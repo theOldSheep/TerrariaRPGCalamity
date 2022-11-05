@@ -1,0 +1,2 @@
+§6欢迎 §a{PLAYER} §6来到 §b{SERVER} §6服务器
+§a当前服务器使用 §dAuthMe §a登陆系统 §6- §c编辑 By:开服侠

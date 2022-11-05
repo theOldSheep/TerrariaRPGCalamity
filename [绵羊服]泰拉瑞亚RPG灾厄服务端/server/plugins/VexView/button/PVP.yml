@@ -1,0 +1,14 @@
+id: 6
+name: ''
+url: 'https://static.wikia.nocookie.net/terraria_gamepedia/images/a/ab/Falcon_Blade.png'
+url2: 'https://static.wikia.nocookie.net/terraria_gamepedia/images/a/ab/Falcon_Blade.png'
+x: 22.5
+y: 7.5
+width: 30
+high: 30
+commands:
+- 'togglepvp'
+asop: false
+close: false
+to: '-'
+click_url: ''

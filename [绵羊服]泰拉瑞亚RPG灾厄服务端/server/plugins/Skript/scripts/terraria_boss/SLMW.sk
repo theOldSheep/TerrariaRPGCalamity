@@ -1,0 +1,234 @@
+import:
+	java.util.ArrayList
+	java.util.HashMap
+	net.minecraft.server.v1_11_R1.BossBattle
+	net.minecraft.server.v1_11_R1.BossBattle$BarColor
+	net.minecraft.server.v1_11_R1.BossBattle$BarStyle
+	net.minecraft.server.v1_11_R1.BossBattleServer
+	net.minecraft.server.v1_11_R1.PacketPlayOutBoss$Action
+	net.minecraft.server.v1_11_R1.PathfinderGoalFloat
+	net.minecraft.server.v1_11_R1.PathfinderGoalSelector
+	org.bukkit.craftbukkit.v1_11_R1.util.CraftChatMessage
+	org.bukkit.entity.EntityType
+
+on rightclick:
+	gamemode of player is survival
+	set {_tool} to player's tool
+	metadata "useCD" of player is false
+	if trimText(name of {_tool}) is "史莱姆王冠":
+		{BOSS}.containsKey("史莱姆王") is false
+		spawnSLMW(player)
+		applyCD(player, 20)
+		set {_tool} to (item amount of {_tool} - 1) of {_tool}
+		set player's tool to {_tool}
+
+function spawnSLMW(ply: player):
+	{BOSS}.containsKey("史莱姆王") is false
+	set {_loc} to location of {_ply}
+	set y-coordinate of {_loc} to -1
+	spawn a slime at {_loc}
+	handleSLMW(spawned entity, {_ply})
+
+function handleSLMW(slmw: entity, ply: player):
+	broadcast "&d&l史莱姆王 苏醒了！"
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_ply}
+	set {_attrMap} to new HashMap()
+	{_attrMap}.put("crit", 0.04)
+	{_attrMap}.put("damage", 176)
+	{_attrMap}.put("damageMeleeMulti", 1)
+	{_attrMap}.put("damageMulti", 1)
+	{_attrMap}.put("damageType", "Melee")
+	{_attrMap}.put("defence", 10)
+	{_attrMap}.put("defenceMulti", 1)
+	{_attrMap}.put("knockback", 4)
+	{_attrMap}.put("knockbackResistance", 1)
+	{_attrMap}.put("knockbackMeleeMulti", 1)
+	{_attrMap}.put("knockbackMulti", 1)
+	set metadata "attrMap" of {_slmw} to {_attrMap}
+	
+	set {_bossbar} to new BossBattleServer(CraftChatMessage.fromString("史莱姆王", true)[0], BarColor.GREEN, BarStyle.PROGRESS)
+	{_bossbar}.setVisible(true)
+	set metadata "bossbar" of {_slmw} to {_bossbar}
+	
+	set {_targets} to setupBossTarget({_slmw}, 0, {_ply}, true, {_bossbar})
+	set metadata "targets" of {_slmw} to {_targets}
+	set {_healthMulti} to getBossHealthMulti({_targets}.size())
+	{_slmw}.setInvulnerable(true)
+	set name of {_slmw} to "史莱姆王"
+	{_slmw}.setCustomName("史莱姆王")
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_slmw}
+	add "isMonster" to scoreboard tags of {_slmw}
+	add "isBOSS" to scoreboard tags of {_slmw}
+	{_slmw}.setCustomNameVisible(true)
+	
+	{_slmw}.setRemoveWhenFarAway(false)
+	{_slmw}.setSize(1)
+	
+	{BOSS}.put("史莱姆王", {_slmw})
+	
+	set {_slmw}.getHandle().goalSelector to new PathfinderGoalSelector({_slmw}.getHandle().getWorld().methodProfiler)
+	{_slmw}.getHandle().goalSelector.a(0f, new PathfinderGoalFloat({_slmw}.getHandle()))
+	
+	wait 1 tick
+	set max health of {_slmw} to round(5600 * {_healthMulti})
+	set health of {_slmw} to round(5600 * {_healthMulti})
+	set {_countAI} to 0
+	set {_target} to {_ply}
+	makeTarget({_slmw}, {_target})
+	set metadata "target" of {_slmw} to {_target}
+	set {_lastLoc1} to location of {_slmw}
+	set {_lastLoc2} to location of {_slmw}
+	
+	set {_size} to 32
+	set {_l} to location of {_target}
+	set y-coordinate of {_l} to -1
+	loop 6 times:
+		teleport {_slmw} to {_l}
+		wait 10 ticks
+	teleport {_slmw} to location of {_target}
+	add "noMelee" to scoreboard tags of {_slmw}
+	loop 25 times:
+		slimeResize({_slmw}, (({_size} - 1) * loop-number / 25) + 1)
+		wait 2 ticks
+	remove "noMelee" from scoreboard tags of {_slmw}
+	{_slmw}.setInvulnerable(false)
+	
+	renderSingleBossbar({_slmw}, {_bossbar})
+	set {_aboveHalfHealth} to true
+	while health of {_slmw} > 0:
+		set {_size} to ceil(22 * health of {_slmw} / max health of {_slmw}) + 10
+		#clear invalid targets
+		if {_target} is set:
+			checkBossTarget({_target}, {_slmw}, false) is false
+			clear {_target}
+		
+		if {_target} is not set:
+			loop toSkList {_targets}.keySet():
+				set {_ply} to "%loop-value%" parsed as player
+				checkBossTarget({_ply}, {_slmw}, false) is true
+				set {_target} to {_ply}
+				makeTarget({_slmw}, {_target})
+				set metadata "target" of {_slmw} to {_target}
+				stop loop
+			#find new target if avaliable, otherwise flee
+		if {_target} is not set:
+			set {_lastLoc2} to {_lastLoc1}
+			set {_lastLoc1} to location of {_slmw}
+		#AI part starting here
+		set {_teleport} to false
+		if distance between {_lastLoc1} and location of {_slmw} is less than 3:
+			set {_teleport} to true
+		else if distance between {_lastLoc2} and location of {_slmw} is less than 3:
+			set {_teleport} to true
+		if {_teleport} is true:
+			#teleport
+			{_slmw}.setInvulnerable(true)
+			add "noMelee" to scoreboard tags of {_slmw}
+			loop 25 times:
+				slimeResize({_slmw}, (({_size} - 1) * (25 - loop-number) / 25) + 1)
+				wait 2 ticks
+			if {_target} is not set:
+				set max health of {_slmw} to 1
+				{_slmw}.remove()
+				stop loop
+			set {_l} to location of {_target}
+			set y-coordinate of {_l} to -1
+			loop 6 times:
+				teleport {_slmw} to {_l}
+				wait 10 ticks
+			teleport {_slmw} to location of {_target}
+			loop 25 times:
+				slimeResize({_slmw}, (({_size} - 1) * loop-number / 25) + 1)
+				wait 2 ticks
+			remove "noMelee" from scoreboard tags of {_slmw}
+			{_slmw}.setInvulnerable(false)
+		else:
+			#jump
+			set {_lastLoc2} to {_lastLoc1}
+			set {_lastLoc1} to location of {_slmw}
+			set {_v} to vector((x-coordinate of {_target} - x-coordinate of {_slmw}), 0, (z-coordinate of {_target} - z-coordinate of {_slmw}))
+			if mod({_countAI}, 4) = 3:
+				set vector length of {_v} to 3
+				{_v}.setY(3)
+			else:
+				set vector length of {_v} to 1.75
+				{_v}.setY(1.6)
+			push {_slmw} {_v}
+			wait 10 ticks
+			while {_slmw}.isOnGround() is false:
+				if {_slmw}.getHandle().dead:
+					stop loop
+				if block 1 below location of {_slmw} is water or lava:
+					stop loop
+				wait 5 ticks
+			add 1 to {_countAI}
+		if {_aboveHalfHealth} is true:
+			if (health of {_slmw} / max health of {_slmw}) < 0.5:
+				set {_aboveHalfHealth} to false
+				handleWGBS({_slmw})
+		wait 1 second
+	{_bossbar}.setVisible(false)
+	{BOSS}.remove("史莱姆王")
+	#drop
+	set {_maxHealth} to max health of {_slmw}
+	{_maxHealth} is not 1
+	broadcast "&d&l史莱姆王 被击败了."
+	set {_targets} to metadata "targets" of {_slmw}
+	set {_killers} to {_targets}.keySet().iterator()
+	set {_drop} to a leather named "&r专家模式福袋" with lore "&7史莱姆王"
+	while {_killers}.hasNext():
+		set {_ply} to {_killers}.next()
+		set {_player} to {_ply} parsed as player
+		name of {_player} is {_ply}
+		if {_targets}.get({_ply}) * 5 > ({_maxHealth}) / ({_targets}.size()):
+			if {_player} can hold {_drop}:
+				send "&a恭喜你击败了BOSS[&r史莱姆王&a]!您的战利品已经放在背包里了。" to {_player}
+				give {_drop} to {_player}
+			else:
+				send "&a恭喜你击败了BOSS[&r史莱姆王&a]!您的背包空间不足以容纳战利品，请迅速拾起脚下的战利品袋，以免丢失。" to {_player}
+				drop {_drop} at {_player}.getEyeLocation() without velocity
+		else:
+			send "&aBOSS 史莱姆王 已经被击败。很遗憾，您的输出不足以获得一份战利品。" to {_player}
+	if {event} is "史莱姆雨":
+		broadcast "&a史莱姆不再从天而降."
+		clear {event}
+
+function handleWGBS(slmw: entity):
+	spawn a slime at location of {_slmw}
+	set {_wgbs} to spawned entity
+	set name of {_wgbs} to "王冠宝石"
+	{_wgbs}.setSize(2)
+	add "noDamage" to scoreboard tags of {_wgbs}
+	add "isMonster" to scoreboard tags of {_wgbs}
+	add "isBOSS" to scoreboard tags of {_wgbs}
+	add "noMelee" to scoreboard tags of {_wgbs}
+	set {_wgbs}.getHandle().noclip to true
+	set {_attrMapProjectile} to new HashMap()
+	{_attrMapProjectile}.put("damageType", "Arrow")
+	{_attrMapProjectile}.put("damage", 96)
+	set metadata "attrMap" of {_wgbs} to {_attrMapProjectile}
+	set {_index} to 1
+	while health of {_slmw} > 0:
+		if {_slmw}.isDead() is true:
+			stop loop
+		set {_target} to metadata "target" of {_slmw}
+		if {_target} is set:
+			set {_v} to (location of {_target}).add(0, 8, 0).subtract(location of {_wgbs}).toVector()
+			if vector length of {_v} > 0.5:
+				set vector length of {_v} to 0.5
+			if mod({_index}, 4) = 0:
+				set {_vProjectile} to (eye location of {_target}).subtract(eye location of {_wgbs}).toVector()
+				if vector length of {_vProjectile} > 0:
+					set vector length of {_vProjectile} to 1
+					mobProjectile({_wgbs}, {_vProjectile}, {_attrMapProjectile}, "殷红弹幕")
+				loop 2 times:
+					set {_vProjectile} to (eye location of {_target}).add((a random number between -3 and 3), (a random number between -3 and 3), (a random number between -3 and 3)).subtract(eye location of {_wgbs}).toVector()
+					if vector length of {_vProjectile} > 0:
+						set vector length of {_vProjectile} to 1
+						mobProjectile({_wgbs}, {_vProjectile}, {_attrMapProjectile}, "殷红弹幕")
+		else:
+			set {_v} to vector(0, 0, 0)
+		set velocity of {_wgbs} to {_v}
+		add 1 to {_index}
+		wait 5 ticks
+	{_wgbs}.remove()

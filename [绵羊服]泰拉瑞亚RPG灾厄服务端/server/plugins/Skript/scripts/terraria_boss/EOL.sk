@@ -1,0 +1,581 @@
+import:
+	java.util.ArrayList
+	java.util.HashMap
+	me.libraryaddict.disguise.DisguiseAPI
+	me.libraryaddict.disguise.disguisetypes.DisguiseType
+	me.libraryaddict.disguise.disguisetypes.MobDisguise
+	net.minecraft.server.v1_11_R1.BossBattle
+	net.minecraft.server.v1_11_R1.BossBattle$BarColor
+	net.minecraft.server.v1_11_R1.BossBattle$BarStyle
+	net.minecraft.server.v1_11_R1.BossBattleServer
+	net.minecraft.server.v1_11_R1.PacketPlayOutBoss$Action
+	org.bukkit.craftbukkit.v1_11_R1.util.CraftChatMessage
+	org.bukkit.entity.EntityType
+	org.bukkit.Particle
+
+function handleEOL(ply: player):
+	{BOSS}.containsKey("光之女皇") is false
+	spawn a slime 8 above {_ply}
+	set {_eol} to spawned entity
+	broadcast "&d&l光之女皇 苏醒了！"
+	play sound "entity.eol.summoned" with volume 10 and pitch 1 at location of {_eol}
+	set {_attrMap} to new HashMap(24)
+	{_attrMap}.put("crit", 0.04)
+	{_attrMap}.put("damage", 220)
+	{_attrMap}.put("damageMeleeMulti", 1)
+	{_attrMap}.put("damageMulti", 1)
+	{_attrMap}.put("damageType", "Melee")
+	{_attrMap}.put("defence", 120)
+	{_attrMap}.put("defenceMulti", 1)
+	{_attrMap}.put("knockback", 4)
+	{_attrMap}.put("knockbackResistance", 1)
+	{_attrMap}.put("knockbackMeleeMulti", 1)
+	{_attrMap}.put("knockbackMulti", 1)
+	set {_attrMapPB} to new HashMap()
+	{_attrMapPB}.put("damage", 280)
+	{_attrMapPB}.put("damageMeleeMulti", 1)
+	{_attrMapPB}.put("damageMulti", 1)
+	{_attrMapPB}.put("damageType", "Melee")
+	{_attrMapPB}.put("knockback", 4)
+	{_attrMapPB}.put("knockbackMulti", 1)
+	set {_attrMapSD} to {_attrMapPB}.clone()
+	{_attrMapSD}.put("damage", 320)
+	set {_attrMapEREL} to {_attrMapPB}.clone()
+	{_attrMapEREL}.put("damage", 280)
+	set {_attrMapELV2} to {_attrMapPB}.clone()
+	{_attrMapELV2}.put("damage", 240)
+	set metadata "attrMap" of {_eol} to {_attrMap}
+	set metadata "attrMapPB" of {_eol} to {_attrMapPB}
+	set metadata "attrMapSD" of {_eol} to {_attrMapSD}
+	set metadata "attrMapEREL" of {_eol} to {_attrMapEREL}
+	set metadata "attrMapELV2" of {_eol} to {_attrMapELV2}
+	
+	set {_bossbar} to new BossBattleServer(CraftChatMessage.fromString("光之女皇", true)[0], BarColor.GREEN, BarStyle.PROGRESS)
+	{_bossbar}.setVisible(true)
+	set metadata "bossbar" of {_eol} to {_bossbar}
+	
+	set {_targets} to setupBossTarget({_eol}, 4, {_ply}, true, {_bossbar})
+	set metadata "targets" of {_eol} to {_targets}
+	set {_target} to {_ply}
+	set {_healthMulti} to getBossHealthMulti({_targets}.size())
+	{_eol}.setInvulnerable(true)
+	set name of {_eol} to "光之女皇"
+	set {_eol}.getHandle().noclip to true
+	{_eol}.setCustomName("光之女皇")
+	add "isMonster" to scoreboard tags of {_eol}
+	add "isBOSS" to scoreboard tags of {_eol}
+	{_eol}.setCustomNameVisible(true)
+	{_eol}.setGravity(false)
+	{_eol}.setRemoveWhenFarAway(false)
+	{_eol}.setSize(8)
+	
+	{BOSS}.put("光之女皇", {_eol})
+	
+	wait 1 tick
+	{_eol}.setInvulnerable(false)
+	set max health of {_eol} to round(196000 * {_healthMulti})
+	set health of {_eol} to round(196000 * {_healthMulti})
+	
+	set {_rage} to false
+	set {_isKilledDuringDay} to true
+	set {_typeAI} to 1
+	set {_indexAI} to 109
+	
+	set {_particleColor} to new ArrayList(8)
+	set metadata "particleColor" of {_eol} to {_particleColor}
+	
+	add "noDamage" to scoreboard tags of {_eol}
+	wait 2 seconds
+	remove "noDamage" from scoreboard tags of {_eol}
+	
+	renderSingleBossbar({_eol}, {_bossbar})
+	if (world of {_eol}).getTime() is not between 13500 and 22500:
+		{_attrMap}.put("damageMulti", 100)
+		{_attrMapPB}.put("damageMulti", 100)
+		{_attrMapSD}.put("damageMulti", 100)
+		{_attrMapEREL}.put("damageMulti", 100)
+		{_attrMapELV2}.put("damageMulti", 100)
+		{_particleColor}.add("255|255|125")
+	else:
+		{_particleColor}.add("255|0|0")
+		{_particleColor}.add("255|255|0")
+		{_particleColor}.add("0|255|0")
+		{_particleColor}.add("0|255|255")
+		{_particleColor}.add("0|0|255")
+		{_particleColor}.add("255|0|255")
+	
+	while health of {_eol} > 0:
+		if (world of {_eol}).getTime() is not between 13500 and 22500:
+			{_attrMap}.put("damageMulti", 100)
+			{_attrMapPB}.put("damageMulti", 100)
+			{_attrMapSD}.put("damageMulti", 100)
+			{_attrMapEREL}.put("damageMulti", 100)
+			{_attrMapELV2}.put("damageMulti", 100)
+			{_particleColor}.clear()
+			{_particleColor}.add("255|255|125")
+		if health of {_eol} < max health of {_eol}:
+			(world of {_eol}).getTime() is between 13500 and 22500
+			set {_isKilledDuringDay} to false
+		if (world of {_eol}).getTime() is between 13497 and 13510:
+			set max health of {_eol} to 1
+			{_eol}.remove()
+			stop loop
+		#clear invalid targets
+		if {_target} is set:
+			checkBossTarget({_target}, {_eol}, false) is false
+			clear {_target}
+			clear metadata "target" of {_eol}
+		if {_target} is not set:
+			loop toSkList {_targets}.keySet():
+				set {_ply} to "%loop-value%" parsed as player
+				checkBossTarget({_ply}, {_eol}, false) is true
+				set {_target} to {_ply}
+				set metadata "target" of {_eol} to {_target}
+				makeTarget({_eol}, {_target})
+				stop loop
+			#find new target if avaliable, otherwise flee
+		if {_target} is not set:
+			set max health of {_eol} to 1
+			{_eol}.remove()
+			stop loop
+		else:
+			#AI
+			set {_healthRatio} to health of {_eol} / max health of {_eol}
+			if {_typeAI} = 1:
+				if {_healthRatio} < 0.5:
+					set {_loc} to location of {_eol}
+					set y-coordinate of {_loc} to -5
+					teleport {_eol} to {_loc}
+					set {_typeAI} to 2
+					wait 1 second
+					set {_indexAI} to 0
+				else:
+					set {_attackMethodIndex} to mod({_indexAI}, 110)
+					set {_attackMethodIndex} to floor({_attackMethodIndex} / 10)
+					if mod({_indexAI}, 10) = 0:
+						if {_attackMethodIndex} = 0:
+							set {_attackMethod} to "PB"
+						else if {_attackMethodIndex} = 1:
+							set {_attackMethod} to "DA"
+						else if {_attackMethodIndex} <= 3:
+							set {_attackMethod} to "SD"
+						else if {_attackMethodIndex} = 4:
+							set {_attackMethod} to "DA"
+						else if {_attackMethodIndex} = 5:
+							set {_attackMethod} to "ER"
+						else if {_attackMethodIndex} = 6:
+							set {_attackMethod} to "PB"
+						else if {_attackMethodIndex} = 7:
+							set {_attackMethod} to "DA"
+						else if {_attackMethodIndex} = 8:
+							set {_attackMethod} to "EL"
+						else if {_attackMethodIndex} = 9:
+							set {_attackMethod} to "DA"
+						else:
+							set {_attackMethod} to "ER"
+						if {_attackMethodIndex} is not 3:
+							EOLperk({_eol}, {_attackMethod}, {_attrMapPB})
+			else:
+				set {_attackMethodIndex} to mod({_indexAI}, 80)
+				set {_attackMethodIndex} to floor({_attackMethodIndex} / 8)
+				if mod({_indexAI}, 8) = 0:
+					if {_attackMethodIndex} = 0:
+						set {_attackMethod} to "ELV2"
+					else if {_attackMethodIndex} = 1:
+						set {_attackMethod} to "PB"
+					else if {_attackMethodIndex} = 2:
+						set {_attackMethod} to "DA"
+						EOLperk({_eol}, "EL", false)
+					else if {_attackMethodIndex} = 3:
+						set {_attackMethod} to "ER"
+					else if {_attackMethodIndex} = 4:
+						set {_attackMethod} to "PB"
+					else if {_attackMethodIndex} <= 6:
+						set {_attackMethod} to "SD"
+					else if {_attackMethodIndex} = 7:
+						set {_attackMethod} to "EL"
+					else if {_attackMethodIndex} = 8:
+						set {_attackMethod} to "DA"
+						EOLperk({_eol}, "EL", false)
+					else:
+						set {_attackMethod} to "PBV2"
+					if {_attackMethodIndex} is not 6:
+						EOLperk({_eol}, {_attackMethod}, {_attrMapPB})
+		add 1 to {_indexAI}
+		wait 6 ticks
+	{_bossbar}.setVisible(false)
+	{BOSS}.remove("光之女皇")
+	#drop
+	set {_maxHealth} to max health of {_eol}
+	{_maxHealth} is not 1
+	broadcast "&d&l光之女皇 被击败了."
+	set {_targets} to metadata "targets" of {_eol}
+	set {_killers} to {_targets}.keySet().iterator()
+	if {_isKilledDuringDay} is true:
+		set {_item} to getItem("泰拉棱镜")
+		drop {_item} at location of {_eol}
+	set {_drop} to a leather named "&r专家模式福袋" with lore "&7光之女皇"
+	while {_killers}.hasNext():
+		set {_ply} to {_killers}.next()
+		set {_player} to {_ply} parsed as player
+		name of {_player} is {_ply}
+		if {_targets}.get({_ply}) * 5 > ({_maxHealth}) / ({_targets}.size()):
+			if {_player} can hold {_drop}:
+				send "&a恭喜你击败了BOSS[&r光之女皇&a]!您的战利品已经放在背包里了。" to {_player}
+				give {_drop} to {_player}
+			else:
+				send "&a恭喜你击败了BOSS[&r光之女皇&a]!您的背包空间不足以容纳战利品，请迅速拾起脚下的战利品袋，以免丢失。" to {_player}
+				drop {_drop} at {_player}.getEyeLocation() without velocity
+		else:
+			send "&aBOSS 光之女皇 已经被击败。很遗憾，您的输出不足以获得一份战利品。" to {_player}
+
+function EOLperk(eol: entity, perk: text, attrMapRanged: object):
+	play sound "entity.eol.%{_perk}%" with volume 10 and pitch 1 at location of {_eol}
+	set {_healthRatio} to health of {_eol} / max health of {_eol}
+	set {_target} to metadata "target" of {_eol}
+	set {_loc} to location of {_target}
+	if {_perk} is not "DA":
+		set {_a} to a random number between 0 and 360
+		{_loc}.add((sin({_a}) * 12), (a random number between 8 and 12), (cos({_a}) * 12))
+	if {_perk} is "PB":
+		set {_attrMapPB} to metadata "attrMapPB" of {_eol}
+		teleport {_eol} to {_loc}
+		loop 15 times:
+			if health of {_eol} <= 0:
+				stop loop
+			set {_vel} to (eye location of {_target}).subtract({_loc}).toVector()
+			set vector length of {_vel} to 3.5
+			set {_velocity} to {_vel}.add(vector((a random number between -0.5 and 0.5), (a random number between -0.5 and 0.5), (a random number between -0.5 and 0.5)))
+			spawn a slime at {_loc}
+			set {_projectile} to spawned entity
+			set metadata "attrMap" of {_projectile} to {_attrMapPB}
+			add "isMonster" to scoreboard tags of {_projectile}
+			add "noDamage" to scoreboard tags of {_projectile}
+			set glowing of {_projectile} to on
+			set gravity of {_projectile} to off
+			set {_projectile}.getHandle().noclip to true
+			{_projectile}.setRemoveWhenFarAway(false)
+			{_projectile}.setSize(1)
+			{_projectile}.setCustomName("水晶矢")
+			if vector length of {_velocity} < 0.1:
+				set {_velocity} to vector(0, 1, 0)
+			set vector length of {_velocity} to 1.5
+			set velocity of {_projectile} to {_velocity}
+			EOLperk({_eol}, "PB_PROJECTILE", {_projectile})
+			wait 2 tick
+	if {_perk} is "PBV2":
+		set {_attrMapPB} to metadata "attrMapPB" of {_eol}
+		teleport {_eol} to {_loc}
+		loop 25 times:
+			if health of {_eol} <= 0:
+				stop loop
+			set {_velocity} to vector((a random number between -0.5 and 0.5), (a random number between -0.5 and 0.5), (a random number between -0.5 and 0.5))
+			spawn a slime at {_loc}
+			set {_projectile} to spawned entity
+			set metadata "attrMap" of {_projectile} to {_attrMapPB}
+			add "isMonster" to scoreboard tags of {_projectile}
+			add "noDamage" to scoreboard tags of {_projectile}
+			set glowing of {_projectile} to on
+			set gravity of {_projectile} to off
+			set {_projectile}.getHandle().noclip to true
+			{_projectile}.setRemoveWhenFarAway(false)
+			{_projectile}.setSize(1)
+			{_projectile}.setCustomName("水晶矢")
+			if vector length of {_velocity} < 0.01:
+				set {_velocity} to vector(0, 1, 0)
+			set vector length of {_velocity} to 0.75
+			set velocity of {_projectile} to {_velocity}
+			EOLperk({_eol}, "PB_PROJECTILE", {_projectile})
+			wait 2 tick
+	else if {_perk} is "PB_PROJECTILE":
+		set {_particleColor} to metadata "particleColor" of {_eol}
+		set {_color} to new ArrayList(1)
+		{_color}.add({_particleColor}.get(a random integer between 0 and ({_particleColor}.size() - 1)))
+		set {_projectile} to {_attrMapRanged}
+		set {_v} to velocity of {_projectile}
+		set {_damaged} to new ArrayList(20)
+		loop 50 times:
+			set {_lastLoc} to location of {_projectile}
+			wait 2 ticks
+			set {_index} to loop-number
+			if {_index} <= 15:
+				set vector length of {_v} to (vector length of {_v}) * 0.9
+			else:
+				set {_dV} to (eye location of {_target}).subtract(location of {_projectile}).toVector()
+				if vector length of {_dV} > 0.1:
+					set {_dist} to vector length of {_dV}
+					set vector length of {_dV} to min({_dist} / 10, 0.35)
+					{_v}.add({_dV})
+					if vector length of {_v} > 2:
+						set vector length of {_v} to 2
+			set velocity of {_projectile} to {_v}
+			set {_strikeDir} to {_lastLoc}.subtract(eye location of {_projectile}).toVector()
+			set {_yaw} to vector yaw of {_strikeDir}
+			set {_pitch} to vector pitch of {_strikeDir}
+			handleStrikeLine({_projectile}, {_yaw}, {_pitch}, (vector length of {_strikeDir}), (a diamond), {_color}, {_damaged}, true, {_null})
+		{_projectile}.remove()
+	else if {_perk} is "DA":
+		set {_attrMap} to metadata "attrMap" of {_eol}
+		set {_xOffset} to a random number between -16 and 16
+		set {_zOffset} to 16 - abs({_xOffset})
+		if chance of 0.5:
+			set {_zOffset} to {_zOffset} * -1
+		{_loc}.add({_xOffset}, 0, {_zOffset})
+		set {_velocity} to vector(({_xOffset} * -1), 0, ({_zOffset} * -1))
+		set vector length of {_velocity} to 0.75
+		teleport {_eol} to {_loc}
+		set {_velRecoil} to {_velocity}.clone().multiply(-1)
+		set velocity of {_eol} to {_velRecoil}
+		wait 20 ticks
+		{_attrMap}.put("damage", 330)
+		set {_velocity} to (location of {_target}).subtract(location of {_eol}).toVector()
+		if vector length of {_velocity} < 0.1:
+			set {_velocity} to vector(2.5, 0, 0)
+		else:
+			set vector length of {_velocity} to 2.5
+		set velocity of {_eol} to {_velocity}
+		if {_healthRatio} > 0.5:
+			wait 35 ticks
+		else:
+			wait 26 ticks
+		{_attrMap}.put("damage", 220)
+		set velocity of {_eol} to vector(0, 0, 0)
+	else if {_perk} is "SD":
+		set {_angle} to 0
+		set {_rays} to 6
+		if (world of {_eol}).getTime() is not between 13500 and 22500:
+			set {_rays} to 8
+		loop 3 times:
+			EOLperk({_eol}, "SD_HANDLE", {_angle})
+			add (360 / {_rays}) * 0.7 to {_angle}
+			if {_healthRatio} > 0.5:
+				wait 1.5 seconds
+			else:
+				wait 1 second
+		set velocity of {_eol} to vector(0, 0, 0)
+	else if {_perk} is "SD_HANDLE":
+		set {_rays} to 6
+		if (world of {_eol}).getTime() is not between 13500 and 22500:
+			set {_rays} to 8
+		set {_angle} to {_attrMapRanged}
+		set {_dTick} to 180 / ({_rays} * 20)
+		clear {_projectiles::*}
+		set {_length} to 15
+		set {_attrMapSD} to metadata "attrMapSD" of {_eol}
+		loop {_rays} times:
+			loop {_length} times:
+				spawn a slime at location of {_eol}
+				set metadata "attrMap" of spawned entity to {_attrMapSD}
+				set {_projectile} to spawned entity
+				add "isMonster" to scoreboard tags of {_projectile}
+				add "noDamage" to scoreboard tags of {_projectile}
+				set name of {_projectile} to "太阳舞"
+				set glowing of {_projectile} to on
+				{_projectile}.setAI(false)
+				{_projectile}.setSize(1)
+				{_projectile}.setGravity(false)
+				{_projectile}.setRemoveWhenFarAway(false)
+				add {_projectile} to {_projectiles::*}
+		loop 30 times:
+			if loop-number <= 10:
+				add (6 / {_rays}) to {_angle}
+				#360 / 60 / rays
+			else:
+				add (9 / {_rays}) to {_angle}
+				#360 / 40 / rays
+			set {_dY} to y-coordinate of {_target}
+			set {_vel} to vector(0, 0, 0)
+			set velocity of {_eol} to {_vel}
+			set {_loc} to location of {_eol}
+			set y-coordinate of {_loc} to {_dY}
+			teleport {_eol} to {_loc}
+			if health of {_eol} <= 0:
+				stop loop
+			set {_index} to 1
+			set {_idxSD} to loop-number-1
+			set {_widthMulti} to 1 - (abs(20 - {_idxSD}) / 10)
+			if {_widthMulti} > 0.01:
+				set {_widthMulti} to sqrt({_widthMulti})
+			loop {_rays} times:
+				set {_a} to {_angle} + (360 * (loop-value-2) / {_rays})
+				set {_v} to new vector with yaw {_a} and pitch 0
+				set vector length of {_v} to 2.05
+				set {_centerLoc} to eye location of {_eol}
+				{_centerLoc}.add({_v})
+				loop {_length} times:
+					set {_projectile} to {_projectiles::%{_index}%}
+					set velocity of {_projectile} to {_vel}
+					set {_loc} to location of {_projectile}
+					set y-coordinate of {_loc} to {_dY}
+					teleport {_projectile} to {_loc}
+					if {_idxSD} <= 10:
+						set {_size} to 1
+						if {_idxSD} > 5:
+							(loop-number-3) * 2 < {_length}
+							set {_size} to 2
+					else:
+						set {_sizeFactor} to (1 - ((loop-number-3) / {_length})) * {_widthMulti} * 5
+						set {_size} to floor(2 + {_sizeFactor})
+					set {_radius} to 0.255 * ({_size} + 1)
+					set vector length of {_v} to {_radius}
+					{_centerLoc}.add({_v})
+					{_projectile}.setSize({_size})
+					teleport {_projectile} to {_centerLoc}.clone().subtract(0, {_radius}, 0)
+					{_centerLoc}.add({_v})
+					add 1 to {_index}
+			wait 2 ticks
+		loop {_projectiles::*}:
+			(loop-value).remove()
+	else if {_perk} is "ER":
+		set {_angle} to 0
+		set {_range} to 0
+		set {_attrMapEREL} to metadata "attrMapEREL" of {_eol}
+		loop 13 times:
+			spawn a slime at eye location of {_eol}
+			add spawned entity to {_projectiles::*}
+			set metadata "attrMap" of spawned entity to {_attrMapEREL}
+			add "isMonster" to scoreboard tags of spawned entity
+			add "noDamage" to scoreboard tags of spawned entity
+			(spawned entity).setGravity(false)
+			(spawned entity).setRemoveWhenFarAway(false)
+			(spawned entity).setSize(8)
+			(spawned entity).setCustomName("永恒虹光")
+		set {_loc} to location of {_target}
+		set {_x} to a random number between -20 and 20
+		set {_z} to 20 - abs({_x})
+		if chance of 0.5:
+			set {_z} to {_z} * -1
+		{_loc}.add({_x}, 0, {_z})
+		if {_attrMapRanged} is not false:
+			teleport {_eol} to {_loc}
+		loop 120 times:
+			if health of {_eol} <= 0:
+				stop loop
+			set {_index} to loop-number
+			add 5 to {_angle}
+			loop 13 times:
+				set {_ind} to loop-number-2
+				set {_currLoc} to {_projectiles::%{_ind}%}
+				if {_index} < 60:
+					add (60 - {_index}) * 0.0035 to {_range}
+				else if {_index} > 80:
+					remove (140 - {_index}) * 0.0035 from {_range}
+				set {_itemAngle} to {_angle} + (360 * ({_ind}) / 13)
+				set {_itemLoc} to {_loc}.clone().add(sin({_itemAngle}) * {_range}, 0, cos({_itemAngle}) * {_range})
+				teleport {_projectiles::%{_ind}%} to {_itemLoc}
+				EOLtrack({_projectiles::%{_ind}%}, {_target}, "永恒虹光", {_itemLoc})
+			wait 2 ticks
+		loop {_projectiles::*}:
+			(loop-value).remove()
+	else if {_perk} is "EL":
+		teleport {_eol} to {_loc}
+		loop 20 times:
+			if health of {_eol} <= 0:
+				stop loop
+			set {_v} to velocity of {_target}
+			if vector length of {_v} < 0.1:
+				set {_x} to (a random number between -10 and 10)
+				set {_z} to 10 - abs({_x})
+				if chance of 0.5:
+					set {_z} to {_z} * -1
+				set {_v} to vector({_x}, (a random number between 5 and -5), {_z})
+			set vector length of {_v} to 10
+			set {_location} to (eye location of {_target}).add((a random number between -5 and 5), (a random number between -5 and 5), (a random number between -5 and 5)).subtract({_v})
+			EOLtrack({_eol}, {_target}, "天界之矛", {_location})
+			wait 2 ticks
+	else if {_perk} is "ELV2":
+		add (vector(1, 0, 0)) to {_directions::*}
+		add (vector(0, 0, 1)) to {_directions::*}
+		add (vector(1, 0, 1)) to {_directions::*}
+		add (vector(-1, 0, 1)) to {_directions::*}
+		add (vector(1, 0, -1)) to {_directions::*}
+		add (vector(-1, 0, -1)) to {_directions::*}
+		teleport {_eol} to {_loc}
+		loop {_directions::*}:
+			if health of {_eol} <= 0:
+				stop loop
+			set {_v} to loop-value
+			set {_yaw} to vector yaw of {_v}
+			subtract 30 from {_yaw}
+			loop 3 times:
+				set {_pitch} to vector pitch of {_v}
+				subtract 30 from {_pitch}
+				set {_targetLoc} to eye location of {_target}
+				loop 3 times:
+					set {_dV} to new vector with yaw {_yaw} and pitch {_pitch}
+					set vector length of {_dV} to 10
+					set {_location} to {_targetLoc}.clone().subtract({_dV})
+					EOLtrack({_eol}, {_target}, "天界之矛", {_location})
+					add 30 to {_pitch}
+				add 130 to {_yaw}
+				wait 1 tick
+			wait 1 second
+		
+function EOLtrack(projectile: entity, target: entity, type: text, loc: location):
+	if {_type} is "永恒虹光":
+		wait 3 ticks
+		set {_centerLoc} to {_loc}.add(0, 2.295, 0)
+		spawn a slime at {_centerLoc}.clone().subtract(0, 2.04, 0)
+		set metadata "attrMap" of spawned entity to metadata "attrMap" of {_projectile}
+		set {_projectile} to spawned entity
+		add "isMonster" to scoreboard tags of {_projectile}
+		add "noDamage" to scoreboard tags of {_projectile}
+		set {_size} to 8
+		set velocity of {_projectile} to vector(0, 0, 0)
+		{_projectile}.setAI(false)
+		{_projectile}.setGravity(false)
+		{_projectile}.setRemoveWhenFarAway(false)
+		{_projectile}.setCustomName("永恒虹光")
+		loop 6 times:
+			remove 1 from {_size}
+			{_projectile}.setSize({_size})
+			set {_offSet} to 0.255 * {_size}
+			teleport {_projectile} to {_centerLoc}.clone().subtract(0, {_offSet}, 0)
+			wait 6 ticks
+		{_projectile}.remove()
+		#~EOLtrack(("lao" parsed as player), ("lao" parsed as player), "永恒虹光", (location of "lao" parsed as player))
+	if {_type} is "水晶矢":
+		wait 1 second
+		set {_velocity} to (eye location of {_target}).subtract(location of {_projectile}).toVector()
+		set vector length of {_velocity} to 0.75
+		set velocity of {_projectile} to {_velocity}
+		wait 6 ticks
+		while {_target} is online:
+			if {_projectile}.getHandle().dead is true:
+				stop trigger
+			if gamemode of {_target} is spectator:
+				stop loop
+			if world of {_target} is not world of {_projectile}:
+				stop loop
+			if distance between {_projectile} and {_target} <= 4:
+				stop loop
+			set {_dVec} to (eye location of {_target}).subtract(location of {_projectile}).toVector()
+			set vector length of {_dVec} to 1
+			set {_velocity} to velocity of {_projectile}
+			set vector length of {_velocity} to 2
+			{_velocity}.add({_dVec})
+			set vector length of {_velocity} to 0.75
+			set velocity of {_projectile} to {_velocity}
+			wait 6 ticks
+		projectileAI({_projectile}, "GUN")
+	else if {_type} is "天界之矛":
+		set {_v} to (eye location of {_target}).subtract({_loc}).toVector()
+		set {_particleColor} to metadata "particleColor" of {_projectile}
+		handleParticleLine({_v}, 20, 0.1, {_loc}, {_particleColor})
+		set vector length of {_v} to 0.5
+		set {_displayV} to {_v}.clone()
+		set vector length of {_v} to 5
+		set {_colorLance} to new ArrayList(1)
+		{_colorLance}.add("255|255|255")
+		handleParticleLine({_displayV}, 3, 0.5, {_loc}.clone().subtract({_displayV}), {_colorLance})
+		wait 1.5 seconds
+		set {_advanced} to new HashMap(4)
+		{_advanced}.put("startLocation", {_loc})
+		{_advanced}.put("particleInterval", 1)
+		set {_yaw} to vector yaw of {_v}
+		set {_pitch} to vector pitch of {_v}
+		set {_damaged} to new ArrayList(20)
+		loop 20 times:
+			{_loc}.add({_v})
+			handleStrikeLine({_projectile}, {_yaw}, {_pitch}, 5, (a diamond), {_colorLance}, {_damaged}, true, {_advanced})
+			wait 3 ticks

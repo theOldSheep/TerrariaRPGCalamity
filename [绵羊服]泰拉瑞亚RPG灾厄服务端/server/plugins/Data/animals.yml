@@ -1,0 +1,317 @@
+subTypes:
+  Bird:
+    金鸟:
+      weight: 1
+      biome:
+      - normal
+      - hallow
+      - tundra
+      yMin: 60
+      yMax: 100
+    鸟:
+      weight: 20
+      biome:
+      - normal
+      - hallow
+      - tundra
+      yMin: 60
+      yMax: 100
+    冠蓝鸦:
+      weight: 10
+      biome:
+      - normal
+      - hallow
+      - tundra
+      yMin: 60
+      yMax: 100
+    红雀:
+      weight: 10
+      biome:
+      - normal
+      - hallow
+      - tundra
+      yMin: 60
+      yMax: 100
+  Butterfly:
+    茱莉娅蝶:
+      weight: 15
+      biome:
+      - normal
+    帝王蝶:
+      weight: 35
+      biome:
+      - normal
+    紫君王蝶:
+      weight: 5
+      biome:
+      - normal
+    红纹蝶:
+      weight: 20
+      biome:
+      - normal
+    硫磺蝶:
+      weight: 30
+      biome:
+      - normal
+    树若虫蝴蝶:
+      weight: 2
+      biome:
+      - normal
+    尤利西斯蝶:
+      weight: 25
+      biome:
+      - normal
+    斑纹燕尾蝶:
+      weight: 10
+      biome:
+      - normal
+    金蝴蝶:
+      weight: 1
+      biome:
+      - normal
+  Lavafly:
+    地狱蝴蝶:
+      weight: 10
+      biome:
+      - underworld
+    熔岩蝇:
+      weight: 6
+      biome:
+      - underworld
+  MagmaSnail:
+    岩浆蜗牛:
+      weight: 10
+      biome:
+      - underworld
+  Firefly:
+    萤火虫:
+      weight: 8
+      yMin: 60
+      yMax: 100
+    荧光虫:
+      weight: 10
+      biome:
+      - hallow
+      yMin: 60
+      yMax: 100
+  Ground:
+    金蚱蜢:
+      weight: 0.5
+      biome:
+      - normal
+      yMin: 60
+      yMax: 80
+    蚱蜢:
+      weight: 10
+      biome:
+      - normal
+      yMin: 60
+      yMax: 80
+    兔兔:
+      weight: 30
+      biome:
+      - normal
+      - hallow
+      - tundra
+      - jungle
+      yMin: 60
+      yMax: 80
+    金兔:
+      weight: 0.5
+      biome:
+      - normal
+      - hallow
+      - tundra
+      - jungle
+      yMin: 60
+      yMax: 80
+    松鼠:
+      weight: 20
+      biome:
+      - normal
+      - hallow
+      - tundra
+      - jungle
+      yMin: 60
+      yMax: 80
+    蛆虫:
+      weight: 5
+      biome:
+      - jungle
+      yMin: 60
+      yMax: 80
+    瓢虫:
+      weight: 3
+      biome:
+      - normal
+      yMin: 60
+      yMax: 80
+    金瓢虫:
+      weight: 0.5
+      biome:
+      - normal
+      yMin: 60
+      yMax: 80
+    蚜虫:
+      weight: 8
+      biome:
+      - jungle
+      yMin: 60
+      yMax: 80
+    红松鼠:
+      weight: 15
+      biome:
+      - normal
+      yMin: 60
+      yMax: 80
+    金松鼠:
+      weight: 0.5
+      biome:
+      - normal
+      - hallow
+      - tundra
+      - jungle
+      yMin: 60
+      yMax: 80
+    青蛙:
+      weight: 4
+      biome:
+      - normal
+      yMin: 60
+      yMax: 80
+    金蛙:
+      weight: 0.5
+      biome:
+      - normal
+      yMin: 60
+      yMax: 80
+    发光蜗牛:
+      weight: 3
+      biome:
+      - corruption
+      yMin: 0
+      yMax: 80
+    松露虫:
+      weight: 1
+      biome:
+      - corruption
+      yMin: 0
+      yMax: 80
+    老鼠:
+      weight: 10
+      yMin: 5
+      yMax: 60
+    金老鼠:
+      weight: 1
+      yMin: 5
+      yMax: 60
+    企鹅:
+      weight: 1
+      biome:
+      - tundra
+      yMin: 60
+      yMax: 80
+    蜗牛:
+      weight: 6
+      yMin: 5
+      yMax: 60
+    鼻涕虫:
+      weight: 4
+      biome:
+      - jungle
+      yMin: 60
+      yMax: 80
+    蠕虫:
+      weight: 10
+      biome:
+      - normal
+      yMin: 60
+      yMax: 80
+    金蠕虫:
+      weight: 0.5
+      biome:
+      - normal
+      yMin: 60
+      yMax: 80
+  GroundNight:
+    附魔夜行者:
+      weight: 6
+      yMin: 60
+      yMax: 80
+animalType:
+  金鸟: Bird
+  鸟: Bird
+  冠蓝鸦: Bird
+  红雀: Bird
+  萤火虫: Firefly
+  荧光虫: Firefly
+  茱莉娅蝶: Butterfly
+  帝王蝶: Butterfly
+  紫君王蝶: Butterfly
+  红纹蝶: Butterfly
+  硫磺蝶: Butterfly
+  树若虫蝴蝶: Butterfly
+  尤利西斯蝶: Butterfly
+  斑纹燕尾蝶: Butterfly
+  七彩草蛉: Butterfly
+  金蝴蝶: Butterfly
+  地狱蝴蝶: Lavafly
+  熔岩蝇: Lavafly
+  岩浆蜗牛: MagmaSnail
+  蚱蜢: Ground
+  兔兔: Ground
+  松鼠: Ground
+  蛆虫: Ground
+  瓢虫: Ground
+  蚜虫: Ground
+  红松鼠: Ground
+  青蛙: Ground
+  金蛙: Ground
+  发光蜗牛: Ground
+  松露虫: Ground
+  老鼠: Ground
+  企鹅: Ground
+  蜗牛: Ground
+  鼻涕虫: Ground
+  蠕虫: Ground
+  金松鼠: Ground
+  金瓢虫: Ground
+  金老鼠: Ground
+  金蚱蜢: Ground
+  金蠕虫: Ground
+  金兔: Ground
+  附魔夜行者: GroundNight
+idleSounds:
+  鸟: bird
+  冠蓝鸦: bluejay
+  红雀: cardinal
+particleColor:
+  七彩草蛉:
+  - 255|0|0
+  - 255|255|0
+  - 0|255|0
+  - 0|255|255
+  - 0|0|255
+  - 255|0|255
+  金鸟:
+  - 255|255|0
+  金蝴蝶:
+  - 255|255|0
+  金蛙:
+  - 255|255|0
+  金松鼠:
+  - 255|255|0
+  金瓢虫:
+  - 255|255|0
+  金老鼠:
+  - 255|255|0
+  金蚱蜢:
+  - 255|255|0
+  金蠕虫:
+  - 255|255|0
+  金兔:
+  - 255|255|0
+  附魔夜行者:
+  - 255|100|100
+  松露虫:
+  - 0|100|255

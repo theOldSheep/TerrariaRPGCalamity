@@ -1,0 +1,205 @@
+match: "专家模式物品"
+priority: 0
+Functions:
+  open: |-
+    界面变量.ww = tip.width;
+    界面变量.hh = tip.height;
+  preRender: |-
+    界面变量.r_c_temp=方法.floor(方法.mod(方法.取当前时间(), (90*30)-1) / 30);
+    界面变量.r_c = 界面变量.r_c_temp == 0 ? 'FF0000' : 'FF1100';
+    界面变量.r_c = 界面变量.r_c_temp == 1 ? 'FF1100' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 2 ? 'FF2200' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 3 ? 'FF3300' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 4 ? 'FF4400' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 5 ? 'FF5500' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 6 ? 'FF6600' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 7 ? 'FF7700' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 8 ? 'FF8800' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 9 ? 'FF9900' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 10 ? 'FFAA00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 11 ? 'FFBB00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 12 ? 'FFCC00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 13 ? 'FFDD00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 14 ? 'FFEE00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 15 ? 'FFFF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 16 ? 'EEFF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 17 ? 'DDFF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 18 ? 'CCFF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 19 ? 'BBFF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 20 ? 'AAFF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 21 ? '99FF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 22 ? '88FF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 23 ? '77FF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 24 ? '66FF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 25 ? '55FF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 26 ? '44FF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 27 ? '33FF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 28 ? '22FF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 29 ? '11FF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 30 ? '00FF00' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 31 ? '00FF11' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 32 ? '00FF22' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 33 ? '00FF33' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 34 ? '00FF44' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 35 ? '00FF55' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 36 ? '00FF66' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 37 ? '00FF77' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 38 ? '00FF88' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 39 ? '00FF99' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 40 ? '00FFAA' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 41 ? '00FFBB' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 42 ? '00FFCC' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 43 ? '00FFDD' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 44 ? '00FFEE' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 45 ? '00FFFF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 46 ? '00EEFF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 47 ? '00DDFF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 48 ? '00CCFF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 49 ? '00BBFF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 50 ? '00AAFF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 51 ? '0099FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 52 ? '0088FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 53 ? '0077FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 54 ? '0066FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 55 ? '0055FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 56 ? '0044FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 57 ? '0033FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 58 ? '0022FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 59 ? '0011FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 60 ? '0000FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 61 ? '1100FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 62 ? '2200FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 63 ? '3300FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 64 ? '4400FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 65 ? '5500FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 66 ? '6600FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 67 ? '7700FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 68 ? '8800FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 69 ? '9900FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 70 ? 'AA00FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 71 ? 'BB00FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 72 ? 'CC00FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 73 ? 'DD00FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 74 ? 'EE00FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 75 ? 'FF00FF' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 76 ? 'FF00EE' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 77 ? 'FF00DD' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 78 ? 'FF00CC' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 79 ? 'FF00BB' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 80 ? 'FF00AA' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 81 ? 'FF0099' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 82 ? 'FF0088' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 83 ? 'FF0077' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 84 ? 'FF0066' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 85 ? 'FF0055' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 86 ? 'FF0044' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 87 ? 'FF0033' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 88 ? 'FF0022' : 界面变量.r_c;
+    界面变量.r_c = 界面变量.r_c_temp == 89 ? 'FF0011' : 界面变量.r_c;
+    界面变量.color = 方法.合并文本('&#', 界面变量.r_c, '&l', 方法.去颜色(界面变量.lines[0]));
+    界面变量.alpha = 0.6 + (0.4 * 方法.sin(方法.取当前时间() * 0.00314));
+    (界面变量.y + tip.height+40>h)?{
+      界面变量.y = h-tip.height-40;
+    }:0;
+    (界面变量.x + tip.width+40>w)?{
+      界面变量.x = w-tip.width-40;
+    }:0;
+
+# 变量列表
+# x  鼠标X
+# y  鼠标y
+# w  物品原本显示的lore(包含原版完整显示的内容,比如名字,附魔等)，最长一条的长度
+# h  物品原本显示的lore(包含原版完整显示的内容,比如名字,附魔等)，总共的高度
+# iw 物品的lore(仅Lore和名字)，最长一条的长度
+# ih 物品的lore(仅Lore和名字)，总共的高度
+# sw 屏幕宽度(ScreenWidth)
+# sh 屏幕高度(ScreenHeight)
+
+
+背景:
+  type: texture
+  x: 界面变量.x+12
+  y: 界面变量.y+12
+  width : 界面变量.w
+  height: 界面变量.h
+  texture:  tip/背景.png
+  alpha: 0.95
+左上角:
+  type: texture
+  x : 界面变量.x+7
+  y : 界面变量.y+7
+  width : 5
+  height: 5
+  texture:  tip/左上角.png
+  alpha: 0.95
+右上角:
+  type: texture
+  x : 界面变量.x+12+界面变量.w
+  y : 界面变量.y+7
+  width : 5
+  height: 5
+  texture:  tip/右上角.png
+  alpha: 0.95
+左下角:
+  type: texture
+  x : 界面变量.x+7
+  y : 界面变量.y+12+界面变量.h
+  width : 5
+  height: 5
+  texture:  tip/左下角.png
+  alpha: 0.95
+右下角:
+  type: texture
+  x : 界面变量.x+12+界面变量.w
+  y : 界面变量.y+12+界面变量.h
+  width : 5
+  height: 5
+  texture:  tip/右下角.png
+  alpha: 0.95
+
+左边:
+  type: texture
+  x : 界面变量.x+7
+  y : 界面变量.y+12
+  width : 5
+  height: 界面变量.h
+  texture:  tip/左边.png
+  alpha: 0.95
+右边:
+  type: texture
+  x : 界面变量.x+12+界面变量.w
+  y : 界面变量.y+12
+  width : 5
+  height: 界面变量.h
+  texture:  tip/右边.png
+  alpha: 0.95
+上边:
+  type: texture
+  x : 界面变量.x+12
+  y : 界面变量.y+7
+  width : 界面变量.w
+  height: 5
+  texture:  tip/上边.png
+  alpha: 0.955
+下边:
+  type: texture
+  x : 界面变量.x+12
+  y : 界面变量.y+12+界面变量.h
+  width : 界面变量.w
+  height: 5
+  texture:  tip/下边.png
+  alpha: 0.95
+
+
+itemname:
+  type: label
+  x: 界面变量.x+12
+  y: 界面变量.y+12
+  # 彩虹色物品名
+  texts: "界面变量.color"
+  alpha: 界面变量.alpha
+tip:
+  type: label
+  x: 界面变量.x+12
+  y: 界面变量.y+22
+  texts: "界面变量.lores"

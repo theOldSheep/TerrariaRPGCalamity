@@ -1,0 +1,263 @@
+import:
+	java.util.ArrayList
+	java.util.HashMap
+	net.minecraft.server.v1_11_R1.BossBattle
+	net.minecraft.server.v1_11_R1.BossBattle$BarColor
+	net.minecraft.server.v1_11_R1.BossBattle$BarStyle
+	net.minecraft.server.v1_11_R1.BossBattleServer
+	net.minecraft.server.v1_11_R1.PacketPlayOutBoss$Action
+	net.minecraft.server.v1_11_R1.PathfinderGoalFloat
+	net.minecraft.server.v1_11_R1.PathfinderGoalSelector
+	org.bukkit.craftbukkit.v1_11_R1.util.CraftChatMessage
+	org.bukkit.entity.EntityType
+
+on rightclick:
+	gamemode of player is survival
+	set {_tool} to player's tool
+	metadata "useCD" of player is false
+	if trimText(name of {_tool}) is "明胶水晶":
+		{BOSS}.containsKey("史莱姆皇后") is false
+		"%biome of location of player%" contains "ice"
+		applyCD(player, 20)
+		set {_tool} to (item amount of {_tool} - 1) of {_tool}
+		set player's tool to {_tool}
+		{BOSS}.containsKey("史莱姆皇后") is false
+		set {_loc} to location of player
+		set y-coordinate of {_loc} to -1
+		spawn a slime at {_loc}
+		handleSLMHH(spawned entity, player)
+
+function handleSLMHH(slmhh: entity, ply: player):
+	broadcast "&d&l史莱姆皇后 苏醒了！"
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_slmhh}
+	set {_attrMap} to new HashMap()
+	{_attrMap}.put("crit", 0.04)
+	{_attrMap}.put("damage", 240)
+	{_attrMap}.put("damageMulti", 1)
+	{_attrMap}.put("defence", 52)
+	{_attrMap}.put("defenceMulti", 1)
+	{_attrMap}.put("knockback", 4)
+	{_attrMap}.put("knockbackResistance", 1)
+	{_attrMap}.put("knockbackMeleeMulti", 1)
+	{_attrMap}.put("knockbackMulti", 1)
+	set {_attrMapArrow} to {_attrMap}.clone()
+	{_attrMapArrow}.put("damageRangedMulti", 1)
+	{_attrMapArrow}.put("damageArrowMulti", 1)
+	{_attrMapArrow}.put("damageType", "Arrow")
+	{_attrMap}.put("damageMeleeMulti", 1)
+	{_attrMap}.put("damageType", "Melee")
+	set metadata "attrMap" of {_slmhh} to {_attrMap}
+	
+	set {_bossbar} to new BossBattleServer(CraftChatMessage.fromString("史莱姆皇后", true)[0], BarColor.GREEN, BarStyle.PROGRESS)
+	{_bossbar}.setVisible(true)
+	set metadata "bossbar" of {_slmhh} to {_bossbar}
+	
+	set {_targets} to setupBossTarget({_slmhh}, 4, {_ply}, true, {_bossbar})
+	set metadata "targets" of {_slmhh} to {_targets}
+	set {_healthMulti} to getBossHealthMulti({_targets}.size())
+	{_slmhh}.setInvulnerable(true)
+	set name of {_slmhh} to "史莱姆皇后"
+	{_slmhh}.setCustomName("史莱姆皇后")
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_slmhh}
+	add "isMonster" to scoreboard tags of {_slmhh}
+	add "isBOSS" to scoreboard tags of {_slmhh}
+	{_slmhh}.setCustomNameVisible(true)
+	
+	{_slmhh}.setRemoveWhenFarAway(false)
+	{_slmhh}.setSize(1)
+	
+	{BOSS}.put("史莱姆皇后", {_slmhh})
+	
+	set {_slmhh}.getHandle().goalSelector to new PathfinderGoalSelector({_slmhh}.getHandle().getWorld().methodProfiler)
+	{_slmhh}.getHandle().goalSelector.a(0f, new PathfinderGoalFloat({_slmhh}.getHandle()))
+	
+	wait 1 tick
+	set max health of {_slmhh} to round(57600 * {_healthMulti})
+	set health of {_slmhh} to round(57600 * {_healthMulti})
+	set {_countAI} to 0
+	set {_target} to {_ply}
+	set metadata "target" of {_slmhh} to {_target}
+	makeTarget({_slmhh}, {_target})
+	set {_lastLoc} to location of {_slmhh}
+	
+	set {_size} to 6
+	set {_AI} to 1
+	wait 8 ticks
+	teleport {_slmhh} to location of {_target}
+	loop 25 times:
+		slimeResize({_slmhh}, (({_size} - 1) * loop-number / 25) + 1)
+		wait 2 ticks
+	{_slmhh}.setInvulnerable(false)
+	
+	renderSingleBossbar({_slmhh}, {_bossbar})
+	while health of {_slmhh} > 0:
+		#clear invalid targets
+		if {_target} is set:
+			checkBossTarget({_target}, {_slmhh}, false) is false
+			clear {_target}
+		if {_target} is not set:
+			loop toSkList {_targets}.keySet():
+				set {_ply} to "%loop-value%" parsed as player
+				checkBossTarget({_ply}, {_slmhh}, false) is true
+				set {_target} to {_ply}
+				makeTarget({_slmhh}, {_target})
+				set metadata "target" of {_slmhh} to {_target}
+				stop loop
+			#find new target if avaliable, otherwise flee
+		if {_target} is not set:
+			#flee
+			{_slmhh}.setInvulnerable(true)
+			loop 25 times:
+				slimeResize({_slmhh}, (({_size} - 1) * (25 - loop-number) / 25) + 1)
+				wait 2 ticks
+			set max health of {_slmhh} to 1
+			{_slmhh}.remove()
+			stop loop
+		#AI part starting here
+		if {_AI} = 1:
+			if (health of {_slmhh}) / (max health of {_slmhh}) > 0.5:
+				if distance between {_lastLoc} and location of {_slmhh} is less than 3:
+					#teleport
+					{_slmhh}.setInvulnerable(true)
+					loop 25 times:
+						slimeResize({_slmhh}, (({_size} - 1) * (25 - loop-number) / 25) + 1)
+						wait 2 ticks
+					if {_target} is not set:
+						set max health of {_slmhh} to 1
+						{_slmhh}.remove()
+						stop loop
+					set {_l} to location of {_target}
+					set y-coordinate of {_l} to -1
+					loop 6 times:
+						teleport {_slmhh} to {_l}
+						wait 10 ticks
+					teleport {_slmhh} to location of {_target}
+					loop 25 times:
+						slimeResize({_slmhh}, (({_size} - 1) * loop-number / 25) + 1)
+						wait 2 ticks
+					{_slmhh}.setInvulnerable(false)
+				else:
+					#jump
+					set {_lastLoc} to location of {_slmhh}
+					set {_v} to vector((x-coordinate of {_target} - x-coordinate of {_slmhh}), 0, (z-coordinate of {_target} - z-coordinate of {_slmhh}))
+					if mod({_countAI}, 4) = 5:
+						{_attrMap}.put("damage", 320)
+						set vector length of {_v} to 1.5
+						{_v}.setY(3)
+					else:
+						{_attrMap}.put("damage", 240)
+						if chance of 0.2:
+							set vector length of {_v} to 3.5
+						else:
+							set vector length of {_v} to 1.3
+						{_v}.setY(1)
+					push {_slmhh} {_v}
+					wait 10 ticks
+					while {_slmhh}.isOnGround() is false:
+						if {_slmhh}.getHandle().dead:
+							stop loop
+						if block 1 below location of {_slmhh} is water or lava:
+							stop loop
+						wait 5 ticks
+					add 1 to {_countAI}
+				if chance of 0.15:
+					spawnMob("水晶史莱姆", location of {_slmhh}, {_target})
+				if chance of 0.15:
+					spawnMob("飞翔史莱姆", location of {_slmhh}, {_target})
+				if chance of 0.15:
+					spawnMob("弹力史莱姆", location of {_slmhh}, {_target})
+			else:
+				set {_AI} to 2
+				set {_bossbar}.color to BarColor.RED
+				{_bossbar}.sendUpdate(Action.UPDATE_STYLE)
+				set gravity of {_slmhh} to off
+				set {_smash} to 0
+			wait 1 second
+		else:
+			if {_slmhh}.hasLineOfSight({_target}) is false:
+				#teleport
+				{_slmhh}.setInvulnerable(true)
+				loop 25 times:
+					slimeResize({_slmhh}, (({_size} - 1) * (25 - loop-number) / 25) + 1)
+					wait 2 ticks
+				set {_l} to location of {_target}
+				set y-coordinate of {_l} to -1
+				loop 6 times:
+					teleport {_slmhh} to {_l}
+					wait 10 ticks
+				teleport {_slmhh} to location of {_target}
+				loop 25 times:
+					slimeResize({_slmhh}, (({_size} - 1) * loop-number / 25) + 1)
+					wait 2 ticks
+				{_slmhh}.setInvulnerable(false)
+			set {_destination} to (location of {_target}).add(0, 8, 0)
+			remove 1 from {_smash}
+			if {_smash} >= 0:
+				if {_smash} > 0:
+					set {_destination} to (location of {_target}).add(0, 12, 0)
+				else:
+					{_attrMap}.put("damage", 320)
+					set {_x} to x-coordinate of {_slmhh}
+					set {_z} to z-coordinate of {_slmhh}
+					set {_vec} to vector(0, -0.2, 0)
+					push {_slmhh} {_vec}
+					loop 8 times:
+						wait 5 ticks
+						set {_location} to location of {_slmhh}
+						set x-coordinate of {_location} to {_x}
+						set z-coordinate of {_location} to {_z}
+						teleport {_slmhh} to {_location}
+						push {_slmhh} {_vec}
+					{_attrMap}.put("damage", 240)
+			else if {_smash} < 25:
+				set {_smash} to 5
+			if mod({_smash}, 15) = 3:
+				loop 26 times:
+					set {_velocity} to vector(a random number between -1.3 and 1.3, a random number between -1.3 and 1.3, a random number between -1.3 and 1.3)
+					
+					set {_bulletE} to {_slmhh}.getWorld().spawnEntity({_slmhh}.getEyeLocation(), EntityType.SPLASH_POTION)
+					
+					{_bulletE}.setCustomName("挥发明胶")
+					{_bulletE}.setVelocity({_velocity})
+					{_bulletE}.setShooter({_slmhh})
+					disguiseProjectile({_bulletE})
+					
+					set metadata "attrMap" of {_bulletE} to {_attrMapArrow}
+					set metadata "collided" of {_bulletE} to new ArrayList()
+					set metadata "penetration" of {_bulletE} to 2
+					set metadata "bounce" of {_bulletE} to 4
+			
+			set {_vec} to {_destination}.subtract({_slmhh}.getEyeLocation()).toVector()
+			set {_distance} to vector length of {_vec}
+			set vector length of {_vec} to sqrt({_distance} / 8)
+			set velocity of {_slmhh} to {_vec}
+			
+			if chance of 0.1:
+				spawnMob("水晶史莱姆", location of {_slmhh}, {_target})
+			if chance of 0.1:
+				spawnMob("飞翔史莱姆", location of {_slmhh}, {_target})
+			if chance of 0.1:
+				spawnMob("弹力史莱姆", location of {_slmhh}, {_target})
+			wait 5 ticks
+	{_bossbar}.setVisible(false)
+	{BOSS}.remove("史莱姆皇后")
+	#drop
+	set {_maxHealth} to max health of {_slmhh}
+	{_maxHealth} is not 1
+	broadcast "&d&l史莱姆皇后 被击败了."
+	set {_targets} to metadata "targets" of {_slmhh}
+	set {_killers} to {_targets}.keySet().iterator()
+	set {_drop} to a leather named "&r专家模式福袋" with lore "&7史莱姆皇后"
+	while {_killers}.hasNext():
+		set {_ply} to {_killers}.next()
+		set {_player} to {_ply} parsed as player
+		name of {_player} is {_ply}
+		if {_targets}.get({_ply}) * 5 > ({_maxHealth}) / ({_targets}.size()):
+			if {_player} can hold {_drop}:
+				send "&a恭喜你击败了BOSS[&r史莱姆皇后&a]!您的战利品已经放在背包里了。" to {_player}
+				give {_drop} to {_player}
+			else:
+				send "&a恭喜你击败了BOSS[&r史莱姆皇后&a]!您的背包空间不足以容纳战利品，请迅速拾起脚下的战利品袋，以免丢失。" to {_player}
+				drop {_drop} at {_player}.getEyeLocation() without velocity
+		else:
+			send "&aBOSS 史莱姆皇后 已经被击败。很遗憾，您的输出不足以获得一份战利品。" to {_player}

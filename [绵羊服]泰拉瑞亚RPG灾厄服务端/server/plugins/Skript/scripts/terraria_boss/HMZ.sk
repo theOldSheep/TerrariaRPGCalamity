@@ -1,0 +1,331 @@
+import:
+	java.util.ArrayList
+	java.util.HashMap
+	net.minecraft.server.v1_11_R1.BossBattle
+	net.minecraft.server.v1_11_R1.BossBattle$BarColor
+	net.minecraft.server.v1_11_R1.BossBattle$BarStyle
+	net.minecraft.server.v1_11_R1.BossBattleServer
+	net.minecraft.server.v1_11_R1.PacketPlayOutBoss$Action
+	org.bukkit.craftbukkit.v1_11_R1.util.CraftChatMessage
+	org.bukkit.entity.EntityType
+
+on rightclick:
+	gamemode of player is survival
+	set {_tool} to player's tool
+	metadata "useCD" of player is false
+	if trimText(name of {_tool}) is "机械蠕虫":
+		player.getWorld().getTime() is between 13500 and 22500
+		{BOSS}.containsKey("毁灭者") is false
+		handleHMZ(player)
+		applyCD(player, 20)
+		set {_tool} to (item amount of {_tool} - 1) of {_tool}
+		set player's tool to {_tool}
+
+function handleHMZ(ply: player):
+	broadcast "&d&l毁灭者 苏醒了！"
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_ply}
+	set {_attrMapLazer} to new HashMap(30)
+	{_attrMapLazer}.put("crit", 0.04)
+	{_attrMapLazer}.put("damage", 144)
+	{_attrMapLazer}.put("damageBulletMulti", 1)
+	{_attrMapLazer}.put("damageRangedMulti", 1)
+	{_attrMapLazer}.put("damageMulti", 1)
+	{_attrMapLazer}.put("damageType", "Bullet")
+	{_attrMapLazer}.put("knockback", 1)
+	{_attrMapLazer}.put("knockbackBulletMulti", 1)
+	{_attrMapLazer}.put("knockbackRangedMulti", 1)
+	{_attrMapLazer}.put("knockbackMulti", 1)
+	set {_attrMap} to new HashMap(30)
+	{_attrMap}.put("crit", 0.04)
+	{_attrMap}.put("damage", 560)
+	{_attrMap}.put("damageMeleeMulti", 1)
+	{_attrMap}.put("damageMulti", 1)
+	{_attrMap}.put("damageType", "Melee")
+	{_attrMap}.put("defence", 0)
+	{_attrMap}.put("defenceMulti", 1)
+	{_attrMap}.put("knockback", 1)
+	{_attrMap}.put("knockbackResistance", 1)
+	{_attrMap}.put("knockbackMeleeMulti", 1)
+	{_attrMap}.put("knockbackMulti", 1)
+	
+	set {_bossbar} to new BossBattleServer(CraftChatMessage.fromString("毁灭者", true)[0], BarColor.GREEN, BarStyle.PROGRESS)
+	{_bossbar}.setVisible(true)
+	
+	set {_spawnLoc} to (location of {_ply}).add((40 * sin({_angle})), -30, (40 * cos({_angle})))
+	spawn a slime at {_spawnLoc}
+	set {_targets} to setupBossTarget((spawned entity), 4, {_ply}, true, {_bossbar})
+	(spawned entity).remove()
+	set {_healthMulti} to getBossHealthMulti({_targets}.size())
+	set {_health} to round(240000 * {_healthMulti})
+	set {_segList} to new ArrayList(50)
+	set {_angle} to a random number between 0 and 360
+	loop 80 times:
+		spawn a slime at {_spawnLoc}
+		set {_hmz} to spawned entity
+		
+		set metadata "bossbar" of {_hmz} to {_bossbar}
+		set metadata "targets" of {_hmz} to {_targets}
+		add "isMonster" to scoreboard tags of {_hmz}
+		add "isBOSS" to scoreboard tags of {_hmz}
+		add "isMechanic" to scoreboard tags of {_hmz}
+		set metadata "attrMap" of {_hmz} to {_attrMap}
+		set max health of {_hmz} to {_health}
+		set health of {_hmz} to {_health}
+		slimeResize({_hmz}, 4)
+		{_segList}.add({_hmz})
+		handleSegmentHMZ({_hmz}, ((loop-number) - 1), {_segList}, {_attrMapLazer})
+		if loop-number = 1:
+			set {_attrMap} to {_attrMap}.clone()
+			{_attrMap}.put("damage", 186)
+			{_attrMap}.put("defence", 60)
+			set name of {_hmz} to "毁灭者&1"
+			{_hmz}.setCustomName("毁灭者&1")
+			set metadata "target" of {_hmz} to {_ply}
+		else if loop-number < 80:
+			add "hasProbe" to scoreboard tags of {_hmz}
+			add "healthPool" to scoreboard tags of {_hmz}
+			set name of {_hmz} to "毁灭者&2"
+			{_hmz}.setCustomName("毁灭者&2")
+			if (loop-number) = 79:
+				set {_attrMap} to {_attrMap}.clone()
+				{_attrMap}.put("damage", 136)
+				{_attrMap}.put("defence", 70)
+		else:
+			add "healthPool" to scoreboard tags of {_hmz}
+			set name of {_hmz} to "毁灭者&3"
+			{_hmz}.setCustomName("毁灭者&3")
+		{_hmz}.setCustomNameVisible(true)
+		{_hmz}.setGravity(false)
+		{_hmz}.setRemoveWhenFarAway(false)
+	{BOSS}.put("毁灭者", {_segList})
+	set {_head} to {_segList}.get(0)
+	
+	renderSingleBossbar({_segList}.get(0), {_bossbar})
+	while health of {_segList}.get(0) > 0:
+		wait 5 ticks
+	{_bossbar}.setVisible(false)
+	{BOSS}.remove("毁灭者")
+	#drop
+	set {_maxHealth} to max health of {_head}
+	{_maxHealth} > 1
+	broadcast "&d&l毁灭者 被击败了."
+	set {_targets} to metadata "targets" of {_segList}.get(0)
+	set {_killers} to {_targets}.keySet().iterator()
+	set {_drop} to a leather named "&r专家模式福袋" with lore "&7毁灭者"
+	while {_killers}.hasNext():
+		set {_ply} to {_killers}.next()
+		set {_player} to {_ply} parsed as player
+		name of {_player} is {_ply}
+		set {_tier} to metadata "tier" of {_player}
+		if {_targets}.get({_ply}) * 5 > ({_maxHealth}) / ({_targets}.size()):
+			if {_tier} = 4:
+				set {_progress} to yml value "stats.bossProgress" from file "plugins/PlayerData/%{_ply}%.yml"
+				if {_progress} is not set:
+					set {_progress} to new ArrayList()
+				if {_progress}.contains("毁灭者") is false:
+					{_progress}.add("毁灭者")
+				if {_progress}.size() = 3:
+					set metadata "tier" of {_player} to 5
+					set yml value "stats.tier" from file "plugins/PlayerData/%{_ply}%.yml" to 5
+					clear yml value "stats.bossProgress" from file "plugins/PlayerData/%{_ply}%.yml"
+				else:
+					set yml value "stats.bossProgress" from file "plugins/PlayerData/%{_ply}%.yml" to {_progress}
+			if {_player} can hold {_drop}:
+				send "&a恭喜你击败了BOSS[&r毁灭者&a]!您的战利品已经放在背包里了。" to {_player}
+				give {_drop} to {_player}
+			else:
+				send "&a恭喜你击败了BOSS[&r毁灭者&a]!您的背包空间不足以容纳战利品，请迅速拾起脚下的战利品袋，以免丢失。" to {_player}
+				drop {_drop} at {_player}.getEyeLocation() without velocity
+		else:
+			send "&aBOSS 毁灭者 已经被击败。很遗憾，您的输出不足以获得一份战利品。" to {_player}
+
+function handleSegmentHMZ(segment: entity, index: number, segList: object, attrMapLazer: object):
+	wait 5 ticks
+	set {_healthPoolOwner} to {_segList}.get(0)
+	if {_index} = 0:
+		set {_indexAI} to 1
+		set {_moveDir} to vector(0, 0, 0)
+		set {_timeStrike} to 40
+		set {_timeHit} to floor(0.413 * {_timeStrike})
+		set {_timeRotate} to 60
+		set {_isHighUp} to false
+	else:
+		set {_lastSegment} to {_segList}.get({_index} - 1)
+		set {_lazerCD} to a random integer between 0 and 50
+	set {_targets} to metadata "targets" of {_segList}.get(0)
+	while health of {_healthPoolOwner} > 0:
+		if {_index} = 0:
+			#head
+			set {_loc} to location of {_segment}
+			if (world of {_segment}).getTime() is not between 13500 and 22500:
+				clear {_target}
+				clear metadata "target" of {_segment}
+			else:
+				if {_target} is set:
+					checkBossTarget({_target}, {_segment}, false) is false
+					clear {_target}
+					clear metadata "target" of {_segment}
+				if {_target} is not set:
+					loop ...{_targets}.keySet():
+						set {_ply} to "%loop-value%" parsed as player
+						checkBossTarget({_ply}, {_segment}, false) is true
+						set {_target} to {_ply}
+						set metadata "target" of {_segment} to {_target}
+						makeTarget({_segment}, {_target})
+						stop loop
+					#find new target if avaliable, otherwise flee
+			set {_distX} to (x-coordinate of {_segment}) - (x-coordinate of "lao" parsed as player)
+			set {_distZ} to (z-coordinate of {_segment}) - (z-coordinate of "lao" parsed as player)
+			set {_horDistSqr} to {_distX} * {_distX} + {_distZ} * {_distZ}
+			if {_target} is not set:
+				{_loc}.subtract(0, 3, 0)
+				if {_loc}.getY() <= 0:
+					set max health of {_segment} to 1
+					set health of {_segment} to 0
+				teleport {_segment} to {_loc}
+				#follow last
+				set {_i} to 0
+				set {_lastLoc} to location of {_segList}.get(0)
+				set {_currLoc} to location of {_segList}.get(1)
+				set {_nextLoc} to location of {_segList}.get(2)
+				loop 79 times:
+					add 1 to {_i}
+					set {_currentSeg} to {_segList}.get({_i})
+					if {_i} + 1 = {_segList}.size():
+						set {_next} to {_currentSeg}
+					else:
+						set {_next} to {_segList}.get({_i} + 1)
+					set {_nextLoc} to location of {_next}
+					set {_last} to {_segList}.get({_i} - 1)
+					set {_segdVec} to {_lastLoc}.clone().subtract({_nextLoc}).toVector()
+					if vector length of {_segdVec} > 0:
+						set vector length of {_segdVec} to 1
+						set {_baseVec} to {_lastLoc}.clone().subtract({_currLoc}).toVector()
+						vector length of {_baseVec} > 0
+						set vector length of {_baseVec} to 3
+						set {_dVec} to {_segdVec}.add({_baseVec})
+						vector length of {_dVec} > 0
+						set vector length of {_dVec} to 2.6
+						set {_currLoc} to {_lastLoc}.clone().subtract({_dVec})
+						teleport {_currentSeg} to {_currLoc}
+					set {_lastLoc} to {_currLoc}
+					set {_currLoc} to {_nextLoc}
+			else:
+				#AI
+				if {_indexAI} = 1:
+					if y-coordinate of {_target} > 90:
+						set {_isHighUp} to true
+					else:
+						set {_isHighUp} to false
+				if {_indexAI} <= {_timeStrike}:
+					if {_indexAI} = 1:
+						set {_initialLoc} to location of {_segment}
+					if {_indexAI} <= {_timeHit} - 2:
+						set {_dV} to (location of {_target}).subtract({_initialLoc}).toVector()
+						set {_dY} to y component of {_dV}
+						set y component of {_dV} to 0
+						if vector length of {_dV} < 0.1:
+							set {_dV} to vector(0.1, 0, 0)
+					set {_progress} to {_indexAI} / {_timeStrike}
+					set {_dVec} to {_dV}.clone()
+					if {_isHighUp}:
+						# 7 * x^2 * sqrt(|x-1|)
+						set vector length of {_dVec} to (vector length of {_dVec}) * {_progress} / 0.4362
+						set {_loc} to {_initialLoc}.clone().add({_dVec})
+						set {_x} to {_progress}
+						set {_yOffset} to {_dY} * (7 * {_x} * {_x} * sqrt(abs({_x} - 1)))
+						add {_yOffset} to y-coordinate of {_loc}
+					else:
+						#-10 * x^2 * (x-1)
+						set vector length of {_dVec} to (vector length of {_dVec}) * {_progress} / 0.413
+						set {_loc} to {_initialLoc}.clone().add({_dVec})
+						set {_x} to {_progress}
+						set {_yOffset} to {_dY} * (-10 * {_x} * {_x} * ({_x} - 1))
+						add {_yOffset} to y-coordinate of {_loc}
+					#dist > 55
+					if {_horDistSqr} > 3025:
+						{_indexAI} * 2 > {_timeStrike}
+						set {_indexAI} to {_timeStrike}
+					if {_indexAI} = {_timeStrike}:
+						set {_dV} to (location of {_segment}).subtract(location of {_target}).toVector()
+						set {_dY} to (y-coordinate of {_segment}) - 50
+						set {_initialDist} to vector length of {_dV}
+						if {_initialDist} < 0.1:
+							set {_yaw} to a random number between 0 and 360
+						else:
+							set {_yaw} to vector yaw of {_dV}
+						if chance of 0.5:
+							set {_dYaw} to a random number between -3 and -6
+						else:
+							set {_dYaw} to a random number between 3 and 6
+				else if {_indexAI} <= {_timeRotate}:
+					set {_progress} to min((({_indexAI} - {_timeStrike}) * 1.5 / ({_timeRotate} - {_timeStrike})), 1)
+					set {_dV} to new vector with yaw {_yaw} and pitch 0
+					set vector length of {_dV} to {_initialDist} + ((40 - {_initialDist}) * {_progress})
+					set {_loc} to (location of {_target}).add({_dV})
+					set y-coordinate of {_loc} to 50 + ({_dY} * (1 - {_progress}))
+					add {_dYaw} to {_yaw}
+				else:
+					set {_loc} to (location of {_segment}).add(0, 5, 0)
+					if (y-coordinate of {_segment} + 25) >= (y-coordinate of {_target}):
+						set {_indexAI} to 0
+				teleport {_segment} to {_loc}
+				add 1 to {_indexAI}
+				#follow last
+				set {_i} to 0
+				set {_lastLoc} to location of {_segment}
+				set {_currLoc} to location of {_segList}.get(1)
+				set {_nextLoc} to location of {_segList}.get(2)
+				loop 79 times:
+					add 1 to {_i}
+					set {_currentSeg} to {_segList}.get({_i})
+					if {_i} + 1 = {_segList}.size():
+						set {_next} to {_currentSeg}
+					else:
+						set {_next} to {_segList}.get({_i} + 1)
+					set {_nextLoc} to location of {_next}
+					set {_last} to {_segList}.get({_i} - 1)
+					set {_segdVec} to {_lastLoc}.clone().subtract({_nextLoc}).toVector()
+					if vector length of {_segdVec} > 0:
+						set {_baseVec} to {_lastLoc}.clone().subtract({_currLoc}).toVector()
+						vector length of {_baseVec} > 0
+						set vector length of {_baseVec} to 1
+						if {_isHighUp}:
+							set {_segdVec} to vector(0, -0.05, 0)
+						else:
+							set vector length of {_segdVec} to 0.1
+						set {_dVec} to {_baseVec}.add({_segdVec})
+						vector length of {_dVec} > 0
+						set vector length of {_dVec} to 2.6
+						set {_currLoc} to {_lastLoc}.clone().subtract({_dVec})
+						teleport {_currentSeg} to {_currLoc}
+					set {_lastLoc} to {_currLoc}
+					set {_currLoc} to {_nextLoc}
+		else:
+			clear {_target}
+			set {_target} to metadata "target" of {_healthPoolOwner}
+			set health of {_segment} to health of {_healthPoolOwner}
+			makeTarget({_segment}, {_lastSegment})
+			if {_segment} has scoreboard tag "hasProbe":
+				remove 1 from {_lazerCD}
+				if {_lazerCD} < 0:
+					add (a random integer between 20 and 40) to {_lazerCD}
+				{_target} is set
+				world of {_target} is world of {_segment}
+				{_lazerCD} = 0
+				
+				#lazer
+				set {_v} to (eye location of {_target}).subtract(eye location of {_segment}).toVector()
+				set vector length of {_v} to 1.8
+				
+				set {_lazer} to (world of {_segment}).spawnEntity({_segment}.getEyeLocation(), EntityType.SPLASH_POTION)
+				{_lazer}.setCustomName("死亡激光")
+				{_lazer}.setVelocity({_v})
+				{_lazer}.setShooter({_segment})
+				set metadata "attrMap" of {_lazer} to {_attrMapLazer}
+				disguiseProjectile({_lazer})
+				{_lazer}.setGravity(false)
+				set metadata "penetration" of {_lazer} to 4
+				projectileAI({_lazer}, "GUN")
+		wait 2 ticks
+	set health of {_segment} to 0

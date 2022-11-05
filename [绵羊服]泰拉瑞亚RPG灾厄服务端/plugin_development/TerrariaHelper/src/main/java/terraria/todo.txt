@@ -1,0 +1,6 @@
+1. BOSS血量/动态DR转而在boss类中实现
+4. buff: 玩家加入时tick所有剩余的buff
+5. buff: 对于NPC的属性调整
+6. attrMap拆分为：数值类留在attrMap，攻击造成debuff放在defaultPlayerEffectInflict，伤害类型另存一个metadata
+7. toolchanged改为scoreboard tag
+8. 植物凝融块： 海晶石/PRISMARINE:0； void stone：暗海晶石/PRISMARINE:1； tenebris:  海晶石砖/PRISMARINE:2

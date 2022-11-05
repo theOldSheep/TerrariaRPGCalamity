@@ -1,0 +1,945 @@
+南瓜榴弹:
+  radius: 2
+狱炎箭:
+  radius: 3.5
+爆炸弹:
+  radius: 2.99
+  damageShooter: true
+孢子球:
+  radius: 1.5
+玛瑙能量:
+  radius: 4
+狱火爆破弹:
+  radius: 4.5
+星璇导弹:
+  radius: 5
+火球:
+  radius: 3
+流体入侵怪:
+  radius: 3.5
+幻影球:
+  radius: 6
+幻影眼:
+  radius: 4
+七彩水晶:
+  radius: 2.5
+集束破片:
+  radius: 1.25
+  damageShooter: true
+初级雪人火箭:
+  radius: 2.25
+  damageShooter: true
+二级雪人火箭:
+  radius: 2.75
+  damageShooter: true
+  destroyBlock: true
+三级雪人火箭:
+  radius: 3.25
+  damageShooter: true
+四级雪人火箭:
+  radius: 3.5
+  damageShooter: true
+  destroyBlock: true
+集束雪人火箭:
+  radius: 2
+  damageShooter: true
+红烟花火箭:
+  radius: 8
+绿烟花火箭:
+  radius: 8
+蓝烟花火箭:
+  radius: 8
+黄烟花火箭:
+  radius: 8
+初级榴弹:
+  radius: 2.5
+  damageShooter: true
+二级榴弹:
+  radius: 2.9
+  damageShooter: true
+  destroyBlock: true
+三级榴弹:
+  radius: 3.6
+  damageShooter: true
+四级榴弹:
+  radius: 4.25
+  damageShooter: true
+  destroyBlock: true
+集束榴弹:
+  radius: 2.35
+  damageShooter: true
+捕虫网:
+  type: SWING
+  size: 3
+  particleColor:
+  - 75|75|75
+金捕虫网:
+  type: SWING
+  size: 5
+  particleColor:
+  - 255|255|75
+木剑:
+  type: SWING
+  size: 2.2
+仙人掌镐:
+  type: SWING
+  size: 2.2
+铜镐:
+  type: SWING
+  size: 1.7
+  particleColor:
+  - 255|155|100
+铁镐:
+  type: SWING
+  size: 2
+银镐:
+  type: SWING
+  size: 2.1
+金镐:
+  type: SWING
+  size: 2.2
+恶魔镐:
+  type: SWING
+  size: 2.3
+熔火镐:
+  type: SWING
+  size: 2.5
+掠夺鲨:
+  type: SWING
+  size: 3
+钴镐:
+  type: SWING
+  size: 3
+  particleColor:
+  - 0|94|181
+秘银镐:
+  type: SWING
+  size: 3.5
+  particleColor:
+  - 212|255|190
+精金镐:
+  type: SWING
+  size: 4
+  particleColor:
+  - 210|25|28
+镐斧:
+  type: SWING
+  size: 4.5
+叶绿镐:
+  type: SWING
+  size: 5
+锯刃镐:
+  type: SWING
+  size: 5
+铜质短剑:
+  type: STAB
+  size: 1.7
+  particleColor:
+  - 255|155|100
+铜质阔剑:
+  type: SWING
+  size: 2.3
+  particleColor:
+  - 255|155|100
+铜质短弓:
+  type: BOW
+铁短剑:
+  type: STAB
+  size: 1.7
+铁阔剑:
+  type: SWING
+  size: 2.3
+银短剑:
+  type: STAB
+  size: 1.7
+金短剑:
+  type: STAB
+  size: 1.7
+  particleColor:
+  - 150|150|0
+金阔剑:
+  type: SWING
+  size: 2.4
+  particleColor:
+  - 150|150|0
+银阔剑:
+  type: SWING
+  size: 2.3
+仙人掌剑:
+  type: SWING
+  size: 2.7
+  particleColor:
+  - 0|150|0
+钨钢刀:
+  type: SWING
+  autoSwing: true
+  size: 3
+  particleColor:
+  - 125|200|125
+光之驱逐:
+  type: SWING
+  size: 2.4
+  particleColor:
+  - 80|0|150
+妖刀村正:
+  type: SWING
+  autoSwing: true
+  size: 3.6
+  particleColor:
+  - 0|0|175
+陨星光剑:
+  type: SWING
+  size: 3.6
+  particleColor:
+  - 255|255|0
+紫挥棒鱼:
+  type: SWING
+  autoSwing: true
+  size: 3.5
+  particleColor:
+  - 80|0|150
+草薙剑:
+  type: SWING
+  size: 3.7
+  particleColor:
+  - 0|150|0
+烈焰剑:
+  type: SWING
+  size: 4
+  particleColor:
+  - 255|150|0
+永夜之刃:
+  type: SWING
+  autoSwing: true
+  size: 4.5
+  particleColor:
+  - 0|0|175
+剑鱼:
+  type: STAB
+  size: 4
+毁灭刃:
+  type: SWING
+  size: 7
+钴剑:
+  type: SWING
+  autoSwing: true
+  size: 4.5
+  particleColor:
+  - 0|94|181
+秘银剑:
+  type: SWING
+  autoSwing: true
+  size: 5
+  particleColor:
+  - 212|255|190
+精金剑:
+  type: SWING
+  autoSwing: true
+  size: 5
+  particleColor:
+  - 210|25|28
+圣剑:
+  type: SWING
+  autoSwing: true
+  size: 6
+泰拉之刃:
+  type: SWING
+  autoSwing: true
+  size: 6
+  projectileInfo:
+    interval: 2
+    velocity: 2
+    noGravity: true
+    penetration: 2
+    name: 泰拉光束
+    damageMulti: 1.5
+  particleColor:
+  - 100|255|150
+真·永夜之刃:
+  type: SWING
+  autoSwing: true
+  size: 4.5
+  projectileInfo:
+    interval: 2
+    velocity: 1.5
+    noGravity: true
+    name: 永夜光束
+真·圣剑:
+  type: SWING
+  autoSwing: true
+  size: 6
+  projectileInfo:
+    interval: 2
+    velocity: 1.5
+    noGravity: true
+    name: 光明光束
+叶绿军刀:
+  type: SWING
+  autoSwing: true
+  size: 4.5
+  particleColor:
+  - 91|217|74
+  projectileInfo:
+    interval: 1
+    velocity: 0.5
+    noGravity: true
+    isGranade: true
+    name: 孢子球
+叶绿双刃刀:
+  type: SWING
+  autoSwing: true
+  size: 6.5
+  particleColor:
+  - 91|217|74
+  projectileInfo:
+    interval: 1
+    velocity: 1.75
+    name: 叶绿珠
+    penetration: 49
+无头骑士剑:
+  type: SWING
+  autoSwing: true
+  size: 4
+  particleColor:
+  - 255|125|125
+  projectileInfo:
+    interval: 1
+    velocity: 1.5
+    noGravity: true
+    name: 烈焰杰克南瓜
+吉他斧:
+  type: SWING
+  autoSwing: true
+  size: 8
+  particleColor:
+  - 225|35|64
+钥匙剑:
+  type: SWING
+  autoSwing: true
+  size: 5
+死神镰刀:
+  type: SWING
+  autoSwing: true
+  size: 5
+  projectileInfo:
+    interval: 1
+    velocity: 0.15
+    noGravity: true
+    name: 死神镰刀
+    penetration: 99
+圣诞树剑:
+  type: SWING
+  autoSwing: true
+  size: 6
+  projectileInfo:
+    interval: 1
+    velocity: 1
+    name: 装饰
+种子弯刀:
+  type: SWING
+  autoSwing: true
+  size: 5
+  projectileInfo:
+    interval: 1
+    velocity: 1.25
+    isGranade: true
+    name: 种子弯刀坚果
+  particleColor:
+  - 25|200|75
+狂星之怒:
+  type: SWING
+  autoSwing: true
+  size: 5
+  particleColor:
+  - 255|50|50
+彩虹猫之刃:
+  type: SWING
+  autoSwing: true
+  size: 6
+  projectileInfo:
+    interval: 1
+    velocity: 1.75
+    bounce: 4
+    penetration: 99
+    name: 彩虹猫之刃
+  particleColor:
+  - 255|155|255
+天顶剑:
+  type: SWING
+  autoSwing: true
+  size: 24
+  particleColor:
+  - 100|255|150
+  - 255|155|255
+  - 255|50|50
+  - 255|125|125
+  - 25|200|75
+  - 255|155|100
+钴薙刀:
+  type: STAB
+  size: 6
+  particleColor:
+  - 0|94|181
+  - 172|172|172
+秘银长戟:
+  type: STAB
+  size: 6.5
+  particleColor:
+  - 212|255|190
+精金关刀:
+  type: STAB
+  size: 7
+  particleColor:
+  - 210|25|28
+永恒之枪:
+  type: STAB
+  size: 8
+叶绿镋:
+  type: STAB
+  size: 7.5
+  projectileInfo:
+    interval: 1
+    velocity: 0.5
+    noGravity: true
+    isGranade: true
+    name: 孢子球
+北极:
+  type: STAB
+  size: 8
+  autoSwing: true
+  projectileInfo:
+    interval: 1
+    velocity: 2.25
+    name: 北极长矛
+    penetration: 99
+  particleColor:
+  - 75|150|255
+破晓之光:
+  type: STAB
+  size: 0.05
+  autoSwing: true
+  projectileInfo:
+    interval: 1
+    velocity: 3
+    name: 破晓之光
+    isGranade: true
+星光:
+  type: STAB
+  autoSwing: true
+  size: 3.75
+  particleColor:
+  - 255|0|0
+  - 255|127|0
+  - 255|255|0
+  - 0|255|0
+  - 0|0|255
+  - 75|0|130
+  - 143|0|255
+木弓:
+  type: BOW
+  thruWall: true
+钨钢弓:
+  type: BOW
+铁弓:
+  type: BOW
+银弓:
+  type: BOW
+金弓:
+  type: BOW
+恶魔弓:
+  type: BOW
+熔火之怒:
+  type: BOW
+代达罗斯风暴弓:
+  type: BOW
+  autoSwing: true
+日暮:
+  type: BOW
+  autoSwing: true
+  shots: 5
+海啸弓:
+  type: BOW
+  autoSwing: true
+幻象弓:
+  type: BOW
+  autoSwing: true
+  shots: 4
+  offSet: 49
+钴连弩:
+  type: BOW
+  autoSwing: true
+秘银连弩:
+  type: BOW
+  autoSwing: true
+精金连弩:
+  type: BOW
+  autoSwing: true
+神圣连弩:
+  type: BOW
+  autoSwing: true
+叶绿连弩:
+  type: BOW
+  autoSwing: true
+  shots: 3
+  offSet: 40
+气泵枪:
+  type: SPECIAL_AMMO
+  ammo: _南瓜榴弹
+  autoSwing: true
+  isGranade: true
+  maxLoad: 5
+  loadTimeMulti: 0.6
+  offSet: 10
+骨头手套:
+  type: SPECIAL_AMMO
+  ammo: 骨头
+尖桩发射器:
+  type: SPECIAL_AMMO
+  ammo: 尖桩
+  autoSwing: true
+  gravity: false
+玉米糖步枪:
+  type: SPECIAL_AMMO
+  ammo: 玉米糖
+  autoSwing: true
+杰克南瓜灯发射器:
+  type: SPECIAL_AMMO
+  ammo: 爆炸杰克南瓜灯
+  autoSwing: true
+  isGranade: true
+精灵熔枪:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  autoSwing: true
+  gravity: false
+燧发枪:
+  type: GUN
+  thruWall: true
+左轮手枪:
+  type: GUN
+迷你鲨:
+  type: GUN
+  autoSwing: true
+  offSet: 15
+发条突击步枪:
+  type: GUN
+  autoSwing: true
+  shots: 3
+  offSet: 26
+巨兽鲨:
+  type: GUN
+  autoSwing: true
+  offSet: 20
+金星马格南:
+  type: GUN
+  autoSwing: true
+  offSet: 20
+狙击步枪:
+  type: GUN
+战术霰弹枪:
+  type: GUN
+  shots: 6
+  offSet: 16
+  autoSwing: true
+链式机枪:
+  type: GUN
+  autoSwing: true
+  offSet: 7
+星璇机枪:
+  type: GUN
+  autoSwing: true
+  offSet: 9.5
+太空海豚机枪:
+  type: GUN
+  autoSwing: true
+  offSet: 24
+四管猎枪:
+  type: GUN
+  shots: 4
+  offSet: 5
+玛瑙爆破枪:
+  type: GUN
+  shots: 4
+  offSet: 14
+手枪:
+  type: GUN
+凤凰爆破枪:
+  type: GUN
+榴弹发射器:
+  type: ROCKET
+  autoSwing: true
+  displayName:
+    初级火箭: 初级榴弹
+    二级火箭: 二级榴弹
+    三级火箭: 三级榴弹
+    四级火箭: 四级榴弹
+    集束火箭: 集束榴弹
+雪人炮:
+  type: ROCKET
+  autoSwing: true
+  offSet: 49
+  displayName:
+    初级火箭: 初级雪人火箭
+    二级火箭: 二级雪人火箭
+    三级火箭: 三级雪人火箭
+    四级火箭: 四级雪人火箭
+    集束火箭: 集束雪人火箭
+喜庆弹射器:
+  type: ROCKET
+  autoSwing: true
+  shots: 2
+  offSet: 24
+木制回力镖:
+  type: BOOMERANG
+  distance: 6
+  velocity: 6.5
+附魔回力镖:
+  type: BOOMERANG
+  distance: 7
+  velocity: 10
+荆棘旋刃:
+  type: BOOMERANG
+  distance: 7.25
+  velocity: 14
+烈焰回旋镖:
+  type: BOOMERANG
+  distance: 7.5
+  velocity: 14
+疯狂飞斧:
+  autoSwing: true
+  type: STAB
+  size: -1
+  projectileInfo:
+    interval: 0.1
+    velocity: 3
+    name: 疯狂飞斧
+木制悠悠球:
+  type: YOYO
+  reach: 9
+  velocity: 16
+  duration: 80
+抑郁球:
+  type: YOYO
+  reach: 14
+  velocity: 16
+  duration: 100
+亚马逊悠悠球:
+  type: YOYO
+  reach: 13
+  velocity: 16
+  duration: 120
+克苏鲁之眼悠悠球:
+  type: YOYO
+  reach: 23
+  velocity: 16
+  duration: 1200
+泰拉悠悠球:
+  type: YOYO
+  reach: 32
+  velocity: 16
+  duration: 1200
+链锤:
+  type: YOYO
+  reach: 12
+  velocity: 11
+  duration: 200
+  typeID: 1
+  autoSwing: true
+火焰锤:
+  type: YOYO
+  reach: 12
+  velocity: 11
+  duration: 200
+  typeID: 1
+  autoSwing: true
+蓝月:
+  type: YOYO
+  reach: 14.5
+  velocity: 12
+  duration: 200
+  typeID: 1
+  autoSwing: true
+太极连枷:
+  type: YOYO
+  reach: 16
+  velocity: 15
+  duration: 200
+  typeID: 1
+  autoSwing: true
+猪鲨链球:
+  type: YOYO
+  reach: 20
+  velocity: 14
+  duration: 200
+  typeID: 1
+  autoSwing: true
+手里剑:
+  type: THROW_PROJECTILE
+尖刺球:
+  type: THROW_PROJECTILE
+手榴弹:
+  type: THROW_GRENADE
+  damageShooter: true
+  radius: 4
+炸弹:
+  type: THROW_GRENADE
+  damageShooter: true
+  radius: 2.5
+  destroyBlock: true
+粘性炸弹:
+  type: THROW_GRENADE
+  damageShooter: true
+  radius: 2.5
+  destroyBlock: true
+雷管:
+  type: THROW_GRENADE
+  damageShooter: true
+  radius: 4
+  destroyBlock: true
+粘性雷管:
+  type: THROW_GRENADE
+  damageShooter: true
+  radius: 4
+  destroyBlock: true
+火花魔棒:
+  type: MAGIC_PROJECTILE
+  projectileName: 小火花
+钨钢法杖:
+  type: MAGIC_PROJECTILE
+  projectileName: 钨钢光球
+  gravity: false
+  autoSwing: true
+钻石法杖:
+  type: MAGIC_PROJECTILE
+  projectileName: 钻石射线
+骷髅头法书:
+  type: MAGIC_PROJECTILE
+  projectileName: 骷髅头
+  gravity: false
+  autoSwing: true
+恶魔锄刀:
+  type: MAGIC_PROJECTILE
+  projectileName: 恶魔之镰
+  gravity: false
+邪恶三叉戟:
+  type: MAGIC_PROJECTILE
+  projectileName: 邪恶三叉戟
+  gravity: false
+  autoSwing: true
+海蓝权杖:
+  type: MAGIC_PROJECTILE
+  projectileName: 海蓝射线
+太空枪:
+  type: MAGIC_PROJECTILE
+  projectileName: 绿激光
+  gravity: false
+  autoSwing: true
+水矢:
+  type: MAGIC_PROJECTILE
+  projectileName: 水矢
+  autoSwing: true
+  gravity: false
+激光步枪:
+  type: MAGIC_PROJECTILE
+  projectileName: 激光
+  gravity: false
+  autoSwing: true
+水晶风暴:
+  type: MAGIC_PROJECTILE
+  projectileName: 水晶碎块
+  gravity: false
+  autoSwing: true
+  offSet: 16
+裂天剑:
+  type: MAGIC_SPECIAL
+  projectileName: 裂天剑
+  autoSwing: true
+爆裂藤蔓:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+吹叶机:
+  type: MAGIC_PROJECTILE
+  projectileName: 树叶
+  gravity: false
+  autoSwing: true
+  offSet: 16
+狱火叉:
+  type: MAGIC_PROJECTILE
+  projectileName: 狱火爆破弹
+  gravity: false
+  autoSwing: true
+幽灵法杖:
+  type: MAGIC_PROJECTILE
+  projectileName: 亡魂
+  gravity: false
+  autoSwing: true
+暗影束法杖:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+高温射线枪:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+剃刀松:
+  type: MAGIC_PROJECTILE
+  projectileName: 松针
+  autoSwing: true
+  offSet: 16
+蝙蝠权杖:
+  type: MAGIC_PROJECTILE
+  projectileName: 蝙蝠
+  gravity: false
+  autoSwing: true
+  offSet: 19
+暴雪法杖:
+  type: MAGIC_SPECIAL
+  projectileName: 暴雪
+  gravity: false
+  autoSwing: true
+夜光:
+  type: MAGIC_PROJECTILE
+  projectileName: 彩虹水晶
+  gravity: false
+  autoSwing: true
+  offSet: 8
+泡泡枪:
+  type: MAGIC_PROJECTILE
+  projectileName: 泡泡
+  gravity: false
+  autoSwing: true
+  offSet: 6
+利刃台风:
+  type: MAGIC_PROJECTILE
+  projectileName: 台风
+  gravity: false
+  autoSwing: true
+星云烈焰:
+  type: MAGIC_PROJECTILE
+  projectileName: 星云烈焰
+  gravity: false
+  autoSwing: true
+星云奥秘:
+  type: MAGIC_PROJECTILE
+  projectileName: 星云奥秘
+  gravity: false
+  autoSwing: true
+月之耀斑:
+  type: MAGIC_SPECIAL
+  projectileName: 月之耀斑
+  gravity: false
+  autoSwing: true
+  radius: 4.5
+终极棱镜:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+蜘蛛女王法杖:
+  type: SENTRY
+  damageType: Arrow
+  minionName: 蜘蛛女王
+七彩水晶法杖:
+  type: SENTRY
+  damageType: Magic
+  minionName: 七彩水晶
+月亮传送门法杖:
+  type: SENTRY
+  damageType: Magic
+  minionName: 月亮传送门
+史莱姆法杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 史莱姆宝宝
+钨钢控制器:
+  type: SUMMON
+  damageType: Magic
+  minionName: 钨钢无人机
+小鬼法杖:
+  type: SUMMON
+  damageType: Arrow
+  minionName: 小鬼
+蜘蛛法杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 蜘蛛
+刃杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 附魔飞刀
+魔眼法杖:
+  type: SUMMON
+  damageType: Bullet
+  minionName: 小激光眼
+矮人法杖:
+  type: SUMMON
+  damageType: Arrow
+  minionName: 矮人
+致命球法杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 致命球
+泰拉棱镜:
+  type: SUMMON
+  damageType: Melee
+  minionName: 泰拉棱镜
+星尘细胞法杖:
+  type: SUMMON
+  damageType: Arrow
+  minionName: 星尘细胞
+星尘之龙法杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 星尘之龙
+鞭炮:
+  type: WHIP
+  autoSwing: true
+  size: 16
+  particleColor:
+  - 255|0|0
+  decay: 0.5
+  inflictsBuff: true
+  bonusDamage: 5
+迪朗达尔:
+  type: WHIP
+  autoSwing: true
+  size: 25
+  particleColor:
+  - 150|150|0
+  decay: 0.4
+  inflictsBuff: true
+  bonusDamage: 18
+晨星:
+  type: WHIP
+  autoSwing: true
+  size: 30
+  particleColor:
+  - 0|100|100
+  decay: 0.4
+  inflictsBuff: true
+  bonusDamage: 10
+暗黑收割:
+  type: WHIP
+  autoSwing: true
+  size: 35
+  particleColor:
+  - 0|50|50
+  decay: 0.4
+  inflictsBuff: true
+  bonusDamage: 10
+万花筒:
+  type: WHIP
+  autoSwing: true
+  size: 40
+  particleColor:
+  - 255|0|0
+  - 255|255|0
+  - 0|255|0
+  - 0|255|255
+  - 0|0|255
+  - 255|0|255
+  decay: 0.5
+  inflictsBuff: true
+  bonusDamage: 40
+日耀喷发剑:
+  type: WHIP
+  autoSwing: true
+  size: 48
+  particleColor:
+  - 255|100|50

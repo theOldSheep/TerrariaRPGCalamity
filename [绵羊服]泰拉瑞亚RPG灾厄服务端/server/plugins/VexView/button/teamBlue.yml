@@ -1,0 +1,14 @@
+id: 4
+name: ''
+url: 'https://static.wikia.nocookie.net/terraria_gamepedia/images/f/fc/Offline_Sapphire_Gemspark_Wall_%28placed%29.png'
+url2: 'https://static.wikia.nocookie.net/terraria_gamepedia/images/f/fc/Offline_Sapphire_Gemspark_Wall_%28placed%29.png'
+x: 10
+y: 65
+width: 20
+high: 20
+commands:
+- 'team blue'
+asop: false
+close: false
+to: '-'
+click_url: ''

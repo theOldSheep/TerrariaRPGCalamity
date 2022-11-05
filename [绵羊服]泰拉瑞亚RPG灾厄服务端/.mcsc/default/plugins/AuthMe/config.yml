@@ -1,0 +1,338 @@
+DataSource:
+    # 你希望如何存储登陆数据?
+    # 允许设置的值: sqlite, sqlitehikari, mysql
+    # (sqlitehikari 比普通的 sqlite 更快 但这只是一个实验功能!)
+    backend: sqlite
+    # 开启数据缓存
+    caching: true
+    # MySql 数据库地址
+    mySQLHost: 127.0.0.1
+    # MySql 数据库端口
+    mySQLPort: '3306'
+    # MySql 最大连接数
+    mySQLMaxConections: 25
+    # MySql 用户名
+    mySQLUsername: authme
+    # MySql 密码
+    mySQLPassword: '12345'
+    # MySql 数据库名称, 或者是 SQLITE 数据库名称
+    mySQLDatabase: authme
+    # 数据库表名
+    mySQLTablename: authme
+    # 字段 id 字段名
+    mySQLColumnId: id
+    # 字段 username 字段名
+    mySQLColumnName: username
+    # 字段 password 字段名
+    mySQLColumnPassword: password
+    # 字段 email 字段名
+    mySQLColumnEmail: email
+    # 字段 isLogged 字段名
+    mySQLColumnLogged: isLogged
+    # 字段 ip 字段名
+    mySQLColumnIp: ip
+    # 字段 lastlogin 字段名
+    mySQLColumnLastLogin: lastlogin
+    # 字段 x 字段名
+    mySQLlastlocX: x
+    # 字段 y 字段名
+    mySQLlastlocY: y
+    # 字段 z 字段名
+    mySQLlastlocZ: z
+    # 字段 world 字段名
+    mySQLlastlocWorld: world
+    # 字段 realname 字段名
+    mySQLRealName: realname
+settings:
+    sessions:
+        # 是否开启 Session 缓存.
+        # 如果开启 Session 玩家可以在特殊情况下自动登录.
+        # 他的IP和名称将会被保存.
+        # 在他下次进入服务器时.
+        # 如果 名称 IP 都相同 并且没有超出缓存时间.
+        # 那么他可以自动登录到服务器.
+        enabled: false
+        # Session 缓存时间
+        timeout: 10
+        # 下次登陆是否需要检查 IP
+        sessionExpireOnIpChange: true
+    restrictions:
+        # 未登录情况下是否允许聊天.
+        allowChat: false
+        # 未登录情况下允许使用的命令.
+        allowCommands:
+        - /login
+        - /register
+        - /l
+        - /reg
+        - /email
+        - /captcha
+        # 每一个 IP 允许注册的账号 (使用隧道或端口映射，都是127.0.0.1，不能做限制)
+        maxRegPerIp: 0
+        # 允许的最大用户名长度
+        maxNicknameLength: 16
+        # 玩家在线时会t了“从另一位置”登陆的玩家
+        # 这个选项可以防止玩家在你游戏时利用你的账号
+        ForceSingleSession: true
+        # 在每次玩家登陆成功时，退出时传送到世界出生点
+        # 可以防止玩家在世界各地出生登陆
+        # 不同于“传送未登陆的玩家到出生点”
+        # 这个选项在玩家登陆后也会传送
+        ForceSpawnLocOnJoinEnabled: false
+        # 存储退出位置
+        # 这可以防止玩家登陆时丢失退出位置
+        SaveQuitLocation: false
+        # 激活此选项将限制指定id、ip的用户
+        # 下面是个例子
+        AllowRestrictedUser: false
+        # 符合以下id或ip的受限用户将无法进入服务器
+        # 例子：playername；127.0.0.1，如果playername使用
+        # 127.0.0.1，那么他将无法登陆
+        # Example:
+        #   AllowedRestrictedUser:
+        #   - playername;127.0.0.1
+        AllowedRestrictedUser:
+        - playername;127.0.0.1
+        # 是否立即踢出没有注册的玩家?
+        kickNonRegistered: false
+        # 是否立即踢出错误密码的玩家？
+        kickOnWrongPassword: false
+        # 是否玩家被传送到出生点之前记录地标？
+        # 登陆后他们会被传送会原来的位置
+        teleportUnAuthedToSpawn: false
+        # 允许id的最小长度
+        minNicknameLength: 4
+        # 未注册的玩家是否能走动？
+        allowMovement: false
+        # 是否需要设置玩家的飞行或行走速度为0?
+        # 这将在登录以后恢复.
+        removeSpeed: true
+        # 登陆超时的时间
+        # 设置为0则关闭
+        timeout: 30
+        # 玩家id字符允许的java语句正则表达式  中文的表达式：[a-zA-Z0-9_\u4E00-\u9FA5]*
+        allowedNicknameCharacters: '[a-zA-Z0-9_]*'
+        # 未注册的玩家能走多远？ [半径]
+        # 设置为0则无限半径
+        allowedMovementRadius: 100
+        # 时候启用注册时双重验证
+        # 当它启用了，注册时会这样显示：
+        # /register <password> <confirmPassword>
+        enablePasswordVerifier: true
+        # 是否保护玩家登陆之前的物品，登陆之前无物品
+        ProtectInventoryBeforeLogIn: true
+        # 是否在玩家登陆时显示他的其他几个账号
+        # 权限: /authme.admin.accounts
+        displayOtherAccounts: true
+        # 哪些世界需要强制出生在出生点
+        ForceSpawnOnTheseWorlds:
+        - world
+        - world_nether
+        - world_the_end
+        # 禁止不在ip数据库里的ip
+        banUnsafedIP: false
+        # 优先出生分级, Values : authme, essentials, default
+        spawnPriority: authme,essentials,default
+        # ip允许的最大登陆数
+        maxLoginPerIp: 0
+        # ip允许的最大加入服务器数
+        maxJoinPerIp: 0
+        # Authme永远不会传送玩家！
+        noTeleport: false
+        # 登陆密码允许的java语句正则表达式 
+        allowedPasswordCharacters: '[\x21-\x7E]*'
+    GameMode:
+        # 是否在玩家登陆之前强制生存模式
+        ForceSurvivalMode: false
+        # 如果玩家加入时是创造模式，并且上面一条设置为true
+        # 物品栏将被存储
+        ResetInventoryIfCreative: false
+        # 是否强制只有使用/login 密码登陆后才有生存模式?
+        ForceOnlyAfterLogin: false
+    security:
+        # 密码最小长度
+        minPasswordLength: 5
+        # 这是个非常重要的选项, 
+        # 每次玩家加入到服务器,
+        # 如果他们注册, AuthMe 将会吧他移动到未登录组
+        # 这可以防止所有主要利用注册的作弊
+        # 所以，你可以在你的权限插件里设置一个这样的特殊的无权限权限组
+        # 玩家正确登陆后会被移动到正常组
+        # 注意，组名是区分大小写的
+        # 如果大小写搞错，玩家会被移动到默认组
+        # 例如: NotLogged
+        unLoggedinGroup: unLoggedinGroup
+        # 可以设置的值: MD5, SHA1, SHA256, WHIRLPOOL, XAUTH, MD5VB, PHPBB,
+        # PLAINTEXT (unhashed password),
+        # MYBB, IPB3, PHPFUSION, SMF, XENFORO, SALTED2MD5, JOOMLA, BCRYPT, WBB3, SHA512,
+        # DOUBLEMD5, PBKDF2, PBKDF2DJANGO, WORDPRESS, ROYALAUTH, CUSTOM(for developpers only)
+        passwordHash: SHA256
+        # salt length for the SALTED2MD5 MD5(MD5(password)+salt)
+        doubleMD5SaltLength: 8
+        # 如果检测到密码返回为false, 是否需要检测所有其他密码
+        # 来检测一个老的密码？Autheme将更新一个新的Hash密码！
+        supportOldPasswordHash: false
+        # 禁止使用的不安全的密码, 使用小写！
+        unsafePasswords:
+        - '123456'
+        - 'password'
+        - 'qwerty'
+        - '12345'
+        - '54321'
+    registration:
+        # 是否启用注册
+        enabled: true
+        # 每X秒给玩家发送一个/register 的信息以提示他注册
+        messageInterval: 5
+        # 只有注册和登陆的玩家才能进行有效
+        # 请查看 restrictions 免责条款
+        force: true
+        # 是否更换到使用邮箱注册
+        enableEmailRegistrationSystem: false
+        # 在你注册时双重检测邮箱
+        # 当它开启，注册时看起来会是这样
+        # /register <email> <confirmEmail>
+        doubleEmailCheck: false
+        # 是否在玩家成功注册后t出玩家
+        # 不使用下面的注册功能
+        forceKickAfterRegister: false
+        # 是否需要Autheme注册以后直接使玩家登录
+        forceLoginAfterRegister: true
+    unrestrictions:
+        # 在下面列出的所有id，Authme都将忽略注册和登陆。启用该选项要注意风险！
+        # 如果你要添加[]的括号，你必须使用' '
+        # 这个选项可以增加与其他插件的兼容性
+        # 区分大小写！
+        UnrestrictedName: []
+    # Message language, available : en, de, br, cz, pl, fr, ru, hu, sk, es, zhtw, fi, zhcn, lt, it, ko, pt
+    messagesLanguage: zhcn
+    # 强制在/login才能使用这些指令, 不要添加 '/', 使用 %p 来代替玩家id
+    forceCommands: []
+    # 强制服务器后台在/login才能使用这些指令, 不要添加 '/', 使用 %p 来代替玩家id
+    forceCommandsAsConsole: []
+    # 强制在/register才能使用这些指令, 不要添加 '/', 使用 %p 来代替玩家id
+    forceRegisterCommands: []
+    # 强制服务器后台在/register才能使用这些指令, 不要添加 '/', 使用 %p 来代替玩家id
+    forceRegisterCommandsAsConsole: []
+    # 是否在注册或者登陆后显示欢迎信息(welcome.txt)？
+    # 你可以在welcome.txt里使用不同的颜色，以及一些替换符号
+    # {PLAYER} : 玩家名, {ONLINE} : 显示在线玩家数, {MAXPLAYERS} : 显示服务器插件
+    # {IP} : 玩家ip, {LOGINS} : 登陆的玩家数, {WORLD} : 玩家当前的世界, {SERVER} : 服务器名
+    # {VERSION} : 当前Bukkit版本, {COUNTRY} : 玩家的国家
+    useWelcomeMessage: true
+    # 是否对所有在线玩家或者服务器显示欢迎信息，设置为true则只有服务器显示，设置为false则对所有玩家显示
+    broadcastWelcomeMessage: false
+    # 是否需要设置在成功使用 /login 登陆后过X秒才进入游戏?
+    delayJoinMessage: false
+    # 是否需要再 login或register 后使用药水效果?
+    applyBlindEffect: false
+ExternalBoardOptions:
+    # MySQL column for the salt , needed for some forum/cms support
+    mySQLColumnSalt: ''
+    # MySQL column for the group, needed for some forum/cms support
+    mySQLColumnGroup: ''
+    # -1 mean disabled. If u want that only
+    # activated player can login in your server
+    # u can put in this options the group number
+    # of unactivated user, needed for some forum/cms support
+    nonActivedUserGroup: -1
+    # Other MySQL columns where we need to put the Username (case sensitive)
+    mySQLOtherUsernameColumns: []
+    # How much Log to Round needed in BCrypt(do not change it if you do not know what's your doing)
+    bCryptLog2Round: 10
+    # phpBB prefix defined during phpbb installation process
+    phpbbTablePrefix: 'phpbb_'
+    # phpBB activated group id , 2 is default registered group defined by phpbb
+    phpbbActivatedGroupId: 2
+    # WordPress prefix defined during WordPress installation process
+    wordpressTablePrefix: 'wp_'
+permission:
+    # 注意这个选项
+    # 如果你不想使用 Vault 和 Group Switching 来区分
+    # AuthMe 的未登陆组， 设置为 False
+    # 默认为 true.
+    EnablePermissionCheck: false
+BackupSystem:
+    # 启用活禁用自动备份
+    ActivateBackup: false
+    # 是否在服务器启动时备份
+    OnServerStart: false
+    # 是否在服务器关闭是备份
+    OnServerStop: true
+    # 仅Windows的 mysql 安装路径
+    MysqlWindowsPath: 'C:\\Program Files\\MySQL\\MySQL Server 5.1\\'
+Security:
+    SQLProblem:
+        # Stop the server if we can't contact the sql database
+        # Take care with this, if you set that to false,
+        # AuthMe automatically disable and the server is not protected!
+        stopServer: true
+    ReloadCommand:
+        # /reload support
+        useReloadCommandSupport: true
+    console:
+        # 移除控制台消息
+        noConsoleSpam: false
+        # 当玩家输入类似 /login 指令时，在后台替换显示的密码
+        removePassword: true
+    captcha:
+        # 当玩家输入错误密码很多次后需要填写验证码
+        useCaptcha: false
+        # 超过这个数开始要求验证码
+        maxLoginTry: 5
+        # 验证码长度
+        captchaLength: 4
+Converter:
+    Rakamak:
+        # Rakamak 的文件名
+        fileName: users.rak
+        # Rakamak 使用ip
+        useIP: false
+        # rakamak 的ip文件名 
+        ipFileName: UsersIp.rak
+    CrazyLogin:
+        # CrazyLogin 数据库文件
+        fileName: accounts.db
+Hooks:
+    # 是否启用配合 BungeeCord 来获取玩家真实ip?（如果你跨服最好启用）
+    bungeecord: false
+    # 是否启用配合 Notifications 来发送信息 ?
+    notifications: true
+    # 是否在登陆时禁用 Essentials SocialSpy ?
+    disableSocialSpy: true
+    # 是否允许在登陆时使用 /motd Essentials 指令 ?
+    useEssentialsMotd: false
+Purge:
+    # On Enable , does AuthMe need to purge automatically old accounts unused ?
+    useAutoPurge: false
+    # Number of Days an account become Unused
+    daysBeforeRemovePlayer: 60
+    # Do we need to remove the player.dat file during purge process ?
+    removePlayerDat: false
+    # Do we need to remove the Essentials/users/player.yml file during purge process ?
+    removeEssentialsFile: false
+    # World where are players.dat stores
+    defaultWorld: 'world'
+    # Do we need to remove LimitedCreative/inventories/player.yml , player_creative.yml files during purge process ?
+    removeLimitedCreativesInventories: false
+    # Do we need to remove the AntiXRayData/PlayerData/player file during purge process ?
+    removeAntiXRayFile: false
+    # Do we need to remove permissions ?
+    removePermissions: false
+Protection:
+    # Enable some servers protection ( country based login, antibot )
+    enableProtection: false
+    # Countries allowed to join the server and register, see http://dev.bukkit.org/bukkit-plugins/authme-reloaded/pages/countries-codes/ for countries' codes
+    countries:
+    - US
+    - GB
+    - CN
+    # Countries blacklisted automatically ( without any needed to enable protection )
+    countriesBlacklist:
+    - A1
+    # Do we need to enable automatic antibot system?
+    enableAntiBot: false
+    # Max number of player allowed to login in 5 secs before enable AntiBot system automatically
+    antiBotSensibility: 5
+    # Duration in minutes of the antibot automatic system
+    antiBotDuration: 10

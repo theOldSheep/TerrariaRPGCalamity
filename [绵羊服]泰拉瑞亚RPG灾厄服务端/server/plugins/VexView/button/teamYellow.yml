@@ -1,0 +1,14 @@
+id: 5
+name: ''
+url: 'https://static.wikia.nocookie.net/terraria_gamepedia/images/7/72/Offline_Topaz_Gemspark_Wall_%28placed%29.png'
+url2: 'https://static.wikia.nocookie.net/terraria_gamepedia/images/7/72/Offline_Topaz_Gemspark_Wall_%28placed%29.png'
+x: 35
+y: 65
+width: 20
+high: 20
+commands:
+- 'team yellow'
+asop: false
+close: false
+to: '-'
+click_url: ''

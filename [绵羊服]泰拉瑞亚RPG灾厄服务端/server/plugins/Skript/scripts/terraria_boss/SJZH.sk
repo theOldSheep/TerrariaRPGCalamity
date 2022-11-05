@@ -1,0 +1,324 @@
+import:
+	java.util.ArrayList
+	java.util.HashMap
+	net.minecraft.server.v1_11_R1.BossBattle
+	net.minecraft.server.v1_11_R1.BossBattle$BarColor
+	net.minecraft.server.v1_11_R1.BossBattle$BarStyle
+	net.minecraft.server.v1_11_R1.BossBattleServer
+	net.minecraft.server.v1_11_R1.PacketPlayOutBoss$Action
+	org.bukkit.craftbukkit.v1_11_R1.util.CraftChatMessage
+	org.bukkit.entity.EntityType
+
+function handleSJZH(ply: player):
+	{BOSS}.containsKey("世纪之花") is false
+	spawn a slime 32 behind {_ply}
+	set {_sjzh} to spawned entity
+	broadcast "&d&l世纪之花 苏醒了！"
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_sjzh}
+	set {_attrMap} to new HashMap(16)
+	{_attrMap}.put("crit", 0.04)
+	{_attrMap}.put("damage", 200)
+	{_attrMap}.put("damageMeleeMulti", 1)
+	{_attrMap}.put("damageMulti", 1)
+	{_attrMap}.put("damageType", "Melee")
+	{_attrMap}.put("defence", 72)
+	{_attrMap}.put("defenceMulti", 1)
+	{_attrMap}.put("knockback", 4)
+	{_attrMap}.put("knockbackResistance", 1)
+	{_attrMap}.put("knockbackMeleeMulti", 1)
+	{_attrMap}.put("knockbackMulti", 1)
+	set metadata "attrMap" of {_sjzh} to {_attrMap}
+	set {_attrMapSeed} to new HashMap(12)
+	{_attrMapSeed}.put("crit", 0.04)
+	{_attrMapSeed}.put("damage", 152)
+	{_attrMapSeed}.put("damageArrowMulti", 1)
+	{_attrMapSeed}.put("damageRangedMulti", 1)
+	{_attrMapSeed}.put("damageMulti", 1)
+	{_attrMapSeed}.put("damageType", "Arrow")
+	{_attrMapSeed}.put("knockback", 2)
+	{_attrMapSeed}.put("knockbackMulti", 1)
+	set {_attrMapPoisonSeed} to {_attrMapSeed}.clone()
+	{_attrMapPoisonSeed}.put("damage", 192)
+	set {_attrMapSpikeball} to {_attrMapSeed}.clone()
+	{_attrMapSpikeball}.put("damage", 288)
+	set {_attrMapSporeSac} to {_attrMap}.clone()
+	{_attrMapSporeSac}.put("damage", 240)
+	set {_attrMapTentacle} to {_attrMap}.clone()
+	{_attrMapTentacle}.put("damage", 276)
+	{_attrMapTentacle}.put("defence", 40)
+	{_attrMapTentacle}.put("knockbackResistance", 0.1)
+	
+	loop 3 times:
+		spawn a slime 32 behind {_ply}
+		add spawned entity to {_sporeSac::*}
+		set metadata "attrMap" of spawned entity to {_attrMapSporeSac}
+		add "isMonster" to scoreboard tags of spawned entity
+		add "isBOSS" to scoreboard tags of spawned entity
+		add "noDamage" to scoreboard tags of spawned entity
+		(spawned entity).setCustomNameVisible(true)
+		(spawned entity).setGravity(false)
+		(spawned entity).setRemoveWhenFarAway(false)
+		(spawned entity).setSize(2)
+		set name of spawned entity to "世纪之花孢子囊"
+		(spawned entity).setCustomName("世纪之花孢子囊")
+	
+	set {_bossbar} to new BossBattleServer(CraftChatMessage.fromString("世纪之花", true)[0], BarColor.GREEN, BarStyle.PROGRESS)
+	{_bossbar}.setVisible(true)
+	set metadata "bossbar" of {_sjzh} to {_bossbar}
+	
+	set {_targets} to setupBossTarget({_sjzh}, 5, {_ply}, true, {_bossbar})
+	set metadata "targets" of {_sjzh} to {_targets}
+	set {_target} to {_ply}
+	set {_healthMulti} to getBossHealthMulti({_targets}.size())
+	{_sjzh}.setInvulnerable(true)
+	set name of {_sjzh} to "世纪之花"
+	{_sjzh}.setCustomName("世纪之花")
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_sjzh}
+	add "isMonster" to scoreboard tags of {_sjzh}
+	add "isBOSS" to scoreboard tags of {_sjzh}
+	{_sjzh}.setCustomNameVisible(true)
+	
+	{_sjzh}.setGravity(false)
+	{_sjzh}.setRemoveWhenFarAway(false)
+	{_sjzh}.setSize(5)
+	
+	{BOSS}.put("世纪之花", {_sjzh})
+	
+	wait 1 tick
+	{_sjzh}.setInvulnerable(false)
+	set max health of {_sjzh} to round(84000 * {_healthMulti})
+	set health of {_sjzh} to round(84000 * {_healthMulti})
+	
+	set {_rage} to false
+	set {_form} to 1
+	set {_indexAI} to 0
+	set {_loc} to {_sjzh}.getLocation()
+	
+	renderSingleBossbar({_sjzh}, {_bossbar})
+	while health of {_sjzh} > 0:
+		{_sjzh}.setVelocity({_sjzh}.getVelocity().zero())
+		
+		#clear invalid targets
+		if {_target} is set:
+			checkBossTarget({_target}, {_sjzh}, false) is false
+			clear {_target}
+			clear metadata "target" of {_sjzh}
+		if {_target} is not set:
+			loop toSkList {_targets}.keySet():
+				set {_ply} to "%loop-value%" parsed as player
+				checkBossTarget({_ply}, {_sjzh}, false) is true
+				set {_target} to {_ply}
+				set metadata "target" of {_sjzh} to {_target}
+				makeTarget({_sjzh}, {_target})
+				stop loop
+			#find new target if avaliable, otherwise flee
+		if {_target} is not set:
+			{_loc}.subtract(0, 5, 0)
+			if {_loc}.getY() <= -10:
+				set max health of {_sjzh} to 1
+				{_sjzh}.remove()
+				stop loop
+		else:
+			#AI
+			if {_rage} is false:
+				if "%biome at location of {_sjzh}%" doesn't contain "jungle":
+					set {_rage} to true
+				else if y-coordinate of {_target} is not between 5 and 50:
+					y-coordinate of {_sjzh} is not between 5 and 50
+					set {_rage} to true
+				if {_rage} is true:
+					{_attrMapSeed}.put("damageMulti", 2)
+					{_attrMapSpikeball}.put("damageMulti", 2)
+					{_attrMap}.put("damageMulti", 2)
+					{_attrMap}.put("defenceMulti", 2)
+					set {_bossbar}.color to BarColor.RED
+					{_bossbar}.sendUpdate(Action.UPDATE_STYLE)
+			else:
+				if "%biome at location of {_sjzh}%" contains "jungle":
+					y-coordinate of {_target} is between 5 and 50
+					set {_rage} to false
+					{_attrMapSeed}.put("damageMulti", 1)
+					{_attrMapSpikeball}.put("damageMulti", 1)
+					{_attrMap}.put("damageMulti", 1)
+					{_attrMap}.put("defenceMulti", 1)
+					set {_bossbar}.color to BarColor.GREEN
+					{_bossbar}.sendUpdate(Action.UPDATE_STYLE)
+			
+			set {_healthPercent} to health of {_sjzh} / max health of {_sjzh}
+			
+			#projectiles
+			if {_healthPercent} > 0.8:
+				if {_healthPercent} > 0.9:
+					set {_cd1} to 5
+				else:
+					set {_cd1} to 3
+				if mod({_indexAI}, {_cd1}) = 0:
+					SJZHprojectile({_sjzh}, {_target}, 1, {_attrMapSeed})
+			else:
+				if {_healthPercent} > 0.7:
+					set {_cd1} to 2
+					set {_cd2} to 3
+					set {_cd3} to 7
+				else if {_healthPercent} > 0.6:
+					set {_cd1} to 2
+					set {_cd2} to 2
+					set {_cd3} to 5
+				else if {_healthPercent} > 0.5:
+					set {_cd1} to 2
+					set {_cd2} to 2
+					set {_cd3} to 3
+				else:
+					set {_cd1} to 1
+					set {_cd2} to 2
+					set {_cd3} to 2
+				if mod({_indexAI}, {_cd1}) = 0:
+					SJZHprojectile({_sjzh}, {_target}, 1, {_attrMapSeed})
+				if mod({_indexAI}, {_cd2}) = 0:
+					SJZHprojectile({_sjzh}, {_target}, 2, {_attrMapPoisonSeed})
+				if mod({_indexAI}, {_cd3}) = 0:
+					SJZHprojectile({_sjzh}, {_target}, 3, {_attrMapSpikeball})
+			
+			
+			set {_dVec} to (location of {_target}).subtract(0, 1, 0).subtract({_loc}).toVector()
+			set {_dist} to vector length of {_dVec}
+			if {_form} = 1:
+				set {_speed} to max({_dist} / 35, 0.6)
+				if {_healthPercent} <= 0.5:
+					set {_form} to 2
+					set name of {_sjzh} to "世纪之花&1"
+					{_sjzh}.setCustomName("世纪之花&1")
+					{_attrMap}.put("damage", 210)
+					loop 8 times:
+						SJZHtentacle({_sjzh}, {_attrMapTentacle}, {_sjzh})
+					loop {_sporeSac::*}:
+						loop 3 times:
+							SJZHtentacle((loop-value-1), {_attrMapTentacle}, {_sjzh})
+			else:
+				set {_speed} to max({_dist} / 20, 0.8)
+			if {_rage} is true:
+				set {_speed} to {_speed} * 1.5
+			if vector length of {_dVec} > 0:
+				set vector length of {_dVec} to {_speed}
+			{_loc}.add({_dVec})
+			
+			set {_yaw} to vector yaw of {_dVec} + 90
+		loop 3 times:
+			set {_pitch} to (120 * loop-number) + ({_speed} * {_indexAI})
+			set {_v} to new vector with yaw {_yaw} and pitch {_pitch}
+			set vector length of {_v} to 6
+			teleport {_sporeSac::%loop-number%} to {_loc}.clone().add({_v})
+			
+		teleport {_sjzh} to {_loc}
+		add 1 to {_indexAI}
+		wait 3 ticks
+	{_bossbar}.setVisible(false)
+	{BOSS}.remove("世纪之花")
+	loop {_sporeSac::*}:
+		(loop-value).remove()
+	#drop
+	set {_maxHealth} to max health of {_sjzh}
+	{_maxHealth} is not 1
+	broadcast "&d&l世纪之花 被击败了."
+	set {_targets} to metadata "targets" of {_sjzh}
+	set {_killers} to {_targets}.keySet().iterator()
+	set {_drop} to a leather named "&r专家模式福袋" with lore "&7世纪之花"
+	while {_killers}.hasNext():
+		set {_ply} to {_killers}.next()
+		set {_player} to {_ply} parsed as player
+		name of {_player} is {_ply}
+		set {_tier} to metadata "tier" of {_player}
+		if {_targets}.get({_ply}) * 5 > ({_maxHealth}) / ({_targets}.size()):
+			if {_tier} = 5:
+				set metadata "tier" of {_player} to 6
+				set yml value "stats.tier" from file "plugins/PlayerData/%name of {_player}%.yml" to 6
+			if {_player} can hold {_drop}:
+				send "&a恭喜你击败了BOSS[&r世纪之花&a]!您的战利品已经放在背包里了。" to {_player}
+				give {_drop} to {_player}
+			else:
+				send "&a恭喜你击败了BOSS[&r世纪之花&a]!您的背包空间不足以容纳战利品，请迅速拾起脚下的战利品袋，以免丢失。" to {_player}
+				drop {_drop} at {_player}.getEyeLocation() without velocity
+		else:
+			send "&aBOSS 世纪之花 已经被击败。很遗憾，您的输出不足以获得一份战利品。" to {_player}
+
+function SJZHprojectile(sjzh: entity, target: entity, type: integer, attribute: object):
+	if {_type} < 3:
+		set {_speed} to 1
+	else:
+		set {_speed} to 2
+	set {_velocity} to (eye location of {_target}).subtract(eye location of {_sjzh}).toVector()
+	set {_projectile} to {_sjzh}.getWorld().spawnEntity({_sjzh}.getEyeLocation(), EntityType.SPLASH_POTION)
+	
+	set vector length of {_velocity} to {_speed}
+	{_projectile}.setVelocity({_velocity})
+	{_projectile}.setShooter({_sjzh})
+	set metadata "attrMap" of {_projectile} to {_attribute}
+	
+	if {_type} = 1:
+		{_projectile}.setCustomName("种子")
+		set gravity of {_projectile} to off
+		SJZHprojectileAI({_projectile}, {_target})
+	else if {_type} = 2:
+		{_projectile}.setCustomName("毒种子")
+		set gravity of {_projectile} to off
+		SJZHprojectileAI({_projectile}, {_target})
+	else:
+		{_projectile}.setCustomName("刺球")
+		set metadata "Bounce" of {_projectile} to 10
+	disguiseProjectile({_projectile})
+function SJZHprojectileAI(projectile: entity, target: entity):
+	set {_trace} to true
+	loop 60 times:
+		if {_projectile}.isDead() is true:
+			stop loop
+		if {_trace} is true:
+			set {_dVec} to (eye location of {_target}).subtract(location of {_projectile}).toVector()
+			set {_currDist} to vector length of {_dVec}
+			if {_currDist} < 3:
+				set {_trace} to false
+			set {_v} to velocity of {_projectile}
+			set vector length of {_v} to 1
+			#ac = v^2 / r
+			set vector length of {_dVec} to 0.5 / {_currDist}
+			{_v}.add({_dVec})
+			set velocity of {_projectile} to {_v}
+		wait 1 tick
+	{_projectile}.remove()
+function SJZHtentacle(attatched: entity, attrMap: object, sjzh: entity):
+	spawn a slime at location of {_attatched}
+	set {_tentacle} to spawned slime
+	set {_tentacle}.getHandle().noclip to true
+	slimeResize({_tentacle}, 2)
+	set max health of {_tentacle} to 4000
+	set health of {_tentacle} to 4000
+	set metadata "attrMap" of {_tentacle} to {_attrMap}
+	{_tentacle}.setGravity(false)
+	{_tentacle}.setCustomName("世纪之花触手")
+	wait "%a random integer between 0 and 10% ticks" parsed as timespan
+	set {_offSet} to vector((a random number between -3 and 3), (a random number between -3 and 3), (a random number between -3 and 3))
+	while health of {_tentacle} > 0:
+		if health of {_attatched} <= 0:
+			{_tentacle}.remove()
+			stop trigger
+		if distance between {_attatched} and {_tentacle} > 32:
+			teleport {_tentacle} to {_attatched}
+		set {_target} to metadata "target" of {_sjzh}
+		if world of {_target} is world of {_attatched}:
+			set {_locTarget} to (location of {_target}).add(0, 1, 0)
+			if distance between (eye location of {_attatched}) and {_locTarget} <= 10:
+				set {_destination} to {_locTarget}
+			else:
+				set {_v} to {_locTarget}.subtract(eye location of {_attatched}).toVector()
+				set vector length of {_v} to 6
+				set {_destination} to (eye location of {_attatched}).add({_v}).add({_offSet})
+			set {_dVel} to {_destination}.subtract(eye location of {_tentacle}).toVector()
+			vector length of {_dVel} >= 0
+			set vector length of {_dVel} to min((vector length of {_dVel}) / 6, 1)
+			set {_velocity} to (velocity of {_tentacle}).add({_dVel})
+			if vector length of {_velocity} > 1:
+				set vector length of {_velocity} to 1
+			{_tentacle}.setVelocity({_velocity})
+		wait 5 ticks
+	{_attatched} is {_sjzh}
+	wait "%a random integer between 5 and 20% seconds" parsed as timespan
+	health of {_sjzh} > 0
+	SJZHtentacle({_sjzh}, {_attrMap}, {_sjzh})

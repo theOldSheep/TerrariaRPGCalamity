@@ -1,0 +1,67 @@
+跳跃之瓶:
+    bounceTime: 1
+    maxProgress: 1
+    maxVelocity: 16
+    maxAcceleration: 100
+    horizontalVelocity: 30
+气球束:
+    bounceTime: 3
+    maxProgress: 3
+    maxVelocity: 16
+    maxAcceleration: 100
+    horizontalVelocity: 30
+火箭靴:
+    maxProgress: 1.6
+    maxVelocity: 24
+    maxAcceleration: 15
+    horizontalVelocity: 20
+幽灵靴:
+    maxProgress: 1.6
+    maxVelocity: 24
+    maxAcceleration: 15
+    horizontalVelocity: 20
+鸟妖之翼:
+    maxProgress: 2.33
+    maxVelocity: 24
+    maxAcceleration: 10
+    horizontalVelocity: 34
+猪鲨之翼:
+    maxProgress: 3
+    maxVelocity: 30
+    maxAcceleration: 10
+    horizontalVelocity: 41
+女皇之翼:
+    maxProgress: 2.5
+    maxVelocity: 36
+    maxAcceleration: 15
+    horizontalVelocity: 41
+喜庆之翼:
+    maxProgress: 2.83
+    maxVelocity: 42
+    maxAcceleration: 10
+    horizontalVelocity: 38
+日耀之翼:
+    maxProgress: 3
+    maxVelocity: 48
+    maxAcceleration: 15
+    horizontalVelocity: 46
+星尘之翼:
+    maxProgress: 3
+    maxVelocity: 48
+    maxAcceleration: 15
+    horizontalVelocity: 46
+星云之翼:
+    maxProgress: 2.67
+    maxVelocity: 32
+    maxAcceleration: 10
+    horizontalVelocity: 33
+星璇之翼:
+    maxProgress: 2.67
+    maxVelocity: 32
+    maxAcceleration: 10
+    horizontalVelocity: 33
+天界之翼:
+    maxProgress: 3
+    maxVelocity: 48
+    maxAcceleration: 20
+    horizontalVelocity: 41

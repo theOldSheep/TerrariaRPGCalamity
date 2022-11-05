@@ -1,0 +1,647 @@
+import:
+	java.util.ArrayList
+	java.util.HashMap
+	me.libraryaddict.disguise.DisguiseAPI
+	me.libraryaddict.disguise.disguisetypes.DisguiseType
+	me.libraryaddict.disguise.disguisetypes.MobDisguise
+	net.minecraft.server.v1_11_R1.BossBattle
+	net.minecraft.server.v1_11_R1.BossBattle$BarColor
+	net.minecraft.server.v1_11_R1.BossBattle$BarStyle
+	net.minecraft.server.v1_11_R1.BossBattleServer
+	net.minecraft.server.v1_11_R1.PacketPlayOutBoss$Action
+	net.minecraft.server.v1_11_R1.PathfinderGoalSelector
+	org.bukkit.craftbukkit.v1_11_R1.util.CraftChatMessage
+	org.bukkit.entity.EntityType
+
+function handleLunaticCultist(ply: player):
+	{BOSS}.containsKey("拜月教邪教徒") is false
+	spawn a slime 5 above {_ply}
+	set {_cltst} to spawned entity
+	
+	set {_disguise} to new MobDisguise(DisguiseType.HUSK, true)
+	{_disguise}.setReplaceSounds(true)
+	DisguiseAPI.disguiseEntity({_cltst}, {_disguise})
+	set {_cltst}.getHandle().goalSelector to new PathfinderGoalSelector({_cltst}.getHandle().getWorld().methodProfiler)
+	
+	broadcast "&d&l拜月教邪教徒 苏醒了！"
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_cltst}
+	set {_attrMap} to new HashMap(10)
+	{_attrMap}.put("crit", 0.04)
+	{_attrMap}.put("damage", 150)
+	{_attrMap}.put("damageType", "Melee")
+	{_attrMap}.put("defence", 84)
+	{_attrMap}.put("knockback", 4)
+	{_attrMap}.put("knockbackResistance", 1)
+	set {_attrMapDoom} to {_attrMap}.clone()
+	{_attrMapDoom}.put("damage", 90)
+	{_attrMapDoom}.put("defence", 0)
+	set {_attrMapDragon} to {_attrMap}.clone()
+	{_attrMapDragon}.put("damage", 150)
+	{_attrMapDragon}.put("defence", 60)
+	set {_attrMapVision} to {_attrMap}.clone()
+	{_attrMapVision}.put("damage", 360)
+	{_attrMapVision}.put("defence", 60)
+	set {_attrMapFireball} to new HashMap(8)
+	{_attrMapFireball}.put("crit", 0.04)
+	{_attrMapFireball}.put("damage", 160)
+	{_attrMapFireball}.put("damageType", "Arrow")
+	{_attrMapFireball}.put("knockback", 4)
+	set {_attrMapIce} to {_attrMapFireball}.clone()
+	{_attrMapIce}.put("damage", 200)
+	set {_attrMapLightning} to {_attrMapFireball}.clone()
+	{_attrMapLightning}.put("damage", 240)
+	set {_attrMapLight} to {_attrMapFireball}.clone()
+	{_attrMapLight}.put("damage", 320)
+	set metadata "attrMap" of {_cltst} to {_attrMap}
+	
+	set {_bossbar} to new BossBattleServer(CraftChatMessage.fromString("拜月教邪教徒", true)[0], BarColor.GREEN, BarStyle.PROGRESS)
+	{_bossbar}.setVisible(true)
+	set metadata "bossbar" of {_cltst} to {_bossbar}
+	
+	set {_targets} to setupBossTarget({_cltst}, 7, {_ply}, true, {_bossbar})
+	set metadata "targets" of {_cltst} to {_targets}
+	set {_healthMulti} to getBossHealthMulti({_targets}.size())
+	{_cltst}.setCustomName("拜月教邪教徒")
+	{_cltst}.setCustomNameVisible(true)
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_cltst}
+	add "isMonster" to scoreboard tags of {_cltst}
+	add "isBOSS" to scoreboard tags of {_cltst}
+	
+	{_cltst}.setGravity(false)
+	{_cltst}.setRemoveWhenFarAway(false)
+	slimeResize({_cltst}, 4)
+	
+	{BOSS}.put("拜月教邪教徒", {_cltst})
+	
+	set max health of {_cltst} to round(80000 * {_healthMulti})
+	set health of {_cltst} to round(80000 * {_healthMulti})
+	
+	set {_indexAI} to 0
+	set {_typeAI} to 1
+	set metadata "target" of {_cltst} to {_target}
+	
+	add "noDamage" to scoreboard tags of {_cltst}
+	send "&a你有30秒的时间寻找开阔的场地，请做好挑战拜月教邪教徒的准备！" to {_ply}
+	wait 30 seconds
+	remove "noDamage" from scoreboard tags of {_cltst}
+	
+	set {_decoy} to new ArrayList()
+	
+	renderSingleBossbar({_cltst}, {_bossbar})
+	while health of {_cltst} > 0:
+		{_cltst}.setVelocity({_cltst}.getVelocity().zero())
+		set {_loc} to {_cltst}.getLocation()		
+		
+		#clear invalid targets
+		if {_target} is set:
+			checkBossTarget({_target}, {_cltst}, false) is false
+			clear {_target}
+			clear metadata "target" of {_cltst}
+		
+		if {_target} is not set:
+			loop toSkList {_targets}.keySet():
+				set {_ply} to "%loop-value%" parsed as player
+				checkBossTarget({_ply}, {_cltst}, false) is true
+				set {_target} to {_ply}
+				set metadata "target" of {_cltst} to {_target}
+				makeTarget({_cltst}, {_target})
+				stop loop
+			#find new target if avaliable, otherwise flee
+		if {_target} is not set:
+			set max health of {_cltst} to 1
+			{_cltst}.remove()
+			stop loop
+		else:
+			#AI part starting here
+			set {_healthRatio} to (health of {_cltst}) / (max health of {_cltst})
+			if {_typeAI} = 0:
+				#summon decoy
+				if {_indexAI} = 0:
+					set {_wrongHits} to 0
+					remove "wrongHit" from scoreboard tags of {_cltst}
+					remove "isMonster" from scoreboard tags of {_cltst}
+					add "noDamage" to scoreboard tags of {_cltst}
+					set {_initialHealth} to health of {_cltst}
+					set {_disguise} to new MobDisguise(DisguiseType.ZOMBIE, true)
+					{_disguise}.setReplaceSounds(true)
+					loop 2 times:
+						if {_decoy}.size() < 6:
+							spawn a slime at location of {_cltst}
+							set {_newDecoy} to spawned entity
+							{_newDecoy}.setCustomName("远古邪教徒")
+							set max health of {_newDecoy} to 1
+							set health of {_newDecoy} to 1
+							slimeResize({_newDecoy}, 4)
+							set gravity of {_newDecoy} to off
+							set metadata "damageSourcePlayer" of {_newDecoy} to {_cltst}
+							add "keepChunkLoading" to scoreboard tags of {_newDecoy}
+							
+							set {_newDecoy}.getHandle().goalSelector to new PathfinderGoalSelector({_newDecoy}.getHandle().getWorld().methodProfiler)
+							DisguiseAPI.disguiseEntity({_newDecoy}, {_disguise})
+							{_decoy}.add({_newDecoy})
+					loop {_decoy}.size() times:
+						remove "noDamage" from scoreboard tags of {_decoy}.get((loop-number) - 1)
+				else:
+					clear {_toRemove::*}
+					set {_loopIndex} to 0
+					loop {_decoy}.size() times:
+						if health of {_decoy}.get({_loopIndex}) <= 0:
+							add {_decoy}.get({_loopIndex}) to {_toRemove::*}
+							add 1 to {_wrongHits}
+						add 1 to {_loopIndex}
+					if {_wrongHits} > 0:
+						add "wrongHit" to scoreboard tags of {_cltst}
+						loop (reversed {_toRemove::*}):
+							{_decoy}.remove(loop-value)
+					else:
+						if {_initialHealth} > health of {_cltst}:
+							loop {_decoy}.size() times:
+								{_decoy}.get((loop-number) - 1).remove()
+							{_decoy}.clear()
+					if {_indexAI} = 15:
+						remove "noDamage" from scoreboard tags of {_cltst}
+					else if {_indexAI} = 60:
+						add "isMonster" to scoreboard tags of {_cltst}
+						if {_wrongHits} = 0:
+							if {_initialHealth} = health of {_cltst}:
+								set {_wrongHits} to 1
+						loop {_wrongHits} times:
+							if health of {_phantasmDragon} > 0:
+								spawn a slime at {_centerLoc}
+								set {_vision} to spawned entity
+								set metadata "attrMap" of {_vision} to {_attrMapVision}
+								add "isMonster" to scoreboard tags of {_vision}
+								set gravity of {_vision} to off
+								slimeResize({_vision}, 5)
+								set {_vision}.getHandle().noclip to true
+								set max health of {_vision} to 8000
+								set health of {_vision} to 8000
+								{_vision}.setCustomName("远古幻影妖")
+								handleProjectileCLTST({_vision}, {_cltst}, 7)
+							else:
+								set {_segments} to new ArrayList()
+								loop 14 times:
+									spawn a slime at {_centerLoc}
+									set {_segment} to spawned entity
+									if {_segments}.size() = 0:
+										set {_phantasmDragon} to {_segment}
+										set metadata "attrMap" of {_segment} to {_attrMapDragon}.clone()
+										{_segment}.setCustomName("幻影龙")
+									else:
+										set metadata "damageTaker" of {_segment} to {_phantasmDragon}
+										set metadata "attrMap" of {_segment} to {_attrMapDragon}
+										{_segment}.setCustomName("幻影龙&1")
+									add "isMonster" to scoreboard tags of {_segment}
+									set gravity of {_segment} to off
+									slimeResize({_segment}, 2)
+									set {_segment}.getHandle().noclip to true
+									set max health of {_segment} to 25000
+									set health of {_segment} to 25000
+									{_segments}.add({_segment})
+								set metadata "segments" of {_phantasmDragon} to {_segments}
+								handleProjectileCLTST({_phantasmDragon}, {_cltst}, 6)
+						loop {_decoy}.size() times:
+							add "noDamage" to scoreboard tags of {_decoy}.get((loop-number) - 1)
+						set {_typeAI} to 1
+						set {_indexAI} to -1
+			else:
+				if {_indexAI} >= 0:
+					set {_decoyShootIndex} to mod(floor({_indexAI} / 2), 6)
+					if {_decoy}.size() > {_decoyShootIndex}:
+						#decoy fireball
+						set {_shooter} to {_decoy}.get({_decoyShootIndex})
+						set {_v} to (eye location of {_target}).subtract(eye location of {_shooter}).toVector()
+						if vector length of {_v} = 0:
+							set {_v} to vector(0, 1, 0)
+						set vector length of {_v} to 1.5
+						set {_fireball} to mobProjectile({_shooter}, {_v}, {_attrMapFireball}, "暗影焰")
+						handleProjectileCLTST({_fireball}, {_cltst}, 1)
+				if {_typeAI} = 1:
+					#fireball
+					if {_indexAI} = 0:
+						set {_v} to (eye location of {_target}).subtract(eye location of {_cltst}).toVector()
+						if vector length of {_v} = 0:
+							set {_v} to vector(0, 1, 0)
+						set vector length of {_v} to 1.5
+					if {_indexAI} is 0 or 5 or 10:
+						set {_fireball} to mobProjectile({_cltst}, {_v}, {_attrMapFireball}, "火球")
+						add "isGranade" to scoreboard tags of {_fireball}
+						handleProjectileCLTST({_fireball}, {_cltst}, 1)
+					else if {_indexAI} > 17:
+						set {_typeAI} to 2
+						set {_indexAI} to -1
+				else if {_typeAI} = 2:
+					#ice shard
+					if {_indexAI} = 0:
+						spawn a slime at eye location of {_cltst}
+						set {_iceball} to spawned entity
+						add "noDamage" to scoreboard tags of {_iceball}
+						add "isMonster" to scoreboard tags of {_iceball}
+						set metadata "attrMap" of {_iceball} to {_attrMapIce}
+						{_iceball}.setCustomName("冰球")
+						handleProjectileCLTST({_iceball}, {_cltst}, 2)
+					else if {_indexAI} > 17:
+						set {_typeAI} to 3
+						set {_indexAI} to -1
+				else if {_typeAI} = 3:
+					#lightning
+					if {_indexAI} = 0:
+						spawn a slime 2 above eye location of {_cltst}
+						set {_lightningBall} to spawned entity
+						add "noDamage" to scoreboard tags of {_lightningBall}
+						add "isMonster" to scoreboard tags of {_lightningBall}
+						set metadata "attrMap" of {_lightningBall} to {_attrMapIce}
+						{_lightningBall}.setCustomName("闪电珠")
+						set gravity of {_lightningBall} to off
+						handleProjectileCLTST({_lightningBall}, {_cltst}, 3)
+					else if {_indexAI} > 17:
+						if {_healthRatio} < 0.5:
+							set {_typeAI} to 4
+						else:
+							set {_typeAI} to 0
+						set {_indexAI} to -1
+				else if {_typeAI} = 4:
+					#ancient light
+					if {_indexAI} is 0 or 3:
+						set {_v} to (eye location of {_target}).subtract(eye location of {_cltst}).toVector()
+						if vector length of {_v} = 0:
+							set {_v} to vector(0, 1, 0)
+						set {_dPitch} to a random number between -30 and 30
+						set {_yaw} to (vector yaw of {_v}) - 20
+						set {_pitch} to (vector pitch of {_v}) - ({_dPitch} * 2)
+						loop 5 times:
+							set {_velocity} to new vector with yaw {_yaw} and pitch {_pitch}
+							set vector length of {_velocity} to 3
+							spawn a slime at eye location of {_cltst}
+							set {_light} to spawned entity
+							add "destroyOnDamage" to scoreboard tags of {_light}
+							add "isMonster" to scoreboard tags of {_light}
+							set metadata "attrMap" of {_light} to {_attrMapLight}
+							set {_light}.getHandle().noclip to true
+							{_light}.setCustomName("远古辉光")
+							set gravity of {_light} to off
+							set velocity of {_light} to {_velocity}
+							handleProjectileCLTST({_light}, {_cltst}, 4)
+							add 10 to {_yaw}
+							add {_dPitch} to {_pitch}
+					else if {_indexAI} > 10:
+						if {_healthRatio} < 0.5:
+							set {_typeAI} to 5
+						else:
+							set {_typeAI} to 0
+						set {_indexAI} to -1
+				else if {_typeAI} = 5:
+					#ancient doom
+					if {_indexAI} is 0:
+						loop 10 times:
+							spawn a slime at (location of {_target}).add((a random number between 20 and -20), (a random number between 20 and -20), (a random number between 20 and -20))
+							set {_doom} to spawned entity
+							add "isMonster" to scoreboard tags of {_doom}
+							set metadata "attrMap" of {_doom} to {_attrMapDoom}
+							{_doom}.setCustomName("远古噩运")
+							set gravity of {_doom} to off
+							set {_doom}.getHandle().noclip to false
+							set max health of {_doom} to 1250
+							set health of {_doom} to 1250
+							handleProjectileCLTST({_doom}, {_cltst}, 5)
+					else if {_indexAI} > 17:
+						set {_typeAI} to 0
+						set {_indexAI} to -1
+			if {_indexAI} <= 0:
+				#teleport
+				if {_typeAI} = 0:
+					{_indexAI} = 0
+					set {_dAngle} to (360 / ({_decoy}.size() + 1))
+					set {_centerLoc} to (location of {_target}).add((a random number between 26 and -26), (a random number between 8 and 16), (a random number between 26 and -26))
+					set {_angle} to a random number between 0 and 360
+					teleport {_cltst} to {_centerLoc}.clone().add(((sin({_angle})) * 12), 0, ((cos({_angle})) * 12))
+					loop {_decoy}.size() times:
+						add {_dAngle} to {_angle}
+						teleport {_decoy}.get((loop-number) - 1) to {_centerLoc}.clone().add(((sin({_angle})) * 12), 0, ((cos({_angle})) * 12))
+					set metadata "centerLoc" of {_cltst} to {_centerLoc}
+					handleProjectileCLTST({_cltst}, {_cltst}, 8)
+				else:
+					{_indexAI} = -1
+					set {_dAngle} to (360 / ({_decoy}.size()))
+					set {_initialLoc} to location of {_cltst}
+					set {_dV} to (location of {_target}).add((a random number between 16 and -16), (a random number between 8 and 16), (a random number between 16 and -16)).subtract({_initialLoc}).toVector()
+					{_dV}.multiply(1/20)
+					set {_angle} to 0
+					loop 20 times:
+						{_initialLoc}.add({_dV})
+						teleport {_cltst} to {_initialLoc}
+						loop {_decoy}.size() times:
+							teleport {_decoy}.get((loop-number-2) - 1) to (location of {_cltst}).add(((sin({_angle})) * 12), 0, ((cos({_angle})) * 12))
+							add {_dAngle} to {_angle}
+						wait 1 tick
+			add 1 to {_indexAI}
+		wait 3 ticks
+	{_bossbar}.setVisible(false)
+	loop {_decoy}.size() times:
+		{_decoy}.get((loop-number) - 1).remove()
+	{BOSS}.remove("拜月教邪教徒")
+	#drop
+	set {_maxHealth} to max health of {_cltst}
+	{_maxHealth} is not 1
+	handleCelestrialPillars()
+	broadcast "&d&l拜月教邪教徒 被击败了."
+
+function handleProjectileCLTST(projectile: entity, cltst: entity, type: number):
+	if {_projectile} is a slime:
+		set {_projectile}.getHandle().goalSelector to new PathfinderGoalSelector({_projectile}.getHandle().getWorld().methodProfiler)
+	if {_type} = 1:
+		#fireball
+		set {_speed} to 1.5
+		set {_target} to metadata "target" of {_cltst}
+		set {_tracking} to true
+		loop 50 times:
+			set {_v} to velocity of {_projectile}
+			if {_projectile}.getHandle().dead:
+				stop trigger
+			if {_tracking} is true:
+				set {_dV} to (eye location of {_target}).subtract(location of {_projectile}).toVector()
+				set vector length of {_dV} to 2
+				set vector length of {_v} to 3
+				{_v}.add({_dV})
+				set vector length of {_v} to {_speed}
+				set velocity of {_projectile} to {_v}
+				if distance between location of {_projectile} and location of {_target} < 5:
+					set {_tracking} to false
+			wait 3 ticks
+		{_projectile}.remove()
+	else if {_type} = 2:
+		#ice ball
+		set {_attrMapIce} to metadata "attrMap" of {_projectile}
+		slimeResize({_projectile}, 4)
+		set {_target} to metadata "target" of {_cltst}
+		set {_v} to (eye location of {_target}).subtract(location of {_projectile}).toVector()
+		set vector length of {_v} to 0.4
+		set gravity of {_projectile} to off
+		set {_projectile}.getHandle().noclip to true
+		loop 7 times:
+			set velocity of {_projectile} to {_v}
+			set {_velocity} to (eye location of {_target}).subtract(location of {_projectile}).toVector()
+			set {_yaw} to 30 * loop-number
+			loop 6 times:
+				set {_vShard} to new vector with yaw {_yaw} and pitch 0
+				spawn a slime at eye location of {_projectile}
+				set {_iceSpike} to spawned entity
+				add "noDamage" to scoreboard tags of {_iceSpike}
+				add "isMonster" to scoreboard tags of {_iceSpike}
+				set metadata "attrMap" of {_iceSpike} to {_attrMapIce}
+				slimeResize({_iceSpike}, 2)
+				{_iceSpike}.setCustomName("冰雪碎块")
+				set velocity of {_iceSpike} to {_vShard}
+				set gravity of {_iceSpike} to off
+				set {_iceSpike}.getHandle().noclip to true
+				projectileAI({_iceSpike}, "GUN")
+				add 60 to {_yaw}
+			wait 1 second
+		{_projectile}.remove()
+	else if {_type} = 3:
+		#lightning ball
+		set {_loc} to location of {_projectile}
+		slimeResize({_projectile}, 3)
+		set {_index} to 0
+		loop 50 times:
+			teleport {_projectile} to {_loc}
+			if {_index} is 5 or 12 or 19 or 26 or 35:
+				handleProjectileCLTST({_projectile}, {_cltst}, 3.5)
+			add 1 to {_index}
+			wait 3 ticks
+		{_projectile}.remove()
+	else if {_type} = 3.5:
+		#lightning bolt
+		set {_index} to 0
+		set {_removeIndex} to 1
+		set {_addIndex} to 2
+		set {_target} to metadata "target" of {_cltst}
+		set {_terminalPoint} to location of {_target}
+		set {_lastPoint} to eye location of {_projectile}
+		add {_lastPoint} to {_points::*}
+		
+		set {_advanced} to new HashMap(2)
+		{_advanced}.put("particleInterval", 0.75)
+		set {_particleColor} to new ArrayList(1)
+		{_particleColor}.add("255|255|255")
+		loop 15 times:
+			if {_index} >= 5:
+				clear {_points::%{_removeIndex}%}
+				add 1 to {_removeIndex}
+			if {_index} < 12:
+				set {_length} to a random number between 3 and 5
+				if {_terminalPoint} is set:
+					set {_velocity} to {_terminalPoint}.clone().subtract({_lastPoint}).toVector()
+					set vector length of {_velocity} to 5
+					set {_dV} to {_velocity}.clone().add(vector((a random number between -2 and 2), (a random number between -2 and 2), (a random number between -2 and 2)))
+					set vector length of {_dV} to {_length}
+					if distance between {_lastPoint} and {_terminalPoint} <= {_length}:
+						set {_points::%{_addIndex}%} to {_terminalPoint}
+						set {_lastPoint} to {_terminalPoint}
+						clear {_terminalPoint}
+					else:
+						{_lastPoint}.add({_dV})
+						set {_points::%{_addIndex}%} to {_lastPoint}.clone()
+				else:
+					{_lastPoint}.add({_dV})
+					set {_points::%{_addIndex}%} to {_lastPoint}.clone()
+				add 1 to {_addIndex}
+			if size of {_points::*} > 1:
+				loop {_points::*}:
+					{_advanced}.put("startLocation", loop-value-2)
+					set {_indexNext} to (loop-index parsed as number) + 1
+					set {_dV} to {_points::%{_indexNext}%}.clone().subtract(loop-value-2).toVector()
+					handleStrikeLine({_projectile}, (vector yaw of {_dV}), (vector pitch of {_dV}), (vector length of {_dV}), (a diamond), {_particleColor}, (new ArrayList()), true, {_advanced})
+			add 1 to {_index}
+			wait 4 ticks
+	else if {_type} = 4:
+		#ancient light
+		slimeResize({_projectile}, 3)
+		set {_v} to velocity of {_projectile}
+		while vector length of velocity of {_projectile} > 0:
+			if health of {_projectile} <= 0:
+				stop trigger
+			if block at {_projectile} is not air:
+				stop loop
+			set velocity of {_projectile} to {_v}
+			wait 5 ticks
+		{_projectile}.remove()
+	else if {_type} = 5:
+		#ancient doom
+		slimeResize({_projectile}, 3)
+		set {_loc} to location of {_projectile}
+		loop 6 times:
+			if health of {_projectile} > 0:
+				teleport {_projectile} to {_loc}
+			wait 10 ticks
+		if health of {_projectile} > 0:
+			{_projectile}.remove()
+			set {_attrMapProphecyEnd} to new HashMap(8)
+			{_attrMapProphecyEnd}.put("crit", 0.04)
+			{_attrMapProphecyEnd}.put("damage", 360)
+			{_attrMapProphecyEnd}.put("damageType", "Arrow")
+			{_attrMapProphecyEnd}.put("knockback", 4)
+			loop 6 times:
+				spawn a slime at {_loc}
+				set {_entity} to spawned entity
+				add {_entity} to {_projectiles::*}
+				add "noDamage" to scoreboard tags of {_entity}
+				add "isMonster" to scoreboard tags of {_entity}
+				set metadata "attrMap" of {_entity} to {_attrMapProphecyEnd}
+				{_entity}.setCustomName("预言之末")
+				set gravity of {_entity} to off
+				set {_entity}.getHandle().noclip to true
+				slimeResize({_entity}, 3)
+			loop 8 times:
+				set velocity of {_projectiles::1} to vector(0, 2, 0)
+				set velocity of {_projectiles::2} to vector(0, -2, 0)
+				set velocity of {_projectiles::3} to vector(2, 0, 0)
+				set velocity of {_projectiles::4} to vector(-2, 0, 0)
+				set velocity of {_projectiles::5} to vector(0, 0, 2)
+				set velocity of {_projectiles::6} to vector(0, 0, -2)
+				wait 1 second
+			loop {_projectiles::*}:
+				(loop-value).remove()
+	else if {_type} = 6:
+		#phantasm dragon
+		set {_segments} to metadata "segments" of {_projectile}
+		set {_attrMap} to metadata "attrMap" of {_projectile}
+		{_attrMap}.put("damageMulti", 2)
+		{_attrMap}.put("defenceMulti", 0.5)
+		set {_phase} to 0
+		while health of {_projectile} > 0:
+			if health of {_cltst} > 0:
+				clear {_target}
+				set {_target} to metadata "target" of {_cltst}
+			else if checkMobTarget({_target}, {_projectile}) is not true:
+				clear {_target}
+			
+			if {_target} is not set:
+				stop loop
+			else:
+				if {_phase} < 15:
+					if {_phase} > 0:
+						add 1 to {_phase}
+					else:
+						set {_v} to (eye location of {_target}).subtract(location of {_projectile}).toVector()
+						if vector length of {_v} = 0:
+							set {_v} to vector(0, 1, 0)
+						set vector length of {_v} to 2
+					if distance between location of {_projectile} and eye location of {_target} < 5:
+						set {_phase} to 1
+				else:
+					add 0.05 to y of {_v}
+					if distance between location of {_projectile} and location of {_target} > 20:
+						set {_phase} to 0
+				teleport {_projectile} to (location of {_projectile}).add({_v})
+				
+				set {_i} to 0
+				set {_lastLoc} to location of {_projectile}
+				set {_currLoc} to location of {_segments}.get(1)
+				set {_nextLoc} to location of {_segments}.get(2)
+				loop 13 times:
+					add 1 to {_i}
+					set {_iNext} to {_i} + 1
+					set {_currentSeg} to {_segments}.get({_i})
+					set health of {_currentSeg} to health of {_projectile}
+					if {_i} = 13:
+						set {_next} to {_currentSeg}
+					else:
+						set {_next} to {_segments}.get({_iNext})
+					set {_segdVec} to {_lastLoc}.clone().subtract({_nextLoc}).toVector()
+					vector length of {_segdVec} > 0
+					set vector length of {_segdVec} to 1
+					set {_baseVec} to {_lastLoc}.clone().subtract({_currLoc}).toVector()
+					vector length of {_baseVec} > 0
+					set vector length of {_baseVec} to 3
+					set {_dVec} to {_segdVec}.add({_baseVec})
+					vector length of {_dVec} > 0
+					set vector length of {_dVec} to 1.3
+					set {_currLoc} to {_lastLoc}.clone().subtract({_dVec})
+					teleport {_currentSeg} to {_currLoc}
+					set {_lastLoc} to {_currLoc}
+					set {_currLoc} to {_nextLoc}
+					set {_nextLoc} to location of {_next}
+			wait 4 ticks
+		loop 15 times:
+			set health of {_segments}.get((loop-number) - 1) to 0
+	else if {_type} = 7:
+		#ancient vision
+		set {_phase} to 15
+		set {_v} to vector((a random number between 10 and -10), (a random number between -2 and -5), (a random number between 10 and -10))
+		set vector length of {_v} to 1
+		while health of {_projectile} > 0:
+			if health of {_cltst} > 0:
+				clear {_target}
+				set {_target} to metadata "target" of {_cltst}
+			else if checkMobTarget({_target}, {_projectile}) is not true:
+				clear {_target}
+			
+			if {_target} is not set:
+				{_projectile}.remove()
+				stop trigger
+			else:
+				if {_phase} < 15:
+					if {_phase} > 0:
+						add 1 to {_phase}
+					else:
+						set {_v} to (location of {_target}).subtract(location of {_projectile}).toVector()
+						if vector length of {_v} = 0:
+							set {_v} to vector(1, 0, 0)
+						set vector length of {_v} to 1
+					set {_distX} to (x-coordinate of {_projectile}) - (x-coordinate of {_target})
+					set {_distZ} to (z-coordinate of {_projectile}) - (z-coordinate of {_target})
+					set {_horDist} to sqrt({_distX} * {_distX} + {_distZ} * {_distZ})
+					if {_horDist} < 8:
+						set {_phase} to 1
+				else:
+					if y-coordinate of {_target} > y of {_projectile}:
+						add 0.1 to y of {_v}
+					else:
+						subtract 0.1 from y of {_v}
+					if distance between location of {_projectile} and location of {_target} > 10:
+						set x of {_v} to x of {_v} * 0.98
+						set z of {_v} to z of {_v} * 0.98
+						if distance between location of {_projectile} and location of {_target} > 25:
+							set {_phase} to 0
+				set velocity of {_projectile} to {_v}
+			wait 5 ticks
+	else if {_type} = 8:
+		set {_particleColor} to new ArrayList(1)
+		{_particleColor}.add("255|255|100")
+		set {_centerLoc} to metadata "centerLoc" of {_cltst}
+		set {_angleOffset} to 0
+		set {_radius} to 2
+		set {_health} to health of {_cltst}
+		loop 20 times:
+			if health of {_cltst} <= 0:
+				stop trigger
+			if {_cltst} has scoreboard tag "wrongHit":
+				set {_health} to 0
+			if health of {_cltst} < {_health}:
+				stop trigger
+			set {_r} to {_radius}
+			loop 2 times:
+				handleParticleCircle({_centerLoc}, {_r}, 0.1, 0, 0, "255|255|100")
+				clear {_points::*}
+				add {_centerLoc}.clone().add(cos({_angleOffset}) * {_r}, 0, sin({_angleOffset}) * {_r}) to {_points::*}
+				add {_centerLoc}.clone().add(cos({_angleOffset} + 90) * {_r}, 0, sin({_angleOffset} + 90) * {_r}) to {_points::*}
+				add {_centerLoc}.clone().add(cos({_angleOffset} + 180) * {_r}, 0, sin({_angleOffset} + 180) * {_r}) to {_points::*}
+				add {_centerLoc}.clone().add(cos({_angleOffset} + 270) * {_r}, 0, sin({_angleOffset} + 270) * {_r}) to {_points::*}
+				set {_pointIndex} to 2
+				set {_pointA} to {_points::1}
+				set {_pointB} to {_points::2}
+				loop 4 times:
+					set {_v} to {_pointA}.clone().subtract({_pointB}).toVector()
+					set {_pointIndex} to mod({_pointIndex}, 4) + 1
+					set {_pointA} to {_pointB}
+					set {_pointB} to {_points::%{_pointIndex}%}
+					handleParticleLine({_v}, (vector length of {_v}), 0.1, {_pointA}, {_particleColor})
+				set {_r} to {_r} / sqrt(2)
+				set {_angleOffset} to {_angleOffset} * -1
+			if loop-number <= 6:
+				add 1.5 to {_radius}
+			else if loop-number >= 15:
+				subtract 2 from {_radius}
+			add 20 to {_angleOffset}
+			wait 9 ticks

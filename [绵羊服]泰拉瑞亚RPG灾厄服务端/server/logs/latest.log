@@ -1,0 +1,541 @@
+[11:26:53] [Server thread/INFO]: Starting minecraft server version 1.11.2
+[11:26:53] [Server thread/INFO]: Loading properties
+[11:26:53] [Server thread/INFO]: Default game type: SURVIVAL
+[11:26:53] [Server thread/INFO]: This server is running Paper version git-Paper-1106 (MC: 1.11.2) (Implementing API version 1.11.2-R0.1-SNAPSHOT)
+[11:26:53] [Server thread/INFO]: Debug logging is disabled
+[11:26:53] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[11:26:53] [Server thread/INFO]: Using 4 threads for Netty based IO
+[11:26:53] [Server thread/INFO]: Generating keypair
+[11:26:53] [Server thread/INFO]: Starting Minecraft server on *:25565
+[11:26:53] [Server thread/INFO]: Using default channel type
+[11:26:53] [Server thread/ERROR]: Could not load 'plugins\paper-1.11.2-1106.jar' in folder 'plugins'
+org.bukkit.plugin.InvalidDescriptionException: Invalid plugin.yml
+	at org.bukkit.plugin.java.JavaPluginLoader.getPluginDescription(JavaPluginLoader.java:150) ~[patched_1.11.2.jar:git-Paper-1106]
+	at org.bukkit.plugin.SimplePluginManager.loadPlugins(SimplePluginManager.java:136) [patched_1.11.2.jar:git-Paper-1106]
+	at org.bukkit.craftbukkit.v1_11_R1.CraftServer.loadPlugins(CraftServer.java:302) [patched_1.11.2.jar:git-Paper-1106]
+	at net.minecraft.server.v1_11_R1.DedicatedServer.init(DedicatedServer.java:208) [patched_1.11.2.jar:git-Paper-1106]
+	at net.minecraft.server.v1_11_R1.MinecraftServer.run(MinecraftServer.java:612) [patched_1.11.2.jar:git-Paper-1106]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_333]
+Caused by: java.io.FileNotFoundException: Jar does not contain plugin.yml
+	... 6 more
+[11:26:53] [Server thread/INFO]: Set PluginClassLoader as parallel capable
+[11:26:53] [Server thread/INFO]: [AntiExplosion] Loading AntiExplosion v1.0.1
+[11:26:53] [Server thread/INFO]: [PlaceholderAPI] Loading PlaceholderAPI v2.10.0
+[11:26:53] [Server thread/INFO]: [GrItemTags] Loading GrItemTags v1.0.7
+[11:26:53] [Server thread/INFO]: [Vault] Loading Vault v1.7.3-b131
+[11:26:53] [Server thread/INFO]: [ProtocolLib] Loading ProtocolLib v4.4.0
+[11:26:54] [Server thread/INFO]: [LibsDisguises] Loading LibsDisguises v9.1.2
+[11:26:54] [Server thread/INFO]: [ChatItem] Loading ChatItem v1.3.6.2
+[11:26:54] [Server thread/INFO]: [Essentials] Loading Essentials v2.18.2.0
+[11:26:54] [Server thread/INFO]: [AuthMe] Loading AuthMe v5.2-b1542
+[11:26:54] [Server thread/INFO]: [VexView] Loading VexView v2.6.10
+[11:26:54] [Server thread/INFO]: [TabList] Loading TabList v5.1
+[11:26:54] [Server thread/INFO]: [Residence] Loading Residence v4.8.2.0
+[11:26:54] [Server thread/INFO]: [Skript] Loading Skript v2.5.3
+[11:26:54] [Server thread/INFO]: [skript-placeholders] Loading skript-placeholders v1.5.2
+[11:26:54] [Server thread/INFO]: [skDragon] Loading skDragon v0.16
+[11:26:54] [Server thread/INFO]: [skript-reflect] Loading skript-reflect v2.2.3
+[11:26:54] [Server thread/INFO]: [SkQuery] Loading SkQuery v4.1.1
+[11:26:54] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[11:26:54] [Server thread/INFO]: [PlaceholderAPI] Enabling PlaceholderAPI v2.10.0
+[11:26:54] [Server thread/INFO]: [PlaceholderAPI] Placeholder expansion registration initializing...
+[11:26:54] [Server thread/INFO]: [PlaceholderAPI] Fetching available expansion information...
+[11:26:54] [Server thread/INFO]: [Vault] Enabling Vault v1.7.3-b131
+[11:26:54] [Server thread/INFO]: [Vault] [Economy] Essentials Economy found: Waiting
+[11:26:54] [Server thread/INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+[11:26:54] [Server thread/INFO]: [Vault] Enabled Version 1.7.3-b131
+[11:26:54] [Server thread/INFO]: [ProtocolLib] Enabling ProtocolLib v4.4.0
+[11:26:54] [Server thread/INFO]: [ProtocolLib] Started structure compiler thread.
+[11:26:54] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[11:26:54] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
+[11:26:54] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[11:26:54] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[11:26:54] [Server thread/INFO]: **** Beginning UUID conversion, this may take A LONG time ****
+[11:26:54] [Server thread/INFO]: Preparing level "world"
+[11:26:54] [Server thread/INFO]: -------- World Settings For [world] --------
+[11:26:54] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
+[11:26:54] [Server thread/INFO]: Item Despawn Rate: 3000
+[11:26:54] [Server thread/INFO]: Item Merge Radius: 2.5
+[11:26:54] [Server thread/INFO]: Arrow Despawn Rate: 12000
+[11:26:54] [Server thread/INFO]: View Distance: 6
+[11:26:54] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
+[11:26:54] [Server thread/INFO]: Mob Spawn Range: 4
+[11:26:54] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
+[11:26:54] [Server thread/INFO]: Cactus Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Cane Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Melon Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Sapling Growth Modifier: 100%
+[11:26:54] [Server thread/INFO]: Wheat Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Vine Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Structure Info Saving: true
+[11:26:54] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
+[11:26:54] [Server thread/INFO]: Max TNT Explosions: 100
+[11:26:54] [Server thread/INFO]: Random Lighting Updates: true
+[11:26:54] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75
+[11:26:54] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
+[11:26:54] [Server thread/INFO]: Experience Merge Radius: 3.0
+[11:26:54] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
+[11:26:54] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
+[11:26:54] [Server thread/INFO]: -------- World Settings For [world_nether] --------
+[11:26:54] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
+[11:26:54] [Server thread/INFO]: Item Despawn Rate: 3000
+[11:26:54] [Server thread/INFO]: Item Merge Radius: 2.5
+[11:26:54] [Server thread/INFO]: Arrow Despawn Rate: 12000
+[11:26:54] [Server thread/INFO]: View Distance: 6
+[11:26:54] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
+[11:26:54] [Server thread/INFO]: Mob Spawn Range: 4
+[11:26:54] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
+[11:26:54] [Server thread/INFO]: Cactus Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Cane Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Melon Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Sapling Growth Modifier: 100%
+[11:26:54] [Server thread/INFO]: Wheat Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Vine Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Structure Info Saving: true
+[11:26:54] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
+[11:26:54] [Server thread/INFO]: Max TNT Explosions: 100
+[11:26:54] [Server thread/INFO]: Random Lighting Updates: true
+[11:26:54] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75
+[11:26:54] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
+[11:26:54] [Server thread/INFO]: Experience Merge Radius: 3.0
+[11:26:54] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
+[11:26:54] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
+[11:26:54] [Server thread/INFO]: -------- World Settings For [world_the_end] --------
+[11:26:54] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
+[11:26:54] [Server thread/INFO]: Item Despawn Rate: 3000
+[11:26:54] [Server thread/INFO]: Item Merge Radius: 2.5
+[11:26:54] [Server thread/INFO]: Arrow Despawn Rate: 12000
+[11:26:54] [Server thread/INFO]: View Distance: 6
+[11:26:54] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
+[11:26:54] [Server thread/INFO]: Mob Spawn Range: 4
+[11:26:54] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
+[11:26:54] [Server thread/INFO]: Cactus Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Cane Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Melon Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Sapling Growth Modifier: 100%
+[11:26:54] [Server thread/INFO]: Wheat Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Vine Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
+[11:26:54] [Server thread/INFO]: Structure Info Saving: true
+[11:26:54] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
+[11:26:54] [Server thread/INFO]: Max TNT Explosions: 100
+[11:26:54] [Server thread/INFO]: Random Lighting Updates: true
+[11:26:54] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75
+[11:26:54] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
+[11:26:54] [Server thread/INFO]: Experience Merge Radius: 3.0
+[11:26:54] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
+[11:26:54] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
+[11:26:54] [Server thread/INFO]: Preparing start region for level 0 (Seed: 4175543147961324202)
+[11:26:54] [Server thread/INFO]: Preparing start region for level 1 (Seed: -5128974474665219817)
+[11:26:54] [Server thread/INFO]: Preparing start region for level 2 (Seed: -5128974474665219817)
+[11:26:54] [Server thread/INFO]: [AntiExplosion] Enabling AntiExplosion v1.0.1
+[11:26:54] [Server thread/INFO]: [AntiExplosion] AntiExplosion is enabled!
+[11:26:54] [Server thread/INFO]: [GrItemTags] Enabling GrItemTags v1.0.7
+[11:26:54] [Server thread/INFO]: [LibsDisguises] Enabling LibsDisguises v9.1.2
+[11:26:54] [Server thread/INFO]: [LibsDisguises] Discovered MC version: v1_11_R1
+[11:26:55] [Server thread/WARN]: Error finding the FlagType for FIREWORK! Index 7 can't be found!
+[11:26:55] [Server thread/WARN]: Value is 0 (class java.lang.Integer) (class net.minecraft.server.v1_11_R1.EntityFireworks) & FireworkWatcher
+[11:26:55] [Server thread/WARN]: Lib's Disguises will continue to load, but this will not work properly!
+[11:26:55] [Server thread/WARN]: Error finding the FlagType for PIG! Index 14 can't be found!
+[11:26:55] [Server thread/WARN]: Value is 0 (class java.lang.Integer) (class net.minecraft.server.v1_11_R1.EntityPig) & PigWatcher
+[11:26:55] [Server thread/WARN]: Lib's Disguises will continue to load, but this will not work properly!
+[11:26:55] [Server thread/INFO]: [ChatItem] Enabling ChatItem v1.3.6.2
+[11:26:55] [Server thread/INFO]: [Essentials] Enabling Essentials v2.18.2.0
+[11:26:55] [Server thread/INFO]: Attempting to convert old kits in config.yml to new kits.yml
+[11:26:55] [Server thread/INFO]: No kits found to migrate.
+[11:26:55] [Server thread/INFO]: Loaded 852 items from items.csv.
+[11:26:55] [Server thread/INFO]: Using locale zh_CN
+[11:26:55] [Server thread/INFO]: [Essentials] ServerListPingEvent: Spigot iterator API
+[11:26:55] [Server thread/INFO]: [Essentials] Starting Metrics. Opt-out using the global bStats config.
+[11:26:55] [Server thread/INFO]: [Vault] [Economy] Essentials Economy hooked.
+[11:26:55] [Server thread/INFO]: [Essentials] Using superperms-based permissions.
+[11:26:55] [Server thread/INFO]: [AuthMe] Enabling AuthMe v5.2-b1542
+[11:26:55] [Server thread/INFO]: [AuthMe] SQLite driver loaded
+[11:26:55] [Server thread/INFO]: [AuthMe] SQLite Setup finished
+[11:26:55] [Server thread/INFO]: [AuthMe] Hooked into Vault!
+[11:26:55] [Server thread/INFO]: [AuthMe] Hooked successfully into Essentials
+[11:26:55] [Server thread/INFO]: [AuthMe] Essentials spawn file not found: 'C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端\server\plugins\Essentials\spawn.yml'
+[11:26:55] [Thread-7/WARN]: [AuthMe] Could not download GeoLiteAPI database [UnknownHostException]: geolite.maxmind.com
+[11:26:55] [Server thread/INFO]: [AuthMe] Development builds are available on our jenkins, thanks to f14stelt.
+[11:26:55] [Server thread/INFO]: [AuthMe] Do you want a good game server? Look at our sponsor GameHosting.it leader in Italy as Game Server Provider!
+[11:26:55] [Server thread/INFO]: [AuthMe] AuthMe 5.2 build n.1542 correctly enabled!
+[11:26:55] [Server thread/INFO]: [VexView] Enabling VexView v2.6.10
+[11:26:55] [Server thread/INFO]: ======== VexView > 开始启动 ========
+[11:26:55] [Server thread/INFO]: > 欢迎使用VexView！
+[11:26:55] [Server thread/INFO]: > 已将您的语言设置为：中国 (zh_CN)
+[11:26:55] [Server thread/INFO]: > 当前服务器版本： 1.11.2 (已兼容)
+[11:26:55] [Server thread/INFO]: > 该游戏版本已开放使用的功能：
+[11:26:55] [Server thread/INFO]:  ┣ GUI基础功能 √
+[11:26:55] [Server thread/INFO]:  ┣ TAG基础功能 √
+[11:26:55] [Server thread/INFO]:  ┣ VexViewStore商店 √
+[11:26:55] [Server thread/INFO]:  ┣ GUI高级功能（物品槽） √
+[11:26:55] [Server thread/INFO]:  ┣ 自定义药水效果 √
+[11:26:55] [Server thread/INFO]:  ┣ 高级特效 √
+[11:26:55] [Server thread/INFO]:  ┣ 高级物品提示框 √
+[11:26:55] [Server thread/INFO]:  ┣ 自定义游戏菜单 √
+[11:26:55] [Server thread/INFO]:  ┗ 其他功能 √
+[11:26:55] [Server thread/INFO]: > 检测到未启用数据库
+[11:26:55] [Server thread/INFO]: > AuthMe 插件未安装，跳过兼容！
+[11:26:55] [Server thread/INFO]: > BetonQuest 插件未安装，跳过兼容！
+[11:26:55] [Server thread/INFO]: > Cronus 插件未安装，跳过兼容！
+[11:26:55] [Server thread/INFO]: > PlaceholderAPI 插件成功兼容！
+[11:26:55] [Server thread/INFO]: > 已完成VexView插件全部功能载入！
+[11:26:55] [Server thread/INFO]: > 作者 LK520 | 版本: 2.6.10
+[11:26:55] [Server thread/INFO]: ======== VexView > 启动完成 ========
+[11:26:55] [Server thread/INFO]: [TabList] Enabling TabList v5.1
+[11:26:55] [Server thread/INFO]: [TabList] Hooked PlaceholderAPI version: 2.10.0
+[11:26:56] [Server thread/WARN]: java.io.FileNotFoundException: https://raw.githubusercontent.com/montlikadani/TabList/master/plugin.yml
+[11:26:56] [Server thread/WARN]: 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
+[11:26:56] [Server thread/WARN]: 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
+[11:26:56] [Server thread/WARN]: 	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
+[11:26:56] [Server thread/WARN]: 	at java.net.URL.openStream(Unknown Source)
+[11:26:56] [Server thread/WARN]: 	at hu.montlikadani.tablist.bukkit.TabList.checkVersion(TabList.java:185)
+[11:26:56] [Server thread/WARN]: 	at hu.montlikadani.tablist.bukkit.TabList.onEnable(TabList.java:119)
+[11:26:56] [Server thread/WARN]: 	at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:271)
+[11:26:56] [Server thread/WARN]: 	at org.bukkit.plugin.java.JavaPluginLoader.enablePlugin(JavaPluginLoader.java:316)
+[11:26:56] [Server thread/WARN]: 	at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:407)
+[11:26:56] [Server thread/WARN]: 	at org.bukkit.craftbukkit.v1_11_R1.CraftServer.enablePlugin(CraftServer.java:378)
+[11:26:56] [Server thread/WARN]: 	at org.bukkit.craftbukkit.v1_11_R1.CraftServer.enablePlugins(CraftServer.java:328)
+[11:26:56] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.MinecraftServer.t(MinecraftServer.java:438)
+[11:26:56] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.MinecraftServer.l(MinecraftServer.java:399)
+[11:26:56] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.MinecraftServer.a(MinecraftServer.java:337)
+[11:26:56] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.DedicatedServer.init(DedicatedServer.java:276)
+[11:26:56] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.MinecraftServer.run(MinecraftServer.java:612)
+[11:26:56] [Server thread/WARN]: 	at java.lang.Thread.run(Unknown Source)
+[11:26:56] [Server thread/WARN]: [TabList] Failed to compare versions. java.io.FileNotFoundException: https://raw.githubusercontent.com/montlikadani/TabList/master/plugin.yml Please report it here:
+https://github.com/montlikadani/TabList/issues
+[11:26:56] [Server thread/INFO]: [TabList] 
+[11:26:56] [Server thread/INFO]: [TabList] Metrics enabled.
+[11:26:56] [Server thread/INFO]: [TabList] > The plugin successfully enabled v5.1!
+[11:26:56] [Server thread/INFO]: [Residence] Enabling Residence v4.8.2.0
+[11:26:56] [Server thread/INFO]: [Residence] Found Vault, but Vault reported no usable permissions system...
+[11:26:56] [Server thread/INFO]: [Residence] Permissions plugin NOT FOUND!
+[11:26:57] [Server thread/INFO]: [Residence] Scanning for economy systems...
+[11:26:57] [Server thread/INFO]: [Residence] Found Vault using economy: Essentials Economy
+[11:26:57] [Server thread/INFO]: [Residence] Loading save data for world world...
+[11:26:57] [Server thread/INFO]: [Residence] Loaded world data. (1 ms)
+[11:26:57] [Server thread/INFO]: [Residence] Loading save data for world world_nether...
+[11:26:57] [Server thread/INFO]: [Residence] Loaded world_nether data. (0 ms)
+[11:26:57] [Server thread/INFO]: [Residence] Loading save data for world world_the_end...
+[11:26:57] [Server thread/INFO]: [Residence] Loaded world_the_end data. (1 ms)
+[11:26:57] [Server thread/INFO]: [Residence] Loading world data into memory...
+[11:26:57] [Server thread/INFO]: [Residence] Loaded world data into memory. (7 ms)
+[11:26:57] [Server thread/INFO]: [Residence] Loading world_nether data into memory...
+[11:26:57] [Server thread/INFO]: [Residence] Loaded world_nether data into memory. (0 ms)
+[11:26:57] [Server thread/INFO]: [Residence] Loading world_the_end data into memory...
+[11:26:57] [Server thread/INFO]: [Residence] Loaded world_the_end data into memory. (0 ms)
+[11:26:57] [Server thread/INFO]: [Residence] WorldEdit NOT found!
+[11:26:57] [Server thread/INFO]: [Residence] PlaceholderAPI hooked.
+[11:26:57] [Server thread/INFO]: [Residence] PlaceholderAPI was found - Enabling capabilities.
+[11:26:57] [Server thread/INFO]: [Residence] Enabled! Version 4.8.2.0 by Zrips
+[11:26:57] [Server thread/INFO]: [Skript] Enabling Skript v2.5.3
+[11:26:57] [Server thread/INFO]: [Skript] The updater is disabled, so a check for the latest version of Skript was not performed.
+[11:26:59] [Server thread/INFO]: [Skript] Loaded 18113 aliases in 1452ms
+[11:26:59] [Server thread/INFO]: [Skript]  ~ created by & ? Peter Güttinger aka Njol ~
+[11:26:59] [Server thread/INFO]: [skript-placeholders] Enabling skript-placeholders v1.5.2
+[11:26:59] [Server thread/INFO]: [skDragon] Enabling skDragon v0.16
+[11:26:59] [Server thread/INFO]: §3[§bskDragon§3] §aPlugin has been Enabled
+[11:26:59] [Server thread/INFO]: [skript-reflect] Enabling skript-reflect v2.2.3
+[11:26:59] [Server thread/INFO]: [SkQuery] Enabling SkQuery v4.1.1
+[11:26:59] [Server thread/INFO]: [skQuery] Locating classes from SkQuery...
+[11:27:00] [Server thread/INFO]: [skQuery] Beginning to process a total of 139 from SkQuery
+[11:27:00] [Server thread/INFO]: [skQuery] Out of 139 classes, 137 classes were loaded from SkQuery
+[11:27:00] [Server thread/INFO]: Done (5.666s)! For help, type "help" or "?"
+[11:27:00] [Server thread/INFO]: Timings Reset
+[11:27:00] [Server thread/INFO]: [Skript] Loading variables...
+[11:27:00] [Server thread/INFO]: [Skript] Loaded 104 variables in 0.0 seconds
+[11:27:00] [Craft Scheduler Thread - 2/INFO]: [LibsDisguises] Failed to check for a update on spigot.
+[11:27:00] [Craft Scheduler Thread - 1/INFO]: [PlaceholderAPI] 191 placeholder expansions are available on the cloud.
+[11:27:00] [Craft Scheduler Thread - 11/INFO]: Failed to check for Residence update on spigot web page.
+[11:27:00] [Server thread/WARN]: [Skript] org.bukkit.event.entity.EntityTargetEvent$TargetReason doesn't need the alias TargetReason, as it will already be imported under that name (APIcommon.sk, line 29: org.bukkit.event.entity.EntityTargetEvent$TargetReason as TargetReason')
+[11:27:00] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 255, 255, 255 (APIcommon.sk, line 149: {_itemMeta}.setColor(BukkitColor.fromRGB(255, 255, 255))')
+[11:27:01] [Craft Scheduler Thread - 4/WARN]: [VexView] Plugin VexView v2.6.10 generated an exception while executing task 19
+java.lang.StringIndexOutOfBoundsException: String index out of range: -9
+	at java.lang.String.substring(Unknown Source) ~[?:1.8.0_333]
+	at lk.vexview.?A.<init>(hm:231) ~[?:?]
+	at lk.vexview.?A.?(hm:255) ~[?:?]
+	at lk.vexview.Main$?G.run(lh:84) ~[?:?]
+	at org.bukkit.craftbukkit.v1_11_R1.scheduler.CraftTask.run(CraftTask.java:58) ~[patched_1.11.2.jar:git-Paper-1106]
+	at org.bukkit.craftbukkit.v1_11_R1.scheduler.CraftAsyncTask.run(CraftAsyncTask.java:52) [patched_1.11.2.jar:git-Paper-1106]
+	at com.destroystokyo.paper.ServerSchedulerReportingWrapper.run(ServerSchedulerReportingWrapper.java:22) [patched_1.11.2.jar:git-Paper-1106]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source) [?:1.8.0_333]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source) [?:1.8.0_333]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_333]
+[11:27:01] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (APIcommon.sk, line 609: set {_hookEntity} to {_hookWorld}.spawnEntity((location of {_ply}).add(0, 1, 0), EntityType.ARROW)')
+[11:27:01] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (APIcommon.sk, line 663: set {_dVec} to (location of {_hook}).subtract(location of {_ply}).subtract(0, 1, 0).toVector()')
+[11:27:01] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (APIcommon.sk, line 668: set {_particleLoc} to (location of {_ply}).add(0, 1, 0)')
+[11:27:01] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (APIcommon.sk, line 681: set {_thrust} to {_center}.subtract(location of {_ply}).subtract(0, 1, 0).toVector()')
+[11:27:03] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 102, 255, 255 (APIcommon.sk, line 2188: {_color}.add(BukkitColor.fromRGB(102, 255, 255))')
+[11:27:03] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 102, 255, 255 (APIcommon.sk, line 2227: {_color}.add(BukkitColor.fromRGB(102, 255, 255))')
+[11:28:57] [Server thread/WARN]: [Skript] org.bukkit.scoreboard.Team$Option doesn't need the alias Option, as it will already be imported under that name (basicSetting.sk, line 19: org.bukkit.scoreboard.Team$Option as Option')
+[11:28:57] [Server thread/WARN]: [Skript] org.bukkit.scoreboard.Team$OptionStatus doesn't need the alias OptionStatus, as it will already be imported under that name (basicSetting.sk, line 20: org.bukkit.scoreboard.Team$OptionStatus as OptionStatus')
+[11:28:58] [Server thread/WARN]: [Skript] org.bukkit.event.Event$Result doesn't need the alias Result, as it will already be imported under that name (control.sk, line 28: org.bukkit.event.Event$Result as Result')
+[11:29:11] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (control.sk, line 926: spawnAnimal(trimText(name of player's tool), (location of player).add(0, 1, 0))')
+[11:29:12] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (control.sk, line 1235: set {_destination} to (location of metadata "target" of {_ply}).add(0, 1, 0)')
+[11:29:12] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (control.sk, line 1237: set {_destination} to (location of targeted block of {_ply}).add(0, 1, 0)')
+[11:29:15] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (control.sk, line 1476: set {_destination} to (location of targeted block of {_ply}).add(0, 1, 0)')
+[11:29:15] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (control.sk, line 1487: set {_destination} to (location of metadata "target" of {_ply}).add(0, 1, 0)')
+[11:29:15] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (control.sk, line 1489: set {_destination} to (location of targeted block of {_ply}).add(0, 1, 0)')
+[11:29:17] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (control.sk, line 1742: set {_destination} to (location of targeted block of {_ply}).add(0, 1, 0)')
+[11:29:21] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (control.sk, line 2308: set {_location} to (location of {_ply}).add(0, 1, 0).add({_dV})')
+[11:29:21] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0.5, 1, 0.5 (control.sk, line 2332: set {_loc} to (location of targeted block of {_ply}).add(0.5, 1, 0.5)')
+[11:29:21] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0.125, 0.125, 0.125 (control.sk, line 2384: set {_entities} to {_yoyo}.getWorld().getNearbyEntities((location of {_yoyo}).clone().add(0.125, 0.125, 0.125), {_size}, {_size}, {_size})')
+[11:29:21] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0.125, 0.125, 0.125 (control.sk, line 2562: set {_entities} to {_cousin}.getWorld().getNearbyEntities({_cousin}.getLocation().add(0.125, 0.125, 0.125), 0.3, 0.3, 0.3)')
+[11:29:21] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 3, 0 (control.sk, line 2688: set {_targetLoc} to (eye location of {_target}).add(0, 3, 0)')
+[11:29:21] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 3.5, 0 (control.sk, line 2720: set {_targetLoc} to (location of {_target}).add(0, 3.5, 0)')
+[11:29:21] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 0.5, 0 (control.sk, line 2748: set {_targetLoc} to (eye location of {_target}).subtract(0, 0.5, 0)')
+[11:29:21] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 3.5, 0 (control.sk, line 2760: set {_targetLoc} to (location of {_target}).add(0, 3.5, 0)')
+[11:29:21] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 3.5, 0 (control.sk, line 2808: set {_targetLoc} to (location of {_target}).add(0, 3.5, 0)')
+[11:29:21] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 4, 0 (control.sk, line 2884: set {_v} to (eye location of {_target}).add(0, 4, 0).subtract(location of {_minion}).toVector()')
+[11:29:22] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 4, 0 (control.sk, line 2932: set {_dir} to (eye location of {_target}).subtract((location of {_minion}).add(0, 4, 0)).toVector()')
+[11:29:22] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (control.sk, line 2975: set {_targetLoc} to (location of {_owner}).add(0, 1, 0).subtract({_dV}).add({_dPos})')
+[11:29:22] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0.125, 0.125, 0.125 (control.sk, line 3017: set {_entities} to {_minion}.getWorld().getNearbyEntities({_minion}.getLocation().add(0.125, 0.125, 0.125).subtract({_velocity}), {_checkRadius}, {_checkRadius}, {_checkRadius})')
+[11:29:22] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0.25, 0.125, 0.25 (control.sk, line 3019: set {_entities} to {_minion}.getWorld().getNearbyEntities({_minion}.getLocation().add(0.25, 0.125, 0.25), {_checkRadius}, {_checkRadius}, {_checkRadius})')
+[11:29:22] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0.125, 0.125, 0.125 (control.sk, line 3021: set {_entities} to {_minion}.getWorld().getNearbyEntities({_minion}.getLocation().add(0.125, 0.125, 0.125), {_checkRadius}, {_checkRadius}, {_checkRadius})')
+[11:29:23] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (critter.sk, line 28: {_loc}.add(0, 1, 0)')
+[11:29:31] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0.5, 0.4, 0.5 (drop.sk, line 108: set {_dropLoc} to {_block}.getLocation().add(0.5, 0.4, 0.5)')
+[11:29:31] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (EOC.sk, line 95: {_loc}.add(0, 5, 0)')
+[11:29:31] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1.25, 0 (EOC.sk, line 112: {_loc}.add(0, 1.25, 0)')
+[11:29:31] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 15, 0 (EOC.sk, line 147: set {_dVec} to ({_target}.getLocation().add(0, 15, 0).subtract({_eoc}.getLocation())).toVector()')
+[11:29:31] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, -4, 0 (EOC.sk, line 156: spawnMob("克苏鲁的仆从", {_eoc}.getLocation().add(0, -4, 0), {_target})')
+[11:29:32] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 2.295, 0 (EOL.sk, line 517: set {_centerLoc} to {_loc}.add(0, 2.295, 0)')
+[11:29:32] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 2.04, 0 (EOL.sk, line 518: spawn a slime at {_centerLoc}.clone().subtract(0, 2.04, 0)')
+[11:29:32] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (EOW.sk, line 248: {_loc}.subtract(0, 5, 0)')
+[11:29:32] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 20, 0 (EOW.sk, line 288: set {_targetLoc} to (location of {_target}).subtract(0, 20, 0)')
+[11:29:33] [Server thread/ERROR]: [Skript] The function 'handleFallenStar' requires at least 2 arguments, but only 1 is given. (event.sk, line 60: handleFallenStar({_spawnLoc})')
+[11:29:33] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 8, 0 (event.sk, line 408: set {_targetLoc} to (location of {_target}).add(0, 8, 0)')
+[11:29:34] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 15, 0 (event.sk, line 778: set {_v} to (location of {_target}).add(0, 15, 0).subtract(location of {_boss}).toVector()')
+[11:29:34] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 15, 0 (event.sk, line 801: set {_v} to (location of {_target}).add(0, 15, 0).subtract(location of {_boss}).toVector()')
+[11:29:34] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 3, 0 (HMZ.sk, line 181: {_loc}.subtract(0, 3, 0)')
+[11:29:34] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (HMZ.sk, line 269: set {_loc} to (location of {_segment}).add(0, 5, 0)')
+[11:29:35] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (JXKLW.sk, line 194: teleport {_jxklw} to (location of {_jxklw}).add(0, 5, 0)')
+[11:29:35] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (JXKLW.sk, line 195: teleport {_hand1} to (location of {_hand1}).add(0, 5, 0)')
+[11:29:35] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (JXKLW.sk, line 196: teleport {_hand2} to (location of {_hand2}).add(0, 5, 0)')
+[11:29:35] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (JXKLW.sk, line 197: teleport {_hand3} to (location of {_hand3}).add(0, 5, 0)')
+[11:29:35] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (JXKLW.sk, line 198: teleport {_hand4} to (location of {_hand4}).add(0, 5, 0)')
+[11:29:35] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 8, 0 (JXKLW.sk, line 217: set {_destination} to (location of {_target}).add(0, 8, 0)')
+[11:29:35] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 20, 0 (JXKLW.sk, line 221: set {_destination} to (location of {_target}).add(0, 20, 0)')
+[11:29:35] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (JXKLW.sk, line 252: set {_destination} to (eye location of {_target}).add(0, 5, 0)')
+[11:29:35] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (JXKLW.sk, line 256: set {_destination} to (eye location of {_target}).subtract(0, 5, 0)')
+[11:29:35] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 20, 0 (JXKLW.sk, line 323: set {_vHead} to (location of {_target}).add(0, 20, 0).subtract(location of {_jxklw}).toVector()')
+[11:29:36] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (KLW.sk, line 140: teleport {_klw} to (location of {_klw}).subtract(0, 5, 0)')
+[11:29:36] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (KLW.sk, line 141: teleport {_hand1} to (location of {_hand1}).subtract(0, 5, 0)')
+[11:29:36] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (KLW.sk, line 142: teleport {_hand2} to (location of {_hand2}).subtract(0, 5, 0)')
+[11:29:36] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 15, 0 (KLW.sk, line 232: set {_vHead} to {_target}.getLocation().add(0, 15, 0).subtract({_klw}.getLocation()).toVector()')
+[11:29:36] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (KLW.sk, line 247: set {_velocity} to ({_target}.getEyeLocation().subtract(0, 1, 0).subtract({_klw}.getLocation())).toVector()')
+[11:29:37] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 8, 0 (monster.sk, line 103: set {_biome} to getBiome((location of {_ply}).add(0, 8, 0))')
+[11:29:37] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (monster.sk, line 210: {_loc}.add(0, 1, 0)')
+[11:29:37] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 30, 0 (monster.sk, line 214: {_loc}.add(0, 30, 0)')
+[11:29:37] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 15, 0 (monster.sk, line 222: {_loc}.subtract(0, 15, 0)')
+[11:29:37] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 3, 0 (monster.sk, line 657: set {_dV} to (location of highest solid block at location of {_target}).add(0, 3, 0).subtract(location of {_entity}).toVector()')
+[11:29:38] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (monster.sk, line 795: set {_targetLoc} to (location of {_target}).add(0, 1, 0)')
+[11:29:38] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 8, 0 (monster.sk, line 1172: set {_destination} to (location of {_target}).add(0, 8, 0)')
+[11:29:38] [Server thread/WARN]: [Skript] org.bukkit.entity.Villager$Profession doesn't need the alias Profession, as it will already be imported under that name (NPC.sk, line 30: org.bukkit.entity.Villager$Profession as Profession')
+[11:29:38] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (NPC.sk, line 99: set {_loc} to (location of highest solid block at {_loc}).add(0, 5, 0)')
+[11:30:31] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 4.5, 0 (SJR.sk, line 190: teleport {_head} to {_coreLoc}.clone().add(0, 4.5, 0)')
+[11:30:31] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 0.5, 0 (SJR.sk, line 206: teleport {_legs::1} to {_coreLoc}.clone().subtract(0, 0.5, 0).add({_dV})')
+[11:30:31] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 0.5, 0 (SJR.sk, line 207: teleport {_legs::2} to {_coreLoc}.clone().subtract(0, 0.5, 0).subtract({_dV})')
+[11:30:31] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 4, 0 (SJR.sk, line 248: set {_targetLocFist} to {_coreLoc}.clone().add(0, 4, 0).add({_dV})')
+[11:30:31] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 4, 0 (SJR.sk, line 263: set {_targetLocFist} to {_coreLoc}.clone().add(0, 4, 0).subtract({_dV})')
+[11:30:31] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (SJZH.sk, line 116: {_loc}.subtract(0, 5, 0)')
+[11:30:31] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (SJZH.sk, line 182: set {_dVec} to (location of {_target}).subtract(0, 1, 0).subtract({_loc}).toVector()')
+[11:30:31] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (SJZH.sk, line 306: set {_locTarget} to (location of {_target}).add(0, 1, 0)')
+[11:30:32] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 8, 0 (SLMHH.sk, line 193: set {_destination} to (location of {_target}).add(0, 8, 0)')
+[11:30:32] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 12, 0 (SLMHH.sk, line 197: set {_destination} to (location of {_target}).add(0, 12, 0)')
+[11:30:33] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (SZMY.sk, line 129: {_loc}.add(0, 5, 0)')
+[11:30:33] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 5, 0 (SZMY.sk, line 132: {_loc}.add(0, 5, 0)')
+[11:30:34] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 3, 0 (SZMY.sk, line 259: set {_v} to (eye location of {_target}).add(0, 3, 0).subtract(eye location of {_myy}).toVector()')
+[11:30:34] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 16, 0 (TJZ.sk, line 51: add ((location of highest solid block at {_loc}).add(0, 16, 0)) to {_locs::*}')
+[11:30:34] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 0.1, 0 (TJZ.sk, line 178: set {_spawnLoc} to (location of {_ply}).add(0, 0.1, 0)')
+[11:30:34] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 0.5, 0 (TJZ.sk, line 642: teleport {_mob} to (eye location of {_target}).subtract(0, 0.5, 0)')
+[11:30:35] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1.5, 0 (TJZ.sk, line 869: pillarMobSpawn({_pillar}, {_target}, (eye location of {_mob}).add(0, 1.5, 0), "闪耀怪")')
+[11:30:35] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 4.5, 0 (TJZ.sk, line 934: set {_v} to (location of {_pillar}).add(0, 4.5, 0).subtract({_loc}).toVector()')
+[11:30:35] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (WLF.sk, line 239: {_checkLoc}.subtract(0, 1, 0)')
+[11:30:35] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 1, 0 (WLF.sk, line 250: {_checkLoc}.add(0, 1, 0)')
+[11:30:36] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 8, 0 (YQLZ.sk, line 190: teleport {_bg::2} to {_centerLoc}.clone().add(0, 8, 0).add({_dVleft})')
+[11:30:36] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 8, 0 (YQLZ.sk, line 193: teleport {_bg::3} to {_centerLoc}.clone().add(0, 8, 0).add({_dVright})')
+[11:30:36] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 12, 0 (YQLZ.sk, line 194: teleport {_bg::4} to {_centerLoc}.clone().add(0, 12, 0)')
+[11:30:36] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': -1, 0, 0 (ZSGJ.sk, line 176: handleDukeFishronPerk(3, (location of {_zsgj}).add(-1, 0, 0), {_zsgj})')
+[11:30:36] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 1, 0, 0 (ZSGJ.sk, line 177: handleDukeFishronPerk(3, (location of {_zsgj}).add(1, 0, 0), {_zsgj})')
+[11:30:36] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 0, -1 (ZSGJ.sk, line 178: handleDukeFishronPerk(3, (location of {_zsgj}).add(0, 0, -1), {_zsgj})')
+[11:30:37] [Server thread/WARN]: [Skript] List is missing 'and' or 'or', defaulting to 'and': 0, 0, 1 (ZSGJ.sk, line 179: handleDukeFishronPerk(3, (location of {_zsgj}).add(0, 0, 1), {_zsgj})')
+[11:30:37] [Server thread/INFO]: [Skript] Loaded 29 scripts with a total of 127 triggers and 20 commands in 3 minutes and 37.356 seconds
+[11:30:37] [Server thread/INFO]: [Skript] Finished loading.
+[11:30:38] [Server thread/INFO]: [PlaceholderAPI] An update for PlaceholderAPI (v2.11.2) is available at:
+[11:30:38] [Server thread/INFO]: [PlaceholderAPI] https://www.spigotmc.org/resources/placeholderapi.6245/
+[11:30:38] [Craft Scheduler Thread - 12/INFO]: §3[§bskDragon§3] §aChecking for updates now!
+[11:30:38] [Craft Scheduler Thread - 12/INFO]: §3[§bskDragon§3] §avnull is available
+[11:30:38] [Server thread/INFO]: [ProtocolLib] The updater found an update, and has readied it to be loaded the next time the server restarts/reloads.
+[11:36:33] [User Authenticator #1/INFO]: UUID of player laomianyang is ca6b413d-2214-3ecc-8fc5-01eeea5b7cb6
+[11:36:34] [Server thread/WARN]: [TabList] You not using any permission manager plugin!
+[11:36:34] [Server thread/WARN]: java.io.FileNotFoundException: https://raw.githubusercontent.com/montlikadani/TabList/master/plugin.yml
+[11:36:34] [Server thread/WARN]: 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
+[11:36:34] [Server thread/WARN]: 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
+[11:36:34] [Server thread/WARN]: 	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
+[11:36:34] [Server thread/WARN]: 	at java.net.URL.openStream(Unknown Source)
+[11:36:34] [Server thread/WARN]: 	at hu.montlikadani.tablist.bukkit.TabList.checkVersion(TabList.java:185)
+[11:36:34] [Server thread/WARN]: 	at hu.montlikadani.tablist.bukkit.Listeners.onPlJoin(Listeners.java:35)
+[11:36:34] [Server thread/WARN]: 	at com.destroystokyo.paper.event.executor.asm.generated.GeneratedEventExecutor112.execute(Unknown Source)
+[11:36:34] [Server thread/WARN]: 	at org.bukkit.plugin.EventExecutor$1.execute(EventExecutor.java:44)
+[11:36:34] [Server thread/WARN]: 	at co.aikar.timings.TimedEventExecutor.execute(TimedEventExecutor.java:78)
+[11:36:34] [Server thread/WARN]: 	at org.bukkit.plugin.RegisteredListener.callEvent(RegisteredListener.java:62)
+[11:36:34] [Server thread/WARN]: 	at org.bukkit.plugin.SimplePluginManager.fireEvent(SimplePluginManager.java:517)
+[11:36:34] [Server thread/WARN]: 	at org.bukkit.plugin.SimplePluginManager.callEvent(SimplePluginManager.java:502)
+[11:36:34] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.PlayerList.onPlayerJoin(PlayerList.java:352)
+[11:36:34] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.PlayerList.a(PlayerList.java:178)
+[11:36:34] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.LoginListener.b(LoginListener.java:153)
+[11:36:34] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.LoginListener.F_(LoginListener.java:57)
+[11:36:34] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.NetworkManager.a(NetworkManager.java:239)
+[11:36:34] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.ServerConnection.c(ServerConnection.java:150)
+[11:36:34] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.MinecraftServer.D(MinecraftServer.java:934)
+[11:36:34] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.DedicatedServer.D(DedicatedServer.java:403)
+[11:36:34] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.MinecraftServer.C(MinecraftServer.java:763)
+[11:36:34] [Server thread/WARN]: 	at net.minecraft.server.v1_11_R1.MinecraftServer.run(MinecraftServer.java:661)
+[11:36:34] [Server thread/WARN]: 	at java.lang.Thread.run(Unknown Source)
+[11:36:34] [Server thread/WARN]: [TabList] Failed to compare versions. java.io.FileNotFoundException: https://raw.githubusercontent.com/montlikadani/TabList/master/plugin.yml Please report it here:
+https://github.com/montlikadani/TabList/issues
+[11:36:34] [Server thread/INFO]: laomianyang[/127.0.0.1:53424] logged in with entity id 259 at ([world]134.93426066490463, 71.0, 277.62540380600126)
+[11:36:34] [Server thread/INFO]: CONSOLE issued server command: /tell laomianyang - 欢迎您, laomianyang!
+[11:36:34] [Server thread/INFO]: [me -> laomianyang] - 欢迎您, laomianyang!
+[11:36:34] [Craft Scheduler Thread - 17/INFO]: Failed to check for Residence update on spigot web page.
+[11:36:37] [Craft Scheduler Thread - 14/INFO]: [AuthMe] laomianyang logged in!
+[11:36:38] [Server thread/INFO]: <laomianyang> .
+[11:37:37] [Server thread/INFO]: 史莱姆王 苏醒了！
+[11:37:37] [Server thread/INFO]: BOSS的挑战者为：[laomianyang]
+[11:37:58] [Server thread/INFO]: 史莱姆王 被击败了.
+[11:38:03] [Server thread/INFO]: laomianyang issued server command: /killall drop
+[11:43:30] [Async Chat Thread - #0/INFO]: <laomianyang> &e
+[11:43:37] [Server thread/INFO]: [Skript] laomianyang issued effect command: broadcast "&3e"
+[11:43:37] [Server thread/INFO]: e
+[11:43:46] [Server thread/INFO]: [Skript] laomianyang issued effect command: broadcast "&ae"
+[11:43:46] [Server thread/INFO]: e
+[11:43:49] [Server thread/INFO]: [Skript] laomianyang issued effect command: broadcast "&2e"
+[11:43:49] [Server thread/INFO]: e
+[11:44:04] [Server thread/INFO]: [Skript] laomianyang issued effect command: broadcast "&1e"
+[11:44:04] [Server thread/INFO]: e
+[11:44:22] [Server thread/INFO]: [Skript] laomianyang issued effect command: broadcast "&6e"
+[11:44:22] [Server thread/INFO]: e
+[11:44:24] [Server thread/INFO]: [Skript] laomianyang issued effect command: broadcast "&5e"
+[11:44:24] [Server thread/INFO]: e
+[11:44:27] [Server thread/INFO]: [Skript] laomianyang issued effect command: broadcast "&4e"
+[11:44:27] [Server thread/INFO]: e
+[11:44:29] [Server thread/INFO]: [Skript] laomianyang issued effect command: broadcast "&7e"
+[11:44:29] [Server thread/INFO]: e
+[11:44:32] [Server thread/INFO]: [Skript] laomianyang issued effect command: broadcast "&5e"
+[11:44:32] [Server thread/INFO]: e
+[11:44:33] [Server thread/INFO]: [Skript] laomianyang issued effect command: broadcast "&be"
+[11:44:33] [Server thread/INFO]: e
+[11:44:41] [Server thread/INFO]: [Skript] laomianyang issued effect command: broadcast "&0e"
+[11:44:41] [Server thread/INFO]: e
+[11:44:43] [Server thread/INFO]: [Skript] laomianyang issued effect command: broadcast "&9e"
+[11:44:43] [Server thread/INFO]: e
+[11:44:46] [Server thread/INFO]: [Skript] laomianyang issued effect command: broadcast "&1e"
+[11:44:46] [Server thread/INFO]: e
+[11:49:21] [Server thread/INFO]: laomianyang 求死的愿望实现了，凶手是装甲幻影魔
+[11:49:36] [Server thread/WARN]: laomianyang moved wrongly!
+[11:50:29] [Server thread/INFO]: laomianyang 停止了呼吸，凶手是装甲幻影魔
+[11:50:44] [Server thread/WARN]: laomianyang moved wrongly!
+[12:10:45] [Server thread/INFO]: laomianyang issued server command: /god
+[12:21:47] [Server thread/INFO]: 血月正在升起...
+[12:27:24] [Async Chat Thread - #1/INFO]: <laomianyang> e
+[12:30:53] [Server thread/INFO]: laomianyang issued server command: /killall drop
+[12:30:58] [Server thread/INFO]: laomianyang issued server command: /killall drop
+[12:35:47] [Server thread/INFO]: laomianyang issued server command: /sk reload SLMW
+[12:35:49] [Server thread/INFO]: 史莱姆王 苏醒了！
+[12:35:49] [Server thread/INFO]: BOSS的挑战者为：[laomianyang]
+[12:35:56] [Server thread/INFO]: laomianyang issued server command: /god
+[12:36:50] [Server thread/INFO]: 史莱姆王 被击败了.
+[12:36:59] [Server thread/INFO]: laomianyang issued server command: /killall drop
+[12:41:30] [Server thread/INFO]: 史莱姆王 苏醒了！
+[12:41:30] [Server thread/INFO]: BOSS的挑战者为：[laomianyang]
+[12:41:34] [Server thread/INFO]: laomianyang issued server command: /sk reload Damage
+[12:42:11] [Server thread/INFO]: 史莱姆王 被击败了.
+[12:42:30] [Server thread/INFO]: laomianyang issued server command: /killall drop
+[12:42:34] [Server thread/INFO]: laomianyang issued server command: /killall drop
+[12:43:05] [Server thread/INFO]: laomianyang issued server command: /sk reload SLMW
+[12:43:07] [Server thread/INFO]: 史莱姆王 苏醒了！
+[12:43:07] [Server thread/INFO]: BOSS的挑战者为：[laomianyang]
+[12:46:54] [Server thread/INFO]: laomianyang issued server command: /sk reload slmw
+[12:47:00] [Server thread/INFO]: laomianyang issued server command: /sk reload SLMW
+[12:47:06] [Server thread/INFO]: 史莱姆王 被击败了.
+[12:47:21] [Server thread/INFO]: laomianyang issued server command: /killall drop
+[12:47:38] [Server thread/INFO]: laomianyang issued server command: /sk reload SLMW
+[12:47:40] [Server thread/INFO]: 史莱姆王 苏醒了！
+[12:47:40] [Server thread/INFO]: BOSS的挑战者为：[laomianyang]
+[12:48:23] [Server thread/INFO]: laomianyang 被谋杀了，凶手是殷红弹幕
+[12:48:53] [Server thread/WARN]: laomianyang moved too quickly! 76.63625785097261,-1.7734327545623643,-45.120555325933424
+[12:51:21] [Server thread/INFO]: laomianyang issued server command: /sk reload SLMW
+[12:51:23] [Server thread/INFO]: 史莱姆王 苏醒了！
+[12:51:23] [Server thread/INFO]: BOSS的挑战者为：[laomianyang]
+[12:52:45] [Server thread/INFO]: 史莱姆王 被击败了.
+[12:54:07] [Server thread/INFO]: laomianyang issued server command: /killall drop
+[12:54:22] [Server thread/INFO]: laomianyang issued server command: /day
+[12:54:22] [Server thread/INFO]: 史莱姆王 苏醒了！
+[12:54:22] [Server thread/INFO]: BOSS的挑战者为：[laomianyang]
+[12:55:33] [Server thread/INFO]: 史莱姆王 被击败了.
+[12:55:40] [Server thread/INFO]: laomianyang issued server command: /killall drop
+[12:55:44] [Server thread/INFO]: laomianyang issued server command: /killall drop
+[12:58:07] [Server thread/INFO]: laomianyang issued server command: /night
+[12:58:07] [Server thread/INFO]: 克苏鲁之眼 苏醒了！
+[12:58:07] [Server thread/INFO]: BOSS的挑战者为：[laomianyang]
+[12:58:22] [Server thread/INFO]: 克苏鲁之眼 被击败了.
+[12:58:26] [Server thread/INFO]: laomianyang issued server command: /killall drop
+[13:01:26] [Server thread/INFO]: laomianyang 惨遭屠杀，凶手是装甲幻影魔
+[13:01:31] [Server thread/INFO]: 渔夫 惨遭腰斩，凶手是装甲幻影魔
+[13:01:41] [Server thread/WARN]: laomianyang moved wrongly!
+[13:10:07] [Server thread/INFO]: 史莱姆正在从天而降！
+[13:20:27] [Server thread/INFO]: 史莱姆王 苏醒了！
+[13:20:27] [Server thread/INFO]: BOSS的挑战者为：[laomianyang]
+[13:20:42] [Server thread/INFO]: 裁缝 被登dua郎，凶手是尖刺史莱姆
+[13:20:44] [Server thread/INFO]: 军火商 被撕裂了，凶手是尖刺
+[13:20:48] [Server thread/INFO]: 护士 停止了呼吸，凶手是尖刺
+[13:20:49] [Server thread/INFO]: 建材商人 被谋杀了，凶手是尖刺
+[13:20:51] [Server thread/INFO]: 史莱姆王 被击败了.
+[13:20:51] [Server thread/INFO]: 史莱姆不再从天而降.
+[13:20:52] [Server thread/INFO]: 向导 被从这个世界里剔除了，凶手是尖刺
+[13:20:52] [Server thread/INFO]: 渔夫 被从这个世界里剔除了，凶手是尖刺
+[15:12:50] [Server thread/INFO]: laomianyang issued server command: /sk reload control
+[15:13:25] [Server thread/WARN]: laomianyang moved too quickly! -9.470725955771854,9.1315633992116,-4.213227435700787
+[15:16:32] [Server thread/INFO]: Stopping the server
+[15:16:32] [Server thread/INFO]: Stopping server
+[15:16:32] [Server thread/INFO]: [SkQuery] Disabling SkQuery v4.1.1
+[15:16:32] [Server thread/INFO]: [skript-reflect] Disabling skript-reflect v2.2.3
+[15:16:32] [Server thread/INFO]: [skDragon] Disabling skDragon v0.16
+[15:16:32] [Server thread/INFO]: [skript-placeholders] Disabling skript-placeholders v1.5.2
+[15:16:32] [Server thread/INFO]: [Skript] Disabling Skript v2.5.3
+[15:16:32] [Server thread/INFO]: [Residence] Disabling Residence v4.8.2.0
+[15:16:32] [Server thread/INFO]: [PlaceholderAPI] Unregistered placeholder hook for placeholder: residence
+[15:16:32] [Server thread/INFO]: [Residence] Disabled!
+[15:16:32] [Server thread/INFO]: [TabList] Disabling TabList v5.1
+[15:16:32] [Server thread/INFO]: [TabList] > The plugin successfully disabled!
+[15:16:32] [Server thread/INFO]: [VexView] Disabling VexView v2.6.10
+[15:16:32] [Server thread/INFO]: [AuthMe] Disabling AuthMe v5.2-b1542
+[15:16:32] [Server thread/INFO]: [AuthMe] Waiting for 0 tasks to finish
+[15:16:32] [Server thread/INFO]: [AuthMe] AuthMe 5.2-b1542 disabled!
+[15:16:32] [Server thread/INFO]: [Essentials] Disabling Essentials v2.18.2.0
+[15:16:32] [Server thread/INFO]: [Vault] [Economy] Essentials Economy unhooked.
+[15:16:32] [Server thread/INFO]: [ChatItem] Disabling ChatItem v1.3.6.2
+[15:16:32] [Server thread/INFO]: [LibsDisguises] Disabling LibsDisguises v9.1.2
+[15:16:32] [Server thread/INFO]: [ProtocolLib] Disabling ProtocolLib v4.4.0
+[15:16:32] [Server thread/INFO]: [Vault] Disabling Vault v1.7.3-b131
+[15:16:32] [Server thread/INFO]: [GrItemTags] Disabling GrItemTags v1.0.7
+[15:16:32] [Server thread/INFO]: [PlaceholderAPI] Disabling PlaceholderAPI v2.10.0
+[15:16:32] [Server thread/INFO]: [AntiExplosion] Disabling AntiExplosion v1.0.1
+[15:16:32] [Server thread/INFO]: Saving players
+[15:16:32] [Server thread/INFO]: laomianyang lost connection: Server closed
+[15:16:32] [Server thread/INFO]: laomianyang left the game
+[15:16:32] [Server thread/INFO]: Saving worlds
+[15:16:32] [Server thread/INFO]: Saving chunks for level 'world'/Overworld
+[15:16:32] [Server thread/INFO]: Saving chunks for level 'world_nether'/Nether
+[15:16:32] [Server thread/INFO]: Saving chunks for level 'world_the_end'/The End

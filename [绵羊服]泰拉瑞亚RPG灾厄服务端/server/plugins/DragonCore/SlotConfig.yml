@@ -1,0 +1,178 @@
+# 自定义的槽位必须填在此处，否则槽位将不允许点击操作
+
+ammo1:
+  attribute: true
+  limit:
+  - "lorecontains|[弹药]"
+ammo2:
+  attribute: true
+  limit:
+  - "lorecontains|[弹药]"
+ammo3:
+  attribute: true
+  limit:
+  - "lorecontains|[弹药]"
+ammo4:
+  attribute: true
+  limit:
+  - "lorecontains|[弹药]"
+ammo5:
+  attribute: true
+  limit:
+  - "lorecontains|[弹药]"
+ammo6:
+  attribute: true
+  limit:
+  - "lorecontains|[弹药]"
+ammo7:
+  attribute: true
+  limit:
+  - "lorecontains|[弹药]"
+ammo8:
+  attribute: true
+  limit:
+  - "lorecontains|[弹药]"
+trash:
+  attribute: true
+  limit:
+  - "lorecontains|[坐骑]"
+mount:
+  attribute: true
+  limit: []
+accessory1:
+  attribute: true
+  limit:
+  - "accessory_check|1"
+accessory2:
+  attribute: true
+  limit:
+  - "accessory_check|2"
+accessory3:
+  attribute: true
+  limit:
+  - "accessory_check|3"
+accessory4:
+  attribute: true
+  limit:
+  - "accessory_check|4"
+accessory5:
+  attribute: true
+  limit:
+  - "accessory_check|5"
+accessory6:
+  attribute: true
+  limit:
+  - "accessory_check|6"
+accessory7:
+  attribute: true
+  limit:
+  - "accessory_check|7"
+
+
+# 脚本功能，不会改的不要乱改哦~
+Script:
+  # 判定饰品
+  accessory_check: |-
+    function execute(player, itemStack, slotIdentifier, limitString){
+      var itemDNE = itemStack == null || itemStack.getType().toString() == "AIR";
+      if (itemDNE) {
+        return true;
+      }
+      
+      var lore = itemStack.getItemMeta().getLore();
+      var hasLore = false;
+      if(lore!=null){
+        for(var i=0;i<lore.size();i++){
+          var line = lore.get(i);
+          if(line!=null && line.contains("[饰品]")){
+             hasLore = true;
+             break;
+          }
+        }
+      }
+      if (hasLore === false){
+        return false;
+      }
+      
+      var itemName = itemStack.getItemMeta().getDisplayName();
+      if (itemName.endsWith("靴") || itemName.endsWith("之翼")) {
+        for (var idx = 1; idx <= 7; idx ++) {
+          if ("" + idx == limitString) {
+            continue;
+          }
+          var currItem = SlotAPI.static.getCacheSlotItem(player,"accessory"+idx);
+          var itemDNE = currItem == null || currItem.getType().toString() == "AIR";
+          if (itemDNE) {
+            continue;
+          }
+          var currItemName = currItem.getItemMeta().getDisplayName();
+          if (currItemName.endsWith("靴") || currItemName.endsWith("之翼")) {
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+  # 用于判断物品的某行lore里是否包含了xxx
+  lorecontains: |-
+    function execute(player, itemStack, slotIdentifier, limitString){
+      limitString = limitString.replaceAll("&","§");
+      var lore = itemStack.getItemMeta().getLore();
+      if(lore!=null){
+        for(var i=0;i<lore.size();i++){
+          var line = lore.get(i).replaceAll(" ","");
+          if(line!=null && line.contains(limitString)){
+             return true;
+          }
+        }
+      }
+      return false;
+    }
+  # 用于判断物品是否有一行lore为xxx
+  lore: |-
+    function execute(player, itemStack, slotIdentifier, limitString){
+      limitString = limitString.replaceAll("&","§");
+      var lore = itemStack.getItemMeta().getLore();
+      var result = lore != null && lore.contains(limitString);
+      if(!result){
+    	player.sendMessage("§c该槽位需要Lore: "+limitString);
+      }
+      return result;
+    }
+  # 用于判断玩家是否拥有权限xxx
+  permission: |-
+    function execute(player, itemStack, slotIdentifier, limitString){
+      var result = player.hasPermission(limitString);
+      if(!result){
+    	player.sendMessage("§6你需要有 §f"+limitString+" §6权限才可以使用该槽位")
+      }
+      return result;
+    }
+  # 用于判断玩家放入的时装是否为xx
+  skin: |-
+    function execute(player, itemStack, slotIdentifier, limitString) {
+        var itemSkinType = DragonAPI.static.getItemSkinType(itemStack);
+        if (itemSkinType != null) {
+            itemSkinType = itemSkinType.toLowerCase();
+        }
+        var result = (itemSkinType === limitString) || (itemSkinType != null && limitString=="*");
+        if (!result) {
+            player.sendMessage("§c当前槽位需要时装类型: §f" + limitString + "§c  你放入的物品时装类型是: §f" + itemSkinType);
+        }
+        return result;
+    }
+  # 用于判断其他槽位内是否不存在物品
+  emptyslot: |-
+    function execute(player, itemStack, slotIdentifier, limitString) {
+        var item = SlotAPI.static.getCacheSlotItem(player,limitString);
+        var result = item == null || item.getType().toString() == "AIR";
+        if(!result){
+            if(limitString=="额外槽位1"){
+               limitString = "英文名的话可以通过这个方式改成中文名提示玩家";
+            }else if(limitString=="额外槽位2"){
+               limitString = "英文名的话可以通过这个方式改成中文名提示玩家2333";
+            }
+            player.sendMessage("§c当前槽位与: §f" + limitString + "§c 冲突,您不能同时在两个槽位内放置物品");
+        }
+        return result;
+    }

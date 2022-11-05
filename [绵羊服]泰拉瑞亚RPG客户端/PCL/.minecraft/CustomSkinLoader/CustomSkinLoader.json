@@ -1,0 +1,41 @@
+{
+  "version": "14.8",
+  "loadlist": [
+    {
+      "name": "Mojang",
+      "type": "MojangAPI"
+    },
+    {
+      "name": "LittleSkin",
+      "type": "CustomSkinAPI",
+      "root": "https://mcskin.littleservice.cn/"
+    },
+    {
+      "name": "BlessingSkin",
+      "type": "CustomSkinAPI",
+      "root": "http://skin.prinzeugen.net/"
+    },
+    {
+      "name": "SkinMe",
+      "type": "UniSkinAPI",
+      "root": "http://www.skinme.cc/uniskin/"
+    },
+    {
+      "name": "LocalSkin",
+      "type": "Legacy",
+      "checkPNG": false,
+      "skin": "LocalSkin/skins/{USERNAME}.png",
+      "model": "default",
+      "cape": "LocalSkin/capes/{USERNAME}.png",
+      "elytra": "LocalSkin/elytras/{USERNAME}.png"
+    }
+  ],
+  "enableDynamicSkull": true,
+  "enableTransparentSkin": true,
+  "ignoreHttpsCertificate": false,
+  "forceLoadAllTextures": false,
+  "cacheExpiry": 20,
+  "enableUpdateSkull": false,
+  "enableLocalProfileCache": false,
+  "enableCacheAutoClean": false
+}

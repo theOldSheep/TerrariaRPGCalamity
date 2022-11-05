@@ -1,0 +1,346 @@
+import:
+	java.util.ArrayList
+	java.util.HashMap
+	net.minecraft.server.v1_11_R1.BossBattle
+	net.minecraft.server.v1_11_R1.BossBattle$BarColor
+	net.minecraft.server.v1_11_R1.BossBattle$BarStyle
+	net.minecraft.server.v1_11_R1.BossBattleServer
+	net.minecraft.server.v1_11_R1.PacketPlayOutBoss$Action
+	org.bukkit.craftbukkit.v1_11_R1.util.CraftChatMessage
+	org.bukkit.entity.EntityType
+
+on rightclick:
+	gamemode of player is survival
+	set {_tool} to player's tool
+	if {_tool}.getType().toString() is "EYE_OF_ENDER" or "ENDER_PEARL":
+		cancel event
+	metadata "useCD" of player is false
+	if trimText(name of {_tool}) is "机械魔眼":
+		player.getWorld().getTime() is between 13500 and 22500
+		{BOSS}.containsKey("双子魔眼") is false
+		spawn a slime 41 behind player
+		set {_jgy} to spawned entity
+		spawn a slime 41 behind player
+		set {_myy} to spawned entity
+		handleSZMY({_jgy}, {_myy}, player)
+		applyCD(player, 20)
+		set {_tool} to (item amount of {_tool} - 1) of {_tool}
+		set player's tool to {_tool}
+
+function handleSZMY(jgy: entity, myy: entity, ply: player):
+	broadcast "&d&l双子魔眼 苏醒了！"
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_jgy}
+	set {_attrMapJGY} to new HashMap()
+	{_attrMapJGY}.put("crit", 0.04)
+	{_attrMapJGY}.put("damage", 152)
+	{_attrMapJGY}.put("damageMeleeMulti", 1)
+	{_attrMapJGY}.put("damageMulti", 1)
+	{_attrMapJGY}.put("damageType", "Melee")
+	{_attrMapJGY}.put("defence", 20)
+	{_attrMapJGY}.put("defenceMulti", 1)
+	{_attrMapJGY}.put("knockback", 4)
+	{_attrMapJGY}.put("knockbackResistance", 1)
+	{_attrMapJGY}.put("knockbackMeleeMulti", 1)
+	{_attrMapJGY}.put("knockbackMulti", 1)
+	set metadata "attrMap" of {_jgy} to {_attrMapJGY}
+	set {_attrMapJG} to new HashMap()
+	{_attrMapJG}.put("crit", 0.04)
+	{_attrMapJG}.put("damage", 152)
+	{_attrMapJG}.put("damageRangedMulti", 1)
+	{_attrMapJG}.put("damageMagicMulti", 1)
+	{_attrMapJG}.put("damageMulti", 1)
+	{_attrMapJG}.put("damageType", "Magic")
+	{_attrMapJG}.put("knockback", 2)
+	{_attrMapJG}.put("knockbackMulti", 1)
+	set {_attrMapMYY} to {_attrMapJGY}.clone()
+	{_attrMapMYY}.put("damage", 170)
+	set metadata "attrMap" of {_myy} to {_attrMapMYY}
+	set {_attrMapZHQ} to {_attrMapJG}.clone()
+	{_attrMapZHQ}.put("damage", 176)
+	
+	set {_bossbar} to new BossBattleServer(CraftChatMessage.fromString("双子魔眼", true)[0], BarColor.GREEN, BarStyle.PROGRESS)
+	{_bossbar}.setVisible(true)
+	set metadata "bossbar" of {_jgy} to {_bossbar}
+	set metadata "bossbar" of {_myy} to {_bossbar}
+	
+	set {_targets} to setupBossTarget({_jgy}, 4, {_ply}, true, {_bossbar})
+	set metadata "targets" of {_jgy} to {_targets}
+	set metadata "targets" of {_myy} to {_targets}
+	set {_healthMulti} to getBossHealthMulti({_targets}.size())
+	set name of {_jgy} to "激光眼"
+	{_jgy}.setCustomName("激光眼")
+	{_jgy}.setCustomNameVisible(true)
+	{_jgy}.setGravity(false)
+	{_jgy}.setRemoveWhenFarAway(false)
+	slimeResize({_jgy}, 5)
+	set name of {_myy} to "魔焰眼"
+	{_myy}.setCustomName("魔焰眼")
+	{_myy}.setCustomNameVisible(true)
+	{_myy}.setGravity(false)
+	{_myy}.setRemoveWhenFarAway(false)
+	slimeResize({_myy}, 5)
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_jgy}
+	add "isMonster" to scoreboard tags of {_jgy}
+	add "isBOSS" to scoreboard tags of {_jgy}
+	add "isMonster" to scoreboard tags of {_myy}
+	add "isBOSS" to scoreboard tags of {_myy}
+	
+	set {_bossList} to new ArrayList(2)
+	{_bossList}.add({_jgy})
+	{_bossList}.add({_myy})
+	{BOSS}.put("双子魔眼", {_bossList})
+	set {_health} to round(60000 * {_healthMulti})
+	set max health of {_jgy} to {_health}
+	set health of {_jgy} to {_health}
+	set {_health} to round(69000 * {_healthMulti})
+	set max health of {_myy} to {_health}
+	set health of {_myy} to {_health}
+	
+	set {_indexAI} to 0
+	set {_target} to {_ply}
+	set metadata "target" of {_jgy} to {_target}
+	set metadata "target" of {_myy} to {_target}
+	
+	set {_locJGY} to location of {_jgy}
+	set {_locMYY} to location of {_myy}
+	set {_tierJGY} to 0
+	set {_tierMYY} to 0
+	
+	while ((health of {_jgy}) + (health of {_myy})) > 0:
+		if (world of {_jgy}).getTime() is not between 13500 and 22500:
+			clear {_target}
+			clear metadata "target" of {_jgy}
+		else:
+			if {_target} is set:
+				checkBossTarget({_target}, {_jgy}, false) is false
+				clear {_target}
+				clear metadata "target" of {_jgy}
+			if {_target} is not set:
+				loop ...{_targets}.keySet():
+					set {_ply} to "%loop-value%" parsed as player
+					checkBossTarget({_ply}, {_jgy}, false) is true
+					set {_target} to {_ply}
+					set metadata "target" of {_jgy} to {_target}
+					makeTarget({_jgy}, {_target})
+					stop loop
+				#find new target if avaliable, otherwise flee
+		if {_target} is not set:
+			set {_loc} to location of {_jgy}
+			{_loc}.add(0, 5, 0)
+			teleport {_jgy} to {_loc}
+			set {_loc} to location of {_myy}
+			{_loc}.add(0, 5, 0)
+			teleport {_myy} to {_loc}
+			if {_loc}.getY() >= 300:
+				set max health of {_jgy} to 1
+				{_jgy}.remove()
+				{_myy}.remove()
+				stop loop
+		else:
+			#AI
+			{_jgy}.setVelocity(vector(0, 0, 0))
+			{_myy}.setVelocity(vector(0, 0, 0))
+			if health of {_jgy} > 0:
+				if {_tierJGY} = 0:
+					if health of {_jgy} / max health of {_jgy} < 0.4:
+						set {_tierJGY} to 1
+						add "isMechanic" to scoreboard tags of {_jgy}
+						{_attrMapJGY}.put("damage", 228)
+						{_attrMapJGY}.put("defence", 40)
+					else:
+						if mod({_indexAI}, 220) < 60:
+							#dash
+							if mod({_indexAI}, 15) = 0:
+								set {_velocityJGY} to (location of {_target}).subtract(location of {_jgy}).toVector()
+								if vector length of {_velocityJGY} = 0:
+									set {_velocityJGY} to vector(0, 1, 0)
+								set vector length of {_velocityJGY} to 1
+							else if mod({_indexAI}, 15) > 9:
+								{_velocityJGY}.multiply(0.8)
+						else:
+							if mod({_indexAI}, 3) is 0:
+								set {_velocityJGY} to (location of {_target}).add(sin({_indexAI}) * 10, 10, cos({_indexAI}) * 10).subtract(location of {_jgy}).toVector()
+								if vector length of {_velocityJGY} > 0:
+									set vector length of {_velocityJGY} to min(3, (vector length of {_velocityJGY}) / 10)
+							#lazer
+							if mod({_indexAI}, 30) is 0 or 8:
+								set {_v} to (eye location of {_target}).subtract(eye location of {_jgy}).toVector()
+								set vector length of {_v} to 1.8
+								
+								set {_lazer} to (world of {_jgy}).spawnEntity((eye location of {_jgy}), EntityType.SPLASH_POTION)
+								{_lazer}.setCustomName("死亡激光")
+								{_lazer}.setVelocity({_v})
+								{_lazer}.setShooter({_jgy})
+								set metadata "attrMap" of {_lazer} to {_attrMapJG}
+								disguiseProjectile({_lazer})
+								{_lazer}.setGravity(false)
+								projectileAI({_lazer}, "GUN")
+								set metadata "penetration" of {_lazer} to 4
+						set {_loc} to location of {_jgy}
+						{_loc}.add({_velocityJGY})
+						teleport {_jgy} to {_loc}
+				else if {_tierJGY} < 40:
+					add 1 to {_tierJGY}
+					if {_tierJGY} >= 40:
+						set name of {_jgy} to "激光眼&1"
+						{_jgy}.setCustomName("激光眼&1")
+				else:
+					if mod({_indexAI}, 200) < floor(health of {_jgy} / max health of {_jgy} * 17) * 15:
+						#single lazer
+						if mod({_indexAI}, 3) is 0:
+							set {_velocityJGY} to (location of {_target}).add(sin({_indexAI}) * 10, 10, cos({_indexAI}) * 10).subtract(location of {_jgy}).toVector()
+							if vector length of {_velocityJGY} > 0:
+								set vector length of {_velocityJGY} to min(3, (vector length of {_velocityJGY}) / 10)
+						#lazer
+						if mod({_indexAI}, 30) is 0 or 8:
+							set {_attrMapJG} to {_attrMapJG}.clone()
+							{_attrMapJG}.put("damage", 184)
+							set {_v} to (eye location of {_target}).subtract(eye location of {_jgy}).toVector()
+							set vector length of {_v} to 1.8
+							
+							set {_lazer} to (world of {_jgy}).spawnEntity((eye location of {_jgy}), EntityType.SPLASH_POTION)
+							{_lazer}.setCustomName("死亡激光")
+							{_lazer}.setVelocity({_v})
+							{_lazer}.setShooter({_jgy})
+							set metadata "attrMap" of {_lazer} to {_attrMapJG}
+							disguiseProjectile({_lazer})
+							projectileAI({_lazer}, "GUN")
+							{_lazer}.setGravity(false)
+							set metadata "penetration" of {_lazer} to 4
+					else:
+						set {_velocityJGY} to (location of {_target}).add(sin({_indexAI}) * 10, 0, cos({_indexAI}) * 10).subtract(location of {_jgy}).toVector()
+						if vector length of {_velocityJGY} > 0:
+							set vector length of {_velocityJGY} to min(3, (vector length of {_velocityJGY}) / 10)
+						#lazer combo
+						if mod({_indexAI}, 3) = 0:
+							set {_attrMapJG} to {_attrMapJG}.clone()
+							{_attrMapJG}.put("damage", 136)
+							set {_v} to (eye location of {_target}).subtract(eye location of {_jgy}).toVector()
+							set vector length of {_v} to 1.5
+							
+							set {_lazer} to (world of {_jgy}).spawnEntity((eye location of {_jgy}), EntityType.SPLASH_POTION)
+							{_lazer}.setCustomName("死亡激光")
+							{_lazer}.setVelocity({_v})
+							{_lazer}.setShooter({_jgy})
+							set metadata "attrMap" of {_lazer} to {_attrMapJG}
+							disguiseProjectile({_lazer})
+							{_lazer}.setGravity(false)
+							projectileAI({_lazer}, "GUN")
+							set metadata "penetration" of {_lazer} to 4
+					set {_loc} to location of {_jgy}
+					{_loc}.add({_velocityJGY})
+					teleport {_jgy} to {_loc}
+			if health of {_myy} > 0:
+				if {_tierMYY} = 0:
+					if health of {_myy} / max health of {_myy} < 0.4:
+						set {_tierMYY} to 1
+						add "isMechanic" to scoreboard tags of {_myy}
+						{_attrMapMYY}.put("damage", 254)
+						{_attrMapMYY}.put("defence", 56)
+						set {_attrMapZHQ} to {_attrMapZHQ}.clone()
+						{_attrMapZHQ}.put("damage", 216)
+					else:
+						if mod({_indexAI}, 138) < 78:
+							#dash
+							if mod({_indexAI}, 13) = 0:
+								set {_velocityMYY} to (location of {_target}).subtract(location of {_myy}).toVector()
+								if vector length of {_velocityMYY} = 0:
+									set {_velocityMYY} to vector(0, 1, 0)
+								set vector length of {_velocityMYY} to 0.9
+							else if mod({_indexAI}, 13) > 8:
+								{_velocityMYY}.multiply(0.8)
+						else:
+							if mod({_indexAI}, 6) = 0:
+								set {_velocityMYY} to (location of {_target}).subtract(location of {_myy}).toVector()
+								if vector length of {_velocityMYY} > 0:
+									set vector length of {_velocityMYY} to 1
+							#curseflame
+							if mod(({_indexAI}- 78), 20) = 0 or 6:
+								set {_v} to (eye location of {_target}).add(0, 3, 0).subtract(eye location of {_myy}).toVector()
+								set vector length of {_v} to 1.8
+								
+								set {_zhq} to (world of {_myy}).spawnEntity((eye location of {_myy}), EntityType.SPLASH_POTION)
+								{_zhq}.setCustomName("咒火球")
+								{_zhq}.setVelocity({_v})
+								{_zhq}.setShooter({_myy})
+								disguiseProjectile({_zhq})
+								set metadata "attrMap" of {_zhq} to {_attrMapZHQ}
+								set metadata "penetration" of {_zhq} to 4
+						set {_loc} to location of {_myy}
+						{_loc}.add({_velocityMYY})
+						teleport {_myy} to {_loc}
+				else if {_tierMYY} < 40:
+					add 1 to {_tierMYY}
+					if {_tierMYY} >= 40:
+						set name of {_myy} to "魔焰眼&1"
+						{_myy}.setCustomName("魔焰眼&1")
+						set {_indexAI} to 0
+				else:
+					if mod({_indexAI}, 200) < 90:
+						#dash
+						if mod({_indexAI}, 15) = 0:
+							set {_velocityMYY} to (location of {_target}).subtract(location of {_myy}).toVector()
+							if vector length of {_velocityMYY} = 0:
+								set {_velocityMYY} to vector(0, 1, 0)
+							set vector length of {_velocityMYY} to 1.3
+						else if mod({_indexAI}, 15) > 9:
+							{_velocityMYY}.multiply(0.8)
+					else:
+						set {_velocityMYY} to (location of {_target}).subtract(location of {_myy}).toVector()
+						if vector length of {_velocityMYY} > 0:
+							set vector length of {_velocityMYY} to min(2, (vector length of {_velocityMYY}) / 15)
+						#flame
+						if mod({_indexAI}, 5) = 0:
+							SZMYflame({_myy}, {_target})
+					set {_loc} to location of {_myy}
+					{_loc}.add({_velocityMYY})
+					teleport {_myy} to {_loc}
+		{_bossbar}.setProgress[float]((health of {_jgy} + health of {_myy}) / (max health of {_jgy} + max health of {_myy}))
+		add 1 to {_indexAI}
+		wait 3 ticks
+	{_bossbar}.setVisible(false)
+	{BOSS}.remove("双子魔眼")
+	#drop
+	set {_maxHealth} to max health of {_jgy}
+	{_maxHealth} is not 1
+	broadcast "&d&l双子魔眼 被击败了."
+	set {_targets} to metadata "targets" of {_jgy}
+	set {_killers} to {_targets}.keySet().iterator()
+	set {_drop} to a leather named "&r专家模式福袋" with lore "&7双子魔眼"
+	while {_killers}.hasNext():
+		set {_ply} to {_killers}.next()
+		set {_player} to {_ply} parsed as player
+		name of {_player} is {_ply}
+		set {_tier} to metadata "tier" of {_player}
+		if {_targets}.get({_ply}) * 5 > ({_maxHealth}) / ({_targets}.size()):
+			if {_tier} = 4:
+				set {_progress} to yml value "stats.bossProgress" from file "plugins/PlayerData/%{_ply}%.yml"
+				if {_progress} is not set:
+					set {_progress} to new ArrayList()
+				if {_progress}.contains("双子魔眼") is false:
+					{_progress}.add("双子魔眼")
+				if {_progress}.size() = 3:
+					set metadata "tier" of {_player} to 5
+					set yml value "stats.tier" from file "plugins/PlayerData/%{_ply}%.yml" to 5
+					clear yml value "stats.bossProgress" from file "plugins/PlayerData/%{_ply}%.yml"
+				else:
+					set yml value "stats.bossProgress" from file "plugins/PlayerData/%{_ply}%.yml" to {_progress}
+			if {_player} can hold {_drop}:
+				send "&a恭喜你击败了BOSS[&r双子魔眼&a]!您的战利品已经放在背包里了。" to {_player}
+				give {_drop} to {_player}
+			else:
+				send "&a恭喜你击败了BOSS[&r双子魔眼&a]!您的背包空间不足以容纳战利品，请迅速拾起脚下的战利品袋，以免丢失。" to {_player}
+				drop {_drop} at {_player}.getEyeLocation() without velocity
+		else:
+			send "&aBOSS 双子魔眼 已经被击败。很遗憾，您的输出不足以获得一份战利品。" to {_player}
+
+function SZMYflame(myy: entity, target: entity):
+	set {_velocity} to (eye location of {_target}).subtract(eye location of {_myy}).toVector()
+	set {_particleColor} to new ArrayList(1)
+	{_particleColor}.add("160|255|160")
+	set {_advanced} to new HashMap()
+	{_advanced}.put("startLocation", (eye location of {_myy}))
+	{_advanced}.put("particleInterval", 1)
+	loop 6 times:
+		handleStrikeLine({_myy}, (vector yaw of {_velocity}), (vector pitch of {_velocity}), ((loop-number) * 3), (a diamond), {_particleColor}, (new ArrayList()), true, {_advanced})
+		wait 5 ticks

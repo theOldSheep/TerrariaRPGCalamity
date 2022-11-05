@@ -1,0 +1,944 @@
+import:
+	java.util.ArrayList
+	java.util.HashMap
+	me.libraryaddict.disguise.DisguiseAPI
+	me.libraryaddict.disguise.disguisetypes.DisguiseType
+	me.libraryaddict.disguise.disguisetypes.MobDisguise
+	net.minecraft.server.v1_11_R1.BossBattle
+	net.minecraft.server.v1_11_R1.BossBattle$BarColor
+	net.minecraft.server.v1_11_R1.BossBattle$BarStyle
+	net.minecraft.server.v1_11_R1.BossBattleServer
+	net.minecraft.server.v1_11_R1.PacketPlayOutBoss$Action
+	net.minecraft.server.v1_11_R1.PathfinderGoalSelector
+	org.bukkit.attribute.Attribute
+	org.bukkit.craftbukkit.v1_11_R1.util.CraftChatMessage
+	org.bukkit.entity.EntityType
+
+function handleCelestrialPillars():
+	{pillars} is not set
+	broadcast "&d&l天界生物要入侵了！"
+	set {pillars} to new HashMap()
+	set {_attrMap} to new HashMap(10)
+	{_attrMap}.put("crit", 0.04)
+	{_attrMap}.put("damage", 0)
+	{_attrMap}.put("damageType", "Melee")
+	{_attrMap}.put("defence", 40)
+	{_attrMap}.put("knockback", 0)
+	{_attrMap}.put("knockbackResistance", 1)
+	set {_world} to world("world")
+	
+	set {_xMulti} to 1
+	set {_zMulti} to 1
+	loop 2 times:
+		set {_xMulti} to {_xMulti} * -1
+		loop 2 times:
+			set {_zMulti} to {_zMulti} * -1
+			set {_newX} to (a random number between 500 and 1000) * {_xMulti}
+			set {_newZ} to (a random number between 500 and 1000) * {_zMulti}
+			set {_loc} to location({_newX}, 100, {_newZ}, {_world})
+			loop 50 times:
+				set {_valid} to true
+				if getBiome({_loc}) is "ocean":
+					set {_valid} to false
+				else if "%biome of {_loc}%" contains "swamp":
+					set {_valid} to false
+				if {_valid} is false:
+					set {_newX} to (a random number between 500 and 1000) * {_xMulti}
+					set {_newZ} to (a random number between 500 and 1000) * {_zMulti}
+					set {_loc} to location({_newX}, 100, {_newZ}, {_world})
+				else:
+					stop loop
+			add ((location of highest solid block at {_loc}).add(0, 16, 0)) to {_locs::*}
+			
+	set {_disguise} to new MobDisguise(DisguiseType.GIANT, true)
+	{_disguise}.setReplaceSounds(true)
+	set {_locs::*} to shuffled {_locs::*}
+	loop {_locs::*}:
+		set {_loc} to loop-value
+		{_world}.getChunkAt({_loc}).load()
+		spawn a slime at {_loc}
+		set {_pillar} to spawned entity
+		slimeResize({_pillar}, 8)
+		set max health of {_pillar} to 40000
+		set health of {_pillar} to 40000
+		set gravity of {_pillar} to off
+		{_pillar}.setCustomNameVisible(true)
+		{_pillar}.setRemoveWhenFarAway(false)
+		add "isPillar" to scoreboard tags of {_pillar}
+		add "isMonster" to scoreboard tags of {_pillar}
+		add "isBOSS" to scoreboard tags of {_pillar}
+		set metadata "attrMap" of {_pillar} to {_attrMap}
+		set metadata "shield" of {_pillar} to 200
+		set {_pillar}.getHandle().goalSelector to new PathfinderGoalSelector({_pillar}.getHandle().getWorld().methodProfiler)
+		DisguiseAPI.disguiseEntity({_pillar}, {_disguise})
+		add {_pillar} to {_spawnedPillars::*}
+	{_spawnedPillars::1}.setCustomName("日耀柱")
+	{_spawnedPillars::2}.setCustomName("星璇柱")
+	{_spawnedPillars::3}.setCustomName("星云柱")
+	{_spawnedPillars::4}.setCustomName("星尘柱")
+	set metadata "amountWorm" of {_spawnedPillars::1} to 0
+	loop {_spawnedPillars::*}:
+		set {_pillar} to loop-value
+		{pillars}.put({_pillar}.getCustomName(), {_pillar})
+		
+		set {_bossbar} to new BossBattleServer(CraftChatMessage.fromString("%name of {_pillar}% [%x-coordinate of {_pillar}%, %y-coordinate of {_pillar}%, %z-coordinate of {_pillar}%]", true)[0], BarColor.WHITE, BarStyle.PROGRESS)
+		{_bossbar}.setVisible(true)
+		loop all players:
+			{_bossbar}.addPlayer(loop-player.getHandle())
+		set metadata "bossbar" of {_pillar} to {_bossbar}
+		add {_bossbar} to {_bossbars::*}
+	while {pillars} is set:
+		loop {_spawnedPillars::*}:
+			set {_pillar} to loop-value
+			health of {_pillar} > 0
+			set {_bossbar} to {_bossbars::%loop-index%}
+			set {_shield} to metadata "shield" of {_pillar}
+			if {_shield} > 0:
+				{_bossbar}.setProgress[float]({_shield} / 200)
+			else if "%{_bossbar}.color%" is "WHITE":
+				set {_bossbar}.color to BarColor.RED
+				{_bossbar}.sendUpdate(Action.UPDATE_STYLE)
+				renderSingleBossbar({_pillar}, {_bossbar})
+		loop {_bossbars::*}:
+			set {_bossbar} to loop-value
+			if health of {_spawnedPillars::%loop-index%} <= 0:
+				{_bossbar}.setVisible(false)
+		wait 10 ticks
+	loop {_bossbars::*}:
+		set {_bossbar} to loop-value
+		{_bossbar}.setVisible(false)
+on join:
+	{pillars} is set
+	loop ...({pillars}.values()):
+		set {_pillar} to loop-value
+		(metadata "bossbar" of {_pillar}).addPlayer(player.getHandle())
+
+on skript stop:
+	loop ...({pillars}.values()):
+		(loop-value).remove()
+	clear {pillars}
+
+function attemptPillarMobSpawn(pillar: entity, ply: player):
+	chance of 0.75
+	set {_xOffset} to a random number between 35 and -35
+	set {_zOffset} to 35 - abs({_xOffset})
+	if chance of 0.5:
+		set {_zOffset} to {_zOffset} * -1
+	set {_xOffset} to {_xOffset} * a random number between 0.8 and 1.2
+	set {_zOffset} to {_zOffset} * a random number between 0.8 and 1.2
+	set {_spawnLoc} to (location of {_ply}).add({_xOffset}, 0, {_zOffset})
+	set {_spawnLoc} to location of the block 1 above (highest solid block at {_spawnLoc})
+	if name of {_pillar} is "日耀柱":
+		if chance of 2/11:
+			set {_mobName} to "流星火怪"
+		else if chance of 2/9:
+			set {_mobName} to "火龙战士"
+		else if chance of 2/7:
+			set {_mobName} to "火龙怪"
+		else if chance of 2/5:
+			set {_mobName} to "火月怪"
+		else if chance of 2/3:
+			set {_mobName} to "火滚怪"
+		else:
+			set {_mobName} to "千足蜈蚣"
+			set {_amountWorm} to metadata "amountWorm" of {_pillar}
+			if {_amountWorm} >= 2:
+				stop trigger
+	else if name of {_pillar} is "星璇柱":
+		if chance of 1/3:
+			set {_mobName} to "异星黄蜂"
+		else if chance of 1/10:
+			set {_mobName} to "星璇怪"
+		else if chance of 2/3:
+			set {_mobName} to "漩泥怪"
+		else:
+			set {_mobName} to "异星蜂王"
+	else if name of {_pillar} is "星云柱":
+		if chance of 7/12:
+			set {_mobName} to "吮脑怪"
+		else if chance of 3/7:
+			set {_mobName} to "预言怪"
+		else if chance of 1/2:
+			set {_mobName} to "星云浮怪"
+		else:
+			set {_mobName} to "进化兽"
+	else if name of {_pillar} is "星尘柱":
+		if chance of 1/8:
+			set {_mobName} to "星尘细胞"
+		else if chance of 1/7:
+			set {_mobName} to "银河织妖"
+		else if chance of 1/6:
+			set {_mobName} to "流体入侵怪"
+		else if chance of 3/5:
+			set {_mobName} to "观星怪"
+		else:
+			set {_mobName} to "闪耀炮手"
+	if name of {_pillar} is "星璇柱":
+		chance of 0.25
+		set {_spawnLoc} to (location of {_ply}).add(0, 0.1, 0)
+		wait 3 seconds
+	pillarMobSpawn({_pillar}, {_ply}, {_spawnLoc}, {_mobName})
+function pillarMobSpawn(pillar: entity, ply: player, spawnLoc: location, mobName: text):
+	if {_ply} is set:
+		{_mobName} is not "星云球"
+		{_mobName} is not "闪耀怪"
+		{_mobName} is not "异星幼虫"
+		if metadata "mobAmount" of {_ply} > 20:
+			stop trigger
+	set {_attrMap} to new HashMap(10)
+	set {_slimeSize} to 2
+	
+	if {_mobName} is "流星火怪":
+		set {_health} to 2400
+		set {_type} to "slime"
+		set {_slimeSize} to 3
+		{_attrMap}.put("damage", 280)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 52)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.82)
+	else if {_mobName} is "千足蜈蚣":
+		set {_health} to 40000
+		set {_type} to "slime"
+		set {_slimeSize} to 3
+		{_attrMap}.put("damage", 600)
+		{_attrMap}.put("damageTakenMulti", 10)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 1000)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 1)
+	else if {_mobName} is "火龙战士":
+		set {_health} to 4000
+		set {_type} to "zombie"
+		{_attrMap}.put("damage", 320)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 56)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.64)
+	else if {_mobName} is "火龙怪":
+		set {_health} to 3200
+		set {_type} to "slime"
+		set {_slimeSize} to 4
+		{_attrMap}.put("damage", 220)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 64)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.82)
+	else if {_mobName} is "火月怪":
+		set {_health} to 3200
+		set {_type} to "zombie"
+		{_attrMap}.put("damage", 360)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 60)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.64)
+	else if {_mobName} is "火滚怪":
+		set {_health} to 2800
+		set {_type} to "zombie"
+		{_attrMap}.put("damage", 320)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 68)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 1)
+	else if {_mobName} is "异星黄蜂":
+		set {_health} to 2800
+		set {_type} to "slime"
+		{_attrMap}.put("damage", 360)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 68)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.46)
+	else if {_mobName} is "异星幼虫":
+		set {_health} to 800
+		set {_type} to "silverfish"
+		{_attrMap}.put("damage", 200)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 12)
+		{_attrMap}.put("knockback", 1)
+		{_attrMap}.put("knockbackResistance", 0.1)
+	else if {_mobName} is "星璇怪":
+		set {_health} to 2800
+		set {_type} to "zombie"
+		{_attrMap}.put("damage", 360)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 68)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.46)
+	else if {_mobName} is "漩泥怪":
+		set {_health} to 3200
+		set {_type} to "zombie"
+		{_attrMap}.put("damage", 400)
+		{_attrMap}.put("damageType", "Bullet")
+		{_attrMap}.put("defence", 80)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.64)
+	else if {_mobName} is "异星蜂王":
+		set {_health} to 4000
+		set {_type} to "zombie"
+		{_attrMap}.put("damage", 400)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 88)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.73)
+	else if {_mobName} is "吮脑怪":
+		set {_health} to 1320
+		set {_type} to "slime"
+		{_attrMap}.put("damage", 280)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 68)
+		{_attrMap}.put("knockback", 0)
+		{_attrMap}.put("knockbackResistance", 0.55)
+	else if {_mobName} is "预言怪":
+		set {_health} to 2800
+		set {_type} to "zombie"
+		{_attrMap}.put("damage", 360)
+		{_attrMap}.put("damageType", "Magic")
+		{_attrMap}.put("defence", 68)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.64)
+	else if {_mobName} is "星云浮怪":
+		set {_health} to 5200
+		set {_type} to "slime"
+		set {_slimeSize} to 3
+		{_attrMap}.put("damage", 400)
+		{_attrMap}.put("damageType", "Magic")
+		{_attrMap}.put("defence", 40)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.55)
+	else if {_mobName} is "进化兽":
+		set {_health} to 3400
+		set {_type} to "zombie"
+		{_attrMap}.put("damage", 360)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 92)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.82)
+	else if {_mobName} is "星云球":
+		set {_type} to "slime"
+		set {_slimeSize} to 2
+		{_attrMap}.put("damage", 280)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("knockback", 2)
+	else if {_mobName} is "星尘细胞":
+		set {_health} to 1200
+		set {_slimeSize} to 4
+		set {_type} to "slime"
+		{_attrMap}.put("damage", 480)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 100)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.55)
+	else if {_mobName} is "银河织妖":
+		set {_health} to 4800
+		set {_slimeSize} to 3
+		set {_type} to "slime"
+		{_attrMap}.put("damage", 320)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 20)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 1)
+	else if {_mobName} is "流体入侵怪":
+		set {_health} to 1200
+		set {_slimeSize} to 3
+		set {_type} to "slime"
+		{_attrMap}.put("damage", 280)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 100)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.55)
+	else if {_mobName} is "观星怪":
+		set {_health} to 2800
+		set {_type} to "zombie"
+		{_attrMap}.put("damage", 360)
+		{_attrMap}.put("damageType", "Magic")
+		{_attrMap}.put("defence", 68)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.64)
+	else if {_mobName} is "闪耀炮手":
+		set {_health} to 3200
+		set {_slimeSize} to 4
+		set {_type} to "slime"
+		{_attrMap}.put("damage", 280)
+		{_attrMap}.put("damageType", "Melee")
+		{_attrMap}.put("defence", 80)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.64)
+	else if {_mobName} is "闪耀怪":
+		set {_health} to 800
+		set {_type} to "silverfish"
+		{_attrMap}.put("damage", 320)
+		{_attrMap}.put("damageType", "Magic")
+		{_attrMap}.put("defence", 20)
+		{_attrMap}.put("knockback", 2)
+		{_attrMap}.put("knockbackResistance", 0.73)
+	
+	if {_type} is "zombie":
+		spawn a zombie at {_spawnLoc}
+		set helmet of (spawned entity) to a diamond helmet
+		apply potion of fire resistance without particles to (spawned entity) for 10 days
+		if {_mobName} is "进化兽":
+			(spawned entity).setBaby(true)
+		else:
+			(spawned entity).setBaby(false)
+	else if {_type} is "silverfish":
+		spawn a silverfish at {_spawnLoc}
+	else:
+		spawn a slime at {_spawnLoc}
+		slimeResize(spawned entity, {_slimeSize})
+	{_mob}.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.32d)
+	{_mob}.getAttribute(Attribute.GENERIC_FOLLOW_RANGE).setBaseValue(100d)
+	set {_mob} to spawned entity
+	set max health of {_mob} to {_health}
+	set health of {_mob} to {_health}
+	set metadata "attrMap" of {_mob} to {_attrMap}
+	add "isMonster" to scoreboard tags of {_mob}
+	{_mob}.setCustomName({_mobName})
+	{_mob}.setRemoveWhenFarAway(false)
+	if {_mobName} is not "星云球":
+		{_mobName} is not "闪耀怪"
+		{_mobName} is not "异星幼虫"
+		set metadata "mobAmount" of {_ply} to metadata "mobAmount" of {_ply} + 1
+	pillarMobAI({_pillar}, {_mob}, {_ply})
+function pillarMobAI(pillar: entity, mob: entity, ply: entity):
+	set {_target} to {_ply}
+	set {_type} to trimText(name of {_mob})
+	set {_indexAI} to 0
+	set {_attrMap} to metadata "attrMap" of {_mob}
+	
+	if {_type} = "闪耀怪" or "星云球" or "异星幼虫":
+		clear {_ply}
+	else if {_type} = "异星蜂王":
+		set {_indexAI} to a random integer between 0 and 360
+	
+	if {_type} = "星尘细胞" or "星云浮怪" or "异星蜂王" or "异星黄蜂":
+		set gravity of {_mob} to off
+	else if {_type} = "吮脑怪" or "流星火怪":
+		set gravity of {_mob} to off
+		set {_mob}.getHandle().noclip to true
+	else if {_type} = "火龙怪":
+		set {_disguise} to new MobDisguise(DisguiseType.HORSE, true)
+		DisguiseAPI.disguiseEntity({_mob}, {_disguise})
+	else if {_type} = "星云球":
+		set gravity of {_mob} to off
+		set {_mob}.getHandle().noclip to true
+		add "noDamage" to scoreboard tags of {_mob}
+	else if {_type} = "异星幼虫":
+		{_mob}.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.05d)
+	else if {_type} = "银河织妖":
+		set gravity of {_mob} to off
+		set {_v} to vector(0, 0, 0)
+		set {_index} to 0
+		loop 10 times:
+			spawn a slime at location of {_mob}
+			set {_segment} to spawned entity
+			slimeResize({_segment}, 3)
+			add "noDamage" to scoreboard tags of {_segment}
+			set gravity of {_segment} to off
+			set metadata "attrMap" of {_segment} to {_attrMap}
+			{_segment}.setCustomName("银河织妖")
+			{_segment}.setRemoveWhenFarAway(false)
+			add {_segment} to {_segments::*}
+			set max health of {_segment} to max health of {_mob}
+			add location of {_mob} to {_locations::*}
+			add location of {_mob} to {_locations::*}
+		add location of {_mob} to {_locations::*}
+		add location of {_mob} to {_locations::*}
+	else if {_type} = "千足蜈蚣":
+		set metadata "amountWorm" of {_pillar} to max((metadata "amountWorm" of {_pillar}) + 1, 0)
+		set gravity of {_mob} to off
+		set {_v} to vector(0, 0, 0)
+		set {_index} to a random number between 0 and 360
+		set {_attrMapSeg} to {_attrMap}.clone()
+		{_attrMapSeg}.put("damage", 400)
+		remove "isMonster" from scoreboard tags of {_mob}
+		loop 15 times:
+			spawn a slime at location of {_mob}
+			set {_segment} to spawned entity
+			slimeResize({_segment}, 3)
+			if loop-number = 15:
+				set {_attrMapSeg} to {_attrMapSeg}.clone()
+				{_attrMapSeg}.put("damage", 200)
+				{_attrMapSeg}.put("defence", 0)
+				add "isMonster" to scoreboard tags of {_segment}
+				set metadata "damageTaker" of {_segment} to {_mob}
+			set gravity of {_segment} to off
+			set metadata "attrMap" of {_segment} to {_attrMapSeg}
+			{_segment}.setCustomName("千足蜈蚣")
+			{_segment}.setRemoveWhenFarAway(false)
+			add {_segment} to {_segments::*}
+			set max health of {_segment} to max health of {_mob}
+	else if {_type} = "流体入侵怪":
+		set {_targetLoc} to location of {_mob}
+		set gravity of {_mob} to off
+		set {_attrMapProjectile} to (metadata "attrMap" of {_mob}).clone()
+		add (a random integer between 0 and 36) * 10 to {_indexAI}
+		{_attrMapProjectile}.put("damage", 480)
+		{_attrMapProjectile}.put("damageType", "Magic")
+		set {_particleColor} to new ArrayList(1)
+		{_particleColor}.add("100|150|255")
+	else if {_type} = "观星怪":
+		set {_particleColor} to new ArrayList(1)
+		{_particleColor}.add("100|150|255")
+	
+	while health of {_mob} > 0:
+		if {_ply} is set:
+			{_ply} is not online
+			clear {_ply}
+		if checkMobTarget({_target}, {_mob}) is false:
+			clear {_target}
+		if {_target} is not set:
+			loop all players in radius 64 of {_mob}:
+				if checkMobTarget(loop-player, {_mob}) is true:
+					set {_target} to loop-player
+					stop loop
+		if {_target} is not set:
+			{_mob}.remove()
+			stop loop
+		if {_mob}.hasLineOfSight({_target}) is false:
+			add 1 to {_timeOutOfFight}
+			if {_timeOutOfFight} > 200:
+				set max health of {_mob} to 1
+				{_mob}.remove()
+				clear {_target}
+				stop loop
+		else:
+			set {_timeOutOfFight} to 0
+		makeTarget({_mob}, {_target})
+		
+		
+		if {_type} = "流星火怪":
+			if {_indexAI} = 0:
+				set {_v} to (eye location of {_target}).subtract(eye location of {_mob}).toVector()
+				if vector length of {_v} = 0:
+					set {_v} to vector(0, -1, 0)
+				set vector length of {_v} to 2
+			if {_indexAI} > 0:
+				if {_indexAI} >= 4:
+					distance between location of {_mob} and location of {_target} > 25
+					set {_indexAI} to min({_indexAI} * -1, -6)
+					set {_v} to vector(0, 0.6, 0)
+			set velocity of {_mob} to {_v}
+		else if {_type} = "千足蜈蚣":
+			if {_indexAI} >= 0:
+				set {_indexAI} to 0
+				loop 10 times:
+					if the block (loop-number) below location of {_target} is air:
+						add 0.1 to {_indexAI}
+				if {_indexAI} < 0.8:
+					set {_indexAI} to 0
+					loop all players in radius 64 of {_mob}:
+						loop 10 times:
+							if the block (loop-number) below location of loop-player is air:
+								add 0.1 to {_indexAI}
+						if {_indexAI} >= 0.8:
+							set {_indexAI} to 1
+							set {_target} to loop-player
+							stop loop
+						else:
+							set {_indexAI} to 0
+			if {_indexAI} = 0:
+				set {_targetLoc} to (location of {_target}).add((sin({_index}) * 25), 16, (cos({_index}) * 25))
+				set {_dV} to {_targetLoc}.subtract(eye location of {_mob}).toVector()
+				if vector length of {_dV} = 0:
+					set {_dV} to vector(0, 1, 0)
+				set vector length of {_dV} to 0.5
+				set {_indexAI} to -1
+			else if {_indexAI} = 1:
+				set {_targetLoc} to (eye location of {_target})
+				set {_dV} to {_targetLoc}.subtract(eye location of {_mob}).toVector()
+				if vector length of {_dV} = 0:
+					set {_dV} to vector(0, 1, 0)
+				set vector length of {_dV} to 4
+				if distance between location of {_target} and location of {_mob} <= 2:
+					set {_indexAI} to -4
+			{_v}.add({_dV})
+			if {_indexAI} = 0:
+				if vector length of {_v} > 1.5:
+					set vector length of {_v} to 1.5
+			else:
+				if vector length of {_v} > 5:
+					set vector length of {_v} to 5
+			add 2.5 to {_index}
+			teleport {_mob} to (location of {_mob}).add({_v})
+			set {_i} to 0
+			set {_lastLoc} to location of {_mob}
+			set {_currLoc} to location of {_segments::1}
+			set {_nextLoc} to location of {_segments::2}
+			loop 15 times:
+				add 1 to {_i}
+				set {_iNext} to {_i} + 1
+				set {_currentSeg} to {_segments::%{_i}%}
+				set health of {_currentSeg} to health of {_mob}
+				if {_i} = 15:
+					set {_next} to {_currentSeg}
+				else:
+					set {_next} to {_segments::%{_iNext}%}
+				set {_segdVec} to {_lastLoc}.clone().subtract({_nextLoc}).toVector()
+				vector length of {_segdVec} > 0
+				set vector length of {_segdVec} to 1
+				set {_baseVec} to {_lastLoc}.clone().subtract({_currLoc}).toVector()
+				vector length of {_baseVec} > 0
+				set vector length of {_baseVec} to 3
+				set {_dVec} to {_segdVec}.add({_baseVec})
+				vector length of {_dVec} > 0
+				set vector length of {_dVec} to 1.5
+				set {_currLoc} to {_lastLoc}.clone().subtract({_dVec})
+				teleport {_currentSeg} to {_currLoc}
+				set {_lastLoc} to {_currLoc}
+				set {_currLoc} to {_nextLoc}
+				set {_nextLoc} to location of {_next}
+		else if {_type} = "火月怪" or "火滚怪":
+			if {_indexAI} = 0:
+				if {_type} = "火月怪":
+					{_attrMap}.put("defenceMulti", 1)
+					remove "reflectProjectile" from scoreboard tags of {_mob}
+				else:
+					{_attrMap}.put("damage", 320)
+			else if {_indexAI} = 33:
+				push {_mob} upward with velocity 1
+			else if {_indexAI} >= 36:
+				{_mob}.setFallDistance(0)
+				if {_indexAI} = 36:
+					if {_type} = "火月怪":
+						add "reflectProjectile" to scoreboard tags of {_mob}
+						{_attrMap}.put("defenceMulti", 0)
+						set {_lastHealth} to health of {_mob}
+					else:
+						{_attrMap}.put("damage", 432)
+					set {_v} to (eye location of {_target}).subtract(location of {_mob}).toVector()
+					set y of {_v} to 0
+					vector length of {_v} > 0
+					set vector length of {_v} to 0.5
+					set y of {_v} to 0.2
+				if {_type} is "火月怪":
+					if {_indexAI} >= 60:
+						set {_indexAI} to -1
+					else if {_mob}.isOnGround() is true:
+						set {_indexAI} to -1
+					else if health of {_mob} < {_lastHealth}:
+						set {_indexAI} to -1
+					subtract 0.005 from y of {_v}
+				else:
+					if {_indexAI} >= 60:
+						set {_indexAI} to -1
+					else:
+						if block 1 below {_mob} is not air:
+							set {_v} to (eye location of {_target}).subtract(location of {_mob}).toVector()
+							set y of {_v} to 0
+							vector length of {_v} > 0
+							set vector length of {_v} to 0.5
+							set y of {_v} to 0.35
+						subtract 0.05 from y of {_v}
+				push {_mob} {_v}
+				set {_velocity} to velocity of {_mob}
+				if vector length of {_velocity} > 2:
+					set vector length of {_velocity} to 2
+					set velocity of {_mob} to {_velocity}
+		else if {_type} = "吮脑怪":
+			if metadata "suckTarget" of {_mob} is set:
+				set {_target} to metadata "suckTarget" of {_mob}
+				if checkMobTarget({_target}, {_mob}) is false:
+					clear metadata "suckTarget" of {_mob}
+				teleport {_mob} to (eye location of {_target}).subtract(0, 0.5, 0)
+				set velocity of {_mob} to vector(0, 0, 0)
+			else:
+				set {_v} to velocity of {_mob}
+				set {_dV} to (eye location of {_target}).subtract(eye location of {_mob}).toVector()
+				if vector length of {_dV} = 0:
+					set {_dV} to vector(0, 1, 0)
+				set vector length of {_dV} to 0.1
+				{_v}.add({_dV})
+				if vector length of {_v} > 0:
+					set vector length of {_v} to 0.35
+				set velocity of {_mob} to {_v}
+		else if {_type} = "异星黄蜂":
+			if mod({_indexAI}, 5) = 0:
+				set {_v} to (eye location of {_target}).subtract(eye location of {_mob}).toVector()
+				if vector length of {_v} = 0:
+					set {_v} to vector(0, 1, 0)
+				set vector length of {_v} to 0.4
+			set velocity of {_mob} to {_v}
+			if {_indexAI} > 150:
+				{_mob}.remove()
+				pillarMobSpawn({_pillar}, {_null}, (location of {_mob}), "异星蜂王")
+				if {_ply} is set:
+					set metadata "mobAmount" of {_ply} to max(metadata "mobAmount" of {_ply} - 1, 0)
+				stop trigger
+		else if {_type} = "异星幼虫":
+			if {_indexAI} > 60:
+				{_mob}.remove()
+				pillarMobSpawn({_pillar}, {_ply}, (location of {_mob}), "异星黄蜂")
+				stop trigger
+		else if {_type} = "漩泥怪":
+			{_mob}.setFallDistance(0)
+			if y-coordinate of {_mob} < y-coordinate of {_target}:
+				set {_levitationCurrent} to "UP"
+			else:
+				set {_levitationCurrent} to "DOWN"
+			if {_levitation} is not {_levitationCurrent}:
+				remove levitation from {_mob}
+				set {_levitation} to {_levitationCurrent}
+				if {_levitationCurrent} is "UP":
+					apply potion of levitation 5 without particles to {_mob} for 1 day
+			if {_levitationCurrent} is "DOWN":
+				set {_velocity} to velocity of {_mob}
+				if y of {_velocity} < -0.2:
+					set y of {_velocity} to -0.2
+					set velocity of {_mob} to {_velocity}
+			set {_dV} to (location of {_target}).subtract(location of {_mob}).toVector()
+			if distance between location of {_mob} and location of {_target} > 16:
+				set y of {_dV} to 0
+				set vector length of {_dV} to 0.05
+				push {_mob} {_dV}
+			
+			if {_indexAI} = 30:
+				set {_v} to (eye location of {_target}).subtract(eye location of {_mob}).toVector()
+				if vector length of {_v} = 0:
+					set {_v} to vector(0, 2, 0)
+				loop 6 times:
+					set {_velocity} to {_v}.clone().add(vector((a random number between -1 and 1), (a random number between -1 and 1), (a random number between -1 and 1)))
+					set vector length of {_velocity} to 2
+					set {_projectile} to mobProjectile({_mob}, {_velocity}, {_attrMap}, "星旋激光")
+					set metadata "penetration" of {_projectile} to 99
+					set gravity of {_projectile} to off
+					projectileAI({_projectile}, "MAGIC")
+				set {_indexAI} to 0
+		else if {_type} = "异星蜂王":
+			set {_targetLoc} to (location of {_target}).add((cos({_indexAI}) * -16), (sin({_indexAI} + 90) * 4) + 12, (sin({_indexAI}) * -16))
+			set {_v} to {_targetLoc}.subtract(eye location of {_mob}).toVector()
+			if vector length of {_v} = 0:
+				set {_v} to vector(0, 1, 0)
+			set vector length of {_v} to 0.4
+			set velocity of {_mob} to {_v}
+			if mod({_indexAI}, 12) = 0:
+				set {_velocity} to (eye location of {_target}).subtract(eye location of {_mob}).toVector()
+				if vector length of {_velocity} = 0:
+					set {_velocity} to vector(0, 2, 0)
+				set vector length of {_velocity} to 1.5
+				set {_projectile} to mobProjectile({_mob}, {_velocity}, {_attrMap}, "异星黏液")
+				set metadata "penetration" of {_projectile} to 99
+				set gravity of {_projectile} to off
+				projectileAI({_projectile}, "MAGIC")
+		else if {_type} = "预言怪":
+			if {_indexAI} = 15:
+				{_mob}.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.05d)
+			else if {_indexAI} = 19:
+				set {_locTarget} to location of {_target}
+			else if {_indexAI} = 20:
+				set {_v} to (location of {_target}).subtract({_locTarget}).toVector()
+				if vector length of {_v} = 0:
+					set {_targetLoc} to eye location of {_target}
+				else:
+					set {_time} to (distance between eye location of {_target} and eye location of {_mob}) / 4.5
+					set vector length of {_v} to (vector length of {_v}) * {_time}
+					set {_targetLoc} to (eye location of {_target}).add({_v})
+				set {_v} to {_targetLoc}.subtract(eye location of {_mob}).toVector()
+				if vector length of {_v} = 0:
+					set {_v} to vector(0, 2, 0)
+				else:
+					set vector length of {_v} to 49
+				loop 10 times:
+					set {_velocity} to {_v}.clone().add(vector((a random number between -1 and 1), (a random number between -1 and 1), (a random number between -1 and 1)))
+					set vector length of {_velocity} to 1.5
+					set {_projectile} to mobProjectile({_mob}, {_velocity}, {_attrMap}, "星云针弹")
+					set metadata "penetration" of {_projectile} to 99
+					set gravity of {_projectile} to off
+					projectileAI({_projectile}, "MAGIC")
+				{_mob}.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.25d)
+				set {_indexAI} to 0
+		else if {_type} = "进化兽":
+			if {_indexAI} = 30:
+				{_mob}.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.05d)
+			else if {_indexAI} = 40:
+				pillarMobSpawn({_pillar}, {_target}, (eye location of {_mob}), "星云球")
+				{_mob}.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.35d)
+				set {_indexAI} to 0
+		else if {_type} = "星云球":
+			if {_indexAI} > 50:
+				{_mob}.remove()
+				stop loop
+			set {_dV} to (eye location of {_target}).subtract(eye location of {_mob}).toVector()
+			vector length of {_dV} > 0
+			set vector length of {_dV} to 0.05
+			push {_mob} {_dV}
+			set {_velocity} to velocity of {_mob}
+			if vector length of {_velocity} > 0.25:
+				set vector length of {_velocity} to 0.25
+				set velocity of {_mob} to {_velocity}
+		else if {_type} = "星云浮怪":
+			if {_indexAI} < 12:
+				set {_dV} to (eye location of {_target}).subtract(eye location of {_mob}).toVector()
+				vector length of {_dV} > 0
+				set vector length of {_dV} to 0.1
+			else:
+				set y of {_dV} to 0.02
+			push {_mob} {_dV}
+			set {_velocity} to velocity of {_mob}
+			if vector length of {_velocity} > 0.75:
+				set vector length of {_velocity} to 0.75
+				set velocity of {_mob} to {_velocity}
+			if {_indexAI} = 25:
+				set {_vProjectile} to (eye location of {_target}).subtract(eye location of {_mob}).toVector()
+				set vector length of {_vProjectile} to 2
+				set {_projectile} to mobProjectile({_mob}, {_vProjectile}, {_attrMap}, "星云激光")
+				set gravity of {_projectile} to off
+				projectileAI({_projectile}, "MAGIC")
+			else if {_indexAI} = 30:
+				teleport {_mob} to (location of highest solid block at (location of {_target}).add((a random number between -10 and 10), (a random number between 10 and 20), (a random number between -10 and 10)))
+				set {_indexAI} to 0
+		else if {_type} = "星尘细胞":
+			if {_mob}.getSize() = 2:
+				if {_indexAI} = 1:
+					{_attrMap}.put("damage", 280)
+					{_attrMap}.put("defence", 0)
+					{_attrMap}.put("knockbackResistance", 0.64)
+				if {_indexAI} = 40:
+					slimeResize({_mob}, 4)
+					{_attrMap}.put("damage", 480)
+					{_attrMap}.put("defence", 100)
+					{_attrMap}.put("knockbackResistance", 0.55)
+					set health of {_mob} to 1200
+					set {_lastDist} to distance between location of {_target} and location of {_mob}
+				set {_v} to vector(0, 0.1, 0)
+			else:
+				if {_lastDist} > 8:
+					set {_v} to (eye location of {_target}).subtract(eye location of {_mob}).toVector()
+				if vector length of {_v} = 0:
+					set {_v} to vector(0, 1, 0)
+				if {_lastDist} < distance between location of {_target} and location of {_mob}:
+					set vector length of {_v} to 1.5
+				else:
+					set vector length of {_v} to 1
+				set {_lastDist} to distance between location of {_target} and location of {_mob}
+			set velocity of {_mob} to {_v}
+		else if {_type} = "银河织妖":
+			loop 10 times:
+				set {_i} to {_index} + (1 + loop-number) * 2
+				teleport {_segments::%loop-number%} to {_locations::%{_i}%}
+				set velocity of {_segments::%loop-number%} to {_v}
+				set health of {_segments::%loop-number%} to health of {_mob}
+			clear {_locations::%{_index}%}
+			set {_joinIndex} to {_index} + 23
+			set {_locations::%{_joinIndex}%} to location of {_mob}
+			add 1 to {_index}
+			if {_indexAI} <= 0:
+				set {_dV} to (eye location of {_target}).subtract(location of {_mob}).toVector()
+				if vector length of {_dV} < 5:
+					set {_indexAI} to 15
+				if vector length of {_dV} = 0:
+					set {_dV} to vector(0, 1, 0)
+				set vector length of {_dV} to 0.2
+				{_v}.add({_dV})
+			else:
+				subtract 1 from {_indexAI}
+			if vector length of {_v} > 0.8:
+				set vector length of {_v} to 0.8
+			subtract 1 from {_indexAI}
+			set velocity of {_mob} to {_v}
+		else if {_type} = "流体入侵怪":
+			if mod({_indexAI}, 6) = 0:
+				set {_targetLoc} to (location of {_target}).add((sin({_indexAI}) * 10), (a random number between -5 and 10), (cos({_indexAI}) * 10))
+				set {_v} to {_targetLoc}.subtract(location of {_mob}).toVector()
+				set vector length of {_v} to 0.1
+			push {_mob} {_v}
+			set {_velocity} to velocity of {_mob}
+			if vector length of {_velocity} > 0.5:
+				set vector length of {_velocity} to 0.5
+				set velocity of {_mob} to {_velocity}
+			if mod({_indexAI}, 6) = 0:
+				if {_projectileAmount} >= 5:
+					set {_velocity} to (eye location of {_target}).subtract(eye location of {_mob}).toVector()
+					set vector length of {_velocity} to 1.5
+					set {_projectile} to mobProjectile({_mob}, {_velocity}, {_attrMapProjectile}, "流体入侵怪")
+					add "isGranade" to scoreboard tags of {_projectile}
+					set gravity of {_projectile} to off
+					projectileAI({_projectile}, "MAGIC")
+				else:
+					add 1 to {_projectileAmount}
+			set {_angleOffset} to 360 / {_projectileAmount}
+			loop {_projectileAmount} times:
+				handleParticleLine(vector(0, 1, 0), 0.2, 0.2, (location of {_mob}).add(sin({_indexAI} + ({_angleOffset} * loop-number)) * 2, 1, cos({_indexAI} + ({_angleOffset} * loop-number)) * 2), {_particleColor})
+		else if {_type} = "观星怪":
+			if {_indexAI} = 37:
+				set {_v} to (eye location of {_target}).subtract(eye location of {_mob}).toVector()
+			else if {_indexAI} = 40:
+				handleStrikeLine({_mob}, (vector yaw of {_v}), (vector pitch of {_v}), 48, (a diamond), {_particleColor}, new ArrayList(), true, {_empty})
+				set {_indexAI} to 0
+		else if {_type} = "闪耀炮手":
+			if mod({_indexAI}, 20) = 0:
+				pillarMobSpawn({_pillar}, {_target}, (eye location of {_mob}).add(0, 1.5, 0), "闪耀怪")
+				push spawned entity upward
+		else if {_type} = "闪耀怪":
+			if distance between location of {_target} and location of {_mob} < 5:
+				stop loop
+			if {_indexAI} > 40:
+				stop loop
+		
+		
+		add 1 to {_indexAI}
+		if {_type} is "千足蜈蚣" or "银河织妖":
+			wait 3 ticks
+		else:
+			wait 5 ticks
+	
+	if {_ply} is set:
+		set metadata "mobAmount" of {_ply} to max(metadata "mobAmount" of {_ply} - 1, 0)
+	if {_type} = "千足蜈蚣":
+		set metadata "amountWorm" of {_pillar} to max((metadata "amountWorm" of {_pillar}) - 1, 0)
+	
+	if {_type} = "星尘细胞":
+		set {_mob}.getHandle().noclip to true
+		wait 1 tick
+		if {_mob}.getSize() = 2:
+			stop trigger
+		set {_amount} to a random integer between 2 and 4
+		loop {_amount} times:
+			pillarMobSpawn({_pillar}, {_ply}, (location of {_mob}).add((a random number between -1 and 1), (a random number between -1 and 1), (a random number between -1 and 1)), "星尘细胞")
+			slimeResize(spawned entity, 2)
+	if {_type} = "异星蜂王":
+		set {_amount} to a random integer between 1 and 3
+		loop {_amount} times:
+			pillarMobSpawn({_pillar}, {_ply}, (location of {_mob}).add((a random number between -1 and 1), (a random number between -1 and 1), (a random number between -1 and 1)), "异星幼虫")
+	else if {_type} is "银河织妖" or "千足蜈蚣":
+		loop {_segments::*}:
+			set health of loop-value to 0
+	else if {_type} is "闪耀怪":
+		health of {_mob} > 0
+		{_mob}.remove()
+		loop 20 times:
+			set {_v} to vector((a random number between -0.35 and 0.35), (a random number between 0.35 and 1), (a random number between -0.35 and 0.35))
+			mobProjectile({_mob}, {_v}, {_attrMap}, "闪耀怪")
+		stop trigger
+	else if {_type} is "异星幼虫":
+		stop trigger
+	else if {_type} is "流体入侵怪":
+		set {_vProjectile} to (eye location of {_target}).subtract(eye location of {_mob}).toVector()
+		loop {_projectileAmount} times:
+			set {_dV} to {_vProjectile}.clone()
+			set vector length of {_dV} to (a random number between 0.45 and 0.6) * vector length of {_dV}
+			set {_targetLoc} to (eye location of {_mob}).add({_dV})
+			set {_loc} to (location of {_mob}).add(sin({_indexAI} + ({_angleOffset} * loop-number)) * 2, 1, cos({_indexAI} + ({_angleOffset} * loop-number)) * 2)
+			set {_velocity} to {_targetLoc}.subtract({_loc}).toVector()
+			set vector length of {_velocity} to 1.5
+			set {_projectile} to spawnProjectile({_mob}, {_velocity}, {_attrMapProjectile}, "流体入侵怪", {_loc})
+			add "isGranade" to scoreboard tags of {_projectile}
+			set gravity of {_projectile} to off
+			projectileAI({_projectile}, "MAGIC")
+	if max health of {_mob} > 1:
+		health of {_mob} <= 0
+		{_target} is set
+		metadata "shield" of {_pillar} > 0
+		set {_particleColor} to new ArrayList(1)
+		{_particleColor}.add("255|125|125")
+		set {_loc} to location of {_mob}
+		set {_v} to (location of {_pillar}).add(0, 4.5, 0).subtract({_loc}).toVector()
+		if vector length of {_v} > 0:
+			set {_loopTime} to floor(vector length of {_v})
+			set vector length of {_v} to 1
+			loop {_loopTime} times:
+				handleParticleLine({_v}, 2, 0.1, {_loc}, {_particleColor})
+				{_loc}.add({_v})
+				wait 3 ticks
+		set {_shield} to metadata "shield" of {_pillar}
+		set metadata "shield" of {_pillar} to max({_shield} - 1, 0)
+	

@@ -1,0 +1,318 @@
+import:
+	com.comphenix.protocol.events.PacketContainer
+	java.util.HashMap
+
+on script load:
+	set {MountAndPlayers} to new HashMap()
+
+command /test:
+	trigger:
+		spawn a silverfish
+		set {_mount} to spawned entity
+		set {_handle} to {_mount}.getHandle()
+		set {_handle}.width to 1
+		set {_handle}.length to 2
+		add "noDamage" to scoreboard tags of {_mount}
+		add "isMount" to scoreboard tags of {_mount}
+		set walking speed of {_mount} to 0
+		make {_mount} silent
+		({_mount}).addPassenger(command sender)
+
+
+function playerThrust(ply: player, state: boolean):
+	#thrust
+	gamemode of {_ply} is survival
+	set metadata "thrusting" of {_ply} to {_state}
+	{_state} is true
+	#remove all hooks
+	set {_hooks} to metadata "hooks" of {_ply}
+	loop ...{_hooks}:
+		if (loop-value).getHandle().inGround is true:
+			(loop-value).remove()
+	set {_index} to metadata "thrust" of {_ply}
+	set {_thrustProgress} to metadata "thrustProgress" of {_ply}
+	set {_accessory} to metadata "accessory" of {_ply}
+	set {_mount} to vehicle of {_ply}
+	set {_accessoryUsed} to air
+	set {_bounceTime} to 0
+	if {_mount} is on ground:
+		{_ply} has scoreboard tag "temp_isMounting"
+		# get mount (jump/flight) info
+		set {_mountItemType} to metadata "mountItem" of {_ply}
+		set {_maxProgress} to yml value "%{_mountItemType}%.maxProgress" from file "plugins/Data/wings.yml"
+		set {_maxVelocity} to yml value "%{_mountItemType}%.maxVelocity" from file "plugins/Data/wings.yml"
+		set {_maxAcceleration} to yml value "%{_mountItemType}%.maxAcceleration" from file "plugins/Data/wings.yml"
+		set {_horizontalVelocity} to yml value "%{_mountItemType}%.horizontalVelocity" from file "plugins/Data/wings.yml"
+		set {_bounceTime} to yml value "%{_mountItemType}%.bounceTime" from file "plugins/Data/wings.yml"
+		set {_accessoryUsed} to {_mountItemType}
+	if {_maxProgress} is not set:
+		while {_index} < {_accessory}.size():
+			set {_currAcc} to {_accessory}.get({_index})
+			if {_currAcc} doesn't end with "翼":
+				# do not use jump bottle on ground
+				{_mount} is on ground
+				broadcast "Attempted to use jump bottle. On ground."
+				set {_currAcc} to "AIR"
+			set {_maxProgress} to yml value "%{_currAcc}%.maxProgress" from file "plugins/Data/wings.yml"
+			if {_maxProgress} is set:
+				set {_maxVelocity} to yml value "%{_currAcc}%.maxVelocity" from file "plugins/Data/wings.yml"
+				set {_maxAcceleration} to yml value "%{_currAcc}%.maxAcceleration" from file "plugins/Data/wings.yml"
+				set {_horizontalVelocity} to yml value "%{_currAcc}%.horizontalVelocity" from file "plugins/Data/wings.yml"
+				set {_bounceTime} to yml value "%{_currAcc}%.bounceTime" from file "plugins/Data/wings.yml"
+				set {_accessoryUsed} to {_currAcc}
+				broadcast "Thrusting using: %{_currAcc}%"
+				stop loop
+			add 1 to {_index}
+		if {_maxProgress} is not set:
+			if {_mount} is on ground:
+				# jump
+				set {_maxProgress} to 0.267
+				set {_maxVelocity} to 16
+				set {_maxAcceleration} to 16
+				set {_horizontalVelocity} to 11
+				set {_index} to -1
+				broadcast "Jump"
+			else:
+				broadcast "Attempted to jump. Not on ground."
+	if {_accessory}.contains("翱翔徽章") is true:
+		set {_maxVelocity} to {_maxVelocity} * 1.25
+		set {_maxAcceleration} to {_maxAcceleration} * 1.25
+		set {_horizontalVelocity} to {_horizontalVelocity} * 1.25
+		if {_maxProgress} > {_bounceTime}:
+			add ({_maxProgress} - {_bounceTime}) * 4 to {_maxProgress}
+	set {_attrMap} to metadata "attrMap" of {_ply}
+	if {_attrMap} is set:
+		set {_multi} to {_attrMap}.getOrDefault("speedMulti", 1)
+		set {_maxVelocity} to {_maxVelocity} * {_multi}
+		set {_maxAcceleration} to {_maxAcceleration} * {_multi}
+		set {_horizontalVelocity} to {_horizontalVelocity} * {_multi}
+	# convert block/s into block/tick
+	set {_maxVelocity} to {_maxVelocity} / 20
+	set {_maxAcceleration} to {_maxAcceleration} / 20
+	set {_horizontalVelocity} to {_horizontalVelocity} / 20
+	if {_index} >= {_accessory}.size():
+		# flight time depleted. Check if the player has a wing
+		set {_gliding} to false
+		set {_index} to 0
+		loop {_accessory}.size() times:
+			if {_accessory}.get({_index}).toString() ends with "翼":
+				set {_gliding} to true
+				set {_index} to {_accessory}.size()
+				stop loop
+			add 1 to {_index}
+		if {_gliding} is true:
+			set {_maxVelocity} to -0.1
+			set {_horizontalVelocity} to {_horizontalVelocity} / 2
+			set {_maxProgress} to 5000000
+			broadcast "Start gliding."
+		else:
+			# the player has no wing
+			broadcast "Attempted gliding, has no wing."
+	if {_maxProgress} is set:
+		set metadata "thrust" of {_ply} to {_index}
+		while {_ply} is online:
+			if metadata "thrusting" of {_ply} is not true:
+				stop loop
+			if gamemode of {_ply} is spectator:
+				stop loop
+			{_mount}.setFallDistance(0)
+			
+			# vertical movement
+			set {_v} to velocity of {_mount}
+			set {_force} to min({_maxAcceleration}, ({_maxVelocity} - (y of {_v})))
+			broadcast "%{_force}%"
+			if {_force} > 0:
+				push {_mount} {_force} upward
+			# horizontal movement
+			set {_dir} to (metadata "moveDir" of {_ply}).clone()
+			if {_dir} is set:
+				set {_playerVelocity} to velocity of {_mount}
+				set y component of {_playerVelocity} to 0
+				# velocity is the speed in which the player is moving along 
+				set {_dirLength} to vector length of {_dir}
+				if {_dirLength} > 0:
+					set {_velocity} to max((({_playerVelocity} dot {_dir}) / {_dirLength}), 0)
+				else:
+					set {_velocity} to 0
+				set vector length of {_dir} to min({_maxAcceleration}, ({_horizontalVelocity} - {_velocity}))
+				push {_mount} {_dir}
+			if {_gliding} is not true:
+				#particles
+				if {_bounceTime} > 0:
+					# bottle jump
+					set {_xOffset} to -1
+					loop 3 times:
+						set {_zOffset} to -1
+						loop 3 times:
+							if {_xOffset} = 0:
+								{_zOffset} = 0
+								continue
+							draw 4 cloud particles at location of {_mount} with direction vector({_xOffset}, 0, {_zOffset}) and speed 0.1, offset 0.5, 0, 0.5, visible range 30, keep 1 tick							
+							add 1 to {_zOffset}
+						add 1 to {_xOffset}
+					add 10 to {_thrustProgress}
+				else:
+					add 1 to {_thrustProgress}
+					if {_accessoryUsed} is "火箭靴" or "幽灵靴":
+						draw 10 cloud particles at location of {_mount} with direction vector(0, -1, 0) and speed 0.17, offset 0.5, 0, 0.5, visible range 30, keep 1 tick
+				
+				# flight time depleted
+				if {_thrustProgress} / 10 >= {_maxProgress}:
+					set {_thrustProgress} to 0
+					add 1 to {_index}
+					stop loop
+				else if {_bounceTime} > 0:
+					# no continuous flight for bottle jump
+					stop loop
+			wait 2 ticks
+	broadcast "JUMP THREAD STOPPED."
+	set metadata "thrust" of {_ply} to {_index}
+	set metadata "thrustProgress" of {_ply} to {_thrustProgress}
+	set metadata "thrusting" of {_ply} to false
+
+on packet event play_client_steer_vehicle with lowest priority:
+	set {_ply} to event-player
+	gamemode of {_ply} is not spectator
+	set {_packet} to event-packet
+	set {_mount} to vehicle of {_ply}
+	set metadata "xDir" of {_mount} to float field 0 of {_packet}
+	set metadata "zDir" of {_mount} to float field 1 of {_packet}
+	set metadata "spacebar" of {_mount} to boolean field 0 of {_packet}
+	set metadata "shift" of {_mount} to boolean field 1 of {_packet}
+#	broadcast "%float field 0 of {_packet}%|%float field 1 of {_packet}%|%boolean field 0 of {_packet}%|%boolean field 1 of {_packet}%"
+
+function threadMovement(ply: player):
+	# movement
+	wait 1 tick
+	while {_ply} is online:
+		clear {_mount}
+		set {_mount} to vehicle of {_ply}
+		set {_canMove} to true
+		if gamemode of {_ply} is not survival:
+			set {_canMove} to false
+			stop loop
+		if {_ply} has scoreboard tag "unauthorized":
+			set {_canMove} to false
+		if {_canMove} is true:
+			set {_attrMap} to metadata "attrMap" of {_ply}
+			set {_accessory} to metadata "accessory" of {_ply}
+			if {_mount} is not set:
+				spawn a silverfish 0.1 above location of {_ply}
+				set {_mount} to spawned entity
+#				set {_handle} to {_mount}.getHandle()
+#				set {_handle}.width to 2
+#				set {_handle}.length to 5
+				add "noDamage" to scoreboard tags of {_mount}
+				add "isMount" to scoreboard tags of {_mount}
+				set walking speed of {_mount} to 0
+				make {_mount} silent
+				({_mount}).addPassenger({_ply})
+				set walking speed of {_mount} to 0
+#				apply potion of invisibility without particles to {_mount} for 10 days
+			set {_canFly} to false
+			set {_speedGround} to ({_attrMap}.get("speed")) * ({_attrMap}.getOrDefault("speedMulti", 1))
+			set {_speedAir} to 0
+			set {_groundAccelerationRatio} to 0.8
+			set {_airAccelerationRatio} to 0
+			set {_wetSpeedMulti} to 0.66
+			# override if player is mounting
+			if {_ply} has scoreboard tag "temp_isMounting":
+				set {_mountItemType} to metadata "mountItem" of {_ply}
+				set {_canFly} to yml value "%{_mountItemType}%.canFly" from file "plugins/Data/wings.yml"
+				if {_canFly} is true:
+					set {_speedAir} to yml value "%{_mountItemType}%.speedAir" from file "plugins/Data/wings.yml"
+					set {_airAccelerationRatio} to yml value "%{_mountItemType}%.groundAccelerationRatio" from file "plugins/Data/wings.yml"
+				set {_speedGround} to yml value "%{_mountItemType}%.speedGround" from file "plugins/Data/wings.yml"
+				set {_groundAccelerationRatio} to yml value "%{_mountItemType}%.groundAccelerationRatio" from file "plugins/Data/wings.yml"
+				set {_wetSpeedMulti} to yml value "%{_mountItemType}%.wetSpeedMulti" from file "plugins/Data/wings.yml"
+			if (block at {_mount}) is water or lava:
+				set {_speedGround} to {_speedGround} * {_wetSpeedMulti}
+				set {_speedAir} to {_speedGround} * {_wetSpeedMulti}
+			set {_groundAcceleration} to {_speedGround} * {_groundAccelerationRatio}
+			set {_airAcceleration} to {_speedAir} * {_airAccelerationRatio}
+			set {_moveDir} to vector((metadata "xDir" of {_mount}), 0, (metadata "zDir" of {_mount}))
+			{_moveDir} is set
+			if vector length of {_moveDir} > 0:
+				set {_moveDir} to new vector with yaw (({_ply}.getHandle().yaw) + (vector yaw of {_moveDir})) and pitch 0
+			set metadata "moveDir" of {_ply} to {_moveDir}.clone()
+			set {_currSpacebarPressed} to false
+			if {_canFly} is true:
+				# flying mount
+				set gravity of {_mount} to off
+			else:
+				set gravity of {_mount} to on
+				set {_currSpacebarPressed} to metadata "spacebar" of {_mount}
+				if {_currSpacebarPressed} is not (metadata "lastSpacebarPressed" of {_ply}):
+					# released/pressed spacebar
+					set metadata "lastSpacebarPressed" of {_ply} to {_currSpacebarPressed}
+					playerThrust({_ply}, {_currSpacebarPressed})
+				set {_velocity} to velocity of {_mount}
+				if metadata "thrusting" of {_ply} is not true:
+					# walk(on ground/in air)
+					if (metadata "shift" of {_mount}) is true:
+						# sneaking
+						{_ply} is on ground
+						set {_speedGround} to {_speedGround} / 2
+					if vector length of {_moveDir} > 0:
+						set vector length of {_moveDir} to {_groundAcceleration}
+						{_velocity}.add({_moveDir})
+				# regulate movement speed
+				set {_ySpeed} to y component of {_velocity}
+				set y component of {_velocity} to 0
+				set {_currMoveSpeed} to vector length of {_velocity}
+				if {_currMoveSpeed} > 0:
+					set vector length of {_velocity} to min({_speedGround}, {_currMoveSpeed} * 0.95)
+				set y component of {_velocity} to {_ySpeed}
+				push {_mount} {_velocity}.subtract(velocity of {_mount})
+				broadcast "%velocity of {_mount}%|%{_velocity}%|%{_moveDir}%|%{_speedGround}%"
+#				kill {_mount}
+		else if {_mount} is set:
+			delete {_mount}
+		wait 1 tick
+	delete {_mount}
+on join:
+	set metadata "lastSpacebarPressed" of {_ply} to false
+	set {_world} to world("world")
+	set {_spawnLoc} to {_world}.getSpawnLocation()
+	player.getHandle().setLocation((x-coordinate of {_spawnLoc}), (y-coordinate of {_spawnLoc}), (z-coordinate of {_spawnLoc}), 0, 0)
+	broadcast "%{_spawnLoc}%"
+#	threadMovement(player)
+on gamemode change to survival:
+#	threadMovement(player)
+on dismount:
+	set {_ply} to event-entity
+	set {_mount} to vehicle of {_ply}
+	broadcast "%{_mount}%"
+	if gamemode of {_ply} is not spectator:
+		{_ply} doesn't have scoreboard tag "unauthorized"
+		{_mount}.isDead() is not true
+		{_mount} is not a regular minecart
+		cancel event
+		stop trigger
+	{_mount}.remove()
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+# make other players think the player is not riding
+#on packet event play_server_mount with lowest priority:
+#	set {_packet} to event-packet
+#	set {_player} to event-player
+#	set {_playerID} to event-player.getHandle().getId()
+#	broadcast "%int field of {_packet}%|%int array field of {_packet}%|||||%event-player%|%{_playerID}%|||%java class of int array field of {_packet}%"
+#	loop int array field of {_packet}:
+#		{MountAndPlayers}.put((int field of {_packet}), loop-value)
+#		if loop-value is {_playerID}:
+#			wait 1 second
+#			broadcast "%int field of {_packet}%|%int array field of {_packet}%|||||%event-player%|%{_playerID}%|||%java class of int array field of {_packet}%"
+#			stop trigger
+#	set int array field of {_packet} to -1
+#	wait 1 second
+#	broadcast "%int field of {_packet}%|%int array field of {_packet}%|||||%event-player%|%{_playerID}%|||%java class of int array field of {_packet}%"

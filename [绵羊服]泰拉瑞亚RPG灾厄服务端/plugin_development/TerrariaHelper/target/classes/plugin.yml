@@ -1,0 +1,11 @@
+name: TerrariaHelper
+version: 1.0
+main: terraria.TerrariaHelper
+softdepend:
+  - DragonCore
+  - LibsDisguises
+load: startup
+commands:
+  findNoise:
+    description: teleport to somewhere near the noise input
+    usage: /<command> [<noise(double)>]

@@ -1,0 +1,44 @@
+Version: 1
+Seed: 4175543147961324202
+Residences:
+  zhucheng:
+    LeaveMessage: 您已经离开主城。
+    TPLoc:
+      X: 133.5
+      Pitch: 90.0
+      Y: 71.0
+      Z: 272.5
+      Yaw: 90.92
+    BlockSellPrice: 0.3
+    EnterMessage: 您已经回到主城。
+    Permissions:
+      PlayerFlags: {}
+      AreaFlags:
+        container: false
+        ignite: false
+        shear: false
+        firespread: false
+        use: false
+        destroy: false
+        pvp: true
+        animalkilling: true
+        hook: false
+        build: false
+        explode: false
+        vehicledestroy: false
+        tnt: false
+        leash: false
+        pistonprotection: true
+        tp: true
+        creeper: false
+      OwnerUUID: 00000000-0000-0000-0000-000000000000
+      OwnerLastKnownName: Server_Land
+    CreatedOn: 1656445283442
+    Areas:
+      main:
+        X1: 172
+        Y1: 255
+        Z1: 310
+        X2: 96
+        Y2: 0
+        Z2: 233

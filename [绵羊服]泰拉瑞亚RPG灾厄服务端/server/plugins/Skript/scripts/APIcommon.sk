@@ -1,0 +1,2464 @@
+import:
+	eos.moe.dragoncore.api.CoreAPI
+	java.util.ArrayList
+	java.io.File
+	java.util.Calendar
+	java.util.List
+	java.util.HashMap
+	java.util.HashSet
+	java.util.Random
+	java.util.Set
+	java.lang.Integer
+	lk.vexview.api.VexViewAPI
+	lk.vexview.hud.MinecraftHud
+	lk.vexview.potions.VexPotion
+	lk.vexview.tag.components.VexTextTag
+	lk.vexview.tag.TagDirection
+	me.libraryaddict.disguise.DisguiseAPI
+	me.libraryaddict.disguise.disguisetypes.DisguiseType
+	me.libraryaddict.disguise.disguisetypes.MiscDisguise
+	me.libraryaddict.disguise.disguisetypes.MobDisguise
+	me.libraryaddict.disguise.disguisetypes.watchers.SplashPotionWatcher
+	net.minecraft.server.v1_12_R1.EntitySlime
+	net.minecraft.server.v1_12_R1.Items
+	net.minecraft.server.v1_12_R1.PacketPlayOutSetCooldown
+	org.bukkit.Bukkit
+	org.bukkit.Color as BukkitColor
+	org.bukkit.configuration.file.FileConfiguration
+	org.bukkit.configuration.file.YamlConfiguration
+	org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
+	org.bukkit.entity.EntityType
+	org.bukkit.event.block.BlockBreakEvent
+	org.bukkit.event.entity.EntityTargetEvent$TargetReason as TargetReason
+	org.bukkit.inventory.ItemFlag
+	org.bukkit.inventory.ItemStack
+	org.bukkit.Material
+	org.bukkit.Particle
+	org.bukkit.WeatherType
+	org.bukkit.util.BlockIterator
+
+expression player:
+	get:
+		set {_ply} to try event.getPlayer()
+		if {_ply} is not set:
+			set {_ply} to command sender
+		return {_ply}
+
+function sendInfo(info: text):
+	replace all "&" in {_info} with "§"
+	send "%{_info}%" to "laomianyang" parsed as player
+
+plural expression toSkList %object%:
+	get:
+		return ...(expr-1)
+
+on script load:
+	set {YMLcache} to new HashMap()
+	set {YMLtoSave} to new HashSet()
+on skript stop:
+	saveAllYaml()
+every 10 seconds:
+	saveAllYaml()
+function saveAllYaml():
+	loop ...{YMLtoSave}:
+		set {_filePath} to loop-value
+		if {_filePath} contains "/":
+			replace all "/" in {_filePath} with File.separator
+		{YMLcache}.get(loop-value).save({_filePath})
+	{YMLtoSave}.clear()
+expression y[a]ml value [of ]%string% (in|from) [the][ ][file ]%string%:
+	get:
+		set {_filePath} to expr-2
+		set {_node} to expr-1
+		if {YMLcache}.containsKey({_filePath}):
+			set {_config} to {YMLcache}.get({_filePath})
+		else:
+			if {_filePath} contains "/":
+				replace all "/" in {_filePath} with File.separator
+			set {_file} to new File({_filePath})
+			set {_config} to YamlConfiguration.loadConfiguration({_file})
+			{YMLcache}.put(expr-2, {_config})
+		set {_result} to {_config}.get({_node})
+		if {_result} is instance of ArrayList:
+			set {_result} to {_result}.clone()
+		else if {_result} is instance of HashMap:
+			set {_result} to {_result}.clone()
+		return {_result}
+	set:
+		set {_filePath} to expr-2
+		set {_node} to expr-1
+		if {YMLcache}.containsKey({_filePath}):
+			set {_config} to {YMLcache}.get({_filePath})
+		else:
+			if {_filePath} contains "/":
+				replace all "/" in {_filePath} with File.separator
+			set {_file} to new File({_filePath})
+			set {_config} to YamlConfiguration.loadConfiguration({_file})
+		{_config}.set({_node}, change value)
+		{YMLcache}.put(expr-2, {_config})
+		{YMLtoSave}.add(expr-2)
+	delete:
+		set yml value expr-1 from file expr-2 to null
+	reset:
+		set yml value expr-1 from file expr-2 to null
+plural expression y[a]ml node[s] [of ]%string% (in|from) [the][ ][file ]%string%:
+	get:
+		set {_filePath} to expr-2
+		set {_node} to expr-1
+		if {YMLcache}.containsKey({_filePath}):
+			set {_config} to {YMLcache}.get({_filePath})
+		else:
+			if {_filePath} contains "/":
+				replace all "/" in {_filePath} with File.separator
+			set {_file} to new File({_filePath})
+			set {_config} to YamlConfiguration.loadConfiguration({_file})
+			{YMLcache}.put(expr-2, {_config})
+		if try {_config}.contains({_node}) is true:
+			set {_return} to {_config}.getConfigurationSection({_node}).getKeys(false)
+		return ...{_return}
+plural expression y[a]ml node[s](-|[ ])list [of ]%string% (in|from) [the][ ][file ]%string%:
+	get:
+		set {_filePath} to expr-2
+		set {_node} to expr-1
+		if {YMLcache}.containsKey({_filePath}):
+			set {_config} to {YMLcache}.get({_filePath})
+		else:
+			if {_filePath} contains "/":
+				replace all "/" in {_filePath} with File.separator
+			set {_file} to new File({_filePath})
+			set {_config} to YamlConfiguration.loadConfiguration({_file})
+			{YMLcache}.put(expr-2, {_config})
+		if try {_config}.contains({_node}) is true:
+			set {_return} to {_config}.getConfigurationSection({_node}).getKeys(true)
+		return ...{_return}
+
+function makeTarget(entity: entity, target: entity):
+	try {_entity}.getHandle().setGoalTarget({_target}.getHandle(), TargetReason.RANDOM_TARGET, true)
+function damageCD(list: object, victim: object, cd: number):
+	{_list}.add({_victim})
+	wait "%ceil({_cd})% ticks" parsed as timespan
+	{_list}.remove({_victim})
+function getMoonPhase() :: number:
+	set {_world} to world "world"
+	set {_day} to floor({_world}.getFullTime() / 24000)
+	return mod({_day}, 8)
+function disguiseProjectile(projectile: entity):
+	if "%{_projectile}.getType()%" is "SPLASH_POTION":
+		set {_name} to {_projectile}.getCustomName()
+		{_name} is set
+		set {_disguiseItem} to new ItemStack(Material.SPLASH_POTION)
+		set {_itemMeta} to {_disguiseItem}.getItemMeta()
+		{_itemMeta}.setDisplayName({_name})
+		{_itemMeta}.setColor(BukkitColor.fromRGB(255, 255, 255))
+		{_disguiseItem}.setItemMeta({_itemMeta})
+		{_projectile}.setItem({_disguiseItem})
+		if {_name} contains "激光":
+			set glowing of {_projectile} to on
+	else if "%{_projectile}.getType()%" is "SNOWBALL":
+		set {_disguise} to new MiscDisguise(DisguiseType.ARROW)
+		DisguiseAPI.disguiseEntity({_projectile}, {_disguise})
+function getWorth(name: text) :: integer:
+	if {_name} contains "的 ":
+		set {_prefix} to {_name}.split("的 ")[0]
+		set {_name} to {_name}.split("的 ")[1]
+	set {_worth} to yml value "%{_name}%.worth" from file "plugins/Data/items.yml"
+	if {_worth} is not set:
+		set {_worth} to "0"
+	set {_worth} to {_worth} parsed as number
+	if {_prefix} is set:
+		set {_worthMulti} to yml value "prefixInfo.%{_prefix}%.priceMultiplier" from file "plugins/Data/prefix.yml"
+		{_worthMulti} is set
+		set {_worthMulti} to {_worthMulti} parsed as number
+		set {_worth} to {_worth} * {_worthMulti}
+	return round({_worth} / 100) * 100
+function getMaxHealthByTier(tier: number) :: number:
+	if mod({_tier}, 1) > 0.5:
+		set {_tier} to ceil({_tier})
+	else:
+		set {_tier} to floor({_tier})
+	if {_tier} < 21:
+		return {_tier} * 40
+	else if {_tier} < 41:
+		return 800 + (({_tier} - 20) * 10)
+	else if {_tier} = 41:
+		return 1050
+	else if {_tier} = 42:
+		return 1100
+	else if {_tier} = 43:
+		return 1150
+	else:
+		return 1200
+function getMaxManaByTier(tier: number) :: number:
+	if mod({_tier}, 1) > 0.5:
+		set {_tier} to ceil({_tier})
+	else:
+		set {_tier} to floor({_tier})
+	if {_tier} < 11:
+		return {_tier} * 20
+	else if {_tier} = 11:
+		return 250
+	else if {_tier} = 12:
+		return 300
+	else:
+		return 350
+function getBiome(loc: location) :: text:
+	if "%(world of {_loc})%" is "world_nether":
+		return "underworld"
+	else if y-coordinate of {_loc} >= 150:
+		return "space"
+	else if y-coordinate of {_loc} <= 5:
+		return "underworld"
+	set {_biome} to "%biome at {_loc}%"
+	if {_biome} contains "mushroom":
+		return "corruption"
+	else if {_biome} contains "ice":
+		return "hallow"
+	else if {_biome} contains "mesa" or "desert":
+		return "desert"
+	else if {_biome} contains "beach":
+		return "ocean"
+	else if {_biome} contains "cold" or "frozen":
+		return "tundra"
+	else if {_biome} contains "ocean":
+		return "ocean"
+	else if {_biome} contains "jungle":
+		return "jungle"
+	return "normal"
+function coinConversion(copper: number) :: numbers:
+	set {_coin::1} to 0
+	set {_coin::2} to 0
+	set {_coin::3} to 0
+	set {_coin::4} to 0
+	if {_copper} >= 1000000:
+		set {_coin::1} to floor({_copper} / 1000000)
+		remove {_coin::1} * 1000000 from {_copper}
+	if {_copper} >= 10000:
+		set {_coin::2} to floor({_copper} / 10000)
+		remove {_coin::2} * 10000 from {_copper}
+	if {_copper} >= 100:
+		set {_coin::3} to floor({_copper} / 100)
+		remove {_coin::3} * 100 from {_copper}
+	if {_copper} >= 1:
+		set {_coin::4} to {_copper}
+	return {_coin::*}
+function slimeResize(slime: entity, size: number):
+	{_slime}.getType().toString() is "SLIME"
+	set {_size} to round({_size})
+	{_size} >= 1
+	{_slime}.getHandle().getDataWatcher().set(EntitySlime.bu, Integer.valueOf("%{_size}%"))
+	{_slime}.getHandle().setSize(0.51000005F * {_size}, 0.51000005F * {_size})
+function checkMobTarget(target: entity, mob: entity) :: boolean:
+	if {_target} is a player:
+		{_target} is online
+		{_target} doesn't have scoreboard tag "unauthorized"
+		gamemode of {_target} is survival
+		world of {_target} is world of {_mob}
+		set {_distX} to abs((x-coordinate of {_mob}) - (x-coordinate of {_target}))
+		set {_distZ} to abs((z-coordinate of {_mob}) - (z-coordinate of {_target}))
+		set {_horDist} to max({_distX}, {_distZ})
+		if {_horDist} > 48:
+			return false
+		return true
+	return false
+function setupBossTarget(BOSS: entity, tier: integer, ply: player, hasDistanceRestriction: boolean, bossbar: object) :: object:
+	set {_targets} to new HashMap()
+	loop all players:
+		set {_currPly} to loop-player
+		if world of {_currPly} is not world of {_BOSS}:
+			continue
+		if {_currPly} is not {_ply}:
+			metadata "tier" of {_currPly} >= {_tier}
+			(metadata "team" of {_currPly}) is (metadata "team" of {_ply})
+			if {_hasDistanceRestriction} is true:
+				if distance between {_currPly} and {_ply} > 192:
+					continue
+			{_bossbar}.addPlayer({_currPly}.getHandle())
+			{_targets}.put(name of {_currPly}, 0)
+		else:
+			{_bossbar}.addPlayer({_currPly}.getHandle())
+			{_targets}.put(name of {_currPly}, 0)
+	broadcast "BOSS的挑战者为：%{_targets}.keySet()%"
+	return {_targets}
+function getBossHealthMulti(numPly: number) :: number:
+	set {_numPly} to round({_numPly})
+	set {_curr} to 1
+	set {_multi} to 1
+	set {_multiInc} to 0.35
+	#multiInc -> 1 for curr > 30
+	set {_loopTo} to min({_numPly}, 32)
+	while {_curr} < {_loopTo}:
+		add {_multiInc} to {_multi}
+		add (1 - {_multiInc}) / 3 to {_multiInc}
+		add 1 to {_curr}
+	add max(0, {_numPly} - {_loopTo}) to {_multi}
+	if {_numPly} >= 10:
+		set {_multi} to (({_multi} * 2) + 8) / 3
+	return {_multi}
+function checkBossTarget(target: entity, boss: entity, ignoreDistance: boolean) :: boolean:
+	if {_target} is a player:
+		{_target} is online
+		{_target} doesn't have scoreboard tag "unauthorized"
+		gamemode of {_target} is survival
+		world of {_target} is world of {_boss}
+		set {_distX} to (x-coordinate of {_boss}) - (x-coordinate of {_target})
+		set {_distZ} to (z-coordinate of {_boss}) - (z-coordinate of {_target})
+		set {_horDist} to max(abs({_distX}), abs({_distZ}))
+		if {_horDist} > 125:
+			return {_ignoreDistance}
+		return true
+	return false
+function renderSingleBossbarAdvanced(boss: entity, bossbar: object, shouldAlter: boolean):
+	set {_timeElapsed} to 0
+	set {_targetTime} to 900
+	set {_targetTime} to yml value "BossDefeatTime.%trimText(name of {_boss})%" from file "setting.yml"
+	set {_dynamicDR} to 1
+	while {_boss}.isDead() is not true:
+		if health of {_boss} <= 0:
+			stop trigger
+		if max health of {_boss} is 1:
+			stop trigger
+		if {_shouldAlter}:
+			set {_currProgress} to health of {_boss} / max health of {_boss}
+			{_bossbar}.setProgress[float]({_currProgress})
+		else:
+			set {_currProgress} to {_bossbar}.getProgress()
+		# setup dynamic DR
+		# timeprogress: 0->1
+		#  damagetaken       / timeConsumed *         timeLeft           *    DR     =  healthLeft                  
+		# (1 - currProgress) / timeElapsed  * (targetTime - timeElapsed) * dynamicDR = currProgress
+		if {_timeElapsed} < {_targetTime}:
+			{_timeElapsed} > 0
+			{_currProgress} < 1
+			set {_dynamicDR} to ({_currProgress} / (1 - {_currProgress})) * {_timeElapsed} / ({_targetTime} - {_timeElapsed})
+			set {_dynamicDR} to max(min({_dynamicDR}, 1), 0.005)
+		else if {_dynamicDR} < 1:
+			set {_dynamicDR} to min({_dynamicDR} + 0.0075, 1)
+		set metadata "dynamicDR" of {_boss} to {_dynamicDR}
+		add 2 to {_timeElapsed}
+		wait 2 ticks
+	{_bossbar}.setProgress[float](0)
+function renderSingleBossbar(boss: entity, bossbar: object):
+	renderSingleBossbarAdvanced({_boss}, {_bossbar}, true)
+function tweakAttribute(attrMap: object, key: object, value: text, addOrRemove: boolean):
+	if try {_attrMap}.containsKey({_key}) is false:
+		stop trigger
+	if {_key} is "damageType":
+		{_attrMap}.put({_key}, {_value})
+		stop trigger
+	if {_key} doesn't start with "buffInflict":
+		set {_value} to {_value} parsed as number
+		if {_key} is "useTime":
+			set {_value} to {_value} / 2
+	if {_addOrRemove} is true:
+		if {_key} is "damageTakenMulti":
+			{_attrMap}.put({_key}, ({_attrMap}.getOrDefault({_key}, 1) / (2 - {_value})))
+			stop trigger
+		if {_key} is "ammoConsumptionRate" or "arrowConsumptionRate":
+			{_attrMap}.put({_key}, ({_attrMap}.getOrDefault({_key}, 1) * {_value}))
+			stop trigger
+		if {_key} ends with "Multi":
+			{_attrMap}.put({_key}, ({_attrMap}.getOrDefault({_key}, 1) * (1 + {_value})))
+			stop trigger
+		if {_key} starts with "buffInflict":
+			{_attrMap}.get({_key}).add({_value})
+			stop trigger
+		{_attrMap}.put({_key}, ({_attrMap}.getOrDefault({_key}, 0) + {_value}))
+	else:
+		if {_key} is "damageTakenMulti":
+			{_attrMap}.put({_key}, ({_attrMap}.getOrDefault({_key}, 1) * (2 - {_value})))
+			stop trigger
+		if {_key} is "ammoConsumptionRate" or "arrowConsumptionRate":
+			{_attrMap}.put({_key}, ({_attrMap}.getOrDefault({_key}, 1) / {_value}))
+			stop trigger
+		if {_key} ends with "Multi":
+			{_attrMap}.put({_key}, ({_attrMap}.getOrDefault({_key}, 1) / (1 + {_value})))
+			stop trigger
+		if {_key} starts with "buffInflict":
+			{_attrMap}.get({_key}).remove({_value})
+			stop trigger
+		{_attrMap}.put({_key}, ({_attrMap}.getOrDefault({_key}, 0) - {_value}))
+
+function applyEffect(entity: entity, effect: text, time: integer):
+	if {_entity} is not a player:
+		add metadata "motherType" of {_entity} to {_checkNode::*}
+		add trimText(name of {_entity}) to {_checkNode::*}
+		loop {_checkNode::*}:
+			set {_immute} to yml value "%loop-value%.buffImmute" from file "plugins/Data/entities.yml"
+			if {_immute}.contains({_effect}):
+				stop trigger
+	else:
+		set {_accessories} to metadata "accessory" of {_entity}
+		if {_effect} is "破损护甲":
+			if {_immute}.contains("盔甲抛光剂"):
+				stop trigger
+	if {_effect} is "燃烧":
+		{_entity}.setFireTicks(max({_entity}.getFireTicks(), {_time}))
+		stop trigger
+	else if {_effect} is "失明" or "阻塞":
+		remove blindness from {_entity}
+		apply potion of blindness without particles to {_entity} for "%{_time}% ticks" parsed as timespan
+	else if {_effect} is "鱼鳃":
+		remove water breathing from {_entity}
+		apply potion of water breathing without particles to {_entity} for "%{_time}% ticks" parsed as timespan
+	else if {_effect} is "隐身":
+		remove invisibility from {_entity}
+		apply potion of invisibility without particles to {_entity} for "%{_time}% ticks" parsed as timespan
+	else if {_effect} is "黑曜石皮":
+		remove fire resistance from {_entity}
+		apply potion of fire resistance without particles to {_entity} for "%{_time}% ticks" parsed as timespan
+	else if {_effect} is "生命力":
+		remove health boost from {_entity}
+		set {_level} to round(max health of {_entity} / 10)
+		apply potion of health boost {_level} without particles to {_entity} for "%{_time}% ticks" parsed as timespan
+	set {_current} to 0
+	set {_current} to metadata "effectTime%{_effect}%" of {_entity}
+	if {_effect} is "魔力疾病":
+		set {_time} to round(min({_current} + 200, 400))
+	else if {_effect} is "破晓" or "伤害星云" or "生命星云" or "魔力星云":
+		if {_effect} is "破晓":
+			set {_maxLevel} to 8
+			set {_levelTime} to 100
+		else:
+			set {_maxLevel} to 3
+			set {_levelTime} to 160
+		set {_currentLevel} to ceil(({_current} - 0.5) / {_levelTime})
+		set {_newLevel} to ceil(({_time} - 0.5) / {_levelTime})
+		if {_newLevel} > {_currentLevel}:
+			set {_time} to round(min({_currentLevel} + 1, {_maxLevel}) * {_levelTime})
+		else:
+			set {_time} to round(max({_currentLevel}, {_newLevel}) * {_levelTime})
+	else:
+		set {_time} to round(max({_current}, {_time}))
+	tickEffect({_entity}, {_effect}, {_time})
+	if {_entity} is a player:
+		showEffect({_entity}, {_effect}, {_time})
+function showEffect(ply: player, effect: text, time: integer):
+	set {_buffOrDebuff} to yml value "effects.%{_effect}%.isBuff" from file "plugins/Data/setting.yml"
+	if {_buffOrDebuff} is not set:
+		set {_buffOrDebuff} to true
+	if {_effect} is "伤害星云" or "生命星云" or "魔力星云":
+		set {_level} to round({_time} / 160)
+		if {_ply} has scoreboard tag "useLocalSprite":
+			set {_icon} to "[local]%{_effect}%%{_level}%"
+		else:
+			set {_icon} to yml value "effects.%{_effect}%%{_level}%.icon" from file "plugins/Data/setting.yml"
+		set {_potion} to new VexPotion("%{_icon}%.png", {_effect}, 180, ({_level} - 1), {_buffOrDebuff})
+		VexViewAPI.addPlayerVexPotion({_ply}, {_potion})
+		loop ({_level} - 1) times:
+			wait 15 seconds
+			subtract 1 from {_level}
+			set {_time} to metadata "effectTime%{_effect}%" of {_ply}
+			if abs({_time} - ({_level} * 160)) > 10:
+				stop loop
+			if {_ply} has scoreboard tag "useLocalSprite":
+				set {_icon} to "[local]%{_effect}%%{_level}%"
+			else:
+				set {_icon} to yml value "effects.%{_effect}%%{_level}%.icon" from file "plugins/Data/setting.yml"
+			set {_potion} to new VexPotion("%{_icon}%.png", {_effect}, 180, ({_level} - 1), {_buffOrDebuff})
+			VexViewAPI.addPlayerVexPotion({_ply}, {_potion})
+	else:
+		if {_ply} has scoreboard tag "useLocalSprite":
+			set {_icon} to "[local]%{_effect}%"
+		else:
+			set {_icon} to yml value "effects.%{_effect}%.icon" from file "plugins/Data/setting.yml"
+		set {_potion} to new VexPotion("%{_icon}%.png", {_effect}, max({_time} + 20, 1), 0, {_buffOrDebuff})
+		VexViewAPI.addPlayerVexPotion({_ply}, {_potion})
+function tickEffect(entity: entity, effect: text, time: integer):
+	if {_effect} is "诅咒":
+		stop trigger
+	set {_statsGen} to metadata "statsGeneration" of {_entity}
+	set {_attrMap} to metadata "attrMap" of {_entity}
+	set {_current} to 0
+	set {_current} to metadata "effectTime%{_effect}%" of {_entity}
+	if {_current} > 0:
+		if {_time} is 0:
+			set metadata "effectTime%{_effect}%" of {_entity} to 0
+		else:
+			set metadata "effectTime%{_effect}%" of {_entity} to {_time}
+		stop trigger
+	else if {_time} is 0:
+		stop trigger
+	set metadata "effectTime%{_effect}%" of {_entity} to {_time}
+	if {_effect} is "霜火" or "咒火" or "中毒" or "剧毒" or "破晓":
+		if {_effect} is "霜火":
+			set {_damage} to 4
+			set {_dmgInterval} to 5
+		else if {_effect} is "咒火":
+			set {_damage} to 20
+			set {_dmgInterval} to 15
+		else if {_effect} is "中毒":
+			set {_damage} to 2
+			set {_dmgInterval} to 10
+		else if {_effect} is "剧毒":
+			set {_damage} to 5
+			set {_dmgInterval} to 5
+		else:
+			set {_damage} to 25
+			set {_dmgInterval} to 10
+		while metadata "effectTime%{_effect}%" of {_entity} > 0:
+			if {_entity} is a player:
+				{_entity} is online
+				if gamemode of {_entity} is spectator:
+					set {_potion} to new VexPotion("", {_effect}, 1, 0, true)
+					VexViewAPI.addPlayerVexPotion({_entity}, {_potion})
+					clear metadata "effectTime%{_effect}%" of {_entity}
+					stop trigger
+			else:
+				if health of {_entity} <= 0:
+					stop trigger
+			set {_time} to metadata "effectTime%{_effect}%" of {_entity}
+			remove {_dmgInterval} from {_time}
+			set metadata "effectTime%{_effect}%" of {_entity} to {_time}
+			if {_effect} is "破晓":
+				set {_damage} to max(ceil({_time} / 100) * 25, 25)
+				if {_entity} is a player:
+					set {_damage} to {_damage} / 5
+			handleDamage({_entity}, {_entity}, {_damage}, "debuff_%{_effect}%")
+			wait "%{_dmgInterval}% ticks" parsed as timespan
+	else if {_effect} is "扭曲":
+		{_entity} is a player
+		while metadata "effectTime%{_effect}%" of {_entity} > 0:
+			if {_entity} is not online:
+				stop trigger
+			if gamemode of {_entity} is spectator:
+				set {_potion} to new VexPotion("", {_effect}, 1, 0, true)
+				VexViewAPI.addPlayerVexPotion({_entity}, {_potion})
+				clear metadata "effectTime%{_effect}%" of {_entity}
+				stop trigger
+			set {_time} to metadata "effectTime%{_effect}%" of {_entity}
+			remove 4 from {_time}
+			set metadata "effectTime%{_effect}%" of {_entity} to {_time}
+			set {_targetLoc} to (location of highest solid block at location of {_entity}).add(0, 8 + (sin({_time} * 2.5) * 2), 0)
+			set {_v} to velocity of {_entity}
+			set {_y} to (y-coordinate of {_targetLoc}) - (y-coordinate of {_entity})
+			set y of {_v} to ({_y} / 6)
+			set velocity of {_entity} to {_v}
+			{_entity}.setFallDistance(0)
+			wait 4 ticks
+	else if {_effect} is "恐惧":
+		{_entity} is a player
+		while metadata "effectTime%{_effect}%" of {_entity} > 0:
+			wait 10 ticks
+			if {_entity} is not online:
+				stop trigger
+			if gamemode of {_entity} is spectator:
+				set {_potion} to new VexPotion("", {_effect}, 1, 0, true)
+				VexViewAPI.addPlayerVexPotion({_entity}, {_potion})
+				clear metadata "effectTime%{_effect}%" of {_entity}
+				stop trigger
+			if {BOSS}.containsKey("血肉之墙"):
+				set {_mouth} to {BOSS}.get("血肉之墙").get(0)
+				if world of {_entity} is not world of {_mouth}:
+					handleDamage({_entity}, {_mouth}, 114514, "恐惧")
+				else if distance between location of {_entity} and location of {_mouth} > 100:
+					handleDamage({_entity}, {_mouth}, 114514, "恐惧")
+			else:
+				set {_potion} to new VexPotion("", {_effect}, 1, 0, true)
+				VexViewAPI.addPlayerVexPotion({_entity}, {_potion})
+				clear metadata "effectTime%{_effect}%" of {_entity}
+				stop trigger
+			set {_time} to metadata "effectTime%{_effect}%" of {_entity}
+			remove 10 from {_time}
+			set metadata "effectTime%{_effect}%" of {_entity} to {_time}
+	else:
+		set {_attribute} to yml value "effects.%{_effect}%.attributes" from file "plugins/Data/setting.yml"
+		set {_attributes::*} to ...{_attribute}
+		loop {_attributes::*}:
+			add (loop-value).split(": ")[0] to {_attr::*}
+			add (loop-value).split(": ")[1] to {_attrValue::*}
+		if {_effect} is "伤害星云" or "生命星云" or "魔力星云":
+			set {_loopTime} to max(ceil(({_time} - 0.5) / 160), 1)
+			set {_lastLoopTime} to {_loopTime}
+		else:
+			set {_loopTime} to 1
+			if {_effect} is "魔力疾病":
+				set {_lastManaMulti} to "0"
+		loop {_attr::*}:
+			set {_key} to "%loop-value%"
+			set {_value} to {_attrValue::%loop-index%}
+			loop {_loopTime} times:
+				tweakAttribute({_attrMap}, {_key}, {_value}, true)
+		set {_entity}'s walk speed to min((({_attrMap}.get("speed")) * ({_attrMap}.get("speedMulti"))), 1)
+		{_entity} is a player
+		while metadata "effectTime%{_effect}%" of {_entity} > 0:
+			wait 5 ticks
+			set {_time} to metadata "effectTime%{_effect}%" of {_entity}
+			remove 5 from {_time}
+			set metadata "effectTime%{_effect}%" of {_entity} to {_time}
+			if {_entity} is a player:
+				{_entity} is online
+				if gamemode of {_entity} is spectator:
+					set {_potion} to new VexPotion("", {_effect}, 1, 0, true)
+					VexViewAPI.addPlayerVexPotion({_entity}, {_potion})
+					clear metadata "effectTime%{_effect}%" of {_entity}
+					stop trigger
+			else:
+				if health of {_entity} <= 0:
+					stop trigger
+			if {_effect} is "生命星云" or "伤害星云" or "魔力星云":
+				{_entity} is a player
+				mod({_time} + 5, 160) <= 5
+				{_time} > 0
+				showEffect({_entity}, {_effect}, {_time})
+				
+			set {_generation} to metadata "statsGeneration" of {_entity}
+			if {_effect} is "魔力疾病":
+				set {_attrMap} to metadata "attrMap" of {_entity}
+				if {_statsGen} != {_generation}:
+					set {_statsGen} to {_generation}
+				else:
+					tweakAttribute({_attrMap}, "damageMagicMulti", {_lastManaMulti}, false)
+				set {_lastManaMulti} to "%{_time} / -800%"
+				tweakAttribute({_attrMap}, "damageMagicMulti", {_lastManaMulti}, true)
+			else:
+				if {_statsGen} != {_generation}:
+					if {_effect} is "生命星云" or "伤害星云" or "魔力星云":
+						set {_loopTime} to max(ceil(({_time} - 0.5) / 160), 1)
+					else:
+						set {_loopTime} to 1
+					set {_attrMap} to metadata "attrMap" of {_entity}
+					loop {_attr::*}:
+						set {_key} to "%loop-value%"
+						set {_value} to {_attrValue::%loop-index%}
+						loop {_loopTime} times:
+							tweakAttribute({_attrMap}, {_key}, {_value}, true)
+					set {_entity}'s walk speed to min((({_attrMap}.get("speed")) * ({_attrMap}.getOrDefault("speedMulti", 1))), 1)
+					set {_statsGen} to {_generation}
+				else if {_effect} is "生命星云" or "伤害星云" or "魔力星云":
+					set {_loopTime} to max(ceil(({_time} - 0.5) / 160), 1)
+					if {_lastLoopTime} < {_loopTime}:
+						set {_attrMap} to metadata "attrMap" of {_entity}
+						loop {_attr::*}:
+							set {_key} to "%loop-value%"
+							set {_value} to {_attrValue::%loop-index%}
+							loop ({_loopTime} - {_lastLoopTime}) times:
+								tweakAttribute({_attrMap}, {_key}, {_value}, true)
+					else if {_lastLoopTime} > {_loopTime}:
+						set {_attrMap} to metadata "attrMap" of {_entity}
+						loop {_attr::*}:
+							set {_key} to "%loop-value%"
+							set {_value} to {_attrValue::%loop-index%}
+							tweakAttribute({_attrMap}, {_key}, {_value}, false)
+					set {_lastLoopTime} to {_loopTime}
+			
+		set {_attrMap} to metadata "attrMap" of {_entity}
+		loop {_attr::*}:
+			set {_key} to "%loop-value%"
+			set {_value} to {_attrValue::%loop-index%}
+			tweakAttribute({_attrMap}, {_key}, {_value}, false)
+		set {_entity}'s walk speed to min((({_attrMap}.get("speed")) * ({_attrMap}.getOrDefault("speedMulti", 1))), 1)
+	clear metadata "effectTime%{_effect}%" of {_entity}
+
+function handleGrapplingHook(ply: player):
+	set {_hooks} to metadata "hooks" of {_ply}
+	set {_hookItem} to {_ply}'s offhand tool
+	set {_hookWorld} to world of {_ply}
+	set {_hookAmount} to 0
+	set {_hookAmount} to yml value "%trimText(name of {_hookItem})%.amount" from file "plugins/Data/hooks.yml"
+	if {_hooks}.size() >= {_hookAmount}:
+		# removed the first hook on blocks if trying to launch more hooks than the player has
+		set {_removed} to false
+		loop ...{_hooks}:
+			set {_hook} to loop-value
+			if {_hook}.getHandle().inGround is true:
+				{_hook}.remove()
+				{_hooks}.remove({_hook})
+				set {_removed} to true
+				stop loop
+		if {_removed} is false:
+			stop trigger
+	set {_hookEntity} to {_hookWorld}.spawnEntity((location of {_ply}).add(0, 1, 0), EntityType.ARROW)
+	{_hookEntity}.setShooter({_ply})
+	#velocity
+	set {_hookSpeed} to 10
+	set {_hookSpeed} to yml value "%trimText(name of {_hookItem})%.velocity" from file "plugins/Data/hooks.yml"
+	set {_hookSpeed} to {_hookSpeed} / 6
+	set {_yaw} to {_ply}.getHandle().yaw
+	set {_pitch} to {_ply}.getHandle().pitch
+	set {_velocity} to new vector with yaw {_yaw} and pitch {_pitch}
+	set vector length of {_velocity} to {_hookSpeed}
+	set gravity of {_hookEntity} to off
+	set velocity of {_hookEntity} to {_velocity}
+	#pre-set particle item
+	set {_hookColors} to yml value "%trimText(name of {_hookItem})%.particleItem" from file "plugins/Data/hooks.yml"
+	loop ...{_hooks}:
+		set {_hook} to loop-value
+		set {_existingColor} to metadata "color" of {_hook}
+		try {_hookColors}.remove({_existingColor})
+	if {_hookColors}.size() > 0:
+		set {_color} to "%{_hookColors}.get(0)%"
+	else:
+		set {_color} to "125|125|125"
+	set metadata "color" of {_hookEntity} to {_color}
+	set {_colorInfo::*} to {_color} split at "|"
+	set {_color} to BukkitColor.fromRGB(({_colorInfo::1} parsed as integer), ({_colorInfo::2} parsed as integer), ({_colorInfo::3} parsed as integer))
+	set metadata "colorInfo" of {_hookEntity} to {_color}
+	add "isHook" to scoreboard tags of {_hookEntity}
+	{_hooks}.add({_hookEntity})
+	#tick the hooks, if this is the first hook launched
+	if {_hooks}.size() = 1:
+		set {_hookReach} to 12
+		set {_hookReach} to yml value "%trimText(name of {_hookItem})%.reach" from file "plugins/Data/hooks.yml"
+		set {_hookPullSpeed} to 0.1
+		set {_hookPullSpeed} to yml value "%trimText(name of {_hookItem})%.playerSpeed" from file "plugins/Data/hooks.yml"
+		while {_ply} is online:
+			if gamemode of {_ply} is spectator:
+				stop loop
+			if name of {_ply}'s offhand tool is not name of {_hookItem}:
+				stop loop
+			if world of {_ply} is not {_hookWorld}:
+				stop loop
+			if {_hooks}.size() = 0:
+				stop loop
+			set {_mount} to vehicle of {_ply}
+			if {_mount} is set:
+				set {_center} to location(0, 0, 0, {_hookWorld})
+				set {_hookedAmount} to 0
+				loop ...{_hooks}:
+					set {_hook} to loop-value
+					if (distance between location of {_ply} and location of {_hook}) / 2 > {_hookReach}:
+						{_hook}.remove()
+					if {_hook}.isDead() is false:
+						if {_hook}.getHandle().inGround is true:
+							{_center}.add(location of {_hook})
+							add 1 to {_hookedAmount}
+						#draw chain of the hook
+						set {_dVec} to (location of {_hook}).subtract(location of {_ply}).subtract(0, 1, 0).toVector()
+						if vector length of {_dVec} > 0:
+							set {_loopTime} to floor((vector length of {_dVec}) * 2)
+							set {_color} to metadata "colorInfo" of {_hook}
+							loop {_loopTime} times:
+								set {_particleLoc} to (location of {_ply}).add(0, 1, 0)
+								set {_vector} to {_dVec}.clone()
+								set vector length of {_vector} to (0.5 * (loop-number))
+								{_particleLoc}.add({_vector})
+								{_hookWorld}.spawnParticle(Particle.REDSTONE, {_particleLoc}, 0, ({_color}.getRed() / 255 - 1), ({_color}.getGreen() / 255), ({_color}.getBlue() / 255))
+					else:
+						{_hooks}.remove({_hook})
+				if {_hookedAmount} >= 1:
+					set gravity of {_mount} to off
+					set metadata "thrust" of {_ply} to 0
+					set metadata "thrustProgress" of {_ply} to 0
+					{_mount}.setFallDistance(0)
+					{_center}.multiply(1 / {_hookedAmount})
+					set {_thrust} to {_center}.subtract(location of {_ply}).subtract(0, 1, 0).toVector()
+					if vector length of {_thrust} > {_hookPullSpeed} * 6:
+						set vector length of {_thrust} to {_hookPullSpeed}
+					else if vector length of {_thrust} > 0:
+						set vector length of {_thrust} to (vector length of {_thrust} * 0.167)
+					set velocity of {_mount} to {_thrust}
+				else:
+					set gravity of {_mount} to on
+			wait 3 ticks
+		loop ...{_hooks}:
+			try loop-value.remove()
+		{_hooks}.clear()
+		set gravity of {_mount} to on
+function threadAccessory(ply: player):
+	set {_index} to 0
+	set {_attrMap} to new HashMap(5)
+	{_attrMap}.put("damage", 0)
+	{_attrMap}.put("damageType", "Arrow")
+	{_attrMap}.put("knockback", 0)
+	set {_attrMapStand} to new HashMap(5)
+	{_attrMapStand}.put("damage", 75)
+	{_attrMapStand}.put("damageType", "Melee")
+	{_attrMapStand}.put("knockback", 1)
+	while {_ply} is online:
+		if {_ply} has scoreboard tag "unauthorized":
+			stop loop
+		if gamemode of {_ply} is not spectator:
+			set {_armorSet} to metadata "armorSet" of {_ply}
+			if {_armorSet} starts with "叶绿":
+				mod({_index}, 2) = 0
+				{_attrMap}.put("damage", 200)
+				set {_distance} to 100
+				clear {_target}
+				loop all living entities in radius 25 of {_ply}:
+					loop-entity is not {_ply}
+					health of loop-entity > 0
+					{_ply}.hasLineOfSight(loop-value) is true
+					checkCanDamage({_ply}, loop-value) is true
+					set {_dist} to distance between location of {_ply} and location of loop-value
+					if {_dist} < {_distance}:
+						set {_distance} to {_dist}
+						set {_target} to loop-value
+				{_target} is set
+				set {_v} to (eye location of {_target}).subtract(eye location of {_ply}).toVector()
+				set vector length of {_v} to 1.5
+				
+				set {_bulletE} to mobProjectile({_ply}, {_v}, {_attrMap}, "树叶")
+				
+				set gravity of {_bulletE} to off
+				projectileAI({_bulletE}, "MAGIC")
+			else if {_armorSet} is "星尘套装":
+				if gamemode of {_ply} is not spectator:
+					if {_stand}.isDead() is true:
+						clear {_stand}
+					if {_stand} is not set:
+						spawn a zombie pigman 1 behind location of {_ply}
+						set {_stand} to spawned entity
+						{_stand}.setBaby(false)
+						{_stand}.setCustomName("星尘守卫")
+						set gravity of {_stand} to off
+						add "noDamage" to scoreboard tags of {_stand}
+						set metadata "damageSourcePlayer" of {_stand} to {_ply}
+						set metadata "attrMap" of {_stand} to {_attrMapStand}
+						set {_disguise} to new MobDisguise(DisguiseType.ZOMBIE, true)
+						DisguiseAPI.disguiseEntity({_stand}, {_disguise})
+					clear {_standTarget}
+					{_attrMapStand}.put("damageMulti", (metadata "attrMap" of {_ply}).getOrDefault("damageSummonMulti", 1))
+					loop all entities in radius 12 of {_ply}:
+						health of loop-value > 0
+						loop-value doesn't have scoreboard tag "isNPC"
+						checkCanDamage({_ply}, loop-value) is true
+						set {_standTarget} to loop-value
+						stop loop
+					if {_standTarget} is set:
+						set {_v} to (eye location of {_standTarget}).subtract(eye location of {_ply}).toVector()
+						set y of {_v} to 0
+						if vector length of {_v} = 0:
+							set {_v} to vector(0, 0, 1)
+						set {_axisAlignedBB} to {_standTarget}.getHandle().getBoundingBox()
+						set vector length of {_v} to ((({_axisAlignedBB}.a) - ({_axisAlignedBB}.d)) / 2) + 0.5
+						set {_standLoc} to (eye location of {_standTarget}).subtract({_v})
+						set y-coordinate of {_standLoc} to y-coordinate of eye location of {_standTarget}
+						handleDamage({_standTarget}, {_stand}, 75, "Melee")
+						makeTarget({_stand}, {_standTarget})
+					else:
+						set {_standLoc} to (location 2 behind {_ply})
+						set y-coordinate of {_standLoc} to y-coordinate of eye location of {_ply}
+					teleport {_stand} to {_standLoc}
+				else if {_stand} is set:
+					{_stand}.remove()
+					clear {_stand}
+			else if {_stand} is set:
+				{_stand}.remove()
+			set {_accessories} to new HashSet(metadata "accessory" of {_ply})
+			if {_accessories}.contains("新手版挥发明胶"):
+				mod({_index}, 4) = 0
+				{_attrMap}.put("damage", 30)
+				loop all living entities in radius 12 of {_ply}:
+					loop-entity is not {_ply}
+					{_ply}.hasLineOfSight(loop-value) is true
+					checkCanDamage({_ply}, loop-value) is true
+					set {_v} to (loop-value).getEyeLocation().subtract({_ply}.getEyeLocation()).toVector()
+					set vector length of {_v} to 0.5
+					
+					set {_bulletE} to (world of {_ply}).spawnEntity({_ply}.getEyeLocation(), EntityType.SPLASH_POTION)
+					
+					{_bulletE}.setCustomName("挥发明胶")
+					set metadata "attrMap" of {_bulletE} to {_attrMap}.clone()
+					disguiseProjectile({_bulletE})
+					{_bulletE}.setVelocity({_v})
+					{_bulletE}.setShooter({_ply})
+					set metadata "Bounce" of {_bulletE} to 2
+					set metadata "penetration" of {_bulletE} to 1
+					stop loop
+			if {_accessories}.contains("挥发明胶"):
+				mod({_index}, 4) = 0
+				{_attrMap}.put("damage", 130)
+				{_attrMap}.put("knockback", 7)
+				loop all living entities in radius 12 of {_ply}:
+					loop-entity is not {_ply}
+					{_ply}.hasLineOfSight(loop-value) is true
+					checkCanDamage({_ply}, loop-value) is true
+					set {_v} to (loop-value).getEyeLocation().subtract({_ply}.getEyeLocation()).toVector()
+					set vector length of {_v} to 0.6
+					
+					set {_bulletE} to (world of {_ply}).spawnEntity({_ply}.getEyeLocation(), EntityType.SPLASH_POTION)
+					
+					{_bulletE}.setCustomName("挥发明胶")
+					set metadata "attrMap" of {_bulletE} to {_attrMap}.clone()
+					disguiseProjectile({_bulletE})
+					{_bulletE}.setVelocity({_v})
+					{_bulletE}.setShooter({_ply})
+					set metadata "Bounce" of {_bulletE} to 4
+					set metadata "penetration" of {_bulletE} to 2
+					stop loop
+			set {_hasMagnet} to false
+			if {_accessories}.contains("天界磁石"):
+				set {_hasMagnet} to true
+			else if {_accessories}.contains("天界手铐"):
+				set {_hasMagnet} to true
+			else if {_accessories}.contains("天界徽章"):
+				set {_hasMagnet} to true
+			else if {_accessories}.contains("磁花"):
+				set {_hasMagnet} to true
+			if {_hasMagnet} is true:
+				loop all dropped items in radius 22 of {_ply}:
+					if uncoloured (name of item of loop-value) is "星":
+						set {_v} to (eye location of {_ply}).subtract(location of loop-value).toVector()
+						vector length of {_v} > 0.1
+						set vector length of {_v} to 0.5
+						set velocity of loop-value to {_v}
+			if {_accessories}.contains("孢子囊"):
+				mod({_index}, 3) = 0
+				{_attrMap}.put("damage", 225)
+				set {_spawnLoc} to (location of {_ply}).add((a random number between -5 and 5), (a random number between -1 and 3), (a random number between -5 and 5))
+				(block at {_spawnLoc}).getType().isSolid() is false
+				set {_bulletE} to (world of {_ply}).spawnEntity({_spawnLoc}, EntityType.SPLASH_POTION)
+				
+				set {_v} to vector((a random number between -0.05 and 0.05), (a random number between -0.05 and 0.05), (a random number between -0.05 and 0.05))
+				{_bulletE}.setCustomName("孢子球")
+				set metadata "pSpeed" of {_bulletE} to 0.25
+				set metadata "attrMap" of {_bulletE} to {_attrMap}.clone()
+				{_bulletE}.setVelocity({_v})
+				{_bulletE}.setShooter({_ply})
+				set gravity of {_bulletE} to off
+				add "isGranade" to scoreboard tags of {_bulletE}
+				disguiseProjectile({_bulletE})
+				projectileAI({_bulletE}, "ARROW")
+			if (world of {_ply}).getTime() is 22500 or 13500:
+				set {_moonStone} to air
+				set {_sunStone} to air
+				set {_accessoryAmount} to yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of {_ply}%.yml"
+				set {_accInv} to (metadata "inventories" of {_ply}).get("accessory")
+				set {_slot} to 10
+				loop {_accessoryAmount} times:
+					set {_item} to slot {_slot} of {_accInv}
+					if trimText(line 1 of lore of {_item}) is "[饰品]":
+						set {_name} to trimText(name of {_item})
+						if {_name} contains "的 ":
+							set {_name} to {_name}.split("的 ")[1]
+						if {_name} is "月亮石":
+							set {_moonStone} to {_item}
+						else if {_name} is "太阳石":
+							set {_sunStone} to {_item}
+					add 1 to {_slot}
+					if {_slot} = 15:
+						add 1 to {_slot}
+					set {_itemNew} to air
+				if (world of {_ply}).getTime() is 22500:
+					handlePlayerSwitchItem({_ply}, {_moonStone}, {_sunStone})
+				else:
+					handlePlayerSwitchItem({_ply}, {_sunStone}, {_moonStone})
+			set {_index} to mod({_index} + 1, 60)
+		else:
+			{_stand}.remove()
+		wait 5 ticks
+	{_stand}.remove()
+function threadThrustRegen(ply: player):
+	while {_ply} is online:
+		set {_block} to the block 1 below {_ply}
+		if {_block}.getType().isSolid() is true:
+			set metadata "thrust" of {_ply} to 0
+			set metadata "thrustProgress" of {_ply} to 0
+		wait 4 ticks
+function threadBackground(ply: player):
+	set {_lastWorld} to ""
+	set {_world} to "%world of {_ply}%"
+	set {_last} to ""
+	set {_reset} to false
+	while {_ply} is online:
+		set {_current} to "normal"
+		if {BOSS}.containsKey("月球领主") is true:
+			set {_current} to "虚空"
+		else if {event} is "血月" or "日食":
+			"%world of {_ply}%" is not "world_nether"
+			set {_current} to {event}
+		else:
+			set {_current} to metadata "background" of {_ply}
+		if {BOSS}.containsKey("猪鲨公爵") is true:
+			set {_zsgj} to {BOSS}.get("猪鲨公爵")
+			(health of {_zsgj}) / (max health of {_zsgj}) <= 0.15
+			set {_current} to "猪鲨"
+		if y-coordinate of {_ply} >= 50:
+			{pillars} is set
+			loop ...({pillars}.values()):
+				set {_pillar} to loop-value
+				if distance between location of {_ply} and location of {_pillar} < 150:
+					set {_current} to (loop-value).getCustomName()
+					replace all "柱" in {_current} with ""
+					stop loop
+		
+		if {_current} is "虚空":
+			set {_time} to 22000
+		else if {_current} is "血月":
+			set {_time} to 22940
+		else if {_current} is "日耀":
+			set {_time} to 23000
+		else if {_current} is "星璇":
+			set {_time} to 23080
+		else if {_current} is "星云":
+			set {_time} to 23150
+		else if {_current} is "星尘":
+			set {_time} to 23300
+		else if {_current} is "猪鲨":
+			set {_time} to 23365
+		else if {_current} is "日食":
+			set {_time} to 20000
+		
+		if {_last} is not {_current}:
+			set {_reset} to true
+		else if {_lastWorld} is not {_world}:
+			set {_reset} to true
+		if {_reset} is true:
+			if {_current} is "normal":
+				{_ply}.resetPlayerTime()
+				{_ply}.resetPlayerWeather()
+				remove night vision from {_ply}
+			else:
+				{_ply}.setPlayerTime({_time}, false)
+				{_ply}.setPlayerWeather(WeatherType.DOWNFALL)
+				apply potion of night vision without particles to {_ply} for 10 days
+			set {_reset} to false
+		
+		set {_last} to {_current}
+		set {_lastWorld} to {_world}
+		wait 10 ticks
+function threadBGM(ply: player):
+	set {_time} to 0
+	set {_timeLast} to 0
+	set {_timeTotal} to 0
+	set {_lastWorld} to ""
+	set {_world} to "%world of {_ply}%"
+	set {_last} to ""
+	set {_current} to ""
+	while {_ply} is online:
+		set {_time} to Calendar.getInstance().getTimeInMillis()
+		set {_world} to "%world of {_ply}%"
+		clear {_current}
+		
+		loop ...({BOSS}.values()):
+			if loop-value is instance of ArrayList:
+				set {_bossEntity} to loop-value.get(0)
+			else:
+				set {_bossEntity} to loop-value
+			{_world} is "%world of {_bossEntity}%"
+			set {_current} to yml value "boss.%trimText({_bossEntity}.getCustomName())%" from file "plugins/Data/sounds.yml"
+			stop loop
+		if y-coordinate of {_ply} >= 50:
+			{pillars} is set
+			loop ...({pillars}.values()):
+				set {_pillar} to loop-value
+				if distance between location of {_ply} and location of {_pillar} < 150:
+					set {_current} to "lunartower"
+					stop loop
+		if {_current} is not set:
+			if {_world} is "world_nether":
+				set {_current} to "underworld"
+			else:
+				set {_current} to getBiome(location of {_ply})
+				if y-coordinate of {_ply} > 150:
+					if {_ply}.getWorld().getTime() is between 13500 and 22500:
+						set {_current} to "spacenight"
+					else:
+						set {_current} to "space"
+				else if y-coordinate of {_ply} > 50:
+					if {event} is set:
+						"%world of {_ply}%" is not "world_nether"
+						set {_current} to yml value "event.%{event}%" from file "plugins/Data/sounds.yml"
+					else if {_current} is "normal" or "jungle" or "ocean" or "hallow":
+						{_ply}.getWorld().getTime() is between 13500 and 22500
+						set {_current} to "%{_current}%night"
+				else:
+					if y-coordinate of {_ply} > 5:
+						set {_current} to "%{_current}%underground"
+					else:
+						set {_current} to "underworld"
+					set {_block} to the block 1 below {_ply}
+					if {_block} is cracked stone brick:
+						set {_current} to "dungeon"
+					else if {_block} is mossy stone brick:
+						set {_current} to "temple"
+		
+		if {_last} is not {_current}:
+			set {_timeTotal} to -1
+		else if {_lastWorld} is not {_world}:
+			set {_timeTotal} to -1
+		if ({_time} - {_timeLast}) > ({_timeTotal} * 1000):
+			set {_timeLast} to {_time}
+			stop sound "music.%{_last}%" in music category for {_ply}
+			set {_timeTotal} to yml value "lengths.%{_current}%" from file "plugins/Data/sounds.yml"
+			play sound "music.%{_current}%" in music category with volume 1145141919810 to {_ply}
+		
+		set {_last} to {_current}
+		set {_lastWorld} to {_world}
+		wait 5 ticks
+function threadRegen(ply: player):
+	set {_healthRegenCD} to 0
+	set {_manaRegenCD} to 0
+	set {_lastManaUse} to 0
+	set {_lastHealth} to health of {_ply}
+	set {_lastMana} to level of {_ply}
+	set {_lastLoc} to location of {_ply}
+	while {_ply} is online:
+		if {_ply} has scoreboard tag "unauthorized":
+			stop trigger
+		if gamemode of {_ply} is spectator:
+			stop trigger
+		set {_attrMap} to metadata "attrMap" of {_ply}
+		set {_accessories} to metadata "accessory" of {_ply}
+		
+		if {_lastHealth} > health of {_ply}:
+			set {_healthRegenCD} to 6
+		# health regen
+		set {_lastHealth} to health of {_ply}
+		set {_totalHealAmount} to 0
+			
+		if metadata "effectTime生命星云" of {_ply} > 0:
+			set {_buffLevel} to ceil((metadata "effectTime生命星云" of {_ply}) / 160)
+			add (3 * {_buffLevel}) to {_totalHealAmount}
+		if {_ply} has metadata "effectTime再生":
+			add 4 to {_totalHealAmount}
+		if {_accessories}.contains("再生手环"):
+			add 2 to {_totalHealAmount}
+		if {_accessories}.contains("神话护身符"):
+			add 2 to {_totalHealAmount}
+		
+		if {_healthRegenCD} <= 0:
+			add max(({_attrMap}.get("regen")) * ({_attrMap}.get("regenMulti")), 0) to {_totalHealAmount}
+			if distance between location of {_ply} and {_lastLoc} > 0.25:
+				set {_healthRegenCD} to 2
+			else:
+				if {_accessories}.contains("闪亮石"):
+					add 10 to {_totalHealAmount}
+		else:
+			remove 1 from {_healthRegenCD}
+		if {_totalHealAmount} > 0:
+			set {_totalHealAmount} to {_totalHealAmount} / 4
+			set health of {_ply} to min(health of {_ply} + {_totalHealAmount}, max health of {_ply})
+			set {_lastHealth} to health of {_ply}
+		set {_lastLoc} to location of {_ply}
+		# mana regen
+		set {_totalManaRegen} to 0
+		set {_maxMana} to {_attrMap}.get("maxMana")
+		if {_lastMana} != level of {_ply}:
+			if {_lastMana} > level of {_ply}:
+				set {_manaRegenCD} to 6
+				set {_lastManaUse} to 2
+		if {_lastManaUse} <= 0:
+			{_accessories}.contains("魔力再生手环") is true
+			set {_regenAmount} to 2 + (5 * ((level of {_ply}) / {_maxMana}))
+			add {_regenAmount} to {_totalManaRegen}
+		if metadata "effectTime魔力星云" of {_ply} > 0:
+			set {_manaRegenCD} to 0
+		if {_manaRegenCD} <= 0:
+			if distance between location of {_ply} and {_lastLoc} > 0.25:
+				{_ply} doesn't have metadata "effectTime魔力再生"
+				set {_manaRegenCD} to 2
+			set {_regenAmount} to ({_attrMap}.get("manaRegen")) * ({_attrMap}.get("manaRegenMulti"))
+			set {_regenAmount} to 2 + ({_regenAmount} * ((level of {_ply}) / {_maxMana}))
+			add {_regenAmount} to {_totalManaRegen}
+		else:
+			remove 1 from {_manaRegenCD}
+		remove 1 from {_lastManaUse}
+		if {_totalManaRegen} > 0.1:
+			set {_totalManaRegen} to round({_totalManaRegen})
+			set level of {_ply} to (level of {_ply} + {_totalManaRegen})
+			if level of {_ply} > {_maxMana}:
+				set level of {_ply} to {_maxMana}
+		set {_lastMana} to level of {_ply}
+		set {_lastLoc} to location of {_ply}
+		wait 5 ticks
+
+function loadInventories(ply: player):
+	set {_inventory} to new HashMap()
+	set {_inv} to a new chest inventory with 3 rows named "&r饰品"
+	loop 27 times:
+		set slot ((loop-number) - 1) of {_inv} to a blue stained glass pane named "&1&1&4&5&1&4&r=w="
+	set {_numAcc} to yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of {_ply}%.yml"
+	set {_slot} to 10
+	set {_accs} to yml value "accessories" from file "plugins/PlayerData/%name of {_ply}%.yml"
+	if {_numAcc} < 7:
+		set slot 15 of {_inv} to a barrier named "&1&1&4&5&1&4&a请使用恶魔之心来解锁此饰品栏"
+		set slot 16 of {_inv} to a barrier named "&1&1&4&5&1&4&a请使用恶魔之心来解锁此饰品栏"
+	loop {_numAcc} times:
+		if (loop-number) <= {_accs}.size():
+			set slot {_slot} of {_inv} to getItem({_accs}.get((loop-number) - 1))
+		else:
+			set slot {_slot} of {_inv} to air
+		add 1 to {_slot}
+	{_inventory}.put("accessory", {_inv})
+	
+	set {_otherInvs} to yml value "settings.playerInventories" from file "plugins/Data/setting.yml"
+	loop ...{_otherInvs}:
+		set {_title} to yml value "settings.playerInventoryTitles.%loop-value%" from file "plugins/Data/setting.yml"
+		set {_contents} to yml value "inventory.%loop-value%" from file "plugins/PlayerData/%name of {_ply}%.yml"
+		if {_contents} is not set:
+			set {_contents} to new ArrayList(0)
+		set {_inv} to a new chest inventory with 3 rows named {_title}
+		set {_slot} to 0
+		loop ...{_contents}:
+			set slot {_slot} of {_inv} to getItem("%loop-value-2%")
+			add 1 to {_slot}
+		{_inventory}.put(loop-value, {_inv})
+	
+	set metadata "inventories" of {_ply} to {_inventory}
+function saveInventories(ply: player):
+	set {_inventory} to metadata "inventories" of {_ply}
+	set {_numAcc} to yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of {_ply}%.yml"
+	loop ...({_inventory}.keySet()):
+		set {_invType} to loop-value
+		set {_currInv} to {_inventory}.get({_invType})
+		if {_invType} is "accessory":
+			set {_result} to new ArrayList({_numAcc})
+			set {_slot} to 10
+			loop {_numAcc} times:
+				set {_item} to slot {_slot} of {_currInv}
+				if item amount of {_item} > 1:
+					if name of {_item} is set:
+						if name of {_item} contains "的 ":
+							{_result}.add("%trimText(name of {_item})%:%item amount of {_item}%")
+						else:
+							{_result}.add("下北泽的 %trimText(name of {_item})%:%item amount of {_item}%")
+					else:
+						{_result}.add("%{_item}.getType()%:%item amount of {_item}%")
+				else:
+					if name of {_item} is set:
+						if name of {_item} contains "的 ":
+							{_result}.add(trimText(name of {_item}))
+						else:
+							{_result}.add("下北泽的 %trimText(name of {_item})%")
+					else:
+						{_result}.add("%{_item}.getType()%")
+				add 1 to {_slot}
+			set yml value "accessories" from file "plugins/PlayerData/%name of {_ply}%.yml" to {_result}
+		else:
+			set {_result} to new ArrayList(27)
+			set {_slot} to 0
+			loop 27 times:
+				set {_item} to slot {_slot} of {_currInv}
+				if item amount of {_item} > 1:
+					if name of {_item} is set:
+						if name of {_item} contains "的 ":
+							{_result}.add("%trimText(name of {_item})%:%item amount of {_item}%")
+						else:
+							set {_itemName} to trimText(name of {_item})
+							if {_itemName} is "专家模式福袋":
+								{_result}.add("%trimText(line 1 of lore of {_item})%的 %{_itemName}%:%item amount of {_item}%")
+							else:
+								{_result}.add("下北泽的 %{_itemName}%:%item amount of {_item}%")
+					else:
+						{_result}.add("%{_item}.getType()%:%item amount of {_item}%")
+				else:
+					if name of {_item} is set:
+						if name of {_item} contains "的 ":
+							{_result}.add(trimText(name of {_item}))
+						else:
+							set {_itemName} to trimText(name of {_item})
+							if {_itemName} is "专家模式福袋":
+								{_result}.add("%trimText(line 1 of lore of {_item})%的 %{_itemName}%")
+							else:
+								{_result}.add("下北泽的 %{_itemName}%")
+					else:
+						{_result}.add("%{_item}.getType()%")
+				add 1 to {_slot}
+			set yml value "inventory.%{_invType}%" from file "plugins/PlayerData/%name of {_ply}%.yml" to {_result}
+	
+function resetPlayerStats(ply: player):
+	set hunger of {_ply} to 3
+	set gravity of {_ply} to on
+	set metadata "thrusting" of {_ply} to false
+	
+	set metadata "craftingStation" of {_ply} to "CLOSED"
+	set metadata "recipeNumber" of {_ply} to -1
+	set metadata "isLoadingWeapon" of {_ply} to false
+	set metadata "autoSwing" of {_ply} to false
+	set metadata "swingAmount" of {_ply} to 0
+	set metadata "minions" of {_ply} to new ArrayList()
+	set metadata "sentries" of {_ply} to new ArrayList()
+	set metadata "hooks" of {_ply} to new ArrayList()
+	set metadata "nextMinionIndex" of {_ply} to 0
+	set metadata "nextSentryIndex" of {_ply} to 0
+	set metadata "mobAmount" of {_ply} to 0
+	set metadata "toolChanged" of {_ply} to false
+	set metadata "useCD" of {_ply} to false
+	clear metadata "damageCD" of {_ply}
+	clear metadata "dashCD" of {_ply}
+	set metadata "thrust" of {_ply} to 0
+	set metadata "thrustProgress" of {_ply} to 0
+	set metadata "statsGeneration" of {_ply} to 1
+	set metadata "team" of {_ply} to "red"
+	set {_ply}'s walk speed to 0.25
+	
+	if {_ply} has scoreboard tag "useLocalSprite":
+		set metadata "GUIbackground" of {_ply} to "[local]GuiBG.png"
+		set metadata "GUIbackgroundNPC" of {_ply} to "[local]GuiNPCBG.png"
+		wait 1 second
+		send "&e您正在使用本地贴图；如果出现&c贴图无法加载&e的问题，请加群并下载修复包（内附使用说明）或输入&d/toggleSprite&e来尝试使用泰拉瑞亚wiki网页提供的贴图。" to {_ply}
+	else:
+		set metadata "GUIbackground" of {_ply} to "https://static.wikia.nocookie.net/terraria_gamepedia/images/1/1e/Hallow_background_2.png"
+		set metadata "GUIbackgroundNPC" of {_ply} to "https://static.wikia.nocookie.net/terraria_gamepedia/images/f/fc/Offline_Sapphire_Gemspark_Wall_%%28placed%%29.png"
+		wait 1 second
+		send "&e您正在使用泰拉瑞亚wiki网页提供的贴图；如果出现&c贴图无法加载&e的问题，请加群并下载修复包（内附使用说明）。" to {_ply}
+
+function canReforge(item: item) :: boolean:
+	set {_trimLore} to trimText(line 1 of lore of {_item})
+	if {_trimLore} is "[饰品]":
+		return true
+	if {_trimLore} is "[装备]":
+		return false
+	if name of {_item} contains "的 ":
+		set {_itemType} to (trimText(name of {_item})).split("的 ")[1]
+	else:
+		set {_itemType} to trimText(name of {_item})
+	set {_weaponType} to yml value "%{_itemType}%.type" from file "plugins/Data/weapons.yml"
+	if {_weaponType} is set:
+		if {_weaponType} starts with "THROW":
+			return false
+		return true
+	return false
+function randomPrefix(item: item) :: item:
+	if canReforge({_item}) is false:
+		return {_item}
+	if name of {_item} contains "的 ":
+		set {_itemType} to (trimText(name of {_item})).split("的 ")[1]
+		set {_item} to getRawItem({_itemType})
+	else:
+		set {_itemType} to trimText(name of {_item})
+	set {_trimLore} to trimText(line 1 of lore of {_item})
+	set {_allPrefix} to new ArrayList()
+	if {_trimLore} is "[饰品]":
+		{_allPrefix}.addAll(yml value "prefixList.Accessory" from file "plugins/Data/prefix.yml")
+	else:
+		set {_weaponType} to yml value "%{_itemType}%.type" from file "plugins/Data/weapons.yml"
+		if {_weaponType} is set:
+			set {_toAdd} to yml value "prefixList.Universal" from file "plugins/Data/prefix.yml"
+			if {_toAdd} is set:
+				{_allPrefix}.addAll({_toAdd})
+				clear {_toAdd}
+			if {_weaponType} is "STAB" or "SWING" or "WHIP" or "BOOMERANG" or "YOYO":
+				set {_toAdd} to yml value "prefixList.Melee" from file "plugins/Data/prefix.yml"
+			else if {_weaponType} is "MAGIC_PROJECTILE" or "MAGIC_SPECIAL" or "SUMMON":
+				set {_toAdd} to yml value "prefixList.Magic" from file "plugins/Data/prefix.yml"
+			else if {_weaponType} is "BOW" or "GUN" or "SPECIAL_AMMO" or "ROCKET":
+				set {_toAdd} to yml value "prefixList.Ranged" from file "plugins/Data/prefix.yml"
+			if {_toAdd} is set:
+				{_allPrefix}.addAll({_toAdd})
+		else:
+			return {_item}
+	if chance of 0.05:
+		return {_item}
+	set {_iterator} to {_allPrefix}.iterator()
+	set {_prefix} to new HashMap(50)
+	set {_max} to 0
+	while {_iterator}.hasNext():
+		set {_info} to {_iterator}.next().split(":")
+		{_prefix}.put({_info}[0], ({_info}[1] parsed as number))
+		add ({_info}[1] parsed as number) to {_max}
+	if {_max} > 0:
+		set {_random} to a random number between 0 and {_max}
+		set {_iterator} to {_prefix}.entrySet().iterator()
+		while {_random} > 0:
+			set {_next} to {_iterator}.next()
+			remove {_next}.getValue() from {_random}
+			set {_prefix} to {_next}.getKey()
+		# generate color according to rarity
+		set {_rarity} to 0
+		set {_rarity} to yml value "%{_itemType}%.rarity" from file "plugins/Data/items.yml"
+		# initialize rarity color before applying prefix
+		set {_rarityColor} to yml value "rarity.%{_rarity}%" from file "plugins/Data/setting.yml"
+		add (yml value "prefixInfo.%{_prefix}%.rarity" from file "plugins/Data/prefix.yml") to {_rarity}
+		set {_rarityColor} to yml value "rarity.%{_rarity}%" from file "plugins/Data/setting.yml"
+		set name of {_item} to "%{_rarityColor}%%{_prefix}%的 %{_itemType}%"
+		set {_addLore::*} to ...(yml value "prefixInfo.%{_prefix}%.lore" from file "plugins/Data/prefix.yml")
+		add {_addLore::*} to lore of {_item}
+	return {_item}
+function getRawItem(info: text) :: item:
+	if {_info} contains ":":
+		set {_name} to {_info}.split(":")[0]
+		set {_amount} to {_info}.split(":")[1] parsed as integer
+	else:
+		set {_name} to {_info}
+		set {_amount} to 1
+	if {Items}.containsKey({_name}):
+		set {_item} to {Items}.get({_name})
+	else:
+		set {_material} to Material.AIR
+		set {_material} to try Material.valueOf({_name})
+		set {_item} to new ItemStack({_material})
+	return {_amount} of {_item}
+function getRawItemFromYML(info: text) :: item:
+	if {_info} contains ":":
+		set {_name} to {_info}.split(":")[0]
+		set {_amount} to {_info}.split(":")[1] parsed as integer
+	else:
+		set {_name} to {_info}
+		set {_amount} to 1
+	if yml value "%{_name}%" from file "plugins/Data/items.yml" is set:
+		set {_material} to yml value "%{_name}%.item" from file "plugins/Data/items.yml"
+		set {_item} to new ItemStack(Material.valueOf({_material}), {_amount})
+		set {_rarity} to 0
+		set {_rarity} to yml value "%{_name}%.rarity" from file "plugins/Data/items.yml"
+		set {_rarityColor} to 5
+		set {_rarityColor} to yml value "rarity.%{_rarity}%" from file "plugins/Data/setting.yml"
+		set name of {_item} to "%{_rarityColor}%%{_name}%"
+		set {_lore} to yml value "%{_name}%.lore" from file "plugins/Data/items.yml"
+		if {_lore} is set:
+			add ...{_lore} to lore of {_item}
+	else:
+		set {_item} to new ItemStack(try Material.valueOf({_name}), {_amount})
+	set {_meta} to {_item}.getItemMeta()
+	if {_item}.getMaxStackSize() = 1:
+		{_meta}.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+	set {_enchantments} to yml value "%{_name}%.enchantment" from file "plugins/Data/items.yml"
+	if {_enchantments} is set:
+		{_meta}.addItemFlags(ItemFlag.HIDE_ENCHANTS)
+	{_item}.setItemMeta({_meta})
+	if {_enchantments} is set:
+		loop ...{_enchantments}:
+			set {_enchantment} to loop-value
+			{_enchantment} parsed as enchantment type is set
+			set {_enchantment} to {_enchantment} parsed as enchantment type
+			enchant {_item} with {_enchantment}
+	return {_item}
+function getItem(info: text) :: item:
+	if {_info} contains "的 ":
+		set {_prefix} to {_info}.split("的 ")[0]
+		set {_itemType} to {_info}.split("的 ")[1]
+		set {_i} to getRawItem({_itemType})
+		if {_itemType} contains ":":
+			set {_itemType} to {_itemType}.split(":")[0]
+		if {_itemType} starts with "专家模式福袋":
+			set line 1 of lore of {_i} to "&7%{_prefix}%"
+		else:
+			set {_rarity} to 0
+			set {_rarity} to yml value "%{_itemType}%.rarity" from file "plugins/Data/items.yml"
+			set {_addLore} to yml value "prefixInfo.%{_prefix}%.lore" from file "plugins/Data/prefix.yml"
+			# initialize rarity color before applying prefix
+			set {_rarityColor} to yml value "rarity.%{_rarity}%" from file "plugins/Data/setting.yml"
+			if {_addLore} is set:
+				add (yml value "prefixInfo.%{_prefix}%.rarity" from file "plugins/Data/prefix.yml") to {_rarity}
+				add (...{_addLore}) to lore of {_i}
+			set {_rarityColor} to yml value "rarity.%{_rarity}%" from file "plugins/Data/setting.yml"
+			if {_addLore} is set:
+				set name of {_i} to "%{_rarityColor}%%{_prefix}%的 %{_itemType}%"
+			else:
+				set name of {_i} to "%{_rarityColor}%%{_itemType}%"
+		return {_i}
+	else:
+		set {_i} to getRawItem({_info})
+		return (item amount of {_i}) of randomPrefix({_i})
+function giveItem(ply: player, item: item):
+	if trimText(name of {_item}) is "铂金币" or "金币" or "银币" or "铜币":
+		drop {_item} at location of {_ply} without velocity
+		stop trigger
+	if {_ply}'s inventory can hold {_item}:
+		give {_item} to {_ply}
+	else:
+		drop {_item} at location of {_ply} without velocity
+
+function trimText(text: object) :: text:
+	set {_splittext::*} to {_text} split at ""
+	set {_returnText} to ""
+	set {_isColor} to -1
+	loop {_splittext::*}:
+		if loop-value is "§":
+			set {_isColor} to 1
+		if {_isColor} = 0:
+			loop-value is "##"
+			set {_isColor} to 6
+		if {_isColor} < 0:
+			set {_returnText} to "%{_returnText}%%loop-value%"
+		subtract 1 from {_isColor}
+	return {_returnText}
+
+function dropMoney(loc: location, amount: integer):
+	set {_stackSize::*} to coinConversion({_amount})
+	if {_stackSize::1} > 0:
+		set {_item} to getItem("铂金币:%{_stackSize::1}%")
+		drop {_item} at {_loc}
+	if {_stackSize::2} > 0:
+		set {_item} to getItem("金币:%{_stackSize::2}%")
+		drop {_item} at {_loc}
+	if {_stackSize::3} > 0:
+		set {_item} to getItem("银币:%{_stackSize::3}%")
+		drop {_item} at {_loc}
+	if {_stackSize::4} > 0:
+		set {_item} to getItem("铜币:%{_stackSize::4}%")
+		drop {_item} at {_loc}
+
+function applyCD(ply: player, cd: number):
+	set {_cd} to ceil({_cd})
+	set metadata "useCD" of {_ply} to true
+	set {_lastCDapply} to Calendar.getInstance().getTimeInMillis()
+	set metadata "useCDInternal" of {_ply} to {_lastCDapply}
+	if {_cd} <= 0:
+		set {_tool} to {_ply}'s tool
+		if {_tool} is not air:
+			set {_packet} to new PacketPlayOutSetCooldown(CraftItemStack.asNMSCopy[ItemStack]({_tool}).getItem(), 1919810)
+			{_ply}.getHandle().playerConnection.sendPacket({_packet})
+	else:
+		set {_tool} to {_ply}'s tool
+		if {_tool} is not air:
+			set {_packet} to new PacketPlayOutSetCooldown(CraftItemStack.asNMSCopy[ItemStack]({_tool}).getItem(), {_cd})
+			{_ply}.getHandle().playerConnection.sendPacket({_packet})
+		wait ("%{_cd}% ticks" parsed as timespan)
+		{_ply} is online
+		metadata "useCDInternal" of {_ply} is {_lastCDapply}
+		set metadata "useCD" of {_ply} to false
+		if {_ply} has scoreboard tag "unauthorized":
+			set metadata "autoSwing" of {_ply} to false
+		else:
+			if gamemode of {_ply} is not spectator:
+				if metadata "autoSwing" of {_ply} is true:
+					playerUseItem({_ply}, ({_ply}'s tool))
+			else:
+				set metadata "autoSwing" of {_ply} to false
+
+function createTracingBullet(dPly: entity, loc: location, num: number, healingOrDamage: boolean, color: text):
+	set {_particleColor} to new ArrayList(1)
+	{_particleColor}.add({_color})
+	if {_healingOrDamage} is true:
+		set {_targetHealth} to 100000
+		loop all players:
+			world of loop-player is world of {_dPly}
+			distance between loop-player and {_loc} <= 48
+			gamemode of loop-player is survival
+			health of loop-player < {_targetHealth}
+			health of loop-player < max health of loop-player
+			(metadata "team" of loop-player) is (metadata "team" of {_dPly})
+			set {_targetHealth} to health of loop-player
+			set {_target} to loop-player
+	else:
+		loop all entities in radius 24 of {_loc}:
+			loop-value has scoreboard tag "isMonster"
+			health of loop-value > 0
+			checkCanDamage({_dPly}, loop-value) is true
+			set {_target} to loop-value
+			stop loop
+	{_target} is set
+	set {_v} to a random vector
+	set {_vLength} to 0.5
+	set {_world} to world of {_target}
+	loop 240 times:
+		if world of {_target} is not {_world}:
+			stop trigger
+		if health of {_target} <= 0:
+			stop trigger
+		
+		if loop-number > 5:
+			if loop-number = 6:
+				set {_vLength} to 4
+			set {_dist} to distance between {_loc} and eye location of {_target}
+			if {_dist} < {_vLength}:
+				set {_v} to (eye location of {_target}).subtract({_loc}).toVector()
+				set {_vLength} to {_dist}
+				set {_dist} to -1
+			else:
+				set {_dV} to (eye location of {_target}).subtract({_loc}).toVector()
+				vector length of {_dV} > 0
+				if vector length of {_v} > 0:
+					set vector length of {_v} to min(sqrt(vector length of {_dV}), 4)
+				set vector length of {_dV} to 4
+				{_v}.add({_dV})
+				add 0.25 to {_vLength}
+			if {_dist} < 0:
+				if {_healingOrDamage} is true:
+					gamemode of {_target} is survival
+					heal {_target} by {_num}
+					displayHolo({_target}, {_num}, false, "回血")
+				else:
+					handleDamage({_target}, {_dPly}, {_num}, "spectre")
+				stop trigger
+		else:
+			add 0.1 to {_vLength}
+		set vector length of {_v} to {_vLength}
+		handleParticleLine({_v}, {_vLength}, 0.01, {_loc}, {_particleColor})
+		{_loc}.add({_v})
+		wait 2 ticks
+function playerMagicArmorEvent(dPly: entity, v: entity, dmg: number):
+	{_v} has scoreboard tag "isMonster"
+	set {_armorSet} to metadata "armorSet" of {_dPly}
+	if {_armorSet} is "星云套装":
+		{_v} has scoreboard tag "isMonster"
+		{_dPly} doesn't have scoreboard tag "tempNebulaCD"
+		chance of 1/3
+		if chance of 1/3:
+			set {_item} to a flint and steel named "&c生命强化焰"
+		else if chance of 0.5:
+			set {_item} to a flint and steel named "&d伤害强化焰"
+		else:
+			set {_item} to a flint and steel named "&9魔力强化焰"
+		drop {_item} at eye location of {_v}
+		set {_velocity} to new vector with yaw (a random number between -180 and 180) and pitch (a random number between -90 and 90)
+		set vector length of {_velocity} to 0.05
+		set velocity of (dropped item) to {_velocity}
+		set gravity of (dropped item) to off
+		projectileAI((dropped item), "MAGIC")
+		add "tempNebulaCD" to scoreboard tags of {_dPly}
+		wait 10 ticks
+		{_dPly} is online
+		remove "tempNebulaCD" from scoreboard tags of {_dPly}
+	else if {_armorSet} is "幽灵吸血套装" or "幽灵输出套装":
+		{_dmg} > 2
+		{_dPly} doesn't have scoreboard tag "tempSpectreCD"
+		add "tempSpectreCD" to scoreboard tags of {_dPly}
+		wait 4 ticks
+		{_dPly} is online
+		remove "tempSpectreCD" from scoreboard tags of {_dPly}
+		if {_armorSet} is "幽灵吸血套装":
+			createTracingBullet({_dPly}, (eye location of {_v}), ceil({_dmg} * 0.06), true, "255|255|255")
+		else:
+			createTracingBullet({_dPly}, (eye location of {_v}), ceil({_dmg} / 2), false, "255|255|255")
+
+function entityDamageEvent(d: entity, dPly: entity, v: entity, damageTaker: entity, dmg: number, damageCause: text) :: boolean:
+	if {_d} is not set:
+		return true
+	set {_nameV} to trimText(name of {_v})
+	set {_minion} to {_d}
+	if {_damageCause} is "Arrow" or "Magic" or "Bullet":
+		set {_minion} to shooter of {_d}
+	if {_minion} has scoreboard tag "isMinion":
+		if {_v} has scoreboard tag "暗黑收割":
+			remove "暗黑收割" from scoreboard tags of {_v}
+			handleEntityExplode({_d}, {_null})
+	if {_v} has scoreboard tag "isBOSS":
+		if {_nameV} is "史莱姆王":
+			{_dPly} is a player
+			set {_health} to health of {_v}
+			set {_maxHealth} to max health of {_v}
+			set {_before} to floor({_health} * 25 / {_maxHealth})
+			set {_after} to floor(({_health} - {_dmg}) * 25 / {_maxHealth})
+			{_before} > {_after}
+			#only 25 times maximum throughout the fight
+			spawnMob("史莱姆", location of {_v}, {_dPly})
+			if chance of 0.5:
+				spawnMob("尖刺史莱姆", location of {_v}, {_dPly})
+			if chance of 0.25:
+				spawnMob("尖刺史莱姆", location of {_v}, {_dPly})
+			set {_size} to ceil(22 * health of {_v} / max health of {_v}) + 10
+			if {_v}.getSize() is not {_size}:
+				slimeResize({_v}, {_size})
+		else if {_nameV} is "毁灭者":
+			{_dPly} is a player
+			{_v} has scoreboard tag "hasProbe"
+			chance of 0.25
+			{_v}.setCustomName("毁灭者&4")
+			set name of {_v} to "毁灭者&4"
+			remove "hasProbe" from scoreboard tags of {_v}
+			spawnMob("探测怪", location of {_v}, {_dPly})
+		else if {_nameV} is "石巨人头":
+			{_dmg} >= health of {_v}
+			add "noDamage" to scoreboard tags of {_v}
+			set {_golem} to {BOSS}.get("石巨人")
+			remove "noDamage" from scoreboard tags of {_golem}
+			return false
+		else if {_nameV} is "月球领主手" or "月球领主":
+			{_dmg} >= health of {_v}
+			add "noDamage" to scoreboard tags of {_v}
+			set max health of {_v} to 1
+			return false
+	else if {_nameV} is "蜥蜴人":
+		health of {_v} > (max health of {_v} / 2)
+		(health of {_v} - {_dmg}) <= (max health of {_v} / 2)
+		set {_attrMap} to metadata "attrMap" of {_v}
+		{_attrMap}.put("damageMulti", 1.5)
+		{_attrMap}.put("defenceMulti", 1.5)
+		{_attrMap}.put("knockbackResistance", 1)
+	else if {_nameV} is "胡桃夹士":
+		health of {_v} > (max health of {_v} / 2)
+		(health of {_v} - {_dmg}) <= (max health of {_v} / 2)
+		set {_attrMap} to metadata "attrMap" of {_v}
+		{_attrMap}.put("damageMulti", 1.25)
+		{_attrMap}.put("defenceMulti", 1.5)
+		{_attrMap}.put("knockbackResistance", 0.91)
+	else if {_v} is a player:
+		if name of {_d} is "水螺旋":
+			{_d} has scoreboard tag "isMonster"
+			set {_zsgj} to {BOSS}.getOrDefault("猪鲨公爵", {_null})
+			{_d}.remove()
+			if {_zsgj} is set:
+				handleDukeFishronPerk(4, (location of {_d}), {_zsgj})
+			return false
+		else if name of {_d} is "吮脑怪":
+			{_v} is a player
+			set metadata "suckTarget" of {_d} to {_v}
+		
+		set {_accessories} to new HashSet(metadata "accessory" of {_v})
+		set {_attrMap} to metadata "attrMap" of {_v}
+		set {_hasMagicCuff} to false
+		if {_accessories}.contains("魔法手铐") is true:
+			set {_hasMagicCuff} to true
+		else if {_accessories}.contains("天界手铐") is true:
+			set {_hasMagicCuff} to true
+		if {_hasMagicCuff} is true:
+			set {_maxMana} to {_attrMap}.get("maxMana")
+			set {_recovery} to max(1, floor({_dmg} / 2))
+			set level of {_v} to (level of {_v} + {_recovery})
+			displayHolo({_v}, {_recovery}, false, "回蓝")
+			if level of {_v} > {_maxMana}:
+				set level of {_v} to {_maxMana}
+	if metadata "effectTime荆棘" of {_damageTaker} is set:
+		{_damageCause} is "Melee"
+		handleDamage({_d}, {_damageTaker}, min(round({_dmg} / 3), 1000), "Thorn")
+	if metadata "armorSet" of {_damageTaker} is "耀斑套装":
+		{_damageCause} is "Melee"
+		handleDamage({_d}, {_damageTaker}, min(max({_dmg}, 150), 1000), "Thorn")
+	if {_v} has scoreboard tag "destroyOnDamage":
+		{_v}.remove()
+		return false
+	if {_dPly} is a player:
+		{_damageCause} is "Magic"
+		playerMagicArmorEvent({_dPly}, {_v}, {_dmg})
+	return true
+
+function handleDeath(v: entity, dPly: entity, d: entity, damageCause: text):
+	if {_damageCause} = "Summon":
+		set {_damageCause} to "Melee"
+	if {_v} is a player:
+		set velocity of {_v} to vector(0, 0, 0)
+		remove health boost from {_v}
+		remove fire resistance from {_v}
+		remove blindness from {_v}
+		remove invisibility from {_v}
+		remove water breathing from {_v}
+		if {BOSS}.size() > 0:
+			set {_respawnTime} to 30
+			loop ...({BOSS}.values()):
+				set {_curr} to loop-value
+				if {_curr} is instance of ArrayList:
+					set {_curr} to {_curr}.get(0)
+				set {_currTargets} to metadata "targets" of {_curr}
+				if {_currTargets}.containsKey(name of {_v}):
+					set {_currRespawnTime} to 10 * ({_currTargets}.size())
+					if {_currRespawnTime} > {_respawnTime}:
+						set {_respawnTime} to {_currRespawnTime}
+		else:
+			set {_respawnTime} to 15
+		
+		set {_moneyDrop} to floor({_v}'s money / 100)
+		set {_moneyDrop} to ceil({_moneyDrop} * 0.75)
+		remove {_moneyDrop} * 100 from {_v}'s money
+		dropMoney(({_v}.getEyeLocation()), {_moneyDrop})
+		if {_moneyDrop} > 0:
+			set {_m::*} to coinConversion({_moneyDrop})
+			set {_moneyMSG} to ""
+			if {_m::1} > 0:
+				set {_moneyMSG} to "%{_moneyMSG}%&c&l %{_m::1}%&f&l 铂"
+			if {_m::2} > 0:
+				set {_moneyMSG} to "%{_moneyMSG}%&c&l %{_m::2}%&e&l 金"
+			if {_m::3} > 0:
+				set {_moneyMSG} to "%{_moneyMSG}%&c&l %{_m::3}%&7&l 银"
+			if {_m::4} > 0:
+				set {_moneyMSG} to "%{_moneyMSG}%&c&l %{_m::4}% 铜"
+			send title "&c&l你死了！" with subtitle "&c&l掉了%{_moneyMSG}%" to {_v} for ("%{_respawnTime}% seconds" parsed as timespan) with fade-in 0 second and fade-out 0 second
+		else:
+			send title "&c&l你死了！" with subtitle "" to {_v} for ("%{_respawnTime}% seconds" parsed as timespan) with fade-in 0 second and fade-out 0 second
+		close {_v}'s inventory
+		if {_d} is set:
+			set {_killer} to name of {_d}
+			set {_killer} to {_d}.getCustomName()
+			if {_killer} is not set:
+				set {_killer} to {_d}.getType().toString()
+		if {_damageCause} is "fire" or "burning" or "debuff_咒火" or "debuff_霜火" or "debuff_破晓":
+			set {_dm} to "<victim> 没能及时把火扑灭"
+		else if {_damageCause} is "suffocation" or "void":
+			set {_dm} to "<victim> 没法呼吸 ##I can't breathe##"
+		else if {_damageCause} is "debuff_中毒" or "debuff_剧毒":
+			set {_dm} to "<victim> 没找到解药"
+		else if {_damageCause} is "恐惧":
+			set {_dm} to "<victim> 被恐惧吞没..."
+		else if {_damageCause} is "boss_angry":
+			set {_dm} to "<victim> 被暴怒的BOSS秒杀..."
+		else:
+			set {_dm} to yml value "deathMessages.%{_damageCause}%" from file "plugins/Data/setting.yml"
+			if {_dm} is not set:
+				set {_dm} to yml value "deathMessages.Generic" from file "plugins/Data/setting.yml"
+			{_dm} is set
+			set {_dm} to {_dm}.get(a random integer between 0 and ({_dm}.size() - 1))
+			if {_killer} is set:
+				set {_dm} to "%{_dm}%，凶手是%{_killer}%"
+		if {_dm} is set:
+			replace all "<victim>" in {_dm} with name of {_v}
+			broadcast "&4%{_dm}%"
+		
+		set {_v}'s health to min(400, {_v}'s max health)
+		set {_v}'s level to (metadata "attrMap" of {_v}).getOrDefault("maxMana", 100)
+		set metadata "respawnCD" of {_v} to {_respawnTime}
+		while {_respawnTime} > 0:
+			if {_v} is online:
+				set gamemode of {_v} to spectator
+				{_v}.setFlySpeed(0)
+				{_v}.setFallDistance(0)
+				remove 1 from {_respawnTime}
+				set metadata "respawnCD" of {_v} to {_respawnTime}
+				send action bar "&a重生倒计时： %{_respawnTime}%" to {_v}
+			else:
+				set {_vNew} to name of {_v} parsed as player
+				if name of {_vNew} is name of {_v}:
+					set {_v} to {_vNew}
+			wait 1 second
+		set gamemode of {_v} to survival
+		set {_spawnLoc} to (world "world").getSpawnLocation()
+		if {_v}.getBedSpawnLocation() is set:
+			{_v} doesn't have scoreboard tag "bedCancelled"
+			set {_spawnLoc} to {_v}.getBedSpawnLocation()
+		teleport {_v} to {_spawnLoc}
+		threadRegen({_v})
+		set metadata "isLoadingWeapon" of {_ply} to false
+		set metadata "nextMinionIndex" of {_v} to 0
+		set metadata "nextSentryIndex" of {_v} to 0
+	else:
+		if {_dPly} is a player:
+			if trimText({_v}.getCustomName()) is "七彩草蛉":
+				handleEOL({_dPly})
+			if {_damageCause} is "Magic" or "spectre":
+				{_v} has scoreboard tag "isMonster"
+				loop 3 times:
+					if chance of 0.1:
+						drop 1 clay ball named "&9星" with lore "%a random number between -10000 and 10000%" at location of {_v}
+			if {_v} has scoreboard tag "isBOSS":
+				if trimText({_v}.getCustomName()) is "世界吞噬者" or "石巨人拳头" or "机械炮" or "机械锯" or "机械钳" or "机械激光":
+					drop 1 clay ball named "&c心" with lore "%a random number between -10000 and 10000%" at location of {_v}
+				else:
+					loop 15 times:
+						drop 1 clay ball named "&c心" with lore "%a random number between -10000 and 10000%" at location of {_v}
+			else if health of {_dPly} < max health of {_dPly}:
+				{_v} has scoreboard tag "isMonster"
+				if chance of 0.2:
+					drop 1 clay ball named "&c心" with lore "%a random number between -10000 and 10000%" at location of {_v}
+		set health of {_v} to 0
+		if {_v} has scoreboard tag "isPillar":
+			{pillars}.remove({_v}.getCustomName())
+			if {pillars}.size() = 3:
+				broadcast "&d&o你的头脑变得麻木..."
+			else if {pillars}.size() = 2:
+				broadcast "&d&o你痛苦不堪..."
+			else if {pillars}.size() = 1:
+				broadcast "&d&o阴森的声音在你耳边萦绕不绝..."
+			else:
+				broadcast "&d&o月亮末日慢慢逼近..."
+				clear {pillars}
+				handleMoonLord({_dPly})
+		else if {_v} has scoreboard tag "isNPC":
+			if {_d} is set:
+				set {_killer} to name of {_d}
+				set {_killer} to {_d}.getCustomName()
+				if {_killer} is not set:
+					set {_killer} to {_d}.getType().toString()
+			if {_damageCause} is "fire" or "burning" or "debuff_咒火" or "debuff_霜火":
+				set {_dm} to "<victim> 没能及时把火扑灭"
+			else if {_damageCause} is "suffocation" or "void":
+				set {_dm} to "<victim> 没法呼吸 ##I can't breathe##"
+			else if {_damageCause} is "中毒" or "剧毒":
+				set {_dm} to "<victim> 没找到解药"
+			else if {_damageCause} is "恐惧":
+				set {_dm} to "<victim> 被恐惧吞没..."
+			else if {_damageCause} is "boss_angry":
+				set {_dm} to "<victim> 被暴怒的BOSS秒杀..."
+			else:
+				set {_dm} to yml value "deathMessages.%{_damageCause}%" from file "plugins/Data/setting.yml"
+				if {_dm} is not set:
+					set {_dm} to yml value "deathMessages.Generic" from file "plugins/Data/setting.yml"
+				{_dm} is set
+				set {_dm} to {_dm}.get(a random integer between 0 and ({_dm}.size() - 1))
+				if {_killer} is set:
+					set {_dm} to "%{_dm}%，凶手是%{_killer}%"
+			if {_dm} is set:
+				replace all "<victim>" in {_dm} with name of {_v}
+				broadcast "&4%{_dm}%"
+		else if {_v} has scoreboard tag "isMonster":
+			if metadata "spawnEvent" of {_v} is {event}:
+				if {event} is "史莱姆雨":
+					{eventInfo}.put("slimeKill", {eventInfo}.get("slimeKill") + 1)
+					if mod({eventInfo}.get("slimeKill"), 150) = 0:
+						if {_d} is a player:
+							set {_ply} to {_d}
+						else:
+							set {_ply} to a random player out of all players in world of {_d}
+						spawnSLMW({_ply})
+				else if {eventInfo}.getOrDefault("isInvasion", false) is true:
+					set {_progress} to metadata "killProgress" of {_v}
+					{eventInfo}.put("invadeProgress", {eventInfo}.get("invadeProgress") + {_progress})
+					if {eventInfo}.get("invadeProgress") >= {eventInfo}.get("invadeProgressMax"):
+						if {event} is "冰霜月" or "南瓜月":
+							set {_tier} to {eventInfo}.getOrDefault("tier", 1)
+							add 1 to {_tier}
+							{_tier} <= ({eventInfo}.getOrDefault("tierMax", 15))
+							set {_progressNext} to yml value "events.%{event}%.progress.%{_tier}%" from file "plugins/Data/setting.yml"
+							set {_msg} to yml value "events.%{event}%.messages.%{_tier}%" from file "plugins/Data/setting.yml"
+							broadcast {_msg}
+							{eventInfo}.put("invadeProgress", 0)
+							{eventInfo}.put("invadeProgressMax", {_progressNext})
+							{eventInfo}.put("tier", {_tier})
+						else:
+							broadcast "&d&l%{event}%被击退了！"
+							if {event} is "哥布林军团":
+								loop all players:
+									set yml value "bossDefeated.GoblinArmy" from file "plugins/PlayerData/%name of loop-player%.yml" to true
+							clear {event}
+			if metadata "motherType" of {_v} is "史莱姆":
+				"%world of {_v}%" is "world_nether"
+				set {_deathLoc} to location of {_v}
+				"%block at {_deathLoc}%" is "air"
+				set block at {_deathLoc} to flowing lava
+				wait 5 seconds
+				"%block at {_deathLoc}%" contains "lava"
+				set block at {_deathLoc} to air
+			else if metadata "motherType" of {_v} is "饿鬼Attatched":
+				{_dPly} is a player
+				spawnMob("饿鬼", (location of {_v}), {_dPly})
+				{_v}.remove()
+			else if metadata "motherType" of {_v} is "装甲骷髅":
+				{_dPly} is a player
+				metadata "tier" of {_dPly} >= 6
+				chance of 0.125
+				spawnMob("地牢幽魂", location of {_v}, {_dPly})
+			else if metadata "motherType" of {_v} is "拜月教教徒":
+				{_dPly} is a player
+				handleLunaticCultist({_dPly})
+			if metadata "tier" of {_dPly} >= 4:
+				{_v} doesn't have scoreboard tag "isBOSS"
+				set {_biome} to getBiome(location of {_v})
+				if {_biome} is "hallow":
+					if y-coordinate of {_v} < 50:
+						set {_dropChance} to (50 - (y-coordinate of {_v})) * 2
+						if chance of {_dropChance}:
+							set {_item} to getItem("光明之魂")
+							drop {_item} at eye location of {_v} without velocity
+							set gravity of (dropped item) to off
+					else if chance of 0.02:
+						set {_item} to getItem("光明碎块")
+						drop {_item} at eye location of {_v} without velocity
+				else if {_biome} is "corruption":
+					if y-coordinate of {_v} < 50:
+						set {_dropChance} to (50 - (y-coordinate of {_v})) * 2
+						if chance of {_dropChance}:
+							set {_item} to getItem("暗影之魂")
+							drop {_item} at eye location of {_v} without velocity
+							set gravity of (dropped item) to off
+					else if chance of 0.02:
+						set {_item} to getItem("暗黑碎块")
+						drop {_item} at eye location of {_v} without velocity
+						
+
+function displayHolo(e: entity, damage: number, isCrit: boolean, damageCause: text):
+	if {_damageCause} is "回血":
+		set {_text} to "&a%round({_damage})%"
+	else if {_damageCause} is "回蓝":
+		set {_text} to "&9%round({_damage})%"
+	else if {_damageCause} starts with "debuff_":
+		if {_damageCause} is "debuff_咒火":
+			set {_text} to "&e%round({_damage})%"
+		else if {_damageCause} is "debuff_霜火":
+			set {_text} to "&b%round({_damage})%"
+		else if {_damageCause} is "debuff_中毒" or "debuff_剧毒":
+			set {_text} to "&2%round({_damage})%"
+		else if {_damageCause} is "debuff_破晓":
+			set {_text} to "&6%round({_damage})%"
+		else:
+			stop trigger
+	else:
+		if {_isCrit} is true:
+			set {_text} to "&c%round({_damage})%"
+		else:
+			set {_text} to "&6%round({_damage})%"
+	replace all "&" in {_text} with "§"
+	set {_loc} to (location of {_e}).clone().add((new Random().nextFloat() - 0.5), (new Random().nextFloat() + 1), (new Random().nextFloat() - 0.5))
+	set {_holoInd} to "HOLOIND_%{NextHologramIndex}%"
+	add 1 to {NextHologramIndex}
+	loop all players in radius 200 of {_loc}:
+		add loop-player to {_playersSent::*}
+	loop {_playersSent::*}:
+		CoreAPI.setPlayerWorldTexture((loop-value), {_holoInd}, {_loc}, 0, 0, 0, "[text]%{_text}%", 1, 0.75, 1, true, true)
+	{Holograms}.put({_holoInd}, {_loc}.getWorld())
+	wait 5 seconds
+	loop {_playersSent::*}:
+		CoreAPI.removePlayerWorldTexture((loop-value), {_holoInd})
+	{Holograms}.remove({_holoInd})
+function handleDamage(v: entity, d: entity, dmg: number, damageCause: text):
+	set {_damageTaker} to {_v}
+	if {_v} is not living entity:
+		if {_damageCause} is "Melee":
+			if checkMeleeTarget({_v}) is true:
+				{_v}.remove()
+			stop trigger
+		else:
+			{_v}.remove()
+			stop trigger
+	if {_v} has scoreboard tag "isMinion":
+		stop trigger
+	if {_v} has scoreboard tag "noDamage":
+		stop trigger
+	if {_v}.isInvulnerable():
+		stop trigger
+	if {_v} is a player:
+		gamemode of {_v} is not survival
+		stop trigger
+	else if health of {_v} <= 0:
+		stop trigger
+	set {_attrMapV} to metadata "attrMap" of {_v}
+	set {_accessories} to new ArrayList()
+	set {_accessories} to metadata "accessory" of {_v}
+	if {_d} is living entity:
+		health of {_d} <= 0
+		{_damageCause} is "Melee"
+		stop trigger
+	set {_isMinionDmg} to false
+	if shooter of {_d} is set:
+		shooter of {_d} has scoreboard tag "isMinion"
+		set {_isMinionDmg} to true
+	else if {_d} has scoreboard tag "isMinion":
+		set {_isMinionDmg} to true
+	if shooter of {_d} is set:
+		if shooter of {_d} is a player:
+			set {_dPly} to shooter of {_d}
+		else if (shooter of {_d}) has metadata "damageSourcePlayer":
+			set {_dPly} to metadata "damageSourcePlayer" of (shooter of {_d})
+		else:
+			set {_dPly} to shooter of {_d}
+	else:
+		if {_d} has metadata "damageSourcePlayer":
+			set {_dPly} to metadata "damageSourcePlayer" of {_d}
+		else:
+			set {_dPly} to {_d}
+	if {_v} has scoreboard tag "tempDamageCD_%{_damageCause}%":
+		if trimText(name of {_dPly}) contains "月球领主":
+			{_damageCause} is "Melee"
+			stop trigger
+		else:
+			stop trigger
+	if {_damageCause} is "Melee" or "Arrow" or "Bullet" or "Rocket" or "Magic" or "Summon":
+		if checkCanDamage({_dPly}, {_v}) is false:
+			stop trigger
+		set {_damageCD} to {_attrMapV}.getOrDefault("invulnerabilityTick", 0)
+	if {_v} has scoreboard tag "isBOSS":
+		if {_damageCause} is not "Melee" or "Arrow" or "Bullet" or "Magic" or "Rocket" or "Summon" or "burning" or "Thorn" or "spectre":
+			{_damageCause} doesn't start with "debuff_"
+			stop trigger
+		else:
+			set {_targets} to metadata "targets" of {_v}
+			if try {_targets}.containsKey(name of {_dPly}) is false:
+				set {_defence} to 100000
+		if {_v} has scoreboard tag "healthPool":
+			set {_damageTaker} to try {BOSS}.get(trimText(name of {_v})).get(0)
+	if {_v} has metadata "damageTaker":
+		set {_damageTaker} to metadata "damageTaker" of {_v}
+	
+	if {_dPly} is a player:
+		{_d} is not a player
+		set {_buff::*} to ...(yml value "%trimText({_d}.getCustomName())%.buffInflict" from file "plugins/Data/entities.yml")
+	else:
+		set {_buff::*} to ...(yml value "%trimText(name of {_dPly})%.buffInflict" from file "plugins/Data/entities.yml")
+	set {_attrMap} to new HashMap(1)
+	if shooter of {_d} is set:
+		set {_attrMap} to metadata "attrMap" of (shooter of {_d})
+	else:
+		set {_attrMap} to metadata "attrMap" of {_d}
+	if {_dPly} is a player:
+		add ...({_attrMap}.get("buffInflict")) to {_buff::*}
+		if {_damageCause} is "Arrow" or "Bullet" or "Rocket":
+			add ...({_attrMap}.get("buffInflictRanged")) to {_buff::*}
+		else if {_damageCause} is "Melee":
+			{_d} is {_dPly}
+			add ...({_attrMap}.getOrDefault("buffInflictMelee", new ArrayList())) to {_buff::*}
+		else:
+			add ...({_attrMap}.getOrDefault("buffInflict%{_damageCause}%", new ArrayList())) to {_buff::*}
+	loop {_buff::*}:
+		clear {_splitInfo::*}
+		set {_splitInfo::*} to loop-value split at "|"
+		if chance of ({_splitInfo::3} parsed as number):
+			applyEffect({_v}, {_splitInfo::1}, ({_splitInfo::2} parsed as integer))
+	
+	if {_damageCause} is "恐惧" or "boss_angry":
+		set {_dmg} to 114514
+		set {_fixedDamage} to true
+	else if {_damageCause} is "fall":
+		set {_dist} to round(3 + ({_dmg} * 2))
+		if {_dist} <= 8:
+			stop trigger
+		else:
+			set {_dmg} to ({_dist} - 8) * 10
+			set {_fixedDamage} to true
+	else if {_damageCause} is "block explosion":
+		set {_kb} to 17
+	else if {_damageCause} is "entity explosion":
+		set {_attrMapD} to metadata "attrMap" of {_d}
+		set {_kb} to {_attrMapD}.get("knockback") * ({_attrMapD}.getOrDefault("knockbackMulti", 1))
+		set {_dmg} to {_attrMapD}.get("damage") * ({_attrMapD}.getOrDefault("damageMulti", 1)) * ({_attrMapD}.getOrDefault("damageRangedMulti", 1)) * ({_attrMapD}.getOrDefault("damageRocketMulti", 1))
+	else if {_damageCause} is "lava":
+		{_v}.setFireTicks(max({_v}.getFireTicks(), 140))
+		set {_damageCD} to {_attrMapV}.getOrDefault("invulnerabilityTick", 10) * 2
+		if {_dmg} < 200:
+			set {_dmg} to 200
+	else if {_damageCause} is "fire" or "burning":
+		set {_damageCD} to 3
+		set {_dmg} to 2
+		set {_fixedDamage} to true
+	else if {_damageCause} starts with "debuff_":
+		set {_fixedDamage} to true
+	else if {_damageCause} is "suffocation" or "void":
+		set {_dmg} to 10
+		set {_fixedDamage} to true
+	else if {_damageCause} is "drowning":
+		set {_dmg} to 50
+		set {_fixedDamage} to true
+	else if {_damageCause} is "spectre":
+		set {_attrMapD} to metadata "attrMap" of {_d}
+	else if {_damageCause} is "Thorn":
+		set {_damageCD} to 0
+		set {_fixedDamage} to true
+	else:
+		set {_attrMapD} to metadata "attrMap" of {_d}
+		if {_attrMapD} is set:
+			set {_dmg} to {_attrMapD}.get("damage") * ({_attrMapD}.getOrDefault("damageMulti", 1))
+		if {_isMinionDmg} is true:
+			if {_damageTaker} has scoreboard tag "鞭炮":
+				remove "鞭炮" from scoreboard tags of {_damageTaker}
+				set {_dmg} to {_dmg} * 2.75
+				play large explosion on {_v}
+				play sound "entity.generic.explode" with volume 1 and pitch 1 at location of {_v}
+		set {_kb} to {_attrMapD}.get("knockback") * ({_attrMapD}.getOrDefault("knockbackMulti", 1))
+		if {_damageCause} is "Melee":
+			set {_dmg} to {_dmg} * ({_attrMapD}.getOrDefault("damageMeleeMulti", 1))
+			set {_kb} to {_kb} * ({_attrMapD}.getOrDefault("knockbackMeleeMulti", 1))
+		else if {_damageCause} is "Arrow" or "Bullet" or "Rocket":
+			set {_dmg} to {_dmg} * ({_attrMapD}.getOrDefault("damageRangedMulti", 1)) * ({_attrMapD}.getOrDefault("damage%{_damageCause}%Multi", 1))
+		else if {_damageCause} is "Magic":
+			set {_dmg} to {_dmg} * ({_attrMapD}.getOrDefault("damageMagicMulti", 1))
+		else if {_damageCause} is "Summon":
+			set {_dmg} to {_dmg} * ({_attrMapD}.getOrDefault("damageSummonMulti", 1))
+		else if {_damageCause} is "Explode":
+			set {_dmg} to {_dmg} * a random number between 0.9 and 1.1
+		else:
+			stop trigger
+
+	if {_fixedDamage} is not true:
+		set {_damageTakenMulti} to {_attrMapV}.getOrDefault("damageTakenMulti", 1)
+		set {_dmg} to {_dmg} * a random number between 0.9 and 1.1
+		set {_kbResis} to max(0, 1 - ({_attrMapV}.getOrDefault("knockbackResistance", 0)))
+		if {_defence} is not set:
+			set {_defence} to {_attrMapV}.get("defence")
+			if {_attrMapV}.getOrDefault("defenceMulti", 1) >= 0:
+				set {_defence} to {_defence} * ({_attrMapV}.getOrDefault("defenceMulti", 1))
+		if {_d} has scoreboard tag "isMinion":
+			set {_dmgBonus} to metadata "minionWhipBonusDamage" of {_v}
+			set {_critBonus} to metadata "minionWhipBonusCrit" of {_v}
+			if {_dmgBonus} is set:
+				add {_dmgBonus} to {_dmg}
+		if {_attrMapD} is set:
+			if {_v} is a player:
+				set {_crit} to false
+			else:
+				{_dPly} is a player
+				set {_crit} to max(0, {_attrMapD}.getOrDefault("crit", 4))
+				if {_damageCause} is "Arrow" or "Bullet" or "Rocket":
+					add max(0, {_attrMapD}.getOrDefault("critRanged", 0)) to {_crit}
+				if {_critBonus} is set:
+					add {_critBonus} to {_crit}
+				if chance of ({_crit} / 100):
+					add {_dmg} to {_dmg}
+					set {_crit} to true
+				else:
+					set {_crit} to false
+		if {_v} is a player:
+			{_accessories}.contains("圣骑士护盾") is false
+			{_accessories}.contains("冰冻护盾") is false
+			set {_team} to metadata "team" of {_v}
+			set {_dist} to 999999999
+			loop all players in radius 64 of {_v}:
+				loop-player doesn't have scoreboard tag "unauthorized"
+				gamemode of loop-player is survival
+				set {_acc} to new ArrayList(1)
+				set {_acc} to metadata "accessory" of loop-player
+				if {_acc}.contains("圣骑士护盾") is false:
+					{_acc}.contains("冰冻护盾") is false
+					continue
+				metadata "team" of loop-player is {_team}
+				(health of loop-player) / (max health of loop-player) > 0.25
+				set {_currDist} to distance between loop-player and loop-player
+				if {_currDist} < {_dist}:
+					set {_dist} to {_currDist}
+					set {_shieldPly} to loop-player
+			if {_shieldPly} is set:
+				handleDamage({_shieldPly}, {_d}, ({_dmg} * 0.05), "Thorn")
+				set {_dmg} to {_dmg} * 0.85
+		set {_defence} to max({_defence} - ({_attrMap}.getOrDefault("armorPenetration", 0)), 0)
+		remove ({_defence} * 0.75) from {_dmg}
+		if {_damageTakenMulti} is set:
+			set {_dmg} to {_dmg} * {_damageTakenMulti}
+	if {_v} has scoreboard tag "isBOSS":
+		set {_dynamicDR} to 1
+		set {_dynamicDR} to metadata "dynamicDR" of {_v}
+		set {_dmg} to {_dmg} * {_dynamicDR}
+	
+	if entityDamageEvent({_d}, {_dPly}, {_v}, {_damageTaker}, {_dmg}, {_damageCause}) is false:
+		stop trigger
+		
+	set {_dmg} to round({_dmg})
+	if {_dmg} <= 1:
+		if {_crit} is true:
+			set {_dmg} to 2
+		else:
+			set {_dmg} to 1
+	
+	if {_v} is not armor stand:
+		if {_damageTaker} has scoreboard tag "isBOSS":
+			set {_targets} to metadata "targets" of {_damageTaker}
+			if try {_targets}.containsKey(name of {_dPly}):
+				{_targets}.put(name of {_dPly}, {_targets}.get(name of {_dPly}) + {_dmg})
+		if health of {_damageTaker} <= {_dmg}:
+			handleDeath({_damageTaker}, {_dPly}, {_d}, {_damageCause})
+			set {_sound} to yml value "%trimText({_v}.getCustomName())%.soundKilled" from file "plugins/Data/entities.yml"
+			if {_sound} is set:
+				play sound {_sound} with volume 3 and pitch 1 at {_v}.getLocation()
+			else if {_v} has scoreboard tag "isMechanic":
+				play sound "ENTITY.GENERIC.EXPLODE" with volume 3 and pitch 1 at {_v}.getLocation()
+			else:
+				play sound "ENTITY.%{_v}.getType()%.DEATH" with volume 3 and pitch 1 at {_v}.getLocation()
+		else:
+			if {_damageCause} is not "burning":
+				{_damageCause} doesn't start with "debuff_"
+				set {_sound} to yml value "%trimText({_v}.getCustomName())%.soundDamaged" from file "plugins/Data/entities.yml"
+				if {_sound} is set:
+					play sound {_sound} with volume 3 and pitch 1 at {_v}.getLocation()
+				else if {_v} has scoreboard tag "isMechanic":
+					play sound "ENTITY.IRONGOLEM.HURT" with volume 3 and pitch 1 at {_v}.getLocation()
+				else:
+					play sound "ENTITY.%{_v}.getType()%.HURT" with volume 3 and pitch 1 at {_v}.getLocation()
+			set health of {_damageTaker} to (health of {_damageTaker} - {_dmg})
+			set {_kb} to {_kb} * {_kbResis}
+			if {_kb} > 0:
+				set {_vec} to vector((x-coordinate of {_damageTaker} - x-coordinate of {_d}), 0, (z-coordinate of {_damageTaker} - z-coordinate of {_d}))
+				set vector length of {_vec} to sqrt({_kb}) / 3
+				set y of {_vec} to min(1, {_kb} / 8)
+				if y of velocity of {_damageTaker} > 5:
+					subtract y of velocity of {_damageTaker} from y of {_vec}
+			set {_knockbackTaker} to {_damageTaker}
+			if {_damageTaker} is a player:
+				set {_knockbackTaker} to vehicle of {_damageTaker}
+			push {_knockbackTaker} {_vec}
+	
+	if {_damageCause} is not "drowning":
+		displayHolo({_v}, {_dmg}, {_crit}, {_damageCause})
+	
+	if {_dPly} is a player:
+		{_damageCause} doesn't start with "debuff_"
+		if health of {_v} > 0:
+			send action bar "&r%name of {_v}% &6[&a%health of {_v}%&c/&a%max health of {_v}%] &b(-%round({_dmg})%)" to {_dPly}
+		else:
+			send action bar "&r%name of {_v}% &c领了盒饭" to {_dPly}
+	
+	set {_wait} to {_damageCD}
+	if {_wait} > 0:
+		add "tempDamageCD_%{_damageCause}%" to scoreboard tags of {_v}
+		set {_wait} to ceil({_wait})
+		wait "%{_wait}% ticks" parsed as timespan
+		remove "tempDamageCD_%{_damageCause}%" from scoreboard tags of {_v}
+
+function handleParticleCircle(centerLoc: location, radius: number, width: number, startYaw: number, dPitch: number, particleColor: text):
+	if {_width} < 0.1:
+		set {_width} to 0.1
+	set {_loopTime} to ceil(6.28 * {_radius} / {_width})
+	set {_world} to world of {_centerLoc}
+	if {_particleColor} is not set:
+		set {_particleColor} to "102|255|255"
+	set {_colorRGB::*} to {_particleColor} split at "|"
+	set {_color} to try BukkitColor.fromRGB(({_colorRGB::1} parsed as integer), ({_colorRGB::2} parsed as integer), ({_colorRGB::3} parsed as integer))
+	loop {_loopTime} times:
+		set {_pitch} to {_dPitch} * sin((loop-value) * 360 / {_loopTime})
+		set {_v} to new vector with yaw ({_startYaw} + ((loop-number) * 360 / {_loopTime})) and pitch {_pitch}
+		set vector length of {_v} to {_radius}
+		set {_loc} to {_centerLoc}.clone().add({_v})
+		set {_r} to ({_color}.getRed() / 255) - 1
+		set {_g} to {_color}.getGreen() / 255
+		set {_b} to {_color}.getBlue() / 255
+		loop (ceil({_width} * 8)) times:
+			set {_l} to {_loc}.clone().add((a random number between ({_width} * -1) and {_width}), (a random number between ({_width} * -1) and {_width}), (a random number between ({_width} * -1) and {_width}))
+			{_world}.spawnParticle(Particle.REDSTONE, {_l}, 0, {_r}, {_g}, {_b})
+function handleParticleLine(vector: vector, length: number, width: number, startLoc: location, particleColor: object):
+	if {_width} < 0.1:
+		set {_width} to 0.1
+	set {_loopTime} to ceil({_length} / {_width})
+	set {_world} to world of {_startLoc}
+	set {_color} to new ArrayList()
+	if {_particleColor} is not set:
+		{_color}.add(BukkitColor.fromRGB(102, 255, 255))
+	else:
+		loop ...{_particleColor}:
+			set {_colorRGB::*} to (loop-value).toString() split at "|"
+			{_color}.add(try BukkitColor.fromRGB(({_colorRGB::1} parsed as integer), ({_colorRGB::2} parsed as integer), ({_colorRGB::3} parsed as integer)))
+	loop {_loopTime} times:
+		set {_loc} to {_startLoc}.clone()
+		set {_dVec} to {_vector}.clone()
+		set vector length of {_dVec} to ({_width} * (loop-number))
+		{_loc}.add({_dVec})
+		set {_colorIndex} to floor(((loop-number) / {_loopTime}) * ({_color}.size() - 1))
+		set {_c1} to {_color}.get({_colorIndex})
+		if {_color}.size() > 1:
+			set {_c2} to {_color}.get(mod({_colorIndex} + 1, {_color}.size()))
+			set {_multi2} to ((loop-number / {_loopTime}) * ({_color}.size())) - {_colorIndex}
+			set {_multi1} to 1 - {_multi2}
+			set {_r} to ((({_c1}.getRed() * {_multi1}) + ({_c2}.getRed() * {_multi2})) / 255) - 1
+			set {_g} to (({_c1}.getGreen() * {_multi1}) + ({_c2}.getGreen() * {_multi2})) / 255
+			set {_b} to (({_c1}.getBlue() * {_multi1}) + ({_c2}.getBlue() * {_multi2})) / 255
+		else:
+			set {_r} to ({_c1}.getRed() / 255) - 1
+			set {_g} to {_c1}.getGreen() / 255
+			set {_b} to {_c1}.getBlue() / 255
+		loop (ceil({_width} * 8)) times:
+			set {_l} to {_loc}.clone().add((a random number between ({_width} * -1) and {_width}), (a random number between ({_width} * -1) and {_width}), (a random number between ({_width} * -1) and {_width}))
+			{_world}.spawnParticle(Particle.REDSTONE, {_l}, 0, {_r}, {_g}, {_b})
+function handleStrikeLine(ply: entity, yaw: number, pitch: number, length: number, item: item, particleColor: object, toDamage: object, thruWall: boolean, advanced: object) :: number:
+	{_toDamage} is instance of ArrayList
+	set {_vector} to vector with yaw {_yaw} and pitch {_pitch}
+	set {_damage} to (metadata "attrMap" of {_ply}).get("damage")
+	set {_damagetype} to (metadata "attrMap" of {_ply}).get("damageType")
+	set {_index} to 2
+	set {_canDamage} to true
+	set {_itemName} to trimText(name of {_item})
+	if {_itemName} contains "的 ":
+		set {_itemName} to {_itemName}.split("的 ")[1]
+	set {_world} to world of {_ply}
+	set {_color} to new ArrayList()
+	if {_particleColor} is not set:
+		{_color}.add(BukkitColor.fromRGB(102, 255, 255))
+	else:
+		loop ...{_particleColor}:
+			set {_colorRGB::*} to (loop-value).toString() split at "|"
+			{_color}.add(try BukkitColor.fromRGB(({_colorRGB::1} parsed as integer), ({_colorRGB::2} parsed as integer), ({_colorRGB::3} parsed as integer)))
+	if {_advanced} is instance of HashMap:
+		set {_decayCoef} to 1 - ({_advanced}.getOrDefault("decay", 0))
+		set {_whipBonus} to {_advanced}.getOrDefault("whipBonus", 0)
+		set {_inflictBuff} to {_advanced}.getOrDefault("inflictBuff", false)
+		set {_damage} to {_advanced}.getOrDefault("damage", {_damage})
+		set {_particleInterval} to {_advanced}.getOrDefault("particleInterval", 0.33)
+		set {_locStart} to {_advanced}.getOrDefault("startLocation", (eye location of {_ply}))
+		set {_thruWall} to {_advanced}.getOrDefault("stopWhenHitBlock", {_thruWall})
+		set {_bounceWhenHitBlock} to {_advanced}.getOrDefault("bounceWhenHitBlock", false)
+	else:
+		set {_decayCoef} to 1
+		set {_whipBonus} to 0
+		set {_particleInterval} to 0.33
+		set {_locStart} to eye location of {_ply}
+		set {_inflictBuff} to false
+		set {_bounceWhenHitBlock} to false
+	set {_loopTime} to round({_length} / {_particleInterval})
+	set {_checkRange} to {_particleInterval} * 2.5
+	set {_loc} to {_locStart}.clone()
+	set {_dVec} to {_vector}.clone()
+	set vector length of {_dVec} to {_particleInterval}
+	loop {_loopTime} times:
+		{_loc}.add({_dVec})
+		set {_blockType} to "%(block at {_loc}).getType()%"
+		if {_blockType} is "LONG_GRASS" or "DOUBLE_PLANT" or "VINE" or "YELLOW_FLOWER" or "RED_ROSE":
+			set block at {_loc} to air
+		else:
+			{_blockType} is not "AIR" or "STATIONARY_WATER" or "STATIONARY_LAVA" or "LADDER"
+			if {_bounceWhenHitBlock} is true:
+				set {_hitBlock} to block at {_loc}
+				set {_currLoc} to {_loc}.clone().subtract({_dVec})
+				
+				set {_bi} to new BlockIterator({_world}, {_currLoc}.toVector(), {_dVec}, 0, 3)
+				while {_bi}.hasNext():
+					set {_bNext} to {_bi}.next()
+					if {_bNext} is not {_hitBlock}:
+						set {_block} to {_bNext}
+					else:
+						stop loop
+				
+				set {_blockFace} to {_hitBlock}.getFace({_block}).toString()
+				#Get blockface, bounce off
+				if {_blockFace} is "EAST" or "WEST":
+					set x of {_dVec} to -1 * x of {_dVec}
+				else if {_blockFace} is "UP" or "DOWN":
+					set y of {_dVec} to -1 * y of {_dVec}
+				else if {_blockFace} is "SOUTH" or "NORTH":
+					set z of {_dVec} to -1 * z of {_dVec}
+				set {_index} to 0
+				{_loc}.add({_dVec})
+			else if {_thruWall} is false:
+				stop trigger
+		set {_checkHit} to false
+		if {_index} is 0:
+			set {_checkHit} to true
+		else if loop-number is {_loopTime}:
+			set {_checkHit} to true
+		if {_checkHit} is true:
+			if {_itemName} is "捕虫网" or "金捕虫网":
+				set {_toLoop} to {_loc}.getWorld().getNearbyEntities({_loc}, 0.75, 0.75, 0.75)
+				loop ...{_toLoop}:
+					set {_entity1} to loop-value-2
+					{_entity1} has scoreboard tag "isAnimal"
+					health of {_entity1} > 0
+					giveItem({_ply}, getItem(trimText({_entity1}.getCustomName())))
+					{_entity1}.remove()
+			else:
+				set {_toLoop} to {_loc}.getWorld().getNearbyEntities({_loc}, {_checkRange}, {_checkRange}, {_checkRange})
+				loop ...{_toLoop}:
+					set {_entity1} to loop-value-2
+					checkMeleeTarget({_entity1}) is true
+					{_toDamage}.contains({_entity1}) is false
+					if {_entity1} is not {_ply}:
+						handleDamage({_entity1}, {_ply}, {_damage}, {_damagetype})
+					damageCD({_toDamage}, {_entity1}, 10)
+					if checkCanDamage({_ply}, {_entity1}) is not false:
+						#whip, damage decrease and buff
+						set {_damage} to {_damage} * {_decayCoef}
+						if {_whipBonus} > 0:
+							set metadata "minionWhipFocus" of {_ply} to {_entity1}
+							set metadata "minionWhipBonusDamage" of {_entity1} to {_whipBonus}
+							if {_itemName} is "万花筒":
+								set metadata "minionWhipBonusCrit" of {_entity1} to {_whipBonus}
+							else if {_itemName} is "鞭炮":
+								add "鞭炮" to scoreboard tags of {_entity1}
+						if {_inflictBuff}:
+							add {_itemName} to scoreboard tags of {_entity1}
+						else if {_itemName} is "日耀喷发剑":
+							applyEffect({_entity1}, "破晓", 100)
+			set {_index} to 3
+		else:
+			remove 1 from {_index}
+		set {_colorIndex} to floor(((loop-number) / {_loopTime}) * ({_color}.size() - 1))
+		set {_c1} to {_color}.get({_colorIndex})
+		if {_color}.size() > 1:
+			set {_c2} to {_color}.get(mod({_colorIndex} + 1, {_color}.size()))
+			set {_multi2} to ((loop-number / {_loopTime}) * ({_color}.size())) - {_colorIndex}
+			set {_multi1} to 1 - {_multi2}
+			{_world}.spawnParticle(Particle.REDSTONE, {_loc}, 0, ((({_c1}.getRed() * {_multi1}) + ({_c2}.getRed() * {_multi2})) / 255 - 1), ((({_c1}.getGreen() * {_multi1}) + ({_c2}.getGreen() * {_multi2})) / 255), ((({_c1}.getBlue() * {_multi1}) + ({_c2}.getBlue() * {_multi2})) / 255))
+		else:
+			{_world}.spawnParticle(Particle.REDSTONE, {_loc}, 0, ({_c1}.getRed() / 255 - 1), ({_c1}.getGreen() / 255), ({_c1}.getBlue() / 255))
+	return {_damage}
+function handleEntityExplodeAtLoc(entity: entity, exception: entity, loc: location):
+	set {_radius} to 2
+	set {_radius} to yml value "%{_entity}.getCustomName()%.radius" from file "plugins/Data/weapons.yml"
+	set {_damageShooter} to false
+	set {_damageShooter} to yml value "%{_entity}.getCustomName()%.damageShooter" from file "plugins/Data/weapons.yml"
+	set {_damage} to (metadata "attrMap" of {_entity}).get("damage")
+	set {_damagetype} to (metadata "attrMap" of {_entity}).get("damageType")
+	set {_destroyBlock} to yml value "%{_entity}.getCustomName()%.destroyBlock" from file "plugins/Data/weapons.yml"
+	if {_radius} < 3:
+		play large explosion at {_loc}
+	else if {_radius} < 5:
+		play huge explosion at {_loc}
+	else:
+		set {_rangeParticlePositive} to {_radius} - 4
+		set {_rangeParticleNegative} to 4 - {_radius}
+		set {_loopTime} to ceil({_radius} * {_radius} / 4)
+		loop {_loopTime} times:
+			set {_locParticle} to {_loc}.clone().add((a random number between {_rangeParticlePositive} and {_rangeParticleNegative}), (a random number between {_rangeParticlePositive} and {_rangeParticleNegative}), (a random number between {_rangeParticlePositive} and {_rangeParticleNegative}))
+			play huge explosion at {_locParticle}
+	play sound "entity.generic.explode" with volume 1 and pitch 1 at {_loc}
+	
+	set {_entities} to (world of {_entity}).getNearbyEntities({_loc}, {_radius}, {_radius}, {_radius})
+	loop ...{_entities}:
+		set {_victim} to loop-value
+		if {_victim} is not living entity:
+			continue
+		if {_victim} is shooter of {_entity}:
+			if {_damageShooter} is true:
+				{_victim} is a player
+				handleDamage({_victim}, {_entity}, {_damage}, "Explode")
+			continue
+		if {_victim} is {_exception}:
+			continue
+		if checkCanDamage({_entity}, {_victim}) is false:
+			continue
+		handleDamage({_victim}, {_entity}, {_damage}, {_damagetype})
+	if {_destroyBlock} is true:
+		set {_ply} to shooter of {_entity}
+		set {_ply} to metadata "damageSourcePlayer" of {_entity}
+		{_ply} is a player
+		set {_ply} to {_ply} parsed as player
+		
+		loop all blocks in radius {_radius} of {_loc}:
+			loop-block is not bedrock
+			loop-block is solid
+			set {_breakEvent} to new BlockBreakEvent(loop-block, {_ply})
+			if {_breakEvent}.callEvent() is true:
+				loop-block.breakNaturally()
+function handleEntityExplode(entity: entity, exception: entity):
+	handleEntityExplodeAtLoc({_entity}, {_exception}, (location of {_entity}))

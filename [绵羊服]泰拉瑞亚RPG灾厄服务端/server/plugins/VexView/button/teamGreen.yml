@@ -1,0 +1,14 @@
+id: 3
+name: ''
+url: 'https://static.wikia.nocookie.net/terraria_gamepedia/images/9/95/Offline_Emerald_Gemspark_Wall_%28placed%29.png'
+url2: 'https://static.wikia.nocookie.net/terraria_gamepedia/images/9/95/Offline_Emerald_Gemspark_Wall_%28placed%29.png'
+x: 35
+y: 40
+width: 20
+high: 20
+commands:
+- 'team green'
+asop: false
+close: false
+to: '-'
+click_url: ''

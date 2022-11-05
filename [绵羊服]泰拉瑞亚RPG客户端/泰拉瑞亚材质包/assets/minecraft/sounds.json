@@ -1,0 +1,539 @@
+{
+	"entity.cltst.death": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "mob/cltst/death"
+			}
+		]
+	},
+	"entity.bird.idle": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "critter/bird/idle1"
+			},
+			{
+				"name": "critter/bird/idle2"
+			}
+		]
+	},
+	"entity.bluejay.idle": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "critter/bluejay/idle"
+			}
+		]
+	},
+	"entity.cardinal.idle": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "critter/cardinal/idle1"
+			},
+			{
+				"name": "critter/cardinal/idle2"
+			}
+		]
+	},
+	"entity.eoc.growl": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "mob/enderdragon/growl5",
+				"attenuation_distance": 30
+			}
+		]
+	},
+	"entity.eol.summoned": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "mob/eol/summoned",
+				"attenuation_distance": 30
+			}
+		]
+	},
+	"entity.eol.DA": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "mob/eol/da",
+				"attenuation_distance": 30
+			}
+		]
+	},
+	"entity.eol.EL": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "mob/eol/el",
+				"attenuation_distance": 30
+			}
+		]
+	},
+	"entity.eol.ER": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "mob/eol/er",
+				"attenuation_distance": 30
+			}
+		]
+	},
+	"entity.eol.PB": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "mob/eol/pb",
+				"attenuation_distance": 30
+			}
+		]
+	},
+	"entity.eol.SD": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "mob/eol/sd",
+				"attenuation_distance": 30
+			}
+		]
+	},
+	"item.bowShoot": {
+        "category": "master",
+		"subtitle": "\u5f13:\u5c04\u7bad",
+		"sounds": [
+			{
+				"name": "item/bowshoot",
+				"attenuation_distance": 30
+			}
+		]
+	},
+	"item.gunFire": {
+        "category": "master",
+		"subtitle": "\u67aa\u68b0:\u5c04\u51fb",
+		"sounds": [
+			{
+				"name": "item/gunfire",
+				"attenuation_distance": 60
+			}
+		]
+	},
+	"item.genericSwing": {
+        "category": "master",
+		"subtitle": "\u7269\u54c1:\u6325\u821e",
+		"sounds": [
+			{
+				"name": "item/genericswing",
+				"attenuation_distance": 8
+			}
+		]
+	},
+	"item.guitar": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "item/guitar"
+			}
+		]
+	},
+	"item.harp": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "item/harp"
+			}
+		]
+	},
+	"music.space": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/space",
+				"stream": true
+			}
+		]
+	},
+	"music.spacenight": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/spacenight",
+				"stream": true
+			}
+		]
+	},
+	"music.normal": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/normal1",
+				"stream": true
+			},
+			{
+				"name": "music/terraria/normal2",
+				"stream": true
+			}
+		]
+	},
+	"music.normalnight": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/normalnight",
+				"stream": true
+			}
+		]
+	},
+	"music.hallownight": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/normalnight",
+				"stream": true
+			}
+		]
+	},
+	"music.normalunderground": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/normalunderground1",
+				"stream": true
+			},
+			{
+				"name": "music/terraria/normalunderground2",
+				"stream": true
+			}
+		]
+	},
+	"music.oceanunderground": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/normalunderground1",
+				"stream": true
+			},
+			{
+				"name": "music/terraria/normalunderground2",
+				"stream": true
+			}
+		]
+	},
+	"music.corruption": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/corruption",
+				"stream": true
+			}
+		]
+	},
+	"music.corruptionunderground": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/corruptionunderground",
+				"stream": true
+			}
+		]
+	},
+	"music.underworld": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/underworld",
+				"stream": true
+			}
+		]
+	},
+	"music.hallow": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/hallow",
+				"stream": true
+			}
+		]
+	},
+	"music.hallowunderground": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/hallowunderground",
+				"stream": true
+			}
+		]
+	},
+	"music.desert": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/desert",
+				"stream": true
+			}
+		]
+	},
+	"music.desertunderground": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/desertunderground",
+				"stream": true
+			}
+		]
+	},
+	"music.ocean": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/ocean",
+				"stream": true
+			}
+		]
+	},
+	"music.oceannight": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/oceannight",
+				"stream": true
+			}
+		]
+	},
+	"music.tundra": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/tundra",
+				"stream": true
+			}
+		]
+	},
+	"music.tundraunderground": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/tundraunderground",
+				"stream": true
+			}
+		]
+	},
+	"music.jungle": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/jungle",
+				"stream": true
+			}
+		]
+	},
+	"music.junglenight": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/junglenight",
+				"stream": true
+			}
+		]
+	},
+	"music.jungleunderground": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/jungleunderground",
+				"stream": true
+			}
+		]
+	},
+	"music.dungeon": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/dungeon",
+				"stream": true
+			}
+		]
+	},
+	"music.temple": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/temple",
+				"stream": true
+			}
+		]
+	},
+	"music.boss1": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/boss1",
+				"stream": true
+			}
+		]
+	},
+	"music.boss2": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/boss2",
+				"stream": true
+			}
+		]
+	},
+	"music.boss3": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/boss3",
+				"stream": true
+			}
+		]
+	},
+	"music.boss4": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/boss4",
+				"stream": true
+			}
+		]
+	},
+	"music.queenslime": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/queenslime",
+				"stream": true
+			}
+		]
+	},
+	"music.plantera": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/plantera",
+				"stream": true
+			}
+		]
+	},
+	"music.empressoflight": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/empressoflight",
+				"stream": true
+			}
+		]
+	},
+	"music.dukefishron": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/dukefishron",
+				"stream": true
+			}
+		]
+	},
+	"music.lunarboss": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/lunarboss",
+				"stream": true
+			}
+		]
+	},
+	"music.eerie": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/eerie",
+				"stream": true
+			}
+		]
+	},
+	"music.slimerain": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/slimerain",
+				"stream": true
+			}
+		]
+	},
+	"music.eclipse": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/eclipse",
+				"stream": true
+			}
+		]
+	},
+	"music.pumpkinmoon": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/pumpkinmoon",
+				"stream": true
+			}
+		]
+	},
+	"music.frostmoon": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/frostmoon",
+				"stream": true
+			}
+		]
+	},
+	"music.goblinarmy": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/goblinarmy",
+				"stream": true
+			}
+		]
+	},
+	"music.martianmadness": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/martianmadness",
+				"stream": true
+			}
+		]
+	},
+	"music.pirate": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/pirate",
+				"stream": true
+			}
+		]
+	},
+	"music.lunartower": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/lunartower",
+				"stream": true
+			}
+		]
+	},
+	"music.oldonesarmy": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/terraria/oldonesarmy",
+				"stream": true
+			}
+		]
+	}
+}

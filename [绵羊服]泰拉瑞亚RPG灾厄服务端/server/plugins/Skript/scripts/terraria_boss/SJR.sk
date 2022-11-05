@@ -1,0 +1,333 @@
+import:
+	java.util.ArrayList
+	java.util.HashMap
+	net.minecraft.server.v1_11_R1.BossBattle
+	net.minecraft.server.v1_11_R1.BossBattle$BarColor
+	net.minecraft.server.v1_11_R1.BossBattle$BarStyle
+	net.minecraft.server.v1_11_R1.BossBattleServer
+	net.minecraft.server.v1_11_R1.PacketPlayOutBoss$Action
+	net.minecraft.server.v1_11_R1.PathfinderGoalSelector
+	org.bukkit.craftbukkit.v1_11_R1.util.CraftChatMessage
+	org.bukkit.entity.EntityType
+
+on rightclick:
+	gamemode of player is survival
+	the block 1 below player is mossy stone brick
+	getBiome(location of player) is "jungle"
+	y-coordinate of player <= 50
+	set {_tool} to player's tool
+	metadata "useCD" of player is false
+	if trimText(name of {_tool}) is "丛林蜥蜴电池":
+		{BOSS}.containsKey("石巨人") is false
+		applyCD(player, 20)
+		handleSJR(player)
+		set {_tool} to (item amount of {_tool} - 1) of {_tool}
+		set player's tool to {_tool}
+
+function handleSJR(ply: player):
+	{BOSS}.containsKey("石巨人") is false
+	spawn a slime 10 above location of {_ply}
+	set {_sjr} to spawned entity
+	set {_coreLoc} to location of {_sjr}
+	broadcast "&d&l石巨人 苏醒了！"
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_sjr}
+	set {_attrMap} to new HashMap(16)
+	{_attrMap}.put("crit", 0.04)
+	{_attrMap}.put("damage", 230)
+	{_attrMap}.put("damageMeleeMulti", 1)
+	{_attrMap}.put("damageMulti", 1)
+	{_attrMap}.put("damageType", "Melee")
+	{_attrMap}.put("defence", 52)
+	{_attrMap}.put("defenceMulti", 1)
+	{_attrMap}.put("knockback", 4)
+	{_attrMap}.put("knockbackResistance", 1)
+	{_attrMap}.put("knockbackMeleeMulti", 1)
+	{_attrMap}.put("knockbackMulti", 1)
+	set metadata "attrMap" of {_sjr} to {_attrMap}
+	set {_attrMapFireball} to new HashMap(12)
+	{_attrMapFireball}.put("crit", 0.04)
+	{_attrMapFireball}.put("damage", 200)
+	{_attrMapFireball}.put("damageArrowMulti", 1)
+	{_attrMapFireball}.put("damageRangedMulti", 1)
+	{_attrMapFireball}.put("damageMulti", 1)
+	{_attrMapFireball}.put("damageType", "Arrow")
+	{_attrMapFireball}.put("knockback", 2)
+	{_attrMapFireball}.put("knockbackMulti", 1)
+	set {_attrMapFist} to {_attrMap}.clone()
+	{_attrMapFist}.put("damage", 188)
+	{_attrMapFist}.put("defence", 56)
+	set {_attrMapHead} to {_attrMap}.clone()
+	{_attrMapHead}.put("damage", 224)
+	{_attrMapHead}.put("defence", 40)
+	
+	set {_pathfinder} to new PathfinderGoalSelector({_sjr}.getHandle().getWorld().methodProfiler)
+	
+	loop 2 times:
+		spawn a slime at {_coreLoc}
+		add spawned entity to {_fists::*}
+		set metadata "attrMap" of spawned entity to {_attrMapFist}
+		add "isMonster" to scoreboard tags of spawned entity
+		add "isBOSS" to scoreboard tags of spawned entity
+		spawned entity.setCustomNameVisible(true)
+		spawned entity.setRemoveWhenFarAway(false)
+		slimeResize(spawned entity, 4)
+		spawned entity.setCustomName("石巨人拳头§%loop-number%")
+		set spawned entity.getHandle().goalSelector to {_pathfinder}
+		set gravity of spawned entity to off
+	loop 2 times:
+		spawn a slime at {_coreLoc}
+		add spawned entity to {_legs::*}
+		add "noDamage" to scoreboard tags of spawned entity
+		spawned entity.setCustomNameVisible(true)
+		spawned entity.setRemoveWhenFarAway(false)
+		slimeResize(spawned entity, 4)
+		spawned entity.setCustomName("石巨人脚§%loop-number%")
+		set spawned entity.getHandle().goalSelector to {_pathfinder}
+		set gravity of spawned entity to off
+	spawn a slime at {_coreLoc}
+	set metadata "attrMap" of spawned entity to {_attrMapHead}
+	add "isMonster" to scoreboard tags of spawned entity
+	add "isBOSS" to scoreboard tags of spawned entity
+	spawned entity.setCustomNameVisible(true)
+	spawned entity.setRemoveWhenFarAway(false)
+	slimeResize(spawned entity, 6)
+	set name of spawned entity to "石巨人头"
+	spawned entity.setCustomName("石巨人头")
+	set spawned entity.getHandle().noclip to true
+	set gravity of spawned entity to off
+	set {_head} to spawned entity
+	
+	set {_sjr}.getHandle().goalSelector to {_pathfinder}
+	
+	
+	set {_bossbar} to new BossBattleServer(CraftChatMessage.fromString("石巨人", true)[0], BarColor.GREEN, BarStyle.PROGRESS)
+	{_bossbar}.setVisible(true)
+	set metadata "bossbar" of {_sjr} to {_bossbar}
+	
+	set {_targets} to setupBossTarget({_sjr}, 6, {_ply}, true, {_bossbar})
+	set {_target} to {_ply}
+	set metadata "targets" of {_sjr} to {_targets}
+	set metadata "targets" of {_head} to {_targets}
+	set {_healthMulti} to getBossHealthMulti({_targets}.size())
+	set name of {_sjr} to "石巨人"
+	{_sjr}.setCustomName("石巨人")
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_sjr}
+	add "isMonster" to scoreboard tags of {_sjr}
+	add "isBOSS" to scoreboard tags of {_sjr}
+	{_sjr}.setCustomNameVisible(true)
+	
+	{_sjr}.setRemoveWhenFarAway(false)
+	slimeResize({_sjr}, 10)
+	add "noDamage" to scoreboard tags of {_sjr}
+	
+	{BOSS}.put("石巨人", {_sjr})
+	
+	set max health of {_sjr} to round(27000 * {_healthMulti})
+	set health of {_sjr} to round(27000 * {_healthMulti})
+	set max health of {_head} to round(48000 * {_healthMulti})
+	set health of {_head} to round(48000 * {_healthMulti})
+	loop {_fists::*}:
+		set max health of (loop-value) to round(21000 * {_healthMulti})
+		set health of (loop-value) to round(21000 * {_healthMulti})
+	
+	set {_totalHealth} to (max health of {_sjr}) + (max health of {_head}) + (max health of {_fists::1}) + (max health of {_fists::2})
+	
+	set {_indexGeneral} to 1
+	set {_indexAI} to 0
+	set {_indexLazer} to 0
+	while health of {_sjr} > 0:
+		set {_currHealth} to (health of {_sjr}) + (health of {_head}) + (health of {_fists::1}) + (health of {_fists::2})
+		{_bossbar}.setProgress[float]({_currHealth} / {_totalHealth})
+		#clear invalid targets
+		if {_target} is set:
+			checkBossTarget({_target}, {_sjr}, false) is false
+			clear {_target}
+			clear metadata "target" of {_sjr}
+		if {_target} is not set:
+			loop toSkList {_targets}.keySet():
+				set {_ply} to "%loop-value%" parsed as player
+				checkBossTarget({_ply}, {_sjr}, false) is true
+				set {_target} to {_ply}
+				set metadata "target" of {_sjr} to {_target}
+				stop loop
+			#find new target if avaliable, otherwise flee
+		if {_target} is not set:
+			set max health of {_sjr} to 1
+			{_sjr}.remove()
+			{_head}.remove()
+			loop {_legs::*}:
+				(loop-value).remove()
+			loop {_fists::*}:
+				health of loop-value > 0
+				(loop-value).remove()
+		else:
+			#AI
+			makeTarget({_sjr}, {_target})
+			makeTarget({_head}, {_target})
+			makeTarget({_fists::1}, {_target})
+			makeTarget({_fists::2}, {_target})
+			makeTarget({_legs::1}, {_target})
+			makeTarget({_legs::2}, {_target})
+			set {_coreLoc} to location of {_sjr}
+			if {_head} has scoreboard tag "noDamage":
+				#second form
+				if mod({_indexAI}, 10) = 0:
+					{_attrMapHead}.put("damage", 256)
+					set {_targetLoc} to (location of {_target}).add(a random number between -10 and 10, a random number between 15 and 20, a random number between -10 and 10)
+					set {_v} to {_targetLoc}.subtract(location of {_head}).toVector()
+					if vector length of {_v} = 0:
+						set {_v} to vector(0, 10, 0)
+					set vector length of {_v} to sqrt(vector length of {_v}) / 5
+					set velocity of {_head} to {_v}
+				set {_fireRate} to floor(health of {_sjr} * 4 / max health of {_sjr})
+				if {_indexLazer} >= {_fireRate}:
+					set {_indexLazer} to 0
+					SJRLazer({_head}, {_target}, {_lastTargetLoc})
+				add 1 to {_indexAI}
+				add 1 to {_indexLazer}
+			else:
+				#first form
+				teleport {_head} to {_coreLoc}.clone().add(0, 4.5, 0)
+				if health of {_head} <= (max health of {_head} / 2):
+					mod({_indexGeneral}, 5) = 0
+					SJRLazer({_head}, {_target}, {_lastTargetLoc})
+				if mod({_indexGeneral}, 10) = 0:
+					set {_v} to (eye location of {_target}).subtract(eye location of {_head}).toVector()
+					vector length of {_v} > 0
+					set vector length of {_v} to 2.5
+					set {_fireball} to mobProjectile({_head}, {_v}, {_attrMapFireball}, "火球")
+					set metadata "Bounce" of {_fireball} to 10
+					set metadata "penetration" of {_fireball} to 4
+				
+			set {_dV} to (location of {_target}).subtract({_coreLoc}).toVector()
+			if vector length of {_dV} > 0:
+				set vector length of {_dV} to 4.5
+			set {_dV} to vector(z of {_dV}, 0, (x of {_dV}) * -1)
+			teleport {_legs::1} to {_coreLoc}.clone().subtract(0, 0.5, 0).add({_dV})
+			teleport {_legs::2} to {_coreLoc}.clone().subtract(0, 0.5, 0).subtract({_dV})
+			
+			if mod({_indexGeneral}, 20) = 0:
+				if mod({_indexGeneral}, 60) = 40:
+					#jump
+					set {_jumpVelocity} to (location of {_target}).subtract(location of {_sjr}).toVector()
+					set y of {_jumpVelocity} to 0
+					if vector length of {_jumpVelocity} = 0:
+						set {_jumpVelocity} to vector(1, 0, 0)
+					set vector length of {_jumpVelocity} to sqrt(vector length of {_jumpVelocity}) / 4
+					set gravity of {_sjr} to off
+					set {_sjr}.getHandle().noclip to true
+					clear {_fistVelocity::*}
+				else:
+					#fist
+					set {_v} to (eye location of {_target}).subtract(location of {_fists::1}).toVector()
+					if vector length of {_v} > 0:
+						set {_fistVelocity::1} to {_v}
+					set {_v} to (eye location of {_target}).subtract(location of {_fists::2}).toVector()
+					if vector length of {_v} > 0:
+						set {_fistVelocity::2} to {_v}
+					set {_lastFistHealth::1} to health of {_fists::1}
+					set {_lastFistHealth::2} to health of {_fists::2}
+					set {_fistLoc::1} to location of {_fists::1}
+					set {_fistLoc::2} to location of {_fists::2}
+			
+			if {_jumpVelocity} is set:
+				if mod({_indexGeneral}, 20) <= 10:
+					set y of {_jumpVelocity} to (10 - mod({_indexGeneral}, 20)) / 15
+					set velocity of {_sjr} to {_jumpVelocity}
+				else:
+					set gravity of {_sjr} to on
+					set {_sjr}.getHandle().noclip to false
+					clear {_jumpVelocity}
+			if vector length of {_dV} > 0:
+				set vector length of {_dV} to 4
+			if health of {_fists::1} > 0:
+				if {_fistVelocity::1} is set:
+					if health of {_fists::1} < {_lastFistHealth::1}:
+						clear {_fistVelocity::1}
+				if {_fistVelocity::1} is not set:
+					set {_targetLocFist} to {_coreLoc}.clone().add(0, 4, 0).add({_dV})
+					set {_v} to {_targetLocFist}.subtract(location of {_fists::1}).toVector()
+					if vector length of {_v} > 1.5:
+						set vector length of {_v} to 1.5
+					teleport {_fists::1} to (location of {_fists::1}).add({_v})
+				else:
+					set vector length of {_fistVelocity::1} to 2 * (mod({_indexGeneral}, 20) + 1)
+					teleport {_fists::1} to {_fistLoc::1}.clone().add({_fistVelocity::1})
+					if mod({_indexGeneral}, 20) >= 10:
+						clear {_fistVelocity::1}
+			if health of {_fists::2} > 0:
+				if {_fistVelocity::2} is set:
+					if health of {_fists::2} < {_lastFistHealth::2}:
+						clear {_fistVelocity::2}
+				if {_fistVelocity::2} is not set:
+					set {_targetLocFist} to {_coreLoc}.clone().add(0, 4, 0).subtract({_dV})
+					set {_v} to {_targetLocFist}.subtract(location of {_fists::2}).toVector()
+					if vector length of {_v} > 1.5:
+						set vector length of {_v} to 1.5
+					teleport {_fists::2} to (location of {_fists::2}).add({_v})
+				else:
+					set vector length of {_fistVelocity::2} to 2 * (mod({_indexGeneral}, 20) + 1)
+					teleport {_fists::2} to {_fistLoc::2}.clone().add({_fistVelocity::2})
+					if mod({_indexGeneral}, 20) >= 10:
+						clear {_fistVelocity::2}
+			
+			add 1 to {_indexGeneral}
+			set {_lastTargetLoc} to location of {_target}
+		wait 3 ticks
+	{_bossbar}.setVisible(false)
+	{BOSS}.remove("石巨人")
+	{_head}.remove()
+	loop {_legs::*}:
+		(loop-value).remove()
+	loop {_fists::*}:
+		health of loop-value > 0
+		(loop-value).remove()
+	#drop
+	set {_maxHealth} to max health of {_sjr}
+	{_maxHealth} is not 1
+	broadcast "&d&l石巨人 被击败了."
+	set {_targets} to metadata "targets" of {_sjr}
+	set {_killers} to {_targets}.keySet().iterator()
+	set {_drop} to a leather named "&r专家模式福袋" with lore "&7石巨人"
+	while {_killers}.hasNext():
+		set {_ply} to {_killers}.next()
+		set {_player} to {_ply} parsed as player
+		name of {_player} is {_ply}
+		set {_tier} to metadata "tier" of {_player}
+		if {_targets}.get({_ply}) * 5 > ({_maxHealth}) / ({_targets}.size()):
+			if {_tier} = 6:
+				set metadata "tier" of {_player} to 7
+				set yml value "stats.tier" from file "plugins/PlayerData/%name of {_player}%.yml" to 7
+			if {_player} can hold {_drop}:
+				send "&a恭喜你击败了BOSS[&r石巨人&a]!您的战利品已经放在背包里了。" to {_player}
+				give {_drop} to {_player}
+			else:
+				send "&a恭喜你击败了BOSS[&r石巨人&a]!您的背包空间不足以容纳战利品，请迅速拾起脚下的战利品袋，以免丢失。" to {_player}
+				drop {_drop} at {_player}.getEyeLocation() without velocity
+		else:
+			send "&aBOSS 石巨人 已经被击败。很遗憾，您的输出不足以获得一份战利品。" to {_player}
+
+function SJRLazer(head: entity, target: entity, lastTargetLoc: location):
+	set {_loc} to eye location of {_head}
+	set {_targetLoc} to eye location of {_target}
+	if {_head} has scoreboard tag "noDamage":
+		chance of 0.6
+		set {_time} to (distance between {_head} and {_target}) / 1.75
+		set {_v} to (location of {_target}).subtract({_lastTargetLoc}).toVector()
+		if vector length of {_v} > 0:
+			set vector length of {_v} to vector length of {_v} * {_time}
+		{_targetLoc}.add({_v})
+	set {_v} to ({_targetLoc}).subtract({_loc}).toVector()
+	set {_yaw} to vector yaw of {_v}
+	set {_pitch} to vector pitch of {_v}
+	set vector length of {_v} to 3
+	set {_color} to new ArrayList(1)
+	{_color}.add("255|255|100")
+	set {_advanced} to new HashMap(4)
+	{_advanced}.put("startLocation", {_loc})
+	{_advanced}.put("particleInterval", 1)
+	set {_damaged} to new ArrayList()
+	loop 20 times:
+		{_loc}.add({_v})
+		handleStrikeLine({_head}, {_yaw}, {_pitch}, 3, (a diamond), {_color}, {_damaged}, true, {_advanced})
+		wait 2 ticks

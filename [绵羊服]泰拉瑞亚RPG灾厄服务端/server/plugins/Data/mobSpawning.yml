@@ -1,0 +1,1426 @@
+spawnInfo:
+    陨石雨:
+        陨石怪: 5
+    史莱姆雨:
+        史莱姆: 1
+    血月:
+        僵尸: 17
+        僵尸夫妇: 1
+        恶魔之眼: 6
+    哥布林军团:
+        哥布林苦力: 4
+        哥布林盗贼: 5
+        哥布林战士: 8
+        哥布林弓箭手: 3
+    day:
+        史莱姆: 1
+        钨钢军团: 0.005
+    night:
+        僵尸: 16
+        恶魔之眼: 8
+        装甲幻影魔: 3
+        幽灵: 1
+    underworld:
+        地狱蝙蝠: 50
+        史莱姆: 35
+        恶魔: 16
+        骨蛇: 5
+        红恶魔: 8
+        巫毒恶魔: 1
+    jungle_day:
+        丛林蝙蝠: 10
+        丛林史莱姆: 10
+        巨型陆龟: 1
+    jungle_night:
+        丛林蝙蝠: 8
+        僵尸: 6
+        恶魔之眼: 6
+        巨型陆龟: 1
+    jungle_underground:
+        丛林蝙蝠: 1
+        丛林史莱姆: 2
+    jungle_cavern:
+        丛林蝙蝠: 15
+        丛林史莱姆: 10
+        巨型陆龟: 4
+    tundra_cavern:
+        史莱姆: 20
+        黑隐士: 4
+        冰雪陆龟: 1
+    corruption_underground:
+        噬魂怪: 1
+    corruption:
+        噬魂怪: 1
+    underground:
+        史莱姆: 10
+    cavern:
+        史莱姆: 20
+        黑隐士: 4
+    地牢:
+        骷髅: 50
+        装甲骷髅: 100
+        诅咒骷髅头: 15
+        圣骑士: 5
+        死灵法师: 5
+        褴褛邪教徒法师: 5
+        魔教徒: 5
+        骷髅狙击手: 5
+        骷髅特警: 5
+        巨型诅咒骷髅头: 15
+        拜月教教徒: 1
+    神庙:
+        蜥蜴人: 5
+        飞蛇: 2
+    日食:
+        眼怪: 20
+        科学怪人: 25
+        沼泽怪: 50
+        吸血鬼: 10
+        水月怪: 35
+        弗里茨: 25
+        攀爬魔: 20
+        死神: 15
+        蛾怪: 1
+        致命球: 10
+    南瓜月1:
+        稻草人: 1
+    南瓜月2:
+        稻草人: 3
+        树精: 1
+    南瓜月3:
+        稻草人: 10
+        树精: 3
+        地狱犬: 1
+    南瓜月4:
+        稻草人: 10
+        树精: 5
+        地狱犬: 2
+    南瓜月5:
+        稻草人: 15
+        树精: 8
+        地狱犬: 4
+        胡闹鬼: 1
+    南瓜月6:
+        树精: 8
+        地狱犬: 5
+        胡闹鬼: 1
+    南瓜月7:
+        稻草人: 12
+        地狱犬: 5
+        胡闹鬼: 1
+    南瓜月8:
+        树精: 10
+        地狱犬: 5
+        胡闹鬼: 1
+    南瓜月9:
+        稻草人: 1
+    南瓜月10:
+        树精: 8
+        地狱犬: 5
+        胡闹鬼: 1
+    南瓜月11:
+        稻草人: 3
+        树精: 8
+        地狱犬: 5
+        胡闹鬼: 1
+    南瓜月12:
+        地狱犬: 5
+        胡闹鬼: 1
+    南瓜月13:
+        地狱犬: 3
+        胡闹鬼: 1
+    冰霜月1:
+        僵尸精灵: 5
+        姜饼人: 3
+    冰霜月2:
+        僵尸精灵: 5
+        精灵弓箭手: 2
+    冰霜月3:
+        僵尸精灵: 8
+        精灵弓箭手: 4
+        姜饼人: 6
+        胡桃夹士: 1
+    冰霜月4:
+        僵尸精灵: 8
+        精灵弓箭手: 6
+        姜饼人: 5
+    冰霜月5:
+        僵尸精灵: 10
+        精灵弓箭手: 6
+        胡桃夹士: 3
+    冰霜月6:
+        精灵弓箭手: 10
+        胡桃夹士: 5
+        精灵直升机: 1
+    冰霜月7:
+        姜饼人: 10
+        精灵弓箭手: 8
+        僵尸精灵: 4
+    冰霜月8:
+        胡桃夹士: 10
+        精灵弓箭手: 8
+        精灵直升机: 3
+        坎卜斯: 2
+    冰霜月9:
+        胡桃夹士: 10
+        姜饼人: 6
+        精灵直升机: 4
+    冰霜月10:
+        僵尸精灵: 7
+        精灵直升机: 4
+        坎卜斯: 2
+    冰霜月11:
+        姜饼人: 10
+        僵尸精灵: 6
+        雪花怪: 4
+    冰霜月12:
+        姜饼人: 10
+        雪兽: 7
+        僵尸精灵: 6
+    冰霜月13:
+        精灵直升机: 6
+        姜饼人: 10
+        雪花怪: 4
+    冰霜月14:
+        雪兽: 10
+        坎卜斯: 6
+    冰霜月15:
+        雪兽: 8
+        精灵直升机: 6
+    冰霜月16:
+        雪兽: 1
+        雪花怪: 1
+    冰霜月17:
+        雪兽: 4
+        坎卜斯: 8
+        精灵直升机: 6
+    冰霜月18:
+        雪兽: 4
+        胡桃夹士: 6
+        坎卜斯: 8
+    冰霜月19:
+        雪兽: 1
+mobTier:
+    探测怪: -1
+    水晶史莱姆: -1
+    飞翔史莱姆: -1
+    弹力史莱姆: -1
+    神圣宝箱怪: -1
+    腐化宝箱怪: -1
+    陨石怪: 1
+    装甲幻影魔: 4
+    幽灵: 4
+    黑隐士: 4
+    巨型陆龟: 4
+    冰雪陆龟: 4
+    红恶魔: 5
+    装甲骷髅: 6
+    巨型诅咒骷髅头: 6
+    圣骑士: 6
+    死灵法师: 6
+    褴褛邪教徒法师: 6
+    魔教徒: 6
+    骷髅狙击手: 6
+    骷髅特警: 6
+    地牢幽魂: 6
+    蜥蜴人: 6
+    飞蛇: 6
+    眼怪: 4
+    科学怪人: 4
+    沼泽怪: 4
+    吸血鬼: 4
+    水月怪: 4
+    弗里茨: 4
+    攀爬魔: 4
+    死神: 5
+    蛾怪: 6
+    致命球: 6
+    拜月教教徒: 7
+    飞龙: 4
+    稻草人: 6
+    树精: 6
+    地狱犬: 6
+    胡闹鬼: 6
+    僵尸精灵: 6
+    姜饼人: 6
+    精灵弓箭手: 6
+    胡桃夹士: 6
+    精灵直升机: 6
+    坎卜斯: 6
+    雪花怪: 6
+    雪兽: 6
+mobTierMax:
+    诅咒骷髅头: 4
+    恶魔: 5
+mobInfo:
+    陨石怪:
+        name: "陨石怪"
+        monsterType: "SLIME"
+        variants:
+            陨石雨1:
+                attributes:
+                    damage: 35
+                    damageType: "Melee"
+                    defence: 6
+                    knockback: 2
+                    knockbackResistance: 0.64
+                    health: 52
+                name: "陨石怪"
+    僵尸夫妇:
+        name: "僵尸"
+        monsterType: "ZOMBIE"
+        variants:
+            血月1:
+                attributes:
+                    damage: 28
+                    damageType: "Melee"
+                    defence: 8
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 400
+                name: "僵尸新郎"
+            血月2:
+                attributes:
+                    damage: 28
+                    damageType: "Melee"
+                    defence: 8
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 400
+                name: "僵尸新娘"
+    僵尸:
+        name: "僵尸"
+        monsterType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 28
+                    damageType: "Melee"
+                    defence: 6
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 90
+                name: "僵尸§1"
+            default2:
+                attributes:
+                    damage: 30
+                    damageType: "Melee"
+                    defence: 6
+                    knockback: 2
+                    knockbackResistance: 0.6
+                    health: 99
+                name: "僵尸§2"
+            default3:
+                attributes:
+                    damage: 32
+                    damageType: "Melee"
+                    defence: 8
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 100
+                name: "木箭僵尸"
+            default4:
+                attributes:
+                    damage: 26
+                    damageType: "Melee"
+                    defence: 6
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 80
+                name: "凝胶僵尸"
+            血月1:
+                attributes:
+                    damage: 40
+                    damageType: "Melee"
+                    defence: 8
+                    knockback: 2
+                    knockbackResistance: 0.64
+                    health: 150
+                name: "血腥僵尸"
+    恶魔之眼:
+        name: "恶魔之眼"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 28
+                    damageType: "Melee"
+                    defence: 6
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 90
+            default2:
+                attributes:
+                    damage: 28
+                    damageType: "Melee"
+                    defence: 6
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 90
+            default3:
+                attributes:
+                    damage: 28
+                    damageType: "Melee"
+                    defence: 6
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 90
+            血月1:
+                attributes:
+                    damage: 56
+                    damageType: "Melee"
+                    defence: 14
+                    knockback: 2
+                    knockbackResistance: 0.46
+                    health: 100
+                name: "血滴怪"
+    丛林史莱姆:
+        name: "丛林史莱姆§1"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 36
+                    damageType: "Melee"
+                    defence: 6
+                    knockback: 2
+                    knockbackResistance: 0.5
+                    health: 120
+    钨钢回转器:
+        name: "钨钢回转器"
+        monsterType: "HUSK"
+        disguiseType: "SLIME_3"
+        variants:
+            default1:
+                attributes:
+                    damage: 60
+                    damageType: "Melee"
+                    defence: 10
+                    knockback: 2
+                    knockbackResistance: 0.14
+                    health: 72
+    钨钢悬浮坦克:
+        name: "钨钢悬浮坦克"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 80
+                    damageType: "Melee"
+                    defence: 8
+                    knockback: 2
+                    knockbackResistance: 0.9
+                    health: 60
+    钨钢无人机:
+        name: "钨钢无人机"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 96
+                    damageType: "Melee"
+                    defence: 8
+                    knockback: 2
+                    knockbackResistance: 0.32
+                    health: 84
+    钨钢漫步者:
+        name: "钨钢漫步者"
+        monsterType: "HUSK"
+        disguiseType: "SLIME_3"
+        variants:
+            default1:
+                attributes:
+                    damage: 128
+                    damageType: "Melee"
+                    defence: 26
+                    knockback: 2
+                    knockbackResistance: 0.85
+                    health: 40
+    史莱姆:
+        name: "史莱姆"
+        monsterType: "SLIME"
+        variants:
+            underground1:
+                attributes:
+                    damage: 30
+                    damageType: "Melee"
+                    defence: 7
+                    knockback: 2
+                    knockbackResistance: 0.5
+                    health: 90
+                name: "黄史莱姆"
+            cavern1:
+                attributes:
+                    damage: 30
+                    damageType: "Melee"
+                    defence: 4
+                    knockback: 2
+                    knockbackResistance: 0.5
+                    health: 90
+                name: "黑史莱姆"
+            hell1:
+                attributes:
+                    damage: 30
+                    damageType: "Melee"
+                    defence: 10
+                    knockback: 2
+                    knockbackResistance: 0.5
+                    health: 100
+                name: "岩浆史莱姆"
+            default1:
+                attributes:
+                    damage: 12
+                    damageType: "Melee"
+                    defence: 0
+                    knockback: 2
+                    knockbackResistance: 0.5
+                    health: 28
+                name: "史莱姆§1"
+            default2:
+                attributes:
+                    damage: 14
+                    damageType: "Melee"
+                    defence: 2
+                    knockback: 2
+                    knockbackResistance: 0.5
+                    health: 50
+                name: "史莱姆§2"
+            史莱姆雨1:
+                attributes:
+                    damage: 12
+                    damageType: "Melee"
+                    defence: 0
+                    knockback: 2
+                    knockbackResistance: 0.5
+                    health: 28
+                name: "史莱姆§1"
+            史莱姆雨2:
+                attributes:
+                    damage: 14
+                    damageType: "Melee"
+                    defence: 2
+                    knockback: 2
+                    knockbackResistance: 0.5
+                    health: 50
+                name: "史莱姆§2"
+    装甲幻影魔:
+        name: "装甲幻影魔"
+        monsterType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 180
+                    damageType: "Melee"
+                    defence: 56
+                    knockback: 2
+                    knockbackResistance: 0.64
+                    health: 750
+    幽灵:
+        name: "幽灵"
+        monsterType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 200
+                    damageType: "Melee"
+                    defence: 30
+                    knockback: 2
+                    knockbackResistance: 0.37
+                    health: 500
+    黑隐士:
+        name: "黑隐士"
+        monsterType: "CAVE_SPIDER"
+        variants:
+            default1:
+                attributes:
+                    damage: 360
+                    damageType: "Melee"
+                    defence: 80
+                    knockback: 2
+                    knockbackResistance: 0.78
+                    health: 1400
+    巨型陆龟:
+        name: "巨型陆龟"
+        monsterType: "BABY_HUSK"
+        disguiseType: "SLIME_4"
+        variants:
+            default1:
+                attributes:
+                    damage: 320
+                    damageType: "Melee"
+                    defence: 60
+                    knockback: 2
+                    knockbackResistance: 0.73
+                    health: 1880
+    冰雪陆龟:
+        name: "冰雪陆龟"
+        monsterType: "BABY_HUSK"
+        disguiseType: "SLIME_4"
+        variants:
+            default1:
+                attributes:
+                    damage: 220
+                    damageType: "Melee"
+                    defence: 56
+                    knockback: 2
+                    knockbackResistance: 0.73
+                    health: 1600
+    克苏鲁的仆从:
+        name: "克苏鲁的仆从"
+        monsterType: "SLIME"
+        hasHealthMulti: true
+        variants:
+            default1:
+                attributes:
+                    damage: 66
+                    damageType: "Melee"
+                    defence: 0
+                    knockback: 2
+                    knockbackResistance: 0.1
+                    health: 24
+    饿鬼:
+        name: "饿鬼"
+        monsterType: "SLIME"
+        hasHealthMulti: true
+        variants:
+            default1:
+                attributes:
+                    damage: 100
+                    damageType: "Melee"
+                    defence: 10
+                    knockback: 2
+                    knockbackResistance: 0.28
+                    health: 150
+    噬魂怪:
+        name: "噬魂怪"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 44
+                    damageType: "Melee"
+                    defence: 8
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 80
+                name: "噬魂怪"
+            default2:
+                attributes:
+                    damage: 37
+                    damageType: "Melee"
+                    defence: 6
+                    knockback: 2
+                    knockbackResistance: 0.48
+                    health: 68
+                name: "小噬魂怪"
+            default3:
+                attributes:
+                    damage: 50
+                    damageType: "Melee"
+                    defence: 9
+                    knockback: 2
+                    knockbackResistance: 0.62
+                    health: 92
+                name: "大噬魂怪"
+    地狱蝙蝠:
+        name: "地狱蝙蝠"
+        monsterType: "SLIME"
+        disguiseType: "BAT"
+        variants:
+            default1:
+                attributes:
+                    damage: 105
+                    damageType: "Melee"
+                    defence: 16
+                    knockback: 2
+                    knockbackResistance: 0.28
+                    health: 150
+    丛林蝙蝠:
+        name: "丛林蝙蝠"
+        monsterType: "SLIME"
+        disguiseType: "BAT"
+        variants:
+            default1:
+                attributes:
+                    damage: 80
+                    damageType: "Melee"
+                    defence: 8
+                    knockback: 2
+                    knockbackResistance: 0.28
+                    health: 136
+    恶魔:
+        name: "恶魔"
+        monsterType: "SLIME"
+        disguiseType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 84
+                    damageType: "Melee"
+                    defence: 8
+                    knockback: 2
+                    knockbackResistance: 0.78
+                    health: 240
+    红恶魔:
+        name: "红恶魔"
+        monsterType: "SLIME"
+        disguiseType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 500
+                    damageType: "Arrow"
+                    defence: 60
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 2000
+    巫毒恶魔:
+        name: "巫毒恶魔"
+        monsterType: "SLIME"
+        disguiseType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 84
+                    damageType: "Melee"
+                    defence: 8
+                    knockback: 2
+                    knockbackResistance: 0.78
+                    health: 240
+    骨蛇:
+        name: "骨蛇"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 50
+                    damageMulti: 2
+                    damageType: "Melee"
+                    defence: 10
+                    knockback: 2
+                    knockbackResistance: 1
+                    health: 800
+    哥布林弓箭手:
+        name: "哥布林弓箭手"
+        monsterType: "SKELETON"
+        disguiseType: "HUSK"
+        variants:
+            哥布林军团1:
+                attributes:
+                    damage: 44
+                    damageType: "Arrow"
+                    defence: 6
+                    knockback: 2
+                    knockbackResistance: 0.37
+                    health: 160
+    哥布林战士:
+        name: "哥布林战士"
+        monsterType: "HUSK"
+        variants:
+            哥布林军团1:
+                attributes:
+                    damage: 50
+                    damageType: "Melee"
+                    defence: 8
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 220
+    哥布林盗贼:
+        name: "哥布林盗贼"
+        monsterType: "HUSK"
+        variants:
+            哥布林军团1:
+                attributes:
+                    damage: 40
+                    damageType: "Melee"
+                    defence: 6
+                    knockback: 2
+                    knockbackResistance: 0.37
+                    health: 160
+    哥布林苦力:
+        name: "哥布林苦力"
+        monsterType: "HUSK"
+        variants:
+            哥布林军团1:
+                attributes:
+                    damage: 24
+                    damageType: "Melee"
+                    defence: 4
+                    knockback: 2
+                    knockbackResistance: 0.28
+                    health: 120
+    骷髅:
+        name: "骷髅"
+        monsterType: "SKELETON"
+        variants:
+            default1:
+                attributes:
+                    damage: 36
+                    damageType: "Arrow"
+                    defence: 8
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 132
+            default2:
+                attributes:
+                    damage: 39
+                    damageType: "Arrow"
+                    defence: 8
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 145
+                name: "大骷髅"
+            default3:
+                attributes:
+                    damage: 32
+                    damageType: "Arrow"
+                    defence: 7
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 118
+                name: "小骷髅"
+    诅咒骷髅头:
+        name: "诅咒骷髅头"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 105
+                    damageType: "Melee"
+                    defence: 9
+                    knockback: 2
+                    knockbackResistance: 0.82
+                    health: 120
+    装甲骷髅:
+        name: "装甲骷髅"
+        monsterType: "SKELETON"
+        variants:
+            default1:
+                attributes:
+                    damage: 135
+                    damageType: "Melee"
+                    defence: 75
+                    knockback: 2
+                    knockbackResistance: 0.87
+                    health: 1500
+            default2:
+                attributes:
+                    damage: 195
+                    damageType: "Melee"
+                    defence: 51
+                    knockback: 2
+                    knockbackResistance: 0.64
+                    health: 1050
+            default3:
+                attributes:
+                    damage: 135
+                    damageType: "Melee"
+                    defence: 75
+                    knockback: 2
+                    knockbackResistance: 0.87
+                    health: 1650
+            default4:
+                attributes:
+                    damage: 255
+                    damageType: "Melee"
+                    defence: 81
+                    knockback: 2
+                    knockbackResistance: 0.82
+                    health: 1500
+    巨型诅咒骷髅头:
+        name: "巨型诅咒骷髅头"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 180
+                    damageType: "Melee"
+                    defence: 30
+                    knockback: 2
+                    knockbackResistance: 0.82
+                    health: 1200
+    圣骑士:
+        name: "圣骑士"
+        monsterType: "HUSK"
+        variants:
+            default1:
+                attributes:
+                    damage: 400
+                    damageType: "Melee"
+                    defence: 100
+                    knockback: 3
+                    knockbackResistance: 1
+                    health: 20000
+    死灵法师:
+        name: "死灵法师"
+        monsterType: "HUSK"
+        disguiseType: "SKELETON"
+        variants:
+            default1:
+                attributes:
+                    damage: 200
+                    damageType: "Magic"
+                    defence: 36
+                    knockback: 1
+                    knockbackResistance: 0.51
+                    health: 1200
+    褴褛邪教徒法师:
+        name: "褴褛邪教徒法师"
+        monsterType: "HUSK"
+        disguiseType: "SKELETON"
+        variants:
+            default1:
+                attributes:
+                    damage: 160
+                    damageType: "Magic"
+                    defence: 40
+                    knockback: 1
+                    knockbackResistance: 0.46
+                    health: 1600
+    魔教徒:
+        name: "魔教徒"
+        monsterType: "HUSK"
+        disguiseType: "SKELETON"
+        variants:
+            default1:
+                attributes:
+                    damage: 200
+                    damageType: "Magic"
+                    defence: 24
+                    knockback: 1
+                    knockbackResistance: 0.37
+                    health: 800
+    骷髅狙击手:
+        name: "骷髅狙击手"
+        monsterType: "HUSK"
+        disguiseType: "SKELETON"
+        variants:
+            default1:
+                attributes:
+                    damage: 240
+                    damageType: "Bullet"
+                    defence: 56
+                    knockback: 6
+                    knockbackResistance: 0.64
+                    health: 1600
+    骷髅特警:
+        name: "骷髅特警"
+        monsterType: "HUSK"
+        disguiseType: "SKELETON"
+        variants:
+            default1:
+                attributes:
+                    damage: 240
+                    damageType: "Bullet"
+                    defence: 56
+                    knockback: 3
+                    knockbackResistance: 0.64
+                    health: 1600
+    眼怪:
+        name: "眼怪"
+        monsterType: "HUSK"
+        disguiseType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 240
+                    damageType: "Magic"
+                    defence: 60
+                    knockback: 2
+                    knockbackResistance: 0.73
+                    health: 4000
+    科学怪人:
+        name: "科学怪人"
+        monsterType: "HUSK"
+        disguiseType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 260
+                    damageType: "Melee"
+                    defence: 36
+                    knockback: 2
+                    knockbackResistance: 0.73
+                    health: 1400
+    沼泽怪:
+        name: "沼泽怪"
+        monsterType: "HUSK"
+        disguiseType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 280
+                    damageType: "Melee"
+                    defence: 52
+                    knockback: 2
+                    knockbackResistance: 0.82
+                    health: 1800
+    吸血鬼:
+        name: "吸血鬼"
+        monsterType: "HUSK"
+        disguiseType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 320
+                    damageType: "Melee"
+                    defence: 48
+                    knockback: 2
+                    knockbackResistance: 0.64
+                    health: 3000
+    水月怪:
+        name: "水月怪"
+        monsterType: "HUSK"
+        disguiseType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 240
+                    damageType: "Melee"
+                    defence: 44
+                    knockback: 2
+                    knockbackResistance: 0.73
+                    health: 1600
+    弗里茨:
+        name: "弗里茨"
+        monsterType: "BABY_HUSK"
+        disguiseType: "BABY_ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 280
+                    damageType: "Melee"
+                    defence: 28
+                    knockback: 2
+                    knockbackResistance: 0.37
+                    health: 1080
+    攀爬魔:
+        name: "攀爬魔"
+        monsterType: "CAVE_SPIDER"
+        disguiseType: "BABY_ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 272
+                    damageType: "Melee"
+                    defence: 52
+                    knockback: 2
+                    knockbackResistance: 0.69
+                    health: 2400
+    死神:
+        name: "死神"
+        monsterType: "HUSK"
+        disguiseType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 320
+                    damageType: "Melee"
+                    defence: 44
+                    knockback: 2
+                    knockbackResistance: 0.46
+                    health: 2800
+    致命球:
+        name: "致命球"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 400
+                    damageType: "Melee"
+                    defence: 160
+                    knockback: 2
+                    knockbackResistance: 0.37
+                    health: 1400
+    蛾怪:
+        name: "蛾怪"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 320
+                    damageType: "Melee"
+                    defence: 60
+                    knockback: 2
+                    knockbackResistance: 0.82
+                    health: 24000
+    拜月教教徒:
+        name: "拜月教教徒"
+        monsterType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 200
+                    damageType: "Melee"
+                    defence: 30
+                    knockback: 2
+                    knockbackResistance: 0.51
+                    health: 800
+    地牢幽魂:
+        name: "地牢幽魂"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 280
+                    damageType: "Melee"
+                    defence: 60
+                    knockback: 2
+                    knockbackResistance: 0.82
+                    health: 800
+    尖刺史莱姆:
+        name: "尖刺史莱姆"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 36
+                    damageType: "Arrow"
+                    defence: 5
+                    knockback: 2
+                    knockbackResistance: 0.1
+                    health: 100
+    水晶史莱姆:
+        name: "水晶史莱姆"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 160
+                    damageType: "Arrow"
+                    defence: 70
+                    knockback: 2
+                    knockbackResistance: 0.1
+                    health: 450
+    飞翔史莱姆:
+        name: "飞翔史莱姆"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 200
+                    damageType: "Melee"
+                    defence: 60
+                    knockback: 2
+                    knockbackResistance: 0.28
+                    health: 360
+    弹力史莱姆:
+        name: "弹力史莱姆"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 160
+                    damageType: "Arrow"
+                    defence: 70
+                    knockback: 2
+                    knockbackResistance: 0.1
+                    health: 450
+    探测怪:
+        name: "探测怪"
+        monsterType: "SLIME"
+        isMechanic: true
+        hasHealthMulti: true
+        variants:
+            default1:
+                attributes:
+                    damage: 176
+                    damageType: "Arrow"
+                    defence: 40
+                    knockback: 2
+                    knockbackResistance: 0.28
+                    health: 600
+    鸟妖:
+        name: "鸟妖"
+        monsterType: "SLIME"
+        disguiseType: "HUSK"
+        variants:
+            default1:
+                attributes:
+                    damage: 90
+                    damageType: "Arrow"
+                    defence: 10
+                    knockback: 2
+                    knockbackResistance: 0.46
+                    health: 300
+    飞龙:
+        name: "飞龙"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 120
+                    damageMulti: 2
+                    damageType: "Melee"
+                    defence: 15
+                    knockback: 2
+                    knockbackResistance: 1
+                    health: 12000
+    蜥蜴人:
+        name: "蜥蜴人"
+        monsterType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 130
+                    damageType: "Melee"
+                    defence: 30
+                    knockback: 2
+                    knockbackResistance: 0.64
+                    health: 1650
+    飞蛇:
+        name: "飞蛇"
+        monsterType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 250
+                    damageType: "Melee"
+                    defence: 35
+                    knockback: 2
+                    knockbackResistance: 0.42
+                    health: 800
+    稻草人:
+        name: "稻草人"
+        monsterType: "ZOMBIE"
+        eventProgress: 2
+        variants:
+            南瓜月1:
+                attributes:
+                    damage: 156
+                    damageType: "Melee"
+                    defence: 52
+                    knockback: 2
+                    knockbackResistance: 0.55
+                    health: 1350
+            南瓜月2:
+                attributes:
+                    damage: 180
+                    damageType: "Melee"
+                    defence: 36
+                    knockback: 2
+                    knockbackResistance: 0.64
+                    health: 1500
+            南瓜月3:
+                attributes:
+                    damage: 198
+                    damageType: "Melee"
+                    defence: 28
+                    knockback: 2
+                    knockbackResistance: 0.69
+                    health: 1950
+            南瓜月4:
+                attributes:
+                    damage: 234
+                    damageType: "Melee"
+                    defence: 32
+                    knockback: 2
+                    knockbackResistance: 0.78
+                    health: 1800
+            南瓜月5:
+                attributes:
+                    damage: 156
+                    damageType: "Melee"
+                    defence: 28
+                    knockback: 2
+                    knockbackResistance: 0.82
+                    health: 1200
+    树精:
+        name: "树精"
+        monsterType: "WITHER_SKELETON"
+        eventProgress: 4
+        variants:
+            南瓜月1:
+                attributes:
+                    damage: 300
+                    damageType: "Melee"
+                    defence: 64
+                    knockback: 2
+                    knockbackResistance: 0.82
+                    health: 2700
+    地狱犬:
+        name: "地狱犬"
+        monsterType: "WOLF"
+        eventProgress: 8
+        variants:
+            南瓜月1:
+                attributes:
+                    damage: 240
+                    damageType: "Melee"
+                    defence: 76
+                    knockback: 2
+                    knockbackResistance: 0.73
+                    health: 3600
+    胡闹鬼:
+        name: "胡闹鬼"
+        monsterType: "SLIME"
+        eventProgress: 16
+        variants:
+            南瓜月1:
+                attributes:
+                    damage: 270
+                    damageType: "Melee"
+                    defence: 88
+                    knockback: 2
+                    knockbackResistance: 0.64
+                    health: 6000
+    礼物宝箱怪:
+        name: "礼物宝箱怪"
+        monsterType: "SLIME"
+        eventProgress: 40
+        variants:
+            冰霜月1:
+                attributes:
+                    damage: 300
+                    damageType: "Melee"
+                    defence: 64
+                    knockback: 3
+                    knockbackResistance: 0.78
+                    health: 2700
+    雪花怪:
+        name: "雪花怪"
+        monsterType: "SLIME"
+        eventProgress: 0
+        variants:
+            冰霜月1:
+                attributes:
+                    damage: 300
+                    damageType: "Melee"
+                    defence: 16
+                    knockback: 3
+                    knockbackResistance: 0.64
+                    health: 1800
+    姜饼人:
+        name: "姜饼人"
+        monsterType: "ZOMBIE"
+        eventProgress: 4
+        variants:
+            冰霜月1:
+                attributes:
+                    damage: 360
+                    damageType: "Melee"
+                    defence: 52
+                    knockback: 3
+                    knockbackResistance: 0.82
+                    health: 3000
+    僵尸精灵:
+        name: "僵尸精灵"
+        monsterType: "ZOMBIE"
+        eventProgress: 2
+        variants:
+            冰霜月1:
+                attributes:
+                    damage: 260
+                    damageType: "Melee"
+                    defence: 36
+                    knockback: 2
+                    knockbackResistance: 0.64
+                    health: 2400
+            冰霜月2:
+                attributes:
+                    damage: 208
+                    damageType: "Melee"
+                    defence: 48
+                    knockback: 2
+                    knockbackResistance: 0.82
+                    health: 2800
+            冰霜月3:
+                attributes:
+                    damage: 312
+                    damageType: "Melee"
+                    defence: 28
+                    knockback: 2
+                    knockbackResistance: 0.78
+                    health: 2000
+    精灵弓箭手:
+        name: "精灵弓箭手"
+        monsterType: "SKELETON"
+        eventProgress: 6
+        variants:
+            冰霜月1:
+                attributes:
+                    damage: 360
+                    damageType: "Arrow"
+                    defence: 60
+                    knockback: 2
+                    knockbackResistance: 0.6
+                    health: 2700
+    胡桃夹士:
+        name: "胡桃夹士"
+        monsterType: "ZOMBIE"
+        eventProgress: 8
+        variants:
+            冰霜月1:
+                attributes:
+                    damage: 240
+                    damageType: "Melee"
+                    defence: 52
+                    knockback: 2
+                    knockbackResistance: 0.64
+                    health: 5400
+    雪兽:
+        name: "雪兽"
+        monsterType: "ZOMBIE"
+        eventProgress: 36
+        variants:
+            冰霜月1:
+                attributes:
+                    damage: 560
+                    damageType: "Melee"
+                    defence: 100
+                    knockback: 3
+                    knockbackResistance: 1
+                    health: 14000
+    精灵直升机:
+        name: "精灵直升机"
+        monsterType: "SLIME"
+        eventProgress: 16
+        isMechanic: true
+        variants:
+            冰霜月1:
+                attributes:
+                    damage: 256
+                    damageType: "Melee"
+                    defence: 56
+                    knockback: 2
+                    knockbackResistance: 0.64
+                    health: 3600
+    坎卜斯:
+        name: "坎卜斯"
+        monsterType: "WITHER_SKELETON"
+        eventProgress: 0
+        variants:
+            冰霜月1:
+                attributes:
+                    damage: 400
+                    damageType: "Melee"
+                    defence: 80
+                    knockback: 2
+                    knockbackResistance: 0.91
+                    health: 10000
+    神圣宝箱怪:
+        name: "神圣宝箱怪"
+        monsterType: "SLIME"
+        hasHealthMulti: true
+        variants:
+            default1:
+                attributes:
+                    damage: 360
+                    damageType: "Melee"
+                    defence: 68
+                    knockback: 2
+                    knockbackResistance: 0.91
+                    health: 14000
+    腐化宝箱怪:
+        name: "腐化宝箱怪"
+        monsterType: "SLIME"
+        hasHealthMulti: true
+        variants:
+            default1:
+                attributes:
+                    damage: 360
+                    damageType: "Melee"
+                    defence: 68
+                    knockback: 2
+                    knockbackResistance: 0.91
+                    health: 14000

@@ -1,0 +1,382 @@
+import:
+	java.util.ArrayList
+	java.util.HashMap
+	net.minecraft.server.v1_11_R1.BossBattle
+	net.minecraft.server.v1_11_R1.BossBattle$BarColor
+	net.minecraft.server.v1_11_R1.BossBattle$BarStyle
+	net.minecraft.server.v1_11_R1.BossBattleServer
+	net.minecraft.server.v1_11_R1.PacketPlayOutBoss$Action
+	net.minecraft.server.v1_11_R1.PathfinderGoalFloat
+	net.minecraft.server.v1_11_R1.PathfinderGoalSelector
+	org.bukkit.craftbukkit.v1_11_R1.util.CraftChatMessage
+	org.bukkit.entity.EntityType
+
+
+function spawnKLW(ply: player):
+	{BOSS}.containsKey("骷髅王") is false
+	set {_loc} to location of {NPC}.get("裁缝")
+	spawn a slime at {_loc}
+	set {_klw} to spawned entity
+	spawn a slime at {_loc}
+	set {_hand1} to spawned entity
+	spawn a slime at {_loc}
+	set {_hand2} to spawned entity
+	spawn a slime at {_loc}
+	set {_hand3} to spawned entity
+	spawn a slime at {_loc}
+	set {_hand4} to spawned entity
+	handleKLW({_klw}, {_ply}, {_hand1}, {_hand2}, {_hand3}, {_hand4})
+
+function handleKLW(klw: entity, ply: player, hand1: entity, hand2: entity, hand3: entity, hand4: entity):
+	broadcast "&d&l骷髅王 苏醒了！"
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_klw}
+	set {_attrMapSkull} to new HashMap(10)
+	{_attrMapSkull}.put("crit", 0.04)
+	{_attrMapSkull}.put("damage", 184)
+	{_attrMapSkull}.put("damageBulletMulti", 1)
+	{_attrMapSkull}.put("damageRangedMulti", 1)
+	{_attrMapSkull}.put("damageMulti", 1)
+	{_attrMapSkull}.put("damageType", "Bullet")
+	{_attrMapSkull}.put("knockback", 2)
+	{_attrMapSkull}.put("knockbackBulletMulti", 1)
+	{_attrMapSkull}.put("knockbackRangedMulti", 1)
+	{_attrMapSkull}.put("knockbackMulti", 1)
+	set {_attrMap} to new HashMap(11)
+	{_attrMap}.put("crit", 0.04)
+	{_attrMap}.put("damage", 184)
+	{_attrMap}.put("damageMeleeMulti", 1)
+	{_attrMap}.put("damageMulti", 1)
+	{_attrMap}.put("damageType", "Melee")
+	{_attrMap}.put("defence", 2020)
+	{_attrMap}.put("defenceMulti", 1)
+	{_attrMap}.put("knockback", 1)
+	{_attrMap}.put("knockbackResistance", 1)
+	{_attrMap}.put("knockbackMeleeMulti", 1)
+	{_attrMap}.put("knockbackMulti", 1)
+	set {_attrMapHand} to {_attrMap}.clone()
+	{_attrMapHand}.put("defence", 30)
+	{_attrMapHand}.put("damage", 122)
+	set metadata "attrMap" of {_klw} to {_attrMap}
+	set metadata "attrMap" of {_hand1} to {_attrMapHand}
+	set metadata "attrMap" of {_hand2} to {_attrMapHand}
+	set metadata "attrMap" of {_hand3} to {_attrMapHand}
+	set metadata "attrMap" of {_hand4} to {_attrMapHand}
+	
+	set {_bossbar} to new BossBattleServer(CraftChatMessage.fromString("骷髅王", true)[0], BarColor.GREEN, BarStyle.PROGRESS)
+	{_bossbar}.setVisible(true)
+	set metadata "bossbar" of {_klw} to {_bossbar}
+	
+	set {_targets} to setupBossTarget({_klw}, 0, {_ply}, true, {_bossbar})
+	set metadata "targets" of {_klw} to {_targets}
+	set metadata "targets" of {_hand1} to {_targets}
+	set metadata "targets" of {_hand2} to {_targets}
+	set metadata "targets" of {_hand3} to {_targets}
+	set metadata "targets" of {_hand4} to {_targets}
+	set {_healthMulti} to getBossHealthMulti({_targets}.size())
+	set name of {_klw} to "骷髅王"
+	add "noDamage" to scoreboard tags of {_klw}
+	add "isMonster" to scoreboard tags of {_klw}
+	add "isBOSS" to scoreboard tags of {_klw}
+	set name of {_hand1} to "骷髅王左手"
+	add "isMonster" to scoreboard tags of {_hand1}
+	add "isBOSS" to scoreboard tags of {_hand1}
+	set name of {_hand2} to "骷髅王右手"
+	add "isMonster" to scoreboard tags of {_hand2}
+	add "isBOSS" to scoreboard tags of {_hand2}
+	set name of {_hand3} to "骷髅王左手"
+	add "isMonster" to scoreboard tags of {_hand3}
+	add "isBOSS" to scoreboard tags of {_hand3}
+	set name of {_hand4} to "骷髅王右手"
+	add "isMonster" to scoreboard tags of {_hand4}
+	add "isBOSS" to scoreboard tags of {_hand4}
+	
+	{_klw}.setRemoveWhenFarAway(false)
+	{_klw}.setGravity(false)
+	slimeResize({_klw}, 8)
+	{_hand1}.setRemoveWhenFarAway(false)
+	{_hand1}.setGravity(false)
+	slimeResize({_hand1}, 5)
+	{_hand2}.setRemoveWhenFarAway(false)
+	{_hand2}.setGravity(false)
+	slimeResize({_hand2}, 5)
+	{_hand3}.setRemoveWhenFarAway(false)
+	{_hand3}.setGravity(false)
+	slimeResize({_hand3}, 5)
+	{_hand4}.setRemoveWhenFarAway(false)
+	{_hand4}.setGravity(false)
+	slimeResize({_hand4}, 5)
+	
+	set {_bossArlst} to new ArrayList(5)
+	{_bossArlst}.add({_klw})
+	{_bossArlst}.add({_hand1})
+	{_bossArlst}.add({_hand2})
+	{_bossArlst}.add({_hand3})
+	{_bossArlst}.add({_hand4})
+	{BOSS}.put("骷髅王", {_bossArlst})
+	
+	set max health of {_klw} to round(20000 * {_healthMulti})
+	set health of {_klw} to round(20000 * {_healthMulti})
+	set max health of {_hand1} to round(2340 * {_healthMulti})
+	set health of {_hand1} to round(2340 * {_healthMulti})
+	set max health of {_hand2} to round(2340 * {_healthMulti})
+	set health of {_hand2} to round(2340 * {_healthMulti})
+	set max health of {_hand3} to round(2340 * {_healthMulti})
+	set health of {_hand3} to round(2340 * {_healthMulti})
+	set max health of {_hand4} to round(2340 * {_healthMulti})
+	set health of {_hand4} to round(2340 * {_healthMulti})
+	set {_countAI} to 0
+	set {_target} to {_ply}
+	set metadata "target" of {_klw} to {_ply}
+	set {_hand1AI} to true
+	set {_hand2AI} to true
+	set {_hand3AI} to true
+	set {_hand4AI} to true
+	set {_handsAlive} to 4
+	set {_angry} to false
+	
+	makeTarget({_klw}, {_target})
+	renderSingleBossbar({_klw}, {_bossbar})
+	wait 1 tick
+	
+	while health of {_klw} > 0:
+		if {_klw}.getWorld().getTime() is between 22490 and 22510:
+			set {_angry} to true
+			{_attrMap}.put("damageType", "boss_angry")
+			set {_bossbar}.color to BarColor.RED
+			{_bossbar}.sendUpdate(Action.UPDATE_STYLE)
+			{_attrMap}.put("defence", 10000)
+			{_attrMap}.put("damageTakenMulti", 0.01)
+			{_hand1}.remove()
+			{_hand2}.remove()
+			{_hand3}.remove()
+			{_hand4}.remove()
+		#clear invalid targets
+		if {_target} is set:
+			checkBossTarget({_target}, {_klw}, false) is false
+			clear {_target}
+			clear metadata "target" of {_klw}
+
+		
+		if {_target} is not set:
+			loop toSkList {_targets}.keySet():
+				set {_ply} to "%loop-value%" parsed as player
+				checkBossTarget({_ply}, {_klw}, false) is true
+				set {_target} to {_ply}
+				set metadata "target" of {_klw} to {_ply}
+				makeTarget({_klw}, {_target})
+				stop loop
+			#find new target if avaliable, otherwise flee
+		if {_target} is not set:
+			#flee
+			teleport {_klw} to (location of {_klw}).subtract(0, 5, 0)
+			teleport {_hand1} to (location of {_hand1}).subtract(0, 5, 0)
+			teleport {_hand2} to (location of {_hand2}).subtract(0, 5, 0)
+			teleport {_hand3} to (location of {_hand3}).subtract(0, 5, 0)
+			teleport {_hand4} to (location of {_hand4}).subtract(0, 5, 0)
+			if y-coordinate of location of {_klw} <= 30:
+				set max health of {_klw} to 1
+				{_klw}.remove()
+				{_hand1}.remove()
+				{_hand2}.remove()
+				{_hand3}.remove()
+				{_hand4}.remove()
+				stop loop
+		else:
+			#AI part starting here
+			set {_countAI} to mod({_countAI}, 170)
+			#hand AI
+			if {_handsAlive} > 0:
+				set {_distanceVec} to (location of {_klw}).subtract(location of {_target}).toVector().normalize()
+				loop 4 times:
+					set {_handIndex} to loop-number
+					if mod({_handIndex}, 2) = 0:
+						set {_horMulti} to -1
+					else:
+						set {_horMulti} to 1
+					if {_handIndex} > 2:
+						set {_vertMulti} to -1
+					else:
+						set {_vertMulti} to 1
+					if {_hand%{_handIndex}%AI} is true:
+						set {_handCountAI} to {_countAI} + 5 - ({_handIndex} * 5)
+						if health of {_hand%{_handIndex}%} > 0:
+							if {_handCountAI} = 0:
+								set {_dVec%{_handIndex}%} to vector({_distanceVec}.getZ() * -10 * {_horMulti}, 10 * {_vertMulti}, {_distanceVec}.getX() * 10 * {_horMulti})
+							else if {_handCountAI} = 10:
+								clear {_dVec%{_handIndex}%}
+								set {_destination%{_handIndex}%} to (location of {_klw}).add(({_distanceVec}.getZ() * -22 * {_horMulti}), 0, ({_distanceVec}.getX() * 22 * {_horMulti}))
+							else if {_handCountAI} = 20:
+								set {_destination%{_handIndex}%} to (location of {_target})
+							else if {_handCountAI} = 50:
+								clear {_dVec%{_handIndex}%}
+								set {_destination%{_handIndex}%} to (location of {_klw}).add(({_distanceVec}.getZ() * -5 * {_horMulti}), 22 * {_vertMulti}, ({_distanceVec}.getX() * 5 * {_horMulti}))
+							else if {_handCountAI} = 60:
+								set {_destination%{_handIndex}%} to (location of {_target})
+							else if {_handCountAI} is 30 or 70:
+								set {_dVec%{_handIndex}%} to vector({_distanceVec}.getZ() * -10 * {_horMulti}, 10 * {_vertMulti}, {_distanceVec}.getX() * 10 * {_horMulti})
+							if {_dVec%{_handIndex}%} is set:
+								set {_dVec%{_handIndex}%} to vector({_distanceVec}.getZ() * -10 * {_horMulti}, 10 * {_vertMulti}, {_distanceVec}.getX() * 10 * {_horMulti})
+								set {_destination%{_handIndex}%} to (location of {_klw}).add({_dVec%{_handIndex}%})
+								set {_vHand%{_handIndex}%} to {_destination%{_handIndex}%}.clone().subtract(location of {_hand%{_handIndex}%}).toVector()
+								set vector length of {_vHand%{_handIndex}%} to min(3, (distance between {_destination%{_handIndex}%} and location of {_hand%{_handIndex}%}) / 10)
+							else if {_destination%{_handIndex}%} is set:
+								set {_vHand%{_handIndex}%} to {_destination%{_handIndex}%}.clone().subtract({_hand%{_handIndex}%}.getLocation()).toVector()
+								if {_handCountAI} is 10 or 50:
+									set vector length of {_vHand%{_handIndex}%} to (distance between {_destination%{_handIndex}%} and location of {_hand%{_handIndex}%}) / 10
+								else:
+									set vector length of {_vHand%{_handIndex}%} to max(3, (distance between {_destination%{_handIndex}%} and location of {_hand%{_handIndex}%}) / 6)
+								clear {_destination%{_handIndex}%}
+							set {_locHand} to location of {_hand%{_handIndex}%}
+							teleport {_hand%{_handIndex}%} to {_locHand}.add({_vHand%{_handIndex}%})
+						else:
+							set {_hand%{_handIndex}%AI} to false
+							{_attrMap}.put("defence", ({_attrMap}.get("defence") - 500))
+							subtract 1 from {_handsAlive}
+							if {_handsAlive} <= 0:
+								remove "noDamage" from scoreboard tags of {_klw}
+							broadcast "%{_handsAlive}% hands alive. %{_attrMap}.get(""defence"")%"
+			#head AI
+			if {_angry} is true:
+				set {_vHead} to {_target}.getLocation().subtract({_klw}.getLocation()).toVector()
+				set vector length of {_vHead} to min(2, (distance between {_klw} and {_target}) / 6)
+				set {_locHead} to {_klw}.getLocation()
+				teleport {_klw} to {_locHead}.add({_vHead})
+			else:
+				if {_countAI} < 90:
+					if {_countAI} = 0:
+						{_attrMap}.put("defence", ({_attrMap}.get("defence") + 20))
+						{_attrMap}.put("damage", 184)
+						set name of {_klw} to "骷髅王"
+						{_klw}.setCustomName("骷髅王")
+						if {_handsAlive} <= 0:
+							set {_countAI} to 70
+					else if {_countAI} is between 70 and 85:
+						play large explosion at {_teleportDestination}
+						if {_countAI} = 70:
+							set {_teleportDestination} to (location of {_target}).add((a random number between -16 and 16), (a random number between -16 and 16), (a random number between -16 and 16))
+						else if {_countAI} = 85:
+							{_teleportDestination} is set
+							if {_hand1AI} is true:
+								set {_directionHand1} to (location of {_hand1}).subtract(location of {_klw}).toVector()
+							if {_hand2AI} is true:
+								set {_directionHand2} to (location of {_hand2}).subtract(location of {_klw}).toVector()
+							if {_hand3AI} is true:
+								set {_directionHand3} to (location of {_hand3}).subtract(location of {_klw}).toVector()
+							if {_hand4AI} is true:
+								set {_directionHand4} to (location of {_hand4}).subtract(location of {_klw}).toVector()
+							teleport {_klw} to {_teleportDestination}
+							if {_hand1AI} is true:
+								teleport {_hand1} to (location of {_klw}).add({_directionHand1})
+							if {_hand2AI} is true:
+								teleport {_hand2} to (location of {_klw}).add({_directionHand2})
+							if {_hand3AI} is true:
+								teleport {_hand3} to (location of {_klw}).add({_directionHand3})
+							if {_hand4AI} is true:
+								teleport {_hand4} to (location of {_klw}).add({_directionHand4})
+							handleProjectileKLW({_klw}, "诅咒头", {_attrMapSkull})
+							clear {_teleportDestination}
+					set {_vHead} to {_target}.getLocation().add(0, 15, 0).subtract({_klw}.getLocation()).toVector()
+					set vector length of {_vHead} to min(2, (distance between {_klw} and {_target}) / 10)
+					set {_locHead} to {_klw}.getLocation()
+					teleport {_klw} to {_locHead}.add({_vHead})
+					set {_shoot} to false
+					if (health of {_klw}) / (max health of {_klw}) > 0.4:
+						mod({_countAI}, 10) = 0
+						if {_handsAlive} <= 3:
+							set {_shoot} to true
+						else if (health of {_klw}) / (max health of {_klw}) < 0.8:
+							set {_shoot} to true
+					else:
+						mod({_countAI}, 4) = 0
+						set {_shoot} to true
+					if {_shoot}:
+						handleProjectileKLW({_klw}, "诅咒头", {_attrMapSkull})
+						{_skull}.setGravity(false)
+				else if {_countAI} = 90:
+					{_attrMap}.put("defence", ({_attrMap}.get("defence") - 20))
+					{_attrMap}.put("damage", 240)
+					play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_klw}
+					set name of {_klw} to "骷髅王&1"
+					{_klw}.setCustomName("骷髅王&1")
+				else:
+					set {_vHead} to {_target}.getLocation().subtract({_klw}.getLocation()).toVector()
+					set vector length of {_vHead} to min(2, (distance between {_klw} and {_target}) / 6)
+					set {_locHead} to {_klw}.getLocation()
+					teleport {_klw} to {_locHead}.add({_vHead})
+			add 1 to {_countAI}
+		wait 3 ticks
+	{_bossbar}.setVisible(false)
+	{BOSS}.remove("骷髅王")
+	set health of {_hand1} to 0
+	set health of {_hand2} to 0
+	#drop
+	set {_maxHealth} to max health of {_klw}
+	{_maxHealth} is not 1
+	broadcast "&d&l骷髅王 被击败了."
+	set {_targets} to metadata "targets" of {_klw}
+	set {_killers} to {_targets}.keySet().iterator()
+	set {_drop} to a leather named "&r专家模式福袋" with lore "&7骷髅王"
+	while {_killers}.hasNext():
+		set {_ply} to {_killers}.next()
+		set {_player} to {_ply} parsed as player
+		name of {_player} is {_ply}
+		set {_tier} to metadata "tier" of {_player}
+		if {_targets}.get({_ply}) * 5 > ({_maxHealth}) / ({_targets}.size()):
+			if {_tier} < 3:
+				set metadata "tier" of {_player} to 3
+				set yml value "stats.tier" from file "plugins/PlayerData/%name of {_player}%.yml" to 3
+			set yml value "bossDefeated.Skeletron" from file "plugins/PlayerData/%name of {_player}%.yml" to true
+			if {_player} can hold {_drop}:
+				send "&a恭喜你击败了BOSS[&r骷髅王&a]!您的战利品已经放在背包里了。" to {_player}
+				give {_drop} to {_player}
+			else:
+				send "&a恭喜你击败了BOSS[&r骷髅王&a]!您的背包空间不足以容纳战利品，请迅速拾起脚下的战利品袋，以免丢失。" to {_player}
+				drop {_drop} at {_player}.getEyeLocation() without velocity
+		else:
+			send "&aBOSS 骷髅王 已经被击败。很遗憾，您的输出不足以获得一份战利品。" to {_player}
+
+
+function handleProjectileKLW(klw: entity, type: text, attrMap: object):
+	set {_target} to metadata "target" of {_klw}
+	if {_type} is "诅咒头":
+		set {_velocity} to ((eye location of {_target}).subtract(0, 1, 0).subtract(location of {_klw})).toVector()
+		set vector length of {_velocity} to 0.75
+		set {_skull} to mobProjectile({_klw}, {_velocity}, {_attrMap}, {_type})
+	
+		set {_speed} to 0.75
+		{_skull}.setGlowing(true)
+		loop 300 times:
+			set {_target} to target of {_klw}
+			set {_v} to velocity of {_skull}
+			if {_skull}.getHandle().dead:
+				stop trigger
+			if loop-number < 17:
+				if {_target} is set:
+					set {_dV} to {_target}.getEyeLocation().subtract({_skull}.getLocation()).toVector()
+					set vector length of {_dV} to 2
+					set vector length of {_v} to 5
+					{_v}.add({_dV})
+			set vector length of {_v} to {_speed}
+			set velocity of {_skull} to {_v}
+			wait 3 ticks
+		{_skull}.remove()
+	else if {_type} is "暗影焰":
+		spawn a slime at eye location of {_klw}
+		set {_projectile} to spawned entity
+		set metadata "attrMap" of {_projectile} to {_attrMap}
+		set gravity of {_projectile} to off
+		set glowing of {_projectile} to on
+		set {_projectile}.getHandle().noclip to true
+		set name of {_projectile} to "诅咒骷髅头"
+		add "isMonster" to scoreboard tags of {_projectile}
+		add "noDamage" to scoreboard tags of {_projectile}
+		{_projectile}.setRemoveWhenFarAway(false)
+		{_projectile}.setSize(3)
+		set {_dir} to (eye location of {_target}).subtract(location of {_projectile}).toVector()
+		if vector length of {_dir} < 0.01:
+			set {_dir} to vector(0, 1, 0)
+		set vector length of {_dir} to 1.5
+		loop 8 times:
+			set velocity of {_projectile} to {_dir}
+			wait 5 ticks
+		{_projectile}.remove()

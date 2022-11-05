@@ -1,0 +1,158 @@
+import:
+	java.util.HashMap
+	org.bukkit.event.player.PlayerFishEvent
+
+on shoot:
+	"%projectile.getType()%" is "FISHING_HOOK"
+	set {_handle} to projectile.getHandle()
+	set {_baits::*} to yml nodes "baitsAndPower" from file "plugins/Data/fishing.yml"
+	while projectile.isDead() is false:
+		if {_handle}.at > 0:
+			if projectile doesn't have scoreboard tag "WAITING":
+				#reset waiting time
+				clear {_baitSlot}
+				loop 36 times:
+					set {_name} to trimText(name of slot (loop-number) - 1 of shooter's inventory)
+					if {_baits::*} contains {_name}:
+						set {_baitPower} to yml value "baitsAndPower.%{_name}%" from file "plugins/Data/fishing.yml"
+						set {_baitSlot} to (loop-number) - 1
+						set {_bait} to slot {_baitSlot} of shooter's inventory
+						if {_name} is "松露虫":
+							set {_baitPower} to 25
+							if "%biome of location of projectile%" contains "beach" or "ocean":
+								stop loop
+							else:
+								clear {_baitSlot}
+								continue
+						stop loop
+				if {_baitSlot} is set:
+					if tool of shooter is fishing rod:
+						set {_rodType} to trimText(name of (tool of shooter))
+					else:
+						set {_rodType} to trimText(name of (offhand tool of shooter))
+					set metadata "bait" of projectile to 1 of {_bait}
+					set metadata "baitPower" of projectile to {_baitPower}
+					add (yml value "rodsAndPower.%{_rodType}%" from file "plugins/Data/fishing.yml") to {_baitPower}
+					set metadata "fishPower" of projectile to {_baitPower}
+					set {_timeNeeded} to ceil((a random number between 0.85 and 1.15) * 220 / (2.5 + 23 * {_baitPower} / 600))
+					set {_handle}.at to {_timeNeeded}
+					add "WAITING" to scoreboard tags of projectile
+				else:
+					send action bar "&7你可能需要一些鱼饵才能钓鱼。" to shooter
+					set {_handle}.at to -1
+		wait 5 ticks
+
+on PlayerFishEvent:
+	set {_state} to "%event.getState()%"
+	set {_hook} to event.getHook()
+	set {_ply} to event.getPlayer()
+	if {_state} is "CAUGHT_ENTITY":
+		cancel event
+		{_hook}.remove()
+		stop trigger
+	else if {_state} is "FAILED_ATTEMPT":
+		remove "WAITING" from scoreboard tags of {_hook}
+	{_state} is "CAUGHT_FISH" or "BITE"
+	set {_bait} to metadata "bait" of {_hook}
+	if {_bait} is not set:
+		cancel event
+		send action bar "&7鱼好像不想咬钩。你可能需要一些鱼饵才能钓鱼。" to {_ply}
+		stop trigger
+	if "%event.getState()%" is "BITE":
+		set {_pushDir} to vector(0, -0.5, 0)
+		push {_hook} {_pushDir}
+		wait 10 ticks
+		{_hook}.isDead() is false
+		push {_hook} {_pushDir}
+	
+	"%event.getState()%" is "CAUGHT_FISH"
+	event.setExpToDrop(0)
+	if {_ply} has {_bait}:
+		if trimText(name of {_bait}) is "松露虫":
+			handleDukeFishron({_ply}, (location of {_hook}))
+			remove 1 of {_bait} from {_ply}'s inventory
+			cancel event
+			event.getHook().remove()
+			stop trigger
+		else:
+			set {_baitPower} to metadata "baitPower" of {_hook}
+			set {_fishPower} to metadata "fishPower" of {_hook}
+			if chance of (1 / (1 + {_baitPower} / 6)):
+				remove 1 of {_bait} from {_ply}'s inventory
+	else:
+		cancel event
+		stop trigger
+		
+	if chance of min({_fishPower} / 4500, 1 / 6):
+		set {_item} to air
+		if metadata "tier" of {_ply} < 4:
+			set {_item} to getItem("金匣")
+		else:
+			set {_item} to getItem("钛金匣")
+		event.getCaught().setItemStack({_item})
+		stop trigger
+	else if chance of min({_fishPower} / 2250, 1 / 5):
+		set {_item} to air
+		if metadata "tier" of {_ply} < 4:
+			set {_item} to getItem("铁匣")
+		else:
+			set {_item} to getItem("秘银匣")
+		event.getCaught().setItemStack({_item})
+		stop trigger
+	else if chance of min({_fishPower} / 1050, 1 / 4):
+		set {_item} to air
+		if metadata "tier" of {_ply} < 4:
+			set {_item} to getItem("木匣")
+		else:
+			set {_item} to getItem("珍珠木匣")
+		event.getCaught().setItemStack({_item})
+		stop trigger
+	
+	if y-coordinate of {_ply} <= 5:
+		set {_depth} to "hell"
+	else if y-coordinate of {_ply} <= 30:
+		set {_depth} to "cavern"
+	else if y-coordinate of {_ply} <= 50:
+		set {_depth} to "underground"
+	else if y-coordinate of {_ply} <= 150:
+		set {_depth} to "surface"
+	else:
+		set {_depth} to "sky"
+	if {_depth} is "hell" or "sky":
+		set {_biome} to "normal"
+	else:
+		set {_biome} to {_ply}.getWorld().getBiome(round(x-coordinate of {_hook}), round(z-coordinate of {_hook})).toString().toLowerCase()
+		if {_biome} contains "jungle":
+			set {_biome} to "jungle"
+		else if {_biome} contains "ocean":
+			set {_biome} to "ocean"
+		else if {_biome} contains "frozen" or "cold":
+			set {_biome} to "tundra"
+		else if {_biome} contains "ice":
+			set {_biome} to "hollow"
+		else if {_biome} contains "mushroom":
+			set {_biome} to "corrupt"
+		else:
+			set {_biome} to "normal"
+	
+	if {questFish} is set:
+		{questFishCompleted}.contains(name of {_ply}) is false
+		chance of 0.025
+		set {_allLocs} to yml value "questFish.%{questFish}%" from file "plugins/Data/fishing.yml"
+		if {_allLocs}.contains("%{_biome}%_%{_depth}%"):
+			set {_item} to air
+			set {_item} to getItem({questFish})
+			event.getCaught().setItemStack({_item})
+			stop trigger
+	set {_results::*} to yml nodes "loots.%{_biome}%_%{_depth}%" from file "plugins/Data/fishing.yml"
+	loop {_results::*}:
+		add yml value "loots.%{_biome}%_%{_depth}%.%loop-value%" from file "plugins/Data/fishing.yml" to {_weight::*}
+	set {_total} to sum({_weight::*})
+	set {_rand} to a random integer between 0 and {_total}
+	loop {_results::*}:
+		remove {_weight::%loop-index%} from {_rand}
+		if {_rand} <= 0:
+			set {_item} to air
+			set {_item} to getItem(loop-value)
+			event.getCaught().setItemStack({_item})
+			stop loop

@@ -1,0 +1,382 @@
+import:
+	java.util.ArrayList
+	java.util.HashMap
+	net.minecraft.server.v1_11_R1.BossBattle
+	net.minecraft.server.v1_11_R1.BossBattle$BarColor
+	net.minecraft.server.v1_11_R1.BossBattle$BarStyle
+	net.minecraft.server.v1_11_R1.BossBattleServer
+	net.minecraft.server.v1_11_R1.PacketPlayOutBoss$Action
+	net.minecraft.server.v1_11_R1.PathfinderGoalFloat
+	net.minecraft.server.v1_11_R1.PathfinderGoalSelector
+	org.bukkit.craftbukkit.v1_11_R1.util.CraftChatMessage
+	org.bukkit.entity.EntityType
+
+
+on rightclick:
+	gamemode of player is survival
+	set {_tool} to player's tool
+	metadata "useCD" of player is false
+	if trimText(name of {_tool}) is "机械骷髅头":
+		player.getWorld().getTime() is between 13500 and 22500
+		{BOSS}.containsKey("机械骷髅王") is false
+		spawn a slime 41 below player
+		set {_hand1} to spawned entity
+		spawn a slime 41 below player
+		set {_hand2} to spawned entity
+		spawn a slime 41 below player
+		set {_hand3} to spawned entity
+		spawn a slime 41 below player
+		set {_hand4} to spawned entity
+		spawn a slime 41 below player
+		set {_jxklw} to spawned entity
+		handleJXKLW({_jxklw}, {_hand1}, {_hand2}, {_hand3}, {_hand4}, player)
+		applyCD(player, 20)
+		set {_tool} to (item amount of {_tool} - 1) of {_tool}
+		set player's tool to {_tool}
+
+function handleJXKLW(jxklw: entity, hand1: entity, hand2: entity, hand3: entity, hand4: entity, ply: player):
+	broadcast "&d&l机械骷髅王 苏醒了！"
+	play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_jxklw}
+	set {_attrMapLazer} to new HashMap(15)
+	{_attrMapLazer}.put("crit", 0.04)
+	{_attrMapLazer}.put("damage", 200)
+	{_attrMapLazer}.put("damageBulletMulti", 1)
+	{_attrMapLazer}.put("damageRangedMulti", 1)
+	{_attrMapLazer}.put("damageMulti", 1)
+	{_attrMapLazer}.put("damageType", "Bullet")
+	{_attrMapLazer}.put("knockback", 2)
+	{_attrMapLazer}.put("knockbackBulletMulti", 1)
+	{_attrMapLazer}.put("knockbackRangedMulti", 1)
+	{_attrMapLazer}.put("knockbackMulti", 1)
+	set {_attrMapBomb} to {_attrMapLazer}.clone()
+	{_attrMapBomb}.put("damage", 320)
+	set {_attrMap} to new HashMap(11)
+	{_attrMap}.put("crit", 0.04)
+	{_attrMap}.put("damage", 158)
+	{_attrMap}.put("damageMeleeMulti", 1)
+	{_attrMap}.put("damageMulti", 1)
+	{_attrMap}.put("damageType", "Melee")
+	{_attrMap}.put("defence", 48)
+	{_attrMap}.put("defenceMulti", 1)
+	{_attrMap}.put("knockback", 1)
+	{_attrMap}.put("knockbackResistance", 1)
+	{_attrMap}.put("knockbackMeleeMulti", 1)
+	{_attrMap}.put("knockbackMulti", 1)
+	set {_attrMapCannon} to {_attrMap}.clone()
+	{_attrMapCannon}.put("defence", 46)
+	{_attrMapCannon}.put("damage", 102)
+	set {_attrMapSaw} to {_attrMap}.clone()
+	{_attrMapSaw}.put("defence", 76)
+	{_attrMapSaw}.put("damage", 190)
+	set {_attrMapVice} to {_attrMap}.clone()
+	{_attrMapVice}.put("defence", 68)
+	{_attrMapVice}.put("damage", 176)
+	set {_attrMapLazerGun} to {_attrMap}.clone()
+	{_attrMapLazerGun}.put("defence", 40)
+	{_attrMapLazerGun}.put("damage", 98)
+	set metadata "attrMap" of {_jxklw} to {_attrMap}
+	set metadata "attrMap" of {_hand1} to {_attrMapCannon}
+	set metadata "attrMap" of {_hand2} to {_attrMapSaw}
+	set metadata "attrMap" of {_hand3} to {_attrMapVice}
+	set metadata "attrMap" of {_hand4} to {_attrMapLazerGun}
+	
+	set {_bossbar} to new BossBattleServer(CraftChatMessage.fromString("机械骷髅王", true)[0], BarColor.GREEN, BarStyle.PROGRESS)
+	{_bossbar}.setVisible(true)
+	set metadata "bossbar" of {_jxklw} to {_bossbar}
+	
+	set {_targets} to setupBossTarget({_jxklw}, 4, {_ply}, true, {_bossbar})
+	set metadata "targets" of {_jxklw} to {_targets}
+	set metadata "targets" of {_hand1} to {_targets}
+	set metadata "targets" of {_hand2} to {_targets}
+	set {_healthMulti} to getBossHealthMulti({_targets}.size())
+	set name of {_jxklw} to "机械骷髅王"
+	{_jxklw}.setCustomName("机械骷髅王")
+	add "isMonster" to scoreboard tags of {_jxklw}
+	add "isBOSS" to scoreboard tags of {_jxklw}
+	{_jxklw}.setCustomNameVisible(true)
+	set name of {_hand1} to "机械炮"
+	add "isMonster" to scoreboard tags of {_hand1}
+	add "isBOSS" to scoreboard tags of {_hand1}
+	{_hand1}.setCustomName("机械炮")
+	{_hand1}.setCustomNameVisible(true)
+	set name of {_hand2} to "机械锯"
+	add "isMonster" to scoreboard tags of {_hand2}
+	add "isBOSS" to scoreboard tags of {_hand2}
+	{_hand2}.setCustomName("机械锯")
+	{_hand2}.setCustomNameVisible(true)
+	set name of {_hand3} to "机械钳"
+	add "isMonster" to scoreboard tags of {_hand3}
+	add "isBOSS" to scoreboard tags of {_hand3}
+	{_hand3}.setCustomName("机械钳")
+	{_hand3}.setCustomNameVisible(true)
+	set name of {_hand4} to "机械激光"
+	add "isMonster" to scoreboard tags of {_hand4}
+	add "isBOSS" to scoreboard tags of {_hand4}
+	{_hand4}.setCustomName("机械激光")
+	{_hand4}.setCustomNameVisible(true)
+	
+	{_jxklw}.setRemoveWhenFarAway(false)
+	{_jxklw}.setGravity(false)
+	set {_jxklw}.getHandle().noclip to true
+	slimeResize({_jxklw}, 8)
+	{_hand1}.setRemoveWhenFarAway(false)
+	{_hand1}.setGravity(false)
+	set {_hand1}.getHandle().noclip to true
+	slimeResize({_hand1}, 3)
+	{_hand2}.setRemoveWhenFarAway(false)
+	{_hand2}.setGravity(false)
+	set {_hand2}.getHandle().noclip to true
+	slimeResize({_hand2}, 3)
+	{_hand3}.setRemoveWhenFarAway(false)
+	{_hand3}.setGravity(false)
+	set {_hand3}.getHandle().noclip to true
+	slimeResize({_hand3}, 3)
+	{_hand4}.setRemoveWhenFarAway(false)
+	{_hand4}.setGravity(false)
+	set {_hand4}.getHandle().noclip to true
+	slimeResize({_hand4}, 3)
+	
+	set {_bossArlst} to new ArrayList(5)
+	{_bossArlst}.add({_jxklw})
+	{_bossArlst}.add({_hand1})
+	{_bossArlst}.add({_hand2})
+	{_bossArlst}.add({_hand3})
+	{_bossArlst}.add({_hand4})
+	{BOSS}.put("机械骷髅王", {_bossArlst})
+	
+	set max health of {_jxklw} to round(84000 * {_healthMulti})
+	set health of {_jxklw} to round(84000 * {_healthMulti})
+	set max health of {_hand1} to round(21000 * {_healthMulti})
+	set health of {_hand1} to round(21000 * {_healthMulti})
+	set max health of {_hand2} to round(27000 * {_healthMulti})
+	set health of {_hand2} to round(27000 * {_healthMulti})
+	set max health of {_hand3} to round(27000 * {_healthMulti})
+	set health of {_hand3} to round(27000 * {_healthMulti})
+	set max health of {_hand4} to round(18000 * {_healthMulti})
+	set health of {_hand4} to round(18000 * {_healthMulti})
+	set {_countAI} to 0
+	set {_target} to {_ply}
+	set {_hand1AI} to true
+	set {_hand2AI} to true
+	set {_hand3AI} to true
+	set {_hand4AI} to true
+	set {_hand4Angle} to 0
+	
+	makeTarget({_jxklw}, {_target})
+	renderSingleBossbar({_jxklw}, {_bossbar})
+	wait 1 tick
+	
+	while health of {_jxklw} > 0:
+		if {_jxklw}.getWorld().getTime() is between 22490 and 22510:
+			{_attrMap}.put("damageType", "boss_angry")
+			set {_bossbar}.color to BarColor.RED
+			{_bossbar}.sendUpdate(Action.UPDATE_STYLE)
+			{_attrMap}.put("defence", 10000)
+			set health of {_hand1} to 0
+			set health of {_hand2} to 0
+			set health of {_hand3} to 0
+			set health of {_hand4} to 0
+		#clear invalid targets
+		if {_target} is set:
+			checkBossTarget({_target}, {_jxklw}, false) is false
+			clear {_target}
+		
+		if {_target} is not set:
+			loop toSkList {_targets}.keySet():
+				set {_ply} to "%loop-value%" parsed as player
+				checkBossTarget({_ply}, {_jxklw}, false) is true
+				set {_target} to {_ply}
+				makeTarget({_jxklw}, {_target})
+				stop loop
+			#find new target if avaliable, otherwise flee
+		if {_target} is not set:
+			#flee
+			teleport {_jxklw} to (location of {_jxklw}).add(0, 5, 0)
+			teleport {_hand1} to (location of {_hand1}).add(0, 5, 0)
+			teleport {_hand2} to (location of {_hand2}).add(0, 5, 0)
+			teleport {_hand3} to (location of {_hand3}).add(0, 5, 0)
+			teleport {_hand4} to (location of {_hand4}).add(0, 5, 0)
+			if y-coordinate of location of {_jxklw} >= 300:
+				set max health of {_jxklw} to 1
+				{_jxklw}.remove()
+				{_hand1}.remove()
+				{_hand2}.remove()
+				{_hand3}.remove()
+				{_hand4}.remove()
+				stop loop
+		else:
+			#AI part starting here
+			set {_countAI} to mod({_countAI}, 111)
+			#hand AI
+			if health of {_hand1} + health of {_hand2} + health of {_hand3} + health of {_hand4} > 0:
+				set {_distanceVec} to (location of {_jxklw}).subtract(location of {_target}).toVector().normalize()
+				if {_hand1AI}:
+					if health of {_hand1} > 0:
+						set {_shoot} to false
+						if {_countAI} < 66:
+							set {_destination} to (location of {_target}).add(0, 8, 0)
+							if mod({_countAI}, 15) = 0:
+								set {_shoot} to true
+						else:
+							set {_destination} to (location of {_target}).add(0, 20, 0)
+							if mod({_countAI}, 5) = 0:
+								set {_shoot} to true
+						if {_shoot} is true:
+							if {_countAI} < 66:
+								set {_v} to vector(0, 0.75, 0)
+							else:
+								set {_v} to (eye location of {_target}).subtract(eye location of {_hand1}).toVector()
+								if vector length of {_v} = 0:
+									set {_v} to vector(0, 1, 0)
+								set vector length of {_v} to 0.75
+							
+							set {_bomb} to (world of {_hand1}).spawnEntity((eye location of {_hand1}), EntityType.SPLASH_POTION)
+							{_bomb}.setCustomName("炸弹")
+							{_bomb}.setVelocity({_v})
+							{_bomb}.setShooter({_hand1})
+							disguiseProjectile({_bomb})
+							set metadata "attrMap" of {_bomb} to {_attrMapBomb}
+							add "isGranade" to scoreboard tags of {_bomb}
+						set {_vHand} to {_destination}.subtract(location of {_hand1}).toVector()
+						if vector length of {_vHand} = 0:
+							set {_vHand} to vector(0, 1, 0)
+						set vector length of {_vHand} to min(3, (distance between {_destination} and location of {_hand1}) / 2)
+						set {_locHand} to location of {_hand1}
+						teleport {_hand1} to {_locHand}.add({_vHand})
+					else:
+						set {_hand1AI} to false
+				if {_hand2AI}:
+					if health of {_hand2} > 0:
+						if {_countAI} < 66:
+							if mod({_countAI}, 10) = 0:
+								set {_destination} to (eye location of {_target}).add(0, 5, 0)
+								set {_vHand2} to {_destination}.subtract(eye location of {_hand2}).toVector()
+								set vector length of {_vHand2} to (vector length of {_vHand2}) / 12
+							else if mod({_countAI}, 10) = 5:
+								set {_destination} to (eye location of {_target}).subtract(0, 5, 0)
+								set {_vHand2} to {_destination}.subtract(eye location of {_hand2}).toVector()
+								set vector length of {_vHand2} to (vector length of {_vHand2}) / 12
+						else:
+							set {_destination} to eye location of {_target}
+							set {_vHand2} to {_destination}.subtract(eye location of {_hand2}).toVector()
+							set vector length of {_vHand2} to (vector length of {_vHand2}) / 15
+						if vector length of {_vHand} = 0:
+							set {_vHand} to vector(0, 0.1, 0)
+						set velocity of {_hand2} to {_vHand2}
+					else:
+						set {_hand2AI} to false
+				if {_hand3AI}:
+					if health of {_hand3} > 0:
+						if mod({_countAI}, 5) = 0:
+							set {_chanceStrike} to 0.1
+							if {_countAI} > 66:
+								set {_chanceStrike} to 0.25
+							if chance of {_chanceStrike}:
+								set {_destination} to eye location of {_target}
+							else:
+								set {_destination} to (location of {_target}).add((a random number between -10 and 10), (a random number between -10 and 10), (a random number between -10 and 10))
+							set {_vHand3} to {_destination}.subtract(eye location of {_hand3}).toVector()
+							if vector length of {_vHand3} = 0:
+								set {_vHand3} to vector(0, 0.1, 0)
+							set vector length of {_vHand3} to 1.5
+						set velocity of {_hand3} to {_vHand3}
+					else:
+						set {_hand3AI} to false
+				if {_hand4AI}:
+					if health of {_hand4} > 0:
+						add 3 to {_hand4Angle}
+						set {_shoot} to false
+						if {_countAI} < 66:
+							if mod({_countAI}, 22) = 0:
+								set {_shoot} to true
+						else if mod({_countAI}, 9) = 0:
+							set {_shoot} to true
+						if {_shoot} is true:
+							set {_v} to (eye location of {_target}).subtract(eye location of {_hand4}).toVector()
+							if vector length of {_v} = 0:
+								set {_v} to vector(0, 1, 0)
+							set vector length of {_v} to 1.8
+							set {_lazer} to (world of {_hand4}).spawnEntity((eye location of {_hand4}), EntityType.SPLASH_POTION)
+							{_lazer}.setCustomName("死亡激光")
+							{_lazer}.setVelocity({_v})
+							{_lazer}.setShooter({_hand4})
+							disguiseProjectile({_lazer})
+							set metadata "attrMap" of {_lazer} to {_attrMapLazer}
+							{_lazer}.setGravity(false)
+							add "isGranade" to scoreboard tags of {_lazer}
+						set {_destination} to (location of {_target}).add((8 * sin({_hand4Angle})), 0, (8 * cos({_hand4Angle})))
+						set {_vHand} to {_destination}.subtract(location of {_hand4}).toVector()
+						if vector length of {_vHand} = 0:
+							set {_vHand} to vector(0, 1, 0)
+						set vector length of {_vHand} to min(2.2, (distance between {_destination} and location of {_hand4}) / 5)
+						set {_locHand} to location of {_hand4}
+						teleport {_hand4} to {_locHand}.add({_vHand})
+					else:
+						set {_hand4AI} to false
+			#head AI
+			if {_countAI} < 66:
+				if {_countAI} = 0:
+					{_attrMap}.put("damageMulti", 1)
+					{_attrMap}.put("defenceMulti", 1)
+					set name of {_jxklw} to "机械骷髅王"
+					{_jxklw}.setCustomName("机械骷髅王")
+				set {_vHead} to (location of {_target}).add(0, 20, 0).subtract(location of {_jxklw}).toVector()
+				if vector length of {_vHead} = 0:
+					set {_vHead} to vector(0, 1, 0)
+				set vector length of {_vHead} to min(2, (distance between {_jxklw} and {_target}) / 15)
+				set {_locHead} to location of {_jxklw}
+				teleport {_jxklw} to {_locHead}.add({_vHead})
+			else if {_countAI} = 66:
+				{_attrMap}.put("damageMulti", 2)
+				{_attrMap}.put("defenceMulti", 2)
+				play sound "entity.enderdragon.growl" with volume 10 and pitch 1 at location of {_jxklw}
+				set name of {_jxklw} to "机械骷髅王&1"
+				{_jxklw}.setCustomName("机械骷髅王&1")
+			else:
+				set {_vHead} to (location of {_target}).subtract(location of {_jxklw}).toVector()
+				if vector length of {_vHead} = 0:
+					set {_vHead} to vector(0, 1, 0)
+				set vector length of {_vHead} to (distance between {_jxklw} and {_target}) / 10
+				set {_locHead} to location of {_jxklw}
+				teleport {_jxklw} to {_locHead}.add({_vHead})
+			add 1 to {_countAI}
+		wait 3 ticks
+	{_bossbar}.setVisible(false)
+	{BOSS}.remove("机械骷髅王")
+	set health of {_hand1} to 0
+	set health of {_hand2} to 0
+	set health of {_hand3} to 0
+	set health of {_hand4} to 0
+	#drop
+	set {_maxHealth} to max health of {_jxklw}
+	{_maxHealth} is not 1
+	broadcast "&d&l机械骷髅王 被击败了."
+	set {_targets} to metadata "targets" of {_jxklw}
+	set {_killers} to {_targets}.keySet().iterator()
+	set {_drop} to a leather named "&r专家模式福袋" with lore "&7机械骷髅王"
+	while {_killers}.hasNext():
+		set {_ply} to {_killers}.next()
+		set {_player} to {_ply} parsed as player
+		name of {_player} is {_ply}
+		set {_tier} to metadata "tier" of {_player}
+		if {_targets}.get({_ply}) * 5 > ({_maxHealth}) / ({_targets}.size()):
+			if {_tier} = 4:
+				set {_progress} to yml value "stats.bossProgress" from file "plugins/PlayerData/%{_ply}%.yml"
+				if {_progress} is not set:
+					set {_progress} to new ArrayList()
+				if {_progress}.contains("机械骷髅王") is false:
+					{_progress}.add("机械骷髅王")
+				if {_progress}.size() = 3:
+					set metadata "tier" of {_player} to 5
+					set yml value "stats.tier" from file "plugins/PlayerData/%{_ply}%.yml" to 5
+					clear yml value "stats.bossProgress" from file "plugins/PlayerData/%{_ply}%.yml"
+				else:
+					set yml value "stats.bossProgress" from file "plugins/PlayerData/%{_ply}%.yml" to {_progress}
+			if {_player} can hold {_drop}:
+				send "&a恭喜你击败了BOSS[&r机械骷髅王&a]!您的战利品已经放在背包里了。" to {_player}
+				give {_drop} to {_player}
+			else:
+				send "&a恭喜你击败了BOSS[&r机械骷髅王&a]!您的背包空间不足以容纳战利品，请迅速拾起脚下的战利品袋，以免丢失。" to {_player}
+				drop {_drop} at (eye location of {_player}) without velocity
+		else:
+			send "&aBOSS 机械骷髅王 已经被击败。很遗憾，您的输出不足以获得一份战利品。" to {_player}
