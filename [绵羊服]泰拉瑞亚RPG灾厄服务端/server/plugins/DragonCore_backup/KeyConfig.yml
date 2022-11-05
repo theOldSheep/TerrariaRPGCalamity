@@ -1,0 +1,10 @@
+# 按键名
+Y:
+  # 执行的指令
+  - "[op]say 欢迎使用龙之核心-DragonCore"
+  - "[console]say 欢迎使用龙之核心-DragonCore"
+  - "say 这个指令不是OP没法用啦"
+喵了个咪的:
+  - "[op]say 欢迎使用龙之核心-DragonCore"
+  - "[console]say 欢迎使用龙之核心-DragonCore"
+  - "say 这个指令不是OP没法用啦"

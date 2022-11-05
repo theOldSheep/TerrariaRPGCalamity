@@ -71,13 +71,13 @@
         amount: 5
         name: 集束破片
         velocity: 0.5
-        damageMulti: 0.45
+        damageMulti: 0.5
 集束榴弹:
     clusterBomb:
         amount: 5
         name: 集束破片
         velocity: 0.5
-        damageMulti: 0.45
+        damageMulti: 0.5
 星云奥秘:
     autoTrace: true
     clusterBomb:

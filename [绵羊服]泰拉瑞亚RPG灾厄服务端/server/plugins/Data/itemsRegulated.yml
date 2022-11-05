@@ -1,0 +1,4596 @@
+南瓜:
+  item: PUMPKIN
+  worth: 2500
+  rarity: 0
+南瓜种子:
+  item: PUMPKIN_SEEDS
+  worth: 1000
+  rarity: 0
+木材:
+  item: WOOD
+  rarity: 0
+冰块:
+  item: ICE
+  rarity: 0
+黑曜石:
+  item: OBSIDIAN
+  rarity: 0
+石头:
+  item: STONE
+  rarity: 0
+灰烬块:
+  item: NETHERRACK
+  rarity: 0
+沙块:
+  item: SAND
+  rarity: 0
+玻璃:
+  item: GLASS
+  rarity: 0
+箱子:
+  item: ENDER_CHEST
+  worth: 10000
+  rarity: 0
+铁轨:
+  item: RAILS
+  rarity: 0
+充能铁轨:
+  item: POWERED_RAIL
+  worth: 20000
+  rarity: 0
+拉杆:
+  item: LEVER
+  worth: 10000
+  rarity: 0
+床:
+  item: BED
+  rarity: 0
+死亡草:
+  item: CLAY_BALL
+  worth: 2000
+  rarity: 0
+火焰花:
+  item: CLAY_BALL
+  worth: 2000
+  rarity: 0
+寒颤棘:
+  item: CLAY_BALL
+  worth: 2000
+  rarity: 0
+太阳花:
+  item: CLAY_BALL
+  worth: 2000
+  rarity: 0
+月光草:
+  item: CLAY_BALL
+  worth: 2000
+  rarity: 0
+波浪叶:
+  item: CLAY_BALL
+  worth: 2000
+  rarity: 0
+闪耀根:
+  item: CLAY_BALL
+  worth: 2000
+  rarity: 0
+凝胶:
+  item: COAL
+  worth: 100
+  rarity: 0
+水晶碎块:
+  item: CLAY_BALL
+  worth: 100
+  rarity: 1
+弹壳:
+  item: CLAY_BALL
+  worth: 100
+  rarity: 0
+火药:
+  item: SULPHUR
+  worth: 24000
+  rarity: 0
+非法枪械部件:
+  item: CLAY_BALL
+  worth: 4000000
+  rarity: 0
+  lore:
+  - §r“在大多数地方禁用”
+草种:
+  item: CLAY_BALL
+  worth: 1000
+  rarity: 0
+腐化种子:
+  item: CLAY_BALL
+  worth: 10000
+  rarity: 0
+钨钢金属废料:
+  item: CLAY_BALL
+  worth: 8000
+  rarity: 1
+能源核心:
+  item: CLAY_BALL
+  worth: 8000
+  rarity: 1
+骨头:
+  item: BONE
+  worth: 1000
+  rarity: 0
+晶状体:
+  item: EYE_OF_ENDER
+  worth: 10000
+  rarity: 0
+黑晶状体:
+  item: EYE_OF_ENDER
+  worth: 100000
+  rarity: 0
+腐肉:
+  item: ROTTEN_FLESH
+  worth: 20000
+  rarity: 0
+  lore:
+  - §r“看上去很好吃！”
+羽毛:
+  item: FEATHER
+  worth: 1000
+  rarity: 0
+巨型羽毛:
+  item: FEATHER
+  worth: 2500000
+  rarity: 5
+蜘蛛牙:
+  item: CLAY_BALL
+  worth: 50000
+  rarity: 4
+寒霜核:
+  item: CLAY_BALL
+  worth: 1000000
+  rarity: 4
+妖精尘:
+  item: GLOWSTONE_DUST
+  worth: 10000
+  rarity: 1
+独角兽角:
+  item: FEATHER
+  worth: 300000
+  rarity: 1
+诅咒焰:
+  item: CLAY_BALL
+  worth: 80000
+  rarity: 3
+小瓶毒液:
+  item: CLAY_BALL
+  worth: 30000
+  rarity: 3
+  lore:
+  - §r“剧毒”
+灵气:
+  item: CLAY_BALL
+  worth: 500000
+  rarity: 8
+海龟壳:
+  item: CLAY_BALL
+  worth: 100000
+  rarity: 7
+甲虫外壳:
+  item: CLAY_BALL
+  worth: 500000
+  rarity: 8
+光明钥匙:
+  item: SHEARS
+  rarity: 0
+  lore:
+  - §r“汇聚了大量灵魂的精华”
+夜光钥匙:
+  item: SHEARS
+  rarity: 0
+  lore:
+  - §r“汇聚了大量灵魂的精华”
+光明碎块:
+  item: NETHER_STAR
+  worth: 90000
+  rarity: 2
+  lore:
+  - §r“神圣之地的地表生物有时会携带”
+暗黑碎块:
+  item: NETHER_STAR
+  worth: 90000
+  rarity: 2
+  lore:
+  - §r“腐化之地的地表生物有时会携带”
+光明之魂:
+  item: NETHER_STAR
+  worth: 20000
+  rarity: 3
+  lore:
+  - §r“光明生物的精华”
+暗影之魂:
+  item: NETHER_STAR
+  worth: 20000
+  rarity: 3
+  lore:
+  - §r“黑暗生物的精华”
+飞翔之魂:
+  item: NETHER_STAR
+  worth: 20000
+  rarity: 3
+  lore:
+  - §r“强大飞行生物的精华”
+日耀碑牌碎片:
+  item: CLAY_BALL
+  rarity: 8
+日耀碑牌:
+  item: CLAY_BALL
+  rarity: 8
+阴森木:
+  item: LOG_2
+  rarity: 0
+专家模式福袋:
+  item: LEATHER
+  rarity: 1000
+可疑的眼球:
+  item: EYE_OF_ENDER
+  rarity: 1
+史莱姆王冠:
+  item: COAL
+  rarity: 1
+虫饵:
+  item: ROTTEN_FLESH
+  rarity: 1
+明胶水晶:
+  item: COAL
+  worth: 1000000
+  rarity: 5
+机械骷髅头:
+  item: IRON_NUGGET
+  rarity: 3
+机械魔眼:
+  item: IRON_NUGGET
+  rarity: 3
+机械蠕虫:
+  item: IRON_NUGGET
+  rarity: 3
+丛林蜥蜴电池:
+  item: CLAY_BALL
+  worth: 1000000
+  rarity: 0
+天界符:
+  item: CLAY_BALL
+  rarity: 10
+南瓜月勋章:
+  item: CLAY_BALL
+  rarity: 8
+调皮礼物:
+  item: CLAY_BALL
+  rarity: 8
+向导巫毒娃娃:
+  item: LEASH
+  worth: 20000
+  rarity: 0
+  lore:
+  - §r“你是个可怕的人！”
+小动物友谊指南:
+  item: LEASH
+  worth: 1000000
+  rarity: 0
+大自然的恩赐:
+  item: LEASH
+  attributes:
+    manaUseMulti: -0.06
+  worth: 540000
+  rarity: 3
+魔力花:
+  item: LEASH
+  attributes:
+    manaUseMulti: -0.08
+  worth: 1000000
+  rarity: 4
+天界磁石:
+  item: LEASH
+  worth: 3000000
+  rarity: 4
+星力手环:
+  item: LEASH
+  attributes:
+    maxMana: 20
+  worth: 1500000
+  rarity: 1
+魔力再生手环:
+  item: LEASH
+  attributes:
+    maxMana: 20
+    manaRegenMulti: 0.33
+  worth: 1000000
+  rarity: 1
+魔法手铐:
+  item: LEASH
+  attributes:
+    maxMana: 20
+  worth: 2000000
+  rarity: 2
+天界手铐:
+  item: LEASH
+  attributes:
+    maxMana: 20
+  worth: 3200000
+  rarity: 5
+天界徽章:
+  item: LEASH
+  attributes:
+    damageMagicMulti: 0.15
+  worth: 3200000
+  rarity: 5
+磁花:
+  item: LEASH
+  attributes:
+    manaUseMulti: -0.08
+  worth: 4000000
+  rarity: 5
+镣铐:
+  item: LEASH
+  attributes:
+    defence: 2
+  worth: 20000
+  rarity: 1
+钨钢屏障生成仪:
+  item: LEASH
+  attributes:
+    defence: 10
+  worth: 200000
+  rarity: 1
+钨钢电池:
+  item: LEASH
+  attributes:
+    damageSummonMulti: 0.07
+  worth: 200000
+  rarity: 1
+鲨牙项链:
+  item: LEASH
+  attributes:
+    armorPenetration: 10
+  worth: 1000000
+  rarity: 1
+皇家凝胶:
+  item: LEASH
+  worth: 2000000
+  rarity: 1000
+克苏鲁之眼盾:
+  item: LEASH
+  attributes:
+    defence: 1
+  worth: 2000000
+  rarity: 1000
+火箭靴:
+  item: LEASH
+  worth: 1000000
+  rarity: 3
+蠕虫围巾:
+  item: LEASH
+  attributes:
+    damageTakenMulti: 0.9
+  worth: 2000000
+  rarity: 1000
+钴盾:
+  item: LEASH
+  attributes:
+    defence: 2
+    knockbackResistance: 1
+  worth: 1750000
+  rarity: 2
+黑曜石头骨:
+  item: LEASH
+  attributes:
+    defence: 2
+  worth: 540000
+  rarity: 2
+黑曜石护盾:
+  item: LEASH
+  attributes:
+    defence: 4
+    knockbackResistance: 1
+  worth: 2000000
+  rarity: 4
+魔法箭袋:
+  item: LEASH
+  attributes:
+    damageArrowMulti: 0.1
+    projectileSpeedArrowMulti: 0.5
+    arrowConsumptionRate: 0.8
+  worth: 5000000
+  rarity: 4
+熔火箭袋:
+  item: LEASH
+  attributes:
+    damageArrowMulti: 0.08
+    projectileSpeedArrowMulti: 0.5
+    arrowConsumptionRate: 0.8
+  worth: 7500000
+  rarity: 5
+  lore:
+  - §r“在恐惧中颤抖吧！”
+潜行者箭袋:
+  item: LEASH
+  attributes:
+    damageArrowMulti: 0.08
+    projectileSpeedArrowMulti: 0.5
+    arrowConsumptionRate: 0.8
+    mobLimit: -1
+    mobSpawnRateMulti: -0.1
+  worth: 15000000
+  rarity: 5
+冰冻海龟壳:
+  item: LEASH
+  attributes:
+    damageTakenMulti: 0.85
+  worth: 4500000
+  rarity: 5
+孢子囊:
+  item: LEASH
+  worth: 4000000
+  rarity: 1000
+圣骑士护盾:
+  item: LEASH
+  attributes:
+    defence: 12
+    knockbackResistance: 1
+  worth: 6000000
+  rarity: 8
+冰冻护盾:
+  item: LEASH
+  attributes:
+    defence: 12
+    damageTakenMulti: 0.9
+    knockbackResistance: 1
+  worth: 10000000
+  rarity: 5
+步枪瞄准镜:
+  item: LEASH
+  worth: 3000000
+  rarity: 4
+狙击镜:
+  item: LEASH
+  attributes:
+    damageRangedMulti: 0.1
+    critRanged: 10
+  worth: 5000000
+  rarity: 7
+侦察镜:
+  item: LEASH
+  attributes:
+    damageRangedMulti: 0.1
+    critRanged: 10
+    mobLimit: -1
+    mobSpawnRateMulti: -0.1
+  worth: 15000000
+  rarity: 5
+  lore:
+  - §r“发现敌人”
+闪亮石:
+  item: LEASH
+  worth: 5000000
+  rarity: 1000
+太阳石:
+  item: LEASH
+  attributes:
+    useTimeMeleeMulti: -0.1
+    damageMulti: 0.1
+    crit: 2
+    regen: 1
+    defence: 4
+  worth: 7500000
+  rarity: 7
+月亮石:
+  item: LEASH
+  attributes:
+    useTimeMeleeMulti: -0.1
+    damageMulti: 0.1
+    crit: 2
+    regen: 1
+    defence: 4
+  worth: 7500000
+  rarity: 5
+天界石:
+  item: LEASH
+  attributes:
+    useTimeMeleeMulti: -0.1
+    damageMulti: 0.1
+    crit: 2
+    regen: 1
+    defence: 4
+  worth: 8000000
+  rarity: 7
+鸟妖之翼:
+  item: LEASH
+  worth: 8000000
+  rarity: 5
+喜庆之翼:
+  item: LEASH
+  worth: 8000000
+  rarity: 5
+女皇之翼:
+  item: LEASH
+  worth: 8000000
+  rarity: 9
+猪鲨之翼:
+  item: LEASH
+  worth: 1000000
+  rarity: 8
+星云之翼:
+  item: LEASH
+  worth: 8000000
+  rarity: 10
+星璇之翼:
+  item: LEASH
+  worth: 8000000
+  rarity: 10
+日耀之翼:
+  item: LEASH
+  worth: 8000000
+  rarity: 10
+星尘之翼:
+  item: LEASH
+  worth: 8000000
+  rarity: 10
+天界之翼:
+  item: LEASH
+  worth: 10000000
+  rarity: 1000
+航鱼靴:
+  item: LEASH
+  attributes:
+    speedMulti: 0.1
+  worth: 1000000
+  rarity: 1
+幽灵靴:
+  item: LEASH
+  attributes:
+    speedMulti: 0.1
+  worth: 2000000
+  rarity: 4
+跳跃之瓶:
+  item: LEASH
+  worth: 500000
+  rarity: 1
+岩浆石:
+  item: LEASH
+  attributes:
+    buffInflictMelee: 燃烧|100|1
+  worth: 2000000
+  rarity: 3
+腐香囊:
+  item: LEASH
+  attributes:
+    mobLimit: -1
+    mobSpawnRateMulti: -0.1
+    damageMulti: 0.05
+    crit: 5
+  worth: 8000000
+  rarity: 5
+再生手环:
+  item: LEASH
+  worth: 1000000
+  rarity: 1
+炼金石:
+  item: LEASH
+  worth: 2000000
+  rarity: 4
+神话护身符:
+  item: LEASH
+  worth: 4000000
+  rarity: 5
+十字项链:
+  item: LEASH
+  attributes:
+    invulnerabilityTick: 5
+  worth: 2000000
+  rarity: 4
+泰坦手套:
+  item: LEASH
+  attributes:
+    knockbackMeleeMulti: 1
+    meleeReachMulti: 0.1
+  worth: 2000000
+  rarity: 4
+机械手套:
+  item: LEASH
+  attributes:
+    knockbackMeleeMulti: 1
+    meleeReachMulti: 0.1
+    damageMeleeMulti: 0.12
+  worth: 5000000
+  rarity: 5
+烈火手套:
+  item: LEASH
+  attributes:
+    knockbackMeleeMulti: 0.8
+    meleeReachMulti: 0.1
+    damageMeleeMulti: 0.09
+    buffInflictMelee: 燃烧|80|1
+  worth: 6000000
+  rarity: 7
+战士徽章:
+  item: LEASH
+  attributes:
+    damageMeleeMulti: 0.15
+  worth: 2000000
+  rarity: 4
+游侠徽章:
+  item: LEASH
+  attributes:
+    damageRangedMulti: 0.15
+  worth: 2000000
+  rarity: 4
+巫师徽章:
+  item: LEASH
+  attributes:
+    damageMagicMulti: 0.15
+  worth: 2000000
+  rarity: 4
+召唤师徽章:
+  item: LEASH
+  attributes:
+    damageSummonMulti: 0.15
+  worth: 2000000
+  rarity: 4
+复仇者徽章:
+  item: LEASH
+  attributes:
+    damageMulti: 0.12
+  worth: 6000000
+  rarity: 5
+石巨人之眼:
+  item: LEASH
+  attributes:
+    crit: 10
+  worth: 5000000
+  rarity: 7
+毁灭者徽章:
+  item: LEASH
+  attributes:
+    damageMulti: 0.1
+    crit: 8
+  worth: 6000000
+  rarity: 7
+盔甲抛光剂:
+  item: LEASH
+  worth: 2000000
+  rarity: 4
+新手版挥发明胶:
+  item: LEASH
+  worth: 100000
+  rarity: 2
+  lore:
+  - §r“挥发明胶青春版”
+挥发明胶:
+  item: LEASH
+  worth: 5000000
+  rarity: 1000
+翱翔徽章:
+  item: LEASH
+  worth: 10000000
+  rarity: 1000
+矮人项链:
+  item: LEASH
+  attributes:
+    minionLimit: 1
+  worth: 4000000
+  rarity: 2
+大力士甲虫:
+  item: LEASH
+  attributes:
+    damageSummonMulti: 0.15
+  worth: 8000000
+  rarity: 7
+死灵卷轴:
+  item: LEASH
+  attributes:
+    minionLimit: 1
+    damageSummonMulti: 0.1
+  worth: 4000000
+  rarity: 8
+甲虫莎草纸:
+  item: LEASH
+  attributes:
+    minionLimit: 1
+    damageSummonMulti: 0.15
+  worth: 5000000
+  rarity: 8
+钓鱼竿:
+  item: FISHING_ROD
+  worth: 20000
+  rarity: 0
+金钓竿:
+  item: FISHING_ROD
+  worth: 5000000
+  rarity: 3
+圈地锄头:
+  item: WOOD_HOE
+  rarity: 0
+仙人掌镐:
+  item: STONE_PICKAXE
+  enchantment:
+  - efficiency 1
+  attributes:
+    damage: 4
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 23
+    powerPickaxe: 35
+  worth: 40000
+  rarity: 0
+铜镐:
+  item: IRON_PICKAXE
+  attributes:
+    damage: 4
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 23
+    powerPickaxe: 35
+  worth: 10000
+  rarity: 0
+铁镐:
+  item: IRON_PICKAXE
+  attributes:
+    damage: 5
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 20
+    powerPickaxe: 40
+  worth: 40000
+  rarity: 0
+银镐:
+  item: IRON_PICKAXE
+  enchantment:
+  - efficiency 1
+  attributes:
+    damage: 6
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 19
+    powerPickaxe: 45
+  worth: 100000
+  rarity: 0
+金镐:
+  item: IRON_PICKAXE
+  attributes:
+    damage: 6
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 20
+    powerPickaxe: 55
+  worth: 200000
+  rarity: 0
+恶魔镐:
+  item: DIAMOND_PICKAXE
+  attributes:
+    damage: 9
+    damageType: Melee
+    crit: 4
+    knockback: 3
+    useTime: 20
+    powerPickaxe: 65
+  worth: 360000
+  rarity: 1
+熔火镐:
+  item: DIAMOND_PICKAXE
+  attributes:
+    damage: 12
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 23
+    powerPickaxe: 100
+  worth: 540000
+  rarity: 3
+掠夺鲨:
+  item: DIAMOND_PICKAXE
+  attributes:
+    damage: 16
+    damageType: Melee
+    crit: 4
+    knockback: 3
+    useTime: 22
+    powerPickaxe: 100
+  worth: 1500000
+  rarity: 3
+钴镐:
+  item: DIAMOND_PICKAXE
+  attributes:
+    damage: 20
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 25
+    powerPickaxe: 110
+  worth: 1080000
+  rarity: 4
+  lore:
+  - §r“可挖掘秘银”
+秘银镐:
+  item: DIAMOND_PICKAXE
+  enchantment:
+  - efficiency 1
+  attributes:
+    damage: 30
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 25
+    powerPickaxe: 150
+  worth: 1620000
+  rarity: 4
+  lore:
+  - §r“可挖掘精金”
+精金镐:
+  item: DIAMOND_PICKAXE
+  enchantment:
+  - efficiency 2
+  attributes:
+    damage: 40
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 25
+    powerPickaxe: 180
+  worth: 2160000
+  rarity: 4
+镐斧:
+  item: DIAMOND_PICKAXE
+  enchantment:
+  - efficiency 2
+  attributes:
+    damage: 70
+    damageType: Melee
+    crit: 4
+    knockback: 4.75
+    useTime: 25
+    powerPickaxe: 200
+  worth: 4400000
+  rarity: 5
+叶绿镐:
+  item: DIAMOND_PICKAXE
+  enchantment:
+  - efficiency 3
+  attributes:
+    damage: 60
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 25
+    powerPickaxe: 200
+  worth: 4320000
+  rarity: 7
+锯刃镐:
+  item: DIAMOND_PICKAXE
+  enchantment:
+  - efficiency 5
+  attributes:
+    damage: 68
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 16
+    powerPickaxe: 210
+  worth: 4320000
+  rarity: 7
+木剑:
+  item: WOOD_SWORD
+  attributes:
+    damage: 14
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 25
+  worth: 2000
+  rarity: 0
+仙人掌剑:
+  item: WOOD_SWORD
+  attributes:
+    damage: 16
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 32
+  worth: 36000
+  rarity: 0
+钨钢刀:
+  item: IRON_SWORD
+  attributes:
+    damage: 24
+    damageType: Melee
+    crit: 4
+    knockback: 3.75
+    useTime: 19
+  worth: 200000
+  rarity: 1
+铜质短剑:
+  item: IRON_SWORD
+  attributes:
+    damage: 10
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 13
+  worth: 7000
+  rarity: 0
+铜质阔剑:
+  item: IRON_SWORD
+  attributes:
+    damage: 15
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 23
+  worth: 9000
+  rarity: 0
+铁短剑:
+  item: STONE_SWORD
+  attributes:
+    damage: 16
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 13
+  worth: 28000
+  rarity: 0
+铁阔剑:
+  item: IRON_SWORD
+  attributes:
+    damage: 20
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 23
+  worth: 36000
+  rarity: 0
+  lore:
+  - §r“使用时并不需要高速旋转”
+银短剑:
+  item: IRON_SWORD
+  attributes:
+    damage: 17
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 13
+  worth: 70000
+  rarity: 0
+银阔剑:
+  item: IRON_SWORD
+  attributes:
+    damage: 22
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 19
+  worth: 90000
+  rarity: 0
+金短剑:
+  item: GOLD_SWORD
+  attributes:
+    damage: 24
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 13
+  worth: 140000
+  rarity: 0
+金阔剑:
+  item: GOLD_SWORD
+  attributes:
+    damage: 28
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 16
+  worth: 180000
+  rarity: 0
+光之驱逐:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 34
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 16
+  worth: 270000
+  rarity: 1
+妖刀村正:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 38
+    damageType: Melee
+    crit: 4
+    knockback: 3.5
+    useTime: 16
+  worth: 1750000
+  rarity: 2
+陨星光剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 38
+    damageType: Melee
+    crit: 4
+    knockback: 3.5
+    useTime: 19
+  worth: 540000
+  rarity: 1
+紫挥棒鱼:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 48
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 32
+  worth: 1000000
+  rarity: 1
+草薙剑:
+  item: WOOD_SWORD
+  attributes:
+    damage: 42
+    damageType: Melee
+    crit: 4
+    knockback: 3.5
+    useTime: 23
+  worth: 540000
+  rarity: 3
+烈焰剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 72
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 23
+  worth: 540000
+  rarity: 3
+永夜之刃:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 87
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 23
+  worth: 4000000
+  rarity: 3
+剑鱼:
+  item: STONE_SWORD
+  attributes:
+    damage: 37
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 16
+  worth: 500000
+  rarity: 2
+毁灭刃:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 86
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 30
+  worth: 3000000
+  rarity: 4
+钴剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 78
+    damageType: Melee
+    crit: 4
+    knockback: 3.85
+    useTime: 23
+  worth: 1380000
+  rarity: 4
+秘银剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 88
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 26
+  worth: 2070000
+  rarity: 4
+精金剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 100
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 26
+  worth: 2760000
+  rarity: 4
+圣剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 132
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 20
+  worth: 4600000
+  rarity: 5
+断裂英雄剑:
+  item: DIAMOND_SWORD
+  worth: 7500000
+  rarity: 8
+真·永夜之刃:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 210
+    damageType: Melee
+    crit: 4
+    knockback: 4.75
+    useTime: 26
+  worth: 10000000
+  rarity: 8
+真·圣剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 140
+    damageType: Melee
+    crit: 4
+    knockback: 4.75
+    useTime: 16
+  worth: 10000000
+  rarity: 8
+泰拉之刃:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 230
+    damageType: Melee
+    crit: 4
+    knockback: 6.5
+    useTime: 14
+  worth: 20000000
+  rarity: 8
+叶绿军刀:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 114
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 16
+  worth: 5520000
+  rarity: 7
+叶绿双刃刀:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 150
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 25
+  worth: 5520000
+  rarity: 7
+吉他斧:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 105
+    damageType: Melee
+    crit: 4
+    knockback: 7.25
+    useTime: 22
+  worth: 10000000
+  rarity: 8
+钥匙剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 170
+    damageType: Melee
+    crit: 17
+    knockback: 6.5
+    useTime: 20
+  worth: 4000000
+  rarity: 8
+死神镰刀:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 114
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 25
+  worth: 7500000
+  rarity: 5
+圣诞树剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 172
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 23
+  worth: 10000000
+  rarity: 8
+无头骑士剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 150
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 25
+  worth: 10000000
+  rarity: 8
+种子弯刀:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 100
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 23
+  worth: 10000000
+  rarity: 5
+狂星之怒:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 220
+    damageType: Melee
+    crit: 4
+    knockback: 6.5
+    useTime: 16
+  worth: 20000000
+  rarity: 9
+彩虹猫之刃:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 400
+    damageType: Melee
+    crit: 4
+    knockback: 6.5
+    useTime: 16
+  worth: 20000000
+  rarity: 10
+天顶剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 400
+    damageType: Melee
+    crit: 14
+    knockback: 1
+    useTime: 30
+  worth: 20000000
+  rarity: 10
+钴薙刀:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 43
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 28
+  worth: 900000
+  rarity: 4
+秘银长戟:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 52
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 26
+  worth: 13500000
+  rarity: 4
+精金关刀:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 57
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 25
+  worth: 18000000
+  rarity: 4
+永恒之枪:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 84
+    damageType: Melee
+    crit: 4
+    knockback: 6.4
+    useTime: 22
+  worth: 4600000
+  rarity: 5
+叶绿镋:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 98
+    damageType: Melee
+    crit: 4
+    knockback: 6.2
+    useTime: 22
+  worth: 3600000
+  rarity: 7
+北极:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 146
+    damageType: Melee
+    crit: 4
+    knockback: 6.7
+    useTime: 25
+  worth: 9000000
+  rarity: 7
+星光:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 120
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 18
+  worth: 5000000
+  rarity: 8
+破晓之光:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 300
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 16
+  worth: 10000000
+  rarity: 10
+  lore:
+  - §r“用光明之矛将敌人四分五裂！”
+木制回力镖:
+  item: STICK
+  attributes:
+    damage: 16
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 16
+  worth: 100000
+  rarity: 0
+附魔回力镖:
+  item: STICK
+  attributes:
+    damage: 26
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 15
+  worth: 1000000
+  rarity: 1
+荆棘旋刃:
+  item: STICK
+  attributes:
+    damage: 50
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 15
+  worth: 1000000
+  rarity: 3
+烈焰回旋镖:
+  item: STICK
+  attributes:
+    damage: 62
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 15
+    buffInflictMelee: 燃烧|60|0.2
+  worth: 2000000
+  rarity: 3
+疯狂飞斧:
+  item: STICK
+  attributes:
+    damage: 160
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 14
+  worth: 7000000
+  rarity: 7
+链锤:
+  item: STICK
+  attributes:
+    damage: 30
+    damageType: Melee
+    crit: 4
+    knockback: 4.6
+    useTime: 45
+  worth: 2000000
+  rarity: 1
+火焰锤:
+  item: STICK
+  attributes:
+    damage: 36
+    damageType: Melee
+    crit: 4
+    knockback: 4.6
+    useTime: 45
+    buffInflictMelee: 燃烧|60|0.25
+  worth: 2000000
+  rarity: 1
+蓝月:
+  item: STICK
+  attributes:
+    damage: 60
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 45
+  worth: 1750000
+  rarity: 2
+太极连枷:
+  item: STICK
+  attributes:
+    damage: 126
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 45
+  worth: 2880000
+  rarity: 5
+猪鲨链球:
+  item: STICK
+  attributes:
+    damage: 132
+    damageType: Melee
+    crit: 4
+    knockback: 4.5
+    useTime: 19
+  worth: 5000000
+  rarity: 8
+木制悠悠球:
+  item: STICK
+  attributes:
+    damage: 18
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 16
+    knockback: 2.5
+    useTime: 25
+  worth: 10000
+  rarity: 0
+抑郁球:
+  item: STICK
+  attributes:
+    damage: 32
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 16
+    knockback: 4.5
+    useTime: 25
+  worth: 1000000
+  rarity: 1
+亚马逊悠悠球:
+  item: STICK
+  attributes:
+    damage: 36
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 16
+    knockback: 3.75
+    useTime: 25
+  worth: 1300000
+  rarity: 3
+克苏鲁之眼悠悠球:
+  item: STICK
+  attributes:
+    damage: 230
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 16
+    knockback: 3.5
+    useTime: 24
+  worth: 11000000
+  rarity: 8
+泰拉悠悠球:
+  item: STICK
+  attributes:
+    damage: 300
+    damageType: Melee
+    crit: 14
+    projectileSpeed: 16
+    knockback: 6.5
+    useTime: 25
+  worth: 10000000
+  rarity: 10
+木弓:
+  item: BOW
+  attributes:
+    damage: 8
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 6.1
+    knockback: 0
+    useTime: 30
+  worth: 2000
+  rarity: 0
+钨钢弓:
+  item: BOW
+  attributes:
+    damage: 22
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12
+    knockback: 2.25
+    useTime: 25
+  worth: 200000
+  rarity: 1
+铜质短弓:
+  item: BOW
+  attributes:
+    damage: 12
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 6.6
+    knockback: 0
+    useTime: 23
+  worth: 7000
+  rarity: 0
+铁弓:
+  item: BOW
+  attributes:
+    damage: 16
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 6.6
+    knockback: 0
+    useTime: 28
+  worth: 28000
+  rarity: 0
+银弓:
+  item: BOW
+  attributes:
+    damage: 18
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 6.6
+    knockback: 0
+    useTime: 27
+  worth: 70000
+  rarity: 0
+金弓:
+  item: BOW
+  attributes:
+    damage: 22
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 6.6
+    knockback: 0
+    useTime: 26
+  worth: 140000
+  rarity: 0
+恶魔弓:
+  item: BOW
+  attributes:
+    damage: 30
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 6.7
+    knockback: 2.5
+    useTime: 25
+  worth: 360000
+  rarity: 1
+熔火之怒:
+  item: BOW
+  attributes:
+    damage: 60
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 8
+    knockback: 3
+    useTime: 22
+  worth: 540000
+  rarity: 3
+代达罗斯风暴弓:
+  item: BOW
+  attributes:
+    damage: 60
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12.5
+    knockback: 2.25
+    useTime: 19
+  worth: 8000000
+  rarity: 5
+钴连弩:
+  item: BOW
+  attributes:
+    damage: 64
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 9
+    knockback: 1.5
+    useTime: 25
+  worth: 1200000
+  rarity: 4
+秘银连弩:
+  item: BOW
+  attributes:
+    damage: 72
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 9.5
+    knockback: 2
+    useTime: 22
+  worth: 1800000
+  rarity: 4
+精金连弩:
+  item: BOW
+  attributes:
+    damage: 80
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 10
+    knockback: 2.5
+    useTime: 19
+  worth: 2400000
+  rarity: 4
+神圣连弩:
+  item: BOW
+  attributes:
+    damage: 106
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 10
+    knockback: 2.5
+    useTime: 16
+  worth: 4000000
+  rarity: 5
+叶绿连弩:
+  item: BOW
+  attributes:
+    damage: 51
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 11.5
+    knockback: 2.75
+    useTime: 18
+  worth: 4800000
+  rarity: 7
+海啸弓:
+  item: BOW
+  attributes:
+    damage: 120
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 5
+    knockback: 2
+    useTime: 24
+  worth: 5000000
+  rarity: 8
+日暮:
+  item: BOW
+  attributes:
+    damage: 75
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 10
+    knockback: 2.5
+    useTime: 20
+    penetration: 4
+  worth: 5000000
+  rarity: 8
+幻象弓:
+  item: BOW
+  attributes:
+    damage: 100
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 10
+    knockback: 2
+    useTime: 12
+    ammoConsumptionRate: 0.33
+  worth: 10000000
+  rarity: 10
+榴弹发射器:
+  item: BLAZE_ROD
+  attributes:
+    bounce: 4
+    damage: 120
+    damageType: Rocket
+    crit: 4
+    projectileSpeed: 4
+    knockback: 4
+    useTime: 20
+  worth: 7000000
+  rarity: 8
+雪人炮:
+  item: BLAZE_ROD
+  attributes:
+    damage: 134
+    damageType: Rocket
+    crit: 4
+    projectileSpeed: 15
+    knockback: 4
+    useTime: 15
+  worth: 9000000
+  rarity: 8
+喜庆弹射器:
+  item: BLAZE_ROD
+  attributes:
+    damage: 130
+    damageType: Rocket
+    crit: 4
+    projectileSpeed: 15
+    knockback: 4
+    useTime: 30
+  worth: 16000000
+  rarity: 10
+气泵枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 54
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 11
+    knockback: 1.25
+    useTime: 30
+  worth: 400000
+  rarity: 2
+骨头手套:
+  item: BOW
+  attributes:
+    damage: 40
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 8
+    knockback: 2.3
+    useTime: 12
+    penetration: 2
+    bounce: 1
+  worth: 2000000
+  rarity: 1000
+尖桩发射器:
+  item: BOW
+  attributes:
+    damage: 200
+    damageType: Arrow
+    crit: 14
+    projectileSpeed: 12
+    projectileSpeedMulti: 3
+    knockback: 11
+    useTime: 12
+    penetration: 9
+  worth: 10000000
+  rarity: 8
+尖桩:
+  item: FLINT
+  attributes:
+    damage: 50
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 3
+    projectileSpeedMulti: 3
+    knockback: 4.5
+  worth: 300
+  rarity: 0
+玉米糖步枪:
+  item: BOW
+  attributes:
+    damage: 106
+    damageType: Arrow
+    crit: 14
+    projectileSpeed: 14
+    knockback: 3.5
+    useTime: 9
+    penetration: 9
+    bounce: 4
+    ammoConsumptionRate: 0.66
+  worth: 10000000
+  rarity: 8
+玉米糖:
+  item: FLINT
+  attributes:
+    damage: 18
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 4
+    knockback: 1.5
+  worth: 100
+  rarity: 0
+杰克南瓜灯发射器:
+  item: BOW
+  attributes:
+    damage: 250
+    damageType: Arrow
+    crit: 14
+    projectileSpeed: 11
+    knockback: 8
+    useTime: 25
+    bounce: 9
+  worth: 10000000
+  rarity: 8
+爆炸杰克南瓜灯:
+  item: FLINT
+  attributes:
+    damage: 120
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 4
+    knockback: 3
+  worth: 300
+  rarity: 0
+精灵熔枪:
+  item: BOW
+  attributes:
+    damage: 100
+    damageType: Arrow
+    crit: 14
+    projectileSpeed: 25.5
+    knockback: 0.425
+    useTime: 15
+    penetration: 99
+  worth: 10000000
+  rarity: 8
+燧发枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 20
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 5
+    projectileSpeedMulti: 0.01
+    knockback: 0
+    useTime: 16
+  worth: 1000000
+  rarity: 1
+左轮手枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 40
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 16
+    knockback: 3
+    useTime: 22
+  worth: 2000000
+  rarity: 2
+迷你鲨:
+  item: BLAZE_ROD
+  attributes:
+    damage: 12
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 7
+    knockback: 0
+    useTime: 8
+    ammoConsumptionRate: 0.66
+  worth: 7000000
+  rarity: 2
+发条突击步枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 34
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 0
+    useTime: 20
+  worth: 3000000
+  rarity: 4
+巨兽鲨:
+  item: BLAZE_ROD
+  attributes:
+    damage: 50
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 10
+    knockback: 1
+    useTime: 7
+    ammoConsumptionRate: 0.5
+  worth: 7000000
+  rarity: 5
+  lore:
+  - §r“迷你鲨的老大哥”
+金星马格南:
+  item: BLAZE_ROD
+  attributes:
+    damage: 60
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 13.5
+    projectileSpeedMulti: 1.5
+    knockback: 5.5
+    useTime: 6
+  worth: 5000000
+  rarity: 7
+狙击步枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 370
+    damageType: Bullet
+    crit: 29
+    projectileSpeed: 8
+    projectileSpeedMulti: 2
+    knockback: 8
+    useTime: 30
+  worth: 8000000
+  rarity: 8
+战术霰弹枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 58
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 6
+    knockback: 7
+    useTime: 25
+  worth: 8000000
+  rarity: 8
+链式机枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 62
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 14
+    knockback: 1.75
+    useTime: 4
+    ammoConsumptionRate: 0.5
+  worth: 5000000
+  rarity: 8
+星璇机枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 100
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 10
+    knockback: 0
+    useTime: 4
+    ammoConsumptionRate: 0.33
+  worth: 10000000
+  rarity: 10
+  lore:
+  - §r“劈劈啪啪，乒乒乓乓，一顿混乱，惨绝人寰。”
+太空海豚机枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 170
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 2.5
+    useTime: 5
+    ammoConsumptionRate: 0.33
+  worth: 15000000
+  rarity: 10
+  lore:
+  - §r“它来自太空边缘”
+四管猎枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 47
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 7
+    knockback: 5.5
+    useTime: 45
+  worth: 7000000
+  rarity: 3
+玛瑙爆破枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 48
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 8
+    knockback: 6.5
+    useTime: 48
+  worth: 5000000
+  rarity: 4
+手枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 34
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 10
+    knockback: 3
+    useTime: 10
+  worth: 1750000
+  rarity: 2
+凤凰爆破枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 48
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 13
+    knockback: 3
+    useTime: 11
+  worth: 3500000
+  rarity: 3
+火花魔棒:
+  item: STICK
+  attributes:
+    damage: 24
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 7
+    knockback: 0
+    useTime: 26
+    manaUse: 4
+  worth: 100000
+  rarity: 1
+钨钢法杖:
+  item: STICK
+  attributes:
+    damage: 26
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 9
+    knockback: 3
+    useTime: 20
+    manaUse: 2
+    penetration: 1
+  worth: 200000
+  rarity: 1
+钻石法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 46
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 9.5
+    knockback: 5.5
+    useTime: 26
+    manaUse: 16
+    penetration: 1
+  worth: 600000
+  rarity: 2
+海蓝权杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 54
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 37.5
+    knockback: 7
+    useTime: 16
+    manaUse: 7
+    penetration: 99
+  worth: 1750000
+  rarity: 2
+太空枪:
+  item: WOOD_SWORD
+  attributes:
+    damage: 36
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 30
+    knockback: 0.75
+    useTime: 17
+    manaUse: 14
+    penetration: 2
+  worth: 400000
+  rarity: 1
+水矢:
+  item: BOOK
+  attributes:
+    damage: 40
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 4.5
+    knockback: 5
+    useTime: 17
+    manaUse: 20
+    penetration: 9
+    bounce: 4
+  worth: 1500000
+  rarity: 2
+骷髅头法书:
+  item: BOOK
+  attributes:
+    damage: 56
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 3.5
+    knockback: 3.5
+    useTime: 26
+    manaUse: 18
+    penetration: 2
+  worth: 1500000
+  rarity: 2
+恶魔锄刀:
+  item: BOOK
+  attributes:
+    damage: 70
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 0.2
+    knockback: 5
+    useTime: 20
+    manaUse: 30
+  worth: 1500000
+  rarity: 3
+邪恶三叉戟:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 130
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 13
+    knockback: 6.5
+    useTime: 17
+    manaUse: 19
+    penetration: 2
+  worth: 10000000
+  rarity: 5
+激光步枪:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 58
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 17
+    knockback: 2.5
+    useTime: 11
+    manaUse: 8
+    penetration: 2
+  worth: 3000000
+  rarity: 4
+水晶风暴:
+  item: BOOK
+  attributes:
+    damage: 64
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 16
+    knockback: 3
+    useTime: 6
+    manaUse: 5
+    bounce: 5
+  worth: 4000000
+  rarity: 4
+裂天剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 76
+    damageType: Magic
+    crit: 24
+    projectileSpeed: 14
+    knockback: 4
+    useTime: 12
+    manaUse: 17
+  worth: 6000000
+  rarity: 4
+爆裂藤蔓:
+  item: DIAMOND_SWORD
+  attributes:
+    armorPenetration: 20
+    damage: 50
+    damageType: Magic
+    crit: 4
+    knockback: 1
+    useTime: 25
+    manaUse: 12
+  worth: 4000000
+  rarity: 7
+吹叶机:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 72
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 11
+    knockback: 4
+    useTime: 7
+    manaUse: 4
+  worth: 6000000
+  rarity: 7
+狱火叉:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 200
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 8
+    knockback: 8
+    useTime: 20
+    manaUse: 18
+  worth: 6000000
+  rarity: 8
+暗影束法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 160
+    damageType: Magic
+    crit: 4
+    knockback: 3.25
+    useTime: 15
+    manaUse: 7
+  worth: 6000000
+  rarity: 8
+幽灵法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 130
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 12
+    knockback: 4
+    useTime: 24
+    manaUse: 15
+    penetration: 2
+    bounce: 10
+  worth: 6000000
+  rarity: 8
+高温射线枪:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 160
+    damageType: Magic
+    crit: 4
+    knockback: 3
+    useTime: 10
+    manaUse: 8
+  worth: 7000000
+  rarity: 7
+  lore:
+  - §r“喔啦！！”
+剃刀松:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 96
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 24
+    knockback: 3.25
+    useTime: 8
+    manaUse: 5
+  worth: 9000000
+  rarity: 8
+暴雪法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 116
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 20
+    knockback: 5.4
+    useTime: 10
+    manaUse: 9
+  worth: 5000000
+  rarity: 8
+蝙蝠权杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 90
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 10
+    knockback: 3
+    useTime: 12
+    manaUse: 6
+  worth: 10000000
+  rarity: 8
+夜光:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 100
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 1
+    penetration: 2
+    bounce: 10
+    knockback: 2.5
+    useTime: 26
+    manaUse: 20
+  worth: 5000000
+  rarity: 8
+泡泡枪:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 140
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 1
+    knockback: 3
+    useTime: 9
+    manaUse: 4
+  worth: 5000000
+  rarity: 8
+利刃台风:
+  item: BOOK
+  attributes:
+    damage: 120
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 18
+    knockback: 5
+    useTime: 40
+    manaUse: 25
+    penetration: 15
+    bounce: 9
+  worth: 5000000
+  rarity: 8
+星云烈焰:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 260
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 13
+    knockback: 0
+    useTime: 12
+    manaUse: 12
+  worth: 10000000
+  rarity: 10
+  lore:
+  - §r“从猎户座腰带收到掌中”
+星云奥秘:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 140
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 2
+    knockback: 5
+    useTime: 30
+    manaUse: 30
+    bounce: 4
+    penetration: 2
+  worth: 10000000
+  rarity: 10
+  lore:
+  - §r“召唤大量星体能量来追杀敌人”
+月之耀斑:
+  item: BOOK
+  attributes:
+    damage: 200
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 22
+    knockback: 4.5
+    useTime: 10
+    manaUse: 13
+  worth: 10000000
+  rarity: 10
+终极棱镜:
+  item: BOOK
+  attributes:
+    damage: 125
+    damageType: Magic
+    crit: 4
+    knockback: 0
+    useTime: 10
+    manaUse: 12
+  worth: 10000000
+  rarity: 10
+  lore:
+  - §r“发射生命解离彩虹”
+蜘蛛女王法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 150
+    damageType: Summon
+    knockback: 7.5
+    useTime: 30
+    manaUse: 10
+  worth: 5000000
+  rarity: 4
+  lore:
+  - §r“啊↗啊↑啊→啊→啊↓啊↓啊↓”
+月亮传送门法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 100
+    damageType: Summon
+    knockback: 7.5
+    useTime: 30
+    manaUse: 10
+  worth: 10000000
+  rarity: 10
+七彩水晶法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 260
+    damageType: Summon
+    knockback: 7.5
+    useTime: 30
+    manaUse: 10
+  worth: 10000000
+  rarity: 10
+  lore:
+  - §r“公爵，多么缤纷的颜色！”
+史莱姆法杖:
+  item: WOOD_SWORD
+  attributes:
+    damage: 16
+    damageType: Summon
+    projectileSpeed: 10
+    knockback: 2
+    useTime: 28
+    manaUse: 20
+  worth: 2000000
+  rarity: 4
+钨钢控制器:
+  item: WOOD_SWORD
+  attributes:
+    damage: 20
+    damageType: Summon
+    projectileSpeed: 10
+    knockback: 0.5
+    useTime: 34
+    manaUse: 10
+  worth: 2000000
+  rarity: 1
+小鬼法杖:
+  item: WOOD_SWORD
+  attributes:
+    damage: 34
+    damageType: Summon
+    knockback: 2
+    useTime: 36
+    manaUse: 20
+  worth: 200000
+  rarity: 3
+蜘蛛法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 52
+    damageType: Summon
+    knockback: 1
+    useTime: 36
+    manaUse: 10
+  worth: 1000000
+  rarity: 4
+  lore:
+  - §r“这个好像……是一个……蜘蛛！”
+刃杖:
+  item: DIAMOND_SWORD
+  attributes:
+    armorPenetration: 50
+    damage: 12
+    damageType: Summon
+    knockback: 0
+    useTime: 36
+    manaUse: 10
+  worth: 1000000
+  rarity: 5
+  lore:
+  - §r“千刀万剐”
+魔眼法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 60
+    damageType: Summon
+    knockback: 2
+    useTime: 36
+    manaUse: 10
+  worth: 2000000
+  rarity: 5
+矮人法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 82
+    damageType: Summon
+    knockback: 3
+    useTime: 28
+    manaUse: 10
+  worth: 7000000
+  rarity: 7
+致命球法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 100
+    damageType: Summon
+    knockback: 3
+    useTime: 36
+    manaUse: 10
+  worth: 10000000
+  rarity: 8
+泰拉棱镜:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 180
+    damageType: Summon
+    knockback: 1
+    useTime: 36
+    manaUse: 10
+  worth: 20000000
+  rarity: 8
+星尘细胞法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 120
+    damageType: Summon
+    knockback: 2
+    useTime: 36
+    manaUse: 10
+  worth: 10000000
+  rarity: 10
+  lore:
+  - §r“培养最美丽的细胞感染”
+星尘之龙法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 80
+    damageType: Summon
+    knockback: 2
+    useTime: 36
+    manaUse: 10
+  worth: 10000000
+  rarity: 10
+  lore:
+  - §r“有了星尘之龙后，谁还需要一群仆从呢？”
+鞭炮:
+  item: DIAMOND_SWORD
+  attributes:
+    buffInflictMelee: 燃烧|80|1
+    damage: 60
+    damageType: Summon
+    crit: 4
+    knockback: 2
+    useTime: 30
+  worth: 3000000
+  rarity: 4
+迪朗达尔:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 110
+    damageType: Summon
+    crit: 4
+    knockback: 2
+    useTime: 20
+  worth: 4600000
+  rarity: 5
+晨星:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 360
+    damageType: Summon
+    crit: 14
+    knockback: 11
+    useTime: 45
+  worth: 6000000
+  rarity: 8
+暗黑收割:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 200
+    damageType: Summon
+    crit: 4
+    knockback: 3
+    useTime: 30
+  worth: 10000000
+  rarity: 8
+万花筒:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 360
+    damageType: Summon
+    crit: 4
+    knockback: 4
+    useTime: 30
+  worth: 5000000
+  rarity: 8
+日耀喷发剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 210
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 20
+  worth: 10000000
+  rarity: 10
+手里剑:
+  item: IRON_NUGGET
+  attributes:
+    damage: 15
+    damageType: Arrow
+    crit: 4
+    knockback: 0
+    projectileSpeed: 9
+    useTime: 15
+    penetration: 3
+  worth: 300
+  rarity: 0
+尖刺球:
+  item: IRON_NUGGET
+  attributes:
+    damage: 15
+    damageType: Arrow
+    crit: 4
+    knockback: 1
+    projectileSpeed: 5
+    useTime: 15
+    penetration: 4
+    bounce: 8
+  worth: 1600
+  rarity: 0
+手榴弹:
+  item: IRON_NUGGET
+  attributes:
+    damage: 120
+    damageType: Arrow
+    crit: 4
+    knockback: 8
+    projectileSpeed: 5.5
+    useTime: 45
+  worth: 2500
+  rarity: 0
+炸弹:
+  item: IRON_NUGGET
+  attributes:
+    damage: 200
+    damageType: Arrow
+    crit: 4
+    knockback: 8
+    projectileSpeed: 5
+    useTime: 25
+  worth: 6000
+  rarity: 0
+粘性炸弹:
+  item: IRON_NUGGET
+  attributes:
+    damage: 200
+    damageType: Arrow
+    crit: 4
+    knockback: 8
+    projectileSpeed: 5
+    useTime: 25
+  worth: 10000
+  rarity: 0
+  lore:
+  - §r“投出去可不是件易事。”
+雷管:
+  item: IRON_NUGGET
+  attributes:
+    damage: 500
+    damageType: Arrow
+    crit: 4
+    knockback: 10
+    projectileSpeed: 4
+    useTime: 40
+  worth: 40000
+  rarity: 1
+粘性雷管:
+  item: IRON_NUGGET
+  attributes:
+    damage: 500
+    damageType: Arrow
+    crit: 4
+    knockback: 10
+    projectileSpeed: 4
+    useTime: 40
+  worth: 40000
+  rarity: 1
+  lore:
+  - §r“投出去可不是件易事。”
+木箭:
+  item: ARROW
+  attributes:
+    damage: 10
+    damageType: Arrow
+    crit: 4
+    knockback: 2
+    projectileSpeed: 3
+  worth: 100
+  rarity: 0
+烈焰箭:
+  item: ARROW
+  attributes:
+    damage: 14
+    damageType: Arrow
+    crit: 4
+    knockback: 2
+    projectileSpeed: 3.5
+  worth: 200
+  rarity: 0
+邪箭:
+  item: ARROW
+  attributes:
+    damage: 24
+    damageType: Arrow
+    crit: 4
+    knockback: 3
+    projectileSpeed: 3.4
+    penetration: 4
+  worth: 800
+  rarity: 1
+小丑之箭:
+  item: ARROW
+  attributes:
+    damage: 20
+    damageType: Arrow
+    crit: 4
+    knockback: 4
+    projectileSpeed: 0.5
+    projectileSpeedMulti: 2
+    penetration: 999
+  worth: 2000
+  rarity: 1
+狱炎箭:
+  item: ARROW
+  attributes:
+    damage: 26
+    damageType: Arrow
+    crit: 4
+    knockback: 8
+    projectileSpeed: 6.5
+  worth: 2000
+  rarity: 2
+冰焰箭:
+  item: ARROW
+  attributes:
+    damage: 18
+    damageType: Arrow
+    crit: 4
+    knockback: 2.2
+    projectileSpeed: 3.75
+    projectileSpeedMulti: 2
+  worth: 300
+  rarity: 0
+圣箭:
+  item: ARROW
+  attributes:
+    damage: 26
+    damageType: Arrow
+    crit: 4
+    knockback: 2
+    projectileSpeed: 3.5
+  worth: 1600
+  rarity: 3
+诅咒箭:
+  item: ARROW
+  attributes:
+    damage: 25
+    damageType: Arrow
+    crit: 4
+    knockback: 3
+    projectileSpeed: 4
+  worth: 800
+  rarity: 3
+叶绿箭:
+  item: ARROW
+  attributes:
+    damage: 24
+    damageType: Arrow
+    crit: 4
+    knockback: 3.5
+    projectileSpeed: 4.5
+    projectileSpeedMulti: 2
+    bounce: 3
+    penetration: -3
+  worth: 2000
+  rarity: 7
+毒液箭:
+  item: ARROW
+  attributes:
+    damage: 29
+    damageType: Arrow
+    crit: 4
+    knockback: 4.2
+    projectileSpeed: 4.3
+    projectileSpeedMulti: 2
+  worth: 1800
+  rarity: 3
+夜明箭:
+  item: ARROW
+  attributes:
+    damage: 24
+    damageType: Arrow
+    crit: 4
+    knockback: 3.5
+    projectileSpeed: 3
+    projectileSpeedMulti: 2
+    penetration: 5
+  worth: 200
+  rarity: 9
+  lore:
+  - §r“以音速射下它们！”
+火枪子弹:
+  item: SLIME_BALL
+  attributes:
+    damage: 10
+    damageType: Bullet
+    crit: 4
+    knockback: 2
+    projectileSpeed: 3
+  worth: 100
+  rarity: 0
+陨星弹:
+  item: SLIME_BALL
+  attributes:
+    damage: 18
+    damageType: Bullet
+    crit: 4
+    knockback: 1
+    projectileSpeed: 3
+    penetration: 1
+    bounce: 1
+  worth: 100
+  rarity: 1
+银子弹:
+  item: SLIME_BALL
+  attributes:
+    damage: 18
+    damageType: Bullet
+    crit: 4
+    knockback: 3
+    projectileSpeed: 4.5
+  worth: 300
+  rarity: 0
+爆炸弹:
+  item: SLIME_BALL
+  attributes:
+    damage: 20
+    damageType: Bullet
+    crit: 4
+    knockback: 6.6
+    projectileSpeed: 4.7
+    projectileSpeedMulti: 3
+  worth: 800
+  rarity: 3
+绿藻弹:
+  item: SLIME_BALL
+  attributes:
+    damage: 18
+    damageBulletMulti: -0.25
+    damageType: Bullet
+    crit: 4
+    knockback: 2
+    projectileSpeed: 5
+    projectileSpeedMulti: 3
+    bounce: 10
+  worth: 1000
+  rarity: 7
+  lore:
+  - §r“你跑不掉了……”
+水晶子弹:
+  item: SLIME_BALL
+  attributes:
+    damage: 18
+    damageType: Bullet
+    crit: 4
+    knockback: 1
+    projectileSpeed: 5
+    projectileSpeedMulti: 2
+  worth: 600
+  rarity: 3
+诅咒弹:
+  item: SLIME_BALL
+  attributes:
+    damage: 24
+    damageType: Bullet
+    crit: 4
+    knockback: 4
+    projectileSpeed: 5
+    projectileSpeedMulti: 3
+  worth: 600
+  rarity: 3
+毒液弹:
+  item: SLIME_BALL
+  attributes:
+    damage: 30
+    damageType: Bullet
+    crit: 4
+    knockback: 4.1
+    projectileSpeed: 5.3
+    projectileSpeedMulti: 3
+  worth: 800
+  rarity: 3
+夜明弹:
+  item: SLIME_BALL
+  attributes:
+    damage: 40
+    damageType: Bullet
+    crit: 4
+    knockback: 3
+    projectileSpeed: 2
+    projectileSpeedMulti: 6
+    penetration: 49
+  worth: 200
+  rarity: 9
+  lore:
+  - §r“鬼怪排成行，一发百中...”
+初级火箭:
+  item: BLAZE_POWDER
+  attributes:
+    damage: 60
+    damageType: Rocket
+    crit: 4
+  worth: 1000
+  rarity: 0
+二级火箭:
+  item: BLAZE_POWDER
+  attributes:
+    damage: 80
+    damageType: Rocket
+    crit: 4
+  worth: 2000
+  rarity: 1
+三级火箭:
+  item: BLAZE_POWDER
+  attributes:
+    damage: 110
+    damageType: Rocket
+    crit: 4
+  worth: 5000
+  rarity: 1
+四级火箭:
+  item: BLAZE_POWDER
+  attributes:
+    damage: 130
+    damageType: Rocket
+    crit: 4
+  worth: 10000
+  rarity: 7
+集束火箭:
+  item: BLAZE_POWDER
+  attributes:
+    damage: 75
+    damageType: Rocket
+    crit: 4
+  worth: 15000
+  rarity: 0
+苦力怕时装:
+  item: PAPER
+  worth: 2000000
+  rarity: 2
+  lore:
+  - §r“CREEPER?”
+绵羊时装:
+  item: PAPER
+  worth: 2000000
+  rarity: 2
+  lore:
+  - §r“咩~”
+僵尸时装:
+  item: PAPER
+  worth: 2000000
+  rarity: 2
+  lore:
+  - §r“你的脑子吃掉了僵尸！”
+僵尸宝宝时装:
+  item: PAPER
+  worth: 4000000
+  rarity: 1
+  lore:
+  - §r“小僵尸成精了！”
+木头盔:
+  item: LEATHER_HELMET
+  attributes:
+    defence: 2
+  rarity: 0
+木胸甲:
+  item: LEATHER_CHESTPLATE
+  attributes:
+    defence: 2
+  rarity: 0
+木护胫:
+  item: LEATHER_LEGGINGS
+  rarity: 0
+仙人掌头盔:
+  item: LEATHER_HELMET
+  attributes:
+    defence: 2
+  worth: 4000
+  rarity: 0
+仙人掌胸甲:
+  item: LEATHER_CHESTPLATE
+  attributes:
+    defence: 2
+  worth: 6000
+  rarity: 0
+仙人掌护腿:
+  item: LEATHER_LEGGINGS
+  attributes:
+    defence: 2
+  worth: 5000
+  rarity: 0
+钨钢战盔:
+  item: IRON_HELMET
+  attributes:
+    defence: 6
+    damageMeleeMulti: 0.1
+  worth: 150000
+  rarity: 1
+钨钢头饰:
+  item: IRON_HELMET
+  attributes:
+    defence: 4
+    damageRangedMulti: 0.1
+  worth: 150000
+  rarity: 1
+钨钢兜帽:
+  item: IRON_HELMET
+  attributes:
+    defence: 2
+    damageMagicMulti: 0.1
+  worth: 150000
+  rarity: 1
+钨钢头罩:
+  item: IRON_HELMET
+  attributes:
+    damageSummonMulti: 0.1
+  worth: 150000
+  rarity: 1
+钨钢盔甲:
+  item: IRON_CHESTPLATE
+  attributes:
+    defence: 4
+    crit: 3
+  worth: 100000
+  rarity: 1
+钨钢护胫:
+  item: IRON_LEGGINGS
+  attributes:
+    defence: 2
+    speedMulti: 0.05
+  worth: 50000
+  rarity: 1
+铜头盔:
+  item: IRON_HELMET
+  attributes:
+    defence: 2
+  worth: 25000
+  rarity: 0
+铜链甲:
+  item: IRON_CHESTPLATE
+  attributes:
+    defence: 4
+  worth: 20000
+  rarity: 0
+铜护胫:
+  item: IRON_LEGGINGS
+  attributes:
+    defence: 2
+  worth: 15000
+  rarity: 0
+铁头盔:
+  item: IRON_HELMET
+  attributes:
+    defence: 4
+  worth: 60000
+  rarity: 0
+铁链甲:
+  item: IRON_CHESTPLATE
+  attributes:
+    defence: 6
+  worth: 100000
+  rarity: 0
+铁护胫:
+  item: IRON_LEGGINGS
+  attributes:
+    defence: 4
+  worth: 80000
+  rarity: 0
+银头盔:
+  item: IRON_HELMET
+  attributes:
+    defence: 6
+  worth: 250000
+  rarity: 0
+银链甲:
+  item: IRON_CHESTPLATE
+  attributes:
+    defence: 8
+  worth: 200000
+  rarity: 0
+银护胫:
+  item: IRON_LEGGINGS
+  attributes:
+    defence: 6
+  worth: 150000
+  rarity: 0
+忍者头盔:
+  item: LEATHER_HELMET
+  attributes:
+    defence: 3
+    crit: 3
+  worth: 200000
+  rarity: 1
+忍者胸甲:
+  item: LEATHER_CHESTPLATE
+  attributes:
+    defence: 5
+    crit: 3
+  worth: 100000
+  rarity: 1
+忍者护腿:
+  item: LEATHER_LEGGINGS
+  attributes:
+    defence: 3
+    crit: 3
+  worth: 100000
+  rarity: 1
+金头盔:
+  item: GOLD_HELMET
+  attributes:
+    defence: 8
+  worth: 300000
+  rarity: 0
+金链甲:
+  item: GOLD_CHESTPLATE
+  attributes:
+    defence: 10
+  worth: 500000
+  rarity: 0
+金护胫:
+  item: GOLD_LEGGINGS
+  attributes:
+    defence: 8
+  worth: 400000
+  rarity: 0
+流星头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 10
+    damageMagicMulti: 0.09
+  worth: 600000
+  rarity: 1
+流星护甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 12
+    damageMagicMulti: 0.09
+  worth: 900000
+  rarity: 1
+流星护腿:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 10
+    damageMagicMulti: 0.09
+  worth: 600000
+  rarity: 1
+暗影头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 12
+  worth: 750000
+  rarity: 1
+暗影鳞甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 14
+  worth: 600000
+  rarity: 1
+暗影护胫:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 12
+  worth: 450000
+  rarity: 1
+熔岩头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 16
+  worth: 900000
+  rarity: 3
+熔岩胸甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 18
+  worth: 600000
+  rarity: 3
+熔岩护胫:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 16
+  worth: 600000
+  rarity: 3
+蜘蛛面具:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 10
+    minionLimit: 1
+    damageSummonMulti: 0.05
+  worth: 750000
+  rarity: 4
+蜘蛛胸甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 16
+    minionLimit: 1
+    damageSummonMulti: 0.05
+  worth: 750000
+  rarity: 4
+蜘蛛护胫:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 14
+    minionLimit: 1
+    damageSummonMulti: 0.06
+  worth: 750000
+  rarity: 4
+水晶刺客兜帽:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 24
+    crit: 5
+    manaUse: -0.1
+  worth: 2000000
+  rarity: 5
+水晶刺客上衣:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 28
+    damageMulti: 0.05
+    ammoConsumptionRate: 0.9
+  worth: 2000000
+  rarity: 5
+水晶刺客裤:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 20
+    speedMulti: 0.2
+    useTimeMeleeMulti: -0.1
+  worth: 2000000
+  rarity: 5
+钴帽:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 4
+    maxMana: 40
+    damageMagicMulti: 0.1
+    crit: 9
+  worth: 1500000
+  rarity: 4
+钴头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 24
+    speedMulti: 0.1
+    damageMeleeMulti: 0.15
+  worth: 1500000
+  rarity: 4
+钴面具:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 8
+    damageRangedMulti: 0.1
+    crit: 10
+  worth: 1500000
+  rarity: 4
+钴胸甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 16
+    crit: 5
+  worth: 1200000
+  rarity: 4
+钴护腿:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 16
+    speedMulti: 0.1
+    damageMulti: 0.03
+  worth: 900000
+  rarity: 4
+秘银帽:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 6
+    maxMana: 60
+    damageMagicMulti: 0.15
+  worth: 2250000
+  rarity: 4
+秘银头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 32
+    crit: 8
+    damageMeleeMulti: 0.1
+  worth: 2250000
+  rarity: 4
+秘银兜帽:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 12
+    damageRangedMulti: 0.12
+    crit: 7
+  worth: 2250000
+  rarity: 4
+秘银链甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 24
+    damageMulti: 0.07
+  worth: 1800000
+  rarity: 4
+秘银护胫:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 18
+    crit: 10
+  worth: 1350000
+  rarity: 4
+精金头饰:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 8
+    maxMana: 80
+    damageMagicMulti: 0.12
+    crit: 12
+  worth: 3000000
+  rarity: 4
+精金头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 44
+    crit: 7
+    damageMeleeMulti: 0.14
+  worth: 3000000
+  rarity: 4
+精金面具:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 16
+    damageRangedMulti: 0.14
+    crit: 10
+  worth: 3000000
+  rarity: 4
+精金胸甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 32
+    damageMulti: 0.08
+  worth: 2400000
+  rarity: 4
+精金护腿:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 24
+    crit: 7
+    speedMulti: 0.05
+  worth: 1800000
+  rarity: 4
+叶绿头饰:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 14
+    maxMana: 80
+    manaUseMulti: -0.17
+    damageMagicMulti: 0.16
+  worth: 6000000
+  rarity: 7
+叶绿头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 26
+    damageRangedMulti: 0.16
+    ammoConsumptionRate: 0.8
+  worth: 6000000
+  rarity: 7
+叶绿面具:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 50
+    damageMeleeMulti: 0.16
+    crit: 6
+  worth: 6000000
+  rarity: 7
+叶绿板甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 36
+    damageMulti: 0.05
+    crit: 7
+  worth: 4800000
+  rarity: 7
+叶绿护胫:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 26
+    crit: 8
+    speedMulti: 0.05
+  worth: 3600000
+  rarity: 7
+幽灵兜帽:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 12
+    damageMagicMulti: -0.4
+  worth: 7500000
+  rarity: 8
+幽灵面具:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 36
+    maxMana: 60
+    manaUseMulti: -0.13
+    damageMagicMulti: 0.1
+    crit: 10
+  worth: 7500000
+  rarity: 8
+幽灵长袍:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 28
+    damageMagicMulti: 0.07
+    crit: 7
+  worth: 6000000
+  rarity: 8
+幽灵裤:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 20
+    damageMagicMulti: 0.08
+    speedMulti: 0.08
+  worth: 4500000
+  rarity: 8
+甲虫头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 46
+    damageMeleeMulti: 0.06
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
+  worth: 6000000
+  rarity: 8
+甲虫铠甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 40
+    damageMeleeMulti: 0.08
+    crit: 8
+    speedMulti: 0.06
+    useTimeMeleeMulti: -0.06
+  worth: 4800000
+  rarity: 8
+甲虫壳:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 64
+    damageMeleeMulti: 0.05
+    crit: 5
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
+  worth: 4800000
+  rarity: 8
+甲虫护腿:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 36
+    useTimeMeleeMulti: -0.06
+    speedMulti: 0.06
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
+  worth: 3600000
+  rarity: 8
+蘑菇矿头饰:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 22
+    damageArrowMulti: 0.15
+    crit: 5
+  worth: 7500000
+  rarity: 8
+蘑菇矿头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 22
+    damageRocketMulti: 0.15
+    crit: 5
+  worth: 7500000
+  rarity: 8
+蘑菇矿面具:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 22
+    damageBulletMulti: 0.15
+    crit: 5
+  worth: 7500000
+  rarity: 8
+蘑菇矿胸甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 48
+    damageRangedMulti: 0.13
+    crit: 13
+    ammoConsumptionRate: 0.8
+  worth: 6000000
+  rarity: 8
+蘑菇矿护腿:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 32
+    crit: 7
+    speedMulti: 0.12
+  worth: 4500000
+  rarity: 8
+神圣头饰:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 10
+    maxMana: 100
+    damageMagicMulti: 0.12
+    crit: 12
+  worth: 5000000
+  rarity: 5
+神圣面具:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 48
+    crit: 10
+    damageMeleeMulti: 0.1
+    useTimeMeleeMulti: -0.1
+  worth: 5000000
+  rarity: 5
+神圣头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 18
+    damageRangedMulti: 0.15
+    crit: 8
+  worth: 5000000
+  rarity: 5
+神圣兜帽:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 2
+    damageSummonMulti: 0.1
+    minionLimit: 1
+  worth: 5000000
+  rarity: 5
+神圣板甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 30
+    crit: 7
+  worth: 4000000
+  rarity: 5
+神圣护胫:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 22
+    damageMulti: 0.07
+    speedMulti: 0.08
+  worth: 3000000
+  rarity: 5
+寒霜头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 25
+    damageMeleeMulti: 0.2
+    damageRangedMulti: 0.2
+  worth: 5000000
+  rarity: 5
+寒霜胸甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 50
+    crit: 15
+  worth: 4000000
+  rarity: 5
+寒霜护腿:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 33
+    useTimeMeleeMulti: -0.13
+    speedMulti: 0.1
+  worth: 3000000
+  rarity: 5
+阴森头盔:
+  item: LEATHER_HELMET
+  attributes:
+    defence: 16
+    minionLimit: 1
+    damageSummonMulti: 0.11
+  worth: 1000000
+  rarity: 8
+阴森胸甲:
+  item: LEATHER_CHESTPLATE
+  attributes:
+    defence: 20
+    minionLimit: 1
+    damageSummonMulti: 0.11
+  worth: 1000000
+  rarity: 8
+阴森护腿:
+  item: LEATHER_LEGGINGS
+  attributes:
+    defence: 18
+    minionLimit: 1
+    damageSummonMulti: 0.11
+    speedMulti: 0.2
+  worth: 1000000
+  rarity: 8
+星云头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    crit: 7
+    damageMagicMulti: 0.07
+    defence: 28
+    manaUseMulti: -0.15
+    maxMana: 60
+  worth: 7000000
+  rarity: 10
+星云胸甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    crit: 9
+    damageMagicMulti: 0.09
+    defence: 36
+  worth: 14000000
+  rarity: 10
+星云护腿:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    damageMagicMulti: 0.1
+    defence: 28
+    speedMulti: 0.1
+  worth: 10500000
+  rarity: 10
+耀斑头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 48
+    crit: 26
+    regenMulti: 0.167
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
+  worth: 7000000
+  rarity: 10
+耀斑胸甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 68
+    damageMeleeMulti: 0.29
+    regenMulti: 0.167
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
+  worth: 14000000
+  rarity: 10
+耀斑护腿:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 40
+    useTimeMeleeMulti: -0.15
+    regenMulti: 0.167
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
+  worth: 10500000
+  rarity: 10
+星尘头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 20
+    minionLimit: 1
+    damageSummonMulti: 0.22
+  worth: 7000000
+  rarity: 10
+星尘板甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 32
+    minionLimit: 2
+    damageSummonMulti: 0.22
+  worth: 14000000
+  rarity: 10
+星尘护腿:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 24
+    minionLimit: 2
+    damageSummonMulti: 0.22
+  worth: 10500000
+  rarity: 10
+星璇头盔:
+  item: DIAMOND_HELMET
+  attributes:
+    defence: 28
+    damageRangedMulti: 0.16
+    crit: 7
+  worth: 7000000
+  rarity: 10
+星璇胸甲:
+  item: DIAMOND_CHESTPLATE
+  attributes:
+    defence: 56
+    crit: 12
+    damageRangedMulti: 0.12
+    ammoConsumptionRate: 0.75
+  worth: 14000000
+  rarity: 10
+星璇护腿:
+  item: DIAMOND_LEGGINGS
+  attributes:
+    defence: 40
+    crit: 8
+    damageRangedMulti: 0.08
+    speedMulti: 0.1
+  worth: 10500000
+  rarity: 10
+钱币槽:
+  item: PAPER
+  worth: 2000000
+  rarity: 3
+虚空袋:
+  item: PAPER
+  worth: 2000000
+  rarity: 3
+弹药储备药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+箭术药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+战斗药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+镇静药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+耐力药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+鱼鳃药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+隐身药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+铁皮药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+生命力药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+魔能药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+魔力再生药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+黑曜石皮药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+再生药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+召唤药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+敏捷药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+荆棘药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+泰坦药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+怒气药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+回城药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+虫洞药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+蜂蜜瓶:
+  item: CLAY_BALL
+  worth: 800
+  rarity: 0
+弱效治疗药水:
+  item: CLAY_BALL
+  worth: 6000
+  rarity: 0
+治疗药水:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 1
+强效治疗药水:
+  item: CLAY_BALL
+  worth: 100000
+  rarity: 3
+超级治疗药水:
+  item: CLAY_BALL
+  worth: 300000
+  rarity: 7
+恢复药水:
+  item: CLAY_BALL
+  worth: 30000
+  rarity: 1
+生命水晶:
+  item: CLAY_BALL
+  worth: 1500000
+  rarity: 2
+生命果:
+  item: CLAY_BALL
+  worth: 400000
+  rarity: 7
+魔力星:
+  item: CLAY_BALL
+  worth: 2000000
+  rarity: 2
+恶魔之心:
+  item: CLAY_BALL
+  worth: 2000000
+  rarity: 1000
+金鸟:
+  item: RABBIT_HIDE
+  worth: 10000000
+  rarity: 3
+金兔:
+  item: RABBIT_HIDE
+  worth: 10000000
+  rarity: 3
+金蝴蝶:
+  item: RABBIT_HIDE
+  worth: 10000000
+  rarity: 3
+金蛙:
+  item: RABBIT_HIDE
+  worth: 10000000
+  rarity: 3
+金蚱蜢:
+  item: RABBIT_HIDE
+  worth: 10000000
+  rarity: 3
+金瓢虫:
+  item: RABBIT_HIDE
+  worth: 10000000
+  rarity: 3
+金老鼠:
+  item: RABBIT_HIDE
+  worth: 10000000
+  rarity: 3
+金松鼠:
+  item: RABBIT_HIDE
+  worth: 10000000
+  rarity: 3
+金蠕虫:
+  item: RABBIT_HIDE
+  worth: 10000000
+  rarity: 3
+鸟:
+  item: RABBIT_HIDE
+  worth: 50000
+  rarity: 0
+冠蓝鸦:
+  item: RABBIT_HIDE
+  worth: 75000
+  rarity: 0
+红雀:
+  item: RABBIT_HIDE
+  worth: 75000
+  rarity: 0
+萤火虫:
+  item: RABBIT_HIDE
+  worth: 30000
+  rarity: 0
+荧光虫:
+  item: RABBIT_HIDE
+  worth: 50000
+  rarity: 0
+茱莉娅蝶:
+  item: RABBIT_HIDE
+  worth: 300000
+  rarity: 1
+帝王蝶:
+  item: RABBIT_HIDE
+  worth: 50000
+  rarity: 0
+紫君王蝶:
+  item: RABBIT_HIDE
+  worth: 750000
+  rarity: 2
+红纹蝶:
+  item: RABBIT_HIDE
+  worth: 400000
+  rarity: 2
+硫磺蝶:
+  item: RABBIT_HIDE
+  worth: 100000
+  rarity: 0
+树若虫蝴蝶:
+  item: RABBIT_HIDE
+  worth: 1000000
+  rarity: 3
+尤利西斯蝶:
+  item: RABBIT_HIDE
+  worth: 200000
+  rarity: 1
+斑纹燕尾蝶:
+  item: RABBIT_HIDE
+  worth: 150000
+  rarity: 1
+地狱蝴蝶:
+  item: RABBIT_HIDE
+  worth: 200000
+  rarity: 1
+蚱蜢:
+  item: RABBIT_HIDE
+  worth: 25000
+  rarity: 0
+兔兔:
+  item: RABBIT_HIDE
+  worth: 50000
+  rarity: 0
+松鼠:
+  item: RABBIT_HIDE
+  worth: 50000
+  rarity: 0
+红松鼠:
+  item: RABBIT_HIDE
+  worth: 50000
+  rarity: 0
+老鼠:
+  item: RABBIT_HIDE
+  worth: 100000
+  rarity: 0
+企鹅:
+  item: RABBIT_HIDE
+  worth: 125000
+  rarity: 0
+青蛙:
+  item: RABBIT_HIDE
+  worth: 150000
+  rarity: 0
+发光蜗牛:
+  item: RABBIT_HIDE
+  worth: 500000
+  rarity: 1
+蛆虫:
+  item: RABBIT_HIDE
+  worth: 25000
+  rarity: 1
+瓢虫:
+  item: RABBIT_HIDE
+  worth: 100000
+  rarity: 1
+熔岩蝇:
+  item: RABBIT_HIDE
+  worth: 200000
+  rarity: 1
+岩浆蜗牛:
+  item: RABBIT_HIDE
+  worth: 500000
+  rarity: 2
+鼻涕虫:
+  item: RABBIT_HIDE
+  worth: 50000
+  rarity: 1
+蜗牛:
+  item: RABBIT_HIDE
+  worth: 100000
+  rarity: 0
+蠕虫:
+  item: RABBIT_HIDE
+  worth: 50000
+  rarity: 1
+附魔夜行者:
+  item: RABBIT_HIDE
+  worth: 200000
+  rarity: 2
+七彩草蛉:
+  item: RABBIT_HIDE
+  worth: 5000000
+  rarity: 3
+  lore:
+  - §r“它的翅膀很娇嫩，一定要小心，不要伤到它…”
+松露虫:
+  item: RABBIT_HIDE
+  worth: 10000000
+  rarity: 3
+捕虫网:
+  item: STICK
+  worth: 20000
+  attributes:
+    useTime: 30
+  rarity: 0
+金捕虫网:
+  item: STICK
+  attributes:
+    useTime: 20
+  worth: 5000000
+  rarity: 3
+蘑菇:
+  item: CLAY_BALL
+  worth: 500
+  rarity: 0
+发光蘑菇:
+  item: CLAY_BALL
+  worth: 1000
+  rarity: 0
+水瓶:
+  item: CLAY_BALL
+  worth: 400
+  rarity: 0
+弱效魔力药水:
+  item: CLAY_BALL
+  worth: 2000
+  rarity: 0
+魔力药水:
+  item: CLAY_BALL
+  worth: 5000
+  rarity: 1
+强效魔力药水:
+  item: CLAY_BALL
+  worth: 10000
+  rarity: 3
+超级魔力药水:
+  item: CLAY_BALL
+  worth: 30000
+  rarity: 4
+祭坛:
+  item: ENCHANTMENT_TABLE
+  worth: 600000
+  rarity: 0
+酿造台:
+  item: BREWING_STAND_ITEM
+  worth: 100000
+  rarity: 0
+木制工作台:
+  item: WORKBENCH
+  rarity: 0
+工匠合成台:
+  item: FURNACE
+  worth: 2000000
+  rarity: 0
+秘银砧:
+  item: FURNACE
+  worth: 500000
+  rarity: 3
+精金熔炉:
+  item: FURNACE
+  worth: 1000000
+  rarity: 3
+远古操纵机:
+  item: FURNACE
+  rarity: 10
+火炉:
+  item: FURNACE
+  worth: 2000
+  rarity: 0
+地狱熔炉:
+  item: FURNACE
+  worth: 60000
+  rarity: 0
+铁砧:
+  item: ANVIL
+  worth: 20000
+  rarity: 0
+丝绸:
+  item: LEATHER
+  worth: 20000
+  rarity: 0
+暗影鳞片:
+  item: DRAGON_EGG
+  worth: 160000
+  rarity: 1
+火把:
+  item: TORCH
+  worth: 1000
+  rarity: 0
+钩爪:
+  item: LEASH
+  worth: 400000
+  rarity: 1
+失谐钩爪:
+  item: LEASH
+  worth: 5000000
+  rarity: 4
+刺钩:
+  item: LEASH
+  worth: 6000000
+  rarity: 5
+阴森钩:
+  item: LEASH
+  worth: 4000000
+  rarity: 7
+圣诞钩:
+  item: LEASH
+  worth: 4000000
+  rarity: 7
+月钩:
+  item: LEASH
+  worth: 10000000
+  rarity: 4
+蛛丝:
+  item: WEB
+  worth: 1000
+  rarity: 0
+毒刺:
+  item: RED_ROSE
+  worth: 4000
+  rarity: 0
+丛林孢子:
+  item: WEB
+  worth: 2000
+  rarity: 0
+仙人掌:
+  item: CACTUS
+  worth: 200
+  rarity: 0
+藤蔓:
+  item: VINE
+  worth: 20000
+  rarity: 0
+冰冻火把:
+  item: TORCH
+  worth: 1200
+  rarity: 0
+坠星:
+  item: CLAY_BALL
+  worth: 50000
+  rarity: 1
+钻石:
+  item: DIAMOND
+  worth: 300000
+  rarity: 0
+机械电池片:
+  item: DIAMOND
+  worth: 500000
+  rarity: 1000
+机械车轮片:
+  item: IRON_INGOT
+  worth: 500000
+  rarity: 1000
+机械车体片:
+  item: IRON_INGOT
+  worth: 500000
+  rarity: 1000
+机械矿车:
+  item: IRON_INGOT
+  worth: 3000000
+  rarity: 3
+彩虹猫矿车:
+  item: IRON_INGOT
+  worth: 10000000
+  rarity: 10
+力量之魂:
+  item: NETHER_STAR
+  worth: 800000
+  rarity: 5
+  lore:
+  - §r“毁灭者的精华”
+视域之魂:
+  item: NETHER_STAR
+  worth: 800000
+  rarity: 5
+  lore:
+  - §r“全知看守人的精华”
+恐惧之魂:
+  item: NETHER_STAR
+  worth: 800000
+  rarity: 5
+  lore:
+  - §r“纯粹恐惧的精华”
+日耀碎片:
+  item: NETHER_STAR
+  worth: 200000
+  rarity: 9
+  lore:
+  - §r“宇宙之怒存在于此碎片内”
+星璇碎片:
+  item: NETHER_STAR
+  worth: 200000
+  rarity: 9
+  lore:
+  - §r“旋涡能量源于此碎片”
+星云碎片:
+  item: NETHER_STAR
+  worth: 200000
+  rarity: 9
+  lore:
+  - §r“星系之力存在于此碎片内”
+星尘碎片:
+  item: NETHER_STAR
+  worth: 200000
+  rarity: 9
+  lore:
+  - §r“引人入胜的微粒围绕此碎片旋转”
+日耀天塔柱:
+  item: STICK
+  worth: 20000000
+  rarity: 9
+  lore:
+  - §r“动用少量日耀塔之力”
+星璇天塔柱:
+  item: STICK
+  worth: 20000000
+  rarity: 9
+  lore:
+  - §r“动用少量星璇塔之力”
+星云天塔柱:
+  item: STICK
+  worth: 20000000
+  rarity: 9
+  lore:
+  - §r“动用少量星云塔之力”
+星尘天塔柱:
+  item: STICK
+  worth: 20000000
+  rarity: 9
+  lore:
+  - §r“动用少量星尘塔之力”
+虚空天塔柱:
+  item: STICK
+  worth: 20000000
+  rarity: 9
+  lore:
+  - §r“动用少量虚空之力”
+血月天塔柱:
+  item: STICK
+  worth: 1000000
+  rarity: 3
+  lore:
+  - §r“维持月亮的血腥部分”
+陨星矿:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 0
+陨星锭:
+  item: IRON_INGOT
+  worth: 60000
+  rarity: 0
+铜锭:
+  item: IRON_INGOT
+  worth: 15000
+  rarity: 0
+铜矿石:
+  item: CLAY_BALL
+  worth: 5000
+  rarity: 0
+铁锭:
+  item: IRON_INGOT
+  worth: 30000
+  rarity: 0
+铁矿石:
+  item: CLAY_BALL
+  worth: 10000
+  rarity: 0
+银锭:
+  item: IRON_INGOT
+  worth: 60000
+  rarity: 0
+银矿石:
+  item: CLAY_BALL
+  worth: 15000
+  rarity: 0
+金锭:
+  item: GOLD_INGOT
+  worth: 120000
+  rarity: 0
+金矿石:
+  item: CLAY_BALL
+  worth: 30000
+  rarity: 0
+恶魔锭:
+  item: IRON_INGOT
+  worth: 300000
+  rarity: 1
+恶魔矿:
+  item: CLAY_BALL
+  worth: 100000
+  rarity: 1
+狱炎锭:
+  item: IRON_INGOT
+  worth: 400000
+  rarity: 2
+狱炎矿:
+  item: CLAY_BALL
+  worth: 25000
+  rarity: 2
+钴锭:
+  item: IRON_INGOT
+  worth: 210000
+  rarity: 3
+钴矿:
+  item: CLAY_BALL
+  worth: 70000
+  rarity: 3
+秘银锭:
+  item: IRON_INGOT
+  worth: 440000
+  rarity: 3
+秘银矿:
+  item: CLAY_BALL
+  worth: 110000
+  rarity: 3
+精金锭:
+  item: IRON_INGOT
+  worth: 750000
+  rarity: 3
+精金矿:
+  item: CLAY_BALL
+  worth: 150000
+  rarity: 3
+神圣锭:
+  item: IRON_INGOT
+  worth: 400000
+  rarity: 3
+叶绿矿:
+  item: CLAY_BALL
+  worth: 150000
+  rarity: 7
+叶绿锭:
+  item: IRON_INGOT
+  worth: 900000
+  rarity: 7
+幽灵锭:
+  item: IRON_INGOT
+  worth: 1000000
+  rarity: 7
+蘑菇锭:
+  item: IRON_INGOT
+  worth: 1000000
+  rarity: 7
+夜明锭:
+  item: IRON_INGOT
+  worth: 1200000
+  rarity: 10
+  lore:
+  - §r“它汇聚了闪耀的天界能量”
+夜明矿:
+  item: CLAY_BALL
+  worth: 300000
+  rarity: 10
+  lore:
+  - §r“天堂卵石”
+铜币:
+  item: CLAY_BALL
+  worth: 100
+  rarity: 0
+银币:
+  item: CLAY_BALL
+  worth: 10000
+  rarity: 0
+金币:
+  item: CLAY_BALL
+  worth: 1000000
+  rarity: 0
+铂金币:
+  item: CLAY_BALL
+  worth: 100000000
+  rarity: 0
+空瓶:
+  item: CLAY_BALL
+  worth: 400
+  rarity: 0
+空桶:
+  item: BUCKET
+  rarity: 0
+熟虾:
+  item: COOKED_FISH
+  worth: 150000
+  rarity: 0
+刺身:
+  item: RAW_FISH
+  worth: 50000
+  rarity: 0
+熟龙虾尾:
+  item: COOKED_FISH
+  worth: 200000
+  rarity: 0
+炸鱼:
+  item: COOKED_FISH
+  worth: 50000
+  rarity: 0
+  lore:
+  - §r“可莉，你应该知道后果吧？”
+海鲜大餐:
+  item: COOKED_FISH
+  worth: 200000
+  rarity: 0
+南瓜派:
+  item: PUMPKIN_PIE
+  worth: 20000
+  rarity: 2
+  lore:
+  - §r“一口就吃完了！”
+苹果:
+  item: APPLE
+  worth: 20000
+  rarity: 0
+初学者鱼饵:
+  item: CLAY_BALL
+  worth: 100000
+  rarity: 2
+专家鱼饵:
+  item: CLAY_BALL
+  worth: 200000
+  rarity: 1
+大师鱼饵:
+  item: CLAY_BALL
+  worth: 500000
+  rarity: 3
+木匣:
+  item: CLAY_BALL
+  worth: 100000
+  rarity: 1
+铁匣:
+  item: CLAY_BALL
+  worth: 500000
+  rarity: 2
+金匣:
+  item: CLAY_BALL
+  worth: 2000000
+  rarity: 3
+珍珠木匣:
+  item: CLAY_BALL
+  worth: 100000
+  rarity: 1
+秘银匣:
+  item: CLAY_BALL
+  worth: 500000
+  rarity: 2
+钛金匣:
+  item: CLAY_BALL
+  worth: 2000000
+  rarity: 3
+装甲洞穴鱼:
+  item: RAW_FISH
+  worth: 150000
+  rarity: 1
+大西洋鳕鱼:
+  item: RAW_FISH
+  worth: 75000
+  rarity: 0
+鲈鱼:
+  item: RAW_FISH
+  worth: 50000
+  rarity: 0
+雀鲷:
+  item: RAW_FISH
+  worth: 300000
+  rarity: 1
+双鳍鳕鱼:
+  item: RAW_FISH
+  worth: 150000
+  rarity: 1
+黑檀锦鲤:
+  item: RAW_FISH
+  worth: 150000
+  rarity: 1
+寒霜鲦鱼:
+  item: RAW_FISH
+  worth: 150000
+  rarity: 1
+霓虹脂鲤:
+  item: RAW_FISH
+  worth: 150000
+  rarity: 1
+七彩矿鱼:
+  item: RAW_FISH
+  worth: 1000000
+  rarity: 1
+红鲷鱼:
+  item: RAW_FISH
+  worth: 75000
+  rarity: 0
+龙虾:
+  item: RAW_FISH
+  worth: 100000
+  rarity: 1
+三文鱼:
+  item: RAW_FISH
+  worth: 75000
+  rarity: 0
+虾:
+  item: RAW_FISH
+  worth: 150000
+  rarity: 2
+镜面鱼:
+  item: RAW_FISH
+  worth: 150000
+  rarity: 2
+鳟鱼:
+  item: RAW_FISH
+  worth: 50000
+  rarity: 0
+金枪鱼:
+  item: RAW_FISH
+  worth: 75000
+  rarity: 0
+斑驳油鱼:
+  item: RAW_FISH
+  worth: 150000
+  rarity: 1
+天使鱼:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
+蝙蝠鱼:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
+骷髅鱼:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
+兔兔鱼:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
+小丑鱼:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
+泥鱼:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
+土鱼:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
+克苏鲁鱼:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
+向导巫毒鱼:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
+突变弗林鱼:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
+蜂蜜鱼:
+  item: RAW_FISH
+  worth: 80000
+  rarity: 1
+梯子:
+  item: LADDER
+  worth: 300
+  rarity: 0
+牌子:
+  item: SIGN
+  worth: 10000
+  rarity: 0
+木栅栏:
+  item: FENCE
+  worth: 300
+  rarity: 0
+羊毛:
+  item: WOOL
+  worth: 500
+  rarity: 0
+萤石:
+  item: GLOWSTONE
+  worth: 200
+  rarity: 0
+石英块:
+  item: QUARTZ_BLOCK
+  worth: 200
+  rarity: 0
+石英台阶:
+  item: QUARTZ_STAIRS
+  worth: 200
+  rarity: 0
+石砖:
+  item: SMOOTH_BRICK
+  worth: 200
+  rarity: 0
+石砖台阶:
+  item: SMOOTH_STAIRS
+  worth: 200
+  rarity: 0

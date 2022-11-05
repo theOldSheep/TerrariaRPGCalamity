@@ -1,0 +1,73 @@
+SQL:
+  enable: false
+  table: "dragoncore"
+  hostname: "127.0.0.1"
+  port: "3306"
+  #数据库名，库需要自己创建，否则连接失败
+  database: "database"
+  username: "root"
+  password: "root"
+  # 最大连接数(默认为处理器数*2)
+  maxconnections: 10
+  properties:
+    - "useSSL=false"
+    - "useUnicode=true"
+    - "characterEncoding=utf8"
+
+# 玩家背包数据目录(当SQL为false时可以使用该选项)
+# 填空则是以插件目录内的PlayerData进行保存
+PlayerDataFolder: ""
+
+# 资源文件夹目录,默认为plugins/DragonCoreResource
+ResourcePack: ""
+
+
+# 压缩包需放在DragonCore目录下，并命名为Resource.zip
+Password: "压缩包密码"
+
+# 若删除这条配置则不会修改标题
+ClientTitle: "欢迎使用龙之核心,该标题可在config.yml修改"
+
+# 聊天若输入渐变格式，会变成渐变色文本
+replaceChatColor: true
+
+# 是否修改服务端实体的碰撞箱
+# 启用的话服务端实体将具有正确的碰撞箱,可以被人推动等
+# 如果实体没有足够的范围将会处于卡墙掉血状态
+# 该配置仅适用于EntityModel配置中的实体 对于调用api对玩家发包修改实体模型的无效(实现原理在HitBoxTask中自行查看)
+EntityHitBox: false
+
+# 是否兼容AP属性插件
+AttributePlus: true
+# 是否兼容SX属性插件
+SX-Attribute: true
+# 是否兼容龙之时装付费版
+DragonArmourers: false
+
+# 提示：所有文件(除了config.yml)均可创建一个同名的文件夹，里面任意的yml均会载入
+# 例如插件存在EntityModel.yml
+# 则可以创建一个文件夹EntityModel，里面的所有yml文件都会载入
+# DragonCore/
+#  - EntityModel/
+#    - 日系汽车.yml
+#    - 国产汽车.yml
+
+ScriptTools:
+  # 这四个已默认拥有,不需要添加
+  #PlaceholderAPI: "me.clip.placeholderapi.PlaceholderAPI"
+  #Bukkit: "org.bukkit.Bukkit"
+  #Arrays: "java.util.Arrays"
+  #SlotAPI: "eos.moe.dragoncore.api.SlotAPI"
+
+# papi变量黑名单,模式为包含模式
+# 也就是变量名带这串内容就屏蔽
+# 如果你想添加,这里三个也需要加上
+#
+# 1.trmenu_js
+# 2.chemdah
+# 3.trchat_js
+BlackPlaceholder:
+  - "trmenu_js"
+  - "chemdah"
+  - "trmenu_js"
+BlackPlaceholderLog: true

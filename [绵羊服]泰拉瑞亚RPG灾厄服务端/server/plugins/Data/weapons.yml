@@ -712,6 +712,8 @@
 钻石法杖:
   type: MAGIC_PROJECTILE
   projectileName: 钻石射线
+  gravity: false
+  autoSwing: true
 骷髅头法书:
   type: MAGIC_PROJECTILE
   projectileName: 骷髅头
@@ -913,7 +915,7 @@
   - 0|100|100
   decay: 0.4
   inflictsBuff: true
-  bonusDamage: 10
+  bonusDamage: 12
 暗黑收割:
   type: WHIP
   autoSwing: true

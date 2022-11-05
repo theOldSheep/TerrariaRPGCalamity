@@ -1,0 +1,162 @@
+# 隐藏各个原版的HUD,其它可隐藏内容可在教程内查看
+hideHud:
+  - "HEALTH"
+  - "FOOD"
+  - "ARMOR"
+  - "EXPERIENCE"
+  - "HOTBAR"
+
+# 匹配界面名,hud为自动开启
+# GuiInventory可以替换背包
+# GuiIngameMenu可以替换ESC
+# 或者直接填写箱子界面名称，即可替换箱子界面(颜色符号需写为§)
+match: "hud"
+
+# 鼠标拿着物品时的显示大小
+currentItemSize: 16
+
+
+Functions:
+  # 界面开启时会自动执行open方法，利用open方法来开启定时刷新变量的方法
+  open: "方法.异步执行方法('每300毫秒更新变量')"
+
+  # 关于变量更新在 背包.yml 里讲了,可以去那个配置里看
+  每300毫秒更新变量: |-
+    方法.更新变量值('player_health','player_max_health','player_food_level');
+    方法.延时(300);
+    方法.异步执行方法('每300毫秒更新变量');
+
+
+# 设置总体背景图（_texture后缀为贴图组件）
+背景_texture:
+  # 关于xy在背包.yml里讲了,可以去那里看
+  x: "(方法.取屏幕宽度-背景_texture.width)/2"
+  y: "方法.取屏幕高度-75"
+  width: 256
+  height: 41
+  texture: "hud/hud背景.png"
+
+
+# 血量
+血量_texture:
+  x: "背景_texture.x+27"
+  y: "方法.取屏幕高度-69"
+  # 获取玩家的  当前血量/最大血量*图片宽度   做到显示血量的功能
+  # 注意，该变量需要装PlaceholderAPI的拓展插件才可使用, /papi ecloud download player 完成后重启服务器
+  width: "方法.取变量('player_health')/方法.取变量('player_max_health')*63"
+  height: 3
+  texture: "hud/血条.png"
+饥饿_texture:
+  x: "背景_texture.x+166"
+  y: "方法.取屏幕高度-69"
+  width: "方法.取变量('player_food_level')/20*63"
+  height: 3
+  texture: "hud/饥饿条.png"
+
+经验_texture:
+  x: "背景_texture.x+22"
+  y: "方法.取屏幕高度-40"
+  width: "方法.玩家经验*212"
+  height: 2
+  texture: "hud/经验条.png"
+玩家等级_label:
+  x: "背景_texture.x+129"
+  y: "方法.取屏幕高度-56"
+  center: true
+  texts: "方法.合并文本('&a&l',方法.到整数(方法.玩家等级))"
+# 设置物品背景图
+槽位1_texture:
+  x: "背景_texture.x+4-0.1"
+  y: "方法.取屏幕高度-30"
+  width: "24"
+  height: "24"
+  # 判断式 (条件)? 达成结果 : 否则结果;
+  # 注意文本是需要用''进行包裹的, 这点在背包.yml讲了
+  texture: "(方法.玩家手持槽==0) ? 'hud/槽位1.png':'hud/槽位.png'"
+槽位2_texture:
+  x: "背景_texture.x+8+24-0.1"
+  y: "方法.取屏幕高度-30"
+  width: "24"
+  height: "24"
+  texture: "(方法.玩家手持槽==1) ? 'hud/槽位1.png':'hud/槽位.png'"
+槽位3_texture:
+  x: "背景_texture.x+12+48-0.1"
+  y: "方法.取屏幕高度-30"
+  width: "24"
+  height: "24"
+  texture: "(方法.玩家手持槽==2) ? 'hud/槽位1.png':'hud/槽位.png'"
+槽位4_texture:
+  x: "背景_texture.x+16+72-0.1"
+  y: "方法.取屏幕高度-30"
+  width: "24"
+  height: "24"
+  texture: "(方法.玩家手持槽==3) ? 'hud/槽位1.png':'hud/槽位.png'"
+槽位5_texture:
+  x: "背景_texture.x+20+96-0.1"
+  y: "方法.取屏幕高度-30"
+  width: "24"
+  height: "24"
+  texture: "(方法.玩家手持槽==4) ? 'hud/槽位1.png':'hud/槽位.png'"
+槽位6_texture:
+  x: "背景_texture.x+24+120-0.1"
+  y: "方法.取屏幕高度-30"
+  width: "24"
+  height: "24"
+  texture: "(方法.玩家手持槽==5) ? 'hud/槽位1.png':'hud/槽位.png'"
+槽位7_texture:
+  x: "背景_texture.x+28+144-0.1"
+  y: "方法.取屏幕高度-30"
+  width: "24"
+  height: "24"
+  texture: "(方法.玩家手持槽==6) ? 'hud/槽位1.png':'hud/槽位.png'"
+槽位8_texture:
+  x: "背景_texture.x+32+168-0.1"
+  y: "方法.取屏幕高度-30"
+  width: "24"
+  height: "24"
+  texture: "(方法.玩家手持槽==7) ? 'hud/槽位1.png':'hud/槽位.png'"
+槽位9_texture:
+  x: "背景_texture.x+36+192-0.1"
+  y: "方法.取屏幕高度-30"
+  width: "24"
+  height: "24"
+  texture: "(方法.玩家手持槽==8) ? 'hud/槽位1.png':'hud/槽位.png'"
+
+# 设置物品（_slot后缀为槽位组件）
+槽位1_slot:
+  x: "背景_texture.x+4+4"
+  y: "方法.取屏幕高度-30+4"
+  # 槽位ID,在背包.yml讲了
+  identifier: "container_36"
+槽位2_slot:
+  x: "背景_texture.x+8+24+4"
+  y: "方法.取屏幕高度-30+4"
+  identifier: "container_37"
+槽位3_slot:
+  x: "背景_texture.x+12+48+4"
+  y: "方法.取屏幕高度-30+4"
+  identifier: "container_38"
+槽位4_slot:
+  x: "背景_texture.x+16+72+4"
+  y: "方法.取屏幕高度-30+4"
+  identifier: "container_39"
+槽位5_slot:
+  x: "背景_texture.x+20+96+4"
+  y: "方法.取屏幕高度-30+4"
+  identifier: "container_40"
+槽位6_slot:
+  x: "背景_texture.x+24+120+4"
+  y: "方法.取屏幕高度-30+4"
+  identifier: "container_41"
+槽位7_slot:
+  x: "背景_texture.x+28+144+4"
+  y: "方法.取屏幕高度-30+4"
+  identifier: "container_42"
+槽位8_slot:
+  x: "背景_texture.x+32+168+4"
+  y: "方法.取屏幕高度-30+4"
+  identifier: "container_43"
+槽位9_slot:
+  x: "背景_texture.x+36+192+4"
+  y: "方法.取屏幕高度-30+4"
+  identifier: "container_44"

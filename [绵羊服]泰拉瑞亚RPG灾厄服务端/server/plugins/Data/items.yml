@@ -316,7 +316,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r魔力消耗减少6%
   attributes:
   - 'manaUseMulti: -0.06'
   worth: 540000
@@ -325,7 +324,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r魔力消耗减少8%
   - §r需要时自动使用魔力药水
   attributes:
   - 'manaUseMulti: -0.08'
@@ -342,7 +340,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r最大魔力值增加20
   attributes:
   - 'maxMana: 20'
   worth: 1500000
@@ -351,8 +348,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r最大魔力值增加20
-  - §r提高魔力再生速度
   attributes:
   - 'maxMana: 20'
   - 'manaRegenMulti: 0.33'
@@ -362,7 +357,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r最大魔力值增加20
   - §r受伤害时恢复魔力
   attributes:
   - 'maxMana: 20'
@@ -374,7 +368,6 @@
   - §r[饰品]
   - §r将大范围内的魔力星牵引向自身
   - §r受到伤害后恢复魔力
-  - §r最大魔力值增加20
   attributes:
   - 'maxMana: 20'
   worth: 3200000
@@ -384,7 +377,6 @@
   lore:
   - §r[饰品]
   - §r将大范围内的魔力星牵引向自身
-  - §r魔法伤害增加15%
   attributes:
   - 'damageMagicMulti: 0.15'
   worth: 3200000
@@ -393,7 +385,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r魔力消耗减少8%
   - §r需要时自动使用魔力药水
   - §r将大范围内的魔力星牵引向自身
   attributes:
@@ -404,7 +395,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r2 防御
   attributes:
   - 'defence: 2'
   worth: 20000
@@ -413,7 +403,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r10 防御
   attributes:
   - 'defence: 10'
   worth: 200000
@@ -422,7 +411,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r增加7%召唤伤害
   attributes:
   - 'damageSummonMulti: 0.07'
   worth: 200000
@@ -431,7 +419,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r无视敌人10点护甲
   attributes:
   - 'armorPenetration: 10'
   worth: 1000000
@@ -449,8 +436,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r1 防御
-  - §r按C进行冲刺
+  - §r双击一个方向来冲刺
   - §6专家模式物品
   attributes:
   - 'defence: 1'
@@ -460,14 +446,13 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r按住V短暂飞行
+  - §r算作火箭靴
   worth: 1000000
   rarity: 3
 蠕虫围巾:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r所受伤害减少10%
   - §6专家模式物品
   attributes:
   - 'damageTakenMulti: 0.9'
@@ -477,8 +462,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r+2 防御
-  - §r免疫击退
   attributes:
   - 'defence: 2'
   - 'knockbackResistance: 1'
@@ -488,7 +471,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r2 防御
   attributes:
   - 'defence: 2'
   worth: 540000
@@ -497,8 +479,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r+4 防御
-  - §r免疫击退
   attributes:
   - 'defence: 4'
   - 'knockbackResistance: 1'
@@ -508,8 +488,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r箭的伤害增加10%，箭的速度有所提高
-  - §r20%的几率不消耗箭
   attributes:
   - 'damageArrowMulti: 0.1'
   - 'projectileSpeedArrowMulti: 0.5'
@@ -520,8 +498,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r箭的伤害增加10%，箭的速度有所提高
-  - §r20%的几率不消耗箭
   - §r点燃木箭，火光熊熊
   - §r“在恐惧中颤抖吧！”
   attributes:
@@ -534,9 +510,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r箭的伤害增加10%，箭的速度有所提高
-  - §r20%的几率不消耗箭
-  - §r刷怪数量和效率下降
   attributes:
   - 'damageArrowMulti: 0.1'
   - 'projectileSpeedArrowMulti: 0.5'
@@ -549,7 +522,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r所受伤害减少15%
   attributes:
   - 'damageTakenMulti: 0.85'
   worth: 4500000
@@ -568,12 +540,10 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r12 防御
   - §r当团队中附近玩家受伤时，若生命值高于25%则在计算一切减免前：
   - §r-> 受到相当于本次伤害5%的真实伤害
   - §r-> 使本次伤害降低15%
   - §r你受到的伤害无法被其他玩家以此方式减少
-  - §r对击退免疫
   attributes:
   - 'defence: 12'
   - 'knockbackResistance: 1'
@@ -583,13 +553,10 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r12 防御
   - §r当团队中附近玩家受伤时，若生命值高于25%则在计算一切减免前：
   - §r-> 受到相当于本次伤害5%的真实伤害
   - §r-> 使本次伤害降低15%
   - §r你受到的伤害无法被其他玩家以此方式减少
-  - §r所受伤害减少10%
-  - §r对击退免疫
   attributes:
   - 'defence: 12'
   - 'damageTakenMulti: 0.9'
@@ -606,7 +573,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r远程伤害和暴击率各增加10%
   attributes:
   - 'damageRangedMulti: 0.1'
   - 'critRanged: 10'
@@ -616,8 +582,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r远程伤害和暴击率各增加10%
-  - §r刷怪数量和效率下降
   - §r“发现敌人”
   attributes:
   - 'damageRangedMulti: 0.1'
@@ -638,7 +602,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r白天获得属性加成
+  - §r夜晚时属性加成失效
   attributes:
   - 'useTimeMeleeMulti: -0.1'
   - 'damageMulti: 0.1'
@@ -651,7 +615,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r夜间获得属性加成
+  - §r白天时属性加成失效
   attributes:
   - 'useTimeMeleeMulti: -0.1'
   - 'damageMulti: 0.1'
@@ -664,7 +628,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r获得属性加成
   attributes:
   - 'useTimeMeleeMulti: -0.1'
   - 'damageMulti: 0.1'
@@ -677,72 +640,81 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r按住V短暂飞行
-  - §r飞行时间结束后按住V缓降
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
   worth: 8000000
   rarity: 5
 喜庆之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r按住V短暂飞行
-  - §r飞行时间结束后按住V缓降
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
   worth: 8000000
   rarity: 5
 女皇之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r按住V短暂飞行
-  - §r飞行时间结束后按住V缓降
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
   worth: 8000000
   rarity: 9
 猪鲨之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r按住V短暂飞行
-  - §r飞行时间结束后按住V缓降
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
   worth: 1000000
   rarity: 8
 星云之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r按住V短暂飞行
-  - §r飞行时间结束后按住V缓降
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
   worth: 8000000
   rarity: 10
 星璇之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r按住V短暂飞行
-  - §r飞行时间结束后按住V缓降
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
   worth: 8000000
   rarity: 10
 日耀之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r按住V短暂飞行
-  - §r飞行时间结束后按住V缓降
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
   worth: 8000000
   rarity: 10
 星尘之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r按住V短暂飞行
-  - §r飞行时间结束后按住V缓降
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
   worth: 8000000
   rarity: 10
 天界之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r按住V短暂飞行
-  - §r飞行时间结束后按住V缓降
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
   - §6专家模式物品
   worth: 10000000
   rarity: 1000
@@ -750,7 +722,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r+10% 移动速度
   attributes:
   - 'speedMulti: 0.1'
   worth: 1000000
@@ -759,8 +730,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r+10% 移动速度
-  - §r按住V短暂飞行
+  - §r算作火箭靴
   attributes:
   - 'speedMulti: 0.1'
   worth: 2000000
@@ -769,14 +739,13 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r按V释放二段跳
+  - §r按空格释放二段跳
   worth: 500000
   rarity: 1
 岩浆石:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r近战伤害点燃敌人
   attributes:
   - 'buffInflictMelee: 燃烧|100|1'
   worth: 2000000
@@ -785,8 +754,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r略微减少刷怪率和刷怪量
-  - §r伤害和暴击率各增加5%
   attributes:
   - 'mobLimit: -1'
   - 'mobSpawnRateMulti: -0.1'
@@ -819,7 +786,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r受伤无敌时间略微延长
   attributes:
   - 'invulnerabilityTick: 5'
   worth: 2000000
@@ -828,8 +794,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r提高近战击退威力
-  - §r增加近战武器尺寸
   attributes:
   - 'knockbackMeleeMulti: 1'
   - 'meleeReachMulti: 0.1'
@@ -839,9 +803,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r提高近战击退威力
-  - §r增加近战武器尺寸
-  - §r近战伤害提升12%
   attributes:
   - 'knockbackMeleeMulti: 1'
   - 'meleeReachMulti: 0.1'
@@ -852,10 +813,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r提高近战击退威力
-  - §r增加近战武器尺寸
-  - §r近战伤害提升9%
-  - §r近战伤害点燃敌人
   attributes:
   - 'knockbackMeleeMulti: 0.8'
   - 'meleeReachMulti: 0.1'
@@ -867,7 +824,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r近战伤害+15%
   attributes:
   - 'damageMeleeMulti: 0.15'
   worth: 2000000
@@ -876,7 +832,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r远程伤害+15%
   attributes:
   - 'damageRangedMulti: 0.15'
   worth: 2000000
@@ -885,7 +840,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r魔法伤害+15%
   attributes:
   - 'damageMagicMulti: 0.15'
   worth: 2000000
@@ -894,7 +848,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r仆从伤害+15%
   attributes:
   - 'damageSummonMulti: 0.15'
   worth: 2000000
@@ -903,7 +856,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r攻击伤害+12%
   attributes:
   - 'damageMulti: 0.12'
   worth: 6000000
@@ -912,7 +864,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r暴击率增加10%
   attributes:
   - 'crit: 10'
   worth: 5000000
@@ -921,8 +872,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r伤害增加10%
-  - §r暴击率增加8%
   attributes:
   - 'damageMulti: 0.1'
   - 'crit: 8'
@@ -941,7 +890,6 @@
   - §r[饰品]
   - §r定期释放能伤害敌人的挥发明胶
   - §r“挥发明胶青春版”
-  - §r按~键（esc下方的按键）打开饰品栏装备饰品
   worth: 100000
   rarity: 2
 挥发明胶:
@@ -964,7 +912,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r仆从数量上限提高1个
   attributes:
   - 'minionLimit: 1'
   worth: 4000000
@@ -973,7 +920,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r仆从的伤害增加15%
   attributes:
   - 'damageSummonMulti: 0.15'
   worth: 8000000
@@ -982,8 +928,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r仆从数量上限提高1个
-  - §r仆从伤害增加10%
   attributes:
   - 'minionLimit: 1'
   - 'damageSummonMulti: 0.1'
@@ -993,8 +937,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r仆从数量上限提高1个
-  - §r提高仆从的伤害
   attributes:
   - 'minionLimit: 1'
   - 'damageSummonMulti: 0.15'
@@ -1003,7 +945,7 @@
 钓鱼竿:
   item: FISHING_ROD
   lore:
-  - §r市面上最常见的钓鱼竿，没啥特别的。
+  - §r市面上最常见的钓鱼竿，没什么特别的。
   - §r5% 渔力
   worth: 20000
   rarity: 0
@@ -1026,12 +968,6 @@
   rarity: 0
 仙人掌镐:
   item: STONE_PICKAXE
-  lore:
-  - §r4 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r很弱的击退威力
-  - §r35% 镐力
   enchantment:
   - efficiency 1
   attributes:
@@ -1045,12 +981,6 @@
   rarity: 0
 铜镐:
   item: IRON_PICKAXE
-  lore:
-  - §r4 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r很弱的击退威力
-  - §r35% 镐力
   attributes:
   - 'damage: 4'
   - 'damageType: Melee'
@@ -1062,12 +992,6 @@
   rarity: 0
 铁镐:
   item: IRON_PICKAXE
-  lore:
-  - §r5 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
-  - §r40% 镐力
   attributes:
   - 'damage: 5'
   - 'damageType: Melee'
@@ -1079,12 +1003,6 @@
   rarity: 0
 银镐:
   item: IRON_PICKAXE
-  lore:
-  - §r6 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
-  - §r45% 镐力
   enchantment:
   - efficiency 1
   attributes:
@@ -1098,12 +1016,6 @@
   rarity: 0
 金镐:
   item: IRON_PICKAXE
-  lore:
-  - §r6 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
-  - §r55% 镐力
   attributes:
   - 'damage: 6'
   - 'damageType: Melee'
@@ -1115,12 +1027,6 @@
   rarity: 0
 恶魔镐:
   item: DIAMOND_PICKAXE
-  lore:
-  - §r9 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
-  - §r65% 镐力
   attributes:
   - 'damage: 9'
   - 'damageType: Melee'
@@ -1132,12 +1038,6 @@
   rarity: 1
 熔火镐:
   item: DIAMOND_PICKAXE
-  lore:
-  - §r12 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r很弱的击退威力
-  - §r100% 镐力
   attributes:
   - 'damage: 12'
   - 'damageType: Melee'
@@ -1149,12 +1049,6 @@
   rarity: 3
 掠夺鲨:
   item: DIAMOND_PICKAXE
-  lore:
-  - §r16 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r很弱的击退威力
-  - §r100% 镐力
   attributes:
   - 'damage: 16'
   - 'damageType: Melee'
@@ -1167,11 +1061,6 @@
 钴镐:
   item: DIAMOND_PICKAXE
   lore:
-  - §r20 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r一般的击退威力
-  - §r110% 镐力
   - §r“可挖掘秘银”
   attributes:
   - 'damage: 20'
@@ -1185,11 +1074,6 @@
 秘银镐:
   item: DIAMOND_PICKAXE
   lore:
-  - §r30 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r一般的击退威力
-  - §r150% 镐力
   - §r“可挖掘精金”
   enchantment:
   - efficiency 1
@@ -1204,12 +1088,6 @@
   rarity: 4
 精金镐:
   item: DIAMOND_PICKAXE
-  lore:
-  - §r40 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r一般的击退威力
-  - §r180% 镐力
   enchantment:
   - efficiency 2
   attributes:
@@ -1223,12 +1101,6 @@
   rarity: 4
 镐斧:
   item: DIAMOND_PICKAXE
-  lore:
-  - §r70 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r普通的击退威力
-  - §r200% 镐力
   enchantment:
   - efficiency 2
   attributes:
@@ -1242,12 +1114,6 @@
   rarity: 5
 叶绿镐:
   item: DIAMOND_PICKAXE
-  lore:
-  - §r60 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r普通的击退威力
-  - §r200% 镐力
   enchantment:
   - efficiency 3
   attributes:
@@ -1261,12 +1127,6 @@
   rarity: 7
 锯刃镐:
   item: DIAMOND_PICKAXE
-  lore:
-  - §r68 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通的击退威力
-  - §r210% 镐力
   enchantment:
   - efficiency 5
   attributes:
@@ -1280,11 +1140,6 @@
   rarity: 7
 木剑:
   item: WOOD_SWORD
-  lore:
-  - §r14 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r弱的击退威力
   attributes:
   - 'damage: 14'
   - 'damageType: Melee'
@@ -1295,11 +1150,6 @@
   rarity: 0
 仙人掌剑:
   item: WOOD_SWORD
-  lore:
-  - §r16 近战伤害
-  - §r4% 暴击率
-  - §r慢的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 16'
   - 'damageType: Melee'
@@ -1310,11 +1160,6 @@
   rarity: 0
 钨钢刀:
   item: IRON_SWORD
-  lore:
-  - §r24 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r较弱的击退威力
   attributes:
   - 'damage: 24'
   - 'damageType: Melee'
@@ -1325,11 +1170,6 @@
   rarity: 1
 铜质短剑:
   item: IRON_SWORD
-  lore:
-  - §r10 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r弱的击退威力
   attributes:
   - 'damage: 10'
   - 'damageType: Melee'
@@ -1340,11 +1180,6 @@
   rarity: 0
 铜质阔剑:
   item: IRON_SWORD
-  lore:
-  - §r15 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r弱的击退威力
   attributes:
   - 'damage: 15'
   - 'damageType: Melee'
@@ -1355,11 +1190,6 @@
   rarity: 0
 铁短剑:
   item: STONE_SWORD
-  lore:
-  - §r16 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r弱的击退威力
   attributes:
   - 'damage: 16'
   - 'damageType: Melee'
@@ -1371,10 +1201,6 @@
 铁阔剑:
   item: IRON_SWORD
   lore:
-  - §r20 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r普通的击退威力
   - §r“使用时并不需要高速旋转”
   attributes:
   - 'damage: 20'
@@ -1386,11 +1212,6 @@
   rarity: 0
 银短剑:
   item: IRON_SWORD
-  lore:
-  - §r17 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r弱的击退威力
   attributes:
   - 'damage: 17'
   - 'damageType: Melee'
@@ -1401,11 +1222,6 @@
   rarity: 0
 银阔剑:
   item: IRON_SWORD
-  lore:
-  - §r22 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 22'
   - 'damageType: Melee'
@@ -1416,11 +1232,6 @@
   rarity: 0
 金短剑:
   item: GOLD_SWORD
-  lore:
-  - §r24 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 24'
   - 'damageType: Melee'
@@ -1431,11 +1242,6 @@
   rarity: 0
 金阔剑:
   item: GOLD_SWORD
-  lore:
-  - §r28 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 28'
   - 'damageType: Melee'
@@ -1446,11 +1252,6 @@
   rarity: 0
 光之驱逐:
   item: DIAMOND_SWORD
-  lore:
-  - §r34 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 34'
   - 'damageType: Melee'
@@ -1461,11 +1262,6 @@
   rarity: 1
 妖刀村正:
   item: DIAMOND_SWORD
-  lore:
-  - §r38 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 38'
   - 'damageType: Melee'
@@ -1476,11 +1272,6 @@
   rarity: 2
 陨星光剑:
   item: DIAMOND_SWORD
-  lore:
-  - §r38 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 38'
   - 'damageType: Melee'
@@ -1491,11 +1282,6 @@
   rarity: 1
 紫挥棒鱼:
   item: DIAMOND_SWORD
-  lore:
-  - §r48 近战伤害
-  - §r4% 暴击率
-  - §r慢的使用速度
-  - §r较强的击退威力
   attributes:
   - 'damage: 48'
   - 'damageType: Melee'
@@ -1506,11 +1292,6 @@
   rarity: 1
 草薙剑:
   item: WOOD_SWORD
-  lore:
-  - §r42 近战伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 42'
   - 'damageType: Melee'
@@ -1521,11 +1302,6 @@
   rarity: 3
 烈焰剑:
   item: DIAMOND_SWORD
-  lore:
-  - §r72 近战伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r较强的击退威力
   attributes:
   - 'damage: 72'
   - 'damageType: Melee'
@@ -1536,11 +1312,6 @@
   rarity: 3
 永夜之刃:
   item: DIAMOND_SWORD
-  lore:
-  - §r87 近战伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 87'
   - 'damageType: Melee'
@@ -1551,11 +1322,6 @@
   rarity: 3
 剑鱼:
   item: STONE_SWORD
-  lore:
-  - §r37 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 37'
   - 'damageType: Melee'
@@ -1566,11 +1332,6 @@
   rarity: 2
 毁灭刃:
   item: DIAMOND_SWORD
-  lore:
-  - §r86 近战伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r很强的击退威力
   attributes:
   - 'damage: 86'
   - 'damageType: Melee'
@@ -1581,11 +1342,6 @@
   rarity: 4
 钴剑:
   item: DIAMOND_SWORD
-  lore:
-  - §r78 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r弱的击退威力
   attributes:
   - 'damage: 78'
   - 'damageType: Melee'
@@ -1596,11 +1352,6 @@
   rarity: 4
 秘银剑:
   item: DIAMOND_SWORD
-  lore:
-  - §r88 近战伤害
-  - §r4% 暴击率
-  - §r一般的使用速度
-  - §r一般的击退威力
   attributes:
   - 'damage: 88'
   - 'damageType: Melee'
@@ -1611,11 +1362,6 @@
   rarity: 4
 精金剑:
   item: DIAMOND_SWORD
-  lore:
-  - §r100 近战伤害
-  - §r4% 暴击率
-  - §r一般的使用速度
-  - §r一般的击退威力
   attributes:
   - 'damage: 100'
   - 'damageType: Melee'
@@ -1626,11 +1372,6 @@
   rarity: 4
 圣剑:
   item: DIAMOND_SWORD
-  lore:
-  - §r132 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 132'
   - 'damageType: Melee'
@@ -1645,11 +1386,6 @@
   rarity: 8
 真·永夜之刃:
   item: DIAMOND_SWORD
-  lore:
-  - §r210 近战伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 210'
   - 'damageType: Melee'
@@ -1660,11 +1396,6 @@
   rarity: 8
 真·圣剑:
   item: DIAMOND_SWORD
-  lore:
-  - §r140 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 140'
   - 'damageType: Melee'
@@ -1675,11 +1406,6 @@
   rarity: 8
 泰拉之刃:
   item: DIAMOND_SWORD
-  lore:
-  - §r230 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r较强的击退威力
   attributes:
   - 'damage: 230'
   - 'damageType: Melee'
@@ -1691,10 +1417,6 @@
 叶绿军刀:
   item: DIAMOND_SWORD
   lore:
-  - §r114 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r较弱的击退威力
   - §r射出孢子球
   attributes:
   - 'damage: 114'
@@ -1707,10 +1429,6 @@
 叶绿双刃刀:
   item: DIAMOND_SWORD
   lore:
-  - §r150 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r普通的击退威力
   - §r射出叶绿珠
   attributes:
   - 'damage: 150'
@@ -1722,11 +1440,6 @@
   rarity: 7
 吉他斧:
   item: DIAMOND_SWORD
-  lore:
-  - §r105 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r很强的击退威力
   attributes:
   - 'damage: 105'
   - 'damageType: Melee'
@@ -1737,11 +1450,6 @@
   rarity: 8
 钥匙剑:
   item: DIAMOND_SWORD
-  lore:
-  - §r170 近战伤害
-  - §r17% 暴击率
-  - §r很快的使用速度
-  - §r较强的击退威力
   attributes:
   - 'damage: 170'
   - 'damageType: Melee'
@@ -1753,10 +1461,6 @@
 死神镰刀:
   item: DIAMOND_SWORD
   lore:
-  - §r114 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r较强的击退威力
   - §r§o射出致命镰刀
   attributes:
   - 'damage: 114'
@@ -1768,11 +1472,6 @@
   rarity: 5
 圣诞树剑:
   item: DIAMOND_SWORD
-  lore:
-  - §r172 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r较强的击退威力
   attributes:
   - 'damage: 172'
   - 'damageType: Melee'
@@ -1784,10 +1483,6 @@
 无头骑士剑:
   item: DIAMOND_SWORD
   lore:
-  - §r150 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r很强的击退威力
   - §r射出南瓜头
   attributes:
   - 'damage: 150'
@@ -1799,11 +1494,6 @@
   rarity: 8
 种子弯刀:
   item: DIAMOND_SWORD
-  lore:
-  - §r100 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 100'
   - 'damageType: Melee'
@@ -1814,11 +1504,6 @@
   rarity: 5
 狂星之怒:
   item: DIAMOND_SWORD
-  lore:
-  - §r220 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r较强的击退威力
   attributes:
   - 'damage: 220'
   - 'damageType: Melee'
@@ -1829,11 +1514,6 @@
   rarity: 9
 彩虹猫之刃:
   item: DIAMOND_SWORD
-  lore:
-  - §r400 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r较强的击退威力
   attributes:
   - 'damage: 400'
   - 'damageType: Melee'
@@ -1844,11 +1524,6 @@
   rarity: 10
 天顶剑:
   item: DIAMOND_SWORD
-  lore:
-  - §r400 近战伤害
-  - §r14% 暴击率
-  - §r普通的使用速度
-  - §r弱的击退威力
   attributes:
   - 'damage: 400'
   - 'damageType: Melee'
@@ -1859,11 +1534,6 @@
   rarity: 10
 钴薙刀:
   item: DIAMOND_SWORD
-  lore:
-  - §r43 近战伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r较弱的击退威力
   attributes:
   - 'damage: 43'
   - 'damageType: Melee'
@@ -1874,11 +1544,6 @@
   rarity: 4
 秘银长戟:
   item: DIAMOND_SWORD
-  lore:
-  - §r52 近战伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 52'
   - 'damageType: Melee'
@@ -1889,11 +1554,6 @@
   rarity: 4
 精金关刀:
   item: DIAMOND_SWORD
-  lore:
-  - §r57 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 57'
   - 'damageType: Melee'
@@ -1904,11 +1564,6 @@
   rarity: 4
 永恒之枪:
   item: DIAMOND_SWORD
-  lore:
-  - §r84 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r较强的击退威力
   attributes:
   - 'damage: 84'
   - 'damageType: Melee'
@@ -1920,10 +1575,6 @@
 叶绿镋:
   item: DIAMOND_SWORD
   lore:
-  - §r98 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r较强的击退威力
   - §r射出孢子球
   attributes:
   - 'damage: 98'
@@ -1935,11 +1586,6 @@
   rarity: 7
 北极:
   item: DIAMOND_SWORD
-  lore:
-  - §r146 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r较强的击退威力
   attributes:
   - 'damage: 146'
   - 'damageType: Melee'
@@ -1950,11 +1596,6 @@
   rarity: 7
 星光:
   item: DIAMOND_SWORD
-  lore:
-  - §r120 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r弱的击退威力
   attributes:
   - 'damage: 120'
   - 'damageType: Melee'
@@ -1966,10 +1607,6 @@
 破晓之光:
   item: DIAMOND_SWORD
   lore:
-  - §r300 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通的击退威力
   - §r“用光明之矛将敌人四分五裂！”
   attributes:
   - 'damage: 300'
@@ -1981,11 +1618,6 @@
   rarity: 10
 木制回力镖:
   item: STICK
-  lore:
-  - §r16 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 16'
   - 'damageType: Melee'
@@ -1996,11 +1628,6 @@
   rarity: 0
 附魔回力镖:
   item: STICK
-  lore:
-  - §r26 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很强的击退威力
   attributes:
   - 'damage: 26'
   - 'damageType: Melee'
@@ -2011,11 +1638,6 @@
   rarity: 1
 荆棘旋刃:
   item: STICK
-  lore:
-  - §r50 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很强的击退威力
   attributes:
   - 'damage: 50'
   - 'damageType: Melee'
@@ -2026,11 +1648,6 @@
   rarity: 3
 烈焰回旋镖:
   item: STICK
-  lore:
-  - §r62 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很强的击退威力
   attributes:
   - 'damage: 62'
   - 'damageType: Melee'
@@ -2043,10 +1660,6 @@
 疯狂飞斧:
   item: STICK
   lore:
-  - §r160 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通的击退威力
   - §r追杀敌人
   attributes:
   - 'damage: 160'
@@ -2058,11 +1671,6 @@
   rarity: 7
 链锤:
   item: STICK
-  lore:
-  - §r30 近战伤害
-  - §r4% 暴击率
-  - §r非常慢的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 30'
   - 'damageType: Melee'
@@ -2073,11 +1681,6 @@
   rarity: 1
 火焰锤:
   item: STICK
-  lore:
-  - §r36 近战伤害
-  - §r4% 暴击率
-  - §r非常慢的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 36'
   - 'damageType: Melee'
@@ -2089,11 +1692,6 @@
   rarity: 1
 蓝月:
   item: STICK
-  lore:
-  - §r60 近战伤害
-  - §r4% 暴击率
-  - §r非常慢的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 60'
   - 'damageType: Melee'
@@ -2104,11 +1702,6 @@
   rarity: 2
 太极连枷:
   item: STICK
-  lore:
-  - §r126 近战伤害
-  - §r4% 暴击率
-  - §r很慢的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 126'
   - 'damageType: Melee'
@@ -2120,10 +1713,6 @@
 猪鲨链球:
   item: STICK
   lore:
-  - §r132 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通的击退威力
   - §r喷出自动寻敌泡泡
   attributes:
   - 'damage: 132'
@@ -2135,11 +1724,6 @@
   rarity: 8
 木制悠悠球:
   item: STICK
-  lore:
-  - §r18 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r非常弱的击退威力
   attributes:
   - 'damage: 18'
   - 'damageType: Melee'
@@ -2151,11 +1735,6 @@
   rarity: 0
 抑郁球:
   item: STICK
-  lore:
-  - §r32 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 32'
   - 'damageType: Melee'
@@ -2167,11 +1746,6 @@
   rarity: 1
 亚马逊悠悠球:
   item: STICK
-  lore:
-  - §r36 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r弱的击退威力
   attributes:
   - 'damage: 36'
   - 'damageType: Melee'
@@ -2183,11 +1757,6 @@
   rarity: 3
 克苏鲁之眼悠悠球:
   item: STICK
-  lore:
-  - §r230 近战伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 230'
   - 'damageType: Melee'
@@ -2199,11 +1768,6 @@
   rarity: 8
 泰拉悠悠球:
   item: STICK
-  lore:
-  - §r300 近战伤害
-  - §r14% 暴击率
-  - §r快的使用速度
-  - §r较强的击退威力
   attributes:
   - 'damage: 300'
   - 'damageType: Melee'
@@ -2215,11 +1779,6 @@
   rarity: 10
 木弓:
   item: BOW
-  lore:
-  - §r8 远程伤害
-  - §r4% 暴击率
-  - §r中等的使用速度
-  - §r无击退威力
   attributes:
   - 'damage: 8'
   - 'damageType: Arrow'
@@ -2231,11 +1790,6 @@
   rarity: 0
 钨钢弓:
   item: BOW
-  lore:
-  - §r22 远程伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 22'
   - 'damageType: Arrow'
@@ -2247,11 +1801,6 @@
   rarity: 1
 铜质短弓:
   item: BOW
-  lore:
-  - §r12 远程伤害
-  - §r4% 暴击率
-  - §r中等的使用速度
-  - §r无击退威力
   attributes:
   - 'damage: 12'
   - 'damageType: Arrow'
@@ -2263,11 +1812,6 @@
   rarity: 0
 铁弓:
   item: BOW
-  lore:
-  - §r16 远程伤害
-  - §r4% 暴击率
-  - §r中等的使用速度
-  - §r无击退威力
   attributes:
   - 'damage: 16'
   - 'damageType: Arrow'
@@ -2279,11 +1823,6 @@
   rarity: 0
 银弓:
   item: BOW
-  lore:
-  - §r18 远程伤害
-  - §r4% 暴击率
-  - §r中等的使用速度
-  - §r无击退威力
   attributes:
   - 'damage: 18'
   - 'damageType: Arrow'
@@ -2295,11 +1834,6 @@
   rarity: 0
 金弓:
   item: BOW
-  lore:
-  - §r22 远程伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r无击退威力
   attributes:
   - 'damage: 22'
   - 'damageType: Arrow'
@@ -2311,11 +1845,6 @@
   rarity: 0
 恶魔弓:
   item: BOW
-  lore:
-  - §r30 远程伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r极弱击退威力
   attributes:
   - 'damage: 30'
   - 'damageType: Arrow'
@@ -2327,11 +1856,6 @@
   rarity: 1
 熔火之怒:
   item: BOW
-  lore:
-  - §r60 远程伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 60'
   - 'damageType: Arrow'
@@ -2343,11 +1867,6 @@
   rarity: 3
 代达罗斯风暴弓:
   item: BOW
-  lore:
-  - §r60 远程伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 60'
   - 'damageType: Arrow'
@@ -2359,11 +1878,6 @@
   rarity: 5
 钴连弩:
   item: BOW
-  lore:
-  - §r64 远程伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 64'
   - 'damageType: Arrow'
@@ -2375,11 +1889,6 @@
   rarity: 4
 秘银连弩:
   item: BOW
-  lore:
-  - §r72 远程伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 72'
   - 'damageType: Arrow'
@@ -2391,11 +1900,6 @@
   rarity: 4
 精金连弩:
   item: BOW
-  lore:
-  - §r80 远程伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 80'
   - 'damageType: Arrow'
@@ -2407,11 +1911,6 @@
   rarity: 4
 神圣连弩:
   item: BOW
-  lore:
-  - §r106 远程伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 106'
   - 'damageType: Arrow'
@@ -2423,11 +1922,6 @@
   rarity: 5
 叶绿连弩:
   item: BOW
-  lore:
-  - §r51 远程伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 51'
   - 'damageType: Arrow'
@@ -2439,11 +1933,6 @@
   rarity: 7
 海啸弓:
   item: BOW
-  lore:
-  - §r120 远程伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 120'
   - 'damageType: Arrow'
@@ -2455,11 +1944,6 @@
   rarity: 8
 日暮:
   item: BOW
-  lore:
-  - §r100 远程伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 75'
   - 'damageType: Arrow'
@@ -2472,12 +1956,6 @@
   rarity: 8
 幻象弓:
   item: BOW
-  lore:
-  - §r100 远程伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
-  - §r66%几率不消耗弹药
   attributes:
   - 'damage: 100'
   - 'damageType: Arrow'
@@ -2490,11 +1968,6 @@
   rarity: 10
 榴弹发射器:
   item: BLAZE_ROD
-  lore:
-  - §r120 远程伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r较弱的击退威力
   attributes:
   - 'bounce: 4'
   - 'damage: 120'
@@ -2508,10 +1981,6 @@
 雪人炮:
   item: BLAZE_ROD
   lore:
-  - §r134 远程伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r较弱的击退威力
   - §r发射自动寻敌的导弹
   attributes:
   - 'damage: 134'
@@ -2524,11 +1993,6 @@
   rarity: 8
 喜庆弹射器:
   item: BLAZE_ROD
-  lore:
-  - §r130 远程伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r较弱的击退威力
   attributes:
   - 'damage: 130'
   - 'damageType: Rocket'
@@ -2541,10 +2005,6 @@
 气泵枪:
   item: BLAZE_ROD
   lore:
-  - §r54 远程伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r极弱的击退威力
   - §r将至多5枚南瓜榴弹装填后一次性射出
   attributes:
   - 'damage: 54'
@@ -2558,12 +2018,7 @@
 骨头手套:
   item: BOW
   lore:
-  - §r40 远程伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
   - §r投出骨头
-  - §r手持它右键石砖会令其沾染上阴森的气息……
   - §6专家模式物品
   attributes:
   - 'damage: 40'
@@ -2578,11 +2033,6 @@
   rarity: 1000
 尖桩发射器:
   item: BOW
-  lore:
-  - §r150 远程伤害
-  - §r14% 暴击率
-  - §r很快的使用速度
-  - §r较强的击退威力
   attributes:
   - 'damage: 200'
   - 'damageType: Arrow'
@@ -2597,8 +2047,6 @@
 尖桩:
   item: FLINT
   lore:
-  - §r50 远程伤害
-  - §r4% 暴击率
   - §r尖桩发射器的弹药
   attributes:
   - 'damage: 50'
@@ -2611,12 +2059,6 @@
   rarity: 0
 玉米糖步枪:
   item: BOW
-  lore:
-  - §r88 远程伤害
-  - §r10% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
-  - §r33%的几率不消耗弹药
   attributes:
   - 'damage: 106'
   - 'damageType: Arrow'
@@ -2632,8 +2074,6 @@
 玉米糖:
   item: FLINT
   lore:
-  - §r18 远程伤害
-  - §r4% 暴击率
   - §r玉米糖步枪的弹药
   attributes:
   - 'damage: 18'
@@ -2645,11 +2085,6 @@
   rarity: 0
 杰克南瓜灯发射器:
   item: BOW
-  lore:
-  - §r130 远程伤害
-  - §r10% 暴击率
-  - §r快的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 250'
   - 'damageType: Arrow'
@@ -2663,8 +2098,6 @@
 爆炸杰克南瓜灯:
   item: FLINT
   lore:
-  - §r120 远程伤害
-  - §r4% 暴击率
   - §r杰克南瓜灯发射器的弹药
   attributes:
   - 'damage: 120'
@@ -2676,11 +2109,6 @@
   rarity: 0
 精灵熔枪:
   item: BOW
-  lore:
-  - §r100 远程伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r极弱的击退威力
   attributes:
   - 'damage: 100'
   - 'damageType: Arrow'
@@ -2693,11 +2121,6 @@
   rarity: 8
 燧发枪:
   item: BLAZE_ROD
-  lore:
-  - §r20 远程伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r无击退威力
   attributes:
   - 'damage: 20'
   - 'damageType: Bullet'
@@ -2710,11 +2133,6 @@
   rarity: 1
 左轮手枪:
   item: BLAZE_ROD
-  lore:
-  - §r40 远程伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r较弱击退威力
   attributes:
   - 'damage: 40'
   - 'damageType: Bullet'
@@ -2726,12 +2144,6 @@
   rarity: 2
 迷你鲨:
   item: BLAZE_ROD
-  lore:
-  - §r12 远程伤害
-  - §r4% 暴击率
-  - §r超快的使用速度
-  - §r无击退威力
-  - §r33%几率不消耗弹药
   attributes:
   - 'damage: 12'
   - 'damageType: Bullet'
@@ -2745,10 +2157,6 @@
 发条突击步枪:
   item: BLAZE_ROD
   lore:
-  - §r34 远程伤害
-  - §r4% 暴击率
-  - §r极快的使用速度
-  - §r无击退威力
   - §r三连发，只有第一发消耗弹药
   attributes:
   - 'damage: 34'
@@ -2762,11 +2170,6 @@
 巨兽鲨:
   item: BLAZE_ROD
   lore:
-  - §r50 远程伤害
-  - §r4% 暴击率
-  - §r超快的使用速度
-  - §r极弱的击退威力
-  - §r50%几率不消耗弹药
   - §r“迷你鲨的老大哥”
   attributes:
   - 'damage: 50'
@@ -2780,11 +2183,6 @@
   rarity: 5
 金星马格南:
   item: BLAZE_ROD
-  lore:
-  - §r60 远程伤害
-  - §r4% 暴击率
-  - §r超快的使用速度
-  - §r普通的击退威力
   attributes:
   - 'damage: 60'
   - 'damageType: Bullet'
@@ -2797,11 +2195,6 @@
   rarity: 7
 狙击步枪:
   item: BLAZE_ROD
-  lore:
-  - §r370 远程伤害
-  - §r29% 暴击率
-  - §r很慢的使用速度
-  - §r很强的击退威力
   attributes:
   - 'damage: 370'
   - 'damageType: Bullet'
@@ -2814,11 +2207,6 @@
   rarity: 8
 战术霰弹枪:
   item: BLAZE_ROD
-  lore:
-  - §r58 远程伤害
-  - §r4% 暴击率
-  - §r慢的使用速度
-  - §r较强的击退威力
   attributes:
   - 'damage: 58'
   - 'damageType: Bullet'
@@ -2830,12 +2218,6 @@
   rarity: 8
 链式机枪:
   item: BLAZE_ROD
-  lore:
-  - §r62 远程伤害
-  - §r4% 暴击率
-  - §r超快的使用速度
-  - §r很弱的击退威力
-  - §r50%几率不会消耗弹药
   attributes:
   - 'damage: 62'
   - 'damageType: Bullet'
@@ -2849,11 +2231,6 @@
 星璇机枪:
   item: BLAZE_ROD
   lore:
-  - §r100 远程伤害
-  - §r4% 暴击率
-  - §r极快的使用速度
-  - §r无击退威力
-  - §r66%几率不消耗弹药
   - §r“劈劈啪啪，乒乒乓乓，一顿混乱，惨绝人寰。”
   attributes:
   - 'damage: 100'
@@ -2868,11 +2245,6 @@
 太空海豚机枪:
   item: BLAZE_ROD
   lore:
-  - §r170 远程伤害
-  - §r4% 暴击率
-  - §r超快的使用速度
-  - §r很弱的击退威力
-  - §r66%几率不消耗弹药
   - §r“它来自太空边缘”
   attributes:
   - 'damage: 170'
@@ -2886,11 +2258,6 @@
   rarity: 10
 四管猎枪:
   item: BLAZE_ROD
-  lore:
-  - §r47 远程伤害
-  - §r4% 暴击率
-  - §r很慢的使用速度
-  - §r较强击退威力
   attributes:
   - 'damage: 47'
   - 'damageType: Bullet'
@@ -2902,11 +2269,6 @@
   rarity: 3
 玛瑙爆破枪:
   item: BLAZE_ROD
-  lore:
-  - §r48 远程伤害
-  - §r4% 暴击率
-  - §r很慢的使用速度
-  - §r强击退威力
   attributes:
   - 'damage: 48'
   - 'damageType: Bullet'
@@ -2918,11 +2280,6 @@
   rarity: 4
 手枪:
   item: BLAZE_ROD
-  lore:
-  - §r34 远程伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 34'
   - 'damageType: Bullet'
@@ -2934,11 +2291,6 @@
   rarity: 2
 凤凰爆破枪:
   item: BLAZE_ROD
-  lore:
-  - §r48 远程伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 48'
   - 'damageType: Bullet'
@@ -2950,12 +2302,6 @@
   rarity: 3
 火花魔棒:
   item: STICK
-  lore:
-  - §r24 魔法伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r无击退威力
-  - §r魔法 消耗4
   attributes:
   - 'damage: 24'
   - 'damageType: Magic'
@@ -2969,11 +2315,6 @@
 钨钢法杖:
   item: STICK
   lore:
-  - §r26 魔法伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
-  - §r魔法 消耗2
   - §r发射钨钢光球
   attributes:
   - 'damage: 26'
@@ -2988,12 +2329,6 @@
   rarity: 1
 钻石法杖:
   item: DIAMOND_SWORD
-  lore:
-  - §r46 魔法伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r普通击退威力
-  - §r魔法 消耗16
   attributes:
   - 'damage: 46'
   - 'damageType: Magic'
@@ -3007,12 +2342,6 @@
   rarity: 2
 海蓝权杖:
   item: DIAMOND_SWORD
-  lore:
-  - §r32 魔法伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通击退威力
-  - §r魔法 消耗12
   attributes:
   - 'damage: 32'
   - 'damageType: Magic'
@@ -3026,12 +2355,6 @@
   rarity: 2
 太空枪:
   item: WOOD_SWORD
-  lore:
-  - §r36 魔法伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
-  - §r魔法 消耗14
   attributes:
   - 'damage: 36'
   - 'damageType: Magic'
@@ -3045,12 +2368,6 @@
   rarity: 1
 水矢:
   item: BOOK
-  lore:
-  - §r40 魔法伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通击退威力
-  - §r魔法 消耗20
   attributes:
   - 'damage: 40'
   - 'damageType: Magic'
@@ -3065,12 +2382,6 @@
   rarity: 2
 骷髅头法书:
   item: BOOK
-  lore:
-  - §r56 魔法伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r弱击退威力
-  - §r魔法 消耗18
   attributes:
   - 'damage: 56'
   - 'damageType: Magic'
@@ -3084,12 +2395,6 @@
   rarity: 2
 恶魔锄刀:
   item: BOOK
-  lore:
-  - §r70 魔法伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r普通击退威力
-  - §r魔法 消耗30
   attributes:
   - 'damage: 70'
   - 'damageType: Magic'
@@ -3102,12 +2407,6 @@
   rarity: 3
 邪恶三叉戟:
   item: DIAMOND_SWORD
-  lore:
-  - §r130 魔法伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r强的击退威力
-  - §r魔法 消耗19
   attributes:
   - 'damage: 130'
   - 'damageType: Magic'
@@ -3121,12 +2420,6 @@
   rarity: 5
 激光步枪:
   item: DIAMOND_SWORD
-  lore:
-  - §r58 魔法伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
-  - §r魔法 消耗8
   attributes:
   - 'damage: 58'
   - 'damageType: Magic'
@@ -3141,11 +2434,6 @@
 水晶风暴:
   item: BOOK
   lore:
-  - §r64 魔法伤害
-  - §r4% 暴击率
-  - §r超快的使用速度
-  - §r普通的击退威力
-  - §r魔法 消耗5
   - §r召唤快速发射的水晶碎块
   attributes:
   - 'damage: 64'
@@ -3160,12 +2448,6 @@
   rarity: 4
 裂天剑:
   item: DIAMOND_SWORD
-  lore:
-  - §r76 魔法伤害
-  - §r24% 暴击率
-  - §r很快的使用速度
-  - §r普通的击退威力
-  - §r魔法 消耗17
   attributes:
   - 'damage: 76'
   - 'damageType: Magic'
@@ -3178,13 +2460,6 @@
   rarity: 4
 爆裂藤蔓:
   item: DIAMOND_SWORD
-  lore:
-  - §r50 魔法伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r极弱的击退威力
-  - §r魔法 消耗12
-  - §r忽略20点敌人防御
   attributes:
   - 'armorPenetration: 20'
   - 'damage: 50'
@@ -3198,11 +2473,6 @@
 吹叶机:
   item: DIAMOND_SWORD
   lore:
-  - §r72 魔法伤害
-  - §r4% 暴击率
-  - §r超快的使用速度
-  - §r较弱的击退威力
-  - §r魔法 消耗4
   - §r快速射出刀锋般锋利的树叶
   attributes:
   - 'damage: 72'
@@ -3217,11 +2487,6 @@
 狱火叉:
   item: DIAMOND_SWORD
   lore:
-  - §r200 魔法伤害
-  - §r4% 暴击率
-  - §r较快的使用速度
-  - §r很强的击退威力
-  - §r魔法 消耗18
   - §r发射造成破晓的火光球
   attributes:
   - 'damage: 200'
@@ -3236,11 +2501,6 @@
 暗影束法杖:
   item: DIAMOND_SWORD
   lore:
-  - §r120 魔法伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r较弱的击退威力
-  - §r魔法 消耗7
   - §r产生会在墙上反弹的暗影光束
   attributes:
   - 'damage: 120'
@@ -3254,11 +2514,6 @@
 幽灵法杖:
   item: DIAMOND_SWORD
   lore:
-  - §r130 魔法伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r普通的击退威力
-  - §r魔法 消耗15
   - §r召唤亡魂来追杀敌人
   attributes:
   - 'damage: 130'
@@ -3275,11 +2530,6 @@
 高温射线枪:
   item: DIAMOND_SWORD
   lore:
-  - §r160 魔法伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
-  - §r魔法 消耗8
   - §r射出灼热的高温射线
   - §r“喔啦！！”
   attributes:
@@ -3293,12 +2543,6 @@
   rarity: 7
 剃刀松:
   item: DIAMOND_SWORD
-  lore:
-  - §r96 魔法伤害
-  - §r4% 暴击率
-  - §r超快的使用速度
-  - §r较弱的击退威力
-  - §r魔法 消耗5
   attributes:
   - 'damage: 96'
   - 'damageType: Magic'
@@ -3311,12 +2555,6 @@
   rarity: 8
 暴雪法杖:
   item: DIAMOND_SWORD
-  lore:
-  - §r116 魔法伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通的击退威力
-  - §r魔法 消耗9
   attributes:
   - 'damage: 116'
   - 'damageType: Magic'
@@ -3329,12 +2567,6 @@
   rarity: 8
 蝙蝠权杖:
   item: DIAMOND_SWORD
-  lore:
-  - §r90 魔法伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
-  - §r魔法 消耗6
   attributes:
   - 'damage: 90'
   - 'damageType: Magic'
@@ -3347,12 +2579,6 @@
   rarity: 8
 夜光:
   item: DIAMOND_SWORD
-  lore:
-  - §r100 魔法伤害
-  - §r4% 暴击率
-  - §r慢的使用速度
-  - §r很弱的击退威力
-  - §r魔法 消耗20
   attributes:
   - 'damage: 100'
   - 'damageType: Magic'
@@ -3368,11 +2594,6 @@
 泡泡枪:
   item: DIAMOND_SWORD
   lore:
-  - §r140 魔法伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
-  - §r魔法 消耗4
   - §r快速射出强劲的泡泡
   attributes:
   - 'damage: 140'
@@ -3387,11 +2608,6 @@
 利刃台风:
   item: BOOK
   lore:
-  - §r120 魔法伤害
-  - §r4% 暴击率
-  - §r很慢的使用速度
-  - §r普通的击退威力
-  - §r魔法 消耗16
   - §r发射快速移动的利刃台风
   attributes:
   - 'damage: 120'
@@ -3408,11 +2624,6 @@
 星云烈焰:
   item: DIAMOND_SWORD
   lore:
-  - §r260 魔法伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r无击退威力
-  - §r魔法 消耗12
   - §r“从猎户座腰带收到掌中”
   attributes:
   - 'damage: 260'
@@ -3427,11 +2638,6 @@
 星云奥秘:
   item: DIAMOND_SWORD
   lore:
-  - §r140 魔法伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r普通的击退威力
-  - §r魔法 消耗30
   - §r“召唤大量星体能量来追杀敌人”
   attributes:
   - 'damage: 140'
@@ -3448,11 +2654,6 @@
 月之耀斑:
   item: BOOK
   lore:
-  - §r200 魔法伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r普通击退威力
-  - §r魔法 消耗13
   - §r射出月之耀斑
   attributes:
   - 'damage: 200'
@@ -3467,11 +2668,6 @@
 终极棱镜:
   item: BOOK
   lore:
-  - §r125 魔法伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r无击退威力
-  - §r魔法 消耗12
   - §r“发射生命解离彩虹”
   attributes:
   - 'damage: 125'
@@ -3485,10 +2681,6 @@
 蜘蛛女王法杖:
   item: DIAMOND_SWORD
   lore:
-  - §r150 召唤伤害
-  - §r普通的使用速度
-  - §r很强的击退威力
-  - §r魔法 消耗10
   - §r召唤哨兵
   - §r召唤蜘蛛女王来朝敌人吐蜘蛛卵
   - §r“啊↗啊↑啊→啊→啊↓啊↓啊↓”
@@ -3503,10 +2695,6 @@
 月亮传送门法杖:
   item: DIAMOND_SWORD
   lore:
-  - §r100 召唤伤害
-  - §r普通的使用速度
-  - §r很强的击退威力
-  - §r魔法 消耗10
   - §r召唤哨兵
   - §r召唤月亮传送门，向敌人发射激光
   attributes:
@@ -3520,10 +2708,6 @@
 七彩水晶法杖:
   item: DIAMOND_SWORD
   lore:
-  - §r260 召唤伤害
-  - §r普通的使用速度
-  - §r很强的击退威力
-  - §r魔法 消耗10
   - §r召唤哨兵
   - §r召唤用来驱逐敌人的放射水晶
   - §r“公爵，多么缤纷的颜色！”
@@ -3538,10 +2722,6 @@
 史莱姆法杖:
   item: WOOD_SWORD
   lore:
-  - §r16 召唤伤害
-  - §r普通的使用速度
-  - §r非常弱击退威力
-  - §r魔法 消耗20
   - §r召唤小史莱姆来为你战斗
   attributes:
   - 'damage: 16'
@@ -3555,10 +2735,6 @@
 钨钢控制器:
   item: WOOD_SWORD
   lore:
-  - §r20 召唤伤害
-  - §r慢的使用速度
-  - §r极弱的击退威力
-  - §r魔法 消耗10
   - §r召唤钨钢机器人为你而战
   attributes:
   - 'damage: 20'
@@ -3572,10 +2748,6 @@
 小鬼法杖:
   item: WOOD_SWORD
   lore:
-  - §r34 召唤伤害
-  - §r很慢的使用速度
-  - §r非常弱击退威力
-  - §r魔法 消耗20
   - §r召唤小鬼来为你战斗
   attributes:
   - 'damage: 34'
@@ -3588,10 +2760,6 @@
 蜘蛛法杖:
   item: DIAMOND_SWORD
   lore:
-  - §r52 召唤伤害
-  - §r很慢的使用速度
-  - §r很弱的击退威力
-  - §r魔法 消耗10
   - §r召唤蜘蛛来为你战斗
   - §r“这个好像……是一个……蜘蛛！”
   attributes:
@@ -3605,10 +2773,6 @@
 刃杖:
   item: DIAMOND_SWORD
   lore:
-  - §r12 召唤伤害
-  - §r很慢的使用速度
-  - §r无击退威力
-  - §r魔法 消耗10
   - §r召唤附魔飞刀来为你战斗
   - §r“千刀万剐”
   attributes:
@@ -3623,10 +2787,6 @@
 魔眼法杖:
   item: DIAMOND_SWORD
   lore:
-  - §r60 召唤伤害
-  - §r很慢的使用速度
-  - §r很弱的击退威力
-  - §r魔法 消耗10
   - §r召唤双子魔眼来为你战斗
   attributes:
   - 'damage: 60'
@@ -3639,10 +2799,6 @@
 矮人法杖:
   item: DIAMOND_SWORD
   lore:
-  - §r70 召唤伤害
-  - §r普通的使用速度
-  - §r很弱的击退威力
-  - §r魔法 消耗10
   - §r召唤矮人来为你战斗
   attributes:
   - 'damage: 70'
@@ -3655,10 +2811,6 @@
 致命球法杖:
   item: DIAMOND_SWORD
   lore:
-  - §r100 召唤伤害
-  - §r很慢的使用速度
-  - §r很弱的击退威力
-  - §r魔法 消耗10
   - §r召唤致命球来为你战斗
   attributes:
   - 'damage: 100'
@@ -3671,10 +2823,6 @@
 泰拉棱镜:
   item: DIAMOND_SWORD
   lore:
-  - §r180 召唤伤害
-  - §r很慢的使用速度
-  - §r很弱的击退威力
-  - §r魔法 消耗10
   - §r召唤附魔剑来为你战斗
   attributes:
   - 'damage: 180'
@@ -3687,10 +2835,6 @@
 星尘细胞法杖:
   item: DIAMOND_SWORD
   lore:
-  - §r120 召唤伤害
-  - §r很慢的使用速度
-  - §r很弱的击退威力
-  - §r魔法 消耗10
   - §r召唤星尘细胞来为你战斗
   - §r“培养最美丽的细胞感染”
   attributes:
@@ -3704,10 +2848,6 @@
 星尘之龙法杖:
   item: DIAMOND_SWORD
   lore:
-  - §r80 召唤伤害
-  - §r很慢的使用速度
-  - §r很弱的击退威力
-  - §r魔法 消耗10
   - §r召唤星尘之龙来为你战斗
   - §r“有了星尘之龙后，谁还需要一群仆从呢？”
   attributes:
@@ -3720,11 +2860,6 @@
   rarity: 10
 鞭炮:
   item: DIAMOND_SWORD
-  lore:
-  - §r60 召唤伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'buffInflictMelee: 燃烧|80|1'
   - 'damage: 60'
@@ -3736,11 +2871,6 @@
   rarity: 4
 迪朗达尔:
   item: DIAMOND_SWORD
-  lore:
-  - §r110 召唤伤害
-  - §r4% 暴击率
-  - §r较快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 110'
   - 'damageType: Summon'
@@ -3751,11 +2881,6 @@
   rarity: 5
 晨星:
   item: DIAMOND_SWORD
-  lore:
-  - §r360 召唤伤害
-  - §r14% 暴击率
-  - §r很慢的使用速度
-  - §r极强的击退威力
   attributes:
   - 'damage: 360'
   - 'damageType: Summon'
@@ -3766,11 +2891,6 @@
   rarity: 8
 暗黑收割:
   item: DIAMOND_SWORD
-  lore:
-  - §r200 召唤伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 200'
   - 'damageType: Summon'
@@ -3781,11 +2901,6 @@
   rarity: 8
 万花筒:
   item: DIAMOND_SWORD
-  lore:
-  - §r360 召唤伤害
-  - §r4% 暴击率
-  - §r普通的使用速度
-  - §r较弱的击退威力
   attributes:
   - 'damage: 360'
   - 'damageType: Summon'
@@ -3796,11 +2911,6 @@
   rarity: 8
 日耀喷发剑:
   item: DIAMOND_SWORD
-  lore:
-  - §r210 近战伤害
-  - §r4% 暴击率
-  - §r很快的使用速度
-  - §r很弱的击退威力
   attributes:
   - 'damage: 210'
   - 'damageType: Melee'
@@ -3811,11 +2921,6 @@
   rarity: 10
 手里剑:
   item: IRON_NUGGET
-  lore:
-  - §r10 远程伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r无击退威力
   attributes:
   - 'damage: 15'
   - 'damageType: Arrow'
@@ -3828,11 +2933,6 @@
   rarity: 0
 尖刺球:
   item: IRON_NUGGET
-  lore:
-  - §r10 远程伤害
-  - §r4% 暴击率
-  - §r快的使用速度
-  - §r非常弱击退威力
   attributes:
   - 'damage: 15'
   - 'damageType: Arrow'
@@ -3846,11 +2946,6 @@
   rarity: 0
 手榴弹:
   item: IRON_NUGGET
-  lore:
-  - §r120 远程伤害
-  - §r4% 暴击率
-  - §r很慢的使用速度
-  - §r很强的击退威力
   attributes:
   - 'damage: 120'
   - 'damageType: Arrow'
@@ -3863,9 +2958,6 @@
 炸弹:
   item: IRON_NUGGET
   lore:
-  - §r200 远程伤害
-  - §r快的使用速度
-  - §r很强击退威力
   - §r造成会摧毁大部分图格的小爆炸
   attributes:
   - 'damage: 200'
@@ -3879,9 +2971,6 @@
 粘性炸弹:
   item: IRON_NUGGET
   lore:
-  - §r200 远程伤害
-  - §r快的使用速度
-  - §r很强击退威力
   - §r造成会摧毁大部分图格的小爆炸
   - §r“投出去可不是件易事。”
   attributes:
@@ -3896,9 +2985,6 @@
 雷管:
   item: IRON_NUGGET
   lore:
-  - §r500 远程伤害
-  - §r很慢的使用速度
-  - §r很强击退威力
   - §r造成会摧毁大部分图格的大爆炸
   attributes:
   - 'damage: 500'
@@ -3912,9 +2998,6 @@
 粘性雷管:
   item: IRON_NUGGET
   lore:
-  - §r500 远程伤害
-  - §r很慢的使用速度
-  - §r很强击退威力
   - §r造成会摧毁大部分图格的大爆炸
   - §r“投出去可不是件易事。”
   attributes:
@@ -3928,9 +3011,6 @@
   rarity: 1
 木箭:
   item: ARROW
-  lore:
-  - §r10 远程伤害
-  - §r4% 暴击率
   attributes:
   - 'damage: 10'
   - 'damageType: Arrow'
@@ -3941,9 +3021,6 @@
   rarity: 0
 烈焰箭:
   item: ARROW
-  lore:
-  - §r14 远程伤害
-  - §r4% 暴击率
   attributes:
   - 'damage: 14'
   - 'damageType: Arrow'
@@ -3954,9 +3031,6 @@
   rarity: 0
 邪箭:
   item: ARROW
-  lore:
-  - §r24 远程伤害
-  - §r4% 暴击率
   attributes:
   - 'damage: 24'
   - 'damageType: Arrow'
@@ -3968,9 +3042,6 @@
   rarity: 1
 小丑之箭:
   item: ARROW
-  lore:
-  - §r20 远程伤害
-  - §r4% 暴击率
   attributes:
   - 'damage: 20'
   - 'damageType: Arrow'
@@ -3983,9 +3054,6 @@
   rarity: 1
 狱炎箭:
   item: ARROW
-  lore:
-  - §r26 远程伤害
-  - §r4% 暴击率
   attributes:
   - 'damage: 26'
   - 'damageType: Arrow'
@@ -3996,9 +3064,6 @@
   rarity: 2
 冰焰箭:
   item: ARROW
-  lore:
-  - §r18 远程伤害
-  - §r4% 暴击率
   attributes:
   - 'damage: 18'
   - 'damageType: Arrow'
@@ -4010,9 +3075,6 @@
   rarity: 0
 圣箭:
   item: ARROW
-  lore:
-  - §r26 远程伤害
-  - §r4% 暴击率
   attributes:
   - 'damage: 26'
   - 'damageType: Arrow'
@@ -4024,8 +3086,6 @@
 诅咒箭:
   item: ARROW
   lore:
-  - §r29 远程伤害
-  - §r4% 暴击率
   - §r对目标施放酸性毒液
   attributes:
   - 'damage: 25'
@@ -4038,8 +3098,6 @@
 叶绿箭:
   item: ARROW
   lore:
-  - §r24 远程伤害
-  - §r4% 暴击率
   - §r撞墙后弹回
   attributes:
   - 'damage: 24'
@@ -4055,8 +3113,6 @@
 毒液箭:
   item: ARROW
   lore:
-  - §r29 远程伤害
-  - §r4% 暴击率
   - §r对目标施放酸性毒液
   attributes:
   - 'damage: 29'
@@ -4070,8 +3126,6 @@
 夜明箭:
   item: ARROW
   lore:
-  - §r22 远程伤害
-  - §r4% 暴击率
   - §r“以音速射下它们！”
   attributes:
   - 'damage: 24'
@@ -4085,9 +3139,6 @@
   rarity: 9
 火枪子弹:
   item: SLIME_BALL
-  lore:
-  - §r10 远程伤害
-  - §r4% 暴击率
   attributes:
   - 'damage: 10'
   - 'damageType: Bullet'
@@ -4098,9 +3149,6 @@
   rarity: 0
 陨星弹:
   item: SLIME_BALL
-  lore:
-  - §r18 远程伤害
-  - §r4% 暴击率
   attributes:
   - 'damage: 18'
   - 'damageType: Bullet'
@@ -4113,9 +3161,6 @@
   rarity: 1
 银子弹:
   item: SLIME_BALL
-  lore:
-  - §r18 远程伤害
-  - §r4% 暴击率
   attributes:
   - 'damage: 18'
   - 'damageType: Bullet'
@@ -4127,8 +3172,6 @@
 爆炸弹:
   item: SLIME_BALL
   lore:
-  - §r20 远程伤害
-  - §r4% 暴击率
   - §r击中后发生爆炸
   attributes:
   - 'damage: 20'
@@ -4142,8 +3185,6 @@
 绿藻弹:
   item: SLIME_BALL
   lore:
-  - §r18 远程伤害
-  - §r4% 暴击率
   - §r“你跑不掉了……”
   attributes:
   - 'damage: 18'
@@ -4159,8 +3200,6 @@
 水晶子弹:
   item: SLIME_BALL
   lore:
-  - §r18 远程伤害
-  - §r4% 暴击率
   - §r碰撞时产生水晶碎片
   attributes:
   - 'damage: 18'
@@ -4173,9 +3212,6 @@
   rarity: 3
 诅咒弹:
   item: SLIME_BALL
-  lore:
-  - §r24 远程伤害
-  - §r4% 暴击率
   attributes:
   - 'damage: 24'
   - 'damageType: Bullet'
@@ -4188,8 +3224,6 @@
 毒液弹:
   item: SLIME_BALL
   lore:
-  - §r30 远程伤害
-  - §r4% 暴击率
   - §r对目标施放酸性毒液
   attributes:
   - 'damage: 30'
@@ -4203,8 +3237,6 @@
 夜明弹:
   item: SLIME_BALL
   lore:
-  - §r40 远程伤害
-  - §r4% 暴击率
   - §r“鬼怪排成行，一发百中...”
   attributes:
   - 'damage: 40'
@@ -4218,9 +3250,6 @@
   rarity: 9
 初级火箭:
   item: BLAZE_POWDER
-  lore:
-  - §r60 远程伤害
-  - §r4% 暴击率
   attributes:
   - 'damage: 60'
   - 'damageType: Rocket'
@@ -4230,8 +3259,6 @@
 二级火箭:
   item: BLAZE_POWDER
   lore:
-  - §r80 远程伤害
-  - §r4% 暴击率
   - §r爆炸会摧毁图格
   attributes:
   - 'damage: 80'
@@ -4241,9 +3268,6 @@
   rarity: 1
 三级火箭:
   item: BLAZE_POWDER
-  lore:
-  - §r110 远程伤害
-  - §r4% 暴击率
   attributes:
   - 'damage: 110'
   - 'damageType: Rocket'
@@ -4253,8 +3277,6 @@
 四级火箭:
   item: BLAZE_POWDER
   lore:
-  - §r130 远程伤害
-  - §r4% 暴击率
   - §r爆炸会摧毁图格
   attributes:
   - 'damage: 130'
@@ -4264,9 +3286,6 @@
   rarity: 7
 集束火箭:
   item: BLAZE_POWDER
-  lore:
-  - §r75 远程伤害
-  - §r4% 暴击率
   attributes:
   - 'damage: 75'
   - 'damageType: Rocket'
@@ -4305,7 +3324,6 @@
   item: LEATHER_HELMET
   lore:
   - §r[装备]
-  - §r2 防御
   attributes:
   - 'defence: 2'
   rarity: 0
@@ -4313,7 +3331,6 @@
   item: LEATHER_CHESTPLATE
   lore:
   - §r[装备]
-  - §r2 防御
   attributes:
   - 'defence: 2'
   rarity: 0
@@ -4326,7 +3343,6 @@
   item: LEATHER_HELMET
   lore:
   - §r[装备]
-  - §r2 防御
   attributes:
   - 'defence: 2'
   worth: 4000
@@ -4335,7 +3351,6 @@
   item: LEATHER_CHESTPLATE
   lore:
   - §r[装备]
-  - §r2 防御
   attributes:
   - 'defence: 2'
   worth: 6000
@@ -4344,7 +3359,6 @@
   item: LEATHER_LEGGINGS
   lore:
   - §r[装备]
-  - §r2 防御
   attributes:
   - 'defence: 2'
   worth: 5000
@@ -4353,8 +3367,6 @@
   item: IRON_HELMET
   lore:
   - §r[装备]
-  - §r6 防御
-  - §r增加10%近战伤害
   attributes:
   - 'defence: 6'
   - 'damageMeleeMulti: 0.1'
@@ -4364,8 +3376,6 @@
   item: IRON_HELMET
   lore:
   - §r[装备]
-  - §r4 防御
-  - §r增加10%远程伤害
   attributes:
   - 'defence: 4'
   - 'damageRangedMulti: 0.1'
@@ -4375,8 +3385,6 @@
   item: IRON_HELMET
   lore:
   - §r[装备]
-  - §r2 防御
-  - §r增加10%魔法伤害
   attributes:
   - 'defence: 2'
   - 'damageMagicMulti: 0.1'
@@ -4386,9 +3394,8 @@
   item: IRON_HELMET
   lore:
   - §r[装备]
-  - §r0 防御
-  - §r增加10%召唤伤害
   attributes:
+  - 'defence: 0'
   - 'damageSummonMulti: 0.1'
   worth: 150000
   rarity: 1
@@ -4396,8 +3403,6 @@
   item: IRON_CHESTPLATE
   lore:
   - §r[装备]
-  - §r4 防御
-  - §r增加3%暴击率
   attributes:
   - 'defence: 4'
   - 'crit: 3'
@@ -4407,8 +3412,6 @@
   item: IRON_LEGGINGS
   lore:
   - §r[装备]
-  - §r2 防御
-  - §r提高5%移动速度
   attributes:
   - 'defence: 2'
   - 'speedMulti: 0.05'
@@ -4418,7 +3421,6 @@
   item: IRON_HELMET
   lore:
   - §r[装备]
-  - §r2 防御
   attributes:
   - 'defence: 2'
   worth: 25000
@@ -4427,7 +3429,6 @@
   item: IRON_CHESTPLATE
   lore:
   - §r[装备]
-  - §r4 防御
   attributes:
   - 'defence: 4'
   worth: 20000
@@ -4436,7 +3437,6 @@
   item: IRON_LEGGINGS
   lore:
   - §r[装备]
-  - §r2 防御
   attributes:
   - 'defence: 2'
   worth: 15000
@@ -4445,7 +3445,6 @@
   item: IRON_HELMET
   lore:
   - §r[装备]
-  - §r4 防御
   attributes:
   - 'defence: 4'
   worth: 60000
@@ -4454,7 +3453,6 @@
   item: IRON_CHESTPLATE
   lore:
   - §r[装备]
-  - §r6 防御
   attributes:
   - 'defence: 6'
   worth: 100000
@@ -4463,7 +3461,6 @@
   item: IRON_LEGGINGS
   lore:
   - §r[装备]
-  - §r4 防御
   attributes:
   - 'defence: 4'
   worth: 80000
@@ -4472,7 +3469,6 @@
   item: IRON_HELMET
   lore:
   - §r[装备]
-  - §r6 防御
   attributes:
   - 'defence: 6'
   worth: 250000
@@ -4481,7 +3477,6 @@
   item: IRON_CHESTPLATE
   lore:
   - §r[装备]
-  - §r8 防御
   attributes:
   - 'defence: 8'
   worth: 200000
@@ -4490,7 +3485,6 @@
   item: IRON_LEGGINGS
   lore:
   - §r[装备]
-  - §r6 防御
   attributes:
   - 'defence: 6'
   worth: 150000
@@ -4499,8 +3493,6 @@
   item: LEATHER_HELMET
   lore:
   - §r[装备]
-  - §r3 防御
-  - §r+3% 暴击率
   attributes:
   - 'defence: 3'
   - 'crit: 3'
@@ -4510,8 +3502,6 @@
   item: LEATHER_CHESTPLATE
   lore:
   - §r[装备]
-  - §r5 防御
-  - §r+3% 暴击率
   attributes:
   - 'defence: 5'
   - 'crit: 3'
@@ -4521,8 +3511,6 @@
   item: LEATHER_LEGGINGS
   lore:
   - §r[装备]
-  - §r3 防御
-  - §r+3% 暴击率
   attributes:
   - 'defence: 3'
   - 'crit: 3'
@@ -4532,7 +3520,6 @@
   item: GOLD_HELMET
   lore:
   - §r[装备]
-  - §r8 防御
   attributes:
   - 'defence: 8'
   worth: 300000
@@ -4541,7 +3528,6 @@
   item: GOLD_CHESTPLATE
   lore:
   - §r[装备]
-  - §r10 防御
   attributes:
   - 'defence: 10'
   worth: 500000
@@ -4550,7 +3536,6 @@
   item: GOLD_LEGGINGS
   lore:
   - §r[装备]
-  - §r8 防御
   attributes:
   - 'defence: 8'
   worth: 400000
@@ -4559,8 +3544,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r10 防御
-  - §r魔法伤害增加9%
   attributes:
   - 'defence: 10'
   - 'damageMagicMulti: 0.09'
@@ -4570,8 +3553,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r12 防御
-  - §r魔法伤害增加9%
   attributes:
   - 'defence: 12'
   - 'damageMagicMulti: 0.09'
@@ -4581,8 +3562,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r10 防御
-  - §r魔法伤害增加9%
   attributes:
   - 'defence: 10'
   - 'damageMagicMulti: 0.09'
@@ -4592,7 +3571,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r12 防御
   attributes:
   - 'defence: 12'
   worth: 750000
@@ -4601,7 +3579,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r14 防御
   attributes:
   - 'defence: 14'
   worth: 600000
@@ -4610,7 +3587,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r12 防御
   attributes:
   - 'defence: 12'
   worth: 450000
@@ -4619,7 +3595,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r16 防御
   attributes:
   - 'defence: 16'
   worth: 900000
@@ -4628,7 +3603,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r18 防御
   attributes:
   - 'defence: 18'
   worth: 600000
@@ -4637,7 +3611,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r16 防御
   attributes:
   - 'defence: 16'
   worth: 600000
@@ -4646,9 +3619,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r10 防御
-  - §r仆从数量上限提高1个
-  - §r仆从伤害增加5%
   attributes:
   - 'defence: 10'
   - 'minionLimit: 1'
@@ -4659,9 +3629,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r16 防御
-  - §r仆从数量上限提高1个
-  - §r仆从伤害增加5%
   attributes:
   - 'defence: 16'
   - 'minionLimit: 1'
@@ -4672,9 +3639,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r14 防御
-  - §r仆从数量上限提高1个
-  - §r仆从伤害增加6%
   attributes:
   - 'defence: 14'
   - 'minionLimit: 1'
@@ -4685,9 +3649,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r24 防御
-  - §r+5% 暴击率
-  - §r-10% 魔力消耗
   attributes:
   - 'defence: 24'
   - 'crit: 5'
@@ -4698,9 +3659,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r28 防御
-  - §r+5% 伤害
-  - §r-10% 弹药消耗
   attributes:
   - 'defence: 28'
   - 'damageMulti: 0.05'
@@ -4711,9 +3669,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r20 防御
-  - §r+20% 移动速度
-  - §r+10% 近战速度
   attributes:
   - 'defence: 20'
   - 'speedMulti: 0.2'
@@ -4724,10 +3679,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r4 防御
-  - §r+40 法力上限
-  - §r+10% 魔法伤害
-  - §r+9% 暴击率
   attributes:
   - 'defence: 4'
   - 'maxMana: 40'
@@ -4739,9 +3690,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r24 防御
-  - §r+10% 移动速度
-  - §r+15% 近战伤害
   attributes:
   - 'defence: 24'
   - 'speedMulti: 0.1'
@@ -4752,9 +3700,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r8 防御
-  - §r+10% 远程伤害
-  - §r+10% 暴击率
   attributes:
   - 'defence: 8'
   - 'damageRangedMulti: 0.1'
@@ -4765,8 +3710,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r16 防御
-  - §r+5% 暴击率
   attributes:
   - 'defence: 16'
   - 'crit: 5'
@@ -4776,9 +3719,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r16 防御
-  - §r+10% 移动速度
-  - §r+3% 伤害
   attributes:
   - 'defence: 16'
   - 'speedMulti: 0.1'
@@ -4789,9 +3729,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r6 防御
-  - §r+60 法力上限
-  - §r+15% 魔法伤害
   attributes:
   - 'defence: 6'
   - 'maxMana: 60'
@@ -4802,9 +3739,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r32 防御
-  - §r+8% 暴击率
-  - §r+10% 近战伤害
   attributes:
   - 'defence: 32'
   - 'crit: 8'
@@ -4815,9 +3749,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r12 防御
-  - §r+12% 远程伤害
-  - §r+7% 暴击率
   attributes:
   - 'defence: 12'
   - 'damageRangedMulti: 0.12'
@@ -4828,8 +3759,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r24 防御
-  - §r+7% 伤害
   attributes:
   - 'defence: 24'
   - 'damageMulti: 0.07'
@@ -4839,8 +3768,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r18 防御
-  - §r+10% 暴击率
   attributes:
   - 'defence: 18'
   - 'crit: 10'
@@ -4850,10 +3777,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r8 防御
-  - §r+80 法力上限
-  - §r+12% 魔法伤害
-  - §r+12% 暴击率
   attributes:
   - 'defence: 8'
   - 'maxMana: 80'
@@ -4865,9 +3788,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r44 防御
-  - §r+7% 暴击率
-  - §r+14% 近战伤害
   attributes:
   - 'defence: 44'
   - 'crit: 7'
@@ -4878,9 +3798,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r16 防御
-  - §r+14% 远程伤害
-  - §r+10% 暴击率
   attributes:
   - 'defence: 16'
   - 'damageRangedMulti: 0.14'
@@ -4891,8 +3808,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r32 防御
-  - §r+8% 伤害
   attributes:
   - 'defence: 32'
   - 'damageMulti: 0.08'
@@ -4902,9 +3817,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r24 防御
-  - §r+7% 暴击率
-  - §r+5% 移动速度
   attributes:
   - 'defence: 24'
   - 'crit: 7'
@@ -4915,10 +3827,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r14 防御
-  - §r+80 法力上限
-  - §r-17% 魔力消耗
-  - §r+16% 魔法伤害
   attributes:
   - 'defence: 14'
   - 'maxMana: 80'
@@ -4930,9 +3838,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r26 防御
-  - §r+16% 远程伤害
-  - §r20%几率不会消耗弹药
   attributes:
   - 'defence: 26'
   - 'damageRangedMulti: 0.16'
@@ -4943,9 +3848,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r50 防御
-  - §r+16% 近战伤害
-  - §r+6% 暴击率
   attributes:
   - 'defence: 50'
   - 'damageMeleeMulti: 0.16'
@@ -4956,9 +3858,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r36 防御
-  - §r+5% 伤害
-  - §r+7% 暴击率
   attributes:
   - 'defence: 36'
   - 'damageMulti: 0.05'
@@ -4969,9 +3868,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r26 防御
-  - §r+8% 暴击率
-  - §r+5% 移动速度
   attributes:
   - 'defence: 26'
   - 'crit: 8'
@@ -4982,8 +3878,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r12 防御
-  - §r减少 40% 魔法伤害
   attributes:
   - 'defence: 12'
   - 'damageMagicMulti: -0.4'
@@ -4993,9 +3887,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r36 防御
-  - §r最大魔力值增加60，同时魔力消耗减少13%
-  - §r魔法伤害和暴击率各增加10%
   attributes:
   - 'defence: 36'
   - 'maxMana: 60'
@@ -5008,8 +3899,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r28 防御
-  - §r魔法伤害和暴击率各增加7%
   attributes:
   - 'defence: 28'
   - 'damageMagicMulti: 0.07'
@@ -5020,9 +3909,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r20 防御
-  - §r魔法伤害增加8%
-  - §r移动速度提高8%
   attributes:
   - 'defence: 20'
   - 'damageMagicMulti: 0.08'
@@ -5033,9 +3919,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r46 防御
-  - §r近战伤害增加6%
-  - §r刷怪数量和效率增加
   attributes:
   - 'defence: 46'
   - 'damageMeleeMulti: 0.06'
@@ -5047,9 +3930,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r40 防御
-  - §r近战伤害和暴击率各增加8%
-  - §r移动和近战速度各提高6%
   attributes:
   - 'defence: 40'
   - 'damageMeleeMulti: 0.08'
@@ -5062,9 +3942,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r64 防御
-  - §r近战伤害和暴击率各增加5%
-  - §r刷怪数量和效率增加
   attributes:
   - 'defence: 64'
   - 'damageMeleeMulti: 0.05'
@@ -5077,9 +3954,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r36 防御
-  - §r移动和近战速度各提高6%
-  - §r刷怪数量和效率增加
   attributes:
   - 'defence: 36'
   - 'useTimeMeleeMulti: -0.06'
@@ -5092,9 +3966,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r22 防御
-  - §r箭矢伤害增加15%
-  - §r暴击率增加5%
   attributes:
   - 'defence: 22'
   - 'damageArrowMulti: 0.15'
@@ -5105,9 +3976,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r22 防御
-  - §r火箭伤害增加15%
-  - §r暴击率增加5%
   attributes:
   - 'defence: 22'
   - 'damageRocketMulti: 0.15'
@@ -5118,9 +3986,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r22 防御
-  - §r子弹伤害增加15%
-  - §r暴击率增加5%
   attributes:
   - 'defence: 22'
   - 'damageBulletMulti: 0.15'
@@ -5131,9 +3996,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r48 防御
-  - §r远程伤害和暴击率各增加13%
-  - §r20%的几率不消耗弹药
   attributes:
   - 'defence: 48'
   - 'damageRangedMulti: 0.13'
@@ -5145,9 +4007,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r32 防御
-  - §r暴击率增加7%
-  - §r移动速度提高12%
   attributes:
   - 'defence: 32'
   - 'crit: 7'
@@ -5158,10 +4017,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r10 防御
-  - §r+100 法力上限
-  - §r+12% 魔法伤害
-  - §r+12% 暴击率
   attributes:
   - 'defence: 10'
   - 'maxMana: 100'
@@ -5173,10 +4028,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r48 防御
-  - §r+10% 暴击率
-  - §r+10% 近战伤害
-  - §r+10% 近战速度
   attributes:
   - 'defence: 48'
   - 'crit: 10'
@@ -5188,9 +4039,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r18 防御
-  - §r+15% 远程伤害
-  - §r+8% 暴击率
   attributes:
   - 'defence: 18'
   - 'damageRangedMulti: 0.15'
@@ -5201,9 +4049,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r2 防御
-  - §r+10% 仆从伤害
-  - §r+1 仆从上限
   attributes:
   - 'defence: 2'
   - 'damageSummonMulti: 0.10'
@@ -5214,8 +4059,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r30 防御
-  - §r+7% 暴击率
   attributes:
   - 'defence: 30'
   - 'crit: 7'
@@ -5225,9 +4068,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r22 防御
-  - §r+7% 伤害
-  - §r+8% 移动速度
   attributes:
   - 'defence: 22'
   - 'damageMulti: 0.07'
@@ -5238,9 +4078,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r25 防御
-  - §r+20% 近战伤害
-  - §r+20% 远程伤害
   attributes:
   - 'defence: 25'
   - 'damageMeleeMulti: 0.2'
@@ -5251,8 +4088,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r50 防御
-  - §r+15% 暴击率
   attributes:
   - 'defence: 50'
   - 'crit: 15'
@@ -5262,9 +4097,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r33 防御
-  - §r+13% 近战速度
-  - §r+10% 移动速度
   attributes:
   - 'defence: 33'
   - 'useTimeMeleeMulti: -0.13'
@@ -5275,9 +4107,6 @@
   item: LEATHER_HELMET
   lore:
   - §r[装备]
-  - §r16 防御
-  - §r提高仆从数量上限
-  - §r仆从伤害增加11%
   attributes:
   - 'defence: 16'
   - 'minionLimit: 1'
@@ -5288,9 +4117,6 @@
   item: LEATHER_CHESTPLATE
   lore:
   - §r[装备]
-  - §r20 防御
-  - §r提高仆从数量上限
-  - §r仆从伤害增加11%
   attributes:
   - 'defence: 20'
   - 'minionLimit: 1'
@@ -5301,10 +4127,6 @@
   item: LEATHER_LEGGINGS
   lore:
   - §r[装备]
-  - §r18 防御
-  - §r提高仆从数量上限
-  - §r仆从伤害增加11%
-  - §r移动速度提高20%
   attributes:
   - 'defence: 18'
   - 'minionLimit: 1'
@@ -5316,9 +4138,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r28 防御
-  - §r最大魔力值增加60，同时魔力使用率减少15%
-  - §r魔法伤害和暴击率各增加7%
   attributes:
   - 'crit: 7'
   - 'damageMagicMulti: 0.07'
@@ -5331,8 +4150,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r36 防御
-  - §r魔法伤害和暴击率各增加9%
   attributes:
   - 'crit: 9'
   - 'damageMagicMulti: 0.09'
@@ -5343,9 +4160,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r28 防御
-  - §r魔法伤害增加10%
-  - §r移动速度增加10%
   attributes:
   - 'damageMagicMulti: 0.1'
   - 'defence: 28'
@@ -5356,10 +4170,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r48 防御
-  - §r暴击率增加26%
-  - §r可小幅提高生命再生速度
-  - §r刷怪数量和效率增加
   attributes:
   - 'defence: 48'
   - 'crit: 26'
@@ -5372,10 +4182,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r68 防御
-  - §r近战伤害增加29%
-  - §r可小幅提高生命再生速度
-  - §r刷怪数量和效率增加
   attributes:
   - 'defence: 68'
   - 'damageMeleeMulti: 0.29'
@@ -5388,10 +4194,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r40 防御
-  - §r移动和近战速度各提高15%
-  - §r可小幅提高生命再生速度
-  - §r刷怪数量和效率增加
   attributes:
   - 'defence: 40'
   - 'useTimeMeleeMulti: -0.15'
@@ -5404,9 +4206,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r20 防御
-  - §r提高仆从数量上限
-  - §r仆从伤害增加22%
   attributes:
   - 'defence: 20'
   - 'minionLimit: 1'
@@ -5417,9 +4216,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r32 防御
-  - §r提高仆从数量上限
-  - §r仆从伤害增加22%
   attributes:
   - 'defence: 32'
   - 'minionLimit: 2'
@@ -5430,9 +4226,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r24 防御
-  - §r提高仆从数量上限
-  - §r仆从伤害增加22%
   attributes:
   - 'defence: 24'
   - 'minionLimit: 2'
@@ -5443,9 +4236,6 @@
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
-  - §r28 防御
-  - §r远程伤害增加16%
-  - §r暴击率增加7%
   attributes:
   - 'defence: 28'
   - 'damageRangedMulti: 0.16'
@@ -5456,9 +4246,6 @@
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
-  - §r56 防御
-  - §r暴击率和远程伤害各增加12%
-  - §r25%的几率不消耗弹药
   attributes:
   - 'defence: 56'
   - 'crit: 12'
@@ -5470,9 +4257,6 @@
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
-  - §r40 防御
-  - §r暴击率和远程伤害各增加8%
-  - §r移动速度提高10%
   attributes:
   - 'defence: 40'
   - 'crit: 8'
@@ -6076,37 +4860,37 @@
 钩爪:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按C或V收回钩爪
+  - §r放置在副手，按R射出钩爪，按空格收回钩爪
   worth: 400000
   rarity: 1
 失谐钩爪:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按C或V收回钩爪
+  - §r放置在副手，按R射出钩爪，按空格收回钩爪
   worth: 5000000
   rarity: 4
 刺钩:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按C或V收回钩爪
+  - §r放置在副手，按R射出钩爪，按空格收回钩爪
   worth: 6000000
   rarity: 5
 阴森钩:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按C或V收回钩爪
+  - §r放置在副手，按R射出钩爪，按空格收回钩爪
   worth: 4000000
   rarity: 7
 圣诞钩:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按C或V收回钩爪
+  - §r放置在副手，按R射出钩爪，按空格收回钩爪
   worth: 4000000
   rarity: 7
 月钩:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按C或V收回钩爪
+  - §r放置在副手，按R射出钩爪，按空格收回钩爪
   worth: 10000000
   rarity: 4
 蛛丝:

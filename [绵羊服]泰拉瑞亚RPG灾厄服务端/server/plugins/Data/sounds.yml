@@ -1,74 +1,122 @@
 lengths:
-    space: 83
-    spacenight: 95
-    underworld: 130
-    normal: 137
-    normalnight: 121
-    normalunderground: 179
-    corruption: 157
-    corruptionunderground: 142
-    hallow: 126
-    hallownight: 121
-    hallowunderground: 176
-    desert: 88
-    desertunderground: 121
-    ocean: 88
-    oceannight: 92
-    oceanunderground: 179
-    tundra: 94
-    tundraunderground: 84
-    jungle: 164
-    junglenight: 96
-    jungleunderground: 108
-    dungeon: 100
-    temple: 97
-    boss1: 136
-    boss2: 120
-    boss3: 110
-    boss4: 88
-    plantera: 76
-    queenslime: 90
-    empressoflight: 168
-    dukefishron: 102
-    lunarboss: 113
-    goblinarmy: 105
-    eerie: 161
-    slimerain: 83
-    pirate: 110
-    eclipse: 96
-    martianmadness: 101
-    pumpkinmoon: 86
-    frostmoon: 68
-    lunartower: 87
-    oldonesarmy: 141
+    space: 83276
+    space_night: 95985
+    underworld: 130223
+    normal: 137112
+    normal_night: 121125
+    normal_underground: 179503
+    corruption: 157212
+    corruption_underground: 142760
+    hallow: 126495
+    normal_night: 121125
+    hallow_underground: 176197
+    desert: 89003
+    desert_underground: 121765
+    ocean: 88710
+    ocean_night: 92239
+    ocean_underground: 179503
+    tundra: 94834
+    tundra_underground: 84063
+    jungle: 164691
+    jungle_night: 96084
+    jungle_underground: 108630
+    dungeon: 100726
+    temple: 97377
+    boss1: 136711
+    boss2: 120597
+    boss3: 110879
+    boss4: 88005
+    queen_slime: 90047
+    plantera: 76800
+    empress_of_light: 168809
+    duke_fishron: 102633
+    lunar_boss: 113178
+    goblinarmy: 105614
+    eerie: 161504
+    slime_rain: 83001
+    pirate: 110866
+    eclipse: 96925
+    martian_madness: 101156
+    pumpkin_moon: 86417
+    frost_moon: 68574
+    lunar_tower: 87111
+    # below: calamity music
+    sunken_sea: 328000
+    brimstone_crag: 278000
+    sulphurous_ocean: 340000
+    astral_infection: 287000
+    astral_infection_underground: 425000
+    abyss_1: 267000
+    abyss_2: 267000
+    abyss_3: 408000
+    guardian_of_the_former_seas: 242000
+    infestation: 252160
+    the_filthy_mind: 116000
+    return_to_slime: 127500
+    return_to_slime_full: 24000
+    antarctic_reinforcement: 129000
+    left_alone: 145333
+    outcast_of_the_sulphurous_seas: 161750
+    raw_unfiltered_calamity: 249400
+    sirens_war_cry: 80333
+    forbidden_lullaby: 119450
+    interstellar_stomper: 147000
+    fly_of_beelzebub: 125666
+    open_frenzy: 134000
+    pest_of_the_cosmos: 112000
 
 boss:
     史莱姆王: boss1
+    荒漠灾虫: guardian_of_the_former_seas
     克苏鲁之眼: boss1
+    菌生蟹: infestation
     世界吞噬者: boss1
+    腐巢意志: the_filthy_mind
     骷髅王: boss1
+    史莱姆之神: return_to_slime
     血肉之墙: boss2
-    史莱姆皇后: queenslime
-    机械骷髅王: boss1
-    激光眼: boss2
-    魔焰眼: boss2
+    史莱姆皇后: queen_slime
+    极地之灵: antarctic_reinforcement
+    双子魔眼: boss2
+    硫磺火元素: left_alone
     毁灭者: boss3
+    渊海灾虫: outcast_of_the_sulphurous_seas
+    机械骷髅王: boss1
+    灾厄之眼: raw_unfiltered_calamity
     世纪之花: plantera
-    光之女皇: empressoflight
+    阿娜希塔和利维坦1: sirens_war_cry
+    阿娜希塔和利维坦2: forbidden_lullaby
+    白金星舰: interstellar_stomper
     石巨人: boss4
-    猪鲨公爵: dukefishron
+    瘟疫使者歌莉娅: fly_of_beelzebub
+    光之女皇: empress_of_light
+    猪鲨公爵: duke_fishron
+    毁灭魔像: open_frenzy
     拜月教邪教徒: boss4
-    月球领主心脏: lunarboss
+    星神游龙: pest_of_the_cosmos
+    月球领主: lunar_boss
+    亵渎守卫: 1800
+    痴愚金龙: 2400
+    亵渎天神: 4800
+    无尽虚空: 3600
+    风暴编织者: 2700
+    神之使徒西格纳斯: 2400
+    噬魂幽花: 3600
+    硫海遗爵: 3600
+    神明吞噬者: 4800
+    丛林龙，犽戎: 5100
+    星流巨械: 7200
+    至尊灾厄: 6000
+    成年幻海妖龙: 4800
 event:
-    哥布林军团: goblinarmy
-    史莱姆雨: slimerain
+    哥布林军团: goblin_army
+    史莱姆雨: slime_rain
     陨石雨: eerie
     血月: eerie
     寒霜军团: boss3
-    火星入侵: martianmadness
-    南瓜月: pumpkinmoon
-    冰霜月: frostmoon
+    火星入侵: martian_madness
+    南瓜月: pumpkin_moon
+    冰霜月: frost_moon
     海盗入侵: pirate
     日食: eclipse
-    天界塔: lunartower
-    旧日军团: oldonesarmy
+    天界塔: lunar_tower

@@ -1,0 +1,76 @@
+stats:
+  tier: 5
+  maxAccessories: 7
+  maxHealth: 1000
+  maxMana: 200
+  healthTier: 44
+  manaTier: 13
+inventory:
+  piggyBank:
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  voidBag:
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+  - AIR
+accessories:
+- AIR
+- AIR
+- AIR
+- AIR
+- AIR
+- AIR
+- AIR
+goblinDefeated: true
+bossDefeated:
+  GoblinArmy: true
+  Skeletron: true
