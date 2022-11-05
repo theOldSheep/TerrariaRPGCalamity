@@ -232,6 +232,7 @@ on ProjectileCollideEvent:
 function holyArrow(arrow: entity):
 	set {_attrMap} to (metadata "attrMap" of {_arrow}).clone()
 	{_attrMap}.put("knockbackMulti", 0.3)
+	{_attrMap}.put("damage", ({_attrMap}.get("damage")) * 0.33)
 	set {_shooter} to {_arrow}.getShooter()
 	set {_projectileSpeed} to sqrt({_attrMap}.get("projectileSpeed"))
 	set {_targetLoc} to location of {_arrow}

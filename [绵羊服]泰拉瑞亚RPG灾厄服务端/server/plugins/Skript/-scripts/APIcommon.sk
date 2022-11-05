@@ -201,27 +201,44 @@ function getMaxManaByTier(tier: number) :: number:
 		return 300
 	else:
 		return 350
-function getBiome(loc: location) :: text:
+function getHeight(loc: location) :: text:
+	if "%(world of {_loc})%" is "world":
+		if y-coordinate of {_loc} >= 200:
+			return "space"
+		if y-coordinate of {_loc} >= 50:
+			return "surface"
+		return "underground"
+	if "%(world of {_loc})%" is "world_cavern":
+		return "cavern"
 	if "%(world of {_loc})%" is "world_nether":
 		return "underworld"
-	else if y-coordinate of {_loc} >= 150:
-		return "space"
-	else if y-coordinate of {_loc} <= 5:
-		return "underworld"
+	return "surface"
+function getBiome(loc: location) :: text:
+	set {_height} to getHeight({_loc})
+	if {_height} is "underworld" or "space":
+		return {_height}
 	set {_biome} to "%biome at {_loc}%"
 	if {_biome} contains "mushroom":
 		return "corruption"
-	else if {_biome} contains "ice":
+	if {_biome} contains "ice":
 		return "hallow"
-	else if {_biome} contains "mesa" or "desert":
+	if {_biome} contains "mesa":
+		return "astral_infection"
+	if {_biome} contains "desert":
+		if {_biome} contains "m":
+			return "sunken_sea"
 		return "desert"
-	else if {_biome} contains "beach":
+	if {_biome} contains "beach":
+		if {_biome} contains "cold":
+			return "sulphurous_ocean"
 		return "ocean"
-	else if {_biome} contains "cold" or "frozen":
+	if {_biome} contains "ocean":
+		if {_biome} contains "frozen":
+			return "sulphurous_ocean"
+		return "ocean"
+	if {_biome} contains "cold":
 		return "tundra"
-	else if {_biome} contains "ocean":
-		return "ocean"
-	else if {_biome} contains "jungle":
+	if {_biome} contains "jungle":
 		return "jungle"
 	return "normal"
 function coinConversion(copper: number) :: numbers:

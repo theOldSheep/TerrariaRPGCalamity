@@ -1,36 +1,188 @@
 import:
-	eos.moe.dragoncore.api.KeyPressEvent
+	eos.moe.dragoncore.config.Config
+	java.io.File
+	java.util.ArrayList
+	java.util.HashMap
+	java.util.HashSet
+	terraria.util.EntityHelper
+	terraria.util.PlayerHelper
+	terraria.util.MathHelper
+	org.bukkit.configuration.file.FileConfiguration
+	org.bukkit.configuration.file.YamlConfiguration
 
-on KeyPressEvent:
-#	broadcast "%event.isCancelled()%|%event.getKey()%|%event.getKeys()%"
+plural expression toSkList %object%:
+	get:
+		return ...(expr-1)
 
-command /resetHealth <boolean>:
+on script load:
+	set {YMLcache} to new HashMap()
+	set {YMLtoSave} to new HashSet()
+on skript stop:
+	saveAllYaml()
+every 10 seconds:
+	saveAllYaml()
+function saveAllYaml():
+	loop ...{YMLtoSave}:
+		set {_filePath} to loop-value
+		if {_filePath} contains "/":
+			replace all "/" in {_filePath} with File.separator
+		{YMLcache}.get(loop-value).save({_filePath})
+	{YMLtoSave}.clear()
+expression y[a]ml value [of ]%string% (in|from) [the][ ][file ]%string%:
+	get:
+		set {_filePath} to expr-2
+		set {_node} to expr-1
+		if {YMLcache}.containsKey({_filePath}):
+			set {_config} to {YMLcache}.get({_filePath})
+		else:
+			if {_filePath} contains "/":
+				replace all "/" in {_filePath} with File.separator
+			set {_file} to new File({_filePath})
+			set {_config} to YamlConfiguration.loadConfiguration({_file})
+			{YMLcache}.put(expr-2, {_config})
+		set {_result} to {_config}.get({_node})
+		if {_result} is instance of ArrayList:
+			set {_result} to {_result}.clone()
+		else if {_result} is instance of HashMap:
+			set {_result} to {_result}.clone()
+		return {_result}
+	set:
+		set {_filePath} to expr-2
+		set {_node} to expr-1
+		if {YMLcache}.containsKey({_filePath}):
+			set {_config} to {YMLcache}.get({_filePath})
+		else:
+			if {_filePath} contains "/":
+				replace all "/" in {_filePath} with File.separator
+			set {_file} to new File({_filePath})
+			set {_config} to YamlConfiguration.loadConfiguration({_file})
+		{_config}.set({_node}, change value)
+		{YMLcache}.put(expr-2, {_config})
+		{YMLtoSave}.add(expr-2)
+	delete:
+		set yml value expr-1 from file expr-2 to null
+	reset:
+		set yml value expr-1 from file expr-2 to null
+plural expression y[a]ml node[s] [of ]%string% (in|from) [the][ ][file ]%string%:
+	get:
+		set {_filePath} to expr-2
+		set {_node} to expr-1
+		if {YMLcache}.containsKey({_filePath}):
+			set {_config} to {YMLcache}.get({_filePath})
+		else:
+			if {_filePath} contains "/":
+				replace all "/" in {_filePath} with File.separator
+			set {_file} to new File({_filePath})
+			set {_config} to YamlConfiguration.loadConfiguration({_file})
+			{YMLcache}.put(expr-2, {_config})
+		if try {_config}.contains({_node}) is true:
+			set {_return} to {_config}.getConfigurationSection({_node}).getKeys(false)
+		return ...{_return}
+plural expression y[a]ml node[s](-|[ ])list [of ]%string% (in|from) [the][ ][file ]%string%:
+	get:
+		set {_filePath} to expr-2
+		set {_node} to expr-1
+		if {YMLcache}.containsKey({_filePath}):
+			set {_config} to {YMLcache}.get({_filePath})
+		else:
+			if {_filePath} contains "/":
+				replace all "/" in {_filePath} with File.separator
+			set {_file} to new File({_filePath})
+			set {_config} to YamlConfiguration.loadConfiguration({_file})
+			{YMLcache}.put(expr-2, {_config})
+		if try {_config}.contains({_node}) is true:
+			set {_return} to {_config}.getConfigurationSection({_node}).getKeys(true)
+		return ...{_return}
+
+
+command /potion:
 	trigger:
-		set health of command sender to 1
-		set level of command sender to 0
-		if arg-1 is true:
-			set yml value "stats.healthTier" from file "plugins/PlayerData/%name of command sender%.yml" to 5
-			set yml value "stats.manaTier" from file "plugins/PlayerData/%name of command sender%.yml" to 1
-			kick command sender
-command /getTestItem:
+		EntityHelper.applyEffect(command sender, "魔力疾病", 200)
+		EntityHelper.applyEffect(command sender, "再生", 20)
+command /playMusic [<text>]:
 	trigger:
-		command sender is op
-		set {_sender} to command sender
-		give 5 diamond named "附魔星鱼" to {_sender}
-		give 4 diamond named "魔力星" to {_sender}
-		give a diamond named "彗星碎片" to {_sender}
-		give a diamond named "飘渺之核" to {_sender}
-		give a diamond named "幻影之心" to {_sender}
-		
-		give 15 emerald named "生命水晶" to {_sender}
-		give 20 emerald named "生命果" to {_sender}
-		give a emerald named "血橙" to {_sender}
-		give a emerald named "奇迹之果" to {_sender}
-		give a emerald named "旧神浆果" to {_sender}
-		give a emerald named "龙果" to {_sender}
-command /HP:
+		if arg-1 is ".":
+			EntityHelper.setMetadata(command sender, "forceBGM", {_null})
+		else:
+			EntityHelper.setMetadata(command sender, "forceBGM", arg-1)
+command /displayBackground [<text>]:
 	trigger:
-		set {_ht} to yml value "stats.healthTier" from file "plugins/PlayerData/%name of command sender%.yml"
-		set {_mt} to yml value "stats.manaTier" from file "plugins/PlayerData/%name of command sender%.yml"
-		broadcast "%health of command sender%/%max health of command sender%|%{_ht}%"
-		broadcast "%level of command sender%/%(metadata ""attrMap"" of command sender).get(""maxMana"")%|%{_mt}%"
+		if arg-1 is ".":
+			EntityHelper.setMetadata(command sender, "forceBackground", {_null})
+		else:
+			EntityHelper.setMetadata(command sender, "forceBackground", arg-1)
+			
+
+
+command /tweakYML:
+	trigger:
+		# armorset
+		set yml value "pieces" from file "plugins/Data/armorSetRegulated.yml" to (yml value "pieces" from file "plugins/Data/armorSet.yml")
+		set {_stations::*} to yml nodes "sets" from file "plugins/Data/armorSet.yml"
+		broadcast "%{_stations::*}%"
+		loop {_stations::*}:
+			set yml value "sets.%loop-value%.lore" from file "plugins/Data/armorSetRegulated.yml" to (yml value "sets.%loop-value%.lore" from file "plugins/Data/armorSet.yml")
+			clear {_attributes}
+			set {_attributes} to yml value "sets.%loop-value%.attributes" from file "plugins/Data/armorSet.yml"
+			loop ...{_attributes}:
+				set {_str} to "%loop-value-2%"
+				set {_name::*} to ...({_str}.split(": "))
+				if {_name::2} parsed as number is set:
+					set yml value "sets.%loop-value-1%.attributes.%{_name::1}%" from file "plugins/Data/armorSetRegulated.yml" to {_name::2} parsed as number
+				else:
+					set yml value "sets.%loop-value-1%.attributes.%{_name::1}%" from file "plugins/Data/armorSetRegulated.yml" to {_name::2}
+		clear {_stations::*}
+		# setting
+		set {_nodes::*} to yml nodes "" from file "plugins/Data/setting.yml"
+		loop {_nodes::*}:
+			set yml value "%loop-value%" from file "plugins/Data/settingRegulated.yml" to (yml value "%loop-value%" from file "plugins/Data/setting.yml")
+		clear {_nodes::*}
+		set {_stations::*} to yml nodes "effects" from file "plugins/Data/setting.yml"
+		broadcast "%{_stations::*}%"
+		loop {_stations::*}:
+			clear {_attributes}
+			set {_attributes} to yml value "effects.%loop-value%.attributes" from file "plugins/Data/setting.yml"
+			loop ...{_attributes}:
+				set {_str} to "%loop-value-2%"
+				set {_name::*} to ...({_str}.split(": "))
+				if {_name::2} parsed as number is set:
+					set yml value "effects.%loop-value-1%.attributes.%{_name::1}%" from file "plugins/Data/settingRegulated.yml" to {_name::2} parsed as number
+				else:
+					set yml value "effects.%loop-value-1%.attributes.%{_name::1}%" from file "plugins/Data/settingRegulated.yml" to {_name::2}
+		clear {_stations::*}
+		# prefix
+		set {_nodes::*} to yml nodes "" from file "plugins/Data/prefix.yml"
+		loop {_nodes::*}:
+			set yml value "%loop-value%" from file "plugins/Data/prefixRegulated.yml" to (yml value "%loop-value%" from file "plugins/Data/prefix.yml")
+		clear {_nodes::*}
+		set {_stations::*} to yml nodes "prefixInfo" from file "plugins/Data/prefix.yml"
+		broadcast "%{_stations::*}%"
+		loop {_stations::*}:
+			clear {_attributes}
+			set {_attributes} to yml value "prefixInfo.%loop-value%.attributes" from file "plugins/Data/prefix.yml"
+			loop ...{_attributes}:
+				set {_str} to "%loop-value-2%"
+				set {_name::*} to ...({_str}.split(": "))
+				if {_name::2} parsed as number is set:
+					set yml value "prefixInfo.%loop-value-1%.attributes.%{_name::1}%" from file "plugins/Data/prefixRegulated.yml" to {_name::2} parsed as number
+				else:
+					set yml value "prefixInfo.%loop-value-1%.attributes.%{_name::1}%" from file "plugins/Data/prefixRegulated.yml" to {_name::2}
+		clear {_stations::*}
+		# items
+		set {_nodes::*} to yml nodes "" from file "plugins/Data/items.yml"
+		loop {_nodes::*}:
+			set yml value "%loop-value%" from file "plugins/Data/itemsRegulated.yml" to (yml value "%loop-value%" from file "plugins/Data/items.yml")
+		clear {_nodes::*}
+		set {_stations::*} to yml nodes "" from file "plugins/Data/items.yml"
+		broadcast "%{_stations::*}%"
+		loop {_stations::*}:
+			clear {_attributes}
+			set {_attributes} to yml value "%loop-value%.attributes" from file "plugins/Data/items.yml"
+			loop ...{_attributes}:
+				set {_str} to "%loop-value-2%"
+				set {_name::*} to ...({_str}.split(": "))
+				if {_name::2} parsed as number is set:
+					set yml value "%loop-value-1%.attributes.%{_name::1}%" from file "plugins/Data/itemsRegulated.yml" to {_name::2} parsed as number
+				else:
+					set yml value "%loop-value-1%.attributes.%{_name::1}%" from file "plugins/Data/itemsRegulated.yml" to {_name::2}
+		clear {_stations::*}

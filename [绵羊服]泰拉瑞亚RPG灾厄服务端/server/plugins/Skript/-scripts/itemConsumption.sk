@@ -4,10 +4,7 @@ import:
 	me.libraryaddict.disguise.DisguiseAPI
 	me.libraryaddict.disguise.disguisetypes.DisguiseType
 	me.libraryaddict.disguise.disguisetypes.MobDisguise
-	terraria.util.EntityHelper
 
-on rightclick:
-	EntityHelper.applyEffect(player, "魔力疾病", 200)
 on rightclick:
 	set {_name} to trimText(name of player's tool)
 	if {_name} is "暗影鳞片":
@@ -445,12 +442,12 @@ on rightclick:
 			play sound "entity.generic.eat" with volume 1 and pitch 1 at location of player
 		else:
 			play sound "entity.generic.drink" with volume 1 and pitch 1 at location of player
-		EntityHelper.applyEffect(player, "耐药性", round({_time}))
+		applyEffect(player, "耐药性", round({_time}))
 	if {_mana} is set:
 		set level of player to min(({_attrMap}.get("maxMana")), (level of player + {_mana}))
 		displayHolo(player, {_mana}, false, "回蓝")
 		play sound "entity.generic.drink" with volume 1 and pitch 1 at location of player
-		EntityHelper.applyEffect(player, "魔力疾病", 200)
+		applyEffect(player, "魔力疾病", 200)
 	loop {_potion::*}:
 		if loop-value is "吃饱" or "饱足" or "饕餮":
 			add "吃饱" to {_toRemove::*}
@@ -458,11 +455,11 @@ on rightclick:
 			add "饕餮" to {_toRemove::*}
 			remove loop-value from {_toRemove::*}
 			loop {_toRemove::*}:
-				EntityHelper.applyEffect(player, (loop-value-2), 0)
+				applyEffect(player, (loop-value-2), 0)
 			play sound "entity.generic.eat" with volume 1 and pitch 1 at location of player
 		else:
 			play sound "entity.generic.drink" with volume 1 and pitch 1 at location of player
-		EntityHelper.applyEffect(player, loop-value, round({_potionDuration::%loop-index%}))
+		applyEffect(player, loop-value, round({_potionDuration::%loop-index%}))
 	set {_item} to player's tool
 	broadcast "%{_item}%"
 	set {_item} to (item amount of {_item} - 1) of {_item}

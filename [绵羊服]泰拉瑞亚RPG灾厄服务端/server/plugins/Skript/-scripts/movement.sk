@@ -1,7 +1,6 @@
 import:
 	eos.moe.dragoncore.api.event.KeyPressEvent
 	eos.moe.dragoncore.api.event.KeyReleaseEvent
-	terraria.util.PlayerHelper
 
 on jump:
 	cancel event
@@ -172,16 +171,11 @@ on KeyPressEvent:
 #	broadcast "%{_ply}%|%event.getKey()%"
 	set {_accessory} to metadata "accessory" of {_ply}
 	if event.getKey() is "SPACE":
-		# remove all hooks
-		set {_hooks} to metadata "hooks" of {_ply}
-		loop ...{_hooks}:
-			if (loop-value).getHandle().inGround is true:
-				(loop-value).remove()
 		# thrust/jump
 		playerThrust({_ply}, true)
 	else if event.getKey() is "R":
 		# Grappling hook
-		PlayerHelper.handleGrapplingHook({_ply})
+		handleGrapplingHook({_ply})
 	else if event.getKey() is "C":
 		# remove all hooks
 		set {_hooks} to metadata "hooks" of {_ply}

@@ -1579,8 +1579,8 @@ function sentryAI(sentry: entity, owner: player, nameSentry: text):
 	set {_target} to {_owner}
 	set {_sentryLoc} to location of {_sentry}
 	
-	# alive for at most 5 minutes
-	loop 2000 times:
+	# alive for at most 10 minutes
+	loop 4000 times:
 		if {_owner} is not online:
 			stop loop
 		if {_owner} has scoreboard tag "unauthorized":
