@@ -23,7 +23,7 @@ Functions:
   # 由于功能完全是在客户端实现的，所以客户端并不能直接知道变量的值，我们需要通过【方法.更新变量值】来向服务端同步变量值到客户端内
   # 文本内容需要用 ''包裹,不然mod无法识别这条公式
   更新背包变量: |-
-    方法.更新变量值('skript_defence','skript_money','skript_accessory_amount');
+    方法.更新变量值('terraria_defence','terraria_money','terraria_accessory_amount');
     方法.延时(1000);
     方法.异步执行方法('更新背包变量');
 
@@ -154,7 +154,7 @@ accessory5_slot:
   identifier: "accessory5"
   drawBackground: false
 accessory6_texture:
-  visible: "方法.到整数(方法.取变量('skript_accessory_amount')) > 5.5"
+  visible: "方法.到整数(方法.取变量('terraria_accessory_amount')) > 5.5"
   x: "方法.取屏幕宽度-50"
   y: "方法.取屏幕高度-98"
   width: 16
@@ -162,13 +162,13 @@ accessory6_texture:
   texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory6'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
   alpha: 0.75
 accessory6_slot:
-  visible: "方法.到整数(方法.取变量('skript_accessory_amount')) > 5.5"
+  visible: "方法.到整数(方法.取变量('terraria_accessory_amount')) > 5.5"
   x: "方法.取屏幕宽度-50"
   y: "方法.取屏幕高度-98"
   identifier: "accessory6"
   drawBackground: false
 accessory7_texture:
-  visible: "方法.到整数(方法.取变量('skript_accessory_amount')) > 6.5"
+  visible: "方法.到整数(方法.取变量('terraria_accessory_amount')) > 6.5"
   x: "方法.取屏幕宽度-50"
   y: "方法.取屏幕高度-80"
   width: 16
@@ -176,7 +176,7 @@ accessory7_texture:
   texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory7'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
   alpha: 0.75
 accessory7_slot:
-  visible: "方法.到整数(方法.取变量('skript_accessory_amount')) > 6.5"
+  visible: "方法.到整数(方法.取变量('terraria_accessory_amount')) > 6.5"
   x: "方法.取屏幕宽度-50"
   y: "方法.取屏幕高度-80"
   identifier: "accessory7"
@@ -214,8 +214,8 @@ defence_label:
   y: "方法.取屏幕高度-37"
   center: true
   scale: 0.8
-  texts: "方法.合并文本('&#CCCCCC&l', 方法.取变量('skript_defence'))"
-  tip: "方法.合并文本(方法.取变量('skript_defence'), ' 防御力')"
+  texts: "方法.合并文本('&#CCCCCC&l', 方法.取变量('terraria_defence'))"
+  tip: "方法.合并文本(方法.取变量('terraria_defence'), ' 防御力')"
 # 背包
 backpack_label:
   x: "17"
@@ -779,7 +779,7 @@ ammoslot8_slot:
 money_label:
   x: "8"
   y: "82"
-  texts: "方法.合并文本('金钱: ', 方法.取变量('skript_money'))"
+  texts: "方法.合并文本('金钱: ', 方法.取变量('terraria_money'))"
 
 
 

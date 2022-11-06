@@ -272,7 +272,7 @@ sets:
     - ''
     - §a套装效果： -20% 弹药消耗
     attributes:
-      ammoConsumptionRate: 0.8
+      ammoConsumptionRate: -0.2
   铜套装:
     lore:
     - ''
@@ -344,7 +344,7 @@ sets:
     - ''
     - §a套装效果： 20% 几率不消耗弹药
     attributes:
-      ammoConsumptionRate: 0.8
+      ammoConsumptionRate: -0.2
   秘银战士套装:
     lore:
     - ''
@@ -363,7 +363,7 @@ sets:
     - ''
     - §a套装效果： 20% 几率不消耗弹药
     attributes:
-      ammoConsumptionRate: 0.8
+      ammoConsumptionRate: -0.2
   精金战士套装:
     lore:
     - ''
@@ -382,7 +382,7 @@ sets:
     - ''
     - §a套装效果： 25% 几率不消耗弹药
     attributes:
-      ammoConsumptionRate: 0.75
+      ammoConsumptionRate: -0.25
   神圣魔法套装:
     lore:
     - ''
@@ -394,7 +394,7 @@ sets:
     - ''
     - §a套装效果： 25% 几率不消耗弹药
     attributes:
-      ammoConsumptionRate: 0.75
+      ammoConsumptionRate: -0.25
   神圣战士套装:
     lore:
     - ''
@@ -443,7 +443,7 @@ sets:
     - ''
     - §a套装效果：所受伤害减少20%
     attributes:
-      damageTakenMulti: 0.8
+      damageTakenMulti: -0.2
   蘑菇矿套装:
     lore:
     - ''
@@ -488,7 +488,7 @@ sets:
     - §a受到近战攻击后反弹伤害
     - §a近战攻击命中敌人后，若其破晓层数小于2则追加一层破晓效果
     attributes:
-      damageTakenMulti: 0.9
+      damageTakenMulti: -0.1
       buffInflictMelee: 破晓|200|1
   星尘套装:
     lore:

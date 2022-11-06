@@ -770,7 +770,7 @@ prefixInfo:
     attributes:
       defence: 2
       defenceMulti: 0.01
-      damageTakenMulti: 0.9975
+      damageTakenMulti: -0.0025
     rarity: 1
   守护:
     lore:
@@ -781,7 +781,7 @@ prefixInfo:
     attributes:
       defence: 4
       defenceMulti: 0.02
-      damageTakenMulti: 0.995
+      damageTakenMulti: -0.005
     priceMultiplier: 1.15
     rarity: 1
   装甲:
@@ -793,7 +793,7 @@ prefixInfo:
     attributes:
       defence: 6
       defenceMulti: 0.03
-      damageTakenMulti: 0.9925
+      damageTakenMulti: -0.0075
     priceMultiplier: 1.4
     rarity: 1
   护佑:
@@ -805,7 +805,7 @@ prefixInfo:
     attributes:
       defence: 8
       defenceMulti: 0.04
-      damageTakenMulti: 0.99
+      damageTakenMulti: -0.01
     priceMultiplier: 1.6
     rarity: 2
   精确:
