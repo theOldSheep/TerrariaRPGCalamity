@@ -26,7 +26,6 @@ Functions:
 
   # 关于变量更新在 背包.yml 里讲了,可以去那个配置里看
   更新hud变量: |-
-    方法.更新变量值('player_health','player_max_health');
     方法.更新变量值('terraria_max_mana','terraria_mana_tier','terraria_health_tier');
     方法.延时(100);
     方法.异步执行方法('更新hud变量');
@@ -279,35 +278,35 @@ heart1_background_texture:
   width: "12"
   height: "12"
   texture: "'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart2_background_texture:
   x: "(方法.取屏幕宽度) - 126"
   y: "6"
   width: "12"
   height: "12"
   texture: "'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart3_background_texture:
   x: "(方法.取屏幕宽度) - 114"
   y: "6"
   width: "12"
   height: "12"
   texture: "'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart4_background_texture:
   x: "(方法.取屏幕宽度) - 102"
   y: "6"
   width: "12"
   height: "12"
   texture: "'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart5_background_texture:
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 5 ? (方法.取屏幕宽度) - 93 : (方法.取屏幕宽度) - 90"
   y: "方法.到整数(方法.取变量('terraria_health_tier')) == 5 ? 3 : 6"
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 5 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 5 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 5 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart6_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 6) ? 'true' : 'false'"
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 6 ? (方法.取屏幕宽度) - 81 : (方法.取屏幕宽度) - 78"
@@ -315,7 +314,7 @@ heart6_background_texture:
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 6 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 6 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 6 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart7_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 7) ? 'true' : 'false'"
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 7 ? (方法.取屏幕宽度) - 69 : (方法.取屏幕宽度) - 66"
@@ -323,7 +322,7 @@ heart7_background_texture:
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 7 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 7 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 7 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart8_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 8) ? 'true' : 'false'"
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 8 ? (方法.取屏幕宽度) - 57 : (方法.取屏幕宽度) - 54"
@@ -331,7 +330,7 @@ heart8_background_texture:
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 8 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 8 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 8 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart9_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 9) ? 'true' : 'false'"
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 9 ? (方法.取屏幕宽度) - 45 : (方法.取屏幕宽度) - 42"
@@ -339,7 +338,7 @@ heart9_background_texture:
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 9 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 9 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 9 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart10_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 10) ? 'true' : 'false'"
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 10 ? (方法.取屏幕宽度) - 33 : (方法.取屏幕宽度) - 30"
@@ -347,7 +346,7 @@ heart10_background_texture:
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 10 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 10 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 10 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart11_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 11) ? 'true' : 'false'"
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 11 ? (方法.取屏幕宽度) - 141 : (方法.取屏幕宽度) - 138"
@@ -355,7 +354,7 @@ heart11_background_texture:
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 11 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 11 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 11 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart12_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 12) ? 'true' : 'false'"
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 12 ? (方法.取屏幕宽度) - 129 : (方法.取屏幕宽度) - 126"
@@ -363,7 +362,7 @@ heart12_background_texture:
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 12 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 12 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 12 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart13_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 13) ? 'true' : 'false'"
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 13 ? (方法.取屏幕宽度) - 117 : (方法.取屏幕宽度) - 114"
@@ -371,7 +370,7 @@ heart13_background_texture:
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 13 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 13 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 13 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart14_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 14) ? 'true' : 'false'"
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 14 ? (方法.取屏幕宽度) - 105 : (方法.取屏幕宽度) - 102"
@@ -379,7 +378,7 @@ heart14_background_texture:
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 14 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 14 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 14 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart15_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 15) ? 'true' : 'false'"
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 15 ? (方法.取屏幕宽度) - 93 : (方法.取屏幕宽度) - 90"
@@ -387,7 +386,7 @@ heart15_background_texture:
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 15 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 15 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 15 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart16_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 16) ? 'true' : 'false'"
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 16 ? (方法.取屏幕宽度) - 81 : (方法.取屏幕宽度) - 78"
@@ -395,7 +394,7 @@ heart16_background_texture:
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 16 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 16 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 16 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart17_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 17) ? 'true' : 'false'"
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 17 ? (方法.取屏幕宽度) - 69 : (方法.取屏幕宽度) - 66"
@@ -403,7 +402,7 @@ heart17_background_texture:
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 17 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 17 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 17 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart18_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 18) ? 'true' : 'false'"
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 18 ? (方法.取屏幕宽度) - 57 : (方法.取屏幕宽度) - 54"
@@ -411,7 +410,7 @@ heart18_background_texture:
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 18 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 18 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 18 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart19_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 19) ? 'true' : 'false'"
   x: "方法.到整数(方法.取变量('terraria_health_tier')) == 19 ? (方法.取屏幕宽度) - 45 : (方法.取屏幕宽度) - 42"
@@ -419,7 +418,7 @@ heart19_background_texture:
   width: "方法.到整数(方法.取变量('terraria_health_tier')) == 19 ? 18 : 12"
   height: "方法.到整数(方法.取变量('terraria_health_tier')) == 19 ? 18 : 12"
   texture: "方法.到整数(方法.取变量('terraria_health_tier')) == 19 ? 'hud/heart_container_last.png' : 'hud/heart_container.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"
 heart20_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_health_tier')) >= 20) ? 'true' : 'false'"
   x: "(方法.取屏幕宽度) - 33"
@@ -427,4 +426,4 @@ heart20_background_texture:
   width: "18"
   height: "18"
   texture: "'hud/heart_container_last.png'"
-  tip: "方法.合并文本(方法.到整数(方法.取变量('player_health')), '/', 方法.到整数(方法.取变量('player_max_health')))"
+  tip: "方法.合并文本(方法.到整数(方法.玩家血量()), '/', 方法.到整数(方法.玩家最大血量()))"

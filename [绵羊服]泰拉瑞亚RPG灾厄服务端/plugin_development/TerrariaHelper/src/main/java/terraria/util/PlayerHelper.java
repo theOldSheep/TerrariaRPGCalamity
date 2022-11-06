@@ -1,9 +1,13 @@
 package terraria.util;
 
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.User;
+import com.earth2me.essentials.api.Economy;
+import me.clip.placeholderapi.PlaceholderAPI;
+import me.clip.placeholderapi.PlaceholderHook;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.metadata.MetadataValue;
@@ -11,9 +15,11 @@ import org.bukkit.metadata.Metadatable;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+import sun.net.www.content.text.Generic;
 import terraria.TerrariaHelper;
 import terraria.gameplay.Event;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.logging.Level;
 
@@ -43,17 +49,20 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("defence", 0d);
         defaultPlayerAttrMap.put("defenceMulti", 1d);
         defaultPlayerAttrMap.put("healthMulti", 1d);
+        defaultPlayerAttrMap.put("healthTier", 5d);
         defaultPlayerAttrMap.put("invulnerabilityTick", 10d);
         defaultPlayerAttrMap.put("knockback", 0d);
         defaultPlayerAttrMap.put("knockbackResistance", 0d);
         defaultPlayerAttrMap.put("knockbackMeleeMulti", 1d);
         defaultPlayerAttrMap.put("knockbackMulti", 1d);
-        defaultPlayerAttrMap.put("manaRegen", 4d);
+        defaultPlayerAttrMap.put("manaRegen", 0d);
         defaultPlayerAttrMap.put("manaRegenMulti", 1d);
         defaultPlayerAttrMap.put("manaUse", 0d);
         defaultPlayerAttrMap.put("manaUseMulti", 1d);
+        defaultPlayerAttrMap.put("manaTier", 1d);
         defaultPlayerAttrMap.put("maxHealth", 200d);
         defaultPlayerAttrMap.put("maxHealthMulti", 1d);
+        defaultPlayerAttrMap.put("maxMana", 20d);
         defaultPlayerAttrMap.put("meleeReachMulti", 1d);
         defaultPlayerAttrMap.put("minionLimit", 1d);
         defaultPlayerAttrMap.put("mobLimit", 15d);
@@ -64,7 +73,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("projectileSpeed", 0d);
         defaultPlayerAttrMap.put("projectileSpeedMulti", 1d);
         defaultPlayerAttrMap.put("projectileSpeedArrowMulti", 1d);
-        defaultPlayerAttrMap.put("regen", 2d);
+        defaultPlayerAttrMap.put("regen", 0d);
         defaultPlayerAttrMap.put("regenMulti", 1d);
         defaultPlayerAttrMap.put("sentryLimit", 1d);
         defaultPlayerAttrMap.put("speed", 0.2d);
@@ -74,6 +83,11 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("useTimeMeleeMulti", 1d);
         defaultPlayerAttrMap.put("useTimeMulti", 1d);
         defaultPlayerAttrMap.put("useTimeRangedMulti", 1d);
+        // test!
+        defaultPlayerAttrMap.put("maxHealth", 1200d);
+        defaultPlayerAttrMap.put("maxMana", 350d);
+        defaultPlayerAttrMap.put("healthTier", 44d);
+        defaultPlayerAttrMap.put("manaTier", 13d);
         // init default player buff inflict map
         defaultPlayerEffectInflict.add("buffInflict");
         defaultPlayerEffectInflict.add("buffInflictMagic");
@@ -95,6 +109,21 @@ public class PlayerHelper {
     }
     public static HashMap<String, Double> getDefaultPlayerAttributes() {
         return (HashMap<String, Double>) defaultPlayerAttrMap.clone();
+    }
+    public static void setMoney(Player ply, double amount) {
+        try {
+            Economy.setMoney(ply.getUniqueId(), BigDecimal.valueOf(amount));
+        } catch (Exception e) {
+            Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setMoney ", e);
+        }
+    }
+    public static double getMoney(Player ply) {
+        try {
+            return Economy.getMoneyExact(ply.getUniqueId()).doubleValue();
+        } catch (Exception e) {
+            Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] getMoney ", e);
+            return 0d;
+        }
     }
     // threads
     public static void threadGrapplingHook() {
@@ -173,6 +202,7 @@ public class PlayerHelper {
             }
         }, 3, 0);
     }
+    // TODO
     public static void threadArmorAccessory() {
         // every 5 ticks (1/4 second)
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
@@ -295,6 +325,7 @@ public class PlayerHelper {
         }, 10, 0);
     }
     public static void threadBGM() {
+        boolean printBGMDebugInfo = false;
         // every 4 ticks (1/5 second)
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
@@ -409,7 +440,7 @@ public class PlayerHelper {
                     }
                     // play music if needed
                     long musicDuration = soundConfig.getLong("lengths." + current, 0L);
-                    ply.sendMessage(current + ", " + (musicDuration + lastTime - currentTime) + " ms left.");
+                    if (printBGMDebugInfo) ply.sendMessage(current + ", " + (musicDuration + lastTime - currentTime) + " ms left.");
                     boolean shouldPlayMusic = false;
                     if (musicDuration + lastTime < currentTime) {
                         // full song finished playing
@@ -418,7 +449,7 @@ public class PlayerHelper {
                         if (current.endsWith("_full")) current = current.replace("_full", "");
                     } else if (!last.equals(current)) shouldPlayMusic = true;
                     if (shouldPlayMusic) {
-                        ply.sendMessage(current + ", replayed!");
+                        if (printBGMDebugInfo) ply.sendMessage(current + ", replayed!");
                         ply.stopSound("music." + last);
                         ply.playSound(ply.getEyeLocation(), "music." + current, SoundCategory.MUSIC, Float.MAX_VALUE, 1f);
                         // update last bgm metadata
@@ -430,6 +461,94 @@ public class PlayerHelper {
                 }
             }
         }, 4, 0);
+    }
+    public static void threadRegen() {
+        boolean debugMessage = false;
+        int delay = 4;
+        double perTickMulti = (double)delay / 20;
+        // every 4 ticks (1/5 second)
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
+            for (Player ply : Bukkit.getOnlinePlayers()) {
+                try {
+                    if (!isProperlyPlaying(ply)) continue; // waiting to revive etc.
+                    // basic variable setup
+                    HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+                    HashSet<String> accessories = getAccessories(ply);
+                    HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
+                    Location currLoc = ply.getLocation();
+                    Location lastLoc = (Location) EntityHelper.getMetadata(ply, "lastLocation").value();
+                    EntityHelper.setMetadata(ply, "lastLocation", currLoc);
+                    boolean moved = lastLoc.getWorld().equals(currLoc.getWorld()) && lastLoc.distanceSquared(currLoc) > 1e-5;
+                    // health regen
+                    {
+                        // init variables
+                        double healthRegenTime = EntityHelper.getMetadata(ply, "regenTime").asDouble();
+                        double effectiveRegenTime;
+                        if (healthRegenTime <= 300) effectiveRegenTime = 0;
+                        else if (healthRegenTime <= 800) effectiveRegenTime = (healthRegenTime - 300) / 100;
+                        else effectiveRegenTime = 5 + ((healthRegenTime - 800) / 200);
+                        if (debugMessage) ply.sendMessage(effectiveRegenTime + "|" + healthRegenTime);
+                        double maxHealth = ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                        double regenerationRate = ((maxHealth * 0.85 / 800) + 0.15) * effectiveRegenTime;
+                        regenerationRate *= moved ? 0.5 : 1.25;
+                        // additional hardcoded accessories etc
+                        double additionalHealthRegen = attrMap.getOrDefault("regen", 0d); // from accessories etc
+                        if (!moved && accessories.contains("闪亮石")) {
+                            regenerationRate += 8;
+                            healthRegenTime += delay * 4;
+                        }
+                        // regen
+                        double regenAmount = (regenerationRate + additionalHealthRegen) * perTickMulti * attrMap.getOrDefault("regenMulti", 1d);
+                        ply.setHealth(Math.min(ply.getHealth() + regenAmount, maxHealth));
+                        healthRegenTime += delay;
+                        EntityHelper.setMetadata(ply, "regenTime", Math.min(healthRegenTime, 1200));
+                    }
+                    // mana regen
+                    {
+                        double manaRegenDelay = EntityHelper.getMetadata(ply, "manaRegenDelay").asDouble();
+                        double manaRegenCounter = EntityHelper.getMetadata(ply, "manaRegenCounter").asDouble();
+                        boolean hasManaRegenBand = accessories.contains("魔力再生手环");
+                        boolean hasManaRegenPotionEffect = effectMap.containsKey("魔力再生");
+                        if (manaRegenDelay > 0) {
+                            // waiting for regen CD
+                            manaRegenDelay -= moved ? delay : delay * 2;
+                            if (hasManaRegenBand) manaRegenDelay -= delay;
+                            if (hasManaRegenPotionEffect) manaRegenDelay -= delay;
+                            EntityHelper.setMetadata(ply, "manaRegenDelay", manaRegenDelay);
+                        } else {
+                            // regeneration
+                            double manaRegenBonus = attrMap.getOrDefault("manaRegen", 0d);
+                            double maxMana = attrMap.getOrDefault("maxMana", 20d);
+                            // players with mana regen buff regenerates mana as if their mana is full
+                            double manaRatio = hasManaRegenPotionEffect ? 1d : (double) ply.getLevel() / maxMana;
+                            double manaRegenRate = ((maxMana * (moved ? 1d/8 : 1d/5)) + 1 + manaRegenBonus) * (manaRatio * 0.8 + 0.2) * 1.15;
+                            if (ply.getLevel() < maxMana) {
+                                manaRegenCounter += manaRegenRate * delay * attrMap.getOrDefault("manaRegenMulti", 1d);
+                                double regenAmount = Math.floor(manaRegenCounter / 40);
+                                manaRegenCounter %= 40;
+                                int levelResult = ply.getLevel() + (int) regenAmount;
+                                ply.setLevel((int) Math.min(levelResult, maxMana));
+                                if (ply.getLevel() >= maxMana) ply.playSound(ply.getLocation(), Sound.BLOCK_NOTE_PLING, 2, 2);
+                                EntityHelper.setMetadata(ply, "manaRegenCounter", manaRegenCounter);
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadRegen ", e);
+                }
+            }
+        }, delay, 0);
+    }
+    public static void threadAttribute() {
+        int delay = 10;
+        // every 10 ticks (1/2 second)
+        // note that players would have their stats updated
+        // when they use their weapon after switching hot bar slot or closes an inventory.
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
+            for (Player ply : Bukkit.getOnlinePlayers()) {
+                setupAttribute(ply);
+            }
+        }, delay, 0);
     }
     // others
     public static void initPlayerStats(Player ply) {
@@ -464,9 +583,15 @@ public class PlayerHelper {
         // other variable
         EntityHelper.setMetadata(ply, "team", "red");
         EntityHelper.setMetadata(ply, "armorSet", "");
+        // bgm and background
         EntityHelper.setMetadata(ply, "lastBackground", "");
         EntityHelper.setMetadata(ply, "lastBGM", "normal");
         EntityHelper.setMetadata(ply, "lastBGMTime", 0L);
+        // regeneration
+        EntityHelper.setMetadata(ply, "lastLocation", ply.getLocation());
+        EntityHelper.setMetadata(ply, "regenTime", 0d);
+        EntityHelper.setMetadata(ply, "manaRegenDelay", 0d);
+        EntityHelper.setMetadata(ply, "manaRegenCounter", 0d);
     }
     public static int getMaxHealthByTier(int tier) {
         if (tier < 21) return tier * 40;
@@ -496,6 +621,14 @@ public class PlayerHelper {
     public static boolean hasDefeated(Player player, String progressToCheck) {
         YmlHelper.YmlSection fileSection = YmlHelper.getFile("plugins/PlayerData/" + player.getName() + ".yml");
         return fileSection.getBoolean("bossDefeated" + progressToCheck, false);
+    }
+    // TODO
+    public static void setupAttribute(Player player) {
+        try {
+
+        } catch (Exception e) {
+            Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setupAttribute ", e);
+        }
     }
     public static boolean isProperlyPlaying(Player player) {
         if (!player.isOnline()) return false;

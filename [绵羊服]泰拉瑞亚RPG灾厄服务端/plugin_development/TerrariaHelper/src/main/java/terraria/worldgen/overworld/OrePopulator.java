@@ -100,6 +100,7 @@ public class OrePopulator extends BlockPopulator {
             int height = wld.getHighestBlockYAt(xCenter, zCenter);
             if (Math.abs(height - OverworldChunkGenerator.LAND_HEIGHT) > 10) return;
             Material oreMat = oreMaterials.getOrDefault("METEORITE", Material.STONE);
+            height -= 6;
             // set spherical cluster of ore
             for (int xOffset = -10; xOffset <= 10; xOffset ++) {
                 for (int zOffset = -10; zOffset <= 10; zOffset ++) {
@@ -109,12 +110,14 @@ public class OrePopulator extends BlockPopulator {
                     for (int ySet = height + 1; true; ySet ++) {
                         double distSqr = (ySet - height) * (ySet - height) + horDistSqr;
                         if (distSqr > 100) break;
-                        wld.getBlockAt(xSet, ySet, zSet).setType(distSqr < 36 ? Material.AIR : oreMat);
+                        Block blk = wld.getBlockAt(xSet, ySet, zSet);
+                        if (blk.getType().isSolid()) blk.setType(distSqr < 64 ? Material.AIR : oreMat);
                     }
                     for (int ySet = height; true; ySet --) {
                         double distSqr = (ySet - height) * (ySet - height) + horDistSqr;
                         if (distSqr > 100) break;
-                        wld.getBlockAt(xSet, ySet, zSet).setType(distSqr < 36 ? Material.AIR : oreMat);
+                        Block blk = wld.getBlockAt(xSet, ySet, zSet);
+                        if (blk.getType().isSolid()) blk.setType(distSqr < 64 ? Material.AIR : oreMat);
                     }
                 }
             }

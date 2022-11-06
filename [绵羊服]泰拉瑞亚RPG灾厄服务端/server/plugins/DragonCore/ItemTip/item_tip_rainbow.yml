@@ -5,7 +5,7 @@ Functions:
     界面变量.ww = tip.width;
     界面变量.hh = tip.height;
   preRender: |-
-    界面变量.r_c_temp=方法.floor(方法.mod(方法.取当前时间(), (90*60)-1) / 60);
+    界面变量.r_c_temp=方法.floor(方法.mod(方法.取当前时间(), (90*90)-1) / 90);
     界面变量.r_c = 界面变量.r_c_temp == 0 ? 'FF0000' : 'FF1100';
     界面变量.r_c = 界面变量.r_c_temp == 1 ? 'FF1100' : 界面变量.r_c;
     界面变量.r_c = 界面变量.r_c_temp == 2 ? 'FF2200' : 界面变量.r_c;

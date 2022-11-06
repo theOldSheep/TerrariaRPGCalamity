@@ -75,7 +75,16 @@ public class EntityHelper {
             HashMap<String, Double> attrMap = getAttrMap(entity);
             if (!attrMap.containsKey(key)) return;
             value_number = Double.parseDouble(value);
-            if (key.equals("useTime")) value_number /= 2;
+            switch (key) {
+                case "useTime":
+                    value_number /= 2;
+                    break;
+                case "damageTakenMulti":
+                case "arrowConsumptionRate":
+                case "ammoConsumptionRate":
+                    value_number = 1 + value_number;
+                    break;
+            }
             switch (key) {
                 case "damageTakenMulti":
                     if (addOrRemove)
@@ -155,6 +164,14 @@ public class EntityHelper {
                 double horDist = GenericHelper.getHorizontalDistance(mob.getLocation(), targetPlayer.getLocation());
                 return horDist < 48;
             }
+        }
+        return false;
+    }
+    public static boolean hasEffect(Entity entity, String effect) {
+        try {
+            return getEffectMap(entity).containsKey(effect);
+        } catch (Exception e) {
+            Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] getEffectMap", e);
         }
         return false;
     }

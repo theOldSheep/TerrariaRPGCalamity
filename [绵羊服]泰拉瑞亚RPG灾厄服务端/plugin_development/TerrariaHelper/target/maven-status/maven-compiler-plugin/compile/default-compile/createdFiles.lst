@@ -1,11 +1,13 @@
 terraria\util\YmlHelper$YmlSection.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
+terraria\listener\DamageListener$1.class
 terraria\worldgen\overworld\OverworldChunkGenerator.class
 terraria\dragoncorehelper\RandomTitle.class
 terraria\util\BossHelper.class
 terraria\worldgen\overworld\OverworldCaveGenerator$1.class
 terraria\gameplay\Event.class
 terraria\util\WorldHelper$1.class
+terraria\TerrariaHelper$1.class
 terraria\worldgen\overworld\NoiseGeneratorTest.class
 terraria\util\GameplayHelper.class
 terraria\listener\playerKeyToggleListener.class
@@ -38,4 +40,5 @@ terraria\worldgen\Interpolate$InterpolatePoint.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator.class
 terraria\util\EntityHelper.class
 terraria\worldgen\overworld\OverworldChunkGenerator$1.class
+terraria\listener\DamageListener.class
 terraria\TerrariaHelper.class

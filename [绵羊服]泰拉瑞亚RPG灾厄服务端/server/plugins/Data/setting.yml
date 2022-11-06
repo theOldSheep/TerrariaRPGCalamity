@@ -118,6 +118,8 @@ effects:
   魔力再生:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/7/77/Mana_Regeneration
     isBuff: true
+    attributes:
+      manaRegen: 10
   黑曜石皮:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/8d/Obsidian_Skin
     isBuff: true

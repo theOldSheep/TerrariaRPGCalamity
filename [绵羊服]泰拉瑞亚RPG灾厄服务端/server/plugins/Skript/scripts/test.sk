@@ -1,6 +1,7 @@
 import:
 	eos.moe.dragoncore.config.Config
 	java.io.File
+	java.lang.Double
 	java.util.ArrayList
 	java.util.HashMap
 	java.util.HashSet
@@ -99,6 +100,12 @@ command /potion:
 	trigger:
 		EntityHelper.applyEffect(command sender, "魔力疾病", 200)
 		EntityHelper.applyEffect(command sender, "再生", 20)
+command /attrMapItem [<text>] [<text>] [<boolean>]:
+	trigger:
+		EntityHelper.tweakAttribute(command sender, arg-1, arg-2, arg-3)
+		set {_attrMap} to EntityHelper.getAttrMap(command sender)
+		broadcast "%{_attrMap}%"
+		broadcast "%last java error% &a|&r %{_attrMap}.get(arg-1)%"
 command /playMusic [<text>]:
 	trigger:
 		if arg-1 is ".":

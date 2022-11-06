@@ -4,6 +4,9 @@ main: terraria.TerrariaHelper
 softdepend:
   - DragonCore
   - LibsDisguises
+  - PlaceholderAPI
+  - Vault
+  - Essentials
 load: startup
 commands:
   findNoise:
