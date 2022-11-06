@@ -1,636 +1,568 @@
-[16:03:40] [Server thread/INFO]: Starting minecraft server version 1.12.2
-[16:03:40] [Server thread/INFO]: Loading properties
-[16:03:40] [Server thread/INFO]: Default game type: SURVIVAL
-[16:03:40] [Server thread/INFO]: This server is running Paper version git-Paper-1620 (MC: 1.12.2) (Implementing API version 1.12.2-R0.1-SNAPSHOT)
-[16:03:40] [Server thread/INFO]: Debug logging is disabled
-[16:03:40] [Server thread/INFO]: Server Ping Player Sample Count: 12
-[16:03:40] [Server thread/INFO]: Using 4 threads for Netty based IO
-[16:03:40] [Server thread/INFO]: Generating keypair
-[16:03:40] [Server thread/INFO]: Starting Minecraft server on *:25565
-[16:03:40] [Server thread/INFO]: Using default channel type
-[16:03:41] [Server thread/INFO]: Set PluginClassLoader as parallel capable
-[16:03:41] [Server thread/INFO]: [AntiExplosion] Loading AntiExplosion v1.0.1
-[16:03:41] [Server thread/INFO]: [PlaceholderAPI] Loading PlaceholderAPI v2.10.0
-[16:03:41] [Server thread/INFO]: [GrItemTags] Loading GrItemTags v1.0.7
-[16:03:41] [Server thread/INFO]: [Vault] Loading Vault v1.7.3-b131
-[16:03:41] [Server thread/INFO]: [VexView] Loading VexView v2.7.3
-[16:03:41] [Server thread/INFO]: [ProtocolLib] Loading ProtocolLib v4.4.0
-[16:03:41] [Server thread/INFO]: [LibsDisguises] Loading LibsDisguises v10.0.31
-[16:03:41] [Server thread/INFO]: [ChatItem] Loading ChatItem v1.3.6.2
-[16:03:41] [Server thread/INFO]: [Essentials] Loading Essentials v2.18.2.0
-[16:03:41] [Server thread/INFO]: [AuthMe] Loading AuthMe v5.6.0-beta2-b2453
-[16:03:41] [Server thread/INFO]: [DragonCore] Loading DragonCore v2.5.6.6
-[16:03:41] [Server thread/INFO]: [TerrariaHelper] Loading TerrariaHelper v1.0
-[16:03:41] [Server thread/INFO]: [TabList] Loading TabList v5.1
-[16:03:41] [Server thread/INFO]: [Residence] Loading Residence v4.8.2.0
-[16:03:41] [Server thread/INFO]: [Skript] Loading Skript v2.5.3
-[16:03:41] [Server thread/INFO]: [skript-placeholders] Loading skript-placeholders v1.5.2
-[16:03:41] [Server thread/INFO]: [skDragon] Loading skDragon v0.16
-[16:03:41] [Server thread/INFO]: [skript-reflect] Loading skript-reflect v2.2.3
-[16:03:41] [Server thread/INFO]: [SkQuery] Loading SkQuery v4.1.1
-[16:03:41] [Server thread/INFO]: [ThatPacketAddon] Loading ThatPacketAddon v1.0-BETA.3
-[16:03:41] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
-[16:03:41] [Server thread/INFO]: [PlaceholderAPI] Enabling PlaceholderAPI v2.10.0
-[16:03:41] [Server thread/INFO]: [PlaceholderAPI] Placeholder expansion registration initializing...
-[16:03:41] [Server thread/INFO]: [PlaceholderAPI] Fetching available expansion information...
-[16:03:41] [Server thread/INFO]: [Vault] Enabling Vault v1.7.3-b131
-[16:03:41] [Server thread/INFO]: [Vault] [Economy] Essentials Economy found: Waiting
-[16:03:41] [Server thread/INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
-[16:03:41] [Server thread/INFO]: [Vault] Enabled Version 1.7.3-b131
-[16:03:41] [Server thread/INFO]: [ProtocolLib] Enabling ProtocolLib v4.4.0
-[16:03:41] [Server thread/INFO]: [ProtocolLib] Started structure compiler thread.
-[16:03:41] [Server thread/INFO]: [TerrariaHelper] Enabling TerrariaHelper v1.0
-[16:03:41] [Server thread/INFO]: [TerrariaHelper] 泰拉瑞亚RPG插件部分已启动。
-[16:03:41] [Server thread/INFO]: [TerrariaHelper] 世界种子: 114514
-[16:03:41] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
-[16:03:41] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
-[16:03:41] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
-[16:03:41] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
-[16:03:41] [Server thread/INFO]: **** Beginning UUID conversion, this may take A LONG time ****
-[16:03:41] [Server thread/INFO]: Preparing level "world"
-[16:03:41] [Server thread/INFO]: -------- World Settings For [world] --------
-[16:03:41] [Server thread/INFO]: Item Merge Radius: 2.5
-[16:03:41] [Server thread/INFO]: Item Despawn Rate: 3000
-[16:03:41] [Server thread/INFO]: View Distance: 16
-[16:03:41] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
-[16:03:41] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
-[16:03:41] [Server thread/INFO]: Arrow Despawn Rate: 12000
-[16:03:41] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
-[16:03:41] [Server thread/INFO]: Experience Merge Radius: 3.0
-[16:03:41] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
-[16:03:41] [Server thread/INFO]: Mob Spawn Range: 4
-[16:03:41] [Server thread/INFO]: Cactus Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Cane Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Melon Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Sapling Growth Modifier: 100%
-[16:03:41] [Server thread/INFO]: Wheat Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Vine Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Structure Info Saving: true
-[16:03:41] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
-[16:03:41] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75 / Tiv true
-[16:03:41] [Server thread/INFO]: Max TNT Explosions: 100
-[16:03:41] [Server thread/INFO]: Random Lighting Updates: true
-[16:03:41] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
-[16:03:41] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
-[16:03:41] [Server thread/INFO]: -------- World Settings For [world_nether] --------
-[16:03:41] [Server thread/INFO]: Item Merge Radius: 2.5
-[16:03:41] [Server thread/INFO]: Item Despawn Rate: 3000
-[16:03:41] [Server thread/INFO]: View Distance: 16
-[16:03:41] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
-[16:03:41] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
-[16:03:41] [Server thread/INFO]: Arrow Despawn Rate: 12000
-[16:03:41] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
-[16:03:41] [Server thread/INFO]: Experience Merge Radius: 3.0
-[16:03:41] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
-[16:03:41] [Server thread/INFO]: Mob Spawn Range: 4
-[16:03:41] [Server thread/INFO]: Cactus Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Cane Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Melon Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Sapling Growth Modifier: 100%
-[16:03:41] [Server thread/INFO]: Wheat Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Vine Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Structure Info Saving: true
-[16:03:41] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
-[16:03:41] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75 / Tiv true
-[16:03:41] [Server thread/INFO]: Max TNT Explosions: 100
-[16:03:41] [Server thread/INFO]: Random Lighting Updates: true
-[16:03:41] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
-[16:03:41] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
-[16:03:41] [Server thread/INFO]: -------- World Settings For [world_the_end] --------
-[16:03:41] [Server thread/INFO]: Item Merge Radius: 2.5
-[16:03:41] [Server thread/INFO]: Item Despawn Rate: 3000
-[16:03:41] [Server thread/INFO]: View Distance: 16
-[16:03:41] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
-[16:03:41] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
-[16:03:41] [Server thread/INFO]: Arrow Despawn Rate: 12000
-[16:03:41] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
-[16:03:41] [Server thread/INFO]: Experience Merge Radius: 3.0
-[16:03:41] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
-[16:03:41] [Server thread/INFO]: Mob Spawn Range: 4
-[16:03:41] [Server thread/INFO]: Cactus Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Cane Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Melon Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Sapling Growth Modifier: 100%
-[16:03:41] [Server thread/INFO]: Wheat Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Vine Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
-[16:03:41] [Server thread/INFO]: Structure Info Saving: true
-[16:03:41] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
-[16:03:41] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75 / Tiv true
-[16:03:41] [Server thread/INFO]: Max TNT Explosions: 100
-[16:03:41] [Server thread/INFO]: Random Lighting Updates: true
-[16:03:41] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
-[16:03:41] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
-[16:03:41] [Server thread/INFO]: Preparing start region for level 0 (Seed: 5505676239222284580)
-[16:03:41] [Server thread/INFO]: Preparing start region for level 1 (Seed: 2456250912421721751)
-[16:03:41] [Server thread/INFO]: Preparing start region for level 2 (Seed: -5879282893166092516)
-[16:03:41] [Server thread/INFO]: [AntiExplosion] Enabling AntiExplosion v1.0.1
-[16:03:41] [Server thread/INFO]: [AntiExplosion] AntiExplosion is enabled!
-[16:03:41] [Server thread/INFO]: [GrItemTags] Enabling GrItemTags v1.0.7
-[16:03:41] [Server thread/INFO]: [VexView] Enabling VexView v2.7.3
-[16:03:41] [Server thread/INFO]: ======== VexView > 开始启动 ========
-[16:03:41] [Server thread/INFO]: > 欢迎使用VexView！
-[16:03:41] [Server thread/INFO]: > 已将您的语言设置为：中国 (zh_CN)
-[16:03:42] [Server thread/INFO]: > 当前服务器版本： 1.12.2 (已兼容)
-[16:03:42] [Server thread/INFO]: > 该游戏版本已开放使用的功能：
-[16:03:42] [Server thread/INFO]:  ┣ GUI基础功能 √
-[16:03:42] [Server thread/INFO]:  ┣ TAG基础功能 √
-[16:03:42] [Server thread/INFO]:  ┣ VexViewStore商店 √
-[16:03:42] [Server thread/INFO]:  ┣ GUI高级功能（物品槽） √
-[16:03:42] [Server thread/INFO]:  ┣ 自定义药水效果 √
-[16:03:42] [Server thread/INFO]:  ┣ 高级特效 √
-[16:03:42] [Server thread/INFO]:  ┣ 高级物品提示框 √
-[16:03:42] [Server thread/INFO]:  ┣ 自定义游戏菜单 √
-[16:03:42] [Server thread/INFO]:  ┗ 其他功能 √
-[16:03:42] [Server thread/INFO]: > 检测到未启用数据库
-[16:03:42] [Server thread/INFO]: > PlaceholderAPI 插件成功兼容！
-[16:03:42] [Server thread/INFO]: > 已完成VexView插件全部功能载入！
-[16:03:42] [Server thread/INFO]: > 作者 LK520 |lona 版本: 2.7.3
-[16:03:42] [Server thread/INFO]: ======== VexView > 启动完成 ========
-[16:03:42] [Server thread/INFO]: [LibsDisguises] Enabling LibsDisguises v10.0.31
-[16:03:42] [Server thread/INFO]: [LibsDisguises] File Name: LibsDisguises-10.0.31-Free.jar
-[16:03:42] [Server thread/INFO]: [LibsDisguises] Discovered nms version: v1_12_R1
-[16:03:42] [Server thread/INFO]: [LibsDisguises] Jenkins Build: #1119
-[16:03:42] [Server thread/INFO]: [LibsDisguises] Build Date: 09/08/2022 06:41
-[16:03:42] [Server thread/WARN]: [LibsDisguises] If you own the plugin, place the premium jar downloaded from https://www.spigotmc.org/resources/libs-disguises.32453/ in plugins/LibsDisguises/
-[16:03:42] [Server thread/INFO]: [LibsDisguises] You are running the free version, commands limited to non-players and operators. (Console, Command Blocks, Admins)
-[16:03:42] [Server thread/INFO]: [LibsDisguises] Loaded custom disguise libraryaddict
-[16:03:42] [Server thread/INFO]: [LibsDisguises] Loaded 1 custom disguise
-[16:03:42] [Server thread/INFO]: [LibsDisguises] Config is up to date!
-[16:03:42] [Server thread/INFO]: [ChatItem] Enabling ChatItem v1.3.6.2
-[16:03:42] [Server thread/INFO]: [Essentials] Enabling Essentials v2.18.2.0
-[16:03:42] [Server thread/INFO]: [Essentials] Attempting to convert old kits in config.yml to new kits.yml
-[16:03:42] [Server thread/INFO]: [Essentials] No kits found to migrate.
-[16:03:42] [Server thread/INFO]: [Essentials] Loaded 852 items from items.csv.
-[16:03:42] [Server thread/INFO]: [Essentials] Using locale zh_CN
-[16:03:42] [Server thread/INFO]: [Essentials] ServerListPingEvent: Spigot iterator API
-[16:03:42] [Server thread/INFO]: [Essentials] Starting Metrics. Opt-out using the global bStats config.
-[16:03:42] [Server thread/INFO]: [Vault] [Economy] Essentials Economy hooked.
-[16:03:42] [Server thread/INFO]: [Essentials] Using superperms-based permissions.
-[16:03:42] [Server thread/INFO]: [AuthMe] Enabling AuthMe v5.6.0-beta2-b2453
-[16:03:42] [Server thread/INFO]: [AuthMe] SQLite Setup finished
-[16:03:42] [Server thread/INFO]: [AuthMe] Hooked into Vault!
-[16:03:43] [Server thread/INFO]: [AuthMe] Hooked successfully into Essentials
-[16:03:43] [Server thread/INFO]: [AuthMe] Essentials spawn file not found: 'C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\server - worldgentest\plugins\Essentials\spawn.yml'
-[16:03:43] [Server thread/INFO]: [AuthMe] AuthMe 5.6.0-beta2 build n.2453 successfully enabled!
-[16:03:43] [Server thread/INFO]: [DragonCore] Enabling DragonCore v2.5.6.6
-[16:03:43] [Server thread/INFO]: ************************************************************
-[16:03:43] [Server thread/INFO]: [DragonCore] 欢迎使用【龙之核心】，插件作者为QQ448780139
-[16:03:43] [Server thread/INFO]: [DragonCore] 欢迎加入QQ交流群: 901704037
-[16:03:43] [Server thread/INFO]: [DragonCore] 欢迎注册社区网站: https://dragoncore.top/
-[16:03:43] [Server thread/INFO]: ************************************************************
-[16:03:43] [Server thread/INFO]: NMS版本:net.minecraft.server.v1_12_R1
-[16:03:43] [Server thread/INFO]: 加载NBT功能
-[16:03:43] [Server thread/INFO]: DragonCore - 开始载入文件
-[16:03:43] [Server thread/INFO]: ┏━━━━━━━━━ 开始载入Yml文件 ━━━━━━━━━
-[16:03:43] [Server thread/INFO]: ┃ 载入: ArmorLayer.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: Blood.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: config.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: EntityModel.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: FontConfig.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: Gui/hotbar.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: Gui/huds.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: Gui/hud_overlay.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: Gui/背包.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: ItemIcon.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: ItemModel.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: ItemTip/item_tip.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: ItemTip/item_tip_rainbow.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: KeyConfig.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: SlotConfig.yml
-[16:03:43] [Server thread/INFO]: ┃ 载入: WorldTexture.yml
-[16:03:43] [Server thread/INFO]: ┖━━━━━━━━━━ 文件载入完成 ━━━━━━━━━━━
-[16:03:43] [Server thread/INFO]: 已启用YML格式存储玩家数据
-[16:03:43] [Server thread/INFO]: DragonCore - 加载完成
-[16:03:43] [Server thread/INFO]: [TabList] Enabling TabList v5.1
-[16:03:43] [Server thread/INFO]: [TabList] Hooked PlaceholderAPI version: 2.10.0
-[16:03:43] [Server thread/WARN]: java.io.FileNotFoundException: https://raw.githubusercontent.com/montlikadani/TabList/master/plugin.yml
-[16:03:43] [Server thread/WARN]: 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1910)
-[16:03:43] [Server thread/WARN]: 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1512)
-[16:03:43] [Server thread/WARN]: 	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:268)
-[16:03:43] [Server thread/WARN]: 	at java.net.URL.openStream(URL.java:1092)
-[16:03:43] [Server thread/WARN]: 	at hu.montlikadani.tablist.bukkit.TabList.checkVersion(TabList.java:185)
-[16:03:43] [Server thread/WARN]: 	at hu.montlikadani.tablist.bukkit.TabList.onEnable(TabList.java:119)
-[16:03:43] [Server thread/WARN]: 	at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:264)
-[16:03:43] [Server thread/WARN]: 	at org.bukkit.plugin.java.JavaPluginLoader.enablePlugin(JavaPluginLoader.java:316)
-[16:03:43] [Server thread/WARN]: 	at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:405)
-[16:03:43] [Server thread/WARN]: 	at org.bukkit.craftbukkit.v1_12_R1.CraftServer.enablePlugin(CraftServer.java:395)
-[16:03:43] [Server thread/WARN]: 	at org.bukkit.craftbukkit.v1_12_R1.CraftServer.enablePlugins(CraftServer.java:344)
-[16:03:43] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.MinecraftServer.t(MinecraftServer.java:442)
-[16:03:43] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.MinecraftServer.l(MinecraftServer.java:403)
-[16:03:43] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.MinecraftServer.a(MinecraftServer.java:341)
-[16:03:43] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.DedicatedServer.init(DedicatedServer.java:289)
-[16:03:43] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.MinecraftServer.run(MinecraftServer.java:616)
-[16:03:43] [Server thread/WARN]: 	at java.lang.Thread.run(Thread.java:750)
-[16:03:43] [Server thread/WARN]: [TabList] Failed to compare versions. java.io.FileNotFoundException: https://raw.githubusercontent.com/montlikadani/TabList/master/plugin.yml Please report it here:
+[12:04:06] [Server thread/INFO]: Starting minecraft server version 1.12.2
+[12:04:06] [Server thread/INFO]: Loading properties
+[12:04:06] [Server thread/INFO]: Default game type: SURVIVAL
+[12:04:06] [Server thread/INFO]: This server is running Paper version git-Paper-1620 (MC: 1.12.2) (Implementing API version 1.12.2-R0.1-SNAPSHOT)
+[12:04:06] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[12:04:06] [Server thread/INFO]: Using 4 threads for Netty based IO
+[12:04:06] [Server thread/INFO]: Debug logging is disabled
+[12:04:06] [Server thread/INFO]: Generating keypair
+[12:04:07] [Server thread/INFO]: Starting Minecraft server on *:25565
+[12:04:07] [Server thread/INFO]: Using default channel type
+[12:04:07] [Server thread/INFO]: Set PluginClassLoader as parallel capable
+[12:04:07] [Server thread/INFO]: [AntiExplosion] Loading AntiExplosion v1.0.1
+[12:04:07] [Server thread/INFO]: [PlaceholderAPI] Loading PlaceholderAPI v2.10.0
+[12:04:07] [Server thread/INFO]: [GrItemTags] Loading GrItemTags v1.0.7
+[12:04:07] [Server thread/INFO]: [Vault] Loading Vault v1.7.3-b131
+[12:04:07] [Server thread/INFO]: [VexView] Loading VexView v2.7.3
+[12:04:07] [Server thread/INFO]: [ProtocolLib] Loading ProtocolLib v4.4.0
+[12:04:08] [Server thread/INFO]: [LibsDisguises] Loading LibsDisguises v10.0.31
+[12:04:08] [Server thread/INFO]: [ChatItem] Loading ChatItem v1.3.6.2
+[12:04:08] [Server thread/INFO]: [Essentials] Loading Essentials v2.18.2.0
+[12:04:08] [Server thread/INFO]: [AuthMe] Loading AuthMe v5.6.0-beta2-b2453
+[12:04:08] [Server thread/INFO]: [DragonCore] Loading DragonCore v2.5.6.6
+[12:04:08] [Server thread/INFO]: [TerrariaHelper] Loading TerrariaHelper v1.0
+[12:04:08] [Server thread/INFO]: [TabList] Loading TabList v5.1
+[12:04:08] [Server thread/INFO]: [Residence] Loading Residence v4.8.2.0
+[12:04:08] [Server thread/INFO]: [Skript] Loading Skript v2.5.3
+[12:04:08] [Server thread/INFO]: [skript-placeholders] Loading skript-placeholders v1.5.2
+[12:04:08] [Server thread/INFO]: [skDragon] Loading skDragon v0.16
+[12:04:08] [Server thread/INFO]: [skript-reflect] Loading skript-reflect v2.2.3
+[12:04:08] [Server thread/INFO]: [SkQuery] Loading SkQuery v4.1.1
+[12:04:08] [Server thread/INFO]: [ThatPacketAddon] Loading ThatPacketAddon v1.0-BETA.3
+[12:04:08] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[12:04:08] [Server thread/INFO]: [PlaceholderAPI] Enabling PlaceholderAPI v2.10.0
+[12:04:08] [Server thread/INFO]: [PlaceholderAPI] Placeholder expansion registration initializing...
+[12:04:08] [Server thread/INFO]: [PlaceholderAPI] Fetching available expansion information...
+[12:04:08] [Server thread/INFO]: [Vault] Enabling Vault v1.7.3-b131
+[12:04:08] [Server thread/INFO]: [Vault] [Economy] Essentials Economy found: Waiting
+[12:04:08] [Server thread/INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+[12:04:08] [Server thread/INFO]: [Vault] Enabled Version 1.7.3-b131
+[12:04:08] [Server thread/INFO]: [ProtocolLib] Enabling ProtocolLib v4.4.0
+[12:04:08] [Server thread/INFO]: [ProtocolLib] Started structure compiler thread.
+[12:04:08] [Server thread/INFO]: [TerrariaHelper] Enabling TerrariaHelper v1.0
+[12:04:08] [Server thread/INFO]: [TerrariaHelper] 泰拉瑞亚RPG插件部分已启动。
+[12:04:08] [Server thread/INFO]: [TerrariaHelper] 世界种子: 114514
+[12:04:08] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[12:04:08] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
+[12:04:08] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[12:04:08] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[12:04:08] [Server thread/INFO]: **** Beginning UUID conversion, this may take A LONG time ****
+[12:04:08] [Server thread/INFO]: Preparing level "world"
+[12:04:08] [Server thread/INFO]: -------- World Settings For [world] --------
+[12:04:08] [Server thread/INFO]: Item Merge Radius: 2.5
+[12:04:08] [Server thread/INFO]: Item Despawn Rate: 3000
+[12:04:08] [Server thread/INFO]: View Distance: 16
+[12:04:08] [Server thread/INFO]: Arrow Despawn Rate: 12000
+[12:04:08] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
+[12:04:08] [Server thread/INFO]: Experience Merge Radius: 3.0
+[12:04:08] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
+[12:04:08] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
+[12:04:08] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
+[12:04:08] [Server thread/INFO]: Structure Info Saving: true
+[12:04:08] [Server thread/INFO]: Cactus Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Cane Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Melon Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Sapling Growth Modifier: 100%
+[12:04:08] [Server thread/INFO]: Wheat Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Vine Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Mob Spawn Range: 4
+[12:04:08] [Server thread/INFO]: Max TNT Explosions: 100
+[12:04:08] [Server thread/INFO]: Random Lighting Updates: true
+[12:04:08] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
+[12:04:08] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75 / Tiv true
+[12:04:08] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
+[12:04:08] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
+[12:04:08] [Server thread/INFO]: -------- World Settings For [world_nether] --------
+[12:04:08] [Server thread/INFO]: Item Merge Radius: 2.5
+[12:04:08] [Server thread/INFO]: Item Despawn Rate: 3000
+[12:04:08] [Server thread/INFO]: View Distance: 16
+[12:04:08] [Server thread/INFO]: Arrow Despawn Rate: 12000
+[12:04:08] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
+[12:04:08] [Server thread/INFO]: Experience Merge Radius: 3.0
+[12:04:08] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
+[12:04:08] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
+[12:04:08] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
+[12:04:08] [Server thread/INFO]: Structure Info Saving: true
+[12:04:08] [Server thread/INFO]: Cactus Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Cane Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Melon Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Sapling Growth Modifier: 100%
+[12:04:08] [Server thread/INFO]: Wheat Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Vine Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Mob Spawn Range: 4
+[12:04:08] [Server thread/INFO]: Max TNT Explosions: 100
+[12:04:08] [Server thread/INFO]: Random Lighting Updates: true
+[12:04:08] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
+[12:04:08] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75 / Tiv true
+[12:04:08] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
+[12:04:08] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
+[12:04:08] [Server thread/INFO]: -------- World Settings For [world_the_end] --------
+[12:04:08] [Server thread/INFO]: Item Merge Radius: 2.5
+[12:04:08] [Server thread/INFO]: Item Despawn Rate: 3000
+[12:04:08] [Server thread/INFO]: View Distance: 16
+[12:04:08] [Server thread/INFO]: Arrow Despawn Rate: 12000
+[12:04:08] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
+[12:04:08] [Server thread/INFO]: Experience Merge Radius: 3.0
+[12:04:08] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
+[12:04:08] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
+[12:04:08] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
+[12:04:08] [Server thread/INFO]: Structure Info Saving: true
+[12:04:08] [Server thread/INFO]: Cactus Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Cane Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Melon Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Sapling Growth Modifier: 100%
+[12:04:08] [Server thread/INFO]: Wheat Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Vine Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
+[12:04:08] [Server thread/INFO]: Mob Spawn Range: 4
+[12:04:08] [Server thread/INFO]: Max TNT Explosions: 100
+[12:04:08] [Server thread/INFO]: Random Lighting Updates: true
+[12:04:08] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
+[12:04:08] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75 / Tiv true
+[12:04:08] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
+[12:04:08] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
+[12:04:08] [Server thread/INFO]: Preparing start region for level 0 (Seed: 5505676239222284580)
+[12:04:08] [Server thread/INFO]: Preparing start region for level 1 (Seed: 2456250912421721751)
+[12:04:08] [Server thread/INFO]: Preparing start region for level 2 (Seed: -5879282893166092516)
+[12:04:08] [Server thread/INFO]: [AntiExplosion] Enabling AntiExplosion v1.0.1
+[12:04:08] [Server thread/INFO]: [AntiExplosion] AntiExplosion is enabled!
+[12:04:08] [Server thread/INFO]: [GrItemTags] Enabling GrItemTags v1.0.7
+[12:04:08] [Server thread/INFO]: [VexView] Enabling VexView v2.7.3
+[12:04:08] [Server thread/INFO]: ======== VexView > 开始启动 ========
+[12:04:08] [Server thread/INFO]: > 欢迎使用VexView！
+[12:04:08] [Server thread/INFO]: > 已将您的语言设置为：中国 (zh_CN)
+[12:04:08] [Server thread/INFO]: > 当前服务器版本： 1.12.2 (已兼容)
+[12:04:08] [Server thread/INFO]: > 该游戏版本已开放使用的功能：
+[12:04:08] [Server thread/INFO]:  ┣ GUI基础功能 √
+[12:04:08] [Server thread/INFO]:  ┣ TAG基础功能 √
+[12:04:08] [Server thread/INFO]:  ┣ VexViewStore商店 √
+[12:04:08] [Server thread/INFO]:  ┣ GUI高级功能（物品槽） √
+[12:04:08] [Server thread/INFO]:  ┣ 自定义药水效果 √
+[12:04:08] [Server thread/INFO]:  ┣ 高级特效 √
+[12:04:08] [Server thread/INFO]:  ┣ 高级物品提示框 √
+[12:04:08] [Server thread/INFO]:  ┣ 自定义游戏菜单 √
+[12:04:08] [Server thread/INFO]:  ┗ 其他功能 √
+[12:04:08] [Server thread/INFO]: > 检测到未启用数据库
+[12:04:08] [Server thread/INFO]: > PlaceholderAPI 插件成功兼容！
+[12:04:08] [Server thread/INFO]: > 已完成VexView插件全部功能载入！
+[12:04:08] [Server thread/INFO]: > 作者 LK520 |lona 版本: 2.7.3
+[12:04:08] [Server thread/INFO]: ======== VexView > 启动完成 ========
+[12:04:08] [Server thread/INFO]: [LibsDisguises] Enabling LibsDisguises v10.0.31
+[12:04:08] [Server thread/INFO]: [LibsDisguises] File Name: LibsDisguises-10.0.31-Free.jar
+[12:04:08] [Server thread/INFO]: [LibsDisguises] Discovered nms version: v1_12_R1
+[12:04:08] [Server thread/INFO]: [LibsDisguises] Jenkins Build: #1119
+[12:04:08] [Server thread/INFO]: [LibsDisguises] Build Date: 09/08/2022 06:41
+[12:04:08] [Server thread/WARN]: [LibsDisguises] If you own the plugin, place the premium jar downloaded from https://www.spigotmc.org/resources/libs-disguises.32453/ in plugins/LibsDisguises/
+[12:04:08] [Server thread/INFO]: [LibsDisguises] You are running the free version, commands limited to non-players and operators. (Console, Command Blocks, Admins)
+[12:04:09] [Server thread/INFO]: [LibsDisguises] Loaded custom disguise libraryaddict
+[12:04:09] [Server thread/INFO]: [LibsDisguises] Loaded 1 custom disguise
+[12:04:09] [Server thread/INFO]: [LibsDisguises] Config is up to date!
+[12:04:09] [Server thread/INFO]: [ChatItem] Enabling ChatItem v1.3.6.2
+[12:04:09] [Server thread/INFO]: [Essentials] Enabling Essentials v2.18.2.0
+[12:04:09] [Server thread/INFO]: [Essentials] Attempting to convert old kits in config.yml to new kits.yml
+[12:04:09] [Server thread/INFO]: [Essentials] No kits found to migrate.
+[12:04:09] [Server thread/INFO]: [Essentials] Loaded 852 items from items.csv.
+[12:04:09] [Server thread/INFO]: [Essentials] Using locale zh_CN
+[12:04:10] [Server thread/INFO]: [Essentials] ServerListPingEvent: Spigot iterator API
+[12:04:10] [Server thread/INFO]: [Essentials] Starting Metrics. Opt-out using the global bStats config.
+[12:04:10] [Server thread/INFO]: [Vault] [Economy] Essentials Economy hooked.
+[12:04:10] [Server thread/INFO]: [Essentials] Using superperms-based permissions.
+[12:04:10] [Server thread/INFO]: [AuthMe] Enabling AuthMe v5.6.0-beta2-b2453
+[12:04:10] [Server thread/INFO]: [AuthMe] SQLite Setup finished
+[12:04:10] [Server thread/INFO]: [AuthMe] Hooked into Vault!
+[12:04:10] [Server thread/INFO]: [AuthMe] Hooked successfully into Essentials
+[12:04:10] [Server thread/INFO]: [AuthMe] Essentials spawn file not found: 'C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\server\plugins\Essentials\spawn.yml'
+[12:04:10] [Server thread/INFO]: [AuthMe] AuthMe 5.6.0-beta2 build n.2453 successfully enabled!
+[12:04:10] [Server thread/INFO]: [DragonCore] Enabling DragonCore v2.5.6.6
+[12:04:10] [Server thread/INFO]: ************************************************************
+[12:04:10] [Server thread/INFO]: [DragonCore] 欢迎使用【龙之核心】，插件作者为QQ448780139
+[12:04:10] [Server thread/INFO]: [DragonCore] 欢迎加入QQ交流群: 901704037
+[12:04:10] [Server thread/INFO]: [DragonCore] 欢迎注册社区网站: https://dragoncore.top/
+[12:04:10] [Server thread/INFO]: ************************************************************
+[12:04:10] [Server thread/INFO]: NMS版本:net.minecraft.server.v1_12_R1
+[12:04:10] [Server thread/INFO]: 加载NBT功能
+[12:04:10] [Server thread/INFO]: DragonCore - 开始载入文件
+[12:04:10] [Server thread/INFO]: ┏━━━━━━━━━ 开始载入Yml文件 ━━━━━━━━━
+[12:04:10] [Server thread/INFO]: ┃ 载入: ArmorLayer.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: Blood.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: config.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: EntityModel.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: FontConfig.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: Gui/hotbar.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: Gui/huds.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: Gui/hud_overlay.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: Gui/背包.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: ItemIcon.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: ItemModel.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: ItemTip/item_tip.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: ItemTip/item_tip_rainbow.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: KeyConfig.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: SlotConfig.yml
+[12:04:10] [Server thread/INFO]: ┃ 载入: WorldTexture.yml
+[12:04:10] [Server thread/INFO]: ┖━━━━━━━━━━ 文件载入完成 ━━━━━━━━━━━
+[12:04:10] [Server thread/INFO]: 已启用YML格式存储玩家数据
+[12:04:10] [Server thread/INFO]: DragonCore - 加载完成
+[12:04:10] [Server thread/INFO]: [TabList] Enabling TabList v5.1
+[12:04:10] [Server thread/INFO]: [TabList] Hooked PlaceholderAPI version: 2.10.0
+[12:04:10] [Server thread/WARN]: java.io.FileNotFoundException: https://raw.githubusercontent.com/montlikadani/TabList/master/plugin.yml
+[12:04:10] [Server thread/WARN]: 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1910)
+[12:04:10] [Server thread/WARN]: 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1512)
+[12:04:10] [Server thread/WARN]: 	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:268)
+[12:04:10] [Server thread/WARN]: 	at java.net.URL.openStream(URL.java:1092)
+[12:04:10] [Server thread/WARN]: 	at hu.montlikadani.tablist.bukkit.TabList.checkVersion(TabList.java:185)
+[12:04:10] [Server thread/WARN]: 	at hu.montlikadani.tablist.bukkit.TabList.onEnable(TabList.java:119)
+[12:04:10] [Server thread/WARN]: 	at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:264)
+[12:04:10] [Server thread/WARN]: 	at org.bukkit.plugin.java.JavaPluginLoader.enablePlugin(JavaPluginLoader.java:316)
+[12:04:10] [Server thread/WARN]: 	at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:405)
+[12:04:10] [Server thread/WARN]: 	at org.bukkit.craftbukkit.v1_12_R1.CraftServer.enablePlugin(CraftServer.java:395)
+[12:04:10] [Server thread/WARN]: 	at org.bukkit.craftbukkit.v1_12_R1.CraftServer.enablePlugins(CraftServer.java:344)
+[12:04:10] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.MinecraftServer.t(MinecraftServer.java:442)
+[12:04:10] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.MinecraftServer.l(MinecraftServer.java:403)
+[12:04:10] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.MinecraftServer.a(MinecraftServer.java:341)
+[12:04:10] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.DedicatedServer.init(DedicatedServer.java:289)
+[12:04:10] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.MinecraftServer.run(MinecraftServer.java:616)
+[12:04:10] [Server thread/WARN]: 	at java.lang.Thread.run(Thread.java:750)
+[12:04:10] [Server thread/WARN]: [TabList] Failed to compare versions. java.io.FileNotFoundException: https://raw.githubusercontent.com/montlikadani/TabList/master/plugin.yml Please report it here:
 https://github.com/montlikadani/TabList/issues
-[16:03:43] [Server thread/INFO]: [TabList] 
-[16:03:43] [Server thread/INFO]: [TabList] Metrics enabled.
-[16:03:43] [Server thread/INFO]: [TabList] > The plugin successfully enabled v5.1!
-[16:03:43] [Server thread/INFO]: [Residence] Enabling Residence v4.8.2.0
-[16:03:44] [Server thread/INFO]: [Residence] Found Vault, but Vault reported no usable permissions system...
-[16:03:44] [Server thread/INFO]: [Residence] Permissions plugin NOT FOUND!
-[16:03:44] [Server thread/INFO]: [Residence] Scanning for economy systems...
-[16:03:44] [Server thread/INFO]: [Residence] Found Vault using economy: Essentials Economy
-[16:03:44] [Server thread/INFO]: [Residence] Loading save data for world world...
-[16:03:44] [Server thread/INFO]: [Residence] Loaded world data. (1 ms)
-[16:03:44] [Server thread/INFO]: [Residence] Loading save data for world world_nether...
-[16:03:44] [Server thread/INFO]: [Residence] Loaded world_nether data. (0 ms)
-[16:03:44] [Server thread/INFO]: [Residence] Loading save data for world world_the_end...
-[16:03:44] [Server thread/INFO]: [Residence] Loaded world_the_end data. (0 ms)
-[16:03:44] [Server thread/INFO]: [Residence] Loading world data into memory...
-[16:03:44] [Server thread/INFO]: [Residence] Loaded world data into memory. (6 ms)
-[16:03:44] [Server thread/INFO]: [Residence] Loading world_nether data into memory...
-[16:03:44] [Server thread/INFO]: [Residence] Loaded world_nether data into memory. (0 ms)
-[16:03:44] [Server thread/INFO]: [Residence] Loading world_the_end data into memory...
-[16:03:44] [Server thread/INFO]: [Residence] Loaded world_the_end data into memory. (0 ms)
-[16:03:44] [Server thread/INFO]: [Residence] WorldEdit NOT found!
-[16:03:44] [Server thread/INFO]: [Residence] PlaceholderAPI hooked.
-[16:03:44] [Server thread/INFO]: [Residence] PlaceholderAPI was found - Enabling capabilities.
-[16:03:44] [Server thread/INFO]: [Residence] Enabled! Version 4.8.2.0 by Zrips
-[16:03:44] [Server thread/INFO]: [Skript] Enabling Skript v2.5.3
-[16:03:44] [Server thread/INFO]: [Skript] The updater is disabled, so a check for the latest version of Skript was not performed.
-[16:03:45] [Server thread/INFO]: [Skript] Loaded 18217 aliases in 1152ms
-[16:03:45] [Server thread/INFO]: [Skript]  ~ created by & ? Peter Güttinger aka Njol ~
-[16:03:45] [Server thread/INFO]: [skript-placeholders] Enabling skript-placeholders v1.5.2
-[16:03:45] [Server thread/INFO]: [skDragon] Enabling skDragon v0.16
-[16:03:45] [Server thread/INFO]: [skDragon] Plugin has been Enabled
-[16:03:46] [Server thread/INFO]: [skript-reflect] Enabling skript-reflect v2.2.3
-[16:03:46] [Server thread/INFO]: [SkQuery] Enabling SkQuery v4.1.1
-[16:03:46] [Server thread/INFO]: [skQuery] Locating classes from SkQuery...
-[16:03:46] [Server thread/INFO]: [skQuery] Beginning to process a total of 139 from SkQuery
-[16:03:46] [Server thread/INFO]: [skQuery] Out of 139 classes, 137 classes were loaded from SkQuery
-[16:03:46] [Server thread/INFO]: [ThatPacketAddon] Enabling ThatPacketAddon v1.0-BETA.3
-[16:03:46] [Server thread/INFO]: Done (4.749s)! For help, type "help" or "?"
-[16:03:46] [Server thread/INFO]: Timings Reset
-[16:03:46] [Craft Scheduler Thread - 8/INFO]: [AuthMe] Downloading GEO IP database, because the old database is older than 30 days or doesn't exist
-[16:03:46] [Craft Scheduler Thread - 11/INFO]: [skDragon] Checking for updates now!
-[16:03:46] [Server thread/INFO]: [DragonCore] 开始载入资源文件夹: DragonCoreResource
-[16:03:46] [Craft Scheduler Thread - 8/WARN]: [AuthMe] No MaxMind credentials found in the configuration file! GeoIp protections will be disabled.
-[16:03:46] [Craft Scheduler Thread - 8/INFO]: [AuthMe] There is no newer GEO IP database uploaded to MaxMind. Using the old one for now.
-[16:03:46] [Thread-8/INFO]: [DragonCore] 资源文件载入完成,共计0个
-[16:03:46] [Craft Scheduler Thread - 8/WARN]: [AuthMe] Could not download GeoLiteAPI database [FileNotFoundException]: plugins\AuthMe\GeoLite2-Country.mmdb (系统找不到指定的文件。)
-[16:03:46] [Server thread/INFO]: [Skript] Loading variables...
-[16:03:46] [Server thread/INFO]: [Skript] Loaded 170 variables in 0.0 seconds
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 12: set {_name} to trimText(name of player's tool)')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 15: if trimText(line 1 of lore of player's tool) is "时装":')
-[16:03:46] [Craft Scheduler Thread - 11/INFO]: [skDragon] vnull is available
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 45: add getItem("银币:%a random integer between 20 and 90%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 48: add getItem("弱效治疗药水:%a random integer between 5 and 15%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 50: add getItem("弱效魔力药水:%a random integer between 5 and 15%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 53: add getItem("专家鱼饵:%a random integer between 1 and 4%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 55: add getItem("初学者鱼饵:%a random integer between 1 and 4%") to {_itemsToGive::*}')
-[16:03:46] [Craft Scheduler Thread - 4/INFO]: Failed to check for Residence update on spigot web page.
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 65: add getItem("治疗药水:%a random integer between 5 and 15%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 67: add getItem("魔力药水:%a random integer between 5 and 15%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 70: add getItem("大师鱼饵:%a random integer between 2 and 4%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 72: add getItem("专家鱼饵:%a random integer between 2 and 4%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 81: add getItem("生命水晶") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 84: add getItem("治疗药水:%a random integer between 5 and 20%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 86: add getItem("魔力药水:%a random integer between 5 and 20%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 88: add getItem("大师鱼饵:%a random integer between 3 and 7%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 93: add getItem("金币:%a random integer between {_moneyInfo::2} and {_moneyInfo::3}%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 109: add getItem("%a random element out of {_temp::*}%:%a random integer between {_oreInfo::4} and {_oreInfo::5}%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 124: add getItem("%a random element out of {_temp::*}%:%a random integer between {_oreInfo::6} and {_oreInfo::7}%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 132: add getItem("%a random element out of {_temp::*}%:%a random integer between {_potionInfo::2} and {_potionInfo::3}%") to {_itemsToGive::*}')
-[16:03:46] [Server thread/ERROR]: [Skript] The function 'giveItem' does not exist. (itemConsumption.sk, line 138: giveItem(player, loop-value)')
-[16:03:46] [Server thread/ERROR]: [Skript] The function 'applyCD' does not exist. (itemConsumption.sk, line 139: applyCD(player, 20)')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 142: set {_type} to trimText(line 1 of lore of player's tool)')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 147: giveItem(player, getItem("克苏鲁之眼盾"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 148: giveItem(player, getItem("邪箭:%a random integer between 20 and 49%"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 149: giveItem(player, getItem("恶魔矿:%a random integer between 30 and 87%"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 150: giveItem(player, getItem("腐化种子:%a random integer between 1 and 3%"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 153: giveItem(player, getItem("星力手环"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 154: giveItem(player, getItem("蠕虫围巾"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 155: giveItem(player, getItem("恶魔矿:%a random integer between 30 and 59%"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 156: giveItem(player, getItem("暗影鳞片:%a random integer between 10 and 19%"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 159: giveItem(player, getItem("皇家凝胶"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 161: giveItem(player, getItem("忍者头盔"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 162: giveItem(player, getItem("忍者胸甲"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 164: giveItem(player, getItem("忍者头盔"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 165: giveItem(player, getItem("忍者护腿"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 167: giveItem(player, getItem("忍者胸甲"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 168: giveItem(player, getItem("忍者护腿"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 172: giveItem(player, getItem("失谐钩爪"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 174: giveItem(player, getItem("水晶刺客兜帽"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 175: giveItem(player, getItem("水晶刺客上衣"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 177: giveItem(player, getItem("水晶刺客兜帽"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 178: giveItem(player, getItem("水晶刺客裤"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 180: giveItem(player, getItem("水晶刺客上衣"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 181: giveItem(player, getItem("水晶刺客裤"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 183: giveItem(player, getItem("刃杖"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 184: giveItem(player, getItem("挥发明胶"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 187: giveItem(player, getItem("蓝月"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 188: giveItem(player, getItem("钴盾"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 189: giveItem(player, getItem("海蓝权杖"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 190: giveItem(player, getItem("妖刀村正"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 191: giveItem(player, getItem("骨头手套"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 192: giveItem(player, getItem("链锤"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 193: giveItem(player, getItem("骨头:%a random integer between 30 and 60%"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 195: giveItem(player, getItem("骷髅头法书"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml"' (itemConsumption.sk, line 198: set {_maxAcc} to yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml"')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 200: giveItem(player, getItem("恶魔之心"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 202: giveItem(player, getItem("战士徽章"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 204: giveItem(player, getItem("游侠徽章"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 206: giveItem(player, getItem("巫师徽章"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 208: giveItem(player, getItem("召唤师徽章"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 210: giveItem(player, getItem("毁灭刃"))')
-[16:03:46] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 212: giveItem(player, getItem("发条突击步枪"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 214: giveItem(player, getItem("激光步枪"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 216: giveItem(player, getItem("鞭炮"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 219: giveItem(player, getItem("强效治疗药水:%a random integer between 5 and 15%"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 220: giveItem(player, getItem("恐惧之魂:%a random integer between 25 and 40%"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 221: giveItem(player, getItem("神圣锭:%a random integer between 20 and 35%"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 222: giveItem(player, getItem("机械电池片"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 225: giveItem(player, getItem("强效治疗药水:%a random integer between 5 and 15%"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 226: giveItem(player, getItem("视域之魂:%a random integer between 25 and 40%"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 227: giveItem(player, getItem("神圣锭:%a random integer between 20 and 35%"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 228: giveItem(player, getItem("机械车轮片"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 231: giveItem(player, getItem("强效治疗药水:%a random integer between 5 and 15%"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 232: giveItem(player, getItem("力量之魂:%a random integer between 25 and 40%"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 233: giveItem(player, getItem("神圣锭:%a random integer between 20 and 35%"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 234: giveItem(player, getItem("机械车体片"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 237: giveItem(player, getItem("孢子囊"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 238: giveItem(player, getItem("小瓶毒液:%a random integer between 8 and 16%"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 239: giveItem(player, getItem("叶绿矿:%a random integer between 40 and 100%"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 241: giveItem(player, getItem("吉他斧"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 243: giveItem(player, getItem("矮人法杖"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 245: giveItem(player, getItem("刺钩"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 247: giveItem(player, getItem("榴弹发射器"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 248: giveItem(player, getItem("初级火箭:%a random integer between 50 and 149%"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 250: giveItem(player, getItem("金星马格南"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 252: giveItem(player, getItem("爆裂藤蔓"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 254: giveItem(player, getItem("吹叶机"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 256: giveItem(player, getItem("种子弯刀"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 260: giveItem(player, getItem("夜光"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 262: giveItem(player, getItem("星光"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 264: giveItem(player, getItem("万花筒"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 266: giveItem(player, getItem("日暮"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 267: giveItem(player, getItem("翱翔徽章"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 269: giveItem(player, getItem("女皇之翼"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 272: giveItem(player, getItem("闪亮石"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 273: giveItem(player, getItem("甲虫外壳:%a random integer between 18 and 23%"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 275: giveItem(player, getItem("疯狂飞斧"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 277: giveItem(player, getItem("太阳石"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 279: giveItem(player, getItem("石巨人之眼"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 281: giveItem(player, getItem("高温射线枪"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 283: giveItem(player, getItem("锯刃镐"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 287: giveItem(player, getItem("猪鲨之翼"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 289: giveItem(player, getItem("泡泡枪"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 291: giveItem(player, getItem("海啸弓"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 293: giveItem(player, getItem("猪鲨链球"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 295: giveItem(player, getItem("利刃台风"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 298: giveItem(player, getItem("天界之翼"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 299: giveItem(player, getItem("夜明矿:%a random integer between 90 and 110%"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 301: giveItem(player, getItem("天体洋葱"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 303: giveItem(player, getItem("彩虹猫矿车"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 305: giveItem(player, getItem("月亮传送门法杖"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 307: giveItem(player, getItem("七彩水晶法杖"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 309: giveItem(player, getItem("彩虹猫之刃"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 311: giveItem(player, getItem("泰拉悠悠球"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 313: giveItem(player, getItem("狂星之怒"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 315: giveItem(player, getItem("太空海豚机枪"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 317: giveItem(player, getItem("喜庆弹射器"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 319: giveItem(player, getItem("终极棱镜"))')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 321: giveItem(player, getItem("月之耀斑"))')
-[16:03:47] [Server thread/ERROR]: [Skript] The function 'applyCD' does not exist. (itemConsumption.sk, line 323: applyCD(player, 20)')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml"' (itemConsumption.sk, line 326: set {_maxAcc} to yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this condition/effect: set yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml" to 6 (itemConsumption.sk, line 328: set yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml" to 6')
-[16:03:47] [Server thread/ERROR]: [Skript] The function 'applyCD' does not exist. (itemConsumption.sk, line 332: applyCD(player, 20)')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml"' (itemConsumption.sk, line 338: set {_maxAcc} to yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this condition/effect: set yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml" to 7 (itemConsumption.sk, line 340: set yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml" to 7')
-[16:03:47] [Server thread/ERROR]: [Skript] The function 'applyCD' does not exist. (itemConsumption.sk, line 344: applyCD(player, 20)')
-[16:03:47] [Server thread/ERROR]: [Skript] The function 'applyCD' does not exist. (itemConsumption.sk, line 367: applyCD(player, 5)')
-[16:03:47] [Server thread/ERROR]: [Skript] {_nodes::*} can't be set to 'yml nodes "%{_name}%" from file "plugins/Data/consumeable.yml"' because the latter is not an object (itemConsumption.sk, line 371: set {_nodes::*} to yml nodes "%{_name}%" from file "plugins/Data/consumeable.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_name}%.%loop-value%" from file "plugins/Data/consumeable.yml"' (itemConsumption.sk, line 375: set {_%loop-value%} to yml value "%{_name}%.%loop-value%" from file "plugins/Data/consumeable.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_name}%.%loop-value%" from file "plugins/Data/consumeable.yml"' (itemConsumption.sk, line 377: set {_%loop-value%} to yml value "%{_name}%.%loop-value%" from file "plugins/Data/consumeable.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_name}%.%loop-value%" from file "plugins/Data/consumeable.yml"' (itemConsumption.sk, line 379: set {_duration} to yml value "%{_name}%.%loop-value%" from file "plugins/Data/consumeable.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "stats.healthTier" from file "plugins/PlayerData/%name of player%.yml"' (itemConsumption.sk, line 383: set {_hTier} to yml value "stats.healthTier" from file "plugins/PlayerData/%name of player%.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this condition/effect: set yml value "stats.healthTier" from file "plugins/PlayerData/%name of player%.yml" to {_hTier} (itemConsumption.sk, line 406: set yml value "stats.healthTier" from file "plugins/PlayerData/%name of player%.yml" to {_hTier}')
-[16:03:47] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 407: set {_mHealth} to getMaxHealthByTier({_hTier})')
-[16:03:47] [Server thread/ERROR]: [Skript] The function 'displayHolo' does not exist. (itemConsumption.sk, line 411: displayHolo(player, {_maxHealth}, false, "回血")')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "stats.manaTier" from file "plugins/PlayerData/%name of player%.yml"' (itemConsumption.sk, line 413: set {_mTier} to yml value "stats.manaTier" from file "plugins/PlayerData/%name of player%.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this condition/effect: set yml value "stats.manaTier" from file "plugins/PlayerData/%name of player%.yml" to {_mTier} (itemConsumption.sk, line 429: set yml value "stats.manaTier" from file "plugins/PlayerData/%name of player%.yml" to {_mTier}')
-[16:03:47] [Server thread/ERROR]: [Skript] The function 'displayHolo' does not exist. (itemConsumption.sk, line 431: displayHolo(player, {_maxMana}, false, "回蓝")')
-[16:03:47] [Server thread/ERROR]: [Skript] The function 'displayHolo' does not exist. (itemConsumption.sk, line 436: displayHolo(player, {_health}, false, "回血")')
-[16:03:47] [Server thread/ERROR]: [Skript] The function 'displayHolo' does not exist. (itemConsumption.sk, line 451: displayHolo(player, {_mana}, false, "回蓝")')
-[16:03:47] [Server thread/ERROR]: [Skript] The function 'applyCD' does not exist. (itemConsumption.sk, line 470: applyCD(player, 5)')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_mountItemType}%.maxProgress" from file "plugins/Data/wings.yml"' (movement.sk, line 30: set {_maxProgress} to yml value "%{_mountItemType}%.maxProgress" from file "plugins/Data/wings.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_mountItemType}%.maxVelocity" from file "plugins/Data/wings.yml"' (movement.sk, line 31: set {_maxVelocity} to yml value "%{_mountItemType}%.maxVelocity" from file "plugins/Data/wings.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_mountItemType}%.maxAcceleration" from file "plugins/Data/wings.yml"' (movement.sk, line 32: set {_maxAcceleration} to yml value "%{_mountItemType}%.maxAcceleration" from file "plugins/Data/wings.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_mountItemType}%.horizontalVelocity" from file "plugins/Data/wings.yml"' (movement.sk, line 33: set {_horizontalVelocity} to yml value "%{_mountItemType}%.horizontalVelocity" from file "plugins/Data/wings.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_mountItemType}%.bounceTime" from file "plugins/Data/wings.yml"' (movement.sk, line 34: set {_bounceTime} to yml value "%{_mountItemType}%.bounceTime" from file "plugins/Data/wings.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_currAcc}%.maxProgress" from file "plugins/Data/wings.yml"' (movement.sk, line 44: set {_maxProgress} to yml value "%{_currAcc}%.maxProgress" from file "plugins/Data/wings.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_currAcc}%.maxVelocity" from file "plugins/Data/wings.yml"' (movement.sk, line 46: set {_maxVelocity} to yml value "%{_currAcc}%.maxVelocity" from file "plugins/Data/wings.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_currAcc}%.maxAcceleration" from file "plugins/Data/wings.yml"' (movement.sk, line 47: set {_maxAcceleration} to yml value "%{_currAcc}%.maxAcceleration" from file "plugins/Data/wings.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_currAcc}%.horizontalVelocity" from file "plugins/Data/wings.yml"' (movement.sk, line 48: set {_horizontalVelocity} to yml value "%{_currAcc}%.horizontalVelocity" from file "plugins/Data/wings.yml"')
-[16:03:47] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_currAcc}%.bounceTime" from file "plugins/Data/wings.yml"' (movement.sk, line 49: set {_bounceTime} to yml value "%{_currAcc}%.bounceTime" from file "plugins/Data/wings.yml"')
-[16:03:47] [Craft Scheduler Thread - 2/INFO]: [PlaceholderAPI] 192 placeholder expansions are available on the cloud.
-[16:03:47] [Server thread/INFO]: [Skript] Loaded 3 scripts with a total of 16 triggers and 4 commands in 1.252 seconds
-[16:03:47] [Server thread/INFO]: [Skript] Finished loading.
-[16:03:47] [Server thread/INFO]: 正在尝试初始化地面世界！
-[16:03:47] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[16:03:47] [Server thread/INFO]: START GENERATING INTERPOLATE MAP astral_infection_heightmap
-[16:03:47] [Server thread/INFO]: Interpolate Pivots: [(-0.5, 150.0), (-0.45, 100.0), (0.45, 100.0), (0.5, 150.0)]
-[16:03:47] [Server thread/INFO]: FINISHED GENERATING INTERPOLATE MAP astral_infection_heightmap
-[16:03:47] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[16:03:47] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[16:03:47] [Server thread/INFO]: START GENERATING INTERPOLATE MAP generic_heightmap
-[16:03:47] [Server thread/INFO]: Interpolate Pivots: [(-0.85, 150.0), (-0.7, 100.0), (-0.6, 150.0), (-0.5, 110.0), (-0.4, 200.0), (-0.3, 100.0), (0.15, 100.0), (0.3, 115.0), (0.4, 160.0), (0.5, 125.0), (0.6, 140.0), (0.7, 110.0), (0.8, 100.0), (0.85, 150.0)]
-[16:03:47] [Server thread/INFO]: FINISHED GENERATING INTERPOLATE MAP generic_heightmap
-[16:03:47] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[16:03:47] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[16:03:47] [Server thread/INFO]: START GENERATING INTERPOLATE MAP river_ratio_map
-[16:03:47] [Server thread/INFO]: Interpolate Pivots: [(-0.05, 0.0), (0.0, 1.0), (0.05, 0.0)]
-[16:03:47] [Server thread/INFO]: FINISHED GENERATING INTERPOLATE MAP river_ratio_map
-[16:03:47] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[16:03:47] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[16:03:47] [Server thread/INFO]: START GENERATING INTERPOLATE MAP lake_ratio_map
-[16:03:47] [Server thread/INFO]: Interpolate Pivots: [(-0.95, 1.0), (-0.9, 0.8), (-0.75, 0.0)]
-[16:03:47] [Server thread/INFO]: FINISHED GENERATING INTERPOLATE MAP lake_ratio_map
-[16:03:47] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[16:03:47] [Server thread/INFO]: -------- World Settings For [world_surface] --------
-[16:03:47] [Server thread/INFO]: Item Merge Radius: 2.5
-[16:03:47] [Server thread/INFO]: Item Despawn Rate: 3000
-[16:03:47] [Server thread/INFO]: View Distance: 16
-[16:03:47] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
-[16:03:47] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
-[16:03:47] [Server thread/INFO]: Arrow Despawn Rate: 12000
-[16:03:47] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
-[16:03:47] [Server thread/INFO]: Experience Merge Radius: 3.0
-[16:03:47] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
-[16:03:47] [Server thread/INFO]: Mob Spawn Range: 4
-[16:03:47] [Server thread/INFO]: Cactus Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Cane Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Melon Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Sapling Growth Modifier: 100%
-[16:03:47] [Server thread/INFO]: Wheat Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Vine Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Structure Info Saving: true
-[16:03:47] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
-[16:03:47] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75 / Tiv true
-[16:03:47] [Server thread/INFO]: Max TNT Explosions: 100
-[16:03:47] [Server thread/INFO]: Random Lighting Updates: true
-[16:03:47] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
-[16:03:47] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
-[16:03:47] [Server thread/INFO]: Preparing start region for level 3 (Seed: 114514)
-[16:03:47] [Server thread/INFO]: 正在尝试初始化洞穴世界！
-[16:03:47] [Server thread/INFO]: -------- World Settings For [world_cavern] --------
-[16:03:47] [Server thread/INFO]: Item Merge Radius: 2.5
-[16:03:47] [Server thread/INFO]: Item Despawn Rate: 3000
-[16:03:47] [Server thread/INFO]: View Distance: 16
-[16:03:47] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
-[16:03:47] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
-[16:03:47] [Server thread/INFO]: Arrow Despawn Rate: 12000
-[16:03:47] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
-[16:03:47] [Server thread/INFO]: Experience Merge Radius: 3.0
-[16:03:47] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
-[16:03:47] [Server thread/INFO]: Mob Spawn Range: 4
-[16:03:47] [Server thread/INFO]: Cactus Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Cane Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Melon Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Sapling Growth Modifier: 100%
-[16:03:47] [Server thread/INFO]: Wheat Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Vine Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
-[16:03:47] [Server thread/INFO]: Structure Info Saving: true
-[16:03:47] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
-[16:03:47] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75 / Tiv true
-[16:03:47] [Server thread/INFO]: Max TNT Explosions: 100
-[16:03:47] [Server thread/INFO]: Random Lighting Updates: true
-[16:03:47] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
-[16:03:47] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
-[16:03:47] [Server thread/INFO]: Preparing start region for level 4 (Seed: 114514)
-[16:03:48] [Server thread/INFO]: 正在尝试初始化地狱世界！
-[16:03:48] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[16:03:48] [Server thread/INFO]: START GENERATING INTERPOLATE MAP underworld_floor_heightmap
-[16:03:48] [Server thread/INFO]: Interpolate Pivots: [(-0.8, 10.0), (-0.7, 25.0), (-0.4, 40.0), (0.0, 75.0), (0.5, 40.0), (0.6, 30.0)]
-[16:03:48] [Server thread/INFO]: FINISHED GENERATING INTERPOLATE MAP underworld_floor_heightmap
-[16:03:48] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[16:03:48] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[16:03:48] [Server thread/INFO]: START GENERATING INTERPOLATE MAP underworld_ceil_heightmap
-[16:03:48] [Server thread/INFO]: Interpolate Pivots: [(-0.7, 0.0), (-0.6, 90.0), (-0.2, 100.0), (0.2, 120.0), (0.6, 100.0), (0.7, 0.0)]
-[16:03:48] [Server thread/INFO]: FINISHED GENERATING INTERPOLATE MAP underworld_ceil_heightmap
-[16:03:48] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-[16:03:48] [Server thread/INFO]: -------- World Settings For [world_underworld] --------
-[16:03:48] [Server thread/INFO]: Item Merge Radius: 2.5
-[16:03:48] [Server thread/INFO]: Item Despawn Rate: 3000
-[16:03:48] [Server thread/INFO]: View Distance: 16
-[16:03:48] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
-[16:03:48] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
-[16:03:48] [Server thread/INFO]: Arrow Despawn Rate: 12000
-[16:03:48] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
-[16:03:48] [Server thread/INFO]: Experience Merge Radius: 3.0
-[16:03:48] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
-[16:03:48] [Server thread/INFO]: Mob Spawn Range: 4
-[16:03:48] [Server thread/INFO]: Cactus Growth Modifier: 1000%
-[16:03:48] [Server thread/INFO]: Cane Growth Modifier: 1000%
-[16:03:48] [Server thread/INFO]: Melon Growth Modifier: 1000%
-[16:03:48] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
-[16:03:48] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
-[16:03:48] [Server thread/INFO]: Sapling Growth Modifier: 100%
-[16:03:48] [Server thread/INFO]: Wheat Growth Modifier: 1000%
-[16:03:48] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
-[16:03:48] [Server thread/INFO]: Vine Growth Modifier: 1000%
-[16:03:48] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
-[16:03:48] [Server thread/INFO]: Structure Info Saving: true
-[16:03:48] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
-[16:03:48] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75 / Tiv true
-[16:03:48] [Server thread/INFO]: Max TNT Explosions: 100
-[16:03:48] [Server thread/INFO]: Random Lighting Updates: true
-[16:03:48] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
-[16:03:48] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
-[16:03:48] [Server thread/INFO]: Preparing start region for level 5 (Seed: 114514)
-[16:03:48] [Server thread/INFO]: 世界初始化尝试完毕！
-[16:03:48] [Server thread/INFO]: [PlaceholderAPI] An update for PlaceholderAPI (v2.11.2) is available at:
-[16:03:48] [Server thread/INFO]: [PlaceholderAPI] https://www.spigotmc.org/resources/placeholderapi.6245/
-[16:04:52] [User Authenticator #1/INFO]: UUID of player laomianyang is ca6b413d-2214-3ecc-8fc5-01eeea5b7cb6
-[16:04:52] [Server thread/INFO]: [DragonCore] 开始载入玩家 laomianyang 物品
-[16:04:52] [Server thread/INFO]: [DragonCore] 载入玩家 laomianyang 物品完成,共 21 个物品
-[16:04:52] [Server thread/WARN]: [TabList] You not using any permission manager plugin!
-[16:04:52] [Server thread/WARN]: java.io.FileNotFoundException: https://raw.githubusercontent.com/montlikadani/TabList/master/plugin.yml
-[16:04:52] [Server thread/WARN]: 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1910)
-[16:04:52] [Server thread/WARN]: 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1512)
-[16:04:52] [Server thread/WARN]: 	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:268)
-[16:04:52] [Server thread/WARN]: 	at java.net.URL.openStream(URL.java:1092)
-[16:04:52] [Server thread/WARN]: 	at hu.montlikadani.tablist.bukkit.TabList.checkVersion(TabList.java:185)
-[16:04:52] [Server thread/WARN]: 	at hu.montlikadani.tablist.bukkit.Listeners.onPlJoin(Listeners.java:35)
-[16:04:52] [Server thread/WARN]: 	at com.destroystokyo.paper.event.executor.asm.generated.GeneratedEventExecutor147.execute(Unknown Source)
-[16:04:52] [Server thread/WARN]: 	at org.bukkit.plugin.EventExecutor$2.execute(EventExecutor.java:70)
-[16:04:52] [Server thread/WARN]: 	at co.aikar.timings.TimedEventExecutor.execute(TimedEventExecutor.java:78)
-[16:04:52] [Server thread/WARN]: 	at org.bukkit.plugin.RegisteredListener.callEvent(RegisteredListener.java:62)
-[16:04:52] [Server thread/WARN]: 	at org.bukkit.plugin.SimplePluginManager.callEvent(SimplePluginManager.java:513)
-[16:04:52] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.PlayerList.onPlayerJoin(PlayerList.java:370)
-[16:04:52] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.PlayerList.a(PlayerList.java:183)
-[16:04:52] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.LoginListener.b(LoginListener.java:178)
-[16:04:52] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.LoginListener.e(LoginListener.java:68)
-[16:04:52] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.NetworkManager.a(NetworkManager.java:273)
-[16:04:52] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.ServerConnection.c(ServerConnection.java:150)
-[16:04:52] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.MinecraftServer.D(MinecraftServer.java:948)
-[16:04:52] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.DedicatedServer.D(DedicatedServer.java:423)
-[16:04:52] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.MinecraftServer.C(MinecraftServer.java:774)
-[16:04:52] [Server thread/WARN]: 	at net.minecraft.server.v1_12_R1.MinecraftServer.run(MinecraftServer.java:666)
-[16:04:52] [Server thread/WARN]: 	at java.lang.Thread.run(Thread.java:750)
-[16:04:52] [Server thread/WARN]: [TabList] Failed to compare versions. java.io.FileNotFoundException: https://raw.githubusercontent.com/montlikadani/TabList/master/plugin.yml Please report it here:
-https://github.com/montlikadani/TabList/issues
-[16:04:52] [Server thread/INFO]: laomianyang[/192.168.1.68:60142] logged in with entity id 139 at ([world_cavern]-882.1821622152767, 186.72265408052425, 1467.3028755792996)
-[16:04:52] [Craft Scheduler Thread - 14/INFO]: Failed to check for Residence update on spigot web page.
-[16:04:55] [Server thread/WARN]: laomianyang moved too quickly! 0.0,-25.357186041298533,0.0
-[16:05:14] [Craft Scheduler Thread - 14/INFO]: [AuthMe] laomianyang logged in 192.168.1.68
-[16:05:16] [Server thread/INFO]: laomianyang fell out of the world
-[16:05:18] [Server thread/WARN]: [TabList] You not using any permission manager plugin!
-[16:05:34] [Server thread/INFO]: laomianyang issued server command: /playmusic antarctic_reinforcement
-[16:05:34] [Server thread/INFO]: laomianyang [ca6b413d-2214-3ecc-8fc5-01eeea5b7cb6]: /playmusic antarctic_reinforcement
-[16:05:37] [Server thread/INFO]: KEYDOWN: W
-[16:05:37] [Server thread/INFO]: KEYDOWN: SPACE
-[16:06:47] [Server thread/INFO]: KEYDOWN: W
-[16:06:48] [Server thread/INFO]: KEYDOWN: D
-[16:06:48] [Server thread/INFO]: KEYDOWN: D
-[16:06:49] [Server thread/INFO]: KEYDOWN: S
-[16:06:49] [Server thread/INFO]: KEYDOWN: D
-[16:06:50] [Server thread/INFO]: KEYDOWN: W
-[16:06:50] [Server thread/INFO]: KEYDOWN: D
-[16:06:50] [Server thread/INFO]: KEYDOWN: SPACE
-[16:06:51] [Server thread/INFO]: KEYDOWN: W
-[16:06:51] [Server thread/INFO]: KEYDOWN: D
-[16:06:52] [Server thread/INFO]: KEYDOWN: D
-[16:06:53] [Server thread/INFO]: KEYDOWN: A
-[16:06:53] [Server thread/INFO]: KEYDOWN: SPACE
-[16:06:54] [Server thread/INFO]: KEYDOWN: A
-[16:06:58] [Server thread/INFO]: KEYDOWN: W
-[16:06:59] [Server thread/INFO]: KEYDOWN: SPACE
-[16:07:00] [Server thread/INFO]: KEYDOWN: D
-[16:14:31] [Server thread/INFO]: laomianyang issued server command: /playmusic leftalone
-[16:14:31] [Server thread/INFO]: laomianyang [ca6b413d-2214-3ecc-8fc5-01eeea5b7cb6]: /playmusic leftalone
-[16:14:34] [Server thread/INFO]: laomianyang issued server command: /playmusic left_alone
-[16:14:34] [Server thread/INFO]: laomianyang [ca6b413d-2214-3ecc-8fc5-01eeea5b7cb6]: /playmusic left_alone
-[16:14:37] [Server thread/INFO]: KEYDOWN: W
-[16:14:37] [Server thread/INFO]: KEYDOWN: D
-[16:14:38] [Server thread/INFO]: KEYDOWN: SPACE
-[16:14:39] [Server thread/INFO]: KEYDOWN: W
-[16:14:39] [Server thread/INFO]: KEYDOWN: D
-[16:14:47] [Server thread/INFO]: KEYDOWN: W
-[16:14:47] [Server thread/INFO]: KEYDOWN: D
-[16:17:27] [Server thread/INFO]: laomianyang issued server command: /playmusic outcast_of_the_sulphurous_seas
-[16:17:27] [Server thread/INFO]: laomianyang [ca6b413d-2214-3ecc-8fc5-01eeea5b7cb6]: /playmusic outcast_of_the_sulphurous_seas
-[16:17:28] [Server thread/INFO]: KEYDOWN: W
-[16:17:28] [Server thread/INFO]: KEYDOWN: A
-[16:23:54] [Server thread/INFO]: KEYDOWN: W
+[12:04:10] [Server thread/INFO]: [TabList] 
+[12:04:10] [Server thread/INFO]: [TabList] Metrics enabled.
+[12:04:10] [Server thread/INFO]: [TabList] > The plugin successfully enabled v5.1!
+[12:04:10] [Server thread/INFO]: [Residence] Enabling Residence v4.8.2.0
+[12:04:11] [Server thread/INFO]: [Residence] Found Vault, but Vault reported no usable permissions system...
+[12:04:11] [Server thread/INFO]: [Residence] Permissions plugin NOT FOUND!
+[12:04:11] [Server thread/INFO]: [Residence] Scanning for economy systems...
+[12:04:11] [Server thread/INFO]: [Residence] Found Vault using economy: Essentials Economy
+[12:04:11] [Server thread/INFO]: [Residence] Loading save data for world world...
+[12:04:11] [Server thread/INFO]: [Residence] Loaded world data. (1 ms)
+[12:04:11] [Server thread/INFO]: [Residence] Loading save data for world world_nether...
+[12:04:11] [Server thread/INFO]: [Residence] Loaded world_nether data. (0 ms)
+[12:04:11] [Server thread/INFO]: [Residence] Loading save data for world world_the_end...
+[12:04:11] [Server thread/INFO]: [Residence] Loaded world_the_end data. (1 ms)
+[12:04:11] [Server thread/INFO]: [Residence] Loading world data into memory...
+[12:04:11] [Server thread/INFO]: [Residence] Loaded world data into memory. (7 ms)
+[12:04:11] [Server thread/INFO]: [Residence] Loading world_nether data into memory...
+[12:04:11] [Server thread/INFO]: [Residence] Loaded world_nether data into memory. (0 ms)
+[12:04:11] [Server thread/INFO]: [Residence] Loading world_the_end data into memory...
+[12:04:11] [Server thread/INFO]: [Residence] Loaded world_the_end data into memory. (0 ms)
+[12:04:11] [Server thread/INFO]: [Residence] WorldEdit NOT found!
+[12:04:11] [Server thread/INFO]: [Residence] PlaceholderAPI hooked.
+[12:04:11] [Server thread/INFO]: [Residence] PlaceholderAPI was found - Enabling capabilities.
+[12:04:11] [Server thread/INFO]: [Residence] Enabled! Version 4.8.2.0 by Zrips
+[12:04:11] [Server thread/INFO]: [Skript] Enabling Skript v2.5.3
+[12:04:11] [Server thread/INFO]: [Skript] The updater is disabled, so a check for the latest version of Skript was not performed.
+[12:04:13] [Server thread/INFO]: [Skript] Loaded 18217 aliases in 1391ms
+[12:04:13] [Server thread/INFO]: [Skript]  ~ created by & ? Peter Güttinger aka Njol ~
+[12:04:13] [Server thread/INFO]: [skript-placeholders] Enabling skript-placeholders v1.5.2
+[12:04:13] [Server thread/INFO]: [skDragon] Enabling skDragon v0.16
+[12:04:13] [Server thread/INFO]: [skDragon] Plugin has been Enabled
+[12:04:13] [Server thread/INFO]: [skript-reflect] Enabling skript-reflect v2.2.3
+[12:04:13] [Server thread/INFO]: [SkQuery] Enabling SkQuery v4.1.1
+[12:04:13] [Server thread/INFO]: [skQuery] Locating classes from SkQuery...
+[12:04:13] [Server thread/INFO]: [skQuery] Beginning to process a total of 139 from SkQuery
+[12:04:13] [Server thread/INFO]: [skQuery] Out of 139 classes, 137 classes were loaded from SkQuery
+[12:04:13] [Server thread/INFO]: [ThatPacketAddon] Enabling ThatPacketAddon v1.0-BETA.3
+[12:04:13] [Server thread/INFO]: Done (5.749s)! For help, type "help" or "?"
+[12:04:13] [Server thread/INFO]: Timings Reset
+[12:04:13] [Craft Scheduler Thread - 8/INFO]: [AuthMe] Downloading GEO IP database, because the old database is older than 30 days or doesn't exist
+[12:04:13] [Craft Scheduler Thread - 2/INFO]: [skDragon] Checking for updates now!
+[12:04:13] [Server thread/INFO]: [DragonCore] 开始载入资源文件夹: DragonCoreResource
+[12:04:13] [Craft Scheduler Thread - 8/WARN]: [AuthMe] No MaxMind credentials found in the configuration file! GeoIp protections will be disabled.
+[12:04:13] [Craft Scheduler Thread - 8/INFO]: [AuthMe] There is no newer GEO IP database uploaded to MaxMind. Using the old one for now.
+[12:04:13] [Thread-8/INFO]: [DragonCore] 资源文件载入完成,共计0个
+[12:04:13] [Craft Scheduler Thread - 8/WARN]: [AuthMe] Could not download GeoLiteAPI database [FileNotFoundException]: plugins\AuthMe\GeoLite2-Country.mmdb (系统找不到指定的文件。)
+[12:04:13] [Server thread/INFO]: [Skript] Loading variables...
+[12:04:13] [Server thread/INFO]: [Skript] Loaded 170 variables in 0.0 seconds
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 12: set {_name} to trimText(name of player's tool)')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 15: if trimText(line 1 of lore of player's tool) is "时装":')
+[12:04:14] [Craft Scheduler Thread - 2/INFO]: [skDragon] vnull is available
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 45: add getItem("银币:%a random integer between 20 and 90%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 48: add getItem("弱效治疗药水:%a random integer between 5 and 15%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 50: add getItem("弱效魔力药水:%a random integer between 5 and 15%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 53: add getItem("专家鱼饵:%a random integer between 1 and 4%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 55: add getItem("初学者鱼饵:%a random integer between 1 and 4%") to {_itemsToGive::*}')
+[12:04:14] [Craft Scheduler Thread - 11/INFO]: Failed to check for Residence update on spigot web page.
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 65: add getItem("治疗药水:%a random integer between 5 and 15%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 67: add getItem("魔力药水:%a random integer between 5 and 15%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 70: add getItem("大师鱼饵:%a random integer between 2 and 4%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 72: add getItem("专家鱼饵:%a random integer between 2 and 4%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 81: add getItem("生命水晶") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 84: add getItem("治疗药水:%a random integer between 5 and 20%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 86: add getItem("魔力药水:%a random integer between 5 and 20%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 88: add getItem("大师鱼饵:%a random integer between 3 and 7%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 93: add getItem("金币:%a random integer between {_moneyInfo::2} and {_moneyInfo::3}%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 109: add getItem("%a random element out of {_temp::*}%:%a random integer between {_oreInfo::4} and {_oreInfo::5}%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 124: add getItem("%a random element out of {_temp::*}%:%a random integer between {_oreInfo::6} and {_oreInfo::7}%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 132: add getItem("%a random element out of {_temp::*}%:%a random integer between {_potionInfo::2} and {_potionInfo::3}%") to {_itemsToGive::*}')
+[12:04:14] [Server thread/ERROR]: [Skript] The function 'giveItem' does not exist. (itemConsumption.sk, line 138: giveItem(player, loop-value)')
+[12:04:14] [Server thread/ERROR]: [Skript] The function 'applyCD' does not exist. (itemConsumption.sk, line 139: applyCD(player, 20)')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 142: set {_type} to trimText(line 1 of lore of player's tool)')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 147: giveItem(player, getItem("克苏鲁之眼盾"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 148: giveItem(player, getItem("邪箭:%a random integer between 20 and 49%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 149: giveItem(player, getItem("恶魔矿:%a random integer between 30 and 87%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 150: giveItem(player, getItem("腐化种子:%a random integer between 1 and 3%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 153: giveItem(player, getItem("星力手环"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 154: giveItem(player, getItem("蠕虫围巾"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 155: giveItem(player, getItem("恶魔矿:%a random integer between 30 and 59%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 156: giveItem(player, getItem("暗影鳞片:%a random integer between 10 and 19%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 159: giveItem(player, getItem("皇家凝胶"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 161: giveItem(player, getItem("忍者头盔"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 162: giveItem(player, getItem("忍者胸甲"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 164: giveItem(player, getItem("忍者头盔"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 165: giveItem(player, getItem("忍者护腿"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 167: giveItem(player, getItem("忍者胸甲"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 168: giveItem(player, getItem("忍者护腿"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 172: giveItem(player, getItem("失谐钩爪"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 174: giveItem(player, getItem("水晶刺客兜帽"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 175: giveItem(player, getItem("水晶刺客上衣"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 177: giveItem(player, getItem("水晶刺客兜帽"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 178: giveItem(player, getItem("水晶刺客裤"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 180: giveItem(player, getItem("水晶刺客上衣"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 181: giveItem(player, getItem("水晶刺客裤"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 183: giveItem(player, getItem("刃杖"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 184: giveItem(player, getItem("挥发明胶"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 187: giveItem(player, getItem("蓝月"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 188: giveItem(player, getItem("钴盾"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 189: giveItem(player, getItem("海蓝权杖"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 190: giveItem(player, getItem("妖刀村正"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 191: giveItem(player, getItem("骨头手套"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 192: giveItem(player, getItem("链锤"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 193: giveItem(player, getItem("骨头:%a random integer between 30 and 60%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 195: giveItem(player, getItem("骷髅头法书"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml"' (itemConsumption.sk, line 198: set {_maxAcc} to yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml"')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 200: giveItem(player, getItem("恶魔之心"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 202: giveItem(player, getItem("战士徽章"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 204: giveItem(player, getItem("游侠徽章"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 206: giveItem(player, getItem("巫师徽章"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 208: giveItem(player, getItem("召唤师徽章"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 210: giveItem(player, getItem("毁灭刃"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 212: giveItem(player, getItem("发条突击步枪"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 214: giveItem(player, getItem("激光步枪"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 216: giveItem(player, getItem("鞭炮"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 219: giveItem(player, getItem("强效治疗药水:%a random integer between 5 and 15%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 220: giveItem(player, getItem("恐惧之魂:%a random integer between 25 and 40%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 221: giveItem(player, getItem("神圣锭:%a random integer between 20 and 35%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 222: giveItem(player, getItem("机械电池片"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 225: giveItem(player, getItem("强效治疗药水:%a random integer between 5 and 15%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 226: giveItem(player, getItem("视域之魂:%a random integer between 25 and 40%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 227: giveItem(player, getItem("神圣锭:%a random integer between 20 and 35%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 228: giveItem(player, getItem("机械车轮片"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 231: giveItem(player, getItem("强效治疗药水:%a random integer between 5 and 15%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 232: giveItem(player, getItem("力量之魂:%a random integer between 25 and 40%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 233: giveItem(player, getItem("神圣锭:%a random integer between 20 and 35%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 234: giveItem(player, getItem("机械车体片"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 237: giveItem(player, getItem("孢子囊"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 238: giveItem(player, getItem("小瓶毒液:%a random integer between 8 and 16%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 239: giveItem(player, getItem("叶绿矿:%a random integer between 40 and 100%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 241: giveItem(player, getItem("吉他斧"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 243: giveItem(player, getItem("矮人法杖"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 245: giveItem(player, getItem("刺钩"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 247: giveItem(player, getItem("榴弹发射器"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 248: giveItem(player, getItem("初级火箭:%a random integer between 50 and 149%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 250: giveItem(player, getItem("金星马格南"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 252: giveItem(player, getItem("爆裂藤蔓"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 254: giveItem(player, getItem("吹叶机"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 256: giveItem(player, getItem("种子弯刀"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 260: giveItem(player, getItem("夜光"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 262: giveItem(player, getItem("星光"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 264: giveItem(player, getItem("万花筒"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 266: giveItem(player, getItem("日暮"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 267: giveItem(player, getItem("翱翔徽章"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 269: giveItem(player, getItem("女皇之翼"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 272: giveItem(player, getItem("闪亮石"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 273: giveItem(player, getItem("甲虫外壳:%a random integer between 18 and 23%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 275: giveItem(player, getItem("疯狂飞斧"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 277: giveItem(player, getItem("太阳石"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 279: giveItem(player, getItem("石巨人之眼"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 281: giveItem(player, getItem("高温射线枪"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 283: giveItem(player, getItem("锯刃镐"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 287: giveItem(player, getItem("猪鲨之翼"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 289: giveItem(player, getItem("泡泡枪"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 291: giveItem(player, getItem("海啸弓"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 293: giveItem(player, getItem("猪鲨链球"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 295: giveItem(player, getItem("利刃台风"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 298: giveItem(player, getItem("天界之翼"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 299: giveItem(player, getItem("夜明矿:%a random integer between 90 and 110%"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 301: giveItem(player, getItem("天体洋葱"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 303: giveItem(player, getItem("彩虹猫矿车"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 305: giveItem(player, getItem("月亮传送门法杖"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 307: giveItem(player, getItem("七彩水晶法杖"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 309: giveItem(player, getItem("彩虹猫之刃"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 311: giveItem(player, getItem("泰拉悠悠球"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 313: giveItem(player, getItem("狂星之怒"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 315: giveItem(player, getItem("太空海豚机枪"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 317: giveItem(player, getItem("喜庆弹射器"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 319: giveItem(player, getItem("终极棱镜"))')
+[12:04:14] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 321: giveItem(player, getItem("月之耀斑"))')
+[12:04:14] [Server thread/ERROR]: [Skript] The function 'applyCD' does not exist. (itemConsumption.sk, line 323: applyCD(player, 20)')
+[12:04:14] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml"' (itemConsumption.sk, line 326: set {_maxAcc} to yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml"')
+[12:04:14] [Server thread/ERROR]: [Skript] Can't understand this condition/effect: set yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml" to 6 (itemConsumption.sk, line 328: set yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml" to 6')
+[12:04:14] [Server thread/ERROR]: [Skript] The function 'applyCD' does not exist. (itemConsumption.sk, line 332: applyCD(player, 20)')
+[12:04:14] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml"' (itemConsumption.sk, line 338: set {_maxAcc} to yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml"')
+[12:04:14] [Server thread/ERROR]: [Skript] Can't understand this condition/effect: set yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml" to 7 (itemConsumption.sk, line 340: set yml value "stats.maxAccessories" from file "plugins/PlayerData/%name of player%.yml" to 7')
+[12:04:14] [Server thread/ERROR]: [Skript] The function 'applyCD' does not exist. (itemConsumption.sk, line 344: applyCD(player, 20)')
+[12:04:14] [Server thread/ERROR]: [Skript] The function 'applyCD' does not exist. (itemConsumption.sk, line 367: applyCD(player, 5)')
+[12:04:14] [Server thread/ERROR]: [Skript] {_nodes::*} can't be set to 'yml nodes "%{_name}%" from file "plugins/Data/consumeable.yml"' because the latter is not an object (itemConsumption.sk, line 371: set {_nodes::*} to yml nodes "%{_name}%" from file "plugins/Data/consumeable.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_name}%.%loop-value%" from file "plugins/Data/consumeable.yml"' (itemConsumption.sk, line 375: set {_%loop-value%} to yml value "%{_name}%.%loop-value%" from file "plugins/Data/consumeable.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_name}%.%loop-value%" from file "plugins/Data/consumeable.yml"' (itemConsumption.sk, line 377: set {_%loop-value%} to yml value "%{_name}%.%loop-value%" from file "plugins/Data/consumeable.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_name}%.%loop-value%" from file "plugins/Data/consumeable.yml"' (itemConsumption.sk, line 379: set {_duration} to yml value "%{_name}%.%loop-value%" from file "plugins/Data/consumeable.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "stats.healthTier" from file "plugins/PlayerData/%name of player%.yml"' (itemConsumption.sk, line 383: set {_hTier} to yml value "stats.healthTier" from file "plugins/PlayerData/%name of player%.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this condition/effect: set yml value "stats.healthTier" from file "plugins/PlayerData/%name of player%.yml" to {_hTier} (itemConsumption.sk, line 406: set yml value "stats.healthTier" from file "plugins/PlayerData/%name of player%.yml" to {_hTier}')
+[12:04:15] [Server thread/ERROR]: [Skript] Functions cannot be used here (or there is a problem with your arguments). (itemConsumption.sk, line 407: set {_mHealth} to getMaxHealthByTier({_hTier})')
+[12:04:15] [Server thread/ERROR]: [Skript] The function 'displayHolo' does not exist. (itemConsumption.sk, line 411: displayHolo(player, {_maxHealth}, false, "回血")')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "stats.manaTier" from file "plugins/PlayerData/%name of player%.yml"' (itemConsumption.sk, line 413: set {_mTier} to yml value "stats.manaTier" from file "plugins/PlayerData/%name of player%.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this condition/effect: set yml value "stats.manaTier" from file "plugins/PlayerData/%name of player%.yml" to {_mTier} (itemConsumption.sk, line 429: set yml value "stats.manaTier" from file "plugins/PlayerData/%name of player%.yml" to {_mTier}')
+[12:04:15] [Server thread/ERROR]: [Skript] The function 'displayHolo' does not exist. (itemConsumption.sk, line 431: displayHolo(player, {_maxMana}, false, "回蓝")')
+[12:04:15] [Server thread/ERROR]: [Skript] The function 'displayHolo' does not exist. (itemConsumption.sk, line 436: displayHolo(player, {_health}, false, "回血")')
+[12:04:15] [Server thread/ERROR]: [Skript] The function 'displayHolo' does not exist. (itemConsumption.sk, line 451: displayHolo(player, {_mana}, false, "回蓝")')
+[12:04:15] [Server thread/ERROR]: [Skript] The function 'applyCD' does not exist. (itemConsumption.sk, line 470: applyCD(player, 5)')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_mountItemType}%.maxProgress" from file "plugins/Data/wings.yml"' (movement.sk, line 30: set {_maxProgress} to yml value "%{_mountItemType}%.maxProgress" from file "plugins/Data/wings.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_mountItemType}%.maxVelocity" from file "plugins/Data/wings.yml"' (movement.sk, line 31: set {_maxVelocity} to yml value "%{_mountItemType}%.maxVelocity" from file "plugins/Data/wings.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_mountItemType}%.maxAcceleration" from file "plugins/Data/wings.yml"' (movement.sk, line 32: set {_maxAcceleration} to yml value "%{_mountItemType}%.maxAcceleration" from file "plugins/Data/wings.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_mountItemType}%.horizontalVelocity" from file "plugins/Data/wings.yml"' (movement.sk, line 33: set {_horizontalVelocity} to yml value "%{_mountItemType}%.horizontalVelocity" from file "plugins/Data/wings.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_mountItemType}%.bounceTime" from file "plugins/Data/wings.yml"' (movement.sk, line 34: set {_bounceTime} to yml value "%{_mountItemType}%.bounceTime" from file "plugins/Data/wings.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_currAcc}%.maxProgress" from file "plugins/Data/wings.yml"' (movement.sk, line 44: set {_maxProgress} to yml value "%{_currAcc}%.maxProgress" from file "plugins/Data/wings.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_currAcc}%.maxVelocity" from file "plugins/Data/wings.yml"' (movement.sk, line 46: set {_maxVelocity} to yml value "%{_currAcc}%.maxVelocity" from file "plugins/Data/wings.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_currAcc}%.maxAcceleration" from file "plugins/Data/wings.yml"' (movement.sk, line 47: set {_maxAcceleration} to yml value "%{_currAcc}%.maxAcceleration" from file "plugins/Data/wings.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_currAcc}%.horizontalVelocity" from file "plugins/Data/wings.yml"' (movement.sk, line 48: set {_horizontalVelocity} to yml value "%{_currAcc}%.horizontalVelocity" from file "plugins/Data/wings.yml"')
+[12:04:15] [Server thread/ERROR]: [Skript] Can't understand this expression: 'yml value "%{_currAcc}%.bounceTime" from file "plugins/Data/wings.yml"' (movement.sk, line 49: set {_bounceTime} to yml value "%{_currAcc}%.bounceTime" from file "plugins/Data/wings.yml"')
+[12:04:15] [Server thread/INFO]: [Skript] Loaded 3 scripts with a total of 16 triggers and 4 commands in 1.562 seconds
+[12:04:15] [Server thread/INFO]: [Skript] Finished loading.
+[12:04:15] [Server thread/INFO]: 正在尝试初始化地面世界！
+[12:04:15] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[12:04:15] [Server thread/INFO]: START GENERATING INTERPOLATE MAP astral_infection_heightmap
+[12:04:15] [Server thread/INFO]: Interpolate Pivots: [(-0.5, 150.0), (-0.45, 100.0), (0.45, 100.0), (0.5, 150.0)]
+[12:04:15] [Server thread/INFO]: FINISHED GENERATING INTERPOLATE MAP astral_infection_heightmap
+[12:04:15] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[12:04:15] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[12:04:15] [Server thread/INFO]: START GENERATING INTERPOLATE MAP generic_heightmap
+[12:04:15] [Server thread/INFO]: Interpolate Pivots: [(-0.85, 150.0), (-0.7, 100.0), (-0.6, 150.0), (-0.5, 110.0), (-0.4, 200.0), (-0.3, 100.0), (0.15, 100.0), (0.3, 115.0), (0.4, 160.0), (0.5, 125.0), (0.6, 140.0), (0.7, 110.0), (0.8, 100.0), (0.85, 150.0)]
+[12:04:15] [Server thread/INFO]: FINISHED GENERATING INTERPOLATE MAP generic_heightmap
+[12:04:15] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[12:04:15] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[12:04:15] [Server thread/INFO]: START GENERATING INTERPOLATE MAP river_ratio_map
+[12:04:15] [Server thread/INFO]: Interpolate Pivots: [(-0.05, 0.0), (0.0, 1.0), (0.05, 0.0)]
+[12:04:15] [Server thread/INFO]: FINISHED GENERATING INTERPOLATE MAP river_ratio_map
+[12:04:15] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[12:04:15] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[12:04:15] [Server thread/INFO]: START GENERATING INTERPOLATE MAP lake_ratio_map
+[12:04:15] [Server thread/INFO]: Interpolate Pivots: [(-0.95, 1.0), (-0.9, 0.8), (-0.75, 0.0)]
+[12:04:15] [Server thread/INFO]: FINISHED GENERATING INTERPOLATE MAP lake_ratio_map
+[12:04:15] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[12:04:15] [Server thread/INFO]: -------- World Settings For [world_surface] --------
+[12:04:15] [Server thread/INFO]: Item Merge Radius: 2.5
+[12:04:15] [Server thread/INFO]: Item Despawn Rate: 3000
+[12:04:15] [Server thread/INFO]: View Distance: 16
+[12:04:15] [Server thread/INFO]: Arrow Despawn Rate: 12000
+[12:04:15] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
+[12:04:15] [Server thread/INFO]: Experience Merge Radius: 3.0
+[12:04:15] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
+[12:04:15] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
+[12:04:15] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
+[12:04:15] [Server thread/INFO]: Structure Info Saving: true
+[12:04:15] [Server thread/INFO]: Cactus Growth Modifier: 1000%
+[12:04:15] [Server thread/INFO]: Cane Growth Modifier: 1000%
+[12:04:15] [Server thread/INFO]: Melon Growth Modifier: 1000%
+[12:04:15] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
+[12:04:15] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
+[12:04:15] [Server thread/INFO]: Sapling Growth Modifier: 100%
+[12:04:15] [Server thread/INFO]: Wheat Growth Modifier: 1000%
+[12:04:15] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
+[12:04:15] [Server thread/INFO]: Vine Growth Modifier: 1000%
+[12:04:15] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
+[12:04:15] [Server thread/INFO]: Mob Spawn Range: 4
+[12:04:15] [Server thread/INFO]: Max TNT Explosions: 100
+[12:04:15] [Server thread/INFO]: Random Lighting Updates: true
+[12:04:15] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
+[12:04:15] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75 / Tiv true
+[12:04:15] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
+[12:04:15] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
+[12:04:15] [Server thread/INFO]: Preparing start region for level 3 (Seed: 114514)
+[12:04:15] [Craft Scheduler Thread - 1/INFO]: [PlaceholderAPI] 192 placeholder expansions are available on the cloud.
+[12:04:16] [Server thread/INFO]: 正在尝试初始化洞穴世界！
+[12:04:16] [Server thread/INFO]: -------- World Settings For [world_cavern] --------
+[12:04:16] [Server thread/INFO]: Item Merge Radius: 2.5
+[12:04:16] [Server thread/INFO]: Item Despawn Rate: 3000
+[12:04:16] [Server thread/INFO]: View Distance: 16
+[12:04:16] [Server thread/INFO]: Arrow Despawn Rate: 12000
+[12:04:16] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
+[12:04:16] [Server thread/INFO]: Experience Merge Radius: 3.0
+[12:04:16] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
+[12:04:16] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
+[12:04:16] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
+[12:04:16] [Server thread/INFO]: Structure Info Saving: true
+[12:04:16] [Server thread/INFO]: Cactus Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Cane Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Melon Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Sapling Growth Modifier: 100%
+[12:04:16] [Server thread/INFO]: Wheat Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Vine Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Mob Spawn Range: 4
+[12:04:16] [Server thread/INFO]: Max TNT Explosions: 100
+[12:04:16] [Server thread/INFO]: Random Lighting Updates: true
+[12:04:16] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
+[12:04:16] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75 / Tiv true
+[12:04:16] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
+[12:04:16] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
+[12:04:16] [Server thread/INFO]: Preparing start region for level 4 (Seed: 114514)
+[12:04:16] [Server thread/INFO]: 正在尝试初始化地狱世界！
+[12:04:16] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[12:04:16] [Server thread/INFO]: START GENERATING INTERPOLATE MAP underworld_floor_heightmap
+[12:04:16] [Server thread/INFO]: Interpolate Pivots: [(-0.8, 10.0), (-0.7, 25.0), (-0.4, 40.0), (0.0, 75.0), (0.5, 40.0), (0.6, 30.0)]
+[12:04:16] [Server thread/INFO]: FINISHED GENERATING INTERPOLATE MAP underworld_floor_heightmap
+[12:04:16] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[12:04:16] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[12:04:16] [Server thread/INFO]: START GENERATING INTERPOLATE MAP underworld_ceil_heightmap
+[12:04:16] [Server thread/INFO]: Interpolate Pivots: [(-0.7, 0.0), (-0.6, 90.0), (-0.2, 100.0), (0.2, 120.0), (0.6, 100.0), (0.7, 0.0)]
+[12:04:16] [Server thread/INFO]: FINISHED GENERATING INTERPOLATE MAP underworld_ceil_heightmap
+[12:04:16] [Server thread/INFO]: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[12:04:16] [Server thread/INFO]: -------- World Settings For [world_underworld] --------
+[12:04:16] [Server thread/INFO]: Item Merge Radius: 2.5
+[12:04:16] [Server thread/INFO]: Item Despawn Rate: 3000
+[12:04:16] [Server thread/INFO]: View Distance: 16
+[12:04:16] [Server thread/INFO]: Arrow Despawn Rate: 12000
+[12:04:16] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
+[12:04:16] [Server thread/INFO]: Experience Merge Radius: 3.0
+[12:04:16] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
+[12:04:16] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
+[12:04:16] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 1 Hopper Amount: 1
+[12:04:16] [Server thread/INFO]: Structure Info Saving: true
+[12:04:16] [Server thread/INFO]: Cactus Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Cane Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Melon Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Mushroom Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Pumpkin Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Sapling Growth Modifier: 100%
+[12:04:16] [Server thread/INFO]: Wheat Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: NetherWart Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Vine Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Cocoa Growth Modifier: 1000%
+[12:04:16] [Server thread/INFO]: Mob Spawn Range: 4
+[12:04:16] [Server thread/INFO]: Max TNT Explosions: 100
+[12:04:16] [Server thread/INFO]: Random Lighting Updates: true
+[12:04:16] [Server thread/INFO]: Entity Tracking Range: Pl 100 / An 100 / Mo 100 / Mi 100 / Other 100
+[12:04:16] [Server thread/INFO]: Entity Activation Range: An 16 / Mo 75 / Mi 75 / Tiv true
+[12:04:16] [Server thread/INFO]: Tile Max Tick Time: 1000ms Entity max Tick Time: 1000ms
+[12:04:16] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617 Monument: 10387313 Slime: 987234911
+[12:04:16] [Server thread/INFO]: Preparing start region for level 5 (Seed: 114514)
+[12:04:16] [Server thread/INFO]: 世界初始化尝试完毕！
+[12:04:16] [Server thread/INFO]: [PlaceholderAPI] An update for PlaceholderAPI (v2.11.2) is available at:
+[12:04:16] [Server thread/INFO]: [PlaceholderAPI] https://www.spigotmc.org/resources/placeholderapi.6245/
+[12:04:19] [Server thread/INFO]: 木套装, 仙人掌套装, 钨钢近战套装, 钨钢远程魔法套装, 钨钢召唤套装, 忍者套装, 铜套装, 铁套装, 银套装, 金套装, 流星套装, 暗影套装, 熔岩套装, 蜘蛛套装, 水晶刺客套装, 钴战士套装, 钴魔法套装, 钴射手套装, 秘银战士套装, 秘银魔法套装, 秘银射手套装, 精金战士套装, 精金魔法套装, 精金射手套装, 神圣魔法套装, 神圣射手套装, 神圣战士套装, 神圣召唤套装, 叶绿魔法套装, 叶绿射手套装, 叶绿战士套装, 幽灵吸血套装, 幽灵输出套装, 甲虫铠甲套装, 甲虫壳套装, 蘑菇矿套装, 寒霜套装, 阴森套装, 星云套装, 耀斑套装, 星尘套装 and 星璇套装
+[12:04:19] [Server thread/INFO]: 燃烧, 霜火, 咒火, 耐药性, 魔力疾病, 失明, 阻塞, 弹药储备, 箭术, 战斗, 虫潮, 冷静, 禅定, 耐力, 鱼鳃, 隐身, 铁皮, 生命力, 魔能, 魔力再生, 黑曜石皮, 再生, 召唤, 敏捷, 荆棘, 泰坦, 怒气, 吃饱, 饱足, 饕餮, 流血, 缓慢, 恐惧, 中毒, 剧毒, 破损盔甲, 诅咒, 扭曲, 冷冻, 冰冻, 破晓, 伤害星云, 伤害星云1, 伤害星云2, 伤害星云3, 生命星云, 生命星云1, 生命星云2, 生命星云3, 魔力星云, 魔力星云1, 魔力星云2 and 魔力星云3
+[12:04:19] [Server thread/INFO]: 敏锐, 高端, 强力, 碎裂, 破损, 粗劣, 致伤, 强劲, 粗鲁, 虚弱, 无情, 神级, 恶魔, 狂热, 迅捷, 致命, 灵活, 灵巧, 残暴, 缓慢, 迟钝, 呆滞, 惹恼, 凶险, 大, 巨大, 危险, 凶残, 锋利, 尖锐, 微小, 可怕, 小, 钝, 倒霉, 笨重, 可耻, 重, 轻, 传奇, 精准, 迅速, 急速, 恐怖, 致死, 可靠, 可畏, 无力, 粗笨, 强大, 暴怒, 虚幻, 神秘, 精巧, 精湛, 笨拙, 无知, 错乱, 威猛, 禁忌, 天界, 狂怒, 狂躁, 神话, 坚硬, 守护, 装甲, 护佑, 精确, 幸运, 锯齿, 尖刺, 愤怒, 险恶, 轻快, 快速, 急切, 敏捷, 狂野, 鲁莽, 勇猛, 暴力 and 奥术
+[12:04:19] [Server thread/INFO]: 南瓜, 南瓜种子, 木材, 冰块, 黑曜石, 石头, 灰烬块, 沙块, 玻璃, 箱子, 铁轨, 充能铁轨, 拉杆, 床, 死亡草, 火焰花, 寒颤棘, 太阳花, 月光草, 波浪叶, 闪耀根, 凝胶, 水晶碎块, 弹壳, 火药, 非法枪械部件, 草种, 腐化种子, 钨钢金属废料, 能源核心, 骨头, 晶状体, 黑晶状体, 腐肉, 羽毛, 巨型羽毛, 蜘蛛牙, 寒霜核, 妖精尘, 独角兽角, 诅咒焰, 小瓶毒液, 灵气, 海龟壳, 甲虫外壳, 光明钥匙, 夜光钥匙, 光明碎块, 暗黑碎块, 光明之魂, 暗影之魂, 飞翔之魂, 日耀碑牌碎片, 日耀碑牌, 阴森木, 专家模式福袋, 可疑的眼球, 史莱姆王冠, 虫饵, 明胶水晶, 机械骷髅头, 机械魔眼, 机械蠕虫, 丛林蜥蜴电池, 天界符, 南瓜月勋章, 调皮礼物, 向导巫毒娃娃, 小动物友谊指南, 大自然的恩赐, 魔力花, 天界磁石, 星力手环, 魔力再生手环, 魔法手铐, 天界手铐, 天界徽章, 磁花, 镣铐, 钨钢屏障生成仪, 钨钢电池, 鲨牙项链, 皇家凝胶, 克苏鲁之眼盾, 火箭靴, 蠕虫围巾, 钴盾, 黑曜石头骨, 黑曜石护盾, 魔法箭袋, 熔火箭袋, 潜行者箭袋, 冰冻海龟壳, 孢子囊, 圣骑士护盾, 冰冻护盾, 步枪瞄准镜, 狙击镜, 侦察镜, 闪亮石, 太阳石, 月亮石, 天界石, 鸟妖之翼, 喜庆之翼, 女皇之翼, 猪鲨之翼, 星云之翼, 星璇之翼, 日耀之翼, 星尘之翼, 天界之翼, 航鱼靴, 幽灵靴, 跳跃之瓶, 岩浆石, 腐香囊, 再生手环, 炼金石, 神话护身符, 十字项链, 泰坦手套, 机械手套, 烈火手套, 战士徽章, 游侠徽章, 巫师徽章, 召唤师徽章, 复仇者徽章, 石巨人之眼, 毁灭者徽章, 盔甲抛光剂, 新手版挥发明胶, 挥发明胶, 翱翔徽章, 矮人项链, 大力士甲虫, 死灵卷轴, 甲虫莎草纸, 钓鱼竿, 金钓竿, 圈地锄头, 仙人掌镐, 铜镐, 铁镐, 银镐, 金镐, 恶魔镐, 熔火镐, 掠夺鲨, 钴镐, 秘银镐, 精金镐, 镐斧, 叶绿镐, 锯刃镐, 木剑, 仙人掌剑, 钨钢刀, 铜质短剑, 铜质阔剑, 铁短剑, 铁阔剑, 银短剑, 银阔剑, 金短剑, 金阔剑, 光之驱逐, 妖刀村正, 陨星光剑, 紫挥棒鱼, 草薙剑, 烈焰剑, 永夜之刃, 剑鱼, 毁灭刃, 钴剑, 秘银剑, 精金剑, 圣剑, 断裂英雄剑, 真·永夜之刃, 真·圣剑, 泰拉之刃, 叶绿军刀, 叶绿双刃刀, 吉他斧, 钥匙剑, 死神镰刀, 圣诞树剑, 无头骑士剑, 种子弯刀, 狂星之怒, 彩虹猫之刃, 天顶剑, 钴薙刀, 秘银长戟, 精金关刀, 永恒之枪, 叶绿镋, 北极, 星光, 破晓之光, 木制回力镖, 附魔回力镖, 荆棘旋刃, 烈焰回旋镖, 疯狂飞斧, 链锤, 火焰锤, 蓝月, 太极连枷, 猪鲨链球, 木制悠悠球, 抑郁球, 亚马逊悠悠球, 克苏鲁之眼悠悠球, 泰拉悠悠球, 木弓, 钨钢弓, 铜质短弓, 铁弓, 银弓, 金弓, 恶魔弓, 熔火之怒, 代达罗斯风暴弓, 钴连弩, 秘银连弩, 精金连弩, 神圣连弩, 叶绿连弩, 海啸弓, 日暮, 幻象弓, 榴弹发射器, 雪人炮, 喜庆弹射器, 气泵枪, 骨头手套, 尖桩发射器, 尖桩, 玉米糖步枪, 玉米糖, 杰克南瓜灯发射器, 爆炸杰克南瓜灯, 精灵熔枪, 燧发枪, 左轮手枪, 迷你鲨, 发条突击步枪, 巨兽鲨, 金星马格南, 狙击步枪, 战术霰弹枪, 链式机枪, 星璇机枪, 太空海豚机枪, 四管猎枪, 玛瑙爆破枪, 手枪, 凤凰爆破枪, 火花魔棒, 钨钢法杖, 钻石法杖, 海蓝权杖, 太空枪, 水矢, 骷髅头法书, 恶魔锄刀, 邪恶三叉戟, 激光步枪, 水晶风暴, 裂天剑, 爆裂藤蔓, 吹叶机, 狱火叉, 暗影束法杖, 幽灵法杖, 高温射线枪, 剃刀松, 暴雪法杖, 蝙蝠权杖, 夜光, 泡泡枪, 利刃台风, 星云烈焰, 星云奥秘, 月之耀斑, 终极棱镜, 蜘蛛女王法杖, 月亮传送门法杖, 七彩水晶法杖, 史莱姆法杖, 钨钢控制器, 小鬼法杖, 蜘蛛法杖, 刃杖, 魔眼法杖, 矮人法杖, 致命球法杖, 泰拉棱镜, 星尘细胞法杖, 星尘之龙法杖, 鞭炮, 迪朗达尔, 晨星, 暗黑收割, 万花筒, 日耀喷发剑, 手里剑, 尖刺球, 手榴弹, 炸弹, 粘性炸弹, 雷管, 粘性雷管, 木箭, 烈焰箭, 邪箭, 小丑之箭, 狱炎箭, 冰焰箭, 圣箭, 诅咒箭, 叶绿箭, 毒液箭, 夜明箭, 火枪子弹, 陨星弹, 银子弹, 爆炸弹, 绿藻弹, 水晶子弹, 诅咒弹, 毒液弹, 夜明弹, 初级火箭, 二级火箭, 三级火箭, 四级火箭, 集束火箭, 苦力怕时装, 绵羊时装, 僵尸时装, 僵尸宝宝时装, 木头盔, 木胸甲, 木护胫, 仙人掌头盔, 仙人掌胸甲, 仙人掌护腿, 钨钢战盔, 钨钢头饰, 钨钢兜帽, 钨钢头罩, 钨钢盔甲, 钨钢护胫, 铜头盔, 铜链甲, 铜护胫, 铁头盔, 铁链甲, 铁护胫, 银头盔, 银链甲, 银护胫, 忍者头盔, 忍者胸甲, 忍者护腿, 金头盔, 金链甲, 金护胫, 流星头盔, 流星护甲, 流星护腿, 暗影头盔, 暗影鳞甲, 暗影护胫, 熔岩头盔, 熔岩胸甲, 熔岩护胫, 蜘蛛面具, 蜘蛛胸甲, 蜘蛛护胫, 水晶刺客兜帽, 水晶刺客上衣, 水晶刺客裤, 钴帽, 钴头盔, 钴面具, 钴胸甲, 钴护腿, 秘银帽, 秘银头盔, 秘银兜帽, 秘银链甲, 秘银护胫, 精金头饰, 精金头盔, 精金面具, 精金胸甲, 精金护腿, 叶绿头饰, 叶绿头盔, 叶绿面具, 叶绿板甲, 叶绿护胫, 幽灵兜帽, 幽灵面具, 幽灵长袍, 幽灵裤, 甲虫头盔, 甲虫铠甲, 甲虫壳, 甲虫护腿, 蘑菇矿头饰, 蘑菇矿头盔, 蘑菇矿面具, 蘑菇矿胸甲, 蘑菇矿护腿, 神圣头饰, 神圣面具, 神圣头盔, 神圣兜帽, 神圣板甲, 神圣护胫, 寒霜头盔, 寒霜胸甲, 寒霜护腿, 阴森头盔, 阴森胸甲, 阴森护腿, 星云头盔, 星云胸甲, 星云护腿, 耀斑头盔, 耀斑胸甲, 耀斑护腿, 星尘头盔, 星尘板甲, 星尘护腿, 星璇头盔, 星璇胸甲, 星璇护腿, 钱币槽, 虚空袋, 弹药储备药水, 箭术药水, 战斗药水, 镇静药水, 耐力药水, 鱼鳃药水, 隐身药水, 铁皮药水, 生命力药水, 魔能药水, 魔力再生药水, 黑曜石皮药水, 再生药水, 召唤药水, 敏捷药水, 荆棘药水, 泰坦药水, 怒气药水, 回城药水, 虫洞药水, 蜂蜜瓶, 弱效治疗药水, 治疗药水, 强效治疗药水, 超级治疗药水, 恢复药水, 生命水晶, 生命果, 魔力星, 恶魔之心, 金鸟, 金兔, 金蝴蝶, 金蛙, 金蚱蜢, 金瓢虫, 金老鼠, 金松鼠, 金蠕虫, 鸟, 冠蓝鸦, 红雀, 萤火虫, 荧光虫, 茱莉娅蝶, 帝王蝶, 紫君王蝶, 红纹蝶, 硫磺蝶, 树若虫蝴蝶, 尤利西斯蝶, 斑纹燕尾蝶, 地狱蝴蝶, 蚱蜢, 兔兔, 松鼠, 红松鼠, 老鼠, 企鹅, 青蛙, 发光蜗牛, 蛆虫, 瓢虫, 熔岩蝇, 岩浆蜗牛, 鼻涕虫, 蜗牛, 蠕虫, 附魔夜行者, 七彩草蛉, 松露虫, 捕虫网, 金捕虫网, 蘑菇, 发光蘑菇, 水瓶, 弱效魔力药水, 魔力药水, 强效魔力药水, 超级魔力药水, 祭坛, 酿造台, 木制工作台, 工匠合成台, 秘银砧, 精金熔炉, 远古操纵机, 火炉, 地狱熔炉, 铁砧, 丝绸, 暗影鳞片, 火把, 钩爪, 失谐钩爪, 刺钩, 阴森钩, 圣诞钩, 月钩, 蛛丝, 毒刺, 丛林孢子, 仙人掌, 藤蔓, 冰冻火把, 坠星, 钻石, 机械电池片, 机械车轮片, 机械车体片, 机械矿车, 彩虹猫矿车, 力量之魂, 视域之魂, 恐惧之魂, 日耀碎片, 星璇碎片, 星云碎片, 星尘碎片, 日耀天塔柱, 星璇天塔柱, 星云天塔柱, 星尘天塔柱, 虚空天塔柱, 血月天塔柱, 陨星矿, 陨星锭, 铜锭, 铜矿石, 铁锭, 铁矿石, 银锭, 银矿石, 金锭, 金矿石, 恶魔锭, 恶魔矿, 狱炎锭, 狱炎矿, 钴锭, 钴矿, 秘银锭, 秘银矿, 精金锭, 精金矿, 神圣锭, 叶绿矿, 叶绿锭, 幽灵锭, 蘑菇锭, 夜明锭, 夜明矿, 铜币, 银币, 金币, 铂金币, 空瓶, 空桶, 熟虾, 刺身, 熟龙虾尾, 炸鱼, 海鲜大餐, 南瓜派, 苹果, 初学者鱼饵, 专家鱼饵, 大师鱼饵, 木匣, 铁匣, 金匣, 珍珠木匣, 秘银匣, 钛金匣, 装甲洞穴鱼, 大西洋鳕鱼, 鲈鱼, 雀鲷, 双鳍鳕鱼, 黑檀锦鲤, 寒霜鲦鱼, 霓虹脂鲤, 七彩矿鱼, 红鲷鱼, 龙虾, 三文鱼, 虾, 镜面鱼, 鳟鱼, 金枪鱼, 斑驳油鱼, 天使鱼, 蝙蝠鱼, 骷髅鱼, 兔兔鱼, 小丑鱼, 泥鱼, 土鱼, 克苏鲁鱼, 向导巫毒鱼, 突变弗林鱼, 蜂蜜鱼, 梯子, 牌子, 木栅栏, 羊毛, 萤石, 石英块, 石英台阶, 石砖 and 石砖台阶

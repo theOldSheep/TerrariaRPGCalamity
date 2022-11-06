@@ -317,7 +317,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'manaUseMulti: -0.06'
+    manaUseMulti: -0.06
   worth: 540000
   rarity: 3
 魔力花:
@@ -326,7 +326,7 @@
   - §r[饰品]
   - §r需要时自动使用魔力药水
   attributes:
-  - 'manaUseMulti: -0.08'
+    manaUseMulti: -0.08
   worth: 1000000
   rarity: 4
 天界磁石:
@@ -341,7 +341,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'maxMana: 20'
+    maxMana: 20
   worth: 1500000
   rarity: 1
 魔力再生手环:
@@ -349,8 +349,8 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'maxMana: 20'
-  - 'manaRegenMulti: 0.33'
+    maxMana: 20
+    manaRegen: 25
   worth: 1000000
   rarity: 1
 魔法手铐:
@@ -359,7 +359,7 @@
   - §r[饰品]
   - §r受伤害时恢复魔力
   attributes:
-  - 'maxMana: 20'
+    maxMana: 20
   worth: 2000000
   rarity: 2
 天界手铐:
@@ -369,7 +369,7 @@
   - §r将大范围内的魔力星牵引向自身
   - §r受到伤害后恢复魔力
   attributes:
-  - 'maxMana: 20'
+    maxMana: 20
   worth: 3200000
   rarity: 5
 天界徽章:
@@ -378,7 +378,7 @@
   - §r[饰品]
   - §r将大范围内的魔力星牵引向自身
   attributes:
-  - 'damageMagicMulti: 0.15'
+    damageMagicMulti: 0.15
   worth: 3200000
   rarity: 5
 磁花:
@@ -388,7 +388,7 @@
   - §r需要时自动使用魔力药水
   - §r将大范围内的魔力星牵引向自身
   attributes:
-  - 'manaUseMulti: -0.08'
+    manaUseMulti: -0.08
   worth: 4000000
   rarity: 5
 镣铐:
@@ -396,7 +396,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'defence: 2'
+    defence: 2
   worth: 20000
   rarity: 1
 钨钢屏障生成仪:
@@ -404,7 +404,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'defence: 10'
+    defence: 10
   worth: 200000
   rarity: 1
 钨钢电池:
@@ -412,7 +412,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'damageSummonMulti: 0.07'
+    damageSummonMulti: 0.07
   worth: 200000
   rarity: 1
 鲨牙项链:
@@ -420,7 +420,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'armorPenetration: 10'
+    armorPenetration: 10
   worth: 1000000
   rarity: 1
 皇家凝胶:
@@ -439,7 +439,7 @@
   - §r双击一个方向来冲刺
   - §6专家模式物品
   attributes:
-  - 'defence: 1'
+    defence: 1
   worth: 2000000
   rarity: 1000
 火箭靴:
@@ -455,7 +455,7 @@
   - §r[饰品]
   - §6专家模式物品
   attributes:
-  - 'damageTakenMulti: 0.9'
+    damageTakenMulti: -0.1
   worth: 2000000
   rarity: 1000
 钴盾:
@@ -463,8 +463,8 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'defence: 2'
-  - 'knockbackResistance: 1'
+    defence: 2
+    knockbackResistance: 1
   worth: 1750000
   rarity: 2
 黑曜石头骨:
@@ -472,7 +472,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'defence: 2'
+    defence: 2
   worth: 540000
   rarity: 2
 黑曜石护盾:
@@ -480,8 +480,8 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'defence: 4'
-  - 'knockbackResistance: 1'
+    defence: 4
+    knockbackResistance: 1
   worth: 2000000
   rarity: 4
 魔法箭袋:
@@ -489,9 +489,9 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'damageArrowMulti: 0.1'
-  - 'projectileSpeedArrowMulti: 0.5'
-  - 'arrowConsumptionRate: 0.8'
+    damageArrowMulti: 0.1
+    projectileSpeedArrowMulti: 0.5
+    arrowConsumptionRate: -0.2
   worth: 5000000
   rarity: 4
 熔火箭袋:
@@ -501,9 +501,9 @@
   - §r点燃木箭，火光熊熊
   - §r“在恐惧中颤抖吧！”
   attributes:
-  - 'damageArrowMulti: 0.1'
-  - 'projectileSpeedArrowMulti: 0.5'
-  - 'arrowConsumptionRate: 0.8'
+    damageArrowMulti: 0.1
+    projectileSpeedArrowMulti: 0.5
+    arrowConsumptionRate: -0.2
   worth: 7500000
   rarity: 5
 潜行者箭袋:
@@ -511,11 +511,11 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'damageArrowMulti: 0.1'
-  - 'projectileSpeedArrowMulti: 0.5'
-  - 'arrowConsumptionRate: 0.8'
-  - 'mobLimit: -1'
-  - 'mobSpawnRateMulti: -0.1'
+    damageArrowMulti: 0.1
+    projectileSpeedArrowMulti: 0.5
+    arrowConsumptionRate: -0.2
+    mobLimit: -1
+    mobSpawnRateMulti: -0.1
   worth: 15000000
   rarity: 5
 冰冻海龟壳:
@@ -523,7 +523,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'damageTakenMulti: 0.85'
+    damageTakenMulti: -0.15
   worth: 4500000
   rarity: 5
 孢子囊:
@@ -545,8 +545,8 @@
   - §r-> 使本次伤害降低15%
   - §r你受到的伤害无法被其他玩家以此方式减少
   attributes:
-  - 'defence: 12'
-  - 'knockbackResistance: 1'
+    defence: 12
+    knockbackResistance: 1
   worth: 6000000
   rarity: 8
 冰冻护盾:
@@ -558,9 +558,9 @@
   - §r-> 使本次伤害降低15%
   - §r你受到的伤害无法被其他玩家以此方式减少
   attributes:
-  - 'defence: 12'
-  - 'damageTakenMulti: 0.9'
-  - 'knockbackResistance: 1'
+    defence: 12
+    damageTakenMulti: -0.1
+    knockbackResistance: 1
   worth: 10000000
   rarity: 5
 步枪瞄准镜:
@@ -574,8 +574,8 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'damageRangedMulti: 0.1'
-  - 'critRanged: 10'
+    damageRangedMulti: 0.1
+    critRanged: 10
   worth: 5000000
   rarity: 7
 侦察镜:
@@ -584,10 +584,10 @@
   - §r[饰品]
   - §r“发现敌人”
   attributes:
-  - 'damageRangedMulti: 0.1'
-  - 'critRanged: 10'
-  - 'mobLimit: -1'
-  - 'mobSpawnRateMulti: -0.1'
+    damageRangedMulti: 0.1
+    critRanged: 10
+    mobLimit: -1
+    mobSpawnRateMulti: -0.1
   worth: 15000000
   rarity: 5
 闪亮石:
@@ -604,11 +604,11 @@
   - §r[饰品]
   - §r夜晚时属性加成失效
   attributes:
-  - 'useTimeMeleeMulti: -0.1'
-  - 'damageMulti: 0.1'
-  - 'crit: 2'
-  - 'regen: 1'
-  - 'defence: 4'
+    useTimeMeleeMulti: -0.1
+    damageMulti: 0.1
+    crit: 2
+    regen: 1
+    defence: 4
   worth: 7500000
   rarity: 7
 月亮石:
@@ -617,11 +617,11 @@
   - §r[饰品]
   - §r白天时属性加成失效
   attributes:
-  - 'useTimeMeleeMulti: -0.1'
-  - 'damageMulti: 0.1'
-  - 'crit: 2'
-  - 'regen: 1'
-  - 'defence: 4'
+    useTimeMeleeMulti: -0.1
+    damageMulti: 0.1
+    crit: 2
+    regen: 1
+    defence: 4
   worth: 7500000
   rarity: 5
 天界石:
@@ -629,11 +629,11 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'useTimeMeleeMulti: -0.1'
-  - 'damageMulti: 0.1'
-  - 'crit: 2'
-  - 'regen: 1'
-  - 'defence: 4'
+    useTimeMeleeMulti: -0.1
+    damageMulti: 0.1
+    crit: 2
+    regen: 1
+    defence: 4
   worth: 8000000
   rarity: 7
 鸟妖之翼:
@@ -723,7 +723,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'speedMulti: 0.1'
+    speedMulti: 0.1
   worth: 1000000
   rarity: 1
 幽灵靴:
@@ -732,7 +732,7 @@
   - §r[饰品]
   - §r算作火箭靴
   attributes:
-  - 'speedMulti: 0.1'
+    speedMulti: 0.1
   worth: 2000000
   rarity: 4
 跳跃之瓶:
@@ -747,7 +747,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'buffInflictMelee: 燃烧|100|1'
+    buffInflictMelee: 燃烧|100|1
   worth: 2000000
   rarity: 3
 腐香囊:
@@ -755,10 +755,10 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'mobLimit: -1'
-  - 'mobSpawnRateMulti: -0.1'
-  - 'damageMulti: 0.05'
-  - 'crit: 5'
+    mobLimit: -1
+    mobSpawnRateMulti: -0.1
+    damageMulti: 0.05
+    crit: 5
   worth: 8000000
   rarity: 5
 再生手环:
@@ -766,6 +766,8 @@
   lore:
   - §r[饰品]
   - §r缓慢再生生命
+  attributes:
+    regen: 2
   worth: 1000000
   rarity: 1
 炼金石:
@@ -780,6 +782,8 @@
   lore:
   - §r[饰品]
   - §r提供生命再生并使治疗药水的冷却时间缩短25%
+  attributes:
+    regen: 2
   worth: 4000000
   rarity: 5
 十字项链:
@@ -787,7 +791,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'invulnerabilityTick: 5'
+    invulnerabilityTick: 5
   worth: 2000000
   rarity: 4
 泰坦手套:
@@ -795,8 +799,8 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'knockbackMeleeMulti: 1'
-  - 'meleeReachMulti: 0.1'
+    knockbackMeleeMulti: 1
+    meleeReachMulti: 0.1
   worth: 2000000
   rarity: 4
 机械手套:
@@ -804,9 +808,9 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'knockbackMeleeMulti: 1'
-  - 'meleeReachMulti: 0.1'
-  - 'damageMeleeMulti: 0.12'
+    knockbackMeleeMulti: 1
+    meleeReachMulti: 0.1
+    damageMeleeMulti: 0.12
   worth: 5000000
   rarity: 5
 烈火手套:
@@ -814,10 +818,10 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'knockbackMeleeMulti: 0.8'
-  - 'meleeReachMulti: 0.1'
-  - 'damageMeleeMulti: 0.09'
-  - 'buffInflictMelee: 燃烧|80|1'
+    knockbackMeleeMulti: 0.8
+    meleeReachMulti: 0.1
+    damageMeleeMulti: 0.09
+    buffInflictMelee: 燃烧|80|1
   worth: 6000000
   rarity: 7
 战士徽章:
@@ -825,7 +829,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'damageMeleeMulti: 0.15'
+    damageMeleeMulti: 0.15
   worth: 2000000
   rarity: 4
 游侠徽章:
@@ -833,7 +837,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'damageRangedMulti: 0.15'
+    damageRangedMulti: 0.15
   worth: 2000000
   rarity: 4
 巫师徽章:
@@ -841,7 +845,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'damageMagicMulti: 0.15'
+    damageMagicMulti: 0.15
   worth: 2000000
   rarity: 4
 召唤师徽章:
@@ -849,7 +853,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'damageSummonMulti: 0.15'
+    damageSummonMulti: 0.15
   worth: 2000000
   rarity: 4
 复仇者徽章:
@@ -857,7 +861,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'damageMulti: 0.12'
+    damageMulti: 0.12
   worth: 6000000
   rarity: 5
 石巨人之眼:
@@ -865,7 +869,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'crit: 10'
+    crit: 10
   worth: 5000000
   rarity: 7
 毁灭者徽章:
@@ -873,8 +877,8 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'damageMulti: 0.1'
-  - 'crit: 8'
+    damageMulti: 0.1
+    crit: 8
   worth: 6000000
   rarity: 7
 盔甲抛光剂:
@@ -913,7 +917,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'minionLimit: 1'
+    minionLimit: 1
   worth: 4000000
   rarity: 2
 大力士甲虫:
@@ -921,7 +925,7 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'damageSummonMulti: 0.15'
+    damageSummonMulti: 0.15
   worth: 8000000
   rarity: 7
 死灵卷轴:
@@ -929,8 +933,8 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'minionLimit: 1'
-  - 'damageSummonMulti: 0.1'
+    minionLimit: 1
+    damageSummonMulti: 0.1
   worth: 4000000
   rarity: 8
 甲虫莎草纸:
@@ -938,8 +942,8 @@
   lore:
   - §r[饰品]
   attributes:
-  - 'minionLimit: 1'
-  - 'damageSummonMulti: 0.15'
+    minionLimit: 1
+    damageSummonMulti: 0.15
   worth: 5000000
   rarity: 8
 钓鱼竿:
@@ -971,34 +975,34 @@
   enchantment:
   - efficiency 1
   attributes:
-  - 'damage: 4'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 2'
-  - 'useTime: 23'
-  - 'powerPickaxe: 35'
+    damage: 4
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 23
+    powerPickaxe: 35
   worth: 40000
   rarity: 0
 铜镐:
   item: IRON_PICKAXE
   attributes:
-  - 'damage: 4'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 2'
-  - 'useTime: 23'
-  - 'powerPickaxe: 35'
+    damage: 4
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 23
+    powerPickaxe: 35
   worth: 10000
   rarity: 0
 铁镐:
   item: IRON_PICKAXE
   attributes:
-  - 'damage: 5'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 2'
-  - 'useTime: 20'
-  - 'powerPickaxe: 40'
+    damage: 5
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 20
+    powerPickaxe: 40
   worth: 40000
   rarity: 0
 银镐:
@@ -1006,56 +1010,56 @@
   enchantment:
   - efficiency 1
   attributes:
-  - 'damage: 6'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 2'
-  - 'useTime: 19'
-  - 'powerPickaxe: 45'
+    damage: 6
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 19
+    powerPickaxe: 45
   worth: 100000
   rarity: 0
 金镐:
   item: IRON_PICKAXE
   attributes:
-  - 'damage: 6'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 2'
-  - 'useTime: 20'
-  - 'powerPickaxe: 55'
+    damage: 6
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 20
+    powerPickaxe: 55
   worth: 200000
   rarity: 0
 恶魔镐:
   item: DIAMOND_PICKAXE
   attributes:
-  - 'damage: 9'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 3'
-  - 'useTime: 20'
-  - 'powerPickaxe: 65'
+    damage: 9
+    damageType: Melee
+    crit: 4
+    knockback: 3
+    useTime: 20
+    powerPickaxe: 65
   worth: 360000
   rarity: 1
 熔火镐:
   item: DIAMOND_PICKAXE
   attributes:
-  - 'damage: 12'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 2'
-  - 'useTime: 23'
-  - 'powerPickaxe: 100'
+    damage: 12
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 23
+    powerPickaxe: 100
   worth: 540000
   rarity: 3
 掠夺鲨:
   item: DIAMOND_PICKAXE
   attributes:
-  - 'damage: 16'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 3'
-  - 'useTime: 22'
-  - 'powerPickaxe: 100'
+    damage: 16
+    damageType: Melee
+    crit: 4
+    knockback: 3
+    useTime: 22
+    powerPickaxe: 100
   worth: 1500000
   rarity: 3
 钴镐:
@@ -1063,12 +1067,12 @@
   lore:
   - §r“可挖掘秘银”
   attributes:
-  - 'damage: 20'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 25'
-  - 'powerPickaxe: 110'
+    damage: 20
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 25
+    powerPickaxe: 110
   worth: 1080000
   rarity: 4
 秘银镐:
@@ -1078,12 +1082,12 @@
   enchantment:
   - efficiency 1
   attributes:
-  - 'damage: 30'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 25'
-  - 'powerPickaxe: 150'
+    damage: 30
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 25
+    powerPickaxe: 150
   worth: 1620000
   rarity: 4
 精金镐:
@@ -1091,12 +1095,12 @@
   enchantment:
   - efficiency 2
   attributes:
-  - 'damage: 40'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 25'
-  - 'powerPickaxe: 180'
+    damage: 40
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 25
+    powerPickaxe: 180
   worth: 2160000
   rarity: 4
 镐斧:
@@ -1104,12 +1108,12 @@
   enchantment:
   - efficiency 2
   attributes:
-  - 'damage: 70'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 4.75'
-  - 'useTime: 25'
-  - 'powerPickaxe: 200'
+    damage: 70
+    damageType: Melee
+    crit: 4
+    knockback: 4.75
+    useTime: 25
+    powerPickaxe: 200
   worth: 4400000
   rarity: 5
 叶绿镐:
@@ -1117,12 +1121,12 @@
   enchantment:
   - efficiency 3
   attributes:
-  - 'damage: 60'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 25'
-  - 'powerPickaxe: 200'
+    damage: 60
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 25
+    powerPickaxe: 200
   worth: 4320000
   rarity: 7
 锯刃镐:
@@ -1130,72 +1134,72 @@
   enchantment:
   - efficiency 5
   attributes:
-  - 'damage: 68'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5.5'
-  - 'useTime: 16'
-  - 'powerPickaxe: 210'
+    damage: 68
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 16
+    powerPickaxe: 210
   worth: 4320000
   rarity: 7
 木剑:
   item: WOOD_SWORD
   attributes:
-  - 'damage: 14'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 4'
-  - 'useTime: 25'
+    damage: 14
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 25
   worth: 2000
   rarity: 0
 仙人掌剑:
   item: WOOD_SWORD
   attributes:
-  - 'damage: 16'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 32'
+    damage: 16
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 32
   worth: 36000
   rarity: 0
 钨钢刀:
   item: IRON_SWORD
   attributes:
-  - 'damage: 24'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 3.75'
-  - 'useTime: 19'
+    damage: 24
+    damageType: Melee
+    crit: 4
+    knockback: 3.75
+    useTime: 19
   worth: 200000
   rarity: 1
 铜质短剑:
   item: IRON_SWORD
   attributes:
-  - 'damage: 10'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 4'
-  - 'useTime: 13'
+    damage: 10
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 13
   worth: 7000
   rarity: 0
 铜质阔剑:
   item: IRON_SWORD
   attributes:
-  - 'damage: 15'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 4'
-  - 'useTime: 23'
+    damage: 15
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 23
   worth: 9000
   rarity: 0
 铁短剑:
   item: STONE_SWORD
   attributes:
-  - 'damage: 16'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 4'
-  - 'useTime: 13'
+    damage: 16
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 13
   worth: 28000
   rarity: 0
 铁阔剑:
@@ -1203,181 +1207,181 @@
   lore:
   - §r“使用时并不需要高速旋转”
   attributes:
-  - 'damage: 20'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 23'
+    damage: 20
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 23
   worth: 36000
   rarity: 0
 银短剑:
   item: IRON_SWORD
   attributes:
-  - 'damage: 17'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 4'
-  - 'useTime: 13'
+    damage: 17
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 13
   worth: 70000
   rarity: 0
 银阔剑:
   item: IRON_SWORD
   attributes:
-  - 'damage: 22'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 19'
+    damage: 22
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 19
   worth: 90000
   rarity: 0
 金短剑:
   item: GOLD_SWORD
   attributes:
-  - 'damage: 24'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 13'
+    damage: 24
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 13
   worth: 140000
   rarity: 0
 金阔剑:
   item: GOLD_SWORD
   attributes:
-  - 'damage: 28'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 16'
+    damage: 28
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 16
   worth: 180000
   rarity: 0
 光之驱逐:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 34'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 16'
+    damage: 34
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 16
   worth: 270000
   rarity: 1
 妖刀村正:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 38'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 3.5'
-  - 'useTime: 16'
+    damage: 38
+    damageType: Melee
+    crit: 4
+    knockback: 3.5
+    useTime: 16
   worth: 1750000
   rarity: 2
 陨星光剑:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 38'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 3.5'
-  - 'useTime: 19'
+    damage: 38
+    damageType: Melee
+    crit: 4
+    knockback: 3.5
+    useTime: 19
   worth: 540000
   rarity: 1
 紫挥棒鱼:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 48'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5.5'
-  - 'useTime: 32'
+    damage: 48
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 32
   worth: 1000000
   rarity: 1
 草薙剑:
   item: WOOD_SWORD
   attributes:
-  - 'damage: 42'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 3.5'
-  - 'useTime: 23'
+    damage: 42
+    damageType: Melee
+    crit: 4
+    knockback: 3.5
+    useTime: 23
   worth: 540000
   rarity: 3
 烈焰剑:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 72'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5.5'
-  - 'useTime: 23'
+    damage: 72
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 23
   worth: 540000
   rarity: 3
 永夜之刃:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 87'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 23'
+    damage: 87
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 23
   worth: 4000000
   rarity: 3
 剑鱼:
   item: STONE_SWORD
   attributes:
-  - 'damage: 37'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 16'
+    damage: 37
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 16
   worth: 500000
   rarity: 2
 毁灭刃:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 86'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 8'
-  - 'useTime: 30'
+    damage: 86
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 30
   worth: 3000000
   rarity: 4
 钴剑:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 78'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 3.85'
-  - 'useTime: 23'
+    damage: 78
+    damageType: Melee
+    crit: 4
+    knockback: 3.85
+    useTime: 23
   worth: 1380000
   rarity: 4
 秘银剑:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 88'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 6'
-  - 'useTime: 26'
+    damage: 88
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 26
   worth: 2070000
   rarity: 4
 精金剑:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 100'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 6'
-  - 'useTime: 26'
+    damage: 100
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 26
   worth: 2760000
   rarity: 4
 圣剑:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 132'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 20'
+    damage: 132
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 20
   worth: 4600000
   rarity: 5
 断裂英雄剑:
@@ -1387,31 +1391,31 @@
 真·永夜之刃:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 210'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 4.75'
-  - 'useTime: 26'
+    damage: 210
+    damageType: Melee
+    crit: 4
+    knockback: 4.75
+    useTime: 26
   worth: 10000000
   rarity: 8
 真·圣剑:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 140'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 4.75'
-  - 'useTime: 16'
+    damage: 140
+    damageType: Melee
+    crit: 4
+    knockback: 4.75
+    useTime: 16
   worth: 10000000
   rarity: 8
 泰拉之刃:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 230'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 6.5'
-  - 'useTime: 14'
+    damage: 230
+    damageType: Melee
+    crit: 4
+    knockback: 6.5
+    useTime: 14
   worth: 20000000
   rarity: 8
 叶绿军刀:
@@ -1419,11 +1423,11 @@
   lore:
   - §r射出孢子球
   attributes:
-  - 'damage: 114'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 4'
-  - 'useTime: 16'
+    damage: 114
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 16
   worth: 5520000
   rarity: 7
 叶绿双刃刀:
@@ -1431,31 +1435,31 @@
   lore:
   - §r射出叶绿珠
   attributes:
-  - 'damage: 150'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 6'
-  - 'useTime: 25'
+    damage: 150
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 25
   worth: 5520000
   rarity: 7
 吉他斧:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 105'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 7.25'
-  - 'useTime: 22'
+    damage: 105
+    damageType: Melee
+    crit: 4
+    knockback: 7.25
+    useTime: 22
   worth: 10000000
   rarity: 8
 钥匙剑:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 170'
-  - 'damageType: Melee'
-  - 'crit: 17'
-  - 'knockback: 6.5'
-  - 'useTime: 20'
+    damage: 170
+    damageType: Melee
+    crit: 17
+    knockback: 6.5
+    useTime: 20
   worth: 4000000
   rarity: 8
 死神镰刀:
@@ -1463,21 +1467,21 @@
   lore:
   - §r§o射出致命镰刀
   attributes:
-  - 'damage: 114'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 7'
-  - 'useTime: 25'
+    damage: 114
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 25
   worth: 7500000
   rarity: 5
 圣诞树剑:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 172'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 7'
-  - 'useTime: 23'
+    damage: 172
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 23
   worth: 10000000
   rarity: 8
 无头骑士剑:
@@ -1485,91 +1489,91 @@
   lore:
   - §r射出南瓜头
   attributes:
-  - 'damage: 150'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 7.5'
-  - 'useTime: 25'
+    damage: 150
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 25
   worth: 10000000
   rarity: 8
 种子弯刀:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 100'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 6'
-  - 'useTime: 23'
+    damage: 100
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 23
   worth: 10000000
   rarity: 5
 狂星之怒:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 220'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 6.5'
-  - 'useTime: 16'
+    damage: 220
+    damageType: Melee
+    crit: 4
+    knockback: 6.5
+    useTime: 16
   worth: 20000000
   rarity: 9
 彩虹猫之刃:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 400'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 6.5'
-  - 'useTime: 16'
+    damage: 400
+    damageType: Melee
+    crit: 4
+    knockback: 6.5
+    useTime: 16
   worth: 20000000
   rarity: 10
 天顶剑:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 400'
-  - 'damageType: Melee'
-  - 'crit: 14'
-  - 'knockback: 1'
-  - 'useTime: 30'
+    damage: 400
+    damageType: Melee
+    crit: 14
+    knockback: 1
+    useTime: 30
   worth: 20000000
   rarity: 10
 钴薙刀:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 43'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 4'
-  - 'useTime: 28'
+    damage: 43
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 28
   worth: 900000
   rarity: 4
 秘银长戟:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 52'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 26'
+    damage: 52
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 26
   worth: 13500000
   rarity: 4
 精金关刀:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 57'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 6'
-  - 'useTime: 25'
+    damage: 57
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 25
   worth: 18000000
   rarity: 4
 永恒之枪:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 84'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 6.4'
-  - 'useTime: 22'
+    damage: 84
+    damageType: Melee
+    crit: 4
+    knockback: 6.4
+    useTime: 22
   worth: 4600000
   rarity: 5
 叶绿镋:
@@ -1577,31 +1581,31 @@
   lore:
   - §r射出孢子球
   attributes:
-  - 'damage: 98'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 6.2'
-  - 'useTime: 22'
+    damage: 98
+    damageType: Melee
+    crit: 4
+    knockback: 6.2
+    useTime: 22
   worth: 3600000
   rarity: 7
 北极:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 146'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 6.7'
-  - 'useTime: 25'
+    damage: 146
+    damageType: Melee
+    crit: 4
+    knockback: 6.7
+    useTime: 25
   worth: 9000000
   rarity: 7
 星光:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 120'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 4'
-  - 'useTime: 18'
+    damage: 120
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 18
   worth: 5000000
   rarity: 8
 破晓之光:
@@ -1609,52 +1613,52 @@
   lore:
   - §r“用光明之矛将敌人四分五裂！”
   attributes:
-  - 'damage: 300'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 16'
+    damage: 300
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 16
   worth: 10000000
   rarity: 10
 木制回力镖:
   item: STICK
   attributes:
-  - 'damage: 16'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 16'
+    damage: 16
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 16
   worth: 100000
   rarity: 0
 附魔回力镖:
   item: STICK
   attributes:
-  - 'damage: 26'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 8'
-  - 'useTime: 15'
+    damage: 26
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 15
   worth: 1000000
   rarity: 1
 荆棘旋刃:
   item: STICK
   attributes:
-  - 'damage: 50'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 8'
-  - 'useTime: 15'
+    damage: 50
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 15
   worth: 1000000
   rarity: 3
 烈焰回旋镖:
   item: STICK
   attributes:
-  - 'damage: 62'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 8'
-  - 'useTime: 15'
-  - 'buffInflictMelee: 燃烧|60|0.2'
+    damage: 62
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 15
+    buffInflictMelee: 燃烧|60|0.2
   worth: 2000000
   rarity: 3
 疯狂飞斧:
@@ -1662,52 +1666,52 @@
   lore:
   - §r追杀敌人
   attributes:
-  - 'damage: 160'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 5'
-  - 'useTime: 14'
+    damage: 160
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 14
   worth: 7000000
   rarity: 7
 链锤:
   item: STICK
   attributes:
-  - 'damage: 30'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 4.6'
-  - 'useTime: 45'
+    damage: 30
+    damageType: Melee
+    crit: 4
+    knockback: 4.6
+    useTime: 45
   worth: 2000000
   rarity: 1
 火焰锤:
   item: STICK
   attributes:
-  - 'damage: 36'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 4.6'
-  - 'useTime: 45'
-  - 'buffInflictMelee: 燃烧|60|0.25'
+    damage: 36
+    damageType: Melee
+    crit: 4
+    knockback: 4.6
+    useTime: 45
+    buffInflictMelee: 燃烧|60|0.25
   worth: 2000000
   rarity: 1
 蓝月:
   item: STICK
   attributes:
-  - 'damage: 60'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 6'
-  - 'useTime: 45'
+    damage: 60
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 45
   worth: 1750000
   rarity: 2
 太极连枷:
   item: STICK
   attributes:
-  - 'damage: 126'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 6'
-  - 'useTime: 45'
+    damage: 126
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 45
   worth: 2880000
   rarity: 5
 猪鲨链球:
@@ -1715,267 +1719,267 @@
   lore:
   - §r喷出自动寻敌泡泡
   attributes:
-  - 'damage: 132'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 4.5'
-  - 'useTime: 19'
+    damage: 132
+    damageType: Melee
+    crit: 4
+    knockback: 4.5
+    useTime: 19
   worth: 5000000
   rarity: 8
 木制悠悠球:
   item: STICK
   attributes:
-  - 'damage: 18'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'projectileSpeed: 16'
-  - 'knockback: 2.5'
-  - 'useTime: 25'
+    damage: 18
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 16
+    knockback: 2.5
+    useTime: 25
   worth: 10000
   rarity: 0
 抑郁球:
   item: STICK
   attributes:
-  - 'damage: 32'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'projectileSpeed: 16'
-  - 'knockback: 4.5'
-  - 'useTime: 25'
+    damage: 32
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 16
+    knockback: 4.5
+    useTime: 25
   worth: 1000000
   rarity: 1
 亚马逊悠悠球:
   item: STICK
   attributes:
-  - 'damage: 36'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'projectileSpeed: 16'
-  - 'knockback: 3.75'
-  - 'useTime: 25'
+    damage: 36
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 16
+    knockback: 3.75
+    useTime: 25
   worth: 1300000
   rarity: 3
 克苏鲁之眼悠悠球:
   item: STICK
   attributes:
-  - 'damage: 230'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'projectileSpeed: 16'
-  - 'knockback: 3.5'
-  - 'useTime: 24'
+    damage: 230
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 16
+    knockback: 3.5
+    useTime: 24
   worth: 11000000
   rarity: 8
 泰拉悠悠球:
   item: STICK
   attributes:
-  - 'damage: 300'
-  - 'damageType: Melee'
-  - 'crit: 14'
-  - 'projectileSpeed: 16'
-  - 'knockback: 6.5'
-  - 'useTime: 25'
+    damage: 300
+    damageType: Melee
+    crit: 14
+    projectileSpeed: 16
+    knockback: 6.5
+    useTime: 25
   worth: 10000000
   rarity: 10
 木弓:
   item: BOW
   attributes:
-  - 'damage: 8'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 6.1'
-  - 'knockback: 0'
-  - 'useTime: 30'
+    damage: 8
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 6.1
+    knockback: 0
+    useTime: 30
   worth: 2000
   rarity: 0
 钨钢弓:
   item: BOW
   attributes:
-  - 'damage: 22'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 12'
-  - 'knockback: 2.25'
-  - 'useTime: 25'
+    damage: 22
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12
+    knockback: 2.25
+    useTime: 25
   worth: 200000
   rarity: 1
 铜质短弓:
   item: BOW
   attributes:
-  - 'damage: 12'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 6.6'
-  - 'knockback: 0'
-  - 'useTime: 23'
+    damage: 12
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 6.6
+    knockback: 0
+    useTime: 23
   worth: 7000
   rarity: 0
 铁弓:
   item: BOW
   attributes:
-  - 'damage: 16'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 6.6'
-  - 'knockback: 0'
-  - 'useTime: 28'
+    damage: 16
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 6.6
+    knockback: 0
+    useTime: 28
   worth: 28000
   rarity: 0
 银弓:
   item: BOW
   attributes:
-  - 'damage: 18'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 6.6'
-  - 'knockback: 0'
-  - 'useTime: 27'
+    damage: 18
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 6.6
+    knockback: 0
+    useTime: 27
   worth: 70000
   rarity: 0
 金弓:
   item: BOW
   attributes:
-  - 'damage: 22'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 6.6'
-  - 'knockback: 0'
-  - 'useTime: 26'
+    damage: 22
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 6.6
+    knockback: 0
+    useTime: 26
   worth: 140000
   rarity: 0
 恶魔弓:
   item: BOW
   attributes:
-  - 'damage: 30'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 6.7'
-  - 'knockback: 2.5'
-  - 'useTime: 25'
+    damage: 30
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 6.7
+    knockback: 2.5
+    useTime: 25
   worth: 360000
   rarity: 1
 熔火之怒:
   item: BOW
   attributes:
-  - 'damage: 60'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 8'
-  - 'knockback: 3'
-  - 'useTime: 22'
+    damage: 60
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 8
+    knockback: 3
+    useTime: 22
   worth: 540000
   rarity: 3
 代达罗斯风暴弓:
   item: BOW
   attributes:
-  - 'damage: 60'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 12.5'
-  - 'knockback: 2.25'
-  - 'useTime: 19'
+    damage: 60
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12.5
+    knockback: 2.25
+    useTime: 19
   worth: 8000000
   rarity: 5
 钴连弩:
   item: BOW
   attributes:
-  - 'damage: 64'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 9'
-  - 'knockback: 1.5'
-  - 'useTime: 25'
+    damage: 64
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 9
+    knockback: 1.5
+    useTime: 25
   worth: 1200000
   rarity: 4
 秘银连弩:
   item: BOW
   attributes:
-  - 'damage: 72'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 9.5'
-  - 'knockback: 2'
-  - 'useTime: 22'
+    damage: 72
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 9.5
+    knockback: 2
+    useTime: 22
   worth: 1800000
   rarity: 4
 精金连弩:
   item: BOW
   attributes:
-  - 'damage: 80'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 10'
-  - 'knockback: 2.5'
-  - 'useTime: 19'
+    damage: 80
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 10
+    knockback: 2.5
+    useTime: 19
   worth: 2400000
   rarity: 4
 神圣连弩:
   item: BOW
   attributes:
-  - 'damage: 106'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 10'
-  - 'knockback: 2.5'
-  - 'useTime: 16'
+    damage: 106
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 10
+    knockback: 2.5
+    useTime: 16
   worth: 4000000
   rarity: 5
 叶绿连弩:
   item: BOW
   attributes:
-  - 'damage: 51'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 11.5'
-  - 'knockback: 2.75'
-  - 'useTime: 18'
+    damage: 51
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 11.5
+    knockback: 2.75
+    useTime: 18
   worth: 4800000
   rarity: 7
 海啸弓:
   item: BOW
   attributes:
-  - 'damage: 120'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 5'
-  - 'knockback: 2'
-  - 'useTime: 24'
+    damage: 120
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 5
+    knockback: 2
+    useTime: 24
   worth: 5000000
   rarity: 8
 日暮:
   item: BOW
   attributes:
-  - 'damage: 75'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 10'
-  - 'knockback: 2.5'
-  - 'useTime: 20'
-  - 'penetration: 4'
+    damage: 75
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 10
+    knockback: 2.5
+    useTime: 20
+    penetration: 4
   worth: 5000000
   rarity: 8
 幻象弓:
   item: BOW
   attributes:
-  - 'damage: 100'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 10'
-  - 'knockback: 2'
-  - 'useTime: 12'
-  - 'ammoConsumptionRate: 0.33'
+    damage: 100
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 10
+    knockback: 2
+    useTime: 12
+    ammoConsumptionRate: -0.66
   worth: 10000000
   rarity: 10
 榴弹发射器:
   item: BLAZE_ROD
   attributes:
-  - 'bounce: 4'
-  - 'damage: 120'
-  - 'damageType: Rocket'
-  - 'crit: 4'
-  - 'projectileSpeed: 4'
-  - 'knockback: 4'
-  - 'useTime: 20'
+    bounce: 4
+    damage: 120
+    damageType: Rocket
+    crit: 4
+    projectileSpeed: 4
+    knockback: 4
+    useTime: 20
   worth: 7000000
   rarity: 8
 雪人炮:
@@ -1983,23 +1987,23 @@
   lore:
   - §r发射自动寻敌的导弹
   attributes:
-  - 'damage: 134'
-  - 'damageType: Rocket'
-  - 'crit: 4'
-  - 'projectileSpeed: 15'
-  - 'knockback: 4'
-  - 'useTime: 15'
+    damage: 134
+    damageType: Rocket
+    crit: 4
+    projectileSpeed: 15
+    knockback: 4
+    useTime: 15
   worth: 9000000
   rarity: 8
 喜庆弹射器:
   item: BLAZE_ROD
   attributes:
-  - 'damage: 130'
-  - 'damageType: Rocket'
-  - 'crit: 4'
-  - 'projectileSpeed: 15'
-  - 'knockback: 4'
-  - 'useTime: 30'
+    damage: 130
+    damageType: Rocket
+    crit: 4
+    projectileSpeed: 15
+    knockback: 4
+    useTime: 30
   worth: 16000000
   rarity: 10
 气泵枪:
@@ -2007,12 +2011,12 @@
   lore:
   - §r将至多5枚南瓜榴弹装填后一次性射出
   attributes:
-  - 'damage: 54'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 11'
-  - 'knockback: 1.25'
-  - 'useTime: 30'
+    damage: 54
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 11
+    knockback: 1.25
+    useTime: 30
   worth: 400000
   rarity: 2
 骨头手套:
@@ -2021,27 +2025,27 @@
   - §r投出骨头
   - §6专家模式物品
   attributes:
-  - 'damage: 40'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 8'
-  - 'knockback: 2.3'
-  - 'useTime: 12'
-  - 'penetration: 2'
-  - 'bounce: 1'
+    damage: 40
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 8
+    knockback: 2.3
+    useTime: 12
+    penetration: 2
+    bounce: 1
   worth: 2000000
   rarity: 1000
 尖桩发射器:
   item: BOW
   attributes:
-  - 'damage: 200'
-  - 'damageType: Arrow'
-  - 'crit: 14'
-  - 'projectileSpeed: 12'
-  - 'projectileSpeedMulti: 3'
-  - 'knockback: 11'
-  - 'useTime: 12'
-  - 'penetration: 9'
+    damage: 200
+    damageType: Arrow
+    crit: 14
+    projectileSpeed: 12
+    projectileSpeedMulti: 3
+    knockback: 11
+    useTime: 12
+    penetration: 9
   worth: 10000000
   rarity: 8
 尖桩:
@@ -2049,26 +2053,26 @@
   lore:
   - §r尖桩发射器的弹药
   attributes:
-  - 'damage: 50'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 3'
-  - 'projectileSpeedMulti: 3'
-  - 'knockback: 4.5'
+    damage: 50
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 3
+    projectileSpeedMulti: 3
+    knockback: 4.5
   worth: 300
   rarity: 0
 玉米糖步枪:
   item: BOW
   attributes:
-  - 'damage: 106'
-  - 'damageType: Arrow'
-  - 'crit: 14'
-  - 'projectileSpeed: 14'
-  - 'knockback: 3.5'
-  - 'useTime: 9'
-  - 'penetration: 9'
-  - 'bounce: 4'
-  - 'ammoConsumptionRate: 0.66'
+    damage: 106
+    damageType: Arrow
+    crit: 14
+    projectileSpeed: 14
+    knockback: 3.5
+    useTime: 9
+    penetration: 9
+    bounce: 4
+    ammoConsumptionRate: -0.33
   worth: 10000000
   rarity: 8
 玉米糖:
@@ -2076,23 +2080,23 @@
   lore:
   - §r玉米糖步枪的弹药
   attributes:
-  - 'damage: 18'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 4'
-  - 'knockback: 1.5'
+    damage: 18
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 4
+    knockback: 1.5
   worth: 100
   rarity: 0
 杰克南瓜灯发射器:
   item: BOW
   attributes:
-  - 'damage: 250'
-  - 'damageType: Arrow'
-  - 'crit: 14'
-  - 'projectileSpeed: 11'
-  - 'knockback: 8'
-  - 'useTime: 25'
-  - 'bounce: 9'
+    damage: 250
+    damageType: Arrow
+    crit: 14
+    projectileSpeed: 11
+    knockback: 8
+    useTime: 25
+    bounce: 9
   worth: 10000000
   rarity: 8
 爆炸杰克南瓜灯:
@@ -2100,58 +2104,58 @@
   lore:
   - §r杰克南瓜灯发射器的弹药
   attributes:
-  - 'damage: 120'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'projectileSpeed: 4'
-  - 'knockback: 3'
+    damage: 120
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 4
+    knockback: 3
   worth: 300
   rarity: 0
 精灵熔枪:
   item: BOW
   attributes:
-  - 'damage: 100'
-  - 'damageType: Arrow'
-  - 'crit: 14'
-  - 'projectileSpeed: 25.5'
-  - 'knockback: 0.425'
-  - 'useTime: 15'
-  - 'penetration: 99'
+    damage: 100
+    damageType: Arrow
+    crit: 14
+    projectileSpeed: 25.5
+    knockback: 0.425
+    useTime: 15
+    penetration: 99
   worth: 10000000
   rarity: 8
 燧发枪:
   item: BLAZE_ROD
   attributes:
-  - 'damage: 20'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 5'
-  - 'projectileSpeedMulti: 0.01'
-  - 'knockback: 0'
-  - 'useTime: 16'
+    damage: 20
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 5
+    projectileSpeedMulti: 0.01
+    knockback: 0
+    useTime: 16
   worth: 1000000
   rarity: 1
 左轮手枪:
   item: BLAZE_ROD
   attributes:
-  - 'damage: 40'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 16'
-  - 'knockback: 3'
-  - 'useTime: 22'
+    damage: 40
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 16
+    knockback: 3
+    useTime: 22
   worth: 2000000
   rarity: 2
 迷你鲨:
   item: BLAZE_ROD
   attributes:
-  - 'damage: 12'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 7'
-  - 'knockback: 0'
-  - 'useTime: 8'
-  - 'ammoConsumptionRate: 0.66'
+    damage: 12
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 7
+    knockback: 0
+    useTime: 8
+    ammoConsumptionRate: -0.33
   worth: 7000000
   rarity: 2
 发条突击步枪:
@@ -2159,12 +2163,12 @@
   lore:
   - §r三连发，只有第一发消耗弹药
   attributes:
-  - 'damage: 34'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 12'
-  - 'knockback: 0'
-  - 'useTime: 20'
+    damage: 34
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 0
+    useTime: 20
   worth: 3000000
   rarity: 4
 巨兽鲨:
@@ -2172,60 +2176,60 @@
   lore:
   - §r“迷你鲨的老大哥”
   attributes:
-  - 'damage: 50'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 10'
-  - 'knockback: 1'
-  - 'useTime: 7'
-  - 'ammoConsumptionRate: 0.5'
+    damage: 50
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 10
+    knockback: 1
+    useTime: 7
+    ammoConsumptionRate: -0.5
   worth: 7000000
   rarity: 5
 金星马格南:
   item: BLAZE_ROD
   attributes:
-  - 'damage: 60'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 13.5'
-  - 'projectileSpeedMulti: 1.5'
-  - 'knockback: 5.5'
-  - 'useTime: 6'
+    damage: 60
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 13.5
+    projectileSpeedMulti: 1.5
+    knockback: 5.5
+    useTime: 6
   worth: 5000000
   rarity: 7
 狙击步枪:
   item: BLAZE_ROD
   attributes:
-  - 'damage: 370'
-  - 'damageType: Bullet'
-  - 'crit: 29'
-  - 'projectileSpeed: 8'
-  - 'projectileSpeedMulti: 2'
-  - 'knockback: 8'
-  - 'useTime: 30'
+    damage: 370
+    damageType: Bullet
+    crit: 29
+    projectileSpeed: 8
+    projectileSpeedMulti: 2
+    knockback: 8
+    useTime: 30
   worth: 8000000
   rarity: 8
 战术霰弹枪:
   item: BLAZE_ROD
   attributes:
-  - 'damage: 58'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 6'
-  - 'knockback: 7'
-  - 'useTime: 25'
+    damage: 58
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 6
+    knockback: 7
+    useTime: 25
   worth: 8000000
   rarity: 8
 链式机枪:
   item: BLAZE_ROD
   attributes:
-  - 'damage: 62'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 14'
-  - 'knockback: 1.75'
-  - 'useTime: 4'
-  - 'ammoConsumptionRate: 0.5'
+    damage: 62
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 14
+    knockback: 1.75
+    useTime: 4
+    ammoConsumptionRate: -0.5
   worth: 5000000
   rarity: 8
 星璇机枪:
@@ -2233,13 +2237,13 @@
   lore:
   - §r“劈劈啪啪，乒乒乓乓，一顿混乱，惨绝人寰。”
   attributes:
-  - 'damage: 100'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 10'
-  - 'knockback: 0'
-  - 'useTime: 4'
-  - 'ammoConsumptionRate: 0.33'
+    damage: 100
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 10
+    knockback: 0
+    useTime: 4
+    ammoConsumptionRate: -0.66
   worth: 10000000
   rarity: 10
 太空海豚机枪:
@@ -2247,69 +2251,69 @@
   lore:
   - §r“它来自太空边缘”
   attributes:
-  - 'damage: 170'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 12'
-  - 'knockback: 2.5'
-  - 'useTime: 5'
-  - 'ammoConsumptionRate: 0.33'
+    damage: 170
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 2.5
+    useTime: 5
+    ammoConsumptionRate: -0.66
   worth: 15000000
   rarity: 10
 四管猎枪:
   item: BLAZE_ROD
   attributes:
-  - 'damage: 47'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 7'
-  - 'knockback: 5.5'
-  - 'useTime: 45'
+    damage: 47
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 7
+    knockback: 5.5
+    useTime: 45
   worth: 7000000
   rarity: 3
 玛瑙爆破枪:
   item: BLAZE_ROD
   attributes:
-  - 'damage: 48'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 8'
-  - 'knockback: 6.5'
-  - 'useTime: 48'
+    damage: 48
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 8
+    knockback: 6.5
+    useTime: 48
   worth: 5000000
   rarity: 4
 手枪:
   item: BLAZE_ROD
   attributes:
-  - 'damage: 34'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 10'
-  - 'knockback: 3'
-  - 'useTime: 10'
+    damage: 34
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 10
+    knockback: 3
+    useTime: 10
   worth: 1750000
   rarity: 2
 凤凰爆破枪:
   item: BLAZE_ROD
   attributes:
-  - 'damage: 48'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'projectileSpeed: 13'
-  - 'knockback: 3'
-  - 'useTime: 11'
+    damage: 48
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 13
+    knockback: 3
+    useTime: 11
   worth: 3500000
   rarity: 3
 火花魔棒:
   item: STICK
   attributes:
-  - 'damage: 24'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 7'
-  - 'knockback: 0'
-  - 'useTime: 26'
-  - 'manaUse: 4'
+    damage: 24
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 7
+    knockback: 0
+    useTime: 26
+    manaUse: 4
   worth: 100000
   rarity: 1
 钨钢法杖:
@@ -2317,118 +2321,118 @@
   lore:
   - §r发射钨钢光球
   attributes:
-  - 'damage: 26'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 9'
-  - 'knockback: 3'
-  - 'useTime: 20'
-  - 'manaUse: 2'
-  - 'penetration: 1'
+    damage: 26
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 9
+    knockback: 3
+    useTime: 20
+    manaUse: 2
+    penetration: 1
   worth: 200000
   rarity: 1
 钻石法杖:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 46'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 9.5'
-  - 'knockback: 5.5'
-  - 'useTime: 26'
-  - 'manaUse: 16'
-  - 'penetration: 1'
+    damage: 46
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 9.5
+    knockback: 5.5
+    useTime: 26
+    manaUse: 16
+    penetration: 1
   worth: 600000
   rarity: 2
 海蓝权杖:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 32'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 37.5'
-  - 'knockback: 5'
-  - 'useTime: 16'
-  - 'manaUse: 12'
-  - 'penetration: 99'
+    damage: 32
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 37.5
+    knockback: 5
+    useTime: 16
+    manaUse: 12
+    penetration: 99
   worth: 1750000
   rarity: 2
 太空枪:
   item: WOOD_SWORD
   attributes:
-  - 'damage: 36'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 30'
-  - 'knockback: 0.75'
-  - 'useTime: 17'
-  - 'manaUse: 14'
-  - 'penetration: 2'
+    damage: 36
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 30
+    knockback: 0.75
+    useTime: 17
+    manaUse: 14
+    penetration: 2
   worth: 400000
   rarity: 1
 水矢:
   item: BOOK
   attributes:
-  - 'damage: 40'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 4.5'
-  - 'knockback: 5'
-  - 'useTime: 17'
-  - 'manaUse: 20'
-  - 'penetration: 9'
-  - 'bounce: 4'
+    damage: 40
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 4.5
+    knockback: 5
+    useTime: 17
+    manaUse: 20
+    penetration: 9
+    bounce: 4
   worth: 1500000
   rarity: 2
 骷髅头法书:
   item: BOOK
   attributes:
-  - 'damage: 56'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 3.5'
-  - 'knockback: 3.5'
-  - 'useTime: 26'
-  - 'manaUse: 18'
-  - 'penetration: 2'
+    damage: 56
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 3.5
+    knockback: 3.5
+    useTime: 26
+    manaUse: 18
+    penetration: 2
   worth: 1500000
   rarity: 2
 恶魔锄刀:
   item: BOOK
   attributes:
-  - 'damage: 70'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 0.2'
-  - 'knockback: 5'
-  - 'useTime: 20'
-  - 'manaUse: 30'
+    damage: 70
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 0.2
+    knockback: 5
+    useTime: 20
+    manaUse: 30
   worth: 1500000
   rarity: 3
 邪恶三叉戟:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 130'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 13'
-  - 'knockback: 6.5'
-  - 'useTime: 17'
-  - 'manaUse: 19'
-  - 'penetration: 2'
+    damage: 130
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 13
+    knockback: 6.5
+    useTime: 17
+    manaUse: 19
+    penetration: 2
   worth: 10000000
   rarity: 5
 激光步枪:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 58'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 17'
-  - 'knockback: 2.5'
-  - 'useTime: 11'
-  - 'manaUse: 8'
-  - 'penetration: 2'
+    damage: 58
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 17
+    knockback: 2.5
+    useTime: 11
+    manaUse: 8
+    penetration: 2
   worth: 3000000
   rarity: 4
 水晶风暴:
@@ -2436,38 +2440,38 @@
   lore:
   - §r召唤快速发射的水晶碎块
   attributes:
-  - 'damage: 64'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 16'
-  - 'knockback: 3'
-  - 'useTime: 6'
-  - 'manaUse: 5'
-  - 'bounce: 5'
+    damage: 64
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 16
+    knockback: 3
+    useTime: 6
+    manaUse: 5
+    bounce: 5
   worth: 4000000
   rarity: 4
 裂天剑:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 76'
-  - 'damageType: Magic'
-  - 'crit: 24'
-  - 'projectileSpeed: 14'
-  - 'knockback: 4'
-  - 'useTime: 12'
-  - 'manaUse: 17'
+    damage: 76
+    damageType: Magic
+    crit: 24
+    projectileSpeed: 14
+    knockback: 4
+    useTime: 12
+    manaUse: 17
   worth: 6000000
   rarity: 4
 爆裂藤蔓:
   item: DIAMOND_SWORD
   attributes:
-  - 'armorPenetration: 20'
-  - 'damage: 50'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'knockback: 1'
-  - 'useTime: 25'
-  - 'manaUse: 12'
+    armorPenetration: 20
+    damage: 50
+    damageType: Magic
+    crit: 4
+    knockback: 1
+    useTime: 25
+    manaUse: 12
   worth: 4000000
   rarity: 7
 吹叶机:
@@ -2475,13 +2479,13 @@
   lore:
   - §r快速射出刀锋般锋利的树叶
   attributes:
-  - 'damage: 72'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 11'
-  - 'knockback: 4'
-  - 'useTime: 7'
-  - 'manaUse: 4'
+    damage: 72
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 11
+    knockback: 4
+    useTime: 7
+    manaUse: 4
   worth: 6000000
   rarity: 7
 狱火叉:
@@ -2489,13 +2493,13 @@
   lore:
   - §r发射造成破晓的火光球
   attributes:
-  - 'damage: 200'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 8'
-  - 'knockback: 8'
-  - 'useTime: 20'
-  - 'manaUse: 18'
+    damage: 200
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 8
+    knockback: 8
+    useTime: 20
+    manaUse: 18
   worth: 6000000
   rarity: 8
 暗影束法杖:
@@ -2503,12 +2507,12 @@
   lore:
   - §r产生会在墙上反弹的暗影光束
   attributes:
-  - 'damage: 120'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'knockback: 3.25'
-  - 'useTime: 15'
-  - 'manaUse: 7'
+    damage: 120
+    damageType: Magic
+    crit: 4
+    knockback: 3.25
+    useTime: 15
+    manaUse: 7
   worth: 6000000
   rarity: 8
 幽灵法杖:
@@ -2516,15 +2520,15 @@
   lore:
   - §r召唤亡魂来追杀敌人
   attributes:
-  - 'damage: 130'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 12'
-  - 'knockback: 4'
-  - 'useTime: 24'
-  - 'manaUse: 15'
-  - 'penetration: 2'
-  - 'bounce: 10'
+    damage: 130
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 12
+    knockback: 4
+    useTime: 24
+    manaUse: 15
+    penetration: 2
+    bounce: 10
   worth: 6000000
   rarity: 8
 高温射线枪:
@@ -2533,62 +2537,62 @@
   - §r射出灼热的高温射线
   - §r“喔啦！！”
   attributes:
-  - 'damage: 160'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'knockback: 3'
-  - 'useTime: 10'
-  - 'manaUse: 8'
+    damage: 160
+    damageType: Magic
+    crit: 4
+    knockback: 3
+    useTime: 10
+    manaUse: 8
   worth: 7000000
   rarity: 7
 剃刀松:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 96'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 24'
-  - 'knockback: 3.25'
-  - 'useTime: 8'
-  - 'manaUse: 5'
+    damage: 96
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 24
+    knockback: 3.25
+    useTime: 8
+    manaUse: 5
   worth: 9000000
   rarity: 8
 暴雪法杖:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 116'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 20'
-  - 'knockback: 5.4'
-  - 'useTime: 10'
-  - 'manaUse: 9'
+    damage: 116
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 20
+    knockback: 5.4
+    useTime: 10
+    manaUse: 9
   worth: 5000000
   rarity: 8
 蝙蝠权杖:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 90'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 10'
-  - 'knockback: 3'
-  - 'useTime: 12'
-  - 'manaUse: 6'
+    damage: 90
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 10
+    knockback: 3
+    useTime: 12
+    manaUse: 6
   worth: 10000000
   rarity: 8
 夜光:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 100'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 1'
-  - 'penetration: 2'
-  - 'bounce: 10'
-  - 'knockback: 2.5'
-  - 'useTime: 26'
-  - 'manaUse: 20'
+    damage: 100
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 1
+    penetration: 2
+    bounce: 10
+    knockback: 2.5
+    useTime: 26
+    manaUse: 20
   worth: 5000000
   rarity: 8
 泡泡枪:
@@ -2596,13 +2600,13 @@
   lore:
   - §r快速射出强劲的泡泡
   attributes:
-  - 'damage: 140'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 1'
-  - 'knockback: 3'
-  - 'useTime: 9'
-  - 'manaUse: 4'
+    damage: 140
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 1
+    knockback: 3
+    useTime: 9
+    manaUse: 4
   worth: 5000000
   rarity: 8
 利刃台风:
@@ -2610,15 +2614,15 @@
   lore:
   - §r发射快速移动的利刃台风
   attributes:
-  - 'damage: 120'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 18'
-  - 'knockback: 5'
-  - 'useTime: 40'
-  - 'manaUse: 16'
-  - 'penetration: 15'
-  - 'bounce: 9'
+    damage: 120
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 18
+    knockback: 5
+    useTime: 40
+    manaUse: 16
+    penetration: 15
+    bounce: 9
   worth: 5000000
   rarity: 8
 星云烈焰:
@@ -2626,13 +2630,13 @@
   lore:
   - §r“从猎户座腰带收到掌中”
   attributes:
-  - 'damage: 260'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 13'
-  - 'knockback: 0'
-  - 'useTime: 12'
-  - 'manaUse: 12'
+    damage: 260
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 13
+    knockback: 0
+    useTime: 12
+    manaUse: 12
   worth: 10000000
   rarity: 10
 星云奥秘:
@@ -2640,15 +2644,15 @@
   lore:
   - §r“召唤大量星体能量来追杀敌人”
   attributes:
-  - 'damage: 140'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 2'
-  - 'knockback: 5'
-  - 'useTime: 30'
-  - 'manaUse: 30'
-  - 'bounce: 4'
-  - 'penetration: 2'
+    damage: 140
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 2
+    knockback: 5
+    useTime: 30
+    manaUse: 30
+    bounce: 4
+    penetration: 2
   worth: 10000000
   rarity: 10
 月之耀斑:
@@ -2656,13 +2660,13 @@
   lore:
   - §r射出月之耀斑
   attributes:
-  - 'damage: 200'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'projectileSpeed: 22'
-  - 'knockback: 4.5'
-  - 'useTime: 10'
-  - 'manaUse: 13'
+    damage: 200
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 22
+    knockback: 4.5
+    useTime: 10
+    manaUse: 13
   worth: 10000000
   rarity: 10
 终极棱镜:
@@ -2670,12 +2674,12 @@
   lore:
   - §r“发射生命解离彩虹”
   attributes:
-  - 'damage: 125'
-  - 'damageType: Magic'
-  - 'crit: 4'
-  - 'knockback: 0'
-  - 'useTime: 10'
-  - 'manaUse: 12'
+    damage: 125
+    damageType: Magic
+    crit: 4
+    knockback: 0
+    useTime: 10
+    manaUse: 12
   worth: 10000000
   rarity: 10
 蜘蛛女王法杖:
@@ -2685,11 +2689,11 @@
   - §r召唤蜘蛛女王来朝敌人吐蜘蛛卵
   - §r“啊↗啊↑啊→啊→啊↓啊↓啊↓”
   attributes:
-  - 'damage: 150'
-  - 'damageType: Summon'
-  - 'knockback: 7.5'
-  - 'useTime: 30'
-  - 'manaUse: 10'
+    damage: 150
+    damageType: Summon
+    knockback: 7.5
+    useTime: 30
+    manaUse: 10
   worth: 5000000
   rarity: 4
 月亮传送门法杖:
@@ -2698,11 +2702,11 @@
   - §r召唤哨兵
   - §r召唤月亮传送门，向敌人发射激光
   attributes:
-  - 'damage: 100'
-  - 'damageType: Summon'
-  - 'knockback: 7.5'
-  - 'useTime: 30'
-  - 'manaUse: 10'
+    damage: 100
+    damageType: Summon
+    knockback: 7.5
+    useTime: 30
+    manaUse: 10
   worth: 10000000
   rarity: 10
 七彩水晶法杖:
@@ -2712,11 +2716,11 @@
   - §r召唤用来驱逐敌人的放射水晶
   - §r“公爵，多么缤纷的颜色！”
   attributes:
-  - 'damage: 260'
-  - 'damageType: Summon'
-  - 'knockback: 7.5'
-  - 'useTime: 30'
-  - 'manaUse: 10'
+    damage: 260
+    damageType: Summon
+    knockback: 7.5
+    useTime: 30
+    manaUse: 10
   worth: 10000000
   rarity: 10
 史莱姆法杖:
@@ -2724,12 +2728,12 @@
   lore:
   - §r召唤小史莱姆来为你战斗
   attributes:
-  - 'damage: 16'
-  - 'damageType: Summon'
-  - 'projectileSpeed: 10'
-  - 'knockback: 2'
-  - 'useTime: 28'
-  - 'manaUse: 20'
+    damage: 16
+    damageType: Summon
+    projectileSpeed: 10
+    knockback: 2
+    useTime: 28
+    manaUse: 20
   worth: 2000000
   rarity: 4
 钨钢控制器:
@@ -2737,12 +2741,12 @@
   lore:
   - §r召唤钨钢机器人为你而战
   attributes:
-  - 'damage: 20'
-  - 'damageType: Summon'
-  - 'projectileSpeed: 10'
-  - 'knockback: 0.5'
-  - 'useTime: 34'
-  - 'manaUse: 10'
+    damage: 20
+    damageType: Summon
+    projectileSpeed: 10
+    knockback: 0.5
+    useTime: 34
+    manaUse: 10
   worth: 2000000
   rarity: 1
 小鬼法杖:
@@ -2750,11 +2754,11 @@
   lore:
   - §r召唤小鬼来为你战斗
   attributes:
-  - 'damage: 34'
-  - 'damageType: Summon'
-  - 'knockback: 2'
-  - 'useTime: 36'
-  - 'manaUse: 20'
+    damage: 34
+    damageType: Summon
+    knockback: 2
+    useTime: 36
+    manaUse: 20
   worth: 200000
   rarity: 3
 蜘蛛法杖:
@@ -2763,11 +2767,11 @@
   - §r召唤蜘蛛来为你战斗
   - §r“这个好像……是一个……蜘蛛！”
   attributes:
-  - 'damage: 52'
-  - 'damageType: Summon'
-  - 'knockback: 1'
-  - 'useTime: 36'
-  - 'manaUse: 10'
+    damage: 52
+    damageType: Summon
+    knockback: 1
+    useTime: 36
+    manaUse: 10
   worth: 1000000
   rarity: 4
 刃杖:
@@ -2776,12 +2780,12 @@
   - §r召唤附魔飞刀来为你战斗
   - §r“千刀万剐”
   attributes:
-  - 'armorPenetration: 50'
-  - 'damage: 12'
-  - 'damageType: Summon'
-  - 'knockback: 0'
-  - 'useTime: 36'
-  - 'manaUse: 10'
+    armorPenetration: 50
+    damage: 12
+    damageType: Summon
+    knockback: 0
+    useTime: 36
+    manaUse: 10
   worth: 1000000
   rarity: 5
 魔眼法杖:
@@ -2789,11 +2793,11 @@
   lore:
   - §r召唤双子魔眼来为你战斗
   attributes:
-  - 'damage: 60'
-  - 'damageType: Summon'
-  - 'knockback: 2'
-  - 'useTime: 36'
-  - 'manaUse: 10'
+    damage: 60
+    damageType: Summon
+    knockback: 2
+    useTime: 36
+    manaUse: 10
   worth: 2000000
   rarity: 5
 矮人法杖:
@@ -2801,11 +2805,11 @@
   lore:
   - §r召唤矮人来为你战斗
   attributes:
-  - 'damage: 70'
-  - 'damageType: Summon'
-  - 'knockback: 3'
-  - 'useTime: 28'
-  - 'manaUse: 10'
+    damage: 70
+    damageType: Summon
+    knockback: 3
+    useTime: 28
+    manaUse: 10
   worth: 7000000
   rarity: 7
 致命球法杖:
@@ -2813,11 +2817,11 @@
   lore:
   - §r召唤致命球来为你战斗
   attributes:
-  - 'damage: 100'
-  - 'damageType: Summon'
-  - 'knockback: 3'
-  - 'useTime: 36'
-  - 'manaUse: 10'
+    damage: 100
+    damageType: Summon
+    knockback: 3
+    useTime: 36
+    manaUse: 10
   worth: 10000000
   rarity: 8
 泰拉棱镜:
@@ -2825,11 +2829,11 @@
   lore:
   - §r召唤附魔剑来为你战斗
   attributes:
-  - 'damage: 180'
-  - 'damageType: Summon'
-  - 'knockback: 1'
-  - 'useTime: 36'
-  - 'manaUse: 10'
+    damage: 180
+    damageType: Summon
+    knockback: 1
+    useTime: 36
+    manaUse: 10
   worth: 20000000
   rarity: 8
 星尘细胞法杖:
@@ -2838,11 +2842,11 @@
   - §r召唤星尘细胞来为你战斗
   - §r“培养最美丽的细胞感染”
   attributes:
-  - 'damage: 120'
-  - 'damageType: Summon'
-  - 'knockback: 2'
-  - 'useTime: 36'
-  - 'manaUse: 10'
+    damage: 120
+    damageType: Summon
+    knockback: 2
+    useTime: 36
+    manaUse: 10
   worth: 10000000
   rarity: 10
 星尘之龙法杖:
@@ -2851,108 +2855,108 @@
   - §r召唤星尘之龙来为你战斗
   - §r“有了星尘之龙后，谁还需要一群仆从呢？”
   attributes:
-  - 'damage: 80'
-  - 'damageType: Summon'
-  - 'knockback: 2'
-  - 'useTime: 36'
-  - 'manaUse: 10'
+    damage: 80
+    damageType: Summon
+    knockback: 2
+    useTime: 36
+    manaUse: 10
   worth: 10000000
   rarity: 10
 鞭炮:
   item: DIAMOND_SWORD
   attributes:
-  - 'buffInflictMelee: 燃烧|80|1'
-  - 'damage: 60'
-  - 'damageType: Summon'
-  - 'crit: 4'
-  - 'knockback: 2'
-  - 'useTime: 30'
+    buffInflictMelee: 燃烧|80|1
+    damage: 60
+    damageType: Summon
+    crit: 4
+    knockback: 2
+    useTime: 30
   worth: 3000000
   rarity: 4
 迪朗达尔:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 110'
-  - 'damageType: Summon'
-  - 'crit: 4'
-  - 'knockback: 2'
-  - 'useTime: 20'
+    damage: 110
+    damageType: Summon
+    crit: 4
+    knockback: 2
+    useTime: 20
   worth: 4600000
   rarity: 5
 晨星:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 360'
-  - 'damageType: Summon'
-  - 'crit: 14'
-  - 'knockback: 11'
-  - 'useTime: 45'
+    damage: 360
+    damageType: Summon
+    crit: 14
+    knockback: 11
+    useTime: 45
   worth: 6000000
   rarity: 8
 暗黑收割:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 200'
-  - 'damageType: Summon'
-  - 'crit: 4'
-  - 'knockback: 3'
-  - 'useTime: 30'
+    damage: 200
+    damageType: Summon
+    crit: 4
+    knockback: 3
+    useTime: 30
   worth: 10000000
   rarity: 8
 万花筒:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 360'
-  - 'damageType: Summon'
-  - 'crit: 4'
-  - 'knockback: 4'
-  - 'useTime: 30'
+    damage: 360
+    damageType: Summon
+    crit: 4
+    knockback: 4
+    useTime: 30
   worth: 5000000
   rarity: 8
 日耀喷发剑:
   item: DIAMOND_SWORD
   attributes:
-  - 'damage: 210'
-  - 'damageType: Melee'
-  - 'crit: 4'
-  - 'knockback: 2'
-  - 'useTime: 20'
+    damage: 210
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 20
   worth: 10000000
   rarity: 10
 手里剑:
   item: IRON_NUGGET
   attributes:
-  - 'damage: 15'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 0'
-  - 'projectileSpeed: 9'
-  - 'useTime: 15'
-  - 'penetration: 3'
+    damage: 15
+    damageType: Arrow
+    crit: 4
+    knockback: 0
+    projectileSpeed: 9
+    useTime: 15
+    penetration: 3
   worth: 300
   rarity: 0
 尖刺球:
   item: IRON_NUGGET
   attributes:
-  - 'damage: 15'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 1'
-  - 'projectileSpeed: 5'
-  - 'useTime: 15'
-  - 'penetration: 4'
-  - 'bounce: 8'
+    damage: 15
+    damageType: Arrow
+    crit: 4
+    knockback: 1
+    projectileSpeed: 5
+    useTime: 15
+    penetration: 4
+    bounce: 8
   worth: 1600
   rarity: 0
 手榴弹:
   item: IRON_NUGGET
   attributes:
-  - 'damage: 120'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 8'
-  - 'projectileSpeed: 5.5'
-  - 'useTime: 45'
+    damage: 120
+    damageType: Arrow
+    crit: 4
+    knockback: 8
+    projectileSpeed: 5.5
+    useTime: 45
   worth: 2500
   rarity: 0
 炸弹:
@@ -2960,12 +2964,12 @@
   lore:
   - §r造成会摧毁大部分图格的小爆炸
   attributes:
-  - 'damage: 200'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 8'
-  - 'projectileSpeed: 5'
-  - 'useTime: 25'
+    damage: 200
+    damageType: Arrow
+    crit: 4
+    knockback: 8
+    projectileSpeed: 5
+    useTime: 25
   worth: 6000
   rarity: 0
 粘性炸弹:
@@ -2974,12 +2978,12 @@
   - §r造成会摧毁大部分图格的小爆炸
   - §r“投出去可不是件易事。”
   attributes:
-  - 'damage: 200'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 8'
-  - 'projectileSpeed: 5'
-  - 'useTime: 25'
+    damage: 200
+    damageType: Arrow
+    crit: 4
+    knockback: 8
+    projectileSpeed: 5
+    useTime: 25
   worth: 10000
   rarity: 0
 雷管:
@@ -2987,12 +2991,12 @@
   lore:
   - §r造成会摧毁大部分图格的大爆炸
   attributes:
-  - 'damage: 500'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 10'
-  - 'projectileSpeed: 4'
-  - 'useTime: 40'
+    damage: 500
+    damageType: Arrow
+    crit: 4
+    knockback: 10
+    projectileSpeed: 4
+    useTime: 40
   worth: 40000
   rarity: 1
 粘性雷管:
@@ -3001,86 +3005,86 @@
   - §r造成会摧毁大部分图格的大爆炸
   - §r“投出去可不是件易事。”
   attributes:
-  - 'damage: 500'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 10'
-  - 'projectileSpeed: 4'
-  - 'useTime: 40'
+    damage: 500
+    damageType: Arrow
+    crit: 4
+    knockback: 10
+    projectileSpeed: 4
+    useTime: 40
   worth: 40000
   rarity: 1
 木箭:
   item: ARROW
   attributes:
-  - 'damage: 10'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 2'
-  - 'projectileSpeed: 3'
+    damage: 10
+    damageType: Arrow
+    crit: 4
+    knockback: 2
+    projectileSpeed: 3
   worth: 100
   rarity: 0
 烈焰箭:
   item: ARROW
   attributes:
-  - 'damage: 14'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 2'
-  - 'projectileSpeed: 3.5'
+    damage: 14
+    damageType: Arrow
+    crit: 4
+    knockback: 2
+    projectileSpeed: 3.5
   worth: 200
   rarity: 0
 邪箭:
   item: ARROW
   attributes:
-  - 'damage: 24'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 3'
-  - 'projectileSpeed: 3.4'
-  - 'penetration: 4'
+    damage: 24
+    damageType: Arrow
+    crit: 4
+    knockback: 3
+    projectileSpeed: 3.4
+    penetration: 4
   worth: 800
   rarity: 1
 小丑之箭:
   item: ARROW
   attributes:
-  - 'damage: 20'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 4'
-  - 'projectileSpeed: 0.5'
-  - 'projectileSpeedMulti: 2'
-  - 'penetration: 999'
+    damage: 20
+    damageType: Arrow
+    crit: 4
+    knockback: 4
+    projectileSpeed: 0.5
+    projectileSpeedMulti: 2
+    penetration: 999
   worth: 2000
   rarity: 1
 狱炎箭:
   item: ARROW
   attributes:
-  - 'damage: 26'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 8'
-  - 'projectileSpeed: 6.5'
+    damage: 26
+    damageType: Arrow
+    crit: 4
+    knockback: 8
+    projectileSpeed: 6.5
   worth: 2000
   rarity: 2
 冰焰箭:
   item: ARROW
   attributes:
-  - 'damage: 18'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 2.2'
-  - 'projectileSpeed: 3.75'
-  - 'projectileSpeedMulti: 2'
+    damage: 18
+    damageType: Arrow
+    crit: 4
+    knockback: 2.2
+    projectileSpeed: 3.75
+    projectileSpeedMulti: 2
   worth: 300
   rarity: 0
 圣箭:
   item: ARROW
   attributes:
-  - 'damage: 26'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 2'
-  - 'projectileSpeed: 3.5'
+    damage: 26
+    damageType: Arrow
+    crit: 4
+    knockback: 2
+    projectileSpeed: 3.5
   worth: 1600
   rarity: 3
 诅咒箭:
@@ -3088,11 +3092,11 @@
   lore:
   - §r对目标施放酸性毒液
   attributes:
-  - 'damage: 25'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 3'
-  - 'projectileSpeed: 4'
+    damage: 25
+    damageType: Arrow
+    crit: 4
+    knockback: 3
+    projectileSpeed: 4
   worth: 800
   rarity: 3
 叶绿箭:
@@ -3100,14 +3104,14 @@
   lore:
   - §r撞墙后弹回
   attributes:
-  - 'damage: 24'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 3.5'
-  - 'projectileSpeed: 4.5'
-  - 'projectileSpeedMulti: 2'
-  - 'bounce: 3'
-  - 'penetration: -3'
+    damage: 24
+    damageType: Arrow
+    crit: 4
+    knockback: 3.5
+    projectileSpeed: 4.5
+    projectileSpeedMulti: 2
+    bounce: 3
+    penetration: -3
   worth: 2000
   rarity: 7
 毒液箭:
@@ -3115,12 +3119,12 @@
   lore:
   - §r对目标施放酸性毒液
   attributes:
-  - 'damage: 29'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 4.2'
-  - 'projectileSpeed: 4.3'
-  - 'projectileSpeedMulti: 2'
+    damage: 29
+    damageType: Arrow
+    crit: 4
+    knockback: 4.2
+    projectileSpeed: 4.3
+    projectileSpeedMulti: 2
   worth: 1800
   rarity: 3
 夜明箭:
@@ -3128,45 +3132,45 @@
   lore:
   - §r“以音速射下它们！”
   attributes:
-  - 'damage: 24'
-  - 'damageType: Arrow'
-  - 'crit: 4'
-  - 'knockback: 3.5'
-  - 'projectileSpeed: 3'
-  - 'projectileSpeedMulti: 2'
-  - 'penetration: 5'
+    damage: 24
+    damageType: Arrow
+    crit: 4
+    knockback: 3.5
+    projectileSpeed: 3
+    projectileSpeedMulti: 2
+    penetration: 5
   worth: 200
   rarity: 9
 火枪子弹:
   item: SLIME_BALL
   attributes:
-  - 'damage: 10'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'knockback: 2'
-  - 'projectileSpeed: 3'
+    damage: 10
+    damageType: Bullet
+    crit: 4
+    knockback: 2
+    projectileSpeed: 3
   worth: 100
   rarity: 0
 陨星弹:
   item: SLIME_BALL
   attributes:
-  - 'damage: 18'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'knockback: 1'
-  - 'projectileSpeed: 3'
-  - 'penetration: 1'
-  - 'bounce: 1'
+    damage: 18
+    damageType: Bullet
+    crit: 4
+    knockback: 1
+    projectileSpeed: 3
+    penetration: 1
+    bounce: 1
   worth: 100
   rarity: 1
 银子弹:
   item: SLIME_BALL
   attributes:
-  - 'damage: 18'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'knockback: 3'
-  - 'projectileSpeed: 4.5'
+    damage: 18
+    damageType: Bullet
+    crit: 4
+    knockback: 3
+    projectileSpeed: 4.5
   worth: 300
   rarity: 0
 爆炸弹:
@@ -3174,12 +3178,12 @@
   lore:
   - §r击中后发生爆炸
   attributes:
-  - 'damage: 20'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'knockback: 6.6'
-  - 'projectileSpeed: 4.7'
-  - 'projectileSpeedMulti: 3'
+    damage: 20
+    damageType: Bullet
+    crit: 4
+    knockback: 6.6
+    projectileSpeed: 4.7
+    projectileSpeedMulti: 3
   worth: 800
   rarity: 3
 绿藻弹:
@@ -3187,14 +3191,14 @@
   lore:
   - §r“你跑不掉了……”
   attributes:
-  - 'damage: 18'
-  - 'damageBulletMulti: -0.25'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'knockback: 2'
-  - 'projectileSpeed: 5'
-  - 'projectileSpeedMulti: 3'
-  - 'bounce: 10'
+    damage: 18
+    damageBulletMulti: -0.25
+    damageType: Bullet
+    crit: 4
+    knockback: 2
+    projectileSpeed: 5
+    projectileSpeedMulti: 3
+    bounce: 10
   worth: 1000
   rarity: 7
 水晶子弹:
@@ -3202,23 +3206,23 @@
   lore:
   - §r碰撞时产生水晶碎片
   attributes:
-  - 'damage: 18'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'knockback: 1'
-  - 'projectileSpeed: 5'
-  - 'projectileSpeedMulti: 2'
+    damage: 18
+    damageType: Bullet
+    crit: 4
+    knockback: 1
+    projectileSpeed: 5
+    projectileSpeedMulti: 2
   worth: 600
   rarity: 3
 诅咒弹:
   item: SLIME_BALL
   attributes:
-  - 'damage: 24'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'knockback: 4'
-  - 'projectileSpeed: 5'
-  - 'projectileSpeedMulti: 3'
+    damage: 24
+    damageType: Bullet
+    crit: 4
+    knockback: 4
+    projectileSpeed: 5
+    projectileSpeedMulti: 3
   worth: 600
   rarity: 3
 毒液弹:
@@ -3226,12 +3230,12 @@
   lore:
   - §r对目标施放酸性毒液
   attributes:
-  - 'damage: 30'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'knockback: 4.1'
-  - 'projectileSpeed: 5.3'
-  - 'projectileSpeedMulti: 3'
+    damage: 30
+    damageType: Bullet
+    crit: 4
+    knockback: 4.1
+    projectileSpeed: 5.3
+    projectileSpeedMulti: 3
   worth: 800
   rarity: 3
 夜明弹:
@@ -3239,21 +3243,21 @@
   lore:
   - §r“鬼怪排成行，一发百中...”
   attributes:
-  - 'damage: 40'
-  - 'damageType: Bullet'
-  - 'crit: 4'
-  - 'knockback: 3'
-  - 'projectileSpeed: 2'
-  - 'projectileSpeedMulti: 6'
-  - 'penetration: 49'
+    damage: 40
+    damageType: Bullet
+    crit: 4
+    knockback: 3
+    projectileSpeed: 2
+    projectileSpeedMulti: 6
+    penetration: 49
   worth: 200
   rarity: 9
 初级火箭:
   item: BLAZE_POWDER
   attributes:
-  - 'damage: 60'
-  - 'damageType: Rocket'
-  - 'crit: 4'
+    damage: 60
+    damageType: Rocket
+    crit: 4
   worth: 1000
   rarity: 0
 二级火箭:
@@ -3261,17 +3265,17 @@
   lore:
   - §r爆炸会摧毁图格
   attributes:
-  - 'damage: 80'
-  - 'damageType: Rocket'
-  - 'crit: 4'
+    damage: 80
+    damageType: Rocket
+    crit: 4
   worth: 2000
   rarity: 1
 三级火箭:
   item: BLAZE_POWDER
   attributes:
-  - 'damage: 110'
-  - 'damageType: Rocket'
-  - 'crit: 4'
+    damage: 110
+    damageType: Rocket
+    crit: 4
   worth: 5000
   rarity: 1
 四级火箭:
@@ -3279,17 +3283,17 @@
   lore:
   - §r爆炸会摧毁图格
   attributes:
-  - 'damage: 130'
-  - 'damageType: Rocket'
-  - 'crit: 4'
+    damage: 130
+    damageType: Rocket
+    crit: 4
   worth: 10000
   rarity: 7
 集束火箭:
   item: BLAZE_POWDER
   attributes:
-  - 'damage: 75'
-  - 'damageType: Rocket'
-  - 'crit: 4'
+    damage: 75
+    damageType: Rocket
+    crit: 4
   worth: 15000
   rarity: 0
 苦力怕时装:
@@ -3325,14 +3329,14 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 2'
+    defence: 2
   rarity: 0
 木胸甲:
   item: LEATHER_CHESTPLATE
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 2'
+    defence: 2
   rarity: 0
 木护胫:
   item: LEATHER_LEGGINGS
@@ -3344,7 +3348,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 2'
+    defence: 2
   worth: 4000
   rarity: 0
 仙人掌胸甲:
@@ -3352,7 +3356,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 2'
+    defence: 2
   worth: 6000
   rarity: 0
 仙人掌护腿:
@@ -3360,7 +3364,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 2'
+    defence: 2
   worth: 5000
   rarity: 0
 钨钢战盔:
@@ -3368,8 +3372,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 6'
-  - 'damageMeleeMulti: 0.1'
+    defence: 6
+    damageMeleeMulti: 0.1
   worth: 150000
   rarity: 1
 钨钢头饰:
@@ -3377,8 +3381,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 4'
-  - 'damageRangedMulti: 0.1'
+    defence: 4
+    damageRangedMulti: 0.1
   worth: 150000
   rarity: 1
 钨钢兜帽:
@@ -3386,8 +3390,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 2'
-  - 'damageMagicMulti: 0.1'
+    defence: 2
+    damageMagicMulti: 0.1
   worth: 150000
   rarity: 1
 钨钢头罩:
@@ -3395,8 +3399,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 0'
-  - 'damageSummonMulti: 0.1'
+    defence: 0
+    damageSummonMulti: 0.1
   worth: 150000
   rarity: 1
 钨钢盔甲:
@@ -3404,8 +3408,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 4'
-  - 'crit: 3'
+    defence: 4
+    crit: 3
   worth: 100000
   rarity: 1
 钨钢护胫:
@@ -3413,8 +3417,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 2'
-  - 'speedMulti: 0.05'
+    defence: 2
+    speedMulti: 0.05
   worth: 50000
   rarity: 1
 铜头盔:
@@ -3422,7 +3426,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 2'
+    defence: 2
   worth: 25000
   rarity: 0
 铜链甲:
@@ -3430,7 +3434,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 4'
+    defence: 4
   worth: 20000
   rarity: 0
 铜护胫:
@@ -3438,7 +3442,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 2'
+    defence: 2
   worth: 15000
   rarity: 0
 铁头盔:
@@ -3446,7 +3450,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 4'
+    defence: 4
   worth: 60000
   rarity: 0
 铁链甲:
@@ -3454,7 +3458,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 6'
+    defence: 6
   worth: 100000
   rarity: 0
 铁护胫:
@@ -3462,7 +3466,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 4'
+    defence: 4
   worth: 80000
   rarity: 0
 银头盔:
@@ -3470,7 +3474,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 6'
+    defence: 6
   worth: 250000
   rarity: 0
 银链甲:
@@ -3478,7 +3482,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 8'
+    defence: 8
   worth: 200000
   rarity: 0
 银护胫:
@@ -3486,7 +3490,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 6'
+    defence: 6
   worth: 150000
   rarity: 0
 忍者头盔:
@@ -3494,8 +3498,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 3'
-  - 'crit: 3'
+    defence: 3
+    crit: 3
   worth: 200000
   rarity: 1
 忍者胸甲:
@@ -3503,8 +3507,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 5'
-  - 'crit: 3'
+    defence: 5
+    crit: 3
   worth: 100000
   rarity: 1
 忍者护腿:
@@ -3512,8 +3516,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 3'
-  - 'crit: 3'
+    defence: 3
+    crit: 3
   worth: 100000
   rarity: 1
 金头盔:
@@ -3521,7 +3525,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 8'
+    defence: 8
   worth: 300000
   rarity: 0
 金链甲:
@@ -3529,7 +3533,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 10'
+    defence: 10
   worth: 500000
   rarity: 0
 金护胫:
@@ -3537,7 +3541,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 8'
+    defence: 8
   worth: 400000
   rarity: 0
 流星头盔:
@@ -3545,8 +3549,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 10'
-  - 'damageMagicMulti: 0.09'
+    defence: 10
+    damageMagicMulti: 0.09
   worth: 600000
   rarity: 1
 流星护甲:
@@ -3554,8 +3558,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 12'
-  - 'damageMagicMulti: 0.09'
+    defence: 12
+    damageMagicMulti: 0.09
   worth: 900000
   rarity: 1
 流星护腿:
@@ -3563,8 +3567,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 10'
-  - 'damageMagicMulti: 0.09'
+    defence: 10
+    damageMagicMulti: 0.09
   worth: 600000
   rarity: 1
 暗影头盔:
@@ -3572,7 +3576,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 12'
+    defence: 12
   worth: 750000
   rarity: 1
 暗影鳞甲:
@@ -3580,7 +3584,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 14'
+    defence: 14
   worth: 600000
   rarity: 1
 暗影护胫:
@@ -3588,7 +3592,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 12'
+    defence: 12
   worth: 450000
   rarity: 1
 熔岩头盔:
@@ -3596,7 +3600,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 16'
+    defence: 16
   worth: 900000
   rarity: 3
 熔岩胸甲:
@@ -3604,7 +3608,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 18'
+    defence: 18
   worth: 600000
   rarity: 3
 熔岩护胫:
@@ -3612,7 +3616,7 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 16'
+    defence: 16
   worth: 600000
   rarity: 3
 蜘蛛面具:
@@ -3620,9 +3624,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 10'
-  - 'minionLimit: 1'
-  - 'damageSummonMulti: 0.05'
+    defence: 10
+    minionLimit: 1
+    damageSummonMulti: 0.05
   worth: 750000
   rarity: 4
 蜘蛛胸甲:
@@ -3630,9 +3634,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 16'
-  - 'minionLimit: 1'
-  - 'damageSummonMulti: 0.05'
+    defence: 16
+    minionLimit: 1
+    damageSummonMulti: 0.05
   worth: 750000
   rarity: 4
 蜘蛛护胫:
@@ -3640,9 +3644,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 14'
-  - 'minionLimit: 1'
-  - 'damageSummonMulti: 0.06'
+    defence: 14
+    minionLimit: 1
+    damageSummonMulti: 0.06
   worth: 750000
   rarity: 4
 水晶刺客兜帽:
@@ -3650,9 +3654,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 24'
-  - 'crit: 5'
-  - 'manaUse: -0.1'
+    defence: 24
+    crit: 5
+    manaUse: -0.1
   worth: 2000000
   rarity: 5
 水晶刺客上衣:
@@ -3660,9 +3664,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 28'
-  - 'damageMulti: 0.05'
-  - 'ammoConsumptionRate: 0.9'
+    defence: 28
+    damageMulti: 0.05
+    ammoConsumptionRate: -0.1
   worth: 2000000
   rarity: 5
 水晶刺客裤:
@@ -3670,9 +3674,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 20'
-  - 'speedMulti: 0.2'
-  - 'useTimeMeleeMulti: -0.1'
+    defence: 20
+    speedMulti: 0.2
+    useTimeMeleeMulti: -0.1
   worth: 2000000
   rarity: 5
 钴帽:
@@ -3680,10 +3684,10 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 4'
-  - 'maxMana: 40'
-  - 'damageMagicMulti: 0.1'
-  - 'crit: 9'
+    defence: 4
+    maxMana: 40
+    damageMagicMulti: 0.1
+    crit: 9
   worth: 1500000
   rarity: 4
 钴头盔:
@@ -3691,9 +3695,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 24'
-  - 'speedMulti: 0.1'
-  - 'damageMeleeMulti: 0.15'
+    defence: 24
+    speedMulti: 0.1
+    damageMeleeMulti: 0.15
   worth: 1500000
   rarity: 4
 钴面具:
@@ -3701,9 +3705,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 8'
-  - 'damageRangedMulti: 0.1'
-  - 'crit: 10'
+    defence: 8
+    damageRangedMulti: 0.1
+    crit: 10
   worth: 1500000
   rarity: 4
 钴胸甲:
@@ -3711,8 +3715,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 16'
-  - 'crit: 5'
+    defence: 16
+    crit: 5
   worth: 1200000
   rarity: 4
 钴护腿:
@@ -3720,9 +3724,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 16'
-  - 'speedMulti: 0.1'
-  - 'damageMulti: 0.03'
+    defence: 16
+    speedMulti: 0.1
+    damageMulti: 0.03
   worth: 900000
   rarity: 4
 秘银帽:
@@ -3730,9 +3734,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 6'
-  - 'maxMana: 60'
-  - 'damageMagicMulti: 0.15'
+    defence: 6
+    maxMana: 60
+    damageMagicMulti: 0.15
   worth: 2250000
   rarity: 4
 秘银头盔:
@@ -3740,9 +3744,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 32'
-  - 'crit: 8'
-  - 'damageMeleeMulti: 0.1'
+    defence: 32
+    crit: 8
+    damageMeleeMulti: 0.1
   worth: 2250000
   rarity: 4
 秘银兜帽:
@@ -3750,9 +3754,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 12'
-  - 'damageRangedMulti: 0.12'
-  - 'crit: 7'
+    defence: 12
+    damageRangedMulti: 0.12
+    crit: 7
   worth: 2250000
   rarity: 4
 秘银链甲:
@@ -3760,8 +3764,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 24'
-  - 'damageMulti: 0.07'
+    defence: 24
+    damageMulti: 0.07
   worth: 1800000
   rarity: 4
 秘银护胫:
@@ -3769,8 +3773,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 18'
-  - 'crit: 10'
+    defence: 18
+    crit: 10
   worth: 1350000
   rarity: 4
 精金头饰:
@@ -3778,10 +3782,10 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 8'
-  - 'maxMana: 80'
-  - 'damageMagicMulti: 0.12'
-  - 'crit: 12'
+    defence: 8
+    maxMana: 80
+    damageMagicMulti: 0.12
+    crit: 12
   worth: 3000000
   rarity: 4
 精金头盔:
@@ -3789,9 +3793,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 44'
-  - 'crit: 7'
-  - 'damageMeleeMulti: 0.14'
+    defence: 44
+    crit: 7
+    damageMeleeMulti: 0.14
   worth: 3000000
   rarity: 4
 精金面具:
@@ -3799,9 +3803,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 16'
-  - 'damageRangedMulti: 0.14'
-  - 'crit: 10'
+    defence: 16
+    damageRangedMulti: 0.14
+    crit: 10
   worth: 3000000
   rarity: 4
 精金胸甲:
@@ -3809,8 +3813,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 32'
-  - 'damageMulti: 0.08'
+    defence: 32
+    damageMulti: 0.08
   worth: 2400000
   rarity: 4
 精金护腿:
@@ -3818,9 +3822,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 24'
-  - 'crit: 7'
-  - 'speedMulti: 0.05'
+    defence: 24
+    crit: 7
+    speedMulti: 0.05
   worth: 1800000
   rarity: 4
 叶绿头饰:
@@ -3828,10 +3832,10 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 14'
-  - 'maxMana: 80'
-  - 'manaUseMulti: -0.17'
-  - 'damageMagicMulti: 0.16'
+    defence: 14
+    maxMana: 80
+    manaUseMulti: -0.17
+    damageMagicMulti: 0.16
   worth: 6000000
   rarity: 7
 叶绿头盔:
@@ -3839,9 +3843,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 26'
-  - 'damageRangedMulti: 0.16'
-  - 'ammoConsumptionRate: 0.8'
+    defence: 26
+    damageRangedMulti: 0.16
+    ammoConsumptionRate: -0.2
   worth: 6000000
   rarity: 7
 叶绿面具:
@@ -3849,9 +3853,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 50'
-  - 'damageMeleeMulti: 0.16'
-  - 'crit: 6'
+    defence: 50
+    damageMeleeMulti: 0.16
+    crit: 6
   worth: 6000000
   rarity: 7
 叶绿板甲:
@@ -3859,9 +3863,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 36'
-  - 'damageMulti: 0.05'
-  - 'crit: 7'
+    defence: 36
+    damageMulti: 0.05
+    crit: 7
   worth: 4800000
   rarity: 7
 叶绿护胫:
@@ -3869,9 +3873,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 26'
-  - 'crit: 8'
-  - 'speedMulti: 0.05'
+    defence: 26
+    crit: 8
+    speedMulti: 0.05
   worth: 3600000
   rarity: 7
 幽灵兜帽:
@@ -3879,8 +3883,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 12'
-  - 'damageMagicMulti: -0.4'
+    defence: 12
+    damageMagicMulti: -0.4
   worth: 7500000
   rarity: 8
 幽灵面具:
@@ -3888,11 +3892,11 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 36'
-  - 'maxMana: 60'
-  - 'manaUseMulti: -0.13'
-  - 'damageMagicMulti: 0.1'
-  - 'crit: 10'
+    defence: 36
+    maxMana: 60
+    manaUseMulti: -0.13
+    damageMagicMulti: 0.1
+    crit: 10
   worth: 7500000
   rarity: 8
 幽灵长袍:
@@ -3900,9 +3904,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 28'
-  - 'damageMagicMulti: 0.07'
-  - 'crit: 7'
+    defence: 28
+    damageMagicMulti: 0.07
+    crit: 7
   worth: 6000000
   rarity: 8
 幽灵裤:
@@ -3910,9 +3914,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 20'
-  - 'damageMagicMulti: 0.08'
-  - 'speedMulti: 0.08'
+    defence: 20
+    damageMagicMulti: 0.08
+    speedMulti: 0.08
   worth: 4500000
   rarity: 8
 甲虫头盔:
@@ -3920,10 +3924,10 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 46'
-  - 'damageMeleeMulti: 0.06'
-  - 'mobLimit: 2'
-  - 'mobSpawnRateMulti: 0.2'
+    defence: 46
+    damageMeleeMulti: 0.06
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
   worth: 6000000
   rarity: 8
 甲虫铠甲:
@@ -3931,11 +3935,11 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 40'
-  - 'damageMeleeMulti: 0.08'
-  - 'crit: 8'
-  - 'speedMulti: 0.06'
-  - 'useTimeMeleeMulti: -0.06'
+    defence: 40
+    damageMeleeMulti: 0.08
+    crit: 8
+    speedMulti: 0.06
+    useTimeMeleeMulti: -0.06
   worth: 4800000
   rarity: 8
 甲虫壳:
@@ -3943,11 +3947,11 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 64'
-  - 'damageMeleeMulti: 0.05'
-  - 'crit: 5'
-  - 'mobLimit: 2'
-  - 'mobSpawnRateMulti: 0.2'
+    defence: 64
+    damageMeleeMulti: 0.05
+    crit: 5
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
   worth: 4800000
   rarity: 8
 甲虫护腿:
@@ -3955,11 +3959,11 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 36'
-  - 'useTimeMeleeMulti: -0.06'
-  - 'speedMulti: 0.06'
-  - 'mobLimit: 2'
-  - 'mobSpawnRateMulti: 0.2'
+    defence: 36
+    useTimeMeleeMulti: -0.06
+    speedMulti: 0.06
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
   worth: 3600000
   rarity: 8
 蘑菇矿头饰:
@@ -3967,9 +3971,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 22'
-  - 'damageArrowMulti: 0.15'
-  - 'crit: 5'
+    defence: 22
+    damageArrowMulti: 0.15
+    crit: 5
   worth: 7500000
   rarity: 8
 蘑菇矿头盔:
@@ -3977,9 +3981,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 22'
-  - 'damageRocketMulti: 0.15'
-  - 'crit: 5'
+    defence: 22
+    damageRocketMulti: 0.15
+    crit: 5
   worth: 7500000
   rarity: 8
 蘑菇矿面具:
@@ -3987,9 +3991,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 22'
-  - 'damageBulletMulti: 0.15'
-  - 'crit: 5'
+    defence: 22
+    damageBulletMulti: 0.15
+    crit: 5
   worth: 7500000
   rarity: 8
 蘑菇矿胸甲:
@@ -3997,10 +4001,10 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 48'
-  - 'damageRangedMulti: 0.13'
-  - 'crit: 13'
-  - 'ammoConsumptionRate: 0.8'
+    defence: 48
+    damageRangedMulti: 0.13
+    crit: 13
+    ammoConsumptionRate: -0.2
   worth: 6000000
   rarity: 8
 蘑菇矿护腿:
@@ -4008,9 +4012,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 32'
-  - 'crit: 7'
-  - 'speedMulti: 0.12'
+    defence: 32
+    crit: 7
+    speedMulti: 0.12
   worth: 4500000
   rarity: 8
 神圣头饰:
@@ -4018,10 +4022,10 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 10'
-  - 'maxMana: 100'
-  - 'damageMagicMulti: 0.12'
-  - 'crit: 12'
+    defence: 10
+    maxMana: 100
+    damageMagicMulti: 0.12
+    crit: 12
   worth: 5000000
   rarity: 5
 神圣面具:
@@ -4029,10 +4033,10 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 48'
-  - 'crit: 10'
-  - 'damageMeleeMulti: 0.10'
-  - 'useTimeMeleeMulti: -0.10'
+    defence: 48
+    crit: 10
+    damageMeleeMulti: 0.1
+    useTimeMeleeMulti: -0.1
   worth: 5000000
   rarity: 5
 神圣头盔:
@@ -4040,9 +4044,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 18'
-  - 'damageRangedMulti: 0.15'
-  - 'crit: 8'
+    defence: 18
+    damageRangedMulti: 0.15
+    crit: 8
   worth: 5000000
   rarity: 5
 神圣兜帽:
@@ -4050,9 +4054,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 2'
-  - 'damageSummonMulti: 0.10'
-  - 'minionLimit: 1'
+    defence: 2
+    damageSummonMulti: 0.1
+    minionLimit: 1
   worth: 5000000
   rarity: 5
 神圣板甲:
@@ -4060,8 +4064,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 30'
-  - 'crit: 7'
+    defence: 30
+    crit: 7
   worth: 4000000
   rarity: 5
 神圣护胫:
@@ -4069,9 +4073,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 22'
-  - 'damageMulti: 0.07'
-  - 'speedMulti: 0.08'
+    defence: 22
+    damageMulti: 0.07
+    speedMulti: 0.08
   worth: 3000000
   rarity: 5
 寒霜头盔:
@@ -4079,9 +4083,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 25'
-  - 'damageMeleeMulti: 0.2'
-  - 'damageRangedMulti: 0.2'
+    defence: 25
+    damageMeleeMulti: 0.2
+    damageRangedMulti: 0.2
   worth: 5000000
   rarity: 5
 寒霜胸甲:
@@ -4089,8 +4093,8 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 50'
-  - 'crit: 15'
+    defence: 50
+    crit: 15
   worth: 4000000
   rarity: 5
 寒霜护腿:
@@ -4098,9 +4102,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 33'
-  - 'useTimeMeleeMulti: -0.13'
-  - 'speedMulti: 0.1'
+    defence: 33
+    useTimeMeleeMulti: -0.13
+    speedMulti: 0.1
   worth: 3000000
   rarity: 5
 阴森头盔:
@@ -4108,9 +4112,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 16'
-  - 'minionLimit: 1'
-  - 'damageSummonMulti: 0.11'
+    defence: 16
+    minionLimit: 1
+    damageSummonMulti: 0.11
   worth: 1000000
   rarity: 8
 阴森胸甲:
@@ -4118,9 +4122,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 20'
-  - 'minionLimit: 1'
-  - 'damageSummonMulti: 0.11'
+    defence: 20
+    minionLimit: 1
+    damageSummonMulti: 0.11
   worth: 1000000
   rarity: 8
 阴森护腿:
@@ -4128,10 +4132,10 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 18'
-  - 'minionLimit: 1'
-  - 'damageSummonMulti: 0.11'
-  - 'speedMulti: 0.2'
+    defence: 18
+    minionLimit: 1
+    damageSummonMulti: 0.11
+    speedMulti: 0.2
   worth: 1000000
   rarity: 8
 星云头盔:
@@ -4139,11 +4143,11 @@
   lore:
   - §r[装备]
   attributes:
-  - 'crit: 7'
-  - 'damageMagicMulti: 0.07'
-  - 'defence: 28'
-  - 'manaUseMulti: -0.15'
-  - 'maxMana: 60'
+    crit: 7
+    damageMagicMulti: 0.07
+    defence: 28
+    manaUseMulti: -0.15
+    maxMana: 60
   worth: 7000000
   rarity: 10
 星云胸甲:
@@ -4151,9 +4155,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'crit: 9'
-  - 'damageMagicMulti: 0.09'
-  - 'defence: 36'
+    crit: 9
+    damageMagicMulti: 0.09
+    defence: 36
   worth: 14000000
   rarity: 10
 星云护腿:
@@ -4161,9 +4165,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'damageMagicMulti: 0.1'
-  - 'defence: 28'
-  - 'speedMulti: 0.1'
+    damageMagicMulti: 0.1
+    defence: 28
+    speedMulti: 0.1
   worth: 10500000
   rarity: 10
 耀斑头盔:
@@ -4171,11 +4175,11 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 48'
-  - 'crit: 26'
-  - 'regenMulti: 0.167'
-  - 'mobLimit: 2'
-  - 'mobSpawnRateMulti: 0.2'
+    defence: 48
+    crit: 26
+    regenMulti: 0.167
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
   worth: 7000000
   rarity: 10
 耀斑胸甲:
@@ -4183,11 +4187,11 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 68'
-  - 'damageMeleeMulti: 0.29'
-  - 'regenMulti: 0.167'
-  - 'mobLimit: 2'
-  - 'mobSpawnRateMulti: 0.2'
+    defence: 68
+    damageMeleeMulti: 0.29
+    regenMulti: 0.167
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
   worth: 14000000
   rarity: 10
 耀斑护腿:
@@ -4195,11 +4199,11 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 40'
-  - 'useTimeMeleeMulti: -0.15'
-  - 'regenMulti: 0.167'
-  - 'mobLimit: 2'
-  - 'mobSpawnRateMulti: 0.2'
+    defence: 40
+    useTimeMeleeMulti: -0.15
+    regenMulti: 0.167
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
   worth: 10500000
   rarity: 10
 星尘头盔:
@@ -4207,9 +4211,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 20'
-  - 'minionLimit: 1'
-  - 'damageSummonMulti: 0.22'
+    defence: 20
+    minionLimit: 1
+    damageSummonMulti: 0.22
   worth: 7000000
   rarity: 10
 星尘板甲:
@@ -4217,9 +4221,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 32'
-  - 'minionLimit: 2'
-  - 'damageSummonMulti: 0.22'
+    defence: 32
+    minionLimit: 2
+    damageSummonMulti: 0.22
   worth: 14000000
   rarity: 10
 星尘护腿:
@@ -4227,9 +4231,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 24'
-  - 'minionLimit: 2'
-  - 'damageSummonMulti: 0.22'
+    defence: 24
+    minionLimit: 2
+    damageSummonMulti: 0.22
   worth: 10500000
   rarity: 10
 星璇头盔:
@@ -4237,9 +4241,9 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 28'
-  - 'damageRangedMulti: 0.16'
-  - 'crit: 7'
+    defence: 28
+    damageRangedMulti: 0.16
+    crit: 7
   worth: 7000000
   rarity: 10
 星璇胸甲:
@@ -4247,10 +4251,10 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 56'
-  - 'crit: 12'
-  - 'damageRangedMulti: 0.12'
-  - 'ammoConsumptionRate: 0.75'
+    defence: 56
+    crit: 12
+    damageRangedMulti: 0.12
+    ammoConsumptionRate: -0.25
   worth: 14000000
   rarity: 10
 星璇护腿:
@@ -4258,10 +4262,10 @@
   lore:
   - §r[装备]
   attributes:
-  - 'defence: 40'
-  - 'crit: 8'
-  - 'damageRangedMulti: 0.08'
-  - 'speedMulti: 0.1'
+    defence: 40
+    crit: 8
+    damageRangedMulti: 0.08
+    speedMulti: 0.1
   worth: 10500000
   rarity: 10
 钱币槽:
@@ -4287,7 +4291,8 @@
 箭术药水:
   item: CLAY_BALL
   lore:
-  - §a+20% 箭矢速度与伤害
+  - §a+20% 箭矢速度
+  - §a+5% 箭矢速度
   - §a8分钟持续时间
   worth: 20000
   rarity: 1
@@ -4343,7 +4348,7 @@
 魔能药水:
   item: CLAY_BALL
   lore:
-  - §a+20% 魔法伤害
+  - §a+10% 魔法伤害
   - §a4分钟持续时间
   worth: 20000
   rarity: 1
@@ -4378,7 +4383,7 @@
 敏捷药水:
   item: CLAY_BALL
   lore:
-  - §a+25% 移速
+  - §a+15% 移速
   - §a8分钟持续时间
   worth: 20000
   rarity: 1
@@ -4754,14 +4759,14 @@
   item: STICK
   worth: 20000
   attributes:
-  - 'useTime: 30'
+    useTime: 30
   rarity: 0
 金捕虫网:
   item: STICK
   lore:
   - §r挥舞速度更快！
   attributes:
-  - 'useTime: 20'
+    useTime: 20
   worth: 5000000
   rarity: 3
 蘑菇:

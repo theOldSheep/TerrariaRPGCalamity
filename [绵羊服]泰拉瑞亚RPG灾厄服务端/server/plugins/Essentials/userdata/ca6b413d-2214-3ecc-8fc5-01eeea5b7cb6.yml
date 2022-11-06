@@ -1,22 +1,22 @@
 lastAccountName: laomianyang
 timestamps:
-  login: 1667685892337
-  lastteleport: 1667680040781
-  logout: 1667685817723
-ipAddress: 192.168.1.68
+  login: 1667754619018
+  lastteleport: 1667753932263
+  logout: 1667760972869
+ipAddress: 192.168.1.71
 money: '2160900.0'
 lastlocation:
-  world: world_cavern
-  x: -882.1821622152767
-  y: 186.72265408052425
-  z: 1467.3028755792996
-  yaw: 6.44751
-  pitch: 16.799913
+  world: world_surface
+  x: 4602.665633449994
+  y: 105.0
+  z: -500.52024596174454
+  yaw: 62.402622
+  pitch: 30.300135
 logoutlocation:
   world: world_surface
-  x: 1462.2175030398016
-  y: 77.5022663325916
-  z: 230.03792599549746
-  yaw: 270.3
-  pitch: 86.54998
+  x: -1749.6032706675499
+  y: 127.99190347658063
+  z: 5196.742720229432
+  yaw: -169.3507
+  pitch: 42.75003
 godmode: false

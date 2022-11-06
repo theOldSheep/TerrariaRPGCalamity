@@ -42,8 +42,8 @@ header:
 - "&6Ping:&r %ping%&7ms"
 
 footer:
-- "&e金钱: &r%skript_money%"
-- "&r防御力: &r%skript_defence%"
+- "&e金钱: &r%terraria_money%"
+- "&r防御力: &r%terraria_defence%"
 
 # Per world tablist
 per-world:

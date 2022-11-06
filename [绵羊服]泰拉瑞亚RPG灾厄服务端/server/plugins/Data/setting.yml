@@ -26,22 +26,16 @@ effects:
   燃烧:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/dc/Frostburn
     isBuff: false
-    attributes:
-      regen: -100
     damageInterval: 4
     damage: 1
   霜火:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/dc/Frostburn
     isBuff: false
-    attributes:
-      regen: -100
     damageInterval: 4
     damage: 2
   咒火:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a0/Cursed_Inferno
     isBuff: false
-    attributes:
-      regen: -100
     damageInterval: 5
     damage: 3
     damageMonster: 6
@@ -61,7 +55,7 @@ effects:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/c/c8/Ammo_Reservation
     isBuff: true
     attributes:
-      ammoConsumptionRate: 0.8
+      ammoConsumptionRate: -0.2
   箭术:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/9/98/Archery
     isBuff: true
@@ -96,7 +90,7 @@ effects:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/0/0a/Endurance
     isBuff: true
     attributes:
-      damageTakenMulti: 0.95
+      damageTakenMulti: -0.05
   鱼鳃:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/f/fc/Gills
     isBuff: true
@@ -114,16 +108,16 @@ effects:
   生命力:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/9/98/Lifeforce
     isBuff: true
+    attributes:
+      healthMulti: 0.2
   魔能:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/c/cd/Magic_Power
     isBuff: true
     attributes:
-      damageMagicMulti: 0.2
+      damageMagicMulti: 0.1
   魔力再生:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/7/77/Mana_Regeneration
     isBuff: true
-    attributes:
-      manaRegen: 10
   黑曜石皮:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/8d/Obsidian_Skin
     isBuff: true
@@ -139,7 +133,7 @@ effects:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/af/Swiftness
     isBuff: true
     attributes:
-      speedMulti: 0.25
+      speedMulti: 0.15
   荆棘:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/9/9e/Thorns
     isBuff: true
@@ -157,32 +151,32 @@ effects:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a3/Well_Fed
     isBuff: true
     attributes:
-      defence: 2
+      defence: 4
       crit: 2
       useTimeMeleeMulti: -0.05
       damageMulti: 0.05
-      speedMulti: 0.2
-      regenMulti: 0.1
+      speedMulti: 0.05
+      regen: 2
   饱足:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/2/2a/Plenty_Satisfied
     isBuff: true
     attributes:
-      defence: 3
+      defence: 6
       crit: 3
       useTimeMeleeMulti: -0.075
       damageMulti: 0.075
-      speedMulti: 0.3
-      regenMulti: 0.15
+      speedMulti: 0.075
+      regen: 4
   饕餮:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/1/15/Exquisitely_Stuffed
     isBuff: true
     attributes:
-      defence: 4
+      defence: 8
       crit: 4
       useTimeMeleeMulti: -0.1
       damageMulti: 0.1
-      speedMulti: 0.4
-      regenMulti: 0.2
+      speedMulti: 0.1
+      regen: 6
   流血:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/33/Bleeding
     isBuff: false
@@ -242,7 +236,7 @@ effects:
   伤害星云:
     isBuff: true
     attributes:
-      damageMulti: 0.1
+      damageMulti: 0.075
   伤害星云1:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/3f/Wrath
   伤害星云2:
@@ -251,6 +245,8 @@ effects:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/3f/Wrath
   生命星云:
     isBuff: true
+    attributes:
+      regen: 10
   生命星云1:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/5/53/Regeneration
   生命星云2:
@@ -260,7 +256,7 @@ effects:
   魔力星云:
     isBuff: true
     attributes:
-      manaRegenMulti: 0.05
+      manaRegen: 10
   魔力星云1:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/7/77/Mana_Regeneration
   魔力星云2:
