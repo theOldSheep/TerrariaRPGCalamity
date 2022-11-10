@@ -226,7 +226,7 @@ prefixInfo:
     - ''
     - §a+10%使用速度
     attributes:
-      useTimeMulti: -0.1
+      useSpeedMulti: 0.1
     priceMultiplier: 1.26
     rarity: 1
   致命:
@@ -236,7 +236,7 @@ prefixInfo:
     - §a+10%使用速度
     attributes:
       damageMulti: 0.1
-      useTimeMulti: -0.1
+      useSpeedMulti: 0.1
     priceMultiplier: 1.52
     rarity: 2
   灵活:
@@ -245,7 +245,7 @@ prefixInfo:
     - §a+10%使用速度
     - §a+3%暴击率
     attributes:
-      useTimeMulti: -0.1
+      useSpeedMulti: 0.1
       crit: 3
     priceMultiplier: 1.36
     rarity: 1
@@ -254,7 +254,7 @@ prefixInfo:
     - ''
     - §a+5%使用速度
     attributes:
-      useTimeMulti: -0.05
+      useSpeedMulti: 0.05
     priceMultiplier: 1.15
     rarity: 1
   残暴:
@@ -265,7 +265,7 @@ prefixInfo:
     - §a+3%暴击率
     attributes:
       damageMulti: 0.07
-      useTimeMulti: -0.06
+      useSpeedMulti: 0.06
       crit: 3
     priceMultiplier: 1.45
     rarity: 2
@@ -274,7 +274,7 @@ prefixInfo:
     - ''
     - §c-15%使用速度
     attributes:
-      useTimeMulti: 0.15
+      useSpeedMulti: -0.15
     priceMultiplier: 0.75
     rarity: -1
   迟钝:
@@ -282,7 +282,7 @@ prefixInfo:
     - ''
     - §c-20%使用速度
     attributes:
-      useTimeMulti: 0.2
+      useSpeedMulti: -0.2
     priceMultiplier: 0.66
     rarity: -1
   呆滞:
@@ -291,7 +291,7 @@ prefixInfo:
     - §c-8%使用速度
     - §r“阿巴阿巴……”
     attributes:
-      useTimeMulti: 0.08
+      useSpeedMulti: -0.08
     priceMultiplier: 0.88
     rarity: -1
   惹恼:
@@ -302,7 +302,7 @@ prefixInfo:
     - §r“RNM，退钱！”
     attributes:
       damageMulti: -0.2
-      useTimeMulti: 0.15
+      useSpeedMulti: -0.15
     priceMultiplier: 0.48
     rarity: -2
   凶险:
@@ -314,7 +314,7 @@ prefixInfo:
     - §c-10%击退威力
     attributes:
       damageMulti: 0.05
-      useTimeMulti: -0.1
+      useSpeedMulti: 0.1
       crit: 2
       knockbackMulti: -0.1
     priceMultiplier: 1.17
@@ -419,7 +419,7 @@ prefixInfo:
     - §c-10%大小
     - §c-10%击退威力
     attributes:
-      useTimeMeleeMulti: 0.1
+      useSpeedMeleeMulti: -0.1
       meleeReachMulti: -0.1
       knockbackMulti: -0.1
     priceMultiplier: 0.55
@@ -433,7 +433,7 @@ prefixInfo:
     - §a+10%击退威力
     attributes:
       damageMulti: 0.05
-      useTimeMeleeMulti: 0.15
+      useSpeedMeleeMulti: -0.15
       meleeReachMulti: 0.1
       knockbackMulti: 0.1
     priceMultiplier: 1.21
@@ -456,7 +456,7 @@ prefixInfo:
     - §c-10%使用速度
     - §a+15%击退威力
     attributes:
-      useTimeMeleeMulti: 0.1
+      useSpeedMeleeMulti: -0.1
       knockbackMulti: 0.15
     priceMultiplier: 1.11
     rarity: 1
@@ -466,7 +466,7 @@ prefixInfo:
     - §a+15%使用速度
     - §c-10%击退威力
     attributes:
-      useTimeMeleeMulti: -0.15
+      useSpeedMeleeMulti: 0.15
       knockbackMulti: -0.1
     priceMultiplier: 1.11
     rarity: 1
@@ -481,7 +481,7 @@ prefixInfo:
     - §r“英雄将与此利刃一同成为传奇！”
     attributes:
       damageMulti: 0.15
-      useTimeMeleeMulti: -0.1
+      useSpeedMeleeMulti: 0.1
       crit: 5
       meleeReachMulti: 0.1
       knockbackMulti: 0.15
@@ -503,7 +503,7 @@ prefixInfo:
     - §a+15%射速
     - §a+10%弹射物速度
     attributes:
-      useTimeMulti: -0.15
+      useSpeedMulti: 0.15
       projectileSpeedMulti: 0.1
     priceMultiplier: 1.66
     rarity: 2
@@ -513,7 +513,7 @@ prefixInfo:
     - §a+10%射速
     - §a+15%弹射物速度
     attributes:
-      useTimeMulti: -0.1
+      useSpeedMulti: 0.1
       projectileSpeedMulti: 0.15
     priceMultiplier: 1.66
     rarity: 2
@@ -537,7 +537,7 @@ prefixInfo:
     - §a+5%击退威力
     attributes:
       damageMulti: 0.1
-      useTimeMulti: -0.05
+      useSpeedMulti: 0.05
       crit: 2
       projectileSpeedMulti: 0.05
       knockbackMulti: 0.05
@@ -571,7 +571,7 @@ prefixInfo:
     - §c-15%使用速度
     - §c-10%弹射物速度
     attributes:
-      useTimeMulti: 0.1
+      useSpeedMulti: -0.15
       projectileSpeedMulti: -0.1
     priceMultiplier: 0.61
     rarity: -2
@@ -581,7 +581,7 @@ prefixInfo:
     - §c-10%使用速度
     - §c-20%击退威力
     attributes:
-      useTimeMulti: 0.1
+      useSpeedMulti: -0.1
       knockbackMulti: -0.2
     priceMultiplier: 0.54
     rarity: -2
@@ -593,7 +593,7 @@ prefixInfo:
     - §a+1%暴击率
     attributes:
       damageMulti: 0.15
-      useTimeMulti: 0.1
+      useSpeedMulti: -0.1
       crit: 1
     priceMultiplier: 1.11
     rarity: 1
@@ -605,7 +605,7 @@ prefixInfo:
     - §r“无能狂怒！”
     attributes:
       damageMulti: -0.15
-      useTimeMulti: -0.15
+      useSpeedMulti: 0.15
     priceMultiplier: 0.99
     rarity: 1
   虚幻:
@@ -619,7 +619,7 @@ prefixInfo:
     - §r“这……是真实的力量吗？”
     attributes:
       damageMulti: 0.15
-      useTimeMulti: -0.1
+      useSpeedMulti: 0.1
       crit: 5
       projectileSpeedMulti: 0.1
       knockbackMulti: 0.15
@@ -701,7 +701,7 @@ prefixInfo:
     - §c+10%魔力消耗
     - §a+10%击退威力
     attributes:
-      useTimeMulti: -0.1
+      useSpeedMulti: 0.1
       manaUseMulti: 0.1
       knockbackMulti: 0.1
     priceMultiplier: 1.23
@@ -715,7 +715,7 @@ prefixInfo:
     - §a+10%击退威力
     attributes:
       damageMulti: 0.1
-      useTimeMulti: 0.1
+      useSpeedMulti: -0.1
       manaUseMulti: -0.1
       knockbackMulti: 0.1
     priceMultiplier: 1.49
@@ -740,7 +740,7 @@ prefixInfo:
     - §a-10%魔力消耗
     attributes:
       damageMulti: -0.1
-      useTimeMulti: -0.1
+      useSpeedMulti: 0.1
       manaUseMulti: -0.1
     priceMultiplier: 1.23
     rarity: 1
@@ -755,7 +755,7 @@ prefixInfo:
     - §r“神话一般的存在”
     attributes:
       damageMulti: 0.15
-      useTimeMulti: -0.1
+      useSpeedMulti: 0.1
       crit: 5
       manaUseMulti: -0.1
       knockbackMulti: 0.15
@@ -893,7 +893,7 @@ prefixInfo:
     - ''
     - §a+1%近战速度
     attributes:
-      useTimeMeleeMulti: -0.01
+      useSpeedMeleeMulti: 0.01
     priceMultiplier: 1.15
     rarity: 1
   鲁莽:
@@ -901,7 +901,7 @@ prefixInfo:
     - ''
     - §a+2%近战速度
     attributes:
-      useTimeMeleeMulti: -0.02
+      useSpeedMeleeMulti: 0.02
     priceMultiplier: 1.25
     rarity: 1
   勇猛:
@@ -909,7 +909,7 @@ prefixInfo:
     - ''
     - §a+3%近战速度
     attributes:
-      useTimeMeleeMulti: -0.03
+      useSpeedMeleeMulti: 0.03
     priceMultiplier: 1.4
     rarity: 1
   暴力:
@@ -917,7 +917,7 @@ prefixInfo:
     - ''
     - §a+4%近战速度
     attributes:
-      useTimeMeleeMulti: -0.04
+      useSpeedMeleeMulti: 0.04
     priceMultiplier: 1.6
     rarity: 2
   奥术:

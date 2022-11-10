@@ -604,11 +604,11 @@
   - §r[饰品]
   - §r夜晚时属性加成失效
   attributes:
-    useTimeMeleeMulti: -0.1
     damageMulti: 0.1
     crit: 2
     regen: 1
     defence: 4
+    useSpeedMeleeMulti: 0.1
   worth: 7500000
   rarity: 7
 月亮石:
@@ -617,11 +617,11 @@
   - §r[饰品]
   - §r白天时属性加成失效
   attributes:
-    useTimeMeleeMulti: -0.1
     damageMulti: 0.1
     crit: 2
     regen: 1
     defence: 4
+    useSpeedMeleeMulti: 0.1
   worth: 7500000
   rarity: 5
 天界石:
@@ -629,11 +629,11 @@
   lore:
   - §r[饰品]
   attributes:
-    useTimeMeleeMulti: -0.1
     damageMulti: 0.1
     crit: 2
     regen: 1
     defence: 4
+    useSpeedMeleeMulti: 0.1
   worth: 8000000
   rarity: 7
 鸟妖之翼:
@@ -3676,7 +3676,7 @@
   attributes:
     defence: 20
     speedMulti: 0.2
-    useTimeMeleeMulti: -0.1
+    useSpeedMeleeMulti: 0.1
   worth: 2000000
   rarity: 5
 钴帽:
@@ -3939,7 +3939,7 @@
     damageMeleeMulti: 0.08
     crit: 8
     speedMulti: 0.06
-    useTimeMeleeMulti: -0.06
+    useSpeedMeleeMulti: 0.06
   worth: 4800000
   rarity: 8
 甲虫壳:
@@ -3960,10 +3960,10 @@
   - §r[装备]
   attributes:
     defence: 36
-    useTimeMeleeMulti: -0.06
     speedMulti: 0.06
     mobLimit: 2
     mobSpawnRateMulti: 0.2
+    useSpeedMeleeMulti: 0.06
   worth: 3600000
   rarity: 8
 蘑菇矿头饰:
@@ -4036,7 +4036,7 @@
     defence: 48
     crit: 10
     damageMeleeMulti: 0.1
-    useTimeMeleeMulti: -0.1
+    useSpeedMeleeMulti: 0.1
   worth: 5000000
   rarity: 5
 神圣头盔:
@@ -4103,8 +4103,8 @@
   - §r[装备]
   attributes:
     defence: 33
-    useTimeMeleeMulti: -0.13
     speedMulti: 0.1
+    useSpeedMeleeMulti: 0.13
   worth: 3000000
   rarity: 5
 阴森头盔:
@@ -4200,10 +4200,10 @@
   - §r[装备]
   attributes:
     defence: 40
-    useTimeMeleeMulti: -0.15
     regenMulti: 0.167
     mobLimit: 2
     mobSpawnRateMulti: 0.2
+    useSpeedMeleeMulti: 0.15
   worth: 10500000
   rarity: 10
 星尘头盔:

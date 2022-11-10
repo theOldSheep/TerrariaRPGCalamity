@@ -155,7 +155,7 @@ effects:
     attributes:
       defence: 4
       crit: 2
-      useTimeMeleeMulti: -0.05
+      useSpeedMeleeMulti: 0.05
       damageMulti: 0.05
       speedMulti: 0.05
       regen: 2
@@ -165,7 +165,7 @@ effects:
     attributes:
       defence: 6
       crit: 3
-      useTimeMeleeMulti: -0.075
+      useSpeedMeleeMulti: 0.075
       damageMulti: 0.075
       speedMulti: 0.075
       regen: 4
@@ -175,7 +175,7 @@ effects:
     attributes:
       defence: 8
       crit: 4
-      useTimeMeleeMulti: -0.1
+      useSpeedMeleeMulti: 0.1
       damageMulti: 0.1
       speedMulti: 0.1
       regen: 6

@@ -26,7 +26,7 @@ Functions:
 
   # 关于变量更新在 背包.yml 里讲了,可以去那个配置里看
   更新hud变量: |-
-    方法.更新变量值('terraria_max_mana','terraria_mana_tier','terraria_health_tier');
+    方法.更新变量值('terraria_max_mana','terraria_mana_tier','terraria_health_tier','terraria_held_slot');
     方法.延时(100);
     方法.异步执行方法('更新hud变量');
 

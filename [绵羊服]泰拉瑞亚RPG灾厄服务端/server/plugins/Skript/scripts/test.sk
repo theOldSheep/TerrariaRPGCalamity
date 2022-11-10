@@ -118,7 +118,9 @@ command /displayBackground [<text>]:
 			EntityHelper.setMetadata(command sender, "forceBackground", {_null})
 		else:
 			EntityHelper.setMetadata(command sender, "forceBackground", arg-1)
-			
+
+
+
 
 
 command /tweakYML:

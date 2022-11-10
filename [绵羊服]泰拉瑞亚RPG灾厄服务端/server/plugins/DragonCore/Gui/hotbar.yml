@@ -1,6 +1,7 @@
 match: "hud"
 Functions:
   preRender: |-
+    界面变量.held_slot = 方法.到整数(方法.取变量('terraria_held_slot'));
     界面变量.r_c_temp=方法.floor(方法.mod(方法.取当前时间(), (90*30)-1) / 30);
     界面变量.r_c = 界面变量.r_c_temp == 0 ? 'FF0000' : 'FF1100';
     界面变量.r_c = 界面变量.r_c_temp == 1 ? 'FF1100' : 界面变量.r_c;
@@ -93,120 +94,113 @@ Functions:
     界面变量.r_c = 界面变量.r_c_temp == 88 ? 'FF0022' : 界面变量.r_c;
     界面变量.r_c = 界面变量.r_c_temp == 89 ? 'FF0011' : 界面变量.r_c;
 
-槽位1_texture:
+槽位0_texture:
   x: "8"
-  y: "(方法.玩家手持槽==0) ? 8 : 12"
-  width: "(方法.玩家手持槽==0) ? 24 : 16"
-  height: "(方法.玩家手持槽==0) ? 24 : 16"
-  texture: "(方法.玩家手持槽==0) ? 'gui/slot_selected.png':'gui/slot.png'"
+  y: "(界面变量.held_slot==0) ? 8 : 12"
+  width: "(界面变量.held_slot==0) ? 24 : 16"
+  height: "(界面变量.held_slot==0) ? 24 : 16"
+  texture: "(界面变量.held_slot==0) ? 'gui/slot_selected.png':'gui/slot.png'"
+槽位1_texture:
+  x: "(界面变量.held_slot<1) ? 34 : 26"
+  y: "(界面变量.held_slot==1) ? 8 : 12"
+  width: "(界面变量.held_slot==1) ? 24 : 16"
+  height: "(界面变量.held_slot==1) ? 24 : 16"
+  texture: "(界面变量.held_slot==1) ? 'gui/slot_selected.png':'gui/slot.png'"
 槽位2_texture:
-  x: "(方法.玩家手持槽<1) ? 34 : 26"
-  y: "(方法.玩家手持槽==1) ? 8 : 12"
-  width: "(方法.玩家手持槽==1) ? 24 : 16"
-  height: "(方法.玩家手持槽==1) ? 24 : 16"
-  texture: "(方法.玩家手持槽==1) ? 'gui/slot_selected.png':'gui/slot.png'"
+  x: "(界面变量.held_slot<2) ? 52 : 44"
+  y: "(界面变量.held_slot==2) ? 8 : 12"
+  width: "(界面变量.held_slot==2) ? 24 : 16"
+  height: "(界面变量.held_slot==2) ? 24 : 16"
+  texture: "(界面变量.held_slot==2) ? 'gui/slot_selected.png':'gui/slot.png'"
 槽位3_texture:
-  x: "(方法.玩家手持槽<2) ? 52 : 44"
-  y: "(方法.玩家手持槽==2) ? 8 : 12"
-  width: "(方法.玩家手持槽==2) ? 24 : 16"
-  height: "(方法.玩家手持槽==2) ? 24 : 16"
-  texture: "(方法.玩家手持槽==2) ? 'gui/slot_selected.png':'gui/slot.png'"
+  x: "(界面变量.held_slot<3) ? 70 : 62"
+  y: "(界面变量.held_slot==3) ? 8 : 12"
+  width: "(界面变量.held_slot==3) ? 24 : 16"
+  height: "(界面变量.held_slot==3) ? 24 : 16"
+  texture: "(界面变量.held_slot==3) ? 'gui/slot_selected.png':'gui/slot.png'"
 槽位4_texture:
-  x: "(方法.玩家手持槽<3) ? 70 : 62"
-  y: "(方法.玩家手持槽==3) ? 8 : 12"
-  width: "(方法.玩家手持槽==3) ? 24 : 16"
-  height: "(方法.玩家手持槽==3) ? 24 : 16"
-  texture: "(方法.玩家手持槽==3) ? 'gui/slot_selected.png':'gui/slot.png'"
+  x: "(界面变量.held_slot<4) ? 88 : 80"
+  y: "(界面变量.held_slot==4) ? 8 : 12"
+  width: "(界面变量.held_slot==4) ? 24 : 16"
+  height: "(界面变量.held_slot==4) ? 24 : 16"
+  texture: "(界面变量.held_slot==4) ? 'gui/slot_selected.png':'gui/slot.png'"
 槽位5_texture:
-  x: "(方法.玩家手持槽<4) ? 88 : 80"
-  y: "(方法.玩家手持槽==4) ? 8 : 12"
-  width: "(方法.玩家手持槽==4) ? 24 : 16"
-  height: "(方法.玩家手持槽==4) ? 24 : 16"
-  texture: "(方法.玩家手持槽==4) ? 'gui/slot_selected.png':'gui/slot.png'"
+  x: "(界面变量.held_slot<5) ? 106 : 98"
+  y: "(界面变量.held_slot==5) ? 8 : 12"
+  width: "(界面变量.held_slot==5) ? 24 : 16"
+  height: "(界面变量.held_slot==5) ? 24 : 16"
+  texture: "(界面变量.held_slot==5) ? 'gui/slot_selected.png':'gui/slot.png'"
 槽位6_texture:
-  x: "(方法.玩家手持槽<5) ? 106 : 98"
-  y: "(方法.玩家手持槽==5) ? 8 : 12"
-  width: "(方法.玩家手持槽==5) ? 24 : 16"
-  height: "(方法.玩家手持槽==5) ? 24 : 16"
-  texture: "(方法.玩家手持槽==5) ? 'gui/slot_selected.png':'gui/slot.png'"
+  x: "(界面变量.held_slot<6) ? 124 : 116"
+  y: "(界面变量.held_slot==6) ? 8 : 12"
+  width: "(界面变量.held_slot==6) ? 24 : 16"
+  height: "(界面变量.held_slot==6) ? 24 : 16"
+  texture: "(界面变量.held_slot==6) ? 'gui/slot_selected.png':'gui/slot.png'"
 槽位7_texture:
-  x: "(方法.玩家手持槽<6) ? 124 : 116"
-  y: "(方法.玩家手持槽==6) ? 8 : 12"
-  width: "(方法.玩家手持槽==6) ? 24 : 16"
-  height: "(方法.玩家手持槽==6) ? 24 : 16"
-  texture: "(方法.玩家手持槽==6) ? 'gui/slot_selected.png':'gui/slot.png'"
+  x: "(界面变量.held_slot<7) ? 142 : 134"
+  y: "(界面变量.held_slot==7) ? 8 : 12"
+  width: "(界面变量.held_slot==7) ? 24 : 16"
+  height: "(界面变量.held_slot==7) ? 24 : 16"
+  texture: "(界面变量.held_slot==7) ? 'gui/slot_selected.png':'gui/slot.png'"
 槽位8_texture:
-  x: "(方法.玩家手持槽<7) ? 142 : 134"
-  y: "(方法.玩家手持槽==7) ? 8 : 12"
-  width: "(方法.玩家手持槽==7) ? 24 : 16"
-  height: "(方法.玩家手持槽==7) ? 24 : 16"
-  texture: "(方法.玩家手持槽==7) ? 'gui/slot_selected.png':'gui/slot.png'"
+  x: "(界面变量.held_slot<8) ? 160 : 152"
+  y: "(界面变量.held_slot==8) ? 8 : 12"
+  width: "(界面变量.held_slot==8) ? 24 : 16"
+  height: "(界面变量.held_slot==8) ? 24 : 16"
+  texture: "(界面变量.held_slot==8) ? 'gui/slot_selected.png':'gui/slot.png'"
 槽位9_texture:
-  x: "(方法.玩家手持槽<8) ? 160 : 152"
-  y: "(方法.玩家手持槽==8) ? 8 : 12"
-  width: "(方法.玩家手持槽==8) ? 24 : 16"
-  height: "(方法.玩家手持槽==8) ? 24 : 16"
-  texture: "(方法.玩家手持槽==8) ? 'gui/slot_selected.png':'gui/slot.png'"
+  x: "(界面变量.held_slot<9) ? 178 : 170"
+  y: "(界面变量.held_slot==9) ? 8 : 12"
+  width: "(界面变量.held_slot==9) ? 24 : 16"
+  height: "(界面变量.held_slot==9) ? 24 : 16"
+  texture: "(界面变量.held_slot==9) ? 'gui/slot_selected.png':'gui/slot.png'"
 
 # 设置物品（_slot后缀为槽位组件）
+槽位0_slot:
+  x: "(界面变量.held_slot==0) ? 12 : 8"
+  y: "12"
+  identifier: "inventory0"
 槽位1_slot:
-  x: "(方法.玩家手持槽==0) ? 12 : 8"
+  x: "(界面变量.held_slot<1) ? 34 : ((界面变量.held_slot==1) ? 30 : 26)"
   y: "12"
-  identifier: "container_36"
-  
+  identifier: "inventory1"
 槽位2_slot:
-  x: "(方法.玩家手持槽<1) ? 34 : ((方法.玩家手持槽==1) ? 30 : 26)"
+  x: "(界面变量.held_slot<2) ? 52 : ((界面变量.held_slot==2) ? 48 : 44)"
   y: "12"
-  identifier: "container_37"
-  enable: false
-  drawBackground: false
+  identifier: "inventory2"
 槽位3_slot:
-  x: "(方法.玩家手持槽<2) ? 52 : ((方法.玩家手持槽==2) ? 48 : 44)"
+  x: "(界面变量.held_slot<3) ? 70 : ((界面变量.held_slot==3) ? 66 : 62)"
   y: "12"
-  identifier: "container_38"
-  enable: false
-  drawBackground: false
+  identifier: "inventory3"
 槽位4_slot:
-  x: "(方法.玩家手持槽<3) ? 70 : ((方法.玩家手持槽==3) ? 66 : 62)"
+  x: "(界面变量.held_slot<4) ? 88 : ((界面变量.held_slot==4) ? 84 : 80)"
   y: "12"
-  identifier: "container_39"
-  enable: false
-  drawBackground: false
+  identifier: "inventory4"
 槽位5_slot:
-  x: "(方法.玩家手持槽<4) ? 88 : ((方法.玩家手持槽==4) ? 84 : 80)"
+  x: "(界面变量.held_slot<5) ? 106 : ((界面变量.held_slot==5) ? 102 : 98)"
   y: "12"
-  identifier: "container_40"
-  enable: false
-  drawBackground: false
+  identifier: "inventory5"
 槽位6_slot:
-  x: "(方法.玩家手持槽<5) ? 106 : ((方法.玩家手持槽==5) ? 102 : 98)"
+  x: "(界面变量.held_slot<6) ? 124 : ((界面变量.held_slot==6) ? 120 : 116)"
   y: "12"
-  identifier: "container_41"
-  enable: false
-  drawBackground: false
+  identifier: "inventory6"
 槽位7_slot:
-  x: "(方法.玩家手持槽<6) ? 124 : ((方法.玩家手持槽==6) ? 120 : 116)"
+  x: "(界面变量.held_slot<7) ? 142 : ((界面变量.held_slot==7) ? 138 : 134)"
   y: "12"
-  identifier: "container_42"
-  enable: false
-  drawBackground: false
+  identifier: "inventory7"
 槽位8_slot:
-  x: "(方法.玩家手持槽<7) ? 142 : ((方法.玩家手持槽==7) ? 138 : 134)"
+  x: "(界面变量.held_slot<8) ? 160 : ((界面变量.held_slot==8) ? 156 : 152)"
   y: "12"
-  identifier: "container_43"
-  enable: false
-  drawBackground: false
+  identifier: "inventory8"
 槽位9_slot:
-  x: "(方法.玩家手持槽<8) ? 160 : ((方法.玩家手持槽==8) ? 156 : 152)"
+  x: "(界面变量.held_slot<9) ? 178 : ((界面变量.held_slot==9) ? 174 : 170)"
   y: "12"
-  identifier: "container_44"
-  enable: false
-  drawBackground: false
+  identifier: "inventory9"
 
 hotbar_label:
   x: 84
   y: 0
-  texts: "方法.是否存在前缀(方法.取物品名(方法.取物品(方法.合并文本('container_',方法.玩家手持槽() + 36))), '§l') == 1 ? 方法.合并文本('&#', 界面变量.r_c, 方法.替换(方法.取物品名(方法.取物品(方法.合并文本('container_',方法.玩家手持槽() + 36))), '§', '&')) : 方法.替换(方法.取物品名(方法.取物品(方法.合并文本('container_',方法.玩家手持槽() + 36))), '§', '&')"
+  texts: "方法.是否存在前缀(方法.取物品名(方法.取物品(方法.合并文本('inventory',界面变量.held_slot()))), '§l') == 1 ? 方法.合并文本('&#', 界面变量.r_c, 方法.替换(方法.取物品名(方法.取物品(方法.合并文本('inventory',界面变量.held_slot()))), '§', '&')) : 方法.替换(方法.取物品名(方法.取物品(方法.合并文本('inventory',界面变量.held_slot()))), '§', '&')"
   center: true
   shadow: true
   length: 100000

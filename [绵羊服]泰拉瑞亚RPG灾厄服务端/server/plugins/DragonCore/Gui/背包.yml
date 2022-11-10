@@ -34,7 +34,7 @@ helmet_texture:
   width: 16
   height: 16
   texture: "方法.取文本长度(方法.取物品名(方法.取物品('container_5'))) < 0.1 ? 'gui/slot_helmet.png' : 'gui/slot_accessory_full.png'"
-  alpha: 0.75
+  alpha: 0.9
 helmet_slot:
   x: "方法.取屏幕宽度-32"
   y: "方法.取屏幕高度-160"
@@ -46,7 +46,7 @@ chestplate_texture:
   width: 16
   height: 16
   texture: "方法.取文本长度(方法.取物品名(方法.取物品('container_6'))) < 0.1 ? 'gui/slot_chestplate.png' : 'gui/slot_accessory_full.png'"
-  alpha: 0.75
+  alpha: 0.9
 chestplate_slot:
   x: "方法.取屏幕宽度-32"
   y: "方法.取屏幕高度-142"
@@ -58,7 +58,7 @@ leggings_texture:
   width: 16
   height: 16
   texture: "方法.取文本长度(方法.取物品名(方法.取物品('container_7'))) < 0.1 ? 'gui/slot_leggings.png' : 'gui/slot_accessory_full.png'"
-  alpha: 0.75
+  alpha: 0.9
 leggings_slot:
   x: "方法.取屏幕宽度-32"
   y: "方法.取屏幕高度-124"
@@ -70,7 +70,7 @@ offhand_texture:
   width: 16
   height: 16
   texture: "方法.取文本长度(方法.取物品名(方法.取物品('container_45'))) < 0.1 ? 'gui/slot_hook.png' : 'gui/slot_accessory_full.png'"
-  alpha: 0.75
+  alpha: 0.9
 offhand_slot:
   x: "方法.取屏幕宽度-50"
   y: "方法.取屏幕高度-142"
@@ -82,7 +82,7 @@ mount_texture:
   width: 16
   height: 16
   texture: "方法.取文本长度(方法.取物品名(方法.取物品('mount'))) < 0.1 ? 'gui/slot_mount.png' : 'gui/slot_accessory_full.png'"
-  alpha: 0.75
+  alpha: 0.9
 mount_slot:
   x: "方法.取屏幕宽度-50"
   y: "方法.取屏幕高度-124"
@@ -99,7 +99,7 @@ accessory1_texture:
   width: 16
   height: 16
   texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory1'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
-  alpha: 0.75
+  alpha: 0.9
 accessory1_slot:
   x: "方法.取屏幕宽度-32"
   y: "方法.取屏幕高度-98"
@@ -111,7 +111,7 @@ accessory2_texture:
   width: 16
   height: 16
   texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory2'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
-  alpha: 0.75
+  alpha: 0.9
 accessory2_slot:
   x: "方法.取屏幕宽度-32"
   y: "方法.取屏幕高度-80"
@@ -123,7 +123,7 @@ accessory3_texture:
   width: 16
   height: 16
   texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory3'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
-  alpha: 0.75
+  alpha: 0.9
 accessory3_slot:
   x: "方法.取屏幕宽度-32"
   y: "方法.取屏幕高度-62"
@@ -135,7 +135,7 @@ accessory4_texture:
   width: 16
   height: 16
   texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory4'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
-  alpha: 0.75
+  alpha: 0.9
 accessory4_slot:
   x: "方法.取屏幕宽度-32"
   y: "方法.取屏幕高度-44"
@@ -147,7 +147,7 @@ accessory5_texture:
   width: 16
   height: 16
   texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory5'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
-  alpha: 0.75
+  alpha: 0.9
 accessory5_slot:
   x: "方法.取屏幕宽度-32"
   y: "方法.取屏幕高度-26"
@@ -160,7 +160,7 @@ accessory6_texture:
   width: 16
   height: 16
   texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory6'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
-  alpha: 0.75
+  alpha: 0.9
 accessory6_slot:
   visible: "方法.到整数(方法.取变量('terraria_accessory_amount')) > 5.5"
   x: "方法.取屏幕宽度-50"
@@ -174,7 +174,7 @@ accessory7_texture:
   width: 16
   height: 16
   texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory7'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
-  alpha: 0.75
+  alpha: 0.9
 accessory7_slot:
   visible: "方法.到整数(方法.取变量('terraria_accessory_amount')) > 6.5"
   x: "方法.取屏幕宽度-50"
@@ -209,12 +209,13 @@ defence_texture:
   width: 14
   height: 14
   texture: "gui/defence.png"
+  tip: "方法.合并文本(方法.取变量('terraria_defence'), ' 防御力')"
 defence_label:
   x: "方法.取屏幕宽度-43"
   y: "方法.取屏幕高度-37"
   center: true
   scale: 0.8
-  texts: "方法.合并文本('&#CCCCCC&l', 方法.取变量('terraria_defence'))"
+  texts: "方法.合并文本('&0&l', 方法.取变量('terraria_defence'))"
   tip: "方法.合并文本(方法.取变量('terraria_defence'), ' 防御力')"
 # 背包
 backpack_label:
@@ -222,555 +223,721 @@ backpack_label:
   y: "0"
   texts: "物品栏"
 # 背包格子
-slot1-1_texture:
-  x: "8"
-  y: "10"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot1-1_slot:
-  x: "8"
-  y: "10"
-  identifier: "container_36"
+inventory0_texture:
+  x: 8.0
+  y: 10.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory0_slot:
+  x: 8.0
+  y: 10.0
+  identifier: inventory0
   drawBackground: false
-slot1-2_texture:
-  x: "26"
-  y: "10"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot1-2_slot:
-  x: "26"
-  y: "10"
-  identifier: "container_37"
+inventory1_texture:
+  x: 26.0
+  y: 10.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory1_slot:
+  x: 26.0
+  y: 10.0
+  identifier: inventory1
   drawBackground: false
-slot1-3_texture:
-  x: "44"
-  y: "10"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot1-3_slot:
-  x: "44"
-  y: "10"
-  identifier: "container_38"
+inventory2_texture:
+  x: 44.0
+  y: 10.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory2_slot:
+  x: 44.0
+  y: 10.0
+  identifier: inventory2
   drawBackground: false
-slot1-4_texture:
-  x: "62"
-  y: "10"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot1-4_slot:
-  x: "62"
-  y: "10"
-  identifier: "container_39"
+inventory3_texture:
+  x: 62.0
+  y: 10.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory3_slot:
+  x: 62.0
+  y: 10.0
+  identifier: inventory3
   drawBackground: false
-slot1-5_texture:
-  x: "80"
-  y: "10"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot1-5_slot:
-  x: "80"
-  y: "10"
-  identifier: "container_40"
+inventory4_texture:
+  x: 80.0
+  y: 10.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory4_slot:
+  x: 80.0
+  y: 10.0
+  identifier: inventory4
   drawBackground: false
-slot1-6_texture:
-  x: "98"
-  y: "10"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot1-6_slot:
-  x: "98"
-  y: "10"
-  identifier: "container_41"
+inventory5_texture:
+  x: 98.0
+  y: 10.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory5_slot:
+  x: 98.0
+  y: 10.0
+  identifier: inventory5
   drawBackground: false
-slot1-7_texture:
-  x: "116"
-  y: "10"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot1-7_slot:
-  x: "116"
-  y: "10"
-  identifier: "container_42"
+inventory6_texture:
+  x: 116.0
+  y: 10.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory6_slot:
+  x: 116.0
+  y: 10.0
+  identifier: inventory6
   drawBackground: false
-slot1-8_texture:
-  x: "134"
-  y: "10"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot1-8_slot:
-  x: "134"
-  y: "10"
-  identifier: "container_43"
+inventory7_texture:
+  x: 134.0
+  y: 10.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory7_slot:
+  x: 134.0
+  y: 10.0
+  identifier: inventory7
   drawBackground: false
-slot1-9_texture:
-  x: "152"
-  y: "10"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot1-9_slot:
-  x: "152"
-  y: "10"
-  identifier: "container_44"
+inventory8_texture:
+  x: 152.0
+  y: 10.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory8_slot:
+  x: 152.0
+  y: 10.0
+  identifier: inventory8
   drawBackground: false
-# line 2
-slot2-1_texture:
-  x: "8"
-  y: "28"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot2-1_slot:
-  x: "8"
-  y: "28"
-  identifier: "container_9"
+inventory9_texture:
+  x: 170.0
+  y: 10.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory9_slot:
+  x: 170.0
+  y: 10.0
+  identifier: inventory9
   drawBackground: false
-slot2-2_texture:
-  x: "26"
-  y: "28"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot2-2_slot:
-  x: "26"
-  y: "28"
-  identifier: "container_10"
+inventory10_texture:
+  x: 8.0
+  y: 28.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory10_slot:
+  x: 8.0
+  y: 28.0
+  identifier: inventory10
   drawBackground: false
-slot2-3_texture:
-  x: "44"
-  y: "28"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot2-3_slot:
-  x: "44"
-  y: "28"
-  identifier: "container_11"
+inventory11_texture:
+  x: 26.0
+  y: 28.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory11_slot:
+  x: 26.0
+  y: 28.0
+  identifier: inventory11
   drawBackground: false
-slot2-4_texture:
-  x: "62"
-  y: "28"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot2-4_slot:
-  x: "62"
-  y: "28"
-  identifier: "container_12"
+inventory12_texture:
+  x: 44.0
+  y: 28.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory12_slot:
+  x: 44.0
+  y: 28.0
+  identifier: inventory12
   drawBackground: false
-slot2-5_texture:
-  x: "80"
-  y: "28"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot2-5_slot:
-  x: "80"
-  y: "28"
-  identifier: "container_13"
+inventory13_texture:
+  x: 62.0
+  y: 28.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory13_slot:
+  x: 62.0
+  y: 28.0
+  identifier: inventory13
   drawBackground: false
-slot2-6_texture:
-  x: "98"
-  y: "28"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot2-6_slot:
-  x: "98"
-  y: "28"
-  identifier: "container_14"
+inventory14_texture:
+  x: 80.0
+  y: 28.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory14_slot:
+  x: 80.0
+  y: 28.0
+  identifier: inventory14
   drawBackground: false
-slot2-7_texture:
-  x: "116"
-  y: "28"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot2-7_slot:
-  x: "116"
-  y: "28"
-  identifier: "container_15"
+inventory15_texture:
+  x: 98.0
+  y: 28.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory15_slot:
+  x: 98.0
+  y: 28.0
+  identifier: inventory15
   drawBackground: false
-slot2-8_texture:
-  x: "134"
-  y: "28"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot2-8_slot:
-  x: "134"
-  y: "28"
-  identifier: "container_16"
+inventory16_texture:
+  x: 116.0
+  y: 28.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory16_slot:
+  x: 116.0
+  y: 28.0
+  identifier: inventory16
   drawBackground: false
-slot2-9_texture:
-  x: "152"
-  y: "28"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot2-9_slot:
-  x: "152"
-  y: "28"
-  identifier: "container_17"
+inventory17_texture:
+  x: 134.0
+  y: 28.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory17_slot:
+  x: 134.0
+  y: 28.0
+  identifier: inventory17
   drawBackground: false
-# line 3
-slot3-1_texture:
-  x: "8"
-  y: "46"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot3-1_slot:
-  x: "8"
-  y: "46"
-  identifier: "container_18"
+inventory18_texture:
+  x: 152.0
+  y: 28.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory18_slot:
+  x: 152.0
+  y: 28.0
+  identifier: inventory18
   drawBackground: false
-slot3-2_texture:
-  x: "26"
-  y: "46"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot3-2_slot:
-  x: "26"
-  y: "46"
-  identifier: "container_19"
+inventory19_texture:
+  x: 170.0
+  y: 28.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory19_slot:
+  x: 170.0
+  y: 28.0
+  identifier: inventory19
   drawBackground: false
-slot3-3_texture:
-  x: "44"
-  y: "46"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot3-3_slot:
-  x: "44"
-  y: "46"
-  identifier: "container_20"
+inventory20_texture:
+  x: 8.0
+  y: 46.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory20_slot:
+  x: 8.0
+  y: 46.0
+  identifier: inventory20
   drawBackground: false
-slot3-4_texture:
-  x: "62"
-  y: "46"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot3-4_slot:
-  x: "62"
-  y: "46"
-  identifier: "container_21"
+inventory21_texture:
+  x: 26.0
+  y: 46.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory21_slot:
+  x: 26.0
+  y: 46.0
+  identifier: inventory21
   drawBackground: false
-slot3-5_texture:
-  x: "80"
-  y: "46"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot3-5_slot:
-  x: "80"
-  y: "46"
-  identifier: "container_22"
+inventory22_texture:
+  x: 44.0
+  y: 46.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory22_slot:
+  x: 44.0
+  y: 46.0
+  identifier: inventory22
   drawBackground: false
-slot3-6_texture:
-  x: "98"
-  y: "46"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot3-6_slot:
-  x: "98"
-  y: "46"
-  identifier: "container_23"
+inventory23_texture:
+  x: 62.0
+  y: 46.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory23_slot:
+  x: 62.0
+  y: 46.0
+  identifier: inventory23
   drawBackground: false
-slot3-7_texture:
-  x: "116"
-  y: "46"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot3-7_slot:
-  x: "116"
-  y: "46"
-  identifier: "container_24"
+inventory24_texture:
+  x: 80.0
+  y: 46.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory24_slot:
+  x: 80.0
+  y: 46.0
+  identifier: inventory24
   drawBackground: false
-slot3-8_texture:
-  x: "134"
-  y: "46"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot3-8_slot:
-  x: "134"
-  y: "46"
-  identifier: "container_25"
+inventory25_texture:
+  x: 98.0
+  y: 46.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory25_slot:
+  x: 98.0
+  y: 46.0
+  identifier: inventory25
   drawBackground: false
-slot3-9_texture:
-  x: "152"
-  y: "46"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot3-9_slot:
-  x: "152"
-  y: "46"
-  identifier: "container_26"
+inventory26_texture:
+  x: 116.0
+  y: 46.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory26_slot:
+  x: 116.0
+  y: 46.0
+  identifier: inventory26
   drawBackground: false
-# line 4
-slot4-1_texture:
-  x: "8"
-  y: "64"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot4-1_slot:
-  x: "8"
-  y: "64"
-  identifier: "container_27"
+inventory27_texture:
+  x: 134.0
+  y: 46.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory27_slot:
+  x: 134.0
+  y: 46.0
+  identifier: inventory27
   drawBackground: false
-slot4-2_texture:
-  x: "26"
-  y: "64"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot4-2_slot:
-  x: "26"
-  y: "64"
-  identifier: "container_28"
+inventory28_texture:
+  x: 152.0
+  y: 46.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory28_slot:
+  x: 152.0
+  y: 46.0
+  identifier: inventory28
   drawBackground: false
-slot4-3_texture:
-  x: "44"
-  y: "64"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot4-3_slot:
-  x: "44"
-  y: "64"
-  identifier: "container_29"
+inventory29_texture:
+  x: 170.0
+  y: 46.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory29_slot:
+  x: 170.0
+  y: 46.0
+  identifier: inventory29
   drawBackground: false
-slot4-4_texture:
-  x: "62"
-  y: "64"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot4-4_slot:
-  x: "62"
-  y: "64"
-  identifier: "container_30"
+inventory30_texture:
+  x: 8.0
+  y: 64.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory30_slot:
+  x: 8.0
+  y: 64.0
+  identifier: inventory30
   drawBackground: false
-slot4-5_texture:
-  x: "80"
-  y: "64"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot4-5_slot:
-  x: "80"
-  y: "64"
-  identifier: "container_31"
+inventory31_texture:
+  x: 26.0
+  y: 64.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory31_slot:
+  x: 26.0
+  y: 64.0
+  identifier: inventory31
   drawBackground: false
-slot4-6_texture:
-  x: "98"
-  y: "64"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot4-6_slot:
-  x: "98"
-  y: "64"
-  identifier: "container_32"
+inventory32_texture:
+  x: 44.0
+  y: 64.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory32_slot:
+  x: 44.0
+  y: 64.0
+  identifier: inventory32
   drawBackground: false
-slot4-7_texture:
-  x: "116"
-  y: "64"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot4-7_slot:
-  x: "116"
-  y: "64"
-  identifier: "container_33"
+inventory33_texture:
+  x: 62.0
+  y: 64.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory33_slot:
+  x: 62.0
+  y: 64.0
+  identifier: inventory33
   drawBackground: false
-slot4-8_texture:
-  x: "134"
-  y: "64"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot4-8_slot:
-  x: "134"
-  y: "64"
-  identifier: "container_34"
+inventory34_texture:
+  x: 80.0
+  y: 64.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory34_slot:
+  x: 80.0
+  y: 64.0
+  identifier: inventory34
   drawBackground: false
-slot4-9_texture:
-  x: "152"
-  y: "64"
-  width: "16"
-  height: "16"
-  texture: "gui/slot.png"
-  alpha: 0.75
-slot4-9_slot:
-  x: "152"
-  y: "64"
-  identifier: "container_35"
+inventory35_texture:
+  x: 98.0
+  y: 64.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory35_slot:
+  x: 98.0
+  y: 64.0
+  identifier: inventory35
   drawBackground: false
+inventory36_texture:
+  x: 116.0
+  y: 64.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory36_slot:
+  x: 116.0
+  y: 64.0
+  identifier: inventory36
+  drawBackground: false
+inventory37_texture:
+  x: 134.0
+  y: 64.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory37_slot:
+  x: 134.0
+  y: 64.0
+  identifier: inventory37
+  drawBackground: false
+inventory38_texture:
+  x: 152.0
+  y: 64.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory38_slot:
+  x: 152.0
+  y: 64.0
+  identifier: inventory38
+  drawBackground: false
+inventory39_texture:
+  x: 170.0
+  y: 64.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory39_slot:
+  x: 170.0
+  y: 64.0
+  identifier: inventory39
+  drawBackground: false
+inventory40_texture:
+  x: 8.0
+  y: 82.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory40_slot:
+  x: 8.0
+  y: 82.0
+  identifier: inventory40
+  drawBackground: false
+inventory41_texture:
+  x: 26.0
+  y: 82.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory41_slot:
+  x: 26.0
+  y: 82.0
+  identifier: inventory41
+  drawBackground: false
+inventory42_texture:
+  x: 44.0
+  y: 82.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory42_slot:
+  x: 44.0
+  y: 82.0
+  identifier: inventory42
+  drawBackground: false
+inventory43_texture:
+  x: 62.0
+  y: 82.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory43_slot:
+  x: 62.0
+  y: 82.0
+  identifier: inventory43
+  drawBackground: false
+inventory44_texture:
+  x: 80.0
+  y: 82.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory44_slot:
+  x: 80.0
+  y: 82.0
+  identifier: inventory44
+  drawBackground: false
+inventory45_texture:
+  x: 98.0
+  y: 82.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory45_slot:
+  x: 98.0
+  y: 82.0
+  identifier: inventory45
+  drawBackground: false
+inventory46_texture:
+  x: 116.0
+  y: 82.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory46_slot:
+  x: 116.0
+  y: 82.0
+  identifier: inventory46
+  drawBackground: false
+inventory47_texture:
+  x: 134.0
+  y: 82.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory47_slot:
+  x: 134.0
+  y: 82.0
+  identifier: inventory47
+  drawBackground: false
+inventory48_texture:
+  x: 152.0
+  y: 82.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory48_slot:
+  x: 152.0
+  y: 82.0
+  identifier: inventory48
+  drawBackground: false
+inventory49_texture:
+  x: 170.0
+  y: 82.0
+  width: 16
+  height: 16
+  texture: gui/slot.png
+  alpha: 0.9
+inventory49_slot:
+  x: 170.0
+  y: 82.0
+  identifier: inventory49
+  drawBackground: false
+
 # ammunition
 ammoslot_label:
-  x: "183"
-  y: "12"
+  x: "201"
+  y: "30"
   texts: "弹药"
   center: true
 ammoslot1_texture:
-  x: "170"
-  y: "22"
+  x: "188"
+  y: "40"
   width: "12"
   height: "12"
   texture: "gui/slot.png"
-  alpha: 0.75
+  alpha: 0.9
 ammoslot1_slot:
-  x: "170"
-  y: "22"
+  x: "188"
+  y: "40"
   width: "12"
   height: "12"
   identifier: "ammo1"
   drawBackground: false
 ammoslot2_texture:
-  x: "170"
-  y: "36"
+  x: "188"
+  y: "54"
   width: "12"
   height: "12"
   texture: "gui/slot.png"
-  alpha: 0.75
+  alpha: 0.9
 ammoslot2_slot:
-  x: "170"
-  y: "36"
+  x: "188"
+  y: "54"
   width: "12"
   height: "12"
   identifier: "ammo2"
   drawBackground: false
 ammoslot3_texture:
-  x: "170"
-  y: "50"
+  x: "188"
+  y: "68"
   width: "12"
   height: "12"
   texture: "gui/slot.png"
-  alpha: 0.75
+  alpha: 0.9
 ammoslot3_slot:
-  x: "170"
-  y: "50"
+  x: "188"
+  y: "68"
   width: "12"
   height: "12"
   identifier: "ammo3"
   drawBackground: false
 ammoslot4_texture:
-  x: "170"
-  y: "64"
+  x: "188"
+  y: "82"
   width: "12"
   height: "12"
   texture: "gui/slot.png"
-  alpha: 0.75
+  alpha: 0.9
 ammoslot4_slot:
-  x: "170"
-  y: "64"
+  x: "188"
+  y: "82"
   width: "12"
   height: "12"
   identifier: "ammo4"
   drawBackground: false
 ammoslot5_texture:
-  x: "184"
-  y: "22"
+  x: "202"
+  y: "40"
   width: "12"
   height: "12"
   texture: "gui/slot.png"
-  alpha: 0.75
+  alpha: 0.9
 ammoslot5_slot:
-  x: "184"
-  y: "22"
+  x: "202"
+  y: "40"
   width: "12"
   height: "12"
   identifier: "ammo5"
   drawBackground: false
 ammoslot6_texture:
-  x: "184"
-  y: "36"
+  x: "202"
+  y: "54"
   width: "12"
   height: "12"
   texture: "gui/slot.png"
-  alpha: 0.75
+  alpha: 0.9
 ammoslot6_slot:
-  x: "184"
-  y: "36"
+  x: "202"
+  y: "54"
   width: "12"
   height: "12"
   identifier: "ammo6"
   drawBackground: false
 ammoslot7_texture:
-  x: "184"
-  y: "50"
+  x: "202"
+  y: "68"
   width: "12"
   height: "12"
   texture: "gui/slot.png"
-  alpha: 0.75
+  alpha: 0.9
 ammoslot7_slot:
-  x: "184"
-  y: "50"
+  x: "202"
+  y: "68"
   width: "12"
   height: "12"
   identifier: "ammo7"
   drawBackground: false
 ammoslot8_texture:
-  x: "184"
-  y: "64"
+  x: "202"
+  y: "82"
   width: "12"
   height: "12"
   texture: "gui/slot.png"
-  alpha: 0.75
+  alpha: 0.9
 ammoslot8_slot:
-  x: "184"
-  y: "64"
+  x: "202"
+  y: "82"
   width: "12"
   height: "12"
   identifier: "ammo8"
@@ -778,7 +945,7 @@ ammoslot8_slot:
 # 显示钱币
 money_label:
   x: "8"
-  y: "82"
+  y: "100"
   texts: "方法.合并文本('金钱: ', 方法.取变量('terraria_money'))"
 
 

@@ -33,6 +33,11 @@ Item:
     amount: 0
   accessory6:
     ==: org.bukkit.inventory.ItemStack
+    type: AIR
+    damage: -1
+    amount: 0
+  accessory7:
+    ==: org.bukkit.inventory.ItemStack
     type: LEASH
     meta:
       ==: ItemMeta
@@ -44,11 +49,6 @@ Item:
       - §r2 防御
       - ''
       - §a+4%暴击率
-  accessory7:
-    ==: org.bukkit.inventory.ItemStack
-    type: AIR
-    damage: -1
-    amount: 0
   accessory1:
     ==: org.bukkit.inventory.ItemStack
     type: LEASH
@@ -103,16 +103,9 @@ Item:
     amount: 0
   ammo4:
     ==: org.bukkit.inventory.ItemStack
-    type: FLINT
-    meta:
-      ==: ItemMeta
-      meta-type: UNSPECIFIC
-      display-name: §#F4F4F4尖桩
-      lore:
-      - §r[弹药]
-      - §r50 远程伤害
-      - §r4% 暴击率
-      - §r尖桩发射器的弹药
+    type: AIR
+    damage: -1
+    amount: 0
   ammo2:
     ==: org.bukkit.inventory.ItemStack
     type: AIR
@@ -151,6 +144,418 @@ Item:
     damage: -1
     amount: 0
   ammo5:
+    ==: org.bukkit.inventory.ItemStack
+    type: AIR
+    damage: -1
+    amount: 0
+  backpackSlot0:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+  backpackSlot1:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 2
+  backpackSlot2:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 3
+  backpackSlot3:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 4
+  backpackSlot4:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 5
+  backpackSlot5:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 6
+  backpackSlot6:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 7
+  backpackSlot7:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 8
+  backpackSlot8:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 9
+  backpackSlot9:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 10
+  backpackSlot10:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 11
+  backpackSlot11:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 12
+  backpackSlot12:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 13
+  backpackSlot13:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 14
+  backpackSlot14:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 15
+  backpackSlot15:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 16
+  backpackSlot16:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 17
+  backpackSlot17:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 18
+  backpackSlot18:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 19
+  backpackSlot19:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 20
+  backpackSlot20:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 21
+  backpackSlot21:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 22
+  backpackSlot22:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 23
+  backpackSlot23:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 24
+  backpackSlot24:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 25
+  backpackSlot25:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 26
+  backpackSlot26:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 27
+  backpackSlot27:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 28
+  backpackSlot28:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 29
+  backpackSlot29:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 30
+  backpackSlot30:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 31
+  backpackSlot31:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 32
+  backpackSlot32:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 33
+  backpackSlot33:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 34
+  backpackSlot34:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 35
+  backpackSlot35:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 36
+  backpackSlot36:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 37
+  backpackSlot37:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 38
+  backpackSlot38:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 39
+  backpackSlot39:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 40
+  backpackSlot40:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 41
+  backpackSlot41:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 42
+  backpackSlot42:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 43
+  backpackSlot43:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 44
+  backpackSlot44:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 45
+  backpackSlot45:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 46
+  backpackSlot46:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 47
+  backpackSlot47:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 48
+  backpackSlot48:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 49
+  backpackSlot49:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 50
+  inventory49:
+    ==: org.bukkit.inventory.ItemStack
+    type: AIR
+    damage: -1
+    amount: 0
+  inventory0:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 13
+    meta:
+      ==: ItemMeta
+      meta-type: UNSPECIFIC
+      display-name: §c伤害强化焰
+  inventory1:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 5
+    meta:
+      ==: ItemMeta
+      meta-type: UNSPECIFIC
+      display-name: 光明之魂
+  inventory2:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 64
+  inventory3:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 64
+  inventory4:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 64
+  inventory5:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 64
+  inventory6:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 64
+  inventory7:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 64
+  inventory8:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 64
+  inventory9:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 64
+  inventory10:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 64
+  inventory11:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 37
+  inventory12:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 13
+  inventory13:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 14
+  inventory14:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 15
+  inventory15:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 16
+  inventory16:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 17
+  inventory17:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 18
+  inventory18:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 19
+  inventory19:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 20
+  inventory20:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 21
+  inventory21:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 22
+  inventory22:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 23
+  inventory23:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 24
+  inventory24:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 25
+  inventory25:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 26
+  inventory26:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 27
+  inventory27:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 28
+  inventory28:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 29
+  inventory29:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 30
+  inventory30:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 31
+  inventory31:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 32
+  inventory32:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 33
+  inventory33:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 34
+  inventory34:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 35
+  inventory35:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 64
+  inventory36:
+    ==: org.bukkit.inventory.ItemStack
+    type: DIAMOND
+    amount: 45
+    meta:
+      ==: ItemMeta
+      meta-type: UNSPECIFIC
+      display-name: 坠星
+  inventory37:
+    ==: org.bukkit.inventory.ItemStack
+    type: STONE_SPADE
+  inventory38:
+    ==: org.bukkit.inventory.ItemStack
+    type: STONE_SPADE
+  inventory39:
+    ==: org.bukkit.inventory.ItemStack
+    type: STONE_SPADE
+  inventory40:
+    ==: org.bukkit.inventory.ItemStack
+    type: STONE_SPADE
+  inventory41:
+    ==: org.bukkit.inventory.ItemStack
+    type: STONE_SPADE
+  inventory42:
+    ==: org.bukkit.inventory.ItemStack
+    type: STONE_SPADE
+  inventory43:
+    ==: org.bukkit.inventory.ItemStack
+    type: AIR
+    damage: -1
+    amount: 0
+  inventory44:
+    ==: org.bukkit.inventory.ItemStack
+    type: AIR
+    damage: -1
+    amount: 0
+  inventory45:
+    ==: org.bukkit.inventory.ItemStack
+    type: AIR
+    damage: -1
+    amount: 0
+  inventory46:
+    ==: org.bukkit.inventory.ItemStack
+    type: AIR
+    damage: -1
+    amount: 0
+  inventory47:
+    ==: org.bukkit.inventory.ItemStack
+    type: AIR
+    damage: -1
+    amount: 0
+  inventory48:
     ==: org.bukkit.inventory.ItemStack
     type: AIR
     damage: -1
