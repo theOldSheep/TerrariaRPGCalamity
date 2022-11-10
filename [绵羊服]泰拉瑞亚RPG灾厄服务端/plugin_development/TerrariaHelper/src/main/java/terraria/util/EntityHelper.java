@@ -9,11 +9,12 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftSlime;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.*;
+import org.bukkit.craftbukkit.v1_12_R1.projectiles.CraftBlockProjectileSource;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -26,6 +27,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.TerrariaItem;
+import terraria.entity.TerrariaProjectile;
 import terraria.gameplay.Event;
 
 import java.util.*;
@@ -643,11 +646,9 @@ public class EntityHelper {
                             for (int i = 0; i < 3; i ++)
                                 if (Math.random() < 0.1) {
                                     ItemStack star = new ItemStack(Material.CLAY_BALL);
-                                    star.getItemMeta().setDisplayName("§9星");
-                                    // prevent stacking
-                                    ArrayList<String> lore = new ArrayList<>(3);
-                                    for (int j = 0; j < 3; j ++) lore.add(Math.random() + "");
-                                    star.getItemMeta().setLore(lore);
+                                    ItemMeta meta = star.getItemMeta();
+                                    meta.setDisplayName("§9星");
+                                    star.setItemMeta(meta);
                                     dPlayer.getWorld().dropItemNaturally(v.getLocation(), star);
                                 }
                         }
@@ -656,11 +657,9 @@ public class EntityHelper {
                 if (dPlayer.getHealth() < dPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() &&
                         vScoreboardTags.contains("isMonster") && Math.random() < 0.2) {
                         ItemStack heart = new ItemStack(Material.CLAY_BALL);
-                        heart.getItemMeta().setDisplayName("§c心");
-                        // prevent stacking
-                        ArrayList<String> lore = new ArrayList<>(3);
-                        for (int j = 0; j < 3; j ++) lore.add(Math.random() + "");
-                        heart.getItemMeta().setLore(lore);
+                        ItemMeta meta = heart.getItemMeta();
+                        meta.setDisplayName("§c心");
+                        heart.setItemMeta(meta);
                         dPlayer.getWorld().dropItemNaturally(v.getLocation(), heart);
                     }
             }
@@ -806,5 +805,16 @@ public class EntityHelper {
     }
     public static void handleEntityExplode(Entity source, Entity damageException, Location loc) {
         // TODO
+    }
+    public static Projectile spawnProjectile(Location loc, Vector velocity, String projectileName, ProjectileSource src) {
+        return spawnProjectile(loc, velocity, projectileName, src, 0, 0, false, false);
+    }
+    public static Projectile spawnProjectile(Location loc, Vector velocity, String projectileName, ProjectileSource src, int bounce, int penetration, boolean bouncePenetrationBounded, boolean thruWall) {
+        TerrariaProjectile entity = new TerrariaProjectile(loc, TerrariaProjectile.generateItemStack(projectileName), velocity, projectileName, bounce, penetration, bouncePenetrationBounded, thruWall);
+        CraftWorld wld = (CraftWorld) loc.getWorld();
+        wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        Projectile bukkitProjectile = new CraftSplashPotion(wld.getHandle().getServer(), entity);
+        bukkitProjectile.setShooter(src);
+        return bukkitProjectile;
     }
 }

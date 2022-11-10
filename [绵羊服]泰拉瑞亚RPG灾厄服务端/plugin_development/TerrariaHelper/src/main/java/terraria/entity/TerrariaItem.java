@@ -2,7 +2,6 @@ package terraria.entity;
 
 import net.minecraft.server.v1_12_R1.MathHelper;
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.event.CraftEventFactory;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
@@ -11,11 +10,11 @@ import org.bukkit.util.Vector;
 import terraria.util.*;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Set;
 
 
 public class TerrariaItem extends EntityItem {
+    public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");
     static final int
             BOOSTER_LIVE_TIME = 600,
             HEART_LIVE_TIME = 1200,
@@ -23,11 +22,14 @@ public class TerrariaItem extends EntityItem {
     static final double maxPickupRadius = 27.5;
     public int liveTime, baseRarity, lastTick, age;
     public String itemType;
-    public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");;
+    public org.bukkit.inventory.ItemStack bukkitItemStack;
+    public boolean canBeMerged;
     public TerrariaItem (org.bukkit.Location loc, org.bukkit.inventory.ItemStack item) {
         super(((CraftWorld) loc.getWorld()).getHandle(),
                 loc.getX(), loc.getY(), loc.getZ(),
                 CraftItemStack.asNMSCopy(item));
+        bukkitItemStack = item.clone();
+        canBeMerged = canMerge();
         this.lastTick = MinecraftServer.currentTick - 1;
         pickupDelay = 20;
     }
@@ -36,7 +38,7 @@ public class TerrariaItem extends EntityItem {
         Player ply = p.getBukkitEntity();
         Set<String> accessories = PlayerHelper.getAccessories(ply);
         HashMap<String, Integer> potionEffects = EntityHelper.getEffectMap(ply);
-        double reach = 5;
+        double reach = 3;
         switch (itemType) {
             case "铜币":
             case "银币":
@@ -61,6 +63,69 @@ public class TerrariaItem extends EntityItem {
         }
         return reach;
     }
+    public boolean canMerge() {
+        switch (itemType) {
+            case "生命强化焰":
+            case "伤害强化焰":
+            case "魔力强化焰":
+            case "心":
+            case "星":
+                return false;
+            default:
+                return true;
+        }
+    }
+    // merging
+    public boolean mergeWith(TerrariaItem itemToMerge) {
+        // function modified from EntityItem.class
+        if (itemToMerge == this) {
+            return false;
+        } else if (itemToMerge.isAlive() && this.isAlive()) {
+            ItemStack itemstack = this.getItemStack();
+            ItemStack itemstack1 = itemToMerge.getItemStack();
+
+            if (itemstack1.getItem() != itemstack.getItem()) {
+                return false;
+            } else if (itemstack1.hasTag() ^ itemstack.hasTag()) {
+                return false;
+            } else if (itemstack1.hasTag() && !itemstack1.getTag().equals(itemstack.getTag())) {
+                return false;
+            } else if (itemstack1.getItem() == null) {
+                return false;
+            } else if (itemstack1.getItem().k() && itemstack1.getData() != itemstack.getData()) {
+                return false;
+            } else if (itemstack1.getCount() < itemstack.getCount()) {
+                return itemToMerge.mergeWith(this);
+            } else if (itemstack1.getCount() + itemstack.getCount() > itemstack1.getMaxStackSize()) {
+                return false;
+            } else if (CraftEventFactory.callItemMergeEvent(this, itemToMerge).isCancelled()) {
+                return false;
+            } else {
+                itemstack1.add(itemstack.getCount());
+                itemToMerge.pickupDelay = Math.max(itemToMerge.pickupDelay, this.pickupDelay);
+                itemToMerge.age = Math.min(itemToMerge.age, this.age);
+                itemToMerge.setItemStack(itemstack1);
+                this.die();
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+    public void merge() {
+        if (!canBeMerged) return;
+        for (TerrariaItem toMerge : this.world.a(TerrariaItem.class, this.getBoundingBox().grow(1.5, 1, 1.5))) {
+            this.mergeWith(toMerge);
+        }
+    }
+    @Override
+    public Entity b(int i) {
+        Entity entity = super.b(i);
+        if (!this.world.isClientSide && entity instanceof TerrariaItem)
+            ((TerrariaItem)entity).merge();
+        return entity;
+    }
+    // generic ticking
     @Override
     public void B_() {
         this.world.methodProfiler.a("entityBaseTick");
@@ -82,19 +147,20 @@ public class TerrariaItem extends EntityItem {
         EntityPlayer nearest = null;
         // if the item can be picked up, find the player that will pick it up.
         if (this.pickupDelay <= 0) {
-            Iterator<EntityPlayer> iterator = this.world.a(EntityPlayer.class, this.getBoundingBox().grow(maxPickupRadius, maxPickupRadius, maxPickupRadius)).iterator();
-
-            while(iterator.hasNext()) {
-                EntityPlayer p = iterator.next();
+            for (EntityPlayer p : this.world.a(EntityPlayer.class, this.getBoundingBox().grow(maxPickupRadius, maxPickupRadius, maxPickupRadius))) {
                 if (p.playerInteractManager.getGameMode() != EnumGamemode.SURVIVAL) continue;
                 if (p.getScoreboardTags().contains("unauthorized")) continue;
                 double distX = p.locX - this.locX;
                 double distY = p.locY - this.locY;
                 double distZ = p.locZ - this.locZ;
                 double distSqr = distX * distX + distY * distY + distZ * distZ;
-                double pickUpDist = getPickUpDistance(p);
-                double pickupAbility = 1 - (distSqr / (pickUpDist * pickUpDist));
+                double pickUpDistSqr = getPickUpDistance(p);
+                pickUpDistSqr *= pickUpDistSqr;
+                if (distSqr > pickUpDistSqr) continue;
+                double pickupAbility = 1 - (distSqr / pickUpDistSqr);
                 if (greatestPickupAbility < pickupAbility) {
+                    // player can not hold new item
+                    if (!PlayerHelper.canHoldAny(p.getBukkitEntity(), bukkitItemStack)) continue;
                     greatestPickupAbility = distSqr;
                     nearest = p;
                 }
@@ -109,11 +175,16 @@ public class TerrariaItem extends EntityItem {
             double speed = currVelocity.length() + 0.1;
             this.noclip = true;
             Vector acceleration = new Vector(nearest.locX - this.locX, nearest.locY - this.locY, nearest.locZ - this.locZ);
-            terraria.util.MathHelper.setVectorLengthSquared(
-                    currVelocity, acceleration.length());
-            currVelocity.add(acceleration);
-            double newSpeed = currVelocity.length();
-            if (newSpeed > speed) currVelocity.multiply(speed / newSpeed);
+            double accelerationLength = acceleration.length();
+            // this item is very close to the player
+            if (accelerationLength < speed) currVelocity = acceleration;
+            else {
+                if (currVelocity.lengthSquared() > 0)
+                    terraria.util.MathHelper.setVectorLengthSquared(currVelocity, accelerationLength);
+                currVelocity.add(acceleration);
+                double newSpeed = currVelocity.length();
+                if (newSpeed > speed && newSpeed > 0) currVelocity.multiply(speed / newSpeed);
+            }
         } else {
             // no player is picking it up
             // if it has gravity: fall to the ground
@@ -127,6 +198,7 @@ public class TerrariaItem extends EntityItem {
         this.motZ = currVelocity.getZ();
 
         this.move(EnumMoveType.SELF, this.motX, this.motY, this.motZ);
+        this.merge();
 
         // slow down the item slightly
         float f = 0.95F;
@@ -197,7 +269,7 @@ public class TerrariaItem extends EntityItem {
             case "坠星":
             case "落星":
             case "坠落之星":
-                glowing = true;
+                g(true);
         }
         // those items should have no gravity
         switch (itemInfo[1]) {
@@ -223,6 +295,7 @@ public class TerrariaItem extends EntityItem {
                 liveTime = GENERIC_LIVE_TIME;
         }
         baseRarity = itemConfig.getInt(GenericHelper.trimText(getItemStack().getName()) + ".rarity", 0);
+        bukkitItemStack = CraftItemStack.asBukkitCopy(itemstack);
     }
 
     @Override
@@ -246,7 +319,7 @@ public class TerrariaItem extends EntityItem {
     public void d(EntityHuman entityhuman) {
         if (pickupDelay > 0) return;
         ItemStack itemstack = this.getItemStack();
-        int remaining = PlayerHelper.addItemToPlayerInventory(CraftItemStack.asBukkitCopy(itemstack), (Player) entityhuman.getBukkitEntity());
+        int remaining = PlayerHelper.giveItem((Player) entityhuman.getBukkitEntity(), bukkitItemStack, false);
         if (remaining > 0)
             itemstack.setCount(remaining);
         else {

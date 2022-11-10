@@ -6,10 +6,12 @@ import net.minecraft.server.v1_12_R1.IChatBaseComponent;
 import net.minecraft.server.v1_12_R1.PacketPlayOutTitle;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.potion.PotionEffect;
@@ -608,7 +610,6 @@ public class PlayerHelper {
         // other variable
         EntityHelper.setMetadata(ply, "team", "red");
         EntityHelper.setMetadata(ply, "armorSet", "");
-        EntityHelper.setMetadata(ply, "heldSlot", 0);
         // bgm and background
         EntityHelper.setMetadata(ply, "lastBackground", "");
         EntityHelper.setMetadata(ply, "lastBGM", "normal");
@@ -667,24 +668,13 @@ public class PlayerHelper {
             String title = settingConfig.getString("settings.playerInventoryTitles." + invName, "");
             List<String> contents = plyFile.getStringList("inventory." + invName);
             if (contents == null) contents = new ArrayList<>(1);
-            Inventory inv = Bukkit.createInventory(ply, 36, title);
+            Inventory inv = Bukkit.createInventory(ply, 54, title);
             int slot = 0;
             for (String itemInfo : contents) {
                 inv.setItem(slot, ItemHelper.getItemFromDescription(itemInfo, false));
                 slot ++;
             }
             inventories.put(invName, inv);
-        }
-        // fill the player's inventory with glass that can not be moved to prevent bug
-        Inventory plyInv = ply.getInventory();
-        ItemStack placeholder = new ItemStack(Material.STONE_SPADE);
-        placeholder.getItemMeta().setDisplayName(ItemHelper.placeholderItemNamePrefix);
-        for (int i = 0; i < 36; i ++) {
-            plyInv.setItem(i, placeholder);
-        }
-        for (int i = 0; i < 50; i ++) {
-            String slotIndex = "inventory" + i;
-            DragoncoreHelper.setSlotItem(ply, slotIndex, new ItemStack(Material.DIAMOND, i + 1));
         }
         EntityHelper.setMetadata(ply, "inventories", inventories);
     }
@@ -694,12 +684,17 @@ public class PlayerHelper {
         YmlHelper.YmlSection plyFile = YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml");
         for (String invType : inventories.keySet()) {
             Inventory currInv = inventories.get(invType);
-            ArrayList<String> result = new ArrayList<>(36);
-            for (int i = 0; i < 36; i ++) {
+            ArrayList<String> result = new ArrayList<>(54);
+            for (int i = 0; i < 54; i ++) {
                 result.add(ItemHelper.getItemDescription(currInv.getItem(i)));
             }
             plyFile.set("inventory." + invType, result);
         }
+    }
+    @Nullable
+    public static Inventory getInventory(Player ply, String key) {
+        return ((HashMap<String, Inventory>) EntityHelper.getMetadata(ply, "inventories").value())
+                .get(key);
     }
     public static boolean isProperlyPlaying(Player player) {
         if (!player.isOnline()) return false;
@@ -760,83 +755,131 @@ public class PlayerHelper {
             Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] handleGrapplingHook ", e);
         }
     }
-    public static int addItemToPlayerInventory(ItemStack item, Player ply) {
-        // returns how many remaining
-        int itemAmountRemaining = item.getAmount();
-        // stacks up with existing item
-        for (int i = 0; i < 50; i ++) {
-            String slotIndex = "inventory" + i;
-            ItemStack currItem = DragoncoreHelper.getSlotItem(ply, slotIndex);
-            if (currItem.isSimilar(item)) {
-                int amountToAdd = Math.min(currItem.getMaxStackSize() - currItem.getAmount(), itemAmountRemaining);
-                itemAmountRemaining -= amountToAdd;
-                currItem.setAmount(currItem.getAmount() + amountToAdd);
-                DragoncoreHelper.setSlotItem(ply, slotIndex, currItem);
-                if (itemAmountRemaining <= 0) break;
-            }
+    public static boolean hasVoidBag(Player ply) {
+        ItemStack voidBag = ItemHelper.getItemFromDescription("虚空袋", false, new ItemStack(Material.BEDROCK));
+        return ply.getInventory().contains(voidBag);
+    }
+    public static boolean canHoldAny(Player ply, ItemStack item) {
+        if (item == null) return true;
+        String itemType = ItemHelper.splitItemName(item)[1];
+        // these items get consumed once picked up
+        switch (itemType) {
+            case "铜币":
+            case "银币":
+            case "金币":
+            case "铂金币":
+            case "心":
+            case "星":
+            case "生命强化焰":
+            case "伤害强化焰":
+            case "魔力强化焰":
+                return true;
         }
-        // creates a new stack at an empty slot
-        for (int i = 0; i < 50; i ++) {
-            String slotIndex = "inventory" + i;
-            ItemStack currItem = DragoncoreHelper.getSlotItem(ply, slotIndex);
-            if (currItem.getType() == Material.AIR) {
-                int amountToAdd = Math.min(item.getMaxStackSize(), itemAmountRemaining);
-                itemAmountRemaining -= amountToAdd;
-                ItemStack itemToSet = item.clone();
-                itemToSet.setAmount(amountToAdd);
-                DragoncoreHelper.setSlotItem(ply, slotIndex, itemToSet);
-                if (itemAmountRemaining <= 0) break;
-            }
+        // check airs first, they are a lot less performance costly.
+        // backpack
+        Inventory plyInv = ply.getInventory();
+        boolean hasVoidBag = hasVoidBag(ply);
+        Inventory voidBagInv = getInventory(ply, "voidBag");
+        for (int i = 0; i < 36; i ++) {
+            ItemStack currItem = plyInv.getItem(i);
+            if (currItem == null || currItem.getType() == Material.AIR) return true;
         }
-        if (itemAmountRemaining != item.getAmount()) ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup ", 1, 1);
-        return itemAmountRemaining;
+        // void bag
+        if (hasVoidBag && voidBagInv != null) {
+            for (ItemStack currItem : voidBagInv.getContents())
+                if (currItem == null || currItem.getType() == Material.AIR) return true;
+        }
+        // then we check for stacking
+        // items that can not stack do not need any additional check.
+        int maxStackSize = item.getMaxStackSize();
+        if (maxStackSize <= 1) return false;
+        // backpack
+        for (int i = 0; i < 36; i ++) {
+            ItemStack currItem = plyInv.getItem(i);
+            if (currItem.isSimilar(item) && maxStackSize > currItem.getAmount()) return true;
+        }
+        // void bag
+        if (hasVoidBag && voidBagInv != null) {
+                for (ItemStack currItem : voidBagInv.getContents())
+                    if (currItem.isSimilar(item) && maxStackSize > currItem.getAmount()) return true;
+        }
+        return false;
     }
     public static int addItemToGenericInventory(ItemStack item, Inventory inventory) {
+        if (item == null) return 0;
         // returns how many remaining
         HashMap<Integer, ItemStack> remainingItemMap = inventory.addItem(item);
         if (remainingItemMap.isEmpty()) return 0;
         else return remainingItemMap.get(0).getAmount();
     }
     public static int giveItem(Player ply, ItemStack item, boolean dropExtra) {
+        if (item == null) return 0;
         int amountRemaining = item.getAmount();
-        if (item.getItemMeta().hasDisplayName()) {
-            String itemType = GenericHelper.trimText(item.getItemMeta().getDisplayName());
-            switch (itemType) {
-                case "铜币":
-                    setMoney(ply, getMoney(ply) + 100 * amountRemaining);
-                    return 0;
-                case "银币":
-                    setMoney(ply, getMoney(ply) + 10000 * amountRemaining);
-                    return 0;
-                case "金币":
-                    setMoney(ply, getMoney(ply) + 1000000 * amountRemaining);
-                    return 0;
-                case "铂金币":
-                    setMoney(ply, getMoney(ply) + 100000000 * amountRemaining);
-                    return 0;
-                case "心":
-                    heal(ply, 20);
-                    return 0;
-                case "星":
-                    restoreMana(ply, 100);
-                    return 0;
+        String itemType = ItemHelper.splitItemName(item)[1];
+        switch (itemType) {
+            case "铜币":
+                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+                setMoney(ply, getMoney(ply) + 100 * amountRemaining);
+                return 0;
+            case "银币":
+                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+                setMoney(ply, getMoney(ply) + 10000 * amountRemaining);
+                return 0;
+            case "金币":
+                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+                setMoney(ply, getMoney(ply) + 1000000 * amountRemaining);
+                return 0;
+            case "铂金币":
+                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+                setMoney(ply, getMoney(ply) + 100000000 * amountRemaining);
+                return 0;
+            case "心":
+                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+                heal(ply, 20);
+                return 0;
+            case "星":
+                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+                restoreMana(ply, 100);
+                return 0;
+            case "生命强化焰":
+            case "伤害强化焰":
+            case "魔力强化焰": {
+                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+                String effect;
+                switch (itemType) {
+                    case "生命强化焰":
+                        effect = "生命星云";
+                        break;
+                    case "伤害强化焰":
+                        effect = "伤害星云";
+                        break;
+                    default:
+                        effect = "魔力星云";
+                }
+                String team = EntityHelper.getMetadata(ply, "team").asString();
+                for (Player plyEffect : ply.getWorld().getPlayers()) {
+                    if (isProperlyPlaying(plyEffect) && EntityHelper.getMetadata(plyEffect, "team").asString().equals(team) && plyEffect.getLocation().distanceSquared(ply.getLocation()) < 3600)
+                        EntityHelper.applyEffect(ply, effect, 480);
+                }
+                return 0;
             }
         }
         try {
-            amountRemaining = addItemToPlayerInventory(item, ply);
+            amountRemaining = addItemToGenericInventory(item, ply.getInventory());
             if (amountRemaining > 0) {
                 // put the item in the player's void bag, if the player has a void bag in the inventory
-                if (ply.getInventory().contains(ItemHelper.getItemFromDescription("虚空袋", false, new ItemStack(Material.BEDROCK)))) {
-                    Inventory voidBagInv = ((HashMap<String, Inventory>) EntityHelper.getMetadata(ply, "inventories").value())
-                            .get("voidBag");
-                    amountRemaining = addItemToGenericInventory(item, voidBagInv);
+                if (hasVoidBag(ply)) {
+                    Inventory voidBagInv = getInventory(ply, "voidBag");
+                    if (voidBagInv != null)
+                        amountRemaining = addItemToGenericInventory(item, voidBagInv);
                 }
             }
             if (dropExtra && amountRemaining > 0) {
                 ItemStack itemToDrop = item.clone();
                 itemToDrop.setAmount(amountRemaining);
-                ply.getWorld().dropItemNaturally(ply.getEyeLocation(), itemToDrop);
+                ItemHelper.dropItem(ply.getEyeLocation(), itemToDrop);
             }
+            if (amountRemaining < item.getAmount()) ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
             return amountRemaining;
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "PlayerHelper.giveItem", e);
@@ -847,12 +890,12 @@ public class PlayerHelper {
     public static void heal(Player ply, double amount) {
         double healAmount = Math.min(ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() - ply.getHealth(), amount);
         ply.setHealth(ply.getHealth() + healAmount);
-        GenericHelper.displayHolo(ply, healAmount, false, "回血");
+        GenericHelper.displayHolo(ply, amount, false, "回血");
     }
     public static void restoreMana(Player ply, double amount) {
         int restoreAmount = (int) Math.min(EntityHelper.getAttrMap(ply).getOrDefault("maxMana", 20d) - ply.getLevel(), amount);
         ply.setLevel(ply.getLevel() + restoreAmount);
-        GenericHelper.displayHolo(ply, restoreAmount, false, "回蓝");
+        GenericHelper.displayHolo(ply, amount, false, "回蓝");
     }
     public static Location getSpawnLocation(Player ply) {
         if (ply.getBedSpawnLocation() != null && !ply.getScoreboardTags().contains("bedCancelled"))

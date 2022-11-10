@@ -22,9 +22,10 @@ public class DragoncoreHelper {
         }
     }
     static ItemStack getSlotItem(Player ply, String slot) {
-        SlotCallback cbk = new SlotCallback();
-        SlotAPI.getSlotItem(ply, slot, cbk);
-        return cbk.getResult();
+//        SlotCallback cbk = new SlotCallback();
+//        SlotAPI.getSlotItem(ply, slot, cbk);
+//        return cbk.getResult();
+        return SlotAPI.getCacheSlotItem(ply, slot);
     }
     static void setSlotItem(Player ply, String slot, ItemStack itemToSet) {
         SlotAPI.setSlotItem(ply, slot, itemToSet, true);

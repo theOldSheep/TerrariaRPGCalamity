@@ -10,9 +10,11 @@ terraria\entity\boss\Boss.class
 terraria\util\DragoncoreHelper$SlotCallback.class
 terraria\util\EntityHelper$1.class
 terraria\util\ItemHelper.class
+terraria\listener\ArrowShootEvent.class
 terraria\listener\WorldRegisterListener.class
 terraria\util\WorldHelper.class
 terraria\worldgen\overworld\OverworldCaveGenerator.class
+terraria\listener\PlayerKeyToggleListener.class
 terraria\TerrariaHelper$Constants.class
 terraria\util\PlayerHelper.class
 terraria\listener\DamageListener.class
@@ -24,8 +26,6 @@ terraria\worldgen\overworld\OverworldChunkGenerator.class
 terraria\util\BossHelper.class
 terraria\gameplay\Event.class
 terraria\worldgen\overworld\NoiseGeneratorTest.class
-terraria\listener\ItemPickupListener.class
-terraria\listener\playerKeyToggleListener.class
 terraria\worldgen\overworld\TreePopulator$1.class
 terraria\util\DragoncoreHelper.class
 terraria\worldgen\overworld\OverworldBiomeGenerator.class
@@ -42,6 +42,7 @@ terraria\util\GenericHelper.class
 terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
 terraria\listener\PlayerWorldChangeListener.class
 terraria\worldgen\underworld\UnderworldChunkGenerator.class
+terraria\entity\TerrariaProjectile.class
 terraria\entity\TerrariaItem.class
 terraria\listener\PlayerJoinListener.class
 terraria\worldgen\Interpolate$InterpolatePoint.class
