@@ -3,10 +3,9 @@ package terraria;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.PlaceholderHook;
 import org.bukkit.Bukkit;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import terraria.dragoncorehelper.RandomTitle;
+import terraria.listener.RandomTitleListener;
 import terraria.listener.*;
 import terraria.util.EntityHelper;
 import terraria.util.GenericHelper;
@@ -47,6 +46,8 @@ public class TerrariaHelper extends JavaPlugin {
                         if (moneyInfo[3] > 0) result += "&c" + moneyInfo[3] + "铜币 ";
                     }
                     return result;
+                } else if (params.equals("held_slot")) {
+                    return EntityHelper.getMetadata(ply, "heldSlot").asInt() + "";
                 }
                 HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
                 if (attrMap == null) attrMap = new HashMap<>(1);
@@ -70,12 +71,16 @@ public class TerrariaHelper extends JavaPlugin {
         });
     }
     private void registerEvents() {
-        Bukkit.getPluginManager().registerEvents(new playerKeyToggleListener(), this);
-        Bukkit.getPluginManager().registerEvents(new RandomTitle(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        Bukkit.getPluginManager().registerEvents(new WorldRegisterListener(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerWorldChangeListener(), this);
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
+        Bukkit.getPluginManager().registerEvents(new DropItemSpawnListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ItemPickupListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        Bukkit.getPluginManager().registerEvents(new playerKeyToggleListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerWorldChangeListener(), this);
+        Bukkit.getPluginManager().registerEvents(new RandomTitleListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ServerStopListener(), this);
+        Bukkit.getPluginManager().registerEvents(new WorldRegisterListener(), this);
     }
     private void initThreads() {
         YmlHelper.threadSaveYml();

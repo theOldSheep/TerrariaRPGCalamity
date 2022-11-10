@@ -1,21 +1,20 @@
 package terraria.util;
 
-import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.User;
 import com.earth2me.essentials.api.Economy;
-import me.clip.placeholderapi.PlaceholderAPI;
-import me.clip.placeholderapi.PlaceholderHook;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.IChatBaseComponent;
+import net.minecraft.server.v1_12_R1.PacketPlayOutTitle;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
-import sun.net.www.content.text.Generic;
 import terraria.TerrariaHelper;
 import terraria.gameplay.Event;
 
@@ -26,6 +25,7 @@ import java.util.logging.Level;
 public class PlayerHelper {
     // constants
     private static YmlHelper.YmlSection soundConfig = YmlHelper.getFile("plugins/Data/sounds.yml");
+    private static YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
     private static HashMap<String, Double> defaultPlayerAttrMap = new HashMap<>(60);
     private static HashSet<String> defaultPlayerEffectInflict = new HashSet<>(8);
     static {
@@ -35,7 +35,10 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("arrowConsumptionRate", 1d);
         defaultPlayerAttrMap.put("bounce", 0d);
         defaultPlayerAttrMap.put("crit", 0d);
+        defaultPlayerAttrMap.put("critMagic", 0d);
+        defaultPlayerAttrMap.put("critMelee", 0d);
         defaultPlayerAttrMap.put("critRanged", 0d);
+        defaultPlayerAttrMap.put("critTrueMelee", 0d);
         defaultPlayerAttrMap.put("damage", 0d);
         defaultPlayerAttrMap.put("damageArrowMulti", 1d);
         defaultPlayerAttrMap.put("damageBulletMulti", 1d);
@@ -46,6 +49,8 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("damageRocketMulti", 1d);
         defaultPlayerAttrMap.put("damageSummonMulti", 0.75d);
         defaultPlayerAttrMap.put("damageTakenMulti", 1d);
+        defaultPlayerAttrMap.put("damageContactTakenMulti", 1d);
+        defaultPlayerAttrMap.put("damageTrueMeleeMulti", 1d);
         defaultPlayerAttrMap.put("defence", 0d);
         defaultPlayerAttrMap.put("defenceMulti", 1d);
         defaultPlayerAttrMap.put("healthMulti", 1d);
@@ -78,11 +83,11 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("sentryLimit", 1d);
         defaultPlayerAttrMap.put("speed", 0.2d);
         defaultPlayerAttrMap.put("speedMulti", 1d);
+        defaultPlayerAttrMap.put("useSpeedMagicMulti", 1d);
+        defaultPlayerAttrMap.put("useSpeedMeleeMulti", 1d);
+        defaultPlayerAttrMap.put("useSpeedMulti", 1d);
+        defaultPlayerAttrMap.put("useSpeedRangedMulti", 1d);
         defaultPlayerAttrMap.put("useTime", 0d);
-        defaultPlayerAttrMap.put("useTimeMagicMulti", 1d);
-        defaultPlayerAttrMap.put("useTimeMeleeMulti", 1d);
-        defaultPlayerAttrMap.put("useTimeMulti", 1d);
-        defaultPlayerAttrMap.put("useTimeRangedMulti", 1d);
         // test!
         defaultPlayerAttrMap.put("maxHealth", 1200d);
         defaultPlayerAttrMap.put("maxMana", 350d);
@@ -470,66 +475,86 @@ public class PlayerHelper {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 try {
-                    if (!isProperlyPlaying(ply)) continue; // waiting to revive etc.
-                    // basic variable setup
-                    HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
-                    HashSet<String> accessories = getAccessories(ply);
-                    HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
-                    Location currLoc = ply.getLocation();
-                    Location lastLoc = (Location) EntityHelper.getMetadata(ply, "lastLocation").value();
-                    EntityHelper.setMetadata(ply, "lastLocation", currLoc);
-                    boolean moved = lastLoc.getWorld().equals(currLoc.getWorld()) && lastLoc.distanceSquared(currLoc) > 1e-5;
-                    // health regen
-                    {
-                        // init variables
-                        double healthRegenTime = EntityHelper.getMetadata(ply, "regenTime").asDouble();
-                        double effectiveRegenTime;
-                        if (healthRegenTime <= 300) effectiveRegenTime = 0;
-                        else if (healthRegenTime <= 800) effectiveRegenTime = (healthRegenTime - 300) / 100;
-                        else effectiveRegenTime = 5 + ((healthRegenTime - 800) / 200);
-                        if (debugMessage) ply.sendMessage(effectiveRegenTime + "|" + healthRegenTime);
-                        double maxHealth = ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-                        double regenerationRate = ((maxHealth * 0.85 / 800) + 0.15) * effectiveRegenTime;
-                        regenerationRate *= moved ? 0.5 : 1.25;
-                        // additional hardcoded accessories etc
-                        double additionalHealthRegen = attrMap.getOrDefault("regen", 0d); // from accessories etc
-                        if (!moved && accessories.contains("闪亮石")) {
-                            regenerationRate += 8;
-                            healthRegenTime += delay * 4;
-                        }
-                        // regen
-                        double regenAmount = (regenerationRate + additionalHealthRegen) * perTickMulti * attrMap.getOrDefault("regenMulti", 1d);
-                        ply.setHealth(Math.min(ply.getHealth() + regenAmount, maxHealth));
-                        healthRegenTime += delay;
-                        EntityHelper.setMetadata(ply, "regenTime", Math.min(healthRegenTime, 1200));
-                    }
-                    // mana regen
-                    {
-                        double manaRegenDelay = EntityHelper.getMetadata(ply, "manaRegenDelay").asDouble();
-                        double manaRegenCounter = EntityHelper.getMetadata(ply, "manaRegenCounter").asDouble();
-                        boolean hasManaRegenBand = accessories.contains("魔力再生手环");
-                        boolean hasManaRegenPotionEffect = effectMap.containsKey("魔力再生");
-                        if (manaRegenDelay > 0) {
-                            // waiting for regen CD
-                            manaRegenDelay -= moved ? delay : delay * 2;
-                            if (hasManaRegenBand) manaRegenDelay -= delay;
-                            if (hasManaRegenPotionEffect) manaRegenDelay -= delay;
-                            EntityHelper.setMetadata(ply, "manaRegenDelay", manaRegenDelay);
+                    MetadataValue respawnCD = EntityHelper.getMetadata(ply, "respawnCD");
+                    if (respawnCD != null) {
+                        int ticksRemaining = respawnCD.asInt();
+                        ticksRemaining -= delay;
+                        if (ticksRemaining > 0) {
+                            ply.setGameMode(GameMode.SPECTATOR);
+                            ply.setFlySpeed(0);
+                            ply.setFallDistance(0);
+                            sendActionBar(ply, "§a重生倒计时： " + ticksRemaining / 20);
+                            EntityHelper.setMetadata(ply, "respawnCD", ticksRemaining);
                         } else {
-                            // regeneration
-                            double manaRegenBonus = attrMap.getOrDefault("manaRegen", 0d);
-                            double maxMana = attrMap.getOrDefault("maxMana", 20d);
-                            // players with mana regen buff regenerates mana as if their mana is full
-                            double manaRatio = hasManaRegenPotionEffect ? 1d : (double) ply.getLevel() / maxMana;
-                            double manaRegenRate = ((maxMana * (moved ? 1d/8 : 1d/5)) + 1 + manaRegenBonus) * (manaRatio * 0.8 + 0.2) * 1.15;
-                            if (ply.getLevel() < maxMana) {
-                                manaRegenCounter += manaRegenRate * delay * attrMap.getOrDefault("manaRegenMulti", 1d);
-                                double regenAmount = Math.floor(manaRegenCounter / 40);
-                                manaRegenCounter %= 40;
-                                int levelResult = ply.getLevel() + (int) regenAmount;
-                                ply.setLevel((int) Math.min(levelResult, maxMana));
-                                if (ply.getLevel() >= maxMana) ply.playSound(ply.getLocation(), Sound.BLOCK_NOTE_PLING, 2, 2);
-                                EntityHelper.setMetadata(ply, "manaRegenCounter", manaRegenCounter);
+                            EntityHelper.setMetadata(ply, "respawnCD", null);
+                            ply.setGameMode(GameMode.SURVIVAL);
+                            ply.teleport(getSpawnLocation(ply));
+                            // minion index, sentry index etc get to reset
+                            initPlayerStats(ply);
+                        }
+                    } else {
+                        if (!isProperlyPlaying(ply)) continue; // waiting to revive etc.
+                        // basic variable setup
+                        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+                        HashSet<String> accessories = getAccessories(ply);
+                        HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
+                        Location currLoc = ply.getLocation();
+                        Location lastLoc = (Location) EntityHelper.getMetadata(ply, "lastLocation").value();
+                        EntityHelper.setMetadata(ply, "lastLocation", currLoc);
+                        boolean moved = lastLoc.getWorld().equals(currLoc.getWorld()) && lastLoc.distanceSquared(currLoc) > 1e-5;
+                        // health regen
+                        {
+                            // init variables
+                            double healthRegenTime = EntityHelper.getMetadata(ply, "regenTime").asDouble();
+                            double effectiveRegenTime;
+                            if (healthRegenTime <= 300) effectiveRegenTime = 0;
+                            else if (healthRegenTime <= 800) effectiveRegenTime = (healthRegenTime - 300) / 100;
+                            else effectiveRegenTime = 5 + ((healthRegenTime - 800) / 200);
+                            if (debugMessage) ply.sendMessage(effectiveRegenTime + "|" + healthRegenTime);
+                            double maxHealth = ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                            double regenerationRate = ((maxHealth * 0.85 / 800) + 0.15) * effectiveRegenTime;
+                            regenerationRate *= moved ? 0.5 : 1.25;
+                            // additional hardcoded accessories etc
+                            double additionalHealthRegen = attrMap.getOrDefault("regen", 0d); // from accessories etc
+                            if (!moved && accessories.contains("闪亮石")) {
+                                regenerationRate += 8;
+                                healthRegenTime += delay * 4;
+                            }
+                            // regen
+                            double regenAmount = (regenerationRate + additionalHealthRegen) * perTickMulti * attrMap.getOrDefault("regenMulti", 1d);
+                            ply.setHealth(Math.min(ply.getHealth() + regenAmount, maxHealth));
+                            healthRegenTime += delay;
+                            EntityHelper.setMetadata(ply, "regenTime", Math.min(healthRegenTime, 1200));
+                        }
+                        // mana regen
+                        {
+                            double manaRegenDelay = EntityHelper.getMetadata(ply, "manaRegenDelay").asDouble();
+                            double manaRegenCounter = EntityHelper.getMetadata(ply, "manaRegenCounter").asDouble();
+                            boolean hasManaRegenBand = accessories.contains("魔力再生手环");
+                            boolean hasManaRegenPotionEffect = effectMap.containsKey("魔力再生");
+                            if (manaRegenDelay > 0) {
+                                // waiting for regen CD
+                                manaRegenDelay -= moved ? delay : delay * 2;
+                                if (hasManaRegenBand) manaRegenDelay -= delay;
+                                if (hasManaRegenPotionEffect) manaRegenDelay -= delay;
+                                EntityHelper.setMetadata(ply, "manaRegenDelay", manaRegenDelay);
+                            } else {
+                                // regeneration
+                                double manaRegenBonus = attrMap.getOrDefault("manaRegen", 0d);
+                                double maxMana = attrMap.getOrDefault("maxMana", 20d);
+                                // players with mana regen buff regenerates mana as if their mana is full
+                                double manaRatio = hasManaRegenPotionEffect ? 1d : (double) ply.getLevel() / maxMana;
+                                double manaRegenRate = ((maxMana * (moved ? 1d / 8 : 1d / 5)) + 1 + manaRegenBonus) * (manaRatio * 0.8 + 0.2) * 1.15;
+                                if (ply.getLevel() < maxMana) {
+                                    manaRegenCounter += manaRegenRate * delay * attrMap.getOrDefault("manaRegenMulti", 1d);
+                                    double regenAmount = Math.floor(manaRegenCounter / 40);
+                                    manaRegenCounter %= 40;
+                                    int levelResult = ply.getLevel() + (int) regenAmount;
+                                    ply.setLevel((int) Math.min(levelResult, maxMana));
+                                    if (ply.getLevel() >= maxMana)
+                                        ply.playSound(ply.getLocation(), Sound.BLOCK_NOTE_PLING, 2, 2);
+                                    EntityHelper.setMetadata(ply, "manaRegenCounter", manaRegenCounter);
+                                }
                             }
                         }
                     }
@@ -559,12 +584,12 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "craftingStation", "CLOSED");
         EntityHelper.setMetadata(ply, "recipeNumber", -1);
         // weapon use variables
-        EntityHelper.setMetadata(ply, "isLoadingWeapon", false);
-        EntityHelper.setMetadata(ply, "autoSwing", false);
+        ply.removeScoreboardTag("isLoadingWeapon");
+        ply.removeScoreboardTag("autoSwing");
+        ply.removeScoreboardTag("useCD");
         EntityHelper.setMetadata(ply, "swingAmount", 0);
         EntityHelper.setMetadata(ply, "nextMinionIndex", 0);
         EntityHelper.setMetadata(ply, "nextSentryIndex", 0);
-        EntityHelper.setMetadata(ply, "useCD", false);
         // object variables
         EntityHelper.setMetadata(ply, "minions", new ArrayList<Entity>());
         EntityHelper.setMetadata(ply, "sentries", new ArrayList<Entity>());
@@ -576,13 +601,14 @@ public class PlayerHelper {
         // mob spawning variable
         EntityHelper.setMetadata(ply, "mobAmount", 0);
         // movement variable
+        ply.removeScoreboardTag("thrusting");
         EntityHelper.setMetadata(ply, "grapplingHookItem", "");
-        EntityHelper.setMetadata(ply, "thrusting", false);
         EntityHelper.setMetadata(ply, "thrust", 0);
         EntityHelper.setMetadata(ply, "thrustProgress", 0);
         // other variable
         EntityHelper.setMetadata(ply, "team", "red");
         EntityHelper.setMetadata(ply, "armorSet", "");
+        EntityHelper.setMetadata(ply, "heldSlot", 0);
         // bgm and background
         EntityHelper.setMetadata(ply, "lastBackground", "");
         EntityHelper.setMetadata(ply, "lastBGM", "normal");
@@ -592,6 +618,8 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "regenTime", 0d);
         EntityHelper.setMetadata(ply, "manaRegenDelay", 0d);
         EntityHelper.setMetadata(ply, "manaRegenCounter", 0d);
+        // inventories
+        loadInventories(ply);
     }
     public static int getMaxHealthByTier(int tier) {
         if (tier < 21) return tier * 40;
@@ -628,6 +656,49 @@ public class PlayerHelper {
 
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setupAttribute ", e);
+        }
+    }
+    public static void loadInventories(Player ply) {
+        HashMap<String, Inventory> inventories = new HashMap<>();
+        YmlHelper.YmlSection plyFile = YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml");
+        // storage inventories (piggy bank, void bag)
+        List<String> otherInvs = settingConfig.getStringList("settings.playerInventories");
+        for (String invName : otherInvs) {
+            String title = settingConfig.getString("settings.playerInventoryTitles." + invName, "");
+            List<String> contents = plyFile.getStringList("inventory." + invName);
+            if (contents == null) contents = new ArrayList<>(1);
+            Inventory inv = Bukkit.createInventory(ply, 36, title);
+            int slot = 0;
+            for (String itemInfo : contents) {
+                inv.setItem(slot, ItemHelper.getItemFromDescription(itemInfo, false));
+                slot ++;
+            }
+            inventories.put(invName, inv);
+        }
+        // fill the player's inventory with glass that can not be moved to prevent bug
+        Inventory plyInv = ply.getInventory();
+        ItemStack placeholder = new ItemStack(Material.STONE_SPADE);
+        placeholder.getItemMeta().setDisplayName(ItemHelper.placeholderItemNamePrefix);
+        for (int i = 0; i < 36; i ++) {
+            plyInv.setItem(i, placeholder);
+        }
+        for (int i = 0; i < 50; i ++) {
+            String slotIndex = "inventory" + i;
+            DragoncoreHelper.setSlotItem(ply, slotIndex, new ItemStack(Material.DIAMOND, i + 1));
+        }
+        EntityHelper.setMetadata(ply, "inventories", inventories);
+    }
+    // TODO
+    public static void saveInventories(Player ply) {
+        HashMap<String, Inventory> inventories = (HashMap<String, Inventory>) EntityHelper.getMetadata(ply, "inventories").value();
+        YmlHelper.YmlSection plyFile = YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml");
+        for (String invType : inventories.keySet()) {
+            Inventory currInv = inventories.get(invType);
+            ArrayList<String> result = new ArrayList<>(36);
+            for (int i = 0; i < 36; i ++) {
+                result.add(ItemHelper.getItemDescription(currInv.getItem(i)));
+            }
+            plyFile.set("inventory." + invType, result);
         }
     }
     public static boolean isProperlyPlaying(Player player) {
@@ -671,7 +742,7 @@ public class PlayerHelper {
             EntityPlayer nms_ply = ((CraftPlayer) ply).getHandle();
             double yaw = nms_ply.yaw,
                     pitch = nms_ply.pitch;
-            Vector velocity = GenericHelper.vectorFromYawPitch_quick(yaw, pitch);
+            Vector velocity = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
             velocity.multiply(hookSpeed);
             hookEntity.setGravity(false);
             hookEntity.setVelocity(velocity);
@@ -689,5 +760,241 @@ public class PlayerHelper {
             Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] handleGrapplingHook ", e);
         }
     }
+    public static int addItemToPlayerInventory(ItemStack item, Player ply) {
+        // returns how many remaining
+        int itemAmountRemaining = item.getAmount();
+        // stacks up with existing item
+        for (int i = 0; i < 50; i ++) {
+            String slotIndex = "inventory" + i;
+            ItemStack currItem = DragoncoreHelper.getSlotItem(ply, slotIndex);
+            if (currItem.isSimilar(item)) {
+                int amountToAdd = Math.min(currItem.getMaxStackSize() - currItem.getAmount(), itemAmountRemaining);
+                itemAmountRemaining -= amountToAdd;
+                currItem.setAmount(currItem.getAmount() + amountToAdd);
+                DragoncoreHelper.setSlotItem(ply, slotIndex, currItem);
+                if (itemAmountRemaining <= 0) break;
+            }
+        }
+        // creates a new stack at an empty slot
+        for (int i = 0; i < 50; i ++) {
+            String slotIndex = "inventory" + i;
+            ItemStack currItem = DragoncoreHelper.getSlotItem(ply, slotIndex);
+            if (currItem.getType() == Material.AIR) {
+                int amountToAdd = Math.min(item.getMaxStackSize(), itemAmountRemaining);
+                itemAmountRemaining -= amountToAdd;
+                ItemStack itemToSet = item.clone();
+                itemToSet.setAmount(amountToAdd);
+                DragoncoreHelper.setSlotItem(ply, slotIndex, itemToSet);
+                if (itemAmountRemaining <= 0) break;
+            }
+        }
+        if (itemAmountRemaining != item.getAmount()) ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup ", 1, 1);
+        return itemAmountRemaining;
+    }
+    public static int addItemToGenericInventory(ItemStack item, Inventory inventory) {
+        // returns how many remaining
+        HashMap<Integer, ItemStack> remainingItemMap = inventory.addItem(item);
+        if (remainingItemMap.isEmpty()) return 0;
+        else return remainingItemMap.get(0).getAmount();
+    }
+    public static int giveItem(Player ply, ItemStack item, boolean dropExtra) {
+        int amountRemaining = item.getAmount();
+        if (item.getItemMeta().hasDisplayName()) {
+            String itemType = GenericHelper.trimText(item.getItemMeta().getDisplayName());
+            switch (itemType) {
+                case "铜币":
+                    setMoney(ply, getMoney(ply) + 100 * amountRemaining);
+                    return 0;
+                case "银币":
+                    setMoney(ply, getMoney(ply) + 10000 * amountRemaining);
+                    return 0;
+                case "金币":
+                    setMoney(ply, getMoney(ply) + 1000000 * amountRemaining);
+                    return 0;
+                case "铂金币":
+                    setMoney(ply, getMoney(ply) + 100000000 * amountRemaining);
+                    return 0;
+                case "心":
+                    heal(ply, 20);
+                    return 0;
+                case "星":
+                    restoreMana(ply, 100);
+                    return 0;
+            }
+        }
+        try {
+            amountRemaining = addItemToPlayerInventory(item, ply);
+            if (amountRemaining > 0) {
+                // put the item in the player's void bag, if the player has a void bag in the inventory
+                if (ply.getInventory().contains(ItemHelper.getItemFromDescription("虚空袋", false, new ItemStack(Material.BEDROCK)))) {
+                    Inventory voidBagInv = ((HashMap<String, Inventory>) EntityHelper.getMetadata(ply, "inventories").value())
+                            .get("voidBag");
+                    amountRemaining = addItemToGenericInventory(item, voidBagInv);
+                }
+            }
+            if (dropExtra && amountRemaining > 0) {
+                ItemStack itemToDrop = item.clone();
+                itemToDrop.setAmount(amountRemaining);
+                ply.getWorld().dropItemNaturally(ply.getEyeLocation(), itemToDrop);
+            }
+            return amountRemaining;
+        } catch (Exception e) {
+            Bukkit.getLogger().log(Level.SEVERE, "PlayerHelper.giveItem", e);
+            return amountRemaining;
+        }
+    }
+    // TODO: hologram
+    public static void heal(Player ply, double amount) {
+        double healAmount = Math.min(ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() - ply.getHealth(), amount);
+        ply.setHealth(ply.getHealth() + healAmount);
+        GenericHelper.displayHolo(ply, healAmount, false, "回血");
+    }
+    public static void restoreMana(Player ply, double amount) {
+        int restoreAmount = (int) Math.min(EntityHelper.getAttrMap(ply).getOrDefault("maxMana", 20d) - ply.getLevel(), amount);
+        ply.setLevel(ply.getLevel() + restoreAmount);
+        GenericHelper.displayHolo(ply, restoreAmount, false, "回蓝");
+    }
+    public static Location getSpawnLocation(Player ply) {
+        if (ply.getBedSpawnLocation() != null && !ply.getScoreboardTags().contains("bedCancelled"))
+            return ply.getBedSpawnLocation();
+        return Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE).getSpawnLocation();
+    }
+    public static void sendActionBar(Player player, String message) {
+        IChatBaseComponent actionBar = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + message + "\"}");
+        PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.ACTIONBAR, actionBar);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+    }
 
+    private static void spectreProjectileTick(Vector currDir, LivingEntity target, int idx, double velocity, Player dPly, Location loc, double num, boolean healingOrDamage, String color) {
+        if (!target.getWorld().equals(loc.getWorld())) return;
+        // if the target becomes invalid, terminate this projectile and start a new identical one
+        boolean shouldRetarget = false;
+        if (target instanceof Player && !isProperlyPlaying((Player) target)) shouldRetarget = true;
+        else if (target.getHealth() <= 0) shouldRetarget = true;
+        if (shouldRetarget) {
+            createSpectreProjectile(dPly, loc, num, healingOrDamage, color);
+            return;
+        }
+        // ticking mechanism
+        Location targetLoc = target.getEyeLocation();
+        if (idx > 5) {
+            if (idx == 6) velocity = 4;
+            double distSqr = loc.distanceSquared(targetLoc);
+            if (distSqr < velocity * velocity) {
+                // if the projectile reaches its target
+                currDir = targetLoc.clone().subtract(loc).toVector();
+                velocity = Math.sqrt(distSqr);
+                distSqr = -1;
+            } else {
+                // if the projectile does not yet reach its target
+                Vector dV = targetLoc.clone().subtract(loc).toVector();
+                if (dV.lengthSquared() > 0) {
+                    // set vector length of currDir to: min( sqrt(dV.length()) , 4)
+                    if (currDir.lengthSquared() > 0)
+                        MathHelper.setVectorLengthSquared(currDir, Math.min(dV.length(), 16));
+                    MathHelper.setVectorLength(dV, 4);
+                    currDir.add(dV);
+                    velocity += 0.25;
+                }
+            }
+            // hits its target
+            if (distSqr < 0) {
+                if (healingOrDamage) {
+                    heal((Player) target, num);
+                } else {
+                    EntityHelper.handleDamage(target, dPly, num, "spectre");
+                }
+                return;
+            }
+        } else
+            velocity += 0.1;
+        MathHelper.setVectorLength(currDir, velocity);
+        GenericHelper.handleParticleLine(currDir, velocity, 0.01, loc, color);
+        loc.add(currDir);
+        Vector finalCurrDir = currDir;
+        double finalVelocity = velocity;
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () ->
+                spectreProjectileTick(finalCurrDir, target, idx + 1, finalVelocity, dPly, loc, num, healingOrDamage, color),
+                2);
+    }
+    public static void createSpectreProjectile(Player dPly, Location loc, double num, boolean healingOrDamage, String color) {
+        Entity target = null;
+        if (healingOrDamage) {
+            String team = EntityHelper.getMetadata(dPly, "team").asString();
+            double targetHealth = 1e9;
+            // get the teammate nearby that has the lowest health
+            for (Player ply : dPly.getWorld().getPlayers()) {
+                // only heal teammates within 48 blocks radius
+                if (isProperlyPlaying(ply) &&
+                        ply.getHealth() < targetHealth && (ply.getHealth() + 1) < ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() &&
+                        ply.getLocation().distanceSquared(dPly.getLocation()) < 2304 &&
+                        EntityHelper.getMetadata(ply, "team").asString().equals(team)) {
+                    target = ply;
+                    targetHealth = ply.getHealth();
+                }
+            }
+        } else {
+            // get the valid target around loc that is closest to the player
+            double targetDistSqr = 1e9;
+            for (Entity e : loc.getWorld().getNearbyEntities(loc, 24, 24, 24)) {
+                if (EntityHelper.checkCanDamage(dPly, e)) {
+                    double distSqr = e.getLocation().distanceSquared(dPly.getLocation());
+                    if (distSqr < targetDistSqr) {
+                        target = e;
+                        targetDistSqr = distSqr;
+                    }
+                }
+            }
+        }
+        if (target != null) {
+            spectreProjectileTick(MathHelper.randomVector(), (LivingEntity) target, 0, 0.5, dPly, loc, num, healingOrDamage, color);
+        }
+    }
+    public static void playerSpectreArmor(Player dPly, Entity v, double dmg) {
+        if (!v.getScoreboardTags().contains("isMonster")) return;
+        String armorSet = EntityHelper.getMetadata(dPly, "armorSet").asString();
+        switch (armorSet) {
+            case "星云套装": {
+                if (dPly.getScoreboardTags().contains("tempNebulaCD")) break;
+                ItemStack nebulaItem = new ItemStack(Material.FLINT_AND_STEEL);
+                double rdm = Math.random();
+                if (rdm < 1d/9)
+                    nebulaItem.getItemMeta().setDisplayName("§c生命强化焰");
+                else if (rdm < 2d/9)
+                    nebulaItem.getItemMeta().setDisplayName("§d伤害强化焰");
+                else if (rdm < 1d/3)
+                    nebulaItem.getItemMeta().setDisplayName("§9魔力强化焰");
+                else break;
+                v.getWorld().dropItemNaturally(v.getLocation().add(0, 1.5d, 0), nebulaItem);
+                dPly.addScoreboardTag("tempNebulaCD");
+                Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+                    if (dPly.isOnline()) dPly.removeScoreboardTag("tempNebulaCD");
+                }, 10);
+                break;
+            }
+            case "幽灵吸血套装":
+            case "幽灵输出套装": {
+                if (dmg > 2) {
+                    if (dPly.getScoreboardTags().contains("tempSpectreCD")) break;
+                    dPly.addScoreboardTag("tempSpectreCD");
+                    int coolDownTicks;
+                    if (armorSet.equals("幽灵吸血套装")) {
+                        double projectilePower = (int) Math.ceil(dmg * 0.08);
+                        createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), (int) Math.ceil(projectilePower), true, "255|255|255");
+                        // 80 health/second
+                        coolDownTicks = (int) (projectilePower / 4);
+                    } else {
+                        double projectilePower = (int) Math.ceil(dmg * 0.5);
+                        createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), (int) Math.ceil(projectilePower), false, "255|255|255");
+                        // 800 dmg/second
+                        coolDownTicks = (int) (projectilePower / 40);
+                    }
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+                        if (dPly.isOnline()) dPly.removeScoreboardTag("tempSpectreCD");
+                    }, coolDownTicks);
+                }
+                break;
+            }
+        }
+    }
 }

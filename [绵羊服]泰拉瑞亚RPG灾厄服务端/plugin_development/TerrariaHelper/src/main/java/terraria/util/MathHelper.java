@@ -1,6 +1,12 @@
 package terraria.util;
 
+import org.bukkit.util.Vector;
+
+import java.util.HashMap;
+
 public class MathHelper {
+    public static final double DEG_TO_RAD = Math.PI / 180;
+
     // xsin source code: https://stackoverflow.com/questions/523531/fast-transcendent-trigonometric-functions-for-java
     // Return an approx to sin(pi/2 * x) where -1 <= x <= 1.
     // In that range it has a max absolute error of 5e-9
@@ -47,5 +53,48 @@ public class MathHelper {
     public static boolean isBetween(int toCheck, int lower, int upper) {
         return toCheck <= upper && toCheck >= lower;
     }
-
+    public static Vector vectorFromYawPitch(double yaw, double pitch) {
+        // source code from Skript
+        double y = -1 * Math.sin(pitch * DEG_TO_RAD);
+        double div = Math.cos(pitch * DEG_TO_RAD);
+        double x = -1 * Math.sin(yaw * DEG_TO_RAD);
+        double z = Math.cos(yaw * DEG_TO_RAD);
+        x *= div;
+        z *= div;
+        return new Vector(x,y,z);
+    }
+    public static Vector randomVector() {
+        return vectorFromYawPitch_quick(Math.random() * 360 - 180, Math.random() * 180 - 90);
+    }
+    public static Vector vectorFromYawPitch_quick(double yaw, double pitch) {
+        // algorithm from Skript
+        // uses xsin and xcos so that it is quicker. a bit less accurate though.
+        double y = -1 * MathHelper.xsin_degree(pitch);
+        double div = MathHelper.xcos_degree(pitch);
+        double x = -1 * MathHelper.xsin_degree(yaw);
+        double z = MathHelper.xcos_degree(yaw);
+        x *= div;
+        z *= div;
+        return new Vector(x,y,z);
+    }
+    public static String selectWeighedRandom(HashMap<String, Double> weighedMap) {
+        double total = 0;
+        for (double curr : weighedMap.values()) total += curr;
+        double rdm = Math.random() * total;
+        for (String curr : weighedMap.keySet()) {
+            double currWeight = weighedMap.get(curr);
+            if (rdm <= currWeight) return curr;
+            rdm -= currWeight;
+        }
+        // this is technically never reachable. It is here to prevent IDE reporting an error.
+        return "";
+    }
+    public static Vector setVectorLength(Vector vec, double targetLength) {
+        vec.normalize().multiply(targetLength);
+        return vec;
+    }
+    public static Vector setVectorLengthSquared(Vector vec, double targetLengthSquared) {
+        vec.multiply(Math.sqrt(targetLengthSquared / vec.lengthSquared()));
+        return vec;
+    }
 }

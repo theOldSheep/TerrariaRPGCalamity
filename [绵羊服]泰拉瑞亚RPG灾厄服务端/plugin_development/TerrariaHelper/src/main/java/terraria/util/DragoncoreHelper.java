@@ -1,4 +1,4 @@
-package terraria.dragoncorehelper;
+package terraria.util;
 
 import eos.moe.dragoncore.api.SlotAPI;
 import eos.moe.dragoncore.database.IDataBase;
@@ -6,7 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class SlotHelper {
+public class DragoncoreHelper {
     static class SlotCallback implements IDataBase.Callback<ItemStack> {
         ItemStack result = new ItemStack(Material.AIR);
         public ItemStack getResult() {

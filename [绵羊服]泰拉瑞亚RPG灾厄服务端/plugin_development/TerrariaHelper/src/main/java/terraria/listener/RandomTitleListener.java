@@ -1,4 +1,4 @@
-package terraria.dragoncorehelper;
+package terraria.listener;
 
 import eos.moe.dragoncore.config.Config;
 import org.bukkit.event.EventHandler;
@@ -7,9 +7,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 
-public class RandomTitle implements Listener {
+public class RandomTitleListener implements Listener {
     String[] titles;
-    public RandomTitle() {
+    public RandomTitleListener() {
         titles = new String[]{
                 "泰拉瑞亚：少说多挖之外传！",
                 "泰拉瑞亚：沙子被制服了",
