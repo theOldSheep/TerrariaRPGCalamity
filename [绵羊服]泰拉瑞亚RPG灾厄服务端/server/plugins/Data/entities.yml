@@ -1,3 +1,55 @@
+弹射物示例:
+    # 是否自动追踪，不写则视为false
+    autoTrace: false
+    # 自动追踪的寻敌半径，单位（格）。不写则视为12
+    autoTraceRadius: 12
+    # 自动追踪的能力，数字越高则追踪转向效率越高。不写则视为0.5
+    autoTraceAbility: 0.5
+    # 这个弹射物会不会被闭合的宝箱怪，旋转的火月怪等反弹？不写则视为true
+    canBeReflected: true
+    # 击中怪物后敌人多少帧后才能被本弹射物再次伤害？（一秒=20帧）不写则视为5
+    enemyInvincibilityFrame: 5
+    # 弹射物多少帧后超时自动损毁？（一秒=20帧）不写则视为200（10秒）
+    liveTime: 200
+    # 穿透敌怪次数，不写则视为0
+    penetration: 0
+    # 无视重力飞行的帧数，不写则视为15
+    noGravityTicks: 15
+    # 重力影响，受重力时每帧向下的速度改变（负数则为向上偏移）。不写则视为0.05
+    gravity: 0.05
+    # 弹射物的碰撞箱体积，不写视为0.25
+    projectileSize: 0.25
+    # 每帧速度乘以这个数字，例如1.25则为每帧加速25%，不写则视为1
+    speedMultiPerTick: 0
+    # 最大速度（单位：格/帧），防止恶魔锄刀类武器的速度突破天际，不写则视为2
+    maxSpeed: 2
+    # 是否为爆炸弹幕（损毁时爆炸）？不写则视为false
+    isGrenade: false
+    # 是否被水减速？不写则视为true
+    slowedByWater: true
+    # 击中方块时的反应，不写则视为die
+    # die: 击中方块时损毁； thru：穿透方块； bounce：弹跳； stick：黏在方块上； slide：像月光弓一样，在方块表面摩擦
+    blockHitAction: die
+    # 弹跳次数，不写则视为0。仅在blockHitAction: bounce时有作用。
+    bounce: 0
+    # 弹跳次数和穿透次数是否绑定（弹跳时穿透次数也减少1，反之亦然）？不写则视为false。仅在blockHitAction: bounce时有作用。
+    bouncePenetrationBonded: false
+    # 弹跳时速度乘的倍数，不写则视为1。仅在blockHitAction: bounce时有作用。
+    bounceVelocityMulti: 0
+    # 攻击造成的buff，格式为  buff名|buff时长（单位：帧）|几率。可不写。
+    buffInflict:
+        - "霜火|100|0.35"
+    # 集束炸弹类，可不写
+    # 仅在损毁时生效
+    clusterBomb:
+        # 分裂成弹片数量
+        amount: 8
+        # 分裂后弹片弹射物类型
+        name: 装饰弹片
+        # 分裂后弹片弹射物速度
+        velocity: 0.5
+        # 分裂后弹片伤害为原本伤害*damageMulti
+        damageMulti: 0.85
 冰焰箭:
     buffInflict:
         - "霜火|100|0.35"

@@ -1,4 +1,4 @@
-package terraria.listener;
+package terraria.event.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

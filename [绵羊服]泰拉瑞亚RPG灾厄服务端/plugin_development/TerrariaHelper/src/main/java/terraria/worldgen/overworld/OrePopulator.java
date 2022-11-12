@@ -98,7 +98,7 @@ public class OrePopulator extends BlockPopulator {
             int xCenter = chunk.getX() * 16 + (int) (Math.random() * 16),
                     zCenter = chunk.getZ() * 16 + (int) (Math.random() * 16);
             int height = wld.getHighestBlockYAt(xCenter, zCenter);
-            if (Math.abs(height - OverworldChunkGenerator.LAND_HEIGHT) > 10) return;
+            if (height < OverworldChunkGenerator.LAND_HEIGHT || height > OverworldChunkGenerator.LAND_HEIGHT + 20) return;
             Material oreMat = oreMaterials.getOrDefault("METEORITE", Material.STONE);
             height -= 6;
             // set spherical cluster of ore

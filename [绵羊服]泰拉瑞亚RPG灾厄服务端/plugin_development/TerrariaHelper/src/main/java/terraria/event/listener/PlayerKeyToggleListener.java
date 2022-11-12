@@ -1,4 +1,4 @@
-package terraria.listener;
+package terraria.event.listener;
 
 import eos.moe.dragoncore.api.event.KeyPressEvent;
 import eos.moe.dragoncore.api.event.KeyReleaseEvent;

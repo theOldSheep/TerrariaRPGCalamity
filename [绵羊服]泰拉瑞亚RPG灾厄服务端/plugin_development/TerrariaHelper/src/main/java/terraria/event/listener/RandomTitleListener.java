@@ -1,4 +1,4 @@
-package terraria.listener;
+package terraria.event.listener;
 
 import eos.moe.dragoncore.config.Config;
 import org.bukkit.event.EventHandler;

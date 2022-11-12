@@ -1,7 +1,5 @@
-package terraria.listener;
+package terraria.event.listener;
 
-import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

@@ -1,0 +1,264 @@
+buffConflicts:
+  # 食物buff有优先级的不同
+  1:
+    吃饱: 1
+    饱足: 2
+    饕餮: 3
+  # 灌注buff无优先级的不同，因此后触发的buff会覆盖之前存在的
+  2:
+    灵液灌注: 1
+    诅咒焰灌注: 1
+  3:
+    怒气: 1
+    圣神之怒: 2
+  # 拾心，再生，生命力的优先级为0，此时不判定为冲突因此不会互相覆盖，但心律和谐buff会覆盖掉上述三种
+  4:
+    拾心: 0
+    再生: 0
+    生命力: 0
+    心律和谐: 1
+
+effects:
+  燃烧:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/dc/Frostburn
+    isBuff: false
+    damageInterval: 4
+    damage: 1
+    tooltip: 孙哥我着火了
+  霜火:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/dc/Frostburn
+    isBuff: false
+    damageInterval: 4
+    damage: 2
+  咒火:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a0/Cursed_Inferno
+    isBuff: false
+    damageInterval: 5
+    damage: 3
+    damageMonster: 6
+  耐药性:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/83/Potion_Sickness
+    isBuff: false
+  魔力疾病:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/9/93/Mana_Sickness
+    isBuff: false
+  失明:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/c/c0/Darkness
+    isBuff: false
+  阻塞:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a5/Obstructed
+    isBuff: false
+  弹药储备:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/c/c8/Ammo_Reservation
+    isBuff: true
+    attributes:
+      ammoConsumptionRate: -0.2
+  箭术:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/9/98/Archery
+    isBuff: true
+    attributes:
+      projectileSpeedArrowMulti: 0.2
+      damageArrowMulti: 0.1
+  战斗:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/7/70/Battle
+    isBuff: true
+    attributes:
+      mobLimit: 10
+      mobSpawnRateMulti: 1.5
+  虫潮:
+    icon: https://calamitymod.wiki.gg/images/5/5c/Zerg
+    isBuff: true
+    attributes:
+      mobLimit: 5
+      mobSpawnRate: 1
+  冷静:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/2/20/Calm
+    isBuff: true
+    attributes:
+      mobLimit: -1
+      mobSpawnRateMulti: -0.2
+  禅定:
+    icon: https://calamitymod.wiki.gg/images/e/ee/Zen
+    isBuff: true
+    attributes:
+      mobLimit: -2
+      mobSpawnRate: -0.1
+  耐力:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/0/0a/Endurance
+    isBuff: true
+    attributes:
+      damageTakenMulti: -0.05
+  鱼鳃:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/f/fc/Gills
+    isBuff: true
+  隐身:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/e/e5/Invisibility
+    isBuff: true
+    attributes:
+      mobLimit: -1
+      mobSpawnRateMulti: -0.1
+  铁皮:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/3d/Ironskin
+    isBuff: true
+    attributes:
+      defence: 8
+  生命力:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/9/98/Lifeforce
+    isBuff: true
+    attributes:
+      healthMulti: 0.2
+  魔能:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/c/cd/Magic_Power
+    isBuff: true
+    attributes:
+      damageMagicMulti: 0.1
+  魔力再生:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/7/77/Mana_Regeneration
+    isBuff: true
+    attributes:
+      manaRegen: 10
+  黑曜石皮:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/8d/Obsidian_Skin
+    isBuff: true
+  再生:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/5/53/Regeneration
+    isBuff: true
+  召唤:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/1/18/Summoning_%28buff%29
+    isBuff: true
+    attributes:
+      minionLimit: 1
+  敏捷:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/af/Swiftness
+    isBuff: true
+    attributes:
+      speedMulti: 0.15
+  荆棘:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/9/9e/Thorns
+    isBuff: true
+  泰坦:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/88/Titan
+    isBuff: true
+    attributes:
+      knockbackMulti: 0.5
+  怒气:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/3f/Wrath
+    isBuff: true
+    attributes:
+      damageMulti: 0.1
+  吃饱:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a3/Well_Fed
+    isBuff: true
+    attributes:
+      defence: 4
+      crit: 2
+      useSpeedMeleeMulti: 0.05
+      damageMulti: 0.05
+      speedMulti: 0.05
+      regen: 2
+  饱足:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/2/2a/Plenty_Satisfied
+    isBuff: true
+    attributes:
+      defence: 6
+      crit: 3
+      useSpeedMeleeMulti: 0.075
+      damageMulti: 0.075
+      speedMulti: 0.075
+      regen: 4
+  饕餮:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/1/15/Exquisitely_Stuffed
+    isBuff: true
+    attributes:
+      defence: 8
+      crit: 4
+      useSpeedMeleeMulti: 0.1
+      damageMulti: 0.1
+      speedMulti: 0.1
+      regen: 6
+  流血:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/33/Bleeding
+    isBuff: false
+    attributes:
+      regen: -100
+  缓慢:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/f/f5/Slow
+    isBuff: false
+    attributes:
+      speedMulti: -0.5
+  恐惧:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/0/0b/Horrified
+    isBuff: false
+  中毒:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/1/11/Poisoned
+    isBuff: false
+    attributes:
+      regen: -100
+    damageInterval: 10
+    damage: 1
+  剧毒:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/8a/Venom
+    isBuff: false
+    attributes:
+      regen: -100
+    damageInterval: 4
+    damage: 6
+  破损盔甲:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/d5/Broken_Armor
+    isBuff: false
+    attributes:
+      defenceMulti: -0.5
+  诅咒:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/f/f0/Cursed
+    isBuff: false
+  扭曲:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/db/Distorted
+    isBuff: false
+  冷冻:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a6/Chilled
+    isBuff: false
+    attributes:
+      speedMulti: -0.5
+  冰冻:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/86/Frozen
+    isBuff: false
+    attributes:
+      speed: -10
+  破晓:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/b/b5/Stardust_Dragon
+    isBuff: false
+    attributes:
+      regen: -100
+    damageInterval: 5
+    damage: 10
+    damageMonster: 25
+  伤害星云:
+    isBuff: true
+    attributes:
+      damageMulti: 0.075
+  伤害星云1:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/3f/Wrath
+  伤害星云2:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/3f/Wrath
+  伤害星云3:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/3f/Wrath
+  生命星云:
+    isBuff: true
+    attributes:
+      regen: 10
+  生命星云1:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/5/53/Regeneration
+  生命星云2:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/5/53/Regeneration
+  生命星云3:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/5/53/Regeneration
+  魔力星云:
+    isBuff: true
+    attributes:
+      manaRegen: 10
+  魔力星云1:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/7/77/Mana_Regeneration
+  魔力星云2:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/7/77/Mana_Regeneration
+  魔力星云3:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/7/77/Mana_Regeneration

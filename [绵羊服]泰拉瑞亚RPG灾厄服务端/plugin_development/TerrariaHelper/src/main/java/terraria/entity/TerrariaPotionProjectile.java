@@ -1,0 +1,380 @@
+package terraria.entity;
+
+import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.util.Vector;
+import terraria.event.TerrariaProjectileHitEvent;
+import terraria.util.EntityHelper;
+import terraria.util.YmlHelper;
+
+import java.util.*;
+
+public class TerrariaPotionProjectile extends EntityPotion {
+    public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/entities.yml");
+    // projectile info
+    public String projectileType, blockHitAction = "die";
+    public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noGravityTicks = 15, penetration = 0;
+    public double autoTraceAbility = 0.5, autoTraceRadius = 12, bounceVelocityMulti = 1, gravity = 0.05, maxSpeed = 2, projectileSize = 0.25, speedMultiPerTick = 1;
+    public boolean autoTrace = false, bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = true;
+    public HashMap<UUID, Integer> damageCD;
+    public org.bukkit.entity.Projectile bukkitEntity;
+    public Entity autoTraceTarget = null;
+    private void setupProjectileProperties() {
+        ConfigurationSection section = projectileConfig.getConfigurationSection(projectileType);
+        if (section != null) {
+            this.bounce = section.getInt("bounce", this.bounce);
+            this.penetration = section.getInt("penetration", this.penetration);
+            this.enemyInvincibilityFrame = section.getInt("enemyInvincibilityFrame", this.enemyInvincibilityFrame);
+            this.liveTime = section.getInt("liveTime", this.liveTime);
+            this.noGravityTicks = section.getInt("noGravityTicks", this.noGravityTicks);
+            // thru, bounce, stick, slide
+            this.blockHitAction = section.getString("blockHitAction", this.blockHitAction);
+
+            this.autoTraceAbility = section.getDouble("autoTraceAbility", this.autoTraceAbility);
+            this.autoTraceRadius = section.getDouble("autoTraceRadius", this.autoTraceRadius);
+            this.bounceVelocityMulti = section.getDouble("bounceVelocityMulti", this.bounceVelocityMulti);
+            this.gravity = section.getDouble("gravity", this.gravity);
+            this.maxSpeed = section.getDouble("maxSpeed", this.maxSpeed);
+            this.projectileSize = section.getDouble("projectileSize", this.bounceVelocityMulti);
+            this.speedMultiPerTick = section.getDouble("speedMultiPerTick", this.speedMultiPerTick);
+
+            this.autoTrace = section.getBoolean("autoTrace", this.autoTrace);
+            this.bouncePenetrationBonded = section.getBoolean("bouncePenetrationBonded", this.bouncePenetrationBonded);
+            this.canBeReflected = section.getBoolean("canBeReflected", this.canBeReflected);
+            this.isGrenade = section.getBoolean("isGrenade", this.isGrenade);
+            this.slowedByWater = section.getBoolean("slowedByWater", this.slowedByWater);
+        }
+        this.setNoGravity(true);
+        damageCD = new HashMap<>((int) (penetration * 1.5));
+    }
+    public static ItemStack generateItemStack(String projectileType) {
+        org.bukkit.inventory.ItemStack item = new org.bukkit.inventory.ItemStack(org.bukkit.Material.SPLASH_POTION);
+        org.bukkit.inventory.meta.PotionMeta meta = (org.bukkit.inventory.meta.PotionMeta) item.getItemMeta();
+        meta.setDisplayName(projectileType);
+        meta.setColor(org.bukkit.Color.fromRGB(255, 255, 255));
+        item.setItemMeta(meta);
+        return CraftItemStack.asNMSCopy(item);
+    }
+    // constructor
+    public TerrariaPotionProjectile(org.bukkit.Location loc, ItemStack projectileItem, Vector velocity, String projectileType) {
+        super(((CraftWorld) loc.getWorld()).getHandle(), loc.getX(), loc.getY(), loc.getZ(), projectileItem);
+        this.motX = velocity.getX();
+        this.motY = velocity.getY();
+        this.motZ = velocity.getZ();
+        this.projectileType = projectileType;
+        setupProjectileProperties();
+        bukkitEntity = (org.bukkit.entity.Projectile) getBukkitEntity();
+    }
+
+    public void setType(String type) {
+        projectileType = type;
+        setItem(generateItemStack(type));
+        setupProjectileProperties();
+    }
+
+    protected double getAutoTraceInterest(Entity target) {
+        // if the target is dead or is not a
+        if (!target.isAlive() || (target instanceof EntityLiving && ((EntityLiving) target).getHealth() <= 0))
+            return -1;
+        // should not be following critters and attempt to damage them
+        if (!EntityHelper.checkCanDamage(bukkitEntity, target.getBukkitEntity())) return -1;
+        // neutral on target during invincibility tick
+        if (damageCD.containsKey(target.getUniqueID())) return 0;
+        return autoTraceRadius * autoTraceRadius - target.d(this.locX, this.locY, this.locZ);
+    }
+    public boolean checkCanHit(Entity e) {
+        if (damageCD.containsKey(e.getUniqueID())) return false;
+        // should still be able to hit entities that are neither monster nor forbidden to hit
+        return EntityHelper.checkCanDamage(bukkitEntity, e.getBukkitEntity(), false);
+    }
+    public void hitEntity(Entity e, MovingObjectPosition position) {
+        // handles post-hit mechanism: damage is handled by a listener
+        if (--penetration < 0) {
+            setPosition(position.pos.x, position.pos.y, position.pos.z);
+            die();
+        }
+        if (bouncePenetrationBonded) bounce --;
+        damageCD.put(e.getUniqueID(), enemyInvincibilityFrame);
+    }
+
+    // override functions
+    @Override
+    public void extinguish() {
+        switch (projectileType) {
+            case "小火花":
+                this.die();
+                break;
+            case "烈焰箭":
+                setType("木箭");
+                break;
+        }
+    }
+    @Override
+    // tick water
+    public boolean aq() {
+        if (this.world.a(this.getBoundingBox().grow(0.0, -0.4000000059604645, 0.0).shrink(0.001), Material.WATER, this)) {
+            this.inWater = true;
+            this.extinguish();
+        } else {
+            this.inWater = false;
+        }
+        return this.inWater;
+    }
+    // die
+    @Override
+    public void die() {
+        TerrariaProjectileHitEvent.callProjectileHitEvent(this);
+        super.die();
+        if (isGrenade) EntityHelper.handleEntityExplode(bukkitEntity, null,
+                new org.bukkit.Location(bukkitEntity.getWorld(), this.locX, this.locY, this.locZ));
+    }
+    // tick
+    @Override
+    public void B_() {
+        // start timing
+        this.world.methodProfiler.a("entityBaseTick");
+        // ticking from Entity.class
+        this.I = this.J;
+        this.lastX = this.locX;
+        this.lastY = this.locY;
+        this.lastZ = this.locZ;
+        this.lastPitch = this.pitch;
+        this.lastYaw = this.yaw;
+        // tick water
+        this.aq();
+        if (this.locY < -64.0) this.die();
+        if (!isAlive()) return;
+
+        this.justCreated = false;
+        // ticking from EntityProjectile.class
+        this.M = this.locX;
+        this.N = this.locY;
+        this.O = this.locZ;
+        // in lava or water
+        double speedMulti = 1;
+        if ((this.au() || this.inWater) && slowedByWater) {
+            speedMulti = 0.5;
+        }
+        if (this.inGround) {
+            switch (blockHitAction) {
+                case "bounce":
+                case "slide":
+                case "die":
+                    this.die();
+                    return;
+            }
+        }
+        // get the block it will cram into, then set the final location after ticking
+        Vector velocity = new Vector(this.motX, this.motY, this.motZ);
+        double spdX = this.motX * speedMulti, spdY = this.motY * speedMulti, spdZ = this.motZ * speedMulti;
+        Vec3D initialLoc = new Vec3D(this.locX, this.locY, this.locZ);
+        Vec3D futureLoc = new Vec3D(this.locX + spdX, this.locY + spdY, this.locZ + spdZ);
+        MovingObjectPosition movingobjectposition = this.world.rayTrace(initialLoc, futureLoc);
+        initialLoc = new Vec3D(this.locX, this.locY, this.locZ);
+        futureLoc = new Vec3D(this.locX + spdX, this.locY + spdY, this.locZ + spdZ);
+        if (movingobjectposition != null) {
+            switch (blockHitAction) {
+                case "bounce":
+                case "slide":
+                case "stick":
+                    Vector travelled = new Vector(movingobjectposition.pos.x - this.locX,
+                            movingobjectposition.pos.y - this.locY,
+                            movingobjectposition.pos.z - this.locZ);
+                    double dist = travelled.length();
+                    if (dist > 0.01) {
+                        travelled.multiply((dist - 0.01) / dist);
+                    } else {
+                        travelled.multiply(0);
+                    }
+                    futureLoc = new Vec3D(this.locX + travelled.getX(), this.locY + travelled.getY(), this.locZ + travelled.getZ());
+                    // tweak velocity
+                    switch (blockHitAction) {
+                        case "bounce":
+                        {
+                            if (--bounce < 0) {
+                                die();
+                                return;
+                            }
+                            if (bouncePenetrationBonded) penetration --;
+                            switch (movingobjectposition.direction) {
+                                case UP:
+                                case DOWN:
+                                    velocity.setY(velocity.getY() * -1);
+                                    break;
+                                case EAST:
+                                case WEST:
+                                    velocity.setX(velocity.getX() * -1);
+                                    break;
+                                case SOUTH:
+                                case NORTH:
+                                    velocity.setZ(velocity.getZ() * -1);
+                                    break;
+                            }
+                            velocity.multiply(bounceVelocityMulti);
+                            break;
+                        }
+                        case "slide":
+                        {
+                            switch (movingobjectposition.direction) {
+                                case UP:
+                                case DOWN:
+                                    velocity.setY(0);
+                                    break;
+                                case EAST:
+                                case WEST:
+                                    velocity.setX(0);
+                                    break;
+                                case SOUTH:
+                                case NORTH:
+                                    velocity.setZ(0);
+                                    break;
+                            }
+                            break;
+                        }
+                        case "stick":
+                        {
+                            velocity.multiply(0);
+                            break;
+                        }
+                    }
+                    break;
+                case "die":
+                    futureLoc = new Vec3D(movingobjectposition.pos.x, movingobjectposition.pos.y, movingobjectposition.pos.z);
+                    break;
+            }
+        }
+        // handle projectile hit
+        {
+            // update invincibility map
+            ArrayList<UUID> toRemove = new ArrayList<>(5);
+            for (UUID currCheck : damageCD.keySet()) {
+                int currInvincibility = damageCD.get(currCheck);
+                if (currInvincibility <= 1) toRemove.add(currCheck);
+                else damageCD.put(currCheck, currInvincibility - 1);
+            }
+            for (UUID currRemove : toRemove) damageCD.remove(currRemove);
+            // get list of entities that could get hit
+            List<Entity> list = this.world.getEntities(this, getBoundingBox().b(this.motX, this.motY, this.motZ).g(projectileSize));
+            Set<HitEntityInfo> hitCandidates = new TreeSet<>(Comparator.comparingDouble(HitEntityInfo::getDistance));
+            for (Entity toCheck : list) {
+                // living entities etc
+                if (toCheck.isInteractable())
+                    if (this.shooter == null || this.shooter != toCheck) {
+                        AxisAlignedBB axisalignedbb = toCheck.getBoundingBox().g(projectileSize);
+                        MovingObjectPosition hitPosition = axisalignedbb.b(initialLoc, futureLoc);
+                        if (hitPosition != null && checkCanHit(toCheck)) {
+                            double distanceSquared = initialLoc.distanceSquared(hitPosition.pos);
+                            hitCandidates.add(new HitEntityInfo(distanceSquared, toCheck, hitPosition));
+                        }
+                    }
+            }
+            for (HitEntityInfo toHit : hitCandidates) {
+                Entity hitEntity = toHit.getHitEntity();
+                MovingObjectPosition hitInfo = new MovingObjectPosition(hitEntity);
+                if (TerrariaProjectileHitEvent.callProjectileHitEvent(this, hitInfo).isCancelled()) continue;
+                // we use the former hit location because it contains the information of collision location
+                hitEntity(hitEntity, toHit.getHitLocation());
+                // if the projectile reached its penetration capacity, stop damaging enemies
+                if (this.dead) break;
+            }
+        }
+        // move
+        this.locX = futureLoc.x;
+        this.locY = futureLoc.y;
+        this.locZ = futureLoc.z;
+        float horizontalSpeed = MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ);
+        // update yaw and pitch
+        this.yaw = (float)(MathHelper.c(this.motX, this.motZ) * 57.2957763671875D);
+        for (this.pitch = (float)(MathHelper.c(this.motY, horizontalSpeed) * 57.2957763671875D); this.pitch - this.lastPitch < -180.0F; this.lastPitch -= 360.0F);
+        while (this.pitch - this.lastPitch >= 180.0F)
+            this.lastPitch += 360.0F;
+        while (this.yaw - this.lastYaw < -180.0F)
+            this.lastYaw -= 360.0F;
+        while (this.yaw - this.lastYaw >= 180.0F)
+            this.lastYaw += 360.0F;
+        this.pitch = this.lastPitch + (this.pitch - this.lastPitch) * 0.2F;
+        this.yaw = this.lastYaw + (this.yaw - this.lastYaw) * 0.2F;
+        // handle water particle
+        if (isInWater()) {
+            for (int j = 0; j < 4; j++)
+                this.world.addParticle(EnumParticle.WATER_BUBBLE, this.locX - this.motX * projectileSize, this.locY - this.motY * projectileSize, this.locZ - this.motZ * projectileSize, this.motX, this.motY, this.motZ, new int[0]);
+        }
+        // optimize auto trace target
+        if (autoTrace) {
+            if (getAutoTraceInterest(autoTraceTarget) < -0.01)
+                autoTraceTarget = null;
+            double maxInterest = 0;
+            List<Entity> list = this.world.getEntities(this, getBoundingBox().g(autoTraceRadius));
+            for (Entity toCheck : list) {
+                // living entities etc
+                if (!toCheck.isInteractable()) continue;
+                if (this.shooter != null && this.shooter == toCheck) continue;
+                // if the target is unreachable
+                if (!blockHitAction.equals("thru")){
+                    Vec3D traceBegin = new Vec3D(this.locX, this.locY, this.locZ);
+                    Vec3D traceEnd = toCheck.d();
+                    MovingObjectPosition blockHitPos = this.world.rayTrace(traceBegin, traceEnd);
+                    if (blockHitPos != null) continue;
+                }
+                double currInterest = getAutoTraceInterest(toCheck);
+                if (currInterest > maxInterest) {
+                    maxInterest = currInterest;
+                    autoTraceTarget = toCheck;
+                }
+            }
+        }
+        // tweak speed: handle auto trace or tweak by per tick speed decay and gravity
+        if (autoTrace && autoTraceTarget != null) {
+            Vector acceleration;
+            if (autoTraceTarget instanceof EntityLiving) acceleration = ((LivingEntity) autoTraceTarget.getBukkitEntity()).getEyeLocation().subtract(this.locX, this.locY, this.locZ).toVector();
+            else acceleration = autoTraceTarget.getBukkitEntity().getLocation().add(0, 1.5, 0).subtract(this.locX, this.locY, this.locZ).toVector();
+            double spd = velocity.length();
+            if (acceleration.lengthSquared() > 0) {
+                acceleration.multiply(spd / acceleration.length());
+                velocity.add(acceleration);
+            }
+        } else {
+            velocity.multiply(speedMulti);
+            if (!isNoGravity()) velocity.subtract(new Vector(0, gravity, 0));
+        }
+        if (velocity.lengthSquared() > maxSpeed * maxSpeed) terraria.util.MathHelper.setVectorLength(velocity, maxSpeed);
+        // set position and velocity info
+        setPosition(this.locX, this.locY, this.locZ);
+        this.motX = velocity.getX();
+        this.motY = velocity.getY();
+        this.motZ = velocity.getZ();
+        // tick lived mechanisms
+        this.ticksLived ++;
+        if (this.ticksLived >= liveTime) die();
+        if (this.ticksLived >= noGravityTicks) this.setNoGravity(false);
+        // timing
+        this.world.methodProfiler.b();
+    }
+
+
+    public static class HitEntityInfo {
+        private double distance;
+        private Entity hitEntity;
+        private MovingObjectPosition hitLocation;
+
+        public HitEntityInfo(double distance, Entity hitEntity, MovingObjectPosition hitLocation) {
+            this.distance = distance;
+            this.hitEntity = hitEntity;
+            this.hitLocation = hitLocation;
+        }
+
+        public double getDistance() {
+            return this.distance;
+        }
+
+        public Entity getHitEntity() {
+            return this.hitEntity;
+        }
+        public MovingObjectPosition getHitLocation() {
+            return this.hitLocation;
+        }
+    }
+}

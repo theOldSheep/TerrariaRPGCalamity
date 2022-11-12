@@ -5,8 +5,8 @@ import me.clip.placeholderapi.PlaceholderHook;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import terraria.listener.RandomTitleListener;
-import terraria.listener.*;
+import terraria.event.listener.RandomTitleListener;
+import terraria.event.listener.*;
 import terraria.util.EntityHelper;
 import terraria.util.GenericHelper;
 import terraria.util.PlayerHelper;
@@ -69,6 +69,7 @@ public class TerrariaHelper extends JavaPlugin {
         });
     }
     private void registerEvents() {
+        Bukkit.getPluginManager().registerEvents(new ArrowShootEvent(), this);
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new DropItemSpawnListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);

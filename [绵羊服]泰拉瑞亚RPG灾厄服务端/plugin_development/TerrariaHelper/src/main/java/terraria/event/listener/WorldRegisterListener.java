@@ -1,4 +1,4 @@
-package terraria.listener;
+package terraria.event.listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;

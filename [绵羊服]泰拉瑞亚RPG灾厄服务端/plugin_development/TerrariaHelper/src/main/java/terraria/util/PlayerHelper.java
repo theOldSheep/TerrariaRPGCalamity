@@ -814,7 +814,8 @@ public class PlayerHelper {
     }
     public static int giveItem(Player ply, ItemStack item, boolean dropExtra) {
         if (item == null) return 0;
-        int amountRemaining = item.getAmount();
+        int amountInitial = item.getAmount();
+        int amountRemaining = amountInitial;
         String itemType = ItemHelper.splitItemName(item)[1];
         switch (itemType) {
             case "铜币":
@@ -879,7 +880,7 @@ public class PlayerHelper {
                 itemToDrop.setAmount(amountRemaining);
                 ItemHelper.dropItem(ply.getEyeLocation(), itemToDrop);
             }
-            if (amountRemaining < item.getAmount()) ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+            if (amountRemaining < amountInitial) ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
             return amountRemaining;
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "PlayerHelper.giveItem", e);

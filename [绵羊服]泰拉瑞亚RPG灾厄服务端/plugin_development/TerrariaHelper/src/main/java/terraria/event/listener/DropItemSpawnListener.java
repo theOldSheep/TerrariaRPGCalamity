@@ -1,4 +1,4 @@
-package terraria.listener;
+package terraria.event.listener;
 
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftItem;
 import org.bukkit.entity.Entity;

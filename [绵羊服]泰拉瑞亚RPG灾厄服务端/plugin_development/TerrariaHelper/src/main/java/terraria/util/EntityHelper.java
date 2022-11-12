@@ -9,9 +9,9 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.*;
-import org.bukkit.craftbukkit.v1_12_R1.projectiles.CraftBlockProjectileSource;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -27,8 +27,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.TerrariaItem;
-import terraria.entity.TerrariaProjectile;
+import terraria.entity.TerrariaPotionProjectile;
 import terraria.gameplay.Event;
 
 import java.util.*;
@@ -36,7 +35,43 @@ import java.util.logging.Level;
 
 public class EntityHelper {
     // constants
-    static YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
+    static final YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
+    static final YmlHelper.YmlSection buffConfig = YmlHelper.getFile("plugins/Data/buff.yml");
+    static final HashMap<String, Set<String>> buffInferior, buffSuperior;
+    static {
+        buffSuperior = new HashMap<>(50);
+        buffInferior = new HashMap<>(50);
+        ConfigurationSection conflictSection = buffConfig.getConfigurationSection("buffConflicts");
+        Set<String> rules = conflictSection.getKeys(false);
+        for (String rule : rules) {
+            ConfigurationSection ruleSection = conflictSection.getConfigurationSection(rule);
+            Set<String> specificBuffs = conflictSection.getKeys(false);
+            for (String buff1 : specificBuffs) {
+                int priority1 = ruleSection.getInt(buff1, 0);
+                for (String buff2 : specificBuffs) {
+                    if (buff1.equals(buff2)) continue;
+                    int priority2 = ruleSection.getInt(buff2, 0);
+                    // they have same priority, so they can both override each other
+                    if (priority1 == priority2) {
+                        if (priority1 != 0) {
+                            buffInferior.getOrDefault(buff1, new HashSet<>(25)).add(buff2);
+                            buffInferior.getOrDefault(buff2, new HashSet<>(25)).add(buff1);
+                        }
+                    } else {
+                        if (priority1 > priority2) {
+                            // buff2 can not be applied when buff1 is present, buff1 can override buff2
+                            buffInferior.getOrDefault(buff1, new HashSet<>(25)).add(buff2);
+                            buffSuperior.getOrDefault(buff2, new HashSet<>(25)).add(buff1);
+                        } else {
+                            // buff1 can not be applied when buff2 is present, buff2 can override buff1
+                            buffSuperior.getOrDefault(buff1, new HashSet<>(25)).add(buff2);
+                            buffInferior.getOrDefault(buff2, new HashSet<>(25)).add(buff1);
+                        }
+                    }
+                }
+            }
+        }
+    }
     // helper functions
     public static void initEntityMetadata(Entity entity) {
         setMetadata(entity, "effects", new HashMap<String, Integer>());
@@ -174,6 +209,7 @@ public class EntityHelper {
         }
         return false;
     }
+    // potion effect
     public static boolean hasEffect(Entity entity, String effect) {
         try {
             return getEffectMap(entity).containsKey(effect);
@@ -218,6 +254,23 @@ public class EntityHelper {
         int levelDuration = getEffectLevelDuration(effect);
         if (levelDuration > 0) return Math.min((durationTicks + levelDuration - 1) / levelDuration, getEffectLevelMax(effect));
         return 1;
+    }
+    public static List<PotionEffectType> getVanillaEffectInflict(String effect) {
+        ArrayList<PotionEffectType> result = new ArrayList<>(3);
+        switch (effect) {
+            case "阻塞":
+                result.add(PotionEffectType.BLINDNESS);
+                break;
+            case "鱼鳃":
+                result.add(PotionEffectType.WATER_BREATHING);
+                break;
+            case "黑曜石皮":
+                result.add(PotionEffectType.FIRE_RESISTANCE);
+                break;
+            case "隐身":
+                result.add(PotionEffectType.INVISIBILITY);
+        }
+        return result;
     }
     public static void tickEffect(Entity entity, String effect, int delay, double damagePerDelay) {
         try {
@@ -278,10 +331,14 @@ public class EntityHelper {
             if (!(entity instanceof Player)) {
                 String attributesPath = "effects." + effect + ".attributes";
                 Set<String> attributesTweaked =
-                        settingConfig.getConfigurationSection(attributesPath).getKeys(false);
+                        buffConfig.getConfigurationSection(attributesPath).getKeys(false);
                 for (String attr : attributesTweaked) {
-                    tweakAttribute(entity, attr, settingConfig.getString(attributesPath + attr), false);
+                    tweakAttribute(entity, attr, buffConfig.getString(attributesPath + attr), false);
                 }
+            } else {
+                // remove the buff applied
+                for (PotionEffectType effectInflict : getVanillaEffectInflict(effect))
+                    ((LivingEntity) entity).removePotionEffect(effectInflict);
             }
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] endTickEffect", e);
@@ -294,17 +351,17 @@ public class EntityHelper {
             if (effect.equals("扭曲")) {
                 delay = 4;
             } else {
-                delay = settingConfig.getInt("effects." + effect + ".damageInterval", delay);
-                damagePerDelay = settingConfig.getInt("effects." + effect + ".damage", 0);
+                delay = buffConfig.getInt("effects." + effect + ".damageInterval", delay);
+                damagePerDelay = buffConfig.getInt("effects." + effect + ".damage", 0);
                 if (!(entity instanceof Player))
-                    damagePerDelay = settingConfig.getInt("effects." + effect + ".damageMonster", damagePerDelay);
+                    damagePerDelay = buffConfig.getInt("effects." + effect + ".damageMonster", damagePerDelay);
             }
             // tweak attrMap if the target is not a player
             String attributesPath = "effects." + effect + ".attributes";
             Set<String> attributesTweaked =
-                    settingConfig.getConfigurationSection(attributesPath).getKeys(false);
+                    buffConfig.getConfigurationSection(attributesPath).getKeys(false);
             for (String attr : attributesTweaked) {
-                tweakAttribute(entity, attr, settingConfig.getString(attributesPath + attr), true);
+                tweakAttribute(entity, attr, buffConfig.getString(attributesPath + attr), true);
             }
             // register delayed task
             int finalDamagePerDelay = damagePerDelay;
@@ -316,6 +373,8 @@ public class EntityHelper {
     }
     public static void applyEffect(Entity entity, String effect, int durationTicks) {
         try {
+            // if the buff is not in config, do not do anything
+            if (!buffConfig.contains("effects." + effect)) return;
             // returns if the entity is immune to this effect (i.e. debuff)
             if (!(entity instanceof Player)) {
                 ArrayList<String> checkNode = new ArrayList<>();
@@ -377,24 +436,16 @@ public class EntityHelper {
                 }
             }
             // apply the buff
-            PotionEffectType effectInflict = null;
-            switch (effect) {
-                case "阻塞":
-                    effectInflict = PotionEffectType.BLINDNESS;
-                    break;
-                case "鱼鳃":
-                    effectInflict = PotionEffectType.WATER_BREATHING;
-                    break;
-                case "黑曜石皮":
-                    effectInflict = PotionEffectType.FIRE_RESISTANCE;
-                    break;
-                case "隐身":
-                    effectInflict = PotionEffectType.INVISIBILITY;
-            }
-            if (effectInflict != null)
+            for (PotionEffectType effectInflict : getVanillaEffectInflict(effect))
                 ((LivingEntity) entity).addPotionEffect(new PotionEffect(effectInflict, durationTicks, 0), true);
             // tweak effect time of some special effects
             HashMap<String, Integer> allEffects = getEffectMap(entity);
+            // does nothing if the target has a superior effect, otherwise tweak the inferior effects
+            for (String effectSuperior : buffSuperior.getOrDefault(effect, new HashSet<>()))
+                if (allEffects.containsKey(effectSuperior)) return;
+            for (String effectInferior : buffInferior.getOrDefault(effect, new HashSet<>()))
+                if (allEffects.containsKey(effectInferior)) allEffects.put(effectInferior, 0);
+            // tweak duration of special effects
             int finalDurationTicks;
             int currentDurationTicks = allEffects.getOrDefault(effect, 0);
             switch (effect) {
@@ -419,7 +470,8 @@ public class EntityHelper {
                 default:
                     finalDurationTicks = Math.max(currentDurationTicks, durationTicks);
             }
-            getEffectMap(entity).put(effect, finalDurationTicks);
+            // record effect info
+            allEffects.put(effect, finalDurationTicks);
             // prepare to start ticking effect if the entity does not have it yet
             if (currentDurationTicks == 0) prepareTickEffect(entity, effect);
         } catch (Exception e) {
@@ -797,20 +849,20 @@ public class EntityHelper {
             }
         }
     }
-    public static boolean checkCanDamage(Entity entity, Entity Target) {
-        return false;
+    public static boolean checkCanDamage(Entity entity, Entity target) {
+        return checkCanDamage(entity, target, true);
     }
-    public static void handleDamage(Entity victim, Entity target, double damage, String damageCause) {
+    public static boolean checkCanDamage(Entity entity, Entity target, boolean strict) {
+        return true;
+    }
+    public static void handleDamage(Entity damager, Entity target, double damage, String damageCause) {
         // TODO
     }
     public static void handleEntityExplode(Entity source, Entity damageException, Location loc) {
         // TODO
     }
     public static Projectile spawnProjectile(Location loc, Vector velocity, String projectileName, ProjectileSource src) {
-        return spawnProjectile(loc, velocity, projectileName, src, 0, 0, false, false);
-    }
-    public static Projectile spawnProjectile(Location loc, Vector velocity, String projectileName, ProjectileSource src, int bounce, int penetration, boolean bouncePenetrationBounded, boolean thruWall) {
-        TerrariaProjectile entity = new TerrariaProjectile(loc, TerrariaProjectile.generateItemStack(projectileName), velocity, projectileName, bounce, penetration, bouncePenetrationBounded, thruWall);
+        TerrariaPotionProjectile entity = new TerrariaPotionProjectile(loc, TerrariaPotionProjectile.generateItemStack(projectileName), velocity, projectileName);
         CraftWorld wld = (CraftWorld) loc.getWorld();
         wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         Projectile bukkitProjectile = new CraftSplashPotion(wld.getHandle().getServer(), entity);

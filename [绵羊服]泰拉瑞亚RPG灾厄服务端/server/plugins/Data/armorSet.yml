@@ -27,30 +27,6 @@ pieces:
   - 钨钢近战套装
   - 钨钢远程魔法套装
   - 钨钢召唤套装
-  沙漠巡游者帽:
-  - 沙漠巡游者套装
-  沙漠巡游者衣:
-  - 沙漠巡游者套装
-  沙漠巡游者裤:
-  - 沙漠巡游者套装
-  胜潮贝盔:
-  - 胜潮近战套装
-  胜潮瑚巾:
-  - 胜潮远程套装
-  胜潮隐帽:
-  - 胜潮魔法套装
-  胜潮面罩:
-  - 胜潮召唤套装
-  胜潮胸甲:
-  - 胜潮近战套装
-  - 胜潮远程套装
-  - 胜潮召唤套装
-  - 胜潮魔法套装
-  胜潮护胫:
-  - 胜潮近战套装
-  - 胜潮远程套装
-  - 胜潮召唤套装
-  - 胜潮魔法套装
   忍者头盔:
   - 忍者套装
   忍者胸甲:
@@ -287,66 +263,10 @@ sets:
     lore:
     - ''
     - §a套装效果： +6 防御
-    - §a+1 召唤栏
+    - §a+1召唤栏
     attributes:
       defence: 6
       minionLimit: 1
-  沙漠巡游者套装:
-    lore:
-    - ''
-    - §a套装效果： 
-    - §a+12 防御
-    - §a+1 远程伤害
-    - §a+9% 远程暴击率
-    - §a-20% 弹药消耗
-    - §a+10% 移动速度
-    - §a远程伤害暴击有概率召唤一个沙龙卷，沙龙卷持续15秒，对接触到的敌人造成伤害。它所造成的伤害等同于你引发它的那一发弹幕的伤害，而它的暴击率等同于你所持武器的暴击率。
-    attributes:
-      defence: 12
-      critRanged: 9
-      damage: 1
-      ammoConsumptionRate: -0.2
-      speedMulti: 0.1
-  胜潮近战套装:
-    lore:
-    - ''
-    - §a套装效果： 
-    - §a+6 生命恢复
-    - §a+10% 近战伤害
-    - §a加快敌人刷新
-    attributes:
-      damageMeleeMulti: 0.1
-      regen: 6
-      mobSpawnRateMulti: 0.2
-  胜潮远程套装:
-    lore:
-    - ''
-    - §a套装效果： 
-    - §a+6 生命恢复
-    - §a+10% 远程伤害
-    attributes:
-      damageRangedMulti: 0.1
-      regen: 6
-  胜潮魔法套装:
-    lore:
-    - ''
-    - §a套装效果： 
-    - §a+6 生命恢复
-    - §a+10% 魔法伤害
-    attributes:
-      damageMagicMulti: 0.1
-      regen: 6
-  胜潮召唤套装:
-    lore:
-    - ''
-    - §a套装效果： 
-    - §a+6 生命恢复
-    - §a+10% 召唤伤害
-    - §a+2 召唤栏
-    attributes:
-      damageSummonMultiMulti: 0.1
-      regen: 6
-      minionLimit: 2
   忍者套装:
     lore:
     - ''

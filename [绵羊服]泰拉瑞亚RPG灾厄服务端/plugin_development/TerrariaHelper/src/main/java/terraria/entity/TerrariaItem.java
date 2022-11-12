@@ -6,6 +6,7 @@ import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.event.CraftEventFactory;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.util.Vector;
 import terraria.util.*;
 
@@ -320,6 +321,10 @@ public class TerrariaItem extends EntityItem {
         if (pickupDelay > 0) return;
         ItemStack itemstack = this.getItemStack();
         int remaining = PlayerHelper.giveItem((Player) entityhuman.getBukkitEntity(), bukkitItemStack, false);
+        // call the event to update item tag amount
+        PlayerPickupItemEvent playerEvent = new PlayerPickupItemEvent((Player)entityhuman.getBukkitEntity(), (org.bukkit.entity.Item)this.getBukkitEntity(), remaining);
+        this.world.getServer().getPluginManager().callEvent(playerEvent);
+
         if (remaining > 0)
             itemstack.setCount(remaining);
         else {
