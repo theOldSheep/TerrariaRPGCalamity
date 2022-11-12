@@ -8,6 +8,7 @@ import:
 	terraria.util.EntityHelper
 	terraria.util.PlayerHelper
 	terraria.util.MathHelper
+	terraria.util.YmlHelper
 	org.bukkit.configuration.file.FileConfiguration
 	org.bukkit.configuration.file.YamlConfiguration
 
@@ -96,10 +97,9 @@ plural expression y[a]ml node[s](-|[ ])list [of ]%string% (in|from) [the][ ][fil
 		return ...{_return}
 
 
-command /potion:
+command /potion [<text>]:
 	trigger:
-		EntityHelper.applyEffect(command sender, "魔力疾病", 200)
-		EntityHelper.applyEffect(command sender, "再生", 20)
+		EntityHelper.applyEffect(command sender, arg-1, 100)
 command /attrMapItem [<text>] [<text>] [<boolean>]:
 	trigger:
 		EntityHelper.tweakAttribute(command sender, arg-1, arg-2, arg-3)
@@ -118,11 +118,31 @@ command /displayBackground [<text>]:
 			EntityHelper.setMetadata(command sender, "forceBackground", {_null})
 		else:
 			EntityHelper.setMetadata(command sender, "forceBackground", arg-1)
+command /shootProjetile [<integer>] [<integer>] [<integer>] [<text>]:
+	trigger:
+		set {_ply} to command sender
+		set {_yaw} to {_ply}.getHandle().yaw
+		set {_pitch} to {_ply}.getHandle().pitch
+		set {_velocity} to new vector with yaw {_yaw} and pitch {_pitch}
+		broadcast "%{_velocity}%"
+		set {_proj} to EntityHelper.spawnProjectile((eye location of {_ply}), {_velocity}, arg-4, {_ply})
+		set {_handle} to {_proj}.getHandle()
+		set {_handle}.bounce to arg-1
+		set {_handle}.penetration to arg-2
+		if arg-3 is 1:
+			set {_handle}.blockHitAction to "thru"
+		if arg-3 is 2:
+			set {_handle}.blockHitAction to "bounce"
+		if arg-3 is 3:
+			set {_handle}.blockHitAction to "stick"
+		if arg-3 is 4:
+			set {_handle}.blockHitAction to "slide"
 
 
 
-
-
+command /resetYmlCache:
+	trigger:
+		YmlHelper.clearCache()
 command /tweakYML:
 	trigger:
 		# armorset

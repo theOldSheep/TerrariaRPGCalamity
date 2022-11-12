@@ -17,11 +17,15 @@ public class TerrariaPotionProjectile extends EntityPotion {
     // projectile info
     public String projectileType, blockHitAction = "die";
     public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noGravityTicks = 15, penetration = 0;
-    public double autoTraceAbility = 0.5, autoTraceRadius = 12, bounceVelocityMulti = 1, gravity = 0.05, maxSpeed = 2, projectileSize = 0.25, speedMultiPerTick = 1;
+    public double autoTraceAbility = 4, autoTraceRadius = 12, bounceVelocityMulti = 1, gravity = 0.05, maxSpeed = 2, projectileSize = 0.125, speedMultiPerTick = 1;
     public boolean autoTrace = false, bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = true;
+
+    public double speed;
     public HashMap<UUID, Integer> damageCD;
     public org.bukkit.entity.Projectile bukkitEntity;
     public Entity autoTraceTarget = null;
+
+
     private void setupProjectileProperties() {
         ConfigurationSection section = projectileConfig.getConfigurationSection(projectileType);
         if (section != null) {
@@ -48,7 +52,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.slowedByWater = section.getBoolean("slowedByWater", this.slowedByWater);
         }
         this.setNoGravity(true);
-        damageCD = new HashMap<>((int) (penetration * 1.5));
+        this.noclip = true;
+        this.damageCD = new HashMap<>((int) (penetration * 1.5));
     }
     public static ItemStack generateItemStack(String projectileType) {
         org.bukkit.inventory.ItemStack item = new org.bukkit.inventory.ItemStack(org.bukkit.Material.SPLASH_POTION);
@@ -67,6 +72,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         this.projectileType = projectileType;
         setupProjectileProperties();
         bukkitEntity = (org.bukkit.entity.Projectile) getBukkitEntity();
+        this.speed = velocity.length();
     }
 
     public void setType(String type) {
@@ -115,7 +121,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     @Override
     // tick water
     public boolean aq() {
-        if (this.world.a(this.getBoundingBox().grow(0.0, -0.4000000059604645, 0.0).shrink(0.001), Material.WATER, this)) {
+        if (this.world.a(this.getBoundingBox().grow(0.0, -0.4, 0.0).shrink(0.001), Material.WATER, this)) {
             this.inWater = true;
             this.extinguish();
         } else {
@@ -136,6 +142,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public void B_() {
         // start timing
         this.world.methodProfiler.a("entityBaseTick");
+
         // ticking from Entity.class
         this.I = this.J;
         this.lastX = this.locX;
@@ -148,7 +155,10 @@ public class TerrariaPotionProjectile extends EntityPotion {
         if (this.locY < -64.0) this.die();
         if (!isAlive()) return;
 
+        // comment out to send fresh movement speed packets to client frequently
         this.justCreated = false;
+
+
         // ticking from EntityProjectile.class
         this.M = this.locX;
         this.N = this.locY;
@@ -156,8 +166,11 @@ public class TerrariaPotionProjectile extends EntityPotion {
         // in lava or water
         double speedMulti = 1;
         if ((this.au() || this.inWater) && slowedByWater) {
-            speedMulti = 0.5;
+            speedMulti = 1d/3;
         }
+
+        // movement setup
+        boolean shouldMove = true;
         if (this.inGround) {
             switch (blockHitAction) {
                 case "bounce":
@@ -165,40 +178,48 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 case "die":
                     this.die();
                     return;
+                case "stick":
+                    if (this.world.getType(new BlockPosition(this.locX, this.locY, this.locZ)).getMaterial().isSolid())
+                        shouldMove = false;
+                    else
+                        this.inGround = false;
             }
         }
-        // get the block it will cram into, then set the final location after ticking
-        Vector velocity = new Vector(this.motX, this.motY, this.motZ);
-        double spdX = this.motX * speedMulti, spdY = this.motY * speedMulti, spdZ = this.motZ * speedMulti;
+        // move
         Vec3D initialLoc = new Vec3D(this.locX, this.locY, this.locZ);
-        Vec3D futureLoc = new Vec3D(this.locX + spdX, this.locY + spdY, this.locZ + spdZ);
-        MovingObjectPosition movingobjectposition = this.world.rayTrace(initialLoc, futureLoc);
-        initialLoc = new Vec3D(this.locX, this.locY, this.locZ);
-        futureLoc = new Vec3D(this.locX + spdX, this.locY + spdY, this.locZ + spdZ);
-        if (movingobjectposition != null) {
-            switch (blockHitAction) {
-                case "bounce":
-                case "slide":
-                case "stick":
-                    Vector travelled = new Vector(movingobjectposition.pos.x - this.locX,
-                            movingobjectposition.pos.y - this.locY,
-                            movingobjectposition.pos.z - this.locZ);
-                    double dist = travelled.length();
-                    if (dist > 0.01) {
-                        travelled.multiply((dist - 0.01) / dist);
-                    } else {
-                        travelled.multiply(0);
-                    }
-                    futureLoc = new Vec3D(this.locX + travelled.getX(), this.locY + travelled.getY(), this.locZ + travelled.getZ());
-                    // tweak velocity
-                    switch (blockHitAction) {
-                        case "bounce":
-                        {
+        Vec3D futureLoc = new Vec3D(this.locX, this.locY, this.locZ);
+        Vector velocity = new Vector(this.motX, this.motY, this.motZ);
+        this.setNoGravity(true);
+        if (shouldMove) {
+            // get the block it will cram into, then set the final location after ticking
+            double spdX = this.motX * speedMulti, spdY = this.motY * speedMulti, spdZ = this.motZ * speedMulti;
+            futureLoc = new Vec3D(this.locX + spdX, this.locY + spdY, this.locZ + spdZ);
+            MovingObjectPosition movingobjectposition = this.world.rayTrace(initialLoc, futureLoc);
+            this.inGround = false;
+            if (movingobjectposition != null) {
+                this.inGround = true;
+                switch (blockHitAction) {
+                    case "bounce":
+                    case "slide": {
+                        // for sliding off and bouncing off, pull it back a bit, so it does not get stuck in the wall
+                        this.inGround = false;
+                        Vector travelled = new Vector(movingobjectposition.pos.x - this.locX,
+                                movingobjectposition.pos.y - this.locY,
+                                movingobjectposition.pos.z - this.locZ);
+                        double dist = travelled.length();
+                        if (dist > 0.001) {
+                            travelled.multiply((dist - 0.001) / dist);
+                        } else {
+                            travelled.multiply(0);
+                        }
+                        futureLoc = new Vec3D(this.locX + travelled.getX(), this.locY + travelled.getY(), this.locZ + travelled.getZ());
+                        // tweak velocity
+                        if (blockHitAction.equals("bounce")) {
                             if (--bounce < 0) {
                                 die();
                                 return;
                             }
-                            if (bouncePenetrationBonded) penetration --;
+                            if (bouncePenetrationBonded) penetration--;
                             switch (movingobjectposition.direction) {
                                 case UP:
                                 case DOWN:
@@ -214,10 +235,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                     break;
                             }
                             velocity.multiply(bounceVelocityMulti);
-                            break;
-                        }
-                        case "slide":
-                        {
+                        } else {
+                            // slide
                             switch (movingobjectposition.direction) {
                                 case UP:
                                 case DOWN:
@@ -232,20 +251,104 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                     velocity.setZ(0);
                                     break;
                             }
-                            break;
                         }
-                        case "stick":
-                        {
-                            velocity.multiply(0);
-                            break;
+                        break;
+                    }
+                    // thru: it never gets stuck, so make a break here
+                    case "thru":
+                        break;
+                    // stick: it is supposed to get stuck in the wall
+                    case "stick":
+                        velocity.multiply(0);
+                        Vector travelled = new Vector(movingobjectposition.pos.x - this.locX,
+                                movingobjectposition.pos.y - this.locY,
+                                movingobjectposition.pos.z - this.locZ);
+                        double dist = travelled.length();
+                        if (dist > 0)
+                            travelled.multiply((dist + 0.001) / dist);
+                        futureLoc = new Vec3D(this.locX + travelled.getX(), this.locY + travelled.getY(), this.locZ + travelled.getZ());
+                        break;
+                    default:
+                        futureLoc = new Vec3D(movingobjectposition.pos.x, movingobjectposition.pos.y, movingobjectposition.pos.z);
+                }
+            }
+
+            // update yaw and pitch
+            float horizontalSpeed = MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ);
+            this.yaw = (float) (MathHelper.c(this.motX, this.motZ) * 57.2957763671875D);
+            for (this.pitch = (float) (MathHelper.c(this.motY, horizontalSpeed) * 57.2957763671875D);
+                 this.pitch - this.lastPitch < -180.0F;
+                 this.lastPitch -= 360.0F);
+            while (this.pitch - this.lastPitch >= 180.0F)
+                this.lastPitch += 360.0F;
+            while (this.yaw - this.lastYaw < -180.0F)
+                this.lastYaw -= 360.0F;
+            while (this.yaw - this.lastYaw >= 180.0F)
+                this.lastYaw += 360.0F;
+            this.pitch = this.lastPitch + (this.pitch - this.lastPitch) * 0.2F;
+            this.yaw = this.lastYaw + (this.yaw - this.lastYaw) * 0.2F;
+
+            // handle water particle
+            if (isInWater()) {
+                for (int j = 0; j < 4; j++)
+                    this.world.addParticle(EnumParticle.WATER_BUBBLE, this.locX - this.motX * projectileSize, this.locY - this.motY * projectileSize, this.locZ - this.motZ * projectileSize, this.motX, this.motY, this.motZ, new int[0]);
+            }
+
+            // optimize auto trace target
+            if (autoTrace) {
+                if (autoTraceTarget != null && getAutoTraceInterest(autoTraceTarget) < -0.01)
+                    autoTraceTarget = null;
+                if (autoTraceTarget == null) {
+                    double maxInterest = 0;
+                    List<Entity> list = this.world.getEntities(this, getBoundingBox().g(autoTraceRadius));
+                    for (Entity toCheck : list) {
+                        // only living entities are valid targets
+                        if (!toCheck.isInteractable()) continue;
+                        if (this.shooter != null && this.shooter == toCheck) continue;
+                        // if the target is unreachable
+                        if (!blockHitAction.equals("thru")) {
+                            Vec3D traceEnd = toCheck.d();
+                            MovingObjectPosition blockHitPos = this.world.rayTrace(initialLoc, traceEnd);
+                            if (blockHitPos != null) continue;
+                        }
+                        double currInterest = getAutoTraceInterest(toCheck);
+                        if (currInterest > maxInterest) {
+                            maxInterest = currInterest;
+                            autoTraceTarget = toCheck;
                         }
                     }
-                    break;
-                case "die":
-                    futureLoc = new Vec3D(movingobjectposition.pos.x, movingobjectposition.pos.y, movingobjectposition.pos.z);
-                    break;
+                }
+            }
+
+            // tweak speed: handle auto trace or tweak by per tick speed decay and gravity
+            if (autoTrace && autoTraceTarget != null) {
+                Vector acceleration;
+                if (autoTraceTarget instanceof EntityLiving)
+                    acceleration = ((LivingEntity) autoTraceTarget.getBukkitEntity()).getEyeLocation().subtract(this.locX, this.locY, this.locZ).toVector();
+                else
+                    acceleration = autoTraceTarget.getBukkitEntity().getLocation().add(0, 1.5, 0).subtract(this.locX, this.locY, this.locZ).toVector();
+
+                double accMagnitude = acceleration.length(), velMagnitude = velocity.length();
+                velocity.multiply(Math.sqrt(Math.min(accMagnitude, autoTraceAbility)) / velMagnitude);
+                acceleration.multiply(autoTraceAbility / accMagnitude);
+
+                velocity.add(acceleration);
+
+                if (velocity.lengthSquared() > 0)
+                    velocity.normalize().multiply(speed);
+            } else {
+                // gravity
+                if (this.ticksLived >= noGravityTicks && gravity > 0) {
+                    // prevent client side glitch
+                    if (!inGround) this.setNoGravity(false);
+                    velocity.subtract(new Vector(0, gravity, 0));
+                }
+                // regulate velocity
+                if (velocity.lengthSquared() > maxSpeed * maxSpeed)
+                    terraria.util.MathHelper.setVectorLength(velocity, maxSpeed);
             }
         }
+
         // handle projectile hit
         {
             // update invincibility map
@@ -256,8 +359,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 else damageCD.put(currCheck, currInvincibility - 1);
             }
             for (UUID currRemove : toRemove) damageCD.remove(currRemove);
+
             // get list of entities that could get hit
-            List<Entity> list = this.world.getEntities(this, getBoundingBox().b(this.motX, this.motY, this.motZ).g(projectileSize));
+            List<Entity> list = this.world.getEntities(this, getBoundingBox().b(velocity.getX(), velocity.getY(), velocity.getZ()).g(projectileSize));
             Set<HitEntityInfo> hitCandidates = new TreeSet<>(Comparator.comparingDouble(HitEntityInfo::getDistance));
             for (Entity toCheck : list) {
                 // living entities etc
@@ -271,6 +375,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
                         }
                     }
             }
+
+            // hit entities
             for (HitEntityInfo toHit : hitCandidates) {
                 Entity hitEntity = toHit.getHitEntity();
                 MovingObjectPosition hitInfo = new MovingObjectPosition(hitEntity);
@@ -281,75 +387,17 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 if (this.dead) break;
             }
         }
-        // move
-        this.locX = futureLoc.x;
-        this.locY = futureLoc.y;
-        this.locZ = futureLoc.z;
-        float horizontalSpeed = MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ);
-        // update yaw and pitch
-        this.yaw = (float)(MathHelper.c(this.motX, this.motZ) * 57.2957763671875D);
-        for (this.pitch = (float)(MathHelper.c(this.motY, horizontalSpeed) * 57.2957763671875D); this.pitch - this.lastPitch < -180.0F; this.lastPitch -= 360.0F);
-        while (this.pitch - this.lastPitch >= 180.0F)
-            this.lastPitch += 360.0F;
-        while (this.yaw - this.lastYaw < -180.0F)
-            this.lastYaw -= 360.0F;
-        while (this.yaw - this.lastYaw >= 180.0F)
-            this.lastYaw += 360.0F;
-        this.pitch = this.lastPitch + (this.pitch - this.lastPitch) * 0.2F;
-        this.yaw = this.lastYaw + (this.yaw - this.lastYaw) * 0.2F;
-        // handle water particle
-        if (isInWater()) {
-            for (int j = 0; j < 4; j++)
-                this.world.addParticle(EnumParticle.WATER_BUBBLE, this.locX - this.motX * projectileSize, this.locY - this.motY * projectileSize, this.locZ - this.motZ * projectileSize, this.motX, this.motY, this.motZ, new int[0]);
-        }
-        // optimize auto trace target
-        if (autoTrace) {
-            if (getAutoTraceInterest(autoTraceTarget) < -0.01)
-                autoTraceTarget = null;
-            double maxInterest = 0;
-            List<Entity> list = this.world.getEntities(this, getBoundingBox().g(autoTraceRadius));
-            for (Entity toCheck : list) {
-                // living entities etc
-                if (!toCheck.isInteractable()) continue;
-                if (this.shooter != null && this.shooter == toCheck) continue;
-                // if the target is unreachable
-                if (!blockHitAction.equals("thru")){
-                    Vec3D traceBegin = new Vec3D(this.locX, this.locY, this.locZ);
-                    Vec3D traceEnd = toCheck.d();
-                    MovingObjectPosition blockHitPos = this.world.rayTrace(traceBegin, traceEnd);
-                    if (blockHitPos != null) continue;
-                }
-                double currInterest = getAutoTraceInterest(toCheck);
-                if (currInterest > maxInterest) {
-                    maxInterest = currInterest;
-                    autoTraceTarget = toCheck;
-                }
-            }
-        }
-        // tweak speed: handle auto trace or tweak by per tick speed decay and gravity
-        if (autoTrace && autoTraceTarget != null) {
-            Vector acceleration;
-            if (autoTraceTarget instanceof EntityLiving) acceleration = ((LivingEntity) autoTraceTarget.getBukkitEntity()).getEyeLocation().subtract(this.locX, this.locY, this.locZ).toVector();
-            else acceleration = autoTraceTarget.getBukkitEntity().getLocation().add(0, 1.5, 0).subtract(this.locX, this.locY, this.locZ).toVector();
-            double spd = velocity.length();
-            if (acceleration.lengthSquared() > 0) {
-                acceleration.multiply(spd / acceleration.length());
-                velocity.add(acceleration);
-            }
-        } else {
-            velocity.multiply(speedMulti);
-            if (!isNoGravity()) velocity.subtract(new Vector(0, gravity, 0));
-        }
-        if (velocity.lengthSquared() > maxSpeed * maxSpeed) terraria.util.MathHelper.setVectorLength(velocity, maxSpeed);
+
         // set position and velocity info
-        setPosition(this.locX, this.locY, this.locZ);
+        setPosition(futureLoc.x, futureLoc.y, futureLoc.z);
+        this.velocityChanged = ticksLived % 10 == 0 ||
+                velocity.distanceSquared(new Vector(this.motX, this.motY, this.motZ)) > 0.0001;
         this.motX = velocity.getX();
         this.motY = velocity.getY();
         this.motZ = velocity.getZ();
-        // tick lived mechanisms
-        this.ticksLived ++;
+
+        // time out removal
         if (this.ticksLived >= liveTime) die();
-        if (this.ticksLived >= noGravityTicks) this.setNoGravity(false);
         // timing
         this.world.methodProfiler.b();
     }

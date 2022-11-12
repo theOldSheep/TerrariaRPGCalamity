@@ -15,7 +15,9 @@ import java.util.logging.Level;
 
 public class YmlHelper {
     static HashMap<String, YmlSection> ymlCache = new HashMap<>();
-    static HashMap<String, YmlSection> ymlLastSaveCache = new HashMap<>();
+    public static void clearCache() {
+        ymlCache = new HashMap<>();
+    }
 
     public static void threadSaveYml() {
         // save the yml every 10 seconds (200 ticks)

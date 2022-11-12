@@ -38,9 +38,9 @@ replaceChatColor: true
 EntityHitBox: true
 
 # 是否兼容AP属性插件
-AttributePlus: true
+AttributePlus: false
 # 是否兼容SX属性插件
-SX-Attribute: true
+SX-Attribute: false
 # 是否兼容龙之时装付费版
 DragonArmourers: false
 

@@ -330,10 +330,12 @@ public class EntityHelper {
             // tweak attrMap if the target is not a player
             if (!(entity instanceof Player)) {
                 String attributesPath = "effects." + effect + ".attributes";
-                Set<String> attributesTweaked =
-                        buffConfig.getConfigurationSection(attributesPath).getKeys(false);
-                for (String attr : attributesTweaked) {
-                    tweakAttribute(entity, attr, buffConfig.getString(attributesPath + attr), false);
+                if (buffConfig.contains(attributesPath)) {
+                    Set<String> attributesTweaked =
+                            buffConfig.getConfigurationSection(attributesPath).getKeys(false);
+                    for (String attr : attributesTweaked) {
+                        tweakAttribute(entity, attr, buffConfig.getString(attributesPath + attr), false);
+                    }
                 }
             } else {
                 // remove the buff applied
@@ -358,10 +360,12 @@ public class EntityHelper {
             }
             // tweak attrMap if the target is not a player
             String attributesPath = "effects." + effect + ".attributes";
-            Set<String> attributesTweaked =
-                    buffConfig.getConfigurationSection(attributesPath).getKeys(false);
-            for (String attr : attributesTweaked) {
-                tweakAttribute(entity, attr, buffConfig.getString(attributesPath + attr), true);
+            if (buffConfig.contains(attributesPath)) {
+                Set<String> attributesTweaked =
+                        buffConfig.getConfigurationSection(attributesPath).getKeys(false);
+                for (String attr : attributesTweaked) {
+                    tweakAttribute(entity, attr, buffConfig.getString(attributesPath + attr), true);
+                }
             }
             // register delayed task
             int finalDamagePerDelay = damagePerDelay;
