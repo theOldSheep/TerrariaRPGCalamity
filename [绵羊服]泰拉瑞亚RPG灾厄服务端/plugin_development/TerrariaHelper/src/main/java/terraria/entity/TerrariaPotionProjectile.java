@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.util.EntityHelper;
+import terraria.util.GenericHelper;
 import terraria.util.YmlHelper;
 
 import java.util.*;
@@ -15,7 +16,7 @@ import java.util.*;
 public class TerrariaPotionProjectile extends EntityPotion {
     public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/entities.yml");
     // projectile info
-    public String projectileType, blockHitAction = "die";
+    public String projectileType, blockHitAction = "die", trailColor = null;
     public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noGravityTicks = 15, penetration = 0;
     public double autoTraceAbility = 4, autoTraceRadius = 12, bounceVelocityMulti = 1, gravity = 0.05, maxSpeed = 2, projectileSize = 0.125, speedMultiPerTick = 1;
     public boolean autoTrace = false, bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = true;
@@ -36,6 +37,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.noGravityTicks = section.getInt("noGravityTicks", this.noGravityTicks);
             // thru, bounce, stick, slide
             this.blockHitAction = section.getString("blockHitAction", this.blockHitAction);
+            this.trailColor = section.getString("trailColor");
 
             this.autoTraceAbility = section.getDouble("autoTraceAbility", this.autoTraceAbility);
             this.autoTraceRadius = section.getDouble("autoTraceRadius", this.autoTraceRadius);
@@ -388,6 +390,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
             }
         }
 
+        // draw particle trail
+        if (trailColor != null)
+            GenericHelper.handleParticleLine(velocity, velocity.length(), projectileSize * 2, bukkitEntity.getLocation(), trailColor);
         // set position and velocity info
         setPosition(futureLoc.x, futureLoc.y, futureLoc.z);
         this.velocityChanged = ticksLived % 10 == 0 ||

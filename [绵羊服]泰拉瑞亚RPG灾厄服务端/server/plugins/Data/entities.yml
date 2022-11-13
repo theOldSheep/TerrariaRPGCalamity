@@ -36,6 +36,8 @@
     bouncePenetrationBonded: false
     # 弹跳时速度乘的倍数，不写则视为1。仅在blockHitAction: bounce时有作用。
     bounceVelocityMulti: 0
+    # 轨迹的颜色(R|G|B)，可不写。
+    trailColor: 255|125|125
     # 攻击造成的buff，格式为  buff名|buff时长（单位：帧）|几率。可不写。
     buffInflict:
         - "霜火|100|0.35"
