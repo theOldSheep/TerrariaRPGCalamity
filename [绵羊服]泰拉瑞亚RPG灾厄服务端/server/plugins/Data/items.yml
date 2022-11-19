@@ -3571,6 +3571,36 @@
     defence: 8
   worth: 400000
   rarity: 0
+丛林帽:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 10
+    maxMana: 40
+    critMagic: 6
+  worth: 900000
+  rarity: 3
+丛林衣:
+  item: IRON_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 12
+    maxMana: 20
+    damageMagicMulti: 0.06
+  worth: 600000
+  rarity: 3
+丛林裤:
+  item: IRON_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 12
+    maxMana: 20
+    critMagic: 6
+  worth: 600000
+  rarity: 3
 胜潮贝盔:
   item: IRON_HELMET
   lore:
@@ -3626,6 +3656,33 @@
     speedMulti: 0.23
   worth: 400000
   rarity: 2
+黑曜石逃犯帽:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 8
+    damageSummonMulti: 0.08
+  worth: 90000
+  rarity: 1
+黑曜石风衣:
+  item: IRON_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 12
+    minionLimit: 1
+  worth: 90000
+  rarity: 1
+黑曜石裤:
+  item: IRON_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 10
+    damageSummonMulti: 0.08
+  worth: 90000
+  rarity: 1
 流星头盔:
   item: DIAMOND_HELMET
   lore:
@@ -3677,6 +3734,33 @@
     defence: 12
   worth: 450000
   rarity: 1
+死灵头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 12
+    damageRangedMulti: 0.05
+  worth: 900000
+  rarity: 2
+死灵胸甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 14
+    damageRangedMulti: 0.05
+  worth: 600000
+  rarity: 2
+死灵护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 12
+    damageRangedMulti: 0.05
+  worth: 600000
+  rarity: 2
 天蓝战盔:
   item: IRON_HELMET
   lore:
