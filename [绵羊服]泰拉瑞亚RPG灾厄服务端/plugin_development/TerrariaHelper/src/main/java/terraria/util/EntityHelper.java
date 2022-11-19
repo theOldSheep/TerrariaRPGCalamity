@@ -35,9 +35,10 @@ import java.util.logging.Level;
 
 public class EntityHelper {
     // constants
-    static final YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
+    static final YmlHelper.YmlSection entityConfig = YmlHelper.getFile("plugins/Data/entities.yml");
     static final YmlHelper.YmlSection buffConfig = YmlHelper.getFile("plugins/Data/buff.yml");
-    static final HashMap<String, Set<String>> buffInferior, buffSuperior;
+    static final YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
+    static HashMap<String, Set<String>> buffInferior, buffSuperior;
     static {
         buffSuperior = new HashMap<>(50);
         buffInferior = new HashMap<>(50);
@@ -45,7 +46,7 @@ public class EntityHelper {
         Set<String> rules = conflictSection.getKeys(false);
         for (String rule : rules) {
             ConfigurationSection ruleSection = conflictSection.getConfigurationSection(rule);
-            Set<String> specificBuffs = conflictSection.getKeys(false);
+            Set<String> specificBuffs = ruleSection.getKeys(false);
             for (String buff1 : specificBuffs) {
                 int priority1 = ruleSection.getInt(buff1, 0);
                 for (String buff2 : specificBuffs) {
@@ -54,27 +55,36 @@ public class EntityHelper {
                     // they have same priority, so they can both override each other
                     if (priority1 == priority2) {
                         if (priority1 != 0) {
-                            buffInferior.getOrDefault(buff1, new HashSet<>(25)).add(buff2);
-                            buffInferior.getOrDefault(buff2, new HashSet<>(25)).add(buff1);
+                            if (!buffInferior.containsKey(buff1)) buffInferior.put(buff1, new HashSet<>(25));
+                            buffInferior.get(buff1).add(buff2);
+                            if (!buffInferior.containsKey(buff2)) buffInferior.put(buff2, new HashSet<>(25));
+                            buffInferior.get(buff2).add(buff1);
                         }
                     } else {
                         if (priority1 > priority2) {
                             // buff2 can not be applied when buff1 is present, buff1 can override buff2
-                            buffInferior.getOrDefault(buff1, new HashSet<>(25)).add(buff2);
-                            buffSuperior.getOrDefault(buff2, new HashSet<>(25)).add(buff1);
+                            if (!buffInferior.containsKey(buff1)) buffInferior.put(buff1, new HashSet<>(25));
+                            buffInferior.get(buff1).add(buff2);
+                            if (!buffSuperior.containsKey(buff2)) buffSuperior.put(buff2, new HashSet<>(25));
+                            buffSuperior.get(buff2).add(buff1);
                         } else {
                             // buff1 can not be applied when buff2 is present, buff2 can override buff1
-                            buffSuperior.getOrDefault(buff1, new HashSet<>(25)).add(buff2);
-                            buffInferior.getOrDefault(buff2, new HashSet<>(25)).add(buff1);
+                            if (!buffSuperior.containsKey(buff1)) buffSuperior.put(buff1, new HashSet<>(25));
+                            buffSuperior.get(buff1).add(buff2);
+                            if (!buffInferior.containsKey(buff2)) buffInferior.put(buff2, new HashSet<>(25));
+                            buffInferior.get(buff2).add(buff1);
                         }
                     }
                 }
             }
         }
+        Bukkit.getLogger().info("[Entity Helper] buffSuperior: " + buffSuperior);
+        Bukkit.getLogger().info("[Entity Helper] buffInferior: " + buffInferior);
     }
     // helper functions
     public static void initEntityMetadata(Entity entity) {
         setMetadata(entity, "effects", new HashMap<String, Integer>());
+        setMetadata(entity, "buffImmune", new HashMap<String, Integer>());
     }
     public static HashMap<String, Double> getAttrMap(Metadatable entity) {
         try {
@@ -101,7 +111,6 @@ public class EntityHelper {
             setMetadata(entity, "damageType", value);
             return;
         }
-        double value_number = 1;
         try {
             if (key.startsWith("buffInflict")) {
                 if (entity instanceof Player) {
@@ -114,9 +123,23 @@ public class EntityHelper {
                 }
                 return;
             }
+            if (key.equals("buffImmune")) {
+                Map<String, Integer> buffImmune = (Map<String, Integer>) getMetadata(entity, "buffImmune").value();
+                int layers = buffImmune.getOrDefault(value, 0);
+                if (addOrRemove)
+                    layers ++;
+                else
+                    layers --;
+                if (layers > 0)
+                    buffImmune.put(value, layers);
+                else
+                    buffImmune.remove(value);
+                return;
+            }
+            // tweak double value in attribute map
             HashMap<String, Double> attrMap = getAttrMap(entity);
             if (!attrMap.containsKey(key)) return;
-            value_number = Double.parseDouble(value);
+            double value_number = Double.parseDouble(value);
             switch (key) {
                 case "useTime":
                     value_number /= 2;
@@ -148,7 +171,7 @@ public class EntityHelper {
                         attrMap.put(key, (attrMap.getOrDefault(key, 1d)) - value_number);
             }
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number in tweakAttribute ", e);
+            Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
         }
     }
     public static void makeTarget(Entity entity, Entity target) {
@@ -329,7 +352,7 @@ public class EntityHelper {
             if (removeEffectOnStop) allEffects.remove(effect);
             // tweak attrMap if the target is not a player
             if (!(entity instanceof Player)) {
-                String attributesPath = "effects." + effect + ".attributes";
+                String attributesPath = "effects." + effect + ".attributes.";
                 if (buffConfig.contains(attributesPath)) {
                     Set<String> attributesTweaked =
                             buffConfig.getConfigurationSection(attributesPath).getKeys(false);
@@ -359,15 +382,17 @@ public class EntityHelper {
                     damagePerDelay = buffConfig.getInt("effects." + effect + ".damageMonster", damagePerDelay);
             }
             // tweak attrMap if the target is not a player
-            String attributesPath = "effects." + effect + ".attributes";
-            if (buffConfig.contains(attributesPath)) {
-                Set<String> attributesTweaked =
-                        buffConfig.getConfigurationSection(attributesPath).getKeys(false);
-                for (String attr : attributesTweaked) {
-                    tweakAttribute(entity, attr, buffConfig.getString(attributesPath + attr), true);
+            if (!(entity instanceof Player)) {
+                String attributesPath = "effects." + effect + ".attributes.";
+                if (buffConfig.contains(attributesPath)) {
+                    Set<String> attributesTweaked =
+                            buffConfig.getConfigurationSection(attributesPath).getKeys(false);
+                    for (String attr : attributesTweaked) {
+                        tweakAttribute(entity, attr, buffConfig.getString(attributesPath + attr), true);
+                    }
                 }
             }
-            // register delayed task
+            // register delayed task for ticking potion
             int finalDamagePerDelay = damagePerDelay;
             int finalDelay = delay;
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> tickEffect(entity, effect, finalDelay, finalDamagePerDelay), delay);
@@ -380,79 +405,28 @@ public class EntityHelper {
             // if the buff is not in config, do not do anything
             if (!buffConfig.contains("effects." + effect)) return;
             // returns if the entity is immune to this effect (i.e. debuff)
-            if (!(entity instanceof Player)) {
-                ArrayList<String> checkNode = new ArrayList<>();
-                checkNode.add(getMetadata(entity, "motherType").asString());
-                checkNode.add(GenericHelper.trimText(entity.getName()));
-                for (String check : checkNode) {
-                    List<String> immune = YmlHelper.getFile("plugins/Data/entities.yml").getStringList(check + ".buffImmune");
-                    if (immune.contains(effect)) return;
-                }
-            } else {
-                HashSet<String> accessories = PlayerHelper.getAccessories(entity);
-                switch (effect) {
-                    case "黑暗":
-                        if (accessories.contains("蒙眼布")) return;
-                        if (accessories.contains("十字章护身符")) return;
-                        if (accessories.contains("十字章护盾")) return;
-                        break;
-                    case "虚弱":
-                        if (accessories.contains("维生素")) return;
-                        if (accessories.contains("盔甲背带")) return;
-                        if (accessories.contains("十字章护身符")) return;
-                        if (accessories.contains("十字章护盾")) return;
-                        break;
-                    case "破损护甲":
-                        if (accessories.contains("盔甲抛光剂")) return;
-                        if (accessories.contains("盔甲背带")) return;
-                        if (accessories.contains("十字章护身符")) return;
-                        if (accessories.contains("十字章护盾")) return;
-                        break;
-                    case "流血":
-                        if (accessories.contains("粘性绷带")) return;
-                        if (accessories.contains("药用绷带")) return;
-                        if (accessories.contains("十字章护身符")) return;
-                        if (accessories.contains("十字章护盾")) return;
-                        break;
-                    case "中毒":
-                        if (accessories.contains("牛黄")) return;
-                        if (accessories.contains("药用绷带")) return;
-                        if (accessories.contains("十字章护身符")) return;
-                        if (accessories.contains("十字章护盾")) return;
-                        break;
-                    case "诅咒":
-                        if (accessories.contains("邪眼")) return;
-                        if (accessories.contains("反诅咒咒语")) return;
-                        if (accessories.contains("十字章护身符")) return;
-                        if (accessories.contains("十字章护盾")) return;
-                        break;
-                    case "沉默":
-                        if (accessories.contains("扩音器")) return;
-                        if (accessories.contains("反诅咒咒语")) return;
-                        if (accessories.contains("十字章护身符")) return;
-                        if (accessories.contains("十字章护盾")) return;
-                        break;
-                    case "缓慢":
-                        if (accessories.contains("快走时钟")) return;
-                        if (accessories.contains("十字章护身符")) return;
-                        if (accessories.contains("十字章护盾")) return;
-                        break;
-                }
-            }
-            // apply the buff
-            for (PotionEffectType effectInflict : getVanillaEffectInflict(effect))
-                ((LivingEntity) entity).addPotionEffect(new PotionEffect(effectInflict, durationTicks, 0), true);
-            // tweak effect time of some special effects
-            HashMap<String, Integer> allEffects = getEffectMap(entity);
+            Map<String, Integer> buffImmune = (Map<String, Integer>) getMetadata(entity, "buffImmune").value();
+            if (buffImmune.containsKey(effect)) return;
             // does nothing if the target has a superior effect, otherwise tweak the inferior effects
+            HashMap<String, Integer> allEffects = getEffectMap(entity);
+            for (String effectSuperior : buffSuperior.getOrDefault(effect, new HashSet<>()))
+                Bukkit.broadcastMessage("buffSuperior: " + effectSuperior);
+            for (String effectInferior : buffInferior.getOrDefault(effect, new HashSet<>()))
+                Bukkit.broadcastMessage("buffInferior: " + effectInferior);
             for (String effectSuperior : buffSuperior.getOrDefault(effect, new HashSet<>()))
                 if (allEffects.containsKey(effectSuperior)) return;
             for (String effectInferior : buffInferior.getOrDefault(effect, new HashSet<>()))
                 if (allEffects.containsKey(effectInferior)) allEffects.put(effectInferior, 0);
-            // tweak duration of special effects
+            // apply the buff
+            for (PotionEffectType effectInflict : getVanillaEffectInflict(effect))
+                ((LivingEntity) entity).addPotionEffect(new PotionEffect(effectInflict, durationTicks, 0), true);
+            // tweak duration of some special effects
             int finalDurationTicks;
             int currentDurationTicks = allEffects.getOrDefault(effect, 0);
             switch (effect) {
+                case "护甲损伤":
+                    finalDurationTicks = currentDurationTicks + durationTicks;
+                    break;
                 case "魔力疾病":
                     finalDurationTicks = currentDurationTicks + durationTicks;
                     if (finalDurationTicks > 400 && durationTicks < 400) finalDurationTicks = 400;

@@ -2,6 +2,7 @@ package terraria;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.PlaceholderHook;
+import net.minecraft.server.v1_12_R1.EntityItem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -99,8 +100,12 @@ public class TerrariaHelper extends JavaPlugin {
 
         this.getCommand("findNoise").setExecutor(new NoiseGeneratorTest());
 
+        getLogger().info("\n\n\n");
+        getLogger().info("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
         getLogger().info("泰拉瑞亚RPG插件部分已启动。");
         getLogger().info("世界种子: " + worldSeed);
+        getLogger().info("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+        getLogger().info("\n\n\n");
     }
     @Override
     public void onDisable() {

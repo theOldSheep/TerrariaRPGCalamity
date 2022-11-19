@@ -201,9 +201,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
             if (movingobjectposition != null) {
                 // gravity turns on after bouncing
                 this.noGravityTicks = this.ticksLived;
-                // call hit block event
-                TerrariaProjectileHitEvent.callProjectileHitEvent(this, movingobjectposition);
                 this.inGround = true;
+                boolean shouldCallEvent = false;
                 switch (blockHitAction) {
                     case "bounce":
                     case "slide": {
@@ -265,6 +264,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                         break;
                     // stick: it is supposed to get stuck in the wall
                     case "stick":
+                        shouldCallEvent = true;
                         velocity.multiply(0);
                         Vector travelled = new Vector(movingobjectposition.pos.x - this.locX,
                                 movingobjectposition.pos.y - this.locY,
@@ -275,8 +275,12 @@ public class TerrariaPotionProjectile extends EntityPotion {
                         futureLoc = new Vec3D(this.locX + travelled.getX(), this.locY + travelled.getY(), this.locZ + travelled.getZ());
                         break;
                     default:
+                        shouldCallEvent = true;
                         futureLoc = new Vec3D(movingobjectposition.pos.x, movingobjectposition.pos.y, movingobjectposition.pos.z);
                 }
+                if (shouldCallEvent)
+                    // call hit block event
+                    TerrariaProjectileHitEvent.callProjectileHitEvent(this, movingobjectposition);
             }
 
             // update yaw and pitch
@@ -402,8 +406,14 @@ public class TerrariaPotionProjectile extends EntityPotion {
             GenericHelper.handleParticleLine(velocity, velocity.length(), projectileSize * 2, bukkitEntity.getLocation(), trailColor);
         // set position and velocity info
         setPosition(futureLoc.x, futureLoc.y, futureLoc.z);
+        // send new velocity if:
+        //     velocity changed
+        //     the projectile has gravity
+        // otherwise send new velocity regularly every 10 ticks
         this.velocityChanged = ticksLived % 10 == 0 ||
-                velocity.distanceSquared(new Vector(this.motX, this.motY, this.motZ)) > 0.0001;
+                velocity.distanceSquared(new Vector(this.motX, this.motY, this.motZ)) > 0.0001 ||
+                !isNoGravity();
+
         this.motX = velocity.getX();
         this.motY = velocity.getY();
         this.motZ = velocity.getZ();
