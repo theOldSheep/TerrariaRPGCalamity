@@ -20,21 +20,21 @@ public class OverworldCaveGenerator {
                 test_cave_setup = 0, test_cave_setup_time = 0,
                 test_cave_rough_setup = 0, test_cave_rough_setup_time = 0,
                 blockTotal = 0, regenerated = 0;
-    static final boolean test_timing = true;
+    static final boolean test_timing = false;
     public OverworldCaveGenerator(int yOffset, long seed, int OCTAVES) {
         this.yOffset = yOffset;
 
         Random rdm = new Random(seed);
         rdm.nextInt();
         cheeseCaveGenerator = new SimplexOctaveGenerator(rdm.nextLong(), OCTAVES);
-        cheeseCaveGenerator.setScale(0.0075);
+        cheeseCaveGenerator.setScale(0.005);
         cheeseCaveGenerator.setYScale(cheeseCaveGenerator.getYScale() * 5 / 3);
         spaghettiGeneratorOne = new SimplexOctaveGenerator(rdm.nextLong(), OCTAVES);
         spaghettiGeneratorOne.setScale(0.005);
-        spaghettiGeneratorOne.setYScale(spaghettiGeneratorOne.getYScale() * 4 / 3);
+        spaghettiGeneratorOne.setYScale(spaghettiGeneratorOne.getYScale() * 5 / 3);
         spaghettiGeneratorTwo = new SimplexOctaveGenerator(rdm.nextLong(), OCTAVES);
-        spaghettiGeneratorTwo.setScale(0.0055);
-        spaghettiGeneratorTwo.setYScale(spaghettiGeneratorTwo.getYScale() * 4 / 3);
+        spaghettiGeneratorTwo.setScale(0.005);
+        spaghettiGeneratorTwo.setYScale(spaghettiGeneratorTwo.getYScale() * 5 / 3);
 
     }
     public static double getCavernNoiseMulti(Biome biome) {
@@ -90,15 +90,14 @@ public class OverworldCaveGenerator {
         return result;
     }
     private boolean validateCaveEstimate(double[] noise) {
-        double cheeseThreshold = 0.75;
-//        double spaghettiThreshold = 0.15;
+        double cheeseThreshold = 0.8;
         double spaghettiThreshold = 0.05;
         return (noise[0] > cheeseThreshold) || (
                     (Math.abs(noise[1]) < spaghettiThreshold) &&
                     (Math.abs(noise[2]) < spaghettiThreshold));
     }
     private boolean validateCave(double[] noise) {
-        double cheeseThreshold = 0.75;
+        double cheeseThreshold = 0.8;
         double spaghettiThreshold = 0.05;
         return (noise[0] > cheeseThreshold) || (
                     (Math.abs(noise[1]) < spaghettiThreshold) &&
@@ -115,13 +114,14 @@ public class OverworldCaveGenerator {
         if (allSolid) return -1;
         return 0;
     }
+
     public void populate(World wld, ChunkGenerator.ChunkData chunk, ChunkGenerator.BiomeGrid biome, int[][] heightMap, int x, int z, double[][] caveMultiMap) {
         int chunkX = x << 4, chunkZ = z << 4;
         // setup cave estimates
         long timing = System.nanoTime();
         int cacheRadius = 3;
         int estimationWidth = Math.floorDiv(16, cacheRadius) + 2,
-            estimationHeight = Math.floorDiv(256, cacheRadius) + 2;
+                estimationHeight = Math.floorDiv(256, cacheRadius) + 2;
         if (16 % cacheRadius != 0)
             estimationWidth ++;
         if (256 % cacheRadius != 0)

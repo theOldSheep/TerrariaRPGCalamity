@@ -16,7 +16,7 @@ import java.util.*;
 
 public class OverworldChunkGenerator extends ChunkGenerator {
     static long seed = TerrariaHelper.worldSeed;
-    public static int OCTAVES = 6, OCTAVES_CAVE = 6,
+    public static int OCTAVES = 6, OCTAVES_CAVE = 4,
             NEARBY_BIOME_SAMPLE_RADIUS, NEARBY_BIOME_SAMPLE_STEPSIZE,
             LAND_HEIGHT, RIVER_DEPTH, LAKE_DEPTH, PLATEAU_HEIGHT, SEA_LEVEL, LAVA_LEVEL;
     static int yOffset_overworld = 0;
