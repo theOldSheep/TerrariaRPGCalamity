@@ -18,6 +18,7 @@ public class OverworldCaveGenerator {
 
     long test_cave = 0, test_cave_time = 0,
                 test_cave_setup = 0, test_cave_setup_time = 0,
+                test_cave_rough_setup = 0, test_cave_rough_setup_time = 0,
                 blockTotal = 0, regenerated = 0;
     static final boolean test_timing = true;
     public OverworldCaveGenerator(int yOffset, long seed, int OCTAVES) {
@@ -90,6 +91,7 @@ public class OverworldCaveGenerator {
     }
     private boolean validateCaveEstimate(double[] noise) {
         double cheeseThreshold = 0.75;
+//        double spaghettiThreshold = 0.15;
         double spaghettiThreshold = 0.05;
         return (noise[0] > cheeseThreshold) || (
                     (Math.abs(noise[1]) < spaghettiThreshold) &&
@@ -113,28 +115,34 @@ public class OverworldCaveGenerator {
         if (allSolid) return -1;
         return 0;
     }
-
     public void populate(World wld, ChunkGenerator.ChunkData chunk, ChunkGenerator.BiomeGrid biome, int[][] heightMap, int x, int z, double[][] caveMultiMap) {
         int chunkX = x << 4, chunkZ = z << 4;
         // setup cave estimates
         long timing = System.nanoTime();
+        int cacheRadius = 3;
+        int estimationWidth = Math.floorDiv(16, cacheRadius) + 2,
+            estimationHeight = Math.floorDiv(256, cacheRadius) + 2;
+        if (16 % cacheRadius != 0)
+            estimationWidth ++;
+        if (256 % cacheRadius != 0)
+            estimationHeight ++;
 
-        boolean[][][] caveEstimates = new boolean[10][130][10];
-        for (int i = 0; i < 10; i ++) {
-            int xBlockOffset = ((i - 1) << 1);
+        boolean[][][] caveEstimates = new boolean[estimationWidth][estimationHeight][estimationWidth];
+        for (int i = 0; i < estimationWidth; i ++) {
+            int xBlockOffset = (i - 1) * cacheRadius;
             int currX = chunkX + xBlockOffset;
             // prevent out of bound
             if (xBlockOffset < 0) xBlockOffset = 0;
             else if (xBlockOffset >= 16) xBlockOffset = 15;
-            for (int j = 0; j < 10; j ++) {
-                int zBlockOffset = ((j - 1) << 1);
+            for (int j = 0; j < estimationWidth; j ++) {
+                int zBlockOffset = (j - 1) * cacheRadius;
                 int currZ = chunkZ + zBlockOffset;
                 // prevent out of bound
                 if (zBlockOffset < 0) zBlockOffset = 0;
                 else if (zBlockOffset >= 16) zBlockOffset = 15;
                 Biome columnBiome = OverworldBiomeGenerator.getBiome(TerrariaHelper.worldSeed, currX, currZ);
-                for (int y_coord = 0; y_coord < 130; y_coord ++) {
-                    int effectualY = ((y_coord - 1) << 1) + yOffset;
+                for (int y_coord = 0; y_coord < estimationHeight; y_coord ++) {
+                    int effectualY = ((y_coord - 1) * cacheRadius) + yOffset;
                     caveEstimates[i][y_coord][j] = validateCaveEstimate(getCavernNoise(
                             columnBiome, heightMap[i][j], currX, effectualY, currZ, caveMultiMap[xBlockOffset][zBlockOffset]));
                 }
@@ -152,14 +160,14 @@ public class OverworldCaveGenerator {
         // setup actual blocks
         for (int i = 0; i < 16; i ++) {
             int currX = chunkX + i;
-            int estimateX = 1 + (i >> 1);
+            int estimateX = 1 + Math.floorDiv(i, cacheRadius);
             for (int j = 0; j < 16; j ++) {
                 int currZ = chunkZ + j;
-                int estimateZ = 1 + (j >> 1);
+                int estimateZ = 1 + Math.floorDiv(j, cacheRadius);
                 // loop through y to set blocks
                 for (int y_coord = 1; y_coord < 255; y_coord ++) {
                     int effectualY = y_coord + yOffset;
-                    int estimateY = 1 + (y_coord >> 1);
+                    int estimateY = 1 + Math.floorDiv(y_coord, cacheRadius);
                     Material currBlock = chunk.getType(i, y_coord, j);
                     if (!currBlock.isSolid()) break;
                     // check if the nearby estimates contains cave
@@ -167,7 +175,7 @@ public class OverworldCaveGenerator {
                     byte shouldCheckCave = hasNearbyCaveEstimate(caveEstimates, estimateX, estimateY, estimateZ);
                     boolean isCave = false;
                     if (shouldCheckCave == 0) {
-                        if ((i&1)==0 && (y_coord&1)==0 && (j&1)==0) {
+                        if ((i%cacheRadius)==0 && (y_coord%cacheRadius)==0 && (j%cacheRadius)==0) {
                             // if the cave is in estimate already
                             isCave = caveEstimates[estimateX][estimateY][estimateZ];
                         } else {

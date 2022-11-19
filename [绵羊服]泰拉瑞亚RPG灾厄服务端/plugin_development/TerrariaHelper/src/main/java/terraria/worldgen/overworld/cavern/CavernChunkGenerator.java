@@ -22,6 +22,7 @@ public class CavernChunkGenerator extends ChunkGenerator {
     public static CavernChunkGenerator getInstance() {
         return instance;
     }
+    public long tweak_terrain = 0, tweak_terrain_time = 0;
 
     public CavernChunkGenerator() {
         super();
@@ -61,7 +62,9 @@ public class CavernChunkGenerator extends ChunkGenerator {
         caveGen.populate(world, chunk, biome, heightMap, x, z, caveMultiMap);
 //        caveGen.populate_no_optimization(chunk, biome, heightMap, x, z, caveMultiMap);
 
-        Bukkit.broadcastMessage("tweak terrain: " + (System.nanoTime() - nanosec));
+        tweak_terrain += System.nanoTime() - nanosec;
+        tweak_terrain_time ++;
+        Bukkit.broadcastMessage("tweak terrain (average): " + tweak_terrain / tweak_terrain_time);
         nanosec = System.nanoTime();
 
         for (int i = 0; i < 16; i ++)
