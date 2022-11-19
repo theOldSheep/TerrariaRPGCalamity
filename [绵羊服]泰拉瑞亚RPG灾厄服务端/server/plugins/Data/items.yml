@@ -3489,9 +3489,9 @@
   lore:
   - §r[装备]
   attributes:
-    defence: 15
+    defence: 13
     crit: 5
-    damageTakenMulti: -0.1
+    damageTakenMulti: -0.07
   worth: 400000
   rarity: 2
 胜潮护胫:
@@ -3503,6 +3503,62 @@
     speedMulti: 0.23
   worth: 400000
   rarity: 2
+天蓝战盔:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 14
+    damageMeleeMulti: 0.08
+  worth: 800000
+  rarity: 3
+天蓝兜帽:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 10
+    damageRangedMulti: 0.08
+  worth: 800000
+  rarity: 3
+天蓝帽:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 6
+    damageMeleeMulti: 0.08
+    maxMana: 20
+  worth: 800000
+  rarity: 3
+天蓝头盔:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 4
+    damageSummonMulti: 0.05
+    speedMulti: 0.05
+  worth: 800000
+  rarity: 3
+天蓝胸甲:
+  item: IRON_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 14
+    crit: 6
+  worth: 800000
+  rarity: 3
+天蓝护胫:
+  item: IRON_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 12
+    speedMulti: 0.24
+  worth: 800000
+  rarity: 3
 铜头盔:
   item: IRON_HELMET
   lore:
