@@ -3448,180 +3448,6 @@
     speedMulti: 0.1
   worth: 200000
   rarity: 1
-胜潮贝盔:
-  item: IRON_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 8
-    damageMeleeMulti: 0.05
-  worth: 400000
-  rarity: 2
-胜潮瑚巾:
-  item: IRON_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 6
-    damageRangedMulti: 0.05
-  worth: 400000
-  rarity: 2
-胜潮隐帽:
-  item: IRON_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 4
-    damageMagicMulti: 0.05
-  worth: 400000
-  rarity: 2
-胜潮面罩:
-  item: IRON_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 2
-    damageSummonMulti: 0.1
-  worth: 400000
-  rarity: 2
-胜潮胸甲:
-  item: IRON_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 13
-    crit: 5
-    damageTakenMulti: -0.07
-  worth: 400000
-  rarity: 2
-胜潮护胫:
-  item: IRON_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 8
-    speedMulti: 0.23
-  worth: 400000
-  rarity: 2
-天蓝战盔:
-  item: IRON_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 14
-    damageMeleeMulti: 0.08
-  worth: 800000
-  rarity: 3
-天蓝兜帽:
-  item: IRON_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 10
-    damageRangedMulti: 0.08
-  worth: 800000
-  rarity: 3
-天蓝帽:
-  item: IRON_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 6
-    damageMeleeMulti: 0.08
-    maxMana: 20
-  worth: 800000
-  rarity: 3
-天蓝头盔:
-  item: IRON_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 4
-    damageSummonMulti: 0.05
-    speedMulti: 0.05
-  worth: 800000
-  rarity: 3
-天蓝胸甲:
-  item: IRON_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 14
-    crit: 6
-  worth: 800000
-  rarity: 3
-天蓝护胫:
-  item: IRON_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 12
-    speedMulti: 0.24
-  worth: 800000
-  rarity: 3
-斯塔提斯战盔:
-  item: IRON_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 18
-    damageMeleeMulti: 0.1
-    useSpeedMeleeMulti: 0.1
-    critMelee: 7
-  worth: 2400000
-  rarity: 5
-斯塔提斯头饰:
-  item: IRON_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 14
-    damageRangedMulti: 0.1
-    ammoConsumptionRate: -0.1
-    critRanged: 7
-  worth: 2400000
-  rarity: 5
-斯塔提斯帽子:
-  item: IRON_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 10
-    damageMagicMulti: 0.1
-    maxMana: 30
-    manaUseMulti: -0.1
-    critMagic: 7
-  worth: 2400000
-  rarity: 5
-斯塔提斯兜帽:
-  item: IRON_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 8
-    damageSummonMulti: 0.12
-    speedMulti: 0.05
-  worth: 2400000
-  rarity: 5
-斯塔提斯盔甲:
-  item: IRON_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 20
-    crit: 5
-  worth: 2400000
-  rarity: 5
-斯塔提斯护胫:
-  item: IRON_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 16
-    speedMulti: 0.05
-    damageMulti: 0.05
-  worth: 2400000
-  rarity: 5
 铜头盔:
   item: IRON_HELMET
   lore:
@@ -3745,6 +3571,61 @@
     defence: 8
   worth: 400000
   rarity: 0
+胜潮贝盔:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 8
+    damageMeleeMulti: 0.05
+  worth: 400000
+  rarity: 2
+胜潮瑚巾:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 6
+    damageRangedMulti: 0.05
+  worth: 400000
+  rarity: 2
+胜潮隐帽:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 4
+    damageMagicMulti: 0.05
+  worth: 400000
+  rarity: 2
+胜潮面罩:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 2
+    damageSummonMulti: 0.1
+  worth: 400000
+  rarity: 2
+胜潮胸甲:
+  item: IRON_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 13
+    crit: 5
+    damageTakenMulti: -0.07
+  worth: 400000
+  rarity: 2
+胜潮护胫:
+  item: IRON_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 8
+    speedMulti: 0.23
+  worth: 400000
+  rarity: 2
 流星头盔:
   item: DIAMOND_HELMET
   lore:
@@ -3796,6 +3677,62 @@
     defence: 12
   worth: 450000
   rarity: 1
+天蓝战盔:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 14
+    damageMeleeMulti: 0.08
+  worth: 800000
+  rarity: 3
+天蓝兜帽:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 10
+    damageRangedMulti: 0.08
+  worth: 800000
+  rarity: 3
+天蓝帽:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 6
+    damageMeleeMulti: 0.08
+    maxMana: 20
+  worth: 800000
+  rarity: 3
+天蓝头盔:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 4
+    damageSummonMulti: 0.05
+    speedMulti: 0.05
+  worth: 800000
+  rarity: 3
+天蓝胸甲:
+  item: IRON_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 14
+    crit: 6
+  worth: 800000
+  rarity: 3
+天蓝护胫:
+  item: IRON_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 12
+    speedMulti: 0.24
+  worth: 800000
+  rarity: 3
 熔岩头盔:
   item: DIAMOND_HELMET
   lore:
@@ -3823,6 +3760,69 @@
     useSpeedMeleeMulti: 0.07
   worth: 600000
   rarity: 3
+斯塔提斯战盔:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 18
+    damageMeleeMulti: 0.1
+    useSpeedMeleeMulti: 0.1
+    critMelee: 7
+  worth: 2400000
+  rarity: 5
+斯塔提斯头饰:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 14
+    damageRangedMulti: 0.1
+    ammoConsumptionRate: -0.1
+    critRanged: 7
+  worth: 2400000
+  rarity: 5
+斯塔提斯帽子:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 10
+    damageMagicMulti: 0.1
+    maxMana: 30
+    manaUseMulti: -0.1
+    critMagic: 7
+  worth: 2400000
+  rarity: 5
+斯塔提斯兜帽:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 8
+    damageSummonMulti: 0.12
+    speedMulti: 0.05
+  worth: 2400000
+  rarity: 5
+斯塔提斯盔甲:
+  item: IRON_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 20
+    crit: 5
+  worth: 2400000
+  rarity: 5
+斯塔提斯护胫:
+  item: IRON_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 16
+    speedMulti: 0.05
+    damageMulti: 0.05
+  worth: 2400000
+  rarity: 5
 蜘蛛面具:
   item: DIAMOND_HELMET
   lore:
