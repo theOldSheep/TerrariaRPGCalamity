@@ -56,6 +56,9 @@
         velocity: 0.5
         # 分裂后弹片伤害为原本伤害*damageMulti
         damageMulti: 0.85
+天蓝羽毛:
+    autoTrace: true
+    blastRadius: 2
 南瓜榴弹:
     blastRadius: 2
 狱炎箭:
@@ -69,8 +72,7 @@
     blastRadius: 4.5
     buffInflict:
         - "破晓|400|1"
-    trailColor:
-        - "255|125|125"
+    trailColor: 255|125|125
 星璇导弹:
     autoTrace: true
     blastRadius: 5
@@ -240,8 +242,7 @@
     autoTrace: true
 亡魂:
     autoTrace: true
-    trailColor:
-        - "255|255|255"
+    trailColor: 255|255|255
 蝙蝠:
     autoTrace: true
 台风:

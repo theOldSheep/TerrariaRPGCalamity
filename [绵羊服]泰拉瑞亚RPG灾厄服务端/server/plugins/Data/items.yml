@@ -3421,6 +3421,88 @@
     speedMulti: 0.05
   worth: 50000
   rarity: 1
+沙漠巡游者帽:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 2
+    ammoConsumptionRate: -0.2
+  worth: 200000
+  rarity: 1
+沙漠巡游者衣:
+  item: IRON_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 6
+    critRanged: 5
+  worth: 200000
+  rarity: 1
+沙漠巡游者裤:
+  item: IRON_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 4
+    speedMulti: 0.1
+  worth: 200000
+  rarity: 1
+胜潮贝盔:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 8
+    damageMeleeMulti: 0.05
+  worth: 400000
+  rarity: 2
+胜潮瑚巾:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 6
+    damageRangedMulti: 0.05
+  worth: 400000
+  rarity: 2
+胜潮隐帽:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 4
+    damageMagicMulti: 0.05
+  worth: 400000
+  rarity: 2
+胜潮面罩:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 2
+    damageSummonMulti: 0.1
+  worth: 400000
+  rarity: 2
+胜潮胸甲:
+  item: IRON_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 15
+    crit: 5
+    damageTakenMulti: -0.1
+  worth: 400000
+  rarity: 2
+胜潮护胫:
+  item: IRON_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 8
+    speedMulti: 0.23
+  worth: 400000
+  rarity: 2
 铜头盔:
   item: IRON_HELMET
   lore:
