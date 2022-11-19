@@ -224,6 +224,7 @@
 孢子球:
     blastRadius: 1.5
     autoTrace: true
+    isGrenade: true
     buffInflict:
         - "剧毒|150|1"
 投矛:
