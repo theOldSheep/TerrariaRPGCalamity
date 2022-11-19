@@ -34,22 +34,43 @@ public class CavernChunkGenerator extends ChunkGenerator {
 
     @Override
     public ChunkData generateChunkData(World world, Random random, int x, int z, BiomeGrid biome) {
+        long nanosec = System.nanoTime();
         // setup biome
         OverworldChunkGenerator.tweakBiome(x, z, biome, yOffset);
+
+        Bukkit.broadcastMessage("setup biome: " + (System.nanoTime() - nanosec));
+        nanosec = System.nanoTime();
+
         // init info maps
         int[][] heightMap = new int[16][16];
         double[][] caveMultiMap = new double[16][16];
         OverworldChunkGenerator.generateMaps(x << 4, z << 4, heightMap, caveMultiMap);
+
+        Bukkit.broadcastMessage("setup info maps: " + (System.nanoTime() - nanosec));
+        nanosec = System.nanoTime();
+
         // init terrain
         ChunkData chunk = createChunkData(world);
         OverworldChunkGenerator.initializeTerrain(chunk, x * 16, z * 16, biome, yOffset, heightMap);
         boolean[][][] stoneFlags = OverworldChunkGenerator.setupStoneFlags(x << 4, z << 4, yOffset, heightMap);
+
+        Bukkit.broadcastMessage("init terrain: " + (System.nanoTime() - nanosec));
+        nanosec = System.nanoTime();
+
         // tweak terrain
         caveGen.populate(world, chunk, biome, heightMap, x, z, caveMultiMap);
 //        caveGen.populate_no_optimization(chunk, biome, heightMap, x, z, caveMultiMap);
+
+        Bukkit.broadcastMessage("tweak terrain: " + (System.nanoTime() - nanosec));
+        nanosec = System.nanoTime();
+
         for (int i = 0; i < 16; i ++)
             for (int j = 0; j < 16; j ++)
                 OverworldChunkGenerator.generateTopSoil(chunk, stoneFlags, i, heightMap[i][j], j, (x << 4) + i, (z << 4) + j, biome.getBiome(i, j), yOffset);
+
+        Bukkit.broadcastMessage("generate top soil: " + (System.nanoTime() - nanosec));
+        nanosec = System.nanoTime();
+
         return chunk;
     }
 
