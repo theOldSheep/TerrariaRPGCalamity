@@ -25,10 +25,10 @@
     maxSpeed: 2
     # 是否为爆炸弹幕（损毁时爆炸）？不写则视为false
     isGrenade: false
-    # 爆炸半径
+    # 爆炸半径，不写则视为1.5
     blastRadius: 1.5
-    # 爆炸是否会伤害玩家
-    blastDamageShooter: true
+    # 爆炸是否会伤害玩家，不写则视为false
+    blastDamageShooter: false
     # 是否被水减速？不写则视为true
     slowedByWater: true
     # 击中方块时的反应，不写则视为die
