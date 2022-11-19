@@ -69,6 +69,24 @@ pieces:
   - 天蓝远程套装
   - 天蓝召唤套装
   - 天蓝魔法套装
+  斯塔提斯战盔:
+  -斯塔提斯近战套装
+  斯塔提斯头饰:
+  -斯塔提斯远程套装
+  斯塔提斯帽子:
+  -斯塔提斯魔法套装
+  斯塔提斯兜帽:
+  -斯塔提斯召唤套装
+  斯塔提斯盔甲:
+  -斯塔提斯近战套装
+  -斯塔提斯远程套装
+  -斯塔提斯魔法套装
+  -斯塔提斯召唤套装
+  斯塔提斯护胫:
+  -斯塔提斯近战套装
+  -斯塔提斯远程套装
+  -斯塔提斯魔法套装
+  -斯塔提斯召唤套装
   忍者头盔:
   - 忍者套装
   忍者胸甲:
@@ -383,7 +401,7 @@ sets:
     attributes:
       critRanged: 5
       speedMulti: 0.05
-   天蓝魔法套装:
+  天蓝魔法套装:
     lore:
     - ''
     - §a套装效果： 
@@ -392,7 +410,7 @@ sets:
     attributes:
       critMagic: 5
       speedMulti: 0.05
-    天蓝召唤套装:
+  天蓝召唤套装:
     lore:
     - ''
     - §a套装效果： 
@@ -400,6 +418,42 @@ sets:
     - §a+2 召唤栏
     attributes:
       damageSummonMulti: 0.11
+      minionLimit: 2
+  斯塔提斯近战套装:
+    lore:
+    - ''
+    - §a套装效果： 
+    - §a+5% 近战伤害
+    - §a+5% 近战暴击
+    attributes:
+      critMelee: 5
+      damageMeleeMulti: 0.05
+  斯塔提斯远程套装:
+    lore:
+    - ''
+    - §a套装效果： 
+    - §a+5% 远程伤害
+    - §a+5% 远程暴击
+    attributes:
+      critRanged: 5
+      damageRangedMulti: 0.05
+  斯塔提斯魔法套装:
+    lore:
+    - ''
+    - §a套装效果： 
+    - §a+5% 魔法伤害
+    - §a+5% 魔法暴击
+    attributes:
+      critMagic: 5
+      damageMagicMulti: 0.05
+  斯塔提斯召唤套装:
+    lore:
+    - ''
+    - §a套装效果： 
+    - §a+18% 召唤伤害
+    - §a+2 召唤栏
+    attributes:
+      damageSummonMulti: 0.18
       minionLimit: 2
   忍者套装:
     lore:
