@@ -1,5 +1,6 @@
 package terraria.worldgen.overworld.cavern;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
@@ -25,7 +26,7 @@ public class CavernChunkGenerator extends ChunkGenerator {
     public CavernChunkGenerator() {
         super();
         // init populator
-        caveGen = new OverworldCaveGenerator(yOffset, TerrariaHelper.worldSeed, OverworldChunkGenerator.OCTAVES);
+        caveGen = new OverworldCaveGenerator(yOffset, TerrariaHelper.worldSeed, OverworldChunkGenerator.OCTAVES_CAVE);
         populators = new ArrayList<>();
         populators.add(new OverworldBlockGenericPopulator());
         populators.add(new OrePopulator(yOffset));
@@ -35,15 +36,20 @@ public class CavernChunkGenerator extends ChunkGenerator {
     public ChunkData generateChunkData(World world, Random random, int x, int z, BiomeGrid biome) {
         // setup biome
         OverworldChunkGenerator.tweakBiome(x, z, biome, yOffset);
+        // init info maps
+        int[][] heightMap = new int[16][16];
+        double[][] caveMultiMap = new double[16][16];
+        OverworldChunkGenerator.generateMaps(x << 4, z << 4, heightMap, caveMultiMap);
         // init terrain
         ChunkData chunk = createChunkData(world);
-        int[][] heightMap = OverworldChunkGenerator.initializeTerrain(chunk, x * 16, z * 16, biome, yOffset);
+        OverworldChunkGenerator.initializeTerrain(chunk, x * 16, z * 16, biome, yOffset, heightMap);
+        boolean[][][] stoneFlags = OverworldChunkGenerator.setupStoneFlags(x << 4, z << 4, yOffset, heightMap);
         // tweak terrain
-        caveGen.populate(world, chunk, biome, heightMap, x, z);
-//        caveGen.populate_no_estimate(chunk, biome, heightMap, x, z);
+        caveGen.populate(world, chunk, biome, heightMap, x, z, caveMultiMap);
+//        caveGen.populate_no_optimization(chunk, biome, heightMap, x, z, caveMultiMap);
         for (int i = 0; i < 16; i ++)
             for (int j = 0; j < 16; j ++)
-                OverworldChunkGenerator.generateTopSoil(chunk, i, heightMap[i][j], j, (x << 4) + i, (z << 4) + j, biome.getBiome(i, j), yOffset);
+                OverworldChunkGenerator.generateTopSoil(chunk, stoneFlags, i, heightMap[i][j], j, (x << 4) + i, (z << 4) + j, biome.getBiome(i, j), yOffset);
         return chunk;
     }
 

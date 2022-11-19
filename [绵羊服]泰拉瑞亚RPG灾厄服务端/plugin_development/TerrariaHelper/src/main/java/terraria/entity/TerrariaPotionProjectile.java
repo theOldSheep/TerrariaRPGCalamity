@@ -14,7 +14,7 @@ import terraria.util.YmlHelper;
 import java.util.*;
 
 public class TerrariaPotionProjectile extends EntityPotion {
-    public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/entities.yml");
+    public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/projectiles.yml");
     // projectile info
     public String projectileType, blockHitAction = "die", trailColor = null;
     public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noGravityTicks = 15, penetration = 0;
@@ -199,6 +199,10 @@ public class TerrariaPotionProjectile extends EntityPotion {
             MovingObjectPosition movingobjectposition = this.world.rayTrace(initialLoc, futureLoc);
             this.inGround = false;
             if (movingobjectposition != null) {
+                // gravity turns on after bouncing
+                this.noGravityTicks = this.ticksLived;
+                // call hit block event
+                TerrariaProjectileHitEvent.callProjectileHitEvent(this, movingobjectposition);
                 this.inGround = true;
                 switch (blockHitAction) {
                     case "bounce":
@@ -276,19 +280,22 @@ public class TerrariaPotionProjectile extends EntityPotion {
             }
 
             // update yaw and pitch
-            float horizontalSpeed = MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ);
-            this.yaw = (float) (MathHelper.c(this.motX, this.motZ) * 57.2957763671875D);
-            for (this.pitch = (float) (MathHelper.c(this.motY, horizontalSpeed) * 57.2957763671875D);
-                 this.pitch - this.lastPitch < -180.0F;
-                 this.lastPitch -= 360.0F);
-            while (this.pitch - this.lastPitch >= 180.0F)
-                this.lastPitch += 360.0F;
-            while (this.yaw - this.lastYaw < -180.0F)
-                this.lastYaw -= 360.0F;
-            while (this.yaw - this.lastYaw >= 180.0F)
-                this.lastYaw += 360.0F;
-            this.pitch = this.lastPitch + (this.pitch - this.lastPitch) * 0.2F;
-            this.yaw = this.lastYaw + (this.yaw - this.lastYaw) * 0.2F;
+            {
+                float horizontalSpeed = MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ);
+                this.yaw = (float) (MathHelper.c(this.motX, this.motZ) * 57.2957763671875D);
+                for (this.pitch = (float) (MathHelper.c(this.motY, horizontalSpeed) * 57.2957763671875D);
+                     this.pitch - this.lastPitch < -180.0F;
+                     this.lastPitch -= 360.0F)
+                    ;
+                while (this.pitch - this.lastPitch >= 180.0F)
+                    this.lastPitch += 360.0F;
+                while (this.yaw - this.lastYaw < -180.0F)
+                    this.lastYaw -= 360.0F;
+                while (this.yaw - this.lastYaw >= 180.0F)
+                    this.lastYaw += 360.0F;
+                this.pitch = this.lastPitch + (this.pitch - this.lastPitch) * 0.2F;
+                this.yaw = this.lastYaw + (this.yaw - this.lastYaw) * 0.2F;
+            }
 
             // handle water particle
             if (isInWater()) {

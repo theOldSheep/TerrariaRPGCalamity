@@ -16,7 +16,7 @@ import java.util.*;
 
 public class OverworldChunkGenerator extends ChunkGenerator {
     static long seed = TerrariaHelper.worldSeed;
-    public static int OCTAVES = 6,
+    public static int OCTAVES = 6, OCTAVES_CAVE = 6,
             NEARBY_BIOME_SAMPLE_RADIUS, NEARBY_BIOME_SAMPLE_STEPSIZE,
             LAND_HEIGHT, RIVER_DEPTH, LAKE_DEPTH, PLATEAU_HEIGHT, SEA_LEVEL, LAVA_LEVEL;
     static int yOffset_overworld = 0;
@@ -90,7 +90,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 InterpolatePoint.create(-0.75   , 0),
         }, "lake_ratio_map");
         // block populators
-        caveGen = new OverworldCaveGenerator(yOffset_overworld, seed, OCTAVES);
+        caveGen = new OverworldCaveGenerator(yOffset_overworld, seed, OCTAVES_CAVE);
         populators = new ArrayList<>();
         populators.add(new OverworldBlockGenericPopulator());
         populators.add(new OrePopulator(yOffset_overworld));
@@ -140,7 +140,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     }
     // helper functions
     // chunk block material details
-    public static void generateTopSoil(ChunkData chunk, int i, int height, int j, int blockX, int blockZ, Biome biome, int yOffset) {
+    public static void generateTopSoil(ChunkData chunk, boolean[][][] stoneVeinFlag, int i, int height, int j, int blockX, int blockZ, Biome biome, int yOffset) {
         // although it is named as such, this actually generates stone layers too.
         double topSoilThicknessRandomizer = stoneVeinGenerator.noise(blockX, blockZ, 0.5, 0.5, false);
         double topSoilThickness;
@@ -199,7 +199,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 if (! chunk.getType(i, y, j).isSolid()) continue;
                 Material matToSet;
                 int effectualY = y + yOffset;
-                boolean isStoneVein = stoneVeinGenerator.noise(blockX, effectualY, blockZ, 0.5, 0.5, false) > 0.5;
+                boolean isStoneVein = stoneVeinFlag[i][y][j];
                 if (effectualY > soilLayerHeight) {
                     if (isStoneVein)
                         matToSet = matStone;
@@ -231,14 +231,14 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             }
         }
     }
-    // init terrain (rough + detail)
-    public static int[][] initializeTerrain(ChunkData chunk, int blockXStart, int blockZStart, BiomeGrid biome, int yOffset) {
-        // this function creates the raw terrain of the chunk, consisting of only air, water or stone.
-        int[][] heightMap = new int[16][16];
-        double height;
+    // init terrain helpers
+    public static void generateMaps(int blockXStart, int blockZStart, int[][] heightMap, double[][] caveMultiMap) {
+        double height, caveMulti;
         double biomesSampled = (1 + NEARBY_BIOME_SAMPLE_RADIUS * 2) * (1 + NEARBY_BIOME_SAMPLE_RADIUS * 2);
         int currX, currZ;
 
+        // setup height info according to nearby biomes at both offset 0.
+        // Then use sliding window technique to derive the height everywhere.
         HashMap<Biome, Integer> nearbyBiomeMap = new HashMap<>();
         for (int sampleOffsetX = NEARBY_BIOME_SAMPLE_RADIUS * -1; sampleOffsetX <= NEARBY_BIOME_SAMPLE_RADIUS; sampleOffsetX++) {
             int currSampleX = blockXStart + sampleOffsetX * NEARBY_BIOME_SAMPLE_STEPSIZE;
@@ -256,8 +256,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             nearbyBiomeMap = (HashMap<Biome, Integer>) nearbyBiomeMapBackup.clone();
             for (int j = 0; j < 16; j++) {
                 currZ = blockZStart + j;
-
-                // setup height info according to nearby biomes.
+                // setup height according to nearby biomes.
                 height = 0;
                 double terrainNoise = terrainGenerator.noise(currX, currZ, 0.5, 0.5, false);
                 double terrainNoiseTwo = terrainGeneratorTwo.noise(currX, currZ, 0.5, 0.5, true);
@@ -269,7 +268,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                     totalBiomes += nearbyBiomeMap.get(bom);
                     height += getTerrainHeight(bom, terrainNoise, terrainNoiseTwo, riverNoise, lakeNoise) * nearbyBiomeMap.get(bom);
                 }
-                if (totalBiomes != biomesSampled) Bukkit.getLogger().info("SAMPLE BIOME COUNT NOT MATCHING?? " + i + ", " + j + ", " + totalBiomes);
+                if (totalBiomes != biomesSampled) Bukkit.getLogger().info("ERROR WHILE GENERATING HEIGHT MAP: SAMPLE BIOME COUNT NOT MATCHING?? " + i + ", " + j + ", " + totalBiomes);
                 height /= biomesSampled;
                 double spawnMulti = (double)(Math.abs(currX) + Math.abs(currZ)) / 1000; // make sure no absurd landscape occurs around the spawn point
                 if (spawnMulti < 1)
@@ -278,20 +277,17 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                     double randomHeightMulti = Math.min(Math.max(2, (height - SEA_LEVEL) * 2), 10);
                     height += randomHeightMulti * terrainDetailGenerator.noise(currX, currZ, 0.5, 0.5, true);
                 }
-
-                // loop through y to set blocks
-                for (int y_coord = 0; y_coord < 256; y_coord ++) {
-                    int effectualY = y_coord + yOffset;
-                    if (y_coord == 0)
-                        chunk.setBlock(i, y_coord, j, Material.BEDROCK);
-                    else if (y_coord == 255 && yOffset < 0)
-                        chunk.setBlock(i, y_coord, j, Material.BEDROCK);
-                    else if (effectualY < height)
-                        chunk.setBlock(i, y_coord, j, Material.STONE);
-                    else
-                        chunk.setBlock(i, y_coord, j, Material.AIR);
-                }
+                // save height into heightmap
                 heightMap[i][j] = (int) Math.ceil(height);
+
+                // setup cave multi according to nearby biomes
+                caveMulti = 0;
+                for (Biome bom : nearbyBiomeMap.keySet()) {
+                    caveMulti += OverworldCaveGenerator.getCavernNoiseMulti(bom) * nearbyBiomeMap.get(bom);
+                }
+                caveMulti /= biomesSampled;
+                // save cave multi into caveMultiMap
+                caveMultiMap[i][j] = caveMulti;
 
                 // sliding window technique
                 if (j + 1 < 16) {
@@ -310,7 +306,6 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             if (i + 1 < 16) {
                 int currSample_dropX = currX - NEARBY_BIOME_SAMPLE_RADIUS * NEARBY_BIOME_SAMPLE_STEPSIZE;
                 int currSample_addX  = currX + (NEARBY_BIOME_SAMPLE_RADIUS + 1) * NEARBY_BIOME_SAMPLE_STEPSIZE;
-                // setup height info according to nearby biomes at both offset 0. Then use sliding window technique to derive the height everywhere.
                 for (int sampleOffset = NEARBY_BIOME_SAMPLE_RADIUS * -1; sampleOffset <= NEARBY_BIOME_SAMPLE_RADIUS; sampleOffset++) {
                     int currSampleZ = blockZStart + sampleOffset * NEARBY_BIOME_SAMPLE_STEPSIZE;
                     Biome currBiome_drop = OverworldBiomeGenerator.getBiome(seed, currSample_dropX, currSampleZ);
@@ -320,21 +315,145 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 }
             }
         }
-        return heightMap;
+    }
+    // init terrain (rough + detail)
+    public static void initializeTerrain(ChunkData chunk, int blockXStart, int blockZStart, BiomeGrid biome, int yOffset, int[][] heightMap) {
+        // this function creates the raw terrain of the chunk, consisting of only air, water or stone.
+        int currX, currZ;
+
+        // loop through all blocks.
+        for (int i = 0; i < 16; i ++) {
+            currX = blockXStart + i;
+            for (int j = 0; j < 16; j++) {
+                currZ = blockZStart + j;
+
+                // loop through y to set blocks
+                for (int y_coord = 0; y_coord < 256; y_coord ++) {
+                    int effectualY = y_coord + yOffset;
+                    if (y_coord == 0)
+                        chunk.setBlock(i, y_coord, j, Material.BEDROCK);
+                    else if (y_coord == 255 && yOffset < 0)
+                        chunk.setBlock(i, y_coord, j, Material.BEDROCK);
+                    else if (effectualY < heightMap[i][j])
+                        chunk.setBlock(i, y_coord, j, Material.STONE);
+                    else
+                        chunk.setBlock(i, y_coord, j, Material.AIR);
+                }
+            }
+        }
+    }
+    // helper function for set stone flags
+    protected static boolean checkStoneNoise(double blockX, double effectualY, double blockZ) {
+        return stoneVeinGenerator.noise(blockX, effectualY, blockZ, 0.5, 0.5, false) > 0.5;
+    }
+    protected static boolean isDetailedCheckNeeded(boolean[][][] greaterGrid, int indexX, int indexY, int indexZ) {
+        // checks the nearby 2*2 greater grid and tells if they are the same.
+        int greaterIdxX = indexX >> 1;
+        int greaterIdxY = indexY >> 1;
+        int greaterIdxZ = indexZ >> 1;
+        boolean expected = greaterGrid[greaterIdxX][greaterIdxY][greaterIdxZ];
+        // for x,y,z index & 1:   0 when index % 2 = 0;  1 when index % 2 = 1.
+        // to demonstrate this algorithm, an analogy in 2d would be ideal:
+        // o stands for grid info in greaterGrid
+        // * means the grid needs to loop through all surrounding, as x,y&1=1
+        // - means the grid needs to loop through the two horizontal, as x&1=1 and y&1=0
+        // | means the grid needs to loop through the two vertical,   as x&1=0 and y&1=1
+        // the actual scenario is in 3D so it is a bit different, but the idea is the same.
+        // o  -  o
+        // |  *  |
+        // o  -  o
+        for (int i = greaterIdxX; i <= greaterIdxX + (indexX & 1); i ++) {
+            for (int j = greaterIdxY; j <= greaterIdxY + (indexY & 1); j ++) {
+                for (int k = greaterIdxZ; k <= greaterIdxZ + (indexZ & 1); k ++) {
+                    // if the grid is different from expected, return true and flag for further calculation
+                    if (greaterGrid[i][j][k] != expected) return true;
+                }
+            }
+        }
+        // everything seems to match, returns false and no extra calculation is needed.
+        return false;
+    }
+    public static boolean[][][] setupStoneFlags(int xStart, int zStart, int yOffset, int[][] heightMap) {
+        // setup 4*4 grid
+        boolean[][][] fourGrid = new boolean[5][65][5];
+        for (int i = 0; i < 5; i++) {
+            int actualXOffset = i << 2;
+            for (int j = 0; j < 65; j++) {
+                int actualY = (j << 2) + yOffset;
+                for (int k = 0; k < 5; k++) {
+                    int actualZOffset = k << 2;
+                    // if the block is above max height. Checks i and k for out of bound.
+                    if (i < 4 && k < 4 && actualY > heightMap[actualXOffset][actualZOffset])
+                        fourGrid[i][j][k] = false;
+                    // otherwise, we calculate the noise and validate
+                    else fourGrid[i][j][k] = checkStoneNoise(xStart + actualXOffset, actualY, zStart + actualZOffset);
+                }
+            }
+        }
+        // setup 2*2 grid
+        boolean[][][] twoGrid = new boolean[9][129][9];
+        for (int i = 0; i < 9; i++) {
+            int actualXOffset = i << 1;
+            for (int j = 0; j < 129; j++) {
+                int actualY = (j << 1) + yOffset;
+                for (int k = 0; k < 9; k++) {
+                    int actualZOffset = k << 1;
+                    // if the block is above max height. Checks i and k for out of bound.
+                    if (i < 8 && k < 8 && actualY > heightMap[actualXOffset][actualZOffset]) {
+                        twoGrid[i][j][k] = false;
+                        continue;
+                    }
+                    if (isDetailedCheckNeeded(fourGrid, i, j, k)) {
+                        // if further calculation is needed, we calculate the noise and validate
+                        twoGrid[i][j][k] = checkStoneNoise(xStart + actualXOffset, actualY, zStart + actualZOffset);
+                    } else {
+                        // otherwise, let it inherit the 4*4 grid stone flag
+                        twoGrid[i][j][k] = fourGrid[i >> 1][j >> 1][k >> 1];
+                    }
+                }
+            }
+        }
+        // setup result grid
+        boolean[][][] result = new boolean[16][256][16];
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 256; j++) {
+                int actualY = j + yOffset;
+                for (int k = 0; k < 16; k++) {
+                    // if the block is above max height.
+                    if (actualY > heightMap[i][k]) {
+                        result[i][j][k] = false;
+                        continue;
+                    }
+                    if (isDetailedCheckNeeded(twoGrid, i, j, k)) {
+                        // if further calculation is needed, we calculate the noise and validate
+                        result[i][j][k] = checkStoneNoise(xStart + i, actualY, zStart + k);
+                    } else {
+                        // otherwise, let it inherit the 2*2 grid stone flag
+                        result[i][j][k] = twoGrid[i >> 1][j >> 1][k >> 1];
+                    }
+                }
+            }
+        }
+        return result;
     }
     @Override
     public ChunkData generateChunkData(World world, Random random, int x, int z, BiomeGrid biome) {
         // setup biome
         tweakBiome(x, z, biome, yOffset_overworld);
+        // init info maps
+        int[][] heightMap = new int[16][16];
+        double[][] caveMultiMap = new double[16][16];
+        generateMaps(x << 4, z << 4, heightMap, caveMultiMap);
         // init terrain
         ChunkData chunk = createChunkData(world);
-        int[][] heightMap = initializeTerrain(chunk, x << 4, z << 4, biome, yOffset_overworld);
+        initializeTerrain(chunk, x << 4, z << 4, biome, yOffset_overworld, heightMap);
+        boolean[][][] stoneFlags = setupStoneFlags(x << 4, z << 4, yOffset_overworld, heightMap);
         // tweak terrain
-        caveGen.populate(world, chunk, biome, heightMap, x, z);
-//        caveGen.populate_no_estimate(chunk, biome, heightMap, x, z);
+        caveGen.populate(world, chunk, biome, heightMap, x, z, caveMultiMap);
+//        caveGen.populate_no_optimization(chunk, biome, heightMap, x, z, caveMultiMap);
         for (int i = 0; i < 16; i ++)
             for (int j = 0; j < 16; j ++)
-                generateTopSoil(chunk, i, heightMap[i][j], j, (x << 4) + i, (z << 4) + j, biome.getBiome(i, j), yOffset_overworld);
+                generateTopSoil(chunk, stoneFlags, i, heightMap[i][j], j, (x << 4) + i, (z << 4) + j, biome.getBiome(i, j), yOffset_overworld);
         return chunk;
     }
     @Override

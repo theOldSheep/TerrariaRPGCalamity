@@ -7,8 +7,8 @@ import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 import terraria.TerrariaHelper;
+import terraria.util.MathHelper;
 
-import javax.swing.*;
 import java.util.Random;
 
 public class OverworldCaveGenerator {
@@ -16,7 +16,7 @@ public class OverworldCaveGenerator {
     SimplexOctaveGenerator cheeseCaveGenerator, spaghettiGeneratorOne, spaghettiGeneratorTwo;
 
 
-    static long test_cave = 0, test_cave_time = 0,
+    long test_cave = 0, test_cave_time = 0,
                 test_cave_setup = 0, test_cave_setup_time = 0,
                 blockTotal = 0, regenerated = 0;
     static final boolean test_timing = false;
@@ -27,17 +27,16 @@ public class OverworldCaveGenerator {
         rdm.nextInt();
         cheeseCaveGenerator = new SimplexOctaveGenerator(rdm.nextLong(), OCTAVES);
         cheeseCaveGenerator.setScale(0.0075);
-        cheeseCaveGenerator.setYScale(cheeseCaveGenerator.getYScale() * 5);
+        cheeseCaveGenerator.setYScale(cheeseCaveGenerator.getYScale() * 5 / 3);
         spaghettiGeneratorOne = new SimplexOctaveGenerator(rdm.nextLong(), OCTAVES);
         spaghettiGeneratorOne.setScale(0.005);
-        spaghettiGeneratorOne.setYScale(spaghettiGeneratorOne.getYScale() * 4);
+        spaghettiGeneratorOne.setYScale(spaghettiGeneratorOne.getYScale() * 4 / 3);
         spaghettiGeneratorTwo = new SimplexOctaveGenerator(rdm.nextLong(), OCTAVES);
         spaghettiGeneratorTwo.setScale(0.0055);
-        spaghettiGeneratorTwo.setYScale(spaghettiGeneratorTwo.getYScale() * 4);
+        spaghettiGeneratorTwo.setYScale(spaghettiGeneratorTwo.getYScale() * 4 / 3);
 
     }
-    private double[] getCavernNoise(Biome biome, int height, int currX, int effectualY, int currZ) {
-        double[] result = new double[]{-1, -1, -1};
+    public static double getCavernNoiseMulti(Biome biome) {
         switch (biome) {
             case DESERT:            // desert
             case MUTATED_DESERT:    // sunken sea
@@ -45,14 +44,18 @@ public class OverworldCaveGenerator {
             case FROZEN_OCEAN:      // sulphurous ocean
             case DEEP_OCEAN:        // abyss
                 // caves for these biomes will be customized.
-                return result;
+                return 0;
+            default:
+                return 1;
         }
-        double caveNoiseY = ((double) effectualY) / 3;
+    }
+    private double[] getCavernNoise(Biome biome, int height, int currX, int effectualY, int currZ, double noiseMulti) {
+        double[] result = new double[]{-1, -1, -1};
         if (effectualY > 30) {
             boolean hasRiver = height - yOffset - 2 < OverworldChunkGenerator.SEA_LEVEL;
             double caveNoiseOffset = ((double) (effectualY - 30)) / 20;
             if (caveNoiseOffset < 2) {
-                result[0] = cheeseCaveGenerator.noise(currX, caveNoiseY, currZ, 0.5, 0.5, false) - caveNoiseOffset;
+                result[0] = cheeseCaveGenerator.noise(currX, effectualY, currZ, 0.5, 0.5, false) - caveNoiseOffset;
             }
             switch (biome) {
                 case FOREST:        // forest
@@ -61,8 +64,8 @@ public class OverworldCaveGenerator {
                 case ICE_FLATS:     // hallow
                 case MESA:          // astral infection
                     // only these biomes may have surface spaghetti caves!
-                    result[1] = spaghettiGeneratorOne.noise(currX, caveNoiseY, currZ, 0.5, 0.5, false);
-                    result[2] = spaghettiGeneratorTwo.noise(currX, caveNoiseY, currZ, 0.5, 0.5, false);
+                    result[1] = spaghettiGeneratorOne.noise(currX, effectualY, currZ, 0.5, 0.5, false);
+                    result[2] = spaghettiGeneratorTwo.noise(currX, effectualY, currZ, 0.5, 0.5, false);
                     if (hasRiver) {
                         if (result[1] < 0)
                             result[1] -= caveNoiseOffset;
@@ -75,15 +78,19 @@ public class OverworldCaveGenerator {
                     }
             }
         } else {
-            result[0] = cheeseCaveGenerator.noise(currX, caveNoiseY, currZ, 0.5, 0.5, false);
-            result[1] = spaghettiGeneratorOne.noise(currX, caveNoiseY, currZ, 0.5, 0.5, false);
-            result[2] = spaghettiGeneratorTwo.noise(currX, caveNoiseY, currZ, 0.5, 0.5, false);
+            result[0] = cheeseCaveGenerator.noise(currX, effectualY, currZ, 0.5, 0.5, false);
+            result[1] = spaghettiGeneratorOne.noise(currX, effectualY, currZ, 0.5, 0.5, false);
+            result[2] = spaghettiGeneratorTwo.noise(currX, effectualY, currZ, 0.5, 0.5, false);
         }
+        double complementNoise = 1 - noiseMulti;
+        result[0] = result[0] * noiseMulti - complementNoise;
+        result[1] = result[1] * noiseMulti - complementNoise;
+        result[2] = result[2] * noiseMulti - complementNoise;
         return result;
     }
     private boolean validateCaveEstimate(double[] noise) {
         double cheeseThreshold = 0.75;
-        double spaghettiThreshold = 0.1;
+        double spaghettiThreshold = 0.15;
         return (noise[0] > cheeseThreshold) || (
                     (Math.abs(noise[1]) < spaghettiThreshold) &&
                     (Math.abs(noise[2]) < spaghettiThreshold));
@@ -103,31 +110,43 @@ public class OverworldCaveGenerator {
         return false;
     }
 
-    public void populate(World wld, ChunkGenerator.ChunkData chunk, ChunkGenerator.BiomeGrid biome, int[][] heightMap, int x, int z) {
+    public void populate(World wld, ChunkGenerator.ChunkData chunk, ChunkGenerator.BiomeGrid biome, int[][] heightMap, int x, int z, double[][] caveMultiMap) {
+        int chunkX = x << 4, chunkZ = z << 4;
         // setup cave estimates
         boolean[][][] caveEstimates = new boolean[6][66][6];
         for (int i = 0; i < 6; i ++) {
-            int currX = (x << 4) + ((i - 1) << 2);
+            int xBlockOffset = ((i - 1) << 2);
+            int currX = chunkX + xBlockOffset;
+            // prevent out of bound
+            if (xBlockOffset < 0) xBlockOffset = 0;
+            else if (xBlockOffset >= 16) xBlockOffset = 15;
             for (int j = 0; j < 6; j ++) {
-                int currZ = (z << 4) + ((j - 1) << 2);
+                int zBlockOffset = ((j - 1) << 2);
+                int currZ = chunkZ + zBlockOffset;
+                // prevent out of bound
+                if (zBlockOffset < 0) zBlockOffset = 0;
+                else if (zBlockOffset >= 16) zBlockOffset = 15;
                 Biome columnBiome = OverworldBiomeGenerator.getBiome(TerrariaHelper.worldSeed, currX, currZ);
                 for (int y_coord = 0; y_coord < 66; y_coord ++) {
                     int effectualY = ((y_coord - 1) << 2) + yOffset;
-                    caveEstimates[i][y_coord][j] = validateCaveEstimate(getCavernNoise(columnBiome, heightMap[i][j], currX, effectualY, currZ));
+                    caveEstimates[i][y_coord][j] = validateCaveEstimate(getCavernNoise(
+                            columnBiome, heightMap[i][j], currX, effectualY, currZ, caveMultiMap[xBlockOffset][zBlockOffset]));
                 }
             }
         }
 
+        if (test_timing && test_cave_setup_time % 10 == 0)
+            Bukkit.broadcastMessage("caveMultiMap[0][0]: " + caveMultiMap[0][0]);
         if (test_timing && ++test_cave_setup_time % 10 == 0)
             Bukkit.broadcastMessage("Time elapsed for setup cave estimates: " + test_cave_setup / test_cave_setup_time);
         if (test_timing && ++test_cave_time % 10 == 0)
             Bukkit.broadcastMessage("Time elapsed for generating cave: " + test_cave / test_cave_time);
         // setup actual blocks
         for (int i = 0; i < 16; i ++) {
-            int currX = (x << 4) + i;
+            int currX = chunkX + i;
             int estimateX = 1 + (i >> 2);
             for (int j = 0; j < 16; j ++) {
-                int currZ = (z << 4) + j;
+                int currZ = chunkZ + j;
                 int estimateZ = 1 + (j >> 2);
                 // loop through y to set blocks
                 for (int y_coord = 1; y_coord < 255; y_coord ++) {
@@ -146,7 +165,8 @@ public class OverworldCaveGenerator {
                     }
                     if (shouldCheckCave) {
                         // setup two types of cave noise
-                        double[] noise = getCavernNoise(biome.getBiome(i, j), heightMap[i][j], currX, effectualY, currZ);
+                        double[] noise = getCavernNoise(
+                                biome.getBiome(i, j), heightMap[i][j], currX, effectualY, currZ, caveMultiMap[i][j]);
                         // cheese cave noise should be decreased above y=30, and completely gone above y=50
                         boolean isCave = validateCave(noise);
                         if (isCave)
@@ -162,12 +182,13 @@ public class OverworldCaveGenerator {
             }
         }
     }
-    public void populate_no_estimate(ChunkGenerator.ChunkData chunk, ChunkGenerator.BiomeGrid biome, int[][] heightMap, int x, int z) {
+    public void populate_no_optimization(ChunkGenerator.ChunkData chunk, ChunkGenerator.BiomeGrid biome, int[][] heightMap, int x, int z, double[][] caveMultiMap) {
+        int chunkX = x << 4, chunkZ = z << 4;
         // setup actual blocks
         for (int i = 0; i < 16; i ++) {
-            int currX = (x << 4) + i;
+            int currX = chunkX + i;
             for (int j = 0; j < 16; j ++) {
-                int currZ = (z << 4) + j;
+                int currZ = chunkZ + j;
                 // loop through y to set blocks
                 for (int y_coord = 1; y_coord < 255; y_coord ++) {
                     int effectualY = y_coord + yOffset;
@@ -176,7 +197,8 @@ public class OverworldCaveGenerator {
 
                     long timing = System.nanoTime();
                     // setup two types of cave noise
-                    double[] noise = getCavernNoise(biome.getBiome(i, j), heightMap[i][j], currX, effectualY, currZ);
+                    double[] noise = getCavernNoise(
+                            biome.getBiome(i, j), heightMap[i][j], currX, effectualY, currZ, caveMultiMap[i][j]);
                     // cheese cave noise should be decreased above y=30, and completely gone above y=50
                     boolean isCave = validateCave(noise);
                     if (test_timing){
