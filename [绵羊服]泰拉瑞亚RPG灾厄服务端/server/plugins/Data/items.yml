@@ -3802,6 +3802,7 @@
   - §r[装备]
   attributes:
     defence: 16
+    critMelee: 7
   worth: 900000
   rarity: 3
 熔岩胸甲:
@@ -3810,6 +3811,7 @@
   - §r[装备]
   attributes:
     defence: 18
+    damageMeleeMulti: 0.07
   worth: 600000
   rarity: 3
 熔岩护胫:
@@ -3818,6 +3820,7 @@
   - §r[装备]
   attributes:
     defence: 16
+    useSpeedMeleeMulti: 0.07
   worth: 600000
   rarity: 3
 蜘蛛面具:
