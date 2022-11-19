@@ -51,6 +51,24 @@ pieces:
   - 胜潮远程套装
   - 胜潮召唤套装
   - 胜潮魔法套装
+  天蓝战盔:
+  - 天蓝近战套装
+  天蓝兜帽:
+  - 天蓝远程套装
+  天蓝帽:
+  - 天蓝魔法套装
+  天蓝头盔:
+  - 天蓝召唤套装
+  天蓝胸甲:
+  - 天蓝近战套装
+  - 天蓝远程套装
+  - 天蓝召唤套装
+  - 天蓝魔法套装
+  天蓝护胫:
+  - 天蓝近战套装
+  - 天蓝远程套装
+  - 天蓝召唤套装
+  - 天蓝魔法套装
   忍者头盔:
   - 忍者套装
   忍者胸甲:
@@ -330,7 +348,7 @@ sets:
   胜潮魔法套装:
     lore:
     - ''
-    - §a套装效果： 
+    - §a套装效果：
     - §a+6 生命恢复
     - §a+10% 魔法伤害
     attributes:
@@ -339,13 +357,49 @@ sets:
   胜潮召唤套装:
     lore:
     - ''
-    - §a套装效果： 
+    - §a套装效果：
     - §a+6 生命恢复
     - §a+10% 召唤伤害
     - §a+2 召唤栏
     attributes:
-      damageSummonMultiMulti: 0.1
+      damageSummonMulti: 0.1
       regen: 6
+      minionLimit: 2
+  天蓝近战套装:
+    lore:
+    - ''
+    - §a套装效果： 
+    - §a+5% 移动速度
+    - §a+5% 近战暴击
+    attributes:
+      critMelee: 5
+      speedMulti: 0.05
+  天蓝远程套装:
+    lore:
+    - ''
+    - §a套装效果： 
+    - §a+5% 移动速度
+    - §a+5% 远程暴击
+    attributes:
+      critRanged: 5
+      speedMulti: 0.05
+   天蓝魔法套装:
+    lore:
+    - ''
+    - §a套装效果： 
+    - §a+5% 移动速度
+    - §a+5% 魔法暴击
+    attributes:
+      critMagic: 5
+      speedMulti: 0.05
+    天蓝召唤套装:
+    lore:
+    - ''
+    - §a套装效果： 
+    - §a+11% 召唤伤害
+    - §a+2 召唤栏
+    attributes:
+      damageSummonMulti: 0.11
       minionLimit: 2
   忍者套装:
     lore:
