@@ -1,0 +1,255 @@
+弹射物示例:
+    # 是否自动追踪，不写则视为false
+    autoTrace: false
+    # 自动追踪的寻敌半径，单位（格）。不写则视为12
+    autoTraceRadius: 12
+    # 自动追踪的能力，数字越高则追踪转向的最高效率越高。不写则视为4
+    autoTraceAbility: 4
+    # 这个弹射物会不会被闭合的宝箱怪，旋转的火月怪等反弹？不写则视为true
+    canBeReflected: true
+    # 击中怪物后敌人多少帧后才能被本弹射物再次伤害？（一秒=20帧）不写则视为5
+    enemyInvincibilityFrame: 5
+    # 弹射物多少帧后超时自动损毁？（一秒=20帧）不写则视为200（10秒）
+    liveTime: 200
+    # 穿透敌怪次数，不写则视为0
+    penetration: 0
+    # 无视重力飞行的帧数，不写则视为15
+    noGravityTicks: 15
+    # 重力影响，受重力时每帧向下的速度改变（负数则为向上偏移）。不写则视为0.05
+    gravity: 0.05
+    # 弹射物的碰撞箱体积，不写视为0.125
+    projectileSize: 0.125
+    # 每帧速度乘以这个数字，例如1.25则为每帧加速25%，不写则视为1
+    speedMultiPerTick: 0
+    # 最大速度（单位：格/帧），防止恶魔锄刀类武器的速度突破天际，不写则视为2
+    maxSpeed: 2
+    # 是否为爆炸弹幕（损毁时爆炸）？不写则视为false
+    isGrenade: false
+    # 爆炸半径
+    blastRadius: 1.5
+    # 爆炸是否会伤害玩家
+    blastDamageShooter: true
+    # 是否被水减速？不写则视为true
+    slowedByWater: true
+    # 击中方块时的反应，不写则视为die
+    # die: 击中方块时损毁； thru：穿透方块； bounce：弹跳； stick：黏在方块上； slide：像月光弓一样，在方块表面摩擦
+    blockHitAction: die
+    # 弹跳次数，不写则视为0。仅在blockHitAction: bounce时有作用。
+    bounce: 0
+    # 弹跳次数和穿透次数是否绑定（弹跳时穿透次数也减少1，反之亦然）？不写则视为false。仅在blockHitAction: bounce时有作用。
+    bouncePenetrationBonded: false
+    # 弹跳时速度乘的倍数，不写则视为1。仅在blockHitAction: bounce时有作用。
+    bounceVelocityMulti: 0
+    # 轨迹的颜色(R|G|B)，可不写。
+    trailColor: 255|125|125
+    # 攻击造成的buff，格式为  buff名|buff时长（单位：帧）|几率。可不写。
+    buffInflict:
+        - "霜火|100|0.35"
+    # 集束炸弹类，可不写
+    # 仅在损毁时生效
+    clusterBomb:
+        # 分裂成弹片数量
+        amount: 8
+        # 分裂后弹片弹射物类型
+        name: 装饰弹片
+        # 分裂后弹片弹射物速度
+        velocity: 0.5
+        # 分裂后弹片伤害为原本伤害*damageMulti
+        damageMulti: 0.85
+南瓜榴弹:
+    blastRadius: 2
+狱炎箭:
+    blastRadius: 3.5
+爆炸弹:
+    blastRadius: 1.5
+    blastDamageShooter: true
+玛瑙能量:
+    blastRadius: 4
+狱火爆破弹:
+    blastRadius: 4.5
+    buffInflict:
+        - "破晓|400|1"
+    trailColor:
+        - "255|125|125"
+星璇导弹:
+    autoTrace: true
+    blastRadius: 5
+火球:
+    blastRadius: 3
+    buffInflict:
+        - "燃烧|100|1"
+流体入侵怪:
+    blastRadius: 3.5
+幻影球:
+    blastRadius: 6
+幻影眼:
+    blastRadius: 4
+七彩水晶:
+    blastRadius: 2.5
+集束破片:
+    blastRadius: 1.25
+    blastDamageShooter: true
+初级雪人火箭:
+    autoTrace: true
+    blastRadius: 2.25
+    blastDamageShooter: true
+二级雪人火箭:
+    autoTrace: true
+    blastRadius: 2.75
+    blastDamageShooter: true
+    destroyBlock: true
+三级雪人火箭:
+    autoTrace: true
+    blastRadius: 3.25
+    blastDamageShooter: true
+四级雪人火箭:
+    autoTrace: true
+    blastRadius: 3.5
+    blastDamageShooter: true
+    destroyBlock: true
+集束雪人火箭:
+    autoTrace: true
+    clusterBomb:
+        amount: 5
+        name: 集束破片
+        velocity: 0.5
+        damageMulti: 0.5
+    blastRadius: 2
+    blastDamageShooter: true
+红烟花火箭:
+    blastRadius: 8
+绿烟花火箭:
+    blastRadius: 8
+蓝烟花火箭:
+    blastRadius: 8
+黄烟花火箭:
+    blastRadius: 8
+初级榴弹:
+    blastRadius: 2.5
+    blastDamageShooter: true
+二级榴弹:
+    blastRadius: 2.9
+    blastDamageShooter: true
+    destroyBlock: true
+三级榴弹:
+    blastRadius: 3.6
+    blastDamageShooter: true
+四级榴弹:
+    blastRadius: 4.25
+    blastDamageShooter: true
+    destroyBlock: true
+集束榴弹:
+    clusterBomb:
+        amount: 5
+        name: 集束破片
+        velocity: 0.5
+        damageMulti: 0.5
+    blastRadius: 2.35
+    blastDamageShooter: true
+冰焰箭:
+    buffInflict:
+        - "霜火|100|0.35"
+烈焰箭:
+    buffInflict:
+        - "燃烧|200|0.3"
+火焰:
+    buffInflict:
+        - "燃烧|400|1"
+希腊烈火:
+    buffInflict:
+        - "燃烧|200|1"
+诅咒箭:
+    buffInflict:
+        - "咒火|140|1"
+毒液箭:
+    buffInflict:
+        - "剧毒|200|1"
+异星蜂王:
+    buffInflict:
+        - "扭曲|160|1"
+异星黏液:
+    buffInflict:
+        - "扭曲|160|1"
+寒霜碎块:
+    buffInflict:
+        - "冷冻|150|0.67"
+寒霜波:
+    buffInflict:
+        - "冷冻|150|1"
+        - "冰冻|100|0.1654"
+破晓之光:
+    buffInflict:
+        - "破晓|800|1"
+水晶子弹:
+    clusterBomb:
+        amount: 4
+        name: 水晶碎块
+        velocity: 0.5
+        damageMulti: 0.45
+装饰:
+    clusterBomb:
+        amount: 8
+        name: 装饰弹片
+        velocity: 0.5
+        damageMulti: 0.85
+种子弯刀坚果:
+    clusterBomb:
+        amount: 8
+        name: 种子弯刀坚果碎片
+        velocity: 0.75
+        damageMulti: 0.75
+疯狂飞斧:
+    autoTrace: true
+星云奥秘:
+    autoTrace: true
+    clusterBomb:
+        amount: 12
+        name: 星云奥秘爆炸弹碎块
+        velocity: 0.5
+        damageMulti: 0.65
+诅咒弹:
+    buffInflict:
+        - "咒火|140|1"
+毒液弹:
+    buffInflict:
+        - "剧毒|200|1"
+小火花:
+    buffInflict:
+        - "燃烧|100|0.3"
+咒火球:
+    buffInflict:
+        - "咒火|600|1"
+孢子球:
+    blastRadius: 1.5
+    autoTrace: true
+    buffInflict:
+        - "剧毒|150|1"
+投矛:
+    buffInflict:
+        - "中毒|300|1"
+        - "剧毒|300|0.33"
+绿藻弹:
+    autoTrace: true
+彩虹水晶:
+    autoTrace: true
+星云烈焰:
+    autoTrace: true
+星云烈焰炮弹:
+    autoTrace: true
+幻象箭:
+    autoTrace: true
+亡魂:
+    autoTrace: true
+    trailColor:
+        - "255|255|255"
+蝙蝠:
+    autoTrace: true
+台风:
+    autoTrace: true
+气泡弹:
+    autoTrace: true
+星尘细胞弹:
+    autoTrace: true
+    buffInflict:
+        - "缓慢|200|1"
+        - "剧毒|200|1"
