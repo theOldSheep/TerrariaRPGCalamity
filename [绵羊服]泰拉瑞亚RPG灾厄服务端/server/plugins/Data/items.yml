@@ -1324,6 +1324,138 @@
     useTime: 23
   worth: 4000000
   rarity: 3
+翡翠斧:
+  item: DIAMOND_PICKAXE
+  attributes:
+    damage: 36
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 24
+    powerPickaxe: 100
+  worth: 400000
+  rarity: 1
+深渊碾碎者:
+  item: DIAMOND_PICKAXE
+  attributes:
+    damage: 72
+    damageType: Melee
+    crit: 4
+    knockback: 5.25
+    useTime: 21
+    powerPickaxe: 100
+  worth: 400000
+  rarity: 1
+海耀之刃:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 52
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 19
+  worth: 400000
+  rarity: 1
+泪刃:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 90
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 23
+  worth: 400000
+  rarity: 1
+痛击者:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 60
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 25
+  worth: 200000
+  rarity: 2
+真菌爪:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 42
+    damageType: Melee
+    crit: 4
+    knockback: 3.75
+    useTime: 6
+  worth: 400000
+  rarity: 1
+绝望之刃:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 140
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 26
+  worth: 400000
+  rarity: 1
+灼炎弯刀:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 56
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 20
+  worth: 200000
+  rarity: 2
+阴雷:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 96
+    damageType: Melee
+    crit: 4
+    knockback: 4.25
+    useTime: 24
+  worth: 800000
+  rarity: 3
+风之刃:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 82
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 20
+  worth: 800000
+  rarity: 3
+高斯短匕:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 50
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 24
+  worth: 800000
+  rarity: 1100
+凝胶波刃:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 76
+    damageType: Melee
+    crit: 4
+    knockback: 5.25
+    useTime: 36
+  worth: 2400000
+  rarity: 4
+血锋:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 140
+    damageType: Melee
+    crit: 4
+    knockback: 5.25
+    useTime: 23
+  worth: 800000
+  rarity: 3
 剑鱼:
   item: STONE_SWORD
   attributes:
