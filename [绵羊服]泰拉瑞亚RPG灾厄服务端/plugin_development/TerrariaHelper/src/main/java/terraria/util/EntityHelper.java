@@ -37,6 +37,7 @@ public class EntityHelper {
     // constants
     static final YmlHelper.YmlSection entityConfig = YmlHelper.getFile("plugins/Data/entities.yml");
     static final YmlHelper.YmlSection buffConfig = YmlHelper.getFile("plugins/Data/buff.yml");
+    static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/projectiles.yml");
     static final YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
     static HashMap<String, Set<String>> buffInferior, buffSuperior;
     static {
@@ -83,14 +84,22 @@ public class EntityHelper {
     }
     // helper functions
     public static void initEntityMetadata(Entity entity) {
+        setMetadata(entity, "damageType", "Melee");
         setMetadata(entity, "effects", new HashMap<String, Integer>());
         setMetadata(entity, "buffImmune", new HashMap<String, Integer>());
+    }
+    public static String getDamageType(Metadatable entity) {
+        try {
+            return getMetadata(entity, "damageType").asString();
+        } catch (Exception e) {
+            return "Melee";
+        }
     }
     public static HashMap<String, Double> getAttrMap(Metadatable entity) {
         try {
             return (HashMap<String, Double>) getMetadata(entity, "attrMap").value();
         } catch (Exception e) {
-            return null;
+            return new HashMap<>(0);
         }
     }
     public static MetadataValue getMetadata(Metadatable owner, String key) {
@@ -108,7 +117,7 @@ public class EntityHelper {
     }
     public static void tweakAttribute(Entity entity, String key, String value, boolean addOrRemove) {
         if (key.equals("damageType")) {
-            setMetadata(entity, "damageType", value);
+            if (addOrRemove) setMetadata(entity, "damageType", value);
             return;
         }
         try {
@@ -245,9 +254,8 @@ public class EntityHelper {
         try {
             return (HashMap<String, Integer>) getMetadata(entity, "effects").value();
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] getEffectMap", e);
+            return new HashMap<>();
         }
-        return new HashMap<>();
     }
     public static int getEffectLevelMax(String effect) {
         switch (effect) {
@@ -329,7 +337,7 @@ public class EntityHelper {
             if (damagePerDelay > 0) {
                 double damageMulti = 1;
                 if (effect.equals("破晓")) damageMulti = getEffectLevel(effect, timeRemaining);
-                handleDamage(entity, entity, damagePerDelay * damageMulti, "debuff_" + effect);
+                handleDamage(entity, entity, damagePerDelay * damageMulti, "Debuff_" + effect);
             }
             if (effect.equals("扭曲")) {
                 World entityWorld = entity.getLocation().getWorld();
@@ -493,47 +501,47 @@ public class EntityHelper {
                     dm += "，凶手是" + killer;
                 }
         }
-        dm.replaceAll("<victim>", v.getName());
+        dm = dm.replaceAll("<victim>", v.getName());
         Bukkit.broadcastMessage("§4" + dm);
     }
-    public static boolean entityDamageEvent(Entity d, Entity dPly, LivingEntity v, LivingEntity damageTaker, double dmg, String damageCause) {
-        if (d == null) return true;
-        String nameV = GenericHelper.trimText(v.getName());
-        Entity minion = d;
+    public static boolean entityDamageEvent(Entity damager, Entity dPly, LivingEntity victim, LivingEntity damageTaker, double dmg, String damageCause) {
+        if (damager == null) return true;
+        String nameV = GenericHelper.trimText(victim.getName());
+        Entity minion = damager;
         // special minion behaviour
         if (minion instanceof Projectile) {
             ProjectileSource projSrc = ((Projectile) minion).getShooter();
             if (projSrc instanceof Entity) minion = (Entity) projSrc;
         }
         if (minion.getScoreboardTags().contains("isMinion")) {
-            if (v.getScoreboardTags().contains("暗黑收割")) {
-                v.removeScoreboardTag("暗黑收割");
-                handleEntityExplode(d, null, v.getEyeLocation());
+            if (victim.getScoreboardTags().contains("暗黑收割")) {
+                victim.removeScoreboardTag("暗黑收割");
+                handleEntityExplode(damager, 2, null, victim.getEyeLocation());
             }
         }
         // special victim behaviour
         switch (nameV) {
             case "史莱姆王": {
                 if (dPly instanceof Player) {
-                    MonsterHelper.spawnMob("史莱姆", v.getLocation(), (Player) dPly);
-                    if (Math.random() < 0.5) MonsterHelper.spawnMob("尖刺史莱姆", v.getLocation(), (Player) dPly);
-                    if (Math.random() < 0.25) MonsterHelper.spawnMob("尖刺史莱姆", v.getLocation(), (Player) dPly);
+                    MonsterHelper.spawnMob("史莱姆", victim.getLocation(), (Player) dPly);
+                    if (Math.random() < 0.5) MonsterHelper.spawnMob("尖刺史莱姆", victim.getLocation(), (Player) dPly);
+                    if (Math.random() < 0.25) MonsterHelper.spawnMob("尖刺史莱姆", victim.getLocation(), (Player) dPly);
                 }
                 break;
             }
             case "毁灭者": {
                 if (dPly instanceof Player) {
-                    if (v.getScoreboardTags().contains("hasProbe") && Math.random() < 0.25) {
-                        v.setCustomName("毁灭者" + ChatColor.COLOR_CHAR + "4");
-                        v.removeScoreboardTag("hasProbe");
-                        MonsterHelper.spawnMob("探测怪", v.getLocation(), (Player) dPly);
+                    if (victim.getScoreboardTags().contains("hasProbe") && Math.random() < 0.25) {
+                        victim.setCustomName("毁灭者" + ChatColor.COLOR_CHAR + "4");
+                        victim.removeScoreboardTag("hasProbe");
+                        MonsterHelper.spawnMob("探测怪", victim.getLocation(), (Player) dPly);
                     }
                 }
                 break;
             }
             case "石巨人头": {
-                if (dmg >= v.getHealth()) {
-                    v.addScoreboardTag("noDamage");
+                if (dmg >= victim.getHealth()) {
+                    victim.addScoreboardTag("noDamage");
                     ArrayList<Entity> bossParts = BossHelper.bossMap.get("石巨人");
                     if (bossParts != null) {
                         bossParts.get(0).removeScoreboardTag("noDamage");
@@ -544,18 +552,18 @@ public class EntityHelper {
             }
             case "月球领主手":
             case "月球领主": {
-                if (dmg >= v.getHealth()) {
-                    v.addScoreboardTag("noDamage");
-                    v.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
+                if (dmg >= victim.getHealth()) {
+                    victim.addScoreboardTag("noDamage");
+                    victim.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
                     return false;
                 }
                 break;
             }
             case "蜥蜴人": {
-                double healthThreshold = v.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 2;
-                if (v.getHealth() > healthThreshold) {
-                    if ((v.getHealth() - dmg) <= healthThreshold) {
-                        HashMap<String, Double> attrMap = getAttrMap(v);
+                double healthThreshold = victim.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 2;
+                if (victim.getHealth() > healthThreshold) {
+                    if ((victim.getHealth() - dmg) <= healthThreshold) {
+                        HashMap<String, Double> attrMap = getAttrMap(victim);
                         attrMap.put("damageMulti", 1.5d);
                         attrMap.put("defenceMulti", 1.5d);
                         attrMap.put("knockbackResistance", 1d);
@@ -564,10 +572,10 @@ public class EntityHelper {
                 break;
             }
             case "胡桃夹士": {
-                double healthThreshold = v.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 2;
-                if (v.getHealth() > healthThreshold) {
-                    if ((v.getHealth() - dmg) <= healthThreshold) {
-                        HashMap<String, Double> attrMap = getAttrMap(v);
+                double healthThreshold = victim.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 2;
+                if (victim.getHealth() > healthThreshold) {
+                    if ((victim.getHealth() - dmg) <= healthThreshold) {
+                        HashMap<String, Double> attrMap = getAttrMap(victim);
                         attrMap.put("damageMulti", 1.25d);
                         attrMap.put("defenceMulti", 1.5d);
                         attrMap.put("knockbackResistance", 0.91d);
@@ -577,13 +585,15 @@ public class EntityHelper {
             }
         }
         // player being damaged
-        if (v instanceof Player) {
-            Player vPly = (Player) v;
-            switch (d.getName()) {
+        if (victim instanceof Player) {
+            // health regen time reset
+            setMetadata(victim, "regenTime", 0);
+            Player vPly = (Player) victim;
+            switch (damager.getName()) {
                 case "水螺旋": {
                     // phrase 2 only
-                    if (d.getScoreboardTags().contains("isMonster")) {
-                        d.remove();
+                    if (damager.getScoreboardTags().contains("isMonster")) {
+                        damager.remove();
                         ArrayList<Entity> bossList = BossHelper.bossMap.get("猪鲨公爵");
                         if (bossList != null) {
                             Entity dukeFishron = bossList.get(0);
@@ -594,32 +604,32 @@ public class EntityHelper {
                     break;
                 }
                 case "吮脑怪": {
-                    setMetadata(d, "suckTarget", v);
+                    setMetadata(damager, "suckTarget", victim);
                     break;
                 }
             }
-            HashSet<String> accessories = (HashSet<String>) getMetadata(v, "accessory").value();
-            HashMap<String, Double> attrMap = getAttrMap(v);
+            HashSet<String> accessories = (HashSet<String>) getMetadata(victim, "accessory").value();
+            HashMap<String, Double> attrMap = getAttrMap(victim);
             boolean hasMagicCuff = accessories.contains("魔法手铐") || accessories.contains("天界手铐");
             if (hasMagicCuff) {
                 int recovery = (int) Math.max(1, Math.floor(dmg / 4));
                 PlayerHelper.restoreMana(vPly, recovery);
             }
             if (getMetadata(vPly, "armorSet").asString().equals("耀斑套装") && damageCause.equals("Melee")) {
-                handleDamage(d, damageTaker, Math.min(Math.max(dmg, 300), 1500), "Thorn");
+                handleDamage(damageTaker, damager, Math.min(Math.max(dmg, 300), 1500), "Thorn");
             }
         }
         // thorn effect
-        HashMap<String, Integer> victimEffects = getEffectMap(v);
+        HashMap<String, Integer> victimEffects = getEffectMap(victim);
         if (victimEffects.containsKey("荆棘") && damageCause.equals("Melee")) {
-            handleDamage(d, damageTaker, Math.min(Math.max(dmg / 3, 25), 500), "Thorn");
+            handleDamage(damageTaker, damager, Math.min(Math.max(dmg / 3, 25), 500), "Thorn");
         }
-        if (v.getScoreboardTags().contains("destroyOnDamage")) {
-            v.remove();
+        if (victim.getScoreboardTags().contains("destroyOnDamage")) {
+            victim.remove();
             return false;
         }
         if (dPly instanceof Player && damageCause.equals("Magic")) {
-            PlayerHelper.playerSpectreArmor((Player) dPly, v, dmg);
+            PlayerHelper.playerSpectreArmor((Player) dPly, victim, dmg);
         }
         return true;
     }
@@ -831,13 +841,361 @@ public class EntityHelper {
         return checkCanDamage(entity, target, true);
     }
     public static boolean checkCanDamage(Entity entity, Entity target, boolean strict) {
-        return true;
+        return target instanceof LivingEntity;
     }
-    public static void handleDamage(Entity damager, Entity target, double damage, String damageCause) {
-        // TODO
+    public static Entity getDamageSource(Entity damager) {
+        Entity source = damager;
+        if (source instanceof Projectile) {
+            ProjectileSource shooter = ((Projectile) source).getShooter();
+            if (shooter instanceof Entity) source = (Entity) shooter;
+        }
+        if (source.hasMetadata("damageSourcePlayer"))
+            source = (Entity) getMetadata(source, "damageSourcePlayer").value();
+        return source;
+    }
+    public static void knockback(Entity entity, Vector dir) {
+        double kbResistance = getAttrMap(entity).getOrDefault("knockbackResistance", 0d);
+        if (kbResistance >= 1) return;
+        dir.multiply(Math.max(1 - kbResistance, 0));
+        Entity knockbackTaker = entity.getVehicle();
+        if (knockbackTaker == null) knockbackTaker = entity;
+        knockbackTaker.setVelocity(dir);
+    }
+    public static void handleDamage(Entity damager, Entity victim, double damage, String damageReason) {
+        HashMap<String, Double> victimAttrMap = getAttrMap(victim);
+        // projectile etc
+        if (!(victim instanceof LivingEntity)) {
+            if (victimAttrMap.containsKey("health")) {
+                double health = victimAttrMap.get("health") - damage;
+                victimAttrMap.put("health", health);
+                if (health < 0) {
+                    victim.remove();
+                }
+            }
+            return;
+        }
+        // living entities
+        LivingEntity victimLivingEntity = (LivingEntity) victim;
+        Entity damageSource = getDamageSource(damager);
+        LivingEntity damageTaker = victimLivingEntity;
+        Set<String> victimScoreboardTags = victim.getScoreboardTags();
+        // no damage scenarios
+        boolean canDamage = true;
+        if (victimScoreboardTags.contains("isMinion")) canDamage = false;
+        else if (victimScoreboardTags.contains("noDamage")) canDamage = false;
+        else if (victim.isInvulnerable()) canDamage = false;
+        else if (victim instanceof Player && ((Player) victim).getGameMode() != GameMode.SURVIVAL) canDamage = false;
+        else if (victimLivingEntity.getHealth() <= 0) canDamage = false;
+        // check minion damage
+        boolean isMinionDmg = false;
+        boolean isDirectAttackDamage = false;
+        if (damager instanceof Projectile) {
+            ProjectileSource shooter = ((Projectile) damager).getShooter();
+            if (shooter instanceof Entity && ((Entity) shooter).getScoreboardTags().contains("isMinion"))
+                isMinionDmg = true;
+        } else if (damager.getScoreboardTags().contains("isMinion")) isMinionDmg = true;
+        // setup properties such as invulnerability tick and defence
+        int damageInvulnerbilityTicks = 0;
+        double defence = victimAttrMap.getOrDefault("defence", 0d) * victimAttrMap.getOrDefault("defenceMulti", 1d);
+        switch (damageReason) {
+            case "DirectDamage":
+            case "Projectile":
+            case "Explosion":
+            case "Spectre":
+                isDirectAttackDamage = true;
+                if (!checkCanDamage(damageSource, victim))
+                    canDamage = false;
+                damageInvulnerbilityTicks = victimAttrMap.getOrDefault("invulnerabilityTick", 0d).intValue();
+        }
+        if (victimScoreboardTags.contains("isBOSS")) {
+            if (isDirectAttackDamage) {
+                // damage source of a boss is not a target
+                if (!(damageSource instanceof Player &&
+                        ((HashMap<String, Double>) getMetadata(victim, "targets").value()).containsKey(damageSource.getName())))
+                    defence = 999999999;
+            } else {
+                // if the damage source of a boss is neither direct attack, thorn nor debuff (that is, lava etc.)
+                // the damage is ignored.
+                if ((!damageReason.startsWith("Debuff_")) && (!damageReason.equals("Thorn"))) canDamage = false;
+            }
+        }
+        if (!canDamage) return;
+
+        // damage taker is the entity that takes the damage
+        if (victim.hasMetadata("damageTaker")) damageTaker = (LivingEntity) getMetadata(victim, "damageTaker").value();
+        // setup damager attribute and buff inflict
+        HashMap<String, Double> damagerAttrMap = getAttrMap(damager);
+        List<String> buffInflict = new ArrayList<>();
+        String damageType;
+        if (isDirectAttackDamage) {
+            damageType = getDamageType(damager);
+            if (damageType.equals("Melee") && damageReason.equals("DirectDamage")) damageType = "TrueMelee";
+        } else {
+            damageType = damageReason;
+        }
+        // if the victim has invincibility frame on this damage type (usually player)
+        String damageInvincibilityFrameName = "tempDamageCD_" + damageType;
+        if (victimScoreboardTags.contains(damageInvincibilityFrameName)) return;
+        // projectile buff inflict
+        if (damager instanceof Projectile) {
+            buffInflict.addAll(projectileConfig.getStringList(damager.getName() + ".buffInflict"));
+        }
+        if (damageSource instanceof Player) {
+            // player minion buff inflict
+            HashMap<String, ArrayList<String>> buffInflictMap = PlayerHelper.getPlayerEffectInflict(damageSource);
+            buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict", new ArrayList<>(0)));
+            switch (damageType) {
+                case "Arrow":
+                case "Bullet":
+                case "Rocket":
+                    buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictRanged", new ArrayList<>(0)));
+                    break;
+                case "TrueMelee":
+                    buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
+                    buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictTrueMelee", new ArrayList<>(0)));
+                    break;
+                default: // summon, Melee, Magic
+                    buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict" + damageType, new ArrayList<>(0)));
+            }
+        } else {
+            // monster buff inflict
+            buffInflict.addAll(entityConfig.getStringList(GenericHelper.trimText(damageSource.getName()) + ".buffInflict"));
+        }
+        // apply (de)buff(s) to victim
+        for (String buff : buffInflict) {
+            String buffInfo[] = buff.split("\\|");
+            double chance;
+            try {
+                chance = Double.parseDouble(buffInfo[2]);
+                if (Math.random() < chance)
+                    applyEffect(victim, buffInfo[0], Integer.parseInt(buffInfo[1]));
+            } catch (Exception ignored) {
+            }
+        }
+
+        // further setup damage info
+        double dmg = damage;
+        double knockback = 0d, critRate = -1e9;
+        boolean damageFixed = false;
+        switch (damageReason) {
+            case "Fear":
+            case "Boss_Angry":
+                dmg = 114514;
+                damageFixed = true;
+                break;
+            case "Fall":
+                double fallDist = victim.getFallDistance();
+                dmg = (fallDist - 12.5) * 20;
+                if (dmg < 0) return;
+                break;
+            case "BlockExplosion":
+                knockback = 5;
+                dmg = 1000;
+                break;
+            case "Lava":
+                if (victim.getLocation().getBlock().getBiome() == Biome.SAVANNA)
+                    applyEffect(victim, "硫磺火", 150);
+                else
+                    applyEffect(victim, "燃烧", 150);
+                dmg = 200;
+                break;
+            case "Drowning":
+                dmg = 50;
+                damageFixed = true;
+                break;
+            case "Suffocation":
+                dmg = 10;
+                damageFixed = true;
+                break;
+            case "Thorn":
+                damageInvulnerbilityTicks = 0;
+                damageFixed = true;
+                break;
+            default:
+                if (damageType.startsWith("Debuff_")) {
+                    damageFixed = true;
+                } else if (isDirectAttackDamage) {
+                    // special minion whip etc
+                    if (isMinionDmg) {
+                        if (victimScoreboardTags.contains("鞭炮")) {
+                            victim.removeScoreboardTag("鞭炮");
+                            dmg *= 2.75;
+                            victim.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, victim.getLocation(), 1);
+                            victim.getWorld().playSound(victim.getLocation(), "entity.generic.explode", 1f, 1f);
+                        }
+                    }
+                    knockback = damagerAttrMap.getOrDefault("knockback", 0d);
+                    knockback *= damagerAttrMap.getOrDefault("knockbackMulti", 1d);
+                    dmg *= damagerAttrMap.getOrDefault("damageMulti", 1d);
+                    critRate = damagerAttrMap.getOrDefault("crit", 0d);
+                    switch (damageType) {
+                        case "TrueMelee":
+                            dmg *= damagerAttrMap.getOrDefault("damageTrueMeleeMulti", 1d);
+                            critRate += damagerAttrMap.getOrDefault("critTrueMelee", 0d);
+                        case "Melee":
+                            dmg *= damagerAttrMap.getOrDefault("damageMeleeMulti", 1d);
+                            critRate += damagerAttrMap.getOrDefault("critMelee", 0d);
+                            knockback *= damagerAttrMap.getOrDefault("knockbackMeleeMulti", 1d);
+                            break;
+                        case "Arrow":
+                        case "Bullet":
+                        case "Rocket":
+                            dmg *= damagerAttrMap.getOrDefault("damage" + damageType + "Multi", 1d);
+                            dmg *= damagerAttrMap.getOrDefault("damageRangedMulti", 1d);
+                            critRate += damagerAttrMap.getOrDefault("critRanged", 0d);
+                            break;
+                        case "Magic":
+                            critRate += damagerAttrMap.getOrDefault("critMagic", 0d);
+                        case "Summon":
+                            dmg *= damagerAttrMap.getOrDefault("damage" + damageType + "Multi", 1d);
+                            break;
+                        default:
+                            Bukkit.broadcastMessage("Unhandled damage type: " + damageType);
+                            return;
+                    }
+                } else {
+                    Bukkit.broadcastMessage("Unhandled damage reason: " + damageReason);
+                    return;
+                }
+        }
+
+        // handle random damage floating and crit
+        boolean crit = false;
+        if (!damageFixed) {
+            double damageTakenMulti = victimAttrMap.getOrDefault("damageTakenMulti", 1d);
+            dmg *= Math.random() * 0.3 + 0.85;
+            if (isMinionDmg) {
+                MetadataValue temp;
+                temp = getMetadata(victim, "minionWhipBonusDamage");
+                double dmgBonus = temp != null ? temp.asDouble() : 0;
+                temp = getMetadata(victim, "minionWhipBonusCrit");
+                critRate += temp != null ? temp.asDouble() : 0;
+            }
+            if (!(victim instanceof Player)) {
+                // crit, only applies to non-player victims
+                if (Math.random() * 100 < critRate) {
+                    crit = true;
+                    dmg *= 1 + (damagerAttrMap.getOrDefault("critDamage", 1d));
+                }
+            } else {
+                // paladin shield, only applies to player victims
+                if (! hasEffect(victim, "圣骑士护盾")) {
+                    String team = getMetadata(victim, "team").asString();
+                    // works with players within 64 blocks
+                    double dist = 4096;
+                    Entity shieldPly = null;
+                    for (Player ply : victim.getWorld().getPlayers()) {
+                        if (!PlayerHelper.isProperlyPlaying(ply)) continue;
+                        if (!hasEffect(ply, "圣骑士护盾")) continue;
+                        String currTeam = getMetadata(ply, "team").asString();
+                        if (!(currTeam.equals(team))) continue;
+                        double currDist = ply.getLocation().distanceSquared(victim.getLocation());
+                        if (currDist >= dist) continue;
+                        dist = currDist;
+                        shieldPly = ply;
+                    }
+                    if (shieldPly != null) {
+                        handleDamage(damager, shieldPly, (dmg * 0.05), "Thorn");
+                        dmg *= 0.85;
+                    }
+                }
+            }
+            dmg *= damageTakenMulti;
+            defence = Math.max(defence - damagerAttrMap.getOrDefault("armorPenetration", 0d), 0);
+            dmg -= defence * 0.75;
+            if (victimScoreboardTags.contains("isBOSS")) {
+                double dynamicDR = 1;
+                MetadataValue temp = getMetadata(victim, "dynamicDR");
+                if (temp != null) dynamicDR = temp.asDouble();
+                dmg *= dynamicDR;
+            }
+        }
+
+        // call damage event
+        if (! entityDamageEvent(damager, damageSource, victimLivingEntity, damageTaker, dmg, damageType))
+            return;
+        dmg = Math.round(dmg);
+        if (dmg < 1.5) dmg = crit ? 2 : 1;
+
+        // damage/kill
+        if (!(victim instanceof ArmorStand)) {
+            if (victimScoreboardTags.contains("isBOSS") && damageSource instanceof Player) {
+                MetadataValue temp = getMetadata(damageTaker, "targets");
+                if (temp != null) {
+                    HashMap<String, Double> targets = (HashMap<String, Double>) temp.value();
+                    String plyName = damageSource.getName();
+                    if (targets.containsKey(plyName))
+                        targets.put(plyName, targets.get(plyName) + dmg);
+                }
+            }
+            if (damageTaker.getHealth() <= dmg) {
+                // kills the target
+                handleDeath(damageTaker, damageSource, damager, damageType);
+                String sound;
+                if (victimScoreboardTags.contains("isMechanic")) sound = "entity.generic.explode";
+                else sound = "entity." + damageTaker.getType() + ".death";
+                sound = entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundKilled", sound);
+                victim.getWorld().playSound(victim.getLocation(), sound, 3, 1);
+            } else {
+                // hurts the target
+                damageTaker.setHealth(Math.max(0, damageTaker.getHealth() - dmg));
+                if (!damageType.startsWith("Debuff_")) {
+                    // if damage cause is not debuff, play hurt sound
+                    String sound;
+                    if (victimScoreboardTags.contains("isMechanic")) sound = "entity.irongolem.hurt";
+                    else sound = "entity." + damageTaker.getType() + ".hurt";
+                    sound = entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundDamaged", sound);
+                    victim.getWorld().playSound(victim.getLocation(), sound, 3, 1);
+                }
+            }
+            // knockback
+            if (knockback > 0) {
+                Vector vec = victim.getLocation().subtract(damager.getLocation()).toVector();
+                vec.setY(0);
+                MathHelper.setVectorLength(vec, knockback / 20);
+                vec.setY(Math.min(1, knockback / 10));
+                knockback(victim, vec);
+            }
+        }
+
+        // display damage
+        GenericHelper.displayHolo(victim, dmg, crit, damageType);
+
+        // send info message to damager player
+        if (damageSource instanceof Player && victim != damageSource) {
+            String vName = damageTaker.getName();
+            if (damageTaker.getHealth() > 0) {
+                int dmgInt = (int) dmg;
+                int healthInt = (int) damageTaker.getHealth();
+                int maxHealthInt = (int) damageTaker.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                PlayerHelper.sendActionBar((Player) damageSource,
+                        "§r" + vName + " §6[§a" + healthInt + "§6/§a" + maxHealthInt + "§6] §b(-" + dmgInt + ")");
+            } else
+                PlayerHelper.sendActionBar((Player) damageSource, vName + " §c领了盒饭");
+        }
+
+        // handle invincibility ticks
+        if (damageInvulnerbilityTicks > 0) {
+            victim.addScoreboardTag(damageInvincibilityFrameName);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                    () -> victim.removeScoreboardTag(damageInvincibilityFrameName), damageInvulnerbilityTicks);
+        }
     }
     public static void handleEntityExplode(Entity source, Entity damageException, Location loc) {
-        // TODO
+        double blastRadius = projectileConfig.getDouble(source.getName() + "blastRadius", 1.5d);
+        handleEntityExplode(source, blastRadius, damageException, loc);
+    }
+    public static void handleEntityExplode(Entity source, double radius, Entity damageException, Location loc) {
+        handleEntityExplode(source, radius, damageException, loc, 1);
+    }
+    public static void handleEntityExplode(Entity source, double radius, Entity damageException, Location loc, int ticksDuration) {
+//        handleDamage(source, e, , "Explode");
+        // lingering explosion
+        if (ticksDuration > 4) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                    () -> handleEntityExplode(source, radius, damageException, loc, ticksDuration - 4),
+                    4);
+        }
     }
     public static Projectile spawnProjectile(Location loc, Vector velocity, String projectileName, ProjectileSource src) {
         TerrariaPotionProjectile entity = new TerrariaPotionProjectile(loc, TerrariaPotionProjectile.generateItemStack(projectileName), velocity, projectileName);
@@ -846,5 +1204,23 @@ public class EntityHelper {
         Projectile bukkitProjectile = new CraftSplashPotion(wld.getHandle().getServer(), entity);
         bukkitProjectile.setShooter(src);
         return bukkitProjectile;
+    }
+    // the spawn projectile below are much easier to use
+    public static Projectile spawnProjectile(Entity shooter, Vector velocity, HashMap<String, Double> attrMap, String projectileName) {
+        return spawnProjectile(shooter, velocity, attrMap, getDamageType(shooter), projectileName);
+    }
+    public static Projectile spawnProjectile(Entity shooter, Vector velocity, HashMap<String, Double> attrMap, String damageType, String projectileName) {
+        Location shootLoc;
+        if (shooter instanceof LivingEntity) shootLoc = ((LivingEntity) shooter).getEyeLocation();
+        else shootLoc = shooter.getLocation();
+        return spawnProjectile(shooter, shootLoc, velocity, attrMap, getDamageType(shooter), projectileName);
+    }
+    public static Projectile spawnProjectile(Entity shooter, Location shootLoc, Vector velocity, HashMap<String, Double> attrMap, String damageType, String projectileName) {
+        ProjectileSource projSrc = null;
+        if (shooter instanceof ProjectileSource) projSrc = (ProjectileSource) shooter;
+        Projectile result = spawnProjectile(shootLoc, velocity, projectileName, projSrc);
+        setMetadata(result, "attrMap", attrMap.clone());
+        setMetadata(result, "damageType", damageType);
+        return result;
     }
 }

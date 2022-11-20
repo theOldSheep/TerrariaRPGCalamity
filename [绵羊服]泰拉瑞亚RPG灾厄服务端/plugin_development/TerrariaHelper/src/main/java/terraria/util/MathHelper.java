@@ -90,11 +90,13 @@ public class MathHelper {
         return "";
     }
     public static Vector setVectorLength(Vector vec, double targetLength) {
-        vec.normalize().multiply(targetLength);
+        if (vec.lengthSquared() < 1e-9) vec.setY(targetLength);
+        else vec.normalize().multiply(targetLength);
         return vec;
     }
     public static Vector setVectorLengthSquared(Vector vec, double targetLengthSquared) {
-        vec.multiply(Math.sqrt(targetLengthSquared / vec.lengthSquared()));
+        if (vec.lengthSquared() < 1e-9) vec.setY(Math.sqrt(targetLengthSquared));
+        else vec.multiply(Math.sqrt(targetLengthSquared / vec.lengthSquared()));
         return vec;
     }
 }

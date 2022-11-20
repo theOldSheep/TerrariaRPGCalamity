@@ -14,6 +14,12 @@ public class WorldHelper {
         }
         return 0;
     }
+    public static boolean isDayTime(World wld) {
+        return isDayTime(wld.getTime());
+    }
+    public static boolean isDayTime(long timeInTick) {
+        return ! (MathHelper.isBetween(timeInTick, 13500, 22500));
+    }
     public static String getHeightLayer(Location loc) {
         switch (loc.getWorld().getName()) {
             case TerrariaHelper.Constants.WORLD_NAME_SURFACE: {

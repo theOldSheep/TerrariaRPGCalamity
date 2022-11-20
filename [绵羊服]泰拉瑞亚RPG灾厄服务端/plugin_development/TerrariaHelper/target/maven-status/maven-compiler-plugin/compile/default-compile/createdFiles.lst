@@ -16,6 +16,7 @@ terraria\util\EntityHelper$1.class
 terraria\event\listener\WorldRegisterListener.class
 terraria\event\listener\PlayerWorldChangeListener.class
 terraria\util\ItemHelper.class
+terraria\event\listener\ArrowHitEvent.class
 terraria\util\WorldHelper.class
 terraria\worldgen\overworld\OverworldCaveGenerator.class
 terraria\TerrariaHelper$Constants.class

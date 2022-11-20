@@ -21,11 +21,11 @@ public class YmlHelper {
 
     public static void threadSaveYml() {
         // save the yml every 10 seconds (200 ticks)
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (String ymlPath : ymlCache.keySet()) {
                 ymlCache.get(ymlPath).saveIfModified(ymlPath);
             }
-        }, 200, 0);
+        }, 0, 200);
     }
 
     public static YmlSection getFile(String filePath) {

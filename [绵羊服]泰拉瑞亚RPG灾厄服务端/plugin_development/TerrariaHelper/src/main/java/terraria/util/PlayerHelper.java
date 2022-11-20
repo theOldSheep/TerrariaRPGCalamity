@@ -11,7 +11,6 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.potion.PotionEffect;
@@ -37,6 +36,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("arrowConsumptionRate", 1d);
         defaultPlayerAttrMap.put("bounce", 0d);
         defaultPlayerAttrMap.put("crit", 0d);
+        defaultPlayerAttrMap.put("critDamage", 100d);
         defaultPlayerAttrMap.put("critMagic", 0d);
         defaultPlayerAttrMap.put("critMelee", 0d);
         defaultPlayerAttrMap.put("critRanged", 0d);
@@ -91,7 +91,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("useSpeedRangedMulti", 1d);
         defaultPlayerAttrMap.put("useTime", 0d);
         // test!
-        defaultPlayerAttrMap.put("maxHealth", 1200d);
+//        defaultPlayerAttrMap.put("maxHealth", 1200d);
         defaultPlayerAttrMap.put("maxMana", 350d);
         defaultPlayerAttrMap.put("healthTier", 44d);
         defaultPlayerAttrMap.put("manaTier", 13d);
@@ -100,6 +100,8 @@ public class PlayerHelper {
         defaultPlayerEffectInflict.add("buffInflictMagic");
         defaultPlayerEffectInflict.add("buffInflictMelee");
         defaultPlayerEffectInflict.add("buffInflictRanged");
+        defaultPlayerEffectInflict.add("buffInflictSummon");
+        defaultPlayerEffectInflict.add("buffInflictTrueMelee");
     }
     // getters
     public static HashMap<String, ArrayList<String>> getDefaultPlayerEffectInflict() {
@@ -135,7 +137,7 @@ public class PlayerHelper {
     // threads
     public static void threadGrapplingHook() {
         // every 3 ticks (~1/7 second)
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 try {
                     ArrayList<Entity> hooks = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "hooks").value();
@@ -207,39 +209,136 @@ public class PlayerHelper {
                     Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadGrapplingHook ", e);
                 }
             }
-        }, 3, 0);
+        }, 0, 3);
     }
     // TODO
     public static void threadArmorAccessory() {
+        // setup projectile attributes
+        HashMap<String, Double> attrMapChlorophyte = new HashMap<>(5);
+        {
+            attrMapChlorophyte.put("damage", 200d);
+            attrMapChlorophyte.put("knockback", 0d);
+        }
+        HashMap<String, Double> attrMapVolatileGelatinJr = new HashMap<>(5);
+        {
+            attrMapVolatileGelatinJr.put("damage", 20d);
+            attrMapVolatileGelatinJr.put("knockback", 0d);
+        }
+        HashMap<String, Double> attrMapVolatileGelatin = new HashMap<>(5);
+        {
+            attrMapVolatileGelatin.put("damage", 20d);
+            attrMapVolatileGelatin.put("knockback", 0d);
+        }
+        HashMap<String, Double> attrMapSpore = new HashMap<>(5);
+        {
+            attrMapSpore.put("damage", 225d);
+            attrMapSpore.put("knockback", 0d);
+        }
         // every 5 ticks (1/4 second)
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 try {
                     // validate the current player
                     if (PlayerHelper.isProperlyPlaying(ply)) {
+                        double health = ply.getHealth(), maxHealth = ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                        int tickIndex = ply.getTicksLived();
                         // handle armor sets
                         switch (EntityHelper.getMetadata(ply, "armorSet").asString()) {
-                            case "星尘套装":
-                                // TODO: spawn a stardust guardian
-                                break;
                             case "叶绿魔法套装":
                             case "叶绿射手套装":
                             case "叶绿战士套装":
                                 // chlorophyte
-
+                                if (tickIndex % 8 == 0) {
+                                    double distanceSqr = 10000d;
+                                    Entity target = null;
+                                    for (Entity e : ply.getWorld().getNearbyEntities(ply.getEyeLocation(), 25, 25, 25)) {
+                                        // is not a valid enemy
+                                        if (!(EntityHelper.checkCanDamage(ply, e, true))) break;
+                                        double distSqr = e.getLocation().distanceSquared(ply.getLocation());
+                                        // further than current
+                                        if (distSqr > distanceSqr) break;
+                                        // player can not see it
+                                        if (!ply.hasLineOfSight(e)) break;
+                                        distanceSqr = distSqr;
+                                        target = e;
+                                    }
+                                    if (target != null) {
+                                        Vector v;
+                                        if (target instanceof LivingEntity) v = ((LivingEntity) target).getEyeLocation().subtract(ply.getEyeLocation()).toVector();
+                                        else v = target.getLocation().subtract(ply.getEyeLocation()).toVector();
+                                        v.normalize().multiply(1.5);
+                                        EntityHelper.spawnProjectile(ply, v, attrMapChlorophyte, "Arrow","叶绿树叶");
+                                    }
+                                }
                                 break;
                         }
                         // handle accessories
+                        HashSet<String> accessories = getAccessories(ply);
+                        for (String accessory : accessories) {
+                            switch (accessory) {
+                                case "新手版挥发明胶":
+                                case "挥发明胶":
+                                    if (tickIndex % 20 == 0) {
+                                        double distanceSqr = 10000d;
+                                        Entity target = null;
+                                        for (Entity e : ply.getWorld().getNearbyEntities(ply.getEyeLocation(), 12, 12, 12)) {
+                                            // is not a valid enemy
+                                            if (!(EntityHelper.checkCanDamage(ply, e, true))) break;
+                                            double distSqr = e.getLocation().distanceSquared(ply.getLocation());
+                                            // further than current
+                                            if (distSqr > distanceSqr) break;
+                                            // player can not see it
+                                            if (!ply.hasLineOfSight(e)) break;
+                                            distanceSqr = distSqr;
+                                            target = e;
+                                        }
+                                        if (target != null) {
+                                            Vector v;
+                                            if (target instanceof LivingEntity) v = ((LivingEntity) target).getEyeLocation().subtract(ply.getEyeLocation()).toVector();
+                                            else v = target.getLocation().subtract(ply.getEyeLocation()).toVector();
+                                            if (accessory.equals("新手版挥发明胶")) {
+                                                v.normalize().multiply(0.5);
+                                                EntityHelper.spawnProjectile(ply, v, attrMapVolatileGelatinJr, "Arrow","新手版挥发明胶");
+                                            } else {
+                                                v.normalize().multiply(0.6);
+                                                EntityHelper.spawnProjectile(ply, v, attrMapVolatileGelatin, "Arrow","挥发明胶");
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case "孢子囊":
+                                    if (tickIndex % 10 == 0) {
+                                        Location spawnLoc = ply.getLocation().add(Math.random() * 10 - 5, Math.random() * 4 - 1, Math.random() * 10 - 5);
+                                        if (!spawnLoc.getBlock().getType().isSolid()) {
+                                            Vector velocity = new Vector(Math.random() * 0.1 - 0.05, Math.random() * 0.1 - 0.05, Math.random() * 0.1 - 0.05);
+                                            EntityHelper.spawnProjectile(ply, velocity, attrMapSpore, "Arrow","孢子球");
+                                        }
+                                    }
+                                    break;
+                                case "圣骑士护盾":
+                                    if (health * 4 > maxHealth)
+                                        EntityHelper.applyEffect(ply, "圣骑士护盾", 20);
+                                    break;
+                                case "冰冻护盾":
+                                case "寒霜壁垒":
+                                case "神之壁垒":
+                                    if (health * 4 > maxHealth)
+                                        EntityHelper.applyEffect(ply, "圣骑士护盾", 20);
+                                    if (health * 2 > maxHealth)
+                                        EntityHelper.applyEffect(ply, "冰障", 20);
+                                    break;
+                            }
+                        }
                     }
                 } catch (Exception e) {
                     Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadArmorAccessory ", e);
                 }
             }
-        }, 5, 0);
+        }, 0, 5);
     }
     public static void threadThrustRegen() {
         // every 4 ticks (1/5 second)
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 try {
                     // validate the current player
@@ -253,7 +352,7 @@ public class PlayerHelper {
                     Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadThrustRegen ", e);
                 }
             }
-        }, 4, 0);
+        }, 0, 4);
     }
     public static void threadBackground() {
         // every 10 ticks (1/2 second)
@@ -329,7 +428,7 @@ public class PlayerHelper {
                     Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadBackground ", e);
                 }
             }
-        }, 10, 0);
+        }, 0, 10);
     }
     public static void threadBGM() {
         boolean printBGMDebugInfo = false;
@@ -387,7 +486,7 @@ public class PlayerHelper {
                             }
                         }
                         // no event/boss
-                        boolean isDayTime = ! (MathHelper.isBetween(plyWorld.getTime(), 13500, 22500));
+                        boolean isDayTime = WorldHelper.isDayTime(plyWorld);
                         if (current.equals("")) {
                             String biomeType = WorldHelper.getBiome(ply.getLocation());
                             switch (WorldHelper.getHeightLayer(ply.getLocation())) {
@@ -467,15 +566,16 @@ public class PlayerHelper {
                     Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadBGM ", e);
                 }
             }
-        }, 4, 0);
+        }, 0, 4);
     }
     public static void threadRegen() {
         boolean debugMessage = false;
         int delay = 4;
         double perTickMulti = (double)delay / 20;
         // every 4 ticks (1/5 second)
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
+                if (ply.getScoreboardTags().contains("unauthorized")) continue;
                 try {
                     MetadataValue respawnCD = EntityHelper.getMetadata(ply, "respawnCD");
                     if (respawnCD != null) {
@@ -491,6 +591,7 @@ public class PlayerHelper {
                             EntityHelper.setMetadata(ply, "respawnCD", null);
                             ply.setGameMode(GameMode.SURVIVAL);
                             ply.teleport(getSpawnLocation(ply));
+                            sendActionBar(ply, "");
                             // minion index, sentry index etc get to reset
                             initPlayerStats(ply);
                         }
@@ -564,18 +665,18 @@ public class PlayerHelper {
                     Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadRegen ", e);
                 }
             }
-        }, delay, 0);
+        }, 0, delay);
     }
     public static void threadAttribute() {
         int delay = 10;
         // every 10 ticks (1/2 second)
         // note that players would have their stats updated
         // when they use their weapon after switching hot bar slot or closes an inventory.
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 setupAttribute(ply);
             }
-        }, delay, 0);
+        }, 0, delay);
     }
     // others
     public static void initPlayerStats(Player ply) {
@@ -602,6 +703,7 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "hooks", new ArrayList<Entity>());
         // mob spawning variable
         EntityHelper.setMetadata(ply, "mobAmount", 0);
+        EntityHelper.setMetadata(ply, "biome", "normal");
         // movement variable
         ply.removeScoreboardTag("thrusting");
         EntityHelper.setMetadata(ply, "grapplingHookItem", "");
@@ -946,7 +1048,7 @@ public class PlayerHelper {
                 if (healingOrDamage) {
                     heal((Player) target, num);
                 } else {
-                    EntityHelper.handleDamage(target, dPly, num, "spectre");
+                    EntityHelper.handleDamage(dPly, target, num, "Spectre");
                 }
                 return;
             }

@@ -84,7 +84,6 @@ public class GenericHelper {
     }
     public static void displayHolo(Entity e, double dmg, boolean isCrit, String damageCause) {
         String colorCode;
-        int ticksDisplay = 30;
         switch (damageCause) {
             case "回血":
                 colorCode = "a";
@@ -109,9 +108,19 @@ public class GenericHelper {
             default:
                 colorCode = isCrit ? "c" : "6";
         }
-        if (damageCause.startsWith("debuff_")) {
-            ticksDisplay = 8;
-        } else if (isCrit) ticksDisplay = 50;
+        int ticksDisplay = 30;
+        switch (damageCause) {
+            case "Drowning":
+                ticksDisplay = 10;
+                break;
+            case "Suffocation":
+                ticksDisplay = 5;
+                break;
+            default:
+                if (damageCause.startsWith("debuff_")) {
+                    ticksDisplay = 8;
+                } else if (isCrit) ticksDisplay = 50;
+        }
         // display the message
         String text = ChatColor.COLOR_CHAR + colorCode + (int) Math.round(dmg);
         Location displayLoc;

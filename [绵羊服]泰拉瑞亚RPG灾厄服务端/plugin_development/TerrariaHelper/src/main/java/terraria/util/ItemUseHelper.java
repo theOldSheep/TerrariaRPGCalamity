@@ -4,11 +4,13 @@ import net.minecraft.server.v1_12_R1.PacketPlayOutSetCooldown;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import terraria.TerrariaHelper;
 
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class ItemUseHelper {
     public static void applyCD(Player ply, int CD) {
@@ -33,5 +35,15 @@ public class ItemUseHelper {
     }
     public static void playerUseItem(Player ply) {
         // TODO
+    }
+    public static void spawnSentryMinion(Player ply, String type, HashMap<String, Double> attrMap, boolean sentryOrMinion) {
+        if (sentryOrMinion) {
+
+        } else {
+
+        }
+    }
+    private static void minionAI(Entity minion, Player owner, String nameMinion, int minionSlot) {
+
     }
 }

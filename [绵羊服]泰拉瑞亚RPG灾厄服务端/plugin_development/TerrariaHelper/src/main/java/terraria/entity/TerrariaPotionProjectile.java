@@ -1,6 +1,7 @@
 package terraria.entity;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
@@ -18,8 +19,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
     // projectile info
     public String projectileType, blockHitAction = "die", trailColor = null;
     public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noGravityTicks = 15, penetration = 0;
-    public double autoTraceAbility = 4, autoTraceRadius = 12, bounceVelocityMulti = 1, gravity = 0.05, maxSpeed = 2, projectileSize = 0.125, speedMultiPerTick = 1;
-    public boolean autoTrace = false, bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = true;
+    public double autoTraceAbility = 4, autoTraceRadius = 12, blastRadius = 1.5, bounceVelocityMulti = 1, gravity = 0.05, maxSpeed = 2, projectileSize = 0.125, speedMultiPerTick = 1;
+    public boolean autoTrace = false, blastDamageShooter = false, bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = true;
 
     public double speed;
     public HashMap<UUID, Integer> damageCD;
@@ -41,6 +42,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
 
             this.autoTraceAbility = section.getDouble("autoTraceAbility", this.autoTraceAbility);
             this.autoTraceRadius = section.getDouble("autoTraceRadius", this.autoTraceRadius);
+            this.blastRadius = section.getDouble("blastRadius", this.blastRadius);
             this.bounceVelocityMulti = section.getDouble("bounceVelocityMulti", this.bounceVelocityMulti);
             this.gravity = section.getDouble("gravity", this.gravity);
             this.maxSpeed = section.getDouble("maxSpeed", this.maxSpeed);
@@ -48,6 +50,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.speedMultiPerTick = section.getDouble("speedMultiPerTick", this.speedMultiPerTick);
 
             this.autoTrace = section.getBoolean("autoTrace", this.autoTrace);
+            this.blastDamageShooter = section.getBoolean("blastDamageShooter", this.blastDamageShooter);
             this.bouncePenetrationBonded = section.getBoolean("bouncePenetrationBonded", this.bouncePenetrationBonded);
             this.canBeReflected = section.getBoolean("canBeReflected", this.canBeReflected);
             this.isGrenade = section.getBoolean("isGrenade", this.isGrenade);
@@ -136,8 +139,15 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public void die() {
         TerrariaProjectileHitEvent.callProjectileHitEvent(this);
         super.die();
-        if (isGrenade) EntityHelper.handleEntityExplode(bukkitEntity, null,
-                new org.bukkit.Location(bukkitEntity.getWorld(), this.locX, this.locY, this.locZ));
+        if (isGrenade) {
+            org.bukkit.entity.Entity damageException = null;
+            if (!blastDamageShooter) {
+                EntityLiving shooter = getShooter();
+                if (shooter != null) damageException = shooter.getBukkitEntity();
+            }
+            EntityHelper.handleEntityExplode(bukkitEntity, blastRadius, damageException,
+                    new org.bukkit.Location(bukkitEntity.getWorld(), this.locX, this.locY, this.locZ));
+        }
     }
     // tick
     @Override
@@ -376,17 +386,19 @@ public class TerrariaPotionProjectile extends EntityPotion {
             // get list of entities that could get hit
             List<Entity> list = this.world.getEntities(this, getBoundingBox().b(velocity.getX(), velocity.getY(), velocity.getZ()).g(projectileSize));
             Set<HitEntityInfo> hitCandidates = new TreeSet<>(Comparator.comparingDouble(HitEntityInfo::getDistance));
+            int total = 0;
             for (Entity toCheck : list) {
-                // living entities etc
-                if (toCheck.isInteractable())
-                    if (this.shooter == null || this.shooter != toCheck) {
-                        AxisAlignedBB axisalignedbb = toCheck.getBoundingBox().g(projectileSize);
-                        MovingObjectPosition hitPosition = axisalignedbb.b(initialLoc, futureLoc);
-                        if (hitPosition != null && checkCanHit(toCheck)) {
+                if (this.shooter == null || this.shooter != toCheck) {
+                    AxisAlignedBB axisalignedbb = toCheck.getBoundingBox().g(projectileSize);
+                    MovingObjectPosition hitPosition = axisalignedbb.b(initialLoc, futureLoc);
+                    if (hitPosition != null) {
+                        if (checkCanHit(toCheck)) {
+                            total ++;
                             double distanceSquared = initialLoc.distanceSquared(hitPosition.pos);
                             hitCandidates.add(new HitEntityInfo(distanceSquared, toCheck, hitPosition));
                         }
                     }
+                }
             }
 
             // hit entities
@@ -431,7 +443,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
         private MovingObjectPosition hitLocation;
 
         public HitEntityInfo(double distance, Entity hitEntity, MovingObjectPosition hitLocation) {
-            this.distance = distance;
+            // add a tiny offset so that it would not have accidental collision
+            this.distance = distance + Math.random() * 1e-9;
             this.hitEntity = hitEntity;
             this.hitLocation = hitLocation;
         }
