@@ -842,6 +842,10 @@ public class EntityHelper {
         return checkCanDamage(entity, target, true);
     }
     public static boolean checkCanDamage(Entity entity, Entity target, boolean strict) {
+        // dead target
+        if (target.isDead()) return false;
+        if (target instanceof LivingEntity && ((LivingEntity) target).getHealth() <= 0) return false;
+        // store scoreboard tags as it is requested frequently below
         Set<String> targetScoreboardTags = target.getScoreboardTags();
         Set<String> entityScoreboardTags = entity.getScoreboardTags();
         Entity damageSource = getDamageSource(entity);

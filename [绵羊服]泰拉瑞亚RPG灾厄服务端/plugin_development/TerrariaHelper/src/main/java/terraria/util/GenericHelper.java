@@ -108,7 +108,7 @@ public class GenericHelper {
             default:
                 colorCode = isCrit ? "c" : "6";
         }
-        int ticksDisplay = 30;
+        int ticksDisplay = 15;
         switch (damageCause) {
             case "Drowning":
                 ticksDisplay = 10;
@@ -119,7 +119,7 @@ public class GenericHelper {
             default:
                 if (damageCause.startsWith("Debuff_")) {
                     ticksDisplay = 8;
-                } else if (isCrit) ticksDisplay = 50;
+                } else if (isCrit) ticksDisplay = 30;
         }
         // display the message
         String text = ChatColor.COLOR_CHAR + colorCode + (int) Math.round(dmg);

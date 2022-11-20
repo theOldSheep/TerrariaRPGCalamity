@@ -87,10 +87,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     }
 
     protected double getAutoTraceInterest(Entity target) {
-        // if the target is dead
-        if (!target.isAlive() || (target instanceof EntityLiving && ((EntityLiving) target).getHealth() <= 0))
-            return -1e9;
-        // should not be following critters etc. and attempt to damage them
+        // should not be following critters, dead entities etc. and attempt to damage them
         if (!EntityHelper.checkCanDamage(bukkitEntity, target.getBukkitEntity())) return -1e9;
         // target during invincibility tick: returns ticks remaining squared * -1
         if (damageCD.containsKey(target.getUniqueID())) {
