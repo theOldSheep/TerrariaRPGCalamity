@@ -153,6 +153,27 @@ FURNACE:
     resultItem: 南瓜派:4
     requireItem:
     - 南瓜:12
+  '31':
+    requireLevel: 2
+    resultItem: 黑曜石逃犯帽
+    requireItem:
+    - 黑曜石:20
+    - 丝绸:10
+    - 暗影鳞片:10
+  '32':
+    requireLevel: 2
+    resultItem: 黑曜石风衣
+    requireItem:
+    - 黑曜石:20
+    - 丝绸:10
+    - 暗影鳞片:5
+  '33':
+    requireLevel: 2
+    resultItem: 黑曜石石裤
+    requireItem:
+    - 黑曜石:20
+    - 丝绸:10
+    - 暗影鳞片:5
 ANVIL:
   '1':
     requireLevel: 1
@@ -1032,6 +1053,23 @@ ANVIL:
     resultItem: 日耀碑牌
     requireItem:
     - 日耀碑牌碎片:8
+  '159':
+    requireLevel: 1
+    resultItem: 丛林帽
+    requireItem:
+    - 丛林孢子:8
+  '160':
+    requireLevel: 1
+    resultItem: 丛林衣
+    requireItem:
+    - 丛林孢子:16
+    - 毒刺:10
+  '161':
+    requireLevel: 1
+    resultItem: 丛林裤
+    requireItem:
+    - 丛林孢子:8
+    - 藤蔓:2
 WORKBENCH:
   '1':
     requireLevel: 1
@@ -1228,6 +1266,24 @@ WORKBENCH:
     resultItem: 发光蘑菇
     requireItem:
     - 蘑菇:4
+  '36':
+    requireLevel: 1
+    resultItem: 死灵头盔
+    requireItem:
+    - 骨头:40
+    - 蛛丝:40
+  '37':
+    requireLevel: 1
+    resultItem: 死灵胸甲
+    requireItem:
+    - 骨头:60
+    - 蛛丝:50
+  '38':
+    requireLevel: 1
+    resultItem: 死灵胸甲
+    requireItem:
+    - 骨头:50
+    - 蛛丝:45
 ENCHANTMENT_TABLE:
   '1':
     requireLevel: 1

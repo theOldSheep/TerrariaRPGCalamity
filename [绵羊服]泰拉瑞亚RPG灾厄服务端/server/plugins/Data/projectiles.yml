@@ -25,10 +25,10 @@
     maxSpeed: 2
     # 是否为爆炸弹幕（损毁时爆炸）？不写则视为false
     isGrenade: false
-    # 爆炸半径
+    # 爆炸半径，不写则视为1.5
     blastRadius: 1.5
-    # 爆炸是否会伤害玩家
-    blastDamageShooter: true
+    # 爆炸是否会伤害玩家，不写则视为false
+    blastDamageShooter: false
     # 是否被水减速？不写则视为true
     slowedByWater: true
     # 击中方块时的反应，不写则视为die
@@ -56,6 +56,9 @@
         velocity: 0.5
         # 分裂后弹片伤害为原本伤害*damageMulti
         damageMulti: 0.85
+天蓝羽毛:
+    autoTrace: true
+    blastRadius: 2
 南瓜榴弹:
     blastRadius: 2
 狱炎箭:
@@ -69,8 +72,7 @@
     blastRadius: 4.5
     buffInflict:
         - "破晓|400|1"
-    trailColor:
-        - "255|125|125"
+    trailColor: 255|125|125
 星璇导弹:
     autoTrace: true
     blastRadius: 5
@@ -222,6 +224,7 @@
 孢子球:
     blastRadius: 1.5
     autoTrace: true
+    isGrenade: true
     buffInflict:
         - "剧毒|150|1"
 投矛:
@@ -240,8 +243,7 @@
     autoTrace: true
 亡魂:
     autoTrace: true
-    trailColor:
-        - "255|255|255"
+    trailColor: 255|255|255
 蝙蝠:
     autoTrace: true
 台风:
