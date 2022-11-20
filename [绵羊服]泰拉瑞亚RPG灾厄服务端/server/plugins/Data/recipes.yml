@@ -1071,7 +1071,113 @@ ANVIL:
     - 丛林孢子:8
     - 藤蔓:2
   '162':
-  
+    requireLevel: 1
+    resultItem: 胜潮贝盔
+    requireItem:
+    - 海洋残渣:3
+  '163':
+    requireLevel: 1
+    resultItem: 胜潮面罩
+    requireItem:
+    - 海洋残渣:3
+  '164':
+    requireLevel: 1
+    resultItem: 胜潮蟹盔
+    requireItem:
+    - 海洋残渣:3
+  '165':
+    requireLevel: 1
+    resultItem: 胜潮隐帽
+    requireItem:
+    - 海洋残渣:3
+  '166':
+    requireLevel: 1
+    resultItem: 胜潮护胫
+    requireItem:
+    - 海洋残渣:4
+  '167':
+    requireLevel: 1
+    resultItem: 胜潮胸甲
+    requireItem:
+    - 海洋残渣:5
+  '168':
+    requireLevel: 1
+    resultItem: 天蓝胸甲
+    requireItem:
+    - 天蓝锭:11
+    - 丝绸:15
+    - 羽毛:2
+  '169':
+    requireLevel: 1
+    resultItem: 天蓝护胫
+    requireItem:
+    - 天蓝锭:7
+    - 丝绸:9
+    - 羽毛:2
+  '170':
+    requireLevel: 1
+    resultItem: 天蓝战盔
+    requireItem:
+    - 天蓝锭:5
+    - 丝绸:4
+    - 羽毛:1
+  '171':
+    requireLevel: 1
+    resultItem: 天蓝兜帽
+    requireItem:
+    - 天蓝锭:5
+    - 丝绸:4
+    - 羽毛:1
+  '172':
+    requireLevel: 1
+    resultItem: 天蓝帽
+    requireItem:
+    - 天蓝锭:5
+    - 丝绸:4
+    - 羽毛:1
+  '173':
+    requireLevel: 1
+    resultItem: 天蓝头盔
+    requireItem:
+    - 天蓝锭:5
+    - 丝绸:4
+    - 羽毛:1
+  '174':
+    requireLevel: 1
+    resultItem: 斯塔提斯盔甲
+    requireItem:
+    - 纯净凝胶:8
+    - 狱石锭:13
+  '175':
+    requireLevel: 1
+    resultItem: 斯塔提斯护胫
+    requireItem:
+    - 纯净凝胶:6
+    - 狱石锭:11
+  '176':
+    requireLevel: 1
+    resultItem: 斯塔提斯战盔
+    requireItem:
+    - 纯净凝胶:5
+    - 狱石锭:9
+  '177':
+    requireLevel: 1
+    resultItem: 斯塔提斯头饰
+    requireItem:
+    - 纯净凝胶:5
+    - 狱石锭:9
+  '178':
+    requireLevel: 1
+    resultItem: 斯塔提斯帽子
+    requireItem:
+    - 纯净凝胶:5
+    - 狱石锭:9
+  '179':
+    requireLevel: 1
+    resultItem: 斯塔提斯兜帽
+    requireItem:
+    - 纯净凝胶:5
+    - 狱石锭:9
 WORKBENCH:
   '1':
     requireLevel: 1
@@ -1286,6 +1392,24 @@ WORKBENCH:
     requireItem:
     - 骨头:50
     - 蛛丝:45
+  '39':
+    requireLevel: 1
+    requireItem: 沙漠巡游者帽
+    requireItem:
+    - 丝绸:8
+    - 荒漠之羽:2
+  '40':
+    requireLevel: 1
+    requireItem: 沙漠巡游者衣
+    requireItem:
+    - 丝绸:10
+    - 荒漠之羽:3
+  '41':
+    requireLevel: 1
+    requireItem: 沙漠巡游者裤
+    requireItem:
+    - 丝绸:5
+    - 荒漠之羽:1
 ENCHANTMENT_TABLE:
   '1':
     requireLevel: 1
