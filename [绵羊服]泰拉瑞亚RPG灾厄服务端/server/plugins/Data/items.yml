@@ -241,6 +241,13 @@
   lore:
   - §r放置后破坏以转化为普通木材
   rarity: 0
+荒漠之羽:
+  item: FEATHER
+  lore:
+  - §r秃鹫的羽毛
+  worth: 2000
+  rarity: 3
+
 专家模式福袋:
   item: LEATHER
   lore:
@@ -5494,6 +5501,14 @@
   item: CLAY_BALL
   worth: 30000
   rarity: 0
+海洋残渣:
+  item: CLAY_BALL
+  worth: 60000
+  rarity: 1
+珍珠碎片:
+  item: IRON_INGOT
+  worth: 30000
+  rarity: 1
 恶魔锭:
   item: IRON_INGOT
   worth: 300000
@@ -5510,6 +5525,14 @@
   item: CLAY_BALL
   worth: 25000
   rarity: 2
+天蓝锭:
+  item: IRON_INGOT
+  worth: 300000
+  rarity: 3
+天蓝矿:
+  item: CLAY_BALL
+  worth: 60000
+  rarity: 3
 钴锭:
   item: IRON_INGOT
   worth: 210000
