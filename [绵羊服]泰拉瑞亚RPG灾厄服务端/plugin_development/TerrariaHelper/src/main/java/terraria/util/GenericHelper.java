@@ -91,18 +91,18 @@ public class GenericHelper {
             case "回蓝":
                 colorCode = "9";
                 break;
-            case "debuff_咒火":
-            case "debuff_神圣之火":
+            case "Debuff_咒火":
+            case "Debuff_神圣之火":
                 colorCode = "e";
                 break;
-            case "debuff_霜火":
+            case "Debuff_霜火":
                 colorCode = "b";
                 break;
-            case "debuff_中毒":
-            case "debuff_剧毒":
+            case "Debuff_中毒":
+            case "Debuff_剧毒":
                 colorCode = "2";
                 break;
-            case "debuff_破晓":
+            case "Debuff_破晓":
                 colorCode = "4";
                 break;
             default:
@@ -117,7 +117,7 @@ public class GenericHelper {
                 ticksDisplay = 5;
                 break;
             default:
-                if (damageCause.startsWith("debuff_")) {
+                if (damageCause.startsWith("Debuff_")) {
                     ticksDisplay = 8;
                 } else if (isCrit) ticksDisplay = 50;
         }

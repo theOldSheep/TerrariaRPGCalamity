@@ -46,7 +46,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.bounceVelocityMulti = section.getDouble("bounceVelocityMulti", this.bounceVelocityMulti);
             this.gravity = section.getDouble("gravity", this.gravity);
             this.maxSpeed = section.getDouble("maxSpeed", this.maxSpeed);
-            this.projectileSize = section.getDouble("projectileSize", this.bounceVelocityMulti);
+            this.projectileSize = section.getDouble("projectileSize", this.projectileSize);
             this.speedMultiPerTick = section.getDouble("speedMultiPerTick", this.speedMultiPerTick);
 
             this.autoTrace = section.getBoolean("autoTrace", this.autoTrace);
@@ -87,14 +87,20 @@ public class TerrariaPotionProjectile extends EntityPotion {
     }
 
     protected double getAutoTraceInterest(Entity target) {
-        // if the target is dead or is not a
+        // if the target is dead
         if (!target.isAlive() || (target instanceof EntityLiving && ((EntityLiving) target).getHealth() <= 0))
-            return -1;
-        // should not be following critters and attempt to damage them
-        if (!EntityHelper.checkCanDamage(bukkitEntity, target.getBukkitEntity())) return -1;
-        // neutral on target during invincibility tick
-        if (damageCD.containsKey(target.getUniqueID())) return 0;
-        return autoTraceRadius * autoTraceRadius - target.d(this.locX, this.locY, this.locZ);
+            return -1e9;
+        // should not be following critters etc. and attempt to damage them
+        if (!EntityHelper.checkCanDamage(bukkitEntity, target.getBukkitEntity())) return -1e9;
+        // target during invincibility tick: returns ticks remaining squared * -1
+        if (damageCD.containsKey(target.getUniqueID())) {
+            double ticksRemaining = damageCD.get(target.getUniqueID());
+            return ticksRemaining * ticksRemaining * -1;
+        }
+        // returns distance squared / velocity squared, that is, ticks to get there squared, * -1
+        double distSqr = target.d(this.locX, this.locY, this.locZ) - (this.projectileSize * this.projectileSize);
+        double spdSqr = this.motX * this.motX + this.motY * this.motY + this.motZ * this.motZ;
+        return distSqr / spdSqr * -1;
     }
     public boolean checkCanHit(Entity e) {
         if (damageCD.containsKey(e.getUniqueID())) return false;
@@ -209,88 +215,86 @@ public class TerrariaPotionProjectile extends EntityPotion {
             MovingObjectPosition movingobjectposition = this.world.rayTrace(initialLoc, futureLoc);
             this.inGround = false;
             if (movingobjectposition != null) {
-                // gravity turns on after bouncing
-                this.noGravityTicks = this.ticksLived;
-                this.inGround = true;
-                boolean shouldCallEvent = false;
-                switch (blockHitAction) {
-                    case "bounce":
-                    case "slide": {
-                        // for sliding off and bouncing off, pull it back a bit, so it does not get stuck in the wall
-                        this.inGround = false;
-                        Vector travelled = new Vector(movingobjectposition.pos.x - this.locX,
-                                movingobjectposition.pos.y - this.locY,
-                                movingobjectposition.pos.z - this.locZ);
-                        double dist = travelled.length();
-                        if (dist > 0.001) {
-                            travelled.multiply((dist - 0.001) / dist);
-                        } else {
-                            travelled.multiply(0);
+                // call hit block event
+                TerrariaProjectileHitEvent evt = TerrariaProjectileHitEvent.callProjectileHitEvent(this, movingobjectposition);
+                if (!evt.isCancelled()) {
+                    // gravity turns on after bouncing
+                    this.noGravityTicks = this.ticksLived;
+                    this.inGround = true;
+                    switch (blockHitAction) {
+                        case "bounce":
+                        case "slide": {
+                            // for sliding off and bouncing off, pull it back a bit, so it does not get stuck in the wall
+                            this.inGround = false;
+                            Vector travelled = new Vector(movingobjectposition.pos.x - this.locX,
+                                    movingobjectposition.pos.y - this.locY,
+                                    movingobjectposition.pos.z - this.locZ);
+                            double dist = travelled.length();
+                            if (dist > 0.001) {
+                                travelled.multiply((dist - 0.001) / dist);
+                            } else {
+                                travelled.multiply(0);
+                            }
+                            futureLoc = new Vec3D(this.locX + travelled.getX(), this.locY + travelled.getY(), this.locZ + travelled.getZ());
+                            // tweak velocity
+                            if (blockHitAction.equals("bounce")) {
+                                if (--bounce < 0) {
+                                    die();
+                                    return;
+                                }
+                                if (bouncePenetrationBonded) penetration--;
+                                switch (movingobjectposition.direction) {
+                                    case UP:
+                                    case DOWN:
+                                        velocity.setY(velocity.getY() * -1);
+                                        break;
+                                    case EAST:
+                                    case WEST:
+                                        velocity.setX(velocity.getX() * -1);
+                                        break;
+                                    case SOUTH:
+                                    case NORTH:
+                                        velocity.setZ(velocity.getZ() * -1);
+                                        break;
+                                }
+                                velocity.multiply(bounceVelocityMulti);
+                            } else {
+                                // slide
+                                switch (movingobjectposition.direction) {
+                                    case UP:
+                                    case DOWN:
+                                        velocity.setY(0);
+                                        break;
+                                    case EAST:
+                                    case WEST:
+                                        velocity.setX(0);
+                                        break;
+                                    case SOUTH:
+                                    case NORTH:
+                                        velocity.setZ(0);
+                                        break;
+                                }
+                            }
+                            break;
                         }
-                        futureLoc = new Vec3D(this.locX + travelled.getX(), this.locY + travelled.getY(), this.locZ + travelled.getZ());
-                        // tweak velocity
-                        if (blockHitAction.equals("bounce")) {
-                            if (--bounce < 0) {
-                                die();
-                                return;
-                            }
-                            if (bouncePenetrationBonded) penetration--;
-                            switch (movingobjectposition.direction) {
-                                case UP:
-                                case DOWN:
-                                    velocity.setY(velocity.getY() * -1);
-                                    break;
-                                case EAST:
-                                case WEST:
-                                    velocity.setX(velocity.getX() * -1);
-                                    break;
-                                case SOUTH:
-                                case NORTH:
-                                    velocity.setZ(velocity.getZ() * -1);
-                                    break;
-                            }
-                            velocity.multiply(bounceVelocityMulti);
-                        } else {
-                            // slide
-                            switch (movingobjectposition.direction) {
-                                case UP:
-                                case DOWN:
-                                    velocity.setY(0);
-                                    break;
-                                case EAST:
-                                case WEST:
-                                    velocity.setX(0);
-                                    break;
-                                case SOUTH:
-                                case NORTH:
-                                    velocity.setZ(0);
-                                    break;
-                            }
-                        }
-                        break;
+                        // thru: it never gets stuck, so make a break here
+                        case "thru":
+                            break;
+                        // stick: it is supposed to get stuck in the wall
+                        case "stick":
+                            velocity.multiply(0);
+                            Vector travelled = new Vector(movingobjectposition.pos.x - this.locX,
+                                    movingobjectposition.pos.y - this.locY,
+                                    movingobjectposition.pos.z - this.locZ);
+                            double dist = travelled.length();
+                            if (dist > 0)
+                                travelled.multiply((dist + 0.001) / dist);
+                            futureLoc = new Vec3D(this.locX + travelled.getX(), this.locY + travelled.getY(), this.locZ + travelled.getZ());
+                            break;
+                        default:
+                            futureLoc = new Vec3D(movingobjectposition.pos.x, movingobjectposition.pos.y, movingobjectposition.pos.z);
                     }
-                    // thru: it never gets stuck, so make a break here
-                    case "thru":
-                        break;
-                    // stick: it is supposed to get stuck in the wall
-                    case "stick":
-                        shouldCallEvent = true;
-                        velocity.multiply(0);
-                        Vector travelled = new Vector(movingobjectposition.pos.x - this.locX,
-                                movingobjectposition.pos.y - this.locY,
-                                movingobjectposition.pos.z - this.locZ);
-                        double dist = travelled.length();
-                        if (dist > 0)
-                            travelled.multiply((dist + 0.001) / dist);
-                        futureLoc = new Vec3D(this.locX + travelled.getX(), this.locY + travelled.getY(), this.locZ + travelled.getZ());
-                        break;
-                    default:
-                        shouldCallEvent = true;
-                        futureLoc = new Vec3D(movingobjectposition.pos.x, movingobjectposition.pos.y, movingobjectposition.pos.z);
                 }
-                if (shouldCallEvent)
-                    // call hit block event
-                    TerrariaProjectileHitEvent.callProjectileHitEvent(this, movingobjectposition);
             }
 
             // update yaw and pitch
@@ -319,10 +323,10 @@ public class TerrariaPotionProjectile extends EntityPotion {
 
             // optimize auto trace target
             if (autoTrace) {
-                if (autoTraceTarget != null && getAutoTraceInterest(autoTraceTarget) < -0.01)
+                if (autoTraceTarget != null && getAutoTraceInterest(autoTraceTarget) < 0.01)
                     autoTraceTarget = null;
                 if (autoTraceTarget == null) {
-                    double maxInterest = 0;
+                    double maxInterest = -1e5;
                     List<Entity> list = this.world.getEntities(this, getBoundingBox().g(autoTraceRadius));
                     for (Entity toCheck : list) {
                         // only living entities are valid targets
@@ -386,14 +390,17 @@ public class TerrariaPotionProjectile extends EntityPotion {
             // get list of entities that could get hit
             List<Entity> list = this.world.getEntities(this, getBoundingBox().b(velocity.getX(), velocity.getY(), velocity.getZ()).g(projectileSize));
             Set<HitEntityInfo> hitCandidates = new TreeSet<>(Comparator.comparingDouble(HitEntityInfo::getDistance));
-            int total = 0;
             for (Entity toCheck : list) {
                 if (this.shooter == null || this.shooter != toCheck) {
                     AxisAlignedBB axisalignedbb = toCheck.getBoundingBox().g(projectileSize);
-                    MovingObjectPosition hitPosition = axisalignedbb.b(initialLoc, futureLoc);
+                    MovingObjectPosition hitPosition = null;
+                    // if the initial location is already within the collision box
+                    if (axisalignedbb.b(initialLoc)) hitPosition = new MovingObjectPosition(initialLoc, EnumDirection.DOWN);
+                    // otherwise, check for the first hit location
+                    if (hitPosition == null) hitPosition = axisalignedbb.b(initialLoc, futureLoc);
+                    // if the entity is being hit
                     if (hitPosition != null) {
                         if (checkCanHit(toCheck)) {
-                            total ++;
                             double distanceSquared = initialLoc.distanceSquared(hitPosition.pos);
                             hitCandidates.add(new HitEntityInfo(distanceSquared, toCheck, hitPosition));
                         }
@@ -435,7 +442,6 @@ public class TerrariaPotionProjectile extends EntityPotion {
         // timing
         this.world.methodProfiler.b();
     }
-
 
     public static class HitEntityInfo {
         private double distance;

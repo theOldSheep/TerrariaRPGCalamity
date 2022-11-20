@@ -87,6 +87,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("speedMulti", 1d);
         defaultPlayerAttrMap.put("useSpeedMagicMulti", 1d);
         defaultPlayerAttrMap.put("useSpeedMeleeMulti", 1d);
+        defaultPlayerAttrMap.put("useSpeedMiningMulti", 1d);
         defaultPlayerAttrMap.put("useSpeedMulti", 1d);
         defaultPlayerAttrMap.put("useSpeedRangedMulti", 1d);
         defaultPlayerAttrMap.put("useTime", 0d);
@@ -570,7 +571,7 @@ public class PlayerHelper {
     }
     public static void threadRegen() {
         boolean debugMessage = false;
-        int delay = 4;
+        int delay = 2;
         double perTickMulti = (double)delay / 20;
         // every 4 ticks (1/5 second)
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
@@ -610,9 +611,10 @@ public class PlayerHelper {
                             // init variables
                             double healthRegenTime = EntityHelper.getMetadata(ply, "regenTime").asDouble();
                             double effectiveRegenTime;
-                            if (healthRegenTime <= 300) effectiveRegenTime = 0;
-                            else if (healthRegenTime <= 800) effectiveRegenTime = (healthRegenTime - 300) / 100;
-                            else effectiveRegenTime = 5 + ((healthRegenTime - 800) / 200);
+                            if (healthRegenTime <= 100) effectiveRegenTime = 0;
+                            else if (healthRegenTime < 600) effectiveRegenTime = (healthRegenTime - 100) / 100;
+                            else effectiveRegenTime = 5 + ((healthRegenTime - 600) / 200);
+                            effectiveRegenTime = Math.floor(effectiveRegenTime);
                             if (debugMessage) ply.sendMessage(effectiveRegenTime + "|" + healthRegenTime);
                             double maxHealth = ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
                             double regenerationRate = ((maxHealth * 0.85 / 800) + 0.15) * effectiveRegenTime;
@@ -627,7 +629,7 @@ public class PlayerHelper {
                             double regenAmount = (regenerationRate + additionalHealthRegen) * perTickMulti * attrMap.getOrDefault("regenMulti", 1d);
                             ply.setHealth(Math.min(ply.getHealth() + regenAmount, maxHealth));
                             healthRegenTime += delay;
-                            EntityHelper.setMetadata(ply, "regenTime", Math.min(healthRegenTime, 1200));
+                            EntityHelper.setMetadata(ply, "regenTime", Math.min(healthRegenTime, 1201));
                         }
                         // mana regen
                         {
@@ -647,7 +649,7 @@ public class PlayerHelper {
                                 double maxMana = attrMap.getOrDefault("maxMana", 20d);
                                 // players with mana regen buff regenerates mana as if their mana is full
                                 double manaRatio = hasManaRegenPotionEffect ? 1d : (double) ply.getLevel() / maxMana;
-                                double manaRegenRate = ((maxMana * (moved ? 1d / 8 : 1d / 5)) + 1 + manaRegenBonus) * (manaRatio * 0.8 + 0.2) * 1.15;
+                                double manaRegenRate = ((maxMana * (moved ? 1d / 6 : 1d / 2)) + 1 + manaRegenBonus) * (manaRatio * 0.8 + 0.2) * 1.15;
                                 if (ply.getLevel() < maxMana) {
                                     manaRegenCounter += manaRegenRate * delay * attrMap.getOrDefault("manaRegenMulti", 1d);
                                     double regenAmount = Math.floor(manaRegenCounter / 40);
