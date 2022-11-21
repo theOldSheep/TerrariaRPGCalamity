@@ -5538,6 +5538,18 @@
   item: CLAY_BALL
   worth: 100000
   rarity: 1
+腐烂物质:
+  item: CLAY_BALL
+  worth: 100000
+  rarity: 1
+可疑镀层:
+  item: CLAY_BALL
+  worth: 60000
+  rarity: 1100
+神秘电路:
+  item: CLAY_BALL
+  worth: 60000
+  rarity: 1100
 狱炎锭:
   item: IRON_INGOT
   worth: 400000
@@ -5554,6 +5566,7 @@
   item: CLAY_BALL
   worth: 60000
   rarity: 3
+
 纯净凝胶:
   item: CLAY_BALL
   worth: 500000
