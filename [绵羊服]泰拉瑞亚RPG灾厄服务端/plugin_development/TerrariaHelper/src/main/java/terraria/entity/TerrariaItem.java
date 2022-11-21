@@ -115,7 +115,7 @@ public class TerrariaItem extends EntityItem {
     }
     public void merge() {
         if (!canBeMerged) return;
-        for (TerrariaItem toMerge : this.world.a(TerrariaItem.class, this.getBoundingBox().grow(1.5, 1, 1.5))) {
+        for (TerrariaItem toMerge : this.world.a(TerrariaItem.class, this.getBoundingBox().grow(3, 2, 3))) {
             this.mergeWith(toMerge);
         }
     }

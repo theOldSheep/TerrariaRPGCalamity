@@ -10,6 +10,7 @@ import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.Hash;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.*;
 import org.bukkit.entity.*;
@@ -841,7 +842,81 @@ public class EntityHelper {
         return checkCanDamage(entity, target, true);
     }
     public static boolean checkCanDamage(Entity entity, Entity target, boolean strict) {
-        return target instanceof LivingEntity;
+        // dead target
+        if (target.isDead()) return false;
+        if (target instanceof LivingEntity && ((LivingEntity) target).getHealth() <= 0) return false;
+        // store scoreboard tags as it is requested frequently below
+        Set<String> targetScoreboardTags = target.getScoreboardTags();
+        Set<String> entityScoreboardTags = entity.getScoreboardTags();
+        Entity damageSource = getDamageSource(entity);
+        if (targetScoreboardTags.contains("isPillar")) {
+            MetadataValue temp = getMetadata(target, "shield");
+            if (temp != null && temp.asInt() > 0) return false;
+        }
+        if (!(target instanceof LivingEntity)) {
+            if (target instanceof Projectile) {
+                if (getAttrMap(target).containsKey("health")) {
+                    ProjectileSource src = ((Projectile) target).getShooter();
+                    if (src instanceof Entity) target = (Entity) src;
+                    // can damage shooter (no strict checking needed):
+                    // if strict mode return false(so homing weapons do not home to enemy projectiles)
+                    // if not strict mode return true(so enemy can be damaged)
+                    if (checkCanDamage(entity, target, false)) return !strict;
+                }
+            }
+            return false;
+        }
+        // only players can damage armor stand
+        if (target instanceof ArmorStand) return damageSource instanceof Player;
+        // invulnerable target
+        if (target.isInvulnerable()) return false;
+        if (targetScoreboardTags.contains("noDamage")) return false;
+        // fallen star etc. can damage players and NPC etc. without further check
+        if (entityScoreboardTags.contains("ignoreCanDamageCheck")) return true;
+        // can not attack oneself
+        if (damageSource == target) return false;
+        // check details about damage source and victim
+        entityScoreboardTags = damageSource.getScoreboardTags();
+        if (damageSource instanceof Player) {
+            if (!PlayerHelper.isProperlyPlaying((Player) damageSource)) return false;
+            // only both players are in pvp mode and the check is not strict
+            // so homing weapons and minions will not target other players
+            if (target instanceof Player)
+                return (!strict) && (targetScoreboardTags.contains("PVP") && entityScoreboardTags.contains("PVP"));
+            else {
+                HashSet<String> accessories = PlayerHelper.getAccessories(damageSource);
+                if (targetScoreboardTags.contains("isMonster")) return true;
+                // homing weapons and minions should not willingly attack critters and NPCs
+                if (strict) return false;
+                if (targetScoreboardTags.contains("isNPC"))
+                    return accessories.contains(target.getName() + "巫毒娃娃");
+                if (targetScoreboardTags.contains("isAnimal"))
+                    return (!accessories.contains("小动物友谊指南"));
+            }
+        } else if (target instanceof Player) {
+            // non-player attacks player
+            HashSet<String> accessories = PlayerHelper.getAccessories(target);
+            Player targetPly = (Player) target;
+            if (PlayerHelper.isProperlyPlaying(targetPly)) {
+                // handle special mother type (slime damage neglected by royal gel)
+                MetadataValue temp = getMetadata(damageSource, "motherType");
+                if (temp != null) {
+                    String motherType = temp.asString();
+                    if (motherType.equals("史莱姆") && accessories.contains("皇家凝胶"))
+                        return false;
+                }
+                // NPCs do not attack players
+                return !entityScoreboardTags.contains("isNPC");
+            }
+        } else {
+            // non-player attacks non-player
+            // monster -> non-monster: true
+            if (entityScoreboardTags.contains("isMonster") && !(targetScoreboardTags.contains("isMonster")))
+                return true;
+            // any entity other than monster -> monster: true
+            return targetScoreboardTags.contains("isMonster");
+        }
+        return false;
     }
     public static Entity getDamageSource(Entity damager) {
         Entity source = damager;
@@ -1190,6 +1265,7 @@ public class EntityHelper {
     }
     public static void handleEntityExplode(Entity source, double radius, Entity damageException, Location loc, int ticksDuration) {
 //        handleDamage(source, e, , "Explode");
+
         // lingering explosion
         if (ticksDuration > 4) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
