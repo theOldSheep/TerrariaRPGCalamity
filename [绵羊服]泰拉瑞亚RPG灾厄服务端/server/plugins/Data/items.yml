@@ -5519,6 +5519,17 @@
 贝壳:
   item: CLAY_BALL
   rarity: 0
+沉沦渊石:
+  item: CLAY_BALL
+  rarity: 0
+海棱晶:
+  item: CLAY_BALL
+  worth: 100000
+  rarity: 1
+棱晶碎片:
+  item: CLAY_BALL
+  worth: 30000
+  rarity: 1
 恶魔锭:
   item: IRON_INGOT
   worth: 300000

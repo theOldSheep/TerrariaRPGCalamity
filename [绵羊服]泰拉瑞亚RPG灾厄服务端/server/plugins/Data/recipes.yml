@@ -1224,6 +1224,11 @@ ANVIL:
     - 纯净凝胶:30
     - 凝胶:35
     - 狱石锭:10
+  '186':
+    requireLevel: 1
+    resultItem: 海棱晶
+    requireItem:
+    - 棱晶碎片:5
 WORKBENCH:
   '1':
     requireLevel: 1
