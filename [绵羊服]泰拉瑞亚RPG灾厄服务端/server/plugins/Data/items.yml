@@ -5509,6 +5509,27 @@
   item: IRON_INGOT
   worth: 30000
   rarity: 1
+珊瑚:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 0
+海星:
+  item: CLAY_BALL
+  rarity: 0
+贝壳:
+  item: CLAY_BALL
+  rarity: 0
+沉沦渊石:
+  item: CLAY_BALL
+  rarity: 0
+海棱晶:
+  item: CLAY_BALL
+  worth: 100000
+  rarity: 1
+棱晶碎片:
+  item: CLAY_BALL
+  worth: 30000
+  rarity: 1
 恶魔锭:
   item: IRON_INGOT
   worth: 300000
@@ -5517,6 +5538,18 @@
   item: CLAY_BALL
   worth: 100000
   rarity: 1
+腐烂物质:
+  item: CLAY_BALL
+  worth: 100000
+  rarity: 1
+可疑镀层:
+  item: CLAY_BALL
+  worth: 60000
+  rarity: 1100
+神秘电路:
+  item: CLAY_BALL
+  worth: 60000
+  rarity: 1100
 狱炎锭:
   item: IRON_INGOT
   worth: 400000
@@ -5533,6 +5566,11 @@
   item: CLAY_BALL
   worth: 60000
   rarity: 3
+
+纯净凝胶:
+  item: CLAY_BALL
+  worth: 500000
+  rarity: 4
 钴锭:
   item: IRON_INGOT
   worth: 210000

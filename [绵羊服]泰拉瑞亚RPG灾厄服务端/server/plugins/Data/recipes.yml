@@ -174,6 +174,11 @@ FURNACE:
     - 黑曜石:20
     - 丝绸:10
     - 暗影鳞片:5
+  '34':
+    requireLevel: 1
+    resultItem: 天蓝锭
+    requireItem:
+    - 天蓝矿:4
 ANVIL:
   '1':
     requireLevel: 1
@@ -1178,6 +1183,52 @@ ANVIL:
     requireItem:
     - 纯净凝胶:5
     - 狱石锭:9
+  '180':
+    requireLevel: 1
+    resultItem: 翡翠斧
+    requireItem:
+    - 木材:15
+    - 银锭:10
+    - 银稿
+  '181':
+    requireLevel: 1
+    resultItem: 海耀之刃
+    requireItem:
+    - 沉沦渊石:10
+    - 海棱晶:7
+    - 珍珠碎片:3
+  '182':
+    requireLevel: 1
+    resultItem: 痛击者
+    requireItem:
+    - 硫磺鳞片:12
+    - 酸蚀木:30
+  '183':
+    requireLevel: 1
+    resultItem: 风之刃
+    requireItem:
+    - 天蓝矿:9
+    - 陨星锭:3
+  '184':
+    requireLevel: 1
+    resultItem: 高斯短匕
+    requireItem:
+    - 可疑镀层:7
+    - 神秘电路:5
+    - 天蓝锭:4
+    - 海棱晶:7
+  '185':
+    requireLevel: 1
+    resultItem: 凝胶波刃
+    requireItem:
+    - 纯净凝胶:30
+    - 凝胶:35
+    - 狱石锭:10
+  '186':
+    requireLevel: 1
+    resultItem: 海棱晶
+    requireItem:
+    - 棱晶碎片:5
 WORKBENCH:
   '1':
     requireLevel: 1
@@ -1442,6 +1493,30 @@ ENCHANTMENT_TABLE:
     - 骨头:30
     - 丛林孢子:15
     - 暗影鳞片:30
+  '6':
+    requireLevel: 1
+    resultItem: 绝望之刃
+    requireItem:
+    - 岩浆桶
+    - 酸蚀木:10
+    - 暗影鳞甲:8
+    - 死亡草:2
+  '7':
+    requireLevel: 1
+    resultItem: 阴雷
+    requireItem:
+    - 恶魔锭:5
+    - 腐烂物质:15
+    - 腐肉:5
+  '8':
+    requireLevel: 1
+    resultItem: 血锋
+    requireItem:
+    - 光之驱逐
+    - 妖刀村正
+    - 草薙剑
+    - 烈焰剑
+    - 纯净凝胶:5
 AIR:
   '1':
     requireLevel: 1
