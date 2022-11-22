@@ -23,6 +23,7 @@ terraria\TerrariaHelper$Constants.class
 terraria\entity\TerrariaPotionProjectile$1.class
 terraria\util\PlayerHelper.class
 terraria\TerrariaHelper.class
+terraria\util\GameplayHelper$1.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
 terraria\worldgen\overworld\OverworldChunkGenerator.class
 terraria\util\BossHelper.class

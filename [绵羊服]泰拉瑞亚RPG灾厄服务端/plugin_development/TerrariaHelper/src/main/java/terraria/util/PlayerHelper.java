@@ -114,7 +114,7 @@ public class PlayerHelper {
         try {
             return (HashMap<String, ArrayList<String>>) EntityHelper.getMetadata(player, "effectInflict").value();
         } catch (Exception e) {
-            return null;
+            return new HashMap<>();
         }
     }
     public static HashMap<String, Double> getDefaultPlayerAttributes() {
@@ -683,6 +683,8 @@ public class PlayerHelper {
     // others
     public static void initPlayerStats(Player ply) {
         EntityHelper.initEntityMetadata(ply);
+        ply.addPotionEffect(new PotionEffect(
+                PotionEffectType.SLOW_DIGGING, 999999999, 9, false, false), true);
         ply.setFoodLevel(0);
         ply.setGravity(true);
         // crafting variables
@@ -782,7 +784,6 @@ public class PlayerHelper {
         }
         EntityHelper.setMetadata(ply, "inventories", inventories);
     }
-    // TODO
     public static void saveInventories(Player ply) {
         HashMap<String, Inventory> inventories = (HashMap<String, Inventory>) EntityHelper.getMetadata(ply, "inventories").value();
         YmlHelper.YmlSection plyFile = YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml");
@@ -991,7 +992,6 @@ public class PlayerHelper {
             return amountRemaining;
         }
     }
-    // TODO: hologram
     public static void heal(Player ply, double amount) {
         double healAmount = Math.min(ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() - ply.getHealth(), amount);
         ply.setHealth(ply.getHealth() + healAmount);

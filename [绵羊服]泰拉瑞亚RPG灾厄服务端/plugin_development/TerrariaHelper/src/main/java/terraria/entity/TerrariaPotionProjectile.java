@@ -60,6 +60,18 @@ public class TerrariaPotionProjectile extends EntityPotion {
         this.noclip = true;
         this.damageCD = new HashMap<>((int) (penetration * 1.5));
     }
+
+    // setup properties of the specific type, excluding its item displayed
+    public void setProperties(String type) {
+        projectileType = type;
+        setupProjectileProperties();
+        setCustomName(type);
+    }
+    // setup properties of the specific type, including its item displayed
+    public void setType(String type) {
+        setItem(generateItemStack(type));
+        setProperties(type);
+    }
     public static ItemStack generateItemStack(String projectileType) {
         org.bukkit.inventory.ItemStack item = new org.bukkit.inventory.ItemStack(org.bukkit.Material.SPLASH_POTION);
         org.bukkit.inventory.meta.PotionMeta meta = (org.bukkit.inventory.meta.PotionMeta) item.getItemMeta();
@@ -75,15 +87,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
         this.motY = velocity.getY();
         this.motZ = velocity.getZ();
         this.projectileType = projectileType;
-        setupProjectileProperties();
+        setProperties(projectileType);
         bukkitEntity = (org.bukkit.entity.Projectile) getBukkitEntity();
         this.speed = velocity.length();
-    }
-
-    public void setType(String type) {
-        projectileType = type;
-        setItem(generateItemStack(type));
-        setupProjectileProperties();
     }
 
     protected double getAutoTraceInterest(Entity target) {

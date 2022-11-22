@@ -15,10 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import terraria.entity.TerrariaItem;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 
 public class ItemHelper {
@@ -86,7 +83,7 @@ public class ItemHelper {
     }
     public static boolean canReforge(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
-        if (meta.hasLore()) {
+        if (meta != null && meta.hasLore()) {
             String trimLore = GenericHelper.trimText(meta.getLore().get(0));
             switch (trimLore) {
                 case "[饰品]":
@@ -168,20 +165,25 @@ public class ItemHelper {
                 // the amount info is specified.
                 // take one recursive call to get the item then set the amount.
                 String[] info = information.split(":");
-                ItemStack result = getItemFromDescription(info[0], randomizePrefixIfNoneExists);
-                result.setAmount(Integer.parseInt(info[1]));
+                ItemStack result = getItemFromDescription(info[0], randomizePrefixIfNoneExists, notFoundDefault);
+                if (!result.isSimilar(notFoundDefault))
+                    result.setAmount(Integer.parseInt(info[1]));
                 return result;
             } else {
                 String[] itemNameInfo = splitItemName(information);
+                Bukkit.broadcastMessage(information);
+                Bukkit.broadcastMessage(Arrays.toString(itemNameInfo));
                 String prefix = itemNameInfo[0];
                 String itemType = itemNameInfo[1];
                 // get the itemstack
                 ItemStack resultItem;
                 try {
-                    resultItem = itemMap.getOrDefault(itemType, new ItemStack(Material.valueOf(itemType))).clone();
+                    resultItem = itemMap.get(itemType).clone();
+                    if (resultItem == null) return new ItemStack(Material.valueOf(itemType));
                 } catch (Exception e) {
                     resultItem = notFoundDefault;
                 }
+                ItemMeta meta = resultItem.getItemMeta();
                 // setup prefix
                 if (prefix.length() == 0) {
                     if (randomizePrefixIfNoneExists) resultItem = randomPrefix(resultItem);
@@ -198,14 +200,19 @@ public class ItemHelper {
                         // otherwise, resolve to rarity color [rarity]
                         String rarityColorPrefix = settingConfig.getString("rarity." + (rarity + prefixRarity),
                                 settingConfig.getString("rarity." + rarity, ""));
-                        resultItem.getItemMeta().setDisplayName(rarityColorPrefix + information);
+                        meta.setDisplayName(rarityColorPrefix + information);
                         // add prefix lore to item
-                        lore = resultItem.getItemMeta().getLore();
+                        try {
+                            lore = meta.getLore();
+                        } catch (Exception e) {
+                            lore = new ArrayList<>();
+                        }
                         lore.addAll(prefixConfig.getStringList("prefixInfo." + prefix + ".lore"));
-                        resultItem.getItemMeta().setLore(lore);
+                        meta.setLore(lore);
                     }
-                    resultItem.getItemMeta().setLore(lore);
+                    meta.setLore(lore);
                 }
+                resultItem.setItemMeta(meta);
                 return resultItem;
             }
         } catch (Exception e) {
@@ -447,8 +454,34 @@ public class ItemHelper {
             return item.getType().toString();
         }
     }
-    // TODO
+    public static Item dropItem(Location loc, String itemToDropDescription) {
+        String[] itemInfo = itemToDropDescription.split(":");
+        // 物品名:最小数量:最大数量:几率
+        int itemAmount = 1;
+        switch (itemInfo.length) {
+            case 4:
+                double chance = Double.parseDouble(itemInfo[3]);
+                if (Math.random() > chance) return null;
+            case 3:
+                int itemMax = Integer.parseInt(itemInfo[2]);
+                int itemMin = Integer.parseInt(itemInfo[1]);
+                itemAmount = (int) (itemMin + (itemMax - itemMin + 1) * Math.random());
+                break;
+            case 2:
+                itemAmount = Integer.parseInt(itemInfo[1]);
+        }
+        ItemStack itemToDrop = getItemFromDescription(itemInfo[0]);
+        if (itemAmount <= 0) return null;
+        if (itemToDrop.getType() == Material.AIR) return null;
+        itemToDrop.setAmount(itemAmount);
+        EntityItem entity = new TerrariaItem(loc, itemToDrop);
+        CraftWorld wld = (CraftWorld) loc.getWorld();
+        wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        return new CraftItem(wld.getHandle().getServer(), entity);
+    }
     public static Item dropItem(Location loc, ItemStack itemToDrop) {
+        if (itemToDrop.getAmount() <= 0) return null;
+        if (itemToDrop.getType() == Material.AIR) return null;
         EntityItem entity = new TerrariaItem(loc, itemToDrop);
         CraftWorld wld = (CraftWorld) loc.getWorld();
         wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);

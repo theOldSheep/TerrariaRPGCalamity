@@ -10,7 +10,6 @@ import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.Hash;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.*;
 import org.bukkit.entity.*;
@@ -970,17 +969,15 @@ public class EntityHelper {
                 isMinionDmg = true;
         } else if (damager.getScoreboardTags().contains("isMinion")) isMinionDmg = true;
         // setup properties such as invulnerability tick and defence
-        int damageInvulnerbilityTicks = 0;
+        int damageInvulnerabilityTicks = 0;
         double defence = victimAttrMap.getOrDefault("defence", 0d) * victimAttrMap.getOrDefault("defenceMulti", 1d);
         switch (damageReason) {
             case "DirectDamage":
             case "Projectile":
             case "Explosion":
+            case "Thorn":
             case "Spectre":
                 isDirectAttackDamage = true;
-                if (!checkCanDamage(damageSource, victim))
-                    canDamage = false;
-                damageInvulnerbilityTicks = victimAttrMap.getOrDefault("invulnerabilityTick", 0d).intValue();
         }
         if (victimScoreboardTags.contains("isBOSS")) {
             if (isDirectAttackDamage) {
@@ -1049,6 +1046,7 @@ public class EntityHelper {
         }
 
         // further setup damage info
+        damageInvulnerabilityTicks = victimAttrMap.getOrDefault("invulnerabilityTick", 0d).intValue();
         double dmg = damage;
         double knockback = 0d, critRate = -1e9;
         boolean damageFixed = false;
@@ -1079,11 +1077,12 @@ public class EntityHelper {
                 damageFixed = true;
                 break;
             case "Suffocation":
+                damageInvulnerabilityTicks = 0;
                 dmg = 10;
                 damageFixed = true;
                 break;
             case "Thorn":
-                damageInvulnerbilityTicks = 0;
+                damageInvulnerabilityTicks = 0;
                 damageFixed = true;
                 break;
             default:
@@ -1250,11 +1249,14 @@ public class EntityHelper {
         }
 
         // handle invincibility ticks
-        if (damageInvulnerbilityTicks > 0) {
+        if (damageInvulnerabilityTicks > 0) {
             victim.addScoreboardTag(damageInvincibilityFrameName);
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> victim.removeScoreboardTag(damageInvincibilityFrameName), damageInvulnerbilityTicks);
+                    () -> victim.removeScoreboardTag(damageInvincibilityFrameName), damageInvulnerabilityTicks);
         }
+    }
+    public static void handleEntityExplode(Entity source, Entity damageException) {
+        handleEntityExplode(source, damageException, source.getLocation());
     }
     public static void handleEntityExplode(Entity source, Entity damageException, Location loc) {
         double blastRadius = projectileConfig.getDouble(source.getName() + "blastRadius", 1.5d);
@@ -1264,13 +1266,75 @@ public class EntityHelper {
         handleEntityExplode(source, radius, damageException, loc, 1);
     }
     public static void handleEntityExplode(Entity source, double radius, Entity damageException, Location loc, int ticksDuration) {
-//        handleDamage(source, e, , "Explode");
-
+        boolean damageShooter = false;
+        boolean destroyBlock = false;
+        ConfigurationSection sourceSection = projectileConfig.getConfigurationSection(GenericHelper.trimText(source.getName()));
+        if (sourceSection != null) {
+            damageShooter = sourceSection.getBoolean("blastDamageShooter", false);
+            destroyBlock = sourceSection.getBoolean("blastDestroyBlock", false);
+        }
+        double dmg = getAttrMap(source).getOrDefault("damage", 25d);
+        // particles
+        if (radius < 3)
+            loc.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, loc, 1);
+        else if (radius < 5)
+            loc.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, loc, 1);
+        else {
+            int amount = (int) (radius * radius / 4);
+            loc.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, loc, amount, radius - 4, radius - 4, radius - 4);
+        }
+        // sound
+        loc.getWorld().playSound(loc, "entity.generic.explode", (float) radius + 2, 1f);
+        // damage nearby entities
+        Collection<Entity> entities = loc.getWorld().getNearbyEntities(loc, radius, radius, radius);
+        Entity shooter = source;
+        if (source instanceof Projectile) {
+            ProjectileSource src = ((Projectile) source).getShooter();
+            if (src instanceof Entity) shooter = (Entity) src;
+        }
+        for (Entity victim : entities) {
+            if (victim == shooter) {
+                if (damageShooter)
+                    handleDamage(source, victim, dmg, "Explosion");
+                continue;
+            }
+            if (victim == damageException) continue;
+            if (checkCanDamage(source, victim, false))
+                handleDamage(source, victim, dmg, "Explosion");
+        }
+        // destroy block
+        if (destroyBlock) {
+            Player ply = null;
+            if (source instanceof Projectile) {
+                ProjectileSource src = ((Projectile) source).getShooter();
+                if (src instanceof Player) ply = (Player) src;
+            }
+            if (ply != null) {
+                org.bukkit.block.Block blastCenterBlock = loc.getBlock();
+                double radiusSqr = radius * radius;
+                int radInt = (int) Math.ceil(radius);
+                double distSqrX, distSqrY, distSqrZ;
+                for (int xOffset = radInt * -1; xOffset <= radInt; xOffset ++) {
+                    distSqrX = xOffset * xOffset;
+                    for (int yOffset = radInt * -1; yOffset <= radInt; yOffset++) {
+                        distSqrY = yOffset * yOffset;
+                        if (distSqrX + distSqrY > radiusSqr) continue;
+                        for (int zOffset = radInt * -1; zOffset <= radInt; zOffset++) {
+                            distSqrZ = zOffset * zOffset;
+                            if (distSqrX + distSqrY + distSqrZ > radiusSqr) continue;
+                            org.bukkit.block.Block currBlock = blastCenterBlock.getRelative(xOffset, yOffset, zOffset);
+                            GameplayHelper.playerBreakBlock(currBlock, ply);
+                        }
+                    }
+                }
+            }
+        }
         // lingering explosion
-        if (ticksDuration > 4) {
+        int delay = 5;
+        if (ticksDuration > delay) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                     () -> handleEntityExplode(source, radius, damageException, loc, ticksDuration - 4),
-                    4);
+                    delay);
         }
     }
     public static Projectile spawnProjectile(Location loc, Vector velocity, String projectileName, ProjectileSource src) {

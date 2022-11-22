@@ -31,7 +31,9 @@ public class GenericHelper {
             }
             return result.toString();
         } catch (Exception e) {
-            return textToTrim;
+            if (textToTrim != null)
+                return textToTrim;
+            return "";
         }
     }
     public static int[] coinConversion(int copperAmount) {
