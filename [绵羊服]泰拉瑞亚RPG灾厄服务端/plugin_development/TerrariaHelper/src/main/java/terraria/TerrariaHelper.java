@@ -5,6 +5,7 @@ import me.clip.placeholderapi.PlaceholderHook;
 import net.minecraft.server.v1_12_R1.EntityItem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import terraria.event.listener.RandomTitleListener;
 import terraria.event.listener.*;

@@ -1,5 +1,7 @@
 package terraria.util;
 
+import lk.vexview.gui.VexGui;
+import lk.vexview.gui.components.*;
 import net.minecraft.server.v1_12_R1.EntityItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,8 +23,132 @@ import java.util.logging.Level;
 public class ItemHelper {
     public static final String placeholderItemNamePrefix = "§1§1§4§5§1§4";
     public static HashMap<String, String> attributeDisplayName = new HashMap<>();
-    private static final HashMap<String, ItemStack> itemMap = new HashMap<>();
-    static {
+    private static HashMap<String, ItemStack> itemMap;
+    private static HashMap<String, VexGui> craftingGuiMap;
+    private static HashMap<String, String> craftingGuisRecipeIndexMap;
+    private static HashMap<String, Integer> craftingGuiLengthMap;
+    private static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");
+    private static final YmlHelper.YmlSection prefixConfig = YmlHelper.getFile("plugins/Data/prefix.yml");
+    private static final YmlHelper.YmlSection recipeConfig = YmlHelper.getFile("plugins/Data/recipes.yml");
+    private static final YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
+    private static final YmlHelper.YmlSection weaponConfig = YmlHelper.getFile("plugins/Data/weapons.yml");
+    public static void setupItemRecipe(boolean printDebugMessage) {
+        Bukkit.clearRecipes();
+        Set<String> items = itemConfig.getKeys(false);
+        Set<String> craftStations = recipeConfig.getKeys(false);
+        itemMap = new HashMap<>();
+        craftingGuiMap = new HashMap<>();
+        craftingGuisRecipeIndexMap = new HashMap<>();
+        craftingGuiLengthMap = new HashMap<>();
+        // items
+        for (String itemInfo : items) {
+            ItemStack item = getItemFromYML(itemInfo);
+            if (item.getType() == Material.AIR) {
+                if (printDebugMessage) Bukkit.getLogger().log(Level.SEVERE, "Could not read " + itemInfo + " from yml.");
+                continue;
+            }
+            if (printDebugMessage) Bukkit.getLogger().log(Level.FINEST, "Loading " + itemInfo + " from yml.");
+            switch (item.getType()) {
+                case ARROW:
+                case SLIME_BALL:
+                case BLAZE_POWDER:
+                case FLINT: {
+                    if (printDebugMessage) Bukkit.getLogger().log(Level.FINEST, itemInfo + " is ammunition, adding item description.");
+                    // these are reserved for ammunition.
+                    ItemMeta meta = item.getItemMeta();
+                    List<String> lore;
+                    if (meta.hasLore()) lore = meta.getLore();
+                    else lore = new ArrayList<>();
+                    int idx;
+                    for (idx = 0; idx < lore.size(); idx ++) {
+                        String currLine = GenericHelper.trimText(lore.get(idx));
+                        if (currLine.startsWith("[") && currLine.endsWith("]")) continue;
+                        break;
+                    }
+                    lore.add(idx, "&r[弹药]");
+                    meta.setLore(lore);
+                    item.setItemMeta(meta);
+                }
+            }
+            itemMap.put(itemInfo, item);
+        }
+        // setup material tooltip
+        Set<String> allMaterials = new HashSet<>();
+        for (String block : craftStations) {
+            ConfigurationSection blockSection = recipeConfig.getConfigurationSection(block);
+            Set<String> nodes = blockSection.getKeys(false);
+            for (String recipeIndex : nodes) {
+                List<String> currMaterials = blockSection.getStringList(recipeIndex + ".requireItem");
+                if (currMaterials == null) continue;
+                for (String itemInfo : currMaterials) {
+                    if (itemInfo.contains(":")) itemInfo = itemInfo.split(":")[0];
+                    allMaterials.add(itemInfo);
+                }
+            }
+        }
+        for (String mat : allMaterials) {
+            ItemStack item = itemMap.get(mat);
+            if (item == null) {
+                if (printDebugMessage) Bukkit.getLogger().log(Level.SEVERE, mat + " is supposed to be an crafting material, but it is not found.");
+                continue;
+            }
+            if (printDebugMessage) Bukkit.getLogger().log(Level.FINEST, mat + " is considered a material, adding item description.");
+            ItemMeta meta = item.getItemMeta();
+            List<String> lore;
+            if (meta.hasLore()) lore = meta.getLore();
+            else lore = new ArrayList<>();
+            int idx;
+            for (idx = 0; idx < lore.size(); idx ++) {
+                String currLine = GenericHelper.trimText(lore.get(idx));
+                if (currLine.startsWith("[") && currLine.endsWith("]")) continue;
+                break;
+            }
+            lore.add(idx, "&r[材料]");
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+        }
+        // recipes
+        String bg = "[local]GuiBG.png";
+        for (String block : craftStations) {
+            ConfigurationSection blockSection = recipeConfig.getConfigurationSection(block);
+            Set<String> nodes = blockSection.getKeys(false);
+            int level = 1, levelMax = 1;
+            while (level <= levelMax) {
+                if (printDebugMessage) Bukkit.getLogger().log(Level.FINEST, "Setting up workbench " + block + "_" + level);
+                // setup gui
+                VexGui gui = new VexGui(bg, 0, 0, 200, 150);
+                ArrayList<ScrollingListComponent> itemSlots = new ArrayList<>();
+                int recipeIndex = 0;
+                for (String recipeName : nodes) {
+                    ConfigurationSection recipeSection = blockSection.getConfigurationSection(recipeName);
+                    int requireLevel = recipeSection.getInt("requireLevel", 0);
+                    if (requireLevel <= level) {
+                        recipeIndex ++;
+                        ItemStack resultItem = getItemFromDescription(recipeSection.getString("resultItem", ""), false);
+                        VexSlot slotComp = new VexSlot(recipeIndex, 5, (recipeIndex - 1) * 20, resultItem);
+                        itemSlots.add(slotComp);
+                        craftingGuisRecipeIndexMap.put(block + "_" + level + "_" + recipeIndex, recipeName);
+                    } else {
+                        levelMax = requireLevel;
+                    }
+                }
+                // set up the VexGui
+                VexScrollingList scrList = new VexScrollingList((int) (gui.getWidth() * 0.75), 17, 30, gui.getHeight() - 34, itemSlots.size() * 20);
+                for (ScrollingListComponent comp : itemSlots)
+                    scrList.addComponent(comp);
+                gui.addComponent(scrList);
+                gui.addComponent(new VexButton("CRAFT", "选择配方", bg, bg, gui.getWidth() - 120, gui.getHeight() - 50, 35, 17 + level));
+                gui.addComponent(new VexButton("CRAFT_ALL", "选择配方", bg, bg, gui.getWidth() - 60, gui.getHeight() - 50, 35, 17 + level));
+                // save the GUI to mapping
+                String craftGuiMappingKey = block + "_" + level;
+                craftingGuiMap.put(craftGuiMappingKey, gui);
+                craftingGuiLengthMap.put(craftGuiMappingKey, recipeIndex);
+                // add 1 to level to handle higher tier workbench
+                level ++;
+            }
+        }
+    }
+    private static void setupAttributeDisplayName() {
         attributeDisplayName.put("damageTakenMulti", "受到伤害");
         attributeDisplayName.put("damageContactTakenMulti", "受到接触伤害");
         attributeDisplayName.put("damageMulti", "伤害");
@@ -46,27 +172,22 @@ public class ItemHelper {
         attributeDisplayName.put("knockbackMeleeMulti", "近战击退");
         attributeDisplayName.put("projectileSpeedArrowMulti", "箭矢速度");
     }
-    private static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");
-    private static final YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/settings.yml");
-    private static final YmlHelper.YmlSection weaponConfig = YmlHelper.getFile("plugins/Data/weapons.yml");
-    private static final YmlHelper.YmlSection prefixConfig = YmlHelper.getFile("plugins/Data/prefix.yml");
+    static {
+        setupItemRecipe(true);
+        setupAttributeDisplayName();
+    }
     public static String[] splitItemName(String itemName) {
-        try {
-            itemName = GenericHelper.trimText(itemName);
-            if (itemName.contains("的 ")) {
-                return itemName.split("的 ");
-            }
-            return new String[]{"", itemName};
-        } catch (Exception e) {
-            return new String[]{"", ""};
+        if (itemName == null) return new String[]{"", ""};
+        itemName = GenericHelper.trimText(itemName);
+        if (itemName.contains("的 ")) {
+            return itemName.split("的 ");
         }
+        return new String[]{"", itemName};
     }
     public static String[] splitItemName(ItemStack item) {
-        try {
+        if (item != null && item.getType() != Material.AIR && item.getItemMeta().hasDisplayName())
             return splitItemName(item.getItemMeta().getDisplayName());
-        } catch (Exception e) {
-            return new String[]{"", ""};
-        }
+        return new String[]{"", ""};
     }
     public static int getWorth(String name) {
         if (name == null) name = "";
@@ -151,7 +272,9 @@ public class ItemHelper {
         // 5% chance to not have any prefix
         String prefix = MathHelper.selectWeighedRandom(getApplicablePrefix(item));
         if (Math.random() < 0.05) prefix = "";
-        return getItemFromDescription(prefix + "的 " + itemInfo[1], false);
+        if (prefix.length() > 0)
+            return getItemFromDescription(prefix + "的 " + itemInfo[1], false);
+        return getItemFromDescription(itemInfo[1], false);
     }
     public static ItemStack getItemFromDescription(String information) {
         return getItemFromDescription(information, true, new ItemStack(Material.AIR));
@@ -171,48 +294,53 @@ public class ItemHelper {
                 return result;
             } else {
                 String[] itemNameInfo = splitItemName(information);
-                Bukkit.broadcastMessage(information);
-                Bukkit.broadcastMessage(Arrays.toString(itemNameInfo));
                 String prefix = itemNameInfo[0];
                 String itemType = itemNameInfo[1];
+                Bukkit.broadcastMessage(Arrays.toString(itemNameInfo));
                 // get the itemstack
                 ItemStack resultItem;
                 try {
-                    resultItem = itemMap.get(itemType).clone();
-                    if (resultItem == null) return new ItemStack(Material.valueOf(itemType));
+                    resultItem = itemMap.get(itemType);
+                    if (resultItem == null || resultItem.getType() == Material.AIR) {
+                        // check if the itemType is a material
+                        try {
+                            Material.valueOf(itemType);
+                        } catch (Exception e) {
+                            Bukkit.getLogger().log(Level.SEVERE, "item " + itemType + " not found in mapping.");
+                        }
+                        return new ItemStack(Material.valueOf(itemType));
+                    }
+                    resultItem = resultItem.clone();
                 } catch (Exception e) {
-                    resultItem = notFoundDefault;
+                    Bukkit.getLogger().log(Level.SEVERE, "ItemHelper.getItemFromDescription", e);
+                    return notFoundDefault;
                 }
-                ItemMeta meta = resultItem.getItemMeta();
                 // setup prefix
                 if (prefix.length() == 0) {
                     if (randomizePrefixIfNoneExists) resultItem = randomPrefix(resultItem);
                 } else {
+                    ItemMeta meta = resultItem.getItemMeta();
                     List<String> lore;
                     if (itemType.equals("专家模式福袋")) {
                         lore = new ArrayList<>(1);
                         lore.add(ChatColor.COLOR_CHAR + "7" + prefix);
                     } else {
                         // generate color according to rarity
-                        int rarity = itemConfig.getInt(itemNameInfo[1] + ".rarity", 0);
+                        int itemBaseRarity = itemConfig.getInt(itemType + ".rarity", 0);
                         int prefixRarity = prefixConfig.getInt("prefixInfo." + prefix + ".rarity", 0);
-                        // if rarity color [rarity + prefixRarity] is set, use it
-                        // otherwise, resolve to rarity color [rarity]
-                        String rarityColorPrefix = settingConfig.getString("rarity." + (rarity + prefixRarity),
-                                settingConfig.getString("rarity." + rarity, ""));
+                        // if rarity color [itemBaseRarity + prefixRarity] is set, use it
+                        // otherwise, resolve to rarity color [itemBaseRarity]
+                        String rarityColorPrefix = settingConfig.getString("rarity." + (itemBaseRarity + prefixRarity),
+                                settingConfig.getString("rarity." + itemBaseRarity, "§r"));
                         meta.setDisplayName(rarityColorPrefix + information);
                         // add prefix lore to item
-                        try {
-                            lore = meta.getLore();
-                        } catch (Exception e) {
-                            lore = new ArrayList<>();
-                        }
+                        if (meta.hasLore()) lore = meta.getLore();
+                        else lore = new ArrayList<>();
                         lore.addAll(prefixConfig.getStringList("prefixInfo." + prefix + ".lore"));
-                        meta.setLore(lore);
                     }
                     meta.setLore(lore);
+                    resultItem.setItemMeta(meta);
                 }
-                resultItem.setItemMeta(meta);
                 return resultItem;
             }
         } catch (Exception e) {
@@ -225,6 +353,7 @@ public class ItemHelper {
         // the performance of this function is not very critical
         // it is called only once per item when the plugin loads
         ArrayList<String> result = new ArrayList<>(10);
+        if (attributeSection == null) return result;
         Set<String> attributes = attributeSection.getKeys(false);
         String[] attributeLoreOrder = {
                 // usually found in weapon lore
@@ -393,6 +522,10 @@ public class ItemHelper {
                     else result.add((resistance > 0 ? "+" : "") + resistancePercentage + "% 击退抗性");
                     break;
                 }
+                // these attributes are not shown.
+                case "damageType":
+                case "projectileSpeed":
+                    break;
                 default:
                     if (attributeDisplayName.containsKey(attribute)) {
                         double multi = attributeSection.getDouble(attribute, 0d);
@@ -412,19 +545,23 @@ public class ItemHelper {
                 ConfigurationSection itemSection = itemConfig.getConfigurationSection(itemName);
                 Material material = Material.valueOf(itemSection.getString("item", "AIR"));
                 ItemStack item = new ItemStack(material);
+                // air has no item meta.
+                if (material == Material.AIR) return item;
+                ItemMeta meta = item.getItemMeta();
                 byte data = (byte) itemSection.getInt("data", 0);
                 if (data != 0) item.getData().setData(data);
                 int rarity = itemSection.getInt("rarity", 0);
-                String rarityColor = settingConfig.getString("rarity." + rarity, "5");
-                item.getItemMeta().setDisplayName(rarityColor + itemName);
+                String rarityColor = settingConfig.getString("rarity." + rarity, "§r");
+                meta.setDisplayName(rarityColor + itemName);
                 List<String> lore = itemSection.getStringList("lore");
                 List<String> loreDescription = getLoreDescription(itemSection.getConfigurationSection("attributes"));
                 ArrayList<String> finalLore = new ArrayList<>(20);
-                if (lore.size() > 0 && lore.get(0).endsWith("]")) finalLore.add(lore.remove(0));
+                while (lore.size() > 0 && lore.get(0).endsWith("]")) finalLore.add(lore.remove(0));
                 finalLore.addAll(loreDescription);
                 finalLore.addAll(lore);
-                if (finalLore.size() > 0) item.getItemMeta().setLore(finalLore);
-                item.getItemMeta().addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                if (finalLore.size() > 0) meta.setLore(finalLore);
+                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                item.setItemMeta(meta);
                 return item;
             } else {
                 return new ItemStack(Material.valueOf(itemName));
@@ -471,13 +608,8 @@ public class ItemHelper {
                 itemAmount = Integer.parseInt(itemInfo[1]);
         }
         ItemStack itemToDrop = getItemFromDescription(itemInfo[0]);
-        if (itemAmount <= 0) return null;
-        if (itemToDrop.getType() == Material.AIR) return null;
         itemToDrop.setAmount(itemAmount);
-        EntityItem entity = new TerrariaItem(loc, itemToDrop);
-        CraftWorld wld = (CraftWorld) loc.getWorld();
-        wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
-        return new CraftItem(wld.getHandle().getServer(), entity);
+        return dropItem(loc, itemToDrop);
     }
     public static Item dropItem(Location loc, ItemStack itemToDrop) {
         if (itemToDrop.getAmount() <= 0) return null;

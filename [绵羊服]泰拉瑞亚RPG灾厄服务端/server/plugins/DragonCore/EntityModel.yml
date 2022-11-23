@@ -1,5 +1,10 @@
 # 重要：基础目录为DragonCore/models/entities
 
+#default:
+#  entity: ""
+#  contains: true
+#  model: "empty"
+#  blood: "generic"
 # 该名称随意
 小黄人:
   # 识别生物名

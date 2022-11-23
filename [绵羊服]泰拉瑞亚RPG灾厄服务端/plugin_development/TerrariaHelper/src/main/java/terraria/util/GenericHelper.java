@@ -1,10 +1,7 @@
 package terraria.util;
 
 import eos.moe.dragoncore.api.CoreAPI;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -16,10 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GenericHelper {
-    static int nextHologramIndex = 0;
-    static HashMap<String, World> holograms = new HashMap<>();
+    static long nextHologramIndex = 0;
 
     public static String trimText(String textToTrim) {
+        if (textToTrim == null) return "";
         try {
             StringBuilder result = new StringBuilder();
             int isColor = -1;
@@ -31,9 +28,7 @@ public class GenericHelper {
             }
             return result.toString();
         } catch (Exception e) {
-            if (textToTrim != null)
-                return textToTrim;
-            return "";
+            return textToTrim;
         }
     }
     public static int[] coinConversion(int copperAmount) {
@@ -70,19 +65,68 @@ public class GenericHelper {
         double distZ = Math.abs(locationA.getZ() - locationA.getZ());
         return Math.max(distX, distZ);
     }
-    public static void handleParticleLine(Vector vector, double length, double width, Location startLoc, List<String> particleColor) {
-    }
-    public static void handleParticleLine(Vector vector, double length, double width, double stepsize, double stepLoopTime, Location startLoc, List<String> particleColor) {
-    }
-    public static void handleParticleLine(Vector vector, double length, double width, Location startLoc, String particleColor) {
+    public static void handleParticleLine(Vector vector, double length, double width, int ticksLinger, Location startLoc, String particleColor) {
         ArrayList<String> colorList = new ArrayList<>();
         colorList.add(particleColor);
-        handleParticleLine(vector, length, width, startLoc, colorList);
+        handleParticleLine(vector, length, width, width, ticksLinger, startLoc, colorList);
     }
-    public static void handleParticleLine(Vector vector, double length, double width, double stepsize, double stepLoopTime, Location startLoc, String particleColor) {
+    public static void handleParticleLine(Vector vector, double length, double width, double stepsize, int ticksLinger, Location startLoc, String particleColor) {
         ArrayList<String> colorList = new ArrayList<>();
         colorList.add(particleColor);
-        handleParticleLine(vector, length, width, stepsize, stepLoopTime, startLoc, colorList);
+        handleParticleLine(vector, length, width, stepsize, ticksLinger, startLoc, colorList);
+    }
+    public static void handleParticleLine(Vector vector, double length, double width, double stepsize, int ticksLinger, Location startLoc, List<String> particleColor) {
+        Vector dVec = vector.clone().normalize();
+        int loopTime = (int) Math.round(length / stepsize);
+        dVec.multiply(length / loopTime);
+        List<Color> allColors = new ArrayList<>();
+        for (String currColor : particleColor) {
+            String[] info = currColor.split("\\|");
+            allColors.add(Color.fromRGB(Integer.parseInt(info[0]), Integer.parseInt(info[1]), Integer.parseInt(info[2])));
+        }
+        Location currLoc = startLoc.clone();
+        for (int i = 0; i <= loopTime; i ++) {
+            // tweak color
+            double colorProgress = (double) i * allColors.size() / (loopTime + 1);
+            int colorIndex = (int) colorProgress;
+            Color c1 = allColors.get(colorIndex);
+            int rInt, gInt, bInt;
+            if (allColors.size() > 1) {
+                Color c2 = allColors.get((colorIndex + 1) % allColors.size());
+                double multi2 = colorProgress % 1;
+                double multi1 = 1 - multi2;
+                rInt = (int) ((c1.getRed() * multi1) + (c2.getRed() * multi2));
+                gInt = (int) ((c1.getGreen() * multi1) + (c2.getGreen() * multi2));
+                bInt = (int) ((c1.getBlue() * multi1) + (c2.getBlue() * multi2));
+            } else {
+                rInt = c1.getRed();
+                gInt = c1.getGreen();
+                bInt = c1.getBlue();
+            }
+            // spawn "particles"
+            String rCode = Integer.toHexString(rInt), gCode = Integer.toHexString(gInt), bCode = Integer.toHexString(bInt);
+            if (rCode.length() == 1) rCode = "0" + rCode;
+            if (gCode.length() == 1) gCode = "0" + gCode;
+            if (bCode.length() == 1) bCode = "0" + bCode;
+            String colorCode = rCode + gCode + bCode;
+            // █ ●
+            displayHoloText(currLoc, "§#" + colorCode + "█", ticksLinger, (float) width, (float) width, 1f);
+            // add vector to location
+            currLoc.add(dVec);
+        }
+    }
+    public static void displayHoloText(Location displayLoc, String text, int ticksDisplay, float width, float height, float alpha) {
+        String holoInd = "" + (nextHologramIndex++);
+        // all players in radius of 64 blocks can see the hologram
+        ArrayList<Player> playersSent = new ArrayList<>(100);
+        for (Player p : displayLoc.getWorld().getPlayers())
+            if (p.getLocation().distanceSquared(displayLoc) < 4096) playersSent.add(p);
+        for (Player p : playersSent)
+            CoreAPI.setPlayerWorldTexture(p, holoInd, displayLoc, 0, 0, 0, "[text]" + text, width, height, alpha, true, true);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+            for (Player p : playersSent)
+                CoreAPI.removePlayerWorldTexture(p, holoInd);
+        }, ticksDisplay);
     }
     public static void displayHolo(Entity e, double dmg, boolean isCrit, String damageCause) {
         String colorCode;
@@ -128,18 +172,6 @@ public class GenericHelper {
         Location displayLoc;
         if (e instanceof LivingEntity) displayLoc = ((LivingEntity) e).getEyeLocation().add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
         else displayLoc = e.getLocation().add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
-        String holoInd = "HOLOIND_" + (nextHologramIndex++);
-        // all players in radius of 64 blocks can see the hologram
-        ArrayList<Player> playersSent = new ArrayList<>(100);
-        for (Player p : e.getWorld().getPlayers())
-            if (p.getLocation().distanceSquared(displayLoc) < 4096) playersSent.add(p);
-        for (Player p : playersSent)
-            CoreAPI.setPlayerWorldTexture(p, holoInd, displayLoc, 0, 0, 0, "[text]" + text, 1, 0.75f, 1, true, true);
-        holograms.put(holoInd, displayLoc.getWorld());
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
-            for (Player p : playersSent)
-                CoreAPI.removePlayerWorldTexture(p, holoInd);
-            holograms.remove(holoInd);
-        }, ticksDisplay);
+        displayHoloText(displayLoc, text, ticksDisplay, 1f, 0.75f, 1f);
     }
 }

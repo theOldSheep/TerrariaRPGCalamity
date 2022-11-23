@@ -11,16 +11,18 @@ terraria\event\listener\DamageListener.class
 terraria\entity\boss\Boss.class
 terraria\event\listener\ArrowShootEvent.class
 terraria\util\DragoncoreHelper$SlotCallback.class
-terraria\entity\TerrariaPotionProjectile$HitEntityInfo.class
 terraria\util\EntityHelper$1.class
 terraria\event\listener\WorldRegisterListener.class
+terraria\entity\TerrariaArrowProjectile.class
 terraria\event\listener\PlayerWorldChangeListener.class
 terraria\util\ItemHelper.class
 terraria\event\listener\ArrowHitEvent.class
 terraria\util\WorldHelper.class
 terraria\worldgen\overworld\OverworldCaveGenerator.class
+terraria\entity\TerrariaArrowProjectile$1.class
 terraria\TerrariaHelper$Constants.class
 terraria\entity\TerrariaPotionProjectile$1.class
+terraria\util\ItemHelper$1.class
 terraria\util\PlayerHelper.class
 terraria\TerrariaHelper.class
 terraria\util\GameplayHelper$1.class
@@ -52,5 +54,6 @@ terraria\event\listener\ServerStopListener.class
 terraria\entity\TerrariaItem.class
 terraria\worldgen\Interpolate$InterpolatePoint.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator.class
+terraria\entity\HitEntityInfo.class
 terraria\util\EntityHelper.class
 terraria\worldgen\overworld\OverworldChunkGenerator$1.class

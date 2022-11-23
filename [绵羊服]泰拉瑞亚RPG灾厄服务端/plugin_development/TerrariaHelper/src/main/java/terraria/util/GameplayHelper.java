@@ -69,7 +69,7 @@ public class GameplayHelper {
         return "METAL";
     }
     public static void playBlockParticleAndSound(Block blockToBreak) {
-        double particleRadius = 1.05;
+        double particleRadius = 0.5;
         MaterialData data = new MaterialData(blockToBreak.getType(), blockToBreak.getData());
         blockToBreak.getWorld().spawnParticle(Particle.BLOCK_CRACK,
                 blockToBreak.getLocation().add(0.5, 0.5, 0.5), 25,
@@ -83,7 +83,6 @@ public class GameplayHelper {
         String material = blockToBreak.getType().toString();
         String data = String.valueOf(blockToBreak.getData());
         if (itemMapConfig.contains(material + "_" + data)) {
-            Bukkit.broadcastMessage(data);
             return itemMapConfig.getConfigurationSection(material + "_" + data);
         } if (itemMapConfig.contains(material)) {
             return itemMapConfig.getConfigurationSection(material);
@@ -118,6 +117,7 @@ public class GameplayHelper {
         return !evt.isCancelled();
     }
     public static void playerMineBlock(Block blockToBreak, Player ply) {
+        if (blockToBreak.getType() == Material.AIR) return;
         playBlockParticleAndSound(blockToBreak);
         if (!isBreakable(blockToBreak, ply)) return;
         // get existing breaking progress
@@ -133,7 +133,6 @@ public class GameplayHelper {
         int powerPickaxe = EntityHelper.getAttrMap(ply).getOrDefault("powerPickaxe", 0d).intValue();
         // handle breaking progress
         breakingProgress += powerPickaxe;
-        Bukkit.broadcastMessage(breakingProgress + "/" + breakingProgressMax);
         int plyId = ((CraftPlayer) ply).getHandle().getId();
         PacketPlayOutBlockBreakAnimation packetToSend;
         if (breakingProgress >= breakingProgressMax) {
@@ -164,9 +163,9 @@ public class GameplayHelper {
         }
     }
     public static void playerBreakBlock(Block blockToBreak, Player ply) {
+        if (blockToBreak.getType() == Material.AIR) return;
         playBlockParticleAndSound(blockToBreak);
         if (!isBreakable(blockToBreak, ply)) return;
-        blockToBreak.setType(Material.AIR);
         ConfigurationSection configSection = getBlockConfigSection(blockToBreak);
         if (configSection != null) {
             List<String> itemsToDrop = configSection.getStringList("dropItem");
@@ -176,5 +175,6 @@ public class GameplayHelper {
         } else {
             Bukkit.broadcastMessage("Not handled block type: " + blockToBreak.getType() + " with data " + blockToBreak.getData());
         }
+        blockToBreak.setType(Material.AIR);
     }
 }

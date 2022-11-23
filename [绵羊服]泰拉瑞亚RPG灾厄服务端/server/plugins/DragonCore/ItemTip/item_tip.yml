@@ -29,7 +29,7 @@ Functions:
   x: 界面变量.x+12
   y: 界面变量.y+12
   width : 界面变量.w
-  height: 界面变量.h
+  height: 界面变量.ih
   texture:  tip/背景.png
   alpha: 0.95
 左上角:
@@ -51,7 +51,7 @@ Functions:
 左下角:
   type: texture
   x : 界面变量.x+7
-  y : 界面变量.y+12+界面变量.h
+  y : 界面变量.y+12+界面变量.ih
   width : 5
   height: 5
   texture:  tip/左下角.png
@@ -59,7 +59,7 @@ Functions:
 右下角:
   type: texture
   x : 界面变量.x+12+界面变量.w
-  y : 界面变量.y+12+界面变量.h
+  y : 界面变量.y+12+界面变量.ih
   width : 5
   height: 5
   texture:  tip/右下角.png
@@ -70,7 +70,7 @@ Functions:
   x : 界面变量.x+7
   y : 界面变量.y+12
   width : 5
-  height: 界面变量.h
+  height: 界面变量.ih
   texture:  tip/左边.png
   alpha: 0.95
 右边:
@@ -78,7 +78,7 @@ Functions:
   x : 界面变量.x+12+界面变量.w
   y : 界面变量.y+12
   width : 5
-  height: 界面变量.h
+  height: 界面变量.ih
   texture:  tip/右边.png
   alpha: 0.95
 上边:
@@ -92,7 +92,7 @@ Functions:
 下边:
   type: texture
   x : 界面变量.x+12
-  y : 界面变量.y+12+界面变量.h
+  y : 界面变量.y+12+界面变量.ih
   width : 界面变量.w
   height: 5
   texture:  tip/下边.png

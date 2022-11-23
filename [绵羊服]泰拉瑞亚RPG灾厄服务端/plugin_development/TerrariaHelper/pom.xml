@@ -45,6 +45,13 @@
             <systemPath>${project.basedir}/dragoncore/DragonCore-2.5.6.6.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>lk.vexview.Main</groupId>
+            <artifactId>VexView</artifactId>
+            <version>2.7.3</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/vexview/vexview-spigot-all-2.7.3.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>me.libraryaddict</groupId>
             <artifactId>LibsDisguises</artifactId>
             <version>10.0.31</version>
@@ -62,6 +69,13 @@
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.xephi.authme.AuthMe</groupId>
+            <artifactId>AuthMe</artifactId>
+            <version>5.6.0-beta2-b2453</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/authme/AuthMe-5.6.0-beta2.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.earth2me</groupId>

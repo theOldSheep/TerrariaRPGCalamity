@@ -1,12 +1,15 @@
 name: TerrariaHelper
 version: 1.0
 main: terraria.TerrariaHelper
-softdepend:
+prefix: 泰拉瑞亚
+depend:
+  - AuthMe
   - DragonCore
+  - Essentials
   - LibsDisguises
   - PlaceholderAPI
   - Vault
-  - Essentials
+  - VexView
 load: startup
 commands:
   findNoise:

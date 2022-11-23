@@ -185,7 +185,7 @@ public class PlayerHelper {
                             // draw chain
                             Vector dVec = hook.getLocation().subtract(ply.getEyeLocation()).toVector();
                             if (dVec.lengthSquared() > 0) {
-                                GenericHelper.handleParticleLine(dVec, dVec.length(), 0, 1, 1,
+                                GenericHelper.handleParticleLine(dVec, dVec.length(), 0, 3,
                                         ply.getEyeLocation(), EntityHelper.getMetadata(hook, "color").asString());
                             }
                         }
@@ -883,13 +883,13 @@ public class PlayerHelper {
         // check airs first, they are a lot less performance costly.
         // backpack
         Inventory plyInv = ply.getInventory();
-        boolean hasVoidBag = hasVoidBag(ply);
-        Inventory voidBagInv = getInventory(ply, "voidBag");
         for (int i = 0; i < 36; i ++) {
             ItemStack currItem = plyInv.getItem(i);
             if (currItem == null || currItem.getType() == Material.AIR) return true;
         }
         // void bag
+        boolean hasVoidBag = hasVoidBag(ply);
+        Inventory voidBagInv = getInventory(ply, "voidBag");
         if (hasVoidBag && voidBagInv != null) {
             for (ItemStack currItem : voidBagInv.getContents())
                 if (currItem == null || currItem.getType() == Material.AIR) return true;
@@ -1057,7 +1057,7 @@ public class PlayerHelper {
         } else
             velocity += 0.1;
         MathHelper.setVectorLength(currDir, velocity);
-        GenericHelper.handleParticleLine(currDir, velocity, 0.01, loc, color);
+        GenericHelper.handleParticleLine(currDir, velocity, 0.01, 4, loc, color);
         loc.add(currDir);
         Vector finalCurrDir = currDir;
         double finalVelocity = velocity;

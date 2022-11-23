@@ -1,7 +1,7 @@
 package terraria.entity;
 
+import com.google.common.base.Predicate;
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
@@ -18,7 +18,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/projectiles.yml");
     // projectile info
     public String projectileType, blockHitAction = "die", trailColor = null;
-    public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noGravityTicks = 15, penetration = 0;
+    public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noGravityTicks = 15, trailLingerTime = 10, penetration = 0;
     public double autoTraceAbility = 4, autoTraceRadius = 12, blastRadius = 1.5, bounceVelocityMulti = 1, gravity = 0.05, maxSpeed = 2, projectileSize = 0.125, speedMultiPerTick = 1;
     public boolean autoTrace = false, blastDamageShooter = false, bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = true;
 
@@ -32,10 +32,11 @@ public class TerrariaPotionProjectile extends EntityPotion {
         ConfigurationSection section = projectileConfig.getConfigurationSection(projectileType);
         if (section != null) {
             this.bounce = section.getInt("bounce", this.bounce);
-            this.penetration = section.getInt("penetration", this.penetration);
             this.enemyInvincibilityFrame = section.getInt("enemyInvincibilityFrame", this.enemyInvincibilityFrame);
             this.liveTime = section.getInt("liveTime", this.liveTime);
             this.noGravityTicks = section.getInt("noGravityTicks", this.noGravityTicks);
+            this.trailLingerTime = section.getInt("trailLingerTime", this.trailLingerTime);
+            this.penetration = section.getInt("penetration", this.penetration);
             // thru, bounce, stick, slide
             this.blockHitAction = section.getString("blockHitAction", this.blockHitAction);
             this.trailColor = section.getString("trailColor");
@@ -66,6 +67,10 @@ public class TerrariaPotionProjectile extends EntityPotion {
         projectileType = type;
         setupProjectileProperties();
         setCustomName(type);
+        if (isGrenade) addScoreboardTag("isGrenade");
+        else removeScoreboardTag("isGrenade");
+        if (blastDamageShooter) addScoreboardTag("blastDamageShooter");
+        else removeScoreboardTag("blastDamageShooter");
     }
     // setup properties of the specific type, including its item displayed
     public void setType(String type) {
@@ -95,15 +100,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
     protected double getAutoTraceInterest(Entity target) {
         // should not be following critters, dead entities etc. and attempt to damage them
         if (!EntityHelper.checkCanDamage(bukkitEntity, target.getBukkitEntity())) return -1e9;
-        // target during invincibility tick: returns ticks remaining squared * -1
-        if (damageCD.containsKey(target.getUniqueID())) {
-            double ticksRemaining = damageCD.get(target.getUniqueID());
-            return ticksRemaining * ticksRemaining * -1;
-        }
         // returns distance squared / velocity squared, that is, ticks to get there squared, * -1
         double distSqr = target.d(this.locX, this.locY, this.locZ) - (this.projectileSize * this.projectileSize);
-        double spdSqr = this.motX * this.motX + this.motY * this.motY + this.motZ * this.motZ;
-        return distSqr / spdSqr * -1;
+        return distSqr * -1;
     }
     public boolean checkCanHit(Entity e) {
         if (damageCD.containsKey(e.getUniqueID())) return false;
@@ -148,15 +147,6 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public void die() {
         TerrariaProjectileHitEvent.callProjectileHitEvent(this);
         super.die();
-        if (isGrenade) {
-            org.bukkit.entity.Entity damageException = null;
-            if (!blastDamageShooter) {
-                EntityLiving shooter = getShooter();
-                if (shooter != null) damageException = shooter.getBukkitEntity();
-            }
-            EntityHelper.handleEntityExplode(bukkitEntity, blastRadius, damageException,
-                    new org.bukkit.Location(bukkitEntity.getWorld(), this.locX, this.locY, this.locZ));
-        }
     }
     // tick
     @Override
@@ -215,7 +205,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             // get the block it will cram into, then set the final location after ticking
             double spdX = this.motX * speedMulti, spdY = this.motY * speedMulti, spdZ = this.motZ * speedMulti;
             futureLoc = new Vec3D(this.locX + spdX, this.locY + spdY, this.locZ + spdZ);
-            MovingObjectPosition movingobjectposition = this.world.rayTrace(initialLoc, futureLoc);
+            MovingObjectPosition movingobjectposition = HitEntityInfo.rayTraceBlocks(this.world, initialLoc, futureLoc);
             this.inGround = false;
             if (movingobjectposition != null) {
                 // call hit block event
@@ -326,7 +316,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
 
             // optimize auto trace target
             if (autoTrace) {
-                if (autoTraceTarget != null && getAutoTraceInterest(autoTraceTarget) < 0.01)
+                if (autoTraceTarget != null && getAutoTraceInterest(autoTraceTarget) < -1e5)
                     autoTraceTarget = null;
                 if (autoTraceTarget == null) {
                     double maxInterest = -1e5;
@@ -391,25 +381,15 @@ public class TerrariaPotionProjectile extends EntityPotion {
             for (UUID currRemove : toRemove) damageCD.remove(currRemove);
 
             // get list of entities that could get hit
-            List<Entity> list = this.world.getEntities(this, getBoundingBox().b(velocity.getX(), velocity.getY(), velocity.getZ()).g(projectileSize));
-            Set<HitEntityInfo> hitCandidates = new TreeSet<>(Comparator.comparingDouble(HitEntityInfo::getDistance));
-            for (Entity toCheck : list) {
-                if (this.shooter == null || this.shooter != toCheck) {
-                    AxisAlignedBB axisalignedbb = toCheck.getBoundingBox().g(projectileSize);
-                    MovingObjectPosition hitPosition = null;
-                    // if the initial location is already within the collision box
-                    if (axisalignedbb.b(initialLoc)) hitPosition = new MovingObjectPosition(initialLoc, EnumDirection.DOWN);
-                    // otherwise, check for the first hit location
-                    if (hitPosition == null) hitPosition = axisalignedbb.b(initialLoc, futureLoc);
-                    // if the entity is being hit
-                    if (hitPosition != null) {
-                        if (checkCanHit(toCheck)) {
-                            double distanceSquared = initialLoc.distanceSquared(hitPosition.pos);
-                            hitCandidates.add(new HitEntityInfo(distanceSquared, toCheck, hitPosition));
-                        }
-                    }
-                }
-            }
+            Set<HitEntityInfo> hitCandidates = HitEntityInfo.getEntitiesHit(
+                    this.world,
+                    new Vec3D(locX, locY, locZ),
+                    new Vec3D(locX + velocity.getX(), locY + velocity.getY(), locZ + velocity.getZ()),
+                    this.projectileSize,
+                    (Entity toCheck) -> {
+                        if (this.shooter != null && this.shooter == toCheck) return false;
+                        return checkCanHit(toCheck);
+                    });
 
             // hit entities
             for (HitEntityInfo toHit : hitCandidates) {
@@ -425,7 +405,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
 
         // draw particle trail
         if (trailColor != null)
-            GenericHelper.handleParticleLine(velocity, velocity.length(), projectileSize * 2, bukkitEntity.getLocation(), trailColor);
+            GenericHelper.handleParticleLine(velocity, velocity.length(), projectileSize * 2, trailLingerTime, bukkitEntity.getLocation(), trailColor);
         // set position and velocity info
         setPosition(futureLoc.x, futureLoc.y, futureLoc.z);
         // send new velocity if:
@@ -444,29 +424,5 @@ public class TerrariaPotionProjectile extends EntityPotion {
         if (this.ticksLived >= liveTime) die();
         // timing
         this.world.methodProfiler.b();
-    }
-
-    public static class HitEntityInfo {
-        private double distance;
-        private Entity hitEntity;
-        private MovingObjectPosition hitLocation;
-
-        public HitEntityInfo(double distance, Entity hitEntity, MovingObjectPosition hitLocation) {
-            // add a tiny offset so that it would not have accidental collision
-            this.distance = distance + Math.random() * 1e-9;
-            this.hitEntity = hitEntity;
-            this.hitLocation = hitLocation;
-        }
-
-        public double getDistance() {
-            return this.distance;
-        }
-
-        public Entity getHitEntity() {
-            return this.hitEntity;
-        }
-        public MovingObjectPosition getHitLocation() {
-            return this.hitLocation;
-        }
     }
 }

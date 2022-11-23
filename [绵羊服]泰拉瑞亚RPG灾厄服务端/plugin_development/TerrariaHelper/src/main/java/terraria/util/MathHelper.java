@@ -1,5 +1,6 @@
 package terraria.util;
 
+import net.minecraft.server.v1_12_R1.Vec3D;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -80,6 +81,7 @@ public class MathHelper {
     public static String selectWeighedRandom(HashMap<String, Double> weighedMap) {
         double total = 0;
         for (double curr : weighedMap.values()) total += curr;
+        if (total == 0) return "";
         double rdm = Math.random() * total;
         for (String curr : weighedMap.keySet()) {
             double currWeight = weighedMap.get(curr);
@@ -98,5 +100,8 @@ public class MathHelper {
         if (vec.lengthSquared() < 1e-9) vec.setY(Math.sqrt(targetLengthSquared));
         else vec.multiply(Math.sqrt(targetLengthSquared / vec.lengthSquared()));
         return vec;
+    }
+    public static Vec3D toNMSVector(Vector vec) {
+        return new Vec3D(vec.getX(), vec.getY(), vec.getZ());
     }
 }

@@ -906,6 +906,9 @@ public class EntityHelper {
                 }
                 // NPCs do not attack players
                 return !entityScoreboardTags.contains("isNPC");
+            } else {
+                // players that are logged out are not supposed to get hurt.
+                return false;
             }
         } else {
             // non-player attacks non-player
@@ -949,10 +952,17 @@ public class EntityHelper {
             return;
         }
         // living entities
+        Set<String> victimScoreboardTags = victim.getScoreboardTags();
+        if (victimScoreboardTags.contains("isDaawnlight")) {
+            if (damageReason.equals("Daawnlight") && victim.hasMetadata("damageTaker")) {
+                Object damageTaker = getMetadata(victim, "damageTaker").value();
+                if (damageTaker instanceof LivingEntity)
+                    victim = (LivingEntity) getMetadata(victim, "damageTaker").value();
+            } else return;
+        }
         LivingEntity victimLivingEntity = (LivingEntity) victim;
         Entity damageSource = getDamageSource(damager);
         LivingEntity damageTaker = victimLivingEntity;
-        Set<String> victimScoreboardTags = victim.getScoreboardTags();
         // no damage scenarios
         boolean canDamage = true;
         if (victimScoreboardTags.contains("isMinion")) canDamage = false;
@@ -969,11 +979,12 @@ public class EntityHelper {
                 isMinionDmg = true;
         } else if (damager.getScoreboardTags().contains("isMinion")) isMinionDmg = true;
         // setup properties such as invulnerability tick and defence
-        int damageInvulnerabilityTicks = 0;
+        int damageInvulnerabilityTicks;
         double defence = victimAttrMap.getOrDefault("defence", 0d) * victimAttrMap.getOrDefault("defenceMulti", 1d);
         switch (damageReason) {
             case "DirectDamage":
             case "Projectile":
+            case "Daawnlight":
             case "Explosion":
             case "Thorn":
             case "Spectre":
@@ -994,7 +1005,11 @@ public class EntityHelper {
         if (!canDamage) return;
 
         // damage taker is the entity that takes the damage
-        if (victim.hasMetadata("damageTaker")) damageTaker = (LivingEntity) getMetadata(victim, "damageTaker").value();
+        if (victim.hasMetadata("damageTaker")) {
+            Object dmgTaker = getMetadata(victim, "damageTaker").value();
+            if (dmgTaker instanceof LivingEntity)
+                damageTaker = (LivingEntity) dmgTaker;
+        }
         // setup damager attribute and buff inflict
         HashMap<String, Double> damagerAttrMap = getAttrMap(damager);
         List<String> buffInflict = new ArrayList<>();
@@ -1251,15 +1266,16 @@ public class EntityHelper {
         // handle invincibility ticks
         if (damageInvulnerabilityTicks > 0) {
             victim.addScoreboardTag(damageInvincibilityFrameName);
+            Entity finalVictim = victim;
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> victim.removeScoreboardTag(damageInvincibilityFrameName), damageInvulnerabilityTicks);
+                    () -> finalVictim.removeScoreboardTag(damageInvincibilityFrameName), damageInvulnerabilityTicks);
         }
     }
     public static void handleEntityExplode(Entity source, Entity damageException) {
         handleEntityExplode(source, damageException, source.getLocation());
     }
     public static void handleEntityExplode(Entity source, Entity damageException, Location loc) {
-        double blastRadius = projectileConfig.getDouble(source.getName() + "blastRadius", 1.5d);
+        double blastRadius = projectileConfig.getDouble(source.getName() + ".blastRadius", 1.5d);
         handleEntityExplode(source, blastRadius, damageException, loc);
     }
     public static void handleEntityExplode(Entity source, double radius, Entity damageException, Location loc) {
@@ -1280,8 +1296,9 @@ public class EntityHelper {
         else if (radius < 5)
             loc.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, loc, 1);
         else {
-            int amount = (int) (radius * radius / 4);
-            loc.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, loc, amount, radius - 4, radius - 4, radius - 4);
+            int amount = (int) (radius * radius);
+            double actualRad = radius - 4;
+            loc.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, loc, amount, actualRad, actualRad, actualRad);
         }
         // sound
         loc.getWorld().playSound(loc, "entity.generic.explode", (float) radius + 2, 1f);
