@@ -29,6 +29,7 @@ public class PlayerHelper {
     private static YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
     private static HashMap<String, Double> defaultPlayerAttrMap = new HashMap<>(60);
     private static HashSet<String> defaultPlayerEffectInflict = new HashSet<>(8);
+    public static final int playerExtraInventorySize = 54;
     static {
         // init default player attribute map
         defaultPlayerAttrMap.put("armorPenetration", 0d);
@@ -774,7 +775,7 @@ public class PlayerHelper {
             String title = settingConfig.getString("settings.playerInventoryTitles." + invName, "");
             List<String> contents = plyFile.getStringList("inventory." + invName);
             if (contents == null) contents = new ArrayList<>(1);
-            Inventory inv = Bukkit.createInventory(ply, 54, title);
+            Inventory inv = Bukkit.createInventory(ply, playerExtraInventorySize, title);
             int slot = 0;
             for (String itemInfo : contents) {
                 inv.setItem(slot, ItemHelper.getItemFromDescription(itemInfo, false));
@@ -789,8 +790,8 @@ public class PlayerHelper {
         YmlHelper.YmlSection plyFile = YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml");
         for (String invType : inventories.keySet()) {
             Inventory currInv = inventories.get(invType);
-            ArrayList<String> result = new ArrayList<>(54);
-            for (int i = 0; i < 54; i ++) {
+            ArrayList<String> result = new ArrayList<>(playerExtraInventorySize);
+            for (int i = 0; i < playerExtraInventorySize; i ++) {
                 result.add(ItemHelper.getItemDescription(currInv.getItem(i)));
             }
             plyFile.set("inventory." + invType, result);

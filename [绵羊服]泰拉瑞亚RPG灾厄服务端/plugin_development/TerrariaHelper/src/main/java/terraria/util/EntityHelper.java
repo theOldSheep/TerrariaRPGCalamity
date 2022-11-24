@@ -470,36 +470,16 @@ public class EntityHelper {
         if (d != null) {
             killer = d.getCustomName();
         }
-        switch (damageCause) {
-            case "fire":
-            case "burning":
-            case "debuff_咒火":
-            case "debuff_霜火":
-            case "debuff_破晓":
-                dm = "<victim> 没能及时把火扑灭";
-                break;
-            case "suffocation":
-            case "void":
-                dm = "<victim> 没法呼吸";
-                break;
-            case "debuff_中毒":
-            case "debuff_剧毒":
-                dm = "<victim> 没找到解药";
-                break;
-            case "恐惧":
-                dm = "<victim> 被恐惧吞没...";
-                break;
-            default:
-                List<String> deathMessages;
-                if (settingConfig.contains("deathMessages." + damageCause)) {
-                    deathMessages = settingConfig.getStringList("deathMessages." + damageCause);
-                } else {
-                    deathMessages = settingConfig.getStringList("deathMessages.Generic");
-                }
-                dm = deathMessages.get((int) (Math.random() * deathMessages.size()));
-                if (killer != null) {
-                    dm += "，凶手是" + killer;
-                }
+
+        List<String> deathMessages;
+        if (settingConfig.contains("deathMessages." + damageCause)) {
+            deathMessages = settingConfig.getStringList("deathMessages." + damageCause);
+        } else {
+            deathMessages = settingConfig.getStringList("deathMessages.Generic");
+        }
+        dm = deathMessages.get((int) (Math.random() * deathMessages.size()));
+        if (killer != null) {
+            dm += "，凶手是" + killer;
         }
         dm = dm.replaceAll("<victim>", v.getName());
         Bukkit.broadcastMessage("§4" + dm);
@@ -758,7 +738,7 @@ public class EntityHelper {
                                         Bukkit.broadcastMessage("§d§l" + currentEvent + "被击退了！");
                                         if (currentEvent.equals("哥布林军团"))
                                             for (Player ply : Bukkit.getOnlinePlayers())
-                                                YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml").set("bossDefeated.GoblinArmy", true);
+                                                YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml").set("bossDefeated." + currentEvent, true);
                                         Event.currentEvent = "";
                                 }
                             }
@@ -805,11 +785,11 @@ public class EntityHelper {
                     Player dPlayer = (Player) dPly;
                     // TODO: dungeon
                     if (v.getLocation().getBlock().getBiome().equals(Biome.FOREST_HILLS)) {
-                        if (PlayerHelper.hasDefeated(dPlayer, "plantera") && Math.random() < 0.125)
+                        if (PlayerHelper.hasDefeated(dPlayer, "世纪之花") && Math.random() < 0.125)
                             MonsterHelper.spawnMob("地牢幽魂", v.getLocation(), dPlayer);
                     }
                     // souls and shards
-                    if (PlayerHelper.hasDefeated(dPlayer, "wall_of_flesh")) {
+                    if (PlayerHelper.hasDefeated(dPlayer, "血肉之墙")) {
                         if (!v.getScoreboardTags().contains("isBOSS")) {
                             Biome biome = v.getLocation().getBlock().getBiome();
                             switch (biome) {

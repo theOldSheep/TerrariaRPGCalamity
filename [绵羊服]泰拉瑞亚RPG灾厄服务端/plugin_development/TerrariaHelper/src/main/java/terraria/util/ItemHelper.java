@@ -24,9 +24,9 @@ public class ItemHelper {
     public static final String placeholderItemNamePrefix = "§1§1§4§5§1§4";
     public static HashMap<String, String> attributeDisplayName = new HashMap<>();
     private static HashMap<String, ItemStack> itemMap;
-    private static HashMap<String, VexGui> craftingGuiMap;
-    private static HashMap<String, String> craftingGuisRecipeIndexMap;
-    private static HashMap<String, Integer> craftingGuiLengthMap;
+    public static HashMap<String, VexGui> craftingGuiMap;
+    public static HashMap<String, String> craftingGuisRecipeIndexMap;
+    public static HashMap<String, Integer> craftingGuiLengthMap;
     private static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");
     private static final YmlHelper.YmlSection prefixConfig = YmlHelper.getFile("plugins/Data/prefix.yml");
     private static final YmlHelper.YmlSection recipeConfig = YmlHelper.getFile("plugins/Data/recipes.yml");
@@ -118,16 +118,17 @@ public class ItemHelper {
                 // setup gui
                 VexGui gui = new VexGui(bg, 0, 0, 200, 150);
                 ArrayList<ScrollingListComponent> itemSlots = new ArrayList<>();
-                int recipeIndex = 0;
+                int recipeIndex = 1;
                 for (String recipeName : nodes) {
                     ConfigurationSection recipeSection = blockSection.getConfigurationSection(recipeName);
                     int requireLevel = recipeSection.getInt("requireLevel", 0);
                     if (requireLevel <= level) {
-                        recipeIndex ++;
                         ItemStack resultItem = getItemFromDescription(recipeSection.getString("resultItem", ""), false);
+                        resultItem.setAmount(1);
                         VexSlot slotComp = new VexSlot(recipeIndex, 5, (recipeIndex - 1) * 20, resultItem);
                         itemSlots.add(slotComp);
-                        craftingGuisRecipeIndexMap.put(block + "_" + level + "_" + recipeIndex, recipeName);
+                        craftingGuisRecipeIndexMap.put(block + "_" + level + "_" + recipeIndex, block + "." + recipeName);
+                        recipeIndex++;
                     } else {
                         levelMax = requireLevel;
                     }
@@ -137,8 +138,6 @@ public class ItemHelper {
                 for (ScrollingListComponent comp : itemSlots)
                     scrList.addComponent(comp);
                 gui.addComponent(scrList);
-                gui.addComponent(new VexButton("CRAFT", "选择配方", bg, bg, gui.getWidth() - 120, gui.getHeight() - 50, 35, 17 + level));
-                gui.addComponent(new VexButton("CRAFT_ALL", "选择配方", bg, bg, gui.getWidth() - 60, gui.getHeight() - 50, 35, 17 + level));
                 // save the GUI to mapping
                 String craftGuiMappingKey = block + "_" + level;
                 craftingGuiMap.put(craftGuiMappingKey, gui);

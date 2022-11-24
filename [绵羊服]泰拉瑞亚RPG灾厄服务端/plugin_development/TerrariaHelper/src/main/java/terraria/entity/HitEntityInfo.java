@@ -1,16 +1,12 @@
 package terraria.entity;
 
-import lk.vexview.event.VexSlotInteractEvent;
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.util.Vector;
 import terraria.util.MathHelper;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeSet;
-import java.util.function.Predicate;
 
 public class HitEntityInfo {
     private double distance;
@@ -39,7 +35,8 @@ public class HitEntityInfo {
         return rayTraceBlocks(world, MathHelper.toNMSVector(startLoc), MathHelper.toNMSVector(terminalLoc));
     }
     public static MovingObjectPosition rayTraceBlocks(World world, Vec3D startLoc, Vec3D terminalLoc) {
-        MovingObjectPosition movingobjectposition = world.rayTrace(startLoc, terminalLoc);
+        // do not care about grass etc.
+        MovingObjectPosition movingobjectposition = world.rayTrace(startLoc, terminalLoc, false, true, false);
         return movingobjectposition;
     }
 
