@@ -6,13 +6,9 @@ import lk.vexview.event.VexSlotClickEvent;
 import lk.vexview.gui.OpenedVexGui;
 import lk.vexview.gui.VexGui;
 import lk.vexview.gui.components.*;
-import org.apache.logging.log4j.core.config.builder.api.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.Furnace;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Vex;
@@ -61,6 +57,7 @@ public class CraftingListener implements Listener {
             if (currItem == null) continue;
             String[] itemInfo = ItemHelper.splitItemName(currItem);
             String itemType = itemInfo[1];
+            if (itemType.equals("")) continue;
             if (interestedItems == null || interestedItems.contains(itemType)) {
                 playerItemMap.putIfAbsent(itemType, 0);
                 playerItems.putIfAbsent(itemType, new ArrayList<>());
@@ -78,6 +75,7 @@ public class CraftingListener implements Listener {
                 if (currItem == null) continue;
                 String[] itemInfo = ItemHelper.splitItemName(currItem);
                 String itemType = itemInfo[1];
+                if (itemType.equals("")) continue;
                 if (interestedItems == null || interestedItems.contains(itemType)) {
                     playerItemMap.putIfAbsent(itemType, 0);
                     playerItems.putIfAbsent(itemType, new ArrayList<>());
@@ -308,14 +306,12 @@ public class CraftingListener implements Listener {
             ply.sendMessage("§a提示：潜行右键合成站点时会显示所有配方哦~");
             // get the ingredients the player has
             HashMap<String, Integer> availableItems = getPlayerIngredientMap(ply, null)[0];
-            Bukkit.broadcastMessage(availableItems.toString());
             // set up items that could be crafted
             List<ScrollingListComponent> itemSlotsAll = originalGui.getList().getComponents();
             itemSlots = new ArrayList<>(itemSlotsAll.size());
             for (ScrollingListComponent cmp : itemSlotsAll) {
-                if (!(cmp instanceof VexButton)) continue;
-                HashMap<String, Integer> recipeIngredients = getRecipeIngredientMap(station, ((VexButton) cmp).getId().toString());
-                Bukkit.broadcastMessage(recipeIngredients.toString());
+                if (!(cmp instanceof VexSlot)) continue;
+                HashMap<String, Integer> recipeIngredients = getRecipeIngredientMap(station + "_" + level, ((VexSlot) cmp).getID() + "");
                 if (getMaxCraftAmount(recipeIngredients, availableItems) > 0)
                     itemSlots.add(cmp);
             }
@@ -323,8 +319,13 @@ public class CraftingListener implements Listener {
         // scrolling list
         VexScrollingList scrList = new VexScrollingList(guiToOpen.getWidth() / 10, 17, 30,
                 guiToOpen.getHeight() - 34, itemSlots.size() * 20);
-        for (ScrollingListComponent comp : itemSlots)
-            scrList.addComponent(comp);
+        int yOffset = 0;
+        for (ScrollingListComponent comp : itemSlots) {
+            VexSlot slotOld = (VexSlot) comp;
+            VexSlot slotToAdd = new VexSlot(slotOld.getID(), 5, yOffset, slotOld.getItem());
+            yOffset += 20;
+            scrList.addComponent(slotToAdd);
+        }
         guiToOpen.addComponent(scrList);
         // buttons
         guiToOpen.addComponent(new VexButton("CRAFT", "选择配方", bg, bg,
