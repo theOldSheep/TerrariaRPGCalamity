@@ -594,8 +594,8 @@ public class PlayerHelper {
                             ply.setGameMode(GameMode.SURVIVAL);
                             ply.teleport(getSpawnLocation(ply));
                             sendActionBar(ply, "");
-                            // minion index, sentry index etc get to reset
-                            initPlayerStats(ply);
+                            // reset minion index, sentry index etc.
+                            initPlayerStats(ply, false);
                         }
                     } else {
                         if (!isProperlyPlaying(ply)) continue; // waiting to revive etc.
@@ -682,7 +682,7 @@ public class PlayerHelper {
         }, 0, delay);
     }
     // others
-    public static void initPlayerStats(Player ply) {
+    public static void initPlayerStats(Player ply, boolean joinOrRespawn) {
         EntityHelper.initEntityMetadata(ply);
         ply.addPotionEffect(new PotionEffect(
                 PotionEffectType.SLOW_DIGGING, 999999999, 9, false, false), true);
@@ -715,19 +715,25 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "thrust", 0);
         EntityHelper.setMetadata(ply, "thrustProgress", 0);
         // other variable
-        EntityHelper.setMetadata(ply, "team", "red");
+        if (joinOrRespawn) {
+            EntityHelper.setMetadata(ply, "team", "red");
+        }
         EntityHelper.setMetadata(ply, "armorSet", "");
         // bgm and background
-        EntityHelper.setMetadata(ply, "lastBackground", "");
-        EntityHelper.setMetadata(ply, "lastBGM", "normal");
-        EntityHelper.setMetadata(ply, "lastBGMTime", 0L);
+        if (joinOrRespawn) {
+            EntityHelper.setMetadata(ply, "lastBackground", "");
+            EntityHelper.setMetadata(ply, "lastBGM", "normal");
+            EntityHelper.setMetadata(ply, "lastBGMTime", 0L);
+        }
         // regeneration
         EntityHelper.setMetadata(ply, "lastLocation", ply.getLocation());
         EntityHelper.setMetadata(ply, "regenTime", 0d);
         EntityHelper.setMetadata(ply, "manaRegenDelay", 0d);
         EntityHelper.setMetadata(ply, "manaRegenCounter", 0d);
         // inventories
-        loadInventories(ply);
+        if (joinOrRespawn) {
+            loadInventories(ply);
+        }
     }
     public static int getMaxHealthByTier(int tier) {
         if (tier < 21) return tier * 40;

@@ -1082,6 +1082,7 @@ public class EntityHelper {
                 break;
             default:
                 if (damageType.startsWith("Debuff_")) {
+                    damageInvulnerabilityTicks = 0;
                     damageFixed = true;
                 } else if (isDirectAttackDamage) {
                     // special minion whip etc

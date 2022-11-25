@@ -11,7 +11,7 @@ public class PlayerJoinListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onKeyPressEvent(PlayerJoinEvent e) {
         Player joinedPly = e.getPlayer();
-        PlayerHelper.initPlayerStats(joinedPly);
+        PlayerHelper.initPlayerStats(joinedPly, true);
         joinedPly.teleport(PlayerHelper.getSpawnLocation(joinedPly));
     }
 }
