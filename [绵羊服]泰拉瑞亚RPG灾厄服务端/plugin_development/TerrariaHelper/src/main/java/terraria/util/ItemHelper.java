@@ -32,6 +32,80 @@ public class ItemHelper {
     private static final YmlHelper.YmlSection recipeConfig = YmlHelper.getFile("plugins/Data/recipes.yml");
     private static final YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
     private static final YmlHelper.YmlSection weaponConfig = YmlHelper.getFile("plugins/Data/weapons.yml");
+    // recipe init helpers
+    private static int getMaxRecipeLevel(String station) {
+        int maxLevel = 1;
+        ConfigurationSection blockSection = recipeConfig.getConfigurationSection(station);
+        Set<String> nodes = blockSection.getKeys(false);
+        for (String recipeName : nodes) {
+            int requireLevel = blockSection.getInt(recipeName + ".requireLevel", 0);
+            if (requireLevel > maxLevel) {
+                maxLevel = requireLevel;
+            }
+        }
+        return maxLevel;
+    }
+    private static void setupRecipesForStation(String station, int level) {
+        String bg = "[local]GuiBG.png";
+        ConfigurationSection blockSection = recipeConfig.getConfigurationSection(station);
+        ArrayList<ScrollingListComponent> itemSlots = new ArrayList<>();
+        int recipeIndex = 1;
+        // the recipe added by the block itself
+        {
+            Set<String> nodes = blockSection.getKeys(false);
+            for (String recipeName : nodes) {
+                if (recipeName.equals("containedStations")) continue;
+                ConfigurationSection recipeSection = blockSection.getConfigurationSection(recipeName);
+                int requireLevel = recipeSection.getInt("requireLevel", 0);
+                if (requireLevel <= level) {
+                    ItemStack resultItem = getItemFromDescription(recipeSection.getString("resultItem", ""), false);
+                    resultItem.setAmount(1);
+                    VexSlot slotComp = new VexSlot(recipeIndex, 5, (recipeIndex - 1) * 20, resultItem);
+                    itemSlots.add(slotComp);
+                    craftingGuisRecipeIndexMap.put(station + "_" + level + "_" + recipeIndex, station + "." + recipeName);
+                    recipeIndex++;
+                }
+            }
+        }
+        // add recipes from contained stations
+        // for example, draedon's forge, can work as multiple other work stations
+        ConfigurationSection containedStationSection = blockSection.getConfigurationSection("containedStations");
+        if (containedStationSection != null) {
+            Set<String> containedStations = containedStationSection.getKeys(false);
+            for (String subStation : containedStations) {
+                int subStationLevel = containedStationSection.getInt(subStation, 1);
+                // loop through the station info for each
+                ConfigurationSection subStationSection = recipeConfig.getConfigurationSection(subStation);
+                Set<String> nodes = subStationSection.getKeys(false);
+                for (String recipeName : nodes) {
+                    if (recipeName.equals("containedStations")) continue;
+                    ConfigurationSection recipeSection = subStationSection.getConfigurationSection(recipeName);
+                    int requireLevel = recipeSection.getInt("requireLevel", 0);
+                    if (requireLevel <= subStationLevel) {
+                        ItemStack resultItem = getItemFromDescription(recipeSection.getString("resultItem", ""), false);
+                        resultItem.setAmount(1);
+                        VexSlot slotComp = new VexSlot(recipeIndex, 5, (recipeIndex - 1) * 20, resultItem);
+                        itemSlots.add(slotComp);
+                        // the level below is used as the player crafts, so it should remain as level instead of subStationLevel
+                        // the subStationLevel is used to validate the recipe only
+                        craftingGuisRecipeIndexMap.put(station + "_" + level + "_" + recipeIndex, subStation + "." + recipeName);
+                        recipeIndex++;
+                    }
+                }
+
+            }
+        }
+        // set up the VexGui
+        VexGui gui = new VexGui(bg, 0, 0, 200, 150);
+        VexScrollingList scrList = new VexScrollingList((int) (gui.getWidth() * 0.75), 17, 30, gui.getHeight() - 34, itemSlots.size() * 20);
+        for (ScrollingListComponent comp : itemSlots)
+            scrList.addComponent(comp);
+        gui.addComponent(scrList);
+        // save the GUI to mapping
+        String craftGuiMappingKey = station + "_" + level;
+        craftingGuiMap.put(craftGuiMappingKey, gui);
+        craftingGuiLengthMap.put(craftGuiMappingKey, recipeIndex);
+    }
     public static void setupItemRecipe(boolean printDebugMessage) {
         Bukkit.clearRecipes();
         Set<String> items = itemConfig.getKeys(false);
@@ -108,42 +182,11 @@ public class ItemHelper {
             item.setItemMeta(meta);
         }
         // recipes
-        String bg = "[local]GuiBG.png";
         for (String block : craftStations) {
-            ConfigurationSection blockSection = recipeConfig.getConfigurationSection(block);
-            Set<String> nodes = blockSection.getKeys(false);
-            int level = 1, levelMax = 1;
-            while (level <= levelMax) {
+            int levelMax = getMaxRecipeLevel(block);
+            for (int level = 1; level <= levelMax; level ++) {
                 if (printDebugMessage) Bukkit.getLogger().log(Level.FINEST, "Setting up workbench " + block + "_" + level);
-                // setup gui
-                VexGui gui = new VexGui(bg, 0, 0, 200, 150);
-                ArrayList<ScrollingListComponent> itemSlots = new ArrayList<>();
-                int recipeIndex = 1;
-                for (String recipeName : nodes) {
-                    ConfigurationSection recipeSection = blockSection.getConfigurationSection(recipeName);
-                    int requireLevel = recipeSection.getInt("requireLevel", 0);
-                    if (requireLevel <= level) {
-                        ItemStack resultItem = getItemFromDescription(recipeSection.getString("resultItem", ""), false);
-                        resultItem.setAmount(1);
-                        VexSlot slotComp = new VexSlot(recipeIndex, 5, (recipeIndex - 1) * 20, resultItem);
-                        itemSlots.add(slotComp);
-                        craftingGuisRecipeIndexMap.put(block + "_" + level + "_" + recipeIndex, block + "." + recipeName);
-                        recipeIndex++;
-                    } else {
-                        levelMax = requireLevel;
-                    }
-                }
-                // set up the VexGui
-                VexScrollingList scrList = new VexScrollingList((int) (gui.getWidth() * 0.75), 17, 30, gui.getHeight() - 34, itemSlots.size() * 20);
-                for (ScrollingListComponent comp : itemSlots)
-                    scrList.addComponent(comp);
-                gui.addComponent(scrList);
-                // save the GUI to mapping
-                String craftGuiMappingKey = block + "_" + level;
-                craftingGuiMap.put(craftGuiMappingKey, gui);
-                craftingGuiLengthMap.put(craftGuiMappingKey, recipeIndex);
-                // add 1 to level to handle higher tier workbench
-                level ++;
+                setupRecipesForStation(block, level);
             }
         }
     }
@@ -295,7 +338,6 @@ public class ItemHelper {
                 String[] itemNameInfo = splitItemName(information);
                 String prefix = itemNameInfo[0];
                 String itemType = itemNameInfo[1];
-                Bukkit.broadcastMessage(Arrays.toString(itemNameInfo));
                 // get the itemstack
                 ItemStack resultItem;
                 try {

@@ -8,6 +8,8 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.ProjectileHitEvent;
 
 public class TerrariaProjectileHitEvent extends ProjectileHitEvent {
+    public boolean cancelled = false;
+    public MovingObjectPosition movingObjectPosition;
 
     // modified version of event factory call event, as that event may not be cancelled.
     public static TerrariaProjectileHitEvent callProjectileHitEvent(net.minecraft.server.v1_12_R1.Entity entity) {
@@ -22,26 +24,31 @@ public class TerrariaProjectileHitEvent extends ProjectileHitEvent {
             hitBlock = entity.getBukkitEntity().getWorld().getBlockAt(blockposition.getX(), blockposition.getY(), blockposition.getZ());
         }
 
-        TerrariaProjectileHitEvent event = new TerrariaProjectileHitEvent((Projectile)entity.getBukkitEntity(), position.entity == null ? null : position.entity.getBukkitEntity(), hitBlock);
+        TerrariaProjectileHitEvent event = new TerrariaProjectileHitEvent(
+                (Projectile)entity.getBukkitEntity(),
+                position.entity == null ? null : position.entity.getBukkitEntity(),
+                hitBlock, position);
         entity.world.getServer().getPluginManager().callEvent(event);
         return event;
     }
-    public boolean cancelled = false;
 
     public TerrariaProjectileHitEvent(Projectile projectile) {
         super(projectile);
     }
 
-    public TerrariaProjectileHitEvent(Projectile projectile, Entity hitEntity) {
+    public TerrariaProjectileHitEvent(Projectile projectile, Entity hitEntity, MovingObjectPosition movingObjectPosition) {
         super(projectile, hitEntity);
+        this.movingObjectPosition = movingObjectPosition;
     }
 
-    public TerrariaProjectileHitEvent(Projectile projectile, Block hitBlock) {
+    public TerrariaProjectileHitEvent(Projectile projectile, Block hitBlock, MovingObjectPosition movingObjectPosition) {
         super(projectile, hitBlock);
+        this.movingObjectPosition = movingObjectPosition;
     }
 
-    public TerrariaProjectileHitEvent(Projectile projectile, Entity hitEntity, Block hitBlock) {
+    public TerrariaProjectileHitEvent(Projectile projectile, Entity hitEntity, Block hitBlock, MovingObjectPosition movingObjectPosition) {
         super(projectile, hitEntity, hitBlock);
+        this.movingObjectPosition = movingObjectPosition;
     }
 
     public boolean isCancelled() { return cancelled; }

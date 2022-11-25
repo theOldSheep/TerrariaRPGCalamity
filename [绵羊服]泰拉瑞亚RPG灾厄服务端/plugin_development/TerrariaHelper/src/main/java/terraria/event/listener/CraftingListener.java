@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
@@ -137,10 +138,19 @@ public class CraftingListener implements Listener {
             }
         }
         // gives the result item to the player
+        String resultItemType = recipeConfigSection.getString("resultItem");
         player.sendMessage("§a合成成功！~");
-        for (int i = 0; i < amountToCraft; i ++) {
-            ItemStack resultItem = ItemHelper.getItemFromDescription(
-                    recipeConfigSection.getString("resultItem"), true);
+        // if the result is sword etc. that could be reforged, give items individually to the player
+        if (ItemHelper.canReforge(ItemHelper.getItemFromDescription(resultItemType, false))) {
+            for (int i = 0; i < amountToCraft; i ++) {
+                ItemStack resultItem = ItemHelper.getItemFromDescription(resultItemType, true);
+                PlayerHelper.giveItem(player, resultItem, true);
+            }
+        }
+        // otherwise, give all items at once to the player to prevent lag and a loud pickup sound effect buildup
+        else {
+            ItemStack resultItem = ItemHelper.getItemFromDescription(resultItemType, true);
+            resultItem.setAmount(resultItem.getAmount() * amountToCraft);
             PlayerHelper.giveItem(player, resultItem, true);
         }
     }
@@ -194,6 +204,8 @@ public class CraftingListener implements Listener {
             ItemStack item = ItemHelper.getItemFromDescription(requiredItem, false);
             VexSlot newSlot = new VexSlot(++index, xOffset, yOffset, item);
             newComps.add(newSlot);
+            // if required amount > 1, add a text to specify the amount of current ingredient needed
+            // this is due to the improper display of items with stack size > 127
             int requiredAmount = ingredients.get(requiredItem);
             if (requiredAmount > 1) {
                 List<String> textDisplay = new ArrayList<>();
@@ -241,13 +253,14 @@ public class CraftingListener implements Listener {
             currGui.addDynamicComponent((DynamicComponent) cmp);
         currGui.addDynamicComponent(btn1);
         currGui.addDynamicComponent(btn2);
-        // setup cool down to prevent accidental selection of new recipes
+        // setup cool down to prevent accidental selection of new recipes or glitch
         EntityHelper.setMetadata(player, "recipeNumber", recipeIndex);
         player.addScoreboardTag("tempCraftingCD");
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                () -> player.removeScoreboardTag("tempCraftingCD"), 10);
+                () -> player.removeScoreboardTag("tempCraftingCD"), 20);
     }
     public boolean handleCrafting(Player ply, Block block) {
+        if (!PlayerHelper.isProperlyPlaying(ply)) return false;
         if (ply.getScoreboardTags().contains("tempCraftingCD")) return false;
         // setup work station info
         String station;
@@ -282,7 +295,7 @@ public class CraftingListener implements Listener {
                         case "工匠合成台":
                             station = "TINKER_WORKBENCH";
                             break;
-                        case "远古操纵机":
+                        default:
                             station = name;
                             break;
                     }
@@ -355,5 +368,17 @@ public class CraftingListener implements Listener {
     public void onCraftingGridClick(InventoryClickEvent e) {
         if (e.getSlotType() == InventoryType.SlotType.RESULT)
             handleCrafting((Player) e.getInventory().getHolder(), null);
+    }
+    // prevents the player from opening GUI of some special work stations
+    @EventHandler(priority = EventPriority.LOW)
+    public void onGuiOpen(InventoryOpenEvent e) {
+        switch (e.getInventory().getType()) {
+            case FURNACE:
+            case WORKBENCH:
+            case ANVIL:
+            case ENCHANTING:
+            case BREWING:
+                e.setCancelled(true);
+        }
     }
 }

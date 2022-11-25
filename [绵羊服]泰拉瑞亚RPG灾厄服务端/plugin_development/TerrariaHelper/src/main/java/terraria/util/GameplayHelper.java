@@ -16,7 +16,7 @@ import org.bukkit.metadata.MetadataValue;
 import java.util.List;
 
 public class GameplayHelper {
-    private static final YmlHelper.YmlSection itemMapConfig = YmlHelper.getFile("plugins/Data/itemMap.yml");
+    private static final YmlHelper.YmlSection blockConfig = YmlHelper.getFile("plugins/Data/blocks.yml");
     public static String getBlockCategory(Block block) {
         switch (block.getType()) {
             case ANVIL:
@@ -82,10 +82,10 @@ public class GameplayHelper {
     private static ConfigurationSection getBlockConfigSection(Block blockToBreak) {
         String material = blockToBreak.getType().toString();
         String data = String.valueOf(blockToBreak.getData());
-        if (itemMapConfig.contains(material + "_" + data)) {
-            return itemMapConfig.getConfigurationSection(material + "_" + data);
-        } if (itemMapConfig.contains(material)) {
-            return itemMapConfig.getConfigurationSection(material);
+        if (blockConfig.contains(material + "_" + data)) {
+            return blockConfig.getConfigurationSection(material + "_" + data);
+        } if (blockConfig.contains(material)) {
+            return blockConfig.getConfigurationSection(material);
         }
         return null;
     }

@@ -910,13 +910,17 @@ public class EntityHelper {
             source = (Entity) getMetadata(source, "damageSourcePlayer").value();
         return source;
     }
-    public static void knockback(Entity entity, Vector dir) {
+    public static void knockback(Entity entity, Vector dir, boolean addOrReplace) {
         double kbResistance = getAttrMap(entity).getOrDefault("knockbackResistance", 0d);
         if (kbResistance >= 1) return;
         dir.multiply(Math.max(1 - kbResistance, 0));
         Entity knockbackTaker = entity.getVehicle();
         if (knockbackTaker == null) knockbackTaker = entity;
-        knockbackTaker.setVelocity(dir);
+        if (addOrReplace) {
+            knockbackTaker.setVelocity(knockbackTaker.getVelocity().add(dir));
+        } else {
+            knockbackTaker.setVelocity(dir);
+        }
     }
     public static void handleDamage(Entity damager, Entity victim, double damage, String damageReason) {
         HashMap<String, Double> victimAttrMap = getAttrMap(victim);
@@ -934,11 +938,8 @@ public class EntityHelper {
         // living entities
         Set<String> victimScoreboardTags = victim.getScoreboardTags();
         if (victimScoreboardTags.contains("isDaawnlight")) {
-            if (damageReason.equals("Daawnlight") && victim.hasMetadata("damageTaker")) {
-                Object damageTaker = getMetadata(victim, "damageTaker").value();
-                if (damageTaker instanceof LivingEntity)
-                    victim = (LivingEntity) getMetadata(victim, "damageTaker").value();
-            } else return;
+            // Daawnlight target should not take any damage
+            return;
         }
         LivingEntity victimLivingEntity = (LivingEntity) victim;
         Entity damageSource = getDamageSource(damager);
@@ -964,7 +965,6 @@ public class EntityHelper {
         switch (damageReason) {
             case "DirectDamage":
             case "Projectile":
-            case "Daawnlight":
             case "Explosion":
             case "Thorn":
             case "Spectre":
@@ -1223,7 +1223,7 @@ public class EntityHelper {
                 vec.setY(0);
                 MathHelper.setVectorLength(vec, knockback / 20);
                 vec.setY(Math.min(1, knockback / 10));
-                knockback(victim, vec);
+                knockback(victim, vec, false);
             }
         }
 

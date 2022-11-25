@@ -104,4 +104,7 @@ public class MathHelper {
     public static Vec3D toNMSVector(Vector vec) {
         return new Vec3D(vec.getX(), vec.getY(), vec.getZ());
     }
+    public static Vector toBukkitVector(Vec3D vec) {
+        return new Vector(vec.x, vec.y, vec.z);
+    }
 }
