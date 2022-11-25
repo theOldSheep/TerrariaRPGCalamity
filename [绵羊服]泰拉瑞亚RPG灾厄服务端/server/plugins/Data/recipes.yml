@@ -2170,3 +2170,36 @@ TINKER_WORKBENCH:
     - 日耀碎片
     - 星璇碎片
     - 星云碎片
+嘉登熔炉:
+  containedStations:
+    # FURNACE中 requireLevel<=3的配方也会被加载（即精金熔炉）
+    FURNACE: 3
+    # ANVIL中 requireLevel<=3的配方也会被加载（即星宇砧）
+    ANVIL: 3
+    # TINKER_WORKBENCH中 requireLevel<=1的配方也会被加载
+    TINKER_WORKBENCH: 1
+    # 远古操纵机中 requireLevel<=1的配方也会被加载
+    远古操纵机: 1
+  # 在下面可以写此工作台的其他配方
+  '示例':
+    requireLevel: 1
+    resultItem: 天界符:4
+    requireItem:
+    - 日耀碎片:20
+    - 星璇碎片:20
+    - 星云碎片:20
+    - 星尘碎片:20
+    - 石头:64
+    - 铜锭:4
+    - 铁锭:4
+    - 银锭:4
+    - 金锭:4
+  '这里的配方名不能和同工作站点的其他配方名重合':
+    requireLevel: 1
+    resultItem: 钻石:4
+    requireItem:
+    - 石头:64
+    - 铜锭:4
+    - 铁锭:4
+    - 银锭:4
+    - 金锭:4

@@ -1,0 +1,49 @@
+LOG:
+  totalProgress: 65
+  dropItem:
+  - 木材:1:4:1
+LOG_2:
+  totalProgress: 65
+  dropItem:
+  - 木材:1:4:1
+WOOD:
+  totalProgress: 65
+  dropItem:
+  - 木材
+DIRT_1:
+  totalProgress: 65
+  dropItem:
+  - 星辉泥土
+DIRT:
+  totalProgress: 65
+  dropItem:
+  - 泥土
+PACKED_ICE:
+  totalProgress: 100
+  dropItem:
+  - 冰块
+STONE:
+  totalProgress: 100
+  dropItem:
+  - 石头
+STAINED_CLAY_0:
+  powerPickaxe: 65
+  totalProgress: 200
+  dropItem:
+  - 珍珠石
+STAINED_CLAY_7:
+  powerPickaxe: 65
+  totalProgress: 200
+  dropItem:
+  - 黑檀石
+STAINED_CLAY_11:
+  progress: 灾厄之眼
+  powerPickaxe: 200
+  totalProgress: 500
+  dropItem:
+  - 黑渊石
+STAINED_CLAY_15:
+  powerPickaxe: 65
+  totalProgress: 200
+  dropItem:
+  - 星辉石

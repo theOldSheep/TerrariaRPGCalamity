@@ -24,6 +24,56 @@ rarity:
   '1100': §#C94622§l
 deathMessages:
   Generic:
+  - <victim> 的肠子被扯出来了
+  - <victim> 的旅程结束了
+  - <victim> 被送去见奥库瑞姆了
+  - <victim> 被浸渍了
+  - <victim> 被放干了血
+  - <victim> 被送到了骷髅区
+  - <victim> 被自发切除了脑叶
+  - <victim> 被压成了肉酱
+  - <victim> 被碾成了肉泥
+  - <victim> 的骨头被敲得粉碎
+  - <victim> 成了怪物的食物
+  - <victim> 的家被重塑了
+  - <victim> 被迫自愿献血了
+  - <victim> 的天灵盖被掀了
+  - <victim> 的头顶被削掉了
+  - <victim> 的零件放错了位置
+  - <victim> 被打成了爽口酱汁
+  - <victim> 的脊椎被扯掉了
+  - <victim> 的存活纪录被终结了
+  - <victim> 接受了强制截肢
+  - <victim> 的脖子被折断了
+  - <victim> 被撕成了碎片
+  - <victim> 重伤不治
+  - <victim> 被告知阳寿已尽
+  - <victim> 的无能被展示了
+  - <victim> 的灵魂被抽离了
+  - <victim> 经历了仁慈的安乐死
+  - <victim> 被自下而上地吃掉了
+  - <victim> 被去骨了
+  - <victim> 的两个肾都被偷了
+  - <victim> 的堕落结束了
+  - <victim> 的椎间盘脱出了
+  - <victim> 的遗体被捐赠给了科学
+  - <victim> 的大脑变成了果酱
+  - <victim> 变成了下酒菜
+  - <victim> 被送到了农场
+  - <victim> 咽下了最后一口气
+  - <victim> 的心跳停止了
+  - <victim> 的头部挨了一记猛的
+  - <victim> 被抹杀了
+  - <victim> 受了脱套伤
+  - <victim> 被剥了皮
+  - <victim> 被围杀了
+  - <victim> 被打屁股了
+  - <victim> 被抓到了
+  - <victim> 被杀掉了
+  - <victim> 被放进水晶棺里了
+  - <victim> 已经被埋了
+  - <victim> 很快就会被遗忘
+  - <victim> 被劈了
   - <victim> 被杀害了
   - <victim> 被从这个世界里剔除了
   - <victim> 被谋杀了
@@ -49,19 +99,71 @@ deathMessages:
   - <victim> 停止了呼吸
   - <victim> 身首异处
   - <victim> 的头飞了
+  - 英灵殿在等着 <victim>
+  - <victim> 光荣地死去
+  - <victim> 肌肉不够多
+  - <victim> 能够逃脱
+  - <victim> 犯了人类的经典错误
+  - <victim> 在英灵殿中安息
+  - <victim> 在死后的世界冲浪
+  - <victim> 的运气用光了
   - <victim> 被登dua郎
   - <victim> 心花怒放
   - <victim> 脑洞大开
-  lava:
-  - <victim> 在岩浆里泡澡，骨头渣都没剩下
-  - <victim> 很显然不太熟悉岩浆的厉害
-  fall:
-  - <victim> 亲吻了大地
+  Fear:
+  - <victim> 试图逃跑
+  Lava:
+  - <victim> 被熔化了
+  - <victim> 被烧成了灰
+  - <victim> 试图在熔岩中游泳
+  - <victim> 喜欢在岩浆中玩耍
+  - <victim> 不擅长玩“地板是熔岩”
+  Fall:
   - <victim> 摔死了
-  drowning:
+  - <victim> 没有反弹
+  - <victim> 发明了重力
+  - <victim> 领悟了“抛出窗外”的意思
+  - <victim> 自由......自由落体了
+  - <victim> 尝试了滑冰上坡
+  - <victim> 认为自己会飞
+  - <victim> 留下了一个大坑
+  - <victim> 忘记了自己绝妙的想法
+  - <victim> 亲吻了大地
+  Drowning:
   - <victim> 忘记了呼吸
-  - <victim> 去喂鱼了
-  - <victim> 忧国投江
+  - <victim> 与鱼同眠
+  - <victim> 溺死了
+  - <victim> 成了鲨鱼的食物
+  - <victim> 试图饮尽湖水
+  - <victim> 发现了亚特兰蒂斯
+  - <victim> 忘了带毛巾
+  Suffocation:
+  - <victim> 无法呼吸
+  - <victim> 被活埋了
+  Debuff_燃烧:
+  - <victim> 无法把火扑灭
+  - <victim> 被烧成了焦炭
+  - <victim> 被烧得只剩渣了
+  - <victim> 成了全熟牛排
+  Debuff_咒火:
+  - <victim> 无法把火扑灭
+  - <victim> 被烧成了焦炭
+  - <victim> 被烧得只剩渣了
+  - <victim> 成了全熟牛排
+  Debuff_霜火:
+  - <victim> 无法把火扑灭
+  - <victim> 被烧成了焦炭
+  - <victim> 被烧得只剩渣了
+  - <victim> 成了全熟牛排
+  Debuff_中毒:
+  - <victim> 无法找到解药
+  Debuff_剧毒:
+  - <victim> 无法找到解药
+  Debuff_带电:
+  - <victim> 无法控制瓦数
+  - <victim> 变成了电池
+  - <victim> 的生命力从正变负
+  - <victim> 成了避雷针
 NPC:
   messages:
     向导:

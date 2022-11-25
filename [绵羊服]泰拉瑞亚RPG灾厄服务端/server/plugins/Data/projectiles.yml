@@ -1,4 +1,6 @@
 弹射物示例:
+    # 贴图使用箭矢还是药水？不写则视为false(药水)
+    arrowOrPotion: false
     # 是否自动追踪，不写则视为false
     autoTrace: false
     # 自动追踪的寻敌半径，单位（格）。不写则视为12
@@ -29,6 +31,8 @@
     blastRadius: 1.5
     # 爆炸是否会伤害玩家，不写则视为false
     blastDamageShooter: false
+    # 爆炸是否会破坏方块，不写则视为false
+    blastDestroyBlock: false
     # 是否被水减速？不写则视为true
     slowedByWater: true
     # 击中方块时的反应，不写则视为die
@@ -42,6 +46,8 @@
     bounceVelocityMulti: 0
     # 轨迹的颜色(R|G|B)，可不写。
     trailColor: 255|125|125
+    # 轨迹停留时间（单位：帧，1秒=20帧）。不写则视为10。
+    trailLingerTime: 10
     # 攻击造成的buff，格式为  buff名|buff时长（单位：帧）|几率。可不写。
     buffInflict:
         - "霜火|100|0.35"
@@ -50,12 +56,14 @@
     clusterBomb:
         # 分裂成弹片数量
         amount: 8
-        # 分裂后弹片弹射物类型
-        name: 装饰弹片
-        # 分裂后弹片弹射物速度
-        velocity: 0.5
         # 分裂后弹片伤害为原本伤害*damageMulti
         damageMulti: 0.85
+        # 分裂后弹片弹射物类型
+        name: 装饰弹片
+        # 分裂方式，normal（默认）: 在原地分裂，star：圣箭落星式分裂 
+        type: normal
+        # 分裂后弹片弹射物速度
+        velocity: 0.5
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2
