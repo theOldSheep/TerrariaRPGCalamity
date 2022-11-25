@@ -1,40 +1,5 @@
 # 自定义的槽位必须填在此处，否则槽位将不允许点击操作
 
-ammo1:
-  attribute: true
-  limit:
-  - "lorecontains|[弹药]"
-ammo2:
-  attribute: true
-  limit:
-  - "lorecontains|[弹药]"
-ammo3:
-  attribute: true
-  limit:
-  - "lorecontains|[弹药]"
-ammo4:
-  attribute: true
-  limit:
-  - "lorecontains|[弹药]"
-ammo5:
-  attribute: true
-  limit:
-  - "lorecontains|[弹药]"
-ammo6:
-  attribute: true
-  limit:
-  - "lorecontains|[弹药]"
-ammo7:
-  attribute: true
-  limit:
-  - "lorecontains|[弹药]"
-ammo8:
-  attribute: true
-  limit:
-  - "lorecontains|[弹药]"
-trash:
-  attribute: true
-  limit: []
 mount:
   attribute: true
   limit:
