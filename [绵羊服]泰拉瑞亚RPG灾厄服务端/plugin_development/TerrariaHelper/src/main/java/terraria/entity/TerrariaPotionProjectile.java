@@ -191,6 +191,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         this.world.methodProfiler.a("entityBaseTick");
 
         // ticking from Entity.class
+        Bukkit.broadcastMessage(this.locX + ", " + this.locY + ", " + this.locZ + "||" + this.motX + ", " + this.motY + ", " + this.motZ);
         double distMovedSqr = new Vector(locX, locY, locZ).distanceSquared(new Vector(lastX, lastY, lastZ));
         this.I = this.J;
         this.lastX = this.locX;
@@ -198,7 +199,6 @@ public class TerrariaPotionProjectile extends EntityPotion {
         this.lastZ = this.locZ;
         this.lastPitch = this.pitch;
         this.lastYaw = this.yaw;
-        this.velocityChanged = false;
         // tick water
         this.aq();
         if (this.locY < -64.0) this.die();
@@ -285,12 +285,6 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 extraMovingTick();
                 // gravity
                 if (this.ticksLived >= noGravityTicks && gravity > 0) {
-                    // prevent client side glitch
-                    // -> if the velocity is roughly none (projectiles sticking to wall, grenade bouncing on floor etc.),
-                    //    the client should think this projectile has no gravity, otherwise it appears to be sinking into the ground
-                    if (distMovedSqr > 1e-5) {
-                        if (!inGround) this.setNoGravity(false);
-                    }
                     velocity.subtract(new Vector(0, gravity, 0));
                 }
                 // regulate velocity
@@ -299,7 +293,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     terraria.util.MathHelper.setVectorLength(velocity, maxSpeed);
             }
             // get the block it will cram into, then set the final location after ticking
-            double spdX = this.motX * speedMulti, spdY = this.motY * speedMulti, spdZ = this.motZ * speedMulti;
+            double spdX = velocity.getX() * speedMulti, spdY = velocity.getY() * speedMulti, spdZ = velocity.getZ() * speedMulti;
             futureLoc = new Vec3D(this.locX + spdX, this.locY + spdY, this.locZ + spdZ);
             MovingObjectPosition movingobjectposition = HitEntityInfo.rayTraceBlocks(this.world, initialLoc, futureLoc);
             this.inGround = false;
@@ -336,10 +330,21 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                     penetration--;
                                     EntityHelper.setMetadata(bukkitEntity, "penetration", this.penetration);
                                 }
+                                velocity.multiply(bounceVelocityMulti);
+                                double yVelocityThreshold = gravity * speedMulti;
                                 switch (movingobjectposition.direction) {
                                     case UP:
+                                        velocity.setY(velocity.getY() * -1);
+                                        // prevent projectile twitching
+                                        if (gravity > 0 && velocity.getY() < yVelocityThreshold) {
+                                            Bukkit.broadcastMessage("Y velocity changed from " + velocity.getY() + " to " + yVelocityThreshold);
+                                            velocity.setY(yVelocityThreshold);
+                                        }
+                                        break;
                                     case DOWN:
                                         velocity.setY(velocity.getY() * -1);
+                                        // prevent projectile twitching
+                                        if (gravity < 0 && velocity.getY() > yVelocityThreshold) velocity.setY(yVelocityThreshold);
                                         break;
                                     case EAST:
                                     case WEST:
@@ -350,7 +355,6 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                         velocity.setZ(velocity.getZ() * -1);
                                         break;
                                 }
-                                velocity.multiply(bounceVelocityMulti);
                             } else {
                                 // slide
                                 switch (movingobjectposition.direction) {
@@ -459,10 +463,14 @@ public class TerrariaPotionProjectile extends EntityPotion {
         //     velocity changed
         //     the projectile has gravity
         // otherwise send new velocity regularly every 5 ticks
-        if (!this.velocityChanged && (ticksLived % 5 == 0 ||
-                velocity.distanceSquared(new Vector(this.motX, this.motY, this.motZ)) > 0.0001 ||
-                !isNoGravity()))
-            this.velocityChanged = true;
+//        if (!this.velocityChanged && (ticksLived % 5 == 0 ||
+//                velocity.distanceSquared(new Vector(this.motX, this.motY, this.motZ)) > 0.0001 ||
+//                !isNoGravity()))
+//            this.velocityChanged = true;
+
+        // prevents client glitch
+        this.velocityChanged = true;
+        this.positionChanged = true;
 
         this.motX = velocity.getX();
         this.motY = velocity.getY();

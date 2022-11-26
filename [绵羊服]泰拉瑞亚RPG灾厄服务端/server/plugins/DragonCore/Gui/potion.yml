@@ -1,0 +1,862 @@
+# 匹配界面名,hud为自动开启
+match: "hud"
+priority: 1
+
+Functions:
+  open: "方法.异步执行方法('更新药水变量')"
+  
+  preRender: |-
+    界面变量.before_split = 方法.取变量('terraria_effects');
+    界面变量.splitted = 方法.分割(界面变量.before_split,'~');
+    界面变量.buffAlpha = 0.7 + (0.3 * 方法.sin(方法.取当前时间() * 0.01));
+    
+    界面变量.type_potion_1 = 方法.取成员(界面变量.splitted, 0);
+    界面变量.duration_potion_1 = 方法.取成员(界面变量.splitted, 1);
+    界面变量.type_potion_2 = 方法.取成员(界面变量.splitted, 2);
+    界面变量.duration_potion_2 = 方法.取成员(界面变量.splitted, 3);
+    界面变量.type_potion_3 = 方法.取成员(界面变量.splitted, 4);
+    界面变量.duration_potion_3 = 方法.取成员(界面变量.splitted, 5);
+    界面变量.type_potion_4 = 方法.取成员(界面变量.splitted, 6);
+    界面变量.duration_potion_4 = 方法.取成员(界面变量.splitted, 7);
+    界面变量.type_potion_5 = 方法.取成员(界面变量.splitted, 8);
+    界面变量.duration_potion_5 = 方法.取成员(界面变量.splitted, 9);
+    界面变量.type_potion_6 = 方法.取成员(界面变量.splitted, 10);
+    界面变量.duration_potion_6 = 方法.取成员(界面变量.splitted, 11);
+    界面变量.type_potion_7 = 方法.取成员(界面变量.splitted, 12);
+    界面变量.duration_potion_7 = 方法.取成员(界面变量.splitted, 13);
+    界面变量.type_potion_8 = 方法.取成员(界面变量.splitted, 14);
+    界面变量.duration_potion_8 = 方法.取成员(界面变量.splitted, 15);
+    界面变量.type_potion_9 = 方法.取成员(界面变量.splitted, 16);
+    界面变量.duration_potion_9 = 方法.取成员(界面变量.splitted, 17);
+    界面变量.type_potion_10 = 方法.取成员(界面变量.splitted, 18);
+    界面变量.duration_potion_10 = 方法.取成员(界面变量.splitted, 19);
+    界面变量.type_potion_11 = 方法.取成员(界面变量.splitted, 20);
+    界面变量.duration_potion_11 = 方法.取成员(界面变量.splitted, 21);
+    界面变量.type_potion_12 = 方法.取成员(界面变量.splitted, 22);
+    界面变量.duration_potion_12 = 方法.取成员(界面变量.splitted, 23);
+    界面变量.type_potion_13 = 方法.取成员(界面变量.splitted, 24);
+    界面变量.duration_potion_13 = 方法.取成员(界面变量.splitted, 25);
+    界面变量.type_potion_14 = 方法.取成员(界面变量.splitted, 26);
+    界面变量.duration_potion_14 = 方法.取成员(界面变量.splitted, 27);
+    界面变量.type_potion_15 = 方法.取成员(界面变量.splitted, 28);
+    界面变量.duration_potion_15 = 方法.取成员(界面变量.splitted, 29);
+    界面变量.type_potion_16 = 方法.取成员(界面变量.splitted, 30);
+    界面变量.duration_potion_16 = 方法.取成员(界面变量.splitted, 31);
+    界面变量.type_potion_17 = 方法.取成员(界面变量.splitted, 32);
+    界面变量.duration_potion_17 = 方法.取成员(界面变量.splitted, 33);
+    界面变量.type_potion_18 = 方法.取成员(界面变量.splitted, 34);
+    界面变量.duration_potion_18 = 方法.取成员(界面变量.splitted, 35);
+    界面变量.type_potion_19 = 方法.取成员(界面变量.splitted, 36);
+    界面变量.duration_potion_19 = 方法.取成员(界面变量.splitted, 37);
+    界面变量.type_potion_20 = 方法.取成员(界面变量.splitted, 38);
+    界面变量.duration_potion_20 = 方法.取成员(界面变量.splitted, 39);
+    界面变量.type_potion_21 = 方法.取成员(界面变量.splitted, 40);
+    界面变量.duration_potion_21 = 方法.取成员(界面变量.splitted, 41);
+    界面变量.type_potion_22 = 方法.取成员(界面变量.splitted, 42);
+    界面变量.duration_potion_22 = 方法.取成员(界面变量.splitted, 43);
+    界面变量.type_potion_23 = 方法.取成员(界面变量.splitted, 44);
+    界面变量.duration_potion_23 = 方法.取成员(界面变量.splitted, 45);
+    界面变量.type_potion_24 = 方法.取成员(界面变量.splitted, 46);
+    界面变量.duration_potion_24 = 方法.取成员(界面变量.splitted, 47);
+    界面变量.type_potion_25 = 方法.取成员(界面变量.splitted, 48);
+    界面变量.duration_potion_25 = 方法.取成员(界面变量.splitted, 49);
+    界面变量.type_potion_26 = 方法.取成员(界面变量.splitted, 50);
+    界面变量.duration_potion_26 = 方法.取成员(界面变量.splitted, 51);
+    界面变量.type_potion_27 = 方法.取成员(界面变量.splitted, 52);
+    界面变量.duration_potion_27 = 方法.取成员(界面变量.splitted, 53);
+    界面变量.type_potion_28 = 方法.取成员(界面变量.splitted, 54);
+    界面变量.duration_potion_28 = 方法.取成员(界面变量.splitted, 55);
+    界面变量.type_potion_29 = 方法.取成员(界面变量.splitted, 56);
+    界面变量.duration_potion_29 = 方法.取成员(界面变量.splitted, 57);
+    界面变量.type_potion_30 = 方法.取成员(界面变量.splitted, 58);
+    界面变量.duration_potion_30 = 方法.取成员(界面变量.splitted, 59);
+    界面变量.type_potion_31 = 方法.取成员(界面变量.splitted, 60);
+    界面变量.duration_potion_31 = 方法.取成员(界面变量.splitted, 61);
+    界面变量.type_potion_32 = 方法.取成员(界面变量.splitted, 62);
+    界面变量.duration_potion_32 = 方法.取成员(界面变量.splitted, 63);
+    界面变量.type_potion_33 = 方法.取成员(界面变量.splitted, 64);
+    界面变量.duration_potion_33 = 方法.取成员(界面变量.splitted, 65);
+    界面变量.type_potion_34 = 方法.取成员(界面变量.splitted, 66);
+    界面变量.duration_potion_34 = 方法.取成员(界面变量.splitted, 67);
+    界面变量.type_potion_35 = 方法.取成员(界面变量.splitted, 68);
+    界面变量.duration_potion_35 = 方法.取成员(界面变量.splitted, 69);
+    界面变量.type_potion_36 = 方法.取成员(界面变量.splitted, 70);
+    界面变量.duration_potion_36 = 方法.取成员(界面变量.splitted, 71);
+    界面变量.type_potion_37 = 方法.取成员(界面变量.splitted, 72);
+    界面变量.duration_potion_37 = 方法.取成员(界面变量.splitted, 73);
+    界面变量.type_potion_38 = 方法.取成员(界面变量.splitted, 74);
+    界面变量.duration_potion_38 = 方法.取成员(界面变量.splitted, 75);
+    界面变量.type_potion_39 = 方法.取成员(界面变量.splitted, 76);
+    界面变量.duration_potion_39 = 方法.取成员(界面变量.splitted, 77);
+    界面变量.type_potion_40 = 方法.取成员(界面变量.splitted, 78);
+    界面变量.duration_potion_40 = 方法.取成员(界面变量.splitted, 79);
+    界面变量.type_potion_41 = 方法.取成员(界面变量.splitted, 80);
+    界面变量.duration_potion_41 = 方法.取成员(界面变量.splitted, 81);
+    界面变量.type_potion_42 = 方法.取成员(界面变量.splitted, 82);
+    界面变量.duration_potion_42 = 方法.取成员(界面变量.splitted, 83);
+    界面变量.type_potion_43 = 方法.取成员(界面变量.splitted, 84);
+    界面变量.duration_potion_43 = 方法.取成员(界面变量.splitted, 85);
+    界面变量.type_potion_44 = 方法.取成员(界面变量.splitted, 86);
+    界面变量.duration_potion_44 = 方法.取成员(界面变量.splitted, 87);
+
+  更新药水变量: |-
+    方法.更新变量值('terraria_effects');
+    方法.延时(250);
+    方法.异步执行方法('更新药水变量');
+
+
+# row 1
+potion_1_texture:
+  x: 16
+  y: 34
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_1 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_1, '.png')"
+  visible: "界面变量.duration_potion_1 > 0"
+potion_1_label:
+  x: 22
+  y: 46
+  texts: "界面变量.duration_potion_1 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_1 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_1 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_1 > 0"
+potion_2_texture:
+  x: 30
+  y: 34
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_2 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_2, '.png')"
+  visible: "界面变量.duration_potion_2 > 0"
+potion_2_label:
+  x: 36
+  y: 46
+  texts: "界面变量.duration_potion_2 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_2 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_2 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_2 > 0"
+potion_3_texture:
+  x: 44
+  y: 34
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_3 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_3, '.png')"
+  visible: "界面变量.duration_potion_3 > 0"
+potion_3_label:
+  x: 50
+  y: 46
+  texts: "界面变量.duration_potion_3 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_3 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_3 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_3 > 0"
+potion_4_texture:
+  x: 58
+  y: 34
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_4 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_4, '.png')"
+  visible: "界面变量.duration_potion_4 > 0"
+potion_4_label:
+  x: 64
+  y: 46
+  texts: "界面变量.duration_potion_4 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_4 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_4 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_4 > 0"
+potion_5_texture:
+  x: 72
+  y: 34
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_5 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_5, '.png')"
+  visible: "界面变量.duration_potion_5 > 0"
+potion_5_label:
+  x: 78
+  y: 46
+  texts: "界面变量.duration_potion_5 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_5 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_5 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_5 > 0"
+potion_6_texture:
+  x: 86
+  y: 34
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_6 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_6, '.png')"
+  visible: "界面变量.duration_potion_6 > 0"
+potion_6_label:
+  x: 92
+  y: 46
+  texts: "界面变量.duration_potion_6 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_6 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_6 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_6 > 0"
+potion_7_texture:
+  x: 100
+  y: 34
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_7 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_7, '.png')"
+  visible: "界面变量.duration_potion_7 > 0"
+potion_7_label:
+  x: 106
+  y: 46
+  texts: "界面变量.duration_potion_7 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_7 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_7 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_7 > 0"
+potion_8_texture:
+  x: 114
+  y: 34
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_8 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_8, '.png')"
+  visible: "界面变量.duration_potion_8 > 0"
+potion_8_label:
+  x: 120
+  y: 46
+  texts: "界面变量.duration_potion_8 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_8 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_8 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_8 > 0"
+potion_9_texture:
+  x: 128
+  y: 34
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_9 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_9, '.png')"
+  visible: "界面变量.duration_potion_9 > 0"
+potion_9_label:
+  x: 134
+  y: 46
+  texts: "界面变量.duration_potion_9 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_9 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_9 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_9 > 0"
+potion_10_texture:
+  x: 142
+  y: 34
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_10 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_10, '.png')"
+  visible: "界面变量.duration_potion_10 > 0"
+potion_10_label:
+  x: 148
+  y: 46
+  texts: "界面变量.duration_potion_10 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_10 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_10 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_10 > 0"
+potion_11_texture:
+  x: 156
+  y: 34
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_11 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_11, '.png')"
+  visible: "界面变量.duration_potion_11 > 0"
+potion_11_label:
+  x: 162
+  y: 46
+  texts: "界面变量.duration_potion_11 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_11 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_11 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_11 > 0"
+
+# row 2
+potion_12_texture:
+  x: 16
+  y: 54
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_12 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_12, '.png')"
+  visible: "界面变量.duration_potion_12 > 0"
+potion_12_label:
+  x: 22
+  y: 66
+  texts: "界面变量.duration_potion_12 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_12 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_12 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_12 > 0"
+potion_13_texture:
+  x: 30 
+  y: 54
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_13 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_13, '.png')"
+  visible: "界面变量.duration_potion_13 > 0"
+potion_13_label:
+  x: 36 
+  y: 66
+  texts: "界面变量.duration_potion_13 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_13 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_13 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_13 > 0"
+potion_14_texture:
+  x: 44 
+  y: 54
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_14 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_14, '.png')"
+  visible: "界面变量.duration_potion_14 > 0"
+potion_14_label:
+  x: 50 
+  y: 66
+  texts: "界面变量.duration_potion_14 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_14 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_14 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_14 > 0"
+potion_15_texture:
+  x: 58 
+  y: 54
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_15 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_15, '.png')"
+  visible: "界面变量.duration_potion_15 > 0"
+potion_15_label:
+  x: 64 
+  y: 66
+  texts: "界面变量.duration_potion_15 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_15 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_15 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_15 > 0"
+potion_16_texture:
+  x: 72 
+  y: 54
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_16 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_16, '.png')"
+  visible: "界面变量.duration_potion_16 > 0"
+potion_16_label:
+  x: 78 
+  y: 66
+  texts: "界面变量.duration_potion_16 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_16 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_16 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_16 > 0"
+potion_17_texture:
+  x: 86 
+  y: 54
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_17 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_17, '.png')"
+  visible: "界面变量.duration_potion_17 > 0"
+potion_17_label:
+  x: 92 
+  y: 66
+  texts: "界面变量.duration_potion_17 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_17 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_17 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_17 > 0"
+potion_18_texture:
+  x: 100 
+  y: 54
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_18 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_18, '.png')"
+  visible: "界面变量.duration_potion_18 > 0"
+potion_18_label:
+  x: 106 
+  y: 66
+  texts: "界面变量.duration_potion_18 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_18 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_18 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_18 > 0"
+potion_19_texture:
+  x: 114 
+  y: 54
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_19 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_19, '.png')"
+  visible: "界面变量.duration_potion_19 > 0"
+potion_19_label:
+  x: 120 
+  y: 66
+  texts: "界面变量.duration_potion_19 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_19 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_19 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_19 > 0"
+potion_20_texture:
+  x: 128 
+  y: 54
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_20 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_20, '.png')"
+  visible: "界面变量.duration_potion_20 > 0"
+potion_20_label:
+  x: 134 
+  y: 66
+  texts: "界面变量.duration_potion_20 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_20 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_20 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_20 > 0"
+potion_21_texture:
+  x: 142 
+  y: 54
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_21 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_21, '.png')"
+  visible: "界面变量.duration_potion_21 > 0"
+potion_21_label:
+  x: 148 
+  y: 66
+  texts: "界面变量.duration_potion_21 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_21 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_21 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_21 > 0"
+potion_22_texture:
+  x: 156 
+  y: 54
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_22 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_22, '.png')"
+  visible: "界面变量.duration_potion_22 > 0"
+potion_22_label:
+  x: 162
+  y: 66
+  texts: "界面变量.duration_potion_22 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_22 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_22 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_22 > 0"
+
+# row 3
+potion_23_texture:
+  x: 16 
+  y: 74
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_23 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_23, '.png')"
+  visible: "界面变量.duration_potion_23 > 0"
+potion_23_label:
+  x: 22 
+  y: 86
+  texts: "界面变量.duration_potion_23 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_23 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_23 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_23 > 0"
+potion_24_texture:
+  x: 30 
+  y: 74
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_24 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_24, '.png')"
+  visible: "界面变量.duration_potion_24 > 0"
+potion_24_label:
+  x: 36 
+  y: 86
+  texts: "界面变量.duration_potion_24 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_24 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_24 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_24 > 0"
+potion_25_texture:
+  x: 44 
+  y: 74
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_25 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_25, '.png')"
+  visible: "界面变量.duration_potion_25 > 0"
+potion_25_label:
+  x: 50 
+  y: 86
+  texts: "界面变量.duration_potion_25 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_25 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_25 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_25 > 0"
+potion_26_texture:
+  x: 58 
+  y: 74
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_26 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_26, '.png')"
+  visible: "界面变量.duration_potion_26 > 0"
+potion_26_label:
+  x: 64 
+  y: 86
+  texts: "界面变量.duration_potion_26 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_26 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_26 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_26 > 0"
+potion_27_texture:
+  x: 72 
+  y: 74
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_27 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_27, '.png')"
+  visible: "界面变量.duration_potion_27 > 0"
+potion_27_label:
+  x: 78 
+  y: 86
+  texts: "界面变量.duration_potion_27 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_27 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_27 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_27 > 0"
+potion_28_texture:
+  x: 86 
+  y: 74
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_28 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_28, '.png')"
+  visible: "界面变量.duration_potion_28 > 0"
+potion_28_label:
+  x: 92 
+  y: 86
+  texts: "界面变量.duration_potion_28 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_28 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_28 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_28 > 0"
+potion_29_texture:
+  x: 100 
+  y: 74
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_29 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_29, '.png')"
+  visible: "界面变量.duration_potion_29 > 0"
+potion_29_label:
+  x: 106 
+  y: 86
+  texts: "界面变量.duration_potion_29 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_29 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_29 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_29 > 0"
+potion_30_texture:
+  x: 114 
+  y: 74
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_30 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_30, '.png')"
+  visible: "界面变量.duration_potion_30 > 0"
+potion_30_label:
+  x: 120 
+  y: 86
+  texts: "界面变量.duration_potion_30 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_30 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_30 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_30 > 0"
+potion_31_texture:
+  x: 128 
+  y: 74
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_31 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_31, '.png')"
+  visible: "界面变量.duration_potion_31 > 0"
+potion_31_label:
+  x: 134 
+  y: 86
+  texts: "界面变量.duration_potion_31 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_31 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_31 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_31 > 0"
+potion_32_texture:
+  x: 142 
+  y: 74
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_32 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_32, '.png')"
+  visible: "界面变量.duration_potion_32 > 0"
+potion_32_label:
+  x: 148 
+  y: 86
+  texts: "界面变量.duration_potion_32 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_32 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_32 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_32 > 0"
+potion_33_texture:
+  x: 156 
+  y: 74
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_33 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_33, '.png')"
+  visible: "界面变量.duration_potion_33 > 0"
+potion_33_label:
+  x: 162
+  y: 86
+  texts: "界面变量.duration_potion_33 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_33 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_33 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_33 > 0"
+
+# row 4
+potion_34_texture:
+  x: 16 
+  y: 94
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_34 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_34, '.png')"
+  visible: "界面变量.duration_potion_34 > 0"
+potion_34_label:
+  x: 22 
+  y: 106
+  texts: "界面变量.duration_potion_34 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_34 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_34 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_34 > 0"
+potion_35_texture:
+  x: 30 
+  y: 94
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_35 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_35, '.png')"
+  visible: "界面变量.duration_potion_35 > 0"
+potion_35_label:
+  x: 36 
+  y: 106
+  texts: "界面变量.duration_potion_35 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_35 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_35 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_35 > 0"
+potion_36_texture:
+  x: 44 
+  y: 94
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_36 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_36, '.png')"
+  visible: "界面变量.duration_potion_36 > 0"
+potion_36_label:
+  x: 50 
+  y: 106
+  texts: "界面变量.duration_potion_36 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_36 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_36 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_36 > 0"
+potion_37_texture:
+  x: 58 
+  y: 94
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_37 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_37, '.png')"
+  visible: "界面变量.duration_potion_37 > 0"
+potion_37_label:
+  x: 64 
+  y: 106
+  texts: "界面变量.duration_potion_37 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_37 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_37 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_37 > 0"
+potion_38_texture:
+  x: 72 
+  y: 94
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_38 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_38, '.png')"
+  visible: "界面变量.duration_potion_38 > 0"
+potion_38_label:
+  x: 78 
+  y: 106
+  texts: "界面变量.duration_potion_38 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_38 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_38 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_38 > 0"
+potion_39_texture:
+  x: 86 
+  y: 94
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_39 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_39, '.png')"
+  visible: "界面变量.duration_potion_39 > 0"
+potion_39_label:
+  x: 92 
+  y: 106
+  texts: "界面变量.duration_potion_39 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_39 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_39 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_39 > 0"
+potion_40_texture:
+  x: 100 
+  y: 94
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_40 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_40, '.png')"
+  visible: "界面变量.duration_potion_40 > 0"
+potion_40_label:
+  x: 106 
+  y: 106
+  texts: "界面变量.duration_potion_40 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_40 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_40 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_40 > 0"
+potion_41_texture:
+  x: 114 
+  y: 94
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_41 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_41, '.png')"
+  visible: "界面变量.duration_potion_41 > 0"
+potion_41_label:
+  x: 120 
+  y: 106
+  texts: "界面变量.duration_potion_41 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_41 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_41 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_41 > 0"
+potion_42_texture:
+  x: 128 
+  y: 94
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_42 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_42, '.png')"
+  visible: "界面变量.duration_potion_42 > 0"
+potion_42_label:
+  x: 134 
+  y: 106
+  texts: "界面变量.duration_potion_42 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_42 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_42 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_42 > 0"
+potion_43_texture:
+  x: 142 
+  y: 94
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_43 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_43, '.png')"
+  visible: "界面变量.duration_potion_43 > 0"
+potion_43_label:
+  x: 148 
+  y: 106
+  texts: "界面变量.duration_potion_43 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_43 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_43 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_43 > 0"
+potion_44_texture:
+  x: 156 
+  y: 94
+  width: 12
+  height: 12
+  alpha: "界面变量.duration_potion_44 < 200 ? 界面变量.buffAlpha : 1"
+  texture: "方法.合并文本('potion/', 界面变量.type_potion_44, '.png')"
+  visible: "界面变量.duration_potion_44 > 0"
+potion_44_label:
+  x: 162
+  y: 106
+  texts: "界面变量.duration_potion_44 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_44 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_44 / 1200), '分')"
+  center: true
+  shadow: true
+  length: 999999
+  scale: 0.75
+  visible: "界面变量.duration_potion_44 > 0"

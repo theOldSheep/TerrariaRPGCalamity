@@ -15,7 +15,10 @@ import terraria.util.PlayerHelper;
 import terraria.util.YmlHelper;
 import terraria.worldgen.overworld.NoiseGeneratorTest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 
 public class TerrariaHelper extends JavaPlugin {
@@ -35,19 +38,49 @@ public class TerrariaHelper extends JavaPlugin {
         PlaceholderAPI.registerPlaceholderHook("terraria", new PlaceholderHook() {
             @Override
             public String onPlaceholderRequest(Player ply, String params) {
-                if (params.equals("money")) {
-                    double amount = PlayerHelper.getMoney(ply);
-                    String result = "";
-                    if (amount < 100) {
-                        result = "笑死，身无分文";
-                    } else {
-                        int[] moneyInfo = GenericHelper.coinConversion((int) (amount + 0.01));
-                        if (moneyInfo[0] > 0) result += "&f" + moneyInfo[0] + "铂金币 ";
-                        if (moneyInfo[1] > 0) result += "&e" + moneyInfo[1] + "金币 ";
-                        if (moneyInfo[2] > 0) result += "&7" + moneyInfo[2] + "银币 ";
-                        if (moneyInfo[3] > 0) result += "&c" + moneyInfo[3] + "铜币 ";
+                switch (params) {
+                    case "money": {
+                        double amount = PlayerHelper.getMoney(ply);
+                        String result = "";
+                        if (amount < 100) {
+                            result = "笑死，身无分文";
+                        } else {
+                            int[] moneyInfo = GenericHelper.coinConversion((int) (amount + 0.01));
+                            if (moneyInfo[0] > 0) result += "&f" + moneyInfo[0] + "铂金币 ";
+                            if (moneyInfo[1] > 0) result += "&e" + moneyInfo[1] + "金币 ";
+                            if (moneyInfo[2] > 0) result += "&7" + moneyInfo[2] + "银币 ";
+                            if (moneyInfo[3] > 0) result += "&c" + moneyInfo[3] + "铜币 ";
+                        }
+                        return result;
                     }
-                    return result;
+                    case "effects": {
+                        StringBuilder result = new StringBuilder();
+                        String separator = "~";
+                        HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
+                        for (Map.Entry<String, Integer> effect : effectMap.entrySet()) {
+                            if (result.length() > 0) result.append(separator);
+                            String effectDisplayName = effect.getKey();
+                            int effectDisplayTime = effect.getValue();
+                            // tweak the display for certain special buffs
+                            switch (effectDisplayName) {
+                                case "伤害星云":
+                                case "生命星云":
+                                case "魔力星云": {
+                                    int effectLevelTime = EntityHelper.getEffectLevelDuration(effectDisplayName);
+                                    int effectActualLevel = effectDisplayTime / effectLevelTime;
+                                    effectDisplayTime %= effectLevelTime;
+                                    // edge case
+                                    if (effectDisplayTime != 0) effectActualLevel ++;
+                                    else effectDisplayTime += effectLevelTime;
+                                    // tweak name
+                                    effectDisplayName += effectActualLevel;
+                                    break;
+                                }
+                            }
+                            result.append(effectDisplayName).append(separator).append(effectDisplayTime);
+                        }
+                        return result.toString();
+                    }
                 }
                 HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
                 if (attrMap == null) attrMap = new HashMap<>(1);

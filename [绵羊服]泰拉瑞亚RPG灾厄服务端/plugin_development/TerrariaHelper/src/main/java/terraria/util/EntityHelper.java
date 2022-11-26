@@ -333,7 +333,6 @@ public class EntityHelper {
             }
             allEffects.put(effect, timeRemaining);
             // tick mechanism
-            Bukkit.broadcastMessage("Ticking Potion Effect " + effect + " for entity " + entity.getName());
             if (damagePerDelay > 0) {
                 double damageMulti = 1;
                 if (effect.equals("破晓")) damageMulti = getEffectLevel(effect, timeRemaining);
@@ -413,14 +412,13 @@ public class EntityHelper {
             // if the buff is not in config, do not do anything
             if (!buffConfig.contains("effects." + effect)) return;
             // returns if the entity is immune to this effect (i.e. debuff)
-            Map<String, Integer> buffImmune = (Map<String, Integer>) getMetadata(entity, "buffImmune").value();
-            if (buffImmune.containsKey(effect)) return;
+            MetadataValue buffImmuneMetadata = getMetadata(entity, "buffImmune");
+            if (buffImmuneMetadata != null) {
+                Map<String, Integer> buffImmune = (Map<String, Integer>) buffImmuneMetadata.value();
+                if (buffImmune.containsKey(effect)) return;
+            }
             // does nothing if the target has a superior effect, otherwise tweak the inferior effects
             HashMap<String, Integer> allEffects = getEffectMap(entity);
-            for (String effectSuperior : buffSuperior.getOrDefault(effect, new HashSet<>()))
-                Bukkit.broadcastMessage("buffSuperior: " + effectSuperior);
-            for (String effectInferior : buffInferior.getOrDefault(effect, new HashSet<>()))
-                Bukkit.broadcastMessage("buffInferior: " + effectInferior);
             for (String effectSuperior : buffSuperior.getOrDefault(effect, new HashSet<>()))
                 if (allEffects.containsKey(effectSuperior)) return;
             for (String effectInferior : buffInferior.getOrDefault(effect, new HashSet<>()))
@@ -1066,6 +1064,8 @@ public class EntityHelper {
                 else
                     applyEffect(victim, "燃烧", 150);
                 dmg = 200;
+                // mainly prevents excessive damage dealt to enemies
+                damageInvulnerabilityTicks = Math.max(damageInvulnerabilityTicks, 30);
                 break;
             case "Drowning":
                 dmg = 50;
