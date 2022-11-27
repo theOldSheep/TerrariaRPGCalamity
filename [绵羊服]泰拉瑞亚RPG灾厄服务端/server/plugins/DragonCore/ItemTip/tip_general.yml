@@ -1,0 +1,29 @@
+#match: "&2&3&3&r"
+match: "§2§3§3§r"
+priority: 0
+Functions:
+  preRender: |-
+    界面变量.alpha = 0.85 + (0.15 * 方法.sin(方法.取当前时间() * 0.00314));
+    (界面变量.y + tip.height+40>h)?{
+      界面变量.y = h-tip.height-40;
+    }:0;
+    (界面变量.x + tip.width+40>w)?{
+      界面变量.x = w-tip.width-40;
+    }:0;
+
+# 变量列表
+# x  鼠标X
+# y  鼠标y
+# w  物品原本显示的lore(包含原版完整显示的内容,比如名字,附魔等)，最长一条的长度
+# h  物品原本显示的lore(包含原版完整显示的内容,比如名字,附魔等)，总共的高度
+# iw 物品的lore(仅Lore和名字)，最长一条的长度
+# ih 物品的lore(仅Lore和名字)，总共的高度
+# sw 屏幕宽度(ScreenWidth)
+# sh 屏幕高度(ScreenHeight)
+
+
+itemname:
+  type: label
+  x: 界面变量.x+4
+  y: 界面变量.y+4
+  texts: "界面变量.lines"

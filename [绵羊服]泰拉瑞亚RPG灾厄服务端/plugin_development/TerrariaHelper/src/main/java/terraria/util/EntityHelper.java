@@ -35,15 +35,11 @@ import java.util.logging.Level;
 
 public class EntityHelper {
     // constants
-    static final YmlHelper.YmlSection entityConfig = YmlHelper.getFile("plugins/Data/entities.yml");
-    static final YmlHelper.YmlSection buffConfig = YmlHelper.getFile("plugins/Data/buff.yml");
-    static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/projectiles.yml");
-    static final YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
     static HashMap<String, Set<String>> buffInferior, buffSuperior;
     static {
         buffSuperior = new HashMap<>(50);
         buffInferior = new HashMap<>(50);
-        ConfigurationSection conflictSection = buffConfig.getConfigurationSection("buffConflicts");
+        ConfigurationSection conflictSection = TerrariaHelper.buffConfig.getConfigurationSection("buffConflicts");
         Set<String> rules = conflictSection.getKeys(false);
         for (String rule : rules) {
             ConfigurationSection ruleSection = conflictSection.getConfigurationSection(rule);
@@ -94,6 +90,10 @@ public class EntityHelper {
         } catch (Exception e) {
             return "Melee";
         }
+    }
+    public static void setDamageType(Metadatable entity, String damageType) {
+        if (damageType == null) setMetadata(entity, "damageType", "Melee");
+        else setMetadata(entity, "damageType", damageType);
     }
     public static HashMap<String, Double> getAttrMap(Metadatable entity) {
         try {
@@ -181,6 +181,15 @@ public class EntityHelper {
             }
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
+        }
+    }
+    public static void tweakAllAttributes(Entity entity, ConfigurationSection attributes, boolean addOrRemove) {
+        if (attributes != null) {
+            Set<String> attributesTweaked = attributes.getKeys(false);
+            for (String attr : attributesTweaked) {
+                tweakAttribute(entity, attr,
+                        attributes.getString(attr), addOrRemove);
+            }
         }
     }
     public static void makeTarget(Entity entity, Entity target) {
@@ -360,13 +369,8 @@ public class EntityHelper {
             // tweak attrMap if the target is not a player
             if (!(entity instanceof Player)) {
                 String attributesPath = "effects." + effect + ".attributes.";
-                if (buffConfig.contains(attributesPath)) {
-                    Set<String> attributesTweaked =
-                            buffConfig.getConfigurationSection(attributesPath).getKeys(false);
-                    for (String attr : attributesTweaked) {
-                        tweakAttribute(entity, attr, buffConfig.getString(attributesPath + attr), false);
-                    }
-                }
+                ConfigurationSection effectSection = TerrariaHelper.buffConfig.getConfigurationSection(attributesPath);
+                tweakAllAttributes(entity, effectSection, false);
             } else {
                 // remove the buff applied
                 for (PotionEffectType effectInflict : getVanillaEffectInflict(effect))
@@ -383,21 +387,16 @@ public class EntityHelper {
             if (effect.equals("扭曲")) {
                 delay = 4;
             } else {
-                delay = buffConfig.getInt("effects." + effect + ".damageInterval", delay);
-                damagePerDelay = buffConfig.getInt("effects." + effect + ".damage", 0);
+                delay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageInterval", delay);
+                damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damage", 0);
                 if (!(entity instanceof Player))
-                    damagePerDelay = buffConfig.getInt("effects." + effect + ".damageMonster", damagePerDelay);
+                    damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageMonster", damagePerDelay);
             }
             // tweak attrMap if the target is not a player
             if (!(entity instanceof Player)) {
                 String attributesPath = "effects." + effect + ".attributes.";
-                if (buffConfig.contains(attributesPath)) {
-                    Set<String> attributesTweaked =
-                            buffConfig.getConfigurationSection(attributesPath).getKeys(false);
-                    for (String attr : attributesTweaked) {
-                        tweakAttribute(entity, attr, buffConfig.getString(attributesPath + attr), true);
-                    }
-                }
+                ConfigurationSection effectSection = TerrariaHelper.buffConfig.getConfigurationSection(attributesPath);
+                tweakAllAttributes(entity, effectSection, true);
             }
             // register delayed task for ticking potion
             int finalDamagePerDelay = damagePerDelay;
@@ -410,7 +409,7 @@ public class EntityHelper {
     public static void applyEffect(Entity entity, String effect, int durationTicks) {
         try {
             // if the buff is not in config, do not do anything
-            if (!buffConfig.contains("effects." + effect)) return;
+            if (!TerrariaHelper.buffConfig.contains("effects." + effect)) return;
             // returns if the entity is immune to this effect (i.e. debuff)
             MetadataValue buffImmuneMetadata = getMetadata(entity, "buffImmune");
             if (buffImmuneMetadata != null) {
@@ -470,10 +469,10 @@ public class EntityHelper {
         }
 
         List<String> deathMessages;
-        if (settingConfig.contains("deathMessages." + damageCause)) {
-            deathMessages = settingConfig.getStringList("deathMessages." + damageCause);
+        if (TerrariaHelper.settingConfig.contains("deathMessages." + damageCause)) {
+            deathMessages = TerrariaHelper.settingConfig.getStringList("deathMessages." + damageCause);
         } else {
-            deathMessages = settingConfig.getStringList("deathMessages.Generic");
+            deathMessages = TerrariaHelper.settingConfig.getStringList("deathMessages.Generic");
         }
         dm = deathMessages.get((int) (Math.random() * deathMessages.size()));
         if (killer != null) {
@@ -1003,7 +1002,7 @@ public class EntityHelper {
         if (victimScoreboardTags.contains(damageInvincibilityFrameName)) return;
         // projectile buff inflict
         if (damager instanceof Projectile) {
-            buffInflict.addAll(projectileConfig.getStringList(damager.getName() + ".buffInflict"));
+            buffInflict.addAll(TerrariaHelper.projectileConfig.getStringList(damager.getName() + ".buffInflict"));
         }
         if (damageSource instanceof Player) {
             // player minion buff inflict
@@ -1024,7 +1023,7 @@ public class EntityHelper {
             }
         } else {
             // monster buff inflict
-            buffInflict.addAll(entityConfig.getStringList(GenericHelper.trimText(damageSource.getName()) + ".buffInflict"));
+            buffInflict.addAll(TerrariaHelper.entityConfig.getStringList(GenericHelper.trimText(damageSource.getName()) + ".buffInflict"));
         }
         // apply (de)buff(s) to victim
         for (String buff : buffInflict) {
@@ -1204,7 +1203,7 @@ public class EntityHelper {
                 String sound;
                 if (victimScoreboardTags.contains("isMechanic")) sound = "entity.generic.explode";
                 else sound = "entity." + damageTaker.getType() + ".death";
-                sound = entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundKilled", sound);
+                sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundKilled", sound);
                 victim.getWorld().playSound(victim.getLocation(), sound, 3, 1);
             } else {
                 // hurts the target
@@ -1214,7 +1213,7 @@ public class EntityHelper {
                     String sound;
                     if (victimScoreboardTags.contains("isMechanic")) sound = "entity.irongolem.hurt";
                     else sound = "entity." + damageTaker.getType() + ".hurt";
-                    sound = entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundDamaged", sound);
+                    sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundDamaged", sound);
                     victim.getWorld().playSound(victim.getLocation(), sound, 3, 1);
                 }
             }
@@ -1256,7 +1255,7 @@ public class EntityHelper {
         handleEntityExplode(source, damageException, source.getLocation());
     }
     public static void handleEntityExplode(Entity source, Entity damageException, Location loc) {
-        double blastRadius = projectileConfig.getDouble(source.getName() + ".blastRadius", 1.5d);
+        double blastRadius = TerrariaHelper.projectileConfig.getDouble(source.getName() + ".blastRadius", 1.5d);
         handleEntityExplode(source, blastRadius, damageException, loc);
     }
     public static void handleEntityExplode(Entity source, double radius, Entity damageException, Location loc) {
@@ -1265,7 +1264,7 @@ public class EntityHelper {
     public static void handleEntityExplode(Entity source, double radius, Entity damageException, Location loc, int ticksDuration) {
         boolean damageShooter = false;
         boolean destroyBlock = false;
-        ConfigurationSection sourceSection = projectileConfig.getConfigurationSection(GenericHelper.trimText(source.getName()));
+        ConfigurationSection sourceSection = TerrariaHelper.projectileConfig.getConfigurationSection(GenericHelper.trimText(source.getName()));
         if (sourceSection != null) {
             damageShooter = sourceSection.getBoolean("blastDamageShooter", false);
             destroyBlock = sourceSection.getBoolean("blastDestroyBlock", false);

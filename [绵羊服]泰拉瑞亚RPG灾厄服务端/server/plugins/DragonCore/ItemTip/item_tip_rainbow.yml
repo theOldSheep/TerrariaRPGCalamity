@@ -1,5 +1,5 @@
 match: "专家模式物品"
-priority: 0
+priority: 1
 Functions:
   open: |-
     界面变量.ww = tip.width;

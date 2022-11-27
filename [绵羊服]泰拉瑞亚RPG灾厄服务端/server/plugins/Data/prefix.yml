@@ -765,22 +765,22 @@ prefixInfo:
     lore:
     - ''
     - §a+2防御
-    - §a+1%防御
+    - §a+0.5%防御
     - §a所受伤害减少0.25%
     attributes:
       defence: 2
-      defenceMulti: 0.01
+      defenceMulti: 0.005
       damageTakenMulti: -0.0025
     rarity: 1
   守护:
     lore:
     - ''
     - §a+4防御
-    - §a+2%防御
+    - §a+1%防御
     - §a所受伤害减少0.5%
     attributes:
       defence: 4
-      defenceMulti: 0.02
+      defenceMulti: 0.01
       damageTakenMulti: -0.005
     priceMultiplier: 1.15
     rarity: 1
@@ -788,11 +788,11 @@ prefixInfo:
     lore:
     - ''
     - §a+6防御
-    - §a+3%防御
+    - §a+1.5%防御
     - §a所受伤害减少0.75%
     attributes:
       defence: 6
-      defenceMulti: 0.03
+      defenceMulti: 0.015
       damageTakenMulti: -0.0075
     priceMultiplier: 1.4
     rarity: 1
@@ -800,11 +800,11 @@ prefixInfo:
     lore:
     - ''
     - §a+8防御
-    - §a+4%防御
+    - §a+2%防御
     - §a所受伤害减少1%
     attributes:
       defence: 8
-      defenceMulti: 0.04
+      defenceMulti: 0.02
       damageTakenMulti: -0.01
     priceMultiplier: 1.6
     rarity: 2

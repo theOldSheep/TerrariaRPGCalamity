@@ -4,6 +4,7 @@ terraria\worldgen\overworld\OverworldCaveGenerator$1.class
 terraria\util\ItemUseHelper.class
 terraria\util\WorldHelper$1.class
 terraria\TerrariaHelper$1.class
+terraria\event\listener\ItemUseAndAttributeListener$1.class
 terraria\util\GameplayHelper.class
 terraria\util\MonsterHelper.class
 terraria\event\listener\PlayerJoinListener.class
@@ -47,6 +48,7 @@ terraria\util\GenericHelper.class
 terraria\event\listener\DropItemSpawnListener.class
 terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
 terraria\event\listener\DamageListener$1.class
+terraria\event\listener\ItemUseAndAttributeListener.class
 terraria\worldgen\underworld\UnderworldChunkGenerator.class
 terraria\entity\TerrariaPotionProjectile.class
 terraria\event\TerrariaProjectileHitEvent.class

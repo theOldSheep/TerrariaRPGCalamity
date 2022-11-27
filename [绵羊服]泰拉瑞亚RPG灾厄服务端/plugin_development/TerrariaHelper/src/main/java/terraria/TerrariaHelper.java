@@ -2,12 +2,9 @@ package terraria;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.PlaceholderHook;
-import net.minecraft.server.v1_12_R1.EntityItem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import terraria.event.listener.RandomTitleListener;
 import terraria.event.listener.*;
 import terraria.util.EntityHelper;
 import terraria.util.GenericHelper;
@@ -15,7 +12,7 @@ import terraria.util.PlayerHelper;
 import terraria.util.YmlHelper;
 import terraria.worldgen.overworld.NoiseGeneratorTest;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -27,6 +24,17 @@ public class TerrariaHelper extends JavaPlugin {
     }
     public static long worldSeed;
     public static TerrariaHelper instance;
+    // YML configs
+    public static final YmlHelper.YmlSection entityConfig = YmlHelper.getFile("plugins/Data/entities.yml");
+    public static final YmlHelper.YmlSection blockConfig = YmlHelper.getFile("plugins/Data/blocks.yml");
+    public static final YmlHelper.YmlSection buffConfig = YmlHelper.getFile("plugins/Data/buff.yml");
+    public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");
+    public static final YmlHelper.YmlSection prefixConfig = YmlHelper.getFile("plugins/Data/prefix.yml");
+    public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/projectiles.yml");
+    public static final YmlHelper.YmlSection recipeConfig = YmlHelper.getFile("plugins/Data/recipes.yml");
+    public static final YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
+    public static final YmlHelper.YmlSection soundConfig = YmlHelper.getFile("plugins/Data/sounds.yml");
+    public static final YmlHelper.YmlSection weaponConfig = YmlHelper.getFile("plugins/Data/weapons.yml");
 
     public TerrariaHelper() {
         super();
@@ -60,24 +68,41 @@ public class TerrariaHelper extends JavaPlugin {
                         for (Map.Entry<String, Integer> effect : effectMap.entrySet()) {
                             if (result.length() > 0) result.append(separator);
                             String effectDisplayName = effect.getKey();
+                            String effectLore = buffConfig.getString("effects." + effectDisplayName + ".tooltip", "我不道啊？！");
                             int effectDisplayTime = effect.getValue();
                             // tweak the display for certain special buffs
-                            switch (effectDisplayName) {
-                                case "伤害星云":
-                                case "生命星云":
-                                case "魔力星云": {
-                                    int effectLevelTime = EntityHelper.getEffectLevelDuration(effectDisplayName);
-                                    int effectActualLevel = effectDisplayTime / effectLevelTime;
-                                    effectDisplayTime %= effectLevelTime;
-                                    // edge case
-                                    if (effectDisplayTime != 0) effectActualLevel ++;
-                                    else effectDisplayTime += effectLevelTime;
-                                    // tweak name
-                                    effectDisplayName += effectActualLevel;
-                                    break;
-                                }
+                            if (EntityHelper.getEffectLevelMax(effectDisplayName) > 1) {
+                                int effectLevel = EntityHelper.getEffectLevel(effectDisplayName, effectDisplayTime);
+                                effectDisplayTime -= (effectLevel - 1) * EntityHelper.getEffectLevelDuration(effectDisplayName);
+                                // tweak name
+                                effectDisplayName += effectLevel;
                             }
-                            result.append(effectDisplayName).append(separator).append(effectDisplayTime);
+                            result.append(effectDisplayName).append(separator)
+                                    .append(effectLore).append(separator)
+                                    .append(effectDisplayTime);
+                        }
+                        long offset = ((Calendar.getInstance().getTimeInMillis() / 500)) % 50;
+                        Set<String> allBuff = buffConfig.getConfigurationSection("effects").getKeys(false);
+                        for (int i = 0; i < 3; i ++) {
+                            for (String effectDisplayName : allBuff) {
+                                if (offset > 0) {
+                                    offset --;
+                                    continue;
+                                }
+                                if (result.length() > 0) result.append(separator);
+                                String effectLore = buffConfig.getString("effects." + effectDisplayName + ".tooltip", "我不道啊？！");
+                                int effectDisplayTime = 160;
+                                // tweak the display for certain special buffs
+                                if (EntityHelper.getEffectLevelMax(effectDisplayName) > 1) {
+                                    int effectLevel = EntityHelper.getEffectLevel(effectDisplayName, effectDisplayTime);
+                                    effectDisplayTime -= (effectLevel - 1) * EntityHelper.getEffectLevelDuration(effectDisplayName);
+                                    // tweak name
+                                    effectDisplayName += effectLevel;
+                                }
+                                result.append(effectDisplayName).append(separator)
+                                        .append(effectLore).append(separator)
+                                        .append(effectDisplayTime);
+                            }
                         }
                         return result.toString();
                     }
@@ -110,6 +135,7 @@ public class TerrariaHelper extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new CraftingListener(), this);
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new DropItemSpawnListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ItemUseAndAttributeListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerKeyToggleListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), this);

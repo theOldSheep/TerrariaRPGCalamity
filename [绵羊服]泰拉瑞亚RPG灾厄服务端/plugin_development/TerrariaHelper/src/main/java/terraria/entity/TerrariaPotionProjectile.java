@@ -1,6 +1,5 @@
 package terraria.entity;
 
-import com.google.common.base.Predicate;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -8,15 +7,14 @@ import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
+import terraria.TerrariaHelper;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.util.EntityHelper;
 import terraria.util.GenericHelper;
-import terraria.util.YmlHelper;
 
 import java.util.*;
 
 public class TerrariaPotionProjectile extends EntityPotion {
-    public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/projectiles.yml");
     // projectile info
     public String projectileType, blockHitAction = "die", trailColor = null;
     public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noGravityTicks = 15, trailLingerTime = 10, penetration = 0;
@@ -30,7 +28,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
 
 
     private void setupProjectileProperties() {
-        ConfigurationSection section = projectileConfig.getConfigurationSection(projectileType);
+        ConfigurationSection section = TerrariaHelper.projectileConfig.getConfigurationSection(projectileType);
         if (section != null) {
             this.bounce = section.getInt("bounce", this.bounce);
             this.enemyInvincibilityFrame = section.getInt("enemyInvincibilityFrame", this.enemyInvincibilityFrame);
@@ -191,7 +189,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         this.world.methodProfiler.a("entityBaseTick");
 
         // ticking from Entity.class
-        Bukkit.broadcastMessage(this.locX + ", " + this.locY + ", " + this.locZ + "||" + this.motX + ", " + this.motY + ", " + this.motZ);
+//        Bukkit.broadcastMessage(this.locX + ", " + this.locY + ", " + this.locZ + "||" + this.motX + ", " + this.motY + ", " + this.motZ);
         double distMovedSqr = new Vector(locX, locY, locZ).distanceSquared(new Vector(lastX, lastY, lastZ));
         this.I = this.J;
         this.lastX = this.locX;
@@ -337,7 +335,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                         velocity.setY(velocity.getY() * -1);
                                         // prevent projectile twitching
                                         if (gravity > 0 && velocity.getY() < yVelocityThreshold) {
-                                            Bukkit.broadcastMessage("Y velocity changed from " + velocity.getY() + " to " + yVelocityThreshold);
+//                                            Bukkit.broadcastMessage("Y velocity changed from " + velocity.getY() + " to " + yVelocityThreshold);
                                             velocity.setY(yVelocityThreshold);
                                         }
                                         break;

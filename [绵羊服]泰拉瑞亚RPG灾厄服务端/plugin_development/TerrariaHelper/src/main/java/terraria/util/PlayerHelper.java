@@ -6,11 +6,13 @@ import net.minecraft.server.v1_12_R1.IChatBaseComponent;
 import net.minecraft.server.v1_12_R1.PacketPlayOutTitle;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.potion.PotionEffect;
@@ -25,8 +27,6 @@ import java.util.logging.Level;
 
 public class PlayerHelper {
     // constants
-    private static YmlHelper.YmlSection soundConfig = YmlHelper.getFile("plugins/Data/sounds.yml");
-    private static YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
     private static HashMap<String, Double> defaultPlayerAttrMap = new HashMap<>(60);
     private static HashSet<String> defaultPlayerEffectInflict = new HashSet<>(8);
     public static final int playerExtraInventorySize = 54;
@@ -81,6 +81,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("projectileSpeed", 0d);
         defaultPlayerAttrMap.put("projectileSpeedMulti", 1d);
         defaultPlayerAttrMap.put("projectileSpeedArrowMulti", 1d);
+        defaultPlayerAttrMap.put("reachExtra", 0d);
         defaultPlayerAttrMap.put("regen", 0d);
         defaultPlayerAttrMap.put("regenMulti", 1d);
         defaultPlayerAttrMap.put("sentryLimit", 1d);
@@ -463,7 +464,7 @@ public class PlayerHelper {
                             if (plyWorld.equals(currBoss.getWorld())) currDist = currBoss.getLocation().distanceSquared(ply.getLocation());
                             if (currDist < minBossDistance) {
                                 minBossDistance = currDist;
-                                current = soundConfig.getString("boss." + bossName, "");
+                                current = TerrariaHelper.soundConfig.getString("boss." + bossName, "");
                                 switch (bossName) {
                                     case "史莱姆之神":
                                         if (! last.equals(current)) {
@@ -547,7 +548,7 @@ public class PlayerHelper {
                         }
                     }
                     // play music if needed
-                    long musicDuration = soundConfig.getLong("lengths." + current, 0L);
+                    long musicDuration = TerrariaHelper.soundConfig.getLong("lengths." + current, 0L);
                     if (printBGMDebugInfo) ply.sendMessage(current + ", " + (musicDuration + lastTime - currentTime) + " ms left.");
                     boolean shouldPlayMusic = false;
                     if (musicDuration + lastTime < currentTime) {
@@ -628,9 +629,14 @@ public class PlayerHelper {
                             }
                             // regen
                             double regenAmount = (regenerationRate + additionalHealthRegen) * perTickMulti * attrMap.getOrDefault("regenMulti", 1d);
-                            ply.setHealth(Math.min(ply.getHealth() + regenAmount, maxHealth));
-                            healthRegenTime += delay;
-                            EntityHelper.setMetadata(ply, "regenTime", Math.min(healthRegenTime, 1201));
+                            double healthAmount = Math.min(ply.getHealth() + regenAmount, maxHealth);
+                            if (healthAmount > 0) {
+                                ply.setHealth(healthAmount);
+                                healthRegenTime += delay;
+                                EntityHelper.setMetadata(ply, "regenTime", Math.min(healthRegenTime, 1201));
+                            } else {
+                                EntityHelper.handleDeath(ply, ply, ply, "Negative_Regen");
+                            }
                         }
                         // mana regen
                         {
@@ -677,7 +683,8 @@ public class PlayerHelper {
         // when they use their weapon after switching hot bar slot or closes an inventory.
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
-                setupAttribute(ply);
+                if (isProperlyPlaying(ply))
+                    setupAttribute(ply);
             }
         }, 0, delay);
     }
@@ -765,9 +772,61 @@ public class PlayerHelper {
         return fileSection.getBoolean("bossDefeated" + progressToCheck, false);
     }
     // TODO
-    public static void setupAttribute(Player player) {
+    public static void setupAttribute(Player ply) {
         try {
-
+            ply.removeScoreboardTag("toolChanged");
+            // re-initialize attribute map
+            EntityHelper.setMetadata(ply, "attrMap", getDefaultPlayerAttributes());
+            // potion effects
+            HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
+            for (Map.Entry<String, Integer> effectInfo : effectMap.entrySet()) {
+                String effect = effectInfo.getKey();
+                int ticksRemaining = effectInfo.getValue();
+                switch (effect) {
+                    case "魔力疾病":
+                        EntityHelper.tweakAttribute(ply, "damageMagicMulti",
+                                (ticksRemaining / 4) + "", false);
+                        break;
+                    default: {
+                        String attributesPath = "effects." + effect + ".attributes";
+                        ConfigurationSection effectSection = TerrariaHelper.buffConfig.getConfigurationSection(attributesPath);
+                        if (effectSection != null) {
+                            int buffLevel = EntityHelper.getEffectLevel(effect, ticksRemaining);
+                            Set<String> attributesTweaked = effectSection.getKeys(false);
+                            for (String attr : attributesTweaked) {
+                                // other buff may contain non-string attributes, but leveled buff usually do not.
+                                // so it is safe to read the attribute from level > 1 as double.
+                                // if a buff can be leveled but its level is 1, it does not matter.
+                                if (buffLevel > 1)
+                                    EntityHelper.tweakAttribute(ply, attr,
+                                            (effectSection.getDouble(attr) * buffLevel) + "", true);
+                                else
+                                    EntityHelper.tweakAttribute(ply, attr,
+                                            effectSection.getString(attr), true);
+                            }
+                        }
+                    }
+                }
+            }
+            PlayerInventory plyInv = ply.getInventory();
+            // weapon
+            {
+                ItemStack tool = plyInv.getItemInMainHand();
+                String toolCombatType = ItemHelper.getItemCombatType(tool);
+                if (toolCombatType.equals("武器")) {
+                    String[] toolInfo = ItemHelper.splitItemName(tool);
+                    // attributes from the item itself
+                    String attributesPath = toolInfo[1] + ".attributes";
+                    ConfigurationSection allAttributes = TerrariaHelper.itemConfig.getConfigurationSection(attributesPath);
+                    EntityHelper.tweakAllAttributes(ply, allAttributes, true);
+                    // attributes from the item's prefix
+                    String attributesPathPrefix = "prefixInfo." + toolInfo[0] +  ".attributes";
+                    ConfigurationSection allAttributesPrefix = TerrariaHelper.prefixConfig.getConfigurationSection(attributesPathPrefix);
+                    EntityHelper.tweakAllAttributes(ply, allAttributesPrefix, true);
+                }
+            }
+            // TODO: armor
+            // TODO: accessories
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setupAttribute ", e);
         }
@@ -776,9 +835,9 @@ public class PlayerHelper {
         HashMap<String, Inventory> inventories = new HashMap<>();
         YmlHelper.YmlSection plyFile = YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml");
         // storage inventories (piggy bank, void bag)
-        List<String> otherInvs = settingConfig.getStringList("settings.playerInventories");
+        List<String> otherInvs = TerrariaHelper.settingConfig.getStringList("settings.playerInventories");
         for (String invName : otherInvs) {
-            String title = settingConfig.getString("settings.playerInventoryTitles." + invName, "");
+            String title = TerrariaHelper.settingConfig.getString("settings.playerInventoryTitles." + invName, "");
             List<String> contents = plyFile.getStringList("inventory." + invName);
             if (contents == null) contents = new ArrayList<>(1);
             Inventory inv = Bukkit.createInventory(ply, playerExtraInventorySize, title);

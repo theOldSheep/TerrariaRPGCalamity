@@ -20,7 +20,8 @@ public class DropItemSpawnListener implements Listener {
         Item droppedItem = e.getEntity();
         if (((CraftItem) droppedItem).getHandle() instanceof TerrariaItem) return;
         ItemStack droppedItemStack = droppedItem.getItemStack();
-        ItemHelper.dropItem(droppedItem.getLocation(), droppedItemStack).setVelocity(droppedItem.getVelocity());
+        Item newItem = ItemHelper.dropItem(droppedItem.getLocation(), droppedItemStack);
+        if (newItem != null) newItem.setVelocity(droppedItem.getVelocity());
         droppedItem.remove();
     }
     @EventHandler(priority = EventPriority.LOW)
@@ -29,7 +30,8 @@ public class DropItemSpawnListener implements Listener {
             for (Entity entity : e.getChunk().getEntities())
                 if (entity instanceof Item) {
                     Item droppedItem = (Item) entity;
-                    ItemHelper.dropItem(droppedItem.getLocation(), droppedItem.getItemStack()).setVelocity(droppedItem.getVelocity());
+                    Item newItem = ItemHelper.dropItem(droppedItem.getLocation(), droppedItem.getItemStack());
+                    if (newItem != null) newItem.setVelocity(droppedItem.getVelocity());
                     droppedItem.remove();
                 }
         }, 1);

@@ -15,6 +15,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import terraria.TerrariaHelper;
 import terraria.entity.TerrariaItem;
 
 import java.util.*;
@@ -27,15 +28,10 @@ public class ItemHelper {
     public static HashMap<String, VexGui> craftingGuiMap;
     public static HashMap<String, String> craftingGuisRecipeIndexMap;
     public static HashMap<String, Integer> craftingGuiLengthMap;
-    private static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");
-    private static final YmlHelper.YmlSection prefixConfig = YmlHelper.getFile("plugins/Data/prefix.yml");
-    private static final YmlHelper.YmlSection recipeConfig = YmlHelper.getFile("plugins/Data/recipes.yml");
-    private static final YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
-    private static final YmlHelper.YmlSection weaponConfig = YmlHelper.getFile("plugins/Data/weapons.yml");
     // recipe init helpers
     private static int getMaxRecipeLevel(String station) {
         int maxLevel = 1;
-        ConfigurationSection blockSection = recipeConfig.getConfigurationSection(station);
+        ConfigurationSection blockSection = TerrariaHelper.recipeConfig.getConfigurationSection(station);
         Set<String> nodes = blockSection.getKeys(false);
         for (String recipeName : nodes) {
             int requireLevel = blockSection.getInt(recipeName + ".requireLevel", 0);
@@ -47,7 +43,7 @@ public class ItemHelper {
     }
     private static void setupRecipesForStation(String station, int level) {
         String bg = "[local]GuiBG.png";
-        ConfigurationSection blockSection = recipeConfig.getConfigurationSection(station);
+        ConfigurationSection blockSection = TerrariaHelper.recipeConfig.getConfigurationSection(station);
         ArrayList<ScrollingListComponent> itemSlots = new ArrayList<>();
         int recipeIndex = 1;
         // the recipe added by the block itself
@@ -75,7 +71,7 @@ public class ItemHelper {
             for (String subStation : containedStations) {
                 int subStationLevel = containedStationSection.getInt(subStation, 1);
                 // loop through the station info for each
-                ConfigurationSection subStationSection = recipeConfig.getConfigurationSection(subStation);
+                ConfigurationSection subStationSection = TerrariaHelper.recipeConfig.getConfigurationSection(subStation);
                 Set<String> nodes = subStationSection.getKeys(false);
                 for (String recipeName : nodes) {
                     if (recipeName.equals("containedStations")) continue;
@@ -108,8 +104,8 @@ public class ItemHelper {
     }
     public static void setupItemRecipe(boolean printDebugMessage) {
         Bukkit.clearRecipes();
-        Set<String> items = itemConfig.getKeys(false);
-        Set<String> craftStations = recipeConfig.getKeys(false);
+        Set<String> items = TerrariaHelper.itemConfig.getKeys(false);
+        Set<String> craftStations = TerrariaHelper.recipeConfig.getKeys(false);
         itemMap = new HashMap<>();
         craftingGuiMap = new HashMap<>();
         craftingGuisRecipeIndexMap = new HashMap<>();
@@ -149,7 +145,7 @@ public class ItemHelper {
         // setup material tooltip
         Set<String> allMaterials = new HashSet<>();
         for (String block : craftStations) {
-            ConfigurationSection blockSection = recipeConfig.getConfigurationSection(block);
+            ConfigurationSection blockSection = TerrariaHelper.recipeConfig.getConfigurationSection(block);
             Set<String> nodes = blockSection.getKeys(false);
             for (String recipeIndex : nodes) {
                 List<String> currMaterials = blockSection.getStringList(recipeIndex + ".requireItem");
@@ -161,6 +157,7 @@ public class ItemHelper {
             }
         }
         for (String mat : allMaterials) {
+            // no cloning here needed, as we are intended to tweak the item value.
             ItemStack item = itemMap.get(mat);
             if (item == null) {
                 if (printDebugMessage) Bukkit.getLogger().log(Level.SEVERE, mat + " is supposed to be an crafting material, but it is not found.");
@@ -244,23 +241,32 @@ public class ItemHelper {
         if (item == null) return 0;
         return getWorth(item.getItemMeta().getDisplayName());
     }
-    public static boolean canReforge(ItemStack item) {
+    public static String getItemCombatType(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null && meta.hasLore()) {
             String trimLore = GenericHelper.trimText(meta.getLore().get(0));
             switch (trimLore) {
                 case "[饰品]":
-                    return true;
+                    return "饰品";
                 case "[装备]":
-                    return false;
+                    return "装备";
             }
+        }
+        return "武器";
+    }
+    public static boolean canReforge(ItemStack item) {
+        switch (getItemCombatType(item)) {
+            case "饰品":
+                return true;
+            case "装备":
+                return false;
         }
         // now determine if the item is a proper weapon.
         String itemName = splitItemName(item)[1];
         // items that deals no damage, for example, bug net, shall not have any prefix
-        if (itemConfig.getDouble(itemName + ".attributes.damage", -1) <= 0) return false;
+        if (TerrariaHelper.itemConfig.getDouble(itemName + ".attributes.damage", -1) <= 0) return false;
         // thrown projectile (grenades, for example), can not have any prefix neither
-        String weaponType = weaponConfig.getString(itemName + ".type", "THROW");
+        String weaponType = TerrariaHelper.weaponConfig.getString(itemName + ".type", "THROW");
         return !weaponType.startsWith("THROW");
     }
     public static HashMap<String, Double> getApplicablePrefix(ItemStack item) {
@@ -270,7 +276,7 @@ public class ItemHelper {
         if (meta.hasLore()) {
             String trimLore = GenericHelper.trimText(meta.getLore().get(0));
             if (trimLore.equals("[饰品]")) {
-                for (String prefix : prefixConfig.getStringList("prefixList.Accessory")) {
+                for (String prefix : TerrariaHelper.prefixConfig.getStringList("prefixList.Accessory")) {
                     String[] prefixInfo = prefix.split(":");
                     result.put(prefixInfo[0], Double.parseDouble(prefixInfo[1]));
                 }
@@ -281,7 +287,7 @@ public class ItemHelper {
         ArrayList<String> prefixClassesApplicable = new ArrayList<>(4);
         prefixClassesApplicable.add("Universal");
         String itemName = splitItemName(item)[1];
-        switch (weaponConfig.getString(itemName + ".type").toLowerCase()) {
+        switch (TerrariaHelper.weaponConfig.getString(itemName + ".type").toLowerCase()) {
             case "stab":
             case "swing":
             case "whip":
@@ -302,7 +308,7 @@ public class ItemHelper {
                 break;
         }
         for (String prefixClass : prefixClassesApplicable) {
-            for (String prefix : prefixConfig.getStringList("prefixList." + prefixClass)) {
+            for (String prefix : TerrariaHelper.prefixConfig.getStringList("prefixList." + prefixClass)) {
                 String[] prefixInfo = prefix.split(":");
                 result.put(prefixInfo[0], Double.parseDouble(prefixInfo[1]));
             }
@@ -341,7 +347,7 @@ public class ItemHelper {
                 // get the itemstack
                 ItemStack resultItem;
                 try {
-                    resultItem = itemMap.get(itemType);
+                    resultItem = itemMap.get(itemType).clone();
                     if (resultItem == null || resultItem.getType() == Material.AIR) {
                         // check if the itemType is a material
                         try {
@@ -367,17 +373,17 @@ public class ItemHelper {
                         lore.add(ChatColor.COLOR_CHAR + "7" + prefix);
                     } else {
                         // generate color according to rarity
-                        int itemBaseRarity = itemConfig.getInt(itemType + ".rarity", 0);
-                        int prefixRarity = prefixConfig.getInt("prefixInfo." + prefix + ".rarity", 0);
+                        int itemBaseRarity = TerrariaHelper.itemConfig.getInt(itemType + ".rarity", 0);
+                        int prefixRarity = TerrariaHelper.prefixConfig.getInt("prefixInfo." + prefix + ".rarity", 0);
                         // if rarity color [itemBaseRarity + prefixRarity] is set, use it
                         // otherwise, resolve to rarity color [itemBaseRarity]
-                        String rarityColorPrefix = settingConfig.getString("rarity." + (itemBaseRarity + prefixRarity),
-                                settingConfig.getString("rarity." + itemBaseRarity, "§r"));
+                        String rarityColorPrefix = TerrariaHelper.settingConfig.getString("rarity." + (itemBaseRarity + prefixRarity),
+                                TerrariaHelper.settingConfig.getString("rarity." + itemBaseRarity, "§r"));
                         meta.setDisplayName(rarityColorPrefix + information);
                         // add prefix lore to item
                         if (meta.hasLore()) lore = meta.getLore();
                         else lore = new ArrayList<>();
-                        lore.addAll(prefixConfig.getStringList("prefixInfo." + prefix + ".lore"));
+                        lore.addAll(TerrariaHelper.prefixConfig.getStringList("prefixInfo." + prefix + ".lore"));
                     }
                     meta.setLore(lore);
                     resultItem.setItemMeta(meta);
@@ -389,7 +395,11 @@ public class ItemHelper {
             return notFoundDefault;
         }
     }
-
+    public static ItemStack getRawItem(String information) {
+        if (information != null && itemMap.containsKey(information))
+            return itemMap.get(information).clone();
+        return new ItemStack(Material.AIR);
+    }
     private static List<String> getLoreDescription(ConfigurationSection attributeSection) {
         // the performance of this function is not very critical
         // it is called only once per item when the plugin loads
@@ -582,8 +592,8 @@ public class ItemHelper {
     }
     public static ItemStack getItemFromYML(String itemName) {
         try {
-            if (itemConfig.contains(itemName)) {
-                ConfigurationSection itemSection = itemConfig.getConfigurationSection(itemName);
+            if (TerrariaHelper.itemConfig.contains(itemName)) {
+                ConfigurationSection itemSection = TerrariaHelper.itemConfig.getConfigurationSection(itemName);
                 Material material = Material.valueOf(itemSection.getString("item", "AIR"));
                 ItemStack item = new ItemStack(material);
                 // air has no item meta.
@@ -592,7 +602,7 @@ public class ItemHelper {
                 byte data = (byte) itemSection.getInt("data", 0);
                 if (data != 0) item.getData().setData(data);
                 int rarity = itemSection.getInt("rarity", 0);
-                String rarityColor = settingConfig.getString("rarity." + rarity, "§r");
+                String rarityColor = TerrariaHelper.settingConfig.getString("rarity." + rarity, "§r");
                 meta.setDisplayName(rarityColor + itemName);
                 List<String> lore = itemSection.getStringList("lore");
                 List<String> loreDescription = getLoreDescription(itemSection.getConfigurationSection("attributes"));
@@ -633,6 +643,9 @@ public class ItemHelper {
         }
     }
     public static Item dropItem(Location loc, String itemToDropDescription) {
+        return dropItem(loc, itemToDropDescription, true);
+    }
+    public static Item dropItem(Location loc, String itemToDropDescription, boolean randomizePrefixIfNoneExists) {
         String[] itemInfo = itemToDropDescription.split(":");
         // 物品名:最小数量:最大数量:几率
         int itemAmount = 1;
@@ -640,6 +653,7 @@ public class ItemHelper {
             case 4:
                 double chance = Double.parseDouble(itemInfo[3]);
                 if (Math.random() > chance) return null;
+                break;
             case 3:
                 int itemMax = Integer.parseInt(itemInfo[2]);
                 int itemMin = Integer.parseInt(itemInfo[1]);
@@ -647,8 +661,9 @@ public class ItemHelper {
                 break;
             case 2:
                 itemAmount = Integer.parseInt(itemInfo[1]);
+                break;
         }
-        ItemStack itemToDrop = getItemFromDescription(itemInfo[0]);
+        ItemStack itemToDrop = getItemFromDescription(itemInfo[0], randomizePrefixIfNoneExists);
         itemToDrop.setAmount(itemAmount);
         return dropItem(loc, itemToDrop);
     }

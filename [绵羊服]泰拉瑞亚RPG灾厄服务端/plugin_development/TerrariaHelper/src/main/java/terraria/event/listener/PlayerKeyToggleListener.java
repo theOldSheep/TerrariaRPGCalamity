@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import terraria.util.PlayerHelper;
 
 public class PlayerKeyToggleListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
@@ -23,7 +24,10 @@ public class PlayerKeyToggleListener implements Listener {
             case "S":
             case "D":
             case "SPACE":
-
+                break;
+            case "R":
+                PlayerHelper.handleGrapplingHook(ply);
+                break;
         }
         Bukkit.getServer().broadcastMessage("KEYDOWN: " + e.getKey());
     }

@@ -1,10 +1,9 @@
 package terraria.util;
 
 import net.minecraft.server.v1_12_R1.BlockPosition;
+import net.minecraft.server.v1_12_R1.ItemStack;
 import net.minecraft.server.v1_12_R1.PacketPlayOutBlockBreakAnimation;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -12,11 +11,24 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
+import terraria.TerrariaHelper;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GameplayHelper {
-    private static final YmlHelper.YmlSection blockConfig = YmlHelper.getFile("plugins/Data/blocks.yml");
+    // this set is also used by ItemUseHelper to determine ray trace block result.
+    // that is, materials in this set would be ignored while mining.
+    public static Set<Material> noMiningSet;
+    static {
+        noMiningSet = new HashSet<>();
+        noMiningSet.add(Material.AIR);
+        noMiningSet.add(Material.WATER);
+        noMiningSet.add(Material.STATIONARY_WATER);
+        noMiningSet.add(Material.LAVA);
+        noMiningSet.add(Material.STATIONARY_LAVA);
+    }
     public static String getBlockCategory(Block block) {
         switch (block.getType()) {
             case ANVIL:
@@ -79,27 +91,24 @@ public class GameplayHelper {
             blockToBreak.getWorld().playSound(blockToBreak.getLocation(),
                     "block." + soundCategory + ".break",1, 1);
     }
-    private static ConfigurationSection getBlockConfigSection(Block blockToBreak) {
+    private static ConfigurationSection getblockConfigSection(Block blockToBreak) {
         String material = blockToBreak.getType().toString();
         String data = String.valueOf(blockToBreak.getData());
-        if (blockConfig.contains(material + "_" + data)) {
-            return blockConfig.getConfigurationSection(material + "_" + data);
-        } if (blockConfig.contains(material)) {
-            return blockConfig.getConfigurationSection(material);
+        if (TerrariaHelper.blockConfig.contains(material + "_" + data)) {
+            return TerrariaHelper.blockConfig.getConfigurationSection(material + "_" + data);
+        } if (TerrariaHelper.blockConfig.contains(material)) {
+            return TerrariaHelper.blockConfig.getConfigurationSection(material);
         }
         return null;
     }
     public static boolean isBreakable(Block block, Player ply) {
+        if (noMiningSet.contains(block.getType())) return false;
         switch (block.getType()) {
             case BEDROCK:
             case ENDER_PORTAL_FRAME:
-            case WATER:
-            case STATIONARY_WATER:
-            case LAVA:
-            case STATIONARY_LAVA:
                 return false;
         }
-        ConfigurationSection breakRule = getBlockConfigSection(block);
+        ConfigurationSection breakRule = getblockConfigSection(block);
         if (breakRule != null) {
             if (breakRule.contains("progress")) {
                 // requires the player to defeat a certain boss
@@ -125,7 +134,7 @@ public class GameplayHelper {
         int breakingProgress = 0;
         if (temp != null) breakingProgress = temp.asInt();
         // get breaking progress required to break the block
-        ConfigurationSection configSection = getBlockConfigSection(blockToBreak);
+        ConfigurationSection configSection = getblockConfigSection(blockToBreak);
         int breakingProgressMax = 100;
         if (configSection != null)
             breakingProgressMax = configSection.getInt("totalProgress");
@@ -166,15 +175,51 @@ public class GameplayHelper {
         if (blockToBreak.getType() == Material.AIR) return;
         playBlockParticleAndSound(blockToBreak);
         if (!isBreakable(blockToBreak, ply)) return;
-        ConfigurationSection configSection = getBlockConfigSection(blockToBreak);
+        ConfigurationSection configSection = getblockConfigSection(blockToBreak);
         if (configSection != null) {
             List<String> itemsToDrop = configSection.getStringList("dropItem");
+            Location locToDrop = blockToBreak.getLocation().add(0.5, 0.4, 0.5);
             for (String currItem : itemsToDrop) {
-                ItemHelper.dropItem(blockToBreak.getLocation().add(0.5, 0.4, 0.5), currItem);
+                String[] itemInfo = currItem.split(":");
+                // 物品名:最小数量:最大数量:几率
+                int itemAmount = 1;
+                switch (itemInfo.length) {
+                    case 4:
+                        double chance = Double.parseDouble(itemInfo[3]);
+                        if (Math.random() > chance) continue;
+                        break;
+                    case 3:
+                        int itemMax = Integer.parseInt(itemInfo[2]);
+                        int itemMin = Integer.parseInt(itemInfo[1]);
+                        itemAmount = (int) (itemMin + (itemMax - itemMin + 1) * Math.random());
+                        break;
+                    case 2:
+                        itemAmount = Integer.parseInt(itemInfo[1]);
+                }
+                org.bukkit.inventory.ItemStack itemToDrop = ItemHelper.getRawItem(itemInfo[0]);
+                itemToDrop.setAmount(itemAmount);
+                ItemHelper.dropItem(locToDrop, itemToDrop);
             }
         } else {
             Bukkit.broadcastMessage("Not handled block type: " + blockToBreak.getType() + " with data " + blockToBreak.getData());
         }
         blockToBreak.setType(Material.AIR);
+    }
+    public static void playerRightClickBlock(Player ply, Block blk) {
+        switch (blk.getType()) {
+            // wool changes color
+            case WOOL: {
+                int data = blk.getData();
+                Bukkit.broadcastMessage(data + "");
+                if (ply.isSneaking())
+                    data = (data + 1) % 16;
+                else
+                    data = (data + 15) % 16;
+                Bukkit.broadcastMessage(data + "");
+                int finalData = data;
+                Bukkit.getScheduler().runTask(TerrariaHelper.getInstance(), () -> blk.setData((byte) finalData));
+                break;
+            }
+        }
     }
 }

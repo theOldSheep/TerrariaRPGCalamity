@@ -12,6 +12,7 @@ import org.bukkit.block.Furnace;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Vex;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -261,6 +262,7 @@ public class CraftingListener implements Listener {
     }
     public boolean handleCrafting(Player ply, Block block) {
         if (!PlayerHelper.isProperlyPlaying(ply)) return false;
+        if (ply.getScoreboardTags().contains("useCD")) return false;
         if (ply.getScoreboardTags().contains("tempCraftingCD")) return false;
         // setup work station info
         String station;
@@ -356,18 +358,21 @@ public class CraftingListener implements Listener {
         return true;
     }
     // opens a new crafting gui to the player when a work station is interacted
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent e) {
         if (e.isCancelled()) return;
         Block block = e.getClickedBlock();
         if (block == null) return;
         boolean guiOpened = handleCrafting(e.getPlayer(), block);
-        if (guiOpened) e.setCancelled(true);
+        if (guiOpened) {
+            e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+        }
     }
     @EventHandler(priority = EventPriority.LOW)
     public void onCraftingGridClick(InventoryClickEvent e) {
         if (e.getSlotType() == InventoryType.SlotType.RESULT)
-            handleCrafting((Player) e.getInventory().getHolder(), null);
+            handleCrafting((Player) e.getWhoClicked(), null);
     }
     // prevents the player from opening GUI of some special work stations
     @EventHandler(priority = EventPriority.LOW)

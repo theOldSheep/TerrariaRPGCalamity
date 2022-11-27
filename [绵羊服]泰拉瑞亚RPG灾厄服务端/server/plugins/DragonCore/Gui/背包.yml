@@ -8,6 +8,7 @@
 match: "GuiInventory"
 hideHud:
   - "hotbar"
+  - "potion"
 allowEscClose: true
 interactHud: true # 可以看到血量/魔力提示
 
@@ -201,7 +202,7 @@ crafting_slot:
   height: 12
   identifier: "container_0"
   drawBackground: false
-  tip: "制作窗口"
+  tip: "&2&3&3&r制作窗口"
 # 防御
 defence_texture:
   x: "方法.取屏幕宽度-50"
@@ -209,13 +210,14 @@ defence_texture:
   width: 14
   height: 14
   texture: "gui/defence.png"
+  tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')"
 defence_label:
   x: "方法.取屏幕宽度-43"
   y: "方法.取屏幕高度-37"
   center: true
   scale: 0.8
   texts: "方法.合并文本('&#CCCCCC&l', 方法.取变量('terraria_defence'))"
-  tip: "方法.合并文本(方法.取变量('terraria_defence'), ' 防御力')"
+  tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')"
 # 背包
 backpack_label:
   x: "17"
