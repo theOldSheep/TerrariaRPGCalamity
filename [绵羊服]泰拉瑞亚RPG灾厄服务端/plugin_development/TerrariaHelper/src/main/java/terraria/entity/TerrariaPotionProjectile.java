@@ -19,7 +19,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     // projectile info
     public String projectileType, blockHitAction = "die", trailColor = null;
     public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noGravityTicks = 15, trailLingerTime = 10, penetration = 0;
-    public double autoTraceAbility = 4, autoTraceRadius = 12, blastRadius = 1.5, bounceVelocityMulti = 1, gravity = 0.05, maxSpeed = 2, projectileSize = 0.125, speedMultiPerTick = 1;
+    public double autoTraceAbility = 4, autoTraceRadius = 12, blastRadius = 1.5, bounceVelocityMulti = 1, frictionFactor = 0.05, gravity = 0.05, maxSpeed = 2, projectileSize = 0.125, speedMultiPerTick = 1;
     public boolean autoTrace = false, blastDamageShooter = false, bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = true;
 
     public double speed;
@@ -45,6 +45,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.autoTraceRadius = section.getDouble("autoTraceRadius", this.autoTraceRadius);
             this.blastRadius = section.getDouble("blastRadius", this.blastRadius);
             this.bounceVelocityMulti = section.getDouble("bounceVelocityMulti", this.bounceVelocityMulti);
+            this.frictionFactor = section.getDouble("frictionFactor", this.frictionFactor);
             this.gravity = section.getDouble("gravity", this.gravity);
             this.maxSpeed = section.getDouble("maxSpeed", this.maxSpeed);
             this.projectileSize = section.getDouble("projectileSize", this.projectileSize);
@@ -196,7 +197,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             case "bounce":
             case "slide": {
                 double distCheck = distCheckOnGround * (gravity > 0 ? -1 : 1);
-                Vec3D checkLocInitial = new Vec3D(this.locX, this.locY - distCheck, this.locZ);
+                Vec3D checkLocInitial = new Vec3D(this.locX, this.locY, this.locZ);
                 Vec3D checkLocTerminal = new Vec3D(this.locX, this.locY + distCheck, this.locZ);
                 MovingObjectPosition onGroundResult = HitEntityInfo.rayTraceBlocks(this.world, checkLocInitial, checkLocTerminal);
                 this.onGround = onGroundResult != null;
@@ -295,8 +296,11 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     velocity.normalize().multiply(speed);
             } else {
                 extraMovingTick();
-                // gravity
-                if (!this.onGround && this.ticksLived >= noGravityTicks) {
+                if (this.onGround) {
+                    velocity.multiply(1 - frictionFactor);
+                    // friction
+                }else if (this.ticksLived >= noGravityTicks) {
+                    // gravity
                     velocity.subtract(new Vector(0, gravity, 0));
                 }
                 // regulate velocity

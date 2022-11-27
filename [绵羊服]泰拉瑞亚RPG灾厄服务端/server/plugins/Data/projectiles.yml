@@ -48,6 +48,8 @@
     trailColor: 255|125|125
     # 轨迹停留时间（单位：帧，1秒=20帧）。不写则视为10。
     trailLingerTime: 10
+    # blockHitAction为bounce（手榴弹）或slide的弹射物在与地面摩擦时的阻力，0为无阻力，1为马上停止。不写则视为0.05。
+    frictionFactor: 0.05
     # 攻击造成的buff，格式为  buff名|buff时长（单位：帧）|几率。可不写。
     buffInflict:
         - "霜火|100|0.35"
