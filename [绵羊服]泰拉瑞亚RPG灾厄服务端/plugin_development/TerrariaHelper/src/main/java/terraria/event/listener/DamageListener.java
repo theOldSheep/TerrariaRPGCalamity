@@ -49,7 +49,6 @@ public class DamageListener implements Listener {
                             boundingBox.a + length, boundingBox.b + height, boundingBox.c + width);
                     double maxDmg = 0;
                     Entity damager = null;
-                    String damageType = null;
                     for (Entity curr : victim.getWorld().getNearbyEntities(centerLoc, length, height, width)) {
                         if (! EntityHelper.checkCanDamage(curr, victim, false)) continue;
                         if (curr instanceof LivingEntity && ((LivingEntity) curr).getHealth() <= 0) continue;
@@ -61,11 +60,10 @@ public class DamageListener implements Listener {
                         if (currDmg > maxDmg) {
                             maxDmg = currDmg;
                             damager = curr;
-                            damageType = currDmgType;
                         }
                     }
                     if (damager != null)
-                        EntityHelper.handleDamage(damager, victim, maxDmg, damageType);
+                        EntityHelper.handleDamage(damager, victim, maxDmg, "DirectDamage");
                 }
                 break;
         }

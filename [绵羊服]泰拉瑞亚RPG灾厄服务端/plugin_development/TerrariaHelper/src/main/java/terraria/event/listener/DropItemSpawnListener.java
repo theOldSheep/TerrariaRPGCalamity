@@ -23,6 +23,7 @@ public class DropItemSpawnListener implements Listener {
         Item newItem = ItemHelper.dropItem(droppedItem.getLocation(), droppedItemStack);
         if (newItem != null) newItem.setVelocity(droppedItem.getVelocity());
         droppedItem.remove();
+        e.setCancelled(true);
     }
     @EventHandler(priority = EventPriority.LOW)
     public void onChunkLoad(ChunkLoadEvent e) {

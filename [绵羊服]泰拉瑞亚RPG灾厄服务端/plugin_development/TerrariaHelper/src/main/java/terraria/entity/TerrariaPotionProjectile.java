@@ -15,6 +15,7 @@ import terraria.util.GenericHelper;
 import java.util.*;
 
 public class TerrariaPotionProjectile extends EntityPotion {
+    private static final double distFromBlock = 1e-5, distCheckOnGround = 1e-1;
     // projectile info
     public String projectileType, blockHitAction = "die", trailColor = null;
     public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noGravityTicks = 15, trailLingerTime = 10, penetration = 0;
@@ -188,9 +189,22 @@ public class TerrariaPotionProjectile extends EntityPotion {
         // start timing
         this.world.methodProfiler.a("entityBaseTick");
 
-        // ticking from Entity.class
+        // basic ticking (mainly from Entity.class)
+        this.onGround = false;
+        switch (blockHitAction) {
+            // only bouncing and sliding projectiles should consider on ground cases (prevent glitch etc.)
+            case "bounce":
+            case "slide": {
+                double distCheck = distCheckOnGround * (gravity > 0 ? -1 : 1);
+                Vec3D checkLocInitial = new Vec3D(this.locX, this.locY - distCheck, this.locZ);
+                Vec3D checkLocTerminal = new Vec3D(this.locX, this.locY + distCheck, this.locZ);
+                MovingObjectPosition onGroundResult = HitEntityInfo.rayTraceBlocks(this.world, checkLocInitial, checkLocTerminal);
+                this.onGround = onGroundResult != null;
+            }
+        }
+
 //        Bukkit.broadcastMessage(this.locX + ", " + this.locY + ", " + this.locZ + "||" + this.motX + ", " + this.motY + ", " + this.motZ);
-        double distMovedSqr = new Vector(locX, locY, locZ).distanceSquared(new Vector(lastX, lastY, lastZ));
+//        Bukkit.broadcastMessage(this.onGround + ", " + ticksLived + "/" + liveTime);
         this.I = this.J;
         this.lastX = this.locX;
         this.lastY = this.locY;
@@ -282,7 +296,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             } else {
                 extraMovingTick();
                 // gravity
-                if (this.ticksLived >= noGravityTicks && gravity > 0) {
+                if (!this.onGround && this.ticksLived >= noGravityTicks) {
                     velocity.subtract(new Vector(0, gravity, 0));
                 }
                 // regulate velocity
@@ -302,7 +316,6 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     // gravity turns on after bouncing
                     this.noGravityTicks = this.ticksLived;
                     this.inGround = true;
-                    double distFromBlock = 1e-9;
                     switch (blockHitAction) {
                         case "bounce":
                         case "slide": {
@@ -334,15 +347,14 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                     case UP:
                                         velocity.setY(velocity.getY() * -1);
                                         // prevent projectile twitching
-                                        if (gravity > 0 && velocity.getY() < yVelocityThreshold) {
-//                                            Bukkit.broadcastMessage("Y velocity changed from " + velocity.getY() + " to " + yVelocityThreshold);
-                                            velocity.setY(yVelocityThreshold);
-                                        }
+                                        if (gravity > 0 && velocity.getY() < yVelocityThreshold)
+                                            velocity.setY(0);
                                         break;
                                     case DOWN:
                                         velocity.setY(velocity.getY() * -1);
                                         // prevent projectile twitching
-                                        if (gravity < 0 && velocity.getY() > yVelocityThreshold) velocity.setY(yVelocityThreshold);
+                                        if (gravity < 0 && velocity.getY() > yVelocityThreshold)
+                                            velocity.setY(0);
                                         break;
                                     case EAST:
                                     case WEST:
@@ -398,8 +410,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 this.yaw = (float) (MathHelper.c(this.motX, this.motZ) * 57.2957763671875D);
                 for (this.pitch = (float) (MathHelper.c(this.motY, horizontalSpeed) * 57.2957763671875D);
                      this.pitch - this.lastPitch < -180.0F;
-                     this.lastPitch -= 360.0F)
-                    ;
+                     this.lastPitch -= 360.0F);
                 while (this.pitch - this.lastPitch >= 180.0F)
                     this.lastPitch += 360.0F;
                 while (this.yaw - this.lastYaw < -180.0F)
@@ -468,7 +479,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
 
         // prevents client glitch
         this.velocityChanged = true;
-        this.positionChanged = true;
+//        this.positionChanged = true;
 
         this.motX = velocity.getX();
         this.motY = velocity.getY();

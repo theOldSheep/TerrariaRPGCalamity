@@ -1,7 +1,6 @@
 package terraria.util;
 
 import net.minecraft.server.v1_12_R1.BlockPosition;
-import net.minecraft.server.v1_12_R1.ItemStack;
 import net.minecraft.server.v1_12_R1.PacketPlayOutBlockBreakAnimation;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -35,22 +34,22 @@ public class GameplayHelper {
                 return "ANVIL";
             case WOOL:
                 return "CLOTH";
-            case DIRT:
             case GLASS:
-            case LEAVES:
-            case LEAVES_2:
             case ICE:
             case PACKED_ICE:
             case FROSTED_ICE:
                 return "GLASS";
+            case LEAVES:
+            case LEAVES_2:
             case GRASS:
             case MYCEL:
-            case CLAY:
             case PUMPKIN:
             case PUMPKIN_STEM:
-            case NETHERRACK:
                 return "GRASS";
+            case CLAY:
+            case DIRT:
             case GRAVEL:
+            case NETHERRACK:
                 return "GRAVEL";
             case LADDER:
                 return "LADDER";
@@ -89,9 +88,9 @@ public class GameplayHelper {
                 data);
         String soundCategory = getBlockCategory(blockToBreak);
             blockToBreak.getWorld().playSound(blockToBreak.getLocation(),
-                    "block." + soundCategory + ".break",1, 1);
+                    "block." + soundCategory + ".place",2, 1);
     }
-    private static ConfigurationSection getblockConfigSection(Block blockToBreak) {
+    private static ConfigurationSection getBlockConfigSection(Block blockToBreak) {
         String material = blockToBreak.getType().toString();
         String data = String.valueOf(blockToBreak.getData());
         if (TerrariaHelper.blockConfig.contains(material + "_" + data)) {
@@ -108,7 +107,7 @@ public class GameplayHelper {
             case ENDER_PORTAL_FRAME:
                 return false;
         }
-        ConfigurationSection breakRule = getblockConfigSection(block);
+        ConfigurationSection breakRule = getBlockConfigSection(block);
         if (breakRule != null) {
             if (breakRule.contains("progress")) {
                 // requires the player to defeat a certain boss
@@ -134,7 +133,7 @@ public class GameplayHelper {
         int breakingProgress = 0;
         if (temp != null) breakingProgress = temp.asInt();
         // get breaking progress required to break the block
-        ConfigurationSection configSection = getblockConfigSection(blockToBreak);
+        ConfigurationSection configSection = getBlockConfigSection(blockToBreak);
         int breakingProgressMax = 100;
         if (configSection != null)
             breakingProgressMax = configSection.getInt("totalProgress");
@@ -175,7 +174,7 @@ public class GameplayHelper {
         if (blockToBreak.getType() == Material.AIR) return;
         playBlockParticleAndSound(blockToBreak);
         if (!isBreakable(blockToBreak, ply)) return;
-        ConfigurationSection configSection = getblockConfigSection(blockToBreak);
+        ConfigurationSection configSection = getBlockConfigSection(blockToBreak);
         if (configSection != null) {
             List<String> itemsToDrop = configSection.getStringList("dropItem");
             Location locToDrop = blockToBreak.getLocation().add(0.5, 0.4, 0.5);

@@ -274,6 +274,10 @@ public class CraftingListener implements Listener {
         } else {
             station = block.getType().toString();
             switch (block.getType()) {
+                case AIR:
+                    // this is due to some glitch after mining some block, ignore it.
+                    // AIR crafting station is opened by clicking the button in backpack, handled above.
+                    return false;
                 case FURNACE:
                 case BURNING_FURNACE: {
                     Inventory inv = ((Furnace) block.getState()).getInventory();
