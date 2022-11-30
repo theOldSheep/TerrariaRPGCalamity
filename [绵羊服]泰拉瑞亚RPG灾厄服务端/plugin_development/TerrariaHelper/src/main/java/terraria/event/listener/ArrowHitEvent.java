@@ -1,9 +1,11 @@
 package terraria.event.listener;
 
+import net.minecraft.server.v1_12_R1.EntityProjectile;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftProjectile;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
@@ -112,9 +114,11 @@ public class ArrowHitEvent implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onArrowHit(TerrariaProjectileHitEvent e) {
         Projectile arrow = e.getEntity();
-        if (arrow.getScoreboardTags().contains("isHook")) {
+        // grappling hooks should ignore entities
+        if (arrow.getScoreboardTags().contains("isHook") && e.getHitEntity() != null) {
             e.setCancelled(true);
-            Vector velocity = arrow.getVelocity();
+            EntityProjectile nmsArrow = ((CraftProjectile) arrow).getHandle();
+            Vector velocity = new Vector(nmsArrow.motX, nmsArrow.motY, nmsArrow.motZ);
             Bukkit.getScheduler().runTask(TerrariaHelper.getInstance(), () -> arrow.setVelocity(velocity));
             return;
         }

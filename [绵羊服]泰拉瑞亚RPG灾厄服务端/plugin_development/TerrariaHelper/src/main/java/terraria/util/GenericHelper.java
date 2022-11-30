@@ -31,6 +31,12 @@ public class GenericHelper {
             return textToTrim;
         }
     }
+    public static int[] coinConversion(int amount, boolean copperOrRaw) {
+        int amountCopper;
+        if (copperOrRaw) amountCopper = amount;
+        else amountCopper = amount / 100;
+        return coinConversion(amountCopper);
+    }
     public static int[] coinConversion(int copperAmount) {
         int copper = copperAmount;
         int[] result = new int[]{0, 0, 0, 0};
@@ -48,6 +54,12 @@ public class GenericHelper {
         }
         result[3] = copper;
         return result;
+    }
+    public static void dropMoney(Location loc, int amount, boolean copperOrRaw) {
+        int amountCopper;
+        if (copperOrRaw) amountCopper = amount;
+        else amountCopper = amount / 100;
+        dropMoney(loc, amountCopper);
     }
     public static void dropMoney(Location loc, int amount) {
         int[] stackSize = coinConversion(amount);

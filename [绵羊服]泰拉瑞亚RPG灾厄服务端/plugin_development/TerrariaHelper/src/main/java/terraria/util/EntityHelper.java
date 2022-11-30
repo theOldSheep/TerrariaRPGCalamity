@@ -624,11 +624,13 @@ public class EntityHelper {
             }
             int moneyDrop = (int) Math.floor(PlayerHelper.getMoney(vPly) / 100);
             moneyDrop = (int) Math.ceil(moneyDrop * 0.75);
-            PlayerHelper.setMoney(vPly, PlayerHelper.getMoney(vPly) - moneyDrop * 100);
-            GenericHelper.dropMoney(vPly.getEyeLocation(), moneyDrop);
+            moneyDrop *= 100;
+            PlayerHelper.setMoney(vPly, PlayerHelper.getMoney(vPly) - moneyDrop);
+            GenericHelper.dropMoney(vPly.getEyeLocation(), moneyDrop, false);
             String moneyMsg = "";
             if (moneyDrop > 0) {
-                int[] moneyConverted = GenericHelper.coinConversion(moneyDrop);
+                moneyMsg = "§c§l掉了";
+                int[] moneyConverted = GenericHelper.coinConversion(moneyDrop, false);
                 if (moneyConverted[0] > 0)
                     moneyMsg += "§c§l " + moneyConverted[0] + "§f§l 铂";
                 if (moneyConverted[1] > 0)

@@ -54,7 +54,7 @@ public class TerrariaHelper extends JavaPlugin {
                         if (amount < 100) {
                             result = "笑死，身无分文";
                         } else {
-                            int[] moneyInfo = GenericHelper.coinConversion((int) (amount + 0.01));
+                            int[] moneyInfo = GenericHelper.coinConversion((int) (amount + 0.01), false);
                             if (moneyInfo[0] > 0) result += "&f" + moneyInfo[0] + "铂金币 ";
                             if (moneyInfo[1] > 0) result += "&e" + moneyInfo[1] + "金币 ";
                             if (moneyInfo[2] > 0) result += "&7" + moneyInfo[2] + "银币 ";
