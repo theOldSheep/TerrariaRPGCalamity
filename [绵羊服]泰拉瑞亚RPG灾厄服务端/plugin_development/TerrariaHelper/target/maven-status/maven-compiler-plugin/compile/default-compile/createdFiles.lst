@@ -10,7 +10,6 @@ terraria\util\MonsterHelper.class
 terraria\event\listener\PlayerJoinListener.class
 terraria\event\listener\DamageListener.class
 terraria\entity\boss\Boss.class
-terraria\event\listener\ArrowShootEvent.class
 terraria\util\DragoncoreHelper$SlotCallback.class
 terraria\util\EntityHelper$1.class
 terraria\event\listener\WorldRegisterListener.class

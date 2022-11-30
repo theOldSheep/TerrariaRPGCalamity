@@ -1,8 +1,7 @@
 package terraria.event.listener;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
@@ -14,11 +13,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import terraria.util.GameplayHelper;
 import terraria.util.ItemHelper;
 import terraria.util.ItemUseHelper;
@@ -36,28 +38,41 @@ public class ItemUseAndAttributeListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public static void onInventoryClick(InventoryClickEvent e) {
         Player ply = (Player) e.getWhoClicked();
+        if (ply.getGameMode() == GameMode.SPECTATOR) {
+            e.setCancelled(true);
+            return;
+        }
         if (ply.getScoreboardTags().contains("useCD")) e.setCancelled(true);
         if (e.isCancelled()) return;
         ply.addScoreboardTag("toolChanged");
         // make sure the armor set message does not linger on the armor clicked
         ItemStack clickedItem = e.getCurrentItem();
-        if (ItemHelper.getItemCombatType(clickedItem).equals("装备")) {
-            e.setCurrentItem(ItemHelper.getItemFromDescription(
-                    ItemHelper.splitItemName(clickedItem)[1], false));
+        if (clickedItem != null && ItemHelper.getItemCombatType(clickedItem).equals("装备")) {
+            clickedItem.setItemMeta(ItemHelper.getRawItem(ItemHelper.splitItemName(clickedItem)[1]).getItemMeta());
         }
+//        ItemStack cursorItem = e.getCursor();
+//        if (cursorItem != null && ItemHelper.getItemCombatType(cursorItem).equals("装备")) {
+//            cursorItem.setItemMeta(ItemHelper.getRawItem(ItemHelper.splitItemName(cursorItem)[1]).getItemMeta());
+//        }
     }
     @EventHandler(priority = EventPriority.LOW)
     public static void onDiscardItem(PlayerDropItemEvent e) {
         Player ply = e.getPlayer();
+        if (ply.getGameMode() == GameMode.SPECTATOR) {
+            e.setCancelled(true);
+            return;
+        }
         if (ply.getScoreboardTags().contains("useCD")) e.setCancelled(true);
         if (e.isCancelled()) return;
         ply.addScoreboardTag("toolChanged");
         // make sure the armor set message does not linger on the armor dropped
         Item droppedItem = e.getItemDrop();
-        ItemStack droppedItemStack = droppedItem.getItemStack();
-        if (ItemHelper.getItemCombatType(droppedItemStack).equals("装备")) {
-            droppedItem.setItemStack(ItemHelper.getItemFromDescription(
-                    ItemHelper.splitItemName(droppedItemStack)[1], false));
+        if (droppedItem != null) {
+            ItemStack droppedItemStack = droppedItem.getItemStack();
+            if (droppedItemStack != null && ItemHelper.getItemCombatType(droppedItemStack).equals("装备")) {
+                droppedItem.setItemStack(ItemHelper.getItemFromDescription(
+                        ItemHelper.splitItemName(droppedItemStack)[1], false));
+            }
         }
     }
     // swing item helper

@@ -25,9 +25,10 @@ public class TerrariaHelper extends JavaPlugin {
     public static long worldSeed;
     public static TerrariaHelper instance;
     // YML configs
-    public static final YmlHelper.YmlSection entityConfig = YmlHelper.getFile("plugins/Data/entities.yml");
+    public static final YmlHelper.YmlSection armorSetConfig = YmlHelper.getFile("plugins/Data/armorSet.yml");
     public static final YmlHelper.YmlSection blockConfig = YmlHelper.getFile("plugins/Data/blocks.yml");
     public static final YmlHelper.YmlSection buffConfig = YmlHelper.getFile("plugins/Data/buff.yml");
+    public static final YmlHelper.YmlSection entityConfig = YmlHelper.getFile("plugins/Data/entities.yml");
     public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");
     public static final YmlHelper.YmlSection prefixConfig = YmlHelper.getFile("plugins/Data/prefix.yml");
     public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/projectiles.yml");
@@ -119,7 +120,7 @@ public class TerrariaHelper extends JavaPlugin {
                     case "health_tier":
                         return (int)Math.round(attrMap.getOrDefault("healthTier", 5d)) + "";
                     case "accessory_amount": {
-                        return YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml").getString("stats.maxAccessories");
+                        return PlayerHelper.getAccessoryAmount(ply) + "";
                     }
                     default:
                         Bukkit.broadcastMessage("UNHANDLED PLACEHOLDER " + params);
@@ -130,7 +131,6 @@ public class TerrariaHelper extends JavaPlugin {
     }
     private void registerEvents() {
         Bukkit.getPluginManager().registerEvents(new ArrowHitEvent(), this);
-        Bukkit.getPluginManager().registerEvents(new ArrowShootEvent(), this);
         Bukkit.getPluginManager().registerEvents(new BlockBreakListener(), this);
         Bukkit.getPluginManager().registerEvents(new CraftingListener(), this);
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);

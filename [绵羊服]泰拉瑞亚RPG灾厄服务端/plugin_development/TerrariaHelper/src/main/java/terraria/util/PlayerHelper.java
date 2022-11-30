@@ -5,6 +5,7 @@ import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.IChatBaseComponent;
 import net.minecraft.server.v1_12_R1.PacketPlayOutTitle;
 import org.bukkit.*;
+import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
@@ -13,6 +14,7 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.potion.PotionEffect;
@@ -187,8 +189,11 @@ public class PlayerHelper {
                             // draw chain
                             Vector dVec = hook.getLocation().subtract(ply.getEyeLocation()).toVector();
                             if (dVec.lengthSquared() > 0) {
-                                GenericHelper.handleParticleLine(dVec, dVec.length(), 0, 3,
-                                        ply.getEyeLocation(), EntityHelper.getMetadata(hook, "color").asString());
+                                double dVecLength = dVec.length();
+                                // offset vector prevents color block spamming the screen
+                                Vector offsetVector = dVec.clone().multiply(1/dVecLength);
+                                GenericHelper.handleParticleLine(dVec, dVecLength, 0.25, 1,3,
+                                        ply.getEyeLocation().add(offsetVector), EntityHelper.getMetadata(hook, "color").asString());
                             }
                         }
                         for (Entity hook : hooksToRemove) hooks.remove(hook);
@@ -214,7 +219,6 @@ public class PlayerHelper {
             }
         }, 0, 3);
     }
-    // TODO
     public static void threadArmorAccessory() {
         // setup projectile attributes
         HashMap<String, Double> attrMapChlorophyte = new HashMap<>(5);
@@ -608,6 +612,14 @@ public class PlayerHelper {
                         Location lastLoc = (Location) EntityHelper.getMetadata(ply, "lastLocation").value();
                         EntityHelper.setMetadata(ply, "lastLocation", currLoc);
                         boolean moved = lastLoc.getWorld().equals(currLoc.getWorld()) && lastLoc.distanceSquared(currLoc) > 1e-5;
+                        // make sure health or mana do not exceed maximum
+                        {
+                            ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(
+                                    attrMap.getOrDefault("maxHealth", 200d) *
+                                            attrMap.getOrDefault("maxHealthMulti", 1d));
+                            int level = Math.min(ply.getLevel(), attrMap.get("maxMana").intValue());
+                            ply.setLevel(level);
+                        }
                         // health regen
                         {
                             // init variables
@@ -677,8 +689,8 @@ public class PlayerHelper {
         }, 0, delay);
     }
     public static void threadAttribute() {
-        int delay = 10;
-        // every 10 ticks (1/2 second)
+        int delay = 6;
+        // every 6 ticks (0.3 second)
         // note that players would have their stats updated
         // when they use their weapon after switching hot bar slot or closes an inventory.
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
@@ -772,6 +784,17 @@ public class PlayerHelper {
         return fileSection.getBoolean("bossDefeated" + progressToCheck, false);
     }
     // TODO
+    private static void addItemAttribute(Player ply, ItemStack item) {
+        String[] itemInfo = ItemHelper.splitItemName(item);
+        // attributes from the item itself
+        String attributesPath = itemInfo[1] + ".attributes";
+        ConfigurationSection allAttributes = TerrariaHelper.itemConfig.getConfigurationSection(attributesPath);
+        EntityHelper.tweakAllAttributes(ply, allAttributes, true);
+        // attributes from the item's prefix
+        String attributesPathPrefix = "prefixInfo." + itemInfo[0] +  ".attributes";
+        ConfigurationSection allAttributesPrefix = TerrariaHelper.prefixConfig.getConfigurationSection(attributesPathPrefix);
+        EntityHelper.tweakAllAttributes(ply, allAttributesPrefix, true);
+    }
     public static void setupAttribute(Player ply) {
         try {
             ply.removeScoreboardTag("toolChanged");
@@ -814,19 +837,101 @@ public class PlayerHelper {
                 ItemStack tool = plyInv.getItemInMainHand();
                 String toolCombatType = ItemHelper.getItemCombatType(tool);
                 if (toolCombatType.equals("武器")) {
-                    String[] toolInfo = ItemHelper.splitItemName(tool);
-                    // attributes from the item itself
-                    String attributesPath = toolInfo[1] + ".attributes";
-                    ConfigurationSection allAttributes = TerrariaHelper.itemConfig.getConfigurationSection(attributesPath);
-                    EntityHelper.tweakAllAttributes(ply, allAttributes, true);
-                    // attributes from the item's prefix
-                    String attributesPathPrefix = "prefixInfo." + toolInfo[0] +  ".attributes";
-                    ConfigurationSection allAttributesPrefix = TerrariaHelper.prefixConfig.getConfigurationSection(attributesPathPrefix);
-                    EntityHelper.tweakAllAttributes(ply, allAttributesPrefix, true);
+                    addItemAttribute(ply, tool);
                 }
             }
-            // TODO: armor
-            // TODO: accessories
+            // armor
+            {
+                List<ItemStack> armors = new ArrayList<>();
+                {
+                    ItemStack helm = plyInv.getHelmet();
+                    if (helm != null) {
+                        helm = ItemHelper.getRawItem(ItemHelper.splitItemName(helm)[1]);
+                        armors.add(helm);
+                        plyInv.setHelmet(helm);
+                    }
+                }
+                {
+                    ItemStack chestPlate = plyInv.getChestplate();
+                    if (chestPlate != null) {
+                        chestPlate = ItemHelper.getRawItem(ItemHelper.splitItemName(chestPlate)[1]);
+                        armors.add(chestPlate);
+                        plyInv.setChestplate(chestPlate);
+                    }
+                }
+                {
+                    ItemStack leggings = plyInv.getLeggings();
+                    if (leggings != null) {
+                        leggings = ItemHelper.getRawItem(ItemHelper.splitItemName(leggings)[1]);
+                        armors.add(leggings);
+                        plyInv.setLeggings(leggings);
+                    }
+                }
+                // basic attributes
+                for (ItemStack armorPiece : armors) {
+                    addItemAttribute(ply, armorPiece);
+                }
+                // set bonus
+                String armorSet = "";
+                if (armors.size() == 3) {
+                    List<String> possibleArmorSets = null;
+                    for (ItemStack armorPiece : armors) {
+                        String currPieceType = ItemHelper.splitItemName(armorPiece)[1];
+                        List<String> currPieceSets = TerrariaHelper.armorSetConfig.getStringList("pieces." + currPieceType);
+                        if (possibleArmorSets == null) {
+                            possibleArmorSets = currPieceSets;
+                        } else {
+                            List<String> setsToRemove = new ArrayList<>();
+                            for (String possibleArmorSet : possibleArmorSets) {
+                                if (!currPieceSets.contains(possibleArmorSet))
+                                    setsToRemove.add(possibleArmorSet);
+                            }
+                            possibleArmorSets.removeAll(setsToRemove);
+                            if (possibleArmorSets.size() == 0) break;
+                        }
+                    }
+                    // if a unique set bonus is found
+                    if (possibleArmorSets != null && possibleArmorSets.size() == 1) {
+                        armorSet = possibleArmorSets.get(0);
+                        ConfigurationSection setBonusSection = TerrariaHelper.armorSetConfig.getConfigurationSection(
+                                "sets." + armorSet);
+                        // add lore
+                        List<String> loreToAdd = setBonusSection.getStringList("lore");
+                        for (ItemStack armorPiece : armors) {
+                            ItemMeta meta = armorPiece.getItemMeta();
+                            List<String> lore = meta.getLore();
+                            lore.addAll(loreToAdd);
+                            meta.setLore(lore);
+                            armorPiece.setItemMeta(meta);
+                        }
+                        plyInv.setHelmet(armors.get(0));
+                        plyInv.setChestplate(armors.get(1));
+                        plyInv.setLeggings(armors.get(2));
+                        // tweak attributes
+                        EntityHelper.tweakAllAttributes(ply,
+                                setBonusSection.getConfigurationSection("attributes"), true);
+                    }
+                }
+                EntityHelper.setMetadata(ply, "armorSet", armorSet);
+            }
+            // accessories
+            {
+                Set<String> accessories = new HashSet<>();
+                int accessoryAmount = getAccessoryAmount(ply);
+                // setup accessory list
+                for (int idx = 1; idx <= accessoryAmount; idx ++) {
+                    ItemStack currAcc = DragoncoreHelper.getSlotItem(ply, "accessory" + idx);
+                    if (currAcc == null || currAcc.getType() == Material.AIR) continue;
+                    String currAccType = ItemHelper.splitItemName(currAcc)[1];
+                    if (currAccType.equals("太阳石") && !WorldHelper.isDayTime(ply.getWorld())) continue;
+                    if (currAccType.equals("月亮石") && WorldHelper.isDayTime(ply.getWorld())) continue;
+                    // attribute
+                    addItemAttribute(ply, currAcc);
+                    // accessory type
+                    accessories.add(currAccType);
+                }
+                EntityHelper.setMetadata(ply, "accessory", accessories);
+            }
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setupAttribute ", e);
         }
@@ -872,6 +977,9 @@ public class PlayerHelper {
         if (player.getGameMode() != GameMode.SURVIVAL) return false;
         return !player.getScoreboardTags().contains("unauthorized");
     }
+    public static int getAccessoryAmount(Player ply) {
+        return YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml").getInt("stats.maxAccessories", 5);
+    }
     public static HashSet<String> getAccessories(Entity entity) {
         try {
             return (HashSet<String>) EntityHelper.getMetadata(entity, "accessory").value();
@@ -881,50 +989,47 @@ public class PlayerHelper {
         return new HashSet<>();
     }
     public static void handleGrapplingHook(Player ply) {
-        try {
-            List<Entity> hooks = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "hooks").value();
-            String hookItemName = ItemHelper.splitItemName(ply.getInventory().getItemInOffHand())[1];
-            EntityHelper.setMetadata(ply, "grapplingHookItem", hookItemName);
-            World hookWorld = ply.getWorld();
-            YmlHelper.YmlSection config = YmlHelper.getFile("plugins/Data/hooks.yml");
-            int hookAmount = config.getInt(hookItemName + ".amount", 0);
-            if (hooks.size() >= hookAmount) {
-                // removed the first hook on blocks if trying to launch more hooks than the player has
-                Entity removed = null;
-                for (Entity hook : hooks) {
-                    if (hook.isOnGround()) {
-                        hook.remove();
-                        removed = hook;
-                        break;
-                    }
-                }
-                if (removed != null) hooks.remove(removed);
-                else return;
-            }
-            Arrow hookEntity = (Arrow) hookWorld.spawnEntity(ply.getEyeLocation(), EntityType.ARROW);
-            hookEntity.setShooter(ply);
-            // velocity
-            double hookSpeed = config.getDouble(hookItemName + ".velocity", 10) / 6;
-            EntityPlayer nms_ply = ((CraftPlayer) ply).getHandle();
-            double yaw = nms_ply.yaw,
-                    pitch = nms_ply.pitch;
-            Vector velocity = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
-            velocity.multiply(hookSpeed);
-            hookEntity.setGravity(false);
-            hookEntity.setVelocity(velocity);
-            // pre-set particle item
-            List<String> hookColors = config.getStringList(hookItemName + ".particleItem");
+        List<Entity> hooks = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "hooks").value();
+        Bukkit.broadcastMessage(hooks.toString());
+        String hookItemName = ItemHelper.splitItemName(ply.getInventory().getItemInOffHand())[1];
+        EntityHelper.setMetadata(ply, "grapplingHookItem", hookItemName);
+        World hookWorld = ply.getWorld();
+        YmlHelper.YmlSection config = YmlHelper.getFile("plugins/Data/hooks.yml");
+        int hookAmount = config.getInt(hookItemName + ".amount", 0);
+        if (hooks.size() >= hookAmount) {
+            // removed the first hook on blocks if trying to launch more hooks than the player has
+            Entity removed = null;
             for (Entity hook : hooks) {
-                hookColors.remove(EntityHelper.getMetadata(hook, "color").asString());
+                if (hook.isOnGround()) {
+                    hook.remove();
+                    removed = hook;
+                    break;
+                }
             }
-            String color = hookColors.size() > 0 ? hookColors.get(0) : "125|125|125";
-            EntityHelper.setMetadata(hookEntity, "color", color);
-            // mark hook entity as a hook
-            hookEntity.addScoreboardTag("isHook");
-            hooks.add(hookEntity);
-        } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] handleGrapplingHook ", e);
+            if (removed != null) hooks.remove(removed);
+            else return;
         }
+        Arrow hookEntity = (Arrow) hookWorld.spawnEntity(ply.getEyeLocation(), EntityType.ARROW);
+        hookEntity.setShooter(ply);
+        // velocity
+        double hookSpeed = config.getDouble(hookItemName + ".velocity", 10) / 6;
+        EntityPlayer nms_ply = ((CraftPlayer) ply).getHandle();
+        double yaw = nms_ply.yaw,
+                pitch = nms_ply.pitch;
+        Vector velocity = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
+        velocity.multiply(hookSpeed);
+        hookEntity.setGravity(false);
+        hookEntity.setVelocity(velocity);
+        // pre-set particle item
+        List<String> hookColors = config.getStringList(hookItemName + ".particleItem");
+        for (Entity hook : hooks) {
+            hookColors.remove(EntityHelper.getMetadata(hook, "color").asString());
+        }
+        String color = hookColors.size() > 0 ? hookColors.get(0) : "125|125|125";
+        EntityHelper.setMetadata(hookEntity, "color", color);
+        // mark hook entity as a hook
+        hookEntity.addScoreboardTag("isHook");
+        hooks.add(hookEntity);
     }
     public static boolean hasVoidBag(Player ply) {
         ItemStack voidBag = ItemHelper.getItemFromDescription("虚空袋", false, new ItemStack(Material.BEDROCK));
@@ -1123,7 +1228,7 @@ public class PlayerHelper {
         } else
             velocity += 0.1;
         MathHelper.setVectorLength(currDir, velocity);
-        GenericHelper.handleParticleLine(currDir, velocity, 0.01, 4, loc, color);
+        GenericHelper.handleParticleLine(currDir, velocity, 0.05, 0.15, 4, loc, color);
         loc.add(currDir);
         Vector finalCurrDir = currDir;
         double finalVelocity = velocity;

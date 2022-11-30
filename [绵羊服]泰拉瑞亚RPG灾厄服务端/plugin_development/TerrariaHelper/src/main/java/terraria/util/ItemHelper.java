@@ -347,7 +347,7 @@ public class ItemHelper {
                 // get the itemstack
                 ItemStack resultItem;
                 try {
-                    resultItem = itemMap.get(itemType).clone();
+                    resultItem = itemMap.get(itemType);
                     if (resultItem == null || resultItem.getType() == Material.AIR) {
                         // check if the itemType is a material
                         try {

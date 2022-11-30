@@ -22,8 +22,8 @@ public class GenericHelper {
             int isColor = -1;
             for (char c : textToTrim.toCharArray()) {
                 if (c == '§') isColor = 1;
-                if (isColor == 0 && c == '#') isColor = 6;
-                if (isColor < 0) result.append(c);
+                else if (isColor == 0 && c == '#') isColor = 6;
+                else if (isColor < 0) result.append(c);
                 isColor --;
             }
             return result.toString();

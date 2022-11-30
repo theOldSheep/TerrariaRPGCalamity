@@ -1,6 +1,5 @@
 package terraria.event.listener;
 
-import net.minecraft.server.v1_12_R1.Vec3D;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -112,8 +111,15 @@ public class ArrowHitEvent implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onArrowHit(TerrariaProjectileHitEvent e) {
-        if (e.getHitBlock() != null) handleHitBlock(e, e.getEntity(), e.getHitBlock());
-        else if (e.getHitEntity() != null) handleHitEntity(e, e.getEntity(), e.getHitEntity());
-        else handleDestroy(e, e.getEntity());
+        Projectile arrow = e.getEntity();
+        if (arrow.getScoreboardTags().contains("isHook")) {
+            e.setCancelled(true);
+            Vector velocity = arrow.getVelocity();
+            Bukkit.getScheduler().runTask(TerrariaHelper.getInstance(), () -> arrow.setVelocity(velocity));
+            return;
+        }
+        if (e.getHitBlock() != null) handleHitBlock(e, arrow, e.getHitBlock());
+        else if (e.getHitEntity() != null) handleHitEntity(e, arrow, e.getHitEntity());
+        else handleDestroy(e, arrow);
     }
 }
