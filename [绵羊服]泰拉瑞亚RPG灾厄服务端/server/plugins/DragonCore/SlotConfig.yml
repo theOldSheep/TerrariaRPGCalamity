@@ -38,43 +38,129 @@ accessory7:
 Script:
   # 判定饰品
   accessory_check: |-
-    function execute(player, itemStack, slotIdentifier, limitString){
-      var itemDNE = itemStack == null || itemStack.getType().toString() == "AIR";
-      if (itemDNE) {
-        return true;
-      }
-      
+    function isValid(itemStack){
+      return itemStack != null && itemStack.getType().toString() != "AIR";
+    }
+    function isAccessory(itemStack){
       var lore = itemStack.getItemMeta().getLore();
-      var hasLore = false;
       if(lore!=null){
         for(var i=0;i<lore.size();i++){
           var line = lore.get(i);
           if(line!=null && line.contains("[饰品]")){
-             hasLore = true;
-             break;
+            return true;
           }
         }
       }
-      if (hasLore === false){
-        return false;
+      return false;
+    }
+    function isWing(itemStack){
+      var lore = itemStack.getItemMeta().getLore();
+      if(lore!=null){
+        for(var i=0;i<lore.size();i++){
+          var line = lore.get(i);
+          if(line!=null && line.contains("算作翅膀")){
+            return true;
+          }
+        }
       }
-      
+      return false;
+    }
+    function hasAccessoryConflictSingle(currItem, otherAccessoryName){
+      if (currItem == otherAccessoryName) return true;
+      switch(currItem) {
+        case "核子之源":
+          if (otherAccessoryName == "核子之源") return true;
+          if (otherAccessoryName == "玷星之源") return true;
+          if (otherAccessoryName == "斯塔提斯的诅咒") return true;
+          break;
+        case "玷星之源":
+          if (otherAccessoryName == "核子之源") return true;
+          if (otherAccessoryName == "凝胶充能电池") return true;
+          if (otherAccessoryName == "核燃料棒") return true;
+          if (otherAccessoryName == "星爆核心") return true;
+          break;
+        case "斯塔提斯的诅咒":
+          if (otherAccessoryName == "核子之源") return true;
+          if (otherAccessoryName == "斯塔提斯的祝福") return true;
+          if (otherAccessoryName == "始源暗影炎") return true;
+          break;
+      }
+      return false;
+    }
+    function hasAccessoryConflict(currItem, otherAccessoryNames){
+      for (var i = 0; i < otherAccessoryNames.length; i++) {
+        if (hasAccessoryConflictSingle(currItem, otherAccessoryNames[i]) === true) {
+          return true;
+        }
+      }
+      return false;
+    }
+    function getOtherAccessories(player, currentSlot){
+      var result = [];
+      var nextIdx = 0;
+      for (var idx = 1; idx <= 7; idx ++) {
+        if ("" + idx == currentSlot) {
+          continue;
+        }
+        var currItem = SlotAPI.static.getCacheSlotItem(player,"accessory"+idx);
+        if (!isValid(currItem)) {
+          continue;
+        }
+        result [nextIdx++] = currItem;
+      }
+      return result;
+    }
+    function trimText(textToTrim){
+      var result = "";
+      var colorInfo = -1;
+      var resultSplit = textToTrim.toCharArray();
+      for (var i = 0; i < resultSplit.length; i++) {
+        var c = resultSplit[i];
+        if (c == "§") {
+          colorInfo = 1;
+        } else if (colorInfo == 0 && c == "#") {
+          colorInfo = 6;
+        } else if (colorInfo < 0) {
+          result += c;
+        }
+        colorInfo--;
+      }
+      return result;
+    }
+    function getItemName(itemStack){
       var itemName = itemStack.getItemMeta().getDisplayName();
-      if (itemName.endsWith("靴") || itemName.endsWith("之翼")) {
-        for (var idx = 1; idx <= 7; idx ++) {
-          if ("" + idx == limitString) {
-            continue;
-          }
-          var currItem = SlotAPI.static.getCacheSlotItem(player,"accessory"+idx);
-          var itemDNE = currItem == null || currItem.getType().toString() == "AIR";
-          if (itemDNE) {
-            continue;
-          }
-          var currItemName = currItem.getItemMeta().getDisplayName();
-          if (currItemName.endsWith("靴") || currItemName.endsWith("之翼")) {
+      if (itemName.contains("的 ")) {
+        return itemName.split("的 ")[1];
+      } else {
+        return trimText(itemName);
+      }
+      return "";
+    }
+    function execute(player, itemStack, slotIdentifier, limitString){
+      // if the item is air etc, return true
+      if (!isValid(itemStack)) return true;
+      // if the item is not an accessory, return false
+      if (isAccessory(itemStack) === false) return false;
+      
+      // setup item info and other accessory info
+      var otherAccessories = getOtherAccessories(player, limitString);
+      var itemName = getItemName(itemStack);
+      var otherAccessoryNames = [];
+      for (var i = 0; i < otherAccessories.length; i ++) {
+        otherAccessoryNames[i] = getItemName(otherAccessories[i]);
+      }
+      // do not allow multiple wings
+      if (isWing(itemStack) === true) {
+        for (var i = 0; i < otherAccessories.length; i ++) {
+          var otherAcc = otherAccessories[i];
+          if (isWing(otherAcc) === true) {
             return false;
-          }
+          }          
         }
+      }
+      // do not allow conflicting accessories
+      if (hasAccessoryConflict(itemName, otherAccessoryNames)) {
+        return false;
       }
       return true;
     }
