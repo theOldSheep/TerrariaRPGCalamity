@@ -21,10 +21,7 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import terraria.util.GameplayHelper;
-import terraria.util.ItemHelper;
-import terraria.util.ItemUseHelper;
-import terraria.util.PlayerHelper;
+import terraria.util.*;
 
 public class ItemUseAndAttributeListener implements Listener {
     // events that could affect attribute and item use logic
@@ -90,6 +87,7 @@ public class ItemUseAndAttributeListener implements Listener {
         } else {
             ply.removeScoreboardTag("isSecondaryAttack");
         }
+        EntityHelper.setMetadata(ply, "swingAmount", 0);
         ItemUseHelper.playerUseItem(ply);
     }
     // swing item listener

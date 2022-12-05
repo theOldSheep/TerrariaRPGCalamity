@@ -5,6 +5,7 @@ terraria\util\ItemUseHelper.class
 terraria\util\WorldHelper$1.class
 terraria\TerrariaHelper$1.class
 terraria\event\listener\ItemUseAndAttributeListener$1.class
+terraria\util\GenericHelper$StrikeLineOptions.class
 terraria\util\GameplayHelper.class
 terraria\util\MonsterHelper.class
 terraria\event\listener\PlayerJoinListener.class
@@ -36,6 +37,7 @@ terraria\worldgen\overworld\TreePopulator$1.class
 terraria\util\DragoncoreHelper.class
 terraria\worldgen\overworld\OverworldBiomeGenerator.class
 terraria\event\listener\RandomTitleListener.class
+terraria\util\GenericHelper$ParticleLineOptions.class
 terraria\worldgen\overworld\OverworldBiomeGenerator$1.class
 terraria\worldgen\overworld\TreePopulator.class
 terraria\util\YmlHelper.class

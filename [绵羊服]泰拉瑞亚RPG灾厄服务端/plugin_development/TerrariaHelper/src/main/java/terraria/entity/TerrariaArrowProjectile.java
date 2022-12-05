@@ -405,7 +405,7 @@ public class TerrariaArrowProjectile extends EntityArrow {
 
         // draw particle trail
         if (trailColor != null && this.ticksLived > 0)
-            GenericHelper.handleParticleLine(velocity, velocity.length(), projectileSize * 2, trailLingerTime, bukkitEntity.getLocation(), trailColor);
+//            GenericHelper.handleParticleLine(velocity, velocity.length(), projectileSize * 2, trailLingerTime, bukkitEntity.getLocation(), trailColor);
         // set position and velocity info
         setPosition(futureLoc.x, futureLoc.y, futureLoc.z);
         // send new velocity if:

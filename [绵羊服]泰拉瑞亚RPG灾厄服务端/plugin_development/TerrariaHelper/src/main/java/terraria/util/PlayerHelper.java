@@ -192,8 +192,14 @@ public class PlayerHelper {
                                 double dVecLength = dVec.length();
                                 // offset vector prevents color block spamming the screen
                                 Vector offsetVector = dVec.clone().multiply(1/dVecLength);
-                                GenericHelper.handleParticleLine(dVec, dVecLength, 0.25, 1,3,
-                                        ply.getEyeLocation().add(offsetVector), EntityHelper.getMetadata(hook, "color").asString());
+                                GenericHelper.handleParticleLine(dVec, ply.getEyeLocation().add(offsetVector),
+                                        new GenericHelper.ParticleLineOptions()
+                                                .setLength(dVecLength)
+                                                .setWidth(0.25, false)
+                                                .setAlpha(0.25f)
+                                                .setStepsize(1)
+                                                .setTicksLinger(3)
+                                                .setParticleColor(EntityHelper.getMetadata(hook, "color").asString()));
                             }
                         }
                         for (Entity hook : hooksToRemove) hooks.remove(hook);
@@ -1184,7 +1190,7 @@ public class PlayerHelper {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
     }
 
-    private static void spectreProjectileTick(Vector currDir, LivingEntity target, int idx, double velocity, Player dPly, Location loc, double num, boolean healingOrDamage, String color) {
+    private static void spectreProjectileTick(Vector currDir, LivingEntity target, int idx, double speed, Player dPly, Location loc, double num, boolean healingOrDamage, String color) {
         if (!target.getWorld().equals(loc.getWorld())) return;
         // if the target becomes invalid, terminate this projectile and start a new identical one
         boolean shouldRetarget = false;
@@ -1197,12 +1203,12 @@ public class PlayerHelper {
         // ticking mechanism
         Location targetLoc = target.getEyeLocation();
         if (idx > 5) {
-            if (idx == 6) velocity = 4;
+            if (idx == 6) speed = 4;
             double distSqr = loc.distanceSquared(targetLoc);
-            if (distSqr < velocity * velocity) {
+            if (distSqr < speed * speed) {
                 // if the projectile reaches its target
                 currDir = targetLoc.clone().subtract(loc).toVector();
-                velocity = Math.sqrt(distSqr);
+                speed = Math.sqrt(distSqr);
                 distSqr = -1;
             } else {
                 // if the projectile does not yet reach its target
@@ -1213,7 +1219,7 @@ public class PlayerHelper {
                         MathHelper.setVectorLengthSquared(currDir, Math.min(dV.length(), 16));
                     MathHelper.setVectorLength(dV, 4);
                     currDir.add(dV);
-                    velocity += 0.25;
+                    speed += 0.25;
                 }
             }
             // hits its target
@@ -1226,14 +1232,20 @@ public class PlayerHelper {
                 return;
             }
         } else
-            velocity += 0.1;
-        MathHelper.setVectorLength(currDir, velocity);
-        GenericHelper.handleParticleLine(currDir, velocity, 0.05, 0.15, 4, loc, color);
+            speed += 0.1;
+        MathHelper.setVectorLength(currDir, speed);
+        GenericHelper.handleParticleLine(currDir, loc,
+                new GenericHelper.ParticleLineOptions()
+                        .setLength(speed)
+                        .setWidth(0.2)
+                        .setTicksLinger(4)
+                        .setAlpha(0.75f)
+                        .setParticleColor(color));
         loc.add(currDir);
         Vector finalCurrDir = currDir;
-        double finalVelocity = velocity;
+        double finalSpeed = speed;
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () ->
-                spectreProjectileTick(finalCurrDir, target, idx + 1, finalVelocity, dPly, loc, num, healingOrDamage, color),
+                spectreProjectileTick(finalCurrDir, target, idx + 1, finalSpeed, dPly, loc, num, healingOrDamage, color),
                 2);
     }
     public static void createSpectreProjectile(Player dPly, Location loc, double num, boolean healingOrDamage, String color) {

@@ -467,7 +467,12 @@ public class TerrariaPotionProjectile extends EntityPotion {
 
         // draw particle trail
         if (trailColor != null && this.ticksLived > 5)
-            GenericHelper.handleParticleLine(velocity, velocity.length(), projectileSize * 2, trailLingerTime, bukkitEntity.getLocation(), trailColor);
+            GenericHelper.handleParticleLine(velocity, bukkitEntity.getLocation(),
+                    new GenericHelper.ParticleLineOptions()
+                            .setLength(velocity.length())
+                            .setWidth(projectileSize * 2)
+                            .setTicksLinger(trailLingerTime)
+                            .setParticleColor(trailColor));
         // set position and velocity info
         setPosition(futureLoc.x, futureLoc.y, futureLoc.z);
         // extra ticking

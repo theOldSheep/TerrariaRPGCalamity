@@ -1147,7 +1147,7 @@ public class EntityHelper {
                 // crit, only applies to non-player victims
                 if (Math.random() * 100 < critRate) {
                     crit = true;
-                    dmg *= 1 + (damagerAttrMap.getOrDefault("critDamage", 1d));
+                    dmg *= 1 + (damagerAttrMap.getOrDefault("critDamage", 1d) / 100);
                 }
             } else {
                 // paladin shield, only applies to player victims
@@ -1223,9 +1223,7 @@ public class EntityHelper {
             // knockback
             if (knockback > 0) {
                 Vector vec = victim.getLocation().subtract(damager.getLocation()).toVector();
-                vec.setY(0);
                 MathHelper.setVectorLength(vec, knockback / 20);
-                vec.setY(Math.min(1, knockback / 10));
                 knockback(victim, vec, false);
             }
         }

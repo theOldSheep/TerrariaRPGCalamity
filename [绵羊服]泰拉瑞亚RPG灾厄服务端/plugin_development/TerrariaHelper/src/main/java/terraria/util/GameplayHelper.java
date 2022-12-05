@@ -197,7 +197,12 @@ public class GameplayHelper {
                 }
                 org.bukkit.inventory.ItemStack itemToDrop = ItemHelper.getRawItem(itemInfo[0]);
                 itemToDrop.setAmount(itemAmount);
+
+                long ns = System.nanoTime();
+
                 ItemHelper.dropItem(locToDrop, itemToDrop);
+
+                Bukkit.broadcastMessage("Time elapsed: " + (System.nanoTime() - ns));
             }
         } else {
             Bukkit.broadcastMessage("Not handled block type: " + blockToBreak.getType() + " with data " + blockToBreak.getData());

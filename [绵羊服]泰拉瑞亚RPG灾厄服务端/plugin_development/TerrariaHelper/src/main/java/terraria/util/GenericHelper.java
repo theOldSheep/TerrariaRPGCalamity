@@ -1,19 +1,74 @@
 package terraria.util;
 
 import eos.moe.dragoncore.api.CoreAPI;
+import net.minecraft.server.v1_12_R1.MovingObjectPosition;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.HitEntityInfo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class GenericHelper {
     static long nextHologramIndex = 0;
+    public static class StrikeLineOptions {
+        public StrikeLineOptions() {
+
+        }
+    }
+    public static class ParticleLineOptions {
+        double length, width, stepsize;
+        float alpha;
+        int ticksLinger;
+        String particleChar;
+        List<String> particleColor;
+        public ParticleLineOptions() {
+            length = 1;
+            width = 0.25;
+            stepsize = width;
+            ticksLinger = 5;
+            particleChar = "█";
+            particleColor = new ArrayList<>();
+            particleColor.add("255|255|255");
+            alpha = 0.5f;
+        }
+        public ParticleLineOptions setLength(double length) {
+            this.length = length;
+            return this;
+        }
+        public ParticleLineOptions setWidth(double width) {
+            return setWidth(width, true);
+        }
+        public ParticleLineOptions setWidth(double width, boolean changeStepSize) {
+            this.width = width;
+            if (changeStepSize) this.stepsize = width;
+            return this;
+        }
+        public ParticleLineOptions setStepsize(double stepsize) {
+            this.stepsize = stepsize;
+            return this;
+        }
+        public ParticleLineOptions setTicksLinger(int ticksLinger) {
+            this.ticksLinger = ticksLinger;
+            return this;
+        }
+        public ParticleLineOptions setAlpha(float alpha) {
+            this.alpha = alpha;
+            return this;
+        }
+        public ParticleLineOptions setParticleChar(String particleChar) {
+            this.particleChar = particleChar;
+            return this;
+        }
+        public ParticleLineOptions setParticleColor(String... particleColor) {
+            this.particleColor.clear();
+            this.particleColor.addAll(Arrays.asList(particleColor));
+            return this;
+        }
+    }
 
     public static String trimText(String textToTrim) {
         if (textToTrim == null) return "";
@@ -30,6 +85,10 @@ public class GenericHelper {
         } catch (Exception e) {
             return textToTrim;
         }
+    }
+    public static void damageCoolDown(Collection<Entity> list, Entity victim, int cd) {
+        list.add(victim);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> list.remove(victim), cd);
     }
     public static int[] coinConversion(int amount, boolean copperOrRaw) {
         int amountCopper;
@@ -77,17 +136,16 @@ public class GenericHelper {
         double distZ = Math.abs(locationA.getZ() - locationA.getZ());
         return Math.max(distX, distZ);
     }
-    public static void handleParticleLine(Vector vector, double length, double width, int ticksLinger, Location startLoc, String particleColor) {
-        ArrayList<String> colorList = new ArrayList<>();
-        colorList.add(particleColor);
-        handleParticleLine(vector, length, width, width, ticksLinger, startLoc, colorList);
-    }
-    public static void handleParticleLine(Vector vector, double length, double width, double stepsize, int ticksLinger, Location startLoc, String particleColor) {
-        ArrayList<String> colorList = new ArrayList<>();
-        colorList.add(particleColor);
-        handleParticleLine(vector, length, width, stepsize, ticksLinger, startLoc, colorList);
-    }
-    public static void handleParticleLine(Vector vector, double length, double width, double stepsize, int ticksLinger, Location startLoc, List<String> particleColor) {
+    public static void handleParticleLine(Vector vector, Location startLoc, ParticleLineOptions options) {
+        // variables copied from options
+        double length = options.length;
+        double width = options.width;
+        double stepsize = options.stepsize;
+        int ticksLinger = options.ticksLinger;
+        float alpha = options.alpha;
+        String particleCharacter = options.particleChar;
+        List<String> particleColor = options.particleColor;
+
         Vector dVec = vector.clone().normalize();
         int loopTime = (int) Math.round(length / stepsize);
         dVec.multiply(length / loopTime);
@@ -121,10 +179,67 @@ public class GenericHelper {
             if (gCode.length() == 1) gCode = "0" + gCode;
             if (bCode.length() == 1) bCode = "0" + bCode;
             String colorCode = rCode + gCode + bCode;
-            // █ ●
-            displayHoloText(currLoc, "§#" + colorCode + "█", ticksLinger, (float) width, (float) width, 1f);
+            displayHoloText(currLoc, "§#" + colorCode + particleCharacter, ticksLinger, (float) width, (float) width, alpha);
             // add vector to location
             currLoc.add(dVec);
+        }
+    }
+    // warning: this function modifies attrMap and exceptions!
+    public static void handleStrikeLine(Player ply, Location startLoc, double yaw, double pitch, double length, double width, String itemType, String color, List<Entity> exceptions, HashMap<String, Double> attrMap, boolean thruWall, StrikeLineOptions advanced) {
+        // find terminal location ( hit block etc. )
+        World wld = startLoc.getWorld();
+        Vector direction = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
+        direction.multiply(length);
+        Location terminalLoc = startLoc.clone().add(direction);
+        // if the projectile does not go through wall, find possible collision
+        if (!thruWall) {
+            MovingObjectPosition hitLoc = HitEntityInfo.rayTraceBlocks(wld,
+                    startLoc.toVector(),
+                    terminalLoc.toVector());
+            if (hitLoc != null && hitLoc.pos != null) {
+                terminalLoc = MathHelper.toBukkitVector(hitLoc.pos).toLocation(wld);
+                direction = terminalLoc.toVector().subtract(startLoc.toVector());
+                length = direction.length();
+            }
+        }
+        // display particle
+        handleParticleLine(direction, startLoc,
+                new ParticleLineOptions()
+                        .setParticleColor(color)
+                        .setAlpha(0.5f)
+                        .setLength(length)
+                        .setWidth(width)
+                        .setTicksLinger(5));
+        // handle strike
+        com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication;
+        if (itemType.contains("虫网")) {
+            predication = (e) -> {
+                if (!e.isAlive()) return false;
+                Entity entity = e.getBukkitEntity();
+                if (entity.getScoreboardTags().contains("isAnimal")) {
+                    if (entity instanceof LivingEntity) {
+                        LivingEntity entityParsed = (LivingEntity) entity;
+                        if (entityParsed.getHealth() > 0) return true;
+                    }
+                }
+                return false;
+            };
+        } else {
+            predication = (e) -> {
+                Entity entity = e.getBukkitEntity();
+                if (EntityHelper.checkCanDamage(ply, entity, false)) {
+                    return !exceptions.contains(entity);
+                }
+                return false;
+            };
+        }
+        Set<HitEntityInfo> entityHitCandidate = HitEntityInfo.getEntitiesHit(
+                wld, startLoc.toVector(), terminalLoc.toVector(), width, predication);
+        double damage = attrMap.getOrDefault("damage", 10d);
+        for (HitEntityInfo info : entityHitCandidate) {
+            Entity victim = info.getHitEntity().getBukkitEntity();
+            EntityHelper.handleDamage(ply, victim, damage, "DirectDamage");
+            damageCoolDown(exceptions, victim, 15);
         }
     }
     public static void displayHoloText(Location displayLoc, String text, int ticksDisplay, float width, float height, float alpha) {
@@ -184,6 +299,6 @@ public class GenericHelper {
         Location displayLoc;
         if (e instanceof LivingEntity) displayLoc = ((LivingEntity) e).getEyeLocation().add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
         else displayLoc = e.getLocation().add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
-        displayHoloText(displayLoc, text, ticksDisplay, 1f, 0.75f, 1f);
+        displayHoloText(displayLoc, text, ticksDisplay, 1f, 0.75f, 0.75f);
     }
 }

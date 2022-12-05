@@ -1,6 +1,8 @@
 package terraria.entity;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.util.Vector;
 import terraria.util.MathHelper;
 
@@ -31,8 +33,8 @@ public class HitEntityInfo {
         return this.hitLocation;
     }
     // helper functions for projectiles etc.
-    public static MovingObjectPosition rayTraceBlocks(World world, Vector startLoc, Vector terminalLoc) {
-        return rayTraceBlocks(world, MathHelper.toNMSVector(startLoc), MathHelper.toNMSVector(terminalLoc));
+    public static MovingObjectPosition rayTraceBlocks(org.bukkit.World world, Vector startLoc, Vector terminalLoc) {
+        return rayTraceBlocks(((CraftWorld) world).getHandle(), MathHelper.toNMSVector(startLoc), MathHelper.toNMSVector(terminalLoc));
     }
     public static MovingObjectPosition rayTraceBlocks(World world, Vec3D startLoc, Vec3D terminalLoc) {
         // do not care about grass etc.
@@ -40,8 +42,9 @@ public class HitEntityInfo {
         return movingobjectposition;
     }
 
-    public static TreeSet<HitEntityInfo> getEntitiesHit(World world, Vector startLoc, Vector terminalLoc, double radius, com.google.common.base.Predicate<? super Entity> predication) {
-        return getEntitiesHit(world, MathHelper.toNMSVector(startLoc), MathHelper.toNMSVector(terminalLoc), radius, predication);
+    public static TreeSet<HitEntityInfo> getEntitiesHit(org.bukkit.World world, Vector startLoc, Vector terminalLoc, double radius, com.google.common.base.Predicate<? super Entity> predication) {
+        return getEntitiesHit(((CraftWorld) world).getHandle(),
+                MathHelper.toNMSVector(startLoc), MathHelper.toNMSVector(terminalLoc), radius, predication);
     }
     public static TreeSet<HitEntityInfo> getEntitiesHit(World world, Vec3D startLoc, Vec3D terminalLoc, double radius, com.google.common.base.Predicate<? super Entity> predication) {
         AxisAlignedBB boundingBox = new AxisAlignedBB(startLoc.x, startLoc.y, startLoc.z, terminalLoc.x, terminalLoc.y, terminalLoc.z)

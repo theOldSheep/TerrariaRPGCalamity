@@ -1,24 +1,32 @@
 package terraria.util;
 
+import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.PacketPlayOutSetCooldown;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 
 import java.util.*;
 
 public class ItemUseHelper {
-    public static void applyCD(Player ply, double CD) {
+    private static final String SOUND_GENERIC_SWING = "item.genericSwing", SOUND_BOW_SHOOT = "item.bowShoot",
+            SOUND_GUN_FIRE = "item.gunfire", SOUND_GUN_FIRE_LOUD = "entity.generic.explode";
+    private static final double MELEE_STRIKE_RADIUS = 0.25;
+    public static int applyCD(Player ply, double CD) {
         int coolDown = (int) CD;
         if (Math.random() < CD % 1) coolDown ++;
-        applyCD(ply, coolDown);
+        return applyCD(ply, coolDown);
     }
-    public static void applyCD(Player ply, int CD) {
+    public static int applyCD(Player ply, int CD) {
         ply.addScoreboardTag("useCD");
         long lastCDApply = Calendar.getInstance().getTimeInMillis();
         EntityHelper.setMetadata(ply, "useCDInternal", lastCDApply);
@@ -40,6 +48,7 @@ public class ItemUseHelper {
                 }
             }, CD);
         }
+        return CD;
     }
     // util functions for use item
     private static void playerSwingPickaxe(Player ply, HashMap<String, Double> attrMap, boolean isRightClick) {
@@ -72,34 +81,188 @@ public class ItemUseHelper {
         }
         return false;
     }
+    private static boolean playerUsePotion(Player ply, String itemType, ItemStack potion) {
+        return false;
+    }
+    // melee helper functions below
+    // TODO: handle zenith
+    private static void handleZenith(Player ply, HashMap<String, Double> attrMap, String weaponType) {
+
+    }
+    // warning: this function modifies attrMap and damaged!
+    private static void handleMeleeSwing(Player ply, HashMap<String, Double> attrMap, Vector lookDir,
+                                         List<Entity> damaged, ConfigurationSection weaponSection,
+                                         double yaw, double pitch, String weaponType, double size,
+                                         boolean dirFixed, boolean stabOrSwing, int currentIndex, int maxIndex) {
+        if (!PlayerHelper.isProperlyPlaying(ply)) return;
+        if (!dirFixed) {
+            EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+            yaw = plyNMS.yaw;
+            pitch = plyNMS.pitch;
+            lookDir = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
+        }
+        String color = "102|255|255";
+        if (stabOrSwing) {
+            boolean shouldStrike;
+            double strikeYaw = yaw, strikePitch = pitch;
+            if (weaponType.equals("星光")) {
+                shouldStrike = currentIndex % 2 == 0;
+                if (shouldStrike) {
+                    // prevent DPS loss due to damage invincibility frame
+                    damaged = new ArrayList<>();
+                    List<String> colorCandidates = weaponSection.getStringList("particleColor");
+                    color = colorCandidates.get((int) (Math.random() * colorCandidates.size()));
+                    if (currentIndex > 0) ply.getWorld().playSound(ply.getLocation(), SOUND_GENERIC_SWING, 1f, 1f);
+                    strikeYaw += Math.random() * 30 - 15;
+                    strikePitch += Math.random() * 30 - 15;
+                }
+            } else {
+                shouldStrike = currentIndex == 0;
+                if (shouldStrike) {
+                    List<String> colors = weaponSection.getStringList("particleColor");
+                    if (colors.size() > 0)
+                        color = colors.get(0);
+                }
+            }
+            if (shouldStrike)
+                GenericHelper.handleStrikeLine(ply, ply.getEyeLocation().add(lookDir), strikeYaw, strikePitch, size, MELEE_STRIKE_RADIUS,
+                        weaponType, color, damaged, attrMap, false, new GenericHelper.StrikeLineOptions());
+        } else {
+            if (weaponType.equals("天顶剑")) {
+                if (currentIndex % 4 == 0) {
+                    handleZenith(ply, (HashMap<String, Double>) attrMap.clone(), weaponType);
+                }
+            } else {
+                List<String> colors = weaponSection.getStringList("particleColor");
+                if (colors.size() > 0)
+                    color = colors.get(0);
+                int loopTimes = Math.max(maxIndex, 35);
+                int indexStart = loopTimes * currentIndex / (maxIndex + 1);
+                int indexEnd = loopTimes * (currentIndex + 1) / (maxIndex + 1);
+                for (int i = indexStart; i < indexEnd; i ++) {
+                    double actualPitch = ((170 * (double) i / loopTimes) - 110);
+                    Vector offsetDir = MathHelper.vectorFromYawPitch_quick(yaw, actualPitch);
+                    GenericHelper.handleStrikeLine(ply, ply.getEyeLocation().add(offsetDir), yaw, actualPitch,
+                            size, MELEE_STRIKE_RADIUS, weaponType, color, damaged, attrMap, false, new GenericHelper.StrikeLineOptions());
+                }
+            }
+        }
+        if (currentIndex < maxIndex) {
+            double finalYaw = yaw;
+            double finalPitch = pitch;
+            Vector finalLookDir = lookDir;
+            List<Entity> finalDamaged = damaged;
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                    () -> handleMeleeSwing(ply, attrMap, finalLookDir, finalDamaged, weaponSection, finalYaw, finalPitch,
+                            weaponType, size, dirFixed, stabOrSwing, currentIndex + 1, maxIndex), 1);
+        }
+    }
+    private static boolean playerUseMelee(Player ply, String itemType, ItemStack weapon,
+                                          ConfigurationSection weaponSection, HashMap<String, Double> attrMap, int swingAmount, boolean stabOrSwing) {
+        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+        double yaw = plyNMS.yaw, pitch = plyNMS.pitch;
+        double size = weaponSection.getDouble("size", 3d);
+        Vector lookDir = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
+        size *= attrMap.getOrDefault("meleeReachMulti", 1d);
+        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
+        double useTimeMulti = 1 / useSpeed;
+        ConfigurationSection projectileInfo = weaponSection.getConfigurationSection("projectileInfo");
+        if (projectileInfo != null) {
+            HashMap<String, Double> attrMapProjectile = (HashMap<String, Double>) attrMap.clone();
+            int shootInterval = (int) Math.floor(projectileInfo.getInt("interval", 1) * useSpeed);
+            int shootAmount = 1;
+            if (swingAmount % shootInterval == 0) {
+                lookDir.multiply(projectileInfo.getDouble("velocity", 1d));
+                String projectileType = projectileInfo.getString("name", "");
+                for (int i = 0; i < shootAmount; i ++) {
+                    if (stabOrSwing) {
+                        Vector v = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
+                        v.multiply(size);
+                        EntityHelper.spawnProjectile(ply, ply.getEyeLocation().add(v),
+                                lookDir, attrMapProjectile, "Melee", projectileType);
+                    } else {
+                        EntityHelper.spawnProjectile(ply, ply.getEyeLocation(),
+                                lookDir, attrMapProjectile, "Melee", projectileType);
+                    }
+                }
+            }
+        }
+        int coolDown = applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
+        boolean dirFixed = weaponSection.getBoolean("dirFixed", true);
+        handleMeleeSwing(ply, attrMap, lookDir, new ArrayList<>(), weaponSection, yaw, pitch, itemType, size,
+                dirFixed, stabOrSwing, 0, coolDown);
+        return true;
+    }
     // note that use time CD handling are in individual helper functions.
     public static void playerUseItem(Player ply) {
+        // cursed players can not use any item
         if (EntityHelper.hasEffect(ply, "诅咒")) {
             ply.removeScoreboardTag("autoSwing");
             EntityHelper.setMetadata(ply, "swingAmount", 0);
             return;
         }
+        // if the player is not logged in or is dead
+        if (!PlayerHelper.isProperlyPlaying(ply)) return;
+        // if tool changed, reload attributes
         Set<String> scoreboardTags = ply.getScoreboardTags();
         if (scoreboardTags.contains("toolChanged"))
             PlayerHelper.setupAttribute(ply);
-        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+        // variable setup
+        HashMap<String, Double> attrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(ply).clone();
         boolean isRightClick = scoreboardTags.contains("isSecondaryAttack");
         // pickaxe
         if (attrMap.getOrDefault("powerPickaxe", 0d) > 1) {
             playerSwingPickaxe(ply, attrMap, isRightClick);
             return;
         }
+        // other items
         ItemStack mainHandItem = ply.getInventory().getItemInMainHand();
         String itemName = ItemHelper.splitItemName(mainHandItem)[1];
         // void bag, piggy bank, musical instruments etc.
         if (isRightClick && playerUseMiscellaneous(ply, itemName)) return;
         // potion and other consumable consumption
-        // TODO
-        // other weapon etc.
-        else {
-            String damageType = EntityHelper.getDamageType(ply);
-            switch (damageType) {
-                // TODO
+        if (isRightClick && playerUsePotion(ply, itemName, mainHandItem)) return;
+        // use weapon
+        ConfigurationSection weaponSection = TerrariaHelper.weaponConfig.getConfigurationSection(itemName);
+        if (weaponSection != null) {
+            String weaponType = weaponSection.getString("type", "");
+            // prevent accidental glitch that creates endless item use cool down
+            if (attrMap.getOrDefault("useCD", 0d) < 0.01) PlayerHelper.setupAttribute(ply);
+            int swingAmount = EntityHelper.getMetadata(ply, "swingAmount").asInt();
+            boolean success = false;
+            switch (weaponType) {
+                case "STAB":
+                case "SWING":
+                    success = playerUseMelee(ply, itemName, mainHandItem, weaponSection, attrMap, swingAmount, weaponType.equals("STAB"));
+                    break;
+            }
+            if (success) {
+                boolean autoSwing = weaponSection.getBoolean("autoSwing", false);
+                if (autoSwing) {
+                    ply.addScoreboardTag("autoSwing");
+                    EntityHelper.setMetadata(ply, "swingAmount", swingAmount + 1);
+                }
+                // play item use sound
+                String itemUseSound;
+                float volume = 1f, pitch = 1f;
+                switch (weaponType) {
+                    case "BOW":
+                        itemUseSound = SOUND_BOW_SHOOT;
+                        volume = 2f;
+                        break;
+                    case "GUN":
+                        if (autoSwing) {
+                            itemUseSound = SOUND_GUN_FIRE;
+                        } else {
+                            itemUseSound = SOUND_GUN_FIRE_LOUD;
+                            pitch = 1.2f;
+                        }
+                        volume = 3f;
+                        break;
+                    default:
+                        itemUseSound = SOUND_GENERIC_SWING;
+                }
+                ply.getWorld().playSound(ply.getLocation(), itemUseSound, volume, pitch);
             }
         }
     }
