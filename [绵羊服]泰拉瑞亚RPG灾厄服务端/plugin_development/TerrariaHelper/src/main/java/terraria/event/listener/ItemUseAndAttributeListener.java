@@ -13,15 +13,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
+import terraria.TerrariaHelper;
 import terraria.util.*;
+
+import java.util.Set;
 
 public class ItemUseAndAttributeListener implements Listener {
     // events that could affect attribute and item use logic
@@ -74,11 +74,17 @@ public class ItemUseAndAttributeListener implements Listener {
     }
     // swing item helper
     private static void toolSwing(Player ply, boolean isRightClick) {
+        Set<String> scoreboardTags = ply.getScoreboardTags();
+        // prevent glitch due to multiple listeners triggered at once(most noticeably cancelling auto swing)
+        String CDScoreboardTag = "temp_checkedToolSwing";
+        Bukkit.broadcastMessage("Attempted use item! has scoreboard tag: " + scoreboardTags.contains(CDScoreboardTag));
+        if (scoreboardTags.contains(CDScoreboardTag)) return;
+        ply.addScoreboardTag(CDScoreboardTag);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                () -> ply.removeScoreboardTag(CDScoreboardTag), 2);
         // if the player is in swing cool down, do nothing (cancel auto swing if applicable)
-        if (ply.getScoreboardTags().contains("useCD")) {
-            boolean lastRightAttack = ply.getScoreboardTags().contains("isSecondaryAttack");
-            if (lastRightAttack == isRightClick)
-                ply.removeScoreboardTag("autoSwing");
+        if (scoreboardTags.contains("useCD")) {
+            ply.removeScoreboardTag("autoSwing");
             return;
         }
         // setup click type and let player use the item

@@ -806,7 +806,8 @@ public class PlayerHelper {
             ply.removeScoreboardTag("toolChanged");
             // re-initialize attribute map
             EntityHelper.setMetadata(ply, "attrMap", getDefaultPlayerAttributes());
-            // potion effects
+            EntityHelper.setMetadata(ply, "effectInflict", getDefaultPlayerEffectInflict());
+            // potion effect
             HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
             for (Map.Entry<String, Integer> effectInfo : effectMap.entrySet()) {
                 String effect = effectInfo.getKey();

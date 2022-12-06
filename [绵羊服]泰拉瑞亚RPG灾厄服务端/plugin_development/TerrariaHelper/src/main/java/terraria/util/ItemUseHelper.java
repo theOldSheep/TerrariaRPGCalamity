@@ -226,7 +226,8 @@ public class ItemUseHelper {
         // potion and other consumable consumption
         if (isRightClick && playerUsePotion(ply, itemName, mainHandItem)) return;
         // use weapon
-        ConfigurationSection weaponSection = TerrariaHelper.weaponConfig.getConfigurationSection(itemName);
+        String weaponYMLPath = itemName + (isRightClick ? "_RIGHT_CLICK" : "");
+        ConfigurationSection weaponSection = TerrariaHelper.weaponConfig.getConfigurationSection(weaponYMLPath);
         if (weaponSection != null) {
             String weaponType = weaponSection.getString("type", "");
             // prevent accidental glitch that creates endless item use cool down

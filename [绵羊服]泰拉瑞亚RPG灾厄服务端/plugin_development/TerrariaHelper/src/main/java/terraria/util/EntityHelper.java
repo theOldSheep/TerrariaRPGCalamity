@@ -264,7 +264,9 @@ public class EntityHelper {
         try {
             return (HashMap<String, Integer>) getMetadata(entity, "effects").value();
         } catch (Exception e) {
-            return new HashMap<>();
+            HashMap<String, Integer> effectMap = new HashMap<>();
+            setMetadata(entity, "effects", effectMap);
+            return effectMap;
         }
     }
     public static int getEffectLevelMax(String effect) {
@@ -389,7 +391,7 @@ public class EntityHelper {
                 delay = 4;
             } else {
                 delay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageInterval", delay);
-                damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damage", 0);
+                damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damage", damagePerDelay);
                 if (!(entity instanceof Player))
                     damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageMonster", damagePerDelay);
             }
@@ -1007,6 +1009,7 @@ public class EntityHelper {
         if (damager instanceof Projectile) {
             buffInflict.addAll(TerrariaHelper.projectileConfig.getStringList(damager.getName() + ".buffInflict"));
         }
+        // player buff inflict
         if (damageSource instanceof Player) {
             // player minion buff inflict
             HashMap<String, ArrayList<String>> buffInflictMap = PlayerHelper.getPlayerEffectInflict(damageSource);
@@ -1021,16 +1024,20 @@ public class EntityHelper {
                     buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
                     buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictTrueMelee", new ArrayList<>(0)));
                     break;
-                default: // summon, Melee, Magic
+                default: // Summon, Melee, Magic
+                    // whip
+                    if (damageType.equals("Summon") && damageReason.equals("DirectDamage"))
+                        buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
                     buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict" + damageType, new ArrayList<>(0)));
             }
-        } else {
-            // monster buff inflict
+        }
+        // monster buff inflict
+        else {
             buffInflict.addAll(TerrariaHelper.entityConfig.getStringList(GenericHelper.trimText(damageSource.getName()) + ".buffInflict"));
         }
         // apply (de)buff(s) to victim
         for (String buff : buffInflict) {
-            String buffInfo[] = buff.split("\\|");
+            String[] buffInfo = buff.split("\\|");
             double chance;
             try {
                 chance = Double.parseDouble(buffInfo[2]);
@@ -1122,11 +1129,11 @@ public class EntityHelper {
                             dmg *= damagerAttrMap.getOrDefault("damage" + damageType + "Multi", 1d);
                             break;
                         default:
-                            Bukkit.broadcastMessage("Unhandled damage type: " + damageType);
+                            Bukkit.getLogger().log(Level.SEVERE, "Unhandled damage type: " + damageType);
                             return;
                     }
                 } else {
-                    Bukkit.broadcastMessage("Unhandled damage reason: " + damageReason);
+                    Bukkit.getLogger().log(Level.SEVERE, "Unhandled damage reason: " + damageReason);
                     return;
                 }
         }
