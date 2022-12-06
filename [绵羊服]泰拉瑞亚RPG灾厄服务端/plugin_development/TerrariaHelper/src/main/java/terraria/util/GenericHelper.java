@@ -14,11 +14,6 @@ import java.util.*;
 
 public class GenericHelper {
     static long nextHologramIndex = 0;
-    public static class StrikeLineOptions {
-        public StrikeLineOptions() {
-
-        }
-    }
     public static class ParticleLineOptions {
         double length, width, stepsize;
         float alpha;
@@ -66,6 +61,48 @@ public class GenericHelper {
         public ParticleLineOptions setParticleColor(String... particleColor) {
             this.particleColor.clear();
             this.particleColor.addAll(Arrays.asList(particleColor));
+            return this;
+        }
+    }
+    public static class StrikeLineOptions {
+        boolean bounceWhenHitBlock, thruWall;
+        double damage, decayCoef, whipBonusCrit, whipBonusDamage;
+        ParticleLineOptions particleInfo;
+        public StrikeLineOptions() {
+            bounceWhenHitBlock = false;
+            thruWall = true;
+            damage = 0d;
+            decayCoef = 1d;
+            whipBonusCrit = 0d;
+            whipBonusDamage = 0d;
+            particleInfo = null;
+        }
+        public StrikeLineOptions setBounceWhenHitBlock(boolean shouldBounce) {
+            this.bounceWhenHitBlock = shouldBounce;
+            return this;
+        }
+        public StrikeLineOptions setThruWall(boolean thruWall) {
+            this.thruWall = thruWall;
+            return this;
+        }
+        public StrikeLineOptions setDamage(double damage) {
+            this.damage = damage;
+            return this;
+        }
+        public StrikeLineOptions setDecayCoef(double decayCoef) {
+            this.damage = decayCoef;
+            return this;
+        }
+        public StrikeLineOptions setWhipBonusCrit(double whipBonusCrit) {
+            this.whipBonusCrit = whipBonusCrit;
+            return this;
+        }
+        public StrikeLineOptions setWhipBonusDamage(double whipBonusDamage) {
+            this.whipBonusDamage = whipBonusDamage;
+            return this;
+        }
+        public StrikeLineOptions setParticleInfo(ParticleLineOptions particleInfo) {
+            this.particleInfo = particleInfo;
             return this;
         }
     }
@@ -185,7 +222,24 @@ public class GenericHelper {
         }
     }
     // warning: this function modifies attrMap and exceptions!
-    public static void handleStrikeLine(Player ply, Location startLoc, double yaw, double pitch, double length, double width, String itemType, String color, List<Entity> exceptions, HashMap<String, Double> attrMap, boolean thruWall, StrikeLineOptions advanced) {
+    public static void handleStrikeLine(Entity damager, Location startLoc, double yaw, double pitch, double length, double width, String itemType, String color, List<Entity> exceptions, HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
+        if (length < 0) return;
+        // setup variables
+        boolean bounceWhenHitBlock = advanced.bounceWhenHitBlock,
+                thruWall = advanced.thruWall,
+                useAttrMapDamage = advanced.damage <= 0d;
+        double  damage = useAttrMapDamage ? attrMap.getOrDefault("damage", 10d) : advanced.damage,
+                decayCoef = advanced.decayCoef,
+                whipBonusCrit = advanced.whipBonusCrit,
+                whipBonusDamage = advanced.whipBonusDamage;
+        ParticleLineOptions particleInfo = advanced.particleInfo;
+        if (particleInfo == null)
+            particleInfo = new ParticleLineOptions()
+                .setParticleColor(color)
+                .setAlpha(0.5f)
+                .setLength(length)
+                .setWidth(width)
+                .setTicksLinger(5);
         // find terminal location ( hit block etc. )
         World wld = startLoc.getWorld();
         Vector direction = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
@@ -199,18 +253,45 @@ public class GenericHelper {
             if (hitLoc != null && hitLoc.pos != null) {
                 terminalLoc = MathHelper.toBukkitVector(hitLoc.pos).toLocation(wld);
                 direction = terminalLoc.toVector().subtract(startLoc.toVector());
-                length = direction.length();
+                double distToWall = direction.length();
+                particleInfo.setLength(distToWall);
+                // bounce when hit block
+                if (bounceWhenHitBlock) {
+                    // make sure that the new strike line does not get stuck in wall
+                    Vector dirToHitLoc = direction.clone();
+                    if (distToWall > 0.01) {
+                        dirToHitLoc.multiply((distToWall - 0.01) / distToWall);
+                        terminalLoc = startLoc.clone().add(dirToHitLoc);
+                        distToWall -= 0.01;
+                    }
+                    double newStrikeLength = length - Math.max(distToWall, 5);
+                    switch (hitLoc.direction) {
+                        case EAST:
+                        case WEST:
+                            dirToHitLoc.setX(dirToHitLoc.getX() * -1);
+                            break;
+                        case UP:
+                        case DOWN:
+                            dirToHitLoc.setY(dirToHitLoc.getY() * -1);
+                            break;
+                        case SOUTH:
+                        case NORTH:
+                            dirToHitLoc.setZ(dirToHitLoc.getZ() * -1);
+                            break;
+                    }
+                    Location newStartLoc = terminalLoc;
+                    Bukkit.getScheduler().runTask(TerrariaHelper.getInstance(),
+                            () -> handleStrikeLine(damager, newStartLoc,
+                                    MathHelper.getVectorYaw(dirToHitLoc), MathHelper.getVectorPitch(dirToHitLoc),
+                                    newStrikeLength, width, itemType,
+                                    color, exceptions, attrMap, advanced));
+                }
+                length = distToWall;
             }
         }
         // display particle
-        handleParticleLine(direction, startLoc,
-                new ParticleLineOptions()
-                        .setParticleColor(color)
-                        .setAlpha(0.5f)
-                        .setLength(length)
-                        .setWidth(width)
-                        .setTicksLinger(5));
-        // handle strike
+        handleParticleLine(direction, startLoc, particleInfo);
+        // init predication for victim selection
         com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication;
         if (itemType.contains("虫网")) {
             predication = (e) -> {
@@ -219,7 +300,7 @@ public class GenericHelper {
                 if (entity.getScoreboardTags().contains("isAnimal")) {
                     if (entity instanceof LivingEntity) {
                         LivingEntity entityParsed = (LivingEntity) entity;
-                        if (entityParsed.getHealth() > 0) return true;
+                        return entityParsed.getHealth() > 0;
                     }
                 }
                 return false;
@@ -227,18 +308,34 @@ public class GenericHelper {
         } else {
             predication = (e) -> {
                 Entity entity = e.getBukkitEntity();
-                if (EntityHelper.checkCanDamage(ply, entity, false)) {
+                if (EntityHelper.checkCanDamage(damager, entity, false)) {
                     return !exceptions.contains(entity);
                 }
                 return false;
             };
         }
+        // damage hit entities
         Set<HitEntityInfo> entityHitCandidate = HitEntityInfo.getEntitiesHit(
                 wld, startLoc.toVector(), terminalLoc.toVector(), width, predication);
-        double damage = attrMap.getOrDefault("damage", 10d);
         for (HitEntityInfo info : entityHitCandidate) {
             Entity victim = info.getHitEntity().getBukkitEntity();
-            EntityHelper.handleDamage(ply, victim, damage, "DirectDamage");
+            EntityHelper.handleDamage(damager, victim, damage, "DirectDamage");
+            // damage decay
+            damage *= decayCoef;
+            if (useAttrMapDamage)
+                attrMap.put("damage", damage);
+            // whip marking
+            switch (itemType) {
+                case "鞭炮":
+                case "暗黑收割":
+                    victim.addScoreboardTag(itemType);
+                    break;
+            }
+            // whip dmg/crit bonus
+            if (whipBonusDamage > 0 && whipBonusCrit > 0) {
+                EntityHelper.setMetadata(victim, "minionWhipBonusDamage",   whipBonusDamage);
+                EntityHelper.setMetadata(victim, "minionWhipBonusCrit",     whipBonusCrit);
+            }
             damageCoolDown(exceptions, victim, 15);
         }
     }
@@ -247,7 +344,7 @@ public class GenericHelper {
         // all players in radius of 64 blocks can see the hologram
         ArrayList<Player> playersSent = new ArrayList<>(100);
         for (Player p : displayLoc.getWorld().getPlayers())
-            if (p.getLocation().distanceSquared(displayLoc) < 4096) playersSent.add(p);
+            if (p.getLocation().distanceSquared(displayLoc) < 40000) playersSent.add(p);
         for (Player p : playersSent)
             CoreAPI.setPlayerWorldTexture(p, holoInd, displayLoc, 0, 0, 0, "[text]" + text, width, height, alpha, true, true);
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {

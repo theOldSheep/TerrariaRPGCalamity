@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 public class MathHelper {
     public static final double DEG_TO_RAD = Math.PI / 180;
+    public static final double RAD_TO_DEG = 180 / Math.PI;
 
     // xsin source code: https://stackoverflow.com/questions/523531/fast-transcendent-trigonometric-functions-for-java
     // Return an approx to sin(pi/2 * x) where -1 <= x <= 1.
@@ -77,6 +78,22 @@ public class MathHelper {
         x *= div;
         z *= div;
         return new Vector(x,y,z);
+    }
+    public static double getVectorYaw(Vector vector) {
+        // algorithm from Skript
+        if (vector.getX() == 0 && vector.getZ() == 0) {
+            return -90;
+        }
+        double resultYaw = Math.atan2(vector.getZ(), vector.getX()) * RAD_TO_DEG - 90;
+        if (resultYaw < -180)
+            resultYaw += 360;
+        return resultYaw;
+    }
+    public static double getVectorPitch(Vector vector) {
+        // algorithm from Skript
+        double xz = Math.sqrt(vector.getX() * vector.getX() + vector.getZ() * vector.getZ());
+        if (xz == 0d) return vector.getY() >= 0 ? -90d : 90d;
+        return Math.atan(vector.getY() / xz) * RAD_TO_DEG * -1;
     }
     public static String selectWeighedRandom(HashMap<String, Double> weighedMap) {
         double total = 0;

@@ -102,6 +102,9 @@ public class ItemUseHelper {
             lookDir = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
         }
         String color = "102|255|255";
+        GenericHelper.StrikeLineOptions strikeLineInfo =
+                new GenericHelper.StrikeLineOptions()
+                        .setThruWall(false);
         if (stabOrSwing) {
             boolean shouldStrike;
             double strikeYaw = yaw, strikePitch = pitch;
@@ -126,7 +129,7 @@ public class ItemUseHelper {
             }
             if (shouldStrike)
                 GenericHelper.handleStrikeLine(ply, ply.getEyeLocation().add(lookDir), strikeYaw, strikePitch, size, MELEE_STRIKE_RADIUS,
-                        weaponType, color, damaged, attrMap, false, new GenericHelper.StrikeLineOptions());
+                        weaponType, color, damaged, attrMap, strikeLineInfo);
         } else {
             if (weaponType.equals("天顶剑")) {
                 if (currentIndex % 4 == 0) {
@@ -143,7 +146,7 @@ public class ItemUseHelper {
                     double actualPitch = ((170 * (double) i / loopTimes) - 110);
                     Vector offsetDir = MathHelper.vectorFromYawPitch_quick(yaw, actualPitch);
                     GenericHelper.handleStrikeLine(ply, ply.getEyeLocation().add(offsetDir), yaw, actualPitch,
-                            size, MELEE_STRIKE_RADIUS, weaponType, color, damaged, attrMap, false, new GenericHelper.StrikeLineOptions());
+                            size, MELEE_STRIKE_RADIUS, weaponType, color, damaged, attrMap, strikeLineInfo);
                 }
             }
         }
