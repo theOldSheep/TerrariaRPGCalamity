@@ -147,7 +147,7 @@ public class GameplayHelper {
             // send packet and metadata before breaking to prevent bug
             EntityHelper.setMetadata(blockToBreak, "breakProgress", 0);
             packetToSend = new PacketPlayOutBlockBreakAnimation(
-                    plyId,
+                    -plyId,
                     new BlockPosition(blockToBreak.getX(), blockToBreak.getY(), blockToBreak.getZ()),
                     -1
             );
@@ -161,7 +161,7 @@ public class GameplayHelper {
             EntityHelper.setMetadata(blockToBreak, "breakProgress", breakingProgress);
             int breakProgress = (int) Math.floor((double) (8 * breakingProgress) / breakingProgressMax);
             packetToSend = new PacketPlayOutBlockBreakAnimation(
-                    plyId,
+                    -plyId,
                     new BlockPosition(blockToBreak.getX(), blockToBreak.getY(), blockToBreak.getZ()),
                     breakProgress
             );

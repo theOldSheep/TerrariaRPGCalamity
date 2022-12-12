@@ -65,6 +65,11 @@ public class MathHelper {
         z *= div;
         return new Vector(x,y,z);
     }
+    // vector math
+    public static Vector vectorProjection(Vector toProjectOnto, Vector vector) {
+        // toProjectOnto.lengthSquared is equivalent to toProjectOnto.dot(toProjectOnto)
+        return toProjectOnto.clone().multiply(toProjectOnto.dot(vector) / toProjectOnto.lengthSquared());
+    }
     public static Vector randomVector() {
         return vectorFromYawPitch_quick(Math.random() * 360 - 180, Math.random() * 180 - 90);
     }

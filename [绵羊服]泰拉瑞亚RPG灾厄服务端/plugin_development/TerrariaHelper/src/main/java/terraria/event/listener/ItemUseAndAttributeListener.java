@@ -47,10 +47,6 @@ public class ItemUseAndAttributeListener implements Listener {
         if (clickedItem != null && ItemHelper.getItemCombatType(clickedItem).equals("装备")) {
             clickedItem.setItemMeta(ItemHelper.getRawItem(ItemHelper.splitItemName(clickedItem)[1]).getItemMeta());
         }
-//        ItemStack cursorItem = e.getCursor();
-//        if (cursorItem != null && ItemHelper.getItemCombatType(cursorItem).equals("装备")) {
-//            cursorItem.setItemMeta(ItemHelper.getRawItem(ItemHelper.splitItemName(cursorItem)[1]).getItemMeta());
-//        }
     }
     @EventHandler(priority = EventPriority.LOW)
     public static void onDiscardItem(PlayerDropItemEvent e) {
