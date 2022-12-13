@@ -974,9 +974,11 @@ public class EntityHelper {
         }
         if (victimScoreboardTags.contains("isBOSS")) {
             if (isDirectAttackDamage) {
+                MetadataValue bossTargets = getMetadata(victim, "targets");
+                boolean canDamageBoss = bossTargets == null ||
+                        (((HashMap<String, Double>) (bossTargets.value())).containsKey(damageSource.getName()));
                 // damage source of a boss is not a target
-                if (!(damageSource instanceof Player &&
-                        ((HashMap<String, Double>) getMetadata(victim, "targets").value()).containsKey(damageSource.getName())))
+                if (!(damageSource instanceof Player && canDamageBoss))
                     defence = 999999999;
             } else {
                 // if the damage source of a boss is neither direct attack, thorn nor debuff (that is, lava etc.)

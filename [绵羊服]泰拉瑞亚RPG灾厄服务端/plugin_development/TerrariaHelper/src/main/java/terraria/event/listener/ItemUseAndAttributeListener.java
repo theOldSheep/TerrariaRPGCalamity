@@ -73,13 +73,20 @@ public class ItemUseAndAttributeListener implements Listener {
         Set<String> scoreboardTags = ply.getScoreboardTags();
         // prevent glitch due to multiple listeners triggered at once(most noticeably cancelling auto swing)
         String CDScoreboardTag = "temp_checkedToolSwing";
-        Bukkit.broadcastMessage("Attempted use item! has scoreboard tag: " + scoreboardTags.contains(CDScoreboardTag));
         if (scoreboardTags.contains(CDScoreboardTag)) return;
         ply.addScoreboardTag(CDScoreboardTag);
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                 () -> ply.removeScoreboardTag(CDScoreboardTag), 2);
-        // if the player is in swing cool down, do nothing (cancel auto swing if applicable)
+        // if the player is in swing cool down
+        // if the player is using a loading weapon, fire the loaded ammo
+        // otherwise, do nothing
+        // cancel auto swing if applicable
         if (scoreboardTags.contains("useCD")) {
+            if (scoreboardTags.contains("isLoadingWeapon")) {
+                ply.removeScoreboardTag("isLoadingWeapon");
+                // fire loaded shots
+                ItemUseHelper.playerUseItem(ply);
+            }
             ply.removeScoreboardTag("autoSwing");
             return;
         }

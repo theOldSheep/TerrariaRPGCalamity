@@ -106,6 +106,31 @@ public class GenericHelper {
             return this;
         }
     }
+    public static class AimHelperOptions {
+        int ticksOffset = 0;
+        double projectileSpeed = 0d, intensity = 1d, randomOffsetRadius = 0d;
+        boolean useTickOrSpeedEstimation = false;
+        public AimHelperOptions setTicksOffset(int ticksOffset) {
+            this.ticksOffset = ticksOffset;
+            return this;
+        }
+        public AimHelperOptions setProjectileSpeed(int projectileSpeed) {
+            this.projectileSpeed = projectileSpeed;
+            return this;
+        }
+        public AimHelperOptions setIntensity(double intensity) {
+            this.intensity = intensity;
+            return this;
+        }
+        public AimHelperOptions setRandomOffsetRadius(double randomOffsetRadius) {
+            this.randomOffsetRadius = randomOffsetRadius;
+            return this;
+        }
+        public AimHelperOptions setAimMode(boolean useTickOrSpeedEstimation) {
+            this.useTickOrSpeedEstimation = useTickOrSpeedEstimation;
+            return this;
+        }
+    }
 
     public static String trimText(String textToTrim) {
         if (textToTrim == null) return "";
@@ -126,6 +151,27 @@ public class GenericHelper {
     public static void damageCoolDown(Collection<Entity> list, Entity victim, int cd) {
         list.add(victim);
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> list.remove(victim), cd);
+    }
+    public static Location helperAimEntity(Entity source, Entity target, AimHelperOptions aimHelperOption) {
+        Location targetLoc;
+        // setup target location
+        if (target instanceof LivingEntity) targetLoc = ((LivingEntity) target).getEyeLocation();
+        else targetLoc = target.getLocation();
+        // estimate the distance that the entity will move
+        double predictionIntensity = aimHelperOption.intensity;
+        if (source != null && predictionIntensity > 1e-5) {
+            double distance = targetLoc.distance(source.getLocation());
+            double ticksOffset = 0;
+            if (aimHelperOption.useTickOrSpeedEstimation) ticksOffset = aimHelperOption.ticksOffset;
+            else if (aimHelperOption.projectileSpeed > 1) ticksOffset = distance / aimHelperOption.projectileSpeed;
+            ticksOffset *= aimHelperOption.intensity;
+            targetLoc.add(target.getVelocity().multiply(ticksOffset));
+        }
+        // random offset for projectiles
+        double randomOffset = aimHelperOption.randomOffsetRadius;
+        if (randomOffset > 1e-5)
+            targetLoc.add(Math.random() * randomOffset, Math.random() * randomOffset, Math.random() * randomOffset);
+        return targetLoc;
     }
     public static int[] coinConversion(int amount, boolean copperOrRaw) {
         int amountCopper;
@@ -222,7 +268,7 @@ public class GenericHelper {
         }
     }
     // warning: this function modifies attrMap and exceptions!
-    public static void handleStrikeLine(Entity damager, Location startLoc, double yaw, double pitch, double length, double width, String itemType, String color, List<Entity> exceptions, HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
+    public static void handleStrikeLine(Entity damager, Location startLoc, double yaw, double pitch, double length, double width, String itemType, String color, Collection<Entity> exceptions, HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
         if (length < 0) return;
         // setup variables
         boolean bounceWhenHitBlock = advanced.bounceWhenHitBlock,
@@ -286,7 +332,6 @@ public class GenericHelper {
                                     newStrikeLength, width, itemType,
                                     color, exceptions, attrMap, advanced));
                 }
-                length = distToWall;
             }
         }
         // display particle

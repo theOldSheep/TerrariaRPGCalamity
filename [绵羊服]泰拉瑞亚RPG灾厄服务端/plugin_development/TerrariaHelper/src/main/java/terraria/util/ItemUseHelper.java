@@ -20,6 +20,7 @@ import terraria.TerrariaHelper;
 import terraria.entity.HitEntityInfo;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class ItemUseHelper {
     private static final String SOUND_GENERIC_SWING = "item.genericSwing", SOUND_BOW_SHOOT = "item.bowShoot",
@@ -89,50 +90,37 @@ public class ItemUseHelper {
         return false;
     }
     // weapon use helper functions below
-    private static Location getPlayerTargetLoc(Player ply, double traceDist, double entityEnlargeRadius, double projectileSpeed) {
-        Location targetLoc = null;
-        World plyWorld = ply.getWorld();
-        EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
-        Vector lookDir = MathHelper.vectorFromYawPitch_quick(nmsPly.yaw, nmsPly.pitch);
-        {
-            Vector eyeLoc = ply.getEyeLocation().toVector();
-            Vector endLoc = eyeLoc.clone().add(lookDir.clone().multiply(traceDist));
-            // the block the player is looking at, if near enough
-            {
-                MovingObjectPosition rayTraceResult = HitEntityInfo.rayTraceBlocks(
-                        plyWorld,
-                        eyeLoc.clone(),
-                        endLoc);
-                if (rayTraceResult != null) {
-                    endLoc = MathHelper.toBukkitVector(rayTraceResult.pos);
-                    targetLoc = endLoc.toLocation(plyWorld);
-                }
-            }
-            // the enemy the player is looking at, if applicable
-            if (eyeLoc.distanceSquared(endLoc) > entityEnlargeRadius * entityEnlargeRadius * 4) {
-                Set<HitEntityInfo> hits = HitEntityInfo.getEntitiesHit(
-                        plyWorld,
-                        eyeLoc.clone().add(lookDir.clone().multiply(entityEnlargeRadius)),
-                        endLoc.clone().add(lookDir.clone().multiply(entityEnlargeRadius)),
-                        entityEnlargeRadius,
-                        (net.minecraft.server.v1_12_R1.Entity target) -> EntityHelper.checkCanDamage(ply, target.getBukkitEntity(), true));
-                if (hits.size() > 0) {
-                    HitEntityInfo hitInfo = hits.iterator().next();
-                    Entity hitEntity = hitInfo.getHitEntity().getBukkitEntity();
-                    if (hitEntity instanceof LivingEntity) endLoc = ((LivingEntity) hitEntity).getEyeLocation().toVector();
-                    else endLoc = hitEntity.getLocation().toVector();
-                    double distance = hitEntity.getLocation().distance(ply.getLocation());
-                    endLoc.add(hitEntity.getVelocity().multiply(distance / projectileSpeed));
-                }
-            }
-            // if the target location is still null, that is, no block/entity being hit
-            if (targetLoc == null) {
-                targetLoc = ply.getEyeLocation().add(lookDir.clone().multiply(traceDist));
-            }
+    private static void displayLoadingProgress(Player ply, int currLoad, int maxLoad) {
+        double fillProgress = (double) currLoad / maxLoad;
+        String colorCode;
+        switch ((int) fillProgress * 5) {
+            case 1:
+                colorCode = "§4";
+                break;
+            case 2:
+                colorCode = "§c";
+                break;
+            case 3:
+                colorCode = "§e";
+                break;
+            case 4:
+                colorCode = "§a";
+                break;
+            default:
+                colorCode = "§2";
         }
-        return targetLoc;
+        int barLengthTotal = 50;
+        int barLengthReady = (int) (barLengthTotal * fillProgress);
+        StringBuilder infoText = new StringBuilder(colorCode + "装填:[");
+        for (int i = 0; i < barLengthReady; i ++)
+            infoText.append("|");
+        infoText.append("§8");
+        for (int i = barLengthReady; i < barLengthTotal; i ++)
+            infoText.append("|");
+        infoText.append(colorCode).append("]");
+        PlayerHelper.sendActionBar(ply, infoText.toString());
     }
-    private static Location getPlayerTargetLoc(Player ply, double traceDist, double entityEnlargeRadius, int ticksOffset) {
+    private static Location getPlayerTargetLoc(Player ply, double traceDist, double entityEnlargeRadius, GenericHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
         Location targetLoc = null;
         World plyWorld = ply.getWorld();
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
@@ -158,14 +146,11 @@ public class ItemUseHelper {
                         eyeLoc.clone().add(lookDir.clone().multiply(entityEnlargeRadius)),
                         endLoc.clone().add(lookDir.clone().multiply(entityEnlargeRadius)),
                         entityEnlargeRadius,
-                        (net.minecraft.server.v1_12_R1.Entity target) -> EntityHelper.checkCanDamage(ply, target.getBukkitEntity(), true));
+                        (net.minecraft.server.v1_12_R1.Entity target) -> EntityHelper.checkCanDamage(ply, target.getBukkitEntity(), strictMode));
                 if (hits.size() > 0) {
                     HitEntityInfo hitInfo = hits.iterator().next();
                     Entity hitEntity = hitInfo.getHitEntity().getBukkitEntity();
-                    if (hitEntity instanceof LivingEntity) endLoc = ((LivingEntity) hitEntity).getEyeLocation().toVector();
-                    else endLoc = hitEntity.getLocation().toVector();
-                    endLoc.add(hitEntity.getVelocity().multiply(ticksOffset));
-                    targetLoc = endLoc.toLocation(plyWorld);
+                    targetLoc = GenericHelper.helperAimEntity(ply, hitEntity, aimHelperInfo);
                 }
             }
             // if the target location is still null, that is, no block/entity being hit
@@ -178,7 +163,7 @@ public class ItemUseHelper {
     // melee helper functions below
     private static void handleSingleZenithSwingAnimation(Player ply, HashMap<String, Double> attrMap,
                                                          Location centerLoc, Vector reachVector, Vector offsetVector,
-                                                         ArrayList<Entity> exceptions, String color,
+                                                         Collection<Entity> exceptions, String color,
                                                          GenericHelper.StrikeLineOptions strikeLineInfo,
                                                          int index, int indexMax) {
         if (index >= indexMax) return;
@@ -203,7 +188,8 @@ public class ItemUseHelper {
         // setup vector info etc.
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
         Vector lookDir = MathHelper.vectorFromYawPitch_quick(nmsPly.yaw, nmsPly.pitch);
-        Location targetLoc = getPlayerTargetLoc(ply, 96, 5, 8);
+        Location targetLoc = getPlayerTargetLoc(ply, 96, 5,
+                new GenericHelper.AimHelperOptions().setTicksOffset(8).setAimMode(true), false);
         Location centerLoc = targetLoc.clone().add(ply.getEyeLocation()).multiply(0.5);
         Vector reachVec = centerLoc.clone().subtract(ply.getEyeLocation()).toVector();
         Vector offsetVec = null;
@@ -224,11 +210,11 @@ public class ItemUseHelper {
         int loopAmount = (int) (reachLength * 4);
         String color = "255|0|0";
         if (colors != null && colors.size() > 0) color = colors.get((int) (Math.random() * colors.size()));
-        handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVec, offsetVec, new ArrayList<>(), color, strikeLineInfo, 0, loopAmount);
+        handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVec, offsetVec, new HashSet<>(), color, strikeLineInfo, 0, loopAmount);
     }
     // warning: this function modifies attrMap and damaged!
     private static void handleMeleeSwing(Player ply, HashMap<String, Double> attrMap, Vector lookDir,
-                                         List<Entity> damaged, ConfigurationSection weaponSection,
+                                         Collection<Entity> damaged, ConfigurationSection weaponSection,
                                          double yaw, double pitch, String weaponType, double size,
                                          boolean dirFixed, boolean stabOrSwing, int currentIndex, int maxIndex) {
         if (!PlayerHelper.isProperlyPlaying(ply)) return;
@@ -291,13 +277,14 @@ public class ItemUseHelper {
             double finalYaw = yaw;
             double finalPitch = pitch;
             Vector finalLookDir = lookDir;
-            List<Entity> finalDamaged = damaged;
+            Collection<Entity> finalDamaged = damaged;
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                     () -> handleMeleeSwing(ply, attrMap, finalLookDir, finalDamaged, weaponSection, finalYaw, finalPitch,
                             weaponType, size, dirFixed, stabOrSwing, currentIndex + 1, maxIndex), 1);
         }
     }
-    private static boolean playerUseMelee(Player ply, String itemType, ItemStack weapon,
+    // stab and swing. NOT NECESSARILY MELEE DAMAGE!
+    private static boolean playerUseMelee(Player ply, String itemType,
                                           ConfigurationSection weaponSection, HashMap<String, Double> attrMap, int swingAmount, boolean stabOrSwing) {
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         double yaw = plyNMS.yaw, pitch = plyNMS.pitch;
@@ -329,9 +316,17 @@ public class ItemUseHelper {
         }
         int coolDown = applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
         boolean dirFixed = weaponSection.getBoolean("dirFixed", true);
-        handleMeleeSwing(ply, attrMap, lookDir, new ArrayList<>(), weaponSection, yaw, pitch, itemType, size,
+        handleMeleeSwing(ply, attrMap, lookDir, new HashSet<>(), weaponSection, yaw, pitch, itemType, size,
                 dirFixed, stabOrSwing, 0, coolDown);
         return true;
+    }
+    // TODO: ranged helper functions below
+    private static boolean consumePlayerAmmo(Player ply, Predicate<ItemStack> ammoPredicate, double consumptionRate) {
+        return false;
+    }
+    private static boolean playerUseRanged(Player ply, String itemType, int swingAmount, String damageType,
+                                           ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
+        return false;
     }
     // note that use time CD handling are in individual helper functions.
     public static void playerUseItem(Player ply) {
@@ -362,10 +357,42 @@ public class ItemUseHelper {
         if (isRightClick && playerUseMiscellaneous(ply, itemName)) return;
         // potion and other consumable consumption
         if (isRightClick && playerUsePotion(ply, itemName, mainHandItem)) return;
-        // use weapon
+        // weapon
         String weaponYMLPath = itemName + (isRightClick ? "_RIGHT_CLICK" : "");
         ConfigurationSection weaponSection = TerrariaHelper.weaponConfig.getConfigurationSection(weaponYMLPath);
         if (weaponSection != null) {
+            // handle loading
+            boolean autoSwing = weaponSection.getBoolean("autoSwing", false);
+            boolean isLoading = false;
+            int maxLoad = weaponSection.getInt("maxLoad", 0);
+            int shotsLoaded = 0;
+            if (maxLoad > 0) {
+                shotsLoaded = Math.min(EntityHelper.getMetadata(ply, "swingAmount").asInt(), maxLoad);
+                if (scoreboardTags.contains("autoSwing")) {
+                    if (scoreboardTags.contains("isLoadingWeapon")) {
+                        // still loading
+                        isLoading = true;
+                    } else {
+                        // finished loading
+                        autoSwing = false;
+                    }
+                } else {
+                    // start loading, as the auto swing scoreboard tag is added later.
+                    ply.addScoreboardTag("isLoadingWeapon");
+                    isLoading = true;
+                }
+            }
+            if (isLoading) {
+                shotsLoaded = Math.min(shotsLoaded + 1, maxLoad);
+                ply.addScoreboardTag("autoSwing");
+                EntityHelper.setMetadata(ply, "swingAmount", shotsLoaded);
+                displayLoadingProgress(ply, shotsLoaded, maxLoad);
+                double loadSpeedMulti = weaponSection.getDouble("loadTimeMulti", 0.5d);
+                applyCD(ply, attrMap.getOrDefault("useTime", 10d)
+                        * attrMap.getOrDefault("useTimeMulti", 1d) * loadSpeedMulti);
+                return;
+            }
+            // use weapon
             String weaponType = weaponSection.getString("type", "");
             // prevent accidental glitch that creates endless item use cool down
             if (attrMap.getOrDefault("useCD", 0d) < 0.01) PlayerHelper.setupAttribute(ply);
@@ -374,11 +401,10 @@ public class ItemUseHelper {
             switch (weaponType) {
                 case "STAB":
                 case "SWING":
-                    success = playerUseMelee(ply, itemName, mainHandItem, weaponSection, attrMap, swingAmount, weaponType.equals("STAB"));
+                    success = playerUseMelee(ply, itemName, weaponSection, attrMap, swingAmount, weaponType.equals("STAB"));
                     break;
             }
             if (success) {
-                boolean autoSwing = weaponSection.getBoolean("autoSwing", false);
                 if (autoSwing) {
                     ply.addScoreboardTag("autoSwing");
                     EntityHelper.setMetadata(ply, "swingAmount", swingAmount + 1);
