@@ -1285,12 +1285,12 @@ public class EntityHelper {
                     sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundDamaged", sound);
                     victim.getWorld().playSound(victim.getLocation(), sound, 3, 1);
                 }
-            }
-            // knockback
-            if (knockback > 0) {
-                Vector vec = victim.getLocation().subtract(damager.getLocation()).toVector();
-                MathHelper.setVectorLength(vec, knockback / 20);
-                knockback(victim, vec, false);
+                // knockback
+                if (knockback > 0) {
+                    Vector vec = victim.getLocation().subtract(damager.getLocation()).toVector();
+                    MathHelper.setVectorLength(vec, knockback / 20);
+                    knockback(victim, vec, false);
+                }
             }
         }
 
