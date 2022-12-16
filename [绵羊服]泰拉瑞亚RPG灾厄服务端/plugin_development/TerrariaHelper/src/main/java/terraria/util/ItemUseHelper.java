@@ -1,9 +1,6 @@
 package terraria.util;
 
-import net.minecraft.server.v1_12_R1.EntityPlayer;
-import net.minecraft.server.v1_12_R1.MovingObjectPosition;
-import net.minecraft.server.v1_12_R1.PacketPlayOutSetCooldown;
-import net.minecraft.server.v1_12_R1.Vec3D;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,6 +12,7 @@ import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -324,26 +322,44 @@ public class ItemUseHelper {
         return true;
     }
     // ranged helper functions below
-    private static void handleRangedFire(Player ply, HashMap<String, Double> attrMap, ConfigurationSection weaponSection,
+    private static void handleRangedFire(Player ply, HashMap<String, Double> attrMapOriginal, ConfigurationSection weaponSection,
                                          int fireIndex, int swingAmount,
-                                         String itemType, String weaponType, String ammoType,
+                                         String itemType, String weaponType, String ammoTypeInitial,
                                          boolean isLoadingWeapon, boolean autoSwing) {
         int fireRoundMax = weaponSection.getInt("fireRounds", 1);
         int fireAmount = isLoadingWeapon ? swingAmount : weaponSection.getInt("shots", 1);
         double spread = weaponSection.getDouble("offSet", -1d);
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+        // account for arrow attribute.
+        String ammoType = ammoTypeInitial;
+        HashMap<String, Double> attrMap = (HashMap<String, Double>) attrMapOriginal.clone();
+        List<String> ammoConversion = weaponSection.getStringList("ammoConversion." + ammoTypeInitial);
+        // if the ammo could get converted into multiple possible projectiles, handle them separately in the loop instead.
+        if  (ammoConversion.size() <= 1) {
+            if (ammoConversion.size() == 1) ammoType = ammoConversion.get(0);
+            ConfigurationSection ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoType + ".attributes");
+            // if the converted ammo does not have attributes that overrides the original, default to the original
+            if (ammoAttributeSection == null)
+                ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoTypeInitial + ".attributes");
+            if (ammoAttributeSection != null)
+                EntityHelper.tweakAllAttributes(attrMap, ammoAttributeSection, true);
+        }
         for (int i = 0; i < fireAmount; i ++) {
             Location fireLoc = ply.getEyeLocation();
             Vector fireVelocity = facingDir.clone();
-            String projectileType = ammoType;
+            double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
+            projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
+            projectileSpeed /= 10;
+            if (weaponType.equals("BOW"))
+                projectileSpeed *= attrMap.getOrDefault("projectileSpeedArrowMulti", 1d);
             // bullet spread
             if (spread > 0d) {
                 fireVelocity.multiply(spread);
                 fireVelocity.add(MathHelper.randomVector());
                 fireVelocity.normalize();
             }
-            // handle special weapons
+            // handle special weapons (pre-firing)
             switch (itemType) {
                 case "海啸弓": {
                     fireLoc.add(MathHelper.vectorFromYawPitch_quick(plyNMS.yaw,
@@ -351,14 +367,43 @@ public class ItemUseHelper {
                             .multiply(1.5));
                     break;
                 }
+                case "湮灭千星":
+                case "代达罗斯风暴弓": {
+                    Vector offset = new Vector(Math.random() * 15 - 7.5, 20 + Math.random() * 10, Math.random() * 15 - 7.5);
+                    fireVelocity = offset.clone().multiply(-1).normalize();
+                    Location destination = getPlayerTargetLoc(ply, 64, 4,
+                            new GenericHelper.AimHelperOptions()
+                                    .setRandomOffsetRadius(1)
+                                    .setTicksOffset(offset.length() / projectileSpeed), true);
+                    fireLoc = destination.add(offset);
+                    break;
+                }
+            }
+            // account for arrow attribute.
+            // if the ammo could get converted into multiple possible projectiles, handle them separately here in the loop.
+            if  (ammoConversion.size() > 1) {
+                attrMap = (HashMap<String, Double>) attrMapOriginal.clone();
+                ammoType = ammoConversion.get((int) (Math.random() * ammoConversion.size()));
+                ConfigurationSection ammoAttributeSection =
+                        TerrariaHelper.itemConfig.getConfigurationSection(ammoType + ".attributes");
+                // if the converted ammo does not have attributes that overrides the original, default to the original
+                if (ammoAttributeSection == null)
+                    ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoTypeInitial + ".attributes");
+                if (ammoAttributeSection != null)
+                    EntityHelper.tweakAllAttributes(attrMap, ammoAttributeSection, true);
             }
             // setup projectile velocity
-            double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
-            projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
-            if (weaponType.equals("BOW"))
-                projectileSpeed *= attrMap.getOrDefault("projectileSpeedArrowMulti", 1d);
             fireVelocity.multiply(projectileSpeed);
-            EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMap, EntityHelper.getDamageType(ply), projectileType);
+            Projectile firedProjectile = EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMap,
+                    EntityHelper.getDamageType(ply), ammoType);
+            // handle special weapons (post-firing)
+            switch (itemType) {
+                case "幻象弓":
+                case "幻界": {
+                    firedProjectile.addScoreboardTag("isVortex");
+                    break;
+                }
+            }
         }
         // if this is a delayed shot, play item swing sound
         playerUseItemSound(ply, weaponType, autoSwing);
@@ -366,8 +411,8 @@ public class ItemUseHelper {
         if (fireIndex < fireRoundMax) {
             int fireRoundDelay = weaponSection.getInt("fireRoundsDelay", 20);
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> handleRangedFire(ply, attrMap, weaponSection, fireIndex + 1, swingAmount,
-                            itemType, weaponType, ammoType, isLoadingWeapon, autoSwing)
+                    () -> handleRangedFire(ply, attrMapOriginal, weaponSection, fireIndex + 1, swingAmount,
+                            itemType, weaponType, ammoTypeInitial, isLoadingWeapon, autoSwing)
                     , fireRoundDelay);
         }
     }
@@ -436,12 +481,6 @@ public class ItemUseHelper {
         }
         // if no suitable ammo exists
         if (ammoType == null) return false;
-        // account for arrow attribute.
-        // It must not be handled in handleRangedFire
-        // as some weapons are fired multiple times.
-        ConfigurationSection arrowAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoType + ".attributes");
-        if (arrowAttributeSection != null)
-            EntityHelper.tweakAllAttributes(attrMap, arrowAttributeSection,true);
         // otherwise, use the weapon.
         handleRangedFire(ply, attrMap, weaponSection, 1, swingAmount,
                 itemType, weaponType, ammoType, isLoadingWeapon, autoSwing);

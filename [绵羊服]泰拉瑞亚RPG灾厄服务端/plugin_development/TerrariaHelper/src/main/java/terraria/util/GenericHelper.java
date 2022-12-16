@@ -107,10 +107,9 @@ public class GenericHelper {
         }
     }
     public static class AimHelperOptions {
-        int ticksOffset = 0;
-        double projectileSpeed = 0d, intensity = 1d, randomOffsetRadius = 0d;
+        double projectileSpeed = 0d, intensity = 1d, randomOffsetRadius = 0d, ticksOffset = 0;
         boolean useTickOrSpeedEstimation = false;
-        public AimHelperOptions setTicksOffset(int ticksOffset) {
+        public AimHelperOptions setTicksOffset(double ticksOffset) {
             this.ticksOffset = ticksOffset;
             return this;
         }

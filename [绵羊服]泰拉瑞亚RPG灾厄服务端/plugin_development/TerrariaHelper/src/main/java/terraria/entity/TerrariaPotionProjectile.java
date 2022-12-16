@@ -1,7 +1,6 @@
 package terraria.entity;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
@@ -19,8 +18,10 @@ public class TerrariaPotionProjectile extends EntityPotion {
     // projectile info
     public String projectileType, blockHitAction = "die", trailColor = null;
     public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noGravityTicks = 15, trailLingerTime = 10, penetration = 0;
-    public double autoTraceAbility = 4, autoTraceRadius = 12, blastRadius = 1.5, bounceVelocityMulti = 1, frictionFactor = 0.05, gravity = 0.05, maxSpeed = 2, projectileSize = 0.125, speedMultiPerTick = 1;
-    public boolean autoTrace = false, blastDamageShooter = false, bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = true;
+    public double autoTraceAbility = 4, autoTraceRadius = 12, blastRadius = 1.5, bounceVelocityMulti = 1,
+            frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileSize = 0.125, speedMultiPerTick = 1;
+    public boolean autoTrace = false, autoTraceSharpTurning = true, blastDamageShooter = false, bouncePenetrationBonded = false,
+            canBeReflected = true, isGrenade = false, slowedByWater = true;
 
     public double speed;
     public HashMap<UUID, Integer> damageCD;
@@ -39,6 +40,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.penetration = section.getInt("penetration", this.penetration);
             // thru, bounce, stick, slide
             this.blockHitAction = section.getString("blockHitAction", this.blockHitAction);
+
             this.trailColor = section.getString("trailColor");
 
             this.autoTraceAbility = section.getDouble("autoTraceAbility", this.autoTraceAbility);
@@ -52,6 +54,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.speedMultiPerTick = section.getDouble("speedMultiPerTick", this.speedMultiPerTick);
 
             this.autoTrace = section.getBoolean("autoTrace", this.autoTrace);
+            this.autoTraceSharpTurning = section.getBoolean("autoTraceSharpTurning", this.autoTraceSharpTurning);
             this.blastDamageShooter = section.getBoolean("blastDamageShooter", this.blastDamageShooter);
             this.bouncePenetrationBonded = section.getBoolean("bouncePenetrationBonded", this.bouncePenetrationBonded);
             this.canBeReflected = section.getBoolean("canBeReflected", this.canBeReflected);
@@ -93,6 +96,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         this.motX = velocity.getX();
         this.motY = velocity.getY();
         this.motZ = velocity.getZ();
+        this.speed = velocity.length();
         this.projectileType = projectileType;
         bukkitEntity = (org.bukkit.entity.Projectile) getBukkitEntity();
         setProperties(projectileType);
@@ -250,7 +254,6 @@ public class TerrariaPotionProjectile extends EntityPotion {
         Vec3D initialLoc = new Vec3D(this.locX, this.locY, this.locZ);
         Vec3D futureLoc = new Vec3D(this.locX, this.locY, this.locZ);
         Vector velocity = new Vector(this.motX, this.motY, this.motZ);
-        this.speed = velocity.length();
         this.setNoGravity(true);
         if (shouldMove) {
             // optimize auto trace target
@@ -298,7 +301,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
 
                 velocity.add(acceleration);
 
-                if (velocity.lengthSquared() > 0)
+                // if no sharp turning is allowed, then as long as the velocity length is above 0, it is being regularized.
+                double normalizeThreshold = autoTraceSharpTurning ? speed * speed : 0;
+                if (velocity.lengthSquared() > normalizeThreshold)
                     velocity.normalize().multiply(speed);
             } else {
                 extraMovingTick();
@@ -494,7 +499,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
 
         // prevents client glitch
         this.velocityChanged = true;
-//        this.positionChanged = true;
+        this.positionChanged = true;
 
         this.motX = velocity.getX();
         this.motY = velocity.getY();
