@@ -95,7 +95,6 @@ public class TerrariaPotionProjectile extends EntityPotion {
         this.motZ = velocity.getZ();
         this.projectileType = projectileType;
         bukkitEntity = (org.bukkit.entity.Projectile) getBukkitEntity();
-        this.speed = velocity.length();
         setProperties(projectileType);
     }
 
@@ -251,6 +250,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         Vec3D initialLoc = new Vec3D(this.locX, this.locY, this.locZ);
         Vec3D futureLoc = new Vec3D(this.locX, this.locY, this.locZ);
         Vector velocity = new Vector(this.motX, this.motY, this.motZ);
+        this.speed = velocity.length();
         this.setNoGravity(true);
         if (shouldMove) {
             // optimize auto trace target

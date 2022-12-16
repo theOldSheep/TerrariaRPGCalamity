@@ -116,6 +116,54 @@ public class EntityHelper {
         else
             owner.setMetadata(key, new FixedMetadataValue(TerrariaHelper.getInstance(), value));
     }
+    public static void tweakAttribute(HashMap<String, Double> attrMap, String key, String value, boolean addOrRemove) {
+        if (key.equals("damageType")) {
+            return;
+        }
+        try {
+            if (key.startsWith("buffInflict")) {
+                return;
+            }
+            if (key.equals("buffImmune")) {
+                return;
+            }
+            // tweak double value in attribute map
+            if (!attrMap.containsKey(key)) return;
+            double value_number = Double.parseDouble(value);
+            switch (key) {
+                case "useTime":
+                    value_number /= 2;
+                    break;
+                case "damageTakenMulti":
+                case "arrowConsumptionRate":
+                case "ammoConsumptionRate":
+                    value_number = 1 + value_number;
+                    break;
+            }
+            switch (key) {
+                case "damageTakenMulti":
+                    if (addOrRemove)
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / (2 - value_number));
+                    else
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * (2 - value_number));
+                    break;
+                case "ammoConsumptionRate":
+                case "arrowConsumptionRate":
+                    if (addOrRemove)
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * value_number);
+                    else
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / value_number);
+                    break;
+                default:
+                    if (addOrRemove)
+                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) + value_number);
+                    else
+                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) - value_number);
+            }
+        } catch (Exception e) {
+            Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
+        }
+    }
     public static void tweakAttribute(Entity entity, String key, String value, boolean addOrRemove) {
         if (key.equals("damageType")) {
             if (addOrRemove) setMetadata(entity, "damageType", value);
@@ -189,6 +237,15 @@ public class EntityHelper {
             Set<String> attributesTweaked = attributes.getKeys(false);
             for (String attr : attributesTweaked) {
                 tweakAttribute(entity, attr,
+                        attributes.getString(attr), addOrRemove);
+            }
+        }
+    }
+    public static void tweakAllAttributes(HashMap<String, Double> attrMap, ConfigurationSection attributes, boolean addOrRemove) {
+        if (attributes != null) {
+            Set<String> attributesTweaked = attributes.getKeys(false);
+            for (String attr : attributesTweaked) {
+                tweakAttribute(attrMap, attr,
                         attributes.getString(attr), addOrRemove);
             }
         }

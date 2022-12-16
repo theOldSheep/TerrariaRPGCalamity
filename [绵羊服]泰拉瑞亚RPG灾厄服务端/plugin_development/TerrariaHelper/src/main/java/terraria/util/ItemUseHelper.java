@@ -6,6 +6,7 @@ import net.minecraft.server.v1_12_R1.PacketPlayOutSetCooldown;
 import net.minecraft.server.v1_12_R1.Vec3D;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
@@ -14,6 +15,7 @@ import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
@@ -205,7 +207,8 @@ public class ItemUseHelper {
         }
         centerLoc.subtract(lookDir.clone().multiply(2));
         // offset vector should be proportionally scaled according to reach length
-        offsetVec.normalize().multiply(reachLength * 0.5);
+        // it should be around 0.3 - 0.5 of reach length
+        offsetVec.normalize().multiply(reachLength * (0.3 + Math.random() * 0.2));
         // strike
         int loopAmount = (int) (reachLength * 4);
         String color = "255|0|0";
@@ -320,13 +323,155 @@ public class ItemUseHelper {
                 dirFixed, stabOrSwing, 0, coolDown);
         return true;
     }
-    // TODO: ranged helper functions below
-    private static boolean consumePlayerAmmo(Player ply, Predicate<ItemStack> ammoPredicate, double consumptionRate) {
-        return false;
+    // ranged helper functions below
+    private static void handleRangedFire(Player ply, HashMap<String, Double> attrMap, ConfigurationSection weaponSection,
+                                         int fireIndex, int swingAmount,
+                                         String itemType, String weaponType, String ammoType,
+                                         boolean isLoadingWeapon, boolean autoSwing) {
+        int fireRoundMax = weaponSection.getInt("fireRounds", 1);
+        int fireAmount = isLoadingWeapon ? swingAmount : weaponSection.getInt("shots", 1);
+        double spread = weaponSection.getDouble("offSet", -1d);
+        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+        Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+        for (int i = 0; i < fireAmount; i ++) {
+            Location fireLoc = ply.getEyeLocation();
+            Vector fireVelocity = facingDir.clone();
+            String projectileType = ammoType;
+            // bullet spread
+            if (spread > 0d) {
+                fireVelocity.multiply(spread);
+                fireVelocity.add(MathHelper.randomVector());
+                fireVelocity.normalize();
+            }
+            // handle special weapons
+            switch (itemType) {
+                case "海啸弓": {
+                    fireLoc.add(MathHelper.vectorFromYawPitch_quick(plyNMS.yaw,
+                            plyNMS.pitch + 12.5 * (i - fireAmount / 2))
+                            .multiply(1.5));
+                    break;
+                }
+            }
+            // setup projectile velocity
+            double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
+            projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
+            if (weaponType.equals("BOW"))
+                projectileSpeed *= attrMap.getOrDefault("projectileSpeedArrowMulti", 1d);
+            fireVelocity.multiply(projectileSpeed);
+            EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMap, EntityHelper.getDamageType(ply), projectileType);
+        }
+        // if this is a delayed shot, play item swing sound
+        playerUseItemSound(ply, weaponType, autoSwing);
+        // extra delayed shots
+        if (fireIndex < fireRoundMax) {
+            int fireRoundDelay = weaponSection.getInt("fireRoundsDelay", 20);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                    () -> handleRangedFire(ply, attrMap, weaponSection, fireIndex + 1, swingAmount,
+                            itemType, weaponType, ammoType, isLoadingWeapon, autoSwing)
+                    , fireRoundDelay);
+        }
     }
-    private static boolean playerUseRanged(Player ply, String itemType, int swingAmount, String damageType,
+    private static String consumePlayerAmmo(Player ply, Predicate<ItemStack> ammoPredicate, double consumptionRate) {
+        // in the player's inventory
+        Inventory plyInv = ply.getInventory();
+        for (int i = 0; i < 36; i ++) {
+            ItemStack currItem = plyInv.getItem(i);
+            if (currItem != null && ammoPredicate.test(currItem)) {
+                String ammoName = ItemHelper.splitItemName(currItem)[1];
+                if (Math.random() < consumptionRate) currItem.setAmount(currItem.getAmount() - 1);
+                return ammoName;
+            }
+        }
+        // in the player's void bag
+        if (PlayerHelper.hasVoidBag(ply)) {
+            Inventory voidBagInv = PlayerHelper.getInventory(ply, "voidBag");
+            for (ItemStack currItem : voidBagInv.getContents()) {
+                if (currItem != null && ammoPredicate.test(currItem)) {
+                    String ammoName = ItemHelper.splitItemName(currItem)[1];
+                    if (Math.random() < consumptionRate) currItem.setAmount(currItem.getAmount() - 1);
+                    return ammoName;
+                }
+            }
+        }
+        // ammunition not found
+        return null;
+    }
+    private static boolean playerUseRanged(Player ply, String itemType, int swingAmount, String weaponType,
+                                           boolean isLoadingWeapon, boolean autoSwing,
                                            ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
-        return false;
+        Predicate<ItemStack> ammoPredicate = null;
+        String ammoType = null;
+        double consumptionRate = attrMap.getOrDefault("ammoConsumptionRate", 1d);
+        // setup basic variables according to damage type
+        switch (weaponType) {
+            case "BOW": {
+                ammoPredicate = (itemStack) -> itemStack.getType() == Material.ARROW;
+                consumptionRate *= attrMap.getOrDefault("arrowConsumptionRate", 1d);
+                break;
+            }
+            case "GUN": {
+                ammoPredicate = (itemStack) -> itemStack.getType() == Material.SLIME_BALL;
+                break;
+            }
+            case "ROCKET": {
+                ammoPredicate = (itemStack) -> itemStack.getType() == Material.BLAZE_POWDER;
+                break;
+            }
+            case "SPECIAL_AMMO": {
+                String ammunitionType = weaponSection.getString("ammo", "_火枪子弹");
+                if (ammunitionType.startsWith("_")) {
+                    consumptionRate = 0d;
+                    ammoType = ammunitionType.substring(1);
+                    ammoPredicate = (itemStack) -> true;
+                } else {
+                    ammoPredicate = (itemStack) -> ItemHelper.splitItemName(itemStack)[1].equals(ammunitionType);
+                }
+                break;
+            }
+        }
+        // for special_ammo that does not require any ammunition, ammoType should not be null here
+        // if ammo is not set, find the first ammo that is suitable
+        if (ammoType == null) {
+            ammoType = consumePlayerAmmo(ply, ammoPredicate, consumptionRate);
+        }
+        // if no suitable ammo exists
+        if (ammoType == null) return false;
+        // account for arrow attribute.
+        // It must not be handled in handleRangedFire
+        // as some weapons are fired multiple times.
+        ConfigurationSection arrowAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoType + ".attributes");
+        if (arrowAttributeSection != null)
+            EntityHelper.tweakAllAttributes(attrMap, arrowAttributeSection,true);
+        // otherwise, use the weapon.
+        handleRangedFire(ply, attrMap, weaponSection, 1, swingAmount,
+                itemType, weaponType, ammoType, isLoadingWeapon, autoSwing);
+        // apply CD
+        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
+        double useTimeMulti = 1 / useSpeed;
+        applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
+        return true;
+    }
+    private static void playerUseItemSound(Player ply, String weaponType, boolean autoSwing) {
+        String itemUseSound;
+        float volume = 1f, pitch = 1f;
+        switch (weaponType) {
+            case "BOW":
+                itemUseSound = SOUND_BOW_SHOOT;
+                volume = 2f;
+                break;
+            case "GUN":
+                if (autoSwing) {
+                    itemUseSound = SOUND_GUN_FIRE;
+                } else {
+                    itemUseSound = SOUND_GUN_FIRE_LOUD;
+                    pitch = 1.2f;
+                }
+                volume = 3f;
+                break;
+            default:
+                itemUseSound = SOUND_GENERIC_SWING;
+        }
+        ply.getWorld().playSound(ply.getLocation(), itemUseSound, volume, pitch);
     }
     // note that use time CD handling are in individual helper functions.
     public static void playerUseItem(Player ply) {
@@ -365,9 +510,9 @@ public class ItemUseHelper {
             boolean autoSwing = weaponSection.getBoolean("autoSwing", false);
             boolean isLoading = false;
             int maxLoad = weaponSection.getInt("maxLoad", 0);
-            int shotsLoaded = 0;
+            int swingAmount = EntityHelper.getMetadata(ply, "swingAmount").asInt();
             if (maxLoad > 0) {
-                shotsLoaded = Math.min(EntityHelper.getMetadata(ply, "swingAmount").asInt(), maxLoad);
+                swingAmount = Math.min(swingAmount, maxLoad);
                 if (scoreboardTags.contains("autoSwing")) {
                     if (scoreboardTags.contains("isLoadingWeapon")) {
                         // still loading
@@ -383,10 +528,10 @@ public class ItemUseHelper {
                 }
             }
             if (isLoading) {
-                shotsLoaded = Math.min(shotsLoaded + 1, maxLoad);
+                swingAmount = Math.min(swingAmount + 1, maxLoad);
                 ply.addScoreboardTag("autoSwing");
-                EntityHelper.setMetadata(ply, "swingAmount", shotsLoaded);
-                displayLoadingProgress(ply, shotsLoaded, maxLoad);
+                EntityHelper.setMetadata(ply, "swingAmount", swingAmount);
+                displayLoadingProgress(ply, swingAmount, maxLoad);
                 double loadSpeedMulti = weaponSection.getDouble("loadTimeMulti", 0.5d);
                 applyCD(ply, attrMap.getOrDefault("useTime", 10d)
                         * attrMap.getOrDefault("useTimeMulti", 1d) * loadSpeedMulti);
@@ -396,12 +541,18 @@ public class ItemUseHelper {
             String weaponType = weaponSection.getString("type", "");
             // prevent accidental glitch that creates endless item use cool down
             if (attrMap.getOrDefault("useCD", 0d) < 0.01) PlayerHelper.setupAttribute(ply);
-            int swingAmount = EntityHelper.getMetadata(ply, "swingAmount").asInt();
             boolean success = false;
             switch (weaponType) {
                 case "STAB":
                 case "SWING":
                     success = playerUseMelee(ply, itemName, weaponSection, attrMap, swingAmount, weaponType.equals("STAB"));
+                    break;
+                case "BOW":
+                case "GUN":
+                case "ROCKET":
+                case "SPECIAL_AMMO":
+                    success = playerUseRanged(ply, itemName, swingAmount, weaponType,
+                            maxLoad > 0, autoSwing, weaponSection, attrMap);
                     break;
             }
             if (success) {
@@ -410,26 +561,7 @@ public class ItemUseHelper {
                     EntityHelper.setMetadata(ply, "swingAmount", swingAmount + 1);
                 }
                 // play item use sound
-                String itemUseSound;
-                float volume = 1f, pitch = 1f;
-                switch (weaponType) {
-                    case "BOW":
-                        itemUseSound = SOUND_BOW_SHOOT;
-                        volume = 2f;
-                        break;
-                    case "GUN":
-                        if (autoSwing) {
-                            itemUseSound = SOUND_GUN_FIRE;
-                        } else {
-                            itemUseSound = SOUND_GUN_FIRE_LOUD;
-                            pitch = 1.2f;
-                        }
-                        volume = 3f;
-                        break;
-                    default:
-                        itemUseSound = SOUND_GENERIC_SWING;
-                }
-                ply.getWorld().playSound(ply.getLocation(), itemUseSound, volume, pitch);
+                playerUseItemSound(ply, weaponType, autoSwing);
             }
         }
     }
