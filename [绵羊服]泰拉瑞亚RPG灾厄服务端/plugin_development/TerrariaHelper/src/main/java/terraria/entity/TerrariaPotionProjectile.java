@@ -284,11 +284,17 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 if (autoTraceTarget instanceof EntityLiving)
                     acceleration = ((LivingEntity) autoTraceTarget.getBukkitEntity()).getEyeLocation().subtract(this.locX, this.locY, this.locZ).toVector();
                 else
-                    acceleration = autoTraceTarget.getBukkitEntity().getLocation().add(0, 1.5, 0).subtract(this.locX, this.locY, this.locZ).toVector();
+                    acceleration = autoTraceTarget.getBukkitEntity().getLocation().subtract(this.locX, this.locY, this.locZ).toVector();
 
                 double accMagnitude = acceleration.length(), velMagnitude = velocity.length();
-                velocity.multiply(Math.sqrt(Math.min(accMagnitude, autoTraceAbility)) / velMagnitude);
-                acceleration.multiply(autoTraceAbility / accMagnitude);
+                if (velMagnitude > 1e-5) {
+//                    velocity.multiply(Math.sqrt(Math.min(accMagnitude, autoTraceAbility)) / velMagnitude);
+                    velocity.multiply(accMagnitude / autoTraceAbility / velMagnitude);
+                }
+                if (accMagnitude > 1e-5) {
+//                    acceleration.multiply(autoTraceAbility / accMagnitude);
+                    acceleration.multiply(autoTraceAbility / accMagnitude);
+                }
 
                 velocity.add(acceleration);
 
