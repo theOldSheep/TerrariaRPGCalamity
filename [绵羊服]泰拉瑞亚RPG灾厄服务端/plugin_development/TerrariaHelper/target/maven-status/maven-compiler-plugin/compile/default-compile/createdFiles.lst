@@ -12,6 +12,7 @@ terraria\event\listener\PlayerJoinListener.class
 terraria\event\listener\DamageListener.class
 terraria\entity\boss\Boss.class
 terraria\util\DragoncoreHelper$SlotCallback.class
+terraria\util\EntityHelper$AimHelperOptions.class
 terraria\util\EntityHelper$1.class
 terraria\event\listener\WorldRegisterListener.class
 terraria\entity\TerrariaArrowProjectile.class
@@ -28,7 +29,6 @@ terraria\util\PlayerHelper.class
 terraria\TerrariaHelper.class
 terraria\util\GameplayHelper$1.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
-terraria\util\GenericHelper$AimHelperOptions.class
 terraria\worldgen\overworld\OverworldChunkGenerator.class
 terraria\util\BossHelper.class
 terraria\event\listener\PlayerQuitListener.class

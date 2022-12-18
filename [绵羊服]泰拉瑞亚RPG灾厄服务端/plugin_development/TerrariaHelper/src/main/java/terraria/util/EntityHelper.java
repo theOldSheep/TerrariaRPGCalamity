@@ -79,6 +79,30 @@ public class EntityHelper {
         Bukkit.getLogger().info("[Entity Helper] buffSuperior: " + buffSuperior);
         Bukkit.getLogger().info("[Entity Helper] buffInferior: " + buffInferior);
     }
+    public static class AimHelperOptions {
+        double projectileSpeed = 0d, intensity = 1d, randomOffsetRadius = 0d, ticksOffset = 0;
+        boolean useTickOrSpeedEstimation = false;
+        public AimHelperOptions setTicksOffset(double ticksOffset) {
+            this.ticksOffset = ticksOffset;
+            return this;
+        }
+        public AimHelperOptions setProjectileSpeed(double projectileSpeed) {
+            this.projectileSpeed = projectileSpeed;
+            return this;
+        }
+        public AimHelperOptions setIntensity(double intensity) {
+            this.intensity = intensity;
+            return this;
+        }
+        public AimHelperOptions setRandomOffsetRadius(double randomOffsetRadius) {
+            this.randomOffsetRadius = randomOffsetRadius;
+            return this;
+        }
+        public AimHelperOptions setAimMode(boolean useTickOrSpeedEstimation) {
+            this.useTickOrSpeedEstimation = useTickOrSpeedEstimation;
+            return this;
+        }
+    }
     // helper functions
     public static void initEntityMetadata(Entity entity) {
         setMetadata(entity, "damageType", "Melee");
@@ -1426,5 +1450,26 @@ public class EntityHelper {
         setMetadata(result, "attrMap", attrMap.clone());
         setMetadata(result, "damageType", damageType);
         return result;
+    }
+    public static Location helperAimEntity(Entity source, Entity target, AimHelperOptions aimHelperOption) {
+        Location targetLoc;
+        // setup target location
+        if (target instanceof LivingEntity) targetLoc = ((LivingEntity) target).getEyeLocation();
+        else targetLoc = target.getLocation();
+        // estimate the distance that the entity will move
+        double predictionIntensity = aimHelperOption.intensity;
+        if (source != null && predictionIntensity > 1e-5) {
+            double distance = targetLoc.distance(source.getLocation());
+            double ticksOffset = 0;
+            if (aimHelperOption.useTickOrSpeedEstimation) ticksOffset = aimHelperOption.ticksOffset;
+            else if (aimHelperOption.projectileSpeed > 1) ticksOffset = distance / aimHelperOption.projectileSpeed;
+            ticksOffset *= aimHelperOption.intensity;
+            targetLoc.add(target.getVelocity().multiply(ticksOffset));
+        }
+        // random offset for projectiles
+        double randomOffset = aimHelperOption.randomOffsetRadius;
+        if (randomOffset > 1e-5)
+            targetLoc.add(Math.random() * randomOffset, Math.random() * randomOffset, Math.random() * randomOffset);
+        return targetLoc;
     }
 }

@@ -120,7 +120,7 @@ public class ItemUseHelper {
         infoText.append(colorCode).append("]");
         PlayerHelper.sendActionBar(ply, infoText.toString());
     }
-    private static Location getPlayerTargetLoc(Player ply, double traceDist, double entityEnlargeRadius, GenericHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
+    private static Location getPlayerTargetLoc(Player ply, double traceDist, double entityEnlargeRadius, EntityHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
         Location targetLoc = null;
         World plyWorld = ply.getWorld();
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
@@ -150,7 +150,7 @@ public class ItemUseHelper {
                 if (hits.size() > 0) {
                     HitEntityInfo hitInfo = hits.iterator().next();
                     Entity hitEntity = hitInfo.getHitEntity().getBukkitEntity();
-                    targetLoc = GenericHelper.helperAimEntity(ply, hitEntity, aimHelperInfo);
+                    targetLoc = EntityHelper.helperAimEntity(ply, hitEntity, aimHelperInfo);
                 }
             }
             // if the target location is still null, that is, no block/entity being hit
@@ -189,7 +189,7 @@ public class ItemUseHelper {
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
         Vector lookDir = MathHelper.vectorFromYawPitch_quick(nmsPly.yaw, nmsPly.pitch);
         Location targetLoc = getPlayerTargetLoc(ply, 96, 5,
-                new GenericHelper.AimHelperOptions().setTicksOffset(8).setAimMode(true), false);
+                new EntityHelper.AimHelperOptions().setTicksOffset(8).setAimMode(true), false);
         Location centerLoc = targetLoc.clone().add(ply.getEyeLocation()).multiply(0.5);
         Vector reachVec = centerLoc.clone().subtract(ply.getEyeLocation()).toVector();
         Vector offsetVec = null;
@@ -372,7 +372,8 @@ public class ItemUseHelper {
                     Vector offset = new Vector(Math.random() * 15 - 7.5, 20 + Math.random() * 10, Math.random() * 15 - 7.5);
                     fireVelocity = offset.clone().multiply(-1).normalize();
                     Location destination = getPlayerTargetLoc(ply, 64, 4,
-                            new GenericHelper.AimHelperOptions()
+                            new EntityHelper.AimHelperOptions()
+                                    .setAimMode(true)
                                     .setRandomOffsetRadius(1)
                                     .setTicksOffset(offset.length() / projectileSpeed), true);
                     fireLoc = destination.add(offset);
@@ -403,6 +404,21 @@ public class ItemUseHelper {
                     firedProjectile.addScoreboardTag("isVortex");
                     break;
                 }
+            }
+        }
+        // onyx blaster (including its upgrades) extra exploding shot
+        switch (itemType) {
+            case "玛瑙爆破枪":
+            case "玛瑙链炮":
+            case "奥妮克希亚": {
+                Location fireLoc = ply.getEyeLocation();
+                Vector fireVelocity = facingDir.clone();
+                double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
+                projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
+                // setup projectile velocity
+                fireVelocity.multiply(projectileSpeed);
+                EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMap,
+                        EntityHelper.getDamageType(ply), "玛瑙能量");
             }
         }
         // if this is a delayed shot, play item swing sound

@@ -1,6 +1,7 @@
 package terraria.entity;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
@@ -24,6 +25,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             canBeReflected = true, isGrenade = false, slowedByWater = true;
 
     public double speed;
+    public boolean lastOnGround = false;
     public HashMap<UUID, Integer> damageCD;
     public org.bukkit.entity.Projectile bukkitEntity;
     public Entity autoTraceTarget = null;
@@ -215,6 +217,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         this.lastZ = this.locZ;
         this.lastPitch = this.pitch;
         this.lastYaw = this.yaw;
+        this.lastOnGround = this.onGround;
         // tick water
         this.aq();
         if (this.locY < -64.0) this.die();
@@ -250,6 +253,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
                         this.inGround = false;
             }
         }
+
+
         // move
         Vec3D initialLoc = new Vec3D(this.locX, this.locY, this.locZ);
         Vec3D futureLoc = new Vec3D(this.locX, this.locY, this.locZ);
@@ -281,6 +286,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     }
                 }
             }
+
             // tweak speed: handle auto trace or tweak by per tick speed decay and gravity
             if (autoTrace && autoTraceTarget != null) {
                 Vector acceleration;
@@ -307,10 +313,10 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     velocity.normalize().multiply(speed);
             } else {
                 extraMovingTick();
-                if (this.onGround) {
+                if (this.onGround && this.lastOnGround) {
                     velocity.multiply(1 - frictionFactor);
                     // friction
-                }else if (this.ticksLived >= noGravityTicks) {
+                } else if (this.ticksLived >= noGravityTicks) {
                     // gravity
                     velocity.subtract(new Vector(0, gravity, 0));
                 }
@@ -319,6 +325,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 if (velocity.lengthSquared() > maxSpeed * maxSpeed)
                     terraria.util.MathHelper.setVectorLength(velocity, maxSpeed);
             }
+
             // get the block it will cram into, then set the final location after ticking
             double spdX = velocity.getX() * speedMulti, spdY = velocity.getY() * speedMulti, spdZ = velocity.getZ() * speedMulti;
             futureLoc = new Vec3D(this.locX + spdX, this.locY + spdY, this.locZ + spdZ);
@@ -356,31 +363,74 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                     penetration--;
                                     EntityHelper.setMetadata(bukkitEntity, "penetration", this.penetration);
                                 }
-                                velocity.multiply(bounceVelocityMulti);
-                                double yVelocityThreshold = gravity * speedMulti;
-                                switch (movingobjectposition.direction) {
-                                    case UP:
-                                        velocity.setY(velocity.getY() * -1);
-                                        // prevent projectile twitching
-                                        if (gravity > 0 && velocity.getY() < yVelocityThreshold)
-                                            velocity.setY(0);
-                                        break;
-                                    case DOWN:
-                                        velocity.setY(velocity.getY() * -1);
-                                        // prevent projectile twitching
-                                        if (gravity < 0 && velocity.getY() > yVelocityThreshold)
-                                            velocity.setY(0);
-                                        break;
-                                    case EAST:
-                                    case WEST:
-                                        velocity.setX(velocity.getX() * -1);
-                                        break;
-                                    case SOUTH:
-                                    case NORTH:
-                                        velocity.setZ(velocity.getZ() * -1);
-                                        break;
+                                if (projectileType.equals("叶绿箭")) {
+                                    velocity.multiply(-1);
+                                    double homeInRadius = 24,
+                                            smallestDistSqr = 1e9;
+                                    Location currLoc = new Location(this.bukkitEntity.getWorld(), futureLoc.x, futureLoc.y, futureLoc.z);
+                                    for (org.bukkit.entity.Entity entity : getBukkitEntity().getNearbyEntities(homeInRadius, homeInRadius, homeInRadius)) {
+                                        // should strictly home into "proper" enemies (no critters!)
+                                        if (!EntityHelper.checkCanDamage(this.bukkitEntity, entity, true))
+                                            continue;
+                                        // make sure the closest entity is targeted
+                                        double currDistSqr = entity.getLocation().distanceSquared(currLoc);
+                                        if (currDistSqr >= smallestDistSqr)
+                                            continue;
+                                        // predicts the enemy's future location
+                                        Location predictedLoc = EntityHelper.helperAimEntity(this.bukkitEntity, entity,
+                                                new EntityHelper.AimHelperOptions()
+                                                        .setProjectileSpeed(this.speed));
+                                        // initializes direction the projectile should go to
+                                        Vector dir = predictedLoc.subtract(currLoc).toVector();
+                                        double predictedDist = dir.length();
+                                        dir.multiply(this.speed / predictedDist);
+                                        // account for gravity
+                                        int ticksToTravel = (int) Math.floor(predictedDist / this.speed);
+                                        // distY = acceleration(gravity) * ticksToTravel^2 / 2
+                                        // to counter that, yVelocityOffset = distY / ticksToTravel = gravity * ticksToTravel / 2
+                                        double yVelocityOffset = this.gravity * ticksToTravel / 2;
+                                        dir.setY(dir.getY() + yVelocityOffset);
+                                        // check if the direction is clear. If it is obstructed with block, skip this entity.
+                                        Vec3D checkLocVec = new Vec3D(
+                                                futureLoc.x + dir.getX() * ticksToTravel,
+                                                futureLoc.y + dir.getY() * ticksToTravel,
+                                                futureLoc.z + dir.getZ() * ticksToTravel);
+                                        MovingObjectPosition blockedLocation = HitEntityInfo.rayTraceBlocks(this.world,
+                                                futureLoc, checkLocVec);
+                                        if (blockedLocation != null)
+                                            continue;
+                                        // update the smallest distance only if the target is reachable.
+                                        smallestDistSqr = currDistSqr;
+                                        // update velocity
+                                        velocity = dir;
+                                    }
+                                } else {
+                                    velocity.multiply(bounceVelocityMulti);
+                                    double yVelocityThreshold = gravity * speedMulti;
+                                    switch (movingobjectposition.direction) {
+                                        case UP:
+                                            velocity.setY(velocity.getY() * -1);
+                                            // prevent projectile twitching
+                                            if (gravity > 0 && velocity.getY() < yVelocityThreshold)
+                                                velocity.setY(0);
+                                            break;
+                                        case DOWN:
+                                            velocity.setY(velocity.getY() * -1);
+                                            // prevent projectile twitching
+                                            if (gravity < 0 && velocity.getY() > yVelocityThreshold)
+                                                velocity.setY(0);
+                                            break;
+                                        case EAST:
+                                        case WEST:
+                                            velocity.setX(velocity.getX() * -1);
+                                            break;
+                                        case SOUTH:
+                                        case NORTH:
+                                            velocity.setZ(velocity.getZ() * -1);
+                                            break;
+                                    }
                                 }
-                            } else {
+                            } else{
                                 // slide
                                 switch (movingobjectposition.direction) {
                                     case UP:
@@ -477,7 +527,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         }
 
         // draw particle trail
-        if (trailColor != null && this.ticksLived > 5)
+        if (trailColor != null && this.ticksLived > 0)
             GenericHelper.handleParticleLine(velocity, bukkitEntity.getLocation(),
                     new GenericHelper.ParticleLineOptions()
                             .setLength(velocity.length())
