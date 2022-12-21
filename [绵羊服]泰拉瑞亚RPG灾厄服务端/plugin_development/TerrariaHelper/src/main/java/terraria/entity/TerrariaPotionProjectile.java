@@ -18,7 +18,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     private static final double distFromBlock = 1e-5, distCheckOnGround = 1e-1;
     // projectile info
     public String projectileType, blockHitAction = "die", trailColor = null;
-    public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noGravityTicks = 15, trailLingerTime = 10, penetration = 0;
+    public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noAutoTraceTicks = 0, noGravityTicks = 15, trailLingerTime = 10, penetration = 0;
     public double autoTraceAbility = 4, autoTraceRadius = 12, blastRadius = 1.5, bounceVelocityMulti = 1,
             frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileSize = 0.125, speedMultiPerTick = 1;
     public boolean autoTrace = false, autoTraceSharpTurning = true, blastDamageShooter = false, bouncePenetrationBonded = false,
@@ -37,6 +37,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.bounce = section.getInt("bounce", this.bounce);
             this.enemyInvincibilityFrame = section.getInt("enemyInvincibilityFrame", this.enemyInvincibilityFrame);
             this.liveTime = section.getInt("liveTime", this.liveTime);
+            this.noAutoTraceTicks = section.getInt("noAutoTraceTicks", this.noAutoTraceTicks);
             this.noGravityTicks = section.getInt("noGravityTicks", this.noGravityTicks);
             this.trailLingerTime = section.getInt("trailLingerTime", this.trailLingerTime);
             this.penetration = section.getInt("penetration", this.penetration);
@@ -263,25 +264,30 @@ public class TerrariaPotionProjectile extends EntityPotion {
         if (shouldMove) {
             // optimize auto trace target
             if (autoTrace) {
-                if (autoTraceTarget != null && getAutoTraceInterest(autoTraceTarget) < -1e5)
+                // auto trace should not work before the projectile's age exceeds no auto trace tick
+                if (ticksLived < noAutoTraceTicks) {
                     autoTraceTarget = null;
-                if (autoTraceTarget == null) {
-                    double maxInterest = -1e5;
-                    List<Entity> list = this.world.getEntities(this, getBoundingBox().g(autoTraceRadius));
-                    for (Entity toCheck : list) {
-                        // only living entities are valid targets
-                        if (!toCheck.isInteractable()) continue;
-                        if (this.shooter != null && this.shooter == toCheck) continue;
-                        // if the target is unreachable
-                        if (!blockHitAction.equals("thru")) {
-                            Vec3D traceEnd = toCheck.d();
-                            MovingObjectPosition blockHitPos = HitEntityInfo.rayTraceBlocks(this.world, initialLoc, traceEnd);
-                            if (blockHitPos != null) continue;
-                        }
-                        double currInterest = getAutoTraceInterest(toCheck);
-                        if (currInterest > maxInterest) {
-                            maxInterest = currInterest;
-                            autoTraceTarget = toCheck;
+                } else {
+                    if (autoTraceTarget != null && getAutoTraceInterest(autoTraceTarget) < -1e5)
+                        autoTraceTarget = null;
+                    if (autoTraceTarget == null) {
+                        double maxInterest = -1e5;
+                        List<Entity> list = this.world.getEntities(this, getBoundingBox().g(autoTraceRadius));
+                        for (Entity toCheck : list) {
+                            // only living entities are valid targets
+                            if (!toCheck.isInteractable()) continue;
+                            if (this.shooter != null && this.shooter == toCheck) continue;
+                            // if the target is unreachable
+                            if (!blockHitAction.equals("thru")) {
+                                Vec3D traceEnd = toCheck.d();
+                                MovingObjectPosition blockHitPos = HitEntityInfo.rayTraceBlocks(this.world, initialLoc, traceEnd);
+                                if (blockHitPos != null) continue;
+                            }
+                            double currInterest = getAutoTraceInterest(toCheck);
+                            if (currInterest > maxInterest) {
+                                maxInterest = currInterest;
+                                autoTraceTarget = toCheck;
+                            }
                         }
                     }
                 }
@@ -363,6 +369,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                     penetration--;
                                     EntityHelper.setMetadata(bukkitEntity, "penetration", this.penetration);
                                 }
+                                // chlorophyte arrow bounce into enemies
                                 if (projectileType.equals("叶绿箭")) {
                                     velocity.multiply(-1);
                                     double homeInRadius = 24,
@@ -385,16 +392,17 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                         double predictedDist = dir.length();
                                         dir.multiply(this.speed / predictedDist);
                                         // account for gravity
-                                        int ticksToTravel = (int) Math.floor(predictedDist / this.speed);
+                                        double ticksToTravel = Math.ceil(predictedDist / this.speed);
                                         // distY = acceleration(gravity) * ticksToTravel^2 / 2
                                         // to counter that, yVelocityOffset = distY / ticksToTravel = gravity * ticksToTravel / 2
                                         double yVelocityOffset = this.gravity * ticksToTravel / 2;
                                         dir.setY(dir.getY() + yVelocityOffset);
                                         // check if the direction is clear. If it is obstructed with block, skip this entity.
-                                        Vec3D checkLocVec = new Vec3D(
-                                                futureLoc.x + dir.getX() * ticksToTravel,
-                                                futureLoc.y + dir.getY() * ticksToTravel,
-                                                futureLoc.z + dir.getZ() * ticksToTravel);
+                                        Vec3D checkLocVec;
+                                        if (entity instanceof LivingEntity)
+                                            checkLocVec = terraria.util.MathHelper.toNMSVector(((LivingEntity) entity).getEyeLocation().toVector());
+                                        else
+                                            checkLocVec = terraria.util.MathHelper.toNMSVector(entity.getLocation().toVector());
                                         MovingObjectPosition blockedLocation = HitEntityInfo.rayTraceBlocks(this.world,
                                                 futureLoc, checkLocVec);
                                         if (blockedLocation != null)

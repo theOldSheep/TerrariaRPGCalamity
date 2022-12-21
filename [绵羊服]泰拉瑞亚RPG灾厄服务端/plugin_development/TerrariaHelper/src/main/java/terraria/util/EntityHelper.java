@@ -1399,7 +1399,8 @@ public class EntityHelper {
             }
             if (ply != null) {
                 org.bukkit.block.Block blastCenterBlock = loc.getBlock();
-                double radiusSqr = radius * radius;
+                // subtract 1e-3 from radiusSqr to prevent annoying unnatural shape
+                double radiusSqr = radius * radius - 1e-3;
                 int radInt = (int) Math.ceil(radius);
                 double distSqrX, distSqrY, distSqrZ;
                 for (int xOffset = radInt * -1; xOffset <= radInt; xOffset ++) {
