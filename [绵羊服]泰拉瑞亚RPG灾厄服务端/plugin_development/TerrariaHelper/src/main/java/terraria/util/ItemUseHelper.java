@@ -369,12 +369,12 @@ public class ItemUseHelper {
                 }
                 case "湮灭千星":
                 case "代达罗斯风暴弓": {
-                    Vector offset = new Vector(Math.random() * 15 - 7.5, 20 + Math.random() * 10, Math.random() * 15 - 7.5);
+                    Vector offset = new Vector(Math.random() * 30 - 15, 20 + Math.random() * 20, Math.random() * 30 - 15);
                     fireVelocity = offset.clone().multiply(-1).normalize();
                     Location destination = getPlayerTargetLoc(ply, 64, 4,
                             new EntityHelper.AimHelperOptions()
                                     .setAimMode(true)
-                                    .setRandomOffsetRadius(1)
+                                    .setRandomOffsetRadius(5)
                                     .setTicksOffset(offset.length() / projectileSpeed), true);
                     fireLoc = destination.add(offset);
                     break;
@@ -506,6 +506,125 @@ public class ItemUseHelper {
         applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
         return true;
     }
+    // magic helper functions below
+    private static boolean consumeMana(Player ply, int mana) {
+        if (mana <= 0) return true;
+        if (ply.getLevel() < mana) {
+            // consume mana potion if applicable
+            Collection<String> accessories = PlayerHelper.getAccessories(ply);
+            if (    accessories.contains("魔力花") ||
+                    accessories.contains("磁花") ||
+                    accessories.contains("空灵护符")) {
+                boolean hasConsumedPotion = false;
+                // player's backpack
+                Inventory plyInv = ply.getInventory();
+                for (int i = 0; i < 36; i ++) {
+                    ItemStack currItem = plyInv.getItem(i);
+                    String itemType = ItemHelper.splitItemName(currItem)[1];
+                    if (currItem != null && itemType.endsWith("魔力药水")) {
+                        hasConsumedPotion = playerUsePotion(ply, itemType, currItem);
+                        if (hasConsumedPotion)
+                            break;
+                    }
+                }
+                // in the player's void bag
+                if (!hasConsumedPotion && PlayerHelper.hasVoidBag(ply)) {
+                    Inventory voidBagInv = PlayerHelper.getInventory(ply, "voidBag");
+                    for (ItemStack currItem : voidBagInv.getContents()) {
+                        String itemType = ItemHelper.splitItemName(currItem)[1];
+                        if (currItem != null && itemType.endsWith("魔力药水")) {
+                            hasConsumedPotion = playerUsePotion(ply, itemType, currItem);
+                            if (hasConsumedPotion)
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        int currMana = ply.getLevel();
+        if (currMana >= mana) {
+            currMana -= mana;
+            ply.setLevel(currMana);
+            int maxMana = EntityHelper.getAttrMap(ply).getOrDefault("maxMana", 20d).intValue();
+            int regenDelay = (int) Math.ceil(0.3 * (
+                    (1 - ((double) currMana / maxMana)) * 240 + 45   ));
+            EntityHelper.setMetadata(ply, "manaRegenDelay", regenDelay);
+            return true;
+        }
+        return false;
+    }
+    private static void handleMagicProjectileFire(Player ply, HashMap<String, Double> attrMap, ConfigurationSection weaponSection,
+                                                  int fireIndex, String itemType, String weaponType, boolean autoSwing) {
+        int fireRoundMax = weaponSection.getInt("fireRounds", 1);
+        int fireAmount = weaponSection.getInt("shots", 1);
+        double spread = weaponSection.getDouble("offSet", -1d);
+        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+        Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+        for (int i = 0; i < fireAmount; i ++) {
+            Location fireLoc = ply.getEyeLocation();
+            Vector fireVelocity = facingDir.clone();
+            double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
+            projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
+            projectileSpeed /= 10;
+            if (weaponType.equals("BOW"))
+                projectileSpeed *= attrMap.getOrDefault("projectileSpeedArrowMulti", 1d);
+            // bullet spread
+            if (spread > 0d) {
+                fireVelocity.multiply(spread);
+                fireVelocity.add(MathHelper.randomVector());
+                fireVelocity.normalize();
+            }
+            // handle special weapons (pre-firing)
+            switch (itemType) {
+                case "月之耀斑":
+                case "暴雪法杖": {
+                    Vector offset = new Vector(Math.random() * 30 - 15, 20 + Math.random() * 20, Math.random() * 30 - 15);
+                    fireVelocity = offset.clone().multiply(-1).normalize();
+                    EntityHelper.AimHelperOptions options = new EntityHelper.AimHelperOptions()
+                            .setAimMode(true)
+                            .setTicksOffset(offset.length() / projectileSpeed);
+                    if (itemType.equals("暴雪法杖"))
+                        options.setRandomOffsetRadius(5);
+                    Location destination = getPlayerTargetLoc(ply, 64, 4, options, true);
+                    fireLoc = destination.add(offset);
+                    break;
+                }
+            }
+            // setup projectile velocity
+            fireVelocity.multiply(projectileSpeed);
+            String projectileName = weaponSection.getString("projectileName", "小火花");
+            Projectile firedProjectile = EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMap,
+                    EntityHelper.getDamageType(ply), projectileName);
+        }
+        // if this is a delayed shot, play item swing sound
+        playerUseItemSound(ply, weaponType, autoSwing);
+        // extra delayed shots
+        if (fireIndex < fireRoundMax) {
+            int fireRoundDelay = weaponSection.getInt("fireRoundsDelay", 20);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                    () -> handleMagicProjectileFire(ply, attrMap, weaponSection, fireIndex + 1,
+                            itemType, weaponType, autoSwing)
+                    , fireRoundDelay);
+        }
+    }
+    private static boolean playerUseMagic(Player ply, String itemType, int swingAmount, String weaponType,
+                                          boolean autoSwing,
+                                          ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
+        int manaConsumption = (int) Math.round(attrMap.getOrDefault("manaUse", 10d) *
+                attrMap.getOrDefault("manaUseMulti", 1d));
+        if (weaponType.equals("太空枪") && EntityHelper.getMetadata(ply, "armorSet").asString().equals("流星套装"))
+            manaConsumption = 0;
+        if (!consumeMana(ply, manaConsumption)) return false;
+        if (weaponType.equals("MAGIC_PROJECTILE")) {
+            handleMagicProjectileFire(ply, attrMap, weaponSection, 1, itemType, weaponType, autoSwing);
+        }
+        // apply CD
+        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMagicMulti", 1d);
+        double useTimeMulti = 1 / useSpeed;
+        applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
+        return true;
+    }
+    // other helper functions for item using
     private static void playerUseItemSound(Player ply, String weaponType, boolean autoSwing) {
         String itemUseSound;
         float volume = 1f, pitch = 1f;
@@ -608,6 +727,11 @@ public class ItemUseHelper {
                 case "SPECIAL_AMMO":
                     success = playerUseRanged(ply, itemName, swingAmount, weaponType,
                             maxLoad > 0, autoSwing, weaponSection, attrMap);
+                    break;
+                case "MAGIC_PROJECTILE":
+                case "MAGIC_SPECIAL":
+                    success = playerUseMagic(ply, itemName, swingAmount, weaponType,
+                            autoSwing, weaponSection, attrMap);
                     break;
             }
             if (success) {

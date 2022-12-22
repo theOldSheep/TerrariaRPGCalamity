@@ -58,7 +58,12 @@ public class TerrariaItem extends EntityItem {
                     reach += 15.625;
                 break;
             case "星":
-                if (accessories.contains("天界磁石") || accessories.contains("天界徽章") || accessories.contains("天界手铐") || accessories.contains("磁花"))
+                if (accessories.contains("天界磁石") ||
+                        accessories.contains("天界徽章") ||
+                        accessories.contains("天界手铐") ||
+                        accessories.contains("磁花") ||
+                        accessories.contains("空灵护符") ||
+                        accessories.contains("灾厄符章"))
                     reach += 18.75;
                 break;
         }

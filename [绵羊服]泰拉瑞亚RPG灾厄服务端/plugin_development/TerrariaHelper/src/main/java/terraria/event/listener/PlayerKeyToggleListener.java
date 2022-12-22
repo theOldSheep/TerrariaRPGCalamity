@@ -29,7 +29,6 @@ public class PlayerKeyToggleListener implements Listener {
                 PlayerHelper.handleGrapplingHook(ply);
                 break;
         }
-        Bukkit.getServer().broadcastMessage("KEYDOWN: " + e.getKey());
     }
 
 }

@@ -1,6 +1,7 @@
 package terraria.util;
 
 import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
 import net.minecraft.server.v1_12_R1.*;
@@ -28,6 +29,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.TerrariaArrowProjectile;
 import terraria.entity.TerrariaPotionProjectile;
 import terraria.gameplay.Event;
 
@@ -1426,11 +1428,19 @@ public class EntityHelper {
                     delay);
         }
     }
-    public static Projectile spawnProjectile(Location loc, Vector velocity, String projectileName, ProjectileSource src) {
-        TerrariaPotionProjectile entity = new TerrariaPotionProjectile(loc, TerrariaPotionProjectile.generateItemStack(projectileName), velocity, projectileName);
+    private static Projectile spawnProjectile(Location loc, Vector velocity, String projectileName,
+                                              ProjectileSource src, boolean arrowOrPotion) {
         CraftWorld wld = (CraftWorld) loc.getWorld();
-        wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
-        Projectile bukkitProjectile = new CraftSplashPotion(wld.getHandle().getServer(), entity);
+        Projectile bukkitProjectile;
+        if (arrowOrPotion) {
+            TerrariaArrowProjectile entity = new TerrariaArrowProjectile(loc, velocity, projectileName);
+            wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            bukkitProjectile = new CraftArrow(wld.getHandle().getServer(), entity);
+        } else {
+            TerrariaPotionProjectile entity = new TerrariaPotionProjectile(loc, TerrariaPotionProjectile.generateItemStack(projectileName), velocity, projectileName);
+            wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            bukkitProjectile = new CraftSplashPotion(wld.getHandle().getServer(), entity);
+        }
         bukkitProjectile.setShooter(src);
         return bukkitProjectile;
     }
@@ -1447,7 +1457,10 @@ public class EntityHelper {
     public static Projectile spawnProjectile(Entity shooter, Location shootLoc, Vector velocity, HashMap<String, Double> attrMap, String damageType, String projectileName) {
         ProjectileSource projSrc = null;
         if (shooter instanceof ProjectileSource) projSrc = (ProjectileSource) shooter;
-        Projectile result = spawnProjectile(shootLoc, velocity, projectileName, projSrc);
+        boolean arrowOrPotion = projectileName.endsWith("箭");
+        arrowOrPotion = TerrariaHelper.projectileConfig.getBoolean(projectileName + ".arrowOrPotion", arrowOrPotion);
+        arrowOrPotion = false; // chlorophyte arrows glitch on client side
+        Projectile result = spawnProjectile(shootLoc, velocity, projectileName, projSrc, arrowOrPotion);
         setMetadata(result, "attrMap", attrMap.clone());
         setMetadata(result, "damageType", damageType);
         return result;
@@ -1469,8 +1482,12 @@ public class EntityHelper {
         }
         // random offset for projectiles
         double randomOffset = aimHelperOption.randomOffsetRadius;
-        if (randomOffset > 1e-5)
-            targetLoc.add(Math.random() * randomOffset, Math.random() * randomOffset, Math.random() * randomOffset);
+        if (randomOffset > 1e-5) {
+            double randomOffsetHalved = randomOffset / 2;
+            targetLoc.add(Math.random() * randomOffset - randomOffsetHalved,
+                    Math.random() * randomOffset - randomOffsetHalved,
+                    Math.random() * randomOffset - randomOffsetHalved);
+        }
         return targetLoc;
     }
 }
