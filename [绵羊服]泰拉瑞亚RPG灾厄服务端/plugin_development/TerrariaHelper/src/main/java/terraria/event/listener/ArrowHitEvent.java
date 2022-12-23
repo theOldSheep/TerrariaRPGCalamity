@@ -12,6 +12,7 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
@@ -21,16 +22,25 @@ import terraria.util.MathHelper;
 import terraria.util.YmlHelper;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 
 public class ArrowHitEvent implements Listener {
     public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/projectiles.yml");
     private void handleHitBlock(TerrariaProjectileHitEvent e, Projectile projectile, Block block) {
-
+        // explode
+        Set<String> scoreboardTags = projectile.getScoreboardTags();
+        if (scoreboardTags.contains("isGrenade")) {
+            Location projectileDestroyLoc = MathHelper.toBukkitVector(e.movingObjectPosition.pos).toLocation(block.getWorld());
+            if (scoreboardTags.contains("blastOnContactBlock")) {
+                handleProjectileBlast(projectile, projectileDestroyLoc);
+            }
+        }
     }
     private void handleHitEntity(TerrariaProjectileHitEvent e, Projectile projectile, Entity entity) {
         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(projectile);
+        Set<String> projectileScoreboardTags = projectile.getScoreboardTags();
         // Daawnlight targets
         if (entity.getScoreboardTags().contains("isDaawnlight")) {
             projectile.addScoreboardTag("hitDaawnlight");
@@ -38,10 +48,6 @@ public class ArrowHitEvent implements Listener {
             entity.remove();
             return;
         }
-        Set<String> projectileScoreboardTags = projectile.getScoreboardTags();
-        // if the projectile is about to explode, do not deal direct damage
-        if (EntityHelper.getMetadata(projectile, "penetration").asInt() <= 0 &&
-                projectileScoreboardTags.contains("isGrenade")) return;
         if (projectileScoreboardTags.contains("hitDaawnlight")) {
             projectile.removeScoreboardTag("hitDaawnlight");
             double lastCrit = attrMap.getOrDefault("crit", 0d);
@@ -51,17 +57,27 @@ public class ArrowHitEvent implements Listener {
         } else {
             EntityHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), "Projectile");
         }
+        // explode
+        if (projectileScoreboardTags.contains("isGrenade")) {
+            Location projectileDestroyLoc = MathHelper.toBukkitVector(e.movingObjectPosition.pos).toLocation(entity.getWorld());
+            if (projectileScoreboardTags.contains("blastOnContactBlock")) {
+                handleProjectileBlast(projectile, projectileDestroyLoc);
+            }
+        }
+    }
+    private void handleProjectileBlast(Projectile projectile, Location projectileDestroyLoc) {
+        // explode
+        HashSet<org.bukkit.entity.Entity> damageExceptions = (HashSet<Entity>) EntityHelper.getMetadata(projectile, "collided").value();
+        EntityHelper.handleEntityExplode(projectile, damageExceptions, projectileDestroyLoc);
     }
     private void handleDestroy(TerrariaProjectileHitEvent e, Projectile projectile) {
         Location projectileDestroyLoc = projectile.getLocation();
+        String destroyReason = "";
+        MetadataValue destroyReasonMetadata = EntityHelper.getMetadata(projectile, "destroyReason");
+        if (destroyReasonMetadata != null) destroyReason = destroyReasonMetadata.asString();
         // explode
         if (projectile.getScoreboardTags().contains("isGrenade")) {
-            org.bukkit.entity.Entity damageException = null;
-            if (! projectile.getScoreboardTags().contains("blastDamageShooter")) {
-                ProjectileSource shooter = projectile.getShooter();
-                if (shooter instanceof LivingEntity) damageException = (LivingEntity) shooter;
-            }
-            EntityHelper.handleEntityExplode(projectile, damageException, projectileDestroyLoc);
+            handleProjectileBlast(projectile, projectileDestroyLoc);
         }
         // other ticking
         String projectileType = projectile.getName();
@@ -73,7 +89,16 @@ public class ArrowHitEvent implements Listener {
         // cluster bomb etc
         {
             ConfigurationSection clusterSection = projectileSection.getConfigurationSection("clusterBomb");
-            if (clusterSection != null) {
+            boolean shouldFire;
+            if (clusterSection == null)
+                shouldFire = false;
+            else if (destroyReason.equals("hitBlock"))
+                shouldFire = clusterSection.getBoolean("fireOnHitBlock", true);
+            else if (destroyReason.equals("hitEntity"))
+                shouldFire = clusterSection.getBoolean("fireOnHitEntity", true);
+            else
+                shouldFire = clusterSection.getBoolean("fireOnTimeout", true);
+            if (shouldFire) {
                 String clusterName = clusterSection.getString("name");
                 if (clusterName != null) {
                     int clusterAmount = clusterSection.getInt("amount", 3);
@@ -97,6 +122,12 @@ public class ArrowHitEvent implements Listener {
                                         Math.random() * 3 - 1.5,
                                         Math.random() * 3 - 1.5);
                                 velocity = targetLoc.subtract(spawnLoc).toVector().normalize();
+                                break;
+                            }
+                            case "surround": {
+                                velocity = MathHelper.randomVector();
+                                spawnLoc = projectile.getLocation().add(velocity.clone().multiply(
+                                        10 + Math.random() * 15));
                                 break;
                             }
                             default:

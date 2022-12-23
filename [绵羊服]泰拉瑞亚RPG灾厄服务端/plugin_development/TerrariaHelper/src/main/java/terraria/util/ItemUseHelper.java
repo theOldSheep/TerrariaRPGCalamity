@@ -607,16 +607,273 @@ public class ItemUseHelper {
                     , fireRoundDelay);
         }
     }
+    private static void handleMagicSpecialFire(Player ply, HashMap<String, Double> attrMap, ConfigurationSection weaponSection,
+                                               int fireIndex, String itemType, String weaponType, Location targetedLocation,
+                                               boolean autoSwing, int swingAmount, Collection<Entity> damageCD) {
+        int fireAmount = 1, fireDelay = 0;
+        switch (itemType) {
+            case "爆裂藤蔓":
+            case "暗影束法杖":
+            case "高温射线枪":
+            case "终极棱镜":
+            case "永夜射线":
+            case "女武神权杖":
+            case "泰拉射线":
+            case "元素射线":
+            {
+                Collection<Entity> damageExceptions;
+                if (damageCD == null) damageExceptions = new HashSet<>();
+                else damageExceptions = damageCD;
+                GenericHelper.StrikeLineOptions strikeInfo = new GenericHelper.StrikeLineOptions();
+                Vector fireDir = targetedLocation.clone().subtract(ply.getEyeLocation()).toVector().normalize();
+                double yaw = MathHelper.getVectorYaw(fireDir),
+                        pitch = MathHelper.getVectorPitch(fireDir);
+                Location startLoc = ply.getEyeLocation().add(fireDir);
+                double length = 8, width = 0.5;
+                // some weapons do not need smart targeting, they shoot exactly at the cursor
+                boolean useSmartTargeting = itemType.equals("元素射线");
+                if (!useSmartTargeting) {
+                    EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+                    yaw = plyNMS.yaw;
+                    pitch = plyNMS.pitch;
+                    fireDir = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
+                }
+                // handle strike line properties
+                switch (itemType) {
+                    case "爆裂藤蔓": {
+                        length = 16;
+                        strikeInfo.setParticleInfo(new GenericHelper.ParticleLineOptions()
+                                        .setParticleColor("103|78|50")
+                                        .setTicksLinger(33))
+                                .setDamageCD(4)
+                                .setLingerTime(6)
+                                .setLingerDelay(5)
+                                .setThruWall(true);
+                        break;
+                    }
+                    case "高温射线枪": {
+                        length = 48;
+                        strikeInfo
+                                .setParticleInfo(new GenericHelper.ParticleLineOptions()
+                                        .setParticleColor("255|225|0"))
+                                .setThruWall(false)
+                                .setMaxTargetHit(1);
+                        break;
+                    }
+                    case "暗影束法杖": {
+                        length = 64;
+                        strikeInfo
+                                .setParticleInfo(new GenericHelper.ParticleLineOptions()
+                                        .setParticleColor("255|125|255"))
+                                .setBounceWhenHitBlock(true);
+                        break;
+                    }
+                    case "终极棱镜": {
+                        double convergeProgress = Math.min((double) swingAmount / 25, 1);
+                        length = 40 + 24 * convergeProgress;
+                        // particle color
+                        String colorParticle;
+                        if (convergeProgress < 1) {
+                            String[] particleColors = new String[]{"255|0|0", "255|165|0", "255|255|0", "0|128|0",
+                                    "0|0|255", "75|0|130", "238|130|238"};
+                            fireAmount = 7;
+                            // so that enemies do not get damaged for an unreasonable amount of times
+                            damageCD = damageExceptions;
+                            colorParticle = particleColors[fireIndex % particleColors.length];
+                        } else {
+                            colorParticle = "255|255|255";
+                            width = 1;
+                            // converged ray deals 3x damage
+                            attrMap.put("damage", attrMap.getOrDefault("damage", 125d) * 3);
+                        }
+                        // strike line additional information
+                        strikeInfo
+                                .setParticleInfo(new GenericHelper.ParticleLineOptions()
+                                        .setParticleColor(colorParticle))
+                                .setThruWall(false);
+                        // tweak shooting direction
+                        if (convergeProgress < 1) {
+                            double angle = (360 * (double) fireIndex / fireAmount) - (swingAmount * 20);
+                            yaw += MathHelper.xsin_degree(angle) * 20 * (1 - convergeProgress);
+                            pitch += MathHelper.xcos_degree(angle) * 20 * (1 - convergeProgress);
+                        }
+                        break;
+                    }
+                    case "永夜射线": {
+                        length = 24;
+                        strikeInfo
+                                .setParticleInfo(new GenericHelper.ParticleLineOptions()
+                                        .setParticleColor("0|0|175"))
+                                .setThruWall(false)
+                                .setDamagedFunction((hitIndex, hitEntity) -> {
+                                    if (hitEntity instanceof LivingEntity && hitIndex == 1) {
+                                        String damageType = EntityHelper.getDamageType(ply);
+                                        for (int i = 0; i < 4; i ++) {
+                                            Location explodeLoc = ((LivingEntity) hitEntity).getEyeLocation()
+                                                    .add(Math.random() * 8 - 4, Math.random() * 8 - 4, Math.random() * 8 - 4);
+                                            EntityHelper.spawnProjectile(ply, explodeLoc, MathHelper.randomVector(), attrMap,
+                                                    damageType, "暗影射线分支");
+                                        }
+                                    }
+                                });
+                        break;
+                    }
+                    case "女武神权杖": {
+                        length = 32;
+                        strikeInfo
+                                .setParticleInfo(new GenericHelper.ParticleLineOptions()
+                                        .setParticleColor("255|125|255")
+                                        .setTicksLinger(22))
+                                .setThruWall(false)
+                                .setDamageCD(3)
+                                .setLingerTime(5)
+                                .setLingerDelay(4);
+                        break;
+                    }
+                    case "泰拉射线": {
+                        length = 48;
+                        strikeInfo
+                                .setParticleInfo(new GenericHelper.ParticleLineOptions()
+                                        .setParticleColor("100|255|150")
+                                        .setTicksLinger(22))
+                                .setDamageCD(3)
+                                .setLingerTime(5)
+                                .setLingerDelay(4)
+                                .setDamagedFunction((hitIndex, hitEntity) -> {
+                                    if (hitEntity instanceof LivingEntity && hitIndex == 1) {
+                                        String damageType = EntityHelper.getDamageType(ply);
+                                        for (int i = 0; i < 3; i ++) {
+                                            Location explodeLoc = ((LivingEntity) hitEntity).getEyeLocation()
+                                                    .add(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
+                                            EntityHelper.spawnProjectile(ply, explodeLoc, MathHelper.randomVector(), attrMap,
+                                                    damageType, "自然能量");
+                                        }
+                                    }
+                                });
+                        break;
+                    }
+                    case "元素射线": {
+                        length = 56;
+                        fireAmount = 4;
+                        startLoc.add(fireDir.clone().multiply(2));
+                        startLoc.add(Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2);
+                        fireDir = targetedLocation.clone().subtract(startLoc).toVector();
+                        yaw = MathHelper.getVectorYaw(fireDir) + Math.random() * 5 - 2.5;
+                        pitch = MathHelper.getVectorPitch(fireDir) + Math.random() * 5 - 2.5;
+                        switch (fireIndex) {
+                            // solar
+                            case 1: {
+                                strikeInfo
+                                        .setParticleInfo(new GenericHelper.ParticleLineOptions()
+                                                .setParticleColor("255|100|50")
+                                                .setTicksLinger(18))
+                                        .setDamageCD(3)
+                                        .setLingerTime(4)
+                                        .setLingerDelay(4)
+                                        .setDamagedFunction((hitIndex, hitEntity) -> {
+                                            if (hitEntity instanceof LivingEntity) {
+                                                Location explodeLoc = ((LivingEntity) hitEntity).getEyeLocation();
+                                                EntityHelper.handleEntityExplode(ply, 1, damageExceptions, explodeLoc);
+                                            }
+                                        });
+                                break;
+                            }
+                            // stardust
+                            case 2: {
+                                strikeInfo
+                                        .setParticleInfo(new GenericHelper.ParticleLineOptions()
+                                                .setParticleColor("25|200|225")
+                                                .setTicksLinger(18))
+                                        .setDamageCD(3)
+                                        .setLingerTime(4)
+                                        .setLingerDelay(4)
+                                        .setDamagedFunction((hitIndex, hitEntity) -> {
+                                            if (hitEntity instanceof LivingEntity && Math.random() < 0.2) {
+                                                String damageType = EntityHelper.getDamageType(ply);
+                                                for (int i = 0; i < 4; i ++) {
+                                                    Location explodeLoc = ((LivingEntity) hitEntity).getEyeLocation()
+                                                            .add(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
+                                                    EntityHelper.spawnProjectile(ply, explodeLoc, MathHelper.randomVector(), attrMap,
+                                                            damageType, "星尘流星");
+                                                }
+                                            }
+                                        });
+                                break;
+                            }
+                            // vortex
+                            case 3: {
+                                strikeInfo
+                                        .setParticleInfo(new GenericHelper.ParticleLineOptions()
+                                                .setParticleColor("125|255|225")
+                                                .setTicksLinger(18))
+                                        .setMaxTargetHit(1)
+                                        .setDamagedFunction((hitIndex, hitEntity) -> {
+                                            if (hitEntity instanceof LivingEntity) {
+                                                EntityHelper.applyEffect(hitEntity, "带电", 100);
+                                            }
+                                        });
+                                break;
+                            }
+                            // nebula
+                            case 4: {
+                                fireDelay = 5;
+                                width = 1;
+                                strikeInfo
+                                        .setParticleInfo(new GenericHelper.ParticleLineOptions()
+                                                .setParticleColor("225|150|225")
+                                                .setTicksLinger(18))
+                                        .setDamageCD(3)
+                                        .setLingerTime(4)
+                                        .setLingerDelay(4);
+                                yaw -= (fireIndex - 6) * 2;
+                                break;
+                            }
+                            default:
+                                return;
+                        }
+                        break;
+                    }
+                }
+                GenericHelper.handleStrikeLine(ply, startLoc, yaw, pitch, length, width, itemType, "255|255|0",
+                        damageExceptions, attrMap, strikeInfo);
+                break;
+            }
+        }
+        // extra delayed shots
+        if (fireIndex < fireAmount) {
+            Collection<Entity> finalDamageCD = damageCD;
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                    () -> handleMagicSpecialFire(ply, attrMap, weaponSection, fireIndex + 1,
+                            itemType, weaponType, targetedLocation, autoSwing, swingAmount, finalDamageCD)
+                    , fireDelay);
+        }
+    }
     private static boolean playerUseMagic(Player ply, String itemType, int swingAmount, String weaponType,
                                           boolean autoSwing,
                                           ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
         int manaConsumption = (int) Math.round(attrMap.getOrDefault("manaUse", 10d) *
                 attrMap.getOrDefault("manaUseMulti", 1d));
-        if (weaponType.equals("太空枪") && EntityHelper.getMetadata(ply, "armorSet").asString().equals("流星套装"))
-            manaConsumption = 0;
+        switch (weaponType) {
+            case "太空枪":
+                if (EntityHelper.getMetadata(ply, "armorSet").asString().equals("流星套装"))
+                    manaConsumption = 0;
+                break;
+            case "终极棱镜":
+                if (swingAmount >= 25)
+                    manaConsumption *= 3;
+                else if (swingAmount >= 15)
+                    manaConsumption *= 1.75;
+                break;
+        }
         if (!consumeMana(ply, manaConsumption)) return false;
         if (weaponType.equals("MAGIC_PROJECTILE")) {
             handleMagicProjectileFire(ply, attrMap, weaponSection, 1, itemType, weaponType, autoSwing);
+        } else {
+            Location targetedLocation = getPlayerTargetLoc(ply, 64, 4,
+                    new EntityHelper.AimHelperOptions()
+                            .setAimMode(true), true);
+            handleMagicSpecialFire(ply, attrMap, weaponSection, 1, itemType, weaponType,
+                    targetedLocation, autoSwing, swingAmount, null);
         }
         // apply CD
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMagicMulti", 1d);

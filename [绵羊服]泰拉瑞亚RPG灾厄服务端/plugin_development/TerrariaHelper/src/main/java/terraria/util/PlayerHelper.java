@@ -5,7 +5,6 @@ import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.IChatBaseComponent;
 import net.minecraft.server.v1_12_R1.PacketPlayOutTitle;
 import org.bukkit.*;
-import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
@@ -96,7 +95,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("useSpeedRangedMulti", 1d);
         defaultPlayerAttrMap.put("useTime", 0d);
         // test!
-//        defaultPlayerAttrMap.put("maxHealth", 1200d);
+        defaultPlayerAttrMap.put("maxHealth", 1200d);
         defaultPlayerAttrMap.put("maxMana", 350d);
         defaultPlayerAttrMap.put("healthTier", 44d);
         defaultPlayerAttrMap.put("manaTier", 13d);
@@ -789,23 +788,23 @@ public class PlayerHelper {
         YmlHelper.YmlSection fileSection = YmlHelper.getFile("plugins/PlayerData/" + player.getName() + ".yml");
         return fileSection.getBoolean("bossDefeated" + progressToCheck, false);
     }
-    // TODO
-    private static void addItemAttribute(Player ply, ItemStack item) {
+    private static void addItemAttribute(Player ply, HashMap<String, Double> attrMap, ItemStack item) {
         String[] itemInfo = ItemHelper.splitItemName(item);
         // attributes from the item itself
         String attributesPath = itemInfo[1] + ".attributes";
         ConfigurationSection allAttributes = TerrariaHelper.itemConfig.getConfigurationSection(attributesPath);
-        EntityHelper.tweakAllAttributes(ply, allAttributes, true);
+        EntityHelper.tweakAllAttributes(ply, attrMap, allAttributes, true);
         // attributes from the item's prefix
         String attributesPathPrefix = "prefixInfo." + itemInfo[0] +  ".attributes";
         ConfigurationSection allAttributesPrefix = TerrariaHelper.prefixConfig.getConfigurationSection(attributesPathPrefix);
-        EntityHelper.tweakAllAttributes(ply, allAttributesPrefix, true);
+        EntityHelper.tweakAllAttributes(ply, attrMap, allAttributesPrefix, true);
     }
     public static void setupAttribute(Player ply) {
         try {
             ply.removeScoreboardTag("toolChanged");
             // re-initialize attribute map
-            EntityHelper.setMetadata(ply, "attrMap", getDefaultPlayerAttributes());
+            // attrMap is being overridden after newAttrMap is ready to prevent client glitch (especially on max mana)
+            HashMap<String, Double> newAttrMap = getDefaultPlayerAttributes();
             EntityHelper.setMetadata(ply, "effectInflict", getDefaultPlayerEffectInflict());
             // potion effect
             HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
@@ -814,7 +813,7 @@ public class PlayerHelper {
                 int ticksRemaining = effectInfo.getValue();
                 switch (effect) {
                     case "魔力疾病":
-                        EntityHelper.tweakAttribute(ply, "damageMagicMulti",
+                        EntityHelper.tweakAttribute(ply, newAttrMap, "damageMagicMulti",
                                 (ticksRemaining / 4) + "", false);
                         break;
                     default: {
@@ -826,12 +825,12 @@ public class PlayerHelper {
                             for (String attr : attributesTweaked) {
                                 // other buff may contain non-string attributes, but leveled buff usually do not.
                                 // so it is safe to read the attribute from level > 1 as double.
-                                // if a buff can be leveled but its level is 1, it does not matter.
+                                // if a buff can be leveled but its level is 1, it does not matter as multiplication is not required.
                                 if (buffLevel > 1)
-                                    EntityHelper.tweakAttribute(ply, attr,
+                                    EntityHelper.tweakAttribute(ply, newAttrMap, attr,
                                             (effectSection.getDouble(attr) * buffLevel) + "", true);
                                 else
-                                    EntityHelper.tweakAttribute(ply, attr,
+                                    EntityHelper.tweakAttribute(ply, newAttrMap, attr,
                                             effectSection.getString(attr), true);
                             }
                         }
@@ -844,7 +843,7 @@ public class PlayerHelper {
                 ItemStack tool = plyInv.getItemInMainHand();
                 String toolCombatType = ItemHelper.getItemCombatType(tool);
                 if (toolCombatType.equals("武器")) {
-                    addItemAttribute(ply, tool);
+                    addItemAttribute(ply, newAttrMap, tool);
                 }
             }
             // armor
@@ -876,7 +875,7 @@ public class PlayerHelper {
                 }
                 // basic attributes
                 for (ItemStack armorPiece : armors) {
-                    addItemAttribute(ply, armorPiece);
+                    addItemAttribute(ply, newAttrMap, armorPiece);
                 }
                 // set bonus
                 String armorSet = "";
@@ -915,7 +914,7 @@ public class PlayerHelper {
                         plyInv.setChestplate(armors.get(1));
                         plyInv.setLeggings(armors.get(2));
                         // tweak attributes
-                        EntityHelper.tweakAllAttributes(ply,
+                        EntityHelper.tweakAllAttributes(ply, newAttrMap,
                                 setBonusSection.getConfigurationSection("attributes"), true);
                     }
                 }
@@ -933,12 +932,13 @@ public class PlayerHelper {
                     if (currAccType.equals("太阳石") && !WorldHelper.isDayTime(ply.getWorld())) continue;
                     if (currAccType.equals("月亮石") && WorldHelper.isDayTime(ply.getWorld())) continue;
                     // attribute
-                    addItemAttribute(ply, currAcc);
+                    addItemAttribute(ply, newAttrMap, currAcc);
                     // accessory type
                     accessories.add(currAccType);
                 }
                 EntityHelper.setMetadata(ply, "accessory", accessories);
             }
+            EntityHelper.setMetadata(ply, "attrMap", newAttrMap);
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setupAttribute ", e);
         }
@@ -1204,7 +1204,7 @@ public class PlayerHelper {
         // ticking mechanism
         Location targetLoc = target.getEyeLocation();
         if (idx > 5) {
-            if (idx == 6) speed = 4;
+            if (idx == 6) speed = 1;
             double distSqr = loc.distanceSquared(targetLoc);
             if (distSqr < speed * speed) {
                 // if the projectile reaches its target
@@ -1220,7 +1220,7 @@ public class PlayerHelper {
                         MathHelper.setVectorLengthSquared(currDir, Math.min(dV.length(), 16));
                     MathHelper.setVectorLength(dV, 4);
                     currDir.add(dV);
-                    speed += 0.25;
+                    speed += 0.1;
                 }
             }
             // hits its target
@@ -1233,7 +1233,7 @@ public class PlayerHelper {
                 return;
             }
         } else
-            speed += 0.1;
+            speed += 0.2;
         MathHelper.setVectorLength(currDir, speed);
         GenericHelper.handleParticleLine(currDir, loc,
                 new GenericHelper.ParticleLineOptions()
@@ -1266,23 +1266,21 @@ public class PlayerHelper {
                 }
             }
         } else {
-            // get the valid target around loc that is closest to the player
-            double targetDistSqr = 1e9;
+            // target a random target that is valid.
+            ArrayList<Entity> candidates = new ArrayList<>(35);
             for (Entity e : loc.getWorld().getNearbyEntities(loc, 24, 24, 24)) {
                 if (EntityHelper.checkCanDamage(dPly, e)) {
-                    double distSqr = e.getLocation().distanceSquared(dPly.getLocation());
-                    if (distSqr < targetDistSqr) {
-                        target = e;
-                        targetDistSqr = distSqr;
-                    }
+                    candidates.add(e);
                 }
             }
+            if (candidates.size() > 0)
+                target = candidates.get((int) (Math.random() * candidates.size()));
         }
         if (target != null) {
             spectreProjectileTick(MathHelper.randomVector(), (LivingEntity) target, 0, 0.5, dPly, loc, num, healingOrDamage, color);
         }
     }
-    public static void playerSpectreArmor(Player dPly, Entity v, double dmg) {
+    public static void playerMagicArmorSet(Player dPly, Entity v, double dmg) {
         if (!v.getScoreboardTags().contains("isMonster")) return;
         String armorSet = EntityHelper.getMetadata(dPly, "armorSet").asString();
         switch (armorSet) {
@@ -1290,13 +1288,15 @@ public class PlayerHelper {
                 if (dPly.getScoreboardTags().contains("tempNebulaCD")) break;
                 ItemStack nebulaItem = new ItemStack(Material.FLINT_AND_STEEL);
                 double rdm = Math.random();
+                ItemMeta meta = nebulaItem.getItemMeta();
                 if (rdm < 1d/9)
-                    nebulaItem.getItemMeta().setDisplayName("§c生命强化焰");
+                    meta.setDisplayName("§c生命强化焰");
                 else if (rdm < 2d/9)
-                    nebulaItem.getItemMeta().setDisplayName("§d伤害强化焰");
+                    meta.setDisplayName("§d伤害强化焰");
                 else if (rdm < 1d/3)
-                    nebulaItem.getItemMeta().setDisplayName("§9魔力强化焰");
+                    meta.setDisplayName("§9魔力强化焰");
                 else break;
+                nebulaItem.setItemMeta(meta);
                 v.getWorld().dropItemNaturally(v.getLocation().add(0, 1.5d, 0), nebulaItem);
                 dPly.addScoreboardTag("tempNebulaCD");
                 Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
@@ -1312,14 +1312,16 @@ public class PlayerHelper {
                     int coolDownTicks;
                     if (armorSet.equals("幽灵吸血套装")) {
                         double projectilePower = (int) Math.ceil(dmg * 0.08);
-                        createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), (int) Math.ceil(projectilePower), true, "255|255|255");
+                        createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), Math.ceil(projectilePower), true, "255|255|255");
                         // 80 health/second
-                        coolDownTicks = (int) (projectilePower / 4);
+                        coolDownTicks = (int) Math.ceil(projectilePower / 4);
                     } else {
+                        Bukkit.broadcastMessage("original damage dealt: " + dmg);
                         double projectilePower = (int) Math.ceil(dmg * 0.5);
-                        createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), (int) Math.ceil(projectilePower), false, "255|255|255");
+                        Bukkit.broadcastMessage("projectile power: " + projectilePower);
+                        createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), Math.ceil(projectilePower), false, "255|255|255");
                         // 800 dmg/second
-                        coolDownTicks = (int) (projectilePower / 40);
+                        coolDownTicks = (int) Math.ceil(projectilePower / 40);
                     }
                     Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
                         if (dPly.isOnline()) dPly.removeScoreboardTag("tempSpectreCD");

@@ -21,12 +21,13 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noAutoTraceTicks = 0, noGravityTicks = 15, trailLingerTime = 10, penetration = 0;
     public double autoTraceAbility = 4, autoTraceRadius = 12, blastRadius = 1.5, bounceVelocityMulti = 1,
             frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileSize = 0.125, speedMultiPerTick = 1;
-    public boolean autoTrace = false, autoTraceSharpTurning = true, blastDamageShooter = false, bouncePenetrationBonded = false,
+    public boolean autoTrace = false, autoTraceSharpTurning = true, blastDamageShooter = false,
+            blastOnContactBlock = false, blastOnContactEnemy = false, bouncePenetrationBonded = false,
             canBeReflected = true, isGrenade = false, slowedByWater = true;
 
     public double speed;
     public boolean lastOnGround = false;
-    public HashMap<UUID, Integer> damageCD;
+    public HashSet<org.bukkit.entity.Entity> damageCD;
     public org.bukkit.entity.Projectile bukkitEntity;
     public Entity autoTraceTarget = null;
 
@@ -59,6 +60,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.autoTrace = section.getBoolean("autoTrace", this.autoTrace);
             this.autoTraceSharpTurning = section.getBoolean("autoTraceSharpTurning", this.autoTraceSharpTurning);
             this.blastDamageShooter = section.getBoolean("blastDamageShooter", this.blastDamageShooter);
+            this.blastOnContactBlock = section.getBoolean("blastOnContactBlock", this.blastOnContactBlock);
+            this.blastOnContactEnemy = section.getBoolean("blastOnContactEnemy", this.blastOnContactEnemy);
             this.bouncePenetrationBonded = section.getBoolean("bouncePenetrationBonded", this.bouncePenetrationBonded);
             this.canBeReflected = section.getBoolean("canBeReflected", this.canBeReflected);
             this.isGrenade = section.getBoolean("isGrenade", this.isGrenade);
@@ -66,7 +69,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         }
         this.setNoGravity(true);
         this.noclip = true;
-        this.damageCD = new HashMap<>((int) (penetration * 1.5));
+        this.damageCD = new HashSet<>((int) (penetration * 1.5));
     }
 
     // setup properties of the specific type, excluding its item displayed
@@ -76,9 +79,14 @@ public class TerrariaPotionProjectile extends EntityPotion {
         setCustomName(type);
         if (isGrenade) addScoreboardTag("isGrenade");
         else removeScoreboardTag("isGrenade");
+        if (blastOnContactBlock) addScoreboardTag("blastOnContactBlock");
+        else removeScoreboardTag("blastOnContactBlock");
+        if (blastOnContactEnemy) addScoreboardTag("blastOnContactEnemy");
+        else removeScoreboardTag("blastOnContactEnemy");
         if (blastDamageShooter) addScoreboardTag("blastDamageShooter");
         else removeScoreboardTag("blastDamageShooter");
         EntityHelper.setMetadata(bukkitEntity, "penetration", this.penetration);
+        EntityHelper.setMetadata(bukkitEntity, "collided", this.damageCD);
     }
     // setup properties of the specific type, including its item displayed
     public void setType(String type) {
@@ -113,19 +121,21 @@ public class TerrariaPotionProjectile extends EntityPotion {
         return distSqr * -1;
     }
     public boolean checkCanHit(Entity e) {
-        if (damageCD.containsKey(e.getUniqueID())) return false;
+        org.bukkit.entity.Entity bukkitE = e.getBukkitEntity();
+        if (damageCD.contains(bukkitE)) return false;
         // should still be able to hit entities that are neither monster nor forbidden to hit
-        return EntityHelper.checkCanDamage(bukkitEntity, e.getBukkitEntity(), false);
+        return EntityHelper.checkCanDamage(bukkitEntity, bukkitE, false);
     }
     public void hitEntity(Entity e, MovingObjectPosition position) {
         // handles post-hit mechanism: damage is handled by a listener
         if (--penetration < 0) {
             setPosition(position.pos.x, position.pos.y, position.pos.z);
+            EntityHelper.setMetadata(bukkitEntity, "destroyReason", "hitEntity");
             die();
         }
         EntityHelper.setMetadata(bukkitEntity, "penetration", this.penetration);
         if (bouncePenetrationBonded) bounce --;
-        damageCD.put(e.getUniqueID(), enemyInvincibilityFrame);
+        GenericHelper.damageCoolDown(damageCD, e.getBukkitEntity(), enemyInvincibilityFrame);
     }
 
     // override functions
@@ -133,6 +143,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public void extinguish() {
         switch (projectileType) {
             case "小火花":
+                EntityHelper.setMetadata(bukkitEntity, "destroyReason", "hitBlock");
                 this.die();
                 break;
             case "烈焰箭":
@@ -245,6 +256,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 case "bounce":
                 case "slide":
                 case "die":
+                    EntityHelper.setMetadata(bukkitEntity, "destroyReason", "hitBlock");
                     this.die();
                     return;
                 case "stick":
@@ -362,6 +374,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                             // tweak velocity
                             if (blockHitAction.equals("bounce")) {
                                 if (--bounce < 0) {
+                                    EntityHelper.setMetadata(bukkitEntity, "destroyReason", "hitBlock");
                                     die();
                                     return;
                                 }
@@ -503,15 +516,6 @@ public class TerrariaPotionProjectile extends EntityPotion {
 
         // handle projectile hit
         {
-            // update invincibility map
-            ArrayList<UUID> toRemove = new ArrayList<>();
-            for (UUID currCheck : damageCD.keySet()) {
-                int currInvincibility = damageCD.get(currCheck);
-                if (currInvincibility <= 1) toRemove.add(currCheck);
-                else damageCD.put(currCheck, currInvincibility - 1);
-            }
-            for (UUID currRemove : toRemove) damageCD.remove(currRemove);
-
             // get list of entities that could get hit
             Set<HitEntityInfo> hitCandidates = HitEntityInfo.getEntitiesHit(
                     this.world,

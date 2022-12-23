@@ -395,6 +395,19 @@
   autoSwing: true
   shots: 4
   offSet: 49
+湮灭千星:
+  type: BOW
+  autoSwing: true
+  shots: 7
+  ammoConversion:
+    木箭:
+    - 红自导能源箭
+    - 绿自导能源箭
+    - 蓝自导能源箭
+    - 粉自导能源箭
+    - 黄自导能源箭
+    - 紫自导能源箭
+    - 橙自导能源箭
 钴连弩:
   type: BOW
   autoSwing: true
@@ -714,28 +727,33 @@
 剃刀松:
   type: MAGIC_PROJECTILE
   projectileName: 松针
+  shots: 3
   autoSwing: true
   offSet: 16
 蝙蝠权杖:
   type: MAGIC_PROJECTILE
   projectileName: 蝙蝠
+  shots: 3
   gravity: false
   autoSwing: true
   offSet: 19
 暴雪法杖:
-  type: MAGIC_SPECIAL
+  type: MAGIC_PROJECTILE
   projectileName: 暴雪
+  shots: 10
   gravity: false
   autoSwing: true
 夜光:
   type: MAGIC_PROJECTILE
   projectileName: 彩虹水晶
+  shots: 4
   gravity: false
   autoSwing: true
   offSet: 8
 泡泡枪:
   type: MAGIC_PROJECTILE
   projectileName: 泡泡
+  shots: 2
   gravity: false
   autoSwing: true
   offSet: 6
@@ -755,12 +773,25 @@
   gravity: false
   autoSwing: true
 月之耀斑:
-  type: MAGIC_SPECIAL
+  type: MAGIC_PROJECTILE
   projectileName: 月之耀斑
+  shots: 3
   gravity: false
   autoSwing: true
   radius: 4.5
 终极棱镜:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+永夜射线:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+女武神权杖:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+泰拉射线:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+元素射线:
   type: MAGIC_SPECIAL
   autoSwing: true
 蜘蛛女王法杖:

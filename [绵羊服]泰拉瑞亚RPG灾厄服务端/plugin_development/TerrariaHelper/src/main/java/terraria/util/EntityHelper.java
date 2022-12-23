@@ -1,14 +1,12 @@
 package terraria.util;
 
 import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.*;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
@@ -142,54 +140,6 @@ public class EntityHelper {
         else
             owner.setMetadata(key, new FixedMetadataValue(TerrariaHelper.getInstance(), value));
     }
-    public static void tweakAttribute(HashMap<String, Double> attrMap, String key, String value, boolean addOrRemove) {
-        if (key.equals("damageType")) {
-            return;
-        }
-        try {
-            if (key.startsWith("buffInflict")) {
-                return;
-            }
-            if (key.equals("buffImmune")) {
-                return;
-            }
-            // tweak double value in attribute map
-            if (!attrMap.containsKey(key)) return;
-            double value_number = Double.parseDouble(value);
-            switch (key) {
-                case "useTime":
-                    value_number /= 2;
-                    break;
-                case "damageTakenMulti":
-                case "arrowConsumptionRate":
-                case "ammoConsumptionRate":
-                    value_number = 1 + value_number;
-                    break;
-            }
-            switch (key) {
-                case "damageTakenMulti":
-                    if (addOrRemove)
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / (2 - value_number));
-                    else
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * (2 - value_number));
-                    break;
-                case "ammoConsumptionRate":
-                case "arrowConsumptionRate":
-                    if (addOrRemove)
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * value_number);
-                    else
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / value_number);
-                    break;
-                default:
-                    if (addOrRemove)
-                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) + value_number);
-                    else
-                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) - value_number);
-            }
-        } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
-        }
-    }
     public static void tweakAttribute(Entity entity, String key, String value, boolean addOrRemove) {
         if (key.equals("damageType")) {
             if (addOrRemove) setMetadata(entity, "damageType", value);
@@ -267,11 +217,136 @@ public class EntityHelper {
             }
         }
     }
+    public static void tweakAttribute(HashMap<String, Double> attrMap, String key, String value, boolean addOrRemove) {
+        if (key.equals("damageType")) {
+            return;
+        }
+        try {
+            if (key.startsWith("buffInflict")) {
+                return;
+            }
+            if (key.equals("buffImmune")) {
+                return;
+            }
+            // tweak double value in attribute map
+            if (!attrMap.containsKey(key)) return;
+            double value_number = Double.parseDouble(value);
+            switch (key) {
+                case "useTime":
+                    value_number /= 2;
+                    break;
+                case "damageTakenMulti":
+                case "arrowConsumptionRate":
+                case "ammoConsumptionRate":
+                    value_number = 1 + value_number;
+                    break;
+            }
+            switch (key) {
+                case "damageTakenMulti":
+                    if (addOrRemove)
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / (2 - value_number));
+                    else
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * (2 - value_number));
+                    break;
+                case "ammoConsumptionRate":
+                case "arrowConsumptionRate":
+                    if (addOrRemove)
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * value_number);
+                    else
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / value_number);
+                    break;
+                default:
+                    if (addOrRemove)
+                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) + value_number);
+                    else
+                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) - value_number);
+            }
+        } catch (Exception e) {
+            Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
+        }
+    }
     public static void tweakAllAttributes(HashMap<String, Double> attrMap, ConfigurationSection attributes, boolean addOrRemove) {
         if (attributes != null) {
             Set<String> attributesTweaked = attributes.getKeys(false);
             for (String attr : attributesTweaked) {
                 tweakAttribute(attrMap, attr,
+                        attributes.getString(attr), addOrRemove);
+            }
+        }
+    }
+    // the two below is used in update player attribute
+    public static void tweakAttribute(Entity entity, HashMap<String, Double> attrMap, String key, String value, boolean addOrRemove) {
+        if (key.equals("damageType")) {
+            if (addOrRemove) setMetadata(entity, "damageType", value);
+            return;
+        }
+        try {
+            if (key.startsWith("buffInflict")) {
+                if (entity instanceof Player) {
+                    HashMap<String, ArrayList<String>> effectInflict = PlayerHelper.getPlayerEffectInflict(entity);
+                    if (!effectInflict.containsKey(key)) return;
+                    if (addOrRemove)
+                        effectInflict.get(key).add(value);
+                    else
+                        effectInflict.get(key).remove(value);
+                }
+                return;
+            }
+            if (key.equals("buffImmune")) {
+                Map<String, Integer> buffImmune = (Map<String, Integer>) getMetadata(entity, "buffImmune").value();
+                int layers = buffImmune.getOrDefault(value, 0);
+                if (addOrRemove)
+                    layers ++;
+                else
+                    layers --;
+                if (layers > 0)
+                    buffImmune.put(value, layers);
+                else
+                    buffImmune.remove(value);
+                return;
+            }
+            // tweak double value in attribute map
+            if (!attrMap.containsKey(key)) return;
+            double value_number = Double.parseDouble(value);
+            switch (key) {
+                case "useTime":
+                    value_number /= 2;
+                    break;
+                case "damageTakenMulti":
+                case "arrowConsumptionRate":
+                case "ammoConsumptionRate":
+                    value_number = 1 + value_number;
+                    break;
+            }
+            switch (key) {
+                case "damageTakenMulti":
+                    if (addOrRemove)
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / (2 - value_number));
+                    else
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * (2 - value_number));
+                    break;
+                case "ammoConsumptionRate":
+                case "arrowConsumptionRate":
+                    if (addOrRemove)
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * value_number);
+                    else
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / value_number);
+                    break;
+                default:
+                    if (addOrRemove)
+                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) + value_number);
+                    else
+                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) - value_number);
+            }
+        } catch (Exception e) {
+            Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
+        }
+    }
+    public static void tweakAllAttributes(Entity entity, HashMap<String, Double> attrMap, ConfigurationSection attributes, boolean addOrRemove) {
+        if (attributes != null) {
+            Set<String> attributesTweaked = attributes.getKeys(false);
+            for (String attr : attributesTweaked) {
+                tweakAttribute(entity, attrMap, attr,
                         attributes.getString(attr), addOrRemove);
             }
         }
@@ -567,7 +642,7 @@ public class EntityHelper {
         dm = dm.replaceAll("<victim>", v.getName());
         Bukkit.broadcastMessage("§4" + dm);
     }
-    public static boolean entityDamageEvent(Entity damager, Entity dPly, LivingEntity victim, LivingEntity damageTaker, double dmg, String damageCause) {
+    public static boolean entityDamageEvent(Entity damager, Entity dPly, LivingEntity victim, LivingEntity damageTaker, double dmg, String damageCause, String damageReason) {
         if (damager == null) return true;
         String nameV = GenericHelper.trimText(victim.getName());
         Entity minion = damager;
@@ -691,8 +766,8 @@ public class EntityHelper {
             victim.remove();
             return false;
         }
-        if (dPly instanceof Player && damageCause.equals("Magic")) {
-            PlayerHelper.playerSpectreArmor((Player) dPly, victim, dmg);
+        if (dPly instanceof Player && damageCause.equals("Magic") && !damageReason.equals("Spectre")) {
+            PlayerHelper.playerMagicArmorSet((Player) dPly, victim, dmg);
         }
         return true;
     }
@@ -1190,28 +1265,36 @@ public class EntityHelper {
                     }
                     knockback = damagerAttrMap.getOrDefault("knockback", 0d);
                     knockback *= damagerAttrMap.getOrDefault("knockbackMulti", 1d);
-                    dmg *= damagerAttrMap.getOrDefault("damageMulti", 1d);
+                    // no percentage dmg for spectre; critical strike only.
+                    boolean canGetPercentageBonus = !damageReason.equals("Spectre");
+                    if (canGetPercentageBonus)
+                        dmg *= damagerAttrMap.getOrDefault("damageMulti", 1d);
                     critRate = damagerAttrMap.getOrDefault("crit", 0d);
                     switch (damageType) {
                         case "TrueMelee":
-                            dmg *= damagerAttrMap.getOrDefault("damageTrueMeleeMulti", 1d);
+                            if (canGetPercentageBonus)
+                                dmg *= damagerAttrMap.getOrDefault("damageTrueMeleeMulti", 1d);
                             critRate += damagerAttrMap.getOrDefault("critTrueMelee", 0d);
                         case "Melee":
-                            dmg *= damagerAttrMap.getOrDefault("damageMeleeMulti", 1d);
+                            if (canGetPercentageBonus)
+                                dmg *= damagerAttrMap.getOrDefault("damageMeleeMulti", 1d);
                             critRate += damagerAttrMap.getOrDefault("critMelee", 0d);
                             knockback *= damagerAttrMap.getOrDefault("knockbackMeleeMulti", 1d);
                             break;
                         case "Arrow":
                         case "Bullet":
                         case "Rocket":
-                            dmg *= damagerAttrMap.getOrDefault("damage" + damageType + "Multi", 1d);
-                            dmg *= damagerAttrMap.getOrDefault("damageRangedMulti", 1d);
+                            if (canGetPercentageBonus) {
+                                dmg *= damagerAttrMap.getOrDefault("damage" + damageType + "Multi", 1d);
+                                dmg *= damagerAttrMap.getOrDefault("damageRangedMulti", 1d);
+                            }
                             critRate += damagerAttrMap.getOrDefault("critRanged", 0d);
                             break;
                         case "Magic":
                             critRate += damagerAttrMap.getOrDefault("critMagic", 0d);
                         case "Summon":
-                            dmg *= damagerAttrMap.getOrDefault("damage" + damageType + "Multi", 1d);
+                            if (canGetPercentageBonus)
+                                dmg *= damagerAttrMap.getOrDefault("damage" + damageType + "Multi", 1d);
                             break;
                         default:
                             Bukkit.getLogger().log(Level.SEVERE, "Unhandled damage type: " + damageType);
@@ -1276,7 +1359,7 @@ public class EntityHelper {
         }
 
         // call damage event
-        if (! entityDamageEvent(damager, damageSource, victimLivingEntity, damageTaker, dmg, damageType))
+        if (! entityDamageEvent(damager, damageSource, victimLivingEntity, damageTaker, dmg, damageType, damageReason))
             return;
         dmg = Math.round(dmg);
         if (dmg < 1.5) dmg = crit ? 2 : 1;
@@ -1344,17 +1427,17 @@ public class EntityHelper {
                     () -> finalVictim.removeScoreboardTag(damageInvincibilityFrameName), damageInvulnerabilityTicks);
         }
     }
-    public static void handleEntityExplode(Entity source, Entity damageException) {
-        handleEntityExplode(source, damageException, source.getLocation());
+    public static void handleEntityExplode(Entity source, Collection<Entity> damageExceptions) {
+        handleEntityExplode(source, damageExceptions, source.getLocation());
     }
-    public static void handleEntityExplode(Entity source, Entity damageException, Location loc) {
+    public static void handleEntityExplode(Entity source, Collection<Entity> damageExceptions, Location loc) {
         double blastRadius = TerrariaHelper.projectileConfig.getDouble(source.getName() + ".blastRadius", 1.5d);
-        handleEntityExplode(source, blastRadius, damageException, loc);
+        handleEntityExplode(source, blastRadius, damageExceptions, loc);
     }
-    public static void handleEntityExplode(Entity source, double radius, Entity damageException, Location loc) {
-        handleEntityExplode(source, radius, damageException, loc, 1);
+    public static void handleEntityExplode(Entity source, double radius, Collection<Entity> damageExceptions, Location loc) {
+        handleEntityExplode(source, radius, damageExceptions, loc, 1);
     }
-    public static void handleEntityExplode(Entity source, double radius, Entity damageException, Location loc, int ticksDuration) {
+    public static void handleEntityExplode(Entity source, double radius, Collection<Entity> damageExceptions, Location loc, int ticksDuration) {
         boolean damageShooter = false;
         boolean destroyBlock = false;
         ConfigurationSection sourceSection = TerrariaHelper.projectileConfig.getConfigurationSection(GenericHelper.trimText(source.getName()));
@@ -1388,7 +1471,7 @@ public class EntityHelper {
                     handleDamage(source, victim, dmg, "Explosion");
                 continue;
             }
-            if (victim == damageException) continue;
+            if (damageExceptions.contains(victim)) continue;
             if (checkCanDamage(source, victim, false))
                 handleDamage(source, victim, dmg, "Explosion");
         }
@@ -1424,7 +1507,7 @@ public class EntityHelper {
         int delay = 5;
         if (ticksDuration > delay) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> handleEntityExplode(source, radius, damageException, loc, ticksDuration - 4),
+                    () -> handleEntityExplode(source, radius, damageExceptions, loc, ticksDuration - 4),
                     delay);
         }
     }

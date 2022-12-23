@@ -11,6 +11,7 @@ import terraria.TerrariaHelper;
 import terraria.entity.HitEntityInfo;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 
 public class GenericHelper {
     static long nextHologramIndex = 0;
@@ -66,25 +67,59 @@ public class GenericHelper {
     }
     public static class StrikeLineOptions {
         boolean bounceWhenHitBlock, thruWall;
+        int damageCD, lingerTime, lingerDelay, maxTargetHit;
         double damage, decayCoef, whipBonusCrit, whipBonusDamage;
         ParticleLineOptions particleInfo;
+        BiConsumer<Integer, Entity> damagedFunction;
+        // internal variables
+        int amountEntitiesHit;
         public StrikeLineOptions() {
             bounceWhenHitBlock = false;
             thruWall = true;
+
+            damageCD = 10;
+            lingerTime = 1;
+            lingerDelay = 6;
+            maxTargetHit = 999999;
+
             damage = 0d;
             decayCoef = 1d;
             whipBonusCrit = 0d;
             whipBonusDamage = 0d;
+
             particleInfo = null;
+
+            damagedFunction = null;
+            // internal values
+            amountEntitiesHit = 0;
         }
         public StrikeLineOptions setBounceWhenHitBlock(boolean shouldBounce) {
             this.bounceWhenHitBlock = shouldBounce;
+            if (shouldBounce) this.thruWall = false;
             return this;
         }
         public StrikeLineOptions setThruWall(boolean thruWall) {
             this.thruWall = thruWall;
             return this;
         }
+
+        public StrikeLineOptions setDamageCD(int damageCD) {
+            this.damageCD = damageCD;
+            return this;
+        }
+        public StrikeLineOptions setLingerTime(int lingerTime) {
+            this.lingerTime = lingerTime;
+            return this;
+        }
+        public StrikeLineOptions setLingerDelay(int lingerDelay) {
+            this.lingerDelay = lingerDelay;
+            return this;
+        }
+        public StrikeLineOptions setMaxTargetHit(int maxTargetHit) {
+            this.maxTargetHit = maxTargetHit;
+            return this;
+        }
+
         public StrikeLineOptions setDamage(double damage) {
             this.damage = damage;
             return this;
@@ -101,8 +136,15 @@ public class GenericHelper {
             this.whipBonusDamage = whipBonusDamage;
             return this;
         }
+
+
         public StrikeLineOptions setParticleInfo(ParticleLineOptions particleInfo) {
             this.particleInfo = particleInfo;
+            return this;
+        }
+
+        public StrikeLineOptions setDamagedFunction(BiConsumer<Integer, Entity> damagedFunction) {
+            this.damagedFunction = damagedFunction;
             return this;
         }
     }
@@ -123,7 +165,7 @@ public class GenericHelper {
             return textToTrim;
         }
     }
-    public static void damageCoolDown(Collection<Entity> list, Entity victim, int cd) {
+    public static <T> void damageCoolDown(Collection<T> list, T victim, int cd) {
         list.add(victim);
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> list.remove(victim), cd);
     }
@@ -182,6 +224,7 @@ public class GenericHelper {
         float alpha = options.alpha;
         String particleCharacter = options.particleChar;
         List<String> particleColor = options.particleColor;
+        if (ticksLinger <= 0) return;
 
         Vector dVec = vector.clone().normalize();
         int loopTime = (int) Math.round(length / stepsize);
@@ -221,6 +264,66 @@ public class GenericHelper {
             currLoc.add(dVec);
         }
     }
+    // helper function for handle strike line. This only handles damage.
+    private static Location handleStrikeLineDamage(World wld, Location startLoc, Location terminalLoc, double width,
+                                               com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication,
+                                               Entity damager, double damage,
+                                               HashMap<String, Double> attrMap, String itemType,
+                                               Collection<Entity> exceptions, int lingerTime,
+                                               StrikeLineOptions advanced) {
+        if (lingerTime <= 0) return null;
+        // setup variables
+        boolean useAttrMapDamage = advanced.damage <= 0d;
+        int     damageCD = advanced.damageCD,
+                lingerDelay = advanced.lingerDelay,
+                penetration = advanced.maxTargetHit;
+        double  decayCoef = advanced.decayCoef,
+                whipBonusCrit = advanced.whipBonusCrit,
+                whipBonusDamage = advanced.whipBonusDamage;
+        BiConsumer<Integer, Entity> damagedFunction = advanced.damagedFunction;
+        // get hit entities
+        Set<HitEntityInfo> entityHitCandidate = HitEntityInfo.getEntitiesHit(
+                wld, startLoc.toVector(), terminalLoc.toVector(), width, predication);
+        int amountDamaged = advanced.amountEntitiesHit;
+        for (HitEntityInfo info : entityHitCandidate) {
+            Entity victim = info.getHitEntity().getBukkitEntity();
+            EntityHelper.handleDamage(damager, victim, damage, "DirectDamage");
+            // damage decay
+            damage *= decayCoef;
+            if (useAttrMapDamage)
+                attrMap.put("damage", damage);
+            // whip marking
+            switch (itemType) {
+                case "鞭炮":
+                case "暗黑收割":
+                    victim.addScoreboardTag(itemType);
+                    break;
+            }
+            // whip dmg/crit bonus
+            if (whipBonusDamage > 0 && whipBonusCrit > 0) {
+                EntityHelper.setMetadata(victim, "minionWhipBonusDamage",   whipBonusDamage);
+                EntityHelper.setMetadata(victim, "minionWhipBonusCrit",     whipBonusCrit);
+            }
+            damageCoolDown(exceptions, victim, damageCD);
+            amountDamaged ++;
+            // use damaged function
+            if (damagedFunction != null)
+                damagedFunction.accept(amountDamaged, victim);
+            // handle maxTargetHit
+            if (amountDamaged >= penetration)
+                return MathHelper.toBukkitVector(info.getHitLocation().pos).toLocation(wld);
+        }
+        advanced.amountEntitiesHit = amountDamaged;
+        // schedule lingering
+        if (lingerTime > 1) {
+            double finalDamage = damage;
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                    () -> handleStrikeLineDamage(wld, startLoc, terminalLoc, width, predication, damager, finalDamage,
+                            attrMap, itemType, exceptions, lingerTime - 1, advanced),
+                    lingerDelay);
+        }
+        return null;
+    }
     // warning: this function modifies attrMap and exceptions!
     public static void handleStrikeLine(Entity damager, Location startLoc, double yaw, double pitch, double length, double width, String itemType, String color, Collection<Entity> exceptions, HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
         if (length < 0) return;
@@ -228,18 +331,17 @@ public class GenericHelper {
         boolean bounceWhenHitBlock = advanced.bounceWhenHitBlock,
                 thruWall = advanced.thruWall,
                 useAttrMapDamage = advanced.damage <= 0d;
-        double  damage = useAttrMapDamage ? attrMap.getOrDefault("damage", 10d) : advanced.damage,
-                decayCoef = advanced.decayCoef,
-                whipBonusCrit = advanced.whipBonusCrit,
-                whipBonusDamage = advanced.whipBonusDamage;
+        int     lingerTime = advanced.lingerTime,
+                lingerDelay = advanced.lingerDelay;
+        double  damage = useAttrMapDamage ? attrMap.getOrDefault("damage", 10d) : advanced.damage;
         ParticleLineOptions particleInfo = advanced.particleInfo;
-        if (particleInfo == null)
+        // default particle info if it does not exist
+        if (particleInfo == null) {
             particleInfo = new ParticleLineOptions()
-                .setParticleColor(color)
-                .setAlpha(0.5f)
-                .setLength(length)
-                .setWidth(width)
-                .setTicksLinger(5);
+                    .setParticleColor(color)
+                    .setAlpha(0.5f)
+                    .setTicksLinger(lingerTime > 1 ? lingerTime * lingerDelay : 5);
+        }
         // find terminal location ( hit block etc. )
         World wld = startLoc.getWorld();
         Vector direction = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
@@ -254,7 +356,6 @@ public class GenericHelper {
                 terminalLoc = MathHelper.toBukkitVector(hitLoc.pos).toLocation(wld);
                 direction = terminalLoc.toVector().subtract(startLoc.toVector());
                 double distToWall = direction.length();
-                particleInfo.setLength(distToWall);
                 // bounce when hit block
                 if (bounceWhenHitBlock) {
                     // make sure that the new strike line does not get stuck in wall
@@ -288,8 +389,6 @@ public class GenericHelper {
                 }
             }
         }
-        // display particle
-        handleParticleLine(direction, startLoc, particleInfo);
         // init predication for victim selection
         com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication;
         if (itemType.contains("虫网")) {
@@ -314,29 +413,16 @@ public class GenericHelper {
             };
         }
         // damage hit entities
-        Set<HitEntityInfo> entityHitCandidate = HitEntityInfo.getEntitiesHit(
-                wld, startLoc.toVector(), terminalLoc.toVector(), width, predication);
-        for (HitEntityInfo info : entityHitCandidate) {
-            Entity victim = info.getHitEntity().getBukkitEntity();
-            EntityHelper.handleDamage(damager, victim, damage, "DirectDamage");
-            // damage decay
-            damage *= decayCoef;
-            if (useAttrMapDamage)
-                attrMap.put("damage", damage);
-            // whip marking
-            switch (itemType) {
-                case "鞭炮":
-                case "暗黑收割":
-                    victim.addScoreboardTag(itemType);
-                    break;
-            }
-            // whip dmg/crit bonus
-            if (whipBonusDamage > 0 && whipBonusCrit > 0) {
-                EntityHelper.setMetadata(victim, "minionWhipBonusDamage",   whipBonusDamage);
-                EntityHelper.setMetadata(victim, "minionWhipBonusCrit",     whipBonusCrit);
-            }
-            damageCoolDown(exceptions, victim, 15);
+        Location newTerminalLoc = handleStrikeLineDamage(wld, startLoc, terminalLoc, width, predication, damager, damage,
+                attrMap, itemType, exceptions, lingerTime, advanced);
+        if (newTerminalLoc != null) {
+            direction = newTerminalLoc.subtract(startLoc).toVector();
         }
+        // display particle
+        particleInfo
+                .setLength(direction.length())
+                .setWidth(width);
+        handleParticleLine(direction, startLoc, particleInfo);
     }
     public static void displayHoloText(Location displayLoc, String text, int ticksDisplay, float width, float height, float alpha) {
         String holoInd = "" + (nextHologramIndex++);

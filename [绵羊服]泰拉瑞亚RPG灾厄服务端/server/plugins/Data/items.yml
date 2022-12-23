@@ -357,7 +357,7 @@
   - §r[饰品]
   attributes:
     maxMana: 20
-    manaRegen: 25
+    manaRegen: 15
   worth: 1000000
   rarity: 1
 魔法手铐:
@@ -2109,6 +2109,20 @@
     ammoConsumptionRate: -0.66
   worth: 10000000
   rarity: 10
+湮灭千星:
+  item: BOW
+  lore:
+  - §r从天空发射七发箭矢风暴
+  - §r将木箭转化为自导能源箭
+  attributes:
+    damage: 116
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12
+    knockback: 2.25
+    useTime: 22
+  worth: 22000000
+  rarity: 11
 榴弹发射器:
   item: BLAZE_ROD
   attributes:
@@ -2786,7 +2800,7 @@
     damage: 140
     damageType: Magic
     crit: 4
-    projectileSpeed: 2
+    projectileSpeed: 7
     knockback: 5
     useTime: 30
     manaUse: 30
@@ -2821,6 +2835,63 @@
     manaUse: 12
   worth: 10000000
   rarity: 10
+永夜射线:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射暗影射线
+  - §r射线命中的第一个敌怪会受到额外的攻击
+  attributes:
+    damage: 48
+    damageType: Magic
+    crit: 4
+    knockback: 3.25
+    useTime: 20
+    manaUse: 10
+  worth: 2400000
+  rarity: 4
+女武神权杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r释放拥有神圣之力的毁灭射线
+  attributes:
+    damage: 146
+    damageType: Magic
+    crit: 4
+    knockback: 8.5
+    useTime: 47
+    manaUse: 26
+  worth: 7200000
+  rarity: 5
+泰拉射线:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射能量射线，命中后分解为自然能量
+  attributes:
+    damage: 100
+    damageType: Magic
+    crit: 4
+    knockback: 4
+    useTime: 24
+    manaUse: 10
+  worth: 16000000
+  rarity: 8
+元素射线:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射四道天体射线
+  - §#ff6432耀斑射线§r命中敌怪后爆炸
+  - §#e196e1星云射线§r相较其余射线更粗
+  - §#7dffe1星旋射线§r命中后造成带电减益
+  - §#19c8e1星尘射线§r命中敌怪后产生追踪的星尘流星
+  attributes:
+    damage: 180
+    damageType: Magic
+    crit: 4
+    knockback: 7.5
+    useTime: 16
+    manaUse: 18
+  worth: 22000000
+  rarity: 11
 蜘蛛女王法杖:
   item: DIAMOND_SWORD
   lore:
