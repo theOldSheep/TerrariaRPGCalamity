@@ -630,6 +630,7 @@ public class ItemUseHelper {
                         pitch = MathHelper.getVectorPitch(fireDir);
                 Location startLoc = ply.getEyeLocation().add(fireDir);
                 double length = 8, width = 0.5;
+                String particleColor = "255|255|0";
                 // some weapons do not need smart targeting, they shoot exactly at the cursor
                 boolean useSmartTargeting = itemType.equals("元素射线");
                 if (!useSmartTargeting) {
@@ -641,30 +642,31 @@ public class ItemUseHelper {
                 // handle strike line properties
                 switch (itemType) {
                     case "爆裂藤蔓": {
-                        length = 16;
-                        strikeInfo.setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                        .setParticleColor("103|78|50")
-                                        .setTicksLinger(33))
+                        length = 24;
+                        particleColor = "103|78|50";
+                        strikeInfo
                                 .setDamageCD(4)
                                 .setLingerTime(6)
                                 .setLingerDelay(5)
                                 .setThruWall(true);
+                        GenericHelper.handleStrikeLightning(ply, startLoc, yaw, pitch, length, 4,  width, 1, 3, particleColor,
+                                damageExceptions, attrMap, strikeInfo);
+                        // prevent redundant strike
+                        strikeInfo = null;
                         break;
                     }
                     case "高温射线枪": {
                         length = 48;
+                        particleColor = "255|225|0";
                         strikeInfo
-                                .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                        .setParticleColor("255|225|0"))
                                 .setThruWall(false)
                                 .setMaxTargetHit(1);
                         break;
                     }
                     case "暗影束法杖": {
                         length = 64;
+                        particleColor = "255|125|255";
                         strikeInfo
-                                .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                        .setParticleColor("255|125|255"))
                                 .setBounceWhenHitBlock(true);
                         break;
                     }
@@ -672,24 +674,21 @@ public class ItemUseHelper {
                         double convergeProgress = Math.min((double) swingAmount / 25, 1);
                         length = 40 + 24 * convergeProgress;
                         // particle color
-                        String colorParticle;
                         if (convergeProgress < 1) {
                             String[] particleColors = new String[]{"255|0|0", "255|165|0", "255|255|0", "0|128|0",
                                     "0|0|255", "75|0|130", "238|130|238"};
                             fireAmount = 7;
                             // so that enemies do not get damaged for an unreasonable amount of times
                             damageCD = damageExceptions;
-                            colorParticle = particleColors[fireIndex % particleColors.length];
+                            particleColor = particleColors[fireIndex % particleColors.length];
                         } else {
-                            colorParticle = "255|255|255";
+                            particleColor = "255|255|255";
                             width = 1;
                             // converged ray deals 3x damage
                             attrMap.put("damage", attrMap.getOrDefault("damage", 125d) * 3);
                         }
                         // strike line additional information
                         strikeInfo
-                                .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                        .setParticleColor(colorParticle))
                                 .setThruWall(false);
                         // tweak shooting direction
                         if (convergeProgress < 1) {
@@ -701,9 +700,8 @@ public class ItemUseHelper {
                     }
                     case "永夜射线": {
                         length = 24;
+                        particleColor = "0|0|175";
                         strikeInfo
-                                .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                        .setParticleColor("0|0|175"))
                                 .setThruWall(false)
                                 .setDamagedFunction((hitIndex, hitEntity) -> {
                                     if (hitEntity instanceof LivingEntity && hitIndex == 1) {
@@ -720,10 +718,8 @@ public class ItemUseHelper {
                     }
                     case "女武神权杖": {
                         length = 32;
+                        particleColor = "255|125|255";
                         strikeInfo
-                                .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                        .setParticleColor("255|125|255")
-                                        .setTicksLinger(22))
                                 .setThruWall(false)
                                 .setDamageCD(3)
                                 .setLingerTime(5)
@@ -732,10 +728,8 @@ public class ItemUseHelper {
                     }
                     case "泰拉射线": {
                         length = 48;
+                        particleColor = "100|255|150";
                         strikeInfo
-                                .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                        .setParticleColor("100|255|150")
-                                        .setTicksLinger(22))
                                 .setDamageCD(3)
                                 .setLingerTime(5)
                                 .setLingerDelay(4)
@@ -758,15 +752,13 @@ public class ItemUseHelper {
                         startLoc.add(fireDir.clone().multiply(2));
                         startLoc.add(Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2);
                         fireDir = targetedLocation.clone().subtract(startLoc).toVector();
-                        yaw = MathHelper.getVectorYaw(fireDir) + Math.random() * 5 - 2.5;
-                        pitch = MathHelper.getVectorPitch(fireDir) + Math.random() * 5 - 2.5;
+                        yaw = MathHelper.getVectorYaw(fireDir) + Math.random() * 20 - 10;
+                        pitch = MathHelper.getVectorPitch(fireDir) + Math.random() * 20 - 10;
                         switch (fireIndex) {
                             // solar
                             case 1: {
+                                particleColor = "255|100|50";
                                 strikeInfo
-                                        .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                                .setParticleColor("255|100|50")
-                                                .setTicksLinger(18))
                                         .setDamageCD(3)
                                         .setLingerTime(4)
                                         .setLingerDelay(4)
@@ -780,10 +772,8 @@ public class ItemUseHelper {
                             }
                             // stardust
                             case 2: {
+                                particleColor = "25|200|225";
                                 strikeInfo
-                                        .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                                .setParticleColor("25|200|225")
-                                                .setTicksLinger(18))
                                         .setDamageCD(3)
                                         .setLingerTime(4)
                                         .setLingerDelay(4)
@@ -802,26 +792,30 @@ public class ItemUseHelper {
                             }
                             // vortex
                             case 3: {
+                                // this thunder is accurate.
+                                yaw = MathHelper.getVectorYaw(fireDir);
+                                pitch = MathHelper.getVectorPitch(fireDir);
+                                particleColor = "125|255|225";
                                 strikeInfo
-                                        .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                                .setParticleColor("125|255|225")
-                                                .setTicksLinger(18))
                                         .setMaxTargetHit(1)
+                                        .setLingerDelay(15)
                                         .setDamagedFunction((hitIndex, hitEntity) -> {
                                             if (hitEntity instanceof LivingEntity) {
                                                 EntityHelper.applyEffect(hitEntity, "带电", 100);
                                             }
                                         });
+                                GenericHelper.handleStrikeLightning(ply, startLoc, yaw, pitch, length, 8,  width, 2, 2, particleColor,
+                                        damageExceptions, attrMap, strikeInfo);
+                                // prevent redundant strike
+                                strikeInfo = null;
                                 break;
                             }
                             // nebula
                             case 4: {
                                 fireDelay = 5;
                                 width = 1;
+                                particleColor = "225|150|225";
                                 strikeInfo
-                                        .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                                .setParticleColor("225|150|225")
-                                                .setTicksLinger(18))
                                         .setDamageCD(3)
                                         .setLingerTime(4)
                                         .setLingerDelay(4);
@@ -834,8 +828,9 @@ public class ItemUseHelper {
                         break;
                     }
                 }
-                GenericHelper.handleStrikeLine(ply, startLoc, yaw, pitch, length, width, itemType, "255|255|0",
-                        damageExceptions, attrMap, strikeInfo);
+                if (strikeInfo != null)
+                    GenericHelper.handleStrikeLine(ply, startLoc, yaw, pitch, length, width, itemType, particleColor,
+                            damageExceptions, attrMap, strikeInfo);
                 break;
             }
         }

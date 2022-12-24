@@ -284,7 +284,6 @@ public class GenericHelper {
         // get hit entities
         Set<HitEntityInfo> entityHitCandidate = HitEntityInfo.getEntitiesHit(
                 wld, startLoc.toVector(), terminalLoc.toVector(), width, predication);
-        int amountDamaged = advanced.amountEntitiesHit;
         for (HitEntityInfo info : entityHitCandidate) {
             Entity victim = info.getHitEntity().getBukkitEntity();
             EntityHelper.handleDamage(damager, victim, damage, "DirectDamage");
@@ -305,15 +304,14 @@ public class GenericHelper {
                 EntityHelper.setMetadata(victim, "minionWhipBonusCrit",     whipBonusCrit);
             }
             damageCoolDown(exceptions, victim, damageCD);
-            amountDamaged ++;
+            advanced.amountEntitiesHit ++;
             // use damaged function
             if (damagedFunction != null)
-                damagedFunction.accept(amountDamaged, victim);
+                damagedFunction.accept(advanced.amountEntitiesHit, victim);
             // handle maxTargetHit
-            if (amountDamaged >= penetration)
+            if (advanced.amountEntitiesHit >= penetration)
                 return MathHelper.toBukkitVector(info.getHitLocation().pos).toLocation(wld);
         }
-        advanced.amountEntitiesHit = amountDamaged;
         // schedule lingering
         if (lingerTime > 1) {
             double finalDamage = damage;
@@ -340,7 +338,7 @@ public class GenericHelper {
             particleInfo = new ParticleLineOptions()
                     .setParticleColor(color)
                     .setAlpha(0.5f)
-                    .setTicksLinger(lingerTime > 1 ? lingerTime * lingerDelay : 5);
+                    .setTicksLinger(lingerTime > 1 ? (lingerTime - 1) * lingerDelay : lingerDelay);
         }
         // find terminal location ( hit block etc. )
         World wld = startLoc.getWorld();
@@ -423,6 +421,38 @@ public class GenericHelper {
                 .setLength(direction.length())
                 .setWidth(width);
         handleParticleLine(direction, startLoc, particleInfo);
+    }
+    // helper function for each step of lightning
+    private static void handleStrikeLightningStep(Entity damager, Location[] locations, int currIndex, double width, int delay, String color, Collection<Entity> exceptions, HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
+        // find the current direction
+        Location startLoc = locations[currIndex];
+        Vector currDir = locations[currIndex + 1].clone().subtract(startLoc).toVector();
+        handleStrikeLine(damager, startLoc, MathHelper.getVectorYaw(currDir), MathHelper.getVectorPitch(currDir), currDir.length(),
+        width, "LIGHTNING", color, exceptions, (HashMap<String, Double>) attrMap.clone(), advanced);
+        // if the lightning reached penetration limit
+        if (advanced.amountEntitiesHit >= advanced.maxTargetHit)
+            return;
+        if (currIndex + 2 < locations.length) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                    () -> handleStrikeLightningStep(damager, locations, currIndex + 1, width, delay, color, exceptions, attrMap, advanced),
+                    delay);
+        }
+    }
+    public static void handleStrikeLightning(Entity damager, Location startLoc, double yaw, double pitch, double length, double stepSize, double width, double offset, int delay, String color, Collection<Entity> exceptions, HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
+        // initialize the intermediate points
+        int size = (int) Math.max(1, Math.round(length / stepSize)) + 1;
+        Location[] locations = new Location[size];
+        Vector dVec = MathHelper.vectorFromYawPitch_quick(yaw, pitch).multiply(length / (size - 1));
+        for (int i = 0; i < size; i ++) {
+            Location currLoc = startLoc.clone().add(dVec.clone().multiply(i));
+            // start location and terminal location must be kept intact.
+            if (i != 0 && i + 1 < size) {
+                currLoc.add(MathHelper.randomVector().multiply(offset));
+            }
+            locations[i] = currLoc;
+        }
+        // handle the steps
+        handleStrikeLightningStep(damager, locations, 0, width, delay, color, exceptions, attrMap, advanced);
     }
     public static void displayHoloText(Location displayLoc, String text, int ticksDisplay, float width, float height, float alpha) {
         String holoInd = "" + (nextHologramIndex++);
