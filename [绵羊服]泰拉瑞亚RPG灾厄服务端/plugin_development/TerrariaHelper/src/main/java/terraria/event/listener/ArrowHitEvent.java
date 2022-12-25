@@ -107,7 +107,7 @@ public class ArrowHitEvent implements Listener {
                     double clusterSpeed = clusterSection.getDouble("velocity", 1d);
                     // set damage
                     HashMap<String, Double> attrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(projectile).clone();
-                    attrMap.put("damage", attrMap.getOrDefault("damage", 20d * clusterDamageMulti));
+                    attrMap.put("damage", attrMap.getOrDefault("damage", 20d) * clusterDamageMulti);
                     // tweak the spawn location a bit so that cluster projectiles would not all collide on block
                     Location spawnLoc = projectileDestroyLoc.clone();
                     // spawn clusters

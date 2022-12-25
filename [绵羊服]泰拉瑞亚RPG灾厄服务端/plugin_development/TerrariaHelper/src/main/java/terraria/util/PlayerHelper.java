@@ -1316,9 +1316,7 @@ public class PlayerHelper {
                         // 80 health/second
                         coolDownTicks = (int) Math.ceil(projectilePower / 4);
                     } else {
-                        Bukkit.broadcastMessage("original damage dealt: " + dmg);
                         double projectilePower = (int) Math.ceil(dmg * 0.5);
-                        Bukkit.broadcastMessage("projectile power: " + projectilePower);
                         createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), Math.ceil(projectilePower), false, "255|255|255");
                         // 800 dmg/second
                         coolDownTicks = (int) Math.ceil(projectilePower / 40);

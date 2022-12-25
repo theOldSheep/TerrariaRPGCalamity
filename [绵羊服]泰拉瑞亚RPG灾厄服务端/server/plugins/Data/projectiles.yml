@@ -3,6 +3,8 @@
     arrowOrPotion: false
     # 是否自动追踪，不写则视为false
     autoTrace: false
+    # 自动追踪方式。1: 自动追踪效率与距离的平方成反比；2：自动追踪效率恒定。不写则视为1
+    autoTraceMethod: 1
     # 自动追踪的寻敌半径，单位（格）。不写则视为12
     autoTraceRadius: 12
     # 自动追踪时是否可以进行尖锐转向。不写则视为true
@@ -86,13 +88,17 @@
     autoTrace: true
     blastRadius: 2
 南瓜榴弹:
-    blastRadius: 2
+    isGrenade: true
+    blastRadius: 1
 狱炎箭:
-    blastRadius: 3.5
+    isGrenade: true
+    blastRadius: 2
 爆炸弹:
-    blastRadius: 1.5
+    isGrenade: true
+    blastRadius: 0.75
     blastDamageShooter: true
 玛瑙能量:
+    isGrenade: true
     blastRadius: 4
 狱火爆破弹:
     blastRadius: 4.5
@@ -100,7 +106,9 @@
         - "破晓|400|1"
     trailColor: 255|125|125
 星璇导弹:
+    gravity: 0
     autoTrace: true
+    isGrenade: true
     blastRadius: 5
 火球:
     blastRadius: 3
@@ -228,12 +236,17 @@
         damageMulti: 0.75
 疯狂飞斧:
     autoTrace: true
+星云烈焰:
+    gravity: 0
+    autoTrace: true
+星云烈焰炮弹:
+    gravity: 0
+    autoTrace: true
 星云奥秘:
     gravity: 0
     blockHitAction: bounce
     bounce: 3
-    penetration: 2
-    projectileSize: 1.5
+    penetration: 9
     autoTrace: true
     isGrenade: true
     clusterBomb:
@@ -241,6 +254,14 @@
         name: 星云奥秘爆炸弹碎块
         velocity: 0.5
         damageMulti: 0.65
+星云奥秘爆炸弹碎块:
+    noGravityTicks: 0
+    liveTime: 15
+月之耀斑:
+    blockHitAction: thru
+    gravity: 0
+    isGrenade: true
+    blastRadius: 4.5
 暗影射线分支:
     autoTrace: true
     autoTraceAbility: 2
@@ -288,10 +309,6 @@
 绿藻弹:
     autoTrace: true
 彩虹水晶:
-    autoTrace: true
-星云烈焰:
-    autoTrace: true
-星云烈焰炮弹:
     autoTrace: true
 幻象箭:
     autoTrace: true

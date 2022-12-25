@@ -18,7 +18,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     private static final double distFromBlock = 1e-5, distCheckOnGround = 1e-1;
     // projectile info
     public String projectileType, blockHitAction = "die", trailColor = null;
-    public int bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noAutoTraceTicks = 0, noGravityTicks = 15, trailLingerTime = 10, penetration = 0;
+    public int autoTraceMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noAutoTraceTicks = 0, noGravityTicks = 15, trailLingerTime = 10, penetration = 0;
     public double autoTraceAbility = 4, autoTraceRadius = 12, blastRadius = 1.5, bounceVelocityMulti = 1,
             frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileSize = 0.125, speedMultiPerTick = 1;
     public boolean autoTrace = false, autoTraceSharpTurning = true, blastDamageShooter = false,
@@ -35,6 +35,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     private void setupProjectileProperties() {
         ConfigurationSection section = TerrariaHelper.projectileConfig.getConfigurationSection(projectileType);
         if (section != null) {
+            this.autoTraceMethod = section.getInt("autoTraceMethod", this.autoTraceMethod);
             this.bounce = section.getInt("bounce", this.bounce);
             this.enemyInvincibilityFrame = section.getInt("enemyInvincibilityFrame", this.enemyInvincibilityFrame);
             this.liveTime = section.getInt("liveTime", this.liveTime);
@@ -313,14 +314,12 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 else
                     acceleration = autoTraceTarget.getBukkitEntity().getLocation().subtract(this.locX, this.locY, this.locZ).toVector();
 
-                double accMagnitude = acceleration.length(), velMagnitude = velocity.length();
-                if (velMagnitude > 1e-5) {
-//                    velocity.multiply(Math.sqrt(Math.min(accMagnitude, autoTraceAbility)) / velMagnitude);
-                    velocity.multiply(accMagnitude / autoTraceAbility / velMagnitude);
-                }
-                if (accMagnitude > 1e-5) {
-//                    acceleration.multiply(autoTraceAbility / accMagnitude);
-                    acceleration.multiply(autoTraceAbility / accMagnitude);
+                if (acceleration.lengthSquared() > 1e-5) {
+                    if (autoTraceMethod == 2) {
+                        acceleration.multiply(autoTraceAbility / acceleration.length());
+                    } else {
+                        acceleration.multiply(autoTraceAbility * velocity.length() / acceleration.lengthSquared());
+                    }
                 }
 
                 velocity.add(acceleration);

@@ -406,19 +406,44 @@ public class ItemUseHelper {
                 }
             }
         }
-        // onyx blaster (including its upgrades) extra exploding shot
+        // extra projectiles from weapons such as onyx blaster and its upgrades
         switch (itemType) {
+            // single extra projectile
+            case "星璇机枪":
             case "玛瑙爆破枪":
             case "玛瑙链炮":
             case "奥妮克希亚": {
                 Location fireLoc = ply.getEyeLocation();
                 Vector fireVelocity = facingDir.clone();
+                HashMap<String, Double> attrMapExtraProjectile = attrMap;
                 double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
-                projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
+                boolean shouldFire = true;
+                String extraProjectileType = "";
+                switch (itemType) {
+                    case "玛瑙爆破枪":
+                    case "玛瑙链炮":
+                    case "奥妮克希亚": {
+                        extraProjectileType = "玛瑙能量";
+                        break;
+                    }
+                    case "星璇机枪": {
+                        if (swingAmount % 5 == 4) {
+                            extraProjectileType = "星璇导弹";
+                            attrMapExtraProjectile = (HashMap<String, Double>) attrMap.clone();
+                            attrMapExtraProjectile.put("damage", 140d);
+                        } else {
+                            shouldFire = false;
+                        }
+                        break;
+                    }
+                }
                 // setup projectile velocity
-                fireVelocity.multiply(projectileSpeed);
-                EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMap,
-                        EntityHelper.getDamageType(ply), "玛瑙能量");
+                if (shouldFire) {
+                    fireVelocity.multiply(projectileSpeed);
+                    EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMapExtraProjectile,
+                            EntityHelper.getDamageType(ply), extraProjectileType);
+                }
+                break;
             }
         }
         // if this is a delayed shot, play item swing sound
@@ -561,6 +586,7 @@ public class ItemUseHelper {
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
         for (int i = 0; i < fireAmount; i ++) {
+            String projectileName = weaponSection.getString("projectileName", "小火花");
             Location fireLoc = ply.getEyeLocation();
             Vector fireVelocity = facingDir.clone();
             double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
@@ -584,15 +610,22 @@ public class ItemUseHelper {
                             .setAimMode(true)
                             .setTicksOffset(offset.length() / projectileSpeed);
                     if (itemType.equals("暴雪法杖"))
-                        options.setRandomOffsetRadius(5);
+                        options.setRandomOffsetRadius(3);
                     Location destination = getPlayerTargetLoc(ply, 64, 4, options, true);
                     fireLoc = destination.add(offset);
+                    break;
+                }
+                case "星云烈焰": {
+                    if (Math.random() < 0.2) {
+                        projectileName = "星云烈焰炮弹";
+                        fireVelocity.multiply(1.25);
+                        attrMap.put("damageMulti", attrMap.getOrDefault("damageMulti", 1d) + 2);
+                    }
                     break;
                 }
             }
             // setup projectile velocity
             fireVelocity.multiply(projectileSpeed);
-            String projectileName = weaponSection.getString("projectileName", "小火花");
             Projectile firedProjectile = EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMap,
                     EntityHelper.getDamageType(ply), projectileName);
         }
@@ -876,6 +909,17 @@ public class ItemUseHelper {
         applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
         return true;
     }
+    // summoning helper functions below
+    public static void spawnSentryMinion(Player ply, String type, HashMap<String, Double> attrMap, boolean sentryOrMinion) {
+        if (sentryOrMinion) {
+
+        } else {
+
+        }
+    }
+    private static void minionAI(Entity minion, Player owner, String nameMinion, int minionSlot) {
+
+    }
     // other helper functions for item using
     private static void playerUseItemSound(Player ply, String weaponType, boolean autoSwing) {
         String itemUseSound;
@@ -995,15 +1039,5 @@ public class ItemUseHelper {
                 playerUseItemSound(ply, weaponType, autoSwing);
             }
         }
-    }
-    public static void spawnSentryMinion(Player ply, String type, HashMap<String, Double> attrMap, boolean sentryOrMinion) {
-        if (sentryOrMinion) {
-
-        } else {
-
-        }
-    }
-    private static void minionAI(Entity minion, Player owner, String nameMinion, int minionSlot) {
-
     }
 }
