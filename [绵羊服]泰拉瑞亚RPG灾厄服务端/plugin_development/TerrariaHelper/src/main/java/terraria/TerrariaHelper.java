@@ -28,6 +28,7 @@ public class TerrariaHelper extends JavaPlugin {
     public static final YmlHelper.YmlSection armorSetConfig = YmlHelper.getFile("plugins/Data/armorSet.yml");
     public static final YmlHelper.YmlSection blockConfig = YmlHelper.getFile("plugins/Data/blocks.yml");
     public static final YmlHelper.YmlSection buffConfig = YmlHelper.getFile("plugins/Data/buff.yml");
+    public static final YmlHelper.YmlSection consumableConfig = YmlHelper.getFile("plugins/Data/consumeable.yml");
     public static final YmlHelper.YmlSection entityConfig = YmlHelper.getFile("plugins/Data/entities.yml");
     public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");
     public static final YmlHelper.YmlSection prefixConfig = YmlHelper.getFile("plugins/Data/prefix.yml");
@@ -84,7 +85,7 @@ public class TerrariaHelper extends JavaPlugin {
                         }
                         long offset = ((Calendar.getInstance().getTimeInMillis() / 500)) % 50;
                         Set<String> allBuff = buffConfig.getConfigurationSection("effects").getKeys(false);
-                        for (int i = 0; i < 3; i ++) {
+                        for (int i = 0; i < 0; i ++) {
                             for (String effectDisplayName : allBuff) {
                                 if (offset > 0) {
                                     offset --;

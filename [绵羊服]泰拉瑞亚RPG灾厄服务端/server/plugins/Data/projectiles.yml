@@ -243,12 +243,17 @@
     gravity: 0
     autoTrace: true
 星云奥秘:
-    gravity: 0
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceAbility: 0.5
+    blastRadius: 2.75
     blockHitAction: bounce
     bounce: 3
-    penetration: 9
-    autoTrace: true
+    enemyInvincibilityFrame: 10
+    gravity: 0
     isGrenade: true
+    penetration: 4
+    projectileSize: 1
     clusterBomb:
         amount: 12
         name: 星云奥秘爆炸弹碎块
@@ -368,8 +373,8 @@
     penetration: 999
     gravity: 0
     autoTrace: true
-    autoTraceAbility: 2
-    autoTraceRadius: 32
+    autoTraceMethod: 2
+    slowedByWater: false
 气泡弹:
     autoTrace: true
 星尘细胞弹:

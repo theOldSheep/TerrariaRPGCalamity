@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import terraria.util.ItemUseHelper;
 import terraria.util.PlayerHelper;
 
 public class PlayerKeyToggleListener implements Listener {
@@ -27,6 +28,15 @@ public class PlayerKeyToggleListener implements Listener {
                 break;
             case "R":
                 PlayerHelper.handleGrapplingHook(ply);
+                break;
+            case "B":
+                ItemUseHelper.playerQuickUsePotion(ply, ItemUseHelper.QuickBuffType.BUFF);
+                break;
+            case "H":
+                ItemUseHelper.playerQuickUsePotion(ply, ItemUseHelper.QuickBuffType.HEALTH);
+                break;
+            case "J":
+                ItemUseHelper.playerQuickUsePotion(ply, ItemUseHelper.QuickBuffType.MANA);
                 break;
         }
     }

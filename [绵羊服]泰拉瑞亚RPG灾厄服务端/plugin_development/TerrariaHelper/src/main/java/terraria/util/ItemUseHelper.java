@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -23,6 +24,9 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class ItemUseHelper {
+    public enum QuickBuffType {
+        NONE, HEALTH, MANA, BUFF;
+    }
     private static final String SOUND_GENERIC_SWING = "item.genericSwing", SOUND_BOW_SHOOT = "item.bowShoot",
             SOUND_GUN_FIRE = "item.gunfire", SOUND_GUN_FIRE_LOUD = "entity.generic.explode";
     private static final double MELEE_STRIKE_RADIUS = 0.25;
@@ -86,8 +90,149 @@ public class ItemUseHelper {
         }
         return false;
     }
-    private static boolean playerUsePotion(Player ply, String itemType, ItemStack potion) {
-        return false;
+    private static boolean potionEffectNecessary(Player ply, String effect) {
+        HashMap<String, Integer> allEffects = EntityHelper.getEffectMap(ply);
+        // no need to drink the potion if the effect is already in place.
+        if (allEffects.containsKey(effect)) return false;
+        // no need to drink the potion if a superior version is in effect.
+        for (String effectSuperior : EntityHelper.buffSuperior.getOrDefault(effect, new HashSet<>()))
+            if (allEffects.containsKey(effectSuperior)) return false;
+        return true;
+    }
+    private static boolean playerUsePotion(Player ply, String itemType, ItemStack potion, QuickBuffType consumptionInfo) {
+        // to prevent vanilla items being regarded as a proper potion and consumed.
+        if (itemType.length() == 0) return false;
+        boolean successful = false;
+        switch (itemType) {
+            case "回城药水": {
+                ply.teleport(PlayerHelper.getSpawnLocation(ply));
+                successful = true;
+                break;
+            }
+            case "虫洞药水": {
+                if (!ply.getScoreboardTags().contains("wormHole")) {
+                    ply.sendMessage("§a请输入您想传送的玩家名称发送传送请求哦~");
+                    successful = true;
+                } else {
+
+                    ply.sendMessage("§a您上次服用的虫洞药水还未生效哦~");
+                }
+                break;
+            }
+            default: {
+                HashSet<String> accessories = PlayerHelper.getAccessories(ply);
+                ConfigurationSection potionConfig = TerrariaHelper.consumableConfig.getConfigurationSection(itemType);
+                HashMap<String, Double> buffsProvided = new HashMap<>(4);
+                if (potionConfig != null) {
+                    // initializes the buff provided by the potion
+                    for (String node : potionConfig.getKeys(false)) {
+                        buffsProvided.put(node, potionConfig.getDouble(node, 20d));
+                    }
+                    // determine if the potion can be used here
+                    switch (consumptionInfo) {
+                        case NONE:
+                            successful = true;
+                            break;
+                        case HEALTH:
+                            successful = buffsProvided.containsKey("health");
+                            break;
+                        case MANA:
+                            // restoration potions are not considered mana potion.
+                            successful = buffsProvided.containsKey("mana") && !buffsProvided.containsKey("health");
+                            break;
+                        case BUFF:
+                            for (String potionEffect : buffsProvided.keySet()) {
+                                // if the intention is to get some buff, potential (max) health/mana potion should not be considered.
+                                if (potionEffect.equals("health") ||
+                                        potionEffect.equals("mana") ||
+                                        potionEffect.equals("maxHealth") ||
+                                        potionEffect.equals("maxMana")) {
+                                    successful = false;
+                                    break;
+                                } else if (potionEffectNecessary(ply, potionEffect)) {
+                                    successful = true;
+                                }
+                            }
+                            break;
+                    }
+                    // health potions are not supposed to be used if potion sickness debuff is active
+                    if (buffsProvided.containsKey("health") && EntityHelper.hasEffect(ply, "耐药性"))
+                        successful = false;
+                    // if the potion can be used, apply health/mana/buff
+                    if (successful) {
+                        for (String potionInfo: buffsProvided.keySet()) {
+                            double potionPotency = buffsProvided.get(potionInfo);
+                            switch (potionInfo) {
+                                // if the potion has healing ability
+                                case "health": {
+                                    PlayerHelper.heal(ply, potionPotency);
+                                    int duration = 1200;
+                                    if (itemType.equals("恢复药水")) duration *= 0.75;
+                                    if (accessories.contains("炼金石") ||
+                                            accessories.contains("神话护身符"))
+                                        duration *= 0.75;
+                                    EntityHelper.applyEffect(ply, "耐药性", duration);
+                                    break;
+                                }
+                                // if the potion recovers mana
+                                case "mana": {
+                                    PlayerHelper.restoreMana(ply, potionPotency);
+                                    EntityHelper.applyEffect(ply, "魔力疾病", 200);
+                                    break;
+                                }
+                                // otherwise, apply the potion effect
+                                default: {
+                                    EntityHelper.applyEffect(ply, potionInfo, (int) potionPotency);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (successful) {
+            // remove a potion item
+            potion.setAmount(potion.getAmount() - 1);
+            // play consumption sound
+            String sound = "entity.generic.drink";
+            if (!itemType.endsWith("药水"))
+                sound = "entity.generic.eat";
+            ply.getWorld().playSound(ply.getEyeLocation(), sound, 1, 1);
+            // potion use cool down
+            applyCD(ply, 10);
+        }
+        return successful;
+    }
+    public static boolean playerQuickUsePotion(Player ply, QuickBuffType quickBuffType) {
+        Inventory plyInv = ply.getInventory();
+        if (quickBuffType == QuickBuffType.NONE) return false;
+        boolean successfullyConsumed = false;
+        // for health and mana, only one item is needed to be successfully consumed.
+        boolean consumeAllOrOne = quickBuffType == QuickBuffType.BUFF;
+        for (int i = 0; i < 36; i ++) {
+            ItemStack currItem = plyInv.getItem(i);
+            if (currItem != null &&
+                    playerUsePotion(ply, ItemHelper.splitItemName(currItem)[1], currItem, quickBuffType))
+                if (consumeAllOrOne) {
+                    successfullyConsumed = true;
+                } else {
+                    return true;
+                }
+        }
+        // in the player's void bag
+        if (PlayerHelper.hasVoidBag(ply)) {
+            Inventory voidBagInv = PlayerHelper.getInventory(ply, "voidBag");
+            for (ItemStack currItem : voidBagInv.getContents()) {
+                if (currItem != null &&
+                        playerUsePotion(ply, ItemHelper.splitItemName(currItem)[1], currItem, quickBuffType))
+                    if (consumeAllOrOne) {
+                        successfullyConsumed = true;
+                    } else {
+                        return true;
+                    }
+            }
+        }
+        return successfullyConsumed;
     }
     // weapon use helper functions below
     private static void displayLoadingProgress(Player ply, int currLoad, int maxLoad) {
@@ -540,30 +685,7 @@ public class ItemUseHelper {
             if (    accessories.contains("魔力花") ||
                     accessories.contains("磁花") ||
                     accessories.contains("空灵护符")) {
-                boolean hasConsumedPotion = false;
-                // player's backpack
-                Inventory plyInv = ply.getInventory();
-                for (int i = 0; i < 36; i ++) {
-                    ItemStack currItem = plyInv.getItem(i);
-                    String itemType = ItemHelper.splitItemName(currItem)[1];
-                    if (currItem != null && itemType.endsWith("魔力药水")) {
-                        hasConsumedPotion = playerUsePotion(ply, itemType, currItem);
-                        if (hasConsumedPotion)
-                            break;
-                    }
-                }
-                // in the player's void bag
-                if (!hasConsumedPotion && PlayerHelper.hasVoidBag(ply)) {
-                    Inventory voidBagInv = PlayerHelper.getInventory(ply, "voidBag");
-                    for (ItemStack currItem : voidBagInv.getContents()) {
-                        String itemType = ItemHelper.splitItemName(currItem)[1];
-                        if (currItem != null && itemType.endsWith("魔力药水")) {
-                            hasConsumedPotion = playerUsePotion(ply, itemType, currItem);
-                            if (hasConsumedPotion)
-                                break;
-                        }
-                    }
-                }
+                playerQuickUsePotion(ply, QuickBuffType.MANA);
             }
         }
         int currMana = ply.getLevel();
@@ -785,8 +907,8 @@ public class ItemUseHelper {
                         startLoc.add(fireDir.clone().multiply(2));
                         startLoc.add(Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2);
                         fireDir = targetedLocation.clone().subtract(startLoc).toVector();
-                        yaw = MathHelper.getVectorYaw(fireDir) + Math.random() * 20 - 10;
-                        pitch = MathHelper.getVectorPitch(fireDir) + Math.random() * 20 - 10;
+                        yaw = MathHelper.getVectorYaw(fireDir) + Math.random() * 10 - 5;
+                        pitch = MathHelper.getVectorPitch(fireDir) + Math.random() * 10 - 5;
                         switch (fireIndex) {
                             // solar
                             case 1: {
@@ -968,75 +1090,78 @@ public class ItemUseHelper {
         // other items
         ItemStack mainHandItem = ply.getInventory().getItemInMainHand();
         String itemName = ItemHelper.splitItemName(mainHandItem)[1];
-        // void bag, piggy bank, musical instruments etc.
-        if (isRightClick && playerUseMiscellaneous(ply, itemName)) return;
-        // potion and other consumable consumption
-        if (isRightClick && playerUsePotion(ply, itemName, mainHandItem)) return;
-        // weapon
-        String weaponYMLPath = itemName + (isRightClick ? "_RIGHT_CLICK" : "");
-        ConfigurationSection weaponSection = TerrariaHelper.weaponConfig.getConfigurationSection(weaponYMLPath);
-        if (weaponSection != null) {
-            // handle loading
-            boolean autoSwing = weaponSection.getBoolean("autoSwing", false);
-            boolean isLoading = false;
-            int maxLoad = weaponSection.getInt("maxLoad", 0);
-            int swingAmount = EntityHelper.getMetadata(ply, "swingAmount").asInt();
-            if (maxLoad > 0) {
-                swingAmount = Math.min(swingAmount, maxLoad);
-                if (scoreboardTags.contains("autoSwing")) {
-                    if (scoreboardTags.contains("isLoadingWeapon")) {
-                        // still loading
-                        isLoading = true;
+        // if itemName == "", some bug may occur. Also, vanilla items are not useful at all.
+        if (itemName.length() > 0) {
+            // void bag, piggy bank, musical instruments etc.
+            if (isRightClick && playerUseMiscellaneous(ply, itemName)) return;
+            // potion and other consumable consumption
+            if (isRightClick && playerUsePotion(ply, itemName, mainHandItem, QuickBuffType.NONE)) return;
+            // weapon
+            String weaponYMLPath = itemName + (isRightClick ? "_RIGHT_CLICK" : "");
+            ConfigurationSection weaponSection = TerrariaHelper.weaponConfig.getConfigurationSection(weaponYMLPath);
+            if (weaponSection != null) {
+                // handle loading
+                boolean autoSwing = weaponSection.getBoolean("autoSwing", false);
+                boolean isLoading = false;
+                int maxLoad = weaponSection.getInt("maxLoad", 0);
+                int swingAmount = EntityHelper.getMetadata(ply, "swingAmount").asInt();
+                if (maxLoad > 0) {
+                    swingAmount = Math.min(swingAmount, maxLoad);
+                    if (scoreboardTags.contains("autoSwing")) {
+                        if (scoreboardTags.contains("isLoadingWeapon")) {
+                            // still loading
+                            isLoading = true;
+                        } else {
+                            // finished loading
+                            autoSwing = false;
+                        }
                     } else {
-                        // finished loading
-                        autoSwing = false;
+                        // start loading, as the auto swing scoreboard tag is added later.
+                        ply.addScoreboardTag("isLoadingWeapon");
+                        isLoading = true;
                     }
-                } else {
-                    // start loading, as the auto swing scoreboard tag is added later.
-                    ply.addScoreboardTag("isLoadingWeapon");
-                    isLoading = true;
                 }
-            }
-            if (isLoading) {
-                swingAmount = Math.min(swingAmount + 1, maxLoad);
-                ply.addScoreboardTag("autoSwing");
-                EntityHelper.setMetadata(ply, "swingAmount", swingAmount);
-                displayLoadingProgress(ply, swingAmount, maxLoad);
-                double loadSpeedMulti = weaponSection.getDouble("loadTimeMulti", 0.5d);
-                applyCD(ply, attrMap.getOrDefault("useTime", 10d)
-                        * attrMap.getOrDefault("useTimeMulti", 1d) * loadSpeedMulti);
-                return;
-            }
-            // use weapon
-            String weaponType = weaponSection.getString("type", "");
-            // prevent accidental glitch that creates endless item use cool down
-            if (attrMap.getOrDefault("useCD", 0d) < 0.01) PlayerHelper.setupAttribute(ply);
-            boolean success = false;
-            switch (weaponType) {
-                case "STAB":
-                case "SWING":
-                    success = playerUseMelee(ply, itemName, weaponSection, attrMap, swingAmount, weaponType.equals("STAB"));
-                    break;
-                case "BOW":
-                case "GUN":
-                case "ROCKET":
-                case "SPECIAL_AMMO":
-                    success = playerUseRanged(ply, itemName, swingAmount, weaponType,
-                            maxLoad > 0, autoSwing, weaponSection, attrMap);
-                    break;
-                case "MAGIC_PROJECTILE":
-                case "MAGIC_SPECIAL":
-                    success = playerUseMagic(ply, itemName, swingAmount, weaponType,
-                            autoSwing, weaponSection, attrMap);
-                    break;
-            }
-            if (success) {
-                if (autoSwing) {
+                if (isLoading) {
+                    swingAmount = Math.min(swingAmount + 1, maxLoad);
                     ply.addScoreboardTag("autoSwing");
-                    EntityHelper.setMetadata(ply, "swingAmount", swingAmount + 1);
+                    EntityHelper.setMetadata(ply, "swingAmount", swingAmount);
+                    displayLoadingProgress(ply, swingAmount, maxLoad);
+                    double loadSpeedMulti = weaponSection.getDouble("loadTimeMulti", 0.5d);
+                    applyCD(ply, attrMap.getOrDefault("useTime", 10d)
+                            * attrMap.getOrDefault("useTimeMulti", 1d) * loadSpeedMulti);
+                    return;
                 }
-                // play item use sound
-                playerUseItemSound(ply, weaponType, autoSwing);
+                // use weapon
+                String weaponType = weaponSection.getString("type", "");
+                // prevent accidental glitch that creates endless item use cool down
+                if (attrMap.getOrDefault("useCD", 0d) < 0.01) PlayerHelper.setupAttribute(ply);
+                boolean success = false;
+                switch (weaponType) {
+                    case "STAB":
+                    case "SWING":
+                        success = playerUseMelee(ply, itemName, weaponSection, attrMap, swingAmount, weaponType.equals("STAB"));
+                        break;
+                    case "BOW":
+                    case "GUN":
+                    case "ROCKET":
+                    case "SPECIAL_AMMO":
+                        success = playerUseRanged(ply, itemName, swingAmount, weaponType,
+                                maxLoad > 0, autoSwing, weaponSection, attrMap);
+                        break;
+                    case "MAGIC_PROJECTILE":
+                    case "MAGIC_SPECIAL":
+                        success = playerUseMagic(ply, itemName, swingAmount, weaponType,
+                                autoSwing, weaponSection, attrMap);
+                        break;
+                }
+                if (success) {
+                    if (autoSwing) {
+                        ply.addScoreboardTag("autoSwing");
+                        EntityHelper.setMetadata(ply, "swingAmount", swingAmount + 1);
+                    }
+                    // play item use sound
+                    playerUseItemSound(ply, weaponType, autoSwing);
+                }
             }
         }
     }

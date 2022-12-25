@@ -814,7 +814,7 @@ public class PlayerHelper {
                 switch (effect) {
                     case "魔力疾病":
                         EntityHelper.tweakAttribute(ply, newAttrMap, "damageMagicMulti",
-                                (ticksRemaining / 4) + "", false);
+                                ((double)-ticksRemaining / 800) + "", true);
                         break;
                     default: {
                         String attributesPath = "effects." + effect + ".attributes";

@@ -172,38 +172,7 @@ public class EntityHelper {
             }
             // tweak double value in attribute map
             HashMap<String, Double> attrMap = getAttrMap(entity);
-            if (!attrMap.containsKey(key)) return;
-            double value_number = Double.parseDouble(value);
-            switch (key) {
-                case "useTime":
-                    value_number /= 2;
-                    break;
-                case "damageTakenMulti":
-                case "arrowConsumptionRate":
-                case "ammoConsumptionRate":
-                    value_number = 1 + value_number;
-                    break;
-            }
-            switch (key) {
-                case "damageTakenMulti":
-                    if (addOrRemove)
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / (2 - value_number));
-                    else
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * (2 - value_number));
-                    break;
-                case "ammoConsumptionRate":
-                case "arrowConsumptionRate":
-                    if (addOrRemove)
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * value_number);
-                    else
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / value_number);
-                    break;
-                default:
-                    if (addOrRemove)
-                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) + value_number);
-                    else
-                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) - value_number);
-            }
+            tweakAttribute(attrMap, key, value, addOrRemove);
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
         }
@@ -235,11 +204,13 @@ public class EntityHelper {
                 case "useTime":
                     value_number /= 2;
                     break;
-                case "damageTakenMulti":
                 case "arrowConsumptionRate":
                 case "ammoConsumptionRate":
                     value_number = 1 + value_number;
                     break;
+                default:
+                    if (key.endsWith("Multi"))
+                        value_number = 1 + value_number;
             }
             switch (key) {
                 case "damageTakenMulti":
@@ -256,10 +227,17 @@ public class EntityHelper {
                         attrMap.put(key, attrMap.getOrDefault(key, 1d) / value_number);
                     break;
                 default:
-                    if (addOrRemove)
-                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) + value_number);
-                    else
-                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) - value_number);
+                    if (key.endsWith("Multi")) {
+                        if (addOrRemove)
+                            attrMap.put(key, (attrMap.getOrDefault(key, 1d)) * value_number);
+                        else
+                            attrMap.put(key, (attrMap.getOrDefault(key, 1d)) / value_number);
+                    } else {
+                        if (addOrRemove)
+                            attrMap.put(key, (attrMap.getOrDefault(key, 1d)) + value_number);
+                        else
+                            attrMap.put(key, (attrMap.getOrDefault(key, 1d)) - value_number);
+                    }
             }
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
@@ -306,38 +284,7 @@ public class EntityHelper {
                 return;
             }
             // tweak double value in attribute map
-            if (!attrMap.containsKey(key)) return;
-            double value_number = Double.parseDouble(value);
-            switch (key) {
-                case "useTime":
-                    value_number /= 2;
-                    break;
-                case "damageTakenMulti":
-                case "arrowConsumptionRate":
-                case "ammoConsumptionRate":
-                    value_number = 1 + value_number;
-                    break;
-            }
-            switch (key) {
-                case "damageTakenMulti":
-                    if (addOrRemove)
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / (2 - value_number));
-                    else
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * (2 - value_number));
-                    break;
-                case "ammoConsumptionRate":
-                case "arrowConsumptionRate":
-                    if (addOrRemove)
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * value_number);
-                    else
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / value_number);
-                    break;
-                default:
-                    if (addOrRemove)
-                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) + value_number);
-                    else
-                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) - value_number);
-            }
+            tweakAttribute(attrMap, key, value, addOrRemove);
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
         }
