@@ -1,6 +1,8 @@
 package terraria.util;
 
-import net.minecraft.server.v1_12_R1.*;
+import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.MovingObjectPosition;
+import net.minecraft.server.v1_12_R1.PacketPlayOutSetCooldown;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,10 +12,7 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -783,7 +782,7 @@ public class ItemUseHelper {
                 Vector fireDir = targetedLocation.clone().subtract(ply.getEyeLocation()).toVector().normalize();
                 double yaw = MathHelper.getVectorYaw(fireDir),
                         pitch = MathHelper.getVectorPitch(fireDir);
-                Location startLoc = ply.getEyeLocation().add(fireDir);
+                Location startLoc = ply.getEyeLocation().add(fireDir).add(fireDir);
                 double length = 8, width = 0.5;
                 String particleColor = "255|255|0";
                 // some weapons do not need smart targeting, they shoot exactly at the cursor
@@ -914,7 +913,7 @@ public class ItemUseHelper {
                             case 1: {
                                 particleColor = "255|100|50";
                                 strikeInfo
-                                        .setDamageCD(3)
+                                        .setDamageCD(10)
                                         .setLingerTime(4)
                                         .setLingerDelay(4)
                                         .setDamagedFunction((hitIndex, hitEntity) -> {
@@ -929,11 +928,11 @@ public class ItemUseHelper {
                             case 2: {
                                 particleColor = "25|200|225";
                                 strikeInfo
-                                        .setDamageCD(3)
+                                        .setDamageCD(10)
                                         .setLingerTime(4)
                                         .setLingerDelay(4)
                                         .setDamagedFunction((hitIndex, hitEntity) -> {
-                                            if (hitEntity instanceof LivingEntity && Math.random() < 0.2) {
+                                            if (hitEntity instanceof LivingEntity && Math.random() < (1d / (hitIndex + 3))) {
                                                 String damageType = EntityHelper.getDamageType(ply);
                                                 for (int i = 0; i < 4; i ++) {
                                                     Location explodeLoc = ((LivingEntity) hitEntity).getEyeLocation()
@@ -971,7 +970,7 @@ public class ItemUseHelper {
                                 width = 1;
                                 particleColor = "225|150|225";
                                 strikeInfo
-                                        .setDamageCD(3)
+                                        .setDamageCD(10)
                                         .setLingerTime(4)
                                         .setLingerDelay(4);
                                 yaw -= (fireIndex - 6) * 2;
@@ -1003,16 +1002,16 @@ public class ItemUseHelper {
                                           ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
         int manaConsumption = (int) Math.round(attrMap.getOrDefault("manaUse", 10d) *
                 attrMap.getOrDefault("manaUseMulti", 1d));
-        switch (weaponType) {
+        switch (itemType) {
             case "太空枪":
                 if (EntityHelper.getMetadata(ply, "armorSet").asString().equals("流星套装"))
                     manaConsumption = 0;
                 break;
             case "终极棱镜":
                 if (swingAmount >= 25)
-                    manaConsumption *= 3;
+                    manaConsumption *= 2;
                 else if (swingAmount >= 15)
-                    manaConsumption *= 1.75;
+                    manaConsumption *= 1.5;
                 break;
         }
         if (!consumeMana(ply, manaConsumption)) return false;
@@ -1032,15 +1031,89 @@ public class ItemUseHelper {
         return true;
     }
     // summoning helper functions below
-    public static void spawnSentryMinion(Player ply, String type, HashMap<String, Double> attrMap, boolean sentryOrMinion) {
-        if (sentryOrMinion) {
-
-        } else {
-
+    public static boolean spawnSentryMinion(Player ply, String type, HashMap<String, Double> attrMap, int slotsConsumed,
+                                         boolean sentryOrMinion, boolean hasContactDamage, boolean noDuplication) {
+        /*
+        "minions" new ArrayList<Entity>());
+        "sentries"
+         */
+        ArrayList<Entity> minionList;
+        int minionLimit, indexNext;
+        // initialize minion limit and minion list
+        {
+            if (sentryOrMinion) {
+                minionList = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "sentries").value();
+                minionLimit = attrMap.getOrDefault("sentryLimit", 1d).intValue();
+                indexNext = EntityHelper.getMetadata(ply, "nextSentryIndex").asInt();
+            } else {
+                minionList = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "minions").value();
+                minionLimit = attrMap.getOrDefault("minionLimit", 1d).intValue();
+                indexNext = EntityHelper.getMetadata(ply, "nextMinionIndex").asInt();
+            }
         }
+        // validate if the minion can be summoned
+        {
+            // for minions with no duplication allowed, abort the summoning attempt if a minion exists already.
+            if (noDuplication) {
+                for (Entity toCheck : minionList) {
+                    if (GenericHelper.trimText(toCheck.getName()).equals(type))
+                        return false;
+                }
+            }
+            // check if the minion limit satisfies the requirement
+            if (minionLimit < slotsConsumed) return false;
+        }
+        // summon the minion
+        EntityType minionType = EntityType.SLIME;
+        switch (type) {
+            case "矮人":
+                minionType = EntityType.HUSK;
+                break;
+            case "蜘蛛":
+                minionType = EntityType.CAVE_SPIDER;
+                break;
+        }
+        LivingEntity minionEntity = (LivingEntity) ply.getWorld().spawnEntity(ply.getLocation(), minionType);
+        if (minionEntity instanceof Slime)
+            EntityHelper.slimeResize((Slime) minionEntity, 1);
+        EntityHelper.setMetadata(minionEntity, "attrMap", attrMap);
+        minionEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(444);
+        minionEntity.setHealth(444);
+        // set the slots
+        for (int i = 0; i < slotsConsumed; i ++) {
+            
+        }
+        // handle minion AI
+        return true;
     }
-    private static void minionAI(Entity minion, Player owner, String nameMinion, int minionSlot) {
+    // the minionInList variable is used to validate if the minion slot has been changed.
+    // the entity saved in minion/sentry arraylist is not necessarily the minion itself.
+    // minionSlot is used to check if a new minion has been spawned to replace the original.
+    // minionSlotMax is used to check if the max minion slot of the player shrinks.
+    private static void minionAI(Entity minion, Player owner, String nameMinion, int minionSlot, int minionSlotMax, Entity minionInList,
+                                 boolean sentryOrMinion, boolean hasContactDamage) {
 
+    }
+    private static boolean playerUseSummon(Player ply, String itemType, int swingAmount, String weaponType,
+                                           boolean autoSwing,
+                                           ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
+        int manaConsumption = (int) Math.round(attrMap.getOrDefault("manaUse", 10d) *
+                attrMap.getOrDefault("manaUseMulti", 1d));
+        if (!consumeMana(ply, manaConsumption)) return false;
+        boolean sentryOrMinion = weaponType.equals("SENTRY");
+        boolean hasContactDamage = weaponSection.getString("damageType", "Melee").equals("Melee");
+        boolean noDuplication = weaponSection.getBoolean("noDuplication", false);
+        int slotsConsumed = weaponSection.getInt("slotsRequired", 1);
+        String minionName = weaponSection.getString("minionName");
+        if (minionName == null) return false;
+        // if the minion is already present
+        if (!spawnSentryMinion(ply, minionName, attrMap, slotsConsumed, sentryOrMinion, hasContactDamage, noDuplication))
+            return false;
+        // apply CD
+        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMagicMulti", 1d);
+        double useTimeMulti = 1 / useSpeed;
+        applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
+        return true;
     }
     // other helper functions for item using
     private static void playerUseItemSound(Player ply, String weaponType, boolean autoSwing) {
@@ -1066,6 +1139,7 @@ public class ItemUseHelper {
         ply.getWorld().playSound(ply.getLocation(), itemUseSound, volume, pitch);
     }
     // note that use time CD handling are in individual helper functions.
+    // also, attrMap has been already cloned in this function prior to calling individual helper function.
     public static void playerUseItem(Player ply) {
         // cursed players can not use any item
         if (EntityHelper.hasEffect(ply, "诅咒")) {
@@ -1153,6 +1227,11 @@ public class ItemUseHelper {
                         success = playerUseMagic(ply, itemName, swingAmount, weaponType,
                                 autoSwing, weaponSection, attrMap);
                         break;
+                    case "SUMMON":
+                    case "SENTRY":
+                        success = playerUseSummon(ply, itemName, swingAmount, weaponType,
+                                autoSwing, weaponSection, attrMap);
+                        break;
                 }
                 if (success) {
                     if (autoSwing) {
@@ -1161,6 +1240,10 @@ public class ItemUseHelper {
                     }
                     // play item use sound
                     playerUseItemSound(ply, weaponType, autoSwing);
+                } else {
+                    // prevent bug, if the item is not being used successfully, cancel auto swing
+                    // this mainly happens when mana has depleted or ammo runs out
+                    ply.removeScoreboardTag("autoSwing");
                 }
             }
         }

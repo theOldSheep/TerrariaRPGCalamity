@@ -621,29 +621,15 @@
 尖刺球:
   type: THROW_PROJECTILE
 手榴弹:
-  type: THROW_GRENADE
-  damageShooter: true
-  radius: 4
+  type: THROW_PROJECTILE
 炸弹:
-  type: THROW_GRENADE
-  damageShooter: true
-  radius: 2.5
-  destroyBlock: true
+  type: THROW_PROJECTILE
 粘性炸弹:
-  type: THROW_GRENADE
-  damageShooter: true
-  radius: 2.5
-  destroyBlock: true
+  type: THROW_PROJECTILE
 雷管:
-  type: THROW_GRENADE
-  damageShooter: true
-  radius: 4
-  destroyBlock: true
+  type: THROW_PROJECTILE
 粘性雷管:
-  type: THROW_GRENADE
-  damageShooter: true
-  radius: 4
-  destroyBlock: true
+  type: THROW_PROJECTILE
 火花魔棒:
   type: MAGIC_PROJECTILE
   projectileName: 小火花
