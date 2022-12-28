@@ -5,6 +5,7 @@ import me.clip.placeholderapi.PlaceholderHook;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import terraria.entity.CustomEntities;
 import terraria.event.listener.*;
 import terraria.util.EntityHelper;
 import terraria.util.GenericHelper;
@@ -169,6 +170,8 @@ public class TerrariaHelper extends JavaPlugin {
         initThreads();
         setupPlaceholders();
 
+        CustomEntities.registerEntities();
+
         this.getCommand("findNoise").setExecutor(new NoiseGeneratorTest());
 
         getLogger().info("\n\n\n");
@@ -180,6 +183,7 @@ public class TerrariaHelper extends JavaPlugin {
     }
     @Override
     public void onDisable() {
+        CustomEntities.unregisterEntities();
         getLogger().info("泰拉瑞亚RPG插件部分已停用。");
     }
 

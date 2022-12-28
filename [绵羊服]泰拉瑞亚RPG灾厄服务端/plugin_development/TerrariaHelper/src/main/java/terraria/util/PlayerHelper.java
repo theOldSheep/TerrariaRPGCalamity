@@ -73,6 +73,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("maxHealthMulti", 1d);
         defaultPlayerAttrMap.put("maxMana", 20d);
         defaultPlayerAttrMap.put("meleeReachMulti", 1d);
+        defaultPlayerAttrMap.put("minionDamagePenaltyMulti", 0.5d);
         defaultPlayerAttrMap.put("minionLimit", 1d);
         defaultPlayerAttrMap.put("mobLimit", 15d);
         defaultPlayerAttrMap.put("mobSpawnRate", 0.25d);
@@ -788,17 +789,6 @@ public class PlayerHelper {
         YmlHelper.YmlSection fileSection = YmlHelper.getFile("plugins/PlayerData/" + player.getName() + ".yml");
         return fileSection.getBoolean("bossDefeated" + progressToCheck, false);
     }
-    private static void addItemAttribute(Player ply, HashMap<String, Double> attrMap, ItemStack item) {
-        String[] itemInfo = ItemHelper.splitItemName(item);
-        // attributes from the item itself
-        String attributesPath = itemInfo[1] + ".attributes";
-        ConfigurationSection allAttributes = TerrariaHelper.itemConfig.getConfigurationSection(attributesPath);
-        EntityHelper.tweakAllAttributes(ply, attrMap, allAttributes, true);
-        // attributes from the item's prefix
-        String attributesPathPrefix = "prefixInfo." + itemInfo[0] +  ".attributes";
-        ConfigurationSection allAttributesPrefix = TerrariaHelper.prefixConfig.getConfigurationSection(attributesPathPrefix);
-        EntityHelper.tweakAllAttributes(ply, attrMap, allAttributesPrefix, true);
-    }
     public static void setupAttribute(Player ply) {
         try {
             ply.removeScoreboardTag("toolChanged");
@@ -843,7 +833,7 @@ public class PlayerHelper {
                 ItemStack tool = plyInv.getItemInMainHand();
                 String toolCombatType = ItemHelper.getItemCombatType(tool);
                 if (toolCombatType.equals("武器")) {
-                    addItemAttribute(ply, newAttrMap, tool);
+                    EntityHelper.tweakAttribute(ply, newAttrMap, tool, true);
                 }
             }
             // armor
@@ -875,7 +865,7 @@ public class PlayerHelper {
                 }
                 // basic attributes
                 for (ItemStack armorPiece : armors) {
-                    addItemAttribute(ply, newAttrMap, armorPiece);
+                    EntityHelper.tweakAttribute(ply, newAttrMap, armorPiece, true);
                 }
                 // set bonus
                 String armorSet = "";
@@ -932,7 +922,7 @@ public class PlayerHelper {
                     if (currAccType.equals("太阳石") && !WorldHelper.isDayTime(ply.getWorld())) continue;
                     if (currAccType.equals("月亮石") && WorldHelper.isDayTime(ply.getWorld())) continue;
                     // attribute
-                    addItemAttribute(ply, newAttrMap, currAcc);
+                    EntityHelper.tweakAttribute(ply, newAttrMap, currAcc, true);
                     // accessory type
                     accessories.add(currAccType);
                 }

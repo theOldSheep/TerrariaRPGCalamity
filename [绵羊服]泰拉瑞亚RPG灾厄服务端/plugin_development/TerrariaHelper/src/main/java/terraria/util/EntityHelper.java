@@ -140,6 +140,7 @@ public class EntityHelper {
         else
             owner.setMetadata(key, new FixedMetadataValue(TerrariaHelper.getInstance(), value));
     }
+    // helper functions for tweaking attribute
     public static void tweakAttribute(Entity entity, String key, String value, boolean addOrRemove) {
         if (key.equals("damageType")) {
             if (addOrRemove) setMetadata(entity, "damageType", value);
@@ -297,6 +298,31 @@ public class EntityHelper {
                         attributes.getString(attr), addOrRemove);
             }
         }
+    }
+    public static void tweakAttribute(Entity entity, HashMap<String, Double> attrMap, ItemStack item, boolean addOrRemove) {
+        String[] itemInfo = ItemHelper.splitItemName(item);
+        // attributes from the item itself
+        String attributesPath = itemInfo[1] + ".attributes";
+        ConfigurationSection allAttributes = TerrariaHelper.itemConfig.getConfigurationSection(attributesPath);
+        EntityHelper.tweakAllAttributes(entity, attrMap, allAttributes, addOrRemove);
+        // attributes from the item's prefix
+        String attributesPathPrefix = "prefixInfo." + itemInfo[0] +  ".attributes";
+        ConfigurationSection allAttributesPrefix = TerrariaHelper.prefixConfig.getConfigurationSection(attributesPathPrefix);
+        EntityHelper.tweakAllAttributes(entity, attrMap, allAttributesPrefix, addOrRemove);
+    }
+    public static void tweakAttribute(HashMap<String, Double> attrMap, ItemStack item, boolean addOrRemove) {
+        String[] itemInfo = ItemHelper.splitItemName(item);
+        // attributes from the item itself
+        String attributesPath = itemInfo[1] + ".attributes";
+        ConfigurationSection allAttributes = TerrariaHelper.itemConfig.getConfigurationSection(attributesPath);
+        EntityHelper.tweakAllAttributes(attrMap, allAttributes, addOrRemove);
+        // attributes from the item's prefix
+        String attributesPathPrefix = "prefixInfo." + itemInfo[0] +  ".attributes";
+        ConfigurationSection allAttributesPrefix = TerrariaHelper.prefixConfig.getConfigurationSection(attributesPathPrefix);
+        EntityHelper.tweakAllAttributes(attrMap, allAttributesPrefix, addOrRemove);
+    }
+    public static void tweakAttribute(Entity entity, ItemStack item, boolean addOrRemove) {
+        tweakAttribute(entity, getAttrMap(entity), item, addOrRemove);
     }
     public static void makeTarget(Entity entity, Entity target) {
         try {
@@ -682,7 +708,7 @@ public class EntityHelper {
                         ArrayList<Entity> bossList = BossHelper.bossMap.get("猪鲨公爵");
                         if (bossList != null) {
                             Entity dukeFishron = bossList.get(0);
-                            // TODO: spawn a tornados
+                            // TODO: spawn a tornado
                         }
                         return false;
                     }
@@ -943,11 +969,13 @@ public class EntityHelper {
             if (target instanceof Projectile) {
                 if (getAttrMap(target).containsKey("health")) {
                     ProjectileSource src = ((Projectile) target).getShooter();
-                    if (src instanceof Entity) target = (Entity) src;
-                    // can damage shooter (no strict checking needed):
-                    // if strict mode return false(so homing weapons do not home to enemy projectiles)
-                    // if not strict mode return true(so enemy can be damaged)
-                    if (checkCanDamage(entity, target, false)) return !strict;
+                    if (src instanceof Entity) {
+                        target = (Entity) src;
+                        // can damage shooter (no strict checking needed):
+                        // if strict mode return false(so homing weapons do not home to enemy projectiles)
+                        // if not strict mode return true(so enemy can be damaged)
+                        if (checkCanDamage(entity, target, false)) return !strict;
+                    }
                 }
             }
             return false;

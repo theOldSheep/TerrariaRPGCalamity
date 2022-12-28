@@ -1,5 +1,6 @@
 package terraria.util;
 
+import lk.vexview.event.DownloadFailedEvent;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.MovingObjectPosition;
 import net.minecraft.server.v1_12_R1.PacketPlayOutSetCooldown;
@@ -10,14 +11,17 @@ import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.*;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.HitEntityInfo;
+import terraria.entity.minion.MinionSlime;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -1032,24 +1036,26 @@ public class ItemUseHelper {
     }
     // summoning helper functions below
     public static boolean spawnSentryMinion(Player ply, String type, HashMap<String, Double> attrMap, int slotsConsumed,
-                                         boolean sentryOrMinion, boolean hasContactDamage, boolean noDuplication) {
-        /*
-        "minions" new ArrayList<Entity>());
-        "sentries"
-         */
+                                            boolean sentryOrMinion, boolean hasContactDamage, boolean noDuplication,
+                                            ItemStack originalStaff) {
         ArrayList<Entity> minionList;
+        String indexNextMetadataKey;
         int minionLimit, indexNext;
         // initialize minion limit and minion list
         {
             if (sentryOrMinion) {
                 minionList = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "sentries").value();
                 minionLimit = attrMap.getOrDefault("sentryLimit", 1d).intValue();
-                indexNext = EntityHelper.getMetadata(ply, "nextSentryIndex").asInt();
+                indexNextMetadataKey = "nextSentryIndex";
             } else {
                 minionList = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "minions").value();
                 minionLimit = attrMap.getOrDefault("minionLimit", 1d).intValue();
-                indexNext = EntityHelper.getMetadata(ply, "nextMinionIndex").asInt();
+                indexNextMetadataKey = "nextMinionIndex";
             }
+            indexNext = EntityHelper.getMetadata(ply, indexNextMetadataKey).asInt();
+            // prevent bug brought by shrink in minion limit
+            if (indexNext >= minionLimit)
+                indexNext = 0;
         }
         // validate if the minion can be summoned
         {
@@ -1064,38 +1070,32 @@ public class ItemUseHelper {
             if (minionLimit < slotsConsumed) return false;
         }
         // summon the minion
-        EntityType minionType = EntityType.SLIME;
+        // minionSlot is used to check if a new minion has been spawned to replace the original.
+        // minionSlotMax is used to check if the max minion slot of the player shrinks.
+        int minionSlot = indexNext, minionSlotMax = Math.min(indexNext + slotsConsumed, minionLimit) - 1;
+        Entity minionEntity = null;
         switch (type) {
             case "矮人":
-                minionType = EntityType.HUSK;
                 break;
             case "蜘蛛":
-                minionType = EntityType.CAVE_SPIDER;
                 break;
+            default:
+                MinionSlime slimeMinion = new MinionSlime(ply, minionSlot, minionSlotMax, sentryOrMinion, hasContactDamage, type, attrMap, originalStaff);
+                minionEntity = slimeMinion.getBukkitEntity();
         }
-        LivingEntity minionEntity = (LivingEntity) ply.getWorld().spawnEntity(ply.getLocation(), minionType);
-        if (minionEntity instanceof Slime)
-            EntityHelper.slimeResize((Slime) minionEntity, 1);
-        EntityHelper.setMetadata(minionEntity, "attrMap", attrMap);
-        minionEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(444);
-        minionEntity.setHealth(444);
         // set the slots
         for (int i = 0; i < slotsConsumed; i ++) {
-            
+            if (indexNext < minionList.size())
+                minionList.set(indexNext, minionEntity);
+            else
+                minionList.add(minionEntity);
+            indexNext = (indexNext + 1) % minionLimit;
         }
-        // handle minion AI
+        EntityHelper.setMetadata(ply, indexNextMetadataKey, indexNext);
         return true;
     }
-    // the minionInList variable is used to validate if the minion slot has been changed.
-    // the entity saved in minion/sentry arraylist is not necessarily the minion itself.
-    // minionSlot is used to check if a new minion has been spawned to replace the original.
-    // minionSlotMax is used to check if the max minion slot of the player shrinks.
-    private static void minionAI(Entity minion, Player owner, String nameMinion, int minionSlot, int minionSlotMax, Entity minionInList,
-                                 boolean sentryOrMinion, boolean hasContactDamage) {
-
-    }
     private static boolean playerUseSummon(Player ply, String itemType, int swingAmount, String weaponType,
-                                           boolean autoSwing,
+                                           boolean autoSwing, ItemStack originalStaff,
                                            ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
         int manaConsumption = (int) Math.round(attrMap.getOrDefault("manaUse", 10d) *
                 attrMap.getOrDefault("manaUseMulti", 1d));
@@ -1106,8 +1106,8 @@ public class ItemUseHelper {
         int slotsConsumed = weaponSection.getInt("slotsRequired", 1);
         String minionName = weaponSection.getString("minionName");
         if (minionName == null) return false;
-        // if the minion is already present
-        if (!spawnSentryMinion(ply, minionName, attrMap, slotsConsumed, sentryOrMinion, hasContactDamage, noDuplication))
+        // if the summoning attempt failed, for example, minion is already present
+        if (!spawnSentryMinion(ply, minionName, attrMap, slotsConsumed, sentryOrMinion, hasContactDamage, noDuplication, originalStaff))
             return false;
         // apply CD
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMagicMulti", 1d);
@@ -1230,7 +1230,7 @@ public class ItemUseHelper {
                     case "SUMMON":
                     case "SENTRY":
                         success = playerUseSummon(ply, itemName, swingAmount, weaponType,
-                                autoSwing, weaponSection, attrMap);
+                                autoSwing, mainHandItem, weaponSection, attrMap);
                         break;
                 }
                 if (success) {
