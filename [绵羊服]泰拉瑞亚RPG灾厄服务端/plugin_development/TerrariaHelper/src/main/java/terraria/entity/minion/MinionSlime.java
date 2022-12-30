@@ -11,6 +11,7 @@ import org.bukkit.entity.Slime;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import terraria.entity.HitEntityInfo;
 import terraria.util.EntityHelper;
 import terraria.util.GenericHelper;
 import terraria.util.MathHelper;
@@ -94,6 +95,10 @@ public class MinionSlime extends EntitySlime {
                 new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                         this.sentryOrMinion, true,
                         "小魔焰眼", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                setNoGravity(true);
+                break;
+            }
+            case "致命球": {
                 setNoGravity(true);
                 break;
             }
@@ -278,6 +283,41 @@ public class MinionSlime extends EntitySlime {
                             velocity.multiply(0.3);
                         break;
                     }
+                }
+                break;
+            }
+            case "致命球": {
+                int roundLastTime = 15;
+                int round = (ticksLived / roundLastTime) % 4;
+                if (round < 3 || targetIsOwner) {
+                    int roundPhase = ticksLived % roundLastTime;
+                    // velocity init
+                    if (roundPhase == 0) {
+                        Location targetLoc;
+                        if (targetIsOwner)
+                            targetLoc = target.getEyeLocation().add(
+                                    Math.random() * 10 - 5,
+                                    Math.random() * 6 - 2,
+                                    Math.random() * 10 - 5);
+                        else
+                            targetLoc = target.getEyeLocation();
+                        velocity = targetLoc.subtract(minionBukkit.getEyeLocation()).toVector();
+                        double distance = velocity.length();
+                        if (targetIsOwner) {
+                            velocity.multiply(Math.max(1, distance / ticksLived) / distance);
+                        } else {
+                            velocity.multiply(Math.max(2, distance / (ticksLived * 2)) / distance);
+                        }
+                    }
+                    // slow down; float up if target is not the owner
+                    if (roundPhase * 1.5 >= roundLastTime) {
+                        velocity.multiply(0.8);
+                        if (!targetIsOwner)
+                            velocity.setY(velocity.getY() + 0.25);
+                    }
+                } else {
+                    // waiting for next triple dash
+                    velocity.multiply(0.75);
                 }
                 break;
             }
