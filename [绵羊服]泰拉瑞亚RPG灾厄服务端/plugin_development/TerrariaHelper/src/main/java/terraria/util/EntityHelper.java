@@ -103,6 +103,32 @@ public class EntityHelper {
             return this;
         }
     }
+    public static class WormSegmentMovementOptions {
+        // "straightening" multiplier: last segment - next segment
+        // note that this vector smoothens and straightens the worm.
+        double straighteningMultiplier = 0;
+        // "following" multiplier: last segment - current segment
+        // note that this vector let the segment strictly follows the last.
+        double followingMultiplier = 1;
+        double followDistance = 1;
+        boolean velocityOrTeleport = true;
+        public WormSegmentMovementOptions setStraighteningMultiplier(double straighteningMultiplier) {
+            this.straighteningMultiplier = straighteningMultiplier;
+            return this;
+        }
+        public WormSegmentMovementOptions setFollowingMultiplier(double followingMultiplier) {
+            this.followingMultiplier = followingMultiplier;
+            return this;
+        }
+        public WormSegmentMovementOptions setFollowDistance(double followDistance) {
+            this.followDistance = followDistance;
+            return this;
+        }
+        public WormSegmentMovementOptions setVelocityOrTeleport(boolean velocityOrTeleport) {
+            this.velocityOrTeleport = velocityOrTeleport;
+            return this;
+        }
+    }
     // helper functions
     public static void initEntityMetadata(Entity entity) {
         setMetadata(entity, "damageType", "Melee");
@@ -1547,5 +1573,26 @@ public class EntityHelper {
                     Math.random() * randomOffset - randomOffsetHalved);
         }
         return targetLoc;
+    }
+    public static void handleSegmentsFollow(List<Entity> segments, WormSegmentMovementOptions moveOption) {
+        for (int i = 1; i < segments.size(); i ++) {
+            Entity segmentLast = segments.get(i - 1);
+            Entity segmentCurrent = segments.get(i);
+            Entity segmentNext = segments.get(Math.min(i + 1, segments.size()) - 1);
+            Vector segDVec = segmentLast.getLocation().subtract(segmentNext.getLocation()).toVector();
+            Vector followDir = segmentLast.getLocation().subtract(segmentCurrent.getLocation()).toVector();
+            Vector dVec = segDVec.multiply(moveOption.straighteningMultiplier)
+                    .add(followDir.multiply(moveOption.followingMultiplier));
+            if (dVec.lengthSquared() > 1e-9) {
+                dVec.normalize().multiply(moveOption.followDistance);
+                Location targetLoc = segmentLast.getLocation().subtract(dVec);
+                if (moveOption.velocityOrTeleport) {
+                    Vector velocity = targetLoc.subtract(segmentCurrent.getLocation()).toVector();
+                    segmentCurrent.setVelocity(velocity);
+                } else {
+                    segmentCurrent.teleport(targetLoc);
+                }
+            }
+        }
     }
 }

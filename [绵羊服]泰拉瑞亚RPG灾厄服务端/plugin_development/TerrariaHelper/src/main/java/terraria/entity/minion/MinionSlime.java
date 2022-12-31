@@ -68,9 +68,6 @@ public class MinionSlime extends EntitySlime {
         ((CraftWorld) owner.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // attributes etc.
         setSize(1, false);
-        getAttributeInstance(GenericAttributes.maxHealth).setValue(444);
-        getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(444);
-        setHealth(444f);
         EntityHelper.setMetadata(getBukkitEntity(), "attrMap", attrMap);
         addScoreboardTag("isMinion");
         EntityHelper.setMetadata(getBukkitEntity(), "damageSourcePlayer", owner);
@@ -102,11 +99,22 @@ public class MinionSlime extends EntitySlime {
                 setNoGravity(true);
                 break;
             }
+            case "星尘之龙": {
+                setSize(2, false);
+                protectOwner = false;
+                targetNeedLineOfSight = false;
+                noclip = true;
+                setNoGravity(true);
+                break;
+            }
             default: {
                 noclip = true;
                 setNoGravity(true);
             }
         }
+        getAttributeInstance(GenericAttributes.maxHealth).setValue(444);
+        getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(444);
+        setHealth(444f);
     }
     // jumping CD
     @Override
@@ -129,10 +137,6 @@ public class MinionSlime extends EntitySlime {
         // setup target
         if (ticksLived % 5 == 0)
             MinionHelper.setTarget(this, ((CraftPlayer) owner).getHandle(), targetNeedLineOfSight, protectOwner);
-        // strike all enemies in path
-        if (hasContactDamage) {
-            MinionHelper.handleContactDamage(this, hasTeleported, getSize() * 0.5, basicDamage, damageCD, damageInvincibilityTicks);
-        }
         // extra ticking AI
         Vector velocity = new Vector(motX, motY, motZ);
         Collection<Entity> allMinions = (Collection<Entity>) EntityHelper.getMetadata(owner, sentryOrMinion ? "sentries" : "minions").value();
@@ -321,6 +325,117 @@ public class MinionSlime extends EntitySlime {
                 }
                 break;
             }
+            case "星尘细胞": {
+                // teleport and shooting projectile
+                int teleportCD = (int) extraVariables.getOrDefault("teleportCD", 15);
+                Location targetLoc;
+                if (!targetIsOwner) {
+                    // velocity
+                    velocity = target.getEyeLocation().subtract(minionBukkit.getEyeLocation()).toVector();
+                    double distance = velocity.length();
+                    if (distance < 1e-9) velocity = new Vector(0, 0.5, 0);
+                    else if (distance < 8) velocity.multiply(-0.5 / distance);
+                    else velocity.multiply(0.5 / distance);
+                    // basic fire
+                    int fireDelay = (int) extraVariables.getOrDefault("fireDelay", 0);
+                    int amountFired = 0;
+                    if (--fireDelay <= 0) {
+                        amountFired = 1;
+                        fireDelay = 24;
+                    }
+                    if (--teleportCD < 0) {
+                        teleportCD = (int) (Math.random() * 30 + 15);
+                        Location destination = target.getEyeLocation().add(
+                                MathHelper.xsin_degree(ticksLived) * 2,
+                                2,
+                                MathHelper.xcos_degree(ticksLived) * 2);
+                        Vector trailVec = minionBukkit.getEyeLocation().subtract(destination).toVector();
+                        // prevent having a trace vector that is too long and introduces too much unnecessary visual effect
+                        double particleLineLength = trailVec.length();
+                        if (particleLineLength > 7) {
+                            trailVec.multiply(7 / particleLineLength);
+                            particleLineLength = 7;
+                        }
+                        GenericHelper.handleParticleLine(trailVec, destination,
+                                new GenericHelper.ParticleLineOptions()
+                                        .setParticleColor("102|204|255")
+                                        .setLength(particleLineLength));
+                        minionBukkit.teleport(destination);
+                        amountFired ++;
+                    }
+                    for (int i = 0; i < amountFired; i ++) {
+                        Vector projectileDir = target.getEyeLocation().subtract(minionBukkit.getEyeLocation()).toVector();
+                        if (projectileDir.lengthSquared() > 1e-9) {
+                            projectileDir = new Vector(0, 1, 0);
+                        }
+                        projectileDir.normalize().multiply(3);
+                        EntityHelper.spawnProjectile(minionBukkit, projectileDir, attrMap, "星尘细胞弹");
+                    }
+                    extraVariables.put("fireDelay", fireDelay);
+                } else {
+                    teleportCD = (int) (Math.random() * 5 + 5);
+                    targetLoc = target.getLocation().add(
+                            Math.random() * 2 - 1,
+                            Math.random() + 5,
+                            Math.random() * 2 - 1);
+                    if (minionBukkit.getLocation().distanceSquared(targetLoc) > 4) {
+                        velocity = targetLoc.subtract(minionBukkit.getLocation()).toVector();
+                        velocity.normalize().multiply(0.7);
+                    }
+                }
+                extraVariables.put("teleportCD", teleportCD);
+                break;
+            }
+            case "星尘之龙": {
+                // get all segments
+                boolean isHeadSegment = true;
+                ArrayList<Entity> allSegments = new ArrayList<>(allMinions.size());
+                for (Entity currMinion : allMinions) {
+                    if (currMinion.isDead()) continue;
+                    if (!GenericHelper.trimText(currMinion.getName()).equals(minionType)) continue;
+                    if (allSegments.size() == 0 && currMinion != minionBukkit) {
+                        isHeadSegment = false;
+                        break;
+                    }
+                    allSegments.add(currMinion);
+                }
+                // if the segment is the head, handle strike and segments following
+                if (isHeadSegment) {
+                    // tweak speed
+                    Vector v = null;
+                    if (targetIsOwner) {
+                        if (minionBukkit.getLocation().distanceSquared(owner.getLocation()) > 100 || ticksLived % 30 == 0) {
+                            v = target.getEyeLocation().add(0, 4, 0).subtract(minionBukkit.getLocation()).toVector();
+                        }
+                    } else {
+                        if (ticksLived % 8 == 0) {
+                            v = target.getEyeLocation().subtract(minionBukkit.getEyeLocation()).toVector();
+                        }
+                    }
+                    if (v != null) {
+                        if (v.lengthSquared() < 1e-9) v = new Vector(0, 1, 0);
+                        double distance = v.length();
+                        v.multiply(Math.min(
+                                ((allSegments.size() + 1) * 1.25 + distance * 0.25) / 6, 3)  / distance);
+                        velocity = v;
+                    }
+                    EntityHelper.handleSegmentsFollow(allSegments,
+                            new EntityHelper.WormSegmentMovementOptions()
+                                    .setStraighteningMultiplier(1)
+                                    .setFollowingMultiplier(1));
+                }
+                // set display name according to segment info
+                if (isHeadSegment) {
+                    setCustomName(minionType + "§1");
+                } else {
+                    setCustomName(minionType);
+                }
+                break;
+            }
+        }
+        // strike all enemies in path
+        if (hasContactDamage) {
+            MinionHelper.handleContactDamage(this, hasTeleported, getSize() * 0.5, basicDamage, damageCD, damageInvincibilityTicks);
         }
         motX = velocity.getX();
         motY = velocity.getY();

@@ -29,6 +29,7 @@ terraria\entity\TerrariaPotionProjectile$1.class
 terraria\util\ItemHelper$1.class
 terraria\util\PlayerHelper.class
 terraria\TerrariaHelper.class
+terraria\util\EntityHelper$WormSegmentMovementOptions.class
 terraria\util\GameplayHelper$1.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
 terraria\util\ItemUseHelper$1.class
