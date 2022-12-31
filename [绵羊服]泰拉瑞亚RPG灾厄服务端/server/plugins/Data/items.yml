@@ -1913,6 +1913,106 @@
     useTime: 20
   worth: 800000
   rarity: 3
+剑锋之誓约:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 25
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 21
+  worth: 800000
+  rarity: 3
+旧神之誓约:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 60
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 34
+  worth: 800000
+  rarity: 3
+残缺环境刃:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 47
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 29
+  worth: 800000
+  rarity: 3
+残缺环境刃[澄澈之纯净]:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 47
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 29
+  worth: 800000
+  rarity: 3
+残缺环境刃[拥怀之凛冽]:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 57
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 29
+  worth: 800000
+  rarity: 3
+残缺环境刃[伟岸之枯涸]:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 70
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 29
+  worth: 800000
+  rarity: 3
+残缺环境刃[反抗之衰朽]:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 63
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 29
+  worth: 800000
+  rarity: 3
+残缺环境刃[林妖之轻抚]:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 65
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 29
+  worth: 800000
+  rarity: 3
+破碎方舟:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 70
+    damageType: Melee
+    crit: 4
+    knockback: 6.25
+    useTime: 22
+  worth: 24000000
+  rarity: 4
+钨钢螺丝刀:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 9
+    damageType: Melee
+    crit: 4
+    knockback: 3.75
+    useTime: 22
+  worth: 2000000
+  rarity: 1
 太极连枷:
   item: STICK
   attributes:
