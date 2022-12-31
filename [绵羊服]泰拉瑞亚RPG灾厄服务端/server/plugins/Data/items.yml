@@ -1675,6 +1675,46 @@
     useTime: 30
   worth: 20000000
   rarity: 10
+赤潮矛:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 25
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 25
+  worth: 400000
+  rarity: 2
+海王三叉戟:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 12
+    damageType: Melee
+    crit: 4
+    knockback: 4.5
+    useTime: 17
+  worth: 400000
+  rarity: 2
+金羽:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 43
+    damageType: Melee
+    crit: 4
+    knockback: 5.75
+    useTime: 23
+  worth: 800000
+  rarity: 3
+绽花毒藤:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 30
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 22
+  worth: 400000
+  rarity: 2
 钴薙刀:
   item: DIAMOND_SWORD
   attributes:
@@ -1843,6 +1883,36 @@
     useTime: 45
   worth: 1750000
   rarity: 2
+海胆链枷:
+  item: STICK
+  attributes:
+    damage: 23
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 19
+  worth: 400000
+  rarity: 2
+海胆链球:
+  item: STICK
+  attributes:
+    damage: 33
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 25
+  worth: 400000
+  rarity: 2
+河豚链球:
+  item: STICK
+  attributes:
+    damage: 40
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 20
+  worth: 800000
+  rarity: 3
 太极连枷:
   item: STICK
   attributes:
