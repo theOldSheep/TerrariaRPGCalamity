@@ -144,6 +144,14 @@
   size: 4.5
   particleColor:
   - 0|0|175
+翡翠斧:
+  type: SWING
+  autoSwing: true
+  size: 5
+深渊碾碎者:
+  type: SWING
+  autoSwing: true
+  size: 5
 剑鱼:
   type: STAB
   size: 4
