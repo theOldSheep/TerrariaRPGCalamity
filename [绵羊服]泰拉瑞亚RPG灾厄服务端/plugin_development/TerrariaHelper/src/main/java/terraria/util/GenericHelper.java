@@ -513,4 +513,12 @@ public class GenericHelper {
         else displayLoc = e.getLocation().add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
         displayHoloText(displayLoc, text, ticksDisplay, 1f, 0.75f, 0.75f);
     }
+    public static Map.Entry<Double, Double> getDirectionInterpolateOffset(Map.Entry<Double, Double> initialDir,
+                                                                          Map.Entry<Double, Double> finalDir, double progress) {
+        double yawOffset = finalDir.getKey() - initialDir.getKey();
+        if (yawOffset < -180) yawOffset += 360;
+        if (yawOffset > 180) yawOffset -= 360;
+        double pitchOffset = finalDir.getValue() - initialDir.getValue();
+        return new AbstractMap.SimpleImmutableEntry<>(yawOffset * progress, pitchOffset * progress);
+    }
 }

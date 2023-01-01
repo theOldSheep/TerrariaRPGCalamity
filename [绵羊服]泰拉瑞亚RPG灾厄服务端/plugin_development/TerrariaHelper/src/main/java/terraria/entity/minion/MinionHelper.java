@@ -92,6 +92,23 @@ public class MinionHelper {
     private static Collection<net.minecraft.server.v1_12_R1.Entity> getNearbyEntities(net.minecraft.server.v1_12_R1.Entity e, double radius, com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication) {
         return e.getWorld().getEntities(e, e.getBoundingBox().g(radius), predication);
     }
+    private static com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> getTargetPredication(
+            EntityInsentient minion, EntityPlayer owner, boolean needLineOfSight) {
+        Entity minionBukkit = minion.getBukkitEntity();
+        if (needLineOfSight)
+            return (entity) ->
+                    entity != null &&
+                    EntityHelper.checkCanDamage(minionBukkit, entity.getBukkitEntity(), true) &&
+                            (minion.hasLineOfSight(entity) || owner.hasLineOfSight(entity));
+        else
+            return (entity) ->
+                    entity != null &&
+                    EntityHelper.checkCanDamage(minionBukkit, entity.getBukkitEntity(), true);
+    }
+    public static boolean checkTargetIsValidEnemy(EntityInsentient minion, EntityPlayer owner, EntityLiving target, boolean needLineOfSight) {
+        com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication = getTargetPredication(minion, owner, needLineOfSight);
+        return target != owner && predication.test(target);
+    }
     public static void setTarget(EntityInsentient minion, EntityPlayer owner, boolean needLineOfSight, boolean protectOwner) {
         // check distance from the player
         {
@@ -103,17 +120,9 @@ public class MinionHelper {
                 return;
             }
         }
-        Entity minionBukkit = minion.getBukkitEntity();
         EntityLiving finalTarget = owner;
         // strict mode is on so that the minion does not target critters.
-        com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication;
-        if (needLineOfSight)
-            predication = (entity) ->
-                    EntityHelper.checkCanDamage(minionBukkit, entity.getBukkitEntity(), true) &&
-                            minion.hasLineOfSight(entity);
-        else
-            predication = (entity) ->
-                    EntityHelper.checkCanDamage(minionBukkit, entity.getBukkitEntity(), true);
+        com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication = getTargetPredication(minion, owner, needLineOfSight);
         // check if current target is valid
         {
             EntityLiving goalTarget = minion.getGoalTarget();

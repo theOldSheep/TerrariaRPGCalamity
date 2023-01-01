@@ -1579,8 +1579,8 @@ public class EntityHelper {
             Entity segmentLast = segments.get(i - 1);
             Entity segmentCurrent = segments.get(i);
             Entity segmentNext = segments.get(Math.min(i + 1, segments.size()) - 1);
-            Vector segDVec = segmentLast.getLocation().subtract(segmentNext.getLocation()).toVector();
-            Vector followDir = segmentLast.getLocation().subtract(segmentCurrent.getLocation()).toVector();
+            Vector segDVec = segmentLast.getLocation().subtract(segmentNext.getLocation()).toVector().normalize();
+            Vector followDir = segmentLast.getLocation().subtract(segmentCurrent.getLocation()).toVector().normalize();
             Vector dVec = segDVec.multiply(moveOption.straighteningMultiplier)
                     .add(followDir.multiply(moveOption.followingMultiplier));
             if (dVec.lengthSquared() > 1e-9) {
