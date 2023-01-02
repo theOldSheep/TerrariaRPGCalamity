@@ -513,12 +513,38 @@ public class GenericHelper {
         else displayLoc = e.getLocation().add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
         displayHoloText(displayLoc, text, ticksDisplay, 1f, 0.75f, 0.75f);
     }
-    public static Map.Entry<Double, Double> getDirectionInterpolateOffset(Map.Entry<Double, Double> initialDir,
-                                                                          Map.Entry<Double, Double> finalDir, double progress) {
-        double yawOffset = finalDir.getKey() - initialDir.getKey();
+    public static Map.Entry<Double, Double> interpolateDirection(double initialYaw, double initialPitch,
+                                                                 double offsetYaw, double offsetPitch) {
+        double finalYaw = initialYaw + offsetYaw;
+        double finalPitch = initialPitch + offsetPitch;
+        // regularize not number / infinity
+        if (Double.isNaN(finalYaw) || finalYaw == Double.NEGATIVE_INFINITY || finalYaw == Double.POSITIVE_INFINITY)
+            finalYaw = 0;
+        if (Double.isNaN(finalPitch) || finalPitch == Double.NEGATIVE_INFINITY || finalPitch == Double.POSITIVE_INFINITY)
+            finalPitch = 0;
+        // regulate pitch
+        if (finalPitch > 90) {
+            // 90 - (finalPitch - 90)
+            finalPitch = 180 - finalPitch;
+            finalYaw += 180;
+        }
+        if (finalPitch < -90) {
+            // -90 + (-90 - finalPitch)
+            finalPitch = -180 - finalPitch;
+            finalYaw += 180;
+        }
+        // regulate yaw
+        while (finalYaw > 180) finalYaw -= 360;
+        while (finalYaw < -180) finalYaw += 360;
+        return new AbstractMap.SimpleImmutableEntry<>(finalYaw, finalPitch);
+    }
+    public static Map.Entry<Double, Double> getDirectionInterpolateOffset(double initialYaw, double initialPitch,
+                                                                          double targetYaw, double targetPitch, double progress) {
+        double yawOffset = targetYaw - initialYaw;
         if (yawOffset < -180) yawOffset += 360;
         if (yawOffset > 180) yawOffset -= 360;
-        double pitchOffset = finalDir.getValue() - initialDir.getValue();
+        double pitchOffset = targetPitch - initialPitch;
+        // TODO: (?) swing over head or below foot
         return new AbstractMap.SimpleImmutableEntry<>(yawOffset * progress, pitchOffset * progress);
     }
 }

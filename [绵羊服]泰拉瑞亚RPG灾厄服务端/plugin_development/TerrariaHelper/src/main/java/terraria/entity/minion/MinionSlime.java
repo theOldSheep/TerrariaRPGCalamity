@@ -1,22 +1,24 @@
 package terraria.entity.minion;
 
-import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
+import net.minecraft.server.v1_12_R1.EntitySlime;
+import net.minecraft.server.v1_12_R1.GenericAttributes;
+import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Slime;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
-import terraria.entity.HitEntityInfo;
 import terraria.util.EntityHelper;
 import terraria.util.GenericHelper;
 import terraria.util.MathHelper;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MinionSlime extends EntitySlime {
     org.bukkit.entity.Player owner;
@@ -92,6 +94,12 @@ public class MinionSlime extends EntitySlime {
                 setNoGravity(true);
                 break;
             }
+            case "附魔飞刀": {
+                damageInvincibilityTicks = 5;
+                noclip = true;
+                setNoGravity(true);
+                break;
+            }
             case "小激光眼": {
                 new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                         this.sentryOrMinion, true,
@@ -100,6 +108,7 @@ public class MinionSlime extends EntitySlime {
                 break;
             }
             case "致命球": {
+                damageInvincibilityTicks = 10;
                 setNoGravity(true);
                 break;
             }
@@ -118,7 +127,7 @@ public class MinionSlime extends EntitySlime {
                                 .setParticleInfo(new GenericHelper.ParticleLineOptions()
                                         .setWidth(0.2)
                                         .setLength(6)
-                                        .setTicksLinger(3)
+                                        .setTicksLinger(2)
                                         .setParticleColor(
                                                 "255|0|0",
                                                 "255|255|0",
@@ -169,6 +178,7 @@ public class MinionSlime extends EntitySlime {
         else target = owner;
         boolean targetIsOwner = target == owner;
         switch (minionType) {
+            // no breaking here. AI is handled below.
             case "小鬼":
                 setCustomName("小鬼§" + (index / 4) % 4);
             case "钨钢无人机": {
@@ -228,7 +238,7 @@ public class MinionSlime extends EntitySlime {
                 }
                 // setup velocity
                 boolean shouldUpdateVelocity = targetIsOwner || index % 5 == 0;
-                double maxSpeed = targetIsOwner ? 2 : 1.75;
+                double maxSpeed = targetIsOwner ? 2 : 3;
                 if (shouldUpdateVelocity) {
                     velocity = targetLoc.subtract(minionBukkit.getLocation()).toVector();
                     double distance = velocity.length();
@@ -302,20 +312,20 @@ public class MinionSlime extends EntitySlime {
                             if (targetIsOwner)
                                 velocity.multiply(Math.max(distance / 20, 0.75) / distance);
                             else
-                                velocity.multiply(2 / distance);
+                                velocity.multiply(3 / distance);
                         }
                         break;
                     }
                     case 6: {
                         if (!targetIsOwner)
-                            velocity.multiply(0.3);
+                            velocity.multiply(0.6);
                         break;
                     }
                 }
                 break;
             }
             case "致命球": {
-                int roundDuration = 15;
+                int roundDuration = 12;
                 int round = (index / roundDuration) % 4;
                 if (round < 3 || targetIsOwner) {
                     int roundPhase = index % roundDuration;
@@ -334,7 +344,7 @@ public class MinionSlime extends EntitySlime {
                         if (targetIsOwner) {
                             velocity.multiply(Math.max(1, distance / roundDuration) / distance);
                         } else {
-                            velocity.multiply(Math.max(2, distance / roundDuration / 2) / distance);
+                            velocity.multiply(Math.max(2, distance / roundDuration * 1.75) / distance);
                         }
                     }
                     // slow down; float up if target is not the owner
@@ -465,55 +475,43 @@ public class MinionSlime extends EntitySlime {
                 double currPitch = (double) extraVariables.getOrDefault("pitch", 0.0);
                 double dYaw = (double) extraVariables.getOrDefault("dYaw", 0.0);
                 double dPitch = (double) extraVariables.getOrDefault("dPitch", 0.0);
-                // stab or swing
-                boolean attackMethod = (boolean) extraVariables.getOrDefault("atkMethod", true);
                 // handle velocity and dYaw dPitch
                 if (!targetIsOwner) {
-                    int ind = index % 24;
-                    if (ind == 0) {
-                        attackMethod = !attackMethod;
-                    }
+                    int ind = index % 16;
                     Vector direction = target.getEyeLocation().subtract(minionBukkit.getLocation()).toVector();
                     if (direction.lengthSquared() < 1e-9) direction = new Vector(0, 1, 0);
-                    // stab
-                    if (attackMethod) {
+                    // fly upward
+                    if (ind < 8) {
                         if (ind == 0) {
-                            Vector dir = direction.clone().subtract(new Vector(0, 4, 0));
+                            Vector dir = direction.clone().subtract(new Vector(0, 6, 0));
                             if (dir.lengthSquared() < 1e-9) dir = new Vector(0, 1, 0);
                             Map.Entry<Double, Double> newDeltaDir = GenericHelper.getDirectionInterpolateOffset(
-                                    new AbstractMap.SimpleImmutableEntry<>(currYaw, currPitch),
-                                    new AbstractMap.SimpleImmutableEntry<>(MathHelper.getVectorYaw(dir), MathHelper.getVectorPitch(dir)),
-                                    1d / 12);
+                                    currYaw, currPitch, MathHelper.getVectorYaw(dir), MathHelper.getVectorPitch(dir), 1d / 8);
                             dYaw = newDeltaDir.getKey();
                             dPitch = newDeltaDir.getValue();
-                            velocity = new Vector(0, 0.5, 0);
+                        } else if (ind == 7) {
+                            extraVariables.put("tgt", target);
                         }
-                        else if (ind == 12) {
-                            velocity = direction.multiply(1d / 8);
-                            dYaw = 0;
-                            dPitch = 0;
-                        }
+                        velocity = new Vector(0, 0.75, 0);
                     }
-                    // swing
-                    else {
-                        if (ind == 0) {
-                            Vector dir = direction.clone().add(new Vector(0, 4, 0));
-                            if (dir.lengthSquared() < 1e-9) dir = new Vector(0, 1, 0);
-                            Map.Entry<Double, Double> newDeltaDir = GenericHelper.getDirectionInterpolateOffset(
-                                    new AbstractMap.SimpleImmutableEntry<>(currYaw, currPitch),
-                                    new AbstractMap.SimpleImmutableEntry<>(MathHelper.getVectorYaw(dir), MathHelper.getVectorPitch(dir)),
-                                    1d / 12);
-                            dYaw = newDeltaDir.getKey();
-                            dPitch = newDeltaDir.getValue();
-                            velocity = direction.multiply(0.1);
-                        }
+                    // charge at enemy
+                    else if (ind < 14) {
+                        direction = ((LivingEntity) (extraVariables.getOrDefault("tgt", target))).getEyeLocation()
+                                .subtract(minionBukkit.getLocation()).toVector();
+                        dYaw = 0;
+                        dPitch = 0;
+                        currYaw = MathHelper.getVectorYaw(direction);
+                        currPitch = MathHelper.getVectorPitch(direction);
+                        velocity = direction;
+                        double distance = velocity.length();
+                        if (distance > 1e-9)
+                            velocity.multiply(Math.max(distance / (14 - ind), 2 + Math.random())  / distance);
                     }
                 }
                 // target is owner
                 else {
-                    // the next time any enemy is spotted, the minions are ready to stab the enemy
-                    index = 12 + (int) (Math.random() * 12);
-                    attackMethod = false;
+                    // the next time any enemy is spotted, the minions are ready to attack
+                    index = 15;
                     // move to the proper location for this minion
                     Entity firstPrism = minionBukkit;
                     int idxCurr = 1, totalPrism = 1;
@@ -531,9 +529,7 @@ public class MinionSlime extends EntitySlime {
                             targetPitch = -20 - idleIndex * 5;
                     targetYaw += 180d / totalPrism * idxCurr - 90d;
                     Map.Entry<Double, Double> newDeltaDir = GenericHelper.getDirectionInterpolateOffset(
-                            new AbstractMap.SimpleImmutableEntry<>(currYaw, currPitch),
-                            new AbstractMap.SimpleImmutableEntry<>(targetYaw, targetPitch),
-                            0.25);
+                            currYaw, currPitch, targetYaw, targetPitch, 0.25);
                     dYaw = newDeltaDir.getKey();
                     dPitch = newDeltaDir.getValue();
                     // every prism should move periodically according to the first prism.
@@ -543,18 +539,17 @@ public class MinionSlime extends EntitySlime {
                     velocity = targetLoc.subtract(minionBukkit.getLocation()).toVector();
                     velocity.multiply(0.35);
                 }
-                currYaw += dYaw;
-                currPitch += dPitch;
+                Map.Entry<Double, Double> newDir = GenericHelper.interpolateDirection(currYaw, currPitch, dYaw, dPitch);
+                currYaw = newDir.getKey();
+                currPitch = newDir.getValue();
                 // handle strike
-                if (ticksLived % 2 == 0)
-                    GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(), currYaw, currPitch, 6.0, 0.2,
-                            "", "0|0|0", damageCD, (HashMap<String, Double>) attrMap.clone(),
-                            (GenericHelper.StrikeLineOptions) extraVariables.get("strikeLineOption"));
+                GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(), currYaw, currPitch, 5.0, 0.25,
+                        "", "0|0|0", damageCD, (HashMap<String, Double>) attrMap.clone(),
+                        (GenericHelper.StrikeLineOptions) extraVariables.get("strikeLineOption"));
                 extraVariables.put("yaw", currYaw);
                 extraVariables.put("pitch", currPitch);
                 extraVariables.put("dYaw", dYaw);
                 extraVariables.put("dPitch", dPitch);
-                extraVariables.put("atkMethod", attackMethod);
                 break;
             }
         }

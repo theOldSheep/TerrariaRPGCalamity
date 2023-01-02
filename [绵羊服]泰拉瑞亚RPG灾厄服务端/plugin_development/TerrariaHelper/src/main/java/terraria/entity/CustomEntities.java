@@ -1,10 +1,9 @@
 package terraria.entity;
 
-import net.minecraft.server.v1_12_R1.Entity;
-import net.minecraft.server.v1_12_R1.EntitySlime;
-import net.minecraft.server.v1_12_R1.EntityTypes;
-import net.minecraft.server.v1_12_R1.MinecraftKey;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.entity.EntityType;
+import terraria.entity.minion.MinionCaveSpider;
+import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
 
 /*
@@ -12,7 +11,9 @@ class from https://www.spigotmc.org/threads/nms-tutorials-2-custom-nms-entities-
  */
 public enum CustomEntities {
 
-    MINION_SLIME("MinionSlime", 55, EntityType.SLIME, EntitySlime.class, MinionSlime.class);
+    MINION_SLIME       ("MinionSlime"     , 55, EntityType.SLIME      , EntitySlime.class,      MinionSlime.class),
+    MINION_HUSK        ("MinionHusk"      , 23, EntityType.HUSK       , EntityZombieHusk.class, MinionHusk .class),
+    MINION_CAVE_SPIDER ("MinionCaveSpider", 59, EntityType.CAVE_SPIDER, EntityCaveSpider.class, MinionCaveSpider.class);
 
     private String name;
     private int id;

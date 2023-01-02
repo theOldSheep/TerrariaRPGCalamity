@@ -25,6 +25,7 @@ public class TerrariaItem extends EntityItem {
     public String itemType;
     public org.bukkit.inventory.ItemStack bukkitItemStack;
     public boolean canBeMerged;
+    EntityPlayer pickedUpBy = null;
     public TerrariaItem (org.bukkit.Location loc, org.bukkit.inventory.ItemStack item) {
         super(((CraftWorld) loc.getWorld()).getHandle(),
                 loc.getX(), loc.getY(), loc.getZ(),
@@ -150,9 +151,9 @@ public class TerrariaItem extends EntityItem {
 
         // find the player that could pick it up
         double greatestPickupAbility = 0;
-        EntityPlayer nearest = null;
         // if the item can be picked up, find the player that will pick it up.
-        if (this.pickupDelay <= 0) {
+        if (this.pickupDelay <= 0 && ticksLived % 5 == 0) {
+            pickedUpBy = null;
             for (EntityPlayer p : this.world.a(EntityPlayer.class, this.getBoundingBox().grow(maxPickupRadius, maxPickupRadius, maxPickupRadius))) {
                 if (p.playerInteractManager.getGameMode() != EnumGamemode.SURVIVAL) continue;
                 if (p.getScoreboardTags().contains("unauthorized")) continue;
@@ -168,7 +169,7 @@ public class TerrariaItem extends EntityItem {
                     // player can not hold new item
                     if (!PlayerHelper.canHoldAny(p.getBukkitEntity(), bukkitItemStack)) continue;
                     greatestPickupAbility = distSqr;
-                    nearest = p;
+                    pickedUpBy = p;
                 }
             }
         }
@@ -177,10 +178,10 @@ public class TerrariaItem extends EntityItem {
         double d1 = this.motY;
         double d2 = this.motZ;
         Vector currVelocity = new Vector(this.motX, this.motY, this.motZ);
-        if (nearest != null) {
+        if (pickedUpBy != null) {
             double speed = currVelocity.length() + 0.1;
             this.noclip = true;
-            Vector acceleration = new Vector(nearest.locX - this.locX, nearest.locY - this.locY, nearest.locZ - this.locZ);
+            Vector acceleration = new Vector(pickedUpBy.locX - this.locX, pickedUpBy.locY - this.locY, pickedUpBy.locZ - this.locZ);
             double accelerationLength = acceleration.length();
             // this item is very close to the player
             if (accelerationLength < speed) currVelocity = acceleration;
@@ -208,7 +209,7 @@ public class TerrariaItem extends EntityItem {
 
         // slow down the item slightly
         float f = 0.95F;
-        if (nearest == null) {
+        if (pickedUpBy == null) {
             // if it is on ground and nobody would pick it up, slow down according to friction factor
             // if it has no gravity and nobody would pick it up, slow it down at a much faster rate
             if (this.onGround) {
@@ -220,7 +221,7 @@ public class TerrariaItem extends EntityItem {
         this.motY *= f;
         this.motZ *= f;
         // nobody is picking it up: stays on the ground
-        if (this.onGround && nearest == null) {
+        if (this.onGround && pickedUpBy == null) {
             this.motY *= -0.5;
         }
         // tick water

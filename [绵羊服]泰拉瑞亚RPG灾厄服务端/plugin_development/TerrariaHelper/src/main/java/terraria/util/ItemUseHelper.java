@@ -21,6 +21,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.HitEntityInfo;
+import terraria.entity.minion.MinionCaveSpider;
+import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
 
 import java.util.*;
@@ -1076,8 +1078,12 @@ public class ItemUseHelper {
         Entity minionEntity = null;
         switch (type) {
             case "矮人":
+                MinionHusk huskMinion = new MinionHusk(ply, minionSlot, minionSlotMax, sentryOrMinion, hasContactDamage, type, attrMap, originalStaff);
+                minionEntity = huskMinion.getBukkitEntity();
                 break;
             case "蜘蛛":
+                MinionCaveSpider caveSpiderMinion = new MinionCaveSpider(ply, minionSlot, minionSlotMax, sentryOrMinion, hasContactDamage, type, attrMap, originalStaff);
+                minionEntity = caveSpiderMinion.getBukkitEntity();
                 break;
             default:
                 MinionSlime slimeMinion = new MinionSlime(ply, minionSlot, minionSlotMax, sentryOrMinion, hasContactDamage, type, attrMap, originalStaff);

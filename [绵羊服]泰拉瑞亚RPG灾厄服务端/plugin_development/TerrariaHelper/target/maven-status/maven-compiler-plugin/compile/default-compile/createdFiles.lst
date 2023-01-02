@@ -35,6 +35,7 @@ terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
 terraria\util\ItemUseHelper$1.class
 terraria\worldgen\overworld\OverworldChunkGenerator.class
 terraria\util\BossHelper.class
+terraria\entity\minion\MinionHusk.class
 terraria\event\listener\PlayerQuitListener.class
 terraria\gameplay\Event.class
 terraria\worldgen\overworld\NoiseGeneratorTest.class
@@ -54,6 +55,7 @@ terraria\worldgen\Interpolate.class
 terraria\util\GenericHelper.class
 terraria\event\listener\DropItemSpawnListener.class
 terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
+terraria\entity\minion\MinionCaveSpider.class
 terraria\entity\CustomEntities.class
 terraria\event\listener\DamageListener$1.class
 terraria\event\listener\ItemUseAndAttributeListener.class
