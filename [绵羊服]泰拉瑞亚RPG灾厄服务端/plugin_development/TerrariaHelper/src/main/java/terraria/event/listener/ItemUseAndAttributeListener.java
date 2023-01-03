@@ -2,6 +2,7 @@ package terraria.event.listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
@@ -12,6 +13,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
@@ -46,6 +48,14 @@ public class ItemUseAndAttributeListener implements Listener {
         ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem != null && ItemHelper.getItemCombatType(clickedItem).equals("装备")) {
             clickedItem.setItemMeta(ItemHelper.getRawItem(ItemHelper.splitItemName(clickedItem)[1]).getItemMeta());
+        }
+        // open crates
+        if (e.getClick() == ClickType.RIGHT) {
+            ItemStack cursor = e.getCursor();
+            if (cursor == null || cursor.getType() == Material.AIR) {
+                if (ItemUseHelper.playerOpenCrate(ply, e.getCurrentItem()))
+                    e.setCancelled(true);
+            }
         }
     }
     @EventHandler(priority = EventPriority.LOW)

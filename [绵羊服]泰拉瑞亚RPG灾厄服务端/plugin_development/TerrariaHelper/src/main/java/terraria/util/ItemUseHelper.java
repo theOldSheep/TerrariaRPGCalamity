@@ -1,6 +1,6 @@
 package terraria.util;
 
-import lk.vexview.event.DownloadFailedEvent;
+import io.netty.handler.codec.http2.Http2FrameWriter;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.MovingObjectPosition;
 import net.minecraft.server.v1_12_R1.PacketPlayOutSetCooldown;
@@ -8,14 +8,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.*;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -126,7 +123,7 @@ public class ItemUseHelper {
             }
             default: {
                 HashSet<String> accessories = PlayerHelper.getAccessories(ply);
-                ConfigurationSection potionConfig = TerrariaHelper.consumableConfig.getConfigurationSection(itemType);
+                ConfigurationSection potionConfig = TerrariaHelper.potionItemConfig.getConfigurationSection(itemType);
                 HashMap<String, Double> buffsProvided = new HashMap<>(4);
                 if (potionConfig != null) {
                     // initializes the buff provided by the potion
@@ -1175,7 +1172,9 @@ public class ItemUseHelper {
             // void bag, piggy bank, musical instruments etc.
             if (isRightClick && playerUseMiscellaneous(ply, itemName)) return;
             // potion and other consumable consumption
-            if (isRightClick && playerUsePotion(ply, itemName, mainHandItem, QuickBuffType.NONE)) return;
+            if (isRightClick) {
+                if (playerUsePotion(ply, itemName, mainHandItem, QuickBuffType.NONE)) return;
+            }
             // weapon
             String weaponYMLPath = itemName + (isRightClick ? "_RIGHT_CLICK" : "");
             ConfigurationSection weaponSection = TerrariaHelper.weaponConfig.getConfigurationSection(weaponYMLPath);
@@ -1253,5 +1252,41 @@ public class ItemUseHelper {
                 }
             }
         }
+    }
+    // this function is called when the player right-clicks an item in inventory.
+    public static boolean playerOpenCrate(Player ply, ItemStack item) {
+        ConfigurationSection config = TerrariaHelper.crateConfig;
+        String itemType = ItemHelper.splitItemName(item)[1];
+        if (itemType.equals("专家模式福袋")) {
+            config = config.getConfigurationSection(itemType);
+            itemType = GenericHelper.trimText(item.getItemMeta().getLore().get(0));
+        }
+        // if the item is not set, to prevent bug.
+        if (itemType.equals("")) return false;
+        config = config.getConfigurationSection(itemType);
+        if (config != null) {
+            item.setAmount(item.getAmount() - 1);
+            Collection<String> nodes = config.getKeys(false);
+            // give items in each section to the player
+            for (String dropSectionIndex : nodes) {
+                ConfigurationSection dropSection = config.getConfigurationSection(dropSectionIndex);
+                List<String> items = dropSection.getStringList("items");
+                boolean shouldGiveAllItems = dropSection.getBoolean("giveAllItems", true);
+                if (shouldGiveAllItems) {
+                    for (String itemDescToGive : items) {
+                        PlayerHelper.giveItem(ply, ItemHelper.getItemFromDescription(itemDescToGive), true);
+                    }
+                } else {
+                    int amountToGive = dropSection.getInt("amountToGive", 1);
+                    for (int i = 0; i < amountToGive; i++) {
+                        if (items.isEmpty()) break;
+                        String itemDescToGive = items.remove((int) (Math.random() * items.size()));
+                        PlayerHelper.giveItem(ply, ItemHelper.getItemFromDescription(itemDescToGive), true);
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

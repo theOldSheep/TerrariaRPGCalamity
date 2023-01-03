@@ -179,24 +179,7 @@ public class GameplayHelper {
             List<String> itemsToDrop = configSection.getStringList("dropItem");
             Location locToDrop = blockToBreak.getLocation().add(0.5, 0.4, 0.5);
             for (String currItem : itemsToDrop) {
-                String[] itemInfo = currItem.split(":");
-                // 物品名:最小数量:最大数量:几率
-                int itemAmount = 1;
-                switch (itemInfo.length) {
-                    case 4:
-                        double chance = Double.parseDouble(itemInfo[3]);
-                        if (Math.random() > chance) continue;
-                        break;
-                    case 3:
-                        int itemMax = Integer.parseInt(itemInfo[2]);
-                        int itemMin = Integer.parseInt(itemInfo[1]);
-                        itemAmount = (int) (itemMin + (itemMax - itemMin + 1) * Math.random());
-                        break;
-                    case 2:
-                        itemAmount = Integer.parseInt(itemInfo[1]);
-                }
-                org.bukkit.inventory.ItemStack itemToDrop = ItemHelper.getRawItem(itemInfo[0]);
-                itemToDrop.setAmount(itemAmount);
+                org.bukkit.inventory.ItemStack itemToDrop = ItemHelper.getItemFromDescription(currItem);
 
                 long ns = System.nanoTime();
 

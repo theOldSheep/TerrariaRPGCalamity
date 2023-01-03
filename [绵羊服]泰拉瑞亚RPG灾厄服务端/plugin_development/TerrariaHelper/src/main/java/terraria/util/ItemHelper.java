@@ -337,8 +337,26 @@ public class ItemHelper {
                 // take one recursive call to get the item then set the amount.
                 String[] info = information.split(":");
                 ItemStack result = getItemFromDescription(info[0], randomizePrefixIfNoneExists, notFoundDefault);
-                if (!result.isSimilar(notFoundDefault))
-                    result.setAmount(Integer.parseInt(info[1]));
+                if (!result.isSimilar(notFoundDefault)) {
+                    // 物品名:最小数量:最大数量:几率
+                    int itemAmount = 1;
+                    switch (info.length) {
+                        case 4:
+                            double chance = Double.parseDouble(info[3]);
+                            if (Math.random() > chance) {
+                                itemAmount = 0;
+                                break;
+                            }
+                        case 3:
+                            int itemMax = Integer.parseInt(info[2]);
+                            int itemMin = Integer.parseInt(info[1]);
+                            itemAmount = (int) (itemMin + (itemMax - itemMin + 1) * Math.random());
+                            break;
+                        case 2:
+                            itemAmount = Integer.parseInt(info[1]);
+                    }
+                    result.setAmount(itemAmount);
+                }
                 return result;
             } else {
                 String[] itemNameInfo = splitItemName(information);

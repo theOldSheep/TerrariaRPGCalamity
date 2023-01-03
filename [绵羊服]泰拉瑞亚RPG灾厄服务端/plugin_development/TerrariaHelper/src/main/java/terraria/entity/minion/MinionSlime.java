@@ -113,7 +113,7 @@ public class MinionSlime extends EntitySlime {
                 break;
             }
             case "星尘之龙": {
-//                setSize(2, false);
+                damageInvincibilityTicks = 10;
                 protectOwner = false;
                 targetNeedLineOfSight = false;
                 noclip = true;
@@ -171,7 +171,7 @@ public class MinionSlime extends EntitySlime {
                 || ticksLived % 10 == 0)
             MinionHelper.setTarget(this, ((CraftPlayer) owner).getHandle(), targetNeedLineOfSight, protectOwner);
         // extra ticking AI
-        Vector velocity = new Vector(motX, motY, motZ);
+        Vector velocity = new Vector(motX / 0.91, motY / 0.98, motZ / 0.91);
         Collection<Entity> allMinions = (Collection<Entity>) EntityHelper.getMetadata(owner, sentryOrMinion ? "sentries" : "minions").value();
         LivingEntity target, minionBukkit = (LivingEntity) getBukkitEntity();
         if (getGoalTarget() != null) target = (LivingEntity) (getGoalTarget().getBukkitEntity());
@@ -205,9 +205,10 @@ public class MinionSlime extends EntitySlime {
                     String projectileType;
                     if (minionType.equals("小鬼")) {
                         projectileType = "小火花";
-                        projectileVelocity.multiply(1.5);
+                        projectileVelocity.multiply(2);
                     } else {
                         projectileType = "钨钢光球";
+                        projectileVelocity.multiply(1.5);
                     }
                     EntityHelper.spawnProjectile(minionBukkit, projectileVelocity, attrMap, projectileType);
                     shootDelay = (int) (Math.random() * 10) + 15;
@@ -461,6 +462,10 @@ public class MinionSlime extends EntitySlime {
                                     .setFollowingMultiplier(1)
                                     .setFollowDistance(0.5)
                                     .setVelocityOrTeleport(false));
+                }
+                // body segments should not have velocity
+                else {
+                    velocity = new Vector(0, 0, 0);
                 }
                 // set display name according to segment info
                 if (isHeadSegment) {

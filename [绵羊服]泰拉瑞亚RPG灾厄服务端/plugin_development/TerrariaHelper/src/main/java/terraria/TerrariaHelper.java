@@ -29,9 +29,10 @@ public class TerrariaHelper extends JavaPlugin {
     public static final YmlHelper.YmlSection armorSetConfig = YmlHelper.getFile("plugins/Data/armorSet.yml");
     public static final YmlHelper.YmlSection blockConfig = YmlHelper.getFile("plugins/Data/blocks.yml");
     public static final YmlHelper.YmlSection buffConfig = YmlHelper.getFile("plugins/Data/buff.yml");
-    public static final YmlHelper.YmlSection consumableConfig = YmlHelper.getFile("plugins/Data/consumeable.yml");
+    public static final YmlHelper.YmlSection crateConfig = YmlHelper.getFile("plugins/Data/crates.yml");
     public static final YmlHelper.YmlSection entityConfig = YmlHelper.getFile("plugins/Data/entities.yml");
     public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");
+    public static final YmlHelper.YmlSection potionItemConfig = YmlHelper.getFile("plugins/Data/potionItem.yml");
     public static final YmlHelper.YmlSection prefixConfig = YmlHelper.getFile("plugins/Data/prefix.yml");
     public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/projectiles.yml");
     public static final YmlHelper.YmlSection recipeConfig = YmlHelper.getFile("plugins/Data/recipes.yml");
