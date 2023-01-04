@@ -1,6 +1,7 @@
 # 匹配界面名,hud为自动开启
 match: "hud"
 priority: 1
+updateInterval: 100
 
 Functions:
   open: "方法.异步执行方法('更新药水变量')"

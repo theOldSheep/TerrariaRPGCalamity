@@ -16,6 +16,7 @@ hideHud:
 # 或者直接填写箱子界面名称，即可替换箱子界面(颜色符号需写为§)
 match: "hud"
 priority: 1
+updateInterval: 250
 # 鼠标拿着物品时的显示大小
 currentItemSize: 16
 
@@ -26,7 +27,8 @@ Functions:
   
   # 设置玩家显示的血量
   preRender: |-
-    界面变量.healthRounded = 方法.玩家是否飞行() ? 方法.到整数(0) : 方法.到整数(方法.玩家血量())
+    界面变量.healthRounded = 方法.玩家是否飞行() ? 方法.到整数(0) : 方法.到整数(方法.玩家血量());
+    界面变量.healthRounded = 方法.到整数(方法.玩家血量());
 
   # 关于变量更新在 背包.yml 里讲了,可以去那个配置里看
   更新hud变量: |-
