@@ -35,6 +35,7 @@ public class ItemUseHelper {
     public static int applyCD(Player ply, double CD) {
         int coolDown = (int) CD;
         if (Math.random() < CD % 1) coolDown ++;
+        if (coolDown == 0 && CD > 0) coolDown = 1;
         return applyCD(ply, coolDown);
     }
     public static int applyCD(Player ply, int CD) {
@@ -275,7 +276,7 @@ public class ItemUseHelper {
         {
             Vector eyeLoc = ply.getEyeLocation().toVector();
             Vector endLoc = eyeLoc.clone().add(lookDir.clone().multiply(traceDist));
-            // the block the player is looking at, if near enough
+            // the block the player is looking ticksBeforeHookingFish, if near enough
             {
                 MovingObjectPosition rayTraceResult = HitEntityInfo.rayTraceBlocks(
                         plyWorld,
@@ -286,7 +287,7 @@ public class ItemUseHelper {
                     targetLoc = endLoc.toLocation(plyWorld);
                 }
             }
-            // the enemy the player is looking at, if applicable
+            // the enemy the player is looking ticksBeforeHookingFish, if applicable
             if (eyeLoc.distanceSquared(endLoc) > entityEnlargeRadius * entityEnlargeRadius * 4) {
                 Set<HitEntityInfo> hits = HitEntityInfo.getEntitiesHit(
                         plyWorld,
@@ -605,29 +606,11 @@ public class ItemUseHelper {
         }
     }
     private static String consumePlayerAmmo(Player ply, Predicate<ItemStack> ammoPredicate, double consumptionRate) {
-        // in the player's inventory
-        Inventory plyInv = ply.getInventory();
-        for (int i = 0; i < 36; i ++) {
-            ItemStack currItem = plyInv.getItem(i);
-            if (currItem != null && ammoPredicate.test(currItem)) {
-                String ammoName = ItemHelper.splitItemName(currItem)[1];
-                if (Math.random() < consumptionRate) currItem.setAmount(currItem.getAmount() - 1);
-                return ammoName;
-            }
-        }
-        // in the player's void bag
-        if (PlayerHelper.hasVoidBag(ply)) {
-            Inventory voidBagInv = PlayerHelper.getInventory(ply, "voidBag");
-            for (ItemStack currItem : voidBagInv.getContents()) {
-                if (currItem != null && ammoPredicate.test(currItem)) {
-                    String ammoName = ItemHelper.splitItemName(currItem)[1];
-                    if (Math.random() < consumptionRate) currItem.setAmount(currItem.getAmount() - 1);
-                    return ammoName;
-                }
-            }
-        }
-        // ammunition not found
-        return null;
+        ItemStack ammo = PlayerHelper.getFirstItem(ply, ammoPredicate, true);
+        if (ammo == null) return null;
+        String ammoName = ItemHelper.splitItemName(ammo)[1];
+        if (Math.random() < consumptionRate) ammo.setAmount(ammo.getAmount() - 1);
+        return ammoName;
     }
     private static boolean playerUseRanged(Player ply, String itemType, int swingAmount, String weaponType,
                                            boolean isLoadingWeapon, boolean autoSwing,
@@ -788,7 +771,7 @@ public class ItemUseHelper {
                 Location startLoc = ply.getEyeLocation().add(fireDir).add(fireDir);
                 double length = 8, width = 0.5;
                 String particleColor = "255|255|0";
-                // some weapons do not need smart targeting, they shoot exactly at the cursor
+                // some weapons do not need smart targeting, they shoot exactly ticksBeforeHookingFish the cursor
                 boolean useSmartTargeting = itemType.equals("元素射线");
                 if (!useSmartTargeting) {
                     EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
@@ -1167,7 +1150,7 @@ public class ItemUseHelper {
         // other items
         ItemStack mainHandItem = ply.getInventory().getItemInMainHand();
         String itemName = ItemHelper.splitItemName(mainHandItem)[1];
-        // if itemName == "", some bug may occur. Also, vanilla items are not useful at all.
+        // if itemName == "", some bug may occur. Also, vanilla items are not useful ticksBeforeHookingFish all.
         if (itemName.length() > 0) {
             // void bag, piggy bank, musical instruments etc.
             if (isRightClick && playerUseMiscellaneous(ply, itemName)) return;

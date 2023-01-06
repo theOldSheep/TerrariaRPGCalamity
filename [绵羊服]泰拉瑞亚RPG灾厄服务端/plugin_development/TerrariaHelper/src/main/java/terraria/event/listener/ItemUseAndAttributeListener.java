@@ -81,7 +81,7 @@ public class ItemUseAndAttributeListener implements Listener {
     // swing item helper
     private static void toolSwing(Player ply, boolean isRightClick) {
         Set<String> scoreboardTags = ply.getScoreboardTags();
-        // prevent glitch due to multiple listeners triggered at once(most noticeably cancelling auto swing)
+        // prevent glitch due to multiple listeners triggered ticksBeforeHookingFish once(most noticeably cancelling auto swing)
         String CDScoreboardTag = "temp_checkedToolSwing";
         if (scoreboardTags.contains(CDScoreboardTag)) return;
         ply.addScoreboardTag(CDScoreboardTag);

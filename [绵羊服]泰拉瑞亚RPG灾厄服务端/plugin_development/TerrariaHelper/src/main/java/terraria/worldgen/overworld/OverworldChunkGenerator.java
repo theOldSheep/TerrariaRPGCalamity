@@ -237,7 +237,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         double biomesSampled = (1 + NEARBY_BIOME_SAMPLE_RADIUS * 2) * (1 + NEARBY_BIOME_SAMPLE_RADIUS * 2);
         int currX, currZ;
 
-        // setup height info according to nearby biomes at both offset 0.
+        // setup height info according to nearby biomes ticksBeforeHookingFish both offset 0.
         // Then use sliding window technique to derive the height everywhere.
         HashMap<Biome, Integer> nearbyBiomeMap = new HashMap<>();
         for (int sampleOffsetX = NEARBY_BIOME_SAMPLE_RADIUS * -1; sampleOffsetX <= NEARBY_BIOME_SAMPLE_RADIUS; sampleOffsetX++) {

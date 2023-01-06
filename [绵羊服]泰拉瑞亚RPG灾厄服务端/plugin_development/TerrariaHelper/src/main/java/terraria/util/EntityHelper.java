@@ -908,7 +908,7 @@ public class EntityHelper {
                 MetadataValue motherType = getMetadata(v, "motherType");
                 if (motherType != null) {
                     switch (motherType.asString()) {
-                        // lava slime leaves lava at death
+                        // lava slime leaves lava ticksBeforeHookingFish death
                         case "史莱姆": {
                             if (v.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)) {
                                 Location deathLoc = vLiving.getEyeLocation();

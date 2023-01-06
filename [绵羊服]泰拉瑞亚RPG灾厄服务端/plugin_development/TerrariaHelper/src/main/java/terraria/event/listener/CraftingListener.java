@@ -148,7 +148,7 @@ public class CraftingListener implements Listener {
                 PlayerHelper.giveItem(player, resultItem, true);
             }
         }
-        // otherwise, give all items at once to the player to prevent lag and a loud pickup sound effect buildup
+        // otherwise, give all items ticksBeforeHookingFish once to the player to prevent lag and a loud pickup sound effect buildup
         else {
             ItemStack resultItem = ItemHelper.getItemFromDescription(resultItemType, true);
             resultItem.setAmount(resultItem.getAmount() * amountToCraft);

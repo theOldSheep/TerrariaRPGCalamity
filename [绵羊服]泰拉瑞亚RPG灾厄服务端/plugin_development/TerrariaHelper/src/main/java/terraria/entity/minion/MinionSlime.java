@@ -126,7 +126,7 @@ public class MinionSlime extends EntitySlime {
                                 .setDamageCD(damageInvincibilityTicks)
                                 .setParticleInfo(new GenericHelper.ParticleLineOptions()
                                         .setWidth(0.2)
-                                        .setLength(6)
+                                        .setLength(3)
                                         .setTicksLinger(2)
                                         .setParticleColor(
                                                 "255|0|0",
@@ -499,7 +499,7 @@ public class MinionSlime extends EntitySlime {
                         }
                         velocity = new Vector(0, 0.75, 0);
                     }
-                    // charge at enemy
+                    // charge ticksBeforeHookingFish enemy
                     else if (ind < 14) {
                         direction = ((LivingEntity) (extraVariables.getOrDefault("tgt", target))).getEyeLocation()
                                 .subtract(minionBukkit.getLocation()).toVector();
@@ -548,7 +548,7 @@ public class MinionSlime extends EntitySlime {
                 currYaw = newDir.getKey();
                 currPitch = newDir.getValue();
                 // handle strike
-                GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(), currYaw, currPitch, 5.0, 0.25,
+                GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(), currYaw, currPitch, 3.0, 0.2,
                         "", "0|0|0", damageCD, (HashMap<String, Double>) attrMap.clone(),
                         (GenericHelper.StrikeLineOptions) extraVariables.get("strikeLineOption"));
                 extraVariables.put("yaw", currYaw);

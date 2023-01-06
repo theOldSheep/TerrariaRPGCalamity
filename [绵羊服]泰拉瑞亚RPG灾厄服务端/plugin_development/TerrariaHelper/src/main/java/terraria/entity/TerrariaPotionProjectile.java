@@ -171,7 +171,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     }
     // tick
     // this helper function is called every tick as long as the projectile is alive.
-    public void extraTicking() {
+    protected void extraTicking() {
         switch (projectileType) {
             case "风刃": {
                 double radius = 12, suckSpeed = 0.25;
@@ -200,7 +200,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         }
     }
     // this helper function is called every tick only if the projectile would move(not homing into enemies and not stuck on wall)
-    public void extraMovingTick() {
+    protected void extraMovingTick() {
 
     }
     @Override

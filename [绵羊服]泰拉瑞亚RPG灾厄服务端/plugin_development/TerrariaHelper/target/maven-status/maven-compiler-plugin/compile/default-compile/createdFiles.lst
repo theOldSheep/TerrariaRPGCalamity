@@ -18,6 +18,7 @@ terraria\util\EntityHelper$1.class
 terraria\event\listener\WorldRegisterListener.class
 terraria\entity\TerrariaArrowProjectile.class
 terraria\event\listener\PlayerWorldChangeListener.class
+terraria\entity\TerrariaFishingHook.class
 terraria\util\ItemHelper.class
 terraria\event\listener\ArrowHitEvent.class
 terraria\entity\minion\MinionHelper.class
@@ -60,13 +61,16 @@ terraria\entity\CustomEntities.class
 terraria\event\listener\DamageListener$1.class
 terraria\event\listener\ItemUseAndAttributeListener.class
 terraria\worldgen\underworld\UnderworldChunkGenerator.class
+terraria\entity\TerrariaFishingHook$FishingState.class
 terraria\util\GenericHelper$1.class
 terraria\entity\TerrariaPotionProjectile.class
 terraria\event\TerrariaProjectileHitEvent.class
 terraria\event\listener\ServerStopListener.class
+terraria\entity\TerrariaFishingHook$1.class
 terraria\entity\TerrariaItem.class
 terraria\worldgen\Interpolate$InterpolatePoint.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator.class
 terraria\entity\HitEntityInfo.class
+terraria\event\listener\FishHookShootListener.class
 terraria\util\EntityHelper.class
 terraria\worldgen\overworld\OverworldChunkGenerator$1.class

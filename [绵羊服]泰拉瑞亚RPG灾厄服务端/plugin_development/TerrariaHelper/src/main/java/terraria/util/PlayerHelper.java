@@ -24,6 +24,7 @@ import terraria.gameplay.Event;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 
 public class PlayerHelper {
@@ -57,6 +58,8 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("damageTrueMeleeMulti", 1d);
         defaultPlayerAttrMap.put("defence", 0d);
         defaultPlayerAttrMap.put("defenceMulti", 1d);
+        defaultPlayerAttrMap.put("fishingHooks", 1d);
+        defaultPlayerAttrMap.put("fishingPower", 0d);
         defaultPlayerAttrMap.put("healthMulti", 1d);
         defaultPlayerAttrMap.put("healthTier", 5d);
         defaultPlayerAttrMap.put("invulnerabilityTick", 10d);
@@ -720,6 +723,7 @@ public class PlayerHelper {
         ply.removeScoreboardTag("isLoadingWeapon");
         ply.removeScoreboardTag("autoSwing");
         ply.removeScoreboardTag("useCD");
+        EntityHelper.setMetadata(ply, "useCDInternal", 0);
         EntityHelper.setMetadata(ply, "swingAmount", 0);
         EntityHelper.setMetadata(ply, "nextMinionIndex", 0);
         EntityHelper.setMetadata(ply, "nextSentryIndex", 0);
@@ -1084,6 +1088,49 @@ public class PlayerHelper {
         HashMap<Integer, ItemStack> remainingItemMap = inventory.addItem(item);
         if (remainingItemMap.isEmpty()) return 0;
         else return remainingItemMap.get(0).getAmount();
+    }
+    public static ItemStack getFirstItem(Player ply, Predicate<ItemStack> itemPredicate, boolean testVoidBag) {
+        // in the player's inventory
+        Inventory plyInv = ply.getInventory();
+        for (int i = 0; i < 36; i ++) {
+            ItemStack currItem = plyInv.getItem(i);
+            if (currItem != null && itemPredicate.test(currItem)) {
+                return currItem;
+            }
+        }
+        // in the player's void bag
+        if (testVoidBag && PlayerHelper.hasVoidBag(ply)) {
+            Inventory voidBagInv = PlayerHelper.getInventory(ply, "voidBag");
+            for (ItemStack currItem : voidBagInv.getContents()) {
+                if (currItem != null && itemPredicate.test(currItem)) {
+                    return currItem;
+                }
+            }
+        }
+        // item not found
+        return null;
+    }
+    public static ArrayList<ItemStack> getItems(Player ply, Predicate<ItemStack> itemPredicate, boolean testVoidBag) {
+        // in the player's inventory
+        ArrayList<ItemStack> result = new ArrayList<>();
+        Inventory plyInv = ply.getInventory();
+        for (int i = 0; i < 36; i ++) {
+            ItemStack currItem = plyInv.getItem(i);
+            if (currItem != null && itemPredicate.test(currItem)) {
+                result.add(currItem);
+            }
+        }
+        // in the player's void bag
+        if (testVoidBag && PlayerHelper.hasVoidBag(ply)) {
+            Inventory voidBagInv = PlayerHelper.getInventory(ply, "voidBag");
+            for (ItemStack currItem : voidBagInv.getContents()) {
+                if (currItem != null && itemPredicate.test(currItem)) {
+                    result.add(currItem);
+                }
+            }
+        }
+        // return all found items
+        return result;
     }
     public static int giveItem(Player ply, ItemStack item, boolean dropExtra) {
         if (item == null) return 0;
