@@ -42,7 +42,7 @@ public class TerrariaFishingHook extends EntityFishingHook {
     // other variables and methods
     protected long startUseTime;
     protected int hookedTimeRemaining, waitingTimeRemaining;
-    protected float fishingPower;
+    protected float fishingPower, reelingInSpeed = 1;
     protected boolean isInGround, lavaProof;
     protected Player ownerPly;
     protected FishingState state;
@@ -118,12 +118,16 @@ public class TerrariaFishingHook extends EntityFishingHook {
         }
         Sound sound = getSplashSound(block);
         if (sound != null) {
-
+            bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), sound, 1, 1);
         }
     }
     private boolean checkValid() {
+        // if the player clicked again and started reeling in
         long startUseTimeCurrent = EntityHelper.getMetadata(ownerPly, "useCDInternal").asLong();
-        if (startUseTimeCurrent != startUseTime) return false;
+        if (startUseTimeCurrent != startUseTime) {
+            tryCatchingFish();
+            return true;
+        }
         ItemStack itemstack = this.owner.getItemInMainHand();
         boolean isHoldingFishingRod = itemstack.getItem() == Items.FISHING_ROD;
         // if the owner is in the world (online & world not changed),
@@ -148,6 +152,8 @@ public class TerrariaFishingHook extends EntityFishingHook {
         return "鲈鱼";
     }
     protected void tryCatchingFish() {
+        if (state == FishingState.REELING_IN)
+            return;
         if (this.hookedTimeRemaining > 0) {
             org.bukkit.inventory.ItemStack bait = getBait();
             if (bait != null) {
@@ -155,7 +161,7 @@ public class TerrariaFishingHook extends EntityFishingHook {
                 if (Math.random() < 1 / (1 + baitPower / 6))
                     bait.setAmount(bait.getAmount() - 1);
                 this.hookedItem = ItemHelper.dropItem(getBukkitEntity().getLocation(),
-                        catchFishItem(ownerPly, fishingPower + baitPower));
+                        catchFishItem(ownerPly, fishingPower + baitPower), false, false);
             }
         }
         this.state = FishingState.REELING_IN;
@@ -231,13 +237,10 @@ public class TerrariaFishingHook extends EntityFishingHook {
         // basic ticking
         this.Y();
         // fishing rod tick
-        Bukkit.broadcastMessage(this.waitingTimeRemaining + ", " + this.hookedTimeRemaining);
-        Bukkit.broadcastMessage(this.motX + ", " + this.motY + ", " + this.motZ);
-        Bukkit.broadcastMessage(this.locX + ", " + this.locY + ", " + this.locZ);
-        Bukkit.broadcastMessage(this.state.toString());
         double speedOffset;
         if (this.owner == null) {
             this.die();
+            return;
         }
         if (this.checkValid()) {
             // if the player is starting to reel in
@@ -279,7 +282,7 @@ public class TerrariaFishingHook extends EntityFishingHook {
                     this.motX *= 0.75;
                     this.motZ *= 0.75;
                     // fluid Y (target y) - the hook y in next tick
-                    Bukkit.broadcastMessage("Fld ht: " + fluidHeight + ">>>" + ((double)blockposition.getY() + (double)fluidHeight));
+//                    Bukkit.broadcastMessage("Fld ht: " + fluidHeight + ">>>" + ((double)blockposition.getY() + (double)fluidHeight));
                     speedOffset = ((double)blockposition.getY() + (double)fluidHeight) - (this.locY + this.motY);
                     // accelerate the hook
                     this.motY += speedOffset * 0.5;
@@ -291,14 +294,16 @@ public class TerrariaFishingHook extends EntityFishingHook {
                 }
                 case REELING_IN: {
                     setNoGravity(true);
-                    double speed = 1;
                     Vector vel = ownerPly.getEyeLocation().subtract(getBukkitEntity().getLocation()).toVector();
-                    if (vel.lengthSquared() < speed * speed) {
+                    if (vel.lengthSquared() < reelingInSpeed * reelingInSpeed) {
                         die();
-                        hookedItem.setPickupDelay(0);
+                        if (hookedItem != null) {
+                            hookedItem.setPickupDelay(0);
+                        }
                         return;
                     } else {
-                        vel.normalize().multiply(speed);
+                        double distance = vel.length();
+                        vel.multiply(Math.max(distance / 8, reelingInSpeed)  / distance);
                         if (hookedItem != null) {
                             hookedItem.teleport(getBukkitEntity());
                             hookedItem.setPickupDelay(10);
@@ -307,22 +312,28 @@ public class TerrariaFishingHook extends EntityFishingHook {
                         motX = vel.getX();
                         motY = vel.getY();
                         motZ = vel.getZ();
+                        reelingInSpeed += 0.05;
                     }
                     break;
                 }
             }
 
-        }
-        this.move(EnumMoveType.SELF, this.motX, this.motY, this.motZ);
-        this.regularizeDirection();
-        speedOffset = 0.92;
-        this.motX *= speedOffset;
-        this.motY *= speedOffset;
-        this.motZ *= speedOffset;
-        this.setPosition(this.locX, this.locY, this.locZ);
+            this.move(EnumMoveType.SELF, this.motX, this.motY, this.motZ);
+            this.regularizeDirection();
+            speedOffset = 0.92;
+            this.motX *= speedOffset;
+            this.motY *= speedOffset;
+            this.motZ *= speedOffset;
+            this.setPosition(this.locX, this.locY, this.locZ);
 
-        velocityChanged = true;
-        positionChanged = true;
+            velocityChanged = true;
+            positionChanged = true;
+//            PlayerHelper.sendActionBar(ownerPly, this.waitingTimeRemaining + ", " + this.hookedTimeRemaining);
+//            Bukkit.broadcastMessage(this.waitingTimeRemaining + ", " + this.hookedTimeRemaining);
+//            Bukkit.broadcastMessage(this.motX + ", " + this.motY + ", " + this.motZ);
+//            Bukkit.broadcastMessage(this.locX + ", " + this.locY + ", " + this.locZ);
+//            Bukkit.broadcastMessage(this.state.toString());
+        }
     }
     private void regularizeDirection() {
         float horSpd = MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ);

@@ -40,6 +40,7 @@ terraria\entity\minion\MinionHusk.class
 terraria\event\listener\PlayerQuitListener.class
 terraria\gameplay\Event.class
 terraria\worldgen\overworld\NoiseGeneratorTest.class
+terraria\event\listener\VanillaFishHookShootListener.class
 terraria\worldgen\overworld\TreePopulator$1.class
 terraria\util\DragoncoreHelper.class
 terraria\worldgen\overworld\OverworldBiomeGenerator.class
@@ -71,6 +72,5 @@ terraria\entity\TerrariaItem.class
 terraria\worldgen\Interpolate$InterpolatePoint.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator.class
 terraria\entity\HitEntityInfo.class
-terraria\event\listener\FishHookShootListener.class
 terraria\util\EntityHelper.class
 terraria\worldgen\overworld\OverworldChunkGenerator$1.class

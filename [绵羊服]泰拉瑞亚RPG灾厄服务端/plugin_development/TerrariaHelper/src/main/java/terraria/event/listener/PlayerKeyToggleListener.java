@@ -13,7 +13,7 @@ import terraria.util.PlayerHelper;
 public class PlayerKeyToggleListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onKeyReleaseEvent(KeyReleaseEvent e) {
-        Bukkit.getServer().broadcastMessage("KEYUP: " + e.getKey());
+//        Bukkit.getServer().broadcastMessage("KEYUP: " + e.getKey());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

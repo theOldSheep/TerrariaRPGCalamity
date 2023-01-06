@@ -139,7 +139,6 @@ public class TerrariaHelper extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new CraftingListener(), this);
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new DropItemSpawnListener(), this);
-        Bukkit.getPluginManager().registerEvents(new FishHookShootListener(), this);
         Bukkit.getPluginManager().registerEvents(new ItemUseAndAttributeListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerKeyToggleListener(), this);
@@ -147,6 +146,7 @@ public class TerrariaHelper extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerWorldChangeListener(), this);
         Bukkit.getPluginManager().registerEvents(new RandomTitleListener(), this);
         Bukkit.getPluginManager().registerEvents(new ServerStopListener(), this);
+        Bukkit.getPluginManager().registerEvents(new VanillaFishHookShootListener(), this);
         Bukkit.getPluginManager().registerEvents(new WorldRegisterListener(), this);
     }
     private void initThreads() {

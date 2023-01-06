@@ -1,6 +1,7 @@
 package terraria.util;
 
 import io.netty.handler.codec.http2.Http2FrameWriter;
+import net.minecraft.server.v1_12_R1.EntityHuman;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.MovingObjectPosition;
 import net.minecraft.server.v1_12_R1.PacketPlayOutSetCooldown;
@@ -10,14 +11,18 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.*;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.HitEntityInfo;
+import terraria.entity.TerrariaFishingHook;
 import terraria.entity.minion.MinionCaveSpider;
 import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
@@ -29,9 +34,9 @@ public class ItemUseHelper {
     public enum QuickBuffType {
         NONE, HEALTH, MANA, BUFF;
     }
-    private static final String SOUND_GENERIC_SWING = "item.genericSwing", SOUND_BOW_SHOOT = "item.bowShoot",
+    protected static final String SOUND_GENERIC_SWING = "item.genericSwing", SOUND_BOW_SHOOT = "item.bowShoot",
             SOUND_GUN_FIRE = "item.gunfire", SOUND_GUN_FIRE_LOUD = "entity.generic.explode";
-    private static final double MELEE_STRIKE_RADIUS = 0.25;
+    protected static final double MELEE_STRIKE_RADIUS = 0.25;
     public static int applyCD(Player ply, double CD) {
         int coolDown = (int) CD;
         if (Math.random() < CD % 1) coolDown ++;
@@ -40,8 +45,15 @@ public class ItemUseHelper {
     }
     public static int applyCD(Player ply, int CD) {
         ply.addScoreboardTag("useCD");
-        long lastCDApply = Calendar.getInstance().getTimeInMillis();
+        MetadataValue lastCDInternal = EntityHelper.getMetadata(ply, "useCDInternalLast");
+        long lastCDApply;
+        if (lastCDInternal == null) {
+            lastCDApply = 0;
+        } else {
+            lastCDApply = lastCDInternal.asLong() + 1;
+        }
         EntityHelper.setMetadata(ply, "useCDInternal", lastCDApply);
+        EntityHelper.setMetadata(ply, "useCDInternalLast", lastCDApply);
         ItemStack tool = ply.getInventory().getItemInMainHand();
         // the CD <= 0: never stops on its own
         PacketPlayOutSetCooldown packet = new PacketPlayOutSetCooldown(CraftItemStack.asNMSCopy(tool).getItem(), CD <= 0 ? 1919810 : CD);
@@ -51,6 +63,7 @@ public class ItemUseHelper {
                 if (ply.isOnline() && EntityHelper.getMetadata(ply, "useCDInternal").asLong() == lastCDApply) {
                     if (!PlayerHelper.isProperlyPlaying(ply)) {
                         ply.removeScoreboardTag("autoSwing");
+                        ply.removeScoreboardTag("isLoadingWeapon");
                     }
                     // handle next use
                     ply.removeScoreboardTag("useCD");
@@ -63,7 +76,7 @@ public class ItemUseHelper {
         return CD;
     }
     // util functions for use item
-    private static void playerSwingPickaxe(Player ply, HashMap<String, Double> attrMap, boolean isRightClick) {
+    protected static void playerSwingPickaxe(Player ply, HashMap<String, Double> attrMap, boolean isRightClick) {
         ply.playSound(ply.getEyeLocation(), "item.genericSwing", 1, 1);
         double pickaxeReach = 4 + attrMap.getOrDefault("reachExtra", 0d);
         pickaxeReach *= attrMap.getOrDefault("meleeReachMulti", 1d);
@@ -80,7 +93,54 @@ public class ItemUseHelper {
         useCD /= useSpeed;
         applyCD(ply, useCD);
     }
-    private static boolean playerUseMiscellaneous(Player ply, String itemName) {
+    protected static void playerSwingFishingRod(Player ply, HashMap<String, Double> attrMap, String hookType) {
+        // retracting hooks
+        if (ply.getScoreboardTags().contains("autoSwing")) {
+            ply.removeScoreboardTag("isLoadingWeapon");
+            ply.removeScoreboardTag("autoSwing");
+            applyCD(ply, 10);
+            return;
+        }
+        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+        Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+        facingDir.multiply(1.5);
+        double hookAmountTemp = attrMap.getOrDefault("fishingHooks", 1d);
+        // prevent accidental inaccuracy
+        hookAmountTemp += 0.01;
+        int hookAmount = (int) hookAmountTemp;
+        // other variables
+        boolean lavaProof = false;
+        switch (hookType) {
+            case "熔线钓竿":
+            case "金钓竿":
+            case "饮食者钓竿":
+            case "岩缝取鱼者":
+            case "鳕鱼吞噬者":
+                lavaProof = true;
+        }
+        float fishingPower = attrMap.get("fishingPower").floatValue();
+        EntityHuman shooter = ((CraftPlayer) ply).getHandle();
+        CraftWorld wld = (CraftWorld) ply.getWorld();
+        // before spawning projectile, turn on the auto swing and apply CD
+        ply.addScoreboardTag("autoSwing");
+        ply.addScoreboardTag("isLoadingWeapon");
+        applyCD(ply, 0);
+        // spawn fishhooks
+        for (int i = 0; i < hookAmount; i ++) {
+            Vector shootVel = facingDir.clone();
+            if (hookAmount > 1) {
+                shootVel.add(MathHelper.randomVector().multiply(0.5));
+                shootVel.normalize().multiply(1.5);
+            }
+            // spawn fishhook
+            TerrariaFishingHook entity = new TerrariaFishingHook(shooter.getWorld(), shooter, lavaProof, fishingPower);
+            entity.motX = shootVel.getX();
+            entity.motY = shootVel.getY();
+            entity.motZ = shootVel.getZ();
+            wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        }
+    }
+    protected static boolean playerUseMiscellaneous(Player ply, String itemName) {
         switch (itemName) {
             case "钱币槽": {
                 ply.openInventory(PlayerHelper.getInventory(ply, "piggyBank"));
@@ -93,7 +153,7 @@ public class ItemUseHelper {
         }
         return false;
     }
-    private static boolean potionEffectNecessary(Player ply, String effect) {
+    protected static boolean potionEffectNecessary(Player ply, String effect) {
         HashMap<String, Integer> allEffects = EntityHelper.getEffectMap(ply);
         // no need to drink the potion if the effect is already in place.
         if (allEffects.containsKey(effect)) return false;
@@ -102,7 +162,7 @@ public class ItemUseHelper {
             if (allEffects.containsKey(effectSuperior)) return false;
         return true;
     }
-    private static boolean playerUsePotion(Player ply, String itemType, ItemStack potion, QuickBuffType consumptionInfo) {
+    protected static boolean playerUsePotion(Player ply, String itemType, ItemStack potion, QuickBuffType consumptionInfo) {
         // to prevent vanilla items being regarded as a proper potion and consumed.
         if (itemType.length() == 0) return false;
         boolean successful = false;
@@ -238,7 +298,7 @@ public class ItemUseHelper {
         return successfullyConsumed;
     }
     // weapon use helper functions below
-    private static void displayLoadingProgress(Player ply, int currLoad, int maxLoad) {
+    protected static void displayLoadingProgress(Player ply, int currLoad, int maxLoad) {
         double fillProgress = (double) currLoad / maxLoad;
         String colorCode;
         switch ((int) fillProgress * 5) {
@@ -268,7 +328,7 @@ public class ItemUseHelper {
         infoText.append(colorCode).append("]");
         PlayerHelper.sendActionBar(ply, infoText.toString());
     }
-    private static Location getPlayerTargetLoc(Player ply, double traceDist, double entityEnlargeRadius, EntityHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
+    protected static Location getPlayerTargetLoc(Player ply, double traceDist, double entityEnlargeRadius, EntityHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
         Location targetLoc = null;
         World plyWorld = ply.getWorld();
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
@@ -309,7 +369,7 @@ public class ItemUseHelper {
         return targetLoc;
     }
     // melee helper functions below
-    private static void handleSingleZenithSwingAnimation(Player ply, HashMap<String, Double> attrMap,
+    protected static void handleSingleZenithSwingAnimation(Player ply, HashMap<String, Double> attrMap,
                                                          Location centerLoc, Vector reachVector, Vector offsetVector,
                                                          Collection<Entity> exceptions, String color,
                                                          GenericHelper.StrikeLineOptions strikeLineInfo,
@@ -332,7 +392,7 @@ public class ItemUseHelper {
             handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVector, offsetVector, exceptions, color, strikeLineInfo, index + 1, indexMax);
         }
     }
-    private static void handleSingleZenithStrike(Player ply, HashMap<String, Double> attrMap, List<String> colors, GenericHelper.StrikeLineOptions strikeLineInfo) {
+    protected static void handleSingleZenithStrike(Player ply, HashMap<String, Double> attrMap, List<String> colors, GenericHelper.StrikeLineOptions strikeLineInfo) {
         // setup vector info etc.
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
         Vector lookDir = MathHelper.vectorFromYawPitch_quick(nmsPly.yaw, nmsPly.pitch);
@@ -362,7 +422,7 @@ public class ItemUseHelper {
         handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVec, offsetVec, new HashSet<>(), color, strikeLineInfo, 0, loopAmount);
     }
     // warning: this function modifies attrMap and damaged!
-    private static void handleMeleeSwing(Player ply, HashMap<String, Double> attrMap, Vector lookDir,
+    protected static void handleMeleeSwing(Player ply, HashMap<String, Double> attrMap, Vector lookDir,
                                          Collection<Entity> damaged, ConfigurationSection weaponSection,
                                          double yaw, double pitch, String weaponType, double size,
                                          boolean dirFixed, boolean stabOrSwing, int currentIndex, int maxIndex) {
@@ -433,7 +493,7 @@ public class ItemUseHelper {
         }
     }
     // stab and swing. NOT NECESSARILY MELEE DAMAGE!
-    private static boolean playerUseMelee(Player ply, String itemType,
+    protected static boolean playerUseMelee(Player ply, String itemType,
                                           ConfigurationSection weaponSection, HashMap<String, Double> attrMap, int swingAmount, boolean stabOrSwing) {
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         double yaw = plyNMS.yaw, pitch = plyNMS.pitch;
@@ -470,7 +530,7 @@ public class ItemUseHelper {
         return true;
     }
     // ranged helper functions below
-    private static void handleRangedFire(Player ply, HashMap<String, Double> attrMapOriginal, ConfigurationSection weaponSection,
+    protected static void handleRangedFire(Player ply, HashMap<String, Double> attrMapOriginal, ConfigurationSection weaponSection,
                                          int fireIndex, int swingAmount,
                                          String itemType, String weaponType, String ammoTypeInitial,
                                          boolean isLoadingWeapon, boolean autoSwing) {
@@ -605,14 +665,14 @@ public class ItemUseHelper {
                     , fireRoundDelay);
         }
     }
-    private static String consumePlayerAmmo(Player ply, Predicate<ItemStack> ammoPredicate, double consumptionRate) {
+    protected static String consumePlayerAmmo(Player ply, Predicate<ItemStack> ammoPredicate, double consumptionRate) {
         ItemStack ammo = PlayerHelper.getFirstItem(ply, ammoPredicate, true);
         if (ammo == null) return null;
         String ammoName = ItemHelper.splitItemName(ammo)[1];
         if (Math.random() < consumptionRate) ammo.setAmount(ammo.getAmount() - 1);
         return ammoName;
     }
-    private static boolean playerUseRanged(Player ply, String itemType, int swingAmount, String weaponType,
+    protected static boolean playerUseRanged(Player ply, String itemType, int swingAmount, String weaponType,
                                            boolean isLoadingWeapon, boolean autoSwing,
                                            ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
         Predicate<ItemStack> ammoPredicate = null;
@@ -662,7 +722,7 @@ public class ItemUseHelper {
         return true;
     }
     // magic helper functions below
-    private static boolean consumeMana(Player ply, int mana) {
+    protected static boolean consumeMana(Player ply, int mana) {
         if (mana <= 0) return true;
         if (ply.getLevel() < mana) {
             // consume mana potion if applicable
@@ -685,7 +745,7 @@ public class ItemUseHelper {
         }
         return false;
     }
-    private static void handleMagicProjectileFire(Player ply, HashMap<String, Double> attrMap, ConfigurationSection weaponSection,
+    protected static void handleMagicProjectileFire(Player ply, HashMap<String, Double> attrMap, ConfigurationSection weaponSection,
                                                   int fireIndex, String itemType, String weaponType, boolean autoSwing) {
         int fireRoundMax = weaponSection.getInt("fireRounds", 1);
         int fireAmount = weaponSection.getInt("shots", 1);
@@ -747,7 +807,7 @@ public class ItemUseHelper {
                     , fireRoundDelay);
         }
     }
-    private static void handleMagicSpecialFire(Player ply, HashMap<String, Double> attrMap, ConfigurationSection weaponSection,
+    protected static void handleMagicSpecialFire(Player ply, HashMap<String, Double> attrMap, ConfigurationSection weaponSection,
                                                int fireIndex, String itemType, String weaponType, Location targetedLocation,
                                                boolean autoSwing, int swingAmount, Collection<Entity> damageCD) {
         int fireAmount = 1, fireDelay = 0;
@@ -983,7 +1043,7 @@ public class ItemUseHelper {
                     , fireDelay);
         }
     }
-    private static boolean playerUseMagic(Player ply, String itemType, int swingAmount, String weaponType,
+    protected static boolean playerUseMagic(Player ply, String itemType, int swingAmount, String weaponType,
                                           boolean autoSwing,
                                           ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
         int manaConsumption = (int) Math.round(attrMap.getOrDefault("manaUse", 10d) *
@@ -1080,7 +1140,7 @@ public class ItemUseHelper {
         EntityHelper.setMetadata(ply, indexNextMetadataKey, indexNext);
         return true;
     }
-    private static boolean playerUseSummon(Player ply, String itemType, int swingAmount, String weaponType,
+    protected static boolean playerUseSummon(Player ply, String itemType, int swingAmount, String weaponType,
                                            boolean autoSwing, ItemStack originalStaff,
                                            ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
         int manaConsumption = (int) Math.round(attrMap.getOrDefault("manaUse", 10d) *
@@ -1102,7 +1162,7 @@ public class ItemUseHelper {
         return true;
     }
     // other helper functions for item using
-    private static void playerUseItemSound(Player ply, String weaponType, boolean autoSwing) {
+    protected static void playerUseItemSound(Player ply, String weaponType, boolean autoSwing) {
         String itemUseSound;
         float volume = 1f, pitch = 1f;
         switch (weaponType) {
@@ -1147,9 +1207,14 @@ public class ItemUseHelper {
             playerSwingPickaxe(ply, attrMap, isRightClick);
             return;
         }
-        // other items
+        // other items that require item type info
         ItemStack mainHandItem = ply.getInventory().getItemInMainHand();
         String itemName = ItemHelper.splitItemName(mainHandItem)[1];
+        // fishing rod
+        if (!isRightClick && attrMap.getOrDefault("fishingPower", -1d) > 0) {
+            playerSwingFishingRod(ply, attrMap, itemName);
+            return;
+        }
         // if itemName == "", some bug may occur. Also, vanilla items are not useful ticksBeforeHookingFish all.
         if (itemName.length() > 0) {
             // void bag, piggy bank, musical instruments etc.

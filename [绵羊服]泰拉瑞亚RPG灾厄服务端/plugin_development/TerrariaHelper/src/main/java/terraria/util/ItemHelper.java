@@ -661,9 +661,9 @@ public class ItemHelper {
         }
     }
     public static Item dropItem(Location loc, String itemToDropDescription) {
-        return dropItem(loc, itemToDropDescription, true);
+        return dropItem(loc, itemToDropDescription, true, true);
     }
-    public static Item dropItem(Location loc, String itemToDropDescription, boolean randomizePrefixIfNoneExists) {
+    public static Item dropItem(Location loc, String itemToDropDescription, boolean randomizePrefixIfNoneExists, boolean canMerge) {
         String[] itemInfo = itemToDropDescription.split(":");
         // 物品名:最小数量:最大数量:几率
         int itemAmount = 1;
@@ -683,12 +683,17 @@ public class ItemHelper {
         }
         ItemStack itemToDrop = getItemFromDescription(itemInfo[0], randomizePrefixIfNoneExists);
         itemToDrop.setAmount(itemAmount);
-        return dropItem(loc, itemToDrop);
+        return dropItem(loc, itemToDrop, canMerge);
     }
     public static Item dropItem(Location loc, ItemStack itemToDrop) {
+        return dropItem(loc, itemToDrop, true);
+    }
+    public static Item dropItem(Location loc, ItemStack itemToDrop, boolean canMerge) {
         if (itemToDrop.getAmount() <= 0) return null;
         if (itemToDrop.getType() == Material.AIR) return null;
-        EntityItem entity = new TerrariaItem(loc, itemToDrop);
+        TerrariaItem entity = new TerrariaItem(loc, itemToDrop);
+        if (!canMerge)
+            entity.canBeMerged = false;
         CraftWorld wld = (CraftWorld) loc.getWorld();
         wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         return new CraftItem(wld.getHandle().getServer(), entity);
