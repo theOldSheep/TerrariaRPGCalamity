@@ -4,6 +4,8 @@ most of the code in this class are from net.minecraft.server package
 package terraria.entity;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Fish;
@@ -16,8 +18,10 @@ import terraria.util.ItemHelper;
 import terraria.util.PlayerHelper;
 import terraria.util.WorldHelper;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 public class TerrariaFishingHook extends EntityFishingHook {
     // static variables and functions
@@ -163,7 +167,7 @@ public class TerrariaFishingHook extends EntityFishingHook {
             result = FishingResultRarity.COMMON;
         return result;
     }
-    protected String catchCrateItem(double fishingPower, boolean inHardMode, String biome, FishingResultRarity rarity) {
+    protected String catchCrateItem(boolean inHardMode, String biome, FishingResultRarity rarity) {
         String result;
         switch (rarity) {
             case EXTREMELY_RARE:
@@ -173,6 +177,7 @@ public class TerrariaFishingHook extends EntityFishingHook {
             // try getting the biome-specific crate, returns iron/mythril crate if none exists
             case RARE: {
                 result = inHardMode ? "秘银匣" : "铁匣";
+                result = TerrariaHelper.fishingConfig.getString("biomeCrates." + biome, result);
                 break;
             }
             case UNCOMMON:
@@ -183,38 +188,87 @@ public class TerrariaFishingHook extends EntityFishingHook {
         }
         return result;
     }
-    protected String catchFishItem(double fishingPower, boolean inHardMode, String biome, FishingResultRarity rarity) {
-        String result = "鲈鱼";
+    protected String catchFishItem(double fishingPower, String biome, String height, FishingResultRarity rarity) {
+        String result = "";
+        if (rarity == null) return result;
+        ConfigurationSection allFishSection = TerrariaHelper.fishingConfig.getConfigurationSection("fish." + rarity);
+        Collection<String> allFish = allFishSection.getKeys(false);
+        // setup all valid fish types
+        List<String> allFishValid = new ArrayList<>(allFish.size());
+        for (String fish : allFish) {
+            ConfigurationSection currFishSection = allFishSection.getConfigurationSection(fish);
+            // biome exception requirement
+            {
+                Collection<String> biomeExceptions = currFishSection.getStringList("biomeException");
+                if (biomeExceptions.size() > 0 && biomeExceptions.contains(biome))
+                    continue;
+            }
+            // biome requirement
+            {
+                Collection<String> availableBiomes = currFishSection.getStringList("biome");
+                if (availableBiomes.size() > 0 && !availableBiomes.contains(biome))
+                    continue;
+            }
+            // height layer requirement
+            {
+                Collection<String> availableHeights = currFishSection.getStringList("height");
+                if (availableHeights.size() > 0 && !availableHeights.contains(height))
+                    continue;
+            }
+            // fishing power requirement
+            {
+                double fishingPowerRequired = currFishSection.getDouble("fishingPower", -1);
+                if (fishingPower < fishingPowerRequired)
+                    continue;
+            }
+            // game progress requirement
+            {
+                String progress = currFishSection.getString("progressRequired");
+                if (progress != null && !PlayerHelper.hasDefeated(ownerPly, progress))
+                    continue;
+            }
+            // then, the fish is valid.
+            allFishValid.add(fish);
+        }
+        // if valid fish exists, return a random one
+        if (allFishValid.size() > 0) {
+            result = allFishValid.get((int) (Math.random() * allFishValid.size()));
+        }
+        // otherwise, go down a rarity level
+        else {
+            return catchFishItem(fishingPower, biome, height, rarity.getLowerRarity());
+        }
         return result;
     }
     protected String getFishingResult(Player ply, double fishingPower) {
         FishingResultRarity rarity = getFishingResultRarity(fishingPower);
         boolean inHardMode = PlayerHelper.hasDefeated(ply, "血肉之墙");
-        String biome;
+        Location hookLoc = bukkitEntity.getLocation();
+        WorldHelper.BiomeType biome = WorldHelper.BiomeType.getBiome(hookLoc, false);
+        WorldHelper.HeightLayer height = WorldHelper.HeightLayer.getHeightLayer(hookLoc);
         if (isInLava)
-            biome = "underworld";
+            biome = WorldHelper.BiomeType.UNDERWORLD;
         else {
-            WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(bukkitEntity.getLocation());
-            biome = biomeType.toString().toLowerCase();
             // regularize some biomes
             // those biomes will only appear in hardmode but the player is in pre-hardmode
-            switch (biomeType) {
+            switch (biome) {
                 case HALLOW:
                 case ASTRAL_INFECTION: {
                     if (!inHardMode)
-                        biome = "normal";
+                        biome = WorldHelper.BiomeType.NORMAL;
                     break;
                 }
             }
         }
+        Bukkit.broadcastMessage(biome + "||" + rarity);
         // crates
         double crateChance = EntityHelper.hasEffect(ply, "宝匣") ? 0.125 : 0.075;
         if (Math.random() < crateChance) {
-            return catchCrateItem(fishingPower, inHardMode, biome, rarity);
+            return catchCrateItem(inHardMode, biome.toString(), rarity);
         }
         // TODO: quest fish
         // normal fish/weapon etc.
-        return catchFishItem(fishingPower, inHardMode, biome, rarity);
+        return catchFishItem(fishingPower, biome.toString(), height.toString(), rarity);
     }
     protected void tryCatchingFish() {
         if (state == FishingState.REELING_IN)

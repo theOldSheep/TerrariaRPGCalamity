@@ -1,187 +1,242 @@
 baitsAndPower:
-    蘑菇: 10
-    腐肉: 15
-    初学者鱼饵: 15
-    发光蘑菇: 20
-    专家鱼饵: 30
-    大师鱼饵: 50
-    金蝴蝶: 50
-    金蚱蜢: 50
-    金瓢虫: 50
-    金蠕虫: 50
-    萤火虫: 20
-    荧光虫: 35
-    茱莉娅蝶: 25
-    帝王蝶: 5
-    紫君王蝶: 35
-    红纹蝶: 30
-    硫磺蝶: 10
-    树若虫蝴蝶: 50
-    尤利西斯蝶: 20
-    斑纹燕尾蝶: 15
-    地狱蝴蝶: 15
-    蚱蜢: 10
-    发光蜗牛: 15
-    蛆虫: 15
-    瓢虫: 17
-    熔岩蝇: 25
-    岩浆蜗牛: 35
-    鼻涕虫: 25
-    蜗牛: 10
-    蠕虫: 25
-    附魔夜行者: 35
-    松露虫: 0
-rodsAndPower:
-    钓鱼竿: 5
-    金钓竿: 50
-
-loots:
-    normal_sky:
-        鲈鱼: 40
-        雀鲷: 5
-        三文鱼: 25
-    normal_surface:
-        鲈鱼: 40
-        三文鱼: 25
-        虾: 5
-    normal_underground:
-        装甲洞穴鱼: 5
-        鲈鱼: 40
-        镜面鱼: 10
-    normal_cavern:
-        装甲洞穴鱼: 5
-        鲈鱼: 40
-        镜面鱼: 10
-    normal_hell:
-        装甲洞穴鱼: 5
-        鲈鱼: 40
-        镜面鱼: 10
-    jungle_surface:
-        鲈鱼: 40
-        双鳍鳕鱼: 5
-        霓虹脂鲤: 10
-        虾: 5
-        斑驳油鱼: 2
-    jungle_underground:
-        装甲洞穴鱼: 5
-        鲈鱼: 40
-        霓虹脂鲤: 10
-        镜面鱼: 10
-        斑驳油鱼: 5
-    jungle_cavern:
-        装甲洞穴鱼: 5
-        鲈鱼: 40
-        霓虹脂鲤: 10
-        镜面鱼: 10
-        斑驳油鱼: 8
-    ocean_surface:
-        鲈鱼: 40
-        红鲷鱼: 25
-        龙虾: 40
-        虾: 5
-        鳟鱼: 40
-        金枪鱼: 25
-        掠夺鲨: 1
-        剑鱼: 2
-    ocean_underground:
-        装甲洞穴鱼: 5
-        鲈鱼: 40
-        龙虾: 40
-        镜面鱼: 10
-    ocean_cavern:
-        装甲洞穴鱼: 5
-        鲈鱼: 30
-        龙虾: 30
-        镜面鱼: 10
-    tundra_surface:
-        大西洋鳕鱼: 25
-        鲈鱼: 40
-        寒霜鲦鱼: 5
-        三文鱼: 25
-        虾: 5
-    tundra_underground:
-        装甲洞穴鱼: 5
-        大西洋鳕鱼: 25
-        鲈鱼: 40
-        寒霜鲦鱼: 5
-        镜面鱼: 10
-    tundra_cavern:
-        装甲洞穴鱼: 5
-        大西洋鳕鱼: 20
-        鲈鱼: 30
-        寒霜鲦鱼: 5
-        镜面鱼: 10
-    hollow_surface:
-        鲈鱼: 40
-        七彩矿鱼: 2
-        三文鱼: 25
-        虾: 5
-    hollow_underground:
-        装甲洞穴鱼: 5
-        鲈鱼: 40
-        七彩矿鱼: 2
-        镜面鱼: 10
-    hollow_cavern:
-        装甲洞穴鱼: 5
-        七彩矿鱼: 2
-        鲈鱼: 30
-        镜面鱼: 10
-    corrupt_surface:
-        鲈鱼: 40
-        黑檀锦鲤: 8
-        三文鱼: 25
-        虾: 5
-        紫挥棒鱼: 2
-    corrupt_underground:
-        装甲洞穴鱼: 5
-        鲈鱼: 40
-        黑檀锦鲤: 8
-        镜面鱼: 10
-        紫挥棒鱼: 2
-    corrupt_cavern:
-        装甲洞穴鱼: 5
-        鲈鱼: 30
-        黑檀锦鲤: 8
-        镜面鱼: 10
-        紫挥棒鱼: 2
-
+  蘑菇: 10
+  腐肉: 15
+  初学者鱼饵: 15
+  发光蘑菇: 20
+  专家鱼饵: 30
+  大师鱼饵: 50
+  金蝴蝶: 50
+  金蚱蜢: 50
+  金瓢虫: 50
+  金蠕虫: 50
+  萤火虫: 20
+  荧光虫: 35
+  茱莉娅蝶: 25
+  帝王蝶: 5
+  紫君王蝶: 35
+  红纹蝶: 30
+  硫磺蝶: 10
+  树若虫蝴蝶: 50
+  尤利西斯蝶: 20
+  斑纹燕尾蝶: 15
+  地狱蝴蝶: 15
+  蚱蜢: 10
+  发光蜗牛: 15
+  蛆虫: 15
+  瓢虫: 17
+  熔岩蝇: 25
+  岩浆蜗牛: 35
+  鼻涕虫: 25
+  蜗牛: 10
+  蠕虫: 25
+  附魔夜行者: 35
+  松露虫: 0
+biomeCrates:
+  ABYSS: 深渊匣
+  ASTRAL_INFECTION: 星幻匣
+  BRIMSTONE_CRAG: 硫磺火匣
+  CORRUPTION: 腐化匣
+  DESERT: 绿洲匣
+  DUNGEON: 地牢匣
+  HALLOW: 神圣匣
+  JUNGLE: 丛林匣
+  NORMAL: 铁匣
+  OCEAN: 海洋匣
+  SPACE: 天空匣
+  SULPHUROUS_OCEAN: 深渊匣
+  SUNKEN_SEA: 沉沦匣
+  TEMPLE: 丛林匣
+  TUNDRA: 冰冻匣
+  UNDERWORLD: 黑曜石匣
+fish:
+  PLENTIFUL:
+    鲈鱼:
+      biomeException:
+      - DESERT
+      - SUNKEN_SEA
+      - UNDERWORLD
+    偏口鱼:
+      biome:
+      - DESERT
+    龙虾:
+      biome:
+      - DESERT
+    鳟鱼:
+      height:
+      - SPACE
+      - SURFACE
+      biome:
+      - OCEAN
+  COMMON:
+    大西洋鳕鱼:
+      biome:
+      - TUNDRA
+    霓虹脂鲤:
+      biome:
+      - JUNGLE
+    红鲷鱼:
+      height:
+      - SPACE
+      - SURFACE
+      biome:
+      - OCEAN
+    三文鱼:
+      height:
+      - SPACE
+      - SURFACE
+      biomeException:
+      - UNDERWORLD
+    镜面鱼:
+      height:
+      - UNDERGROUND
+      - CAVERN
+      - UNDERWORLD
+      biomeException:
+      - DESERT
+      - SUNKEN_SEA
+    金枪鱼:
+      height:
+      - SPACE
+      - SURFACE
+      biome:
+      - OCEAN
+  UNCOMMON:
+    装甲洞穴鱼:
+      height:
+      - UNDERGROUND
+      - CAVERN
+      - UNDERWORLD
+      biomeException:
+      - DESERT
+      - SUNKEN_SEA
+    雀鲷:
+      height:
+      - SPACE
+      biomeException:
+      - TUNDRA
+      - CORRUPTION
+      - HALLOW
+      - JUNGLE
+      - DESERT
+    双鳍鳕鱼:
+      height:
+      - SPACE
+      biome:
+      - JUNGLE
+    黑檀锦鲤:
+      biome:
+      - CORRUPTION
+    寒霜鲦鱼:
+      biome:
+      - TUNDRA
+    公主鱼:
+      biome:
+      - HALLOW
+    虾:
+      height:
+      - SPACE
+      - SURFACE
+      biome:
+      - OCEAN
+    斑驳油鱼:
+      height:
+      - UNDERGROUND
+      - CAVERN
+      biome:
+      - JUNGLE
+  RARE:
+    黑曜石鱼:
+      biome:
+      - UNDERWORLD
+    七彩矿鱼:
+      biome:
+      - HALLOW
+    臭味鱼:
+      height:
+      - UNDERGROUND
+      - CAVERN
+      - UNDERWORLD
+      biomeException:
+      - CORRUPTION
+      - HALLOW
+      - DESERT
+      - SUNKEN_SEA
+  VERY_RARE:
+    闪鳍锦鲤:
+      biome:
+      - UNDERWORLD
+  EXTREMELY_RARE:
+    金鲤鱼:
+      height:
+      - UNDERGROUND
+      - CAVERN
+      - UNDERWORLD
+      biomeException:
+      - DESERT
+  示例:
+    示例:
+      height:
+      - SPACE
+      - SURFACE
+      - UNDERGROUND
+      - CAVERN
+      - UNDERWORLD
+      biome:
+      - ABYSS
+      - ASTRAL_INFECTION
+      - BRIMSTONE_CRAG
+      - CORRUPTION
+      - DESERT
+      - DUNGEON
+      - HALLOW
+      - JUNGLE
+      - NORMAL
+      - OCEAN
+      - SPACE
+      - SULPHUROUS_OCEAN
+      - SUNKEN_SEA
+      - TEMPLE
+      - TUNDRA
+      - UNDERWORLD
+      biomeException: 同biome部分
+      progressRequired: 灾厄之眼
+      fishingPower: 100
 questFish:
-    天使鱼:
-        - "normal_sky"
-    蝙蝠鱼:
-        - "normal_cavern"
-        - "normal_hell"
-    骷髅鱼:
-        - "normal_cavern"
-        - "normal_hell"
-    兔兔鱼:
-        - "normal_surface"
-    小丑鱼:
-        - "ocean_surface"
-    泥鱼:
-        - "jungle_surface"
-        - "jungle_underground"
-        - "jungle_cavern"
-    土鱼:
-        - "normal_surface"
-        - "normal_underground"
-    克苏鲁鱼:
-        - "normal_sky"
-        - "normal_surface"
-    向导巫毒鱼:
-        - "normal_cavern"
-        - "normal_hell"
-    突变弗林鱼:
-        - "tundra_cavern"
-
+  天使鱼:
+  - normal_sky
+  蝙蝠鱼:
+  - normal_cavern
+  - normal_hell
+  骷髅鱼:
+  - normal_cavern
+  - normal_hell
+  兔兔鱼:
+  - normal_surface
+  小丑鱼:
+  - ocean_surface
+  泥鱼:
+  - jungle_surface
+  - jungle_underground
+  - jungle_cavern
+  土鱼:
+  - normal_surface
+  - normal_underground
+  克苏鲁鱼:
+  - normal_sky
+  - normal_surface
+  向导巫毒鱼:
+  - normal_cavern
+  - normal_hell
+  突变弗林鱼:
+  - tundra_cavern
 questRewards:
-    - "金币:5:3:1"
-    - "蘑菇:25:10:0.6"
-    - "发光蘑菇:15:5:0.25"
-    - "跳跃之瓶:1:1:0.05"
-    - "航鱼靴:1:1:0.03"
-    - "初学者鱼饵:10:5:0.5"
-    - "专家鱼饵:10:5:0.3"
-    - "大师鱼饵:10:5:0.2"
-    - "金捕虫网:1:1:0.05"
-    - "金钓竿:1:1:0.1"
+- 金币:5:3:1
+- 蘑菇:25:10:0.6
+- 发光蘑菇:15:5:0.25
+- 跳跃之瓶:1:1:0.05
+- 航鱼靴:1:1:0.03
+- 初学者鱼饵:10:5:0.5
+- 专家鱼饵:10:5:0.3
+- 大师鱼饵:10:5:0.2
+- 金捕虫网:1:1:0.05
+- 金钓竿:1:1:0.1

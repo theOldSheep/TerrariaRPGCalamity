@@ -520,7 +520,7 @@ public class PlayerHelper {
                                         case TUNDRA:
                                         case JUNGLE:
                                         case ASTRAL_INFECTION:
-                                            current = biomeType + "_underground";
+                                            current = biomeType.toString().toLowerCase() + "_underground";
                                             break;
                                         default:
                                             current = biomeType.toString().toLowerCase();
