@@ -4,7 +4,6 @@ most of the code in this class are from net.minecraft.server package
 package terraria.entity;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Fish;
@@ -15,6 +14,7 @@ import terraria.TerrariaHelper;
 import terraria.util.EntityHelper;
 import terraria.util.ItemHelper;
 import terraria.util.PlayerHelper;
+import terraria.util.WorldHelper;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -43,7 +43,7 @@ public class TerrariaFishingHook extends EntityFishingHook {
     protected long startUseTime;
     protected int hookedTimeRemaining, waitingTimeRemaining;
     protected float fishingPower, reelingInSpeed = 1;
-    protected boolean isInGround, lavaProof;
+    protected boolean isInGround, isInLava = false, lavaProof;
     protected Player ownerPly;
     protected FishingState state;
     protected org.bukkit.entity.Item hookedItem = null;
@@ -95,9 +95,11 @@ public class TerrariaFishingHook extends EntityFishingHook {
     // helper functions and the ticking itself
     protected EnumParticle getSplashParticle(Block block) {
         if (block == Blocks.WATER || block == Blocks.FLOWING_WATER) {
+            this.isInLava = false;
             return EnumParticle.WATER_SPLASH;
         }
         if (block == Blocks.LAVA || block == Blocks.FLOWING_LAVA) {
+            this.isInLava = true;
             return EnumParticle.LAVA;
         }
         return null;
@@ -146,10 +148,73 @@ public class TerrariaFishingHook extends EntityFishingHook {
         return  (iblockdata.getMaterial() == Material.WATER ||
                 (iblockdata.getMaterial() == Material.LAVA && this.lavaProof));
     }
-    protected String catchFishItem(Player ply, double fishingPower) {
-        // TODO: add more fish item
-        if (Math.random() < 0.25) return "木匣";
-        return "鲈鱼";
+    // fishing result helpers
+    protected FishingResultRarity getFishingResultRarity(double fishingPower) {
+        FishingResultRarity result = FishingResultRarity.PLENTIFUL;
+        if (Math.random() < Math.min(fishingPower / 4500, 1d/6))
+            result = FishingResultRarity.EXTREMELY_RARE;
+        else if (Math.random() < Math.min(fishingPower / 2250, 1d/5))
+            result = FishingResultRarity.VERY_RARE;
+        else if (Math.random() < Math.min(fishingPower / 1050, 1d/4))
+            result = FishingResultRarity.RARE;
+        else if (Math.random() < Math.min(fishingPower / 300, 1d/3))
+            result = FishingResultRarity.UNCOMMON;
+        else if (Math.random() < Math.min(fishingPower / 150, 1d/2))
+            result = FishingResultRarity.COMMON;
+        return result;
+    }
+    protected String catchCrateItem(double fishingPower, boolean inHardMode, String biome, FishingResultRarity rarity) {
+        String result;
+        switch (rarity) {
+            case EXTREMELY_RARE:
+            case VERY_RARE:
+                result = inHardMode ? "钛金匣" : "金匣";
+                break;
+            // try getting the biome-specific crate, returns iron/mythril crate if none exists
+            case RARE: {
+                result = inHardMode ? "秘银匣" : "铁匣";
+                break;
+            }
+            case UNCOMMON:
+                result = inHardMode ? "秘银匣" : "铁匣";
+                break;
+            default:
+                result = inHardMode ? "珍珠木匣" : "木匣";
+        }
+        return result;
+    }
+    protected String catchFishItem(double fishingPower, boolean inHardMode, String biome, FishingResultRarity rarity) {
+        String result = "鲈鱼";
+        return result;
+    }
+    protected String getFishingResult(Player ply, double fishingPower) {
+        FishingResultRarity rarity = getFishingResultRarity(fishingPower);
+        boolean inHardMode = PlayerHelper.hasDefeated(ply, "血肉之墙");
+        String biome;
+        if (isInLava)
+            biome = "underworld";
+        else {
+            WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(bukkitEntity.getLocation());
+            biome = biomeType.toString().toLowerCase();
+            // regularize some biomes
+            // those biomes will only appear in hardmode but the player is in pre-hardmode
+            switch (biomeType) {
+                case HALLOW:
+                case ASTRAL_INFECTION: {
+                    if (!inHardMode)
+                        biome = "normal";
+                    break;
+                }
+            }
+        }
+        // crates
+        double crateChance = EntityHelper.hasEffect(ply, "宝匣") ? 0.125 : 0.075;
+        if (Math.random() < crateChance) {
+            return catchCrateItem(fishingPower, inHardMode, biome, rarity);
+        }
+        // TODO: quest fish
+        // normal fish/weapon etc.
+        return catchFishItem(fishingPower, inHardMode, biome, rarity);
     }
     protected void tryCatchingFish() {
         if (state == FishingState.REELING_IN)
@@ -161,12 +226,13 @@ public class TerrariaFishingHook extends EntityFishingHook {
                 if (Math.random() < 1 / (1 + baitPower / 6))
                     bait.setAmount(bait.getAmount() - 1);
                 this.hookedItem = ItemHelper.dropItem(getBukkitEntity().getLocation(),
-                        catchFishItem(ownerPly, fishingPower + baitPower), false, false);
+                        getFishingResult(ownerPly, fishingPower + baitPower), false, false);
             }
         }
         this.state = FishingState.REELING_IN;
         this.noclip = true;
     }
+    // ticking
     private void basicFishingTicking() {
         WorldServer worldserver = (WorldServer)this.world;
         int waitingTimeDecrement = 1;
@@ -226,7 +292,7 @@ public class TerrariaFishingHook extends EntityFishingHook {
                     this.waitingTimeRemaining = 100;
                 } else {
                     this.waitingTimeRemaining = (int) Math.ceil((1 + Math.random() * 0.3 - 0.15) *
-                            220 / (2.5 + 23 * (baitPower + this.fishingPower) / 600));
+                            300 / (1.5 + (baitPower + this.fishingPower) * 0.05));
                 }
             }
         }
@@ -359,5 +425,27 @@ public class TerrariaFishingHook extends EntityFishingHook {
     }
     public enum FishingState {
         FLYING, IN_WATER, REELING_IN;
+    }
+    public enum FishingResultRarity {
+        PLENTIFUL, COMMON, UNCOMMON, RARE, VERY_RARE, EXTREMELY_RARE;
+        public FishingResultRarity getLowerRarity() {
+            return getLowerRarity(this);
+        }
+        public static FishingResultRarity getLowerRarity(FishingResultRarity rarity) {
+            switch (rarity) {
+                case EXTREMELY_RARE:
+                    return VERY_RARE;
+                case VERY_RARE:
+                    return RARE;
+                case RARE:
+                    return UNCOMMON;
+                case UNCOMMON:
+                    return COMMON;
+                case COMMON:
+                    return PLENTIFUL;
+                default:
+                    return null;
+            }
+        }
     }
 }

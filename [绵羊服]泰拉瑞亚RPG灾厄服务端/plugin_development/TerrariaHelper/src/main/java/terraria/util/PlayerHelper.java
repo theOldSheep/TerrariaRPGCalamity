@@ -504,48 +504,48 @@ public class PlayerHelper {
                         // no event/boss
                         boolean isDayTime = WorldHelper.isDayTime(plyWorld);
                         if (current.equals("")) {
-                            String biomeType = WorldHelper.getBiome(ply.getLocation());
-                            switch (WorldHelper.getHeightLayer(ply.getLocation())) {
-                                case "space":
+                            WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(ply.getLocation());
+                            switch (WorldHelper.HeightLayer.getHeightLayer(ply.getLocation())) {
+                                case SPACE:
                                     current = isDayTime ? "space_night" : "space";
                                     break;
-                                case "underground":
-                                case "cavern":
+                                case UNDERGROUND:
+                                case CAVERN:
                                     switch (biomeType) {
-                                        case "normal":
-                                        case "corruption":
-                                        case "hallow":
-                                        case "desert":
-                                        case "ocean":
-                                        case "tundra":
-                                        case "jungle":
-                                        case "astral_infection":
+                                        case NORMAL:
+                                        case CORRUPTION:
+                                        case HALLOW:
+                                        case DESERT:
+                                        case OCEAN:
+                                        case TUNDRA:
+                                        case JUNGLE:
+                                        case ASTRAL_INFECTION:
                                             current = biomeType + "_underground";
                                             break;
                                         default:
-                                            current = biomeType;
+                                            current = biomeType.toString().toLowerCase();
                                     }
                                     break;
                                 default:
                                     switch (biomeType) {
-                                        case "dungeon":
-                                        case "temple":
-                                        case "underworld":
-                                        case "brimstone_crag":
-                                        case "corruption":
-                                        case "astral_infection":
-                                        case "desert":
-                                        case "sunken_sea":
-                                        case "sulphurous_ocean":
-                                        case "abyss":
+                                        case DUNGEON:
+                                        case TEMPLE:
+                                        case UNDERWORLD:
+                                        case BRIMSTONE_CRAG:
+                                        case CORRUPTION:
+                                        case ASTRAL_INFECTION:
+                                        case DESERT:
+                                        case SUNKEN_SEA:
+                                        case SULPHUROUS_OCEAN:
+                                        case ABYSS:
                                             // always the same bgm
-                                            current = biomeType;
+                                            current = biomeType.toString().toLowerCase();
                                             break;
-                                        case "hallow":
+                                        case HALLOW:
                                             current = isDayTime ? "hallow" : "normal_night";
                                             break;
                                         default:
-                                            current = isDayTime ? biomeType : biomeType + "_night";
+                                            current = biomeType.toString().toLowerCase() + (isDayTime ? "" : "_night");
                                     }
                             }
                         }
