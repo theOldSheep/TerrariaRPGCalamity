@@ -30,7 +30,7 @@ public class ItemUseAndAttributeListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public static void onToolChange(PlayerItemHeldEvent e) {
         Player ply = e.getPlayer();
-        if (ply.getScoreboardTags().contains("useCD")) e.setCancelled(true);
+        if (ply.getScoreboardTags().contains("temp_useCD")) e.setCancelled(true);
         if (e.isCancelled()) return;
         ply.addScoreboardTag("toolChanged");
     }
@@ -41,7 +41,7 @@ public class ItemUseAndAttributeListener implements Listener {
             e.setCancelled(true);
             return;
         }
-        if (ply.getScoreboardTags().contains("useCD")) e.setCancelled(true);
+        if (ply.getScoreboardTags().contains("temp_useCD")) e.setCancelled(true);
         if (e.isCancelled()) return;
         ply.addScoreboardTag("toolChanged");
         // make sure the armor set message does not linger on the armor clicked
@@ -65,7 +65,7 @@ public class ItemUseAndAttributeListener implements Listener {
             e.setCancelled(true);
             return;
         }
-        if (ply.getScoreboardTags().contains("useCD")) e.setCancelled(true);
+        if (ply.getScoreboardTags().contains("temp_useCD")) e.setCancelled(true);
         if (e.isCancelled()) return;
         ply.addScoreboardTag("toolChanged");
         // make sure the armor set message does not linger on the armor dropped
@@ -91,13 +91,13 @@ public class ItemUseAndAttributeListener implements Listener {
         // if the player is using a loading weapon, fire the loaded ammo
         // otherwise, do nothing
         // cancel auto swing if applicable
-        if (scoreboardTags.contains("useCD")) {
-            if (scoreboardTags.contains("isLoadingWeapon")) {
-                ply.removeScoreboardTag("isLoadingWeapon");
+        if (scoreboardTags.contains("temp_useCD")) {
+            if (scoreboardTags.contains("temp_isLoadingWeapon")) {
+                ply.removeScoreboardTag("temp_isLoadingWeapon");
                 // fire loaded shots
                 ItemUseHelper.playerUseItem(ply);
             }
-            ply.removeScoreboardTag("autoSwing");
+            ply.removeScoreboardTag("temp_autoSwing");
             return;
         }
         // setup click type and let player use the item

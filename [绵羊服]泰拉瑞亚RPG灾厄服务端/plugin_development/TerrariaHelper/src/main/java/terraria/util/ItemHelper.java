@@ -12,6 +12,7 @@ import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftItem;
 import org.bukkit.entity.Item;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -697,5 +698,12 @@ public class ItemHelper {
         CraftWorld wld = (CraftWorld) loc.getWorld();
         wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         return new CraftItem(wld.getHandle().getServer(), entity);
+    }
+    public static int addItemToGenericInventory(ItemStack item, Inventory inventory) {
+        if (item == null) return 0;
+        // returns how many remaining
+        HashMap<Integer, ItemStack> remainingItemMap = inventory.addItem(item);
+        if (remainingItemMap.isEmpty()) return 0;
+        else return remainingItemMap.get(0).getAmount();
     }
 }

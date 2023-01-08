@@ -143,91 +143,6 @@ public class PlayerHelper {
         }
     }
     // threads
-    public static void threadGrapplingHook() {
-        // every 3 ticks (~1/7 second)
-        Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
-            for (Player ply : Bukkit.getOnlinePlayers()) {
-                try {
-                    ArrayList<Entity> hooks = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "hooks").value();
-                    boolean shouldRemoveHooks = false;
-                    String hookItemName = EntityHelper.getMetadata(ply, "grapplingHookItem").asString();
-                    String[] hookNameInfo = ItemHelper.splitItemName(ply.getInventory().getItemInOffHand());
-                    if (!PlayerHelper.isProperlyPlaying(ply)) {
-                        // not survival mode or not logged in etc
-                        shouldRemoveHooks = true;
-                    } else if (!hookNameInfo[1].equals(hookItemName)) {
-                        // hook item do not match
-                        shouldRemoveHooks = true;
-                    } else if (hooks.size() == 0 || !hooks.get(0).getWorld().equals(ply.getWorld())) {
-                        // no grappling hook or world changed
-                        shouldRemoveHooks = true;
-                    }
-                    if (shouldRemoveHooks) {
-                        for (Entity hook : hooks) hook.remove();
-                        ply.setGravity(true);
-                    } else {
-                        // get center location information
-                        World plyWorld = ply.getWorld();
-                        Location center = new Location(plyWorld, 0, 0, 0);
-                        int hookedAmount = 0;
-                        YmlHelper.YmlSection config = YmlHelper.getFile("plugins/Data/hooks.yml");
-                        double hookReach = config.getDouble(hookItemName + ".reach", 12),
-                                hookPullSpeed = config.getDouble(hookItemName + ".playerSpeed", 0.1);
-                        hookReach = hookReach * hookReach * 4;
-                        HashSet<Entity> hooksToRemove = new HashSet<>();
-                        for (Entity hook : hooks) {
-                            // if the hook is too far away
-                            if (ply.getLocation().subtract(hook.getLocation()).lengthSquared() > hookReach) {
-                                hook.remove();
-                            }
-                            // if the hook is removed by any mean, schedule its removal from the list
-                            if (hook.isDead()) {
-                                hooksToRemove.add(hook);
-                                continue;
-                            }
-                            if (hook.isOnGround()) {
-                                center.add(hook.getLocation());
-                                hookedAmount++;
-                            }
-                            // draw chain
-                            Vector dVec = hook.getLocation().subtract(ply.getEyeLocation()).toVector();
-                            if (dVec.lengthSquared() > 0) {
-                                double dVecLength = dVec.length();
-                                // offset vector prevents color block spamming the screen
-                                Vector offsetVector = dVec.clone().multiply(1/dVecLength);
-                                GenericHelper.handleParticleLine(dVec, ply.getEyeLocation().add(offsetVector),
-                                        new GenericHelper.ParticleLineOptions()
-                                                .setLength(dVecLength)
-                                                .setWidth(0.25, false)
-                                                .setAlpha(0.25f)
-                                                .setStepsize(1)
-                                                .setTicksLinger(3)
-                                                .setParticleColor(EntityHelper.getMetadata(hook, "color").asString()));
-                            }
-                        }
-                        for (Entity hook : hooksToRemove) hooks.remove(hook);
-                        if (hookedAmount >= 1) {
-                            ply.setGravity(false);
-                            EntityHelper.setMetadata(ply, "thrust", 0);
-                            EntityHelper.setMetadata(ply, "thrustProgress", 0);
-                            ply.setFallDistance(0);
-                            center.multiply(1 / (double) hookedAmount);
-                            Vector thrust = center.subtract(ply.getEyeLocation()).toVector();
-                            if (thrust.lengthSquared() > hookPullSpeed * hookPullSpeed * 36)
-                                thrust.normalize().multiply(hookPullSpeed);
-                            else if (thrust.lengthSquared() > 0)
-                                thrust.multiply(0.1666667);
-                            ply.setVelocity(thrust);
-                        } else
-                            // no hook attached to ground
-                            ply.setGravity(true);
-                    }
-                } catch (Exception e) {
-                    Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadGrapplingHook ", e);
-                }
-            }
-        }, 0, 3);
-    }
     public static void threadArmorAccessory() {
         // setup projectile attributes
         HashMap<String, Double> attrMapChlorophyte = new HashMap<>(5);
@@ -352,23 +267,17 @@ public class PlayerHelper {
             }
         }, 0, 5);
     }
-    public static void threadThrustRegen() {
-        // every 4 ticks (1/5 second)
+    public static void threadAttribute() {
+        int delay = 6;
+        // every 6 ticks (0.3 second)
+        // note that players would have their stats updated
+        // when they use their weapon after switching hot bar slot or closes an inventory.
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
-                try {
-                    // validate the current player
-                    if (PlayerHelper.isProperlyPlaying(ply)) {
-                        if (ply.getWorld().getBlockAt(ply.getLocation().subtract(0, 0.5, 0)).getType().isSolid()) {
-                            EntityHelper.setMetadata(ply, "thrust", 0);
-                            EntityHelper.setMetadata(ply, "thrustProgress", 0);
-                        }
-                    }
-                } catch (Exception e) {
-                    Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadThrustRegen ", e);
-                }
+                if (isProperlyPlaying(ply))
+                    setupAttribute(ply);
             }
-        }, 0, 4);
+        }, 0, delay);
     }
     public static void threadBackground() {
         // every 10 ticks (1/2 second)
@@ -584,6 +493,305 @@ public class PlayerHelper {
             }
         }, 0, 4);
     }
+    public static void threadGrapplingHook() {
+        // every 3 ticks (~1/7 second)
+        Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
+            for (Player ply : Bukkit.getOnlinePlayers()) {
+                try {
+                    ArrayList<Entity> hooks = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "hooks").value();
+                    boolean shouldRemoveHooks = false;
+                    String hookItemName = EntityHelper.getMetadata(ply, "grapplingHookItem").asString();
+                    String[] hookNameInfo = ItemHelper.splitItemName(ply.getInventory().getItemInOffHand());
+                    if (!PlayerHelper.isProperlyPlaying(ply)) {
+                        // not survival mode or not logged in etc
+                        shouldRemoveHooks = true;
+                    } else if (!hookNameInfo[1].equals(hookItemName)) {
+                        // hook item do not match
+                        shouldRemoveHooks = true;
+                    } else if (hooks.size() == 0 || !hooks.get(0).getWorld().equals(ply.getWorld())) {
+                        // no grappling hook or world changed
+                        shouldRemoveHooks = true;
+                    }
+                    if (shouldRemoveHooks) {
+                        for (Entity hook : hooks) hook.remove();
+                        ply.setGravity(true);
+                    } else {
+                        // get center location information
+                        World plyWorld = ply.getWorld();
+                        Location center = new Location(plyWorld, 0, 0, 0);
+                        int hookedAmount = 0;
+                        YmlHelper.YmlSection config = YmlHelper.getFile("plugins/Data/hooks.yml");
+                        double hookReach = config.getDouble(hookItemName + ".reach", 12),
+                                hookPullSpeed = config.getDouble(hookItemName + ".playerSpeed", 0.1);
+                        hookReach = hookReach * hookReach * 4;
+                        HashSet<Entity> hooksToRemove = new HashSet<>();
+                        for (Entity hook : hooks) {
+                            // if the hook is too far away
+                            if (ply.getLocation().subtract(hook.getLocation()).lengthSquared() > hookReach) {
+                                hook.remove();
+                            }
+                            // if the hook is removed by any mean, schedule its removal from the list
+                            if (hook.isDead()) {
+                                hooksToRemove.add(hook);
+                                continue;
+                            }
+                            if (hook.isOnGround()) {
+                                center.add(hook.getLocation());
+                                hookedAmount++;
+                            }
+                            // draw chain
+                            Vector dVec = hook.getLocation().subtract(ply.getEyeLocation()).toVector();
+                            if (dVec.lengthSquared() > 0) {
+                                double dVecLength = dVec.length();
+                                // offset vector prevents color block spamming the screen
+                                Vector offsetVector = dVec.clone().multiply(1/dVecLength);
+                                GenericHelper.handleParticleLine(dVec, ply.getEyeLocation().add(offsetVector),
+                                        new GenericHelper.ParticleLineOptions()
+                                                .setLength(dVecLength)
+                                                .setWidth(0.25, false)
+                                                .setAlpha(0.25f)
+                                                .setStepsize(1)
+                                                .setTicksLinger(3)
+                                                .setParticleColor(EntityHelper.getMetadata(hook, "color").asString()));
+                            }
+                        }
+                        for (Entity hook : hooksToRemove) hooks.remove(hook);
+                        if (hookedAmount >= 1) {
+                            ply.setGravity(false);
+                            EntityHelper.setMetadata(ply, "thrust", 0);
+                            EntityHelper.setMetadata(ply, "thrustProgress", 0);
+                            ply.setFallDistance(0);
+                            center.multiply(1 / (double) hookedAmount);
+                            Vector thrust = center.subtract(ply.getEyeLocation()).toVector();
+                            if (thrust.lengthSquared() > hookPullSpeed * hookPullSpeed * 36)
+                                thrust.normalize().multiply(hookPullSpeed);
+                            else if (thrust.lengthSquared() > 0)
+                                thrust.multiply(0.1666667);
+                            ply.setVelocity(thrust);
+                        } else
+                            // no hook attached to ground
+                            ply.setGravity(true);
+                    }
+                } catch (Exception e) {
+                    Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadGrapplingHook ", e);
+                }
+            }
+        }, 0, 3);
+    }
+    public static void threadMovement() {
+        // every 1 tick
+        Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
+            for (Player ply : Bukkit.getOnlinePlayers()) {
+                // validate the current player
+                if (!PlayerHelper.isProperlyPlaying(ply))
+                    continue;
+                // setup variables
+                int thrustIndex = EntityHelper.getMetadata(ply, "thrustIndex").asInt();
+                int thrustProgress = EntityHelper.getMetadata(ply, "thrustProgress").asInt();
+                // if this is the first thrust, save the progress
+                if (thrustIndex == 0 && thrustProgress == 0)
+                    EntityHelper.setMetadata(ply, "accessoryThrust",
+                            ((HashSet<String>) EntityHelper.getMetadata(ply, "accessory").value()).clone());
+                int extraJumpTime = 0;
+                int thrustProgressMax = 0;
+                double maxSpeed = 1, horizontalSpeed = 0.5;
+                double maxAcceleration = 0.5;
+                List<String> accessory = (List<String>) EntityHelper.getMetadata(ply, "accessoryList").value();
+                Set<String> availableAccessory = (Set<String>) EntityHelper.getMetadata(ply, "accessoryThrust").value();
+                Entity entityToPush = ply;
+                String accessoryUsed = "";
+                boolean gliding = false;
+                // if the player is mounting
+                if (ply.getVehicle() != null) {
+                    Bukkit.broadcastMessage("FLYING WITH VEHICLE");
+                    entityToPush = ply.getVehicle();
+                    // get mount (jump/flight) info
+                    String mountType = GenericHelper.trimText(entityToPush.getName());
+                    ConfigurationSection mountSection = TerrariaHelper.mountConfig.getConfigurationSection(mountType);
+                    if (mountSection == null)
+                        continue;
+                    thrustProgressMax = mountSection.getInt("maxProgress", 0);
+                    maxSpeed = mountSection.getDouble("maxSpeed", 1d);
+                    maxAcceleration = mountSection.getDouble("maxAcceleration", 0.5d);
+                    horizontalSpeed = mountSection.getDouble("horizontalSpeed", 0.5d);
+                    extraJumpTime = mountSection.getInt("extraJumpTime", 0);
+                    accessoryUsed = mountType;
+                    // after mounting, accessory (wings etc.) can not be used until landed.
+                    thrustIndex = 999999;
+                }
+                else {
+                    Collection<String> scoreboardTags = ply.getScoreboardTags();
+                    if (!scoreboardTags.contains("temp_thrusting"))
+                        continue;
+                    // determine the accessory to use
+                    for (; thrustIndex < accessory.size(); thrustIndex ++) {
+                        String currAcc = accessory.get(thrustIndex);
+                        if (!availableAccessory.contains(currAcc))
+                            continue;
+                        ConfigurationSection wingSection = TerrariaHelper.wingConfig.getConfigurationSection(currAcc);
+                        if (wingSection == null)
+                            continue;
+                        extraJumpTime = wingSection.getInt("extraJumpTime", 0);
+                        // no extra jump on ground
+                        if (ply.isOnGround() && thrustProgress < extraJumpTime)
+                            continue;
+                        // the accessory should be good to go here
+                        thrustProgressMax = wingSection.getInt("flightTime", 0);
+                        maxSpeed = wingSection.getDouble("maxSpeed", 1d);
+                        maxAcceleration = wingSection.getDouble("maxAcceleration", 0.5d);
+                        horizontalSpeed = wingSection.getDouble("horizontalSpeed", 0.5d);
+                        accessoryUsed = currAcc;
+                        Bukkit.broadcastMessage("FLYING WITH ACCESSORY, " + thrustIndex + "(" + accessoryUsed);
+                        break;
+                    }
+                    // if no valid accessory is present
+                    if (thrustProgressMax <= 0) {
+                        Bukkit.broadcastMessage("ATTEMPT JUMP");
+                        // jump
+                        if (ply.isOnGround()) {
+                            Bukkit.broadcastMessage("JUMP");
+                            thrustProgressMax = 6;
+                            maxSpeed = 16;
+                            maxAcceleration = 11;
+                            horizontalSpeed = 11;
+                            thrustIndex = -1;
+                        }
+                        // glide
+                        else {
+                            for (int i = 0; i < accessory.size(); i ++) {
+                                String currAcc = accessory.get(i);
+                                ConfigurationSection wingSection = TerrariaHelper.wingConfig.getConfigurationSection(currAcc);
+                                if (wingSection == null)
+                                    continue;
+                                boolean isWing = wingSection.getBoolean("isWing", false);
+                                // non-wing flying accessories should not be able to glide
+                                if (!isWing)
+                                    continue;
+                                // the accessory should be a wing here
+                                Bukkit.broadcastMessage("GLIDE");
+                                gliding = true;
+                                thrustProgressMax = 999999;
+                                maxSpeed = 0.25;
+                                horizontalSpeed = wingSection.getDouble("horizontalSpeed", 0.5d) / 2;
+                                accessoryUsed = currAcc;
+                                break;
+                            }
+                        }
+                    }
+                }
+                // update velocity
+                if (thrustProgress < extraJumpTime + thrustProgressMax) {
+                    Bukkit.broadcastMessage(thrustProgress + "/" + extraJumpTime + ", " + thrustProgressMax);
+                    ply.setFallDistance(0);
+                    // movement direction
+                    Vector moveDir;
+                    {
+                        if (gliding) moveDir = new Vector(0, maxSpeed * -1, 0);
+                        else moveDir = new Vector(0, maxSpeed, 0);
+                        double horizontalMoveYaw = ((CraftPlayer) ply).getHandle().yaw;
+                        HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply, "keysPressed").value();
+                        String movementKeyDown = "";
+                        boolean fwd = allKeysPressed.contains("W"),
+                                rev = allKeysPressed.contains("S"),
+                                lft = allKeysPressed.contains("A"),
+                                rt  = allKeysPressed.contains("D");
+                        if (fwd && !rev)
+                            movementKeyDown += "W";
+                        else if (rev && !fwd)
+                            movementKeyDown += "S";
+                        if (lft && !rt)
+                            movementKeyDown += "A";
+                        else if (rt && !lft)
+                            movementKeyDown += "D";
+                        switch (movementKeyDown) {
+                            case "A":
+                                horizontalMoveYaw -= 90;
+                                break;
+                            case "S":
+                                horizontalMoveYaw += 180;
+                                break;
+                            case "D":
+                                horizontalMoveYaw += 90;
+                                break;
+                            case "WA":
+                                horizontalMoveYaw -= 45;
+                                break;
+                            case "WD":
+                                horizontalMoveYaw += 45;
+                                break;
+                            case "SA":
+                                horizontalMoveYaw -= 135;
+                                break;
+                            case "SD":
+                                horizontalMoveYaw += 135;
+                                break;
+                        }
+                        if (movementKeyDown.length() > 0) {
+                            moveDir.add(MathHelper.vectorFromYawPitch_quick(horizontalMoveYaw, 0).multiply(horizontalSpeed));
+                        }
+                    }
+                    Vector acceleration = moveDir.clone().subtract(ply.getVelocity());
+                    double accLength = acceleration.length();
+                    if (accLength > maxAcceleration) {
+                        acceleration.multiply(maxAcceleration / accLength);
+                    }
+                    ply.setVelocity(ply.getVelocity().add(acceleration));
+                    if (!gliding) {
+                        // extra jump
+                        if (thrustProgress < extraJumpTime) {
+                            // particles
+                            for (int xOffset = -1; xOffset <= 1; xOffset ++) {
+                                for (int zOffset = -1; zOffset <= 1; zOffset ++) {
+                                    for (int i = 0; i < 4; i ++)
+                                        entityToPush.getWorld().spawnParticle(Particle.CLOUD,
+                                                entityToPush.getLocation().add(xOffset, 0, zOffset)
+                                                        .add(Math.random() * 0.5, Math.random() * 0.5, Math.random() * 0.5),
+                                                0, xOffset, 0, zOffset, 0.1);
+                                }
+                            }
+                            // extra jump do not get consumed continuously
+                            ply.removeScoreboardTag("temp_thrusting");
+                        }
+                        // rocket boots / wings
+                        else {
+                            // particles
+                            switch (accessoryUsed) {
+                                case "火箭靴":
+                                case "幽灵靴": {
+                                    entityToPush.getWorld().spawnParticle(Particle.CLOUD,
+                                            entityToPush.getLocation()
+                                                    .add(Math.random() * 0.5, Math.random() * 0.5, Math.random() * 0.5),
+                                            0, 0, -1, 0, 0.175);
+                                    break;
+                                }
+                            }
+                        }
+                        thrustProgress++;
+                    }
+                    // flight time depleted
+                    else {
+                        Bukkit.broadcastMessage("FLIGHT TIME DEPLETED!");
+                        Bukkit.broadcastMessage("AVAILABLE ACCESSORIES: " + availableAccessory);
+                        // if the player is using accessory to fly
+                        if (!ply.isInsideVehicle()) {
+                            thrustProgress = 0;
+                            thrustIndex++;
+                            availableAccessory.remove(accessoryUsed);
+                        }
+                        Bukkit.broadcastMessage("AVAILABLE ACCESSORIES AFTER DELETION: " + availableAccessory);
+                        // so that the next flying accessory do not automatically start using
+                        ply.removeScoreboardTag("temp_thrusting");
+                    }
+                    // save variables
+                    EntityHelper.setMetadata(ply, "thrustIndex", thrustIndex);
+                    EntityHelper.setMetadata(ply, "thrustProgress", thrustProgress);
+                }
+                else {
+                    ply.removeScoreboardTag("temp_thrusting");
+                }
+            }
+        }, 0, 1);
+    }
     public static void threadRegen() {
         boolean debugMessage = false;
         int delay = 2;
@@ -697,32 +905,48 @@ public class PlayerHelper {
             }
         }, 0, delay);
     }
-    public static void threadAttribute() {
-        int delay = 6;
-        // every 6 ticks (0.3 second)
-        // note that players would have their stats updated
-        // when they use their weapon after switching hot bar slot or closes an inventory.
+    public static void threadThrustRegen() {
+        // every 4 ticks (1/5 second)
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
-                if (isProperlyPlaying(ply))
-                    setupAttribute(ply);
+                try {
+                    // validate the current player
+                    if (PlayerHelper.isProperlyPlaying(ply)) {
+                        if (ply.getWorld().getBlockAt(ply.getLocation().subtract(0, 0.5, 0)).getType().isSolid()) {
+                            EntityHelper.setMetadata(ply, "thrust", 0);
+                            EntityHelper.setMetadata(ply, "thrustProgress", 0);
+                        }
+                    }
+                } catch (Exception e) {
+                    Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadThrustRegen ", e);
+                }
             }
-        }, 0, delay);
+        }, 0, 4);
     }
     // others
     public static void initPlayerStats(Player ply, boolean joinOrRespawn) {
+        // metadata and scoreboard tag
         EntityHelper.initEntityMetadata(ply);
+        {
+            List<String> scoreboardTagsToRemove = new ArrayList<>();
+            for (String scoreboardTag : ply.getScoreboardTags()) {
+                if (scoreboardTag.startsWith("temp"))
+                    scoreboardTagsToRemove.add(scoreboardTag);
+            }
+            for (String scoreboardTag : scoreboardTagsToRemove) {
+                ply.removeScoreboardTag(scoreboardTag);
+            }
+        }
+        // attribute and vanilla status setup
         ply.addPotionEffect(new PotionEffect(
                 PotionEffectType.SLOW_DIGGING, 999999999, 9, false, false), true);
+        ply.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(Double.MAX_VALUE);
         ply.setFoodLevel(0);
         ply.setGravity(true);
         // crafting variables
         EntityHelper.setMetadata(ply, "craftingStation", "CLOSED");
         EntityHelper.setMetadata(ply, "recipeNumber", -1);
         // weapon use variables
-        ply.removeScoreboardTag("isLoadingWeapon");
-        ply.removeScoreboardTag("autoSwing");
-        ply.removeScoreboardTag("useCD");
         EntityHelper.setMetadata(ply, "useCDInternal", 0);
         EntityHelper.setMetadata(ply, "swingAmount", 0);
         EntityHelper.setMetadata(ply, "nextMinionIndex", 0);
@@ -731,18 +955,23 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "minions", new ArrayList<Entity>());
         EntityHelper.setMetadata(ply, "sentries", new ArrayList<Entity>());
         EntityHelper.setMetadata(ply, "accessory", new HashSet<String>());
+        EntityHelper.setMetadata(ply, "accessoryList", new ArrayList<String>());
+            // the accessory set cached when first thrusting, to prevent buggy behaviour.
+        EntityHelper.setMetadata(ply, "accessoryThrust", new HashSet<String>());
         EntityHelper.setMetadata(ply, "effects", new HashMap<String, Integer>());
         EntityHelper.setMetadata(ply, "attrMap", PlayerHelper.getDefaultPlayerAttributes());
         EntityHelper.setMetadata(ply, "effectInflict", PlayerHelper.getDefaultPlayerEffectInflict());
         EntityHelper.setMetadata(ply, "hooks", new ArrayList<Entity>());
+        EntityHelper.setMetadata(ply, "keysPressed", new HashSet<String>());
         // mob spawning variable
         EntityHelper.setMetadata(ply, "mobAmount", 0);
         EntityHelper.setMetadata(ply, "biome", "normal");
-        // movement variable
-        ply.removeScoreboardTag("thrusting");
+        // movement and control variable
         EntityHelper.setMetadata(ply, "grapplingHookItem", "");
-        EntityHelper.setMetadata(ply, "thrust", 0);
+        EntityHelper.setMetadata(ply, "thrustIndex", 0);
         EntityHelper.setMetadata(ply, "thrustProgress", 0);
+        EntityHelper.setMetadata(ply, "chargeDir", "");
+        EntityHelper.setMetadata(ply, "chargeDirLastPressed", Calendar.getInstance().getTimeInMillis());
         // other variable
         if (joinOrRespawn) {
             EntityHelper.setMetadata(ply, "team", "red");
@@ -916,21 +1145,35 @@ public class PlayerHelper {
             }
             // accessories
             {
-                Set<String> accessories = new HashSet<>();
+                Set<String> accessories = new HashSet<>(12);
+                List<String> accessoryList = new ArrayList<>(7);
                 int accessoryAmount = getAccessoryAmount(ply);
                 // setup accessory list
                 for (int idx = 1; idx <= accessoryAmount; idx ++) {
                     ItemStack currAcc = DragoncoreHelper.getSlotItem(ply, "accessory" + idx);
                     if (currAcc == null || currAcc.getType() == Material.AIR) continue;
                     String currAccType = ItemHelper.splitItemName(currAcc)[1];
-                    if (currAccType.equals("太阳石") && !WorldHelper.isDayTime(ply.getWorld())) continue;
-                    if (currAccType.equals("月亮石") && WorldHelper.isDayTime(ply.getWorld())) continue;
+                    // special accessory activation restrictions
+                    switch (currAccType) {
+                        case "太阳石": {
+                            if (!WorldHelper.isDayTime(ply.getWorld()))
+                                continue;
+                            return;
+                        }
+                        case "月亮石": {
+                            if (WorldHelper.isDayTime(ply.getWorld()))
+                                continue;
+                            return;
+                        }
+                    }
                     // attribute
                     EntityHelper.tweakAttribute(ply, newAttrMap, currAcc, true);
                     // accessory type
                     accessories.add(currAccType);
+                    accessoryList.add(currAccType);
                 }
                 EntityHelper.setMetadata(ply, "accessory", accessories);
+                EntityHelper.setMetadata(ply, "accessoryList", accessoryList);
             }
             EntityHelper.setMetadata(ply, "attrMap", newAttrMap);
         } catch (Exception e) {
@@ -1082,13 +1325,6 @@ public class PlayerHelper {
         }
         return false;
     }
-    public static int addItemToGenericInventory(ItemStack item, Inventory inventory) {
-        if (item == null) return 0;
-        // returns how many remaining
-        HashMap<Integer, ItemStack> remainingItemMap = inventory.addItem(item);
-        if (remainingItemMap.isEmpty()) return 0;
-        else return remainingItemMap.get(0).getAmount();
-    }
     public static ItemStack getFirstItem(Player ply, Predicate<ItemStack> itemPredicate, boolean testVoidBag) {
         // in the player's inventory
         Inventory plyInv = ply.getInventory();
@@ -1186,13 +1422,13 @@ public class PlayerHelper {
             }
         }
         try {
-            amountRemaining = addItemToGenericInventory(item, ply.getInventory());
+            amountRemaining = ItemHelper.addItemToGenericInventory(item, ply.getInventory());
             if (amountRemaining > 0) {
                 // put the item in the player's void bag, if the player has a void bag in the inventory
                 if (hasVoidBag(ply)) {
                     Inventory voidBagInv = getInventory(ply, "voidBag");
                     if (voidBagInv != null)
-                        amountRemaining = addItemToGenericInventory(item, voidBagInv);
+                        amountRemaining = ItemHelper.addItemToGenericInventory(item, voidBagInv);
                 }
             }
             if (dropExtra && amountRemaining > 0) {
@@ -1365,5 +1601,8 @@ public class PlayerHelper {
                 break;
             }
         }
+    }
+    public static void handleDash(Player ply, double yaw, double pitch) {
+
     }
 }

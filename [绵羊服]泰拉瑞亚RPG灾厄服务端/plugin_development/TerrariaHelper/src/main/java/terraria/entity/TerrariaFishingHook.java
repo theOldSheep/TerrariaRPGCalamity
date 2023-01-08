@@ -364,7 +364,7 @@ public class TerrariaFishingHook extends EntityFishingHook {
         }
         if (this.checkValid()) {
             // if the player is starting to reel in
-            if (state != FishingState.REELING_IN && !ownerPly.getScoreboardTags().contains("autoSwing"))
+            if (state != FishingState.REELING_IN && !ownerPly.getScoreboardTags().contains("temp_autoSwing"))
                 tryCatchingFish();
             float fluidHeight = 0.0F;
             BlockPosition blockposition = new BlockPosition(this);

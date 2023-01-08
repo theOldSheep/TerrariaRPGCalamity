@@ -44,7 +44,7 @@ public class ItemUseHelper {
         return applyCD(ply, coolDown);
     }
     public static int applyCD(Player ply, int CD) {
-        ply.addScoreboardTag("useCD");
+        ply.addScoreboardTag("temp_useCD");
         MetadataValue lastCDInternal = EntityHelper.getMetadata(ply, "useCDInternalLast");
         long lastCDApply;
         if (lastCDInternal == null) {
@@ -62,12 +62,12 @@ public class ItemUseHelper {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
                 if (ply.isOnline() && EntityHelper.getMetadata(ply, "useCDInternal").asLong() == lastCDApply) {
                     if (!PlayerHelper.isProperlyPlaying(ply)) {
-                        ply.removeScoreboardTag("autoSwing");
-                        ply.removeScoreboardTag("isLoadingWeapon");
+                        ply.removeScoreboardTag("temp_autoSwing");
+                        ply.removeScoreboardTag("temp_isLoadingWeapon");
                     }
                     // handle next use
-                    ply.removeScoreboardTag("useCD");
-                    if (ply.getScoreboardTags().contains("autoSwing")) {
+                    ply.removeScoreboardTag("temp_useCD");
+                    if (ply.getScoreboardTags().contains("temp_autoSwing")) {
                         playerUseItem(ply);
                     }
                 }
@@ -85,7 +85,7 @@ public class ItemUseHelper {
         if (blk != null) GameplayHelper.playerMineBlock(blk, ply);
         // left click swings until stopped
         if (!isRightClick)
-            ply.addScoreboardTag("autoSwing");
+            ply.addScoreboardTag("temp_autoSwing");
         double useCD = attrMap.getOrDefault("useTime", 20d);
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) *
                 attrMap.getOrDefault("useSpeedMeleeMulti", 1d) *
@@ -95,9 +95,9 @@ public class ItemUseHelper {
     }
     protected static void playerSwingFishingRod(Player ply, HashMap<String, Double> attrMap, String hookType) {
         // retracting hooks
-        if (ply.getScoreboardTags().contains("autoSwing")) {
-            ply.removeScoreboardTag("isLoadingWeapon");
-            ply.removeScoreboardTag("autoSwing");
+        if (ply.getScoreboardTags().contains("temp_autoSwing")) {
+            ply.removeScoreboardTag("temp_isLoadingWeapon");
+            ply.removeScoreboardTag("temp_autoSwing");
             applyCD(ply, 10);
             return;
         }
@@ -122,8 +122,8 @@ public class ItemUseHelper {
         EntityHuman shooter = ((CraftPlayer) ply).getHandle();
         CraftWorld wld = (CraftWorld) ply.getWorld();
         // before spawning projectile, turn on the auto swing and apply CD
-        ply.addScoreboardTag("autoSwing");
-        ply.addScoreboardTag("isLoadingWeapon");
+        ply.addScoreboardTag("temp_autoSwing");
+        ply.addScoreboardTag("temp_isLoadingWeapon");
         applyCD(ply, 0);
         // spawn fishhooks
         for (int i = 0; i < hookAmount; i ++) {
@@ -1189,7 +1189,7 @@ public class ItemUseHelper {
     public static void playerUseItem(Player ply) {
         // cursed players can not use any item
         if (EntityHelper.hasEffect(ply, "诅咒")) {
-            ply.removeScoreboardTag("autoSwing");
+            ply.removeScoreboardTag("temp_autoSwing");
             EntityHelper.setMetadata(ply, "swingAmount", 0);
             return;
         }
@@ -1234,8 +1234,8 @@ public class ItemUseHelper {
                 int swingAmount = EntityHelper.getMetadata(ply, "swingAmount").asInt();
                 if (maxLoad > 0) {
                     swingAmount = Math.min(swingAmount, maxLoad);
-                    if (scoreboardTags.contains("autoSwing")) {
-                        if (scoreboardTags.contains("isLoadingWeapon")) {
+                    if (scoreboardTags.contains("temp_autoSwing")) {
+                        if (scoreboardTags.contains("temp_isLoadingWeapon")) {
                             // still loading
                             isLoading = true;
                         } else {
@@ -1244,13 +1244,13 @@ public class ItemUseHelper {
                         }
                     } else {
                         // start loading, as the auto swing scoreboard tag is added later.
-                        ply.addScoreboardTag("isLoadingWeapon");
+                        ply.addScoreboardTag("temp_isLoadingWeapon");
                         isLoading = true;
                     }
                 }
                 if (isLoading) {
                     swingAmount = Math.min(swingAmount + 1, maxLoad);
-                    ply.addScoreboardTag("autoSwing");
+                    ply.addScoreboardTag("temp_autoSwing");
                     EntityHelper.setMetadata(ply, "swingAmount", swingAmount);
                     displayLoadingProgress(ply, swingAmount, maxLoad);
                     double loadSpeedMulti = weaponSection.getDouble("loadTimeMulti", 0.5d);
@@ -1288,7 +1288,7 @@ public class ItemUseHelper {
                 }
                 if (success) {
                     if (autoSwing) {
-                        ply.addScoreboardTag("autoSwing");
+                        ply.addScoreboardTag("temp_autoSwing");
                         EntityHelper.setMetadata(ply, "swingAmount", swingAmount + 1);
                     }
                     // play item use sound
@@ -1296,7 +1296,7 @@ public class ItemUseHelper {
                 } else {
                     // prevent bug, if the item is not being used successfully, cancel auto swing
                     // this mainly happens when mana has depleted or ammo runs out
-                    ply.removeScoreboardTag("autoSwing");
+                    ply.removeScoreboardTag("temp_autoSwing");
                 }
             }
         }

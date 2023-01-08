@@ -33,6 +33,7 @@ public class TerrariaHelper extends JavaPlugin {
     public static final YmlHelper.YmlSection entityConfig = YmlHelper.getFile("plugins/Data/entities.yml");
     public static final YmlHelper.YmlSection fishingConfig = YmlHelper.getFile("plugins/Data/fishing.yml");
     public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");
+    public static final YmlHelper.YmlSection mountConfig = YmlHelper.getFile("plugins/Data/mounts.yml");
     public static final YmlHelper.YmlSection potionItemConfig = YmlHelper.getFile("plugins/Data/potionItem.yml");
     public static final YmlHelper.YmlSection prefixConfig = YmlHelper.getFile("plugins/Data/prefix.yml");
     public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/projectiles.yml");
@@ -40,6 +41,7 @@ public class TerrariaHelper extends JavaPlugin {
     public static final YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
     public static final YmlHelper.YmlSection soundConfig = YmlHelper.getFile("plugins/Data/sounds.yml");
     public static final YmlHelper.YmlSection weaponConfig = YmlHelper.getFile("plugins/Data/weapons.yml");
+    public static final YmlHelper.YmlSection wingConfig = YmlHelper.getFile("plugins/Data/wings.yml");
 
     public TerrariaHelper() {
         super();
@@ -151,13 +153,14 @@ public class TerrariaHelper extends JavaPlugin {
     }
     private void initThreads() {
         YmlHelper.threadSaveYml();
-        PlayerHelper.threadGrapplingHook();
         PlayerHelper.threadArmorAccessory();
-        PlayerHelper.threadThrustRegen();
+        PlayerHelper.threadAttribute();
         PlayerHelper.threadBackground();
         PlayerHelper.threadBGM();
+        PlayerHelper.threadGrapplingHook();
+        PlayerHelper.threadMovement();
         PlayerHelper.threadRegen();
-        PlayerHelper.threadAttribute();
+        PlayerHelper.threadThrustRegen();
         // thread to save player inventories every 5 seconds
         Bukkit.getScheduler().scheduleSyncRepeatingTask(getInstance(),
                 () -> {
