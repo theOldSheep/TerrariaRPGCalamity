@@ -46,6 +46,7 @@ public class PlayerKeyToggleListener implements Listener {
         // prevent excessive handling when the player is pressing a single key for a prolonged time
         if (allKeysPressed.contains(keyPressed))
             return;
+        allKeysPressed.add(keyPressed);
         switch (keyPressed) {
             case "W":
             case "A":
@@ -56,18 +57,8 @@ public class PlayerKeyToggleListener implements Listener {
                 String lastChargeDir = EntityHelper.getMetadata(ply, "chargeDir").asString();
                 if (currTimeInMS - lastChargeTime < 400 && lastChargeDir.equals(keyPressed)) {
                     // handle player charge
-                    double chargeYaw = ((CraftPlayer) ply).getHandle().yaw;
-                    switch (keyPressed) {
-                        case "A":
-                            chargeYaw -= 90;
-                            break;
-                        case "S":
-                            chargeYaw += 180;
-                            break;
-                        case "D":
-                            chargeYaw += 90;
-                            break;
-                    }
+                    double chargeYaw = PlayerHelper.getPlayerMoveYaw(ply, keyPressed);
+                    PlayerHelper.handleDash(ply, chargeYaw, 0);
                 }
                 EntityHelper.setMetadata(ply, "chargeDirLastPressed", currTimeInMS);
                 EntityHelper.setMetadata(ply, "chargeDir", keyPressed);

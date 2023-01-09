@@ -21,12 +21,12 @@ terraria\entity\TerrariaArrowProjectile.class
 terraria\event\listener\PlayerWorldChangeListener.class
 terraria\entity\TerrariaFishingHook.class
 terraria\util\ItemHelper.class
-terraria\event\listener\ArrowHitEvent.class
 terraria\entity\minion\MinionHelper.class
 terraria\util\WorldHelper.class
 terraria\worldgen\overworld\OverworldCaveGenerator.class
 terraria\entity\TerrariaArrowProjectile$1.class
 terraria\TerrariaHelper$Constants.class
+terraria\event\listener\ArrowHitListener.class
 terraria\entity\TerrariaPotionProjectile$1.class
 terraria\util\ItemHelper$1.class
 terraria\util\WorldHelper$BiomeType.class
@@ -64,6 +64,7 @@ terraria\entity\CustomEntities.class
 terraria\event\listener\DamageListener$1.class
 terraria\event\listener\ItemUseAndAttributeListener.class
 terraria\worldgen\underworld\UnderworldChunkGenerator.class
+terraria\event\listener\PlayerMovementListener.class
 terraria\entity\TerrariaFishingHook$FishingState.class
 terraria\util\GenericHelper$1.class
 terraria\entity\TerrariaPotionProjectile.class

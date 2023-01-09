@@ -1,22 +1,22 @@
 跳跃之瓶:
     extraJumpTime: 1
     maxSpeed: 0.8
-    maxAcceleration: 1
+    maxAcceleration: 100
     horizontalSpeed: 0.35
 气球束:
     extraJumpTime: 3
     maxSpeed: 0.8
-    maxAcceleration: 1
+    maxAcceleration: 100
     horizontalSpeed: 0.35
 火箭靴:
     flightTime: 32
     maxSpeed: 0.75
-    maxAcceleration: 0.05
+    maxAcceleration: 0.125
     horizontalSpeed: 0.5
 幽灵靴:
     flightTime: 32
     maxSpeed: 0.75
-    maxAcceleration: 0.05
+    maxAcceleration: 0.125
     horizontalSpeed: 0.5
 鸟妖之翼:
     flightTime: 47

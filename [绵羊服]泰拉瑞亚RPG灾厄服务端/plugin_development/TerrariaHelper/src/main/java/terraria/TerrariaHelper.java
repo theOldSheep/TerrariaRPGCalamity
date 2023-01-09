@@ -136,7 +136,7 @@ public class TerrariaHelper extends JavaPlugin {
         });
     }
     private void registerEvents() {
-        Bukkit.getPluginManager().registerEvents(new ArrowHitEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new ArrowHitListener(), this);
         Bukkit.getPluginManager().registerEvents(new BlockBreakListener(), this);
         Bukkit.getPluginManager().registerEvents(new CraftingListener(), this);
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
@@ -144,6 +144,7 @@ public class TerrariaHelper extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ItemUseAndAttributeListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerKeyToggleListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerMovementListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerWorldChangeListener(), this);
         Bukkit.getPluginManager().registerEvents(new RandomTitleListener(), this);
@@ -160,7 +161,6 @@ public class TerrariaHelper extends JavaPlugin {
         PlayerHelper.threadGrapplingHook();
         PlayerHelper.threadMovement();
         PlayerHelper.threadRegen();
-        PlayerHelper.threadThrustRegen();
         // thread to save player inventories every 5 seconds
         Bukkit.getScheduler().scheduleSyncRepeatingTask(getInstance(),
                 () -> {

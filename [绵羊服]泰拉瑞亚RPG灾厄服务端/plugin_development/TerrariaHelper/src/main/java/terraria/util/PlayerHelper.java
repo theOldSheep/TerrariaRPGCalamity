@@ -558,7 +558,7 @@ public class PlayerHelper {
                         for (Entity hook : hooksToRemove) hooks.remove(hook);
                         if (hookedAmount >= 1) {
                             ply.setGravity(false);
-                            EntityHelper.setMetadata(ply, "thrust", 0);
+                            EntityHelper.setMetadata(ply, "thrustIndex", 0);
                             EntityHelper.setMetadata(ply, "thrustProgress", 0);
                             ply.setFallDistance(0);
                             center.multiply(1 / (double) hookedAmount);
@@ -585,13 +585,19 @@ public class PlayerHelper {
                 // validate the current player
                 if (!PlayerHelper.isProperlyPlaying(ply))
                     continue;
+                // reset thrust variable if player is on ground
+                if (ply.isOnGround()) {
+                    resetPlayerFlightTime(ply);
+                }
                 // setup variables
                 int thrustIndex = EntityHelper.getMetadata(ply, "thrustIndex").asInt();
                 int thrustProgress = EntityHelper.getMetadata(ply, "thrustProgress").asInt();
+//                Bukkit.broadcastMessage("IndexProgress: " + thrustIndex + ", " + thrustProgress);
                 // if this is the first thrust, save the progress
+                HashSet<String> accessorySet = (HashSet<String>) EntityHelper.getMetadata(ply, "accessory").value();
                 if (thrustIndex == 0 && thrustProgress == 0)
                     EntityHelper.setMetadata(ply, "accessoryThrust",
-                            ((HashSet<String>) EntityHelper.getMetadata(ply, "accessory").value()).clone());
+                            accessorySet.clone());
                 int extraJumpTime = 0;
                 int thrustProgressMax = 0;
                 double maxSpeed = 1, horizontalSpeed = 0.5;
@@ -600,78 +606,116 @@ public class PlayerHelper {
                 Set<String> availableAccessory = (Set<String>) EntityHelper.getMetadata(ply, "accessoryThrust").value();
                 Entity entityToPush = ply;
                 String accessoryUsed = "";
+                boolean isThrusting = ply.getScoreboardTags().contains("temp_thrusting");
+                boolean isWing = false;
                 boolean gliding = false;
                 // if the player is mounting
                 if (ply.getVehicle() != null) {
-                    Bukkit.broadcastMessage("FLYING WITH VEHICLE");
+//                    Bukkit.broadcastMessage("FLYING WITH VEHICLE");
                     entityToPush = ply.getVehicle();
                     // get mount (jump/flight) info
                     String mountType = GenericHelper.trimText(entityToPush.getName());
                     ConfigurationSection mountSection = TerrariaHelper.mountConfig.getConfigurationSection(mountType);
-                    if (mountSection == null)
-                        continue;
-                    thrustProgressMax = mountSection.getInt("maxProgress", 0);
-                    maxSpeed = mountSection.getDouble("maxSpeed", 1d);
-                    maxAcceleration = mountSection.getDouble("maxAcceleration", 0.5d);
-                    horizontalSpeed = mountSection.getDouble("horizontalSpeed", 0.5d);
-                    extraJumpTime = mountSection.getInt("extraJumpTime", 0);
-                    accessoryUsed = mountType;
-                    // after mounting, accessory (wings etc.) can not be used until landed.
-                    thrustIndex = 999999;
-                }
-                else {
-                    Collection<String> scoreboardTags = ply.getScoreboardTags();
-                    if (!scoreboardTags.contains("temp_thrusting"))
-                        continue;
-                    // determine the accessory to use
-                    for (; thrustIndex < accessory.size(); thrustIndex ++) {
-                        String currAcc = accessory.get(thrustIndex);
-                        if (!availableAccessory.contains(currAcc))
-                            continue;
-                        ConfigurationSection wingSection = TerrariaHelper.wingConfig.getConfigurationSection(currAcc);
-                        if (wingSection == null)
-                            continue;
-                        extraJumpTime = wingSection.getInt("extraJumpTime", 0);
-                        // no extra jump on ground
-                        if (ply.isOnGround() && thrustProgress < extraJumpTime)
-                            continue;
-                        // the accessory should be good to go here
-                        thrustProgressMax = wingSection.getInt("flightTime", 0);
-                        maxSpeed = wingSection.getDouble("maxSpeed", 1d);
-                        maxAcceleration = wingSection.getDouble("maxAcceleration", 0.5d);
-                        horizontalSpeed = wingSection.getDouble("horizontalSpeed", 0.5d);
-                        accessoryUsed = currAcc;
-                        Bukkit.broadcastMessage("FLYING WITH ACCESSORY, " + thrustIndex + "(" + accessoryUsed);
-                        break;
+                    if (mountSection != null) {
+                        thrustProgressMax = mountSection.getInt("maxProgress", 0);
+                        maxSpeed = mountSection.getDouble("maxSpeed", 1d);
+                        maxAcceleration = mountSection.getDouble("maxAcceleration", 0.5d);
+                        horizontalSpeed = mountSection.getDouble("horizontalSpeed", 0.5d);
+                        extraJumpTime = mountSection.getInt("extraJumpTime", 0);
+                        accessoryUsed = mountType;
+                        // after mounting, accessory (wings etc.) can not be used until landed.
+                        thrustIndex = 999999;
                     }
-                    // if no valid accessory is present
-                    if (thrustProgressMax <= 0) {
-                        Bukkit.broadcastMessage("ATTEMPT JUMP");
-                        // jump
-                        if (ply.isOnGround()) {
-                            Bukkit.broadcastMessage("JUMP");
-                            thrustProgressMax = 6;
-                            maxSpeed = 16;
-                            maxAcceleration = 11;
-                            horizontalSpeed = 11;
-                            thrustIndex = -1;
+                }
+                // the player is not on mount
+                else {
+                    // if the player is not flying
+                    if (!isThrusting) {
+                        // the player can not keep jumping after leaving the ground
+                        if (thrustIndex < 0) {
+                            thrustIndex = 0;
+                            thrustProgress = 0;
                         }
-                        // glide
+                    }
+                    // if the space bar is being pressed and the player should continue jumping/flying
+                    else {
+                        // handle jump
+                        if (ply.isOnGround()) {
+                            thrustIndex = -1;
+                            // if the player has any wing accessory, do not jump.
+                            for (String checkAcc : accessory) {
+                                ConfigurationSection wingSection = TerrariaHelper.wingConfig.getConfigurationSection(checkAcc);
+                                // if the accessory does not provide any flying/extra jump, do not consider it
+                                if (wingSection == null)
+                                    continue;
+                                // if the first flying accessory is a pair of wings, do not jump
+                                if (wingSection.getBoolean("isWing", false)) {
+                                    thrustIndex = 0;
+                                }
+                                // we are only checking the first flying accessory
+                                break;
+                            }
+                        }
+                        // if the player is not jumping on ground
+                        if (thrustIndex >= 0) {
+                            // determine the accessory to use
+                            int thrustIndexInitial = thrustIndex;
+                            for (; thrustIndex < accessory.size(); thrustIndex++) {
+                                String currAcc = accessory.get(thrustIndex);
+                                // the accessory was not around when the player started flying
+                                // note that the first part is necessary, because
+                                // the accessory is removed from set as soon as the player starts using the accessory to fly, not afterwards
+                                if (thrustIndexInitial != thrustIndex && !availableAccessory.contains(currAcc))
+                                    continue;
+                                ConfigurationSection wingSection = TerrariaHelper.wingConfig.getConfigurationSection(currAcc);
+                                // if the accessory does not provide any flying/extra jump
+                                if (wingSection == null)
+                                    continue;
+                                // prevent player from exploiting one pair of wings by moving around accessories
+//                                Bukkit.broadcastMessage("AVAILABLE ACCESSORIES: " + availableAccessory);
+                                availableAccessory.remove(currAcc);
+//                                Bukkit.broadcastMessage("AVAILABLE ACCESSORIES AFTER DELETION: " + availableAccessory);
+                                // the accessory should be good to go here
+                                extraJumpTime = wingSection.getInt("extraJumpTime", 0);
+                                thrustProgressMax = wingSection.getInt("flightTime", 0);
+                                maxSpeed = wingSection.getDouble("maxSpeed", 1d);
+                                maxAcceleration = wingSection.getDouble("maxAcceleration", 0.5d);
+                                horizontalSpeed = wingSection.getDouble("horizontalSpeed", 0.5d);
+                                isWing = wingSection.getBoolean("isWing", false);
+                                accessoryUsed = currAcc;
+//                                Bukkit.broadcastMessage("FLYING WITH ACCESSORY, " + thrustIndex + "(" + accessoryUsed);
+                                break;
+                            }
+                            // no rocket boots or double jump on ground
+                            if (!isWing && ply.isOnGround()) {
+                                extraJumpTime = 0;
+                                thrustProgressMax = 0;
+                            }
+                        }
+                        // if the player is jumping
                         else {
-                            for (int i = 0; i < accessory.size(); i ++) {
-                                String currAcc = accessory.get(i);
+                            thrustProgressMax = 6;
+                            maxSpeed = 0.6;
+                            maxAcceleration = 0.35;
+                            horizontalSpeed = 0.2;
+                        }
+                        // if no valid accessory is being selected, attempt to glide
+                        if (extraJumpTime + thrustProgressMax <= 0) {
+//                            Bukkit.broadcastMessage("ATTEMPT JUMP");
+                            for (String currAcc : accessory) {
                                 ConfigurationSection wingSection = TerrariaHelper.wingConfig.getConfigurationSection(currAcc);
                                 if (wingSection == null)
                                     continue;
-                                boolean isWing = wingSection.getBoolean("isWing", false);
+                                isWing = wingSection.getBoolean("isWing", false);
                                 // non-wing flying accessories should not be able to glide
                                 if (!isWing)
                                     continue;
                                 // the accessory should be a wing here
-                                Bukkit.broadcastMessage("GLIDE");
+//                                    Bukkit.broadcastMessage("GLIDE");
                                 gliding = true;
                                 thrustProgressMax = 999999;
-                                maxSpeed = 0.25;
+                                maxSpeed = 0.5;
+                                maxAcceleration = 0.05;
                                 horizontalSpeed = wingSection.getDouble("horizontalSpeed", 0.5d) / 2;
                                 accessoryUsed = currAcc;
                                 break;
@@ -680,72 +724,56 @@ public class PlayerHelper {
                     }
                 }
                 // update velocity
-                if (thrustProgress < extraJumpTime + thrustProgressMax) {
-                    Bukkit.broadcastMessage(thrustProgress + "/" + extraJumpTime + ", " + thrustProgressMax);
-                    ply.setFallDistance(0);
-                    // movement direction
-                    Vector moveDir;
+                if (isThrusting) {
+                    double speedMulti = 1, accelerationMulti = 1;
                     {
-                        if (gliding) moveDir = new Vector(0, maxSpeed * -1, 0);
-                        else moveDir = new Vector(0, maxSpeed, 0);
-                        double horizontalMoveYaw = ((CraftPlayer) ply).getHandle().yaw;
-                        HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply, "keysPressed").value();
-                        String movementKeyDown = "";
-                        boolean fwd = allKeysPressed.contains("W"),
-                                rev = allKeysPressed.contains("S"),
-                                lft = allKeysPressed.contains("A"),
-                                rt  = allKeysPressed.contains("D");
-                        if (fwd && !rev)
-                            movementKeyDown += "W";
-                        else if (rev && !fwd)
-                            movementKeyDown += "S";
-                        if (lft && !rt)
-                            movementKeyDown += "A";
-                        else if (rt && !lft)
-                            movementKeyDown += "D";
-                        switch (movementKeyDown) {
-                            case "A":
-                                horizontalMoveYaw -= 90;
-                                break;
-                            case "S":
-                                horizontalMoveYaw += 180;
-                                break;
-                            case "D":
-                                horizontalMoveYaw += 90;
-                                break;
-                            case "WA":
-                                horizontalMoveYaw -= 45;
-                                break;
-                            case "WD":
-                                horizontalMoveYaw += 45;
-                                break;
-                            case "SA":
-                                horizontalMoveYaw -= 135;
-                                break;
-                            case "SD":
-                                horizontalMoveYaw += 135;
-                                break;
+                        if (accessorySet.contains("翱翔徽章")) {
+                            thrustProgressMax *= 1.5;
+                            accelerationMulti *= 1.5;
                         }
-                        if (movementKeyDown.length() > 0) {
-                            moveDir.add(MathHelper.vectorFromYawPitch_quick(horizontalMoveYaw, 0).multiply(horizontalSpeed));
+                        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+                        double speedMultiAttribute = attrMap.getOrDefault("speedMulti", 1d);
+                        speedMulti *= speedMultiAttribute;
+                        accelerationMulti *= speedMultiAttribute / 2;
+                    }
+                    if (thrustProgress < extraJumpTime + thrustProgressMax) {
+//                        Bukkit.broadcastMessage(thrustProgress + "/" + extraJumpTime + ", " + thrustProgressMax);
+                        ply.setFallDistance(0);
+                        // movement direction
+                        Vector moveDir;
+                        {
+                            if (gliding) moveDir = new Vector(0, maxSpeed * -1, 0);
+                            else moveDir = new Vector(0, maxSpeed, 0);
+                            double horizontalMoveYaw = getPlayerMoveYaw(ply);
+                            if (horizontalMoveYaw < 1e5) {
+                                moveDir.add(MathHelper.vectorFromYawPitch_quick(horizontalMoveYaw, 0).multiply(horizontalSpeed));
+                            }
                         }
-                    }
-                    Vector acceleration = moveDir.clone().subtract(ply.getVelocity());
-                    double accLength = acceleration.length();
-                    if (accLength > maxAcceleration) {
-                        acceleration.multiply(maxAcceleration / accLength);
-                    }
-                    ply.setVelocity(ply.getVelocity().add(acceleration));
-                    if (!gliding) {
+                        moveDir.multiply(speedMulti);
+                        Vector acceleration = moveDir.clone().subtract(entityToPush.getVelocity());
+                        double accLength = acceleration.length();
+                        if (accLength > maxAcceleration) {
+                            acceleration.multiply(maxAcceleration * accelerationMulti / accLength);
+                        }
+                        // regularize acceleration so that horizontal speed (especially from dash) do not get decreased
+                        {
+                            Vector moveDirHor = moveDir.clone().setY(0);
+                            Vector accelerationComponent = MathHelper.vectorProjection(moveDirHor, acceleration);
+                            // acceleration has a component that goes in the opposite direction
+                            if (moveDirHor.dot(accelerationComponent) < 0) {
+                                acceleration.subtract(accelerationComponent);
+                            }
+                        }
+                        entityToPush.setVelocity(entityToPush.getVelocity().add(acceleration));
                         // extra jump
                         if (thrustProgress < extraJumpTime) {
                             // particles
-                            for (int xOffset = -1; xOffset <= 1; xOffset ++) {
-                                for (int zOffset = -1; zOffset <= 1; zOffset ++) {
-                                    for (int i = 0; i < 4; i ++)
+                            for (int xOffset = -1; xOffset <= 1; xOffset++) {
+                                for (int zOffset = -1; zOffset <= 1; zOffset++) {
+                                    for (int i = 0; i < 4; i++)
                                         entityToPush.getWorld().spawnParticle(Particle.CLOUD,
-                                                entityToPush.getLocation().add(xOffset, 0, zOffset)
-                                                        .add(Math.random() * 0.5, Math.random() * 0.5, Math.random() * 0.5),
+                                                entityToPush.getLocation().add((double) xOffset / 2, 0, (double) zOffset / 2)
+                                                        .add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5),
                                                 0, xOffset, 0, zOffset, 0.1);
                                 }
                             }
@@ -760,35 +788,34 @@ public class PlayerHelper {
                                 case "幽灵靴": {
                                     entityToPush.getWorld().spawnParticle(Particle.CLOUD,
                                             entityToPush.getLocation()
-                                                    .add(Math.random() * 0.5, Math.random() * 0.5, Math.random() * 0.5),
+                                                    .add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5),
                                             0, 0, -1, 0, 0.175);
                                     break;
                                 }
                             }
+                            // make sure that gravity does not work against the wings
+                            ply.setGravity(false);
                         }
-                        thrustProgress++;
+                        if (!gliding) {
+                            thrustProgress++;
+                        }
                     }
                     // flight time depleted
-                    else {
-                        Bukkit.broadcastMessage("FLIGHT TIME DEPLETED!");
-                        Bukkit.broadcastMessage("AVAILABLE ACCESSORIES: " + availableAccessory);
+                    if (thrustProgress >= extraJumpTime + thrustProgressMax) {
+//                    Bukkit.broadcastMessage("FLIGHT TIME DEPLETED!");
                         // if the player is using accessory to fly
+                        ply.setGravity(true);
                         if (!ply.isInsideVehicle()) {
                             thrustProgress = 0;
                             thrustIndex++;
-                            availableAccessory.remove(accessoryUsed);
                         }
-                        Bukkit.broadcastMessage("AVAILABLE ACCESSORIES AFTER DELETION: " + availableAccessory);
                         // so that the next flying accessory do not automatically start using
                         ply.removeScoreboardTag("temp_thrusting");
                     }
-                    // save variables
-                    EntityHelper.setMetadata(ply, "thrustIndex", thrustIndex);
-                    EntityHelper.setMetadata(ply, "thrustProgress", thrustProgress);
                 }
-                else {
-                    ply.removeScoreboardTag("temp_thrusting");
-                }
+                // save variables
+                EntityHelper.setMetadata(ply, "thrustIndex", thrustIndex);
+                EntityHelper.setMetadata(ply, "thrustProgress", thrustProgress);
             }
         }, 0, 1);
     }
@@ -904,24 +931,6 @@ public class PlayerHelper {
                 }
             }
         }, 0, delay);
-    }
-    public static void threadThrustRegen() {
-        // every 4 ticks (1/5 second)
-        Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
-            for (Player ply : Bukkit.getOnlinePlayers()) {
-                try {
-                    // validate the current player
-                    if (PlayerHelper.isProperlyPlaying(ply)) {
-                        if (ply.getWorld().getBlockAt(ply.getLocation().subtract(0, 0.5, 0)).getType().isSolid()) {
-                            EntityHelper.setMetadata(ply, "thrust", 0);
-                            EntityHelper.setMetadata(ply, "thrustProgress", 0);
-                        }
-                    }
-                } catch (Exception e) {
-                    Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadThrustRegen ", e);
-                }
-            }
-        }, 0, 4);
     }
     // others
     public static void initPlayerStats(Player ply, boolean joinOrRespawn) {
@@ -1175,6 +1184,12 @@ public class PlayerHelper {
                 EntityHelper.setMetadata(ply, "accessory", accessories);
                 EntityHelper.setMetadata(ply, "accessoryList", accessoryList);
             }
+            // setup walking speed
+            double walkingSpeed = newAttrMap.getOrDefault("speed", 0.2d) *
+                    newAttrMap.getOrDefault("speedMulti", 1d);
+            if (Math.abs(ply.getWalkSpeed() - walkingSpeed) > 1e-9) {
+                ply.setWalkSpeed((float) walkingSpeed);
+            }
             EntityHelper.setMetadata(ply, "attrMap", newAttrMap);
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setupAttribute ", e);
@@ -1234,7 +1249,6 @@ public class PlayerHelper {
     }
     public static void handleGrapplingHook(Player ply) {
         List<Entity> hooks = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "hooks").value();
-        Bukkit.broadcastMessage(hooks.toString());
         String hookItemName = ItemHelper.splitItemName(ply.getInventory().getItemInOffHand())[1];
         EntityHelper.setMetadata(ply, "grapplingHookItem", hookItemName);
         World hookWorld = ply.getWorld();
@@ -1602,7 +1616,98 @@ public class PlayerHelper {
             }
         }
     }
+    public static double getPlayerMoveYaw(Player ply) {
+        HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply, "keysPressed").value();
+        String movementKeyDown = "";
+        boolean fwd = allKeysPressed.contains("W"),
+                rev = allKeysPressed.contains("S"),
+                lft = allKeysPressed.contains("A"),
+                rt = allKeysPressed.contains("D");
+        if (fwd && !rev)
+            movementKeyDown += "W";
+        else if (rev && !fwd)
+            movementKeyDown += "S";
+        if (lft && !rt)
+            movementKeyDown += "A";
+        else if (rt && !lft)
+            movementKeyDown += "D";
+        return getPlayerMoveYaw(ply, movementKeyDown);
+    }
+    public static double getPlayerMoveYaw(Player ply, String movementKeyDown) {
+        double horizontalMoveYaw = ((CraftPlayer) ply).getHandle().yaw;
+        switch (movementKeyDown) {
+            case "":
+                horizontalMoveYaw = 1e9;
+                break;
+            case "A":
+                horizontalMoveYaw -= 90;
+                break;
+            case "S":
+                horizontalMoveYaw += 180;
+                break;
+            case "D":
+                horizontalMoveYaw += 90;
+                break;
+            case "WA":
+                horizontalMoveYaw -= 45;
+                break;
+            case "WD":
+                horizontalMoveYaw += 45;
+                break;
+            case "SA":
+                horizontalMoveYaw -= 135;
+                break;
+            case "SD":
+                horizontalMoveYaw += 135;
+                break;
+        }
+        return horizontalMoveYaw;
+    }
+    public static void resetPlayerFlightTime(Player ply) {
+        EntityHelper.setMetadata(ply, "thrustIndex", 0);
+        EntityHelper.setMetadata(ply, "thrustProgress", 0);
+    }
     public static void handleDash(Player ply, double yaw, double pitch) {
-
+        // can not dash if player has dash cooldown
+        if (ply.getScoreboardTags().contains("temp_dashCD"))
+            return;
+        Collection<Entity> hooks = (Collection<Entity>) EntityHelper.getMetadata(ply, "hooks").value();
+        // can not dash if any grappling hook is on the wall
+        for (Entity hook : hooks) {
+            if (hook.isOnGround()) return;
+        }
+        double dashSpeed = 0;
+        int dashCD = -1;
+        // armor set dash
+        String armorSet = EntityHelper.getMetadata(ply, "armorSet").asString();
+        switch (armorSet) {
+            case "水晶刺客套装":
+                dashSpeed = 0.9;
+                dashCD = 30;
+                break;
+        }
+        // accessory dash
+        if (dashCD < 0) {
+            Collection<String> accessories = getAccessories(ply);
+            for (String accessory : accessories) {
+                switch (accessory) {
+                    case "克苏鲁之眼盾":
+                        dashSpeed = 1;
+                        dashCD = 35;
+                        break;
+                }
+                if (dashCD > 0) break;
+            }
+        }
+        // dash if applicable
+        if (dashCD > 0) {
+            HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+            dashSpeed *= attrMap.getOrDefault("speedMulti", 1d);
+            Vector dashVelocity = MathHelper.vectorFromYawPitch_quick(yaw, pitch).multiply(dashSpeed);
+            ply.setVelocity(ply.getVelocity().add(dashVelocity));
+            ply.addScoreboardTag("temp_dashCD");
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                    () -> ply.removeScoreboardTag("temp_dashCD"), dashCD);
+        }
     }
 }

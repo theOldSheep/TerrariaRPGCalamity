@@ -7,13 +7,11 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftProjectile;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.event.TerrariaProjectileHitEvent;
@@ -26,7 +24,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class ArrowHitEvent implements Listener {
+public class ArrowHitListener implements Listener {
     public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/projectiles.yml");
     private void handleHitBlock(TerrariaProjectileHitEvent e, Projectile projectile, Block block) {
         // explode
