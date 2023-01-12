@@ -1,9 +1,6 @@
 package terraria.entity.minion;
 
-import net.minecraft.server.v1_12_R1.EntityCaveSpider;
-import net.minecraft.server.v1_12_R1.EntityZombieHusk;
-import net.minecraft.server.v1_12_R1.GenericAttributes;
-import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -32,6 +29,11 @@ public class MinionCaveSpider extends EntityCaveSpider {
     ItemStack originalStaff;
     HashMap<String, Double> attrMap;
     HashMap<String, Object> extraVariables = new HashMap<>();
+    // default constructor when the chunk loads with one of these custom entity to prevent bug
+    public MinionCaveSpider(World world) {
+        super(world);
+        die();
+    }
     public MinionCaveSpider(org.bukkit.entity.Player owner, int minionSlot, int minionSlotMax,
                       boolean sentryOrMinion, boolean hasContactDamage,
                       String minionType, HashMap<String, Double> attrMap, ItemStack originalStaff) {

@@ -3,6 +3,7 @@ package terraria.entity.minion;
 import net.minecraft.server.v1_12_R1.EntityZombieHusk;
 import net.minecraft.server.v1_12_R1.GenericAttributes;
 import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
+import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -33,6 +34,11 @@ public class MinionHusk extends EntityZombieHusk {
     ItemStack originalStaff;
     HashMap<String, Double> attrMap;
     HashMap<String, Object> extraVariables = new HashMap<>();
+    // default constructor when the chunk loads with one of these custom entity to prevent bug
+    public MinionHusk(World world) {
+        super(world);
+        die();
+    }
     public MinionHusk(org.bukkit.entity.Player owner, int minionSlot, int minionSlotMax,
                        boolean sentryOrMinion, boolean hasContactDamage,
                        String minionType, HashMap<String, Double> attrMap, ItemStack originalStaff) {
