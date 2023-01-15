@@ -55,7 +55,7 @@ public class PlayerKeyToggleListener implements Listener {
                 long lastChargeTime = EntityHelper.getMetadata(ply, "chargeDirLastPressed").asLong();
                 long currTimeInMS = Calendar.getInstance().getTimeInMillis();
                 String lastChargeDir = EntityHelper.getMetadata(ply, "chargeDir").asString();
-                if (currTimeInMS - lastChargeTime < 400 && lastChargeDir.equals(keyPressed)) {
+                if (currTimeInMS - lastChargeTime < 200 && lastChargeDir.equals(keyPressed)) {
                     // handle player charge
                     double chargeYaw = PlayerHelper.getPlayerMoveYaw(ply, keyPressed);
                     PlayerHelper.handleDash(ply, chargeYaw, 0);

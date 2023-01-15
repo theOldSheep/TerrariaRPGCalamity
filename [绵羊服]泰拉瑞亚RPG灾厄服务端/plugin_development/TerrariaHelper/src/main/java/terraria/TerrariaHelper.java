@@ -33,6 +33,7 @@ public class TerrariaHelper extends JavaPlugin {
     public static final YmlHelper.YmlSection entityConfig = YmlHelper.getFile("plugins/Data/entities.yml");
     public static final YmlHelper.YmlSection fishingConfig = YmlHelper.getFile("plugins/Data/fishing.yml");
     public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");
+    public static final YmlHelper.YmlSection mobSpawningConfig = YmlHelper.getFile("plugins/Data/mobSpawning.yml");
     public static final YmlHelper.YmlSection mountConfig = YmlHelper.getFile("plugins/Data/mounts.yml");
     public static final YmlHelper.YmlSection potionItemConfig = YmlHelper.getFile("plugins/Data/potionItem.yml");
     public static final YmlHelper.YmlSection prefixConfig = YmlHelper.getFile("plugins/Data/prefix.yml");

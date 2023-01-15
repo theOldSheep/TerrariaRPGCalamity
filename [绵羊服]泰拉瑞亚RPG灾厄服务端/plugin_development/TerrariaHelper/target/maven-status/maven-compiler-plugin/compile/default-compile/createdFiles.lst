@@ -3,7 +3,6 @@ terraria\util\YmlHelper$YmlSection.class
 terraria\entity\TerrariaFishingHook$FishingResultRarity.class
 terraria\worldgen\overworld\OverworldCaveGenerator$1.class
 terraria\util\ItemUseHelper.class
-terraria\entity\monster\MonsterHelper$MonsterStats.class
 terraria\util\WorldHelper$1.class
 terraria\TerrariaHelper$1.class
 terraria\event\listener\ItemUseAndAttributeListener$1.class
