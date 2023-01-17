@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MonsterSlime extends EntitySlime {
     protected HashMap<String, Object> extraVariables = new HashMap<>();
@@ -18,8 +19,8 @@ public class MonsterSlime extends EntitySlime {
         super(world);
         die();
     }
-    protected void initExtraInformation() {
-        MonsterHelper.initMonsterInfo(this, monsterType, monsterVariant);
+    protected void initExtraInformation(Player ply, String monsterProgressRequired) {
+        MonsterHelper.initMonsterInfo(ply, monsterProgressRequired, this, monsterType, monsterVariant);
     }
     public MonsterSlime(org.bukkit.entity.Player target, String type) {
         super(((CraftWorld) target.getWorld()).getHandle());
@@ -30,10 +31,18 @@ public class MonsterSlime extends EntitySlime {
         Location spawnLoc = target.getLocation();
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         setHeadRotation(0);
+        // get the variant to use
+        String progressRequired;
+        {
+            Map.Entry<String, String> temp = MonsterHelper.getMonsterVariantAndProgress(target, type);
+            this.monsterType = type;
+            this.monsterVariant = temp.getKey();
+            progressRequired = temp.getValue();
+        }
         // add to world
         ((CraftWorld) target.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // attributes etc.
-        initExtraInformation();
+        initExtraInformation(target, progressRequired);
     }
     @Override
     public void die() {

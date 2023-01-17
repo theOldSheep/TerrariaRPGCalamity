@@ -28,6 +28,9 @@ import java.util.function.Predicate;
 import java.util.logging.Level;
 
 public class PlayerHelper {
+    public enum GameProgress {
+        PRE_WALL_OF_FLESH, PRE_PLANTERA, PRE_MOON_LORD, PRE_PROFANED_GODDESS, POST_PROFANED_GODDESS;
+    }
     // constants
     private static HashMap<String, Double> defaultPlayerAttrMap = new HashMap<>(60);
     private static HashSet<String> defaultPlayerEffectInflict = new HashSet<>(8);
@@ -127,13 +130,6 @@ public class PlayerHelper {
     public static HashMap<String, Double> getDefaultPlayerAttributes() {
         return (HashMap<String, Double>) defaultPlayerAttrMap.clone();
     }
-    public static void setMoney(Player ply, double amount) {
-        try {
-            Economy.setMoney(ply.getUniqueId(), BigDecimal.valueOf(amount));
-        } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setMoney ", e);
-        }
-    }
     public static double getMoney(Player ply) {
         try {
             return Economy.getMoneyExact(ply.getUniqueId()).doubleValue();
@@ -141,6 +137,265 @@ public class PlayerHelper {
             Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] getMoney ", e);
             return 0d;
         }
+    }
+    public static Inventory getInventory(Player ply, String key) {
+        return ((HashMap<String, Inventory>) EntityHelper.getMetadata(ply, "inventories").value())
+                .get(key);
+    }
+    public static int getAccessoryAmount(Player ply) {
+        return YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml").getInt("stats.maxAccessories", 5);
+    }
+    public static HashSet<String> getAccessories(Entity entity) {
+        try {
+            return (HashSet<String>) EntityHelper.getMetadata(entity, "accessory").value();
+        } catch (Exception e) {
+            Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] getAccessories", e);
+        }
+        return new HashSet<>();
+    }
+    public static ItemStack getFirstItem(Player ply, Predicate<ItemStack> itemPredicate, boolean testVoidBag) {
+        // in the player's inventory
+        Inventory plyInv = ply.getInventory();
+        for (int i = 0; i < 36; i ++) {
+            ItemStack currItem = plyInv.getItem(i);
+            if (currItem != null && itemPredicate.test(currItem)) {
+                return currItem;
+            }
+        }
+        // in the player's void bag
+        if (testVoidBag && PlayerHelper.hasVoidBag(ply)) {
+            Inventory voidBagInv = PlayerHelper.getInventory(ply, "voidBag");
+            for (ItemStack currItem : voidBagInv.getContents()) {
+                if (currItem != null && itemPredicate.test(currItem)) {
+                    return currItem;
+                }
+            }
+        }
+        // item not found
+        return null;
+    }
+    public static ArrayList<ItemStack> getItems(Player ply, Predicate<ItemStack> itemPredicate, boolean testVoidBag) {
+        // in the player's inventory
+        ArrayList<ItemStack> result = new ArrayList<>();
+        Inventory plyInv = ply.getInventory();
+        for (int i = 0; i < 36; i ++) {
+            ItemStack currItem = plyInv.getItem(i);
+            if (currItem != null && itemPredicate.test(currItem)) {
+                result.add(currItem);
+            }
+        }
+        // in the player's void bag
+        if (testVoidBag && PlayerHelper.hasVoidBag(ply)) {
+            Inventory voidBagInv = PlayerHelper.getInventory(ply, "voidBag");
+            for (ItemStack currItem : voidBagInv.getContents()) {
+                if (currItem != null && itemPredicate.test(currItem)) {
+                    result.add(currItem);
+                }
+            }
+        }
+        // return all found items
+        return result;
+    }
+    public static Location getSpawnLocation(Player ply) {
+        if (ply.getBedSpawnLocation() != null && !ply.getScoreboardTags().contains("bedCancelled"))
+            return ply.getBedSpawnLocation();
+        return Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE).getSpawnLocation();
+    }
+    public static GameProgress getGameProgress(Player player) {
+        ConfigurationSection bossDefeatedSection = getPlayerDataFile(player).getConfigurationSection("bossDefeated");
+        if (bossDefeatedSection.getBoolean("亵渎天神", false))
+            return GameProgress.POST_PROFANED_GODDESS;
+        if (bossDefeatedSection.getBoolean("月球领主", false))
+            return GameProgress.PRE_PROFANED_GODDESS;
+        if (bossDefeatedSection.getBoolean("世纪之花", false))
+            return GameProgress.PRE_MOON_LORD;
+        if (bossDefeatedSection.getBoolean("血肉之墙", false))
+            return GameProgress.PRE_PLANTERA;
+        return GameProgress.PRE_WALL_OF_FLESH;
+    }
+    public static GameProgress getGameProgress(String bossProgress) {
+        switch (bossProgress) {
+            case "血肉之墙":
+            case "史莱姆皇后":
+            case "极地之灵":
+            case "双子魔眼":
+            case "硫磺火元素":
+            case "毁灭者":
+            case "渊海灾虫":
+            case "机械骷髅王":
+            case "灾厄之眼":
+                return GameProgress.PRE_PLANTERA;
+            case "世纪之花":
+            case "阿娜希塔和利维坦":
+            case "白金星舰":
+            case "石巨人":
+            case "瘟疫使者歌莉娅":
+            case "光之女皇":
+            case "猪鲨公爵":
+            case "毁灭魔像":
+            case "拜月教邪教徒":
+            case "星神游龙":
+                return GameProgress.PRE_MOON_LORD;
+            case "月球领主":
+            case "亵渎守卫":
+            case "痴愚金龙":
+                return GameProgress.PRE_PROFANED_GODDESS;
+            case "亵渎天神":
+            case "噬魂幽花":
+            case "硫海遗爵":
+            case "神明吞噬者":
+            case "丛林龙，犽戎":
+            case "星流巨械":
+            case "至尊灾厄":
+                return GameProgress.POST_PROFANED_GODDESS;
+        }
+        return GameProgress.PRE_WALL_OF_FLESH;
+    }
+    public static double getPlayerMoveYaw(Player ply) {
+        HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply, "keysPressed").value();
+        String movementKeyDown = "";
+        boolean fwd = allKeysPressed.contains("W"),
+                rev = allKeysPressed.contains("S"),
+                lft = allKeysPressed.contains("A"),
+                rt = allKeysPressed.contains("D");
+        if (fwd && !rev)
+            movementKeyDown += "W";
+        else if (rev && !fwd)
+            movementKeyDown += "S";
+        if (lft && !rt)
+            movementKeyDown += "A";
+        else if (rt && !lft)
+            movementKeyDown += "D";
+        return getPlayerMoveYaw(ply, movementKeyDown);
+    }
+    public static double getPlayerMoveYaw(Player ply, String movementKeyDown) {
+        double horizontalMoveYaw = ((CraftPlayer) ply).getHandle().yaw;
+        switch (movementKeyDown) {
+            case "":
+                horizontalMoveYaw = 1e9;
+                break;
+            case "A":
+                horizontalMoveYaw -= 90;
+                break;
+            case "S":
+                horizontalMoveYaw += 180;
+                break;
+            case "D":
+                horizontalMoveYaw += 90;
+                break;
+            case "WA":
+                horizontalMoveYaw -= 45;
+                break;
+            case "WD":
+                horizontalMoveYaw += 45;
+                break;
+            case "SA":
+                horizontalMoveYaw -= 135;
+                break;
+            case "SD":
+                horizontalMoveYaw += 135;
+                break;
+        }
+        return horizontalMoveYaw;
+    }
+    public static int getMaxHealthByTier(int tier) {
+        if (tier < 21) return tier * 40;
+        if (tier < 41) return 800 + (tier - 20) * 10;
+        switch (tier) {
+            case 41:
+                return 1050;
+            case 42:
+                return 1100;
+            case 43:
+                return 1150;
+            default:
+                return 1200;
+        }
+    }
+    public static int getMaxManaByTier(int tier) {
+        if (tier < 11) return tier * 20;
+        switch (tier) {
+            case 11:
+                return 250;
+            case 12:
+                return 300;
+            default:
+                return 350;
+        }
+    }
+    public static YmlHelper.YmlSection getPlayerDataFile(Player ply) {
+        return YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml");
+    }
+    public static boolean hasDefeated(Player player, String progressToCheck) {
+        YmlHelper.YmlSection fileSection = getPlayerDataFile(player);
+        return fileSection.getBoolean("bossDefeated." + progressToCheck, false);
+    }
+    public static boolean isProperlyPlaying(Player player) {
+        if (!player.isOnline()) return false;
+        if (player.getGameMode() != GameMode.SURVIVAL) return false;
+        return !player.getScoreboardTags().contains("unauthorized");
+    }
+    public static boolean hasVoidBag(Player ply) {
+        ItemStack voidBag = ItemHelper.getItemFromDescription("虚空袋", false, new ItemStack(Material.BEDROCK));
+        return ply.getInventory().contains(voidBag);
+    }
+    public static boolean canHoldAny(Player ply, ItemStack item) {
+        if (item == null) return true;
+        String itemType = ItemHelper.splitItemName(item)[1];
+        // these items get consumed once picked up
+        switch (itemType) {
+            case "铜币":
+            case "银币":
+            case "金币":
+            case "铂金币":
+            case "心":
+            case "星":
+            case "生命强化焰":
+            case "伤害强化焰":
+            case "魔力强化焰":
+                return true;
+        }
+        // check airs first, they are a lot less performance costly.
+        // backpack
+        Inventory plyInv = ply.getInventory();
+        for (int i = 0; i < 36; i ++) {
+            ItemStack currItem = plyInv.getItem(i);
+            if (currItem == null || currItem.getType() == Material.AIR) return true;
+        }
+        // void bag
+        boolean hasVoidBag = hasVoidBag(ply);
+        Inventory voidBagInv = getInventory(ply, "voidBag");
+        if (hasVoidBag && voidBagInv != null) {
+            for (ItemStack currItem : voidBagInv.getContents())
+                if (currItem == null || currItem.getType() == Material.AIR) return true;
+        }
+        // then we check for stacking
+        // items that can not stack do not need any additional check.
+        int maxStackSize = item.getMaxStackSize();
+        if (maxStackSize <= 1) return false;
+        // backpack
+        for (int i = 0; i < 36; i ++) {
+            ItemStack currItem = plyInv.getItem(i);
+            if (currItem.isSimilar(item) && maxStackSize > currItem.getAmount()) return true;
+        }
+        // void bag
+        if (hasVoidBag && voidBagInv != null) {
+            for (ItemStack currItem : voidBagInv.getContents())
+                if (currItem.isSimilar(item) && maxStackSize > currItem.getAmount()) return true;
+        }
+        return false;
+    }
+    // setters
+    public static void setMoney(Player ply, double amount) {
+        try {
+            Economy.setMoney(ply.getUniqueId(), BigDecimal.valueOf(amount));
+        } catch (Exception e) {
+            Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setMoney ", e);
+        }
+    }
+    public static void resetPlayerFlightTime(Player ply) {
+        EntityHelper.setMetadata(ply, "thrustIndex", 0);
+        EntityHelper.setMetadata(ply, "thrustProgress", 0);
     }
     // threads
     public static void threadArmorAccessory() {
@@ -1002,35 +1257,6 @@ public class PlayerHelper {
             loadInventories(ply);
         }
     }
-    public static int getMaxHealthByTier(int tier) {
-        if (tier < 21) return tier * 40;
-        if (tier < 41) return 800 + (tier - 20) * 10;
-        switch (tier) {
-            case 41:
-                return 1050;
-            case 42:
-                return 1100;
-            case 43:
-                return 1150;
-            default:
-                return 1200;
-        }
-    }
-    public static int getMaxManaByTier(int tier) {
-        if (tier < 11) return tier * 20;
-        switch (tier) {
-            case 11:
-                return 250;
-            case 12:
-                return 300;
-            default:
-                return 350;
-        }
-    }
-    public static boolean hasDefeated(Player player, String progressToCheck) {
-        YmlHelper.YmlSection fileSection = YmlHelper.getFile("plugins/PlayerData/" + player.getName() + ".yml");
-        return fileSection.getBoolean("bossDefeated" + progressToCheck, false);
-    }
     public static void setupAttribute(Player ply) {
         try {
             ply.removeScoreboardTag("toolChanged");
@@ -1227,26 +1453,6 @@ public class PlayerHelper {
         }
     }
     @Nullable
-    public static Inventory getInventory(Player ply, String key) {
-        return ((HashMap<String, Inventory>) EntityHelper.getMetadata(ply, "inventories").value())
-                .get(key);
-    }
-    public static boolean isProperlyPlaying(Player player) {
-        if (!player.isOnline()) return false;
-        if (player.getGameMode() != GameMode.SURVIVAL) return false;
-        return !player.getScoreboardTags().contains("unauthorized");
-    }
-    public static int getAccessoryAmount(Player ply) {
-        return YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml").getInt("stats.maxAccessories", 5);
-    }
-    public static HashSet<String> getAccessories(Entity entity) {
-        try {
-            return (HashSet<String>) EntityHelper.getMetadata(entity, "accessory").value();
-        } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] getAccessories", e);
-        }
-        return new HashSet<>();
-    }
     public static void handleGrapplingHook(Player ply) {
         List<Entity> hooks = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "hooks").value();
         String hookItemName = ItemHelper.splitItemName(ply.getInventory().getItemInOffHand())[1];
@@ -1288,99 +1494,6 @@ public class PlayerHelper {
         // mark hook entity as a hook
         hookEntity.addScoreboardTag("isHook");
         hooks.add(hookEntity);
-    }
-    public static boolean hasVoidBag(Player ply) {
-        ItemStack voidBag = ItemHelper.getItemFromDescription("虚空袋", false, new ItemStack(Material.BEDROCK));
-        return ply.getInventory().contains(voidBag);
-    }
-    public static boolean canHoldAny(Player ply, ItemStack item) {
-        if (item == null) return true;
-        String itemType = ItemHelper.splitItemName(item)[1];
-        // these items get consumed once picked up
-        switch (itemType) {
-            case "铜币":
-            case "银币":
-            case "金币":
-            case "铂金币":
-            case "心":
-            case "星":
-            case "生命强化焰":
-            case "伤害强化焰":
-            case "魔力强化焰":
-                return true;
-        }
-        // check airs first, they are a lot less performance costly.
-        // backpack
-        Inventory plyInv = ply.getInventory();
-        for (int i = 0; i < 36; i ++) {
-            ItemStack currItem = plyInv.getItem(i);
-            if (currItem == null || currItem.getType() == Material.AIR) return true;
-        }
-        // void bag
-        boolean hasVoidBag = hasVoidBag(ply);
-        Inventory voidBagInv = getInventory(ply, "voidBag");
-        if (hasVoidBag && voidBagInv != null) {
-            for (ItemStack currItem : voidBagInv.getContents())
-                if (currItem == null || currItem.getType() == Material.AIR) return true;
-        }
-        // then we check for stacking
-        // items that can not stack do not need any additional check.
-        int maxStackSize = item.getMaxStackSize();
-        if (maxStackSize <= 1) return false;
-        // backpack
-        for (int i = 0; i < 36; i ++) {
-            ItemStack currItem = plyInv.getItem(i);
-            if (currItem.isSimilar(item) && maxStackSize > currItem.getAmount()) return true;
-        }
-        // void bag
-        if (hasVoidBag && voidBagInv != null) {
-                for (ItemStack currItem : voidBagInv.getContents())
-                    if (currItem.isSimilar(item) && maxStackSize > currItem.getAmount()) return true;
-        }
-        return false;
-    }
-    public static ItemStack getFirstItem(Player ply, Predicate<ItemStack> itemPredicate, boolean testVoidBag) {
-        // in the player's inventory
-        Inventory plyInv = ply.getInventory();
-        for (int i = 0; i < 36; i ++) {
-            ItemStack currItem = plyInv.getItem(i);
-            if (currItem != null && itemPredicate.test(currItem)) {
-                return currItem;
-            }
-        }
-        // in the player's void bag
-        if (testVoidBag && PlayerHelper.hasVoidBag(ply)) {
-            Inventory voidBagInv = PlayerHelper.getInventory(ply, "voidBag");
-            for (ItemStack currItem : voidBagInv.getContents()) {
-                if (currItem != null && itemPredicate.test(currItem)) {
-                    return currItem;
-                }
-            }
-        }
-        // item not found
-        return null;
-    }
-    public static ArrayList<ItemStack> getItems(Player ply, Predicate<ItemStack> itemPredicate, boolean testVoidBag) {
-        // in the player's inventory
-        ArrayList<ItemStack> result = new ArrayList<>();
-        Inventory plyInv = ply.getInventory();
-        for (int i = 0; i < 36; i ++) {
-            ItemStack currItem = plyInv.getItem(i);
-            if (currItem != null && itemPredicate.test(currItem)) {
-                result.add(currItem);
-            }
-        }
-        // in the player's void bag
-        if (testVoidBag && PlayerHelper.hasVoidBag(ply)) {
-            Inventory voidBagInv = PlayerHelper.getInventory(ply, "voidBag");
-            for (ItemStack currItem : voidBagInv.getContents()) {
-                if (currItem != null && itemPredicate.test(currItem)) {
-                    result.add(currItem);
-                }
-            }
-        }
-        // return all found items
-        return result;
     }
     public static int giveItem(Player ply, ItemStack item, boolean dropExtra) {
         if (item == null) return 0;
@@ -1467,17 +1580,11 @@ public class PlayerHelper {
         ply.setLevel(ply.getLevel() + restoreAmount);
         GenericHelper.displayHolo(ply, amount, false, "回蓝");
     }
-    public static Location getSpawnLocation(Player ply) {
-        if (ply.getBedSpawnLocation() != null && !ply.getScoreboardTags().contains("bedCancelled"))
-            return ply.getBedSpawnLocation();
-        return Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE).getSpawnLocation();
-    }
     public static void sendActionBar(Player player, String message) {
         IChatBaseComponent actionBar = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + message + "\"}");
         PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.ACTIONBAR, actionBar);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
     }
-
     private static void spectreProjectileTick(Vector currDir, LivingEntity target, int idx, double speed, Player dPly, Location loc, double num, boolean healingOrDamage, String color) {
         if (!target.getWorld().equals(loc.getWorld())) return;
         // if the target becomes invalid, terminate this projectile and start a new identical one
@@ -1615,57 +1722,6 @@ public class PlayerHelper {
                 break;
             }
         }
-    }
-    public static double getPlayerMoveYaw(Player ply) {
-        HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply, "keysPressed").value();
-        String movementKeyDown = "";
-        boolean fwd = allKeysPressed.contains("W"),
-                rev = allKeysPressed.contains("S"),
-                lft = allKeysPressed.contains("A"),
-                rt = allKeysPressed.contains("D");
-        if (fwd && !rev)
-            movementKeyDown += "W";
-        else if (rev && !fwd)
-            movementKeyDown += "S";
-        if (lft && !rt)
-            movementKeyDown += "A";
-        else if (rt && !lft)
-            movementKeyDown += "D";
-        return getPlayerMoveYaw(ply, movementKeyDown);
-    }
-    public static double getPlayerMoveYaw(Player ply, String movementKeyDown) {
-        double horizontalMoveYaw = ((CraftPlayer) ply).getHandle().yaw;
-        switch (movementKeyDown) {
-            case "":
-                horizontalMoveYaw = 1e9;
-                break;
-            case "A":
-                horizontalMoveYaw -= 90;
-                break;
-            case "S":
-                horizontalMoveYaw += 180;
-                break;
-            case "D":
-                horizontalMoveYaw += 90;
-                break;
-            case "WA":
-                horizontalMoveYaw -= 45;
-                break;
-            case "WD":
-                horizontalMoveYaw += 45;
-                break;
-            case "SA":
-                horizontalMoveYaw -= 135;
-                break;
-            case "SD":
-                horizontalMoveYaw += 135;
-                break;
-        }
-        return horizontalMoveYaw;
-    }
-    public static void resetPlayerFlightTime(Player ply) {
-        EntityHelper.setMetadata(ply, "thrustIndex", 0);
-        EntityHelper.setMetadata(ply, "thrustProgress", 0);
     }
     public static void handleDash(Player ply, double yaw, double pitch) {
         // can not dash if player has dash cooldown

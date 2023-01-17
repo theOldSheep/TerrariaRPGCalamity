@@ -16,10 +16,12 @@ import java.util.HashMap;
 
 public class OverworldBiomeGenerator {
     static long seed = 0;
-    static final int CACHE_SIZE = 150000,
-            CACHE_DELETION_SIZE = 100000,
+    static final int
+            BIOME_GRID_GENERATE_RADIUS = 9,
+            CACHE_SIZE = 15000000,
+            CACHE_DELETION_SIZE = 10000000,
             SPAWN_LOC_PROTECTION_RADIUS = 500;
-    static final double SPECIAL_BIOME_RATE = 0.5;
+    static final double SPECIAL_BIOME_RATE = 0.75;
 
 
     static HashMap<Long, Integer> biomeCache = new HashMap<>(CACHE_SIZE, 0.8f);
@@ -450,7 +452,6 @@ public class OverworldBiomeGenerator {
         HashMap<Long, Integer> cache = recursion == 1 ? biomeCache : biomeGridCache;
         if (!cache.containsKey(biomeLocKey)) {
             // setup original position info.
-            final int radius = 7;
             String operation = biomeGenProcess[biomeGenProcess.length - recursion];
             int[][] land_grid;
             int grid_x_begin, grid_z_begin, gridSizeOffset;
@@ -459,17 +460,17 @@ public class OverworldBiomeGenerator {
             } else {
                 gridSizeOffset = gridSize;
             }
-            grid_x_begin = MathHelper.betterFloorDivision(x, gridSizeOffset * (radius - 2));
-            grid_z_begin = MathHelper.betterFloorDivision(z, gridSizeOffset * (radius - 2));
-            // we do a floor division by radius - 2 (margins are removed later).
+            grid_x_begin = MathHelper.betterFloorDivision(x, gridSizeOffset * (BIOME_GRID_GENERATE_RADIUS - 2));
+            grid_z_begin = MathHelper.betterFloorDivision(z, gridSizeOffset * (BIOME_GRID_GENERATE_RADIUS - 2));
+            // we do a floor division by BIOME_GRID_GENERATE_RADIUS - 2 (margins are removed later).
             // so that the chunks we divide biome grid into can largely be independent
             // reducing unnecessary performance consumption
             grid_x_begin --;
             grid_z_begin --;
-            int x_begin = grid_x_begin * gridSizeOffset * (radius - 2), z_begin = grid_z_begin * gridSizeOffset * (radius - 2);
+            int x_begin = grid_x_begin * gridSizeOffset * (BIOME_GRID_GENERATE_RADIUS - 2), z_begin = grid_z_begin * gridSizeOffset * (BIOME_GRID_GENERATE_RADIUS - 2);
 
             // load the grid 1 recursion level higher than current
-            land_grid = getUpperLevelBiomeGrid(radius, x_begin, z_begin, gridSizeOffset, recursion);
+            land_grid = getUpperLevelBiomeGrid(BIOME_GRID_GENERATE_RADIUS, x_begin, z_begin, gridSizeOffset, recursion);
             // manipulate the grid according to current operation
             int[][] manipulated_grid = manipulateBiomeGrid(land_grid, operation, x_begin, z_begin, gridSize);
             int marginDiscard = 1;
