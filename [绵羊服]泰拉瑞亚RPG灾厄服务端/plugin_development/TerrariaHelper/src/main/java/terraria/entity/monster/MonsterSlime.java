@@ -19,8 +19,8 @@ public class MonsterSlime extends EntitySlime {
         super(world);
         die();
     }
-    protected void initExtraInformation(Player ply, String monsterProgressRequired) {
-        MonsterHelper.initMonsterInfo(ply, monsterProgressRequired, this, monsterType, monsterVariant);
+    protected void initExtraInformation(Player ply, String[] monsterProgressRequired) {
+        MonsterHelper.initMonsterInfo(ply, monsterProgressRequired[0], this, monsterType, monsterVariant);
     }
     public MonsterSlime(org.bukkit.entity.Player target, String type) {
         super(((CraftWorld) target.getWorld()).getHandle());
@@ -32,17 +32,16 @@ public class MonsterSlime extends EntitySlime {
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         setHeadRotation(0);
         // get the variant to use
-        String progressRequired;
+        String[] progressRequirement;
         {
-            Map.Entry<String, String> temp = MonsterHelper.getMonsterVariantAndProgress(target, type);
             this.monsterType = type;
-            this.monsterVariant = temp.getKey();
-            progressRequired = temp.getValue();
+            this.monsterVariant = MonsterHelper.getMonsterVariant(target, type);
+            progressRequirement = MonsterHelper.getMonsterProgressRequirement(type);
         }
         // add to world
         ((CraftWorld) target.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // attributes etc.
-        initExtraInformation(target, progressRequired);
+        initExtraInformation(target, progressRequirement);
     }
     @Override
     public void die() {
@@ -51,6 +50,6 @@ public class MonsterSlime extends EntitySlime {
     @Override
     public void B_() {
         super.B_();
-
+        this.target = MonsterHelper.updateMonsterTarget(this.target, this);
     }
 }

@@ -21,48 +21,6 @@ public class WorldHelper {
     public static boolean isDayTime(long timeInTick) {
         return ! (MathHelper.isBetween(timeInTick, 13500, 22500));
     }
-    public static String getBiome(Location loc) {
-//        String height = getHeightLayer(loc);
-//        if (height.equals("space")) {
-//            return "space";
-//        }
-        Biome biome = loc.getWorld().getBiome(loc.getBlockX(), loc.getBlockZ());
-        switch (biome) {
-//            case HELL:
-//                return "underworld";
-//            case SAVANNA:
-//                return "brimstone_crag";
-//            case MUSHROOM_ISLAND:
-//            case MUSHROOM_ISLAND_SHORE:
-//                return "corruption";
-//            case ICE_FLATS:
-//            case MUTATED_ICE_FLATS:
-//                return "hallow";
-//            case MESA:
-//            case MUTATED_MESA:
-//                return "astral_infection";
-//            case DESERT:
-//                return "desert";
-//            case MUTATED_DESERT:
-//                return "sunken_sea";
-//            case BEACHES:
-//            case OCEAN:
-//                return "ocean";
-//            case FROZEN_OCEAN:
-//            case COLD_BEACH:
-//                return "sulphurous_ocean";
-//            case DEEP_OCEAN:
-//                return "abyss";
-//            case TAIGA_COLD:
-//            case MUTATED_TAIGA_COLD:
-//                return "tundra";
-//            case JUNGLE:
-//            case MUTATED_JUNGLE:
-//                return "jungle";
-            default:
-                return "normal";
-        }
-    }
     public enum HeightLayer {
         SPACE, SURFACE, UNDERGROUND, CAVERN, UNDERWORLD;
         public static HeightLayer getHeightLayer(Location loc) {
