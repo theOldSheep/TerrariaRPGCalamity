@@ -14,6 +14,7 @@ public class MonsterSlime extends EntitySlime {
     protected HashMap<String, Object> extraVariables = new HashMap<>();
     Player target;
     String monsterType, monsterVariant;
+    int indexAI = 0;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public MonsterSlime(World world) {
         super(world);

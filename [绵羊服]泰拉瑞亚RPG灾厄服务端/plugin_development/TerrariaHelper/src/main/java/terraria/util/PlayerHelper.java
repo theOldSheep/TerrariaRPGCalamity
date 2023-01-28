@@ -833,6 +833,23 @@ public class PlayerHelper {
             }
         }, 0, 3);
     }
+    public static void threadMonsterSpawn() {
+        // every 5 ticks
+        Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
+            for (Player ply : Bukkit.getOnlinePlayers()) {
+                HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+                double spawnRate = attrMap.getOrDefault("mobSpawnRate", 0.2) *
+                        attrMap.getOrDefault("mobSpawnRateMulti", 1d)
+                        / 2;
+                int spawnAmount = (int) spawnRate;
+                spawnRate -= spawnAmount;
+                if (Math.random() < spawnRate) spawnAmount ++;
+                for (int i = 0; i < spawnAmount; i ++) {
+                    MonsterHelper.naturalMobSpawning(ply);
+                }
+            }
+        }, 0, 5);
+    }
     public static void threadMovement() {
         // every 1 tick
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {

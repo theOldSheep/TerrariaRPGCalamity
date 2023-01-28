@@ -20,6 +20,9 @@ spawnInfo:
         恶魔之眼: 8
         装甲幻影魔: 3
         幽灵: 1
+    space:
+        鸟妖: 9
+        飞龙: 1
     underworld:
         地狱蝙蝠: 50
         史莱姆: 35
@@ -56,7 +59,7 @@ spawnInfo:
     cavern:
         史莱姆: 20
         黑隐士: 4
-    地牢:
+    dungeon:
         骷髅: 50
         装甲骷髅: 100
         诅咒骷髅头: 15
@@ -68,7 +71,7 @@ spawnInfo:
         骷髅特警: 5
         巨型诅咒骷髅头: 15
         拜月教教徒: 1
-    神庙:
+    temple:
         蜥蜴人: 5
         飞蛇: 2
     日食:
@@ -256,6 +259,7 @@ mobInfo:
     陨石怪:
         name: "陨石怪"
         monsterType: "SLIME"
+        spawnLocationType: ANY
         variants:
             陨石雨1:
                 attributes:
@@ -340,6 +344,8 @@ mobInfo:
     恶魔之眼:
         name: "恶魔之眼"
         monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 3
         variants:
             default1:
                 attributes:
@@ -402,6 +408,7 @@ mobInfo:
     钨钢悬浮坦克:
         name: "钨钢悬浮坦克"
         monsterType: "SLIME"
+        slimeSize: 3
         variants:
             default1:
                 attributes:
@@ -414,6 +421,7 @@ mobInfo:
     钨钢无人机:
         name: "钨钢无人机"
         monsterType: "SLIME"
+        slimeSize: 3
         variants:
             default1:
                 attributes:
@@ -518,6 +526,7 @@ mobInfo:
     幽灵:
         name: "幽灵"
         monsterType: "ZOMBIE"
+        spawnLocationType: ANY
         variants:
             default1:
                 attributes:
@@ -568,6 +577,7 @@ mobInfo:
     克苏鲁的仆从:
         name: "克苏鲁的仆从"
         monsterType: "SLIME"
+        spawnLocationType: ANY
         hasHealthMulti: true
         variants:
             default1:
@@ -581,6 +591,8 @@ mobInfo:
     饿鬼:
         name: "饿鬼"
         monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 3
         hasHealthMulti: true
         variants:
             default1:
@@ -594,6 +606,8 @@ mobInfo:
     噬魂怪:
         name: "噬魂怪"
         monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 3
         variants:
             default1:
                 attributes:
@@ -625,6 +639,7 @@ mobInfo:
     地狱蝙蝠:
         name: "地狱蝙蝠"
         monsterType: "SLIME"
+        spawnLocationType: AIR
         disguiseType: "BAT"
         variants:
             default1:
@@ -638,6 +653,7 @@ mobInfo:
     丛林蝙蝠:
         name: "丛林蝙蝠"
         monsterType: "SLIME"
+        spawnLocationType: AIR
         disguiseType: "BAT"
         variants:
             default1:
@@ -651,6 +667,8 @@ mobInfo:
     恶魔:
         name: "恶魔"
         monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 3
         disguiseType: "ZOMBIE"
         variants:
             default1:
@@ -664,6 +682,8 @@ mobInfo:
     红恶魔:
         name: "红恶魔"
         monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 3
         disguiseType: "ZOMBIE"
         variants:
             default1:
@@ -677,6 +697,8 @@ mobInfo:
     巫毒恶魔:
         name: "巫毒恶魔"
         monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 3
         disguiseType: "ZOMBIE"
         variants:
             default1:
@@ -690,6 +712,7 @@ mobInfo:
     骨蛇:
         name: "骨蛇"
         monsterType: "SLIME"
+        spawnLocationType: ANY
         variants:
             default1:
                 attributes:
@@ -782,6 +805,8 @@ mobInfo:
     诅咒骷髅头:
         name: "诅咒骷髅头"
         monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 3
         variants:
             default1:
                 attributes:
@@ -830,6 +855,8 @@ mobInfo:
     巨型诅咒骷髅头:
         name: "巨型诅咒骷髅头"
         monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 5
         variants:
             default1:
                 attributes:
@@ -1010,6 +1037,7 @@ mobInfo:
     死神:
         name: "死神"
         monsterType: "HUSK"
+        spawnLocationType: ANY
         disguiseType: "ZOMBIE"
         variants:
             default1:
@@ -1023,6 +1051,7 @@ mobInfo:
     致命球:
         name: "致命球"
         monsterType: "SLIME"
+        spawnLocationType: ANY
         variants:
             default1:
                 attributes:
@@ -1035,6 +1064,8 @@ mobInfo:
     蛾怪:
         name: "蛾怪"
         monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 6
         variants:
             default1:
                 attributes:
@@ -1059,6 +1090,7 @@ mobInfo:
     地牢幽魂:
         name: "地牢幽魂"
         monsterType: "SLIME"
+        spawnLocationType: ANY
         variants:
             default1:
                 attributes:
@@ -1119,6 +1151,8 @@ mobInfo:
     探测怪:
         name: "探测怪"
         monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 4
         isMechanic: true
         hasHealthMulti: true
         variants:
@@ -1133,6 +1167,7 @@ mobInfo:
     鸟妖:
         name: "鸟妖"
         monsterType: "SLIME"
+        spawnLocationType: AIR
         disguiseType: "HUSK"
         variants:
             default1:
@@ -1146,6 +1181,7 @@ mobInfo:
     飞龙:
         name: "飞龙"
         monsterType: "SLIME"
+        spawnLocationType: ANY
         variants:
             default1:
                 attributes:
@@ -1171,6 +1207,7 @@ mobInfo:
     飞蛇:
         name: "飞蛇"
         monsterType: "ZOMBIE"
+        spawnLocationType: AIR
         variants:
             default1:
                 attributes:
@@ -1254,6 +1291,8 @@ mobInfo:
     胡闹鬼:
         name: "胡闹鬼"
         monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 3
         eventProgress: 16
         variants:
             南瓜月1:
@@ -1280,6 +1319,8 @@ mobInfo:
     雪花怪:
         name: "雪花怪"
         monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 3
         eventProgress: 0
         variants:
             冰霜月1:
@@ -1374,6 +1415,8 @@ mobInfo:
     精灵直升机:
         name: "精灵直升机"
         monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 3
         eventProgress: 16
         isMechanic: true
         variants:
@@ -1401,6 +1444,8 @@ mobInfo:
     神圣宝箱怪:
         name: "神圣宝箱怪"
         monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 3
         hasHealthMulti: true
         variants:
             default1:
@@ -1414,6 +1459,8 @@ mobInfo:
     腐化宝箱怪:
         name: "腐化宝箱怪"
         monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 3
         hasHealthMulti: true
         variants:
             default1:

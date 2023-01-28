@@ -160,6 +160,7 @@ public class TerrariaHelper extends JavaPlugin {
         PlayerHelper.threadBackground();
         PlayerHelper.threadBGM();
         PlayerHelper.threadGrapplingHook();
+        PlayerHelper.threadMonsterSpawn();
         PlayerHelper.threadMovement();
         PlayerHelper.threadRegen();
         // thread to save player inventories every 5 seconds

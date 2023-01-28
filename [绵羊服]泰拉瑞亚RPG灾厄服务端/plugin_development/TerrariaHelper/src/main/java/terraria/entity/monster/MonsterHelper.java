@@ -24,15 +24,17 @@ public class MonsterHelper {
                 damageMulti = 1d;
     }
     public static String[] getMonsterProgressRequirement(String monsterType) {
-        String progMin = "", progMax = "";
+        String progMin = TerrariaHelper.mobSpawningConfig.getString("mobTier." + monsterType, "");
+        String progMax = TerrariaHelper.mobSpawningConfig.getString("mobTierMax." + monsterType, "");
         return new String[] {progMin, progMax};
     }
     public static boolean validateMonsterProgress(Player target, Entity monster, String type) {
         return validateMonsterProgress(getMonsterProgressRequirement(type), target, monster);
     }
     public static boolean validateMonsterProgress(String[] progressRequirement, Player target, Entity monster) {
-        if (!PlayerHelper.hasDefeated(target, progressRequirement[0]) ||
-                PlayerHelper.hasDefeated(target, progressRequirement[1])) {
+        boolean minRequirementMet = progressRequirement[0].length() > 0 && PlayerHelper.hasDefeated(target, progressRequirement[0]);
+        boolean maxRequirementMet = progressRequirement[1].length() > 0 && PlayerHelper.hasDefeated(target, progressRequirement[1]);
+        if (!minRequirementMet || maxRequirementMet) {
             if (monster != null)
                 monster.die();
             return false;
@@ -40,7 +42,7 @@ public class MonsterHelper {
         return true;
     }
     public static String getMonsterVariant(Player target, String monsterType) {
-        String variant = "", progressRequiredMin = "", progressRequiredMax = "";
+        String variant = "";
         ConfigurationSection variantsSection = TerrariaHelper.mobSpawningConfig.getConfigurationSection(
                 "mobInfo." + monsterType + ".variants");
         // setup prefix list
@@ -246,7 +248,6 @@ public class MonsterHelper {
                 return newTarget;
             } else {
                 monster.die();
-                return target;
             }
         }
         return target;
