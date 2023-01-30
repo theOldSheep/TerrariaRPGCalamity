@@ -51,7 +51,7 @@ public class MonsterSlime extends EntitySlime {
     @Override
     public void B_() {
         super.B_();
-        indexAI = MonsterHelper.monsterAI(this, this.monsterType, indexAI, extraVariables);
+        indexAI = MonsterHelper.monsterAI(this, this.target, this.monsterType, indexAI, extraVariables);
         this.target = MonsterHelper.updateMonsterTarget(this.target, this);
     }
 }

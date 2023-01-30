@@ -1508,27 +1508,60 @@ public class EntityHelper {
         int delay = 5;
         if (ticksDuration > delay) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> handleEntityExplode(source, radius, damageExceptions, loc, ticksDuration - 4),
+                    () -> handleEntityExplode(source, radius, damageExceptions, loc, ticksDuration - delay),
                     delay);
         }
     }
-    private static Projectile spawnProjectile(Location loc, Vector velocity, String projectileName,
-                                              ProjectileSource src, boolean arrowOrPotion) {
-        CraftWorld wld = (CraftWorld) loc.getWorld();
+
+    public static class ProjectileShootInfo {
+        public ProjectileSource shooter;
+        public Location shootLoc;
+        public Vector velocity;
+        public HashMap<String, Double> attrMap;
+        public String damageType, projectileName;
+        public boolean arrowOrPotion;
+        // constructors
+        public ProjectileShootInfo(Entity shooter, Vector velocity, HashMap<String, Double> attrMap, String projectileName) {
+            this(shooter, velocity, attrMap, getDamageType(shooter), projectileName);
+        }
+        public ProjectileShootInfo(Entity shooter, Vector velocity, HashMap<String, Double> attrMap, String damageType, String projectileName) {
+            this(shooter,
+                    (shooter instanceof LivingEntity) ? ((LivingEntity) shooter).getEyeLocation() : shooter.getLocation(),
+                    velocity, attrMap, damageType, projectileName);
+        }
+        public ProjectileShootInfo(Entity shooter, Location shootLoc, Vector velocity, HashMap<String, Double> attrMap, String damageType, String projectileName) {
+            this.shooter = null;
+            if (shooter instanceof ProjectileSource) this.shooter = (ProjectileSource) shooter;
+            this.shootLoc = shootLoc;
+            this.velocity = velocity;
+            this.attrMap = attrMap;
+            this.damageType = damageType;
+            this.projectileName = projectileName;
+            boolean arrowOrPotion = projectileName.endsWith("箭");
+            this.arrowOrPotion = TerrariaHelper.projectileConfig.getBoolean(projectileName + ".arrowOrPotion", arrowOrPotion);
+            this.arrowOrPotion = false; // chlorophyte arrows glitch on client side
+        }
+
+    }
+    private static Projectile spawnProjectile(ProjectileShootInfo shootInfo) {
+        CraftWorld wld = (CraftWorld) shootInfo.shootLoc.getWorld();
         Projectile bukkitProjectile;
-        if (arrowOrPotion) {
-            TerrariaArrowProjectile entity = new TerrariaArrowProjectile(loc, velocity, projectileName);
+        if (shootInfo.arrowOrPotion) {
+            TerrariaArrowProjectile entity = new TerrariaArrowProjectile(
+                    shootInfo.shootLoc, shootInfo.velocity, shootInfo.projectileName);
             wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
             bukkitProjectile = new CraftArrow(wld.getHandle().getServer(), entity);
         } else {
-            TerrariaPotionProjectile entity = new TerrariaPotionProjectile(loc, TerrariaPotionProjectile.generateItemStack(projectileName), velocity, projectileName);
+            TerrariaPotionProjectile entity = new TerrariaPotionProjectile(
+                    shootInfo.shootLoc, TerrariaPotionProjectile.generateItemStack(shootInfo.projectileName),
+                    shootInfo.velocity, shootInfo.projectileName);
             wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
             bukkitProjectile = new CraftSplashPotion(wld.getHandle().getServer(), entity);
         }
-        bukkitProjectile.setShooter(src);
+        bukkitProjectile.setShooter(shootInfo.shooter);
         return bukkitProjectile;
     }
-    // the spawn projectile below are much easier to use
+    // the spawn projectile below is much easier to use
     public static Projectile spawnProjectile(Entity shooter, Vector velocity, HashMap<String, Double> attrMap, String projectileName) {
         return spawnProjectile(shooter, velocity, attrMap, getDamageType(shooter), projectileName);
     }
@@ -1536,7 +1569,7 @@ public class EntityHelper {
         Location shootLoc;
         if (shooter instanceof LivingEntity) shootLoc = ((LivingEntity) shooter).getEyeLocation();
         else shootLoc = shooter.getLocation();
-        return spawnProjectile(shooter, shootLoc, velocity, attrMap, getDamageType(shooter), projectileName);
+        return spawnProjectile(shooter, shootLoc, velocity, attrMap, damageType, projectileName);
     }
     public static Projectile spawnProjectile(Entity shooter, Location shootLoc, Vector velocity, HashMap<String, Double> attrMap, String damageType, String projectileName) {
         ProjectileSource projSrc = null;

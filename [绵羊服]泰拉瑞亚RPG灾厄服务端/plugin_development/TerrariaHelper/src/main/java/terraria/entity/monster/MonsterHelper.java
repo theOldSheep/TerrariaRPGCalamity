@@ -10,6 +10,7 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.gameplay.Event;
 import terraria.util.EntityHelper;
@@ -302,8 +303,9 @@ public class MonsterHelper {
         if (monster.ticksLived >= 200) {
             // find possible target
             Player newTarget = null;
+            double targetAttemptRadius = 64;
             double newTargetDistSqr = 4096;
-            for (org.bukkit.entity.Entity checkEntity : monsterBkt.getNearbyEntities(64, 64, 64)) {
+            for (org.bukkit.entity.Entity checkEntity : monsterBkt.getNearbyEntities(targetAttemptRadius, targetAttemptRadius, targetAttemptRadius)) {
                 if (checkEntity instanceof Player) {
                     Player checkPlayer = (Player) checkEntity;
                     double currDistSqr = monsterBkt.getLocation().distanceSquared(checkPlayer.getLocation());
@@ -325,14 +327,14 @@ public class MonsterHelper {
         return target;
     }
     // TODO
-    public static int monsterAI(EntityLiving monster, String type, int indexAI, HashMap<String, Object> extraVariables) {
+    public static int monsterAI(EntityLiving monster, Player target, String type, int indexAI, HashMap<String, Object> extraVariables) {
         if (monster.getHealth() <= 0f) return indexAI;
         LivingEntity monsterBkt = (LivingEntity) monster.getBukkitEntity();
         switch (type) {
             case "僵尸":
             case "钨钢回转器":
             case "稻草人":
-            {
+                {
                 if (indexAI == 0)
                     indexAI = (int) (Math.random() * 100);
                 else if (indexAI > 160 && monster.onGround) {
@@ -342,7 +344,7 @@ public class MonsterHelper {
                 break;
             }
             case "沼泽怪":
-            {
+                {
                 if (indexAI == 0)
                     indexAI = (int) (Math.random() * 100);
                 else if (indexAI > 160) {
@@ -352,6 +354,30 @@ public class MonsterHelper {
                 }
                 break;
             }
+            case "眼怪":
+                {
+                if (indexAI == 0)
+                    indexAI = (int) (Math.random() * 100);
+                else if (indexAI > 160) {
+                    indexAI = (int) (Math.random() * 100);
+                    Vector v = target.getEyeLocation().subtract(monsterBkt.getEyeLocation()).toVector();
+                    double vLen = v.length();
+                    if (vLen > 0) {
+                        v.multiply(1 / vLen);
+                        EntityHelper.spawnProjectile(monsterBkt, v, EntityHelper.getAttrMap(monsterBkt), "激光");
+                    }
+                }
+                break;
+            }
+            case "鸟妖":
+                {
+
+                    break;
+                }
+            case "":
+                {
+                    break;
+                }
         }
         return indexAI + 1;
     }
