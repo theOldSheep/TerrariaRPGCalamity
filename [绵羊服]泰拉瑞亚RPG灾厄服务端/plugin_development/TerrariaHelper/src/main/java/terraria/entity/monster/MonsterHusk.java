@@ -46,11 +46,12 @@ public class MonsterHusk extends EntityZombieHusk {
     @Override
     public void die() {
         super.die();
+        MonsterHelper.tweakPlayerMonsterSpawnedAmount(target, false);
     }
     @Override
     public void B_() {
         super.B_();
-        MonsterHelper.monsterAI(this, this.monsterType, indexAI++, extraVariables);
+        indexAI = MonsterHelper.monsterAI(this, this.monsterType, indexAI, extraVariables);
         this.target = MonsterHelper.updateMonsterTarget(this.target, this);
     }
 }

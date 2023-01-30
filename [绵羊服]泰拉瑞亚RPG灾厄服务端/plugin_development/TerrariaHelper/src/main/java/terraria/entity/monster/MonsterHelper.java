@@ -217,6 +217,8 @@ public class MonsterHelper {
         bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_FOLLOW_RANGE).setBaseValue(444);
         bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.25);
         bukkitMonsterLivingEntity.setHealth(health);
+        // add 1 to target's amount of active monster
+        tweakPlayerMonsterSpawnedAmount(target, true);
         // set the monster's special info
         // no gravity
         switch (type) {
@@ -298,7 +300,6 @@ public class MonsterHelper {
         }
         // after ten seconds without any proper target, attempt to retarget
         if (monster.ticksLived >= 200) {
-            tweakPlayerMonsterSpawnedAmount(target, false);
             // find possible target
             Player newTarget = null;
             double newTargetDistSqr = 4096;
@@ -314,6 +315,7 @@ public class MonsterHelper {
                 }
             }
             if (newTarget != null) {
+                tweakPlayerMonsterSpawnedAmount(target, false);
                 tweakPlayerMonsterSpawnedAmount(newTarget, true);
                 return newTarget;
             } else {
@@ -323,7 +325,34 @@ public class MonsterHelper {
         return target;
     }
     // TODO
-    public static void monsterAI(EntityLiving monster, String type, int indexAI, HashMap<String, Object> extraVariables) {
-
+    public static int monsterAI(EntityLiving monster, String type, int indexAI, HashMap<String, Object> extraVariables) {
+        if (monster.getHealth() <= 0f) return indexAI;
+        LivingEntity monsterBkt = (LivingEntity) monster.getBukkitEntity();
+        switch (type) {
+            case "僵尸":
+            case "钨钢回转器":
+            case "稻草人":
+            {
+                if (indexAI == 0)
+                    indexAI = (int) (Math.random() * 100);
+                else if (indexAI > 160 && monster.onGround) {
+                    indexAI = (int) (Math.random() * 100);
+                    monster.motY = 1;
+                }
+                break;
+            }
+            case "沼泽怪":
+            {
+                if (indexAI == 0)
+                    indexAI = (int) (Math.random() * 100);
+                else if (indexAI > 160) {
+                    indexAI = (int) (Math.random() * 100);
+                    // 0.1 ~ 0.4
+                    monsterBkt.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1 + Math.random() * 0.3);
+                }
+                break;
+            }
+        }
+        return indexAI + 1;
     }
 }

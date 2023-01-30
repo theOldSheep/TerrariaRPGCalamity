@@ -124,6 +124,14 @@ public class GameplayHelper {
         Bukkit.getPluginManager().callEvent(evt);
         return !evt.isCancelled();
     }
+    private static int getBlockBreakingDisplayID(Location loc) {
+        int result = loc.getBlockX();
+        result <<= 1;
+        result += loc.getBlockZ();
+        result <<= 1;
+        result += loc.getBlockY();
+        return result;
+    }
     public static void playerMineBlock(Block blockToBreak, Player ply) {
         if (blockToBreak.getType() == Material.AIR) return;
         playBlockParticleAndSound(blockToBreak);
@@ -141,13 +149,13 @@ public class GameplayHelper {
         int powerPickaxe = EntityHelper.getAttrMap(ply).getOrDefault("powerPickaxe", 0d).intValue();
         // handle breaking progress
         breakingProgress += powerPickaxe;
-        int plyId = ((CraftPlayer) ply).getHandle().getId();
+        int breakProgressDisplayID = getBlockBreakingDisplayID(blockToBreak.getLocation());
         PacketPlayOutBlockBreakAnimation packetToSend;
         if (breakingProgress >= breakingProgressMax) {
             // send packet and metadata before breaking to prevent bug
             EntityHelper.setMetadata(blockToBreak, "breakProgress", 0);
             packetToSend = new PacketPlayOutBlockBreakAnimation(
-                    -plyId,
+                    breakProgressDisplayID,
                     new BlockPosition(blockToBreak.getX(), blockToBreak.getY(), blockToBreak.getZ()),
                     -1
             );
@@ -161,7 +169,7 @@ public class GameplayHelper {
             EntityHelper.setMetadata(blockToBreak, "breakProgress", breakingProgress);
             int breakProgress = (int) Math.floor((double) (8 * breakingProgress) / breakingProgressMax);
             packetToSend = new PacketPlayOutBlockBreakAnimation(
-                    -plyId,
+                    breakProgressDisplayID,
                     new BlockPosition(blockToBreak.getX(), blockToBreak.getY(), blockToBreak.getZ()),
                     breakProgress
             );

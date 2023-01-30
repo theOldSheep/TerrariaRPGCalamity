@@ -29,11 +29,11 @@ public class MonsterHelper {
         Location spawnLoc;
         int adjustHeight;
         if (heightLayer == WorldHelper.HeightLayer.SURFACE) {
-            spawnLoc = ply.getLocation().add(Math.random() * 96 - 48, Math.random() * 20 - 10, Math.random() * 96 - 48);
+            spawnLoc = ply.getLocation().add(Math.random() * 96 - 48, Math.random() * 32 - 16, Math.random() * 96 - 48);
             adjustHeight = 32;
         } else {
-            spawnLoc = ply.getLocation().add(Math.random() * 64 - 32, Math.random() * 24 - 12, Math.random() * 64 - 32);
-            adjustHeight = 8;
+            spawnLoc = ply.getLocation().add(Math.random() * 64 - 32, Math.random() * 40 - 20, Math.random() * 64 - 32);
+            adjustHeight = 24;
         }
         // determine the list of candidate spawning monsters
         ConfigurationSection candidateMonsterSection = TerrariaHelper.mobSpawningConfig.getConfigurationSection("spawnInfo." + spawnType);
