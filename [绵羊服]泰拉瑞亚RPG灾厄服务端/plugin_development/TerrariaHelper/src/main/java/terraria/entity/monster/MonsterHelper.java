@@ -2,11 +2,14 @@ package terraria.entity.monster;
 
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.Hash;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import terraria.TerrariaHelper;
 import terraria.gameplay.Event;
 import terraria.util.EntityHelper;
@@ -32,7 +35,7 @@ public class MonsterHelper {
         return validateMonsterProgress(getMonsterProgressRequirement(type), target, monster);
     }
     public static boolean validateMonsterProgress(String[] progressRequirement, Player target, Entity monster) {
-        boolean minRequirementMet = progressRequirement[0].length() > 0 && PlayerHelper.hasDefeated(target, progressRequirement[0]);
+        boolean minRequirementMet = progressRequirement[0].length() == 0 || PlayerHelper.hasDefeated(target, progressRequirement[0]);
         boolean maxRequirementMet = progressRequirement[1].length() > 0 && PlayerHelper.hasDefeated(target, progressRequirement[1]);
         if (!minRequirementMet || maxRequirementMet) {
             if (monster != null)
@@ -80,9 +83,10 @@ public class MonsterHelper {
         List<String> variantCandidates = new ArrayList<>(10);
         for (String situationPrefix : prefixToCheck) {
             int index = 1;
-            while (availableVariants.contains(situationPrefix + index)) {
-                variantCandidates.add(situationPrefix + index);
-                index ++;
+            String variantName = situationPrefix + index;
+            while (availableVariants.contains(variantName)) {
+                variantCandidates.add(variantName);
+                variantName = situationPrefix + (++index);
             }
         }
         // select a random variant
@@ -161,12 +165,19 @@ public class MonsterHelper {
         }
         return result;
     }
-    public static void initMonsterInfo(Player target, String monsterProgressRequiredMin, Entity monster, String type, String variant) {
+    public static void initMonsterInfo(Player target, String monsterProgressRequiredMin, EntityLiving monster, String type, String variant) {
         // determine if the player's game progress is appropriate
         ConfigurationSection typeConfigSection = TerrariaHelper.mobSpawningConfig.getConfigurationSection("mobInfo." + type);
         ConfigurationSection variantConfigSection = typeConfigSection.getConfigurationSection("variants." + variant);
         ConfigurationSection attributeConfigSection = variantConfigSection.getConfigurationSection("attributes");
         org.bukkit.entity.Entity bukkitMonster = monster.getBukkitEntity();
+        // if the monster is an event mob, setup progress info
+        if (Event.currentEvent.length() > 0 && variant.startsWith(Event.currentEvent)) {
+            double killProgress = typeConfigSection.getDouble("eventProgress", 1d);
+            org.bukkit.entity.Entity monsterBkt = monster.getBukkitEntity();
+            EntityHelper.setMetadata(monsterBkt, "spawnEvent", Event.currentEvent);
+            EntityHelper.setMetadata(monsterBkt, "killProgress", killProgress);
+        }
         // name, size etc.
         if (variantConfigSection.contains("name"))
             monster.setCustomName(variantConfigSection.getString("name"));
@@ -199,11 +210,70 @@ public class MonsterHelper {
         attrMap.put("defenceMulti", statsBoost.defenceMulti);
         health *= statsBoost.healthMulti;
         // set the monster's stats
+        bukkitMonster.addScoreboardTag("isMonster");
         EntityHelper.setMetadata(bukkitMonster, "attrMap", attrMap);
         LivingEntity bukkitMonsterLivingEntity = (LivingEntity) bukkitMonster;
         bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
         bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_FOLLOW_RANGE).setBaseValue(444);
+        bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.25);
         bukkitMonsterLivingEntity.setHealth(health);
+        // set the monster's special info
+        // no gravity
+        switch (type) {
+            case "恶魔之眼":
+            case "噬魂怪":
+            case "恶魔":
+            case "巫毒恶魔":
+            case "红恶魔":
+            case "饿鬼":
+            case "巨型诅咒骷髅头":
+            case "胡闹鬼":
+            case "克苏鲁的仆从":
+            case "飞翔史莱姆":
+            case "鸟妖":
+            case "飞龙":
+            case "骨蛇":
+            case "诅咒骷髅头":
+            case "地牢幽魂":
+            case "致命球":
+            case "探测怪":
+            case "精灵直升机":
+            case "雪花怪":
+            case "钨钢悬浮坦克":
+            case "钨钢无人机":
+            case "蛾怪":
+            case "陨石怪":
+            case "地狱蝙蝠":
+            case "丛林蝙蝠":
+            case "幽灵":
+            case "死神":
+                monster.setNoGravity(true);
+        }
+        // no clip
+        switch (type) {
+            case "巨型诅咒骷髅头" :
+            case "诅咒骷髅头":
+            case "地牢幽魂":
+            case "致命球":
+            case "胡闹鬼":
+            case "探测怪":
+            case "精灵直升机":
+            case "蛾怪":
+            case "陨石怪":
+            case "克苏鲁的仆从":
+            case "幽灵":
+            case "死神":
+                monster.noclip = true;
+        }
+        // attributes and other properties
+        switch (type) {
+            case "钨钢回转器":
+            case "钨钢漫步者": {
+                bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.45);
+                break;
+            }
+        }
+        ((LivingEntity) monster.getBukkitEntity()).getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
     }
     public static void tweakPlayerMonsterSpawnedAmount(Player target, boolean addOrRemove) {
         int mobAmount = EntityHelper.getMetadata(target, "mobAmount").asInt();
@@ -251,5 +321,9 @@ public class MonsterHelper {
             }
         }
         return target;
+    }
+    // TODO
+    public static void monsterAI(EntityLiving monster, String type, int indexAI, HashMap<String, Object> extraVariables) {
+
     }
 }

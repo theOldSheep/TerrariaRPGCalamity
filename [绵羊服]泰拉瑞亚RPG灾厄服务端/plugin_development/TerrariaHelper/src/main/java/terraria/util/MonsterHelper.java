@@ -1,19 +1,28 @@
 package terraria.util;
 
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.Disguise;
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
+import me.libraryaddict.disguise.disguisetypes.MobDisguise;
+import me.libraryaddict.disguise.disguisetypes.watchers.SlimeWatcher;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import terraria.TerrariaHelper;
-import terraria.entity.boss.Boss;
+import terraria.entity.monster.MonsterHusk;
+import terraria.entity.monster.MonsterSlime;
+import terraria.entity.monster.MonsterZombie;
 import terraria.gameplay.Event;
 
 import java.util.Collection;
 import java.util.HashMap;
 
 public class MonsterHelper {
+    // prevent spawning next to any player
+    public static final double NO_MONSTER_SPAWN_RADIUS = 16d;
     private static boolean naturalMobSpawnType(Player ply, String spawnType) {
         // determine the monster spawning location
         WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(ply.getLocation());
@@ -53,9 +62,9 @@ public class MonsterHelper {
                 // so that the loop does not terminate at once
                 boolean lastLocValid = true;
                 for (int i = 1; i <= adjustHeight; i++) {
-                    boolean currLocValid = spawnLoc.getY() >= 255;
+                    boolean currLocValid = spawnLoc.getY() > 0;
                     Material currBlockMat = spawnLoc.getBlock().getType();
-                    // no spawning in water!
+                    // no spawning in liquid!
                     if (currBlockMat == Material.WATER || currBlockMat == Material.LAVA) return true;
                     if (currBlockMat.isSolid()) currLocValid = false;
                     // the block became valid
@@ -68,6 +77,7 @@ public class MonsterHelper {
                         spawnLoc.add(0, -1, 0);
                     else // last not valid (solid): move up
                         spawnLoc.add(0, 1, 0);
+                    lastLocValid = currLocValid;
                     // no proper location found
                     if (i == adjustHeight) return true;
                 }
@@ -90,8 +100,7 @@ public class MonsterHelper {
         if (monsterSpawn.equals("拜月教教徒") && BossHelper.bossMap.containsKey("拜月教邪教徒"))
             return true;
         // prevent spawning next to any player
-        double noMonsterSpawnRadius = 16;
-        for (Entity e : spawnLoc.getWorld().getNearbyEntities(spawnLoc, noMonsterSpawnRadius, noMonsterSpawnRadius, noMonsterSpawnRadius)) {
+        for (Entity e : spawnLoc.getWorld().getNearbyEntities(spawnLoc, NO_MONSTER_SPAWN_RADIUS, NO_MONSTER_SPAWN_RADIUS, NO_MONSTER_SPAWN_RADIUS)) {
             if (e instanceof Player && PlayerHelper.isProperlyPlaying((Player) e) )
                 return true;
         }
@@ -143,7 +152,7 @@ public class MonsterHelper {
         if (BossHelper.bossMap.size() > 0 && Math.random() < 0.75) {
             return;
         }
-        // regular mob spawning
+        // reduced mob spawning rate when no event is present
         if (Event.currentEvent.length() > 0 && Math.random() < 0.5) {
             return;
         }
@@ -171,6 +180,58 @@ public class MonsterHelper {
         naturalMobSpawnType(ply, heightStr);
     }
     public static void spawnMob(String type, Location loc, Player target) {
-        // TODO
+        ConfigurationSection mobInfoSection = TerrariaHelper.mobSpawningConfig.getConfigurationSection("mobInfo." + type);
+        String entityType = mobInfoSection.getString("monsterType", "SLIME");
+        Entity entity;
+        {
+            boolean isBaby = false;
+            switch (entityType) {
+                case "SLIME": {
+                    entity = (new MonsterSlime(target, type, loc)).getBukkitEntity();
+                    break;
+                }
+                case "BABY_ZOMBIE":
+                    isBaby = true;
+                case "ZOMBIE": {
+                    entity = (new MonsterZombie(target, type, loc, isBaby)).getBukkitEntity();
+                    break;
+                }
+                case "BABY_HUSK":
+                    isBaby = true;
+                case "HUSK": {
+                    entity = (new MonsterHusk(target, type, loc, isBaby)).getBukkitEntity();
+                    break;
+                }
+                default:
+                    return;
+            }
+        }
+        // set mechanic sound
+        boolean isMechanic = mobInfoSection.getBoolean("isMechanic", false);
+        if (isMechanic) {
+            entity.addScoreboardTag("isMechanic");
+        }
+        // set disguise
+        String disguiseType = mobInfoSection.getString("disguiseType");
+        if (disguiseType != null) {
+            Disguise disguise;
+            if (disguiseType.startsWith("SLIME_")) {
+                disguiseType = disguiseType.replace("SLIME_", "");
+                int size = Integer.parseInt(disguiseType);
+                disguise = new MobDisguise(DisguiseType.SLIME, true);
+                ((SlimeWatcher) disguise.getWatcher()).setSize(size);
+            } else {
+                boolean isBaby = false;
+                if (disguiseType.startsWith("BABY_")) {
+                    isBaby = true;
+                    disguiseType = disguiseType.replace("BABY_", "");
+                }
+                disguise = new MobDisguise(DisguiseType.valueOf(disguiseType), isBaby);
+            }
+            disguise.setReplaceSounds(true);
+            DisguiseAPI.disguiseEntity(entity, disguise);
+        }
+        // set mother type
+        EntityHelper.setMetadata(entity, "motherType", type);
     }
 }

@@ -5,15 +5,21 @@ import org.bukkit.entity.EntityType;
 import terraria.entity.minion.MinionCaveSpider;
 import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
+import terraria.entity.monster.MonsterHusk;
+import terraria.entity.monster.MonsterSlime;
+import terraria.entity.monster.MonsterZombie;
 
 /*
 class from https://www.spigotmc.org/threads/nms-tutorials-2-custom-nms-entities-1-11.205192/
  */
 public enum CustomEntities {
 
-    MINION_SLIME       ("MinionSlime"     , 55, EntityType.SLIME      , EntitySlime.class,      MinionSlime.class),
-    MINION_HUSK        ("MinionHusk"      , 23, EntityType.HUSK       , EntityZombieHusk.class, MinionHusk .class),
-    MINION_CAVE_SPIDER ("MinionCaveSpider", 59, EntityType.CAVE_SPIDER, EntityCaveSpider.class, MinionCaveSpider.class);
+    MINION_SLIME       ("MinionSlime",      55, EntityType.SLIME,           EntitySlime.class,      MinionSlime.class),
+    MINION_HUSK        ("MinionHusk",       23, EntityType.HUSK,            EntityZombieHusk.class, MinionHusk .class),
+    MINION_CAVE_SPIDER ("MinionCaveSpider", 59, EntityType.CAVE_SPIDER,     EntityCaveSpider.class, MinionCaveSpider.class),
+    MONSTER_SLIME      ("MonsterSlime",     55, EntityType.SLIME,           EntitySlime.class,      MonsterSlime.class),
+    MONSTER_ZOMBIE     ("MonsterZombie",    54, EntityType.ZOMBIE,          EntityZombie.class,     MonsterZombie.class),
+    MONSTER_HUSK       ("MonsterHusk",      23, EntityType.HUSK,            EntityZombieHusk.class, MonsterHusk.class);
 
     private String name;
     private int id;

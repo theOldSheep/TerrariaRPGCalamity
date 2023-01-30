@@ -837,6 +837,7 @@ public class PlayerHelper {
         // every 5 ticks
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
+                if (!isProperlyPlaying(ply)) continue;
                 HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
                 double spawnRate = attrMap.getOrDefault("mobSpawnRate", 0.2) *
                         attrMap.getOrDefault("mobSpawnRateMulti", 1d)
