@@ -39,6 +39,7 @@ terraria\util\EntityHelper$WormSegmentMovementOptions.class
 terraria\util\GameplayHelper$1.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
 terraria\util\ItemUseHelper$1.class
+terraria\util\EntityHelper$ProjectileShootInfo.class
 terraria\util\PlayerHelper$GameProgress.class
 terraria\worldgen\overworld\OverworldChunkGenerator.class
 terraria\util\BossHelper.class

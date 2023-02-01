@@ -1053,9 +1053,10 @@ public class EntityHelper {
             }
         } else {
             // non-player attacks non-player
-            // monster -> non-monster: true
-            if (entityScoreboardTags.contains("isMonster") && !(targetScoreboardTags.contains("isMonster")))
-                return true;
+            // monster attack target: all non-monster targets are valid
+            if (entityScoreboardTags.contains("isMonster")) {
+                return !(targetScoreboardTags.contains("isMonster"));
+            }
             // any entity other than monster -> monster: true
             return targetScoreboardTags.contains("isMonster");
         }
@@ -1582,12 +1583,12 @@ public class EntityHelper {
             this.damageType = damageType;
             this.projectileName = projectileName;
             boolean arrowOrPotion = projectileName.endsWith("箭");
-            this.arrowOrPotion = TerrariaHelper.projectileConfig.getBoolean(projectileName + ".arrowOrPotion", arrowOrPotion);
+//            this.arrowOrPotion = TerrariaHelper.projectileConfig.getBoolean(projectileName + ".arrowOrPotion", arrowOrPotion);
             this.arrowOrPotion = false; // chlorophyte arrows glitch on client side
         }
 
     }
-    private static Projectile spawnProjectile(ProjectileShootInfo shootInfo) {
+    public static Projectile spawnProjectile(ProjectileShootInfo shootInfo) {
         CraftWorld wld = (CraftWorld) shootInfo.shootLoc.getWorld();
         Projectile bukkitProjectile;
         if (shootInfo.arrowOrPotion) {
@@ -1603,9 +1604,11 @@ public class EntityHelper {
             bukkitProjectile = new CraftSplashPotion(wld.getHandle().getServer(), entity);
         }
         bukkitProjectile.setShooter(shootInfo.shooter);
+        setMetadata(bukkitProjectile, "attrMap", shootInfo.attrMap.clone());
+        setMetadata(bukkitProjectile, "damageType", shootInfo.damageType);
         return bukkitProjectile;
     }
-    // the spawn projectile below is much easier to use
+    // the spawn projectile below are not as flexible comparing to the function above
     public static Projectile spawnProjectile(Entity shooter, Vector velocity, HashMap<String, Double> attrMap, String projectileName) {
         return spawnProjectile(shooter, velocity, attrMap, getDamageType(shooter), projectileName);
     }
@@ -1616,15 +1619,8 @@ public class EntityHelper {
         return spawnProjectile(shooter, shootLoc, velocity, attrMap, damageType, projectileName);
     }
     public static Projectile spawnProjectile(Entity shooter, Location shootLoc, Vector velocity, HashMap<String, Double> attrMap, String damageType, String projectileName) {
-        ProjectileSource projSrc = null;
-        if (shooter instanceof ProjectileSource) projSrc = (ProjectileSource) shooter;
-        boolean arrowOrPotion = projectileName.endsWith("箭");
-        arrowOrPotion = TerrariaHelper.projectileConfig.getBoolean(projectileName + ".arrowOrPotion", arrowOrPotion);
-        arrowOrPotion = false; // chlorophyte arrows glitch on client side
-        Projectile result = spawnProjectile(shootLoc, velocity, projectileName, projSrc, arrowOrPotion);
-        setMetadata(result, "attrMap", attrMap.clone());
-        setMetadata(result, "damageType", damageType);
-        return result;
+        ProjectileShootInfo shootInfo = new ProjectileShootInfo(shooter, shootLoc, velocity, attrMap, damageType, projectileName);
+        return spawnProjectile(shootInfo);
     }
     public static Location helperAimEntity(Entity source, Entity target, AimHelperOptions aimHelperOption) {
         Location targetLoc;

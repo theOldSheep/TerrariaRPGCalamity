@@ -2,6 +2,7 @@ package terraria.entity.monster;
 
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.ConfigurationSection;
@@ -364,14 +365,52 @@ public class MonsterHelper {
                     double vLen = v.length();
                     if (vLen > 0) {
                         v.multiply(1 / vLen);
-                        EntityHelper.spawnProjectile(monsterBkt, v, EntityHelper.getAttrMap(monsterBkt), "激光");
+                        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                monsterBkt, v, EntityHelper.getAttrMap(monsterBkt), "激光");
+                        shootInfo.properties.put("penetration", 10);
+                        EntityHelper.spawnProjectile(shootInfo);
                     }
                 }
                 break;
             }
             case "鸟妖":
                 {
-
+                    // fly towards target
+                    {
+                        int indexFlight = indexAI % 60;
+                        if (indexFlight == 0) {
+                            extraVariables.put("targetLoc", target.getEyeLocation());
+                        }
+                        Location targetLoc = (Location) extraVariables.getOrDefault("targetLoc", target.getEyeLocation());
+                        // do not even bother cloning targetLoc; simply multiply by -1 later on to flip the direction
+                        Vector acceleration = monsterBkt.getEyeLocation().subtract(targetLoc).toVector();
+                        double dist = acceleration.length();
+                        if (dist > 1e-9) {
+                            acceleration.multiply(-0.2 / dist);
+                            Vector velocity = monsterBkt.getVelocity();
+                            velocity.add(acceleration);
+                            double maxSpd = 1.5;
+                            if (velocity.lengthSquared() > maxSpd * maxSpd) {
+                                velocity.multiply(maxSpd / velocity.length());
+                            }
+                            monsterBkt.setVelocity(velocity);
+                        }
+                    }
+                    // shoot feathers
+                    {
+                        switch (indexAI % 80) {
+                            case 20:
+                            case 30:
+                            case 40:
+                                Location targetLoc = target.getEyeLocation();
+                                Vector velocity = targetLoc.subtract(monsterBkt.getEyeLocation()).toVector().normalize();
+                                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                        monsterBkt, velocity, EntityHelper.getAttrMap(monsterBkt), "鸟妖羽毛");
+                                shootInfo.properties.put("penetration", 10);
+                                shootInfo.properties.put("autoTrace", true);
+                                EntityHelper.spawnProjectile(shootInfo);
+                        }
+                    }
                     break;
                 }
             case "":
