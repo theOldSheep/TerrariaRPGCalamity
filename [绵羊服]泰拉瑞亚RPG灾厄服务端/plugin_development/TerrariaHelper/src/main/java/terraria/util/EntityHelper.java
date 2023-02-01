@@ -1518,6 +1518,7 @@ public class EntityHelper {
         public Location shootLoc;
         public Vector velocity;
         public HashMap<String, Double> attrMap;
+        public HashMap<String, Object> properties;
         public String damageType, projectileName;
         public boolean arrowOrPotion;
         // constructors
@@ -1535,6 +1536,49 @@ public class EntityHelper {
             this.shootLoc = shootLoc;
             this.velocity = velocity;
             this.attrMap = attrMap;
+            this.properties = new HashMap<>(25);
+            {
+                ConfigurationSection section = TerrariaHelper.projectileConfig.getConfigurationSection(projectileName);
+                if (section != null) {
+                    String[] keys;
+                    // ints
+                    {
+                        keys = new String[]{"autoTraceMethod", "bounce", "enemyInvincibilityFrame", "liveTime",
+                                "noAutoTraceTicks", "noGravityTicks", "trailLingerTime", "penetration"};
+                        for (String key : keys) {
+                            if (section.contains(key))
+                                this.properties.put(key, section.getInt(key));
+                        }
+                    }
+                    // strings
+                    {
+                        keys = new String[]{"blockHitAction", "trailColor"};
+                        for (String key : keys) {
+                            if (section.contains(key))
+                                this.properties.put(key, section.getString(key));
+                        }
+                    }
+                    // doubles
+                    {
+                        keys = new String[]{"autoTraceAbility", "autoTraceRadius", "blastRadius", "bounceVelocityMulti",
+                                "frictionFactor", "gravity", "maxSpeed", "projectileSize", "speedMultiPerTick"};
+                        for (String key : keys) {
+                            if (section.contains(key))
+                                this.properties.put(key, section.getDouble(key));
+                        }
+                    }
+                    // booleans
+                    {
+                        keys = new String[]{"autoTrace", "autoTraceSharpTurning", "blastDamageShooter",
+                                "blastOnContactBlock", "blastOnContactEnemy", "bouncePenetrationBonded",
+                                "canBeReflected", "isGrenade", "slowedByWater"};
+                        for (String key : keys) {
+                            if (section.contains(key))
+                                this.properties.put(key, section.getBoolean(key));
+                        }
+                    }
+                }
+            }
             this.damageType = damageType;
             this.projectileName = projectileName;
             boolean arrowOrPotion = projectileName.endsWith("箭");
@@ -1554,7 +1598,7 @@ public class EntityHelper {
         } else {
             TerrariaPotionProjectile entity = new TerrariaPotionProjectile(
                     shootInfo.shootLoc, TerrariaPotionProjectile.generateItemStack(shootInfo.projectileName),
-                    shootInfo.velocity, shootInfo.projectileName);
+                    shootInfo.velocity, shootInfo.projectileName, shootInfo.properties);
             wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
             bukkitProjectile = new CraftSplashPotion(wld.getHandle().getServer(), entity);
         }

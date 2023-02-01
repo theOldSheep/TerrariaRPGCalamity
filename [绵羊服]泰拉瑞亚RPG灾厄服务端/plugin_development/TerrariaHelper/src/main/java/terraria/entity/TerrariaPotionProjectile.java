@@ -28,45 +28,44 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public double speed;
     public boolean lastOnGround = false;
     public HashSet<org.bukkit.entity.Entity> damageCD;
+    public HashMap<String, Object> properties;
     public org.bukkit.entity.Projectile bukkitEntity;
     public Entity autoTraceTarget = null;
 
 
     private void setupProjectileProperties() {
-        ConfigurationSection section = TerrariaHelper.projectileConfig.getConfigurationSection(projectileType);
-        if (section != null) {
-            this.autoTraceMethod = section.getInt("autoTraceMethod", this.autoTraceMethod);
-            this.bounce = section.getInt("bounce", this.bounce);
-            this.enemyInvincibilityFrame = section.getInt("enemyInvincibilityFrame", this.enemyInvincibilityFrame);
-            this.liveTime = section.getInt("liveTime", this.liveTime);
-            this.noAutoTraceTicks = section.getInt("noAutoTraceTicks", this.noAutoTraceTicks);
-            this.noGravityTicks = section.getInt("noGravityTicks", this.noGravityTicks);
-            this.trailLingerTime = section.getInt("trailLingerTime", this.trailLingerTime);
-            this.penetration = section.getInt("penetration", this.penetration);
+        {
+            this.autoTraceMethod = (int) properties.getOrDefault("autoTraceMethod", this.autoTraceMethod);
+            this.bounce = (int) properties.getOrDefault("bounce", this.bounce);
+            this.enemyInvincibilityFrame = (int) properties.getOrDefault("enemyInvincibilityFrame", this.enemyInvincibilityFrame);
+            this.liveTime = (int) properties.getOrDefault("liveTime", this.liveTime);
+            this.noAutoTraceTicks = (int) properties.getOrDefault("noAutoTraceTicks", this.noAutoTraceTicks);
+            this.noGravityTicks = (int) properties.getOrDefault("noGravityTicks", this.noGravityTicks);
+            this.trailLingerTime = (int) properties.getOrDefault("trailLingerTime", this.trailLingerTime);
+            this.penetration = (int) properties.getOrDefault("penetration", this.penetration);
             // thru, bounce, stick, slide
-            this.blockHitAction = section.getString("blockHitAction", this.blockHitAction);
+            this.blockHitAction = (String) properties.getOrDefault("blockHitAction", this.blockHitAction);
+            this.trailColor = (String) properties.getOrDefault("trailColor", this.trailColor);
 
-            this.trailColor = section.getString("trailColor");
+            this.autoTraceAbility = (double) properties.getOrDefault("autoTraceAbility", this.autoTraceAbility);
+            this.autoTraceRadius = (double) properties.getOrDefault("autoTraceRadius", this.autoTraceRadius);
+            this.blastRadius = (double) properties.getOrDefault("blastRadius", this.blastRadius);
+            this.bounceVelocityMulti = (double) properties.getOrDefault("bounceVelocityMulti", this.bounceVelocityMulti);
+            this.frictionFactor = (double) properties.getOrDefault("frictionFactor", this.frictionFactor);
+            this.gravity = (double) properties.getOrDefault("gravity", this.gravity);
+            this.maxSpeed = (double) properties.getOrDefault("maxSpeed", this.maxSpeed);
+            this.projectileSize = (double) properties.getOrDefault("projectileSize", this.projectileSize);
+            this.speedMultiPerTick = (double) properties.getOrDefault("speedMultiPerTick", this.speedMultiPerTick);
 
-            this.autoTraceAbility = section.getDouble("autoTraceAbility", this.autoTraceAbility);
-            this.autoTraceRadius = section.getDouble("autoTraceRadius", this.autoTraceRadius);
-            this.blastRadius = section.getDouble("blastRadius", this.blastRadius);
-            this.bounceVelocityMulti = section.getDouble("bounceVelocityMulti", this.bounceVelocityMulti);
-            this.frictionFactor = section.getDouble("frictionFactor", this.frictionFactor);
-            this.gravity = section.getDouble("gravity", this.gravity);
-            this.maxSpeed = section.getDouble("maxSpeed", this.maxSpeed);
-            this.projectileSize = section.getDouble("projectileSize", this.projectileSize);
-            this.speedMultiPerTick = section.getDouble("speedMultiPerTick", this.speedMultiPerTick);
-
-            this.autoTrace = section.getBoolean("autoTrace", this.autoTrace);
-            this.autoTraceSharpTurning = section.getBoolean("autoTraceSharpTurning", this.autoTraceSharpTurning);
-            this.blastDamageShooter = section.getBoolean("blastDamageShooter", this.blastDamageShooter);
-            this.blastOnContactBlock = section.getBoolean("blastOnContactBlock", this.blastOnContactBlock);
-            this.blastOnContactEnemy = section.getBoolean("blastOnContactEnemy", this.blastOnContactEnemy);
-            this.bouncePenetrationBonded = section.getBoolean("bouncePenetrationBonded", this.bouncePenetrationBonded);
-            this.canBeReflected = section.getBoolean("canBeReflected", this.canBeReflected);
-            this.isGrenade = section.getBoolean("isGrenade", this.isGrenade);
-            this.slowedByWater = section.getBoolean("slowedByWater", this.slowedByWater);
+            this.autoTrace = (boolean) properties.getOrDefault("autoTrace", this.autoTrace);
+            this.autoTraceSharpTurning = (boolean) properties.getOrDefault("autoTraceSharpTurning", this.autoTraceSharpTurning);
+            this.blastDamageShooter = (boolean) properties.getOrDefault("blastDamageShooter", this.blastDamageShooter);
+            this.blastOnContactBlock = (boolean) properties.getOrDefault("blastOnContactBlock", this.blastOnContactBlock);
+            this.blastOnContactEnemy = (boolean) properties.getOrDefault("blastOnContactEnemy", this.blastOnContactEnemy);
+            this.bouncePenetrationBonded = (boolean) properties.getOrDefault("bouncePenetrationBonded", this.bouncePenetrationBonded);
+            this.canBeReflected = (boolean) properties.getOrDefault("canBeReflected", this.canBeReflected);
+            this.isGrenade = (boolean) properties.getOrDefault("isGrenade", this.isGrenade);
+            this.slowedByWater = (boolean) properties.getOrDefault("slowedByWater", this.slowedByWater);
         }
         this.setNoGravity(true);
         this.noclip = true;
@@ -103,13 +102,15 @@ public class TerrariaPotionProjectile extends EntityPotion {
         return CraftItemStack.asNMSCopy(item);
     }
     // constructor
-    public TerrariaPotionProjectile(org.bukkit.Location loc, ItemStack projectileItem, Vector velocity, String projectileType) {
+    public TerrariaPotionProjectile(org.bukkit.Location loc, ItemStack projectileItem, Vector velocity,
+                                    String projectileType, HashMap<String, Object> properties) {
         super(((CraftWorld) loc.getWorld()).getHandle(), loc.getX(), loc.getY(), loc.getZ(), projectileItem);
         this.motX = velocity.getX();
         this.motY = velocity.getY();
         this.motZ = velocity.getZ();
         this.speed = velocity.length();
         this.projectileType = projectileType;
+        this.properties = properties;
         bukkitEntity = (org.bukkit.entity.Projectile) getBukkitEntity();
         setProperties(projectileType);
     }
