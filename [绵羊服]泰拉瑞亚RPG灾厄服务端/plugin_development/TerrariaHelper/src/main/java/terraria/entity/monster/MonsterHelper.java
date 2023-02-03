@@ -381,19 +381,24 @@ public class MonsterHelper {
                         if (indexFlight == 0) {
                             extraVariables.put("targetLoc", target.getEyeLocation());
                         }
-                        Location targetLoc = (Location) extraVariables.getOrDefault("targetLoc", target.getEyeLocation());
-                        // do not even bother cloning targetLoc; simply multiply by -1 later on to flip the direction
-                        Vector acceleration = monsterBkt.getEyeLocation().subtract(targetLoc).toVector();
-                        double dist = acceleration.length();
-                        if (dist > 1e-9) {
-                            acceleration.multiply(-0.2 / dist);
-                            Vector velocity = monsterBkt.getVelocity();
-                            velocity.add(acceleration);
-                            double maxSpd = 1.5;
-                            if (velocity.lengthSquared() > maxSpd * maxSpd) {
-                                velocity.multiply(maxSpd / velocity.length());
+                        Location targetLoc = (Location) extraVariables.get("targetLoc");
+                        if (targetLoc != null) {
+                            // do not even bother cloning targetLoc; simply multiply by -1 later on to flip the direction
+                            Vector acceleration = monsterBkt.getEyeLocation().subtract(targetLoc).toVector();
+                            double dist = acceleration.length();
+                            double maxSpd = 2;
+                            if (dist > maxSpd) {
+                                acceleration.multiply(-0.05 / dist);
+                                Vector velocity = monsterBkt.getVelocity();
+                                velocity.add(acceleration);
+                                if (velocity.lengthSquared() > maxSpd * maxSpd) {
+                                    velocity.multiply(maxSpd / velocity.length());
+                                }
+                                monsterBkt.setVelocity(velocity);
                             }
-                            monsterBkt.setVelocity(velocity);
+                            // if the harpy is very close to target location, remove its target loc
+                            else
+                                extraVariables.remove("targetLoc");
                         }
                     }
                     // shoot feathers
@@ -407,7 +412,6 @@ public class MonsterHelper {
                                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                                         monsterBkt, velocity, EntityHelper.getAttrMap(monsterBkt), "鸟妖羽毛");
                                 shootInfo.properties.put("penetration", 10);
-                                shootInfo.properties.put("autoTrace", true);
                                 EntityHelper.spawnProjectile(shootInfo);
                         }
                     }

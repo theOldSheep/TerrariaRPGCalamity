@@ -505,7 +505,7 @@ public class MinionSlime extends EntitySlime {
                         }
                         velocity = new Vector(0, 0.75, 0);
                     }
-                    // charge ticksBeforeHookingFish enemy
+                    // charge targeted enemy
                     else if (ind < 14) {
                         direction = ((LivingEntity) (extraVariables.getOrDefault("tgt", target))).getEyeLocation()
                                 .subtract(minionBukkit.getLocation()).toVector();
@@ -518,6 +518,9 @@ public class MinionSlime extends EntitySlime {
                         if (distance > 1e-9)
                             velocity.multiply(Math.max(distance / (14 - ind), 2 + Math.random())  / distance);
                     }
+                    // make a group of prisms attack at slightly different pace, adding some randomness to it
+                    else if (Math.random() < 0.2)
+                        index --;
                 }
                 // target is owner
                 else {

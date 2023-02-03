@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.Player;
 import terraria.TerrariaHelper;
 
 public class WorldHelper {
@@ -44,6 +45,14 @@ public class WorldHelper {
     public enum BiomeType {
         ABYSS, ASTRAL_INFECTION, BRIMSTONE_CRAG, CORRUPTION, DESERT, DUNGEON, HALLOW, JUNGLE, NORMAL, OCEAN,
         SPACE, SULPHUROUS_OCEAN, SUNKEN_SEA, TEMPLE, TUNDRA, UNDERWORLD;
+        public static BiomeType getBiome(Player ply) {
+            return getBiome(ply, true);
+        }
+        public static BiomeType getBiome(Player ply, boolean considerSpace) {
+            BiomeType biomeType = (BiomeType) EntityHelper.getMetadata(ply, "playerBiome").value();
+            if (biomeType != NORMAL) return biomeType;
+            return getBiome(ply.getLocation(), considerSpace);
+        }
         public static BiomeType getBiome(Location loc) {
             return getBiome(loc, true);
         }

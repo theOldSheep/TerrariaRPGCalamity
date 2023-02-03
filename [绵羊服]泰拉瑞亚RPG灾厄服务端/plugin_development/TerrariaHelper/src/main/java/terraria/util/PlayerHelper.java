@@ -6,6 +6,7 @@ import net.minecraft.server.v1_12_R1.IChatBaseComponent;
 import net.minecraft.server.v1_12_R1.PacketPlayOutTitle;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -551,14 +552,12 @@ public class PlayerHelper {
                                 if (fishron.getHealth() / fishron.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() <= 0.15)
                                     current = "猪鲨";
                             } else if (!Event.currentEvent.equals("")) current = Event.currentEvent;
-                            if (ply.getLocation().getY() >= 50) {
-                                for (Entity pillar : Event.pillars)
-                                    if (pillar.getWorld().equals(ply.getWorld()) &&
-                                            pillar.getLocation().distanceSquared(ply.getLocation()) < 22500) {
-                                        current = pillar.getName().replace("柱", "");
-                                        break;
-                                    }
-                            }
+                            for (Entity pillar : Event.pillars)
+                                if (pillar.getWorld().equals(ply.getWorld()) &&
+                                        pillar.getLocation().distanceSquared(ply.getLocation()) < 22500) {
+                                    current = pillar.getName().replace("柱", "");
+                                    break;
+                                }
                         }
                     } else {
                         current = forceBackground.asString();
@@ -668,7 +667,7 @@ public class PlayerHelper {
                         // no event/boss
                         boolean isDayTime = WorldHelper.isDayTime(plyWorld);
                         if (current.equals("")) {
-                            WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(ply.getLocation());
+                            WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(ply);
                             switch (WorldHelper.HeightLayer.getHeightLayer(ply.getLocation())) {
                                 case SPACE:
                                     current = isDayTime ? "space_night" : "space";
@@ -1205,6 +1204,71 @@ public class PlayerHelper {
             }
         }, 0, delay);
     }
+    public static void threadSaveInventories() {
+        // thread to save player inventories every 5 seconds
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(),
+                () -> {
+                    for (Player ply : Bukkit.getOnlinePlayers()) {
+                        PlayerHelper.saveInventories(ply);
+                    }
+                }, 100, 100);
+    }
+    public static void threadSpecialBiome() {
+        // every 10 ticks (1/2 second)
+        int checkRadiusHorizontal = 24, checkRadiusVertical = 64, stepSize = 97, threshold = 1;
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
+            for (int iii = 0; iii < 100; iii ++)
+            for (Player ply : Bukkit.getOnlinePlayers()) {
+                if (isProperlyPlaying(ply)) {
+                    long time = System.nanoTime(), loopTime = 0, timeGetBlock = 0, timeValidate = 0, timeTweakOffset = 0;
+                    int blocksLizard = 0, blocksDungeon = 0;
+                    int xOffset = checkRadiusHorizontal * -1, yOffset = checkRadiusVertical * -1, zOffset = checkRadiusHorizontal * -1;
+                    while (zOffset < checkRadiusHorizontal) {
+                        loopTime ++;
+                        long tm = System.nanoTime();
+                        Block blockToCheck = ply.getLocation().add(xOffset, yOffset, zOffset).getBlock();
+                        timeGetBlock += System.nanoTime() - tm;
+                        tm = System.nanoTime();
+                        if (blockToCheck.getType() == Material.SMOOTH_BRICK) {
+                            int data = blockToCheck.getData();
+                            Bukkit.broadcastMessage(data + ", " + blockToCheck.getLocation());
+                            switch (data) {
+                                case 1:
+                                    blocksLizard ++;
+                                    break;
+                                case 2:
+                                    blocksDungeon ++;
+                                    break;
+                            }
+                        }
+                        timeValidate += System.nanoTime() - tm;
+                        // tweak next location
+                        tm = System.nanoTime();
+                        xOffset += stepSize;
+                        while (xOffset > checkRadiusHorizontal) {
+                            xOffset -= checkRadiusHorizontal * 2;
+                            yOffset ++;
+                        }
+                        while (yOffset > checkRadiusVertical) {
+                            yOffset -= checkRadiusVertical * 2;
+                            zOffset ++;
+                        }
+                        timeTweakOffset += System.nanoTime() - tm;
+                    }
+                    WorldHelper.BiomeType plyBiome = WorldHelper.BiomeType.NORMAL;
+                    if (blocksLizard >= threshold)
+                        plyBiome = WorldHelper.BiomeType.TEMPLE;
+                    else if (blocksDungeon >= threshold)
+                        plyBiome = WorldHelper.BiomeType.DUNGEON;
+                    Bukkit.broadcastMessage("Time elapsed: " + (System.nanoTime() - time) + " ns. " + loopTime + " iter.");
+                    EntityHelper.setMetadata(ply, "playerBiome", plyBiome);
+                    Bukkit.broadcastMessage("Time get block: " + timeGetBlock + " ns. ");
+                    Bukkit.broadcastMessage("Time validate: " + timeValidate + " ns. ");
+                    Bukkit.broadcastMessage("Time tweak offset: " + timeTweakOffset + " ns. ");
+                }
+            }
+        }, 0, 100);
+    }
     // others
     public static void initPlayerStats(Player ply, boolean joinOrRespawn) {
         // metadata and scoreboard tag
@@ -1246,7 +1310,8 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "hooks", new ArrayList<Entity>());
         EntityHelper.setMetadata(ply, "keysPressed", new HashSet<String>());
         // mob spawning variable
-        EntityHelper.setMetadata(ply, "mobAmount", 0);
+        if (joinOrRespawn)
+            EntityHelper.setMetadata(ply, "mobAmount", 0);
         EntityHelper.setMetadata(ply, "biome", "normal");
         // movement and control variable
         EntityHelper.setMetadata(ply, "grapplingHookItem", "");
@@ -1259,12 +1324,11 @@ public class PlayerHelper {
             EntityHelper.setMetadata(ply, "team", "red");
         }
         EntityHelper.setMetadata(ply, "armorSet", "");
-        // bgm and background
-        if (joinOrRespawn) {
-            EntityHelper.setMetadata(ply, "lastBackground", "");
-            EntityHelper.setMetadata(ply, "lastBGM", "normal");
-            EntityHelper.setMetadata(ply, "lastBGMTime", 0L);
-        }
+        // bgm, biome and background
+        EntityHelper.setMetadata(ply, "lastBackground", "");
+        EntityHelper.setMetadata(ply, "lastBGM", "normal");
+        EntityHelper.setMetadata(ply, "lastBGMTime", 0L);
+        EntityHelper.setMetadata(ply, "playerBiome", WorldHelper.BiomeType.NORMAL);
         // regeneration
         EntityHelper.setMetadata(ply, "lastLocation", ply.getLocation());
         EntityHelper.setMetadata(ply, "regenTime", 0d);

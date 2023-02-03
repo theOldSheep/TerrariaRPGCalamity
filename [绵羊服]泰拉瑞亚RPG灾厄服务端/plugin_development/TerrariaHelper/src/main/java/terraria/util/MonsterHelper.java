@@ -62,7 +62,7 @@ public class MonsterHelper {
                 // so that the loop does not terminate at once
                 boolean lastLocValid = true;
                 for (int i = 1; i <= adjustHeight; i++) {
-                    boolean currLocValid = spawnLoc.getY() > 0;
+                    boolean currLocValid = spawnLoc.getY() > 0 && spawnLoc.getY() < 256;
                     Material currBlockMat = spawnLoc.getBlock().getType();
                     // no spawning in liquid!
                     if (currBlockMat == Material.WATER || currBlockMat == Material.LAVA) return true;
@@ -157,7 +157,7 @@ public class MonsterHelper {
             return;
         }
         // only attempt to spawn underworld mobs in underworld
-        WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(ply.getLocation());
+        WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(ply);
         String  biomeStr = biomeType.toString().toLowerCase(),
                 heightStr = heightLayer.toString().toLowerCase();
         if (biomeType == WorldHelper.BiomeType.UNDERWORLD) {

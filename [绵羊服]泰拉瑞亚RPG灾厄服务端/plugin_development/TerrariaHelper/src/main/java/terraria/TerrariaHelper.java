@@ -164,13 +164,8 @@ public class TerrariaHelper extends JavaPlugin {
         PlayerHelper.threadMonsterSpawn();
         PlayerHelper.threadMovement();
         PlayerHelper.threadRegen();
-        // thread to save player inventories every 5 seconds
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(getInstance(),
-                () -> {
-                    for (Player ply : Bukkit.getOnlinePlayers()) {
-                        PlayerHelper.saveInventories(ply);
-                    }
-                }, 100, 100);
+        PlayerHelper.threadSaveInventories();
+        PlayerHelper.threadSpecialBiome();
     }
 
     @Override
