@@ -1214,21 +1214,27 @@ public class PlayerHelper {
                 }, 100, 100);
     }
     public static void threadSpecialBiome() {
-        // every 10 ticks (1/2 second)
+        // every 100 ticks (5 second)
         int checkRadiusHorizontal = 24, checkRadiusVertical = 64, stepSize = 97, threshold = 1;
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
-            for (int iii = 0; iii < 100; iii ++)
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 if (isProperlyPlaying(ply)) {
-                    long time = System.nanoTime(), loopTime = 0, timeGetBlock = 0, timeValidate = 0, timeTweakOffset = 0;
+                    // check height layer
+                    boolean isInUndergroundOrCavern;
+                    switch (WorldHelper.HeightLayer.getHeightLayer(ply.getLocation())) {
+                        case UNDERGROUND:
+                        case CAVERN:
+                            isInUndergroundOrCavern = true;
+                            break;
+                        default:
+                            isInUndergroundOrCavern = false;
+                    }
+                    if (!isInUndergroundOrCavern) continue;
+                    // check dungeon and lizard temple
                     int blocksLizard = 0, blocksDungeon = 0;
                     int xOffset = checkRadiusHorizontal * -1, yOffset = checkRadiusVertical * -1, zOffset = checkRadiusHorizontal * -1;
                     while (zOffset < checkRadiusHorizontal) {
-                        loopTime ++;
-                        long tm = System.nanoTime();
                         Block blockToCheck = ply.getLocation().add(xOffset, yOffset, zOffset).getBlock();
-                        timeGetBlock += System.nanoTime() - tm;
-                        tm = System.nanoTime();
                         if (blockToCheck.getType() == Material.SMOOTH_BRICK) {
                             int data = blockToCheck.getData();
                             Bukkit.broadcastMessage(data + ", " + blockToCheck.getLocation());
@@ -1241,9 +1247,7 @@ public class PlayerHelper {
                                     break;
                             }
                         }
-                        timeValidate += System.nanoTime() - tm;
                         // tweak next location
-                        tm = System.nanoTime();
                         xOffset += stepSize;
                         while (xOffset > checkRadiusHorizontal) {
                             xOffset -= checkRadiusHorizontal * 2;
@@ -1253,18 +1257,13 @@ public class PlayerHelper {
                             yOffset -= checkRadiusVertical * 2;
                             zOffset ++;
                         }
-                        timeTweakOffset += System.nanoTime() - tm;
                     }
                     WorldHelper.BiomeType plyBiome = WorldHelper.BiomeType.NORMAL;
                     if (blocksLizard >= threshold)
                         plyBiome = WorldHelper.BiomeType.TEMPLE;
                     else if (blocksDungeon >= threshold)
                         plyBiome = WorldHelper.BiomeType.DUNGEON;
-                    Bukkit.broadcastMessage("Time elapsed: " + (System.nanoTime() - time) + " ns. " + loopTime + " iter.");
                     EntityHelper.setMetadata(ply, "playerBiome", plyBiome);
-                    Bukkit.broadcastMessage("Time get block: " + timeGetBlock + " ns. ");
-                    Bukkit.broadcastMessage("Time validate: " + timeValidate + " ns. ");
-                    Bukkit.broadcastMessage("Time tweak offset: " + timeTweakOffset + " ns. ");
                 }
             }
         }, 0, 100);
