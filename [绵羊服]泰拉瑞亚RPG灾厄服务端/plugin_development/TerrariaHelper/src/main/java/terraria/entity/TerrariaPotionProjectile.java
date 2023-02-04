@@ -129,15 +129,16 @@ public class TerrariaPotionProjectile extends EntityPotion {
         return EntityHelper.checkCanDamage(bukkitEntity, bukkitE, false);
     }
     public void hitEntity(Entity e, MovingObjectPosition position) {
+        // handle damage CD before doing anything else. Otherwise, exploding projectiles will damage the enemy being hit twice.
+        GenericHelper.damageCoolDown(damageCD, e.getBukkitEntity(), enemyInvincibilityFrame);
         // handles post-hit mechanism: damage is handled by a listener
+        if (bouncePenetrationBonded) bounce --;
         if (--penetration < 0) {
             setPosition(position.pos.x, position.pos.y, position.pos.z);
             EntityHelper.setMetadata(bukkitEntity, "destroyReason", "hitEntity");
             die();
         }
         EntityHelper.setMetadata(bukkitEntity, "penetration", this.penetration);
-        if (bouncePenetrationBonded) bounce --;
-        GenericHelper.damageCoolDown(damageCD, e.getBukkitEntity(), enemyInvincibilityFrame);
     }
 
     // override functions

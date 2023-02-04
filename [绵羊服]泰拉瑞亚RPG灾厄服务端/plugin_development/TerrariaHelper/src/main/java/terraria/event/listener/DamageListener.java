@@ -39,6 +39,7 @@ public class DamageListener implements Listener {
                 if (victimScoreboardTags.contains("noFallDamage")) break;
                 EntityHelper.handleDamage(victim, victim, 50, "Fall");
                 break;
+            /*
             case CRAMMING:
                 if (victim instanceof Player || victimScoreboardTags.contains("isNPC") || victimScoreboardTags.contains("isAnimal")) {
                     AxisAlignedBB boundingBox = ((CraftEntity) victim).getHandle().getBoundingBox();
@@ -66,6 +67,7 @@ public class DamageListener implements Listener {
                         EntityHelper.handleDamage(damager, victim, maxDmg, "DirectDamage");
                 }
                 break;
+            */
         }
     }
 }

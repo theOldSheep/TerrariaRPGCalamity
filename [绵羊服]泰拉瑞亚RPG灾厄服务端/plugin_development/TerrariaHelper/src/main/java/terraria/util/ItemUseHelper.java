@@ -261,8 +261,9 @@ public class ItemUseHelper {
             if (!itemType.endsWith("药水"))
                 sound = "entity.generic.eat";
             ply.getWorld().playSound(ply.getEyeLocation(), sound, 1, 1);
-            // potion use cool down
-            applyCD(ply, 10);
+            // potion use cool down if the potion is being drank manually etc.
+            if (consumptionInfo == QuickBuffType.NONE)
+                applyCD(ply, 10);
         }
         return successful;
     }
@@ -416,7 +417,8 @@ public class ItemUseHelper {
         // it should be around 0.3 - 0.5 of reach length
         offsetVec.normalize().multiply(reachLength * (0.3 + Math.random() * 0.2));
         // strike
-        int loopAmount = (int) (reachLength * 4);
+//        int loopAmount = (int) (reachLength * 4);
+        int loopAmount = 50;
         String color = "255|0|0";
         if (colors != null && colors.size() > 0) color = colors.get((int) (Math.random() * colors.size()));
         handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVec, offsetVec, new HashSet<>(), color, strikeLineInfo, 0, loopAmount);

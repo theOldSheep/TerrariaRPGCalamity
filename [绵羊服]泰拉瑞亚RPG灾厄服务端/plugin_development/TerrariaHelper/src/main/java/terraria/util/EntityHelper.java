@@ -1075,7 +1075,9 @@ public class EntityHelper {
     public static void knockback(Entity entity, Vector dir, boolean addOrReplace) {
         double kbResistance = getAttrMap(entity).getOrDefault("knockbackResistance", 0d);
         if (kbResistance >= 1) return;
-        dir.multiply(Math.max(1 - kbResistance, 0));
+        double kbMulti = Math.max(1 - kbResistance, 0);
+        dir.multiply(kbMulti);
+        setMetadata(entity, "kbFactor", kbMulti);
         Entity knockbackTaker = entity.getVehicle();
         if (knockbackTaker == null) knockbackTaker = entity;
         if (addOrReplace) {

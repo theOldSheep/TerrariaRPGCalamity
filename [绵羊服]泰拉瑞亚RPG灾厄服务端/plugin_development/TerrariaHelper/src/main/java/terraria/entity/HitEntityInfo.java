@@ -46,13 +46,22 @@ public class HitEntityInfo {
         return getEntitiesHit(((CraftWorld) world).getHandle(),
                 MathHelper.toNMSVector(startLoc), MathHelper.toNMSVector(terminalLoc), radius, predication);
     }
+    public static TreeSet<HitEntityInfo> getEntitiesHit(org.bukkit.World world, Vector startLoc, Vector terminalLoc,
+                                                        double radiusX, double radiusY, double radiusZ, com.google.common.base.Predicate<? super Entity> predication) {
+        return getEntitiesHit(((CraftWorld) world).getHandle(),
+                MathHelper.toNMSVector(startLoc), MathHelper.toNMSVector(terminalLoc), radiusX, radiusY, radiusZ, predication);
+    }
     public static TreeSet<HitEntityInfo> getEntitiesHit(World world, Vec3D startLoc, Vec3D terminalLoc, double radius, com.google.common.base.Predicate<? super Entity> predication) {
+        return getEntitiesHit(world, startLoc, terminalLoc, radius, radius, radius, predication);
+    }
+    public static TreeSet<HitEntityInfo> getEntitiesHit(World world, Vec3D startLoc, Vec3D terminalLoc,
+                                                        double radiusX, double radiusY, double radiusZ, com.google.common.base.Predicate<? super Entity> predication) {
         AxisAlignedBB boundingBox = new AxisAlignedBB(startLoc.x, startLoc.y, startLoc.z, terminalLoc.x, terminalLoc.y, terminalLoc.z)
-                .g(radius);
+                .grow(radiusX, radiusY, radiusZ);
         List<Entity> list = world.getEntities(null, boundingBox, predication);
         TreeSet<HitEntityInfo> hitCandidates = new TreeSet<>(Comparator.comparingDouble(HitEntityInfo::getDistance));
         for (Entity toCheck : list) {
-            AxisAlignedBB axisalignedbb = toCheck.getBoundingBox().g(radius);
+            AxisAlignedBB axisalignedbb = toCheck.getBoundingBox().grow(radiusX, radiusY, radiusZ);
             MovingObjectPosition hitPosition = null;
             // if the initial location is already within the collision box
             if (axisalignedbb.b(startLoc)) hitPosition = new MovingObjectPosition(startLoc, EnumDirection.DOWN);

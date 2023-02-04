@@ -3,7 +3,10 @@ package terraria.entity.monster;
 import net.minecraft.server.v1_12_R1.EntityZombieHusk;
 import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
@@ -14,6 +17,7 @@ public class MonsterHusk extends EntityZombieHusk {
     Player target;
     String monsterType, monsterVariant;
     int indexAI = 0;
+    double defaultSpeed = 0.2;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public MonsterHusk(World world) {
         super(world);
@@ -21,6 +25,7 @@ public class MonsterHusk extends EntityZombieHusk {
     }
     protected void initExtraInformation(Player ply, String[] monsterProgressRequired) {
         MonsterHelper.initMonsterInfo(ply, monsterProgressRequired[0], this, monsterType, monsterVariant);
+        defaultSpeed = ((LivingEntity) bukkitEntity).getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue();
     }
     public MonsterHusk(org.bukkit.entity.Player target, String type, Location spawnLoc, boolean isBaby) {
         super(((CraftWorld) target.getWorld()).getHandle());
@@ -51,7 +56,9 @@ public class MonsterHusk extends EntityZombieHusk {
     @Override
     public void B_() {
         super.B_();
-        indexAI = MonsterHelper.monsterAI(this, this.target, this.monsterType, indexAI, extraVariables);
-        this.target = MonsterHelper.updateMonsterTarget(this.target, this);
+        if (getHealth() > 0) {
+            this.target = MonsterHelper.updateMonsterTarget(this.target, this);
+            indexAI = MonsterHelper.monsterAI(this, defaultSpeed, this.target, this.monsterType, indexAI, extraVariables);
+        }
     }
 }

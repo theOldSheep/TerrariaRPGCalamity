@@ -2,19 +2,25 @@ package terraria.entity.monster;
 
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.Hash;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.HitEntityInfo;
 import terraria.gameplay.Event;
+import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
+import terraria.util.MathHelper;
 import terraria.util.PlayerHelper;
 import terraria.util.WorldHelper;
 
@@ -237,6 +243,7 @@ public class MonsterHelper {
             case "鸟妖":
             case "飞龙":
             case "骨蛇":
+            case "飞蛇":
             case "诅咒骷髅头":
             case "地牢幽魂":
             case "致命球":
@@ -328,9 +335,28 @@ public class MonsterHelper {
         return target;
     }
     // TODO
-    public static int monsterAI(EntityLiving monster, Player target, String type, int indexAI, HashMap<String, Object> extraVariables) {
+    public static int monsterAI(EntityLiving monster, double defaultMovementSpeed, Player target, String type,
+                                int indexAI, HashMap<String, Object> extraVariables) {
         if (monster.getHealth() <= 0f) return indexAI;
         LivingEntity monsterBkt = (LivingEntity) monster.getBukkitEntity();
+        // knockback can then be used to modify monster's movement speed temporarily
+        double speedMultiKnockback = 1;
+        {
+            MetadataValue kbFactorMetadata = EntityHelper.getMetadata(monsterBkt, "kbFactor");
+            if (kbFactorMetadata != null) {
+                // knockback speed reduction decreases linearly and disappears after at most 0.5 second
+                double kbFactor = kbFactorMetadata.asDouble() - 0.1;
+                if (kbFactor > 1e-5) {
+                    speedMultiKnockback = 1 - kbFactor;
+                    EntityHelper.setMetadata(monsterBkt, "kbFactor", kbFactor);
+                } else {
+                    EntityHelper.setMetadata(monsterBkt, "kbFactor", null);
+                }
+            }
+        }
+        monsterBkt.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(defaultMovementSpeed * speedMultiKnockback);
+        // the monster's additional AI
+        boolean hasContactDamage = true;
         switch (type) {
             case "僵尸":
             case "钨钢回转器":
@@ -340,7 +366,7 @@ public class MonsterHelper {
                     indexAI = (int) (Math.random() * 100);
                 else if (indexAI > 160 && monster.onGround) {
                     indexAI = (int) (Math.random() * 100);
-                    monster.motY = 1;
+                    monster.motY = speedMultiKnockback;
                 }
                 break;
             }
@@ -350,8 +376,10 @@ public class MonsterHelper {
                     indexAI = (int) (Math.random() * 100);
                 else if (indexAI > 160) {
                     indexAI = (int) (Math.random() * 100);
-                    // 0.1 ~ 0.4
-                    monsterBkt.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1 + Math.random() * 0.3);
+                    // 0.25 ~ 0.55
+                    double moveSpeed = 0.25 + Math.random() * 0.3;
+                    monsterBkt.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(moveSpeed);
+                    ((MonsterHusk) monster).defaultSpeed = moveSpeed;
                 }
                 break;
             }
@@ -386,7 +414,7 @@ public class MonsterHelper {
                             // do not even bother cloning targetLoc; simply multiply by -1 later on to flip the direction
                             Vector acceleration = monsterBkt.getEyeLocation().subtract(targetLoc).toVector();
                             double dist = acceleration.length();
-                            double maxSpd = 2;
+                            double maxSpd = 2 * speedMultiKnockback;
                             if (dist > maxSpd) {
                                 acceleration.multiply(-0.05 / dist);
                                 Vector velocity = monsterBkt.getVelocity();
@@ -417,10 +445,127 @@ public class MonsterHelper {
                     }
                     break;
                 }
+            case "恶魔之眼":
+            case "探测怪":
+            case "飞蛇":
+            case "钨钢悬浮坦克":
+            case "钨钢无人机":
+                {
+                    if (type.equals("探测怪")) {
+                        ArrayList<org.bukkit.entity.Entity> bossLst = BossHelper.bossMap.get("毁灭者");
+                        if (bossLst != null) {
+                            org.bukkit.entity.Entity boss = bossLst.get(0);
+                            target = (Player) EntityHelper.getMetadata(boss, "target").value();
+                        }
+                    }
+                    boolean isFleeing = false;
+                    Vector acceleration = null;
+                    switch (type) {
+                        case "探测怪":
+                        case "恶魔之眼":
+                            if (WorldHelper.isDayTime(monsterBkt.getWorld())) {
+                                acceleration = new Vector(0, 0.25, 0);
+                                isFleeing = true;
+                            }
+                    }
+                    if (!isFleeing) {
+                        // movement
+                        Location targetLoc = target.getEyeLocation();
+                        switch (type) {
+                            case "探测怪":
+                                targetLoc.add(MathHelper.xsin_degree(indexAI) * 16, 5, MathHelper.xcos_degree(indexAI) * 16);
+                                break;
+                            case "钨钢无人机":
+                                targetLoc.add(MathHelper.xsin_degree(indexAI) * 6, 5, MathHelper.xcos_degree(indexAI) * 6);
+                                break;
+                        }
+                        acceleration = targetLoc.subtract(monsterBkt.getLocation()).toVector();
+                        if (acceleration.lengthSquared() > 1e-9) {
+                            acceleration.normalize();
+                        }
+                        switch (type) {
+                            case "飞蛇":
+                                acceleration.multiply(0.1);
+                                break;
+                            case "钨钢悬浮坦克":
+                                acceleration.multiply(0.05);
+                                break;
+                            case "恶魔之眼":
+                                acceleration.multiply(0.25);
+                                if (indexAI % 60 > 45)
+                                    acceleration.multiply(-0.5);
+                                else if (indexAI % 60 > 15)
+                                    acceleration.multiply(0);
+                                break;
+                            default:
+                                acceleration.multiply(0.175);
+                        }
+                        // shoot projectile
+                        switch (type) {
+                            case "探测怪":
+                            case "钨钢无人机":
+                            {
+                                int shootInterval = 0;
+                                String projectileType = "";
+                                switch (type) {
+                                    case "探测怪":
+                                        shootInterval = 10;
+                                        projectileType = "激光";
+                                        break;
+                                    case "钨钢无人机":
+                                        shootInterval = 15;
+                                        projectileType = "钨钢光球";
+                                        break;
+                                }
+                                if (indexAI % shootInterval == 0) {
+                                    Vector projectileV = (target.getEyeLocation()).subtract(monsterBkt.getEyeLocation()).toVector();
+                                    if (projectileV.lengthSquared() > 1e-9) {
+                                        projectileV.normalize();
+                                        if (type.equals("探测怪"))
+                                            projectileV.multiply(2.5);
+                                        else
+                                            projectileV.multiply(1.5);
+                                        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                                monsterBkt, projectileV, EntityHelper.getAttrMap(monsterBkt), projectileType);
+                                        shootInfo.properties.put("gravity", 0d);
+                                        shootInfo.properties.put("penetration", 10);
+                                        if (type.equals("探测怪"))
+                                            shootInfo.properties.put("blockHitAction", "thru");
+                                        EntityHelper.spawnProjectile(shootInfo);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Vector velocity = monsterBkt.getVelocity();
+                    velocity.add(acceleration);
+                    double maxSpeed;
+                    if (type.equals("恶魔之眼"))
+                        maxSpeed = 1.15 * speedMultiKnockback;
+                    else
+                        maxSpeed = 1.5 * speedMultiKnockback;
+                    if (velocity.lengthSquared() > maxSpeed * maxSpeed) {
+                        velocity.multiply(maxSpeed / velocity.length());
+                    }
+                    monsterBkt.setVelocity(velocity);
+                    break;
+                }
             case "":
                 {
                     break;
                 }
+        }
+        if (hasContactDamage) {
+            AxisAlignedBB bb = monster.getBoundingBox();
+            Set<HitEntityInfo> toDamage = HitEntityInfo.getEntitiesHit(monsterBkt.getWorld(),
+                    monsterBkt.getLocation().toVector(), monsterBkt.getLocation().toVector().add(monsterBkt.getVelocity()),
+                    bb.d - bb.a, bb.e - bb.b, bb.f - bb.c,
+                    (Entity entity) -> entity instanceof EntityPlayer);
+            double damage = EntityHelper.getAttrMap(monsterBkt).getOrDefault("damage", 1d);
+            for (HitEntityInfo hitEntityInfo : toDamage) {
+                EntityHelper.handleDamage(monsterBkt, hitEntityInfo.getHitEntity().getBukkitEntity(),
+                        damage, "DirectDamage");
+            }
         }
         return indexAI + 1;
     }
