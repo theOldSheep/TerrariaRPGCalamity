@@ -439,3 +439,6 @@
 
 # Used as a shortcut for setBaby(false) when disguising an entity
 "adult": "adult"
+
+# Found in the disguise options for Slime and uses a int
+"setUnsafeSize": "setUnsafeSize"

@@ -16,7 +16,7 @@ public class MonsterZombie extends EntityZombie {
     protected HashMap<String, Object> extraVariables = new HashMap<>();
     Player target;
     String monsterType, monsterVariant;
-    int indexAI = 0;
+    int indexAI = 0, idx = 0;
     double defaultSpeed = 0.2;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public MonsterZombie(World world) {
@@ -60,7 +60,9 @@ public class MonsterZombie extends EntityZombie {
         motY /= 0.98;
         motZ /= 0.91;
         if (getHealth() > 0) {
-            this.target = MonsterHelper.updateMonsterTarget(this.target, this);
+            if (++this.idx % 10 == 0)
+                this.target = MonsterHelper.updateMonsterTarget(this.target, this);
+            if (this.target == null) return;
             indexAI = MonsterHelper.monsterAI(this, defaultSpeed, this.target, this.monsterType, indexAI, extraVariables);
         }
     }

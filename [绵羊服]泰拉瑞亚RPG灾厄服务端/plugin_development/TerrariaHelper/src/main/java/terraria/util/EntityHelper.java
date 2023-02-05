@@ -1163,7 +1163,8 @@ public class EntityHelper {
         String damageType;
         if (isDirectAttackDamage) {
             damageType = getDamageType(damager);
-            if (damageType.equals("Melee") && damageReason.equals("DirectDamage")) damageType = "TrueMelee";
+            if (damageReason.equals("DirectDamage"))
+                damageType = damageType.equals("Melee") ? "TrueMelee" : "Melee";
         } else {
             damageType = damageReason;
         }

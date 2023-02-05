@@ -8,9 +8,9 @@ Translations: false
 
 # Shall I notify those with the correct permission when there's a LibsDisguises update?
 # Disabling this will also disable notifications when the plugin updated
-NotifyUpdate: true
+NotifyUpdate: false
 # Should the plugin automatically update?
-AutoUpdate: true
+AutoUpdate: false
 
 # Where should the plugin check for updates?
 # SAME_BUILDS - Will check snapshots if you're not using a release build

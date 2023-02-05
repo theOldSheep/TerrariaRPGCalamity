@@ -2386,3 +2386,6 @@
 
 # Used for the disguise option SoundGroup
 "ZOMBIFIED_PIGLIN": "ZOMBIFIED_PIGLIN"
+
+# Used for the disguise option SoundGroup
+"CAMEL": "CAMEL"

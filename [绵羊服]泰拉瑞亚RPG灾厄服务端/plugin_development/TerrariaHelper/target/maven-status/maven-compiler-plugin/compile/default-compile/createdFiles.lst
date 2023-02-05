@@ -13,7 +13,6 @@ terraria\util\MonsterHelper.class
 terraria\event\listener\PlayerJoinListener.class
 terraria\event\listener\DamageListener.class
 terraria\entity\boss\Boss.class
-terraria\event\listener\SlimeSplitListener.class
 terraria\util\DragoncoreHelper$SlotCallback.class
 terraria\entity\monster\MonsterZombie.class
 terraria\event\listener\PlayerMovementListener$1.class
@@ -52,6 +51,7 @@ terraria\entity\monster\MonsterHelper$MonsterStatsMulti.class
 terraria\entity\projectile\TerrariaArrowProjectile$1.class
 terraria\event\listener\PlayerQuitListener.class
 terraria\gameplay\Event.class
+terraria\event\listener\EntitySpawnListener.class
 terraria\worldgen\overworld\NoiseGeneratorTest.class
 terraria\event\listener\VanillaFishHookShootListener.class
 terraria\worldgen\overworld\TreePopulator$1.class

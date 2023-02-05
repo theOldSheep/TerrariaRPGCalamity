@@ -303,6 +303,7 @@ public class MonsterHelper {
         ((LivingEntity) monster.getBukkitEntity()).getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
     }
     public static void tweakPlayerMonsterSpawnedAmount(Player target, boolean addOrRemove) {
+        if (target == null) return;
         int mobAmount = EntityHelper.getMetadata(target, "mobAmount").asInt();
         mobAmount += addOrRemove ? 1 : -1;
         EntityHelper.setMetadata(target, "mobAmount", mobAmount);
@@ -319,7 +320,7 @@ public class MonsterHelper {
                 targetNMS.getWorld() != monster.getWorld() ||
                 // distance > 64
                 target.getLocation().distanceSquared(monsterBkt.getLocation()) > 4096) {
-            monster.ticksLived = 9999;
+            monster.ticksLived = Math.max(monster.ticksLived, 150);
         } else if (monster.hasLineOfSight(targetNMS)) {
             monster.ticksLived = 1;
         }
@@ -332,11 +333,13 @@ public class MonsterHelper {
             for (org.bukkit.entity.Entity checkEntity : monsterBkt.getNearbyEntities(targetAttemptRadius, targetAttemptRadius, targetAttemptRadius)) {
                 if (checkEntity instanceof Player) {
                     Player checkPlayer = (Player) checkEntity;
-                    double currDistSqr = monsterBkt.getLocation().distanceSquared(checkPlayer.getLocation());
-                    if (currDistSqr > newTargetDistSqr) continue;
-                    if (monster.hasLineOfSight( ((CraftPlayer) checkPlayer).getHandle() )) {
-                        newTarget = checkPlayer;
-                        newTargetDistSqr = currDistSqr;
+                    if (PlayerHelper.isProperlyPlaying(checkPlayer)) {
+                        double currDistSqr = monsterBkt.getLocation().distanceSquared(checkPlayer.getLocation());
+                        if (currDistSqr > newTargetDistSqr) continue;
+                        if (monster.hasLineOfSight( ((CraftPlayer) checkPlayer).getHandle() )) {
+                            newTarget = checkPlayer;
+                            newTargetDistSqr = currDistSqr;
+                        }
                     }
                 }
             }
@@ -345,7 +348,9 @@ public class MonsterHelper {
                 tweakPlayerMonsterSpawnedAmount(newTarget, true);
                 return newTarget;
             } else {
+                // target's monster spawned amount is tweaked in die()
                 monster.die();
+                return null;
             }
         }
         return target;

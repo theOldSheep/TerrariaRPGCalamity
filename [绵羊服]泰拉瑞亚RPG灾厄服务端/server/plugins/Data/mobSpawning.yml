@@ -204,57 +204,56 @@ spawnInfo:
     冰霜月19:
         雪兽: 1
 mobTier:
-    探测怪: -1
-    水晶史莱姆: -1
-    飞翔史莱姆: -1
-    弹力史莱姆: -1
-    神圣宝箱怪: -1
-    腐化宝箱怪: -1
-    陨石怪: 1
-    装甲幻影魔: 4
-    幽灵: 4
-    黑隐士: 4
-    巨型陆龟: 4
-    冰雪陆龟: 4
-    红恶魔: 5
-    装甲骷髅: 6
-    巨型诅咒骷髅头: 6
-    圣骑士: 6
-    死灵法师: 6
-    褴褛邪教徒法师: 6
-    魔教徒: 6
-    骷髅狙击手: 6
-    骷髅特警: 6
-    地牢幽魂: 6
-    蜥蜴人: 6
-    飞蛇: 6
-    眼怪: 4
-    科学怪人: 4
-    沼泽怪: 4
-    吸血鬼: 4
-    水月怪: 4
-    弗里茨: 4
-    攀爬魔: 4
-    死神: 5
-    蛾怪: 6
-    致命球: 6
+    探测怪: 血肉之墙
+    水晶史莱姆: 血肉之墙
+    飞翔史莱姆: 血肉之墙
+    弹力史莱姆: 血肉之墙
+    神圣宝箱怪: 血肉之墙
+    腐化宝箱怪: 血肉之墙
+    装甲幻影魔: 血肉之墙
+    幽灵: 血肉之墙
+    黑隐士: 血肉之墙
+    巨型陆龟: 血肉之墙
+    冰雪陆龟: 血肉之墙
+    红恶魔: 机械三王
+    装甲骷髅: 世纪之花
+    巨型诅咒骷髅头: 世纪之花
+    圣骑士: 世纪之花
+    死灵法师: 世纪之花
+    褴褛邪教徒法师: 世纪之花
+    魔教徒: 世纪之花
+    骷髅狙击手: 世纪之花
+    骷髅特警: 世纪之花
+    地牢幽魂: 世纪之花
+    蜥蜴人: 世纪之花
+    飞蛇: 世纪之花
+    眼怪: 血肉之墙
+    科学怪人: 血肉之墙
+    沼泽怪: 血肉之墙
+    吸血鬼: 血肉之墙
+    水月怪: 血肉之墙
+    弗里茨: 血肉之墙
+    攀爬魔: 血肉之墙
+    死神: 机械三王
+    蛾怪: 世纪之花
+    致命球: 世纪之花
     拜月教教徒: 7
-    飞龙: 4
-    稻草人: 6
-    树精: 6
-    地狱犬: 6
-    胡闹鬼: 6
-    僵尸精灵: 6
-    姜饼人: 6
-    精灵弓箭手: 6
-    胡桃夹士: 6
-    精灵直升机: 6
-    坎卜斯: 6
-    雪花怪: 6
-    雪兽: 6
+    飞龙: 血肉之墙
+    稻草人: 世纪之花
+    树精: 世纪之花
+    地狱犬: 世纪之花
+    胡闹鬼: 世纪之花
+    僵尸精灵: 世纪之花
+    姜饼人: 世纪之花
+    精灵弓箭手: 世纪之花
+    胡桃夹士: 世纪之花
+    精灵直升机: 世纪之花
+    坎卜斯: 世纪之花
+    雪花怪: 世纪之花
+    雪兽: 世纪之花
 mobTierMax:
-    诅咒骷髅头: 4
-    恶魔: 5
+    诅咒骷髅头: 血肉之墙
+    恶魔: 机械三王
 mobInfo:
     陨石怪:
         name: "陨石怪"
@@ -898,8 +897,9 @@ mobInfo:
         variants:
             default1:
                 attributes:
-                    damage: 160
+                    damage: 256
                     damageType: "Magic"
+                    damageMeleeMulti: 0.66
                     defence: 40
                     knockback: 1
                     knockbackResistance: 0.46
@@ -911,8 +911,9 @@ mobInfo:
         variants:
             default1:
                 attributes:
-                    damage: 200
+                    damage: 256
                     damageType: "Magic"
+                    damageMeleeMulti: 0.8
                     defence: 24
                     knockback: 1
                     knockbackResistance: 0.37
@@ -924,8 +925,9 @@ mobInfo:
         variants:
             default1:
                 attributes:
-                    damage: 240
+                    damage: 800
                     damageType: "Bullet"
+                    damageMeleeMulti: 0.25
                     defence: 56
                     knockback: 6
                     knockbackResistance: 0.64
@@ -937,8 +939,9 @@ mobInfo:
         variants:
             default1:
                 attributes:
-                    damage: 240
+                    damage: 400
                     damageType: "Bullet"
+                    damageMeleeMulti: 0.6
                     defence: 56
                     knockback: 3
                     knockbackResistance: 0.64

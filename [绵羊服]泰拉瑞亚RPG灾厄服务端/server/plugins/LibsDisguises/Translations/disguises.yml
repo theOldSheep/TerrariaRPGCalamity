@@ -511,3 +511,6 @@
 
 # Used for the disgiuse modify radius command to list all disguisetypes
 "DisgiseType": "DisgiseType"
+
+# Name for the CAMEL disguise
+"Camel": "Camel"

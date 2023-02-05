@@ -230,8 +230,9 @@ public class MonsterHelper {
                 disguise = new MobDisguise(DisguiseType.valueOf(disguiseType), isBaby);
             }
             disguise.setReplaceSounds(true);
-//            DisguiseAPI.disguiseEntity(entity, disguise);
-//            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> DisguiseAPI.disguiseEntity(entity, disguise), 1);
+            disguise.setEntity(entity);
+            DisguiseAPI.disguiseEntity(entity, disguise);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> DisguiseAPI.disguiseEntity(entity, disguise), 1);
         }
         // set mother type
         EntityHelper.setMetadata(entity, "motherType", type);
