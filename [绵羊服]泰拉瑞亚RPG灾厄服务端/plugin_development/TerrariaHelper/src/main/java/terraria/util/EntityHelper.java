@@ -27,8 +27,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.TerrariaArrowProjectile;
-import terraria.entity.TerrariaPotionProjectile;
+import terraria.entity.projectile.TerrariaArrowProjectile;
+import terraria.entity.projectile.TerrariaPotionProjectile;
 import terraria.gameplay.Event;
 
 import java.util.*;
@@ -1083,7 +1083,8 @@ public class EntityHelper {
         if (addOrReplace) {
             knockbackTaker.setVelocity(knockbackTaker.getVelocity().add(dir));
         } else {
-            knockbackTaker.setVelocity(dir);
+            // multiply by 1-kbMulti, as some enemies have negative knockback resistance
+            knockbackTaker.setVelocity(knockbackTaker.getVelocity().multiply(1 - kbMulti).add(dir));
         }
     }
     public static void handleDamage(Entity damager, Entity victim, double damage, String damageReason) {

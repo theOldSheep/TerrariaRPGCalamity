@@ -1,6 +1,5 @@
 package terraria.util;
 
-import io.netty.handler.codec.http2.Http2FrameWriter;
 import net.minecraft.server.v1_12_R1.EntityHuman;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.MovingObjectPosition;
@@ -21,8 +20,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.HitEntityInfo;
-import terraria.entity.TerrariaFishingHook;
+import terraria.entity.projectile.HitEntityInfo;
+import terraria.entity.others.TerrariaFishingHook;
 import terraria.entity.minion.MinionCaveSpider;
 import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
@@ -165,6 +164,8 @@ public class ItemUseHelper {
     protected static boolean playerUsePotion(Player ply, String itemType, ItemStack potion, QuickBuffType consumptionInfo) {
         // to prevent vanilla items being regarded as a proper potion and consumed.
         if (itemType.length() == 0) return false;
+        // potion can not be consumed when cursed.
+        if (EntityHelper.hasEffect(ply, "诅咒")) return false;
         boolean successful = false;
         switch (itemType) {
             case "回城药水": {

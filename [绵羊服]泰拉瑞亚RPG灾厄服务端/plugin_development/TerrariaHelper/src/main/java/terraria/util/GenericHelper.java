@@ -8,7 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.HitEntityInfo;
+import terraria.entity.projectile.HitEntityInfo;
 
 import java.util.*;
 import java.util.function.BiConsumer;

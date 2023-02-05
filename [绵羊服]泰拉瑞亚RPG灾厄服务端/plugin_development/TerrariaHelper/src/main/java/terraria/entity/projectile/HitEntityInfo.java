@@ -1,7 +1,6 @@
-package terraria.entity;
+package terraria.entity.projectile;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.util.Vector;
 import terraria.util.MathHelper;

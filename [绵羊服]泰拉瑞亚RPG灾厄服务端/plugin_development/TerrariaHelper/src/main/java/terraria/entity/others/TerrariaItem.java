@@ -1,4 +1,4 @@
-package terraria.entity;
+package terraria.entity.others;
 
 import net.minecraft.server.v1_12_R1.MathHelper;
 import net.minecraft.server.v1_12_R1.*;

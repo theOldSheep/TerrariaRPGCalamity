@@ -8,7 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
-import terraria.entity.TerrariaFishingHook;
+import terraria.entity.others.TerrariaFishingHook;
 
 public class VanillaFishHookShootListener implements Listener {
 

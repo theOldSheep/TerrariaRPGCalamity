@@ -1,16 +1,18 @@
 package terraria.util;
 
 import com.earth2me.essentials.api.Economy;
-import net.minecraft.server.v1_12_R1.EntityPlayer;
-import net.minecraft.server.v1_12_R1.IChatBaseComponent;
-import net.minecraft.server.v1_12_R1.PacketPlayOutTitle;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.*;
+import org.bukkit.Material;
+import org.bukkit.SoundCategory;
+import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -21,6 +23,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.Event;
 
 import java.math.BigDecimal;
@@ -333,7 +336,7 @@ public class PlayerHelper {
     }
     public static boolean isProperlyPlaying(Player player) {
         if (!player.isOnline()) return false;
-        if (player.getGameMode() != GameMode.SURVIVAL) return false;
+        if (player.getGameMode() == GameMode.SPECTATOR) return false;
         return !player.getScoreboardTags().contains("unauthorized");
     }
     public static boolean hasVoidBag(Player ply) {
@@ -1213,12 +1216,31 @@ public class PlayerHelper {
                     }
                 }, 100, 100);
     }
+    private static int getDungeonLizardState(Block blockToCheck) {
+        if (blockToCheck.getType() == Material.SMOOTH_BRICK) {
+            int data = blockToCheck.getData();
+            switch (data) {
+                case 1:
+                    // lizard
+                    return 2;
+                case 2:
+                    // dungeon
+                    return 1;
+            }
+        }
+        return 0;
+    }
     public static void threadSpecialBiome() {
-        // every 100 ticks (5 second)
-        int checkRadiusHorizontal = 24, checkRadiusVertical = 64, stepSize = 97, threshold = 1;
+        double distCheck = 48;
+        Vector[] vectorsToCheck = new Vector[] {
+                new Vector(distCheck, distCheck, distCheck), new Vector(-distCheck, -distCheck, -distCheck),
+                new Vector(distCheck, -distCheck, distCheck), new Vector(-distCheck, distCheck, -distCheck),
+                new Vector(distCheck, distCheck, -distCheck), new Vector(-distCheck, -distCheck, distCheck)};
+        // every 20 ticks (1 second)
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 if (isProperlyPlaying(ply)) {
+                    long ns = System.nanoTime();
                     // check height layer
                     boolean isInUndergroundOrCavern;
                     switch (WorldHelper.HeightLayer.getHeightLayer(ply.getLocation())) {
@@ -1229,44 +1251,39 @@ public class PlayerHelper {
                         default:
                             isInUndergroundOrCavern = false;
                     }
-                    if (!isInUndergroundOrCavern) continue;
-                    // check dungeon and lizard temple
-                    int blocksLizard = 0, blocksDungeon = 0;
-                    int xOffset = checkRadiusHorizontal * -1, yOffset = checkRadiusVertical * -1, zOffset = checkRadiusHorizontal * -1;
-                    while (zOffset < checkRadiusHorizontal) {
-                        Block blockToCheck = ply.getLocation().add(xOffset, yOffset, zOffset).getBlock();
-                        if (blockToCheck.getType() == Material.SMOOTH_BRICK) {
-                            int data = blockToCheck.getData();
-                            Bukkit.broadcastMessage(data + ", " + blockToCheck.getLocation());
-                            switch (data) {
-                                case 1:
-                                    blocksLizard ++;
-                                    break;
-                                case 2:
-                                    blocksDungeon ++;
-                                    break;
+                    WorldHelper.BiomeType plyBiome = WorldHelper.BiomeType.NORMAL;
+                    if (isInUndergroundOrCavern) {
+                        // check dungeon and lizard temple
+                        int blocksLizard = 0, blocksDungeon = 0;
+                        World wld = ply.getWorld();
+                        for (Vector vector : vectorsToCheck) {
+                            MovingObjectPosition blockMovePos = HitEntityInfo.rayTraceBlocks(
+                                    wld, ply.getEyeLocation().toVector(), ply.getEyeLocation().toVector().add(vector));
+                            if (blockMovePos != null) {
+                                Vector locVec = MathHelper.toBukkitVector(blockMovePos.pos)
+                                        .add(vector.clone().multiply(1e-9));
+                                Block blk = wld.getBlockAt(locVec.toLocation(wld));
+                                switch (getDungeonLizardState(blk)) {
+                                    case 1:
+                                        // dungeon
+                                        blocksDungeon ++;
+                                        break;
+                                    case 2:
+                                        // lizard
+                                        blocksLizard ++;
+                                        break;
+                                }
                             }
                         }
-                        // tweak next location
-                        xOffset += stepSize;
-                        while (xOffset > checkRadiusHorizontal) {
-                            xOffset -= checkRadiusHorizontal * 2;
-                            yOffset ++;
-                        }
-                        while (yOffset > checkRadiusVertical) {
-                            yOffset -= checkRadiusVertical * 2;
-                            zOffset ++;
-                        }
+                        if (blocksLizard >= 3)
+                            plyBiome = WorldHelper.BiomeType.TEMPLE;
+                        else if (blocksDungeon >= 3)
+                            plyBiome = WorldHelper.BiomeType.DUNGEON;
                     }
-                    WorldHelper.BiomeType plyBiome = WorldHelper.BiomeType.NORMAL;
-                    if (blocksLizard >= threshold)
-                        plyBiome = WorldHelper.BiomeType.TEMPLE;
-                    else if (blocksDungeon >= threshold)
-                        plyBiome = WorldHelper.BiomeType.DUNGEON;
                     EntityHelper.setMetadata(ply, "playerBiome", plyBiome);
                 }
             }
-        }, 0, 100);
+        }, 0, 20);
     }
     // others
     public static void initPlayerStats(Player ply, boolean joinOrRespawn) {
@@ -1325,9 +1342,12 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "armorSet", "");
         // bgm, biome and background
         EntityHelper.setMetadata(ply, "lastBackground", "");
-        EntityHelper.setMetadata(ply, "lastBGM", "normal");
-        EntityHelper.setMetadata(ply, "lastBGMTime", 0L);
-        EntityHelper.setMetadata(ply, "playerBiome", WorldHelper.BiomeType.NORMAL);
+        // prevent duplicated soundtrack etc.
+        if (joinOrRespawn) {
+            EntityHelper.setMetadata(ply, "lastBGM", "normal");
+            EntityHelper.setMetadata(ply, "lastBGMTime", 0L);
+            EntityHelper.setMetadata(ply, "playerBiome", WorldHelper.BiomeType.NORMAL);
+        }
         // regeneration
         EntityHelper.setMetadata(ply, "lastLocation", ply.getLocation());
         EntityHelper.setMetadata(ply, "regenTime", 0d);

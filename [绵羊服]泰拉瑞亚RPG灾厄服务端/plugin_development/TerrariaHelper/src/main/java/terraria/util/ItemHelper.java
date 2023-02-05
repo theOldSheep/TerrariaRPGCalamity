@@ -2,7 +2,6 @@ package terraria.util;
 
 import lk.vexview.gui.VexGui;
 import lk.vexview.gui.components.*;
-import net.minecraft.server.v1_12_R1.EntityItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -17,7 +16,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import terraria.TerrariaHelper;
-import terraria.entity.TerrariaItem;
+import terraria.entity.others.TerrariaItem;
 
 import java.util.*;
 import java.util.logging.Level;

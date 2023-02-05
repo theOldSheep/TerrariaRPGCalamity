@@ -39,35 +39,10 @@ public class DamageListener implements Listener {
                 if (victimScoreboardTags.contains("noFallDamage")) break;
                 EntityHelper.handleDamage(victim, victim, 50, "Fall");
                 break;
-            /*
-            case CRAMMING:
-                if (victim instanceof Player || victimScoreboardTags.contains("isNPC") || victimScoreboardTags.contains("isAnimal")) {
-                    AxisAlignedBB boundingBox = ((CraftEntity) victim).getHandle().getBoundingBox();
-                    double length = (boundingBox.d - boundingBox.a) / 2;
-                    double height = (boundingBox.e - boundingBox.b) / 2;
-                    double width  = (boundingBox.f - boundingBox.c) / 2;
-                    Location centerLoc = new Location(victim.getWorld(),
-                            boundingBox.a + length, boundingBox.b + height, boundingBox.c + width);
-                    double maxDmg = 0;
-                    Entity damager = null;
-                    for (Entity curr : victim.getWorld().getNearbyEntities(centerLoc, length, height, width)) {
-                        if (! EntityHelper.checkCanDamage(curr, victim, false)) continue;
-                        if (curr instanceof LivingEntity && ((LivingEntity) curr).getHealth() <= 0) continue;
-                        if (curr.getScoreboardTags().contains("noMelee")) continue;
-                        HashMap<String, Double> damagerAttrMap = EntityHelper.getAttrMap(curr);
-                        double currDmg = damagerAttrMap.getOrDefault("damage", 1d);
-                        String currDmgType = EntityHelper.getDamageType(curr);
-                        if (!(currDmgType.equals("Melee"))) currDmg *= 0.75;
-                        if (currDmg > maxDmg) {
-                            maxDmg = currDmg;
-                            damager = curr;
-                        }
-                    }
-                    if (damager != null)
-                        EntityHelper.handleDamage(damager, victim, maxDmg, "DirectDamage");
-                }
+            case FIRE:
+            case FIRE_TICK:
+                victim.setFireTicks(EntityHelper.getEffectMap(victim).getOrDefault("燃烧", 0));
                 break;
-            */
         }
     }
 }

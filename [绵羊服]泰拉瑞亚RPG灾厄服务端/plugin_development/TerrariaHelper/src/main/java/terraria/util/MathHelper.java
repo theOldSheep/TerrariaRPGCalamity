@@ -1,6 +1,7 @@
 package terraria.util;
 
 import net.minecraft.server.v1_12_R1.Vec3D;
+import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -128,5 +129,13 @@ public class MathHelper {
     }
     public static Vector toBukkitVector(Vec3D vec) {
         return new Vector(vec.x, vec.y, vec.z);
+    }
+    public static Vector getDirection(Location initialLoc, Location finalLoc, double length) {
+        Vector dir = finalLoc.clone().subtract(initialLoc).toVector();
+        double len = dir.length();
+        if (len < 1e-9)
+            return new Vector(0, length, 0);
+        dir.multiply(length / len);
+        return dir;
     }
 }

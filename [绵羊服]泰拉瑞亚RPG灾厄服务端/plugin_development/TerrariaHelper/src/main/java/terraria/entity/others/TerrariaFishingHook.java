@@ -1,7 +1,7 @@
 /*
 most of the code in this class are from net.minecraft.server package
  */
-package terraria.entity;
+package terraria.entity.others;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;

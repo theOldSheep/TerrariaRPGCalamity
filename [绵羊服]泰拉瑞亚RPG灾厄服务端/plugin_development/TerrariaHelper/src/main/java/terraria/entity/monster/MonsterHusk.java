@@ -56,6 +56,9 @@ public class MonsterHusk extends EntityZombieHusk {
     @Override
     public void B_() {
         super.B_();
+        motX /= 0.91;
+        motY /= 0.98;
+        motZ /= 0.91;
         if (getHealth() > 0) {
             this.target = MonsterHelper.updateMonsterTarget(this.target, this);
             indexAI = MonsterHelper.monsterAI(this, defaultSpeed, this.target, this.monsterType, indexAI, extraVariables);

@@ -7,11 +7,10 @@ import net.minecraft.server.v1_12_R1.Vec3D;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
-import terraria.entity.HitEntityInfo;
+import terraria.entity.projectile.HitEntityInfo;
 import terraria.util.EntityHelper;
 
 import java.util.ArrayList;

@@ -11,7 +11,7 @@ import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
 import terraria.TerrariaHelper;
-import terraria.entity.TerrariaItem;
+import terraria.entity.others.TerrariaItem;
 import terraria.util.ItemHelper;
 
 public class DropItemSpawnListener implements Listener {

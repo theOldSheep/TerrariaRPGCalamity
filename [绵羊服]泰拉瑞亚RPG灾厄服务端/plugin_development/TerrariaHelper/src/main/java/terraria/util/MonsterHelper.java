@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.omg.CORBA.TypeCodePackage.BadKind;
 import terraria.TerrariaHelper;
 import terraria.entity.monster.MonsterHusk;
 import terraria.entity.monster.MonsterSlime;
@@ -229,7 +230,8 @@ public class MonsterHelper {
                 disguise = new MobDisguise(DisguiseType.valueOf(disguiseType), isBaby);
             }
             disguise.setReplaceSounds(true);
-            DisguiseAPI.disguiseEntity(entity, disguise);
+//            DisguiseAPI.disguiseEntity(entity, disguise);
+//            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> DisguiseAPI.disguiseEntity(entity, disguise), 1);
         }
         // set mother type
         EntityHelper.setMetadata(entity, "motherType", type);
