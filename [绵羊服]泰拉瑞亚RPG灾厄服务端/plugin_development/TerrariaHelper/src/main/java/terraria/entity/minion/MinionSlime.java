@@ -4,6 +4,7 @@ import net.minecraft.server.v1_12_R1.EntitySlime;
 import net.minecraft.server.v1_12_R1.GenericAttributes;
 import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
 import net.minecraft.server.v1_12_R1.World;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -454,13 +455,18 @@ public class MinionSlime extends EntitySlime {
                             v.multiply(Math.max(distance / 20, 0.75)  / distance);
                             velocity = v;
                         }
-                    } else if (index % 8 == 0) {
+                    } else {
                         Vector v = target.getEyeLocation().subtract(minionBukkit.getEyeLocation()).toVector();
-                        if (v.lengthSquared() < 1e-9) v = new Vector(0, 1, 0);
-                        double distance = v.length();
-                        v.multiply(Math.min(
-                                ((allSegments.size() + 1) * 0.75 + distance * 0.25) / 6, 3)  / distance);
-                        velocity = v;
+                        double distance = v.length(), distMax = ((double) allSegments.size()) / 2;
+                        if (distance < 1e-9) {
+                            v = new Vector(0, 1, 0);
+                            distance = 1;
+                        }
+                        if (velocity.lengthSquared() < 1e-5 || distance > distMax) {
+                            double speed = Math.min( ((allSegments.size() + 1) * 0.75 + distance * 0.25) / 6, 3);
+                            v.multiply( speed / distance);
+                            velocity = v;
+                        }
                     }
                     EntityHelper.handleSegmentsFollow(allSegments,
                             new EntityHelper.WormSegmentMovementOptions()

@@ -283,8 +283,16 @@ public class MonsterHelper {
         // no AI for some slime, to disable unwanted jumping.
         if (monster instanceof EntitySlime) {
             switch (type) {
-                case "恶魔之眼":
-                case "噬魂怪":
+                case "史莱姆":
+                case "丛林史莱姆":
+                case "尖刺史莱姆":
+                case "水晶史莱姆":
+                case "弹力史莱姆":
+                case "礼物宝箱怪":
+                case "神圣宝箱怪":
+                case "腐化宝箱怪":
+                    break;
+                default:
                     EntitySlime slimeMonster = (EntitySlime) monster;
                     World world = monster.world;
                     MethodProfiler methodProfiler = world != null && world.methodProfiler != null ? world.methodProfiler : null;
@@ -710,9 +718,11 @@ public class MonsterHelper {
         }
         if (hasContactDamage) {
             AxisAlignedBB bb = monster.getBoundingBox();
+            double xWidth = (bb.d - bb.a) / 2, zWidth = (bb.f - bb.c) / 2, height = (bb.e - bb.b) / 2;
+            Vector initLoc = new Vector(bb.a + xWidth, bb.b + height, bb.c + zWidth);
             Set<HitEntityInfo> toDamage = HitEntityInfo.getEntitiesHit(monsterBkt.getWorld(),
-                    monsterBkt.getLocation().toVector(), monsterBkt.getLocation().toVector().add(monsterBkt.getVelocity()),
-                    bb.d - bb.a, bb.e - bb.b, bb.f - bb.c,
+                    initLoc, initLoc.clone().add(monsterBkt.getVelocity()),
+                    xWidth, height, zWidth,
                     (Entity entity) -> entity instanceof EntityPlayer);
             double damage = EntityHelper.getAttrMap(monsterBkt).getOrDefault("damage", 1d);
             for (HitEntityInfo hitEntityInfo : toDamage) {
