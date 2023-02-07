@@ -61,7 +61,7 @@ public class MonsterZombie extends EntityZombie {
         motZ /= 0.91;
         if (getHealth() > 0) {
             if (++this.idx % 10 == 0)
-                this.target = MonsterHelper.updateMonsterTarget(this.target, this);
+                this.target = MonsterHelper.updateMonsterTarget(this.target, this, this.monsterType);
             if (this.target == null) return;
             indexAI = MonsterHelper.monsterAI(this, defaultSpeed, this.target, this.monsterType, indexAI, extraVariables);
         }

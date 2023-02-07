@@ -1634,10 +1634,12 @@ public class EntityHelper {
         // estimate the distance that the entity will move
         double predictionIntensity = aimHelperOption.intensity;
         if (source != null && predictionIntensity > 1e-5) {
-            double distance = targetLoc.distance(source.getLocation());
             double ticksOffset = 0;
             if (aimHelperOption.useTickOrSpeedEstimation) ticksOffset = aimHelperOption.ticksOffset;
-            else if (aimHelperOption.projectileSpeed > 1) ticksOffset = distance / aimHelperOption.projectileSpeed;
+            else if (aimHelperOption.projectileSpeed > 0.2) {
+                double distance = targetLoc.distance(source.getLocation());
+                ticksOffset = Math.ceil(distance / aimHelperOption.projectileSpeed);
+            }
             ticksOffset *= aimHelperOption.intensity;
             targetLoc.add(target.getVelocity().multiply(ticksOffset));
         }

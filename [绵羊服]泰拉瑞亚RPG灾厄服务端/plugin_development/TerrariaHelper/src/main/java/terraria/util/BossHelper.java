@@ -62,5 +62,7 @@ public class BossHelper {
         }
         return false;
     }
-
+    public static ArrayList<Entity> getBossList(String boss) {
+        return bossMap.get(boss);
+    }
 }

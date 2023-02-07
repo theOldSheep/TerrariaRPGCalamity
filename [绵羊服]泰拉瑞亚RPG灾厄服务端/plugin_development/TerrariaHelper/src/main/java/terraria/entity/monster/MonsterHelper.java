@@ -2,7 +2,6 @@ package terraria.entity.monster;
 
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -15,6 +14,7 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
+import terraria.entity.projectile.TerrariaPotionProjectile;
 import terraria.gameplay.Event;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
@@ -215,6 +215,24 @@ public class MonsterHelper {
         attrMap.put("damageMulti", statsBoost.damageMulti);
         attrMap.put("defenceMulti", statsBoost.defenceMulti);
         health *= statsBoost.healthMulti;
+        // health bonus for the entity
+        if (typeConfigSection.getBoolean("hasHealthMulti", false)) {
+            String owningBoss = typeConfigSection.getString("owningBoss");
+            ArrayList<org.bukkit.entity.Entity> bossList = null;
+            if (owningBoss != null) {
+                bossList = BossHelper.getBossList(owningBoss);
+            }
+            if (bossList != null) {
+                HashMap<String, Double> targets = (HashMap<String, Double>) EntityHelper.getMetadata(bossList.get(0), "targets").value();
+                health *= targets.size();
+            } else {
+                int totalPlyNearby = 0;
+                for (org.bukkit.entity.Entity e : bukkitMonster.getNearbyEntities(96, 96, 96)) {
+                    if (e instanceof Player) totalPlyNearby ++;
+                }
+                health *= Math.max(totalPlyNearby, 1);
+            }
+        }
         // set the monster's stats
         bukkitMonster.addScoreboardTag("isMonster");
         EntityHelper.setMetadata(bukkitMonster, "attrMap", attrMap);
@@ -317,9 +335,18 @@ public class MonsterHelper {
         EntityHelper.setMetadata(target, "mobAmount", mobAmount);
     }
     // setup monster target
-    public static Player updateMonsterTarget(Player target, EntityLiving monster) {
+    public static Player updateMonsterTarget(Player target, EntityLiving monster, String type) {
         EntityPlayer targetNMS = ((CraftPlayer) target).getHandle();
         org.bukkit.entity.Entity monsterBkt = monster.getBukkitEntity();
+        // boss summoned monsters should attack the boss's target
+        String owningBoss = TerrariaHelper.mobSpawningConfig.getString("mobInfo." + type + ".owningBoss");
+        if (owningBoss != null) {
+            ArrayList<org.bukkit.entity.Entity> bossLst = BossHelper.getBossList(type);
+            if (bossLst != null) {
+                org.bukkit.entity.Entity boss = bossLst.get(0);
+                return (Player) EntityHelper.getMetadata(boss, "target").value();
+            }
+        }
         // the monster's ticks lived is set to represent the ticks of losing any target
         if (
                 // target is not online / not logged in etc.
@@ -479,13 +506,6 @@ public class MonsterHelper {
             case "钨钢悬浮坦克":
             case "钨钢无人机":
                 {
-                    if (type.equals("探测怪")) {
-                        ArrayList<org.bukkit.entity.Entity> bossLst = BossHelper.bossMap.get("毁灭者");
-                        if (bossLst != null) {
-                            org.bukkit.entity.Entity boss = bossLst.get(0);
-                            target = (Player) EntityHelper.getMetadata(boss, "target").value();
-                        }
-                    }
                     boolean isFleeing = false;
                     Vector acceleration = null;
                     if ("探测怪".equals(type)) {
@@ -577,20 +597,6 @@ public class MonsterHelper {
             case "飞翔史莱姆":
             case "雪花怪":
                 {
-                    if (type.equals("饿鬼")) {
-                        ArrayList<org.bukkit.entity.Entity> bossLst = BossHelper.bossMap.get("血肉之墙");
-                        if (bossLst != null) {
-                            org.bukkit.entity.Entity boss = bossLst.get(0);
-                            target = (Player) EntityHelper.getMetadata(boss, "target").value();
-                        }
-                    }
-                    else if (type.equals("飞翔史莱姆")) {
-                        ArrayList<org.bukkit.entity.Entity> bossLst = BossHelper.bossMap.get("史莱姆皇后");
-                        if (bossLst != null) {
-                            org.bukkit.entity.Entity boss = bossLst.get(0);
-                            target = (Player) EntityHelper.getMetadata(boss, "target").value();
-                        }
-                    }
                     // determines if the direction should be updated
                     boolean changeDirection = indexAI % 60 <= 10;
                     // update acceleration if needed
@@ -659,6 +665,8 @@ public class MonsterHelper {
             case "死神":
             case "致命球":
             case "胡闹鬼":
+            case "克苏鲁的仆从":
+            case "陨石怪":
                 {
                     double accelerationLen, speed, retargetDist;
                     switch (type) {
@@ -681,8 +689,8 @@ public class MonsterHelper {
                     speed *= speedMultiKnockback;
                     Vector acc;
                     if (monsterBkt.getLocation().distanceSquared(target.getLocation()) > retargetDist * retargetDist)
-                        indexAI = 0;
-                    if (indexAI < 5) {
+                        indexAI = (int) (Math.random() * 5);
+                    if (indexAI < 8) {
                         acc = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), accelerationLen);
                         extraVariables.put("acc", acc);
                     }
@@ -707,6 +715,54 @@ public class MonsterHelper {
                             EntityHelper.ProjectileShootInfo projectileShootInfo = new EntityHelper.ProjectileShootInfo(
                                     monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "诅咒骷髅头");
                             EntityHelper.spawnProjectile(projectileShootInfo);
+                        }
+                    }
+                    break;
+                }
+            case "尖刺史莱姆":
+            case "水晶史莱姆":
+                {
+                    if (indexAI >= 0) {
+                        if (monsterBkt.getLocation().subtract(0, 1, 0).getBlock().getType().isSolid()) {
+                            String projectileName = type.equals("尖刺史莱姆") ? "尖刺" : "水晶";
+                            HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
+                            for (int i = 0; i < 25; i ++) {
+                                Vector projVel = new Vector(Math.random() * 2 - 1, 0, Math.random() * 2 - 1);
+                                double projVelLen = projVel.length();
+                                if (projVelLen < 1e-9) continue;
+                                if (type.equals("尖刺史莱姆")) {
+                                    projVel.multiply( (0.3 + Math.random() * 0.2) / projVelLen);
+                                    projVel.setY(0.4 + Math.random() * 0.2);
+                                } else {
+                                    projVel.multiply( (0.4 + Math.random() * 0.4) / projVelLen);
+                                    projVel.setY(0.4 + Math.random() * 0.6);
+                                }
+                                EntityHelper.ProjectileShootInfo projInfo = new EntityHelper.ProjectileShootInfo(
+                                        monsterBkt, projVel, attrMap, projectileName);
+                                EntityHelper.spawnProjectile(projInfo);
+                            }
+                            // -40 ~ -25
+                            indexAI = (int) (-25 - 15 * Math.random());
+                        }
+                    }
+                    break;
+                }
+            case "弹力史莱姆":
+                {
+                    if (indexAI % 10 == 9) {
+                        Vector projVel = target.getEyeLocation().subtract(monsterBkt.getEyeLocation()).toVector();
+                        double projVelLen = projVel.length();
+                        if (projVelLen > 1e-9 && projVelLen < 48) {
+                            double ticksFlight = Math.ceil(projVelLen);
+                            projVel.multiply(1 / projVelLen);
+                            projVel.setY(projVel.getY() + ticksFlight * 0.025);
+                            EntityHelper.ProjectileShootInfo projInfo = new EntityHelper.ProjectileShootInfo(
+                                    monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "挥发明胶");
+                            projInfo.properties.put("penetration", 1);
+                            projInfo.properties.put("blockHitAction", "bounce");
+                            projInfo.properties.put("bounce", 5);
+                            projInfo.properties.put("noGravityTicks", 0);
+                            EntityHelper.spawnProjectile(projInfo);
                         }
                     }
                     break;

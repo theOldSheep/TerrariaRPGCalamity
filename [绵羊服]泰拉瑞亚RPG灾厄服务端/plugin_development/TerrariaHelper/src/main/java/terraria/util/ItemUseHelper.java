@@ -966,9 +966,9 @@ public class ItemUseHelper {
                                         .setLingerTime(4)
                                         .setLingerDelay(4)
                                         .setDamagedFunction((hitIndex, hitEntity) -> {
-                                            if (hitEntity instanceof LivingEntity) {
+                                            if (hitEntity instanceof LivingEntity && hitIndex == 1) {
                                                 Location explodeLoc = ((LivingEntity) hitEntity).getEyeLocation();
-                                                EntityHelper.handleEntityExplode(ply, 1, damageExceptions, explodeLoc);
+                                                EntityHelper.handleEntityExplode(ply, 0.5, damageExceptions, explodeLoc);
                                             }
                                         });
                                 break;
@@ -981,7 +981,7 @@ public class ItemUseHelper {
                                         .setLingerTime(4)
                                         .setLingerDelay(4)
                                         .setDamagedFunction((hitIndex, hitEntity) -> {
-                                            if (hitEntity instanceof LivingEntity && Math.random() < (1d / (hitIndex + 3))) {
+                                            if (hitEntity instanceof LivingEntity && Math.random() < (0.5d / (hitIndex + 1))) {
                                                 String damageType = EntityHelper.getDamageType(ply);
                                                 for (int i = 0; i < 4; i ++) {
                                                     Location explodeLoc = ((LivingEntity) hitEntity).getEyeLocation()
