@@ -232,7 +232,6 @@ public class MonsterHelper {
             disguise.setReplaceSounds(true);
             disguise.setEntity(entity);
             DisguiseAPI.disguiseEntity(entity, disguise);
-            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> DisguiseAPI.disguiseEntity(entity, disguise), 1);
         }
         // set mother type
         EntityHelper.setMetadata(entity, "motherType", type);
