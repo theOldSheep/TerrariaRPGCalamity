@@ -1165,7 +1165,7 @@ public class ItemUseHelper {
         return true;
     }
     // other helper functions for item using
-    protected static void playerUseItemSound(Player ply, String weaponType, boolean autoSwing) {
+    public static void playerUseItemSound(Entity ply, String weaponType, boolean autoSwing) {
         String itemUseSound;
         float volume = 1f, pitch = 1f;
         switch (weaponType) {
