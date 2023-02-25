@@ -180,7 +180,7 @@ public class MonsterHelper {
             return;
         naturalMobSpawnType(ply, heightStr);
     }
-    public static void spawnMob(String type, Location loc, Player target) {
+    public static Entity spawnMob(String type, Location loc, Player target) {
         ConfigurationSection mobInfoSection = TerrariaHelper.mobSpawningConfig.getConfigurationSection("mobInfo." + type);
         String entityType = mobInfoSection.getString("monsterType", "SLIME");
         Entity entity;
@@ -204,7 +204,7 @@ public class MonsterHelper {
                     break;
                 }
                 default:
-                    return;
+                    return null;
             }
         }
         // set mechanic sound
@@ -235,5 +235,6 @@ public class MonsterHelper {
         }
         // set mother type
         EntityHelper.setMetadata(entity, "motherType", type);
+        return entity;
     }
 }

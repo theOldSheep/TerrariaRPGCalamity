@@ -656,7 +656,8 @@ public class PlayerHelper {
                         }
                         if (current.equals("")) {
                             // other events
-                            if (!Event.currentEvent.equals("")) current = Event.currentEvent;
+                            if (!Event.currentEvent.equals(""))
+                                current = TerrariaHelper.soundConfig.getString("event." + Event.currentEvent, "");
                             // lunar towers
                             if (ply.getLocation().getY() >= 50 && worldName.equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE)) {
                                 for (Entity pillar : Event.pillars)

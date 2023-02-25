@@ -456,17 +456,20 @@ public class MinionSlime extends EntitySlime {
                             velocity = v;
                         }
                     } else {
-                        double speed = Math.min( (allSegments.size() + 2) / 6, 3);
-                        double distance = target.getEyeLocation().distance(minionBukkit.getEyeLocation()),
-                                distMax = ((double) allSegments.size()) / 2;
-                        Vector v = EntityHelper.helperAimEntity(minionBukkit, target, new EntityHelper.AimHelperOptions()
-                                .setProjectileSpeed(speed)).subtract(minionBukkit.getEyeLocation()).toVector();
+                        double speed = Math.max(1, Math.min( (double) (allSegments.size()) / 6, 3) );
+                        double distanceSqr = target.getEyeLocation().distanceSquared(minionBukkit.getEyeLocation()),
+                                distMax = ((double) allSegments.size() + 1) / 2;
+                        Vector v = EntityHelper.helperAimEntity(minionBukkit, target,
+                                new EntityHelper.AimHelperOptions()
+                                        .setProjectileSpeed(speed))
+                                .subtract(minionBukkit.getEyeLocation())
+                                .toVector();
                         double vLen = v.length();
                         if (vLen < 1e-9) {
                             v = new Vector(0, 1, 0);
                             vLen = 1;
                         }
-                        if (velocity.lengthSquared() < 1e-5 || distance > distMax) {
+                        if (velocity.lengthSquared() < 1e-5 || distanceSqr > distMax * distMax) {
                             v.multiply( speed / vLen);
                             velocity = v;
                         }

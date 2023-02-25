@@ -2,6 +2,7 @@ package terraria.entity.monster;
 
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -336,12 +337,12 @@ public class MonsterHelper {
             case "飞龙":
             case "骨蛇":
             {
+                if (!isMonsterPart) {
                     int additionalSegAmount = 14;
                     Location loc = bukkitMonster.getLocation();
-                    org.bukkit.World wld = loc.getWorld();
                     ArrayList<Slime> segments = new ArrayList<>(additionalSegAmount + 1);
                     segments.add((Slime) bukkitMonster);
-                    for (int i = 0; i < 14; i ++) {
+                    for (int i = 0; i < additionalSegAmount; i++) {
                         org.bukkit.entity.Slime segment = (Slime) (new MonsterSlime(target, type, loc, true)).getBukkitEntity();
                         HashMap<String, Double> attrMapSegment = EntityHelper.getAttrMap(segment);
                         attrMapSegment.put("damageMulti", 1d);
@@ -354,14 +355,15 @@ public class MonsterHelper {
                     // following option
                     EntityHelper.WormSegmentMovementOptions followInfo = new EntityHelper.WormSegmentMovementOptions();
                     extraVariables.put("wormMoveOption", followInfo);
-                    break;
                 }
+                break;
+            }
             case "巨型陆龟":
             case "冰雪陆龟":
             {
-                    bukkitMonster.addScoreboardTag("noFallDamage");
-                    break;
-                }
+                bukkitMonster.addScoreboardTag("noFallDamage");
+                break;
+            }
             case "腐化宝箱怪":
             case "神圣宝箱怪":
             {
@@ -384,6 +386,11 @@ public class MonsterHelper {
             case "骷髅特警":
             {
                 bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+                break;
+            }
+            case "精灵直升机":
+            {
+                ((MonsterSlime) monster).indexAI = (int) (Math.random() * 360);
                 break;
             }
         }
@@ -511,7 +518,7 @@ public class MonsterHelper {
                             Vector v = target.getEyeLocation().subtract(monsterBkt.getEyeLocation()).toVector();
                             double vLen = v.length();
                             if (vLen > 0) {
-                                v.multiply(1 / vLen);
+                                v.multiply(1.5 / vLen);
                                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                                         monsterBkt, v, EntityHelper.getAttrMap(monsterBkt), "激光");
                                 shootInfo.properties.put("penetration", 10);
@@ -906,7 +913,9 @@ public class MonsterHelper {
                 case "冰雪陆龟": {
                     if (monster.getHealth() > 0) {
                         double lastHealth = (double) extraVariables.getOrDefault("lastHealth", monsterBkt.getHealth());
-                        if (monsterBkt.getHealth() < lastHealth - 0.1) {
+                        boolean hasBeenDamaged = monsterBkt.getHealth() < lastHealth - 0.1;
+                        if (hasBeenDamaged) {
+                            monsterBkt.setCustomName(type);
                             indexAI = 999999;
                         }
                         extraVariables.put("lastHealth", monsterBkt.getHealth());
@@ -937,17 +946,17 @@ public class MonsterHelper {
                         }
                         else if (rollProgress == 10) {
                             monsterBkt.setVelocity(monsterBkt.getVelocity().add( new Vector(0, 1, 0)) );
+                            monster.setNoGravity(true);
                         }
-                        else if (rollProgress < 40 && rollProgress > 10) {
+                        else if (rollProgress < 50 && rollProgress > 10) {
                             Vector dV = target.getEyeLocation().subtract(monsterBkt.getEyeLocation()).toVector();
                             if (dV.lengthSquared() > 1e-9) {
                                 if (monsterBkt.getEyeLocation().getY() < target.getLocation().getY())
                                     dV.setY(dV.getY() + 5);
-                                double vLen = dV.length();
-                                dV.multiply(8 / vLen);
+                                dV.normalize().multiply(8);
                                 Vector newVel = monsterBkt.getVelocity().add(dV);
                                 if (newVel.lengthSquared() > 1e-9) {
-                                    newVel.multiply(0.025);
+                                    newVel.multiply(0.1);
                                     // regulate the horizontal speed
                                     double yComp = newVel.getY();
                                     newVel.setY(0);
@@ -958,9 +967,8 @@ public class MonsterHelper {
                                 }
                             }
                         }
-                        else if (rollProgress == 40 || rollProgress >= 50) {
-                            monsterBkt.setGravity(true);
-                            monsterBkt.setCustomName(type);
+                        else if (rollProgress == 50 || rollProgress >= 60) {
+                            monster.setNoGravity(false);
                             HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
                             switch (type) {
                                 case "巨型陆龟":
@@ -971,9 +979,11 @@ public class MonsterHelper {
                                     attrMap.put("damage", 220d);
                                     attrMap.put("defence", 56d);
                             }
-                            ((MonsterHusk) monster).defaultSpeed = 0.2;
-                            if (rollProgress >= 50)
+                            if (monsterBkt.isOnGround()) {
+                                monsterBkt.setCustomName(type);
+                                ((MonsterHusk) monster).defaultSpeed = 0.2;
                                 indexAI = -1;
+                            }
                         }
                     }
                     break;
@@ -982,28 +992,33 @@ public class MonsterHelper {
                     if (monster.getHealth() > 0) {
                         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
                         Vector v = monsterBkt.getVelocity();
-                        if (indexAI < 60) {
+                        if (indexAI < 10) {
                             if (target.getLocation().getY() > monsterBkt.getLocation().getY())
                                 v.setY(v.getY() + 0.025);
                             else
                                 v.setY(v.getY() - 0.025);
                             if (v.lengthSquared() > 0.75 * 0.75)
-                                v.multiply(0.75 / v.length());
+                                v.multiply(1.5 / v.length());
                         } else {
-                            v = target.getEyeLocation().subtract(monsterBkt.getEyeLocation()).toVector();
-                            if (v.lengthSquared() < 1e-9)
-                                v = new Vector(1, 0, 0);
-                            v.setY(v.getY() * 0.5);
-                            v.normalize();
-                            // regulate velocity length
-                            if (Math.random() < 0.5) {
-                                v.multiply(1.75);
-                                attrMap.put("damageMulti", 1.5);
-                            } else {
-                                v.multiply(1.35);
-                                attrMap.put("damageMulti",  0.8);
+                            if (indexAI == 10) {
+                                v = target.getEyeLocation().subtract(monsterBkt.getEyeLocation()).toVector();
+                                if (v.lengthSquared() < 1e-9)
+                                    v = new Vector(1, 0, 0);
+                                v.setY(v.getY() * 0.5);
+                                v.normalize();
+                                // regulate velocity length
+                                if (Math.random() < 0.5) {
+                                    v.multiply(3);
+                                    attrMap.put("damageMulti", 1.5);
+                                } else {
+                                    v.multiply(2.5);
+                                    attrMap.put("damageMulti", 0.8);
+                                }
+                                extraVariables.put("vl", v);
                             }
-                            indexAI = -1;
+                            v = (Vector) extraVariables.get("vl");
+                            if (indexAI > 40)
+                                indexAI = -1;
                         }
                         monsterBkt.setVelocity(v);
                     }
@@ -1011,17 +1026,21 @@ public class MonsterHelper {
                 }
                 case "精灵直升机": {
                     if (monster.getHealth() > 0) {
-                        int indexY = (int) extraVariables.getOrDefault("iY", Math.random() * 360);
-                        indexY ++;
+                        double indexY = (double) extraVariables.getOrDefault("iY", Math.random() * 360);
+                        indexY += 2.5;
                         extraVariables.put("iY", indexY);
-                        Vector v = target.getEyeLocation().add(MathHelper.xsin_degree(indexAI) * 12,
-                                6 + MathHelper.xsin(indexY) * 2,
-                                MathHelper.xcos_degree(indexAI) * 12).subtract(monsterBkt.getLocation()).toVector();
-                        v.multiply(0.05);
+                        Vector v = target.getEyeLocation().add(MathHelper.xsin_degree(indexAI) * 16,
+                                10 + MathHelper.xsin_degree(indexY) * 2,
+                                MathHelper.xcos_degree(indexAI) * 16).subtract(monsterBkt.getLocation()).toVector();
+                        v.multiply(0.025);
                         monsterBkt.setVelocity(v);
                         // shoot projectile
-                        if (indexAI % 7 == 0) {
-                            Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 1.25);
+                        if (indexAI % 7 == 6) {
+                            ItemUseHelper.playerUseItemSound(monsterBkt, "GUN", true);
+                            Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(),
+                                    target.getEyeLocation().add(
+                                            5 * (Math.random() - 0.5), 5 * (Math.random() - 0.5), 5 * (Math.random() - 0.5)),
+                                    1.25);
                             EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                                     monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "火枪子弹");
                             EntityHelper.spawnProjectile(shootInfo);
@@ -1036,12 +1055,12 @@ public class MonsterHelper {
                         if (indexAI < 100) {}
                         // stop and reflect projectiles
                         else if (indexAI == 100) {
-                            monsterBkt.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0d);
                             HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
                             attrMap.put("damageTakenMulti", 0d);
                             monsterBkt.addScoreboardTag("reflectProjectile");
                         }
                         else if (indexAI < 200) {
+                            monsterBkt.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0d);
                             hasContactDamage = false;
                         }
                         // jump towards enemy again
@@ -1065,10 +1084,11 @@ public class MonsterHelper {
                                     if (dist < 1e-9)
                                         v = new Vector(0, 1, 0);
                                     else
-                                        v.multiply(1.5 / v.length());
+                                        v.multiply(2 / v.length());
                                     monsterBkt.setVelocity(v);
                                     if (dist <= 10) {
                                         monster.setNoGravity(false);
+                                        monster.noclip = false;
                                     } else {
                                         indexAI --;
                                     }
@@ -1085,6 +1105,7 @@ public class MonsterHelper {
                                         v = new Vector(0, 1, 0);
                                     double vLen = v.length();
                                     v.multiply( Math.max(vLen / 4, 1) / vLen);
+                                    monsterBkt.setVelocity(v);
                                     if (vLen > 3)
                                         indexAI --;
                                     break;
@@ -1093,11 +1114,11 @@ public class MonsterHelper {
                             case 401:
                                 {
                                     Vector v = target.getEyeLocation().subtract(monsterBkt.getLocation()).toVector();
-                                    monsterBkt.setVelocity(v.multiply(0.1));
+                                    monsterBkt.setVelocity(v.multiply(0.2));
                                     break;
                                 }
                             // move to next cycle
-                            case 411:
+                            case 406:
                                 {
                                     monster.setNoGravity(false);
                                     monster.noclip = false;
@@ -1122,7 +1143,7 @@ public class MonsterHelper {
                                     EntityHelper.ProjectileShootInfo projInfo = new EntityHelper.ProjectileShootInfo(
                                             monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "Arrow", "圣骑士锤");
                                     projInfo.properties.put("blockHitAction", "thru");
-                                    projInfo.properties.put("gravity", 0);
+                                    projInfo.properties.put("gravity", 0d);
                                     projInfo.properties.put("penetration", 999);
                                     projInfo.properties.put("liveTime", 24);
                                     EntityHelper.spawnProjectile(projInfo);
@@ -1171,6 +1192,7 @@ public class MonsterHelper {
                                                 blk = blk.getRelative(0, -1, 0);
                                             }
                                             monsterBkt.teleport(blk.getLocation().add(0, 1, 0));
+                                            indexAI = -1;
                                             break;
                                         }
                                     }
@@ -1252,30 +1274,30 @@ public class MonsterHelper {
                                         double shootAmount, shootInterval, spd;
                                         if (type.equals("骷髅特警")) {
                                             shootAmount = 6;
-                                            shootInterval = 10;
+                                            shootInterval = 15;
                                             spd = 1;
                                         }
                                         // 骷髅狙击手
                                         else {
                                             shootAmount = 1;
-                                            shootInterval = 20;
+                                            shootInterval = 25;
                                             spd = 5;
                                         }
                                         // fire projectile
                                         if (indexAI % shootInterval == 0) {
-                                            Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), spd);
-                                            if (type.equals("骷髅特警")) {
-                                                projVel.add(new Vector(0.2 * (Math.random() - 0.5),
-                                                        0.2 * (Math.random() - 0.5),
-                                                        0.2 * (Math.random() - 0.5)));
-                                                projVel.normalize().multiply(2);
-                                                ItemUseHelper.playerUseItemSound(monsterBkt, "GUN", true);
-                                            } else {
-                                                ItemUseHelper.playerUseItemSound(monsterBkt, "GUN", false);
+                                            ItemUseHelper.playerUseItemSound(monsterBkt, "GUN", type.equals("骷髅特警"));
+                                            for (int i = 0; i < shootAmount; i ++) {
+                                                Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), spd);
+                                                if (type.equals("骷髅特警")) {
+                                                    projVel.add(new Vector(0.2 * (Math.random() - 0.5),
+                                                            0.2 * (Math.random() - 0.5),
+                                                            0.2 * (Math.random() - 0.5)));
+                                                    projVel.normalize().multiply(2);
+                                                }
+                                                EntityHelper.ProjectileShootInfo projInfo = new EntityHelper.ProjectileShootInfo(
+                                                        monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "火枪子弹");
+                                                EntityHelper.spawnProjectile(projInfo);
                                             }
-                                            EntityHelper.ProjectileShootInfo projInfo = new EntityHelper.ProjectileShootInfo(
-                                                    monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "火枪子弹");
-                                            EntityHelper.spawnProjectile(projInfo);
                                             break;
                                         }
                                     }
