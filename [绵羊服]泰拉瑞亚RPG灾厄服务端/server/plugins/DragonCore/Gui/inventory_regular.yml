@@ -1,0 +1,667 @@
+
+
+# 匹配界面名,hud为自动开启
+# GuiInventory可以替换背包
+# GuiIngameMenu可以替换ESC
+# 或者直接填写箱子界面名称，即可替换箱子界面(颜色符号需写为§)
+# PS：当你打开任意界面时，客户端的log内会提示本次打开的界面名哦
+match: "GuiInventory"
+hideHud:
+  - "hud_hotbar"
+  - "hud_potion"
+allowEscClose: true
+interactHud: true # 可以看到血量/魔力提示
+
+Functions:
+  # 通过判断按键，异步执行下面的这个【延时关闭界面】，它会延时100毫秒后才关闭，延时的这段时间是用来做背包的关闭动画的
+  # 判断的格式是  (条件)?{达成执行;}:{否则执行;};  如果没有否则执行  可以用0代替 写成 (条件)?{达成执行;}:0;
+  # || 是或的意思，也就是说当 当前的按键为 E或ESC,就关闭界面   && 则是且的意思
+  keyPress: "(方法.取当前按下键=='E' || 方法.取当前按下键=='ESCAPE')?{方法.关闭界面;}:0"
+
+  # 界面开启之后会自动执行open，此时就可以开始更新变量啦
+  open: "方法.异步执行方法('更新背包变量')"
+
+  # 由于功能完全是在客户端实现的，所以客户端并不能直接知道变量的值，我们需要通过【方法.更新变量值】来向服务端同步变量值到客户端内
+  # 文本内容需要用 ''包裹,不然mod无法识别这条公式
+  更新背包变量: |-
+    方法.更新变量值('terraria_defence','terraria_money','terraria_accessory_amount');
+    方法.延时(1000);
+    方法.异步执行方法('更新背包变量');
+
+# 设置4个装备槽和副手槽
+helmet_texture:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-160"
+  width: 16
+  height: 16
+  texture: "方法.取文本长度(方法.取物品名(方法.取物品('container_5'))) < 0.1 ? 'gui/slot_helmet.png' : 'gui/slot_accessory_full.png'"
+  alpha: 0.75
+helmet_slot:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-160"
+  identifier: "container_5"
+  drawBackground: false
+chestplate_texture:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-142"
+  width: 16
+  height: 16
+  texture: "方法.取文本长度(方法.取物品名(方法.取物品('container_6'))) < 0.1 ? 'gui/slot_chestplate.png' : 'gui/slot_accessory_full.png'"
+  alpha: 0.75
+chestplate_slot:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-142"
+  identifier: "container_6"
+  drawBackground: false
+leggings_texture:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-124"
+  width: 16
+  height: 16
+  texture: "方法.取文本长度(方法.取物品名(方法.取物品('container_7'))) < 0.1 ? 'gui/slot_leggings.png' : 'gui/slot_accessory_full.png'"
+  alpha: 0.75
+leggings_slot:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-124"
+  identifier: "container_7"
+  drawBackground: false
+offhand_texture:
+  x: "方法.取屏幕宽度-50"
+  y: "方法.取屏幕高度-142"
+  width: 16
+  height: 16
+  texture: "方法.取文本长度(方法.取物品名(方法.取物品('container_45'))) < 0.1 ? 'gui/slot_hook.png' : 'gui/slot_accessory_full.png'"
+  alpha: 0.75
+offhand_slot:
+  x: "方法.取屏幕宽度-50"
+  y: "方法.取屏幕高度-142"
+  identifier: "container_45"
+  drawBackground: false
+mount_texture:
+  x: "方法.取屏幕宽度-50"
+  y: "方法.取屏幕高度-124"
+  width: 16
+  height: 16
+  texture: "方法.取文本长度(方法.取物品名(方法.取物品('mount'))) < 0.1 ? 'gui/slot_mount.png' : 'gui/slot_accessory_full.png'"
+  alpha: 0.75
+mount_slot:
+  x: "方法.取屏幕宽度-50"
+  y: "方法.取屏幕高度-124"
+  identifier: "mount"
+  drawBackground: false
+# 饰品
+accessories_label:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-108"
+  texts: "饰品"
+accessory1_texture:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-98"
+  width: 16
+  height: 16
+  texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory1'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
+  alpha: 0.75
+accessory1_slot:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-98"
+  identifier: "accessory1"
+  drawBackground: false
+accessory2_texture:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-80"
+  width: 16
+  height: 16
+  texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory2'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
+  alpha: 0.75
+accessory2_slot:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-80"
+  identifier: "accessory2"
+  drawBackground: false
+accessory3_texture:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-62"
+  width: 16
+  height: 16
+  texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory3'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
+  alpha: 0.75
+accessory3_slot:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-62"
+  identifier: "accessory3"
+  drawBackground: false
+accessory4_texture:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-44"
+  width: 16
+  height: 16
+  texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory4'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
+  alpha: 0.75
+accessory4_slot:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-44"
+  identifier: "accessory4"
+  drawBackground: false
+accessory5_texture:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-26"
+  width: 16
+  height: 16
+  texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory5'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
+  alpha: 0.75
+accessory5_slot:
+  x: "方法.取屏幕宽度-32"
+  y: "方法.取屏幕高度-26"
+  identifier: "accessory5"
+  drawBackground: false
+accessory6_texture:
+  visible: "方法.到整数(方法.取变量('terraria_accessory_amount')) > 5.5"
+  x: "方法.取屏幕宽度-50"
+  y: "方法.取屏幕高度-98"
+  width: 16
+  height: 16
+  texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory6'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
+  alpha: 0.75
+accessory6_slot:
+  visible: "方法.到整数(方法.取变量('terraria_accessory_amount')) > 5.5"
+  x: "方法.取屏幕宽度-50"
+  y: "方法.取屏幕高度-98"
+  identifier: "accessory6"
+  drawBackground: false
+accessory7_texture:
+  visible: "方法.到整数(方法.取变量('terraria_accessory_amount')) > 6.5"
+  x: "方法.取屏幕宽度-50"
+  y: "方法.取屏幕高度-80"
+  width: 16
+  height: 16
+  texture: "方法.取文本长度(方法.取物品名(方法.取物品('accessory7'))) < 0.1 ? 'gui/slot_accessory.png' : 'gui/slot_accessory_full.png'"
+  alpha: 0.75
+accessory7_slot:
+  visible: "方法.到整数(方法.取变量('terraria_accessory_amount')) > 6.5"
+  x: "方法.取屏幕宽度-50"
+  y: "方法.取屏幕高度-80"
+  identifier: "accessory7"
+  drawBackground: false
+
+# 设置合成槽位
+crafting_label:
+  x: "24"
+  y: "110"
+  center: true
+  texts: "合成"
+crafting_texture:
+  x: "18"
+  y: "120"
+  width: 12
+  height: 12
+  texture: "gui/slot_crafting.png"
+crafting_slot:
+  x: "18"
+  y: "120"
+  width: 12
+  height: 12
+  identifier: "container_0"
+  drawBackground: false
+  tip: "&2&3&3&r制作窗口"
+# 防御
+defence_texture:
+  x: "方法.取屏幕宽度-50"
+  y: "方法.取屏幕高度-40"
+  width: 14
+  height: 14
+  texture: "gui/defence.png"
+  tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')"
+defence_label:
+  x: "方法.取屏幕宽度-43"
+  y: "方法.取屏幕高度-37"
+  center: true
+  scale: 0.8
+  texts: "方法.合并文本('&#CCCCCC&l', 方法.取变量('terraria_defence'))"
+  tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')"
+# 背包
+backpack_label:
+  x: "17"
+  y: "0"
+  texts: "物品栏"
+# 背包格子
+slot1-1_texture:
+  x: "8"
+  y: "10"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot1-1_slot:
+  x: "8"
+  y: "10"
+  identifier: "container_36"
+  drawBackground: false
+slot1-2_texture:
+  x: "26"
+  y: "10"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot1-2_slot:
+  x: "26"
+  y: "10"
+  identifier: "container_37"
+  drawBackground: false
+slot1-3_texture:
+  x: "44"
+  y: "10"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot1-3_slot:
+  x: "44"
+  y: "10"
+  identifier: "container_38"
+  drawBackground: false
+slot1-4_texture:
+  x: "62"
+  y: "10"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot1-4_slot:
+  x: "62"
+  y: "10"
+  identifier: "container_39"
+  drawBackground: false
+slot1-5_texture:
+  x: "80"
+  y: "10"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot1-5_slot:
+  x: "80"
+  y: "10"
+  identifier: "container_40"
+  drawBackground: false
+slot1-6_texture:
+  x: "98"
+  y: "10"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot1-6_slot:
+  x: "98"
+  y: "10"
+  identifier: "container_41"
+  drawBackground: false
+slot1-7_texture:
+  x: "116"
+  y: "10"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot1-7_slot:
+  x: "116"
+  y: "10"
+  identifier: "container_42"
+  drawBackground: false
+slot1-8_texture:
+  x: "134"
+  y: "10"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot1-8_slot:
+  x: "134"
+  y: "10"
+  identifier: "container_43"
+  drawBackground: false
+slot1-9_texture:
+  x: "152"
+  y: "10"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot1-9_slot:
+  x: "152"
+  y: "10"
+  identifier: "container_44"
+  drawBackground: false
+# line 2
+slot2-1_texture:
+  x: "8"
+  y: "28"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot2-1_slot:
+  x: "8"
+  y: "28"
+  identifier: "container_9"
+  drawBackground: false
+slot2-2_texture:
+  x: "26"
+  y: "28"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot2-2_slot:
+  x: "26"
+  y: "28"
+  identifier: "container_10"
+  drawBackground: false
+slot2-3_texture:
+  x: "44"
+  y: "28"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot2-3_slot:
+  x: "44"
+  y: "28"
+  identifier: "container_11"
+  drawBackground: false
+slot2-4_texture:
+  x: "62"
+  y: "28"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot2-4_slot:
+  x: "62"
+  y: "28"
+  identifier: "container_12"
+  drawBackground: false
+slot2-5_texture:
+  x: "80"
+  y: "28"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot2-5_slot:
+  x: "80"
+  y: "28"
+  identifier: "container_13"
+  drawBackground: false
+slot2-6_texture:
+  x: "98"
+  y: "28"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot2-6_slot:
+  x: "98"
+  y: "28"
+  identifier: "container_14"
+  drawBackground: false
+slot2-7_texture:
+  x: "116"
+  y: "28"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot2-7_slot:
+  x: "116"
+  y: "28"
+  identifier: "container_15"
+  drawBackground: false
+slot2-8_texture:
+  x: "134"
+  y: "28"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot2-8_slot:
+  x: "134"
+  y: "28"
+  identifier: "container_16"
+  drawBackground: false
+slot2-9_texture:
+  x: "152"
+  y: "28"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot2-9_slot:
+  x: "152"
+  y: "28"
+  identifier: "container_17"
+  drawBackground: false
+# line 3
+slot3-1_texture:
+  x: "8"
+  y: "46"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot3-1_slot:
+  x: "8"
+  y: "46"
+  identifier: "container_18"
+  drawBackground: false
+slot3-2_texture:
+  x: "26"
+  y: "46"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot3-2_slot:
+  x: "26"
+  y: "46"
+  identifier: "container_19"
+  drawBackground: false
+slot3-3_texture:
+  x: "44"
+  y: "46"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot3-3_slot:
+  x: "44"
+  y: "46"
+  identifier: "container_20"
+  drawBackground: false
+slot3-4_texture:
+  x: "62"
+  y: "46"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot3-4_slot:
+  x: "62"
+  y: "46"
+  identifier: "container_21"
+  drawBackground: false
+slot3-5_texture:
+  x: "80"
+  y: "46"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot3-5_slot:
+  x: "80"
+  y: "46"
+  identifier: "container_22"
+  drawBackground: false
+slot3-6_texture:
+  x: "98"
+  y: "46"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot3-6_slot:
+  x: "98"
+  y: "46"
+  identifier: "container_23"
+  drawBackground: false
+slot3-7_texture:
+  x: "116"
+  y: "46"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot3-7_slot:
+  x: "116"
+  y: "46"
+  identifier: "container_24"
+  drawBackground: false
+slot3-8_texture:
+  x: "134"
+  y: "46"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot3-8_slot:
+  x: "134"
+  y: "46"
+  identifier: "container_25"
+  drawBackground: false
+slot3-9_texture:
+  x: "152"
+  y: "46"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot3-9_slot:
+  x: "152"
+  y: "46"
+  identifier: "container_26"
+  drawBackground: false
+# line 4
+slot4-1_texture:
+  x: "8"
+  y: "64"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot4-1_slot:
+  x: "8"
+  y: "64"
+  identifier: "container_27"
+  drawBackground: false
+slot4-2_texture:
+  x: "26"
+  y: "64"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot4-2_slot:
+  x: "26"
+  y: "64"
+  identifier: "container_28"
+  drawBackground: false
+slot4-3_texture:
+  x: "44"
+  y: "64"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot4-3_slot:
+  x: "44"
+  y: "64"
+  identifier: "container_29"
+  drawBackground: false
+slot4-4_texture:
+  x: "62"
+  y: "64"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot4-4_slot:
+  x: "62"
+  y: "64"
+  identifier: "container_30"
+  drawBackground: false
+slot4-5_texture:
+  x: "80"
+  y: "64"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot4-5_slot:
+  x: "80"
+  y: "64"
+  identifier: "container_31"
+  drawBackground: false
+slot4-6_texture:
+  x: "98"
+  y: "64"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot4-6_slot:
+  x: "98"
+  y: "64"
+  identifier: "container_32"
+  drawBackground: false
+slot4-7_texture:
+  x: "116"
+  y: "64"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot4-7_slot:
+  x: "116"
+  y: "64"
+  identifier: "container_33"
+  drawBackground: false
+slot4-8_texture:
+  x: "134"
+  y: "64"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot4-8_slot:
+  x: "134"
+  y: "64"
+  identifier: "container_34"
+  drawBackground: false
+slot4-9_texture:
+  x: "152"
+  y: "64"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.75
+slot4-9_slot:
+  x: "152"
+  y: "64"
+  identifier: "container_35"
+  drawBackground: false
+# 显示钱币
+money_label:
+  x: "8"
+  y: "82"
+  texts: "方法.合并文本('金钱: ', 方法.取变量('terraria_money'))"
+

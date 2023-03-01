@@ -1,0 +1,77 @@
+# 匹配界面名,hud为自动开启
+# GuiInventory可以替换背包
+# GuiIngameMenu可以替换ESC
+# 或者直接填写箱子界面名称，即可替换箱子界面(颜色符号需写为§)
+# PS：当你打开任意界面时，客户端的log内会提示本次打开的界面名哦
+match: "重铸"
+hideHud:
+  - "hud_hotbar"
+  - "hud_potion"
+allowEscClose: true
+interactHud: true # 可以看到血量/魔力提示
+
+Functions:
+  # 通过判断按键，异步执行下面的这个【延时关闭界面】，它会延时100毫秒后才关闭，延时的这段时间是用来做背包的关闭动画的
+  # 判断的格式是  (条件)?{达成执行;}:{否则执行;};  如果没有否则执行  可以用0代替 写成 (条件)?{达成执行;}:0;
+  # || 是或的意思，也就是说当 当前的按键为 E或ESC,就关闭界面   && 则是且的意思
+  keyPress: "(方法.取当前按下键=='E' || 方法.取当前按下键=='ESCAPE')?{方法.关闭界面;}:0"
+
+  # 由于功能完全是在客户端实现的，所以客户端并不能直接知道变量的值，我们需要通过【方法.更新变量值】来向服务端同步变量值到客户端内
+  # 文本内容需要用 ''包裹,不然mod无法识别这条公式
+  update_variables: |-
+    方法.更新变量值('terraria_defence','terraria_money','terraria_accessory_amount');
+    方法.延时(1000);
+    方法.异步执行方法('update_variables');
+
+  # 界面开启之后会自动执行open，此时就可以开始更新变量啦
+  open: |-
+    方法.异步执行方法('update_variables');
+    方法.设置变量值('GUI_slot_amount', '27');
+    方法.设置变量值('reforge_btn_texture', 'gui/Reforge_0.png');
+
+# 基础背包内容
+import:
+  - "inventory_slots_inventory_open"
+
+# 商店内容
+# 重铸物品槽
+inv1-5_texture:
+  x: "20"
+  y: "86"
+  width: "16"
+  height: "16"
+  texture: "gui/slot.png"
+  alpha: 0.8
+inv1-5_slot:
+  x: "20"
+  y: "86"
+  identifier: "container_4"
+  drawBackground: false
+# 重铸信息
+reforge_prompt_label:
+  x: "38"
+  y: "86"
+  scale: 0.8
+  texts:
+    - "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? '将物品放到此处重铸' : 方法.取物品名(方法.取物品('container_4'))"
+# 重铸花费
+reforge_cost_label:
+  x: "20"
+  y: "106"
+  scale: 0.8
+  visible: "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? 0 : 1"
+  texts:
+    - "方法.取物品名(方法.取物品('container_13'))"
+    - "方法.合并文本( '存款: ', 方法.取变量('terraria_money') )"
+# 重铸按钮
+reforge_prompt_texture:
+  x: "40"
+  y: "95"
+  width: "12"
+  height: "12"
+  texture: "方法.取变量('reforge_btn_texture')"
+  visible: "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? 0 : 1"
+  actions:
+    enter: "方法.设置变量值('reforge_btn_texture', 'gui/Reforge_1.png')"
+    leave: "方法.设置变量值('reforge_btn_texture', 'gui/Reforge_0.png')"
+    click: "方法.模拟点击槽位('container_13', 0, 'CLONE', 1)"
