@@ -203,32 +203,32 @@ fish:
       fishingPower: 100
 questFish:
   天使鱼:
-  - normal_sky
+  - NORMAL_SPACE
   蝙蝠鱼:
-  - normal_cavern
-  - normal_hell
+  - NORMAL_CAVERN
+  - NORMAL_UNDERWORLD
   骷髅鱼:
-  - normal_cavern
-  - normal_hell
+  - NORMAL_CAVERN
+  - NORMAL_UNDERWORLD
   兔兔鱼:
-  - normal_surface
+  - NORMAL_SURFACE
   小丑鱼:
-  - ocean_surface
+  - OCEAN_SURFACE
   泥鱼:
-  - jungle_surface
-  - jungle_underground
-  - jungle_cavern
+  - JUNGLE_SURFACE
+  - JUNGLE_UNDERGROUND
+  - JUNGLE_CAVERN
   土鱼:
-  - normal_surface
-  - normal_underground
+  - NORMAL_SURFACE
+  - NORMAL_UNDERGROUND
   克苏鲁鱼:
-  - normal_sky
-  - normal_surface
+  - NORMAL_SPACE
+  - NORMAL_SURFACE
   向导巫毒鱼:
-  - normal_cavern
-  - normal_hell
+  - NORMAL_CAVERN
+  - NORMAL_UNDERWORLD
   突变弗林鱼:
-  - tundra_cavern
+  - TUNDRA_CAVERN
 questRewards:
 - 金币:5:3:1
 - 蘑菇:25:10:0.6
