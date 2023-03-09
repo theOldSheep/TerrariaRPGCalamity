@@ -16,6 +16,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
@@ -459,8 +460,9 @@ public class MonsterHelper {
         return target;
     }
     // TODO
-    public static int monsterAI(EntityLiving monster, double defaultMovementSpeed, Player target, String type,
+    public static int monsterAI(EntityInsentient monster, double defaultMovementSpeed, Player target, String type,
                                 int indexAI, HashMap<String, Object> extraVariables, boolean isMonsterPart) {
+        monster.setGoalTarget( ((CraftPlayer) target).getHandle(), EntityTargetEvent.TargetReason.CUSTOM, false);
         LivingEntity monsterBkt = (LivingEntity) monster.getBukkitEntity();
         // knockback can then be used to modify monster's movement speed temporarily
         double speedMultiKnockback = 1;
@@ -1322,7 +1324,7 @@ public class MonsterHelper {
             Set<HitEntityInfo> toDamage = HitEntityInfo.getEntitiesHit(monsterBkt.getWorld(),
                     initLoc, initLoc.clone().add(monsterBkt.getVelocity()),
                     xWidth, height, zWidth,
-                    (Entity entity) -> entity instanceof EntityPlayer);
+                    (Entity entity) -> EntityHelper.checkCanDamage(monsterBkt, entity.getBukkitEntity(), false));
             double damage = EntityHelper.getAttrMap(monsterBkt).getOrDefault("damage", 1d);
             for (HitEntityInfo hitEntityInfo : toDamage) {
                 EntityHelper.handleDamage(monsterBkt, hitEntityInfo.getHitEntity().getBukkitEntity(),

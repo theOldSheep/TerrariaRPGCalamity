@@ -14,7 +14,9 @@ spawnInfo:
         哥布林弓箭手: 3
     day:
         史莱姆: 1
-        钨钢军团: 0.005
+        钨钢回转器: 0.002
+        钨钢悬浮坦克: 0.002
+        钨钢无人机: 0.002
     night:
         僵尸: 16
         恶魔之眼: 8
@@ -237,7 +239,7 @@ mobTier:
     死神: 机械三王
     蛾怪: 世纪之花
     致命球: 世纪之花
-    拜月教教徒: 7
+    拜月教教徒: 石巨人
     飞龙: 血肉之墙
     稻草人: 世纪之花
     树精: 世纪之花
@@ -577,6 +579,7 @@ mobInfo:
         name: "克苏鲁的仆从"
         monsterType: "SLIME"
         spawnLocationType: ANY
+        owningBoss: 克苏鲁之眼
         hasHealthMulti: true
         variants:
             default1:
@@ -592,6 +595,7 @@ mobInfo:
         monsterType: "SLIME"
         spawnLocationType: ANY
         slimeSize: 3
+        owningBoss: 血肉之墙
         hasHealthMulti: true
         variants:
             default1:
@@ -1106,6 +1110,8 @@ mobInfo:
     尖刺史莱姆:
         name: "尖刺史莱姆"
         monsterType: "SLIME"
+        owningBoss: 史莱姆王
+        hasHealthMulti: true
         variants:
             default1:
                 attributes:
@@ -1118,6 +1124,8 @@ mobInfo:
     水晶史莱姆:
         name: "水晶史莱姆"
         monsterType: "SLIME"
+        owningBoss: 史莱姆皇后
+        hasHealthMulti: true
         variants:
             default1:
                 attributes:
@@ -1130,6 +1138,8 @@ mobInfo:
     飞翔史莱姆:
         name: "飞翔史莱姆"
         monsterType: "SLIME"
+        owningBoss: 史莱姆皇后
+        hasHealthMulti: true
         variants:
             default1:
                 attributes:
@@ -1142,6 +1152,8 @@ mobInfo:
     弹力史莱姆:
         name: "弹力史莱姆"
         monsterType: "SLIME"
+        owningBoss: 史莱姆皇后
+        hasHealthMulti: true
         variants:
             default1:
                 attributes:
@@ -1156,6 +1168,7 @@ mobInfo:
         monsterType: "SLIME"
         spawnLocationType: ANY
         slimeSize: 4
+        owningBoss: 毁灭者
         isMechanic: true
         hasHealthMulti: true
         variants:

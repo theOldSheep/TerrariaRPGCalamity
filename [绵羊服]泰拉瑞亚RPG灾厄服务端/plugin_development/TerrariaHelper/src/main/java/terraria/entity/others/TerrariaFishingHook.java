@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.gameplay.Event;
 import terraria.util.EntityHelper;
 import terraria.util.ItemHelper;
 import terraria.util.PlayerHelper;
@@ -266,7 +267,11 @@ public class TerrariaFishingHook extends EntityFishingHook {
         if (Math.random() < crateChance) {
             return catchCrateItem(inHardMode, biome.toString(), rarity);
         }
-        // TODO: quest fish
+        // quest fish
+        if (TerrariaHelper.fishingConfig.getStringList("questFish." + Event.questFish).contains(biome + "_" + height) &&
+                Math.random() < 0.05) {
+            return Event.questFish;
+        }
         // normal fish/weapon etc.
         return catchFishItem(fishingPower, biome.toString(), height.toString(), rarity);
     }

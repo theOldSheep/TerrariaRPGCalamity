@@ -87,6 +87,8 @@ public class MinionCaveSpider extends EntityCaveSpider {
             case "蜘蛛": {
                 damageInvincibilityTicks = 10;
                 getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.6d);
+                // navigation
+                getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(48);
                 ((LivingEntity) getBukkitEntity()).addPotionEffect(new PotionEffect(
                         PotionEffectType.JUMP,
                         999999,

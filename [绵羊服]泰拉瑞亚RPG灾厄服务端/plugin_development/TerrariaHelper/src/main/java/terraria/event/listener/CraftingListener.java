@@ -169,7 +169,7 @@ public class CraftingListener implements Listener {
             case "合成全部":
                 handlePlayerCraft(player, recipeIndex, station, true);
                 break;
-            default:
+            case "选择配方":
                 player.sendMessage("§c请选择左侧的物品查看配方后合成");
         }
     }

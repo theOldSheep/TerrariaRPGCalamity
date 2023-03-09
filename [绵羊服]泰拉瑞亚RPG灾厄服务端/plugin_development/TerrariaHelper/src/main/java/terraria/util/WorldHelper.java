@@ -23,7 +23,11 @@ public class WorldHelper {
         return ! (MathHelper.isBetween(timeInTick, 13500, 22500));
     }
     public enum HeightLayer {
-        SPACE, SURFACE, UNDERGROUND, CAVERN, UNDERWORLD;
+        SPACE("太空"), SURFACE("地表"), UNDERGROUND("地下"), CAVERN("洞穴"), UNDERWORLD("地狱");
+        public String name;
+        HeightLayer(String name) {
+            this.name = name;
+        }
         public static HeightLayer getHeightLayer(Location loc) {
             switch (loc.getWorld().getName()) {
                 case TerrariaHelper.Constants.WORLD_NAME_SURFACE: {
@@ -43,8 +47,14 @@ public class WorldHelper {
         }
     }
     public enum BiomeType {
-        ABYSS, ASTRAL_INFECTION, BRIMSTONE_CRAG, CORRUPTION, DESERT, DUNGEON, HALLOW, JUNGLE, NORMAL, OCEAN,
-        SPACE, SULPHUROUS_OCEAN, SUNKEN_SEA, TEMPLE, TUNDRA, UNDERWORLD;
+        ABYSS("深渊"), ASTRAL_INFECTION("星辉瘟疫"), BRIMSTONE_CRAG("硫火之崖"), CORRUPTION("腐化之地"),
+        DESERT("沙漠"), DUNGEON("地牢"), HALLOW("神圣之地"), JUNGLE("丛林"), NORMAL("森林"),
+        OCEAN("海洋"), SPACE("太空"), SULPHUROUS_OCEAN("硫磺海"), SUNKEN_SEA("沉沦之海"),
+        TEMPLE("丛林神庙"), TUNDRA("雪原"), UNDERWORLD("地狱");
+        public String name;
+        BiomeType(String name) {
+            this.name = name;
+        }
         public static BiomeType getBiome(Player ply) {
             return getBiome(ply, true);
         }

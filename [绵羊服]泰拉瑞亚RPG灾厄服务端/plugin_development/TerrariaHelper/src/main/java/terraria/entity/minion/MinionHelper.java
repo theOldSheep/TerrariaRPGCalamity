@@ -13,10 +13,7 @@ import org.bukkit.metadata.MetadataValue;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.util.EntityHelper;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 public class MinionHelper {
     private static final double maxDistBeforeReturn = 64, maxDistBeforeTeleport = 80, targetRadius = 64;
@@ -143,15 +140,14 @@ public class MinionHelper {
         }
         // target the nearest enemy
         net.minecraft.server.v1_12_R1.Entity findNearestFrom = protectOwner ? owner : minion;
-        double nearestTargetDistSqr = 1e9;
-        for (net.minecraft.server.v1_12_R1.Entity entity : getNearbyEntities(minion, targetRadius, predication)) {
-            if (!(entity instanceof EntityLiving)) continue;
-            double distSqr = getHorDistSqr(entity.locX, findNearestFrom.locX, entity.locZ, findNearestFrom.locZ);
-            if (distSqr > nearestTargetDistSqr) continue;
-            nearestTargetDistSqr = distSqr;
-            finalTarget = (EntityLiving) entity;
-        }
-        for (net.minecraft.server.v1_12_R1.Entity entity : getNearbyEntities(owner, targetRadius, predication)) {
+        double nearestTargetDistSqr = 1e9,
+                targetRadiusActual =
+                        finalTarget == owner ? targetRadius :
+                                getHorDistSqr(finalTarget.locX, findNearestFrom.locX, finalTarget.locZ, findNearestFrom.locZ) * 0.85 - 8;
+        ArrayList<net.minecraft.server.v1_12_R1.Entity> toCheck = new ArrayList<>(50);
+        toCheck.addAll(getNearbyEntities(minion, targetRadiusActual, predication));
+        toCheck.addAll(getNearbyEntities(owner, targetRadiusActual, predication));
+        for (net.minecraft.server.v1_12_R1.Entity entity : toCheck) {
             if (!(entity instanceof EntityLiving)) continue;
             double distSqr = getHorDistSqr(entity.locX, findNearestFrom.locX, entity.locZ, findNearestFrom.locZ);
             if (distSqr > nearestTargetDistSqr) continue;

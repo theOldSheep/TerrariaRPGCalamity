@@ -331,6 +331,23 @@ public class PlayerHelper {
         return YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml");
     }
     public static boolean hasDefeated(Player player, String progressToCheck) {
+        switch (progressToCheck) {
+            case "机械一王":
+            case "机械二王":
+            case "机械三王":
+                int amountDefeated = 0;
+                if (hasDefeated(player, "双子魔眼")) amountDefeated ++;
+                if (hasDefeated(player, "机械骷髅王")) amountDefeated ++;
+                if (hasDefeated(player, "毁灭者")) amountDefeated ++;
+                switch (progressToCheck) {
+                    case "机械一王":
+                        return amountDefeated >= 1;
+                    case "机械二王":
+                        return amountDefeated >= 2;
+                    case "机械三王":
+                        return amountDefeated >= 3;
+                }
+        }
         YmlHelper.YmlSection fileSection = getPlayerDataFile(player);
         return fileSection.getBoolean("bossDefeated." + progressToCheck, false);
     }
@@ -1672,10 +1689,13 @@ public class PlayerHelper {
             return amountRemaining;
         }
     }
-    public static void heal(Player ply, double amount) {
+    public static void heal(LivingEntity ply, double amount) {
+        heal(ply, amount, false);
+    }
+    public static void heal(LivingEntity ply, double amount, boolean displayActualAmount) {
         double healAmount = Math.min(ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() - ply.getHealth(), amount);
         ply.setHealth(ply.getHealth() + healAmount);
-        GenericHelper.displayHolo(ply, amount, false, "回血");
+        GenericHelper.displayHolo(ply, displayActualAmount ? healAmount : amount, false, "回血");
     }
     public static void restoreMana(Player ply, double amount) {
         int restoreAmount = (int) Math.min(EntityHelper.getAttrMap(ply).getOrDefault("maxMana", 20d) - ply.getLevel(), amount);

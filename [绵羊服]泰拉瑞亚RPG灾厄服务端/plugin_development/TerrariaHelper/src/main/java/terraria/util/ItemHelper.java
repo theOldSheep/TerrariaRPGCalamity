@@ -42,7 +42,7 @@ public class ItemHelper {
         return maxLevel;
     }
     private static void setupRecipesForStation(String station, int level) {
-        String bg = "[local]GuiBG.png";
+        String bg = TerrariaHelper.Constants.GUI_BACKGROUND;
         ConfigurationSection blockSection = TerrariaHelper.recipeConfig.getConfigurationSection(station);
         ArrayList<ScrollingListComponent> itemSlots = new ArrayList<>();
         int recipeIndex = 1;

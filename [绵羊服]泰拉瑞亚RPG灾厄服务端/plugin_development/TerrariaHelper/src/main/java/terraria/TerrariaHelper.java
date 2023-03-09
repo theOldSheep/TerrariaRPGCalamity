@@ -21,7 +21,11 @@ import java.util.Set;
 
 public class TerrariaHelper extends JavaPlugin {
     public static class Constants {
-        public static final String WORLD_NAME_SURFACE = "world_surface", WORLD_NAME_CAVERN = "world_cavern", WORLD_NAME_UNDERWORLD = "world_underworld";
+        public static final String WORLD_NAME_SURFACE = "world_surface",
+                WORLD_NAME_CAVERN = "world_cavern",
+                WORLD_NAME_UNDERWORLD = "world_underworld",
+                GUI_BACKGROUND = "[local]GuiBG.png",
+                GUI_BACKGROUND_NPC = "[local]GuiNPCBG.png";
     }
     public static long worldSeed;
     public static TerrariaHelper instance;
@@ -35,6 +39,7 @@ public class TerrariaHelper extends JavaPlugin {
     public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");
     public static final YmlHelper.YmlSection mobSpawningConfig = YmlHelper.getFile("plugins/Data/mobSpawning.yml");
     public static final YmlHelper.YmlSection mountConfig = YmlHelper.getFile("plugins/Data/mounts.yml");
+    public static final YmlHelper.YmlSection NPCConfig = YmlHelper.getFile("plugins/Data/NPC.yml");
     public static final YmlHelper.YmlSection potionItemConfig = YmlHelper.getFile("plugins/Data/potionItem.yml");
     public static final YmlHelper.YmlSection prefixConfig = YmlHelper.getFile("plugins/Data/prefix.yml");
     public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/projectiles.yml");
@@ -144,6 +149,7 @@ public class TerrariaHelper extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new DropItemSpawnListener(), this);
         Bukkit.getPluginManager().registerEvents(new EntitySpawnListener(), this);
         Bukkit.getPluginManager().registerEvents(new ItemUseAndAttributeListener(), this);
+        Bukkit.getPluginManager().registerEvents(new NPCListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerKeyToggleListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerMovementListener(), this);
