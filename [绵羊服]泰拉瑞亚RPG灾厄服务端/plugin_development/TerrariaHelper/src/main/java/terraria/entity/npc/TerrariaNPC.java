@@ -14,12 +14,13 @@ import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class TerrariaNPC extends EntityVillager {
     public String NPCType;
     public HashMap<String, Double> attrMap;
-    public ArrayList<Player> GUIViewers = new ArrayList<>();
+    public HashSet<Player> GUIViewers = new HashSet<>();
 
     public TerrariaNPC(World world) {
         super(world);
@@ -304,12 +305,6 @@ public class TerrariaNPC extends EntityVillager {
         // initialize the NPC again if the chunk reloaded
         if (EntityHelper.getMetadata(bukkitEntity, "attrMap") == null)
             initTypeInfo(NPCType);
-//        else if (ticksLived % 10 == 0)
-//            EntityHelper.setMetadata(bukkitEntity, "GUIViewers", GUIViewers);
-        if (ticksLived % 20 == 0) {
-            Bukkit.broadcastMessage(GUIViewers + "");
-            Bukkit.broadcastMessage(EntityHelper.getMetadata(bukkitEntity, "GUIViewers").value() + "");
-        }
         // remove duplicate
         if (ticksLived % 5 == 4 && NPCHelper.NPCMap.get(NPCType) != bukkitEntity) {
             die();

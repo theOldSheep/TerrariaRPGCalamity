@@ -8,9 +8,7 @@ import terraria.entity.minion.MinionSlime;
 import terraria.entity.monster.MonsterHusk;
 import terraria.entity.monster.MonsterSlime;
 import terraria.entity.monster.MonsterZombie;
-import terraria.entity.npc.TerrariaNPC;
-import terraria.entity.npc.TerrariaNPCGuide;
-import terraria.entity.npc.TerrariaNPCNurse;
+import terraria.entity.npc.*;
 
 /*
 class from https://www.spigotmc.org/threads/nms-tutorials-2-custom-nms-entities-1-11.205192/
@@ -24,6 +22,12 @@ public enum CustomEntities {
     MONSTER_ZOMBIE     ("MonsterZombie",    54,  EntityType.ZOMBIE,          EntityZombie.class,     MonsterZombie.class),
     MONSTER_HUSK       ("MonsterHusk",      23,  EntityType.HUSK,            EntityZombieHusk.class, MonsterHusk.class),
     TERRARIA_NPC       ("TerrariaNPC",      120, EntityType.VILLAGER,        EntityVillager.class,   TerrariaNPC.class),
+    NPC_ANGLER         ("NPCAngler",        120, EntityType.VILLAGER,        EntityVillager.class,   TerrariaNPCAngler.class),
+    NPC_ARMS_DEALER    ("NPCArmsDealer",    120, EntityType.VILLAGER,        EntityVillager.class,   TerrariaNPCArmsDealer.class),
+    NPC_BLOCK_SELLER   ("NPCBlockSeller",   120, EntityType.VILLAGER,        EntityVillager.class,   TerrariaNPCBlockSeller.class),
+    NPC_CLOTHIER       ("NPCClothier",      120, EntityType.VILLAGER,        EntityVillager.class,   TerrariaNPCClothier.class),
+    NPC_DEMOLITIONIST  ("NPCDemolitionist", 120, EntityType.VILLAGER,        EntityVillager.class,   TerrariaNPCDemolitionist.class),
+    NPC_GOBLIN_TINKERER("NPCGoblinTinkerer",120, EntityType.VILLAGER,        EntityVillager.class,   TerrariaNPCGoblinTinkerer.class),
     NPC_GUIDE          ("NPCGuide",         120, EntityType.VILLAGER,        EntityVillager.class,   TerrariaNPCGuide.class),
     NPC_NURSE          ("NPCNurse",         120, EntityType.VILLAGER,        EntityVillager.class,   TerrariaNPCNurse.class);
 

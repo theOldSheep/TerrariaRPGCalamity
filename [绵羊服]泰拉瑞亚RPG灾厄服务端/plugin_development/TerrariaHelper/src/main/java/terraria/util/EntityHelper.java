@@ -815,7 +815,7 @@ public class EntityHelper {
                 Player dPlayer = (Player) dPly;
                 String victimName = GenericHelper.trimText(v.getName());
                 if (victimName.equals("七彩草蛉")) {
-                    // TODO: spawn empress of light
+                    BossHelper.spawnBoss(dPlayer, BossHelper.BossType.EMPRESS_OF_LIGHT);
                 }
                 // drop stars
                 switch (damageCause) {
@@ -859,8 +859,19 @@ public class EntityHelper {
                         Bukkit.broadcastMessage("§d§o阴森的声音在你耳边萦绕不绝...");
                         break;
                     default:
-                        Bukkit.broadcastMessage("§d§oo月亮末日慢慢逼近...");
-                        // TODO: summon moon lord
+                        Player bossTarget = null;
+                        double minDistSqr = 1e7;
+                        for (Player checkPlayer : v.getWorld().getPlayers()) {
+                            double currDistSqr = v.getLocation().distanceSquared(checkPlayer.getLocation());
+                            if (currDistSqr < minDistSqr) {
+                                minDistSqr = currDistSqr;
+                                bossTarget = checkPlayer;
+                            }
+                        }
+                        if (bossTarget != null) {
+                            Bukkit.broadcastMessage("§d§o月亮末日慢慢逼近...");
+                            BossHelper.spawnBoss(bossTarget, BossHelper.BossType.MOON_LORD);
+                        }
                 }
             }
             // NPC should also get death message
@@ -878,7 +889,7 @@ public class EntityHelper {
                         double slimeKill = eventInfo.getOrDefault("slimeKill", 0d) + 1;
                         if (slimeKill % 50 == 0) {
                             if (d instanceof Player) {
-                                // TODO: spawn slime king
+                                BossHelper.spawnBoss((Player) d, BossHelper.BossType.SLIME_KING);
                             } else slimeKill--;
                         }
                         eventInfo.put("slimeKill", slimeKill);
@@ -934,7 +945,7 @@ public class EntityHelper {
                         // lunatic cultist spawns after killing the mob in the dungeon
                         case "拜月教教徒": {
                             if (dPly instanceof Player) {
-                                // TODO: spawn lunatic cultist
+                                BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LUNATIC_CULTIST);
                             }
                             break;
                         }
@@ -942,8 +953,7 @@ public class EntityHelper {
                 }
                 if (dPly instanceof Player) {
                     Player dPlayer = (Player) dPly;
-                    // TODO: dungeon
-                    if (v.getLocation().getBlock().getBiome().equals(Biome.FOREST_HILLS)) {
+                    if (WorldHelper.BiomeType.getBiome(dPlayer) == WorldHelper.BiomeType.DUNGEON) {
                         if (PlayerHelper.hasDefeated(dPlayer, "世纪之花") && Math.random() < 0.125)
                             MonsterHelper.spawnMob("地牢幽魂", v.getLocation(), dPlayer);
                     }

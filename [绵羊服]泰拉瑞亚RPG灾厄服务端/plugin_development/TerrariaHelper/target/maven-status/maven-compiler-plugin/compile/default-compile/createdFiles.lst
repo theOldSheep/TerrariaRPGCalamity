@@ -2,11 +2,14 @@ terraria\worldgen\overworld\OverworldCaveGenerator$1.class
 terraria\TerrariaHelper$1.class
 terraria\event\listener\ItemUseAndAttributeListener$1.class
 terraria\util\GenericHelper$StrikeLineOptions.class
+terraria\util\BossHelper$1.class
 terraria\event\listener\PlayerJoinListener.class
+terraria\entity\npc\TerrariaNPCClothier.class
 terraria\entity\boss\Boss.class
 terraria\entity\monster\MonsterZombie.class
 terraria\event\listener\PlayerMovementListener$1.class
 terraria\util\EntityHelper$AimHelperOptions.class
+terraria\entity\npc\TerrariaNPCAngler.class
 terraria\util\ItemUseHelper$QuickBuffType.class
 terraria\entity\projectile\TerrariaPotionProjectile$1.class
 terraria\util\EntityHelper$1.class
@@ -20,6 +23,7 @@ terraria\worldgen\overworld\OverworldCaveGenerator.class
 terraria\TerrariaHelper$Constants.class
 terraria\event\listener\ArrowHitListener.class
 terraria\util\ItemHelper$1.class
+terraria\util\BossHelper$BossType.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
 terraria\util\ItemUseHelper$1.class
 terraria\util\PlayerHelper$GameProgress.class
@@ -28,6 +32,7 @@ terraria\util\MonsterHelper$1.class
 terraria\entity\minion\MinionHusk.class
 terraria\entity\monster\MonsterHelper$1.class
 terraria\event\listener\PlayerQuitListener.class
+terraria\entity\npc\TerrariaNPCGoblinTinkerer.class
 terraria\event\listener\VanillaFishHookShootListener.class
 terraria\entity\monster\MonsterSlime.class
 terraria\util\DragoncoreHelper.class
@@ -42,6 +47,7 @@ terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
 terraria\event\listener\DamageListener$1.class
 terraria\event\listener\PlayerMovementListener.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
+terraria\entity\npc\TerrariaNPCArmsDealer.class
 terraria\event\TerrariaProjectileHitEvent.class
 terraria\util\PlayerHelper$1.class
 terraria\util\EntityHelper.class
@@ -53,6 +59,7 @@ terraria\util\WorldHelper$1.class
 terraria\entity\others\TerrariaItem.class
 terraria\entity\projectile\HitEntityInfo.class
 terraria\util\GameplayHelper.class
+terraria\entity\npc\TerrariaNPCBlockSeller.class
 terraria\util\MonsterHelper.class
 terraria\event\listener\DamageListener.class
 terraria\util\DragoncoreHelper$SlotCallback.class
@@ -95,4 +102,5 @@ terraria\event\listener\ServerStopListener.class
 terraria\util\WorldHelper$HeightLayer.class
 terraria\worldgen\Interpolate$InterpolatePoint.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator.class
+terraria\entity\npc\TerrariaNPCDemolitionist.class
 terraria\worldgen\overworld\OverworldChunkGenerator$1.class

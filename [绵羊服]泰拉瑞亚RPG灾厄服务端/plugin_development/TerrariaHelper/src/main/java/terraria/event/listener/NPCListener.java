@@ -1,6 +1,7 @@
 package terraria.event.listener;
 
 import lk.vexview.api.VexViewAPI;
+import lk.vexview.event.ButtonClickEvent;
 import lk.vexview.gui.VexGui;
 import lk.vexview.gui.components.VexButton;
 import lk.vexview.gui.components.VexComponents;
@@ -19,6 +20,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
@@ -28,10 +30,32 @@ import terraria.gameplay.Event;
 import terraria.util.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class NPCListener implements Listener {
+    public void recordInteractingNPC(Player ply, Entity NPC) {
+        if (NPC != null) {
+            ((HashSet<Player>) EntityHelper.getMetadata(NPC, "GUIViewers").value()).add(ply);
+            EntityHelper.setMetadata(ply, "NPCViewing", NPC);
+        } else {
+            MetadataValue NPCViewing = EntityHelper.getMetadata(ply, "NPCViewing");
+            if (NPCViewing != null) {
+                ((HashSet<Player>) EntityHelper.getMetadata((Metadatable) NPCViewing.value(), "GUIViewers").value()).remove(ply);
+            }
+            EntityHelper.setMetadata(ply, "NPCViewing", null);
+        }
+    }
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onInventoryClose(InventoryCloseEvent evt) {
+        recordInteractingNPC((Player) evt.getPlayer(), null);
+    }
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onDisconnect(PlayerQuitEvent evt) {
+        recordInteractingNPC(evt.getPlayer(), null);
+    }
+    // below: functions related to direct interaction with the NPC
     private int getHealingCost(Player ply) {
         double costMulti;
         if (PlayerHelper.hasDefeated(ply, "石巨人"))
@@ -75,31 +99,7 @@ public class NPCListener implements Listener {
         }
         return false;
     }
-    @EventHandler(priority = EventPriority.LOW)
-    public void onVanillaTradeGuiOpen(InventoryOpenEvent evt) {
-        if (evt.getInventory().getType().equals(InventoryType.MERCHANT))
-            evt.setCancelled(true);
-    }
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onInventoryClose(InventoryCloseEvent evt) {
-        Player ply = (Player) evt.getPlayer();
-        MetadataValue NPCViewing = EntityHelper.getMetadata(ply, "NPCViewing");
-        if (NPCViewing != null) {
-            ((List<Player>) EntityHelper.getMetadata((Metadatable) NPCViewing.value(), "GUIViewers").value()).remove(ply);
-        }
-        EntityHelper.setMetadata(ply, "NPCViewing", null);
-    }
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onInteract(PlayerInteractEntityEvent evt) {
-        // ignore cases below
-        if (evt.isCancelled())
-            return;
-        Entity clickedNPC = evt.getRightClicked();
-        if (!clickedNPC.getScoreboardTags().contains("isNPC"))
-            return;
-        Player ply = evt.getPlayer();
-        if (ply.getScoreboardTags().contains("temp_useCD"))
-            return;
+    public void handleInteractNPC(Player ply, Entity clickedNPC) {
         // update cool down and open GUI
         ItemUseHelper.applyCD(ply, 20);
         String NPCType = clickedNPC.getName();
@@ -142,10 +142,10 @@ public class NPCListener implements Listener {
                         int healthRatioInfo = 3 - (int) (health / maxHealth * 3);
                         texts.addAll(msgSection.getStringList("hurt." + healthRatioInfo));
                         // btn display name
-                        btnW += 40;
-                        healBtnDisplay = new StringBuilder("治疗§7(需要 ");
+                        btnW += 20;
+                        healBtnDisplay = new StringBuilder("治疗§7(需要");
                         int[] coinNeeded = GenericHelper.coinConversion(getHealingCost(ply), false);
-                        String[] additionalStr = {" §r■铂 ", " §e■金 ", " §7■银 ", " §c■铜 "};
+                        String[] additionalStr = {"§r■铂", "§e■金", "§7■银", "§c■铜"};
                         for (int index = 0; index < 4; index++) {
                             if (coinNeeded[index] > 0) {
                                 healBtnDisplay.append(additionalStr[index].replace(
@@ -159,8 +159,8 @@ public class NPCListener implements Listener {
                     }
                 }
                 // buttons
-                comps.add(new VexButton("HEAL", healBtnDisplay.toString(), bg, bg, 50, h / 3 - 30, btnW, 17));
-                comps.add(new VexButton("CLOSE", "关闭", bg, bg, 74 + btnW, h / 3 - 30, 26, 17));
+                comps.add(new VexButton("HEAL", healBtnDisplay.toString(), bg, bg, 20, h / 3 - 30, btnW, 17));
+                comps.add(new VexButton("CLOSE", "关闭", bg, bg, 44 + btnW, h / 3 - 30, 26, 17));
                 break;
             }
             case "渔夫": {
@@ -260,7 +260,72 @@ public class NPCListener implements Listener {
         gui.addAllComponents(comps);
         VexViewAPI.openGui(ply, gui);
         // keep track of NPC GUI opened
-        ((List<Player>) EntityHelper.getMetadata(clickedNPC, "GUIViewers").value()).add(ply);
-        EntityHelper.setMetadata(ply, "NPCViewing", clickedNPC);
+        recordInteractingNPC(ply, clickedNPC);
+    }
+    @EventHandler(priority = EventPriority.LOW)
+    public void onVanillaTradeGuiOpen(InventoryOpenEvent evt) {
+        if (evt.getInventory().getType().equals(InventoryType.MERCHANT))
+            evt.setCancelled(true);
+    }
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onInteract(PlayerInteractEntityEvent evt) {
+        // ignore cases below
+        if (evt.isCancelled())
+            return;
+        Entity clickedNPC = evt.getRightClicked();
+        if (!clickedNPC.getScoreboardTags().contains("isNPC"))
+            return;
+        Player ply = evt.getPlayer();
+        if (ply.getScoreboardTags().contains("temp_useCD"))
+            return;
+        handleInteractNPC(ply, clickedNPC);
+    }
+    // below: secondary GUI and GUI button features
+    private void openShopGUI(Player ply, Entity NPC) {
+
+    }
+    private void openReforgeGui(Player ply) {
+
+    }
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onButtonClick(ButtonClickEvent evt) {
+        Player ply = evt.getPlayer();
+        MetadataValue NPCViewingMetadata = EntityHelper.getMetadata(ply, "NPCViewing");
+        if (NPCViewingMetadata == null)
+            return;
+        Entity NPCViewing = (Entity) NPCViewingMetadata.value();
+        Object btnID = evt.getButtonID();
+        ply.closeInventory();
+        if (btnID.equals("HELP")) {
+            handleInteractNPC(ply, NPCViewing);
+        }
+        else if (btnID.equals("SHOP")) {
+            openShopGUI(ply, NPCViewing);
+        }
+        else if (btnID.equals("HEAL")) {
+            int moneyRequired = getHealingCost(ply);
+            double plyMoney = PlayerHelper.getMoney(ply);
+            if (BossHelper.bossMap.size() > 0) {
+                ply.sendMessage("§cBOSS存活时无法使用护士治疗");
+            }
+            else if (plyMoney < moneyRequired) {
+                ply.sendMessage("§c您没有足够的钱。");
+            }
+            else if (moneyRequired < 10) {
+                ply.sendMessage("§r您没有受伤哦，无法进行治疗。");
+            } else {
+                plyMoney -= moneyRequired;
+                PlayerHelper.heal(ply, (int) (ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() - ply.getHealth()) );
+                PlayerHelper.setMoney(ply, plyMoney);
+            }
+        }
+        else if (btnID.equals("CURSE")) {
+            if (! WorldHelper.isDayTime(ply.getWorld()) ) {
+                BossHelper.spawnBoss(ply, BossHelper.BossType.SKELETRON);
+            }
+        }
+        else if (btnID.equals("REFORGE")) {
+            openReforgeGui(ply);
+        }
     }
 }
