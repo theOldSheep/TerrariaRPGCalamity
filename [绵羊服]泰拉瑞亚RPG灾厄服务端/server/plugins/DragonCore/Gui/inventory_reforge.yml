@@ -19,13 +19,18 @@ Functions:
   # 由于功能完全是在客户端实现的，所以客户端并不能直接知道变量的值，我们需要通过【方法.更新变量值】来向服务端同步变量值到客户端内
   # 文本内容需要用 ''包裹,不然mod无法识别这条公式
   update_variables: |-
-    方法.更新变量值('terraria_defence','terraria_money','terraria_accessory_amount');
+    方法.更新变量值('terraria_defence','terraria_accessory_amount');
     方法.延时(1000);
     方法.异步执行方法('update_variables');
+  update_variable_money: |-
+    方法.更新变量值('terraria_money');
+    方法.延时(200);
+    方法.异步执行方法('update_variable_money');
 
   # 界面开启之后会自动执行open，此时就可以开始更新变量啦
   open: |-
     方法.异步执行方法('update_variables');
+    方法.异步执行方法('update_variable_money');
     方法.设置变量值('GUI_slot_amount', '27');
     方法.设置变量值('reforge_btn_texture', 'gui/Reforge_0.png');
 

@@ -1,5 +1,6 @@
 package terraria.event.listener;
 
+import eos.moe.dragoncore.DragonCore;
 import lk.vexview.api.VexViewAPI;
 import lk.vexview.event.ButtonClickEvent;
 import lk.vexview.gui.VexGui;
@@ -8,6 +9,7 @@ import lk.vexview.gui.components.VexComponents;
 import lk.vexview.gui.components.VexText;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
@@ -317,6 +319,7 @@ public class NPCListener implements Listener {
         EntityHelper.setMetadata(ply, "firstSell", index);
         recordInteractingNPC(ply, NPC);
         ply.openInventory(shopInv);
+        ply.sendMessage("§a您可以按左键买卖单个物品，shift+左键买卖整组物品，或右键查看物品价格。");
     }
     private void openReforgeGui(Player ply, Villager NPC) {
         Inventory reforgeInv = Bukkit.createInventory(NPC, 27, "重铸");
@@ -325,7 +328,7 @@ public class NPCListener implements Listener {
                 continue;
             ItemStack placeholder = new ItemStack(Material.STAINED_GLASS_PANE);
             ItemMeta meta = placeholder.getItemMeta();
-            meta.setDisplayName("");
+            meta.setDisplayName("§a");
             placeholder.setItemMeta(meta);
             reforgeInv.setItem(i, placeholder);
         }
@@ -391,7 +394,7 @@ public class NPCListener implements Listener {
                     }
                     priceTipItem.setItemMeta(itemMeta);
                     reforgeInv.setItem(13, priceTipItem);
-                }, 1);
+        }, 1);
     }
     @EventHandler(priority = EventPriority.LOW)
     public void onInventoryDrag(InventoryDragEvent evt) {
@@ -408,12 +411,12 @@ public class NPCListener implements Listener {
     public void onInventoryClick(InventoryClickEvent evt) {
         InventoryView invView = evt.getView();
         Inventory upperInventory = invView.getTopInventory();
-        Inventory eventInventory = evt.getInventory();
         String title = upperInventory.getTitle();
         Player ply = (Player) invView.getPlayer();
+        boolean clickedInGui = evt.getRawSlot() == evt.getSlot();
         switch (title) {
             case "重铸": {
-                if (evt.getInventory().getTitle().equals("重铸")) {
+                if (clickedInGui) {
                     // reforge slot is not clicked
                     if (evt.getSlot() != 4) {
                         evt.setCancelled(true);
@@ -424,6 +427,7 @@ public class NPCListener implements Listener {
                                 double cost = ItemHelper.getReforgeCost(toReforge);
                                 double plyMoney = PlayerHelper.getMoney(ply);
                                 if (plyMoney >= cost) {
+                                    ply.playSound(ply.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
                                     // reforge
                                     String itemType = ItemHelper.splitItemName(toReforge)[1];
                                     ItemStack reforged = ItemHelper.getItemFromDescription(itemType, true);
@@ -447,19 +451,18 @@ public class NPCListener implements Listener {
                     return;
                 }
                 ItemStack clickedItem = evt.getCurrentItem();
-                Bukkit.broadcastMessage(clickedItem + "");
                 if (clickedItem == null || clickedItem.getType() == Material.AIR) {
                     return;
                 }
                 // clicked in the shop GUI
+                int firstSell = firstSellMetadata.asInt();
                 int basicWorth = ItemHelper.getWorth(clickedItem);
                 int clickType = 0;
                 if (evt.getClick() == ClickType.LEFT) clickType = 1;
                 else if (evt.getClick() == ClickType.SHIFT_LEFT) clickType = 2;
                 if (clickType > 0) {
                     double plyMoney = PlayerHelper.getMoney(ply);
-                    int firstSell = firstSellMetadata.asInt();
-                    if (eventInventory.getTitle().equals("商店")) {
+                    if (clickedInGui) {
                         // buy back
                         if (evt.getSlot() >= firstSell) {
                             int amountBuyBack = Math.min(clickType == 1 ? 1 : clickedItem.getAmount(),
@@ -509,7 +512,11 @@ public class NPCListener implements Listener {
                         PlayerHelper.setMoney(ply, plyMoney + amountSold * basicWorth);
                     }
                 }
-                PlayerHelper.sendActionBar(ply, "§a物品单价: " +
+                // if the player is inspecting an item sold, its price should be 5 times the basic worth.
+                else if (clickedInGui && evt.getSlot() < firstSell) {
+                    basicWorth *= 5;
+                }
+                PlayerHelper.sendActionBar(ply, "§a物品价值: " +
                         GenericHelper.getCoinDisplay(GenericHelper.coinConversion(basicWorth, false)));
                 break;
             }
