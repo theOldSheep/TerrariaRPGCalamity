@@ -13,15 +13,18 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.NPC;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.DoubleChestInventory;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
 import org.omg.CORBA.TypeCodePackage.BadKind;
@@ -35,6 +38,7 @@ import java.util.List;
 import java.util.Set;
 
 public class NPCListener implements Listener {
+    // some listeners to prevent bug
     public void recordInteractingNPC(Player ply, Entity NPC) {
         if (NPC != null) {
             ((HashSet<Player>) EntityHelper.getMetadata(NPC, "GUIViewers").value()).add(ply);
@@ -49,7 +53,14 @@ public class NPCListener implements Listener {
     }
     @EventHandler(priority = EventPriority.HIGH)
     public void onInventoryClose(InventoryCloseEvent evt) {
-        recordInteractingNPC((Player) evt.getPlayer(), null);
+        Player ply = (Player) evt.getPlayer();
+        recordInteractingNPC(ply, null);
+        Inventory closedInv = evt.getInventory();
+        if (closedInv.getTitle().equals("重铸")) {
+            ItemStack reforgedItem = closedInv.getItem(4);
+            if (reforgedItem != null && reforgedItem.getType() != Material.AIR)
+                PlayerHelper.giveItem(ply, reforgedItem, true);
+        }
     }
     @EventHandler(priority = EventPriority.HIGH)
     public void onDisconnect(PlayerQuitEvent evt) {
@@ -280,12 +291,47 @@ public class NPCListener implements Listener {
             return;
         handleInteractNPC(ply, clickedNPC);
     }
-    // below: secondary GUI and GUI button features
-    private void openShopGUI(Player ply, Entity NPC) {
-
+    // below: GUI button features
+    private int fillShopGui(Player ply, Inventory shopInv, int index, ConfigurationSection shopSection) {
+        for (String gameProgress : shopSection.getKeys(false)) {
+            // for event only scenarios
+            if ( (Event.currentEvent + "事件").equals(gameProgress) )
+                index = fillShopGui(ply, shopInv, index, shopSection.getConfigurationSection(gameProgress));
+            // if the trade is available
+            if (gameProgress.equals("default") || PlayerHelper.hasDefeated(ply, gameProgress)) {
+                List<String> itemsSold = shopSection.getStringList(gameProgress);
+                for (String itemToSellDescription : itemsSold) {
+                    ItemStack itemToSell = ItemHelper.getItemFromDescription(itemToSellDescription, false);
+                    shopInv.setItem(index ++, itemToSell);
+                }
+            }
+        }
+        return index;
     }
-    private void openReforgeGui(Player ply) {
-
+    private void openShopGUI(Player ply, Villager NPC) {
+        Inventory shopInv = Bukkit.createInventory(NPC, 54, "商店");
+        String NPCType = NPC.getName();
+        ConfigurationSection shopSection = TerrariaHelper.NPCConfig.getConfigurationSection("shops." + NPCType);
+        int index = fillShopGui(ply, shopInv, 0, shopSection);
+        // open inv and setup variables
+        EntityHelper.setMetadata(ply, "firstSell", index);
+        recordInteractingNPC(ply, NPC);
+        ply.openInventory(shopInv);
+    }
+    private void openReforgeGui(Player ply, Villager NPC) {
+        Inventory reforgeInv = Bukkit.createInventory(NPC, 27, "重铸");
+        for (int i = 0; i < 27; i ++) {
+            if (i == 4)
+                continue;
+            ItemStack placeholder = new ItemStack(Material.STAINED_GLASS_PANE);
+            ItemMeta meta = placeholder.getItemMeta();
+            meta.setDisplayName("");
+            placeholder.setItemMeta(meta);
+            reforgeInv.setItem(i, placeholder);
+        }
+        // open inv and setup variables
+        recordInteractingNPC(ply, NPC);
+        ply.openInventory(reforgeInv);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onButtonClick(ButtonClickEvent evt) {
@@ -293,7 +339,7 @@ public class NPCListener implements Listener {
         MetadataValue NPCViewingMetadata = EntityHelper.getMetadata(ply, "NPCViewing");
         if (NPCViewingMetadata == null)
             return;
-        Entity NPCViewing = (Entity) NPCViewingMetadata.value();
+        Villager NPCViewing = (Villager) NPCViewingMetadata.value();
         Object btnID = evt.getButtonID();
         ply.closeInventory();
         if (btnID.equals("HELP")) {
@@ -325,7 +371,148 @@ public class NPCListener implements Listener {
             }
         }
         else if (btnID.equals("REFORGE")) {
-            openReforgeGui(ply);
+            openReforgeGui(ply, NPCViewing);
+        }
+    }
+    // below: secondary GUI (shop, reforge) features
+    private void updateReforgeInventory(Inventory reforgeInv) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                () -> {
+                    ItemStack itemReforge = reforgeInv.getItem(4);
+                    ItemStack priceTipItem = reforgeInv.getItem(13);
+                    ItemMeta itemMeta = priceTipItem.getItemMeta();
+                    if (itemReforge == null || itemReforge.getType() == Material.AIR || ! ItemHelper.canReforge(itemReforge)) {
+                        itemMeta.setDisplayName("§c物品无法重铸");
+                    } else {
+                        String reforgeCost = GenericHelper.getCoinDisplay(
+                                GenericHelper.coinConversion(
+                                        ItemHelper.getReforgeCost(itemReforge), false));
+                        itemMeta.setDisplayName("§r花费:" + reforgeCost);
+                    }
+                    priceTipItem.setItemMeta(itemMeta);
+                    reforgeInv.setItem(13, priceTipItem);
+                }, 1);
+    }
+    @EventHandler(priority = EventPriority.LOW)
+    public void onInventoryDrag(InventoryDragEvent evt) {
+        InventoryView invView = evt.getView();
+        Inventory upperInventory = invView.getTopInventory();
+        String title = upperInventory.getTitle();
+        switch (title) {
+            case "重铸":
+            case "商店":
+                evt.setCancelled(true);
+        }
+    }
+    @EventHandler(priority = EventPriority.LOW)
+    public void onInventoryClick(InventoryClickEvent evt) {
+        InventoryView invView = evt.getView();
+        Inventory upperInventory = invView.getTopInventory();
+        Inventory eventInventory = evt.getInventory();
+        String title = upperInventory.getTitle();
+        Player ply = (Player) invView.getPlayer();
+        switch (title) {
+            case "重铸": {
+                if (evt.getInventory().getTitle().equals("重铸")) {
+                    // reforge slot is not clicked
+                    if (evt.getSlot() != 4) {
+                        evt.setCancelled(true);
+                        // attempt to reforge
+                        if (evt.getSlot() == 13) {
+                            ItemStack toReforge = upperInventory.getItem(4);
+                            if (ItemHelper.canReforge(toReforge)) {
+                                double cost = ItemHelper.getReforgeCost(toReforge);
+                                double plyMoney = PlayerHelper.getMoney(ply);
+                                if (plyMoney >= cost) {
+                                    // reforge
+                                    String itemType = ItemHelper.splitItemName(toReforge)[1];
+                                    ItemStack reforged = ItemHelper.getItemFromDescription(itemType, true);
+                                    upperInventory.setItem(4, reforged);
+                                    // money
+                                    PlayerHelper.setMoney(ply, plyMoney - cost);
+                                }
+                            }
+                        }
+                    }
+                }
+                updateReforgeInventory(upperInventory);
+                break;
+            }
+            case "商店": {
+                evt.setCancelled(true);
+                MetadataValue firstSellMetadata = EntityHelper.getMetadata(ply, "firstSell");
+                // if the GUI variable is not valid, close inventory
+                if (firstSellMetadata == null) {
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), ply::closeInventory, 1);
+                    return;
+                }
+                ItemStack clickedItem = evt.getCurrentItem();
+                Bukkit.broadcastMessage(clickedItem + "");
+                if (clickedItem == null || clickedItem.getType() == Material.AIR) {
+                    return;
+                }
+                // clicked in the shop GUI
+                int basicWorth = ItemHelper.getWorth(clickedItem);
+                int clickType = 0;
+                if (evt.getClick() == ClickType.LEFT) clickType = 1;
+                else if (evt.getClick() == ClickType.SHIFT_LEFT) clickType = 2;
+                if (clickType > 0) {
+                    double plyMoney = PlayerHelper.getMoney(ply);
+                    int firstSell = firstSellMetadata.asInt();
+                    if (eventInventory.getTitle().equals("商店")) {
+                        // buy back
+                        if (evt.getSlot() >= firstSell) {
+                            int amountBuyBack = Math.min(clickType == 1 ? 1 : clickedItem.getAmount(),
+                                    (int) (plyMoney / basicWorth));
+                            if (amountBuyBack <= 0)
+                                PlayerHelper.sendActionBar(ply, "§c您的余额不足以买回该物品。");
+                            else {
+                                int amountLeft = clickedItem.getAmount() - amountBuyBack;
+                                clickedItem.setAmount(amountBuyBack);
+                                PlayerHelper.giveItem(ply, clickedItem, true);
+                                clickedItem.setAmount(amountLeft);
+                                // money
+                                PlayerHelper.setMoney(ply, plyMoney - amountBuyBack * basicWorth);
+                            }
+                        }
+                        // buy
+                        else {
+                            basicWorth *= 5;
+                            int amountBuy = Math.min(clickType == 1 ? 1 : clickedItem.getMaxStackSize(),
+                                    (int) (plyMoney / basicWorth));
+                            if (amountBuy <= 0)
+                                PlayerHelper.sendActionBar(ply, "§c您的余额不足以购买该物品。");
+                            else {
+                                ItemStack itemBought = clickedItem.clone();
+                                itemBought.setAmount(amountBuy);
+                                PlayerHelper.giveItem(ply, itemBought, true);
+                                // money
+                                PlayerHelper.setMoney(ply, plyMoney - amountBuy * basicWorth);
+                            }
+                        }
+                    }
+                    // clicked in player's own inventory, sell
+                    else {
+                        int amountSold = clickType == 1 ? 1 : clickedItem.getAmount();
+                        ItemStack itemSold = clickedItem.clone();
+                        itemSold.setAmount(amountSold);
+                        // item rearrangement
+                        clickedItem.setAmount(clickedItem.getAmount() - amountSold);
+                        for (int idx = firstSell; idx < 54; idx ++) {
+                            ItemStack currSlot = upperInventory.getItem(idx);
+                            if (currSlot == null || currSlot.getType() == Material.AIR) {
+                                upperInventory.setItem(idx, itemSold);
+                                break;
+                            }
+                        }
+                        // money
+                        PlayerHelper.setMoney(ply, plyMoney + amountSold * basicWorth);
+                    }
+                }
+                PlayerHelper.sendActionBar(ply, "§a物品单价: " +
+                        GenericHelper.getCoinDisplay(GenericHelper.coinConversion(basicWorth, false)));
+                break;
+            }
         }
     }
 }

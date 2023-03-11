@@ -148,6 +148,7 @@ public class GenericHelper {
             return this;
         }
     }
+    public static String[] defaultMoneySuffixes = {" §r■铂 ", " §e■金 ", " §7■银 ", " §c■铜 "};
 
     public static String trimText(String textToTrim) {
         if (textToTrim == null) return "";
@@ -192,6 +193,19 @@ public class GenericHelper {
         }
         result[3] = copper;
         return result;
+    }
+    public static String getCoinDisplay(int[] coins) {
+        return getCoinDisplay(coins, defaultMoneySuffixes);
+    }
+    public static String getCoinDisplay(int[] coins, String[] formatStr) {
+        StringBuilder result = new StringBuilder();
+        for (int index = 0; index < 4; index++) {
+            if (coins[index] > 0) {
+                result.append(formatStr[index].replace(
+                        "■", coins[index] + ""));
+            }
+        }
+        return result.toString();
     }
     public static void dropMoney(Location loc, int amount, boolean copperOrRaw) {
         int amountCopper;

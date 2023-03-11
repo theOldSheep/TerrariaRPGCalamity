@@ -241,6 +241,9 @@ public class ItemHelper {
         if (item == null) return 0;
         return getWorth(item.getItemMeta().getDisplayName());
     }
+    public static int getReforgeCost(ItemStack item) {
+        return (getWorth(item) * 5 / 4 / 100) * 100;
+    }
     public static String getItemCombatType(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null && meta.hasLore()) {
