@@ -5,7 +5,7 @@ terraria\util\GenericHelper$StrikeLineOptions.class
 terraria\util\BossHelper$1.class
 terraria\event\listener\PlayerJoinListener.class
 terraria\entity\npc\TerrariaNPCClothier.class
-terraria\entity\boss\Boss.class
+terraria\entity\boss\eoc\EyeOfCthulhu$AIPhase.class
 terraria\entity\monster\MonsterZombie.class
 terraria\event\listener\PlayerMovementListener$1.class
 terraria\util\EntityHelper$AimHelperOptions.class
@@ -26,6 +26,7 @@ terraria\util\ItemHelper$1.class
 terraria\util\BossHelper$BossType.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
 terraria\util\ItemUseHelper$1.class
+terraria\entity\boss\eoc\EyeOfCthulhu.class
 terraria\util\PlayerHelper$GameProgress.class
 terraria\util\BossHelper.class
 terraria\util\MonsterHelper$1.class
@@ -63,7 +64,9 @@ terraria\entity\npc\TerrariaNPCBlockSeller.class
 terraria\util\MonsterHelper.class
 terraria\event\listener\DamageListener.class
 terraria\util\DragoncoreHelper$SlotCallback.class
+terraria\entity\boss\BossHelper.class
 terraria\entity\others\TerrariaFishingHook.class
+terraria\event\listener\BossSpawnListener.class
 terraria\util\ItemHelper.class
 terraria\util\WorldHelper.class
 terraria\event\listener\NPCListener.class
@@ -84,6 +87,7 @@ terraria\worldgen\overworld\NoiseGeneratorTest.class
 terraria\util\NPCHelper.class
 terraria\worldgen\overworld\TreePopulator$1.class
 terraria\worldgen\overworld\OverworldBiomeGenerator.class
+terraria\entity\boss\eoc\EyeOfCthulhu$1.class
 terraria\entity\monster\MonsterHelper.class
 terraria\entity\others\TerrariaFishingHook$FishingState.class
 terraria\worldgen\overworld\TreePopulator.class

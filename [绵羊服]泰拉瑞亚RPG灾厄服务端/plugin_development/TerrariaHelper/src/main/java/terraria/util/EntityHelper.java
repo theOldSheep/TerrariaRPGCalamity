@@ -679,7 +679,7 @@ public class EntityHelper {
             case "石巨人头": {
                 if (dmg >= victim.getHealth()) {
                     victim.addScoreboardTag("noDamage");
-                    ArrayList<Entity> bossParts = BossHelper.bossMap.get("石巨人");
+                    ArrayList<LivingEntity> bossParts = BossHelper.bossMap.get("石巨人");
                     if (bossParts != null) {
                         bossParts.get(0).removeScoreboardTag("noDamage");
                         return false;
@@ -731,7 +731,7 @@ public class EntityHelper {
                     // phrase 2 only
                     if (damager.getScoreboardTags().contains("isMonster")) {
                         damager.remove();
-                        ArrayList<Entity> bossList = BossHelper.bossMap.get("猪鲨公爵");
+                        ArrayList<LivingEntity> bossList = BossHelper.bossMap.get("猪鲨公爵");
                         if (bossList != null) {
                             Entity dukeFishron = bossList.get(0);
                             // TODO: spawn a tornado
@@ -775,10 +775,10 @@ public class EntityHelper {
             Player vPly = (Player) v;
             vPly.setVelocity(new Vector());
             int respawnTime = 15;
-            for (ArrayList<Entity> bossList : BossHelper.bossMap.values()) {
-                HashMap<String, Double> targets = (HashMap<String, Double>) getMetadata(bossList.get(0), "targets").value();
-                if (targets.containsKey(vPly.getName())) {
-                    respawnTime = Math.max(respawnTime, targets.size() * 15);
+            for (ArrayList<LivingEntity> bossList : BossHelper.bossMap.values()) {
+                HashMap<Player, Double> targets = (HashMap<Player, Double>) getMetadata(bossList.get(0), "targets").value();
+                if (targets.containsKey(vPly)) {
+                    respawnTime = Math.max(respawnTime, Math.min(targets.size() * 15, 75));
                 }
             }
             int moneyDrop = (int) Math.floor(PlayerHelper.getMoney(vPly) / 100);
@@ -1148,10 +1148,14 @@ public class EntityHelper {
         if (victimScoreboardTags.contains("isBOSS")) {
             if (isDirectAttackDamage) {
                 MetadataValue bossTargets = getMetadata(victim, "targets");
-                boolean canDamageBoss = bossTargets == null ||
-                        (((HashMap<String, Double>) (bossTargets.value())).containsKey(damageSource.getName()));
+                boolean canProperlyDamage = false;
+                if (damageSource instanceof Player) {
+                    if ( bossTargets == null ||
+                            (((HashMap<Player, Double>) (bossTargets.value())).containsKey(damageSource)) )
+                        canProperlyDamage = true;
+                }
                 // damage source of a boss is not a target
-                if (!(damageSource instanceof Player && canDamageBoss))
+                if (!canProperlyDamage)
                     defence = 999999999;
             } else {
                 // if the damage source of a boss is neither direct attack, thorn nor debuff (that is, lava etc.)
@@ -1385,10 +1389,10 @@ public class EntityHelper {
             if (victimScoreboardTags.contains("isBOSS") && damageSource instanceof Player) {
                 MetadataValue temp = getMetadata(damageTaker, "targets");
                 if (temp != null) {
-                    HashMap<String, Double> targets = (HashMap<String, Double>) temp.value();
-                    String plyName = damageSource.getName();
-                    if (targets.containsKey(plyName))
-                        targets.put(plyName, targets.get(plyName) + dmg);
+                    HashMap<Player, Double> targets = (HashMap<Player, Double>) temp.value();
+                    Player ply = (Player) damageSource;
+                    if (targets.containsKey(ply))
+                        targets.put(ply, targets.get(ply) + dmg);
                 }
             }
             if (damageTaker.getHealth() <= dmg) {

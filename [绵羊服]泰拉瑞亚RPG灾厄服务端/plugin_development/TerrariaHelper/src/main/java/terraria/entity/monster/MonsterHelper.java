@@ -224,7 +224,7 @@ public class MonsterHelper {
         // health bonus for the entity
         if (typeConfigSection.getBoolean("hasHealthMulti", false)) {
             String owningBoss = typeConfigSection.getString("owningBoss");
-            ArrayList<org.bukkit.entity.Entity> bossList = null;
+            ArrayList<LivingEntity> bossList = null;
             if (owningBoss != null) {
                 bossList = BossHelper.getBossList(owningBoss);
             }
@@ -410,7 +410,7 @@ public class MonsterHelper {
         // boss summoned monsters should attack the boss's target
         String owningBoss = TerrariaHelper.mobSpawningConfig.getString("mobInfo." + type + ".owningBoss");
         if (owningBoss != null) {
-            ArrayList<org.bukkit.entity.Entity> bossLst = BossHelper.getBossList(type);
+            ArrayList<LivingEntity> bossLst = BossHelper.getBossList(type);
             if (bossLst != null) {
                 org.bukkit.entity.Entity boss = bossLst.get(0);
                 return (Player) EntityHelper.getMetadata(boss, "target").value();
@@ -459,7 +459,49 @@ public class MonsterHelper {
         }
         return target;
     }
-    // TODO
+    private static void handleMonsterDrop(LivingEntity monsterBkt) {
+        String type = GenericHelper.trimText(monsterBkt.getName());
+        ArrayList<String> toDrop = new ArrayList<>();
+        // celestial pillar
+        if (monsterBkt.getScoreboardTags().contains("isPillar")) {
+            String dropType = type.replace("柱", "碎片");
+            ItemStack itemToDrop = ItemHelper.getItemFromDescription(dropType);
+            for (int i = 0; i < 25; i ++) {
+                // loop 25 times, each time dropping 1-3
+                itemToDrop.setAmount( (int) (1 + Math.random() * 3) );
+                Location dropLoc = monsterBkt.getEyeLocation().add(
+                        Math.random() * 10 - 5, Math.random() * 16 - 8, Math.random() * 10 - 5);
+                ItemHelper.dropItem(dropLoc, itemToDrop);
+            }
+        }
+        // mimic extra loot
+        else {
+            switch (type) {
+                case "神圣宝箱怪":
+                case "腐化宝箱怪": {
+                    String[] candidateDrops = new String[]{"魔法箭袋", "再生手环", "泰坦手套", "炼金石", "十字项链",
+                            type.equals("神圣宝箱怪") ? "代达罗斯风暴弓" : "腐香囊"};
+                    toDrop.add(candidateDrops[(int) (Math.random() * candidateDrops.length)]);
+                    break;
+                }
+            }
+            // default monsters
+            String parentType = EntityHelper.getMetadata(monsterBkt, "parentType").asString();
+            toDrop.addAll(TerrariaHelper.entityConfig.getStringList(type + ".drop"));
+            if (!parentType.equals(type)) {
+                toDrop.addAll(TerrariaHelper.entityConfig.getStringList(parentType + ".drop"));
+            }
+        }
+        for (String dropDesc : toDrop) {
+            ItemStack itemToDrop = ItemHelper.getItemFromDescription(dropDesc);
+            if (itemToDrop != null && itemToDrop.getAmount() > 0 && itemToDrop.getType() != Material.AIR) {
+                if (dropDesc.startsWith("铜币"))
+                    GenericHelper.dropMoney(monsterBkt.getLocation(), itemToDrop.getAmount());
+                else
+                    ItemHelper.dropItem(monsterBkt.getLocation(), itemToDrop);
+            }
+        }
+    }
     public static int monsterAI(EntityInsentient monster, double defaultMovementSpeed, Player target, String type,
                                 int indexAI, HashMap<String, Object> extraVariables, boolean isMonsterPart) {
         monster.setGoalTarget( ((CraftPlayer) target).getHandle(), EntityTargetEvent.TargetReason.CUSTOM, false);
@@ -480,7 +522,7 @@ public class MonsterHelper {
             }
         }
         monsterBkt.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(defaultMovementSpeed * speedMultiKnockback);
-        // the monster's additional AI
+        // the monster's additional AI and drop
         boolean hasContactDamage = true;
         if (!isMonsterPart) {
             switch (type) {
@@ -1315,6 +1357,11 @@ public class MonsterHelper {
                     }
                     break;
                 }
+            }
+            // drop
+            if (monsterBkt.getHealth() <= 0d && ! monsterBkt.getScoreboardTags().contains("dropHandled")) {
+                handleMonsterDrop(monsterBkt);
+                monsterBkt.addScoreboardTag("dropHandled");
             }
         }
         if (hasContactDamage && monster.getHealth() > 0) {

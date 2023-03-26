@@ -22,6 +22,7 @@ public class DamageListener implements Listener {
         e.setCancelled(true);
         Entity victim = e.getEntity();
         Set<String> victimScoreboardTags = victim.getScoreboardTags();
+        if (victimScoreboardTags.contains("isBoss")) return;
         switch (e.getCause()) {
             case SUFFOCATION:
                 if (victim.getType() == EntityType.SLIME) break;

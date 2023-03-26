@@ -233,8 +233,8 @@ public class MonsterHelper {
             disguise.setEntity(entity);
             DisguiseAPI.disguiseEntity(entity, disguise);
         }
-        // set mother type
-        EntityHelper.setMetadata(entity, "motherType", type);
+        // set parent type
+        EntityHelper.setMetadata(entity, "parentType", type);
         return entity;
     }
 }

@@ -379,22 +379,19 @@ public class NPCListener implements Listener {
     }
     // below: secondary GUI (shop, reforge) features
     private void updateReforgeInventory(Inventory reforgeInv) {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                () -> {
-                    ItemStack itemReforge = reforgeInv.getItem(4);
-                    ItemStack priceTipItem = reforgeInv.getItem(13);
-                    ItemMeta itemMeta = priceTipItem.getItemMeta();
-                    if (itemReforge == null || itemReforge.getType() == Material.AIR || ! ItemHelper.canReforge(itemReforge)) {
-                        itemMeta.setDisplayName("§c物品无法重铸");
-                    } else {
-                        String reforgeCost = GenericHelper.getCoinDisplay(
-                                GenericHelper.coinConversion(
-                                        ItemHelper.getReforgeCost(itemReforge), false));
-                        itemMeta.setDisplayName("§r花费:" + reforgeCost);
-                    }
-                    priceTipItem.setItemMeta(itemMeta);
-                    reforgeInv.setItem(13, priceTipItem);
-        }, 1);
+        ItemStack itemReforge = reforgeInv.getItem(4);
+        ItemStack priceTipItem = reforgeInv.getItem(13);
+        ItemMeta itemMeta = priceTipItem.getItemMeta();
+        if (itemReforge == null || itemReforge.getType() == Material.AIR || ! ItemHelper.canReforge(itemReforge)) {
+            itemMeta.setDisplayName("§c");
+        } else {
+            String reforgeCost = GenericHelper.getCoinDisplay(
+                    GenericHelper.coinConversion(
+                            ItemHelper.getReforgeCost(itemReforge), false));
+            itemMeta.setDisplayName("§r花费:" + reforgeCost);
+        }
+        priceTipItem.setItemMeta(itemMeta);
+        reforgeInv.setItem(13, priceTipItem);
     }
     @EventHandler(priority = EventPriority.LOW)
     public void onInventoryDrag(InventoryDragEvent evt) {
@@ -416,6 +413,7 @@ public class NPCListener implements Listener {
         boolean clickedInGui = evt.getRawSlot() == evt.getSlot();
         switch (title) {
             case "重铸": {
+                boolean hasUpdated = false;
                 if (clickedInGui) {
                     // reforge slot is not clicked
                     if (evt.getSlot() != 4) {
@@ -436,10 +434,15 @@ public class NPCListener implements Listener {
                                     PlayerHelper.setMoney(ply, plyMoney - cost);
                                 }
                             }
+                            // update reforge inventory now
+                            updateReforgeInventory(upperInventory);
+                            hasUpdated = true;
                         }
                     }
                 }
-                updateReforgeInventory(upperInventory);
+                if (! hasUpdated) {
+                    Bukkit.getScheduler().runTask(TerrariaHelper.getInstance(), () -> updateReforgeInventory(upperInventory) );
+                }
                 break;
             }
             case "商店": {
@@ -516,8 +519,9 @@ public class NPCListener implements Listener {
                 else if (clickedInGui && evt.getSlot() < firstSell) {
                     basicWorth *= 5;
                 }
-                PlayerHelper.sendActionBar(ply, "§a物品价值: " +
-                        GenericHelper.getCoinDisplay(GenericHelper.coinConversion(basicWorth, false)));
+                PlayerHelper.sendActionBar(ply, "§a§l物品价值: " +
+                        GenericHelper.getCoinDisplay(GenericHelper.coinConversion(basicWorth, false),
+                                new String[]{" §r§l■铂 ", " §e§l■金 ", " §7§l■银 ", " §c§l■铜 "}));
                 break;
             }
         }
