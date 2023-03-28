@@ -431,7 +431,7 @@ public class MinionSlime extends EntitySlime {
             case "星尘之龙": {
                 // get all segments
                 boolean isHeadSegment = true;
-                ArrayList<Entity> allSegments = new ArrayList<>(allMinions.size());
+                ArrayList<LivingEntity> allSegments = new ArrayList<>(allMinions.size());
                 for (Entity currMinion : allMinions) {
                     if (currMinion.isDead()) continue;
                     if (!GenericHelper.trimText(currMinion.getName()).equals(minionType)) continue;
@@ -439,7 +439,7 @@ public class MinionSlime extends EntitySlime {
                         isHeadSegment = false;
                         break;
                     }
-                    allSegments.add(currMinion);
+                    allSegments.add((LivingEntity) currMinion);
                 }
                 // if the segment is the head, handle strike and segments following
                 if (isHeadSegment) {

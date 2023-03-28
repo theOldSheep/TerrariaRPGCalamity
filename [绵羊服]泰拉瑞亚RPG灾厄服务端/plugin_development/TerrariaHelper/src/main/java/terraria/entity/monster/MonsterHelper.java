@@ -884,7 +884,7 @@ public class MonsterHelper {
                 }
                 case "飞龙":
                 case "骨蛇": {
-                    ArrayList<org.bukkit.entity.Entity> segments = (ArrayList<org.bukkit.entity.Entity>) extraVariables.get("attachments");
+                    ArrayList<org.bukkit.entity.LivingEntity> segments = (ArrayList<org.bukkit.entity.LivingEntity>) extraVariables.get("attachments");
                     for (org.bukkit.entity.Entity entity : segments) {
                         ((LivingEntity) entity).setHealth(monsterBkt.getHealth());
                     }

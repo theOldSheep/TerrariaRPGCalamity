@@ -3,6 +3,7 @@ package terraria.entity;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.entity.EntityType;
 import terraria.entity.boss.eoc.EyeOfCthulhu;
+import terraria.entity.boss.eow.EaterOfWorld;
 import terraria.entity.minion.MinionCaveSpider;
 import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
@@ -17,6 +18,7 @@ class from https://www.spigotmc.org/threads/nms-tutorials-2-custom-nms-entities-
 public enum CustomEntities {
 
     BOSS_EOC           ("EyeOfCthulhu",     55,  EntityType.SLIME,           EntitySlime.class,      EyeOfCthulhu.class),
+    BOSS_EOW           ("EaterOfWorlds",    55,  EntityType.SLIME,           EntitySlime.class,      EaterOfWorld.class),
     MINION_CAVE_SPIDER ("MinionCaveSpider", 59,  EntityType.CAVE_SPIDER,     EntityCaveSpider.class, MinionCaveSpider.class),
     MINION_HUSK        ("MinionHusk",       23,  EntityType.HUSK,            EntityZombieHusk.class, MinionHusk .class),
     MINION_SLIME       ("MinionSlime",      55,  EntityType.SLIME,           EntitySlime.class,      MinionSlime.class),

@@ -22,7 +22,7 @@ public class EyeOfCthulhu extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EYE_OF_CTHULHU;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 9516;
+    public static final double BASIC_HEALTH = 12132;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
@@ -52,7 +52,7 @@ public class EyeOfCthulhu extends EntitySlime {
             else {
                 // update target
                 target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                        false, BIOME_REQUIRED, targetMap.keySet());
+                        IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
                 // AI
                 if (ticksLived % 3 == 0) {
                     double healthRatio = this.getHealth() / this.getMaxHealth();
@@ -101,7 +101,7 @@ public class EyeOfCthulhu extends EntitySlime {
                                     break;
                                 }
                                 case SUMMON: {
-                                    Vector velocity = target.getLocation().add(0, 8, 0).subtract(bukkitEntity.getLocation()).toVector();
+                                    Vector velocity = target.getLocation().add(0, 12, 0).subtract(bukkitEntity.getLocation()).toVector();
                                     velocity.multiply(1d / 10);
                                     bukkitEntity.setVelocity(velocity);
                                     if (indexAI >= 5) {
@@ -128,7 +128,7 @@ public class EyeOfCthulhu extends EntitySlime {
                                 ((LivingEntity) bukkitEntity).getEyeLocation(), target);
                         rageRotationIndex --;
                         if (rageRotationIndex == 0) {
-                            attrMap.put("damage", 116d);
+                            attrMap.put("damage", 132d);
                             attrMap.put("defence", 0d);
                             bossbar.color = BossBattle.BarColor.RED;
                             bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
@@ -180,7 +180,7 @@ public class EyeOfCthulhu extends EntitySlime {
                                                         .add(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5)
                                                         .subtract(bukkitEntity.getLocation()).toVector();
                                                 bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1.5f);
-                                                direction.multiply(0.05);
+                                                direction.multiply(0.06);
                                                 bukkitEntity.setVelocity(direction);
                                             }
                                         }
@@ -196,9 +196,9 @@ public class EyeOfCthulhu extends EntitySlime {
                                     }
                                     // hover if health is relatively high
                                     else {
-                                        Vector velocity = target.getLocation().add(0, 10, 0)
+                                        Vector velocity = target.getLocation().add(0, 16, 0)
                                                 .subtract(bukkitEntity.getLocation()).toVector();
-                                        velocity.multiply(0.075);
+                                        velocity.multiply(0.025);
                                         bukkitEntity.setVelocity(velocity);
                                         if (indexAI > 12) {
                                             indexAI = -1;
@@ -285,9 +285,9 @@ public class EyeOfCthulhu extends EntitySlime {
                                     }
                                     // hover if health is relatively high
                                     else {
-                                        Vector velocity = target.getLocation().add(0, 12, 0)
+                                        Vector velocity = target.getLocation().add(0, 20, 0)
                                                 .subtract(bukkitEntity.getLocation()).toVector();
-                                        velocity.multiply(0.06);
+                                        velocity.multiply(0.025);
                                         bukkitEntity.setVelocity(velocity);
                                         if (indexAI > 8) {
                                             indexAI = -1;
@@ -339,7 +339,7 @@ public class EyeOfCthulhu extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 92d);
+            attrMap.put("damage", 102d);
             attrMap.put("damageMeleeMulti", 1d);
             attrMap.put("damageMulti", 1d);
             attrMap.put("defence", 24d);
@@ -354,6 +354,7 @@ public class EyeOfCthulhu extends EntitySlime {
         // init boss bar
         bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                 BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
+        EntityHelper.setMetadata(bukkitEntity, "bossbar", targetMap);
         // init target map
         {
             targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
@@ -389,6 +390,7 @@ public class EyeOfCthulhu extends EntitySlime {
         BossHelper.bossMap.remove(BOSS_TYPE.msgName);
         // if the boss has been defeated properly
         if (getMaxHealth() > 10) {
+            Bukkit.broadcastMessage("§d§l" + BOSS_TYPE.msgName + " 被击败了.");
             // send out loot
             double[] healthInfo = terraria.entity.boss.BossHelper.getHealthInfo(bossParts);
             double dmgDealtReq = healthInfo[1] / targetMap.size() / 10;
@@ -414,6 +416,14 @@ public class EyeOfCthulhu extends EntitySlime {
         motZ /= 0.91;
         // update boss bar and dynamic DR
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);
+        // load nearby chunks
+        {
+            for (int i = -2; i <= 2; i ++)
+                for (int j = -2; j <= 2; j ++) {
+                    org.bukkit.Chunk currChunk = bukkitEntity.getLocation().add(i << 4, 0, j << 4).getChunk();
+                    currChunk.load();
+                }
+        }
         // AI
         AI();
     }

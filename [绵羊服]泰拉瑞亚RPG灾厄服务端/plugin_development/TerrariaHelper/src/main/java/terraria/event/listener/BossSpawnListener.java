@@ -18,6 +18,7 @@ public class BossSpawnListener implements Listener {
     static HashMap<String, BossHelper.BossType> summonItems = new HashMap<>();
     static {
         summonItems.put("可疑的眼球", BossHelper.BossType.EYE_OF_CTHULHU);
+        summonItems.put("虫饵", BossHelper.BossType.EATER_OF_WORLDS);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {

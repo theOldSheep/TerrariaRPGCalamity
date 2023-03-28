@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import terraria.entity.boss.eoc.EyeOfCthulhu;
+import terraria.entity.boss.eow.EaterOfWorld;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +45,13 @@ public class BossHelper {
             case EYE_OF_CTHULHU: {
                 if (EyeOfCthulhu.canSpawn(target)) {
                     new EyeOfCthulhu(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case EATER_OF_WORLDS: {
+                if (EaterOfWorld.canSpawn(target)) {
+                    new EaterOfWorld(target, new ArrayList<>(), 0);
                     spawnedSuccessfully = true;
                 }
                 break;

@@ -23,6 +23,7 @@ terraria\worldgen\overworld\OverworldCaveGenerator.class
 terraria\TerrariaHelper$Constants.class
 terraria\event\listener\ArrowHitListener.class
 terraria\util\ItemHelper$1.class
+terraria\entity\boss\eow\EaterOfWorld.class
 terraria\util\BossHelper$BossType.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
 terraria\util\ItemUseHelper$1.class
@@ -95,6 +96,7 @@ terraria\util\YmlHelper.class
 terraria\worldgen\overworld\OrePopulator.class
 terraria\util\MathHelper.class
 terraria\worldgen\Interpolate.class
+terraria\entity\boss\eow\EaterOfWorld$1.class
 terraria\util\GenericHelper.class
 terraria\entity\minion\MinionCaveSpider.class
 terraria\entity\CustomEntities.class

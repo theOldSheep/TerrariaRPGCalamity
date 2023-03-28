@@ -1667,11 +1667,16 @@ public class EntityHelper {
         }
         return targetLoc;
     }
-    public static void handleSegmentsFollow(List<Entity> segments, WormSegmentMovementOptions moveOption) {
-        for (int i = 1; i < segments.size(); i ++) {
-            Entity segmentLast = segments.get(i - 1);
-            Entity segmentCurrent = segments.get(i);
-            Entity segmentNext = segments.get(Math.min(i + 1, segments.size()) - 1);
+    public static void handleSegmentsFollow(List<LivingEntity> segments, WormSegmentMovementOptions moveOption) {
+        handleSegmentsFollow(segments, moveOption, 0);
+    }
+    public static void handleSegmentsFollow(List<LivingEntity> segments, WormSegmentMovementOptions moveOption, int startIndex) {
+        for (int i = (startIndex + 1) ; i < segments.size(); i ++) {
+            LivingEntity segmentCurrent = segments.get(i);
+            if (segmentCurrent.getHealth() <= 0d || segmentCurrent.isDead())
+                return;
+            LivingEntity segmentLast = segments.get(i - 1);
+            LivingEntity segmentNext = segments.get(Math.min(i + 1, segments.size()) - 1);
             Vector segDVec = segmentLast.getLocation().subtract(segmentNext.getLocation()).toVector().normalize();
             Vector followDir = segmentLast.getLocation().subtract(segmentCurrent.getLocation()).toVector().normalize();
             Vector dVec = segDVec.multiply(moveOption.straighteningMultiplier)
