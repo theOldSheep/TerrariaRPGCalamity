@@ -110,7 +110,7 @@ public class EaterOfWorld extends EntitySlime {
             actualVelocity = new Vector(1, 0, 0);
             actualLen = 1;
         }
-        actualVelocity.multiply( (1.5 * Math.min(
+        actualVelocity.multiply( (0.75 * Math.min(
                 3 / Math.min((double) totalTickSeg / 10, 3d), 2) ) / actualLen);
         bukkitEntity.setVelocity(actualVelocity);
         // increase indexAI
@@ -150,6 +150,7 @@ public class EaterOfWorld extends EntitySlime {
             if (target == null) {
                 for (LivingEntity segment : bossParts) {
                     segment.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
+                    segment.setHealth(0d);
                     segment.remove();
                 }
                 return;
@@ -160,12 +161,14 @@ public class EaterOfWorld extends EntitySlime {
                 target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
                         IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
                 // attack
-                boolean isHead = (index == 0 || bossParts.get(index - 1).getHealth() < 1e-5);
+                boolean isHead = index == 0 ||
+                        bossParts.get(index - 1).getHealth() < 1e-5 ||
+                        bossParts.get(index - 1).isDead();
                 if (isHead) {
                     // if this is the only segment nearby
                     int totalTickSegment = 1;
                     for (int idx = index + 1; idx < TOTAL_LENGTH; idx ++) {
-                        if (bossParts.get(idx).getHealth() <= 1e-5)
+                        if (bossParts.get(idx).getHealth() < 1e-5 || bossParts.get(idx).isDead())
                             break;
                         totalTickSegment ++;
                     }
@@ -300,17 +303,17 @@ public class EaterOfWorld extends EntitySlime {
         super.die();
         // modify the segment before and after it
         if (index > 0) {
-            LivingEntity e = bossParts.get(index - 1);
-            if (e.getHealth() > 1e-5) {
-                HashMap<String, Double> atm = EntityHelper.getAttrMap(e);
+            LivingEntity before = bossParts.get(index - 1);
+            if (before.getHealth() > 1e-5 && !before.isDead()) {
+                HashMap<String, Double> atm = EntityHelper.getAttrMap(before);
                 atm.put("damage", TAIL_DMG);
                 atm.put("defence", TAIL_DEF);
             }
         }
         if (index + 1 < TOTAL_LENGTH) {
-            LivingEntity e = bossParts.get(index + 1);
-            if (e.getHealth() > 1e-5) {
-                HashMap<String, Double> atm = EntityHelper.getAttrMap(e);
+            LivingEntity after = bossParts.get(index + 1);
+            if (after.getHealth() > 1e-5 && !after.isDead()) {
+                HashMap<String, Double> atm = EntityHelper.getAttrMap(after);
                 atm.put("damage", HEAD_DMG);
                 atm.put("defence", HEAD_DEF);
             }
@@ -318,7 +321,7 @@ public class EaterOfWorld extends EntitySlime {
         // check if all segments are defeated
         boolean defeated = true;
         for (LivingEntity entity : bossParts)
-            if (entity.getHealth() > 1e-5) {
+            if (entity.getHealth() > 1e-5 && !entity.isDead()) {
                 defeated = false;
                 break;
             }

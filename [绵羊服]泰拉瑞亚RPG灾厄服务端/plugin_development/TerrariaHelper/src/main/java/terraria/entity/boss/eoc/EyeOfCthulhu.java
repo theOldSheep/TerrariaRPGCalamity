@@ -101,7 +101,7 @@ public class EyeOfCthulhu extends EntitySlime {
                                     break;
                                 }
                                 case SUMMON: {
-                                    Vector velocity = target.getLocation().add(0, 12, 0).subtract(bukkitEntity.getLocation()).toVector();
+                                    Vector velocity = target.getLocation().add(0, 10, 0).subtract(bukkitEntity.getLocation()).toVector();
                                     velocity.multiply(1d / 10);
                                     bukkitEntity.setVelocity(velocity);
                                     if (indexAI >= 5) {
@@ -196,7 +196,7 @@ public class EyeOfCthulhu extends EntitySlime {
                                     }
                                     // hover if health is relatively high
                                     else {
-                                        Vector velocity = target.getLocation().add(0, 16, 0)
+                                        Vector velocity = target.getLocation().add(0, 12, 0)
                                                 .subtract(bukkitEntity.getLocation()).toVector();
                                         velocity.multiply(0.025);
                                         bukkitEntity.setVelocity(velocity);
@@ -285,7 +285,7 @@ public class EyeOfCthulhu extends EntitySlime {
                                     }
                                     // hover if health is relatively high
                                     else {
-                                        Vector velocity = target.getLocation().add(0, 20, 0)
+                                        Vector velocity = target.getLocation().add(0, 12, 0)
                                                 .subtract(bukkitEntity.getLocation()).toVector();
                                         velocity.multiply(0.025);
                                         bukkitEntity.setVelocity(velocity);

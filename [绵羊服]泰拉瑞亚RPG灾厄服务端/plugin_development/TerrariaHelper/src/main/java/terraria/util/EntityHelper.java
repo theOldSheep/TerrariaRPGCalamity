@@ -1673,7 +1673,7 @@ public class EntityHelper {
     public static void handleSegmentsFollow(List<LivingEntity> segments, WormSegmentMovementOptions moveOption, int startIndex) {
         for (int i = (startIndex + 1) ; i < segments.size(); i ++) {
             LivingEntity segmentCurrent = segments.get(i);
-            if (segmentCurrent.getHealth() <= 0d || segmentCurrent.isDead())
+            if (segmentCurrent.getHealth() < 1e-5 || segmentCurrent.isDead())
                 return;
             LivingEntity segmentLast = segments.get(i - 1);
             LivingEntity segmentNext = segments.get(Math.min(i + 1, segments.size()) - 1);
