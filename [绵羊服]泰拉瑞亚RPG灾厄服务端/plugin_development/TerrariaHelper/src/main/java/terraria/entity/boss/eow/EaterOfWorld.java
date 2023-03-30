@@ -31,7 +31,7 @@ public class EaterOfWorld extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    public static final int TOTAL_LENGTH = 70;
+    public static final int TOTAL_LENGTH = 79;
     public static final double
             HEAD_DMG = 264d, HEAD_DEF = 16d,
             BODY_DMG = 80d, BODY_DEF = 12d,
@@ -41,7 +41,7 @@ public class EaterOfWorld extends EntitySlime {
                     .setFollowDistance(1.53)
                     .setFollowingMultiplier(1)
                     .setStraighteningMultiplier(0.1)
-                    .setVelocityOrTeleport(true);
+                    .setVelocityOrTeleport(false);
     public EntityHelper.ProjectileShootInfo projectileProperty;
     int index;
     int indexAI = (int) (Math.random() * 500);
@@ -146,6 +146,9 @@ public class EaterOfWorld extends EntitySlime {
             return;
         // AI
         {
+            // update target
+            target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
+                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity segment : bossParts) {
@@ -157,9 +160,6 @@ public class EaterOfWorld extends EntitySlime {
             }
             // if target is valid, attack
             else {
-                // update target
-                target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                        IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
                 // attack
                 boolean isHead = index == 0 ||
                         bossParts.get(index - 1).getHealth() < 1e-5 ||
@@ -211,7 +211,7 @@ public class EaterOfWorld extends EntitySlime {
             spawnLoc = summonedPlayer.getLocation().add(
                     MathHelper.xsin_degree(angle) * dist, 0, MathHelper.xcos_degree(angle) * dist);
         } else {
-            spawnLoc = bossParts.get(0).getLocation().add(Math.random() * 10, Math.random() * 10, Math.random() * 10);
+            spawnLoc = bossParts.get(0).getLocation().add(Math.random() * 20 - 10, Math.random() * 20 - 10, Math.random() * 20 - 10);
         }
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
@@ -221,6 +221,7 @@ public class EaterOfWorld extends EntitySlime {
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
+        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -318,8 +319,12 @@ public class EaterOfWorld extends EntitySlime {
                 atm.put("defence", HEAD_DEF);
             }
         }
+        // drop loot
+        if (getMaxHealth() > 10) {
+            terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
+        }
         // check if all segments are defeated
-        boolean defeated = true;
+        boolean defeated = BossHelper.bossMap.containsKey(BOSS_TYPE.msgName);
         for (LivingEntity entity : bossParts)
             if (entity.getHealth() > 1e-5 && !entity.isDead()) {
                 defeated = false;
@@ -339,6 +344,7 @@ public class EaterOfWorld extends EntitySlime {
                 for (Player ply : targetMap.keySet()) {
                     if (targetMap.get(ply) >= dmgDealtReq) {
                         ply.sendMessage("§a恭喜你击败了BOSS[§r" + BOSS_TYPE.msgName + "§a]!");
+                        PlayerHelper.setDefeated(ply, BOSS_TYPE.msgName, true);
                         PlayerHelper.giveItem(ply, loopBag, true);
                     } else {
                         ply.sendMessage("§aBOSS " + BOSS_TYPE.msgName + " 已经被击败。很遗憾，您的输出不足以获得一份战利品。");
@@ -356,7 +362,14 @@ public class EaterOfWorld extends EntitySlime {
         motY /= 0.98;
         motZ /= 0.91;
         // update boss bar and dynamic DR
-        terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);
+        boolean shouldCurrSegmentUpdate = true;
+        for (int i = 0; i < index; i ++)
+            if (!bossParts.get(i).isDead() && bossParts.get(i).getHealth() > 1e-5) {
+                shouldCurrSegmentUpdate = false;
+                break;
+            }
+        if (shouldCurrSegmentUpdate)
+            terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, ticksLived, BOSS_TYPE);
         // load nearby chunks
         {
             for (int i = -2; i <= 2; i ++)

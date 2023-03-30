@@ -467,7 +467,7 @@ mobInfo:
                     knockbackResistance: 0.5
                     health: 90
                 name: "黑史莱姆"
-            hell1:
+            underworld1:
                 attributes:
                     damage: 30
                     damageType: "Melee"
@@ -598,7 +598,7 @@ mobInfo:
         owningBoss: 血肉之墙
         hasHealthMulti: true
         variants:
-            default1:
+            underworld1:
                 attributes:
                     damage: 100
                     damageType: "Melee"
@@ -645,7 +645,7 @@ mobInfo:
         spawnLocationType: AIR
         disguiseType: "BAT"
         variants:
-            default1:
+            underworld1:
                 attributes:
                     damage: 105
                     damageType: "Melee"
@@ -674,7 +674,7 @@ mobInfo:
         slimeSize: 3
         disguiseType: "ZOMBIE"
         variants:
-            default1:
+            underworld1:
                 attributes:
                     damage: 84
                     damageType: "Melee"
@@ -689,7 +689,7 @@ mobInfo:
         slimeSize: 3
         disguiseType: "ZOMBIE"
         variants:
-            default1:
+            underworld1:
                 attributes:
                     damage: 500
                     damageType: "Arrow"
@@ -704,7 +704,7 @@ mobInfo:
         slimeSize: 3
         disguiseType: "ZOMBIE"
         variants:
-            default1:
+            underworld1:
                 attributes:
                     damage: 84
                     damageType: "Melee"
@@ -717,7 +717,7 @@ mobInfo:
         monsterType: "SLIME"
         spawnLocationType: ANY
         variants:
-            default1:
+            underworld1:
                 attributes:
                     damage: 50
                     damageMulti: 2

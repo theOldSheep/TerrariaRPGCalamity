@@ -4,6 +4,10 @@ import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.entity.EntityType;
 import terraria.entity.boss.eoc.EyeOfCthulhu;
 import terraria.entity.boss.eow.EaterOfWorld;
+import terraria.entity.boss.klw.SkeletronHand;
+import terraria.entity.boss.klw.SkeletronHead;
+import terraria.entity.boss.wof.WallOfFleshEye;
+import terraria.entity.boss.wof.WallOfFleshMouth;
 import terraria.entity.minion.MinionCaveSpider;
 import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
@@ -19,6 +23,10 @@ public enum CustomEntities {
 
     BOSS_EOC           ("EyeOfCthulhu",     55,  EntityType.SLIME,           EntitySlime.class,      EyeOfCthulhu.class),
     BOSS_EOW           ("EaterOfWorlds",    55,  EntityType.SLIME,           EntitySlime.class,      EaterOfWorld.class),
+    BOSS_KLW           ("Skeletron",        55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHead.class),
+    BOSS_KLW_HAND      ("SkeletronHand",    55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHand.class),
+    BOSS_WOF_EYE       ("WallOfFleshEye",   55,  EntityType.SLIME,           EntitySlime.class,      WallOfFleshEye.class),
+    BOSS_WOF_MOUTH     ("WallOfFleshMouth", 55,  EntityType.SLIME,           EntitySlime.class,      WallOfFleshMouth.class),
     MINION_CAVE_SPIDER ("MinionCaveSpider", 59,  EntityType.CAVE_SPIDER,     EntityCaveSpider.class, MinionCaveSpider.class),
     MINION_HUSK        ("MinionHusk",       23,  EntityType.HUSK,            EntityZombieHusk.class, MinionHusk .class),
     MINION_SLIME       ("MinionSlime",      55,  EntityType.SLIME,           EntitySlime.class,      MinionSlime.class),

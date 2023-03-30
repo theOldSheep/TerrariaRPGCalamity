@@ -1,11 +1,14 @@
 package terraria.util;
 
+import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import terraria.entity.boss.eoc.EyeOfCthulhu;
 import terraria.entity.boss.eow.EaterOfWorld;
+import terraria.entity.boss.klw.SkeletronHead;
+import terraria.entity.boss.wof.WallOfFleshMouth;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,9 +41,15 @@ public class BossHelper {
         }
     }
     public static boolean spawnBoss(Player target, BossType bossType) {
+        return spawnBoss(target, bossType, null);
+    }
+    public static boolean spawnBoss(Player target, BossType bossType, Object extraInfo) {
         // no duplication!
         if (bossMap.containsKey(bossType.msgName)) return false;
         boolean spawnedSuccessfully = false;
+        Location soundLocation = null;
+        if (target != null)
+            soundLocation = target.getLocation();
         switch (bossType) {
             case EYE_OF_CTHULHU: {
                 if (EyeOfCthulhu.canSpawn(target)) {
@@ -56,9 +65,24 @@ public class BossHelper {
                 }
                 break;
             }
+            case SKELETRON: {
+                if (SkeletronHead.canSpawn(target)) {
+                    new SkeletronHead(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case WALL_OF_FLESH: {
+                soundLocation = (Location) extraInfo;
+                if (WallOfFleshMouth.canSpawn(target)) {
+                    new WallOfFleshMouth(soundLocation);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
         }
         if (spawnedSuccessfully) {
-            bossType.playSummonSound(target.getLocation());
+            bossType.playSummonSound(soundLocation);
             Bukkit.broadcastMessage("§d§l" + bossType.msgName + " 苏醒了！");
         }
         return spawnedSuccessfully;

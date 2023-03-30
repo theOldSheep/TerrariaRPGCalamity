@@ -480,13 +480,13 @@ public class EntityHelper {
             // validate if the entity still needs ticking effect
             if (entity instanceof Player) {
                 Player playerE = (Player) entity;
+                // offline: do not clear effect time
                 if (!playerE.isOnline()) {
-                    // offline: do not clear effect time
                     shouldStop = true;
                     removeEffectOnStop = false;
                 }
+                // additionally, the effect time is being cleared if the player is not in survival mode (most likely dead).
                 else if (playerE.getGameMode() != GameMode.SURVIVAL) {
-                    // additionally, the effect time is being cleared if the player dies.
                     shouldStop = true;
                 }
             }
@@ -507,14 +507,29 @@ public class EntityHelper {
                 if (effect.equals("破晓")) damageMulti = getEffectLevel(effect, timeRemaining);
                 handleDamage(entity, entity, damagePerDelay * damageMulti, "Debuff_" + effect);
             }
-            if (effect.equals("扭曲")) {
-                World entityWorld = entity.getLocation().getWorld();
-                Location targetLoc = entityWorld.getHighestBlockAt(entity.getLocation()).getLocation();
-                targetLoc.add(0, 8 + MathHelper.xsin_degree(timeRemaining * 2.5) * 2, 0);
-                Vector velocity = targetLoc.subtract(entity.getLocation()).toVector();
-                velocity.multiply(1/6);
-                entity.setVelocity(velocity);
-                entity.setFallDistance(0);
+            switch (effect) {
+                case "扭曲": {
+                    World entityWorld = entity.getLocation().getWorld();
+                    Location targetLoc = entityWorld.getHighestBlockAt(entity.getLocation()).getLocation();
+                    targetLoc.add(0, 8 + MathHelper.xsin_degree(timeRemaining * 2.5) * 2, 0);
+                    Vector velocity = targetLoc.subtract(entity.getLocation()).toVector();
+                    velocity.multiply(1 / 6);
+                    entity.setVelocity(velocity);
+                    entity.setFallDistance(0);
+                    break;
+                }
+                case "恐惧": {
+                    if (BossHelper.bossMap.containsKey(BossHelper.BossType.WALL_OF_FLESH.msgName)) {
+                        Entity damager = BossHelper.bossMap.get(BossHelper.BossType.WALL_OF_FLESH.msgName).get(0);
+                        if (damager.getWorld() != entity.getWorld() ||
+                                damager.getLocation().distanceSquared(entity.getLocation()) > 10000)
+                            handleDamage(damager, entity, 114514, "Boss_Angry");
+                    }
+                    else {
+                        allEffects.put(effect, 0);
+                    }
+                    break;
+                }
             }
             // next delayed task
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> tickEffect(entity, effect, delay, damagePerDelay), delay);
@@ -635,7 +650,7 @@ public class EntityHelper {
             deathMessages = TerrariaHelper.settingConfig.getStringList("deathMessages.Generic");
         }
         dm = deathMessages.get((int) (Math.random() * deathMessages.size()));
-        if (killer != null) {
+        if (killer != null && d != v) {
             dm += "，凶手是" + killer;
         }
         dm = dm.replaceAll("<victim>", v.getName());
@@ -1252,7 +1267,6 @@ public class EntityHelper {
                     applyEffect(victim, "硫磺火", 150);
                 else
                     applyEffect(victim, "燃烧", 150);
-                dmg = 200;
                 // mainly prevents excessive damage dealt to enemies
                 damageInvulnerabilityTicks = Math.max(damageInvulnerabilityTicks, 30);
                 break;
@@ -1374,7 +1388,9 @@ public class EntityHelper {
                 double dynamicDR = 1;
                 MetadataValue temp = getMetadata(victim, "dynamicDR");
                 if (temp != null) dynamicDR = temp.asDouble();
-                dmg *= dynamicDR;
+                BossHelper.BossType type = (BossHelper.BossType) getMetadata(victim, "bossType").value();
+                if (! (damageSource instanceof Player && PlayerHelper.hasDefeated((Player) damageSource, type.msgName)) )
+                    dmg *= dynamicDR;
             }
         }
 

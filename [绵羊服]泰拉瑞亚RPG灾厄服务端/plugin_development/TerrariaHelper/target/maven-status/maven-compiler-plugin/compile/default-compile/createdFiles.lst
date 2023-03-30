@@ -2,6 +2,7 @@ terraria\worldgen\overworld\OverworldCaveGenerator$1.class
 terraria\TerrariaHelper$1.class
 terraria\event\listener\ItemUseAndAttributeListener$1.class
 terraria\util\GenericHelper$StrikeLineOptions.class
+terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
 terraria\event\listener\PlayerJoinListener.class
 terraria\entity\npc\TerrariaNPCClothier.class
@@ -27,6 +28,7 @@ terraria\entity\boss\eow\EaterOfWorld.class
 terraria\util\BossHelper$BossType.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
 terraria\util\ItemUseHelper$1.class
+terraria\entity\boss\wof\WallOfFleshMouth.class
 terraria\entity\boss\eoc\EyeOfCthulhu.class
 terraria\util\PlayerHelper$GameProgress.class
 terraria\util\BossHelper.class
@@ -42,6 +44,7 @@ terraria\event\listener\RandomTitleListener.class
 terraria\util\GenericHelper$ParticleLineOptions.class
 terraria\entity\minion\MinionSlime.class
 terraria\worldgen\overworld\OverworldBiomeGenerator$1.class
+terraria\entity\boss\klw\SkeletronHead.class
 terraria\worldgen\RandomGenerator.class
 terraria\entity\npc\TerrariaNPCNurse.class
 terraria\event\listener\DropItemSpawnListener.class
@@ -86,7 +89,9 @@ terraria\gameplay\Event.class
 terraria\event\listener\EntitySpawnListener.class
 terraria\worldgen\overworld\NoiseGeneratorTest.class
 terraria\util\NPCHelper.class
+terraria\entity\boss\wof\WallOfFleshEye.class
 terraria\worldgen\overworld\TreePopulator$1.class
+terraria\entity\boss\klw\SkeletronHand.class
 terraria\worldgen\overworld\OverworldBiomeGenerator.class
 terraria\entity\boss\eoc\EyeOfCthulhu$1.class
 terraria\entity\monster\MonsterHelper.class

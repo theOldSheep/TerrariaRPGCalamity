@@ -433,7 +433,7 @@ public class GenericHelper {
         // display particle
         particleInfo
                 .setLength(direction.length())
-                .setWidth(width);
+                .setWidth(width / 5, false);
         handleParticleLine(direction, startLoc, particleInfo);
     }
     // helper function for each step of lightning

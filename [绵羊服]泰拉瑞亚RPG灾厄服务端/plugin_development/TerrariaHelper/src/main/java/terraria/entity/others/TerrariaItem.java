@@ -8,6 +8,7 @@ import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.util.Vector;
+import terraria.entity.boss.wof.WallOfFleshMouth;
 import terraria.util.*;
 
 import java.util.HashMap;
@@ -198,7 +199,9 @@ public class TerrariaItem extends EntityItem {
             // if it has gravity: fall to the ground
             if (!this.isNoGravity())
                 currVelocity.add(new Vector(0, -0.03999999910593033, 0));
-            this.noclip = this.i(this.locX, (this.getBoundingBox().b + this.getBoundingBox().e) / 2.0, this.locZ);
+            // below: do not use noclip from vanilla, creating glitch when dropped item trapped in blocks
+//            this.noclip = this.i(this.locX, (this.getBoundingBox().b + this.getBoundingBox().e) / 2.0, this.locZ);
+            this.noclip = false;
         }
         if (currVelocity.lengthSquared() > 1) currVelocity.normalize();
         this.motX = currVelocity.getX();
@@ -316,7 +319,7 @@ public class TerrariaItem extends EntityItem {
         }
         String itemName = ItemHelper.splitItemName(getItemStack().getName())[1];
         if (itemName.equals("向导巫毒娃娃")) {
-            // TODO: spawn wall of flesh
+            BossHelper.spawnBoss(null, BossHelper.BossType.WALL_OF_FLESH, bukkitEntity.getLocation());
         }
         this.a(SoundEffects.bR, 0.4F, 2.0F + this.random.nextFloat() * 0.4F);
         die();

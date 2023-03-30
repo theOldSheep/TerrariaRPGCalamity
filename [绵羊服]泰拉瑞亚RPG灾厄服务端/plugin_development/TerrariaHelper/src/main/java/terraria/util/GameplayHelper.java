@@ -201,6 +201,7 @@ public class GameplayHelper {
         blockToBreak.setType(Material.AIR);
     }
     public static void playerRightClickBlock(Player ply, Block blk) {
+        if (blk == null) return;
         switch (blk.getType()) {
             // wool changes color
             case WOOL: {

@@ -3,6 +3,7 @@ package terraria.entity.boss.eoc;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
@@ -42,17 +43,19 @@ public class EyeOfCthulhu extends EntitySlime {
             return;
         // AI
         {
+            // update target
+            target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
+                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
             // disappear if no target is available
             if (target == null) {
-                getAttributeInstance(GenericAttributes.maxHealth).setValue(1);
-                die();
+                for (org.bukkit.entity.LivingEntity entity : bossParts) {
+                    entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
+                    entity.remove();
+                }
                 return;
             }
             // if target is valid, attack
             else {
-                // update target
-                target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                        IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
                 // AI
                 if (ticksLived % 3 == 0) {
                     double healthRatio = this.getHealth() / this.getMaxHealth();
@@ -273,7 +276,7 @@ public class EyeOfCthulhu extends EntitySlime {
                                             }
                                             direction.multiply(4 / dirLen);
                                             bukkitEntity.setVelocity(direction);
-                                            attrMap.put("damageMulti", 2.5d);
+                                            attrMap.put("damageMulti", 1.25d);
                                         }
                                         // back to directly charging player
                                         else if (indexAI >= 15) {
@@ -333,6 +336,7 @@ public class EyeOfCthulhu extends EntitySlime {
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
+        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -390,6 +394,9 @@ public class EyeOfCthulhu extends EntitySlime {
         BossHelper.bossMap.remove(BOSS_TYPE.msgName);
         // if the boss has been defeated properly
         if (getMaxHealth() > 10) {
+            // drop items
+            terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
+
             Bukkit.broadcastMessage("§d§l" + BOSS_TYPE.msgName + " 被击败了.");
             // send out loot
             double[] healthInfo = terraria.entity.boss.BossHelper.getHealthInfo(bossParts);
@@ -398,6 +405,7 @@ public class EyeOfCthulhu extends EntitySlime {
             for (Player ply : targetMap.keySet()) {
                 if (targetMap.get(ply) >= dmgDealtReq) {
                     ply.sendMessage("§a恭喜你击败了BOSS[§r" + BOSS_TYPE.msgName + "§a]!");
+                    PlayerHelper.setDefeated(ply, BOSS_TYPE.msgName, true);
                     PlayerHelper.giveItem(ply, loopBag, true);
                 }
                 else {

@@ -331,6 +331,8 @@ public class PlayerHelper {
         return YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml");
     }
     public static boolean hasDefeated(Player player, String progressToCheck) {
+        if (progressToCheck.length() == 0)
+            return true;
         switch (progressToCheck) {
             case "机械一王":
             case "机械二王":
@@ -350,6 +352,10 @@ public class PlayerHelper {
         }
         YmlHelper.YmlSection fileSection = getPlayerDataFile(player);
         return fileSection.getBoolean("bossDefeated." + progressToCheck, false);
+    }
+    public static void setDefeated(Player player, String progressToAdd, boolean defeated) {
+        YmlHelper.YmlSection fileSection = getPlayerDataFile(player);
+        fileSection.set("bossDefeated." + progressToAdd, defeated);
     }
     public static boolean isProperlyPlaying(Player player) {
         if (!player.isOnline()) return false;

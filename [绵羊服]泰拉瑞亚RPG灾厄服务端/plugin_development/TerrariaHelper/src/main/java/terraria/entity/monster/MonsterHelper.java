@@ -459,7 +459,7 @@ public class MonsterHelper {
         }
         return target;
     }
-    private static void handleMonsterDrop(LivingEntity monsterBkt) {
+    public static void handleMonsterDrop(LivingEntity monsterBkt) {
         String type = GenericHelper.trimText(monsterBkt.getName());
         ArrayList<String> toDrop = new ArrayList<>();
         // celestial pillar
@@ -486,10 +486,15 @@ public class MonsterHelper {
                 }
             }
             // default monsters
-            String parentType = EntityHelper.getMetadata(monsterBkt, "parentType").asString();
+            // drops from its own type
             toDrop.addAll(TerrariaHelper.entityConfig.getStringList(type + ".drop"));
-            if (!parentType.equals(type)) {
-                toDrop.addAll(TerrariaHelper.entityConfig.getStringList(parentType + ".drop"));
+            // drops inherited from its parent type
+            MetadataValue parentTypeVal = EntityHelper.getMetadata(monsterBkt, "parentType");
+            if (parentTypeVal != null) {
+                String parentType = parentTypeVal.asString();
+                if (!parentType.equals(type)) {
+                    toDrop.addAll(TerrariaHelper.entityConfig.getStringList(parentType + ".drop"));
+                }
             }
         }
         for (String dropDesc : toDrop) {

@@ -32,17 +32,19 @@ public class BossHelper {
         return result;
     }
     public static void updateBossBarAndDamageReduction(BossBattleServer bossbar, ArrayList<LivingEntity> bossParts, terraria.util.BossHelper.BossType type) {
+        updateBossBarAndDamageReduction(bossbar, bossParts, bossParts.get(0).getTicksLived(), type);
+    }
+    public static void updateBossBarAndDamageReduction(BossBattleServer bossbar, ArrayList<LivingEntity> bossParts, int ticksLived, terraria.util.BossHelper.BossType type) {
         double[] healthInfo = getHealthInfo(bossParts);
         double healthRatio = healthInfo[0] / healthInfo[1];
         bossbar.setProgress((float) healthRatio);
         // dynamic Damage Reduction
         String bossName = type.msgName;
-        double ticksLived = bossParts.get(0).getTicksLived();
         double targetTime = TerrariaHelper.settingConfig.getInt("BossDefeatTime." + bossName, 900);
         double dynamicDR;
         if (ticksLived < targetTime) {
             if (healthRatio < 0.99)
-                dynamicDR = (healthRatio / (1 - healthRatio)) * ticksLived / (targetTime - ticksLived);
+                dynamicDR = Math.min((healthRatio / (1 - healthRatio)) * ticksLived / (targetTime - ticksLived), 1d);
             else
                 dynamicDR = 1d;
         }
@@ -55,6 +57,7 @@ public class BossHelper {
         }
         for (LivingEntity bossPart : bossParts)
             EntityHelper.setMetadata(bossPart, "dynamicDR", dynamicDR);
+//        Bukkit.broadcastMessage("Dynamic DR: " + dynamicDR + ", time: " + ticksLived + "/" + targetTime + ", health: " + healthInfo[0] + "/" + healthInfo[1]);
     }
     public static double getBossHealthMulti(int numPly) {
         double multi = 1, multiInc = 0.35;
@@ -103,7 +106,7 @@ public class BossHelper {
         Bukkit.broadcastMessage(msg.toString());
         return targets;
     }
-    private static boolean checkBossTarget(Entity target, Entity boss, boolean ignoreDistance, WorldHelper.BiomeType biomeRequired) {
+    public static boolean checkBossTarget(Entity target, Entity boss, boolean ignoreDistance, WorldHelper.BiomeType biomeRequired) {
         if (target instanceof Player) {
             Player targetPlayer = (Player) target;
             if (!PlayerHelper.isProperlyPlaying(targetPlayer)) return false;
