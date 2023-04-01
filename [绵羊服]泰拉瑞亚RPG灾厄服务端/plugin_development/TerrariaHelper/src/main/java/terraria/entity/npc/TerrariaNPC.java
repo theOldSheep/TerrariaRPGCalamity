@@ -54,7 +54,7 @@ public class TerrariaNPC extends EntityVillager {
         this.NPCType = type;
         this.ageLocked = true;
         EntityHelper.setMetadata(bukkitEntity, "GUIViewers", GUIViewers);
-        NPCHelper.NPCMap.put(type, bukkitEntity);
+        NPCHelper.NPCMap.put(type, (LivingEntity) bukkitEntity);
         this.setCustomName(type);
         this.setCustomNameVisible(true);
         this.bukkitEntity.addScoreboardTag("isNPC");

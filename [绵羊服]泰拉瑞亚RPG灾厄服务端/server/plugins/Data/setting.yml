@@ -110,8 +110,6 @@ deathMessages:
   - <victim> 被登dua郎
   - <victim> 心花怒放
   - <victim> 脑洞大开
-  Fear:
-  - <victim> 试图逃跑
   Lava:
   - <victim> 被熔化了
   - <victim> 被烧成了灰
@@ -140,6 +138,8 @@ deathMessages:
   Suffocation:
   - <victim> 无法呼吸
   - <victim> 被活埋了
+  Debuff_恐惧:
+  - <victim> 试图逃跑
   Debuff_燃烧:
   - <victim> 无法把火扑灭
   - <victim> 被烧成了焦炭

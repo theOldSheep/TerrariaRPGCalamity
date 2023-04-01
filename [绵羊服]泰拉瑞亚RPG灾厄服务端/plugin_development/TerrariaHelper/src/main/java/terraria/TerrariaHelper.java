@@ -165,6 +165,7 @@ public class TerrariaHelper extends JavaPlugin {
         PlayerHelper.threadBackground();
         PlayerHelper.threadBGM();
         PlayerHelper.threadGrapplingHook();
+        PlayerHelper.threadLastLocation();
         PlayerHelper.threadMonsterSpawn();
         PlayerHelper.threadMovement();
         PlayerHelper.threadRegen();

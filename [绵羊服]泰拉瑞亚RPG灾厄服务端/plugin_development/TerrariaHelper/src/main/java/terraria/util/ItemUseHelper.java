@@ -269,6 +269,8 @@ public class ItemUseHelper {
         return successful;
     }
     public static boolean playerQuickUsePotion(Player ply, QuickBuffType quickBuffType) {
+        if (!PlayerHelper.isProperlyPlaying(ply))
+            return false;
         Inventory plyInv = ply.getInventory();
         if (quickBuffType == QuickBuffType.NONE) return false;
         boolean successfullyConsumed = false;

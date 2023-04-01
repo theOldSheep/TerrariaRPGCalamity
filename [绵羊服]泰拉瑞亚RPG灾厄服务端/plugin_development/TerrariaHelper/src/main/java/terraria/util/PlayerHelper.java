@@ -86,7 +86,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("minionDamagePenaltyMulti", 0.5d);
         defaultPlayerAttrMap.put("minionLimit", 1d);
         defaultPlayerAttrMap.put("mobLimit", 15d);
-        defaultPlayerAttrMap.put("mobSpawnRate", 0.25d);
+        defaultPlayerAttrMap.put("mobSpawnRate", 0.15d);
         defaultPlayerAttrMap.put("mobSpawnRateMulti", 1d);
         defaultPlayerAttrMap.put("penetration", 0d);
         defaultPlayerAttrMap.put("powerPickaxe", 0d);
@@ -425,6 +425,14 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "thrustProgress", 0);
     }
     // threads
+    public static void threadLastLocation() {
+        Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
+            for (Player ply : Bukkit.getOnlinePlayers()) {
+                EntityHelper.setMetadata(ply, "lastLocation", EntityHelper.getMetadata(ply, "currLocation").value());
+                EntityHelper.setMetadata(ply, "currLocation", ply.getLocation());
+            }
+        }, 0, 1);
+    }
     public static void threadArmorAccessory() {
         // setup projectile attributes
         HashMap<String, Double> attrMapChlorophyte = new HashMap<>(5);
@@ -1342,7 +1350,9 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "sentries", new ArrayList<Entity>());
         EntityHelper.setMetadata(ply, "accessory", new HashSet<String>());
         EntityHelper.setMetadata(ply, "accessoryList", new ArrayList<String>());
-            // the accessory set cached when first thrusting, to prevent buggy behaviour.
+        EntityHelper.setMetadata(ply, "lastLocation", ply.getLocation());
+        EntityHelper.setMetadata(ply, "currLocation", ply.getLocation());
+        // the accessory set cached when first thrusting, to prevent buggy behaviour.
         EntityHelper.setMetadata(ply, "accessoryThrust", new HashSet<String>());
         EntityHelper.setMetadata(ply, "effects", new HashMap<String, Integer>());
         EntityHelper.setMetadata(ply, "attrMap", PlayerHelper.getDefaultPlayerAttributes());
@@ -1377,7 +1387,7 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "regenTime", 0d);
         EntityHelper.setMetadata(ply, "manaRegenDelay", 0d);
         EntityHelper.setMetadata(ply, "manaRegenCounter", 0d);
-        // inventories
+        // on join: load inventories etc.
         if (joinOrRespawn) {
             loadInventories(ply);
         }
@@ -1579,6 +1589,8 @@ public class PlayerHelper {
     }
     @Nullable
     public static void handleGrapplingHook(Player ply) {
+        if (!PlayerHelper.isProperlyPlaying(ply))
+            return;
         List<Entity> hooks = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "hooks").value();
         String hookItemName = ItemHelper.splitItemName(ply.getInventory().getItemInOffHand())[1];
         EntityHelper.setMetadata(ply, "grapplingHookItem", hookItemName);
@@ -1852,6 +1864,8 @@ public class PlayerHelper {
         }
     }
     public static void handleDash(Player ply, double yaw, double pitch) {
+        if (!PlayerHelper.isProperlyPlaying(ply))
+            return;
         // can not dash if player has dash cooldown
         if (ply.getScoreboardTags().contains("temp_dashCD"))
             return;

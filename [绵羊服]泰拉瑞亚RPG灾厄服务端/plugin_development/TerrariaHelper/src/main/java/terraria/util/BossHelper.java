@@ -1,13 +1,14 @@
 package terraria.util;
 
-import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import terraria.entity.boss.eoc.EyeOfCthulhu;
 import terraria.entity.boss.eow.EaterOfWorld;
+import terraria.entity.boss.hmzc.DesertScourge;
 import terraria.entity.boss.klw.SkeletronHead;
+import terraria.entity.boss.slmw.KingSlime;
 import terraria.entity.boss.wof.WallOfFleshMouth;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 public class BossHelper {
     public static HashMap<String, ArrayList<LivingEntity>> bossMap = new HashMap<>();
     public enum BossType {
-        SLIME_KING("史莱姆王"), DESERT_SCOURGE("荒漠灾虫"), EYE_OF_CTHULHU("克苏鲁之眼"), CRABULON("菌生蟹"),
+        KING_SLIME("史莱姆王"), DESERT_SCOURGE("荒漠灾虫"), EYE_OF_CTHULHU("克苏鲁之眼"), CRABULON("菌生蟹"),
         EATER_OF_WORLDS("世界吞噬者"), THE_HIVE_MIND("腐巢意志"), SKELETRON("骷髅王"),
         THE_SLIME_GOD("史莱姆之神"), WALL_OF_FLESH("血肉之墙"), QUEEN_SLIME("史莱姆皇后"), CRYOGEN("极地之灵"),
         THE_TWINS("双子魔眼"), AQUATIC_SCOURGE("渊海灾虫"), THE_DESTROYER("毁灭者"),
@@ -51,6 +52,20 @@ public class BossHelper {
         if (target != null)
             soundLocation = target.getLocation();
         switch (bossType) {
+            case KING_SLIME: {
+                if (KingSlime.canSpawn(target)) {
+                    new KingSlime(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case DESERT_SCOURGE: {
+                if (DesertScourge.canSpawn(target)) {
+                    new DesertScourge(target, new ArrayList<>(), 0);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
             case EYE_OF_CTHULHU: {
                 if (EyeOfCthulhu.canSpawn(target)) {
                     new EyeOfCthulhu(target);

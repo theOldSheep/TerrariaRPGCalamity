@@ -4,8 +4,12 @@ import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.entity.EntityType;
 import terraria.entity.boss.eoc.EyeOfCthulhu;
 import terraria.entity.boss.eow.EaterOfWorld;
+import terraria.entity.boss.hmzc.DesertNuisance;
+import terraria.entity.boss.hmzc.DesertScourge;
 import terraria.entity.boss.klw.SkeletronHand;
 import terraria.entity.boss.klw.SkeletronHead;
+import terraria.entity.boss.slmw.CrownJewel;
+import terraria.entity.boss.slmw.KingSlime;
 import terraria.entity.boss.wof.WallOfFleshEye;
 import terraria.entity.boss.wof.WallOfFleshMouth;
 import terraria.entity.minion.MinionCaveSpider;
@@ -23,8 +27,12 @@ public enum CustomEntities {
 
     BOSS_EOC           ("EyeOfCthulhu",     55,  EntityType.SLIME,           EntitySlime.class,      EyeOfCthulhu.class),
     BOSS_EOW           ("EaterOfWorlds",    55,  EntityType.SLIME,           EntitySlime.class,      EaterOfWorld.class),
+    BOSS_HMZC          ("DesertScourge",    55,  EntityType.SLIME,           EntitySlime.class,      DesertScourge.class),
+    BOSS_HMZC_HSEC     ("DesertNuisance",   55,  EntityType.SLIME,           EntitySlime.class,      DesertNuisance.class),
     BOSS_KLW           ("Skeletron",        55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHead.class),
     BOSS_KLW_HAND      ("SkeletronHand",    55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHand.class),
+    BOSS_SLMW          ("KingSlime",        55,  EntityType.SLIME,           EntitySlime.class,      KingSlime.class),
+    BOSS_SLMW_JEWEL    ("CrownJewel",       55,  EntityType.SLIME,           EntitySlime.class,      CrownJewel.class),
     BOSS_WOF_EYE       ("WallOfFleshEye",   55,  EntityType.SLIME,           EntitySlime.class,      WallOfFleshEye.class),
     BOSS_WOF_MOUTH     ("WallOfFleshMouth", 55,  EntityType.SLIME,           EntitySlime.class,      WallOfFleshMouth.class),
     MINION_CAVE_SPIDER ("MinionCaveSpider", 59,  EntityType.CAVE_SPIDER,     EntityCaveSpider.class, MinionCaveSpider.class),

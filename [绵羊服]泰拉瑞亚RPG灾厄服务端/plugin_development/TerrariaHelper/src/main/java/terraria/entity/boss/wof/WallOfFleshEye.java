@@ -52,7 +52,7 @@ public class WallOfFleshEye extends EntitySlime {
                     .setRandomOffsetRadius(2d);
             targetedLoc = EntityHelper.helperAimEntity(bukkitEntity, target, aimHelper);
         }
-        Vector velocity = targetedLoc.subtract(bukkitEntity.getLocation()).toVector();
+        Vector velocity = targetedLoc.subtract( ((LivingEntity) bukkitEntity).getEyeLocation() ).toVector();
         double velLen = velocity.length();
         if (velLen < 1e-5) {
             velocity = mouth.horizontalMoveDirection.clone();

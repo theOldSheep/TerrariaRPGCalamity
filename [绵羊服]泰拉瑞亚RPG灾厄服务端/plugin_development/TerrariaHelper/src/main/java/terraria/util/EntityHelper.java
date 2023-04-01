@@ -523,7 +523,7 @@ public class EntityHelper {
                         Entity damager = BossHelper.bossMap.get(BossHelper.BossType.WALL_OF_FLESH.msgName).get(0);
                         if (damager.getWorld() != entity.getWorld() ||
                                 damager.getLocation().distanceSquared(entity.getLocation()) > 10000)
-                            handleDamage(damager, entity, 114514, "Boss_Angry");
+                            handleDamage(damager, entity, 114514, "Debuff_恐惧");
                     }
                     else {
                         allEffects.put(effect, 0);
@@ -904,7 +904,7 @@ public class EntityHelper {
                         double slimeKill = eventInfo.getOrDefault("slimeKill", 0d) + 1;
                         if (slimeKill % 50 == 0) {
                             if (d instanceof Player) {
-                                BossHelper.spawnBoss((Player) d, BossHelper.BossType.SLIME_KING);
+                                BossHelper.spawnBoss((Player) d, BossHelper.BossType.KING_SLIME);
                             } else slimeKill--;
                         }
                         eventInfo.put("slimeKill", slimeKill);
@@ -1668,10 +1668,21 @@ public class EntityHelper {
             if (aimHelperOption.useTickOrSpeedEstimation) ticksOffset = aimHelperOption.ticksOffset;
             else if (aimHelperOption.projectileSpeed > 0.2) {
                 double distance = targetLoc.distance(source.getLocation());
-                ticksOffset = Math.ceil(distance / aimHelperOption.projectileSpeed);
+                ticksOffset = distance / aimHelperOption.projectileSpeed;
             }
+            ticksOffset = Math.ceil(ticksOffset);
             ticksOffset *= aimHelperOption.intensity;
-            targetLoc.add(target.getVelocity().multiply(ticksOffset));
+            // get the prediction vector
+            Vector velocity;
+            if (target instanceof Player) {
+                Location lastLoc = (Location) EntityHelper.getMetadata(target, "currLocation").value();
+                if (lastLoc.distanceSquared(target.getLocation()) < 1e-5)
+                    lastLoc = (Location) EntityHelper.getMetadata(target, "lastLocation").value();
+                velocity = target.getLocation().subtract(lastLoc).toVector();
+            }
+            else
+                velocity = target.getVelocity();
+            targetLoc.add(velocity.multiply(ticksOffset));
         }
         // random offset for projectiles
         double randomOffset = aimHelperOption.randomOffsetRadius;

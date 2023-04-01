@@ -3,6 +3,7 @@ package terraria.entity.boss.wof;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.Entity;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import terraria.TerrariaHelper;
 import terraria.util.*;
 
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class WallOfFleshMouth extends EntitySlime {
     int indexAI = 0, enragedCounter = 0;
     boolean enraged = false;
     Vector horizontalMoveDirection;
-    static double enrageDistSqr = 40 * 40, maxHorizontalSpeed = 1, eyeSpace = 12;
+    static double ENRAGE_DIST_SQR = 48 * 48, MAX_HORIZONTAL_SPD = 0.8, MIN_EYE_SPACE = 12, Y_COORD_ADJUST_RATE = 0.05;
     static HashMap<String, Double> demon_scythe_attrMap;
     static {
         demon_scythe_attrMap = new HashMap<>();
@@ -45,22 +47,19 @@ public class WallOfFleshMouth extends EntitySlime {
             velocity = horizontalMoveDirection.clone();
             velLen = 1;
         }
-        velocity.multiply(0.1 / velLen);
+        velocity.multiply(1 / velLen);
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                 bukkitEntity, velocity, demon_scythe_attrMap, "--");
         shootInfo.projectileName = "恶魔之镰";
         shootInfo.properties.put("autoTrace", true);
         shootInfo.properties.put("autoTraceMethod", 2);
-        shootInfo.properties.put("autoTraceRadius", 16d);
+        shootInfo.properties.put("autoTraceRadius", 24d);
         shootInfo.properties.put("autoTraceSharpTurning", false);
-        shootInfo.properties.put("autoTraceAbility", 0.5);
+        shootInfo.properties.put("autoTraceAbility", 0.075);
         shootInfo.properties.put("liveTime", 100);
         shootInfo.properties.put("gravity", 0d);
         shootInfo.properties.put("projectileSize", 0.25);
-        shootInfo.properties.put("speedMultiPerTick", 1.15);
-        shootInfo.properties.put("maxSpeed", 2.5);
-        shootInfo.properties.put("blockHitAction", "thru");
-        EntityHelper.spawnProjectile(shootInfo);
+        EntityHelper.spawnProjectile(shootInfo).setGlowing(true);
     }
     private void spawnHungry() {
         for (int i = 0; i < 1; i ++) {
@@ -103,31 +102,50 @@ public class WallOfFleshMouth extends EntitySlime {
                 double moveSpeedMultiplier;
                 {
                     if (enraged)
-                        moveSpeedMultiplier = 1.5;
+                        moveSpeedMultiplier = 1.25;
                     else if (healthRatio < 0.025)
                         moveSpeedMultiplier = 1;
                     else if (healthRatio < 0.035)
-                        moveSpeedMultiplier = 0.9;
+                        moveSpeedMultiplier = 0.75;
                     else if (healthRatio < 0.05)
-                        moveSpeedMultiplier = 0.85;
+                        moveSpeedMultiplier = 0.6;
                     else if (healthRatio < 0.25)
-                        moveSpeedMultiplier = 0.7;
-                    else if (healthRatio < 0.33)
-                        moveSpeedMultiplier = 0.65;
-                    else if (healthRatio < 0.5)
-                        moveSpeedMultiplier = 0.55;
-                    else if (healthRatio < 0.66)
                         moveSpeedMultiplier = 0.5;
+                    else if (healthRatio < 0.33)
+                        moveSpeedMultiplier = 0.4;
+                    else if (healthRatio < 0.5)
+                        moveSpeedMultiplier = 0.3;
+                    else if (healthRatio < 0.66)
+                        moveSpeedMultiplier = 0.25;
                     else if (healthRatio < 0.75)
-                        moveSpeedMultiplier = 0.45;
+                        moveSpeedMultiplier = 0.2;
                     else
-                        moveSpeedMultiplier = 0.35;
+                        moveSpeedMultiplier = 0.15;
                 }
                 // movement of all parts of boss
                 {
                     Location targetLoc = bukkitEntity.getLocation()
-                            .add(horizontalMoveDirection.clone().multiply(3 * maxHorizontalSpeed * moveSpeedMultiplier));
-                    targetLoc.setY( (targetLoc.getY() + target.getLocation().getY()) / 2 );
+                            .add(horizontalMoveDirection.clone().multiply(3 * MAX_HORIZONTAL_SPD * moveSpeedMultiplier));
+                    // get target Y
+                    double targetY = target.getLocation().getY();
+                    double eyeSpace;
+                    {
+                        int ceilHeightOffset, floorHeightOffset;
+                        Location targetYLoc = bukkitEntity.getLocation();
+                        targetYLoc.setY(targetY);
+                        Block locBlock = targetYLoc.getBlock();
+                        for (ceilHeightOffset = 0; ceilHeightOffset < 255; ceilHeightOffset ++) {
+                            if (locBlock.getRelative(0, ceilHeightOffset, 0).getType().isSolid())
+                                break;
+                        }
+                        for (floorHeightOffset = 0; floorHeightOffset > -255; floorHeightOffset --) {
+                            if (locBlock.getRelative(0, floorHeightOffset, 0).getType().isSolid())
+                                break;
+                        }
+                        eyeSpace = Math.max((double) (ceilHeightOffset - floorHeightOffset) / 4, MIN_EYE_SPACE);
+                        targetY += (double) (ceilHeightOffset + floorHeightOffset) / 2;
+                    }
+                    targetLoc.setY( targetLoc.getY() * (1 - Y_COORD_ADJUST_RATE) + targetY * Y_COORD_ADJUST_RATE );
                     Vector velocity;
                     // mouth
                     velocity = targetLoc.clone().subtract(bukkitEntity.getLocation()).toVector();
@@ -155,7 +173,7 @@ public class WallOfFleshMouth extends EntitySlime {
                             continue;
                         EntityHelper.applyEffect(ply, "恐惧", 1200);
                         // enrage?
-                        if (targetMap.containsKey(ply) && distSqr > enrageDistSqr) {
+                        if (targetMap.containsKey(ply) && distSqr > ENRAGE_DIST_SQR) {
                             toggleEnraged(true);
                             enragedCounter = 25;
                         }
@@ -172,10 +190,10 @@ public class WallOfFleshMouth extends EntitySlime {
                     }
                 }
                 // spawn hungry
-                if (indexAI % 20 == 0)
+                if (indexAI % 50 == 0)
                     spawnHungry();
                 // shoot sickles
-                if ( (healthRatio < 0.66 && indexAI % 25 == 0) || (healthRatio < 0.33 && indexAI % 10 == 0))
+                if ( (healthRatio < 0.66 && indexAI % 65 == 0) || (healthRatio < 0.33 && indexAI % 40 == 0))
                     spawnDemonScythe();
 
                 indexAI ++;
@@ -199,12 +217,16 @@ public class WallOfFleshMouth extends EntitySlime {
     public WallOfFleshMouth(Location burntItemLocation) {
         super( ((CraftWorld) burntItemLocation.getWorld()).getHandle() );
         // attempt to summon wall of flesh kills the guide
-        Entity guideNPC = NPCHelper.NPCMap.get("向导");
+        LivingEntity guideNPC = NPCHelper.NPCMap.get("向导");
         if (guideNPC == null || guideNPC.isDead()) {
             die();
             return;
         }
-        EntityHelper.handleDamage(guideNPC, guideNPC, 114514d, "Lava");
+        guideNPC.getLocation().getChunk().load();
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+            LivingEntity NPCguide = NPCHelper.NPCMap.get("向导");
+            EntityHelper.handleDamage(NPCguide, NPCguide, 114514d, "Lava");
+        }, 1);
         // target player
         Player summonedPlayer = null;
         double nearestPlyDistSqr = 1600;

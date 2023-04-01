@@ -4,6 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 
 public class VanillaMechanicListener implements Listener {
@@ -12,4 +13,10 @@ public class VanillaMechanicListener implements Listener {
         evt.setDroppedExp(0);
         evt.getDrops().clear();
     }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void onEat(PlayerItemConsumeEvent evt) {
+        evt.setCancelled(true);
+    }
+
 }

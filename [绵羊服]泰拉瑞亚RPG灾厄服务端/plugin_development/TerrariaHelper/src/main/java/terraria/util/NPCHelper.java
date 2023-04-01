@@ -4,6 +4,7 @@ import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import terraria.TerrariaHelper;
 import terraria.entity.npc.*;
@@ -12,7 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 public class NPCHelper {
-    public static HashMap<String, Entity> NPCMap = new HashMap<>();
+    public static HashMap<String, LivingEntity> NPCMap = new HashMap<>();
     public static HashMap<String, Class> NPCTypeMap = new HashMap<>();
     static {
         NPCTypeMap.put("渔夫", TerrariaNPCAngler.class);
