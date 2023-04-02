@@ -36,6 +36,10 @@ effects:
     damageInterval: 5
     damage: 3
     damageMonster: 6
+  暗影焰:
+    isBuff: false
+    damageInterval: 4
+    damage: 3
   耐药性:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/83/Potion_Sickness
     isBuff: false
@@ -123,6 +127,8 @@ effects:
   再生:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/5/53/Regeneration
     isBuff: true
+    attributes:
+      regen: 4
   召唤:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/1/18/Summoning_%28buff%29
     isBuff: true
@@ -180,7 +186,7 @@ effects:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/33/Bleeding
     isBuff: false
     attributes:
-      regen: -100
+      regenMulti: -1
   缓慢:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/f/f5/Slow
     isBuff: false
@@ -192,15 +198,11 @@ effects:
   中毒:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/1/11/Poisoned
     isBuff: false
-    attributes:
-      regen: -100
     damageInterval: 10
     damage: 1
   剧毒:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/8a/Venom
     isBuff: false
-    attributes:
-      regen: -100
     damageInterval: 4
     damage: 6
   破损盔甲:
@@ -227,8 +229,6 @@ effects:
   破晓:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/b/b5/Stardust_Dragon
     isBuff: false
-    attributes:
-      regen: -100
     damageInterval: 5
     damage: 10
     damageMonster: 25

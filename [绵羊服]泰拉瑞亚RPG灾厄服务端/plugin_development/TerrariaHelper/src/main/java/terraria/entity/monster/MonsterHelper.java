@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
+import org.omg.CORBA.TypeCodePackage.BadKind;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.entity.projectile.TerrariaPotionProjectile;
@@ -262,6 +263,7 @@ public class MonsterHelper {
             case "巨型诅咒骷髅头":
             case "胡闹鬼":
             case "克苏鲁的仆从":
+            case "沼泽之眼":
             case "飞翔史莱姆":
             case "鸟妖":
             case "飞龙":
@@ -295,6 +297,7 @@ public class MonsterHelper {
             case "蛾怪":
             case "陨石怪":
             case "克苏鲁的仆从":
+            case "沼泽之眼":
             case "幽灵":
             case "死神":
             case "飞龙":
@@ -337,6 +340,7 @@ public class MonsterHelper {
             }
             case "飞龙":
             case "骨蛇":
+            case "吞噬者":
             {
                 if (!isMonsterPart) {
                     int additionalSegAmount = 14;
@@ -461,6 +465,13 @@ public class MonsterHelper {
     }
     public static void handleMonsterDrop(LivingEntity monsterBkt) {
         String type = GenericHelper.trimText(monsterBkt.getName());
+        // other mechanisms after death
+        switch (type) {
+            case "沼泽之眼": {
+                EntityHelper.spawnProjectile(monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "腐蚀之云");
+                break;
+            }
+        }
         ArrayList<String> toDrop = new ArrayList<>();
         // celestial pillar
         if (monsterBkt.getScoreboardTags().contains("isPillar")) {
@@ -788,6 +799,7 @@ public class MonsterHelper {
                 case "致命球":
                 case "胡闹鬼":
                 case "克苏鲁的仆从":
+                case "沼泽之眼":
                 case "陨石怪": {
                     if (monster.getHealth() > 0) {
                         double accelerationLen, speed, retargetDist;
@@ -888,7 +900,8 @@ public class MonsterHelper {
                     break;
                 }
                 case "飞龙":
-                case "骨蛇": {
+                case "骨蛇":
+                case "吞噬者": {
                     ArrayList<org.bukkit.entity.LivingEntity> segments = (ArrayList<org.bukkit.entity.LivingEntity>) extraVariables.get("attachments");
                     for (org.bukkit.entity.Entity entity : segments) {
                         ((LivingEntity) entity).setHealth(monsterBkt.getHealth());

@@ -590,6 +590,22 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.1
                     health: 24
+    沼泽之眼:
+        name: "沼泽之眼"
+        monsterType: "SLIME"
+        slimeSize: 4
+        spawnLocationType: ANY
+        owningBoss: 腐巢意志
+        hasHealthMulti: true
+        variants:
+            default1:
+                attributes:
+                    damage: 180
+                    damageType: "Melee"
+                    defence: 12
+                    knockback: 2
+                    knockbackResistance: 0.76
+                    health: 540
     饿鬼:
         name: "饿鬼"
         monsterType: "SLIME"

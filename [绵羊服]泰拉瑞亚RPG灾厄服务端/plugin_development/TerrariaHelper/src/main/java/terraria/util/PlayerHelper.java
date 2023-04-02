@@ -203,7 +203,7 @@ public class PlayerHelper {
     public static Location getSpawnLocation(Player ply) {
         if (ply.getBedSpawnLocation() != null && !ply.getScoreboardTags().contains("bedCancelled"))
             return ply.getBedSpawnLocation();
-        return Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE).getSpawnLocation();
+        return Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE).getHighestBlockAt(0, 0).getLocation().add(0, 1, 0);
     }
     public static GameProgress getGameProgress(Player player) {
         ConfigurationSection bossDefeatedSection = getPlayerDataFile(player).getConfigurationSection("bossDefeated");

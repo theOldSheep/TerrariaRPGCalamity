@@ -2,6 +2,7 @@ package terraria.entity;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.entity.EntityType;
+import terraria.entity.boss.cbl.Crabulon;
 import terraria.entity.boss.eoc.EyeOfCthulhu;
 import terraria.entity.boss.eow.EaterOfWorld;
 import terraria.entity.boss.hmzc.DesertNuisance;
@@ -25,6 +26,7 @@ class from https://www.spigotmc.org/threads/nms-tutorials-2-custom-nms-entities-
  */
 public enum CustomEntities {
 
+    BOSS_CBL           ("Crabulon",         55,  EntityType.SLIME,           EntitySlime.class,      Crabulon.class),
     BOSS_EOC           ("EyeOfCthulhu",     55,  EntityType.SLIME,           EntitySlime.class,      EyeOfCthulhu.class),
     BOSS_EOW           ("EaterOfWorlds",    55,  EntityType.SLIME,           EntitySlime.class,      EaterOfWorld.class),
     BOSS_HMZC          ("DesertScourge",    55,  EntityType.SLIME,           EntitySlime.class,      DesertScourge.class),

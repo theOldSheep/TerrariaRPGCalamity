@@ -155,6 +155,11 @@ deathMessages:
   - <victim> 被烧成了焦炭
   - <victim> 被烧得只剩渣了
   - <victim> 成了全熟牛排
+  Debuff_暗影焰:
+  - <victim> 无法把火扑灭
+  - <victim> 被烧成了焦炭
+  - <victim> 被烧得只剩渣了
+  - <victim> 成了全熟牛排
   Debuff_中毒:
   - <victim> 无法找到解药
   Debuff_剧毒:

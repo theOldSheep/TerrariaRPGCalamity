@@ -42,6 +42,14 @@ public class EaterOfWorld extends EntitySlime {
                     .setFollowingMultiplier(1)
                     .setStraighteningMultiplier(0.1)
                     .setVelocityOrTeleport(false);
+    static final HashMap<String, Double> attrMapSpit;
+    static {
+        attrMapSpit = new HashMap<>();
+        attrMapSpit.put("damage", 192d);
+        attrMapSpit.put("health", 1d);
+        attrMapSpit.put("healthMax", 1d);
+        attrMapSpit.put("knockback", 4d);
+    }
     public EntityHelper.ProjectileShootInfo projectileProperty;
     int index;
     int indexAI = (int) (Math.random() * 500);
@@ -137,7 +145,6 @@ public class EaterOfWorld extends EntitySlime {
             projectileProperty.shootLoc = shootLoc;
             projectileProperty.velocity = velocity;
             Entity projectile = EntityHelper.spawnProjectile(projectileProperty);
-            projectile.addScoreboardTag("isMeleeTarget");
         }
     }
     private void AI() {
@@ -290,7 +297,7 @@ public class EaterOfWorld extends EntitySlime {
             this.setNoGravity(true);
             this.persistent = true;
             // projectile info
-            projectileProperty = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMap, "Arrow", "魔唾液");
+            projectileProperty = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSpit, "Arrow", "魔唾液");
             projectileProperty.properties.put("penetration", 9);
             // next segment
             if (index + 1 < TOTAL_LENGTH)

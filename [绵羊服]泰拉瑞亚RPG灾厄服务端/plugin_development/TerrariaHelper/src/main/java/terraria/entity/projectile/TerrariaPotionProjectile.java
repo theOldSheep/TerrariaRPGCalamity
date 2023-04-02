@@ -2,10 +2,14 @@ package terraria.entity.projectile;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
+import terraria.TerrariaHelper;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.util.EntityHelper;
 import terraria.util.GenericHelper;
@@ -28,7 +32,12 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public HashSet<org.bukkit.entity.Entity> damageCD;
     public HashMap<String, Object> properties;
     public org.bukkit.entity.Projectile bukkitEntity;
+    HashMap<String, Double> attrMap, attrMapExtraProjectile;
     public Entity autoTraceTarget = null;
+    // extra projectile variables
+    public ConfigurationSection extraProjectileConfigSection;
+    int extraProjectileSpawnInterval;
+    EntityHelper.ProjectileShootInfo extraProjectileShootInfo;
 
 
     private void setupProjectileProperties() {
@@ -70,9 +79,18 @@ public class TerrariaPotionProjectile extends EntityPotion {
         this.damageCD = new HashSet<>((int) (penetration * 1.5));
     }
 
+    private void setupExtraProjectileInfo() {
+        extraProjectileConfigSection = TerrariaHelper.projectileConfig.getConfigurationSection(this.projectileType + ".spawnProjectiles");
+        extraProjectileSpawnInterval = extraProjectileConfigSection.getInt("interval", 10);
+        attrMapExtraProjectile = (HashMap<String, Double>) attrMap.clone();
+        attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * extraProjectileConfigSection.getInt("interval", 10));
+        extraProjectileShootInfo = new EntityHelper.ProjectileShootInfo(getShooter().getBukkitEntity(), new Vector(),
+                attrMapExtraProjectile, extraProjectileConfigSection.getString("spawnType", "木箭"));
+    }
     // setup properties of the specific type, excluding its item displayed
     public void setProperties(String type) {
         projectileType = type;
+        setupExtraProjectileInfo();
         setupProjectileProperties();
         setCustomName(type);
         if (isGrenade) addScoreboardTag("isGrenade");
@@ -100,16 +118,29 @@ public class TerrariaPotionProjectile extends EntityPotion {
         return CraftItemStack.asNMSCopy(item);
     }
     // constructor
+    public TerrariaPotionProjectile(EntityHelper.ProjectileShootInfo shootInfo) {
+        this(shootInfo.shootLoc, TerrariaPotionProjectile.generateItemStack(shootInfo.projectileName),
+                shootInfo.velocity, shootInfo.projectileName, shootInfo.properties,
+                shootInfo.attrMap, shootInfo.shooter, shootInfo.projectileName);
+    }
     public TerrariaPotionProjectile(org.bukkit.Location loc, ItemStack projectileItem, Vector velocity,
-                                    String projectileType, HashMap<String, Object> properties) {
+                                    String projectileType, HashMap<String, Object> properties,
+                                    HashMap<String, Double> attrMap, ProjectileSource shooter, String damageType) {
         super(((CraftWorld) loc.getWorld()).getHandle(), loc.getX(), loc.getY(), loc.getZ(), projectileItem);
         this.motX = velocity.getX();
         this.motY = velocity.getY();
         this.motZ = velocity.getZ();
+        // add to world
+        this.world.addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         this.speed = velocity.length();
         this.projectileType = projectileType;
         this.properties = properties;
         bukkitEntity = (org.bukkit.entity.Projectile) getBukkitEntity();
+        // other properties
+        bukkitEntity.setShooter(shooter);
+        this.attrMap = (HashMap<String, Double>) attrMap.clone();
+        EntityHelper.setMetadata(bukkitEntity, "attrMap", this.attrMap);
+        EntityHelper.setMetadata(bukkitEntity, "damageType", damageType);
         setProperties(projectileType);
     }
 
@@ -170,6 +201,30 @@ public class TerrariaPotionProjectile extends EntityPotion {
         TerrariaProjectileHitEvent.callProjectileHitEvent(this);
     }
     // tick
+    // this helper function is called every tick as long as the projectile is alive.
+    protected void spawnExtraProjectiles() {
+        if (extraProjectileConfigSection == null)
+            return;
+        // validate CD
+        if (ticksLived % extraProjectileSpawnInterval == 0) {
+            Vector velocity;
+            switch (extraProjectileConfigSection.getString("spawnMechanism", "BOTTOM")) {
+                case "SURROUND":
+                    velocity = terraria.util.MathHelper.randomVector();
+                    break;
+                case "FORWARD":
+                    velocity = bukkitEntity.getVelocity().normalize();
+                    break;
+                case "BOTTOM":
+                default:
+                    velocity = new Vector(0, -1, 0);
+            }
+            velocity.multiply(extraProjectileConfigSection.getDouble("speed", 1d));
+            extraProjectileShootInfo.shootLoc = bukkitEntity.getLocation();
+            extraProjectileShootInfo.velocity = velocity;
+            EntityHelper.spawnProjectile(extraProjectileShootInfo);
+        }
+    }
     // this helper function is called every tick as long as the projectile is alive.
     protected void extraTicking() {
         switch (projectileType) {
@@ -547,6 +602,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
                             .setParticleColor(trailColor));
         // set position and velocity info
         setPosition(futureLoc.x, futureLoc.y, futureLoc.z);
+        // spawn projectiles
+        spawnExtraProjectiles();
         // extra ticking
         extraTicking();
         // send new velocity if:

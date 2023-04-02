@@ -1112,13 +1112,24 @@ public class EntityHelper {
             knockbackTaker.setVelocity(knockbackTaker.getVelocity().multiply(1 - kbMulti).add(dir));
         }
     }
+    private static void displayDamageActionBar(Player damager, String victimName, int health, int maxHealth, int damage) {
+        if (health > 0) {
+            PlayerHelper.sendActionBar(damager,
+                    "§r" + victimName + " §6[§a" + health + "§6/§a" + maxHealth + "§6] §b(-" + damage + ")");
+        } else
+            PlayerHelper.sendActionBar(damager, victimName + " §c领了盒饭");
+    }
     public static void handleDamage(Entity damager, Entity victim, double damage, String damageReason) {
         HashMap<String, Double> victimAttrMap = getAttrMap(victim);
+        Entity damageSource = getDamageSource(damager);
         // projectile etc
         if (!(victim instanceof LivingEntity)) {
             if (victimAttrMap.containsKey("health")) {
                 double health = victimAttrMap.get("health") - damage;
+                double maxHealth = victimAttrMap.getOrDefault("healthMax", health);
                 victimAttrMap.put("health", health);
+                if (damageSource instanceof Player)
+                    displayDamageActionBar((Player) damageSource, victim.getName(), (int) health, (int) maxHealth, (int) damage);
                 if (health < 0) {
                     victim.remove();
                 }
@@ -1132,7 +1143,6 @@ public class EntityHelper {
             return;
         }
         LivingEntity victimLivingEntity = (LivingEntity) victim;
-        Entity damageSource = getDamageSource(damager);
         LivingEntity damageTaker = victimLivingEntity;
         // no damage scenarios
         boolean canDamage = true;
@@ -1445,14 +1455,10 @@ public class EntityHelper {
         // send info message to damager player
         if (damageSource instanceof Player && victim != damageSource) {
             String vName = damageTaker.getName();
-            if (damageTaker.getHealth() > 0) {
-                int dmgInt = (int) dmg;
-                int healthInt = (int) damageTaker.getHealth();
-                int maxHealthInt = (int) damageTaker.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-                PlayerHelper.sendActionBar((Player) damageSource,
-                        "§r" + vName + " §6[§a" + healthInt + "§6/§a" + maxHealthInt + "§6] §b(-" + dmgInt + ")");
-            } else
-                PlayerHelper.sendActionBar((Player) damageSource, vName + " §c领了盒饭");
+            int dmgInt = (int) dmg;
+            int healthInt = (int) damageTaker.getHealth();
+            int maxHealthInt = (int) damageTaker.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+            displayDamageActionBar((Player) damageSource, vName, healthInt, maxHealthInt, dmgInt);
         }
 
         // handle invincibility ticks
@@ -1631,15 +1637,9 @@ public class EntityHelper {
             wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
             bukkitProjectile = new CraftArrow(wld.getHandle().getServer(), entity);
         } else {
-            TerrariaPotionProjectile entity = new TerrariaPotionProjectile(
-                    shootInfo.shootLoc, TerrariaPotionProjectile.generateItemStack(shootInfo.projectileName),
-                    shootInfo.velocity, shootInfo.projectileName, shootInfo.properties);
-            wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            TerrariaPotionProjectile entity = new TerrariaPotionProjectile(shootInfo);
             bukkitProjectile = new CraftSplashPotion(wld.getHandle().getServer(), entity);
         }
-        bukkitProjectile.setShooter(shootInfo.shooter);
-        setMetadata(bukkitProjectile, "attrMap", shootInfo.attrMap.clone());
-        setMetadata(bukkitProjectile, "damageType", shootInfo.damageType);
         return bukkitProjectile;
     }
     // the spawn projectile below are not as flexible comparing to the function above

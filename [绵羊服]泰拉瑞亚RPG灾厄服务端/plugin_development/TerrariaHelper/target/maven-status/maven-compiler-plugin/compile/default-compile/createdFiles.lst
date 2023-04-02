@@ -5,6 +5,7 @@ terraria\util\GenericHelper$StrikeLineOptions.class
 terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
 terraria\event\listener\PlayerJoinListener.class
+terraria\entity\boss\hvm\HiveBlob.class
 terraria\entity\npc\TerrariaNPCClothier.class
 terraria\entity\boss\eoc\EyeOfCthulhu$AIPhase.class
 terraria\entity\monster\MonsterZombie.class
@@ -39,7 +40,6 @@ terraria\entity\monster\MonsterHelper$1.class
 terraria\entity\boss\cbl\Crabulon.class
 terraria\event\listener\PlayerQuitListener.class
 terraria\entity\npc\TerrariaNPCGoblinTinkerer.class
-terraria\entity\boss\cbl\Crabulon$1.class
 terraria\entity\boss\slmw\KingSlime$SizeState.class
 terraria\event\listener\VanillaFishHookShootListener.class
 terraria\entity\monster\MonsterSlime.class
@@ -47,6 +47,7 @@ terraria\util\DragoncoreHelper.class
 terraria\event\listener\RandomTitleListener.class
 terraria\util\GenericHelper$ParticleLineOptions.class
 terraria\entity\minion\MinionSlime.class
+terraria\entity\boss\hvm\DarkHeart.class
 terraria\worldgen\overworld\OverworldBiomeGenerator$1.class
 terraria\entity\boss\klw\SkeletronHead.class
 terraria\worldgen\RandomGenerator.class
@@ -58,7 +59,6 @@ terraria\event\listener\PlayerMovementListener.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
 terraria\entity\npc\TerrariaNPCArmsDealer.class
 terraria\event\TerrariaProjectileHitEvent.class
-terraria\entity\boss\cbl\Crabulon$SizeState.class
 terraria\util\PlayerHelper$1.class
 terraria\util\EntityHelper.class
 terraria\entity\boss\slmw\CrownJewel.class
@@ -116,9 +116,11 @@ terraria\entity\minion\MinionCaveSpider.class
 terraria\entity\CustomEntities.class
 terraria\event\listener\ItemUseAndAttributeListener.class
 terraria\worldgen\underworld\UnderworldChunkGenerator.class
+terraria\entity\boss\hvm\TheHiveMind.class
 terraria\entity\projectile\TerrariaPotionProjectile.class
 terraria\util\GenericHelper$1.class
 terraria\event\listener\ServerStopListener.class
+terraria\entity\boss\hvm\TheHiveMind$AIPhase.class
 terraria\util\WorldHelper$HeightLayer.class
 terraria\worldgen\Interpolate$InterpolatePoint.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator.class

@@ -1,4 +1,4 @@
-package terraria.entity.boss.cbl;
+package terraria.entity.boss.hvm;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
@@ -7,26 +7,22 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Slime;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.slmw.CrownJewel;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
-public class Crabulon extends EntitySlime {
+public class TheHiveMind extends EntitySlime {
     // basic variables
-    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.CRABULON;
-    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.JUNGLE;
-    public static final double BASIC_HEALTH = 9600 * 2;
+    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.THE_HIVE_MIND;
+    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.CORRUPTION;
+    public static final double BASIC_HEALTH = 24480 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
@@ -34,75 +30,12 @@ public class Crabulon extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    int indexAI = 0;
-    boolean lastOnGround = true;
-    static final HashMap<String, Double> attrMapSpore, attrMapShroom;
-    EntityHelper.ProjectileShootInfo psiSpore, psiShroom;
-    HashSet<Entity> shrooms = new HashSet<>();
-    static {
-        attrMapSpore = new HashMap<>();
-        attrMapSpore.put("damage", 180d);
-        attrMapShroom = new HashMap<>();
-        attrMapShroom.put("damage", 150d);
-        attrMapShroom.put("health", 90d);
-        attrMapShroom.put("healthMax", 90d);
+    private enum AIPhase {
+        CHARGE, CIRCLE, DASH;
     }
-    private boolean isOnGround() {
-        return (onGround ||
-                bukkitEntity.getLocation().subtract(0, 0.25, 0).getBlock().getType() != org.bukkit.Material.AIR) && !noclip;
-    }
-    private void shootProjectiles() {
-        psiSpore.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-        psiShroom.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-        // shoot spores
-        double yaw = MathHelper.getVectorYaw(target.getLocation().subtract(psiSpore.shootLoc).toVector());
-        for (int i = 0; i < 30; i ++) {
-            Vector velocity = MathHelper.vectorFromYawPitch_quick(yaw + (Math.random() * 90 - 45), -90 + Math.random() * 60);
-            velocity.multiply(1.25 + Math.random());
-            psiSpore.velocity = velocity;
-            EntityHelper.spawnProjectile(psiSpore);
-        }
-        // shoot shrooms
-        for (int i = 0; i < 15; i ++) {
-            Vector velocity = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, -90 + Math.random() * 30);
-            velocity.multiply(1 + Math.random());
-            psiShroom.velocity = velocity;
-            shrooms.add( EntityHelper.spawnProjectile(psiShroom) );
-        }
-    }
-    private void handleShroomFollow() {
-        ArrayList<Entity> toRemove = new ArrayList<>();
-        for (Entity shroom : shrooms) {
-            if (shroom.isDead()) {
-                toRemove.add(shroom);
-                continue;
-            }
-            Vector velocity = shroom.getVelocity();
-            if (ticksLived % 30 != 0) {
-                velocity.setY( Math.max(velocity.getY(), -0.125) );
-            }
-            else {
-                Vector offset = target.getLocation().subtract(shroom.getLocation()).toVector();
-                offset.setY(0);
-                if (offset.lengthSquared() < 1e-5) {
-                    continue;
-                }
-                double offsetLen = offset.length();
-                double velLen = velocity.length();
-                offset.multiply( velLen * 2 / offsetLen);
-                velocity.add(offset);
-                velLen = velocity.length();
-                if (velLen > 1) {
-                    velocity.multiply(1 / velLen);
-                }
-                velocity.setY( Math.max(velocity.getY(), -0.25) );
-            }
-            shroom.setVelocity(velocity);
-        }
-        for (Entity deadShroom : toRemove) {
-            shrooms.remove(deadShroom);
-        }
-    }
+    boolean secondPhase = false;
+    int indexAI = 1;
+    AIPhase typeAI = AIPhase.CHARGE;
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -121,62 +54,33 @@ public class Crabulon extends EntitySlime {
                 return;
             }
             // if target is valid, attack
-            else {
-                // AI
-                handleShroomFollow();
-                if (ticksLived % 2 == 0) {
-                    boolean onGround = isOnGround();
-                    if (onGround) {
-                        // upon landing, shoot projectiles
-                        if (!lastOnGround) {
-                            shootProjectiles();
-                            lastOnGround = true;
-                        }
-                        // jump
-                        if (indexAI >= 10) {
-                            Vector velocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
-                            velocity.setY(0);
-                            velocity.normalize().multiply(1.75);
-                            velocity.setY(1.6);
-                            bukkitEntity.setVelocity(velocity);
-                            indexAI = 0;
-                            noclip = true;
-                            lastOnGround = false;
-                        }
-                        // move towards target
-                        else {
-                            Vector velocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
-                            velocity.setY(0);
-                            velocity.normalize().multiply(0.75);
-                            bukkitEntity.setVelocity(velocity);
-                        }
-                        // add 1 to index
-                        indexAI++;
-                    }
-                    else {
-                        this.noclip = this.locY > target.getEyeLocation().getY() + 5;
-                    }
+            if (ticksLived % 3 == 0) {
+                double healthRatio = getHealth() / getMaxHealth();
+                if (!secondPhase && healthRatio < 0.8) {
+                    secondPhase = true;
                 }
+                // add 1 to index
+                indexAI ++;
             }
         }
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
-    public Crabulon(World world) {
+    public TheHiveMind(World world) {
         super(world);
         super.die();
     }
     // validate if the condition for spawning is met
     public static boolean canSpawn(Player player) {
-        return WorldHelper.HeightLayer.getHeightLayer(player.getLocation()) == WorldHelper.HeightLayer.CAVERN &&
-                WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
+        if ( WorldHelper.isDayTime(player.getWorld()) ) return false;
+        return true;
     }
     // a constructor for actual spawning
-    public Crabulon(Player summonedPlayer) {
+    public TheHiveMind(Player summonedPlayer) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
-        double angle = Math.random() * 720d, dist = 25;
+        double angle = Math.random() * 720d, dist = 20;
         Location spawnLoc = summonedPlayer.getLocation().add(
                 MathHelper.xsin_degree(angle) * dist, 0, MathHelper.xcos_degree(angle) * dist);
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
@@ -189,13 +93,12 @@ public class Crabulon extends EntitySlime {
         bukkitEntity.addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
-        goalSelector.a(0, new PathfinderGoalFloat(this));
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 240d);
+            attrMap.put("damage", 270d);
             attrMap.put("damageMeleeMulti", 1d);
             attrMap.put("damageMulti", 1d);
             attrMap.put("defence", 16d);
@@ -206,15 +109,6 @@ public class Crabulon extends EntitySlime {
             attrMap.put("knockbackMulti", 1d);
             EntityHelper.setDamageType(bukkitEntity, "Melee");
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
-        }
-        // init projectile shoot info
-        {
-            psiSpore = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSpore, "-");
-            psiSpore.projectileName = "真菌孢子";
-            psiShroom = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapShroom, "-");
-            psiShroom.projectileName = "真菌孢子";
-            psiShroom.properties.put("gravity", 0.01);
-            psiShroom.properties.put("blockHitAction", "thru");
         }
         // init boss bar
         bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
@@ -240,7 +134,13 @@ public class Crabulon extends EntitySlime {
             bossParts = new ArrayList<>();
             bossParts.add((LivingEntity) bukkitEntity);
             BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
+            this.noclip = true;
+            this.setNoGravity(true);
             this.persistent = true;
+            // hive blobs
+            for (int i = 0; i < 15; i ++) {
+                new HiveBlob(this);
+            }
         }
     }
 
@@ -277,6 +177,10 @@ public class Crabulon extends EntitySlime {
     @Override
     public void B_() {
         super.B_();
+        // undo air resistance etc.
+        motX /= 0.91;
+        motY /= 0.98;
+        motZ /= 0.91;
         // update boss bar and dynamic DR
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);
         // load nearby chunks

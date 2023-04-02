@@ -83,10 +83,39 @@
         fireOnHitEntity: true
         # 分裂后弹片弹射物速度
         velocity: 0.5
+    # 泰拉瑞亚悠悠球，北极等射弹生成额外射弹
+    spawnProjectiles:
+        # 生成间隔，整数，默认10 (2次/秒)
+        interval: 10
+        # 生成方式：BOTTOM，向下生成; SURROUND，向周围生成；FORWARD，向前生成
+        spawnMechanism: BOTTOM
+        # 生成射弹伤害比例
+        damageMulti: 0.5
+        # 生成射弹的速度
+        speed: 1.0
+        # 生成射弹类型
+        spawnType: 木箭
 
+腐蚀之云:
+    penetration: 99999
+    maxSpeed: 0
+    blockHitAction: thru
+    spawnProjectiles:
+        interval: 4
+        spawnMechanism: BOTTOM
+        damageMulti: 1
+        speed: 1.0
+        spawnType: 暗影之雨
+暗影之雨:
+    penetration: 99999
+    buffInflict:
+        - "暗影焰|50|1"
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2
+风刃:
+    projectileSize: 1
+    gravity: 0
 南瓜榴弹:
     isGrenade: true
     blastRadius: 1

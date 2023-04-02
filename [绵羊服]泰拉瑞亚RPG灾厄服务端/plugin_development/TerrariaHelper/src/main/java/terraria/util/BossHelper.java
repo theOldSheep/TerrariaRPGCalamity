@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import terraria.entity.boss.cbl.Crabulon;
 import terraria.entity.boss.eoc.EyeOfCthulhu;
 import terraria.entity.boss.eow.EaterOfWorld;
 import terraria.entity.boss.hmzc.DesertScourge;
@@ -69,6 +70,13 @@ public class BossHelper {
             case EYE_OF_CTHULHU: {
                 if (EyeOfCthulhu.canSpawn(target)) {
                     new EyeOfCthulhu(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case CRABULON: {
+                if (Crabulon.canSpawn(target)) {
+                    new Crabulon(target);
                     spawnedSuccessfully = true;
                 }
                 break;

@@ -3,14 +3,15 @@ version: 1.0
 main: terraria.TerrariaHelper
 prefix: 泰拉瑞亚
 depend:
-  - AuthMe
   - DragonCore
   - Essentials
   - LibsDisguises
   - PlaceholderAPI
   - Vault
   - VexView
-load: startup
+softdepend:
+  - AuthMe
+load: STARTUP
 commands:
   findNoise:
     description: teleport to somewhere near the noise input
