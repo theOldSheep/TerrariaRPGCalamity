@@ -29,7 +29,7 @@
     # 弹射物的碰撞箱体积，不写视为0.125
     projectileSize: 0.125
     # 每帧速度乘以这个数字，例如1.25则为每帧加速25%，不写则视为1
-    speedMultiPerTick: 0
+    speedMultiPerTick: 1
     # 最大速度（单位：格/帧），防止恶魔锄刀类武器的速度突破天际，不写则视为100
     maxSpeed: 100
     # 是否为爆炸弹幕（损毁时爆炸）？不写则视为false
@@ -87,6 +87,8 @@
     spawnProjectiles:
         # 生成间隔，整数，默认10 (2次/秒)
         interval: 10
+        # 生成位置随机偏移的直径，单位：格
+        offset: 1.0
         # 生成方式：BOTTOM，向下生成; SURROUND，向周围生成；FORWARD，向前生成
         spawnMechanism: BOTTOM
         # 生成射弹伤害比例
@@ -98,8 +100,8 @@
 
 腐蚀之云:
     penetration: 99999
-    maxSpeed: 0
-    blockHitAction: thru
+    speedMultiPerTick: 0.95
+    blockHitAction: stick
     spawnProjectiles:
         interval: 4
         spawnMechanism: BOTTOM
@@ -109,7 +111,12 @@
 暗影之雨:
     penetration: 99999
     buffInflict:
-        - "暗影焰|50|1"
+        - "暗影焰|100|1"
+恶毒瘤块:
+    penetration: 99999
+    noGravityTicks: 99999
+    buffInflict:
+        - "咒火|100|1"
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2

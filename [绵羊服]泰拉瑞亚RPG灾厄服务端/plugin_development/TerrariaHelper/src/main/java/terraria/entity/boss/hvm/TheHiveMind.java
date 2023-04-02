@@ -4,11 +4,13 @@ import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.Hash;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Slime;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -30,12 +32,56 @@ public class TheHiveMind extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
+    static final int SIZE = 10;
+    static HashMap<String, Double> attrMapShaderRain;
+    static {
+        attrMapShaderRain = new HashMap<>();
+        attrMapShaderRain.put("damage", 204d);
+    }
     private enum AIPhase {
-        CHARGE, CIRCLE, DASH;
+        CHARGE, CIRCLE, DASH, BURROW;
     }
     boolean secondPhase = false;
-    int indexAI = 1;
+    int indexAI = 1, spawnAmountLeft = 19;
     AIPhase typeAI = AIPhase.CHARGE;
+    Vector circleVec1, circleVec2;
+    private void updateTypeAI(AIPhase newPhase) {
+        if (newPhase == AIPhase.BURROW)
+            addScoreboardTag("noDamage");
+        else
+            removeScoreboardTag("noDamage");
+        typeAI = newPhase;
+        indexAI = -1;
+    }
+    private void spawnMonsters(boolean canSpawnRain) {
+        double rdm = Math.random();
+        Location spawnLoc = bukkitEntity.getLocation().add(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
+        // shader rain
+        if (rdm < 0.25) {
+            if (!canSpawnRain) {
+                spawnMonsters(false);
+                return;
+            }
+            EntityHelper.spawnProjectile(bukkitEntity, spawnLoc, new Vector(), attrMapShaderRain,
+                    "Magic", "腐蚀之云");
+        }
+        // eater of soul
+        else if (rdm < 0.4) {
+            MonsterHelper.spawnMob("噬魂怪", spawnLoc, target);
+        }
+        // devourer
+        else if (rdm < 0.55) {
+            MonsterHelper.spawnMob("吞噬者", spawnLoc, target);
+        }
+        // dark heart
+        else if (rdm < 0.7){
+            new DarkHeart(this);
+        }
+        // Dank Creeper
+        else {
+            MonsterHelper.spawnMob("沼泽之眼", spawnLoc, target);
+        }
+    }
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -54,17 +100,140 @@ public class TheHiveMind extends EntitySlime {
                 return;
             }
             // if target is valid, attack
-            if (ticksLived % 3 == 0) {
-                double healthRatio = getHealth() / getMaxHealth();
-                if (!secondPhase && healthRatio < 0.8) {
-                    secondPhase = true;
+            double healthRatio = getHealth() / getMaxHealth();
+            if (!secondPhase && healthRatio < 0.8) {
+                secondPhase = true;
+            }
+            // attack AI
+            switch (typeAI) {
+                case CHARGE: {
+                    if (ticksLived % 3 == 0) {
+                        double chargeSpd = (1 - healthRatio) * 1.5;
+                        Vector velocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
+                        double velLen = velocity.length();
+                        if (velLen > 1e-5) {
+                            velocity.multiply(chargeSpd / velLen);
+                            bukkitEntity.setVelocity(velocity);
+                        }
+                        // enter next phase
+                        int duration = secondPhase ? 15 : 25;
+                        AIPhase nextPhase = secondPhase ? AIPhase.CIRCLE : AIPhase.BURROW;
+                        if (indexAI >= duration) {
+                            updateTypeAI(nextPhase);
+                        }
+                        // add 1 to index
+                        indexAI++;
+                    }
+                    break;
                 }
-                // add 1 to index
-                indexAI ++;
+                case CIRCLE: {
+                    if (indexAI == 0) {
+                        bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1.5f);
+                        // circle vector 1
+                        circleVec1 = bukkitEntity.getLocation().subtract(target.getLocation()).toVector();
+                        double cv1Len = circleVec1.length();
+                        if (cv1Len < 1e-5) {
+                            circleVec1 = MathHelper.randomVector();
+                            cv1Len = 1;
+                        }
+                        circleVec1.multiply(1d / cv1Len);
+                        // circle vector 2
+                        circleVec2 = null;
+                        while (circleVec2 == null) {
+                            circleVec2 = MathHelper.randomVector();
+                            circleVec2.subtract( MathHelper.vectorProjection(circleVec1, circleVec2) );
+                            double cv2Len = circleVec2.length();
+                            if (cv2Len < 1e-5)
+                                circleVec2 = null;
+                            else {
+                                circleVec2.multiply(1d / cv2Len);
+                            }
+                        }
+                    }
+                    double dist = 15;
+                    Vector offsetVector = circleVec1.clone().multiply(MathHelper.xcos_degree(indexAI) * dist)
+                            .add(circleVec2.clone().multiply(MathHelper.xsin_degree(indexAI) * dist));
+                    Location targetLoc = target.getLocation().add(offsetVector);
+                    Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
+                    bukkitEntity.setVelocity(velocity);
+                    // add 1 to index
+                    indexAI += 20;
+                    if (indexAI > 720) {
+                        updateTypeAI(AIPhase.DASH);
+                    }
+                    break;
+                }
+                case DASH: {
+                    if (ticksLived % 3 == 0) {
+                        if (indexAI == 0) {
+                            bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
+                            Vector velocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
+                            double velLen = velocity.length();
+                            double chargeSpd = 3 - healthRatio;
+                            if (velLen < 1e-5) {
+                                velocity = new Vector(1, 0, 0);
+                                velLen = 1;
+                            }
+                            velocity.multiply(chargeSpd / velLen);
+                            bukkitEntity.setVelocity(velocity);
+                        }
+                        // spawn monsters
+                        if (Math.random() < 0.35)
+                            spawnMonsters(true);
+                        // next AI phase
+                        if (indexAI >= 10) {
+                            updateTypeAI(AIPhase.BURROW);
+                        }
+                        // add 1 to index
+                        indexAI++;
+                    }
+                    break;
+                }
+                // teleport near target
+                case BURROW: {
+                    bukkitEntity.setVelocity(new Vector());
+                    if (ticksLived % 2 == 0) {
+                        if (indexAI < SIZE) {
+                            EntityHelper.slimeResize((Slime) bukkitEntity, SIZE - indexAI);
+                        } else if (indexAI == SIZE) {
+                            double angle = Math.random() * 360, radius = 15 + Math.random() * 10;
+                            Location teleportLoc = bukkitEntity.getWorld().getHighestBlockAt(
+                                            target.getLocation().add(MathHelper.xsin_degree(angle) * radius, 0,
+                                                    MathHelper.xcos_degree(angle) * radius))
+                                    .getLocation().add(0, 1, 0);
+                            bukkitEntity.teleport(teleportLoc);
+                        } else {
+                            int newSize = indexAI - SIZE;
+                            EntityHelper.slimeResize((Slime) bukkitEntity, newSize);
+                            if (newSize >= SIZE) {
+                                updateTypeAI(AIPhase.CHARGE);
+                            }
+                        }
+                        // add 1 to index
+                        indexAI++;
+                    }
+                }
+            }
+            // spawn additional monsters
+            int currSpawnAmountLeft = (int) (healthRatio * 20);
+            while (currSpawnAmountLeft < spawnAmountLeft) {
+                spawnAmountLeft --;
+                if (!secondPhase) {
+                    // hive blobs
+                    for (int i = 0; i < 5; i++) {
+                        new HiveBlob(this);
+                    }
+                    // other random monsters
+                    for (int i = 0; i < 10; i++)
+                        spawnMonsters(false);
+                }
             }
         }
+        // face the player
+        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // collision dmg
-        terraria.entity.boss.BossHelper.collisionDamage(this);
+        if (typeAI != AIPhase.BURROW)
+            terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
     public TheHiveMind(World world) {
@@ -73,7 +242,7 @@ public class TheHiveMind extends EntitySlime {
     }
     // validate if the condition for spawning is met
     public static boolean canSpawn(Player player) {
-        if ( WorldHelper.isDayTime(player.getWorld()) ) return false;
+        if ( WorldHelper.BiomeType.getBiome(player) != BIOME_REQUIRED ) return false;
         return true;
     }
     // a constructor for actual spawning
@@ -123,7 +292,7 @@ public class TheHiveMind extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(10, false);
+            setSize(SIZE, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
@@ -157,6 +326,7 @@ public class TheHiveMind extends EntitySlime {
             terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
 
             Bukkit.broadcastMessage("§d§l" + BOSS_TYPE.msgName + " 被击败了.");
+            Bukkit.broadcastMessage("§#00FFFF苍青色的光辉照耀着这片土地。");
             // send out loot
             double[] healthInfo = terraria.entity.boss.BossHelper.getHealthInfo(bossParts);
             double dmgDealtReq = healthInfo[1] / targetMap.size() / 10;

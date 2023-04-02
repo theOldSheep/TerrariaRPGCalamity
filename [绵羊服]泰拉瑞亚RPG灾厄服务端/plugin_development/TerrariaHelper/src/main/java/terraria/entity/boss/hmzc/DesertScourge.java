@@ -161,10 +161,12 @@ public class DesertScourge extends EntitySlime {
             }
             // if target is valid, attack
             else {
-                // attack
+                // head
                 if (index == 0) {
                     // attack
                     headRushEnemy();
+                    // face the player
+                    this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
                     // follow
                     EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
                 }

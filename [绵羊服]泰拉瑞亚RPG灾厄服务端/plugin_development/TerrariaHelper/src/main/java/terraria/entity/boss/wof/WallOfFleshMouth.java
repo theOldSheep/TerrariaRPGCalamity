@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.util.*;
+import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -201,6 +202,8 @@ public class WallOfFleshMouth extends EntitySlime {
                     toggleEnraged(false);
             }
         }
+        // face the player
+        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }

@@ -147,6 +147,8 @@ public class DesertNuisance extends EntitySlime {
                 if (index == 0) {
                     // attack
                     headRushEnemy();
+                    // face the player
+                    this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
                     // follow
                     EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
                 }

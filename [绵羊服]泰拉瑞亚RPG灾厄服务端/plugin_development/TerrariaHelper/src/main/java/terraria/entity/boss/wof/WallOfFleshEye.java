@@ -94,6 +94,8 @@ public class WallOfFleshEye extends EntitySlime {
                 }
             }
         }
+        // face the player
+        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }

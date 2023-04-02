@@ -267,6 +267,7 @@ public class MonsterHelper {
             case "飞翔史莱姆":
             case "鸟妖":
             case "飞龙":
+            case "吞噬者":
             case "骨蛇":
             case "飞蛇":
             case "诅咒骷髅头":
@@ -301,6 +302,7 @@ public class MonsterHelper {
             case "幽灵":
             case "死神":
             case "飞龙":
+            case "吞噬者":
             case "骨蛇":
                 monster.noclip = true;
         }
@@ -350,7 +352,7 @@ public class MonsterHelper {
                     for (int i = 0; i < additionalSegAmount; i++) {
                         org.bukkit.entity.Slime segment = (Slime) (new MonsterSlime(target, type, loc, true)).getBukkitEntity();
                         HashMap<String, Double> attrMapSegment = EntityHelper.getAttrMap(segment);
-                        attrMapSegment.put("damageMulti", 1d);
+                        attrMapSegment.put("damageMulti", 0.45);
                         attrMapSegment.put("defenceMulti", 2d);
                         EntityHelper.setMetadata(segment, "damageTaker", bukkitMonster);
                         segment.setCustomName(type + "§1");
@@ -761,7 +763,7 @@ public class MonsterHelper {
                                     extraVariables.put("acc", acc);
                                 }
                         }
-                        Vector velocity = monsterBkt.getVelocity().multiply(0.975)
+                        Vector velocity = monsterBkt.getVelocity().multiply(0.9)
                                 .add(acc.clone().multiply(speedMultiKnockback));
                         double spd = 0.75 * speedMultiKnockback;
                         double velLen = velocity.length();
@@ -950,6 +952,9 @@ public class MonsterHelper {
                             switch (type) {
                                 case "骨蛇":
                                     recoilVec = new Vector(0, -0.2, 0);
+                                    break;
+                                case "吞噬者":
+                                    recoilVec = new Vector(0, -0.15, 0);
                                     break;
                                 case "飞龙":
                                     recoilVec = new Vector(0, 0.2, 0);

@@ -67,6 +67,7 @@ terraria\event\listener\PlayerKeyToggleListener.class
 terraria\util\YmlHelper$YmlSection.class
 terraria\util\ItemUseHelper.class
 terraria\util\WorldHelper$1.class
+terraria\entity\boss\hvm\TheHiveMind$1.class
 terraria\entity\others\TerrariaItem.class
 terraria\entity\projectile\HitEntityInfo.class
 terraria\util\GameplayHelper.class

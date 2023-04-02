@@ -1,21 +1,14 @@
 package terraria.entity.boss.hvm;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HiveBlob extends EntitySlime {
@@ -27,8 +20,16 @@ public class HiveBlob extends EntitySlime {
     Player target = null;
     // other variables and AI
     TheHiveMind owner;
-    Vector offset;
-    int indexAI = 0;
+    Vector offset = null;
+    int indexAI = (int) (Math.random() * 300);
+    static final double PROJECTILE_SPEED_PHASE_ONE = 1.5, PROJECTILE_SPEED_PHASE_TWO = 1;
+    static final EntityHelper.AimHelperOptions aimHelper;
+    static {
+        aimHelper = new EntityHelper.AimHelperOptions()
+                .setAimMode(false)
+                .setIntensity(1d)
+                .setProjectileSpeed(PROJECTILE_SPEED_PHASE_ONE);
+    }
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -44,9 +45,9 @@ public class HiveBlob extends EntitySlime {
             }
             // if target is valid, attack
             if (ticksLived % 3 == 0) {
-                if (indexAI % 20 == 0) {
+                if (indexAI % 20 == 0 || offset == null) {
                     offset = MathHelper.randomVector();
-                    offset.multiply(6 + Math.random() * 3);
+                    offset.multiply(6);
                 }
                 // move towards boss
                 {
@@ -55,15 +56,26 @@ public class HiveBlob extends EntitySlime {
                     velocity.multiply(0.1);
                     bukkitEntity.setVelocity(velocity);
                 }
-                // shoot projectile
-                if (indexAI % 33 == 0) {
-                    Vector projVel = target.getEyeLocation().subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector();
+                // shoot projectile, when the owner is in phase 1, shoot faster projectiles more frequently and with very high accuracy.
+                int shootInterval = owner.secondPhase ? 25 : 10;
+                if (indexAI % shootInterval == 0) {
+                    // find targeted location to shoot
+                    Location targetLoc;
+                    if (owner.secondPhase) {
+                        targetLoc = target.getLocation();
+                    } else {
+                        targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, aimHelper);
+                    }
+                    // setup projectile velocity
+                    Vector projVel = targetLoc.subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector();
                     double projVelLen = projVel.length();
                     if (projVelLen < 1e-5) {
                         projVelLen = 1;
                         projVel = new Vector(0, 1, 0);
                     }
-                    projVel.multiply(1.5 / projVelLen);
+                    double projectileSpeed = owner.secondPhase ? PROJECTILE_SPEED_PHASE_TWO : PROJECTILE_SPEED_PHASE_ONE;
+                    projVel.multiply(projectileSpeed / projVelLen);
+                    // spawn projectile
                     EntityHelper.spawnProjectile(bukkitEntity, projVel, attrMap, "恶毒瘤块");
                 }
                 // add 1 to index

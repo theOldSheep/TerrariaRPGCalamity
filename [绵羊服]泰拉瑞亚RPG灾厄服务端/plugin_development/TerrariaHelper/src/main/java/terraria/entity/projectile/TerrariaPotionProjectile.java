@@ -81,9 +81,14 @@ public class TerrariaPotionProjectile extends EntityPotion {
 
     private void setupExtraProjectileInfo() {
         extraProjectileConfigSection = TerrariaHelper.projectileConfig.getConfigurationSection(this.projectileType + ".spawnProjectiles");
+        if (extraProjectileConfigSection == null) {
+            extraProjectileSpawnInterval = -1;
+            return;
+        }
         extraProjectileSpawnInterval = extraProjectileConfigSection.getInt("interval", 10);
         attrMapExtraProjectile = (HashMap<String, Double>) attrMap.clone();
-        attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * extraProjectileConfigSection.getInt("interval", 10));
+        attrMapExtraProjectile.put("damage",
+                attrMapExtraProjectile.get("damage") * extraProjectileConfigSection.getDouble("damageMulti", 0.5));
         extraProjectileShootInfo = new EntityHelper.ProjectileShootInfo(getShooter().getBukkitEntity(), new Vector(),
                 attrMapExtraProjectile, extraProjectileConfigSection.getString("spawnType", "木箭"));
     }
@@ -121,7 +126,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public TerrariaPotionProjectile(EntityHelper.ProjectileShootInfo shootInfo) {
         this(shootInfo.shootLoc, TerrariaPotionProjectile.generateItemStack(shootInfo.projectileName),
                 shootInfo.velocity, shootInfo.projectileName, shootInfo.properties,
-                shootInfo.attrMap, shootInfo.shooter, shootInfo.projectileName);
+                shootInfo.attrMap, shootInfo.shooter, shootInfo.damageType);
     }
     public TerrariaPotionProjectile(org.bukkit.Location loc, ItemStack projectileItem, Vector velocity,
                                     String projectileType, HashMap<String, Object> properties,
@@ -206,21 +211,28 @@ public class TerrariaPotionProjectile extends EntityPotion {
         if (extraProjectileConfigSection == null)
             return;
         // validate CD
-        if (ticksLived % extraProjectileSpawnInterval == 0) {
+        if (extraProjectileSpawnInterval > 0 && ticksLived % extraProjectileSpawnInterval == 0) {
             Vector velocity;
+            double offset = extraProjectileConfigSection.getDouble("offset", 1d);
+            extraProjectileShootInfo.shootLoc = bukkitEntity.getLocation();
             switch (extraProjectileConfigSection.getString("spawnMechanism", "BOTTOM")) {
                 case "SURROUND":
                     velocity = terraria.util.MathHelper.randomVector();
+                    extraProjectileShootInfo.shootLoc.add(
+                            (Math.random() - 0.5) * offset, (Math.random() - 0.5) * offset, (Math.random() - 0.5) * offset);
                     break;
                 case "FORWARD":
                     velocity = bukkitEntity.getVelocity().normalize();
+                    extraProjectileShootInfo.shootLoc.add(
+                            (Math.random() - 0.5) * offset, (Math.random() - 0.5) * offset, (Math.random() - 0.5) * offset);
                     break;
                 case "BOTTOM":
                 default:
                     velocity = new Vector(0, -1, 0);
+                    extraProjectileShootInfo.shootLoc.add(
+                            (Math.random() - 0.5) * offset, 0, (Math.random() - 0.5) * offset);
             }
             velocity.multiply(extraProjectileConfigSection.getDouble("speed", 1d));
-            extraProjectileShootInfo.shootLoc = bukkitEntity.getLocation();
             extraProjectileShootInfo.velocity = velocity;
             EntityHelper.spawnProjectile(extraProjectileShootInfo);
         }

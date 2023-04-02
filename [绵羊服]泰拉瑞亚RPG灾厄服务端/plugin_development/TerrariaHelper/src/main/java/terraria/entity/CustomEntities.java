@@ -7,6 +7,9 @@ import terraria.entity.boss.eoc.EyeOfCthulhu;
 import terraria.entity.boss.eow.EaterOfWorld;
 import terraria.entity.boss.hmzc.DesertNuisance;
 import terraria.entity.boss.hmzc.DesertScourge;
+import terraria.entity.boss.hvm.DarkHeart;
+import terraria.entity.boss.hvm.HiveBlob;
+import terraria.entity.boss.hvm.TheHiveMind;
 import terraria.entity.boss.klw.SkeletronHand;
 import terraria.entity.boss.klw.SkeletronHead;
 import terraria.entity.boss.slmw.CrownJewel;
@@ -31,6 +34,9 @@ public enum CustomEntities {
     BOSS_EOW           ("EaterOfWorlds",    55,  EntityType.SLIME,           EntitySlime.class,      EaterOfWorld.class),
     BOSS_HMZC          ("DesertScourge",    55,  EntityType.SLIME,           EntitySlime.class,      DesertScourge.class),
     BOSS_HMZC_HSEC     ("DesertNuisance",   55,  EntityType.SLIME,           EntitySlime.class,      DesertNuisance.class),
+    BOSS_HVM           ("TheHiveMind",      55,  EntityType.SLIME,           EntitySlime.class,      TheHiveMind.class),
+    BOSS_HVM_BLOB      ("HiveBlob",         55,  EntityType.SLIME,           EntitySlime.class,      HiveBlob.class),
+    BOSS_HVM_HEART     ("DarkHeart",        55,  EntityType.SLIME,           EntitySlime.class,      DarkHeart.class),
     BOSS_KLW           ("Skeletron",        55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHead.class),
     BOSS_KLW_HAND      ("SkeletronHand",    55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHand.class),
     BOSS_SLMW          ("KingSlime",        55,  EntityType.SLIME,           EntitySlime.class,      KingSlime.class),

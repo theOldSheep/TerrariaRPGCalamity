@@ -1,6 +1,4 @@
 spawnInfo:
-    陨石雨:
-        陨石怪: 5
     史莱姆雨:
         史莱姆: 1
     血月:
@@ -55,7 +53,9 @@ spawnInfo:
     corruption_underground:
         噬魂怪: 1
     corruption:
-        噬魂怪: 1
+        噬魂怪: 75
+        腐化囊: 1
+        吞噬者: 5
     underground:
         史莱姆: 10
     cavern:
@@ -73,6 +73,8 @@ spawnInfo:
         骷髅特警: 5
         巨型诅咒骷髅头: 15
         拜月教教徒: 1
+    meteor:
+        陨石怪: 5
     temple:
         蜥蜴人: 5
         飞蛇: 2
@@ -622,6 +624,33 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.28
                     health: 150
+    腐化囊:
+        name: "腐化囊"
+        monsterType: "SLIME"
+        slimeSize: 3
+        spawnLocationType: AIR
+        variants:
+            default1:
+                attributes:
+                    damage: 1
+                    damageType: "Melee"
+                    defence: 0
+                    knockback: 0
+                    knockbackResistance: 1
+                    health: 2000
+    吞噬者:
+        name: "吞噬者"
+        monsterType: "SLIME"
+        spawnLocationType: SOLID
+        variants:
+            default1:
+                attributes:
+                    damage: 186
+                    damageType: "Melee"
+                    defence: 12
+                    knockback: 2
+                    knockbackResistance: 1
+                    health: 600
     噬魂怪:
         name: "噬魂怪"
         monsterType: "SLIME"

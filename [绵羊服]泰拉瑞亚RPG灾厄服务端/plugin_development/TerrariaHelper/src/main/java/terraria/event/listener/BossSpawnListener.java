@@ -20,6 +20,7 @@ public class BossSpawnListener implements Listener {
         summonItems.put("可疑的眼球", BossHelper.BossType.EYE_OF_CTHULHU);
         summonItems.put("节肢动物芽孢", BossHelper.BossType.CRABULON);
         summonItems.put("虫饵", BossHelper.BossType.EATER_OF_WORLDS);
+        summonItems.put("畸形肿瘤", BossHelper.BossType.THE_HIVE_MIND);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {

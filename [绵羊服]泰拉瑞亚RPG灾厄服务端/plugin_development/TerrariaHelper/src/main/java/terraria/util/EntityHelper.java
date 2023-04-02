@@ -968,6 +968,15 @@ public class EntityHelper {
                 }
                 if (dPly instanceof Player) {
                     Player dPlayer = (Player) dPly;
+                    switch ( GenericHelper.trimText(v.getName()) ) {
+                        // the Hive Mind
+                        case "腐化囊": {
+                            BossHelper.spawnBoss(dPlayer, BossHelper.BossType.THE_HIVE_MIND);
+                            break;
+                        }
+
+                    }
+                    // dungeon souls
                     if (WorldHelper.BiomeType.getBiome(dPlayer) == WorldHelper.BiomeType.DUNGEON) {
                         if (PlayerHelper.hasDefeated(dPlayer, "世纪之花") && Math.random() < 0.125)
                             MonsterHelper.spawnMob("地牢幽魂", v.getLocation(), dPlayer);
@@ -1717,6 +1726,7 @@ public class EntityHelper {
                 } else {
                     segmentCurrent.teleport(targetLoc);
                 }
+                ((CraftLivingEntity) segmentCurrent).getHandle().yaw = (float) MathHelper.getVectorYaw( dVec );
             }
         }
     }

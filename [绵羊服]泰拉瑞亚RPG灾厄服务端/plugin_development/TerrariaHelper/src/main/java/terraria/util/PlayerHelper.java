@@ -742,6 +742,9 @@ public class PlayerHelper {
                                         case HALLOW:
                                             current = isDayTime ? "hallow" : "normal_night";
                                             break;
+                                        case METEOR:
+                                            current = "eerie";
+                                            break;
                                         default:
                                             current = biomeType.toString().toLowerCase() + (isDayTime ? "" : "_night");
                                     }
@@ -1248,17 +1251,24 @@ public class PlayerHelper {
                     }
                 }, 100, 100);
     }
-    private static int getDungeonLizardState(Block blockToCheck) {
-        if (blockToCheck.getType() == Material.SMOOTH_BRICK) {
-            int data = blockToCheck.getData();
-            switch (data) {
-                case 1:
-                    // lizard
-                    return 2;
-                case 2:
-                    // dungeon
-                    return 1;
+    private static int getSpecialBiomeBlockType(Block blockToCheck) {
+        switch (blockToCheck.getType()) {
+            // lizard or dungeon
+            case SMOOTH_BRICK: {
+                int data = blockToCheck.getData();
+                switch (data) {
+                    case 1:
+                        // lizard
+                        return 2;
+                    case 2:
+                        // dungeon
+                        return 1;
+                }
+                break;
             }
+            // meteor
+            case RED_GLAZED_TERRACOTTA:
+                return 3;
         }
         return 0;
     }
@@ -1286,7 +1296,7 @@ public class PlayerHelper {
                     WorldHelper.BiomeType plyBiome = WorldHelper.BiomeType.NORMAL;
                     if (isInUndergroundOrCavern) {
                         // check dungeon and lizard temple
-                        int blocksLizard = 0, blocksDungeon = 0;
+                        int[] specialBlocks = {0, 0, 0, 0};
                         World wld = ply.getWorld();
                         for (Vector vector : vectorsToCheck) {
                             MovingObjectPosition blockMovePos = HitEntityInfo.rayTraceBlocks(
@@ -1295,22 +1305,15 @@ public class PlayerHelper {
                                 Vector locVec = MathHelper.toBukkitVector(blockMovePos.pos)
                                         .add(vector.clone().multiply(1e-9));
                                 Block blk = wld.getBlockAt(locVec.toLocation(wld));
-                                switch (getDungeonLizardState(blk)) {
-                                    case 1:
-                                        // dungeon
-                                        blocksDungeon ++;
-                                        break;
-                                    case 2:
-                                        // lizard
-                                        blocksLizard ++;
-                                        break;
-                                }
+                                specialBlocks[ getSpecialBiomeBlockType(blk) ] ++;
                             }
                         }
-                        if (blocksLizard >= 3)
-                            plyBiome = WorldHelper.BiomeType.TEMPLE;
-                        else if (blocksDungeon >= 3)
+                        if (specialBlocks[1] >= 3)
                             plyBiome = WorldHelper.BiomeType.DUNGEON;
+                        else if (specialBlocks[2] >= 3)
+                            plyBiome = WorldHelper.BiomeType.TEMPLE;
+                        else if (specialBlocks[3] > 1)
+                            plyBiome = WorldHelper.BiomeType.METEOR;
                     }
                     EntityHelper.setMetadata(ply, "playerBiome", plyBiome);
                 }

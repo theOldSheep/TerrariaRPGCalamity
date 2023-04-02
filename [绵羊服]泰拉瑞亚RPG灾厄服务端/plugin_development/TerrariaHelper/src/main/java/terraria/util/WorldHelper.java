@@ -48,9 +48,9 @@ public class WorldHelper {
     }
     public enum BiomeType {
         ABYSS("深渊"), ASTRAL_INFECTION("星辉瘟疫"), BRIMSTONE_CRAG("硫火之崖"), CORRUPTION("腐化之地"),
-        DESERT("沙漠"), DUNGEON("地牢"), HALLOW("神圣之地"), JUNGLE("丛林"), NORMAL("森林"),
-        OCEAN("海洋"), SPACE("太空"), SULPHUROUS_OCEAN("硫磺海"), SUNKEN_SEA("沉沦之海"),
-        TEMPLE("丛林神庙"), TUNDRA("雪原"), UNDERWORLD("地狱");
+        DESERT("沙漠"), DUNGEON("地牢"), HALLOW("神圣之地"), JUNGLE("丛林"), METEOR("陨石"),
+        NORMAL("森林"), OCEAN("海洋"), SPACE("太空"), SULPHUROUS_OCEAN("硫磺海"),
+        SUNKEN_SEA("沉沦之海"), TEMPLE("丛林神庙"), TUNDRA("雪原"), UNDERWORLD("地狱");
         public String name;
         BiomeType(String name) {
             this.name = name;

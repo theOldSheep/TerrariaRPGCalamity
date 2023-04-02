@@ -185,6 +185,8 @@ public class EaterOfWorld extends EntitySlime {
                     }
                     // attack
                     headRushEnemy(totalTickSegment);
+                    // face the player
+                    this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
                     // follow
                     EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
                 }

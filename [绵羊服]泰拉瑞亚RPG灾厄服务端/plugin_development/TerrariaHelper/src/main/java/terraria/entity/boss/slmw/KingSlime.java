@@ -158,6 +158,8 @@ public class KingSlime extends EntitySlime {
                 }
             }
         }
+        // face the player
+        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // collision dmg
         if (sizeChangeState == SizeState.NORMAL)
             terraria.entity.boss.BossHelper.collisionDamage(this);

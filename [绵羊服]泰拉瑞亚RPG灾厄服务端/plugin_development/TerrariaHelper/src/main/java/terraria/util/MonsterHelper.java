@@ -94,6 +94,11 @@ public class MonsterHelper {
                 if (currBlockMat != Material.WATER) return true;
                 break;
             }
+            case "SOLID": {
+                Material currBlockMat = spawnLoc.getBlock().getType();
+                if (!currBlockMat.isSolid()) return true;
+                break;
+            }
         }
         // finally, handle some special cases
         if (spawnType.equals("史莱姆雨"))

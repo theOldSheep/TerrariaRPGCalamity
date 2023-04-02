@@ -68,6 +68,7 @@ effects:
     isBuff: true
     attributes:
       mobLimit: 10
+      mobSpawnRate: 0.1
       mobSpawnRateMulti: 1.5
   虫潮:
     icon: https://calamitymod.wiki.gg/images/5/5c/Zerg
@@ -105,7 +106,7 @@ effects:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/3d/Ironskin
     isBuff: true
     attributes:
-      defence: 8
+      defence: 16
   生命力:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/9/98/Lifeforce
     isBuff: true

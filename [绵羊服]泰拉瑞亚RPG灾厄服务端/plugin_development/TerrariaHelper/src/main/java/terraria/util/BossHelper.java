@@ -8,6 +8,7 @@ import terraria.entity.boss.cbl.Crabulon;
 import terraria.entity.boss.eoc.EyeOfCthulhu;
 import terraria.entity.boss.eow.EaterOfWorld;
 import terraria.entity.boss.hmzc.DesertScourge;
+import terraria.entity.boss.hvm.TheHiveMind;
 import terraria.entity.boss.klw.SkeletronHead;
 import terraria.entity.boss.slmw.KingSlime;
 import terraria.entity.boss.wof.WallOfFleshMouth;
@@ -84,6 +85,13 @@ public class BossHelper {
             case EATER_OF_WORLDS: {
                 if (EaterOfWorld.canSpawn(target)) {
                     new EaterOfWorld(target, new ArrayList<>(), 0);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case THE_HIVE_MIND: {
+                if (TheHiveMind.canSpawn(target)) {
+                    new TheHiveMind(target);
                     spawnedSuccessfully = true;
                 }
                 break;
