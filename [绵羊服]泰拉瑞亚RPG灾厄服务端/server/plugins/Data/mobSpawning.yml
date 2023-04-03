@@ -264,7 +264,7 @@ mobInfo:
         monsterType: "SLIME"
         spawnLocationType: ANY
         variants:
-            陨石雨1:
+            default1:
                 attributes:
                     damage: 35
                     damageType: "Melee"

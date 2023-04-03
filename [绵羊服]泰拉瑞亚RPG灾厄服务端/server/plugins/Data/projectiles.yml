@@ -121,6 +121,7 @@
     penetration: 99999
     blockHitAction: thru
     projectileSize: 0.5
+    gravity: 0
     buffInflict:
         - "扭曲|60|0.3"
         - "流血|160|1"
@@ -128,6 +129,7 @@
     penetration: 99999
     blockHitAction: thru
     projectileSize: 0.5
+    gravity: 0
     buffInflict:
         - "扭曲|60|0.2"
         - "缓慢|50|1"
