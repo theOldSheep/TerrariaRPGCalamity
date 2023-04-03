@@ -675,14 +675,7 @@ public class PlayerHelper {
                             if (currDist < minBossDistance) {
                                 minBossDistance = currDist;
                                 current = TerrariaHelper.soundConfig.getString("boss." + bossName, "");
-                                switch (bossName) {
-                                    case "史莱姆之神":
-                                        if (! last.equals(current)) {
-                                            // just started playing this music
-                                            current += "_full";
-                                        }
-                                        break;
-                                }
+                                // TODO: music for Yharon etc. are handled here.
                             }
                         }
                         if (current.equals("")) {
@@ -752,21 +745,21 @@ public class PlayerHelper {
                         }
                     } else {
                         current = forceBGM.asString();
-                        switch (current) {
-                            case "return_to_slime":
-                                if (! last.equals(current)) {
-                                    // just started playing this music
-                                    current += "_full";
-                                }
-                                break;
-                        }
+                    }
+                    switch (current) {
+                        case "return_to_slime":
+                            if (! last.equals(current)) {
+                                // just started playing this music
+                                current += "_full";
+                            }
+                            break;
                     }
                     // play music if needed
                     long musicDuration = TerrariaHelper.soundConfig.getLong("lengths." + current, 0L);
                     if (printBGMDebugInfo) ply.sendMessage(current + ", " + (musicDuration + lastTime - currentTime) + " ms left.");
                     boolean shouldPlayMusic = false;
+                    // full song finished playing
                     if (musicDuration + lastTime < currentTime) {
-                        // full song finished playing
                         shouldPlayMusic = true;
                         // if the current one playing is the full version, next one shall be reduced version
                         if (current.endsWith("_full")) current = current.replace("_full", "");

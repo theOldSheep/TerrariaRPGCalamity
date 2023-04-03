@@ -490,7 +490,7 @@ public class EntityHelper {
                     shouldStop = true;
                 }
             }
-            if (((LivingEntity) entity).getHealth() < 1e-5) shouldStop = true;
+            if (((LivingEntity) entity).getHealth() < 1e-5 || entity.isDead()) shouldStop = true;
             if (timeRemaining <= 0) {
                 // removes the effect after the duration ends
                 shouldStop = true;

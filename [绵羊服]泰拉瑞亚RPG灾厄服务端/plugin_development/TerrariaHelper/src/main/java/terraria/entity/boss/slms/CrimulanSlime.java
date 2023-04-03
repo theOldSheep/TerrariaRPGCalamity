@@ -34,6 +34,7 @@ public class CrimulanSlime extends EntitySlime {
     int indexAI = 0, projectileAmount, jumpDelay;
     double jumpVelHor, jumpVelVer;
     boolean lastOnGround = true;
+    Vector horVelocity = new Vector();
     EntityHelper.ProjectileShootInfo shootInfo;
     EntityHelper.AimHelperOptions aimOption;
     static final HashMap<String, Double> ATTR_MAP_PROJECTILE;
@@ -78,9 +79,10 @@ public class CrimulanSlime extends EntitySlime {
             }
             // if target is valid, attack
             int tickInterval = owner.ebonianDefeated ? 1 : 3;
+            boolean currentlyOnGround = isOnGround();
             if (ticksLived % tickInterval == 0) {
                 // if boss is on ground
-                if (isOnGround()) {
+                if (currentlyOnGround) {
                     // upon landing, shoot projectiles
                     if (!lastOnGround) {
                         shootProjectiles();
@@ -88,12 +90,19 @@ public class CrimulanSlime extends EntitySlime {
                     }
                     // jump
                     if (indexAI >= jumpDelay) {
+                        indexAI = 0;
                         Vector velocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
                         velocity.setY(0);
-                        velocity.normalize().multiply(jumpVelHor);
+                        double velLen = velocity.length();
+                        double horSpd = jumpVelHor;
+                        // horizontal velocity is set to a high value when too far away
+                        if (velLen > 64) {
+                            horSpd = 2;
+                        }
+                        velocity.multiply( horSpd / velLen );
+                        horVelocity = velocity.clone();
                         velocity.setY(jumpVelVer);
                         bukkitEntity.setVelocity(velocity);
-                        indexAI = 0;
                         noclip = true;
                         lastOnGround = false;
                     }
@@ -102,6 +111,7 @@ public class CrimulanSlime extends EntitySlime {
                 }
                 // go through walls as long as boss is above the target or moving upward
                 else {
+                    // determine whether the slime should go through walls
                     if (!lastOnGround) {
                         this.noclip = (this.motY > 0) || (this.locY > target.getEyeLocation().getY() + 5);
                     }
@@ -109,6 +119,11 @@ public class CrimulanSlime extends EntitySlime {
                         this.noclip = false;
                     }
                 }
+            }
+            if (!currentlyOnGround && motY > 0) {
+                // regularize horizontal velocity
+                horVelocity.setY(bukkitEntity.getVelocity().getY());
+                bukkitEntity.setVelocity(horVelocity);
             }
         }
         // face the player

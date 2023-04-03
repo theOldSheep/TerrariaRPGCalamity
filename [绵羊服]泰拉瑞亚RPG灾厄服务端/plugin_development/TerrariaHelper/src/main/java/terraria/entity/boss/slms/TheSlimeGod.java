@@ -35,9 +35,9 @@ public class TheSlimeGod extends EntitySlime {
     int indexAI = 0;
     boolean ebonianDefeated = false, crimulanDefeated = false, enraged = false;
     static final double PROJECTILE_SPEED = 2,
-            BIG_SLIME_HOR_VEL = 3, BIG_SLIME_VER_VEL = 1.4,
-            MID_SLIME_HOR_VEL = 2.5, MID_SLIME_VER_VEL = 1.2,
-            SMALL_SLIME_HOR_VEL = 2, SMALL_SLIME_VER_VEL = 1;
+            BIG_SLIME_HOR_VEL = 0.5, BIG_SLIME_VER_VEL = 1.4,
+            MID_SLIME_HOR_VEL = 0.3, MID_SLIME_VER_VEL = 1.2,
+            SMALL_SLIME_HOR_VEL = 0.15, SMALL_SLIME_VER_VEL = 1;
     static final int BIG_JUMP_DELAY = 6, MID_JUMP_DELAY = 3, SMALL_JUMP_DELAY = 1;
     EntityHelper.ProjectileShootInfo shootInfo;
     static final HashMap<String, Double> attrMapProjectile;
