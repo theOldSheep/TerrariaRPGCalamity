@@ -117,6 +117,12 @@
     noGravityTicks: 99999
     buffInflict:
         - "咒火|100|1"
+血化深渊之球:
+    penetration: 99999
+    blockHitAction: thru
+黑檀深渊之球:
+    penetration: 99999
+    blockHitAction: thru
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2
