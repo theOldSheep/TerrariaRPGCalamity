@@ -26,7 +26,7 @@
     noGravityTicks: 15
     # 重力影响，受重力时每帧向下的速度改变（负数则为向上偏移）。不写则视为0.05
     gravity: 0.05
-    # 弹射物的碰撞箱体积，不写视为0.125
+    # 弹射物的碰撞箱半径，不写视为0.125
     projectileSize: 0.125
     # 每帧速度乘以这个数字，例如1.25则为每帧加速25%，不写则视为1
     speedMultiPerTick: 1
@@ -120,9 +120,17 @@
 血化深渊之球:
     penetration: 99999
     blockHitAction: thru
+    projectileSize: 0.5
+    buffInflict:
+        - "扭曲|60|0.3"
+        - "流血|160|1"
 黑檀深渊之球:
     penetration: 99999
     blockHitAction: thru
+    projectileSize: 0.5
+    buffInflict:
+        - "扭曲|60|0.2"
+        - "缓慢|50|1"
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2
