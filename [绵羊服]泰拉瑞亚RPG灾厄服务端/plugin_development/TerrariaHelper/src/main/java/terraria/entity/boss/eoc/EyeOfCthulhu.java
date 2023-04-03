@@ -309,7 +309,10 @@ public class EyeOfCthulhu extends EntitySlime {
             }
         }
         // face the player
-        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+        if (typeAI == AIPhase.HALT)
+            this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+        else
+            this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }

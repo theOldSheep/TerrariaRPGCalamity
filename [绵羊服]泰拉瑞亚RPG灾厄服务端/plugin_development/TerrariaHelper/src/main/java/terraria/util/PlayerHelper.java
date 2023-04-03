@@ -1251,20 +1251,22 @@ public class PlayerHelper {
                     }
                 }, 100, 100);
     }
-    private static int getSpecialBiomeBlockType(Block blockToCheck) {
+    private static int getSpecialBiomeBlockType(Block blockToCheck, boolean isInUndergroundOrCavern) {
         switch (blockToCheck.getType()) {
             // lizard or dungeon
             case SMOOTH_BRICK: {
-                int data = blockToCheck.getData();
-                switch (data) {
-                    case 1:
-                        // lizard
-                        return 2;
-                    case 2:
-                        // dungeon
-                        return 1;
+                if (isInUndergroundOrCavern) {
+                    int data = blockToCheck.getData();
+                    switch (data) {
+                        case 1:
+                            // lizard
+                            return 2;
+                        case 2:
+                            // dungeon
+                            return 1;
+                    }
+                    break;
                 }
-                break;
             }
             // meteor
             case RED_GLAZED_TERRACOTTA:
@@ -1294,27 +1296,26 @@ public class PlayerHelper {
                             isInUndergroundOrCavern = false;
                     }
                     WorldHelper.BiomeType plyBiome = WorldHelper.BiomeType.NORMAL;
-                    if (isInUndergroundOrCavern) {
-                        // check dungeon and lizard temple
-                        int[] specialBlocks = {0, 0, 0, 0};
-                        World wld = ply.getWorld();
-                        for (Vector vector : vectorsToCheck) {
-                            MovingObjectPosition blockMovePos = HitEntityInfo.rayTraceBlocks(
-                                    wld, ply.getEyeLocation().toVector(), ply.getEyeLocation().toVector().add(vector));
-                            if (blockMovePos != null) {
-                                Vector locVec = MathHelper.toBukkitVector(blockMovePos.pos)
-                                        .add(vector.clone().multiply(1e-9));
-                                Block blk = wld.getBlockAt(locVec.toLocation(wld));
-                                specialBlocks[ getSpecialBiomeBlockType(blk) ] ++;
-                            }
+                    // check dungeon and lizard temple
+                    int[] specialBlocks = {0, 0, 0, 0};
+                    World wld = ply.getWorld();
+                    for (Vector vector : vectorsToCheck) {
+                        MovingObjectPosition blockMovePos = HitEntityInfo.rayTraceBlocks(
+                                wld, ply.getEyeLocation().toVector(), ply.getEyeLocation().toVector().add(vector));
+                        if (blockMovePos != null) {
+                            Vector locVec = MathHelper.toBukkitVector(blockMovePos.pos)
+                                    .add(vector.clone().multiply(1e-9));
+                            Block blk = wld.getBlockAt(locVec.toLocation(wld));
+                            int index = getSpecialBiomeBlockType(blk, isInUndergroundOrCavern);
+                            specialBlocks[ index ] = specialBlocks[ index ] + 1;
                         }
-                        if (specialBlocks[1] >= 3)
-                            plyBiome = WorldHelper.BiomeType.DUNGEON;
-                        else if (specialBlocks[2] >= 3)
-                            plyBiome = WorldHelper.BiomeType.TEMPLE;
-                        else if (specialBlocks[3] > 1)
-                            plyBiome = WorldHelper.BiomeType.METEOR;
                     }
+                    if (specialBlocks[1] >= 3)
+                        plyBiome = WorldHelper.BiomeType.DUNGEON;
+                    else if (specialBlocks[2] >= 3)
+                        plyBiome = WorldHelper.BiomeType.TEMPLE;
+                    else if (specialBlocks[3] > 1)
+                        plyBiome = WorldHelper.BiomeType.METEOR;
                     EntityHelper.setMetadata(ply, "playerBiome", plyBiome);
                 }
             }

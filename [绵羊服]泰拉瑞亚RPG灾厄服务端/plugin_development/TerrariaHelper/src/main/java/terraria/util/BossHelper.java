@@ -10,6 +10,7 @@ import terraria.entity.boss.eow.EaterOfWorld;
 import terraria.entity.boss.hmzc.DesertScourge;
 import terraria.entity.boss.hvm.TheHiveMind;
 import terraria.entity.boss.klw.SkeletronHead;
+import terraria.entity.boss.slms.TheSlimeGod;
 import terraria.entity.boss.slmw.KingSlime;
 import terraria.entity.boss.wof.WallOfFleshMouth;
 
@@ -99,6 +100,13 @@ public class BossHelper {
             case SKELETRON: {
                 if (SkeletronHead.canSpawn(target)) {
                     new SkeletronHead(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case THE_SLIME_GOD: {
+                if (TheSlimeGod.canSpawn(target)) {
+                    new TheSlimeGod(target);
                     spawnedSuccessfully = true;
                 }
                 break;

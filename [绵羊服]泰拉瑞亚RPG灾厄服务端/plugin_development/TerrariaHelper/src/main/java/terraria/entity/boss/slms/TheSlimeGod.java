@@ -1,32 +1,30 @@
-package terraria.entity.boss.cbl;
+package terraria.entity.boss.slms;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Slime;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.slmw.CrownJewel;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
-public class Crabulon extends EntitySlime {
+public class TheSlimeGod extends EntitySlime {
     // basic variables
-    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.CRABULON;
-    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.JUNGLE;
-    public static final double BASIC_HEALTH = 9600 * 2;
+    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.THE_SLIME_GOD;
+    public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
+    public static final double BASIC_HEALTH = 4000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
@@ -35,74 +33,42 @@ public class Crabulon extends EntitySlime {
     Player target = null;
     // other variables and AI
     int indexAI = 0;
-    boolean lastOnGround = true;
-    static final HashMap<String, Double> attrMapSpore, attrMapShroom;
-    EntityHelper.ProjectileShootInfo psiSpore, psiShroom;
-    HashSet<Entity> shrooms = new HashSet<>();
+    boolean ebonianDefeated = false, crimulanDefeated = false, enraged = false;
+    static final double PROJECTILE_SPEED = 2,
+            BIG_SLIME_HOR_VEL = 3, BIG_SLIME_VER_VEL = 1.4,
+            MID_SLIME_HOR_VEL = 2.5, MID_SLIME_VER_VEL = 1.2,
+            SMALL_SLIME_HOR_VEL = 2, SMALL_SLIME_VER_VEL = 1;
+    static final int BIG_JUMP_DELAY = 6, MID_JUMP_DELAY = 3, SMALL_JUMP_DELAY = 1;
+    EntityHelper.ProjectileShootInfo shootInfo;
+    static final HashMap<String, Double> attrMapProjectile;
+    static final EntityHelper.AimHelperOptions aimOption;
     static {
-        attrMapSpore = new HashMap<>();
-        attrMapSpore.put("damage", 180d);
-        attrMapShroom = new HashMap<>();
-        attrMapShroom.put("damage", 150d);
-        attrMapShroom.put("health", 90d);
-        attrMapShroom.put("healthMax", 90d);
+        attrMapProjectile = new HashMap<>();
+        attrMapProjectile.put("damage", 252d);
+        attrMapProjectile.put("knockback", 4d);
+
+        aimOption = new EntityHelper.AimHelperOptions()
+                .setAimMode(false)
+                .setProjectileSpeed(PROJECTILE_SPEED)
+                .setIntensity(1d);
     }
-    private boolean isOnGround() {
-        if (noclip) return false;
-        return (onGround ||
-                bukkitEntity.getLocation().subtract(0, 0.25, 0).getBlock().getType() != org.bukkit.Material.AIR) && !noclip;
+    private Vector getTargetDirectionVector(double length) {
+        Location targetLoc;
+        if (enraged)
+            targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, aimOption);
+        else
+            targetLoc = target.getEyeLocation();
+        return getTargetDirectionVector(targetLoc, length);
     }
-    private void shootProjectiles() {
-        psiSpore.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-        psiShroom.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-        // shoot spores
-        double yaw = MathHelper.getVectorYaw(target.getLocation().subtract(psiSpore.shootLoc).toVector());
-        for (int i = 0; i < 30; i ++) {
-            Vector velocity = MathHelper.vectorFromYawPitch_quick(yaw + (Math.random() * 90 - 45), -90 + Math.random() * 60);
-            velocity.multiply(1.25 + Math.random());
-            psiSpore.velocity = velocity;
-            EntityHelper.spawnProjectile(psiSpore);
+    private Vector getTargetDirectionVector(Location targetLoc, double length) {
+        Vector velocity = targetLoc.subtract( ((LivingEntity) bukkitEntity).getEyeLocation() ).toVector();
+        double velLen = velocity.length();
+        if (velLen < 1e-5) {
+            velocity = MathHelper.randomVector();
+            velLen = 1;
         }
-        // shoot shrooms
-        for (int i = 0; i < 15; i ++) {
-            Vector velocity = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, -90 + Math.random() * 30);
-            velocity.multiply(1 + Math.random());
-            psiShroom.velocity = velocity;
-            shrooms.add( EntityHelper.spawnProjectile(psiShroom) );
-        }
-    }
-    private void handleShroomFollow() {
-        ArrayList<Entity> toRemove = new ArrayList<>();
-        for (Entity shroom : shrooms) {
-            if (shroom.isDead()) {
-                toRemove.add(shroom);
-                continue;
-            }
-            Vector velocity = shroom.getVelocity();
-            if (ticksLived % 30 != 0) {
-                velocity.setY( Math.max(velocity.getY(), -0.125) );
-            }
-            else {
-                Vector offset = target.getLocation().subtract(shroom.getLocation()).toVector();
-                offset.setY(0);
-                if (offset.lengthSquared() < 1e-5) {
-                    continue;
-                }
-                double offsetLen = offset.length();
-                double velLen = velocity.length();
-                offset.multiply( velLen * 2 / offsetLen);
-                velocity.add(offset);
-                velLen = velocity.length();
-                if (velLen > 1) {
-                    velocity.multiply(1 / velLen);
-                }
-                velocity.setY( Math.max(velocity.getY(), -0.25) );
-            }
-            shroom.setVelocity(velocity);
-        }
-        for (Entity deadShroom : toRemove) {
-            shrooms.remove(deadShroom);
-        }
+        velocity.multiply( length / velLen );
+        return velocity;
     }
     private void AI() {
         // no AI after death
@@ -115,54 +81,60 @@ public class Crabulon extends EntitySlime {
                     IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
             // disappear if no target is available
             if (target == null) {
-                for (LivingEntity entity : bossParts) {
-                    entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
-                    entity.remove();
-                }
+                getAttributeInstance(GenericAttributes.maxHealth).setValue(1d);
+                die();
                 return;
             }
             // if target is valid, attack
-            else {
-                // AI
-                handleShroomFollow();
-                if (ticksLived % 2 == 0) {
-                    boolean onGround = isOnGround();
-                    if (onGround) {
-                        // upon landing, shoot projectiles
-                        if (!lastOnGround) {
-                            shootProjectiles();
-                            lastOnGround = true;
-                        }
-                        // jump
-                        if (indexAI >= 10) {
-                            Vector velocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
-                            velocity.setY(0);
-                            velocity.normalize().multiply(1.75);
-                            velocity.setY(1.6);
-                            bukkitEntity.setVelocity(velocity);
-                            indexAI = 0;
-                            noclip = true;
-                            lastOnGround = false;
-                        }
-                        // move towards target
-                        else {
-                            Vector velocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
-                            velocity.setY(0);
-                            velocity.normalize().multiply(0.75);
-                            bukkitEntity.setVelocity(velocity);
-                        }
-                        // add 1 to index
-                        indexAI++;
+            if (ticksLived % 3 == 0) {
+                // test if the slimes are defeated
+                {
+                    ebonianDefeated = true;
+                    crimulanDefeated = true;
+                    for (int i = 1; i < bossParts.size(); i++) {
+                        Entity testEntity = bossParts.get(i);
+                        if (testEntity.isDead())
+                            continue;
+                        net.minecraft.server.v1_12_R1.Entity nmsTestEntity = ((CraftEntity) testEntity).getHandle();
+                        if (nmsTestEntity instanceof CrimulanSlime)
+                            crimulanDefeated = false;
+                        else if (nmsTestEntity instanceof EbonianSlime)
+                            ebonianDefeated = false;
                     }
-                    else {
-                        if (!lastOnGround) {
-                            this.noclip = motY > 0 || this.locY > target.getEyeLocation().getY() + 5;
-                        }
-                        else {
-                            this.noclip = false;
-                        }
+                    enraged = ebonianDefeated && crimulanDefeated;
+                    if (enraged)
+                        removeScoreboardTag("noDamage");
+                    else
+                        addScoreboardTag("noDamage");
+                }
+                // dash
+                if (indexAI == 0) {
+                    bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10,
+                            enraged ? 1.5f : 1f);
+                    bukkitEntity.setVelocity( getTargetDirectionVector(PROJECTILE_SPEED) );
+                }
+                // shoot projectiles
+                else if (indexAI > 10) {
+                    // slow down
+                    Vector velocity = bukkitEntity.getVelocity();
+                    Vector acceleration = getTargetDirectionVector(target.getLocation(), 0.25);
+                    velocity.add(acceleration);
+                    velocity.multiply(0.9);
+                    bukkitEntity.setVelocity(velocity);
+                    // shoot projectile
+                    if (enraged) {
+                        shootInfo.projectileName = Math.random() < 0.5 ? "血化深渊之球" : "黑檀深渊之球";
+                        shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                        shootInfo.velocity = getTargetDirectionVector(PROJECTILE_SPEED);
+                        EntityHelper.spawnProjectile(shootInfo);
+                    }
+                    // back to dash
+                    if (indexAI >= 20) {
+                        indexAI = -1;
                     }
                 }
+                // add 1 to index
+                indexAI ++;
             }
         }
         // face the player
@@ -171,20 +143,19 @@ public class Crabulon extends EntitySlime {
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
-    public Crabulon(World world) {
+    public TheSlimeGod(World world) {
         super(world);
         super.die();
     }
     // validate if the condition for spawning is met
     public static boolean canSpawn(Player player) {
-        return WorldHelper.HeightLayer.getHeightLayer(player.getLocation()) == WorldHelper.HeightLayer.CAVERN &&
-                WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
+        return true;
     }
     // a constructor for actual spawning
-    public Crabulon(Player summonedPlayer) {
+    public TheSlimeGod(Player summonedPlayer) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
-        double angle = Math.random() * 720d, dist = 25;
+        double angle = Math.random() * 720d, dist = 40;
         Location spawnLoc = summonedPlayer.getLocation().add(
                 MathHelper.xsin_degree(angle) * dist, 0, MathHelper.xcos_degree(angle) * dist);
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
@@ -197,16 +168,15 @@ public class Crabulon extends EntitySlime {
         bukkitEntity.addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
-        goalSelector.a(0, new PathfinderGoalFloat(this));
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 240d);
+            attrMap.put("damage", 270d);
             attrMap.put("damageMeleeMulti", 1d);
             attrMap.put("damageMulti", 1d);
-            attrMap.put("defence", 16d);
+            attrMap.put("defence", 12d);
             attrMap.put("defenceMulti", 1d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
@@ -214,15 +184,6 @@ public class Crabulon extends EntitySlime {
             attrMap.put("knockbackMulti", 1d);
             EntityHelper.setDamageType(bukkitEntity, "Melee");
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
-        }
-        // init projectile shoot info
-        {
-            psiSpore = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSpore, "-");
-            psiSpore.projectileName = "真菌孢子";
-            psiShroom = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapShroom, "-");
-            psiShroom.projectileName = "真菌孢子";
-            psiShroom.properties.put("gravity", 0.01);
-            psiShroom.properties.put("blockHitAction", "thru");
         }
         // init boss bar
         bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
@@ -237,7 +198,7 @@ public class Crabulon extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(10, false);
+            setSize(4, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
@@ -248,7 +209,13 @@ public class Crabulon extends EntitySlime {
             bossParts = new ArrayList<>();
             bossParts.add((LivingEntity) bukkitEntity);
             BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
+            this.noclip = true;
+            this.setNoGravity(true);
             this.persistent = true;
+            shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapProjectile, "血化深渊之球");
+            // spawn crimulan and ebonian slime
+            new CrimulanSlime(this);
+            new EbonianSlime(this);
         }
     }
 
@@ -285,6 +252,10 @@ public class Crabulon extends EntitySlime {
     @Override
     public void B_() {
         super.B_();
+        // undo air resistance etc.
+        motX /= 0.91;
+        motY /= 0.98;
+        motZ /= 0.91;
         // update boss bar and dynamic DR
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);
         // load nearby chunks

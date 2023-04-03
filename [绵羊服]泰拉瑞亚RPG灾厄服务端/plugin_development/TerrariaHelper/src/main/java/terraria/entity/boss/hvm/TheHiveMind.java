@@ -54,32 +54,36 @@ public class TheHiveMind extends EntitySlime {
         indexAI = -1;
     }
     private void spawnMonsters(boolean canSpawnRain) {
-        double rdm = Math.random();
-        Location spawnLoc = bukkitEntity.getLocation().add(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
-        // shader rain
-        if (rdm < 0.25) {
-            if (!canSpawnRain) {
-                spawnMonsters(false);
-                return;
+        // amount = sqrt(2x)
+        // x = amount * amount / 2
+        for (int i = 0; i * i / 2 < targetMap.size(); i ++) {
+            double rdm = Math.random();
+            Location spawnLoc = bukkitEntity.getLocation().add(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
+            // shader rain
+            if (rdm < 0.25) {
+                if (!canSpawnRain) {
+                    spawnMonsters(false);
+                    return;
+                }
+                EntityHelper.spawnProjectile(bukkitEntity, spawnLoc, new Vector(), attrMapShaderRain,
+                        "Magic", "腐蚀之云");
             }
-            EntityHelper.spawnProjectile(bukkitEntity, spawnLoc, new Vector(), attrMapShaderRain,
-                    "Magic", "腐蚀之云");
-        }
-        // eater of soul
-        else if (rdm < 0.4) {
-            MonsterHelper.spawnMob("噬魂怪", spawnLoc, target);
-        }
-        // devourer
-        else if (rdm < 0.55) {
-            MonsterHelper.spawnMob("吞噬者", spawnLoc, target);
-        }
-        // dark heart
-        else if (rdm < 0.7){
-            new DarkHeart(this);
-        }
-        // Dank Creeper
-        else {
-            MonsterHelper.spawnMob("沼泽之眼", spawnLoc, target);
+            // eater of soul
+            else if (rdm < 0.4) {
+                MonsterHelper.spawnMob("噬魂怪", spawnLoc, target);
+            }
+            // devourer
+            else if (rdm < 0.55) {
+                MonsterHelper.spawnMob("吞噬者", spawnLoc, target);
+            }
+            // dark heart
+            else if (rdm < 0.7) {
+                new DarkHeart(this);
+            }
+            // Dank Creeper
+            else {
+                MonsterHelper.spawnMob("沼泽之眼", spawnLoc, target);
+            }
         }
     }
     private void AI() {

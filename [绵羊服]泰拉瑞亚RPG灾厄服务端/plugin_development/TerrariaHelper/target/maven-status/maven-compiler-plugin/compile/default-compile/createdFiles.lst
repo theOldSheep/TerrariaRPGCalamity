@@ -1,4 +1,6 @@
 terraria\worldgen\overworld\OverworldCaveGenerator$1.class
+terraria\entity\boss\slms\EbonianSlime$1.class
+terraria\entity\boss\slms\TheSlimeGod.class
 terraria\TerrariaHelper$1.class
 terraria\event\listener\ItemUseAndAttributeListener$1.class
 terraria\util\GenericHelper$StrikeLineOptions.class
@@ -10,6 +12,7 @@ terraria\entity\npc\TerrariaNPCClothier.class
 terraria\entity\boss\eoc\EyeOfCthulhu$AIPhase.class
 terraria\entity\monster\MonsterZombie.class
 terraria\event\listener\PlayerMovementListener$1.class
+terraria\entity\boss\slms\CrimulanSlime$SlimeSize.class
 terraria\util\EntityHelper$AimHelperOptions.class
 terraria\entity\npc\TerrariaNPCAngler.class
 terraria\util\ItemUseHelper$QuickBuffType.class
@@ -28,6 +31,7 @@ terraria\util\ItemHelper$1.class
 terraria\entity\boss\eow\EaterOfWorld.class
 terraria\util\BossHelper$BossType.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
+terraria\entity\boss\slms\EbonianSlime.class
 terraria\util\ItemUseHelper$1.class
 terraria\entity\boss\wof\WallOfFleshMouth.class
 terraria\entity\boss\eoc\EyeOfCthulhu.class
@@ -54,6 +58,7 @@ terraria\worldgen\RandomGenerator.class
 terraria\entity\npc\TerrariaNPCNurse.class
 terraria\event\listener\DropItemSpawnListener.class
 terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
+terraria\entity\boss\slms\EbonianSlime$SlimeSize.class
 terraria\event\listener\DamageListener$1.class
 terraria\event\listener\PlayerMovementListener.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
@@ -70,6 +75,7 @@ terraria\util\WorldHelper$1.class
 terraria\entity\boss\hvm\TheHiveMind$1.class
 terraria\entity\others\TerrariaItem.class
 terraria\entity\projectile\HitEntityInfo.class
+terraria\entity\boss\slms\CrimulanSlime$1.class
 terraria\util\GameplayHelper.class
 terraria\entity\npc\TerrariaNPCBlockSeller.class
 terraria\util\MonsterHelper.class
@@ -80,6 +86,7 @@ terraria\entity\boss\BossHelper.class
 terraria\entity\others\TerrariaFishingHook.class
 terraria\event\listener\BossSpawnListener.class
 terraria\util\ItemHelper.class
+terraria\entity\boss\slms\CrimulanSlime.class
 terraria\util\WorldHelper.class
 terraria\event\listener\NPCListener.class
 terraria\entity\npc\TerrariaNPC.class

@@ -27,7 +27,6 @@ public class WallOfFleshEye extends EntitySlime {
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
     ArrayList<LivingEntity> bossParts;
-    BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
     WallOfFleshMouth mouth;

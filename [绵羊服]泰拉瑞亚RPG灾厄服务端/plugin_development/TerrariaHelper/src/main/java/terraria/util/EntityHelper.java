@@ -509,13 +509,23 @@ public class EntityHelper {
             }
             switch (effect) {
                 case "扭曲": {
-                    World entityWorld = entity.getLocation().getWorld();
-                    Location targetLoc = entityWorld.getHighestBlockAt(entity.getLocation()).getLocation();
-                    targetLoc.add(0, 8 + MathHelper.xsin_degree(timeRemaining * 2.5) * 2, 0);
-                    Vector velocity = targetLoc.subtract(entity.getLocation()).toVector();
-                    velocity.multiply(1 / 6);
-                    entity.setVelocity(velocity);
-                    entity.setFallDistance(0);
+                    if (entity instanceof Player) {
+                        World entityWorld = entity.getWorld();
+                        double targetLocY = entityWorld.getHighestBlockAt(entity.getLocation()).getLocation().getY();
+                        targetLocY += 8 + MathHelper.xsin_degree(timeRemaining * 2.5) * 2;
+                        double velY = targetLocY - entity.getLocation().getY();
+                        velY /= 6;
+                        double maxVerticalSpeed = 0.5;
+                        if (velY < -maxVerticalSpeed) {
+                            velY = -maxVerticalSpeed;
+                        } else if (velY > maxVerticalSpeed) {
+                            velY = maxVerticalSpeed;
+                        }
+                        Vector velocity = entity.getVelocity();
+                        velocity.setY(velY);
+                        entity.setVelocity(velocity);
+                        entity.setFallDistance(0);
+                    }
                     break;
                 }
                 case "恐惧": {
@@ -560,7 +570,7 @@ public class EntityHelper {
             // setup constants
             int delay = 10, damagePerDelay = 0;
             if (effect.equals("扭曲")) {
-                delay = 4;
+                delay = 1;
             } else {
                 delay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageInterval", delay);
                 damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damage", damagePerDelay);

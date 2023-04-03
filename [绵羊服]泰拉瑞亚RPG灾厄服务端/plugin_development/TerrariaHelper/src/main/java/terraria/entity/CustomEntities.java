@@ -12,6 +12,9 @@ import terraria.entity.boss.hvm.HiveBlob;
 import terraria.entity.boss.hvm.TheHiveMind;
 import terraria.entity.boss.klw.SkeletronHand;
 import terraria.entity.boss.klw.SkeletronHead;
+import terraria.entity.boss.slms.CrimulanSlime;
+import terraria.entity.boss.slms.EbonianSlime;
+import terraria.entity.boss.slms.TheSlimeGod;
 import terraria.entity.boss.slmw.CrownJewel;
 import terraria.entity.boss.slmw.KingSlime;
 import terraria.entity.boss.wof.WallOfFleshEye;
@@ -39,6 +42,9 @@ public enum CustomEntities {
     BOSS_HVM_HEART     ("DarkHeart",        55,  EntityType.SLIME,           EntitySlime.class,      DarkHeart.class),
     BOSS_KLW           ("Skeletron",        55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHead.class),
     BOSS_KLW_HAND      ("SkeletronHand",    55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHand.class),
+    BOSS_SLMS          ("TheSlimeGod",      55,  EntityType.SLIME,           EntitySlime.class,      TheSlimeGod.class),
+    BOSS_SLMS_EB       ("EbonianSlime",     55,  EntityType.SLIME,           EntitySlime.class,      EbonianSlime.class),
+    BOSS_SLMS_CR       ("CrimulanSlime",    55,  EntityType.SLIME,           EntitySlime.class,      CrimulanSlime.class),
     BOSS_SLMW          ("KingSlime",        55,  EntityType.SLIME,           EntitySlime.class,      KingSlime.class),
     BOSS_SLMW_JEWEL    ("CrownJewel",       55,  EntityType.SLIME,           EntitySlime.class,      CrownJewel.class),
     BOSS_WOF_EYE       ("WallOfFleshEye",   55,  EntityType.SLIME,           EntitySlime.class,      WallOfFleshEye.class),
