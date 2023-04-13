@@ -12,6 +12,7 @@ import terraria.entity.boss.hvm.HiveBlob;
 import terraria.entity.boss.hvm.TheHiveMind;
 import terraria.entity.boss.klw.SkeletronHand;
 import terraria.entity.boss.klw.SkeletronHead;
+import terraria.entity.boss.slmhh.QueenSlime;
 import terraria.entity.boss.slms.CrimulanSlime;
 import terraria.entity.boss.slms.EbonianSlime;
 import terraria.entity.boss.slms.TheSlimeGod;
@@ -42,6 +43,7 @@ public enum CustomEntities {
     BOSS_HVM_HEART     ("DarkHeart",        55,  EntityType.SLIME,           EntitySlime.class,      DarkHeart.class),
     BOSS_KLW           ("Skeletron",        55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHead.class),
     BOSS_KLW_HAND      ("SkeletronHand",    55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHand.class),
+    BOSS_SLMHH         ("QueenSlime",       55,  EntityType.SLIME,           EntitySlime.class,      QueenSlime.class),
     BOSS_SLMS          ("TheSlimeGod",      55,  EntityType.SLIME,           EntitySlime.class,      TheSlimeGod.class),
     BOSS_SLMS_EB       ("EbonianSlime",     55,  EntityType.SLIME,           EntitySlime.class,      EbonianSlime.class),
     BOSS_SLMS_CR       ("CrimulanSlime",    55,  EntityType.SLIME,           EntitySlime.class,      CrimulanSlime.class),

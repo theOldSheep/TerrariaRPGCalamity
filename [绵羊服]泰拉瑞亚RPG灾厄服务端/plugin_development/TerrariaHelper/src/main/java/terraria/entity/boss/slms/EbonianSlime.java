@@ -244,7 +244,7 @@ public class EbonianSlime extends EntitySlime {
                     jumpVelVer = TheSlimeGod.MID_SLIME_VER_VEL;
                     jumpDelay = TheSlimeGod.MID_JUMP_DELAY;
                     aimOption
-                            .setIntensity(0.95 + Math.random() * 0.1)
+                            .setIntensity(0.9 + Math.random() * 0.2)
                             .setRandomOffsetRadius(2.5d);
                     break;
                 case SMALL:
@@ -253,7 +253,7 @@ public class EbonianSlime extends EntitySlime {
                     jumpVelVer = TheSlimeGod.SMALL_SLIME_VER_VEL;
                     jumpDelay = TheSlimeGod.SMALL_JUMP_DELAY;
                     aimOption
-                            .setIntensity(0.8 + Math.random() * 0.4)
+                            .setIntensity(0.5 + Math.random())
                             .setRandomOffsetRadius(1d);
                     break;
             }
@@ -273,7 +273,7 @@ public class EbonianSlime extends EntitySlime {
                 }
                 break;
             case MIDDLE:
-                for (int i = 0; i < 10; i ++) {
+                for (int i = 0; i < 5; i ++) {
                     new EbonianSlime(owner, SlimeSize.SMALL, getBukkitEntity());
                 }
                 break;

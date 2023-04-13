@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class BossSpawnListener implements Listener {
     static HashMap<String, BossHelper.BossType> summonItems = new HashMap<>();
     static {
+        // pre-wall of flesh
         summonItems.put("史莱姆王冠", BossHelper.BossType.KING_SLIME);
         summonItems.put("荒漠吊坠", BossHelper.BossType.DESERT_SCOURGE);
         summonItems.put("可疑的眼球", BossHelper.BossType.EYE_OF_CTHULHU);
@@ -22,6 +23,8 @@ public class BossSpawnListener implements Listener {
         summonItems.put("虫饵", BossHelper.BossType.EATER_OF_WORLDS);
         summonItems.put("畸形肿瘤", BossHelper.BossType.THE_HIVE_MIND);
         summonItems.put("过载淤泥", BossHelper.BossType.THE_SLIME_GOD);
+        // pre-plantera
+        summonItems.put("明胶水晶", BossHelper.BossType.QUEEN_SLIME);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {

@@ -37,6 +37,7 @@ terraria\entity\boss\wof\WallOfFleshMouth.class
 terraria\entity\boss\eoc\EyeOfCthulhu.class
 terraria\util\PlayerHelper$GameProgress.class
 terraria\entity\boss\hmzc\DesertScourge.class
+terraria\entity\boss\slmhh\QueenSlime.class
 terraria\util\BossHelper.class
 terraria\util\MonsterHelper$1.class
 terraria\entity\minion\MinionHusk.class
@@ -62,6 +63,7 @@ terraria\entity\boss\slms\EbonianSlime$SlimeSize.class
 terraria\event\listener\DamageListener$1.class
 terraria\event\listener\PlayerMovementListener.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
+terraria\entity\boss\slmhh\QueenSlime$1.class
 terraria\entity\npc\TerrariaNPCArmsDealer.class
 terraria\event\TerrariaProjectileHitEvent.class
 terraria\util\PlayerHelper$1.class
@@ -73,6 +75,7 @@ terraria\util\YmlHelper$YmlSection.class
 terraria\util\ItemUseHelper.class
 terraria\util\WorldHelper$1.class
 terraria\entity\boss\hvm\TheHiveMind$1.class
+terraria\entity\boss\slmhh\QueenSlime$SizeState.class
 terraria\entity\others\TerrariaItem.class
 terraria\entity\projectile\HitEntityInfo.class
 terraria\entity\boss\slms\CrimulanSlime$1.class

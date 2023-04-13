@@ -10,6 +10,7 @@ import terraria.entity.boss.eow.EaterOfWorld;
 import terraria.entity.boss.hmzc.DesertScourge;
 import terraria.entity.boss.hvm.TheHiveMind;
 import terraria.entity.boss.klw.SkeletronHead;
+import terraria.entity.boss.slmhh.QueenSlime;
 import terraria.entity.boss.slms.TheSlimeGod;
 import terraria.entity.boss.slmw.KingSlime;
 import terraria.entity.boss.wof.WallOfFleshMouth;
@@ -55,6 +56,7 @@ public class BossHelper {
         if (target != null)
             soundLocation = target.getLocation();
         switch (bossType) {
+            // pre-wall of flesh
             case KING_SLIME: {
                 if (KingSlime.canSpawn(target)) {
                     new KingSlime(target);
@@ -115,6 +117,14 @@ public class BossHelper {
                 soundLocation = (Location) extraInfo;
                 if (WallOfFleshMouth.canSpawn(target)) {
                     new WallOfFleshMouth(soundLocation);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            // pre-plantera
+            case QUEEN_SLIME: {
+                if (QueenSlime.canSpawn(target)) {
+                    new QueenSlime(target);
                     spawnedSuccessfully = true;
                 }
                 break;
