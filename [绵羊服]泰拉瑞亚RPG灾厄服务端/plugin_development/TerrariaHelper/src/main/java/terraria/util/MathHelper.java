@@ -124,6 +124,33 @@ public class MathHelper {
         else vec.multiply(Math.sqrt(targetLengthSquared / vec.lengthSquared()));
         return vec;
     }
+    public static Vector rotateX(Vector vec, double rotationAngleDegCCW) {
+        return rotateX(vec, xsin_degree(rotationAngleDegCCW), xcos_degree(rotationAngleDegCCW));
+    }
+    public static Vector rotateX(Vector vec, double sineVal, double cosineVal) {
+        double newX = vec.getX();
+        double newY = vec.getY() * cosineVal - vec.getZ() * sineVal;
+        double newZ = vec.getY() * sineVal + vec.getZ() * cosineVal;
+        return new Vector(newX, newY, newZ);
+    }
+    public static Vector rotateY(Vector vec, double rotationAngleDegCCW) {
+        return rotateY(vec, xsin_degree(rotationAngleDegCCW), xcos_degree(rotationAngleDegCCW));
+    }
+    public static Vector rotateY(Vector vec, double sineVal, double cosineVal) {
+        double newX = vec.getX() * cosineVal + vec.getZ() * sineVal;
+        double newY = vec.getY();
+        double newZ = -vec.getX() * sineVal + vec.getZ() * cosineVal;
+        return new Vector(newX, newY, newZ);
+    }
+    public static Vector rotateZ(Vector vec, double rotationAngleDegCCW) {
+        return rotateZ(vec, xsin_degree(rotationAngleDegCCW), xcos_degree(rotationAngleDegCCW));
+    }
+    public static Vector rotateZ(Vector vec, double sineVal, double cosineVal) {
+        double newX = vec.getX() * cosineVal - vec.getY() * sineVal;
+        double newY = vec.getX() * sineVal + vec.getY() * cosineVal;
+        double newZ = vec.getZ();
+        return new Vector(newX, newY, newZ);
+    }
     public static Vec3D toNMSVector(Vector vec) {
         return new Vec3D(vec.getX(), vec.getY(), vec.getZ());
     }

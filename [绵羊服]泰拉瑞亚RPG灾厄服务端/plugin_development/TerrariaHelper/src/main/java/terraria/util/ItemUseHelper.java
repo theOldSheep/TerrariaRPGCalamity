@@ -377,7 +377,7 @@ public class ItemUseHelper {
                                                          Location centerLoc, Vector reachVector, Vector offsetVector,
                                                          Collection<Entity> exceptions, String color,
                                                          GenericHelper.StrikeLineOptions strikeLineInfo,
-                                                         int index, int indexMax) {
+                                                         int index, int indexMax, boolean displayParticle) {
         if (index >= indexMax) return;
         double progress = (double) index / indexMax;
         double reachMulti = MathHelper.xcos_degree(180 + progress * 360);
@@ -388,12 +388,14 @@ public class ItemUseHelper {
         Vector strikeDir = strikeLoc.clone().subtract(centerLoc).toVector();
         GenericHelper.handleStrikeLine(ply, strikeLoc,
                 MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
-                6, 0.5, "天顶剑", color, exceptions, attrMap, strikeLineInfo);
-        int delayAmount = ((index + 1) * 16 / indexMax) - (index * 16 / indexMax);
+                6, 0.5, "天顶剑", color, exceptions, attrMap, strikeLineInfo.setDisplayParticle(displayParticle));
+//        int delayAmount = ((index + 1) * 16 / indexMax) - (index * 16 / indexMax);
+        // TODO
+        int delayAmount = 1;
         if (delayAmount > 0) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVector, offsetVector, exceptions, color, strikeLineInfo, index + 1, indexMax), delayAmount);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVector, offsetVector, exceptions, color, strikeLineInfo, index + 1, indexMax, true), delayAmount);
         } else {
-            handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVector, offsetVector, exceptions, color, strikeLineInfo, index + 1, indexMax);
+            handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVector, offsetVector, exceptions, color, strikeLineInfo, index + 1, indexMax, false);
         }
     }
     protected static void handleSingleZenithStrike(Player ply, HashMap<String, Double> attrMap, List<String> colors, GenericHelper.StrikeLineOptions strikeLineInfo) {
@@ -409,6 +411,9 @@ public class ItemUseHelper {
             offsetVec = MathHelper.randomVector();
             offsetVec.subtract(MathHelper.vectorProjection(reachVec, offsetVec));
         }
+        // set the display rotation of item sprite
+        Vector orthogonalVec = offsetVec.getCrossProduct(reachVec);
+        strikeLineInfo.particleInfo.setRightOrthogonalDir( orthogonalVec );
         // offset centerLoc backwards by 2 blocks to prevent strike line visual effect spamming the screen
         // and shorten reachVec by 1 block
         double reachLength = reachVec.length() - 1;
@@ -424,12 +429,12 @@ public class ItemUseHelper {
         int loopAmount = 50;
         String color = "255|0|0";
         if (colors != null && colors.size() > 0) color = colors.get((int) (Math.random() * colors.size()));
-        handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVec, offsetVec, new HashSet<>(), color, strikeLineInfo, 0, loopAmount);
+        handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVec, offsetVec, new HashSet<>(), color, strikeLineInfo, 0, loopAmount, true);
     }
     // warning: this function modifies attrMap and damaged!
     protected static void handleMeleeSwing(Player ply, HashMap<String, Double> attrMap, Vector lookDir,
                                          Collection<Entity> damaged, ConfigurationSection weaponSection,
-                                         double yaw, double pitch, String weaponType, double size,
+                                         double yaw, double pitch, String weaponType, ItemStack weaponItem, double size,
                                          boolean dirFixed, boolean stabOrSwing, int currentIndex, int maxIndex) {
         if (!PlayerHelper.isProperlyPlaying(ply)) return;
         if (!dirFixed) {
@@ -442,6 +447,12 @@ public class ItemUseHelper {
         GenericHelper.StrikeLineOptions strikeLineInfo =
                 new GenericHelper.StrikeLineOptions()
                         .setThruWall(false);
+        // if the player is dealing melee damage, display the player's weapon instead of particle
+        if (EntityHelper.getDamageType(ply).equals("Melee"))
+            strikeLineInfo.setParticleInfo(new GenericHelper.ParticleLineOptions()
+                    .setParticleOrItem(false)
+                    .setSpriteItem(weaponItem)
+                    .setTicksLinger(1));
         if (stabOrSwing) {
             boolean shouldStrike;
             double strikeYaw = yaw, strikePitch = pitch;
@@ -457,7 +468,7 @@ public class ItemUseHelper {
                     strikePitch += Math.random() * 30 - 15;
                 }
             } else {
-                shouldStrike = currentIndex == 0;
+                shouldStrike = currentIndex <= 5;
                 if (shouldStrike) {
                     List<String> colors = weaponSection.getStringList("particleColor");
                     if (colors.size() > 0)
@@ -471,6 +482,9 @@ public class ItemUseHelper {
             List<String> colors = weaponSection.getStringList("particleColor");
             if (weaponType.equals("天顶剑")) {
                 if (currentIndex % 4 == 0) {
+                    String[] candidateItems = {"泰拉之刃", "彩虹猫之刃", "狂星之怒", "无头骑士剑", "种子弯刀", "铜质短剑"};
+                    strikeLineInfo.particleInfo.setSpriteItem(ItemHelper.getRawItem(
+                            candidateItems[(int) (Math.random() * candidateItems.length) ]));
                     handleSingleZenithStrike(ply, (HashMap<String, Double>) attrMap.clone(), colors, strikeLineInfo);
                 }
             } else {
@@ -484,6 +498,8 @@ public class ItemUseHelper {
                     Vector offsetDir = MathHelper.vectorFromYawPitch_quick(yaw, actualPitch);
                     GenericHelper.handleStrikeLine(ply, ply.getEyeLocation().add(offsetDir), yaw, actualPitch,
                             size, MELEE_STRIKE_RADIUS, weaponType, color, damaged, attrMap, strikeLineInfo);
+                    // for strike after first, do not display additional particle effect
+                    strikeLineInfo.displayParticle = false;
                 }
             }
         }
@@ -494,11 +510,11 @@ public class ItemUseHelper {
             Collection<Entity> finalDamaged = damaged;
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                     () -> handleMeleeSwing(ply, attrMap, finalLookDir, finalDamaged, weaponSection, finalYaw, finalPitch,
-                            weaponType, size, dirFixed, stabOrSwing, currentIndex + 1, maxIndex), 1);
+                            weaponType, weaponItem, size, dirFixed, stabOrSwing, currentIndex + 1, maxIndex), 1);
         }
     }
     // stab and swing. NOT NECESSARILY MELEE DAMAGE!
-    protected static boolean playerUseMelee(Player ply, String itemType,
+    protected static boolean playerUseMelee(Player ply, String itemType, ItemStack weaponItem,
                                           ConfigurationSection weaponSection, HashMap<String, Double> attrMap, int swingAmount, boolean stabOrSwing) {
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         double yaw = plyNMS.yaw, pitch = plyNMS.pitch;
@@ -530,7 +546,7 @@ public class ItemUseHelper {
         }
         int coolDown = applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
         boolean dirFixed = weaponSection.getBoolean("dirFixed", true);
-        handleMeleeSwing(ply, attrMap, lookDir, new HashSet<>(), weaponSection, yaw, pitch, itemType, size,
+        handleMeleeSwing(ply, attrMap, lookDir, new HashSet<>(), weaponSection, yaw, pitch, itemType, weaponItem, size,
                 dirFixed, stabOrSwing, 0, coolDown);
         return true;
     }
@@ -1271,7 +1287,7 @@ public class ItemUseHelper {
                 switch (weaponType) {
                     case "STAB":
                     case "SWING":
-                        success = playerUseMelee(ply, itemName, weaponSection, attrMap, swingAmount, weaponType.equals("STAB"));
+                        success = playerUseMelee(ply, itemName, mainHandItem, weaponSection, attrMap, swingAmount, weaponType.equals("STAB"));
                         break;
                     case "BOW":
                     case "GUN":

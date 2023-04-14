@@ -6,6 +6,7 @@ import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
@@ -14,14 +15,20 @@ import java.util.*;
 import java.util.function.BiConsumer;
 
 public class GenericHelper {
-    static long nextHologramIndex = 0;
+    static long nextWorldTextureIndex = 0;
     public static class ParticleLineOptions {
+        boolean particleOrItem;
+        ItemStack spriteItem;
+        Vector rightOrthogonalDir;
         double length, width, stepsize;
         float alpha;
         int ticksLinger;
         String particleChar;
         List<String> particleColor;
         public ParticleLineOptions() {
+            particleOrItem = true;
+            spriteItem = null;
+            rightOrthogonalDir = null;
             length = 1;
             width = 0.25;
             stepsize = width;
@@ -30,6 +37,21 @@ public class GenericHelper {
             particleColor = new ArrayList<>();
             particleColor.add("255|255|255");
             alpha = 0.5f;
+        }
+        public ParticleLineOptions setParticleOrItem(boolean particleOrItem) {
+            this.particleOrItem = particleOrItem;
+            return this;
+        }
+        public ParticleLineOptions setSpriteItem(ItemStack spriteItem) {
+            this.spriteItem = spriteItem;
+            return this;
+        }
+        public ParticleLineOptions setRightOrthogonalDir(Vector rightOrthogonalDir) {
+            if (rightOrthogonalDir.lengthSquared() < 1e-9)
+                return this;
+            this.rightOrthogonalDir = rightOrthogonalDir;
+            this.rightOrthogonalDir.normalize();
+            return this;
         }
         public ParticleLineOptions setLength(double length) {
             this.length = length;
@@ -66,7 +88,7 @@ public class GenericHelper {
         }
     }
     public static class StrikeLineOptions {
-        boolean bounceWhenHitBlock, thruWall;
+        boolean displayParticle, bounceWhenHitBlock, thruWall;
         int damageCD, lingerTime, lingerDelay, maxTargetHit;
         double damage, decayCoef, whipBonusCrit, whipBonusDamage;
         ParticleLineOptions particleInfo;
@@ -74,6 +96,7 @@ public class GenericHelper {
         // internal variables
         int amountEntitiesHit;
         public StrikeLineOptions() {
+            displayParticle = true;
             bounceWhenHitBlock = false;
             thruWall = true;
 
@@ -92,6 +115,10 @@ public class GenericHelper {
             damagedFunction = null;
             // internal values
             amountEntitiesHit = 0;
+        }
+        public StrikeLineOptions setDisplayParticle(boolean displayParticle) {
+            this.displayParticle = displayParticle;
+            return this;
         }
         public StrikeLineOptions setBounceWhenHitBlock(boolean shouldBounce) {
             this.bounceWhenHitBlock = shouldBounce;
@@ -230,6 +257,15 @@ public class GenericHelper {
         return Math.max(distX, distZ);
     }
     public static void handleParticleLine(Vector vector, Location startLoc, ParticleLineOptions options) {
+        if (options.particleOrItem)
+            handleParticleLine_particle(vector, startLoc, options);
+        else
+            handleParticleLine_item(vector, startLoc, options);
+    }
+    public static void handleParticleLine_item(Vector vector, Location startLoc, ParticleLineOptions options) {
+        displayHoloItem(startLoc, options.spriteItem, options.ticksLinger, (float) options.length, vector, options.rightOrthogonalDir);
+    }
+    public static void handleParticleLine_particle(Vector vector, Location startLoc, ParticleLineOptions options) {
         // variables copied from options
         double length = options.length;
         double width = options.width;
@@ -434,7 +470,8 @@ public class GenericHelper {
         particleInfo
                 .setLength(direction.length())
                 .setWidth(width / 5, false);
-        handleParticleLine(direction, startLoc, particleInfo);
+        if (advanced.displayParticle)
+            handleParticleLine(direction, startLoc, particleInfo);
     }
     // helper function for each step of lightning
     private static void handleStrikeLightningStep(Entity damager, Location[] locations, int currIndex, double width, int delay, String color, Collection<Entity> exceptions, HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
@@ -469,13 +506,127 @@ public class GenericHelper {
         handleStrikeLightningStep(damager, locations, 0, width, delay, color, exceptions, attrMap, advanced);
     }
     public static void displayHoloText(Location displayLoc, String text, int ticksDisplay, float width, float height, float alpha) {
-        String holoInd = "" + (nextHologramIndex++);
+        String holoInd = "" + (nextWorldTextureIndex++);
         // all players in radius of 64 blocks can see the hologram
         ArrayList<Player> playersSent = new ArrayList<>(100);
         for (Player p : displayLoc.getWorld().getPlayers())
             if (p.getLocation().distanceSquared(displayLoc) < 40000) playersSent.add(p);
         for (Player p : playersSent)
             CoreAPI.setPlayerWorldTexture(p, holoInd, displayLoc, 0, 0, 0, "[text]" + text, width, height, alpha, true, true);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+            for (Player p : playersSent)
+                CoreAPI.removePlayerWorldTexture(p, holoInd);
+        }, ticksDisplay);
+    }
+    private static double[] calculateRotation(Vector displayDir, Vector rightOrthonormal) {
+        double[] result = {0, 0, 0};
+        rightOrthonormal.normalize();
+        // eliminate edge case
+        if (Math.abs(rightOrthonormal.getZ()) < 0.0001) {
+            rightOrthonormal.setZ(0.0001);
+            rightOrthonormal.normalize();
+        }
+        // calculate the principle roots of x, y rotation
+        result[0] = Math.asin(rightOrthonormal.getY()) * MathHelper.RAD_TO_DEG;
+        result[1] = Math.atan(rightOrthonormal.getX() / rightOrthonormal.getZ()) * MathHelper.RAD_TO_DEG;
+        // now, consider all roots
+        double sinX, sinY, cosX, cosY;
+        sinX = rightOrthonormal.getY();
+        cosX = MathHelper.xcos_degree(result[0]);
+        sinY = MathHelper.xsin_degree(result[1]);
+        cosY = MathHelper.xcos_degree(result[1]);
+        // determine the combination of actual x and y.
+        // x is flipped about the y-axis, y is added by 180 deg.
+        boolean xFlipped = false, yFlipped = false;
+        {
+            double bestError = 999999;
+            boolean[] flipState = {true, false};
+            for (boolean flipX : flipState) {
+                for (boolean flipY : flipState) {
+                    double currError = 0;
+                    int signMulti = -1;
+                    if (flipX) signMulti *= -1;
+                    if (flipY) signMulti *= -1;
+                    currError += Math.abs(rightOrthonormal.getZ() -
+                            signMulti * cosX * cosY);
+                    currError += Math.abs(rightOrthonormal.getX() -
+                            signMulti * cosX * sinY);
+                    if (currError < bestError) {
+                        bestError = currError;
+                        xFlipped = flipX;
+                        yFlipped = flipY;
+                    }
+                }
+            }
+        }
+        // after determining x and y, handle the aftermath
+        {
+            if (!xFlipped) {
+                cosX *= -1;
+                result[0] = 180 - result[0];
+            }
+            if (!yFlipped) {
+                sinY *= -1;
+                cosY *= -1;
+                result[1] += 180;
+            }
+        }
+        // calculate the z-rotation
+        {
+            // default sword direction, (-1, 1, 0)
+            // (-1, 1, 0) after z, x, y rotation -> direction
+            // as rotations are linear transformation,
+            // direction after y, x, z rotation -> (-1, 1, 0)
+            Vector original = new Vector(-1, 1, 0);
+            Vector zRotTargetVec = displayDir.clone();
+            // inverse rotation: rotate by -x, -y
+            // sin(-x) = -sin(x), cos(-x) = cos(x)
+            zRotTargetVec = MathHelper.rotateY(zRotTargetVec, -sinY, cosY);
+            zRotTargetVec = MathHelper.rotateX(zRotTargetVec, -sinX, cosX);
+            result[2] = zRotTargetVec.angle(original) * MathHelper.RAD_TO_DEG;
+            double sinZ = MathHelper.xsin_degree(result[2]);
+            double cosZ = MathHelper.xcos_degree(result[2]);
+            // result: if the z is correct, the inverse we get (-)
+            // inv: if the z should be flipped, the inverse we get (+)
+            Vector zRotResult = MathHelper.rotateZ(zRotTargetVec, -sinZ, cosZ);
+            Vector zRotResultInv = MathHelper.rotateZ(zRotTargetVec, sinZ, cosZ);
+            if (zRotResult.dot(original) < zRotResultInv.dot(original)) {
+                result[2] = result[2] * -1;
+            }
+        }
+        // return the answer
+        return result;
+    }
+    public static void displayHoloItem(Location displayLoc, ItemStack item, int ticksDisplay, float size, Vector displayDir, Vector rightOrthogonalDirection) {
+        String holoInd = "" + (nextWorldTextureIndex++);
+        // all players in radius of 64 blocks can see the hologram
+        ArrayList<Player> playersSent = new ArrayList<>(100);
+        for (Player p : displayLoc.getWorld().getPlayers())
+            if (p.getLocation().distanceSquared(displayLoc) < 40000) playersSent.add(p);
+        // init rotation
+        float rotateX, rotateY, rotateZ;
+        // if no special rotation, use pre-calculated default.
+        if (rightOrthogonalDirection == null) {
+            rotateX = 0;
+            rotateY = -(float) MathHelper.getVectorYaw(displayDir) + 90;
+            rotateZ = (float) MathHelper.getVectorPitch(displayDir) + 45;
+        }
+        // if the sprite is required to rotate in place, calculate it carefully.
+        else {
+            double[] result = calculateRotation(displayDir, rightOrthogonalDirection);
+            rotateX = (float) result[0];
+            rotateY = (float) result[1];
+            rotateZ = (float) result[2];
+        }
+        // generate actual sprite location
+        Vector actualDisplayLocOffset = displayDir.clone();
+        actualDisplayLocOffset.multiply(size / 2 / actualDisplayLocOffset.length() );
+        Location displayLocActual = displayLoc.clone();
+        displayLocActual.add(actualDisplayLocOffset);
+        // send packets
+        for (Player p : playersSent)
+            CoreAPI.setPlayerWorldTextureItem(p, holoInd, displayLocActual,
+                    rotateX, rotateY, rotateZ, item, size * 2, false);
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
             for (Player p : playersSent)
                 CoreAPI.removePlayerWorldTexture(p, holoInd);

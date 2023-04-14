@@ -23,8 +23,7 @@ public class QueenSlime extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.QUEEN_SLIME;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.HALLOW;
-//    public static final double BASIC_HEALTH = 66096 * 2;
-    public static final double BASIC_HEALTH = 66096 * 0.01;
+    public static final double BASIC_HEALTH = 66096 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
