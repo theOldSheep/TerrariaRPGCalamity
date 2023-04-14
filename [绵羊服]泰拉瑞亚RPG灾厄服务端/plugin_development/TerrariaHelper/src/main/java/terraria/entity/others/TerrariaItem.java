@@ -2,6 +2,7 @@ package terraria.entity.others;
 
 import net.minecraft.server.v1_12_R1.MathHelper;
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.event.CraftEventFactory;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
@@ -305,7 +306,8 @@ public class TerrariaItem extends EntityItem {
             default:
                 liveTime = GENERIC_LIVE_TIME;
         }
-        baseRarity = itemConfig.getInt(GenericHelper.trimText(getItemStack().getName()) + ".rarity", 0);
+        baseRarity = itemConfig.getInt(ItemHelper.splitItemName(getItemStack().getName())[1] + ".rarity", 0);
+        this.fireProof = baseRarity > 0;
         bukkitItemStack = CraftItemStack.asBukkitCopy(itemstack);
     }
 

@@ -3,10 +3,7 @@ package terraria.event.listener;
 import net.minecraft.server.v1_12_R1.AxisAlignedBB;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -23,6 +20,7 @@ public class DamageListener implements Listener {
         Entity victim = e.getEntity();
         Set<String> victimScoreboardTags = victim.getScoreboardTags();
         if (victimScoreboardTags.contains("isBoss")) return;
+        if (! (victim instanceof LivingEntity)) return;
         switch (e.getCause()) {
             case SUFFOCATION:
                 if (victim.getType() == EntityType.SLIME) break;

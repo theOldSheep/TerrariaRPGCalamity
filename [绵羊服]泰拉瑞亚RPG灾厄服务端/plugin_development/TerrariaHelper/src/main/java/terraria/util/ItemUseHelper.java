@@ -389,9 +389,7 @@ public class ItemUseHelper {
         GenericHelper.handleStrikeLine(ply, strikeLoc,
                 MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
                 6, 0.5, "天顶剑", color, exceptions, attrMap, strikeLineInfo.setDisplayParticle(displayParticle));
-//        int delayAmount = ((index + 1) * 16 / indexMax) - (index * 16 / indexMax);
-        // TODO
-        int delayAmount = 1;
+        int delayAmount = ((index + 1) * 16 / indexMax) - (index * 16 / indexMax);
         if (delayAmount > 0) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVector, offsetVector, exceptions, color, strikeLineInfo, index + 1, indexMax, true), delayAmount);
         } else {
