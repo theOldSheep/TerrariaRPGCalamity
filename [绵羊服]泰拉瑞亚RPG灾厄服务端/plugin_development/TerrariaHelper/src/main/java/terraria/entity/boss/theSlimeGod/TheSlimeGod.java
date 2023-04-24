@@ -1,0 +1,271 @@
+package terraria.entity.boss.theSlimeGod;
+
+import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
+import terraria.util.MathHelper;
+import terraria.util.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class TheSlimeGod extends EntitySlime {
+    // basic variables
+    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.THE_SLIME_GOD;
+    public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
+    public static final double BASIC_HEALTH = 4000 * 2;
+    public static final boolean IGNORE_DISTANCE = false;
+    HashMap<String, Double> attrMap;
+    HashMap<Player, Double> targetMap;
+    ArrayList<LivingEntity> bossParts;
+    BossBattleServer bossbar;
+    Player target = null;
+    // other variables and AI
+    int indexAI = 0;
+    boolean ebonianDefeated = false, crimulanDefeated = false, enraged = false;
+    static final double PROJECTILE_SPEED = 2,
+            BIG_SLIME_HOR_VEL = 0.5, BIG_SLIME_VER_VEL = 1.4,
+            MID_SLIME_HOR_VEL = 0.3, MID_SLIME_VER_VEL = 1.2,
+            SMALL_SLIME_HOR_VEL = 0.25, SMALL_SLIME_VER_VEL = 1.15;
+    static final int BIG_JUMP_DELAY = 6, MID_JUMP_DELAY = 3, SMALL_JUMP_DELAY = 2;
+    EntityHelper.ProjectileShootInfo shootInfo;
+    static final HashMap<String, Double> attrMapProjectile;
+    static final EntityHelper.AimHelperOptions aimOption;
+    static {
+        attrMapProjectile = new HashMap<>();
+        attrMapProjectile.put("damage", 252d);
+        attrMapProjectile.put("knockback", 4d);
+
+        aimOption = new EntityHelper.AimHelperOptions()
+                .setAimMode(false)
+                .setProjectileSpeed(PROJECTILE_SPEED)
+                .setIntensity(1d);
+    }
+    private Vector getTargetDirectionVector(double length) {
+        Location targetLoc;
+        if (enraged)
+            targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, aimOption);
+        else
+            targetLoc = target.getEyeLocation();
+        return getTargetDirectionVector(targetLoc, length);
+    }
+    private Vector getTargetDirectionVector(Location targetLoc, double length) {
+        Vector velocity = targetLoc.subtract( ((LivingEntity) bukkitEntity).getEyeLocation() ).toVector();
+        double velLen = velocity.length();
+        if (velLen < 1e-5) {
+            velocity = MathHelper.randomVector();
+            velLen = 1;
+        }
+        velocity.multiply( length / velLen );
+        return velocity;
+    }
+    private void AI() {
+        // no AI after death
+        if (getHealth() <= 0d)
+            return;
+        // AI
+        {
+            // update target
+            target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
+                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+            // disappear if no target is available
+            if (target == null) {
+                getAttributeInstance(GenericAttributes.maxHealth).setValue(1d);
+                die();
+                return;
+            }
+            // if target is valid, attack
+            if (ticksLived % 3 == 0) {
+                // test if the slimes are defeated
+                {
+                    ebonianDefeated = true;
+                    crimulanDefeated = true;
+                    for (int i = 1; i < bossParts.size(); i++) {
+                        Entity testEntity = bossParts.get(i);
+                        if (testEntity.isDead())
+                            continue;
+                        net.minecraft.server.v1_12_R1.Entity nmsTestEntity = ((CraftEntity) testEntity).getHandle();
+                        if (nmsTestEntity instanceof CrimulanSlime)
+                            crimulanDefeated = false;
+                        else if (nmsTestEntity instanceof EbonianSlime)
+                            ebonianDefeated = false;
+                    }
+                    enraged = ebonianDefeated && crimulanDefeated;
+                    if (enraged)
+                        removeScoreboardTag("noDamage");
+                    else
+                        addScoreboardTag("noDamage");
+                }
+                // dash
+                if (indexAI == 0) {
+                    bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10,
+                            enraged ? 1.5f : 1f);
+                    bukkitEntity.setVelocity( getTargetDirectionVector(PROJECTILE_SPEED) );
+                }
+                // shoot projectiles
+                else if (indexAI > 10) {
+                    // slow down
+                    Vector velocity = bukkitEntity.getVelocity();
+                    Vector acceleration = getTargetDirectionVector(target.getLocation(), 0.25);
+                    velocity.add(acceleration);
+                    velocity.multiply(0.9);
+                    bukkitEntity.setVelocity(velocity);
+                    // shoot projectile
+                    if (enraged) {
+                        shootInfo.projectileName = Math.random() < 0.5 ? "血化深渊之球" : "黑檀深渊之球";
+                        shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                        shootInfo.velocity = getTargetDirectionVector(PROJECTILE_SPEED);
+                        EntityHelper.spawnProjectile(shootInfo);
+                    }
+                    // back to dash
+                    if (indexAI >= 20) {
+                        indexAI = -1;
+                    }
+                }
+                // add 1 to index
+                indexAI ++;
+            }
+        }
+        // face the player
+        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+        // collision dmg
+        terraria.entity.boss.BossHelper.collisionDamage(this);
+    }
+    // default constructor to handle chunk unload
+    public TheSlimeGod(World world) {
+        super(world);
+        super.die();
+    }
+    // validate if the condition for spawning is met
+    public static boolean canSpawn(Player player) {
+        return true;
+    }
+    // a constructor for actual spawning
+    public TheSlimeGod(Player summonedPlayer) {
+        super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
+        // spawn location
+        double angle = Math.random() * 720d, dist = 40;
+        Location spawnLoc = summonedPlayer.getLocation().add(
+                MathHelper.xsin_degree(angle) * dist, 0, MathHelper.xcos_degree(angle) * dist);
+        setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
+        // add to world
+        ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        // basic characteristics
+        setCustomName(BOSS_TYPE.msgName);
+        setCustomNameVisible(true);
+        bukkitEntity.addScoreboardTag("isMonster");
+        bukkitEntity.addScoreboardTag("isBOSS");
+        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
+        goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
+        targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
+        // init attribute map
+        {
+            attrMap = new HashMap<>();
+            attrMap.put("crit", 0.04);
+            attrMap.put("damage", 270d);
+            attrMap.put("damageMeleeMulti", 1d);
+            attrMap.put("damageMulti", 1d);
+            attrMap.put("defence", 12d);
+            attrMap.put("defenceMulti", 1d);
+            attrMap.put("knockback", 4d);
+            attrMap.put("knockbackResistance", 1d);
+            attrMap.put("knockbackMeleeMulti", 1d);
+            attrMap.put("knockbackMulti", 1d);
+            EntityHelper.setDamageType(bukkitEntity, "Melee");
+            EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
+        }
+        // init boss bar
+        bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
+                BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
+        EntityHelper.setMetadata(bukkitEntity, "bossbar", targetMap);
+        // init target map
+        {
+            targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
+                    getBukkitEntity(), "", summonedPlayer, true, bossbar);
+            target = summonedPlayer;
+            EntityHelper.setMetadata(bukkitEntity, "targets", targetMap);
+        }
+        // init health and slime size
+        {
+            setSize(4, false);
+            double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
+            double health = BASIC_HEALTH * healthMulti;
+            getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
+            setHealth((float) health);
+        }
+        // boss parts and other properties
+        {
+            bossParts = new ArrayList<>();
+            bossParts.add((LivingEntity) bukkitEntity);
+            BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
+            this.noclip = true;
+            this.setNoGravity(true);
+            this.persistent = true;
+            shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapProjectile, "血化深渊之球");
+            // spawn crimulan and ebonian slime
+            new CrimulanSlime(this);
+            new EbonianSlime(this);
+        }
+    }
+
+    // disable death function to remove boss bar
+    @Override
+    public void die() {
+        super.die();
+        // disable boss bar
+        bossbar.setVisible(false);
+        BossHelper.bossMap.remove(BOSS_TYPE.msgName);
+        // if the boss has been defeated properly
+        if (getMaxHealth() > 10) {
+            // drop items
+            terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
+
+            Bukkit.broadcastMessage("§d§l" + BOSS_TYPE.msgName + " 被击败了.");
+            // send out loot
+            double[] healthInfo = terraria.entity.boss.BossHelper.getHealthInfo(bossParts);
+            double dmgDealtReq = healthInfo[1] / targetMap.size() / 10;
+            ItemStack loopBag = ItemHelper.getItemFromDescription( BOSS_TYPE.msgName + "的 专家模式福袋");
+            for (Player ply : targetMap.keySet()) {
+                if (targetMap.get(ply) >= dmgDealtReq) {
+                    ply.sendMessage("§a恭喜你击败了BOSS[§r" + BOSS_TYPE.msgName + "§a]!");
+                    PlayerHelper.setDefeated(ply, BOSS_TYPE.msgName, true);
+                    PlayerHelper.giveItem(ply, loopBag, true);
+                }
+                else {
+                    ply.sendMessage("§aBOSS " + BOSS_TYPE.msgName + " 已经被击败。很遗憾，您的输出不足以获得一份战利品。");
+                }
+            }
+        }
+    }
+    // rewrite AI
+    @Override
+    public void B_() {
+        super.B_();
+        // undo air resistance etc.
+        motX /= 0.91;
+        motY /= 0.98;
+        motZ /= 0.91;
+        // update boss bar and dynamic DR
+        terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);
+        // load nearby chunks
+        {
+            for (int i = -2; i <= 2; i ++)
+                for (int j = -2; j <= 2; j ++) {
+                    org.bukkit.Chunk currChunk = bukkitEntity.getLocation().add(i << 4, 0, j << 4).getChunk();
+                    currChunk.load();
+                }
+        }
+        // AI
+        AI();
+    }
+}

@@ -4,6 +4,7 @@ import net.minecraft.server.v1_12_R1.Vec3D;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MathHelper {
@@ -100,6 +101,12 @@ public class MathHelper {
         double xz = Math.sqrt(vector.getX() * vector.getX() + vector.getZ() * vector.getZ());
         if (xz == 0d) return vector.getY() >= 0 ? -90d : 90d;
         return Math.atan(vector.getY() / xz) * RAD_TO_DEG * -1;
+    }
+    public static ArrayList<Vector> getCircularProjectileDirections(int amount) {
+        ArrayList<Vector> results = new ArrayList<>();
+        for (int i = 0; i < amount * 1.5; i ++)
+            results.add(randomVector());
+        return results;
     }
     public static String selectWeighedRandom(HashMap<String, Double> weighedMap) {
         double total = 0;

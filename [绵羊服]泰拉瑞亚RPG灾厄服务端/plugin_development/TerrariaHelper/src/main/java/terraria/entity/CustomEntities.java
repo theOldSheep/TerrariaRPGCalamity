@@ -2,24 +2,26 @@ package terraria.entity;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.entity.EntityType;
-import terraria.entity.boss.cbl.Crabulon;
-import terraria.entity.boss.eoc.EyeOfCthulhu;
-import terraria.entity.boss.eow.EaterOfWorld;
-import terraria.entity.boss.hmzc.DesertNuisance;
-import terraria.entity.boss.hmzc.DesertScourge;
-import terraria.entity.boss.hvm.DarkHeart;
-import terraria.entity.boss.hvm.HiveBlob;
-import terraria.entity.boss.hvm.TheHiveMind;
-import terraria.entity.boss.klw.SkeletronHand;
-import terraria.entity.boss.klw.SkeletronHead;
-import terraria.entity.boss.slmhh.QueenSlime;
-import terraria.entity.boss.slms.CrimulanSlime;
-import terraria.entity.boss.slms.EbonianSlime;
-import terraria.entity.boss.slms.TheSlimeGod;
-import terraria.entity.boss.slmw.CrownJewel;
-import terraria.entity.boss.slmw.KingSlime;
-import terraria.entity.boss.wof.WallOfFleshEye;
-import terraria.entity.boss.wof.WallOfFleshMouth;
+import terraria.entity.boss.crabulon.Crabulon;
+import terraria.entity.boss.cryogen.Cryogen;
+import terraria.entity.boss.cryogen.CryogenShield;
+import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
+import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
+import terraria.entity.boss.desertScourge.DesertNuisance;
+import terraria.entity.boss.desertScourge.DesertScourge;
+import terraria.entity.boss.theHiveMind.DarkHeart;
+import terraria.entity.boss.theHiveMind.HiveBlob;
+import terraria.entity.boss.theHiveMind.TheHiveMind;
+import terraria.entity.boss.skeletron.SkeletronHand;
+import terraria.entity.boss.skeletron.SkeletronHead;
+import terraria.entity.boss.queenSlime.QueenSlime;
+import terraria.entity.boss.theSlimeGod.CrimulanSlime;
+import terraria.entity.boss.theSlimeGod.EbonianSlime;
+import terraria.entity.boss.theSlimeGod.TheSlimeGod;
+import terraria.entity.boss.kingSlime.CrownJewel;
+import terraria.entity.boss.kingSlime.KingSlime;
+import terraria.entity.boss.wallOfFlesh.WallOfFleshEye;
+import terraria.entity.boss.wallOfFlesh.WallOfFleshMouth;
 import terraria.entity.minion.MinionCaveSpider;
 import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
@@ -34,6 +36,8 @@ class from https://www.spigotmc.org/threads/nms-tutorials-2-custom-nms-entities-
 public enum CustomEntities {
 
     BOSS_CBL           ("Crabulon",         55,  EntityType.SLIME,           EntitySlime.class,      Crabulon.class),
+    BOSS_CYG           ("Cryogen",          55,  EntityType.SLIME,           EntitySlime.class,      Cryogen.class),
+    BOSS_CYG_SHIELD    ("CryogenShield",    55,  EntityType.SLIME,           EntitySlime.class,      CryogenShield.class),
     BOSS_EOC           ("EyeOfCthulhu",     55,  EntityType.SLIME,           EntitySlime.class,      EyeOfCthulhu.class),
     BOSS_EOW           ("EaterOfWorlds",    55,  EntityType.SLIME,           EntitySlime.class,      EaterOfWorld.class),
     BOSS_HMZC          ("DesertScourge",    55,  EntityType.SLIME,           EntitySlime.class,      DesertScourge.class),

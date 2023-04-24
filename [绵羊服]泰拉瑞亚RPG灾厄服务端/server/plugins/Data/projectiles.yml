@@ -123,19 +123,12 @@
     projectileSize: 0.5
     gravity: 0
     buffInflict:
-        - "扭曲|80|0.3"
+        - "扭曲|60|0.3"
         - "流血|160|1"
-黑檀深渊之球:
-    penetration: 99999
-    blockHitAction: thru
-    projectileSize: 0.5
-    gravity: 0
-    buffInflict:
-        - "扭曲|80|0.2"
-        - "缓慢|50|1"
 冰霜爆:
     penetration: 99999
     blockHitAction: thru
+    liveTime: 100
     gravity: 0
     buffInflict:
         - "霜火|40|1"
@@ -144,6 +137,7 @@
     penetration: 99999
     blockHitAction: thru
     projectileSize: 0.5
+    liveTime: 100
     gravity: 0
     buffInflict:
         - "霜火|40|1"
@@ -153,16 +147,17 @@
     blockHitAction: thru
     projectileSize: 0.5
     speedMultiPerTick: 0.95
+    liveTime: 75
     gravity: 0
     buffInflict:
         - "霜火|60|1"
         - "冷冻|45|1"
         - "冰冻|20|1"
     clusterBomb:
-        amount: 32
+        amount: 12
         damageMulti: 0.85
         name: 冰锥
-        velocity: 2
+        velocity: 2.5
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2

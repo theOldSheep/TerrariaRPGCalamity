@@ -25,6 +25,7 @@ public class BossSpawnListener implements Listener {
         summonItems.put("过载淤泥", BossHelper.BossType.THE_SLIME_GOD);
         // pre-plantera
         summonItems.put("明胶水晶", BossHelper.BossType.QUEEN_SLIME);
+        summonItems.put("极寒之匙", BossHelper.BossType.CRYOGEN);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {
