@@ -4,6 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 
@@ -19,4 +20,8 @@ public class VanillaMechanicListener implements Listener {
         evt.setCancelled(true);
     }
 
+    @EventHandler(priority = EventPriority.LOW)
+    public void onSleep(PlayerBedEnterEvent evt) {
+        evt.setCancelled(true);
+    }
 }

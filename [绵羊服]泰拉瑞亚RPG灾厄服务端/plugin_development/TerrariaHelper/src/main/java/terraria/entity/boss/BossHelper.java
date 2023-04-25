@@ -8,19 +8,14 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
-import terraria.util.EntityHelper;
-import terraria.util.GenericHelper;
-import terraria.util.PlayerHelper;
-import terraria.util.WorldHelper;
+import terraria.util.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 public class BossHelper {
     public static double[] getHealthInfo(ArrayList<LivingEntity> bossParts) {
@@ -103,7 +98,8 @@ public class BossHelper {
                 firstAppend = false;
             msg.append(target.getName());
         }
-        Bukkit.broadcastMessage(msg.toString());
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                () -> Bukkit.broadcastMessage(msg.toString()), 1);
         return targets;
     }
     public static boolean checkBossTarget(Entity target, Entity boss, boolean ignoreDistance, WorldHelper.BiomeType biomeRequired) {
@@ -111,7 +107,7 @@ public class BossHelper {
             Player targetPlayer = (Player) target;
             if (!PlayerHelper.isProperlyPlaying(targetPlayer)) return false;
             if (targetPlayer.getWorld() != boss.getWorld()) return false;
-            if (biomeRequired != null && WorldHelper.BiomeType.getBiome(targetPlayer) != biomeRequired) return false;
+            if (biomeRequired != null && WorldHelper.BiomeType.getBiome(targetPlayer, false) != biomeRequired) return false;
             double distHor = GenericHelper.getHorizontalDistance(targetPlayer.getLocation(), boss.getLocation());
             if (distHor > 100) return ignoreDistance;
             return true;
@@ -151,6 +147,54 @@ public class BossHelper {
         for (HitEntityInfo hitEntityInfo : toDamage) {
             EntityHelper.handleDamage(monsterBkt, hitEntityInfo.getHitEntity().getBukkitEntity(),
                     damage, "DirectDamage");
+        }
+    }
+    public static void handleBossDeath(terraria.util.BossHelper.BossType bossType,
+                                       ArrayList<LivingEntity> bossParts, HashMap<Player, Double> targetMap) {
+        double[] healthInfo = terraria.entity.boss.BossHelper.getHealthInfo(bossParts);
+        double dmgDealtReq = healthInfo[1] / targetMap.size() / 10;
+        // boss death message
+        Bukkit.broadcastMessage("§d§l" + bossType.msgName + " 被击败了.");
+        switch (bossType) {
+            case THE_HIVE_MIND:
+                Bukkit.broadcastMessage("§#00FFFF苍青色的光辉照耀着这片土地。");
+                break;
+        }
+        // calculate and broadcast damage dealt
+        {
+            double totalPlyDmg = 0;
+            TreeSet<Map.Entry<Double, String>> damageList = new TreeSet<>(Comparator.comparingDouble(Map.Entry::getKey));
+            for (Map.Entry<Player, Double> entry : targetMap.entrySet()) {
+                damageList.add(new AbstractMap.SimpleImmutableEntry<>(entry.getValue(),
+                        "[" + entry.getKey().getDisplayName() + "]") );
+                totalPlyDmg += entry.getValue();
+            }
+            double debuffDmg = healthInfo[1] - totalPlyDmg;
+            if (debuffDmg < 1e-5) debuffDmg = 0;
+            damageList.add(new AbstractMap.SimpleImmutableEntry<>(debuffDmg, "§7减益等非直接伤害来源") );
+            damageList.add(new AbstractMap.SimpleImmutableEntry<>(dmgDealtReq, "§7获得战利品所需最低伤害") );
+            // send damage dealt
+            Bukkit.broadcastMessage("————————伤害信息————————");
+            for (Iterator<Map.Entry<Double, String>> it = damageList.descendingIterator(); it.hasNext(); ) {
+                Map.Entry<Double, String> damageInfo = it.next();
+                // player, damage, percent damage dealt
+                Bukkit.broadcastMessage(String.format("%1$s 伤害：%2$.0f (占比%3$.1f%%)",
+                        damageInfo.getValue(), damageInfo.getKey(), damageInfo.getKey() * 100 / healthInfo[1]));
+            }
+            Bukkit.broadcastMessage("————————伤害信息————————");
+        }
+        // send out loot
+        {
+            ItemStack loopBag = ItemHelper.getItemFromDescription(bossType.msgName + "的 专家模式福袋");
+            for (Player ply : targetMap.keySet()) {
+                if (targetMap.get(ply) >= dmgDealtReq) {
+                    ply.sendMessage("§a恭喜你击败了BOSS[§r" + bossType.msgName + "§a]!");
+                    PlayerHelper.setDefeated(ply, bossType.msgName, true);
+                    PlayerHelper.giveItem(ply, loopBag, true);
+                } else {
+                    ply.sendMessage("§aBOSS " + bossType.msgName + " 已经被击败。很遗憾，您的输出不足以获得一份战利品。");
+                }
+            }
         }
     }
 }

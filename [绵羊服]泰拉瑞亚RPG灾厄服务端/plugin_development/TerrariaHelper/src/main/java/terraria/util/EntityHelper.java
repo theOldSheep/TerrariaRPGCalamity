@@ -1675,18 +1675,19 @@ public class EntityHelper {
         ProjectileShootInfo shootInfo = new ProjectileShootInfo(shooter, shootLoc, velocity, attrMap, damageType, projectileName);
         return spawnProjectile(shootInfo);
     }
-    public static Location helperAimEntity(Entity source, Entity target, AimHelperOptions aimHelperOption) {
+    public static Location helperAimEntity(Location shootLoc, Entity target, AimHelperOptions aimHelperOption) {
         Location targetLoc;
         // setup target location
         if (target instanceof LivingEntity) targetLoc = ((LivingEntity) target).getEyeLocation();
         else targetLoc = target.getLocation();
         // estimate the distance that the entity will move
         double predictionIntensity = aimHelperOption.intensity;
-        if (source != null && predictionIntensity > 1e-5) {
+        shootLoc.checkFinite();
+        if (predictionIntensity > 1e-5) {
             double ticksOffset = 0;
             if (aimHelperOption.useTickOrSpeedEstimation) ticksOffset = aimHelperOption.ticksOffset;
             else if (aimHelperOption.projectileSpeed > 0.2) {
-                double distance = targetLoc.distance(source.getLocation());
+                double distance = targetLoc.distance(shootLoc);
                 ticksOffset = distance / aimHelperOption.projectileSpeed;
             }
             ticksOffset = Math.ceil(ticksOffset);
@@ -1712,6 +1713,12 @@ public class EntityHelper {
                     Math.random() * randomOffset - randomOffsetHalved);
         }
         return targetLoc;
+    }
+    public static Location helperAimEntity(Entity source, Entity target, AimHelperOptions aimHelperOption) {
+        Location shootLoc = source.getLocation();
+        if (source instanceof LivingEntity)
+            shootLoc = ((LivingEntity) source).getEyeLocation();
+        return helperAimEntity(shootLoc, target, aimHelperOption);
     }
     public static void handleSegmentsFollow(List<LivingEntity> segments, WormSegmentMovementOptions moveOption) {
         handleSegmentsFollow(segments, moveOption, 0);

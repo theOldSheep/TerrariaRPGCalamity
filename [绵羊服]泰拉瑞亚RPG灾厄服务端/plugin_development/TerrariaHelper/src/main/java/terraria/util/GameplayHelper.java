@@ -7,6 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
@@ -214,6 +215,21 @@ public class GameplayHelper {
                 Bukkit.broadcastMessage(data + "");
                 int finalData = data;
                 Bukkit.getScheduler().runTask(TerrariaHelper.getInstance(), () -> blk.setData((byte) finalData));
+                break;
+            }
+            // bed change spawn point
+            case BED_BLOCK: {
+                Location bedLoc = ply.getBedSpawnLocation(), newLoc = blk.getLocation();
+                if (bedLoc == null ||
+                        bedLoc.getWorld() != newLoc.getWorld() ||
+                        bedLoc.distanceSquared(newLoc) > 5) {
+                    ply.setBedSpawnLocation(blk.getLocation(), true);
+                    ply.sendMessage("§7出生点已设置。");
+                }
+                else {
+                    ply.setBedSpawnLocation(null);
+                    ply.sendMessage("§7出生点已移除。");
+                }
                 break;
             }
         }

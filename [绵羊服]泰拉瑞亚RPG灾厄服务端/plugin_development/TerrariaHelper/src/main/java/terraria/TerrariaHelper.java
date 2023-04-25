@@ -74,11 +74,11 @@ public class TerrariaHelper extends JavaPlugin {
                         StringBuilder result = new StringBuilder();
                         String separator = "~";
                         HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
-                        for (Map.Entry<String, Integer> effect : effectMap.entrySet()) {
+                        Set<String> effects = effectMap.keySet();
+                        for (String effectDisplayName : effects) {
+                            int effectDisplayTime = effectMap.get(effectDisplayName);
                             if (result.length() > 0) result.append(separator);
-                            String effectDisplayName = effect.getKey();
                             String effectLore = buffConfig.getString("effects." + effectDisplayName + ".tooltip", "我不道啊？！");
-                            int effectDisplayTime = effect.getValue();
                             // tweak the display for certain special buffs
                             if (EntityHelper.getEffectLevelMax(effectDisplayName) > 1) {
                                 int effectLevel = EntityHelper.getEffectLevel(effectDisplayName, effectDisplayTime);

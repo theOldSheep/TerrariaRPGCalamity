@@ -45,19 +45,22 @@ public class Cryogen extends EntitySlime {
     CryogenShield shield = null;
     Location teleportLoc = null;
     boolean invincible = false;
-    int indexAI = 0, phaseAI = 1, shieldIndex = 0, iceBombIndex = 0;
+    int indexAI = -40, phaseAI = 1, shieldIndex = 0, iceBombIndex = 0;
+    static final int ICE_BLAST_REGULAR = 11, ICE_BLAST_BEFORE_DASH = 17, ICE_BLAST_TIER_5 = 2, ICE_BLAST_TIER_6 = 4;
     private void shootIceBlasts(int amount) {
         psiBlast.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-        for (Vector velocity : MathHelper.getCircularProjectileDirections(amount)) {
-            velocity.multiply(1.5);
+        int amountArcs = phaseAI >= 5 ? 2 : 3;
+        double projectileSpeed = phaseAI >= 5 ? 0.75 : 1.5;
+        for (Vector velocity : MathHelper.getCircularProjectileDirections(
+                amount, amountArcs, 75, target, psiBlast.shootLoc, projectileSpeed)) {
             psiBlast.velocity = velocity;
             EntityHelper.spawnProjectile(psiBlast);
         }
     }
     private void shootIceBombs() {
         psiBomb.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-        for (Vector velocity : MathHelper.getCircularProjectileDirections(3)) {
-            velocity.multiply(1);
+        for (Vector velocity : MathHelper.getCircularProjectileDirections(
+                3, 2, 90, target, psiBomb.shootLoc, 1)) {
             psiBomb.velocity = velocity;
             EntityHelper.spawnProjectile(psiBomb);
         }
@@ -86,12 +89,15 @@ public class Cryogen extends EntitySlime {
                 psiBlast.properties.put("autoTraceMethod", 2);
                 psiBlast.properties.put("autoTraceRadius", 32d);
                 psiBlast.properties.put("autoTraceSharpTurning", false);
-                psiBlast.properties.put("autoTraceAbility", 1d);
+                psiBlast.properties.put("autoTraceAbility", 0.6d);
                 break;
         }
-        indexAI = -1;
+        indexAI = -30;
         phaseAI = newPhase;
         setCustomName(BOSS_TYPE.msgName + "§" + newPhase);
+        // give the player some time to react
+        bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
+        bukkitEntity.setVelocity(new Vector());
     }
     private void AI() {
         // no AI after death
@@ -119,43 +125,47 @@ public class Cryogen extends EntitySlime {
                     // phase 1 (phase 2 technically, as death mode omits original phase 1)
                     case 1: {
                         // rotate around player and fire ice blasts
-                        if (indexAI < 30) {
-                            Location targetLoc = target.getLocation().add(
-                                    MathHelper.xsin_degree(ticksLived * 5) * 16,
-                                    12,
-                                    MathHelper.xcos_degree(ticksLived * 5) * 16);
+                        if (indexAI < 40) {
+                            Vector offset = bukkitEntity.getLocation().subtract(target.getLocation()).toVector();
+                            offset.setY(0);
+                            if (offset.lengthSquared() < 1e-5) {
+                                offset = new Vector(1, 0, 0);
+                            }
+                            offset.normalize().multiply(24);
+                            offset.setY(12);
+                            Location targetLoc = target.getLocation().add(offset);
                             Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                             double velLen = velocity.length();
-                            double maxSpeed = 1.75;
+                            double maxSpeed = 2;
                             if (velLen > maxSpeed) {
                                 velocity.multiply(maxSpeed / velLen);
                             }
                             bukkitEntity.setVelocity(velocity);
                             switch (indexAI) {
                                 case 0:
-                                case 15:
-                                    shootIceBlasts(12);
+                                case 20:
+                                    shootIceBlasts(ICE_BLAST_REGULAR);
                             }
                         }
                         // then, stay where it is, fire 3 rounds of more ice blasts and dash
                         else {
-                            // stay, fire rounds of ice blasts
-                            if (indexAI < 50) {
+                            // stay, fire rounds of ice blasts and dash
+                            if (indexAI <= 60) {
                                 bukkitEntity.setVelocity(new Vector());
                                 switch (indexAI) {
-                                    case 30:
-                                    case 45:
+                                    case 40:
                                     case 50:
-                                        shootIceBlasts(16);
+                                    case 60:
+                                        shootIceBlasts(ICE_BLAST_BEFORE_DASH);
+                                }
+                                // dash
+                                if (indexAI == 60) {
+                                    Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 2.25);
+                                    bukkitEntity.setVelocity(velocity);
                                 }
                             }
-                            // dash
-                            else if (indexAI == 50) {
-                                Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 2.25);
-                                bukkitEntity.setVelocity(velocity);
-                            }
                             // finish one AI cycle
-                            else if (indexAI >= 80)
+                            else if (indexAI >= 90)
                                 indexAI = -1;
                         }
                         // phase transition
@@ -167,32 +177,32 @@ public class Cryogen extends EntitySlime {
                     // phase 2
                     case 2: {
                         // flies towards player, fire two rounds of ice blasts
-                        if (indexAI < 30) {
+                        if (indexAI < 40) {
                             Location targetLoc = target.getLocation();
                             Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                             double velLen = velocity.length();
-                            double maxSpeed = 1;
+                            double maxSpeed = 0.75;
                             if (velLen > maxSpeed) {
                                 velocity.multiply(maxSpeed / velLen);
                             }
                             bukkitEntity.setVelocity(velocity);
                             switch (indexAI) {
                                 case 0:
-                                case 15:
-                                    shootIceBlasts(12);
+                                case 20:
+                                    shootIceBlasts(ICE_BLAST_REGULAR);
                             }
                         }
                         // then, stay where it is, fire 3 rounds of more ice blasts and dash
                         else {
                             // stay, fire rounds of ice blasts
-                            if (indexAI <= 110) {
-                                int subIndex = (indexAI - 30) % 40;
+                            if (indexAI <= 120) {
+                                int subIndex = (indexAI - 40) % 40;
                                 if (subIndex < 20)
                                     bukkitEntity.setVelocity(new Vector());
                                 switch (subIndex) {
                                     case 10:
                                     case 20:
-                                        shootIceBlasts(16);
+                                        shootIceBlasts(ICE_BLAST_BEFORE_DASH);
                                         break;
                                 }
                                 // dash
@@ -225,7 +235,7 @@ public class Cryogen extends EntitySlime {
                             }
                             bukkitEntity.setVelocity(velocity);
                             if (indexAI % 15 == 0)
-                                shootIceBlasts(12);
+                                shootIceBlasts(ICE_BLAST_REGULAR);
                         }
                         // randomly teleport around the player
                         switch (indexAI) {
@@ -264,20 +274,23 @@ public class Cryogen extends EntitySlime {
                         }
                         // too far: accelerate towards player
                         if (indexAI == 0) {
-                            if (dirLen > 16) {
+                            if (dirLen > 24) {
                                 Vector velocity = bukkitEntity.getVelocity();
-                                direction.multiply(0.075 / dirLen);
+                                direction.multiply(0.25 / dirLen);
+                                // the boss can make turns quicker, also this limits max speed to 2.
+                                velocity.multiply(0.875);
                                 velocity.add( direction );
+                                bukkitEntity.setVelocity(velocity);
                                 indexAI = -1;
                             }
                             // close enough: dash towards player
                             else {
-                                direction.multiply(2.5 / dirLen);
+                                direction.multiply(3 / dirLen);
                                 bukkitEntity.setVelocity(direction);
                             }
                         }
                         // repeat AI cycle
-                        else if (indexAI > 20)
+                        else if (indexAI > 30)
                             indexAI = -1;
                         // phase transition
                         if (healthRatio < 0.35) {
@@ -289,7 +302,7 @@ public class Cryogen extends EntitySlime {
                     case 5: {
                         // hover above player
                         if (indexAI < 30) {
-                            Location targetLoc = target.getLocation().add(0, 12, 0);
+                            Location targetLoc = target.getLocation().add(0, 16, 0);
                             Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                             double velLen = velocity.length();
                             double maxSpeed = 1.75;
@@ -298,18 +311,22 @@ public class Cryogen extends EntitySlime {
                             }
                             bukkitEntity.setVelocity(velocity);
                         }
+                        // halt for 10 ticks to signal the player
+                        else if (indexAI < 40) {
+                            bukkitEntity.setVelocity(new Vector());
+                        }
                         // dashes into player
                         else {
                             switch (indexAI) {
-                                case 30:
-                                case 45:
-                                case 60:
+                                case 40:
+                                case 65:
+                                case 90:
                                     Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 2.25);
                                     bukkitEntity.setVelocity(velocity);
-                                    shootIceBlasts(2);
+                                    shootIceBlasts(ICE_BLAST_TIER_5);
                                     break;
                                 // a new AI cycle
-                                case 75:
+                                case 120:
                                     indexAI = -1;
                                     break;
                             }
@@ -324,7 +341,7 @@ public class Cryogen extends EntitySlime {
                     case 6: {
                         // hover above player
                         if (indexAI < 20) {
-                            Location targetLoc = target.getLocation().add(0, 10, 0);
+                            Location targetLoc = target.getLocation().add(0, 12, 0);
                             Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                             double velLen = velocity.length();
                             double maxSpeed = 2.25;
@@ -333,18 +350,22 @@ public class Cryogen extends EntitySlime {
                             }
                             bukkitEntity.setVelocity(velocity);
                         }
+                        // halt for 10 ticks to signal the player
+                        else if (indexAI < 30) {
+                            bukkitEntity.setVelocity(new Vector());
+                        }
                         // dashes into player
                         else {
                             switch (indexAI) {
-                                case 20:
                                 case 30:
-                                case 40:
+                                case 50:
+                                case 70:
                                     Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 1.75);
                                     bukkitEntity.setVelocity(velocity);
-                                    shootIceBlasts(4);
+                                    shootIceBlasts(ICE_BLAST_TIER_6);
                                     break;
                                 // a new AI cycle
-                                case 55:
+                                case 100:
                                     indexAI = -1;
                                     break;
                             }
@@ -478,28 +499,13 @@ public class Cryogen extends EntitySlime {
         if (getMaxHealth() > 10) {
             // drop items
             terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
-
-            Bukkit.broadcastMessage("§d§l" + BOSS_TYPE.msgName + " 被击败了.");
-            // send out loot
-            double[] healthInfo = terraria.entity.boss.BossHelper.getHealthInfo(bossParts);
-            double dmgDealtReq = healthInfo[1] / targetMap.size() / 10;
-            ItemStack loopBag = ItemHelper.getItemFromDescription( BOSS_TYPE.msgName + "的 专家模式福袋");
-            for (Player ply : targetMap.keySet()) {
-                if (targetMap.get(ply) >= dmgDealtReq) {
-                    ply.sendMessage("§a恭喜你击败了BOSS[§r" + BOSS_TYPE.msgName + "§a]!");
-                    PlayerHelper.setDefeated(ply, BOSS_TYPE.msgName, true);
-                    PlayerHelper.giveItem(ply, loopBag, true);
-                }
-                else {
-                    ply.sendMessage("§aBOSS " + BOSS_TYPE.msgName + " 已经被击败。很遗憾，您的输出不足以获得一份战利品。");
-                }
-            }
+            // send loot
+            terraria.entity.boss.BossHelper.handleBossDeath(BOSS_TYPE, bossParts, targetMap);
         }
     }
     // rewrite AI
     @Override
     public void B_() {
-        Bukkit.broadcastMessage("phase " + phaseAI);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

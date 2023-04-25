@@ -248,22 +248,8 @@ public class KingSlime extends EntitySlime {
         if (getMaxHealth() > 10) {
             // drop items
             terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
-
-            Bukkit.broadcastMessage("§d§l" + BOSS_TYPE.msgName + " 被击败了.");
-            // send out loot
-            double[] healthInfo = terraria.entity.boss.BossHelper.getHealthInfo(bossParts);
-            double dmgDealtReq = healthInfo[1] / targetMap.size() / 10;
-            ItemStack loopBag = ItemHelper.getItemFromDescription( BOSS_TYPE.msgName + "的 专家模式福袋");
-            for (Player ply : targetMap.keySet()) {
-                if (targetMap.get(ply) >= dmgDealtReq) {
-                    ply.sendMessage("§a恭喜你击败了BOSS[§r" + BOSS_TYPE.msgName + "§a]!");
-                    PlayerHelper.setDefeated(ply, BOSS_TYPE.msgName, true);
-                    PlayerHelper.giveItem(ply, loopBag, true);
-                }
-                else {
-                    ply.sendMessage("§aBOSS " + BOSS_TYPE.msgName + " 已经被击败。很遗憾，您的输出不足以获得一份战利品。");
-                }
-            }
+            // send loot
+            terraria.entity.boss.BossHelper.handleBossDeath(BOSS_TYPE, bossParts, targetMap);
         }
     }
     // rewrite AI

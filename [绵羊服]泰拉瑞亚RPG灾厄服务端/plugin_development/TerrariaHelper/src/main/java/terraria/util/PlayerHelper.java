@@ -201,7 +201,7 @@ public class PlayerHelper {
         return result;
     }
     public static Location getSpawnLocation(Player ply) {
-        if (ply.getBedSpawnLocation() != null && !ply.getScoreboardTags().contains("bedCancelled"))
+        if (ply.getBedSpawnLocation() != null)
             return ply.getBedSpawnLocation();
         return Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE).getHighestBlockAt(0, 0).getLocation().add(0, 1, 0);
     }
@@ -719,16 +719,17 @@ public class PlayerHelper {
                                     break;
                                 default:
                                     switch (biomeType) {
+                                        case ABYSS:
                                         case DUNGEON:
                                         case TEMPLE:
-                                        case UNDERWORLD:
                                         case BRIMSTONE_CRAG:
-                                        case CORRUPTION:
+                                        case UNDERWORLD:
                                         case ASTRAL_INFECTION:
+                                        case CORRUPTION:
                                         case DESERT:
-                                        case SUNKEN_SEA:
                                         case SULPHUROUS_OCEAN:
-                                        case ABYSS:
+                                        case SUNKEN_SEA:
+                                        case TUNDRA:
                                             // always the same bgm
                                             current = biomeType.toString().toLowerCase();
                                             break;

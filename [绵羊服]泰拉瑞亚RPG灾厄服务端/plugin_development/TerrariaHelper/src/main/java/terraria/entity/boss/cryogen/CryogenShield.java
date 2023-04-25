@@ -77,7 +77,7 @@ public class CryogenShield extends EntitySlime {
         }
         // init target map
         {
-            EntityHelper.setMetadata(bukkitEntity, "targets", owner.targetMap);
+            EntityHelper.setMetadata(bukkitEntity, "targets", owner.targetMap.clone());
         }
         // init health and slime size
         {

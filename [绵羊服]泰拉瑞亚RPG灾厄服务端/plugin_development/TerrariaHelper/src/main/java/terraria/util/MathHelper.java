@@ -2,6 +2,7 @@ package terraria.util;
 
 import net.minecraft.server.v1_12_R1.Vec3D;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -102,11 +103,68 @@ public class MathHelper {
         if (xz == 0d) return vector.getY() >= 0 ? -90d : 90d;
         return Math.atan(vector.getY() / xz) * RAD_TO_DEG * -1;
     }
-    public static ArrayList<Vector> getCircularProjectileDirections(int amount) {
+    public static ArrayList<Vector> getCircularProjectileDirections(int amountPerArc, int amountArcs, double halfArcAngleDeg, Vector fwdDir) {
         ArrayList<Vector> results = new ArrayList<>();
-        for (int i = 0; i < amount * 1.5; i ++)
-            results.add(randomVector());
+        // regularize forward direction
+        double fwdLenSqr = fwdDir.lengthSquared();
+        if (fwdLenSqr < 0.999 || fwdLenSqr > 1.001)
+            fwdDir.normalize();
+        // get offset direction for each arc
+        Vector[] arcDirs = new Vector[amountArcs];
+        {
+            Vector orthVec1 = new Vector();
+            while (orthVec1.lengthSquared() < 1e-5) {
+                orthVec1 = randomVector();
+                Vector fwdComponent = vectorProjection(fwdDir, orthVec1);
+                orthVec1.subtract(fwdComponent);
+            }
+            orthVec1.normalize();
+            if (amountArcs == 1)
+                arcDirs[0] = orthVec1;
+            else {
+                Vector orthVec2 = fwdDir.getCrossProduct(orthVec1);
+                double offset = 180d / amountArcs;
+                double angle = 0;
+                for (int i = 0; i < amountArcs; i ++) {
+                    Vector newArcDir = orthVec1.clone();
+                    newArcDir.multiply(xsin_degree(angle));
+                    Vector offsetArcDir = orthVec2.clone();
+                    offsetArcDir.multiply(xcos_degree(angle));
+                    newArcDir.add(offsetArcDir);
+                    arcDirs[i] = newArcDir;
+                    angle += offset;
+                }
+            }
+        }
+        // then setup all direction vectors
+        int loopAmount = amountPerArc / 2;
+        double angle = 0, offset = halfArcAngleDeg * 2 / amountPerArc;
+        if (amountPerArc % 2 == 1)
+            results.add(fwdDir.clone());
+        else
+            angle += offset / 2;
+        for (int i = 0; i < loopAmount; i ++) {
+            double sinVal = xsin_degree(angle), cosVal = xcos_degree(angle);
+            Vector fwdComp = fwdDir.clone().multiply(cosVal);
+            for (int arcIndex = 0; arcIndex < amountArcs; arcIndex ++) {
+                Vector offsetComp1 = arcDirs[arcIndex].clone().multiply(sinVal);
+                Vector offsetComp2 = arcDirs[arcIndex].clone().multiply(-sinVal);
+                results.add(offsetComp1.add(fwdComp));
+                results.add(offsetComp2.add(fwdComp));
+            }
+            angle += offset;
+        }
         return results;
+    }
+    public static ArrayList<Vector> getCircularProjectileDirections(int amountPerArc, int amountArcs, double halfArcAngleDeg,
+                                                                    Player target, Location shootLoc, double speed) {
+        EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions().setProjectileSpeed(speed);
+        Location targetLoc = EntityHelper.helperAimEntity(shootLoc, target, aimHelper);
+        Vector fwdDir = targetLoc.subtract(shootLoc).toVector();
+        ArrayList<Vector> result = getCircularProjectileDirections(amountPerArc, amountArcs, halfArcAngleDeg, fwdDir);
+        for (Vector vec : result)
+            vec.multiply(speed);
+        return result;
     }
     public static String selectWeighedRandom(HashMap<String, Double> weighedMap) {
         double total = 0;

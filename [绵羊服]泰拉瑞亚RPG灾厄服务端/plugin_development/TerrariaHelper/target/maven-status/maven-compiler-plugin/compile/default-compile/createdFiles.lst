@@ -18,6 +18,7 @@ terraria\entity\npc\TerrariaNPCAngler.class
 terraria\util\ItemUseHelper$QuickBuffType.class
 terraria\entity\projectile\TerrariaPotionProjectile$1.class
 terraria\util\EntityHelper$1.class
+terraria\entity\boss\BossHelper$1.class
 terraria\entity\boss\theSlimeGod\EbonianSlime$SlimeSize.class
 terraria\event\listener\WorldRegisterListener.class
 terraria\event\listener\PlayerWorldChangeListener.class

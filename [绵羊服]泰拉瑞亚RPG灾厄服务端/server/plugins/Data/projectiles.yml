@@ -130,6 +130,7 @@
     blockHitAction: thru
     liveTime: 100
     gravity: 0
+    noAutoTraceTicks: 10
     buffInflict:
         - "霜火|40|1"
         - "冷冻|30|1"
