@@ -1597,7 +1597,7 @@ public class EntityHelper {
             this.velocity = velocity;
             this.attrMap = attrMap;
             this.properties = new HashMap<>(25);
-            {
+            if (projectileName.length() > 0) {
                 ConfigurationSection section = TerrariaHelper.projectileConfig.getConfigurationSection(projectileName);
                 if (section != null) {
                     String[] keys;

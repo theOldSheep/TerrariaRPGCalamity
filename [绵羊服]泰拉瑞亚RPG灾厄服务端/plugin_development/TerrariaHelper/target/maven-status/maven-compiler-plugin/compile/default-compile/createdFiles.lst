@@ -1,4 +1,5 @@
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu.class
+terraria\entity\boss\aquaticScourge\AquaticScourge.class
 terraria\worldgen\overworld\OverworldCaveGenerator$1.class
 terraria\entity\boss\eaterOfWorld\EaterOfWorld$1.class
 terraria\TerrariaHelper$1.class
@@ -83,10 +84,12 @@ terraria\entity\projectile\HitEntityInfo.class
 terraria\util\GameplayHelper.class
 terraria\entity\npc\TerrariaNPCBlockSeller.class
 terraria\util\MonsterHelper.class
+terraria\entity\boss\theTwins\Spazmatism.class
 terraria\event\listener\DamageListener.class
 terraria\util\DragoncoreHelper$SlotCallback.class
 terraria\entity\boss\BossHelper.class
 terraria\entity\boss\desertScourge\DesertScourge.class
+terraria\entity\boss\theTwins\Retinazer.class
 terraria\entity\boss\theHiveMind\TheHiveMind$AIPhase.class
 terraria\entity\others\TerrariaFishingHook.class
 terraria\event\listener\BossSpawnListener.class

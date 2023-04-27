@@ -764,7 +764,9 @@ public class PlayerHelper {
                         shouldPlayMusic = true;
                         // if the current one playing is the full version, next one shall be reduced version
                         if (current.endsWith("_full")) current = current.replace("_full", "");
-                    } else if (!last.equals(current)) shouldPlayMusic = true;
+                    }
+                    else if (!last.equals(current))
+                        shouldPlayMusic = true;
                     if (shouldPlayMusic) {
                         if (printBGMDebugInfo) ply.sendMessage(current + ", replayed!");
                         ply.stopSound("music." + last);

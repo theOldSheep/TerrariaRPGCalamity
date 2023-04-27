@@ -13,10 +13,7 @@ import terraria.util.PlayerHelper;
 import terraria.util.YmlHelper;
 import terraria.worldgen.overworld.NoiseGeneratorTest;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 public class TerrariaHelper extends JavaPlugin {
@@ -73,7 +70,7 @@ public class TerrariaHelper extends JavaPlugin {
                     case "effects": {
                         StringBuilder result = new StringBuilder();
                         String separator = "~";
-                        HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
+                        HashMap<String, Integer> effectMap = (HashMap<String, Integer>) EntityHelper.getEffectMap(ply).clone();
                         Set<String> effects = effectMap.keySet();
                         for (String effectDisplayName : effects) {
                             int effectDisplayTime = effectMap.get(effectDisplayName);

@@ -159,6 +159,35 @@
         damageMulti: 0.85
         name: 冰锥
         velocity: 2.5
+渊海灾虫毒牙:
+    penetration: 99999
+    gravity: 0
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceRadius: 12
+    autoTraceSharpTurning: false
+    autoTraceAbility: 0.35
+    noAutoTraceTicks: 15
+渊海灾虫沙爆:
+    penetration: 99999
+    gravity: 0
+    projectileSize: 1
+    blockHitAction: thru
+    speedMultiPerTick: 0.99
+    liveTime: 600
+    buffInflict:
+        - "辐射|80|1"
+渊海灾虫毒云:
+    penetration: 99999
+    gravity: 0
+    projectileSize: 1
+    blockHitAction: thru
+    speedMultiPerTick: 0.99
+    liveTime: 600
+    buffInflict:
+        - "中毒|80|1"
+        - "剧毒|80|1"
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2

@@ -2,6 +2,7 @@ package terraria.entity;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.entity.EntityType;
+import terraria.entity.boss.aquaticScourge.AquaticScourge;
 import terraria.entity.boss.crabulon.Crabulon;
 import terraria.entity.boss.cryogen.Cryogen;
 import terraria.entity.boss.cryogen.CryogenShield;
@@ -20,6 +21,8 @@ import terraria.entity.boss.theSlimeGod.EbonianSlime;
 import terraria.entity.boss.theSlimeGod.TheSlimeGod;
 import terraria.entity.boss.kingSlime.CrownJewel;
 import terraria.entity.boss.kingSlime.KingSlime;
+import terraria.entity.boss.theTwins.Retinazer;
+import terraria.entity.boss.theTwins.Spazmatism;
 import terraria.entity.boss.wallOfFlesh.WallOfFleshEye;
 import terraria.entity.boss.wallOfFlesh.WallOfFleshMouth;
 import terraria.entity.minion.MinionCaveSpider;
@@ -35,6 +38,7 @@ class from https://www.spigotmc.org/threads/nms-tutorials-2-custom-nms-entities-
  */
 public enum CustomEntities {
 
+    BOSS_AQTS          ("AquaticScourge",   55,  EntityType.SLIME,           EntitySlime.class,      AquaticScourge.class),
     BOSS_CBL           ("Crabulon",         55,  EntityType.SLIME,           EntitySlime.class,      Crabulon.class),
     BOSS_CYG           ("Cryogen",          55,  EntityType.SLIME,           EntitySlime.class,      Cryogen.class),
     BOSS_CYG_SHIELD    ("CryogenShield",    55,  EntityType.SLIME,           EntitySlime.class,      CryogenShield.class),
@@ -53,6 +57,8 @@ public enum CustomEntities {
     BOSS_SLMS_CR       ("CrimulanSlime",    55,  EntityType.SLIME,           EntitySlime.class,      CrimulanSlime.class),
     BOSS_SLMW          ("KingSlime",        55,  EntityType.SLIME,           EntitySlime.class,      KingSlime.class),
     BOSS_SLMW_JEWEL    ("CrownJewel",       55,  EntityType.SLIME,           EntitySlime.class,      CrownJewel.class),
+    BOSS_TWIN_RTN      ("Retinazer",        55,  EntityType.SLIME,           EntitySlime.class,      Retinazer.class),
+    BOSS_TWIN_SPZ      ("Spazmatism",       55,  EntityType.SLIME,           EntitySlime.class,      Spazmatism.class),
     BOSS_WOF_EYE       ("WallOfFleshEye",   55,  EntityType.SLIME,           EntitySlime.class,      WallOfFleshEye.class),
     BOSS_WOF_MOUTH     ("WallOfFleshMouth", 55,  EntityType.SLIME,           EntitySlime.class,      WallOfFleshMouth.class),
     MINION_CAVE_SPIDER ("MinionCaveSpider", 59,  EntityType.CAVE_SPIDER,     EntityCaveSpider.class, MinionCaveSpider.class),

@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import terraria.entity.boss.aquaticScourge.AquaticScourge;
 import terraria.entity.boss.crabulon.Crabulon;
 import terraria.entity.boss.cryogen.Cryogen;
 import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
@@ -14,6 +15,7 @@ import terraria.entity.boss.skeletron.SkeletronHead;
 import terraria.entity.boss.queenSlime.QueenSlime;
 import terraria.entity.boss.theSlimeGod.TheSlimeGod;
 import terraria.entity.boss.kingSlime.KingSlime;
+import terraria.entity.boss.theTwins.Retinazer;
 import terraria.entity.boss.wallOfFlesh.WallOfFleshMouth;
 
 import java.util.ArrayList;
@@ -133,6 +135,20 @@ public class BossHelper {
             case CRYOGEN: {
                 if (Cryogen.canSpawn(target)) {
                     new Cryogen(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case THE_TWINS: {
+                if (Retinazer.canSpawn(target)) {
+                    new Retinazer(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case AQUATIC_SCOURGE: {
+                if (AquaticScourge.canSpawn(target)) {
+                    new AquaticScourge(target, new ArrayList<>(), 0);
                     spawnedSuccessfully = true;
                 }
                 break;
