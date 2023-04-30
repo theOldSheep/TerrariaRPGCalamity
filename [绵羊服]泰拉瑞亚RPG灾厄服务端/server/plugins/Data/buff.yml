@@ -46,6 +46,17 @@ effects:
     damageInterval: 4
     damage: 3
     tooltip: 正在损失生命值
+  硫磺火:
+    isBuff: false
+    damageInterval: 5
+    damage: 4
+    damageMonster: 10
+    tooltip: 被漆黑的火焰吞噬
+  带电:
+    isBuff: false
+    damageInterval: 4
+    damage: 6
+    tooltip: 极速损失生命值
   辐射:
     isBuff: false
     damageInterval: 10
@@ -56,6 +67,17 @@ effects:
       defence: -20
       speedMulti: -0.1
     tooltip: 你的皮肤正被侵蚀
+  孱弱巫咒:
+    isBuff: false
+    damageInterval: 10
+    damage: 8
+    damageMonster: 1332
+    attributes:
+      regenMulti: -1
+      defence: -40
+      damageTakenMulti: 0.1
+      flightTimeMulti: -0.25
+    tooltip: 你很虚弱
   耐药性:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/83/Potion_Sickness
     isBuff: false

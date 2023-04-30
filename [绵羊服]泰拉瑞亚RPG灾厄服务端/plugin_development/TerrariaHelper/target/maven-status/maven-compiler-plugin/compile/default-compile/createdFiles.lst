@@ -62,6 +62,7 @@ terraria\event\listener\DropItemSpawnListener.class
 terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
 terraria\event\listener\DamageListener$1.class
 terraria\entity\boss\kingSlime\KingSlime.class
+terraria\entity\boss\brimstoneElemental\BrimstoneElemental.class
 terraria\event\listener\PlayerMovementListener.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
 terraria\entity\npc\TerrariaNPCArmsDealer.class
@@ -86,6 +87,7 @@ terraria\entity\npc\TerrariaNPCBlockSeller.class
 terraria\util\MonsterHelper.class
 terraria\entity\boss\theTwins\Spazmatism.class
 terraria\event\listener\DamageListener.class
+terraria\entity\others\TerrariaEntityPlayer.class
 terraria\util\DragoncoreHelper$SlotCallback.class
 terraria\entity\boss\BossHelper.class
 terraria\entity\boss\desertScourge\DesertScourge.class
@@ -94,6 +96,7 @@ terraria\entity\boss\theHiveMind\TheHiveMind$AIPhase.class
 terraria\entity\others\TerrariaFishingHook.class
 terraria\event\listener\BossSpawnListener.class
 terraria\util\ItemHelper.class
+terraria\entity\boss\theDestroyer\Destroyer.class
 terraria\util\WorldHelper.class
 terraria\event\listener\NPCListener.class
 terraria\entity\npc\TerrariaNPC.class

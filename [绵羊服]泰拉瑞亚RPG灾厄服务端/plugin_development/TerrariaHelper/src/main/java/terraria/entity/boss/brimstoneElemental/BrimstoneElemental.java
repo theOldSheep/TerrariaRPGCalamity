@@ -1,0 +1,322 @@
+package terraria.entity.boss.brimstoneElemental;
+
+import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.util.Vector;
+import terraria.entity.boss.cryogen.CryogenShield;
+import terraria.util.*;
+import terraria.util.MathHelper;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class BrimstoneElemental extends EntitySlime {
+    // basic variables
+    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.BRIMSTONE_ELEMENTAL;
+    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.BRIMSTONE_CRAG;
+    public static final double BASIC_HEALTH = 118080 * 2;
+    public static final boolean IGNORE_DISTANCE = false;
+    HashMap<String, Double> attrMap;
+    HashMap<Player, Double> targetMap;
+    ArrayList<LivingEntity> bossParts;
+    BossBattleServer bossbar;
+    Player target = null;
+    // other variables and AI
+    static final HashMap<String, Double> attrMapBrimstoneRay, attrMapBrimstoneDart, attrMapHellFireball;
+    static final EntityHelper.AimHelperOptions rayAimHelper;
+    static final GenericHelper.ParticleLineOptions hintParticleOption, rayParticleOption;
+    static final GenericHelper.StrikeLineOptions rayOption;
+    static {
+        rayAimHelper = new EntityHelper.AimHelperOptions()
+                .setAimMode(true)
+                .setTicksOffset(10);
+
+        hintParticleOption = new GenericHelper.ParticleLineOptions()
+                .setWidth(0.1, false)
+                .setStepsize(1)
+                .setParticleColor("255|100|150")
+                .setTicksLinger(1);
+        rayParticleOption = new GenericHelper.ParticleLineOptions()
+                .setWidth(0.25)
+                .setParticleColor("255|50|50")
+                .setTicksLinger(20);
+
+        rayOption = new GenericHelper.StrikeLineOptions()
+                .setLingerTime(20)
+                .setLingerDelay(4)
+                .setParticleInfo(rayParticleOption);
+
+        attrMapBrimstoneRay = new HashMap<>();
+        attrMapBrimstoneRay.put("damage", 684d);
+        attrMapBrimstoneRay.put("knockback", 2d);
+        attrMapBrimstoneDart = new HashMap<>();
+        attrMapBrimstoneDart.put("damage", 384d);
+        attrMapBrimstoneDart.put("knockback", 2d);
+        attrMapHellFireball = new HashMap<>();
+        attrMapHellFireball.put("damage", 468d);
+        attrMapHellFireball.put("knockback", 2d);
+    }
+    public EntityHelper.ProjectileShootInfo psiDart, psiFireball, psiHellBlast;
+    Location aimLoc = null;
+    int indexAI = -40, phaseAI = 1;
+    // 1: dart, 2: fireball, 3: hell blast
+    private void shootProjectile(int type) {
+
+    }
+    private void changePhase() {
+        int newPhase;
+        double healthRatio = getHealth() / getMaxHealth();
+        boolean belowHalfHealth = healthRatio < 0.5;
+        switch (phaseAI) {
+            case 1:
+                if (belowHalfHealth) newPhase = Math.random() < 0.5 ? 2 : 3;
+                else newPhase = 2;
+                break;
+            case 2:
+                if (belowHalfHealth) newPhase = Math.random() < 0.5 ? 1 : 3;
+                else newPhase = 1;
+                break;
+            case 3:
+            default:
+                newPhase = Math.random() < 0.5 ? 1 : 2;
+        }
+        switch (newPhase) {
+            case 1:
+                attrMap.put("defence", 30d);
+                break;
+            case 2:
+                attrMap.put("defence", 120d);
+                break;
+            case 3:
+                attrMap.put("defence", 60d);
+                break;
+        }
+        indexAI = -1;
+        phaseAI = newPhase;
+        setCustomName(BOSS_TYPE.msgName + "§" + newPhase);
+    }
+    private void AI() {
+        // no AI after death
+        if (getHealth() <= 0d)
+            return;
+        // AI
+        {
+            // update target
+            target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
+                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+            // disappear if no target is available
+            if (target == null) {
+                for (LivingEntity entity : bossParts) {
+                    entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
+                    entity.remove();
+                }
+                return;
+            }
+            // if target is valid, attack
+            else {
+                // AI
+                switch (phaseAI) {
+                    // loosely hover above player, shoot fireballs over time
+                    case 1: {
+                        // movement
+                        Location targetLoc = target.getLocation().add(0, 12, 0);
+                        Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
+                        double velLen = velocity.length();
+                        double maxSpeed = 2;
+                        if (velLen > maxSpeed) {
+                            velocity.multiply(maxSpeed / velLen);
+                        }
+                        bukkitEntity.setVelocity(velocity);
+                        // projectiles
+                        int fireballInterval = 10, fireballAmount = indexAI / fireballInterval;
+                        if (indexAI >= 0 && indexAI % fireballInterval == 0) {
+                            shootProjectile(2);
+                            if (fireballAmount % 2 == 0)
+                                shootProjectile(1);
+                        }
+                        // next phase after 10 fireballs
+                        if (indexAI + 1 >= fireballInterval * 11) {
+                            changePhase();
+                        }
+                        break;
+                    }
+                    // gain defence, shoot barrages of brimstone hell blast
+                    case 2: {
+                        // decelerate to a stop
+                        double acc = 0.95;
+                        motX *= acc;
+                        motY *= acc;
+                        motZ *= acc;
+                        // shoot barrages of brimstone hell blast
+                        int shootInterval = 15;
+                        if (indexAI % shootInterval == 0) {
+                            shootProjectile(1);
+                            shootProjectile(3);
+                        }
+                        // next phase after 5 shots
+                        if (indexAI + 1 >= shootInterval * 6) {
+                            changePhase();
+                        }
+                        break;
+                    }
+                    // only below 50% health: aim, then shoot a laser at the player
+                    case 3: {
+                        // movement
+                        Location targetLoc = target.getLocation().add(0, 12, 0);
+                        Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
+                        velocity.multiply(0.2);
+                        bukkitEntity.setVelocity(velocity);
+                        // aim
+                        int cycleTime = 100, cycleAmount = indexAI / cycleTime, cycleIndex = indexAI % cycleTime;
+                        if (cycleAmount < 3 && cycleIndex <= 60) {
+                            Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                            Vector direction = target.getEyeLocation().subtract(shootLoc).toVector();
+                            // fire ray
+                            if (cycleIndex == 60) {
+                                GenericHelper.handleStrikeLine(bukkitEntity, shootLoc,
+                                        MathHelper.getVectorYaw(direction), MathHelper.getVectorPitch(direction), 48, 0.25,
+                                        "", "", new ArrayList<>(), attrMapBrimstoneRay, rayOption);
+                            }
+                            else{
+                                // update aimed location
+                                if (cycleIndex <= 50)
+                                    targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, rayAimHelper);
+                                // display fired ray
+                                GenericHelper.handleParticleLine(direction, shootLoc, hintParticleOption);
+                            }
+                        }
+                        // next phase after 3 rays
+                        else {
+                            changePhase();
+                        }
+                        break;
+                    }
+                }
+                indexAI ++;
+            }
+        }
+        // face the player
+        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+        // collision dmg
+        terraria.entity.boss.BossHelper.collisionDamage(this);
+    }
+    // default constructor to handle chunk unload
+    public BrimstoneElemental(World world) {
+        super(world);
+        super.die();
+    }
+    // validate if the condition for spawning is met
+    public static boolean canSpawn(Player player) {
+        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
+    }
+    // a constructor for actual spawning
+    public BrimstoneElemental(Player summonedPlayer) {
+        super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
+        // spawn location
+        double angle = Math.random() * 720d, dist = 30;
+        Location spawnLoc = summonedPlayer.getLocation().add(
+                MathHelper.xsin_degree(angle) * dist, 0, MathHelper.xcos_degree(angle) * dist);
+        setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
+        // add to world
+        ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        // basic characteristics
+        setCustomName(BOSS_TYPE.msgName + "§1");
+        setCustomNameVisible(true);
+        bukkitEntity.addScoreboardTag("isMonster");
+        bukkitEntity.addScoreboardTag("isBOSS");
+        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
+        goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
+        targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
+        // init attribute map
+        {
+            attrMap = new HashMap<>();
+            attrMap.put("crit", 0.04);
+            attrMap.put("damage", 360d);
+            attrMap.put("damageTakenMulti", 0.85d);
+            attrMap.put("defence", 30d);
+            attrMap.put("knockback", 4d);
+            attrMap.put("knockbackResistance", 1d);
+            EntityHelper.setDamageType(bukkitEntity, "Melee");
+            EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
+        }
+        // init boss bar
+        bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
+                BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
+        EntityHelper.setMetadata(bukkitEntity, "bossbar", targetMap);
+        // init target map
+        {
+            targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
+                    getBukkitEntity(), "血肉之墙", summonedPlayer, true, bossbar);
+            target = summonedPlayer;
+            EntityHelper.setMetadata(bukkitEntity, "targets", targetMap);
+        }
+        // init health and slime size
+        {
+            setSize(8, false);
+            double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
+            double health = BASIC_HEALTH * healthMulti;
+            getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
+            setHealth((float) health);
+        }
+        // boss parts and other properties
+        {
+            bossParts = new ArrayList<>();
+            bossParts.add((LivingEntity) bukkitEntity);
+            BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
+            this.noclip = true;
+            this.setNoGravity(true);
+            this.persistent = true;
+        }
+        // projectile info
+        {
+            psiDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBrimstoneDart, "Magic", "硫火飞弹");
+            psiFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball, "Magic", "炼狱硫火球");
+            psiHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball, "Magic", "深渊亡魂");
+        }
+    }
+
+    // disable death function to remove boss bar
+    @Override
+    public void die() {
+        super.die();
+        // disable boss bar
+        bossbar.setVisible(false);
+        BossHelper.bossMap.remove(BOSS_TYPE.msgName);
+        // if the boss has been defeated properly
+        if (getMaxHealth() > 10) {
+            // drop items
+            terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
+            // send loot
+            terraria.entity.boss.BossHelper.handleBossDeath(BOSS_TYPE, bossParts, targetMap);
+        }
+    }
+    // rewrite AI
+    @Override
+    public void B_() {
+        super.B_();
+        // undo air resistance etc.
+        motX /= 0.91;
+        motY /= 0.98;
+        motZ /= 0.91;
+        // update boss bar and dynamic DR
+        terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);
+        // load nearby chunks
+        {
+            for (int i = -2; i <= 2; i ++)
+                for (int j = -2; j <= 2; j ++) {
+                    org.bukkit.Chunk currChunk = bukkitEntity.getLocation().add(i << 4, 0, j << 4).getChunk();
+                    currChunk.load();
+                }
+        }
+        // AI
+        AI();
+    }
+}

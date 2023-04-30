@@ -66,7 +66,10 @@ public class ArrowHitListener implements Listener {
     private void handleProjectileBlast(Projectile projectile, Location projectileDestroyLoc) {
         // explode
         HashSet<org.bukkit.entity.Entity> damageExceptions = (HashSet<Entity>) EntityHelper.getMetadata(projectile, "collided").value();
-        EntityHelper.handleEntityExplode(projectile, damageExceptions, projectileDestroyLoc);
+        String projectileName = projectile.getName();
+        int blastDuration = projectileConfig.getInt( projectileName + ".blastDuration", 1);
+        double blastRadius = projectileConfig.getDouble( projectileName + ".blastRadius", 1.5);
+        EntityHelper.handleEntityExplode(projectile, blastRadius, damageExceptions, projectileDestroyLoc, blastDuration);
     }
     private void handleDestroy(TerrariaProjectileHitEvent e, Projectile projectile) {
         Location projectileDestroyLoc = projectile.getLocation();

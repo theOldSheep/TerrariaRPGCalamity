@@ -67,6 +67,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("defenceMulti", 1d);
         defaultPlayerAttrMap.put("fishingHooks", 1d);
         defaultPlayerAttrMap.put("fishingPower", 0d);
+        defaultPlayerAttrMap.put("flightTimeMulti", 1d);
         defaultPlayerAttrMap.put("healthMulti", 1d);
         defaultPlayerAttrMap.put("healthTier", 5d);
         defaultPlayerAttrMap.put("invulnerabilityTick", 10d);
@@ -1033,10 +1034,7 @@ public class PlayerHelper {
                 if (isThrusting) {
                     double speedMulti = 1, accelerationMulti = 1;
                     {
-                        if (accessorySet.contains("翱翔徽章")) {
-                            thrustProgressMax *= 1.5;
-                            accelerationMulti *= 1.5;
-                        }
+                        thrustProgressMax *= EntityHelper.getAttrMap(ply).getOrDefault("flightTimeMulti", 1d);
                         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
                         double speedMultiAttribute = attrMap.getOrDefault("speedMulti", 1d);
                         speedMulti *= speedMultiAttribute;

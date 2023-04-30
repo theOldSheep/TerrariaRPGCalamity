@@ -646,7 +646,11 @@ public class GenericHelper {
                 colorCode = "e";
                 break;
             case "Debuff_霜火":
+            case "Debuff_带电":
                 colorCode = "b";
+                break;
+            case "Debuff_硫磺火":
+                colorCode = "7";
                 break;
             case "Debuff_中毒":
             case "Debuff_剧毒":

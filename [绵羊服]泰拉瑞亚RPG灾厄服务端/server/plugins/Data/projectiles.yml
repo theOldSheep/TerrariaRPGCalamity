@@ -11,7 +11,7 @@
     # 当此处为false时，敌人位置越接近移动方向的相反方向，则转弯越缓慢
     autoTraceSharpTurning: true
     # 自动追踪的能力，数字越高则追踪转向的最高效率越高。不写则视为4
-    autoTraceAbility: 4
+    autoTraceAbility: 4.0
     # 弹射物生成后多久无法自动追踪？不写则视为0
     noAutoTraceTicks: 0
     # 这个弹射物会不会被闭合的宝箱怪，旋转的火月怪等反弹？不写则视为true
@@ -29,7 +29,7 @@
     # 弹射物的碰撞箱半径，不写视为0.125
     projectileSize: 0.125
     # 每帧速度乘以这个数字，例如1.25则为每帧加速25%，不写则视为1
-    speedMultiPerTick: 1
+    speedMultiPerTick: 1.0
     # 最大速度（单位：格/帧），防止恶魔锄刀类武器的速度突破天际，不写则视为100
     maxSpeed: 100
     # 是否为爆炸弹幕（损毁时爆炸）？不写则视为false
@@ -40,6 +40,8 @@
     blastOnContactBlock: false
     # 爆炸半径，不写则视为1.5
     blastRadius: 1.5
+    # 爆炸持续时间（20为一秒），不写则视为1（不持续）
+    blastDuration: 1
     # 爆炸是否会伤害玩家，不写则视为false
     blastDamageShooter: false
     # 爆炸是否会破坏方块，不写则视为false
@@ -54,7 +56,7 @@
     # 弹跳次数和穿透次数是否绑定（弹跳时穿透次数也减少1，反之亦然）？不写则视为false。仅在blockHitAction: bounce时有作用。
     bouncePenetrationBonded: false
     # 弹跳时速度乘的倍数，不写则视为1。仅在blockHitAction: bounce时有作用。
-    bounceVelocityMulti: 1
+    bounceVelocityMulti: 1.0
     # 轨迹的颜色(R|G|B)，可不写。
     trailColor: 255|125|125
     # 轨迹停留时间（单位：帧，1秒=20帧）。不写则视为10。
@@ -165,29 +167,72 @@
     blockHitAction: thru
     autoTrace: true
     autoTraceMethod: 2
-    autoTraceRadius: 12
+    autoTraceRadius: 8
     autoTraceSharpTurning: false
-    autoTraceAbility: 0.35
+    autoTraceAbility: 0.15
     noAutoTraceTicks: 15
 渊海灾虫沙爆:
     penetration: 99999
     gravity: 0
-    projectileSize: 1
+    projectileSize: 0.75
     blockHitAction: thru
-    speedMultiPerTick: 0.99
-    liveTime: 600
+    speedMultiPerTick: 0.98
     buffInflict:
         - "辐射|80|1"
 渊海灾虫毒云:
     penetration: 99999
     gravity: 0
-    projectileSize: 1
+    projectileSize: 0.75
     blockHitAction: thru
-    speedMultiPerTick: 0.99
-    liveTime: 600
+    speedMultiPerTick: 0.98
     buffInflict:
         - "中毒|80|1"
         - "剧毒|80|1"
+死亡激光:
+    penetration: 99999
+    gravity: 0
+    blockHitAction: thru
+    trailColor: 255|0|0
+    trailLingerTime: 2
+    buffInflict:
+        - "燃烧|80|1"
+诅咒激光:
+    penetration: 99999
+    gravity: 0
+    blockHitAction: thru
+    trailColor: 100|255|100
+    trailLingerTime: 2
+    buffInflict:
+        - "咒火|60|1"
+电击激光:
+    penetration: 99999
+    gravity: 0
+    blockHitAction: thru
+    trailColor: 100|255|255
+    trailLingerTime: 2
+    buffInflict:
+        - "带电|40|1"
+硫火飞弹:
+    penetration: 99999
+    gravity: 0
+    blockHitAction: thru
+    buffInflict:
+        - "硫磺火|60|1"
+炼狱硫火球:
+    penetration: 99999
+    gravity: 0
+    isGrenade: false
+    blastRadius: 2
+    blastDuration: 50
+    buffInflict:
+        - "硫磺火|100|1"
+深渊亡魂:
+    penetration: 99999
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.75
+    buffInflict:
+        - "硫磺火|60|1"
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2
