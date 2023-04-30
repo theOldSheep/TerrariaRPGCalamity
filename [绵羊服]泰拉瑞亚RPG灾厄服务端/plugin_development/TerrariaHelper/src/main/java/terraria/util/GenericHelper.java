@@ -469,7 +469,7 @@ public class GenericHelper {
         // display particle
         particleInfo
                 .setLength(direction.length())
-                .setWidth(width / 5, false);
+                .setWidth(width);
         if (advanced.displayParticle)
             handleParticleLine(direction, startLoc, particleInfo);
     }

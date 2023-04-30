@@ -156,10 +156,7 @@ deathMessages:
   - <victim> 被烧得只剩渣了
   - <victim> 成了全熟牛排
   Debuff_暗影焰:
-  - <victim> 无法把火扑灭
-  - <victim> 被烧成了焦炭
-  - <victim> 被烧得只剩渣了
-  - <victim> 成了全熟牛排
+  - <victim> 的灵魂化作了灰烬。
   Debuff_中毒:
   - <victim> 无法找到解药
   Debuff_剧毒:
@@ -169,6 +166,12 @@ deathMessages:
   - <victim> 变成了电池
   - <victim> 的生命力从正变负
   - <victim> 成了避雷针
+  Debuff_硫磺火:
+  - <victim> 被漆黑的火焰吞噬
+  Debuff_辐射:
+  - <victim> 死于辐射。
+  Debuff_孱弱巫咒:
+  - <victim> 被硫磺烈焰烧焦了。
 settings:
   playerInventories:
   - piggyBank

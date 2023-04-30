@@ -156,6 +156,57 @@ public class BossHelper {
         // boss death message
         Bukkit.broadcastMessage("§d§l" + bossType.msgName + " 被击败了.");
         switch (bossType) {
+            case DESERT_SCOURGE:
+                Bukkit.broadcastMessage("§#7FFFD4地下沙漠的深处轰隆作响……");
+                break;
+            case WALL_OF_FLESH:
+                Bukkit.broadcastMessage("§#7FFFD4沉沦之海在颤动……");
+                Bukkit.broadcastMessage("§#FFD700一颗明星从天堂中坠陨！");
+                break;
+            case CRYOGEN:
+                Bukkit.broadcastMessage("§#87CEFA寒晶能量从冰之洞穴中迸发而出。");
+                break;
+            case AQUATIC_SCOURGE:
+                Bukkit.broadcastMessage("§#73C293硫磺色的天空变暗了...");
+                break;
+            case CALAMITAS_CLONE:
+                Bukkit.broadcastMessage("§#4169E1海洋的深处传来震动。");
+                break;
+            case PLANTERA:
+                Bukkit.broadcastMessage("§#ADFF2F富含能量的植物物质已在地下形成。");
+                Bukkit.broadcastMessage("§#DAA520沙漠正在剧烈动荡！");
+                break;
+            case ASTRUM_AUREUS:
+                Bukkit.broadcastMessage("§#FFD700星幻敌人得到了增强！");
+                break;
+            case GOLEM:
+                Bukkit.broadcastMessage("§#00FF00一场瘟疫席卷了丛林。");
+                break;
+            case ASTRUM_DEUS:
+                Bukkit.broadcastMessage("§#FFD700幻星的封印已破碎！你可以挖掘炫星矿了。");
+                break;
+            case MOON_LORD:
+                Bukkit.broadcastMessage("§#FFA500亵渎之火猛烈燃烧！");
+                Bukkit.broadcastMessage("§#EE82EE宇宙的恐惧正注着这一切……");
+                Bukkit.broadcastMessage("§#D3D3D3冷黯的能量散布至宇宙之间。");
+                Bukkit.broadcastMessage("§#00FFFF尖叫声回荡于地牢之中。");
+                break;
+            case PROVIDENCE_THE_PROFANED_GODDESS:
+                Bukkit.broadcastMessage("§#FFA500灾厄造物已被血石洗礼。");
+                Bukkit.broadcastMessage("§#90EE90石化树皮正在丛林的淤泥中爆发。");
+                break;
+            case POLTERGHAST:
+                Bukkit.broadcastMessage("§#4169E1深渊之灵受到了威胁。");
+                Bukkit.broadcastMessage("§#73C293喷涌而出的灵魂扰乱了这场酸性风暴...");
+                break;
+            case THE_DEVOURER_OF_GODS:
+                Bukkit.broadcastMessage("§#FFA500收割之月散布着诡异的光芒。");
+                Bukkit.broadcastMessage("§#00FFFF寒霜之月散发着明洁的光辉。");
+                Bukkit.broadcastMessage("§#FFA500黑蚀之日蓄势待发。");
+                break;
+            case YHARON_DRAGON_OF_REBIRTH:
+                Bukkit.broadcastMessage("§#FFD700神之光环祝福了这个世界的洞穴。");
+                break;
             case THE_HIVE_MIND:
                 Bukkit.broadcastMessage("§#00FFFF苍青色的光辉照耀着这片土地。");
                 break;

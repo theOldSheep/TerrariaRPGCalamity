@@ -103,9 +103,10 @@ public class MathHelper {
         if (xz == 0d) return vector.getY() >= 0 ? -90d : 90d;
         return Math.atan(vector.getY() / xz) * RAD_TO_DEG * -1;
     }
-    public static ArrayList<Vector> getCircularProjectileDirections(int amountPerArc, int amountArcs, double halfArcAngleDeg, Vector fwdDir) {
+    public static ArrayList<Vector> getCircularProjectileDirections(int amountPerArc, int amountArcs, double halfArcAngleDeg, Vector forwardDir, double length) {
         ArrayList<Vector> results = new ArrayList<>();
         // regularize forward direction
+        Vector fwdDir = new Vector().copy(forwardDir);
         double fwdLenSqr = fwdDir.lengthSquared();
         if (fwdLenSqr < 0.999 || fwdLenSqr > 1.001)
             fwdDir.normalize();
@@ -154,16 +155,17 @@ public class MathHelper {
             }
             angle += offset;
         }
+        // setup speed
+        for (Vector vec : results)
+            vec.multiply(length);
         return results;
     }
     public static ArrayList<Vector> getCircularProjectileDirections(int amountPerArc, int amountArcs, double halfArcAngleDeg,
-                                                                    Player target, Location shootLoc, double speed) {
-        EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions().setProjectileSpeed(speed);
+                                                                    Player target, Location shootLoc, double length) {
+        EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions().setProjectileSpeed(length);
         Location targetLoc = EntityHelper.helperAimEntity(shootLoc, target, aimHelper);
         Vector fwdDir = targetLoc.subtract(shootLoc).toVector();
-        ArrayList<Vector> result = getCircularProjectileDirections(amountPerArc, amountArcs, halfArcAngleDeg, fwdDir);
-        for (Vector vec : result)
-            vec.multiply(speed);
+        ArrayList<Vector> result = getCircularProjectileDirections(amountPerArc, amountArcs, halfArcAngleDeg, fwdDir, length);
         return result;
     }
     public static String selectWeighedRandom(HashMap<String, Double> weighedMap) {

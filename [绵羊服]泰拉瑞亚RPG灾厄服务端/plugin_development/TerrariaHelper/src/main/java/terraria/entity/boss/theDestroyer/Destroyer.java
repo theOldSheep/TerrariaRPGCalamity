@@ -39,11 +39,13 @@ public class Destroyer extends EntitySlime {
             TAIL_DMG = 306d, TAIL_DEF = 70d;
     public static final EntityHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
             new EntityHelper.WormSegmentMovementOptions()
-                    .setFollowDistance(5)
+                    .setFollowDistance(4)
                     .setFollowingMultiplier(2)
                     .setStraighteningMultiplier(0.1)
                     .setVelocityOrTeleport(false);
+    static double laserSpeed = 2.5;
     static HashMap<String, Double> attrMapDeathLaser, attrMapCursedLaser, attrMapElectricLaser;
+    static EntityHelper.AimHelperOptions laserAimHelper;
     static {
         attrMapDeathLaser = new HashMap<>();
         attrMapDeathLaser.put("damage", 384d);
@@ -54,6 +56,9 @@ public class Destroyer extends EntitySlime {
         attrMapElectricLaser = new HashMap<>();
         attrMapElectricLaser.put("damage", 468d);
         attrMapElectricLaser.put("knockback", 2d);
+
+        laserAimHelper = new EntityHelper.AimHelperOptions()
+                .setProjectileSpeed(laserSpeed);
     }
     public EntityHelper.ProjectileShootInfo projectilePropertyDeathLaser, projectilePropertyCursedLaser, projectilePropertyElectricLaser;
     int index;
@@ -79,7 +84,11 @@ public class Destroyer extends EntitySlime {
                 return;
         }
         shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-        projectilePropertyDeathLaser.velocity = MathHelper.getDirection(projectilePropertyDeathLaser.shootLoc, target.getEyeLocation(), 2.5);
+        projectilePropertyDeathLaser.velocity = MathHelper.getDirection(
+                projectilePropertyDeathLaser.shootLoc,
+                EntityHelper.helperAimEntity(
+                        bukkitEntity, target, laserAimHelper),
+                laserSpeed);
         EntityHelper.spawnProjectile(projectilePropertyDeathLaser);
     }
     private void headRushEnemy() {
@@ -233,17 +242,17 @@ public class Destroyer extends EntitySlime {
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
         if (index == 0) {
-            setCustomName(BOSS_TYPE.msgName);
+            setCustomName(BOSS_TYPE.msgName + "§1");
             this.head = this;
         }
         else {
             this.head = (Destroyer) ((CraftEntity) bossParts.get(0)).getHandle();
             if (index + 1 < TOTAL_LENGTH) {
-                setCustomName(BOSS_TYPE.msgName + "§1");
+                setCustomName(BOSS_TYPE.msgName + "§2");
                 addScoreboardTag("hasProbe");
             }
             else
-                setCustomName(BOSS_TYPE.msgName + "§2");
+                setCustomName(BOSS_TYPE.msgName + "§3");
         }
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
@@ -300,7 +309,7 @@ public class Destroyer extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(6, false);
+            setSize(8, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);

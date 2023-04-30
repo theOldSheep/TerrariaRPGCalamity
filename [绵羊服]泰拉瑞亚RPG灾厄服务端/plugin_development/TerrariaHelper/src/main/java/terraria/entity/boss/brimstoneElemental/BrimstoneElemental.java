@@ -1,6 +1,7 @@
 package terraria.entity.boss.brimstoneElemental;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.attribute.Attribute;
@@ -40,8 +41,9 @@ public class BrimstoneElemental extends EntitySlime {
                 .setTicksOffset(10);
 
         hintParticleOption = new GenericHelper.ParticleLineOptions()
+                .setLength(48)
                 .setWidth(0.1, false)
-                .setStepsize(1)
+                .setStepsize(2)
                 .setParticleColor("255|100|150")
                 .setTicksLinger(1);
         rayParticleOption = new GenericHelper.ParticleLineOptions()
@@ -69,7 +71,43 @@ public class BrimstoneElemental extends EntitySlime {
     int indexAI = -40, phaseAI = 1;
     // 1: dart, 2: fireball, 3: hell blast
     private void shootProjectile(int type) {
-
+        switch (type) {
+            case 1: {
+                double shootSpeed = phaseAI == 2 ? 1.75 : 1.25;
+                psiDart.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                for (Vector direction : MathHelper.getCircularProjectileDirections(
+                        9, 4, 90, target, psiDart.shootLoc, shootSpeed)) {
+                    psiDart.velocity = direction;
+                    EntityHelper.spawnProjectile(psiDart);
+                }
+                break;
+            }
+            case 2: {
+                psiFireball.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                psiFireball.velocity = MathHelper.getDirection(psiFireball.shootLoc, target.getEyeLocation(), 2);
+                EntityHelper.spawnProjectile(psiFireball);
+                break;
+            }
+            case 3: {
+                Location eyeLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                Vector direction = target.getEyeLocation().subtract(eyeLoc).toVector();
+                double dirLen = direction.length();
+                if (dirLen < 1e-5) {
+                    direction = new Vector(0, 1, 0);
+                    dirLen = 1;
+                }
+                // <= 25 block: 2, increases rapidly as distance increases
+                double projectileSpeed = Math.max(dirLen * dirLen * 2 / (25 * 25), 2);
+                direction.multiply(projectileSpeed / dirLen);
+                psiHellBlast.velocity = direction;
+                for (Vector offsetDir : MathHelper.getCircularProjectileDirections(
+                        5, 3, 90, direction, 2.5)) {
+                    psiHellBlast.shootLoc = eyeLoc.clone().add(offsetDir);
+                    EntityHelper.spawnProjectile(psiHellBlast);
+                }
+                break;
+            }
+        }
     }
     private void changePhase() {
         int newPhase;
@@ -88,20 +126,25 @@ public class BrimstoneElemental extends EntitySlime {
             default:
                 newPhase = Math.random() < 0.5 ? 1 : 2;
         }
-        switch (newPhase) {
-            case 1:
-                attrMap.put("defence", 30d);
-                break;
-            case 2:
-                attrMap.put("defence", 120d);
-                break;
-            case 3:
-                attrMap.put("defence", 60d);
-                break;
-        }
         indexAI = -1;
         phaseAI = newPhase;
         setCustomName(BOSS_TYPE.msgName + "§" + newPhase);
+        switch (newPhase) {
+            case 1:
+                attrMap.put("defence", 30d);
+                bossbar.color = BossBattle.BarColor.GREEN;
+                break;
+            case 2:
+                attrMap.put("defence", 120d);
+                bossbar.color = BossBattle.BarColor.RED;
+                indexAI = -60;
+                break;
+            case 3:
+                attrMap.put("defence", 60d);
+                bossbar.color = BossBattle.BarColor.YELLOW;
+                break;
+        }
+        bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
     }
     private void AI() {
         // no AI after death
@@ -127,7 +170,7 @@ public class BrimstoneElemental extends EntitySlime {
                     // loosely hover above player, shoot fireballs over time
                     case 1: {
                         // movement
-                        Location targetLoc = target.getLocation().add(0, 12, 0);
+                        Location targetLoc = target.getLocation().add(0, 16, 0);
                         Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                         double velLen = velocity.length();
                         double maxSpeed = 2;
@@ -156,14 +199,16 @@ public class BrimstoneElemental extends EntitySlime {
                         motY *= acc;
                         motZ *= acc;
                         // shoot barrages of brimstone hell blast
-                        int shootInterval = 15;
-                        if (indexAI % shootInterval == 0) {
-                            shootProjectile(1);
-                            shootProjectile(3);
-                        }
-                        // next phase after 5 shots
-                        if (indexAI + 1 >= shootInterval * 6) {
-                            changePhase();
+                        if (indexAI >= 0) {
+                            int shootInterval = 15;
+                            if (indexAI % shootInterval == 0) {
+                                shootProjectile(1);
+                                shootProjectile(3);
+                            }
+                            // next phase after 5 shots
+                            if (indexAI + 1 >= shootInterval * 6) {
+                                changePhase();
+                            }
                         }
                         break;
                     }
@@ -174,23 +219,28 @@ public class BrimstoneElemental extends EntitySlime {
                         Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                         velocity.multiply(0.2);
                         bukkitEntity.setVelocity(velocity);
-                        // aim
-                        int cycleTime = 100, cycleAmount = indexAI / cycleTime, cycleIndex = indexAI % cycleTime;
-                        if (cycleAmount < 3 && cycleIndex <= 60) {
-                            Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-                            Vector direction = target.getEyeLocation().subtract(shootLoc).toVector();
-                            // fire ray
-                            if (cycleIndex == 60) {
-                                GenericHelper.handleStrikeLine(bukkitEntity, shootLoc,
-                                        MathHelper.getVectorYaw(direction), MathHelper.getVectorPitch(direction), 48, 0.25,
-                                        "", "", new ArrayList<>(), attrMapBrimstoneRay, rayOption);
-                            }
-                            else{
+                        // ray
+                        int cycleTime = 50, cycleAmount = indexAI / cycleTime, cycleIndex = indexAI % cycleTime;
+                        if (cycleAmount < 5) {
+                            if (cycleIndex <= 30) {
                                 // update aimed location
-                                if (cycleIndex <= 50)
-                                    targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, rayAimHelper);
-                                // display fired ray
-                                GenericHelper.handleParticleLine(direction, shootLoc, hintParticleOption);
+                                if (cycleIndex <= 20)
+                                    aimLoc = EntityHelper.helperAimEntity(bukkitEntity, target, rayAimHelper);
+                                // get direction
+                                Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                                Vector direction = aimLoc.clone().subtract(shootLoc).toVector();
+                                // fire ray
+                                if (cycleIndex == 30) {
+                                    GenericHelper.handleStrikeLine(bukkitEntity, shootLoc,
+                                            MathHelper.getVectorYaw(direction), MathHelper.getVectorPitch(direction), 48, 0.5,
+                                            "", "", new ArrayList<>(), attrMapBrimstoneRay, rayOption);
+                                }
+                                // hint targeted location
+                                else {
+                                    // display fired ray
+                                    hintParticleOption.setLength(48);
+                                    GenericHelper.handleParticleLine(direction, shootLoc, hintParticleOption);
+                                }
                             }
                         }
                         // next phase after 3 rays

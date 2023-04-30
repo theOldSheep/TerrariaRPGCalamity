@@ -28,6 +28,8 @@ public class BossSpawnListener implements Listener {
         summonItems.put("极寒之匙", BossHelper.BossType.CRYOGEN);
         summonItems.put("机械魔眼", BossHelper.BossType.THE_TWINS);
         summonItems.put("海鲜饵料", BossHelper.BossType.AQUATIC_SCOURGE);
+        summonItems.put("机械蠕虫", BossHelper.BossType.THE_DESTROYER);
+        summonItems.put("焦炭玩偶", BossHelper.BossType.BRIMSTONE_ELEMENTAL);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {

@@ -5,11 +5,13 @@ import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import terraria.entity.boss.aquaticScourge.AquaticScourge;
+import terraria.entity.boss.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.crabulon.Crabulon;
 import terraria.entity.boss.cryogen.Cryogen;
 import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
 import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
 import terraria.entity.boss.desertScourge.DesertScourge;
+import terraria.entity.boss.theDestroyer.Destroyer;
 import terraria.entity.boss.theHiveMind.TheHiveMind;
 import terraria.entity.boss.skeletron.SkeletronHead;
 import terraria.entity.boss.queenSlime.QueenSlime;
@@ -149,6 +151,20 @@ public class BossHelper {
             case AQUATIC_SCOURGE: {
                 if (AquaticScourge.canSpawn(target)) {
                     new AquaticScourge(target, new ArrayList<>(), 0);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case THE_DESTROYER: {
+                if (Destroyer.canSpawn(target)) {
+                    new Destroyer(target, new ArrayList<>(), 0);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case BRIMSTONE_ELEMENTAL: {
+                if (BrimstoneElemental.canSpawn(target)) {
+                    new BrimstoneElemental(target);
                     spawnedSuccessfully = true;
                 }
                 break;
