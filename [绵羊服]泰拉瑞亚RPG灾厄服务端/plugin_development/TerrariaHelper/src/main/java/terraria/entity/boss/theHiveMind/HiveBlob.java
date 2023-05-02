@@ -130,7 +130,7 @@ public class HiveBlob extends EntitySlime {
         }
         // init target map
         {
-            targetMap = owner.targetMap;
+            targetMap = (HashMap<Player, Double>) owner.targetMap.clone();
             target = owner.target;
             EntityHelper.setMetadata(bukkitEntity, "targets", targetMap);
         }

@@ -181,7 +181,7 @@ public class TheHiveMind extends EntitySlime {
                             bukkitEntity.setVelocity(velocity);
                         }
                         // spawn monsters
-                        if (Math.random() < 0.35)
+                        if (Math.random() < 0.2)
                             spawnMonsters(true);
                         // next AI phase
                         if (indexAI >= 10) {

@@ -62,7 +62,8 @@ public class SkeletronHead extends EntitySlime {
         shootInfo.properties.put("autoTraceRadius", 24d);
         shootInfo.properties.put("autoTraceSharpTurning", false);
         shootInfo.properties.put("autoTraceAbility", 0.5);
-        shootInfo.properties.put("noAutoTraceTicks", 5);
+        shootInfo.properties.put("noAutoTraceTicks", 10);
+        shootInfo.properties.put("maxAutoTraceTicks", 40);
         shootInfo.properties.put("liveTime", 80);
         shootInfo.properties.put("gravity", 0d);
         shootInfo.properties.put("blockHitAction", "thru");

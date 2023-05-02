@@ -26,6 +26,7 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\listener\BossSpawnListener.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\listener\VanillaMechanicListener.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\listener\RandomTitleListener.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\skeletronPrime\SkeletronPrimeHead.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\kingSlime\KingSlime.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\skeletron\SkeletronHead.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\listener\CraftingListener.java
@@ -41,6 +42,7 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\brimstoneElemental\BrimstoneElemental.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\listener\PlayerJoinListener.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\util\WorldHelper.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\skeletronPrime\SkeletronPrimeHand.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\listener\BlockBreakListener.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\listener\WorldRegisterListener.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\wallOfFlesh\WallOfFleshMouth.java

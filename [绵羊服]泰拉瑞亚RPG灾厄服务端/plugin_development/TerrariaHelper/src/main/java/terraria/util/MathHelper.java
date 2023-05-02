@@ -224,12 +224,18 @@ public class MathHelper {
     public static Vector toBukkitVector(Vec3D vec) {
         return new Vector(vec.x, vec.y, vec.z);
     }
-    public static Vector getDirection(Location initialLoc, Location finalLoc, double length) {
+    public static Vector getDirection(Location initialLoc, Location finalLoc, double length, boolean keepOriginalBelowLength) {
         Vector dir = finalLoc.clone().subtract(initialLoc).toVector();
         double len = dir.length();
+        // if the direction is shorter than length,  keep it intact.
+        if (keepOriginalBelowLength && len <= length)
+            return dir;
         if (len < 1e-9)
             return new Vector(0, length, 0);
         dir.multiply(length / len);
         return dir;
+    }
+    public static Vector getDirection(Location initialLoc, Location finalLoc, double length) {
+        return getDirection(initialLoc, finalLoc, length, false);
     }
 }

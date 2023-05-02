@@ -195,11 +195,11 @@ public class MinionSlime extends EntitySlime {
                 if (target == owner)
                     targetLoc = target.getEyeLocation().add(MathHelper.xsin_degree(angle) * 2, 1, MathHelper.xcos_degree(angle) * 2);
                 else
-                    targetLoc = target.getEyeLocation().add(MathHelper.xsin_degree(angle) * 4, 6, MathHelper.xcos_degree(angle) * 4);
+                    targetLoc = target.getEyeLocation().add(MathHelper.xsin_degree(angle) * 3, 4, MathHelper.xcos_degree(angle) * 3);
                 velocity = targetLoc.subtract(minionBukkit.getLocation()).toVector();
                 // tweak velocity
                 {
-                    double maxSpeed = targetIsOwner ? 1.75 : 1;
+                    double maxSpeed = 3;
                     double dist = velocity.length();
                     velocity.multiply(Math.min(1d / 30, maxSpeed / dist));
                 }
@@ -212,13 +212,13 @@ public class MinionSlime extends EntitySlime {
                     String projectileType;
                     if (minionType.equals("小鬼")) {
                         projectileType = "小火花";
-                        projectileVelocity.multiply(2);
+                        projectileVelocity.multiply(2.75);
                     } else {
                         projectileType = "钨钢光球";
-                        projectileVelocity.multiply(1.5);
+                        projectileVelocity.multiply(2);
                     }
                     EntityHelper.spawnProjectile(minionBukkit, projectileVelocity, attrMap, projectileType);
-                    shootDelay = (int) (Math.random() * 10) + 15;
+                    shootDelay = (int) (Math.random() * 5) + 15;
                 }
                 extraVariables.put("shootDelay", shootDelay);
                 break;

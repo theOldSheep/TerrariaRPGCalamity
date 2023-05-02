@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.util.EntityHelper;
+import terraria.util.PlayerHelper;
 
 import java.util.*;
 
@@ -37,6 +38,7 @@ public class MinionHelper {
     }
     public static boolean validate(Entity minion, Player owner, int minionSlot, int minionSlotMax, Entity minionInList, boolean sentryOrMinion) {
         if (!owner.isOnline()) return false;
+        if (!PlayerHelper.isProperlyPlaying(owner)) return false;
         // setup variables
         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(owner);
         ArrayList<Entity> minionList;

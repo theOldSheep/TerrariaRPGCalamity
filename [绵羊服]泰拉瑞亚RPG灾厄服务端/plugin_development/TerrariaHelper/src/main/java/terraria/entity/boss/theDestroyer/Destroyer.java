@@ -235,7 +235,7 @@ public class Destroyer extends EntitySlime {
             spawnLoc = summonedPlayer.getLocation().add(
                     MathHelper.xsin_degree(angle) * dist, -40, MathHelper.xcos_degree(angle) * dist);
         } else {
-            spawnLoc = bossParts.get(0).getLocation().add(Math.random() * 20 - 10, Math.random() * 20 - 10, Math.random() * 20 - 10);
+            spawnLoc = bossParts.get(index - 1).getLocation().add(0, -1, 0);
         }
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world

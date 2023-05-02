@@ -1604,7 +1604,7 @@ public class EntityHelper {
                     // ints
                     {
                         keys = new String[]{"autoTraceMethod", "bounce", "enemyInvincibilityFrame", "liveTime",
-                                "noAutoTraceTicks", "noGravityTicks", "trailLingerTime", "penetration"};
+                                "noAutoTraceTicks", "maxAutoTraceTicks", "noGravityTicks", "trailLingerTime", "penetration"};
                         for (String key : keys) {
                             if (section.contains(key))
                                 this.properties.put(key, section.getInt(key));

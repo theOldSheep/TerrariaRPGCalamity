@@ -11,6 +11,7 @@ import terraria.entity.boss.cryogen.Cryogen;
 import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
 import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
 import terraria.entity.boss.desertScourge.DesertScourge;
+import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
 import terraria.entity.boss.theDestroyer.Destroyer;
 import terraria.entity.boss.theHiveMind.TheHiveMind;
 import terraria.entity.boss.skeletron.SkeletronHead;
@@ -165,6 +166,13 @@ public class BossHelper {
             case BRIMSTONE_ELEMENTAL: {
                 if (BrimstoneElemental.canSpawn(target)) {
                     new BrimstoneElemental(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case SKELETRON_PRIME: {
+                if (SkeletronPrimeHead.canSpawn(target)) {
+                    new SkeletronPrimeHead(target);
                     spawnedSuccessfully = true;
                 }
                 break;

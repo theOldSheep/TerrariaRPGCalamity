@@ -11,6 +11,8 @@ import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
 import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
 import terraria.entity.boss.desertScourge.DesertNuisance;
 import terraria.entity.boss.desertScourge.DesertScourge;
+import terraria.entity.boss.skeletronPrime.SkeletronPrimeHand;
+import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
 import terraria.entity.boss.theDestroyer.Destroyer;
 import terraria.entity.boss.theHiveMind.DarkHeart;
 import terraria.entity.boss.theHiveMind.HiveBlob;
@@ -56,8 +58,10 @@ public enum CustomEntities {
     BOSS_KSLM          ("KingSlime",         55,  EntityType.SLIME,           EntitySlime.class,      KingSlime.class),
     BOSS_KSLM_JEWEL    ("CrownJewel",        55,  EntityType.SLIME,           EntitySlime.class,      CrownJewel.class),
     BOSS_QNSLM         ("QueenSlime",        55,  EntityType.SLIME,           EntitySlime.class,      QueenSlime.class),
-    BOSS_SKL           ("Skeletron",         55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHead.class),
-    BOSS_SKL_HAND      ("SkeletronHand",     55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHand.class),
+    BOSS_SKLT          ("Skeletron",         55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHead.class),
+    BOSS_SKLT_HAND     ("SkeletronHand",     55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHand.class),
+    BOSS_SKLTPM        ("SkeletronPrime",    55,  EntityType.SLIME,           EntitySlime.class,      SkeletronPrimeHead.class),
+    BOSS_SKLTPM_HAND   ("SkeletronPrimeHand",55,  EntityType.SLIME,           EntitySlime.class,      SkeletronPrimeHand.class),
     BOSS_SLMG          ("TheSlimeGod",       55,  EntityType.SLIME,           EntitySlime.class,      TheSlimeGod.class),
     BOSS_SLMG_EB       ("EbonianSlime",      55,  EntityType.SLIME,           EntitySlime.class,      EbonianSlime.class),
     BOSS_SLMG_CR       ("CrimulanSlime",     55,  EntityType.SLIME,           EntitySlime.class,      CrimulanSlime.class),
