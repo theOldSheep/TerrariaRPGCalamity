@@ -12,8 +12,10 @@
     autoTraceSharpTurning: true
     # 自动追踪的能力，数字越高则追踪转向的最高效率越高。不写则视为4
     autoTraceAbility: 4.0
-    # 弹射物生成后多久无法自动追踪？不写则视为0
+    # 弹射物存在多久前无法自动追踪？不写则视为0
     noAutoTraceTicks: 0
+    # 弹射物生成多久后无法自动追踪？不写则视为999999
+    maxAutoTraceTicks: 999999
     # 这个弹射物会不会被闭合的宝箱怪，旋转的火月怪等反弹？不写则视为true
     canBeReflected: true
     # 击中怪物后敌人多少帧后才能被本弹射物再次伤害？（一秒=20帧）不写则视为5
