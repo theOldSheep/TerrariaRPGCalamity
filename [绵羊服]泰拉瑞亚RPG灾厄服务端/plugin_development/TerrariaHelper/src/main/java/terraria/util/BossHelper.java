@@ -6,6 +6,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import terraria.entity.boss.aquaticScourge.AquaticScourge;
 import terraria.entity.boss.brimstoneElemental.BrimstoneElemental;
+import terraria.entity.boss.calamitasClone.CalamitasClone;
 import terraria.entity.boss.crabulon.Crabulon;
 import terraria.entity.boss.cryogen.Cryogen;
 import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
@@ -173,6 +174,13 @@ public class BossHelper {
             case SKELETRON_PRIME: {
                 if (SkeletronPrimeHead.canSpawn(target)) {
                     new SkeletronPrimeHead(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case CALAMITAS_CLONE: {
+                if (CalamitasClone.canSpawn(target)) {
+                    new CalamitasClone(target);
                     spawnedSuccessfully = true;
                 }
                 break;

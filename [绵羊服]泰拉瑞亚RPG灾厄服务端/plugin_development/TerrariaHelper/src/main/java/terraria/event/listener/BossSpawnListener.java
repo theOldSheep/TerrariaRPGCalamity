@@ -31,6 +31,7 @@ public class BossSpawnListener implements Listener {
         summonItems.put("机械蠕虫", BossHelper.BossType.THE_DESTROYER);
         summonItems.put("焦炭玩偶", BossHelper.BossType.BRIMSTONE_ELEMENTAL);
         summonItems.put("机械骷髅头", BossHelper.BossType.SKELETRON_PRIME);
+        summonItems.put("荒芜之眼", BossHelper.BossType.CALAMITAS_CLONE);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {

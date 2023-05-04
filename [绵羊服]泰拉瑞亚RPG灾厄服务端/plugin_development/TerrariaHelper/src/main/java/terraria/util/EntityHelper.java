@@ -1070,7 +1070,7 @@ public class EntityHelper {
             else {
                 HashSet<String> accessories = PlayerHelper.getAccessories(damageSource);
                 if (targetScoreboardTags.contains("isMonster")) return true;
-                // homing weapons and minions should not willingly attack critters and NPCs
+                // homing weapons and minions should not willingly attack critters and NPCs (with voodoo doll)
                 if (strict) return false;
                 if (targetScoreboardTags.contains("isNPC"))
                     return accessories.contains(target.getName() + "巫毒娃娃");
@@ -1097,9 +1097,11 @@ public class EntityHelper {
             }
         } else {
             // non-player attacks non-player
-            // monster attack target: all non-monster targets are valid
+            // monster attack target: npc and critters can be damaged by accident but not targeted on purpose
             if (entityScoreboardTags.contains("isMonster")) {
-                return !(targetScoreboardTags.contains("isMonster"));
+                if (targetScoreboardTags.contains("isNPC") || targetScoreboardTags.contains("isAnimal"))
+                    return !strict;
+                return false;
             }
             // any entity other than monster -> monster: true
             return targetScoreboardTags.contains("isMonster");
@@ -1438,6 +1440,14 @@ public class EntityHelper {
                     Player ply = (Player) damageSource;
                     if (targets.containsKey(ply))
                         targets.put(ply, targets.get(ply) + dmg);
+                }
+            }
+            // for some entities that locks health at a specific value
+            MetadataValue healthLockMetadata = getMetadata(damageTaker, "healthLock");
+            if (healthLockMetadata != null) {
+                double healthLock = healthLockMetadata.asDouble();
+                if (damageTaker.getHealth() > healthLock) {
+                    dmg = Math.min(damageTaker.getHealth() - (healthLock + 1e-5), dmg);
                 }
             }
             if (damageTaker.getHealth() <= dmg) {

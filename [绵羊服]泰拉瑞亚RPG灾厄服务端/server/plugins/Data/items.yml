@@ -398,6 +398,22 @@
     manaUseMulti: -0.08
   worth: 4000000
   rarity: 5
+测试饰品-禁止刷怪:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    mobLimit: -9999
+  worth: 20000
+  rarity: 1
+测试饰品-生命再生:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    regen: 20
+  worth: 20000
+  rarity: 1
 镣铐:
   item: LEASH
   lore:

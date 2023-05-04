@@ -1,6 +1,7 @@
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu.class
 terraria\entity\boss\aquaticScourge\AquaticScourge.class
 terraria\worldgen\overworld\OverworldCaveGenerator$1.class
+terraria\util\NMSUtils.class
 terraria\entity\boss\eaterOfWorld\EaterOfWorld$1.class
 terraria\util\GenericHelper$StrikeLineOptions.class
 terraria\event\listener\VanillaMechanicListener.class
@@ -20,6 +21,9 @@ terraria\entity\boss\theHiveMind\HiveBlob.class
 terraria\entity\monster\MonsterHusk.class
 terraria\entity\npc\TerrariaNPCGuide.class
 terraria\entity\others\TerrariaFishingHook$1.class
+terraria\util\NMSUtils$Attributes.class
+terraria\util\NMSUtils$Biome.class
+terraria\util\NMSUtils$Type.class
 terraria\entity\boss\skeletron\SkeletronHead.class
 terraria\entity\minion\MinionHelper.class
 terraria\worldgen\overworld\OverworldCaveGenerator.class
@@ -57,12 +61,14 @@ terraria\entity\boss\kingSlime\KingSlime.class
 terraria\entity\boss\brimstoneElemental\BrimstoneElemental.class
 terraria\event\listener\PlayerMovementListener.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
+terraria\util\NMSUtils$MobMeta.class
 terraria\entity\npc\TerrariaNPCArmsDealer.class
 terraria\event\TerrariaProjectileHitEvent.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHead$PhaseAI.class
 terraria\entity\boss\theSlimeGod\EbonianSlime$1.class
 terraria\util\PlayerHelper$1.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHand$1.class
+terraria\entity\boss\calamitasClone\Catastrophe.class
 terraria\util\EntityHelper.class
 terraria\entity\boss\cryogen\CryogenShield.class
 terraria\entity\npc\PathfinderGoalNPCRestrictLocation.class
@@ -78,6 +84,7 @@ terraria\entity\projectile\HitEntityInfo.class
 terraria\util\GameplayHelper.class
 terraria\entity\npc\TerrariaNPCBlockSeller.class
 terraria\util\MonsterHelper.class
+terraria\entity\boss\calamitasClone\CalamitasClone.class
 terraria\entity\boss\theTwins\Spazmatism.class
 terraria\event\listener\DamageListener.class
 terraria\entity\others\TerrariaEntityPlayer.class
@@ -95,6 +102,7 @@ terraria\util\WorldHelper$BiomeType.class
 terraria\entity\boss\eaterOfWorld\EaterOfWorld.class
 terraria\entity\projectile\TerrariaArrowProjectile.class
 terraria\util\PlayerHelper.class
+terraria\util\NMSUtils$SpawnData.class
 terraria\util\EntityHelper$WormSegmentMovementOptions.class
 terraria\util\GameplayHelper$1.class
 terraria\entity\boss\queenSlime\QueenSlime$1.class
@@ -116,6 +124,7 @@ terraria\worldgen\overworld\TreePopulator$1.class
 terraria\entity\boss\desertScourge\DesertNuisance.class
 terraria\worldgen\overworld\OverworldBiomeGenerator.class
 terraria\entity\monster\MonsterHelper.class
+terraria\util\NMSUtils$NBTTagType.class
 terraria\entity\others\TerrariaFishingHook$FishingState.class
 terraria\worldgen\overworld\TreePopulator.class
 terraria\entity\boss\skeletron\SkeletronHand.class
@@ -132,6 +141,7 @@ terraria\entity\boss\skeletronPrime\SkeletronPrimeHead.class
 terraria\entity\projectile\TerrariaPotionProjectile.class
 terraria\entity\boss\theHiveMind\TheHiveMind$1.class
 terraria\util\GenericHelper$1.class
+terraria\entity\boss\calamitasClone\Cataclysm.class
 terraria\event\listener\ServerStopListener.class
 terraria\util\WorldHelper$HeightLayer.class
 terraria\worldgen\Interpolate$InterpolatePoint.class

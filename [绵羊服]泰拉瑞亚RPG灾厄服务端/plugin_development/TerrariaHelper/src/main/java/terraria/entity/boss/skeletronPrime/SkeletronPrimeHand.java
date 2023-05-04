@@ -164,8 +164,9 @@ public class SkeletronPrimeHand extends EntitySlime {
         // basic characteristics
         setSize(5, false);
         setCustomNameVisible(true);
-        bukkitEntity.addScoreboardTag("isMonster");
-        bukkitEntity.addScoreboardTag("isBOSS");
+        addScoreboardTag("isMechanic");
+        addScoreboardTag("isMonster");
+        addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);

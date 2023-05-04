@@ -1,9 +1,14 @@
 package terraria.entity;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
+import terraria.TerrariaHelper;
 import terraria.entity.boss.aquaticScourge.AquaticScourge;
 import terraria.entity.boss.brimstoneElemental.BrimstoneElemental;
+import terraria.entity.boss.calamitasClone.CalamitasClone;
+import terraria.entity.boss.calamitasClone.Cataclysm;
+import terraria.entity.boss.calamitasClone.Catastrophe;
 import terraria.entity.boss.crabulon.Crabulon;
 import terraria.entity.boss.cryogen.Cryogen;
 import terraria.entity.boss.cryogen.CryogenShield;
@@ -36,6 +41,8 @@ import terraria.entity.monster.MonsterHusk;
 import terraria.entity.monster.MonsterSlime;
 import terraria.entity.monster.MonsterZombie;
 import terraria.entity.npc.*;
+import terraria.entity.others.TerrariaItem;
+import terraria.util.NMSUtils;
 
 /*
 class from https://www.spigotmc.org/threads/nms-tutorials-2-custom-nms-entities-1-11.205192/
@@ -45,6 +52,9 @@ public enum CustomEntities {
     BOSS_AQTS          ("AquaticScourge",    55,  EntityType.SLIME,           EntitySlime.class,      AquaticScourge.class),
     BOSS_BELM          ("BrimstoneElemental",55,  EntityType.SLIME,           EntitySlime.class,      BrimstoneElemental.class),
     BOSS_CBL           ("Crabulon",          55,  EntityType.SLIME,           EntitySlime.class,      Crabulon.class),
+    BOSS_CLMT          ("Calamitas",         55,  EntityType.SLIME,           EntitySlime.class,      CalamitasClone.class),
+    BOSS_CLMT_CTCLSM   ("Cataclysm",         55,  EntityType.SLIME,           EntitySlime.class,      Cataclysm.class),
+    BOSS_CLMT_CTSTPH   ("Catastrophe",       55,  EntityType.SLIME,           EntitySlime.class,      Catastrophe.class),
     BOSS_CYG           ("Cryogen",           55,  EntityType.SLIME,           EntitySlime.class,      Cryogen.class),
     BOSS_CYG_SHIELD    ("CryogenShield",     55,  EntityType.SLIME,           EntitySlime.class,      CryogenShield.class),
     BOSS_DSTY          ("Destroyer",         55,  EntityType.SLIME,           EntitySlime.class,      Destroyer.class),
@@ -103,9 +113,14 @@ public enum CustomEntities {
         this.oldKey = EntityTypes.b.b(nmsClass);
     }
 
-    public static void registerEntities() { for (CustomEntities ce : CustomEntities.values()) ce.register(); }
+    public static void registerEntities() {
+        for (CustomEntities ce : CustomEntities.values())
+            ce.register();
+        // override some vanilla entities
+        NMSUtils.registerEntity("Terraria_Dropped_Item", NMSUtils.Type.DROPPED_ITEM, TerrariaItem.class, true);
+        TerrariaHelper.getInstance().getLogger().info("Custom entities have been registered.");
+    }
     public static void unregisterEntities() { for (CustomEntities ce : CustomEntities.values()) ce.unregister(); }
-
     private void register() {
         EntityTypes.d.add(key);
         EntityTypes.b.a(id, key, customClass);

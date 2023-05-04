@@ -121,6 +121,8 @@ public class SkeletronPrimeHead extends EntitySlime {
             // update target
             target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
                     IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+            if (WorldHelper.isDayTime(bukkitEntity.getWorld()))
+                target = null;
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {
@@ -230,8 +232,9 @@ public class SkeletronPrimeHead extends EntitySlime {
         // basic characteristics
         setCustomName(BOSS_TYPE.msgName);
         setCustomNameVisible(true);
-        bukkitEntity.addScoreboardTag("isMonster");
-        bukkitEntity.addScoreboardTag("isBOSS");
+        addScoreboardTag("isMechanic");
+        addScoreboardTag("isMonster");
+        addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
