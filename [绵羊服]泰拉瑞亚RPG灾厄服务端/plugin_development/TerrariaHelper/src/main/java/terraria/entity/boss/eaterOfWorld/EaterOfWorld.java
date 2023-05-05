@@ -267,10 +267,10 @@ public class EaterOfWorld extends EntitySlime {
         if (index == 0) {
             bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                     BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
-            EntityHelper.setMetadata(bukkitEntity, "bossbar", targetMap);
         } else {
             bossbar = (BossBattleServer) EntityHelper.getMetadata(bossParts.get(0), "bossbar").value();
         }
+        EntityHelper.setMetadata(bukkitEntity, "bossbar", bossbar);
         // init target map
         {
             if (index == 0) {

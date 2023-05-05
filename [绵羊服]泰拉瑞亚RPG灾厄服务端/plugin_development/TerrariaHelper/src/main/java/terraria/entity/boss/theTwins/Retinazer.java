@@ -346,7 +346,7 @@ public class Retinazer extends EntitySlime {
         // init boss bar
         bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                 BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
-        EntityHelper.setMetadata(bukkitEntity, "bossbar", targetMap);
+        EntityHelper.setMetadata(bukkitEntity, "bossbar", bossbar);
         // init target map
         {
             targetMap = terraria.entity.boss.BossHelper.setupBossTarget(

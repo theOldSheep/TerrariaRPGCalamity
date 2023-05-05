@@ -37,7 +37,7 @@ public class ItemUseAndAttributeListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public static void onInventoryClick(InventoryClickEvent e) {
         Player ply = (Player) e.getWhoClicked();
-        if (ply.getGameMode() == GameMode.SPECTATOR) {
+        if (!PlayerHelper.isProperlyPlaying(ply)) {
             e.setCancelled(true);
             return;
         }
@@ -61,7 +61,7 @@ public class ItemUseAndAttributeListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public static void onDiscardItem(PlayerDropItemEvent e) {
         Player ply = e.getPlayer();
-        if (ply.getGameMode() == GameMode.SPECTATOR) {
+        if (!PlayerHelper.isProperlyPlaying(ply)) {
             e.setCancelled(true);
             return;
         }

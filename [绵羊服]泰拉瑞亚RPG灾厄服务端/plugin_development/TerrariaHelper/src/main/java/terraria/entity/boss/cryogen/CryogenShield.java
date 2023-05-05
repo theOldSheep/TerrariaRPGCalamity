@@ -89,7 +89,6 @@ public class CryogenShield extends EntitySlime {
         }
     }
 
-    // disable death function to remove boss bar
     @Override
     public void die() {
         super.die();

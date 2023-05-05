@@ -508,10 +508,10 @@ public class MinionSlime extends EntitySlime {
                         if (ind == 0) {
                             Vector dir = direction.clone().subtract(new Vector(0, 6, 0));
                             if (dir.lengthSquared() < 1e-9) dir = new Vector(0, 1, 0);
-                            Map.Entry<Double, Double> newDeltaDir = GenericHelper.getDirectionInterpolateOffset(
+                            double[] newDeltaDir = GenericHelper.getDirectionInterpolateOffset(
                                     currYaw, currPitch, MathHelper.getVectorYaw(dir), MathHelper.getVectorPitch(dir), 1d / 8);
-                            dYaw = newDeltaDir.getKey();
-                            dPitch = newDeltaDir.getValue();
+                            dYaw = newDeltaDir[0];
+                            dPitch = newDeltaDir[1];
                         } else if (ind == 7) {
                             extraVariables.put("tgt", target);
                         }
@@ -554,10 +554,10 @@ public class MinionSlime extends EntitySlime {
                             targetYaw = ownerYaw < 0 ? ownerYaw + 180 : ownerYaw - 180,
                             targetPitch = -20 - idleIndex * 5;
                     targetYaw += 180d / totalPrism * idxCurr - 90d;
-                    Map.Entry<Double, Double> newDeltaDir = GenericHelper.getDirectionInterpolateOffset(
+                    double[] newDeltaDir = GenericHelper.getDirectionInterpolateOffset(
                             currYaw, currPitch, targetYaw, targetPitch, 0.25);
-                    dYaw = newDeltaDir.getKey();
-                    dPitch = newDeltaDir.getValue();
+                    dYaw = newDeltaDir[0];
+                    dPitch = newDeltaDir[1];
                     // every prism should move periodically according to the first prism.
                     Vector dPos = MathHelper.vectorFromYawPitch_quick(targetYaw, targetPitch);
                     Location targetLoc = owner.getLocation().add(dPos.multiply(
@@ -565,9 +565,9 @@ public class MinionSlime extends EntitySlime {
                     velocity = targetLoc.subtract(minionBukkit.getLocation()).toVector();
                     velocity.multiply(0.35);
                 }
-                Map.Entry<Double, Double> newDir = GenericHelper.interpolateDirection(currYaw, currPitch, dYaw, dPitch);
-                currYaw = newDir.getKey();
-                currPitch = newDir.getValue();
+                double[] newDir = GenericHelper.interpolateDirection(currYaw, currPitch, dYaw, dPitch);
+                currYaw = newDir[0];
+                currPitch = newDir[1];
                 // handle strike
                 GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(), currYaw, currPitch, 3.0, 0.2,
                         "", "0|0|0", damageCD, (HashMap<String, Double>) attrMap.clone(),

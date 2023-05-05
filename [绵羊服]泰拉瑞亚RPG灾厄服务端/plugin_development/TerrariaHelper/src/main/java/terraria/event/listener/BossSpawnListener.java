@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import terraria.util.BossHelper;
 import terraria.util.ItemHelper;
+import terraria.util.PlayerHelper;
 
 import java.util.HashMap;
 
@@ -44,6 +45,8 @@ public class BossSpawnListener implements Listener {
         spawnBoss(evt.getPlayer());
     }
     private static void spawnBoss(Player ply) {
+        if (!PlayerHelper.isProperlyPlaying(ply))
+            return;
         ItemStack tool = ply.getInventory().getItemInMainHand();
         String toolType = ItemHelper.splitItemName(tool)[1];
         // handle boss spawning

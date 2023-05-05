@@ -62,6 +62,7 @@ terraria\entity\boss\brimstoneElemental\BrimstoneElemental.class
 terraria\event\listener\PlayerMovementListener.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
 terraria\util\NMSUtils$MobMeta.class
+terraria\entity\boss\calamitasClone\CalamitasDummyPlayer.class
 terraria\entity\npc\TerrariaNPCArmsDealer.class
 terraria\event\TerrariaProjectileHitEvent.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHead$PhaseAI.class

@@ -7,6 +7,7 @@ import terraria.TerrariaHelper;
 import terraria.entity.boss.aquaticScourge.AquaticScourge;
 import terraria.entity.boss.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.calamitasClone.CalamitasClone;
+import terraria.entity.boss.calamitasClone.CalamitasDummyPlayer;
 import terraria.entity.boss.calamitasClone.Cataclysm;
 import terraria.entity.boss.calamitasClone.Catastrophe;
 import terraria.entity.boss.crabulon.Crabulon;
@@ -55,6 +56,7 @@ public enum CustomEntities {
     BOSS_CLMT          ("Calamitas",         55,  EntityType.SLIME,           EntitySlime.class,      CalamitasClone.class),
     BOSS_CLMT_CTCLSM   ("Cataclysm",         55,  EntityType.SLIME,           EntitySlime.class,      Cataclysm.class),
     BOSS_CLMT_CTSTPH   ("Catastrophe",       55,  EntityType.SLIME,           EntitySlime.class,      Catastrophe.class),
+    BOSS_CLMT_DUMMY    ("CalamitasDummy",    23,  EntityType.HUSK,            EntityZombieHusk.class, CalamitasDummyPlayer.class),
     BOSS_CYG           ("Cryogen",           55,  EntityType.SLIME,           EntitySlime.class,      Cryogen.class),
     BOSS_CYG_SHIELD    ("CryogenShield",     55,  EntityType.SLIME,           EntitySlime.class,      CryogenShield.class),
     BOSS_DSTY          ("Destroyer",         55,  EntityType.SLIME,           EntitySlime.class,      Destroyer.class),

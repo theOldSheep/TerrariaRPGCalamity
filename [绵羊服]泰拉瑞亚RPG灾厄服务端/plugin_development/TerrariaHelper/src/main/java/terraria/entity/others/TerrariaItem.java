@@ -26,6 +26,10 @@ public class TerrariaItem extends EntityItem {
     public org.bukkit.inventory.ItemStack bukkitItemStack;
     public boolean canBeMerged;
     EntityPlayer pickedUpBy = null;
+    public TerrariaItem (World world) {
+        super(world);
+        die();
+    }
     public TerrariaItem (org.bukkit.Location loc, org.bukkit.inventory.ItemStack item) {
         super(((CraftWorld) loc.getWorld()).getHandle(),
                 loc.getX(), loc.getY(), loc.getZ(),

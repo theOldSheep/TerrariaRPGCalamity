@@ -10,6 +10,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
@@ -426,14 +427,6 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "thrustProgress", 0);
     }
     // threads
-    public static void threadLastLocation() {
-        Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
-            for (Player ply : Bukkit.getOnlinePlayers()) {
-                EntityHelper.setMetadata(ply, "lastLocation", EntityHelper.getMetadata(ply, "currLocation").value());
-                EntityHelper.setMetadata(ply, "currLocation", ply.getLocation());
-            }
-        }, 0, 1);
-    }
     public static void threadArmorAccessory() {
         // setup projectile attributes
         HashMap<String, Double> attrMapChlorophyte = new HashMap<>(5);
@@ -866,6 +859,14 @@ public class PlayerHelper {
                 }
             }
         }, 0, 3);
+    }
+    public static void threadLastLocation() {
+        Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
+            for (Player ply : Bukkit.getOnlinePlayers()) {
+                EntityHelper.setMetadata(ply, "lastLocation", EntityHelper.getMetadata(ply, "currLocation").value());
+                EntityHelper.setMetadata(ply, "currLocation", ply.getLocation());
+            }
+        }, 0, 1);
     }
     public static void threadMonsterSpawn() {
         // every 5 ticks

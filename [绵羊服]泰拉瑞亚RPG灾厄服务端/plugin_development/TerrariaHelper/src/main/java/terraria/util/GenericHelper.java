@@ -682,7 +682,7 @@ public class GenericHelper {
         else displayLoc = e.getLocation().add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
         displayHoloText(displayLoc, text, ticksDisplay, 1f, 0.75f, 0.75f);
     }
-    public static Map.Entry<Double, Double> interpolateDirection(double initialYaw, double initialPitch,
+    public static double[] interpolateDirection(double initialYaw, double initialPitch,
                                                                  double offsetYaw, double offsetPitch) {
         double finalYaw = initialYaw + offsetYaw;
         double finalPitch = initialPitch + offsetPitch;
@@ -705,15 +705,15 @@ public class GenericHelper {
         // regulate yaw
         while (finalYaw > 180) finalYaw -= 360;
         while (finalYaw < -180) finalYaw += 360;
-        return new AbstractMap.SimpleImmutableEntry<>(finalYaw, finalPitch);
+        return new double[] { finalYaw, finalPitch };
     }
-    public static Map.Entry<Double, Double> getDirectionInterpolateOffset(double initialYaw, double initialPitch,
+    public static double[] getDirectionInterpolateOffset(double initialYaw, double initialPitch,
                                                                           double targetYaw, double targetPitch, double progress) {
         double yawOffset = targetYaw - initialYaw;
         if (yawOffset < -180) yawOffset += 360;
         if (yawOffset > 180) yawOffset -= 360;
         double pitchOffset = targetPitch - initialPitch;
         // TODO: (?) swing over head or below foot
-        return new AbstractMap.SimpleImmutableEntry<>(yawOffset * progress, pitchOffset * progress);
+        return new double[] { yawOffset * progress, pitchOffset * progress };
     }
 }

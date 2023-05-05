@@ -278,7 +278,7 @@ public class Spazmatism extends EntitySlime {
         }
         // init boss bar
         bossbar = twin.bossbar;
-        EntityHelper.setMetadata(bukkitEntity, "bossbar", targetMap);
+        EntityHelper.setMetadata(bukkitEntity, "bossbar", bossbar);
         // init target map
         {
             targetMap = twin.targetMap;

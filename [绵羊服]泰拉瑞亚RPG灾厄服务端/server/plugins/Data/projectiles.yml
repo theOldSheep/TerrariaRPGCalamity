@@ -263,7 +263,7 @@
     liveTime: 40
     gravity: 0
     projectileSize: 0.5
-    trailColor: 160|255|160
+    trailColor: 150|0|0
     trailLingerTime: 10
     buffInflict:
         - "硫磺火|60|1"

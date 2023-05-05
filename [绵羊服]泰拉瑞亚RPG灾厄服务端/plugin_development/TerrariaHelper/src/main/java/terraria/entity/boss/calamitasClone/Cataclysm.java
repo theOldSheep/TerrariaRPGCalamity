@@ -137,7 +137,7 @@ public class Cataclysm extends EntitySlime {
         }
         // init boss bar
         bossbar = owner.bossbar;
-        EntityHelper.setMetadata(bukkitEntity, "bossbar", targetMap);
+        EntityHelper.setMetadata(bukkitEntity, "bossbar", bossbar);
         // init target map
         {
             targetMap = owner.targetMap;
