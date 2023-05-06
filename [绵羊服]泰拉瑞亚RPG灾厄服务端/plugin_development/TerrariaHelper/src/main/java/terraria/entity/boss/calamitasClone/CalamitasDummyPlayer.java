@@ -33,7 +33,7 @@ public class CalamitasDummyPlayer extends EntityZombieHusk {
             // disguise the monster
             if (lastDisguisedPlayer != target) {
                 PlayerDisguise disguise = new PlayerDisguise(target);
-//                DisguiseAPI.disguiseEntity(bukkitEntity, disguise);
+                DisguiseAPI.disguiseEntity(bukkitEntity, disguise);
                 setCustomName(target.getName());
                 lastDisguisedPlayer = target;
             }

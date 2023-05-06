@@ -36,8 +36,7 @@ public class Catastrophe extends EntitySlime {
     static EntityHelper.AimHelperOptions laserAimHelper;
     static final double SPEED_LASER_1 = 1.85, SPEED_LASER_2 = 2;
     CalamitasClone owner;
-    boolean dashingPhase = false;
-    int indexAI = -40;
+    int indexAI = -60;
     EntityHelper.ProjectileShootInfo shootInfoGenericLaser;
     static {
         attrMapDeathLaser = new HashMap<>();
@@ -71,48 +70,47 @@ public class Catastrophe extends EntitySlime {
         EntityHelper.spawnProjectile(shootInfoGenericLaser);
     }
     private void attackAI() {
-        // attack
-        double healthRatio = getHealth() / getMaxHealth();
-        // alternate between firing death lasers and rapid lasers
-        dashingPhase = false;
-        // hover above and shoot death laser
-        if (indexAI < 40) {
-            // hover above the player
-            Location targetLoc = target.getLocation().add(0, 12, 0);
-            Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
-            double velLen = velocity.length();
-            double maxSpeed = 2;
-            if (velLen > maxSpeed) {
-                velocity.multiply(maxSpeed / velLen);
+        if (indexAI >= 0) {
+            // alternate between firing death lasers and rapid lasers
+            // hover above and shoot death laser
+            if (indexAI < 40) {
+                // hover above the player
+                Location targetLoc = target.getLocation().add(0, 12, 0);
+                Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
+                double velLen = velocity.length();
+                double maxSpeed = 2;
+                if (velLen > maxSpeed) {
+                    velocity.multiply(maxSpeed / velLen);
+                }
+                bukkitEntity.setVelocity(velocity);
+                // shoot laser
+                if (indexAI % 10 == 0) {
+                    shootLaser(1);
+                }
             }
-            bukkitEntity.setVelocity(velocity);
-            // shoot laser
-            if (indexAI % 10 == 0) {
-                shootLaser(1);
-            }
-        }
-        // horizontally hover and rapid fire
-        else {
-            // hover horizontally
-            Vector offset = bukkitEntity.getLocation().subtract(target.getLocation()).toVector();
-            offset.setY(0);
-            if (offset.lengthSquared() < 1e-5) {
-                offset = new Vector(1, 0, 0);
-            }
-            offset.normalize().multiply(16);
-            Location targetLoc = target.getLocation().add(offset);
-            Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
-            double velLen = velocity.length();
-            double maxSpeed = 2;
-            if (velLen > maxSpeed) {
-                velocity.multiply(maxSpeed / velLen);
-            }
-            bukkitEntity.setVelocity(velocity);
-            // fire laser
-            if (indexAI >= 90)
-                indexAI = -1;
-            else if ((indexAI - 40) % 5 == 0) {
-                shootLaser(2);
+            // horizontally hover and rapid fire
+            else {
+                // hover horizontally
+                Vector offset = bukkitEntity.getLocation().subtract(target.getLocation()).toVector();
+                offset.setY(0);
+                if (offset.lengthSquared() < 1e-5) {
+                    offset = new Vector(1, 0, 0);
+                }
+                offset.normalize().multiply(16);
+                Location targetLoc = target.getLocation().add(offset);
+                Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
+                double velLen = velocity.length();
+                double maxSpeed = 2;
+                if (velLen > maxSpeed) {
+                    velocity.multiply(maxSpeed / velLen);
+                }
+                bukkitEntity.setVelocity(velocity);
+                // fire laser
+                if (indexAI >= 90)
+                    indexAI = -1;
+                else if ((indexAI - 40) % 5 == 0) {
+                    shootLaser(2);
+                }
             }
         }
         indexAI ++;
@@ -140,10 +138,7 @@ public class Catastrophe extends EntitySlime {
             }
         }
         // face the player
-        if (dashingPhase)
-            this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
-        else
-            this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }

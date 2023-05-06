@@ -3,6 +3,7 @@ package terraria.entity.boss.calamitasClone;
 import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.api.CoreAPI;
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -25,7 +26,8 @@ public class CalamitasClone extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.CALAMITAS_CLONE;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 108000 * 2;
+    public static final double BASIC_HEALTH = 10800 * 2;
+//    public static final double BASIC_HEALTH = 108000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
@@ -33,7 +35,7 @@ public class CalamitasClone extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    static final String BULLET_HELL_WARNING = "§4§l弹幕炼狱开始，请做好准备!";
+    static final String BULLET_HELL_WARNING = "§6§l弹幕炼狱开始，请小心躲避！", BROTHER_REBORN = "§6§l兄弟重生!";
     static final double FINAL_DASH_SPEED = 3, SPEED = 2, BULLET_HELL_RADIUS = 32, DART_SPEED = 0.5, DISPLAY_OFFSET = 32;
     static final HashMap<String, Double> attrMapBrimstoneDart, attrMapHellFireball;
     static final EntityHelper.AimHelperOptions dashAimHelper;
@@ -57,7 +59,7 @@ public class CalamitasClone extends EntitySlime {
     // 1: fireball   2: hell blast
     private void beginBulletHell(int ticksDuration) {
         bulletHellTicksLeft = ticksDuration;
-        PlayerHelper.sendActionBar(target, BULLET_HELL_WARNING);
+        Bukkit.broadcastMessage(BULLET_HELL_WARNING);
 
         Location loc = target.getLocation();
         loc.setYaw((float) bulletHellViewYaw);
@@ -109,13 +111,16 @@ public class CalamitasClone extends EntitySlime {
                 displayProjectile, "ticksLive", ticksLive);
         EntityHelper.setMetadata(
                 displayProjectile, "original", projectileSpawned);
+        displayProjectile.setGlowing(true);
         bulletHellProjectiles.add(displayProjectile);
     }
     private void handleBulletHell() {
         // spawn projectiles
         if (--bulletHellTicksLeft > 0) {
             // hell blast
-            {
+            boolean secondBulletHell = healthLockProgress == 4;
+            double hellBlastProbability = secondBulletHell ? 0.8 : 0.6;
+            if (Math.random() < hellBlastProbability) {
                 boolean direction = Math.random() < 0.5;
                 Vector velocity = direction ? bullet_hell_dir1.clone() : bullet_hell_dir2.clone();
                 Vector spawnLocOffset = !direction ? bullet_hell_dir1.clone() : bullet_hell_dir2.clone();
@@ -132,7 +137,7 @@ public class CalamitasClone extends EntitySlime {
                 spawnBulletHellProjectile(velocity, spawnLoc, 1, ticksLive);
             }
             // fire blasts
-            if (bulletHellTicksLeft % 50 == 0) {
+            if (bulletHellTicksLeft % 50 == 0 && secondBulletHell) {
                 double angle = Math.random() * 360;
                 double sinVal = MathHelper.xsin_degree(angle) * BULLET_HELL_RADIUS * 0.5;
                 double cosVal = MathHelper.xcos_degree(angle) * BULLET_HELL_RADIUS * 0.5;
@@ -234,7 +239,7 @@ public class CalamitasClone extends EntitySlime {
                     indexAI = -10;
                 }
                 // normal attack
-                else {
+                else if (indexAI >= 0) {
                     // get health ratio
                     double healthRatio = getHealth() / getMaxHealth();
                     // health lock and phase switch handling
@@ -252,6 +257,7 @@ public class CalamitasClone extends EntitySlime {
                             if (healthRatio < 0.4) {
                                 new Catastrophe(target, this);
                                 new Cataclysm(target, this);
+                                Bukkit.broadcastMessage(BROTHER_REBORN);
                                 brothersAlive = true;
                                 EntityHelper.setMetadata(bukkitEntity, "healthLock", getMaxHealth() * 0.09);
                                 healthLockProgress = 3;
@@ -327,9 +333,9 @@ public class CalamitasClone extends EntitySlime {
                             break;
                         }
                     }
-                    indexAI ++;
                 }
             }
+            indexAI ++;
         }
         // face the player
         this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
