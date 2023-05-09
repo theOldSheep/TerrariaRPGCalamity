@@ -286,7 +286,7 @@ public class Destroyer extends EntitySlime {
                 attrMap.put("damage", BODY_DMG);
                 attrMap.put("defence", BODY_DEF);
             }
-            EntityHelper.setDamageType(bukkitEntity, "Melee");
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
         }
         // init boss bar
@@ -326,11 +326,11 @@ public class Destroyer extends EntitySlime {
             this.persistent = true;
             // projectile info
             projectilePropertyDeathLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapDeathLaser,
-                    "Arrow", "死亡激光");
+                    EntityHelper.DamageType.MAGIC, "死亡激光");
             projectilePropertyCursedLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapCursedLaser,
-                    "Arrow", "诅咒激光");
+                    EntityHelper.DamageType.MAGIC, "诅咒激光");
             projectilePropertyElectricLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapElectricLaser,
-                    "Arrow", "电击激光");
+                    EntityHelper.DamageType.MAGIC, "电击激光");
             // segment settings
             EntityHelper.setMetadata(bukkitEntity, "damageTaker", head.getBukkitEntity());
             // next segment

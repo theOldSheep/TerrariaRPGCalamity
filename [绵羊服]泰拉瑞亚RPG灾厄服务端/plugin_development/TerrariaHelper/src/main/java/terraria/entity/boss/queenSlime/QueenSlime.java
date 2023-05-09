@@ -313,7 +313,7 @@ public class QueenSlime extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, "Melee");
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
         }
         // init boss bar
@@ -345,7 +345,8 @@ public class QueenSlime extends EntitySlime {
         }
         // projectile info
         {
-            projectileProperty = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapRegalGel, "Arrow", "");
+            projectileProperty = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapRegalGel,
+                    EntityHelper.DamageType.ARROW, "");
             projectileProperty.projectileName = "挥发明胶";
             projectileProperty.properties.put("blockHitAction", "bounce");
             projectileProperty.properties.put("bounce", 6);

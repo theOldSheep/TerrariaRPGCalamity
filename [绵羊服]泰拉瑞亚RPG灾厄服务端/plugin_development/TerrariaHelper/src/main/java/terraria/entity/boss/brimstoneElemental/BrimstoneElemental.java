@@ -294,7 +294,7 @@ public class BrimstoneElemental extends EntitySlime {
             attrMap.put("defence", 30d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, "Melee");
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
         }
         // init boss bar
@@ -327,9 +327,12 @@ public class BrimstoneElemental extends EntitySlime {
         }
         // projectile info
         {
-            psiDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBrimstoneDart, "Magic", "硫火飞弹");
-            psiFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball, "Magic", "炼狱硫火球");
-            psiHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball, "Magic", "深渊亡魂");
+            psiDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBrimstoneDart,
+                    EntityHelper.DamageType.MAGIC, "硫火飞弹");
+            psiFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball,
+                    EntityHelper.DamageType.MAGIC, "炼狱硫火球");
+            psiHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball,
+                    EntityHelper.DamageType.MAGIC, "深渊亡魂");
         }
     }
 

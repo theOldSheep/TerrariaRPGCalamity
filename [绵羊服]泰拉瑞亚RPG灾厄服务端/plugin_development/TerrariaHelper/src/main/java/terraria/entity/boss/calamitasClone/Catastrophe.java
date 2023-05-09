@@ -174,7 +174,7 @@ public class Catastrophe extends EntitySlime {
             attrMap.put("defence", 20d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, "Melee");
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
         }
         // init boss bar
@@ -204,7 +204,8 @@ public class Catastrophe extends EntitySlime {
         }
         // shoot info's
         {
-            shootInfoGenericLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapDeathLaser, "硫火飞弹");
+            shootInfoGenericLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapDeathLaser,
+                    EntityHelper.DamageType.MAGIC, "硫火飞弹");
         }
     }
     // rewrite AI

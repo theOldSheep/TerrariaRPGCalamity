@@ -247,7 +247,7 @@ public class DesertScourge extends EntitySlime {
                 attrMap.put("damage", BODY_DMG);
                 attrMap.put("defence", BODY_DEF);
             }
-            EntityHelper.setDamageType(bukkitEntity, "Melee");
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
         }
         // init boss bar
@@ -286,7 +286,8 @@ public class DesertScourge extends EntitySlime {
             this.setNoGravity(true);
             this.persistent = true;
             // projectile info
-            projectileProperty = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMap, "Arrow", "--");
+            projectileProperty = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMap,
+                    EntityHelper.DamageType.ARROW, "--");
             projectileProperty.projectileName = "沙尘暴弹幕";
             projectileProperty.properties.put("penetration", 9);
             EntityHelper.setMetadata(bukkitEntity, "damageTaker", head.getBukkitEntity());

@@ -179,7 +179,7 @@ public class WallOfFleshMouth extends EntitySlime {
                         }
                         // behind wall of flesh?
                         if (horDir.dot(horizontalMoveDirection) < 0) {
-                            EntityHelper.handleDamage(bukkitEntity, ply, 100, "DirectDamage");
+                            EntityHelper.handleDamage(bukkitEntity, ply, 100, EntityHelper.DamageReason.DIRECT_DAMAGE);
                             Vector dragDir = bukkitEntity.getLocation().subtract(ply.getLocation()).toVector();
                             double dragLen = dragDir.length();
                             if (dragLen > 1e-5) {
@@ -227,7 +227,7 @@ public class WallOfFleshMouth extends EntitySlime {
         guideNPC.getLocation().getChunk().load();
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
             LivingEntity NPCguide = NPCHelper.NPCMap.get("向导");
-            EntityHelper.handleDamage(NPCguide, NPCguide, 114514d, "Lava");
+            EntityHelper.handleDamage(NPCguide, NPCguide, 114514d, EntityHelper.DamageReason.LAVA);
         }, 1);
         // target player
         Player summonedPlayer = null;
@@ -275,7 +275,7 @@ public class WallOfFleshMouth extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, "Melee");
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
         }
         // init boss bar

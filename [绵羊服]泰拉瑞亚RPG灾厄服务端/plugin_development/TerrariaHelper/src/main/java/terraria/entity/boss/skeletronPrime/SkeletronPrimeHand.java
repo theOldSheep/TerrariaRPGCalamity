@@ -176,7 +176,7 @@ public class SkeletronPrimeHand extends EntitySlime {
             attrMap.put("crit", 0.04);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, "Melee");
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
         }
         // init target map
@@ -257,9 +257,9 @@ public class SkeletronPrimeHand extends EntitySlime {
         // shoot info
         {
             shootInfoLaser = new EntityHelper.ProjectileShootInfo(
-                    bukkitEntity, new Vector(), SkeletronPrimeHead.attrMapRocket, "Magic", "死亡激光");
+                    bukkitEntity, new Vector(), SkeletronPrimeHead.attrMapRocket, EntityHelper.DamageType.MAGIC, "死亡激光");
             shootInfoRocket = new EntityHelper.ProjectileShootInfo(
-                    bukkitEntity, new Vector(), SkeletronPrimeHead.attrMapRocket, "Rocket", "");
+                    bukkitEntity, new Vector(), SkeletronPrimeHead.attrMapRocket, EntityHelper.DamageType.ROCKET, "");
             shootInfoRocket.projectileName = "红烟花火箭";
             shootInfoRocket.properties.put("autoTrace", true);
             shootInfoRocket.properties.put("autoTraceMethod", 2);

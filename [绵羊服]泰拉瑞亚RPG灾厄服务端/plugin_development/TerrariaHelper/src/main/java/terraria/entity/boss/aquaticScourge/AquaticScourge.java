@@ -298,7 +298,7 @@ public class AquaticScourge extends EntitySlime {
                 attrMap.put("defence", BODY_DEF);
                 attrMap.put("damageTakenMulti", 1 - BODY_DR);
             }
-            EntityHelper.setDamageType(bukkitEntity, "Melee");
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
         }
         // init boss bar
@@ -338,11 +338,11 @@ public class AquaticScourge extends EntitySlime {
             this.persistent = true;
             // projectile info
             projectilePropertySandTooth = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSandTooth,
-                    "Arrow", "渊海灾虫毒牙");
+                    EntityHelper.DamageType.ARROW, "渊海灾虫毒牙");
             projectilePropertySandPoisonCloud = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSandPoisonCloud,
-                    "Arrow", "渊海灾虫沙爆");
+                    EntityHelper.DamageType.ARROW, "渊海灾虫沙爆");
             projectilePropertyToxicCloud = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapToxicCloud,
-                    "Arrow", "渊海灾虫毒云");
+                    EntityHelper.DamageType.ARROW, "渊海灾虫毒云");
             // segment settings
             EntityHelper.setMetadata(bukkitEntity, "damageTaker", head.getBukkitEntity());
             // next segment

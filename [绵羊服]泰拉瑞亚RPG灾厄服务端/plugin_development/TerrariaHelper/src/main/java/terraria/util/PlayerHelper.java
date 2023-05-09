@@ -1372,9 +1372,6 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "effectInflict", PlayerHelper.getDefaultPlayerEffectInflict());
         EntityHelper.setMetadata(ply, "hooks", new ArrayList<Entity>());
         EntityHelper.setMetadata(ply, "keysPressed", new HashSet<String>());
-        // mob spawning variable
-        if (joinOrRespawn)
-            EntityHelper.setMetadata(ply, "mobAmount", 0);
         EntityHelper.setMetadata(ply, "biome", "normal");
         // movement and control variable
         EntityHelper.setMetadata(ply, "grapplingHookItem", "");
@@ -1382,10 +1379,6 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "thrustProgress", 0);
         EntityHelper.setMetadata(ply, "chargeDir", "");
         EntityHelper.setMetadata(ply, "chargeDirLastPressed", Calendar.getInstance().getTimeInMillis());
-        // other variable
-        if (joinOrRespawn) {
-            EntityHelper.setMetadata(ply, "team", "red");
-        }
         EntityHelper.setMetadata(ply, "armorSet", "");
         // bgm, biome and background
         EntityHelper.setMetadata(ply, "lastBackground", "");
@@ -1400,9 +1393,14 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "regenTime", 0d);
         EntityHelper.setMetadata(ply, "manaRegenDelay", 0d);
         EntityHelper.setMetadata(ply, "manaRegenCounter", 0d);
-        // on join: load inventories etc.
+        // on join
         if (joinOrRespawn) {
+            // load inventories
             loadInventories(ply);
+            // join team
+            EntityHelper.setMetadata(ply, "team", "red");
+            // reset monsters spawned to 0
+            EntityHelper.setMetadata(ply, "mobAmount", 0);
         }
     }
     public static void setupAttribute(Player ply) {

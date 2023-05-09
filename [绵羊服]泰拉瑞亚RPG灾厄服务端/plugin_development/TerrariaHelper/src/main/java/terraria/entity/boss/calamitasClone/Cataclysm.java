@@ -134,7 +134,7 @@ public class Cataclysm extends EntitySlime {
             attrMap.put("defence", 20d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, "Melee");
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
         }
         // init boss bar
@@ -164,7 +164,8 @@ public class Cataclysm extends EntitySlime {
         }
         // shoot info's
         {
-            shootInfoFlameThrower = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFlameThrower, "硫火喷射");
+            shootInfoFlameThrower = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFlameThrower,
+                    EntityHelper.DamageType.MAGIC,"硫火喷射");
         }
     }
 

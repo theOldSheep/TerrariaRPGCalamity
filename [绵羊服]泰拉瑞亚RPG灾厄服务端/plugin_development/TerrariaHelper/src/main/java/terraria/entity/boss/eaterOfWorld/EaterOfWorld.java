@@ -260,7 +260,7 @@ public class EaterOfWorld extends EntitySlime {
                 attrMap.put("damage", BODY_DMG);
                 attrMap.put("defence", BODY_DEF);
             }
-            EntityHelper.setDamageType(bukkitEntity, "Melee");
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
         }
         // init boss bar
@@ -299,7 +299,8 @@ public class EaterOfWorld extends EntitySlime {
             this.setNoGravity(true);
             this.persistent = true;
             // projectile info
-            projectileProperty = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSpit, "Arrow", "魔唾液");
+            projectileProperty = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSpit,
+                    EntityHelper.DamageType.ARROW, "魔唾液");
             projectileProperty.properties.put("penetration", 9);
             // next segment
             if (index + 1 < TOTAL_LENGTH)

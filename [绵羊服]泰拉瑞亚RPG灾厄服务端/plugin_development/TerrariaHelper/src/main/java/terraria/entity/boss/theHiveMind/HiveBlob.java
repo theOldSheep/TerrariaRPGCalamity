@@ -125,7 +125,7 @@ public class HiveBlob extends EntitySlime {
             attrMap.put("knockbackResistance", 0.2d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, "Arrow");
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
         }
         // init target map

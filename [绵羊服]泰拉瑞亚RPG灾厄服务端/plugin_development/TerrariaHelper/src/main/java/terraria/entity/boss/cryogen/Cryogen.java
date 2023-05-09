@@ -446,7 +446,7 @@ public class Cryogen extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, "Melee");
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
         }
         // init boss bar
@@ -479,8 +479,10 @@ public class Cryogen extends EntitySlime {
         }
         // projectile info
         {
-            psiBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapIceBlast, "Magic", "冰霜爆");
-            psiBomb = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapIceBomb, "Magic", "冰霜炸弹");
+            psiBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapIceBlast,
+                    EntityHelper.DamageType.MAGIC, "冰霜爆");
+            psiBomb = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapIceBomb,
+                    EntityHelper.DamageType.MAGIC, "冰霜炸弹");
         }
         // spawn with shield
         {

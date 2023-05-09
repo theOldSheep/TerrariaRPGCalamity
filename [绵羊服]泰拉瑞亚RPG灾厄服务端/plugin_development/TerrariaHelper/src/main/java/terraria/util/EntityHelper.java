@@ -194,7 +194,7 @@ public class EntityHelper {
     }
     // helper functions
     public static void initEntityMetadata(Entity entity) {
-        setMetadata(entity, "damageType", "Melee");
+        setMetadata(entity, "damageType", DamageType.MELEE);
         setMetadata(entity, "effects", new HashMap<String, Integer>());
         setMetadata(entity, "buffImmune", new HashMap<String, Integer>());
     }
@@ -232,7 +232,8 @@ public class EntityHelper {
     // helper functions for tweaking attribute
     public static void tweakAttribute(Entity entity, String key, String value, boolean addOrRemove) {
         if (key.equals("damageType")) {
-            if (addOrRemove) setMetadata(entity, "damageType", value);
+            if (addOrRemove) setMetadata(entity, "damageType",
+                    damageTypeInternalNameMapping.getOrDefault(value, DamageType.MELEE));
             return;
         }
         try {
@@ -345,7 +346,8 @@ public class EntityHelper {
     // the two below is used in update player attribute
     public static void tweakAttribute(Entity entity, HashMap<String, Double> attrMap, String key, String value, boolean addOrRemove) {
         if (key.equals("damageType")) {
-            if (addOrRemove) setMetadata(entity, "damageType", value);
+            if (addOrRemove) setMetadata(entity, "damageType",
+                    damageTypeInternalNameMapping.getOrDefault(value, DamageType.MELEE));
             return;
         }
         try {
