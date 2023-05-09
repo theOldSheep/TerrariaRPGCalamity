@@ -50,10 +50,10 @@ public class ArrowHitListener implements Listener {
             projectile.removeScoreboardTag("hitDaawnlight");
             double lastCrit = attrMap.getOrDefault("crit", 0d);
             attrMap.put("crit", 100d);
-            EntityHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), "Daawnlight");
+            EntityHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), EntityHelper.DamageReason.DAAWNLIGHT);
             attrMap.put("crit", lastCrit);
         } else {
-            EntityHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), "Projectile");
+            EntityHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), EntityHelper.DamageReason.PROJECTILE);
         }
         // explode
         if (projectileScoreboardTags.contains("isGrenade")) {
@@ -84,7 +84,7 @@ public class ArrowHitListener implements Listener {
         String projectileType = projectile.getName();
         ConfigurationSection projectileSection = projectileConfig.getConfigurationSection(projectileType);
         if (projectileSection == null) return;
-        String damageType = EntityHelper.getDamageType(projectile);
+        EntityHelper.DamageType damageType = EntityHelper.getDamageType(projectile);
         Entity projectileSource = null;
         if (projectile.getShooter() instanceof Entity) projectileSource = (Entity) projectile.getShooter();
         // cluster bomb etc

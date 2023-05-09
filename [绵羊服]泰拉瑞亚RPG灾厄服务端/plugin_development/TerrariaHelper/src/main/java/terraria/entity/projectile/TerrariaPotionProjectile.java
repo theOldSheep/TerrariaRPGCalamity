@@ -132,7 +132,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     }
     public TerrariaPotionProjectile(org.bukkit.Location loc, ItemStack projectileItem, Vector velocity,
                                     String projectileType, HashMap<String, Object> properties,
-                                    HashMap<String, Double> attrMap, ProjectileSource shooter, String damageType) {
+                                    HashMap<String, Double> attrMap, ProjectileSource shooter, EntityHelper.DamageType damageType) {
         super(((CraftWorld) loc.getWorld()).getHandle(), loc.getX(), loc.getY(), loc.getZ(), projectileItem);
         this.motX = velocity.getX();
         this.motY = velocity.getY();

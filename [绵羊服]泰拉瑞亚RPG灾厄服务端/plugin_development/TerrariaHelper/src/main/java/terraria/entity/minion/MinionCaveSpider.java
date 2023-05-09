@@ -73,7 +73,7 @@ public class MinionCaveSpider extends EntityCaveSpider {
         EntityHelper.setMetadata(getBukkitEntity(), "attrMap", attrMap);
         addScoreboardTag("isMinion");
         EntityHelper.setMetadata(getBukkitEntity(), "damageSourcePlayer", owner);
-        EntityHelper.setDamageType(getBukkitEntity(), "Summon");
+        EntityHelper.setDamageType(getBukkitEntity(), EntityHelper.DamageType.SUMMON);
         addScoreboardTag("noDamage");
         addScoreboardTag("noMelee");
         setCustomName(minionType);

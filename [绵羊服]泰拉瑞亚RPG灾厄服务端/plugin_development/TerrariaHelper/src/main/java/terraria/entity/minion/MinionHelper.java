@@ -81,7 +81,7 @@ public class MinionHelper {
         for (HitEntityInfo info : toDamage) {
             Entity victimBukkit = info.getHitEntity().getBukkitEntity();
             EntityHelper.damageCD(damageCD, victimBukkit, invincibilityTick);
-            EntityHelper.handleDamage(minionBukkit, victimBukkit, basicDamage, "DirectDamage");
+            EntityHelper.handleDamage(minionBukkit, victimBukkit, basicDamage, EntityHelper.DamageReason.DIRECT_DAMAGE);
         }
     }
     private static double getHorDistSqr(double x1, double x2, double y1, double y2) {

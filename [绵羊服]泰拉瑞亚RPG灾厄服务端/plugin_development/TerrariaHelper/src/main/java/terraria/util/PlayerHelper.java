@@ -148,6 +148,9 @@ public class PlayerHelper {
         return ((HashMap<String, Inventory>) EntityHelper.getMetadata(ply, "inventories").value())
                 .get(key);
     }
+    public static String getArmorSet(Player ply) {
+        return EntityHelper.getMetadata(ply, "armorSet").asString();
+    }
     public static int getAccessoryAmount(Player ply) {
         return YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml").getInt("stats.maxAccessories", 5);
     }
@@ -415,6 +418,13 @@ public class PlayerHelper {
         return false;
     }
     // setters
+    public static void setArmorSet(Player ply, String armorSet) {
+        try {
+            EntityHelper.setMetadata(ply, "armorSet", armorSet);
+        } catch (Exception e) {
+            Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setArmorSet ", e);
+        }
+    }
     public static void setMoney(Player ply, double amount) {
         try {
             Economy.setMoney(ply.getUniqueId(), BigDecimal.valueOf(amount));
@@ -446,7 +456,7 @@ public class PlayerHelper {
         }
         HashMap<String, Double> attrMapSpore = new HashMap<>(5);
         {
-            attrMapSpore.put("damage", 225d);
+            attrMapSpore.put("damage", 125d);
             attrMapSpore.put("knockback", 0d);
         }
         // every 5 ticks (1/4 second)
@@ -458,7 +468,7 @@ public class PlayerHelper {
                         double health = ply.getHealth(), maxHealth = ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
                         int tickIndex = ply.getTicksLived();
                         // handle armor sets
-                        switch (EntityHelper.getMetadata(ply, "armorSet").asString()) {
+                        switch (getArmorSet(ply)) {
                             case "叶绿魔法套装":
                             case "叶绿射手套装":
                             case "叶绿战士套装":
@@ -482,7 +492,8 @@ public class PlayerHelper {
                                         if (target instanceof LivingEntity) v = ((LivingEntity) target).getEyeLocation().subtract(ply.getEyeLocation()).toVector();
                                         else v = target.getLocation().subtract(ply.getEyeLocation()).toVector();
                                         v.normalize().multiply(1.5);
-                                        EntityHelper.spawnProjectile(ply, v, attrMapChlorophyte, "Arrow","叶绿树叶");
+                                        EntityHelper.spawnProjectile(ply, v, attrMapChlorophyte,
+                                                EntityHelper.DamageType.ARROW,"叶绿树叶");
                                     }
                                 }
                                 break;
@@ -513,10 +524,12 @@ public class PlayerHelper {
                                             else v = target.getLocation().subtract(ply.getEyeLocation()).toVector();
                                             if (accessory.equals("新手版挥发明胶")) {
                                                 v.normalize().multiply(0.5);
-                                                EntityHelper.spawnProjectile(ply, v, attrMapVolatileGelatinJr, "Arrow","新手版挥发明胶");
+                                                EntityHelper.spawnProjectile(ply, v, attrMapVolatileGelatinJr,
+                                                        EntityHelper.DamageType.ARROW,"新手版挥发明胶");
                                             } else {
                                                 v.normalize().multiply(0.6);
-                                                EntityHelper.spawnProjectile(ply, v, attrMapVolatileGelatin, "Arrow","挥发明胶");
+                                                EntityHelper.spawnProjectile(ply, v, attrMapVolatileGelatin,
+                                                        EntityHelper.DamageType.ARROW,"挥发明胶");
                                             }
                                         }
                                     }
@@ -526,7 +539,8 @@ public class PlayerHelper {
                                         Location spawnLoc = ply.getLocation().add(Math.random() * 10 - 5, Math.random() * 4 - 1, Math.random() * 10 - 5);
                                         if (!spawnLoc.getBlock().getType().isSolid()) {
                                             Vector velocity = new Vector(Math.random() * 0.1 - 0.05, Math.random() * 0.1 - 0.05, Math.random() * 0.1 - 0.05);
-                                            EntityHelper.spawnProjectile(ply, velocity, attrMapSpore, "Arrow","孢子球");
+                                            EntityHelper.spawnProjectile(ply, velocity, attrMapSpore,
+                                                    EntityHelper.DamageType.ARROW,"孢子球");
                                         }
                                     }
                                     break;
@@ -1196,7 +1210,7 @@ public class PlayerHelper {
                                 healthRegenTime += delay;
                                 EntityHelper.setMetadata(ply, "regenTime", Math.min(healthRegenTime, 1201));
                             } else {
-                                EntityHelper.handleDeath(ply, ply, ply, "Negative_Regen");
+                                EntityHelper.handleDeath(ply, ply, ply, EntityHelper.DamageType.NEGATIVE_REGEN, null);
                             }
                         }
                         // mana regen
@@ -1761,7 +1775,7 @@ public class PlayerHelper {
                 if (healingOrDamage) {
                     heal((Player) target, num);
                 } else {
-                    EntityHelper.handleDamage(dPly, target, num, "Spectre");
+                    EntityHelper.handleDamage(dPly, target, num, EntityHelper.DamageReason.SPECTRE);
                 }
                 return;
             }
@@ -1815,7 +1829,7 @@ public class PlayerHelper {
     }
     public static void playerMagicArmorSet(Player dPly, Entity v, double dmg) {
         if (!v.getScoreboardTags().contains("isMonster")) return;
-        String armorSet = EntityHelper.getMetadata(dPly, "armorSet").asString();
+        String armorSet = getArmorSet(dPly);
         switch (armorSet) {
             case "星云套装": {
                 if (dPly.getScoreboardTags().contains("tempNebulaCD")) break;

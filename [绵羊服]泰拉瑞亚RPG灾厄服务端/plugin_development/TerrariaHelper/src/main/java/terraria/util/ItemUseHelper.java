@@ -534,10 +534,10 @@ public class ItemUseHelper {
                         Vector v = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
                         v.multiply(size);
                         EntityHelper.spawnProjectile(ply, ply.getEyeLocation().add(v),
-                                lookDir, attrMapProjectile, "Melee", projectileType);
+                                lookDir, attrMapProjectile, EntityHelper.DamageType.MELEE, projectileType);
                     } else {
                         EntityHelper.spawnProjectile(ply, ply.getEyeLocation(),
-                                lookDir, attrMapProjectile, "Melee", projectileType);
+                                lookDir, attrMapProjectile, EntityHelper.DamageType.MELEE, projectileType);
                     }
                 }
             }
@@ -924,7 +924,7 @@ public class ItemUseHelper {
                                 .setThruWall(false)
                                 .setDamagedFunction((hitIndex, hitEntity) -> {
                                     if (hitEntity instanceof LivingEntity && hitIndex == 1) {
-                                        String damageType = EntityHelper.getDamageType(ply);
+                                        EntityHelper.DamageType damageType = EntityHelper.getDamageType(ply);
                                         for (int i = 0; i < 4; i ++) {
                                             Location explodeLoc = ((LivingEntity) hitEntity).getEyeLocation()
                                                     .add(Math.random() * 8 - 4, Math.random() * 8 - 4, Math.random() * 8 - 4);
@@ -954,7 +954,7 @@ public class ItemUseHelper {
                                 .setLingerDelay(4)
                                 .setDamagedFunction((hitIndex, hitEntity) -> {
                                     if (hitEntity instanceof LivingEntity && hitIndex == 1) {
-                                        String damageType = EntityHelper.getDamageType(ply);
+                                        EntityHelper.DamageType damageType = EntityHelper.getDamageType(ply);
                                         for (int i = 0; i < 3; i ++) {
                                             Location explodeLoc = ((LivingEntity) hitEntity).getEyeLocation()
                                                     .add(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
@@ -998,7 +998,7 @@ public class ItemUseHelper {
                                         .setLingerDelay(4)
                                         .setDamagedFunction((hitIndex, hitEntity) -> {
                                             if (hitEntity instanceof LivingEntity && Math.random() < (0.5d / (hitIndex + 1))) {
-                                                String damageType = EntityHelper.getDamageType(ply);
+                                                EntityHelper.DamageType damageType = EntityHelper.getDamageType(ply);
                                                 for (int i = 0; i < 4; i ++) {
                                                     Location explodeLoc = ((LivingEntity) hitEntity).getEyeLocation()
                                                             .add(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);

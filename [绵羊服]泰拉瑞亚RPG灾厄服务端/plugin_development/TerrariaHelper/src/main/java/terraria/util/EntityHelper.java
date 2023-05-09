@@ -1,5 +1,6 @@
 package terraria.util;
 
+import com.sun.org.apache.bcel.internal.generic.DREM;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
@@ -37,6 +38,7 @@ import java.util.logging.Level;
 public class EntityHelper {
     // constants
     static HashMap<String, Set<String>> buffInferior, buffSuperior;
+    public static final HashMap<String, DamageType> damageTypeInternalNameMapping = new HashMap<>(30);
     static {
         buffSuperior = new HashMap<>(50);
         buffInferior = new HashMap<>(50);
@@ -129,21 +131,82 @@ public class EntityHelper {
             return this;
         }
     }
+    public enum DamageReason {
+        BLOCK_EXPLOSION(false, DamageType.BLOCK_EXPLOSION),
+        BOSS_ANGRY(true, null),
+        DAAWNLIGHT(true, null),
+        DIRECT_DAMAGE(true, null),
+        DEBUFF(false, null),
+        DROWNING(false, DamageType.DROWNING),
+        FALL(false, DamageType.FALL),
+        LAVA(false, DamageType.LAVA),
+        PROJECTILE(true, null),
+        EXPLOSION(true, null),
+        FEAR(true, null),
+        THORN(true, DamageType.THORN),
+        SPECTRE(true, DamageType.SPECTRE),
+        SUFFOCATION(false, DamageType.SUFFOCATION);
+        // fields
+        boolean isDirectDamage = false;
+        DamageType damageType = null;
+        // constructors
+        DamageReason(boolean isDirectDamage, DamageType damageType) {
+            this.isDirectDamage = isDirectDamage;
+            this.damageType = damageType;
+        }
+        // getters
+        boolean isDirectDamage() {
+            return isDirectDamage;
+        }
+        DamageType getDamageType() {
+            return damageType;
+        }
+    }
+    public enum DamageType {
+        ARROW("Arrow"),
+        BLOCK_EXPLOSION("BlockExplosion"),
+        BULLET("Bullet"),
+        DEBUFF("Debuff"),
+        DROWNING("Drowning"),
+        FALL("Fall"),
+        LAVA("Lava"),
+        MAGIC("Magic"),
+        MELEE("Melee"),
+        NEGATIVE_REGEN("NegativeRegen"),
+        ROCKET("Rocket"),
+        SPECTRE("Spectre"),
+        SUFFOCATION("Suffocation"),
+        SUMMON("Summon"),
+        THORN("Thorn"),
+        TRUE_MELEE("TrueMelee");
+        // field
+        String internalName;
+        // constructor
+        DamageType(String internalName) {
+            this.internalName = internalName;
+            damageTypeInternalNameMapping.put(internalName, this);
+        }
+        // getter
+        @Override
+        public String toString() {
+            return internalName;
+        }
+    }
     // helper functions
     public static void initEntityMetadata(Entity entity) {
         setMetadata(entity, "damageType", "Melee");
         setMetadata(entity, "effects", new HashMap<String, Integer>());
         setMetadata(entity, "buffImmune", new HashMap<String, Integer>());
     }
-    public static String getDamageType(Metadatable entity) {
+    public static DamageType getDamageType(Metadatable entity) {
         try {
-            return getMetadata(entity, "damageType").asString();
+            return (DamageType) getMetadata(entity, "damageType").value();
         } catch (Exception e) {
-            return "Melee";
+            return DamageType.MELEE;
         }
     }
-    public static void setDamageType(Metadatable entity, String damageType) {
-        if (damageType == null) setMetadata(entity, "damageType", "Melee");
+    public static void setDamageType(Metadatable entity, DamageType damageType) {
+        if (damageType == null) setMetadata(entity, "damageType", DamageType.MELEE);
         else setMetadata(entity, "damageType", damageType);
     }
     public static HashMap<String, Double> getAttrMap(Metadatable entity) {
@@ -505,7 +568,7 @@ public class EntityHelper {
             if (damagePerDelay > 0) {
                 double damageMulti = 1;
                 if (effect.equals("破晓")) damageMulti = getEffectLevel(effect, timeRemaining);
-                handleDamage(entity, entity, damagePerDelay * damageMulti, "Debuff_" + effect);
+                handleDamage(entity, entity, damagePerDelay * damageMulti, DamageReason.DEBUFF, effect);
             }
             switch (effect) {
                 case "扭曲": {
@@ -533,7 +596,7 @@ public class EntityHelper {
                         Entity damager = BossHelper.bossMap.get(BossHelper.BossType.WALL_OF_FLESH.msgName).get(0);
                         if (damager.getWorld() != entity.getWorld() ||
                                 damager.getLocation().distanceSquared(entity.getLocation()) > 10000)
-                            handleDamage(damager, entity, 114514, "Debuff_恐惧");
+                            handleDamage(damager, entity, 114514, DamageReason.DEBUFF, effect);
                     }
                     else {
                         allEffects.put(effect, 0);
@@ -646,16 +709,22 @@ public class EntityHelper {
             Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] applyEffect", e);
         }
     }
-    private static void sendDeathMessage(Entity d, Entity v, String damageCause) {
+    private static void sendDeathMessage(Entity d, Entity v, DamageType damageType, String debuffType) {
         String dm = "";
         String killer = null;
         if (d != null) {
             killer = d.getCustomName();
         }
 
+        String deathMessageConfigDir;
+        if (damageType == DamageType.DEBUFF)
+            deathMessageConfigDir = "deathMessages.Debuff_" + debuffType;
+        else
+            deathMessageConfigDir = "deathMessages." + damageType.toString();
+
         List<String> deathMessages;
-        if (TerrariaHelper.settingConfig.contains("deathMessages." + damageCause)) {
-            deathMessages = TerrariaHelper.settingConfig.getStringList("deathMessages." + damageCause);
+        if (TerrariaHelper.settingConfig.contains(deathMessageConfigDir)) {
+            deathMessages = TerrariaHelper.settingConfig.getStringList(deathMessageConfigDir);
         } else {
             deathMessages = TerrariaHelper.settingConfig.getStringList("deathMessages.Generic");
         }
@@ -666,7 +735,8 @@ public class EntityHelper {
         dm = dm.replaceAll("<victim>", v.getName());
         Bukkit.broadcastMessage("§4" + dm);
     }
-    public static boolean entityDamageEvent(Entity damager, Entity dPly, LivingEntity victim, LivingEntity damageTaker, double dmg, String damageCause, String damageReason) {
+    public static boolean entityDamageEvent(Entity damager, Entity dPly, LivingEntity victim, LivingEntity damageTaker, double dmg,
+                                            DamageType damageType, DamageReason damageReason) {
         if (damager == null) return true;
         String nameV = GenericHelper.trimText(victim.getName());
         Entity minion = damager;
@@ -770,32 +840,33 @@ public class EntityHelper {
                     break;
                 }
             }
-            HashSet<String> accessories = (HashSet<String>) getMetadata(victim, "accessory").value();
+            HashSet<String> accessories = PlayerHelper.getAccessories(victim);
             HashMap<String, Double> attrMap = getAttrMap(victim);
             boolean hasMagicCuff = accessories.contains("魔法手铐") || accessories.contains("天界手铐");
             if (hasMagicCuff) {
                 int recovery = (int) Math.max(1, Math.floor(dmg / 4));
                 PlayerHelper.restoreMana(vPly, recovery);
             }
-            if (getMetadata(vPly, "armorSet").asString().equals("耀斑套装") && damageCause.equals("Melee")) {
-                handleDamage(damageTaker, damager, Math.min(Math.max(dmg, 300), 1500), "Thorn");
+            String victimPlayerArmorSet = PlayerHelper.getArmorSet(vPly);
+            if (victimPlayerArmorSet.equals("耀斑套装") && damageType == DamageType.MELEE) {
+                handleDamage(damageTaker, damager, Math.min(Math.max(dmg, 300), 1500), DamageReason.THORN);
             }
         }
         // thorn effect
         HashMap<String, Integer> victimEffects = getEffectMap(victim);
-        if (victimEffects.containsKey("荆棘") && damageCause.equals("Melee")) {
-            handleDamage(damageTaker, damager, Math.min(Math.max(dmg / 3, 25), 500), "Thorn");
+        if (victimEffects.containsKey("荆棘") && damageType == DamageType.MELEE) {
+            handleDamage(damageTaker, damager, Math.min(Math.max(dmg / 3, 25), 500), DamageReason.THORN);
         }
         if (victim.getScoreboardTags().contains("destroyOnDamage")) {
             victim.remove();
             return false;
         }
-        if (dPly instanceof Player && damageCause.equals("Magic") && !damageReason.equals("Spectre")) {
+        if (dPly instanceof Player && damageType == DamageType.MAGIC && !(damageReason == DamageReason.SPECTRE)) {
             PlayerHelper.playerMagicArmorSet((Player) dPly, victim, dmg);
         }
         return true;
     }
-    public static void handleDeath(Entity v, Entity dPly, Entity d, String damageCause) {
+    public static void handleDeath(Entity v, Entity dPly, Entity d, DamageType damageType, String debuffType) {
         if (v instanceof Player) {
             Player vPly = (Player) v;
             vPly.setVelocity(new Vector());
@@ -826,7 +897,7 @@ public class EntityHelper {
             }
             vPly.sendTitle("§c§l你死了！", moneyMsg, 0, respawnTime * 20, 0);
             vPly.closeInventory();
-            sendDeathMessage(d, v, damageCause);
+            sendDeathMessage(d, v, damageType, debuffType);
             vPly.setHealth(Math.min(400, vPly.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
             setMetadata(vPly, "respawnCD", respawnTime * 20);
             vPly.setGameMode(GameMode.SPECTATOR);
@@ -843,15 +914,15 @@ public class EntityHelper {
                     BossHelper.spawnBoss(dPlayer, BossHelper.BossType.EMPRESS_OF_LIGHT);
                 }
                 // drop stars
-                switch (damageCause) {
-                    case "Magic":
-                    case "spectre":
+                switch (damageType) {
+                    case MAGIC:
+                    case SPECTRE:
                         if (v.getScoreboardTags().contains("isMonster")) {
                             for (int i = 0; i < 3; i ++)
                                 if (Math.random() < 0.1) {
                                     ItemStack star = new ItemStack(Material.CLAY_BALL);
                                     ItemMeta meta = star.getItemMeta();
-                                    meta.setDisplayName("§9星");
+                                    meta.setDisplayName("§9§l星");
                                     star.setItemMeta(meta);
                                     dPlayer.getWorld().dropItemNaturally(v.getLocation(), star);
                                 }
@@ -862,7 +933,7 @@ public class EntityHelper {
                         vScoreboardTags.contains("isMonster") && Math.random() < 0.2) {
                         ItemStack heart = new ItemStack(Material.CLAY_BALL);
                         ItemMeta meta = heart.getItemMeta();
-                        meta.setDisplayName("§c心");
+                        meta.setDisplayName("§c§l心");
                         heart.setItemMeta(meta);
                         dPlayer.getWorld().dropItemNaturally(v.getLocation(), heart);
                     }
@@ -901,7 +972,7 @@ public class EntityHelper {
             }
             // NPC should also get death message
             else if (vScoreboardTags.contains("isNPC"))
-                sendDeathMessage(d, v, damageCause);
+                sendDeathMessage(d, v, damageType, debuffType);
             // monster generic drop, event etc.
             else if (vScoreboardTags.contains("isMonster")) {
                 LivingEntity vLiving = (LivingEntity) v;
@@ -1140,7 +1211,10 @@ public class EntityHelper {
         } else
             PlayerHelper.sendActionBar(damager, victimName + " §c领了盒饭");
     }
-    public static void handleDamage(Entity damager, Entity victim, double damage, String damageReason) {
+    public static void handleDamage(Entity damager, Entity victim, double damage, DamageReason damageReason) {
+        handleDamage(damager, victim, damage, damageReason, null);
+    }
+    public static void handleDamage(Entity damager, Entity victim, double damage, DamageReason damageReason, String debuffType) {
         HashMap<String, Double> victimAttrMap = getAttrMap(victim);
         Entity damageSource = getDamageSource(damager);
         // projectile etc
@@ -1159,8 +1233,8 @@ public class EntityHelper {
         }
         // living entities
         Set<String> victimScoreboardTags = victim.getScoreboardTags();
+        // Daawnlight target should not take any damage
         if (victimScoreboardTags.contains("isDaawnlight")) {
-            // Daawnlight target should not take any damage
             return;
         }
         LivingEntity victimLivingEntity = (LivingEntity) victim;
@@ -1174,7 +1248,7 @@ public class EntityHelper {
         else if (victimLivingEntity.getHealth() <= 0) canDamage = false;
         // check minion damage
         boolean isMinionDmg = false;
-        boolean isDirectAttackDamage = false;
+        boolean isDirectAttackDamage = damageReason.isDirectDamage();
         if (damager instanceof Projectile) {
             ProjectileSource shooter = ((Projectile) damager).getShooter();
             if (shooter instanceof Entity && ((Entity) shooter).getScoreboardTags().contains("isMinion"))
@@ -1183,14 +1257,6 @@ public class EntityHelper {
         // setup properties such as invulnerability tick and defence
         int damageInvulnerabilityTicks;
         double defence = victimAttrMap.getOrDefault("defence", 0d) * victimAttrMap.getOrDefault("defenceMulti", 1d);
-        switch (damageReason) {
-            case "DirectDamage":
-            case "Projectile":
-            case "Explosion":
-            case "Thorn":
-            case "Spectre":
-                isDirectAttackDamage = true;
-        }
         if (victimScoreboardTags.contains("isBOSS")) {
             if (isDirectAttackDamage) {
                 MetadataValue bossTargets = getMetadata(victim, "targets");
@@ -1206,7 +1272,8 @@ public class EntityHelper {
             } else {
                 // if the damage source of a boss is neither direct attack, thorn nor debuff (that is, lava etc.)
                 // the damage is ignored.
-                if ((!damageReason.startsWith("Debuff_")) && (!damageReason.equals("Thorn"))) canDamage = false;
+                if (! ((damageReason == DamageReason.DEBUFF) || (damageReason == DamageReason.THORN)))
+                    canDamage = false;
             }
         }
         if (!canDamage) return;
@@ -1220,13 +1287,13 @@ public class EntityHelper {
         // setup damager attribute and buff inflict
         HashMap<String, Double> damagerAttrMap = getAttrMap(damager);
         List<String> buffInflict = new ArrayList<>();
-        String damageType;
+        DamageType damageType = damageReason.getDamageType();
         if (isDirectAttackDamage) {
-            damageType = getDamageType(damager);
-            if (damageReason.equals("DirectDamage"))
-                damageType = damageType.equals("Melee") ? "TrueMelee" : "Melee";
-        } else {
-            damageType = damageReason;
+            // if no mandatory damage type for the damage reason, default to the attacker(can be a projectile) damage type
+            if (damageType == null)
+                damageType = getDamageType(damager);
+            if (damageReason == DamageReason.DIRECT_DAMAGE && damageType == DamageType.MELEE)
+                damageType = DamageType.TRUE_MELEE;
         }
         // if the victim has invincibility frame on this damage type (usually player)
         String damageInvincibilityFrameName = "tempDamageCD_" + damageType;
@@ -1241,18 +1308,19 @@ public class EntityHelper {
             HashMap<String, ArrayList<String>> buffInflictMap = PlayerHelper.getPlayerEffectInflict(damageSource);
             buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict", new ArrayList<>(0)));
             switch (damageType) {
-                case "Arrow":
-                case "Bullet":
-                case "Rocket":
+                case ARROW:
+                case BULLET:
+                case ROCKET:
                     buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictRanged", new ArrayList<>(0)));
                     break;
-                case "TrueMelee":
+                case TRUE_MELEE:
                     buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
                     buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictTrueMelee", new ArrayList<>(0)));
                     break;
-                default: // Summon, Melee, Magic
+                // Summon, Melee, Magic
+                default:
                     // whip
-                    if (damageType.equals("Summon") && damageReason.equals("DirectDamage"))
+                    if (damageType == DamageType.SUMMON && damageReason == DamageReason.DIRECT_DAMAGE)
                         buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
                     buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict" + damageType, new ArrayList<>(0)));
             }
@@ -1279,21 +1347,21 @@ public class EntityHelper {
         double knockback = 0d, critRate = -1e9;
         boolean damageFixed = false;
         switch (damageReason) {
-            case "Fear":
-            case "Boss_Angry":
+            case FEAR:
+            case BOSS_ANGRY:
                 dmg = 114514;
                 damageFixed = true;
                 break;
-            case "Fall":
+            case FALL:
                 double fallDist = victim.getFallDistance();
                 dmg = (fallDist - 12.5) * 20;
                 if (dmg < 0) return;
                 break;
-            case "BlockExplosion":
+            case BLOCK_EXPLOSION:
                 knockback = 5;
                 dmg = 1000;
                 break;
-            case "Lava":
+            case LAVA:
                 if (victim.getLocation().getBlock().getBiome() == Biome.SAVANNA)
                     applyEffect(victim, "硫磺火", 150);
                 else
@@ -1301,21 +1369,21 @@ public class EntityHelper {
                 // mainly prevents excessive damage dealt to enemies
                 damageInvulnerabilityTicks = Math.max(damageInvulnerabilityTicks, 30);
                 break;
-            case "Drowning":
+            case DROWNING:
                 dmg = 50;
                 damageFixed = true;
                 break;
-            case "Suffocation":
+            case SUFFOCATION:
                 damageInvulnerabilityTicks = 0;
                 dmg = 10;
                 damageFixed = true;
                 break;
-            case "Thorn":
+            case THORN:
                 damageInvulnerabilityTicks = 0;
                 damageFixed = true;
                 break;
             default:
-                if (damageType.startsWith("Debuff_")) {
+                if (damageType == DamageType.DEBUFF) {
                     damageInvulnerabilityTicks = 0;
                     damageFixed = true;
                 } else if (isDirectAttackDamage) {
@@ -1331,33 +1399,33 @@ public class EntityHelper {
                     knockback = damagerAttrMap.getOrDefault("knockback", 0d);
                     knockback *= damagerAttrMap.getOrDefault("knockbackMulti", 1d);
                     // no percentage dmg for spectre; critical strike only.
-                    boolean canGetPercentageBonus = !damageReason.equals("Spectre");
+                    boolean canGetPercentageBonus = !(damageReason == DamageReason.SPECTRE);
                     if (canGetPercentageBonus)
                         dmg *= damagerAttrMap.getOrDefault("damageMulti", 1d);
                     critRate = damagerAttrMap.getOrDefault("crit", 0d);
                     switch (damageType) {
-                        case "TrueMelee":
+                        case TRUE_MELEE:
                             if (canGetPercentageBonus)
                                 dmg *= damagerAttrMap.getOrDefault("damageTrueMeleeMulti", 1d);
                             critRate += damagerAttrMap.getOrDefault("critTrueMelee", 0d);
-                        case "Melee":
+                        case MELEE:
                             if (canGetPercentageBonus)
                                 dmg *= damagerAttrMap.getOrDefault("damageMeleeMulti", 1d);
                             critRate += damagerAttrMap.getOrDefault("critMelee", 0d);
                             knockback *= damagerAttrMap.getOrDefault("knockbackMeleeMulti", 1d);
                             break;
-                        case "Arrow":
-                        case "Bullet":
-                        case "Rocket":
+                        case ARROW:
+                        case BULLET:
+                        case ROCKET:
                             if (canGetPercentageBonus) {
                                 dmg *= damagerAttrMap.getOrDefault("damage" + damageType + "Multi", 1d);
                                 dmg *= damagerAttrMap.getOrDefault("damageRangedMulti", 1d);
                             }
                             critRate += damagerAttrMap.getOrDefault("critRanged", 0d);
                             break;
-                        case "Magic":
+                        case MAGIC:
                             critRate += damagerAttrMap.getOrDefault("critMagic", 0d);
-                        case "Summon":
+                        case SUMMON:
                             if (canGetPercentageBonus)
                                 dmg *= damagerAttrMap.getOrDefault("damage" + damageType + "Multi", 1d);
                             break;
@@ -1407,7 +1475,7 @@ public class EntityHelper {
                         shieldPly = ply;
                     }
                     if (shieldPly != null) {
-                        handleDamage(damager, shieldPly, (dmg * 0.05), "Thorn");
+                        handleDamage(damager, shieldPly, (dmg * 0.05), DamageReason.THORN);
                         dmg *= 0.85;
                     }
                 }
@@ -1452,7 +1520,7 @@ public class EntityHelper {
             }
             if (damageTaker.getHealth() <= dmg) {
                 // kills the target
-                handleDeath(damageTaker, damageSource, damager, damageType);
+                handleDeath(damageTaker, damageSource, damager, damageType, debuffType);
                 String sound;
                 if (victimScoreboardTags.contains("isMechanic")) sound = "entity.generic.explode";
                 else sound = "entity." + damageTaker.getType() + ".death";
@@ -1461,7 +1529,7 @@ public class EntityHelper {
             } else {
                 // hurts the target
                 damageTaker.setHealth(Math.max(0, damageTaker.getHealth() - dmg));
-                if (!damageType.startsWith("Debuff_")) {
+                if (!(damageType == DamageType.DEBUFF)) {
                     // if damage cause is not debuff, play hurt sound
                     String sound;
                     if (victimScoreboardTags.contains("isMechanic")) sound = "entity.irongolem.hurt";
@@ -1479,7 +1547,12 @@ public class EntityHelper {
         }
 
         // display damage
-        GenericHelper.displayHolo(victim, dmg, crit, damageType);
+        String hologramInfo;
+        if (damageType == DamageType.DEBUFF)
+            hologramInfo = "Debuff_" + debuffType;
+        else
+            hologramInfo = damageType.toString();
+        GenericHelper.displayHolo(victim, dmg, crit, hologramInfo);
 
         // send info message to damager player
         if (damageSource instanceof Player && victim != damageSource) {
@@ -1539,12 +1612,12 @@ public class EntityHelper {
         for (Entity victim : entities) {
             if (victim == shooter) {
                 if (damageShooter)
-                    handleDamage(source, victim, dmg, "Explosion");
+                    handleDamage(source, victim, dmg, DamageReason.EXPLOSION);
                 continue;
             }
             if (damageExceptions.contains(victim)) continue;
             if (checkCanDamage(source, victim, false))
-                handleDamage(source, victim, dmg, "Explosion");
+                handleDamage(source, victim, dmg, DamageReason.EXPLOSION);
         }
         // destroy block
         if (destroyBlock) {
@@ -1589,18 +1662,19 @@ public class EntityHelper {
         public Vector velocity;
         public HashMap<String, Double> attrMap;
         public HashMap<String, Object> properties;
-        public String damageType, projectileName;
+        public DamageType damageType;
+        public String projectileName;
         public boolean arrowOrPotion;
         // constructors
         public ProjectileShootInfo(Entity shooter, Vector velocity, HashMap<String, Double> attrMap, String projectileName) {
             this(shooter, velocity, attrMap, getDamageType(shooter), projectileName);
         }
-        public ProjectileShootInfo(Entity shooter, Vector velocity, HashMap<String, Double> attrMap, String damageType, String projectileName) {
+        public ProjectileShootInfo(Entity shooter, Vector velocity, HashMap<String, Double> attrMap, DamageType damageType, String projectileName) {
             this(shooter,
                     (shooter instanceof LivingEntity) ? ((LivingEntity) shooter).getEyeLocation() : shooter.getLocation(),
                     velocity, attrMap, damageType, projectileName);
         }
-        public ProjectileShootInfo(Entity shooter, Location shootLoc, Vector velocity, HashMap<String, Double> attrMap, String damageType, String projectileName) {
+        public ProjectileShootInfo(Entity shooter, Location shootLoc, Vector velocity, HashMap<String, Double> attrMap, DamageType damageType, String projectileName) {
             this.shooter = null;
             if (shooter instanceof ProjectileSource) this.shooter = (ProjectileSource) shooter;
             this.shootLoc = shootLoc;
@@ -1675,13 +1749,13 @@ public class EntityHelper {
     public static Projectile spawnProjectile(Entity shooter, Vector velocity, HashMap<String, Double> attrMap, String projectileName) {
         return spawnProjectile(shooter, velocity, attrMap, getDamageType(shooter), projectileName);
     }
-    public static Projectile spawnProjectile(Entity shooter, Vector velocity, HashMap<String, Double> attrMap, String damageType, String projectileName) {
+    public static Projectile spawnProjectile(Entity shooter, Vector velocity, HashMap<String, Double> attrMap, DamageType damageType, String projectileName) {
         Location shootLoc;
         if (shooter instanceof LivingEntity) shootLoc = ((LivingEntity) shooter).getEyeLocation();
         else shootLoc = shooter.getLocation();
         return spawnProjectile(shooter, shootLoc, velocity, attrMap, damageType, projectileName);
     }
-    public static Projectile spawnProjectile(Entity shooter, Location shootLoc, Vector velocity, HashMap<String, Double> attrMap, String damageType, String projectileName) {
+    public static Projectile spawnProjectile(Entity shooter, Location shootLoc, Vector velocity, HashMap<String, Double> attrMap, DamageType damageType, String projectileName) {
         ProjectileShootInfo shootInfo = new ProjectileShootInfo(shooter, shootLoc, velocity, attrMap, damageType, projectileName);
         return spawnProjectile(shootInfo);
     }

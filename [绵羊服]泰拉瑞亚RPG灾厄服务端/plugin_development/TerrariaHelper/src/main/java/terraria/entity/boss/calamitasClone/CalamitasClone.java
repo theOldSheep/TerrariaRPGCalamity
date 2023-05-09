@@ -373,7 +373,7 @@ public class CalamitasClone extends EntitySlime {
             attrMap.put("defence", 50d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, "Melee");
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
         }
         // init boss bar
@@ -406,10 +406,14 @@ public class CalamitasClone extends EntitySlime {
         }
         // projectile info
         {
-            psiFireBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBrimstoneDart, "Magic", "无际裂变");
-            psiDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBrimstoneDart, "Magic", "硫火飞弹");
-            psiFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball, "Magic", "炼狱硫火球");
-            psiHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball, "Magic", "深渊亡魂");
+            psiFireBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBrimstoneDart,
+                    EntityHelper.DamageType.MAGIC, "无际裂变");
+            psiDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBrimstoneDart,
+                    EntityHelper.DamageType.MAGIC, "硫火飞弹");
+            psiFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball,
+                    EntityHelper.DamageType.MAGIC, "炼狱硫火球");
+            psiHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball,
+                    EntityHelper.DamageType.MAGIC, "深渊亡魂");
         }
         // health lock info
         EntityHelper.setMetadata(bukkitEntity, "healthLock", getMaxHealth() * 0.69);

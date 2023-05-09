@@ -233,14 +233,14 @@
     blockHitAction: thru
     liveTime: 80
     gravity: 0
-    projectileSize: 0.75
+    projectileSize: 0.5
     buffInflict:
         - "硫磺火|60|1"
 无际裂变:
     penetration: 99999
     blockHitAction: thru
     gravity: 0
-    projectileSize: 1
+    projectileSize: 0.75
     speedMultiPerTick: 0.975
     autoTrace: true
     autoTraceMethod: 2
@@ -267,6 +267,46 @@
     trailLingerTime: 10
     buffInflict:
         - "硫磺火|60|1"
+种子:
+    penetration: 99999
+    blockHitAction: thru
+    liveTime: 75
+    gravity: 0
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceRadius: 32
+    autoTraceSharpTurning: false
+    autoTraceAbility: 0.1
+    maxAutoTraceTicks: 40
+毒种子:
+    penetration: 99999
+    blockHitAction: thru
+    liveTime: 75
+    gravity: 0
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceRadius: 32
+    autoTraceSharpTurning: false
+    autoTraceAbility: 0.1
+    maxAutoTraceTicks: 40
+    buffInflict:
+        - "中毒|80|1"
+刺球:
+    penetration: 99999
+    blockHitAction: bounce
+    bounce: 999
+    liveTime: 300
+    projectileSize: 0.5
+    buffInflict:
+        - "中毒|160|1"
+孢子云:
+    penetration: 99999
+    blockHitAction: thru
+    liveTime: 100
+    projectileSize: 0.5
+    speedMultiPerTick: 0.95
+    buffInflict:
+        - "中毒|160|1"
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2
@@ -485,11 +525,15 @@
     buffInflict:
         - "燃烧|100|0.3"
 孢子球:
-    blastRadius: 1.5
+    blockHitAction: thru
     autoTrace: true
-    isGrenade: true
     buffInflict:
-        - "剧毒|150|1"
+        - "中毒|100|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.6
+        name: 孢子云
+        velocity: 0.35
 投矛:
     buffInflict:
         - "中毒|300|1"

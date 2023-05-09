@@ -211,7 +211,9 @@ public class MonsterHelper {
                     health = attributeConfigSection.getDouble(attribute);
                     break;
                 case "damageType":
-                    EntityHelper.setDamageType(bukkitMonster, attributeConfigSection.getString(attribute));
+                    EntityHelper.setDamageType(bukkitMonster,
+                            EntityHelper.damageTypeInternalNameMapping.getOrDefault(
+                                    attributeConfigSection.getString(attribute), EntityHelper.DamageType.MELEE));
                     break;
                 default:
                     attrMap.put(attribute, attributeConfigSection.getDouble(attribute));
@@ -1208,7 +1210,7 @@ public class MonsterHelper {
                                 if (monsterBkt.hasLineOfSight(target)) {
                                     Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 1.5);
                                     EntityHelper.ProjectileShootInfo projInfo = new EntityHelper.ProjectileShootInfo(
-                                            monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "Arrow", "圣骑士锤");
+                                            monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), EntityHelper.DamageType.MELEE, "圣骑士锤");
                                     projInfo.properties.put("blockHitAction", "thru");
                                     projInfo.properties.put("gravity", 0d);
                                     projInfo.properties.put("penetration", 999);
@@ -1398,7 +1400,7 @@ public class MonsterHelper {
             double damage = EntityHelper.getAttrMap(monsterBkt).getOrDefault("damage", 1d);
             for (HitEntityInfo hitEntityInfo : toDamage) {
                 EntityHelper.handleDamage(monsterBkt, hitEntityInfo.getHitEntity().getBukkitEntity(),
-                        damage, "DirectDamage");
+                        damage, EntityHelper.DamageReason.DIRECT_DAMAGE);
             }
         }
         return indexAI + 1;

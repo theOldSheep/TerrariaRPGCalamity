@@ -146,7 +146,7 @@ public class BossHelper {
         double damage = EntityHelper.getAttrMap(monsterBkt).getOrDefault("damage", 1d);
         for (HitEntityInfo hitEntityInfo : toDamage) {
             EntityHelper.handleDamage(monsterBkt, hitEntityInfo.getHitEntity().getBukkitEntity(),
-                    damage, "DirectDamage");
+                    damage, EntityHelper.DamageReason.DIRECT_DAMAGE);
         }
     }
     public static void handleBossDeath(terraria.util.BossHelper.BossType bossType,

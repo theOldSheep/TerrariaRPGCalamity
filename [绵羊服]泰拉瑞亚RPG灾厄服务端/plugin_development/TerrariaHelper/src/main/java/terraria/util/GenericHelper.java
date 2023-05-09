@@ -336,7 +336,7 @@ public class GenericHelper {
                 wld, startLoc.toVector(), terminalLoc.toVector(), width, predication);
         for (HitEntityInfo info : entityHitCandidate) {
             Entity victim = info.getHitEntity().getBukkitEntity();
-            EntityHelper.handleDamage(damager, victim, damage, "DirectDamage");
+            EntityHelper.handleDamage(damager, victim, damage, EntityHelper.DamageReason.DIRECT_DAMAGE);
             // damage decay
             damage *= decayCoef;
             if (useAttrMapDamage)
@@ -632,9 +632,9 @@ public class GenericHelper {
                 CoreAPI.removePlayerWorldTexture(p, holoInd);
         }, ticksDisplay);
     }
-    public static void displayHolo(Entity e, double dmg, boolean isCrit, String damageCause) {
+    public static void displayHolo(Entity e, double dmg, boolean isCrit, String hologramInfo) {
         String colorCode;
-        switch (damageCause) {
+        switch (hologramInfo) {
             case "回血":
                 colorCode = "a";
                 break;
@@ -663,7 +663,7 @@ public class GenericHelper {
                 colorCode = isCrit ? "c" : "6";
         }
         int ticksDisplay = 15;
-        switch (damageCause) {
+        switch (hologramInfo) {
             case "Drowning":
                 ticksDisplay = 10;
                 break;
@@ -671,7 +671,7 @@ public class GenericHelper {
                 ticksDisplay = 5;
                 break;
             default:
-                if (damageCause.startsWith("Debuff_")) {
+                if (hologramInfo.startsWith("Debuff_")) {
                     ticksDisplay = 8;
                 } else if (isCrit) ticksDisplay = 30;
         }

@@ -25,18 +25,18 @@ public class DamageListener implements Listener {
             case SUFFOCATION:
                 if (victim.getType() == EntityType.SLIME) break;
             case VOID:
-                EntityHelper.handleDamage(victim, victim, 10, "Suffocation");
+                EntityHelper.handleDamage(victim, victim, 10, EntityHelper.DamageReason.SUFFOCATION);
                 break;
             case LAVA:
-                EntityHelper.handleDamage(victim, victim, 200, "Lava");
+                EntityHelper.handleDamage(victim, victim, 200, EntityHelper.DamageReason.LAVA);
                 break;
             case DROWNING:
-                EntityHelper.handleDamage(victim, victim, 50, "Drowning");
+                EntityHelper.handleDamage(victim, victim, 50, EntityHelper.DamageReason.DROWNING);
                 break;
             case FALL:
                 if (victim.getType() == EntityType.SLIME) break;
                 if (victimScoreboardTags.contains("noFallDamage")) break;
-                EntityHelper.handleDamage(victim, victim, 50, "Fall");
+                EntityHelper.handleDamage(victim, victim, 50, EntityHelper.DamageReason.FALL);
                 break;
             case FIRE:
             case FIRE_TICK:
