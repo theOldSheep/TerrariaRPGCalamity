@@ -801,10 +801,12 @@ public class PlayerHelper {
                     if (!PlayerHelper.isProperlyPlaying(ply)) {
                         // not survival mode or not logged in etc
                         shouldRemoveHooks = true;
-                    } else if (!hookNameInfo[1].equals(hookItemName)) {
+                    }
+                    else if (!hookNameInfo[1].equals(hookItemName)) {
                         // hook item do not match
                         shouldRemoveHooks = true;
-                    } else if (hooks.size() == 0 || !hooks.get(0).getWorld().equals(ply.getWorld())) {
+                    }
+                    else if (hooks.size() == 0 || !hooks.get(0).getWorld().equals(ply.getWorld())) {
                         // no grappling hook or world changed
                         shouldRemoveHooks = true;
                     }
@@ -854,15 +856,14 @@ public class PlayerHelper {
                         for (Entity hook : hooksToRemove) hooks.remove(hook);
                         if (hookedAmount >= 1) {
                             ply.setGravity(false);
-                            EntityHelper.setMetadata(ply, "thrustIndex", 0);
-                            EntityHelper.setMetadata(ply, "thrustProgress", 0);
+                            resetPlayerFlightTime(ply);
                             ply.setFallDistance(0);
                             center.multiply(1 / (double) hookedAmount);
                             Vector thrust = center.subtract(ply.getEyeLocation()).toVector();
                             if (thrust.lengthSquared() > hookPullSpeed * hookPullSpeed * 36)
                                 thrust.normalize().multiply(hookPullSpeed);
                             else if (thrust.lengthSquared() > 0)
-                                thrust.multiply(0.1666667);
+                                thrust.multiply(0.5);
                             ply.setVelocity(thrust);
                         } else
                             // no hook attached to ground
@@ -872,7 +873,7 @@ public class PlayerHelper {
                     Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadGrapplingHook ", e);
                 }
             }
-        }, 0, 3);
+        }, 0, 1);
     }
     public static void threadLastLocation() {
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
@@ -1375,11 +1376,10 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, "biome", "normal");
         // movement and control variable
         EntityHelper.setMetadata(ply, "grapplingHookItem", "");
-        EntityHelper.setMetadata(ply, "thrustIndex", 0);
-        EntityHelper.setMetadata(ply, "thrustProgress", 0);
+        resetPlayerFlightTime(ply);
         EntityHelper.setMetadata(ply, "chargeDir", "");
         EntityHelper.setMetadata(ply, "chargeDirLastPressed", Calendar.getInstance().getTimeInMillis());
-        EntityHelper.setMetadata(ply, "armorSet", "");
+        setArmorSet(ply, "");
         // bgm, biome and background
         EntityHelper.setMetadata(ply, "lastBackground", "");
         // prevent duplicated soundtrack etc.
@@ -1522,7 +1522,7 @@ public class PlayerHelper {
                                 setBonusSection.getConfigurationSection("attributes"), true);
                     }
                 }
-                EntityHelper.setMetadata(ply, "armorSet", armorSet);
+                setArmorSet(ply, armorSet);
             }
             // accessories
             {
@@ -1888,7 +1888,7 @@ public class PlayerHelper {
         double dashSpeed = 0;
         int dashCD = -1;
         // armor set dash
-        String armorSet = EntityHelper.getMetadata(ply, "armorSet").asString();
+        String armorSet = getArmorSet(ply);
         switch (armorSet) {
             case "水晶刺客套装":
                 dashSpeed = 0.9;
