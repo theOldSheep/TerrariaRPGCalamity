@@ -32,7 +32,7 @@ public class Cataclysm extends EntitySlime {
     static String bossName = "灾祸";
     CalamitasClone owner;
     boolean dashingPhase = false;
-    int indexAI = -40;
+    int indexAI = -80;
     static HashMap<String, Double> attrMapFlameThrower;
     EntityHelper.ProjectileShootInfo shootInfoFlameThrower;
     static {
@@ -52,22 +52,24 @@ public class Cataclysm extends EntitySlime {
     }
     private void attackAI() {
         // attack
-        // follow and shoot flame
-        if (indexAI < 60) {
-            dashingPhase = false;
-            // fly towards the player
-            bukkitEntity.setVelocity(MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 1));
-            // shoot flame
-            shootCursedFlame();
-        }
-        // long dashes
-        else {
-            dashingPhase = true;
-            if (indexAI >= 210)
-                indexAI = -1;
-            else if ((indexAI - 60) % 30 == 0) {
-                bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
-                bukkitEntity.setVelocity(MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 3));
+        if (indexAI >= 0) {
+            // follow and shoot flame
+            if (indexAI < 60) {
+                dashingPhase = false;
+                // fly towards the player
+                bukkitEntity.setVelocity(MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 1));
+                // shoot flame
+                shootCursedFlame();
+            }
+            // long dashes
+            else {
+                dashingPhase = true;
+                if (indexAI >= 210)
+                    indexAI = -1;
+                else if ((indexAI - 60) % 35 == 0) {
+                    bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
+                    bukkitEntity.setVelocity(MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 3));
+                }
             }
         }
         indexAI ++;
