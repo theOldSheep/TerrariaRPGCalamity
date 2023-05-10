@@ -51,6 +51,7 @@ public class Plantera extends EntitySlime {
     }
 
     EntityHelper.ProjectileShootInfo shootInfoSeed, shootInfoPoisonSeed, shootInfoThornBall, shootInfoSporeGas;
+    boolean secondPhase = false;
 
     private void AI() {
         // no AI after death
@@ -74,7 +75,13 @@ public class Plantera extends EntitySlime {
             }
             // if target is valid, attack
             else {
-
+                double healthRatio = getHealth() / getMaxHealth();
+                if (healthRatio < 0.5 && !secondPhase) {
+                    secondPhase = true;
+                    setCustomName(BOSS_TYPE.msgName + "§1");
+                    attrMap.put("damage", 578d);
+                    attrMap.put("defence", 20d);
+                }
             }
         }
         // face the player
