@@ -12,6 +12,7 @@ import terraria.entity.boss.cryogen.Cryogen;
 import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
 import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
 import terraria.entity.boss.desertScourge.DesertScourge;
+import terraria.entity.boss.plantera.Plantera;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
 import terraria.entity.boss.theDestroyer.Destroyer;
 import terraria.entity.boss.theHiveMind.TheHiveMind;
@@ -185,6 +186,14 @@ public class BossHelper {
                 }
                 break;
             }
+            case PLANTERA: {
+                if (Plantera.canSpawn(target)) {
+                    new Plantera(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            // pre-moon lord
         }
         if (spawnedSuccessfully) {
             bossType.playSummonSound(soundLocation);

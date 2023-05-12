@@ -12,25 +12,49 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.boss.aquaticScourge.AquaticScourge;
+import terraria.entity.boss.desertScourge.DesertNuisance;
+import terraria.entity.boss.desertScourge.DesertScourge;
+import terraria.entity.boss.theDestroyer.Destroyer;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.util.*;
 
 import java.util.*;
 
 public class BossHelper {
-    public static double[] getHealthInfo(ArrayList<LivingEntity> bossParts) {
+    public static double[] getHealthInfo(ArrayList<LivingEntity> bossParts, terraria.util.BossHelper.BossType bossType) {
         double[] result = new double[] {0d, 0d};
         for (LivingEntity e : bossParts) {
             result[0] += e.getHealth();
             result[1] += e.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
         }
+        // tweak total health so that health for bosses that share health pool are calculated correctly.
+        double multiplier;
+        switch (bossType) {
+            case DESERT_SCOURGE:
+                 multiplier = 1d / DesertScourge.TOTAL_LENGTH;
+                break;
+            case WALL_OF_FLESH:
+                multiplier = 1d / 3;
+                break;
+            case AQUATIC_SCOURGE:
+                multiplier = 1d / AquaticScourge.TOTAL_LENGTH;
+                break;
+            case THE_DESTROYER:
+                multiplier = 1d / Destroyer.TOTAL_LENGTH;
+                break;
+            default:
+                multiplier = 1d;
+        }
+        result[0] *= multiplier;
+        result[1] *= multiplier;
         return result;
     }
     public static void updateBossBarAndDamageReduction(BossBattleServer bossbar, ArrayList<LivingEntity> bossParts, terraria.util.BossHelper.BossType type) {
         updateBossBarAndDamageReduction(bossbar, bossParts, bossParts.get(0).getTicksLived(), type);
     }
     public static void updateBossBarAndDamageReduction(BossBattleServer bossbar, ArrayList<LivingEntity> bossParts, int ticksLived, terraria.util.BossHelper.BossType type) {
-        double[] healthInfo = getHealthInfo(bossParts);
+        double[] healthInfo = getHealthInfo(bossParts, type);
         double healthRatio = healthInfo[0] / healthInfo[1];
         bossbar.setProgress((float) healthRatio);
         // dynamic Damage Reduction
@@ -151,13 +175,16 @@ public class BossHelper {
     }
     public static void handleBossDeath(terraria.util.BossHelper.BossType bossType,
                                        ArrayList<LivingEntity> bossParts, HashMap<Player, Double> targetMap) {
-        double[] healthInfo = terraria.entity.boss.BossHelper.getHealthInfo(bossParts);
+        double[] healthInfo = terraria.entity.boss.BossHelper.getHealthInfo(bossParts, bossType);
         double dmgDealtReq = healthInfo[1] / targetMap.size() / 10;
         // boss death message
         Bukkit.broadcastMessage("§d§l" + bossType.msgName + " 被击败了.");
         switch (bossType) {
             case DESERT_SCOURGE:
-                Bukkit.broadcastMessage("§#7FFFD4地下沙漠的深处轰隆作响……");
+                Bukkit.broadcastMessage("§#7FFFD4§l地下沙漠的深处轰隆作响……");
+                break;
+            case THE_HIVE_MIND:
+                Bukkit.broadcastMessage("§#00FFFF§l苍青色的光辉照耀着这片土地。");
                 break;
             case WALL_OF_FLESH:
                 Bukkit.broadcastMessage("§#7FFFD4沉沦之海在颤动……");
@@ -206,9 +233,6 @@ public class BossHelper {
                 break;
             case YHARON_DRAGON_OF_REBIRTH:
                 Bukkit.broadcastMessage("§#FFD700神之光环祝福了这个世界的洞穴。");
-                break;
-            case THE_HIVE_MIND:
-                Bukkit.broadcastMessage("§#00FFFF苍青色的光辉照耀着这片土地。");
                 break;
         }
         // calculate and broadcast damage dealt

@@ -177,8 +177,8 @@ settings:
   - piggyBank
   - voidBag
   playerInventoryTitles:
-    piggyBank: §a存钱罐
-    voidBag: §b虚空袋
+    piggyBank: §a§l存钱罐
+    voidBag: §b§l虚空袋
 BossDefeatTime:
   史莱姆王: 1200
   荒漠灾虫: 1200

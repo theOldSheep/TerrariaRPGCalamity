@@ -136,7 +136,7 @@ public class EntityHelper {
         BOSS_ANGRY(true, null),
         DAAWNLIGHT(true, null),
         DIRECT_DAMAGE(true, null),
-        DEBUFF(false, null),
+        DEBUFF(false, DamageType.DEBUFF),
         DROWNING(false, DamageType.DROWNING),
         FALL(false, DamageType.FALL),
         LAVA(false, DamageType.LAVA),
@@ -1385,7 +1385,7 @@ public class EntityHelper {
                 damageFixed = true;
                 break;
             default:
-                if (damageType == DamageType.DEBUFF) {
+                if (damageReason == damageReason.DEBUFF) {
                     damageInvulnerabilityTicks = 0;
                     damageFixed = true;
                 } else if (isDirectAttackDamage) {

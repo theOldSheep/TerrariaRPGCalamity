@@ -75,7 +75,7 @@ public class Catastrophe extends EntitySlime {
             // hover above and shoot death laser
             if (indexAI < 40) {
                 // hover above the player
-                Location targetLoc = target.getLocation().add(0, 12, 0);
+                Location targetLoc = target.getLocation().add(0, 24, 0);
                 Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                 double velLen = velocity.length();
                 double maxSpeed = 2;
@@ -96,7 +96,7 @@ public class Catastrophe extends EntitySlime {
                 if (offset.lengthSquared() < 1e-5) {
                     offset = new Vector(1, 0, 0);
                 }
-                offset.normalize().multiply(16);
+                offset.normalize().multiply(24);
                 Location targetLoc = target.getLocation().add(offset);
                 Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                 double velLen = velocity.length();

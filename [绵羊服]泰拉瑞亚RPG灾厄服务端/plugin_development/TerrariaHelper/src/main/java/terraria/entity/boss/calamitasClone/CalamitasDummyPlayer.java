@@ -9,12 +9,19 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.util.Vector;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
 
 public class CalamitasDummyPlayer extends EntityZombieHusk {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.CALAMITAS_CLONE;
+    static final EntityHelper.AimHelperOptions velocityHandler;
+    static {
+        velocityHandler = new EntityHelper.AimHelperOptions()
+                .setAimMode(true)
+                .setTicksOffset(1);
+    }
     Player lastDisguisedPlayer = null;
     CalamitasClone owner;
     private void AI() {
@@ -39,6 +46,10 @@ public class CalamitasDummyPlayer extends EntityZombieHusk {
             }
             // teleport the monster
             bukkitEntity.teleport(target.getLocation().add(owner.bullet_hell_orth_dir));
+            // set velocity
+            Vector velocity = EntityHelper.helperAimEntity(bukkitEntity, target, velocityHandler)
+                    .subtract( ((LivingEntity) bukkitEntity).getEyeLocation() ).toVector();
+            bukkitEntity.setVelocity(velocity);
         }
         else {
             lastDisguisedPlayer = null;

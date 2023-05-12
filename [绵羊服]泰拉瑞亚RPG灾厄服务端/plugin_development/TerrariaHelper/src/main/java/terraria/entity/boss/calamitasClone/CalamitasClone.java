@@ -26,8 +26,7 @@ public class CalamitasClone extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.CALAMITAS_CLONE;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 10800 * 2;
-//    public static final double BASIC_HEALTH = 108000 * 2;
+    public static final double BASIC_HEALTH = 108000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
@@ -59,6 +58,7 @@ public class CalamitasClone extends EntitySlime {
     // 1: fireball   2: hell blast
     private void beginBulletHell(int ticksDuration) {
         bulletHellTicksLeft = ticksDuration;
+        addScoreboardTag("noDamage");
         Bukkit.broadcastMessage(BULLET_HELL_WARNING);
 
         Location loc = target.getLocation();
@@ -103,6 +103,8 @@ public class CalamitasClone extends EntitySlime {
         Entity projectileSpawned = EntityHelper.spawnProjectile(shootInfo);
         EntityHelper.setMetadata(
                 projectileSpawned, "ticksLive", ticksLive);
+        if (type == 2)
+            projectileSpawned.addScoreboardTag("isFireBlast");
         bulletHellProjectiles.add(projectileSpawned);
         // the display projectile
         shootInfo.shootLoc.add(bullet_hell_orth_dir);
@@ -119,7 +121,7 @@ public class CalamitasClone extends EntitySlime {
         if (--bulletHellTicksLeft > 0) {
             // hell blast
             boolean secondBulletHell = healthLockProgress == 4;
-            double hellBlastProbability = secondBulletHell ? 0.8 : 0.6;
+            double hellBlastProbability = secondBulletHell ? 0.85 : 0.75;
             if (Math.random() < hellBlastProbability) {
                 boolean direction = Math.random() < 0.5;
                 Vector velocity = direction ? bullet_hell_dir1.clone() : bullet_hell_dir2.clone();
@@ -130,7 +132,7 @@ public class CalamitasClone extends EntitySlime {
                 spawnLocOffset.multiply((Math.random() * 2 - 1) * BULLET_HELL_RADIUS)
                         .add(velocity.clone().multiply(-BULLET_HELL_RADIUS));
                 Location spawnLoc = target.getEyeLocation().add(spawnLocOffset);
-                double projectileSpeed = 0.3 + Math.random() * 0.45;
+                double projectileSpeed = 0.35 + Math.random() * 0.15;
                 velocity.multiply(projectileSpeed);
                 int ticksLive = (int) (BULLET_HELL_RADIUS * 2 / projectileSpeed);
                 // spawn projectile
@@ -239,7 +241,7 @@ public class CalamitasClone extends EntitySlime {
                     indexAI = -10;
                 }
                 // normal attack
-                else if (indexAI >= 0) {
+                else {
                     // get health ratio
                     double healthRatio = getHealth() / getMaxHealth();
                     // health lock and phase switch handling
@@ -260,6 +262,7 @@ public class CalamitasClone extends EntitySlime {
                                 Bukkit.broadcastMessage(BROTHER_REBORN);
                                 brothersAlive = true;
                                 EntityHelper.setMetadata(bukkitEntity, "healthLock", getMaxHealth() * 0.09);
+                                addScoreboardTag("noDamage");
                                 healthLockProgress = 3;
                             }
                             break;
@@ -272,65 +275,73 @@ public class CalamitasClone extends EntitySlime {
                             }
                             break;
                     }
-                    // forced attack methods
-                    if (brothersAlive)
-                        attackMethod = 1;
-                    else if (healthRatio < 0.4)
-                        attackMethod = 3;
-                    switch (attackMethod) {
-                        case 1: {
-                            // set velocity
-                            bukkitEntity.setVelocity( MathHelper.getDirection(
-                                    bukkitEntity.getLocation(), target.getEyeLocation().add(0, 12, 0),
-                                    SPEED, true));
-                            // shoot projectile
-                            if (indexAI % 10 == 0) {
-                                shootProjectile(1);
+                    if (indexAI >= 0) {
+                        // forced attack methods
+                        if (brothersAlive)
+                            attackMethod = 1;
+                        else if (healthRatio < 0.4)
+                            attackMethod = 3;
+                        switch (attackMethod) {
+                            case 1: {
+                                // set velocity
+                                bukkitEntity.setVelocity( MathHelper.getDirection(
+                                        bukkitEntity.getLocation(), target.getEyeLocation().add(0, 12, 0),
+                                        SPEED, true));
+                                // shoot projectile
+                                if (indexAI % 10 == 0) {
+                                    shootProjectile(1);
+                                }
+                                // switch phase
+                                if (indexAI >= 80) {
+                                    indexAI = -1;
+                                    attackMethod = 2;
+                                }
+                                break;
                             }
-                            // switch phase
-                            if (indexAI >= 80) {
-                                indexAI = -1;
-                                attackMethod = 2;
+                            case 2: {
+                                // set velocity
+                                Vector offset = ((LivingEntity) bukkitEntity).getEyeLocation().subtract( target.getEyeLocation() ).toVector();
+                                offset.setY(0);
+                                double velLen = offset.length();
+                                if (velLen < 1e-5) {
+                                    velLen = 1;
+                                    offset = new Vector(1, 0, 0);
+                                }
+                                offset.multiply(12 / velLen);
+                                bukkitEntity.setVelocity( MathHelper.getDirection(
+                                        bukkitEntity.getLocation(), target.getEyeLocation().add(offset),
+                                        SPEED, true));
+                                // shoot projectile
+                                if (indexAI % 8 == 0) {
+                                    shootProjectile(2);
+                                }
+                                // switch phase
+                                if (indexAI >= 80) {
+                                    indexAI = -1;
+                                    attackMethod = 1;
+                                }
+                                break;
                             }
-                            break;
-                        }
-                        case 2: {
-                            // set velocity
-                            Vector offset = ((LivingEntity) bukkitEntity).getEyeLocation().subtract( target.getEyeLocation() ).toVector();
-                            offset.setY(0);
-                            double velLen = offset.length();
-                            if (velLen < 1e-5) {
-                                velLen = 1;
-                                offset = new Vector(1, 0, 0);
+                            case 3: {
+                                // end of dash, only enter next dash if far away enough
+                                if (indexAI >= 30) {
+                                    if (bukkitEntity.getLocation().distanceSquared(target.getLocation()) > 1600 || indexAI > 60)
+                                        indexAI = -1;
+                                }
+                                else {
+                                    // dash
+                                    if (indexAI == 0) {
+                                        Location targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, dashAimHelper);
+                                        Vector direction = MathHelper.getDirection(
+                                                ((LivingEntity) bukkitEntity).getEyeLocation(), targetLoc, FINAL_DASH_SPEED);
+                                        bukkitEntity.setVelocity(direction);
+                                    }
+                                    // shoot hell blasts
+                                    else if (indexAI % 5 == 0)
+                                        shootProjectile(2);
+                                }
+                                break;
                             }
-                            offset.multiply(12 / velLen);
-                            bukkitEntity.setVelocity( MathHelper.getDirection(
-                                    bukkitEntity.getLocation(), target.getEyeLocation().add(offset),
-                                    SPEED, true));
-                            // shoot projectile
-                            if (indexAI % 8 == 0) {
-                                shootProjectile(2);
-                            }
-                            // switch phase
-                            if (indexAI >= 80) {
-                                indexAI = -1;
-                                attackMethod = 1;
-                            }
-                            break;
-                        }
-                        case 3: {
-                            indexAI %= 30;
-                            // dash
-                            if (indexAI == 0) {
-                                Location targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, dashAimHelper);
-                                Vector direction = MathHelper.getDirection(
-                                        ((LivingEntity) bukkitEntity).getEyeLocation(), targetLoc, FINAL_DASH_SPEED );
-                                bukkitEntity.setVelocity(direction);
-                            }
-                            // shoot hell blasts
-                            else if (indexAI % 5 == 0)
-                                shootProjectile(2);
-                            break;
                         }
                     }
                 }

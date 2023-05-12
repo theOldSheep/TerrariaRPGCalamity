@@ -446,7 +446,7 @@ public class ItemUseHelper {
                 new GenericHelper.StrikeLineOptions()
                         .setThruWall(false);
         // if the player is dealing melee damage, display the player's weapon instead of particle
-        if (EntityHelper.getDamageType(ply).equals("Melee"))
+        if (EntityHelper.getDamageType(ply) == EntityHelper.DamageType.MELEE)
             strikeLineInfo.setParticleInfo(new GenericHelper.ParticleLineOptions()
                     .setParticleOrItem(false)
                     .setSpriteItem(weaponItem)
@@ -1166,7 +1166,8 @@ public class ItemUseHelper {
                 attrMap.getOrDefault("manaUseMulti", 1d));
         if (!consumeMana(ply, manaConsumption)) return false;
         boolean sentryOrMinion = weaponType.equals("SENTRY");
-        boolean hasContactDamage = weaponSection.getString("damageType", "Melee").equals("Melee");
+        boolean hasContactDamage = weaponSection.getString(
+                "damageType", EntityHelper.DamageType.MELEE.internalName).equals(EntityHelper.DamageType.MELEE.internalName);
         boolean noDuplication = weaponSection.getBoolean("noDuplication", false);
         int slotsConsumed = weaponSection.getInt("slotsRequired", 1);
         String minionName = weaponSection.getString("minionName");

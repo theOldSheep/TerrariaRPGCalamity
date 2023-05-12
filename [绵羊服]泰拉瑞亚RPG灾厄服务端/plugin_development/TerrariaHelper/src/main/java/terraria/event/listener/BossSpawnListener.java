@@ -33,6 +33,8 @@ public class BossSpawnListener implements Listener {
         summonItems.put("焦炭玩偶", BossHelper.BossType.BRIMSTONE_ELEMENTAL);
         summonItems.put("机械骷髅头", BossHelper.BossType.SKELETRON_PRIME);
         summonItems.put("荒芜之眼", BossHelper.BossType.CALAMITAS_CLONE);
+        summonItems.put("世纪之花花苞", BossHelper.BossType.PLANTERA);
+        // pre-moon lord
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {

@@ -29,7 +29,7 @@ public class MinionHelper {
             EntityHelper.tweakAttribute(attrMap, currentTool, false);
         }
         // account for non-summon tool
-        if (!EntityHelper.getDamageType(owner).equals("Summon")) {
+        if (! (EntityHelper.getDamageType(owner) == EntityHelper.DamageType.SUMMON) ) {
             attrMap.put("damageMulti",
                     attrMap.getOrDefault("damageMulti", 1d) *
                     ownerAttrMap.getOrDefault("minionDamagePenaltyMulti", 0.5d));

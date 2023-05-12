@@ -6,27 +6,22 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.calamitasClone.CalamitasDummyPlayer;
-import terraria.entity.boss.calamitasClone.Cataclysm;
-import terraria.entity.boss.calamitasClone.Catastrophe;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class Plantera extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.PLANTERA;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.JUNGLE;
-    public static final double BASIC_HEALTH = 160650 * 2;
+    public static final double BASIC_HEALTH = 16065 * 2;
+//    public static final double BASIC_HEALTH = 160650 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
@@ -34,6 +29,7 @@ public class Plantera extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
+    static double SEED_SPEED = 1.25, THORN_BALL_SPEED = 1, SPORE_GAS_SPEED = 1.5;
     static HashMap<String, Double> attrMapSeed, attrMapPoisonSeed, attrMapThornBall, attrMapSporeGas;
     static {
         attrMapSeed = new HashMap<>();
@@ -52,7 +48,90 @@ public class Plantera extends EntitySlime {
 
     EntityHelper.ProjectileShootInfo shootInfoSeed, shootInfoPoisonSeed, shootInfoThornBall, shootInfoSporeGas;
     boolean secondPhase = false;
+    int dashIndex = 0, indexAI = 0;
 
+    private void phaseOneProjectile(double healthRatio) {
+        Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        // seeds and poisoned seeds
+        {
+            int shootInterval;
+            double poisonSeedChance;
+            if (healthRatio < 0.5) {
+                shootInterval = 2;
+                poisonSeedChance = 0.5;
+            } else if (healthRatio < 0.6) {
+                shootInterval = 3;
+                poisonSeedChance = 0.25;
+            } else if (healthRatio < 0.7) {
+                shootInterval = 5;
+                poisonSeedChance = 0.1;
+            } else {
+                shootInterval = 7;
+                poisonSeedChance = 0;
+            }
+            if (indexAI % shootInterval == 0) {
+                EntityHelper.ProjectileShootInfo shootInfo = (Math.random() < poisonSeedChance) ? shootInfoPoisonSeed : shootInfoSeed;
+                shootInfo.shootLoc = shootLoc;
+                shootInfo.velocity = MathHelper.getDirection(shootLoc, target.getEyeLocation(), SEED_SPEED);
+                EntityHelper.spawnProjectile(shootInfo);
+            }
+        }
+        // spike ball
+        {
+            int shootInterval;
+            if (healthRatio < 0.5) {
+                shootInterval = 20;
+            } else if (healthRatio < 0.6) {
+                shootInterval = 30;
+            } else if (healthRatio < 0.7) {
+                shootInterval = 35;
+            } else {
+                shootInterval = 40;
+            }
+            if (indexAI % shootInterval == 0) {
+                shootInfoThornBall.shootLoc = shootLoc;
+                shootInfoThornBall.velocity = MathHelper.getDirection(shootLoc, target.getEyeLocation(), THORN_BALL_SPEED);
+                EntityHelper.spawnProjectile(shootInfoThornBall);
+            }
+        }
+    }
+    private void phaseTwoProjectile(double healthRatio) {
+        Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        // seeds
+        if (indexAI % 20 == 0) {
+            int perArcAmount;
+            if (healthRatio < 0.1)
+                perArcAmount = 6;
+            else if (healthRatio < 0.15)
+                perArcAmount = 5;
+            else if (healthRatio < 0.2)
+                perArcAmount = 4;
+            else
+                perArcAmount = 3;
+
+            shootInfoSeed.shootLoc = shootLoc;
+            for (Vector velocity : MathHelper.getCircularProjectileDirections(perArcAmount, 1, 45,
+                    target, shootLoc, SEED_SPEED)) {
+                shootInfoSeed.velocity = velocity;
+                EntityHelper.spawnProjectile(shootInfoSeed);
+            }
+        }
+        // spore cloud
+        if (indexAI % 20 == 10) {
+            int perArcAmount;
+            if (healthRatio < 0.15)
+                perArcAmount = 5;
+            else
+                perArcAmount = 4;
+
+            shootInfoSporeGas.shootLoc = shootLoc;
+            for (Vector velocity : MathHelper.getCircularProjectileDirections(perArcAmount, 1, 45,
+                    target, shootLoc, SPORE_GAS_SPEED)) {
+                shootInfoSporeGas.velocity = velocity;
+                EntityHelper.spawnProjectile(shootInfoSporeGas);
+            }
+        }
+    }
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -60,11 +139,8 @@ public class Plantera extends EntitySlime {
         // AI
         {
             // update target
-            Player lastTarget = target;
             target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
                     IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
-            if (WorldHelper.isDayTime(bukkitEntity.getWorld()))
-                target = null;
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {
@@ -76,13 +152,50 @@ public class Plantera extends EntitySlime {
             // if target is valid, attack
             else {
                 double healthRatio = getHealth() / getMaxHealth();
+                // phase transition
                 if (healthRatio < 0.5 && !secondPhase) {
                     secondPhase = true;
                     setCustomName(BOSS_TYPE.msgName + "§1");
                     attrMap.put("damage", 578d);
                     attrMap.put("defence", 20d);
+                    for (int i = 0; i < 50; i ++) {
+                        new PlanteraTentacle(target, this);
+                    }
+                }
+                // follow player and dashes from time to time
+                {
+                    dashIndex ++;
+                    if (dashIndex >= 0) {
+                        double dist = bukkitEntity.getLocation().distance(target.getLocation());
+                        double speed = secondPhase ? Math.max(dist / 20, 0.8) : Math.max(dist / 35, 0.6);
+                        boolean keepShorterDirection = true;
+                        switch (dashIndex) {
+                            case 180:
+                                bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
+                                break;
+                            case 200:
+                                speed *= 2;
+                                keepShorterDirection = false;
+                                dashIndex = -10;
+                                break;
+                        }
+                        Vector velocity = MathHelper.getDirection(
+                                ((LivingEntity) bukkitEntity).getEyeLocation(),
+                                target.getEyeLocation(),
+                                speed, keepShorterDirection);
+                        bukkitEntity.setVelocity(velocity);
+                    }
+                }
+                // projectiles
+                if (healthRatio > 0.25) {
+                    phaseOneProjectile(healthRatio);
+                }
+                // second phase projectile
+                else {
+                    phaseTwoProjectile(healthRatio);
                 }
             }
+            indexAI ++;
         }
         // face the player
         this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
@@ -166,6 +279,7 @@ public class Plantera extends EntitySlime {
                     EntityHelper.DamageType.ARROW, "刺球");
             shootInfoSporeGas = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSporeGas,
                     EntityHelper.DamageType.MAGIC, "孢子云");
+            shootInfoSporeGas.properties.put("liveTime", 300);
         }
     }
 

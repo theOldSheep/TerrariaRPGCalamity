@@ -54,19 +54,20 @@ public class Cataclysm extends EntitySlime {
         // attack
         if (indexAI >= 0) {
             // follow and shoot flame
-            if (indexAI < 60) {
+            if (indexAI < 80) {
                 dashingPhase = false;
                 // fly towards the player
                 bukkitEntity.setVelocity(MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 1));
                 // shoot flame
-                shootCursedFlame();
+                if (indexAI > 20)
+                    shootCursedFlame();
             }
             // long dashes
             else {
                 dashingPhase = true;
-                if (indexAI >= 210)
+                if (indexAI >= 230)
                     indexAI = -1;
-                else if ((indexAI - 60) % 35 == 0) {
+                else if ((indexAI - 80) % 35 == 0) {
                     bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
                     bukkitEntity.setVelocity(MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 3));
                 }

@@ -17,6 +17,8 @@ import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
 import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
 import terraria.entity.boss.desertScourge.DesertNuisance;
 import terraria.entity.boss.desertScourge.DesertScourge;
+import terraria.entity.boss.plantera.Plantera;
+import terraria.entity.boss.plantera.PlanteraTentacle;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHand;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
 import terraria.entity.boss.theDestroyer.Destroyer;
@@ -69,6 +71,8 @@ public enum CustomEntities {
     BOSS_HVM_HEART     ("DarkHeart",         55,  EntityType.SLIME,           EntitySlime.class,      DarkHeart.class),
     BOSS_KSLM          ("KingSlime",         55,  EntityType.SLIME,           EntitySlime.class,      KingSlime.class),
     BOSS_KSLM_JEWEL    ("CrownJewel",        55,  EntityType.SLIME,           EntitySlime.class,      CrownJewel.class),
+    BOSS_PLTR          ("Plantera",          55,  EntityType.SLIME,           EntitySlime.class,      Plantera.class),
+    BOSS_PLTR_TENTACLE ("PlanteraTentacle",  55,  EntityType.SLIME,           EntitySlime.class,      PlanteraTentacle.class),
     BOSS_QNSLM         ("QueenSlime",        55,  EntityType.SLIME,           EntitySlime.class,      QueenSlime.class),
     BOSS_SKLT          ("Skeletron",         55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHead.class),
     BOSS_SKLT_HAND     ("SkeletronHand",     55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHand.class),

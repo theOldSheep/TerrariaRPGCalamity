@@ -276,7 +276,7 @@
     autoTraceMethod: 2
     autoTraceRadius: 32
     autoTraceSharpTurning: false
-    autoTraceAbility: 0.1
+    autoTraceAbility: 0.35
     maxAutoTraceTicks: 40
 毒种子:
     penetration: 99999
@@ -287,7 +287,7 @@
     autoTraceMethod: 2
     autoTraceRadius: 32
     autoTraceSharpTurning: false
-    autoTraceAbility: 0.1
+    autoTraceAbility: 0.35
     maxAutoTraceTicks: 40
     buffInflict:
         - "中毒|80|1"
@@ -302,7 +302,8 @@
 孢子云:
     penetration: 99999
     blockHitAction: thru
-    liveTime: 100
+    liveTime: 60
+    gravity: 0
     projectileSize: 0.5
     speedMultiPerTick: 0.95
     buffInflict:
