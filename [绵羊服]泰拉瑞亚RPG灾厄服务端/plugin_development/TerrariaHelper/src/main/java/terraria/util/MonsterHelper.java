@@ -24,6 +24,7 @@ import java.util.HashMap;
 public class MonsterHelper {
     // prevent spawning next to any player
     public static final double NO_MONSTER_SPAWN_RADIUS = 16d;
+    public static HashMap<String, Entity> uniqueMonsters = new HashMap<>();
     private static boolean naturalMobSpawnType(Player ply, String spawnType) {
         // determine the monster spawning location
         WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(ply.getLocation());
@@ -187,6 +188,11 @@ public class MonsterHelper {
     }
     public static Entity spawnMob(String type, Location loc, Player target) {
         ConfigurationSection mobInfoSection = TerrariaHelper.mobSpawningConfig.getConfigurationSection("mobInfo." + type);
+        boolean unique = mobInfoSection.getBoolean("unique", false);
+        if (unique && uniqueMonsters.containsKey(type)) {
+            if (!uniqueMonsters.get(type).isDead())
+                return null;
+        }
         String entityType = mobInfoSection.getString("monsterType", "SLIME");
         Entity entity;
         {
@@ -240,6 +246,10 @@ public class MonsterHelper {
         }
         // set parent type
         EntityHelper.setMetadata(entity, "parentType", type);
+        // unique monster cache
+        if (unique) {
+            uniqueMonsters.put(type, entity);
+        }
         return entity;
     }
 }

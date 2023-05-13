@@ -316,24 +316,37 @@ public class MonsterHelper {
             case "诅咒骷髅头":
                 monster.glowing = true;
         }
-        // no AI for some slime, to disable unwanted jumping.
-        if (monster instanceof EntitySlime) {
+        // AI removed for certain monsters to prevent bug
+        {
+            boolean removeAI = false;
+            // no AI for some slime, to disable unwanted jumping.
+            if (monster instanceof EntitySlime) {
+                switch (type) {
+                    case "史莱姆":
+                    case "丛林史莱姆":
+                    case "尖刺史莱姆":
+                    case "水晶史莱姆":
+                    case "弹力史莱姆":
+                    case "礼物宝箱怪":
+                    case "神圣宝箱怪":
+                    case "腐化宝箱怪":
+                        break;
+                    default:
+                        removeAI = true;
+                }
+            }
+            // some special monsters (sea monsters most likely)
             switch (type) {
-                case "史莱姆":
-                case "丛林史莱姆":
-                case "尖刺史莱姆":
-                case "水晶史莱姆":
-                case "弹力史莱姆":
-                case "礼物宝箱怪":
-                case "神圣宝箱怪":
-                case "腐化宝箱怪":
-                    break;
-                default:
-                    EntitySlime slimeMonster = (EntitySlime) monster;
-                    World world = monster.world;
-                    MethodProfiler methodProfiler = world != null && world.methodProfiler != null ? world.methodProfiler : null;
-                    slimeMonster.goalSelector = new PathfinderGoalSelector(methodProfiler);
-                    slimeMonster.targetSelector = new PathfinderGoalSelector(methodProfiler);
+                case "???":
+                    removeAI = true;
+            }
+            // remove AI when necessary
+            if (removeAI) {
+                EntityInsentient insMonster = (EntityInsentient) monster;
+                World world = monster.world;
+                MethodProfiler methodProfiler = world != null && world.methodProfiler != null ? world.methodProfiler : null;
+                insMonster.goalSelector = new PathfinderGoalSelector(methodProfiler);
+                insMonster.targetSelector = new PathfinderGoalSelector(methodProfiler);
             }
         }
         // attributes and other properties
@@ -734,8 +747,7 @@ public class MonsterHelper {
                 case "巫毒恶魔":
                 case "饿鬼":
                 case "飞翔史莱姆":
-                case "雪花怪":
-                case "深海吞食者": {
+                case "雪花怪": {
                     if (monster.getHealth() > 0) {
                         // determines if the direction should be updated
                         boolean changeDirection = indexAI % 60 <= 10;
@@ -795,6 +807,21 @@ public class MonsterHelper {
                                     EntityHelper.spawnProjectile(projectileShootInfo);
                                 }
                                 break;
+                        }
+                    }
+                    break;
+                }
+                case "深海吞食者": {
+                    if (monster.getHealth() > 0) {
+                        // determines if the direction should be updated
+                        if (indexAI % 100 < 80) {
+                            Vector velocity = target.getEyeLocation().subtract(monsterBkt.getEyeLocation()).toVector();
+                            velocity.multiply(0.05);
+                            monsterBkt.setVelocity(velocity);
+                        }
+                        else if (indexAI % 100 == 80) {
+                            monsterBkt.setVelocity(MathHelper.getDirection(
+                                    monsterBkt.getEyeLocation(), target.getEyeLocation(), 2));
                         }
                     }
                     break;

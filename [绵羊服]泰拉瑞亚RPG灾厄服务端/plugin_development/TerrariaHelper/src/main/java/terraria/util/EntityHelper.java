@@ -1014,9 +1014,9 @@ public class EntityHelper {
                     }
                 }
                 // generic death drop etc.
-                MetadataValue motherType = getMetadata(v, "motherType");
-                if (motherType != null) {
-                    switch (motherType.asString()) {
+                MetadataValue parentType = getMetadata(v, "parentType");
+                if (parentType != null) {
+                    switch (parentType.asString()) {
                         // lava slime leaves lava ticksBeforeHookingFish death
                         case "史莱姆": {
                             if (v.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)) {
@@ -1040,6 +1040,20 @@ public class EntityHelper {
                             }
                             break;
                         }
+                        // the Hive Mind
+                        case "腐化囊": {
+                            if (dPly instanceof Player) {
+                                BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.THE_HIVE_MIND);
+                            }
+                            break;
+                        }
+                        // anahita and leviathan spawns after killing ???
+                        case "???": {
+                            if (dPly instanceof Player) {
+                                BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LEVIATHAN_AND_ANAHITA);
+                            }
+                            break;
+                        }
                         // lunatic cultist spawns after killing the mob in the dungeon
                         case "拜月教教徒": {
                             if (dPly instanceof Player) {
@@ -1051,14 +1065,6 @@ public class EntityHelper {
                 }
                 if (dPly instanceof Player) {
                     Player dPlayer = (Player) dPly;
-                    switch ( GenericHelper.trimText(v.getName()) ) {
-                        // the Hive Mind
-                        case "腐化囊": {
-                            BossHelper.spawnBoss(dPlayer, BossHelper.BossType.THE_HIVE_MIND);
-                            break;
-                        }
-
-                    }
                     // dungeon souls
                     if (WorldHelper.BiomeType.getBiome(dPlayer) == WorldHelper.BiomeType.DUNGEON) {
                         if (PlayerHelper.hasDefeated(dPlayer, "世纪之花") && Math.random() < 0.125)
@@ -1155,11 +1161,11 @@ public class EntityHelper {
             HashSet<String> accessories = PlayerHelper.getAccessories(target);
             Player targetPly = (Player) target;
             if (PlayerHelper.isProperlyPlaying(targetPly)) {
-                // handle special mother type (slime damage neglected by royal gel)
-                MetadataValue temp = getMetadata(damageSource, "motherType");
+                // handle special parent type (slime damage neglected by royal gel)
+                MetadataValue temp = getMetadata(damageSource, "parentType");
                 if (temp != null) {
-                    String motherType = temp.asString();
-                    if (motherType.equals("史莱姆") && accessories.contains("皇家凝胶"))
+                    String parentType = temp.asString();
+                    if (parentType.equals("史莱姆") && accessories.contains("皇家凝胶"))
                         return false;
                 }
                 // NPCs do not attack players

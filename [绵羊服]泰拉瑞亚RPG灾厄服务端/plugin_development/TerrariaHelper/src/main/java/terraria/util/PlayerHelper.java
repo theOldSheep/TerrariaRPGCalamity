@@ -670,22 +670,24 @@ public class PlayerHelper {
                         String worldName = plyWorld.getName();
                         double minBossDistance = 999999;
                         for (String bossName : BossHelper.bossMap.keySet()) {
+                            ArrayList<LivingEntity> bossArrayList = BossHelper.bossMap.get(bossName);
                             // if the boss has multiple phases
                             switch (bossName) {
-                                case "阿娜希塔与利维坦":
-                                    if (BossHelper.bossMap.get(bossName).size() == 1) bossName += "1";
+                                case "阿娜希塔和利维坦":
+                                    if (bossArrayList.get(1).isDead()) bossName += "1";
                                     else bossName += "2";
                                     break;
                             }
                             double currDist = 99999;
-                            Entity currBoss = BossHelper.bossMap.get(bossName).get(0);
-                            if (plyWorld.equals(currBoss.getWorld())) currDist = currBoss.getLocation().distanceSquared(ply.getLocation());
+                            Entity currBoss = bossArrayList.get(0);
+                            if (plyWorld.equals(currBoss.getWorld()))
+                                currDist = currBoss.getLocation().distanceSquared(ply.getLocation());
                             if (currDist < minBossDistance) {
                                 minBossDistance = currDist;
                                 current = TerrariaHelper.soundConfig.getString("boss." + bossName, "");
-                                // TODO: music for Yharon etc. are handled here.
                             }
                         }
+                        // events
                         if (current.equals("")) {
                             // other events
                             if (!Event.currentEvent.equals(""))
@@ -700,7 +702,7 @@ public class PlayerHelper {
                                     }
                             }
                         }
-                        // no event/boss
+                        // no event/boss, normal environment bgm
                         boolean isDayTime = WorldHelper.isDayTime(plyWorld);
                         if (current.equals("")) {
                             WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(ply);
@@ -752,7 +754,8 @@ public class PlayerHelper {
                                     }
                             }
                         }
-                    } else {
+                    }
+                    else {
                         current = forceBGM.asString();
                     }
                     switch (current) {

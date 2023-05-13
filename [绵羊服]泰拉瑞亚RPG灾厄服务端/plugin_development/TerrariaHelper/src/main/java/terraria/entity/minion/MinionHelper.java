@@ -4,9 +4,11 @@ import net.minecraft.server.v1_12_R1.EntityInsentient;
 import net.minecraft.server.v1_12_R1.EntityLiving;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.Vec3D;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Slime;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
@@ -87,6 +89,19 @@ public class MinionHelper {
     private static double getHorDistSqr(double x1, double x2, double y1, double y2) {
         return (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2);
     }
+    private static double getHorDistSqr(Entity minion, Entity target) {
+        double targetRadius = 0.5;
+        if (target instanceof Slime) {
+            targetRadius = 0.25 * ((Slime) target).getSize();
+        }
+        Location minionLoc = minion.getLocation();
+        Location targetLoc = target.getLocation();
+        double xDist = Math.abs(minionLoc.getX() - targetLoc.getX());
+        double zDist = Math.abs(minionLoc.getZ() - targetLoc.getZ());
+        xDist = Math.max(xDist - targetRadius, 0);
+        zDist = Math.max(zDist - targetRadius, 0);
+        return xDist * xDist + zDist * zDist;
+    }
     private static Collection<net.minecraft.server.v1_12_R1.Entity> getNearbyEntities(net.minecraft.server.v1_12_R1.Entity e, double radius, com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication) {
         return e.getWorld().getEntities(e, e.getBoundingBox().g(radius), predication);
     }
@@ -145,13 +160,13 @@ public class MinionHelper {
         double nearestTargetDistSqr = 1e9,
                 targetRadiusActual =
                         finalTarget == owner ? targetRadius :
-                                getHorDistSqr(finalTarget.locX, findNearestFrom.locX, finalTarget.locZ, findNearestFrom.locZ) * 0.85 - 8;
+                                getHorDistSqr(findNearestFrom.getBukkitEntity(), finalTarget.getBukkitEntity()) * 0.85 - 8;
         ArrayList<net.minecraft.server.v1_12_R1.Entity> toCheck = new ArrayList<>(50);
         toCheck.addAll(getNearbyEntities(minion, targetRadiusActual, predication));
         toCheck.addAll(getNearbyEntities(owner, targetRadiusActual, predication));
         for (net.minecraft.server.v1_12_R1.Entity entity : toCheck) {
             if (!(entity instanceof EntityLiving)) continue;
-            double distSqr = getHorDistSqr(entity.locX, findNearestFrom.locX, entity.locZ, findNearestFrom.locZ);
+            double distSqr = getHorDistSqr(findNearestFrom.getBukkitEntity(), entity.getBukkitEntity());
             if (distSqr > nearestTargetDistSqr) continue;
             nearestTargetDistSqr = distSqr;
             finalTarget = (EntityLiving) entity;

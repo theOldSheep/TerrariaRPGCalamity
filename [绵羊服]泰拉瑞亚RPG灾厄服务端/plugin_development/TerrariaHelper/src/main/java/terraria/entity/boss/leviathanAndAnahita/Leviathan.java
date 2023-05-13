@@ -21,7 +21,8 @@ public class Leviathan extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.LEVIATHAN_AND_ANAHITA;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.OCEAN;
-    public static final double BASIC_HEALTH = 174144 * 2;
+    public static final double BASIC_HEALTH = 17414 * 2;
+//    public static final double BASIC_HEALTH = 174144 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
@@ -38,7 +39,7 @@ public class Leviathan extends EntitySlime {
     int indexAI = -40;
     double healthRatio = 1d;
     static HashMap<String, Double> attrMapMeteor;
-    static final double SPEED_METEOR = 1.5, SPEED_HOVER = 1, SPEED_DASH = 2;
+    static final double SPEED_METEOR = 2, SPEED_HOVER = 2, SPEED_DASH = 3;
     static final int DASH_DURATION = 60;
     EntityHelper.ProjectileShootInfo shootInfoMeteor;
     static {
@@ -50,8 +51,10 @@ public class Leviathan extends EntitySlime {
         // change phase
         ArrayList<AIPhase> availablePhase = new ArrayList<>();
         availablePhase.add(AIPhase.METEOR);
-        availablePhase.add(AIPhase.SUMMON);
+        availablePhase.add(AIPhase.METEOR);
         availablePhase.add(AIPhase.DASH);
+        availablePhase.add(AIPhase.DASH);
+        availablePhase.add(AIPhase.SUMMON);
         availablePhase.remove(phaseAI);
         phaseAI = availablePhase.get((int) (Math.random() * availablePhase.size()));
         // aftermath
@@ -95,7 +98,7 @@ public class Leviathan extends EntitySlime {
                 Location tempLoc = target.getEyeLocation();
                 Location eyeLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
                 tempLoc.setY(eyeLoc.getY());
-                Vector offsetVec = MathHelper.getDirection(tempLoc, eyeLoc, 25);
+                Vector offsetVec = MathHelper.getDirection(tempLoc, eyeLoc, 16);
                 Location hoverTargetLocation = target.getEyeLocation().add(offsetVec);
                 bukkitEntity.setVelocity(
                         MathHelper.getDirection(eyeLoc, hoverTargetLocation, SPEED_HOVER, true));
@@ -143,8 +146,13 @@ public class Leviathan extends EntitySlime {
         // AI
         {
             // update target
-            target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+            if (anahita.isAlive()) {
+                target = anahita.target;
+            }
+            else {
+                target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
+                        IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+            }
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {
@@ -201,13 +209,11 @@ public class Leviathan extends EntitySlime {
             EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
         }
         // init boss bar
-        bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
-                BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
+        bossbar = anahita.bossbar;
         EntityHelper.setMetadata(bukkitEntity, "bossbar", bossbar);
         // init target map
         {
-            targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
-                    getBukkitEntity(), BossHelper.BossType.PLANTERA.msgName, summonedPlayer, true, bossbar);
+            targetMap = anahita.targetMap;
             target = summonedPlayer;
             EntityHelper.setMetadata(bukkitEntity, "targets", targetMap);
         }
@@ -221,9 +227,8 @@ public class Leviathan extends EntitySlime {
         }
         // boss parts and other properties
         {
-            bossParts = new ArrayList<>();
+            bossParts = anahita.bossParts;
             bossParts.add((LivingEntity) bukkitEntity);
-            BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;
@@ -239,17 +244,20 @@ public class Leviathan extends EntitySlime {
     @Override
     public void die() {
         super.die();
-        // disable boss bar
-        bossbar.setVisible(false);
-        BossHelper.bossMap.remove(BOSS_TYPE.msgName);
+        // disable boss bar if both boss are defeated
+        if (!anahita.isAlive()) {
+            bossbar.setVisible(false);
+            BossHelper.bossMap.remove(BOSS_TYPE.msgName);
+        }
         // if the boss has been defeated properly
         if (getMaxHealth() > 10) {
             // drop items
             terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
 
             // send loot
-            if (!anahita.isAlive())
+            if (!anahita.isAlive()) {
                 terraria.entity.boss.BossHelper.handleBossDeath(BOSS_TYPE, bossParts, targetMap);
+            }
         }
     }
     // rewrite AI
@@ -261,7 +269,8 @@ public class Leviathan extends EntitySlime {
         motY /= 0.98;
         motZ /= 0.91;
         // update boss bar and dynamic DR
-        terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);
+        if (!anahita.isAlive())
+            terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);
         // load nearby chunks
         {
             for (int i = -2; i <= 2; i ++)

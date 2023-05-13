@@ -50,6 +50,8 @@ spawnInfo:
         史莱姆: 20
         黑隐士: 4
         冰雪陆龟: 1
+    ocean:
+        ???: 1
     corruption_underground:
         噬魂怪: 1
     corruption:
@@ -208,6 +210,14 @@ spawnInfo:
     冰霜月19:
         雪兽: 1
 mobTier:
+    飞龙: 血肉之墙
+    眼怪: 血肉之墙
+    科学怪人: 血肉之墙
+    沼泽怪: 血肉之墙
+    吸血鬼: 血肉之墙
+    水月怪: 血肉之墙
+    弗里茨: 血肉之墙
+    攀爬魔: 血肉之墙
     探测怪: 血肉之墙
     水晶史莱姆: 血肉之墙
     飞翔史莱姆: 血肉之墙
@@ -220,29 +230,7 @@ mobTier:
     巨型陆龟: 血肉之墙
     冰雪陆龟: 血肉之墙
     红恶魔: 机械三王
-    装甲骷髅: 世纪之花
-    巨型诅咒骷髅头: 世纪之花
-    圣骑士: 世纪之花
-    死灵法师: 世纪之花
-    褴褛邪教徒法师: 世纪之花
-    魔教徒: 世纪之花
-    骷髅狙击手: 世纪之花
-    骷髅特警: 世纪之花
-    地牢幽魂: 世纪之花
-    蜥蜴人: 世纪之花
-    飞蛇: 世纪之花
-    眼怪: 血肉之墙
-    科学怪人: 血肉之墙
-    沼泽怪: 血肉之墙
-    吸血鬼: 血肉之墙
-    水月怪: 血肉之墙
-    弗里茨: 血肉之墙
-    攀爬魔: 血肉之墙
     死神: 机械三王
-    蛾怪: 世纪之花
-    致命球: 世纪之花
-    拜月教教徒: 石巨人
-    飞龙: 血肉之墙
     稻草人: 世纪之花
     树精: 世纪之花
     地狱犬: 世纪之花
@@ -255,6 +243,21 @@ mobTier:
     坎卜斯: 世纪之花
     雪花怪: 世纪之花
     雪兽: 世纪之花
+    蛾怪: 世纪之花
+    致命球: 世纪之花
+    装甲骷髅: 世纪之花
+    巨型诅咒骷髅头: 世纪之花
+    圣骑士: 世纪之花
+    死灵法师: 世纪之花
+    褴褛邪教徒法师: 世纪之花
+    魔教徒: 世纪之花
+    骷髅狙击手: 世纪之花
+    骷髅特警: 世纪之花
+    地牢幽魂: 世纪之花
+    蜥蜴人: 世纪之花
+    飞蛇: 世纪之花
+    深海吞食者: 世纪之花
+    拜月教教徒: 石巨人
 mobTierMax:
     诅咒骷髅头: 血肉之墙
     恶魔: 机械三王
@@ -592,6 +595,21 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.1
                     health: 24
+    腐化囊:
+        name: "腐化囊"
+        monsterType: "SLIME"
+        slimeSize: 3
+        spawnLocationType: AIR
+        unique: true
+        variants:
+            default1:
+                attributes:
+                    damage: 1
+                    damageType: "Melee"
+                    defence: 0
+                    knockback: 0
+                    knockbackResistance: 1
+                    health: 2000
     沼泽之眼:
         name: "沼泽之眼"
         monsterType: "SLIME"
@@ -616,19 +634,84 @@ mobInfo:
         owningBoss: 血肉之墙
         hasHealthMulti: true
         variants:
-            underworld1:
+    尖刺史莱姆:
+        name: "尖刺史莱姆"
+        monsterType: "SLIME"
+        owningBoss: 史莱姆王
+        hasHealthMulti: true
+        variants:
+            default1:
                 attributes:
-                    damage: 100
+                    damage: 36
+                    damageType: "Arrow"
+                    defence: 5
+                    knockback: 2
+                    knockbackResistance: 0.1
+                    health: 100
+    水晶史莱姆:
+        name: "水晶史莱姆"
+        monsterType: "SLIME"
+        owningBoss: 史莱姆皇后
+        hasHealthMulti: true
+        variants:
+            default1:
+                attributes:
+                    damage: 160
+                    damageType: "Arrow"
+                    defence: 70
+                    knockback: 2
+                    knockbackResistance: 0.1
+                    health: 450
+    飞翔史莱姆:
+        name: "飞翔史莱姆"
+        monsterType: "SLIME"
+        owningBoss: 史莱姆皇后
+        hasHealthMulti: true
+        variants:
+            default1:
+                attributes:
+                    damage: 200
                     damageType: "Melee"
-                    defence: 10
+                    defence: 60
                     knockback: 2
                     knockbackResistance: 0.28
-                    health: 150
-    腐化囊:
-        name: "腐化囊"
+                    health: 360
+    弹力史莱姆:
+        name: "弹力史莱姆"
         monsterType: "SLIME"
-        slimeSize: 3
-        spawnLocationType: AIR
+        owningBoss: 史莱姆皇后
+        hasHealthMulti: true
+        variants:
+            default1:
+                attributes:
+                    damage: 160
+                    damageType: "Arrow"
+                    defence: 70
+                    knockback: 2
+                    knockbackResistance: 0.1
+                    health: 450
+    探测怪:
+        name: "探测怪"
+        monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 4
+        owningBoss: 毁灭者
+        isMechanic: true
+        hasHealthMulti: true
+        variants:
+            default1:
+                attributes:
+                    damage: 176
+                    damageType: "Arrow"
+                    defence: 40
+                    knockback: 2
+                    knockbackResistance: 0.28
+                    health: 600
+    ???:
+        name: "???"
+        monsterType: "HUSK"
+        spawnLocationType: WATER
+        unique: true
         variants:
             default1:
                 attributes:
@@ -638,6 +721,35 @@ mobInfo:
                     knockback: 0
                     knockbackResistance: 1
                     health: 2000
+    深海吞食者:
+        name: "深海吞食者"
+        monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 4
+        owningBoss: 阿娜希塔和利维坦
+        hasHealthMulti: true
+        variants:
+            default1:
+                attributes:
+                    damage: 420
+                    damageType: "Melee"
+                    defence: 28
+                    knockback: 2
+                    knockbackResistance: 1
+                    health: 3600
+    拜月教教徒:
+        name: "拜月教教徒"
+        monsterType: "ZOMBIE"
+        unique: true
+        variants:
+            default1:
+                attributes:
+                    damage: 200
+                    damageType: "Melee"
+                    defence: 30
+                    knockback: 2
+                    knockbackResistance: 0.51
+                    health: 800
     吞噬者:
         name: "吞噬者"
         monsterType: "SLIME"
@@ -1127,18 +1239,6 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.82
                     health: 24000
-    拜月教教徒:
-        name: "拜月教教徒"
-        monsterType: "ZOMBIE"
-        variants:
-            default1:
-                attributes:
-                    damage: 200
-                    damageType: "Melee"
-                    defence: 30
-                    knockback: 2
-                    knockbackResistance: 0.51
-                    health: 800
     地牢幽魂:
         name: "地牢幽魂"
         monsterType: "SLIME"
@@ -1152,95 +1252,6 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.82
                     health: 800
-    尖刺史莱姆:
-        name: "尖刺史莱姆"
-        monsterType: "SLIME"
-        owningBoss: 史莱姆王
-        hasHealthMulti: true
-        variants:
-            default1:
-                attributes:
-                    damage: 36
-                    damageType: "Arrow"
-                    defence: 5
-                    knockback: 2
-                    knockbackResistance: 0.1
-                    health: 100
-    水晶史莱姆:
-        name: "水晶史莱姆"
-        monsterType: "SLIME"
-        owningBoss: 史莱姆皇后
-        hasHealthMulti: true
-        variants:
-            default1:
-                attributes:
-                    damage: 160
-                    damageType: "Arrow"
-                    defence: 70
-                    knockback: 2
-                    knockbackResistance: 0.1
-                    health: 450
-    飞翔史莱姆:
-        name: "飞翔史莱姆"
-        monsterType: "SLIME"
-        owningBoss: 史莱姆皇后
-        hasHealthMulti: true
-        variants:
-            default1:
-                attributes:
-                    damage: 200
-                    damageType: "Melee"
-                    defence: 60
-                    knockback: 2
-                    knockbackResistance: 0.28
-                    health: 360
-    弹力史莱姆:
-        name: "弹力史莱姆"
-        monsterType: "SLIME"
-        owningBoss: 史莱姆皇后
-        hasHealthMulti: true
-        variants:
-            default1:
-                attributes:
-                    damage: 160
-                    damageType: "Arrow"
-                    defence: 70
-                    knockback: 2
-                    knockbackResistance: 0.1
-                    health: 450
-    探测怪:
-        name: "探测怪"
-        monsterType: "SLIME"
-        spawnLocationType: ANY
-        slimeSize: 4
-        owningBoss: 毁灭者
-        isMechanic: true
-        hasHealthMulti: true
-        variants:
-            default1:
-                attributes:
-                    damage: 176
-                    damageType: "Arrow"
-                    defence: 40
-                    knockback: 2
-                    knockbackResistance: 0.28
-                    health: 600
-    深海吞食者:
-        name: "深海吞食者"
-        monsterType: "SLIME"
-        spawnLocationType: ANY
-        slimeSize: 4
-        owningBoss: 阿娜希塔和利维坦
-        hasHealthMulti: true
-        variants:
-            default1:
-                attributes:
-                    damage: 420
-                    damageType: "Melee"
-                    defence: 28
-                    knockback: 2
-                    knockbackResistance: 1
-                    health: 3600
     鸟妖:
         name: "鸟妖"
         monsterType: "SLIME"

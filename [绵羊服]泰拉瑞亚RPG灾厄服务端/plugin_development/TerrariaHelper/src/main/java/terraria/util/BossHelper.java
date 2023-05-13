@@ -43,7 +43,7 @@ public class BossHelper {
         SIGNUS_ENVOY_OF_THE_DEVOURER("神之使徒西格纳斯"), POLTERGHAST("噬魂幽花"), THE_OLD_DUKE("硫海遗爵"),
         THE_DEVOURER_OF_GODS("神明吞噬者"), YHARON_DRAGON_OF_REBIRTH("丛林龙，犽戎"),
         EXO_MECHS("星流巨械"), SUPREME_WITCH_CALAMITAS("至尊灾厄");
-        public String msgName;
+        public final String msgName;
         BossType(String name) {
             this.msgName = name;
         }

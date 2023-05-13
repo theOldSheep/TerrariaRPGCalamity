@@ -324,7 +324,7 @@
     autoTraceRadius: 32
     autoTraceSharpTurning: false
     autoTraceAbility: 0.25
-    noAutoTraceTicks: 20
+    noAutoTraceTicks: 15
     maxAutoTraceTicks: 60
     buffInflict:
         - "冷冻|80|1"
@@ -344,10 +344,9 @@
     speedMultiPerTick: 0.99
     autoTrace: true
     autoTraceMethod: 2
-    autoTraceRadius: 32
+    autoTraceRadius: 64
     autoTraceSharpTurning: false
-    autoTraceAbility: 0.25
-    noAutoTraceTicks: 15
+    autoTraceAbility: 0.15
 流星喷射:
     blockHitAction: thru
     gravity: 0

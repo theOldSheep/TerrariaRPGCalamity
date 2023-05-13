@@ -23,7 +23,8 @@ public class Anahita extends EntityZombieHusk {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.LEVIATHAN_AND_ANAHITA;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.OCEAN;
-    public static final double BASIC_HEALTH = 99840 * 2;
+    public static final double BASIC_HEALTH = 9984 * 2;
+//    public static final double BASIC_HEALTH = 99840 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
@@ -40,8 +41,8 @@ public class Anahita extends EntityZombieHusk {
     int indexAI = -40;
     double healthRatio = 1d;
     static HashMap<String, Double> attrMapWaterSpear, attrMapFrostMist, attrMapTrebleClef, attrMapBubble;
-    static final double SPEED_WATER_SPEAR = 1.5, SPEED_FROST_MIST = 0.9, SPEED_TREBLE_CLEF = 1, SPEED_BUBBLE = 1.5,
-            SPEED_USUAL = 1.5, SPEED_DASH = 3;
+    static final double SPEED_WATER_SPEAR = 1.5, SPEED_FROST_MIST = 0.9, SPEED_TREBLE_CLEF = 1.25, SPEED_BUBBLE = 1,
+            SPEED_USUAL = 2.5, SPEED_DASH = 3;
     static final int DASH_DURATION = 40;
     EntityHelper.ProjectileShootInfo shootInfoWaterSpear, shootInfoFrostMist, shootInfoTrebleClef, shootInfoBubble;
     static {
@@ -75,7 +76,7 @@ public class Anahita extends EntityZombieHusk {
         }
         // aftermath
         indexAI = -1;
-        // invulnerable when leviathan has more than 70% health and hovering
+        // invulnerable when leviathan has more than 70% health
         if (phaseAI == AIPhase.HOVER)
             addScoreboardTag("noDamage");
         else
@@ -124,7 +125,7 @@ public class Anahita extends EntityZombieHusk {
         else {
             for (Vector offset : MathHelper.getCircularProjectileDirections(
                     shootAmount, 2, 180, new Vector(0, 1, 0), 1)) {
-                Vector offsetActual = offset.clone().multiply(6);
+                Vector offsetActual = offset.clone().multiply(12);
                 shootInfo.shootLoc = target.getEyeLocation().add(offsetActual);
                 shootInfo.velocity = offset.multiply(-projectileSpeed);
                 EntityHelper.spawnProjectile(shootInfo);
@@ -191,6 +192,11 @@ public class Anahita extends EntityZombieHusk {
                     changePhase();
                 break;
             }
+            case HOVER: {
+                if (indexAI > 1)
+                    changePhase();
+                break;
+            }
         }
         indexAI ++;
     }
@@ -248,6 +254,7 @@ public class Anahita extends EntityZombieHusk {
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
+        bukkitEntity.addScoreboardTag("noDamage");
         EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
@@ -309,17 +316,20 @@ public class Anahita extends EntityZombieHusk {
     @Override
     public void die() {
         super.die();
-        // disable boss bar
-        bossbar.setVisible(false);
-        BossHelper.bossMap.remove(BOSS_TYPE.msgName);
+        // disable boss bar if both boss are defeated
+        if (!leviathan.isAlive()) {
+            bossbar.setVisible(false);
+            BossHelper.bossMap.remove(BOSS_TYPE.msgName);
+        }
         // if the boss has been defeated properly
         if (getMaxHealth() > 10) {
             // drop items
             terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
 
             // send loot
-            if (!leviathan.isAlive())
+            if (!leviathan.isAlive()) {
                 terraria.entity.boss.BossHelper.handleBossDeath(BOSS_TYPE, bossParts, targetMap);
+            }
         }
     }
     // rewrite AI
