@@ -17,6 +17,8 @@ import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
 import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
 import terraria.entity.boss.desertScourge.DesertNuisance;
 import terraria.entity.boss.desertScourge.DesertScourge;
+import terraria.entity.boss.leviathanAndAnahita.Anahita;
+import terraria.entity.boss.leviathanAndAnahita.Leviathan;
 import terraria.entity.boss.plantera.Plantera;
 import terraria.entity.boss.plantera.PlanteraTentacle;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHand;
@@ -52,6 +54,8 @@ class from https://www.spigotmc.org/threads/nms-tutorials-2-custom-nms-entities-
  */
 public enum CustomEntities {
 
+    BOSS_ANHT          ("Anahita",           23,  EntityType.HUSK,            EntityZombieHusk.class, Anahita.class),
+    BOSS_ANHT_LVT      ("Leviathan",         55,  EntityType.SLIME,           EntitySlime.class,      Leviathan.class),
     BOSS_AQTS          ("AquaticScourge",    55,  EntityType.SLIME,           EntitySlime.class,      AquaticScourge.class),
     BOSS_BELM          ("BrimstoneElemental",55,  EntityType.SLIME,           EntitySlime.class,      BrimstoneElemental.class),
     BOSS_CBL           ("Crabulon",          55,  EntityType.SLIME,           EntitySlime.class,      Crabulon.class),

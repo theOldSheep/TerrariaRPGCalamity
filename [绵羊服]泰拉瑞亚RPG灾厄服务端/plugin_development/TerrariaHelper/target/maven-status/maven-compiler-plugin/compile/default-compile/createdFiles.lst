@@ -1,3 +1,4 @@
+terraria\entity\boss\leviathanAndAnahita\Anahita$AIPhase.class
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu.class
 terraria\entity\boss\aquaticScourge\AquaticScourge.class
 terraria\worldgen\overworld\OverworldCaveGenerator$1.class
@@ -7,6 +8,7 @@ terraria\util\GenericHelper$StrikeLineOptions.class
 terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
 terraria\entity\npc\TerrariaNPCClothier.class
+terraria\entity\boss\leviathanAndAnahita\Leviathan.class
 terraria\entity\monster\MonsterZombie.class
 terraria\event\listener\PlayerMovementListener$1.class
 terraria\entity\boss\cryogen\Cryogen.class
@@ -73,6 +75,7 @@ terraria\entity\boss\skeletronPrime\SkeletronPrimeHand$1.class
 terraria\entity\boss\calamitasClone\Catastrophe.class
 terraria\util\EntityHelper.class
 terraria\entity\boss\cryogen\CryogenShield.class
+terraria\entity\boss\leviathanAndAnahita\Anahita$1.class
 terraria\entity\npc\PathfinderGoalNPCRestrictLocation.class
 terraria\event\listener\PlayerKeyToggleListener.class
 terraria\util\YmlHelper$YmlSection.class
@@ -91,6 +94,7 @@ terraria\entity\boss\theTwins\Spazmatism.class
 terraria\event\listener\DamageListener.class
 terraria\entity\others\TerrariaEntityPlayer.class
 terraria\util\DragoncoreHelper$SlotCallback.class
+terraria\entity\boss\leviathanAndAnahita\Leviathan$1.class
 terraria\entity\boss\BossHelper.class
 terraria\entity\boss\desertScourge\DesertScourge.class
 terraria\entity\boss\theTwins\Retinazer.class
@@ -113,6 +117,7 @@ terraria\worldgen\overworld\OverworldChunkGenerator.class
 terraria\entity\monster\MonsterHelper$MonsterStatsMulti.class
 terraria\entity\projectile\TerrariaArrowProjectile$1.class
 terraria\entity\boss\theSlimeGod\CrimulanSlime$SlimeSize.class
+terraria\entity\boss\leviathanAndAnahita\Leviathan$AIPhase.class
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu$AIPhase.class
 terraria\gameplay\Event.class
 terraria\entity\boss\crabulon\Crabulon.class
@@ -146,6 +151,7 @@ terraria\util\GenericHelper$1.class
 terraria\entity\boss\calamitasClone\Cataclysm.class
 terraria\event\listener\ServerStopListener.class
 terraria\util\WorldHelper$HeightLayer.class
+terraria\entity\boss\leviathanAndAnahita\Anahita.class
 terraria\worldgen\Interpolate$InterpolatePoint.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator.class
 terraria\entity\npc\TerrariaNPCDemolitionist.class

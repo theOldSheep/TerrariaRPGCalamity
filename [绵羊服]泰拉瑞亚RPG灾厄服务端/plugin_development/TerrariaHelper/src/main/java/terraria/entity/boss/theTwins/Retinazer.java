@@ -350,7 +350,7 @@ public class Retinazer extends EntitySlime {
         // init target map
         {
             targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
-                    getBukkitEntity(), "血肉之墙", summonedPlayer, true, bossbar);
+                    getBukkitEntity(), BossHelper.BossType.WALL_OF_FLESH.msgName, summonedPlayer, true, bossbar);
             target = summonedPlayer;
             EntityHelper.setMetadata(bukkitEntity, "targets", targetMap);
         }

@@ -308,6 +308,51 @@
     speedMultiPerTick: 0.95
     buffInflict:
         - "中毒|160|1"
+水之枪:
+    penetration: 99999
+    blockHitAction: thru
+    liveTime: 60
+    gravity: 0
+霜雾:
+    penetration: 99999
+    blockHitAction: thru
+    liveTime: 80
+    gravity: 0
+    projectileSize: 0.5
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceRadius: 32
+    autoTraceSharpTurning: false
+    autoTraceAbility: 0.25
+    noAutoTraceTicks: 20
+    maxAutoTraceTicks: 60
+    buffInflict:
+        - "冷冻|80|1"
+魅惑之音:
+    penetration: 99999
+    blockHitAction: thru
+    liveTime: 300
+    gravity: 0
+    projectileSize: 0.25
+    speedMultiPerTick: 0.95
+    buffInflict:
+        - "冷冻|40|1"
+爆炸泡泡:
+    blockHitAction: thru
+    gravity: 0
+    projectileSize: 0.5
+    speedMultiPerTick: 0.99
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceRadius: 32
+    autoTraceSharpTurning: false
+    autoTraceAbility: 0.25
+    noAutoTraceTicks: 15
+流星喷射:
+    blockHitAction: thru
+    gravity: 0
+    projectileSize: 2.5
+    liveTime: 100
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2

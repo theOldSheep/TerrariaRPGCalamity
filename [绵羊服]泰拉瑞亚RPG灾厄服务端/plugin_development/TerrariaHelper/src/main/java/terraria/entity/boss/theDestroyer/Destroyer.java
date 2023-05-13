@@ -301,7 +301,7 @@ public class Destroyer extends EntitySlime {
         {
             if (index == 0) {
                 targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
-                        getBukkitEntity(), "血肉之墙", summonedPlayer, true, bossbar);
+                        getBukkitEntity(), BossHelper.BossType.WALL_OF_FLESH.msgName, summonedPlayer, true, bossbar);
             } else {
                 targetMap = (HashMap<Player, Double>) EntityHelper.getMetadata(bossParts.get(0), "targets").value();
             }

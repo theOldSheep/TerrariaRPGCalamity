@@ -267,6 +267,8 @@ public class MonsterHelper {
             case "克苏鲁的仆从":
             case "沼泽之眼":
             case "飞翔史莱姆":
+            case "探测怪":
+            case "深海吞食者":
             case "鸟妖":
             case "飞龙":
             case "吞噬者":
@@ -275,7 +277,6 @@ public class MonsterHelper {
             case "诅咒骷髅头":
             case "地牢幽魂":
             case "致命球":
-            case "探测怪":
             case "精灵直升机":
             case "雪花怪":
             case "钨钢悬浮坦克":
@@ -296,6 +297,7 @@ public class MonsterHelper {
             case "致命球":
             case "胡闹鬼":
             case "探测怪":
+            case "深海吞食者":
             case "精灵直升机":
             case "蛾怪":
             case "陨石怪":
@@ -398,8 +400,9 @@ public class MonsterHelper {
                 break;
             }
             case "精灵直升机":
+            case "深海吞食者":
             {
-                ((MonsterSlime) monster).indexAI = (int) (Math.random() * 360);
+                ((MonsterSlime) monster).indexAI = (int) (Math.random() * 3600);
                 break;
             }
         }
@@ -731,7 +734,8 @@ public class MonsterHelper {
                 case "巫毒恶魔":
                 case "饿鬼":
                 case "飞翔史莱姆":
-                case "雪花怪": {
+                case "雪花怪":
+                case "深海吞食者": {
                     if (monster.getHealth() > 0) {
                         // determines if the direction should be updated
                         boolean changeDirection = indexAI % 60 <= 10;

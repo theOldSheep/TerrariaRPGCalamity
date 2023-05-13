@@ -12,6 +12,7 @@ import terraria.entity.boss.cryogen.Cryogen;
 import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
 import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
 import terraria.entity.boss.desertScourge.DesertScourge;
+import terraria.entity.boss.leviathanAndAnahita.Anahita;
 import terraria.entity.boss.plantera.Plantera;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
 import terraria.entity.boss.theDestroyer.Destroyer;
@@ -194,6 +195,13 @@ public class BossHelper {
                 break;
             }
             // pre-moon lord
+            case LEVIATHAN_AND_ANAHITA: {
+                if (Anahita.canSpawn(target)) {
+                    new Anahita(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
         }
         if (spawnedSuccessfully) {
             bossType.playSummonSound(soundLocation);

@@ -1225,6 +1225,22 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.28
                     health: 600
+    深海吞食者:
+        name: "深海吞食者"
+        monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 4
+        owningBoss: 阿娜希塔和利维坦
+        hasHealthMulti: true
+        variants:
+            default1:
+                attributes:
+                    damage: 420
+                    damageType: "Melee"
+                    defence: 28
+                    knockback: 2
+                    knockbackResistance: 1
+                    health: 3600
     鸟妖:
         name: "鸟妖"
         monsterType: "SLIME"
