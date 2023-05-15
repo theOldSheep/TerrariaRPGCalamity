@@ -78,6 +78,16 @@ effects:
       damageTakenMulti: 0.1
       flightTimeMulti: -0.25
     tooltip: 你很虚弱
+  幻星感染:
+    isBuff: false
+    damageInterval: 4
+    damage: 4
+    damageMonster: 15
+    attributes:
+      speedMulti: -0.15
+      regenMulti: -1
+      damageMulti: -0.1
+    tooltip: 你的血肉正在被幻星熔蚀
   耐药性:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/83/Potion_Sickness
     isBuff: false

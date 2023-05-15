@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import terraria.entity.boss.aquaticScourge.AquaticScourge;
+import terraria.entity.boss.astrumAureus.AstrumAureus;
 import terraria.entity.boss.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.calamitasClone.CalamitasClone;
 import terraria.entity.boss.crabulon.Crabulon;
@@ -198,6 +199,13 @@ public class BossHelper {
             case LEVIATHAN_AND_ANAHITA: {
                 if (Anahita.canSpawn(target)) {
                     new Anahita(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case ASTRUM_AUREUS: {
+                if (AstrumAureus.canSpawn(target)) {
+                    new AstrumAureus(target);
                     spawnedSuccessfully = true;
                 }
                 break;

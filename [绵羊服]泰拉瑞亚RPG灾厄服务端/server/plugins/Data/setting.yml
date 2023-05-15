@@ -172,6 +172,8 @@ deathMessages:
   - <victim> 死于辐射。
   Debuff_孱弱巫咒:
   - <victim> 被硫磺烈焰烧焦了。
+  Debuff_幻星感染:
+  - <victim> 成为了星辉瘟疫的一部分。
 settings:
   playerInventories:
   - piggyBank

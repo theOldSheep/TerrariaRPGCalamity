@@ -21,8 +21,7 @@ public class Leviathan extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.LEVIATHAN_AND_ANAHITA;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.OCEAN;
-    public static final double BASIC_HEALTH = 17414 * 2;
-//    public static final double BASIC_HEALTH = 174144 * 2;
+    public static final double BASIC_HEALTH = 174144 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
@@ -98,7 +97,7 @@ public class Leviathan extends EntitySlime {
                 Location tempLoc = target.getEyeLocation();
                 Location eyeLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
                 tempLoc.setY(eyeLoc.getY());
-                Vector offsetVec = MathHelper.getDirection(tempLoc, eyeLoc, 16);
+                Vector offsetVec = MathHelper.getDirection(tempLoc, eyeLoc, 32);
                 Location hoverTargetLocation = target.getEyeLocation().add(offsetVec);
                 bukkitEntity.setVelocity(
                         MathHelper.getDirection(eyeLoc, hoverTargetLocation, SPEED_HOVER, true));
@@ -219,7 +218,7 @@ public class Leviathan extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(20, false);
+            setSize(30, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);

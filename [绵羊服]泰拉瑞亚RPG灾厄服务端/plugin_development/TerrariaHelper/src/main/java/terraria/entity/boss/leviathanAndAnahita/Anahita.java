@@ -23,8 +23,7 @@ public class Anahita extends EntityZombieHusk {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.LEVIATHAN_AND_ANAHITA;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.OCEAN;
-    public static final double BASIC_HEALTH = 9984 * 2;
-//    public static final double BASIC_HEALTH = 99840 * 2;
+    public static final double BASIC_HEALTH = 99840 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
