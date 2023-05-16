@@ -361,7 +361,6 @@
     buffInflict:
         - "幻星感染|40|1"
 星幻凝晶:
-    penetration: 99999
     blockHitAction: thru
     liveTime: 160
     gravity: 0

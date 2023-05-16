@@ -36,8 +36,13 @@ public class AstrumAureus extends EntitySlime {
     }
     AIPhase phaseAI = AIPhase.RECHARGE;
     int indexAI = -40, attacksDuringPhase = 0;
+    double healthRatio = 1;
     static HashMap<String, Double> attrMapLaser, attrMapCrystal;
-    static final double SPEED_LASER = 2.25, SPEED_CRYSTAL = 1;
+    static final int SPREAD_JUMP_MIN = 11, SPREAD_JUMP_MAX = 11, SPREAD_CRAWL_MIN = 8, SPREAD_CRAWL_MAX = 8;
+    static final double SPEED_LASER = 2.25, SPEED_CRYSTAL = 1,
+            HORIZONTAL_SPEED = 1, HORIZONTAL_ACC = 0.1,
+            SPEED_CRAWL_MULTI_MIN = 1, SPEED_CRAWL_MULTI_MAX = 1,
+            SPEED_JUMP_MULTI_MIN = 1, SPEED_JUMP_MULTI_MAX = 1;
     EntityHelper.ProjectileShootInfo shootInfoLaser, shootInfoCrystal;
     static {
         attrMapLaser = new HashMap<>();
@@ -47,19 +52,34 @@ public class AstrumAureus extends EntitySlime {
         attrMapCrystal.put("damage", 600d);
         attrMapCrystal.put("knockback", 2d);
     }
-    // TODO
     private void randomTeleport() {
-        // spawns
+        for (int i = 0; i < 2; i ++)
+            new AureusSpawn(target, this);
+        // teleport
+        Vector offset = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, 0);
+        offset.multiply(25);
+        Location teleportLoc = target.getLocation().add(offset);
+        bukkitEntity.teleport(teleportLoc);
     }
     private void changePhase() {
         // change phase
-        // TODO
+        switch (phaseAI) {
+            case JUMP:
+                if (attacksDuringPhase > 5)
+                    phaseAI = AIPhase.RECHARGE;
+                break;
+            case RECHARGE:
+                phaseAI = AIPhase.CRAWL;
+                break;
+            case CRAWL:
+                phaseAI = AIPhase.JUMP;
+                break;
+        }
         // aftermath
         indexAI = -1;
         attacksDuringPhase = 0;
         // take additional damage during recharge
         if (phaseAI == AIPhase.RECHARGE) {
-            randomTeleport();
             bossbar.color = BossBattle.BarColor.GREEN;
             bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
             attrMap.put("damageTakenMulti", 0.75);
@@ -73,6 +93,105 @@ public class AstrumAureus extends EntitySlime {
         }
     }
 
+    private int getShootSpread() {
+        int spreadMin = phaseAI == AIPhase.CRAWL ? SPREAD_CRAWL_MIN : SPREAD_JUMP_MIN;
+        int spreadMax = phaseAI == AIPhase.CRAWL ? SPREAD_CRAWL_MAX : SPREAD_JUMP_MAX;
+        return spreadMin + (int) ((1 - healthRatio) * (spreadMax - spreadMin));
+    }
+    private double getSpeedMulti() {
+        double speedMultiMin = phaseAI == AIPhase.CRAWL ? SPEED_CRAWL_MULTI_MIN : SPEED_JUMP_MULTI_MIN;
+        double speedMultiMax = phaseAI == AIPhase.CRAWL ? SPEED_CRAWL_MULTI_MAX : SPEED_JUMP_MULTI_MAX;
+        return speedMultiMin + (1 - healthRatio) * (speedMultiMax - speedMultiMin);
+    }
+    private Vector getHorizontalDirection() {
+        Location targetLoc = target.getLocation();
+        Location currLoc = bukkitEntity.getLocation();
+        targetLoc.setY(currLoc.getY());
+        return MathHelper.getDirection(currLoc, targetLoc, 1);
+    }
+
+    private void shootLasers() {
+        shootInfoLaser.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        for (Vector shootVelocity : MathHelper.getCircularProjectileDirections(
+                getShootSpread(), 3, 75,
+                target, shootInfoLaser.shootLoc, SPEED_LASER)) {
+            shootInfoLaser.velocity = shootVelocity;
+            EntityHelper.spawnProjectile(shootInfoLaser);
+        }
+    }
+    private void AIPhaseRecharge() {
+        if (indexAI < 50 && indexAI % 4 == 0) {
+            Vector shootDir = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, 75 + Math.random() * 15);
+            shootDir.multiply(SPEED_CRYSTAL);
+            shootInfoCrystal.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+            shootInfoCrystal.velocity = shootDir;
+            EntityHelper.spawnProjectile(shootInfoCrystal);
+        }
+        else if (indexAI == 50)
+            randomTeleport();
+        else if (indexAI > 80)
+            changePhase();
+    }
+    private void AIPhaseCrawl() {
+        // crawl movement
+        {
+            Vector horizontalAcc = getHorizontalDirection();
+            double speedMulti = getSpeedMulti();
+            horizontalAcc.multiply(HORIZONTAL_ACC * speedMulti);
+            Vector velocity = bukkitEntity.getVelocity();
+            velocity.setY(0);
+            velocity.add(horizontalAcc);
+            double velLen = velocity.length();
+            double horSpeed = HORIZONTAL_SPEED * speedMulti;
+            if (velLen > horSpeed)
+                velocity.multiply(horSpeed / velLen);
+            double verticalVelocity = 0.1;
+            velocity.setY(bukkitEntity.getLocation().getBlock().getType().isSolid() ? verticalVelocity : -verticalVelocity);
+            bukkitEntity.setVelocity(velocity);
+        }
+        // shoot projectiles
+        if (indexAI % 30 == 0) {
+            shootLasers();
+        }
+        if (indexAI > 150)
+            changePhase();
+    }
+    private void AIPhaseJump() {
+        if (indexAI >= 0) {
+            double speedMulti = getSpeedMulti();
+            double speed = HORIZONTAL_SPEED * speedMulti;
+            Vector velocity;
+            if (indexAI == 0) {
+                velocity = getHorizontalDirection();
+                velocity.multiply(speed);
+                velocity.setY(Math.max(2, (target.getLocation().getY() - bukkitEntity.getLocation().getY()) / 20));
+            }
+            else {
+                // horizontal velocity
+                velocity = bukkitEntity.getVelocity();
+                double yComp = velocity.getY();
+                velocity.setY(0);
+                Vector horAcc = getHorizontalDirection();
+                horAcc.multiply(HORIZONTAL_ACC * speedMulti);
+                velocity.add(horAcc);
+                double velLen = velocity.length();
+                if (velLen > speed) {
+                    velocity.multiply(speed / velLen);
+                }
+                yComp = Math.max(-1, yComp - 0.025);
+                velocity.setY(yComp);
+                // landing
+                if (locY < target.getLocation().getY()) {
+                    shootLasers();
+                    indexAI = -30;
+                    attacksDuringPhase ++;
+                    bukkitEntity.setVelocity(new Vector());
+                    changePhase();
+                }
+            }
+            bukkitEntity.setVelocity(velocity);
+        }
+    }
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -92,7 +211,19 @@ public class AstrumAureus extends EntitySlime {
             }
             // if target is valid, attack
             else {
-                // TODO
+                healthRatio = getHealth() / getMaxHealth();
+                switch (phaseAI) {
+                    case RECHARGE:
+                        AIPhaseRecharge();
+                        break;
+                    case CRAWL:
+                        AIPhaseCrawl();
+                        break;
+                    case JUMP:
+                        AIPhaseJump();
+                        break;
+                }
+                indexAI ++;
             }
         }
         // face the player
