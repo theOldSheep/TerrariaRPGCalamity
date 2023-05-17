@@ -370,8 +370,8 @@
     autoTraceRadius: 64
     autoTraceSharpTurning: false
     autoTraceAbility: 0.2
-    noAutoTraceTicks: 40
-    maxAutoTraceTicks: 100
+    noAutoTraceTicks: 15
+    maxAutoTraceTicks: 75
     buffInflict:
         - "幻星感染|60|1"
 天蓝羽毛:

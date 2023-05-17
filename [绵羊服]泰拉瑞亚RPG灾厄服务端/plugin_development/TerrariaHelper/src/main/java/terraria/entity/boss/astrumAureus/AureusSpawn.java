@@ -26,7 +26,7 @@ public class AureusSpawn extends EntitySlime {
     AstrumAureus owner;
     // other variables and AI
     static final String name = "小白星";
-    static final double CHASE_SPEED_MAX = 2, CHASE_ACC = 0.15;
+    static final double CHASE_SPEED_MAX = 3, CHASE_ACC = 0.15;
     private void explode() {
         EntityHelper.handleEntityExplode(bukkitEntity, 4.5, new ArrayList<>(), ((LivingEntity) bukkitEntity).getEyeLocation());
         die();
@@ -118,7 +118,7 @@ public class AureusSpawn extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(16, false);
+            setSize(4, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(owner.targetMap.size());
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);

@@ -5,6 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.aquaticScourge.AquaticScourge;
+import terraria.entity.boss.astrumAureus.AstrumAureus;
+import terraria.entity.boss.astrumAureus.AureusSpawn;
 import terraria.entity.boss.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.calamitasClone.CalamitasClone;
 import terraria.entity.boss.calamitasClone.CalamitasDummyPlayer;
@@ -57,6 +59,8 @@ public enum CustomEntities {
     BOSS_ANHT          ("Anahita",           23,  EntityType.HUSK,            EntityZombieHusk.class, Anahita.class),
     BOSS_ANHT_LVT      ("Leviathan",         55,  EntityType.SLIME,           EntitySlime.class,      Leviathan.class),
     BOSS_AQTS          ("AquaticScourge",    55,  EntityType.SLIME,           EntitySlime.class,      AquaticScourge.class),
+    BOSS_AUREUS        ("AstrumAureus",      55,  EntityType.SLIME,           EntitySlime.class,      AstrumAureus.class),
+    BOSS_AUREUS_SPAWN  ("AureusSpawn",       55,  EntityType.SLIME,           EntitySlime.class,      AureusSpawn.class),
     BOSS_BELM          ("BrimstoneElemental",55,  EntityType.SLIME,           EntitySlime.class,      BrimstoneElemental.class),
     BOSS_CBL           ("Crabulon",          55,  EntityType.SLIME,           EntitySlime.class,      Crabulon.class),
     BOSS_CLMT          ("Calamitas",         55,  EntityType.SLIME,           EntitySlime.class,      CalamitasClone.class),

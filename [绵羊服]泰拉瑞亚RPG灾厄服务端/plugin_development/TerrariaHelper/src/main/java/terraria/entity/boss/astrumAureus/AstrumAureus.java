@@ -34,13 +34,14 @@ public class AstrumAureus extends EntitySlime {
     enum AIPhase {
         RECHARGE, CRAWL, JUMP;
     }
+    boolean falling = false;
     AIPhase phaseAI = AIPhase.RECHARGE;
     int indexAI = -40, attacksDuringPhase = 0;
     double healthRatio = 1;
     static HashMap<String, Double> attrMapLaser, attrMapCrystal;
     static final int SPREAD_JUMP_MIN = 11, SPREAD_JUMP_MAX = 11, SPREAD_CRAWL_MIN = 8, SPREAD_CRAWL_MAX = 8;
-    static final double SPEED_LASER = 2.25, SPEED_CRYSTAL = 1,
-            HORIZONTAL_SPEED = 1, HORIZONTAL_ACC = 0.1,
+    static final double SPEED_LASER = 2.25, SPEED_CRYSTAL = 1.5,
+            HORIZONTAL_SPEED = 1.75, HORIZONTAL_ACC = 0.125,
             SPEED_CRAWL_MULTI_MIN = 1, SPEED_CRAWL_MULTI_MAX = 1,
             SPEED_JUMP_MULTI_MIN = 1, SPEED_JUMP_MULTI_MAX = 1;
     EntityHelper.ProjectileShootInfo shootInfoLaser, shootInfoCrystal;
@@ -57,8 +58,9 @@ public class AstrumAureus extends EntitySlime {
             new AureusSpawn(target, this);
         // teleport
         Vector offset = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, 0);
-        offset.multiply(25);
+        offset.multiply(40);
         Location teleportLoc = target.getLocation().add(offset);
+        teleportLoc.setY(teleportLoc.getWorld().getHighestBlockYAt(teleportLoc));
         bukkitEntity.teleport(teleportLoc);
     }
     private void changePhase() {
@@ -67,6 +69,8 @@ public class AstrumAureus extends EntitySlime {
             case JUMP:
                 if (attacksDuringPhase > 5)
                     phaseAI = AIPhase.RECHARGE;
+                else
+                    return;
                 break;
             case RECHARGE:
                 phaseAI = AIPhase.CRAWL;
@@ -113,15 +117,15 @@ public class AstrumAureus extends EntitySlime {
     private void shootLasers() {
         shootInfoLaser.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         for (Vector shootVelocity : MathHelper.getCircularProjectileDirections(
-                getShootSpread(), 3, 75,
+                getShootSpread(), 3, 60,
                 target, shootInfoLaser.shootLoc, SPEED_LASER)) {
             shootInfoLaser.velocity = shootVelocity;
-            EntityHelper.spawnProjectile(shootInfoLaser);
+            EntityHelper.spawnProjectile(shootInfoLaser).setGlowing(true);
         }
     }
     private void AIPhaseRecharge() {
         if (indexAI < 50 && indexAI % 4 == 0) {
-            Vector shootDir = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, 75 + Math.random() * 15);
+            Vector shootDir = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, -75 - Math.random() * 15);
             shootDir.multiply(SPEED_CRYSTAL);
             shootInfoCrystal.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             shootInfoCrystal.velocity = shootDir;
@@ -145,7 +149,7 @@ public class AstrumAureus extends EntitySlime {
             double horSpeed = HORIZONTAL_SPEED * speedMulti;
             if (velLen > horSpeed)
                 velocity.multiply(horSpeed / velLen);
-            double verticalVelocity = 0.1;
+            double verticalVelocity = 0.5;
             velocity.setY(bukkitEntity.getLocation().getBlock().getType().isSolid() ? verticalVelocity : -verticalVelocity);
             bukkitEntity.setVelocity(velocity);
         }
@@ -164,7 +168,8 @@ public class AstrumAureus extends EntitySlime {
             if (indexAI == 0) {
                 velocity = getHorizontalDirection();
                 velocity.multiply(speed);
-                velocity.setY(Math.max(2, (target.getLocation().getY() - bukkitEntity.getLocation().getY()) / 20));
+                velocity.setY(2);
+                falling = false;
             }
             else {
                 // horizontal velocity
@@ -178,16 +183,23 @@ public class AstrumAureus extends EntitySlime {
                 if (velLen > speed) {
                     velocity.multiply(speed / velLen);
                 }
-                yComp = Math.max(-1, yComp - 0.025);
-                velocity.setY(yComp);
-                // landing
-                if (locY < target.getLocation().getY()) {
-                    shootLasers();
-                    indexAI = -30;
-                    attacksDuringPhase ++;
-                    bukkitEntity.setVelocity(new Vector());
-                    changePhase();
+                if (falling) {
+                    yComp -= 0.075;
+                    // landing
+                    if (locY < target.getLocation().getY() &&
+                            (locY < 0 || bukkitEntity.getLocation().getBlock().getType().isSolid())) {
+                        shootLasers();
+                        velocity = new Vector();
+                        yComp = 0;
+                        indexAI = -30;
+                        attacksDuringPhase ++;
+                        bukkitEntity.setVelocity(new Vector());
+                        changePhase();
+                    }
                 }
+                else if (locY > target.getLocation().getY())
+                    falling = true;
+                velocity.setY(yComp);
             }
             bukkitEntity.setVelocity(velocity);
         }
@@ -201,6 +213,8 @@ public class AstrumAureus extends EntitySlime {
             // update target
             target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
                     IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+            if (WorldHelper.isDayTime(bukkitEntity.getWorld()))
+                target = null;
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {
@@ -239,7 +253,7 @@ public class AstrumAureus extends EntitySlime {
     }
     // validate if the condition for spawning is met
     public static boolean canSpawn(Player player) {
-        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
+        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED && !(WorldHelper.isDayTime(player.getWorld()));
     }
     // a constructor for actual spawning
     public AstrumAureus(Player summonedPlayer) {
@@ -247,7 +261,8 @@ public class AstrumAureus extends EntitySlime {
         // spawn location
         double angle = Math.random() * 720d, dist = 40;
         Location spawnLoc = summonedPlayer.getLocation().add(
-                MathHelper.xsin_degree(angle) * dist, -6, MathHelper.xcos_degree(angle) * dist);
+                MathHelper.xsin_degree(angle) * dist, 0, MathHelper.xcos_degree(angle) * dist);
+        spawnLoc.setY( spawnLoc.getWorld().getHighestBlockYAt(spawnLoc) );
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
