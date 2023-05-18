@@ -346,12 +346,7 @@ public class QueenSlime extends EntitySlime {
         // projectile info
         {
             projectileProperty = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapRegalGel,
-                    EntityHelper.DamageType.ARROW, "");
-            projectileProperty.projectileName = "挥发明胶";
-            projectileProperty.properties.put("blockHitAction", "bounce");
-            projectileProperty.properties.put("bounce", 6);
-            projectileProperty.properties.put("projectileSize", 0.5);
-            projectileProperty.properties.put("penetration", 9);
+                    EntityHelper.DamageType.ARROW, "挥发明胶");
         }
     }
 

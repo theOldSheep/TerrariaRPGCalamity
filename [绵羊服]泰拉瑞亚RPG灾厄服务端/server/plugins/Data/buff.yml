@@ -292,6 +292,13 @@ effects:
     attributes:
       defenceMulti: -0.5
     tooltip: 防御力减半
+  碎甲:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/d5/Broken_Armor
+    isBuff: false
+    attributes:
+      defence: -30
+      damageTakenMulti: 0.15
+    tooltip: 你的护甲被撕裂了
   诅咒:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/f/f0/Cursed
     isBuff: false

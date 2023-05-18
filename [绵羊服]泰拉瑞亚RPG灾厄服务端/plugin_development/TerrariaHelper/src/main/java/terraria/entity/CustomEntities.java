@@ -19,6 +19,10 @@ import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
 import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
 import terraria.entity.boss.desertScourge.DesertNuisance;
 import terraria.entity.boss.desertScourge.DesertScourge;
+import terraria.entity.boss.golem.Golem;
+import terraria.entity.boss.golem.GolemFist;
+import terraria.entity.boss.golem.GolemFoot;
+import terraria.entity.boss.golem.GolemHead;
 import terraria.entity.boss.leviathanAndAnahita.Anahita;
 import terraria.entity.boss.leviathanAndAnahita.Leviathan;
 import terraria.entity.boss.plantera.Plantera;
@@ -74,6 +78,10 @@ public enum CustomEntities {
     BOSS_DSSC_NUIS     ("DesertNuisance",    55,  EntityType.SLIME,           EntitySlime.class,      DesertNuisance.class),
     BOSS_EOC           ("EyeOfCthulhu",      55,  EntityType.SLIME,           EntitySlime.class,      EyeOfCthulhu.class),
     BOSS_EOW           ("EaterOfWorlds",     55,  EntityType.SLIME,           EntitySlime.class,      EaterOfWorld.class),
+    BOSS_GOLEM         ("Golem",             55,  EntityType.SLIME,           EntitySlime.class,      Golem.class),
+    BOSS_GOLEM_HEAD    ("GolemHead",         55,  EntityType.SLIME,           EntitySlime.class,      GolemHead.class),
+    BOSS_GOLEM_FIST    ("GolemFist",         55,  EntityType.SLIME,           EntitySlime.class,      GolemFist.class),
+    BOSS_GOLEM_FOOT    ("GolemFoot",         55,  EntityType.SLIME,           EntitySlime.class,      GolemFoot.class),
     BOSS_HVM           ("TheHiveMind",       55,  EntityType.SLIME,           EntitySlime.class,      TheHiveMind.class),
     BOSS_HVM_BLOB      ("HiveBlob",          55,  EntityType.SLIME,           EntitySlime.class,      HiveBlob.class),
     BOSS_HVM_HEART     ("DarkHeart",         55,  EntityType.SLIME,           EntitySlime.class,      DarkHeart.class),

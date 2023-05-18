@@ -129,6 +129,11 @@
     buffInflict:
         - "扭曲|60|0.3"
         - "流血|160|1"
+挥发明胶:
+    penetration: 99999
+    blockHitAction: bounce
+    bounce: 6
+    projectileSize: 0.5
 冰霜爆:
     penetration: 99999
     blockHitAction: thru
@@ -352,6 +357,8 @@
     gravity: 0
     projectileSize: 2.5
     liveTime: 100
+    buffInflict:
+        - "碎甲|100|1"
 星幻激光:
     penetration: 99999
     blockHitAction: thru
@@ -374,6 +381,27 @@
     maxAutoTraceTicks: 75
     buffInflict:
         - "幻星感染|60|1"
+石巨人火球:
+    penetration: 99999
+    blockHitAction: bounce
+    bounce: 6
+    projectileSize: 0.5
+    gravity: 0
+    buffInflict:
+        - "燃烧|140|1"
+爆裂火球:
+    penetration: 99999
+    projectileSize: 0.5
+    gravity: 0
+    isGrenade: true
+    blastRadius: 3
+    blastDuration: 80
+    buffInflict:
+        - "燃烧|280|1"
+石巨人激光:
+    penetration: 99999
+    gravity: 0
+    blockHitAction: thru
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2
