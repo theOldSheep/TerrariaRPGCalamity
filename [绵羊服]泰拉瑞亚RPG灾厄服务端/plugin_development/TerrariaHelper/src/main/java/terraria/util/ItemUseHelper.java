@@ -561,7 +561,7 @@ public class ItemUseHelper {
         // account for arrow attribute.
         String ammoType = ammoTypeInitial;
         HashMap<String, Double> attrMap = (HashMap<String, Double>) attrMapOriginal.clone();
-        List<String> ammoConversion = weaponSection.getStringList("ammoConversion." + ammoTypeInitial);
+        List<String> ammoConversion = weaponSection.getStringList("ammoConversion." + ammoType);
         // if the ammo could get converted into multiple possible projectiles, handle them separately in the loop instead.
         if  (ammoConversion.size() <= 1) {
             if (ammoConversion.size() == 1) ammoType = ammoConversion.get(0);
@@ -573,13 +573,26 @@ public class ItemUseHelper {
                 EntityHelper.tweakAllAttributes(attrMap, ammoAttributeSection, true);
         }
         for (int i = 0; i < fireAmount; i ++) {
+            // account for arrow attribute.
+            // if the ammo could get converted into multiple possible projectiles, handle them separately here in the loop.
+            if  (ammoConversion.size() > 1) {
+                attrMap = (HashMap<String, Double>) attrMapOriginal.clone();
+                ammoType = ammoConversion.get((int) (Math.random() * ammoConversion.size()));
+                ConfigurationSection ammoAttributeSection =
+                        TerrariaHelper.itemConfig.getConfigurationSection(ammoType + ".attributes");
+                // if the converted ammo does not have attributes that overrides the original, default to the original
+                if (ammoAttributeSection == null)
+                    ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoTypeInitial + ".attributes");
+                if (ammoAttributeSection != null)
+                    EntityHelper.tweakAllAttributes(attrMap, ammoAttributeSection, true);
+            }
             Location fireLoc = ply.getEyeLocation();
             Vector fireVelocity = facingDir.clone();
             double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
             projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
-            projectileSpeed /= 10;
             if (weaponType.equals("BOW"))
                 projectileSpeed *= attrMap.getOrDefault("projectileSpeedArrowMulti", 1d);
+            projectileSpeed = Math.sqrt(projectileSpeed) * 0.8;
             // bullet spread
             if (spread > 0d) {
                 fireVelocity.multiply(spread);
@@ -606,19 +619,6 @@ public class ItemUseHelper {
                     fireLoc = destination.add(offset);
                     break;
                 }
-            }
-            // account for arrow attribute.
-            // if the ammo could get converted into multiple possible projectiles, handle them separately here in the loop.
-            if  (ammoConversion.size() > 1) {
-                attrMap = (HashMap<String, Double>) attrMapOriginal.clone();
-                ammoType = ammoConversion.get((int) (Math.random() * ammoConversion.size()));
-                ConfigurationSection ammoAttributeSection =
-                        TerrariaHelper.itemConfig.getConfigurationSection(ammoType + ".attributes");
-                // if the converted ammo does not have attributes that overrides the original, default to the original
-                if (ammoAttributeSection == null)
-                    ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoTypeInitial + ".attributes");
-                if (ammoAttributeSection != null)
-                    EntityHelper.tweakAllAttributes(attrMap, ammoAttributeSection, true);
             }
             // setup projectile velocity
             fireVelocity.multiply(projectileSpeed);

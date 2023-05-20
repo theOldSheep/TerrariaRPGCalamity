@@ -394,7 +394,8 @@
 日暮:
   type: BOW
   autoSwing: true
-  shots: 5
+  fireRounds: 5
+  fireRoundsDelay: 1
 海啸弓:
   type: BOW
   autoSwing: true
@@ -475,7 +476,8 @@
 发条突击步枪:
   type: GUN
   autoSwing: true
-  shots: 3
+  fireRounds: 3
+  fireRoundsDelay: 2
   offSet: 26
 巨兽鲨:
   type: GUN

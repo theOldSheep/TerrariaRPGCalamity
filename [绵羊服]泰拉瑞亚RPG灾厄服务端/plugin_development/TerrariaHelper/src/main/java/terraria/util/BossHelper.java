@@ -13,6 +13,7 @@ import terraria.entity.boss.cryogen.Cryogen;
 import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
 import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
 import terraria.entity.boss.desertScourge.DesertScourge;
+import terraria.entity.boss.golem.Golem;
 import terraria.entity.boss.leviathanAndAnahita.Anahita;
 import terraria.entity.boss.plantera.Plantera;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
@@ -206,6 +207,13 @@ public class BossHelper {
             case ASTRUM_AUREUS: {
                 if (AstrumAureus.canSpawn(target)) {
                     new AstrumAureus(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case GOLEM: {
+                if (Golem.canSpawn(target)) {
+                    new Golem(target);
                     spawnedSuccessfully = true;
                 }
                 break;

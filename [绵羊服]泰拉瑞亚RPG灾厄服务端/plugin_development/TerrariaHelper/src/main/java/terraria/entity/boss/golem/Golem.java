@@ -22,7 +22,8 @@ import java.util.HashMap;
 public class Golem extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.GOLEM;
-    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.TEMPLE;
+    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.NORMAL;
+//    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.TEMPLE;
     public static final double BASIC_HEALTH = 68850 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
@@ -43,13 +44,27 @@ public class Golem extends EntitySlime {
         attrMapInfernoBolt.put("damage", 540d);
         attrMapInfernoBolt.put("knockback", 2d);
     }
+    static double HORIZONTAL_SPEED = 1, VERTICAL_SPEED = 3;
 
     // phase 1: damage fists only  2: head only  3: body can be damaged
-    int indexAI = 0, phaseAI = 1;
+    int indexAI = 0, phaseAI = 1, jumpIndex = 0;
+    boolean falling = false;
     Vector orthogonalDir = new Vector();
     GolemHead head;
     GolemFist[] fists;
+    EntityHelper.ProjectileShootInfo shootInfoBeam;
 
+    private Vector getHorizontalDirection() {
+        Location targetLoc = target.getLocation();
+        Location currLoc = bukkitEntity.getLocation();
+        targetLoc.setY(currLoc.getY());
+        return MathHelper.getDirection(currLoc, targetLoc, 1);
+    }
+    private void shootLaser() {
+        shootInfoBeam.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        shootInfoBeam.velocity = MathHelper.getDirection(shootInfoBeam.shootLoc, target.getEyeLocation(), 3);
+        EntityHelper.spawnProjectile(shootInfoBeam);
+    }
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -84,7 +99,41 @@ public class Golem extends EntitySlime {
                         break;
                 }
                 // leap
-                // TODO
+                if (indexAI >= 0) {
+                    double speed = HORIZONTAL_SPEED;
+                    Vector velocity;
+                    if (indexAI == 0) {
+                        velocity = getHorizontalDirection();
+                        velocity.multiply(speed);
+                        velocity.setY(VERTICAL_SPEED);
+                        falling = false;
+                    }
+                    else {
+                        velocity = bukkitEntity.getVelocity();
+                        double yComp = velocity.getY();
+                        if (falling) {
+                            yComp -= 0.2;
+                            // landing
+                            if (locY < target.getLocation().getY() &&
+                                    (locY < 0 || bukkitEntity.getLocation().getBlock().getType().isSolid())) {
+                                velocity = new Vector();
+                                yComp = 0;
+                                indexAI = -30;
+                                jumpIndex ++;
+                                bukkitEntity.setVelocity(new Vector());
+                            }
+                        }
+                        else if (locY > target.getLocation().getY() || jumpIndex % 3 == 0)
+                            falling = true;
+                        velocity.setY(yComp);
+                    }
+                    bukkitEntity.setVelocity(velocity);
+                }
+                else if (phaseAI == 3 && indexAI % 5 == 0) {
+                    shootLaser();
+                }
+                // setup orthogonal direction
+                orthogonalDir = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 5);
                 indexAI ++;
             }
         }
@@ -100,7 +149,7 @@ public class Golem extends EntitySlime {
     }
     // validate if the condition for spawning is met
     public static boolean canSpawn(Player player) {
-        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED && !(WorldHelper.isDayTime(player.getWorld()));
+        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
     }
     // a constructor for actual spawning
     public Golem(Player summonedPlayer) {
@@ -166,6 +215,11 @@ public class Golem extends EntitySlime {
             };
             new GolemFoot(target, this, 1);
             new GolemFoot(target, this, 2);
+        }
+        // shoot info
+        {
+            shootInfoBeam = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBeam,
+                    EntityHelper.DamageType.MAGIC, "石巨人激光");
         }
     }
 

@@ -38,7 +38,31 @@ public class GolemHead extends EntitySlime {
     int indexAI = 0;
     EntityHelper.ProjectileShootInfo shootInfoFireball, shootInfoBeam, shootInfoInfernoBolt;
 
-
+    private void shootProjectile(int type) {
+        EntityHelper.ProjectileShootInfo shootInfo;
+        switch (type) {
+            case 1:
+                shootInfo = shootInfoFireball;
+                break;
+            case 2:
+                shootInfo = shootInfoBeam;
+                break;
+            case 3:
+                shootInfo = shootInfoInfernoBolt;
+                break;
+            default:
+                return;
+        }
+        shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        if (type == 3) {
+            shootInfo.velocity = target.getEyeLocation().subtract(shootInfo.shootLoc).toVector();
+            shootInfo.velocity.multiply(1d / 15);
+        }
+        else {
+            shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, target.getEyeLocation(), 2);
+        }
+        EntityHelper.spawnProjectile(shootInfo);
+    }
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -67,7 +91,16 @@ public class GolemHead extends EntitySlime {
                             target.getEyeLocation().add(0, 16, 0), FLIGHT_SPEED, true));
                 }
                 // spawn projectiles
-                // TODO
+
+                // fireball
+                if (indexAI % 20 == 0)
+                    shootProjectile(1);
+                // beam
+                if (indexAI % 8 == 0)
+                    shootProjectile(2);
+                // inferno bolt
+                if (owner.phaseAI == 3 && indexAI % 50 == 0)
+                    shootProjectile(3);
                 indexAI ++;
             }
         }

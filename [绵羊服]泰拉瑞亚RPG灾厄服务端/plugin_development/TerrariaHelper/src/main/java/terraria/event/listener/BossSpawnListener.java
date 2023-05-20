@@ -36,6 +36,7 @@ public class BossSpawnListener implements Listener {
         summonItems.put("世纪之花花苞", BossHelper.BossType.PLANTERA);
         // pre-moon lord
         summonItems.put("星辉碎块", BossHelper.BossType.ASTRUM_AUREUS);
+        summonItems.put("丛林蜥蜴电池", BossHelper.BossType.GOLEM);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {

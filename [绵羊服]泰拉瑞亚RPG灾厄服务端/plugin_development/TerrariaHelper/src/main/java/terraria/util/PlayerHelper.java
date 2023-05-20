@@ -10,7 +10,6 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
@@ -29,6 +28,7 @@ import terraria.gameplay.Event;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 
@@ -460,20 +460,20 @@ public class PlayerHelper {
             attrMapSpore.put("knockback", 0d);
         }
         // every 5 ticks (1/4 second)
+        AtomicInteger tickIndex = new AtomicInteger();
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 try {
                     // validate the current player
                     if (PlayerHelper.isProperlyPlaying(ply)) {
                         double health = ply.getHealth(), maxHealth = ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-                        int tickIndex = ply.getTicksLived();
                         // handle armor sets
                         switch (getArmorSet(ply)) {
                             case "叶绿魔法套装":
                             case "叶绿射手套装":
                             case "叶绿战士套装":
                                 // chlorophyte
-                                if (tickIndex % 8 == 0) {
+                                if (tickIndex.get() % 8 == 0) {
                                     double distanceSqr = 10000d;
                                     Entity target = null;
                                     for (Entity e : ply.getWorld().getNearbyEntities(ply.getEyeLocation(), 25, 25, 25)) {
@@ -504,7 +504,8 @@ public class PlayerHelper {
                             switch (accessory) {
                                 case "新手版挥发明胶":
                                 case "挥发明胶":
-                                    if (tickIndex % 20 == 0) {
+                                    int shootInterval = accessory.equals("新手版挥发明胶") ? 20 : 10;
+                                    if (tickIndex.get() % shootInterval == 0) {
                                         double distanceSqr = 10000d;
                                         Entity target = null;
                                         for (Entity e : ply.getWorld().getNearbyEntities(ply.getEyeLocation(), 12, 12, 12)) {
@@ -535,13 +536,11 @@ public class PlayerHelper {
                                     }
                                     break;
                                 case "孢子囊":
-                                    if (tickIndex % 10 == 0) {
-                                        Location spawnLoc = ply.getLocation().add(Math.random() * 10 - 5, Math.random() * 4 - 1, Math.random() * 10 - 5);
-                                        if (!spawnLoc.getBlock().getType().isSolid()) {
-                                            Vector velocity = new Vector(Math.random() * 0.1 - 0.05, Math.random() * 0.1 - 0.05, Math.random() * 0.1 - 0.05);
-                                            EntityHelper.spawnProjectile(ply, velocity, attrMapSpore,
-                                                    EntityHelper.DamageType.ARROW,"孢子球");
-                                        }
+                                    if (tickIndex.get() % 5 == 0) {
+                                        Vector velocity = MathHelper.randomVector();
+                                        velocity.multiply(0.15);
+                                        EntityHelper.spawnProjectile(ply, velocity, attrMapSpore,
+                                                EntityHelper.DamageType.MAGIC,"孢子球");
                                     }
                                     break;
                                 case "圣骑士护盾":
@@ -563,6 +562,7 @@ public class PlayerHelper {
                     Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadArmorAccessory ", e);
                 }
             }
+            tickIndex.getAndIncrement();
         }, 0, 5);
     }
     public static void threadAttribute() {

@@ -1734,7 +1734,7 @@ public class EntityHelper {
             this.damageType = damageType;
             this.projectileName = projectileName;
             boolean arrowOrPotion = projectileName.endsWith("箭");
-//            this.arrowOrPotion = TerrariaHelper.projectileConfig.getBoolean(projectileName + ".arrowOrPotion", arrowOrPotion);
+            this.arrowOrPotion = TerrariaHelper.projectileConfig.getBoolean(projectileName + ".arrowOrPotion", arrowOrPotion);
             this.arrowOrPotion = false; // chlorophyte arrows glitch on client side
         }
 

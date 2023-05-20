@@ -7,6 +7,7 @@ terraria\entity\boss\eaterOfWorld\EaterOfWorld$1.class
 terraria\util\GenericHelper$StrikeLineOptions.class
 terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
+terraria\entity\boss\golem\GolemHead.class
 terraria\entity\npc\TerrariaNPCClothier.class
 terraria\entity\boss\leviathanAndAnahita\Leviathan.class
 terraria\entity\monster\MonsterZombie.class
@@ -30,6 +31,7 @@ terraria\entity\boss\skeletron\SkeletronHead.class
 terraria\entity\minion\MinionHelper.class
 terraria\worldgen\overworld\OverworldCaveGenerator.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHead$1.class
+terraria\entity\boss\golem\GolemFoot.class
 terraria\event\listener\ArrowHitListener.class
 terraria\util\ItemHelper$1.class
 terraria\entity\boss\queenSlime\QueenSlime$SizeState.class
@@ -118,6 +120,7 @@ terraria\util\GameplayHelper$1.class
 terraria\entity\boss\queenSlime\QueenSlime$1.class
 terraria\util\EntityHelper$ProjectileShootInfo.class
 terraria\worldgen\overworld\OverworldChunkGenerator.class
+terraria\entity\boss\golem\GolemFist.class
 terraria\entity\monster\MonsterHelper$MonsterStatsMulti.class
 terraria\entity\projectile\TerrariaArrowProjectile$1.class
 terraria\entity\boss\theSlimeGod\CrimulanSlime$SlimeSize.class
@@ -129,6 +132,7 @@ terraria\entity\boss\theSlimeGod\CrimulanSlime$1.class
 terraria\entity\boss\theSlimeGod\TheSlimeGod.class
 terraria\event\listener\EntitySpawnListener.class
 terraria\worldgen\overworld\NoiseGeneratorTest.class
+terraria\entity\boss\golem\Golem.class
 terraria\util\NPCHelper.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHand$HandType.class
 terraria\worldgen\overworld\TreePopulator$1.class

@@ -20,7 +20,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     private static final double distFromBlock = 1e-5, distCheckOnGround = 1e-1;
     // projectile info
     public String projectileType, blockHitAction = "die", trailColor = null;
-    public int autoTraceMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noAutoTraceTicks = 0, maxAutoTraceTicks = 0,
+    public int autoTraceMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noAutoTraceTicks = 0, maxAutoTraceTicks = 999999,
             noGravityTicks = 15, trailLingerTime = 10, penetration = 0;
     public double autoTraceAbility = 4, autoTraceRadius = 12, blastRadius = 1.5, bounceVelocityMulti = 1,
             frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileSize = 0.125, speedMultiPerTick = 1;

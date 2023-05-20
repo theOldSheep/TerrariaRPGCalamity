@@ -80,7 +80,7 @@ public class GolemFist extends EntitySlime {
                             indexAI = -1;
                     }
                 }
-                indexAI ++;
+//                indexAI ++;
             }
         }
         // face the player

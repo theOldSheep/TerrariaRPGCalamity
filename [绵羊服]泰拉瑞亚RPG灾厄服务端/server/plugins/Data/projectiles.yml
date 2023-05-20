@@ -393,6 +393,7 @@
     penetration: 99999
     projectileSize: 0.5
     gravity: 0
+    liveTime: 15
     isGrenade: true
     blastRadius: 3
     blastDuration: 80
@@ -401,6 +402,7 @@
 石巨人激光:
     penetration: 99999
     gravity: 0
+    liveTime: 80
     blockHitAction: thru
 天蓝羽毛:
     autoTrace: true
@@ -621,6 +623,7 @@
         - "燃烧|100|0.3"
 孢子球:
     blockHitAction: thru
+    gravity: 0
     autoTrace: true
     buffInflict:
         - "中毒|100|1"
@@ -629,13 +632,14 @@
         damageMulti: 0.6
         name: 孢子云
         fireOnTimeout: false
-        velocity: 0.35
+        velocity: 0.15
 投矛:
     buffInflict:
         - "中毒|300|1"
         - "剧毒|300|0.33"
 绿藻弹:
     autoTrace: true
+    autoTraceAbility: 10.0
 彩虹水晶:
     autoTrace: true
 幻象箭:
