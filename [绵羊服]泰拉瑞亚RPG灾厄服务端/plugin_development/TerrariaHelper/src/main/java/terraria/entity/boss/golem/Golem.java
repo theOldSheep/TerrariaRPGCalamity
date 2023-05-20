@@ -22,8 +22,7 @@ import java.util.HashMap;
 public class Golem extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.GOLEM;
-    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.NORMAL;
-//    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.TEMPLE;
+    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.TEMPLE;
     public static final double BASIC_HEALTH = 68850 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
@@ -87,18 +86,22 @@ public class Golem extends EntitySlime {
                 // phase transition
                 switch (phaseAI) {
                     case 1:
-                        if ( !(fists[0].isAlive() || fists[1].isAlive()) )
+                        if ( !(fists[0].isAlive() || fists[1].isAlive()) ) {
+                            head.removeScoreboardTag("noDamage");
                             phaseAI = 2;
+                        }
                         break;
                     case 2:
                         if ( head.getHealth() < 10 ) {
                             phaseAI = 3;
-                            head.setHealth(head.getMaxHealth());
+                            bukkitEntity.removeScoreboardTag("noDamage");
+                            head.addScoreboardTag("noDamage");
                             EntityHelper.setMetadata(head.getBukkitEntity(), "healthLock", null);
                         }
                         break;
                 }
                 // leap
+                noclip = true;
                 if (indexAI >= 0) {
                     double speed = HORIZONTAL_SPEED;
                     Vector velocity;
@@ -114,16 +117,20 @@ public class Golem extends EntitySlime {
                         if (falling) {
                             yComp -= 0.2;
                             // landing
-                            if (locY < target.getLocation().getY() &&
-                                    (locY < 0 || bukkitEntity.getLocation().getBlock().getType().isSolid())) {
-                                velocity = new Vector();
-                                yComp = 0;
-                                indexAI = -30;
-                                jumpIndex ++;
-                                bukkitEntity.setVelocity(new Vector());
+                            if (locY < target.getLocation().getY()) {
+                                // as soon as the golem is below player, it can collide with blocks.
+                                noclip = false;
+                                if (locY < 0 || onGround) {
+                                    velocity = new Vector();
+                                    yComp = 0;
+                                    indexAI = -30;
+                                    jumpIndex ++;
+                                    bukkitEntity.setVelocity(new Vector());
+                                }
                             }
                         }
-                        else if (locY > target.getLocation().getY() || jumpIndex % 3 == 0)
+                        // every third jump chases enemy to the same height
+                        else if (locY > target.getLocation().getY() || jumpIndex % 3 != 0)
                             falling = true;
                         velocity.setY(yComp);
                     }
@@ -133,7 +140,12 @@ public class Golem extends EntitySlime {
                     shootLaser();
                 }
                 // setup orthogonal direction
-                orthogonalDir = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 5);
+                {
+                    Location targetLoc = target.getLocation();
+                    targetLoc.setY(bukkitEntity.getLocation().getY());
+                    orthogonalDir = MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, 1);
+                    orthogonalDir = new Vector(orthogonalDir.getZ() * -1, 0, orthogonalDir.getX());
+                }
                 indexAI ++;
             }
         }
@@ -162,6 +174,7 @@ public class Golem extends EntitySlime {
         // basic characteristics
         setCustomName(BOSS_TYPE.msgName);
         setCustomNameVisible(true);
+        bukkitEntity.addScoreboardTag("noDamage");
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);

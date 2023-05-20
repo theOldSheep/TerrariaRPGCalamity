@@ -27,10 +27,10 @@ public class GolemFist extends EntitySlime {
     Player target = null;
     // other variables and AI
     static final String name = "石巨人拳头";
-    static final double PUNCH_SPEED = 2.5, RETRACT_SPEED = 2.25;
+    static final double PUNCH_SPEED = 3.25, RETRACT_SPEED = 2.75;
 
     Golem owner;
-    Vector offsetDir = new Vector(0, -0.6, 0);
+    Vector offsetDir = new Vector(0, 4.8, 0);
     int componentIndex;
     int indexAI = 0;
 
@@ -57,8 +57,7 @@ public class GolemFist extends EntitySlime {
                 Location idleLocation;
                 {
                     Vector orthogonalOffsetVec = owner.orthogonalDir.clone();
-                    if (componentIndex == 2)
-                        orthogonalOffsetVec.multiply(-1);
+                    orthogonalOffsetVec.multiply(componentIndex == 2 ? -4.5 : 4.5);
                     idleLocation = owner.getBukkitEntity().getLocation().add(offsetDir).add(orthogonalOffsetVec);
                 }
                 if (indexAI < 15) {
@@ -80,7 +79,7 @@ public class GolemFist extends EntitySlime {
                             indexAI = -1;
                     }
                 }
-//                indexAI ++;
+                indexAI ++;
             }
         }
         // face the player

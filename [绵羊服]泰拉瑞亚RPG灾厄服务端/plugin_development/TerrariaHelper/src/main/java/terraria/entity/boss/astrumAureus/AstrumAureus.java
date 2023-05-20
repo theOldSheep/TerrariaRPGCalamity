@@ -183,18 +183,21 @@ public class AstrumAureus extends EntitySlime {
                 if (velLen > speed) {
                     velocity.multiply(speed / velLen);
                 }
+                noclip = true;
                 if (falling) {
                     yComp -= 0.075;
                     // landing
-                    if (locY < target.getLocation().getY() &&
-                            (locY < 0 || bukkitEntity.getLocation().getBlock().getType().isSolid())) {
-                        shootLasers();
-                        velocity = new Vector();
-                        yComp = 0;
-                        indexAI = -30;
-                        attacksDuringPhase ++;
-                        bukkitEntity.setVelocity(new Vector());
-                        changePhase();
+                    if (locY < target.getLocation().getY()) {
+                        noclip = false;
+                        if (locY < 0 || onGround) {
+                            shootLasers();
+                            velocity = new Vector();
+                            yComp = 0;
+                            indexAI = -30;
+                            attacksDuringPhase ++;
+                            bukkitEntity.setVelocity(new Vector());
+                            changePhase();
+                        }
                     }
                 }
                 else if (locY > target.getLocation().getY())

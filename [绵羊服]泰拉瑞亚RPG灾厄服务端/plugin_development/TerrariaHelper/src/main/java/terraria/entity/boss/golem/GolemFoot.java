@@ -58,7 +58,7 @@ public class GolemFoot extends EntitySlime {
                     bukkitEntity.setVelocity(owner.getBukkitEntity().getVelocity());
                     Vector orthogonalOffsetVec = owner.orthogonalDir.clone();
                     orthogonalOffsetVec.multiply(0.9 *
-                            (componentIndex == 2 ? -1 : 1));
+                            (componentIndex == 2 ? -5.4 : 5.4));
                     bukkitEntity.teleport(owner.getBukkitEntity().getLocation().add(offsetDir).add(orthogonalOffsetVec));
                 }
             }
@@ -86,6 +86,7 @@ public class GolemFoot extends EntitySlime {
         this.componentIndex = index;
         setCustomName(name + "§" + index);
         setCustomNameVisible(true);
+        bukkitEntity.addScoreboardTag("noDamage");
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);

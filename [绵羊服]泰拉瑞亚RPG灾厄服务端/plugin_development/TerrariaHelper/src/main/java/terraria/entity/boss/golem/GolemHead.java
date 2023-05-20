@@ -31,7 +31,16 @@ public class GolemHead extends EntitySlime {
     Player target = null;
     // other variables and AI
     static final String name = "石巨人头";
-    static final double FLIGHT_SPEED = 2.5;
+    static final double FLIGHT_SPEED = 2.5, SPEED_FIREBALL = 3, SPEED_BEAM = 2.25;
+    static final EntityHelper.AimHelperOptions aimHelperFireball, aimHelperBolt;
+    static {
+        aimHelperFireball = new EntityHelper.AimHelperOptions()
+                .setProjectileSpeed(SPEED_FIREBALL);
+        aimHelperBolt = new EntityHelper.AimHelperOptions()
+                .setAimMode(true)
+                .setTicksOffset(15)
+                .setRandomOffsetRadius(1);
+    }
 
     Golem owner;
     Vector offsetDir = new Vector(0, 5.5, 0);
@@ -40,26 +49,34 @@ public class GolemHead extends EntitySlime {
 
     private void shootProjectile(int type) {
         EntityHelper.ProjectileShootInfo shootInfo;
+        Location shootTargetLocation;
+        double projectileSpeed;
         switch (type) {
             case 1:
                 shootInfo = shootInfoFireball;
+                projectileSpeed = SPEED_FIREBALL;
+                shootTargetLocation = EntityHelper.helperAimEntity(bukkitEntity, target, aimHelperFireball);
                 break;
             case 2:
                 shootInfo = shootInfoBeam;
+                projectileSpeed = SPEED_BEAM;
+                shootTargetLocation = target.getEyeLocation();
                 break;
             case 3:
                 shootInfo = shootInfoInfernoBolt;
+                projectileSpeed = 0;
+                shootTargetLocation = EntityHelper.helperAimEntity(bukkitEntity, target, aimHelperBolt);
                 break;
             default:
                 return;
         }
         shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         if (type == 3) {
-            shootInfo.velocity = target.getEyeLocation().subtract(shootInfo.shootLoc).toVector();
+            shootInfo.velocity = shootTargetLocation.subtract(shootInfo.shootLoc).toVector();
             shootInfo.velocity.multiply(1d / 15);
         }
         else {
-            shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, target.getEyeLocation(), 2);
+            shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, shootTargetLocation, projectileSpeed);
         }
         EntityHelper.spawnProjectile(shootInfo);
     }
@@ -127,6 +144,7 @@ public class GolemHead extends EntitySlime {
         this.owner = owner;
         setCustomName(name);
         setCustomNameVisible(true);
+        bukkitEntity.addScoreboardTag("noDamage");
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
