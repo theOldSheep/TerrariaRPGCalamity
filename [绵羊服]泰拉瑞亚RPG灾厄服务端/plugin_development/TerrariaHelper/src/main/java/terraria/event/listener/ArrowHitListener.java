@@ -25,7 +25,8 @@ import java.util.Set;
 
 
 public class ArrowHitListener implements Listener {
-    public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/projectiles.yml");
+    public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile(
+            TerrariaHelper.Constants.DATA_FOLDER_DIR + "projectiles.yml");
     private void handleHitBlock(TerrariaProjectileHitEvent e, Projectile projectile, Block block) {
         // explode
         Set<String> scoreboardTags = projectile.getScoreboardTags();

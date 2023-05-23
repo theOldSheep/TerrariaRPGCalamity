@@ -1006,7 +1006,7 @@ public class EntityHelper {
                                         Bukkit.broadcastMessage("§d§l" + currentEvent + "被击退了！");
                                         if (currentEvent.equals("哥布林军团"))
                                             for (Player ply : Bukkit.getOnlinePlayers())
-                                                YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml").set("bossDefeated." + currentEvent, true);
+                                                PlayerHelper.getPlayerDataFile(ply).set("bossDefeated." + currentEvent, true);
                                         Event.currentEvent = "";
                                 }
                             }

@@ -18,7 +18,10 @@ import java.util.*;
 
 public class TerrariaHelper extends JavaPlugin {
     public static class Constants {
-        public static final String WORLD_NAME_SURFACE = "world_surface",
+        public static final String
+                DATA_FOLDER_DIR = "plugins/Terraria/Data/",
+                DATA_PLAYER_FOLDER_DIR = "plugins/Terraria/Data/",
+                WORLD_NAME_SURFACE = "world_surface",
                 WORLD_NAME_CAVERN = "world_cavern",
                 WORLD_NAME_UNDERWORLD = "world_underworld",
                 GUI_BACKGROUND = "[local]GuiBG.png",
@@ -27,29 +30,30 @@ public class TerrariaHelper extends JavaPlugin {
     public static long worldSeed;
     public static TerrariaHelper instance;
     // YML configs
-    public static final YmlHelper.YmlSection armorSetConfig = YmlHelper.getFile("plugins/Data/armorSet.yml");
-    public static final YmlHelper.YmlSection blockConfig = YmlHelper.getFile("plugins/Data/blocks.yml");
-    public static final YmlHelper.YmlSection buffConfig = YmlHelper.getFile("plugins/Data/buff.yml");
-    public static final YmlHelper.YmlSection crateConfig = YmlHelper.getFile("plugins/Data/crates.yml");
-    public static final YmlHelper.YmlSection entityConfig = YmlHelper.getFile("plugins/Data/entities.yml");
-    public static final YmlHelper.YmlSection fishingConfig = YmlHelper.getFile("plugins/Data/fishing.yml");
-    public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");
-    public static final YmlHelper.YmlSection mobSpawningConfig = YmlHelper.getFile("plugins/Data/mobSpawning.yml");
-    public static final YmlHelper.YmlSection mountConfig = YmlHelper.getFile("plugins/Data/mounts.yml");
-    public static final YmlHelper.YmlSection NPCConfig = YmlHelper.getFile("plugins/Data/NPC.yml");
-    public static final YmlHelper.YmlSection potionItemConfig = YmlHelper.getFile("plugins/Data/potionItem.yml");
-    public static final YmlHelper.YmlSection prefixConfig = YmlHelper.getFile("plugins/Data/prefix.yml");
-    public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile("plugins/Data/projectiles.yml");
-    public static final YmlHelper.YmlSection recipeConfig = YmlHelper.getFile("plugins/Data/recipes.yml");
-    public static final YmlHelper.YmlSection settingConfig = YmlHelper.getFile("plugins/Data/setting.yml");
-    public static final YmlHelper.YmlSection soundConfig = YmlHelper.getFile("plugins/Data/sounds.yml");
-    public static final YmlHelper.YmlSection weaponConfig = YmlHelper.getFile("plugins/Data/weapons.yml");
-    public static final YmlHelper.YmlSection wingConfig = YmlHelper.getFile("plugins/Data/wings.yml");
+    public static final YmlHelper.YmlSection armorSetConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "armorSet.yml");
+    public static final YmlHelper.YmlSection blockConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "blocks.yml");
+    public static final YmlHelper.YmlSection buffConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "buff.yml");
+    public static final YmlHelper.YmlSection crateConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "crates.yml");
+    public static final YmlHelper.YmlSection entityConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "entities.yml");
+    public static final YmlHelper.YmlSection fishingConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "fishing.yml");
+    public static final YmlHelper.YmlSection hookConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "hooks.yml");
+    public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "items.yml");
+    public static final YmlHelper.YmlSection mobSpawningConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "mobSpawning.yml");
+    public static final YmlHelper.YmlSection mountConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "mounts.yml");
+    public static final YmlHelper.YmlSection NPCConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "NPC.yml");
+    public static final YmlHelper.YmlSection potionItemConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "potionItem.yml");
+    public static final YmlHelper.YmlSection prefixConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "prefix.yml");
+    public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "projectiles.yml");
+    public static final YmlHelper.YmlSection recipeConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "recipes.yml");
+    public static final YmlHelper.YmlSection settingConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "setting.yml");
+    public static final YmlHelper.YmlSection soundConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "sounds.yml");
+    public static final YmlHelper.YmlSection weaponConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "weapons.yml");
+    public static final YmlHelper.YmlSection wingConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "wings.yml");
 
     public TerrariaHelper() {
         super();
         instance = this;
-        worldSeed = YmlHelper.getFile("plugins/Data/setting.yml").getLong("worldSeed", 114514);
+        worldSeed = settingConfig.getLong("worldSeed", 114514);
     }
 
     private static void setupPlaceholders() {

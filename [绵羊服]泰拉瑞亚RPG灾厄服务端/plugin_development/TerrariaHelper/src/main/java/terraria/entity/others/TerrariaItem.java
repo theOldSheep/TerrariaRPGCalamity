@@ -8,6 +8,7 @@ import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.util.Vector;
+import terraria.TerrariaHelper;
 import terraria.util.*;
 
 import java.util.HashMap;
@@ -15,7 +16,8 @@ import java.util.Set;
 
 
 public class TerrariaItem extends EntityItem {
-    public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile("plugins/Data/items.yml");
+    public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile(
+            TerrariaHelper.Constants.DATA_FOLDER_DIR + "items.yml");
     static final int
             BOOSTER_LIVE_TIME = 600,
             HEART_LIVE_TIME = 1200,

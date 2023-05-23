@@ -231,8 +231,8 @@ public class ItemHelper {
     public static int getWorth(String name) {
         if (name == null) name = "";
         String[] nameInfo = splitItemName(name);
-        int worth = YmlHelper.getFile("plugins/Data/items.yml").getInt(nameInfo[1] + ".worth", 0);
-        double worthMulti = YmlHelper.getFile("plugins/Data/prefix.yml").getDouble(
+        int worth = TerrariaHelper.itemConfig.getInt(nameInfo[1] + ".worth", 0);
+        double worthMulti = TerrariaHelper.prefixConfig.getDouble(
                 "prefixInfo." + nameInfo[0] + ".priceMultiplier", 1);
         worth *= worthMulti;
         return (worth / 100) * 100;

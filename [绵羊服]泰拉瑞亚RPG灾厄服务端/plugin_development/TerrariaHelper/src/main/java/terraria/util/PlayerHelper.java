@@ -26,6 +26,9 @@ import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.Event;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -152,7 +155,7 @@ public class PlayerHelper {
         return EntityHelper.getMetadata(ply, "armorSet").asString();
     }
     public static int getAccessoryAmount(Player ply) {
-        return YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml").getInt("stats.maxAccessories", 5);
+        return getPlayerDataFile(ply).getInt("stats.maxAccessories", 5);
     }
     public static HashSet<String> getAccessories(Entity entity) {
         try {
@@ -333,7 +336,8 @@ public class PlayerHelper {
         }
     }
     public static YmlHelper.YmlSection getPlayerDataFile(Player ply) {
-        return YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml");
+        String filePath = "plugins/Terraria/PlayerData/" + ply.getName() + ".yml";
+        return YmlHelper.getFile(filePath);
     }
     public static boolean hasDefeated(Player player, String progressToCheck) {
         if (progressToCheck.length() == 0)
@@ -821,7 +825,7 @@ public class PlayerHelper {
                         World plyWorld = ply.getWorld();
                         Location center = new Location(plyWorld, 0, 0, 0);
                         int hookedAmount = 0;
-                        YmlHelper.YmlSection config = YmlHelper.getFile("plugins/Data/hooks.yml");
+                        YmlHelper.YmlSection config = TerrariaHelper.hookConfig;
                         double hookReach = config.getDouble(hookItemName + ".reach", 12),
                                 hookPullSpeed = config.getDouble(hookItemName + ".playerSpeed", 0.1);
                         hookReach = hookReach * hookReach * 4;
@@ -1572,7 +1576,7 @@ public class PlayerHelper {
     }
     public static void loadInventories(Player ply) {
         HashMap<String, Inventory> inventories = new HashMap<>();
-        YmlHelper.YmlSection plyFile = YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml");
+        YmlHelper.YmlSection plyFile = getPlayerDataFile(ply);
         // storage inventories (piggy bank, void bag)
         List<String> otherInvs = TerrariaHelper.settingConfig.getStringList("settings.playerInventories");
         for (String invName : otherInvs) {
@@ -1591,7 +1595,7 @@ public class PlayerHelper {
     }
     public static void saveInventories(Player ply) {
         HashMap<String, Inventory> inventories = (HashMap<String, Inventory>) EntityHelper.getMetadata(ply, "inventories").value();
-        YmlHelper.YmlSection plyFile = YmlHelper.getFile("plugins/PlayerData/" + ply.getName() + ".yml");
+        YmlHelper.YmlSection plyFile = getPlayerDataFile(ply);
         for (String invType : inventories.keySet()) {
             Inventory currInv = inventories.get(invType);
             ArrayList<String> result = new ArrayList<>(playerExtraInventorySize);
@@ -1609,7 +1613,7 @@ public class PlayerHelper {
         String hookItemName = ItemHelper.splitItemName(ply.getInventory().getItemInOffHand())[1];
         EntityHelper.setMetadata(ply, "grapplingHookItem", hookItemName);
         World hookWorld = ply.getWorld();
-        YmlHelper.YmlSection config = YmlHelper.getFile("plugins/Data/hooks.yml");
+        YmlHelper.YmlSection config = TerrariaHelper.hookConfig;
         int hookAmount = config.getInt(hookItemName + ".amount", 0);
         if (hooks.size() >= hookAmount) {
             // removed the first hook on blocks if trying to launch more hooks than the player has

@@ -32,7 +32,8 @@ import java.util.Set;
 
 public class CraftingListener implements Listener {
     private final String bg = "[local]GuiBG.png";
-    private static final YmlHelper.YmlSection recipeConfig = YmlHelper.getFile("plugins/Data/recipes.yml");
+    private static final YmlHelper.YmlSection recipeConfig = YmlHelper.getFile(
+            TerrariaHelper.Constants.DATA_FOLDER_DIR + "recipes.yml");
     private static HashMap<String, Integer> getRecipeIngredientMap(String station, String vexSlotIndex) {
         String recipeConfigName = ItemHelper.craftingGuisRecipeIndexMap.get(station + "_" + vexSlotIndex);
         return getRecipeIngredientMap(recipeConfig.getConfigurationSection(recipeConfigName));

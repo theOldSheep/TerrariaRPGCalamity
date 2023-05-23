@@ -61,6 +61,10 @@
     bounceVelocityMulti: 1.0
     # 轨迹的颜色(R|G|B)，可不写。
     trailColor: 255|125|125
+    # 轨迹大小（单位：格）。不写则默认为弹射物直径。
+    trailSize: -1.0
+    # 轨迹显示的间隔（单位：格）。不写则默认为弹射物直径。
+    trailStepSize: -1.0
     # 轨迹停留时间（单位：帧，1秒=20帧）。不写则视为10。
     trailLingerTime: 10
     # blockHitAction为bounce（手榴弹）或slide的弹射物在与地面摩擦时的阻力，0为无阻力，1为马上停止。不写则视为0.05。
@@ -624,6 +628,7 @@
 孢子球:
     blockHitAction: thru
     gravity: 0
+    speedMultiPerTick: 0.95
     autoTrace: true
     buffInflict:
         - "中毒|100|1"

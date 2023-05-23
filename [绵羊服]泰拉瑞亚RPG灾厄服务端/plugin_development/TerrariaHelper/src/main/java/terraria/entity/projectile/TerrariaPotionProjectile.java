@@ -23,7 +23,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public int autoTraceMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noAutoTraceTicks = 0, maxAutoTraceTicks = 999999,
             noGravityTicks = 15, trailLingerTime = 10, penetration = 0;
     public double autoTraceAbility = 4, autoTraceRadius = 12, blastRadius = 1.5, bounceVelocityMulti = 1,
-            frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileSize = 0.125, speedMultiPerTick = 1;
+            frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileRadius = 0.125, speedMultiPerTick = 1,
+            trailSize = -1, trailStepSize = -1;
     public boolean autoTrace = false, autoTraceSharpTurning = true, blastDamageShooter = false,
             blastOnContactBlock = false, blastOnContactEnemy = false, bouncePenetrationBonded = false,
             canBeReflected = true, isGrenade = false, slowedByWater = true;
@@ -35,6 +36,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public org.bukkit.entity.Projectile bukkitEntity;
     HashMap<String, Double> attrMap, attrMapExtraProjectile;
     public Entity autoTraceTarget = null;
+    Location lastTrailDisplayLocation = null;
     // extra projectile variables
     public ConfigurationSection extraProjectileConfigSection;
     int extraProjectileSpawnInterval;
@@ -63,8 +65,10 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.frictionFactor = (double) properties.getOrDefault("frictionFactor", this.frictionFactor);
             this.gravity = (double) properties.getOrDefault("gravity", this.gravity);
             this.maxSpeed = (double) properties.getOrDefault("maxSpeed", this.maxSpeed);
-            this.projectileSize = (double) properties.getOrDefault("projectileSize", this.projectileSize);
+            this.projectileRadius = (double) properties.getOrDefault("projectileSize", this.projectileRadius);
             this.speedMultiPerTick = (double) properties.getOrDefault("speedMultiPerTick", this.speedMultiPerTick);
+            this.trailSize = (double) properties.getOrDefault("trailSize", this.projectileRadius);
+            this.trailStepSize = (double) properties.getOrDefault("trailStepSize", this.projectileRadius);
 
             this.autoTrace = (boolean) properties.getOrDefault("autoTrace", this.autoTrace);
             this.autoTraceSharpTurning = (boolean) properties.getOrDefault("autoTraceSharpTurning", this.autoTraceSharpTurning);
@@ -155,7 +159,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         // should not be following critters, dead entities etc. and attempt to damage them
         if (!EntityHelper.checkCanDamage(bukkitEntity, target.getBukkitEntity())) return -1e9;
         // returns distance squared / velocity squared, that is, ticks to get there squared, * -1
-        double distSqr = target.d(this.locX, this.locY, this.locZ) - (this.projectileSize * this.projectileSize);
+        double distSqr = target.d(this.locX, this.locY, this.locZ) - (this.projectileRadius * this.projectileRadius);
         return distSqr * -1;
     }
     public boolean checkCanHit(Entity e) {
@@ -578,7 +582,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             // handle water particle
             if (isInWater()) {
                 for (int j = 0; j < 4; j++)
-                    this.world.addParticle(EnumParticle.WATER_BUBBLE, this.locX - this.motX * projectileSize, this.locY - this.motY * projectileSize, this.locZ - this.motZ * projectileSize, this.motX, this.motY, this.motZ, new int[0]);
+                    this.world.addParticle(EnumParticle.WATER_BUBBLE, this.locX - this.motX * projectileRadius, this.locY - this.motY * projectileRadius, this.locZ - this.motZ * projectileRadius, this.motX, this.motY, this.motZ, new int[0]);
             }
         }
 
@@ -589,7 +593,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     this.world,
                     new Vec3D(locX, locY, locZ),
                     futureLoc,
-                    this.projectileSize,
+                    this.projectileRadius,
                     (Entity toCheck) -> {
                         if (this.shooter != null && this.shooter == toCheck) return false;
                         return checkCanHit(toCheck);
@@ -607,13 +611,31 @@ public class TerrariaPotionProjectile extends EntityPotion {
         }
 
         // draw particle trail
-        if (trailColor != null && this.ticksLived > 0)
-            GenericHelper.handleParticleLine(velocity, bukkitEntity.getLocation(),
-                    new GenericHelper.ParticleLineOptions()
-                            .setLength(velocity.length())
-                            .setWidth(projectileSize * 2)
-                            .setTicksLinger(trailLingerTime)
-                            .setParticleColor(trailColor));
+        {
+            if (trailColor != null && this.ticksLived > 1) {
+                // init last display location as current location if it is not set
+                if (lastTrailDisplayLocation == null)
+                    lastTrailDisplayLocation = bukkitEntity.getLocation();
+                // get the smooth transition from last displayed location to future location
+                Location targetDisplayLoc = bukkitEntity.getLocation().add(bukkitEntity.getVelocity());
+                Vector displayDir = targetDisplayLoc.subtract(lastTrailDisplayLocation).toVector();
+                double displayDirLen = displayDir.length();
+                // round down the number of steps between the current and future location
+                int steps = (int) (displayDirLen / trailStepSize);
+                double newDirLen = trailStepSize * steps;
+                displayDir.multiply(newDirLen / displayDirLen);
+                // display particles
+                GenericHelper.handleParticleLine(displayDir, lastTrailDisplayLocation,
+                        new GenericHelper.ParticleLineOptions()
+                                .setLength(newDirLen)
+                                .setWidth(trailSize, false)
+                                .setStepsize(trailStepSize)
+                                .setTicksLinger(trailLingerTime)
+                                .setParticleColor(trailColor));
+                // update last location
+                lastTrailDisplayLocation.add(displayDir);
+            }
+        }
         // set position and velocity info
         setPosition(futureLoc.x, futureLoc.y, futureLoc.z);
         // spawn projectiles

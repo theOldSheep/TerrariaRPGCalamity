@@ -1,5 +1,6 @@
 package terraria.util;
 
+import net.minecraft.server.v1_12_R1.ThreadWatchdog;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -33,6 +34,16 @@ public class YmlHelper {
 
         if (ymlCache.containsKey(tweakedPath))
             return ymlCache.get(tweakedPath);
+
+        File ymlFile = new File(tweakedPath);
+        if (!ymlFile.exists()) {
+            try {
+                ymlFile.createNewFile();
+            }
+            catch (Throwable e) {
+                Bukkit.getLogger().log(Level.SEVERE, "[YML ERROR] Cannot create non-existing file " + tweakedPath, e);
+            }
+        }
 
         YmlSection fileContent = YmlSection.loadConfiguration(new File(tweakedPath));
         ymlCache.put(tweakedPath, fileContent);
