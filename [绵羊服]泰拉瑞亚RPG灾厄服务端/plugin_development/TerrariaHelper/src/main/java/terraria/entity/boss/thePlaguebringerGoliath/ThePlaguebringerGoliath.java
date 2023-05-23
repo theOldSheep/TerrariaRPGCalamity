@@ -10,7 +10,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.astrumAureus.AureusSpawn;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
@@ -32,13 +31,13 @@ public class ThePlaguebringerGoliath extends EntitySlime {
     Player target = null;
     // other variables and AI
     enum AIPhase {
-        RECHARGE, CRAWL, JUMP;
+        DASH, SUMMON, SHOOT, NUKE;
     }
-    AIPhase phaseAI = AIPhase.RECHARGE;
+    AIPhase phaseAI = AIPhase.DASH;
     int indexAI = -40, attacksDuringPhase = 0;
     double healthRatio = 1;
     static HashMap<String, Double> attrMapStingerMissile, attrMapNukeBarrage;
-    static final double SPEED_NORMAL = 2.25, SPEED_DASH = 3;
+    static final double SPEED_NORMAL = 2.25, SPEED_DASH = 3, SPEED_STINGER = 1.75, SPEED_MISSILE = 1.5, SPEED_NUKE = 2;
     EntityHelper.ProjectileShootInfo shootInfoStinger, shootInfoMissile, shootInfoNukeBarrage;
     static {
         attrMapStingerMissile = new HashMap<>();
@@ -49,23 +48,27 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         attrMapNukeBarrage.put("knockback", 2d);
     }
     private void changePhase() {
+        indexAI = -1;
         // change phase
         switch (phaseAI) {
-            case JUMP:
-                if (attacksDuringPhase > 5)
-                    phaseAI = AIPhase.RECHARGE;
-                else
+            case DASH:
+                if (attacksDuringPhase < 5)
                     return;
+                phaseAI = AIPhase.SHOOT;
                 break;
-            case RECHARGE:
-                phaseAI = AIPhase.CRAWL;
+            case SHOOT:
+                phaseAI = AIPhase.SUMMON;
                 break;
-            case CRAWL:
-                phaseAI = AIPhase.JUMP;
+            case SUMMON:
+                phaseAI = healthRatio < 0.5 ? AIPhase.NUKE : AIPhase.DASH;
+                break;
+            case NUKE:
+                if (attacksDuringPhase < 4)
+                    return;
+                phaseAI = AIPhase.DASH;
                 break;
         }
         // aftermath
-        indexAI = -1;
         attacksDuringPhase = 0;
     }
 
@@ -76,8 +79,83 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         return MathHelper.getDirection(currLoc, targetLoc, 1);
     }
 
-    private void AIPhaseJump() {
+    private void shootStingerMissile() {
+        EntityHelper.ProjectileShootInfo shootInfo;
+        double speed;
+        if (Math.random() < 0.25) {
+            shootInfo = shootInfoMissile;
+            speed = SPEED_MISSILE;
+        }
+        else {
+            shootInfo = shootInfoStinger;
+            speed = SPEED_STINGER;
+        }
+        shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, target.getEyeLocation(), speed);
+        EntityHelper.spawnProjectile(shootInfo);
+    }
 
+    private void AIPhaseDash() {
+        Location eyeLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        int dashCountdown = 20 - indexAI;
+        if (dashCountdown >= 0) {
+            Location targetLoc = target.getEyeLocation();
+            double speed;
+            if (dashCountdown == 0) {
+                speed = SPEED_DASH;
+            }
+            else {
+                speed = SPEED_NORMAL / 2;
+                Vector offset = getHorizontalDirection();
+                offset.multiply(24);
+                targetLoc.add(offset);
+            }
+            bukkitEntity.setVelocity( MathHelper.getDirection(eyeLoc, targetLoc, speed) );
+        }
+        else if (indexAI > 50) {
+            attacksDuringPhase ++;
+            changePhase();
+        }
+    }
+    private void AIPhaseShoot() {
+        // hover above target
+        {
+            Location targetLoc = target.getEyeLocation().add(0, 20, 0);
+            bukkitEntity.setVelocity( MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, SPEED_NORMAL) );
+        }
+        // shoot projectiles
+        if (indexAI % 8 == 0) {
+            shootStingerMissile();
+        }
+        else if (indexAI > 100)
+            changePhase();
+    }
+    // TODO
+    private void AIPhaseSummon() {
+        // summon destructible rockets and mines
+
+    }
+    private void AIPhaseNuke() {
+        // dash and fire a spread of nuke
+        if (indexAI == 0) {
+            // dash
+            {
+                Vector velocity = getHorizontalDirection();
+                velocity.multiply(SPEED_DASH);
+                bukkitEntity.setVelocity(velocity);
+            }
+            // shoot barrage of nuke
+            shootInfoNukeBarrage.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+            for (Vector shootVel : MathHelper.getCircularProjectileDirections(
+                    7, 3, 45, target, shootInfoNukeBarrage.shootLoc, SPEED_NUKE)) {
+                shootInfoNukeBarrage.velocity = shootVel;
+                EntityHelper.spawnProjectile(shootInfoNukeBarrage);
+            }
+        }
+        else if (indexAI > 50) {
+            attacksDuringPhase ++;
+            changePhase();
+        }
     }
     private void AI() {
         // no AI after death
@@ -100,25 +178,29 @@ public class ThePlaguebringerGoliath extends EntitySlime {
             else {
                 healthRatio = getHealth() / getMaxHealth();
                 switch (phaseAI) {
-                    case RECHARGE:
-                        AIPhaseRecharge();
+                    case DASH:
+                        AIPhaseDash();
                         break;
-                    case CRAWL:
-                        AIPhaseCrawl();
+                    case SHOOT:
+                        AIPhaseShoot();
                         break;
-                    case JUMP:
-                        AIPhaseJump();
+                    case SUMMON:
+                        AIPhaseSummon();
+                        break;
+                    case NUKE:
+                        AIPhaseNuke();
                         break;
                 }
                 indexAI ++;
             }
         }
         // face the player
-        // TODO: phase dashing direction when dashing
-        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+        if (phaseAI == AIPhase.DASH)
+            this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
+        else
+            this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // collision dmg
-        if (phaseAI != AIPhase.RECHARGE)
-            terraria.entity.boss.BossHelper.collisionDamage(this);
+        terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
     public ThePlaguebringerGoliath(World world) {
