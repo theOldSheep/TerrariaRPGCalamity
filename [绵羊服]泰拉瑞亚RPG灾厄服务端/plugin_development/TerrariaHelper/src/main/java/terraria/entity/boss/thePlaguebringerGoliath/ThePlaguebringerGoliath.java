@@ -1,6 +1,7 @@
 package terraria.entity.boss.thePlaguebringerGoliath;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -20,8 +21,8 @@ import java.util.HashMap;
 
 public class ThePlaguebringerGoliath extends EntitySlime {
     // basic variables
-    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.ASTRUM_AUREUS;
-    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.ASTRAL_INFECTION;
+    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.THE_PLAGUEBRINGER_GOLIATH;
+    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.JUNGLE;
     public static final double BASIC_HEALTH = 255600 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
@@ -36,8 +37,10 @@ public class ThePlaguebringerGoliath extends EntitySlime {
     AIPhase phaseAI = AIPhase.DASH;
     int indexAI = -40, attacksDuringPhase = 0;
     double healthRatio = 1;
+    boolean secondPhase = false;
+
     static HashMap<String, Double> attrMapStingerMissile, attrMapNukeBarrage;
-    static final double SPEED_NORMAL = 2.25, SPEED_DASH = 3, SPEED_STINGER = 1.75, SPEED_MISSILE = 1.5, SPEED_NUKE = 2;
+    static final double SPEED_NORMAL = 2.25, SPEED_DASH = 3, SPEED_STINGER = 1.75, SPEED_MISSILE = 2.5, SPEED_NUKE = 2;
     EntityHelper.ProjectileShootInfo shootInfoStinger, shootInfoMissile, shootInfoNukeBarrage;
     static {
         attrMapStingerMissile = new HashMap<>();
@@ -60,7 +63,7 @@ public class ThePlaguebringerGoliath extends EntitySlime {
                 phaseAI = AIPhase.SUMMON;
                 break;
             case SUMMON:
-                phaseAI = healthRatio < 0.5 ? AIPhase.NUKE : AIPhase.DASH;
+                phaseAI = secondPhase ? AIPhase.NUKE : AIPhase.DASH;
                 break;
             case NUKE:
                 if (attacksDuringPhase < 4)
@@ -72,6 +75,10 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         attacksDuringPhase = 0;
     }
 
+    private void toSecondPhase() {
+        Bukkit.broadcastMessage("§#00FF00瘟疫核弹已就绪，准备发射！！！");
+        secondPhase = true;
+    }
     private Vector getHorizontalDirection() {
         Location targetLoc = target.getLocation();
         Location currLoc = bukkitEntity.getLocation();
@@ -82,7 +89,7 @@ public class ThePlaguebringerGoliath extends EntitySlime {
     private void shootStingerMissile() {
         EntityHelper.ProjectileShootInfo shootInfo;
         double speed;
-        if (Math.random() < 0.25) {
+        if (Math.random() < 0.2) {
             shootInfo = shootInfoMissile;
             speed = SPEED_MISSILE;
         }
@@ -130,10 +137,24 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         else if (indexAI > 100)
             changePhase();
     }
-    // TODO
     private void AIPhaseSummon() {
+        // speed decays
+        {
+            Vector velocity = bukkitEntity.getVelocity();
+            velocity.multiply(0.95);
+            bukkitEntity.setVelocity(velocity);
+        }
         // summon destructible rockets and mines
-
+        if (indexAI % 4 == 0) {
+            // summon mine
+            if (Math.random() < 0.33 && secondPhase)
+                new PlagueMine(this);
+            // summon rocket
+            else
+                new PlagueHomingMissile(this);
+        }
+        if (indexAI > 40)
+            changePhase();
     }
     private void AIPhaseNuke() {
         // dash and fire a spread of nuke
@@ -142,6 +163,8 @@ public class ThePlaguebringerGoliath extends EntitySlime {
             {
                 Vector velocity = getHorizontalDirection();
                 velocity.multiply(SPEED_DASH);
+                double yDist = target.getLocation().getY() + 24 - locY;
+                velocity.setY(yDist / 50);
                 bukkitEntity.setVelocity(velocity);
             }
             // shoot barrage of nuke
@@ -177,6 +200,8 @@ public class ThePlaguebringerGoliath extends EntitySlime {
             // if target is valid, attack
             else {
                 healthRatio = getHealth() / getMaxHealth();
+                if (!secondPhase && healthRatio < 0.5)
+                    toSecondPhase();
                 switch (phaseAI) {
                     case DASH:
                         AIPhaseDash();
@@ -275,7 +300,7 @@ public class ThePlaguebringerGoliath extends EntitySlime {
             shootInfoStinger = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapStingerMissile,
                     EntityHelper.DamageType.ARROW, "瘟疫导弹");
             shootInfoMissile = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapStingerMissile,
-                    EntityHelper.DamageType.ROCKET, "制导瘟疫弹");
+                    EntityHelper.DamageType.ROCKET, "瘟疫火箭");
             shootInfoNukeBarrage = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapNukeBarrage,
                     EntityHelper.DamageType.ROCKET, "瘟疫核弹");
         }

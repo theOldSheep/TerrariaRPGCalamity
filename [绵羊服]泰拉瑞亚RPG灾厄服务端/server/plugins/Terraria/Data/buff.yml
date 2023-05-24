@@ -88,6 +88,15 @@ effects:
       regenMulti: -1
       damageMulti: -0.1
     tooltip: 你的血肉正在被幻星熔蚀
+  瘟疫:
+    isBuff: false
+    damageInterval: 10
+    damage: 10
+    damageMonster: 50
+    attributes:
+      speedMulti: -0.15
+      damageMulti: -0.1
+    tooltip: 从内部腐烂
   耐药性:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/83/Potion_Sickness
     isBuff: false

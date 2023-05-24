@@ -460,6 +460,27 @@
 石巨人头:
     buffInflict:
         - "碎甲|80|1"
+瘟疫使者歌莉娅:
+    buffInflict:
+        - "瘟疫|200|1"
+    buffImmute:
+        - "中毒"
+        - "剧毒"
+        - "瘟疫"
+制导瘟疫弹:
+    buffInflict:
+        - "瘟疫|80|1"
+    buffImmute:
+        - "中毒"
+        - "剧毒"
+        - "瘟疫"
+瘟疫之雷:
+    buffInflict:
+        - "瘟疫|100|1"
+    buffImmute:
+        - "中毒"
+        - "剧毒"
+        - "瘟疫"
 拜月教邪教徒:
     drop:
         - "强效治疗药水:5:15:1"

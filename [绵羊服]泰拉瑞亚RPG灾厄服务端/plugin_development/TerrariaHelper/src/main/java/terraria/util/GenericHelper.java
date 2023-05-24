@@ -650,10 +650,12 @@ public class GenericHelper {
                 colorCode = "b";
                 break;
             case "Debuff_硫磺火":
+            case "Debuff_孱弱巫咒":
                 colorCode = "7";
                 break;
             case "Debuff_中毒":
             case "Debuff_剧毒":
+            case "Debuff_瘟疫":
                 colorCode = "2";
                 break;
             case "Debuff_破晓":
