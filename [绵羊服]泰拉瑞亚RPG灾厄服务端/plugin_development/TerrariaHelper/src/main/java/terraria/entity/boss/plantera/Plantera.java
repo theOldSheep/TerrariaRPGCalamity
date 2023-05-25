@@ -10,6 +10,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
+import terraria.entity.boss.empressOfLight.EmpressOfLight;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
@@ -156,8 +157,10 @@ public class Plantera extends EntitySlime {
                 if (healthRatio < 0.5 && !secondPhase) {
                     secondPhase = true;
                     setCustomName(BOSS_TYPE.msgName + "§1");
-                    attrMap.put("damage", 578d);
-                    attrMap.put("defence", 20d);
+                    // damage 414 -> 578
+                    EntityHelper.tweakAttribute(attrMap, "damage", "164", true);
+                    // defence 64 -> 20
+                    EntityHelper.tweakAttribute(attrMap, "defence", "44", false);
                     for (int i = 0; i < 50; i ++) {
                         new PlanteraTentacle(target, this);
                     }

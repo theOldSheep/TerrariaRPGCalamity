@@ -467,6 +467,18 @@
     blastRadius: 3.5
     buffInflict:
         - "瘟疫|300|1"
+水晶矢:
+    penetration: 99999
+    gravity: 0
+    liveTime: 20
+    blockHitAction: thru
+    trailColor: 50|255|150
+    trailSize: 0.15
+    trailStepSize: 1
+    isGrenade: true
+    blastRadius: 3.5
+    buffInflict:
+        - "瘟疫|300|1"
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2

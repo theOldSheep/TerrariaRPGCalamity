@@ -81,10 +81,7 @@ public class Anahita extends EntityZombieHusk {
         else
             removeScoreboardTag("noDamage");
         // deal extra contact damage when dashing
-        if (phaseAI == AIPhase.DASH)
-            attrMap.put("damageMulti", 1.5d);
-        else
-            attrMap.put("damageMulti", 1d);
+        EntityHelper.tweakAttribute(attrMap, "damageMulti", "0.5", phaseAI == AIPhase.DASH);
     }
     private void shootProjectiles() {
         EntityHelper.ProjectileShootInfo shootInfo;

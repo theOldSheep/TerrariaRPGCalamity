@@ -84,9 +84,9 @@ public class EmpressOfLight extends EntitySlime {
         AttackPhase[] phaseCycle = secondPhase ? attackOrderPhaseTwo : attackOrderPhaseOne;
         attackPhase = phaseCycle[indexAttackPhase % phaseCycle.length];
 
-        attrMap.put("damageMeleeMulti", attackPhase == AttackPhase.CHARGE ? 1.5d : 1d);
+        EntityHelper.tweakAttribute(attrMap, "damageMeleeMulti", "0.5", attackPhase == AttackPhase.CHARGE);
 
-
+        indexAI = -1;
     }
     private void toSecondPhase() {
         indexAttackPhase = 0;
@@ -99,6 +99,10 @@ public class EmpressOfLight extends EntitySlime {
         Location currLoc = bukkitEntity.getLocation();
         targetLoc.setY(currLoc.getY());
         return MathHelper.getDirection(currLoc, targetLoc, 1);
+    }
+    // attack AI
+    private void AIPhaseCharge() {
+
     }
     private void AI() {
         // no AI after death
@@ -127,17 +131,8 @@ public class EmpressOfLight extends EntitySlime {
                     toSecondPhase();
                 // TODO
                 switch (attackPhase) {
-                    case DASH:
-                        AIPhaseDash();
-                        break;
-                    case SHOOT:
-                        AIPhaseShoot();
-                        break;
-                    case SUMMON:
-                        AIPhaseSummon();
-                        break;
-                    case NUKE:
-                        AIPhaseNuke();
+                    case CHARGE:
+                        AIPhaseCharge();
                         break;
                 }
                 indexAI ++;
@@ -187,6 +182,13 @@ public class EmpressOfLight extends EntitySlime {
             attrMap.put("defence", 100d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
+            // damage multiplier
+            double damageMultiplier = summonedDuringDay ? 2d : 1d;
+            attrMap.put("damageMulti", damageMultiplier);
+            attrMapPrismaticBolt.put("damageMulti", damageMultiplier);
+            attrMapSunDance.put("damageMulti", damageMultiplier);
+            attrMapEverlastingRainbow.put("damageMulti", damageMultiplier);
+            attrMapEtherealLance.put("damageMulti", damageMultiplier);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }

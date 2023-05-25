@@ -22,6 +22,7 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import org.omg.CORBA.TypeCodePackage.BadKind;
 import terraria.TerrariaHelper;
+import terraria.entity.boss.empressOfLight.EmpressOfLight;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.entity.projectile.TerrariaPotionProjectile;
 import terraria.gameplay.Event;
@@ -1156,7 +1157,8 @@ public class MonsterHelper {
                         // stop and reflect projectiles
                         else if (indexAI == 100) {
                             HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
-                            attrMap.put("damageTakenMulti", 0d);
+                            // tweak defence to be almost invincible
+                            EntityHelper.tweakAttribute(attrMap, "defence", "500", true);
                             monsterBkt.addScoreboardTag("reflectProjectile");
                         }
                         else if (indexAI < 200) {
@@ -1168,7 +1170,8 @@ public class MonsterHelper {
                             if (indexAI == 200) {
                                 monsterBkt.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.75d);
                                 HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
-                                attrMap.put("damageTakenMulti", 1d);
+                                // remove increased defence
+                                EntityHelper.tweakAttribute(attrMap, "defence", "500", false);
                                 monsterBkt.removeScoreboardTag("reflectProjectile");
                             }
                         }

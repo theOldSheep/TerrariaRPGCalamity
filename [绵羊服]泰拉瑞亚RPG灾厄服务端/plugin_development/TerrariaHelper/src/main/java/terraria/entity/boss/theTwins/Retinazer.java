@@ -11,6 +11,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
+import terraria.entity.boss.empressOfLight.EmpressOfLight;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
@@ -60,8 +61,10 @@ public class Retinazer extends EntitySlime {
         indexAI = -40;
         bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
         if (phaseAI == 2) {
-            attrMap.put("damage", 458d);
-            attrMap.put("defence", 40d);
+            // damage: 306 -> 458
+            EntityHelper.tweakAttribute(attrMap, "damage", "152", true);
+            // defence: 20 -> 40
+            EntityHelper.tweakAttribute(attrMap, "defence", "20", true);
             addScoreboardTag("isMechanic");
             setCustomName(bossName + "§1");
         }

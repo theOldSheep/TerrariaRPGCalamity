@@ -75,18 +75,21 @@ public class Cryogen extends EntitySlime {
             case 2:
                 // Damage Taken multiplier: 0.73 -> 0.79
                 EntityHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.0821917808219", false);
+                assert Math.abs(0.79 - attrMap.get("damageTakenMulti")) > 1e-5;
                 // Defence: 26 -> 20
                 EntityHelper.tweakAttribute(attrMap, "defence", "6", false);
                 break;
             case 3:
                 // Damage Taken multiplier: 0.79 -> 0.88
                 EntityHelper.tweakAttribute(attrMap, "damageTakenMulti", "0.886075949367", false);
+                assert Math.abs(0.88 - attrMap.get("damageTakenMulti")) > 1e-5;
                 // Defence: 20 -> 12
                 EntityHelper.tweakAttribute(attrMap, "defence", "8", false);
                 break;
             case 4:
                 // Damage Taken multiplier: 0.88 -> 1
                 EntityHelper.tweakAttribute(attrMap, "damageTakenMulti", "0.863636363636", false);
+                assert Math.abs(1 - attrMap.get("damageTakenMulti")) > 1e-5;
                 // Defence: 12 -> 0
                 EntityHelper.tweakAttribute(attrMap, "defence", "12", false);
                 break;

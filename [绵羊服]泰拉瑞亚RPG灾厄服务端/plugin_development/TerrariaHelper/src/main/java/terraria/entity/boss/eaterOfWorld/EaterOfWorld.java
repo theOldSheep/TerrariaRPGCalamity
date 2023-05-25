@@ -317,9 +317,9 @@ public class EaterOfWorld extends EntitySlime {
             LivingEntity before = bossParts.get(index - 1);
             if (before.getHealth() > 1e-5 && !before.isDead()) {
                 HashMap<String, Double> atm = EntityHelper.getAttrMap(before);
-                EntityHelper.tweakAttribute(attrMap, "damage",
+                EntityHelper.tweakAttribute(atm, "damage",
                         "" + (TAIL_DMG - atm.get("damage")), true);
-                EntityHelper.tweakAttribute(attrMap, "defence",
+                EntityHelper.tweakAttribute(atm, "defence",
                         "" + (TAIL_DEF - atm.get("defence")), true);
             }
         }
@@ -327,12 +327,10 @@ public class EaterOfWorld extends EntitySlime {
             LivingEntity after = bossParts.get(index + 1);
             if (after.getHealth() > 1e-5 && !after.isDead()) {
                 HashMap<String, Double> atm = EntityHelper.getAttrMap(after);
-                EntityHelper.tweakAttribute(attrMap, "damage",
-                        "" + (TAIL_DMG - atm.get("damage")), true);
-                EntityHelper.tweakAttribute(attrMap, "defence",
-                        "" + (TAIL_DEF - atm.get("defence")), true);
-                atm.put("damage", HEAD_DMG);
-                atm.put("defence", HEAD_DEF);
+                EntityHelper.tweakAttribute(atm, "damage",
+                        "" + (HEAD_DMG - atm.get("damage")), true);
+                EntityHelper.tweakAttribute(atm, "defence",
+                        "" + (HEAD_DEF - atm.get("defence")), true);
             }
         }
         // drop loot

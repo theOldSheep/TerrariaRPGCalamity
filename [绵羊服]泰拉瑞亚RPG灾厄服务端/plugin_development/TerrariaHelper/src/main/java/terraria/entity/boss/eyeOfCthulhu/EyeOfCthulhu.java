@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import terraria.entity.boss.empressOfLight.EmpressOfLight;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
@@ -68,7 +69,8 @@ public class EyeOfCthulhu extends EntitySlime {
                             bossbar.color = BossBattle.BarColor.YELLOW;
                             bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
                             setCustomName(BOSS_TYPE.msgName + "§1");
-                            attrMap.put("defence", 50d);
+                            // enrage spinning, defence: 24 -> 124
+                            EntityHelper.tweakAttribute(attrMap, "defence", "100", true);
                         }
                         else {
                             switch (typeAI) {
@@ -123,15 +125,18 @@ public class EyeOfCthulhu extends EntitySlime {
                         }
                     }
                     //
-                    // ready to start enraged state, spinning
+                    // initializing enraged state, spinning before doing so
                     //
                     else if (rageRotationIndex > 0) {
                         MonsterHelper.spawnMob("克苏鲁的仆从",
                                 ((LivingEntity) bukkitEntity).getEyeLocation(), target);
                         rageRotationIndex --;
+                        // end of spinning state
                         if (rageRotationIndex == 0) {
-                            attrMap.put("damage", 132d);
-                            attrMap.put("defence", 0d);
+                            // enrage spinning, damage: 102 -> 132
+                            EntityHelper.tweakAttribute(attrMap, "damage", "30", true);
+                            // enrage spinning, defence: 124 -> 0
+                            EntityHelper.tweakAttribute(attrMap, "defence", "124", false);
                             bossbar.color = BossBattle.BarColor.RED;
                             bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
                             indexAI = -1;
@@ -275,14 +280,16 @@ public class EyeOfCthulhu extends EntitySlime {
                                             }
                                             direction.multiply(4 / dirLen);
                                             bukkitEntity.setVelocity(direction);
-                                            attrMap.put("damageMulti", 1.25d);
+                                            // quick dash, damage multiplier: 1 -> 1.5
+                                            EntityHelper.tweakAttribute(attrMap, "damageMulti", "0.5", true);
                                         }
                                         // back to directly charging player
                                         else if (indexAI >= 15) {
                                             indexAI = -1;
                                             countAI = 0;
                                             typeAI = AIPhase.CHARGE;
-                                            attrMap.put("damageMulti", 1d);
+                                            // end of quick dash, damage multiplier: 1.5 -> 1
+                                            EntityHelper.tweakAttribute(attrMap, "damageMulti", "0.5", false);
                                         }
                                     }
                                     // hover if health is relatively high

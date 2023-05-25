@@ -51,8 +51,10 @@ public class Spazmatism extends EntitySlime {
         indexAI = -40;
         bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
         if (phaseAI == 2) {
-            attrMap.put("damage", 612d);
-            attrMap.put("defence", 56d);
+            // damage: 408 -> 612
+            EntityHelper.tweakAttribute(attrMap, "damage", "204", true);
+            // defence: 20 -> 56
+            EntityHelper.tweakAttribute(attrMap, "defence", "36", true);
             addScoreboardTag("isMechanic");
             setCustomName(bossName + "§1");
         }

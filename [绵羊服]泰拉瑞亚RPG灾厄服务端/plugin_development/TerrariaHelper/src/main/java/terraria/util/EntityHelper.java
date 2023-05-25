@@ -706,13 +706,14 @@ public class EntityHelper {
         try {
             // this is to prevent removing effect from a player logging out
             if (removeEffectOnStop) allEffects.remove(effect);
-            // tweak attrMap if the target is not a player
-            if (!(entity instanceof Player)) {
+            // tweak attrMap
+            {
                 String attributesPath = "effects." + effect + ".attributes.";
                 ConfigurationSection effectSection = TerrariaHelper.buffConfig.getConfigurationSection(attributesPath);
                 tweakAllAttributes(entity, effectSection, false);
-            } else {
-                // remove the buff applied
+            }
+            // remove the buff applied if the entity is a player
+            if (entity instanceof Player) {
                 for (PotionEffectType effectInflict : getVanillaEffectInflict(effect))
                     ((LivingEntity) entity).removePotionEffect(effectInflict);
             }
@@ -732,8 +733,8 @@ public class EntityHelper {
                 if (!(entity instanceof Player))
                     damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageMonster", damagePerDelay);
             }
-            // tweak attrMap if the target is not a player
-            if (!(entity instanceof Player)) {
+            // tweak attrMap
+            {
                 String attributesPath = "effects." + effect + ".attributes.";
                 ConfigurationSection effectSection = TerrariaHelper.buffConfig.getConfigurationSection(attributesPath);
                 tweakAllAttributes(entity, effectSection, true);

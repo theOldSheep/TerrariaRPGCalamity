@@ -13,6 +13,7 @@ import org.bukkit.entity.Slime;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import terraria.entity.boss.empressOfLight.EmpressOfLight;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
@@ -149,7 +150,7 @@ public class QueenSlime extends EntitySlime {
             case SMASH: {
                 // begin smash
                 if (sizeChangeTimeIndex == 0) {
-                    attrMap.put("damage", 540d);
+                    EntityHelper.tweakAttribute(attrMap, "damageMeleeMulti", "0.2", true);
                 }
                 motX = 0;
                 motY = -(secondPhase ? SMASH_SPEED_NORMAL : SMASH_SPEED_ENRAGED);
@@ -157,7 +158,7 @@ public class QueenSlime extends EntitySlime {
                 sizeChangeTimeIndex ++;
                 // end smash
                 if (locY <= 1 || (locY <= target.getLocation().getY() && isOnGround() )) {
-                    attrMap.put("damage", 480d);
+                    EntityHelper.tweakAttribute(attrMap, "damageMeleeMulti", "0.2", false);
                     if (secondPhase) {
                         sizeChangeState = SizeState.FLY;
                     }
