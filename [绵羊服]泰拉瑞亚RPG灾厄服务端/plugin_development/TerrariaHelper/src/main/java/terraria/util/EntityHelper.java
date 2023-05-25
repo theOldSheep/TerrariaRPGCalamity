@@ -706,8 +706,8 @@ public class EntityHelper {
         try {
             // this is to prevent removing effect from a player logging out
             if (removeEffectOnStop) allEffects.remove(effect);
-            // tweak attrMap
-            {
+            // tweak attribute if the entity is alive
+            if (!entity.isDead()) {
                 String attributesPath = "effects." + effect + ".attributes.";
                 ConfigurationSection effectSection = TerrariaHelper.buffConfig.getConfigurationSection(attributesPath);
                 tweakAllAttributes(entity, effectSection, false);

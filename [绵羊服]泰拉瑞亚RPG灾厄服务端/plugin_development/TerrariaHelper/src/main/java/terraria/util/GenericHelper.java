@@ -24,7 +24,8 @@ public class GenericHelper {
         float alpha;
         int ticksLinger;
         String particleChar;
-        List<String> particleColor;
+        ArrayList<String> particleColor;
+        ArrayList<Color> particleColorObjects;
         public ParticleLineOptions() {
             particleOrItem = true;
             spriteItem = null;
@@ -35,7 +36,7 @@ public class GenericHelper {
             ticksLinger = 5;
             particleChar = "█";
             particleColor = new ArrayList<>();
-            particleColor.add("255|255|255");
+            setParticleColor("255|255|255");
             alpha = 0.5f;
         }
         public ParticleLineOptions setParticleOrItem(boolean particleOrItem) {
@@ -84,7 +85,11 @@ public class GenericHelper {
         public ParticleLineOptions setParticleColor(String... particleColor) {
             this.particleColor.clear();
             this.particleColor.addAll(Arrays.asList(particleColor));
+            this.particleColorObjects = getColorListFromStrings(this.particleColor);
             return this;
+        }
+        public ArrayList<Color> getParticleColorObjects() {
+            return particleColorObjects;
         }
     }
     public static class StrikeLineOptions {
@@ -265,6 +270,40 @@ public class GenericHelper {
     public static void handleParticleLine_item(Vector vector, Location startLoc, ParticleLineOptions options) {
         displayHoloItem(startLoc, options.spriteItem, options.ticksLinger, (float) options.length, vector, options.rightOrthogonalDir);
     }
+    // color helper functions
+    public static String getStringFromColor(Color color) {
+        return color.getRed() + "|" + color.getGreen() + "|" + color.getBlue();
+    }
+    public static Color getColorFromString(String colorString) {
+        String[] info = colorString.split("\\|");
+        return Color.fromRGB(Integer.parseInt(info[0]), Integer.parseInt(info[1]), Integer.parseInt(info[2]));
+    }
+    public static ArrayList<Color> getColorListFromStrings(List<String> colorStrings) {
+        ArrayList<Color> colors = new ArrayList<>();
+        for (String currColor : colorStrings) {
+            colors.add( getColorFromString(currColor) );
+        }
+        return colors;
+    }
+    public static Color getInterpolateColor(double progress, List<Color> allColors) {
+        double colorProgress = progress * allColors.size();
+        int colorIndex = (int) colorProgress;
+        Color c1 = allColors.get(colorIndex);
+        int rInt, gInt, bInt;
+        if (allColors.size() > 1) {
+            Color c2 = allColors.get((colorIndex + 1) % allColors.size());
+            double multi2 = colorProgress % 1;
+            double multi1 = 1 - multi2;
+            rInt = (int) ((c1.getRed() * multi1) + (c2.getRed() * multi2));
+            gInt = (int) ((c1.getGreen() * multi1) + (c2.getGreen() * multi2));
+            bInt = (int) ((c1.getBlue() * multi1) + (c2.getBlue() * multi2));
+        } else {
+            rInt = c1.getRed();
+            gInt = c1.getGreen();
+            bInt = c1.getBlue();
+        }
+        return Color.fromRGB(rInt, gInt, bInt);
+    }
     public static void handleParticleLine_particle(Vector vector, Location startLoc, ParticleLineOptions options) {
         // variables copied from options
         double length = options.length;
@@ -279,32 +318,15 @@ public class GenericHelper {
         Vector dVec = vector.clone().normalize();
         int loopTime = (int) Math.round(length / stepsize);
         dVec.multiply(length / loopTime);
-        List<Color> allColors = new ArrayList<>();
-        for (String currColor : particleColor) {
-            String[] info = currColor.split("\\|");
-            allColors.add(Color.fromRGB(Integer.parseInt(info[0]), Integer.parseInt(info[1]), Integer.parseInt(info[2])));
-        }
+        List<Color> allColors = options.particleColorObjects;
         Location currLoc = startLoc.clone();
         for (int i = 0; i <= loopTime; i ++) {
             // tweak color
-            double colorProgress = (double) i * allColors.size() / (loopTime + 1);
-            int colorIndex = (int) colorProgress;
-            Color c1 = allColors.get(colorIndex);
-            int rInt, gInt, bInt;
-            if (allColors.size() > 1) {
-                Color c2 = allColors.get((colorIndex + 1) % allColors.size());
-                double multi2 = colorProgress % 1;
-                double multi1 = 1 - multi2;
-                rInt = (int) ((c1.getRed() * multi1) + (c2.getRed() * multi2));
-                gInt = (int) ((c1.getGreen() * multi1) + (c2.getGreen() * multi2));
-                bInt = (int) ((c1.getBlue() * multi1) + (c2.getBlue() * multi2));
-            } else {
-                rInt = c1.getRed();
-                gInt = c1.getGreen();
-                bInt = c1.getBlue();
-            }
+            Color currentColor = getInterpolateColor((double) i / (loopTime + 1), allColors);
             // spawn "particles"
-            String rCode = Integer.toHexString(rInt), gCode = Integer.toHexString(gInt), bCode = Integer.toHexString(bInt);
+            String rCode = Integer.toHexString(currentColor.getRed()),
+                    gCode = Integer.toHexString(currentColor.getGreen()),
+                    bCode = Integer.toHexString(currentColor.getBlue());
             if (rCode.length() == 1) rCode = "0" + rCode;
             if (gCode.length() == 1) gCode = "0" + gCode;
             if (bCode.length() == 1) bCode = "0" + bCode;

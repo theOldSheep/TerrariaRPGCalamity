@@ -470,15 +470,18 @@
 水晶矢:
     penetration: 99999
     gravity: 0
-    liveTime: 20
+    liveTime: 50
     blockHitAction: thru
-    trailColor: 50|255|150
+    trailColor: 255|0|0
     trailSize: 0.15
     trailStepSize: 1
-    isGrenade: true
-    blastRadius: 3.5
-    buffInflict:
-        - "瘟疫|300|1"
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceRadius: 64
+    autoTraceSharpTurning: false
+    autoTraceAbility: 0.2
+    noAutoTraceTicks: 10
+    maxAutoTraceTicks: 30
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2

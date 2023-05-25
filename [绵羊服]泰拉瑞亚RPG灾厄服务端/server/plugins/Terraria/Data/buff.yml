@@ -97,6 +97,22 @@ effects:
       speedMulti: -0.15
       damageMulti: -0.1
     tooltip: 从内部腐烂
+  神圣之火:
+    isBuff: false
+    damageInterval: 10
+    damage: 8
+    damageMonster: 25
+    attributes:
+      regenMulti: -1
+    tooltip: 神圣之光正将你焚化
+  夜魇:
+    isBuff: false
+    damageInterval: 10
+    damage: 8
+    damageMonster: 50
+    attributes:
+      regenMulti: -1
+    tooltip: 被月之射线瓦解
   耐药性:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/83/Potion_Sickness
     isBuff: false
