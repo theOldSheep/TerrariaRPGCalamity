@@ -53,7 +53,7 @@ public class TerrariaNPC extends EntityVillager {
         // other variables and attributes etc.
         this.NPCType = type;
         this.ageLocked = true;
-        EntityHelper.setMetadata(bukkitEntity, "GUIViewers", GUIViewers);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.NPC_GUI_VIEWERS, GUIViewers);
         NPCHelper.NPCMap.put(type, (LivingEntity) bukkitEntity);
         this.setCustomName(type);
         this.setCustomNameVisible(true);
@@ -71,43 +71,43 @@ public class TerrariaNPC extends EntityVillager {
         switch (type) {
             case "向导": {
                 attrMap.put("damage", 30d);
-                EntityHelper.setMetadata(bukkitEntity, "damageType", "Arrow");
+                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
                 break;
             }
             case "渔夫": {
                 attrMap.put("damage", 24d);
-                EntityHelper.setMetadata(bukkitEntity, "damageType", "Arrow");
+                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
                 break;
             }
             case "建材商人": {
                 attrMap.put("damage", 32d);
-                EntityHelper.setMetadata(bukkitEntity, "damageType", "Melee");
+                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
                 break;
             }
             case "裁缝": {
                 attrMap.put("damage", 48d);
-                EntityHelper.setMetadata(bukkitEntity, "damageType", "Magic");
+                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
                 break;
             }
             case "军火商": {
                 attrMap.put("damage", 72d);
-                EntityHelper.setMetadata(bukkitEntity, "damageType", "Bullet");
+                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.BULLET);
                 break;
             }
             case "哥布林工匠": {
                 attrMap.put("damage", 44d);
-                EntityHelper.setMetadata(bukkitEntity, "damageType", "Arrow");
+                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
                 break;
             }
             case "爆破专家": {
                 attrMap.put("damage", 60d);
-                EntityHelper.setMetadata(bukkitEntity, "damageType", "Arrow");
+                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
                 break;
             }
             default:
-                EntityHelper.setMetadata(bukkitEntity, "damageType", "Melee");
+                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
         }
-        EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         // health
         double maxHealth;
         switch (type) {
@@ -303,7 +303,7 @@ public class TerrariaNPC extends EntityVillager {
     public void B_() {
         super.B_();
         // initialize the NPC again if the chunk reloaded
-        if (EntityHelper.getMetadata(bukkitEntity, "attrMap") == null)
+        if (EntityHelper.getMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP) == null)
             initTypeInfo(NPCType);
         // remove duplicate
         if (ticksLived % 5 == 4 && NPCHelper.NPCMap.get(NPCType) != bukkitEntity) {

@@ -1,6 +1,5 @@
 package terraria.util;
 
-import com.sun.org.apache.bcel.internal.generic.DREM;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
@@ -39,6 +38,7 @@ public class EntityHelper {
     // constants
     static HashMap<String, Set<String>> buffInferior, buffSuperior;
     public static final HashMap<String, DamageType> damageTypeInternalNameMapping = new HashMap<>(30);
+    private static final HashMap<String, MetadataName> metadataNameMapping = new HashMap<>();
     static {
         buffSuperior = new HashMap<>(50);
         buffInferior = new HashMap<>(50);
@@ -131,6 +131,94 @@ public class EntityHelper {
             return this;
         }
     }
+    public enum MetadataName {
+        ACCESSORIES("accessory"),
+        ACCESSORIES_FLIGHT_BACKUP("accessoryThrust"),
+        ACCESSORIES_LIST("accessoryList"),
+        ARMOR_SET("armorSet"),
+        ATTRIBUTE_MAP("attrMap"),
+        BLOCK_BREAK_PROGRESS("breakProgress"),
+        BOSS_BAR("bossbar"),
+        BOSS_TARGET_MAP("targets"),
+        BOSS_TYPE("bossType"),
+        BUFF_IMMUNE("buffImmune"),
+        BUFF_INFLICT("buffInflict"),
+        CALAMITAS_PROJECTILE_TICKS_LIVED("projectileTicksLive"),
+        CALAMITAS_PROJECTILE_ORIGINAL("projectileOriginal"),
+        CELESTIAL_PILLAR_SHIELD("shield"),
+        DAMAGE_SOURCE("damageSourcePlayer"),
+        DAMAGE_TAKER("damageTaker"),
+        DAMAGE_TYPE("damageType"),
+        DYNAMIC_DAMAGE_REDUCTION("dynamicDR"),
+        EFFECTS("effects"),
+        HEALTH_LOCKED_AT_AMOUNT("healthLock"),
+        KNOCKBACK_SLOW_FACTOR("kbFactor"),
+        KILL_CONTRIBUTE_EVENT_PROGRESS("killProgress"),
+        MINION_WHIP_BONUS_CRIT("minionWhipBonusCrit"),
+        MINION_WHIP_BONUS_DAMAGE("minionWhipBonusDamage"),
+        MONSTER_PARENT_TYPE("parentType"),
+        NPC_FIRST_SELL_INDEX("firstSell"),
+        NPC_GUI_VIEWERS("GUIViewers"),
+        PLAYER_BIOME("playerBiome"),
+        PLAYER_CRAFTING_RECIPE_INDEX("recipeNumber"),
+        PLAYER_CRAFTING_STATION("craftingStation"),
+        PLAYER_CURRENT_LOCATION("currLocation"),
+        PLAYER_DASH_DIRECTION("chargeDir"),
+        PLAYER_DASH_KEY_PRESSED_MS("chargeDirLastPressed"),
+        PLAYER_BUFF_INFLICT("effectInflict"),
+        PLAYER_FORCED_BACKGROUND("forceBackground"),
+        PLAYER_FORCED_BGM("forceBGM"),
+        PLAYER_GRAPPLING_HOOKS("hooks"),
+        PLAYER_GRAPPLING_HOOK_COLOR("color"),
+        PLAYER_GRAPPLING_HOOK_ITEM("grapplingHookItem"),
+        PLAYER_INTERNAL_ITEM_START_USE_CD("useCDInternal"),
+        PLAYER_INTERNAL_LAST_ITEM_START_USE_CD("useCDInternalLast"),
+        PLAYER_INVENTORIES("inventories"),
+        PLAYER_ITEM_SWING_AMOUNT("swingAmount"),
+        PLAYER_KEYS_PRESSED("keysPressed"),
+        PLAYER_LAST_BACKGROUND("lastBackground"),
+        PLAYER_LAST_BGM("lastBGM"),
+        PLAYER_LAST_BGM_TIME("lastBGMTime"),
+        PLAYER_LAST_LOCATION("lastLocation"),
+        PLAYER_MANA_REGEN_DELAY("manaRegenDelay"),
+        PLAYER_MANA_REGEN_COUNTER("manaRegenCounter"),
+        PLAYER_MINION_LIST("minions"),
+        PLAYER_MINION_WHIP_FOCUS("minionWhipFocus"),
+        PLAYER_MONSTER_SPAWNED_AMOUNT("mobAmount"),
+        PLAYER_NEXT_MINION_INDEX("nextMinionIndex"),
+        PLAYER_NEXT_SENTRY_INDEX("nextSentryIndex"),
+        PLAYER_NPC_INTERACTING("NPCViewing"),
+        PLAYER_SENTRY_LIST("sentries"),
+        PLAYER_TEAM("team"),
+        PLAYER_THRUST_INDEX("thrustIndex"),
+        PLAYER_THRUST_PROGRESS("thrustProgress"),
+        PROJECTILE_DESTROY_REASON("destroyReason"),
+        PROJECTILE_PENETRATION_LEFT("penetration"),
+        PROJECTILE_ENTITIES_COLLIDED("collided"),
+        REGEN_TIME("regenTime"),
+        RESPAWN_COUNTDOWN("respawnCD"),
+        SPAWN_IN_EVENT("spawnEvent"),
+        SUCK_TARGET("suckTarget"),
+        ;
+        // fields
+        String metadataName;
+        // constructors
+        MetadataName(String metadataName) {
+            this.metadataName = metadataName;
+            // test for collision
+            if (metadataNameMapping.containsKey(metadataName)) {
+                TerrariaHelper.getInstance().getLogger().log(
+                        Level.SEVERE, "Metadata Name Collision: " + metadataNameMapping +
+                                " between " + metadataNameMapping.get(metadataName) + " and " + this);
+            }
+            metadataNameMapping.put(metadataName, this);
+        }
+
+        @Override
+        public String toString() {
+            return metadataName;
+        }
+    }
     public enum DamageReason {
         BLOCK_EXPLOSION(false, DamageType.BLOCK_EXPLOSION),
         BOSS_ANGRY(true, null),
@@ -194,24 +282,24 @@ public class EntityHelper {
     }
     // helper functions
     public static void initEntityMetadata(Entity entity) {
-        setMetadata(entity, "damageType", DamageType.MELEE);
-        setMetadata(entity, "effects", new HashMap<String, Integer>());
-        setMetadata(entity, "buffImmune", new HashMap<String, Integer>());
+        setMetadata(entity, MetadataName.DAMAGE_TYPE, DamageType.MELEE);
+        setMetadata(entity, MetadataName.EFFECTS, new HashMap<String, Integer>());
+        setMetadata(entity, MetadataName.BUFF_IMMUNE, new HashMap<String, Integer>());
     }
     public static DamageType getDamageType(Metadatable entity) {
         try {
-            return (DamageType) getMetadata(entity, "damageType").value();
+            return (DamageType) getMetadata(entity, MetadataName.DAMAGE_TYPE).value();
         } catch (Exception e) {
             return DamageType.MELEE;
         }
     }
     public static void setDamageType(Metadatable entity, DamageType damageType) {
-        if (damageType == null) setMetadata(entity, "damageType", DamageType.MELEE);
-        else setMetadata(entity, "damageType", damageType);
+        if (damageType == null) setMetadata(entity, MetadataName.DAMAGE_TYPE, DamageType.MELEE);
+        else setMetadata(entity, MetadataName.DAMAGE_TYPE, damageType);
     }
     public static HashMap<String, Double> getAttrMap(Metadatable entity) {
         try {
-            return (HashMap<String, Double>) getMetadata(entity, "attrMap").value();
+            return (HashMap<String, Double>) getMetadata(entity, MetadataName.ATTRIBUTE_MAP).value();
         } catch (Exception e) {
             return new HashMap<>(0);
         }
@@ -223,21 +311,27 @@ public class EntityHelper {
             return null;
         }
     }
+    public static MetadataValue getMetadata(Metadatable owner, MetadataName metadataName) {
+        return getMetadata(owner, metadataName.toString());
+    }
     public static void setMetadata(Metadatable owner, String key, Object value) {
         if (value == null)
             owner.removeMetadata(key, TerrariaHelper.getInstance());
         else
             owner.setMetadata(key, new FixedMetadataValue(TerrariaHelper.getInstance(), value));
     }
+    public static void setMetadata(Metadatable owner, MetadataName key, Object value) {
+        setMetadata(owner, key.toString(), value);
+    }
     // helper functions for tweaking attribute
     public static void tweakAttribute(Entity entity, String key, String value, boolean addOrRemove) {
-        if (key.equals("damageType")) {
-            if (addOrRemove) setMetadata(entity, "damageType",
+        if (key.equals(MetadataName.DAMAGE_TYPE.toString())) {
+            if (addOrRemove) setMetadata(entity, MetadataName.DAMAGE_TYPE,
                     damageTypeInternalNameMapping.getOrDefault(value, DamageType.MELEE));
             return;
         }
         try {
-            if (key.startsWith("buffInflict")) {
+            if (key.startsWith(MetadataName.BUFF_INFLICT.toString())) {
                 if (entity instanceof Player) {
                     HashMap<String, ArrayList<String>> effectInflict = PlayerHelper.getPlayerEffectInflict(entity);
                     if (!effectInflict.containsKey(key)) return;
@@ -248,8 +342,8 @@ public class EntityHelper {
                 }
                 return;
             }
-            if (key.equals("buffImmune")) {
-                Map<String, Integer> buffImmune = (Map<String, Integer>) getMetadata(entity, "buffImmune").value();
+            else if (key.equals(MetadataName.BUFF_IMMUNE.toString())) {
+                Map<String, Integer> buffImmune = (Map<String, Integer>) getMetadata(entity, MetadataName.BUFF_IMMUNE).value();
                 int layers = buffImmune.getOrDefault(value, 0);
                 if (addOrRemove)
                     layers ++;
@@ -303,32 +397,28 @@ public class EntityHelper {
                     if (key.endsWith("Multi"))
                         value_number = 1 + value_number;
             }
-            switch (key) {
-                case "damageTakenMulti":
-                    if (addOrRemove)
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / (2 - value_number));
-                    else
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * (2 - value_number));
-                    break;
-                case "ammoConsumptionRate":
-                case "arrowConsumptionRate":
-                    if (addOrRemove)
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * value_number);
-                    else
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / value_number);
-                    break;
-                default:
-                    if (key.endsWith("Multi")) {
-                        if (addOrRemove)
-                            attrMap.put(key, (attrMap.getOrDefault(key, 1d)) * value_number);
-                        else
-                            attrMap.put(key, (attrMap.getOrDefault(key, 1d)) / value_number);
-                    } else {
-                        if (addOrRemove)
-                            attrMap.put(key, (attrMap.getOrDefault(key, 1d)) + value_number);
-                        else
-                            attrMap.put(key, (attrMap.getOrDefault(key, 1d)) - value_number);
-                    }
+            // damage reduction handled in a special way to prevent unreasonable accumulation of DR
+            if (key.equals("damageTakenMulti")) {
+                // original: 1 - value_number
+                // switched to 2 - value_number because the operation to value_number above
+                if (addOrRemove)
+                    attrMap.put(key, attrMap.getOrDefault(key, 1d) / (2 - value_number));
+                else
+                    attrMap.put(key, attrMap.getOrDefault(key, 1d) * (2 - value_number));
+            }
+            // ammo consumption rate
+            else if (key.endsWith("Rate") || key.endsWith("Multi")) {
+                if (addOrRemove)
+                    attrMap.put(key, (attrMap.getOrDefault(key, 1d)) * value_number);
+                else
+                    attrMap.put(key, (attrMap.getOrDefault(key, 1d)) / value_number);
+            }
+            // scalar attributes
+            else {
+                if (addOrRemove)
+                    attrMap.put(key, (attrMap.getOrDefault(key, 1d)) + value_number);
+                else
+                    attrMap.put(key, (attrMap.getOrDefault(key, 1d)) - value_number);
             }
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
@@ -345,8 +435,8 @@ public class EntityHelper {
     }
     // the two below is used in update player attribute
     public static void tweakAttribute(Entity entity, HashMap<String, Double> attrMap, String key, String value, boolean addOrRemove) {
-        if (key.equals("damageType")) {
-            if (addOrRemove) setMetadata(entity, "damageType",
+        if (key.equals(MetadataName.DAMAGE_TYPE.toString())) {
+            if (addOrRemove) setMetadata(entity, MetadataName.DAMAGE_TYPE,
                     damageTypeInternalNameMapping.getOrDefault(value, DamageType.MELEE));
             return;
         }
@@ -363,7 +453,7 @@ public class EntityHelper {
                 return;
             }
             if (key.equals("buffImmune")) {
-                Map<String, Integer> buffImmune = (Map<String, Integer>) getMetadata(entity, "buffImmune").value();
+                Map<String, Integer> buffImmune = (Map<String, Integer>) getMetadata(entity, MetadataName.BUFF_IMMUNE).value();
                 int layers = buffImmune.getOrDefault(value, 0);
                 if (addOrRemove)
                     layers ++;
@@ -484,10 +574,10 @@ public class EntityHelper {
     }
     public static HashMap<String, Integer> getEffectMap(Entity entity) {
         try {
-            return (HashMap<String, Integer>) getMetadata(entity, "effects").value();
+            return (HashMap<String, Integer>) getMetadata(entity, MetadataName.EFFECTS).value();
         } catch (Exception e) {
             HashMap<String, Integer> effectMap = new HashMap<>();
-            setMetadata(entity, "effects", effectMap);
+            setMetadata(entity, MetadataName.EFFECTS, effectMap);
             return effectMap;
         }
     }
@@ -661,7 +751,7 @@ public class EntityHelper {
             // if the buff is not in config, do not do anything
             if (!TerrariaHelper.buffConfig.contains("effects." + effect)) return;
             // returns if the entity is immune to this effect (i.e. debuff)
-            MetadataValue buffImmuneMetadata = getMetadata(entity, "buffImmune");
+            MetadataValue buffImmuneMetadata = getMetadata(entity, MetadataName.BUFF_IMMUNE);
             if (buffImmuneMetadata != null) {
                 Map<String, Integer> buffImmune = (Map<String, Integer>) buffImmuneMetadata.value();
                 if (buffImmune.containsKey(effect)) return;
@@ -821,7 +911,7 @@ public class EntityHelper {
         // player being damaged
         if (victim instanceof Player) {
             // health regen time reset
-            setMetadata(victim, "regenTime", 0);
+            setMetadata(victim, MetadataName.REGEN_TIME, 0);
             Player vPly = (Player) victim;
             switch (damager.getName()) {
                 case "水螺旋": {
@@ -838,7 +928,7 @@ public class EntityHelper {
                     break;
                 }
                 case "吮脑怪": {
-                    setMetadata(damager, "suckTarget", victim);
+                    setMetadata(damager, MetadataName.SUCK_TARGET, victim);
                     break;
                 }
             }
@@ -874,7 +964,7 @@ public class EntityHelper {
             vPly.setVelocity(new Vector());
             int respawnTime = 15;
             for (ArrayList<LivingEntity> bossList : BossHelper.bossMap.values()) {
-                HashMap<Player, Double> targets = (HashMap<Player, Double>) getMetadata(bossList.get(0), "targets").value();
+                HashMap<Player, Double> targets = (HashMap<Player, Double>) getMetadata(bossList.get(0), MetadataName.BOSS_TARGET_MAP).value();
                 if (targets.containsKey(vPly)) {
                     respawnTime = Math.max(respawnTime, Math.min(targets.size() * 15, 75));
                 }
@@ -901,7 +991,7 @@ public class EntityHelper {
             vPly.closeInventory();
             sendDeathMessage(d, v, damageType, debuffType);
             vPly.setHealth(Math.min(400, vPly.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
-            setMetadata(vPly, "respawnCD", respawnTime * 20);
+            setMetadata(vPly, MetadataName.RESPAWN_COUNTDOWN, respawnTime * 20);
             vPly.setGameMode(GameMode.SPECTATOR);
             vPly.setFlySpeed(0);
             vPly.setFallDistance(0);
@@ -978,7 +1068,7 @@ public class EntityHelper {
             // monster generic drop, event etc.
             else if (vScoreboardTags.contains("isMonster")) {
                 LivingEntity vLiving = (LivingEntity) v;
-                MetadataValue spawnEvt = getMetadata(v, "spawnEvent");
+                MetadataValue spawnEvt = getMetadata(v, MetadataName.SPAWN_IN_EVENT);
                 // event monster
                 if (spawnEvt != null && spawnEvt.asString().equals(Event.currentEvent)) {
                     HashMap<String, Double> eventInfo = Event.eventInfo;
@@ -991,12 +1081,14 @@ public class EntityHelper {
                             } else slimeKill--;
                         }
                         eventInfo.put("slimeKill", slimeKill);
-                    } else if (eventInfo.getOrDefault("isInvasion", 1d) > 0) {
-                        MetadataValue progress = getMetadata(v, "killProgress");
+                    }
+                    else if (eventInfo.getOrDefault(Event.InfoMapKeys.IS_INVASION.toString(), 1d) > 0) {
+                        MetadataValue progress = getMetadata(v, MetadataName.KILL_CONTRIBUTE_EVENT_PROGRESS);
                         if (progress != null) {
-                            eventInfo.put("invadeProgress",
-                                    eventInfo.getOrDefault("invadeProgress", 0d) + progress.asDouble());
-                            if (eventInfo.get("invadeProgress") >= eventInfo.get("invadeProgressMax")) {
+                            eventInfo.put(Event.InfoMapKeys.EVENT_PROGRESS.toString(),
+                                    eventInfo.getOrDefault(Event.InfoMapKeys.EVENT_PROGRESS.toString(), 0d) + progress.asDouble());
+                            if (eventInfo.get(Event.InfoMapKeys.EVENT_PROGRESS.toString()) >=
+                                    eventInfo.get(Event.InfoMapKeys.MAX_EVENT_PROGRESS.toString())) {
                                 switch (currentEvent) {
                                     case "冰霜月":
                                     case "南瓜月": {
@@ -1014,7 +1106,7 @@ public class EntityHelper {
                     }
                 }
                 // generic death drop etc.
-                MetadataValue parentType = getMetadata(v, "parentType");
+                MetadataValue parentType = getMetadata(v, MetadataName.MONSTER_PARENT_TYPE);
                 if (parentType != null) {
                     switch (parentType.asString()) {
                         // lava slime leaves lava ticksBeforeHookingFish death
@@ -1111,7 +1203,7 @@ public class EntityHelper {
         Set<String> entityScoreboardTags = entity.getScoreboardTags();
         Entity damageSource = getDamageSource(entity);
         if (targetScoreboardTags.contains("isPillar")) {
-            MetadataValue temp = getMetadata(target, "shield");
+            MetadataValue temp = getMetadata(target, MetadataName.CELESTIAL_PILLAR_SHIELD);
             if (temp != null && temp.asInt() > 0) return false;
         }
         if (!(target instanceof LivingEntity)) {
@@ -1162,7 +1254,7 @@ public class EntityHelper {
             Player targetPly = (Player) target;
             if (PlayerHelper.isProperlyPlaying(targetPly)) {
                 // handle special parent type (slime damage neglected by royal gel)
-                MetadataValue temp = getMetadata(damageSource, "parentType");
+                MetadataValue temp = getMetadata(damageSource, MetadataName.MONSTER_PARENT_TYPE);
                 if (temp != null) {
                     String parentType = temp.asString();
                     if (parentType.equals("史莱姆") && accessories.contains("皇家凝胶"))
@@ -1193,8 +1285,9 @@ public class EntityHelper {
             ProjectileSource shooter = ((Projectile) source).getShooter();
             if (shooter instanceof Entity) source = (Entity) shooter;
         }
-        if (source.hasMetadata("damageSourcePlayer"))
-            source = (Entity) getMetadata(source, "damageSourcePlayer").value();
+        MetadataValue damageSourceMetadata = getMetadata(source, MetadataName.DAMAGE_SOURCE);
+        if (damageSourceMetadata != null)
+            source = (Entity) damageSourceMetadata.value();
         return source;
     }
     public static void knockback(Entity entity, Vector dir, boolean addOrReplace) {
@@ -1202,7 +1295,7 @@ public class EntityHelper {
         if (kbResistance >= 1) return;
         double kbMulti = Math.max(1 - kbResistance, 0);
         dir.multiply(kbMulti);
-        setMetadata(entity, "kbFactor", kbMulti);
+        setMetadata(entity, MetadataName.KNOCKBACK_SLOW_FACTOR, kbMulti);
         Entity knockbackTaker = entity.getVehicle();
         if (knockbackTaker == null) knockbackTaker = entity;
         if (addOrReplace) {
@@ -1267,7 +1360,7 @@ public class EntityHelper {
         double defence = victimAttrMap.getOrDefault("defence", 0d) * victimAttrMap.getOrDefault("defenceMulti", 1d);
         if (victimScoreboardTags.contains("isBOSS")) {
             if (isDirectAttackDamage) {
-                MetadataValue bossTargets = getMetadata(victim, "targets");
+                MetadataValue bossTargets = getMetadata(victim, MetadataName.BOSS_TARGET_MAP);
                 boolean canProperlyDamage = false;
                 if (damageSource instanceof Player) {
                     if ( bossTargets == null ||
@@ -1288,7 +1381,7 @@ public class EntityHelper {
 
         // damage taker is the entity that takes the damage
         if (victim.hasMetadata("damageTaker")) {
-            Object dmgTaker = getMetadata(victim, "damageTaker").value();
+            Object dmgTaker = getMetadata(victim, MetadataName.DAMAGE_TAKER).value();
             if (dmgTaker instanceof LivingEntity)
                 damageTaker = (LivingEntity) dmgTaker;
         }
@@ -1454,9 +1547,9 @@ public class EntityHelper {
             dmg *= Math.random() * 0.3 + 0.85;
             if (isMinionDmg) {
                 MetadataValue temp;
-                temp = getMetadata(victim, "minionWhipBonusDamage");
+                temp = getMetadata(victim, MetadataName.MINION_WHIP_BONUS_DAMAGE);
                 double dmgBonus = temp != null ? temp.asDouble() : 0;
-                temp = getMetadata(victim, "minionWhipBonusCrit");
+                temp = getMetadata(victim, MetadataName.MINION_WHIP_BONUS_CRIT);
                 critRate += temp != null ? temp.asDouble() : 0;
             }
             if (!(victim instanceof Player)) {
@@ -1468,14 +1561,14 @@ public class EntityHelper {
             } else {
                 // paladin shield, only applies to player victims
                 if (! hasEffect(victim, "圣骑士护盾")) {
-                    String team = getMetadata(victim, "team").asString();
+                    String team = getMetadata(victim, MetadataName.PLAYER_TEAM).asString();
                     // works with players within 64 blocks
                     double dist = 4096;
                     Entity shieldPly = null;
                     for (Player ply : victim.getWorld().getPlayers()) {
                         if (!PlayerHelper.isProperlyPlaying(ply)) continue;
                         if (!hasEffect(ply, "圣骑士护盾")) continue;
-                        String currTeam = getMetadata(ply, "team").asString();
+                        String currTeam = getMetadata(ply, MetadataName.PLAYER_TEAM).asString();
                         if (!(currTeam.equals(team))) continue;
                         double currDist = ply.getLocation().distanceSquared(victim.getLocation());
                         if (currDist >= dist) continue;
@@ -1493,9 +1586,9 @@ public class EntityHelper {
             dmg -= defence * 0.75;
             if (victimScoreboardTags.contains("isBOSS")) {
                 double dynamicDR = 1;
-                MetadataValue temp = getMetadata(victim, "dynamicDR");
+                MetadataValue temp = getMetadata(victim, MetadataName.DYNAMIC_DAMAGE_REDUCTION);
                 if (temp != null) dynamicDR = temp.asDouble();
-                BossHelper.BossType type = (BossHelper.BossType) getMetadata(victim, "bossType").value();
+                BossHelper.BossType type = (BossHelper.BossType) getMetadata(victim, MetadataName.BOSS_TYPE).value();
                 if (! (damageSource instanceof Player && PlayerHelper.hasDefeated((Player) damageSource, type.msgName)) )
                     dmg *= dynamicDR;
             }
@@ -1510,7 +1603,7 @@ public class EntityHelper {
         // damage/kill
         if (!(victim instanceof ArmorStand)) {
             if (victimScoreboardTags.contains("isBOSS") && damageSource instanceof Player) {
-                MetadataValue temp = getMetadata(damageTaker, "targets");
+                MetadataValue temp = getMetadata(damageTaker, MetadataName.BOSS_TARGET_MAP);
                 if (temp != null) {
                     HashMap<Player, Double> targets = (HashMap<Player, Double>) temp.value();
                     Player ply = (Player) damageSource;
@@ -1519,7 +1612,7 @@ public class EntityHelper {
                 }
             }
             // for some entities that locks health at a specific value
-            MetadataValue healthLockMetadata = getMetadata(damageTaker, "healthLock");
+            MetadataValue healthLockMetadata = getMetadata(damageTaker, MetadataName.HEALTH_LOCKED_AT_AMOUNT);
             if (healthLockMetadata != null) {
                 double healthLock = healthLockMetadata.asDouble();
                 if (damageTaker.getHealth() > healthLock) {
@@ -1787,9 +1880,9 @@ public class EntityHelper {
             // get the prediction vector
             Vector velocity;
             if (target instanceof Player) {
-                Location lastLoc = (Location) EntityHelper.getMetadata(target, "currLocation").value();
+                Location lastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_CURRENT_LOCATION).value();
                 if (lastLoc.distanceSquared(target.getLocation()) < 1e-5)
-                    lastLoc = (Location) EntityHelper.getMetadata(target, "lastLocation").value();
+                    lastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_LAST_LOCATION).value();
                 velocity = target.getLocation().subtract(lastLoc).toVector();
             }
             else

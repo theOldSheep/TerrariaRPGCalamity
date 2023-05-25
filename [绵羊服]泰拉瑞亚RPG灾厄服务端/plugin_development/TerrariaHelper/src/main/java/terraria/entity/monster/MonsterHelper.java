@@ -188,8 +188,8 @@ public class MonsterHelper {
         if (Event.currentEvent.length() > 0 && variant.startsWith(Event.currentEvent)) {
             double killProgress = typeConfigSection.getDouble("eventProgress", 1d);
             org.bukkit.entity.Entity monsterBkt = monster.getBukkitEntity();
-            EntityHelper.setMetadata(monsterBkt, "spawnEvent", Event.currentEvent);
-            EntityHelper.setMetadata(monsterBkt, "killProgress", killProgress);
+            EntityHelper.setMetadata(monsterBkt, EntityHelper.MetadataName.SPAWN_IN_EVENT, Event.currentEvent);
+            EntityHelper.setMetadata(monsterBkt, EntityHelper.MetadataName.KILL_CONTRIBUTE_EVENT_PROGRESS, killProgress);
         }
         // name, size etc.
         if (variantConfigSection.contains("name"))
@@ -232,7 +232,7 @@ public class MonsterHelper {
                 bossList = BossHelper.getBossList(owningBoss);
             }
             if (bossList != null) {
-                HashMap<String, Double> targets = (HashMap<String, Double>) EntityHelper.getMetadata(bossList.get(0), "targets").value();
+                HashMap<String, Double> targets = (HashMap<String, Double>) EntityHelper.getMetadata(bossList.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
                 health *= targets.size();
             } else {
                 int totalPlyNearby = 0;
@@ -244,7 +244,7 @@ public class MonsterHelper {
         }
         // set the monster's stats
         bukkitMonster.addScoreboardTag("isMonster");
-        EntityHelper.setMetadata(bukkitMonster, "attrMap", attrMap);
+        EntityHelper.setMetadata(bukkitMonster, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         LivingEntity bukkitMonsterLivingEntity = (LivingEntity) bukkitMonster;
         bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
         bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_FOLLOW_RANGE).setBaseValue(444);
@@ -371,7 +371,7 @@ public class MonsterHelper {
                         HashMap<String, Double> attrMapSegment = EntityHelper.getAttrMap(segment);
                         attrMapSegment.put("damageMulti", 0.45);
                         attrMapSegment.put("defenceMulti", 2d);
-                        EntityHelper.setMetadata(segment, "damageTaker", bukkitMonster);
+                        EntityHelper.setMetadata(segment, EntityHelper.MetadataName.DAMAGE_TAKER, bukkitMonster);
                         segment.setCustomName(type + "§1");
                         segments.add(segment);
                     }
@@ -423,9 +423,9 @@ public class MonsterHelper {
     }
     public static void tweakPlayerMonsterSpawnedAmount(Player target, boolean addOrRemove) {
         if (target == null) return;
-        int mobAmount = EntityHelper.getMetadata(target, "mobAmount").asInt();
+        int mobAmount = EntityHelper.getMetadata(target, EntityHelper.MetadataName.PLAYER_MONSTER_SPAWNED_AMOUNT).asInt();
         mobAmount += addOrRemove ? 1 : -1;
-        EntityHelper.setMetadata(target, "mobAmount", mobAmount);
+        EntityHelper.setMetadata(target, EntityHelper.MetadataName.PLAYER_MONSTER_SPAWNED_AMOUNT, mobAmount);
     }
     // setup monster target
     public static Player updateMonsterTarget(Player target, EntityLiving monster, String type) {
@@ -437,7 +437,7 @@ public class MonsterHelper {
             ArrayList<LivingEntity> bossLst = BossHelper.getBossList(type);
             if (bossLst != null) {
                 org.bukkit.entity.Entity boss = bossLst.get(0);
-                return (Player) EntityHelper.getMetadata(boss, "target").value();
+                return (Player) EntityHelper.getMetadata(boss, EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
             }
         }
         // the monster's ticks lived is set to represent the ticks of losing any target
@@ -520,7 +520,7 @@ public class MonsterHelper {
             // drops from its own type
             toDrop.addAll(TerrariaHelper.entityConfig.getStringList(type + ".drop"));
             // drops inherited from its parent type
-            MetadataValue parentTypeVal = EntityHelper.getMetadata(monsterBkt, "parentType");
+            MetadataValue parentTypeVal = EntityHelper.getMetadata(monsterBkt, EntityHelper.MetadataName.MONSTER_PARENT_TYPE);
             if (parentTypeVal != null) {
                 String parentType = parentTypeVal.asString();
                 if (!parentType.equals(type)) {
@@ -545,15 +545,15 @@ public class MonsterHelper {
         // knockback can then be used to modify monster's movement speed temporarily
         double speedMultiKnockback = 1;
         {
-            MetadataValue kbFactorMetadata = EntityHelper.getMetadata(monsterBkt, "kbFactor");
+            MetadataValue kbFactorMetadata = EntityHelper.getMetadata(monsterBkt, EntityHelper.MetadataName.KNOCKBACK_SLOW_FACTOR);
             if (kbFactorMetadata != null) {
                 double kbFactor = kbFactorMetadata.asDouble();
                 if (kbFactor > 1e-5) {
                     speedMultiKnockback = 1 - kbFactor;
                     // knockback speed reduction decreases every tick
-                    EntityHelper.setMetadata(monsterBkt, "kbFactor", kbFactor - 0.1);
+                    EntityHelper.setMetadata(monsterBkt, EntityHelper.MetadataName.KNOCKBACK_SLOW_FACTOR, kbFactor - 0.1);
                 } else {
-                    EntityHelper.setMetadata(monsterBkt, "kbFactor", null);
+                    EntityHelper.setMetadata(monsterBkt, EntityHelper.MetadataName.KNOCKBACK_SLOW_FACTOR, null);
                 }
             }
         }

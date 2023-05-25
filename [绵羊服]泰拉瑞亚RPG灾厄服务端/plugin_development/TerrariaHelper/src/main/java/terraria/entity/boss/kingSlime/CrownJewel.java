@@ -96,7 +96,7 @@ public class CrownJewel extends EntitySlime {
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
         bukkitEntity.addScoreboardTag("noDamage");
-        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -107,7 +107,7 @@ public class CrownJewel extends EntitySlime {
             attrMap.put("damageMulti", 1d);
             attrMap.put("knockback", 4d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
-            EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init health and slime size
         {

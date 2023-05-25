@@ -26,9 +26,6 @@ import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.Event;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -131,7 +128,7 @@ public class PlayerHelper {
     }
     public static HashMap<String, ArrayList<String>> getPlayerEffectInflict(Metadatable player) {
         try {
-            return (HashMap<String, ArrayList<String>>) EntityHelper.getMetadata(player, "effectInflict").value();
+            return (HashMap<String, ArrayList<String>>) EntityHelper.getMetadata(player, EntityHelper.MetadataName.PLAYER_BUFF_INFLICT).value();
         } catch (Exception e) {
             return new HashMap<>();
         }
@@ -148,18 +145,18 @@ public class PlayerHelper {
         }
     }
     public static Inventory getInventory(Player ply, String key) {
-        return ((HashMap<String, Inventory>) EntityHelper.getMetadata(ply, "inventories").value())
+        return ((HashMap<String, Inventory>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_INVENTORIES).value())
                 .get(key);
     }
     public static String getArmorSet(Player ply) {
-        return EntityHelper.getMetadata(ply, "armorSet").asString();
+        return EntityHelper.getMetadata(ply, EntityHelper.MetadataName.ARMOR_SET).asString();
     }
     public static int getAccessoryAmount(Player ply) {
         return getPlayerDataFile(ply).getInt("stats.maxAccessories", 5);
     }
     public static HashSet<String> getAccessories(Entity entity) {
         try {
-            return (HashSet<String>) EntityHelper.getMetadata(entity, "accessory").value();
+            return (HashSet<String>) EntityHelper.getMetadata(entity, EntityHelper.MetadataName.ACCESSORIES).value();
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] getAccessories", e);
         }
@@ -264,7 +261,7 @@ public class PlayerHelper {
         return GameProgress.PRE_WALL_OF_FLESH;
     }
     public static double getPlayerMoveYaw(Player ply) {
-        HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply, "keysPressed").value();
+        HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_KEYS_PRESSED).value();
         String movementKeyDown = "";
         boolean fwd = allKeysPressed.contains("W"),
                 rev = allKeysPressed.contains("S"),
@@ -424,7 +421,7 @@ public class PlayerHelper {
     // setters
     public static void setArmorSet(Player ply, String armorSet) {
         try {
-            EntityHelper.setMetadata(ply, "armorSet", armorSet);
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ARMOR_SET, armorSet);
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setArmorSet ", e);
         }
@@ -437,8 +434,8 @@ public class PlayerHelper {
         }
     }
     public static void resetPlayerFlightTime(Player ply) {
-        EntityHelper.setMetadata(ply, "thrustIndex", 0);
-        EntityHelper.setMetadata(ply, "thrustProgress", 0);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_THRUST_INDEX, 0);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_THRUST_PROGRESS, 0);
     }
     // threads
     public static void threadArmorAccessory() {
@@ -586,15 +583,15 @@ public class PlayerHelper {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 try {
-                    String last = EntityHelper.getMetadata(ply, "lastBackground").asString();
+                    String last = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BACKGROUND).asString();
                     // setup proper background to display
                     String current = "";
-                    MetadataValue forceBackground = EntityHelper.getMetadata(ply, "forceBackground");
+                    MetadataValue forceBackground = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BACKGROUND);
                     if (forceBackground == null) {
                         if (BossHelper.bossMap.containsKey("月球领主")) current = "虚空";
                         if (ply.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE)) {
                             if (BossHelper.bossMap.containsKey("猪鲨公爵")) {
-                                LivingEntity fishron = (LivingEntity) BossHelper.bossMap.get("猪鲨公爵").get(0);
+                                LivingEntity fishron = BossHelper.bossMap.get("猪鲨公爵").get(0);
                                 if (fishron.getHealth() / fishron.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() <= 0.15)
                                     current = "猪鲨";
                             } else if (!Event.currentEvent.equals("")) current = Event.currentEvent;
@@ -647,7 +644,7 @@ public class PlayerHelper {
                             ply.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0));
                         }
                         // update last background
-                        EntityHelper.setMetadata(ply, "lastBackground", current);
+                        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BACKGROUND, current);
                     }
                 } catch (Exception e) {
                     Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadBackground ", e);
@@ -661,13 +658,13 @@ public class PlayerHelper {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 try {
-                    String last = EntityHelper.getMetadata(ply, "lastBGM").asString();
-                    long lastTime = EntityHelper.getMetadata(ply, "lastBGMTime").asLong();
+                    String last = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM).asString();
+                    long lastTime = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM_TIME).asLong();
 
                     // setup proper music to play
                     String current = "";
                     long currentTime = Calendar.getInstance().getTimeInMillis();
-                    MetadataValue forceBGM = EntityHelper.getMetadata(ply, "forceBGM");
+                    MetadataValue forceBGM = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BGM);
                     if (forceBGM == null) {
                         // no jukebox
                         World plyWorld = ply.getWorld();
@@ -787,8 +784,8 @@ public class PlayerHelper {
                         ply.stopSound("music." + last);
                         ply.playSound(ply.getEyeLocation(), "music." + current, SoundCategory.MUSIC, Float.MAX_VALUE, 1f);
                         // update last bgm metadata
-                        EntityHelper.setMetadata(ply, "lastBGM", current);
-                        EntityHelper.setMetadata(ply, "lastBGMTime", currentTime);
+                        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM, current);
+                        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM_TIME, currentTime);
                     }
                 } catch (Exception e) {
                     Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadBGM ", e);
@@ -801,9 +798,9 @@ public class PlayerHelper {
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 try {
-                    ArrayList<Entity> hooks = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "hooks").value();
+                    ArrayList<Entity> hooks = (ArrayList<Entity>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOKS).value();
                     boolean shouldRemoveHooks = false;
-                    String hookItemName = EntityHelper.getMetadata(ply, "grapplingHookItem").asString();
+                    String hookItemName = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOK_ITEM).asString();
                     String[] hookNameInfo = ItemHelper.splitItemName(ply.getInventory().getItemInOffHand());
                     if (!PlayerHelper.isProperlyPlaying(ply)) {
                         // not survival mode or not logged in etc
@@ -857,7 +854,8 @@ public class PlayerHelper {
                                                 .setAlpha(0.25f)
                                                 .setStepsize(1)
                                                 .setTicksLinger(3)
-                                                .setParticleColor(EntityHelper.getMetadata(hook, "color").asString()));
+                                                .setParticleColor(EntityHelper.getMetadata(hook,
+                                                        EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOK_COLOR).asString()));
                             }
                         }
                         for (Entity hook : hooksToRemove) hooks.remove(hook);
@@ -885,8 +883,9 @@ public class PlayerHelper {
     public static void threadLastLocation() {
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
-                EntityHelper.setMetadata(ply, "lastLocation", EntityHelper.getMetadata(ply, "currLocation").value());
-                EntityHelper.setMetadata(ply, "currLocation", ply.getLocation());
+                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION,
+                        EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_CURRENT_LOCATION).value());
+                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CURRENT_LOCATION, ply.getLocation());
             }
         }, 0, 1);
     }
@@ -920,20 +919,22 @@ public class PlayerHelper {
                     resetPlayerFlightTime(ply);
                 }
                 // setup variables
-                int thrustIndex = EntityHelper.getMetadata(ply, "thrustIndex").asInt();
-                int thrustProgress = EntityHelper.getMetadata(ply, "thrustProgress").asInt();
+                int thrustIndex = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_THRUST_INDEX).asInt();
+                int thrustProgress = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_THRUST_PROGRESS).asInt();
 //                Bukkit.broadcastMessage("IndexProgress: " + thrustIndex + ", " + thrustProgress);
                 // if this is the first thrust, save the progress
-                HashSet<String> accessorySet = (HashSet<String>) EntityHelper.getMetadata(ply, "accessory").value();
+                HashSet<String> accessorySet = (HashSet<String>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.ACCESSORIES).value();
                 if (thrustIndex == 0 && thrustProgress == 0)
-                    EntityHelper.setMetadata(ply, "accessoryThrust",
+                    EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES_FLIGHT_BACKUP,
                             accessorySet.clone());
                 int extraJumpTime = 0;
                 int thrustProgressMax = 0;
                 double maxSpeed = 1, horizontalSpeed = 0.5;
                 double maxAcceleration = 0.5;
-                List<String> accessory = (List<String>) EntityHelper.getMetadata(ply, "accessoryList").value();
-                Set<String> availableAccessory = (Set<String>) EntityHelper.getMetadata(ply, "accessoryThrust").value();
+                List<String> accessory = (List<String>) EntityHelper.getMetadata(ply,
+                        EntityHelper.MetadataName.ACCESSORIES_LIST).value();
+                Set<String> availableAccessory = (Set<String>) EntityHelper.getMetadata(ply,
+                        EntityHelper.MetadataName.ACCESSORIES_FLIGHT_BACKUP).value();
                 Entity entityToPush = ply;
                 String accessoryUsed = "";
                 boolean isThrusting = ply.getScoreboardTags().contains("temp_thrusting");
@@ -1141,8 +1142,8 @@ public class PlayerHelper {
                     }
                 }
                 // save variables
-                EntityHelper.setMetadata(ply, "thrustIndex", thrustIndex);
-                EntityHelper.setMetadata(ply, "thrustProgress", thrustProgress);
+                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_THRUST_INDEX, thrustIndex);
+                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_THRUST_PROGRESS, thrustProgress);
             }
         }, 0, 1);
     }
@@ -1155,7 +1156,7 @@ public class PlayerHelper {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 if (ply.getScoreboardTags().contains("unauthorized")) continue;
                 try {
-                    MetadataValue respawnCD = EntityHelper.getMetadata(ply, "respawnCD");
+                    MetadataValue respawnCD = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.RESPAWN_COUNTDOWN);
                     if (respawnCD != null) {
                         int ticksRemaining = respawnCD.asInt();
                         ticksRemaining -= delay;
@@ -1164,9 +1165,9 @@ public class PlayerHelper {
                             ply.setFlySpeed(0);
                             ply.setFallDistance(0);
                             sendActionBar(ply, "§a重生倒计时： " + ticksRemaining / 20);
-                            EntityHelper.setMetadata(ply, "respawnCD", ticksRemaining);
+                            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.RESPAWN_COUNTDOWN, ticksRemaining);
                         } else {
-                            EntityHelper.setMetadata(ply, "respawnCD", null);
+                            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.RESPAWN_COUNTDOWN, null);
                             ply.setGameMode(GameMode.SURVIVAL);
                             ply.teleport(getSpawnLocation(ply));
                             sendActionBar(ply, "");
@@ -1180,8 +1181,8 @@ public class PlayerHelper {
                         HashSet<String> accessories = getAccessories(ply);
                         HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
                         Location currLoc = ply.getLocation();
-                        Location lastLoc = (Location) EntityHelper.getMetadata(ply, "lastLocation").value();
-                        EntityHelper.setMetadata(ply, "lastLocation", currLoc);
+                        Location lastLoc = (Location) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION).value();
+                        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION, currLoc);
                         boolean moved = lastLoc.getWorld().equals(currLoc.getWorld()) && lastLoc.distanceSquared(currLoc) > 1e-5;
                         // make sure health or mana do not exceed maximum
                         {
@@ -1194,7 +1195,7 @@ public class PlayerHelper {
                         // health regen
                         {
                             // init variables
-                            double healthRegenTime = EntityHelper.getMetadata(ply, "regenTime").asDouble();
+                            double healthRegenTime = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.REGEN_TIME).asDouble();
                             double effectiveRegenTime;
                             if (healthRegenTime <= 100) effectiveRegenTime = 0;
                             else if (healthRegenTime < 600) effectiveRegenTime = (healthRegenTime - 100) / 100;
@@ -1216,15 +1217,15 @@ public class PlayerHelper {
                             if (healthAmount > 0) {
                                 ply.setHealth(healthAmount);
                                 healthRegenTime += delay;
-                                EntityHelper.setMetadata(ply, "regenTime", Math.min(healthRegenTime, 1201));
+                                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.REGEN_TIME, Math.min(healthRegenTime, 1201));
                             } else {
                                 EntityHelper.handleDeath(ply, ply, ply, EntityHelper.DamageType.NEGATIVE_REGEN, null);
                             }
                         }
                         // mana regen
                         {
-                            double manaRegenDelay = EntityHelper.getMetadata(ply, "manaRegenDelay").asDouble();
-                            double manaRegenCounter = EntityHelper.getMetadata(ply, "manaRegenCounter").asDouble();
+                            double manaRegenDelay = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_DELAY).asDouble();
+                            double manaRegenCounter = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_COUNTER).asDouble();
                             boolean hasManaRegenBand = accessories.contains("魔力再生手环");
                             boolean hasManaRegenPotionEffect = effectMap.containsKey("魔力再生");
                             if (manaRegenDelay > 0) {
@@ -1232,7 +1233,7 @@ public class PlayerHelper {
                                 manaRegenDelay -= moved ? delay : delay * 2;
                                 if (hasManaRegenBand) manaRegenDelay -= delay;
                                 if (hasManaRegenPotionEffect) manaRegenDelay -= delay;
-                                EntityHelper.setMetadata(ply, "manaRegenDelay", manaRegenDelay);
+                                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_DELAY, manaRegenDelay);
                             } else {
                                 // regeneration
                                 double manaRegenBonus = attrMap.getOrDefault("manaRegen", 0d);
@@ -1248,7 +1249,7 @@ public class PlayerHelper {
                                     ply.setLevel((int) Math.min(levelResult, maxMana));
                                     if (ply.getLevel() >= maxMana)
                                         ply.playSound(ply.getLocation(), Sound.BLOCK_NOTE_PLING, 2, 2);
-                                    EntityHelper.setMetadata(ply, "manaRegenCounter", manaRegenCounter);
+                                    EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_COUNTER, manaRegenCounter);
                                 }
                             }
                         }
@@ -1333,7 +1334,7 @@ public class PlayerHelper {
                         plyBiome = WorldHelper.BiomeType.TEMPLE;
                     else if (specialBlocks[3] > 1)
                         plyBiome = WorldHelper.BiomeType.METEOR;
-                    EntityHelper.setMetadata(ply, "playerBiome", plyBiome);
+                    EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME, plyBiome);
                 }
             }
         }, 0, 20);
@@ -1359,55 +1360,55 @@ public class PlayerHelper {
         ply.setFoodLevel(0);
         ply.setGravity(true);
         // crafting variables
-        EntityHelper.setMetadata(ply, "craftingStation", "CLOSED");
-        EntityHelper.setMetadata(ply, "recipeNumber", -1);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CRAFTING_STATION, "CLOSED");
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CRAFTING_RECIPE_INDEX, -1);
         // weapon use variables
-        EntityHelper.setMetadata(ply, "useCDInternal", 0);
-        EntityHelper.setMetadata(ply, "swingAmount", 0);
-        EntityHelper.setMetadata(ply, "nextMinionIndex", 0);
-        EntityHelper.setMetadata(ply, "nextSentryIndex", 0);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_INTERNAL_ITEM_START_USE_CD, 0);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, 0);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_NEXT_MINION_INDEX, 0);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_NEXT_SENTRY_INDEX, 0);
         // object variables
-        EntityHelper.setMetadata(ply, "minions", new ArrayList<Entity>());
-        EntityHelper.setMetadata(ply, "sentries", new ArrayList<Entity>());
-        EntityHelper.setMetadata(ply, "accessory", new HashSet<String>());
-        EntityHelper.setMetadata(ply, "accessoryList", new ArrayList<String>());
-        EntityHelper.setMetadata(ply, "lastLocation", ply.getLocation());
-        EntityHelper.setMetadata(ply, "currLocation", ply.getLocation());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MINION_LIST, new ArrayList<Entity>());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_SENTRY_LIST, new ArrayList<Entity>());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES, new HashSet<String>());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES_LIST, new ArrayList<String>());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION, ply.getLocation());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CURRENT_LOCATION, ply.getLocation());
         // the accessory set cached when first thrusting, to prevent buggy behaviour.
-        EntityHelper.setMetadata(ply, "accessoryThrust", new HashSet<String>());
-        EntityHelper.setMetadata(ply, "effects", new HashMap<String, Integer>());
-        EntityHelper.setMetadata(ply, "attrMap", PlayerHelper.getDefaultPlayerAttributes());
-        EntityHelper.setMetadata(ply, "effectInflict", PlayerHelper.getDefaultPlayerEffectInflict());
-        EntityHelper.setMetadata(ply, "hooks", new ArrayList<Entity>());
-        EntityHelper.setMetadata(ply, "keysPressed", new HashSet<String>());
-        EntityHelper.setMetadata(ply, "biome", "normal");
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES_FLIGHT_BACKUP, new HashSet<String>());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.EFFECTS, new HashMap<String, Integer>());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ATTRIBUTE_MAP, PlayerHelper.getDefaultPlayerAttributes());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BUFF_INFLICT, PlayerHelper.getDefaultPlayerEffectInflict());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOKS, new ArrayList<Entity>());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_KEYS_PRESSED, new HashSet<String>());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME, "normal");
         // movement and control variable
-        EntityHelper.setMetadata(ply, "grapplingHookItem", "");
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOK_ITEM, "");
         resetPlayerFlightTime(ply);
-        EntityHelper.setMetadata(ply, "chargeDir", "");
-        EntityHelper.setMetadata(ply, "chargeDirLastPressed", Calendar.getInstance().getTimeInMillis());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_DIRECTION, "");
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS, Calendar.getInstance().getTimeInMillis());
         setArmorSet(ply, "");
         // bgm, biome and background
-        EntityHelper.setMetadata(ply, "lastBackground", "");
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BACKGROUND, "");
         // prevent duplicated soundtrack etc.
         if (joinOrRespawn) {
-            EntityHelper.setMetadata(ply, "lastBGM", "normal");
-            EntityHelper.setMetadata(ply, "lastBGMTime", 0L);
-            EntityHelper.setMetadata(ply, "playerBiome", WorldHelper.BiomeType.NORMAL);
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM, "normal");
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM_TIME, 0L);
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME, WorldHelper.BiomeType.NORMAL);
         }
         // regeneration
-        EntityHelper.setMetadata(ply, "lastLocation", ply.getLocation());
-        EntityHelper.setMetadata(ply, "regenTime", 0d);
-        EntityHelper.setMetadata(ply, "manaRegenDelay", 0d);
-        EntityHelper.setMetadata(ply, "manaRegenCounter", 0d);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION, ply.getLocation());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.REGEN_TIME, 0d);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_DELAY, 0d);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_COUNTER, 0d);
         // on join
         if (joinOrRespawn) {
             // load inventories
             loadInventories(ply);
             // join team
-            EntityHelper.setMetadata(ply, "team", "red");
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TEAM, "red");
             // reset monsters spawned to 0
-            EntityHelper.setMetadata(ply, "mobAmount", 0);
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MONSTER_SPAWNED_AMOUNT, 0);
         }
     }
     public static void setupAttribute(Player ply) {
@@ -1416,7 +1417,7 @@ public class PlayerHelper {
             // re-initialize attribute map
             // attrMap is being overridden after newAttrMap is ready to prevent client glitch (especially on max mana)
             HashMap<String, Double> newAttrMap = getDefaultPlayerAttributes();
-            EntityHelper.setMetadata(ply, "effectInflict", getDefaultPlayerEffectInflict());
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BUFF_INFLICT, getDefaultPlayerEffectInflict());
             // potion effect
             HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
             for (Map.Entry<String, Integer> effectInfo : effectMap.entrySet()) {
@@ -1560,8 +1561,8 @@ public class PlayerHelper {
                     accessories.add(currAccType);
                     accessoryList.add(currAccType);
                 }
-                EntityHelper.setMetadata(ply, "accessory", accessories);
-                EntityHelper.setMetadata(ply, "accessoryList", accessoryList);
+                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES, accessories);
+                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES_LIST, accessoryList);
             }
             // setup walking speed
             double walkingSpeed = newAttrMap.getOrDefault("speed", 0.2d) *
@@ -1569,7 +1570,7 @@ public class PlayerHelper {
             if (Math.abs(ply.getWalkSpeed() - walkingSpeed) > 1e-9) {
                 ply.setWalkSpeed((float) walkingSpeed);
             }
-            EntityHelper.setMetadata(ply, "attrMap", newAttrMap);
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ATTRIBUTE_MAP, newAttrMap);
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setupAttribute ", e);
         }
@@ -1591,10 +1592,11 @@ public class PlayerHelper {
             }
             inventories.put(invName, inv);
         }
-        EntityHelper.setMetadata(ply, "inventories", inventories);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_INVENTORIES, inventories);
     }
     public static void saveInventories(Player ply) {
-        HashMap<String, Inventory> inventories = (HashMap<String, Inventory>) EntityHelper.getMetadata(ply, "inventories").value();
+        HashMap<String, Inventory> inventories = (HashMap<String, Inventory>) EntityHelper.getMetadata(ply,
+                EntityHelper.MetadataName.PLAYER_INVENTORIES).value();
         YmlHelper.YmlSection plyFile = getPlayerDataFile(ply);
         for (String invType : inventories.keySet()) {
             Inventory currInv = inventories.get(invType);
@@ -1609,9 +1611,9 @@ public class PlayerHelper {
     public static void handleGrapplingHook(Player ply) {
         if (!PlayerHelper.isProperlyPlaying(ply))
             return;
-        List<Entity> hooks = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "hooks").value();
+        List<Entity> hooks = (ArrayList<Entity>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOKS).value();
         String hookItemName = ItemHelper.splitItemName(ply.getInventory().getItemInOffHand())[1];
-        EntityHelper.setMetadata(ply, "grapplingHookItem", hookItemName);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOK_ITEM, hookItemName);
         World hookWorld = ply.getWorld();
         YmlHelper.YmlSection config = TerrariaHelper.hookConfig;
         int hookAmount = config.getInt(hookItemName + ".amount", 0);
@@ -1642,10 +1644,10 @@ public class PlayerHelper {
         // pre-set particle item
         List<String> hookColors = config.getStringList(hookItemName + ".particleItem");
         for (Entity hook : hooks) {
-            hookColors.remove(EntityHelper.getMetadata(hook, "color").asString());
+            hookColors.remove(EntityHelper.getMetadata(hook, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOK_COLOR).asString());
         }
         String color = hookColors.size() > 0 ? hookColors.get(0) : "125|125|125";
-        EntityHelper.setMetadata(hookEntity, "color", color);
+        EntityHelper.setMetadata(hookEntity, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOK_COLOR, color);
         // mark hook entity as a hook
         hookEntity.addScoreboardTag("isHook");
         hooks.add(hookEntity);
@@ -1695,9 +1697,9 @@ public class PlayerHelper {
                     default:
                         effect = "魔力星云";
                 }
-                String team = EntityHelper.getMetadata(ply, "team").asString();
+                String team = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_TEAM).asString();
                 for (Player plyEffect : ply.getWorld().getPlayers()) {
-                    if (isProperlyPlaying(plyEffect) && EntityHelper.getMetadata(plyEffect, "team").asString().equals(team) && plyEffect.getLocation().distanceSquared(ply.getLocation()) < 3600)
+                    if (isProperlyPlaying(plyEffect) && EntityHelper.getMetadata(plyEffect, EntityHelper.MetadataName.PLAYER_TEAM).asString().equals(team) && plyEffect.getLocation().distanceSquared(ply.getLocation()) < 3600)
                         EntityHelper.applyEffect(ply, effect, 480);
                 }
                 return 0;
@@ -1804,7 +1806,7 @@ public class PlayerHelper {
     public static void createSpectreProjectile(Player dPly, Location loc, double num, boolean healingOrDamage, String color) {
         Entity target = null;
         if (healingOrDamage) {
-            String team = EntityHelper.getMetadata(dPly, "team").asString();
+            String team = EntityHelper.getMetadata(dPly, EntityHelper.MetadataName.PLAYER_TEAM).asString();
             double targetHealth = 1e9;
             // get the teammate nearby that has the lowest health
             for (Player ply : dPly.getWorld().getPlayers()) {
@@ -1812,7 +1814,7 @@ public class PlayerHelper {
                 if (isProperlyPlaying(ply) &&
                         ply.getHealth() < targetHealth && (ply.getHealth() + 1) < ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() &&
                         ply.getLocation().distanceSquared(dPly.getLocation()) < 2304 &&
-                        EntityHelper.getMetadata(ply, "team").asString().equals(team)) {
+                        EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_TEAM).asString().equals(team)) {
                     target = ply;
                     targetHealth = ply.getHealth();
                 }
@@ -1887,7 +1889,7 @@ public class PlayerHelper {
         // can not dash if player has dash cooldown
         if (ply.getScoreboardTags().contains("temp_dashCD"))
             return;
-        Collection<Entity> hooks = (Collection<Entity>) EntityHelper.getMetadata(ply, "hooks").value();
+        Collection<Entity> hooks = (Collection<Entity>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOKS).value();
         // can not dash if any grappling hook is on the wall
         for (Entity hook : hooks) {
             if (hook.isOnGround()) return;

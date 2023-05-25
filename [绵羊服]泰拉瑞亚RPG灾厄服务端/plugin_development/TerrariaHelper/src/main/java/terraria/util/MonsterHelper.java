@@ -118,7 +118,7 @@ public class MonsterHelper {
     public static void naturalMobSpawning(Player ply) {
         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
         int mobLimit = attrMap.getOrDefault("mobLimit", 10d).intValue();
-        if (EntityHelper.getMetadata(ply, "mobAmount").asInt() >= mobLimit)
+        if (EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_MONSTER_SPAWNED_AMOUNT).asInt() >= mobLimit)
             return;
         // celestial pillars
         WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(ply.getLocation());
@@ -245,7 +245,7 @@ public class MonsterHelper {
             DisguiseAPI.disguiseEntity(entity, disguise);
         }
         // set parent type
-        EntityHelper.setMetadata(entity, "parentType", type);
+        EntityHelper.setMetadata(entity, EntityHelper.MetadataName.MONSTER_PARENT_TYPE, type);
         // unique monster cache
         if (unique) {
             uniqueMonsters.put(type, entity);

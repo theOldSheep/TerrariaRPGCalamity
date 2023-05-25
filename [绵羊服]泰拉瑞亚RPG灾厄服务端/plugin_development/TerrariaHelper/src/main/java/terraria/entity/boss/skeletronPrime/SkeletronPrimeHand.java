@@ -167,7 +167,7 @@ public class SkeletronPrimeHand extends EntitySlime {
         addScoreboardTag("isMechanic");
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -177,13 +177,13 @@ public class SkeletronPrimeHand extends EntitySlime {
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
-            EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map
         {
-            targetMap = (HashMap<Player, Double>) EntityHelper.getMetadata(bossParts.get(0), "targets").value();
+            targetMap = (HashMap<Player, Double>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
             target = summonedPlayer;
-            EntityHelper.setMetadata(bukkitEntity, "targets", targetMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
         // get hand type
         switch (index) {

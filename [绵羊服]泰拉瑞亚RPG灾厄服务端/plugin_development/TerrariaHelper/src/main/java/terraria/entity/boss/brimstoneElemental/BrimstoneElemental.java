@@ -131,16 +131,19 @@ public class BrimstoneElemental extends EntitySlime {
         setCustomName(BOSS_TYPE.msgName + "§" + newPhase);
         switch (newPhase) {
             case 1:
-                attrMap.put("defence", 30d);
+                EntityHelper.tweakAttribute(attrMap, "defence",
+                        "" + (30 - attrMap.get("defence")), true);
                 bossbar.color = BossBattle.BarColor.GREEN;
                 break;
             case 2:
-                attrMap.put("defence", 120d);
+                EntityHelper.tweakAttribute(attrMap, "defence",
+                        "" + (120 - attrMap.get("defence")), true);
                 bossbar.color = BossBattle.BarColor.RED;
                 indexAI = -60;
                 break;
             case 3:
-                attrMap.put("defence", 60d);
+                EntityHelper.tweakAttribute(attrMap, "defence",
+                        "" + (60 - attrMap.get("defence")), true);
                 bossbar.color = BossBattle.BarColor.YELLOW;
                 break;
         }
@@ -282,7 +285,7 @@ public class BrimstoneElemental extends EntitySlime {
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -295,18 +298,18 @@ public class BrimstoneElemental extends EntitySlime {
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
-            EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
         bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                 BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
-        EntityHelper.setMetadata(bukkitEntity, "bossbar", bossbar);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
         // init target map
         {
             targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                     getBukkitEntity(), BossHelper.BossType.WALL_OF_FLESH.msgName, summonedPlayer, true, bossbar);
             target = summonedPlayer;
-            EntityHelper.setMetadata(bukkitEntity, "targets", targetMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
         // init health and slime size
         {

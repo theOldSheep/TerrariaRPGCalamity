@@ -112,8 +112,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
         else removeScoreboardTag("blastOnContactEnemy");
         if (blastDamageShooter) addScoreboardTag("blastDamageShooter");
         else removeScoreboardTag("blastDamageShooter");
-        EntityHelper.setMetadata(bukkitEntity, "penetration", this.penetration);
-        EntityHelper.setMetadata(bukkitEntity, "collided", this.damageCD);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, this.penetration);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_ENTITIES_COLLIDED, this.damageCD);
     }
     // setup properties of the specific type, including its item displayed
     public void setType(String type) {
@@ -150,8 +150,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
         // other properties
         bukkitEntity.setShooter(shooter);
         this.attrMap = (HashMap<String, Double>) attrMap.clone();
-        EntityHelper.setMetadata(bukkitEntity, "attrMap", this.attrMap);
-        EntityHelper.setMetadata(bukkitEntity, "damageType", damageType);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, this.attrMap);
+        EntityHelper.setDamageType(bukkitEntity, damageType);
         setProperties(projectileType);
     }
 
@@ -175,10 +175,10 @@ public class TerrariaPotionProjectile extends EntityPotion {
         if (bouncePenetrationBonded) bounce --;
         if (--penetration < 0) {
             setPosition(position.pos.x, position.pos.y, position.pos.z);
-            EntityHelper.setMetadata(bukkitEntity, "destroyReason", "hitEntity");
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, "hitEntity");
             die();
         }
-        EntityHelper.setMetadata(bukkitEntity, "penetration", this.penetration);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, this.penetration);
     }
 
     // override functions
@@ -186,7 +186,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public void extinguish() {
         switch (projectileType) {
             case "小火花":
-                EntityHelper.setMetadata(bukkitEntity, "destroyReason", "hitBlock");
+                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, "hitBlock");
                 this.die();
                 break;
             case "烈焰箭":
@@ -330,7 +330,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 case "bounce":
                 case "slide":
                 case "die":
-                    EntityHelper.setMetadata(bukkitEntity, "destroyReason", "hitBlock");
+                    EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, "hitBlock");
                     this.die();
                     return;
                 case "stick":
@@ -446,13 +446,13 @@ public class TerrariaPotionProjectile extends EntityPotion {
                             // tweak velocity
                             if (blockHitAction.equals("bounce")) {
                                 if (--bounce < 0) {
-                                    EntityHelper.setMetadata(bukkitEntity, "destroyReason", "hitBlock");
+                                    EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, "hitBlock");
                                     die();
                                     return;
                                 }
                                 if (bouncePenetrationBonded) {
                                     penetration--;
-                                    EntityHelper.setMetadata(bukkitEntity, "penetration", this.penetration);
+                                    EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, this.penetration);
                                 }
                                 // chlorophyte arrow bounce into enemies
                                 if (projectileType.equals("叶绿箭")) {

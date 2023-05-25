@@ -44,22 +44,24 @@ public class ItemUseHelper {
     }
     public static int applyCD(Player ply, int CD) {
         ply.addScoreboardTag("temp_useCD");
-        MetadataValue lastCDInternal = EntityHelper.getMetadata(ply, "useCDInternalLast");
+        MetadataValue lastCDInternal = EntityHelper.getMetadata(ply,
+                EntityHelper.MetadataName.PLAYER_INTERNAL_LAST_ITEM_START_USE_CD);
         long lastCDApply;
         if (lastCDInternal == null) {
             lastCDApply = 0;
         } else {
             lastCDApply = lastCDInternal.asLong() + 1;
         }
-        EntityHelper.setMetadata(ply, "useCDInternal", lastCDApply);
-        EntityHelper.setMetadata(ply, "useCDInternalLast", lastCDApply);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_INTERNAL_ITEM_START_USE_CD, lastCDApply);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_INTERNAL_LAST_ITEM_START_USE_CD, lastCDApply);
         ItemStack tool = ply.getInventory().getItemInMainHand();
         // the CD <= 0: never stops on its own
         PacketPlayOutSetCooldown packet = new PacketPlayOutSetCooldown(CraftItemStack.asNMSCopy(tool).getItem(), CD <= 0 ? 1919810 : CD);
         ((CraftPlayer) ply).getHandle().playerConnection.sendPacket(packet);
         if (CD > 0) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
-                if (ply.isOnline() && EntityHelper.getMetadata(ply, "useCDInternal").asLong() == lastCDApply) {
+                if (ply.isOnline() && EntityHelper.getMetadata(ply,
+                        EntityHelper.MetadataName.PLAYER_INTERNAL_ITEM_START_USE_CD).asLong() == lastCDApply) {
                     if (!PlayerHelper.isProperlyPlaying(ply)) {
                         ply.removeScoreboardTag("temp_autoSwing");
                         ply.removeScoreboardTag("temp_isLoadingWeapon");
@@ -759,7 +761,7 @@ public class ItemUseHelper {
             int maxMana = EntityHelper.getAttrMap(ply).getOrDefault("maxMana", 20d).intValue();
             int regenDelay = (int) Math.ceil(0.3 * (
                     (1 - ((double) currMana / maxMana)) * 240 + 45   ));
-            EntityHelper.setMetadata(ply, "manaRegenDelay", regenDelay);
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_DELAY, regenDelay);
             return true;
         }
         return false;
@@ -1069,7 +1071,7 @@ public class ItemUseHelper {
                 attrMap.getOrDefault("manaUseMulti", 1d));
         switch (itemType) {
             case "太空枪":
-                if (EntityHelper.getMetadata(ply, "armorSet").asString().equals("流星套装"))
+                if (EntityHelper.getMetadata(ply, EntityHelper.MetadataName.ARMOR_SET).asString().equals("流星套装"))
                     manaConsumption = 0;
                 break;
             case "终极棱镜":
@@ -1100,18 +1102,18 @@ public class ItemUseHelper {
                                             boolean sentryOrMinion, boolean hasContactDamage, boolean noDuplication,
                                             ItemStack originalStaff) {
         ArrayList<Entity> minionList;
-        String indexNextMetadataKey;
+        EntityHelper.MetadataName indexNextMetadataKey;
         int minionLimit, indexNext;
         // initialize minion limit and minion list
         {
             if (sentryOrMinion) {
-                minionList = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "sentries").value();
+                minionList = (ArrayList<Entity>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_SENTRY_LIST).value();
                 minionLimit = attrMap.getOrDefault("sentryLimit", 1d).intValue();
-                indexNextMetadataKey = "nextSentryIndex";
+                indexNextMetadataKey = EntityHelper.MetadataName.PLAYER_NEXT_SENTRY_INDEX;
             } else {
-                minionList = (ArrayList<Entity>) EntityHelper.getMetadata(ply, "minions").value();
+                minionList = (ArrayList<Entity>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_MINION_LIST).value();
                 minionLimit = attrMap.getOrDefault("minionLimit", 1d).intValue();
-                indexNextMetadataKey = "nextMinionIndex";
+                indexNextMetadataKey = EntityHelper.MetadataName.PLAYER_NEXT_MINION_INDEX;
             }
             indexNext = EntityHelper.getMetadata(ply, indexNextMetadataKey).asInt();
             // prevent bug brought by shrink in minion limit
@@ -1210,7 +1212,7 @@ public class ItemUseHelper {
         // cursed players can not use any item
         if (EntityHelper.hasEffect(ply, "诅咒")) {
             ply.removeScoreboardTag("temp_autoSwing");
-            EntityHelper.setMetadata(ply, "swingAmount", 0);
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, 0);
             return;
         }
         // if the player is not logged in or is dead
@@ -1251,7 +1253,7 @@ public class ItemUseHelper {
                 boolean autoSwing = weaponSection.getBoolean("autoSwing", false);
                 boolean isLoading = false;
                 int maxLoad = weaponSection.getInt("maxLoad", 0);
-                int swingAmount = EntityHelper.getMetadata(ply, "swingAmount").asInt();
+                int swingAmount = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT).asInt();
                 if (maxLoad > 0) {
                     swingAmount = Math.min(swingAmount, maxLoad);
                     if (scoreboardTags.contains("temp_autoSwing")) {
@@ -1271,7 +1273,7 @@ public class ItemUseHelper {
                 if (isLoading) {
                     swingAmount = Math.min(swingAmount + 1, maxLoad);
                     ply.addScoreboardTag("temp_autoSwing");
-                    EntityHelper.setMetadata(ply, "swingAmount", swingAmount);
+                    EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, swingAmount);
                     displayLoadingProgress(ply, swingAmount, maxLoad);
                     double loadSpeedMulti = weaponSection.getDouble("loadTimeMulti", 0.5d);
                     applyCD(ply, attrMap.getOrDefault("useTime", 10d)
@@ -1309,7 +1311,7 @@ public class ItemUseHelper {
                 if (success) {
                     if (autoSwing) {
                         ply.addScoreboardTag("temp_autoSwing");
-                        EntityHelper.setMetadata(ply, "swingAmount", swingAmount + 1);
+                        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, swingAmount + 1);
                     }
                     // play item use sound
                     playerUseItemSound(ply, weaponType, autoSwing);

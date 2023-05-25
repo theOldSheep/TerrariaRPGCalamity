@@ -59,7 +59,7 @@ public class WorldHelper {
             return getBiome(ply, true);
         }
         public static BiomeType getBiome(Player ply, boolean considerSpace) {
-            BiomeType biomeType = (BiomeType) EntityHelper.getMetadata(ply, "playerBiome").value();
+            BiomeType biomeType = (BiomeType) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME).value();
             if (biomeType != NORMAL) return biomeType;
             return getBiome(ply.getLocation(), considerSpace);
         }

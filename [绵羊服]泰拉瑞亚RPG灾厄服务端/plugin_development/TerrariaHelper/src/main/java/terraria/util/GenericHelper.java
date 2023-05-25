@@ -350,8 +350,8 @@ public class GenericHelper {
             }
             // whip dmg/crit bonus
             if (whipBonusDamage > 0 && whipBonusCrit > 0) {
-                EntityHelper.setMetadata(victim, "minionWhipBonusDamage",   whipBonusDamage);
-                EntityHelper.setMetadata(victim, "minionWhipBonusCrit",     whipBonusCrit);
+                EntityHelper.setMetadata(victim, EntityHelper.MetadataName.MINION_WHIP_BONUS_DAMAGE, whipBonusDamage);
+                EntityHelper.setMetadata(victim, EntityHelper.MetadataName.MINION_WHIP_BONUS_CRIT,   whipBonusCrit);
             }
             damageCoolDown(exceptions, victim, damageCD);
             advanced.amountEntitiesHit ++;

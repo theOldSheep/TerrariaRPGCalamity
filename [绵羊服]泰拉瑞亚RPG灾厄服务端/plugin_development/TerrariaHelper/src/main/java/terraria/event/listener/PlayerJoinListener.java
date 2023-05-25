@@ -15,7 +15,7 @@ public class PlayerJoinListener implements Listener {
     public void onKeyPressEvent(PlayerJoinEvent e) {
         Player joinedPly = e.getPlayer();
         PlayerHelper.initPlayerStats(joinedPly, true);
-        MetadataValue respawnCD = EntityHelper.getMetadata(joinedPly, "respawnCD");
+        MetadataValue respawnCD = EntityHelper.getMetadata(joinedPly, EntityHelper.MetadataName.RESPAWN_COUNTDOWN);
         // teleport to spawn point if the player is not waiting for revive
         if (respawnCD == null) {
             joinedPly.setGameMode(GameMode.SURVIVAL);

@@ -96,7 +96,7 @@ public class AureusSpawn extends EntitySlime {
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -108,13 +108,13 @@ public class AureusSpawn extends EntitySlime {
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
-            EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
-        EntityHelper.setMetadata(bukkitEntity, "bossbar", owner.bossbar);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, owner.bossbar);
         // init target map
         {
-            EntityHelper.setMetadata(bukkitEntity, "targets", owner.targetMap.clone());
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, owner.targetMap.clone());
         }
         // init health and slime size
         {

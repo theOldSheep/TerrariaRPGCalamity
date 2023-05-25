@@ -85,11 +85,11 @@ public class CalamitasDummyPlayer extends EntityZombieHusk {
         setCustomNameVisible(true);
         addScoreboardTag("noDamage");
         addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init boss bar
-        EntityHelper.setMetadata(bukkitEntity, "bossbar", owner.bossbar);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, owner.bossbar);
         // init health
         {
             double health = 1;

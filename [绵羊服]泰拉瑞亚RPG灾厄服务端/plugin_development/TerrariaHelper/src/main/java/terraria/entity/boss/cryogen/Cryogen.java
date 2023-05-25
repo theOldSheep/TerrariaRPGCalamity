@@ -73,16 +73,22 @@ public class Cryogen extends EntitySlime {
     private void changePhase(int newPhase) {
         switch (newPhase) {
             case 2:
-                attrMap.put("damageTakenMulti", 0.79d);
-                attrMap.put("defence", 20d);
+                // Damage Taken multiplier: 0.73 -> 0.79
+                EntityHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.0821917808219", false);
+                // Defence: 26 -> 20
+                EntityHelper.tweakAttribute(attrMap, "defence", "6", false);
                 break;
             case 3:
-                attrMap.put("damageTakenMulti", 0.88d);
-                attrMap.put("defence", 12d);
+                // Damage Taken multiplier: 0.79 -> 0.88
+                EntityHelper.tweakAttribute(attrMap, "damageTakenMulti", "0.886075949367", false);
+                // Defence: 20 -> 12
+                EntityHelper.tweakAttribute(attrMap, "defence", "8", false);
                 break;
             case 4:
-                attrMap.put("damageTakenMulti", 1d);
-                attrMap.put("defence", 0d);
+                // Damage Taken multiplier: 0.88 -> 1
+                EntityHelper.tweakAttribute(attrMap, "damageTakenMulti", "0.863636363636", false);
+                // Defence: 12 -> 0
+                EntityHelper.tweakAttribute(attrMap, "defence", "12", false);
                 break;
             case 5:
                 psiBlast.properties.put("autoTrace", true);
@@ -429,7 +435,7 @@ public class Cryogen extends EntitySlime {
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -447,18 +453,18 @@ public class Cryogen extends EntitySlime {
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
-            EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
         bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                 BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
-        EntityHelper.setMetadata(bukkitEntity, "bossbar", bossbar);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
         // init target map
         {
             targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                     getBukkitEntity(), BossHelper.BossType.WALL_OF_FLESH.msgName, summonedPlayer, true, bossbar);
             target = summonedPlayer;
-            EntityHelper.setMetadata(bukkitEntity, "targets", targetMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
         // init health and slime size
         {

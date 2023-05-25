@@ -23,7 +23,8 @@ public class PlayerKeyToggleListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onKeyReleaseEvent(KeyReleaseEvent e) {
         Player ply = e.getPlayer();
-        HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply, "keysPressed").value();
+        HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply,
+                EntityHelper.MetadataName.PLAYER_KEYS_PRESSED).value();
         String keyReleased = e.getKey();
         allKeysPressed.remove(keyReleased);
         // space bar
@@ -41,7 +42,8 @@ public class PlayerKeyToggleListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onKeyPressEvent(KeyPressEvent e) {
         Player ply = e.getPlayer();
-        HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply, "keysPressed").value();
+        HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply,
+                EntityHelper.MetadataName.PLAYER_KEYS_PRESSED).value();
         String keyPressed = e.getKey();
         // prevent excessive handling when the player is pressing a single key for a prolonged time
         if (allKeysPressed.contains(keyPressed))
@@ -52,21 +54,22 @@ public class PlayerKeyToggleListener implements Listener {
             case "A":
             case "S":
             case "D":
-                long lastChargeTime = EntityHelper.getMetadata(ply, "chargeDirLastPressed").asLong();
+                long lastChargeTime = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS).asLong();
                 long currTimeInMS = Calendar.getInstance().getTimeInMillis();
-                String lastChargeDir = EntityHelper.getMetadata(ply, "chargeDir").asString();
+                String lastChargeDir = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_DIRECTION).asString();
                 if (currTimeInMS - lastChargeTime < 200 && lastChargeDir.equals(keyPressed)) {
                     // handle player charge
                     double chargeYaw = PlayerHelper.getPlayerMoveYaw(ply, keyPressed);
                     PlayerHelper.handleDash(ply, chargeYaw, 0);
                 }
-                EntityHelper.setMetadata(ply, "chargeDirLastPressed", currTimeInMS);
-                EntityHelper.setMetadata(ply, "chargeDir", keyPressed);
+                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS, currTimeInMS);
+                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_DIRECTION, keyPressed);
                 break;
             case "SPACE":
                 ply.addScoreboardTag("temp_thrusting");
                 // remove all hooks
-                for (Entity hook : (Collection<Entity>) EntityHelper.getMetadata(ply, "hooks").value())
+                for (Entity hook : (Collection<Entity>) EntityHelper.getMetadata(ply,
+                        EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOKS).value())
                     hook.remove();
                 break;
             case "R":

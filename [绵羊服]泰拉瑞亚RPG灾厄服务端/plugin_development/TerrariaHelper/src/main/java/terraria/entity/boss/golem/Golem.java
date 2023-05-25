@@ -96,7 +96,7 @@ public class Golem extends EntitySlime {
                             phaseAI = 3;
                             bukkitEntity.removeScoreboardTag("noDamage");
                             head.addScoreboardTag("noDamage");
-                            EntityHelper.setMetadata(head.getBukkitEntity(), "healthLock", null);
+                            EntityHelper.setMetadata(head.getBukkitEntity(), EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, null);
                         }
                         break;
                 }
@@ -177,7 +177,7 @@ public class Golem extends EntitySlime {
         bukkitEntity.addScoreboardTag("noDamage");
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -189,18 +189,18 @@ public class Golem extends EntitySlime {
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
-            EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
         bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                 BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
-        EntityHelper.setMetadata(bukkitEntity, "bossbar", bossbar);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
         // init target map
         {
             targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                     getBukkitEntity(), BossHelper.BossType.PLANTERA.msgName, summonedPlayer, true, bossbar);
             target = summonedPlayer;
-            EntityHelper.setMetadata(bukkitEntity, "targets", targetMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
         // init health and slime size
         {

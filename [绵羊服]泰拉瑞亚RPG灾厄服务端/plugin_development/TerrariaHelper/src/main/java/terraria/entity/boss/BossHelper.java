@@ -69,13 +69,13 @@ public class BossHelper {
         }
         // once exceeding targeted defeat time, dynamic DR multiplier linearly increases to 1 over maximum of 10 seconds.
         else {
-            MetadataValue val = EntityHelper.getMetadata(bossParts.get(0), "dynamicDR");
+            MetadataValue val = EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION);
             if (val != null) dynamicDR = val.asDouble();
             else dynamicDR = 1d;
             dynamicDR = Math.min(dynamicDR + 0.005, 1);
         }
         for (LivingEntity bossPart : bossParts)
-            EntityHelper.setMetadata(bossPart, "dynamicDR", dynamicDR);
+            EntityHelper.setMetadata(bossPart, EntityHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION, dynamicDR);
 //        Bukkit.broadcastMessage("Dynamic DR: " + dynamicDR + ", time: " + ticksLived + "/" + targetTime + ", health: " + healthInfo[0] + "/" + healthInfo[1]);
     }
     public static double getBossHealthMulti(int numPly) {
@@ -92,7 +92,7 @@ public class BossHelper {
     public static HashMap<Player, Double> setupBossTarget(Entity boss, String bossDefeatRequirement,
                                                           Player ply, boolean hasDistanceRestriction, BossBattleServer bossbar) {
         HashMap<Player, Double> targets = new HashMap<>();
-        String team = EntityHelper.getMetadata(ply, "team").asString();
+        String team = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_TEAM).asString();
         for (Player currPly : boss.getWorld().getPlayers()) {
             if (!currPly.getName().equals(ply.getName())) {
                 // unauthorized
@@ -100,7 +100,7 @@ public class BossHelper {
                 // hasn't defeated prerequisite
                 if (!PlayerHelper.hasDefeated(currPly, bossDefeatRequirement)) continue;
                 // not in the same team
-                if (!EntityHelper.getMetadata(currPly, "team").asString().equals(team)) continue;
+                if (!EntityHelper.getMetadata(currPly, EntityHelper.MetadataName.PLAYER_TEAM).asString().equals(team)) continue;
                 // too far away
                 if (hasDistanceRestriction &&
                         GenericHelper.getHorizontalDistance(currPly.getLocation(), ply.getLocation()) > 192) continue;
@@ -109,8 +109,8 @@ public class BossHelper {
             targets.put(currPly, 0d);
         }
         bossbar.setVisible(true);
-        EntityHelper.setMetadata(boss, "bossbar", bossbar);
-        EntityHelper.setMetadata(boss, "targets", targets);
+        EntityHelper.setMetadata(boss, EntityHelper.MetadataName.BOSS_BAR, bossbar);
+        EntityHelper.setMetadata(boss, EntityHelper.MetadataName.BOSS_TARGET_MAP, targets);
         // print out targets of the boss
         StringBuilder msg = new StringBuilder();
         boolean firstAppend = true;

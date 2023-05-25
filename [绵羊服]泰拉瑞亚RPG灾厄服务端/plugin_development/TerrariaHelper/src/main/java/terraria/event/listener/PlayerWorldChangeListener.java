@@ -22,7 +22,7 @@ public class PlayerWorldChangeListener implements Listener {
             return;
         }
         // reset the music to play
-        EntityHelper.setMetadata(e.getPlayer(), "lastBGMTime", 0L);
+        EntityHelper.setMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_LAST_BGM_TIME, 0L);
     }
     // stop any portal from forming
     @EventHandler(priority = EventPriority.LOW)

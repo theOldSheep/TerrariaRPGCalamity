@@ -47,10 +47,12 @@ public class MinionHelper {
         int minionLimit;
         {
             if (sentryOrMinion) {
-                minionList = (ArrayList<Entity>) EntityHelper.getMetadata(owner, "sentries").value();
+                minionList = (ArrayList<Entity>) EntityHelper.getMetadata(owner,
+                        EntityHelper.MetadataName.PLAYER_SENTRY_LIST).value();
                 minionLimit = attrMap.getOrDefault("sentryLimit", 1d).intValue();
             } else {
-                minionList = (ArrayList<Entity>) EntityHelper.getMetadata(owner, "minions").value();
+                minionList = (ArrayList<Entity>) EntityHelper.getMetadata(owner,
+                        EntityHelper.MetadataName.PLAYER_MINION_LIST).value();
                 minionLimit = attrMap.getOrDefault("minionLimit", 1d).intValue();
             }
         }
@@ -144,7 +146,8 @@ public class MinionHelper {
         }
         // whip target
         {
-            MetadataValue whipTargetMetadata = EntityHelper.getMetadata(owner.getBukkitEntity(), "minionWhipFocus");
+            MetadataValue whipTargetMetadata = EntityHelper.getMetadata(owner.getBukkitEntity(),
+                    EntityHelper.MetadataName.PLAYER_MINION_WHIP_FOCUS);
             if (whipTargetMetadata != null) {
                 Entity whipTarget = (Entity) whipTargetMetadata.value();
                 net.minecraft.server.v1_12_R1.Entity whipTargetNMS = ((CraftEntity) whipTarget).getHandle();

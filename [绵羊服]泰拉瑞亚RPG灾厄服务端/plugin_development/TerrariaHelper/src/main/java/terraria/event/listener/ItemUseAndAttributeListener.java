@@ -106,7 +106,7 @@ public class ItemUseAndAttributeListener implements Listener {
         } else {
             ply.removeScoreboardTag("isSecondaryAttack");
         }
-        EntityHelper.setMetadata(ply, "swingAmount", 0);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, 0);
         ItemUseHelper.playerUseItem(ply);
     }
     // swing item listener

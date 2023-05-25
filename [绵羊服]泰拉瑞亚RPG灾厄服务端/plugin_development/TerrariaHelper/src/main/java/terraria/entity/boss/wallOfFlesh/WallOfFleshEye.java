@@ -113,7 +113,7 @@ public class WallOfFleshEye extends EntitySlime {
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         this.mouth = (WallOfFleshMouth) ((CraftEntity) bossParts.get(0)).getHandle();
@@ -131,13 +131,13 @@ public class WallOfFleshEye extends EntitySlime {
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
-            EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map
         {
             targetMap = mouth.targetMap;
             target = summonedPlayer;
-            EntityHelper.setMetadata(bukkitEntity, "targets", targetMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
         // init health and slime size
         {
@@ -154,7 +154,7 @@ public class WallOfFleshEye extends EntitySlime {
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;
-            EntityHelper.setMetadata(bukkitEntity, "damageTaker", mouth.getBukkitEntity());
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, mouth.getBukkitEntity());
         }
     }
 

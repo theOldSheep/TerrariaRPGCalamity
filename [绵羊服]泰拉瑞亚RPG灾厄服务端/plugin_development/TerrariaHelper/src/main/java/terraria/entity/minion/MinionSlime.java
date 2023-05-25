@@ -75,9 +75,9 @@ public class MinionSlime extends EntitySlime {
         ((CraftWorld) owner.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // attributes etc.
         setSize(1, false);
-        EntityHelper.setMetadata(getBukkitEntity(), "attrMap", attrMap);
+        EntityHelper.setMetadata(getBukkitEntity(), EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         addScoreboardTag("isMinion");
-        EntityHelper.setMetadata(getBukkitEntity(), "damageSourcePlayer", owner);
+        EntityHelper.setMetadata(getBukkitEntity(), EntityHelper.MetadataName.DAMAGE_SOURCE, owner);
         EntityHelper.setDamageType(getBukkitEntity(), EntityHelper.DamageType.SUMMON);
         addScoreboardTag("noDamage");
         addScoreboardTag("noMelee");
@@ -179,7 +179,8 @@ public class MinionSlime extends EntitySlime {
             MinionHelper.setTarget(this, ((CraftPlayer) owner).getHandle(), targetNeedLineOfSight, protectOwner);
         // extra ticking AI
         Vector velocity = new Vector(motX / 0.91, motY / 0.98, motZ / 0.91);
-        Collection<Entity> allMinions = (Collection<Entity>) EntityHelper.getMetadata(owner, sentryOrMinion ? "sentries" : "minions").value();
+        Collection<Entity> allMinions = (Collection<Entity>) EntityHelper.getMetadata(owner,
+                sentryOrMinion ? EntityHelper.MetadataName.PLAYER_SENTRY_LIST : EntityHelper.MetadataName.PLAYER_MINION_LIST).value();
         LivingEntity target, minionBukkit = (LivingEntity) getBukkitEntity();
         if (getGoalTarget() != null) target = (LivingEntity) (getGoalTarget().getBukkitEntity());
         else target = owner;

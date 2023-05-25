@@ -198,7 +198,7 @@ public class DesertNuisance extends EntitySlime {
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -230,12 +230,12 @@ public class DesertNuisance extends EntitySlime {
                 attrMap.put("defence", BODY_DEF);
             }
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
-            EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map
         {
-            targetMap = (HashMap<Player, Double>) EntityHelper.getMetadata(owner.getBukkitEntity(), "targets").value();
-            EntityHelper.setMetadata(bukkitEntity, "targets", targetMap);
+            targetMap = (HashMap<Player, Double>) EntityHelper.getMetadata(owner.getBukkitEntity(), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
             target = summonedPlayer;
         }
         // init health and slime size
@@ -253,7 +253,7 @@ public class DesertNuisance extends EntitySlime {
             this.setNoGravity(true);
             this.persistent = true;
 
-            EntityHelper.setMetadata(bukkitEntity, "damageTaker", head.getBukkitEntity());
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
             if (index + 1 < TOTAL_LENGTH)
                 new DesertNuisance(summonedPlayer, bossParts, owner, index + 1, isFirst);

@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPolarBear;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -102,7 +103,7 @@ public class CalamitasClone extends EntitySlime {
         // the projectile itself
         Entity projectileSpawned = EntityHelper.spawnProjectile(shootInfo);
         EntityHelper.setMetadata(
-                projectileSpawned, "ticksLive", ticksLive);
+                projectileSpawned, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_TICKS_LIVED, ticksLive);
         if (type == 2)
             projectileSpawned.addScoreboardTag("isFireBlast");
         bulletHellProjectiles.add(projectileSpawned);
@@ -110,9 +111,9 @@ public class CalamitasClone extends EntitySlime {
         shootInfo.shootLoc.add(bullet_hell_orth_dir);
         Entity displayProjectile = EntityHelper.spawnProjectile(shootInfo);
         EntityHelper.setMetadata(
-                displayProjectile, "ticksLive", ticksLive);
+                displayProjectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_TICKS_LIVED, ticksLive);
         EntityHelper.setMetadata(
-                displayProjectile, "original", projectileSpawned);
+                displayProjectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_ORIGINAL, projectileSpawned);
         displayProjectile.setGlowing(true);
         bulletHellProjectiles.add(displayProjectile);
     }
@@ -153,14 +154,14 @@ public class CalamitasClone extends EntitySlime {
         ArrayList<Entity> projectilesToRemove = new ArrayList<>();
         // record outdated to prevent co-modification error
         for (Entity projectile : bulletHellProjectiles) {
-            int ticksLive = EntityHelper.getMetadata(projectile, "ticksLive").asInt();
+            int ticksLive = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_TICKS_LIVED).asInt();
             if (projectile.isDead() || projectile.getTicksLived() >= ticksLive) {
                 projectilesToRemove.add(projectile);
             }
             // make sure the projectiles stay within the same plane as the player
             // and display purpose projectiles stay at the proper location
             else if (projectile.getTicksLived() > 1) {
-                MetadataValue originalValue = EntityHelper.getMetadata(projectile, "original");
+                MetadataValue originalValue = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_ORIGINAL);
                 // if the projectile is display projectile
                 if (originalValue != null) {
                     Entity original = (Entity) originalValue.value();
@@ -250,7 +251,7 @@ public class CalamitasClone extends EntitySlime {
                         case 1:
                             if (healthRatio < 0.7) {
                                 beginBulletHell(400);
-                                EntityHelper.setMetadata(bukkitEntity, "healthLock", getMaxHealth() * 0.39);
+                                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, getMaxHealth() * 0.39);
                                 healthLockProgress = 2;
                             }
                             break;
@@ -261,7 +262,7 @@ public class CalamitasClone extends EntitySlime {
                                 new Cataclysm(target, this);
                                 Bukkit.broadcastMessage(BROTHER_REBORN);
                                 brothersAlive = true;
-                                EntityHelper.setMetadata(bukkitEntity, "healthLock", getMaxHealth() * 0.09);
+                                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, getMaxHealth() * 0.09);
                                 addScoreboardTag("noDamage");
                                 healthLockProgress = 3;
                             }
@@ -270,7 +271,7 @@ public class CalamitasClone extends EntitySlime {
                         case 3:
                             if (healthRatio < 0.1) {
                                 beginBulletHell(500);
-                                EntityHelper.setMetadata(bukkitEntity, "healthLock", null);
+                                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, null);
                                 healthLockProgress = 4;
                             }
                             break;
@@ -378,7 +379,7 @@ public class CalamitasClone extends EntitySlime {
         addScoreboardTag("isMechanic");
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -391,18 +392,18 @@ public class CalamitasClone extends EntitySlime {
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
-            EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
         bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                 BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
-        EntityHelper.setMetadata(bukkitEntity, "bossbar", bossbar);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
         // init target map
         {
             targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                     getBukkitEntity(), BossHelper.BossType.WALL_OF_FLESH.msgName, summonedPlayer, true, bossbar);
             target = summonedPlayer;
-            EntityHelper.setMetadata(bukkitEntity, "targets", targetMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
         // init health and slime size
         {
@@ -433,7 +434,7 @@ public class CalamitasClone extends EntitySlime {
                     EntityHelper.DamageType.MAGIC, "深渊亡魂");
         }
         // health lock info
-        EntityHelper.setMetadata(bukkitEntity, "healthLock", getMaxHealth() * 0.69);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, getMaxHealth() * 0.69);
         // bullet hell directions
         {
             double angleDir1 = Math.random() * 360 - 180;

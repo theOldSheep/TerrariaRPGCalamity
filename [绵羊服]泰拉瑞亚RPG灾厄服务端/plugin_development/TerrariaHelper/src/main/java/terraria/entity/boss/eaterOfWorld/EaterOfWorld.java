@@ -230,7 +230,7 @@ public class EaterOfWorld extends EntitySlime {
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, "bossType", BOSS_TYPE);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -261,25 +261,25 @@ public class EaterOfWorld extends EntitySlime {
                 attrMap.put("defence", BODY_DEF);
             }
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
-            EntityHelper.setMetadata(bukkitEntity, "attrMap", attrMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
         if (index == 0) {
             bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                     BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
         } else {
-            bossbar = (BossBattleServer) EntityHelper.getMetadata(bossParts.get(0), "bossbar").value();
+            bossbar = (BossBattleServer) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_BAR).value();
         }
-        EntityHelper.setMetadata(bukkitEntity, "bossbar", bossbar);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
         // init target map
         {
             if (index == 0) {
                 targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                         getBukkitEntity(), "", summonedPlayer, true, bossbar);
             } else {
-                targetMap = (HashMap<Player, Double>) EntityHelper.getMetadata(bossParts.get(0), "targets").value();
+                targetMap = (HashMap<Player, Double>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
             }
-            EntityHelper.setMetadata(bukkitEntity, "targets", targetMap);
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
             target = summonedPlayer;
         }
         // init health and slime size
@@ -317,14 +317,20 @@ public class EaterOfWorld extends EntitySlime {
             LivingEntity before = bossParts.get(index - 1);
             if (before.getHealth() > 1e-5 && !before.isDead()) {
                 HashMap<String, Double> atm = EntityHelper.getAttrMap(before);
-                atm.put("damage", TAIL_DMG);
-                atm.put("defence", TAIL_DEF);
+                EntityHelper.tweakAttribute(attrMap, "damage",
+                        "" + (TAIL_DMG - atm.get("damage")), true);
+                EntityHelper.tweakAttribute(attrMap, "defence",
+                        "" + (TAIL_DEF - atm.get("defence")), true);
             }
         }
         if (index + 1 < TOTAL_LENGTH) {
             LivingEntity after = bossParts.get(index + 1);
             if (after.getHealth() > 1e-5 && !after.isDead()) {
                 HashMap<String, Double> atm = EntityHelper.getAttrMap(after);
+                EntityHelper.tweakAttribute(attrMap, "damage",
+                        "" + (TAIL_DMG - atm.get("damage")), true);
+                EntityHelper.tweakAttribute(attrMap, "defence",
+                        "" + (TAIL_DEF - atm.get("defence")), true);
                 atm.put("damage", HEAD_DMG);
                 atm.put("defence", HEAD_DEF);
             }

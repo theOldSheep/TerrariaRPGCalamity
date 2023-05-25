@@ -82,7 +82,7 @@ public class TerrariaArrowProjectile extends EntityTippedArrow {
         else removeScoreboardTag("isGrenade");
         if (blastDamageShooter) addScoreboardTag("blastDamageShooter");
         else removeScoreboardTag("blastDamageShooter");
-        EntityHelper.setMetadata(bukkitEntity, "penetration", this.penetration);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, this.penetration);
     }
 
     public static ItemStack generateItemStack(String projectileType) {
@@ -123,7 +123,7 @@ public class TerrariaArrowProjectile extends EntityTippedArrow {
             setPosition(position.pos.x, position.pos.y, position.pos.z);
             die();
         }
-        EntityHelper.setMetadata(bukkitEntity, "penetration", this.penetration);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, this.penetration);
         if (bouncePenetrationBonded) bounce --;
         damageCD.put(e.getUniqueID(), enemyInvincibilityFrame);
     }
@@ -367,7 +367,7 @@ public class TerrariaArrowProjectile extends EntityTippedArrow {
                                 }
                                 if (bouncePenetrationBonded) {
                                     penetration--;
-                                    EntityHelper.setMetadata(bukkitEntity, "penetration", this.penetration);
+                                    EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, this.penetration);
                                 }
                                 // chlorophyte arrow bounce into enemies
                                 if (projectileType.equals("叶绿箭")) {

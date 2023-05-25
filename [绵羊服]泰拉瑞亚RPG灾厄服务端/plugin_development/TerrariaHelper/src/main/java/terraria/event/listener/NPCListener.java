@@ -43,14 +43,15 @@ public class NPCListener implements Listener {
     // some listeners to prevent bug
     public void recordInteractingNPC(Player ply, Entity NPC) {
         if (NPC != null) {
-            ((HashSet<Player>) EntityHelper.getMetadata(NPC, "GUIViewers").value()).add(ply);
-            EntityHelper.setMetadata(ply, "NPCViewing", NPC);
+            ((HashSet<Player>) EntityHelper.getMetadata(NPC, EntityHelper.MetadataName.NPC_GUI_VIEWERS).value()).add(ply);
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_NPC_INTERACTING, NPC);
         } else {
-            MetadataValue NPCViewing = EntityHelper.getMetadata(ply, "NPCViewing");
+            MetadataValue NPCViewing = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_NPC_INTERACTING);
             if (NPCViewing != null) {
-                ((HashSet<Player>) EntityHelper.getMetadata((Metadatable) NPCViewing.value(), "GUIViewers").value()).remove(ply);
+                ((HashSet<Player>) EntityHelper.getMetadata((Metadatable) NPCViewing.value(),
+                        EntityHelper.MetadataName.NPC_GUI_VIEWERS).value()).remove(ply);
             }
-            EntityHelper.setMetadata(ply, "NPCViewing", null);
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_NPC_INTERACTING, null);
         }
     }
     @EventHandler(priority = EventPriority.HIGH)
@@ -316,7 +317,7 @@ public class NPCListener implements Listener {
         ConfigurationSection shopSection = TerrariaHelper.NPCConfig.getConfigurationSection("shops." + NPCType);
         int index = fillShopGui(ply, shopInv, 0, shopSection);
         // open inv and setup variables
-        EntityHelper.setMetadata(ply, "firstSell", index);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.NPC_FIRST_SELL_INDEX, index);
         recordInteractingNPC(ply, NPC);
         ply.openInventory(shopInv);
         ply.sendMessage("§a您可以按左键买卖单个物品，shift+左键买卖整组物品，或右键查看物品价格。");
@@ -339,7 +340,7 @@ public class NPCListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onButtonClick(ButtonClickEvent evt) {
         Player ply = evt.getPlayer();
-        MetadataValue NPCViewingMetadata = EntityHelper.getMetadata(ply, "NPCViewing");
+        MetadataValue NPCViewingMetadata = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_NPC_INTERACTING);
         if (NPCViewingMetadata == null)
             return;
         Villager NPCViewing = (Villager) NPCViewingMetadata.value();
@@ -447,7 +448,7 @@ public class NPCListener implements Listener {
             }
             case "商店": {
                 evt.setCancelled(true);
-                MetadataValue firstSellMetadata = EntityHelper.getMetadata(ply, "firstSell");
+                MetadataValue firstSellMetadata = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.NPC_FIRST_SELL_INDEX);
                 // if the GUI variable is not valid, close inventory
                 if (firstSellMetadata == null) {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), ply::closeInventory, 1);

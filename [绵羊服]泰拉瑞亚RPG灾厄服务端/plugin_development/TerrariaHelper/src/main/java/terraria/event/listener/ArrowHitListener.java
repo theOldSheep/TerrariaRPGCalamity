@@ -66,7 +66,8 @@ public class ArrowHitListener implements Listener {
     }
     private void handleProjectileBlast(Projectile projectile, Location projectileDestroyLoc) {
         // explode
-        HashSet<org.bukkit.entity.Entity> damageExceptions = (HashSet<Entity>) EntityHelper.getMetadata(projectile, "collided").value();
+        HashSet<org.bukkit.entity.Entity> damageExceptions = (HashSet<Entity>) EntityHelper.getMetadata(projectile,
+                EntityHelper.MetadataName.PROJECTILE_ENTITIES_COLLIDED).value();
         String projectileName = projectile.getName();
         int blastDuration = projectileConfig.getInt( projectileName + ".blastDuration", 1);
         double blastRadius = projectileConfig.getDouble( projectileName + ".blastRadius", 1.5);
@@ -75,7 +76,7 @@ public class ArrowHitListener implements Listener {
     private void handleDestroy(TerrariaProjectileHitEvent e, Projectile projectile) {
         Location projectileDestroyLoc = projectile.getLocation();
         String destroyReason = "";
-        MetadataValue destroyReasonMetadata = EntityHelper.getMetadata(projectile, "destroyReason");
+        MetadataValue destroyReasonMetadata = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON);
         if (destroyReasonMetadata != null) destroyReason = destroyReasonMetadata.asString();
         // explode
         if (projectile.getScoreboardTags().contains("isGrenade")) {

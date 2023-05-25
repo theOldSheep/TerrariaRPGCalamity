@@ -50,7 +50,10 @@ public class BossHelper {
             this.msgName = name;
         }
         public void playSummonSound(Location loc) {
-            switch (this.name()) {
+            switch (this) {
+                case EMPRESS_OF_LIGHT:
+                    loc.getWorld().playSound(loc, "entity.eol.summoned", 10, 1);
+                    break;
                 default:
                     loc.getWorld().playSound(loc, "entity.enderdragon.growl", 10, 1);
             }

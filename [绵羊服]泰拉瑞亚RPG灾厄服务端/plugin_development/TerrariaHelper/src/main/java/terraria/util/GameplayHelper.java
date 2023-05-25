@@ -138,7 +138,7 @@ public class GameplayHelper {
         playBlockParticleAndSound(blockToBreak);
         if (!isBreakable(blockToBreak, ply)) return;
         // get existing breaking progress
-        MetadataValue temp = EntityHelper.getMetadata(blockToBreak, "breakProgress");
+        MetadataValue temp = EntityHelper.getMetadata(blockToBreak, EntityHelper.MetadataName.BLOCK_BREAK_PROGRESS);
         int breakingProgress = 0;
         if (temp != null) breakingProgress = temp.asInt();
         // get breaking progress required to break the block
@@ -154,7 +154,7 @@ public class GameplayHelper {
         PacketPlayOutBlockBreakAnimation packetToSend;
         if (breakingProgress >= breakingProgressMax) {
             // send packet and metadata before breaking to prevent bug
-            EntityHelper.setMetadata(blockToBreak, "breakProgress", 0);
+            EntityHelper.setMetadata(blockToBreak, EntityHelper.MetadataName.BLOCK_BREAK_PROGRESS, 0);
             packetToSend = new PacketPlayOutBlockBreakAnimation(
                     breakProgressDisplayID,
                     new BlockPosition(blockToBreak.getX(), blockToBreak.getY(), blockToBreak.getZ()),
@@ -167,7 +167,7 @@ public class GameplayHelper {
             playerBreakBlock(blockToBreak, ply);
         } else {
             // save block breaking progress and send animation packet
-            EntityHelper.setMetadata(blockToBreak, "breakProgress", breakingProgress);
+            EntityHelper.setMetadata(blockToBreak, EntityHelper.MetadataName.BLOCK_BREAK_PROGRESS, breakingProgress);
             int breakProgress = (int) Math.floor((double) (8 * breakingProgress) / breakingProgressMax);
             packetToSend = new PacketPlayOutBlockBreakAnimation(
                     breakProgressDisplayID,

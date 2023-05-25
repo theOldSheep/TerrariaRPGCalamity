@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.Furnace;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Vex;
 import org.bukkit.event.Event;
@@ -160,9 +161,9 @@ public class CraftingListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onVexButtonClick(ButtonClickEvent e) {
         Player player = e.getPlayer();
-        String station = EntityHelper.getMetadata(player, "craftingStation").asString();
+        String station = EntityHelper.getMetadata(player, EntityHelper.MetadataName.PLAYER_CRAFTING_STATION).asString();
         if (station.equals("CLOSED")) return;
-        int recipeIndex = EntityHelper.getMetadata(player, "recipeNumber").asInt();
+        int recipeIndex = EntityHelper.getMetadata(player, EntityHelper.MetadataName.PLAYER_CRAFTING_RECIPE_INDEX).asInt();
         switch (e.getButton().getName()) {
             case "点我合成":
                 handlePlayerCraft(player, recipeIndex, station, false);
@@ -179,7 +180,7 @@ public class CraftingListener implements Listener {
     public void onVexSlotClick(VexSlotClickEvent e) {
         Player player = e.getPlayer();
         if (player.getScoreboardTags().contains("tempCraftRecipeSelect")) return;
-        String station = EntityHelper.getMetadata(player, "craftingStation").asString();
+        String station = EntityHelper.getMetadata(player, EntityHelper.MetadataName.PLAYER_CRAFTING_STATION).asString();
         int recipeIndex = e.getID();
         // get next index to display(prevent index collision)
         int index = ItemHelper.craftingGuiLengthMap.get(station);
@@ -256,7 +257,7 @@ public class CraftingListener implements Listener {
         currGui.addDynamicComponent(btn1);
         currGui.addDynamicComponent(btn2);
         // setup cool down to prevent accidental selection of new recipes or glitch
-        EntityHelper.setMetadata(player, "recipeNumber", recipeIndex);
+        EntityHelper.setMetadata(player, EntityHelper.MetadataName.PLAYER_CRAFTING_RECIPE_INDEX, recipeIndex);
         player.addScoreboardTag("tempCraftingCD");
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                 () -> player.removeScoreboardTag("tempCraftingCD"), 20);
@@ -353,8 +354,8 @@ public class CraftingListener implements Listener {
         guiToOpen.addComponent(new VexButton("CRAFT_ALL", "选择配方", bg, bg,
                 guiToOpen.getWidth() - 60, guiToOpen.getHeight() - 50, 35, 17 + level));
         // open gui
-        EntityHelper.setMetadata(ply,"recipeNumber", -1);
-        EntityHelper.setMetadata(ply,"craftingStation", guiKey);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CRAFTING_RECIPE_INDEX, -1);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CRAFTING_STATION, guiKey);
         VexViewAPI.openGui(ply, guiToOpen);
         // setup cool down to prevent accidentally opening several guis and causing error
         ply.addScoreboardTag("tempCraftingCD");

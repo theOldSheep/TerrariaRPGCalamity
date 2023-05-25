@@ -1,7 +1,6 @@
-package terraria.entity.boss.thePlaguebringerGoliath;
+package terraria.entity.boss.empressOfLight;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -19,11 +18,11 @@ import terraria.util.WorldHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ThePlaguebringerGoliath extends EntitySlime {
+public class EmpressOfLight extends EntitySlime {
     // basic variables
-    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.THE_PLAGUEBRINGER_GOLIATH;
-    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.JUNGLE;
-    public static final double BASIC_HEALTH = 255600 * 2;
+    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EMPRESS_OF_LIGHT;
+    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.HALLOW;
+    public static final double BASIC_HEALTH = 224910 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
@@ -31,52 +30,68 @@ public class ThePlaguebringerGoliath extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    enum AIPhase {
-        DASH, SUMMON, SHOOT, NUKE;
+    enum AttackPhase {
+        CHARGE, PRISMATIC_BOLT, PRISMATIC_BOLT_V2, SUN_DANCE, EVERLASTING_RAINBOW, ETHEREAL_LANCE, ETHEREAL_LANCE_V2;
     }
-    AIPhase phaseAI = AIPhase.DASH;
-    int indexAI = -40, attacksDuringPhase = 0;
+    AttackPhase attackPhase = AttackPhase.CHARGE;
+    int indexAI = -40, indexAttackPhase = 0;
     double healthRatio = 1;
-    boolean secondPhase = false;
+    boolean secondPhase = false, summonedDuringDay;
 
-    static HashMap<String, Double> attrMapStingerMissile, attrMapNukeBarrage;
-    static final double SPEED_NORMAL = 2.25, SPEED_DASH = 3, SPEED_STINGER = 1.75, SPEED_MISSILE = 2.5, SPEED_NUKE = 2;
     EntityHelper.ProjectileShootInfo shootInfoStinger, shootInfoMissile, shootInfoNukeBarrage;
+    static HashMap<String, Double> attrMapPrismaticBolt, attrMapSunDance, attrMapEverlastingRainbow, attrMapEtherealLance;
+    static AttackPhase[] attackOrderPhaseOne, attackOrderPhaseTwo;
     static {
-        attrMapStingerMissile = new HashMap<>();
-        attrMapStingerMissile.put("damage", 540d);
-        attrMapStingerMissile.put("knockback", 1.5d);
-        attrMapNukeBarrage = new HashMap<>();
-        attrMapNukeBarrage.put("damage", 660d);
-        attrMapNukeBarrage.put("knockback", 2d);
-    }
-    private void changePhase() {
-        indexAI = -1;
-        // change phase
-        switch (phaseAI) {
-            case DASH:
-                if (attacksDuringPhase < 5)
-                    return;
-                phaseAI = AIPhase.SHOOT;
-                break;
-            case SHOOT:
-                phaseAI = AIPhase.SUMMON;
-                break;
-            case SUMMON:
-                phaseAI = secondPhase ? AIPhase.NUKE : AIPhase.DASH;
-                break;
-            case NUKE:
-                if (attacksDuringPhase < 4)
-                    return;
-                phaseAI = AIPhase.DASH;
-                break;
-        }
-        // aftermath
-        attacksDuringPhase = 0;
+        attrMapPrismaticBolt = new HashMap<>();
+        attrMapPrismaticBolt.put("damage", 468d);
+        attrMapPrismaticBolt.put("knockback", 1.5d);
+        attrMapSunDance = new HashMap<>();
+        attrMapSunDance.put("damage", 540d);
+        attrMapSunDance.put("knockback", 2d);
+        attrMapEverlastingRainbow = new HashMap<>();
+        attrMapEverlastingRainbow.put("damage", 468d);
+        attrMapEverlastingRainbow.put("knockback", 2d);
+        attrMapEtherealLance = new HashMap<>();
+        attrMapEtherealLance.put("damage", 468d);
+        attrMapEtherealLance.put("knockback", 2d);
+
+        attackOrderPhaseOne = new AttackPhase[]{
+            AttackPhase.PRISMATIC_BOLT,
+            AttackPhase.CHARGE,
+            AttackPhase.SUN_DANCE,
+            AttackPhase.CHARGE,
+            AttackPhase.EVERLASTING_RAINBOW,
+            AttackPhase.PRISMATIC_BOLT,
+            AttackPhase.CHARGE,
+            AttackPhase.ETHEREAL_LANCE,
+            AttackPhase.CHARGE,
+            AttackPhase.EVERLASTING_RAINBOW,
+        };
+        attackOrderPhaseTwo = new AttackPhase[]{
+            AttackPhase.ETHEREAL_LANCE_V2,
+            AttackPhase.PRISMATIC_BOLT,
+            AttackPhase.CHARGE,
+            AttackPhase.EVERLASTING_RAINBOW,
+            AttackPhase.PRISMATIC_BOLT,
+            AttackPhase.SUN_DANCE,
+            AttackPhase.ETHEREAL_LANCE,
+            AttackPhase.CHARGE,
+            AttackPhase.PRISMATIC_BOLT_V2,
+        };
     }
 
+    private void switchAttackPhase() {
+        AttackPhase[] phaseCycle = secondPhase ? attackOrderPhaseTwo : attackOrderPhaseOne;
+        attackPhase = phaseCycle[indexAttackPhase % phaseCycle.length];
+
+        attrMap.put("damageMeleeMulti", attackPhase == AttackPhase.CHARGE ? 1.5d : 1d);
+
+
+    }
     private void toSecondPhase() {
-        Bukkit.broadcastMessage("§#00FF00瘟疫核弹已就绪，准备发射！！！");
+        indexAttackPhase = 0;
+        indexAI = -40;
+        BOSS_TYPE.playSummonSound(bukkitEntity.getLocation());
         secondPhase = true;
     }
     private Vector getHorizontalDirection() {
@@ -84,101 +99,6 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         Location currLoc = bukkitEntity.getLocation();
         targetLoc.setY(currLoc.getY());
         return MathHelper.getDirection(currLoc, targetLoc, 1);
-    }
-
-    private void shootStingerMissile() {
-        EntityHelper.ProjectileShootInfo shootInfo;
-        double speed;
-        if (Math.random() < 0.2) {
-            shootInfo = shootInfoMissile;
-            speed = SPEED_MISSILE;
-        }
-        else {
-            shootInfo = shootInfoStinger;
-            speed = SPEED_STINGER;
-        }
-        shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-        shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, target.getEyeLocation(), speed);
-        EntityHelper.spawnProjectile(shootInfo);
-    }
-
-    private void AIPhaseDash() {
-        Location eyeLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-        int dashCountdown = 20 - indexAI;
-        if (dashCountdown >= 0) {
-            Location targetLoc = target.getEyeLocation();
-            double speed;
-            if (dashCountdown == 0) {
-                speed = SPEED_DASH;
-            }
-            else {
-                speed = SPEED_NORMAL / 2;
-                Vector offset = getHorizontalDirection();
-                offset.multiply(24);
-                targetLoc.add(offset);
-            }
-            bukkitEntity.setVelocity( MathHelper.getDirection(eyeLoc, targetLoc, speed) );
-        }
-        else if (indexAI > 50) {
-            attacksDuringPhase ++;
-            changePhase();
-        }
-    }
-    private void AIPhaseShoot() {
-        // hover above target
-        {
-            Location targetLoc = target.getEyeLocation().add(0, 20, 0);
-            bukkitEntity.setVelocity( MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, SPEED_NORMAL) );
-        }
-        // shoot projectiles
-        if (indexAI % 8 == 0) {
-            shootStingerMissile();
-        }
-        else if (indexAI > 100)
-            changePhase();
-    }
-    private void AIPhaseSummon() {
-        // speed decays
-        {
-            Vector velocity = bukkitEntity.getVelocity();
-            velocity.multiply(0.95);
-            bukkitEntity.setVelocity(velocity);
-        }
-        // summon destructible rockets and mines
-        if (indexAI % 4 == 0) {
-            // summon mine
-            if (Math.random() < 0.33 && secondPhase)
-                new PlagueMine(this);
-            // summon rocket
-            else
-                new PlagueHomingMissile(this);
-        }
-        if (indexAI > 40)
-            changePhase();
-    }
-    private void AIPhaseNuke() {
-        // dash and fire a spread of nuke
-        if (indexAI == 0) {
-            // dash
-            {
-                Vector velocity = getHorizontalDirection();
-                velocity.multiply(SPEED_DASH);
-                double yDist = target.getLocation().getY() + 24 - locY;
-                velocity.setY(yDist / 50);
-                bukkitEntity.setVelocity(velocity);
-            }
-            // shoot barrage of nuke
-            shootInfoNukeBarrage.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-            for (Vector shootVel : MathHelper.getCircularProjectileDirections(
-                    7, 3, 45, target, shootInfoNukeBarrage.shootLoc, SPEED_NUKE)) {
-                shootInfoNukeBarrage.velocity = shootVel;
-                EntityHelper.spawnProjectile(shootInfoNukeBarrage);
-            }
-        }
-        else if (indexAI > 50) {
-            attacksDuringPhase ++;
-            changePhase();
-        }
     }
     private void AI() {
         // no AI after death
@@ -189,6 +109,9 @@ public class ThePlaguebringerGoliath extends EntitySlime {
             // update target
             target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
                     IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+            // if summoned during day time, disappear at night, vise versa.
+            if (summonedDuringDay != WorldHelper.isDayTime(bukkitEntity.getWorld()))
+                target = null;
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {
@@ -202,7 +125,8 @@ public class ThePlaguebringerGoliath extends EntitySlime {
                 healthRatio = getHealth() / getMaxHealth();
                 if (!secondPhase && healthRatio < 0.5)
                     toSecondPhase();
-                switch (phaseAI) {
+                // TODO
+                switch (attackPhase) {
                     case DASH:
                         AIPhaseDash();
                         break;
@@ -220,7 +144,7 @@ public class ThePlaguebringerGoliath extends EntitySlime {
             }
         }
         // face the player
-        if (phaseAI == AIPhase.DASH)
+        if (attackPhase == AttackPhase.CHARGE)
             this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
         else
             this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
@@ -228,7 +152,7 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
-    public ThePlaguebringerGoliath(World world) {
+    public EmpressOfLight(World world) {
         super(world);
         super.die();
     }
@@ -237,17 +161,16 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
     }
     // a constructor for actual spawning
-    public ThePlaguebringerGoliath(Player summonedPlayer) {
+    public EmpressOfLight(Player summonedPlayer) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
-        double angle = Math.random() * 720d, dist = 40;
-        Location spawnLoc = summonedPlayer.getLocation().add(
-                MathHelper.xsin_degree(angle) * dist, 0, MathHelper.xcos_degree(angle) * dist);
+        Location spawnLoc = summonedPlayer.getLocation().add(0, 12, 0);
         spawnLoc.setY( spawnLoc.getWorld().getHighestBlockYAt(spawnLoc) );
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
+        summonedDuringDay = WorldHelper.isDayTime(bukkitEntity.getWorld());
         setCustomName(BOSS_TYPE.msgName);
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
@@ -259,12 +182,12 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 594d);
-            attrMap.put("damageTakenMulti", 0.7);
+            attrMap.put("damage", 396d);
+            attrMap.put("damageTakenMulti", 0.85);
             attrMap.put("defence", 100d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

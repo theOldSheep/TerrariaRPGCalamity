@@ -64,7 +64,8 @@ public class TerrariaFishingHook extends EntityFishingHook {
             return;
         }
 
-        this.startUseTime = EntityHelper.getMetadata(entityhuman.getBukkitEntity(), "useCDInternal").asLong();
+        this.startUseTime = EntityHelper.getMetadata(entityhuman.getBukkitEntity(),
+                EntityHelper.MetadataName.PLAYER_INTERNAL_ITEM_START_USE_CD).asLong();
 
         this.hookedTimeRemaining = 0;
         this.waitingTimeRemaining = 0;
@@ -130,7 +131,8 @@ public class TerrariaFishingHook extends EntityFishingHook {
     }
     private boolean checkValid() {
         // if the player clicked again and started reeling in
-        long startUseTimeCurrent = EntityHelper.getMetadata(ownerPly, "useCDInternal").asLong();
+        long startUseTimeCurrent = EntityHelper.getMetadata(ownerPly,
+                EntityHelper.MetadataName.PLAYER_INTERNAL_ITEM_START_USE_CD).asLong();
         if (startUseTimeCurrent != startUseTime) {
             tryCatchingFish();
             return true;
