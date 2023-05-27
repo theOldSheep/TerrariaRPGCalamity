@@ -37,6 +37,7 @@ public class BossSpawnListener implements Listener {
         // pre-moon lord
         summonItems.put("星辉碎块", BossHelper.BossType.ASTRUM_AUREUS);
         summonItems.put("丛林蜥蜴电池", BossHelper.BossType.GOLEM);
+        summonItems.put("瘟疫起动装置", BossHelper.BossType.THE_PLAGUEBRINGER_GOLIATH);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {

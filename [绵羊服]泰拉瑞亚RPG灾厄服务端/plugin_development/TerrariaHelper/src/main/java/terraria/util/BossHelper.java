@@ -10,6 +10,7 @@ import terraria.entity.boss.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.calamitasClone.CalamitasClone;
 import terraria.entity.boss.crabulon.Crabulon;
 import terraria.entity.boss.cryogen.Cryogen;
+import terraria.entity.boss.empressOfLight.EmpressOfLight;
 import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
 import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
 import terraria.entity.boss.desertScourge.DesertScourge;
@@ -21,6 +22,7 @@ import terraria.entity.boss.theDestroyer.Destroyer;
 import terraria.entity.boss.theHiveMind.TheHiveMind;
 import terraria.entity.boss.skeletron.SkeletronHead;
 import terraria.entity.boss.queenSlime.QueenSlime;
+import terraria.entity.boss.thePlaguebringerGoliath.ThePlaguebringerGoliath;
 import terraria.entity.boss.theSlimeGod.TheSlimeGod;
 import terraria.entity.boss.kingSlime.KingSlime;
 import terraria.entity.boss.theTwins.Retinazer;
@@ -217,6 +219,20 @@ public class BossHelper {
             case GOLEM: {
                 if (Golem.canSpawn(target)) {
                     new Golem(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case THE_PLAGUEBRINGER_GOLIATH: {
+                if (ThePlaguebringerGoliath.canSpawn(target)) {
+                    new ThePlaguebringerGoliath(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case EMPRESS_OF_LIGHT: {
+                if (EmpressOfLight.canSpawn(target)) {
+                    new EmpressOfLight(target);
                     spawnedSuccessfully = true;
                 }
                 break;

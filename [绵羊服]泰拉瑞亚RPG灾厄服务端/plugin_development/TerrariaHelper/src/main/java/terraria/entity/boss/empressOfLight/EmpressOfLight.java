@@ -7,6 +7,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -17,6 +18,7 @@ import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class EmpressOfLight extends EntitySlime {
     // basic variables
@@ -35,8 +37,10 @@ public class EmpressOfLight extends EntitySlime {
     }
     AttackPhase attackPhase = AttackPhase.CHARGE;
     String[] particleColor;
-    GenericHelper.ParticleLineOptions particleLineOptionsSunDance, particleLineOptionsEverlastingRainbow, particleLineOptionsLance;
-    GenericHelper.StrikeLineOptions strikeLineOptionsSunDance, strikeLineOptionsEverlastingRainbow, strikeLineOptionsLance;
+    GenericHelper.ParticleLineOptions particleLineOptionsSunDance, particleLineOptionsEverlastingRainbow,
+            particleLineOptionsLance, particleLineOptionsLanceWindup;
+    GenericHelper.StrikeLineOptions strikeLineOptionsSunDance, strikeLineOptionsEverlastingRainbow,
+            strikeLineOptionsLance;
     Location attackLoc = null;
     int indexAI = 20, indexAttackPhase = 0;
     double healthRatio = 1;
@@ -45,12 +49,24 @@ public class EmpressOfLight extends EntitySlime {
     EntityHelper.ProjectileShootInfo shootInfoPrismaticBolt;
     static final double SPEED_PRISMATIC_BOLT = 1.5, SPEED_CHARGE_WINDUP = 0.75, SPEED_CHARGE = 2.5,
             SUN_DANCE_MAX_LENGTH = 32, SUN_DANCE_MAX_WIDTH = 1.5,
-            ETERNAL_RAINBOW_WIDTH = 3;
+            ETERNAL_RAINBOW_WIDTH = 3, SPEED_ETHEREAL_LANCE = 5;
     static final int EVERLASTING_RAINBOW_DURATION = 40;
     static HashMap<String, Double> attrMapPrismaticBolt, attrMapSunDance, attrMapEverlastingRainbow, attrMapEtherealLance;
+    static Vector[] eLV2Dirs;
     static AttackPhase[] attackOrderPhaseOne, attackOrderPhaseTwo;
     static String[] particleColorDay, particleColorNight;
     static {
+        // ethereal bolt V2 directions
+        {
+            eLV2Dirs = new Vector[] {
+                new Vector(1, 0, 0),
+                new Vector(0, 0, 1),
+                new Vector(1, 0, 1),
+                new Vector(-1, 0, 1),
+                new Vector(1, 0, -1),
+                new Vector(-1, 0, -1),
+            };
+        }
         // attributes
         {
             attrMapPrismaticBolt = new HashMap<>();
@@ -213,11 +229,7 @@ public class EmpressOfLight extends EntitySlime {
         for (int shootIndex = 0; shootIndex < 15; shootIndex ++) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
                 if (this.isAlive()) {
-                    shootInfoPrismaticBolt.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-                    Location targetLoc = target.getEyeLocation().add(
-                            MathHelper.randomVector());
-                    shootInfoPrismaticBolt.velocity = MathHelper.getDirection(shootInfoPrismaticBolt.shootLoc, targetLoc, SPEED_PRISMATIC_BOLT);
-                    EntityHelper.spawnProjectile(shootInfoPrismaticBolt);
+                    handlePrismaticBolt(false);
                 }
             }, shootIndex * 2);
         }
@@ -228,13 +240,23 @@ public class EmpressOfLight extends EntitySlime {
         for (int shootIndex = 0; shootIndex < 25; shootIndex ++) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
                 if (this.isAlive()) {
-                    shootInfoPrismaticBolt.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-                    shootInfoPrismaticBolt.velocity = MathHelper.randomVector();
-                    shootInfoPrismaticBolt.velocity.multiply(SPEED_PRISMATIC_BOLT);
-                    EntityHelper.spawnProjectile(shootInfoPrismaticBolt);
+                    handlePrismaticBolt(true);
                 }
             }, shootIndex * 2);
         }
+    }
+    private void handlePrismaticBolt(boolean random) {
+        shootInfoPrismaticBolt.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        if (random) {
+            shootInfoPrismaticBolt.velocity = MathHelper.randomVector();
+            shootInfoPrismaticBolt.velocity.multiply(SPEED_PRISMATIC_BOLT);
+        }
+        else {
+            Location targetLoc = target.getEyeLocation().add(
+                    MathHelper.randomVector());
+            shootInfoPrismaticBolt.velocity = MathHelper.getDirection(shootInfoPrismaticBolt.shootLoc, targetLoc, SPEED_PRISMATIC_BOLT);
+        }
+        EntityHelper.spawnProjectile(shootInfoPrismaticBolt);
     }
     private void AIPhaseCharge() {
         bukkitEntity.teleport(attackLoc);
@@ -250,6 +272,14 @@ public class EmpressOfLight extends EntitySlime {
                 bukkitEntity.setVelocity(velCharge);
             }
         }, 20);
+        // releases prismatic bolts along the dash
+        for (int shootIndex = 0; shootIndex < 25; shootIndex ++) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+                if (this.isAlive()) {
+                    handlePrismaticBolt(true);
+                }
+            }, shootIndex + 20);
+        }
         // after a certain time interval, reset the velocity to zero vector
         int waitTime = secondPhase ? 45 : 55;
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
@@ -349,13 +379,55 @@ public class EmpressOfLight extends EntitySlime {
     private void AIPhaseEtherealLance() {
         bukkitEntity.teleport(attackLoc);
         bukkitEntity.setVelocity(new Vector());
+        for (int i = 0; i < 20; i ++) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+                if (this.isAlive()) {
+                    Vector v = target.getVelocity();
+                    if (v.lengthSquared() < 1e-5)
+                        v = MathHelper.randomVector();
+                    v.normalize().multiply(16);
+                    handleEtherealLanceSingle(target.getEyeLocation().subtract(v));
+                }
+            }, i * 2);
+        }
     }
     private void AIPhaseEtherealLanceV2() {
         bukkitEntity.teleport(attackLoc);
         bukkitEntity.setVelocity(new Vector());
+        int ticksOffset = 0;
+        for (Vector offsetDir : eLV2Dirs) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+                if (this.isAlive()) {
+                    for (Vector offset : MathHelper.getCircularProjectileDirections(
+                            5, 3, 30, offsetDir, 16)) {
+                        handleEtherealLanceSingle(target.getEyeLocation().subtract(offset));
+                    }
+                }
+            }, ticksOffset);
+            ticksOffset += 20;
+        }
     }
-    private void handleEtherealLanceSingle() {
-
+    private void handleEtherealLanceSingle(Location location) {
+        Vector velocity = MathHelper.getDirection(location, target.getEyeLocation(), SPEED_ETHEREAL_LANCE);
+        // windup particle as warning
+        GenericHelper.handleParticleLine(velocity, location, particleLineOptionsLanceWindup);
+        // shoot lance
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+            handleEtherealLanceSingleDamage(location, 20, velocity,
+                    MathHelper.getVectorYaw(velocity), MathHelper.getVectorPitch(velocity), new HashSet<>());
+        }, 30);
+    }
+    private void handleEtherealLanceSingleDamage(Location location, int ticksLeft, Vector direction,
+                                                 double yaw, double pitch, HashSet<Entity> damageCD) {
+        // handle damage
+        GenericHelper.handleStrikeLine(bukkitEntity, location, yaw, pitch, SPEED_ETHEREAL_LANCE, 0.5,
+                "", "", damageCD, attrMapEtherealLance, strikeLineOptionsLance);
+        // next step if available
+        location.add(direction);
+        if (ticksLeft > 0)
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+                handleEtherealLanceSingleDamage(location, ticksLeft - 1, direction, yaw, pitch, damageCD);
+            }, 3);
     }
     private void AI() {
         // no AI after death
@@ -492,6 +564,18 @@ public class EmpressOfLight extends EntitySlime {
                     .setLingerDelay(2)
                     .setLingerTime(EVERLASTING_RAINBOW_DURATION)
                     .setThruWall(true);
+            particleLineOptionsLance = new GenericHelper.ParticleLineOptions()
+                    .setParticleColor(particleColor)
+                    .setTicksLinger(1);
+            strikeLineOptionsLance = new GenericHelper.StrikeLineOptions()
+                    .setParticleInfo(particleLineOptionsLance)
+                    .setThruWall(true);
+            particleLineOptionsLanceWindup = new GenericHelper.ParticleLineOptions()
+                    .setParticleColor(particleColor)
+                    .setTicksLinger(20)
+                    .setLength(32)
+                    .setWidth(0.1)
+                    .setStepsize(1);
         }
     }
 

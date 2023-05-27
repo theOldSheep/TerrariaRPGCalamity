@@ -40,7 +40,7 @@ public class ThePlaguebringerGoliath extends EntitySlime {
     boolean secondPhase = false;
 
     static HashMap<String, Double> attrMapStingerMissile, attrMapNukeBarrage;
-    static final double SPEED_NORMAL = 2.25, SPEED_DASH = 3, SPEED_STINGER = 1.75, SPEED_MISSILE = 2.5, SPEED_NUKE = 2;
+    static final double SPEED_NORMAL = 2.25, SPEED_DASH = 3, SPEED_STINGER = 1.75, SPEED_MISSILE = 2.5, SPEED_NUKE = 3;
     EntityHelper.ProjectileShootInfo shootInfoStinger, shootInfoMissile, shootInfoNukeBarrage;
     static {
         attrMapStingerMissile = new HashMap<>();
