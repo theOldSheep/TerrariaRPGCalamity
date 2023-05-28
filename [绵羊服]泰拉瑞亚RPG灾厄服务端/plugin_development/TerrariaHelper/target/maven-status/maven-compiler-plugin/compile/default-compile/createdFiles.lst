@@ -130,9 +130,11 @@ terraria\entity\boss\skeletronPrime\SkeletronPrimeHead$PhaseAI.class
 terraria\entity\boss\theSlimeGod\EbonianSlime$1.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHand$1.class
 terraria\entity\boss\calamitasClone\Catastrophe.class
+terraria\entity\boss\dukeFishron\DukeFishron$AttackPhase.class
 terraria\util\EntityHelper.class
 terraria\entity\boss\cryogen\CryogenShield.class
 terraria\event\listener\PlayerKeyToggleListener.class
+terraria\entity\boss\dukeFishron\DukeFishron.class
 terraria\entity\boss\kingSlime\KingSlime$SizeState.class
 terraria\entity\others\TerrariaItem.class
 terraria\entity\projectile\HitEntityInfo.class

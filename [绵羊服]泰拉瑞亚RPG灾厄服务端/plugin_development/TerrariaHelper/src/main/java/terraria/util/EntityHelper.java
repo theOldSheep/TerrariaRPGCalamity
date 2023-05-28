@@ -1807,7 +1807,8 @@ public class EntityHelper {
                     // doubles
                     {
                         keys = new String[]{"autoTraceAbility", "autoTraceRadius", "blastRadius", "bounceVelocityMulti",
-                                "frictionFactor", "gravity", "maxSpeed", "projectileSize", "speedMultiPerTick"};
+                                "frictionFactor", "gravity", "maxSpeed", "projectileSize", "speedMultiPerTick",
+                                "trailSize", "trailStepSize"};
                         for (String key : keys) {
                             if (section.contains(key))
                                 this.properties.put(key, section.getDouble(key));

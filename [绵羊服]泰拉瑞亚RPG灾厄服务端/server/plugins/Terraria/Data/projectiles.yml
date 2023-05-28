@@ -201,31 +201,34 @@
         - "剧毒|80|1"
 死亡激光:
     penetration: 99999
+    liveTime: 100
     gravity: 0
     blockHitAction: thru
     buffInflict:
         - "燃烧|80|1"
     trailColor: 255|0|0
     trailSize: 0.15
-    trailStepSize: 1
+    trailStepSize: 0.5
 诅咒激光:
     penetration: 99999
+    liveTime: 100
     gravity: 0
     blockHitAction: thru
     buffInflict:
         - "咒火|60|1"
     trailColor: 200|255|0
     trailSize: 0.15
-    trailStepSize: 1
+    trailStepSize: 0.5
 电击激光:
     penetration: 99999
+    liveTime: 100
     gravity: 0
     blockHitAction: thru
     buffInflict:
         - "带电|40|1"
     trailColor: 0|255|200
     trailSize: 0.15
-    trailStepSize: 1
+    trailStepSize: 0.5
 咒火球:
     buffInflict:
         - "咒火|100|1"
@@ -282,8 +285,6 @@
     gravity: 0
     projectileSize: 0.5
     trailColor: 150|0|0
-    trailSize: 1
-    trailStepSize: 2
     trailLingerTime: 10
     buffInflict:
         - "硫磺火|60|1"
@@ -479,9 +480,12 @@
     autoTraceMethod: 2
     autoTraceRadius: 64
     autoTraceSharpTurning: false
-    autoTraceAbility: 0.2
+    autoTraceAbility: 0.25
     noAutoTraceTicks: 10
     maxAutoTraceTicks: 30
+    buffInflict:
+        - "神圣之火|60|1"
+        - "夜魇|60|1"
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2

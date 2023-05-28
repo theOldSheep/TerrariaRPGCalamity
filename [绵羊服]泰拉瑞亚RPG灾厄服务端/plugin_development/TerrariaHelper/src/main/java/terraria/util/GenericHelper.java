@@ -312,7 +312,6 @@ public class GenericHelper {
         int ticksLinger = options.ticksLinger;
         float alpha = options.alpha;
         String particleCharacter = options.particleChar;
-        List<String> particleColor = options.particleColor;
         if (ticksLinger <= 0) return;
 
         Vector dVec = vector.clone().normalize();

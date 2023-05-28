@@ -209,11 +209,12 @@ public class ItemHelper {
         attributeDisplayName.put("useSpeedMeleeMulti", "近战攻击速度");
         attributeDisplayName.put("useSpeedRangedMulti", "远程攻击速度");
         attributeDisplayName.put("knockbackMeleeMulti", "近战击退");
+        attributeDisplayName.put("projectileSpeedMulti", "弹射物速度");
         attributeDisplayName.put("projectileSpeedArrowMulti", "箭矢速度");
     }
     static {
-        setupItemRecipe(true);
         setupAttributeDisplayName();
+        setupItemRecipe(true);
     }
     public static String[] splitItemName(String itemName) {
         if (itemName == null) return new String[]{"", ""};
@@ -517,6 +518,11 @@ public class ItemHelper {
                     result.add("无视敌人" + penetration + "防御");
                     break;
                 }
+                case "powerPickaxe": {
+                    int power = attributeSection.getInt(attribute, 0);
+                    result.add(power + "% 镐力");
+                    break;
+                }
                 case "defence": {
                     int defence = attributeSection.getInt(attribute, 0);
                     result.add(defence + " 防御");
@@ -596,7 +602,10 @@ public class ItemHelper {
                 }
                 // these attributes are not shown.
                 case "damageType":
+                case "bounce":
                 case "projectileSpeed":
+                case "penetration":
+                case "buffInflictMelee":
                     break;
                 default:
                     if (attributeDisplayName.containsKey(attribute)) {
@@ -607,6 +616,7 @@ public class ItemHelper {
                         break;
                     }
                     result.add(attributeSection.getString(attribute) + " " + attribute);
+                    Bukkit.getLogger().log(Level.WARNING, "Raw attribute name used when initializing item from yml （" + attribute + ")");
             }
         }
         return result;

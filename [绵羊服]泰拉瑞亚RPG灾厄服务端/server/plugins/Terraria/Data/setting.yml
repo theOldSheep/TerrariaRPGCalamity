@@ -156,7 +156,7 @@ deathMessages:
   - <victim> 被烧得只剩渣了
   - <victim> 成了全熟牛排
   Debuff_暗影焰:
-  - <victim> 的灵魂化作了灰烬。
+  - <victim> 的灵魂化作了灰烬
   Debuff_中毒:
   - <victim> 无法找到解药
   Debuff_剧毒:
@@ -167,13 +167,20 @@ deathMessages:
   - <victim> 的生命力从正变负
   - <victim> 成了避雷针
   Debuff_硫磺火:
-  - <victim> 被漆黑的火焰吞噬
+  - <victim> 被漆黑的烈焰燃尽
   Debuff_辐射:
-  - <victim> 死于辐射。
+  - <victim> 死于辐射
   Debuff_孱弱巫咒:
-  - <victim> 被硫磺烈焰烧焦了。
+  - <victim> 被硫磺烈焰烧焦了
   Debuff_幻星感染:
-  - <victim> 成为了星辉瘟疫的一部分。
+  - <victim> 成为了星辉瘟疫的一部分
+  Debuff_瘟疫:
+  - <victim> 的血肉被瘟疫所融化
+  - <victim> 已无药可医
+  Debuff_神圣之火:
+  - <victim> 被自己的罪孽吞噬了
+  Debuff_夜魇:
+  - <victim> 被月之射线焚烧殆尽
 settings:
   playerInventories:
   - piggyBank

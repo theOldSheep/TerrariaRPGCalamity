@@ -49,7 +49,7 @@ public class EmpressOfLight extends EntitySlime {
     EntityHelper.ProjectileShootInfo shootInfoPrismaticBolt;
     static final double SPEED_PRISMATIC_BOLT = 1.5, SPEED_CHARGE_WINDUP = 0.75, SPEED_CHARGE = 2.5,
             SUN_DANCE_MAX_LENGTH = 32, SUN_DANCE_MAX_WIDTH = 1.5,
-            ETERNAL_RAINBOW_WIDTH = 3, SPEED_ETHEREAL_LANCE = 5;
+            ETERNAL_RAINBOW_WIDTH = 3, SPEED_ETHEREAL_LANCE = 2;
     static final int EVERLASTING_RAINBOW_DURATION = 40;
     static HashMap<String, Double> attrMapPrismaticBolt, attrMapSunDance, attrMapEverlastingRainbow, attrMapEtherealLance;
     static Vector[] eLV2Dirs;
@@ -157,7 +157,7 @@ public class EmpressOfLight extends EntitySlime {
     private void switchAttackPhase() {
         AttackPhase lastPhase = attackPhase;
         AttackPhase[] phaseCycle = secondPhase ? attackOrderPhaseTwo : attackOrderPhaseOne;
-        attackPhase = phaseCycle[indexAttackPhase % phaseCycle.length];
+        attackPhase = phaseCycle[++indexAttackPhase % phaseCycle.length];
         // damage increase when start dash, back to normal when finishing
         if (attackPhase == AttackPhase.CHARGE)
             EntityHelper.tweakAttribute(attrMap, "damageMeleeMulti", "0.5", true);
@@ -256,13 +256,14 @@ public class EmpressOfLight extends EntitySlime {
                     MathHelper.randomVector());
             shootInfoPrismaticBolt.velocity = MathHelper.getDirection(shootInfoPrismaticBolt.shootLoc, targetLoc, SPEED_PRISMATIC_BOLT);
         }
+        shootInfoPrismaticBolt.properties.put("trailColor", particleColor[(int) (Math.random() * particleColor.length)]);
         EntityHelper.spawnProjectile(shootInfoPrismaticBolt);
     }
     private void AIPhaseCharge() {
         bukkitEntity.teleport(attackLoc);
         Vector velocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(),
                 target.getEyeLocation(), 1);
-        Vector velWindup = velocity.clone().multiply(SPEED_CHARGE_WINDUP);
+        Vector velWindup = velocity.clone().multiply(-SPEED_CHARGE_WINDUP);
         bukkitEntity.setVelocity(velWindup);
         // dash after 1 second
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
@@ -295,7 +296,7 @@ public class EmpressOfLight extends EntitySlime {
         double angle = 0, angleOffset = 360 * 0.7 / rays;
         int interval = secondPhase ? 20 : 30;
         // three waves of sun dance
-        for (int i = 0; i <= 2; i ++) {
+        for (int i = 0; i < 3; i ++) {
             int finalI = i;
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
                 if (this.isAlive()) {
@@ -313,7 +314,7 @@ public class EmpressOfLight extends EntitySlime {
         targetLoc.setY(target.getLocation().getY());
         bukkitEntity.teleport(targetLoc);
         // handle particle/damage
-        double sizeMultiplier = Math.sqrt(1 - Math.abs(20d - index) / 10);
+        double sizeMultiplier = Math.sqrt(1 - Math.abs(20d - index) / 20);
         if (sizeMultiplier > 1e-5) {
             double rayAngleOffset = 360d / rays, angleCurrentRay = angle;
             for (int rayIdx = 0; rayIdx < rays; rayIdx++) {
@@ -344,18 +345,30 @@ public class EmpressOfLight extends EntitySlime {
         bukkitEntity.teleport(attackLoc);
         bukkitEntity.setVelocity(new Vector());
 
+        Vector offset = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, 0);
+        offset.multiply(16);
+        Location centerLoc = target.getEyeLocation().add(offset);
         for (int i = 0; i < 13; i ++) {
-            handleEverlastingRainbowSingle(360d / i, 0,1, bukkitEntity.getLocation());
+            handleEverlastingRainbowSingle(360d * i / 13, 0,1, centerLoc, centerLoc);
         }
     }
-    private void handleEverlastingRainbowSingle(double angle, double range, int index, Location lastLoc) {
+    private void handleEverlastingRainbowSingle(double angle, double range, int index, Location lastLoc, Location centerLoc) {
         // calculate next location
         double nextAngle = angle + 5;
-        double nextRange = range + (index < 60 ?
-                ((60 - index) * 0.0035) : ((140 - index) * -0.0035));
+        double rangeIncrement;
+        // init change in range
+        {
+            if (index < 60)
+                rangeIncrement = (60 - index) * 0.05;
+            else if (index > 80)
+                rangeIncrement = (140 - index) * -0.05;
+            else
+                rangeIncrement = 0;
+        }
+        double nextRange = range + rangeIncrement;
         Vector offsetDir = MathHelper.vectorFromYawPitch_quick(nextAngle, 0);
         offsetDir.multiply(nextRange);
-        Location nextLoc = bukkitEntity.getLocation().add(offsetDir);
+        Location nextLoc = centerLoc.clone().add(offsetDir);
         // handle lingering damage and particle
         Vector strikeDirection = nextLoc.clone().subtract(lastLoc).toVector();
         double strikeYaw = MathHelper.getVectorYaw(strikeDirection);
@@ -372,7 +385,7 @@ public class EmpressOfLight extends EntitySlime {
         if (index < 120)
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
                 if (this.isAlive()) {
-                    handleEverlastingRainbowSingle(nextAngle, nextRange, index + 1, nextLoc);
+                    handleEverlastingRainbowSingle(nextAngle, nextRange, index + 1, nextLoc, centerLoc);
                 }
             }, 2);
     }
@@ -427,7 +440,7 @@ public class EmpressOfLight extends EntitySlime {
         if (ticksLeft > 0)
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
                 handleEtherealLanceSingleDamage(location, ticksLeft - 1, direction, yaw, pitch, damageCD);
-            }, 3);
+            }, 1);
     }
     private void AI() {
         // no AI after death
@@ -575,7 +588,7 @@ public class EmpressOfLight extends EntitySlime {
                     .setTicksLinger(20)
                     .setLength(32)
                     .setWidth(0.1)
-                    .setStepsize(1);
+                    .setStepsize(0.5);
         }
     }
 
@@ -619,4 +632,6 @@ public class EmpressOfLight extends EntitySlime {
         // AI
         AI();
     }
+    // not slowed by water and lava
+
 }

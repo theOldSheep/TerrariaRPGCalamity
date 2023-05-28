@@ -411,7 +411,7 @@
   lore:
   - §r[饰品]
   attributes:
-    regen: 20
+    regen: 2000
   worth: 20000
   rarity: 1
 镣铐:

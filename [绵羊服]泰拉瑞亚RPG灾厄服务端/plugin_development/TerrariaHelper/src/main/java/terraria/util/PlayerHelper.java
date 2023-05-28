@@ -1381,7 +1381,6 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BUFF_INFLICT, PlayerHelper.getDefaultPlayerEffectInflict());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOKS, new ArrayList<Entity>());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_KEYS_PRESSED, new HashSet<String>());
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME, "normal");
         // movement and control variable
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOK_ITEM, "");
         resetPlayerFlightTime(ply);
