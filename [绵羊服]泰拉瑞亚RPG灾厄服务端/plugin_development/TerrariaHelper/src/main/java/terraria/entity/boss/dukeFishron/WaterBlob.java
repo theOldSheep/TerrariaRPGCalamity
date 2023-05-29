@@ -66,6 +66,12 @@ public class WaterBlob extends EntitySlime {
                         bukkitEntity.teleport(MathHelper.toBukkitVector(hitLocation.pos).toLocation(bukkitEntity.getWorld()));
                     die();
                 }
+                // timeout
+                else if (ticksLived > 50) {
+                    die();
+                }
+                // speed decay
+                velocity.multiply(0.95);
             }
         }
         // face the charge direction

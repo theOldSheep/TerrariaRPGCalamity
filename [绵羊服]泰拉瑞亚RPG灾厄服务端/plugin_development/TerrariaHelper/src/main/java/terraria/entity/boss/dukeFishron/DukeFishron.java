@@ -149,7 +149,19 @@ public class DukeFishron extends EntitySlime {
         }
     }
     private void shootSharknado() {
-        // TODO
+        // phase 1, shoot 3 water blobs in 3 directions
+        if (phaseAI == 1) {
+            double angle = Math.random() * 360;
+            for (int offset = 0; offset < 360; offset += 120) {
+                Vector velocity = MathHelper.vectorFromYawPitch_quick(angle, 0);
+                velocity.multiply(2);
+                new WaterBlob(this, velocity);
+            }
+        }
+        // phase 2/4, shoot homing water blob that explodes into a giant sharknado
+        else {
+            new WaterBlob(this, MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 1));
+        }
     }
     private void AIPhase1() {
         // change phase
