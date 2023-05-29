@@ -383,13 +383,15 @@ public class CraftingListener implements Listener {
     // prevents the player from opening GUI of some special work stations
     @EventHandler(priority = EventPriority.LOW)
     public void onGuiOpen(InventoryOpenEvent e) {
-        switch (e.getInventory().getType()) {
-            case FURNACE:
-            case WORKBENCH:
-            case ANVIL:
-            case ENCHANTING:
-            case BREWING:
-                e.setCancelled(true);
-        }
+        Inventory eventInv = e.getInventory();
+        if (eventInv != null)
+            switch (eventInv.getType()) {
+                case FURNACE:
+                case WORKBENCH:
+                case ANVIL:
+                case ENCHANTING:
+                case BREWING:
+                    e.setCancelled(true);
+            }
     }
 }

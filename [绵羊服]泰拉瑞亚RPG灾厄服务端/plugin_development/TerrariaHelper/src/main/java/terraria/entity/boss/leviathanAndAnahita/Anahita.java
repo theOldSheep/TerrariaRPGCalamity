@@ -58,6 +58,8 @@ public class Anahita extends EntityZombieHusk {
         attrMapBubble = new HashMap<>();
         attrMapBubble.put("damage", 540d);
         attrMapBubble.put("knockback", 2d);
+        attrMapBubble.put("health", 1d);
+        attrMapBubble.put("healthMax", 1d);
     }
     private void changePhase() {
         // change phase

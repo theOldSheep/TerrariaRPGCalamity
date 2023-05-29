@@ -1,6 +1,7 @@
 package terraria.entity.boss.dukeFishron;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -8,6 +9,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
+import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
@@ -27,7 +29,7 @@ public class WaterBlob extends EntitySlime {
     Vector velocity;
     // other variables and AI
     boolean phase2;
-    double homingRatio = 0.1, speed = 2;
+    double homingRatio = 0.5, speed = 2;
 
     DukeFishron owner;
     private void AI() {
@@ -47,13 +49,17 @@ public class WaterBlob extends EntitySlime {
             bukkitEntity.setVelocity(velocity);
             // phase 2: home into target
             if (phase2) {
-                homingRatio += 0.005;
+                homingRatio += 0.025;
                 speed += 0.025;
                 Vector acceleration = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), homingRatio * speed);
                 velocity.add(acceleration);
                 double velLen = velocity.length();
                 if (velLen > 1e-5)
                     velocity.multiply(speed / velLen);
+                // timeout
+                if (ticksLived > 100) {
+                    die();
+                }
             }
             // phase 1: move, burst into sharknado on impact or timeout
             else {
@@ -137,7 +143,9 @@ public class WaterBlob extends EntitySlime {
     public void die() {
         super.die();
         // spawn sharknado
-        new Sharknado(owner, bukkitEntity.getLocation(), new ArrayList<>(), 0, phase2);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () ->
+                new Sharknado(owner, bukkitEntity.getLocation(), new ArrayList<>(), 0, phase2),
+                30);
     }
     @Override
     public void B_() {

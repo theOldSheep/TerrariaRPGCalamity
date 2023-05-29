@@ -4,20 +4,19 @@ most of the code in this class are from net.minecraft.server package
 package terraria.entity.others;
 
 import net.minecraft.server.v1_12_R1.*;
+import net.minecraft.server.v1_12_R1.MathHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Fish;
+import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.gameplay.Event;
-import terraria.util.EntityHelper;
-import terraria.util.ItemHelper;
-import terraria.util.PlayerHelper;
-import terraria.util.WorldHelper;
+import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,9 +34,20 @@ public class TerrariaFishingHook extends EntityFishingHook {
             baitsAndPower.put(bait, baitSection.getDouble(bait));
         }
     }
-    public static org.bukkit.inventory.ItemStack getBait(Player player) {
+    public static org.bukkit.inventory.ItemStack getBait(Player player, org.bukkit.entity.Entity hook) {
         return PlayerHelper.getFirstItem(player,
-                (item) -> baitsAndPower.containsKey(ItemHelper.splitItemName(item)[1]),
+                (item) -> {
+                    String itemType = ItemHelper.splitItemName(item)[1];
+                    if (! baitsAndPower.containsKey(itemType))
+                        return false;
+                    if (itemType.equals("松露虫") &&
+                            WorldHelper.BiomeType.getBiome(hook.getLocation()) != WorldHelper.BiomeType.OCEAN)
+                        return false;
+                    if (itemType.equals("血蠕虫") &&
+                            WorldHelper.BiomeType.getBiome(hook.getLocation()) != WorldHelper.BiomeType.SULPHUROUS_OCEAN)
+                        return false;
+                    return true;
+                },
                 true);
     }
     public static double getBaitPower(org.bukkit.inventory.ItemStack bait) {
@@ -81,7 +91,7 @@ public class TerrariaFishingHook extends EntityFishingHook {
     }
 
     protected org.bukkit.inventory.ItemStack getBait() {
-        return getBait(ownerPly);
+        return getBait(ownerPly, bukkitEntity);
     }
     protected double getBaitPower() {
         return getBaitPower(getBait());
@@ -263,7 +273,6 @@ public class TerrariaFishingHook extends EntityFishingHook {
                 }
             }
         }
-        Bukkit.broadcastMessage(biome + "||" + rarity);
         // crates
         double crateChance = EntityHelper.hasEffect(ply, "宝匣") ? 0.125 : 0.075;
         if (Math.random() < crateChance) {
@@ -283,11 +292,25 @@ public class TerrariaFishingHook extends EntityFishingHook {
         if (this.hookedTimeRemaining > 0) {
             org.bukkit.inventory.ItemStack bait = getBait();
             if (bait != null) {
-                double baitPower = getBaitPower(bait);
-                if (Math.random() < 1 / (1 + baitPower / 6))
+                // duke fishron
+                boolean shouldConsumeBait = false;
+                switch (ItemHelper.splitItemName(bait)[1]) {
+                    case "松露虫":
+                        if ( BossHelper.spawnBoss(ownerPly.getPlayer(), BossHelper.BossType.DUKE_FISHRON, bukkitEntity.getLocation()) )
+                            shouldConsumeBait = true;
+                        break;
+                    case "血蠕虫":
+                        // TODO
+                        break;
+                    default:
+                        double baitPower = getBaitPower(bait);
+                        if (Math.random() < 1 / (1 + baitPower / 6))
+                            shouldConsumeBait = true;
+                        this.hookedItem = ItemHelper.dropItem(getBukkitEntity().getLocation(),
+                                getFishingResult(ownerPly, fishingPower + baitPower), false, false);
+                }
+                if (shouldConsumeBait)
                     bait.setAmount(bait.getAmount() - 1);
-                this.hookedItem = ItemHelper.dropItem(getBukkitEntity().getLocation(),
-                        getFishingResult(ownerPly, fishingPower + baitPower), false, false);
             }
         }
         this.state = FishingState.REELING_IN;

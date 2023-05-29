@@ -329,7 +329,7 @@ public class ItemHelper {
         return getItemFromDescription(itemInfo[1], false);
     }
     public static ItemStack getItemFromDescription(String information) {
-        return getItemFromDescription(information, true, new ItemStack(Material.AIR));
+        return getItemFromDescription(information, true);
     }
     public static ItemStack getItemFromDescription(String information, boolean randomizePrefixIfNoneExists) {
         return getItemFromDescription(information, randomizePrefixIfNoneExists, new ItemStack(Material.AIR));
@@ -373,11 +373,11 @@ public class ItemHelper {
                     if (resultItem == null || resultItem.getType() == Material.AIR) {
                         // check if the itemType is a material
                         try {
-                            Material.valueOf(itemType);
+                            Material.matchMaterial(itemType);
                         } catch (Exception e) {
                             Bukkit.getLogger().log(Level.SEVERE, "item " + itemType + " not found in mapping.");
                         }
-                        return new ItemStack(Material.valueOf(itemType));
+                        return new ItemStack(Material.matchMaterial(itemType));
                     }
                     resultItem = resultItem.clone();
                 } catch (Exception e) {
@@ -390,23 +390,27 @@ public class ItemHelper {
                 } else {
                     ItemMeta meta = resultItem.getItemMeta();
                     List<String> lore;
+                    if (meta.hasLore()) lore = meta.getLore();
+                    else lore = new ArrayList<>();
+                    String finalItemName = information;
+                    // treat prefix as the boss type for treasure bags
                     if (itemType.equals("专家模式福袋")) {
-                        lore = new ArrayList<>(1);
-                        lore.add(ChatColor.COLOR_CHAR + "7" + prefix);
-                    } else {
-                        // generate color according to rarity
-                        int itemBaseRarity = TerrariaHelper.itemConfig.getInt(itemType + ".rarity", 0);
-                        int prefixRarity = TerrariaHelper.prefixConfig.getInt("prefixInfo." + prefix + ".rarity", 0);
-                        // if rarity color [itemBaseRarity + prefixRarity] is set, use it
-                        // otherwise, resolve to rarity color [itemBaseRarity]
-                        String rarityColorPrefix = TerrariaHelper.settingConfig.getString("rarity." + (itemBaseRarity + prefixRarity),
-                                TerrariaHelper.settingConfig.getString("rarity." + itemBaseRarity, "§r"));
-                        meta.setDisplayName(rarityColorPrefix + information);
-                        // add prefix lore to item
-                        if (meta.hasLore()) lore = meta.getLore();
-                        else lore = new ArrayList<>();
+                        finalItemName = itemType;
+                        lore.set(0, "§7" + prefix);
+                    }
+                    // add prefix lore to other items
+                    else {
                         lore.addAll(TerrariaHelper.prefixConfig.getStringList("prefixInfo." + prefix + ".lore"));
                     }
+                    // generate color according to rarity
+                    int itemBaseRarity = TerrariaHelper.itemConfig.getInt(itemType + ".rarity", 0);
+                    int prefixRarity = TerrariaHelper.prefixConfig.getInt("prefixInfo." + prefix + ".rarity", 0);
+                    // if rarity color [itemBaseRarity + prefixRarity] is set, use it
+                    // otherwise, resolve to rarity color [itemBaseRarity]
+                    String rarityColorPrefix = TerrariaHelper.settingConfig.getString("rarity." + (itemBaseRarity + prefixRarity),
+                            TerrariaHelper.settingConfig.getString("rarity." + itemBaseRarity, "§r"));
+                    // finish up
+                    meta.setDisplayName(rarityColorPrefix + finalItemName);
                     meta.setLore(lore);
                     resultItem.setItemMeta(meta);
                 }

@@ -25,7 +25,8 @@ public class DukeFishron extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.DUKE_FISHRON;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.OCEAN;
-    public static final double BASIC_HEALTH = 214200 * 2;
+    public static final double BASIC_HEALTH = 21420 * 2;
+//    public static final double BASIC_HEALTH = 214200 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
@@ -36,8 +37,8 @@ public class DukeFishron extends EntitySlime {
     enum AttackPhase {
         DASH, BUBBLE, SHARKNADO, DASH_1, DASH_2, DASH_3;
     }
-    static final double DASH_SPEED_1 = 1.25, BUBBLE_FOLLOW_SPEED = 0.5, BUBBLE_SPEED = 2,
-            DASH_SPEED_2 = 1.5, BUBBLE_ROTATE_RADIUS = 16,
+    static final double DASH_SPEED_1 = 1.25, BUBBLE_FOLLOW_SPEED = 0.5, BUBBLE_SPEED = 0.75,
+            DASH_SPEED_2 = 1.5, BUBBLE_ROTATE_RADIUS = 32,
             DASH_SPEED_3 = 2;
     static final HashMap<String, Double> attrMapDetonatingBubble;
     static final EntityHelper.AimHelperOptions dashAimHelper;
@@ -47,6 +48,8 @@ public class DukeFishron extends EntitySlime {
         attrMapDetonatingBubble = new HashMap<>();
         attrMapDetonatingBubble.put("damage", 450d);
         attrMapDetonatingBubble.put("knockback", 2d);
+        attrMapDetonatingBubble.put("health", 1d);
+        attrMapDetonatingBubble.put("healthMax", 1d);
     }
 
     public EntityHelper.ProjectileShootInfo psiDetonatingBubble;
@@ -118,7 +121,7 @@ public class DukeFishron extends EntitySlime {
             Location targetLoc = target.getEyeLocation().add(teleportOffset);
             bukkitEntity.teleport(targetLoc);
         }
-        indexAI = -1;
+        indexAI = -15;
     }
     private void initDash(double minSpeed, int ticksReach, double chanceDirectDash) {
         Location targetLoc;
@@ -153,7 +156,7 @@ public class DukeFishron extends EntitySlime {
         if (phaseAI == 1) {
             double angle = Math.random() * 360;
             for (int offset = 0; offset < 360; offset += 120) {
-                Vector velocity = MathHelper.vectorFromYawPitch_quick(angle, 0);
+                Vector velocity = MathHelper.vectorFromYawPitch_quick(angle + offset, 0);
                 velocity.multiply(2);
                 new WaterBlob(this, velocity);
             }
@@ -238,18 +241,22 @@ public class DukeFishron extends EntitySlime {
                 if (indexAI >= 60) {
                     changeAttackPhase();
                 }
-                // init dash
-                else if (indexAI % 20 == 0) {
-                    initDash(DASH_SPEED_2, 10, 0.5);
-                }
-                // keep the dash
-                else if (indexAI % 20 < 15) {
-                    bukkitEntity.setVelocity(dashVelocity);
-                }
-                // move towards enemy a bit before next move
+                // dash
                 else {
-                    bukkitEntity.setVelocity(MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(),
-                            target.getEyeLocation(), 0.5));
+                    int dashIndex = indexAI % 20;
+                    // init dash
+                    if (dashIndex == 0) {
+                        initDash(DASH_SPEED_2, 10, 0.5);
+                    }
+                    // keep the dash
+                    else if (dashIndex < 15) {
+                        bukkitEntity.setVelocity(dashVelocity);
+                    }
+                    // move towards enemy a bit before next move
+                    else {
+                        bukkitEntity.setVelocity(MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(),
+                                target.getEyeLocation(), 0.5));
+                    }
                 }
                 break;
             }
@@ -282,7 +289,7 @@ public class DukeFishron extends EntitySlime {
                         offset1.multiply(cosAng);
                         Vector offset2 = bubbleDir2.clone();
                         offset2.multiply(sinAng);
-                        Location targetLoc = bukkitEntity.getLocation().subtract(offset1).subtract(offset2);
+                        Location targetLoc = target.getLocation().subtract(offset1).subtract(offset2);
                         bukkitEntity.setVelocity(
                                 targetLoc.subtract( bukkitEntity.getLocation() ).toVector() );
                     }
@@ -336,7 +343,7 @@ public class DukeFishron extends EntitySlime {
             // begin dash
             if (dashIndex == 5) {
                 setCustomName(BOSS_TYPE.msgName + "§2");
-                initDash(DASH_SPEED_3, 8, 0.2);
+                initDash(DASH_SPEED_3, 10, 1);
             }
             // keep the dash
             else if (dashIndex < 18) {
@@ -373,7 +380,7 @@ public class DukeFishron extends EntitySlime {
             // if target is valid, attack
             else {
                 healthRatio = getHealth() / getMaxHealth();
-                if (indexAI > 0) {
+                if (indexAI >= 0) {
                     switch (phaseAI) {
                         case 1:
                             AIPhase1();

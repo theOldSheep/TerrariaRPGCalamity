@@ -15,10 +15,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import terraria.TerrariaHelper;
 import terraria.util.*;
@@ -77,6 +74,17 @@ public class ItemUseAndAttributeListener implements Listener {
                         ItemHelper.splitItemName(droppedItemStack)[1], false));
             }
         }
+    }
+    @EventHandler(priority = EventPriority.LOW)
+    public static void onHandItemSwap(PlayerSwapHandItemsEvent e) {
+        Player ply = e.getPlayer();
+        if (!PlayerHelper.isProperlyPlaying(ply)) {
+            e.setCancelled(true);
+            return;
+        }
+        if (ply.getScoreboardTags().contains("temp_useCD")) e.setCancelled(true);
+        if (e.isCancelled()) return;
+        ply.addScoreboardTag("toolChanged");
     }
     // swing item helper
     private static void toolSwing(Player ply, boolean isRightClick) {

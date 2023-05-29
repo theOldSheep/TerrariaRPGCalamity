@@ -13,6 +13,7 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\calamitasClone\Catastrophe.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\desertScourge\DesertNuisance.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\worldgen\overworld\NoiseGeneratorTest.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\dukeFishron\Sharkron.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\gameplay\Event.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\util\MonsterHelper.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\util\NPCHelper.java
@@ -55,6 +56,7 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\wallOfFlesh\WallOfFleshMouth.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\TerrariaHelper.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\listener\EntitySpawnListener.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\dukeFishron\DukeFishron.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\golem\Golem.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\util\NMSUtils.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\others\TerrariaFishingHook.java
@@ -79,12 +81,14 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\theDestroyer\Destroyer.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\minion\MinionHelper.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\worldgen\overworld\TreePopulator.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\dukeFishron\WaterBlob.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\theTwins\Retinazer.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\theTwins\Spazmatism.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\cryogen\Cryogen.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\util\EntityHelper.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\cryogen\CryogenShield.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\npc\TerrariaNPCDemolitionist.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\dukeFishron\Sharknado.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\npc\PathfinderGoalNPCRestrictLocation.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\listener\ItemUseAndAttributeListener.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\others\TerrariaItem.java

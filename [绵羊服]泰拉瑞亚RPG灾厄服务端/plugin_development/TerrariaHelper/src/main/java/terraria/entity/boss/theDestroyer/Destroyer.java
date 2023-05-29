@@ -84,12 +84,12 @@ public class Destroyer extends EntitySlime {
                 return;
         }
         shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-        projectilePropertyDeathLaser.velocity = MathHelper.getDirection(
-                projectilePropertyDeathLaser.shootLoc,
+        shootInfo.velocity = MathHelper.getDirection(
+                shootInfo.shootLoc,
                 EntityHelper.helperAimEntity(
                         bukkitEntity, target, laserAimHelper),
                 laserSpeed);
-        EntityHelper.spawnProjectile(projectilePropertyDeathLaser);
+        EntityHelper.spawnProjectile(shootInfo);
     }
     private void headRushEnemy() {
         if (ticksLived % 2 == 0) return;
@@ -198,14 +198,16 @@ public class Destroyer extends EntitySlime {
                 }
                 // body, shoot laser
                 else if (index < TOTAL_LENGTH - 1) {
-                    if (getScoreboardTags().contains("hasProbe") && ++indexAI % 300 == index * 2) {
+                    if (++indexAI % 250 == index * 2) {
                         double healthRatio = getHealth() / getMaxHealth();
-                        if (healthRatio < 0.7)
-                            shootProjectiles(3);
-                        else if (healthRatio < 0.85)
-                            shootProjectiles(2);
-                        else
-                            shootProjectiles(1);
+                        if (getScoreboardTags().contains("hasProbe") || healthRatio < 0.5) {
+                            if (healthRatio < 0.7)
+                                shootProjectiles(3);
+                            else if (healthRatio < 0.85)
+                                shootProjectiles(2);
+                            else
+                                shootProjectiles(1);
+                        }
                     }
                 }
             }

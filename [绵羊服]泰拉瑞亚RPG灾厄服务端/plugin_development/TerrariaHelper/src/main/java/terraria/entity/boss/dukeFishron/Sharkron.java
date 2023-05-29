@@ -30,7 +30,7 @@ public class Sharkron extends EntitySlime {
     Player target = null;
     Vector velocity;
     // other variables and AI
-    static final double DASH_SPEED = 2.25;
+    static final double DASH_SPEED = 4;
 
     DukeFishron owner;
     private void setupVelocity() {
@@ -126,6 +126,8 @@ public class Sharkron extends EntitySlime {
             this.noclip = true;
             this.persistent = true;
         }
+        // init velocity
+        this.velocity = MathHelper.getDirection( ((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), DASH_SPEED);
     }
 
     // rewrite AI

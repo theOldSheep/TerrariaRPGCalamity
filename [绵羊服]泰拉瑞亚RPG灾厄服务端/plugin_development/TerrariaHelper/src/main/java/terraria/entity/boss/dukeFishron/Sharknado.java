@@ -116,8 +116,8 @@ public class Sharknado extends EntitySlime {
         // init slime size and offsets
         {
             horizontalOffset = index * 0.2;
-            verticalOffset = index;
-            int slimeSize = (int) (2 + horizontalOffset);
+            verticalOffset = index * 2;
+            int slimeSize = (int) (4 + horizontalOffset);
             setSize(slimeSize, false);
         }
         // boss parts and other properties
@@ -142,10 +142,11 @@ public class Sharknado extends EntitySlime {
                             sharknadoList, currIndex + 1, phase2);
                 }, 2);
         }
-        // spawn sharkron after a certain height
+        // spawn sharkron
         {
-            if (index >= 8)
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
                 new Sharkron(owner, bukkitEntity.getLocation());
+            }, index * 2L);
         }
     }
 

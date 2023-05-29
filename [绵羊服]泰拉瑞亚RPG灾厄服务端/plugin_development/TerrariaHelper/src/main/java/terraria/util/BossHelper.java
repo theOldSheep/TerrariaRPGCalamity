@@ -10,6 +10,7 @@ import terraria.entity.boss.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.calamitasClone.CalamitasClone;
 import terraria.entity.boss.crabulon.Crabulon;
 import terraria.entity.boss.cryogen.Cryogen;
+import terraria.entity.boss.dukeFishron.DukeFishron;
 import terraria.entity.boss.empressOfLight.EmpressOfLight;
 import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
 import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
@@ -237,6 +238,14 @@ public class BossHelper {
                 }
                 break;
             }
+            case DUKE_FISHRON: {
+                if (DukeFishron.canSpawn(target)) {
+                    new DukeFishron(target, (Location) extraInfo);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            // pre-providence
         }
         if (spawnedSuccessfully) {
             bossType.playSummonSound(soundLocation);
