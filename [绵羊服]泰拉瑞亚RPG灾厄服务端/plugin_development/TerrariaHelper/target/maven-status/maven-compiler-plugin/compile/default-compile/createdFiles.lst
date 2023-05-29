@@ -88,6 +88,7 @@ terraria\worldgen\overworld\OverworldBlockGenericPopulator.class
 terraria\entity\boss\leviathanAndAnahita\Anahita$AIPhase.class
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu.class
 terraria\worldgen\overworld\OverworldCaveGenerator$1.class
+terraria\entity\boss\dukeFishron\Sharkron.class
 terraria\entity\boss\eaterOfWorld\EaterOfWorld$1.class
 terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
@@ -97,6 +98,7 @@ terraria\entity\projectile\TerrariaPotionProjectile$1.class
 terraria\util\EntityHelper$1.class
 terraria\entity\boss\theSlimeGod\EbonianSlime$SlimeSize.class
 terraria\event\listener\WorldRegisterListener.class
+terraria\entity\boss\dukeFishron\DukeFishron$1.class
 terraria\event\listener\PlayerWorldChangeListener.class
 terraria\entity\npc\TerrariaNPCGuide.class
 terraria\entity\others\TerrariaFishingHook$1.class
@@ -111,7 +113,9 @@ terraria\entity\boss\kingSlime\KingSlime$1.class
 terraria\util\BossHelper.class
 terraria\util\MonsterHelper$1.class
 terraria\entity\minion\MinionHusk.class
+terraria\entity\boss\dukeFishron\Sharknado.class
 terraria\entity\boss\empressOfLight\EmpressOfLight$AttackPhase.class
+terraria\entity\boss\dukeFishron\WaterBlob.class
 terraria\entity\monster\MonsterSlime.class
 terraria\event\listener\RandomTitleListener.class
 terraria\util\EntityHelper$MetadataName.class

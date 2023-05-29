@@ -43,7 +43,7 @@ public class TheHiveMind extends EntitySlime {
     boolean secondPhase = false;
     int indexAI = 1, spawnAmountLeft = 19;
     AIPhase typeAI = AIPhase.CHARGE;
-    Vector circleVec1, circleVec2;
+    Vector circleVec1 = new Vector(), circleVec2 = new Vector(), dashVelocity = new Vector();
     private void updateTypeAI(AIPhase newPhase) {
         if (newPhase == AIPhase.BURROW)
             addScoreboardTag("noDamage");
@@ -170,16 +170,16 @@ public class TheHiveMind extends EntitySlime {
                     if (ticksLived % 3 == 0) {
                         if (indexAI == 0) {
                             bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
-                            Vector velocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
-                            double velLen = velocity.length();
-                            double chargeSpd = 3 - healthRatio;
+                            dashVelocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
+                            double velLen = dashVelocity.length();
+                            double chargeSpd = 2.5 - healthRatio * 0.75;
                             if (velLen < 1e-5) {
-                                velocity = new Vector(1, 0, 0);
+                                dashVelocity = new Vector(1, 0, 0);
                                 velLen = 1;
                             }
-                            velocity.multiply(chargeSpd / velLen);
-                            bukkitEntity.setVelocity(velocity);
+                            dashVelocity.multiply(chargeSpd / velLen);
                         }
+                        bukkitEntity.setVelocity(dashVelocity);
                         // spawn monsters
                         if (Math.random() < 0.2)
                             spawnMonsters(true);

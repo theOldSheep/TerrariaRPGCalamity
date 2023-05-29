@@ -35,6 +35,7 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         DASH, SUMMON, SHOOT, NUKE;
     }
     AIPhase phaseAI = AIPhase.DASH;
+    Vector dashVelocity = new Vector();
     int indexAI = -40, attacksDuringPhase = 0;
     double healthRatio = 1;
     boolean secondPhase = false;
@@ -117,11 +118,16 @@ public class ThePlaguebringerGoliath extends EntitySlime {
                 offset.multiply(24);
                 targetLoc.add(offset);
             }
-            bukkitEntity.setVelocity( MathHelper.getDirection(eyeLoc, targetLoc, speed) );
+            dashVelocity = MathHelper.getDirection(eyeLoc, targetLoc, speed);
+            bukkitEntity.setVelocity(dashVelocity);
         }
-        else if (indexAI > 50) {
-            attacksDuringPhase ++;
-            changePhase();
+        else {
+            // maintain dash velocity
+            bukkitEntity.setVelocity(dashVelocity);
+            if (indexAI > 50) {
+                attacksDuringPhase ++;
+                changePhase();
+            }
         }
     }
     private void AIPhaseShoot() {
@@ -161,11 +167,11 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         if (indexAI == 0) {
             // dash
             {
-                Vector velocity = getHorizontalDirection();
-                velocity.multiply(SPEED_DASH);
+                dashVelocity = getHorizontalDirection();
+                dashVelocity.multiply(SPEED_DASH);
                 double yDist = target.getLocation().getY() + 24 - locY;
-                velocity.setY(yDist / 50);
-                bukkitEntity.setVelocity(velocity);
+                dashVelocity.setY(yDist / 50);
+                bukkitEntity.setVelocity(dashVelocity);
             }
             // shoot barrage of nuke
             shootInfoNukeBarrage.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
@@ -175,9 +181,13 @@ public class ThePlaguebringerGoliath extends EntitySlime {
                 EntityHelper.spawnProjectile(shootInfoNukeBarrage);
             }
         }
-        else if (indexAI > 50) {
-            attacksDuringPhase ++;
-            changePhase();
+        else {
+            // maintain the original dash velocity
+            bukkitEntity.setVelocity(dashVelocity);
+            if (indexAI > 50) {
+                attacksDuringPhase ++;
+                changePhase();
+            }
         }
     }
     private void AI() {

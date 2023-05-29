@@ -48,7 +48,7 @@ public class Golem extends EntitySlime {
     // phase 1: damage fists only  2: head only  3: body can be damaged
     int indexAI = 0, phaseAI = 1, jumpIndex = 0;
     boolean falling = false;
-    Vector orthogonalDir = new Vector();
+    Vector orthogonalDir = new Vector(), cachedVelocity = new Vector();
     GolemHead head;
     GolemFist[] fists;
     EntityHelper.ProjectileShootInfo shootInfoBeam;
@@ -104,16 +104,15 @@ public class Golem extends EntitySlime {
                 noclip = true;
                 if (indexAI >= 0) {
                     double speed = HORIZONTAL_SPEED;
-                    Vector velocity;
                     if (indexAI == 0) {
-                        velocity = getHorizontalDirection();
-                        velocity.multiply(speed);
-                        velocity.setY(VERTICAL_SPEED);
+                        cachedVelocity = getHorizontalDirection();
+                        cachedVelocity.multiply(speed);
+                        cachedVelocity.setY(VERTICAL_SPEED);
                         falling = false;
                     }
                     else {
-                        velocity = bukkitEntity.getVelocity();
-                        double yComp = velocity.getY();
+                        cachedVelocity = bukkitEntity.getVelocity();
+                        double yComp = cachedVelocity.getY();
                         if (falling) {
                             yComp -= 0.2;
                             // landing
@@ -121,7 +120,7 @@ public class Golem extends EntitySlime {
                                 // as soon as the golem is below player, it can collide with blocks.
                                 noclip = false;
                                 if (locY < 0 || onGround) {
-                                    velocity = new Vector();
+                                    cachedVelocity = new Vector();
                                     yComp = 0;
                                     indexAI = -30;
                                     jumpIndex ++;
@@ -132,9 +131,9 @@ public class Golem extends EntitySlime {
                         // every third jump chases enemy to the same height
                         else if (locY > target.getLocation().getY() || jumpIndex % 3 != 0)
                             falling = true;
-                        velocity.setY(yComp);
+                        cachedVelocity.setY(yComp);
                     }
-                    bukkitEntity.setVelocity(velocity);
+                    bukkitEntity.setVelocity(cachedVelocity);
                 }
                 else if (phaseAI == 3 && indexAI % 5 == 0) {
                     shootLaser();

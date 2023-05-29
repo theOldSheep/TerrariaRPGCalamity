@@ -867,7 +867,7 @@ public class EntityHelper {
             case "石巨人头": {
                 if (dmg >= victim.getHealth()) {
                     victim.addScoreboardTag("noDamage");
-                    ArrayList<LivingEntity> bossParts = BossHelper.bossMap.get("石巨人");
+                    ArrayList<LivingEntity> bossParts = BossHelper.bossMap.get(BossHelper.BossType.GOLEM.msgName);
                     if (bossParts != null) {
                         bossParts.get(0).removeScoreboardTag("noDamage");
                         return false;
@@ -916,17 +916,8 @@ public class EntityHelper {
             Player vPly = (Player) victim;
             switch (damager.getName()) {
                 case "水螺旋": {
-                    // phrase 2 only
-                    if (damager.getScoreboardTags().contains("isMonster")) {
-                        damager.remove();
-                        ArrayList<LivingEntity> bossList = BossHelper.bossMap.get("猪鲨公爵");
-                        if (bossList != null) {
-                            Entity dukeFishron = bossList.get(0);
-                            // TODO: spawn a tornado
-                        }
-                        return false;
-                    }
-                    break;
+                    damager.remove();
+                    return false;
                 }
                 case "吮脑怪": {
                     setMetadata(damager, MetadataName.SUCK_TARGET, victim);

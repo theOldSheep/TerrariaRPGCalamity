@@ -3,6 +3,7 @@ package terraria.entity.boss.dukeFishron;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.SandstoneType;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -33,14 +34,15 @@ public class DukeFishron extends EntitySlime {
     Player target = null;
     // other variables and AI
     enum AttackPhase {
-        DASH, BUBBLE, SHARKNADO;
+        DASH, BUBBLE, SHARKNADO, DASH_1, DASH_2, DASH_3;
     }
-    static final double DASH_SPEED = 2;
+    static final double DASH_SPEED_1 = 1.25, BUBBLE_FOLLOW_SPEED = 0.5, BUBBLE_SPEED = 2,
+            DASH_SPEED_2 = 1.5, BUBBLE_ROTATE_RADIUS = 16,
+            DASH_SPEED_3 = 2;
     static final HashMap<String, Double> attrMapDetonatingBubble;
     static final EntityHelper.AimHelperOptions dashAimHelper;
     static {
-        dashAimHelper = new EntityHelper.AimHelperOptions()
-                .setProjectileSpeed(DASH_SPEED);
+        dashAimHelper = new EntityHelper.AimHelperOptions();
 
         attrMapDetonatingBubble = new HashMap<>();
         attrMapDetonatingBubble.put("damage", 450d);
@@ -48,12 +50,297 @@ public class DukeFishron extends EntitySlime {
     }
 
     public EntityHelper.ProjectileShootInfo psiDetonatingBubble;
-    int indexAI = -40;
-    AttackPhase attackPhase = AttackPhase.DASH;
+    int indexAI = -40, phaseAI = 1;
+    AttackPhase attackPhase = AttackPhase.DASH, lastNonDashAttack = AttackPhase.DASH;
+    Vector dashVelocity = new Vector(),
+            bubbleDir1 = new Vector(), bubbleDir2 = new Vector();
     double healthRatio = 1;
 
 
-
+    private void changePhaseAI() {
+        phaseAI ++;
+        // set other properties
+        indexAI = -40;
+        bukkitEntity.setVelocity(new Vector());
+        switch (phaseAI) {
+            case 2:
+                setCustomName(BOSS_TYPE.msgName + "§2");
+                bossbar.color = BossBattle.BarColor.YELLOW;
+                attackPhase = AttackPhase.DASH;
+                // damage: 420 -> 604
+                EntityHelper.tweakAttribute(bukkitEntity, "damage", "184", true);
+                // defence: 100 -> 80
+                EntityHelper.tweakAttribute(bukkitEntity, "defence", "20", false);
+                break;
+            case 3:
+                setCustomName(BOSS_TYPE.msgName + "§3");
+                bossbar.color = BossBattle.BarColor.RED;
+                attackPhase = AttackPhase.DASH_1;
+                // damage: 604 -> 554
+                EntityHelper.tweakAttribute(bukkitEntity, "damage", "50", false);
+                // defence: 80 -> 0
+                EntityHelper.tweakAttribute(bukkitEntity, "defence", "80", false);
+                break;
+        }
+        bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+    }
+    private void changeAttackPhase() {
+        if (attackPhase != AttackPhase.DASH)
+            lastNonDashAttack = attackPhase;
+        boolean shouldTeleport = false;
+        switch (attackPhase) {
+            case DASH:
+                attackPhase = lastNonDashAttack == AttackPhase.BUBBLE ?
+                        AttackPhase.SHARKNADO : AttackPhase.BUBBLE;
+                break;
+            case BUBBLE:
+            case SHARKNADO:
+                attackPhase = AttackPhase.DASH;
+                break;
+            case DASH_1:
+                attackPhase = AttackPhase.DASH_2;
+                shouldTeleport = true;
+                break;
+            case DASH_2:
+                attackPhase = AttackPhase.DASH_3;
+                shouldTeleport = true;
+                break;
+            case DASH_3:
+                attackPhase = AttackPhase.DASH_1;
+                shouldTeleport = true;
+                break;
+        }
+        if (shouldTeleport) {
+            Location tempLoc = bukkitEntity.getLocation();
+            tempLoc.setY(target.getLocation().getY());
+            Vector teleportOffset = MathHelper.getDirection(tempLoc, target.getLocation(), 20);
+            teleportOffset.setY(8);
+            Location targetLoc = target.getEyeLocation().add(teleportOffset);
+            bukkitEntity.teleport(targetLoc);
+        }
+        indexAI = -1;
+    }
+    private void initDash(double minSpeed, int ticksReach, double chanceDirectDash) {
+        Location targetLoc;
+        // 50% chance to dash directly into enemy
+        if (Math.random() < chanceDirectDash)
+            targetLoc = target.getEyeLocation();
+            // 50% chance to dash into predicted location of enemy
+        else {
+            dashAimHelper.setAimMode(true).setTicksOffset(ticksReach);
+            targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, dashAimHelper);
+        }
+        dashVelocity = targetLoc.subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector();
+        // (minSpeed * ticksReach) ^ 2
+        if (dashVelocity.lengthSquared() < minSpeed * minSpeed * ticksReach * ticksReach)
+            dashVelocity.normalize().multiply(minSpeed);
+        else
+            dashVelocity.multiply(1d / ticksReach);
+        bukkitEntity.setVelocity(dashVelocity);
+    }
+    private void shootBubble() {
+        psiDetonatingBubble.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        psiDetonatingBubble.velocity = MathHelper.getDirection(psiDetonatingBubble.shootLoc,
+                target.getEyeLocation(), BUBBLE_SPEED);
+        EntityHelper.spawnProjectile(psiDetonatingBubble);
+        // additional sharkron spawning in phase 2
+        if (phaseAI == 2 && indexAI % 4 == 0) {
+            new Sharkron(this, ((LivingEntity) bukkitEntity).getEyeLocation());
+        }
+    }
+    private void shootSharknado() {
+        // TODO
+    }
+    private void AIPhase1() {
+        // change phase
+        if (healthRatio < 0.7) {
+            changePhaseAI();
+            return;
+        }
+        // attacks
+        switch (attackPhase) {
+            case DASH: {
+                // change attack method after dash * 5
+                if (indexAI >= 125) {
+                    changeAttackPhase();
+                }
+                // init dash
+                else if (indexAI % 25 == 0) {
+                    initDash(DASH_SPEED_1, 12, 0.4);
+                }
+                // keep the dash
+                else if (indexAI % 25 < 20) {
+                    bukkitEntity.setVelocity(dashVelocity);
+                }
+                // move upward a bit before next move
+                else {
+                    bukkitEntity.setVelocity(new Vector(0, 0.3, 0));
+                }
+                break;
+            }
+            case BUBBLE: {
+                // change attack method
+                if (indexAI >= 60) {
+                    changeAttackPhase();
+                }
+                else {
+                    // bubble
+                    if (indexAI % 3 == 0) {
+                        shootBubble();
+                    }
+                    // movement
+                    bukkitEntity.setVelocity(MathHelper.getDirection(
+                            bukkitEntity.getLocation(), target.getLocation(), BUBBLE_FOLLOW_SPEED));
+                }
+                break;
+            }
+            case SHARKNADO: {
+                // change attack method
+                if (indexAI >= 30) {
+                    changeAttackPhase();
+                }
+                else {
+                    // spawn sharknado
+                    if (indexAI == 15) {
+                        shootSharknado();
+                    }
+                    // movement
+                    Vector velocity = bukkitEntity.getVelocity();
+                    velocity.multiply(0.95);
+                    bukkitEntity.setVelocity(velocity);
+                }
+                break;
+            }
+        }
+    }
+    private void AIPhase2() {
+        // change phase
+        if (healthRatio < 0.4) {
+            changePhaseAI();
+            return;
+        }
+        // attacks
+        switch (attackPhase) {
+            case DASH: {
+                // change attack method after dash * 3
+                if (indexAI >= 60) {
+                    changeAttackPhase();
+                }
+                // init dash
+                else if (indexAI % 20 == 0) {
+                    initDash(DASH_SPEED_2, 10, 0.5);
+                }
+                // keep the dash
+                else if (indexAI % 20 < 15) {
+                    bukkitEntity.setVelocity(dashVelocity);
+                }
+                // move towards enemy a bit before next move
+                else {
+                    bukkitEntity.setVelocity(MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(),
+                            target.getEyeLocation(), 0.5));
+                }
+                break;
+            }
+            case BUBBLE: {
+                // change attack method
+                if (indexAI >= 50) {
+                    changeAttackPhase();
+                }
+                else {
+                    // init rotate info
+                    if (indexAI == 0) {
+                        bubbleDir1 = MathHelper.getDirection(bukkitEntity.getLocation(),
+                                target.getLocation(), BUBBLE_ROTATE_RADIUS);
+                        bubbleDir2 = new Vector();
+                        while (bubbleDir2.lengthSquared() < 1e-5) {
+                            bubbleDir2 = MathHelper.randomVector();
+                            bubbleDir2.subtract(MathHelper.vectorProjection(bubbleDir1, bubbleDir2));
+                        }
+                        bubbleDir2.normalize().multiply(BUBBLE_ROTATE_RADIUS);
+                    }
+                    // bubble and sharks
+                    if (indexAI <= 40) {
+                        // bubble and sharkron
+                        shootBubble();
+                        // movement, rotate 18 degree per tick (20 tick/cycle)
+                        double angle = indexAI * 18;
+                        double sinAng = MathHelper.xsin_degree(angle);
+                        double cosAng = MathHelper.xcos_degree(angle);
+                        Vector offset1 = bubbleDir1.clone();
+                        offset1.multiply(cosAng);
+                        Vector offset2 = bubbleDir2.clone();
+                        offset2.multiply(sinAng);
+                        Location targetLoc = bukkitEntity.getLocation().subtract(offset1).subtract(offset2);
+                        bukkitEntity.setVelocity(
+                                targetLoc.subtract( bukkitEntity.getLocation() ).toVector() );
+                    }
+                    // hover a little longer after attack is done before starting next phase
+                    else {
+                        bukkitEntity.setVelocity(new Vector(0, 0.25, 0));
+                    }
+                }
+                break;
+            }
+            case SHARKNADO: {
+                // change attack method
+                if (indexAI >= 25) {
+                    changeAttackPhase();
+                }
+                else {
+                    // spawn sharknado
+                    if (indexAI == 15) {
+                        shootSharknado();
+                    }
+                    // movement
+                    Vector velocity = bukkitEntity.getVelocity();
+                    velocity.multiply(0.95);
+                    bukkitEntity.setVelocity(velocity);
+                }
+                break;
+            }
+        }
+    }
+    private void AIPhase3() {
+        boolean finalPhase = healthRatio < 0.2;
+        int dashAmount;
+        switch (attackPhase) {
+            case DASH_1:
+                dashAmount = 1;
+                break;
+            case DASH_2:
+                dashAmount = 2;
+                break;
+            case DASH_3:
+            default:
+                dashAmount = 3;
+        }
+        // change attack method
+        int dashDuration = 22;
+        if (!finalPhase && indexAI >= dashDuration * dashAmount) {
+            changeAttackPhase();
+        }
+        else {
+            int dashIndex = indexAI % dashDuration;
+            // begin dash
+            if (dashIndex == 5) {
+                setCustomName(BOSS_TYPE.msgName + "§2");
+                initDash(DASH_SPEED_3, 8, 0.2);
+            }
+            // keep the dash
+            else if (dashIndex < 18) {
+                bukkitEntity.setVelocity(dashVelocity);
+            }
+            // before the beginning and after the end of each dash
+            else {
+                setCustomName(BOSS_TYPE.msgName + "§3");
+                bukkitEntity.setVelocity(new Vector(0, 0.25, 0));
+            }
+        }
+        // shoot sharknado
+        if (finalPhase && indexAI % 175 == 0) {
+            shootSharknado();
+        }
+    }
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -74,7 +361,19 @@ public class DukeFishron extends EntitySlime {
             // if target is valid, attack
             else {
                 healthRatio = getHealth() / getMaxHealth();
-                // TODO
+                if (indexAI > 0) {
+                    switch (phaseAI) {
+                        case 1:
+                            AIPhase1();
+                            break;
+                        case 2:
+                            AIPhase2();
+                            break;
+                        case 3:
+                            AIPhase3();
+                            break;
+                    }
+                }
                 indexAI ++;
             }
         }
@@ -103,7 +402,7 @@ public class DukeFishron extends EntitySlime {
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName(BOSS_TYPE.msgName);
+        setCustomName(BOSS_TYPE.msgName + "§1");
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
@@ -194,6 +493,5 @@ public class DukeFishron extends EntitySlime {
         // AI
         AI();
     }
-    // not slowed by water and lava
 
 }

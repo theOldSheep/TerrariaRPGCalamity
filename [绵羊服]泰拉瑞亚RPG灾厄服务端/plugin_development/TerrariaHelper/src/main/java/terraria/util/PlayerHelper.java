@@ -590,11 +590,15 @@ public class PlayerHelper {
                     if (forceBackground == null) {
                         if (BossHelper.bossMap.containsKey("月球领主")) current = "虚空";
                         if (ply.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE)) {
-                            if (BossHelper.bossMap.containsKey("猪鲨公爵")) {
-                                LivingEntity fishron = BossHelper.bossMap.get("猪鲨公爵").get(0);
-                                if (fishron.getHealth() / fishron.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() <= 0.15)
+                            if (BossHelper.bossMap.containsKey(BossHelper.BossType.DUKE_FISHRON.msgName)) {
+                                LivingEntity fishron = BossHelper.bossMap.get(BossHelper.BossType.DUKE_FISHRON.msgName).get(0);
+                                if (fishron.getHealth() / fishron.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() <= 0.4)
                                     current = "猪鲨";
-                            } else if (!Event.currentEvent.equals("")) current = Event.currentEvent;
+                            }
+                            // sky darkens when fighting goliath too
+                            else if ( BossHelper.bossMap.containsKey(BossHelper.BossType.THE_PLAGUEBRINGER_GOLIATH.msgName) )
+                                current = "猪鲨";
+                            else if (!Event.currentEvent.equals("")) current = Event.currentEvent;
                             for (Entity pillar : Event.pillars)
                                 if (pillar.getWorld().equals(ply.getWorld()) &&
                                         pillar.getLocation().distanceSquared(ply.getLocation()) < 22500) {

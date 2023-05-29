@@ -36,6 +36,7 @@ public class Anahita extends EntityZombieHusk {
         WATER_SPEAR, FROST_MIST, TREBLE_CLEF, BUBBLE, DASH, HOVER;
     }
     Leviathan leviathan;
+    Vector dashVelocity = new Vector();
     AIPhase phaseAI = AIPhase.HOVER;
     int indexAI = -40;
     double healthRatio = 1d;
@@ -169,12 +170,12 @@ public class Anahita extends EntityZombieHusk {
             }
             case DASH: {
                 if (indexAI % DASH_DURATION == 10) {
-                    bukkitEntity.setVelocity(
-                            MathHelper.getDirection(
-                                    ((LivingEntity) bukkitEntity).getEyeLocation(),
-                                    target.getEyeLocation(),
-                                    SPEED_DASH));
+                    dashVelocity = MathHelper.getDirection(
+                            ((LivingEntity) bukkitEntity).getEyeLocation(),
+                            target.getEyeLocation(),
+                            SPEED_DASH);
                 }
+                bukkitEntity.setVelocity(dashVelocity);
                 if (indexAI >= DASH_DURATION * 3)
                     changePhase();
                 break;

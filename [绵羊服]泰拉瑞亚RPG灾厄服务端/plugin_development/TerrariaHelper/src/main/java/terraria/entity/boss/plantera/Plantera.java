@@ -48,6 +48,7 @@ public class Plantera extends EntitySlime {
     }
 
     EntityHelper.ProjectileShootInfo shootInfoSeed, shootInfoPoisonSeed, shootInfoThornBall, shootInfoSporeGas;
+    Vector dashVelocity = new Vector();
     boolean secondPhase = false;
     int dashIndex = 0, indexAI = 0;
 
@@ -182,11 +183,14 @@ public class Plantera extends EntitySlime {
                                 dashIndex = -10;
                                 break;
                         }
-                        Vector velocity = MathHelper.getDirection(
+                        dashVelocity = MathHelper.getDirection(
                                 ((LivingEntity) bukkitEntity).getEyeLocation(),
                                 target.getEyeLocation(),
                                 speed, keepShorterDirection);
-                        bukkitEntity.setVelocity(velocity);
+                    }
+                    // maintain the speed of dash
+                    else {
+                        bukkitEntity.setVelocity(dashVelocity);
                     }
                 }
                 // projectiles

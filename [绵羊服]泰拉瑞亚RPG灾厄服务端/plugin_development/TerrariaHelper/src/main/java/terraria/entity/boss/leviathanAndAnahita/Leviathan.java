@@ -34,6 +34,7 @@ public class Leviathan extends EntitySlime {
         METEOR, SUMMON, DASH;
     }
     Anahita anahita;
+    Vector dashVelocity = new Vector();
     AIPhase phaseAI = AIPhase.METEOR;
     int indexAI = -40;
     double healthRatio = 1d;
@@ -81,8 +82,9 @@ public class Leviathan extends EntitySlime {
                             bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
                             Location targetLoc = target.getLocation();
                             targetLoc.setY(bukkitEntity.getLocation().getY());
-                            bukkitEntity.setVelocity(MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, SPEED_DASH));
+                            dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, SPEED_DASH);
                         }
+                        bukkitEntity.setVelocity(dashVelocity);
                     }
                     break;
                 }

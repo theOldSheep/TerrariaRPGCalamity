@@ -30,7 +30,8 @@ public class GolemFist extends EntitySlime {
     static final double PUNCH_SPEED = 3.25, RETRACT_SPEED = 2.75;
 
     Golem owner;
-    Vector offsetDir = new Vector(0, 4.8, 0);
+    Vector offsetDir = new Vector(0, 4.8, 0),
+            punchVelocity = new Vector();
     int componentIndex;
     int indexAI = 0;
 
@@ -66,11 +67,14 @@ public class GolemFist extends EntitySlime {
                 }
                 else {
                     if (indexAI == 15) {
-                        bukkitEntity.setVelocity(
-                                MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(),
-                                        target.getEyeLocation(), PUNCH_SPEED));
+                        punchVelocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(),
+                                target.getEyeLocation(), PUNCH_SPEED);
+                        bukkitEntity.setVelocity(punchVelocity);
                     }
-                    else if (indexAI > 30) {
+                    else if (indexAI <= 30) {
+                        bukkitEntity.setVelocity(punchVelocity);
+                    }
+                    else {
                         Vector velocity =
                                 MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(),
                                         idleLocation, RETRACT_SPEED, true);

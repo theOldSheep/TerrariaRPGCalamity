@@ -51,7 +51,8 @@ public class CalamitasClone extends EntitySlime {
         attrMapHellFireball.put("knockback", 2d);
     }
     public EntityHelper.ProjectileShootInfo psiFireBlast, psiDart, psiFireball, psiHellBlast;
-    Vector bullet_hell_dir1, bullet_hell_dir2, bullet_hell_orth_dir;
+    Vector bullet_hell_dir1, bullet_hell_dir2, bullet_hell_orth_dir,
+            dashVelocity = new Vector();
     double bulletHellViewYaw, bulletHellViewPitch;
     boolean brothersAlive = false;
     int indexAI = -40, attackMethod = 1, bulletHellTicksLeft = -1, healthLockProgress = 1;
@@ -333,13 +334,14 @@ public class CalamitasClone extends EntitySlime {
                                     // dash
                                     if (indexAI == 0) {
                                         Location targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, dashAimHelper);
-                                        Vector direction = MathHelper.getDirection(
+                                        dashVelocity = MathHelper.getDirection(
                                                 ((LivingEntity) bukkitEntity).getEyeLocation(), targetLoc, FINAL_DASH_SPEED);
-                                        bukkitEntity.setVelocity(direction);
                                     }
                                     // shoot hell blasts
                                     else if (indexAI % 5 == 0)
                                         shootProjectile(2);
+                                    // reset dash velocity to cached
+                                    bukkitEntity.setVelocity(dashVelocity);
                                 }
                                 break;
                             }

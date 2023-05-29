@@ -15,6 +15,7 @@ import terraria.entity.boss.empressOfLight.EmpressOfLight;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
+import javax.lang.model.element.VariableElement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -32,6 +33,7 @@ public class Retinazer extends EntitySlime {
     // other variables and AI
     static String bossName = "激光眼";
     Spazmatism twin;
+    Vector dashVelocity = new Vector();
     boolean dashingPhase = false;
     int phaseAI = 1, indexAI = -40;
     static HashMap<String, Double> attrMapEyeLaser, attrMapDeathLaser, attrMapRapidFire, attrMapHomingMissile;
@@ -151,9 +153,13 @@ public class Retinazer extends EntitySlime {
                     dashingPhase = true;
                     if (indexAI >= 180)
                         indexAI = -1;
-                    else if ((indexAI - 60) % 40 == 0) {
-                        bukkitEntity.setVelocity(MathHelper.getDirection(
-                                ((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), 2.5) );
+                    else {
+                        if ((indexAI - 60) % 40 == 0) {
+                            dashVelocity = MathHelper.getDirection(
+                                    ((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), 2.5);
+                        }
+                        // maintain dash velocity
+                        bukkitEntity.setVelocity(dashVelocity);
                     }
                 }
                 break;
@@ -250,9 +256,13 @@ public class Retinazer extends EntitySlime {
                     dashingPhase = true;
                     if (indexAI >= 210)
                         indexAI = -1;
-                    else if ((indexAI - 90) % 40 == 0) {
-                        bukkitEntity.setVelocity(MathHelper.getDirection(
-                                ((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), 2.5) );
+                    else {
+                        if ((indexAI - 90) % 40 == 0) {
+                            dashVelocity = MathHelper.getDirection(
+                                    ((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), 2.5);
+                        }
+                        // maintain dash velocity
+                        bukkitEntity.setVelocity(dashVelocity);
                     }
                     // shoot homing projectiles
                     switch (indexAI) {
@@ -274,7 +284,6 @@ public class Retinazer extends EntitySlime {
         if (getHealth() <= 0d)
             return;
         // AI
-        boolean isFacingPlayer = true;
         {
             // update target
             target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),

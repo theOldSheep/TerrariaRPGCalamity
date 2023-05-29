@@ -37,6 +37,7 @@ public class EyeOfCthulhu extends EntitySlime {
     int rageRotationIndex = -1;
     int indexAI = 1, countAI = 0;
     AIPhase typeAI = AIPhase.CHARGE;
+    Vector dashVelocity = new Vector();
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -78,20 +79,18 @@ public class EyeOfCthulhu extends EntitySlime {
                                     if (indexAI <= 15) {
                                         // init dash direction
                                         if (indexAI == 0) {
-                                            Vector direction = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
+                                            dashVelocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
                                             bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
-                                            double dirLen = direction.length();
+                                            double dirLen = dashVelocity.length();
                                             if (dirLen < 0.5) {
-                                                direction = new Vector(0, -1, 0);
+                                                dashVelocity = new Vector(0, -1, 0);
                                                 dirLen = 1;
                                             }
-                                            direction.multiply(0.75 / dirLen);
-                                            bukkitEntity.setVelocity(direction);
+                                            dashVelocity.multiply(0.75 / dirLen);
                                         }
-                                        // charge speed decay
-                                        motX *= 0.95;
-                                        motY *= 0.95;
-                                        motZ *= 0.95;
+                                        // charge speed decay and update velocity
+                                        dashVelocity.multiply(0.95);
+                                        bukkitEntity.setVelocity(dashVelocity);
                                     }
                                     // after charge
                                     else {
@@ -155,16 +154,17 @@ public class EyeOfCthulhu extends EntitySlime {
                                     if (indexAI <= 12) {
                                         // init dash direction
                                         if (indexAI == 0) {
-                                            Vector direction = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
+                                            dashVelocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
                                             bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1.5f);
-                                            double dirLen = direction.length();
+                                            double dirLen = dashVelocity.length();
                                             if (dirLen < 0.5) {
-                                                direction = new Vector(0, -1, 0);
+                                                dashVelocity = new Vector(0, -1, 0);
                                                 dirLen = 1;
                                             }
-                                            direction.multiply(1.5 / dirLen);
-                                            bukkitEntity.setVelocity(direction);
+                                            dashVelocity.multiply(1.5 / dirLen);
                                         }
+                                        // update velocity
+                                        bukkitEntity.setVelocity(dashVelocity);
                                     }
                                     // after charge
                                     else {
@@ -225,19 +225,18 @@ public class EyeOfCthulhu extends EntitySlime {
                                     if (indexAI <= 10) {
                                         // init dash direction
                                         if (indexAI == 0) {
-                                            Vector direction = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
+                                            dashVelocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
                                             bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1.5f);
-                                            double dirLen = direction.length();
+                                            double dirLen = dashVelocity.length();
                                             if (dirLen < 0.5) {
-                                                direction = new Vector(0, -1, 0);
+                                                dashVelocity = new Vector(0, -1, 0);
                                                 dirLen = 1;
                                             }
-                                            direction.multiply(2 / dirLen);
-                                            bukkitEntity.setVelocity(direction);
+                                            dashVelocity.multiply(2 / dirLen);
                                         }
-                                        motX *= 0.95;
-                                        motY *= 0.95;
-                                        motZ *= 0.95;
+                                        // update dash velocity
+                                        dashVelocity.multiply(0.95);
+                                        bukkitEntity.setVelocity(dashVelocity);
                                     }
                                     // halt
                                     else {
