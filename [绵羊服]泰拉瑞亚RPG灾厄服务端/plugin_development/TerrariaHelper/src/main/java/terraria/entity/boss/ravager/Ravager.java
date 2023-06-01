@@ -1,4 +1,4 @@
-package terraria.entity.boss.golem;
+package terraria.entity.boss.ravager;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
@@ -10,20 +10,20 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.astrumAureus.AureusSpawn;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.entity.boss.golem.GolemFist;
+import terraria.entity.boss.golem.GolemFoot;
+import terraria.entity.boss.golem.GolemHead;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Golem extends EntitySlime {
+public class Ravager extends EntitySlime {
     // basic variables
-    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.GOLEM;
-    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.TEMPLE;
-    public static final double BASIC_HEALTH = 68850 * 2;
+    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.RAVAGER;
+    public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
+    public static final double BASIC_HEALTH = 128400 * 2, BASIC_HEALTH_POST_PROVIDENCE = 513600 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
@@ -31,27 +31,15 @@ public class Golem extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    static HashMap<String, Double> attrMapFireball, attrMapBeam, attrMapInfernoBolt;
-    static {
-        attrMapFireball = new HashMap<>();
-        attrMapFireball.put("damage", 468d);
-        attrMapFireball.put("knockback", 2.5d);
-        attrMapBeam = new HashMap<>();
-        attrMapBeam.put("damage", 504d);
-        attrMapBeam.put("knockback", 1d);
-        attrMapInfernoBolt = new HashMap<>();
-        attrMapInfernoBolt.put("damage", 540d);
-        attrMapInfernoBolt.put("knockback", 2d);
-    }
-    static double HORIZONTAL_SPEED = 1, VERTICAL_SPEED = 3;
+    static double HORIZONTAL_SPEED = 1.5, VERTICAL_SPEED = 3, FLY_SPEED_MIN = 2, SMASH_SPEED = 3;
 
-    // phase 1: damage fists only  2: head only  3: body can be damaged
+    // phase 1: damage body parts only   2: body can be damaged
     int indexAI = 0, phaseAI = 1, jumpIndex = 0;
-    boolean falling = false;
+    boolean falling = false, postProvidence;
     Vector orthogonalDir = new Vector(), cachedVelocity = new Vector();
-    GolemHead head;
-    GolemFist[] fists;
-    EntityHelper.ProjectileShootInfo shootInfoBeam;
+    RavagerHead head;
+    RavagerClaw[] claws;
+    RavagerLeg[] legs;
 
     private Vector getHorizontalDirection() {
         Location targetLoc = target.getLocation();
@@ -59,10 +47,90 @@ public class Golem extends EntitySlime {
         targetLoc.setY(currLoc.getY());
         return MathHelper.getDirection(currLoc, targetLoc, 1);
     }
-    private void shootLaser() {
-        shootInfoBeam.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-        shootInfoBeam.velocity = MathHelper.getDirection(shootInfoBeam.shootLoc, target.getEyeLocation(), 3);
-        EntityHelper.spawnProjectile(shootInfoBeam);
+
+    private boolean attemptChangePhase() {
+        // do not enter tier 2 if any other part is alive
+        if (head.isAlive())
+            return false;
+        for (RavagerClaw claw : claws)
+            if (claw.isAlive())
+                return false;
+        for (RavagerLeg leg : legs)
+            if (leg.isAlive())
+                return false;
+        // enter tier 2 and spawn another head
+        head = new RavagerHead(target, this, postProvidence);
+
+        indexAI = -1;
+        return true;
+    }
+
+    private void phase1AI() {
+        // leap
+        noclip = true;
+        if (indexAI >= 0) {
+            double speed = HORIZONTAL_SPEED;
+            if (indexAI == 0) {
+                cachedVelocity = getHorizontalDirection();
+                cachedVelocity.multiply(speed);
+                cachedVelocity.setY(VERTICAL_SPEED);
+                falling = false;
+            } else {
+                double yComp = cachedVelocity.getY();
+                if (falling) {
+                    yComp -= 0.2;
+                    // landing
+                    if (locY < target.getLocation().getY()) {
+                        // as soon as the golem is below player, it can collide with blocks.
+                        noclip = false;
+                        if (locY < 0 || onGround) {
+                            cachedVelocity = new Vector();
+                            yComp = 0;
+                            indexAI = -30;
+                            jumpIndex++;
+                            bukkitEntity.setVelocity(new Vector());
+                        }
+                    }
+                }
+                // every third jump chases enemy to the same height
+                else if (locY > target.getLocation().getY() || jumpIndex % 3 != 0)
+                    falling = true;
+                cachedVelocity.setY(yComp);
+            }
+            bukkitEntity.setVelocity(cachedVelocity);
+        }
+    }
+    private void phase2AI() {
+        noclip = true;
+        // fly above the player
+        if (indexAI <= 60) {
+            Location targetLoc = target.getEyeLocation().add(0, 16, 0);
+            Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
+            double velLen = velocity.length();
+            double speed = Math.max(velLen * indexAI / 59, FLY_SPEED_MIN);
+            //
+            if (speed > velLen) {
+                speed = velLen;
+                indexAI = 60;
+            }
+            velocity.multiply(speed / velLen);
+            bukkitEntity.setVelocity(velocity);
+        }
+        // smash down
+        else {
+            motX = 0;
+            motY = -SMASH_SPEED;
+            motZ = 0;
+            // landing
+            if (locY + motY < target.getLocation().getY()) {
+                // as soon as it will travel below player, it can collide with blocks.
+                noclip = false;
+                if (locY < 0 || onGround) {
+                    indexAI = -30;
+                    bukkitEntity.setVelocity(new Vector());
+                }
+            }
+        }
     }
     private void AI() {
         // no AI after death
@@ -83,59 +151,18 @@ public class Golem extends EntitySlime {
             }
             // if target is valid, attack
             else {
-                // phase transition
-                switch (phaseAI) {
-                    case 1:
-                        if ( !(fists[0].isAlive() || fists[1].isAlive()) ) {
-                            head.removeScoreboardTag("noDamage");
-                            phaseAI = 2;
-                        }
-                        break;
-                    case 2:
-                        if ( head.getHealth() < 10 ) {
-                            phaseAI = 3;
-                            bukkitEntity.removeScoreboardTag("noDamage");
-                            head.addScoreboardTag("noDamage");
-                            EntityHelper.setMetadata(head.getBukkitEntity(), EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, null);
-                        }
-                        break;
+                // phase transition and jump
+                if (phaseAI == 1) {
+                    if (!attemptChangePhase())
+                        phase1AI();
                 }
-                // leap
-                noclip = true;
-                if (indexAI >= 0) {
-                    double speed = HORIZONTAL_SPEED;
-                    if (indexAI == 0) {
-                        cachedVelocity = getHorizontalDirection();
-                        cachedVelocity.multiply(speed);
-                        cachedVelocity.setY(VERTICAL_SPEED);
-                        falling = false;
-                    }
-                    else {
-                        double yComp = cachedVelocity.getY();
-                        if (falling) {
-                            yComp -= 0.2;
-                            // landing
-                            if (locY < target.getLocation().getY()) {
-                                // as soon as the golem is below player, it can collide with blocks.
-                                noclip = false;
-                                if (locY < 0 || onGround) {
-                                    cachedVelocity = new Vector();
-                                    yComp = 0;
-                                    indexAI = -30;
-                                    jumpIndex ++;
-                                    bukkitEntity.setVelocity(new Vector());
-                                }
-                            }
-                        }
-                        // every third jump chases enemy to the same height
-                        else if (locY > target.getLocation().getY() || jumpIndex % 3 != 0)
-                            falling = true;
-                        cachedVelocity.setY(yComp);
-                    }
-                    bukkitEntity.setVelocity(cachedVelocity);
+                // phase 2 smash
+                else {
+                    phase2AI();
                 }
-                else if (phaseAI == 3 && indexAI % 5 == 0) {
-                    shootLaser();
+                // rock pillars
+                if (indexAI % 50 == 0) {
+                    // TODO
                 }
                 // setup orthogonal direction
                 {
@@ -153,17 +180,19 @@ public class Golem extends EntitySlime {
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
-    public Golem(World world) {
+    public Ravager(World world) {
         super(world);
         super.die();
     }
     // validate if the condition for spawning is met
     public static boolean canSpawn(Player player) {
-        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
+        return true;
     }
     // a constructor for actual spawning
-    public Golem(Player summonedPlayer) {
+    public Ravager(Player summonedPlayer) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
+        String providenceName = BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS.msgName;
+        postProvidence = PlayerHelper.hasDefeated(summonedPlayer, providenceName);
         // spawn location
         Location spawnLoc = summonedPlayer.getLocation().add(0, 25, 0);
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
@@ -182,8 +211,9 @@ public class Golem extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 480d);
-            attrMap.put("defence", 52d);
+            attrMap.put("damage", postProvidence ? 864d : 576d);
+            attrMap.put("damageTakenMulti", 0.65);
+            attrMap.put("defence", postProvidence ? 220d : 110d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
@@ -195,8 +225,9 @@ public class Golem extends EntitySlime {
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
         // init target map
         {
+            BossHelper.BossType bossPrerequisite = postProvidence ? BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS : BossHelper.BossType.PLANTERA;
             targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
-                    getBukkitEntity(), BossHelper.BossType.PLANTERA.msgName, summonedPlayer, true, bossbar);
+                    getBukkitEntity(), bossPrerequisite.msgName, summonedPlayer, true, bossbar);
             target = summonedPlayer;
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
@@ -204,7 +235,7 @@ public class Golem extends EntitySlime {
         {
             setSize(12, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
-            double health = BASIC_HEALTH * healthMulti;
+            double health = (postProvidence ? BASIC_HEALTH_POST_PROVIDENCE : BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }
@@ -219,18 +250,15 @@ public class Golem extends EntitySlime {
         }
         // boss parts
         {
-            head = new GolemHead(target, this);
-            fists = new GolemFist[] {
-                    new GolemFist(target, this, 1),
-                    new GolemFist(target, this, 2),
+            head = new RavagerHead(target, this, postProvidence);
+            claws = new RavagerClaw[] {
+                    new RavagerClaw(target, this, 1, postProvidence),
+                    new RavagerClaw(target, this, 2, postProvidence),
             };
-            new GolemFoot(target, this, 1);
-            new GolemFoot(target, this, 2);
-        }
-        // shoot info
-        {
-            shootInfoBeam = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBeam,
-                    EntityHelper.DamageType.MAGIC, "石巨人激光");
+            legs = new RavagerLeg[] {
+                    new RavagerLeg(target, this, 1, postProvidence),
+                    new RavagerLeg(target, this, 2, postProvidence),
+            };
         }
     }
 
