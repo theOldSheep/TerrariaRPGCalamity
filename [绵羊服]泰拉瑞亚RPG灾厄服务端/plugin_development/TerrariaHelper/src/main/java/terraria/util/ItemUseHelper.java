@@ -403,7 +403,7 @@ public class ItemUseHelper {
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
         Vector lookDir = MathHelper.vectorFromYawPitch_quick(nmsPly.yaw, nmsPly.pitch);
         Location targetLoc = getPlayerTargetLoc(ply, 96, 5,
-                new EntityHelper.AimHelperOptions().setTicksOffset(8).setAimMode(true), false);
+                new EntityHelper.AimHelperOptions().setTicksOffset(8).setAimMode(true), true);
         Location centerLoc = targetLoc.clone().add(ply.getEyeLocation()).multiply(0.5);
         Vector reachVec = centerLoc.clone().subtract(ply.getEyeLocation()).toVector();
         Vector offsetVec = null;

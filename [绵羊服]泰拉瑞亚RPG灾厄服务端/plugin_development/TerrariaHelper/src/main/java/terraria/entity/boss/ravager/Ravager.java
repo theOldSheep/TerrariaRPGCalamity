@@ -41,7 +41,7 @@ public class Ravager extends EntitySlime {
 
     // phase 1: damage body parts only   2: body can be damaged
     int indexAI = 0, phaseAI = 1, jumpIndex = 0;
-    boolean falling = false, postProvidence;
+    boolean falling = false, headFreed = false, postProvidence;
     Vector orthogonalDir = new Vector(), cachedVelocity = new Vector();
     RavagerHead head;
     RavagerClaw[] claws;
@@ -56,18 +56,24 @@ public class Ravager extends EntitySlime {
 
     private boolean attemptChangePhase() {
         // do not enter tier 2 if any other part is alive
-        if (head.isAlive())
-            return false;
+        if (!headFreed) {
+            if (head.isAlive())
+                return false;
+            else {
+                headFreed = true;
+                head = new RavagerHead(target, this, postProvidence, true);
+            }
+        }
         for (RavagerClaw claw : claws)
             if (claw.isAlive())
                 return false;
         for (RavagerLeg leg : legs)
             if (leg.isAlive())
                 return false;
-        // enter tier 2 and spawn another head
-        head = new RavagerHead(target, this, postProvidence);
-
-        indexAI = -1;
+        // enter tier 2
+        removeScoreboardTag("noDamage");
+        indexAI = -20;
+        phaseAI = 2;
         return true;
     }
 
@@ -88,50 +94,52 @@ public class Ravager extends EntitySlime {
     private void phase1AI() {
         // leap
         noclip = true;
-        if (indexAI >= 0) {
-            double speed = HORIZONTAL_SPEED;
-            if (indexAI == 0) {
-                cachedVelocity = getHorizontalDirection();
-                cachedVelocity.multiply(speed);
-                cachedVelocity.setY(VERTICAL_SPEED);
-                falling = false;
-            } else {
-                double yComp = cachedVelocity.getY();
-                if (falling) {
-                    yComp -= 0.2;
-                    // landing
-                    if (locY + motY < target.getLocation().getY()) {
-                        // as soon as the golem is below player, it can collide with blocks.
-                        noclip = false;
-                        if (locY < 0 || onGround) {
-                            cachedVelocity = new Vector();
-                            yComp = 0;
-                            indexAI = -30;
-                            jumpIndex++;
-                            bukkitEntity.setVelocity(new Vector());
-                        }
+        if (indexAI < 0)
+            return;
+        double speed = HORIZONTAL_SPEED;
+        if (indexAI == 0) {
+            cachedVelocity = getHorizontalDirection();
+            cachedVelocity.multiply(speed);
+            cachedVelocity.setY(VERTICAL_SPEED);
+            falling = false;
+        } else {
+            double yComp = cachedVelocity.getY();
+            if (falling) {
+                yComp -= 0.2;
+                // landing
+                if (locY + motY < target.getLocation().getY()) {
+                    // as soon as the golem is below player, it can collide with blocks.
+                    noclip = false;
+                    if (locY < 0 || onGround) {
+                        cachedVelocity = new Vector();
+                        yComp = 0;
+                        indexAI = -5;
+                        jumpIndex++;
+                        bukkitEntity.setVelocity(new Vector());
                     }
                 }
-                // every third jump chases enemy to the same height
-                else if (locY > target.getLocation().getY() || jumpIndex % 3 != 0)
-                    falling = true;
-                cachedVelocity.setY(yComp);
             }
-            bukkitEntity.setVelocity(cachedVelocity);
+            // every second jump chases enemy to the same height
+            else if (locY > target.getLocation().getY() || jumpIndex % 2 != 0)
+                falling = true;
+            cachedVelocity.setY(yComp);
         }
+        bukkitEntity.setVelocity(cachedVelocity);
     }
     private void phase2AI() {
         noclip = true;
+        if (indexAI < 0)
+            return;
         // fly above the player
-        if (indexAI <= 60) {
+        if (indexAI <= 40) {
             Location targetLoc = target.getEyeLocation().add(0, 16, 0);
             Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
             double velLen = velocity.length();
-            double speed = Math.max(velLen * indexAI / 59, FLY_SPEED_MIN);
+            double speed = Math.max(velLen * indexAI / 39, FLY_SPEED_MIN);
             //
             if (speed > velLen) {
                 speed = velLen;
-                indexAI = 60;
+                indexAI = 40;
             }
             velocity.multiply(speed / velLen);
             bukkitEntity.setVelocity(velocity);
@@ -146,7 +154,7 @@ public class Ravager extends EntitySlime {
                 // as soon as it will travel below player, it can collide with blocks.
                 noclip = false;
                 if (locY < 0 || onGround) {
-                    indexAI = -30;
+                    indexAI = -15;
                     bukkitEntity.setVelocity(new Vector());
                 }
             }
@@ -181,7 +189,7 @@ public class Ravager extends EntitySlime {
                     phase2AI();
                 }
                 // rock pillars
-                if (indexAI % 50 == 0) {
+                if (indexAI % 35 == 0) {
                     spawnRockPillars();
                 }
                 // setup orthogonal direction
@@ -272,7 +280,7 @@ public class Ravager extends EntitySlime {
         }
         // boss parts
         {
-            head = new RavagerHead(target, this, postProvidence);
+            head = new RavagerHead(target, this, postProvidence, false);
             claws = new RavagerClaw[] {
                     new RavagerClaw(target, this, 1, postProvidence),
                     new RavagerClaw(target, this, 2, postProvidence),

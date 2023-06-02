@@ -176,7 +176,6 @@ public class BossHelper {
     public static void handleBossDeath(terraria.util.BossHelper.BossType bossType,
                                        ArrayList<LivingEntity> bossParts, HashMap<Player, Double> targetMap) {
         double[] healthInfo = terraria.entity.boss.BossHelper.getHealthInfo(bossParts, bossType);
-        double dmgDealtReq = healthInfo[1] / targetMap.size() / 10;
         // boss death message
         Bukkit.broadcastMessage("§d§l" + bossType.msgName + " 被击败了.");
         switch (bossType) {
@@ -236,6 +235,7 @@ public class BossHelper {
                 break;
         }
         // calculate and broadcast damage dealt
+        double dmgDealtReq;
         {
             double totalPlyDmg = 0;
             TreeSet<Map.Entry<Double, String>> damageList = new TreeSet<>(Comparator.comparingDouble(Map.Entry::getKey));
@@ -244,7 +244,10 @@ public class BossHelper {
                         "[" + entry.getKey().getDisplayName() + "]") );
                 totalPlyDmg += entry.getValue();
             }
-            double debuffDmg = healthInfo[1] - totalPlyDmg;
+            // prevent having player damage over 100%
+            double actualBossHealth = Math.max(healthInfo[1], totalPlyDmg);
+            dmgDealtReq = actualBossHealth / targetMap.size() / 10;
+            double debuffDmg = actualBossHealth - totalPlyDmg;
             if (debuffDmg < 1e-5) debuffDmg = 0;
             damageList.add(new AbstractMap.SimpleImmutableEntry<>(debuffDmg, "§7减益等非直接伤害来源") );
             damageList.add(new AbstractMap.SimpleImmutableEntry<>(dmgDealtReq, "§7获得战利品所需最低伤害") );
@@ -254,7 +257,7 @@ public class BossHelper {
                 Map.Entry<Double, String> damageInfo = it.next();
                 // player, damage, percent damage dealt
                 Bukkit.broadcastMessage(String.format("%1$s 伤害：%2$.0f (占比%3$.1f%%)",
-                        damageInfo.getValue(), damageInfo.getKey(), damageInfo.getKey() * 100 / healthInfo[1]));
+                        damageInfo.getValue(), damageInfo.getKey(), damageInfo.getKey() * 100 / actualBossHealth));
             }
             Bukkit.broadcastMessage("————————伤害信息————————");
         }

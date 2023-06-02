@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class RavagerRockPillar extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.RAVAGER;
-    public static final double BASIC_HEALTH = 15000 * 2, BASIC_HEALTH_POST_PROVIDENCE = 60000 * 2;
+    public static final double BASIC_HEALTH = 7500 * 2, BASIC_HEALTH_POST_PROVIDENCE = 30000 * 2;
     HashMap<String, Double> attrMap;
     Player target = null;
     // other variables and AI

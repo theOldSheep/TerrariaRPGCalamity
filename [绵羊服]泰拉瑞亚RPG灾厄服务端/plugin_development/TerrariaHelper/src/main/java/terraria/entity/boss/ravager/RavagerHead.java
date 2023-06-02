@@ -33,6 +33,7 @@ public class RavagerHead extends EntitySlime {
     Ravager owner;
     Vector offsetDir = new Vector(0, 5.5, 0);
     int indexAI = 0;
+    boolean free = false;
 
     private void shootProjectile() {
         new RavagerNuke(target, owner, owner.postProvidence);
@@ -56,13 +57,13 @@ public class RavagerHead extends EntitySlime {
             // if target is valid, attack
             else {
                 // velocity and location
-                if (owner.phaseAI == 1) {
+                if (!free) {
                     bukkitEntity.setVelocity(owner.getBukkitEntity().getVelocity());
                     bukkitEntity.teleport(owner.getBukkitEntity().getLocation().add(offsetDir));
                 }
                 else {
                     bukkitEntity.setVelocity(MathHelper.getDirection(bukkitEntity.getLocation(),
-                            target.getLocation().subtract(0, 16, 0), FLIGHT_SPEED, true));
+                            target.getLocation().subtract(0, 24, 0), FLIGHT_SPEED, true));
                 }
                 // spawn projectile
                 if (indexAI % 80 == 0)
@@ -81,7 +82,7 @@ public class RavagerHead extends EntitySlime {
         super.die();
     }
     // a constructor for actual spawning
-    public RavagerHead(Player summonedPlayer, Ravager owner, boolean postProvidence) {
+    public RavagerHead(Player summonedPlayer, Ravager owner, boolean postProvidence, boolean free) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
         Location spawnLoc = owner.getBukkitEntity().getLocation().add(offsetDir);
@@ -90,6 +91,7 @@ public class RavagerHead extends EntitySlime {
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
         this.owner = owner;
+        this.free = free;
         setCustomName(name);
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");

@@ -1373,7 +1373,7 @@ public class EntityHelper {
         if (!canDamage) return;
 
         // damage taker is the entity that takes the damage
-        if (victim.hasMetadata("damageTaker")) {
+        if (victim.hasMetadata( MetadataName.DAMAGE_TAKER.toString() )) {
             Object dmgTaker = getMetadata(victim, MetadataName.DAMAGE_TAKER).value();
             if (dmgTaker instanceof LivingEntity)
                 damageTaker = (LivingEntity) dmgTaker;
@@ -1477,7 +1477,7 @@ public class EntityHelper {
                 damageFixed = true;
                 break;
             default:
-                if (damageReason == damageReason.DEBUFF) {
+                if (damageReason == DamageReason.DEBUFF) {
                     damageInvulnerabilityTicks = 0;
                     damageFixed = true;
                 } else if (isDirectAttackDamage) {
