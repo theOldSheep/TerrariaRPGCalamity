@@ -31,7 +31,13 @@ public class Ravager extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    static double HORIZONTAL_SPEED = 1.5, VERTICAL_SPEED = 3, FLY_SPEED_MIN = 2, SMASH_SPEED = 3;
+    static double HORIZONTAL_SPEED = 1.5, VERTICAL_SPEED = 3, FLY_SPEED_MIN = 2, SMASH_SPEED = 3, PILLAR_OFFSET = 8;
+    static final EntityHelper.AimHelperOptions spawnAimHelper;
+    static {
+        spawnAimHelper = new EntityHelper.AimHelperOptions()
+                .setAimMode(true)
+                .setTicksOffset(10);
+    }
 
     // phase 1: damage body parts only   2: body can be damaged
     int indexAI = 0, phaseAI = 1, jumpIndex = 0;
@@ -65,6 +71,20 @@ public class Ravager extends EntitySlime {
         return true;
     }
 
+    private void spawnRockPillars() {
+        Location currTargetLoc = target.getLocation();
+        Location predictedTargetLoc = EntityHelper.helperAimEntity(getBukkitEntity(), target, spawnAimHelper);
+        Vector offset = predictedTargetLoc.subtract(currTargetLoc).toVector();
+        double spawnYaw = MathHelper.getVectorYaw(offset);
+        Vector offset1 = MathHelper.vectorFromYawPitch_quick(spawnYaw, 0);
+        Vector offset2 = MathHelper.vectorFromYawPitch_quick(spawnYaw + 90, 0);
+        offset1.multiply(PILLAR_OFFSET);
+        offset2.multiply(PILLAR_OFFSET);
+        new RavagerRockPillar(this, target.getLocation().add(offset1));
+        new RavagerRockPillar(this, target.getLocation().subtract(offset1));
+        new RavagerRockPillar(this, target.getLocation().add(offset2));
+        new RavagerRockPillar(this, target.getLocation().subtract(offset2));
+    }
     private void phase1AI() {
         // leap
         noclip = true;
@@ -80,7 +100,7 @@ public class Ravager extends EntitySlime {
                 if (falling) {
                     yComp -= 0.2;
                     // landing
-                    if (locY < target.getLocation().getY()) {
+                    if (locY + motY < target.getLocation().getY()) {
                         // as soon as the golem is below player, it can collide with blocks.
                         noclip = false;
                         if (locY < 0 || onGround) {
@@ -162,7 +182,7 @@ public class Ravager extends EntitySlime {
                 }
                 // rock pillars
                 if (indexAI % 50 == 0) {
-                    // TODO
+                    spawnRockPillars();
                 }
                 // setup orthogonal direction
                 {
@@ -179,6 +199,8 @@ public class Ravager extends EntitySlime {
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }
+
+
     // default constructor to handle chunk unload
     public Ravager(World world) {
         super(world);
@@ -186,7 +208,7 @@ public class Ravager extends EntitySlime {
     }
     // validate if the condition for spawning is met
     public static boolean canSpawn(Player player) {
-        return true;
+        return WorldHelper.HeightLayer.getHeightLayer(player.getLocation()) == WorldHelper.HeightLayer.SURFACE;
     }
     // a constructor for actual spawning
     public Ravager(Player summonedPlayer) {

@@ -419,6 +419,12 @@ public class MonsterHelper {
                 ((MonsterSlime) monster).indexAI = (int) (Math.random() * 3600);
                 break;
             }
+            case "???":
+            {
+                // minions should not actively damage ???
+                monster.removeScoreboardTag("isMonster");
+                break;
+            }
         }
         ((LivingEntity) monster.getBukkitEntity()).getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
     }

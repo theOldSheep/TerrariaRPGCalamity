@@ -25,6 +25,8 @@ public class RavagerRockPillar extends EntitySlime {
     static final String name = "石元柱";
 
     Ravager owner;
+    RavagerRockPillar base;
+    int heightIndex;
 
 
     private void AI() {
@@ -33,8 +35,15 @@ public class RavagerRockPillar extends EntitySlime {
             return;
         // AI
         {
-            // update health
-            // TODO
+            // update health etc.
+            if (base != null) {
+                setHealth(base.getHealth());
+                bukkitEntity.setVelocity(base.bukkitEntity.getVelocity());
+                bukkitEntity.teleport(base.bukkitEntity.getLocation().add(0, 2 * heightIndex, 0));
+            }
+            // remove on timeout
+            if (ticksLived > 80)
+                die();
         }
         // face the player
         this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
@@ -47,19 +56,24 @@ public class RavagerRockPillar extends EntitySlime {
         super.die();
     }
     // a constructor for actual spawning
-    public RavagerRockPillar(Player summonedPlayer, Ravager owner, int index, boolean postProvidence) {
+    public RavagerRockPillar(Ravager owner, Location spawnLoc) {
+        this(owner.target, owner, 0, owner.postProvidence, null, spawnLoc);
+    }
+    public RavagerRockPillar(Player summonedPlayer, Ravager owner, int index, boolean postProvidence, RavagerRockPillar base, Location spawnLoc) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
-        Location spawnLoc = summonedPlayer.getLocation().add(0, 25, 0);
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
         this.owner = owner;
+        this.base = base;
+        this.heightIndex = index;
         setCustomName(name);
         setCustomNameVisible(true);
-        bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
+        if (base != null)
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, base);
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
@@ -78,7 +92,7 @@ public class RavagerRockPillar extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(5, false);
+            setSize(4, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = (postProvidence ? BASIC_HEALTH_POST_PROVIDENCE : BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
@@ -86,10 +100,12 @@ public class RavagerRockPillar extends EntitySlime {
         }
         // boss parts and other properties
         {
-            this.noclip = true;
-            this.setNoGravity(true);
             this.persistent = true;
         }
+        // next layer
+        if (index < 7)
+            new RavagerRockPillar(summonedPlayer, owner, index + 1, postProvidence,
+                    (index == 0 ? this : base), spawnLoc);
     }
 
     // rewrite AI

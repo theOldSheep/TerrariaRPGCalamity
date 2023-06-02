@@ -115,7 +115,7 @@ public class Golem extends EntitySlime {
                         if (falling) {
                             yComp -= 0.2;
                             // landing
-                            if (locY < target.getLocation().getY()) {
+                            if (locY + motY < target.getLocation().getY()) {
                                 // as soon as the golem is below player, it can collide with blocks.
                                 noclip = false;
                                 if (locY < 0 || onGround) {

@@ -1239,6 +1239,8 @@ public class EntityHelper {
                     return accessories.contains(target.getName() + "巫毒娃娃");
                 if (targetScoreboardTags.contains("isAnimal"))
                     return (!accessories.contains("小动物友谊指南"));
+                // entities that are not animal, NPC or monster can be damaged but are not targeted actively
+                return true;
             }
         } else if (target instanceof Player) {
             // non-player attacks player
@@ -1269,7 +1271,6 @@ public class EntityHelper {
             // any entity other than monster -> monster: true
             return targetScoreboardTags.contains("isMonster");
         }
-        return false;
     }
     public static Entity getDamageSource(Entity damager) {
         Entity source = damager;

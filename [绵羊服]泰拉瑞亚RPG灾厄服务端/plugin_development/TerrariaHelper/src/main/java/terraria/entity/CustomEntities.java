@@ -32,6 +32,7 @@ import terraria.entity.boss.leviathanAndAnahita.Anahita;
 import terraria.entity.boss.leviathanAndAnahita.Leviathan;
 import terraria.entity.boss.plantera.Plantera;
 import terraria.entity.boss.plantera.PlanteraTentacle;
+import terraria.entity.boss.ravager.*;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHand;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
 import terraria.entity.boss.theDestroyer.Destroyer;
@@ -106,6 +107,12 @@ public enum CustomEntities {
     BOSS_PLTR          ("Plantera",               55,  EntityType.SLIME,           EntitySlime.class,      Plantera.class),
     BOSS_PLTR_TENTACLE ("PlanteraTentacle",       55,  EntityType.SLIME,           EntitySlime.class,      PlanteraTentacle.class),
     BOSS_QNSLM         ("QueenSlime",             55,  EntityType.SLIME,           EntitySlime.class,      QueenSlime.class),
+    BOSS_RVG           ("Ravager",                55,  EntityType.SLIME,           EntitySlime.class,      Ravager.class),
+    BOSS_RVG_CLAW      ("RavagerClaw",            55,  EntityType.SLIME,           EntitySlime.class,      RavagerClaw.class),
+    BOSS_RVG_HEAD      ("RavagerHead",            55,  EntityType.SLIME,           EntitySlime.class,      RavagerHead.class),
+    BOSS_RVG_LEG       ("RavagerLeg",             55,  EntityType.SLIME,           EntitySlime.class,      RavagerLeg.class),
+    BOSS_RVG_NUKE      ("RavagerNuke",            55,  EntityType.SLIME,           EntitySlime.class,      RavagerNuke.class),
+    BOSS_RVG_PILLAR    ("RavagerRockPillar",      55,  EntityType.SLIME,           EntitySlime.class,      RavagerRockPillar.class),
     BOSS_SKLT          ("Skeletron",              55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHead.class),
     BOSS_SKLT_HAND     ("SkeletronHand",          55,  EntityType.SLIME,           EntitySlime.class,      SkeletronHand.class),
     BOSS_SKLTPM        ("SkeletronPrime",         55,  EntityType.SLIME,           EntitySlime.class,      SkeletronPrimeHead.class),

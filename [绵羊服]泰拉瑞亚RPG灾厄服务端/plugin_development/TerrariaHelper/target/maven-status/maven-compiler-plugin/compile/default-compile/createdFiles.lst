@@ -4,9 +4,11 @@ terraria\util\GenericHelper$StrikeLineOptions.class
 terraria\entity\boss\empressOfLight\EmpressOfLight.class
 terraria\entity\boss\golem\GolemHead.class
 terraria\entity\npc\TerrariaNPCClothier.class
+terraria\entity\boss\ravager\RavagerLeg.class
 terraria\entity\monster\MonsterZombie.class
 terraria\event\listener\PlayerMovementListener$1.class
 terraria\entity\boss\cryogen\Cryogen.class
+terraria\entity\boss\ravager\RavagerClaw.class
 terraria\entity\boss\BossHelper$1.class
 terraria\entity\boss\theHiveMind\HiveBlob.class
 terraria\entity\monster\MonsterHusk.class
@@ -89,6 +91,7 @@ terraria\entity\boss\leviathanAndAnahita\Anahita$AIPhase.class
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu.class
 terraria\worldgen\overworld\OverworldCaveGenerator$1.class
 terraria\entity\boss\dukeFishron\Sharkron.class
+terraria\entity\boss\ravager\RavagerRockPillar.class
 terraria\entity\boss\eaterOfWorld\EaterOfWorld$1.class
 terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
@@ -119,6 +122,7 @@ terraria\entity\boss\dukeFishron\WaterBlob.class
 terraria\entity\monster\MonsterSlime.class
 terraria\event\listener\RandomTitleListener.class
 terraria\util\EntityHelper$MetadataName.class
+terraria\entity\boss\ravager\RavagerNuke.class
 terraria\worldgen\overworld\OverworldBiomeGenerator$1.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHand.class
 terraria\worldgen\RandomGenerator.class
@@ -177,6 +181,8 @@ terraria\worldgen\Interpolate.class
 terraria\entity\minion\MinionCaveSpider.class
 terraria\entity\CustomEntities.class
 terraria\event\listener\ItemUseAndAttributeListener.class
+terraria\entity\boss\ravager\Ravager.class
+terraria\entity\boss\ravager\RavagerHead.class
 terraria\entity\boss\calamitasClone\Cataclysm.class
 terraria\entity\npc\TerrariaNPCDemolitionist.class
 terraria\worldgen\overworld\OverworldChunkGenerator$1.class

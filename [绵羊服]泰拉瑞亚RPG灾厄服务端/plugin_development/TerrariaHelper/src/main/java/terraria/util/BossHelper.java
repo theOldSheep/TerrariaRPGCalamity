@@ -18,6 +18,8 @@ import terraria.entity.boss.desertScourge.DesertScourge;
 import terraria.entity.boss.golem.Golem;
 import terraria.entity.boss.leviathanAndAnahita.Anahita;
 import terraria.entity.boss.plantera.Plantera;
+import terraria.entity.boss.ravager.Ravager;
+import terraria.entity.boss.ravager.RavagerNuke;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
 import terraria.entity.boss.theDestroyer.Destroyer;
 import terraria.entity.boss.theHiveMind.TheHiveMind;
@@ -241,6 +243,13 @@ public class BossHelper {
             case DUKE_FISHRON: {
                 if (DukeFishron.canSpawn(target)) {
                     new DukeFishron(target, (Location) extraInfo);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case RAVAGER: {
+                if (Ravager.canSpawn(target)) {
+                    new Ravager(target);
                     spawnedSuccessfully = true;
                 }
                 break;

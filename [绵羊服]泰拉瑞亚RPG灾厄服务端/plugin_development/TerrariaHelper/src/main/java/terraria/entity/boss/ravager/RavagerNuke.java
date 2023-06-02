@@ -75,6 +75,7 @@ public class RavagerNuke extends EntitySlime {
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
         this.owner = owner;
+        this.target = owner.target;
         setCustomName(name);
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("noDamage");
