@@ -634,6 +634,14 @@ mobInfo:
         owningBoss: 血肉之墙
         hasHealthMulti: true
         variants:
+            default1:
+                attributes:
+                    damage: 180
+                    damageType: "Melee"
+                    defence: 32
+                    knockback: 2
+                    knockbackResistance: 0.12
+                    health: 1006
     尖刺史莱姆:
         name: "尖刺史莱姆"
         monsterType: "SLIME"

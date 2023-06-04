@@ -486,6 +486,34 @@
     buffInflict:
         - "神圣之火|60|1"
         - "夜魇|60|1"
+暗影焰:
+    blockHitAction: thru
+    liveTime: 100
+    gravity: 0
+    projectileSize: 0.5
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceRadius: 64
+    autoTraceSharpTurning: false
+    autoTraceAbility: 0.35
+    noAutoTraceTicks: 10
+    maxAutoTraceTicks: 35
+    buffInflict:
+        - "暗影焰|40|1"
+火球:
+    blockHitAction: thru
+    liveTime: 100
+    gravity: 0
+    projectileSize: 0.5
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceRadius: 64
+    autoTraceSharpTurning: false
+    autoTraceAbility: 0.35
+    noAutoTraceTicks: 10
+    maxAutoTraceTicks: 35
+    buffInflict:
+        - "燃烧|100|1"
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2
@@ -515,10 +543,6 @@
     autoTrace: true
     isGrenade: true
     blastRadius: 5
-火球:
-    blastRadius: 3
-    buffInflict:
-        - "燃烧|100|1"
 流体入侵怪:
     blastRadius: 3.5
 幻影球:

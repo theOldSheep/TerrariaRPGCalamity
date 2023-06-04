@@ -402,6 +402,30 @@
     drop:
         - "强效治疗药水:5:15:1"
         - "铜币:50000:50000:1"
+毁灭者:
+    buffImmute:
+        - "中毒"
+激光眼:
+    buffImmute:
+        - "中毒"
+魔焰眼:
+    buffImmute:
+        - "中毒"
+机械骷髅王:
+    buffImmute:
+        - "中毒"
+机械炮:
+    buffImmute:
+        - "中毒"
+机械锯:
+    buffImmute:
+        - "中毒"
+机械钳:
+    buffImmute:
+        - "中毒"
+机械激光:
+    buffImmute:
+        - "中毒"
 极地之灵:
     buffInflict:
         - "霜火|100|1"
@@ -489,6 +513,24 @@
         - "燃烧"
         - "神圣之火"
         - "夜魇"
+猪鲨公爵:
+    buffImmute:
+        - "中毒"
+        - "剧毒"
+        - "燃烧"
+        - "霜火"
+毁灭魔像:
+    buffInflict:
+        - "碎甲|160|1"
+毁灭魔像手爪:
+    buffInflict:
+        - "碎甲|80|1"
+毁灭魔像导弹:
+    buffInflict:
+        - "燃烧|60|1"
+石元柱:
+    buffInflict:
+        - "碎甲|80|1"
 拜月教邪教徒:
     drop:
         - "强效治疗药水:5:15:1"
@@ -501,6 +543,16 @@
         - "咒火"
         - "燃烧"
     soundKilled: "ENTITY.CLTST.DEATH"
+冰球:
+    buffInflict:
+        - "冰冻|20|1"
+        - "冷冻|40|1"
+        - "霜火|80|1"
+冰球:
+    buffInflict:
+        - "冰冻|20|1"
+        - "冷冻|40|1"
+        - "霜火|80|1"
 飞龙:
     drop:
         - "铜币:20000:30000:1"
@@ -536,30 +588,6 @@
 吮脑怪:
     buffInflict:
         - "阻塞|200|1"
-毁灭者:
-    buffImmute:
-        - "中毒"
-激光眼:
-    buffImmute:
-        - "中毒"
-魔焰眼:
-    buffImmute:
-        - "中毒"
-机械骷髅王:
-    buffImmute:
-        - "中毒"
-机械炮:
-    buffImmute:
-        - "中毒"
-机械锯:
-    buffImmute:
-        - "中毒"
-机械钳:
-    buffImmute:
-        - "中毒"
-机械激光:
-    buffImmute:
-        - "中毒"
 稻草人:
     drop:
         - "铜币:2000:3000:1"

@@ -413,6 +413,14 @@
     regen: 2000
   worth: 20000
   rarity: 1
+测试饰品-伤害增加:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    damageMulti: 5
+  worth: 20000
+  rarity: 1
 镣铐:
   item: LEASH
   lore:
