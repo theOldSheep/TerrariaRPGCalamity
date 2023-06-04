@@ -242,7 +242,7 @@ public class LunaticCultist extends EntityZombie {
     }
     // validate if the condition for spawning is met
     public static boolean canSpawn(Player player) {
-        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
+        return true;
     }
     // a constructor for actual spawning
     public LunaticCultist(Player summonedPlayer, Location spawnLoc) {

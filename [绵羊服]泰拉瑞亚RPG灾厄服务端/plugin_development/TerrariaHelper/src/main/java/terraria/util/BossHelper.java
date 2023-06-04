@@ -17,6 +17,7 @@ import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
 import terraria.entity.boss.desertScourge.DesertScourge;
 import terraria.entity.boss.golem.Golem;
 import terraria.entity.boss.leviathanAndAnahita.Anahita;
+import terraria.entity.boss.lunaticCultist.LunaticCultist;
 import terraria.entity.boss.plantera.Plantera;
 import terraria.entity.boss.ravager.Ravager;
 import terraria.entity.boss.ravager.RavagerNuke;
@@ -250,6 +251,13 @@ public class BossHelper {
             case RAVAGER: {
                 if (Ravager.canSpawn(target)) {
                     new Ravager(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case LUNATIC_CULTIST: {
+                if (LunaticCultist.canSpawn(target)) {
+                    new LunaticCultist(target, (Location) extraInfo);
                     spawnedSuccessfully = true;
                 }
                 break;

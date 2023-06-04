@@ -634,7 +634,7 @@ mobInfo:
         owningBoss: 血肉之墙
         hasHealthMulti: true
         variants:
-            default1:
+            underworld1:
                 attributes:
                     damage: 180
                     damageType: "Melee"

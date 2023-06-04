@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.*;
@@ -1105,13 +1106,17 @@ public class EntityHelper {
                         case "史莱姆": {
                             if (v.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)) {
                                 Location deathLoc = vLiving.getEyeLocation();
-                                org.bukkit.block.Block deathBlock = deathLoc.getBlock();
-                                if (!deathBlock.getType().isSolid()) {
+                                Block deathBlock = deathLoc.getBlock();
+                                if (deathBlock.getType() == Material.AIR) {
                                     deathBlock.setType(Material.LAVA);
                                     Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
-                                        if (deathBlock.getType().equals(Material.LAVA))
-                                            deathBlock.setType(Material.AIR);
-                                    }, 100);
+                                        Block block = deathLoc.getBlock();
+                                        switch (block.getType()) {
+                                            case LAVA:
+                                            case STATIONARY_LAVA:
+                                                block.setType(Material.AIR);
+                                        }
+                                    }, 50);
                                 }
                             }
                             break;
@@ -1141,7 +1146,7 @@ public class EntityHelper {
                         // lunatic cultist spawns after killing the mob in the dungeon
                         case "拜月教教徒": {
                             if (dPly instanceof Player) {
-                                BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LUNATIC_CULTIST);
+                                BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LUNATIC_CULTIST, v.getLocation());
                             }
                             break;
                         }

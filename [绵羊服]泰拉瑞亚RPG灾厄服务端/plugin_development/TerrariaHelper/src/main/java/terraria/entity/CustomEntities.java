@@ -30,6 +30,7 @@ import terraria.entity.boss.golem.GolemFoot;
 import terraria.entity.boss.golem.GolemHead;
 import terraria.entity.boss.leviathanAndAnahita.Anahita;
 import terraria.entity.boss.leviathanAndAnahita.Leviathan;
+import terraria.entity.boss.lunaticCultist.*;
 import terraria.entity.boss.plantera.Plantera;
 import terraria.entity.boss.plantera.PlanteraTentacle;
 import terraria.entity.boss.ravager.*;
@@ -82,6 +83,13 @@ public enum CustomEntities {
     BOSS_CLMT_DUMMY    ("CalamitasDummy",         23,  EntityType.HUSK,            EntityZombieHusk.class, CalamitasDummyPlayer.class),
     BOSS_CYG           ("Cryogen",                55,  EntityType.SLIME,           EntitySlime.class,      Cryogen.class),
     BOSS_CYG_SHIELD    ("CryogenShield",          55,  EntityType.SLIME,           EntitySlime.class,      CryogenShield.class),
+    BOSS_CULTIST       ("LunaticCultist",         54,  EntityType.ZOMBIE,          EntityZombie.class,     LunaticCultist.class),
+    BOSS_CULTIST_AD    ("LunaticAncientDoom",     55,  EntityType.SLIME,           EntitySlime.class,      LunaticAncientDoom.class),
+    BOSS_CULTIST_AL    ("LunaticAncientLight",    55,  EntityType.SLIME,           EntitySlime.class,      LunaticAncientLight.class),
+    BOSS_CULTIST_CL    ("LunaticCultistClone",    23,  EntityType.HUSK,            EntityZombieHusk.class, LunaticCultistClone.class),
+    BOSS_CULTIST_MS    ("LunaticIceMist",         55,  EntityType.SLIME,           EntitySlime.class,      LunaticIceMist.class),
+    BOSS_CULTIST_LO    ("LunaticLightningOrb",    55,  EntityType.SLIME,           EntitySlime.class,      LunaticLightningOrb.class),
+    BOSS_CULTIST_PD    ("PhantomDragon",          55,  EntityType.SLIME,           EntitySlime.class,      PhantomDragon.class),
     BOSS_DSTY          ("Destroyer",              55,  EntityType.SLIME,           EntitySlime.class,      Destroyer.class),
     BOSS_DSSC          ("DesertScourge",          55,  EntityType.SLIME,           EntitySlime.class,      DesertScourge.class),
     BOSS_DSSC_NUIS     ("DesertNuisance",         55,  EntityType.SLIME,           EntitySlime.class,      DesertNuisance.class),
