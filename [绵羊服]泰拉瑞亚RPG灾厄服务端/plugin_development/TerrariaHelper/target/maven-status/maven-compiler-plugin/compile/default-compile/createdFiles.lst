@@ -3,6 +3,7 @@ terraria\util\NMSUtils.class
 terraria\util\GenericHelper$StrikeLineOptions.class
 terraria\entity\boss\empressOfLight\EmpressOfLight.class
 terraria\entity\boss\golem\GolemHead.class
+terraria\entity\boss\lunaticCultist\LunaticIceMist.class
 terraria\entity\npc\TerrariaNPCClothier.class
 terraria\entity\boss\ravager\RavagerLeg.class
 terraria\entity\monster\MonsterZombie.class
@@ -59,6 +60,7 @@ terraria\util\PlayerHelper.class
 terraria\util\NMSUtils$SpawnData.class
 terraria\worldgen\overworld\OverworldChunkGenerator.class
 terraria\entity\boss\golem\GolemFist.class
+terraria\entity\boss\lunaticCultist\LunaticLightningOrb.class
 terraria\entity\projectile\TerrariaArrowProjectile$1.class
 terraria\entity\boss\theSlimeGod\CrimulanSlime$SlimeSize.class
 terraria\entity\boss\leviathanAndAnahita\Leviathan$AIPhase.class
@@ -70,6 +72,7 @@ terraria\entity\boss\skeletronPrime\SkeletronPrimeHand$HandType.class
 terraria\entity\boss\desertScourge\DesertNuisance.class
 terraria\worldgen\overworld\OverworldBiomeGenerator.class
 terraria\util\NMSUtils$NBTTagType.class
+terraria\entity\boss\lunaticCultist\LunaticAncientLight.class
 terraria\entity\others\TerrariaFishingHook$FishingState.class
 terraria\entity\boss\skeletron\SkeletronHand.class
 terraria\util\YmlHelper.class
@@ -120,6 +123,7 @@ terraria\entity\boss\dukeFishron\Sharknado.class
 terraria\entity\boss\empressOfLight\EmpressOfLight$AttackPhase.class
 terraria\entity\boss\dukeFishron\WaterBlob.class
 terraria\entity\monster\MonsterSlime.class
+terraria\entity\boss\lunaticCultist\PhantomDragon.class
 terraria\event\listener\RandomTitleListener.class
 terraria\util\EntityHelper$MetadataName.class
 terraria\entity\boss\ravager\RavagerNuke.class
@@ -137,6 +141,7 @@ terraria\entity\npc\TerrariaNPCArmsDealer.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHead$PhaseAI.class
 terraria\entity\boss\theSlimeGod\EbonianSlime$1.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHand$1.class
+terraria\entity\boss\lunaticCultist\LunaticAncientDoom.class
 terraria\entity\boss\calamitasClone\Catastrophe.class
 terraria\entity\boss\dukeFishron\DukeFishron$AttackPhase.class
 terraria\util\EntityHelper.class
@@ -164,6 +169,7 @@ terraria\entity\boss\thePlaguebringerGoliath\PlagueHomingMissile.class
 terraria\util\EntityHelper$WormSegmentMovementOptions.class
 terraria\util\GameplayHelper$1.class
 terraria\entity\boss\queenSlime\QueenSlime$1.class
+terraria\entity\boss\lunaticCultist\LunaticCultist.class
 terraria\entity\boss\thePlaguebringerGoliath\PlagueMine.class
 terraria\util\EntityHelper$ProjectileShootInfo.class
 terraria\entity\monster\MonsterHelper$MonsterStatsMulti.class
@@ -178,6 +184,7 @@ terraria\worldgen\overworld\TreePopulator$1.class
 terraria\entity\monster\MonsterHelper.class
 terraria\worldgen\overworld\TreePopulator.class
 terraria\worldgen\Interpolate.class
+terraria\entity\boss\lunaticCultist\LunaticCultistClone.class
 terraria\entity\minion\MinionCaveSpider.class
 terraria\entity\CustomEntities.class
 terraria\event\listener\ItemUseAndAttributeListener.class

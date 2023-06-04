@@ -1256,8 +1256,9 @@ public class EntityHelper {
                 }
                 // NPCs do not attack players
                 return !entityScoreboardTags.contains("isNPC");
-            } else {
-                // players that are logged out are not supposed to get hurt.
+            }
+            // players that are logged out are not supposed to get hurt.
+            else {
                 return false;
             }
         } else {

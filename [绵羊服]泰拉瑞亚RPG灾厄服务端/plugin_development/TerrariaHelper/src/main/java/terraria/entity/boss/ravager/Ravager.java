@@ -10,11 +10,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.golem.GolemFist;
-import terraria.entity.boss.golem.GolemFoot;
-import terraria.entity.boss.golem.GolemHead;
-import terraria.util.*;
 import terraria.util.MathHelper;
+import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -255,7 +252,8 @@ public class Ravager extends EntitySlime {
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
         // init target map
         {
-            BossHelper.BossType bossPrerequisite = postProvidence ? BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS : BossHelper.BossType.PLANTERA;
+            BossHelper.BossType bossPrerequisite = postProvidence ?
+                    BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS : BossHelper.BossType.GOLEM;
             targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                     getBukkitEntity(), bossPrerequisite.msgName, summonedPlayer, true, bossbar);
             target = summonedPlayer;
