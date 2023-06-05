@@ -3,6 +3,7 @@ package terraria.entity.boss.lunaticCultist;
 import net.minecraft.server.v1_12_R1.EntitySlime;
 import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
 import net.minecraft.server.v1_12_R1.World;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -36,7 +37,7 @@ public class LunaticAncientDoom extends EntitySlime {
                 new Vector(0, 0, -1),
         };
         for (Vector velocity : directions) {
-            new LunaticAncientDoom(owner, false)
+            new LunaticAncientDoom(owner, false, bukkitEntity.getLocation())
                     .getBukkitEntity().setVelocity(velocity);
         }
         die();
@@ -60,7 +61,7 @@ public class LunaticAncientDoom extends EntitySlime {
                 if (doomOrEnd) {
                     double angle = ticksLived * 7.2;
                     double sinVal = MathHelper.xsin_degree(angle);
-                    double cosVal = MathHelper.xsin_degree(angle);
+                    double cosVal = MathHelper.xcos_degree(angle);
                     Vector offset1 = dir1.clone();
                     offset1.multiply(sinVal);
                     Vector offset2 = dir2.clone();
@@ -70,7 +71,7 @@ public class LunaticAncientDoom extends EntitySlime {
                     bukkitEntity.setVelocity(new Vector());
 
                     // timeout
-                    if (ticksLived > 100)
+                    if (ticksLived > 60)
                         split();
                 }
                 // prophecy's end
@@ -94,10 +95,12 @@ public class LunaticAncientDoom extends EntitySlime {
         super.die();
     }
     // a constructor for actual spawning
-    public LunaticAncientDoom(LunaticCultist owner, boolean doomOrEnd) {
+    public LunaticAncientDoom(LunaticCultist owner) {
+        this(owner, true, ((LivingEntity) owner.getBukkitEntity()).getLocation());
+    }
+    public LunaticAncientDoom(LunaticCultist owner, boolean doomOrEnd, Location spawnLoc) {
         super( owner.getWorld() );
         // spawn location
-        Location spawnLoc = ((LivingEntity) owner.getBukkitEntity()).getLocation();
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         owner.getWorld().addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
@@ -108,6 +111,7 @@ public class LunaticAncientDoom extends EntitySlime {
         setCustomNameVisible(true);
         if (!doomOrEnd)
             bukkitEntity.addScoreboardTag("noDamage");
+        bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);

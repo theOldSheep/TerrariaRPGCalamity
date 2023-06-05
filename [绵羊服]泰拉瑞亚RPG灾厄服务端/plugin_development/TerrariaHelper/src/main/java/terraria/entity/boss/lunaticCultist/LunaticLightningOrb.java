@@ -34,7 +34,9 @@ public class LunaticLightningOrb extends EntitySlime {
                 .setParticleColor("255|255|255")
                 .setTicksLinger(20);
         lightningStrikeOption = new GenericHelper.StrikeLineOptions()
-                .setParticleInfo(lightningParticleOption);
+                .setParticleInfo(lightningParticleOption)
+                .setLingerTime(20)
+                .setLingerDelay(1);
     }
 
 
@@ -43,7 +45,7 @@ public class LunaticLightningOrb extends EntitySlime {
         Vector strikeDirection = MathHelper.getDirection(startLoc, target.getEyeLocation(), 1);
         GenericHelper.handleStrikeLightning(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
                 MathHelper.getVectorYaw(strikeDirection), MathHelper.getVectorPitch(strikeDirection),
-                80, 8, 1, 5, 5, "255|255|255",
+                80, 8, 1, 5, 2, "255|255|255",
                 new ArrayList<>(), attrMap, lightningStrikeOption);
     }
     private void AI() {

@@ -25,12 +25,12 @@ public class LunaticIceMist extends EntitySlime {
     LunaticCultist owner;
     boolean mistOrShard;
 
-    static final double SPEED_MIST = 1.5, SPEED_SHARD = 2, ACC_MIST = 0.05;
+    static final double SPEED_MIST = 1.5, SPEED_SHARD = 2, ACC_MIST = 0.125;
     private void spawnIceShards() {
         Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         for (Vector shootSpeed : MathHelper.getCircularProjectileDirections(7, 1, 60,
                 target, shootLoc, SPEED_SHARD)) {
-            new LunaticIceMist(target, owner, false)
+            new LunaticIceMist(target, owner, false, shootLoc)
                     .getBukkitEntity().setVelocity(shootSpeed);
         }
     }
@@ -86,10 +86,12 @@ public class LunaticIceMist extends EntitySlime {
         super.die();
     }
     // a constructor for actual spawning
-    public LunaticIceMist(Player summonedPlayer, LunaticCultist owner, boolean mistOrShard) {
+    public LunaticIceMist(LunaticCultist owner) {
+        this(owner.target, owner, true, ((LivingEntity) owner.getBukkitEntity()).getLocation());
+    }
+    public LunaticIceMist(Player summonedPlayer, LunaticCultist owner, boolean mistOrShard, Location spawnLoc) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
-        Location spawnLoc = ((LivingEntity) owner.getBukkitEntity()).getLocation();
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
@@ -115,7 +117,7 @@ public class LunaticIceMist extends EntitySlime {
         }
         // size and other properties
         {
-            setSize(4, false);
+            setSize(mistOrShard ? 4 : 2, false);
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;

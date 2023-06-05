@@ -58,7 +58,7 @@ public class LunaticCultistClone extends EntityZombieHusk {
                 if (owner.indexAI == 0 && owner.phaseAttack != 0) {
                     shootInfoShadowFireball.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
                     shootInfoShadowFireball.velocity = MathHelper.getDirection(shootInfoShadowFireball.shootLoc,
-                            target.getEyeLocation(), SPEED_FIREBALL);
+                            target.getEyeLocation(), SPEED_FIREBALL * (1.25 - Math.random() * 0.5) );
                     EntityHelper.spawnProjectile(shootInfoShadowFireball);
                 }
             }

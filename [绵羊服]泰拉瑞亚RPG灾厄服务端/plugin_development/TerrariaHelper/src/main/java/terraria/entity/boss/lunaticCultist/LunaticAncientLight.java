@@ -29,7 +29,7 @@ public class LunaticAncientLight extends EntitySlime {
     Vector velocity;
     double speed = SPEED_INITIAL;
 
-    static final double SPEED_INITIAL = 2, SPEED_DECAY_MULTI = 0.99, ACCELERATION = 0.02;
+    static final double SPEED_INITIAL = 2, SPEED_DECAY_MULTI = 0.99, ACCELERATION = 0.1;
 
     private void AI() {
         // no AI after death
@@ -48,7 +48,6 @@ public class LunaticAncientLight extends EntitySlime {
             else {
                 // loosely follow player
                 Vector acc = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), ACCELERATION);
-                Vector velocity = bukkitEntity.getVelocity();
                 velocity.add(acc);
                 if (velocity.lengthSquared() < 1e-5)
                     velocity = acc;

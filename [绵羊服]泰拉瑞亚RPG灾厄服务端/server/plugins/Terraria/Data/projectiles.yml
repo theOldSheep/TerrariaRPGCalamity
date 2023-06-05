@@ -495,7 +495,7 @@
     autoTraceMethod: 2
     autoTraceRadius: 64
     autoTraceSharpTurning: false
-    autoTraceAbility: 0.35
+    autoTraceAbility: 0.4
     noAutoTraceTicks: 10
     maxAutoTraceTicks: 35
     buffInflict:
@@ -509,7 +509,7 @@
     autoTraceMethod: 2
     autoTraceRadius: 64
     autoTraceSharpTurning: false
-    autoTraceAbility: 0.35
+    autoTraceAbility: 0.5
     noAutoTraceTicks: 10
     maxAutoTraceTicks: 35
     buffInflict:

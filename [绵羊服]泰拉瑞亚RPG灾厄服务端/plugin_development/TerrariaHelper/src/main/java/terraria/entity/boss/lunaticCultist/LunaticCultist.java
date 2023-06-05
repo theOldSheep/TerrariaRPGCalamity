@@ -12,10 +12,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.entity.boss.desertScourge.DesertNuisance;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,11 +39,16 @@ public class LunaticCultist extends EntityZombie {
     static HashMap<String, Double> attrMapFireball;
     static final int SUMMON_TIMEOUT = 50;
     static final double SPEED_FIREBALL = 1.5;
+    static GenericHelper.ParticleLineOptions summonParticle;
     EntityHelper.ProjectileShootInfo shootInfoFireball;
     static {
-        attrMapFireball= new HashMap<>();
+        attrMapFireball = new HashMap<>();
         attrMapFireball.put("damage", 540d);
         attrMapFireball.put("knockback", 1.5d);
+
+        summonParticle = new GenericHelper.ParticleLineOptions()
+                .setParticleColor("255|255|255")
+                .setWidth(1);
     }
 
     private void nextAttack() {
@@ -82,13 +85,22 @@ public class LunaticCultist extends EntityZombie {
         if (index > 0) {
             if (index % 2 == 0)
                 dirYaw += 180;
-            dirPitch += (index / 2) * 10;
+            dirPitch += (index / 2) * 2;
         }
         Vector offsetDir = MathHelper.vectorFromYawPitch_quick(dirYaw, dirPitch);
         offsetDir.multiply(20);
         return target.getLocation().add(offsetDir);
     }
     // summon clones
+    private void displaySummonParticle(Entity entity) {
+        if (entity == bukkitEntity)
+            summonParticle.setParticleColor("20|110|220");
+        else
+            summonParticle.setParticleColor("255|255|255");
+        Vector direction = entity.getLocation().subtract(centerLoc).toVector();
+        summonParticle.setLength(direction.length());
+        GenericHelper.handleParticleLine(direction, centerLoc, summonParticle);
+    }
     private void attackPhase0() {
         if (indexAI < 0) {
             return;
@@ -99,22 +111,28 @@ public class LunaticCultist extends EntityZombie {
             // spawn clones
             int spawnAmount = Math.min(2, 6 - clones.size());
             for (int i = 0; i < spawnAmount; i ++) {
-                new LunaticCultistClone(target, this);
+                clones.add( new LunaticCultistClone(target, this) );
             }
             // setup location
             centerLoc = getHoverLocation();
             double angle = Math.random();
             int totalEntities = clones.size();
-            for (int i = 0; i <= totalEntities; i ++) {
+            for (int i = 0; i < totalEntities; i ++) {
                 Location targetLoc = centerLoc.clone();
                 Vector offset = MathHelper.vectorFromYawPitch_quick(angle, 0);
                 offset.multiply(6);
                 targetLoc.add(offset);
                 angle += 360d / totalEntities;
 
-                Entity toTeleport = i == clones.size() ? bukkitEntity : clones.get(i).getBukkitEntity();
+                Entity toTeleport = (i + 1) >= clones.size() ? bukkitEntity : clones.get(i).getBukkitEntity();
                 toTeleport.teleport(targetLoc);
             }
+        }
+        // particle hint
+        {
+            displaySummonParticle(bukkitEntity);
+            for (LunaticCultistClone currClone : clones)
+                displaySummonParticle(currClone.getBukkitEntity());
         }
         // cancel on receiving damage
         if (lastHealth > 0 && getHealth() + 1e-5 < lastHealth) {
@@ -147,7 +165,7 @@ public class LunaticCultist extends EntityZombie {
         if (indexAI < 0)
             return;
         if (indexAI % 30 == 0)
-            new LunaticIceMist(target, this, true);
+            new LunaticIceMist(this);
         if (indexAI >= 50)
             nextAttack();
     }
@@ -164,14 +182,14 @@ public class LunaticCultist extends EntityZombie {
     private void attackPhase4() {
         if (indexAI < 0)
             return;
-        if (indexAI % 10 == 0) {
+        if (indexAI % 8 == 0) {
             Location spawnLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             for (Vector velocity : MathHelper.getCircularProjectileDirections(
-                    5, 1, 60, target, spawnLoc, 1)) {
+                    5, 1, 45, target, spawnLoc, 2)) {
                 new LunaticAncientLight(target, this, velocity, spawnLoc);
             }
         }
-        if (indexAI >= 49)
+        if (indexAI >= 39)
             nextAttack();
     }
     // ancient doom
@@ -179,9 +197,10 @@ public class LunaticCultist extends EntityZombie {
         if (indexAI < 0)
             return;
         if (indexAI == 0) {
-            new LunaticAncientDoom(this, true);
+            for (int i = 0; i < 10; i ++)
+                new LunaticAncientDoom(this);
         }
-        if (indexAI >= 50)
+        if (indexAI >= 70)
             nextAttack();
     }
     private void AI() {
