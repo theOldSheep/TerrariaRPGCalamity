@@ -289,6 +289,7 @@ public class Anahita extends EntityZombieHusk {
         }
         // boss parts and other properties
         {
+            setBaby(false);
             bossParts = new ArrayList<>();
             bossParts.add((LivingEntity) bukkitEntity);
             BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);

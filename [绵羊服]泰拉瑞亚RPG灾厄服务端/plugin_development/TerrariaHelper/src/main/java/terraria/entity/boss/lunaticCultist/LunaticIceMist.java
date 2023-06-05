@@ -78,7 +78,8 @@ public class LunaticIceMist extends EntitySlime {
         }
         // face the player
         this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
-        // no collision dmg for lunatic cultist clone
+        // collision dmg
+        terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
     public LunaticIceMist(World world) {

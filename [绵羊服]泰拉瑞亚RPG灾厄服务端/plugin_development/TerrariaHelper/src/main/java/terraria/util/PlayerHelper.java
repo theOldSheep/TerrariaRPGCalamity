@@ -1570,6 +1570,8 @@ public class PlayerHelper {
             // setup walking speed
             double walkingSpeed = newAttrMap.getOrDefault("speed", 0.2d) *
                     newAttrMap.getOrDefault("speedMulti", 1d);
+            if (walkingSpeed < 0d)
+                walkingSpeed = 0d;
             if (Math.abs(ply.getWalkSpeed() - walkingSpeed) > 1e-9) {
                 ply.setWalkSpeed((float) walkingSpeed);
             }

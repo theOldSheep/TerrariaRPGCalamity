@@ -98,6 +98,7 @@ public class CalamitasDummyPlayer extends EntityZombieHusk {
         }
         // boss parts and other properties
         {
+            setBaby(false);
             owner.bossParts.add((LivingEntity) bukkitEntity);
             this.noclip = true;
             this.setNoGravity(true);

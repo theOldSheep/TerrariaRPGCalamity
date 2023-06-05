@@ -28,16 +28,27 @@ public class LunaticAncientDoom extends EntitySlime {
     Vector dir1, dir2;
 
     private void split() {
+        Location spawnLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        // get directions
+        Vector dirDirect = MathHelper.getDirection(spawnLoc, target.getEyeLocation(), 1);
+        Vector dirOrth1 = new Vector();
+        while (dirOrth1.lengthSquared() < 1e-5) {
+            dirOrth1 = MathHelper.randomVector();
+            dirOrth1.subtract(MathHelper.vectorProjection(dirDirect, dirOrth1));
+        }
+        dirOrth1.normalize();
+        Vector dirOrth2 = dirDirect.getCrossProduct(dirOrth1);
         Vector[] directions = new Vector[] {
-                new Vector(1, 0, 0),
-                new Vector(0, 1, 0),
-                new Vector(0, 0, 1),
-                new Vector(-1, 0, 0),
-                new Vector(0, -1, 0),
-                new Vector(0, 0, -1),
+                dirDirect,
+                dirDirect.clone().multiply(-1),
+                dirOrth1,
+                dirOrth1.clone().multiply(-1),
+                dirOrth2,
+                dirOrth2.clone().multiply(-1),
         };
+        // spawn projectiles
         for (Vector velocity : directions) {
-            new LunaticAncientDoom(owner, false, bukkitEntity.getLocation())
+            new LunaticAncientDoom(owner, false, spawnLoc)
                     .getBukkitEntity().setVelocity(velocity);
         }
         die();
@@ -87,7 +98,8 @@ public class LunaticAncientDoom extends EntitySlime {
         }
         // face the player
         this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
-        // no collision dmg for lunatic cultist clone
+        // collision dmg
+        terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
     public LunaticAncientDoom(World world) {

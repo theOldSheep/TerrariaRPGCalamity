@@ -1,6 +1,7 @@
 package terraria.entity.boss.lunaticCultist;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -52,7 +53,7 @@ public class LunaticCultist extends EntityZombie {
     }
 
     private void nextAttack() {
-        indexAI = -10;
+        indexAI = -20;
         phaseAttack++;
         phaseAttack %= 6;
         // for summoning phase, init y-coordinate as -10 and can not be actively targeted by minions etc.
@@ -85,7 +86,7 @@ public class LunaticCultist extends EntityZombie {
         if (index > 0) {
             if (index % 2 == 0)
                 dirYaw += 180;
-            dirPitch += (index / 2) * 2;
+            dirPitch += ( (index + 1) / 2) * 3.5;
         }
         Vector offsetDir = MathHelper.vectorFromYawPitch_quick(dirYaw, dirPitch);
         offsetDir.multiply(20);
@@ -117,14 +118,14 @@ public class LunaticCultist extends EntityZombie {
             centerLoc = getHoverLocation();
             double angle = Math.random();
             int totalEntities = clones.size();
-            for (int i = 0; i < totalEntities; i ++) {
+            for (int i = 0; i <= totalEntities; i ++) {
                 Location targetLoc = centerLoc.clone();
                 Vector offset = MathHelper.vectorFromYawPitch_quick(angle, 0);
                 offset.multiply(6);
                 targetLoc.add(offset);
-                angle += 360d / totalEntities;
+                angle += 360d / (totalEntities + 1);
 
-                Entity toTeleport = (i + 1) >= clones.size() ? bukkitEntity : clones.get(i).getBukkitEntity();
+                Entity toTeleport = i >= clones.size() ? bukkitEntity : clones.get(i).getBukkitEntity();
                 toTeleport.teleport(targetLoc);
             }
         }
@@ -185,7 +186,7 @@ public class LunaticCultist extends EntityZombie {
         if (indexAI % 8 == 0) {
             Location spawnLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             for (Vector velocity : MathHelper.getCircularProjectileDirections(
-                    5, 1, 45, target, spawnLoc, 2)) {
+                    5, 1, 45, target, spawnLoc, 3)) {
                 new LunaticAncientLight(target, this, velocity, spawnLoc);
             }
         }
@@ -310,6 +311,7 @@ public class LunaticCultist extends EntityZombie {
         }
         // boss parts and other properties
         {
+            setBaby(false);
             bossParts = new ArrayList<>();
             bossParts.add((LivingEntity) bukkitEntity);
             BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);

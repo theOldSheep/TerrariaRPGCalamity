@@ -143,8 +143,9 @@ public class MathHelper {
         if (amountPerArc % 2 == 1)
             results.add(fwdDir.clone());
         else
-            angle += offset / 2;
+            angle -= offset / 2;
         for (int i = 0; i < loopAmount; i ++) {
+            angle += offset;
             double sinVal = xsin_degree(angle), cosVal = xcos_degree(angle);
             Vector fwdComp = fwdDir.clone().multiply(cosVal);
             for (int arcIndex = 0; arcIndex < amountArcs; arcIndex ++) {
@@ -153,7 +154,6 @@ public class MathHelper {
                 results.add(offsetComp1.add(fwdComp));
                 results.add(offsetComp2.add(fwdComp));
             }
-            angle += offset;
         }
         // setup speed
         for (Vector vec : results)

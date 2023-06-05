@@ -104,6 +104,7 @@ public class LunaticCultistClone extends EntityZombieHusk {
         }
         // other properties
         {
+            setBaby(false);
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;
