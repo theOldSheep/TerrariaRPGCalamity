@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.LivingEntity;
@@ -36,27 +37,79 @@ public class AstrumDeus extends EntitySlime {
     public static final double
             HEAD_DMG = 720d, HEAD_DEF = 70d, HEAD_DR = 0.2,
             BODY_DMG = 480d, BODY_DEF = 40d, BODY_DR = 0.1,
-            TAIL_DMG = 384d, TAIL_DEF = 100d, TAIL_DR = 0.3;
+            TAIL_DMG = 384d, TAIL_DEF = 100d, TAIL_DR = 0.3,
+            SPEED_LASER = 2;
     public static final EntityHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
             new EntityHelper.WormSegmentMovementOptions()
                     .setFollowDistance(5)
                     .setFollowingMultiplier(1)
                     .setStraighteningMultiplier(0.1)
                     .setVelocityOrTeleport(false);
-    static HashMap<String, Double> attrMapLaser, attrMapMine;
+    static final EntityHelper.AimHelperOptions laserAimHelper;
+    static HashMap<String, Double> attrMapLaser, attrMapMine, attrMapHead, attrMapBody, attrMapTail;
     static {
+        laserAimHelper = new EntityHelper.AimHelperOptions()
+                .setProjectileSpeed(SPEED_LASER);
+
         attrMapLaser = new HashMap<>();
         attrMapLaser.put("damage", 528d);
         attrMapLaser.put("knockback", 2d);
         attrMapMine = new HashMap<>();
         attrMapMine.put("damage", 624d);
         attrMapMine.put("knockback", 2d);
+
+        attrMapHead = new HashMap<>();
+        attrMapHead.put("crit", 0.04);
+        attrMapHead.put("knockback", 4d);
+        attrMapHead.put("knockbackResistance", 1d);
+        attrMapHead.put("damage", HEAD_DMG);
+        attrMapHead.put("defence", HEAD_DEF);
+        attrMapHead.put("damageTakenMulti", 1 - HEAD_DR);
+
+        attrMapBody = new HashMap<>();
+        attrMapBody.put("crit", 0.04);
+        attrMapBody.put("knockback", 4d);
+        attrMapBody.put("knockbackResistance", 1d);
+        attrMapBody.put("damage", BODY_DMG);
+        attrMapBody.put("defence", BODY_DEF);
+        attrMapBody.put("damageTakenMulti", 1 - BODY_DR);
+
+        attrMapTail = new HashMap<>();
+        attrMapTail.put("crit", 0.04);
+        attrMapTail.put("knockback", 4d);
+        attrMapTail.put("knockbackResistance", 1d);
+        attrMapTail.put("damage", TAIL_DMG);
+        attrMapTail.put("defence", TAIL_DEF);
+        attrMapTail.put("damageTakenMulti", 1 - TAIL_DR);
     }
     public EntityHelper.ProjectileShootInfo projectilePropertyLaser, projectilePropertyMine;
     int index;
     int indexAI = 0;
     Vector dVec = null, bufferVec = new Vector(0, 0, 0);
-    boolean charging = true;
+    boolean charging = true, secondPhase = false;
+    private void phaseTransition() {
+        // new tail
+        LivingEntity newTail = bossParts.get(SECOND_HEAD_INDEX - 2);
+        EntityHelper.setMetadata(newTail, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMapTail.clone());
+        newTail.setCustomName(BOSS_TYPE.msgName + "§2");
+        // remove a segment to separate the two
+        LivingEntity toRemove = bossParts.get(SECOND_HEAD_INDEX - 1);
+        toRemove.setHealth(0d);
+        toRemove.remove();
+        // new head
+        LivingEntity newHead = bossParts.get(SECOND_HEAD_INDEX);
+        EntityHelper.setMetadata(newHead, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMapHead.clone());
+        newHead.setCustomName(BOSS_TYPE.msgName);
+        // new head should become a new health pool
+        EntityHelper.setMetadata(newHead, EntityHelper.MetadataName.DAMAGE_TAKER, null);
+        // tweak second half of body to share health with second head
+        AstrumDeus newHeadNMS = (AstrumDeus) ((CraftLivingEntity) newHead).getHandle();
+        for (int idx = SECOND_HEAD_INDEX + 1; idx < bossParts.size(); idx ++) {
+            LivingEntity currentSegment = bossParts.get(idx);
+            EntityHelper.setMetadata(currentSegment, EntityHelper.MetadataName.DAMAGE_TAKER, newHead);
+            ( (AstrumDeus) ((CraftLivingEntity) currentSegment).getHandle() ).head = newHeadNMS;
+        }
+    }
     private void shootProjectiles(int attackMethod) {
         EntityHelper.ProjectileShootInfo shootInfo;
         switch (attackMethod) {
@@ -74,16 +127,19 @@ public class AstrumDeus extends EntitySlime {
         switch (attackMethod) {
             // laser
             case 1: {
-                shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, target.getEyeLocation(), 1);
+                Location targetLoc;
+                if (getHealth() * 2 > getMaxHealth())
+                    targetLoc = target.getEyeLocation();
+                else
+                    targetLoc = EntityHelper.helperAimEntity(shootInfo.shootLoc, target, laserAimHelper);
+                shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, targetLoc, SPEED_LASER);
                 EntityHelper.spawnProjectile(shootInfo);
                 break;
             }
             // mine
             case 2: {
-                for (int i = 0; i < 50; i ++) {
-                    shootInfo.velocity = MathHelper.randomVector();
-                    EntityHelper.spawnProjectile(shootInfo);
-                }
+                shootInfo.velocity = MathHelper.randomVector();
+                EntityHelper.spawnProjectile(shootInfo);
                 break;
             }
         }
@@ -122,8 +178,6 @@ public class AstrumDeus extends EntitySlime {
                 }
             }
             else {
-                if (indexAI % 4 == 1 && indexAI > 1)
-                    shootProjectiles(3);
                 dVec.multiply(0.975);
                 dVec.setY(dVec.getY() - 0.05);
             }
@@ -158,7 +212,7 @@ public class AstrumDeus extends EntitySlime {
             actualVelocity = new Vector(1, 0, 0);
             actualLen = 1;
         }
-        double speed = 2.8 - 0.6 * healthRatio;
+        double speed = 3 - healthRatio;
         actualVelocity.multiply( speed / actualLen);
         bukkitEntity.setVelocity(actualVelocity);
         // increase indexAI
@@ -185,8 +239,16 @@ public class AstrumDeus extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                double healthRatio = getHealth() / getMaxHealth();
+                // phase transition
+                if (index == 0 && !secondPhase && healthRatio < 0.5)
+                    phaseTransition();
+
+                boolean isHead = false;
+                if (index == 0) isHead = true;
+                else if (index == SECOND_HEAD_INDEX && healthRatio < 0.5) isHead = true;
                 // head
-                if (index == 0) {
+                if (isHead) {
                     // attack
                     headRushEnemy();
                     // face the player
@@ -194,10 +256,13 @@ public class AstrumDeus extends EntitySlime {
                     // follow
                     EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
                 }
-                // body
-                else if (index < TOTAL_LENGTH - 1) {
+                // body and tail
+                else {
                     if (++indexAI % 200 == index * 2) {
                         shootProjectiles(1);
+                    }
+                    if (index % 2 == 0 && indexAI % 100 == index) {
+                        shootProjectiles(2);
                     }
                 }
             }
@@ -252,27 +317,17 @@ public class AstrumDeus extends EntitySlime {
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
         {
-            attrMap = new HashMap<>();
-            attrMap.put("crit", 0.04);
-            attrMap.put("knockback", 4d);
-            attrMap.put("knockbackResistance", 1d);
             // head
             if (index == 0) {
-                attrMap.put("damage", HEAD_DMG);
-                attrMap.put("defence", HEAD_DEF);
-                attrMap.put("damageTakenMulti", 1 - HEAD_DR);
+                attrMap = (HashMap<String, Double>) attrMapHead.clone();
             }
             // tail
             else if (index + 1 == TOTAL_LENGTH) {
-                attrMap.put("damage", TAIL_DMG);
-                attrMap.put("defence", TAIL_DEF);
-                attrMap.put("damageTakenMulti", 1 - TAIL_DR);
+                attrMap = (HashMap<String, Double>) attrMapTail.clone();
             }
             // body
             else {
-                attrMap.put("damage", BODY_DMG);
-                attrMap.put("defence", BODY_DEF);
-                attrMap.put("damageTakenMulti", 1 - BODY_DR);
+                attrMap = (HashMap<String, Double>) attrMapBody.clone();
             }
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
@@ -329,18 +384,24 @@ public class AstrumDeus extends EntitySlime {
     @Override
     public void die() {
         super.die();
-        if (index > 0) return;
-        // drop loot
-        if (getMaxHealth() > 10) {
-            terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
-        }
-        // disable boss bar
-        bossbar.setVisible(false);
-        BossHelper.bossMap.remove(BOSS_TYPE.msgName);
-        // if the boss has been defeated properly
-        if (getMaxHealth() > 10) {
-            // send loot
-            terraria.entity.boss.BossHelper.handleBossDeath(BOSS_TYPE, bossParts, targetMap);
+        if (index == 0 || index == SECOND_HEAD_INDEX) {
+            // prevent duplicated death handling
+            if (! (bossParts.get(0).isDead() && bossParts.get(SECOND_HEAD_INDEX).isDead()) )
+                return;
+            if (!bossbar.visible)
+                return;
+            // drop loot
+            if (getMaxHealth() > 10) {
+                terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
+            }
+            // disable boss bar
+            bossbar.setVisible(false);
+            BossHelper.bossMap.remove(BOSS_TYPE.msgName);
+            // if the boss has been defeated properly
+            if (getMaxHealth() > 10) {
+                // send loot
+                terraria.entity.boss.BossHelper.handleBossDeath(BOSS_TYPE, bossParts, targetMap);
+            }
         }
     }
     // rewrite AI
