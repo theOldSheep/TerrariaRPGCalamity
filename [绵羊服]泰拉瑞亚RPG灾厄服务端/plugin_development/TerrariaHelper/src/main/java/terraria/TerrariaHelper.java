@@ -20,7 +20,7 @@ public class TerrariaHelper extends JavaPlugin {
     public static class Constants {
         public static final String
                 DATA_FOLDER_DIR = "plugins/Terraria/Data/",
-                DATA_PLAYER_FOLDER_DIR = "plugins/Terraria/Data/",
+                DATA_PLAYER_FOLDER_DIR = "plugins/Terraria/PlayerData/",
                 WORLD_NAME_SURFACE = "world_surface",
                 WORLD_NAME_CAVERN = "world_cavern",
                 WORLD_NAME_UNDERWORLD = "world_underworld",
@@ -133,7 +133,7 @@ public class TerrariaHelper extends JavaPlugin {
                     }
                     default:
                         Bukkit.broadcastMessage("UNHANDLED PLACEHOLDER " + params);
-                        return "嗒嘀嗒，我不道啊";
+                        return "哒哒哒哒嘀哒哒，我不道啊";
                 }
             }
         });

@@ -514,6 +514,31 @@
     maxAutoTraceTicks: 35
     buffInflict:
         - "燃烧|100|1"
+星幻激光:
+    penetration: 99999
+    gravity: 0
+    liveTime: 80
+    blockHitAction: thru
+    trailColor: 0|255|255
+    trailSize: 0.15
+    trailStepSize: 0.5
+    buffInflict:
+        - "幻星感染|40|1"
+幻星雷:
+    blockHitAction: thru
+    liveTime: 300
+    gravity: 0
+    speedMultiPerTick: 0.95
+    projectileSize: 0.5
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceRadius: 64
+    autoTraceSharpTurning: false
+    autoTraceAbility: 0.4
+    noAutoTraceTicks: 10
+    maxAutoTraceTicks: 35
+    buffInflict:
+        - "幻星感染|60|1"
 天蓝羽毛:
     autoTrace: true
     blastRadius: 2

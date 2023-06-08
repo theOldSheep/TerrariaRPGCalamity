@@ -6,6 +6,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import terraria.entity.boss.aquaticScourge.AquaticScourge;
 import terraria.entity.boss.astrumAureus.AstrumAureus;
+import terraria.entity.boss.astrumDeus.AstrumDeus;
 import terraria.entity.boss.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.calamitasClone.CalamitasClone;
 import terraria.entity.boss.crabulon.Crabulon;
@@ -258,6 +259,13 @@ public class BossHelper {
             case LUNATIC_CULTIST: {
                 if (LunaticCultist.canSpawn(target)) {
                     new LunaticCultist(target, (Location) extraInfo);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case ASTRUM_DEUS: {
+                if (AstrumDeus.canSpawn(target)) {
+                    new AstrumDeus(target, new ArrayList<>(), (Location) extraInfo,0);
                     spawnedSuccessfully = true;
                 }
                 break;

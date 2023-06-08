@@ -1,5 +1,7 @@
 package terraria.event.listener;
 
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -42,7 +44,11 @@ public class BossSpawnListener implements Listener {
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {
-        if (evt.isCancelled() && evt.getClickedBlock() != null) return;
+        if (evt.isCancelled()) return;
+        if (evt.getClickedBlock() != null) {
+            spawnBossAtBlock(evt.getPlayer(), evt.getClickedBlock());
+            return;
+        }
         spawnBoss(evt.getPlayer());
     }
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -61,6 +67,27 @@ public class BossSpawnListener implements Listener {
             if ( BossHelper.spawnBoss(ply, bossType) ) {
                 tool.setAmount(tool.getAmount() - 1);
                 ply.getInventory().setItemInMainHand(tool);
+            }
+        }
+    }
+    private static void spawnBossAtBlock(Player ply, Block block) {
+        if (!PlayerHelper.isProperlyPlaying(ply))
+            return;
+        ItemStack tool = ply.getInventory().getItemInMainHand();
+        String toolType = ItemHelper.splitItemName(tool)[1];
+        // handle boss spawning
+        boolean shouldConsume = false;
+        switch (toolType) {
+            case "泰坦之心":
+                shouldConsume = true;
+            case "星核": {
+                if (block.getType() == Material.ENDER_PORTAL_FRAME
+                        && BossHelper.spawnBoss(ply, BossHelper.BossType.ASTRUM_DEUS, block.getLocation().add(0.5, 1, 0.5))
+                        && shouldConsume) {
+                    tool.setAmount(tool.getAmount() - 1);
+                    ply.getInventory().setItemInMainHand(tool);
+                }
+                break;
             }
         }
     }

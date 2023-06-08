@@ -333,7 +333,7 @@ public class PlayerHelper {
         }
     }
     public static YmlHelper.YmlSection getPlayerDataFile(Player ply) {
-        String filePath = "plugins/Terraria/PlayerData/" + ply.getName() + ".yml";
+        String filePath = TerrariaHelper.Constants.DATA_PLAYER_FOLDER_DIR + ply.getName() + ".yml";
         return YmlHelper.getFile(filePath);
     }
     public static boolean hasDefeated(Player player, String progressToCheck) {

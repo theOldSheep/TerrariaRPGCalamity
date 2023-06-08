@@ -113,6 +113,13 @@ effects:
     attributes:
       regenMulti: -1
     tooltip: 被月之射线瓦解
+  破晓:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/b/b5/Stardust_Dragon
+    isBuff: false
+    damageInterval: 5
+    damage: 10
+    damageMonster: 25
+    tooltip: 被日耀射线焚烧
   耐药性:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/83/Potion_Sickness
     isBuff: false
@@ -344,13 +351,11 @@ effects:
     attributes:
       speed: -10
     tooltip: 你不能动！
-  破晓:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/b/b5/Stardust_Dragon
+  极限重力:
     isBuff: false
-    damageInterval: 5
-    damage: 10
-    damageMonster: 25
-    tooltip: 被日耀射线焚烧
+    attributes:
+      flightTimeMulti: -0.25
+    tooltip: 翅膀飞行时间减少25%
   伤害星云:
     isBuff: true
     attributes:

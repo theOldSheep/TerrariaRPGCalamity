@@ -12,10 +12,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +22,8 @@ public class AstrumDeus extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.ASTRUM_DEUS;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.ASTRAL_INFECTION;
-    public static final double BASIC_HEALTH = 1728000 * 2;
+    public static final double BASIC_HEALTH = 17280 * 2;
+//    public static final double BASIC_HEALTH = 1728000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
@@ -33,12 +32,12 @@ public class AstrumDeus extends EntitySlime {
     Player target = null;
     // other variables and AI
     AstrumDeus head;
-    public static final int TOTAL_LENGTH = 81, SECOND_HEAD_INDEX = TOTAL_LENGTH / 2 + 1;
+    public static final int TOTAL_LENGTH = 81, SECOND_HEAD_INDEX = TOTAL_LENGTH / 2 + 1, SPAWN_ANIMATION_DURATION = 150;
     public static final double
             HEAD_DMG = 720d, HEAD_DEF = 70d, HEAD_DR = 0.2,
             BODY_DMG = 480d, BODY_DEF = 40d, BODY_DR = 0.1,
             TAIL_DMG = 384d, TAIL_DEF = 100d, TAIL_DR = 0.3,
-            SPEED_LASER = 2;
+            SPEED_LASER = 2.25, SPEED_MINE = 1.5;
     public static final EntityHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
             new EntityHelper.WormSegmentMovementOptions()
                     .setFollowDistance(5)
@@ -87,6 +86,56 @@ public class AstrumDeus extends EntitySlime {
     int indexAI = 0;
     Vector dVec = null, bufferVec = new Vector(0, 0, 0);
     boolean charging = true, secondPhase = false;
+    // spawn particle related
+    int spawnAnimationIndex = SPAWN_ANIMATION_DURATION;
+    Location summonedLocation, summonParticleLoc1, summonParticleLoc2;
+    static GenericHelper.ParticleLineOptions summonParticle1, summonParticle2;
+    static {
+        summonParticle1 = new GenericHelper.ParticleLineOptions()
+                .setParticleColor("0|255|255")
+                .setWidth(0.15)
+                .setTicksLinger(10);
+        summonParticle2 = new GenericHelper.ParticleLineOptions()
+                .setParticleColor("255|255|0")
+                .setWidth(0.15)
+                .setTicksLinger(10);
+    }
+    private void handleSpawnAnimation() {
+        if (index != 0) {
+            spawnAnimationIndex --;
+            return;
+        }
+        summonedLocation.add(0, 0.125, 0);
+        // get the max possible radius
+        double maxRadiusMulti = 1.0001 - Math.abs( (spawnAnimationIndex * 2d / SPAWN_ANIMATION_DURATION) - 1);
+        maxRadiusMulti = Math.sqrt(maxRadiusMulti);
+        double maxRadius = 6 * maxRadiusMulti;
+        // get the current radius and angle
+        double currRadiusMulti = 1.0001 - Math.abs( (spawnAnimationIndex % 15 * 2d / 15) - 1);
+        currRadiusMulti = Math.sqrt(currRadiusMulti);
+        double currRadius = maxRadius * currRadiusMulti;
+        double currAngle = 12 * spawnAnimationIndex;
+        // get current display location
+        double offsetX = MathHelper.xsin_degree(currAngle) * currRadius;
+        double offsetZ = MathHelper.xcos_degree(currAngle) * currRadius;
+        Location currLoc1 = summonedLocation.clone().add(offsetX, 0, offsetZ);
+        Location currLoc2 = summonedLocation.clone().subtract(offsetX, 0, offsetZ);
+        // spawn particles
+        Vector particleDir1 = summonParticleLoc1.subtract(currLoc1).toVector();
+        summonParticle1.setLength(particleDir1.length());
+        GenericHelper.handleParticleLine(particleDir1, currLoc1, summonParticle1);
+        Vector particleDir2 = summonParticleLoc2.subtract(currLoc2).toVector();
+        summonParticle2.setLength(particleDir2.length());
+        GenericHelper.handleParticleLine(particleDir2, currLoc2, summonParticle2);
+        // save current location
+        summonParticleLoc1 = currLoc1;
+        summonParticleLoc2 = currLoc2;
+        // remove 1 from spawnAnimationIndex
+        if (--spawnAnimationIndex <= 0) {
+            bukkitEntity.teleport(summonedLocation);
+        }
+    }
+    // AI related
     private void phaseTransition() {
         // new tail
         LivingEntity newTail = bossParts.get(SECOND_HEAD_INDEX - 2);
@@ -98,16 +147,16 @@ public class AstrumDeus extends EntitySlime {
         toRemove.remove();
         // new head
         LivingEntity newHead = bossParts.get(SECOND_HEAD_INDEX);
+        AstrumDeus newHeadSegment = (AstrumDeus) ((CraftLivingEntity) newHead).getHandle();
         EntityHelper.setMetadata(newHead, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMapHead.clone());
         newHead.setCustomName(BOSS_TYPE.msgName);
         // new head should become a new health pool
         EntityHelper.setMetadata(newHead, EntityHelper.MetadataName.DAMAGE_TAKER, null);
         // tweak second half of body to share health with second head
-        AstrumDeus newHeadNMS = (AstrumDeus) ((CraftLivingEntity) newHead).getHandle();
-        for (int idx = SECOND_HEAD_INDEX + 1; idx < bossParts.size(); idx ++) {
+        for (int idx = SECOND_HEAD_INDEX; idx < bossParts.size(); idx ++) {
             LivingEntity currentSegment = bossParts.get(idx);
             EntityHelper.setMetadata(currentSegment, EntityHelper.MetadataName.DAMAGE_TAKER, newHead);
-            ( (AstrumDeus) ((CraftLivingEntity) currentSegment).getHandle() ).head = newHeadNMS;
+            ( (AstrumDeus) ((CraftLivingEntity) currentSegment).getHandle() ).head = newHeadSegment;
         }
     }
     private void shootProjectiles(int attackMethod) {
@@ -138,7 +187,7 @@ public class AstrumDeus extends EntitySlime {
             }
             // mine
             case 2: {
-                shootInfo.velocity = MathHelper.randomVector();
+                shootInfo.velocity = MathHelper.randomVector().multiply(SPEED_MINE);
                 EntityHelper.spawnProjectile(shootInfo);
                 break;
             }
@@ -179,14 +228,20 @@ public class AstrumDeus extends EntitySlime {
             }
             else {
                 dVec.multiply(0.975);
-                dVec.setY(dVec.getY() - 0.05);
+                if (index == 0)
+                    dVec.setY(dVec.getY() - 0.05);
+                else
+                    dVec.setY(dVec.getY() + 0.05);
             }
         }
         else {
-            if (locY > target.getLocation().getY())
+            // one head borrows, one head flies
+            boolean yCoordRequirementMet = locY > target.getLocation().getY();
+            if (index != 0) yCoordRequirementMet = !yCoordRequirementMet;
+            if (yCoordRequirementMet)
                 shouldIncreaseIdx = false;
             else {
-                Location targetLoc = target.getLocation().subtract(0, 20, 0);
+                Location targetLoc = target.getLocation().subtract(0, index == 0 ? 20 : -20, 0);
                 dVec = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                 double dVecLen = dVec.length();
                 if (dVecLen < 0.01) {
@@ -196,7 +251,10 @@ public class AstrumDeus extends EntitySlime {
                 dVec.multiply(0.35 / dVecLen);
             }
             dVec.multiply(0.95);
-            dVec.setY(dVec.getY() - 0.05);
+            if (index == 0)
+                dVec.setY(dVec.getY() - 0.05);
+            else
+                dVec.setY(dVec.getY() + 0.05);
         }
         // tweak buffer vector, cloned and scaled to produce actual velocity
         bufferVec.add(dVec);
@@ -247,12 +305,18 @@ public class AstrumDeus extends EntitySlime {
                 boolean isHead = false;
                 if (index == 0) isHead = true;
                 else if (index == SECOND_HEAD_INDEX && healthRatio < 0.5) isHead = true;
+
+                if (spawnAnimationIndex > 0) {
+                    handleSpawnAnimation();
+                }
                 // head
-                if (isHead) {
+                else if (isHead) {
+                    // apply extreme gravity to target
+                    EntityHelper.applyEffect(target, "极限重力", 300);
                     // attack
                     headRushEnemy();
                     // face the player
-                    this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+                    this.yaw = (float) MathHelper.getVectorYaw(target.getLocation().subtract(bukkitEntity.getLocation()).toVector());
                     // follow
                     EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
                 }
@@ -280,20 +344,17 @@ public class AstrumDeus extends EntitySlime {
         return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
     }
     // a constructor for actual spawning
-    public AstrumDeus(Player summonedPlayer, ArrayList<LivingEntity> bossParts, int index) {
+    public AstrumDeus(Player summonedPlayer, ArrayList<LivingEntity> bossParts, Location spawnParticleLoc, int index) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // copy variable
         this.bossParts = bossParts;
         this.index = index;
         // spawn location
-        Location spawnLoc;
-        if (index == 0) {
-            double angle = Math.random() * 720d, dist = 40;
-            spawnLoc = summonedPlayer.getLocation().add(
-                    MathHelper.xsin_degree(angle) * dist, -40, MathHelper.xcos_degree(angle) * dist);
-        } else {
-            spawnLoc = bossParts.get(index - 1).getLocation().add(0, -1, 0);
-        }
+        summonedLocation = spawnParticleLoc;
+        summonParticleLoc1 = spawnParticleLoc.clone();
+        summonParticleLoc2 = spawnParticleLoc.clone();
+        Location spawnLoc = spawnParticleLoc.clone();
+        spawnLoc.setY(-10);
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
@@ -376,7 +437,7 @@ public class AstrumDeus extends EntitySlime {
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
             if (index + 1 < TOTAL_LENGTH)
-                new AstrumDeus(summonedPlayer, bossParts, index + 1);
+                new AstrumDeus(summonedPlayer, bossParts, spawnParticleLoc, index + 1);
         }
     }
 

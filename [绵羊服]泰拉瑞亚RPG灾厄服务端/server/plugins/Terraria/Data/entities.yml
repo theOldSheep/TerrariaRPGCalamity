@@ -471,6 +471,12 @@
 深海吞食者:
     buffInflict:
         - "流血|80|1"
+白金星舰:
+    buffInflict:
+        - "幻星感染|160|1"
+    buffImmute:
+        - "中毒"
+        - "幻星感染"
 石巨人:
     buffInflict:
         - "碎甲|160|1"
@@ -543,6 +549,17 @@
         - "咒火"
         - "燃烧"
     soundKilled: "ENTITY.CLTST.DEATH"
+星神游龙:
+    drop:
+        - "日耀碎片:20:32:1"
+        - "星璇碎片:20:32:1"
+        - "星云碎片:20:32:1"
+        - "星尘碎片:20:32:1"
+    buffInflict:
+        - "幻星感染|160|1"
+    buffImmute:
+        - "中毒"
+        - "幻星感染"
 冰球:
     buffInflict:
         - "冰冻|20|1"

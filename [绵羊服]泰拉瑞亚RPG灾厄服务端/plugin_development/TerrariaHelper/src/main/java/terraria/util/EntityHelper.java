@@ -628,7 +628,7 @@ public class EntityHelper {
         }
         return result;
     }
-    public static void tickEffect(Entity entity, String effect, int delay, double damagePerDelay) {
+    private static void tickEffect(Entity entity, String effect, int delay, double damagePerDelay) {
         try {
             HashMap<String, Integer> allEffects = getEffectMap(entity);
             int timeRemaining = allEffects.getOrDefault(effect, 0) - delay;
@@ -703,12 +703,14 @@ public class EntityHelper {
             Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] tickEffect", e);
         }
     }
-    public static void endTickEffect(Entity entity, String effect, HashMap<String, Integer> allEffects, boolean removeEffectOnStop) {
+    private static void endTickEffect(Entity entity, String effect, HashMap<String, Integer> allEffects, boolean removeEffectOnStop) {
         try {
             // this is to prevent removing effect from a player logging out
             if (removeEffectOnStop) allEffects.remove(effect);
             // tweak attribute if the entity is alive
-            if (!entity.isDead()) {
+            if (entity instanceof Player)
+                PlayerHelper.setupAttribute((Player) entity);
+            else if (!entity.isDead()) {
                 String attributesPath = "effects." + effect + ".attributes.";
                 ConfigurationSection effectSection = TerrariaHelper.buffConfig.getConfigurationSection(attributesPath);
                 tweakAllAttributes(entity, effectSection, false);
@@ -722,7 +724,7 @@ public class EntityHelper {
             Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] endTickEffect", e);
         }
     }
-    public static void prepareTickEffect(Entity entity, String effect) {
+    private static void prepareTickEffect(Entity entity, String effect) {
         try {
             // setup constants
             int delay = 10, damagePerDelay = 0;
@@ -735,7 +737,9 @@ public class EntityHelper {
                     damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageMonster", damagePerDelay);
             }
             // tweak attrMap
-            {
+            if (entity instanceof Player)
+                PlayerHelper.setupAttribute((Player) entity);
+            else {
                 String attributesPath = "effects." + effect + ".attributes.";
                 ConfigurationSection effectSection = TerrariaHelper.buffConfig.getConfigurationSection(attributesPath);
                 tweakAllAttributes(entity, effectSection, true);

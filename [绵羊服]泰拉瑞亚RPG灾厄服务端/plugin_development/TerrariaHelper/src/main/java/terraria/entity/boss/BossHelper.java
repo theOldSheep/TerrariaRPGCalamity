@@ -13,6 +13,7 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.aquaticScourge.AquaticScourge;
+import terraria.entity.boss.astrumDeus.AstrumDeus;
 import terraria.entity.boss.desertScourge.DesertNuisance;
 import terraria.entity.boss.desertScourge.DesertScourge;
 import terraria.entity.boss.theDestroyer.Destroyer;
@@ -42,6 +43,9 @@ public class BossHelper {
                 break;
             case THE_DESTROYER:
                 multiplier = 1d / Destroyer.TOTAL_LENGTH;
+                break;
+            case ASTRUM_DEUS:
+                multiplier = 1.5d / AstrumDeus.TOTAL_LENGTH;
                 break;
             default:
                 multiplier = 1d;
