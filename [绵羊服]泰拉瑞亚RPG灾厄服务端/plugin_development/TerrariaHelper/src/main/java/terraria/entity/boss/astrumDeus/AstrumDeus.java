@@ -1,6 +1,7 @@
 package terraria.entity.boss.astrumDeus;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -22,7 +23,7 @@ public class AstrumDeus extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.ASTRUM_DEUS;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.ASTRAL_INFECTION;
-    public static final double BASIC_HEALTH = 17280 * 2;
+    public static final double BASIC_HEALTH = 172800 * 2;
 //    public static final double BASIC_HEALTH = 1728000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
@@ -81,9 +82,10 @@ public class AstrumDeus extends EntitySlime {
         attrMapTail.put("defence", TAIL_DEF);
         attrMapTail.put("damageTakenMulti", 1 - TAIL_DR);
     }
-    public EntityHelper.ProjectileShootInfo projectilePropertyLaser, projectilePropertyMine;
+    public EntityHelper.ProjectileShootInfo projectilePropertyLaserBlue, projectilePropertyLaserOrange, projectilePropertyMine;
     int index;
     int indexAI = 0;
+    double healthRatio = 1;
     Vector dVec = null, bufferVec = new Vector(0, 0, 0);
     boolean charging = true, secondPhase = false;
     // spawn particle related
@@ -136,6 +138,7 @@ public class AstrumDeus extends EntitySlime {
         }
     }
     // AI related
+    // only the first head should call this function
     private void phaseTransition() {
         // new tail
         LivingEntity newTail = bossParts.get(SECOND_HEAD_INDEX - 2);
@@ -147,23 +150,32 @@ public class AstrumDeus extends EntitySlime {
         toRemove.remove();
         // new head
         LivingEntity newHead = bossParts.get(SECOND_HEAD_INDEX);
-        AstrumDeus newHeadSegment = (AstrumDeus) ((CraftLivingEntity) newHead).getHandle();
+        AstrumDeus newHeadNMS = (AstrumDeus) ((CraftLivingEntity) newHead).getHandle();
         EntityHelper.setMetadata(newHead, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMapHead.clone());
         newHead.setCustomName(BOSS_TYPE.msgName);
         // new head should become a new health pool
-        EntityHelper.setMetadata(newHead, EntityHelper.MetadataName.DAMAGE_TAKER, null);
+        double updatedHealth = getHealth();
         // tweak second half of body to share health with second head
         for (int idx = SECOND_HEAD_INDEX; idx < bossParts.size(); idx ++) {
             LivingEntity currentSegment = bossParts.get(idx);
-            EntityHelper.setMetadata(currentSegment, EntityHelper.MetadataName.DAMAGE_TAKER, newHead);
-            ( (AstrumDeus) ((CraftLivingEntity) currentSegment).getHandle() ).head = newHeadSegment;
+            AstrumDeus currSegmentNMS = (AstrumDeus) ((CraftLivingEntity) currentSegment).getHandle();
+            // update health of second half
+            currentSegment.setHealth(updatedHealth);
+            EntityHelper.setMetadata(currentSegment, EntityHelper.MetadataName.DAMAGE_TAKER,
+                    idx == SECOND_HEAD_INDEX ? null : newHead);
+            currSegmentNMS.head = idx == SECOND_HEAD_INDEX ? null : newHeadNMS;
         }
+        // mark second phase as true to prevent excessive call
+        secondPhase = true;
     }
     private void shootProjectiles(int attackMethod) {
         EntityHelper.ProjectileShootInfo shootInfo;
         switch (attackMethod) {
             case 1: {
-                shootInfo = projectilePropertyLaser;
+                if (healthRatio > 0.5)
+                    shootInfo = index % 2 == 0 ? projectilePropertyLaserBlue : projectilePropertyLaserOrange;
+                else
+                    shootInfo = index * 2 < TOTAL_LENGTH ? projectilePropertyLaserBlue : projectilePropertyLaserOrange;
                 break;
             }
             case 2:
@@ -177,7 +189,7 @@ public class AstrumDeus extends EntitySlime {
             // laser
             case 1: {
                 Location targetLoc;
-                if (getHealth() * 2 > getMaxHealth())
+                if (healthRatio > 0.5)
                     targetLoc = target.getEyeLocation();
                 else
                     targetLoc = EntityHelper.helperAimEntity(shootInfo.shootLoc, target, laserAimHelper);
@@ -283,51 +295,53 @@ public class AstrumDeus extends EntitySlime {
             return;
         // AI
         {
+            healthRatio = getHealth() / getMaxHealth();
+            boolean isHead = head == null;
             // update target
-            target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
-            // disappear if no target is available
-            if (target == null) {
-                for (LivingEntity segment : bossParts) {
-                    segment.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
-                    segment.setHealth(0d);
-                    segment.remove();
+            if (isHead) {
+                target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
+                        IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+                // disappear if no target is available
+                if (target == null) {
+                    for (LivingEntity segment : bossParts) {
+                        segment.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
+                        segment.setHealth(0d);
+                        segment.remove();
+                    }
+                    return;
                 }
-                return;
             }
+            else
+                target = head.target;
             // if target is valid, attack
+            // phase transition
+            if (index == 0 && !secondPhase && healthRatio < 0.5)
+                phaseTransition();
+
+            if (spawnAnimationIndex > 0) {
+                handleSpawnAnimation();
+            }
+            // head
+            else if (isHead) {
+                Bukkit.broadcastMessage(index + " health " + getHealth());
+                // update boss bar and dynamic DR
+                terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, ticksLived, BOSS_TYPE);
+                // apply extreme gravity to target
+                EntityHelper.applyEffect(target, "极限重力", 310);
+                // attack
+                headRushEnemy();
+                // face the player
+                this.yaw = (float) MathHelper.getVectorYaw(target.getLocation().subtract(bukkitEntity.getLocation()).toVector());
+                // follow
+                EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
+            }
+            // body and tail
             else {
-                double healthRatio = getHealth() / getMaxHealth();
-                // phase transition
-                if (index == 0 && !secondPhase && healthRatio < 0.5)
-                    phaseTransition();
-
-                boolean isHead = false;
-                if (index == 0) isHead = true;
-                else if (index == SECOND_HEAD_INDEX && healthRatio < 0.5) isHead = true;
-
-                if (spawnAnimationIndex > 0) {
-                    handleSpawnAnimation();
+                if (++indexAI % 200 == index * 2) {
+                    shootProjectiles(1);
                 }
-                // head
-                else if (isHead) {
-                    // apply extreme gravity to target
-                    EntityHelper.applyEffect(target, "极限重力", 300);
-                    // attack
-                    headRushEnemy();
-                    // face the player
-                    this.yaw = (float) MathHelper.getVectorYaw(target.getLocation().subtract(bukkitEntity.getLocation()).toVector());
-                    // follow
-                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
-                }
-                // body and tail
-                else {
-                    if (++indexAI % 200 == index * 2) {
-                        shootProjectiles(1);
-                    }
-                    if (index % 2 == 0 && indexAI % 100 == index) {
-                        shootProjectiles(2);
-                    }
+                if (index % 2 == 0 && indexAI % 100 == index) {
+                    shootProjectiles(2);
                 }
             }
         }
@@ -361,7 +375,7 @@ public class AstrumDeus extends EntitySlime {
         // basic characteristics
         if (index == 0) {
             setCustomName(BOSS_TYPE.msgName);
-            this.head = this;
+            this.head = null;
         }
         else {
             this.head = (AstrumDeus) ((CraftEntity) bossParts.get(0)).getHandle();
@@ -429,12 +443,16 @@ public class AstrumDeus extends EntitySlime {
             this.setNoGravity(true);
             this.persistent = true;
             // projectile info
-            projectilePropertyLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLaser,
+            projectilePropertyLaserBlue = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLaser,
                     EntityHelper.DamageType.ARROW, "星幻激光");
+            projectilePropertyLaserOrange = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLaser,
+                    EntityHelper.DamageType.ARROW, "星幻激光");
+            projectilePropertyLaserOrange.properties.put("trailColor", "255|255|0");
             projectilePropertyMine = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapMine,
                     EntityHelper.DamageType.ARROW, "幻星雷");
             // segment settings
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
+            if (head != null)
+                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
             if (index + 1 < TOTAL_LENGTH)
                 new AstrumDeus(summonedPlayer, bossParts, spawnParticleLoc, index + 1);
@@ -473,11 +491,9 @@ public class AstrumDeus extends EntitySlime {
         motX /= 0.91;
         motY /= 0.98;
         motZ /= 0.91;
-        // update boss bar and dynamic DR
-        if (index == 0)
-            terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, ticksLived, BOSS_TYPE);
         // update health
-        setHealth(head.getHealth());
+        if (head != null)
+            setHealth(head.getHealth());
         // load nearby chunks
         if (index % 10 == 0) {
             for (int i = -2; i <= 2; i ++)
