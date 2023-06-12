@@ -10,59 +10,59 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.util.Vector;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MoonLordBackground extends EntitySlime {
+public class MoonLordPhantasmalSphere extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.MOON_LORD;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
-    ArrayList<LivingEntity> bossParts;
+    ArrayList<MoonLordPhantasmalSphere> allSpheres;
     Player target = null;
     // other variables and AI
-    enum MoonLordBackgroundType {
-        BODY      ("月球领主身体", 35),
-        LEFT_HAND ("月球领主左手", 25),
-        RIGHT_HAND("月球领主右手", 25),
-        HEAD      ("月球领主头"  , 30);
-        final String entityName;
-        final int entitySize;
-        private MoonLordBackgroundType(String entityName, int entitySize) {
-            this.entityName = entityName;
-            this.entitySize = entitySize;
+    int index;
+    private void AI() {
+        // no AI after death
+        if (getHealth() <= 0d)
+            return;
+        // AI
+        {
+
         }
+        // face the player
+        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+        // collision dmg
+        terraria.entity.boss.BossHelper.collisionDamage(this);
     }
-    MoonLordBackgroundType backgroundType;
-
-
     // default constructor to handle chunk unload
-    public MoonLordBackground(World world) {
+    public MoonLordPhantasmalSphere(World world) {
         super(world);
         super.die();
     }
+    // validate if the condition for spawning is met
+    public static boolean canSpawn(Player player) {
+        return true;
+    }
     // a constructor for actual spawning
-    public MoonLordBackground(Player summonedPlayer, MoonLord owner, MoonLordBackgroundType backgroundType) {
+    public MoonLordPhantasmalSphere(Player summonedPlayer, Location spawnLoc, ArrayList<MoonLordPhantasmalSphere> allSpheres) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
-        double angle = Math.random() * 720d, dist = 40;
-        Location spawnLoc = owner.getBukkitEntity().getLocation();
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        this.backgroundType = backgroundType;
-        setCustomName(backgroundType.entityName);
+        this.target = summonedPlayer;
+        this.allSpheres = allSpheres;
+        setCustomName("幻影球");
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("noDamage");
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, 1);
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
@@ -71,41 +71,42 @@ public class MoonLordBackground extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 1d);
+            attrMap.put("damageTakenMulti", 0.95);
             attrMap.put("defence", 0d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
-        // init target map
-        {
-            targetMap = owner.targetMap;
-            target = summonedPlayer;
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
-        }
         // init health and slime size
         {
-            setSize(backgroundType.entitySize, false);
-            double health = 1;
-            getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
-            setHealth((float) health);
+            setSize(8, false);
         }
         // boss parts and other properties
         {
-            bossParts = owner.bossParts;
-            bossParts.add((LivingEntity) bukkitEntity);
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;
         }
-        // init background
     }
 
     // rewrite AI
     @Override
     public void B_() {
         super.B_();
-        // set velocity to zero
-        bukkitEntity.setVelocity(new Vector());
+        // undo air resistance etc.
+        motX /= 0.91;
+        motY /= 0.98;
+        motZ /= 0.91;
+        // load nearby chunks
+        {
+            for (int i = -2; i <= 2; i ++)
+                for (int j = -2; j <= 2; j ++) {
+                    org.bukkit.Chunk currChunk = bukkitEntity.getLocation().add(i << 4, 0, j << 4).getChunk();
+                    currChunk.load();
+                }
+        }
+        // AI
+        AI();
     }
 }
