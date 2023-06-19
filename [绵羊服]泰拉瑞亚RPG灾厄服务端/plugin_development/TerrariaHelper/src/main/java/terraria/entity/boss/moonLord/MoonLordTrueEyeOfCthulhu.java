@@ -1,8 +1,10 @@
 package terraria.entity.boss.moonLord;
 
-import net.minecraft.server.v1_12_R1.*;
+import net.minecraft.server.v1_12_R1.EntitySlime;
+import net.minecraft.server.v1_12_R1.GenericAttributes;
+import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
+import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.Hash;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
@@ -18,7 +20,7 @@ import terraria.util.MathHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MoonLordEye extends EntitySlime {
+public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.MOON_LORD;
     HashMap<String, Double> attrMap;
@@ -28,33 +30,6 @@ public class MoonLordEye extends EntitySlime {
     // other variables and AI
     enum EyeAttackMethod {
         PHANTASMAL_DEATH_RAY, PHANTASMAL_SPHERE, PHANTASMAL_EYE, PHANTASMAL_BOLT;
-    }
-    enum MoonLordEyeLocation {
-        LEFT_HAND (57375 * 2,  80d, 4, -1, 0,  "月球领主手",
-                MoonLordBackground.MoonLordBackgroundType.LEFT_HAND,
-                new EyeAttackMethod[]{EyeAttackMethod.PHANTASMAL_EYE, EyeAttackMethod.PHANTASMAL_BOLT, EyeAttackMethod.PHANTASMAL_SPHERE}),
-        RIGHT_HAND(57375 * 2,  80d, 4, -20, 120,"月球领主手",
-                MoonLordBackground.MoonLordBackgroundType.RIGHT_HAND,
-                new EyeAttackMethod[]{EyeAttackMethod.PHANTASMAL_EYE, EyeAttackMethod.PHANTASMAL_SPHERE, EyeAttackMethod.PHANTASMAL_BOLT}),
-        HEAD      (103275 * 2, 100d,6, -50, 240, "月球领主"  ,
-                MoonLordBackground.MoonLordBackgroundType.HEAD,
-                new EyeAttackMethod[]{EyeAttackMethod.PHANTASMAL_BOLT, EyeAttackMethod.PHANTASMAL_DEATH_RAY, EyeAttackMethod.PHANTASMAL_BOLT});
-        final double angleOffset, basicHealth, defence;
-        final int eyeSize, initialIndexAI;
-        final String eyeName;
-        final EyeAttackMethod[] attackCycle;
-        final MoonLordBackground.MoonLordBackgroundType backgroundType;
-        MoonLordEyeLocation(double basicHealth, double defence, int eyeSize, int initialIndexAI, double angleOffset, String eyeName,
-                                    MoonLordBackground.MoonLordBackgroundType backgroundType, EyeAttackMethod[] attackCycle) {
-            this.basicHealth = basicHealth;
-            this.defence = defence;
-            this.eyeSize = eyeSize;
-            this.initialIndexAI = initialIndexAI;
-            this.angleOffset = angleOffset;
-            this.eyeName = eyeName;
-            this.backgroundType = backgroundType;
-            this.attackCycle = attackCycle;
-        }
     }
     static HashMap<String, Double> attrMapPhantasmalEye, attrMapDeathRay;
     static GenericHelper.StrikeLineOptions strikeOptionDeathRay;
@@ -74,11 +49,9 @@ public class MoonLordEye extends EntitySlime {
                                 .setParticleColor("100|255|255"));
     }
 
-    int indexAI = -1, indexAnimation = 0, indexAttackMethod = -1;
-    double deathRayYaw, deathRayPitch, deathRayPitchStep;
+    int indexAI = -1, indexAttackMethod = -1;
+    double deathRayYaw, deathRayPitch, deathRayPitchStep, angleOffset;
     boolean destroyed = false;
-    MoonLordEyeLocation eyeLocation;
-    MoonLordBackground background;
     MoonLord owner;
     EntityHelper.ProjectileShootInfo shootInfoPhantasmalEye;
     EyeAttackMethod attackMethod = EyeAttackMethod.PHANTASMAL_SPHERE;
@@ -87,43 +60,10 @@ public class MoonLordEye extends EntitySlime {
 
 
     // returns true if the animation is finished
-    private boolean openEyeAnimation() {
-        if (! destroyed)
-            removeScoreboardTag("noDamage");
-        if (indexAnimation >= 15) {
-            setCustomName(eyeLocation.eyeName);
-            return true;
-        }
-
-        // 0~4, 5~9, 10~14
-        int customNameIndex = 3 - (indexAnimation / 5);
-        setCustomName(eyeLocation.eyeName + "§" + customNameIndex);
-        indexAnimation ++;
-
-        return false;
-    }
-    // returns true if the animation is finished
-    private boolean closeEyeAnimation() {
-        addScoreboardTag("noDamage");
-        if (indexAnimation <= 0) {
-            setCustomName(eyeLocation.eyeName + "§4");
-            return true;
-        }
-
-        indexAnimation --;
-        // 14~10, 9~5, 4~0
-        int customNameIndex = 3 - (indexAnimation / 5);
-        setCustomName(eyeLocation.eyeName + "§" + customNameIndex);
-
-        return false;
-    }
     private void attackSphere() {
         // open eye and init all spheres
         if (indexAI == 0) {
-            if (openEyeAnimation())
-                allSpheres = new ArrayList<>();
-            else
-                indexAI --;
+            allSpheres = new ArrayList<>();
         }
         // spawn sphere
         switch (indexAI) {
@@ -133,92 +73,70 @@ public class MoonLordEye extends EntitySlime {
             case 40:
             case 50:
             case 60:
-            case 70:
+                Location spawnLoc = getBukkitEntity().getLocation();
+                switch (indexAI) {
+                    case 10:
+                        spawnLoc.add(5, 0, 0);
+                        break;
+                    case 20:
+                        spawnLoc.add(0, 5, 0);
+                        break;
+                    case 30:
+                        spawnLoc.add(0, 0, 5);
+                        break;
+                    case 40:
+                        spawnLoc.add(-5, 0, 0);
+                        break;
+                    case 50:
+                        spawnLoc.add(0, -5, 0);
+                        break;
+                    case 60:
+                        spawnLoc.add(0, 0, -5);
+                        break;
+                }
+                MoonLordPhantasmalSphere sphere = new MoonLordPhantasmalSphere(target, spawnLoc, allSpheres);
+                sphere.setVelocity(new Vector());
+                allSpheres.add(sphere);
             case 80:
-            case 90:
-            case 100:
-            case 110:
-            case 120:
-                allSpheres.add(new MoonLordPhantasmalSphere(target, getBukkitEntity().getLocation(), allSpheres));
-            case 150:
-                MoonLordPhantasmalSphere center = allSpheres.get(allSpheres.size() / 2);
-                Location aimLoc = EntityHelper.helperAimEntity(center.getBukkitEntity(), target, MoonLordPhantasmalSphere.aimHelper);
-                Vector velocity = aimLoc.subtract( ((LivingEntity) center.getBukkitEntity()).getEyeLocation() ).toVector();
+                Location aimLoc = EntityHelper.helperAimEntity(getBukkitEntity(), target, MoonLordPhantasmalSphere.aimHelper);
+                Vector velocity = aimLoc.subtract( ((LivingEntity) getBukkitEntity()).getEyeLocation() ).toVector();
                 velocity.multiply(1d / 15d);
-                for (MoonLordPhantasmalSphere sphere : allSpheres)
-                    sphere.setVelocity(velocity);
+                for (MoonLordPhantasmalSphere currSphere : allSpheres)
+                    currSphere.setVelocity(velocity);
         }
-        // reach changes
-        switch (eyeLocation) {
-            case LEFT_HAND:
-                if (indexAI <= 120)
-                    owner.reachLeft += 0.2;
-                else if (owner.reachLeft > 15)
-                    owner.reachLeft -= 0.5;
-                break;
-            case RIGHT_HAND:
-                if (indexAI <= 120)
-                    owner.reachRight += 0.2;
-                else if (owner.reachRight > 15)
-                    owner.reachRight -= 0.5;
-                break;
-        }
-        // close eye
-        if (indexAI >= 185) {
-            // next attack
-            if (closeEyeAnimation())
-                indexAI = -1;
+        // next attack
+        if (indexAI >= 100) {
+            indexAI = -1;
         }
     }
     private void attackBolt() {
-        // open eye
-        if (indexAI == 0) {
-            if (! openEyeAnimation())
-                indexAI --;
-        }
         // spawn bolt
         switch (indexAI) {
             case 25:
             case 32:
                 new MoonLordPhantasmalBolt(target, ((LivingEntity) bukkitEntity).getEyeLocation());
         }
-        // close eye
+        // next attack
         if (indexAI >= 40) {
-            // next attack
-            if (closeEyeAnimation())
                 indexAI = -1;
         }
     }
     private void attackEye() {
-        // open eye
-        if (indexAI == 0) {
-            if (! openEyeAnimation())
-                indexAI --;
-        }
-        // close eye
+        // next attack
         if (indexAI >= 40) {
-            // next attack
-            if (closeEyeAnimation())
-                indexAI = -1;
+            indexAI = -1;
         }
         // spawn bolt
-        else if (indexAI % 4 == 0) {
+        else if (indexAI % 6 == 0) {
             shootInfoPhantasmalEye.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             shootInfoPhantasmalEye.velocity = MathHelper.randomVector();
             EntityHelper.spawnProjectile(shootInfoPhantasmalEye);
         }
     }
     private void attackDeathRay() {
-        // open eye
-        if (indexAI == 0) {
-            if (! openEyeAnimation())
-                indexAI --;
-        }
-        // close eye
+        // next attack
         if (indexAI >= 120) {
-            // next attack
-            if (closeEyeAnimation())
-                indexAI = -1;
+            indexAI = -1;
         }
         // death ray
         else if (indexAI >= 10 && indexAI <= 110) {
@@ -243,7 +161,7 @@ public class MoonLordEye extends EntitySlime {
             deathRayYaw += directionInterpolation[0];
             deathRayPitch += deathRayPitchStep;
             GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
-                    deathRayYaw, deathRayPitch, 96, 1, "", "",
+                    deathRayYaw, deathRayPitch, 48, 0.5, "", "",
                     deathRayDamageCD, attrMapDeathRay, strikeOptionDeathRay);
         }
     }
@@ -260,7 +178,6 @@ public class MoonLordEye extends EntitySlime {
                 // get next attack method
                 if (indexAI == 0) {
                     indexAttackMethod ++;
-                    attackMethod = eyeLocation.attackCycle[indexAttackMethod % eyeLocation.attackCycle.length];
                 }
                 switch (attackMethod) {
                     case PHANTASMAL_SPHERE:
@@ -281,7 +198,7 @@ public class MoonLordEye extends EntitySlime {
             if (! destroyed && getHealth() < 10d) {
                 destroyed = true;
                 addScoreboardTag("noDamage");
-                new MoonLordTrueEyeOfCthulhu(target, owner, bukkitEntity.getLocation(), eyeLocation.angleOffset);
+
             }
 
             indexAI++;
@@ -291,7 +208,7 @@ public class MoonLordEye extends EntitySlime {
         // no collision dmg
     }
     // default constructor to handle chunk unload
-    public MoonLordEye(World world) {
+    public MoonLordTrueEyeOfCthulhu(World world) {
         super(world);
         super.die();
     }
@@ -300,18 +217,16 @@ public class MoonLordEye extends EntitySlime {
         return true;
     }
     // a constructor for actual spawning
-    public MoonLordEye(Player summonedPlayer, MoonLord owner, MoonLordEyeLocation eyeLocation) {
+    public MoonLordTrueEyeOfCthulhu(Player summonedPlayer, MoonLord owner, Location spawnLoc, double angleOffset) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
-        Location spawnLoc = owner.getBukkitEntity().getLocation();
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
         this.owner = owner;
-        this.eyeLocation = eyeLocation;
-        indexAI = eyeLocation.initialIndexAI;
-        setCustomName(eyeLocation.eyeName + "§4");
+        this.angleOffset = angleOffset;
+        setCustomName("克苏鲁真眼");
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("noDamage");
         bukkitEntity.addScoreboardTag("isMonster");
@@ -326,7 +241,7 @@ public class MoonLordEye extends EntitySlime {
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 1d);
             attrMap.put("damageTakenMulti", 0.95);
-            attrMap.put("defence", eyeLocation.defence);
+            attrMap.put("defence", 0d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
@@ -340,11 +255,7 @@ public class MoonLordEye extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(eyeLocation.eyeSize, false);
-            double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
-            double health = eyeLocation.basicHealth * healthMulti;
-            getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
-            setHealth((float) health);
+            setSize(5, false);
         }
         // boss parts and other properties
         {
@@ -359,8 +270,6 @@ public class MoonLordEye extends EntitySlime {
             shootInfoPhantasmalEye = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPhantasmalEye,
                     EntityHelper.DamageType.MAGIC, "幻影眼");
         }
-        // init background
-        background = new MoonLordBackground(target, owner, eyeLocation.backgroundType);
     }
 
     // rewrite AI

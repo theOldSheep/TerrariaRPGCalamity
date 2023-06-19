@@ -30,6 +30,7 @@ terraria\entity\boss\empressOfLight\EmpressOfLight$1.class
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu$1.class
 terraria\util\DragoncoreHelper.class
 terraria\util\GenericHelper$ParticleLineOptions.class
+terraria\entity\boss\moonLord\MoonLordTrueEyeOfCthulhu$EyeAttackMethod.class
 terraria\entity\minion\MinionSlime.class
 terraria\entity\boss\thePlaguebringerGoliath\ThePlaguebringerGoliath$1.class
 terraria\entity\boss\theHiveMind\TheHiveMind.class
@@ -38,6 +39,7 @@ terraria\entity\boss\kingSlime\KingSlime.class
 terraria\event\listener\PlayerMovementListener.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
 terraria\event\TerrariaProjectileHitEvent.class
+terraria\entity\boss\moonLord\MoonLordEye$MoonLordEyeLocation.class
 terraria\util\PlayerHelper$1.class
 terraria\entity\boss\astrumAureus\AstrumAureus$1.class
 terraria\entity\boss\leviathanAndAnahita\Anahita$1.class
@@ -45,10 +47,12 @@ terraria\entity\npc\PathfinderGoalNPCRestrictLocation.class
 terraria\util\YmlHelper$YmlSection.class
 terraria\entity\boss\wallOfFlesh\WallOfFleshEye.class
 terraria\entity\boss\wallOfFlesh\WallOfFleshMouth.class
+terraria\entity\boss\moonLord\MoonLordEye.class
 terraria\util\WorldHelper$1.class
 terraria\entity\boss\kingSlime\CrownJewel.class
 terraria\entity\npc\TerrariaNPCBlockSeller.class
 terraria\entity\others\TerrariaEntityPlayer.class
+terraria\entity\boss\moonLord\MoonLordPhantasmalBolt.class
 terraria\entity\boss\leviathanAndAnahita\Leviathan$1.class
 terraria\entity\boss\astrumAureus\AstrumAureus$AIPhase.class
 terraria\entity\boss\theHiveMind\TheHiveMind$AIPhase.class
@@ -58,10 +62,13 @@ terraria\util\WorldHelper$BiomeType.class
 terraria\entity\projectile\TerrariaArrowProjectile.class
 terraria\util\PlayerHelper.class
 terraria\util\NMSUtils$SpawnData.class
+terraria\entity\boss\moonLord\MoonLordEye$1.class
 terraria\worldgen\overworld\OverworldChunkGenerator.class
 terraria\entity\boss\golem\GolemFist.class
 terraria\entity\boss\lunaticCultist\LunaticLightningOrb.class
+terraria\entity\boss\moonLord\MoonLordBackground.class
 terraria\entity\projectile\TerrariaArrowProjectile$1.class
+terraria\entity\boss\moonLord\MoonLordPhantasmalSphere.class
 terraria\entity\boss\theSlimeGod\CrimulanSlime$SlimeSize.class
 terraria\entity\boss\leviathanAndAnahita\Leviathan$AIPhase.class
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu$AIPhase.class
@@ -94,6 +101,7 @@ terraria\entity\boss\leviathanAndAnahita\Anahita$AIPhase.class
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu.class
 terraria\worldgen\overworld\OverworldCaveGenerator$1.class
 terraria\entity\boss\dukeFishron\Sharkron.class
+terraria\entity\boss\moonLord\MoonLordEye$EyeAttackMethod.class
 terraria\entity\boss\ravager\RavagerRockPillar.class
 terraria\entity\boss\eaterOfWorld\EaterOfWorld$1.class
 terraria\event\listener\VanillaMechanicListener.class
@@ -148,6 +156,7 @@ terraria\util\EntityHelper.class
 terraria\entity\boss\cryogen\CryogenShield.class
 terraria\event\listener\PlayerKeyToggleListener.class
 terraria\entity\boss\dukeFishron\DukeFishron.class
+terraria\entity\boss\moonLord\MoonLord.class
 terraria\entity\boss\kingSlime\KingSlime$SizeState.class
 terraria\entity\others\TerrariaItem.class
 terraria\entity\projectile\HitEntityInfo.class
@@ -164,6 +173,7 @@ terraria\entity\boss\theTwins\Retinazer.class
 terraria\entity\boss\astrumAureus\AstrumAureus.class
 terraria\util\ItemHelper.class
 terraria\entity\boss\theDestroyer\Destroyer.class
+terraria\entity\boss\moonLord\MoonLordTrueEyeOfCthulhu$1.class
 terraria\entity\npc\TerrariaNPC.class
 terraria\entity\boss\eaterOfWorld\EaterOfWorld.class
 terraria\entity\boss\thePlaguebringerGoliath\PlagueHomingMissile.class
@@ -184,11 +194,13 @@ terraria\entity\boss\thePlaguebringerGoliath\ThePlaguebringerGoliath.class
 terraria\worldgen\overworld\TreePopulator$1.class
 terraria\entity\monster\MonsterHelper.class
 terraria\worldgen\overworld\TreePopulator.class
+terraria\entity\boss\moonLord\MoonLordTrueEyeOfCthulhu.class
 terraria\worldgen\Interpolate.class
 terraria\entity\boss\lunaticCultist\LunaticCultistClone.class
 terraria\entity\minion\MinionCaveSpider.class
 terraria\entity\CustomEntities.class
 terraria\event\listener\ItemUseAndAttributeListener.class
+terraria\entity\boss\moonLord\MoonLordBackground$MoonLordBackgroundType.class
 terraria\entity\boss\ravager\Ravager.class
 terraria\entity\boss\ravager\RavagerHead.class
 terraria\entity\boss\calamitasClone\Cataclysm.class
