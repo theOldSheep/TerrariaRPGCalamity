@@ -1,6 +1,7 @@
 package terraria.entity.boss.moonLord;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -31,7 +32,7 @@ public class MoonLord extends EntitySlime {
     Player target = null;
     // other variables and AI
     static final double MOVE_SPEED = 0.75, MAX_DIST_BEFORE_TELEPORT = 100;
-    int indexAI = (int) (Math.random() * 360), trueEyeIndexAI = 0, trueEyeSpawned = 0, indexSpawnAnimation = 1200;
+    int indexAI = (int) (Math.random() * 360), trueEyeIndexAI = -1, trueEyeSpawned = 0, indexSpawnAnimation = 1200;
     MoonLordBackground background;
     double reachLeft = 15, reachRight = 15;
     boolean secondPhase = false;
@@ -43,16 +44,12 @@ public class MoonLord extends EntitySlime {
         Location tempLoc = target.getLocation();
         tempLoc.setY(backgroundLoc.getY());
         Vector facingDirection = MathHelper.getDirection(backgroundLoc,
-                tempLoc, eye.getSize() * 0.255);
-        double facingYaw = MathHelper.getVectorYaw(facingDirection);
+                tempLoc, background.getSize() * 0.255);
         // teleport
         Location eyeLoc = backgroundLoc.clone()
                 .add(facingDirection).add(0, verticalOffset, 0);
         eye.getBukkitEntity().teleport(eyeLoc);
         background.getBukkitEntity().teleport(backgroundLoc);
-        // facing direction
-        eye.yaw = (float) facingYaw;
-        background.yaw = (float) facingYaw;
     }
     private void setupLocation() {
         double centerLocAngle = indexAI / 10d;
@@ -134,8 +131,6 @@ public class MoonLord extends EntitySlime {
                             PotionEffectType.CONFUSION, ticksDuration, 0, false, false), true);
                 }
             }
-            // TODO
-            indexSpawnAnimation = 1;
 
             if (--indexSpawnAnimation == 0)
                 spawnOtherParts();
@@ -163,7 +158,7 @@ public class MoonLord extends EntitySlime {
                 secondPhase = true;
             }
             // true eye attack
-            if (trueEyeSpawned >= 1)
+            if (trueEyeSpawned > 0)
                 trueEyeIndexAI++;
             // increase index to account for slow rotation
             indexAI ++;
@@ -237,6 +232,8 @@ public class MoonLord extends EntitySlime {
             this.setNoGravity(true);
             this.persistent = true;
         }
+        // reset true eye's attack pattern
+        MoonLordTrueEyeOfCthulhu.initializeAttackPattern();
     }
 
     // disable death function to remove boss bar
@@ -246,6 +243,8 @@ public class MoonLord extends EntitySlime {
         // disable boss bar
         bossbar.setVisible(false);
         BossHelper.bossMap.remove(BOSS_TYPE.msgName);
+        // remove the background
+        background.die();
         // if the boss has been defeated properly
         if (getMaxHealth() > 10) {
             // drop items
@@ -275,5 +274,7 @@ public class MoonLord extends EntitySlime {
         }
         // AI
         AI();
+        // update facing direction
+        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
     }
 }

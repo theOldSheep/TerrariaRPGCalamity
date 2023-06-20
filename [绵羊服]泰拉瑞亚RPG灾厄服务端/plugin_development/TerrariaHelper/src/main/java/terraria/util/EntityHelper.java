@@ -880,15 +880,6 @@ public class EntityHelper {
                 }
                 break;
             }
-            case "月球领主手":
-            case "月球领主": {
-                if (dmg >= victim.getHealth()) {
-                    victim.addScoreboardTag("noDamage");
-                    victim.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
-                    return false;
-                }
-                break;
-            }
             case "蜥蜴人": {
                 double healthThreshold = victim.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 2;
                 if (victim.getHealth() > healthThreshold) {
@@ -1402,6 +1393,7 @@ public class EntityHelper {
         // if the victim has invincibility frame on this damage type (usually player)
         String damageInvincibilityFrameName = "tempDamageCD_" + damageType;
         if (victimScoreboardTags.contains(damageInvincibilityFrameName)) return;
+
         // projectile buff inflict
         if (damager instanceof Projectile) {
             buffInflict.addAll(TerrariaHelper.projectileConfig.getStringList(damager.getName() + ".buffInflict"));
@@ -1543,7 +1535,7 @@ public class EntityHelper {
                 }
         }
 
-        // handle random damage floating and crit
+        // tweak damage, including minion whip bonus, paladin shield, random damage floating and crit
         boolean crit = false;
         if (!damageFixed) {
             double damageTakenMulti = victimAttrMap.getOrDefault("damageTakenMulti", 1d);
@@ -1596,12 +1588,21 @@ public class EntityHelper {
                     dmg *= dynamicDR;
             }
         }
+        // round damage
+        dmg = Math.round(dmg);
+        if (dmg < 1.5) dmg = crit ? 2 : 1;
+        // for some entities that locks health at a specific value
+        MetadataValue healthLockMetadata = getMetadata(damageTaker, MetadataName.HEALTH_LOCKED_AT_AMOUNT);
+        if (healthLockMetadata != null) {
+            double healthLock = healthLockMetadata.asDouble();
+            if (damageTaker.getHealth() > healthLock) {
+                dmg = Math.min(damageTaker.getHealth() - (healthLock + 1e-5), dmg);
+            }
+        }
 
         // call damage event
         if (! entityDamageEvent(damager, damageSource, victimLivingEntity, damageTaker, dmg, damageType, damageReason))
             return;
-        dmg = Math.round(dmg);
-        if (dmg < 1.5) dmg = crit ? 2 : 1;
 
         // damage/kill
         if (!(victim instanceof ArmorStand)) {
@@ -1612,14 +1613,6 @@ public class EntityHelper {
                     Player ply = (Player) damageSource;
                     if (targets.containsKey(ply))
                         targets.put(ply, targets.get(ply) + dmg);
-                }
-            }
-            // for some entities that locks health at a specific value
-            MetadataValue healthLockMetadata = getMetadata(damageTaker, MetadataName.HEALTH_LOCKED_AT_AMOUNT);
-            if (healthLockMetadata != null) {
-                double healthLock = healthLockMetadata.asDouble();
-                if (damageTaker.getHealth() > healthLock) {
-                    dmg = Math.min(damageTaker.getHealth() - (healthLock + 1e-5), dmg);
                 }
             }
             if (damageTaker.getHealth() <= dmg) {

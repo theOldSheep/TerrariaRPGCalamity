@@ -105,5 +105,7 @@ public class MoonLordBackground extends EntitySlime {
         super.B_();
         // set velocity to zero
         bukkitEntity.setVelocity(new Vector());
+        // update facing direction
+        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
     }
 }

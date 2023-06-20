@@ -31,7 +31,7 @@ public class MoonLordPhantasmalSphere extends EntitySlime {
                 .setAimMode(true)
                 .setTicksOffset(15);
     }
-    int ticksRemaining = 1000;
+    int ticksRemaining = 200;
     Vector velocity = new Vector();
 
     public void setVelocity(Vector velocity) {

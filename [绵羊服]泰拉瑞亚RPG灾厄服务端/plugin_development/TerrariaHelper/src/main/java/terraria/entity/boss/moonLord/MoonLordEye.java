@@ -1,8 +1,11 @@
 package terraria.entity.boss.moonLord;
 
-import net.minecraft.server.v1_12_R1.*;
+import net.minecraft.server.v1_12_R1.EntitySlime;
+import net.minecraft.server.v1_12_R1.GenericAttributes;
+import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
+import net.minecraft.server.v1_12_R1.World;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.Hash;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
@@ -30,13 +33,13 @@ public class MoonLordEye extends EntitySlime {
         PHANTASMAL_DEATH_RAY, PHANTASMAL_SPHERE, PHANTASMAL_EYE, PHANTASMAL_BOLT;
     }
     enum MoonLordEyeLocation {
-        LEFT_HAND (57375 * 2,  80d, 4, -1, 0,  "月球领主手",
+        LEFT_HAND (57375 * 2,  80d, 5, -1, 0,  "月球领主手",
                 MoonLordBackground.MoonLordBackgroundType.LEFT_HAND,
                 new EyeAttackMethod[]{EyeAttackMethod.PHANTASMAL_EYE, EyeAttackMethod.PHANTASMAL_BOLT, EyeAttackMethod.PHANTASMAL_SPHERE}),
-        RIGHT_HAND(57375 * 2,  80d, 4, -20, 120,"月球领主手",
+        RIGHT_HAND(57375 * 2,  80d, 5, -20, 120,"月球领主手",
                 MoonLordBackground.MoonLordBackgroundType.RIGHT_HAND,
                 new EyeAttackMethod[]{EyeAttackMethod.PHANTASMAL_EYE, EyeAttackMethod.PHANTASMAL_SPHERE, EyeAttackMethod.PHANTASMAL_BOLT}),
-        HEAD      (103275 * 2, 100d,6, -50, 240, "月球领主"  ,
+        HEAD      (103275 * 2, 100d,5, -50, 240, "月球领主"  ,
                 MoonLordBackground.MoonLordBackgroundType.HEAD,
                 new EyeAttackMethod[]{EyeAttackMethod.PHANTASMAL_BOLT, EyeAttackMethod.PHANTASMAL_DEATH_RAY, EyeAttackMethod.PHANTASMAL_BOLT});
         final double angleOffset, basicHealth, defence;
@@ -148,8 +151,10 @@ public class MoonLordEye extends EntitySlime {
                 Location aimLoc = EntityHelper.helperAimEntity(center.getBukkitEntity(), target, MoonLordPhantasmalSphere.aimHelper);
                 Vector velocity = aimLoc.subtract( ((LivingEntity) center.getBukkitEntity()).getEyeLocation() ).toVector();
                 velocity.multiply(1d / 15d);
-                for (MoonLordPhantasmalSphere currSphere : allSpheres)
+                for (MoonLordPhantasmalSphere currSphere : allSpheres) {
                     currSphere.setVelocity(velocity);
+                    currSphere.ticksRemaining = 75;
+                }
         }
         // reach changes
         switch (eyeLocation) {
@@ -256,6 +261,11 @@ public class MoonLordEye extends EntitySlime {
             return;
         // AI
         {
+            // remove when owner is defeated
+            if (! owner.isAlive()) {
+                die();
+                return;
+            }
             // update target
             target = owner.target;
             // if target is valid, attack
@@ -295,10 +305,6 @@ public class MoonLordEye extends EntitySlime {
     public MoonLordEye(World world) {
         super(world);
         super.die();
-    }
-    // validate if the condition for spawning is met
-    public static boolean canSpawn(Player player) {
-        return true;
     }
     // a constructor for actual spawning
     public MoonLordEye(Player summonedPlayer, MoonLord owner, MoonLordEyeLocation eyeLocation) {
@@ -366,6 +372,12 @@ public class MoonLordEye extends EntitySlime {
 
     // rewrite AI
     @Override
+    public void die() {
+        super.die();
+        // remove the background
+        background.die();
+    }
+    @Override
     public void B_() {
         super.B_();
         // undo air resistance etc.
@@ -382,5 +394,7 @@ public class MoonLordEye extends EntitySlime {
         }
         // AI
         AI();
+        // update facing direction
+        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
     }
 }

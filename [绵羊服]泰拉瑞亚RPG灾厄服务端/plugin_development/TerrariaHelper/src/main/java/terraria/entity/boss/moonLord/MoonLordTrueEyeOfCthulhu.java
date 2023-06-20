@@ -3,6 +3,7 @@ package terraria.entity.boss.moonLord;
 import net.minecraft.server.v1_12_R1.EntitySlime;
 import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
 import net.minecraft.server.v1_12_R1.World;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -30,14 +31,22 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
     enum EyeAttackMethod {
         PHANTASMAL_DEATH_RAY, PHANTASMAL_SPHERE, PHANTASMAL_EYE, PHANTASMAL_BOLT;
     }
+    static EyeAttackMethod[] attackMethodCycle = new EyeAttackMethod[] {
+            EyeAttackMethod.PHANTASMAL_SPHERE,
+            EyeAttackMethod.PHANTASMAL_BOLT,
+            EyeAttackMethod.PHANTASMAL_EYE,
+            EyeAttackMethod.PHANTASMAL_DEATH_RAY,
+    };
+    static EyeAttackMethod attackMethod = attackMethodCycle[0];
+    static int indexAttackMethod = -1;
     static HashMap<String, Double> attrMapPhantasmalEye, attrMapDeathRay;
     static GenericHelper.StrikeLineOptions strikeOptionDeathRay;
     static {
         attrMapPhantasmalEye = new HashMap<>();
-        attrMapPhantasmalEye.put("damage", 480d);
+        attrMapPhantasmalEye.put("damage", 420d);
         attrMapPhantasmalEye.put("knockback", 1.5d);
         attrMapDeathRay = new HashMap<>();
-        attrMapDeathRay.put("damage", 1140d);
+        attrMapDeathRay.put("damage", 750d);
         attrMapDeathRay.put("knockback", 1.5d);
 
         strikeOptionDeathRay = new GenericHelper.StrikeLineOptions()
@@ -48,16 +57,22 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
                                 .setParticleColor("100|255|255"));
     }
 
-    int indexAttackMethod = -1;
     double deathRayYaw, deathRayPitch, deathRayPitchStep, angleOffset;
     boolean startedAttack = false;
     MoonLord owner;
     EntityHelper.ProjectileShootInfo shootInfoPhantasmalEye;
-    EyeAttackMethod attackMethod = EyeAttackMethod.PHANTASMAL_SPHERE;
     ArrayList<MoonLordPhantasmalSphere> allSpheres;
     ArrayList<Entity> deathRayDamageCD = new ArrayList<>();
 
 
+    protected static void initializeAttackPattern() {
+        attackMethod = attackMethodCycle[0];
+        indexAttackMethod = -1;
+    }
+    protected static void nextAttackPattern() {
+        indexAttackMethod = (indexAttackMethod + 1) % attackMethodCycle.length;
+        attackMethod = attackMethodCycle[indexAttackMethod];
+    }
     private void teleportToLocation() {
         Vector offset = MathHelper.vectorFromYawPitch_quick(angleOffset + (owner.ticksLived * 0.5), 0);
         offset.multiply(24);
@@ -72,46 +87,54 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
         }
         // spawn sphere
         switch (owner.trueEyeIndexAI) {
-            case 10:
             case 20:
+            case 25:
             case 30:
+            case 35:
             case 40:
-            case 50:
-            case 60:
+            case 45:
                 Location spawnLoc = getBukkitEntity().getLocation();
                 switch (owner.trueEyeIndexAI) {
-                    case 10:
+                    case 20:
                         spawnLoc.add(5, 0, 0);
                         break;
-                    case 20:
+                    case 25:
                         spawnLoc.add(0, 5, 0);
                         break;
                     case 30:
                         spawnLoc.add(0, 0, 5);
                         break;
-                    case 40:
+                    case 35:
                         spawnLoc.add(-5, 0, 0);
                         break;
-                    case 50:
+                    case 40:
                         spawnLoc.add(0, -5, 0);
                         break;
-                    case 60:
+                    case 45:
                         spawnLoc.add(0, 0, -5);
                         break;
                 }
                 MoonLordPhantasmalSphere sphere = new MoonLordPhantasmalSphere(target, spawnLoc, allSpheres);
                 sphere.setVelocity(new Vector());
                 allSpheres.add(sphere);
-            case 80:
+                break;
+            case 70:
                 Location aimLoc = EntityHelper.helperAimEntity(getBukkitEntity(), target, MoonLordPhantasmalSphere.aimHelper);
                 Vector velocity = aimLoc.subtract( ((LivingEntity) getBukkitEntity()).getEyeLocation() ).toVector();
                 velocity.multiply(1d / 15d);
-                for (MoonLordPhantasmalSphere currSphere : allSpheres)
+                for (MoonLordPhantasmalSphere currSphere : allSpheres) {
                     currSphere.setVelocity(velocity);
+                    currSphere.ticksRemaining = 75;
+                }
+                bukkitEntity.setVelocity(velocity);
+                break;
         }
         // next attack
-        if (owner.trueEyeIndexAI >= 100) {
+        if (owner.trueEyeIndexAI == 90)
+            bukkitEntity.setVelocity(new Vector());
+        else if (owner.trueEyeIndexAI >= 95) {
             owner.trueEyeIndexAI = -20;
+            nextAttackPattern();
         }
     }
     private void attackBolt() {
@@ -123,13 +146,15 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
         }
         // next attack
         if (owner.trueEyeIndexAI >= 40) {
-                owner.trueEyeIndexAI = -20;
+            owner.trueEyeIndexAI = -20;
+            nextAttackPattern();
         }
     }
     private void attackEye() {
         // next attack
         if (owner.trueEyeIndexAI >= 40) {
             owner.trueEyeIndexAI = -20;
+            nextAttackPattern();
         }
         // spawn bolt
         else if (owner.trueEyeIndexAI % 6 == 0) {
@@ -142,6 +167,7 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
         // next attack
         if (owner.trueEyeIndexAI >= 120) {
             owner.trueEyeIndexAI = -20;
+            nextAttackPattern();
         }
         // death ray
         else if (owner.trueEyeIndexAI >= 10 && owner.trueEyeIndexAI <= 110) {
@@ -166,7 +192,7 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
             deathRayYaw += directionInterpolation[0];
             deathRayPitch += deathRayPitchStep;
             GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
-                    deathRayYaw, deathRayPitch, 48, 0.5, "", "",
+                    deathRayYaw, deathRayPitch, 64, 0.75, "", "",
                     deathRayDamageCD, attrMapDeathRay, strikeOptionDeathRay);
         }
     }
@@ -176,30 +202,35 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
             return;
         // AI
         {
+            // remove when owner is defeated
+            if (! owner.isAlive()) {
+                die();
+                return;
+            }
             // update target
             target = owner.target;
             // if target is valid, attack
             if (owner.trueEyeIndexAI >= 0) {
                 // get next attack method
                 if (owner.trueEyeIndexAI == 0) {
-                    indexAttackMethod ++;
                     startedAttack = true;
                     teleportToLocation();
                 }
-                switch (attackMethod) {
-                    case PHANTASMAL_SPHERE:
-                        attackSphere();
-                        break;
-                    case PHANTASMAL_BOLT:
-                        attackBolt();
-                        break;
-                    case PHANTASMAL_EYE:
-                        attackEye();
-                        break;
-                    case PHANTASMAL_DEATH_RAY:
-                        attackDeathRay();
-                        break;
-                }
+                if (startedAttack)
+                    switch (attackMethod) {
+                        case PHANTASMAL_SPHERE:
+                            attackSphere();
+                            break;
+                        case PHANTASMAL_BOLT:
+                            attackBolt();
+                            break;
+                        case PHANTASMAL_EYE:
+                            attackEye();
+                            break;
+                        case PHANTASMAL_DEATH_RAY:
+                            attackDeathRay();
+                            break;
+                    }
             }
         }
         // face the player
@@ -210,10 +241,6 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
     public MoonLordTrueEyeOfCthulhu(World world) {
         super(world);
         super.die();
-    }
-    // validate if the condition for spawning is met
-    public static boolean canSpawn(Player player) {
-        return true;
     }
     // a constructor for actual spawning
     public MoonLordTrueEyeOfCthulhu(Player summonedPlayer, MoonLord owner, Location spawnLoc, double angleOffset) {

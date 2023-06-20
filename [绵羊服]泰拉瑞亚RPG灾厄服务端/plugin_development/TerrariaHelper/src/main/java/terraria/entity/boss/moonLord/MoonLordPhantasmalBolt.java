@@ -42,6 +42,9 @@ public class MoonLordPhantasmalBolt extends EntitySlime {
         {
             // regulate velocity
             bukkitEntity.setVelocity(velocity);
+            // timeout
+            if (ticksLived > 100)
+                die();
         }
         // face the player
         this.yaw = (float) MathHelper.getVectorYaw( velocity );
