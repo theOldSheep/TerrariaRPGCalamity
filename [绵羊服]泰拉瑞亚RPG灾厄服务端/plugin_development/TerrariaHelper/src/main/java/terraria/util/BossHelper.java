@@ -19,6 +19,7 @@ import terraria.entity.boss.desertScourge.DesertScourge;
 import terraria.entity.boss.golem.Golem;
 import terraria.entity.boss.leviathanAndAnahita.Anahita;
 import terraria.entity.boss.lunaticCultist.LunaticCultist;
+import terraria.entity.boss.moonLord.MoonLord;
 import terraria.entity.boss.plantera.Plantera;
 import terraria.entity.boss.ravager.Ravager;
 import terraria.entity.boss.ravager.RavagerNuke;
@@ -266,6 +267,13 @@ public class BossHelper {
             case ASTRUM_DEUS: {
                 if (AstrumDeus.canSpawn(target)) {
                     new AstrumDeus(target, new ArrayList<>(), (Location) extraInfo,0);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case MOON_LORD: {
+                if (MoonLord.canSpawn(target)) {
+                    new MoonLord(target);
                     spawnedSuccessfully = true;
                 }
                 break;

@@ -139,14 +139,17 @@ public class MoonLordEye extends EntitySlime {
             case 100:
             case 110:
             case 120:
-                allSpheres.add(new MoonLordPhantasmalSphere(target, getBukkitEntity().getLocation(), allSpheres));
+                MoonLordPhantasmalSphere sphere = new MoonLordPhantasmalSphere(target, getBukkitEntity().getLocation(), allSpheres);
+                sphere.setVelocity(new Vector(0, 0.25, 0));
+                allSpheres.add(sphere);
+                break;
             case 150:
                 MoonLordPhantasmalSphere center = allSpheres.get(allSpheres.size() / 2);
                 Location aimLoc = EntityHelper.helperAimEntity(center.getBukkitEntity(), target, MoonLordPhantasmalSphere.aimHelper);
                 Vector velocity = aimLoc.subtract( ((LivingEntity) center.getBukkitEntity()).getEyeLocation() ).toVector();
                 velocity.multiply(1d / 15d);
-                for (MoonLordPhantasmalSphere sphere : allSpheres)
-                    sphere.setVelocity(velocity);
+                for (MoonLordPhantasmalSphere currSphere : allSpheres)
+                    currSphere.setVelocity(velocity);
         }
         // reach changes
         switch (eyeLocation) {
@@ -167,7 +170,7 @@ public class MoonLordEye extends EntitySlime {
         if (indexAI >= 185) {
             // next attack
             if (closeEyeAnimation())
-                indexAI = -1;
+                indexAI = -20;
         }
     }
     private void attackBolt() {
@@ -186,7 +189,7 @@ public class MoonLordEye extends EntitySlime {
         if (indexAI >= 40) {
             // next attack
             if (closeEyeAnimation())
-                indexAI = -1;
+                indexAI = -20;
         }
     }
     private void attackEye() {
@@ -199,7 +202,7 @@ public class MoonLordEye extends EntitySlime {
         if (indexAI >= 40) {
             // next attack
             if (closeEyeAnimation())
-                indexAI = -1;
+                indexAI = -20;
         }
         // spawn bolt
         else if (indexAI % 4 == 0) {
@@ -218,7 +221,7 @@ public class MoonLordEye extends EntitySlime {
         if (indexAI >= 120) {
             // next attack
             if (closeEyeAnimation())
-                indexAI = -1;
+                indexAI = -20;
         }
         // death ray
         else if (indexAI >= 10 && indexAI <= 110) {
@@ -286,8 +289,6 @@ public class MoonLordEye extends EntitySlime {
 
             indexAI++;
         }
-        // face the player
-        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // no collision dmg
     }
     // default constructor to handle chunk unload

@@ -1,7 +1,6 @@
 package terraria.entity.boss.moonLord;
 
 import net.minecraft.server.v1_12_R1.EntitySlime;
-import net.minecraft.server.v1_12_R1.GenericAttributes;
 import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
 import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Location;
@@ -49,9 +48,9 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
                                 .setParticleColor("100|255|255"));
     }
 
-    int indexAI = -1, indexAttackMethod = -1;
+    int indexAttackMethod = -1;
     double deathRayYaw, deathRayPitch, deathRayPitchStep, angleOffset;
-    boolean destroyed = false;
+    boolean startedAttack = false;
     MoonLord owner;
     EntityHelper.ProjectileShootInfo shootInfoPhantasmalEye;
     EyeAttackMethod attackMethod = EyeAttackMethod.PHANTASMAL_SPHERE;
@@ -59,14 +58,20 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
     ArrayList<Entity> deathRayDamageCD = new ArrayList<>();
 
 
-    // returns true if the animation is finished
+    private void teleportToLocation() {
+        Vector offset = MathHelper.vectorFromYawPitch_quick(angleOffset + (owner.ticksLived * 0.5), 0);
+        offset.multiply(24);
+        offset.setY(8);
+        Location teleportLoc = target.getLocation().add(offset);
+        bukkitEntity.teleport(teleportLoc);
+    }
     private void attackSphere() {
         // open eye and init all spheres
-        if (indexAI == 0) {
+        if (owner.trueEyeIndexAI == 0) {
             allSpheres = new ArrayList<>();
         }
         // spawn sphere
-        switch (indexAI) {
+        switch (owner.trueEyeIndexAI) {
             case 10:
             case 20:
             case 30:
@@ -74,7 +79,7 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
             case 50:
             case 60:
                 Location spawnLoc = getBukkitEntity().getLocation();
-                switch (indexAI) {
+                switch (owner.trueEyeIndexAI) {
                     case 10:
                         spawnLoc.add(5, 0, 0);
                         break;
@@ -105,29 +110,29 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
                     currSphere.setVelocity(velocity);
         }
         // next attack
-        if (indexAI >= 100) {
-            indexAI = -1;
+        if (owner.trueEyeIndexAI >= 100) {
+            owner.trueEyeIndexAI = -20;
         }
     }
     private void attackBolt() {
         // spawn bolt
-        switch (indexAI) {
+        switch (owner.trueEyeIndexAI) {
             case 25:
             case 32:
                 new MoonLordPhantasmalBolt(target, ((LivingEntity) bukkitEntity).getEyeLocation());
         }
         // next attack
-        if (indexAI >= 40) {
-                indexAI = -1;
+        if (owner.trueEyeIndexAI >= 40) {
+                owner.trueEyeIndexAI = -20;
         }
     }
     private void attackEye() {
         // next attack
-        if (indexAI >= 40) {
-            indexAI = -1;
+        if (owner.trueEyeIndexAI >= 40) {
+            owner.trueEyeIndexAI = -20;
         }
         // spawn bolt
-        else if (indexAI % 6 == 0) {
+        else if (owner.trueEyeIndexAI % 6 == 0) {
             shootInfoPhantasmalEye.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             shootInfoPhantasmalEye.velocity = MathHelper.randomVector();
             EntityHelper.spawnProjectile(shootInfoPhantasmalEye);
@@ -135,13 +140,13 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
     }
     private void attackDeathRay() {
         // next attack
-        if (indexAI >= 120) {
-            indexAI = -1;
+        if (owner.trueEyeIndexAI >= 120) {
+            owner.trueEyeIndexAI = -20;
         }
         // death ray
-        else if (indexAI >= 10 && indexAI <= 110) {
+        else if (owner.trueEyeIndexAI >= 10 && owner.trueEyeIndexAI <= 110) {
             // init
-            if (indexAI == 10) {
+            if (owner.trueEyeIndexAI == 10) {
                 Vector targetDir = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
                 deathRayYaw = MathHelper.getVectorYaw(targetDir);
                 deathRayPitch = MathHelper.getVectorPitch(targetDir);
@@ -174,10 +179,12 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
             // update target
             target = owner.target;
             // if target is valid, attack
-            if (indexAI >= 0) {
+            if (owner.trueEyeIndexAI >= 0) {
                 // get next attack method
-                if (indexAI == 0) {
+                if (owner.trueEyeIndexAI == 0) {
                     indexAttackMethod ++;
+                    startedAttack = true;
+                    teleportToLocation();
                 }
                 switch (attackMethod) {
                     case PHANTASMAL_SPHERE:
@@ -194,14 +201,6 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
                         break;
                 }
             }
-            // handle destruction
-            if (! destroyed && getHealth() < 10d) {
-                destroyed = true;
-                addScoreboardTag("noDamage");
-
-            }
-
-            indexAI++;
         }
         // face the player
         this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
@@ -226,6 +225,7 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
         // basic characteristics
         this.owner = owner;
         this.angleOffset = angleOffset;
+        owner.trueEyeSpawned ++;
         setCustomName("克苏鲁真眼");
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("noDamage");

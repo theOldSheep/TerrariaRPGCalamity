@@ -1,5 +1,6 @@
 package terraria.event.listener;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -41,13 +42,13 @@ public class BossSpawnListener implements Listener {
         summonItems.put("丛林蜥蜴电池", BossHelper.BossType.GOLEM);
         summonItems.put("瘟疫起动装置", BossHelper.BossType.THE_PLAGUEBRINGER_GOLIATH);
         summonItems.put("唤死笛哨", BossHelper.BossType.RAVAGER);
+        summonItems.put("天界符", BossHelper.BossType.MOON_LORD);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {
-        if (evt.isCancelled()) return;
-        if (evt.getClickedBlock() != null) {
-            spawnBossAtBlock(evt.getPlayer(), evt.getClickedBlock());
-            return;
+        if (evt.getClickedBlock() != null && evt.getClickedBlock().getType().isSolid()) {
+            if (spawnBossAtBlock(evt.getPlayer(), evt.getClickedBlock()))
+                return;
         }
         spawnBoss(evt.getPlayer());
     }
@@ -55,6 +56,10 @@ public class BossSpawnListener implements Listener {
     public void onRightClickEntity(PlayerInteractEntityEvent evt) {
         if (evt.isCancelled()) return;
         spawnBoss(evt.getPlayer());
+    }
+    private static void removeSummoningItem(Player ply, ItemStack tool) {
+        tool.setAmount(tool.getAmount() - 1);
+        ply.getInventory().setItemInMainHand(tool);
     }
     private static void spawnBoss(Player ply) {
         if (!PlayerHelper.isProperlyPlaying(ply))
@@ -65,30 +70,30 @@ public class BossSpawnListener implements Listener {
         BossHelper.BossType bossType = summonItems.get(toolType);
         if (bossType != null) {
             if ( BossHelper.spawnBoss(ply, bossType) ) {
-                tool.setAmount(tool.getAmount() - 1);
-                ply.getInventory().setItemInMainHand(tool);
+                removeSummoningItem(ply, tool);
             }
         }
     }
-    private static void spawnBossAtBlock(Player ply, Block block) {
+    private static boolean spawnBossAtBlock(Player ply, Block block) {
         if (!PlayerHelper.isProperlyPlaying(ply))
-            return;
+            return false;
         ItemStack tool = ply.getInventory().getItemInMainHand();
         String toolType = ItemHelper.splitItemName(tool)[1];
         // handle boss spawning
-        boolean shouldConsume = false;
+        boolean shouldConsume = false, summoned = false;
+        Location locAboveBlock = block.getLocation().add(0.5, 1, 0.5);
         switch (toolType) {
             case "泰坦之心":
                 shouldConsume = true;
             case "星核": {
-                if (block.getType() == Material.ENDER_PORTAL_FRAME
-                        && BossHelper.spawnBoss(ply, BossHelper.BossType.ASTRUM_DEUS, block.getLocation().add(0.5, 1, 0.5))
-                        && shouldConsume) {
-                    tool.setAmount(tool.getAmount() - 1);
-                    ply.getInventory().setItemInMainHand(tool);
-                }
+                summoned = block.getType() == Material.ENDER_PORTAL_FRAME
+                        && BossHelper.spawnBoss(ply, BossHelper.BossType.ASTRUM_DEUS, locAboveBlock);
                 break;
             }
         }
+        if (summoned && shouldConsume) {
+            removeSummoningItem(ply, tool);
+        }
+        return summoned;
     }
 }

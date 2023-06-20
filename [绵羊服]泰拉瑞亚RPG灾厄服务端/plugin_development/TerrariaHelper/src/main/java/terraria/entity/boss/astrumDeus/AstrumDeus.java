@@ -322,7 +322,6 @@ public class AstrumDeus extends EntitySlime {
             }
             // head
             else if (isHead) {
-                Bukkit.broadcastMessage(index + " health " + getHealth());
                 // update boss bar and dynamic DR
                 terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, ticksLived, BOSS_TYPE);
                 // apply extreme gravity to target
@@ -366,8 +365,13 @@ public class AstrumDeus extends EntitySlime {
         summonedLocation = spawnParticleLoc;
         summonParticleLoc1 = spawnParticleLoc.clone();
         summonParticleLoc2 = spawnParticleLoc.clone();
-        Location spawnLoc = spawnParticleLoc.clone();
-        spawnLoc.setY(-10);
+        Location spawnLoc;
+        if (index == 0) {
+            spawnLoc = spawnParticleLoc.clone();
+            spawnLoc.setY(-10);
+        }
+        else
+            spawnLoc = bossParts.get(index - 1).getLocation().subtract(0, 2, 0);
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);

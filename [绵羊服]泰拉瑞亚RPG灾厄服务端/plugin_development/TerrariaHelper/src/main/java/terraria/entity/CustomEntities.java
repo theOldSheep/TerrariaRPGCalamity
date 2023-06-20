@@ -32,6 +32,7 @@ import terraria.entity.boss.golem.GolemHead;
 import terraria.entity.boss.leviathanAndAnahita.Anahita;
 import terraria.entity.boss.leviathanAndAnahita.Leviathan;
 import terraria.entity.boss.lunaticCultist.*;
+import terraria.entity.boss.moonLord.*;
 import terraria.entity.boss.plantera.Plantera;
 import terraria.entity.boss.plantera.PlanteraTentacle;
 import terraria.entity.boss.ravager.*;
@@ -111,6 +112,12 @@ public enum CustomEntities {
     BOSS_HVM_HEART     ("DarkHeart",              55,  EntityType.SLIME,           EntitySlime.class,      DarkHeart.class),
     BOSS_KSLM          ("KingSlime",              55,  EntityType.SLIME,           EntitySlime.class,      KingSlime.class),
     BOSS_KSLM_JEWEL    ("CrownJewel",             55,  EntityType.SLIME,           EntitySlime.class,      CrownJewel.class),
+    BOSS_MNLD          ("MoonLord",               55,  EntityType.SLIME,           EntitySlime.class,      MoonLord.class),
+    BOSS_MNLD_BG       ("MoonLordBackground",     55,  EntityType.SLIME,           EntitySlime.class,      MoonLordBackground.class),
+    BOSS_MNLD_EYE      ("MoonLordEye",            55,  EntityType.SLIME,           EntitySlime.class,      MoonLordEye.class),
+    BOSS_MNLD_BOLT     ("PhantasmalBolt",         55,  EntityType.SLIME,           EntitySlime.class,      MoonLordPhantasmalBolt.class),
+    BOSS_MNLD_SPHERE   ("PhantasmalSphere",       55,  EntityType.SLIME,           EntitySlime.class,      MoonLordPhantasmalSphere.class),
+    BOSS_MNLD_TRUE_EYE ("TrueEyeOfCthulhu",       55,  EntityType.SLIME,           EntitySlime.class,      MoonLordTrueEyeOfCthulhu.class),
     BOSS_PBGL          ("ThePlaguebringerGoliath",55,  EntityType.SLIME,           EntitySlime.class,      ThePlaguebringerGoliath.class),
     BOSS_PBGL_MSL      ("PlagueHomingMissile",    55,  EntityType.SLIME,           EntitySlime.class,      PlagueHomingMissile.class),
     BOSS_PBGL_MN       ("PlagueMine",             55,  EntityType.SLIME,           EntitySlime.class,      PlagueMine.class),

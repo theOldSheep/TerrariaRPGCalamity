@@ -7,6 +7,7 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\util\GenericHelper.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\ravager\RavagerNuke.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\projectile\TerrariaPotionProjectile.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\moonLord\MoonLordPhantasmalBolt.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\theHiveMind\DarkHeart.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\npc\TerrariaNPCGuide.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\monster\MonsterZombie.java
@@ -77,6 +78,7 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\kingSlime\CrownJewel.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\listener\PlayerKeyToggleListener.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\plantera\Plantera.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\moonLord\MoonLordEye.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\golem\GolemHead.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\worldgen\underworld\UnderworldChunkGenerator.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\crabulon\Crabulon.java
@@ -93,8 +95,10 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\lunaticCultist\LunaticCultistClone.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\theTwins\Retinazer.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\theTwins\Spazmatism.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\moonLord\MoonLordPhantasmalSphere.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\cryogen\Cryogen.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\util\EntityHelper.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\moonLord\MoonLord.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\lunaticCultist\LunaticCultist.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\cryogen\CryogenShield.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\npc\TerrariaNPCDemolitionist.java
@@ -125,7 +129,9 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\util\MathHelper.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\listener\DamageListener.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\leviathanAndAnahita\Leviathan.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\moonLord\MoonLordBackground.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\monster\MonsterSlime.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\moonLord\MoonLordTrueEyeOfCthulhu.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\util\DragoncoreHelper.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\theSlimeGod\CrimulanSlime.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\lunaticCultist\PhantomDragon.java

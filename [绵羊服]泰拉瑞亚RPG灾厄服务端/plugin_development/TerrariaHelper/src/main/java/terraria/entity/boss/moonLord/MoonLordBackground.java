@@ -51,7 +51,6 @@ public class MoonLordBackground extends EntitySlime {
     public MoonLordBackground(Player summonedPlayer, MoonLord owner, MoonLordBackgroundType backgroundType) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
-        double angle = Math.random() * 720d, dist = 40;
         Location spawnLoc = owner.getBukkitEntity().getLocation();
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
@@ -98,7 +97,6 @@ public class MoonLordBackground extends EntitySlime {
             this.setNoGravity(true);
             this.persistent = true;
         }
-        // init background
     }
 
     // rewrite AI

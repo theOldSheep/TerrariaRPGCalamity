@@ -59,10 +59,6 @@ public class MoonLordPhantasmalSphere extends EntitySlime {
         super(world);
         super.die();
     }
-    // validate if the condition for spawning is met
-    public static boolean canSpawn(Player player) {
-        return true;
-    }
     // a constructor for actual spawning
     public MoonLordPhantasmalSphere(Player summonedPlayer, Location spawnLoc, ArrayList<MoonLordPhantasmalSphere> allSpheres) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
@@ -102,8 +98,6 @@ public class MoonLordPhantasmalSphere extends EntitySlime {
             this.setNoGravity(true);
             this.persistent = true;
         }
-        // init velocity
-        setVelocity(new Vector(0, 0.25, 0));
     }
 
     // rewrite AI

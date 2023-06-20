@@ -1,7 +1,6 @@
 package terraria.entity.boss.moonLord;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -10,13 +9,11 @@ import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.thePlaguebringerGoliath.PlagueHomingMissile;
-import terraria.entity.boss.thePlaguebringerGoliath.PlagueMine;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +31,7 @@ public class MoonLord extends EntitySlime {
     Player target = null;
     // other variables and AI
     static final double MOVE_SPEED = 0.75, MAX_DIST_BEFORE_TELEPORT = 100;
-    int indexAI = (int) (Math.random() * 360);
+    int indexAI = (int) (Math.random() * 360), trueEyeIndexAI = 0, trueEyeSpawned = 0, indexSpawnAnimation = 1200;
     MoonLordBackground background;
     double reachLeft = 15, reachRight = 15;
     boolean secondPhase = false;
@@ -42,8 +39,11 @@ public class MoonLord extends EntitySlime {
 
     private void setupSingleLocation(EntitySlime eye, MoonLordBackground background,
                                      Location backgroundLoc, double verticalOffset) {
+        // set up a tempLoc variable so that the result vector will have no vertical component
+        Location tempLoc = target.getLocation();
+        tempLoc.setY(backgroundLoc.getY());
         Vector facingDirection = MathHelper.getDirection(backgroundLoc,
-                target.getLocation(), eye.getSize() * 0.255);
+                tempLoc, eye.getSize() * 0.255);
         double facingYaw = MathHelper.getVectorYaw(facingDirection);
         // teleport
         Location eyeLoc = backgroundLoc.clone()
@@ -84,6 +84,7 @@ public class MoonLord extends EntitySlime {
         // teleport hands
         Vector leftHandOffset = MathHelper.vectorFromYawPitch_quick(facingYaw - 90, 0);
         Vector rightHandOffset = leftHandOffset.clone();
+        rightHandOffset.multiply(-1);
         leftHandOffset.multiply(reachLeft);
         rightHandOffset.multiply(reachRight);
         Location leftHandBackgroundLoc = actualCenterLoc.clone().add(0, 8, 0).add(leftHandOffset);
@@ -91,12 +92,56 @@ public class MoonLord extends EntitySlime {
         setupSingleLocation(leftHand, leftHand.background, leftHandBackgroundLoc, 3);
         setupSingleLocation(rightHand, rightHand.background, rightHandBackgroundLoc, 3);
     }
+    private void spawnOtherParts() {
+        // background
+        background = new MoonLordBackground(target, this, MoonLordBackground.MoonLordBackgroundType.BODY);
+        // spawn eyes
+        leftHand = new MoonLordEye(target, this, MoonLordEye.MoonLordEyeLocation.LEFT_HAND);
+        rightHand = new MoonLordEye(target, this, MoonLordEye.MoonLordEyeLocation.RIGHT_HAND);
+        head = new MoonLordEye(target, this, MoonLordEye.MoonLordEyeLocation.HEAD);
+    }
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
             return;
+
+        // spawn animation
+        if (indexSpawnAnimation > 0) {
+            int ticksDuration = -1;
+            switch (indexSpawnAnimation) {
+                case 1200:
+                    ticksDuration = 150;
+                    break;
+                case 1000:
+                    ticksDuration = 160;
+                    break;
+                case 800:
+                    ticksDuration = 170;
+                    break;
+                case 600:
+                    ticksDuration = 180;
+                    break;
+                case 400:
+                    ticksDuration = 190;
+                    break;
+                case 200:
+                    ticksDuration = 200;
+                    break;
+            }
+            if (ticksDuration > 0) {
+                for (Player toApplyEffect : targetMap.keySet()) {
+                    toApplyEffect.addPotionEffect(new PotionEffect(
+                            PotionEffectType.CONFUSION, ticksDuration, 0, false, false), true);
+                }
+            }
+            // TODO
+            indexSpawnAnimation = 1;
+
+            if (--indexSpawnAnimation == 0)
+                spawnOtherParts();
+        }
         // AI
-        {
+        else {
             // update target
             target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
                     IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
@@ -111,17 +156,18 @@ public class MoonLord extends EntitySlime {
             // if target is valid, teleport parts to location
             setupLocation();
             // if the eyes are destroyed, the heart can now be damaged.
-            if (!secondPhase && head.getHealth() < 10 && leftHand.getHealth() < 10 && rightHand.getHealth() < 10) {
+            if (!secondPhase && trueEyeSpawned >= 3) {
                 removeScoreboardTag("noDamage");
                 setCustomName("月球领主心脏§1");
 
                 secondPhase = true;
             }
+            // true eye attack
+            if (trueEyeSpawned >= 1)
+                trueEyeIndexAI++;
             // increase index to account for slow rotation
             indexAI ++;
         }
-        // face the player
-        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // no collision dmg
     }
     // default constructor to handle chunk unload
@@ -137,10 +183,8 @@ public class MoonLord extends EntitySlime {
     public MoonLord(Player summonedPlayer) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
-        double angle = Math.random() * 720d, dist = 40;
-        Location spawnLoc = summonedPlayer.getLocation().add(
-                MathHelper.xsin_degree(angle) * dist, 0, MathHelper.xcos_degree(angle) * dist);
-        spawnLoc.setY( spawnLoc.getWorld().getHighestBlockYAt(spawnLoc) );
+        Location spawnLoc = summonedPlayer.getLocation();
+        spawnLoc.setY(-10);
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
@@ -193,12 +237,6 @@ public class MoonLord extends EntitySlime {
             this.setNoGravity(true);
             this.persistent = true;
         }
-        // background
-        background = new MoonLordBackground(target, this, MoonLordBackground.MoonLordBackgroundType.BODY);
-        // spawn eyes
-        leftHand = new MoonLordEye(target, this, MoonLordEye.MoonLordEyeLocation.LEFT_HAND);
-        rightHand = new MoonLordEye(target, this, MoonLordEye.MoonLordEyeLocation.RIGHT_HAND);
-        head = new MoonLordEye(target, this, MoonLordEye.MoonLordEyeLocation.HEAD);
     }
 
     // disable death function to remove boss bar

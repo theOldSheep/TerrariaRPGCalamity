@@ -2,73 +2,73 @@
     extraJumpTime: 1
     maxSpeed: 0.8
     maxAcceleration: 100
-    horizontalSpeed: 0.35
+    horizontalSpeed: 0.6
 气球束:
     extraJumpTime: 3
     maxSpeed: 0.8
     maxAcceleration: 100
-    horizontalSpeed: 0.35
+    horizontalSpeed: 0.6
 火箭靴:
     flightTime: 32
     maxSpeed: 0.75
     maxAcceleration: 0.125
-    horizontalSpeed: 0.5
+    horizontalSpeed: 0.75
 幽灵靴:
     flightTime: 32
     maxSpeed: 0.75
     maxAcceleration: 0.125
-    horizontalSpeed: 0.5
+    horizontalSpeed: 0.75
 鸟妖之翼:
     flightTime: 47
     maxSpeed: 1
     maxAcceleration: 0.1
-    horizontalSpeed: 0.6
+    horizontalSpeed: 0.9
     isWing: true
 猪鲨之翼:
     flightTime: 60
     maxSpeed: 1.5
     maxAcceleration: 0.175
-    horizontalSpeed: 1
+    horizontalSpeed: 1.5
     isWing: true
 女皇之翼:
     flightTime: 50
     maxSpeed: 1.35
     maxAcceleration: 0.3
-    horizontalSpeed: 1
+    horizontalSpeed: 1.5
     isWing: true
 喜庆之翼:
     flightTime: 57
     maxSpeed: 1.2
     maxAcceleration: 0.125
-    horizontalSpeed: 0.9
+    horizontalSpeed: 1.35
     isWing: true
 日耀之翼:
     flightTime: 60
     maxSpeed: 1.5
     maxAcceleration: 0.15
-    horizontalSpeed: 1
+    horizontalSpeed: 1.5
     isWing: true
 星尘之翼:
     flightTime: 60
     maxSpeed: 1.5
     maxAcceleration: 0.15
-    horizontalSpeed: 1
+    horizontalSpeed: 1.5
     isWing: true
 星云之翼:
     flightTime: 53
     maxSpeed: 1.4
     maxAcceleration: 0.125
-    horizontalSpeed: 0.95
+    horizontalSpeed: 1.4
     isWing: true
 星璇之翼:
     flightTime: 53
     maxSpeed: 1.4
     maxAcceleration: 0.125
-    horizontalSpeed: 0.95
+    horizontalSpeed: 1.4
     isWing: true
 天界之翼:
     flightTime: 60
     maxSpeed: 1.5
     maxAcceleration: 0.2
-    horizontalSpeed: 1.2
+    horizontalSpeed: 1.65
     isWing: true

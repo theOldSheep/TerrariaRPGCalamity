@@ -217,7 +217,7 @@ public class BossHelper {
                 break;
             case MOON_LORD:
                 Bukkit.broadcastMessage("§#FFA500亵渎之火猛烈燃烧！");
-                Bukkit.broadcastMessage("§#EE82EE宇宙的恐惧正注着这一切……");
+                Bukkit.broadcastMessage("§#EE82EE宇宙的恐惧正注视着这一切……");
                 Bukkit.broadcastMessage("§#D3D3D3冷黯的能量散布至宇宙之间。");
                 Bukkit.broadcastMessage("§#00FFFF尖叫声回荡于地牢之中。");
                 break;
