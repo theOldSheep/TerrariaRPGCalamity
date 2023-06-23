@@ -45,6 +45,7 @@ terraria\entity\boss\astrumAureus\AstrumAureus$1.class
 terraria\entity\boss\leviathanAndAnahita\Anahita$1.class
 terraria\entity\npc\PathfinderGoalNPCRestrictLocation.class
 terraria\util\YmlHelper$YmlSection.class
+terraria\entity\projectile\TerrariaBoomerang.class
 terraria\entity\boss\wallOfFlesh\WallOfFleshEye.class
 terraria\entity\boss\wallOfFlesh\WallOfFleshMouth.class
 terraria\entity\boss\moonLord\MoonLordEye.class
@@ -61,6 +62,7 @@ terraria\util\WorldHelper.class
 terraria\util\WorldHelper$BiomeType.class
 terraria\entity\projectile\TerrariaArrowProjectile.class
 terraria\util\PlayerHelper.class
+terraria\entity\projectile\TerrariaYoyo.class
 terraria\util\NMSUtils$SpawnData.class
 terraria\entity\boss\moonLord\MoonLordEye$1.class
 terraria\worldgen\overworld\OverworldChunkGenerator.class

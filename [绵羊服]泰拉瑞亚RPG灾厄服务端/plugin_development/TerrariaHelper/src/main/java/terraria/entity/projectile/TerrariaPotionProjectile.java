@@ -129,6 +129,10 @@ public class TerrariaPotionProjectile extends EntityPotion {
         return CraftItemStack.asNMSCopy(item);
     }
     // constructor
+    public TerrariaPotionProjectile(World world) {
+        super(world);
+        die();
+    }
     public TerrariaPotionProjectile(EntityHelper.ProjectileShootInfo shootInfo) {
         this(shootInfo.shootLoc, TerrariaPotionProjectile.generateItemStack(shootInfo.projectileName),
                 shootInfo.velocity, shootInfo.projectileName, shootInfo.properties,

@@ -25,6 +25,8 @@ import terraria.entity.others.TerrariaFishingHook;
 import terraria.entity.minion.MinionCaveSpider;
 import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
+import terraria.entity.projectile.TerrariaArrowProjectile;
+import terraria.entity.projectile.TerrariaBoomerang;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -334,7 +336,7 @@ public class ItemUseHelper {
         infoText.append(colorCode).append("]");
         PlayerHelper.sendActionBar(ply, infoText.toString());
     }
-    protected static Location getPlayerTargetLoc(Player ply, double traceDist, double entityEnlargeRadius, EntityHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
+    public static Location getPlayerTargetLoc(Player ply, double traceDist, double entityEnlargeRadius, EntityHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
         Location targetLoc = null;
         World plyWorld = ply.getWorld();
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
@@ -1183,6 +1185,48 @@ public class ItemUseHelper {
         applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
         return true;
     }
+    protected static boolean playerUseThrowingProjectile(Player ply, String itemType, String weaponType,
+                                                         boolean autoSwing, HashMap<String, Double> attrMap, ItemStack tool) {
+        double consumptionRate = attrMap.getOrDefault("ammoConsumptionRate", 1d);
+        // remove one of the player's tool
+        if (Math.random() < consumptionRate) {
+            tool.setAmount(tool.getAmount() - 1);
+        }
+        // use the weapon
+        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+        Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+        double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
+        projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
+        facingDir.multiply(projectileSpeed);
+        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, facingDir, attrMap, itemType);
+        EntityHelper.spawnProjectile(shootInfo);
+        // play sound
+        playerUseItemSound(ply, weaponType, autoSwing);
+        // apply CD
+        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
+        double useTimeMulti = 1 / useSpeed;
+        applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
+        return true;
+    }
+    protected static boolean playerUseBoomerang(Player ply, String itemType, String weaponType,
+                                                         boolean autoSwing, HashMap<String, Double> attrMap, ConfigurationSection weaponSection) {
+        // use the weapon
+        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+        Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+        double projectileSpeed = weaponSection.getDouble("velocity", 5d);
+        double distance = weaponSection.getDouble("distance", 10d);
+        facingDir.multiply(projectileSpeed);
+        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, facingDir, attrMap, itemType);
+        // spawn projectile
+        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
+        double useTimeMulti = 1 / useSpeed;
+        double useTime = attrMap.getOrDefault("useTime", 20d) * useTimeMulti;
+        TerrariaBoomerang entity = new TerrariaBoomerang(shootInfo, distance, useTime);
+        plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        // play sound
+        playerUseItemSound(ply, weaponType, autoSwing);
+        return true;
+    }
     // other helper functions for item using
     public static void playerUseItemSound(Entity ply, String weaponType, boolean autoSwing) {
         String itemUseSound;
@@ -1306,6 +1350,14 @@ public class ItemUseHelper {
                     case "SENTRY":
                         success = playerUseSummon(ply, itemName, swingAmount, weaponType,
                                 autoSwing, mainHandItem, weaponSection, attrMap);
+                        break;
+                    case "THROW_PROJECTILE":
+                        success = playerUseThrowingProjectile(ply, itemName, weaponType,
+                                autoSwing, attrMap, mainHandItem);
+                        break;
+                    case "BOOMERANG":
+                        success = playerUseBoomerang(ply, itemName, weaponType,
+                                autoSwing, attrMap, weaponSection);
                         break;
                 }
                 if (success) {
