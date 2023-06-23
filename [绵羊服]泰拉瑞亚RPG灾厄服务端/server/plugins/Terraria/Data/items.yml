@@ -418,7 +418,7 @@
   lore:
   - §r[饰品]
   attributes:
-    damageMulti: 5
+    damageMulti: 15
   worth: 20000
   rarity: 1
 镣铐:
@@ -3439,7 +3439,7 @@
     damageType: Arrow
     crit: 4
     knockback: 8
-    projectileSpeed: 5.5
+    projectileSpeed: 1.1
     useTime: 45
   worth: 2500
   rarity: 0
@@ -3452,7 +3452,7 @@
     damageType: Arrow
     crit: 4
     knockback: 8
-    projectileSpeed: 5
+    projectileSpeed: 1
     useTime: 25
   worth: 6000
   rarity: 0
@@ -3466,7 +3466,7 @@
     damageType: Arrow
     crit: 4
     knockback: 8
-    projectileSpeed: 5
+    projectileSpeed: 1
     useTime: 25
   worth: 10000
   rarity: 0
@@ -3479,7 +3479,7 @@
     damageType: Arrow
     crit: 4
     knockback: 10
-    projectileSpeed: 4
+    projectileSpeed: 0.8
     useTime: 40
   worth: 40000
   rarity: 1
@@ -3493,7 +3493,7 @@
     damageType: Arrow
     crit: 4
     knockback: 10
-    projectileSpeed: 4
+    projectileSpeed: 0.8
     useTime: 40
   worth: 40000
   rarity: 1

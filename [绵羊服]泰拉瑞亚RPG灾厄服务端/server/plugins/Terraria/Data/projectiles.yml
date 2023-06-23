@@ -532,15 +532,32 @@
     projectileSize: 0.5
     autoTrace: true
     autoTraceMethod: 2
-    autoTraceRadius: 64
+    autoTraceRadius: 128
     autoTraceSharpTurning: false
     autoTraceAbility: 0.4
     noAutoTraceTicks: 10
     maxAutoTraceTicks: 35
     buffInflict:
         - "幻星感染|60|1"
+幻影眼:
+    blockHitAction: thru
+    trailColor: 100|255|255
+    trailSize: 0.15
+    trailStepSize: 1
+    isGrenade: true
+    blastRadius: 4
+    liveTime: 100
+    gravity: 0
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceRadius: 128
+    autoTraceSharpTurning: false
+    autoTraceAbility: 0.4
+    noAutoTraceTicks: 20
+    maxAutoTraceTicks: 40
 天蓝羽毛:
     autoTrace: true
+    isGrenade: true
     blastRadius: 2
 风刃:
     projectileSize: 1
@@ -559,6 +576,7 @@
     isGrenade: true
     blastRadius: 4
 狱火爆破弹:
+    isGrenade: true
     blastRadius: 4.5
     buffInflict:
         - "破晓|400|1"
@@ -569,14 +587,13 @@
     isGrenade: true
     blastRadius: 5
 流体入侵怪:
+    isGrenade: true
     blastRadius: 3.5
-幻影球:
-    blastRadius: 6
-幻影眼:
-    blastRadius: 4
 七彩水晶:
+    isGrenade: true
     blastRadius: 2.5
 集束破片:
+    isGrenade: true
     blastRadius: 1.25
     blastDamageShooter: true
 初级雪人火箭:
@@ -587,7 +604,7 @@
     autoTrace: true
     blastRadius: 2.75
     blastDamageShooter: true
-    destroyBlock: true
+    blastDestroyBlock: true
 三级雪人火箭:
     autoTrace: true
     blastRadius: 3.25
@@ -596,7 +613,7 @@
     autoTrace: true
     blastRadius: 3.5
     blastDamageShooter: true
-    destroyBlock: true
+    blastDestroyBlock: true
 集束雪人火箭:
     autoTrace: true
     clusterBomb:
@@ -604,38 +621,101 @@
         name: 集束破片
         velocity: 0.5
         damageMulti: 0.5
+    isGrenade: true
     blastRadius: 2
     blastDamageShooter: true
 红烟花火箭:
+    isGrenade: true
     blastRadius: 8
 绿烟花火箭:
+    isGrenade: true
     blastRadius: 8
 蓝烟花火箭:
+    isGrenade: true
     blastRadius: 8
 黄烟花火箭:
+    isGrenade: true
     blastRadius: 8
 初级榴弹:
+    isGrenade: true
     blastRadius: 2.5
     blastDamageShooter: true
 二级榴弹:
+    isGrenade: true
     blastRadius: 2.9
     blastDamageShooter: true
-    destroyBlock: true
+    blastDestroyBlock: true
 三级榴弹:
+    isGrenade: true
     blastRadius: 3.6
     blastDamageShooter: true
 四级榴弹:
+    isGrenade: true
     blastRadius: 4.25
     blastDamageShooter: true
-    destroyBlock: true
+    blastDestroyBlock: true
 集束榴弹:
     clusterBomb:
         amount: 5
         name: 集束破片
         velocity: 0.5
         damageMulti: 0.5
+    isGrenade: true
     blastRadius: 2.35
     blastDamageShooter: true
+手榴弹:
+    blockHitAction: bounce
+    bounce: 999999
+    bounceVelocityMulti: 0.65
+    frictionFactor: 0.1
+    canBeReflected: false
+    liveTime: 100
+    noGravityTicks: 0
+    isGrenade: true
+    blastRadius: 2.25
+    blastDamageShooter: true
+炸弹:
+    blockHitAction: bounce
+    bounce: 999999
+    bounceVelocityMulti: 0.65
+    frictionFactor: 0.1
+    canBeReflected: false
+    liveTime: 100
+    noGravityTicks: 0
+    isGrenade: true
+    blastRadius: 2.5
+    blastDamageShooter: true
+    blastDestroyBlock: true
+粘性炸弹:
+    blockHitAction: stick
+    canBeReflected: false
+    liveTime: 100
+    noGravityTicks: 0
+    isGrenade: true
+    blastRadius: 2.5
+    blastDamageShooter: true
+    blastDestroyBlock: true
+雷管:
+    blockHitAction: bounce
+    bounce: 999999
+    bounceVelocityMulti: 0.65
+    frictionFactor: 0.1
+    canBeReflected: false
+    liveTime: 100
+    noGravityTicks: 0
+    isGrenade: true
+    blastRadius: 4
+    blastDamageShooter: true
+    blastDestroyBlock: true
+粘性雷管:
+    blockHitAction: stick
+    canBeReflected: false
+    liveTime: 100
+    noGravityTicks: 0
+    isGrenade: true
+    blastRadius: 4
+    blastDamageShooter: true
+    blastDestroyBlock: true
 冰焰箭:
     buffInflict:
         - "霜火|100|0.35"
@@ -646,6 +726,7 @@
     buffInflict:
         - "燃烧|400|1"
 希腊烈火:
+    blockHitAction: stick
     buffInflict:
         - "燃烧|200|1"
 诅咒箭:
@@ -700,12 +781,12 @@
     autoTrace: true
     autoTraceMethod: 2
     autoTraceAbility: 0.5
+    isGrenade: true
     blastRadius: 2.75
     blockHitAction: bounce
     bounce: 3
     enemyInvincibilityFrame: 10
     gravity: 0
-    isGrenade: true
     penetration: 4
     projectileSize: 1
     clusterBomb:

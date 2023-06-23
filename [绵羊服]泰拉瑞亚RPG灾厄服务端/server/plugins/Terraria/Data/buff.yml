@@ -290,6 +290,16 @@ effects:
       speedMulti: 0.1
       regen: 6
     tooltip: 所有属性大幅提升
+  怒气模式:
+    isBuff: true
+    attributes:
+      damageMulti: 0.35
+    tooltip: 增加35%伤害
+  肾上腺素:
+    isBuff: true
+    attributes:
+      damageMulti: 2
+    tooltip: 增加200%伤害
   流血:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/33/Bleeding
     isBuff: false
