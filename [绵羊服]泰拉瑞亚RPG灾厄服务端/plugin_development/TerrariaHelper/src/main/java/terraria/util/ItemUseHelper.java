@@ -20,13 +20,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.projectile.HitEntityInfo;
+import terraria.entity.projectile.*;
 import terraria.entity.others.TerrariaFishingHook;
 import terraria.entity.minion.MinionCaveSpider;
 import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
-import terraria.entity.projectile.TerrariaArrowProjectile;
-import terraria.entity.projectile.TerrariaBoomerang;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -376,7 +374,7 @@ public class ItemUseHelper {
         }
         return targetLoc;
     }
-    // melee helper functions below
+    // special weapon attack helper functions below
     protected static void handleSingleZenithSwingAnimation(Player ply, HashMap<String, Double> attrMap,
                                                          Location centerLoc, Vector reachVector, Vector offsetVector,
                                                          Collection<Entity> exceptions, String color,
@@ -515,6 +513,7 @@ public class ItemUseHelper {
                             weaponType, weaponItem, size, dirFixed, stabOrSwing, currentIndex + 1, maxIndex), 1);
         }
     }
+    // melee helper functions below
     // stab and swing. NOT NECESSARILY MELEE DAMAGE!
     protected static boolean playerUseMelee(Player ply, String itemType, ItemStack weaponItem,
                                           ConfigurationSection weaponSection, HashMap<String, Double> attrMap, int swingAmount, boolean stabOrSwing) {
@@ -550,6 +549,64 @@ public class ItemUseHelper {
         boolean dirFixed = weaponSection.getBoolean("dirFixed", true);
         handleMeleeSwing(ply, attrMap, lookDir, new HashSet<>(), weaponSection, yaw, pitch, itemType, weaponItem, size,
                 dirFixed, stabOrSwing, 0, coolDown);
+        return true;
+    }
+    protected static boolean playerUseBoomerang(Player ply, String itemType, String weaponType,
+                                                boolean autoSwing, HashMap<String, Double> attrMap, ConfigurationSection weaponSection) {
+        // use the weapon
+        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+        Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+        double projectileSpeed = weaponSection.getDouble("velocity", 5d);
+        double distance = weaponSection.getDouble("distance", 10d);
+        facingDir.multiply(projectileSpeed);
+        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, facingDir, attrMap, itemType);
+        // spawn projectile
+        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
+        double useTimeMulti = 1 / useSpeed;
+        double useTime = attrMap.getOrDefault("useTime", 20d) * useTimeMulti;
+        TerrariaBoomerang entity = new TerrariaBoomerang(shootInfo, distance, useTime);
+        plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        // play sound
+        playerUseItemSound(ply, weaponType, autoSwing);
+        return true;
+    }
+    protected static boolean playerUseYoyo(Player ply, String itemType, String weaponType,
+                                           boolean autoSwing, HashMap<String, Double> attrMap, ConfigurationSection weaponSection) {
+        // use the weapon
+        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+        Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+        double projectileSpeed = weaponSection.getDouble("velocity", 5d);
+        double reach = weaponSection.getDouble("reach", 10d);
+        int duration = weaponSection.getInt("duration", 100);
+        facingDir.multiply(projectileSpeed);
+        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, facingDir, attrMap, itemType);
+        // spawn projectile
+        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
+        double useTimeMulti = 1 / useSpeed;
+        double useTime = attrMap.getOrDefault("useTime", 20d) * useTimeMulti;
+        TerrariaYoyo entity = new TerrariaYoyo(shootInfo, reach, useTime, duration);
+        plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        // play sound
+        playerUseItemSound(ply, weaponType, autoSwing);
+        return true;
+    }
+    protected static boolean playerUseFlail(Player ply, String itemType, String weaponType,
+                                            boolean autoSwing, HashMap<String, Double> attrMap, ConfigurationSection weaponSection) {
+        // use the weapon
+        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+        Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+        double projectileSpeed = weaponSection.getDouble("velocity", 5d);
+        double reach = weaponSection.getDouble("reach", 10d);
+        facingDir.multiply(projectileSpeed);
+        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, facingDir, attrMap, itemType);
+        // spawn projectile
+        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
+        double useTimeMulti = 1 / useSpeed;
+        double useTime = attrMap.getOrDefault("useTime", 20d) * useTimeMulti;
+        TerrariaFlail entity = new TerrariaFlail(shootInfo, reach, useTime);
+        plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        // play sound
+        playerUseItemSound(ply, weaponType, autoSwing);
         return true;
     }
     // ranged helper functions below
@@ -738,6 +795,29 @@ public class ItemUseHelper {
         // otherwise, use the weapon.
         handleRangedFire(ply, attrMap, weaponSection, 1, swingAmount,
                 itemType, weaponType, ammoType, isLoadingWeapon, autoSwing);
+        // apply CD
+        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
+        double useTimeMulti = 1 / useSpeed;
+        applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
+        return true;
+    }
+    protected static boolean playerUseThrowingProjectile(Player ply, String itemType, String weaponType,
+                                                         boolean autoSwing, HashMap<String, Double> attrMap, ItemStack tool) {
+        double consumptionRate = attrMap.getOrDefault("ammoConsumptionRate", 1d);
+        // remove one of the player's tool
+        if (Math.random() < consumptionRate) {
+            tool.setAmount(tool.getAmount() - 1);
+        }
+        // use the weapon
+        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+        Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+        double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
+        projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
+        facingDir.multiply(projectileSpeed);
+        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, facingDir, attrMap, itemType);
+        EntityHelper.spawnProjectile(shootInfo);
+        // play sound
+        playerUseItemSound(ply, weaponType, autoSwing);
         // apply CD
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
         double useTimeMulti = 1 / useSpeed;
@@ -1185,48 +1265,6 @@ public class ItemUseHelper {
         applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
         return true;
     }
-    protected static boolean playerUseThrowingProjectile(Player ply, String itemType, String weaponType,
-                                                         boolean autoSwing, HashMap<String, Double> attrMap, ItemStack tool) {
-        double consumptionRate = attrMap.getOrDefault("ammoConsumptionRate", 1d);
-        // remove one of the player's tool
-        if (Math.random() < consumptionRate) {
-            tool.setAmount(tool.getAmount() - 1);
-        }
-        // use the weapon
-        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
-        Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
-        double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
-        projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
-        facingDir.multiply(projectileSpeed);
-        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, facingDir, attrMap, itemType);
-        EntityHelper.spawnProjectile(shootInfo);
-        // play sound
-        playerUseItemSound(ply, weaponType, autoSwing);
-        // apply CD
-        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
-        double useTimeMulti = 1 / useSpeed;
-        applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
-        return true;
-    }
-    protected static boolean playerUseBoomerang(Player ply, String itemType, String weaponType,
-                                                         boolean autoSwing, HashMap<String, Double> attrMap, ConfigurationSection weaponSection) {
-        // use the weapon
-        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
-        Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
-        double projectileSpeed = weaponSection.getDouble("velocity", 5d);
-        double distance = weaponSection.getDouble("distance", 10d);
-        facingDir.multiply(projectileSpeed);
-        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, facingDir, attrMap, itemType);
-        // spawn projectile
-        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
-        double useTimeMulti = 1 / useSpeed;
-        double useTime = attrMap.getOrDefault("useTime", 20d) * useTimeMulti;
-        TerrariaBoomerang entity = new TerrariaBoomerang(shootInfo, distance, useTime);
-        plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
-        // play sound
-        playerUseItemSound(ply, weaponType, autoSwing);
-        return true;
-    }
     // other helper functions for item using
     public static void playerUseItemSound(Entity ply, String weaponType, boolean autoSwing) {
         String itemUseSound;
@@ -1357,6 +1395,14 @@ public class ItemUseHelper {
                         break;
                     case "BOOMERANG":
                         success = playerUseBoomerang(ply, itemName, weaponType,
+                                autoSwing, attrMap, weaponSection);
+                        break;
+                    case "YOYO":
+                        success = playerUseYoyo(ply, itemName, weaponType,
+                                autoSwing, attrMap, weaponSection);
+                        break;
+                    case "FLAIL":
+                        success = playerUseFlail(ply, itemName, weaponType,
                                 autoSwing, attrMap, weaponSection);
                         break;
                 }

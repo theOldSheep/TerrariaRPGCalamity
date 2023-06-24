@@ -771,6 +771,33 @@
         damageMulti: 0.75
 疯狂飞斧:
     autoTrace: true
+    liveTime: 100
+猪鲨链球:
+    slowedByWater: false
+    spawnProjectiles:
+        interval: 2
+        offset: 1.0
+        spawnMechanism: SURROUND
+        damageMulti: 0.65
+        speed: 0.3
+        spawnType: 气泡弹
+气泡弹:
+    slowedByWater: false
+    autoTrace: true
+    liveTime: 40
+泰拉悠悠球:
+    spawnProjectiles:
+        interval: 2
+        offset: 0.5
+        spawnMechanism: SURROUND
+        damageMulti: 0.65
+        speed: 0.35
+        spawnType: 泰拉悠悠球光束
+泰拉悠悠球光束:
+    autoTrace: true
+    penetration: 999999
+    blockHitAction: thru
+    liveTime: 40
 星云烈焰:
     gravity: 0
     autoTrace: true
@@ -915,8 +942,6 @@
     autoTrace: true
     autoTraceMethod: 2
     slowedByWater: false
-气泡弹:
-    autoTrace: true
 星尘细胞弹:
     autoTrace: true
     buffInflict:

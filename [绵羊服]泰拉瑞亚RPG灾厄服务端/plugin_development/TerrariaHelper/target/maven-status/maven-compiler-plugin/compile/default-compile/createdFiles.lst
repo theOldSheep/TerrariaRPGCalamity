@@ -176,6 +176,7 @@ terraria\entity\boss\astrumAureus\AstrumAureus.class
 terraria\util\ItemHelper.class
 terraria\entity\boss\theDestroyer\Destroyer.class
 terraria\entity\boss\moonLord\MoonLordTrueEyeOfCthulhu$1.class
+terraria\entity\projectile\TerrariaFlail.class
 terraria\entity\npc\TerrariaNPC.class
 terraria\entity\boss\eaterOfWorld\EaterOfWorld.class
 terraria\entity\boss\thePlaguebringerGoliath\PlagueHomingMissile.class

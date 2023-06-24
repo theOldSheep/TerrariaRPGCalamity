@@ -16,7 +16,6 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
                 .setTicksOffset(1);
     }
     Player owner;
-    Location spawnedLoc;
     Vector recoilPool = new Vector();
     double maxDistance, maxDistanceSquared, useTime, speed, acceleration;
     int ticksDuration, indexAI = 0;
@@ -30,7 +29,6 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
         super(shootInfo);
         // initialize variables
         owner = (Player) shootInfo.shooter;
-        spawnedLoc = bukkitEntity.getLocation();
         this.maxDistance = maxDistance;
         this.maxDistanceSquared = maxDistance * maxDistance;
         this.useTime = useTime;
@@ -60,7 +58,7 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
         Vector recoilDir = MathHelper.getDirection(hitLoc, bukkitEntity.getLocation(), speed * 0.02);
         recoilPool.add(recoilDir);
         // hit increases the index significantly
-        indexAI += 4;
+        indexAI += 6;
     }
 
     @Override

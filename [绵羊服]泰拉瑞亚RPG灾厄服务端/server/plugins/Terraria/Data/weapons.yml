@@ -592,39 +592,34 @@
   velocity: 16
   duration: 1200
 链锤:
-  type: YOYO
+  type: FLAIL
   reach: 12
   velocity: 11
   duration: 200
-  typeID: 1
   autoSwing: true
 火焰锤:
-  type: YOYO
+  type: FLAIL
   reach: 12
   velocity: 11
   duration: 200
-  typeID: 1
   autoSwing: true
 蓝月:
-  type: YOYO
+  type: FLAIL
   reach: 14.5
   velocity: 12
   duration: 200
-  typeID: 1
   autoSwing: true
 太极连枷:
-  type: YOYO
+  type: FLAIL
   reach: 16
   velocity: 15
   duration: 200
-  typeID: 1
   autoSwing: true
 猪鲨链球:
-  type: YOYO
+  type: FLAIL
   reach: 20
   velocity: 14
   duration: 200
-  typeID: 1
   autoSwing: true
 手里剑:
   type: THROW_PROJECTILE
