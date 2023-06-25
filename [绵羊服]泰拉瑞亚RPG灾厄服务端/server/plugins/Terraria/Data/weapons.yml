@@ -544,20 +544,20 @@
   offSet: 24
 木制回力镖:
   type: BOOMERANG
-  distance: 6
-  velocity: 6.5
+  distance: 12
+  velocity: 0.8
 附魔回力镖:
   type: BOOMERANG
-  distance: 7
-  velocity: 10
+  distance: 12
+  velocity: 1
 荆棘旋刃:
   type: BOOMERANG
-  distance: 7.25
-  velocity: 14
+  distance: 15
+  velocity: 1
 烈焰回旋镖:
   type: BOOMERANG
-  distance: 7.5
-  velocity: 14
+  distance: 17.5
+  velocity: 1.1
 疯狂飞斧:
   autoSwing: true
   type: STAB
@@ -568,58 +568,53 @@
     name: 疯狂飞斧
 木制悠悠球:
   type: YOYO
-  reach: 9
-  velocity: 16
+  reach: 11
+  velocity: 1
   duration: 80
 抑郁球:
   type: YOYO
   reach: 14
-  velocity: 16
+  velocity: 1.2
   duration: 100
 亚马逊悠悠球:
   type: YOYO
   reach: 13
-  velocity: 16
+  velocity: 1.1
   duration: 120
 克苏鲁之眼悠悠球:
   type: YOYO
   reach: 23
-  velocity: 16
+  velocity: 1.5
   duration: 1200
 泰拉悠悠球:
   type: YOYO
   reach: 32
-  velocity: 16
+  velocity: 2
   duration: 1200
 链锤:
   type: FLAIL
-  reach: 12
-  velocity: 11
-  duration: 200
+  reach: 16
+  velocity: 1.5
   autoSwing: true
 火焰锤:
   type: FLAIL
-  reach: 12
-  velocity: 11
-  duration: 200
+  reach: 16
+  velocity: 1.5
   autoSwing: true
 蓝月:
   type: FLAIL
-  reach: 14.5
-  velocity: 12
-  duration: 200
+  reach: 24
+  velocity: 1.75
   autoSwing: true
 太极连枷:
   type: FLAIL
-  reach: 16
-  velocity: 15
-  duration: 200
+  reach: 27.5
+  velocity: 2
   autoSwing: true
 猪鲨链球:
   type: FLAIL
-  reach: 20
-  velocity: 14
-  duration: 200
+  reach: 32
+  velocity: 2.25
   autoSwing: true
 手里剑:
   type: THROW_PROJECTILE

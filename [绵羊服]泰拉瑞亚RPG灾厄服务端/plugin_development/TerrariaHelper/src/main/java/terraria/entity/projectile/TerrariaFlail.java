@@ -35,7 +35,7 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
         super.gravity = 0;
         super.penetration = 999999;
         super.liveTime = 999999;
-        super.blockHitAction = "stick";
+        super.blockHitAction = "thru";
         // give infinite use CD temporarily
         ItemUseHelper.applyCD(owner, -1);
     }
@@ -69,6 +69,7 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
             if (! owner.getScoreboardTags().contains("temp_autoSwing")) {
                 bukkitEntity.teleport(owner.getEyeLocation());
                 spinning = false;
+                super.blockHitAction = "stick";
                 // update velocity
                 Vector newVelocity = MathHelper.vectorFromYawPitch_quick(owner.getLocation().getYaw(), owner.getLocation().getPitch());
                 newVelocity.multiply(speed);
@@ -76,7 +77,7 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
             }
             // rotate around the player when spinning
             else {
-                double angle = ticksLived * 25;
+                double angle = ticksLived * 40;
                 Vector horizontalOffset = MathHelper.vectorFromYawPitch_quick(angle, 0);
                 horizontalOffset.multiply(2);
                 Location targetLoc = owner.getLocation().add(0, 1, 0).add(horizontalOffset);

@@ -17,7 +17,7 @@ import terraria.util.GenericHelper;
 import java.util.*;
 
 public class TerrariaPotionProjectile extends EntityPotion {
-    private static final double distFromBlock = 1e-5, distCheckOnGround = 1e-1;
+    private static final double distFromBlock = 1e-3, distCheckOnGround = 1e-1;
     // projectile info
     public String projectileType, blockHitAction = "die", trailColor = null;
     public int autoTraceMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noAutoTraceTicks = 0, maxAutoTraceTicks = 999999,

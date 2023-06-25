@@ -575,7 +575,7 @@ public class ItemUseHelper {
         // use the weapon
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
-        double projectileSpeed = weaponSection.getDouble("velocity", 5d);
+        double projectileSpeed = weaponSection.getDouble("velocity", 0.5d);
         double reach = weaponSection.getDouble("reach", 10d);
         int duration = weaponSection.getInt("duration", 100);
         facingDir.multiply(projectileSpeed);

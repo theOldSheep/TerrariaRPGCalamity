@@ -17,7 +17,7 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
     }
     Player owner;
     Vector recoilPool = new Vector();
-    double maxDistance, maxDistanceSquared, useTime, speed, acceleration;
+    double maxDistance, maxDistanceSquared, useTime, speed;
     int ticksDuration, indexAI = 0;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public TerrariaYoyo(World world) {
@@ -38,7 +38,7 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
         super.gravity = 0;
         super.penetration = 999999;
         super.liveTime = 999999;
-        super.blockHitAction = "slide";
+        super.blockHitAction = "thru";
         // give infinite use CD temporarily
         ItemUseHelper.applyCD(owner, -1);
     }
@@ -55,8 +55,7 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
         super.hitEntity(e, position);
         // tweak the on-hit recoil
         Location hitLoc = new Location(bukkitEntity.getWorld(), position.pos.x, position.pos.y, position.pos.z);
-        Vector recoilDir = MathHelper.getDirection(hitLoc, bukkitEntity.getLocation(), speed * 0.02);
-        recoilPool.add(recoilDir);
+        recoilPool = MathHelper.getDirection(hitLoc, bukkitEntity.getLocation(), speed + 0.75);
         // hit increases the index significantly
         indexAI += 6;
     }
@@ -65,9 +64,10 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
     public void B_() {
         super.B_();
         // returns if too far away
-        boolean isReturning = owner.isSneaking() || ticksLived >= ticksDuration;
+        boolean isReturning = owner.isSneaking() ||
+                ticksLived >= ticksDuration ||
+                bukkitEntity.getLocation().distanceSquared(owner.getEyeLocation()) > maxDistanceSquared;
         if (isReturning) {
-            super.blockHitAction = "thru";
             bukkitEntity.setVelocity(MathHelper.getDirection(
                     bukkitEntity.getLocation(), owner.getEyeLocation(), this.speed) );
             if (bukkitEntity.getLocation().distanceSquared(owner.getEyeLocation()) < this.speed * this.speed)
@@ -76,15 +76,10 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
         // update velocity
         else {
             Location targetLoc = ItemUseHelper.getPlayerTargetLoc(owner, maxDistance, 5, aimHelper, true);
-            Vector acc = MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, acceleration);
-            Vector velocity = bukkitEntity.getVelocity();
+            Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, speed, true);
             // tweak velocity
-            velocity.add(acc);
             velocity.add(recoilPool);
-            recoilPool.multiply(0.5);
-            if (velocity.lengthSquared() < 1e-5)
-                velocity = MathHelper.randomVector();
-            velocity.normalize().multiply(speed);
+            recoilPool.multiply(0.9);
             bukkitEntity.setVelocity(velocity);
         }
         // owner is offline
