@@ -132,6 +132,7 @@ terraria\entity\minion\MinionHusk.class
 terraria\entity\boss\dukeFishron\Sharknado.class
 terraria\entity\boss\empressOfLight\EmpressOfLight$AttackPhase.class
 terraria\entity\boss\dukeFishron\WaterBlob.class
+terraria\entity\monster\MonsterSilverfish.class
 terraria\entity\monster\MonsterSlime.class
 terraria\entity\boss\lunaticCultist\PhantomDragon.class
 terraria\event\listener\RandomTitleListener.class

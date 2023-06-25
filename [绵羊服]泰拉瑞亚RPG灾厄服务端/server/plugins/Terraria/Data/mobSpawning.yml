@@ -91,6 +91,28 @@ spawnInfo:
         死神: 15
         蛾怪: 1
         致命球: 10
+    日耀柱:
+        流星火怪: 1
+        火龙战士: 1
+        火龙怪: 1
+        火月怪: 1
+        火滚怪: 1
+    星璇柱:
+        异星黄蜂: 1
+        星璇怪: 2
+        漩泥怪: 1
+        异星蜂王: 1
+    星云柱:
+        吮脑怪: 5
+        预言怪: 3
+        星云浮怪: 1
+        进化兽: 3
+    星尘柱:
+        星尘细胞: 1
+        银河织妖: 1
+        流体入侵怪: 1
+        观星怪: 3
+        闪耀炮手: 2
     南瓜月1:
         稻草人: 1
     南瓜月2:
@@ -258,6 +280,27 @@ mobTier:
     飞蛇: 世纪之花
     深海吞食者: 世纪之花
     拜月教教徒: 石巨人
+    流星火怪: 石巨人
+    火龙战士: 石巨人
+    火龙怪: 石巨人
+    火月怪: 石巨人
+    火滚怪: 石巨人
+    千足蜈蚣: 石巨人
+    异星黄蜂: 石巨人
+    星璇怪: 石巨人
+    漩泥怪: 石巨人
+    异星蜂王: 石巨人
+    吮脑怪: 石巨人
+    预言怪: 石巨人
+    星云浮怪: 石巨人
+    进化兽: 石巨人
+    星云球: 石巨人
+    星尘细胞: 石巨人
+    银河织妖: 石巨人
+    流体入侵怪: 石巨人
+    观星怪: 石巨人
+    闪耀炮手: 石巨人
+    闪耀怪: 石巨人
 mobTierMax:
     诅咒骷髅头: 血肉之墙
     恶魔: 机械三王
@@ -758,6 +801,302 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.51
                     health: 800
+    流星火怪:
+        name: "流星火怪"
+        monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 4
+        variants:
+            default1:
+                attributes:
+                    damage: 420
+                    damageType: "Melee"
+                    defence: 52
+                    knockback: 2
+                    knockbackResistance: 0.84
+                    health: 3600
+    火龙战士:
+        name: "火龙战士"
+        monsterType: "ZOMBIE"
+        spawnLocationType: GROUND
+        variants:
+            default1:
+                attributes:
+                    damage: 480
+                    damageType: "Melee"
+                    defence: 56
+                    knockback: 2
+                    knockbackResistance: 0.68
+                    health: 6000
+    火龙怪:
+        name: "火龙怪"
+        monsterType: "SLIME"
+        spawnLocationType: GROUND
+        slimeSize: 5
+        variants:
+            default1:
+                attributes:
+                    damage: 330
+                    damageType: "Melee"
+                    defence: 64
+                    knockback: 2
+                    knockbackResistance: 0.84
+                    health: 4800
+    火月怪:
+        name: "火月怪"
+        monsterType: "ZOMBIE"
+        spawnLocationType: GROUND
+        variants:
+            default1:
+                attributes:
+                    damage: 540
+                    damageType: "Melee"
+                    defence: 60
+                    knockback: 2
+                    knockbackResistance: 0.68
+                    health: 4800
+    火滚怪:
+        name: "火滚怪"
+        monsterType: "ZOMBIE"
+        spawnLocationType: GROUND
+        variants:
+            default1:
+                attributes:
+                    damage: 480
+                    damageType: "Melee"
+                    defence: 68
+                    knockback: 2
+                    knockbackResistance: 1
+                    health: 4200
+    千足蜈蚣:
+        name: "千足蜈蚣"
+        monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 4
+        variants:
+            default1:
+                attributes:
+                    damage: 720
+                    damageType: "Melee"
+                    defence: 2000
+                    knockback: 2
+                    knockbackResistance: 1
+                    health: 6000
+    异星黄蜂:
+        name: "异星黄蜂"
+        monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 3
+        variants:
+            default1:
+                attributes:
+                    damage: 450
+                    damageType: "Melee"
+                    defence: 40
+                    knockback: 2
+                    knockbackResistance: 0.6
+                    health: 3000
+    星璇怪:
+        name: "星璇怪"
+        monsterType: "ZOMBIE"
+        spawnLocationType: GROUND
+        variants:
+            default1:
+                attributes:
+                    damage: 540
+                    damageType: "Melee"
+                    defence: 68
+                    knockback: 2
+                    knockbackResistance: 0.52
+                    health: 4200
+    漩泥怪:
+        name: "漩泥怪"
+        monsterType: "ZOMBIE"
+        spawnLocationType: AIR
+        variants:
+            default1:
+                attributes:
+                    damage: 540
+                    damageType: "Melee"
+                    defence: 68
+                    knockback: 2
+                    knockbackResistance: 0.52
+                    health: 4200
+    异星幼虫:
+        name: "异星幼虫"
+        monsterType: "SILVERFISH"
+        spawnLocationType: ANY
+        variants:
+            default1:
+                attributes:
+                    damage: 300
+                    damageType: "Melee"
+                    defence: 12
+                    knockback: 2
+                    knockbackResistance: 0.2
+                    health: 1200
+    异星蜂王:
+        name: "异星蜂王"
+        monsterType: "ZOMBIE"
+        spawnLocationType: GROUND
+        variants:
+            default1:
+                attributes:
+                    damage: 600
+                    damageType: "Melee"
+                    defence: 88
+                    knockback: 2
+                    knockbackResistance: 0.76
+                    health: 6000
+    吮脑怪:
+        name: "吮脑怪"
+        monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 3
+        variants:
+            default1:
+                attributes:
+                    damage: 420
+                    damageType: "Melee"
+                    defence: 68
+                    knockback: 2
+                    knockbackResistance: 0.6
+                    health: 1980
+    预言怪:
+        name: "预言怪"
+        monsterType: "ZOMBIE"
+        spawnLocationType: GROUND
+        variants:
+            default1:
+                attributes:
+                    damage: 480
+                    damageType: "Melee"
+                    defence: 60
+                    knockback: 2
+                    knockbackResistance: 0.52
+                    health: 4200
+    星云浮怪:
+        name: "星云浮怪"
+        monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 4
+        variants:
+            default1:
+                attributes:
+                    damage: 450
+                    damageType: "Melee"
+                    defence: 40
+                    knockback: 2
+                    knockbackResistance: 0.6
+                    health: 7800
+    进化兽:
+        name: "进化兽"
+        monsterType: "ZOMBIE"
+        spawnLocationType: GROUND
+        variants:
+            default1:
+                attributes:
+                    damage: 540
+                    damageType: "Melee"
+                    defence: 92
+                    knockback: 2
+                    knockbackResistance: 0.84
+                    health: 5100
+    星云球:
+        name: "星云球"
+        monsterType: "SLIME"
+        spawnLocationType: ANY
+        variants:
+            default1:
+                attributes:
+                    damage: 420
+                    damageType: "Melee"
+                    defence: 999999
+                    knockback: 2
+                    knockbackResistance: 1
+                    health: 10000
+    星尘细胞:
+        name: "星尘细胞"
+        monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 4
+        variants:
+            default1:
+                attributes:
+                    damage: 720
+                    damageType: "Melee"
+                    defence: 100
+                    knockback: 2
+                    knockbackResistance: 0.76
+                    health: 1800
+    银河织妖:
+        name: "银河织妖"
+        monsterType: "SLIME"
+        spawnLocationType: SOLID
+        slimeSize: 4
+        variants:
+            default1:
+                attributes:
+                    damage: 480
+                    damageType: "Melee"
+                    defence: 20
+                    knockback: 2
+                    knockbackResistance: 1
+                    health: 7200
+    流体入侵怪:
+        name: "流体入侵怪"
+        monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 5
+        variants:
+            default1:
+                attributes:
+                    damage: 420
+                    damageType: "Melee"
+                    defence: 76
+                    knockback: 2
+                    knockbackResistance: 0.98
+                    health: 9000
+    观星怪:
+        name: "观星怪"
+        monsterType: "ZOMBIE"
+        spawnLocationType: GROUND
+        variants:
+            default1:
+                attributes:
+                    damage: 480
+                    damageType: "Melee"
+                    defence: 68
+                    knockback: 2
+                    knockbackResistance: 0.68
+                    health: 4200
+    闪耀炮手:
+        name: "闪耀炮手"
+        monsterType: "SLIME"
+        spawnLocationType: GROUND
+        slimeSize: 5
+        variants:
+            default1:
+                attributes:
+                    damage: 420
+                    damageType: "Melee"
+                    defence: 80
+                    knockback: 2
+                    knockbackResistance: 0.68
+                    health: 4800
+    闪耀怪:
+        name: "闪耀怪"
+        monsterType: "SILVERFISH"
+        spawnLocationType: AIR
+        variants:
+            default1:
+                attributes:
+                    damage: 480
+                    damageType: "Melee"
+                    defence: 20
+                    knockback: 2
+                    knockbackResistance: 0.76
+                    health: 1200
     吞噬者:
         name: "吞噬者"
         monsterType: "SLIME"

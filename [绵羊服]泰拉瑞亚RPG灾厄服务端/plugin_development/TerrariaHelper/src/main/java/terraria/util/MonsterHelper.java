@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.omg.CORBA.TypeCodePackage.BadKind;
 import terraria.TerrariaHelper;
 import terraria.entity.monster.MonsterHusk;
+import terraria.entity.monster.MonsterSilverfish;
 import terraria.entity.monster.MonsterSlime;
 import terraria.entity.monster.MonsterZombie;
 import terraria.gameplay.Event;
@@ -212,6 +213,10 @@ public class MonsterHelper {
                     isBaby = true;
                 case "HUSK": {
                     entity = (new MonsterHusk(target, type, loc, isBaby)).getBukkitEntity();
+                    break;
+                }
+                case "SILVERFISH": {
+                    entity = (new MonsterSilverfish(target, type, loc)).getBukkitEntity();
                     break;
                 }
                 default:
