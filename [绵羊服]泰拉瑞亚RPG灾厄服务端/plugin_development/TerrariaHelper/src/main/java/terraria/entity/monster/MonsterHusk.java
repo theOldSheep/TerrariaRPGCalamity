@@ -1,6 +1,8 @@
 package terraria.entity.monster;
 
+import net.minecraft.server.v1_12_R1.DifficultyDamageScaler;
 import net.minecraft.server.v1_12_R1.EntityZombieHusk;
+import net.minecraft.server.v1_12_R1.GroupDataEntity;
 import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
@@ -10,13 +12,14 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MonsterHusk extends EntityZombieHusk {
     protected HashMap<String, Object> extraVariables = new HashMap<>();
-    boolean isMonsterPart = false;
+    boolean isMonsterPart = false, isBaby;
     Player target;
     String monsterType, monsterVariant;
     int indexAI = 0, idx = 0;
@@ -35,7 +38,7 @@ public class MonsterHusk extends EntityZombieHusk {
     }
     public MonsterHusk(org.bukkit.entity.Player target, String type, Location spawnLoc, boolean isBaby, boolean isMonsterPart) {
         super(((CraftWorld) target.getWorld()).getHandle());
-        setBaby(isBaby);
+        this.isBaby = isBaby;
         this.target = target;
         // does not get removed if far away.
         this.persistent = true;
@@ -56,6 +59,15 @@ public class MonsterHusk extends EntityZombieHusk {
         // attributes etc.
         initExtraInformation(target, progressRequirement);
     }
+
+    @Nullable
+    @Override
+    public GroupDataEntity prepare(DifficultyDamageScaler difficultydamagescaler, @Nullable GroupDataEntity groupdataentity) {
+        GroupDataEntity returned = super.prepare(difficultydamagescaler, groupdataentity);
+        setBaby(isBaby);
+        return returned;
+    }
+
     @Override
     public void die() {
         super.die();

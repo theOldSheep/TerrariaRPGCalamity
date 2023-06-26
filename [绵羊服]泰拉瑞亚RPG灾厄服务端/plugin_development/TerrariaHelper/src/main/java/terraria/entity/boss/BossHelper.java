@@ -62,25 +62,44 @@ public class BossHelper {
         double healthRatio = healthInfo[0] / healthInfo[1];
         bossbar.setProgress((float) healthRatio);
         // dynamic Damage Reduction
-        String bossName = type.msgName;
-        double targetTime = TerrariaHelper.settingConfig.getInt("BossDefeatTime." + bossName, 900);
-        double dynamicDR;
-        if (ticksLived < targetTime) {
-            if (healthRatio < 0.99)
-                dynamicDR = Math.min((healthRatio / (1 - healthRatio)) * ticksLived / (targetTime - ticksLived), 1d);
-            else
-                dynamicDR = 1d;
-        }
-        // once exceeding targeted defeat time, dynamic DR multiplier linearly increases to 1 over maximum of 10 seconds.
-        else {
-            MetadataValue val = EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION);
-            if (val != null) dynamicDR = val.asDouble();
-            else dynamicDR = 1d;
-            dynamicDR = Math.min(dynamicDR + 0.005, 1);
+        double dynamicDamageMultiplier;
+        {
+            String bossName = type.msgName;
+            double targetTime = TerrariaHelper.settingConfig.getInt("BossDefeatTime." + bossName, 900);
+            // get current dynamic damage multiplier
+            double currDynamicDM;
+            MetadataValue metadataVal = EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION);
+            if (metadataVal != null) currDynamicDM = metadataVal.asDouble();
+            else currDynamicDM = 1d;
+            // dynamic DR only applies when the boss lives shorter than expected
+            if (ticksLived < targetTime && ticksLived > 1) {
+                if (healthRatio > 0.00001 && healthRatio < 0.99999) {
+                    double damageDealtRatio = 1 - healthRatio;
+                    double damageDealtRatioPotential = damageDealtRatio / currDynamicDM;
+                    double timeElapsedRatio = ticksLived / targetTime;
+                    // actual DPS * dynamic DM = expected DPS = max health / expected time
+                    // (damage / time elapsed) * dynamic DM = max health / expected time
+                    // (damage / max health / time elapsed) * dynamic DM = 1 / expected time
+                    // dynamic DM = time elapsed / expected time * max health / damage
+                    // dynamic DM = time elapsed ratio / damage dealt ratio potential
+                    dynamicDamageMultiplier = timeElapsedRatio / damageDealtRatioPotential;
+                    // gradually change the damage multiplier
+                    dynamicDamageMultiplier = dynamicDamageMultiplier * 0.05 + currDynamicDM * 0.95;
+                    // dynamic damage multiplier can not increase player damage or decrease damage excessively
+                    dynamicDamageMultiplier = Math.min(dynamicDamageMultiplier, 1d);
+                    dynamicDamageMultiplier = Math.max(dynamicDamageMultiplier, 0.2d);
+                }
+                else
+                    dynamicDamageMultiplier = currDynamicDM;
+            }
+            // once exceeding targeted defeat time, dynamic DR multiplier linearly increases to 1 over maximum of 10 seconds.
+            else {
+                dynamicDamageMultiplier = Math.min(currDynamicDM + 0.005, 1);
+            }
+//            Bukkit.broadcastMessage("Dynamic DR multi: " + dynamicDamageMultiplier + ", time: " + ticksLived + "/" + targetTime + ", health: " + healthInfo[0] + "/" + healthInfo[1]);
         }
         for (LivingEntity bossPart : bossParts)
-            EntityHelper.setMetadata(bossPart, EntityHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION, dynamicDR);
-//        Bukkit.broadcastMessage("Dynamic DR: " + dynamicDR + ", time: " + ticksLived + "/" + targetTime + ", health: " + healthInfo[0] + "/" + healthInfo[1]);
+            EntityHelper.setMetadata(bossPart, EntityHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION, dynamicDamageMultiplier);
     }
     public static double getBossHealthMulti(int numPly) {
         double multi = 1, multiInc = 0.35;

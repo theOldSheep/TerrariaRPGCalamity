@@ -45,7 +45,7 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
     @Override
     public void die() {
         super.die();
-        if (owner != null && PlayerHelper.isProperlyPlaying(owner)) {
+        if (owner != null && owner.isOnline()) {
             ItemUseHelper.applyCD(owner, useTime);
         }
     }

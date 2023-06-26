@@ -537,12 +537,17 @@ public class PlayerHelper {
                                     }
                                     break;
                                 case "孢子囊":
-                                    if (tickIndex.get() % 5 == 0) {
-                                        Vector velocity = MathHelper.randomVector();
-                                        velocity.multiply(0.15);
-                                        EntityHelper.spawnProjectile(ply, velocity, attrMapSpore,
-                                                EntityHelper.DamageType.MAGIC,"孢子球");
-                                    }
+                                    Vector velocity = MathHelper.randomVector();
+                                    velocity.multiply(0.25);
+                                    Location spawnLoc = ply.getEyeLocation().add(
+                                            Math.random() * 10 - 5, Math.random() * 8 - 3, Math.random() * 10 - 5);
+                                    EntityHelper.spawnProjectile(ply, spawnLoc, velocity, attrMapSpore,
+                                            EntityHelper.DamageType.MAGIC,"孢子球");
+                                    break;
+                                // equipments that provide buff
+                                case "冰冻海龟壳":
+                                    if (health * 2 > maxHealth)
+                                        EntityHelper.applyEffect(ply, "冰障", 20);
                                     break;
                                 case "圣骑士护盾":
                                     if (health * 4 > maxHealth)

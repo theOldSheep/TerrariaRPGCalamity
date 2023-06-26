@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -157,22 +158,22 @@ public class MonsterHelper {
             case PRE_MOON_LORD:
                 switch (playerProgress) {
                     case PRE_PROFANED_GODDESS:
+                        result.healthMulti  = 3d;
+                        result.defenceMulti = 2d;
+                        result.damageMulti  = 1.5d;
+                        break;
+                    case POST_PROFANED_GODDESS:
                         result.healthMulti  = 4d;
                         result.defenceMulti = 3d;
                         result.damageMulti  = 2d;
-                        break;
-                    case POST_PROFANED_GODDESS:
-                        result.healthMulti  = 5d;
-                        result.defenceMulti = 5d;
-                        result.damageMulti  = 2.5d;
                         break;
                 }
                 break;
             case PRE_PROFANED_GODDESS:
                 if (playerProgress == PlayerHelper.GameProgress.POST_PROFANED_GODDESS) {
-                    result.healthMulti  = 4d;
-                    result.defenceMulti = 3d;
-                    result.damageMulti  = 2d;
+                    result.healthMulti  = 4.5d;
+                    result.defenceMulti = 2.5d;
+                    result.damageMulti  = 1.5d;
                 }
                 break;
         }
@@ -288,6 +289,8 @@ public class MonsterHelper {
             case "丛林蝙蝠":
             case "幽灵":
             case "死神":
+            case "流星火怪":
+            case "千足蜈蚣":
                 monster.setNoGravity(true);
         }
         // no clip
@@ -309,6 +312,8 @@ public class MonsterHelper {
             case "飞龙":
             case "吞噬者":
             case "骨蛇":
+            case "流星火怪":
+            case "千足蜈蚣":
                 monster.noclip = true;
         }
         // glowing
@@ -361,9 +366,18 @@ public class MonsterHelper {
             case "飞龙":
             case "骨蛇":
             case "吞噬者":
+            case "千足蜈蚣":
             {
                 if (!isMonsterPart) {
-                    int additionalSegAmount = 14;
+                    int additionalSegAmount;
+                    switch (type) {
+                        case "千足蜈蚣":
+                            monster.addScoreboardTag("noDamage");
+                            additionalSegAmount = 15;
+                            break;
+                        default:
+                            additionalSegAmount = 14;
+                    }
                     Location loc = bukkitMonster.getLocation();
                     ArrayList<Slime> segments = new ArrayList<>(additionalSegAmount + 1);
                     segments.add((Slime) bukkitMonster);
@@ -375,10 +389,24 @@ public class MonsterHelper {
                         EntityHelper.setMetadata(segment, EntityHelper.MetadataName.DAMAGE_TAKER, bukkitMonster);
                         segment.setCustomName(type + "§1");
                         segments.add(segment);
+                        // extra segment info
+                        switch (type) {
+                            case "千足蜈蚣":
+                                if (i + 1 < additionalSegAmount) {
+                                    segment.addScoreboardTag("noDamage");
+                                    attrMapSegment.put("damageTakenMulti", 10d);
+                                }
+                                break;
+                        }
                     }
                     extraVariables.put("attachments", segments);
                     // following option
                     EntityHelper.WormSegmentMovementOptions followInfo = new EntityHelper.WormSegmentMovementOptions();
+                    switch (type) {
+                        case "千足蜈蚣":
+                            followInfo.setFollowDistance(1.5);
+                            break;
+                    }
                     extraVariables.put("wormMoveOption", followInfo);
                 }
                 break;
@@ -459,33 +487,55 @@ public class MonsterHelper {
         } else if (monster.hasLineOfSight(targetNMS)) {
             monster.ticksLived = 1;
         }
-        // after ten seconds without any proper target, attempt to retarget
-        if (monster.ticksLived >= 200) {
-            // find possible target
+        // retarget mechanic
+        {
             Player newTarget = null;
-            double targetAttemptRadius = 64;
-            double newTargetDistSqr = 4096;
-            for (org.bukkit.entity.Entity checkEntity : monsterBkt.getNearbyEntities(targetAttemptRadius, targetAttemptRadius, targetAttemptRadius)) {
-                if (checkEntity instanceof Player) {
-                    Player checkPlayer = (Player) checkEntity;
-                    if (PlayerHelper.isProperlyPlaying(checkPlayer)) {
-                        double currDistSqr = monsterBkt.getLocation().distanceSquared(checkPlayer.getLocation());
-                        if (currDistSqr > newTargetDistSqr) continue;
-                        if (monster.hasLineOfSight( ((CraftPlayer) checkPlayer).getHandle() )) {
-                            newTarget = checkPlayer;
-                            newTargetDistSqr = currDistSqr;
+            switch (type) {
+                case "千足蜈蚣": {
+                    if (monster.ticksLived >= 150 || !canCrawltipedeCharge(target))
+                        for (org.bukkit.entity.Entity checkEntity : monsterBkt.getNearbyEntities(64, 128, 64)) {
+                            if (checkEntity instanceof Player) {
+                                Player checkPlayer = (Player) checkEntity;
+                                if (canCrawltipedeCharge(checkPlayer)) {
+                                    newTarget = checkPlayer;
+                                    break;
+                                }
+                            }
+                        }
+                    break;
+                }
+                // for default retargeting
+                // after ten seconds without any proper target, attempt to retarget
+                default:
+                    if (monster.ticksLived >= 200) {
+                        // find possible target
+                        double targetAttemptRadius = 64;
+                        double newTargetDistSqr = 4096;
+                        for (org.bukkit.entity.Entity checkEntity : monsterBkt.getNearbyEntities(targetAttemptRadius, targetAttemptRadius, targetAttemptRadius)) {
+                            if (checkEntity instanceof Player) {
+                                Player checkPlayer = (Player) checkEntity;
+                                if (PlayerHelper.isProperlyPlaying(checkPlayer)) {
+                                    double currDistSqr = monsterBkt.getLocation().distanceSquared(checkPlayer.getLocation());
+                                    if (currDistSqr > newTargetDistSqr) continue;
+                                    if (monster.hasLineOfSight(((CraftPlayer) checkPlayer).getHandle())) {
+                                        newTarget = checkPlayer;
+                                        newTargetDistSqr = currDistSqr;
+                                    }
+                                }
+                            }
+                        }
+                        if (newTarget == null) {
+                            // target's monster spawned amount is tweaked in die()
+                            monster.die();
+                            return null;
                         }
                     }
-                }
             }
+            // update target
             if (newTarget != null) {
                 tweakPlayerMonsterSpawnedAmount(target, false);
                 tweakPlayerMonsterSpawnedAmount(newTarget, true);
                 return newTarget;
-            } else {
-                // target's monster spawned amount is tweaked in die()
-                monster.die();
-                return null;
             }
         }
         return target;
@@ -544,6 +594,15 @@ public class MonsterHelper {
                     ItemHelper.dropItem(monsterBkt.getLocation(), itemToDrop);
             }
         }
+    }
+    // monster AI and helper functions
+    private static boolean canCrawltipedeCharge(Player target) {
+        for (int i = -1; i >= -6; i--) {
+            if (target.getLocation().getBlock().getRelative(0, i, 0).getType().isSolid()) {
+                return true;
+            }
+        }
+        return false;
     }
     public static int monsterAI(EntityInsentient monster, double defaultMovementSpeed, Player target, String type,
                                 int indexAI, HashMap<String, Object> extraVariables, boolean isMonsterPart) {
@@ -1297,10 +1356,10 @@ public class MonsterHelper {
                                                 Math.random() * 24 - 12, Math.random() * 24 - 12, Math.random() * 24 - 12);
                                         Block blk = targetLoc.getBlock();
                                         if (! blk.getType().isSolid()) {
-                                            while (! blk.getType().isSolid()) {
+                                            while (! (blk.getType().isSolid() && blk.getRelative(BlockFace.UP).getType().isSolid()) ) {
                                                 blk = blk.getRelative(0, -1, 0);
                                             }
-                                            monsterBkt.teleport(blk.getLocation().add(0, 1, 0));
+                                            monsterBkt.teleport(blk.getLocation().add(0.5, 1, 0.5));
                                             indexAI = -1;
                                             break;
                                         }
@@ -1412,6 +1471,141 @@ public class MonsterHelper {
                                     }
                                     break;
                             }
+                        }
+                    }
+                    break;
+                }
+                case "流星火怪": {
+                    if (monster.getHealth() > 0) {
+                        Vector velocity = (Vector) extraVariables.getOrDefault("v", new Vector());
+                        // initialize dash direction
+                        if (indexAI == 0) {
+                            velocity = MathHelper.getDirection(
+                                    monsterBkt.getEyeLocation(), target.getEyeLocation(), 2);
+                        }
+                        // maintain velocity & ready for next dash
+                        else {
+                            if (indexAI >= 20) {
+                                if (monsterBkt.getLocation().distanceSquared(target.getLocation()) > 25 * 25) {
+                                    indexAI = (int) Math.min(indexAI * -0.5, -30);
+                                    velocity = new Vector(0, 0.6, 0);
+                                }
+                            }
+                        }
+                        extraVariables.put("v", velocity);
+                        monsterBkt.setVelocity(velocity);
+                    }
+                    break;
+                }
+                case "千足蜈蚣": {
+                    ArrayList<org.bukkit.entity.LivingEntity> segments = (ArrayList<org.bukkit.entity.LivingEntity>) extraVariables.get("attachments");
+                    for (org.bukkit.entity.Entity entity : segments) {
+                        ((LivingEntity) entity).setHealth(monsterBkt.getHealth());
+                    }
+                    if (monster.getHealth() > 0) {
+                        // strike
+                        Location targetLoc;
+                        double accMagnitude, speed;
+                        if (canCrawltipedeCharge(target) ) {
+                            targetLoc = target.getLocation().add(0, 1, 0);
+                            accMagnitude = 0.2;
+                            speed = 2.25;
+                        }
+                        // roam above target
+                        else {
+                            Vector offsetDir = MathHelper.vectorFromYawPitch_quick(indexAI, 0);
+                            offsetDir.multiply(25);
+                            offsetDir.setY(16);
+                            targetLoc = target.getLocation().add(offsetDir);
+                            accMagnitude = 1.5;
+                            speed = 5;
+                        }
+                        // normalize current velocity first
+                        Vector vec = monsterBkt.getVelocity();
+                        double vecLen = vec.length();
+                        if (vecLen < 1e-5) {
+                            vec = MathHelper.randomVector();
+                            vecLen = 1;
+                        }
+                        vec.multiply(1 / vecLen);
+                        // add acceleration
+                        Vector acc = MathHelper.getDirection(monsterBkt.getLocation(), targetLoc, accMagnitude);
+                        vec.add(acc);
+                        // normalize new velocity
+                        vecLen = vec.length();
+                        if (vecLen < 1e-5) {
+                            vec = MathHelper.randomVector();
+                            vecLen = 1;
+                        }
+                        vec.multiply(speed / vecLen);
+                        monsterBkt.setVelocity(vec);
+                    }
+                    EntityHelper.handleSegmentsFollow(segments, (EntityHelper.WormSegmentMovementOptions) extraVariables.get("wormMoveOption"));
+                    break;
+                }
+                case "火月怪":
+                case "火滚怪": {
+                    if (monster.getHealth() > 0) {
+                        if (indexAI == 0) {
+                            if (type.equals("火月怪") ) {
+                                EntityHelper.tweakAttribute(monsterBkt, "defence", "60", true);
+                                monsterBkt.removeScoreboardTag("reflectProjectile");
+                            }
+                            else
+                                EntityHelper.tweakAttribute(monsterBkt, "damage", "168", false);
+                        }
+                        else if (indexAI == 160) {
+                            if (monsterBkt.isOnGround())
+                                monsterBkt.setVelocity(new Vector(0, 1, 0));
+                            else
+                                indexAI --;
+                        }
+                        else if (indexAI >= 175) {
+                            monsterBkt.setFallDistance(0);
+                            // start dashes
+                            Vector acceleration = (Vector) extraVariables.getOrDefault("acc", new Vector());
+                            if (indexAI == 175) {
+                                // init attributes etc.
+                                if (type.equals("火月怪") ) {
+                                    EntityHelper.tweakAttribute(monsterBkt, "defence", "60", false);
+                                    extraVariables.put("LH", monsterBkt.getHealth());
+                                    monsterBkt.addScoreboardTag("reflectProjectile");
+                                }
+                                else
+                                    EntityHelper.tweakAttribute(monsterBkt, "damage", "168", true);
+                                // init speed
+                                Location tempLoc = target.getLocation();
+                                tempLoc.setY(monsterBkt.getLocation().getY());
+                                acceleration = MathHelper.getDirection(monsterBkt.getLocation(), tempLoc, 0.1);
+                                acceleration.setY(0.04);
+                            }
+                            // mechanism during dash
+                            if (type.equals("火月怪")) {
+                                if (indexAI >= 300 ||
+                                        monsterBkt.isOnGround() ||
+                                        monsterBkt.getHealth() + 1e-5 < (double) extraVariables.getOrDefault("LH", 1d) )
+                                    indexAI = -1;
+                                acceleration.setY(acceleration.getY() - 0.0015);
+                            }
+                            else {
+                                if (indexAI >= 300)
+                                    indexAI = -1;
+                                else {
+                                    if (monsterBkt.isOnGround()) {
+                                        Location tempLoc = target.getLocation();
+                                        tempLoc.setY(monsterBkt.getLocation().getY());
+                                        acceleration = MathHelper.getDirection(monsterBkt.getLocation(), tempLoc, 0.1);
+                                        acceleration.setY(0.065);
+                                    }
+                                }
+                                acceleration.setY(acceleration.getY() - 0.015);
+                            }
+                            // update acceleration
+                            extraVariables.put("acc", acceleration);
+                            Vector velocity = monsterBkt.getVelocity().add(acceleration);
+                            if (velocity.lengthSquared() > 4)
+                                velocity.normalize().multiply(2);
+                            monsterBkt.setVelocity( velocity );
                         }
                     }
                     break;
