@@ -7,13 +7,16 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftProjectile;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.metadata.MetadataValue;
+import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.projectile.TerrariaPotionProjectile;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
@@ -40,6 +43,23 @@ public class ArrowHitListener implements Listener {
     private void handleHitEntity(TerrariaProjectileHitEvent e, Projectile projectile, Entity entity) {
         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(projectile);
         Set<String> projectileScoreboardTags = projectile.getScoreboardTags();
+        // if the projectile is reflected
+        if (entity.getScoreboardTags().contains("reflectProjectile")) {
+            TerrariaPotionProjectile nmsProjectile = (TerrariaPotionProjectile) ((CraftProjectile) projectile).getHandle();
+            if (nmsProjectile.canBeReflected) {
+                e.setCancelled(true);
+                // set velocity in the next tick, so it do not get overridden
+                Bukkit.getScheduler().runTask(TerrariaHelper.getInstance(), () -> {
+                    projectile.setVelocity( MathHelper.getDirection(
+                            projectile.getLocation(),
+                            ( (LivingEntity) projectile.getShooter() ).getEyeLocation(),
+                            projectile.getVelocity().length()   ) );
+                    nmsProjectile.autoTrace = false;
+                    projectile.setShooter((ProjectileSource) entity);
+                });
+                return;
+            }
+        }
         // Daawnlight targets
         if (entity.getScoreboardTags().contains("isDaawnlight")) {
             projectile.addScoreboardTag("hitDaawnlight");

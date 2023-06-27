@@ -41,6 +41,7 @@ public class TerrariaBoomerang extends TerrariaPotionProjectile {
         super.penetration = 999999;
         super.liveTime = 999999;
         super.blockHitAction = "stick";
+        super.canBeReflected = false;
         // give infinite use CD temporarily
         ItemUseHelper.applyCD(owner, -1);
     }

@@ -12,6 +12,7 @@ import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.util.*;
 import terraria.util.MathHelper;
@@ -321,25 +322,34 @@ public class AstrumDeus extends EntitySlime {
                 handleSpawnAnimation();
             }
             // head
-            else if (isHead) {
-                // update boss bar and dynamic DR
-                terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, ticksLived, BOSS_TYPE);
-                // apply extreme gravity to target
-                EntityHelper.applyEffect(target, "极限重力", 310);
-                // attack
-                headRushEnemy();
-                // face the player
-                this.yaw = (float) MathHelper.getVectorYaw(target.getLocation().subtract(bukkitEntity.getLocation()).toVector());
-                // follow
-                EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
-            }
-            // body and tail
             else {
-                if (++indexAI % 200 == index * 2) {
-                    shootProjectiles(1);
+                // update facing direction
+                {
+                    MetadataValue valYaw = EntityHelper.getMetadata(bukkitEntity, "yaw");
+                    if (valYaw != null) this.yaw = valYaw.asFloat();
+                    MetadataValue valPitch = EntityHelper.getMetadata(bukkitEntity, "pitch");
+                    if (valPitch != null) this.pitch = valPitch.asFloat();
                 }
-                if (index % 2 == 0 && indexAI % 100 == index) {
-                    shootProjectiles(2);
+                if (isHead) {
+                    // update boss bar and dynamic DR
+                    terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, ticksLived, BOSS_TYPE);
+                    // apply extreme gravity to target
+                    EntityHelper.applyEffect(target, "极限重力", 310);
+                    // attack
+                    headRushEnemy();
+                    // face the charging direction
+                    this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
+                    // follow
+                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
+                }
+                // body and tail
+                else {
+                    if (++indexAI % 200 == index * 2) {
+                        shootProjectiles(1);
+                    }
+                    if (index % 2 == 0 && indexAI % 100 == index) {
+                        shootProjectiles(2);
+                    }
                 }
             }
         }

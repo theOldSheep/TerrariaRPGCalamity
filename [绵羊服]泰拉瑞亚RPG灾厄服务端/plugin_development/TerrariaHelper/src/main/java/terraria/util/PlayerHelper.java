@@ -460,7 +460,7 @@ public class PlayerHelper {
             attrMapSpore.put("damage", 125d);
             attrMapSpore.put("knockback", 0d);
         }
-        // every 5 ticks (1/4 second)
+        // every 2 ticks (1/10 second)
         AtomicInteger tickIndex = new AtomicInteger();
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
@@ -505,7 +505,7 @@ public class PlayerHelper {
                             switch (accessory) {
                                 case "新手版挥发明胶":
                                 case "挥发明胶":
-                                    int shootInterval = accessory.equals("新手版挥发明胶") ? 20 : 10;
+                                    int shootInterval = accessory.equals("新手版挥发明胶") ? 10 : 5;
                                     if (tickIndex.get() % shootInterval == 0) {
                                         double distanceSqr = 10000d;
                                         Entity target = null;
@@ -537,12 +537,14 @@ public class PlayerHelper {
                                     }
                                     break;
                                 case "孢子囊":
-                                    Vector velocity = MathHelper.randomVector();
-                                    velocity.multiply(0.25);
-                                    Location spawnLoc = ply.getEyeLocation().add(
-                                            Math.random() * 10 - 5, Math.random() * 8 - 3, Math.random() * 10 - 5);
-                                    EntityHelper.spawnProjectile(ply, spawnLoc, velocity, attrMapSpore,
-                                            EntityHelper.DamageType.MAGIC,"孢子球");
+                                    if (tickIndex.get() % 3 == 0) {
+                                        Vector velocity = MathHelper.randomVector();
+                                        velocity.multiply(0.25);
+                                        Location spawnLoc = ply.getEyeLocation().add(
+                                                Math.random() * 10 - 5, Math.random() * 8 - 3, Math.random() * 10 - 5);
+                                        EntityHelper.spawnProjectile(ply, spawnLoc, velocity, attrMapSpore,
+                                                EntityHelper.DamageType.MAGIC, "孢子球");
+                                    }
                                     break;
                                 // equipments that provide buff
                                 case "冰冻海龟壳":
@@ -569,7 +571,7 @@ public class PlayerHelper {
                 }
             }
             tickIndex.getAndIncrement();
-        }, 0, 5);
+        }, 0, 2);
     }
     public static void threadAttribute() {
         int delay = 6;

@@ -22,6 +22,7 @@ Functions:
     方法.更新变量值('terraria_defence','terraria_accessory_amount');
     方法.延时(1000);
     方法.异步执行方法('update_variables');
+  
   update_variable_money: |-
     方法.更新变量值('terraria_money');
     方法.延时(200);

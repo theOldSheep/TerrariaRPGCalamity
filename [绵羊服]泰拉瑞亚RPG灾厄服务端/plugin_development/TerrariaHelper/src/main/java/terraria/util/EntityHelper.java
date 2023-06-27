@@ -1642,6 +1642,9 @@ public class EntityHelper {
                 }
             }
         }
+        // remove the not damaged marker scoreboard tag
+        if (isDirectAttackDamage)
+            victim.removeScoreboardTag("notDamaged");
 
         // display damage
         String hologramInfo;
@@ -1925,7 +1928,8 @@ public class EntityHelper {
                 } else {
                     segmentCurrent.teleport(targetLoc);
                 }
-                ((CraftLivingEntity) segmentCurrent).getHandle().yaw = (float) MathHelper.getVectorYaw( dVec );
+                setMetadata(segmentCurrent, "yaw", (float) MathHelper.getVectorYaw( dVec ));
+                setMetadata(segmentCurrent, "pitch", (float) MathHelper.getVectorPitch( dVec ));
             }
         }
     }

@@ -11,6 +11,7 @@ import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.entity.boss.desertScourge.DesertNuisance;
 import terraria.util.BossHelper;
@@ -203,22 +204,27 @@ public class AquaticScourge extends EntitySlime {
                 }
                 return;
             }
-            // if target is valid, attack
-            else {
-                // head
-                if (index == 0) {
-                    // attack
-                    headRushEnemy();
-                    // face the player
-                    this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
-                    // follow
-                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
-                }
-                // body
-                else if (index < TOTAL_LENGTH - 1) {
-                    if (++indexAI % 200 == index * 2) {
-                        shootProjectiles(1);
-                    }
+            // update facing direction
+            {
+                MetadataValue valYaw = EntityHelper.getMetadata(bukkitEntity, "yaw");
+                if (valYaw != null) this.yaw = valYaw.asFloat();
+                MetadataValue valPitch = EntityHelper.getMetadata(bukkitEntity, "pitch");
+                if (valPitch != null) this.pitch = valPitch.asFloat();
+            }
+            // head
+            if (index == 0) {
+                // attack
+                headRushEnemy();
+                // face the charging direction
+                this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
+                this.pitch = (float) MathHelper.getVectorPitch( bukkitEntity.getVelocity() );
+                // follow
+                EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
+            }
+            // body
+            else if (index < TOTAL_LENGTH - 1) {
+                if (++indexAI % 200 == index * 2) {
+                    shootProjectiles(1);
                 }
             }
         }
@@ -254,15 +260,15 @@ public class AquaticScourge extends EntitySlime {
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
         if (index == 0) {
-            setCustomName(BOSS_TYPE.msgName);
+            setCustomName(BOSS_TYPE.msgName + "头");
             this.head = this;
         }
         else {
             this.head = (AquaticScourge) ((CraftEntity) bossParts.get(0)).getHandle();
             if (index + 1 < TOTAL_LENGTH)
-                setCustomName(BOSS_TYPE.msgName + "§1");
+                setCustomName(BOSS_TYPE.msgName + "身体");
             else
-                setCustomName(BOSS_TYPE.msgName + "§2");
+                setCustomName(BOSS_TYPE.msgName + "尾");
         }
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");

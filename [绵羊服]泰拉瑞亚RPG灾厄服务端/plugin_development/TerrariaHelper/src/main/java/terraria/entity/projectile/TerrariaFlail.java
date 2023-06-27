@@ -36,6 +36,7 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
         super.penetration = 999999;
         super.liveTime = 999999;
         super.blockHitAction = "thru";
+        super.canBeReflected = false;
         // give infinite use CD temporarily
         ItemUseHelper.applyCD(owner, -1);
     }

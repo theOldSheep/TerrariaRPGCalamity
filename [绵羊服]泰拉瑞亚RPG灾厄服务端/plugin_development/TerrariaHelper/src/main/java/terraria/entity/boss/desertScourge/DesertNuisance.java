@@ -9,6 +9,7 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.util.MathHelper;
 import terraria.util.*;
@@ -140,12 +141,19 @@ public class DesertNuisance extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // update facing direction
+                {
+                    MetadataValue valYaw = EntityHelper.getMetadata(bukkitEntity, "yaw");
+                    if (valYaw != null) this.yaw = valYaw.asFloat();
+                    MetadataValue valPitch = EntityHelper.getMetadata(bukkitEntity, "pitch");
+                    if (valPitch != null) this.pitch = valPitch.asFloat();
+                }
                 // attack
                 if (index == 0) {
                     // attack
                     headRushEnemy();
-                    // face the player
-                    this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+                    // face the charging direction
+                    this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
                     // follow
                     EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
                 }

@@ -110,6 +110,7 @@
     penetration: 99999
     speedMultiPerTick: 0.95
     blockHitAction: stick
+    projectileSize: 0.5
     spawnProjectiles:
         interval: 4
         spawnMechanism: BOTTOM
@@ -125,6 +126,14 @@
     noGravityTicks: 99999
     buffInflict:
         - "咒火|100|1"
+黑檀深渊之球:
+    penetration: 99999
+    blockHitAction: thru
+    projectileSize: 0.5
+    gravity: 0
+    buffInflict:
+        - "扭曲|60|0.3"
+        - "缓慢|100|1"
 血化深渊之球:
     penetration: 99999
     blockHitAction: thru
@@ -323,10 +332,11 @@
 孢子云:
     penetration: 99999
     blockHitAction: thru
-    liveTime: 60
+    liveTime: 40
     gravity: 0
     projectileSize: 0.5
-    speedMultiPerTick: 0.95
+    speedMultiPerTick: 0.9
+    canBeReflected: false
     buffInflict:
         - "中毒|160|1"
 水之枪:
@@ -791,7 +801,7 @@
         interval: 4
         offset: 0.5
         spawnMechanism: SURROUND
-        damageMulti: 0.65
+        damageMulti: 0.25
         speed: 0.5
         spawnType: 泰拉悠悠球光束
 泰拉悠悠球光束:
@@ -865,13 +875,15 @@
 孢子球:
     blockHitAction: thru
     gravity: 0
+    liveTime: 100
     speedMultiPerTick: 0.95
     autoTrace: true
+    canBeReflected: false
     buffInflict:
         - "中毒|100|1"
     clusterBomb:
         amount: 3
-        damageMulti: 0.6
+        damageMulti: 1
         name: 孢子云
         fireOnTimeout: false
         velocity: 0.15

@@ -35,7 +35,7 @@ replaceChatColor: true
 # 启用的话服务端实体将具有正确的碰撞箱,可以被人推动等
 # 如果实体没有足够的范围将会处于卡墙掉血状态
 # 该配置仅适用于EntityModel配置中的实体 对于调用api对玩家发包修改实体模型的无效(实现原理在HitBoxTask中自行查看)
-EntityHitBox: true
+EntityHitBox: false
 
 # 是否兼容AP属性插件
 AttributePlus: false

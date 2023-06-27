@@ -238,12 +238,12 @@ public class MonsterHelper {
                 disguise = new MobDisguise(DisguiseType.SLIME, true);
                 ((SlimeWatcher) disguise.getWatcher()).setSize(size);
             } else {
-                boolean isBaby = false;
+                boolean isAdult = true;
                 if (disguiseType.startsWith("BABY_")) {
-                    isBaby = true;
+                    isAdult = false;
                     disguiseType = disguiseType.replace("BABY_", "");
                 }
-                disguise = new MobDisguise(DisguiseType.valueOf(disguiseType), isBaby);
+                disguise = new MobDisguise(DisguiseType.valueOf(disguiseType), isAdult);
             }
             disguise.setReplaceSounds(true);
             disguise.setEntity(entity);

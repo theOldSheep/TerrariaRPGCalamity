@@ -336,6 +336,7 @@ public class MonsterHelper {
                     case "礼物宝箱怪":
                     case "神圣宝箱怪":
                     case "腐化宝箱怪":
+                    case "火龙怪":
                         break;
                     default:
                         removeAI = true;
@@ -392,8 +393,11 @@ public class MonsterHelper {
                         // extra segment info
                         switch (type) {
                             case "千足蜈蚣":
+                                segment.setCustomName(type);
                                 if (i + 1 < additionalSegAmount) {
                                     segment.addScoreboardTag("noDamage");
+                                }
+                                else {
                                     attrMapSegment.put("damageTakenMulti", 10d);
                                 }
                                 break;
@@ -599,10 +603,10 @@ public class MonsterHelper {
     private static boolean canCrawltipedeCharge(Player target) {
         for (int i = -1; i >= -6; i--) {
             if (target.getLocation().getBlock().getRelative(0, i, 0).getType().isSolid()) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
     public static int monsterAI(EntityInsentient monster, double defaultMovementSpeed, Player target, String type,
                                 int indexAI, HashMap<String, Object> extraVariables, boolean isMonsterPart) {
@@ -1078,13 +1082,12 @@ public class MonsterHelper {
                 case "巨型陆龟":
                 case "冰雪陆龟": {
                     if (monster.getHealth() > 0) {
-                        double lastHealth = (double) extraVariables.getOrDefault("lastHealth", monsterBkt.getHealth());
-                        boolean hasBeenDamaged = monsterBkt.getHealth() < lastHealth - 0.1;
+                        boolean hasBeenDamaged = monsterBkt.getScoreboardTags().contains("notDamaged");
                         if (hasBeenDamaged) {
                             monsterBkt.setCustomName(type);
                             indexAI = 999999;
                         }
-                        extraVariables.put("lastHealth", monsterBkt.getHealth());
+                        monsterBkt.getScoreboardTags().add("notDamaged");
                         // setup wait time before rolling attack
                         int waitTime;
                         {
@@ -1481,14 +1484,14 @@ public class MonsterHelper {
                         // initialize dash direction
                         if (indexAI == 0) {
                             velocity = MathHelper.getDirection(
-                                    monsterBkt.getEyeLocation(), target.getEyeLocation(), 2);
+                                    monsterBkt.getEyeLocation(), target.getEyeLocation(), 2.5);
                         }
                         // maintain velocity & ready for next dash
                         else {
                             if (indexAI >= 20) {
                                 if (monsterBkt.getLocation().distanceSquared(target.getLocation()) > 25 * 25) {
                                     indexAI = (int) Math.min(indexAI * -0.5, -30);
-                                    velocity = new Vector(0, 0.6, 0);
+                                    velocity = new Vector(0, 0.75, 0);
                                 }
                             }
                         }
@@ -1508,12 +1511,12 @@ public class MonsterHelper {
                         double accMagnitude, speed;
                         if (canCrawltipedeCharge(target) ) {
                             targetLoc = target.getLocation().add(0, 1, 0);
-                            accMagnitude = 0.2;
+                            accMagnitude = 0.5;
                             speed = 2.25;
                         }
                         // roam above target
                         else {
-                            Vector offsetDir = MathHelper.vectorFromYawPitch_quick(indexAI, 0);
+                            Vector offsetDir = MathHelper.vectorFromYawPitch_quick(indexAI * 2.75, 0);
                             offsetDir.multiply(25);
                             offsetDir.setY(16);
                             targetLoc = target.getLocation().add(offsetDir);
@@ -1537,7 +1540,8 @@ public class MonsterHelper {
                             vec = MathHelper.randomVector();
                             vecLen = 1;
                         }
-                        vec.multiply(speed / vecLen);
+                        if (vecLen > speed)
+                            vec.multiply(speed / vecLen);
                         monsterBkt.setVelocity(vec);
                     }
                     EntityHelper.handleSegmentsFollow(segments, (EntityHelper.WormSegmentMovementOptions) extraVariables.get("wormMoveOption"));
@@ -1554,21 +1558,21 @@ public class MonsterHelper {
                             else
                                 EntityHelper.tweakAttribute(monsterBkt, "damage", "168", false);
                         }
-                        else if (indexAI == 160) {
+                        else if (indexAI == 120) {
                             if (monsterBkt.isOnGround())
                                 monsterBkt.setVelocity(new Vector(0, 1, 0));
                             else
                                 indexAI --;
                         }
-                        else if (indexAI >= 175) {
+                        else if (indexAI >= 135) {
                             monsterBkt.setFallDistance(0);
                             // start dashes
                             Vector acceleration = (Vector) extraVariables.getOrDefault("acc", new Vector());
-                            if (indexAI == 175) {
+                            if (indexAI == 135) {
                                 // init attributes etc.
                                 if (type.equals("火月怪") ) {
                                     EntityHelper.tweakAttribute(monsterBkt, "defence", "60", false);
-                                    extraVariables.put("LH", monsterBkt.getHealth());
+                                    monsterBkt.addScoreboardTag("notDamaged");
                                     monsterBkt.addScoreboardTag("reflectProjectile");
                                 }
                                 else
@@ -1576,26 +1580,26 @@ public class MonsterHelper {
                                 // init speed
                                 Location tempLoc = target.getLocation();
                                 tempLoc.setY(monsterBkt.getLocation().getY());
-                                acceleration = MathHelper.getDirection(monsterBkt.getLocation(), tempLoc, 0.1);
-                                acceleration.setY(0.04);
+                                acceleration = MathHelper.getDirection(monsterBkt.getLocation(), tempLoc, 0.25);
+                                acceleration.setY(0.1);
                             }
                             // mechanism during dash
                             if (type.equals("火月怪")) {
-                                if (indexAI >= 300 ||
+                                if (indexAI >= 200 ||
                                         monsterBkt.isOnGround() ||
-                                        monsterBkt.getHealth() + 1e-5 < (double) extraVariables.getOrDefault("LH", 1d) )
+                                        !monsterBkt.getScoreboardTags().contains("notDamaged") )
                                     indexAI = -1;
-                                acceleration.setY(acceleration.getY() - 0.0015);
+                                acceleration.setY(acceleration.getY() - 0.015);
                             }
                             else {
-                                if (indexAI >= 300)
+                                if (indexAI >= 250)
                                     indexAI = -1;
                                 else {
                                     if (monsterBkt.isOnGround()) {
                                         Location tempLoc = target.getLocation();
                                         tempLoc.setY(monsterBkt.getLocation().getY());
-                                        acceleration = MathHelper.getDirection(monsterBkt.getLocation(), tempLoc, 0.1);
-                                        acceleration.setY(0.065);
+                                        acceleration = MathHelper.getDirection(monsterBkt.getLocation(), tempLoc, 0.25);
+                                        acceleration.setY(0.2);
                                     }
                                 }
                                 acceleration.setY(acceleration.getY() - 0.015);
