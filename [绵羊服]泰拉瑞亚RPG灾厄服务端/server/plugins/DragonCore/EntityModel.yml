@@ -1,18 +1,18 @@
 渊海灾虫头:
   entity: "渊海灾虫头"
   contains: false
-  model: "渊海灾虫/头/头.obj"
+  model: "渊海灾虫/头/custom_model.obj"
   texture: "渊海灾虫/头/texture.png"
-  scale: 40
+  scale: 45
 渊海灾虫体节:
   entity: "渊海灾虫身体"
   contains: false
-  model: "渊海灾虫/体节/体节.obj"
+  model: "渊海灾虫/体节/custom_model.obj"
   texture: "渊海灾虫/体节/texture.png"
-  scale: 40
+  scale: 45
 渊海灾虫尾:
   entity: "渊海灾虫尾"
   contains: false
-  model: "渊海灾虫/尾/尾.obj"
+  model: "渊海灾虫/尾/custom_model.obj"
   texture: "渊海灾虫/尾/texture.png"
-  scale: 40
+  scale: 45

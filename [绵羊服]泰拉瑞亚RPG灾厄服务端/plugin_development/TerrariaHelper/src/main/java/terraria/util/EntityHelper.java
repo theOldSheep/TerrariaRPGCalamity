@@ -1116,6 +1116,15 @@ public class EntityHelper {
                             }
                             break;
                         }
+                        // alien queen leaves larva after defeated
+                        case "异星蜂王": {
+                            if (dPly instanceof Player) {
+                                Player targetPly = (Player) dPly;
+                                for (int i = 0; i < 2; i++)
+                                    MonsterHelper.spawnMob("异星幼虫", v.getLocation(), targetPly);
+                            }
+                            break;
+                        }
                         // the hungry flies towards the player after breaks free
                         case "饿鬼Attached": {
                             if (dPly instanceof Player) {
@@ -1147,15 +1156,17 @@ public class EntityHelper {
                         }
                     }
                 }
+                // special, player-progression specific drops
                 if (dPly instanceof Player) {
                     Player dPlayer = (Player) dPly;
                     // dungeon souls
                     if (WorldHelper.BiomeType.getBiome(dPlayer) == WorldHelper.BiomeType.DUNGEON) {
-                        if (PlayerHelper.hasDefeated(dPlayer, "世纪之花") && Math.random() < 0.125)
+                        if (PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.PLANTERA.msgName) &&
+                                Math.random() < 0.125)
                             MonsterHelper.spawnMob("地牢幽魂", v.getLocation(), dPlayer);
                     }
                     // souls and shards
-                    if (PlayerHelper.hasDefeated(dPlayer, "血肉之墙")) {
+                    if (PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.WALL_OF_FLESH.msgName)) {
                         if (!v.getScoreboardTags().contains("isBOSS")) {
                             Biome biome = v.getLocation().getBlock().getBiome();
                             switch (biome) {

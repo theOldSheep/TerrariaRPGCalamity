@@ -291,6 +291,7 @@ public class MonsterHelper {
             case "死神":
             case "流星火怪":
             case "千足蜈蚣":
+            case "漩泥怪":
                 monster.setNoGravity(true);
         }
         // no clip
@@ -1610,6 +1611,93 @@ public class MonsterHelper {
                             if (velocity.lengthSquared() > 4)
                                 velocity.normalize().multiply(2);
                             monsterBkt.setVelocity( velocity );
+                        }
+                    }
+                    break;
+                }
+                case "星璇怪":
+                case "漩泥怪": {
+                    if (monster.getHealth() > 0) {
+                        // adjust velocity
+                        if (type.equals("漩泥怪")) {
+                            Vector velocity = monsterBkt.getVelocity();
+                            // horizontal acceleration when far away
+                            Location tempLoc = target.getLocation();
+                            tempLoc.setY(monsterBkt.getLocation().getY());
+                            if (tempLoc.distanceSquared(monsterBkt.getLocation()) > 400) {
+                                Vector horAcc = MathHelper.getDirection(monsterBkt.getLocation(), tempLoc, 0.01);
+                                velocity.add(horAcc);
+                            }
+                            // vertical acceleration
+                            boolean aboveOrBelow = monsterBkt.getLocation().getY() > target.getLocation().getY();
+                            velocity.setY(velocity.getY() + 0.025 * (aboveOrBelow ? -1 : 1) );
+                            monsterBkt.setVelocity(velocity);
+                        }
+                        // shoot projectiles
+                        if (indexAI % 125 == 0) {
+                            EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                    monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "星旋激光");
+                            EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                                    .setProjectileSpeed(2)
+                                    .setRandomOffsetRadius(2);
+                            for (int i = 0; i < 6; i ++) {
+                                Location targetLoc = EntityHelper.helperAimEntity(monsterBkt, target, aimHelper);
+                                shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, targetLoc, 2);
+                                EntityHelper.spawnProjectile(shootInfo);
+                            }
+                        }
+                    }
+                    break;
+                }
+                case "异星幼虫": {
+                    if (monster.getHealth() > 0) {
+                        // evolve after living for a period of time
+                        if (indexAI > 300) {
+                            monsterBkt.remove();
+                            terraria.util.MonsterHelper.spawnMob("异星黄蜂", monsterBkt.getLocation(), target);
+                        }
+                    }
+                    break;
+                }
+                case "异星黄蜂": {
+                    if (monster.getHealth() > 0) {
+                        // evolve after living for a period of time
+                        if (indexAI > 300) {
+                            monsterBkt.remove();
+                            terraria.util.MonsterHelper.spawnMob("异星蜂王", monsterBkt.getLocation(), target);
+                            break;
+                        }
+                        // dashes every 20 ticks
+                        if (indexAI % 20 == 0) {
+                            monsterBkt.setVelocity(MathHelper.getDirection(
+                                    monsterBkt.getLocation(), target.getLocation().add(0, 1, 0), 0.6));
+                        }
+                        Vector velocity = monsterBkt.getVelocity();
+                        if (velocity.lengthSquared() > 1e-5) {
+                            velocity.normalize().multiply(0.6);
+                            monsterBkt.setVelocity(velocity);
+                        }
+                    }
+                    break;
+                }
+                case "异星蜂王": {
+                    if (monster.getHealth() > 0) {
+                        // fly around the player
+                        {
+                            Vector offsetDir = MathHelper.vectorFromYawPitch_quick(indexAI, 0);
+                            offsetDir.multiply(16);
+                            offsetDir.setY(MathHelper.xsin_degree(indexAI + 90) * 4 + 12);
+                            Location targetLoc = target.getLocation().add(offsetDir);
+                            monsterBkt.setVelocity(MathHelper.getDirection(
+                                    monsterBkt.getLocation(), targetLoc, 0.65, true));
+                        }
+                        // shoot projectile
+                        if (indexAI % 30 == 0) {
+                            EntityHelper.spawnProjectile(
+                                    monsterBkt,
+                                    MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 1.5),
+                                    EntityHelper.getAttrMap(monsterBkt),
+                                    "异星黏液");
                         }
                     }
                     break;
