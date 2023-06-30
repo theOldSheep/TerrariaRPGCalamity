@@ -92,16 +92,17 @@ spawnInfo:
         蛾怪: 1
         致命球: 10
     日耀柱:
-        流星火怪: 1
-        火龙战士: 1
-        火龙怪: 1
-        火月怪: 1
-        火滚怪: 1
+        千足蜈蚣: 2
+        流星火怪: 5
+        火龙战士: 5
+        火龙怪: 5
+        火月怪: 5
+        火滚怪: 5
     星璇柱:
         异星黄蜂: 1
-        星璇怪: 2
-        漩泥怪: 1
-        异星蜂王: 1
+        星璇怪: 1
+        漩泥怪: 5
+        异星蜂王: 2
     星云柱:
         吮脑怪: 5
         预言怪: 3
@@ -832,7 +833,8 @@ mobInfo:
         name: "火龙怪"
         monsterType: "SLIME"
         spawnLocationType: GROUND
-        slimeSize: 5
+        slimeSize: 4
+        disguiseType: "HORSE"
         variants:
             default1:
                 attributes:
@@ -851,7 +853,7 @@ mobInfo:
                 attributes:
                     damage: 540
                     damageType: "Melee"
-                    defence: 60
+                    defence: 0
                     knockback: 2
                     knockbackResistance: 0.68
                     health: 4800
@@ -862,7 +864,7 @@ mobInfo:
         variants:
             default1:
                 attributes:
-                    damage: 480
+                    damage: 648
                     damageType: "Melee"
                     defence: 68
                     knockback: 2
@@ -991,7 +993,7 @@ mobInfo:
                     health: 7800
     进化兽:
         name: "进化兽"
-        monsterType: "ZOMBIE"
+        monsterType: "BABY_ZOMBIE"
         spawnLocationType: GROUND
         variants:
             default1:

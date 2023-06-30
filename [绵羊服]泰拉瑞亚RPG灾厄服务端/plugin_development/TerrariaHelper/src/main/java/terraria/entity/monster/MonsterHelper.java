@@ -291,7 +291,12 @@ public class MonsterHelper {
             case "死神":
             case "流星火怪":
             case "千足蜈蚣":
+            case "异星黄蜂":
+            case "异星蜂王":
             case "漩泥怪":
+            case "吮脑怪":
+            case "星云浮怪":
+            case "星云球":
                 monster.setNoGravity(true);
         }
         // no clip
@@ -315,6 +320,9 @@ public class MonsterHelper {
             case "骨蛇":
             case "流星火怪":
             case "千足蜈蚣":
+            case "吮脑怪":
+            case "星云浮怪":
+            case "星云球":
                 monster.noclip = true;
         }
         // glowing
@@ -456,6 +464,12 @@ public class MonsterHelper {
             {
                 // minions should not actively damage ???
                 monster.removeScoreboardTag("isMonster");
+                break;
+            }
+            case "星云球":
+            {
+                // this is a pseudo-projectile and should take no damage at all.
+                monster.addScoreboardTag("noDamage");
                 break;
             }
         }
@@ -1360,7 +1374,8 @@ public class MonsterHelper {
                                                 Math.random() * 24 - 12, Math.random() * 24 - 12, Math.random() * 24 - 12);
                                         Block blk = targetLoc.getBlock();
                                         if (! blk.getType().isSolid()) {
-                                            while (! (blk.getType().isSolid() && blk.getRelative(BlockFace.UP).getType().isSolid()) ) {
+                                            while (! (blk.getRelative(0, 1, 0).getType().isSolid() &&
+                                                      blk.getRelative(0, 2, 0).getType().isSolid()) ) {
                                                 blk = blk.getRelative(0, -1, 0);
                                             }
                                             monsterBkt.teleport(blk.getLocation().add(0.5, 1, 0.5));
@@ -1620,21 +1635,22 @@ public class MonsterHelper {
                     if (monster.getHealth() > 0) {
                         // adjust velocity
                         if (type.equals("漩泥怪")) {
+                            monsterBkt.setFallDistance(0);
                             Vector velocity = monsterBkt.getVelocity();
                             // horizontal acceleration when far away
                             Location tempLoc = target.getLocation();
                             tempLoc.setY(monsterBkt.getLocation().getY());
                             if (tempLoc.distanceSquared(monsterBkt.getLocation()) > 400) {
-                                Vector horAcc = MathHelper.getDirection(monsterBkt.getLocation(), tempLoc, 0.01);
+                                Vector horAcc = MathHelper.getDirection(monsterBkt.getLocation(), tempLoc, 0.05);
                                 velocity.add(horAcc);
                             }
                             // vertical acceleration
                             boolean aboveOrBelow = monsterBkt.getLocation().getY() > target.getLocation().getY();
-                            velocity.setY(velocity.getY() + 0.025 * (aboveOrBelow ? -1 : 1) );
+                            velocity.setY(velocity.getY() + 0.075 * (aboveOrBelow ? -1 : 1) );
                             monsterBkt.setVelocity(velocity);
                         }
                         // shoot projectiles
-                        if (indexAI % 125 == 0) {
+                        if (indexAI % 125 == 100) {
                             EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                                     monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "星旋激光");
                             EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
@@ -1698,6 +1714,116 @@ public class MonsterHelper {
                                     MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 1.5),
                                     EntityHelper.getAttrMap(monsterBkt),
                                     "异星黏液");
+                        }
+                    }
+                    break;
+                }
+                case "吮脑怪": {
+                    if (monster.getHealth() > 0) {
+                        // move when not sucked onto a player
+                        Vector velocity = monsterBkt.getVelocity();
+                        Vector acc = MathHelper.getDirection(
+                                monsterBkt.getEyeLocation(), target.getEyeLocation(), 0.1);
+                        velocity.add(acc);
+                        if (velocity.lengthSquared() > 1e-5) {
+                            velocity.normalize().multiply(1);
+                        }
+                        monsterBkt.setVelocity(velocity);
+                    }
+                    break;
+                }
+                case "预言怪": {
+                    if (monster.getHealth() > 0) {
+                        // stop for a brief while before shooting
+                        if (indexAI >= 75) {
+                            monsterBkt.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0d);
+                            // shoot projectile
+                            if (indexAI >= 100) {
+                                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                        monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "星云针弹");
+                                EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                                        .setProjectileSpeed(2)
+                                        .setRandomOffsetRadius(2);
+                                for (int i = 0; i < 10; i ++) {
+                                    Location targetLoc = EntityHelper.helperAimEntity(monsterBkt, target, aimHelper);
+                                    shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, targetLoc, 2);
+                                    EntityHelper.spawnProjectile(shootInfo);
+                                }
+                                indexAI = -1;
+                            }
+                        }
+                    }
+                    break;
+                }
+                case "星云浮怪": {
+                    if (monster.getHealth() > 0) {
+                        // handle acceleration
+                        {
+                            Vector acc = (Vector) extraVariables.getOrDefault("acc", new Vector());
+                            if (indexAI < 75) {
+                                acc = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 0.075);
+                            } else {
+                                acc.setY(acc.getY() + 0.005);
+                            }
+                            extraVariables.put("acc", acc);
+                            Vector velocity = monsterBkt.getVelocity();
+                            velocity.add(acc);
+                            if (velocity.lengthSquared() > 1e-5)
+                                velocity.normalize().multiply(0.75);
+                            monsterBkt.setVelocity(velocity);
+                        }
+                        // laser and teleport
+                        switch (indexAI) {
+                            // shoot projectile
+                            case 85:
+                                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                        monsterBkt,
+                                        MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 2.5),
+                                        EntityHelper.getAttrMap(monsterBkt), "星云针弹");
+                                EntityHelper.spawnProjectile(shootInfo);
+                                break;
+                            // teleport
+                            case 100:
+                                Vector offset = MathHelper.randomVector();
+                                offset.multiply(15);
+                                monsterBkt.teleport(target.getEyeLocation().add(offset));
+                                indexAI = -1;
+                                break;
+                        }
+                    }
+                    break;
+                }
+                case "进化兽": {
+                    if (monster.getHealth() > 0) {
+                        // walks slowly before shooting
+                        if (indexAI >= 150) {
+                            monsterBkt.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.05d);
+                            // fire a projectile and continue walking
+                            if (indexAI >= 200) {
+                                // shoot projectile
+                                terraria.util.MonsterHelper.spawnMob("星云球", monsterBkt.getEyeLocation(), target);
+                                // recover walking speed
+                                monsterBkt.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.35d);
+                                indexAI = -1;
+                            }
+                        }
+                    }
+                    break;
+                }
+                case "星云球": {
+                    if (monster.getHealth() > 0) {
+                        // lasts 12.5 seconds
+                        if (indexAI > 250)
+                            monsterBkt.remove();
+                        else {
+                            Vector velocity = monsterBkt.getVelocity();
+                            Vector acc = MathHelper.getDirection(
+                                    monsterBkt.getEyeLocation(), target.getEyeLocation(), 0.05, true);
+                            velocity.add(acc);
+                            if (velocity.lengthSquared() > 1e-5) {
+                                velocity.normalize().multiply(1);
+                            }
+                            monsterBkt.setVelocity(velocity);
                         }
                     }
                     break;

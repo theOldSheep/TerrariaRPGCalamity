@@ -916,7 +916,7 @@ public class EntityHelper {
                     return false;
                 }
                 case "吮脑怪": {
-                    setMetadata(damager, MetadataName.SUCK_TARGET, victim);
+                    victim.addPassenger(damager);
                     break;
                 }
             }
@@ -1121,7 +1121,8 @@ public class EntityHelper {
                             if (dPly instanceof Player) {
                                 Player targetPly = (Player) dPly;
                                 for (int i = 0; i < 2; i++)
-                                    MonsterHelper.spawnMob("异星幼虫", v.getLocation(), targetPly);
+                                    MonsterHelper.spawnMob("异星幼虫", v.getLocation(), targetPly)
+                                            .setVelocity(MathHelper.randomVector());
                             }
                             break;
                         }

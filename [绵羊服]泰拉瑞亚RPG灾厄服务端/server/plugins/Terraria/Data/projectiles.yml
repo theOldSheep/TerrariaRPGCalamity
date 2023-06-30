@@ -565,6 +565,24 @@
     autoTraceAbility: 0.4
     noAutoTraceTicks: 20
     maxAutoTraceTicks: 40
+星旋激光:
+    blockHitAction: thru
+    liveTime: 100
+    gravity: 0
+    penetration: 999999
+异星黏液:
+    liveTime: 100
+    buffInflict:
+        - "扭曲|160|1"
+星云针弹:
+    liveTime: 100
+    blockHitAction: thru
+    gravity: 0
+星云激光:
+    blockHitAction: thru
+    liveTime: 100
+    gravity: 0
+    penetration: 999999
 天蓝羽毛:
     autoTrace: true
     isGrenade: true
@@ -745,12 +763,6 @@
 毒液箭:
     buffInflict:
         - "剧毒|200|1"
-异星蜂王:
-    buffInflict:
-        - "扭曲|160|1"
-异星黏液:
-    buffInflict:
-        - "扭曲|160|1"
 寒霜碎块:
     buffInflict:
         - "冷冻|150|0.67"
