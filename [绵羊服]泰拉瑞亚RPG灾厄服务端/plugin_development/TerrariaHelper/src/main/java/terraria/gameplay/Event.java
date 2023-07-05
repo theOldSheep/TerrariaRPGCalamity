@@ -2,6 +2,7 @@ package terraria.gameplay;
 
 import org.bukkit.entity.Entity;
 import terraria.TerrariaHelper;
+import terraria.entity.boss.event.CelestialPillar;
 import terraria.util.EntityHelper;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class Event {
     public static HashMap<String, Double> eventInfo = new HashMap<>();
     public static HashSet<String> questFishSubmitted = new HashSet<>();
     // celestial pillars
-    public static ArrayList<Entity> pillars = new ArrayList<>(4);
+    public static HashMap<CelestialPillar.PillarTypes, CelestialPillar> pillars = new HashMap<>(8);
 
     private static final HashMap<String, InfoMapKeys> infoKeyMapping = new HashMap<>();
     public enum InfoMapKeys {
@@ -25,7 +26,7 @@ public class Event {
         ;
 
         // fields
-        String keyName;
+        final String keyName;
         // constructors
         InfoMapKeys(String keyName) {
             this.keyName = keyName;

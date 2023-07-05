@@ -1021,37 +1021,8 @@ public class EntityHelper {
             // set health/directly remove
             if (v instanceof LivingEntity) ((LivingEntity) v).setHealth(0);
             else v.remove();
-            // celestial pillars
-            if (vScoreboardTags.contains("isPillar")) {
-                Event.pillars.remove(v.getName());
-                switch (Event.pillars.size()) {
-                    case 3:
-                        Bukkit.broadcastMessage("§d§o你的头脑变得麻木...");
-                        break;
-                    case 2:
-                        Bukkit.broadcastMessage("§d§o你痛苦不堪...");
-                        break;
-                    case 1:
-                        Bukkit.broadcastMessage("§d§o阴森的声音在你耳边萦绕不绝...");
-                        break;
-                    default:
-                        Player bossTarget = null;
-                        double minDistSqr = 1e7;
-                        for (Player checkPlayer : v.getWorld().getPlayers()) {
-                            double currDistSqr = v.getLocation().distanceSquared(checkPlayer.getLocation());
-                            if (currDistSqr < minDistSqr) {
-                                minDistSqr = currDistSqr;
-                                bossTarget = checkPlayer;
-                            }
-                        }
-                        if (bossTarget != null) {
-                            Bukkit.broadcastMessage("§d§o月亮末日慢慢逼近...");
-                            BossHelper.spawnBoss(bossTarget, BossHelper.BossType.MOON_LORD);
-                        }
-                }
-            }
             // NPC should also get death message
-            else if (vScoreboardTags.contains("isNPC"))
+            if (vScoreboardTags.contains("isNPC"))
                 sendDeathMessage(d, v, damageType, debuffType);
             // monster generic drop, event etc.
             else if (vScoreboardTags.contains("isMonster")) {
@@ -1097,7 +1068,7 @@ public class EntityHelper {
                 MetadataValue parentType = getMetadata(v, MetadataName.MONSTER_PARENT_TYPE);
                 if (parentType != null) {
                     switch (parentType.asString()) {
-                        // lava slime leaves lava ticksBeforeHookingFish death
+                        // lava slimes leave lava ticksBeforeHookingFish death
                         case "史莱姆": {
                             if (v.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)) {
                                 Location deathLoc = vLiving.getEyeLocation();
@@ -1113,16 +1084,6 @@ public class EntityHelper {
                                         }
                                     }, 50);
                                 }
-                            }
-                            break;
-                        }
-                        // alien queen leaves larva after defeated
-                        case "异星蜂王": {
-                            if (dPly instanceof Player) {
-                                Player targetPly = (Player) dPly;
-                                for (int i = 0; i < 2; i++)
-                                    MonsterHelper.spawnMob("异星幼虫", v.getLocation(), targetPly)
-                                            .setVelocity(MathHelper.randomVector());
                             }
                             break;
                         }

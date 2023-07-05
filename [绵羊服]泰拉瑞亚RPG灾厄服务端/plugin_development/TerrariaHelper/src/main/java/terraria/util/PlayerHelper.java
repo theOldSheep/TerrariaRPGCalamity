@@ -23,6 +23,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.boss.event.CelestialPillar;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.Event;
 
@@ -606,9 +607,11 @@ public class PlayerHelper {
                             else if ( BossHelper.bossMap.containsKey(BossHelper.BossType.THE_PLAGUEBRINGER_GOLIATH.msgName) )
                                 current = "猪鲨";
                             else if (!Event.currentEvent.equals("")) current = Event.currentEvent;
-                            for (Entity pillar : Event.pillars)
-                                if (pillar.getWorld().equals(ply.getWorld()) &&
-                                        pillar.getLocation().distanceSquared(ply.getLocation()) < 22500) {
+                            // background for celestial pillars
+                            for (CelestialPillar pillar : Event.pillars.values())
+                                if (pillar.getBukkitEntity().getWorld().equals(ply.getWorld()) &&
+                                        pillar.getBukkitEntity().getLocation().distanceSquared(ply.getLocation()) <
+                                                CelestialPillar.EFFECTED_RADIUS_SQR) {
                                     current = pillar.getName().replace("柱", "");
                                     break;
                                 }
@@ -704,11 +707,12 @@ public class PlayerHelper {
                             // other events
                             if (!Event.currentEvent.equals(""))
                                 current = TerrariaHelper.soundConfig.getString("event." + Event.currentEvent, "");
-                            // lunar towers
+                            // celestial pillars
                             if (ply.getLocation().getY() >= 50 && worldName.equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE)) {
-                                for (Entity pillar : Event.pillars)
-                                    if (pillar.getWorld().equals(plyWorld) &&
-                                            pillar.getLocation().distanceSquared(ply.getLocation()) < 22500) {
+                                for (CelestialPillar pillar : Event.pillars.values())
+                                    if (pillar.getBukkitEntity().getWorld().equals(plyWorld) &&
+                                            pillar.getBukkitEntity().getLocation().distanceSquared(ply.getLocation()) <
+                                                    CelestialPillar.EFFECTED_RADIUS_SQR) {
                                         current = "lunar_tower";
                                         break;
                                     }
@@ -1399,9 +1403,9 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS, Calendar.getInstance().getTimeInMillis());
         setArmorSet(ply, "");
         // bgm, biome and background
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BACKGROUND, "");
         // prevent duplicated soundtrack etc.
         if (joinOrRespawn) {
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BACKGROUND, "");
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM, "normal");
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM_TIME, 0L);
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME, WorldHelper.BiomeType.NORMAL);

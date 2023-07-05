@@ -2,6 +2,7 @@ package terraria.entity.monster;
 
 
 import net.minecraft.server.v1_12_R1.*;
+import net.minecraft.server.v1_12_R1.Entity;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -13,10 +14,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftSlime;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Slime;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
@@ -24,6 +22,7 @@ import org.bukkit.util.Vector;
 import org.omg.CORBA.TypeCodePackage.BadKind;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.empressOfLight.EmpressOfLight;
+import terraria.entity.boss.event.CelestialPillar;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.entity.projectile.TerrariaPotionProjectile;
 import terraria.gameplay.Event;
@@ -297,6 +296,9 @@ public class MonsterHelper {
             case "吮脑怪":
             case "星云浮怪":
             case "星云球":
+            case "星尘细胞":
+            case "银河织妖":
+            case "流体入侵怪":
                 monster.setNoGravity(true);
         }
         // no clip
@@ -323,6 +325,8 @@ public class MonsterHelper {
             case "吮脑怪":
             case "星云浮怪":
             case "星云球":
+            case "星尘细胞":
+            case "银河织妖":
                 monster.noclip = true;
         }
         // glowing
@@ -346,6 +350,7 @@ public class MonsterHelper {
                     case "神圣宝箱怪":
                     case "腐化宝箱怪":
                     case "火龙怪":
+                    case "闪耀炮手":
                         break;
                     default:
                         removeAI = true;
@@ -377,13 +382,16 @@ public class MonsterHelper {
             case "骨蛇":
             case "吞噬者":
             case "千足蜈蚣":
+            case "银河织妖":
             {
                 if (!isMonsterPart) {
                     int additionalSegAmount;
                     switch (type) {
                         case "千足蜈蚣":
-                            monster.addScoreboardTag("noDamage");
                             additionalSegAmount = 15;
+                            break;
+                        case "银河织妖":
+                            additionalSegAmount = 10;
                             break;
                         default:
                             additionalSegAmount = 14;
@@ -392,7 +400,8 @@ public class MonsterHelper {
                     ArrayList<Slime> segments = new ArrayList<>(additionalSegAmount + 1);
                     segments.add((Slime) bukkitMonster);
                     for (int i = 0; i < additionalSegAmount; i++) {
-                        org.bukkit.entity.Slime segment = (Slime) (new MonsterSlime(target, type, loc, true)).getBukkitEntity();
+                        org.bukkit.entity.Slime segment = (Slime) (new MonsterSlime(target, type, loc, true))
+                                .getBukkitEntity();
                         HashMap<String, Double> attrMapSegment = EntityHelper.getAttrMap(segment);
                         attrMapSegment.put("damageMulti", 0.45);
                         attrMapSegment.put("defenceMulti", 2d);
@@ -410,6 +419,10 @@ public class MonsterHelper {
                                     attrMapSegment.put("damageTakenMulti", 10d);
                                 }
                                 break;
+                            case "银河织妖":
+                                segment.setCustomName(type);
+                                segment.addScoreboardTag("noDamage");
+                                break;
                         }
                     }
                     extraVariables.put("attachments", segments);
@@ -421,6 +434,19 @@ public class MonsterHelper {
                             break;
                     }
                     extraVariables.put("wormMoveOption", followInfo);
+                    // other properties
+                    switch (type) {
+                        case "千足蜈蚣":
+                            monster.addScoreboardTag("noDamage");
+                            break;
+                        case "银河织妖":
+                            Location[] formerLoc = new Location[10];
+                            for (int i = 0; i < 10; i ++) {
+                                formerLoc[i] = monster.getBukkitEntity().getLocation();
+                            }
+                            extraVariables.put("locs", formerLoc);
+                            break;
+                    }
                 }
                 break;
             }
@@ -500,8 +526,8 @@ public class MonsterHelper {
                 !PlayerHelper.isProperlyPlaying(target) ||
                 // target is in a different world
                 targetNMS.getWorld() != monster.getWorld() ||
-                // distance > 64
-                target.getLocation().distanceSquared(monsterBkt.getLocation()) > 4096) {
+                // distance > 96
+                target.getLocation().distanceSquared(monsterBkt.getLocation()) > 9216) {
             monster.ticksLived = Math.max(monster.ticksLived, 150);
         } else if (monster.hasLineOfSight(targetNMS)) {
             monster.ticksLived = 1;
@@ -528,8 +554,8 @@ public class MonsterHelper {
                 default:
                     if (monster.ticksLived >= 200) {
                         // find possible target
-                        double targetAttemptRadius = 64;
-                        double newTargetDistSqr = 4096;
+                        double targetAttemptRadius = 96;
+                        double newTargetDistSqr = 9216;
                         for (org.bukkit.entity.Entity checkEntity : monsterBkt.getNearbyEntities(targetAttemptRadius, targetAttemptRadius, targetAttemptRadius)) {
                             if (checkEntity instanceof Player) {
                                 Player checkPlayer = (Player) checkEntity;
@@ -1514,6 +1540,11 @@ public class MonsterHelper {
                         extraVariables.put("v", velocity);
                         monsterBkt.setVelocity(velocity);
                     }
+                    // if the monster is killed just now
+                    else if (!extraVariables.containsKey("SPN")) {
+                        extraVariables.put("SPN", true);
+                        CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.SOLAR, monsterBkt.getEyeLocation());
+                    }
                     break;
                 }
                 case "千足蜈蚣": {
@@ -1521,6 +1552,7 @@ public class MonsterHelper {
                     for (org.bukkit.entity.Entity entity : segments) {
                         ((LivingEntity) entity).setHealth(monsterBkt.getHealth());
                     }
+
                     if (monster.getHealth() > 0) {
                         // strike
                         Location targetLoc;
@@ -1559,6 +1591,11 @@ public class MonsterHelper {
                         if (vecLen > speed)
                             vec.multiply(speed / vecLen);
                         monsterBkt.setVelocity(vec);
+                    }
+                    // if the monster is killed just now
+                    else if (!extraVariables.containsKey("SPN")) {
+                        extraVariables.put("SPN", true);
+                        CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.SOLAR, monsterBkt.getEyeLocation());
                     }
                     EntityHelper.handleSegmentsFollow(segments, (EntityHelper.WormSegmentMovementOptions) extraVariables.get("wormMoveOption"));
                     break;
@@ -1628,6 +1665,11 @@ public class MonsterHelper {
                             monsterBkt.setVelocity( velocity );
                         }
                     }
+                    // if the monster is killed just now
+                    else if (!extraVariables.containsKey("SPN")) {
+                        extraVariables.put("SPN", true);
+                        CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.SOLAR, monsterBkt.getEyeLocation());
+                    }
                     break;
                 }
                 case "星璇怪":
@@ -1663,6 +1705,11 @@ public class MonsterHelper {
                             }
                         }
                     }
+                    // if the monster is killed just now
+                    else if (!extraVariables.containsKey("SPN")) {
+                        extraVariables.put("SPN", true);
+                        CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.VORTEX, monsterBkt.getEyeLocation());
+                    }
                     break;
                 }
                 case "异星幼虫": {
@@ -1694,6 +1741,11 @@ public class MonsterHelper {
                             monsterBkt.setVelocity(velocity);
                         }
                     }
+                    // if the monster is killed just now
+                    else if (!extraVariables.containsKey("SPN")) {
+                        extraVariables.put("SPN", true);
+                        CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.VORTEX, monsterBkt.getEyeLocation());
+                    }
                     break;
                 }
                 case "异星蜂王": {
@@ -1716,6 +1768,17 @@ public class MonsterHelper {
                                     "异星黏液");
                         }
                     }
+                    // if the monster is killed just now
+                    else if (!extraVariables.containsKey("SPN")) {
+                        for (int i = 0; i < 2; i++) {
+                            org.bukkit.entity.Entity spawnedMob = terraria.util.MonsterHelper.spawnMob(
+                                    "异星幼虫", monsterBkt.getLocation(), target);
+                            if (spawnedMob != null)
+                                spawnedMob.setVelocity(MathHelper.randomVector());
+                        }
+                        extraVariables.put("SPN", true);
+                        CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.VORTEX, monsterBkt.getEyeLocation());
+                    }
                     break;
                 }
                 case "吮脑怪": {
@@ -1729,6 +1792,11 @@ public class MonsterHelper {
                             velocity.normalize().multiply(1);
                         }
                         monsterBkt.setVelocity(velocity);
+                    }
+                    // if the monster is killed just now
+                    else if (!extraVariables.containsKey("SPN")) {
+                        extraVariables.put("SPN", true);
+                        CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.NEBULA, monsterBkt.getEyeLocation());
                     }
                     break;
                 }
@@ -1752,6 +1820,11 @@ public class MonsterHelper {
                                 indexAI = -1;
                             }
                         }
+                    }
+                    // if the monster is killed just now
+                    else if (!extraVariables.containsKey("SPN")) {
+                        extraVariables.put("SPN", true);
+                        CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.NEBULA, monsterBkt.getEyeLocation());
                     }
                     break;
                 }
@@ -1791,6 +1864,11 @@ public class MonsterHelper {
                                 break;
                         }
                     }
+                    // if the monster is killed just now
+                    else if (!extraVariables.containsKey("SPN")) {
+                        extraVariables.put("SPN", true);
+                        CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.NEBULA, monsterBkt.getEyeLocation());
+                    }
                     break;
                 }
                 case "进化兽": {
@@ -1808,6 +1886,11 @@ public class MonsterHelper {
                             }
                         }
                     }
+                    // if the monster is killed just now
+                    else if (!extraVariables.containsKey("SPN")) {
+                        extraVariables.put("SPN", true);
+                        CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.NEBULA, monsterBkt.getEyeLocation());
+                    }
                     break;
                 }
                 case "星云球": {
@@ -1824,6 +1907,246 @@ public class MonsterHelper {
                                 velocity.normalize().multiply(1);
                             }
                             monsterBkt.setVelocity(velocity);
+                        }
+                    }
+                    break;
+                }
+                case "星尘细胞": {
+                    if (monster.getHealth() > 0) {
+                        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
+                        Slime slimeMonsterBkt = (Slime) monsterBkt;
+                        // baby
+                        if ( slimeMonsterBkt.getSize() < 4) {
+                            attrMap.put("damage", 420d);
+                            attrMap.put("defence", 0d);
+                            // baby grow into full size after 10 seconds
+                            if (indexAI >= 200) {
+                                slimeMonsterBkt.setSize(5);
+                            }
+                            // floats upwards
+                            Vector velocity = monsterBkt.getVelocity();
+                            velocity.multiply(0.9);
+                            velocity.setY(velocity.getY() + 0.045);
+                            monsterBkt.setVelocity(velocity);
+                        }
+                        // full size
+                        else {
+                            attrMap.put("damage", 720d);
+                            attrMap.put("defence", 100d);
+                            // dash into target
+                            Vector velocity = (Vector) extraVariables.getOrDefault("v", new Vector(0, 1, 0));
+                            if (monsterBkt.getLocation().distanceSquared(target.getLocation()) > 100) {
+                                velocity = MathHelper.getDirection(monsterBkt.getLocation(), target.getLocation(), 1.5);
+                            }
+                            monsterBkt.setVelocity(velocity);
+                            extraVariables.put("v", velocity);
+                        }
+                    }
+                    // if the monster is killed just now
+                    else if ( (!extraVariables.containsKey("SPN")) && ((Slime) monsterBkt).getSize() > 4 ) {
+                        for (int i = (int) (Math.random() * 2); i < 4; i++) {
+                            org.bukkit.entity.Entity spawnedMob = terraria.util.MonsterHelper.spawnMob(
+                                    "星尘细胞", monsterBkt.getLocation(), target);
+                            if (spawnedMob != null) {
+                                ((Slime) spawnedMob).setSize(3);
+                                spawnedMob.setVelocity(MathHelper.randomVector());
+                            }
+                        }
+                        extraVariables.put("SPN", true);
+                        CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.STARDUST, monsterBkt.getEyeLocation());
+                    }
+                    break;
+                }
+                case "银河织妖": {
+                    // update segment health
+                    ArrayList<org.bukkit.entity.LivingEntity> segments = (ArrayList<org.bukkit.entity.LivingEntity>) extraVariables.get("attachments");
+                    for (LivingEntity entity : segments) {
+                        entity.setHealth(monsterBkt.getHealth());
+                    }
+                    if (monster.getHealth() > 0) {
+                        // update location of segments
+                        {
+                            Location[] locations = (Location[]) extraVariables.get("locs");
+                            int indexLocationInitial = indexAI / 3, indexLocation = indexLocationInitial;
+                            for (int i = 1; i < segments.size(); i ++) {
+                                LivingEntity entity = segments.get(i);
+                                entity.teleport(locations[indexLocation % locations.length]);
+                                indexLocation ++;
+                            }
+                            // record new location
+                            if (indexAI % 3 == 0)
+                                locations[ (indexLocationInitial + 1) % locations.length] = monsterBkt.getLocation();
+                        }
+                        // acceleration of head
+                        Vector velocity = (Vector) extraVariables.getOrDefault("v", new Vector());
+                        Vector acc = (Vector) extraVariables.getOrDefault("a", new Vector());
+                        int ticksFarAway = (int) extraVariables.getOrDefault("tfa", 1919);
+                        if (ticksFarAway >= 40) {
+                            acc = target.getLocation().subtract(monsterBkt.getLocation()).toVector();
+                            double accLen = acc.length();
+                            if (accLen < 6) {
+                                ticksFarAway = 0;
+                            }
+                            if (accLen < 1e-5) {
+                                acc = MathHelper.randomVector();
+                                accLen = 1;
+                            }
+                            acc.multiply(0.2 / accLen);
+                        }
+                        else {
+                            ticksFarAway ++;
+                        }
+                        // update velocity
+                        velocity.add(acc);
+                        if (velocity.lengthSquared() > 1) {
+                            velocity.normalize();
+                        }
+                        monsterBkt.setVelocity(velocity);
+                        // save possibly changed variables
+                        extraVariables.put("tfa", ticksFarAway);
+                        extraVariables.put("v", velocity);
+                        extraVariables.put("a", acc);
+                    }
+                    // if the monster is killed just now
+                    else if (!extraVariables.containsKey("SPN")) {
+                        extraVariables.put("SPN", true);
+                        CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.STARDUST, monsterBkt.getEyeLocation());
+                    }
+                    break;
+                }
+                case "流体入侵怪": {
+                    int amountProjectile = (int) extraVariables.getOrDefault("P", 0);
+                    if (monster.getHealth() > 0) {
+                        // velocity update
+                        {
+                            Vector offsetDir = MathHelper.vectorFromYawPitch_quick(indexAI * 2, 0);
+                            offsetDir.multiply(12);
+                            offsetDir.setY(8);
+                            Location targetLoc = target.getEyeLocation().add(offsetDir);
+                            Vector acc = MathHelper.getDirection(monsterBkt.getLocation(), targetLoc, 0.075);
+                            Vector velocity = monsterBkt.getVelocity();
+                            velocity.add(acc);
+                            if (velocity.lengthSquared() < 1e-5)
+                                velocity = MathHelper.randomVector();
+                            velocity.normalize().multiply(0.5);
+                            monsterBkt.setVelocity(velocity);
+                        }
+                        // display projectiles
+                        for (int i = 0; i < amountProjectile; i ++) {
+                            Vector offsetDir = MathHelper.vectorFromYawPitch_quick(
+                                    indexAI + i * 360d / amountProjectile, 0);
+                            offsetDir.multiply(2.5);
+                            offsetDir.setY(1.25);
+                            GenericHelper.handleParticleLine(new Vector(0, 1, 0),
+                                    monsterBkt.getLocation().add(offsetDir),
+                                    new GenericHelper.ParticleLineOptions()
+                                            .setLength(0.99)
+                                            .setWidth(0.5)
+                                            .setParticleColor("100|150|255")
+                                            .setTicksLinger(1));
+                        }
+                        // projectiles
+                        {
+                            if (indexAI % 30 == 0)
+                                amountProjectile ++;
+                            if (amountProjectile > 5) {
+                                amountProjectile--;
+                                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                        monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "流体入侵怪");
+                                EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                                        .setProjectileSpeed(2);
+                                Location targetLoc = EntityHelper.helperAimEntity(monsterBkt, target, aimHelper);
+                                shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, targetLoc, 2);
+                                EntityHelper.spawnProjectile(shootInfo);
+                            }
+                        }
+                    }
+                    else {
+                        // if the monster is killed just now
+                        if (!extraVariables.containsKey("SPN")) {
+                            extraVariables.put("SPN", true);
+                            CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.STARDUST, monsterBkt.getEyeLocation());
+                        }
+                        // shoot remaining projectiles on death
+                        if (amountProjectile > 0) {
+                            EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                    monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "流体入侵怪");
+                            EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                                    .setProjectileSpeed(2)
+                                    .setRandomOffsetRadius(3);
+                            for (int i = 0; i < amountProjectile; i ++) {
+                                Location targetLoc = EntityHelper.helperAimEntity(monsterBkt, target, aimHelper);
+                                shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, targetLoc, 2);
+                                EntityHelper.spawnProjectile(shootInfo);
+                            }
+                            amountProjectile = 0;
+                        }
+                    }
+                    extraVariables.put("P", amountProjectile);
+                    break;
+                }
+                case "观星怪": {
+                    if (monster.getHealth() > 0) {
+                        switch (indexAI % 120) {
+                            case 105:
+                                monsterBkt.setGlowing(true);
+                                break;
+                            case 116:
+                                Location targetEyeLoc = target.getEyeLocation();
+                                extraVariables.put("L", targetEyeLoc);
+                                break;
+                            case 119:
+                                Location aimLoc = (Location) extraVariables.get("L");
+                                Vector dir = aimLoc.subtract(monsterBkt.getEyeLocation()).toVector();
+                                if (dir.lengthSquared() < 1e-5)
+                                    dir = MathHelper.randomVector();
+                                GenericHelper.handleStrikeLine(monsterBkt, monsterBkt.getEyeLocation(),
+                                        MathHelper.getVectorYaw(dir), MathHelper.getVectorPitch(dir), 48, 1,
+                                        "", "100|150|255", new ArrayList<>(), EntityHelper.getAttrMap(monsterBkt),
+                                        new GenericHelper.StrikeLineOptions());
+                                monsterBkt.setGlowing(false);
+                                break;
+                        }
+                    }
+                    // if the monster is killed just now
+                    else if (!extraVariables.containsKey("SPN")) {
+                        extraVariables.put("SPN", true);
+                        CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.STARDUST, monsterBkt.getEyeLocation());
+                    }
+                    break;
+                }
+                case "闪耀炮手": {
+                    if (monster.getHealth() > 0) {
+                        if (indexAI % 60 == 0) {
+                            org.bukkit.entity.Entity spawnedMob = terraria.util.MonsterHelper.spawnMob(
+                                    "闪耀怪", monsterBkt.getLocation(), target);
+                            if (spawnedMob != null) {
+                                spawnedMob.setVelocity(new Vector(0, 1, 0));
+                            }
+                        }
+                    }
+                    // if the monster is killed just now
+                    else if (!extraVariables.containsKey("SPN")) {
+                        extraVariables.put("SPN", true);
+                        CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.STARDUST, monsterBkt.getEyeLocation());
+                    }
+                    break;
+                }
+                case "闪耀怪": {
+                    if (monster.getHealth() > 0) {
+                        // explode into a barrage of projectiles on timeout or when it comes close to target
+                        if (indexAI >= 150 ||
+                                monsterBkt.getLocation().add(0, 4, 0).distanceSquared(target.getLocation()) < 16) {
+                            EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                    monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "闪耀怪");
+                            for (int i = 0; i < 20; i ++) {
+                                shootInfo.velocity = new Vector(
+                                        Math.random() * 1 - 0.5,
+                                        Math.random() * 0.75 + 0.5,
+                                        Math.random() * 1 - 0.5);
+                                EntityHelper.spawnProjectile(shootInfo);
+                            }
+                            monsterBkt.remove();
                         }
                     }
                     break;

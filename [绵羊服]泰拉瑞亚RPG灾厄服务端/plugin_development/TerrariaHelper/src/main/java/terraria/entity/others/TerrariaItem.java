@@ -18,6 +18,7 @@ import java.util.Set;
 public class TerrariaItem extends EntityItem {
     public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile(
             TerrariaHelper.Constants.DATA_FOLDER_DIR + "items.yml");
+    // boosters live for 30 seconds, heart for 60 seconds, and generic for 300 seconds (5 minutes)
     static final int
             BOOSTER_LIVE_TIME = 600,
             HEART_LIVE_TIME = 1200,
@@ -294,6 +295,10 @@ public class TerrariaItem extends EntityItem {
             case "魔力强化焰":
             case "光明之魂":
             case "暗影之魂":
+            case "日耀碎片":
+            case "星璇碎片":
+            case "星云碎片":
+            case "星尘碎片":
                 this.setNoGravity(true);
         }
         // setup live time

@@ -34,6 +34,7 @@ terraria\entity\boss\moonLord\MoonLordTrueEyeOfCthulhu$EyeAttackMethod.class
 terraria\entity\minion\MinionSlime.class
 terraria\entity\boss\thePlaguebringerGoliath\ThePlaguebringerGoliath$1.class
 terraria\entity\boss\theHiveMind\TheHiveMind.class
+terraria\entity\boss\event\CelestialPillar.class
 terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
 terraria\entity\boss\kingSlime\KingSlime.class
 terraria\event\listener\PlayerMovementListener.class
@@ -137,6 +138,7 @@ terraria\entity\monster\MonsterSlime.class
 terraria\entity\boss\lunaticCultist\PhantomDragon.class
 terraria\event\listener\RandomTitleListener.class
 terraria\util\EntityHelper$MetadataName.class
+terraria\entity\others\TerrariaCritter.class
 terraria\entity\boss\ravager\RavagerNuke.class
 terraria\worldgen\overworld\OverworldBiomeGenerator$1.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHand.class
@@ -172,6 +174,7 @@ terraria\util\DragoncoreHelper$SlotCallback.class
 terraria\entity\boss\astrumDeus\AstrumDeus.class
 terraria\entity\boss\BossHelper.class
 terraria\entity\boss\desertScourge\DesertScourge.class
+terraria\entity\boss\event\CelestialPillar$PillarTypes.class
 terraria\entity\boss\theTwins\Retinazer.class
 terraria\entity\boss\astrumAureus\AstrumAureus.class
 terraria\util\ItemHelper.class

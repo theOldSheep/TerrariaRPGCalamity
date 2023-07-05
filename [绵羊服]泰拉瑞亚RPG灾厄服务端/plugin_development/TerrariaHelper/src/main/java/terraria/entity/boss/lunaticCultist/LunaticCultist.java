@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.entity.boss.desertScourge.DesertNuisance;
+import terraria.entity.boss.event.CelestialPillar;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
@@ -32,7 +33,7 @@ public class LunaticCultist extends EntityZombie {
     Player target = null;
     // other variables and AI
     int phaseAttack = 1;
-    int indexAI = -40;
+    int indexAI = -40, ticksBeforeAttack = 600;
     double lastHealth, mainYaw = 0;
     ArrayList<LunaticCultistClone> clones = new ArrayList<>(6);
     Location centerLoc;
@@ -222,6 +223,12 @@ public class LunaticCultist extends EntityZombie {
                 return;
             }
             // if target is valid, attack
+            if (ticksBeforeAttack > 0) {
+                bukkitEntity.teleport(target.getLocation().add(0, 16, 0));
+                ticksBeforeAttack --;
+                if (ticksBeforeAttack <= 0)
+                    removeScoreboardTag("noDamage");
+            }
             else {
                 // the cultist do not move
                 motX = 0;
@@ -276,9 +283,11 @@ public class LunaticCultist extends EntityZombie {
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
+        bukkitEntity.addScoreboardTag("noDamage");
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
+        summonedPlayer.sendMessage("§a你有30秒的时间寻找开阔的场地，请做好挑战拜月教邪教徒的准备！");
         // init attribute map
         {
             attrMap = new HashMap<>();
@@ -340,6 +349,9 @@ public class LunaticCultist extends EntityZombie {
 
             // send loot
             terraria.entity.boss.BossHelper.handleBossDeath(BOSS_TYPE, bossParts, targetMap);
+
+            // spawn celestial pillars
+            CelestialPillar.handlePillarSpawn();
         }
     }
     // rewrite AI

@@ -13,6 +13,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.omg.CORBA.TypeCodePackage.BadKind;
 import terraria.TerrariaHelper;
+import terraria.entity.boss.event.CelestialPillar;
 import terraria.entity.monster.MonsterHusk;
 import terraria.entity.monster.MonsterSilverfish;
 import terraria.entity.monster.MonsterSlime;
@@ -105,8 +106,6 @@ public class MonsterHelper {
         // finally, handle some special cases
         if (spawnType.equals("史莱姆雨"))
             spawnLoc.add(0, 30, 0);
-        if (monsterSpawn.equals("拜月教教徒") && BossHelper.bossMap.containsKey("拜月教邪教徒"))
-            return true;
         // prevent spawning next to any player
         for (Entity e : spawnLoc.getWorld().getNearbyEntities(spawnLoc, NO_MONSTER_SPAWN_RADIUS, NO_MONSTER_SPAWN_RADIUS, NO_MONSTER_SPAWN_RADIUS)) {
             if (e instanceof Player && PlayerHelper.isProperlyPlaying((Player) e) )
@@ -126,12 +125,12 @@ public class MonsterHelper {
         boolean isSurfaceOrSpace =
                 heightLayer == WorldHelper.HeightLayer.SURFACE ||
                 heightLayer == WorldHelper.HeightLayer.SPACE;
-        for (Entity pillar : Event.pillars) {
-            if (isSurfaceOrSpace) {
-                if (pillar.getWorld() != ply.getWorld())
+        if (isSurfaceOrSpace) {
+            for (CelestialPillar pillar : Event.pillars.values()) {
+                if (pillar.getBukkitEntity().getWorld() != ply.getWorld())
                     continue;
-                if (pillar.getLocation().distanceSquared(ply.getLocation()) < 22500) {
-                    // TODO: spawn celestial pillar monster
+                if (pillar.getBukkitEntity().getLocation().distanceSquared(ply.getLocation()) < CelestialPillar.EFFECTED_RADIUS_SQR) {
+                    naturalMobSpawnType(ply, pillar.getCustomName());
                     return;
                 }
             }
@@ -188,6 +187,12 @@ public class MonsterHelper {
         naturalMobSpawnType(ply, heightStr);
     }
     public static Entity spawnMob(String type, Location loc, Player target) {
+        // monsters are prohibited to spawn when the active monsters are exceeding target's mob limit by 3 times
+        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(target);
+        int mobLimit = attrMap.getOrDefault("mobLimit", 10d).intValue();
+        if (EntityHelper.getMetadata(target, EntityHelper.MetadataName.PLAYER_MONSTER_SPAWNED_AMOUNT).asInt() >= mobLimit * 3)
+            return null;
+        // get monster info
         ConfigurationSection mobInfoSection = TerrariaHelper.mobSpawningConfig.getConfigurationSection("mobInfo." + type);
         boolean unique = mobInfoSection.getBoolean("unique", false);
         if (unique && uniqueMonsters.containsKey(type)) {

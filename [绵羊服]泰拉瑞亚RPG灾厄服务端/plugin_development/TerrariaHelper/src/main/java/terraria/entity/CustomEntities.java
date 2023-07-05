@@ -21,6 +21,7 @@ import terraria.entity.boss.dukeFishron.Sharknado;
 import terraria.entity.boss.dukeFishron.Sharkron;
 import terraria.entity.boss.dukeFishron.WaterBlob;
 import terraria.entity.boss.empressOfLight.EmpressOfLight;
+import terraria.entity.boss.event.CelestialPillar;
 import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
 import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
 import terraria.entity.boss.desertScourge.DesertNuisance;
@@ -142,6 +143,7 @@ public enum CustomEntities {
     BOSS_TWIN_SPZ      ("Spazmatism",             55,  EntityType.SLIME,           EntitySlime.class,      Spazmatism.class),
     BOSS_WOF_EYE       ("WallOfFleshEye",         55,  EntityType.SLIME,           EntitySlime.class,      WallOfFleshEye.class),
     BOSS_WOF_MOUTH     ("WallOfFleshMouth",       55,  EntityType.SLIME,           EntitySlime.class,      WallOfFleshMouth.class),
+    EVENT_PILLAR       ("CelestialPillar",        53,  EntityType.GIANT,           EntityGiantZombie.class,CelestialPillar.class),
     MINION_CAVE_SPIDER ("MinionCaveSpider",       59,  EntityType.CAVE_SPIDER,     EntityCaveSpider.class, MinionCaveSpider.class),
     MINION_HUSK        ("MinionHusk",             23,  EntityType.HUSK,            EntityZombieHusk.class, MinionHusk .class),
     MINION_SLIME       ("MinionSlime",            55,  EntityType.SLIME,           EntitySlime.class,      MinionSlime.class),
