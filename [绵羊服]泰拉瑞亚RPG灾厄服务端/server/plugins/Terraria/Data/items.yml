@@ -2282,6 +2282,61 @@
     useTime: 22
   worth: 540000
   rarity: 3
+巴淋内德:
+  item: BOW
+  attributes:
+    damage: 18
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 14
+    knockback: 2
+    useTime: 26
+  worth: 400000
+  rarity: 2
+贝壳刃弓:
+  item: BOW
+  attributes:
+    damage: 80
+    damageType: Arrow
+    crit: 19
+    projectileSpeed: 2.5
+    knockback: 6
+    useTime: 70
+  worth: 400000
+  rarity: 2
+剧毒烈弓:
+  item: BOW
+  attributes:
+    damage: 30
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 15
+    knockback: 3
+    useTime: 28
+  worth: 400000
+  rarity: 2
+烈风:
+  item: BOW
+  attributes:
+    damage: 16
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 20
+    knockback: 3
+    useTime: 20
+  worth: 800000
+  rarity: 3
+凝胶弓:
+  item: BOW
+  attributes:
+    damage: 66
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12
+    knockback: 4
+    useTime: 31
+  worth: 2400000
+  rarity: 3
 代达罗斯风暴弓:
   item: BOW
   attributes:
@@ -2446,6 +2501,44 @@
     useTime: 30
   worth: 400000
   rarity: 2
+火花喷射器:
+  item: BOW
+  attributes:
+    damage: 14
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 10
+    knockback: 1
+    useTime: 30
+    penetration: 4
+    ammoConsumptionRate: -0.7
+  worth: 200000
+  rarity: 1
+影流喷射器:
+  item: BOW
+  attributes:
+    damage: 48
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 32
+    knockback: 1.5
+    useTime: 10
+    penetration: 99
+    ammoConsumptionRate: -0.66
+  worth: 800000
+  rarity: 3
+过载凝胶发射器:
+  item: BOW
+  attributes:
+    damage: 32
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 6.5
+    knockback: 1.5
+    useTime: 16
+    ammoConsumptionRate: -0.33
+  worth: 2400000
+  rarity: 4
 骨头手套:
   item: BOW
   lore:
@@ -2585,6 +2678,62 @@
     ammoConsumptionRate: -0.33
   worth: 7000000
   rarity: 2
+鹅卵石冲击波:
+  item: BLAZE_ROD
+  attributes:
+    damage: 18
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 6
+    knockback: 0
+    useTime: 20
+    ammoConsumptionRate: -0.5
+  worth: 400000
+  rarity: 2
+真菌枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 40
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 14
+    knockback: 2.5
+    useTime: 20
+  worth: 400000
+  rarity: 2
+碎水霰弹枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 28
+    damageType: Bullet
+    crit: 10
+    projectileSpeed: 22
+    knockback: 5.5
+    useTime: 26
+  worth: 800000
+  rarity: 3
+射水鱼:
+  item: BLAZE_ROD
+  attributes:
+    damage: 32
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 33
+    knockback: 2
+    useTime: 11
+  worth: 800000
+  rarity: 3
+胶泥散弹枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 46
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 5
+    knockback: 3.5
+    useTime: 32
+  worth: 2400000
+  rarity: 4
 发条突击步枪:
   item: BLAZE_ROD
   lore:
