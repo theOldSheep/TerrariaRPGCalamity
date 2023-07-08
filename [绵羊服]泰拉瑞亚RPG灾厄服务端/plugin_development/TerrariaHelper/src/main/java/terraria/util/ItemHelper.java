@@ -381,7 +381,7 @@ public class ItemHelper {
                     }
                     resultItem = resultItem.clone();
                 } catch (Exception e) {
-                    Bukkit.getLogger().log(Level.SEVERE, "ItemHelper.getItemFromDescription", e);
+                    Bukkit.getLogger().log(Level.SEVERE, "ItemHelper.getItemFromDescription " + information, e);
                     return notFoundDefault;
                 }
                 // setup prefix
@@ -417,7 +417,7 @@ public class ItemHelper {
                 return resultItem;
             }
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "ItemHelper.getItemFromDescription", e);
+            Bukkit.getLogger().log(Level.SEVERE, "ItemHelper.getItemFromDescription " + information, e);
             return notFoundDefault;
         }
     }

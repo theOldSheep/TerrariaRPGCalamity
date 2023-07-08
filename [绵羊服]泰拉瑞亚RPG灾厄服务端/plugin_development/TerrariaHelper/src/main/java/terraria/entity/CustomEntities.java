@@ -66,6 +66,7 @@ import terraria.entity.monster.MonsterSilverfish;
 import terraria.entity.monster.MonsterSlime;
 import terraria.entity.monster.MonsterZombie;
 import terraria.entity.npc.*;
+import terraria.entity.others.TerrariaCritter;
 import terraria.entity.others.TerrariaItem;
 import terraria.util.NMSUtils;
 
@@ -159,6 +160,7 @@ public enum CustomEntities {
     NPC_GOBLIN_TINKERER("NPCGoblinTinkerer",      120, EntityType.VILLAGER,        EntityVillager.class,   TerrariaNPCGoblinTinkerer.class),
     NPC_GUIDE          ("NPCGuide",               120, EntityType.VILLAGER,        EntityVillager.class,   TerrariaNPCGuide.class),
     NPC_NURSE          ("NPCNurse",               120, EntityType.VILLAGER,        EntityVillager.class,   TerrariaNPCNurse.class),
+    TERRARIA_CRITTER   ("TerrariaCritter",        60,  EntityType.SILVERFISH,      EntitySilverfish.class, TerrariaCritter.class),
     TERRARIA_NPC       ("TerrariaNPC",            120, EntityType.VILLAGER,        EntityVillager.class,   TerrariaNPC.class);
 
     private String name;

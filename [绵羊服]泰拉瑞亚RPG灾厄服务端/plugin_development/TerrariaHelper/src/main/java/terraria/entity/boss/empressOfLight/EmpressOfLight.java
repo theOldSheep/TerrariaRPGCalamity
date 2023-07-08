@@ -495,7 +495,6 @@ public class EmpressOfLight extends EntitySlime {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
         Location spawnLoc = summonedPlayer.getLocation().add(0, 12, 0);
-        spawnLoc.setY( spawnLoc.getWorld().getHighestBlockYAt(spawnLoc) );
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);

@@ -141,6 +141,15 @@ public class ItemUseHelper {
             wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         }
     }
+    protected static boolean playerUseCritter(Player ply, String itemName, ItemStack itemStack) {
+        String critterCategory = TerrariaHelper.animalConfig.getString("animalType." + itemName);
+        if (critterCategory != null) {
+            CritterHelper.spawnCritter(itemName, ply.getLocation(), critterCategory);
+            itemStack.setAmount( itemStack.getAmount() - 1);
+            return true;
+        }
+        return false;
+    }
     protected static boolean playerUseMiscellaneous(Player ply, String itemName) {
         switch (itemName) {
             case "钱币槽": {
@@ -1319,12 +1328,14 @@ public class ItemUseHelper {
             playerSwingFishingRod(ply, attrMap, itemName);
             return;
         }
-        // if itemName == "", some bug may occur. Also, vanilla items are not useful ticksBeforeHookingFish all.
+        // if itemName == "", some bug may occur. Also, vanilla items are not useful at all.
         if (itemName.length() > 0) {
-            // void bag, piggy bank, musical instruments etc.
-            if (isRightClick && playerUseMiscellaneous(ply, itemName)) return;
-            // potion and other consumable consumption
             if (isRightClick) {
+                // to release a critter
+                if (playerUseCritter(ply, itemName, mainHandItem)) return;
+                // void bag, piggy bank, musical instruments etc.
+                if (playerUseMiscellaneous(ply, itemName)) return;
+                // potion and other consumable consumption
                 if (playerUsePotion(ply, itemName, mainHandItem, QuickBuffType.NONE)) return;
             }
             // weapon

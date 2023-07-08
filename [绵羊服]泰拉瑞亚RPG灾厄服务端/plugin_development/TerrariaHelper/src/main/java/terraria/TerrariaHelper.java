@@ -30,6 +30,7 @@ public class TerrariaHelper extends JavaPlugin {
     public static long worldSeed;
     public static TerrariaHelper instance;
     // YML configs
+    public static final YmlHelper.YmlSection animalConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "animals.yml");
     public static final YmlHelper.YmlSection armorSetConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "armorSet.yml");
     public static final YmlHelper.YmlSection blockConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "blocks.yml");
     public static final YmlHelper.YmlSection buffConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "buff.yml");
@@ -167,7 +168,7 @@ public class TerrariaHelper extends JavaPlugin {
         PlayerHelper.threadBGM();
         PlayerHelper.threadGrapplingHook();
         PlayerHelper.threadLastLocation();
-        PlayerHelper.threadMonsterSpawn();
+        PlayerHelper.threadMonsterCritterSpawn();
         PlayerHelper.threadMovement();
         PlayerHelper.threadRegen();
         PlayerHelper.threadSaveInventories();

@@ -6,32 +6,24 @@ subTypes:
       - normal
       - hallow
       - tundra
-      yMin: 60
-      yMax: 100
     鸟:
       weight: 20
       biome:
       - normal
       - hallow
       - tundra
-      yMin: 60
-      yMax: 100
     冠蓝鸦:
       weight: 10
       biome:
       - normal
       - hallow
       - tundra
-      yMin: 60
-      yMax: 100
     红雀:
       weight: 10
       biome:
       - normal
       - hallow
       - tundra
-      yMin: 60
-      yMax: 100
   Butterfly:
     茱莉娅蝶:
       weight: 15
@@ -85,28 +77,28 @@ subTypes:
       - underworld
   Firefly:
     萤火虫:
+      weight: 1
+      biome:
+      - hallow
+    萤火虫:
       weight: 8
-      yMin: 60
-      yMax: 100
     荧光虫:
       weight: 10
       biome:
       - hallow
-      yMin: 60
-      yMax: 100
   Ground:
     金蚱蜢:
       weight: 0.5
       biome:
       - normal
-      yMin: 60
-      yMax: 80
+      height:
+      - surface
     蚱蜢:
       weight: 10
       biome:
       - normal
-      yMin: 60
-      yMax: 80
+      height:
+      - surface
     兔兔:
       weight: 30
       biome:
@@ -114,8 +106,8 @@ subTypes:
       - hallow
       - tundra
       - jungle
-      yMin: 60
-      yMax: 80
+      height:
+      - surface
     金兔:
       weight: 0.5
       biome:
@@ -123,8 +115,8 @@ subTypes:
       - hallow
       - tundra
       - jungle
-      yMin: 60
-      yMax: 80
+      height:
+      - surface
     松鼠:
       weight: 20
       biome:
@@ -132,112 +124,120 @@ subTypes:
       - hallow
       - tundra
       - jungle
-      yMin: 60
-      yMax: 80
+      height:
+      - surface
     蛆虫:
       weight: 5
       biome:
       - jungle
-      yMin: 60
-      yMax: 80
+      height:
+      - surface
+      - underground
+      - cavern
     瓢虫:
       weight: 3
       biome:
       - normal
-      yMin: 60
-      yMax: 80
+      height:
+      - surface
+      - underground
+      - cavern
     金瓢虫:
       weight: 0.5
       biome:
       - normal
-      yMin: 60
-      yMax: 80
-    蚜虫:
-      weight: 8
-      biome:
-      - jungle
-      yMin: 60
-      yMax: 80
+      height:
+      - surface
+      - underground
+      - cavern
     红松鼠:
       weight: 15
       biome:
       - normal
-      yMin: 60
-      yMax: 80
+      - hallow
+      height:
+      - surface
     金松鼠:
       weight: 0.5
       biome:
       - normal
       - hallow
-      - tundra
-      - jungle
-      yMin: 60
-      yMax: 80
+      height:
+      - surface
     青蛙:
       weight: 4
       biome:
-      - normal
-      yMin: 60
-      yMax: 80
+      - jungle
+      height:
+      - surface
     金蛙:
       weight: 0.5
       biome:
-      - normal
-      yMin: 60
-      yMax: 80
+      - jungle
+      height:
+      - surface
     发光蜗牛:
       weight: 3
       biome:
-      - corruption
-      yMin: 0
-      yMax: 80
+      - jungle
+      height:
+      - cavern
     松露虫:
       weight: 1
       biome:
-      - corruption
-      yMin: 0
-      yMax: 80
+      - jungle
+      height:
+      - cavern
     老鼠:
       weight: 10
-      yMin: 5
-      yMax: 60
+      height:
+      - underground
+      - cavern
     金老鼠:
       weight: 1
-      yMin: 5
-      yMax: 60
+      height:
+      - underground
+      - cavern
     企鹅:
       weight: 1
       biome:
       - tundra
-      yMin: 60
-      yMax: 80
+      height:
+      - surface
     蜗牛:
       weight: 6
-      yMin: 5
-      yMax: 60
+      height:
+      - underground
+      - cavern
     鼻涕虫:
       weight: 4
       biome:
       - jungle
-      yMin: 60
-      yMax: 80
+      height:
+      - surface
+      - underground
+      - cavern
     蠕虫:
       weight: 10
       biome:
       - normal
-      yMin: 60
-      yMax: 80
+      height:
+      - surface
+      - underground
+      - cavern
     金蠕虫:
       weight: 0.5
       biome:
       - normal
-      yMin: 60
-      yMax: 80
+      height:
+      - surface
+      - underground
+      - cavern
   GroundNight:
     附魔夜行者:
       weight: 6
-      yMin: 60
-      yMax: 80
+      height:
+      - surface
 animalType:
   金鸟: Bird
   鸟: Bird
@@ -263,7 +263,6 @@ animalType:
   松鼠: Ground
   蛆虫: Ground
   瓢虫: Ground
-  蚜虫: Ground
   红松鼠: Ground
   青蛙: Ground
   金蛙: Ground

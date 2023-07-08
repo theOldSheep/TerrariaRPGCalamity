@@ -875,6 +875,7 @@ mobInfo:
         monsterType: "SLIME"
         spawnLocationType: AIR
         slimeSize: 4
+        unique: true
         variants:
             default1:
                 attributes:
@@ -1021,7 +1022,7 @@ mobInfo:
         name: "星尘细胞"
         monsterType: "SLIME"
         spawnLocationType: AIR
-        slimeSize: 4
+        slimeSize: 5
         variants:
             default1:
                 attributes:
@@ -1035,7 +1036,7 @@ mobInfo:
         name: "银河织妖"
         monsterType: "SLIME"
         spawnLocationType: SOLID
-        slimeSize: 4
+        slimeSize: 2
         variants:
             default1:
                 attributes:

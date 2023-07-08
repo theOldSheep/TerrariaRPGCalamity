@@ -110,6 +110,8 @@ terraria\entity\boss\eaterOfWorld\EaterOfWorld$1.class
 terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
 terraria\entity\boss\leviathanAndAnahita\Leviathan.class
+terraria\util\CritterHelper$1.class
+terraria\util\CritterHelper.class
 terraria\util\EntityHelper$AimHelperOptions.class
 terraria\entity\projectile\TerrariaPotionProjectile$1.class
 terraria\util\EntityHelper$1.class

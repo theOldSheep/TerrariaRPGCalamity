@@ -904,11 +904,14 @@ public class PlayerHelper {
             }
         }, 0, 1);
     }
-    public static void threadMonsterSpawn() {
+    public static void threadMonsterCritterSpawn() {
         // every 5 ticks
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 if (!isProperlyPlaying(ply)) continue;
+                // critter spawn
+                CritterHelper.naturalCritterSpawn(ply);
+                // monster spawn
                 HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
                 double spawnRate = attrMap.getOrDefault("mobSpawnRate", 0.2) *
                         attrMap.getOrDefault("mobSpawnRateMulti", 1d)

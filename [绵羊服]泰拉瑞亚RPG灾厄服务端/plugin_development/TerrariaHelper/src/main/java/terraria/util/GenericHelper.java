@@ -460,15 +460,12 @@ public class GenericHelper {
         }
         // init predication for victim selection
         com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication;
-        if (itemType.contains("虫网")) {
+        if (itemType.endsWith("虫网")) {
             predication = (e) -> {
                 if (!e.isAlive()) return false;
-                Entity entity = e.getBukkitEntity();
-                if (entity.getScoreboardTags().contains("isAnimal")) {
-                    if (entity instanceof LivingEntity) {
-                        LivingEntity entityParsed = (LivingEntity) entity;
-                        return entityParsed.getHealth() > 0;
-                    }
+                if (e.getScoreboardTags().contains("isAnimal")) {
+                    ItemHelper.dropItem(e.getBukkitEntity().getLocation(), e.getName());
+                    e.die();
                 }
                 return false;
             };
