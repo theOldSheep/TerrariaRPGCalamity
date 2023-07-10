@@ -1,12 +1,14 @@
 package terraria.event.listener;
 
 import net.minecraft.server.v1_12_R1.EntityProjectile;
+import net.minecraft.server.v1_12_R1.ItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftProjectile;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -18,7 +20,9 @@ import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.TerrariaPotionProjectile;
 import terraria.event.TerrariaProjectileHitEvent;
+import terraria.gameplay.EventAndTime;
 import terraria.util.EntityHelper;
+import terraria.util.ItemHelper;
 import terraria.util.MathHelper;
 import terraria.util.YmlHelper;
 
@@ -102,7 +106,16 @@ public class ArrowHitListener implements Listener {
         if (projectile.getScoreboardTags().contains("isGrenade")) {
             handleProjectileBlast(projectile, projectileDestroyLoc);
         }
-        // other ticking
+        // fallen star
+        if (projectile.getScoreboardTags().contains("isFallenStar")) {
+            Item droppedItem = ItemHelper.dropItem(projectileDestroyLoc,
+                    "坠星", false, false);
+            if (droppedItem != null) {
+                droppedItem.addScoreboardTag("isFallenStar");
+                EventAndTime.fallenStars.add(droppedItem);
+            }
+        }
+        // other mechanism
         String projectileType = projectile.getName();
         ConfigurationSection projectileSection = projectileConfig.getConfigurationSection(projectileType);
         if (projectileSection == null) return;

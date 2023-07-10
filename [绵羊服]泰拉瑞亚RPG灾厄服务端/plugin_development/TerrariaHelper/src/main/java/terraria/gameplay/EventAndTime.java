@@ -3,15 +3,18 @@ package terraria.gameplay;
 import net.minecraft.server.v1_12_R1.BossBattle;
 import net.minecraft.server.v1_12_R1.BossBattleServer;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.event.CelestialPillar;
-import terraria.util.BossHelper;
-import terraria.util.PlayerHelper;
-import terraria.util.WorldHelper;
+import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -131,6 +134,14 @@ public class EventAndTime {
     public static HashSet<String> questFishSubmitted = new HashSet<>();
     // celestial pillars
     public static HashMap<CelestialPillar.PillarTypes, CelestialPillar> pillars = new HashMap<>(8);
+    // fallen stars
+    static final HashMap<String, Double> attrMapFallenStar;
+    static {
+        attrMapFallenStar = new HashMap<>();
+        attrMapFallenStar.put("damage", 2500d);
+        attrMapFallenStar.put("knockback", 2d);
+    }
+    public static ArrayList<Entity> fallenStars = new ArrayList<>();
 
 
 
@@ -164,7 +175,44 @@ public class EventAndTime {
             handleEventTermination();
             // tick event
             tickEvent();
+            // fallen stars
+            if (surfaceWorld != null)
+                tickFallenStars(surfaceWorld);
         }, 0, 3);
+    }
+    protected static void tickFallenStars(World surfaceWorld) {
+        // clear stars at day
+        if (WorldHelper.isDayTime( surfaceWorld ) ) {
+            if (fallenStars.size() > 0) {
+                for (int i = 0; i < fallenStars.size(); i ++) {
+                    Entity entity = fallenStars.get(i);
+                    entity.removeScoreboardTag("isFallenStar");
+                    entity.remove();
+                }
+                fallenStars.clear();
+            }
+        }
+        // randomly spawn star at night
+        else {
+            EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(null,
+                    null, null,
+                    attrMapFallenStar, EntityHelper.DamageType.ARROW, "坠星");
+            for (Chunk chunk : surfaceWorld.getLoadedChunks()) {
+//                if (Math.random() < 0.001) {
+                if (Math.random() < 0.1) {
+                    double spawnX = (chunk.getX() << 4) + Math.random() * 16;
+                    double spawnZ = (chunk.getZ() << 4) + Math.random() * 16;
+                    Location spawnLoc = new Location(surfaceWorld, spawnX, 200 + Math.random() * 150, spawnZ);
+                    Vector velocity = new Vector(Math.random() - 0.5, -3, Math.random() - 0.5);
+                    shootInfo.shootLoc = spawnLoc;
+                    shootInfo.velocity = velocity;
+                    Projectile spawnedFallenStar = EntityHelper.spawnProjectile(shootInfo);
+                    spawnedFallenStar.addScoreboardTag("isFallenStar");
+                    spawnedFallenStar.addScoreboardTag("ignoreCanDamageCheck");
+                    fallenStars.add(spawnedFallenStar);
+                }
+            }
+        }
     }
     protected static void handleEventTermination() {
         // for events that are specific to daytime or nighttime

@@ -66,12 +66,22 @@ public class VanillaMechanicListener implements Listener {
     // world related
     @EventHandler(priority = EventPriority.LOW)
     public void onChunkUnload(ChunkUnloadEvent evt) {
+        if (evt.isCancelled()) return;
+        // do not unload chunks with boss/celestial pillar/npc in it
         for (Entity entity : evt.getChunk().getEntities()) {
-            // do not unload chunks with boss/celestial pillar/npc in it
             Set<String> scoreboardTags = entity.getScoreboardTags();
             if (scoreboardTags.contains("isBOSS") || scoreboardTags.contains("isPillar") || scoreboardTags.contains("isNPC")) {
                 evt.setCancelled(true);
                 return;
+            }
+        }
+        // if the chunk is unloaded
+        for (Entity entity : evt.getChunk().getEntities()) {
+            Set<String> scoreboardTags = entity.getScoreboardTags();
+            // remove fallen stars on chunk unload
+            if (scoreboardTags.contains("isFallenStar") ) {
+                entity.removeScoreboardTag("isFallenStar");
+                entity.remove();
             }
         }
     }

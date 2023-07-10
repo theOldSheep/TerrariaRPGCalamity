@@ -109,6 +109,7 @@ terraria\entity\boss\dukeFishron\Sharkron.class
 terraria\entity\boss\moonLord\MoonLordEye$EyeAttackMethod.class
 terraria\entity\boss\ravager\RavagerRockPillar.class
 terraria\entity\boss\eaterOfWorld\EaterOfWorld$1.class
+terraria\entity\monster\MonsterCaveSpider.class
 terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
 terraria\entity\boss\leviathanAndAnahita\Leviathan.class

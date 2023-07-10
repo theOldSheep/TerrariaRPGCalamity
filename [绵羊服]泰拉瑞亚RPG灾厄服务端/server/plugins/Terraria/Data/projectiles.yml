@@ -106,6 +106,9 @@
         # 生成射弹类型
         spawnType: 木箭
 
+坠星:
+    projectileSize: 0.5
+    penetration: 999999
 腐蚀之云:
     penetration: 99999
     speedMultiPerTick: 0.95
@@ -583,6 +586,16 @@
     liveTime: 100
     gravity: 0
     penetration: 999999
+流体入侵怪:
+    projectileSize: 0.5
+    isGrenade: true
+    blastRadius: 3.5
+    gravity: 0
+闪耀怪:
+    blockHitAction: thru
+    projectileSize: 0.25
+    speedMultiPerTick: 0.98
+    gravity: 0
 天蓝羽毛:
     autoTrace: true
     isGrenade: true
@@ -614,9 +627,6 @@
     autoTrace: true
     isGrenade: true
     blastRadius: 5
-流体入侵怪:
-    isGrenade: true
-    blastRadius: 3.5
 七彩水晶:
     isGrenade: true
     blastRadius: 2.5

@@ -152,7 +152,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
         this.properties = properties;
         bukkitEntity = (org.bukkit.entity.Projectile) getBukkitEntity();
         // other properties
-        bukkitEntity.setShooter(shooter);
+        if (shooter != null)
+           bukkitEntity.setShooter(shooter);
         this.attrMap = (HashMap<String, Double>) attrMap.clone();
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, this.attrMap);
         EntityHelper.setDamageType(bukkitEntity, damageType);

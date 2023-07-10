@@ -145,6 +145,7 @@ public enum CustomEntities {
     MINION_CAVE_SPIDER ("MinionCaveSpider",       59,  EntityType.CAVE_SPIDER,     EntityCaveSpider.class, MinionCaveSpider.class),
     MINION_HUSK        ("MinionHusk",             23,  EntityType.HUSK,            EntityZombieHusk.class, MinionHusk .class),
     MINION_SLIME       ("MinionSlime",            55,  EntityType.SLIME,           EntitySlime.class,      MinionSlime.class),
+    MONSTER_CAVE_SPIDER("MonsterCaveSpider",      59,  EntityType.CAVE_SPIDER,     EntityCaveSpider.class, MonsterCaveSpider.class),
     MONSTER_HUSK       ("MonsterHusk",            23,  EntityType.HUSK,            EntityZombieHusk.class, MonsterHusk.class),
     MONSTER_SILVERFISH ("MonsterSilverfish",      60,  EntityType.SILVERFISH,      EntitySilverfish.class, MonsterSilverfish.class),
     MONSTER_SKELETON   ("MonsterSkeleton",        51,  EntityType.SKELETON,        EntitySkeleton.class,   MonsterSkeleton.class),
