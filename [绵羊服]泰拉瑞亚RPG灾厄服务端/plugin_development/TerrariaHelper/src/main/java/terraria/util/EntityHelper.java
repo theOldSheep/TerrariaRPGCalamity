@@ -30,7 +30,7 @@ import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.TerrariaArrowProjectile;
 import terraria.entity.projectile.TerrariaPotionProjectile;
-import terraria.gameplay.Event;
+import terraria.gameplay.EventAndTime;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -400,8 +400,11 @@ public class EntityHelper {
             }
             // damage reduction handled in a special way to prevent unreasonable accumulation of DR
             if (key.equals("damageTakenMulti")) {
-                // original: 1 - value_number
-                // switched to 2 - value_number because the operation to value_number above
+                // calamity change: DR scale by 1 - 1/(1+DR)
+                // damage taken multiplier = 1/(1+DR)
+                // original: DR
+                // value_number(modified above) = 1 - DR = damage multi
+                // 2 - value_number(modified above) = 2 - 1 + DR = 1 + DR
                 if (addOrRemove)
                     attrMap.put(key, attrMap.getOrDefault(key, 1d) / (2 - value_number));
                 else
@@ -853,9 +856,8 @@ public class EntityHelper {
         switch (nameV) {
             case "史莱姆王": {
                 if (dPly instanceof Player) {
-                    MonsterHelper.spawnMob("史莱姆", victim.getLocation(), (Player) dPly);
-                    if (Math.random() < 0.5) MonsterHelper.spawnMob("尖刺史莱姆", victim.getLocation(), (Player) dPly);
-                    if (Math.random() < 0.25) MonsterHelper.spawnMob("尖刺史莱姆", victim.getLocation(), (Player) dPly);
+                    MonsterHelper.spawnMob(Math.random() < 0.2 ? "尖刺史莱姆" : "史莱姆",
+                            victim.getLocation(), (Player) dPly);
                 }
                 break;
             }
@@ -1029,38 +1031,15 @@ public class EntityHelper {
                 LivingEntity vLiving = (LivingEntity) v;
                 MetadataValue spawnEvt = getMetadata(v, MetadataName.SPAWN_IN_EVENT);
                 // event monster
-                if (spawnEvt != null && spawnEvt.asString().equals(Event.currentEvent)) {
-                    HashMap<String, Double> eventInfo = Event.eventInfo;
-                    String currentEvent = Event.currentEvent;
-                    if (currentEvent.equals("史莱姆雨")) {
-                        double slimeKill = eventInfo.getOrDefault("slimeKill", 0d) + 1;
-                        if (slimeKill % 50 == 0) {
-                            if (d instanceof Player) {
-                                BossHelper.spawnBoss((Player) d, BossHelper.BossType.KING_SLIME);
-                            } else slimeKill--;
-                        }
-                        eventInfo.put("slimeKill", slimeKill);
-                    }
-                    else if (eventInfo.getOrDefault(Event.InfoMapKeys.IS_INVASION.toString(), 1d) > 0) {
+                if (spawnEvt != null && spawnEvt.asString().equals(EventAndTime.currentEvent.toString())) {
+                    HashMap<EventAndTime.EventInfoMapKeys, Double> eventInfo = EventAndTime.eventInfo;
+                    if (eventInfo.getOrDefault(EventAndTime.EventInfoMapKeys.IS_INVASION, 1d) > 0) {
                         MetadataValue progress = getMetadata(v, MetadataName.KILL_CONTRIBUTE_EVENT_PROGRESS);
                         if (progress != null) {
-                            eventInfo.put(Event.InfoMapKeys.EVENT_PROGRESS.toString(),
-                                    eventInfo.getOrDefault(Event.InfoMapKeys.EVENT_PROGRESS.toString(), 0d) + progress.asDouble());
-                            if (eventInfo.get(Event.InfoMapKeys.EVENT_PROGRESS.toString()) >=
-                                    eventInfo.get(Event.InfoMapKeys.MAX_EVENT_PROGRESS.toString())) {
-                                switch (currentEvent) {
-                                    case "冰霜月":
-                                    case "南瓜月": {
-                                        break;
-                                    }
-                                    default:
-                                        Bukkit.broadcastMessage("§d§l" + currentEvent + "被击退了！");
-                                        if (currentEvent.equals("哥布林军团"))
-                                            for (Player ply : Bukkit.getOnlinePlayers())
-                                                PlayerHelper.getPlayerDataFile(ply).set("bossDefeated." + currentEvent, true);
-                                        Event.currentEvent = "";
-                                }
-                            }
+                            int invadeProgress = eventInfo.getOrDefault(EventAndTime.EventInfoMapKeys.INVADE_PROGRESS, 0d)
+                                    .intValue();
+                            eventInfo.put(EventAndTime.EventInfoMapKeys.INVADE_PROGRESS,
+                                    invadeProgress + progress.asDouble());
                         }
                     }
                 }
@@ -1517,6 +1496,7 @@ public class EntityHelper {
                 MetadataValue temp;
                 temp = getMetadata(victim, MetadataName.MINION_WHIP_BONUS_DAMAGE);
                 double dmgBonus = temp != null ? temp.asDouble() : 0;
+                dmg += dmgBonus;
                 temp = getMetadata(victim, MetadataName.MINION_WHIP_BONUS_CRIT);
                 critRate += temp != null ? temp.asDouble() : 0;
             }
@@ -1557,7 +1537,7 @@ public class EntityHelper {
                 MetadataValue temp = getMetadata(victim, MetadataName.DYNAMIC_DAMAGE_REDUCTION);
                 if (temp != null) dynamicDR = temp.asDouble();
                 BossHelper.BossType type = (BossHelper.BossType) getMetadata(victim, MetadataName.BOSS_TYPE).value();
-                if (! (damageSource instanceof Player && PlayerHelper.hasDefeated((Player) damageSource, type.msgName)) )
+                if (damageSource instanceof Player &&  ! PlayerHelper.hasDefeated((Player) damageSource, type.msgName) )
                     dmg *= dynamicDR;
             }
         }

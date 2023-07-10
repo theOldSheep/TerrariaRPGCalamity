@@ -1,28 +1,13 @@
 package terraria.util;
 
-import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.Disguise;
-import me.libraryaddict.disguise.disguisetypes.DisguiseType;
-import me.libraryaddict.disguise.disguisetypes.MobDisguise;
-import me.libraryaddict.disguise.disguisetypes.watchers.SlimeWatcher;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.boss.event.CelestialPillar;
-import terraria.entity.monster.MonsterHusk;
-import terraria.entity.monster.MonsterSilverfish;
-import terraria.entity.monster.MonsterSlime;
-import terraria.entity.monster.MonsterZombie;
 import terraria.entity.others.TerrariaCritter;
-import terraria.gameplay.Event;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,7 +45,7 @@ public class CritterHelper {
         return null;
     }
     public static void naturalCritterSpawn(Player ply) {
-        if (Math.random() > 0.03)
+        if (Math.random() > 0.05)
             return;
         WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(ply.getLocation());
         WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(ply);

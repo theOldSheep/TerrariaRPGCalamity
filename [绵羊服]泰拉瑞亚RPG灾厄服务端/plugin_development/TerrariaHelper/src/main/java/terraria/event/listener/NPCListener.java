@@ -1,6 +1,5 @@
 package terraria.event.listener;
 
-import eos.moe.dragoncore.DragonCore;
 import lk.vexview.api.VexViewAPI;
 import lk.vexview.event.ButtonClickEvent;
 import lk.vexview.gui.VexGui;
@@ -13,7 +12,6 @@ import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.NPC;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
@@ -22,16 +20,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.DoubleChestInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
-import org.omg.CORBA.TypeCodePackage.BadKind;
 import terraria.TerrariaHelper;
-import terraria.gameplay.Event;
+import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 
 import java.util.ArrayList;
@@ -94,14 +90,14 @@ public class NPCListener implements Listener {
     }
     private boolean attemptSubmitQuestFish(Player ply) {
         // if player has already submitted the quest fish for the day
-        if (Event.questFishSubmitted.contains(ply.getName()))
+        if (EventAndTime.questFishSubmitted.contains(ply.getName()))
             return false;
         ItemStack itemHeld = ply.getInventory().getItemInMainHand();
         // if the player is holding the quest fish for the day
-        if (ItemHelper.splitItemName(itemHeld)[0].equals(Event.questFish)) {
+        if (ItemHelper.splitItemName(itemHeld)[1].equals(EventAndTime.questFish.toString())) {
             // remove the fish
             itemHeld.setAmount(itemHeld.getAmount() - 1);
-            Event.questFishSubmitted.add(ply.getName());
+            EventAndTime.questFishSubmitted.add(ply.getName());
             // give the player rewards
             List<String> itemsToGive = TerrariaHelper.fishingConfig.getStringList("questRewards");
             for (String item : itemsToGive) {
@@ -179,7 +175,7 @@ public class NPCListener implements Listener {
             }
             case "渔夫": {
                 // submitted already
-                if (Event.questFishSubmitted.contains(ply.getName())) {
+                if (EventAndTime.questFishSubmitted.contains(ply.getName())) {
                     texts.addAll(msgSection.getStringList("questDone"));
                 }
                 // finish quest
@@ -189,13 +185,14 @@ public class NPCListener implements Listener {
                 // quest available
                 else {
                     for (String toAdd : msgSection.getStringList("quest")) {
-                        texts.add(toAdd.replace("<fishName>", Event.questFish));
+                        texts.add(toAdd.replace("<fishName>", EventAndTime.questFish.toString()));
                     }
-                    for (String availableBiome : TerrariaHelper.fishingConfig.getStringList("questFish." + Event.questFish)) {
+                    for (String availableBiome : TerrariaHelper.fishingConfig.getStringList(
+                            "questFish." + EventAndTime.questFish)) {
                         String[] splitInfo = availableBiome.split("_");
                         StringBuilder locationInfoStr = new StringBuilder();
                         locationInfoStr.append("§7[提示] §r");
-                        locationInfoStr.append(Event.questFish);
+                        locationInfoStr.append(EventAndTime.questFish);
                         locationInfoStr.append(" §7可以在 ");
                         // height
                         try {
@@ -298,7 +295,7 @@ public class NPCListener implements Listener {
     private int fillShopGui(Player ply, Inventory shopInv, int index, ConfigurationSection shopSection) {
         for (String gameProgress : shopSection.getKeys(false)) {
             // for event only scenarios
-            if ( (Event.currentEvent + "事件").equals(gameProgress) )
+            if ( (EventAndTime.currentEvent.toString()).equals(gameProgress) )
                 index = fillShopGui(ply, shopInv, index, shopSection.getConfigurationSection(gameProgress));
             // if the trade is available
             if (gameProgress.equals("default") || PlayerHelper.hasDefeated(ply, gameProgress)) {

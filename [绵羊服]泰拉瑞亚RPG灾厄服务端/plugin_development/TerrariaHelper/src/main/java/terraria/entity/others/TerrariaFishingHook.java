@@ -5,17 +5,15 @@ package terraria.entity.others;
 
 import net.minecraft.server.v1_12_R1.*;
 import net.minecraft.server.v1_12_R1.MathHelper;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Fish;
-import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.gameplay.Event;
+import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 
 import java.util.ArrayList;
@@ -279,9 +277,9 @@ public class TerrariaFishingHook extends EntityFishingHook {
             return catchCrateItem(inHardMode, biome.toString(), rarity);
         }
         // quest fish
-        if (TerrariaHelper.fishingConfig.getStringList("questFish." + Event.questFish).contains(biome + "_" + height) &&
+        if (TerrariaHelper.fishingConfig.getStringList("questFish." + EventAndTime.questFish).contains(biome + "_" + height) &&
                 Math.random() < 0.05) {
-            return Event.questFish;
+            return EventAndTime.questFish.toString();
         }
         // normal fish/weapon etc.
         return catchFishItem(fishingPower, biome.toString(), height.toString(), rarity);

@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import terraria.entity.CustomEntities;
 import terraria.event.listener.*;
+import terraria.gameplay.EventAndTime;
 import terraria.util.EntityHelper;
 import terraria.util.GenericHelper;
 import terraria.util.PlayerHelper;
@@ -156,7 +157,6 @@ public class TerrariaHelper extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerWorldChangeListener(), this);
         Bukkit.getPluginManager().registerEvents(new RandomTitleListener(), this);
         Bukkit.getPluginManager().registerEvents(new ServerStopListener(), this);
-        Bukkit.getPluginManager().registerEvents(new VanillaFishHookShootListener(), this);
         Bukkit.getPluginManager().registerEvents(new VanillaMechanicListener(), this);
         Bukkit.getPluginManager().registerEvents(new WorldRegisterListener(), this);
     }
@@ -173,6 +173,7 @@ public class TerrariaHelper extends JavaPlugin {
         PlayerHelper.threadRegen();
         PlayerHelper.threadSaveInventories();
         PlayerHelper.threadSpecialBiome();
+        EventAndTime.threadTimeAndEvent();
     }
 
     @Override

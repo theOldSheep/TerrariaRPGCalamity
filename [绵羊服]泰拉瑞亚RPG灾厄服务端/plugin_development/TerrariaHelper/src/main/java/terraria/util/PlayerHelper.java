@@ -25,7 +25,7 @@ import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.event.CelestialPillar;
 import terraria.entity.projectile.HitEntityInfo;
-import terraria.gameplay.Event;
+import terraria.gameplay.EventAndTime;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -606,9 +606,10 @@ public class PlayerHelper {
                             // sky darkens when fighting goliath too
                             else if ( BossHelper.bossMap.containsKey(BossHelper.BossType.THE_PLAGUEBRINGER_GOLIATH.msgName) )
                                 current = "猪鲨";
-                            else if (!Event.currentEvent.equals("")) current = Event.currentEvent;
+                            else if (EventAndTime.currentEvent != EventAndTime.Events.NONE)
+                                current = EventAndTime.currentEvent.toString();
                             // background for celestial pillars
-                            for (CelestialPillar pillar : Event.pillars.values())
+                            for (CelestialPillar pillar : EventAndTime.pillars.values())
                                 if (pillar.getBukkitEntity().getWorld().equals(ply.getWorld()) &&
                                         pillar.getBukkitEntity().getLocation().distanceSquared(ply.getLocation()) <
                                                 CelestialPillar.EFFECTED_RADIUS_SQR) {
@@ -646,6 +647,9 @@ public class PlayerHelper {
                         case "日食":
                             time = 20000;
                             break;
+                        // no change in background
+                        default:
+                            current = "";
                     }
                     if (!last.equals(current)) {
                         if (current.equals("")) {
@@ -705,11 +709,12 @@ public class PlayerHelper {
                         // events
                         if (current.equals("")) {
                             // other events
-                            if (!Event.currentEvent.equals(""))
-                                current = TerrariaHelper.soundConfig.getString("event." + Event.currentEvent, "");
+                            if (EventAndTime.currentEvent != EventAndTime.Events.NONE)
+                                current = TerrariaHelper.soundConfig.getString(
+                                        "event." + EventAndTime.currentEvent, "");
                             // celestial pillars
                             if (ply.getLocation().getY() >= 50 && worldName.equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE)) {
-                                for (CelestialPillar pillar : Event.pillars.values())
+                                for (CelestialPillar pillar : EventAndTime.pillars.values())
                                     if (pillar.getBukkitEntity().getWorld().equals(plyWorld) &&
                                             pillar.getBukkitEntity().getLocation().distanceSquared(ply.getLocation()) <
                                                     CelestialPillar.EFFECTED_RADIUS_SQR) {

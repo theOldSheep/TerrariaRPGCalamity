@@ -25,6 +25,7 @@ import terraria.entity.others.TerrariaFishingHook;
 import terraria.entity.minion.MinionCaveSpider;
 import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
+import terraria.gameplay.EventAndTime;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -140,6 +141,31 @@ public class ItemUseHelper {
             entity.motZ = shootVel.getZ();
             wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         }
+    }
+    protected static boolean playerUseEventSummon(Player ply, String itemName, ItemStack itemStack) {
+        boolean successful = false;
+        boolean isDayTime = WorldHelper.isDayTime(ply.getWorld());
+        switch (itemName) {
+            case "日耀碑牌":
+                if (isDayTime) {
+                    successful = EventAndTime.initializeEvent(EventAndTime.Events.SOLAR_ECLIPSE);
+                }
+                break;
+            case "调皮礼物":
+                if (!isDayTime) {
+                    successful = EventAndTime.initializeEvent(EventAndTime.Events.FROST_MOON);
+                }
+                break;
+            case "南瓜月勋章":
+                if (!isDayTime) {
+                    successful = EventAndTime.initializeEvent(EventAndTime.Events.PUMPKIN_MOON);
+                }
+                break;
+        }
+        if (successful) {
+            itemStack.setAmount( itemStack.getAmount() - 1 );
+        }
+        return successful;
     }
     protected static boolean playerUseCritter(Player ply, String itemName, ItemStack itemStack) {
         String critterCategory = TerrariaHelper.animalConfig.getString("animalType." + itemName);
@@ -1331,6 +1357,8 @@ public class ItemUseHelper {
         // if itemName == "", some bug may occur. Also, vanilla items are not useful at all.
         if (itemName.length() > 0) {
             if (isRightClick) {
+                // to summon an event
+                if (playerUseEventSummon(ply, itemName, mainHandItem)) return;
                 // to release a critter
                 if (playerUseCritter(ply, itemName, mainHandItem)) return;
                 // void bag, piggy bank, musical instruments etc.

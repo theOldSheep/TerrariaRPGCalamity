@@ -18,6 +18,7 @@ import terraria.entity.boss.desertScourge.DesertNuisance;
 import terraria.entity.boss.desertScourge.DesertScourge;
 import terraria.entity.boss.theDestroyer.Destroyer;
 import terraria.entity.projectile.HitEntityInfo;
+import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 
 import java.util.*;
@@ -71,23 +72,26 @@ public class BossHelper {
             MetadataValue metadataVal = EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION);
             if (metadataVal != null) currDynamicDM = metadataVal.asDouble();
             else currDynamicDM = 1d;
-            // dynamic DR only applies when the boss lives shorter than expected
+            // dynamic DR only applies when the current time elapsed is within the expected time to defeat the boss
             if (ticksLived < targetTime && ticksLived > 1) {
-                if (healthRatio > 0.00001 && healthRatio < 0.99999) {
-                    double damageDealtRatio = 1 - healthRatio;
-                    double damageDealtRatioPotential = damageDealtRatio / currDynamicDM;
+                if (healthRatio > 0.000001 && healthRatio < 0.999999) {
+                    double damageRatioPotentialBeforeDDM = (1 - healthRatio) / currDynamicDM;
                     double timeElapsedRatio = ticksLived / targetTime;
                     // actual DPS * dynamic DM = expected DPS = max health / expected time
-                    // (damage / time elapsed) * dynamic DM = max health / expected time
-                    // (damage / max health / time elapsed) * dynamic DM = 1 / expected time
-                    // dynamic DM = time elapsed / expected time * max health / damage
-                    // dynamic DM = time elapsed ratio / damage dealt ratio potential
-                    dynamicDamageMultiplier = timeElapsedRatio / damageDealtRatioPotential;
+                    // (actual damage / time elapsed) * dynamic DM = max health / expected time
+                    // (actual damage / max health) * dynamic DM / time elapsed = 1 / expected time
+                    // dynamic DM = time elapsed / expected time * max health / actual damage
+                    // dynamic DM = time elapsed / expected time * max health / (damage dealt / dynamic DM)
+                    // dynamic DM = time elapsed / expected time *  dynamic DM * max health / recorded damage dealt
+                    // dynamic DM = time elapsed / expected time /  ( (recorded damage dealt / max health) / dynamic DM)
+                    // dynamic DM = time elapsed / expected time /  ( (1 - health ratio) / dynamic DM)
+                    // dynamic DM = time elapsed ratio / damageRatioPotentialBeforeDDM
+                    dynamicDamageMultiplier = timeElapsedRatio / damageRatioPotentialBeforeDDM;
                     // gradually change the damage multiplier
-                    dynamicDamageMultiplier = dynamicDamageMultiplier * 0.05 + currDynamicDM * 0.95;
+                    dynamicDamageMultiplier = dynamicDamageMultiplier * 0.1 + currDynamicDM * 0.9;
                     // dynamic damage multiplier can not increase player damage or decrease damage excessively
                     dynamicDamageMultiplier = Math.min(dynamicDamageMultiplier, 1d);
-                    dynamicDamageMultiplier = Math.max(dynamicDamageMultiplier, 0.2d);
+                    dynamicDamageMultiplier = Math.max(dynamicDamageMultiplier, 0.15d);
                 }
                 else
                     dynamicDamageMultiplier = currDynamicDM;
@@ -297,5 +301,13 @@ public class BossHelper {
                 }
             }
         }
+        // other mechanics
+        switch (bossType) {
+            case KING_SLIME: {
+                if (EventAndTime.currentEvent == EventAndTime.Events.SLIME_RAIN)
+                    EventAndTime.endEvent();
+            }
+        }
+
     }
 }

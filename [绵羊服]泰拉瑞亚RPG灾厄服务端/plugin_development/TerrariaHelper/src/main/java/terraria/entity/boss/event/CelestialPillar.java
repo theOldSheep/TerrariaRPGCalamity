@@ -12,7 +12,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.gameplay.Event;
+import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
@@ -45,7 +45,7 @@ public class CelestialPillar extends EntityGiantZombie {
     }
     // static helper functions
     public static CelestialPillar getPillarByType(PillarTypes typeToFind) {
-        return Event.pillars.get(typeToFind);
+        return EventAndTime.pillars.get(typeToFind);
     }
     public static void handlePillarMonsterDeath(PillarTypes typePillar, Location deathLoc) {
         CelestialPillar pillar = getPillarByType(typePillar);
@@ -57,11 +57,11 @@ public class CelestialPillar extends EntityGiantZombie {
         Location actualSpawnLoc = centerLoc.add(Math.random() * 500 - 250, 0, Math.random() * 500 - 250);
         actualSpawnLoc = actualSpawnLoc.getWorld().getHighestBlockAt(actualSpawnLoc).getLocation().add(0, 20, 0);
         actualSpawnLoc.getChunk().load();
-        Event.pillars.put(pillarType, new CelestialPillar(
+        EventAndTime.pillars.put(pillarType, new CelestialPillar(
                 ((CraftWorld) centerLoc.getWorld()).getHandle(), pillarType, actualSpawnLoc) );
     }
     public static void handlePillarSpawn() {
-        if (!Event.pillars.isEmpty())
+        if (!EventAndTime.pillars.isEmpty())
             return;
         Bukkit.broadcastMessage("§d§l天界生物要入侵了！");
         ArrayList<PillarTypes> pillarsPendingSpawn = new ArrayList<>( Arrays.asList(PillarTypes.values()) );
@@ -144,7 +144,7 @@ public class CelestialPillar extends EntityGiantZombie {
         if (pillarType == null)
             return;
         // handle destruction
-        Event.pillars.remove(pillarType);
+        EventAndTime.pillars.remove(pillarType);
         // drop item, between 75 and 125
         int amountToDropLeft = (int) (75 + Math.random() * 50);
         ItemStack itemToDrop = ItemHelper.getItemFromDescription(
@@ -163,7 +163,7 @@ public class CelestialPillar extends EntityGiantZombie {
             }
         }
         // status message
-        switch (Event.pillars.size()) {
+        switch (EventAndTime.pillars.size()) {
             case 3:
                 Bukkit.broadcastMessage("§d§o你的头脑变得麻木...");
                 break;

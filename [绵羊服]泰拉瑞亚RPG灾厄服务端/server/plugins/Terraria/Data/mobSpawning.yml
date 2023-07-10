@@ -1702,7 +1702,7 @@ mobInfo:
                     health: 1200
     树精:
         name: "树精"
-        monsterType: "WITHER_SKELETON"
+        monsterType: "SKELETON"
         eventProgress: 4
         variants:
             南瓜月1:

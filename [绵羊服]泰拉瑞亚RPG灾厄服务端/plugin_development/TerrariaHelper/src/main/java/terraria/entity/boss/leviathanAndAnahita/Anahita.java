@@ -62,6 +62,7 @@ public class Anahita extends EntityZombieHusk {
         attrMapBubble.put("healthMax", 1d);
     }
     private void changePhase() {
+        AIPhase lastPhase = phaseAI;
         // change phase
         if (leviathan.healthRatio > 0.7) {
             phaseAI = AIPhase.HOVER;
@@ -84,7 +85,10 @@ public class Anahita extends EntityZombieHusk {
         else
             removeScoreboardTag("noDamage");
         // deal extra contact damage when dashing
-        EntityHelper.tweakAttribute(attrMap, "damageMulti", "0.5", phaseAI == AIPhase.DASH);
+        if (lastPhase == AIPhase.DASH)
+            EntityHelper.tweakAttribute(attrMap, "damageMulti", "0.5", false);
+        else if (phaseAI == AIPhase.DASH)
+            EntityHelper.tweakAttribute(attrMap, "damageMulti", "0.5", true);
     }
     private void shootProjectiles() {
         EntityHelper.ProjectileShootInfo shootInfo;

@@ -61,10 +61,7 @@ import terraria.entity.boss.wallOfFlesh.WallOfFleshMouth;
 import terraria.entity.minion.MinionCaveSpider;
 import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
-import terraria.entity.monster.MonsterHusk;
-import terraria.entity.monster.MonsterSilverfish;
-import terraria.entity.monster.MonsterSlime;
-import terraria.entity.monster.MonsterZombie;
+import terraria.entity.monster.*;
 import terraria.entity.npc.*;
 import terraria.entity.others.TerrariaCritter;
 import terraria.entity.others.TerrariaItem;
@@ -150,6 +147,7 @@ public enum CustomEntities {
     MINION_SLIME       ("MinionSlime",            55,  EntityType.SLIME,           EntitySlime.class,      MinionSlime.class),
     MONSTER_HUSK       ("MonsterHusk",            23,  EntityType.HUSK,            EntityZombieHusk.class, MonsterHusk.class),
     MONSTER_SILVERFISH ("MonsterSilverfish",      60,  EntityType.SILVERFISH,      EntitySilverfish.class, MonsterSilverfish.class),
+    MONSTER_SKELETON   ("MonsterSkeleton",        51,  EntityType.SKELETON,        EntitySkeleton.class,   MonsterSkeleton.class),
     MONSTER_SLIME      ("MonsterSlime",           55,  EntityType.SLIME,           EntitySlime.class,      MonsterSlime.class),
     MONSTER_ZOMBIE     ("MonsterZombie",          54,  EntityType.ZOMBIE,          EntityZombie.class,     MonsterZombie.class),
     NPC_ANGLER         ("NPCAngler",              120, EntityType.VILLAGER,        EntityVillager.class,   TerrariaNPCAngler.class),

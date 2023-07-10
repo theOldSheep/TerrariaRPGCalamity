@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldLoadEvent;
 import terraria.TerrariaHelper;
+import terraria.util.WorldHelper;
 import terraria.worldgen.overworld.OverworldChunkGenerator;
 import terraria.worldgen.overworld.cavern.CavernChunkGenerator;
 import terraria.worldgen.underworld.UnderworldChunkGenerator;
@@ -21,34 +22,39 @@ public class WorldRegisterListener implements Listener {
                 try {
                     if (Bukkit.getServer().getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE) == null) {
                         Bukkit.getLogger().info("正在尝试初始化地面世界！");
-                        new WorldCreator(TerrariaHelper.Constants.WORLD_NAME_SURFACE)
+                        World surfaceWorld = new WorldCreator(TerrariaHelper.Constants.WORLD_NAME_SURFACE)
                                 .generator(OverworldChunkGenerator.getInstance())
                                 .environment(World.Environment.NORMAL)
                                 .type(WorldType.CUSTOMIZED)
                                 .generateStructures(false)
                                 .seed(TerrariaHelper.worldSeed)
                                 .createWorld();
+                        Bukkit.getLogger().info("正在尝试初始化地面世界游戏规则！");
+                        WorldHelper.initWorldRules(surfaceWorld);
                     }
                     if (Bukkit.getServer().getWorld(TerrariaHelper.Constants.WORLD_NAME_CAVERN) == null) {
                         Bukkit.getLogger().info("正在尝试初始化洞穴世界！");
-                        new WorldCreator(TerrariaHelper.Constants.WORLD_NAME_CAVERN)
+                        World cavernWorld = new WorldCreator(TerrariaHelper.Constants.WORLD_NAME_CAVERN)
                                 .generator(CavernChunkGenerator.getInstance())
                                 .environment(World.Environment.NORMAL)
                                 .type(WorldType.CUSTOMIZED)
                                 .generateStructures(false)
                                 .seed(TerrariaHelper.worldSeed)
                                 .createWorld();
+                        Bukkit.getLogger().info("正在尝试初始化洞穴世界游戏规则！");
+                        WorldHelper.initWorldRules(cavernWorld);
                     }
-                    // TODO: change world generator for hell world to a new one
                     if (Bukkit.getServer().getWorld(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD) == null) {
                         Bukkit.getLogger().info("正在尝试初始化地狱世界！");
-                        new WorldCreator(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)
+                        World underworldWorld = new WorldCreator(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)
                                 .generator(UnderworldChunkGenerator.getInstance())
                                 .environment(World.Environment.NORMAL)
                                 .type(WorldType.CUSTOMIZED)
                                 .generateStructures(false)
                                 .seed(TerrariaHelper.worldSeed)
                                 .createWorld();
+                        Bukkit.getLogger().info("正在尝试初始化地狱世界游戏规则！");
+                        WorldHelper.initWorldRules(underworldWorld);
                     }
                 } catch (Exception e) {
                     Bukkit.getLogger().info("初始化世界时发生错误！");

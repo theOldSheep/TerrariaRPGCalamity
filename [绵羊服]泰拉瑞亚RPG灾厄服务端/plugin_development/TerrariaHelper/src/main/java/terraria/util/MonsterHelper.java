@@ -5,23 +5,19 @@ import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.watchers.SlimeWatcher;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.omg.CORBA.TypeCodePackage.BadKind;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.event.CelestialPillar;
-import terraria.entity.monster.MonsterHusk;
-import terraria.entity.monster.MonsterSilverfish;
-import terraria.entity.monster.MonsterSlime;
-import terraria.entity.monster.MonsterZombie;
-import terraria.gameplay.Event;
+import terraria.entity.monster.*;
+import terraria.gameplay.EventAndTime;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 public class MonsterHelper {
     // prevent spawning next to any player
@@ -126,21 +122,21 @@ public class MonsterHelper {
                 heightLayer == WorldHelper.HeightLayer.SURFACE ||
                 heightLayer == WorldHelper.HeightLayer.SPACE;
         if (isSurfaceOrSpace) {
-            for (CelestialPillar pillar : Event.pillars.values()) {
+            for (CelestialPillar pillar : EventAndTime.pillars.values()) {
                 if (pillar.getBukkitEntity().getWorld() != ply.getWorld())
                     continue;
                 if (pillar.getBukkitEntity().getLocation().distanceSquared(ply.getLocation()) < CelestialPillar.EFFECTED_RADIUS_SQR) {
-                    naturalMobSpawnType(ply, pillar.getCustomName());
-                    return;
+                    if ( naturalMobSpawnType(ply, pillar.getCustomName()) )
+                        return;
                 }
             }
         }
         // event mob
         PlayerHelper.GameProgress gameProgress = PlayerHelper.getGameProgress(ply);
         if (heightLayer == WorldHelper.HeightLayer.SURFACE) {
-            switch (Event.currentEvent) {
-                case "冰霜月":
-                case "南瓜月":
+            switch (EventAndTime.currentEvent) {
+                case FROST_MOON:
+                case PUMPKIN_MOON:
                     boolean canSpawn = true;
                     switch (gameProgress) {
                         case PRE_WALL_OF_FLESH:
@@ -148,9 +144,10 @@ public class MonsterHelper {
                             canSpawn = false;
                     }
                     if (canSpawn) {
-                        int eventTier = Event.eventInfo.getOrDefault("tier", 1d).intValue();
-                        naturalMobSpawnType(ply, Event.currentEvent + eventTier);
-                        return;
+                        int eventTier = EventAndTime.eventInfo.getOrDefault(
+                                EventAndTime.EventInfoMapKeys.EVENT_WAVE, 1d).intValue();
+                        if (naturalMobSpawnType(ply, EventAndTime.currentEvent.toString() + eventTier))
+                            return;
                     }
                     break;
             }
@@ -160,7 +157,7 @@ public class MonsterHelper {
             return;
         }
         // reduced mob spawning rate when no event is present
-        if (Event.currentEvent.length() > 0 && Math.random() < 0.5) {
+        if (EventAndTime.currentEvent == EventAndTime.Events.NONE && Math.random() < 0.5) {
             return;
         }
         // only attempt to spawn underworld mobs in underworld
@@ -173,7 +170,8 @@ public class MonsterHelper {
         }
         // event mob spawning
         if (heightLayer == WorldHelper.HeightLayer.SURFACE) {
-            if (Event.currentEvent.length() > 0 && naturalMobSpawnType(ply, Event.currentEvent))
+            if (EventAndTime.currentEvent != EventAndTime.Events.NONE &&
+                    naturalMobSpawnType(ply, EventAndTime.currentEvent.toString()))
                 return;
             if (WorldHelper.isDayTime(ply.getWorld()))
                 heightStr = "day";
@@ -220,11 +218,16 @@ public class MonsterHelper {
                     entity = (new MonsterHusk(target, type, loc, isBaby)).getBukkitEntity();
                     break;
                 }
+                case "SKELETON": {
+                    entity = (new MonsterSkeleton(target, type, loc)).getBukkitEntity();
+                    break;
+                }
                 case "SILVERFISH": {
                     entity = (new MonsterSilverfish(target, type, loc)).getBukkitEntity();
                     break;
                 }
                 default:
+                    TerrariaHelper.getInstance().getLogger().log(Level.SEVERE, "UNHANDLED MONSTER TYPE: " + entityType);
                     return null;
             }
         }

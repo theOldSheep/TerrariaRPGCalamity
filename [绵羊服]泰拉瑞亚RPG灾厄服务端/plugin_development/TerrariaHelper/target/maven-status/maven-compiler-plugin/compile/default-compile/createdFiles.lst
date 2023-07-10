@@ -25,7 +25,6 @@ terraria\entity\boss\theSlimeGod\CrimulanSlime.class
 terraria\event\listener\PlayerQuitListener.class
 terraria\entity\npc\TerrariaNPCGoblinTinkerer.class
 terraria\entity\boss\queenSlime\QueenSlime.class
-terraria\event\listener\VanillaFishHookShootListener.class
 terraria\entity\boss\empressOfLight\EmpressOfLight$1.class
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu$1.class
 terraria\util\DragoncoreHelper.class
@@ -49,6 +48,7 @@ terraria\util\YmlHelper$YmlSection.class
 terraria\entity\projectile\TerrariaBoomerang.class
 terraria\entity\boss\wallOfFlesh\WallOfFleshEye.class
 terraria\entity\boss\wallOfFlesh\WallOfFleshMouth.class
+terraria\gameplay\EventAndTime$EventInfoMapKeys.class
 terraria\entity\boss\moonLord\MoonLordEye.class
 terraria\util\WorldHelper$1.class
 terraria\entity\boss\kingSlime\CrownJewel.class
@@ -60,6 +60,7 @@ terraria\entity\boss\astrumAureus\AstrumAureus$AIPhase.class
 terraria\entity\boss\theHiveMind\TheHiveMind$AIPhase.class
 terraria\entity\others\TerrariaFishingHook.class
 terraria\util\WorldHelper.class
+terraria\event\listener\VanillaMechanicListener$1.class
 terraria\util\WorldHelper$BiomeType.class
 terraria\entity\projectile\TerrariaArrowProjectile.class
 terraria\util\PlayerHelper.class
@@ -76,6 +77,7 @@ terraria\entity\boss\theSlimeGod\CrimulanSlime$SlimeSize.class
 terraria\entity\boss\leviathanAndAnahita\Leviathan$AIPhase.class
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu$AIPhase.class
 terraria\entity\boss\crabulon\Crabulon.class
+terraria\gameplay\EventAndTime$QuestFish.class
 terraria\entity\boss\thePlaguebringerGoliath\ThePlaguebringerGoliath$AIPhase.class
 terraria\util\NPCHelper.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHand$HandType.class
@@ -95,11 +97,11 @@ terraria\entity\projectile\TerrariaPotionProjectile.class
 terraria\entity\boss\theHiveMind\TheHiveMind$1.class
 terraria\util\GenericHelper$1.class
 terraria\event\listener\ServerStopListener.class
-terraria\gameplay\Event$InfoMapKeys.class
 terraria\util\WorldHelper$HeightLayer.class
 terraria\entity\boss\leviathanAndAnahita\Anahita.class
 terraria\worldgen\Interpolate$InterpolatePoint.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator.class
+terraria\gameplay\EventAndTime$Events.class
 terraria\entity\boss\leviathanAndAnahita\Anahita$AIPhase.class
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu.class
 terraria\worldgen\overworld\OverworldCaveGenerator$1.class
@@ -193,15 +195,17 @@ terraria\entity\boss\lunaticCultist\LunaticCultist.class
 terraria\entity\boss\thePlaguebringerGoliath\PlagueMine.class
 terraria\util\EntityHelper$ProjectileShootInfo.class
 terraria\entity\monster\MonsterHelper$MonsterStatsMulti.class
-terraria\gameplay\Event.class
 terraria\entity\boss\theSlimeGod\CrimulanSlime$1.class
+terraria\entity\monster\MonsterSkeleton.class
 terraria\entity\boss\theSlimeGod\TheSlimeGod.class
 terraria\event\listener\EntitySpawnListener.class
 terraria\worldgen\overworld\NoiseGeneratorTest.class
 terraria\entity\boss\golem\Golem.class
 terraria\entity\boss\thePlaguebringerGoliath\ThePlaguebringerGoliath.class
 terraria\worldgen\overworld\TreePopulator$1.class
+terraria\gameplay\EventAndTime.class
 terraria\entity\monster\MonsterHelper.class
+terraria\gameplay\EventAndTime$1.class
 terraria\worldgen\overworld\TreePopulator.class
 terraria\entity\boss\moonLord\MoonLordTrueEyeOfCthulhu.class
 terraria\worldgen\Interpolate.class

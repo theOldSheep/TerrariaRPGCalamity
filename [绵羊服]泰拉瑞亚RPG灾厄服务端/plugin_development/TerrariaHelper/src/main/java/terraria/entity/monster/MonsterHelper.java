@@ -3,29 +3,21 @@ package terraria.entity.monster;
 
 import net.minecraft.server.v1_12_R1.*;
 import net.minecraft.server.v1_12_R1.Entity;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftSlime;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
-import org.omg.CORBA.TypeCodePackage.BadKind;
 import terraria.TerrariaHelper;
-import terraria.entity.boss.empressOfLight.EmpressOfLight;
 import terraria.entity.boss.event.CelestialPillar;
 import terraria.entity.projectile.HitEntityInfo;
-import terraria.entity.projectile.TerrariaPotionProjectile;
-import terraria.gameplay.Event;
+import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
@@ -68,8 +60,8 @@ public class MonsterHelper {
         WorldHelper.BiomeType   playerBiome = WorldHelper.BiomeType.getBiome(target.getLocation(), false);
         // -> event mobs
         if (playerHeight == WorldHelper.HeightLayer.SURFACE &&
-                Event.currentEvent != null && Event.currentEvent.length() > 0)
-            prefixToCheck.add(Event.currentEvent);
+                EventAndTime.currentEvent != null && EventAndTime.currentEvent != EventAndTime.Events.NONE)
+            prefixToCheck.add(EventAndTime.currentEvent.toString());
         // -> biome specific and height specific
         {
             String biomeStr = playerBiome.toString().toLowerCase();
@@ -186,10 +178,11 @@ public class MonsterHelper {
         ConfigurationSection attributeConfigSection = variantConfigSection.getConfigurationSection("attributes");
         org.bukkit.entity.Entity bukkitMonster = monster.getBukkitEntity();
         // if the monster is an event mob, setup progress info
-        if (Event.currentEvent.length() > 0 && variant.startsWith(Event.currentEvent)) {
+        if (EventAndTime.currentEvent != EventAndTime.Events.NONE &&
+                variant.startsWith(EventAndTime.currentEvent.toString()) ) {
             double killProgress = typeConfigSection.getDouble("eventProgress", 1d);
             org.bukkit.entity.Entity monsterBkt = monster.getBukkitEntity();
-            EntityHelper.setMetadata(monsterBkt, EntityHelper.MetadataName.SPAWN_IN_EVENT, Event.currentEvent);
+            EntityHelper.setMetadata(monsterBkt, EntityHelper.MetadataName.SPAWN_IN_EVENT, EventAndTime.currentEvent);
             EntityHelper.setMetadata(monsterBkt, EntityHelper.MetadataName.KILL_CONTRIBUTE_EVENT_PROGRESS, killProgress);
         }
         // name, size etc.
@@ -278,7 +271,7 @@ public class MonsterHelper {
             case "诅咒骷髅头":
             case "地牢幽魂":
             case "致命球":
-            case "精灵直升机":
+                case "精灵直升机":
             case "雪花怪":
             case "钨钢悬浮坦克":
             case "钨钢无人机":

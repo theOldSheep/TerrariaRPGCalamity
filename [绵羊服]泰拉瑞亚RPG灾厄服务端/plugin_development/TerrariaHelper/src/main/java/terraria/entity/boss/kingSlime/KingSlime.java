@@ -13,6 +13,7 @@ import org.bukkit.entity.Slime;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import terraria.gameplay.EventAndTime;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
@@ -244,6 +245,9 @@ public class KingSlime extends EntitySlime {
         // disable boss bar
         bossbar.setVisible(false);
         BossHelper.bossMap.remove(BOSS_TYPE.msgName);
+        // if the event is slime rain, reset its progress even if the boss flees.
+        if (EventAndTime.currentEvent == EventAndTime.Events.SLIME_RAIN)
+            EventAndTime.eventInfo.put(EventAndTime.EventInfoMapKeys.INVADE_PROGRESS, 0d);
         // if the boss has been defeated properly
         if (getMaxHealth() > 10) {
             // drop items

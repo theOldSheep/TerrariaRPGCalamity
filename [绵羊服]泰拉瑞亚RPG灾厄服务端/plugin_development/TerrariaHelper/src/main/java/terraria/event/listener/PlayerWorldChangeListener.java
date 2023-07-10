@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import terraria.TerrariaHelper;
 import terraria.util.EntityHelper;
+import terraria.util.PlayerHelper;
 
 public class PlayerWorldChangeListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
@@ -21,8 +22,8 @@ public class PlayerWorldChangeListener implements Listener {
             e.setCancelled(true);
             return;
         }
-        // reset the music to play
-        EntityHelper.setMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_LAST_BGM_TIME, 0L);
+        // reset player stats after world change
+        PlayerHelper.initPlayerStats(e.getPlayer(), true);
     }
     // stop any portal from forming
     @EventHandler(priority = EventPriority.LOW)
