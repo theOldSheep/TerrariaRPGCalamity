@@ -2501,6 +2501,45 @@
     useTime: 30
   worth: 400000
   rarity: 2
+芦苇吹管:
+  item: BLAZE_ROD
+  lore:
+  - §r发射高压气泡流
+  attributes:
+    damage: 42
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 16
+    knockback: 4.5
+    useTime: 25
+  worth: 400000
+  rarity: 2
+珊瑚手炮:
+  item: BLAZE_ROD
+  lore:
+  - §r发射高压气泡流
+  attributes:
+    damage: 48
+    damageType: Bullet
+    crit: 14
+    projectileSpeed: 10
+    knockback: 7.5
+    useTime: 20
+  worth: 400000
+  rarity: 2
+泰瑟枪:
+  item: BLAZE_ROD
+  lore:
+  - §r发射会吸附在敌人身上的钩爪，在返回前持续电击敌人
+  attributes:
+    damage: 30
+    damageType: Bullet
+    crit: 14
+    projectileSpeed: 15
+    knockback: 0
+    useTime: 28
+  worth: 800000
+  rarity: 1100
 火花喷射器:
   item: BOW
   attributes:
