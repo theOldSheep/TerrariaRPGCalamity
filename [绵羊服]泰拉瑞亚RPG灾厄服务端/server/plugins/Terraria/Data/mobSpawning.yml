@@ -1702,7 +1702,7 @@ mobInfo:
                     health: 1200
     树精:
         name: "树精"
-        monsterType: "SKELETON"
+        monsterType: "WITHER_SKELETON"
         eventProgress: 4
         variants:
             南瓜月1:
@@ -1715,7 +1715,8 @@ mobInfo:
                     health: 2700
     地狱犬:
         name: "地狱犬"
-        monsterType: "WOLF"
+        monsterType: "BABY_HUSK"
+        disguiseType: "WOLF"
         eventProgress: 8
         variants:
             南瓜月1:
