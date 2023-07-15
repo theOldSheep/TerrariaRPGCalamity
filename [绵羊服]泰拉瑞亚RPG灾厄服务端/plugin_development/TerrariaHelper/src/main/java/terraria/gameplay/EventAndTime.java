@@ -13,12 +13,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.boss.event.CelestialPillar;
+import terraria.entity.boss.event.celestialPillar.CelestialPillar;
+import terraria.entity.boss.event.headlessHorseman.HeadlessHorseman;
+import terraria.entity.boss.event.mourningWood.MourningWood;
+import terraria.entity.boss.event.pumpking.PumpkingHead;
 import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.logging.Level;
 
 public class EventAndTime {
@@ -128,7 +132,7 @@ public class EventAndTime {
     public static int reservedEventCountdown = 0;
     public static HashMap<EventInfoMapKeys, Double> eventInfo;
     public static BossBattleServer eventProgressBar = null;
-    public static int[] eventBossAmount;
+    public static int[] eventBossAmount = {0, 0, 0}, eventBossAmountLimit = {0, 0, 0};
     // quest fish
     public static QuestFish questFish = QuestFish.randomFish();
     public static HashSet<String> questFishSubmitted = new HashSet<>();
@@ -154,9 +158,6 @@ public class EventAndTime {
     public static void threadTimeAndEvent() {
         // every 3 ticks (~1/7 second)
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
-            for (Player ply : Bukkit.getOnlinePlayers())
-                PlayerHelper.sendActionBar(ply,
-                        currentEvent + "(res " + reservedEvent + ")" + ", res time " + reservedEventCountdown);
             World[] worldsToHandle = {
                     Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE),
                     Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_CAVERN),
@@ -198,8 +199,7 @@ public class EventAndTime {
                     null, null,
                     attrMapFallenStar, EntityHelper.DamageType.ARROW, "坠星");
             for (Chunk chunk : surfaceWorld.getLoadedChunks()) {
-//                if (Math.random() < 0.001) {
-                if (Math.random() < 0.1) {
+                if (Math.random() < 0.0001) {
                     double spawnX = (chunk.getX() << 4) + Math.random() * 16;
                     double spawnZ = (chunk.getZ() << 4) + Math.random() * 16;
                     Location spawnLoc = new Location(surfaceWorld, spawnX, 200 + Math.random() * 150, spawnZ);
@@ -252,7 +252,6 @@ public class EventAndTime {
             }
         }
     }
-    // TODO
     protected static void tickEvent() {
         // update progress bar
         if (eventProgressBar != null) {
@@ -289,7 +288,7 @@ public class EventAndTime {
             // frost/pumpkin moon, spawn boss
             case FROST_MOON:
             case PUMPKIN_MOON: {
-
+                handleWaveEventBossSpawn();
                 break;
             }
             // slime king for slime rain
@@ -314,6 +313,7 @@ public class EventAndTime {
         }
     }
 
+    // TODO
     protected static void prepareReservedEvent() {
         if (reservedEvent == Events.NONE)
             return;
@@ -392,6 +392,97 @@ public class EventAndTime {
         double nextTierProgressMax = TerrariaHelper.settingConfig.getInt(
                 "events." + currentEvent + ".progress." + currTier, 99999999);
         eventInfo.put(EventInfoMapKeys.INVADE_PROGRESS_MAX, nextTierProgressMax);
+        // boss limits
+        List<Integer> bossAmountLimitList = TerrariaHelper.settingConfig.getIntegerList(
+                "events." + currentEvent + ".bossMax." + currTier);
+        eventBossAmountLimit = new int[] {
+                bossAmountLimitList.get(0),
+                bossAmountLimitList.get(1),
+                bossAmountLimitList.get(2)};
+    }
+    protected static void handleWaveEventBossSpawn() {
+        switch (currentEvent) {
+            case FROST_MOON:
+            case PUMPKIN_MOON: {
+                if (currentTime % 60 != 0)
+                    return;
+                // determine the boss that can still be spawned
+                ArrayList<Integer> bossIndexCandidate = new ArrayList<>(4);
+                for (int i = 0; i < 3; i ++) {
+                    if (eventBossAmount[i] < eventBossAmountLimit[i])
+                        bossIndexCandidate.add(i);
+                }
+                if (bossIndexCandidate.isEmpty())
+                    return;
+                // get a random boss to spawn
+                int bossSpawnIndex = bossIndexCandidate.get( (int) (Math.random() * bossIndexCandidate.size()) );
+                // get a random player as target
+                Player targetPly = null;
+                {
+                    ArrayList<Player> candidateTargets = new ArrayList<>();
+                    for (Player ply : Bukkit.getOnlinePlayers()) {
+                        if (! PlayerHelper.isProperlyPlaying(ply))
+                            continue;
+                        if (! ply.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE))
+                            continue;
+                        if (! PlayerHelper.hasDefeated(ply, BossHelper.BossType.PLANTERA.msgName))
+                            continue;
+                        switch (WorldHelper.HeightLayer.getHeightLayer( ply.getLocation() ) ) {
+                            case SURFACE:
+                            case SPACE:
+                                candidateTargets.add(ply);
+                        }
+                    }
+                    // no available player, cancel spawning attempt
+                    if (candidateTargets.isEmpty())
+                        return;
+                    targetPly = candidateTargets.get( (int) (Math.random() * candidateTargets.size()) );
+                }
+                switch (bossSpawnIndex) {
+                    // first boss
+                    case 0: {
+                        if (currentEvent == Events.FROST_MOON) {
+
+                        }
+                        else {
+                            new MourningWood(targetPly);
+                        }
+                        break;
+                    }
+                    // second boss
+                    case 1: {
+                        if (currentEvent == Events.FROST_MOON) {
+
+                        }
+                        else {
+                            new PumpkingHead(targetPly);
+                        }
+                        break;
+                    }
+                    // third boss
+                    case 2: {
+                        if (currentEvent == Events.FROST_MOON) {
+
+                        }
+                        else {
+                            new HeadlessHorseman(targetPly);
+                        }
+                        break;
+                    }
+                }
+
+                break;
+            }
+        }
+    }
+    public static double getWaveEventBossDropRate() {
+        switch (currentEvent) {
+            case FROST_MOON:
+            case PUMPKIN_MOON:
+                double wave = eventInfo.get(EventInfoMapKeys.EVENT_WAVE);
+                return 1 / Math.max( (20 - wave) / 2, 1);
+        }
+        return 1d;
     }
     // initialize and terminate event
     public static boolean initializeEvent(Events newEvent) {
@@ -416,7 +507,8 @@ public class EventAndTime {
             case FROST_MOON:
             case PUMPKIN_MOON: {
                 eventBossAmount = new int[] {0, 0, 0};
-                eventInfo.put(EventInfoMapKeys.INVADE_PROGRESS, 0d);
+                eventBossAmountLimit = new int[] {0, 0, 0};
+                eventInfo.put(EventInfoMapKeys.INVADE_PROGRESS, 1e-5);
                 eventInfo.put(EventInfoMapKeys.INVADE_PROGRESS_MAX, 0d);
                 eventInfo.put(EventInfoMapKeys.INVADE_PROGRESS_FROM_FORMER_TIER, 0d);
                 eventInfo.put(EventInfoMapKeys.IS_INVASION, 1d);

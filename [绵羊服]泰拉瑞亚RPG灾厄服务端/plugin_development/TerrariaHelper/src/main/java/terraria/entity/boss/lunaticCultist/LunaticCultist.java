@@ -1,7 +1,6 @@
 package terraria.entity.boss.lunaticCultist;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -12,8 +11,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.desertScourge.DesertNuisance;
-import terraria.entity.boss.event.CelestialPillar;
+import terraria.entity.boss.event.celestialPillar.CelestialPillar;
 import terraria.util.*;
 import terraria.util.MathHelper;
 

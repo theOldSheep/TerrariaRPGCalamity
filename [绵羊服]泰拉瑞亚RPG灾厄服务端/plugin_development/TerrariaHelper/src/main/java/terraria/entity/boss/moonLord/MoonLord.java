@@ -131,9 +131,11 @@ public class MoonLord extends EntitySlime {
                             PotionEffectType.CONFUSION, ticksDuration, 0, false, false), true);
                 }
             }
-
-            if (--indexSpawnAnimation == 0)
+            // spawn other parts and summon message
+            if (--indexSpawnAnimation == 0) {
                 spawnOtherParts();
+                Bukkit.broadcastMessage("§d§l" + BOSS_TYPE + " 苏醒了！");
+            }
         }
         // AI
         else {

@@ -1031,13 +1031,12 @@ public class EntityHelper {
                 LivingEntity vLiving = (LivingEntity) v;
                 MetadataValue spawnEvt = getMetadata(v, MetadataName.SPAWN_IN_EVENT);
                 // event monster
-                if (spawnEvt != null && spawnEvt.asString().equals(EventAndTime.currentEvent.toString())) {
+                if (spawnEvt != null && spawnEvt.value() == EventAndTime.currentEvent ) {
                     HashMap<EventAndTime.EventInfoMapKeys, Double> eventInfo = EventAndTime.eventInfo;
                     if (eventInfo.getOrDefault(EventAndTime.EventInfoMapKeys.IS_INVASION, 1d) > 0) {
                         MetadataValue progress = getMetadata(v, MetadataName.KILL_CONTRIBUTE_EVENT_PROGRESS);
                         if (progress != null) {
-                            int invadeProgress = eventInfo.getOrDefault(EventAndTime.EventInfoMapKeys.INVADE_PROGRESS, 0d)
-                                    .intValue();
+                            double invadeProgress = eventInfo.getOrDefault(EventAndTime.EventInfoMapKeys.INVADE_PROGRESS, 0d);
                             eventInfo.put(EventAndTime.EventInfoMapKeys.INVADE_PROGRESS,
                                     invadeProgress + progress.asDouble());
                         }

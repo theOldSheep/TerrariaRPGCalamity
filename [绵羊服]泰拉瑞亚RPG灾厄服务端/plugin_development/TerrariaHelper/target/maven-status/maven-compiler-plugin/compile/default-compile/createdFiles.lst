@@ -14,11 +14,13 @@ terraria\entity\boss\BossHelper$1.class
 terraria\entity\boss\theHiveMind\HiveBlob.class
 terraria\entity\monster\MonsterHusk.class
 terraria\util\NMSUtils$Attributes.class
+terraria\entity\boss\event\celestialPillar\CelestialPillar$PillarTypes.class
 terraria\entity\boss\skeletron\SkeletronHead.class
 terraria\worldgen\overworld\OverworldCaveGenerator.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHead$1.class
 terraria\util\ItemHelper$1.class
 terraria\util\BossHelper$BossType.class
+terraria\entity\boss\event\mourningWood\MourningWood.class
 terraria\util\PlayerHelper$GameProgress.class
 terraria\entity\monster\MonsterHelper$1.class
 terraria\entity\boss\theSlimeGod\CrimulanSlime.class
@@ -33,7 +35,7 @@ terraria\entity\boss\moonLord\MoonLordTrueEyeOfCthulhu$EyeAttackMethod.class
 terraria\entity\minion\MinionSlime.class
 terraria\entity\boss\thePlaguebringerGoliath\ThePlaguebringerGoliath$1.class
 terraria\entity\boss\theHiveMind\TheHiveMind.class
-terraria\entity\boss\event\CelestialPillar.class
+terraria\entity\monster\MonsterWitherSkeleton.class
 terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
 terraria\entity\boss\kingSlime\KingSlime.class
 terraria\event\listener\PlayerMovementListener.class
@@ -48,10 +50,12 @@ terraria\util\YmlHelper$YmlSection.class
 terraria\entity\projectile\TerrariaBoomerang.class
 terraria\entity\boss\wallOfFlesh\WallOfFleshEye.class
 terraria\entity\boss\wallOfFlesh\WallOfFleshMouth.class
+terraria\entity\boss\event\pumpking\PumpkingScythe.class
 terraria\gameplay\EventAndTime$EventInfoMapKeys.class
 terraria\entity\boss\moonLord\MoonLordEye.class
 terraria\util\WorldHelper$1.class
 terraria\entity\boss\kingSlime\CrownJewel.class
+terraria\entity\boss\event\celestialPillar\CelestialPillar.class
 terraria\entity\npc\TerrariaNPCBlockSeller.class
 terraria\entity\others\TerrariaEntityPlayer.class
 terraria\entity\boss\moonLord\MoonLordPhantasmalBolt.class
@@ -159,6 +163,7 @@ terraria\entity\npc\TerrariaNPCArmsDealer.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHead$PhaseAI.class
 terraria\entity\boss\theSlimeGod\EbonianSlime$1.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHand$1.class
+terraria\entity\boss\event\pumpking\PumpkingHead.class
 terraria\entity\boss\lunaticCultist\LunaticAncientDoom.class
 terraria\entity\boss\calamitasClone\Catastrophe.class
 terraria\entity\boss\dukeFishron\DukeFishron$AttackPhase.class
@@ -175,11 +180,11 @@ terraria\util\MonsterHelper.class
 terraria\entity\boss\calamitasClone\CalamitasClone.class
 terraria\entity\boss\theTwins\Spazmatism.class
 terraria\event\listener\DamageListener.class
+terraria\entity\boss\event\headlessHorseman\HeadlessHorseman.class
 terraria\util\DragoncoreHelper$SlotCallback.class
 terraria\entity\boss\astrumDeus\AstrumDeus.class
 terraria\entity\boss\BossHelper.class
 terraria\entity\boss\desertScourge\DesertScourge.class
-terraria\entity\boss\event\CelestialPillar$PillarTypes.class
 terraria\entity\boss\theTwins\Retinazer.class
 terraria\entity\boss\astrumAureus\AstrumAureus.class
 terraria\util\ItemHelper.class
@@ -203,6 +208,7 @@ terraria\event\listener\EntitySpawnListener.class
 terraria\worldgen\overworld\NoiseGeneratorTest.class
 terraria\entity\boss\golem\Golem.class
 terraria\entity\boss\thePlaguebringerGoliath\ThePlaguebringerGoliath.class
+terraria\entity\boss\event\pumpking\PumpkingHand.class
 terraria\worldgen\overworld\TreePopulator$1.class
 terraria\gameplay\EventAndTime.class
 terraria\entity\monster\MonsterHelper.class

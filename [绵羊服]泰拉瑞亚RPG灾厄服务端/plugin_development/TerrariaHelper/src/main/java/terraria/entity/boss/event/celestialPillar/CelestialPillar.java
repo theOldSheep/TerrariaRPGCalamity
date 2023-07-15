@@ -1,4 +1,4 @@
-package terraria.entity.boss.event;
+package terraria.entity.boss.event.celestialPillar;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;

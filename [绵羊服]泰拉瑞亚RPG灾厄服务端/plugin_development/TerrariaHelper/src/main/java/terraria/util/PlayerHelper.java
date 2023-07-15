@@ -23,7 +23,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.boss.event.CelestialPillar;
+import terraria.entity.boss.event.celestialPillar.CelestialPillar;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.EventAndTime;
 
@@ -61,7 +61,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("damageMulti", 1d);
         defaultPlayerAttrMap.put("damageRangedMulti", 1d);
         defaultPlayerAttrMap.put("damageRocketMulti", 1d);
-        defaultPlayerAttrMap.put("damageSummonMulti", 0.75d);
+        defaultPlayerAttrMap.put("damageSummonMulti", 1d);
         defaultPlayerAttrMap.put("damageTakenMulti", 1d);
         defaultPlayerAttrMap.put("damageContactTakenMulti", 1d);
         defaultPlayerAttrMap.put("damageTrueMeleeMulti", 1d);
@@ -598,6 +598,7 @@ public class PlayerHelper {
                     if (forceBackground == null) {
                         if (BossHelper.bossMap.containsKey("月球领主")) current = "虚空";
                         if (ply.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE)) {
+                            // sky darkens when fighting duke fishron
                             if (BossHelper.bossMap.containsKey(BossHelper.BossType.DUKE_FISHRON.msgName)) {
                                 LivingEntity fishron = BossHelper.bossMap.get(BossHelper.BossType.DUKE_FISHRON.msgName).get(0);
                                 if (fishron.getHealth() / fishron.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() <= 0.4)
@@ -697,8 +698,18 @@ public class PlayerHelper {
                                     else bossName += "2";
                                     break;
                             }
+                            // get the first living component of current boss
                             double currDist = 99999;
+                            int index = 0;
                             Entity currBoss = bossArrayList.get(0);
+                            while (currBoss.isDead()) {
+                                index ++;
+                                if (index >= bossArrayList.size()) {
+                                    break;
+                                }
+                                currBoss = bossArrayList.get(index);
+                            }
+                            // get the nearest boss
                             if (plyWorld.equals(currBoss.getWorld()))
                                 currDist = currBoss.getLocation().distanceSquared(ply.getLocation());
                             if (currDist < minBossDistance) {
@@ -918,9 +929,15 @@ public class PlayerHelper {
                 CritterHelper.naturalCritterSpawn(ply);
                 // monster spawn
                 HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
-                double spawnRate = attrMap.getOrDefault("mobSpawnRate", 0.2) *
-                        attrMap.getOrDefault("mobSpawnRateMulti", 1d)
-                        / 2;
+                double spawnRate;
+                if (EventAndTime.currentEvent != null) {
+                    spawnRate = 0.6;
+                }
+                else {
+                    spawnRate = attrMap.getOrDefault("mobSpawnRate", 0.2) *
+                            attrMap.getOrDefault("mobSpawnRateMulti", 1d)
+                            / 2;
+                }
                 int spawnAmount = (int) spawnRate;
                 spawnRate -= spawnAmount;
                 if (Math.random() < spawnRate) spawnAmount ++;

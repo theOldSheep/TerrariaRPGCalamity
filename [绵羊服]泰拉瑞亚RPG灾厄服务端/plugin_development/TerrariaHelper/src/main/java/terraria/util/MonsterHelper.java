@@ -11,7 +11,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import terraria.TerrariaHelper;
-import terraria.entity.boss.event.CelestialPillar;
+import terraria.entity.boss.event.celestialPillar.CelestialPillar;
 import terraria.entity.monster.*;
 import terraria.gameplay.EventAndTime;
 
@@ -220,6 +220,10 @@ public class MonsterHelper {
                 }
                 case "SKELETON": {
                     entity = (new MonsterSkeleton(target, type, loc)).getBukkitEntity();
+                    break;
+                }
+                case "WITHER_SKELETON": {
+                    entity = (new MonsterWitherSkeleton(target, type, loc)).getBukkitEntity();
                     break;
                 }
                 case "SILVERFISH": {

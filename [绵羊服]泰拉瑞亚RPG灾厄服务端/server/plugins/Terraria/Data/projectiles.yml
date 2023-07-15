@@ -763,7 +763,17 @@
 火焰:
     buffInflict:
         - "燃烧|400|1"
+烈焰木:
+    penetration: 999999
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 100
+    buffInflict:
+        - "燃烧|200|1"
 希腊烈火:
+    penetration: 999999
+    noGravityTicks: 0
+    projectileSize: 0.25
     blockHitAction: stick
     buffInflict:
         - "燃烧|200|1"

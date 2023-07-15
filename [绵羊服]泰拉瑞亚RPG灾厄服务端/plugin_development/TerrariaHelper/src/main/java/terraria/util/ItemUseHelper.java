@@ -563,6 +563,8 @@ public class ItemUseHelper {
         if (projectileInfo != null) {
             HashMap<String, Double> attrMapProjectile = (HashMap<String, Double>) attrMap.clone();
             int shootInterval = (int) Math.floor(projectileInfo.getInt("interval", 1) * useSpeed);
+            if (shootInterval < 1)
+                shootInterval = 1;
             int shootAmount = 1;
             if (swingAmount % shootInterval == 0) {
                 lookDir.multiply(projectileInfo.getDouble("velocity", 1d));

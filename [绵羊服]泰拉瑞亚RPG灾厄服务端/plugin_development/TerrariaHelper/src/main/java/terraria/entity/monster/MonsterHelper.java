@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.boss.event.CelestialPillar;
+import terraria.entity.boss.event.celestialPillar.CelestialPillar;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.EventAndTime;
 import terraria.util.*;
@@ -106,64 +106,64 @@ public class MonsterHelper {
             case PRE_WALL_OF_FLESH:
                 switch (playerProgress) {
                     case PRE_PLANTERA:
-                        result.healthMulti  = 4d;
-                        result.defenceMulti = 3d;
-                        result.damageMulti  = 2d;
+                        result.healthMulti  = 2d;
+                        result.defenceMulti = 2d;
+                        result.damageMulti  = 1.5d;
                         break;
                     case PRE_MOON_LORD:
-                        result.healthMulti  = 5d;
-                        result.defenceMulti = 5d;
-                        result.damageMulti  = 2.5d;
+                        result.healthMulti  = 3d;
+                        result.defenceMulti = 2.5d;
+                        result.damageMulti  = 2d;
                         break;
                     case PRE_PROFANED_GODDESS:
-                        result.healthMulti  = 7d;
-                        result.defenceMulti = 8d;
-                        result.damageMulti  = 3.5d;
+                        result.healthMulti  = 4d;
+                        result.defenceMulti = 3d;
+                        result.damageMulti  = 2.5d;
                         break;
                     case POST_PROFANED_GODDESS:
-                        result.healthMulti  = 10d;
-                        result.defenceMulti = 12.5d;
-                        result.damageMulti  = 5d;
+                        result.healthMulti  = 6d;
+                        result.defenceMulti = 4d;
+                        result.damageMulti  = 3d;
                         break;
                 }
                 break;
             case PRE_PLANTERA:
                 switch (playerProgress) {
                     case PRE_MOON_LORD:
-                        result.healthMulti  = 4d;
-                        result.defenceMulti = 3d;
-                        result.damageMulti  = 2d;
+                        result.healthMulti  = 1.5d;
+                        result.defenceMulti = 1.5d;
+                        result.damageMulti  = 1.5d;
                         break;
                     case PRE_PROFANED_GODDESS:
-                        result.healthMulti  = 5d;
-                        result.defenceMulti = 5d;
-                        result.damageMulti  = 2.5d;
+                        result.healthMulti  = 3d;
+                        result.defenceMulti = 2d;
+                        result.damageMulti  = 1.75d;
                         break;
                     case POST_PROFANED_GODDESS:
-                        result.healthMulti  = 7d;
-                        result.defenceMulti = 8d;
-                        result.damageMulti  = 3.5d;
+                        result.healthMulti  = 4.5d;
+                        result.defenceMulti = 3d;
+                        result.damageMulti  = 2.5d;
                         break;
                 }
                 break;
             case PRE_MOON_LORD:
                 switch (playerProgress) {
                     case PRE_PROFANED_GODDESS:
-                        result.healthMulti  = 3d;
-                        result.defenceMulti = 2d;
+                        result.healthMulti  = 1.75d;
+                        result.defenceMulti = 1.75d;
                         result.damageMulti  = 1.5d;
                         break;
                     case POST_PROFANED_GODDESS:
-                        result.healthMulti  = 4d;
-                        result.defenceMulti = 3d;
+                        result.healthMulti  = 2.5d;
+                        result.defenceMulti = 2.5d;
                         result.damageMulti  = 2d;
                         break;
                 }
                 break;
             case PRE_PROFANED_GODDESS:
                 if (playerProgress == PlayerHelper.GameProgress.POST_PROFANED_GODDESS) {
-                    result.healthMulti  = 4.5d;
-                    result.defenceMulti = 2.5d;
+                    result.healthMulti  = 3d;
+                    result.defenceMulti = 2d;
                     result.damageMulti  = 1.5d;
                 }
                 break;
@@ -342,6 +342,7 @@ public class MonsterHelper {
                     case "礼物宝箱怪":
                     case "神圣宝箱怪":
                     case "腐化宝箱怪":
+                    case "地狱犬":
                     case "火龙怪":
                     case "闪耀炮手":
                         break;
@@ -451,6 +452,8 @@ public class MonsterHelper {
             }
             case "腐化宝箱怪":
             case "神圣宝箱怪":
+            case "地狱犬":
+            case "火龙怪":
             {
                     bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.75);
                     break;
@@ -479,15 +482,16 @@ public class MonsterHelper {
                 ((MonsterSlime) monster).indexAI = (int) (Math.random() * 3600);
                 break;
             }
+            // minions should not actively damage those
+            case "腐化囊":
             case "???":
             {
-                // minions should not actively damage ???
                 monster.removeScoreboardTag("isMonster");
                 break;
             }
+            // this is a pseudo-projectile and should take no damage at all.
             case "星云球":
             {
-                // this is a pseudo-projectile and should take no damage at all.
                 monster.addScoreboardTag("noDamage");
                 break;
             }
@@ -1138,11 +1142,11 @@ public class MonsterHelper {
                             HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
                             switch (type) {
                                 case "巨型陆龟":
-                                    attrMap.put("damage", 576d);
+                                    attrMap.put("damage", 864d);
                                     attrMap.put("defence", 120d);
                                     break;
                                 default:
-                                    attrMap.put("damage", 396d);
+                                    attrMap.put("damage", 594d);
                                     attrMap.put("defence", 112d);
                             }
                             ((MonsterHusk) monster).defaultSpeed = 0;
@@ -1175,11 +1179,11 @@ public class MonsterHelper {
                             HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
                             switch (type) {
                                 case "巨型陆龟":
-                                    attrMap.put("damage", 320d);
+                                    attrMap.put("damage", 480d);
                                     attrMap.put("defence", 60d);
                                     break;
                                 default:
-                                    attrMap.put("damage", 220d);
+                                    attrMap.put("damage", 330d);
                                     attrMap.put("defence", 56d);
                             }
                             if (monsterBkt.isOnGround()) {
@@ -1598,11 +1602,8 @@ public class MonsterHelper {
                     if (monster.getHealth() > 0) {
                         if (indexAI == 0) {
                             if (type.equals("火月怪") ) {
-                                EntityHelper.tweakAttribute(monsterBkt, "defence", "60", true);
                                 monsterBkt.removeScoreboardTag("reflectProjectile");
                             }
-                            else
-                                EntityHelper.tweakAttribute(monsterBkt, "damage", "168", false);
                         }
                         else if (indexAI == 120) {
                             if (monsterBkt.isOnGround())
@@ -1617,12 +1618,9 @@ public class MonsterHelper {
                             if (indexAI == 135) {
                                 // init attributes etc.
                                 if (type.equals("火月怪") ) {
-                                    EntityHelper.tweakAttribute(monsterBkt, "defence", "60", false);
                                     monsterBkt.addScoreboardTag("notDamaged");
                                     monsterBkt.addScoreboardTag("reflectProjectile");
                                 }
-                                else
-                                    EntityHelper.tweakAttribute(monsterBkt, "damage", "168", true);
                                 // init speed
                                 Location tempLoc = target.getLocation();
                                 tempLoc.setY(monsterBkt.getLocation().getY());

@@ -135,6 +135,7 @@ public class AstrumDeus extends EntitySlime {
         // remove 1 from spawnAnimationIndex
         if (--spawnAnimationIndex <= 0) {
             bukkitEntity.teleport(summonedLocation);
+            Bukkit.broadcastMessage("§d§l" + BOSS_TYPE + " 苏醒了！");
         }
     }
     // AI related

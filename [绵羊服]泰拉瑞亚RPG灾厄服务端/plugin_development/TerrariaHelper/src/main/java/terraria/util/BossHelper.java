@@ -45,7 +45,9 @@ public class BossHelper {
         THE_SLIME_GOD("史莱姆之神"), WALL_OF_FLESH("血肉之墙"), QUEEN_SLIME("史莱姆皇后"), CRYOGEN("极地之灵"),
         THE_TWINS("双子魔眼"), AQUATIC_SCOURGE("渊海灾虫"), THE_DESTROYER("毁灭者"),
         BRIMSTONE_ELEMENTAL("硫磺火元素"), SKELETRON_PRIME("机械骷髅王"), CALAMITAS_CLONE("灾厄之眼"),
-        PLANTERA("世纪之花"), LEVIATHAN_AND_ANAHITA("阿娜希塔和利维坦"), ASTRUM_AUREUS("白金星舰"),
+        PLANTERA("世纪之花"), MOURNING_WOOD("哀木"), PUMPKING("南瓜王"), HEADLESS_HORSEMAN("无头骑士"),
+        EVERSCREAM("常绿尖叫怪"), SANTA_NK1("圣诞坦克"), ICE_QUEEN("冰雪女王"),
+        LEVIATHAN_AND_ANAHITA("阿娜希塔和利维坦"), ASTRUM_AUREUS("白金星舰"),
         GOLEM("石巨人"), THE_PLAGUEBRINGER_GOLIATH("瘟疫使者歌莉娅"), EMPRESS_OF_LIGHT("光之女皇"),
         DUKE_FISHRON("猪鲨公爵"), RAVAGER("毁灭魔像"), LUNATIC_CULTIST("拜月教邪教徒"), ASTRUM_DEUS("星神游龙"),
         MOON_LORD("月球领主"), PROFANED_GUARDIANS("亵渎守卫"), THE_DRAGONFOLLY("痴愚金龙"),
@@ -65,6 +67,11 @@ public class BossHelper {
                 default:
                     loc.getWorld().playSound(loc, "entity.enderdragon.growl", 10, 1);
             }
+        }
+
+        @Override
+        public String toString() {
+            return msgName;
         }
     }
     public static boolean spawnBoss(Player target, BossType bossType) {
@@ -282,7 +289,13 @@ public class BossHelper {
         }
         if (spawnedSuccessfully) {
             bossType.playSummonSound(soundLocation);
-            Bukkit.broadcastMessage("§d§l" + bossType.msgName + " 苏醒了！");
+            switch (bossType) {
+                case MOON_LORD:
+                case ASTRUM_DEUS:
+                    break;
+                default:
+                    Bukkit.broadcastMessage("§d§l" + bossType.msgName + " 苏醒了！");
+            }
         }
         return spawnedSuccessfully;
     }
