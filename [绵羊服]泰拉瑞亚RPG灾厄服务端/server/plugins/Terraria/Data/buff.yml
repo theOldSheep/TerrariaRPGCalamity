@@ -22,6 +22,18 @@ buffConflicts:
     黑曜石皮: 1
 
 effects:
+  中毒:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/1/11/Poisoned
+    isBuff: false
+    damageInterval: 10
+    damage: 1
+    tooltip: 缓慢损失生命值
+  剧毒:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/8a/Venom
+    isBuff: false
+    damageInterval: 4
+    damage: 6
+    tooltip: 在酸性毒液的腐蚀下损失生命值
   燃烧:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/dc/Frostburn
     isBuff: false
@@ -120,6 +132,60 @@ effects:
     damage: 10
     damageMonster: 25
     tooltip: 被日耀射线焚烧
+  流血:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/33/Bleeding
+    isBuff: false
+    attributes:
+      regenMulti: -1
+    tooltip: 无法再生生命
+  缓慢:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/f/f5/Slow
+    isBuff: false
+    attributes:
+      speedMulti: -0.5
+    tooltip: 移动速度降低
+  恐惧:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/0/0b/Horrified
+    isBuff: false
+    tooltip: 你已经看到污秽之物，无可逃脱。
+  破损盔甲:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/d5/Broken_Armor
+    isBuff: false
+    attributes:
+      defenceMulti: -0.5
+    tooltip: 防御力减半
+  碎甲:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/d5/Broken_Armor
+    isBuff: false
+    attributes:
+      defence: -30
+      damageTakenMulti: 0.15
+    tooltip: 你的护甲被撕裂了
+  诅咒:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/f/f0/Cursed
+    isBuff: false
+    tooltip: 无法使用任何物品
+  扭曲:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/db/Distorted
+    isBuff: false
+    tooltip: 你周围的重力是扭曲的
+  冷冻:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a6/Chilled
+    isBuff: false
+    attributes:
+      speedMulti: -0.5
+    tooltip: 你的移动速度已降低
+  冰冻:
+    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/86/Frozen
+    isBuff: false
+    attributes:
+      speed: -10
+    tooltip: 你不能动！
+  极限重力:
+    isBuff: false
+    attributes:
+      flightTimeMulti: -0.25
+    tooltip: 翅膀飞行时间减少25%
   耐药性:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/83/Potion_Sickness
     isBuff: false
@@ -300,72 +366,14 @@ effects:
     attributes:
       damageMulti: 2
     tooltip: 增加200%伤害
-  流血:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/33/Bleeding
-    isBuff: false
+  圣骑士护盾:
+    isBuff: true
+    tooltip: 代替附近的队友承受部分伤害
+  冰障:
+    isBuff: true
     attributes:
-      regenMulti: -1
-    tooltip: 无法再生生命
-  缓慢:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/f/f5/Slow
-    isBuff: false
-    attributes:
-      speedMulti: -0.5
-    tooltip: 移动速度降低
-  恐惧:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/0/0b/Horrified
-    isBuff: false
-    tooltip: 你已经看到污秽之物，无可逃脱。
-  中毒:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/1/11/Poisoned
-    isBuff: false
-    damageInterval: 10
-    damage: 1
-    tooltip: 缓慢损失生命值
-  剧毒:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/8a/Venom
-    isBuff: false
-    damageInterval: 4
-    damage: 6
-    tooltip: 在酸性毒液的腐蚀下损失生命值
-  破损盔甲:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/d5/Broken_Armor
-    isBuff: false
-    attributes:
-      defenceMulti: -0.5
-    tooltip: 防御力减半
-  碎甲:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/d5/Broken_Armor
-    isBuff: false
-    attributes:
-      defence: -30
-      damageTakenMulti: 0.15
-    tooltip: 你的护甲被撕裂了
-  诅咒:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/f/f0/Cursed
-    isBuff: false
-    tooltip: 无法使用任何物品
-  扭曲:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/db/Distorted
-    isBuff: false
-    tooltip: 你周围的重力是扭曲的
-  冷冻:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a6/Chilled
-    isBuff: false
-    attributes:
-      speedMulti: -0.5
-    tooltip: 你的移动速度已降低
-  冰冻:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/86/Frozen
-    isBuff: false
-    attributes:
-      speed: -10
-    tooltip: 你不能动！
-  极限重力:
-    isBuff: false
-    attributes:
-      flightTimeMulti: -0.25
-    tooltip: 翅膀飞行时间减少25%
+        damageTakenMulti: -0.15
+    tooltip: 所受伤害减少15%
   伤害星云:
     isBuff: true
     attributes:
