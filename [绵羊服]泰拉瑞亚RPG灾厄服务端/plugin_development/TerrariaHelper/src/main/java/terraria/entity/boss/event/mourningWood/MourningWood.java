@@ -51,8 +51,10 @@ public class MourningWood extends EntitySlime {
     }
     private void AI() {
         // no AI after death
-        if (getHealth() <= 0d)
+        if (getHealth() <= 0d) {
+            bukkitEntity.setVelocity(new Vector());
             return;
+        }
         // AI
         {
             // update target
@@ -105,8 +107,10 @@ public class MourningWood extends EntitySlime {
                 double horSpeed = HORIZONTAL_SPEED;
                 if (velLen > horSpeed)
                     velocity.multiply(horSpeed / velLen);
-                double verticalVelocity = 0.5;
-                velocity.setY(bukkitEntity.getLocation().getBlock().getType().isSolid() ? verticalVelocity : -verticalVelocity);
+                double verticalVelocity = 0.35;
+                velocity.setY(
+                        bukkitEntity.getLocation().subtract(0, verticalVelocity, 0).getBlock().getType().isSolid()
+                                ? verticalVelocity : -verticalVelocity);
                 bukkitEntity.setVelocity(velocity);
             }
 
@@ -188,7 +192,7 @@ public class MourningWood extends EntitySlime {
         EventAndTime.eventBossAmount[EVENT_BOSS_INDEX] ++;
         // shoot info
         shootInfoFlamingWood = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, new Vector(), attrMapGreekFire, EntityHelper.DamageType.MAGIC, "烈焰木");
+                bukkitEntity, new Vector(), attrMapFlamingWood, EntityHelper.DamageType.MAGIC, "烈焰木");
         shootInfoGreekFire = new EntityHelper.ProjectileShootInfo(
                 bukkitEntity, new Vector(), attrMapGreekFire, EntityHelper.DamageType.MAGIC, "希腊烈火");
     }

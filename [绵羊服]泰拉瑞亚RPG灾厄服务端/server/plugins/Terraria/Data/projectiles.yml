@@ -220,7 +220,7 @@
         - "燃烧|80|1"
     trailColor: 255|0|0
     trailSize: 0.15
-    trailStepSize: 0.5
+    trailStepSize: 0.75
 诅咒激光:
     penetration: 99999
     liveTime: 100
@@ -230,7 +230,7 @@
         - "咒火|60|1"
     trailColor: 200|255|0
     trailSize: 0.15
-    trailStepSize: 0.5
+    trailStepSize: 0.75
 电击激光:
     penetration: 99999
     liveTime: 100
@@ -240,7 +240,7 @@
         - "带电|40|1"
     trailColor: 0|255|200
     trailSize: 0.15
-    trailStepSize: 0.5
+    trailStepSize: 0.75
 咒火球:
     buffInflict:
         - "咒火|100|1"
@@ -609,10 +609,6 @@
 狱炎箭:
     isGrenade: true
     blastRadius: 2
-爆炸弹:
-    isGrenade: true
-    blastRadius: 0.75
-    blastDamageShooter: true
 玛瑙能量:
     isGrenade: true
     blastRadius: 4
@@ -631,6 +627,7 @@
     isGrenade: true
     blastRadius: 2.5
 集束破片:
+    noGravityTicks: 0
     isGrenade: true
     blastRadius: 1.25
     blastDamageShooter: true
@@ -670,19 +667,19 @@
 红烟花火箭:
     gravity: 0
     isGrenade: true
-    blastRadius: 8
+    blastRadius: 5
 绿烟花火箭:
     gravity: 0
     isGrenade: true
-    blastRadius: 8
+    blastRadius: 5
 蓝烟花火箭:
     gravity: 0
     isGrenade: true
-    blastRadius: 8
+    blastRadius: 5
 黄烟花火箭:
     gravity: 0
     isGrenade: true
-    blastRadius: 8
+    blastRadius: 5
 初级榴弹:
     noGravityTicks: 0
     isGrenade: true
@@ -791,23 +788,40 @@
     blockHitAction: stick
     buffInflict:
         - "燃烧|200|1"
-诅咒箭:
-    buffInflict:
-        - "咒火|140|1"
-毒液箭:
-    buffInflict:
-        - "剧毒|200|1"
+尖刺球:
+    penetration: 999999
+    noGravityTicks: 0
+    projectileSize: 0.5
+    blockHitAction: bounce
+    bounce: 999999
 寒霜碎块:
     buffInflict:
         - "冷冻|150|0.67"
-寒霜波:
-    buffInflict:
-        - "冷冻|150|1"
-        - "冰冻|100|0.1654"
 破晓之光:
+    projectileSize: 1
     buffInflict:
         - "破晓|800|1"
+火枪子弹:
+    gravity: 0
+诅咒弹:
+    gravity: 0
+    buffInflict:
+        - "咒火|140|1"
+毒液弹:
+    gravity: 0
+    buffInflict:
+        - "剧毒|200|1"
+绿藻弹:
+    gravity: 0
+    autoTrace: true
+    autoTraceAbility: 10.0
+爆炸弹:
+    gravity: 0
+    isGrenade: true
+    blastRadius: 0.75
+    blastDamageShooter: true
 水晶子弹:
+    gravity: 0
     clusterBomb:
         amount: 4
         name: 水晶碎块
@@ -909,12 +923,6 @@
     liveTime: 20
     blockHitAction: thru
     trailColor: 25|200|225
-诅咒弹:
-    buffInflict:
-        - "咒火|140|1"
-毒液弹:
-    buffInflict:
-        - "剧毒|200|1"
 小火花:
     buffInflict:
         - "燃烧|100|0.3"
@@ -937,11 +945,14 @@
     buffInflict:
         - "中毒|300|1"
         - "剧毒|300|0.33"
-绿藻弹:
-    autoTrace: true
-    autoTraceAbility: 10.0
 彩虹水晶:
     autoTrace: true
+诅咒箭:
+    buffInflict:
+        - "咒火|140|1"
+毒液箭:
+    buffInflict:
+        - "剧毒|200|1"
 幻象箭:
     autoTrace: true
 红自导能源箭:

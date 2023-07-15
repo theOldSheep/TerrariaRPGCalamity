@@ -18,6 +18,7 @@ terraria\entity\boss\event\celestialPillar\CelestialPillar$PillarTypes.class
 terraria\entity\boss\skeletron\SkeletronHead.class
 terraria\worldgen\overworld\OverworldCaveGenerator.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHead$1.class
+terraria\entity\boss\event\iceQueen\IceQueen.class
 terraria\util\ItemHelper$1.class
 terraria\util\BossHelper$BossType.class
 terraria\entity\boss\event\mourningWood\MourningWood.class
@@ -56,6 +57,7 @@ terraria\entity\boss\moonLord\MoonLordEye.class
 terraria\util\WorldHelper$1.class
 terraria\entity\boss\kingSlime\CrownJewel.class
 terraria\entity\boss\event\celestialPillar\CelestialPillar.class
+terraria\entity\boss\event\iceQueen\FrostWave.class
 terraria\entity\npc\TerrariaNPCBlockSeller.class
 terraria\entity\others\TerrariaEntityPlayer.class
 terraria\entity\boss\moonLord\MoonLordPhantasmalBolt.class
@@ -189,6 +191,7 @@ terraria\entity\boss\theTwins\Retinazer.class
 terraria\entity\boss\astrumAureus\AstrumAureus.class
 terraria\util\ItemHelper.class
 terraria\entity\boss\theDestroyer\Destroyer.class
+terraria\entity\boss\event\santaNK1\SantaNK1.class
 terraria\entity\boss\moonLord\MoonLordTrueEyeOfCthulhu$1.class
 terraria\entity\projectile\TerrariaFlail.class
 terraria\entity\npc\TerrariaNPC.class
@@ -216,6 +219,7 @@ terraria\gameplay\EventAndTime$1.class
 terraria\worldgen\overworld\TreePopulator.class
 terraria\entity\boss\moonLord\MoonLordTrueEyeOfCthulhu.class
 terraria\worldgen\Interpolate.class
+terraria\entity\boss\event\everscream\Everscream.class
 terraria\entity\boss\lunaticCultist\LunaticCultistClone.class
 terraria\entity\minion\MinionCaveSpider.class
 terraria\entity\CustomEntities.class

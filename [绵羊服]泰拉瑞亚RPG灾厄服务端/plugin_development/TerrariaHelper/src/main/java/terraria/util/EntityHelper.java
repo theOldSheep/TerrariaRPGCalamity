@@ -856,7 +856,7 @@ public class EntityHelper {
         switch (nameV) {
             case "史莱姆王": {
                 if (dPly instanceof Player) {
-                    MonsterHelper.spawnMob(Math.random() < 0.2 ? "尖刺史莱姆" : "史莱姆",
+                    MonsterHelper.spawnMob(Math.random() < 0.1 ? "尖刺史莱姆" : "史莱姆",
                             victim.getLocation(), (Player) dPly);
                 }
                 break;

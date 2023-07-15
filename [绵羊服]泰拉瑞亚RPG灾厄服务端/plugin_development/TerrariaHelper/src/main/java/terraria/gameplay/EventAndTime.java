@@ -14,9 +14,12 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.event.celestialPillar.CelestialPillar;
+import terraria.entity.boss.event.everscream.Everscream;
 import terraria.entity.boss.event.headlessHorseman.HeadlessHorseman;
+import terraria.entity.boss.event.iceQueen.IceQueen;
 import terraria.entity.boss.event.mourningWood.MourningWood;
 import terraria.entity.boss.event.pumpking.PumpkingHead;
+import terraria.entity.boss.event.santaNK1.SantaNK1;
 import terraria.util.*;
 
 import java.util.ArrayList;
@@ -181,17 +184,19 @@ public class EventAndTime {
                 tickFallenStars(surfaceWorld);
         }, 0, 3);
     }
+    public static void destroyAllFallenStars() {
+        if (fallenStars.size() > 0) {
+            for (Entity entity : fallenStars) {
+                entity.removeScoreboardTag("isFallenStar");
+                entity.remove();
+            }
+            fallenStars.clear();
+        }
+    }
     protected static void tickFallenStars(World surfaceWorld) {
         // clear stars at day
         if (WorldHelper.isDayTime( surfaceWorld ) ) {
-            if (fallenStars.size() > 0) {
-                for (int i = 0; i < fallenStars.size(); i ++) {
-                    Entity entity = fallenStars.get(i);
-                    entity.removeScoreboardTag("isFallenStar");
-                    entity.remove();
-                }
-                fallenStars.clear();
-            }
+            destroyAllFallenStars();
         }
         // randomly spawn star at night
         else {
@@ -442,7 +447,7 @@ public class EventAndTime {
                     // first boss
                     case 0: {
                         if (currentEvent == Events.FROST_MOON) {
-
+                            new Everscream(targetPly);
                         }
                         else {
                             new MourningWood(targetPly);
@@ -452,7 +457,7 @@ public class EventAndTime {
                     // second boss
                     case 1: {
                         if (currentEvent == Events.FROST_MOON) {
-
+                            new SantaNK1(targetPly);
                         }
                         else {
                             new PumpkingHead(targetPly);
@@ -462,7 +467,7 @@ public class EventAndTime {
                     // third boss
                     case 2: {
                         if (currentEvent == Events.FROST_MOON) {
-
+                            new IceQueen(targetPly);
                         }
                         else {
                             new HeadlessHorseman(targetPly);

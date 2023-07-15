@@ -21,11 +21,15 @@ import terraria.entity.boss.dukeFishron.Sharkron;
 import terraria.entity.boss.dukeFishron.WaterBlob;
 import terraria.entity.boss.empressOfLight.EmpressOfLight;
 import terraria.entity.boss.event.celestialPillar.CelestialPillar;
+import terraria.entity.boss.event.everscream.Everscream;
 import terraria.entity.boss.event.headlessHorseman.HeadlessHorseman;
+import terraria.entity.boss.event.iceQueen.FrostWave;
+import terraria.entity.boss.event.iceQueen.IceQueen;
 import terraria.entity.boss.event.mourningWood.MourningWood;
 import terraria.entity.boss.event.pumpking.PumpkingHand;
 import terraria.entity.boss.event.pumpking.PumpkingHead;
 import terraria.entity.boss.event.pumpking.PumpkingScythe;
+import terraria.entity.boss.event.santaNK1.SantaNK1;
 import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
 import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
 import terraria.entity.boss.desertScourge.DesertNuisance;
@@ -107,6 +111,7 @@ public enum CustomEntities {
     BOSS_EOC                ("EyeOfCthulhu",           55,  EntityType.SLIME,           EntitySlime.class,           EyeOfCthulhu.class),
     BOSS_EOL                ("EmpressOfLight",         55,  EntityType.SLIME,           EntitySlime.class,           EmpressOfLight.class),
     BOSS_EOW                ("EaterOfWorlds",          55,  EntityType.SLIME,           EntitySlime.class,           EaterOfWorld.class),
+    BOSS_EVERSCREAM         ("Everscream",             55,  EntityType.SLIME,           EntitySlime.class,           Everscream.class),
     BOSS_GOLEM              ("Golem",                  55,  EntityType.SLIME,           EntitySlime.class,           Golem.class),
     BOSS_GOLEM_HEAD         ("GolemHead",              55,  EntityType.SLIME,           EntitySlime.class,           GolemHead.class),
     BOSS_GOLEM_FIST         ("GolemFist",              55,  EntityType.SLIME,           EntitySlime.class,           GolemFist.class),
@@ -115,6 +120,8 @@ public enum CustomEntities {
     BOSS_HVM                ("TheHiveMind",            55,  EntityType.SLIME,           EntitySlime.class,           TheHiveMind.class),
     BOSS_HVM_BLOB           ("HiveBlob",               55,  EntityType.SLIME,           EntitySlime.class,           HiveBlob.class),
     BOSS_HVM_HEART          ("DarkHeart",              55,  EntityType.SLIME,           EntitySlime.class,           DarkHeart.class),
+    BOSS_ICE_QUEEN          ("IceQueen",               55,  EntityType.SLIME,           EntitySlime.class,           IceQueen.class),
+    BOSS_ICE_QUEEN__WAVE    ("FrostWave",              55,  EntityType.SLIME,           EntitySlime.class,           FrostWave.class),
     BOSS_KSLM               ("KingSlime",              55,  EntityType.SLIME,           EntitySlime.class,           KingSlime.class),
     BOSS_KSLM_JEWEL         ("CrownJewel",             55,  EntityType.SLIME,           EntitySlime.class,           CrownJewel.class),
     BOSS_MNLD               ("MoonLord",               55,  EntityType.SLIME,           EntitySlime.class,           MoonLord.class),
@@ -139,6 +146,7 @@ public enum CustomEntities {
     BOSS_RVG_LEG            ("RavagerLeg",             55,  EntityType.SLIME,           EntitySlime.class,           RavagerLeg.class),
     BOSS_RVG_NUKE           ("RavagerNuke",            55,  EntityType.SLIME,           EntitySlime.class,           RavagerNuke.class),
     BOSS_RVG_PILLAR         ("RavagerRockPillar",      55,  EntityType.SLIME,           EntitySlime.class,           RavagerRockPillar.class),
+    BOSS_SANTA_NK1          ("SantaNK1",               55,  EntityType.SLIME,           EntitySlime.class,           SantaNK1.class),
     BOSS_SKLT               ("Skeletron",              55,  EntityType.SLIME,           EntitySlime.class,           SkeletronHead.class),
     BOSS_SKLT_HAND          ("SkeletronHand",          55,  EntityType.SLIME,           EntitySlime.class,           SkeletronHand.class),
     BOSS_SKLTPM             ("SkeletronPrime",         55,  EntityType.SLIME,           EntitySlime.class,           SkeletronPrimeHead.class),

@@ -1,4 +1,4 @@
-package terraria.entity.boss.event.pumpking;
+package terraria.entity.boss.event.iceQueen;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
@@ -18,13 +18,13 @@ import terraria.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PumpkingHead extends EntitySlime {
+public class IceQueen extends EntitySlime {
     // basic variables
-    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.PUMPKING;
+    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.ICE_QUEEN;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 43095 * 2;
+    public static final double BASIC_HEALTH = 56355 * 2;
     public static final boolean IGNORE_DISTANCE = false;
-    public static final int EVENT_BOSS_INDEX = 1;
+    public static final int EVENT_BOSS_INDEX = 2;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
     ArrayList<LivingEntity> bossParts;
@@ -32,23 +32,12 @@ public class PumpkingHead extends EntitySlime {
     Player target = null;
     // other variables and AI
     int indexAI = 0;
-    static HashMap<String, Double> flame_attrMap;
+    static HashMap<String, Double> attrMapFrostShard;
+    EntityHelper.ProjectileShootInfo shootInfoFrostShard;
     static {
-        flame_attrMap = new HashMap<>();
-        flame_attrMap.put("damage", 480d);
-        flame_attrMap.put("damageMulti", 1d);
-    }
-    private void shootFlame() {
-        if (target == null) return;
-        Location targetLoc = target.getEyeLocation().add(
-                Math.random() * 12 - 6,
-                Math.random() * 12 - 6,
-                Math.random() * 12 - 6);
-        Vector velocity = MathHelper.getDirection(
-                ((LivingEntity) bukkitEntity).getEyeLocation(), targetLoc, 0.35 );
-        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, velocity, flame_attrMap, EntityHelper.DamageType.MAGIC, "希腊烈火");
-        EntityHelper.spawnProjectile(shootInfo);
+        attrMapFrostShard = new HashMap<>();
+        attrMapFrostShard.put("damage", 444d);
+        attrMapFrostShard.put("knockback", 1d);
     }
     private void AI() {
         // no AI after death
@@ -61,7 +50,7 @@ public class PumpkingHead extends EntitySlime {
             // update target
             target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
                     IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
-            if (EventAndTime.currentEvent != EventAndTime.Events.PUMPKIN_MOON)
+            if (EventAndTime.currentEvent != EventAndTime.Events.FROST_MOON)
                 target = null;
             // disappear if no target is available
             if (target == null) {
@@ -73,28 +62,44 @@ public class PumpkingHead extends EntitySlime {
             }
             // AI
 
-            // move
-            Vector vHead = target.getLocation().add(0, 8, 0).subtract(bukkitEntity.getLocation()).toVector();
-            vHead.multiply(1d / 25);
-            bukkitEntity.setVelocity(vHead);
-            // < 180: hand sweeping phase
-            // < 245: shoot scythe phase
-            // < 300: flame phase
-            if (indexAI == 180) {
-                setCustomName(BOSS_TYPE.msgName + "§1");
+            // frost waves
+            if (indexAI < 100) {
+                Vector direction = MathHelper.getDirection(
+                        bukkitEntity.getLocation(), target.getLocation().add(0, 15, 0), 1 );
+                bukkitEntity.setVelocity(direction);
+                if (indexAI % 15 == 0) {
+                    new FrostWave(target, ((LivingEntity) bukkitEntity).getEyeLocation() );
+                }
             }
-            else if (indexAI == 245) {
-                setCustomName(BOSS_TYPE.msgName + "§2");
+            // ice shard from above
+            else if (indexAI < 180) {
+                Vector direction = target.getLocation().add(0, 15, 0).subtract(bukkitEntity.getLocation()).toVector();
+                direction.multiply(1d / 3);
+                bukkitEntity.setVelocity(direction);
+                if (indexAI % 4 == 0) {
+                    shootInfoFrostShard.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                    shootInfoFrostShard.velocity = new Vector(0, -0.75, 0);
+                    EntityHelper.spawnProjectile(shootInfoFrostShard)
+                            .setGlowing(true);
+                }
             }
-            else if (indexAI == 300) {
-                setCustomName(BOSS_TYPE.msgName);
-                indexAI = -1;
-            }
-            else if (indexAI > 245) {
-                shootFlame();
+            // ice shard
+            else {
+                bukkitEntity.setVelocity(new Vector(0, 0, 0));
+                if (indexAI % 2 == 0) {
+                    shootInfoFrostShard.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                    Location targetLoc = target.getEyeLocation().add(
+                            Math.random() * 8 - 4,
+                            Math.random() * 8 - 4,
+                            Math.random() * 8 - 4);
+                    shootInfoFrostShard.velocity = MathHelper.getDirection(shootInfoFrostShard.shootLoc,
+                            targetLoc, 1.4);
+                    EntityHelper.spawnProjectile(shootInfoFrostShard)
+                            .setGlowing(true);
+                }
             }
 
-            indexAI++;
+            indexAI = (indexAI + 1) % 260;
         }
         // face the player
         this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
@@ -102,12 +107,12 @@ public class PumpkingHead extends EntitySlime {
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
-    public PumpkingHead(World world) {
+    public IceQueen(World world) {
         super(world);
         super.die();
     }
     // a constructor for actual spawning
-    public PumpkingHead(Player summonedPlayer) {
+    public IceQueen(Player summonedPlayer) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // send spawn message
         Bukkit.broadcastMessage("§d§l" + BOSS_TYPE + " 苏醒了！");
@@ -125,7 +130,7 @@ public class PumpkingHead extends EntitySlime {
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.SPAWN_IN_EVENT, EventAndTime.Events.PUMPKIN_MOON);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.SPAWN_IN_EVENT, EventAndTime.Events.FROST_MOON);
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.KILL_CONTRIBUTE_EVENT_PROGRESS, 375d);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
@@ -133,8 +138,8 @@ public class PumpkingHead extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 224d);
-            attrMap.put("defence", 80d);
+            attrMap.put("damage", 540d);
+            attrMap.put("defence", 76d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
@@ -153,7 +158,7 @@ public class PumpkingHead extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(8, false);
+            setSize(7, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
@@ -168,12 +173,11 @@ public class PumpkingHead extends EntitySlime {
             this.setNoGravity(true);
             this.persistent = true;
         }
-        // spawn hands
-        for (int i = 0; i < 2; i ++) {
-            new PumpkingHand(target, bossParts, this, i);
-        }
         // add boss counter
         EventAndTime.eventBossAmount[EVENT_BOSS_INDEX] ++;
+        // shoot info
+        shootInfoFrostShard = new EntityHelper.ProjectileShootInfo(
+                bukkitEntity, new Vector(), attrMapFrostShard, EntityHelper.DamageType.ARROW, "寒霜碎块");
     }
 
     // disable death function to remove boss bar
@@ -192,22 +196,14 @@ public class PumpkingHead extends EntitySlime {
             // drop one of special items
             double chance = EventAndTime.getWaveEventBossDropRate();
             if (Math.random() < chance) {
-                if (Math.random() < 1d/5) {
-                    ItemHelper.dropItem(bukkitEntity.getLocation(), "无头骑士剑");
-                }
-                else if (Math.random() < 1d/4) {
-                    ItemHelper.dropItem(bukkitEntity.getLocation(), "玉米糖步枪");
-                    ItemHelper.dropItem(bukkitEntity.getLocation(), "玉米糖:50:100");
-                }
-                else if (Math.random() < 1d/3) {
-                    ItemHelper.dropItem(bukkitEntity.getLocation(), "杰克南瓜灯发射器");
-                    ItemHelper.dropItem(bukkitEntity.getLocation(), "爆炸杰克南瓜灯:25:50");
+                if (Math.random() < 1d/3) {
+                    ItemHelper.dropItem(bukkitEntity.getLocation(), "北极");
                 }
                 else if (Math.random() < 1d/2) {
-                    ItemHelper.dropItem(bukkitEntity.getLocation(), "蝙蝠权杖");
+                    ItemHelper.dropItem(bukkitEntity.getLocation(), "雪人炮");
                 }
                 else {
-                    ItemHelper.dropItem(bukkitEntity.getLocation(), "暗黑收割");
+                    ItemHelper.dropItem(bukkitEntity.getLocation(), "暴雪法杖");
                 }
             }
             // send death message
