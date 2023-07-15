@@ -635,24 +635,29 @@
     blastRadius: 1.25
     blastDamageShooter: true
 初级雪人火箭:
+    gravity: 0
     autoTrace: true
     blastRadius: 2.25
     blastDamageShooter: true
 二级雪人火箭:
+    gravity: 0
     autoTrace: true
     blastRadius: 2.75
     blastDamageShooter: true
     blastDestroyBlock: true
 三级雪人火箭:
+    gravity: 0
     autoTrace: true
     blastRadius: 3.25
     blastDamageShooter: true
 四级雪人火箭:
+    gravity: 0
     autoTrace: true
     blastRadius: 3.5
     blastDamageShooter: true
     blastDestroyBlock: true
 集束雪人火箭:
+    gravity: 0
     autoTrace: true
     clusterBomb:
         amount: 5
@@ -663,36 +668,45 @@
     blastRadius: 2
     blastDamageShooter: true
 红烟花火箭:
+    gravity: 0
     isGrenade: true
     blastRadius: 8
 绿烟花火箭:
+    gravity: 0
     isGrenade: true
     blastRadius: 8
 蓝烟花火箭:
+    gravity: 0
     isGrenade: true
     blastRadius: 8
 黄烟花火箭:
+    gravity: 0
     isGrenade: true
     blastRadius: 8
 初级榴弹:
+    noGravityTicks: 0
     isGrenade: true
     blastRadius: 2.5
     blastDamageShooter: true
 二级榴弹:
+    noGravityTicks: 0
     isGrenade: true
     blastRadius: 2.9
     blastDamageShooter: true
     blastDestroyBlock: true
 三级榴弹:
+    noGravityTicks: 0
     isGrenade: true
     blastRadius: 3.6
     blastDamageShooter: true
 四级榴弹:
+    noGravityTicks: 0
     isGrenade: true
     blastRadius: 4.25
     blastDamageShooter: true
     blastDestroyBlock: true
 集束榴弹:
+    noGravityTicks: 0
     clusterBomb:
         amount: 5
         name: 集束破片
