@@ -16,7 +16,7 @@ public class ServerStopListener implements Listener {
         EventAndTime.destroyAllFallenStars();
         // save player inventories and kick players
         for (Player ply : Bukkit.getOnlinePlayers()) {
-            PlayerHelper.saveInventories(ply);
+            PlayerHelper.saveData(ply);
             ply.kickPlayer("服务器已关闭！");
         }
     }

@@ -12,6 +12,6 @@ public class PlayerQuitListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onQuit(PlayerQuitEvent e) {
         Player ply = e.getPlayer();
-        PlayerHelper.saveInventories(ply);
+        PlayerHelper.saveData(ply);
     }
 }

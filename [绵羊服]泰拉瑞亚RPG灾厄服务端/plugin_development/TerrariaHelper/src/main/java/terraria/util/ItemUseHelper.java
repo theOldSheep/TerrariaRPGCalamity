@@ -198,7 +198,7 @@ public class ItemUseHelper {
             if (allEffects.containsKey(effectSuperior)) return false;
         return true;
     }
-    protected static boolean playerUsePotion(Player ply, String itemType, ItemStack potion, QuickBuffType consumptionInfo) {
+    protected static boolean playerUsePotion(Player ply, String itemType, ItemStack potion, QuickBuffType quickBuffType) {
         // to prevent vanilla items being regarded as a proper potion and consumed.
         if (itemType.length() == 0) return false;
         // potion can not be consumed when cursed.
@@ -206,17 +206,21 @@ public class ItemUseHelper {
         boolean successful = false;
         switch (itemType) {
             case "回城药水": {
-                ply.teleport(PlayerHelper.getSpawnLocation(ply));
-                successful = true;
+                if (quickBuffType == QuickBuffType.NONE) {
+                    ply.teleport(PlayerHelper.getSpawnLocation(ply));
+                    successful = true;
+                }
                 break;
             }
             case "虫洞药水": {
-                if (!ply.getScoreboardTags().contains("wormHole")) {
-                    ply.sendMessage("§a请输入您想传送的玩家名称发送传送请求哦~");
-                    successful = true;
-                } else {
-
-                    ply.sendMessage("§a您上次服用的虫洞药水还未生效哦~");
+                if (quickBuffType == QuickBuffType.NONE) {
+                    if (!ply.getScoreboardTags().contains("wormHolePotionUsed")) {
+                        ply.sendMessage("§a请输入\"传送到 (您想传送的玩家名称)\"发送传送请求哦~");
+                        ply.addScoreboardTag("wormHolePotionUsed");
+                        successful = true;
+                    } else {
+                        ply.sendMessage("§a您上次服用的虫洞药水还未生效哦~");
+                    }
                 }
                 break;
             }
@@ -229,8 +233,8 @@ public class ItemUseHelper {
                     for (String node : potionConfig.getKeys(false)) {
                         buffsProvided.put(node, potionConfig.getDouble(node, 20d));
                     }
-                    // determine if the potion can be used here
-                    switch (consumptionInfo) {
+                    // determine if the potion can be used here when player demands to use a
+                    switch (quickBuffType) {
                         case NONE:
                             successful = true;
                             break;
@@ -259,11 +263,78 @@ public class ItemUseHelper {
                     // health potions are not supposed to be used if potion sickness debuff is active
                     if (buffsProvided.containsKey("health") && EntityHelper.hasEffect(ply, "耐药性"))
                         successful = false;
+                    // items that provides permanent max health can only be used in a certain order
+                    if (buffsProvided.containsKey("maxHealth") ) {
+                        int currTier = PlayerHelper.getPlayerHealthTier(ply);
+                        switch (itemType) {
+                            case "生命水晶":
+                                successful = currTier < 20;
+                                break;
+                            case "生命果":
+                                successful = currTier < 40 && currTier >= 20;
+                                break;
+                            case "血橙":
+                                successful = currTier == 40;
+                                break;
+                            case "奇迹之果":
+                                successful = currTier == 41;
+                                break;
+                            case "旧神浆果":
+                                successful = currTier == 42;
+                                break;
+                            case "龙果":
+                                successful = currTier == 43;
+                                break;
+                            default:
+                                successful = false;
+                        }
+                    }
+                    // items that provides permanent max mana can only be used in a certain order
+                    if (buffsProvided.containsKey("maxMana") ) {
+                        int currTier = PlayerHelper.getPlayerManaTier(ply);
+                        switch (itemType) {
+                            case "魔力星":
+                            case "附魔星鱼":
+                                successful = currTier < 10;
+                                break;
+                            case "彗星碎片":
+                                successful = currTier == 10;
+                                break;
+                            case "飘渺之核":
+                                successful = currTier == 11;
+                                break;
+                            case "幻影之心":
+                                successful = currTier == 12;
+                                break;
+                            default:
+                                successful = false;
+                        }
+                    }
                     // if the potion can be used, apply health/mana/buff
                     if (successful) {
                         for (String potionInfo: buffsProvided.keySet()) {
                             double potionPotency = buffsProvided.get(potionInfo);
                             switch (potionInfo) {
+                                // if the item permanently increases max health
+                                case "maxHealth": {
+                                    applyCD(ply, 15);
+                                    // permanently increase max health
+                                    EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_HEALTH_TIER,
+                                            PlayerHelper.getPlayerHealthTier(ply) + 1);
+                                    PlayerHelper.setupAttribute(ply);
+                                    PlayerHelper.heal(ply, potionPotency);
+                                    break;
+                                }
+                                // if the item permanently increases max mana
+                                case "maxMana": {
+                                    applyCD(ply, 15);
+                                    // permanently increase max mana
+                                    EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_TIER,
+                                            PlayerHelper.getPlayerManaTier(ply) + 1);
+                                    PlayerHelper.setupAttribute(ply);
+                                    PlayerHelper.restoreMana(ply, potionPotency);
+                                    break;
+                                }
                                 // if the potion has healing ability
                                 case "health": {
                                     PlayerHelper.heal(ply, potionPotency);
@@ -300,7 +371,7 @@ public class ItemUseHelper {
                 sound = "entity.generic.eat";
             ply.getWorld().playSound(ply.getEyeLocation(), sound, 1, 1);
             // potion use cool down if the potion is being drank manually etc.
-            if (consumptionInfo == QuickBuffType.NONE)
+            if (quickBuffType == QuickBuffType.NONE)
                 applyCD(ply, 10);
         }
         return successful;

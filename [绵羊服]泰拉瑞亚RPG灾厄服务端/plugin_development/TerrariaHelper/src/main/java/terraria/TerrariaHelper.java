@@ -4,6 +4,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.PlaceholderHook;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import terraria.entity.CustomEntities;
 import terraria.event.listener.*;
@@ -127,9 +128,9 @@ public class TerrariaHelper extends JavaPlugin {
                     case "max_mana":
                         return (int)Math.round(attrMap.getOrDefault("maxMana", 20d)) + "";
                     case "mana_tier":
-                        return (int)Math.round(attrMap.getOrDefault("manaTier", 1d)) + "";
+                        return PlayerHelper.getPlayerManaTier(ply) + "";
                     case "health_tier":
-                        return (int)Math.round(attrMap.getOrDefault("healthTier", 5d)) + "";
+                        return PlayerHelper.getPlayerHealthTier(ply) + "";
                     case "accessory_amount": {
                         return PlayerHelper.getAccessoryAmount(ply) + "";
                     }
@@ -150,11 +151,10 @@ public class TerrariaHelper extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new EntitySpawnListener(), this);
         Bukkit.getPluginManager().registerEvents(new ItemUseAndAttributeListener(), this);
         Bukkit.getPluginManager().registerEvents(new NPCListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerKeyToggleListener(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerMovementListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerWorldChangeListener(), this);
         Bukkit.getPluginManager().registerEvents(new RandomTitleListener(), this);
         Bukkit.getPluginManager().registerEvents(new ServerStopListener(), this);
         Bukkit.getPluginManager().registerEvents(new VanillaMechanicListener(), this);

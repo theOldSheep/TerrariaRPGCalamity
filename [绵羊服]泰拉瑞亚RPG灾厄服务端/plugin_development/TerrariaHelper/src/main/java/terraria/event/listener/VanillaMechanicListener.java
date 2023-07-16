@@ -12,10 +12,15 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
+import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.projectiles.ProjectileSource;
+import terraria.TerrariaHelper;
 import terraria.entity.others.TerrariaFishingHook;
 import terraria.util.EntityHelper;
+import terraria.util.PlayerHelper;
 
 import java.util.Set;
 
@@ -31,10 +36,42 @@ public class VanillaMechanicListener implements Listener {
     public void onEat(PlayerItemConsumeEvent evt) {
         evt.setCancelled(true);
     }
-
+    @EventHandler(priority = EventPriority.NORMAL)
+    public static void onSprint(PlayerToggleSprintEvent e) {
+        e.setCancelled(true);
+    }
+    @EventHandler(priority = EventPriority.NORMAL)
+    public static void onTeleport(PlayerTeleportEvent e) {
+        switch (e.getCause()) {
+            case END_PORTAL:
+            case NETHER_PORTAL:
+            case END_GATEWAY:
+            case SPECTATE:
+                e.setCancelled(true);
+        }
+    }
     @EventHandler(priority = EventPriority.LOW)
     public void onSleep(PlayerBedEnterEvent evt) {
         evt.setCancelled(true);
+    }
+    @EventHandler(priority = EventPriority.LOW)
+    public void onWorldChange(PlayerTeleportEvent e) {
+        if (e.getFrom().getWorld().equals(e.getTo().getWorld())) return;
+        // prevent the player from entering vanilla worlds
+        String destinationWorldName = e.getTo().getWorld().getName();
+        if (! ( destinationWorldName.equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE) ||
+                destinationWorldName.equals(TerrariaHelper.Constants.WORLD_NAME_CAVERN) ||
+                destinationWorldName.equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD))) {
+            e.setCancelled(true);
+            return;
+        }
+        // reset player stats after world change
+        PlayerHelper.initPlayerStats(e.getPlayer(), true);
+    }
+    // stop any portal from forming
+    @EventHandler(priority = EventPriority.LOW)
+    public void onPortalForm(PortalCreateEvent e) {
+        e.setCancelled(false);
     }
 
     @EventHandler(priority = EventPriority.LOW)

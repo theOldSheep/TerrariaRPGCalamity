@@ -289,7 +289,6 @@ public class EventAndTime {
                 prepareReservedEvent();
                 break;
             }
-            // TODO
             // frost/pumpkin moon, spawn boss
             case FROST_MOON:
             case PUMPKIN_MOON: {
@@ -318,7 +317,6 @@ public class EventAndTime {
         }
     }
 
-    // TODO
     protected static void prepareReservedEvent() {
         if (reservedEvent == Events.NONE)
             return;

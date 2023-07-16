@@ -7,7 +7,6 @@ terraria\entity\boss\lunaticCultist\LunaticIceMist.class
 terraria\entity\npc\TerrariaNPCClothier.class
 terraria\entity\boss\ravager\RavagerLeg.class
 terraria\entity\monster\MonsterZombie.class
-terraria\event\listener\PlayerMovementListener$1.class
 terraria\entity\boss\cryogen\Cryogen.class
 terraria\entity\boss\ravager\RavagerClaw.class
 terraria\entity\boss\BossHelper$1.class
@@ -39,7 +38,6 @@ terraria\entity\boss\theHiveMind\TheHiveMind.class
 terraria\entity\monster\MonsterWitherSkeleton.class
 terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
 terraria\entity\boss\kingSlime\KingSlime.class
-terraria\event\listener\PlayerMovementListener.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
 terraria\event\TerrariaProjectileHitEvent.class
 terraria\entity\boss\moonLord\MoonLordEye$MoonLordEyeLocation.class
@@ -127,7 +125,6 @@ terraria\util\EntityHelper$1.class
 terraria\entity\boss\theSlimeGod\EbonianSlime$SlimeSize.class
 terraria\event\listener\WorldRegisterListener.class
 terraria\entity\boss\dukeFishron\DukeFishron$1.class
-terraria\event\listener\PlayerWorldChangeListener.class
 terraria\entity\npc\TerrariaNPCGuide.class
 terraria\entity\others\TerrariaFishingHook$1.class
 terraria\util\NMSUtils$Biome.class
@@ -161,6 +158,7 @@ terraria\entity\boss\astrumAureus\AureusSpawn.class
 terraria\entity\boss\brimstoneElemental\BrimstoneElemental.class
 terraria\util\NMSUtils$MobMeta.class
 terraria\entity\boss\calamitasClone\CalamitasDummyPlayer.class
+terraria\event\listener\PlayerChatListener.class
 terraria\entity\npc\TerrariaNPCArmsDealer.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHead$PhaseAI.class
 terraria\entity\boss\theSlimeGod\EbonianSlime$1.class

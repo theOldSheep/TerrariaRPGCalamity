@@ -71,7 +71,6 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("fishingPower", 0d);
         defaultPlayerAttrMap.put("flightTimeMulti", 1d);
         defaultPlayerAttrMap.put("healthMulti", 1d);
-        defaultPlayerAttrMap.put("healthTier", 5d);
         defaultPlayerAttrMap.put("invulnerabilityTick", 10d);
         defaultPlayerAttrMap.put("knockback", 0d);
         defaultPlayerAttrMap.put("knockbackResistance", 0d);
@@ -81,7 +80,6 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("manaRegenMulti", 1d);
         defaultPlayerAttrMap.put("manaUse", 0d);
         defaultPlayerAttrMap.put("manaUseMulti", 1d);
-        defaultPlayerAttrMap.put("manaTier", 1d);
         defaultPlayerAttrMap.put("maxHealth", 200d);
         defaultPlayerAttrMap.put("maxHealthMulti", 1d);
         defaultPlayerAttrMap.put("maxMana", 20d);
@@ -108,11 +106,6 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("useSpeedMulti", 1d);
         defaultPlayerAttrMap.put("useSpeedRangedMulti", 1d);
         defaultPlayerAttrMap.put("useTime", 0d);
-        // test!
-        defaultPlayerAttrMap.put("maxHealth", 1200d);
-        defaultPlayerAttrMap.put("maxMana", 350d);
-        defaultPlayerAttrMap.put("healthTier", 44d);
-        defaultPlayerAttrMap.put("manaTier", 13d);
         // init default player buff inflict map
         defaultPlayerEffectInflict.add("buffInflict");
         defaultPlayerEffectInflict.add("buffInflictMagic");
@@ -213,6 +206,8 @@ public class PlayerHelper {
     }
     public static GameProgress getGameProgress(Player player) {
         ConfigurationSection bossDefeatedSection = getPlayerDataFile(player).getConfigurationSection("bossDefeated");
+        if (bossDefeatedSection == null)
+            return GameProgress.PRE_WALL_OF_FLESH;
         if (bossDefeatedSection.getBoolean("亵渎天神", false))
             return GameProgress.POST_PROFANED_GODDESS;
         if (bossDefeatedSection.getBoolean("月球领主", false))
@@ -249,9 +244,9 @@ public class PlayerHelper {
             case "月球领主":
             case "亵渎守卫":
             case "痴愚金龙":
+            case "噬魂幽花":
                 return GameProgress.PRE_PROFANED_GODDESS;
             case "亵渎天神":
-            case "噬魂幽花":
             case "硫海遗爵":
             case "神明吞噬者":
             case "丛林龙，犽戎":
@@ -307,6 +302,20 @@ public class PlayerHelper {
                 break;
         }
         return horizontalMoveYaw;
+    }
+    public static int getPlayerHealthTier(Player ply) {
+        MetadataValue metadataValue = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_HEALTH_TIER);
+        if (metadataValue != null)
+            return metadataValue.asInt();
+        ConfigurationSection playerDataFile = getPlayerDataFile(ply);
+        return playerDataFile.getInt("stats.healthTier", 5);
+    }
+    public static int getPlayerManaTier(Player ply) {
+        MetadataValue metadataValue = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_TIER);
+        if (metadataValue != null)
+            return metadataValue.asInt();
+        ConfigurationSection playerDataFile = getPlayerDataFile(ply);
+        return playerDataFile.getInt("stats.manaTier", 1);
     }
     public static int getMaxHealthByTier(int tier) {
         if (tier < 21) return tier * 40;
@@ -1224,11 +1233,8 @@ public class PlayerHelper {
                         Location lastLoc = (Location) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION).value();
                         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION, currLoc);
                         boolean moved = lastLoc.getWorld().equals(currLoc.getWorld()) && lastLoc.distanceSquared(currLoc) > 1e-5;
-                        // make sure health or mana do not exceed maximum
+                        // make sure mana do not exceed maximum
                         {
-                            ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(
-                                    attrMap.getOrDefault("maxHealth", 200d) *
-                                            attrMap.getOrDefault("maxHealthMulti", 1d));
                             int level = Math.min(ply.getLevel(), attrMap.get("maxMana").intValue());
                             ply.setLevel(level);
                         }
@@ -1305,7 +1311,7 @@ public class PlayerHelper {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(),
                 () -> {
                     for (Player ply : Bukkit.getOnlinePlayers()) {
-                        PlayerHelper.saveInventories(ply);
+                        PlayerHelper.saveData(ply);
                     }
                 }, 100, 100);
     }
@@ -1330,6 +1336,7 @@ public class PlayerHelper {
             case RED_GLAZED_TERRACOTTA:
                 return 3;
         }
+        // not a special biome
         return 0;
     }
     public static void threadSpecialBiome() {
@@ -1342,7 +1349,6 @@ public class PlayerHelper {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 if (isProperlyPlaying(ply)) {
-                    long ns = System.nanoTime();
                     // check height layer
                     boolean isInUndergroundOrCavern;
                     switch (WorldHelper.HeightLayer.getHeightLayer(ply.getLocation())) {
@@ -1393,7 +1399,7 @@ public class PlayerHelper {
                 ply.removeScoreboardTag(scoreboardTag);
             }
         }
-        // attribute and vanilla status setup
+        // vanilla attribute and vanilla status setup
         ply.addPotionEffect(new PotionEffect(
                 PotionEffectType.SLOW_DIGGING, 999999999, 9, false, false), true);
         ply.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(Double.MAX_VALUE);
@@ -1435,12 +1441,16 @@ public class PlayerHelper {
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM_TIME, 0L);
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME, WorldHelper.BiomeType.NORMAL);
         }
-        // regeneration
+        // health, mana and regeneration
+        if (joinOrRespawn) {
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_HEALTH_TIER, getPlayerHealthTier(ply));
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_TIER, getPlayerManaTier(ply));
+        }
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION, ply.getLocation());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.REGEN_TIME, 0d);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_DELAY, 0d);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_COUNTER, 0d);
-        // on join
+        // extra setups on join
         if (joinOrRespawn) {
             // load inventories
             loadInventories(ply);
@@ -1448,6 +1458,10 @@ public class PlayerHelper {
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TEAM, "red");
             // reset monsters spawned to 0
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MONSTER_SPAWNED_AMOUNT, 0);
+            // remove teleportation target
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TELEPORT_TARGET, null);
+            // attribute
+            setupAttribute(ply);
         }
     }
     public static void setupAttribute(Player ply) {
@@ -1603,6 +1617,12 @@ public class PlayerHelper {
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES, accessories);
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES_LIST, accessoryList);
             }
+            // setup max health and max mana
+            newAttrMap.put("maxHealth", (double) getMaxHealthByTier(getPlayerHealthTier(ply)) );
+            newAttrMap.put("maxMana", (double) getMaxManaByTier(getPlayerManaTier(ply)) );
+            ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(
+                    newAttrMap.getOrDefault("maxHealth", 200d) *
+                            newAttrMap.getOrDefault("maxHealthMulti", 1d));
             // setup walking speed
             double walkingSpeed = newAttrMap.getOrDefault("speed", 0.2d) *
                     newAttrMap.getOrDefault("speedMulti", 1d);
@@ -1635,6 +1655,14 @@ public class PlayerHelper {
         }
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_INVENTORIES, inventories);
     }
+    public static void saveData(Player ply) {
+        // save inventory
+        saveInventories(ply);
+        // save max health and max mana tier
+        ConfigurationSection playerDataFile = getPlayerDataFile(ply);
+        playerDataFile.set("stats.healthTier", getPlayerHealthTier(ply));
+        playerDataFile.set("stats.manaTier", getPlayerManaTier(ply));
+    }
     public static void saveInventories(Player ply) {
         HashMap<String, Inventory> inventories = (HashMap<String, Inventory>) EntityHelper.getMetadata(ply,
                 EntityHelper.MetadataName.PLAYER_INVENTORIES).value();
@@ -1648,7 +1676,6 @@ public class PlayerHelper {
             plyFile.set("inventory." + invType, result);
         }
     }
-    @Nullable
     public static void handleGrapplingHook(Player ply) {
         if (!PlayerHelper.isProperlyPlaying(ply))
             return;

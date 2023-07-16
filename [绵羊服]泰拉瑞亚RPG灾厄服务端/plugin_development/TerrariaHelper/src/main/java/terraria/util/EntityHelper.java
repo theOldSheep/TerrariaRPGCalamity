@@ -172,6 +172,7 @@ public class EntityHelper {
         PLAYER_GRAPPLING_HOOKS("hooks"),
         PLAYER_GRAPPLING_HOOK_COLOR("color"),
         PLAYER_GRAPPLING_HOOK_ITEM("grapplingHookItem"),
+        PLAYER_HEALTH_TIER("healthTier"),
         PLAYER_INTERNAL_ITEM_START_USE_CD("useCDInternal"),
         PLAYER_INTERNAL_LAST_ITEM_START_USE_CD("useCDInternalLast"),
         PLAYER_INVENTORIES("inventories"),
@@ -183,6 +184,7 @@ public class EntityHelper {
         PLAYER_LAST_LOCATION("lastLocation"),
         PLAYER_MANA_REGEN_DELAY("manaRegenDelay"),
         PLAYER_MANA_REGEN_COUNTER("manaRegenCounter"),
+        PLAYER_MANA_TIER("manaTier"),
         PLAYER_MINION_LIST("minions"),
         PLAYER_MINION_WHIP_FOCUS("minionWhipFocus"),
         PLAYER_MONSTER_SPAWNED_AMOUNT("mobAmount"),
@@ -191,6 +193,7 @@ public class EntityHelper {
         PLAYER_NPC_INTERACTING("NPCViewing"),
         PLAYER_SENTRY_LIST("sentries"),
         PLAYER_TEAM("team"),
+        PLAYER_TELEPORT_TARGET("teleportTarget"),
         PLAYER_THRUST_INDEX("thrustIndex"),
         PLAYER_THRUST_PROGRESS("thrustProgress"),
         PROJECTILE_DESTROY_REASON("destroyReason"),
@@ -951,7 +954,9 @@ public class EntityHelper {
     public static void handleDeath(Entity v, Entity dPly, Entity d, DamageType damageType, String debuffType) {
         if (v instanceof Player) {
             Player vPly = (Player) v;
+            // prevent spectator getting in a wall
             vPly.setVelocity(new Vector());
+            // respawn time, default to 15 seconds and increases if boss is alive
             int respawnTime = 15;
             for (ArrayList<LivingEntity> bossList : BossHelper.bossMap.values()) {
                 HashMap<Player, Double> targets = (HashMap<Player, Double>) getMetadata(bossList.get(0), MetadataName.BOSS_TARGET_MAP).value();
@@ -959,11 +964,13 @@ public class EntityHelper {
                     respawnTime = Math.max(respawnTime, Math.min(targets.size() * 15, 75));
                 }
             }
+            // drop money
             int moneyDrop = (int) Math.floor(PlayerHelper.getMoney(vPly) / 100);
             moneyDrop = (int) Math.ceil(moneyDrop * 0.75);
             moneyDrop *= 100;
             PlayerHelper.setMoney(vPly, PlayerHelper.getMoney(vPly) - moneyDrop);
             GenericHelper.dropMoney(vPly.getEyeLocation(), moneyDrop, false);
+            // death message
             String moneyMsg = "";
             if (moneyDrop > 0) {
                 moneyMsg = "§c§l掉了";
@@ -978,8 +985,13 @@ public class EntityHelper {
                     moneyMsg += "§c§l " + moneyConverted[3] + "§c§l 铜";
             }
             vPly.sendTitle("§c§l你死了！", moneyMsg, 0, respawnTime * 20, 0);
-            vPly.closeInventory();
             sendDeathMessage(d, v, damageType, debuffType);
+            // remove vanilla potion effects(terraria potion effects are removed in their threads)
+            for (PotionEffect effect : vPly.getActivePotionEffects()) {
+                vPly.removePotionEffect(effect.getType());
+            }
+            // initialize respawn countdown and other features
+            vPly.closeInventory();
             vPly.setHealth(Math.min(400, vPly.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
             setMetadata(vPly, MetadataName.RESPAWN_COUNTDOWN, respawnTime * 20);
             vPly.setGameMode(GameMode.SPECTATOR);
@@ -987,11 +999,12 @@ public class EntityHelper {
             vPly.setFallDistance(0);
             // further respawn ticking mechanism in regen thread
         } else {
-            // lacewing etc
+            // when a entity is killed by a player
             Set<String> vScoreboardTags = v.getScoreboardTags();
             if (dPly instanceof Player) {
                 Player dPlayer = (Player) dPly;
                 String victimName = GenericHelper.trimText(v.getName());
+                // spawn empress of light
                 if (victimName.equals("七彩草蛉")) {
                     BossHelper.spawnBoss(dPlayer, BossHelper.BossType.EMPRESS_OF_LIGHT);
                 }
