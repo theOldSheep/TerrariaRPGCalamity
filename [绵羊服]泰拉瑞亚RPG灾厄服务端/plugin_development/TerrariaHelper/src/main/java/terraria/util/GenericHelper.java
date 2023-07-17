@@ -370,7 +370,7 @@ public class GenericHelper {
                     break;
             }
             // whip dmg/crit bonus
-            if (whipBonusDamage > 0 && whipBonusCrit > 0) {
+            if (whipBonusDamage > 1e-5 || whipBonusCrit > 1e-5) {
                 EntityHelper.setMetadata(victim, EntityHelper.MetadataName.MINION_WHIP_BONUS_DAMAGE, whipBonusDamage);
                 EntityHelper.setMetadata(victim, EntityHelper.MetadataName.MINION_WHIP_BONUS_CRIT,   whipBonusCrit);
             }

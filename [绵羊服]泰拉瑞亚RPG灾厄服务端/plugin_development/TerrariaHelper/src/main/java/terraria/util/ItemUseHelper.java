@@ -540,28 +540,50 @@ public class ItemUseHelper {
     // warning: this function modifies attrMap and damaged!
     protected static void handleMeleeSwing(Player ply, HashMap<String, Double> attrMap, Vector lookDir,
                                          Collection<Entity> damaged, ConfigurationSection weaponSection,
-                                         double yaw, double pitch, String weaponType, ItemStack weaponItem, double size,
-                                         boolean dirFixed, boolean stabOrSwing, int currentIndex, int maxIndex) {
+                                         double yawMin, double yawMax, double pitchMin, double pitchMax,
+                                           String weaponType, ItemStack weaponItem, double size,
+                                         boolean dirFixed, int interpolateType, int currentIndex, int maxIndex) {
         if (!PlayerHelper.isProperlyPlaying(ply)) return;
         if (!dirFixed) {
             EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
-            yaw = plyNMS.yaw;
-            pitch = plyNMS.pitch;
-            lookDir = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
+            // stab
+            if (interpolateType == 0) {
+                yawMin = plyNMS.yaw;
+                yawMax = plyNMS.yaw;
+                pitchMin = plyNMS.pitch;
+                pitchMax = plyNMS.pitch;
+                lookDir = MathHelper.vectorFromYawPitch_quick(yawMin, pitchMin);
+            }
+            // swing
+            else {
+                yawMin = plyNMS.yaw;
+                yawMax = plyNMS.yaw;
+            }
         }
         String color = "102|255|255";
         GenericHelper.StrikeLineOptions strikeLineInfo =
                 new GenericHelper.StrikeLineOptions()
                         .setThruWall(false);
-        // if the player is dealing melee damage, display the player's weapon instead of particle
-        if (EntityHelper.getDamageType(ply) == EntityHelper.DamageType.MELEE)
-            strikeLineInfo.setParticleInfo(new GenericHelper.ParticleLineOptions()
-                    .setParticleOrItem(false)
-                    .setSpriteItem(weaponItem)
-                    .setTicksLinger(1));
-        if (stabOrSwing) {
+        switch (interpolateType) {
+            // if the player is dealing melee damage, display the player's weapon instead of particle
+            case 0:
+            case 1:
+                if (EntityHelper.getDamageType(ply) == EntityHelper.DamageType.MELEE)
+                    strikeLineInfo.setParticleInfo(new GenericHelper.ParticleLineOptions()
+                            .setParticleOrItem(false)
+                            .setSpriteItem(weaponItem)
+                            .setTicksLinger(1));
+                break;
+            // special settings for whips
+            case 2:
+                strikeLineInfo.setDecayCoef(weaponSection.getDouble("damageMultiPerHit", 1d));
+                strikeLineInfo.setWhipBonusDamage(weaponSection.getDouble("bonusDamage", 0d));
+                strikeLineInfo.setWhipBonusCrit(weaponSection.getDouble("bonusCrit", 0d));
+        }
+        // "stab"
+        if (interpolateType == 0) {
             boolean shouldStrike;
-            double strikeYaw = yaw, strikePitch = pitch;
+            double strikeYaw = yawMin, strikePitch = pitchMin;
             if (weaponType.equals("星光")) {
                 shouldStrike = currentIndex % 2 == 0;
                 if (shouldStrike) {
@@ -584,7 +606,9 @@ public class ItemUseHelper {
             if (shouldStrike)
                 GenericHelper.handleStrikeLine(ply, ply.getEyeLocation().add(lookDir), strikeYaw, strikePitch, size, MELEE_STRIKE_RADIUS,
                         weaponType, color, damaged, attrMap, strikeLineInfo);
-        } else {
+        }
+        // "swing" or "whip"
+        else {
             List<String> colors = weaponSection.getStringList("particleColor");
             if (weaponType.equals("天顶剑")) {
                 if (currentIndex % 4 == 0) {
@@ -600,23 +624,31 @@ public class ItemUseHelper {
                 int indexStart = loopTimes * currentIndex / (maxIndex + 1);
                 int indexEnd = loopTimes * (currentIndex + 1) / (maxIndex + 1);
                 for (int i = indexStart; i < indexEnd; i ++) {
-                    double actualPitch = ((170 * (double) i / loopTimes) - 110);
-                    Vector offsetDir = MathHelper.vectorFromYawPitch_quick(yaw, actualPitch);
-                    GenericHelper.handleStrikeLine(ply, ply.getEyeLocation().add(offsetDir), yaw, actualPitch,
-                            size, MELEE_STRIKE_RADIUS, weaponType, color, damaged, attrMap, strikeLineInfo);
+                    double progress = (double) i / loopTimes;
+                    double actualYaw = yawMin + (yawMax - yawMin) * progress;
+                    double actualPitch = pitchMin + (pitchMax - pitchMin) * progress;
+                    Vector offsetDir = MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch);
+                    // whips have a changing attack reach over time
+                    double strikeLength = interpolateType == 1 ?
+                            MELEE_STRIKE_RADIUS : MELEE_STRIKE_RADIUS * MathHelper.xcos_degree( 300 * (progress - 0.5) );
+                    GenericHelper.handleStrikeLine(ply, ply.getEyeLocation().add(offsetDir), actualYaw, actualPitch,
+                            size, strikeLength, weaponType, color, damaged, attrMap, strikeLineInfo);
                     // for strike after first, do not display additional particle effect
                     strikeLineInfo.displayParticle = false;
                 }
             }
         }
         if (currentIndex < maxIndex) {
-            double finalYaw = yaw;
-            double finalPitch = pitch;
             Vector finalLookDir = lookDir;
             Collection<Entity> finalDamaged = damaged;
+            double finalYawMin = yawMin;
+            double finalYawMax = yawMax;
+            double finalPitchMin = pitchMin;
+            double finalPitchMax = pitchMax;
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> handleMeleeSwing(ply, attrMap, finalLookDir, finalDamaged, weaponSection, finalYaw, finalPitch,
-                            weaponType, weaponItem, size, dirFixed, stabOrSwing, currentIndex + 1, maxIndex), 1);
+                    () -> handleMeleeSwing(ply, attrMap, finalLookDir, finalDamaged, weaponSection,
+                            finalYawMin, finalYawMax, finalPitchMin, finalPitchMax,
+                            weaponType, weaponItem, size, dirFixed, interpolateType, currentIndex + 1, maxIndex), 1);
         }
     }
     // melee helper functions below
@@ -655,8 +687,41 @@ public class ItemUseHelper {
         }
         int coolDown = applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
         boolean dirFixed = weaponSection.getBoolean("dirFixed", true);
-        handleMeleeSwing(ply, attrMap, lookDir, new HashSet<>(), weaponSection, yaw, pitch, itemType, weaponItem, size,
-                dirFixed, stabOrSwing, 0, coolDown);
+        if (stabOrSwing)
+            handleMeleeSwing(ply, attrMap, lookDir, new HashSet<>(), weaponSection,
+                    yaw, yaw, pitch, pitch, itemType, weaponItem, size,
+                    dirFixed, 0, 0, coolDown);
+        else
+            handleMeleeSwing(ply, attrMap, lookDir, new HashSet<>(), weaponSection,
+                    yaw, yaw, -110, 60, itemType, weaponItem, size,
+                    dirFixed, 1, 0, coolDown);
+        return true;
+    }
+    protected static boolean playerUseWhip(Player ply, String itemType, ItemStack weaponItem,
+                                          ConfigurationSection weaponSection, HashMap<String, Double> attrMap, int swingAmount) {
+        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+        double yaw = plyNMS.yaw, pitch = plyNMS.pitch;
+        double size = weaponSection.getDouble("size", 3d);
+        Vector lookDir = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
+        size *= attrMap.getOrDefault("meleeReachMulti", 1d);
+        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
+        double useTimeMulti = 1 / useSpeed;
+        int coolDown = applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
+        // get swing offset
+        double yawOffset, pitchOffset;
+        switch (itemType) {
+            case "日耀喷发剑":
+                yawOffset = Math.random() * 180 - 90;
+                pitchOffset = Math.random() * 100 - 50;
+                break;
+            default:
+                yawOffset = Math.random() * 45 - 22.5;
+                pitchOffset = 30;
+        }
+        handleMeleeSwing(ply, attrMap, lookDir, new HashSet<>(), weaponSection,
+                yaw - yawOffset, yaw + yawOffset, pitch - pitchOffset, pitch + pitchOffset,
+                itemType, weaponItem, size,
+                false, 2, 0, coolDown);
         return true;
     }
     protected static boolean playerUseBoomerang(Player ply, String itemType, String weaponType,
@@ -1483,6 +1548,9 @@ public class ItemUseHelper {
                     case "STAB":
                     case "SWING":
                         success = playerUseMelee(ply, itemName, mainHandItem, weaponSection, attrMap, swingAmount, weaponType.equals("STAB"));
+                        break;
+                    case "WHIP":
+                        success = playerUseWhip(ply, itemName, mainHandItem, weaponSection, attrMap, swingAmount);
                         break;
                     case "BOW":
                     case "GUN":

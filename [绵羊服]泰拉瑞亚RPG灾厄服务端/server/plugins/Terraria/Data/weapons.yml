@@ -878,8 +878,7 @@
   size: 16
   particleColor:
   - 255|0|0
-  decay: 0.5
-  inflictsBuff: true
+  damageMultiPerHit: 0.5
   bonusDamage: 5
 迪朗达尔:
   type: WHIP
@@ -887,8 +886,7 @@
   size: 25
   particleColor:
   - 150|150|0
-  decay: 0.4
-  inflictsBuff: true
+  damageMultiPerHit: 0.6
   bonusDamage: 18
 晨星:
   type: WHIP
@@ -896,8 +894,7 @@
   size: 30
   particleColor:
   - 0|100|100
-  decay: 0.4
-  inflictsBuff: true
+  damageMultiPerHit: 0.9
   bonusDamage: 12
 暗黑收割:
   type: WHIP
@@ -905,8 +902,7 @@
   size: 35
   particleColor:
   - 0|50|50
-  decay: 0.4
-  inflictsBuff: true
+  damageMultiPerHit: 0.75
   bonusDamage: 10
 万花筒:
   type: WHIP
@@ -919,8 +915,7 @@
   - 0|255|255
   - 0|0|255
   - 255|0|255
-  decay: 0.5
-  inflictsBuff: true
+  damageMultiPerHit: 0.5
   bonusDamage: 40
 日耀喷发剑:
   type: WHIP
