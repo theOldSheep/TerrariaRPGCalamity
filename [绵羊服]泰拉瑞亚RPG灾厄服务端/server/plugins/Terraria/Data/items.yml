@@ -5719,6 +5719,7 @@
   item: STICK
   worth: 20000
   attributes:
+    damageType: Melee
     useTime: 30
   rarity: 0
 金捕虫网:
@@ -5726,6 +5727,7 @@
   lore:
   - §r挥舞速度更快！
   attributes:
+    damageType: Melee
     useTime: 20
   worth: 5000000
   rarity: 3
