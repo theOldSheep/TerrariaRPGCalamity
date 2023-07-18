@@ -88,6 +88,12 @@ public class GenericHelper {
             this.particleColorObjects = getColorListFromStrings(this.particleColor);
             return this;
         }
+        public ParticleLineOptions setParticleColor(List<String> particleColor) {
+            this.particleColor.clear();
+            this.particleColor.addAll(particleColor);
+            this.particleColorObjects = getColorListFromStrings(this.particleColor);
+            return this;
+        }
         public ArrayList<Color> getParticleColorObjects() {
             return particleColorObjects;
         }
@@ -157,7 +163,7 @@ public class GenericHelper {
             return this;
         }
         public StrikeLineOptions setDecayCoef(double decayCoef) {
-            this.damage = decayCoef;
+            this.decayCoef = decayCoef;
             return this;
         }
         public StrikeLineOptions setWhipBonusCrit(double whipBonusCrit) {
@@ -369,10 +375,11 @@ public class GenericHelper {
                     victim.addScoreboardTag(itemType);
                     break;
             }
-            // whip dmg/crit bonus
+            // whip dmg/crit bonus and prioritized focus
             if (whipBonusDamage > 1e-5 || whipBonusCrit > 1e-5) {
-                EntityHelper.setMetadata(victim, EntityHelper.MetadataName.MINION_WHIP_BONUS_DAMAGE, whipBonusDamage);
-                EntityHelper.setMetadata(victim, EntityHelper.MetadataName.MINION_WHIP_BONUS_CRIT,   whipBonusCrit);
+                EntityHelper.setMetadata(victim,  EntityHelper.MetadataName.MINION_WHIP_BONUS_DAMAGE,  whipBonusDamage);
+                EntityHelper.setMetadata(victim,  EntityHelper.MetadataName.MINION_WHIP_BONUS_CRIT,    whipBonusCrit);
+                EntityHelper.setMetadata(damager, EntityHelper.MetadataName.PLAYER_MINION_WHIP_FOCUS,  victim);
             }
             damageCoolDown(exceptions, victim, damageCD);
             advanced.amountEntitiesHit ++;
@@ -394,12 +401,14 @@ public class GenericHelper {
         return null;
     }
     // warning: this function modifies attrMap and exceptions!
-    public static void handleStrikeLine(Entity damager, Location startLoc, double yaw, double pitch, double length, double width, String itemType, String color, Collection<Entity> exceptions, HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
+    public static void handleStrikeLine(Entity damager, Location startLoc, double yaw, double pitch, double length, double width,
+                                        String itemType, String color, Collection<Entity> exceptions,
+                                        HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
         if (length < 0) return;
         // setup variables
         boolean bounceWhenHitBlock = advanced.bounceWhenHitBlock,
                 thruWall = advanced.thruWall,
-                useAttrMapDamage = advanced.damage <= 0d;
+                useAttrMapDamage = advanced.damage < 1e-5;
         int     lingerTime = advanced.lingerTime,
                 lingerDelay = advanced.lingerDelay;
         double  damage = useAttrMapDamage ? attrMap.getOrDefault("damage", 10d) : advanced.damage;

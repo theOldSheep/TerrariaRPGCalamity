@@ -560,6 +560,7 @@ public class ItemUseHelper {
                 yawMax = plyNMS.yaw;
             }
         }
+        List<String> particleColors = weaponSection.getStringList("particleColor");
         String color = "102|255|255";
         GenericHelper.StrikeLineOptions strikeLineInfo =
                 new GenericHelper.StrikeLineOptions()
@@ -576,9 +577,12 @@ public class ItemUseHelper {
                 break;
             // special settings for whips
             case 2:
-                strikeLineInfo.setDecayCoef(weaponSection.getDouble("damageMultiPerHit", 1d));
-                strikeLineInfo.setWhipBonusDamage(weaponSection.getDouble("bonusDamage", 0d));
-                strikeLineInfo.setWhipBonusCrit(weaponSection.getDouble("bonusCrit", 0d));
+                strikeLineInfo.setDecayCoef(weaponSection.getDouble("damageMultiPerHit", 1d))
+                        .setWhipBonusDamage(weaponSection.getDouble("bonusDamage", 0d))
+                        .setWhipBonusCrit(weaponSection.getDouble("bonusCrit", 0d))
+                        .setParticleInfo(new GenericHelper.ParticleLineOptions()
+                                .setParticleColor(particleColors)
+                                .setTicksLinger(1));
         }
         // "stab"
         if (interpolateType == 0) {
@@ -589,18 +593,15 @@ public class ItemUseHelper {
                 if (shouldStrike) {
                     // prevent DPS loss due to damage invincibility frame
                     damaged = new ArrayList<>();
-                    List<String> colorCandidates = weaponSection.getStringList("particleColor");
-                    color = colorCandidates.get((int) (Math.random() * colorCandidates.size()));
+                    color = particleColors.get((int) (Math.random() * particleColors.size()));
                     if (currentIndex > 0) ply.getWorld().playSound(ply.getLocation(), SOUND_GENERIC_SWING, 1f, 1f);
                     strikeYaw += Math.random() * 30 - 15;
                     strikePitch += Math.random() * 30 - 15;
                 }
             } else {
                 shouldStrike = currentIndex <= 5;
-                if (shouldStrike) {
-                    List<String> colors = weaponSection.getStringList("particleColor");
-                    if (colors.size() > 0)
-                        color = colors.get(0);
+                if (shouldStrike && particleColors.size() > 0) {
+                    color = particleColors.get(0);
                 }
             }
             if (shouldStrike)
@@ -609,17 +610,16 @@ public class ItemUseHelper {
         }
         // "swing" or "whip"
         else {
-            List<String> colors = weaponSection.getStringList("particleColor");
             if (weaponType.equals("天顶剑")) {
                 if (currentIndex % 4 == 0) {
                     String[] candidateItems = {"泰拉之刃", "彩虹猫之刃", "狂星之怒", "无头骑士剑", "种子弯刀", "铜质短剑"};
                     strikeLineInfo.particleInfo.setSpriteItem(ItemHelper.getRawItem(
                             candidateItems[(int) (Math.random() * candidateItems.length) ]));
-                    handleSingleZenithStrike(ply, (HashMap<String, Double>) attrMap.clone(), colors, strikeLineInfo);
+                    handleSingleZenithStrike(ply, (HashMap<String, Double>) attrMap.clone(), particleColors, strikeLineInfo);
                 }
             } else {
-                if (colors.size() > 0)
-                    color = colors.get(0);
+                if (particleColors.size() > 0)
+                    color = particleColors.get(0);
                 int loopTimes = Math.max(maxIndex, 35);
                 int indexStart = loopTimes * currentIndex / (maxIndex + 1);
                 int indexEnd = loopTimes * (currentIndex + 1) / (maxIndex + 1);
@@ -628,11 +628,11 @@ public class ItemUseHelper {
                     double actualYaw = yawMin + (yawMax - yawMin) * progress;
                     double actualPitch = pitchMin + (pitchMax - pitchMin) * progress;
                     Vector offsetDir = MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch);
-                    // whips have a changing attack reach over time
+                    // swords have a constant reach while whips have a changing attack reach over time
                     double strikeLength = interpolateType == 1 ?
-                            MELEE_STRIKE_RADIUS : MELEE_STRIKE_RADIUS * MathHelper.xcos_degree( 300 * (progress - 0.5) );
+                            size : size * MathHelper.xcos_degree( 300 * (progress - 0.5) );
                     GenericHelper.handleStrikeLine(ply, ply.getEyeLocation().add(offsetDir), actualYaw, actualPitch,
-                            size, strikeLength, weaponType, color, damaged, attrMap, strikeLineInfo);
+                            strikeLength, MELEE_STRIKE_RADIUS, weaponType, color, damaged, attrMap, strikeLineInfo);
                     // for strike after first, do not display additional particle effect
                     strikeLineInfo.displayParticle = false;
                 }
@@ -715,13 +715,13 @@ public class ItemUseHelper {
                 pitchOffset = Math.random() * 100 - 50;
                 break;
             default:
-                yawOffset = Math.random() * 45 - 22.5;
-                pitchOffset = 30;
+                yawOffset = Math.random() * 30 - 15;
+                pitchOffset = 45;
         }
         handleMeleeSwing(ply, attrMap, lookDir, new HashSet<>(), weaponSection,
                 yaw - yawOffset, yaw + yawOffset, pitch - pitchOffset, pitch + pitchOffset,
                 itemType, weaponItem, size,
-                false, 2, 0, coolDown);
+                true, 2, 0, coolDown);
         return true;
     }
     protected static boolean playerUseBoomerang(Player ply, String itemType, String weaponType,

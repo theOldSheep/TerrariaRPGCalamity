@@ -852,7 +852,10 @@ public class EntityHelper {
         if (minion.getScoreboardTags().contains("isMinion")) {
             if (victim.getScoreboardTags().contains("暗黑收割")) {
                 victim.removeScoreboardTag("暗黑收割");
-                handleEntityExplode(damager, 2, null, victim.getEyeLocation());
+                // prevent doubled damage on initial target due to the explosion
+                ArrayList<Entity> damageExceptions = new ArrayList<>();
+                damageExceptions.add(victim);
+                handleEntityExplode(damager, 2, damageExceptions, victim.getEyeLocation());
             }
         }
         // special victim behaviour
@@ -926,7 +929,6 @@ public class EntityHelper {
                 }
             }
             HashSet<String> accessories = PlayerHelper.getAccessories(victim);
-            HashMap<String, Double> attrMap = getAttrMap(victim);
             boolean hasMagicCuff = accessories.contains("魔法手铐") || accessories.contains("天界手铐");
             if (hasMagicCuff) {
                 int recovery = (int) Math.max(1, Math.floor(dmg / 4));
@@ -986,9 +988,11 @@ public class EntityHelper {
             }
             vPly.sendTitle("§c§l你死了！", moneyMsg, 0, respawnTime * 20, 0);
             sendDeathMessage(d, v, damageType, debuffType);
-            // remove vanilla potion effects(terraria potion effects are removed in their threads)
+            // remove vanilla potion effects except for mining fatigue
+            // terraria potion effects are removed in their threads
             for (PotionEffect effect : vPly.getActivePotionEffects()) {
-                vPly.removePotionEffect(effect.getType());
+                if (effect.getType() != PotionEffectType.SLOW_DIGGING)
+                    vPly.removePotionEffect(effect.getType());
             }
             // initialize respawn countdown and other features
             vPly.closeInventory();
@@ -1631,9 +1635,8 @@ public class EntityHelper {
         // handle invincibility ticks
         if (damageInvulnerabilityTicks > 0) {
             victim.addScoreboardTag(damageInvincibilityFrameName);
-            Entity finalVictim = victim;
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> finalVictim.removeScoreboardTag(damageInvincibilityFrameName), damageInvulnerabilityTicks);
+                    () -> victim.removeScoreboardTag(damageInvincibilityFrameName), damageInvulnerabilityTicks);
         }
     }
     public static void handleEntityExplode(Entity source, Collection<Entity> damageExceptions) {

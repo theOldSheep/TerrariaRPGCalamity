@@ -145,6 +145,7 @@ public class MinionHelper {
                 finalTarget = goalTarget;
         }
         // whip target
+        boolean whipTargetValid = false;
         {
             MetadataValue whipTargetMetadata = EntityHelper.getMetadata(owner.getBukkitEntity(),
                     EntityHelper.MetadataName.PLAYER_MINION_WHIP_FOCUS);
@@ -153,26 +154,30 @@ public class MinionHelper {
                 net.minecraft.server.v1_12_R1.Entity whipTargetNMS = ((CraftEntity) whipTarget).getHandle();
                 if (whipTargetNMS instanceof EntityLiving) {
                     EntityLiving whipTargetEntityLiving = (EntityLiving) whipTargetNMS;
-                    if (predication.test(whipTargetEntityLiving))
+                    if (predication.test(whipTargetEntityLiving)) {
                         finalTarget = whipTargetEntityLiving;
+                        whipTargetValid = true;
+                    }
                 }
             }
         }
         // target the nearest enemy
-        net.minecraft.server.v1_12_R1.Entity findNearestFrom = protectOwner ? owner : minion;
-        double nearestTargetDistSqr = 1e9,
-                targetRadiusActual =
-                        finalTarget == owner ? targetRadius :
-                                getHorDistSqr(findNearestFrom.getBukkitEntity(), finalTarget.getBukkitEntity()) * 0.85 - 8;
-        ArrayList<net.minecraft.server.v1_12_R1.Entity> toCheck = new ArrayList<>(50);
-        toCheck.addAll(getNearbyEntities(minion, targetRadiusActual, predication));
-        toCheck.addAll(getNearbyEntities(owner, targetRadiusActual, predication));
-        for (net.minecraft.server.v1_12_R1.Entity entity : toCheck) {
-            if (!(entity instanceof EntityLiving)) continue;
-            double distSqr = getHorDistSqr(findNearestFrom.getBukkitEntity(), entity.getBukkitEntity());
-            if (distSqr > nearestTargetDistSqr) continue;
-            nearestTargetDistSqr = distSqr;
-            finalTarget = (EntityLiving) entity;
+        if (!whipTargetValid) {
+            net.minecraft.server.v1_12_R1.Entity findNearestFrom = protectOwner ? owner : minion;
+            double nearestTargetDistSqr = 1e9,
+                    targetRadiusActual =
+                            finalTarget == owner ? targetRadius :
+                                    getHorDistSqr(findNearestFrom.getBukkitEntity(), finalTarget.getBukkitEntity()) * 0.85 - 8;
+            ArrayList<net.minecraft.server.v1_12_R1.Entity> toCheck = new ArrayList<>(50);
+            toCheck.addAll(getNearbyEntities(minion, targetRadiusActual, predication));
+            toCheck.addAll(getNearbyEntities(owner, targetRadiusActual, predication));
+            for (net.minecraft.server.v1_12_R1.Entity entity : toCheck) {
+                if (!(entity instanceof EntityLiving)) continue;
+                double distSqr = getHorDistSqr(findNearestFrom.getBukkitEntity(), entity.getBukkitEntity());
+                if (distSqr > nearestTargetDistSqr) continue;
+                nearestTargetDistSqr = distSqr;
+                finalTarget = (EntityLiving) entity;
+            }
         }
         minion.setGoalTarget(finalTarget, EntityTargetEvent.TargetReason.CUSTOM, finalTarget != owner);
     }
