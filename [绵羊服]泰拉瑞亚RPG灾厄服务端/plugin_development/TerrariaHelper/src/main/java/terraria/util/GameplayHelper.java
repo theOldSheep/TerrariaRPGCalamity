@@ -4,11 +4,16 @@ import net.minecraft.server.v1_12_R1.BlockPosition;
 import net.minecraft.server.v1_12_R1.PacketPlayOutBlockBreakAnimation;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Chest;
+import org.bukkit.block.Furnace;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
 import terraria.TerrariaHelper;
@@ -94,19 +99,36 @@ public class GameplayHelper {
     private static ConfigurationSection getBlockConfigSection(Block blockToBreak) {
         String material = blockToBreak.getType().toString();
         String data = String.valueOf(blockToBreak.getData());
+        if (blockToBreak.getState() instanceof Furnace) {
+            String furnaceName = GenericHelper.trimText( ((Furnace) blockToBreak.getState()).getCustomName() );
+            if (TerrariaHelper.blockConfig.contains(furnaceName))
+                return TerrariaHelper.blockConfig.getConfigurationSection(furnaceName);
+        }
         if (TerrariaHelper.blockConfig.contains(material + "_" + data)) {
             return TerrariaHelper.blockConfig.getConfigurationSection(material + "_" + data);
         } if (TerrariaHelper.blockConfig.contains(material)) {
             return TerrariaHelper.blockConfig.getConfigurationSection(material);
         }
+        Bukkit.broadcastMessage("Not handled block type: " + blockToBreak.getType() + " with data " + blockToBreak.getData() + " and state " + blockToBreak.getState());
         return null;
     }
     public static boolean isBreakable(Block block, Player ply) {
         if (noMiningSet.contains(block.getType())) return false;
+        // special breaking mechanics for certain blocks
         switch (block.getType()) {
+            // unbreakable
             case BEDROCK:
             case ENDER_PORTAL_FRAME:
                 return false;
+            // unbreakable when items are present in the block
+            case CHEST:
+            case TRAPPED_CHEST:
+                Inventory chestInv = ((Chest) block.getState()).getBlockInventory();
+                for (ItemStack item : chestInv.getStorageContents()) {
+                    if (item != null && item.getType() != Material.AIR)
+                        return false;
+                }
+                break;
         }
         ConfigurationSection breakRule = getBlockConfigSection(block);
         if (breakRule != null) {
@@ -117,7 +139,8 @@ public class GameplayHelper {
             }
             if (breakRule.contains("powerPickaxe")) {
                 // requires certain pickaxe power
-                if (EntityHelper.getAttrMap(ply).getOrDefault("powerPickaxe", 0d) < breakRule.getDouble("powerPickaxe", 0d))
+                if (EntityHelper.getAttrMap(ply).getOrDefault("powerPickaxe", 0d) <
+                        breakRule.getDouble("powerPickaxe", 0d))
                     return false;
             }
         }
@@ -180,26 +203,84 @@ public class GameplayHelper {
         }
     }
     public static void playerBreakBlock(Block blockToBreak, Player ply) {
-        if (blockToBreak.getType() == Material.AIR) return;
-        playBlockParticleAndSound(blockToBreak);
-        if (!isBreakable(blockToBreak, ply)) return;
-        ConfigurationSection configSection = getBlockConfigSection(blockToBreak);
-        if (configSection != null) {
-            List<String> itemsToDrop = configSection.getStringList("dropItem");
-            Location locToDrop = blockToBreak.getLocation().add(0.5, 0.4, 0.5);
-            for (String currItem : itemsToDrop) {
-                org.bukkit.inventory.ItemStack itemToDrop = ItemHelper.getItemFromDescription(currItem);
-
-                long ns = System.nanoTime();
-
-                ItemHelper.dropItem(locToDrop, itemToDrop);
-
-                Bukkit.broadcastMessage("Time elapsed: " + (System.nanoTime() - ns));
-            }
-        } else {
-            Bukkit.broadcastMessage("Not handled block type: " + blockToBreak.getType() + " with data " + blockToBreak.getData());
+        playerBreakBlock(blockToBreak, ply, true, true);
+    }
+    public static void playerBreakBlock(Block blockToBreak, Player ply, boolean validateBreakable, boolean playSound) {
+        Material blockMat = blockToBreak.getType();
+        if (blockMat == Material.AIR) return;
+        if (playSound)
+            playBlockParticleAndSound(blockToBreak);
+        if (validateBreakable && !isBreakable(blockToBreak, ply))
+            return;
+        // several blocks that are dropped using vanilla mechanism
+        switch (blockMat) {
+            case BED_BLOCK:
+            case WOOD_DOOR:
+                blockToBreak.breakNaturally();
+                break;
+            default:
+                ConfigurationSection configSection = getBlockConfigSection(blockToBreak);
+                if (configSection != null) {
+                    List<String> itemsToDrop = configSection.getStringList("dropItem");
+                    Location locToDrop = blockToBreak.getLocation().add(0.5, 0.4, 0.5);
+                    for (String currItem : itemsToDrop) {
+                        org.bukkit.inventory.ItemStack itemToDrop = ItemHelper.getItemFromDescription(currItem);
+                        ItemHelper.dropItem(locToDrop, itemToDrop);
+                    }
+                }
+                blockToBreak.setType(Material.AIR);
         }
-        blockToBreak.setType(Material.AIR);
+        // special handling
+        handleTreeConsecutiveBreak(ply, blockToBreak, blockMat);
+    }
+    // tree breaking helpers
+    private enum BlockTreePart {
+        NONE, LOG, LEAVES;
+    }
+    private static BlockTreePart getBlockTreePart(Material brokenMaterial) {
+        switch (brokenMaterial) {
+            case LOG:
+            case LOG_2:
+                return BlockTreePart.LOG;
+            case LEAVES:
+            case LEAVES_2:
+                return BlockTreePart.LEAVES;
+            default:
+                return BlockTreePart.NONE;
+        }
+    }
+    private static void handleTreeConsecutiveBreak(Player ply, Block brokenBlock, Material brokenMaterial) {
+        BlockTreePart originalBlockTreePart = getBlockTreePart(brokenMaterial);
+        if (originalBlockTreePart == BlockTreePart.NONE) return;
+        BlockFace[] directionsToTest = {
+                BlockFace.UP,
+                BlockFace.DOWN,
+                BlockFace.WEST,
+                BlockFace.EAST,
+                BlockFace.NORTH,
+                BlockFace.SOUTH
+        };
+        for (BlockFace direction : directionsToTest) {
+            Block currBlock = brokenBlock.getRelative(direction);
+            BlockTreePart currBlockTreePart = getBlockTreePart(currBlock.getType());
+            boolean shouldBreak = false;
+            switch (currBlockTreePart) {
+                // not tree part
+                case NONE:
+                    break;
+                // logs are broken bottom-up (and probably sideways too)
+                case LOG:
+                    if (originalBlockTreePart == BlockTreePart.LOG && direction != BlockFace.DOWN)
+                        shouldBreak = true;
+                    break;
+                // leaves are always broken
+                case LEAVES:
+                    shouldBreak = true;
+            }
+            if (shouldBreak) {
+                playerBreakBlock(currBlock, ply, false, false);
+            }
+        }
     }
     public static void playerRightClickBlock(Player ply, Block blk) {
         if (blk == null) return;

@@ -1,11 +1,15 @@
 LOG:
-  totalProgress: 65
+  totalProgress: 400
   dropItem:
   - 木材:1:4:1
 LOG_2:
-  totalProgress: 65
+  totalProgress: 400
   dropItem:
   - 木材:1:4:1
+LEAVES:
+  powerPickaxe: 999999
+LEAVES_2:
+  powerPickaxe: 999999
 WOOD:
   totalProgress: 65
   dropItem:
@@ -14,6 +18,10 @@ DIRT_1:
   totalProgress: 65
   dropItem:
   - 星辉泥土
+GRASS:
+  totalProgress: 65
+  dropItem:
+  - 泥土
 DIRT:
   totalProgress: 65
   dropItem:
@@ -47,3 +55,15 @@ STAINED_CLAY_15:
   totalProgress: 200
   dropItem:
   - 星辉石
+WORKBENCH:
+  totalProgress: 120
+  dropItem:
+  - 木制工作台
+工匠合成台:
+  totalProgress: 120
+  dropItem:
+  - 工匠合成台
+CHEST:
+  totalProgress: 150
+  dropItem:
+  - 箱子

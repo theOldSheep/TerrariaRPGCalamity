@@ -1709,7 +1709,7 @@ public class EntityHelper {
                             distSqrZ = zOffset * zOffset;
                             if (distSqrX + distSqrY + distSqrZ > radiusSqr) continue;
                             org.bukkit.block.Block currBlock = blastCenterBlock.getRelative(xOffset, yOffset, zOffset);
-                            GameplayHelper.playerBreakBlock(currBlock, ply);
+                            GameplayHelper.playerBreakBlock(currBlock, ply, true, false);
                         }
                     }
                 }
