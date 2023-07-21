@@ -37,6 +37,22 @@ spawnInfo:
         骨蛇: 8
         红恶魔: 12
         巫毒恶魔: 0.5
+    astral_infection:
+        白羊座: 20
+        星辉史莱姆: 2
+        擎星者: 1
+    astral_infection_underground:
+        白羊座: 17.5
+        星辉史莱姆: 5
+        擎星者: 1
+    astral_infection_cavern:
+        白羊座: 16
+        星辉史莱姆: 6
+        擎星者: 1
+    hallow:
+        独角兽: 1
+        妖精: 10
+        光明木乃伊: 1
     desert_day:
         史莱姆: 1
         秃鹰: 0.25
@@ -47,18 +63,22 @@ spawnInfo:
         丛林蝙蝠: 10
         丛林史莱姆: 10
         巨型陆龟: 1
+        瘟疫龟: 1.5
     jungle_night:
         丛林蝙蝠: 8
         僵尸: 6
         恶魔之眼: 6
         巨型陆龟: 1
+        瘟疫龟: 1.5
     jungle_underground:
         丛林蝙蝠: 1
         丛林史莱姆: 2
+        瘟疫龟: 0.25
     jungle_cavern:
         丛林蝙蝠: 15
         丛林史莱姆: 10
-        巨型陆龟: 4
+        巨型陆龟: 2
+        瘟疫龟: 3
     tundra_cavern:
         史莱姆: 20
         黑隐士: 4
@@ -71,6 +91,7 @@ spawnInfo:
         噬魂怪: 75
         腐化囊: 1
         吞噬者: 5
+        暗黑木乃伊: 7.5
     underground:
         史莱姆: 10
     cavern:
@@ -257,7 +278,11 @@ spawnInfo:
     冰霜月19:
         雪兽: 1
 mobTier:
+    妖精: 血肉之墙
+    独角兽: 血肉之墙
     飞龙: 血肉之墙
+    白羊座: 血肉之墙
+    擎星者: 血肉之墙
     眼怪: 血肉之墙
     科学怪人: 血肉之墙
     沼泽怪: 血肉之墙
@@ -306,6 +331,7 @@ mobTier:
     蜥蜴人: 世纪之花
     飞蛇: 世纪之花
     深海吞食者: 世纪之花
+    瘟疫龟: 石巨人
     拜月教教徒: 石巨人
     流星火怪: 石巨人
     火龙战士: 石巨人
@@ -328,6 +354,7 @@ mobTier:
     观星怪: 石巨人
     闪耀炮手: 石巨人
     闪耀怪: 石巨人
+    星辉史莱姆: 星神游龙
 mobTierMax:
     诅咒骷髅头: 血肉之墙
     恶魔: 机械三王
@@ -865,6 +892,33 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.92
                     health: 21000
+    妖精:
+        name: "妖精"
+        monsterType: "SLIME"
+        spawnLocationType: AIR
+        variants:
+            default1:
+                attributes:
+                    damage: 330
+                    damageType: "Melee"
+                    defence: 40
+                    knockback: 2
+                    knockbackResistance: 0.52
+                    health: 900
+    独角兽:
+        name: "独角兽"
+        monsterType: "SLIME"
+        disguiseType: "HORSE"
+        slimeSize: 4
+        variants:
+            default1:
+                attributes:
+                    damage: 390
+                    damageType: "Melee"
+                    defence: 60
+                    knockback: 3
+                    knockbackResistance: 0.76
+                    health: 2400
     光明木乃伊:
         name: "光明木乃伊"
         monsterType: "HUSK"
@@ -889,6 +943,44 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.6
                     health: 1080
+    白羊座:
+        name: "白羊座"
+        monsterType: "SLIME"
+        slimeSize: 3
+        variants:
+            default1:
+                attributes:
+                    damage: 300
+                    damageType: "Melee"
+                    defence: 28
+                    knockback: 2
+                    knockbackResistance: 0.52
+                    health: 1800
+    星辉史莱姆:
+        name: "星辉史莱姆"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 390
+                    damageType: "Melee"
+                    defence: 36
+                    knockback: 2
+                    knockbackResistance: 1
+                    health: 1860
+    擎星者:
+        name: "擎星者"
+        monsterType: "ZOMBIE"
+        variants:
+            default1:
+                attributes:
+                    damage: 520
+                    damageType: "Melee"
+                    damageTakenMulti: 0.85
+                    defence: 80
+                    knockback: 2
+                    knockbackResistance: 0.936
+                    health: 7200
     装甲幻影魔:
         name: "装甲幻影魔"
         monsterType: "ZOMBIE"
@@ -980,6 +1072,19 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.6
                     health: 3600
+    瘟疫龟:
+        name: "瘟疫龟"
+        monsterType: "BABY_HUSK"
+        disguiseType: "SLIME_4"
+        variants:
+            default1:
+                attributes:
+                    damage: 480
+                    damageType: "Melee"
+                    defence: 64
+                    knockback: 3
+                    knockbackResistance: 0.84
+                    health: 4800
     装甲骷髅:
         name: "装甲骷髅"
         monsterType: "SKELETON"

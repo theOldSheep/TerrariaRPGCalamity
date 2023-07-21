@@ -678,7 +678,10 @@ public class ItemHelper {
         }
     }
     public static Item dropItem(Location loc, String itemToDropDescription) {
-        return dropItem(loc, itemToDropDescription, true, true);
+        return dropItem(loc, itemToDropDescription, true);
+    }
+    public static Item dropItem(Location loc, String itemToDropDescription, boolean canMerge) {
+        return dropItem(loc, itemToDropDescription, true, canMerge);
     }
     public static Item dropItem(Location loc, String itemToDropDescription, boolean randomizePrefixIfNoneExists, boolean canMerge) {
         String[] itemInfo = itemToDropDescription.split(":");

@@ -78,9 +78,12 @@ public class MinionCaveSpider extends EntityCaveSpider {
         addScoreboardTag("noMelee");
         setCustomName(minionType);
         setCustomNameVisible(true);
-        // minions other than dwarves should not need any goal selector etc. that are redundant and laggy
-        if (!minionType.equals("蜘蛛")) {
-            this.goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
+        // minions other than certain ones should not need any goal selector
+        switch (minionType) {
+            case "蜘蛛":
+                break;
+            default:
+                this.goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         }
         this.targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         switch (minionType) {

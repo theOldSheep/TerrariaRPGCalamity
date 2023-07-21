@@ -81,9 +81,8 @@ public class MonsterHelper {
             }
             prefixToCheck.add(biomeStr);
         }
-        // -> default, prevent normal slime being spawned instead of lava slime
-        if (playerHeight != WorldHelper.HeightLayer.UNDERWORLD)
-            prefixToCheck.add("default");
+        // -> prevent normal slime being spawned instead of lava slime etc.
+        prefixToCheck.add(playerHeight == WorldHelper.HeightLayer.UNDERWORLD ? "underworld" : "default");
         // setup available variant list
         List<String> variantCandidates = new ArrayList<>(10);
         for (String situationPrefix : prefixToCheck) {
@@ -250,6 +249,7 @@ public class MonsterHelper {
         // set the monster's special info
         // no gravity
         switch (type) {
+            case "秃鹰":
             case "恶魔之眼":
             case "噬魂怪":
             case "恶魔":
@@ -267,11 +267,12 @@ public class MonsterHelper {
             case "飞龙":
             case "吞噬者":
             case "骨蛇":
+            case "妖精":
             case "飞蛇":
             case "诅咒骷髅头":
             case "地牢幽魂":
             case "致命球":
-                case "精灵直升机":
+            case "精灵直升机":
             case "雪花怪":
             case "钨钢悬浮坦克":
             case "钨钢无人机":
@@ -324,8 +325,9 @@ public class MonsterHelper {
         }
         // glowing
         switch (type) {
-            case "巨型诅咒骷髅头":
             case "诅咒骷髅头":
+            case "妖精":
+            case "巨型诅咒骷髅头":
                 monster.glowing = true;
         }
         // AI removed for certain monsters to prevent bug
@@ -342,9 +344,12 @@ public class MonsterHelper {
                     case "礼物宝箱怪":
                     case "神圣宝箱怪":
                     case "腐化宝箱怪":
+                    case "独角兽":
+                    case "白羊座":
                     case "地狱犬":
                     case "火龙怪":
                     case "闪耀炮手":
+                    case "星辉史莱姆":
                         break;
                     default:
                         removeAI = true;
@@ -450,6 +455,8 @@ public class MonsterHelper {
                 bukkitMonster.addScoreboardTag("noFallDamage");
                 break;
             }
+            case "白羊座":
+            case "独角兽":
             case "腐化宝箱怪":
             case "神圣宝箱怪":
             case "地狱犬":
@@ -846,7 +853,33 @@ public class MonsterHelper {
                     }
                     break;
                 }
+                case "秃鹰": {
+                    if (monster.getHealth() > 0) {
+                        // flies after being hurt or within 10 blocks of target
+                        boolean fly = monster.getHealth() + 1e-5 < monster.getMaxHealth() ||
+                                monsterBkt.getLocation().distanceSquared(target.getLocation()) < 100;
+                        // when flying, alternating from flying into target and flying above target
+                        if (fly) {
+                            Location targetLoc = target.getEyeLocation();
+                            if (indexAI % 160 < 75)
+                                targetLoc.add(0, 10, 0);
+                            Vector velocity = monsterBkt.getVelocity();
+                            Vector acceleration = MathHelper.getDirection(monsterBkt.getLocation(), targetLoc, 0.1);
+                            velocity.add(acceleration);
+                            // regularize velocity
+                            double velLen = velocity.length();
+                            if (velLen > 1.5)
+                                velocity.multiply(1.5 / velLen);
+                            monsterBkt.setVelocity(velocity);
+                        }
+                        else {
+                            indexAI = -1;
+                        }
+                    }
+                    break;
+                }
                 case "恶魔之眼":
+                case "妖精":
                 case "噬魂怪":
                 case "地狱蝙蝠":
                 case "丛林蝙蝠":
@@ -1117,6 +1150,7 @@ public class MonsterHelper {
                     EntityHelper.handleSegmentsFollow(segments, (EntityHelper.WormSegmentMovementOptions) extraVariables.get("wormMoveOption"));
                     break;
                 }
+                case "瘟疫龟":
                 case "巨型陆龟":
                 case "冰雪陆龟": {
                     if (monster.getHealth() > 0) {
@@ -1139,16 +1173,8 @@ public class MonsterHelper {
                         if (rollProgress == 0) {
                             monsterBkt.setGravity(false);
                             monsterBkt.setCustomName(type + "§1");
-                            HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
-                            switch (type) {
-                                case "巨型陆龟":
-                                    attrMap.put("damage", 864d);
-                                    attrMap.put("defence", 120d);
-                                    break;
-                                default:
-                                    attrMap.put("damage", 594d);
-                                    attrMap.put("defence", 112d);
-                            }
+                            EntityHelper.tweakAttribute(monsterBkt, "damageMulti", "1", true);
+                            EntityHelper.tweakAttribute(monsterBkt, "defenceMulti", "1", true);
                             ((MonsterHusk) monster).defaultSpeed = 0;
                         }
                         else if (rollProgress == 10) {
@@ -1176,16 +1202,8 @@ public class MonsterHelper {
                         }
                         else if (rollProgress == 50 || rollProgress >= 60) {
                             monster.setNoGravity(false);
-                            HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
-                            switch (type) {
-                                case "巨型陆龟":
-                                    attrMap.put("damage", 480d);
-                                    attrMap.put("defence", 60d);
-                                    break;
-                                default:
-                                    attrMap.put("damage", 330d);
-                                    attrMap.put("defence", 56d);
-                            }
+                            EntityHelper.tweakAttribute(monsterBkt, "damageMulti", "1", false);
+                            EntityHelper.tweakAttribute(monsterBkt, "defenceMulti", "1", false);
                             if (monsterBkt.isOnGround()) {
                                 monsterBkt.setCustomName(type);
                                 ((MonsterHusk) monster).defaultSpeed = 0.2;

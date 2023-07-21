@@ -1023,7 +1023,7 @@ public class EntityHelper {
                                     ItemMeta meta = star.getItemMeta();
                                     meta.setDisplayName("§9§l星");
                                     star.setItemMeta(meta);
-                                    dPlayer.getWorld().dropItemNaturally(v.getLocation(), star);
+                                    ItemHelper.dropItem(v.getLocation(), star, false);
                                 }
                         }
                 }
@@ -1034,7 +1034,7 @@ public class EntityHelper {
                         ItemMeta meta = heart.getItemMeta();
                         meta.setDisplayName("§c§l心");
                         heart.setItemMeta(meta);
-                        dPlayer.getWorld().dropItemNaturally(v.getLocation(), heart);
+                        ItemHelper.dropItem(v.getLocation(), heart, false);
                     }
             }
             // set health/directly remove
@@ -1122,26 +1122,46 @@ public class EntityHelper {
                                 Math.random() < 0.125)
                             MonsterHelper.spawnMob("地牢幽魂", v.getLocation(), dPlayer);
                     }
-                    // souls and shards
+                    // souls and essences
                     if (PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.WALL_OF_FLESH.msgName)) {
                         if (!v.getScoreboardTags().contains("isBOSS")) {
-                            Biome biome = v.getLocation().getBlock().getBiome();
+                            Location deathLoc = v.getLocation();
+                            WorldHelper.BiomeType biome = WorldHelper.BiomeType.getBiome(deathLoc);
                             switch (biome) {
-                                case ICE_FLATS: // hallow surface
-                                case MUSHROOM_ISLAND: // corruption surface
+                                case HALLOW: // hallow
+                                case CORRUPTION: // corruption
                                 {
-                                    if (v.getLocation().getY() > 50 && Math.random() < 0.02)
-                                        v.getWorld().dropItemNaturally(vLiving.getEyeLocation(),
-                                                ItemHelper.getItemFromDescription(biome == Biome.ICE_FLATS ? "光明碎块" : "暗黑碎块"));
-                                    break;
-                                }
-                                case MUTATED_ICE_FLATS: // hallow underground
-                                case MUSHROOM_ISLAND_SHORE: // corruption underground
-                                {
+                                    WorldHelper.HeightLayer height = WorldHelper.HeightLayer.getHeightLayer(deathLoc);
+                                    if (height != WorldHelper.HeightLayer.CAVERN)
+                                        return;
                                     double dropChance = (255 - v.getLocation().getY()) / 125;
                                     if (Math.random() < dropChance)
-                                        v.getWorld().dropItemNaturally(vLiving.getEyeLocation(),
-                                                ItemHelper.getItemFromDescription(biome == Biome.MUTATED_ICE_FLATS ? "光明之魂" : "暗影之魂"));
+                                        ItemHelper.dropItem(vLiving.getEyeLocation(),
+                                                biome == WorldHelper.BiomeType.HALLOW ? "光明之魂" : "暗影之魂", false);
+                                    break;
+                                }
+                                case TUNDRA: // tundra
+                                {
+                                    double dropChance = 0.25;
+                                    if (Math.random() < dropChance)
+                                        ItemHelper.dropItem(vLiving.getEyeLocation(),
+                                                "冰川精华", false);
+                                    break;
+                                }
+                                case SPACE: // space
+                                {
+                                    double dropChance = 0.25;
+                                    if (Math.random() < dropChance)
+                                        ItemHelper.dropItem(vLiving.getEyeLocation(),
+                                                "日光精华", false);
+                                    break;
+                                }
+                                case BRIMSTONE_CRAG: // brimstone crag
+                                {
+                                    double dropChance = 0.25;
+                                    if (Math.random() < dropChance)
+                                        ItemHelper.dropItem(vLiving.getEyeLocation(),
+                                                "混乱精华", false);
                                     break;
                                 }
                             }

@@ -164,9 +164,12 @@ public class MonsterHelper {
         WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(ply);
         String  biomeStr = biomeType.toString().toLowerCase(),
                 heightStr = heightLayer.toString().toLowerCase();
-        if (biomeType == WorldHelper.BiomeType.UNDERWORLD) {
-            naturalMobSpawnType(ply, biomeStr);
-            return;
+        // do not attempt anything else for underworld
+        switch (biomeType) {
+            case UNDERWORLD:
+            case BRIMSTONE_CRAG:
+                naturalMobSpawnType(ply, biomeStr);
+                return;
         }
         // event mob spawning
         if (heightLayer == WorldHelper.HeightLayer.SURFACE) {
@@ -228,6 +231,14 @@ public class MonsterHelper {
                 }
                 case "SILVERFISH": {
                     entity = (new MonsterSilverfish(target, type, loc)).getBukkitEntity();
+                    break;
+                }
+                case "SPIDER": {
+                    entity = (new MonsterSpider(target, type, loc)).getBukkitEntity();
+                    break;
+                }
+                case "CAVE_SPIDER": {
+                    entity = (new MonsterCaveSpider(target, type, loc)).getBukkitEntity();
                     break;
                 }
                 default:

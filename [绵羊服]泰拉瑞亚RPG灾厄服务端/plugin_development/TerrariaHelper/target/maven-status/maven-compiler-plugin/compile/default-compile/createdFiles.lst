@@ -162,6 +162,7 @@ terraria\entity\boss\calamitasClone\CalamitasDummyPlayer.class
 terraria\event\listener\PlayerChatListener.class
 terraria\entity\npc\TerrariaNPCArmsDealer.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHead$PhaseAI.class
+terraria\entity\monster\MonsterSpider.class
 terraria\entity\boss\theSlimeGod\EbonianSlime$1.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHand$1.class
 terraria\entity\boss\event\pumpking\PumpkingHead.class

@@ -167,6 +167,7 @@ public enum CustomEntities {
     MONSTER_SILVERFISH      ("MonsterSilverfish",      60,  EntityType.SILVERFISH,      EntitySilverfish.class,      MonsterSilverfish.class),
     MONSTER_SKELETON        ("MonsterSkeleton",        51,  EntityType.SKELETON,        EntitySkeleton.class,        MonsterSkeleton.class),
     MONSTER_SLIME           ("MonsterSlime",           55,  EntityType.SLIME,           EntitySlime.class,           MonsterSlime.class),
+    MONSTER_SPIDER          ("MonsterSpider",          52,  EntityType.SPIDER,          EntitySpider.class,          MonsterSpider.class),
     MONSTER_WITHER_SKELETON ("MonsterWitherSkeleton",  5,   EntityType.WITHER_SKELETON, EntitySkeletonWither.class,  MonsterWitherSkeleton.class),
     MONSTER_ZOMBIE          ("MonsterZombie",          54,  EntityType.ZOMBIE,          EntityZombie.class,          MonsterZombie.class),
     NPC_ANGLER              ("NPCAngler",              120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPCAngler.class),
