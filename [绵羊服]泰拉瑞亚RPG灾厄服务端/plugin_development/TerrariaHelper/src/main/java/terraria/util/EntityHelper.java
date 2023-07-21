@@ -1003,14 +1003,41 @@ public class EntityHelper {
             vPly.setFallDistance(0);
             // further respawn ticking mechanism in regen thread
         } else {
-            // when a entity is killed by a player
+            // when an entity is killed by a player
             Set<String> vScoreboardTags = v.getScoreboardTags();
             if (dPly instanceof Player) {
                 Player dPlayer = (Player) dPly;
                 String victimName = GenericHelper.trimText(v.getName());
                 // spawn empress of light
-                if (victimName.equals("七彩草蛉")) {
-                    BossHelper.spawnBoss(dPlayer, BossHelper.BossType.EMPRESS_OF_LIGHT);
+                switch (victimName) {
+                    // the Hive Mind
+                    case "腐化囊": {
+                        if (dPly instanceof Player) {
+                            BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.THE_HIVE_MIND);
+                        }
+                        break;
+                    }
+                    // anahita and leviathan spawns after killing ???
+                    case "???": {
+                        if (dPly instanceof Player) {
+                            BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LEVIATHAN_AND_ANAHITA);
+                        }
+                        break;
+                    }
+                    // empress of light
+                    case "七彩草蛉": {
+                        if (dPly instanceof Player) {
+                            BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.EMPRESS_OF_LIGHT);
+                        }
+                        break;
+                    }
+                    // lunatic cultist spawns after killing the mob in the dungeon
+                    case "拜月教教徒": {
+                        if (dPly instanceof Player) {
+                            BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LUNATIC_CULTIST, v.getLocation());
+                        }
+                        break;
+                    }
                 }
                 // drop stars
                 switch (damageType) {
@@ -1082,32 +1109,11 @@ public class EntityHelper {
                             }
                             break;
                         }
-                        // the hungry flies towards the player after breaks free
+                        // the hungry flies towards the player after breaking free
                         case "饿鬼Attached": {
                             if (dPly instanceof Player) {
                                 MonsterHelper.spawnMob("饿鬼", v.getLocation(), (Player) dPly);
                                 v.remove();
-                            }
-                            break;
-                        }
-                        // the Hive Mind
-                        case "腐化囊": {
-                            if (dPly instanceof Player) {
-                                BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.THE_HIVE_MIND);
-                            }
-                            break;
-                        }
-                        // anahita and leviathan spawns after killing ???
-                        case "???": {
-                            if (dPly instanceof Player) {
-                                BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LEVIATHAN_AND_ANAHITA);
-                            }
-                            break;
-                        }
-                        // lunatic cultist spawns after killing the mob in the dungeon
-                        case "拜月教教徒": {
-                            if (dPly instanceof Player) {
-                                BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LUNATIC_CULTIST, v.getLocation());
                             }
                             break;
                         }

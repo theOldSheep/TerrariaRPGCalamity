@@ -253,18 +253,22 @@ public class GenericHelper {
     }
     public static void dropMoney(Location loc, int amount) {
         int[] stackSize = coinConversion(amount);
-        if (stackSize[0] > 0) loc.getWorld().dropItemNaturally(loc,
-                ItemHelper.getItemFromDescription("铂金币:" + stackSize[0], false));
-        if (stackSize[1] > 0) loc.getWorld().dropItemNaturally(loc,
-                ItemHelper.getItemFromDescription("金币:" + stackSize[1], false));
-        if (stackSize[2] > 0) loc.getWorld().dropItemNaturally(loc,
-                ItemHelper.getItemFromDescription("银币:" + stackSize[2], false));
-        if (stackSize[3] > 0) loc.getWorld().dropItemNaturally(loc,
-                ItemHelper.getItemFromDescription("铜币:" + stackSize[3], false));
+        if (stackSize[0] > 0)
+            ItemHelper.dropItem(loc, "铂金币:" + stackSize[0],
+                    false, false, false);
+        if (stackSize[1] > 0)
+            ItemHelper.dropItem(loc, "金币:" + stackSize[1],
+                    false, false, false);
+        if (stackSize[2] > 0)
+            ItemHelper.dropItem(loc, "银币:" + stackSize[2],
+                    false, false, false);
+        if (stackSize[3] > 0)
+            ItemHelper.dropItem(loc, "铜币:" + stackSize[3],
+                    false, false, false);
     }
     public static double getHorizontalDistance(Location locationA, Location locationB) {
-        double distX = Math.abs(locationA.getX() - locationA.getX());
-        double distZ = Math.abs(locationA.getZ() - locationA.getZ());
+        double distX = Math.abs(locationA.getX() - locationB.getX());
+        double distZ = Math.abs(locationA.getZ() - locationB.getZ());
         return Math.max(distX, distZ);
     }
     public static void handleParticleLine(Vector vector, Location startLoc, ParticleLineOptions options) {

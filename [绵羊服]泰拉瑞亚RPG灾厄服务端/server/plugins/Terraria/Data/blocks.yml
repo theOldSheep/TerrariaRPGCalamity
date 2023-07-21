@@ -7,9 +7,9 @@ LOG_2:
   dropItem:
   - 木材:1:4:1
 LEAVES:
-  powerPickaxe: 999999
+  totalProgress: 100
 LEAVES_2:
-  powerPickaxe: 999999
+  totalProgress: 100
 WOOD:
   totalProgress: 65
   dropItem:

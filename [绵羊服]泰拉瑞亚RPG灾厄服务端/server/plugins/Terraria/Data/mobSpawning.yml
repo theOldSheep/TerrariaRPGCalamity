@@ -59,6 +59,9 @@ spawnInfo:
     desert_underground:
         蚁狮马: 1
         风暴蚁狮: 0.25
+    sunken_sea:
+        水母: 100
+        巨像蛤: 1
     jungle_day:
         丛林蝙蝠: 10
         丛林史莱姆: 10
@@ -85,6 +88,11 @@ spawnInfo:
         冰雪陆龟: 1
     ocean:
         ???: 1
+        水母: 100
+    sulphurous_ocean:
+        水母: 1
+    abyss:
+        水母: 1
     corruption_underground:
         噬魂怪: 1
     corruption:
@@ -278,6 +286,7 @@ spawnInfo:
     冰霜月19:
         雪兽: 1
 mobTier:
+    肉后巨像蛤: 血肉之墙
     妖精: 血肉之墙
     独角兽: 血肉之墙
     飞龙: 血肉之墙
@@ -358,6 +367,7 @@ mobTier:
 mobTierMax:
     诅咒骷髅头: 血肉之墙
     恶魔: 机械三王
+    巨像蛤: 血肉之墙
 mobInfo:
     陨石怪:
         name: "陨石怪"
@@ -666,6 +676,38 @@ mobInfo:
                     knockback: 3
                     knockbackResistance: 0.36
                     health: 240
+    水母:
+        name: "水母"
+        monsterType: "SLIME"
+        spawnLocationType: "WATER"
+        variants:
+            default1:
+                attributes:
+                    damage: 150
+                    damageType: "Melee"
+                    defence: 8
+                    knockback: 3
+                    knockbackResistance: 0.2
+                    health: 204
+                name: "蓝水母"
+            default2:
+                attributes:
+                    damage: 180
+                    damageType: "Melee"
+                    defence: 12
+                    knockback: 3
+                    knockbackResistance: 0.2
+                    health: 420
+                name: "粉水母"
+            default3:
+                attributes:
+                    damage: 120
+                    damageType: "Melee"
+                    defence: 30
+                    knockback: 3
+                    knockbackResistance: 0.2
+                    health: 360
+                name: "绿水母"
     蚁狮马:
         name: "蚁狮马"
         monsterType: "SPIDER"
@@ -1254,6 +1296,36 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.48
                     health: 1560
+    巨像蛤:
+        name: "巨像蛤"
+        monsterType: "SLIME"
+        slimeSize: 8
+        spawnLocationType: WATER
+        unique: true
+        variants:
+            default1:
+                attributes:
+                    damage: 396
+                    damageType: "Melee"
+                    defence: 20
+                    knockback: 2
+                    knockbackResistance: 1
+                    health: 7500
+    肉后巨像蛤:
+        name: "巨像蛤"
+        monsterType: "SLIME"
+        slimeSize: 8
+        spawnLocationType: WATER
+        unique: true
+        variants:
+            default1:
+                attributes:
+                    damage: 792
+                    damageType: "Melee"
+                    defence: 70
+                    knockback: 2
+                    knockbackResistance: 1
+                    health: 45000
     克苏鲁的仆从:
         name: "克苏鲁的仆从"
         monsterType: "SLIME"

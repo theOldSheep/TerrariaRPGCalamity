@@ -684,33 +684,34 @@ public class ItemHelper {
         return dropItem(loc, itemToDropDescription, true, canMerge);
     }
     public static Item dropItem(Location loc, String itemToDropDescription, boolean randomizePrefixIfNoneExists, boolean canMerge) {
-        String[] itemInfo = itemToDropDescription.split(":");
-        // 物品名:最小数量:最大数量:几率
-        int itemAmount = 1;
-        switch (itemInfo.length) {
-            case 4:
-                double chance = Double.parseDouble(itemInfo[3]);
-                if (Math.random() > chance) return null;
-                break;
-            case 3:
-                int itemMax = Integer.parseInt(itemInfo[2]);
-                int itemMin = Integer.parseInt(itemInfo[1]);
-                itemAmount = (int) (itemMin + (itemMax - itemMin + 1) * Math.random());
-                break;
-            case 2:
-                itemAmount = Integer.parseInt(itemInfo[1]);
-                break;
-        }
-        ItemStack itemToDrop = getItemFromDescription(itemInfo[0], randomizePrefixIfNoneExists);
-        itemToDrop.setAmount(itemAmount);
-        return dropItem(loc, itemToDrop, canMerge);
+        return dropItem(loc, itemToDropDescription, randomizePrefixIfNoneExists, canMerge, true);
+    }
+    public static Item dropItem(Location loc, String itemToDropDescription, boolean randomizePrefixIfNoneExists, boolean canMerge, boolean noOverStack) {
+        ItemStack itemToDrop = getItemFromDescription(itemToDropDescription, randomizePrefixIfNoneExists);
+        return dropItem(loc, itemToDrop, canMerge, noOverStack);
     }
     public static Item dropItem(Location loc, ItemStack itemToDrop) {
         return dropItem(loc, itemToDrop, true);
     }
     public static Item dropItem(Location loc, ItemStack itemToDrop, boolean canMerge) {
-        if (itemToDrop.getAmount() <= 0) return null;
+        return dropItem(loc, itemToDrop, canMerge, true);
+    }
+    public static Item dropItem(Location loc, ItemStack itemToDrop, boolean canMerge, boolean noOverStack) {
+        int itemAmount = itemToDrop.getAmount();
+        if (itemAmount <= 0) return null;
         if (itemToDrop.getType() == Material.AIR) return null;
+        // extras are dropped in separate stacks
+        if (noOverStack) {
+            int maxStackSize = itemToDrop.getType().getMaxStackSize();
+            if (itemAmount > maxStackSize) {
+                // drop extras
+                itemToDrop.setAmount(itemAmount - maxStackSize);
+                dropItem(loc, itemToDrop, canMerge, true);
+                // update current drop amount to max stack size
+                itemToDrop.setAmount(maxStackSize);
+            }
+        }
+        // drop item
         TerrariaItem entity = new TerrariaItem(loc, itemToDrop);
         if (!canMerge)
             entity.canBeMerged = false;

@@ -3,6 +3,7 @@ package terraria.entity.monster;
 
 import net.minecraft.server.v1_12_R1.*;
 import net.minecraft.server.v1_12_R1.Entity;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -105,64 +106,73 @@ public class MonsterHelper {
             case PRE_WALL_OF_FLESH:
                 switch (playerProgress) {
                     case PRE_PLANTERA:
-                        result.healthMulti  = 2d;
-                        result.defenceMulti = 2d;
-                        result.damageMulti  = 1.5d;
-                        break;
-                    case PRE_MOON_LORD:
-                        result.healthMulti  = 3d;
-                        result.defenceMulti = 2.5d;
+                        result.healthMulti  = 6d;
+                        result.defenceMulti = 3.5d;
                         result.damageMulti  = 2d;
                         break;
+                    case PRE_MOON_LORD:
+                        result.healthMulti  = 10d;
+                        result.defenceMulti = 5d;
+                        result.damageMulti  = 3d;
+                        break;
                     case PRE_PROFANED_GODDESS:
-                        result.healthMulti  = 4d;
-                        result.defenceMulti = 3d;
-                        result.damageMulti  = 2.5d;
+                        result.healthMulti  = 10d;
+                        result.defenceMulti = 5d;
+                        result.damageMulti  = 3d;
+                        // TODO: umcomment after finishing post-moonlord contents
+//                        result.healthMulti  = 20d;
+//                        result.defenceMulti = 10d;
+//                        result.damageMulti  = 3.5d;
                         break;
                     case POST_PROFANED_GODDESS:
-                        result.healthMulti  = 6d;
-                        result.defenceMulti = 4d;
-                        result.damageMulti  = 3d;
+                        result.healthMulti  = 35d;
+                        result.defenceMulti = 15d;
+                        result.damageMulti  = 4d;
                         break;
                 }
                 break;
             case PRE_PLANTERA:
                 switch (playerProgress) {
                     case PRE_MOON_LORD:
-                        result.healthMulti  = 1.5d;
-                        result.defenceMulti = 1.5d;
-                        result.damageMulti  = 1.5d;
+                        result.healthMulti  = 5d;
+                        result.defenceMulti = 3d;
+                        result.damageMulti  = 2d;
                         break;
                     case PRE_PROFANED_GODDESS:
-                        result.healthMulti  = 3d;
-                        result.defenceMulti = 2d;
-                        result.damageMulti  = 1.75d;
+                        result.healthMulti  = 5d;
+                        result.defenceMulti = 3d;
+                        result.damageMulti  = 2d;
+                        // TODO: umcomment after finishing post-moonlord contents
+//                        result.healthMulti  = 8d;
+//                        result.defenceMulti = 4d;
+//                        result.damageMulti  = 2.75d;
                         break;
                     case POST_PROFANED_GODDESS:
-                        result.healthMulti  = 4.5d;
-                        result.defenceMulti = 3d;
-                        result.damageMulti  = 2.5d;
+                        result.healthMulti  = 15d;
+                        result.defenceMulti = 6d;
+                        result.damageMulti  = 3.5d;
                         break;
                 }
                 break;
             case PRE_MOON_LORD:
                 switch (playerProgress) {
                     case PRE_PROFANED_GODDESS:
-                        result.healthMulti  = 1.75d;
-                        result.defenceMulti = 1.75d;
-                        result.damageMulti  = 1.5d;
+                        // TODO: umcomment after finishing post-moonlord contents
+//                        result.healthMulti  = 4d;
+//                        result.defenceMulti = 3d;
+//                        result.damageMulti  = 1.5d;
                         break;
                     case POST_PROFANED_GODDESS:
-                        result.healthMulti  = 2.5d;
-                        result.defenceMulti = 2.5d;
-                        result.damageMulti  = 2d;
+                        result.healthMulti  = 6d;
+                        result.defenceMulti = 5d;
+                        result.damageMulti  = 2.5d;
                         break;
                 }
                 break;
             case PRE_PROFANED_GODDESS:
                 if (playerProgress == PlayerHelper.GameProgress.POST_PROFANED_GODDESS) {
-                    result.healthMulti  = 3d;
-                    result.defenceMulti = 2d;
+                    result.healthMulti  = 3.5d;
+                    result.defenceMulti = 2.5d;
                     result.damageMulti  = 1.5d;
                 }
                 break;
@@ -249,6 +259,7 @@ public class MonsterHelper {
         // set the monster's special info
         // no gravity
         switch (type) {
+            case "水母":
             case "秃鹰":
             case "恶魔之眼":
             case "噬魂怪":
@@ -258,11 +269,6 @@ public class MonsterHelper {
             case "饿鬼":
             case "巨型诅咒骷髅头":
             case "胡闹鬼":
-            case "克苏鲁的仆从":
-            case "沼泽之眼":
-            case "飞翔史莱姆":
-            case "探测怪":
-            case "深海吞食者":
             case "鸟妖":
             case "飞龙":
             case "吞噬者":
@@ -293,6 +299,12 @@ public class MonsterHelper {
             case "星尘细胞":
             case "银河织妖":
             case "流体入侵怪":
+            case "克苏鲁的仆从":
+            case "沼泽之眼":
+            case "飞翔史莱姆":
+            case "探测怪":
+            case "???":
+            case "深海吞食者":
                 monster.setNoGravity(true);
         }
         // no clip
@@ -307,7 +319,6 @@ public class MonsterHelper {
             case "精灵直升机":
             case "蛾怪":
             case "陨石怪":
-            case "克苏鲁的仆从":
             case "沼泽之眼":
             case "幽灵":
             case "死神":
@@ -321,6 +332,7 @@ public class MonsterHelper {
             case "星云球":
             case "星尘细胞":
             case "银河织妖":
+            case "克苏鲁的仆从":
                 monster.noclip = true;
         }
         // glowing
@@ -328,6 +340,8 @@ public class MonsterHelper {
             case "诅咒骷髅头":
             case "妖精":
             case "巨型诅咒骷髅头":
+            case "巨像蛤":
+            case "肉后巨像蛤":
                 monster.glowing = true;
         }
         // AI removed for certain monsters to prevent bug
@@ -525,15 +539,19 @@ public class MonsterHelper {
             }
         }
         // the monster's ticks lived is set to represent the ticks of losing any target
+        // this is triggered when target is not online / not logged in; target is in a different world
         if (
-                // target is not online / not logged in etc.
                 !PlayerHelper.isProperlyPlaying(target) ||
-                // target is in a different world
-                targetNMS.getWorld() != monster.getWorld() ||
-                // distance > 96
+                        targetNMS.getWorld() != monster.getWorld()) {
+            monster.ticksLived = Math.max(monster.ticksLived, 9999);
+        }
+        // distance > 96
+        else if (
                 target.getLocation().distanceSquared(monsterBkt.getLocation()) > 9216) {
             monster.ticksLived = Math.max(monster.ticksLived, 150);
-        } else if (monster.hasLineOfSight(targetNMS)) {
+        }
+        // reset ticks out of combat when target can be seen
+        else if (monster.hasLineOfSight(targetNMS)) {
             monster.ticksLived = 1;
         }
         // retarget mechanic
@@ -675,6 +693,7 @@ public class MonsterHelper {
         monsterBkt.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(defaultMovementSpeed * speedMultiKnockback);
         // the monster's additional AI and drop
         boolean hasContactDamage = true;
+        boolean lookAtPlayer = true;
         if (!isMonsterPart) {
             switch (type) {
                 case "僵尸":
@@ -700,25 +719,6 @@ public class MonsterHelper {
                             double moveSpeed = 0.25 + Math.random() * 0.3;
                             monsterBkt.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(moveSpeed);
                             ((MonsterHusk) monster).defaultSpeed = moveSpeed;
-                        }
-                    }
-                    break;
-                }
-                case "眼怪": {
-                    if (monster.getHealth() > 0) {
-                        if (indexAI == 0)
-                            indexAI = (int) (Math.random() * 100);
-                        else if (indexAI > 160) {
-                            indexAI = (int) (Math.random() * 100);
-                            Vector v = target.getEyeLocation().subtract(monsterBkt.getEyeLocation()).toVector();
-                            double vLen = v.length();
-                            if (vLen > 0) {
-                                v.multiply(1.5 / vLen);
-                                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                        monsterBkt, v, EntityHelper.getAttrMap(monsterBkt), "激光");
-                                shootInfo.properties.put("penetration", 10);
-                                EntityHelper.spawnProjectile(shootInfo);
-                            }
                         }
                     }
                     break;
@@ -864,16 +864,85 @@ public class MonsterHelper {
                             if (indexAI % 160 < 75)
                                 targetLoc.add(0, 10, 0);
                             Vector velocity = monsterBkt.getVelocity();
-                            Vector acceleration = MathHelper.getDirection(monsterBkt.getLocation(), targetLoc, 0.1);
+                            Vector acceleration = MathHelper.getDirection(monsterBkt.getLocation(), targetLoc, 0.15);
                             velocity.add(acceleration);
                             // regularize velocity
                             double velLen = velocity.length();
-                            if (velLen > 1.5)
-                                velocity.multiply(1.5 / velLen);
+                            if (velLen > 0.5)
+                                velocity.multiply(0.5 / velLen);
                             monsterBkt.setVelocity(velocity);
                         }
                         else {
                             indexAI = -1;
+                        }
+                    }
+                    break;
+                }
+                case "水母": {
+                    if (monster.getHealth() > 0) {
+                        // periodically becomes invincible
+                        {
+                            if (indexAI % 200 == 0) {
+                                monsterBkt.setGlowing(true);
+                                monsterBkt.addScoreboardTag("noDamage");
+                                EntityHelper.tweakAttribute(monsterBkt, "damageMulti", "0.3", true);
+                            } else if (indexAI % 200 == 100) {
+                                monsterBkt.setGlowing(false);
+                                monsterBkt.removeScoreboardTag("noDamage");
+                                EntityHelper.tweakAttribute(monsterBkt, "damageMulti", "0.3", false);
+                            }
+                        }
+                        // dashes into player when in water, can not move on land.
+                        switch (monsterBkt.getLocation().getBlock().getType()) {
+                            case WATER:
+                            case STATIONARY_WATER: {
+                                if (indexAI % 30 == 0) {
+                                    indexAI += (int) (Math.random() * 10);
+                                    double accLen = Math.random() * 0.2 + 0.65;
+                                    Vector velocity = monsterBkt.getVelocity();
+                                    Vector acceleration = MathHelper.getDirection(
+                                            monsterBkt.getEyeLocation(), target.getEyeLocation(), accLen);
+                                    velocity.add(acceleration);
+                                    monsterBkt.setVelocity(velocity);
+                                }
+                                monsterBkt.setGravity(false);
+                                break;
+                            }
+                            default:
+                                monsterBkt.setGravity(true);
+                        }
+                    }
+                    break;
+                }
+                case "巨像蛤":
+                case "肉后巨像蛤": {
+                    if (monster.getHealth() > 0) {
+                        // stationary on full health
+                        if (monster.getHealth() + 1e-5 > monster.getMaxHealth()) {
+                            monsterBkt.setVelocity(new Vector());
+                        }
+                        // smashes enemy periodically otherwise
+                        else {
+                            // when smashing
+                            if (indexAI == -1) {
+                                monsterBkt.setVelocity(new Vector(0, -1, 0));
+                                indexAI--;
+                                // prepare to land
+                                Location futureLoc = monsterBkt.getLocation().add(monsterBkt.getVelocity()).subtract(0, 0.1, 0);
+                                if (futureLoc.getY() < target.getEyeLocation().getY() &&
+                                        futureLoc.getBlock().getType().isSolid()) {
+                                    monster.noclip = false;
+                                    monsterBkt.removeScoreboardTag("noDamage");
+                                    indexAI = 0;
+                                }
+                            }
+                            Bukkit.broadcastMessage(indexAI + ", " + monsterBkt.getScoreboardTags());
+                            if (indexAI > 30) {
+                                monster.noclip = true;
+                                monsterBkt.teleport(target.getLocation().add(0, 16, 0));
+                                monsterBkt.addScoreboardTag("noDamage");
+                                indexAI = -2;
+                            }
                         }
                     }
                     break;
@@ -1078,6 +1147,7 @@ public class MonsterHelper {
                 case "飞龙":
                 case "骨蛇":
                 case "吞噬者": {
+                    lookAtPlayer = false;
                     ArrayList<org.bukkit.entity.LivingEntity> segments = (ArrayList<org.bukkit.entity.LivingEntity>) extraVariables.get("attachments");
                     for (org.bukkit.entity.Entity entity : segments) {
                         ((LivingEntity) entity).setHealth(monsterBkt.getHealth());
@@ -2166,6 +2236,12 @@ public class MonsterHelper {
                     }
                     break;
                 }
+            }
+            // look at player
+            if (lookAtPlayer) {
+                Vector facingDir = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 1);
+                monster.yaw = (float) MathHelper.getVectorYaw(facingDir);
+                monster.pitch = (float) MathHelper.getVectorPitch(facingDir);
             }
             // drop
             if (monsterBkt.getHealth() <= 0d && ! monsterBkt.getScoreboardTags().contains("dropHandled")) {
