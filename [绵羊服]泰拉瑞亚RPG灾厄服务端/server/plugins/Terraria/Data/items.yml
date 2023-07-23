@@ -5,24 +5,75 @@
 南瓜种子:
   item: PUMPKIN_SEEDS
   lore:
-  - §r右键土地种植南瓜
+  - §r右键种植南瓜
   worth: 1000
+  rarity: 0
+橡实:
+  item: CLAY_BALL
+  lore:
+  - §r右键种树
+  worth: 200
+  rarity: 0
+雪块:
+  item: SNOW_BLOCK
+  rarity: 0
+泥土:
+  item: DIRT
+  rarity: 0
+星辉泥土:
+  item: DIRT
+  data: 1
   rarity: 0
 木材:
   item: WOOD
   rarity: 0
 冰块:
-  item: ICE
+  item: PACKED_ICE
   rarity: 0
 黑曜石:
   item: OBSIDIAN
   rarity: 0
+砂岩:
+  item: SANDSTONE
+  rarity: 0
 石头:
   item: STONE
+  rarity: 0
+黑檀石:
+  item: STAINED_CLAY
+  data: 7
+  rarity: 0
+珍珠石:
+  item: STAINED_CLAY
+  data: 0
+  rarity: 0
+沉沦渊石:
+  item: STAINED_CLAY
+  data: 11
+  rarity: 0
+植物混融块:
+  item: PRISMARINE
+  rarity: 3
+  worth: 6000
+黑渊石:
+  item: PRISMARINE
+  data: 1
+  rarity: 0
+虚空石:
+  item: PRISMARINE
+  data: 2
+  rarity: 0
+星辉石:
+  item: STAINED_CLAY
+  data: 15
   rarity: 0
 灰烬块:
   item: NETHERRACK
   rarity: 0
+硫磺火石砖:
+  item: RED_NETHER_BRICK
+  rarity: 3
+  worth: 2000
 沙块:
   item: SAND
   rarity: 0
@@ -5817,7 +5868,7 @@
   worth: 20000
   rarity: 0
 暗影鳞片:
-  item: DRAGON_EGG
+  item: CLAY
   worth: 160000
   rarity: 1
 火把:
@@ -6054,9 +6105,6 @@
 贝壳:
   item: CLAY_BALL
   rarity: 0
-沉沦渊石:
-  item: CLAY_BALL
-  rarity: 0
 海棱晶:
   item: CLAY_BALL
   worth: 100000
@@ -6136,6 +6184,10 @@
   rarity: 3
 叶绿矿:
   item: CLAY_BALL
+  lore:
+  - §r右键丛林洞穴层的泥土可以把它埋进去
+  - §r在丛林洞穴层时或许会缓慢发生变化？
+  - §r“它似乎不喜欢拥挤”
   worth: 150000
   rarity: 7
 叶绿锭:

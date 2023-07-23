@@ -150,7 +150,7 @@ FURNACE:
     - 发光蘑菇
   '30':
     requireLevel: 1
-    resultItem: 南瓜派:4
+    resultItem: 南瓜派
     requireItem:
     - 南瓜:12
   '31':

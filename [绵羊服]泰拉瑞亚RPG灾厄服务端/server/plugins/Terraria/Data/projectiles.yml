@@ -634,11 +634,13 @@
 初级雪人火箭:
     gravity: 0
     autoTrace: true
+    isGrenade: true
     blastRadius: 2.25
     blastDamageShooter: true
 二级雪人火箭:
     gravity: 0
     autoTrace: true
+    isGrenade: true
     blastRadius: 2.75
     blastDamageShooter: true
     blastDestroyBlock: true
@@ -650,6 +652,7 @@
 四级雪人火箭:
     gravity: 0
     autoTrace: true
+    isGrenade: true
     blastRadius: 3.5
     blastDamageShooter: true
     blastDestroyBlock: true
@@ -763,6 +766,11 @@
     noGravityTicks: 0
     isGrenade: true
     blastRadius: 4
+    blastDamageShooter: true
+    blastDestroyBlock: true
+TNT:
+    isGrenade: true
+    blastRadius: 7.5
     blastDamageShooter: true
     blastDestroyBlock: true
 冰焰箭:

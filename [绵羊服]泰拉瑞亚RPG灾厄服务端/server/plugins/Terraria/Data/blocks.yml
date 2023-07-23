@@ -1,3 +1,4 @@
+# wood
 LOG:
   totalProgress: 400
   dropItem:
@@ -8,16 +9,87 @@ LOG_2:
   - 木材:1:4:1
 LEAVES:
   totalProgress: 100
+  dropItem:
+  - 苹果:1:1:0.01
+  - 橡实:1:1:0.025
 LEAVES_2:
   totalProgress: 100
+  dropItem:
+  - 苹果:1:1:0.01
+  - 橡实:1:1:0.025
 WOOD:
   totalProgress: 65
   dropItem:
   - 木材
+# plants
+CACTUS:
+  totalProgress: 100
+  dropItem:
+  - 仙人掌
+LONG_GRASS:
+  totalProgress: 1
+  dropItem:
+  - 草种:1:1:0.05
+YELLOW_FLOWER:
+  totalProgress: 1
+  dropItem:
+  - 太阳花
+RED_ROSE_0:
+  totalProgress: 1
+  dropItem:
+  - 火焰花
+RED_ROSE_1:
+  totalProgress: 1
+  dropItem:
+  - 死亡草
+RED_ROSE_2:
+  totalProgress: 1
+  dropItem:
+  - 月光草
+RED_ROSE_3:
+  totalProgress: 1
+  dropItem:
+  - 寒颤棘
+RED_ROSE_4:
+  totalProgress: 1
+  dropItem:
+  - 波浪叶
+RED_ROSE_5:
+  totalProgress: 1
+  dropItem:
+  - 闪耀根
+81834b91-513d-450f-b920-6880fd47c997:
+  totalProgress: 1
+  dropItem:
+  - 生命果
+50af25ef-adb9-44d0-880f-6890ea0dc182:
+  totalProgress: 1
+  spawnBoss: PLANTERA
+RED_MUSHROOM:
+  totalProgress: 1
+  dropItem:
+  - 蘑菇
+BROWN_MUSHROOM:
+  totalProgress: 1
+  dropItem:
+  - 发光蘑菇
+PUMPKIN:
+  totalProgress: 1
+  dropItem:
+  - 南瓜:5:10
+# natural blocks
+SAND:
+  totalProgress: 65
+  dropItem:
+  - 沙块
 DIRT_1:
   totalProgress: 65
   dropItem:
   - 星辉泥土
+MYCEL:
+  totalProgress: 65
+  dropItem:
+  - 泥土
 GRASS:
   totalProgress: 65
   dropItem:
@@ -26,6 +98,23 @@ DIRT:
   totalProgress: 65
   dropItem:
   - 泥土
+SNOW_BLOCK:
+  totalProgress: 85
+  dropItem:
+  - 雪块
+OBSIDIAN:
+  powerPickaxe: 55
+  totalProgress: 150
+  dropItem:
+  - 黑曜石
+SANDSTONE:
+  totalProgress: 100
+  dropItem:
+  - 砂岩
+RED_SANDSTONE:
+  totalProgress: 150
+  dropItem:
+  - 砂岩
 PACKED_ICE:
   totalProgress: 100
   dropItem:
@@ -45,25 +134,260 @@ STAINED_CLAY_7:
   dropItem:
   - 黑檀石
 STAINED_CLAY_11:
-  progress: 灾厄之眼
-  powerPickaxe: 200
-  totalProgress: 500
+  progress: 荒漠灾虫
+  powerPickaxe: 55
+  totalProgress: 150
+  dropItem:
+  - 沉沦渊石
+PRISMARINE_0:
+  totalProgress: 200
+  dropItem:
+  - 植物混融块
+PRISMARINE_1:
+  powerPickaxe: 65
+  totalProgress: 300
   dropItem:
   - 黑渊石
+PRISMARINE_2:
+  powerPickaxe: 180
+  totalProgress: 750
+  dropItem:
+  - 虚空石
 STAINED_CLAY_15:
   powerPickaxe: 65
   totalProgress: 200
   dropItem:
   - 星辉石
+NETHERRACK:
+  totalProgress: 125
+  dropItem:
+  - 灰烬块
+RED_NETHER_BRICK:
+  totalProgress: 200
+  dropItem:
+  - 硫磺火石砖
+# vanilla ores
+EMERALD_ORE:
+  totalProgress: 150
+  dropItem:
+  - 生命水晶
+COAL_ORE:
+  totalProgress: 90
+  dropItem:
+  - 铜矿石
+IRON_ORE:
+  totalProgress: 100
+  dropItem:
+  - 铁矿石
+LAPIS_ORE:
+  totalProgress: 120
+  dropItem:
+  - 银矿石
+GOLD_ORE:
+  totalProgress: 135
+  dropItem:
+  - 金矿石
+RED_GLAZED_TERRACOTTA:
+  powerPickaxe: 50
+  totalProgress: 135
+  dropItem:
+  - 陨星矿
+MAGMA:
+  powerPickaxe: 65
+  totalProgress: 180
+  dropItem:
+  - 狱炎矿
+LAPIS_BLOCK:
+  progress: 血肉之墙
+  powerPickaxe: 100
+  totalProgress: 275
+  dropItem:
+  - 钴矿
+EMERALD_BLOCK:
+  progress: 机械一王
+  powerPickaxe: 110
+  totalProgress: 350
+  dropItem:
+  - 秘银矿
+GLOWING_REDSTONE_ORE:
+  progress: 机械二王
+  powerPickaxe: 150
+  totalProgress: 425
+  dropItem:
+  - 精金矿
+REDSTONE_ORE:
+  progress: 机械二王
+  powerPickaxe: 150
+  totalProgress: 425
+  dropItem:
+  - 精金矿
+QUARTZ_ORE:
+  powerPickaxe: 150
+  totalProgress: 425
+  dropItem:
+  - 焦炭矿
+MOSSY_COBBLESTONE:
+  powerPickaxe: 200
+  totalProgress: 750
+  dropItem:
+  - 叶绿矿
+# calamity ores
+SEA_LANTERN:
+  powerPickaxe: 55
+  totalProgress: 150
+  dropItem:
+  - 海棱晶:1:1:0.5
+  - 棱晶碎片:2:4:1
+DIAMOND_ORE:
+  progress: 腐巢意志
+  powerPickaxe: 65
+  totalProgress: 175
+  dropItem:
+  - 天蓝矿
+DIAMOND_BLOCK:
+  powerPickaxe: 180
+  totalProgress: 650
+  dropItem:
+  - 寒元矿
+LIME_GLAZED_TERRACOTTA:
+  powerPickaxe: 200
+  totalProgress: 750
+  dropItem:
+  - 永恒矿
+COAL_BLOCK:
+  powerPickaxe: 210
+  totalProgress: 800
+  dropItem:
+  - 熔渣矿
+REDSTONE_BLOCK:
+  powerPickaxe: 210
+  totalProgress: 800
+  dropItem:
+  - 炫星矿
+BLACK_GLAZED_TERRACOTTA:
+  progress: 月球领主
+  powerPickaxe: 225
+  totalProgress: 800
+  dropItem:
+  - 起源之簇
+BROWN_GLAZED_TERRACOTTA:
+  progress: 亵渎天神，普罗维登斯
+  powerPickaxe: 225
+  totalProgress: 850
+  dropItem:
+  - 龙蒿矿
+YELLOW_GLAZED_TERRACOTTA:
+  progress: 丛林龙，犽戎
+  powerPickaxe: 250
+  totalProgress: 900
+  dropItem:
+  - 圣金源矿
+# building blocks
+WOOL:
+  totalProgress: 75
+  dropItem:
+  - 羊毛
+FENCE:
+  totalProgress: 125
+  dropItem:
+  - 木栅栏
+GLOWSTONE:
+  totalProgress: 80
+  dropItem:
+  - 萤石
+QUARTZ_BLOCK:
+  totalProgress: 175
+  dropItem:
+  - 石英块
+QUARTZ_STAIRS:
+  totalProgress: 175
+  dropItem:
+  - 石英台阶
+SMOOTH_BRICK:
+  totalProgress: 125
+  dropItem:
+  - 石砖
+SMOOTH_STAIRS:
+  totalProgress: 125
+  dropItem:
+  - 石砖台阶
+TORCH:
+  totalProgress: 1
+  dropItem:
+  - 火把
+SIGN:
+  totalProgress: 120
+  dropItem:
+  - 牌子
+WALL_SIGN:
+  totalProgress: 120
+  dropItem:
+  - 牌子
+SIGN_POST:
+  totalProgress: 120
+  dropItem:
+  - 牌子
+LEVER:
+  totalProgress: 1
+  dropItem:
+  - 拉杆
+POWERED_RAIL:
+  totalProgress: 1
+  dropItem:
+  - 充能铁轨
+RAILS:
+  totalProgress: 1
+  dropItem:
+  - 铁轨
+LADDER:
+  totalProgress: 1
+  dropItem:
+  - 梯子
+# workstations and utility blocks
 WORKBENCH:
   totalProgress: 120
   dropItem:
   - 木制工作台
+火炉:
+  totalProgress: 120
+  dropItem:
+  - 火炉
+地狱熔炉:
+  totalProgress: 180
+  dropItem:
+  - 地狱熔炉
+精金熔炉:
+  totalProgress: 350
+  dropItem:
+  - 精金熔炉
+ANVIL:
+  totalProgress: 120
+  dropItem:
+  - 铁砧
+秘银砧:
+  totalProgress: 250
+  dropItem:
+  - 秘银砧
+BREWING_STAND_ITEM:
+  totalProgress: 120
+  dropItem:
+  - 酿造台
 工匠合成台:
   totalProgress: 120
   dropItem:
   - 工匠合成台
+远古操纵机:
+  totalProgress: 650
+  dropItem:
+  - 远古操纵机
 CHEST:
   totalProgress: 150
   dropItem:
   - 箱子
+# unbreakables
+ENCHANTMENT_TABLE:
+  powerPickaxe: 999999
+SMOOTH_BRICK_1:
+  powerPickaxe: 999999
+SMOOTH_BRICK_2:
+  powerPickaxe: 999999
