@@ -990,10 +990,10 @@ protect:
   blacklist:
 
     # Which blocks should people be prevented from placing?
-    placement: LAVA,TNT,LAVA_BUCKET
+    placement: 
 
     # Which items should people be prevented from using?
-    usage: LAVA_BUCKET
+    usage: 
 
     # Which blocks should people be prevented from breaking?
     break:

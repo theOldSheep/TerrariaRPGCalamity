@@ -947,10 +947,7 @@ public class PlayerHelper {
                             attrMap.getOrDefault("mobSpawnRateMulti", 1d)
                             / 2;
                 }
-                int spawnAmount = (int) spawnRate;
-                spawnRate -= spawnAmount;
-                if (Math.random() < spawnRate) spawnAmount ++;
-                for (int i = 0; i < spawnAmount; i ++) {
+                for (int i = 0; i < MathHelper.randomRound(spawnRate); i ++) {
                     MonsterHelper.naturalMobSpawning(ply);
                 }
             }

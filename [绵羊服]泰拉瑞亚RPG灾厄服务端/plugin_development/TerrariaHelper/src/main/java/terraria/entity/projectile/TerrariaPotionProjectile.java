@@ -1,6 +1,7 @@
 package terraria.entity.projectile;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -13,6 +14,7 @@ import terraria.TerrariaHelper;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.util.EntityHelper;
 import terraria.util.GenericHelper;
+import terraria.util.WorldHelper;
 
 import java.util.*;
 
@@ -613,6 +615,13 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 // if the projectile reached its penetration capacity, stop damaging enemies
                 if (this.dead) break;
             }
+        }
+        // handle vegetation hit
+        {
+            org.bukkit.World bukkitWorld = bukkitEntity.getWorld();
+            Location bukkitInitialLoc = terraria.util.MathHelper.toBukkitVector(initialLoc).toLocation(bukkitWorld);
+            Location bukkitFinalLoc = terraria.util.MathHelper.toBukkitVector(futureLoc).toLocation(bukkitWorld);
+            WorldHelper.attemptDestroyVegetation(bukkitInitialLoc, bukkitFinalLoc);
         }
 
         // draw particle trail

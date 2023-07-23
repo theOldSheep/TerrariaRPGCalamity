@@ -2,10 +2,7 @@ package terraria.util;
 
 import lk.vexview.gui.VexGui;
 import lk.vexview.gui.components.*;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftItem;
@@ -15,6 +12,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.Dye;
+import org.bukkit.material.MaterialData;
 import terraria.TerrariaHelper;
 import terraria.entity.others.TerrariaItem;
 
@@ -318,6 +317,96 @@ public class ItemHelper {
             }
         }
         return result;
+    }
+    public static ItemStack regularizeItemDropped(ItemStack item) {
+        if (item.getItemMeta().hasDisplayName())
+            return item;
+        String regularizedItemType = null;
+        switch (item.getType()) {
+            case TORCH:
+                regularizedItemType = "火把";
+                break;
+            case SAND:
+                regularizedItemType = "沙块";
+                break;
+            case ANVIL:
+                regularizedItemType = "铁砧";
+                break;
+            case BED:
+                regularizedItemType = "床";
+                break;
+            case WOOD_DOOR:
+            case WOODEN_DOOR:
+                regularizedItemType = "木门";
+                break;
+            case LADDER:
+                regularizedItemType = "梯子";
+                break;
+            case RAILS:
+                regularizedItemType = "铁轨";
+                break;
+            case POWERED_RAIL:
+                regularizedItemType = "充能铁轨";
+                break;
+            case LEVER:
+                regularizedItemType = "拉杆";
+                break;
+            case SIGN:
+            case WALL_SIGN:
+            case SIGN_POST:
+                regularizedItemType = "牌子";
+                break;
+            case SEEDS:
+                regularizedItemType = "草种";
+                break;
+            case CACTUS:
+                regularizedItemType = "仙人掌";
+                break;
+            case RED_MUSHROOM:
+                regularizedItemType = "蘑菇";
+                break;
+            case BROWN_MUSHROOM:
+                regularizedItemType = "发光蘑菇";
+                break;
+            case YELLOW_FLOWER:
+                regularizedItemType = "太阳花";
+                break;
+            case RED_ROSE:
+                int data = item.getData().getData();
+                switch (data) {
+                    case 0:
+                        regularizedItemType = "火焰花";
+                        break;
+                    case 1:
+                        regularizedItemType = "死亡草";
+                        break;
+                    case 2:
+                        regularizedItemType = "月光草";
+                        break;
+                    case 3:
+                        regularizedItemType = "寒颤棘";
+                        break;
+                    case 4:
+                        regularizedItemType = "波浪叶";
+                        break;
+                    case 5:
+                        regularizedItemType = "闪耀根";
+                        break;
+                }
+                break;
+            // these items simply should not be dropped
+            case SAPLING:
+            case SNOW_BALL:
+            // pumpkin stem being destroyed by flowing water
+            case PUMPKIN_SEEDS:
+                break;
+            default:
+                TerrariaHelper.getInstance().getLogger().log(Level.WARNING,
+                        "UNHANDLED VANILLA DROPPED ITEM: " + item.getType());
+        }
+        if (regularizedItemType == null)
+            return item;
+        return getItemFromDescription(regularizedItemType + ":" + item.getAmount(), false);
     }
     public static ItemStack randomPrefix(ItemStack item) {
         String[] itemInfo = splitItemName(item);
@@ -630,12 +719,12 @@ public class ItemHelper {
             if (TerrariaHelper.itemConfig.contains(itemName)) {
                 ConfigurationSection itemSection = TerrariaHelper.itemConfig.getConfigurationSection(itemName);
                 Material material = Material.valueOf(itemSection.getString("item", "AIR"));
-                ItemStack item = new ItemStack(material);
+                byte data = (byte) itemSection.getInt("data", 0);
+                ItemStack item = new ItemStack(material, 1, (short) 0, data);
                 // air has no item meta.
                 if (material == Material.AIR) return item;
+                // item meta
                 ItemMeta meta = item.getItemMeta();
-                byte data = (byte) itemSection.getInt("data", 0);
-                if (data != 0) item.getData().setData(data);
                 int rarity = itemSection.getInt("rarity", 0);
                 String rarityColor = TerrariaHelper.settingConfig.getString("rarity." + rarity, "§r");
                 meta.setDisplayName(rarityColor + itemName);

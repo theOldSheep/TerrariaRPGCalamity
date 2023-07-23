@@ -87,6 +87,12 @@ public class MathHelper {
         z *= div;
         return new Vector(x,y,z);
     }
+    public static int randomRound(double decimal) {
+        int result = (int) decimal;
+        if (Math.random() < decimal % 1)
+            result ++;
+        return result;
+    }
     public static double getVectorYaw(Vector vector) {
         // algorithm from Skript
         if (vector.getX() == 0 && vector.getZ() == 0) {

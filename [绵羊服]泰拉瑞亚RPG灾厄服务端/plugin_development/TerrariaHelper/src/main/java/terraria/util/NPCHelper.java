@@ -13,10 +13,7 @@ import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -37,28 +34,40 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class NPCHelper {
-    public static HashMap<String, LivingEntity> NPCMap = new HashMap<>();
-    public static HashMap<String, Class> NPCTypeMap = new HashMap<>();
-    static {
-        NPCTypeMap.put("渔夫", TerrariaNPCAngler.class);
-        NPCTypeMap.put("军火商", TerrariaNPCArmsDealer.class);
-        NPCTypeMap.put("建材商人", TerrariaNPCBlockSeller.class);
-        NPCTypeMap.put("裁缝", TerrariaNPCClothier.class);
-        NPCTypeMap.put("爆破专家", TerrariaNPCDemolitionist.class);
-        NPCTypeMap.put("哥布林工匠", TerrariaNPCGoblinTinkerer.class);
-        NPCTypeMap.put("向导", TerrariaNPCGuide.class);
-        NPCTypeMap.put("护士", TerrariaNPCNurse.class);
+    public static HashMap<String, NPCType> NPCTypeMap = new HashMap<>();
+    public enum NPCType {
+        ANGLER("渔夫", TerrariaNPCAngler.class),
+        ARMS_DEALER("军火商", TerrariaNPCArmsDealer.class),
+        BLOCK_SELLER("建材商人", TerrariaNPCBlockSeller.class),
+        CLOTHIER("裁缝", TerrariaNPCClothier.class),
+        DEMOLITIONIST("爆破专家", TerrariaNPCDemolitionist.class),
+        GOBLIN_TINKERER("哥布林工匠", TerrariaNPCGoblinTinkerer.class),
+        GUIDE("向导", TerrariaNPCGuide.class),
+        NURSE("护士", TerrariaNPCNurse.class),
+        // TODO
+//        SEA_KING("海王", null),
+//        CALAMITAS("至尊灾厄", null),
+        ;
+        public final String displayName;
+        public final Class<? extends TerrariaNPC> NPCClass;
+        NPCType (String displayName, Class<? extends TerrariaNPC> NPCClass) {
+            this.displayName = displayName;
+            this.NPCClass = NPCClass;
+            NPCTypeMap.put(displayName, this);
+        }
     }
+    public static HashMap<NPCHelper.NPCType, LivingEntity> NPCMap = new HashMap<>();
     public static Entity spawnNPC(String type) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        return spawnNPC(NPCTypeMap.get(type));
+    }
+    public static Entity spawnNPC(NPCType type) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         org.bukkit.World surfaceWorld = Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE);
         TerrariaNPC nmsNPC;
-        if (NPCTypeMap.containsKey(type)) {
-            Class NPCClass = NPCTypeMap.get(type);
-            nmsNPC = (TerrariaNPC) ( NPCClass.getConstructor(World.class)
-                    .newInstance( ((CraftWorld) surfaceWorld).getHandle() ) );
-        } else {
-            nmsNPC = new TerrariaNPC( ((CraftWorld) surfaceWorld).getHandle(), type );
-        }
+
+        Class<? extends TerrariaNPC> NPCClass = type.NPCClass;
+        nmsNPC = NPCClass.getConstructor(World.class)
+                .newInstance( ((CraftWorld) surfaceWorld).getHandle() );
+
         // add to world
         ((CraftWorld) surfaceWorld).addEntity(nmsNPC, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // return the NPC spawned

@@ -37,7 +37,7 @@ public class OverworldBlockGenericPopulator extends BlockPopulator {
                             break;
                         case STAINED_CLAY:
                             switch (biome) {
-                                case DEEP_OCEAN: // abyss : blue stained clay
+                                case MUTATED_DESERT: // sunken sea : blue stained clay
                                     currBlock.setData((byte) 11);
                                     break;
                                 case ICE_FLATS: // hallow : white stained clay
@@ -50,6 +50,14 @@ public class OverworldBlockGenericPopulator extends BlockPopulator {
                                     currBlock.setData((byte) 7);
                                     break;
                             }
+                            break;
+                        case PRISMARINE:
+                            // very bottom: void stone
+                            if (y < 100)
+                                currBlock.setData((byte) 2);
+                            // other parts of abyss:
+                            else
+                                currBlock.setData((byte) 1);
                             break;
                         case DIRT:
                             switch (biome) {

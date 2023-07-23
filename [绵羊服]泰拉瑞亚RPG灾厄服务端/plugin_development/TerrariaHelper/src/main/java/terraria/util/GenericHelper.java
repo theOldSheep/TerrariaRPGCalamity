@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
@@ -394,6 +395,8 @@ public class GenericHelper {
             if (advanced.amountEntitiesHit >= penetration)
                 return MathHelper.toBukkitVector(info.getHitLocation().pos).toLocation(wld);
         }
+        // destroy vegetation
+        WorldHelper.attemptDestroyVegetation(startLoc, terminalLoc);
         // schedule lingering
         if (lingerTime > 1) {
             double finalDamage = damage;

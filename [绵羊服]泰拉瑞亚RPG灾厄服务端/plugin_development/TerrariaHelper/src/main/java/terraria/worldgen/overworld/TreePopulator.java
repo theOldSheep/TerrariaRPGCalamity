@@ -4,43 +4,11 @@ import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.generator.BlockPopulator;
+import terraria.util.WorldHelper;
 
 import java.util.Random;
 
 public class TreePopulator extends BlockPopulator {
-    void generateTree(Block blk, Random rdm) {
-        Location loc = blk.getLocation();
-        World wld = loc.getWorld();
-        TreeType treeType;
-        boolean isTall = rdm.nextDouble() < 0.2;
-        double variance = rdm.nextDouble();
-        switch (blk.getBiome()) {
-            case FOREST:
-                treeType = isTall ? TreeType.BIG_TREE : TreeType.TREE;
-                break;
-            case JUNGLE:
-                if (variance < 0.25) treeType = TreeType.JUNGLE_BUSH;
-                else treeType = isTall ? TreeType.JUNGLE : TreeType.SMALL_JUNGLE;
-                break;
-            case MESA:
-                treeType = TreeType.ACACIA;
-                break;
-            case TAIGA_COLD:
-                treeType = isTall ? TreeType.TALL_REDWOOD : TreeType.REDWOOD;
-                break;
-            case ICE_FLATS:
-                treeType = isTall ? TreeType.TALL_BIRCH : TreeType.BIRCH;
-                break;
-            case MUSHROOM_ISLAND:
-                if (variance < 0.25) treeType = TreeType.RED_MUSHROOM;
-                else if (variance < 0.5) treeType = TreeType.BROWN_MUSHROOM;
-                else treeType = TreeType.SWAMP;
-                break;
-            default:
-                return;
-        }
-        wld.generateTree(loc, treeType);
-    }
     int getTreeAmount(Biome biome) {
         boolean test = false;
         if (test)
@@ -70,8 +38,9 @@ public class TreePopulator extends BlockPopulator {
             int X = rdm.nextInt(15);
             int Z = rdm.nextInt(15);
             int Y;
-            for (Y = 175; !chunk.getBlock(X, Y, Z).getType().isSolid(); Y--); // Find the highest block of the (X,Z) coordinate chosen.
-            generateTree(chunk.getBlock(X, Y, Z), rdm);
+            // Find the highest block of the (X,Z) coordinate chosen.
+            for (Y = 175; !chunk.getBlock(X, Y, Z).getType().isSolid(); Y--);
+            WorldHelper.attemptGenerateTree( chunk.getBlock(X, Y + 1, Z) );
         }
     }
 }

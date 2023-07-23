@@ -3,20 +3,18 @@ package terraria.util;
 import net.minecraft.server.v1_12_R1.BlockPosition;
 import net.minecraft.server.v1_12_R1.PacketPlayOutBlockBreakAnimation;
 import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.Chest;
-import org.bukkit.block.Furnace;
+import org.bukkit.block.*;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.craftbukkit.v1_12_R1.block.CraftSkull;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
 import terraria.TerrariaHelper;
+import terraria.worldgen.overworld.OverworldBiomeGenerator;
 
 import java.util.HashSet;
 import java.util.List;
@@ -51,6 +49,10 @@ public class GameplayHelper {
             case MYCEL:
             case PUMPKIN:
             case PUMPKIN_STEM:
+            case LONG_GRASS:
+            case YELLOW_FLOWER:
+            case RED_ROSE:
+            case SKULL:
                 return "GRASS";
             case CLAY:
             case DIRT:
@@ -99,21 +101,47 @@ public class GameplayHelper {
     private static ConfigurationSection getBlockConfigSection(Block blockToBreak) {
         String material = blockToBreak.getType().toString();
         String data = String.valueOf(blockToBreak.getData());
-        if (blockToBreak.getState() instanceof Furnace) {
-            String furnaceName = GenericHelper.trimText( ((Furnace) blockToBreak.getState()).getCustomName() );
+        BlockState state = blockToBreak.getState();
+        if (state instanceof Furnace) {
+            String furnaceName = GenericHelper.trimText( ((Furnace) state).getCustomName() );
             if (TerrariaHelper.blockConfig.contains(furnaceName))
                 return TerrariaHelper.blockConfig.getConfigurationSection(furnaceName);
+        }
+        if (state instanceof CraftSkull) {
+            CraftSkull craftSkull = (CraftSkull) state;
+            String skullUUID = craftSkull.getOwningPlayer().getUniqueId().toString();
+            if (TerrariaHelper.blockConfig.contains(skullUUID))
+                return TerrariaHelper.blockConfig.getConfigurationSection(skullUUID);
         }
         if (TerrariaHelper.blockConfig.contains(material + "_" + data)) {
             return TerrariaHelper.blockConfig.getConfigurationSection(material + "_" + data);
         } if (TerrariaHelper.blockConfig.contains(material)) {
             return TerrariaHelper.blockConfig.getConfigurationSection(material);
         }
-        Bukkit.broadcastMessage("Not handled block type: " + blockToBreak.getType() + " with data " + blockToBreak.getData() + " and state " + blockToBreak.getState());
+        Bukkit.broadcastMessage("Not handled block type: " + blockToBreak.getType() + " with data " + blockToBreak.getData() + " and state " + state);
         return null;
     }
     public static boolean isBreakable(Block block, Player ply) {
         if (noMiningSet.contains(block.getType())) return false;
+        // the block directly below a tree can not be mined, unless it is also a log.
+        {
+            Block logBlock = block.getRelative(BlockFace.UP);
+            switch (logBlock.getType()){
+                case LOG:
+                case LOG_2:
+                    // horizontal logs should not make the block unbreakable
+                    if (logBlock.getData() < 4) {
+                        // logs should not make other logs unbreakable
+                        switch (block.getType()){
+                            case LOG:
+                            case LOG_2:
+                                break;
+                            default:
+                                return false;
+                        }
+                    }
+            }
+        }
         // special breaking mechanics for certain blocks
         switch (block.getType()) {
             // unbreakable
@@ -202,16 +230,17 @@ public class GameplayHelper {
                 ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packetToSend);
         }
     }
-    public static void playerBreakBlock(Block blockToBreak, Player ply) {
-        playerBreakBlock(blockToBreak, ply, true, true);
+    public static boolean playerBreakBlock(Block blockToBreak, Player ply) {
+        return playerBreakBlock(blockToBreak, ply, true, true);
     }
-    public static void playerBreakBlock(Block blockToBreak, Player ply, boolean validateBreakable, boolean playSound) {
+    public static boolean playerBreakBlock(Block blockToBreak, Player ply, boolean validateBreakable, boolean playSound) {
         Material blockMat = blockToBreak.getType();
-        if (blockMat == Material.AIR) return;
+        if (blockMat == Material.AIR)
+            return true;
         if (playSound)
             playBlockParticleAndSound(blockToBreak);
         if (validateBreakable && !isBreakable(blockToBreak, ply))
-            return;
+            return false;
         // several blocks that are dropped using vanilla mechanism
         switch (blockMat) {
             case BED_BLOCK:
@@ -221,23 +250,31 @@ public class GameplayHelper {
             default:
                 ConfigurationSection configSection = getBlockConfigSection(blockToBreak);
                 if (configSection != null) {
+                    // item to drop
                     List<String> itemsToDrop = configSection.getStringList("dropItem");
                     Location locToDrop = blockToBreak.getLocation().add(0.5, 0.4, 0.5);
                     for (String currItem : itemsToDrop) {
                         org.bukkit.inventory.ItemStack itemToDrop = ItemHelper.getItemFromDescription(currItem);
                         ItemHelper.dropItem(locToDrop, itemToDrop);
                     }
+                    // boss spawn
+                    String bossSpawn = configSection.getString("spawnBoss");
+                    if (bossSpawn != null)
+                        BossHelper.spawnBoss(ply, BossHelper.BossType.valueOf(bossSpawn));
                 }
                 blockToBreak.setType(Material.AIR);
         }
         // special handling
         handleTreeConsecutiveBreak(ply, blockToBreak, blockMat);
+        handleGrassConsecutiveBreak(ply, blockToBreak);
+        handleSpecialBlockBreakMechanism(ply, blockToBreak, blockMat);
+        return true;
     }
     // tree breaking helpers
-    private enum BlockTreePart {
+    public enum BlockTreePart {
         NONE, LOG, LEAVES;
     }
-    private static BlockTreePart getBlockTreePart(Material brokenMaterial) {
+    public static BlockTreePart getBlockTreePart(Material brokenMaterial) {
         switch (brokenMaterial) {
             case LOG:
             case LOG_2:
@@ -282,18 +319,46 @@ public class GameplayHelper {
             }
         }
     }
+    // grass breaks after the block beneath it is broken
+    private static void handleGrassConsecutiveBreak(Player ply, Block brokenBlock) {
+        Block blockAbove = brokenBlock.getRelative(BlockFace.UP);
+        switch (blockAbove.getType()) {
+            case LONG_GRASS:
+            case YELLOW_FLOWER:
+            case RED_ROSE:
+            case SKULL:
+            case PUMPKIN_STEM:
+            case SAPLING:
+            case BED:
+            case BED_BLOCK:
+                playerBreakBlock(blockAbove, ply, true, false);
+        }
+    }
+    // other block special feature when broken
+    private static void handleSpecialBlockBreakMechanism(Player ply, Block brokenBlock, Material blockMat) {
+        switch (blockMat) {
+            case MAGMA:
+                WorldHelper.createTemporaryLava(brokenBlock);
+                break;
+        }
+    }
+
+
+    // when player right click interacts with a block
     public static void playerRightClickBlock(Player ply, Block blk) {
         if (blk == null) return;
-        switch (blk.getType()) {
+        ItemStack plyTool = ply.getEquipment().getItemInMainHand();
+        String plyToolType = ItemHelper.splitItemName(plyTool)[1];
+        Material blockType = blk.getType();
+        byte blockData = blk.getData();
+        switch (blockType) {
             // wool changes color
             case WOOL: {
-                int data = blk.getData();
-                Bukkit.broadcastMessage(data + "");
+                int data = blockData;
                 if (ply.isSneaking())
                     data = (data + 1) % 16;
                 else
                     data = (data + 15) % 16;
-                Bukkit.broadcastMessage(data + "");
                 int finalData = data;
                 Bukkit.getScheduler().runTask(TerrariaHelper.getInstance(), () -> blk.setData((byte) finalData));
                 break;
@@ -313,6 +378,124 @@ public class GameplayHelper {
                 }
                 break;
             }
+            // attempt to change world
+            case BEDROCK: {
+                Location teleportedLoc = blk.getLocation();
+                teleportedLoc.add(0.5, 0, 0.5);
+                String worldName = blk.getWorld().getName();
+                // going downward
+                if (blk.getY() < 64) {
+                    if (worldName.equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE)) {
+                        teleportedLoc.setY(253.1);
+                        teleportedLoc.setWorld(
+                                Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_CAVERN));
+                    }
+                    else if (worldName.equals(TerrariaHelper.Constants.WORLD_NAME_CAVERN)) {
+                        teleportedLoc.setY(126.001);
+                        teleportedLoc.setWorld(
+                                Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD));
+                    }
+                    else {
+                        break;
+                    }
+                }
+                // going upward
+                else {
+                    teleportedLoc.setY(1.001);
+                    if (worldName.equals(TerrariaHelper.Constants.WORLD_NAME_CAVERN)) {
+                        teleportedLoc.setWorld(
+                                Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE));
+                    }
+                    else if (worldName.equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)) {
+                        teleportedLoc.setWorld(
+                                Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_CAVERN));
+                    }
+                    else {
+                        break;
+                    }
+                }
+                // prepare to teleport
+                Block blockToBreak = teleportedLoc.getBlock();
+                if (playerBreakBlock(blockToBreak, ply) && playerBreakBlock(blockToBreak.getRelative(BlockFace.UP), ply)) {
+                    ply.teleport(teleportedLoc);
+                }
+                else {
+                    ply.sendMessage(blockToBreak + ", " + teleportedLoc);
+                    ply.sendMessage("§7您未能成功移动到目标世界，阻挡目标位置的方块未能被破坏。");
+                    ply.sendMessage("§7您可以手持镐右键基岩，再次尝试破坏目标位置的方块。");
+                }
+                break;
+            }
+            // dirt/grass
+            case DIRT:
+            case GRASS:
+            case MYCEL: {
+                switch (plyToolType) {
+                    // embed a chlorophyte ore in the dirt
+                    case "叶绿矿": {
+                        if (blockType == Material.DIRT && blockData == 0) {
+                            WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(blk.getLocation());
+                            if (biomeType != WorldHelper.BiomeType.JUNGLE) {
+                                ply.sendMessage("§7只能在丛林洞穴层把叶绿矿埋进土里哦");
+                                break;
+                            }
+                            WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(blk.getLocation());
+                            if (heightLayer != WorldHelper.HeightLayer.CAVERN) {
+                                ply.sendMessage("§7只能在丛林洞穴层把叶绿矿埋进土里哦");
+                                break;
+                            }
+
+                            blk.setType(Material.MOSSY_COBBLESTONE, false);
+                            plyTool.setAmount(plyTool.getAmount() - 1);
+                        }
+                        break;
+                    }
+                    // seeds
+                    case "草种": {
+                        if (blockType == Material.DIRT && blockData == 0) {
+                            blk.setType(Material.GRASS, false);
+                            plyTool.setAmount(plyTool.getAmount() - 1);
+                        }
+                        break;
+                    }
+                    case "腐化种子": {
+                        if (blockType == Material.DIRT && blockData == 0) {
+                            blk.setType(Material.MYCEL, false);
+                            plyTool.setAmount(plyTool.getAmount() - 1);
+                            // set biome
+                            World wld = blk.getWorld();
+                            int blkX = blk.getX();
+                            int blkZ = blk.getZ();
+                            boolean isCavern = WorldHelper.HeightLayer.getHeightLayer(blk.getLocation()) == WorldHelper.HeightLayer.CAVERN;
+                            Biome biomeToSet = Biome.MUSHROOM_ISLAND;
+                            if (isCavern) biomeToSet = OverworldBiomeGenerator.getUndergroundEquivalent(biomeToSet);
+                            for (int i = -10; i <= 10; i ++)
+                                for (int j = -10; j <= 10; j ++)
+                                    wld.setBiome(blkX + i, blkZ + j, biomeToSet);
+                        }
+                        break;
+                    }
+                    case "南瓜种子": {
+                        Block blockToPlant = blk.getRelative(BlockFace.UP);
+                        if (blockToPlant.getType() == Material.AIR) {
+                            blockToPlant.setType(Material.PUMPKIN_STEM, false);
+                            blockToPlant.setData((byte) 1, false);
+                            plyTool.setAmount(plyTool.getAmount() - 1);
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        if (plyToolType.equals("橡实") && WorldHelper.canGrowPlant(blk, true) ) {
+            Block blockToPlant = blk.getRelative(BlockFace.UP);
+            WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(blockToPlant.getLocation());
+            byte data = WorldHelper.getSaplingVariantByBiome(biomeType);
+            blockToPlant.setType(Material.SAPLING, false);
+            blockToPlant.setData(data, false);
+            plyTool.setAmount(plyTool.getAmount() - 1);
         }
     }
 }

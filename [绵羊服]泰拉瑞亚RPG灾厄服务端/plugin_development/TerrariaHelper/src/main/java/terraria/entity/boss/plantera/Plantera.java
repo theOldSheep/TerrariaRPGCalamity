@@ -21,8 +21,7 @@ public class Plantera extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.PLANTERA;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.JUNGLE;
-    public static final double BASIC_HEALTH = 16065 * 2;
-//    public static final double BASIC_HEALTH = 160650 * 2;
+    public static final double BASIC_HEALTH = 160650 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<Player, Double> targetMap;
@@ -166,18 +165,18 @@ public class Plantera extends EntitySlime {
                         new PlanteraTentacle(target, this);
                     }
                 }
-                // follow player and dashes from time to time
+                // follow player and dashes every 5 seconds
                 {
                     dashIndex ++;
                     if (dashIndex >= 0) {
                         double dist = bukkitEntity.getLocation().distance(target.getLocation());
-                        double speed = secondPhase ? Math.max(dist / 20, 0.8) : Math.max(dist / 35, 0.6);
+                        double speed = secondPhase ? Math.max(dist / 12.5, 0.8) : Math.max(dist / 17.5, 0.6);
                         boolean keepShorterDirection = true;
                         switch (dashIndex) {
-                            case 180:
+                            case 80:
                                 bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
                                 break;
-                            case 200:
+                            case 100:
                                 speed *= 2;
                                 keepShorterDirection = false;
                                 dashIndex = -10;
@@ -189,9 +188,7 @@ public class Plantera extends EntitySlime {
                                 speed, keepShorterDirection);
                     }
                     // maintain the speed of dash
-                    else {
-                        bukkitEntity.setVelocity(dashVelocity);
-                    }
+                    bukkitEntity.setVelocity(dashVelocity);
                 }
                 // projectiles
                 if (healthRatio > 0.25) {

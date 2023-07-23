@@ -22,6 +22,7 @@ import terraria.entity.boss.event.pumpking.PumpkingHead;
 import terraria.entity.boss.event.santaNK1.SantaNK1;
 import terraria.util.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -173,15 +174,36 @@ public class EventAndTime {
             for (World currWorld : worldsToHandle)
                 if (currWorld != null) {
                     currWorld.setTime(currentTime);
+                    // TODO: remove message
+                    long time = System.nanoTime();
                     WorldHelper.worldRandomTick(currWorld);
+//                    Bukkit.broadcastMessage(System.nanoTime() - time + " nano seconds elapsed.");
                 }
             // end events when appropriate
             handleEventTermination();
             // tick event
             tickEvent();
-            // fallen stars
-            if (surfaceWorld != null)
+            // other surface world mechanism
+            if (surfaceWorld != null) {
+                // fallen stars
                 tickFallenStars(surfaceWorld);
+                // NPC respawn
+                if (WorldHelper.isDayTime(surfaceWorld) && Math.random() < 0.005) {
+                    for (NPCHelper.NPCType npcType : NPCHelper.NPCType.values()) {
+                        // if NPC is alive, move on
+                        if (NPCHelper.NPCMap.containsKey(npcType) && !NPCHelper.NPCMap.get(npcType).isDead())
+                            continue;
+                        // otherwise, revive the NPC
+                        try {
+                            NPCHelper.spawnNPC(npcType);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        // only revive one NPC at a time
+                        break;
+                    }
+                }
+            }
         }, 0, 3);
     }
     public static void destroyAllFallenStars() {

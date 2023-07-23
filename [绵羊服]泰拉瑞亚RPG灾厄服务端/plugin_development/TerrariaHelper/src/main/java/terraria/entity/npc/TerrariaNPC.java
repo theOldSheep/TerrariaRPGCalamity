@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class TerrariaNPC extends EntityVillager {
-    public String NPCType;
+    public NPCHelper.NPCType NPCType;
     public HashMap<String, Double> attrMap;
     public HashSet<Player> GUIViewers = new HashSet<>();
 
@@ -26,13 +26,13 @@ public class TerrariaNPC extends EntityVillager {
         super(world);
         die();
     }
-    public TerrariaNPC(World world, String type) {
+    public TerrariaNPC(World world, NPCHelper.NPCType type) {
         super(world);
         Location spawnLoc = world.getWorld().getHighestBlockAt((int) (Math.random() * 64 - 32), (int) (Math.random() * 64 - 32)).getLocation();
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         initTypeInfo(type);
     }
-    protected void initTypeInfo(String type) {
+    protected void initTypeInfo(NPCHelper.NPCType type) {
         // navigation
         this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(72);
         // pathfinders
@@ -55,7 +55,7 @@ public class TerrariaNPC extends EntityVillager {
         this.ageLocked = true;
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.NPC_GUI_VIEWERS, GUIViewers);
         NPCHelper.NPCMap.put(type, (LivingEntity) bukkitEntity);
-        this.setCustomName(type);
+        this.setCustomName(type.displayName);
         this.setCustomNameVisible(true);
         this.bukkitEntity.addScoreboardTag("isNPC");
         this.persistent = true;
@@ -69,37 +69,37 @@ public class TerrariaNPC extends EntityVillager {
         attrMap.put("knockbackResistance", 0.5d);
         // attrMap and damage type
         switch (type) {
-            case "向导": {
+            case GUIDE: {
                 attrMap.put("damage", 30d);
                 EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
                 break;
             }
-            case "渔夫": {
+            case ANGLER: {
                 attrMap.put("damage", 24d);
                 EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
                 break;
             }
-            case "建材商人": {
+            case BLOCK_SELLER: {
                 attrMap.put("damage", 32d);
                 EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
                 break;
             }
-            case "裁缝": {
+            case CLOTHIER: {
                 attrMap.put("damage", 48d);
                 EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
                 break;
             }
-            case "军火商": {
+            case ARMS_DEALER: {
                 attrMap.put("damage", 72d);
                 EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.BULLET);
                 break;
             }
-            case "哥布林工匠": {
+            case GOBLIN_TINKERER: {
                 attrMap.put("damage", 44d);
                 EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
                 break;
             }
-            case "爆破专家": {
+            case DEMOLITIONIST: {
                 attrMap.put("damage", 60d);
                 EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
                 break;
@@ -111,12 +111,13 @@ public class TerrariaNPC extends EntityVillager {
         // health
         double maxHealth;
         switch (type) {
-            case "至尊灾厄":
-                maxHealth = 50000;
-                break;
-            case "海王":
-                maxHealth = 2500;
-                break;
+            // TODO
+//            case CALAMITAS:
+//                maxHealth = 50000;
+//                break;
+//            case SEA_KING:
+//                maxHealth = 2500;
+//                break;
             default:
                 maxHealth = 1000;
         }
@@ -125,23 +126,23 @@ public class TerrariaNPC extends EntityVillager {
         // profession
         switch (type) {
             // librarian/cartographer
-            case "向导":
-            case "护士":
-            case "建材商人":
-            case "裁缝":
+            case GUIDE:
+            case NURSE:
+            case BLOCK_SELLER:
+            case CLOTHIER:
                 setProfession(1);
                 break;
             // cleric
-            case "爆破专家":
+            case DEMOLITIONIST:
                 setProfession(2);
                 break;
             // blacksmith
-            case "军火商":
-            case "哥布林工匠":
+            case ARMS_DEALER:
+            case GOBLIN_TINKERER:
                 setProfession(3);
                 break;
             // nitwit
-            case "渔夫":
+            case ANGLER:
                 setAge(0);
                 setProfession(5);
                 break;
@@ -152,29 +153,29 @@ public class TerrariaNPC extends EntityVillager {
         // normal projectile attack
         int shootInterval = -1;
         switch (NPCType) {
-            case "向导":
-            case "渔夫":
+            case GUIDE:
+            case ANGLER:
             {
                 shootInterval = 12;
                 break;
             }
-            case "裁缝":
+            case CLOTHIER:
             {
                 shootInterval = 35;
                 break;
             }
-            case "军火商":
+            case ARMS_DEALER:
             {
                 shootInterval = 25;
                 break;
             }
-            case "建材商人":
-            case "哥布林工匠":
+            case BLOCK_SELLER:
+            case GOBLIN_TINKERER:
             {
                 shootInterval = 20;
                 break;
             }
-            case "爆破专家":
+            case DEMOLITIONIST:
             {
                 shootInterval = 50;
                 break;
@@ -185,13 +186,13 @@ public class TerrariaNPC extends EntityVillager {
                     (entity) -> EntityHelper.checkCanDamage(this.getBukkitEntity(), entity.getBukkitEntity(), true));
             double minDistance;
             switch (NPCType) {
-                case "建材商人":
+                case BLOCK_SELLER:
                     minDistance = 5 * 5;
                     break;
-                case "渔夫":
+                case ANGLER:
                     minDistance = 16 * 16;
                     break;
-                case "军火商":
+                case ARMS_DEALER:
                     minDistance = 48 * 48;
                     break;
                 default:
@@ -214,37 +215,37 @@ public class TerrariaNPC extends EntityVillager {
                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, dir, attrMap, "");
                 shootInfo.properties.put("liveTime", 80);
                 switch (NPCType) {
-                    case "建材商人": {
+                    case BLOCK_SELLER: {
                         GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
                                 MathHelper.getVectorYaw(dir), MathHelper.getVectorPitch(dir), 6.0, 0.25,
                                 "", "150|150|0", new ArrayList<>(),
                                 (HashMap<String, Double>) attrMap.clone(), new GenericHelper.StrikeLineOptions());
                         return;
                     }
-                    case "向导": {
+                    case GUIDE: {
                         shootInfo.projectileName = "木箭";
                         shootInfo.velocity.multiply(1.5);
                         break;
                     }
-                    case "渔夫": {
+                    case ANGLER: {
                         shootInfo.projectileName = "木箭";
                         shootInfo.properties.put("penetration", 2);
                         break;
                     }
-                    case "裁缝": {
+                    case CLOTHIER: {
                         shootInfo.projectileName = "骷髅头";
                         shootInfo.velocity.multiply(1.25);
                         shootInfo.properties.put("gravity", 0d);
                         shootInfo.properties.put("penetration", 2);
                         break;
                     }
-                    case "军火商": {
+                    case ARMS_DEALER: {
                         shootInfo.projectileName = "火枪子弹";
                         shootInfo.velocity.multiply(2);
                         shootInfo.properties.put("gravity", 0d);
                         break;
                     }
-                    case "哥布林工匠": {
+                    case GOBLIN_TINKERER: {
                         shootInfo.projectileName = "尖刺球";
                         shootInfo.velocity.multiply(0.35);
                         shootInfo.properties.put("noGravityTicks", 0);
@@ -255,7 +256,7 @@ public class TerrariaNPC extends EntityVillager {
                         shootInfo.properties.put("liveTime", 240);
                         break;
                     }
-                    case "爆破专家": {
+                    case DEMOLITIONIST: {
                         shootInfo.projectileName = "手榴弹";
                         shootInfo.velocity.multiply(0.75);
                         shootInfo.properties.put("noGravityTicks", 0);
@@ -273,7 +274,7 @@ public class TerrariaNPC extends EntityVillager {
         }
         // other attack type
         switch (NPCType) {
-            case "护士": {
+            case NURSE: {
                 if (ticksLived % 10 == 0) {
                     List<Entity> toLoop = getWorld().getEntities(null, getBoundingBox().g(32d),
                             (entity) -> entity.getBukkitEntity().getScoreboardTags().contains("isNPC"));

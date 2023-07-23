@@ -1095,17 +1095,7 @@ public class EntityHelper {
                             if (v.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)) {
                                 Location deathLoc = vLiving.getEyeLocation();
                                 Block deathBlock = deathLoc.getBlock();
-                                if (deathBlock.getType() == Material.AIR) {
-                                    deathBlock.setType(Material.LAVA);
-                                    Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
-                                        Block block = deathLoc.getBlock();
-                                        switch (block.getType()) {
-                                            case LAVA:
-                                            case STATIONARY_LAVA:
-                                                block.setType(Material.AIR);
-                                        }
-                                    }, 50);
-                                }
+                                WorldHelper.createTemporaryLava(deathBlock);
                             }
                             break;
                         }
@@ -1687,10 +1677,10 @@ public class EntityHelper {
         // particles
         if (radius < 3)
             loc.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, loc, 1);
-        else if (radius < 5)
+        else if (radius < 8)
             loc.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, loc, 1);
         else {
-            int amount = (int) (radius * radius);
+            int amount = (int) (radius);
             double actualRad = radius - 4;
             loc.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, loc, amount, actualRad, actualRad, actualRad);
         }
@@ -1716,10 +1706,9 @@ public class EntityHelper {
         // destroy block
         if (destroyBlock) {
             Player ply = null;
-            if (source instanceof Projectile) {
-                ProjectileSource src = ((Projectile) source).getShooter();
-                if (src instanceof Player) ply = (Player) src;
-            }
+            Entity sourceEntity = getDamageSource(source);
+            if (sourceEntity instanceof Player)
+                ply = (Player) sourceEntity;
             if (ply != null) {
                 org.bukkit.block.Block blastCenterBlock = loc.getBlock();
                 // subtract 1e-3 from radiusSqr to prevent annoying unnatural shape
@@ -1728,7 +1717,8 @@ public class EntityHelper {
                 double distSqrX, distSqrY, distSqrZ;
                 for (int xOffset = radInt * -1; xOffset <= radInt; xOffset ++) {
                     distSqrX = xOffset * xOffset;
-                    for (int yOffset = radInt * -1; yOffset <= radInt; yOffset++) {
+                    // prevent a block of dirt held intact after blowing up a tree
+                    for (int yOffset = radInt; yOffset >= -radInt; yOffset--) {
                         distSqrY = yOffset * yOffset;
                         if (distSqrX + distSqrY > radiusSqr) continue;
                         for (int zOffset = radInt * -1; zOffset <= radInt; zOffset++) {

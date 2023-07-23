@@ -143,7 +143,6 @@ public class TerrariaHelper extends JavaPlugin {
     }
     private void registerEvents() {
         Bukkit.getPluginManager().registerEvents(new ArrowHitListener(), this);
-        Bukkit.getPluginManager().registerEvents(new BlockBreakListener(), this);
         Bukkit.getPluginManager().registerEvents(new BossSpawnListener(), this);
         Bukkit.getPluginManager().registerEvents(new CraftingListener(), this);
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);

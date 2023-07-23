@@ -11,6 +11,7 @@ terraria\entity\monster\MonsterZombie.class
 terraria\entity\boss\cryogen\Cryogen.class
 terraria\entity\boss\ravager\RavagerClaw.class
 terraria\entity\boss\BossHelper$1.class
+terraria\util\WorldHelper$PlantType.class
 terraria\entity\boss\theHiveMind\HiveBlob.class
 terraria\entity\monster\MonsterHusk.class
 terraria\util\NMSUtils$Attributes.class
@@ -19,6 +20,7 @@ terraria\entity\boss\skeletron\SkeletronHead.class
 terraria\worldgen\overworld\OverworldCaveGenerator.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHead$1.class
 terraria\entity\boss\event\iceQueen\IceQueen.class
+terraria\util\WorldHelper$LeafShape.class
 terraria\util\ItemHelper$1.class
 terraria\util\BossHelper$BossType.class
 terraria\entity\boss\event\mourningWood\MourningWood.class
@@ -61,6 +63,7 @@ terraria\entity\npc\TerrariaNPCBlockSeller.class
 terraria\entity\others\TerrariaEntityPlayer.class
 terraria\entity\boss\moonLord\MoonLordPhantasmalBolt.class
 terraria\entity\boss\leviathanAndAnahita\Leviathan$1.class
+terraria\util\WorldHelper$LeafLayerShape.class
 terraria\entity\boss\astrumAureus\AstrumAureus$AIPhase.class
 terraria\entity\boss\theHiveMind\TheHiveMind$AIPhase.class
 terraria\entity\others\TerrariaFishingHook.class
@@ -117,6 +120,7 @@ terraria\entity\boss\eaterOfWorld\EaterOfWorld$1.class
 terraria\entity\monster\MonsterCaveSpider.class
 terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
+terraria\util\NPCHelper$NPCType.class
 terraria\entity\boss\leviathanAndAnahita\Leviathan.class
 terraria\util\CritterHelper$1.class
 terraria\util\CritterHelper.class
@@ -182,6 +186,7 @@ terraria\util\MonsterHelper.class
 terraria\entity\boss\calamitasClone\CalamitasClone.class
 terraria\entity\boss\theTwins\Spazmatism.class
 terraria\event\listener\DamageListener.class
+terraria\entity\npc\TerrariaNPC$1.class
 terraria\entity\boss\event\headlessHorseman\HeadlessHorseman.class
 terraria\util\DragoncoreHelper$SlotCallback.class
 terraria\entity\boss\astrumDeus\AstrumDeus.class

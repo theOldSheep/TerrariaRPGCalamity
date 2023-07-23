@@ -20,6 +20,9 @@ public class DropItemSpawnListener implements Listener {
         Item droppedItem = e.getEntity();
         if (((CraftItem) droppedItem).getHandle() instanceof TerrariaItem) return;
         ItemStack droppedItemStack = droppedItem.getItemStack();
+        // regularize dropped item (vanilla items are converted to Terraria correspondents)
+        droppedItemStack = ItemHelper.regularizeItemDropped(droppedItemStack);
+        // create the new Terraria dropped item and remove the old one
         Item newItem = ItemHelper.dropItem(droppedItem.getLocation(), droppedItemStack);
         if (newItem != null) newItem.setVelocity(droppedItem.getVelocity());
         droppedItem.remove();
