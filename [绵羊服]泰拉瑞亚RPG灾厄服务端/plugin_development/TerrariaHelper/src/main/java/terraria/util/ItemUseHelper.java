@@ -271,7 +271,8 @@ public class ItemUseHelper {
                                 successful = currTier < 20;
                                 break;
                             case "生命果":
-                                successful = currTier < 40 && currTier >= 20;
+                                successful = PlayerHelper.hasDefeated(ply, BossHelper.BossType.WALL_OF_FLESH.msgName) &&
+                                        currTier < 40 && currTier >= 20;
                                 break;
                             case "血橙":
                                 successful = currTier == 40;

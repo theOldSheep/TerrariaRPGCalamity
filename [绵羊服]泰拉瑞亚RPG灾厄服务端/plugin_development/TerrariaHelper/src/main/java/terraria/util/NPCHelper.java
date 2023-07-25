@@ -55,6 +55,10 @@ public class NPCHelper {
             this.NPCClass = NPCClass;
             NPCTypeMap.put(displayName, this);
         }
+        @Override
+        public String toString() {
+            return displayName;
+        }
     }
     public static HashMap<NPCHelper.NPCType, LivingEntity> NPCMap = new HashMap<>();
     public static Entity spawnNPC(String type) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {

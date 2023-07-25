@@ -431,25 +431,6 @@ public class GameplayHelper {
             case GRASS:
             case MYCEL: {
                 switch (plyToolType) {
-                    // embed a chlorophyte ore in the dirt
-                    case "叶绿矿": {
-                        if (blockType == Material.DIRT && blockData == 0) {
-                            WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(blk.getLocation());
-                            if (biomeType != WorldHelper.BiomeType.JUNGLE) {
-                                ply.sendMessage("§7只能在丛林洞穴层把叶绿矿埋进土里哦");
-                                break;
-                            }
-                            WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(blk.getLocation());
-                            if (heightLayer != WorldHelper.HeightLayer.CAVERN) {
-                                ply.sendMessage("§7只能在丛林洞穴层把叶绿矿埋进土里哦");
-                                break;
-                            }
-
-                            blk.setType(Material.MOSSY_COBBLESTONE, false);
-                            plyTool.setAmount(plyTool.getAmount() - 1);
-                        }
-                        break;
-                    }
                     // seeds
                     case "草种": {
                         if (blockType == Material.DIRT && blockData == 0) {
@@ -484,6 +465,26 @@ public class GameplayHelper {
                         }
                         break;
                     }
+                }
+                break;
+            }
+            // stone
+            case STONE: {
+                // embed a chlorophyte ore in the dirt
+                if (plyToolType.equals("叶绿矿")) {
+                    WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(blk.getLocation());
+                    if (biomeType != WorldHelper.BiomeType.JUNGLE) {
+                        ply.sendMessage("§7只能在丛林洞穴层把叶绿矿埋进石头里哦");
+                        break;
+                    }
+                    WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(blk.getLocation());
+                    if (heightLayer != WorldHelper.HeightLayer.CAVERN) {
+                        ply.sendMessage("§7只能在丛林洞穴层把叶绿矿埋进石头里哦");
+                        break;
+                    }
+
+                    blk.setType(Material.MOSSY_COBBLESTONE, false);
+                    plyTool.setAmount(plyTool.getAmount() - 1);
                 }
                 break;
             }

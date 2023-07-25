@@ -2,6 +2,7 @@ package terraria.util;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import net.minecraft.server.v1_12_R1.BlockGrass;
 import org.bukkit.*;
 import org.bukkit.block.*;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -19,7 +20,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 public class WorldHelper {
-    public static final double CHANCE_SPECIAL_PLANT = 0.1, CHANCE_LIFE_FRUIT = 0.1, CHANCE_BULB = 0.025;
+    public static final double CHANCE_SPECIAL_PLANT = 0.025, CHANCE_LIFE_FRUIT = 0.125, CHANCE_BULB = 0.075;
     public static final String
             UUID_LIFE_FRUIT = "81834b91-513d-450f-b920-6880fd47c997",
             UUID_BULB = "50af25ef-adb9-44d0-880f-6890ea0dc182",
@@ -50,6 +51,12 @@ public class WorldHelper {
             BlockFace.WEST,
             BlockFace.UP,
             BlockFace.DOWN,
+    };
+    public static BlockFace[] GRASS_SPREAD_DIRECTIONS = new BlockFace[] {
+            BlockFace.NORTH,
+            BlockFace.EAST,
+            BlockFace.SOUTH,
+            BlockFace.WEST,
     };
 
     public enum HeightLayer {
@@ -202,9 +209,12 @@ public class WorldHelper {
         }
     }
 
+
+
     //
     // World Tick
     //
+    private static long randomGenerator = new Random().nextLong();
     public static void worldRandomTick(World wld) {
         for (Chunk chunk : wld.getLoadedChunks()) {
             // chunks can only tick when a 3*3 chunk grid is all loaded.
@@ -227,11 +237,14 @@ public class WorldHelper {
     // grass spread ticking
     //
     private static Block getRandomBlockInChunk(Chunk chunk) {
-        Random randomGenerator = ((CraftWorld) chunk.getWorld()).getHandle().random;
-        return chunk.getBlock(
-                randomGenerator.nextInt(16),
-                randomGenerator.nextInt(256),
-                randomGenerator.nextInt(16));
+        // code from net.minecraft.server
+        randomGenerator = randomGenerator * 3 + 1013904223;
+        int randomInt = (int) (randomGenerator >> 2);
+        int x = randomInt & 15;
+        int y = randomInt >> 10 & 255;
+        int z = randomInt >> 20 & 15;
+        // x and z coordinates are truncated in the function, but not y coordinate.
+        return chunk.getBlock(x, y, z);
     }
     private static Block getRandomBlockInRadius(Block block, int radius) {
         int diameter = radius * 2 + 1;
@@ -244,80 +257,96 @@ public class WorldHelper {
     private static boolean blockPosValidForGrass(Block block) {
         return ! block.getRelative(BlockFace.UP).getType().isSolid();
     }
-    private static Block getSpreadBlock(Block block, Material... targetMat) {
-        ArrayList<Block> validBLocks = new ArrayList<>();
-        for (int xOffset = -1; xOffset <= 1; xOffset ++)
-            for (int yOffset = -1; yOffset <= 1; yOffset ++)
-                for (int zOffset = -1; zOffset <= 1; zOffset ++) {
-                    Block testBlock = block.getRelative(xOffset, yOffset, zOffset);
-                    Material testMat = testBlock.getType();
-                    // validate material
-                    boolean materialValid = false;
-                    for (Material validMat : targetMat) {
-                        if (testMat == validMat) {
-                            materialValid = true;
-                            break;
-                        }
-                    }
-                    // make sure it is not identical as the original block
-                    if (materialValid && !(testMat == block.getType() && testBlock.getData() == block.getData()))
-                        validBLocks.add(testBlock);
-                }
-        if (validBLocks.size() > 1)
-            return validBLocks.get( (int) (Math.random() * validBLocks.size()) );
+    private static boolean validateSpreadBlock(Block testBlock, boolean isGrass,
+                                            Material blockMat, byte blockData,
+                                            ArrayList<Block> validBlocks, Material... targetMat) {
+        Material testMat = testBlock.getType();
+        // validate material
+        boolean materialValid = false;
+        for (Material validMat : targetMat) {
+            if (testMat == validMat) {
+                materialValid = true;
+                break;
+            }
+        }
+        if (materialValid &&
+                // grass do not spread to dirt with a solid block immediately above it
+                (blockPosValidForGrass(testBlock) || !isGrass) &&
+                // make sure it is not identical as the original block
+                (testMat != blockMat || testBlock.getData() != blockData)) {
+            validBlocks.add(testBlock);
+            return true;
+        }
+        return false;
+    }
+    private static Block getSpreadBlock(Block block, boolean isGrass, Material... targetMat) {
+        ArrayList<Block> validBlocks = new ArrayList<>();
+        Material blockMat = block.getType();
+        byte blockData = block.getData();
+        BlockFace[] directions = isGrass ? GRASS_SPREAD_DIRECTIONS : DIRECT_CONTACT_DIRECTIONS;
+        for (BlockFace direction : directions){
+            Block testBlock = block.getRelative(direction);
+            boolean successful = validateSpreadBlock(testBlock, isGrass, blockMat, blockData, validBlocks, targetMat);
+            // if it failed to spread to the grass block adjacent to it, try a block above or below
+            if (isGrass && !successful) {
+                validateSpreadBlock(testBlock.getRelative(BlockFace.UP), isGrass,
+                        blockMat, blockData, validBlocks, targetMat);
+                validateSpreadBlock(testBlock.getRelative(BlockFace.DOWN), isGrass,
+                        blockMat, blockData, validBlocks, targetMat);
+            }
+        }
+        if (validBlocks.size() > 0)
+            return validBlocks.get( (int) (Math.random() * validBlocks.size()) );
         return null;
     }
     private static void worldRandomTickGrass(Chunk chunk) {
         // grass block spread; fade when covered by solid block
-        for (int i = 0; i < MathHelper.randomRound(25); i ++) {
+        for (int i = 0; i < 10; i ++) {
             Block blockToTick = getRandomBlockInChunk(chunk);
             switch (blockToTick.getType()) {
                 // "grass" blocks of different biomes
                 case GRASS: {
                     if (blockPosValidForGrass(blockToTick)) {
-                        Block blockToSpread = getSpreadBlock(blockToTick, Material.DIRT);
-                        if (blockToSpread != null &&
-                                blockToSpread.getType() == Material.DIRT && blockPosValidForGrass(blockToSpread))
-                            blockToSpread.setType(Material.GRASS, false);
+                        Block blockToSpread = getSpreadBlock(blockToTick, true, Material.DIRT);
+                        if (blockToSpread != null)
+                            blockToSpread.setType(Material.GRASS);
                     } else
-                        blockToTick.setType(Material.DIRT, false);
+                        blockToTick.setType(Material.DIRT);
                     break;
                 }
                 case DIRT: {
                     if (blockToTick.getData() == 2) {
                         if (blockPosValidForGrass(blockToTick)) {
-                            Block blockToSpread = getSpreadBlock(blockToTick, Material.DIRT, Material.GRASS, Material.MYCEL);
+                            Block blockToSpread = getSpreadBlock(blockToTick, true, Material.DIRT, Material.GRASS, Material.MYCEL);
                             if (blockToSpread != null &&
-                                    blockPosValidForGrass(blockToSpread) &&
                                     BiomeType.getBiome(blockToSpread.getLocation()) == BiomeType.HALLOW) {
-                                blockToSpread.setType(Material.DIRT, false);
-                                blockToSpread.setData((byte) 2, false);
+                                blockToSpread.setType(Material.DIRT);
+                                blockToSpread.setData((byte) 2);
                             }
                         } else
-                            blockToTick.setType(Material.DIRT, false);
+                            blockToTick.setType(Material.DIRT);
                     }
                     break;
                 }
                 case MYCEL: {
                     if (blockPosValidForGrass(blockToTick)) {
-                        Block blockToSpread = getSpreadBlock(blockToTick, Material.DIRT, Material.GRASS, Material.MYCEL);
+                        Block blockToSpread = getSpreadBlock(blockToTick, true, Material.DIRT, Material.GRASS, Material.MYCEL);
                         if (blockToSpread != null &&
-                                blockPosValidForGrass(blockToSpread) &&
                                 BiomeType.getBiome(blockToSpread.getLocation()) == BiomeType.CORRUPTION) {
-                            blockToSpread.setType(Material.DIRT, false);
-                            blockToSpread.setData((byte) 2, false);
+                            blockToSpread.setType(Material.DIRT);
+                            blockToSpread.setData((byte) 2);
                         }
                     } else
-                        blockToTick.setType(Material.DIRT, false);
+                        blockToTick.setType(Material.DIRT);
                     break;
                 }
                 // special stone and sand blocks spread
                 case SAND: {
                     if (blockToTick.getData() == 1) {
-                        Block blockToSpread = getSpreadBlock(blockToTick, Material.SAND);
+                        Block blockToSpread = getSpreadBlock(blockToTick, false, Material.SAND);
                         if (blockToSpread != null &&
                                 BiomeType.getBiome(blockToSpread.getLocation()) == BiomeType.SULPHUROUS_OCEAN) {
-                            blockToSpread.setData((byte) 1, false);
+                            blockToSpread.setData((byte) 1);
                         }
                     }
                     break;
@@ -333,66 +362,27 @@ public class WorldHelper {
                             break;
                     }
                     if (biome != null) {
-                        Block blockToSpread = getSpreadBlock(blockToTick, Material.STONE, Material.STAINED_CLAY);
+                        Block blockToSpread = getSpreadBlock(blockToTick, false, Material.STONE, Material.STAINED_CLAY);
                         if (blockToSpread != null &&
                                 BiomeType.getBiome(blockToSpread.getLocation()) == biome) {
-                            blockToSpread.setType(Material.STAINED_CLAY, false);
-                            blockToSpread.setData(blockToTick.getLightFromBlocks(), false);
+                            blockToSpread.setType(Material.STAINED_CLAY);
+                            blockToSpread.setData(blockToTick.getLightFromBlocks());
                         }
-                    }
-                    break;
-                }
-                case MOSSY_COBBLESTONE: {
-                    // spreads at a slower rate than dirt
-                    if (Math.random() < 0.35)
-                        return;
-                    Block blockToSpread = getSpreadBlock(blockToTick, Material.DIRT, Material.GRASS);
-                    if (blockToSpread != null &&
-                            BiomeType.getBiome(blockToSpread.getLocation()) == BiomeType.JUNGLE &&
-                            HeightLayer.getHeightLayer(blockToSpread.getLocation()) == HeightLayer.CAVERN) {
-                        // make sure the area is not crowded with chlorophyte ore
-                        int estimatedAmount = 0;
-                        for (int testIndex = 0; testIndex < 27; testIndex ++) {
-                            Block blockToTest = getRandomBlockInRadius(blockToTick, 4);
-                            if (blockToTest.getType() == Material.MOSSY_COBBLESTONE)
-                                estimatedAmount ++;
-                        }
-                        // only spread when the area is not crowded
-                        if (estimatedAmount < 3)
-                            blockToSpread.setType(Material.MOSSY_COBBLESTONE, false);
                     }
                     break;
                 }
             }
         }
         // chlorophyte spread
-        for (int i = 0; i < MathHelper.randomRound(17.5); i ++) {
+        for (int i = 0; i < MathHelper.randomRound(5); i ++) {
             Block blockToTick = getRandomBlockInChunk(chunk);
             if (blockToTick.getType() == Material.MOSSY_COBBLESTONE) {
-                // make sure the area is not crowded with chlorophyte ore
-                int estimatedAmount = 0;
-                for (int testIndex = 0; testIndex < 27; testIndex++) {
-                    Block blockToTest = getRandomBlockInRadius(blockToTick, 4);
-                    if (blockToTest.getType() == Material.MOSSY_COBBLESTONE)
-                        estimatedAmount++;
-                }
-                // spreads when not crowded
-                if (estimatedAmount <= 1) {
-                    Block blockToSpread = getSpreadBlock(blockToTick, Material.DIRT, Material.GRASS);
-                    if (blockToSpread != null &&
-                            BiomeType.getBiome(blockToSpread.getLocation()) == BiomeType.JUNGLE &&
-                            HeightLayer.getHeightLayer(blockToSpread.getLocation()) == HeightLayer.CAVERN) {
-                        // only spread when the area is not crowded
-                        blockToSpread.setType(Material.MOSSY_COBBLESTONE, false);
+                Block blockToSpread = getSpreadBlock(blockToTick, false, Material.STONE);
+                if (blockToSpread != null &&
+                        BiomeType.getBiome(blockToSpread.getLocation()) == BiomeType.JUNGLE &&
+                        HeightLayer.getHeightLayer(blockToSpread.getLocation()) == HeightLayer.CAVERN) {
+                        blockToSpread.setType(Material.MOSSY_COBBLESTONE);
                     }
-                }
-                // becomes dirt when too crowded
-                else if (estimatedAmount >= 3) {
-                    if (blockToTick.getRelative(BlockFace.UP).getType().isSolid())
-                        blockToTick.setType(Material.DIRT, false);
-                    else
-                        blockToTick.setType(Material.GRASS, false);
-                }
             }
         }
     }
@@ -401,7 +391,7 @@ public class WorldHelper {
     //
     //                  flower and long grass
     private static void placeSpecialPlant(Block block, String nameUUID, String texture) {
-        block.setType(Material.SKULL, false);
+        block.setType(Material.SKULL);
         block.setData( (byte) 1 );
         BlockState blockState = block.getState();
         if (blockState instanceof Skull) {
@@ -579,7 +569,7 @@ public class WorldHelper {
                 break;
         }
         if (plantType != PlantType.SPECIAL_OR_NONE) {
-            plantBlock.setType(plantType.material, false);
+            plantBlock.setType(plantType.material);
             if (plantType.data != 0)
                 plantBlock.setData(plantType.data);
         }
@@ -732,6 +722,7 @@ public class WorldHelper {
             {
                 LeafShape empty = new LeafShape();
                 candidateBranchShapes.add(empty);
+                candidateBranchShapes.add(empty);
             }
             // small
             {
@@ -740,6 +731,18 @@ public class WorldHelper {
                         new LeafLayerShape(0, 0)
                 );
                 candidateBranchShapes.add(small);
+                candidateBranchShapes.add(small);
+                candidateBranchShapes.add(small);
+                candidateBranchShapes.add(small);
+                candidateBranchShapes.add(small);
+                candidateBranchShapes.add(small);
+            }
+            // small short
+            {
+                LeafShape small_short = new LeafShape(
+                        new LeafLayerShape(1, 0)
+                );
+                candidateBranchShapes.add(small_short);
             }
             // medium
             {
@@ -749,6 +752,16 @@ public class WorldHelper {
                         new LeafLayerShape(0, 0)
                 );
                 candidateBranchShapes.add(medium);
+                candidateBranchShapes.add(medium);
+                candidateBranchShapes.add(medium);
+            }
+            // medium short
+            {
+                LeafShape medium_short = new LeafShape(
+                        new LeafLayerShape(1, 0),
+                        new LeafLayerShape(1, 0)
+                );
+                candidateBranchShapes.add(medium_short);
             }
         }
     }
@@ -768,10 +781,15 @@ public class WorldHelper {
                 return 0;
         }
     }
-    private static void generateLeaves(Block topTrunk, ArrayList<Block> leafBlocks, LeafShape shape, BlockFace dir) {
-        for (LeafLayerShape currentLayer : shape.layers) {
+    private static void generateLeaves(Block topTrunk, ArrayList<Block> trunkBlocks, ArrayList<Block> leafBlocks,
+                                       LeafShape shape, BlockFace dir) {
+        for (int index = 0; index < shape.layers.length; index ++) {
+            LeafLayerShape currentLayer = shape.layers[index];
             int radius = currentLayer.radius;
             int restraint = currentLayer.roundness;
+            // add log to the leaves if it is on the tip
+            if (index + 2 < shape.layers.length)
+                trunkBlocks.add(topTrunk);
             // loop one direction
             for (int i = -radius; i <= radius; i ++) {
                 // account for roundness restraint
@@ -802,27 +820,15 @@ public class WorldHelper {
             topTrunk = topTrunk.getRelative(dir);
         }
     }
-    private static Block generateSideBranch(Block branchTrunk,
+    private static Block generateSideBranch(Block branchTrunk, ArrayList<BlockFace> directions,
                                             ArrayList<Block> trunkBlocks, ArrayList<Block> leafBlocks, LeafShape shape) {
         // randomize branch direction
-        BlockFace branchDir;
-        {
-            double random = Math.random();
-            if (random < 0.25) {
-                branchDir = BlockFace.EAST;
-            } else if (random < 0.5) {
-                branchDir = BlockFace.SOUTH;
-            } else if (random < 0.75) {
-                branchDir = BlockFace.WEST;
-            } else {
-                branchDir = BlockFace.NORTH;
-            }
-        }
+        BlockFace branchDir = directions.remove( (int) (Math.random() * directions.size()) );
         // register the branched log
         Block branchBlock = branchTrunk.getRelative(branchDir);
         trunkBlocks.add(branchBlock);
         // leaves
-        generateLeaves(branchBlock, leafBlocks, shape, branchDir);
+        generateLeaves(branchBlock, trunkBlocks, leafBlocks, shape, branchDir);
 
         return branchBlock;
     }
@@ -834,7 +840,6 @@ public class WorldHelper {
         if ( ! canGrowPlant(rootBlock.getRelative(BlockFace.DOWN), true, false) ) {
             return;
         }
-        Block branchTrunkBlock = null;
         ArrayList<Block> trunkBlocks = new ArrayList<>();
         ArrayList<Block> leafBlocks = new ArrayList<>();
         // pre-generate trunks
@@ -844,13 +849,28 @@ public class WorldHelper {
         // pre-generate canopy leaves
         LeafShape leafShapeCanopy = candidateCanopyShapes.get((int) (Math.random() * candidateCanopyShapes.size()) );
         Block topTrunkBlock = rootBlock.getRelative(0, trunkHeight - 1, 0);
-        generateLeaves(topTrunkBlock, leafBlocks, leafShapeCanopy, BlockFace.UP);
+        generateLeaves(topTrunkBlock, trunkBlocks, leafBlocks, leafShapeCanopy, BlockFace.UP);
         // pre-generate branch, if the tree is tall enough
-        if (trunkHeight > 8) {
-            int branchHeight = (int) (4 + Math.random() * (trunkHeight - 8));
-            Block branchTrunk = rootBlock.getRelative(0, branchHeight, 0);
-            LeafShape leafShapeBranch = candidateBranchShapes.get((int) (Math.random() * candidateBranchShapes.size()) );
-            branchTrunkBlock = generateSideBranch(branchTrunk, trunkBlocks, leafBlocks, leafShapeBranch);
+        if (trunkHeight >= 6) {
+            // available branch directions and heights
+            ArrayList<BlockFace> directions = new ArrayList<>();
+            directions.add(BlockFace.EAST);
+            directions.add(BlockFace.SOUTH);
+            directions.add(BlockFace.WEST);
+            directions.add(BlockFace.NORTH);
+            ArrayList<Integer> candidateBranchHeights = new ArrayList<>(trunkHeight - 5);
+            for (int index = 2; index + 3 < trunkHeight; index ++)
+                candidateBranchHeights.add(index);
+            // initialize branches
+            while (candidateBranchHeights.size() > 0 && directions.size() > 0) {
+                int branchHeight = candidateBranchHeights.get( (int) (Math.random() * candidateBranchHeights.size()) );
+                candidateBranchHeights.remove( Integer.valueOf(branchHeight - 1) );
+                candidateBranchHeights.remove( Integer.valueOf(branchHeight) );
+                candidateBranchHeights.remove( Integer.valueOf(branchHeight + 1) );
+                Block branchTrunk = rootBlock.getRelative(0, branchHeight, 0);
+                LeafShape leafShapeBranch = candidateBranchShapes.get((int) (Math.random() * candidateBranchShapes.size()));
+                generateSideBranch(branchTrunk, directions, trunkBlocks, leafBlocks, leafShapeBranch);
+            }
         }
         // validate if the tree has enough space to grow
         {
@@ -882,20 +902,18 @@ public class WorldHelper {
             byte treeData = (byte) (treeType & 3);
             // leaves
             for (Block leafBlock : leafBlocks) {
-                leafBlock.setType(leafMat, false);
-                leafBlock.setData(treeData, false);
+                leafBlock.setType(leafMat);
+                leafBlock.setData(treeData);
             }
             // trunk
             for (Block trunkBlock : trunkBlocks) {
-                trunkBlock.setType(logMat, false);
-                trunkBlock.setData(treeData, false);
-            }
-            // update branch rotation
-            if (branchTrunkBlock != null) {
-                if (branchTrunkBlock.getX() != rootBlock.getX())
-                    branchTrunkBlock.setData((byte) (treeData + 4), false);
-                else
-                    branchTrunkBlock.setData((byte) (treeData + 8), false);
+                trunkBlock.setType(logMat);
+                trunkBlock.setData(treeData);
+                // update branch rotation
+                if (trunkBlock.getX() != rootBlock.getX())
+                    trunkBlock.setData((byte) (treeData + 4));
+                else if (trunkBlock.getZ() != rootBlock.getZ())
+                    trunkBlock.setData((byte) (treeData + 8));
             }
         }
     }
@@ -909,11 +927,11 @@ public class WorldHelper {
             }
         }
         // other plant growth ticking
-        for (int i = 0; i < MathHelper.randomRound(12.5); i ++) {
+        for (int i = 0; i < MathHelper.randomRound(15); i ++) {
             Block blockToTick = getRandomBlockInChunk(chunk);
             switch (blockToTick.getType()) {
                 case SAPLING: {
-                    if (Math.random() < 0.5) {
+                    if (Math.random() < 0.35) {
                         attemptGenerateTree(blockToTick);
                     }
                     break;
@@ -922,9 +940,9 @@ public class WorldHelper {
                     byte growthProgress = blockToTick.getData();
                     growthProgress ++;
                     if (growthProgress <= 7)
-                        blockToTick.setData(growthProgress, false);
+                        blockToTick.setData(growthProgress);
                     else
-                        blockToTick.setType(Material.PUMPKIN, false);
+                        blockToTick.setType(Material.PUMPKIN);
                     break;
                 }
             }

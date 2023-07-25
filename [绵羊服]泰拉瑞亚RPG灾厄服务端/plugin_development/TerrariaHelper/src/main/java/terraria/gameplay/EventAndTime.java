@@ -133,7 +133,7 @@ public class EventAndTime {
     public static long currentTime = 2250;
     // event
     public static Events currentEvent = Events.NONE, reservedEvent = Events.NONE;
-    public static int reservedEventCountdown = 0;
+    public static int reservedEventCountdown = 0, NPCRespawnCountdown = 1000;
     public static HashMap<EventInfoMapKeys, Double> eventInfo;
     public static BossBattleServer eventProgressBar = null;
     public static int[] eventBossAmount = {0, 0, 0}, eventBossAmountLimit = {0, 0, 0};
@@ -177,7 +177,7 @@ public class EventAndTime {
                     // TODO: remove message
                     long time = System.nanoTime();
                     WorldHelper.worldRandomTick(currWorld);
-//                    Bukkit.broadcastMessage(System.nanoTime() - time + " nano seconds elapsed.");
+                    Bukkit.broadcastMessage(System.nanoTime() - time + " nano seconds elapsed.");
                 }
             // end events when appropriate
             handleEventTermination();
@@ -188,20 +188,28 @@ public class EventAndTime {
                 // fallen stars
                 tickFallenStars(surfaceWorld);
                 // NPC respawn
-                if (WorldHelper.isDayTime(surfaceWorld) && Math.random() < 0.005) {
-                    for (NPCHelper.NPCType npcType : NPCHelper.NPCType.values()) {
-                        // if NPC is alive, move on
-                        if (NPCHelper.NPCMap.containsKey(npcType) && !NPCHelper.NPCMap.get(npcType).isDead())
-                            continue;
-                        // otherwise, revive the NPC
-                        try {
-                            NPCHelper.spawnNPC(npcType);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                if (WorldHelper.isDayTime(surfaceWorld)) {
+                    if (--NPCRespawnCountdown < 0) {
+                        for (NPCHelper.NPCType npcType : NPCHelper.NPCType.values()) {
+                            // if NPC is alive, move on
+                            if (NPCHelper.NPCMap.containsKey(npcType) && !NPCHelper.NPCMap.get(npcType).isDead())
+                                continue;
+                            // otherwise, revive the NPC
+                            try {
+                                NPCHelper.spawnNPC(npcType);
+                                Bukkit.broadcastMessage("§#327dff" + npcType + " 已到达！");
+                                NPCRespawnCountdown = (int) (1000 + Math.random() * 1000);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            // only revive one NPC at a time
+                            break;
                         }
-                        // only revive one NPC at a time
-                        break;
                     }
+                }
+                // NPC respawn counter resets at night
+                else {
+                    NPCRespawnCountdown = 1800;
                 }
             }
         }, 0, 3);

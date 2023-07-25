@@ -152,7 +152,7 @@ FURNACE:
     requireLevel: 1
     resultItem: 南瓜派
     requireItem:
-    - 南瓜:12
+    - 南瓜:8
   '31':
     requireLevel: 2
     resultItem: 黑曜石逃犯帽
