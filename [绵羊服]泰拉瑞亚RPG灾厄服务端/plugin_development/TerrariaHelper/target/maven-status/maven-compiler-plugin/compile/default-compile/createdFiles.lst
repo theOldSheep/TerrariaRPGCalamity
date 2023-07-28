@@ -1,6 +1,7 @@
 terraria\util\GameplayHelper$BlockTreePart.class
 terraria\entity\boss\aquaticScourge\AquaticScourge.class
 terraria\util\NMSUtils.class
+terraria\entity\others\TerrariaMinecart.class
 terraria\util\GenericHelper$StrikeLineOptions.class
 terraria\entity\boss\empressOfLight\EmpressOfLight.class
 terraria\entity\boss\golem\GolemHead.class
@@ -233,5 +234,6 @@ terraria\entity\boss\moonLord\MoonLordBackground$MoonLordBackgroundType.class
 terraria\entity\boss\ravager\Ravager.class
 terraria\entity\boss\ravager\RavagerHead.class
 terraria\entity\boss\calamitasClone\Cataclysm.class
+terraria\entity\others\TerrariaMinecart$MinecartType.class
 terraria\entity\npc\TerrariaNPCDemolitionist.class
 terraria\worldgen\overworld\OverworldChunkGenerator$1.class

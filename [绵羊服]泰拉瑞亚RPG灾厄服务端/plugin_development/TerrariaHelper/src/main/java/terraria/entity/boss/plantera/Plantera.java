@@ -179,7 +179,7 @@ public class Plantera extends EntitySlime {
                             case 100:
                                 speed *= 2;
                                 keepShorterDirection = false;
-                                dashIndex = -10;
+                                dashIndex = -20;
                                 break;
                         }
                         dashVelocity = MathHelper.getDirection(

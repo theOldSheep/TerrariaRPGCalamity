@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
 import terraria.TerrariaHelper;
+import terraria.entity.others.TerrariaMinecart;
 import terraria.worldgen.overworld.OverworldBiomeGenerator;
 
 import java.util.HashSet;
@@ -486,6 +487,14 @@ public class GameplayHelper {
                     blk.setType(Material.MOSSY_COBBLESTONE, false);
                     plyTool.setAmount(plyTool.getAmount() - 1);
                 }
+                break;
+            }
+            // rail
+            case RAILS:
+            case ACTIVATOR_RAIL:
+            case DETECTOR_RAIL:
+            case POWERED_RAIL: {
+                new TerrariaMinecart(plyToolType, blk.getLocation().add(0.5, 0.1, 0.5), ply);
                 break;
             }
         }

@@ -2,6 +2,7 @@ package terraria.util;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import fr.xephi.authme.security.crypts.description.HasSalt;
 import net.minecraft.server.v1_12_R1.BlockGrass;
 import org.bukkit.*;
 import org.bukkit.block.*;
@@ -216,18 +217,17 @@ public class WorldHelper {
     //
     private static long randomGenerator = new Random().nextLong();
     public static void worldRandomTick(World wld) {
-        for (Chunk chunk : wld.getLoadedChunks()) {
-            // chunks can only tick when a 3*3 chunk grid is all loaded.
-            boolean canTick = true;
-            for (int offsetX = -1; offsetX <= 1; offsetX ++)
-                for (int offsetZ = -1; offsetZ <= 1; offsetZ ++)
-                    if (! wld.isChunkLoaded(chunk.getX() + offsetX, chunk.getZ() + offsetZ)) {
-                        canTick = false;
-                        offsetX = 999;
-                        offsetZ = 999;
-                    }
-            if (! canTick)
-                continue;
+        HashSet<Chunk> chunksToLoop = new HashSet<>();
+        // chunks within radius 5 of any player would be ticked
+        for (Player ply : wld.getPlayers()) {
+            Chunk centerChunk = ply.getLocation().getChunk();
+            int chunkX = centerChunk.getX();
+            int chunkZ = centerChunk.getZ();
+            for (int i = -5; i <= 5; i ++)
+                for (int j = -5; j <= 5; j ++)
+                    chunksToLoop.add(wld.getChunkAt(chunkX + i, chunkZ + j));
+        }
+        for (Chunk chunk : chunksToLoop) {
             // chunk tick mechanisms
             worldRandomTickGrass(chunk);
             worldRandomTickVegetation(chunk);

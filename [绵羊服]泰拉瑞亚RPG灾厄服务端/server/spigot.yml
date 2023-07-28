@@ -12,9 +12,9 @@
 
 config-version: 11
 settings:
-  debug: false
   save-user-cache-on-stop-only: false
   sample-count: 12
+  int-cache-limit: 1024
   attribute:
     maxHealth:
       max: 1.14514191981E12
@@ -22,27 +22,27 @@ settings:
       max: 2048.0
     attackDamage:
       max: 2048.0
-  netty-threads: 4
   item-dirty-ticks: 20
-  late-bind: false
-  player-shuffle: 0
-  user-cache-size: 1000
-  bungeecord: false
+  netty-threads: 4
   timeout-time: 1200
   restart-on-crash: true
   restart-script: ./start.sh
-  int-cache-limit: 1024
+  bungeecord: false
+  late-bind: false
+  player-shuffle: 0
+  user-cache-size: 1000
   moved-too-quickly-multiplier: 10.0
   moved-wrongly-threshold: 0.0625
   filter-creative-items: true
+  debug: false
 commands:
   tab-complete: 0
-  log: true
   replace-commands:
   - setblock
   - summon
   - testforblock
   - tellraw
+  log: true
   spam-exclusions:
   - /skill
   silent-commandblock-console: false
@@ -63,8 +63,53 @@ advancements:
 world-settings:
   default:
     verbose: true
+    seed-village: 10387312
+    seed-feature: 14357617
+    seed-monument: 10387313
+    seed-slime: 987234911
+    dragon-death-sound-radius: 0
+    view-distance: 12
+    item-despawn-rate: 3000
+    merge-radius:
+      item: 2.5
+      exp: 3.0
+    arrow-despawn-rate: 12000
+    enable-zombie-pigmen-portal-spawns: true
+    wither-spawn-sound-radius: 0
+    hanging-tick-frequency: 100
+    zombie-aggressive-towards-villager: true
+    nerf-spawner-mobs: false
+    growth:
+      cactus-modifier: 1000
+      cane-modifier: 1000
+      melon-modifier: 1000
+      mushroom-modifier: 1000
+      pumpkin-modifier: 1000
+      sapling-modifier: 100
+      wheat-modifier: 1000
+      netherwart-modifier: 1000
+      vine-modifier: 1000
+      cocoa-modifier: 1000
+    mob-spawn-range: 4
+    hunger:
+      jump-walk-exhaustion: 10
+      jump-sprint-exhaustion: 10
+      combat-exhaustion: 10
+      regen-exhaustion: 10
+      swim-multiplier: 10
+      sprint-multiplier: 10
+      other-multiplier: 10
+    max-tick-time:
+      tile: 1000
+      entity: 1000
+    max-tnt-per-tick: 100
     squid-spawn-range:
       min: 45.0
+    ticks-per:
+      hopper-transfer: 8
+      hopper-check: 1
+    hopper-amount: 1
+    save-structure-info: true
     entity-activation-range:
       animals: 128
       monsters: 128
@@ -77,50 +122,5 @@ world-settings:
       monsters: 100
       misc: 100
       other: 100
-    ticks-per:
-      hopper-transfer: 8
-      hopper-check: 1
-    hopper-amount: 1
-    mob-spawn-range: 4
-    growth:
-      cactus-modifier: 1000
-      cane-modifier: 1000
-      melon-modifier: 1000
-      mushroom-modifier: 1000
-      pumpkin-modifier: 1000
-      sapling-modifier: 100
-      wheat-modifier: 1000
-      netherwart-modifier: 1000
-      vine-modifier: 1000
-      cocoa-modifier: 1000
     random-light-updates: true
-    save-structure-info: true
-    hunger:
-      jump-walk-exhaustion: 10
-      jump-sprint-exhaustion: 10
-      combat-exhaustion: 10
-      regen-exhaustion: 10
-      swim-multiplier: 10
-      sprint-multiplier: 10
-      other-multiplier: 10
-    max-tnt-per-tick: 100
-    max-tick-time:
-      tile: 1000
-      entity: 1000
-    view-distance: 8
-    item-despawn-rate: 3000
-    merge-radius:
-      item: 2.5
-      exp: 3.0
-    arrow-despawn-rate: 12000
-    wither-spawn-sound-radius: 0
-    enable-zombie-pigmen-portal-spawns: true
-    zombie-aggressive-towards-villager: true
-    nerf-spawner-mobs: false
-    hanging-tick-frequency: 100
-    dragon-death-sound-radius: 0
-    seed-village: 10387312
-    seed-feature: 14357617
-    seed-monument: 10387313
-    seed-slime: 987234911
     max-entity-collisions: -1

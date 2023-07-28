@@ -1008,7 +1008,7 @@ public class PlayerHelper {
                 else {
                     // if the player is not flying
                     if (!isThrusting) {
-                        // the player can not keep jumping after leaving the ground
+                        // the player can not save a part of jumping progress for a "double jump" after leaving the ground
                         if (thrustIndex < 0) {
                             thrustIndex = 0;
                             thrustProgress = 0;
@@ -1107,6 +1107,9 @@ public class PlayerHelper {
                         thrustProgressMax *= EntityHelper.getAttrMap(ply).getOrDefault("flightTimeMulti", 1d);
                         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
                         double speedMultiAttribute = attrMap.getOrDefault("speedMulti", 1d);
+                        // speed multiplier that exceeds 100% are only 40% as effective on wings
+                        if (speedMultiAttribute > 1d)
+                            speedMultiAttribute = 1 + (speedMultiAttribute - 1) * 0.4;
                         speedMulti *= speedMultiAttribute;
                         accelerationMulti *= speedMultiAttribute / 2;
                     }

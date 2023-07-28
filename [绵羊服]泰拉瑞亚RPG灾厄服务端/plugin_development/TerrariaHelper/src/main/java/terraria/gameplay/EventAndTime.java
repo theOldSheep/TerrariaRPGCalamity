@@ -174,10 +174,7 @@ public class EventAndTime {
             for (World currWorld : worldsToHandle)
                 if (currWorld != null) {
                     currWorld.setTime(currentTime);
-                    // TODO: remove message
-                    long time = System.nanoTime();
                     WorldHelper.worldRandomTick(currWorld);
-                    Bukkit.broadcastMessage(System.nanoTime() - time + " nano seconds elapsed.");
                 }
             // end events when appropriate
             handleEventTermination();
