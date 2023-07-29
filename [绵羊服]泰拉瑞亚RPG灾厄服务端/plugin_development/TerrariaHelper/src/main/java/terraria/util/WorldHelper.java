@@ -223,9 +223,19 @@ public class WorldHelper {
             Chunk centerChunk = ply.getLocation().getChunk();
             int chunkX = centerChunk.getX();
             int chunkZ = centerChunk.getZ();
-            for (int i = -5; i <= 5; i ++)
-                for (int j = -5; j <= 5; j ++)
-                    chunksToLoop.add(wld.getChunkAt(chunkX + i, chunkZ + j));
+            for (int i = -8; i <= 8; i ++)
+                for (int j = -8; j <= 8; j ++) {
+                    int dist = Math.abs(i) + Math.abs(j);
+                    double chance = 1;
+                    if (dist >= 12)
+                        chance = 0.25;
+                    else if (dist >= 8)
+                        chance = 0.4;
+                    else if (dist >= 6)
+                        chance = 0.6;
+                    if (Math.random() < chance)
+                        chunksToLoop.add(wld.getChunkAt(chunkX + i, chunkZ + j));
+                }
         }
         for (Chunk chunk : chunksToLoop) {
             // chunk tick mechanisms

@@ -124,7 +124,8 @@ public class MinionHusk extends EntityZombieHusk {
         // setup target
         if (!MinionHelper.checkTargetIsValidEnemy(this, ((CraftPlayer) owner).getHandle(), getGoalTarget(), targetNeedLineOfSight)
                 || ticksLived % 10 == 0)
-            MinionHelper.setTarget(this, ((CraftPlayer) owner).getHandle(), targetNeedLineOfSight, protectOwner);
+            MinionHelper.setTarget(this, ((CraftPlayer) owner).getHandle(),
+                    sentryOrMinion, targetNeedLineOfSight, protectOwner);
         // extra ticking AI
         Vector velocity = new Vector(motX, motY, motZ);
         Collection<Entity> allMinions = (Collection<Entity>) EntityHelper.getMetadata(owner,

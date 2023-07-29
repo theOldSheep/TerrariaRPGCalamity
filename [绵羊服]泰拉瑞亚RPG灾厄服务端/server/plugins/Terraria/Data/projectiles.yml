@@ -626,6 +626,11 @@
 七彩水晶:
     isGrenade: true
     blastRadius: 2.5
+蜘蛛卵:
+    noGravityTicks: 0
+    liveTime: 10
+    isGrenade: true
+    blastRadius: 1
 集束破片:
     noGravityTicks: 0
     isGrenade: true

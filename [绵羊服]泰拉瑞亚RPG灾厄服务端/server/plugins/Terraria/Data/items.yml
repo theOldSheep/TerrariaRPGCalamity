@@ -3412,7 +3412,7 @@
   - §r召唤蜘蛛女王来朝敌人吐蜘蛛卵
   - §r“啊↗啊↑啊→啊→啊↓啊↓啊↓”
   attributes:
-    damage: 150
+    damage: 75
     damageType: Summon
     knockback: 7.5
     useTime: 30
@@ -3425,7 +3425,7 @@
   - §r召唤哨兵
   - §r召唤月亮传送门，向敌人发射激光
   attributes:
-    damage: 100
+    damage: 175
     damageType: Summon
     knockback: 7.5
     useTime: 30
@@ -3439,7 +3439,7 @@
   - §r召唤用来驱逐敌人的放射水晶
   - §r“公爵，多么缤纷的颜色！”
   attributes:
-    damage: 260
+    damage: 125
     damageType: Summon
     knockback: 7.5
     useTime: 30

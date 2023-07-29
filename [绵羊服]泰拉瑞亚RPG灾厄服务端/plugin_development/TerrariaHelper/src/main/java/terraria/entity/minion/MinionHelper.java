@@ -124,9 +124,10 @@ public class MinionHelper {
         com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication = getTargetPredication(minion, owner, needLineOfSight);
         return target != owner && predication.test(target);
     }
-    public static void setTarget(EntityInsentient minion, EntityPlayer owner, boolean needLineOfSight, boolean protectOwner) {
+    public static void setTarget(EntityInsentient minion, EntityPlayer owner,
+                                 boolean sentryOrMinion, boolean needLineOfSight, boolean protectOwner) {
         // check distance from the player
-        {
+        if (!sentryOrMinion) {
             double horDistSqrToOwner = getHorDistSqr(minion.locX, owner.locX, minion.locZ, owner.locZ);
             if (horDistSqrToOwner > maxDistBeforeReturn * maxDistBeforeReturn) {
                 minion.setGoalTarget(owner, EntityTargetEvent.TargetReason.CUSTOM, false);

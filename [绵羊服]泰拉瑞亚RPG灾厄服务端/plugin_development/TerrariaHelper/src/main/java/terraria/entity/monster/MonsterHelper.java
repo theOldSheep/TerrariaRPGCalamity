@@ -1224,12 +1224,12 @@ public class MonsterHelper {
                 case "巨型陆龟":
                 case "冰雪陆龟": {
                     if (monster.getHealth() > 0) {
-                        boolean hasBeenDamaged = monsterBkt.getScoreboardTags().contains("notDamaged");
+                        boolean hasBeenDamaged = ! (monsterBkt.getScoreboardTags().contains("notDamaged"));
                         if (hasBeenDamaged) {
                             monsterBkt.setCustomName(type);
                             indexAI = 999999;
                         }
-                        monsterBkt.getScoreboardTags().add("notDamaged");
+                        monsterBkt.addScoreboardTag("notDamaged");
                         // setup wait time before rolling attack
                         int waitTime;
                         {
@@ -1239,18 +1239,21 @@ public class MonsterHelper {
                             else waitTime = 60;
                         }
                         int rollProgress = indexAI - waitTime;
-                        // walking
+                        // prepare to roll
                         if (rollProgress == 0) {
                             monsterBkt.setGravity(false);
                             monsterBkt.setCustomName(type + "§1");
-                            EntityHelper.tweakAttribute(monsterBkt, "damageMulti", "1", true);
-                            EntityHelper.tweakAttribute(monsterBkt, "defenceMulti", "1", true);
+                            HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
+                            attrMap.put("damageMulti", 2d);
+                            attrMap.put("defenceMulti", 2d);
                             ((MonsterHusk) monster).defaultSpeed = 0;
                         }
+                        // leap
                         else if (rollProgress == 10) {
                             monsterBkt.setVelocity(monsterBkt.getVelocity().add( new Vector(0, 1, 0)) );
                             monster.setNoGravity(true);
                         }
+                        // roll towards enemy
                         else if (rollProgress < 50 && rollProgress > 10) {
                             Vector dV = target.getEyeLocation().subtract(monsterBkt.getEyeLocation()).toVector();
                             if (dV.lengthSquared() > 1e-9) {
@@ -1270,10 +1273,12 @@ public class MonsterHelper {
                                 }
                             }
                         }
-                        else if (rollProgress == 50 || rollProgress >= 60) {
+                        // land
+                        else if (rollProgress == 50 || rollProgress >= 75) {
                             monster.setNoGravity(false);
-                            EntityHelper.tweakAttribute(monsterBkt, "damageMulti", "1", false);
-                            EntityHelper.tweakAttribute(monsterBkt, "defenceMulti", "1", false);
+                            HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
+                            attrMap.put("damageMulti", 1d);
+                            attrMap.put("defenceMulti", 1d);
                             if (monsterBkt.isOnGround()) {
                                 monsterBkt.setCustomName(type);
                                 ((MonsterHusk) monster).defaultSpeed = 0.2;
