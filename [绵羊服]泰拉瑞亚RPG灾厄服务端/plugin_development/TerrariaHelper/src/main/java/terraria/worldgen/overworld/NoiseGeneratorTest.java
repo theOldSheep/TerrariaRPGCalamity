@@ -25,7 +25,7 @@ public class NoiseGeneratorTest implements CommandExecutor {
                         int blockX = xStart + i, blockZ = zStart + j;
                         double noise;
                         if (args.length == 1)
-                            noise = OverworldChunkGenerator.terrainGenerator.noise(blockX, blockZ, 0.5, 0.5, false);
+                            noise = OverworldChunkGenerator.astralInfectionGenerator.noise(blockX, blockZ, 0.5, 0.5, false);
                         else
                             switch (args[1]) {
                                 case "1":
@@ -34,18 +34,39 @@ public class NoiseGeneratorTest implements CommandExecutor {
                                 case "2":
                                     noise = OverworldChunkGenerator.lakeGenerator.noise(blockX, blockZ, 0.5, 0.5, false);
                                     break;
+                                case "3":
+                                    noise = OverworldChunkGenerator.plateauHeightGenerator.noise(blockX, blockZ, 0.5, 0.5, false);
+                                    break;
+                                case "4":
+                                    noise = OverworldChunkGenerator.landscapeVariationGenerator.noise(blockX, blockZ, 0.5, 0.5, false);
+                                    break;
                                 default:
-                                    noise = OverworldChunkGenerator.terrainGenerator.noise(blockX, blockZ, 0.5, 0.5, false);
+                                    noise = OverworldChunkGenerator.astralInfectionGenerator.noise(blockX, blockZ, 0.5, 0.5, false);
                             }
-                        if (Math.abs(noise - toFind) < 0.001) {
-                            player.teleport(new Location(player.getWorld(), blockX, 150, blockZ));
+                        Location loc = new Location(player.getWorld(), blockX, 150, blockZ);
+                        if (Math.abs(noise - toFind) < 0.001 &&
+                                loc.getBlock().getBiome() != Biome.OCEAN && loc.getBlock().getBiome() != Biome.FROZEN_OCEAN) {
+                            player.teleport(loc);
                             player.sendMessage("Found!" + toFind + ", actual noise: " + noise);
                             return true;
                         }
                     }
                 }
             }
-            player.sendMessage("Did not find the noise you wanted to go to :(");
+            else {
+                player.sendMessage("Did not find the noise you wanted to go to :(");
+                int blockX = player.getLocation().getBlockX(), blockZ = player.getLocation().getBlockZ();
+                player.sendMessage("river: " +
+                        OverworldChunkGenerator.riverGenerator.noise(blockX, blockZ, 0.5, 0.5, false));
+                player.sendMessage("lake: " +
+                        OverworldChunkGenerator.lakeGenerator.noise(blockX, blockZ, 0.5, 0.5, false));
+                player.sendMessage("platH: " +
+                        OverworldChunkGenerator.plateauHeightGenerator.noise(blockX, blockZ, 0.5, 0.5, false));
+                player.sendMessage("var.: " +
+                        OverworldChunkGenerator.landscapeVariationGenerator.noise(blockX, blockZ, 0.5, 0.5, false));
+                player.sendMessage("ter.: " +
+                        OverworldChunkGenerator.astralInfectionGenerator.noise(blockX, blockZ, 0.5, 0.5, false));
+            }
         }
 
         return false;

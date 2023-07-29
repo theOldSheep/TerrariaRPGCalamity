@@ -507,7 +507,7 @@ public class OverworldBiomeGenerator {
     public static Biome getBiome(long seed, int actualX, int actualZ) {
         if (test)
             return Biome.FOREST;
-        int x = actualX / 4, z = actualZ / 4;
+        int x = actualX >> 2, z = actualZ >> 2;
         long biomeLocKey = getCacheKey(1, x, z);
         int rst;
         if (biomeCache.containsKey(biomeLocKey)) {

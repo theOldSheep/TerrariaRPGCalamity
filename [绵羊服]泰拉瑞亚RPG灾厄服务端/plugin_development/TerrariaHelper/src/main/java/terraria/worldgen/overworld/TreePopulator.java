@@ -40,7 +40,15 @@ public class TreePopulator extends BlockPopulator {
             int Y;
             // Find the highest block of the (X,Z) coordinate chosen.
             for (Y = 175; !chunk.getBlock(X, Y, Z).getType().isSolid(); Y--);
-            WorldHelper.attemptGenerateTree( chunk.getBlock(X, Y + 1, Z) );
+            // if the position is not covered by water, grow a tree.
+            Block blockToGrow = chunk.getBlock(X, Y + 1, Z);
+            switch (blockToGrow.getType()) {
+                case WATER:
+                case STATIONARY_WATER:
+                    break;
+                default:
+                    WorldHelper.attemptGenerateTree( blockToGrow );
+            }
         }
     }
 }
