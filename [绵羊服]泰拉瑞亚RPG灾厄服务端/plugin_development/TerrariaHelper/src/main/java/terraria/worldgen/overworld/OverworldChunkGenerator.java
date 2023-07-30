@@ -99,28 +99,26 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 InterpolatePoint.create(0.9     , LAND_HEIGHT + 30),
         }, "plateau_height_heightmap");
         variationHeightProvider = new Interpolate(new InterpolatePoint[]{
-                InterpolatePoint.create(-0.75     , 0),
-                InterpolatePoint.create(-0.65     , 10),
-                InterpolatePoint.create(-0.5     , 25),
-                InterpolatePoint.create(-0.4     , 5),
-                InterpolatePoint.create(-0.3     , 30),
-                InterpolatePoint.create(-0.25     , 0),
+                InterpolatePoint.create(-0.35     , 0),
+                InterpolatePoint.create(-0.25     , 10),
+                InterpolatePoint.create(-0.1     , 25),
+                InterpolatePoint.create(0     , 5),
+                InterpolatePoint.create(0.1     , 30),
+                InterpolatePoint.create(0.15     , 15),
                 InterpolatePoint.create(0.25     , 0),
-                InterpolatePoint.create(0.3     , 10),
-                InterpolatePoint.create(0.35      , 50),
-                InterpolatePoint.create(0.4      , 50),
-                InterpolatePoint.create(0.45      , 30),
-                InterpolatePoint.create(0.5       , 20),
-                InterpolatePoint.create(0.55      , 75),
-                InterpolatePoint.create(0.65       , 75),
-                InterpolatePoint.create(0.7      , 40),
-                InterpolatePoint.create(0.75      , 0),
+                InterpolatePoint.create(0.35     , 40),
+                InterpolatePoint.create(0.4     , 10),
+                InterpolatePoint.create(0.45      , 50),
+                InterpolatePoint.create(0.6      , 50),
+                InterpolatePoint.create(0.7      , 30),
+                InterpolatePoint.create(0.75       , 20),
+                InterpolatePoint.create(0.8      , 75),
         }, "variations_heightmap");
         plateauHeightProvider = new Interpolate(new InterpolatePoint[]{
+                InterpolatePoint.create(-0.65    , PLATEAU_HEIGHT),
                 InterpolatePoint.create(-0.55    , 0),
-                InterpolatePoint.create(-0.45    , PLATEAU_HEIGHT),
-                InterpolatePoint.create(0.45     , PLATEAU_HEIGHT),
-                InterpolatePoint.create(0.55     , 0)
+                InterpolatePoint.create(0.55     , 0),
+                InterpolatePoint.create(0.65     , PLATEAU_HEIGHT)
         }, "plateau_heightmap");
         riverRatioProvider = new Interpolate(new InterpolatePoint[]{
                 InterpolatePoint.create(-0.075  , 0),
@@ -132,12 +130,12 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 InterpolatePoint.create(0.075   , 0),
         }, "river_ratio_map");
         lakeRatioProvider = new Interpolate(new InterpolatePoint[]{
-                InterpolatePoint.create(-0.8  , 1),
-                InterpolatePoint.create(-0.7   , 0.5),
+                InterpolatePoint.create(-0.7  , 1),
+                InterpolatePoint.create(-0.6   , 0.5),
                 InterpolatePoint.create(-0.5   , 0),
                 InterpolatePoint.create(0.5   , 0),
-                InterpolatePoint.create(0.7   , 0.5),
-                InterpolatePoint.create(0.8  , 1),
+                InterpolatePoint.create(0.6   , 0.5),
+                InterpolatePoint.create(0.7  , 1),
         }, "lake_ratio_map");
         // block populators
         caveGen = new OverworldCaveGenerator(Y_OFFSET_OVERWORLD, seed, OCTAVES_CAVE);

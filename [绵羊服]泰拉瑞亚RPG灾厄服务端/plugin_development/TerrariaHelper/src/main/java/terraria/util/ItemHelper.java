@@ -523,7 +523,7 @@ public class ItemHelper {
         Set<String> attributes = attributeSection.getKeys(false);
         String[] attributeLoreOrder = {
                 // usually found in weapon lore
-                "damage", "knockback", "crit", "useTime", "manaUse", "armorPenetration", "powerPickaxe",
+                "damage", "knockback", "crit", "useTime", "manaUse", "armorPenetration", "powerPickaxe", "reachExtra",
                 // multipliers, usually found in armor/accessory lore
                 "damageTakenMulti", "damageContactTakenMulti", "damageMulti", "damageMeleeMulti", "damageRangedMulti", "damageMagicMulti", "damageSummonMulti", "damageArrowMulti", "damageBulletMulti", "damageRocketMulti", "damageTrueMeleeMulti",
                 "manaUseMulti", "ammoConsumptionRate", "arrowConsumptionRate", "mobSpawnRateMulti", "speedMulti", "meleeReachMulti", "regenMulti",
@@ -616,6 +616,11 @@ public class ItemHelper {
                     result.add(power + "% 镐力");
                     break;
                 }
+                case "reachExtra": {
+                    int reach = attributeSection.getInt(attribute, 0);
+                    result.add((reach > 0 ? "+" : "") + reach + " 触及范围");
+                    break;
+                }
                 case "defence": {
                     int defence = attributeSection.getInt(attribute, 0);
                     result.add(defence + " 防御");
@@ -700,6 +705,7 @@ public class ItemHelper {
                 case "penetration":
                 case "buffInflictMelee":
                     break;
+                // multiplier-style attributes
                 default:
                     if (attributeDisplayName.containsKey(attribute)) {
                         double multi = attributeSection.getDouble(attribute, 0d);

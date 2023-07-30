@@ -1324,13 +1324,14 @@ public class PlayerHelper {
                     switch (data) {
                         case 1:
                             // lizard
-                            return 2;
+                            if (WorldHelper.BiomeType.getBiome(blockToCheck.getLocation()) == WorldHelper.BiomeType.JUNGLE)
+                                return 2;
                         case 2:
                             // dungeon
                             return 1;
                     }
-                    break;
                 }
+                break;
             }
             // meteor
             case RED_GLAZED_TERRACOTTA:

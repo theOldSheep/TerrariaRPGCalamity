@@ -242,7 +242,7 @@ public class SkeletronHead extends EntitySlime {
     public SkeletronHead(Player summonedPlayer) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
-        org.bukkit.entity.Entity clothier = NPCHelper.NPCMap.get("裁缝");
+        org.bukkit.entity.Entity clothier = NPCHelper.NPCMap.get(NPCHelper.NPCType.CLOTHIER);
         if (clothier == null) {
             die();
             return;

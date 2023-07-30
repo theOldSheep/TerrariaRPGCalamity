@@ -74,6 +74,16 @@
   item: RED_NETHER_BRICK
   rarity: 3
   worth: 2000
+丛林蜥蜴砖:
+  item: SMOOTH_BRICK
+  data: 1
+  rarity: 0
+  worth: 10000
+地牢砖:
+  item: SMOOTH_BRICK
+  data: 2
+  rarity: 0
+  worth: 1000
 沙块:
   item: SAND
   rarity: 0
@@ -97,6 +107,44 @@
   rarity: 0
 床:
   item: BED
+  rarity: 0
+梯子:
+  item: LADDER
+  worth: 300
+  rarity: 0
+牌子:
+  item: SIGN
+  worth: 10000
+  rarity: 0
+木栅栏:
+  item: FENCE
+  worth: 300
+  rarity: 0
+羊毛:
+  item: WOOL
+  lore:
+  - §r放置后右键/潜行右键可以改变颜色
+  worth: 500
+  rarity: 0
+萤石:
+  item: GLOWSTONE
+  worth: 200
+  rarity: 0
+石英块:
+  item: QUARTZ_BLOCK
+  worth: 200
+  rarity: 0
+石英台阶:
+  item: QUARTZ_STAIRS
+  worth: 200
+  rarity: 0
+石砖:
+  item: SMOOTH_BRICK
+  worth: 200
+  rarity: 0
+石砖台阶:
+  item: SMOOTH_STAIRS
+  worth: 200
   rarity: 0
 死亡草:
   item: CLAY_BALL
@@ -1134,14 +1182,12 @@
   rarity: 0
 仙人掌镐:
   item: STONE_PICKAXE
-  enchantment:
-  - efficiency 1
   attributes:
     damage: 4
     damageType: Melee
     crit: 4
     knockback: 2
-    useTime: 23
+    useTime: 15
     powerPickaxe: 35
   worth: 40000
   rarity: 0
@@ -1152,8 +1198,9 @@
     damageType: Melee
     crit: 4
     knockback: 2
-    useTime: 23
+    useTime: 15
     powerPickaxe: 35
+    reachExtra: -1
   worth: 10000
   rarity: 0
 铁镐:
@@ -1163,20 +1210,18 @@
     damageType: Melee
     crit: 4
     knockback: 2
-    useTime: 20
+    useTime: 13
     powerPickaxe: 40
   worth: 40000
   rarity: 0
 银镐:
   item: IRON_PICKAXE
-  enchantment:
-  - efficiency 1
   attributes:
     damage: 6
     damageType: Melee
     crit: 4
     knockback: 2
-    useTime: 19
+    useTime: 11
     powerPickaxe: 45
   worth: 100000
   rarity: 0
@@ -1187,7 +1232,7 @@
     damageType: Melee
     crit: 4
     knockback: 2
-    useTime: 20
+    useTime: 17
     powerPickaxe: 55
   worth: 200000
   rarity: 0
@@ -1198,7 +1243,7 @@
     damageType: Melee
     crit: 4
     knockback: 3
-    useTime: 20
+    useTime: 15
     powerPickaxe: 65
   worth: 360000
   rarity: 1
@@ -1209,7 +1254,7 @@
     damageType: Melee
     crit: 4
     knockback: 2
-    useTime: 23
+    useTime: 18
     powerPickaxe: 100
   worth: 540000
   rarity: 3
@@ -1220,7 +1265,7 @@
     damageType: Melee
     crit: 4
     knockback: 3
-    useTime: 22
+    useTime: 13
     powerPickaxe: 100
   worth: 1500000
   rarity: 3
@@ -1233,7 +1278,7 @@
     damageType: Melee
     crit: 4
     knockback: 5
-    useTime: 25
+    useTime: 13
     powerPickaxe: 110
   worth: 1080000
   rarity: 4
@@ -1241,67 +1286,59 @@
   item: DIAMOND_PICKAXE
   lore:
   - §r“可挖掘精金”
-  enchantment:
-  - efficiency 1
   attributes:
     damage: 30
     damageType: Melee
     crit: 4
     knockback: 5
-    useTime: 25
+    useTime: 10
     powerPickaxe: 150
   worth: 1620000
   rarity: 4
 精金镐:
   item: DIAMOND_PICKAXE
-  enchantment:
-  - efficiency 2
   attributes:
     damage: 40
     damageType: Melee
     crit: 4
     knockback: 5
-    useTime: 25
+    useTime: 8
     powerPickaxe: 180
   worth: 2160000
   rarity: 4
 镐斧:
   item: DIAMOND_PICKAXE
-  enchantment:
-  - efficiency 2
   attributes:
     damage: 70
     damageType: Melee
     crit: 4
     knockback: 4.75
-    useTime: 25
+    useTime: 7
     powerPickaxe: 200
   worth: 4400000
   rarity: 5
 叶绿镐:
   item: DIAMOND_PICKAXE
-  enchantment:
-  - efficiency 3
   attributes:
     damage: 60
     damageType: Melee
     crit: 4
     knockback: 5
-    useTime: 25
+    useTime: 7
     powerPickaxe: 200
+    reachExtra: 1
   worth: 4320000
   rarity: 7
 锯刃镐:
   item: DIAMOND_PICKAXE
-  enchantment:
-  - efficiency 5
   attributes:
     damage: 68
     damageType: Melee
     crit: 4
     knockback: 5.5
-    useTime: 16
+    useTime: 6
     powerPickaxe: 210
+    reachExtra: 1
   worth: 4320000
   rarity: 7
 木剑:
@@ -6450,41 +6487,3 @@
   - §r使用回复240生命值
   worth: 80000
   rarity: 1
-梯子:
-  item: LADDER
-  worth: 300
-  rarity: 0
-牌子:
-  item: SIGN
-  worth: 10000
-  rarity: 0
-木栅栏:
-  item: FENCE
-  worth: 300
-  rarity: 0
-羊毛:
-  item: WOOL
-  lore:
-  - §r放置后右键/潜行右键可以改变颜色
-  worth: 500
-  rarity: 0
-萤石:
-  item: GLOWSTONE
-  worth: 200
-  rarity: 0
-石英块:
-  item: QUARTZ_BLOCK
-  worth: 200
-  rarity: 0
-石英台阶:
-  item: QUARTZ_STAIRS
-  worth: 200
-  rarity: 0
-石砖:
-  item: SMOOTH_BRICK
-  worth: 200
-  rarity: 0
-石砖台阶:
-  item: SMOOTH_STAIRS
-  worth: 200
-  rarity: 0

@@ -213,21 +213,21 @@ public class WallOfFleshMouth extends EntitySlime {
     }
     // validate if the condition for spawning is met
     public static boolean canSpawn(Player player) {
-        return NPCHelper.NPCMap.containsKey("向导");
+        return NPCHelper.NPCMap.containsKey(NPCHelper.NPCType.GUIDE);
     }
     // a constructor for actual spawning
     public WallOfFleshMouth(Location burntItemLocation) {
         super( ((CraftWorld) burntItemLocation.getWorld()).getHandle() );
         // attempt to summon wall of flesh kills the guide
-        LivingEntity guideNPC = NPCHelper.NPCMap.get("向导");
+        LivingEntity guideNPC = NPCHelper.NPCMap.get(NPCHelper.NPCType.GUIDE);
         if (guideNPC == null || guideNPC.isDead()) {
             die();
             return;
         }
         guideNPC.getLocation().getChunk().load();
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
-            LivingEntity NPCguide = NPCHelper.NPCMap.get("向导");
-            EntityHelper.handleDamage(NPCguide, NPCguide, 114514d, EntityHelper.DamageReason.LAVA);
+            LivingEntity NPCGuide = NPCHelper.NPCMap.get(NPCHelper.NPCType.GUIDE);
+            EntityHelper.handleDamage(NPCGuide, NPCGuide, 114514d, EntityHelper.DamageReason.LAVA);
         }, 1);
         // target player
         Player summonedPlayer = null;

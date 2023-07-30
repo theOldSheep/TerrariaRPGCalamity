@@ -30,6 +30,9 @@ public class TreePopulator extends BlockPopulator {
     }
     @Override
     public void populate(World wld, Random rdm, Chunk chunk) {
+        // no trees if the chunk is very close to world spawn point
+        if (Math.abs(chunk.getX()) < 3 && Math.abs(chunk.getZ()) < 3)
+            return;
         // Amount of trees
         int amount = getTreeAmount(wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16));
         if (amount <= 0) return;

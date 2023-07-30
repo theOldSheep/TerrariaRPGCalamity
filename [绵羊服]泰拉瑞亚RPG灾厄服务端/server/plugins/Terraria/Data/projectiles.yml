@@ -606,9 +606,6 @@
 南瓜榴弹:
     isGrenade: true
     blastRadius: 1
-狱炎箭:
-    isGrenade: true
-    blastRadius: 2
 玛瑙能量:
     isGrenade: true
     blastRadius: 4
@@ -778,12 +775,6 @@ TNT:
     blastRadius: 7.5
     blastDamageShooter: true
     blastDestroyBlock: true
-冰焰箭:
-    buffInflict:
-        - "霜火|100|0.35"
-烈焰箭:
-    buffInflict:
-        - "燃烧|200|0.3"
 火焰:
     buffInflict:
         - "燃烧|400|1"
@@ -960,56 +951,75 @@ TNT:
         - "剧毒|300|0.33"
 彩虹水晶:
     autoTrace: true
+烈焰箭:
+    buffInflict:
+        - "燃烧|200|0.3"
+冰焰箭:
+    buffInflict:
+        - "霜火|100|0.35"
+狱炎箭:
+    isGrenade: true
+    blastRadius: 2
 诅咒箭:
     buffInflict:
         - "咒火|140|1"
 毒液箭:
     buffInflict:
         - "剧毒|200|1"
+叶绿箭:
+    blockHitAction: bounce
+    bounce: 3
 幻象箭:
     autoTrace: true
 红自导能源箭:
     autoTrace: true
-    autoTraceAbility: 2
+    autoTraceAbility: 2.5
     autoTraceRadius: 24
     blockHitAction: thru
     trailColor: 255|0|0
+    trailStepSize: 1
 蓝自导能源箭:
     autoTrace: true
-    autoTraceAbility: 2
+    autoTraceAbility: 2.5
     autoTraceRadius: 24
     blockHitAction: thru
     trailColor: 150|200|255
+    trailStepSize: 1
 绿自导能源箭:
     autoTrace: true
-    autoTraceAbility: 2
+    autoTraceAbility: 2.5
     autoTraceRadius: 24
     blockHitAction: thru
     trailColor: 150|255|150
+    trailStepSize: 1
 粉自导能源箭:
     autoTrace: true
-    autoTraceAbility: 2
+    autoTraceAbility: 2.5
     autoTraceRadius: 24
     blockHitAction: thru
     trailColor: 255|150|200
+    trailStepSize: 1
 黄自导能源箭:
     autoTrace: true
-    autoTraceAbility: 2
+    autoTraceAbility: 2.5
     autoTraceRadius: 24
     blockHitAction: thru
     trailColor: 255|255|0
+    trailStepSize: 1
 紫自导能源箭:
     autoTrace: true
-    autoTraceAbility: 2
+    autoTraceAbility: 2.5
     autoTraceRadius: 24
     blockHitAction: thru
     trailColor: 255|0|255
+    trailStepSize: 1
 橙自导能源箭:
     autoTrace: true
-    autoTraceAbility: 2
+    autoTraceAbility: 2.5
     autoTraceRadius: 24
     blockHitAction: thru
     trailColor: 255|150|50
+    trailStepSize: 1
 亡魂:
     autoTrace: true
     trailColor: 255|255|255

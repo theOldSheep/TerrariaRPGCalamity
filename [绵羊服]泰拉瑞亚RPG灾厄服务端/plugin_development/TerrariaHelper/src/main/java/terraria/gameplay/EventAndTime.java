@@ -134,6 +134,7 @@ public class EventAndTime {
     // event
     public static Events currentEvent = Events.NONE, reservedEvent = Events.NONE;
     public static int reservedEventCountdown = 0, NPCRespawnCountdown = 1000;
+    public static boolean NPCInitialized = false;
     public static HashMap<EventInfoMapKeys, Double> eventInfo;
     public static BossBattleServer eventProgressBar = null;
     public static int[] eventBossAmount = {0, 0, 0}, eventBossAmountLimit = {0, 0, 0};
@@ -182,6 +183,17 @@ public class EventAndTime {
             tickEvent();
             // other surface world mechanism
             if (surfaceWorld != null) {
+                // spawn NPCs
+                if (!NPCInitialized) {
+                    for (NPCHelper.NPCType npcType : NPCHelper.NPCType.values()) {
+                        try {
+                            NPCHelper.spawnNPC(npcType);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    NPCInitialized = true;
+                }
                 // fallen stars
                 tickFallenStars(surfaceWorld);
                 // NPC respawn

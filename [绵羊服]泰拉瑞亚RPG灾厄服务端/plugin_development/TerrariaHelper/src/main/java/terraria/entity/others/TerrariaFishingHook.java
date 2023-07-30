@@ -253,7 +253,7 @@ public class TerrariaFishingHook extends EntityFishingHook {
     }
     protected String getFishingResult(Player ply, double fishingPower) {
         FishingResultRarity rarity = getFishingResultRarity(fishingPower);
-        boolean inHardMode = PlayerHelper.hasDefeated(ply, "血肉之墙");
+        boolean inHardMode = PlayerHelper.hasDefeated(ply, BossHelper.BossType.WALL_OF_FLESH.msgName);
         Location hookLoc = bukkitEntity.getLocation();
         WorldHelper.BiomeType biome = WorldHelper.BiomeType.getBiome(hookLoc, false);
         WorldHelper.HeightLayer height = WorldHelper.HeightLayer.getHeightLayer(hookLoc);
