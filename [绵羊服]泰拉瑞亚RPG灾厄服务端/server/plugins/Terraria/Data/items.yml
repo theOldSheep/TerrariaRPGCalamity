@@ -3570,6 +3570,34 @@
     manaUse: 12
   worth: 400000
   rarity: 2
+脉冲手枪:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一道在击中一个敌人后，可以弧向附近敌人的脉冲
+  attributes:
+    damage: 52
+    damageType: Magic
+    projectileSpeed: 525.5
+    crit: 4
+    knockback: 0
+    useTime: 20
+    manaUse: 6
+  worth: 800000
+  rarity: 1100
+深渊电击者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一道不准确的电击，在敌人之间形成弹射电弧
+  attributes:
+    damage: 56
+    damageType: Magic
+    projectileSpeed: 14
+    crit: 4
+    knockback: 0
+    useTime: 19
+    manaUse: 10
+  worth: 800000
+  rarity: 3
 永夜射线:
   item: DIAMOND_SWORD
   lore:
