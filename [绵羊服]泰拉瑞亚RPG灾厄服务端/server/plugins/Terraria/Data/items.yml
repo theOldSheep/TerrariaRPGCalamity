@@ -3385,6 +3385,191 @@
     manaUse: 12
   worth: 10000000
   rarity: 10
+冰坠法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤冰柱从天而降
+  attributes:
+    damage: 20
+    damageType: Magic
+    projectileSpeed: 22
+    crit: 4
+    knockback: 2
+    useTime: 30
+    manaUse: 6
+  worth: 200000
+  rarity: 1
+魔法玫瑰:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射会爆炸分裂成花瓣的魔法花朵
+  attributes:
+    damage: 40
+    damageType: Magic
+    projectileSpeed: 10
+    crit: 4
+    knockback: 3.25
+    useTime: 38
+    manaUse: 8
+  worth: 400000
+  rarity: 2
+水流喷射:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一个会额外溅射的水柱
+  attributes:
+    damage: 28
+    damageType: Magic
+    projectileSpeed: 30
+    crit: 4
+    knockback: 2
+    useTime: 33
+    manaUse: 8
+    penetration: 99
+  worth: 400000
+  rarity: 2
+海水杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射两道蓝色魔法矢
+  attributes:
+    damage: 34
+    damageType: Magic
+    projectileSpeed: 14
+    crit: 4
+    knockback: 2.5
+    useTime: 22
+    manaUse: 3
+  worth: 400000
+  rarity: 2
+天空之羽:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤羽毛从天而降，会附着在敌人和物块上并爆炸
+  attributes:
+    damage: 30
+    damageType: Magic
+    projectileSpeed: 15
+    crit: 4
+    knockback: 3.5
+    useTime: 25
+    manaUse: 8
+  worth: 200000
+  rarity: 1
+丰收:
+  item: DIAMOND_SWORD
+  lore:
+  - §r丢出燃烧的南瓜
+  attributes:
+    damage: 52
+    damageType: Magic
+    projectileSpeed: 10
+    crit: 4
+    knockback: 5
+    useTime: 23
+    manaUse: 5
+    penetration: 1
+  worth: 400000
+  rarity: 2
+寄生权杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一阵会吸附敌人的水蛭，造成可叠加的持续伤害
+  attributes:
+    damage: 24
+    damageType: Magic
+    projectileSpeed: 10
+    crit: 4
+    knockback: 5
+    useTime: 35
+    manaUse: 10
+  worth: 400000
+  rarity: 2
+菌杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r在玩家附近召唤孢子球
+  attributes:
+    damage: 44
+    damageType: Magic
+    projectileSpeed: 1
+    crit: 4
+    knockback: 2
+    useTime: 24
+    manaUse: 7
+  worth: 400000
+  rarity: 2
+等离子射线:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一束低伤等离子射线
+  - §r击中物块时会分裂成伤害更高的几束射线
+  - §r直接击中敌人时则会造成暗影焰减益
+  attributes:
+    damage: 16
+    damageType: Magic
+    projectileSpeed: 1111
+    crit: 4
+    knockback: 2.5
+    useTime: 20
+    manaUse: 10
+  worth: 200000
+  rarity: 1
+狱火蝙蝠杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射火蝙蝠
+  attributes:
+    damage: 44
+    damageType: Magic
+    projectileSpeed: 36
+    crit: 4
+    knockback: 5
+    useTime: 30
+    manaUse: 18
+  worth: 800000
+  rarity: 3
+腐蚀之雨法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤出一个阴影云
+  attributes:
+    damage: 42
+    damageType: Magic
+    projectileSpeed: 16
+    crit: 4
+    useTime: 24
+    manaUse: 10
+  worth: 800000
+  rarity: 3
+酸液枪:
+  item: DIAMOND_SWORD
+  lore:
+  - §r喷出三股酸液流
+  attributes:
+    damage: 56
+    damageType: Magic
+    projectileSpeed: 42
+    crit: 4
+    knockback: 1.5
+    useTime: 45
+    manaUse: 9
+  worth: 400000
+  rarity: 2
+麦格纳炮:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一束能量冲击波
+  attributes:
+    damage: 56
+    damageType: Magic
+    projectileSpeed: 12
+    crit: 4
+    knockback: 3.5
+    useTime: 32
+    manaUse: 12
+  worth: 400000
+  rarity: 2
 永夜射线:
   item: DIAMOND_SWORD
   lore:
