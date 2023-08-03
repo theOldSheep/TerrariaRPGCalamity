@@ -45,19 +45,26 @@ public class BossHelper {
         THE_SLIME_GOD("史莱姆之神"), WALL_OF_FLESH("血肉之墙"), QUEEN_SLIME("史莱姆皇后"), CRYOGEN("极地之灵"),
         THE_TWINS("双子魔眼"), AQUATIC_SCOURGE("渊海灾虫"), THE_DESTROYER("毁灭者"),
         BRIMSTONE_ELEMENTAL("硫磺火元素"), SKELETRON_PRIME("机械骷髅王"), CALAMITAS_CLONE("灾厄之眼"),
-        PLANTERA("世纪之花"), MOURNING_WOOD("哀木"), PUMPKING("南瓜王"), HEADLESS_HORSEMAN("无头骑士"),
-        EVERSCREAM("常绿尖叫怪"), SANTA_NK1("圣诞坦克"), ICE_QUEEN("冰雪女王"),
+        PLANTERA("世纪之花"), MOURNING_WOOD("哀木", false), PUMPKING("南瓜王", false),
+        HEADLESS_HORSEMAN("无头骑士", false), EVERSCREAM("常绿尖叫怪", false),
+        SANTA_NK1("圣诞坦克", false), ICE_QUEEN("冰雪女王", false),
         LEVIATHAN_AND_ANAHITA("阿娜希塔和利维坦"), ASTRUM_AUREUS("白金星舰"),
         GOLEM("石巨人"), THE_PLAGUEBRINGER_GOLIATH("瘟疫使者歌莉娅"), EMPRESS_OF_LIGHT("光之女皇"),
-        DUKE_FISHRON("猪鲨公爵"), RAVAGER("毁灭魔像"), LUNATIC_CULTIST("拜月教邪教徒"), ASTRUM_DEUS("星神游龙"),
-        MOON_LORD("月球领主"), PROFANED_GUARDIANS("亵渎守卫"), THE_DRAGONFOLLY("痴愚金龙"),
-        PROVIDENCE_THE_PROFANED_GODDESS("亵渎天神，普罗维登斯"), STORM_WEAVER("风暴编织者"), CEASELESS_VOID("无尽虚空"),
+        DUKE_FISHRON("猪鲨公爵"), RAVAGER("毁灭魔像"), LUNATIC_CULTIST("拜月教邪教徒", false),
+        ASTRUM_DEUS("星神游龙"), MOON_LORD("月球领主"), PROFANED_GUARDIANS("亵渎守卫"),
+        THE_DRAGONFOLLY("痴愚金龙"), PROVIDENCE_THE_PROFANED_GODDESS("亵渎天神，普罗维登斯"),
+        STORM_WEAVER("风暴编织者"), CEASELESS_VOID("无尽虚空"),
         SIGNUS_ENVOY_OF_THE_DEVOURER("神之使徒西格纳斯"), POLTERGHAST("噬魂幽花"), THE_OLD_DUKE("硫海遗爵"),
         THE_DEVOURER_OF_GODS("神明吞噬者"), YHARON_DRAGON_OF_REBIRTH("丛林龙，犽戎"),
         EXO_MECHS("星流巨械"), SUPREME_WITCH_CALAMITAS("至尊灾厄");
         public final String msgName;
+        public final boolean hasTreasureBag;
         BossType(String name) {
+            this(name, true);
+        }
+        BossType(String name, boolean hasTreasureBag) {
             this.msgName = name;
+            this.hasTreasureBag = hasTreasureBag;
         }
         public void playSummonSound(Location loc) {
             switch (this) {

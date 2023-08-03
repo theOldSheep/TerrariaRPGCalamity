@@ -142,7 +142,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         populators = new ArrayList<>();
         populators.add(new OverworldBlockGenericPopulator());
         populators.add(new OrePopulator(Y_OFFSET_OVERWORLD));
-        populators.add(new TreePopulator());
+        populators.add(new FoilagePopulator());
     }
     public static void tweakBiome(int x, int z, BiomeGrid biome, int yOffset) {
         for (int i = 0; i < 16; i++)

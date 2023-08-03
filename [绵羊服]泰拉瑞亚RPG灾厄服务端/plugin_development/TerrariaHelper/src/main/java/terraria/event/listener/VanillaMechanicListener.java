@@ -18,19 +18,14 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.event.player.PlayerBedEnterEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.player.PlayerToggleSprintEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.projectiles.ProjectileSource;
 import terraria.TerrariaHelper;
 import terraria.entity.others.TerrariaFishingHook;
-import terraria.util.EntityHelper;
-import terraria.util.PlayerHelper;
-import terraria.util.WorldHelper;
+import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -126,11 +121,34 @@ public class VanillaMechanicListener implements Listener {
     public void onPortalForm(PortalCreateEvent e) {
         e.setCancelled(true);
     }
-    // blocks such as life fruit and Plantera's bulb should not be destroyed by flowing liquid.
+    // liquid related
     @EventHandler(priority = EventPriority.LOW)
     public void onLiquidFlow(BlockFromToEvent e) {
+        // blocks such as life fruit and Plantera's bulb should not be destroyed by flowing liquid.
         if (e.getToBlock().getType() == Material.SKULL)
             e.setCancelled(true);
+    }
+    @EventHandler(priority = EventPriority.LOW)
+    public void onBucketEmpty(PlayerBucketEmptyEvent e) {
+        if (e.isCancelled())
+            return;
+        Block liquidBlock = e.getBlockClicked().getRelative(e.getBlockFace());
+        // water will evaporate quickly in underworld after placing
+        if (e.getBucket() == Material.WATER_BUCKET &&
+                e.getPlayer().getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+                Block currLiquidBlock = liquidBlock.getLocation().getBlock();
+                switch (liquidBlock.getType()) {
+                    case WATER:
+                    case STATIONARY_WATER:
+                        liquidBlock.setType(Material.AIR);
+                }
+            }, 8);
+        }
+        // life fruit etc. should be broken by placing water here
+        if (liquidBlock.getType() == Material.SKULL) {
+            GameplayHelper.playerBreakBlock(liquidBlock, e.getPlayer());
+        }
     }
     // stop most vanilla block tick mechanics
     @EventHandler(priority = EventPriority.LOW)

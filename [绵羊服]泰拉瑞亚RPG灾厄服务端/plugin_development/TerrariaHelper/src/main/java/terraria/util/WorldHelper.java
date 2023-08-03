@@ -2,8 +2,6 @@ package terraria.util;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import fr.xephi.authme.security.crypts.description.HasSalt;
-import net.minecraft.server.v1_12_R1.BlockGrass;
 import org.bukkit.*;
 import org.bukkit.block.*;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -480,8 +478,10 @@ public class WorldHelper {
                 return blockMat == Material.GRASS;
         }
     }
-    public static void attemptGrowPlant(Block plantBlock) {
+    public static void attemptGrowPlantAt(Block plantBlock) {
         if (plantBlock.getType() != Material.AIR)
+            return;
+        if (!canGrowPlant(plantBlock.getRelative(BlockFace.DOWN)))
             return;
         // plant different blocks according to location
         BiomeType biome = BiomeType.getBiome(plantBlock.getLocation());
@@ -842,10 +842,10 @@ public class WorldHelper {
 
         return branchBlock;
     }
-    public static void attemptGenerateTree(Block rootBlock) {
-        attemptGenerateTree(rootBlock, 4 + (int) (Math.random() * 8) );
+    public static void attemptGenerateTreeAt(Block rootBlock) {
+        attemptGenerateTreeAt(rootBlock, 4 + (int) (Math.random() * 8) );
     }
-    public static void attemptGenerateTree(Block rootBlock, int trunkHeight) {
+    public static void attemptGenerateTreeAt(Block rootBlock, int trunkHeight) {
         // validate the block below
         if ( ! canGrowPlant(rootBlock.getRelative(BlockFace.DOWN), true, false) ) {
             return;
@@ -931,10 +931,7 @@ public class WorldHelper {
         // grass
         for (int i = 0; i < MathHelper.randomRound(1.25); i ++) {
             Block blockToTick = getRandomBlockInChunk(chunk);
-            if (canGrowPlant(blockToTick)) {
-                Block plantBlock = blockToTick.getRelative(BlockFace.UP);
-                attemptGrowPlant(plantBlock);
-            }
+            attemptGrowPlantAt(blockToTick);
         }
         // other plant growth ticking
         for (int i = 0; i < MathHelper.randomRound(15); i ++) {
@@ -942,7 +939,7 @@ public class WorldHelper {
             switch (blockToTick.getType()) {
                 case SAPLING: {
                     if (Math.random() < 0.35) {
-                        attemptGenerateTree(blockToTick);
+                        attemptGenerateTreeAt(blockToTick);
                     }
                     break;
                 }

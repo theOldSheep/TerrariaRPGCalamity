@@ -1619,6 +1619,9 @@ public class ItemUseHelper {
             // give items in each section to the player
             for (String dropSectionIndex : nodes) {
                 ConfigurationSection dropSection = config.getConfigurationSection(dropSectionIndex);
+                String progressRequired = dropSection.getString("progressRequired", "");
+                if (!PlayerHelper.hasDefeated(ply, progressRequired))
+                    continue;
                 List<String> items = dropSection.getStringList("items");
                 boolean shouldGiveAllItems = dropSection.getBoolean("giveAllItems", true);
                 if (shouldGiveAllItems) {

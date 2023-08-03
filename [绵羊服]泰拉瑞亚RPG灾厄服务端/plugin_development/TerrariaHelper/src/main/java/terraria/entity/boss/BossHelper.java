@@ -289,7 +289,7 @@ public class BossHelper {
             Bukkit.broadcastMessage("————————伤害信息————————");
         }
         // send out loot
-        {
+        if (bossType.hasTreasureBag) {
             ItemStack loopBag = ItemHelper.getItemFromDescription(bossType.msgName + "的 专家模式福袋");
             for (Player ply : targetMap.keySet()) {
                 if (targetMap.get(ply) >= dmgDealtReq) {
