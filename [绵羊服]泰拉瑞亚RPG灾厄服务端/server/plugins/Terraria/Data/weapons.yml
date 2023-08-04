@@ -832,10 +832,6 @@
   type: SUMMON
   damageType: Melee
   minionName: 史莱姆宝宝
-钨钢控制器:
-  type: SUMMON
-  damageType: Magic
-  minionName: 钨钢无人机
 小鬼法杖:
   type: SUMMON
   damageType: Arrow
@@ -872,6 +868,142 @@
   type: SUMMON
   damageType: Melee
   minionName: 星尘之龙
+钨钢控制器:
+  type: SUMMON
+  damageType: Magic
+  minionName: 钨钢无人机
+霜华法杖:
+  type: SUMMON
+  damageType: Magic
+  minionName: 霜之华
+太阳之灵法杖:
+  type: SUMMON
+  damageType: Magic
+  minionName: 太阳之灵
+颠茄灵杖:
+  type: SUMMON
+  damageType: Magic
+  minionName: 颠茄之灵
+海星召唤杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 脆弱之星
+腐化吞噬者:
+  type: SUMMON
+  damageType: Melee
+  minionName: 灵魂吞噬者宝宝
+烬英法杖:
+  type: SUMMON
+  damageType: Magic
+  minionName: 烬之英
+沼泽之眼:
+  type: SUMMON
+  damageType: Melee
+  minionName: 沼泽之眼
+噬星者控制元件:
+  type: SUMMON
+  damageType: Magic
+  minionName: 噬星者
+真菌块:
+  type: SUMMON
+  damageType: Melee
+  minionName: 真菌块
+死亡凝视法杖:
+  type: SUMMON
+  damageType: Magic
+  minionName: 微型克苏鲁之眼
+永夜之眼:
+  type: SUMMON
+  damageType: Magic
+  minionName: 永夜眼球
+黑鹰遥控器:
+  type: SUMMON
+  damageType: Bullet
+  minionName: 黑鹰战斗机
+蚀骨法杖:
+  type: SUMMON
+  damageType: Magic
+  minionName: 蚀骨之龙
+失落极峰:
+  type: SUMMON
+  damageType: Melee
+  minionName: 远古岩鲨
+海贝法杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 海贝
+冰寒神性:
+  type: SUMMON
+  damageType: Magic
+  minionName: 极寒冰块
+永冻之焱华:
+  type: SUMMON
+  damageType: Magic
+  minionName: 永冻之焱华
+深海权杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 深海海星
+沉眠寻焰者:
+  type: SUMMON
+  damageType: Melee
+  minionName: 硫火搜寻者
+淬焰之升华:
+  type: SUMMON
+  damageType: Melee
+  minionName: 熔火古刀
+架式扫射机:
+  type: SUMMON
+  damageType: Bullet
+  minionName: 架式扫射机
+太阳神法杖:
+  type: SUMMON
+  damageType: Magic
+  minionName: 太阳神之灵
+混乱之祈祷:
+  type: SUMMON
+  damageType: Magic
+  minionName: 迷你灾厄
+苍华之庭:
+  type: SUMMON
+  damageType: Melee
+  minionName: 迷你世纪之花
+沙龙卷法杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 沙龙卷
+畸变吞食者法杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 畸变吞食者
+反魂蝶:
+  type: SUMMON
+  damageType: Melee
+  minionName: 紫蝶
+燃料电池组:
+  type: SUMMON
+  damageType: Rocket
+  minionName: 迷你瘟疫使者
+瘟疫控制器:
+  type: SUMMON
+  damageType: Melee
+  minionName: 瘟疫雌蜂
+星神圣护:
+  type: SUMMON
+  damageType: Magic
+  minionName: 幻星探测器
+剧毒芽孢:
+  type: SUMMON
+  damageType: Arrow
+  minionName: 鼠尾草之灵
+凋零绽放法杖:
+  type: SUMMON
+  damageType: Magic
+  minionName: 凋零枯花
+代达罗斯守卫法杖:
+  type: SUMMON
+  damageType: Magic
+  minionName: 代达罗斯守卫
 鞭炮:
   type: WHIP
   autoSwing: true
