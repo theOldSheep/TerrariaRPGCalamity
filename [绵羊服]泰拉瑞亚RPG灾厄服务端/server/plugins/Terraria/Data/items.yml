@@ -520,6 +520,14 @@
     damageMulti: 15
   worth: 20000
   rarity: 1
+测试饰品-使用速度:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    useTime: 1
+  worth: 20000
+  rarity: 1
 镣铐:
   item: LEASH
   lore:
