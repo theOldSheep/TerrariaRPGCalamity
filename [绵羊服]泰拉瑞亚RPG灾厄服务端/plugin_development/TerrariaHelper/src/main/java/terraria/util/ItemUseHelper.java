@@ -827,7 +827,7 @@ public class ItemUseHelper {
             projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
             if (weaponType.equals("BOW"))
                 projectileSpeed *= attrMap.getOrDefault("projectileSpeedArrowMulti", 1d);
-            projectileSpeed = Math.sqrt(projectileSpeed) * 0.8;
+            projectileSpeed = Math.sqrt(projectileSpeed) * 0.5;
             // bullet spread
             if (spread > 0d) {
                 fireVelocity.multiply(spread);
@@ -1180,11 +1180,11 @@ public class ItemUseHelper {
                         particleColor = "0|0|175";
                         strikeInfo
                                 .setThruWall(false)
-                                .setDamagedFunction((hitIndex, hitEntity) -> {
+                                .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
                                     if (hitEntity instanceof LivingEntity && hitIndex == 1) {
                                         EntityHelper.DamageType damageType = EntityHelper.getDamageType(ply);
                                         for (int i = 0; i < 4; i ++) {
-                                            Location explodeLoc = ((LivingEntity) hitEntity).getEyeLocation()
+                                            Location explodeLoc = hitLoc.clone()
                                                     .add(Math.random() * 8 - 4, Math.random() * 8 - 4, Math.random() * 8 - 4);
                                             EntityHelper.spawnProjectile(ply, explodeLoc, MathHelper.randomVector(), attrMap,
                                                     damageType, "暗影射线分支");
@@ -1210,11 +1210,11 @@ public class ItemUseHelper {
                                 .setDamageCD(3)
                                 .setLingerTime(5)
                                 .setLingerDelay(4)
-                                .setDamagedFunction((hitIndex, hitEntity) -> {
+                                .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
                                     if (hitEntity instanceof LivingEntity && hitIndex == 1) {
                                         EntityHelper.DamageType damageType = EntityHelper.getDamageType(ply);
                                         for (int i = 0; i < 3; i ++) {
-                                            Location explodeLoc = ((LivingEntity) hitEntity).getEyeLocation()
+                                            Location explodeLoc = hitLoc.clone()
                                                     .add(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
                                             EntityHelper.spawnProjectile(ply, explodeLoc, MathHelper.randomVector(), attrMap,
                                                     damageType, "自然能量");
@@ -1239,10 +1239,9 @@ public class ItemUseHelper {
                                         .setDamageCD(10)
                                         .setLingerTime(4)
                                         .setLingerDelay(4)
-                                        .setDamagedFunction((hitIndex, hitEntity) -> {
+                                        .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
                                             if (hitEntity instanceof LivingEntity && hitIndex == 1) {
-                                                Location explodeLoc = ((LivingEntity) hitEntity).getEyeLocation();
-                                                EntityHelper.handleEntityExplode(ply, 0.5, damageExceptions, explodeLoc);
+                                                EntityHelper.handleEntityExplode(ply, 0.5, damageExceptions, hitLoc);
                                             }
                                         });
                                 break;
@@ -1254,11 +1253,11 @@ public class ItemUseHelper {
                                         .setDamageCD(10)
                                         .setLingerTime(4)
                                         .setLingerDelay(4)
-                                        .setDamagedFunction((hitIndex, hitEntity) -> {
+                                        .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
                                             if (hitEntity instanceof LivingEntity && Math.random() < (0.5d / (hitIndex + 1))) {
                                                 EntityHelper.DamageType damageType = EntityHelper.getDamageType(ply);
                                                 for (int i = 0; i < 4; i ++) {
-                                                    Location explodeLoc = ((LivingEntity) hitEntity).getEyeLocation()
+                                                    Location explodeLoc = hitLoc.clone()
                                                             .add(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
                                                     EntityHelper.spawnProjectile(ply, explodeLoc, MathHelper.randomVector(), attrMap,
                                                             damageType, "星尘流星");
@@ -1276,7 +1275,7 @@ public class ItemUseHelper {
                                 strikeInfo
                                         .setMaxTargetHit(1)
                                         .setLingerDelay(15)
-                                        .setDamagedFunction((hitIndex, hitEntity) -> {
+                                        .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
                                             if (hitEntity instanceof LivingEntity) {
                                                 EntityHelper.applyEffect(hitEntity, "带电", 100);
                                             }
@@ -1392,13 +1391,16 @@ public class ItemUseHelper {
         // minionSlot is used to check if a new minion has been spawned to replace the original.
         // minionSlotMax is used to check if the max minion slot of the player shrinks.
         int minionSlot = indexNext, minionSlotMax = Math.min(indexNext + slotsConsumed, minionLimit) - 1;
-        Entity minionEntity = null;
+        Entity minionEntity;
         switch (type) {
             case "矮人":
+            case "颠茄之灵":
                 MinionHusk huskMinion = new MinionHusk(ply, minionSlot, minionSlotMax, sentryOrMinion, hasContactDamage, type, attrMap, originalStaff);
                 minionEntity = huskMinion.getBukkitEntity();
                 break;
             case "蜘蛛":
+            case "寄居蟹":
+            case "灵魂吞噬者宝宝":
                 MinionCaveSpider caveSpiderMinion = new MinionCaveSpider(ply, minionSlot, minionSlotMax, sentryOrMinion, hasContactDamage, type, attrMap, originalStaff);
                 minionEntity = caveSpiderMinion.getBukkitEntity();
                 break;

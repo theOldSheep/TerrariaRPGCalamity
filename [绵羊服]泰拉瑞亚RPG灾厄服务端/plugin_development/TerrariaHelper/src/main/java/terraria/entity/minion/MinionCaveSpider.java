@@ -13,6 +13,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import terraria.util.EntityHelper;
+import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -81,6 +82,7 @@ public class MinionCaveSpider extends EntityCaveSpider {
         // minions other than certain ones should not need any goal selector
         switch (minionType) {
             case "蜘蛛":
+            case "寄居蟹":
                 break;
             default:
                 this.goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
@@ -100,6 +102,20 @@ public class MinionCaveSpider extends EntityCaveSpider {
                         false
                 ));
                 break;
+            }
+            case "寄居蟹": {
+                damageInvincibilityTicks = 10;
+                getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.4d);
+                // navigation
+                getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(32);
+                break;
+            }
+            case "灵魂吞噬者宝宝": {
+                setNoGravity(true);
+            }
+            default: {
+                noclip = true;
+                setNoGravity(true);
             }
         }
         getAttributeInstance(GenericAttributes.maxHealth).setValue(444);
@@ -137,6 +153,42 @@ public class MinionCaveSpider extends EntityCaveSpider {
                 if (!targetIsOwner && damageCD.contains(target)) {
                     hasTeleported = true;
                     minionBukkit.teleport(target.getEyeLocation());
+                }
+                break;
+            }
+            case "灵魂吞噬者宝宝": {
+                // wonder around the owner when idle
+                if (targetIsOwner) {
+                    Location targetLoc = target.getLocation().add(
+                            Math.random() * 2 - 1,
+                            Math.random() + 5,
+                            Math.random() * 2 - 1);
+                    if (minionBukkit.getLocation().distanceSquared(targetLoc) > 16) {
+                        velocity = targetLoc.subtract(minionBukkit.getLocation()).toVector();
+                        velocity.normalize().multiply(0.5);
+                    }
+                }
+                // attack enemy
+                else {
+                    // stuck to enemy that has been attacked
+                    if (damageCD.contains(target)) {
+                        hasTeleported = true;
+                        minionBukkit.teleport(target.getEyeLocation());
+                    }
+                    // if not yet attached to target, dash into it
+                    else {
+                        switch (index % 12) {
+                            case 0: {
+                                velocity = MathHelper.getDirection(
+                                        minionBukkit.getEyeLocation(), target.getEyeLocation(), 2);
+                                break;
+                            }
+                            case 8: {
+                                velocity.multiply(0.6);
+                                break;
+                            }
+                        }
+                    }
                 }
                 break;
             }

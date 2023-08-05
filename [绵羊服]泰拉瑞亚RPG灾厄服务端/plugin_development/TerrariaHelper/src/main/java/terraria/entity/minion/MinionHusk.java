@@ -91,6 +91,7 @@ public class MinionHusk extends EntityZombieHusk {
             this.goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         }
         this.targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
+        // move speed, potion effects etc.
         switch (minionType) {
             case "矮人": {
                 getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5d);
@@ -103,6 +104,9 @@ public class MinionHusk extends EntityZombieHusk {
                 ));
                 break;
             }
+            default:
+                noclip = true;
+                setNoGravity(true);
         }
         getAttributeInstance(GenericAttributes.maxHealth).setValue(444);
         getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(444);
@@ -142,6 +146,25 @@ public class MinionHusk extends EntityZombieHusk {
                     if (dist > 1e-9) {
                         v.multiply(2.5 / dist);
                         EntityHelper.spawnProjectile(minionBukkit, v, attrMap, "投矛");
+                    }
+                }
+                break;
+            }
+            case "颠茄之灵": {
+                Location targetLoc = owner.getLocation().add(
+                        Math.random() * 2 - 1,
+                        Math.random() + 5,
+                        Math.random() * 2 - 1);
+                // wonder around the owner.
+                if (minionBukkit.getLocation().distanceSquared(targetLoc) > (targetIsOwner ? 16 : 4)) {
+                    velocity = targetLoc.subtract(minionBukkit.getLocation()).toVector();
+                    velocity.normalize().multiply(0.5);
+                }
+                // shoot projectile
+                if (!targetIsOwner) {
+                    if (index % 15 == 0) {
+                        EntityHelper.spawnProjectile(minionBukkit, new Vector(0, 0.5, 0),
+                                EntityHelper.getAttrMap(minionBukkit), "剧毒花瓣");
                     }
                 }
                 break;

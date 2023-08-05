@@ -12,6 +12,8 @@
     autoTraceSharpTurning: true
     # 自动追踪的能力，数字越高则追踪转向的最高效率越高。不写则视为4
     autoTraceAbility: 4.0
+    # 自动追踪时长结束但未丢失目标时速度增加的倍数。不写则视为1
+    autoTraceEndSpeedMultiplier: 1.0
     # 弹射物存在多久前无法自动追踪？不写则视为0
     noAutoTraceTicks: 0
     # 弹射物生成多久后无法自动追踪？不写则视为999999
@@ -24,8 +26,8 @@
     liveTime: 200
     # 穿透敌怪次数，不写则视为0
     penetration: 0
-    # 无视重力飞行的帧数，不写则视为15
-    noGravityTicks: 15
+    # 无视重力飞行的帧数，不写则视为5
+    noGravityTicks: 5
     # 重力影响，受重力时每帧向下的速度改变（负数则为向上偏移）。不写则视为0.05
     gravity: 0.05
     # 弹射物的碰撞箱半径，不写视为0.125
@@ -613,21 +615,78 @@
     isGrenade: true
     blastRadius: 4.5
     buffInflict:
-        - "破晓|400|1"
+        - "狱炎|400|1"
     trailColor: 255|125|125
 星璇导弹:
     gravity: 0
     autoTrace: true
     isGrenade: true
     blastRadius: 5
-七彩水晶:
-    isGrenade: true
-    blastRadius: 2.5
+剧毒花瓣:
+    gravity: 0
+    speedMultiPerTick: 0.95
+    liveTime: 45
+    autoTrace: true
+    autoTraceAbility: 999999
+    autoTraceMethod: 2
+    autoTraceRadius: 40
+    noAutoTraceTicks: 20
+    maxAutoTraceTicks: 20
+    autoTraceEndSpeedMultiplier: 7.5
+    blockHitAction: thru
+    trailColor: "0|200|0"
+    trailStepSize: 0.5
+    buffInflict:
+        - "中毒|80|1"
+追踪花球:
+    gravity: 0
+    autoTrace: true
+    autoTraceAbility: 2
+    autoTraceRadius: 32
+    noAutoTraceTicks: 5
+    projectileSize: 0.5
+    blockHitAction: thru
+    buffInflict:
+        - "霜火|60|1"
+        - "狱炎|60|1"
+瘟疫矢:
+    gravity: 0
+    autoTrace: true
+    projectileSize: 0.5
+    autoTraceRadius: 32
+    blockHitAction: thru
+    trailColor: "0|100|50"
+    buffInflict:
+        - "瘟疫|60|1"
+    clusterBomb:
+        amount: 2
+        damageMulti: 0.5
+        name: 瘟疫搜寻者
+        fireOnTimeout: false
+        velocity: 2.5
+瘟疫搜寻者:
+    gravity: 0
+    autoTrace: true
+    blockHitAction: thru
+    noAutoTraceTicks: 5
+    liveTime: 60
+    trailColor: "100|255|100"
+    trailStepSize: 0.5
+    buffInflict:
+        - "瘟疫|60|1"
 蜘蛛卵:
     noGravityTicks: 0
     liveTime: 10
     isGrenade: true
     blastRadius: 1
+星尘细胞弹:
+    autoTrace: true
+    buffInflict:
+        - "缓慢|200|1"
+        - "剧毒|200|1"
+七彩水晶:
+    isGrenade: true
+    blastRadius: 2.5
 集束破片:
     noGravityTicks: 0
     isGrenade: true
@@ -818,7 +877,9 @@ TNT:
 绿藻弹:
     gravity: 0
     autoTrace: true
-    autoTraceAbility: 10.0
+    autoTraceAbility: 8.0
+    trailColor: "100|255|100"
+    trailStepSize: 1.5
 爆炸弹:
     gravity: 0
     isGrenade: true
@@ -1036,8 +1097,3 @@ TNT:
     autoTrace: true
     autoTraceMethod: 2
     slowedByWater: false
-星尘细胞弹:
-    autoTrace: true
-    buffInflict:
-        - "缓慢|200|1"
-        - "剧毒|200|1"

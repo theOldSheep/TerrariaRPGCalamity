@@ -24,7 +24,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public String projectileType, blockHitAction = "die", trailColor = null;
     public int autoTraceMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noAutoTraceTicks = 0, maxAutoTraceTicks = 999999,
             noGravityTicks = 15, trailLingerTime = 10, penetration = 0;
-    public double autoTraceAbility = 4, autoTraceRadius = 12, blastRadius = 1.5, bounceVelocityMulti = 1,
+    public double autoTraceAbility = 4, autoTraceEndSpeedMultiplier = 1, autoTraceRadius = 12,
+            blastRadius = 1.5, bounceVelocityMulti = 1,
             frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileRadius = 0.125, speedMultiPerTick = 1,
             trailSize = -1, trailStepSize = -1;
     public boolean autoTrace = false, autoTraceSharpTurning = true, blastDamageShooter = false,
@@ -61,6 +62,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.trailColor = (String) properties.getOrDefault("trailColor", this.trailColor);
 
             this.autoTraceAbility = (double) properties.getOrDefault("autoTraceAbility", this.autoTraceAbility);
+            this.autoTraceEndSpeedMultiplier = (double) properties.getOrDefault("autoTraceEndSpeedMultiplier", this.autoTraceEndSpeedMultiplier);
             this.autoTraceRadius = (double) properties.getOrDefault("autoTraceRadius", this.autoTraceRadius);
             this.blastRadius = (double) properties.getOrDefault("blastRadius", this.blastRadius);
             this.bounceVelocityMulti = (double) properties.getOrDefault("bounceVelocityMulti", this.bounceVelocityMulti);
@@ -408,6 +410,11 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 double normalizeThreshold = autoTraceSharpTurning ? speed * speed : 0;
                 if (velocity.lengthSquared() > normalizeThreshold)
                     velocity.normalize().multiply(speed);
+
+                // if a target is valid when auto trace timeout, multiply the speed by the multiplier
+                if (ticksLived == maxAutoTraceTicks) {
+                    velocity.multiply(autoTraceEndSpeedMultiplier);
+                }
             } else {
                 extraMovingTick();
                 if (this.onGround && this.lastOnGround) {

@@ -390,6 +390,7 @@
   type: BOW
 代达罗斯风暴弓:
   type: BOW
+  shots: 4
   autoSwing: true
 日暮:
   type: BOW
@@ -398,6 +399,7 @@
   fireRoundsDelay: 1
 海啸弓:
   type: BOW
+  shots: 5
   autoSwing: true
 幻象弓:
   type: BOW
@@ -888,6 +890,10 @@
   type: SUMMON
   damageType: Melee
   minionName: 脆弱之星
+附魔海螺:
+  type: SUMMON
+  damageType: Melee
+  minionName: 寄居蟹
 腐化吞噬者:
   type: SUMMON
   damageType: Melee
@@ -904,6 +910,10 @@
   type: SUMMON
   damageType: Magic
   minionName: 噬星者
+死灵骨髓杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 小骷髅
 真菌块:
   type: SUMMON
   damageType: Melee

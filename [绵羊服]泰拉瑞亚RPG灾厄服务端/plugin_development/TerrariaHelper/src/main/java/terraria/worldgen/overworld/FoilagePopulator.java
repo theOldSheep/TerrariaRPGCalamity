@@ -10,7 +10,7 @@ import terraria.util.WorldHelper;
 import java.util.Random;
 
 public class FoilagePopulator extends BlockPopulator {
-    public static final double GRASS_GROW_CHANCE = 0.35;
+    public static final double GRASS_GROW_CHANCE = 0.1;
     int getTreeAmount(Biome biome) {
         boolean test = false;
         if (test)

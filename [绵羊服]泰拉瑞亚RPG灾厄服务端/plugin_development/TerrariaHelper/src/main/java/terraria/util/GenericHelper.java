@@ -2,6 +2,7 @@ package terraria.util;
 
 import eos.moe.dragoncore.api.CoreAPI;
 import net.minecraft.server.v1_12_R1.MovingObjectPosition;
+import org.apache.logging.log4j.util.TriConsumer;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -104,7 +105,7 @@ public class GenericHelper {
         int damageCD, lingerTime, lingerDelay, maxTargetHit;
         double damage, decayCoef, whipBonusCrit, whipBonusDamage;
         ParticleLineOptions particleInfo;
-        BiConsumer<Integer, Entity> damagedFunction;
+        TriConsumer<Integer, Entity, Location> damagedFunction;
         // internal variables
         int amountEntitiesHit;
         public StrikeLineOptions() {
@@ -182,7 +183,7 @@ public class GenericHelper {
             return this;
         }
 
-        public StrikeLineOptions setDamagedFunction(BiConsumer<Integer, Entity> damagedFunction) {
+        public StrikeLineOptions setDamagedFunction(TriConsumer<Integer, Entity, Location> damagedFunction) {
             this.damagedFunction = damagedFunction;
             return this;
         }
@@ -362,7 +363,7 @@ public class GenericHelper {
         double  decayCoef = advanced.decayCoef,
                 whipBonusCrit = advanced.whipBonusCrit,
                 whipBonusDamage = advanced.whipBonusDamage;
-        BiConsumer<Integer, Entity> damagedFunction = advanced.damagedFunction;
+        TriConsumer<Integer, Entity, Location> damagedFunction = advanced.damagedFunction;
         // get hit entities
         Set<HitEntityInfo> entityHitCandidate = HitEntityInfo.getEntitiesHit(
                 wld, startLoc.toVector(), terminalLoc.toVector(), width, predication);
@@ -390,7 +391,8 @@ public class GenericHelper {
             advanced.amountEntitiesHit ++;
             // use damaged function
             if (damagedFunction != null)
-                damagedFunction.accept(advanced.amountEntitiesHit, victim);
+                damagedFunction.accept(advanced.amountEntitiesHit, victim,
+                        MathHelper.toBukkitVector(info.getHitLocation().pos).toLocation(victim.getWorld()) );
             // handle maxTargetHit
             if (advanced.amountEntitiesHit >= penetration)
                 return MathHelper.toBukkitVector(info.getHitLocation().pos).toLocation(wld);

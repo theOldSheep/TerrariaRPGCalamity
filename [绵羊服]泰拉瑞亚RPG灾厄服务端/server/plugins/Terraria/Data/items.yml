@@ -876,7 +876,7 @@
   lore:
   - §r[饰品]
   attributes:
-    buffInflictMelee: 燃烧|100|1
+    buffInflictMelee: 狱炎|100|1
   worth: 2000000
   rarity: 3
 腐香囊:
@@ -950,7 +950,7 @@
     knockbackMeleeMulti: 0.8
     meleeReachMulti: 0.1
     damageMeleeMulti: 0.09
-    buffInflictMelee: 燃烧|80|1
+    buffInflictMelee: 狱炎|80|1
   worth: 6000000
   rarity: 7
 战士徽章:
@@ -4047,7 +4047,6 @@
     manaUse: 10
   worth: 100000
   rarity: 0
-
 小鬼法杖:
   item: WOOD_SWORD
   lore:

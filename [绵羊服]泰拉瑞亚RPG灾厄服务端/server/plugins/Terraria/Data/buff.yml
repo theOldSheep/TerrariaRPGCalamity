@@ -46,6 +46,11 @@ effects:
     damageInterval: 4
     damage: 2
     tooltip: 不是特别烫就是特别冻。反正都是特别特别痛
+  狱炎:
+    isBuff: false
+    damageInterval: 4
+    damage: 6
+    tooltip: 缓慢损失生命值
   咒火:
     icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a0/Cursed_Inferno
     isBuff: false

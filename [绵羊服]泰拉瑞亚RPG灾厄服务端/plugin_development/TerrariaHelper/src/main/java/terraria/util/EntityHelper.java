@@ -1788,7 +1788,8 @@ public class EntityHelper {
                     }
                     // doubles
                     {
-                        keys = new String[]{"autoTraceAbility", "autoTraceRadius", "blastRadius", "bounceVelocityMulti",
+                        keys = new String[]{"autoTraceAbility", "autoTraceEndSpeedMultiplier", "autoTraceRadius",
+                                "blastRadius", "bounceVelocityMulti",
                                 "frictionFactor", "gravity", "maxSpeed", "projectileSize", "speedMultiPerTick",
                                 "trailSize", "trailStepSize"};
                         for (String key : keys) {
