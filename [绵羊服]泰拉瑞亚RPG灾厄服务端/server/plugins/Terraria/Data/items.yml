@@ -3598,6 +3598,133 @@
     manaUse: 10
   worth: 800000
   rarity: 3
+冰矢:
+  item: BOOK
+  lore:
+  - §r发射缓慢飞行的冰矢
+  attributes:
+    damage: 28
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 6
+    knockback: 3.5
+    useTime: 20
+    manaUse: 6
+  worth: 400000
+  rarity: 2
+珊瑚泥:
+  item: BOOK
+  lore:
+  - §r向地面喷出能攻击敌人的刺球
+  attributes:
+    damage: 34
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 16
+    knockback: 3.5
+    useTime: 26
+    manaUse: 4
+  worth: 400000
+  rarity: 2
+清道夫:
+  item: BOOK
+  lore:
+  - §r施放并不精准的水束
+  attributes:
+    damage: 32
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 12
+    knockback: 2.5
+    useTime: 15
+    manaUse: 4
+  worth: 400000
+  rarity: 2
+火矢:
+  item: BOOK
+  lore:
+  - §r发射缓慢飞行的火矢
+  attributes:
+    damage: 84
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 7.5
+    knockback: 5.5
+    useTime: 30
+    manaUse: 12
+  worth: 800000
+  rarity: 3
+信风:
+  item: BOOK
+  lore:
+  - §r发射飞快而锋利的羽毛
+  attributes:
+    damage: 62
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 20
+    knockback: 5
+    useTime: 12
+    manaUse: 5
+  worth: 800000
+  rarity: 3
+深渊之书:
+  item: BOOK
+  lore:
+  - §r释放一个缓慢移动的黑暗能量球
+  attributes:
+    damage: 66
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 9
+    knockback: 6
+    useTime: 25
+    manaUse: 15
+  worth: 2400000
+  rarity: 4
+诡触之书:
+  item: BOOK
+  lore:
+  - §r释放邪恶的触手攻击敌人
+  attributes:
+    damage: 84
+    damageType: Magic
+    crit: 9
+    projectileSpeed: 36
+    knockback: 3.5
+    useTime: 21
+    manaUse: 7
+  worth: 2400000
+  rarity: 4
+黑尿鱼:
+  item: DIAMOND_SWORD
+  lore:
+  - §r喷射泡泡和追踪浮游物
+  attributes:
+    damage: 42
+    damageType: Magic
+    projectileSpeed: 8
+    crit: 4
+    knockback: 2.75
+    useTime: 14
+    manaUse: 10
+  worth: 800000
+  rarity: 3
+闪光皇后鱼:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一道聚焦激光来歼灭你的敌人
+  - §r被击杀的敌人会爆出棱晶碎片
+  attributes:
+    damage: 20
+    damageType: Magic
+    projectileSpeed: 14
+    crit: 4
+    knockback: 0
+    useTime: 20
+    manaUse: 5
+  worth: 400000
+  rarity: 2
 永夜射线:
   item: DIAMOND_SWORD
   lore:
@@ -3716,12 +3843,211 @@
   attributes:
     damage: 20
     damageType: Summon
-    projectileSpeed: 10
     knockback: 0.5
     useTime: 34
     manaUse: 10
-  worth: 2000000
+  worth: 200000
   rarity: 1
+霜华法杖:
+  item: WOOD_SWORD
+  lore:
+  - §r在你的头顶召唤一朵冰霜之花
+  - §r同时只能存在至多一朵冰霜之花
+  attributes:
+    damage: 20
+    damageType: Summon
+    knockback: 2
+    useTime: 34
+    manaUse: 10
+  worth: 200000
+  rarity: 1
+太阳之灵法杖:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤一个太阳之灵来保护你
+  - §r同时只能存在至多一个太阳之灵
+  attributes:
+    damage: 24
+    damageType: Summon
+    knockback: 1.15
+    useTime: 34
+    manaUse: 10
+  worth: 200000
+  rarity: 1
+颠茄灵杖:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤一个会投掷魔法剧毒花瓣的可爱的颠茄之灵
+  attributes:
+    damage: 44
+    damageType: Summon
+    knockback: 1
+    useTime: 34
+    manaUse: 10
+  worth: 200000
+  rarity: 1
+海星召唤杖:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤海星为你而战
+  attributes:
+    damage: 22
+    damageType: Summon
+    knockback: 2
+    useTime: 34
+    manaUse: 10
+  worth: 400000
+  rarity: 2
+附魔海螺:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤寄居蟹为你而战
+  attributes:
+    damage: 40
+    damageType: Summon
+    knockback: 2
+    useTime: 34
+    manaUse: 10
+  worth: 400000
+  rarity: 2
+腐化吞噬者:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤灵魂吞噬者宝宝来保护你
+  attributes:
+    damage: 18
+    damageType: Summon
+    knockback: 0.5
+    useTime: 29
+    manaUse: 10
+  worth: 400000
+  rarity: 2
+烬英法杖:
+  item: WOOD_SWORD
+  lore:
+  - §r在你的头顶召唤一朵灼热之花
+  - §r同时只能存在至多一朵灼热之花
+  attributes:
+    damage: 32
+    damageType: Summon
+    knockback: 2
+    useTime: 29
+    manaUse: 10
+  worth: 800000
+  rarity: 3
+沼泽之眼:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤黑暗爬行者为你而战
+  attributes:
+    damage: 14
+    damageType: Summon
+    knockback: 2.25
+    useTime: 30
+    manaUse: 10
+  worth: 800000
+  rarity: 3
+噬星者控制元件:
+  item: WOOD_SWORD
+  lore:
+  - §r用于运输和发射电浆的小巧玩具，在人类中意外的流行
+  - §r召唤一个生物力学青蛙，向敌人倾吐电浆
+  attributes:
+    damage: 48
+    damageType: Summon
+    knockback: 2.25
+    useTime: 30
+    manaUse: 10
+  worth: 800000
+  rarity: 1110
+死灵骨髓杖:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤小骷髅为你而战
+  - §r小骷髅在移动时会留下骨细胞
+  attributes:
+    damage: 62
+    damageType: Summon
+    knockback: 3.5
+    useTime: 29
+    manaUse: 10
+  worth: 800000
+  rarity: 3
+鲱鱼法杖:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤鲱鱼为你而战
+  - §r仅占据半格召唤栏位
+  attributes:
+    damage: 34
+    damageType: Summon
+    knockback: 1.25
+    useTime: 29
+    manaUse: 10
+  worth: 800000
+  rarity: 3
+腐化史莱姆召唤杖:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤腐化史莱姆为你而战
+  attributes:
+    damage: 48
+    damageType: Summon
+    knockback: 2
+    useTime: 29
+    manaUse: 10
+  worth: 2400000
+  rarity: 4
+血腥史莱姆召唤杖:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤血腥史莱姆为你而战
+  attributes:
+    damage: 48
+    damageType: Summon
+    knockback: 2
+    useTime: 29
+    manaUse: 10
+  worth: 2400000
+  rarity: 4
+死亡凝视法杖:
+  item: WOOD_SWORD
+  lore:
+  - §r在你的头顶召唤一颗眼球，它会看着你并向敌人发射激光
+  - §r同时只能存在至多一颗眼球
+  attributes:
+    damage: 66
+    damageType: Summon
+    knockback: 2
+    useTime: 34
+    manaUse: 10
+  worth: 400000
+  rarity: 1
+永夜之眼:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤会发射瘟疫细胞的永夜眼球，瘟疫细胞会附着在敌怪身上
+  attributes:
+    damage: 56
+    damageType: Summon
+    knockback: 1
+    useTime: 29
+    manaUse: 10
+  worth: 800000
+  rarity: 3
+松鼠召唤杖:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤一只松鼠为你而战
+  attributes:
+    damage: 16
+    damageType: Summon
+    knockback: 0.5
+    useTime: 34
+    manaUse: 10
+  worth: 100000
+  rarity: 0
+
 小鬼法杖:
   item: WOOD_SWORD
   lore:
