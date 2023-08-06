@@ -297,6 +297,9 @@
     blockHitAction: thru
     liveTime: 80
     gravity: 0
+    trailColor: 255|46|46
+    trailSize: 0.2
+    trailStepSize: 0.75
     buffInflict:
         - "硫磺火|60|1"
 硫火喷射:
@@ -305,9 +308,7 @@
     liveTime: 40
     gravity: 0
     projectileSize: 0.5
-    trailColor: 150|0|0
-    trailSize: 0.2
-    trailStepSize: 0.5
+    trailColor: 255|46|46
     trailLingerTime: 10
     buffInflict:
         - "硫磺火|60|1"
@@ -710,6 +711,45 @@
     liveTime: 60
     gravity: 0
     projectileSize: 0.5
+硫酸泡泡:
+    liveTime: 75
+    gravity: 0
+    speedMultiPerTick: 0.9
+    slowedByWater: false
+呕吐物:
+    liveTime: 60
+    noGravityTicks: 10
+    penetration: 2
+    slowedByWater: false
+    buffInflict:
+        - "剧毒|40|1"
+樱花弹:
+    liveTime: 60
+    gravity: 0
+    autoTrace: true
+    blockHitAction: thru
+    trailColor: "233|52|115"
+    trailSize: 0.1
+    trailStepSize: 0.5
+爆炸导弹:
+    liveTime: 60
+    gravity: 0
+    blockHitAction: thru
+    isGrenade: true
+    blastRadius: 2
+    projectileSize: 0.25
+    buffInflict:
+        - "瘟疫|60|1"
+追踪瘟疫导弹:
+    liveTime: 75
+    gravity: 0
+    autoTrace: true
+    blockHitAction: thru
+    isGrenade: true
+    blastRadius: 1.5
+    projectileSize: 0.25
+    buffInflict:
+        - "瘟疫|60|1"
 瘟疫矢:
     gravity: 0
     liveTime: 100

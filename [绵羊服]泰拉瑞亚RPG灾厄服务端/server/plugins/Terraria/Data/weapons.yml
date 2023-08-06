@@ -1007,7 +1007,7 @@
   minionName: 沙龙卷
 畸变吞食者法杖:
   type: SUMMON
-  damageType: Melee
+  damageType: Arrow
   minionName: 畸变吞食者
 反魂蝶:
   type: SUMMON
