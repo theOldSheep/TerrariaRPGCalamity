@@ -413,6 +413,13 @@ public class GenericHelper {
     public static void handleStrikeLine(Entity damager, Location startLoc, double yaw, double pitch, double length, double width,
                                         String itemType, String color, Collection<Entity> exceptions,
                                         HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
+        handleStrikeLine(damager, startLoc, yaw, pitch, length, width, width,
+                itemType, color, exceptions, attrMap, advanced);
+    }
+    public static void handleStrikeLine(Entity damager, Location startLoc,
+                                        double yaw, double pitch, double length, double width, double particleInterval,
+                                        String itemType, String color, Collection<Entity> exceptions,
+                                        HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
         if (length < 0) return;
         // setup variables
         boolean bounceWhenHitBlock = advanced.bounceWhenHitBlock,
@@ -505,27 +512,41 @@ public class GenericHelper {
         // display particle
         particleInfo
                 .setLength(direction.length())
-                .setWidth(width);
+                .setWidth(width)
+                .setStepsize(particleInterval);
         if (advanced.displayParticle)
             handleParticleLine(direction, startLoc, particleInfo);
     }
     // helper function for each step of lightning
-    private static void handleStrikeLightningStep(Entity damager, Location[] locations, int currIndex, double width, int delay, String color, Collection<Entity> exceptions, HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
+    private static void handleStrikeLightningStep(Entity damager, Location[] locations, int currIndex,
+                                                  double width, double particleInterval, int delay, String color,
+                                                  Collection<Entity> exceptions, HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
         // find the current direction
         Location startLoc = locations[currIndex];
         Vector currDir = locations[currIndex + 1].clone().subtract(startLoc).toVector();
         handleStrikeLine(damager, startLoc, MathHelper.getVectorYaw(currDir), MathHelper.getVectorPitch(currDir), currDir.length(),
-        width, "LIGHTNING", color, exceptions, (HashMap<String, Double>) attrMap.clone(), advanced);
+        width, particleInterval, "LIGHTNING", color, exceptions, (HashMap<String, Double>) attrMap.clone(), advanced);
         // if the lightning reached penetration limit
         if (advanced.amountEntitiesHit >= advanced.maxTargetHit)
             return;
         if (currIndex + 2 < locations.length) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> handleStrikeLightningStep(damager, locations, currIndex + 1, width, delay, color, exceptions, attrMap, advanced),
+                    () -> handleStrikeLightningStep(damager, locations, currIndex + 1, width, particleInterval, delay, color, exceptions, attrMap, advanced),
                     delay);
         }
     }
-    public static void handleStrikeLightning(Entity damager, Location startLoc, double yaw, double pitch, double length, double stepSize, double width, double offset, int delay, String color, Collection<Entity> exceptions, HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
+    public static void handleStrikeLightning(Entity damager, Location startLoc,
+                                             double yaw, double pitch, double length, double stepSize, double width,
+                                             double offset, int delay, String color,
+                                             Collection<Entity> exceptions, HashMap<String, Double> attrMap,
+                                             StrikeLineOptions advanced) {
+        handleStrikeLightning(damager, startLoc, yaw, pitch, length, stepSize, width, width, offset, delay, color, exceptions, attrMap, advanced);
+    }
+    public static void handleStrikeLightning(Entity damager, Location startLoc,
+                                             double yaw, double pitch, double length, double stepSize, double width, double particleStepSize,
+                                             double offset, int delay, String color,
+                                             Collection<Entity> exceptions, HashMap<String, Double> attrMap,
+                                             StrikeLineOptions advanced) {
         // initialize the intermediate points
         int size = (int) Math.max(1, Math.round(length / stepSize)) + 1;
         Location[] locations = new Location[size];
@@ -539,7 +560,8 @@ public class GenericHelper {
             locations[i] = currLoc;
         }
         // handle the steps
-        handleStrikeLightningStep(damager, locations, 0, width, delay, color, exceptions, attrMap, advanced);
+        handleStrikeLightningStep(damager, locations, 0, width, particleStepSize,
+                delay, color, exceptions, attrMap, advanced);
     }
     public static void displayHoloText(Location displayLoc, String text, int ticksDisplay, float width, float height, float alpha) {
         String holoInd = "" + (nextWorldTextureIndex++);

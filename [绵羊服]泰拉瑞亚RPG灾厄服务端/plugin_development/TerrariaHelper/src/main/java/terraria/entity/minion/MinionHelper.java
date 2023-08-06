@@ -67,7 +67,7 @@ public class MinionHelper {
         if (owner.getWorld() != minion.getWorld()) return false;
         return true;
     }
-    public static void handleContactDamage(net.minecraft.server.v1_12_R1.Entity minion, boolean hasTeleported, double size, double basicDamage, ArrayList<Entity> damageCD, int invincibilityTick) {
+    public static Set<HitEntityInfo> handleContactDamage(net.minecraft.server.v1_12_R1.Entity minion, boolean hasTeleported, double size, double basicDamage, ArrayList<Entity> damageCD, int invincibilityTick) {
         Vec3D startLoc;
         if (hasTeleported)
             startLoc = new Vec3D(minion.locX, minion.locY, minion.locZ);
@@ -87,6 +87,7 @@ public class MinionHelper {
             EntityHelper.damageCD(damageCD, victimBukkit, invincibilityTick);
             EntityHelper.handleDamage(minionBukkit, victimBukkit, basicDamage, EntityHelper.DamageReason.DIRECT_DAMAGE);
         }
+        return toDamage;
     }
     private static double getHorDistSqr(double x1, double x2, double y1, double y2) {
         return (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2);

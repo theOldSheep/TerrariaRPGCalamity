@@ -1,9 +1,6 @@
 package terraria.entity.minion;
 
-import net.minecraft.server.v1_12_R1.EntityZombieHusk;
-import net.minecraft.server.v1_12_R1.GenericAttributes;
-import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
-import net.minecraft.server.v1_12_R1.World;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -18,6 +15,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import terraria.util.EntityHelper;
+import terraria.util.GenericHelper;
+import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -87,12 +86,22 @@ public class MinionHusk extends EntityZombieHusk {
         // prevent items being picked up by the minion
         ((Husk) getBukkitEntity()).getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
         // minions other than dwarves should not need any goal selector etc. that are redundant and laggy
-        if (!minionType.equals("矮人")) {
-            this.goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
+        switch (minionType) {
+            case "小骷髅":
+            case "缠怨鬼碟":
+            case "矮人":
+                break;
+            default:
+                this.goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         }
         this.targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // move speed, potion effects etc.
         switch (minionType) {
+            case "小骷髅":
+            case "缠怨鬼碟": {
+                getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5d);
+                break;
+            }
             case "矮人": {
                 getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5d);
                 ((LivingEntity) getBukkitEntity()).addPotionEffect(new PotionEffect(
@@ -139,17 +148,6 @@ public class MinionHusk extends EntityZombieHusk {
         else target = owner;
         boolean targetIsOwner = target == owner;
         switch (minionType) {
-            case "矮人": {
-                if (!targetIsOwner && ticksLived % 12 == 0) {
-                    Vector v = target.getEyeLocation().subtract(minionBukkit.getEyeLocation()).toVector();
-                    double dist = v.length();
-                    if (dist > 1e-9) {
-                        v.multiply(2.5 / dist);
-                        EntityHelper.spawnProjectile(minionBukkit, v, attrMap, "投矛");
-                    }
-                }
-                break;
-            }
             case "颠茄之灵": {
                 Location targetLoc = owner.getLocation().add(
                         Math.random() * 2 - 1,
@@ -165,6 +163,67 @@ public class MinionHusk extends EntityZombieHusk {
                     if (index % 15 == 0) {
                         EntityHelper.spawnProjectile(minionBukkit, new Vector(0, 0.5, 0),
                                 EntityHelper.getAttrMap(minionBukkit), "剧毒花瓣");
+                    }
+                }
+                break;
+            }
+            case "蚀骨之龙": {
+                // stay behind the owner when idle
+                if (targetIsOwner) {
+                    // get the index of current minion
+                    double indexCurr = 0;
+                    for (Entity currMinion : allMinions) {
+                        if (currMinion.isDead()) continue;
+                        if (!GenericHelper.trimText(currMinion.getName()).equals(minionType)) continue;
+                        if (currMinion == minionBukkit)
+                            break;
+                        indexCurr ++;
+                    }
+                    // get the location for this minion
+                    Location targetLoc = target.getEyeLocation();
+                    EntityPlayer plyNMS = ((CraftPlayer) owner).getHandle();
+                    Vector offset = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw + 180, 0);
+                    offset.multiply(indexCurr + 1);
+                    targetLoc.add(offset);
+                    // set velocity
+                    velocity = MathHelper.getDirection(minionBukkit.getLocation(), targetLoc, 1, true);
+                }
+                else {
+                    // fly into enemy
+                    velocity.add(MathHelper.getDirection(minionBukkit.getLocation(),
+                            target.getEyeLocation().add(0, 2, 0), 0.1));
+                    double velLen = velocity.length();
+                    if (velLen > 0.6)
+                        velocity.multiply(0.6 / velLen);
+                    // shoot projectile
+                    if (index % 12 == 0) {
+                        EntityHelper.spawnProjectile(minionBukkit, MathHelper.getDirection(minionBukkit.getEyeLocation(),
+                                target.getEyeLocation(), 1.5), EntityHelper.getAttrMap(minionBukkit), "蚀骨尖刺");
+                    }
+                }
+                break;
+            }
+            case "小骷髅": {
+                // occasionally leaves explosion when attacking
+                if (!targetIsOwner && Math.random() < 0.05) {
+                    EntityHelper.handleEntityExplode(minionBukkit, 1, new ArrayList<>(), minionBukkit.getEyeLocation());
+                }
+                break;
+            }
+            case "缠怨鬼碟": {
+                if (!targetIsOwner && ticksLived % 10 == 0) {
+                    Vector projVel = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 2);
+                    EntityHelper.spawnProjectile(minionBukkit, projVel, attrMap, "缠怨鬼碟");
+                }
+                break;
+            }
+            case "矮人": {
+                if (!targetIsOwner && ticksLived % 12 == 0) {
+                    Vector v = target.getEyeLocation().subtract(minionBukkit.getEyeLocation()).toVector();
+                    double dist = v.length();
+                    if (dist > 1e-9) {
+                        v.multiply(2.5 / dist);
+                        EntityHelper.spawnProjectile(minionBukkit, v, attrMap, "投矛");
                     }
                 }
                 break;

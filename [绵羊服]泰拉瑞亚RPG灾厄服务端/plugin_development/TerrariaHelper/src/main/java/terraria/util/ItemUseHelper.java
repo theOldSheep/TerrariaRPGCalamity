@@ -919,7 +919,7 @@ public class ItemUseHelper {
                     , fireRoundDelay);
         }
     }
-    protected static String consumePlayerAmmo(Player ply, Predicate<ItemStack> ammoPredicate, double consumptionRate) {
+    public static String consumePlayerAmmo(Player ply, Predicate<ItemStack> ammoPredicate, double consumptionRate) {
         ItemStack ammo = PlayerHelper.getFirstItem(ply, ammoPredicate, true);
         if (ammo == null) return null;
         String ammoName = ItemHelper.splitItemName(ammo)[1];
@@ -1380,7 +1380,7 @@ public class ItemUseHelper {
             // for minions with no duplication allowed, abort the summoning attempt if a minion exists already.
             if (noDuplication) {
                 for (Entity toCheck : minionList) {
-                    if (GenericHelper.trimText(toCheck.getName()).equals(type))
+                    if (GenericHelper.trimText(toCheck.getName()).equals(type) && !toCheck.isDead())
                         return false;
                 }
             }
@@ -1393,8 +1393,11 @@ public class ItemUseHelper {
         int minionSlot = indexNext, minionSlotMax = Math.min(indexNext + slotsConsumed, minionLimit) - 1;
         Entity minionEntity;
         switch (type) {
-            case "矮人":
             case "颠茄之灵":
+            case "小骷髅":
+            case "蚀骨之龙":
+            case "缠怨鬼碟":
+            case "矮人":
                 MinionHusk huskMinion = new MinionHusk(ply, minionSlot, minionSlotMax, sentryOrMinion, hasContactDamage, type, attrMap, originalStaff);
                 minionEntity = huskMinion.getBukkitEntity();
                 break;
@@ -1432,14 +1435,12 @@ public class ItemUseHelper {
         int slotsConsumed = weaponSection.getInt("slotsRequired", 1);
         String minionName = weaponSection.getString("minionName");
         if (minionName == null) return false;
-        // if the summoning attempt failed, for example, minion is already present
-        if (!spawnSentryMinion(ply, minionName, attrMap, slotsConsumed, sentryOrMinion, hasContactDamage, noDuplication, originalStaff))
-            return false;
-        // apply CD
+        // apply CD, even if the summon attempt fails.
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMagicMulti", 1d);
         double useTimeMulti = 1 / useSpeed;
         applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
-        return true;
+        // if the summoning attempt failed, for example, minion is already present
+        return spawnSentryMinion(ply, minionName, attrMap, slotsConsumed, sentryOrMinion, hasContactDamage, noDuplication, originalStaff);
     }
     // other helper functions for item using
     public static void playerUseItemSound(Entity ply, String weaponType, boolean autoSwing) {

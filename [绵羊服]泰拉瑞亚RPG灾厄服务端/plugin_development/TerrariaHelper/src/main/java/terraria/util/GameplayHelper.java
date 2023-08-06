@@ -415,16 +415,11 @@ public class GameplayHelper {
                         break;
                     }
                 }
-                // prepare to teleport
+                // teleport
                 Block blockToBreak = teleportedLoc.getBlock();
-                if (playerBreakBlock(blockToBreak, ply) && playerBreakBlock(blockToBreak.getRelative(BlockFace.UP), ply)) {
-                    ply.teleport(teleportedLoc);
-                }
-                else {
-                    ply.sendMessage(blockToBreak + ", " + teleportedLoc);
-                    ply.sendMessage("§7您未能成功移动到目标世界，阻挡目标位置的方块未能被破坏。");
-                    ply.sendMessage("§7您可以手持镐右键基岩，再次尝试破坏目标位置的方块。");
-                }
+                blockToBreak.setType(Material.AIR);
+                blockToBreak.getRelative(BlockFace.UP).setType(Material.AIR);
+                ply.teleport(teleportedLoc);
                 break;
             }
             // dirt/grass

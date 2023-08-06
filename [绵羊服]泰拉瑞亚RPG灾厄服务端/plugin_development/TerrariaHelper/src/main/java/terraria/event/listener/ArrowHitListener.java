@@ -184,9 +184,6 @@ public class ArrowHitListener implements Listener {
         // grappling hooks should ignore entities
         if (arrow.getScoreboardTags().contains("isHook") && e.getHitEntity() != null) {
             e.setCancelled(true);
-            EntityProjectile nmsArrow = ((CraftProjectile) arrow).getHandle();
-            Vector velocity = new Vector(nmsArrow.motX, nmsArrow.motY, nmsArrow.motZ);
-            Bukkit.getScheduler().runTask(TerrariaHelper.getInstance(), () -> arrow.setVelocity(velocity));
             return;
         }
         if (e.getHitBlock() != null) handleHitBlock(e, arrow, e.getHitBlock());

@@ -2,6 +2,7 @@ package terraria.util;
 
 import net.minecraft.server.v1_12_R1.Vec3D;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -167,7 +168,7 @@ public class MathHelper {
         return results;
     }
     public static ArrayList<Vector> getCircularProjectileDirections(int amountPerArc, int amountArcs, double halfArcAngleDeg,
-                                                                    Player target, Location shootLoc, double length) {
+                                                                    Entity target, Location shootLoc, double length) {
         EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions().setProjectileSpeed(length);
         Location targetLoc = EntityHelper.helperAimEntity(shootLoc, target, aimHelper);
         Vector fwdDir = targetLoc.subtract(shootLoc).toVector();

@@ -87,7 +87,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("minionDamagePenaltyMulti", 0.5d);
         defaultPlayerAttrMap.put("minionLimit", 1d);
         defaultPlayerAttrMap.put("mobLimit", 15d);
-        defaultPlayerAttrMap.put("mobSpawnRate", 0.15d);
+        defaultPlayerAttrMap.put("mobSpawnRate", 0.1d);
         defaultPlayerAttrMap.put("mobSpawnRateMulti", 1d);
         defaultPlayerAttrMap.put("penetration", 0d);
         defaultPlayerAttrMap.put("powerPickaxe", 0d);
@@ -882,14 +882,15 @@ public class PlayerHelper {
                                 hookedAmount++;
                             }
                             // draw chain
-                            Vector dVec = hook.getLocation().subtract(ply.getEyeLocation()).toVector();
+                            Location drawCenterLoc = ply.getLocation().add(0, 1, 0);
+                            Vector dVec = hook.getLocation().subtract(drawCenterLoc).toVector();
                             if (dVec.lengthSquared() > 0) {
                                 double dVecLength = dVec.length();
                                 // offset vector prevents color block spamming the screen
-                                Vector offsetVector = dVec.clone().multiply(1/dVecLength);
-                                GenericHelper.handleParticleLine(dVec, ply.getEyeLocation().add(offsetVector),
+                                Vector offsetVector = dVec.clone().multiply(1.5 / dVecLength);
+                                GenericHelper.handleParticleLine(dVec, drawCenterLoc.add(offsetVector),
                                         new GenericHelper.ParticleLineOptions()
-                                                .setLength(dVecLength)
+                                                .setLength(dVecLength - 1.5)
                                                 .setWidth(0.25, false)
                                                 .setAlpha(0.25f)
                                                 .setStepsize(1)
@@ -943,7 +944,7 @@ public class PlayerHelper {
                     spawnRate = 0.6;
                 }
                 else {
-                    spawnRate = attrMap.getOrDefault("mobSpawnRate", 0.2) *
+                    spawnRate = attrMap.getOrDefault("mobSpawnRate", 0.1) *
                             attrMap.getOrDefault("mobSpawnRateMulti", 1d)
                             / 2;
                 }
@@ -1699,8 +1700,6 @@ public class PlayerHelper {
             if (removed != null) hooks.remove(removed);
             else return;
         }
-        Arrow hookEntity = (Arrow) hookWorld.spawnEntity(ply.getEyeLocation(), EntityType.ARROW);
-        hookEntity.setShooter(ply);
         // velocity
         double hookSpeed = config.getDouble(hookItemName + ".velocity", 10) / 6;
         EntityPlayer nms_ply = ((CraftPlayer) ply).getHandle();
@@ -1708,8 +1707,7 @@ public class PlayerHelper {
                 pitch = nms_ply.pitch;
         Vector velocity = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
         velocity.multiply(hookSpeed);
-        hookEntity.setGravity(false);
-        hookEntity.setVelocity(velocity);
+        Entity hookEntity = EntityHelper.spawnProjectile(ply, velocity, new HashMap<>(), "钩爪");
         // pre-set particle item
         List<String> hookColors = config.getStringList(hookItemName + ".particleItem");
         for (Entity hook : hooks) {

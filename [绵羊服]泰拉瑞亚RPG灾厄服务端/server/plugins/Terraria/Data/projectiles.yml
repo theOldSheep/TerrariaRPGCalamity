@@ -108,6 +108,13 @@
         # 生成射弹类型
         spawnType: 木箭
 
+钩爪:
+    gravity: 0
+    speedMultiPerTick: 1
+    slowedByWater: false
+    projectileSize: 0.5
+    penetration: 999999
+    blockHitAction: stick
 坠星:
     projectileSize: 0.5
     penetration: 999999
@@ -299,6 +306,8 @@
     gravity: 0
     projectileSize: 0.5
     trailColor: 150|0|0
+    trailSize: 0.2
+    trailStepSize: 0.5
     trailLingerTime: 10
     buffInflict:
         - "硫磺火|60|1"
@@ -638,10 +647,42 @@
     trailStepSize: 0.5
     buffInflict:
         - "中毒|80|1"
-追踪花球:
+黑鹰子弹:
     gravity: 0
+    liveTime: 80
+    blockHitAction: thru
+蚀骨尖刺:
+    liveTime: 60
+    penetration: 999999
+    blockHitAction: thru
+    trailColor: "255|100|0"
+    trailStepSize: 0.5
+    buffInflict:
+        - "剧毒|40|0.25"
+        - "狱炎|40|0.25"
+缠怨鬼碟:
+    liveTime: 100
+    clusterBomb:
+        amount: 3
+        name: 水晶碎块
+        velocity: 0.5
+        damageMulti: 0.45
+冰钉:
+    gravity: 0
+    liveTime: 120
     autoTrace: true
     autoTraceAbility: 2
+    autoTraceRadius: 48
+    noAutoTraceTicks: 5
+    projectileSize: 0.5
+    blockHitAction: thru
+    buffInflict:
+        - "霜火|100|1"
+追踪花球:
+    gravity: 0
+    liveTime: 100
+    autoTrace: true
+    autoTraceAbility: 2.75
     autoTraceRadius: 32
     noAutoTraceTicks: 5
     projectileSize: 0.5
@@ -649,8 +690,29 @@
     buffInflict:
         - "霜火|60|1"
         - "狱炎|60|1"
+小型硫火喷射:
+    penetration: 99999
+    blockHitAction: thru
+    liveTime: 15
+    gravity: 0
+    projectileSize: 0.5
+    trailColor: 150|0|0
+    trailSize: 0.2
+    trailStepSize: 0.5
+    trailLingerTime: 10
+    buffInflict:
+        - "硫磺火|60|1"
+微型沙鲨:
+    liveTime: 60
+    gravity: 0
+    projectileSize: 0.5
+迷你鲨鱼龙:
+    liveTime: 60
+    gravity: 0
+    projectileSize: 0.5
 瘟疫矢:
     gravity: 0
+    liveTime: 100
     autoTrace: true
     projectileSize: 0.5
     autoTraceRadius: 32
@@ -892,6 +954,8 @@ TNT:
         name: 水晶碎块
         velocity: 0.5
         damageMulti: 0.45
+水晶碎块:
+    liveTime: 10
 装饰:
     clusterBomb:
         amount: 8

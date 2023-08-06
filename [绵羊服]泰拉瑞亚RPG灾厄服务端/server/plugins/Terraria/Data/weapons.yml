@@ -878,10 +878,12 @@
   type: SUMMON
   damageType: Magic
   minionName: 霜之华
+  noDuplication: true
 太阳之灵法杖:
   type: SUMMON
   damageType: Magic
   minionName: 太阳之灵
+  noDuplication: true
 颠茄灵杖:
   type: SUMMON
   damageType: Magic
@@ -902,6 +904,7 @@
   type: SUMMON
   damageType: Magic
   minionName: 烬之英
+  noDuplication: true
 沼泽之眼:
   type: SUMMON
   damageType: Melee
@@ -914,6 +917,14 @@
   type: SUMMON
   damageType: Melee
   minionName: 小骷髅
+腐化史莱姆召唤杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 小腐化史莱姆
+血腥史莱姆召唤杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 小血腥史莱姆
 真菌块:
   type: SUMMON
   damageType: Melee
@@ -922,6 +933,7 @@
   type: SUMMON
   damageType: Magic
   minionName: 微型克苏鲁之眼
+  noDuplication: true
 永夜之眼:
   type: SUMMON
   damageType: Magic
@@ -938,18 +950,25 @@
   type: SUMMON
   damageType: Melee
   minionName: 远古岩鲨
+闹鬼卷轴:
+  type: SUMMON
+  damageType: Arrow
+  minionName: 缠怨鬼碟
 海贝法杖:
   type: SUMMON
   damageType: Melee
   minionName: 海贝
+  slotsRequired: 2
 冰寒神性:
   type: SUMMON
   damageType: Magic
   minionName: 极寒冰块
+  noDuplication: true
 永冻之焱华:
   type: SUMMON
   damageType: Magic
   minionName: 永冻之焱华
+  noDuplication: true
 深海权杖:
   type: SUMMON
   damageType: Melee
@@ -970,14 +989,18 @@
   type: SUMMON
   damageType: Magic
   minionName: 太阳神之灵
+  noDuplication: true
 混乱之祈祷:
   type: SUMMON
   damageType: Magic
   minionName: 迷你灾厄
+  slotsRequired: 2
 苍华之庭:
   type: SUMMON
   damageType: Melee
   minionName: 迷你世纪之花
+  slotsRequired: 3
+  noDuplication: true
 沙龙卷法杖:
   type: SUMMON
   damageType: Melee
@@ -1010,6 +1033,7 @@
   type: SUMMON
   damageType: Magic
   minionName: 凋零枯花
+  noDuplication: true
 代达罗斯守卫法杖:
   type: SUMMON
   damageType: Magic
