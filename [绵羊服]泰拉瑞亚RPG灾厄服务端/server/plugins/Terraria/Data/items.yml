@@ -120,6 +120,10 @@
   item: FENCE
   worth: 300
   rarity: 0
+木门:
+  item: WOOD_DOOR
+  worth: 1000
+  rarity: 0
 羊毛:
   item: WOOL
   lore:
