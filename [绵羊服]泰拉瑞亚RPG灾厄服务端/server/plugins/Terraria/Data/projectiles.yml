@@ -1058,6 +1058,9 @@ TNT:
     blockHitAction: thru
     gravity: 0
     liveTime: 25
+螺丝钉:
+    noGravityTicks: 0
+    liveTime: 60
 星云烈焰:
     gravity: 0
     autoTrace: true

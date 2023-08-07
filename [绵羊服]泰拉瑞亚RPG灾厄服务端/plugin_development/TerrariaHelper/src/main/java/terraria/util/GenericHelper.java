@@ -15,6 +15,7 @@ import terraria.entity.projectile.HitEntityInfo;
 
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
 public class GenericHelper {
     static long nextWorldTextureIndex = 0;
@@ -105,6 +106,7 @@ public class GenericHelper {
         int damageCD, lingerTime, lingerDelay, maxTargetHit;
         double damage, decayCoef, whipBonusCrit, whipBonusDamage;
         ParticleLineOptions particleInfo;
+        Predicate<Entity> shouldDamageFunction;
         TriConsumer<Integer, Entity, Location> damagedFunction;
         // internal variables
         int amountEntitiesHit;
@@ -125,6 +127,7 @@ public class GenericHelper {
 
             particleInfo = null;
 
+            shouldDamageFunction = null;
             damagedFunction = null;
             // internal values
             amountEntitiesHit = 0;
@@ -183,6 +186,10 @@ public class GenericHelper {
             return this;
         }
 
+        public StrikeLineOptions setShouldDamageFunction(Predicate<Entity> shouldDamageFunction) {
+            this.shouldDamageFunction = shouldDamageFunction;
+            return this;
+        }
         public StrikeLineOptions setDamagedFunction(TriConsumer<Integer, Entity, Location> damagedFunction) {
             this.damagedFunction = damagedFunction;
             return this;
@@ -485,16 +492,9 @@ public class GenericHelper {
         }
         // init predication for victim selection
         com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication;
-        if (itemType.endsWith("虫网")) {
-            predication = (e) -> {
-                if (!e.isAlive()) return false;
-                if (e.getScoreboardTags().contains("isAnimal")) {
-                    ItemHelper.dropItem(e.getBukkitEntity().getLocation(), e.getName());
-                    e.die();
-                }
-                return false;
-            };
-        } else {
+        if (advanced.shouldDamageFunction != null)
+            predication = (e) -> advanced.shouldDamageFunction.test(e.getBukkitEntity());
+        else
             predication = (e) -> {
                 Entity entity = e.getBukkitEntity();
                 if (EntityHelper.checkCanDamage(damager, entity, false)) {
@@ -502,7 +502,6 @@ public class GenericHelper {
                 }
                 return false;
             };
-        }
         // damage hit entities
         Location newTerminalLoc = handleStrikeLineDamage(wld, startLoc, terminalLoc, width, predication, damager, damage,
                 attrMap, itemType, exceptions, lingerTime, advanced);

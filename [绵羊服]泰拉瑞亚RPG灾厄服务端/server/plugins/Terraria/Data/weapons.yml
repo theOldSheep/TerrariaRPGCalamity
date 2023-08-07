@@ -373,6 +373,17 @@
   - 0|0|255
   - 75|0|130
   - 143|0|255
+钨钢螺丝刀:
+  type: STAB
+  size: 1.5
+  projectileInfo:
+    velocity: 0.1
+    name: 螺丝钉
+钨钢螺丝刀_RIGHT_CLICK:
+  type: STAB
+  size: 3.75
+  attributes:
+    useTime: 30
 木弓:
   type: BOW
   thruWall: true

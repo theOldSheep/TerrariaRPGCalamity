@@ -4,10 +4,7 @@ import net.minecraft.server.v1_12_R1.EntityHuman;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.MovingObjectPosition;
 import net.minecraft.server.v1_12_R1.PacketPlayOutSetCooldown;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -589,24 +586,45 @@ public class ItemUseHelper {
         if (interpolateType == 0) {
             boolean shouldStrike;
             double strikeYaw = yawMin, strikePitch = pitchMin;
-            if (weaponType.equals("星光")) {
-                shouldStrike = currentIndex % 2 == 0;
-                if (shouldStrike) {
-                    // prevent DPS loss due to damage invincibility frame
-                    damaged = new ArrayList<>();
-                    color = particleColors.get((int) (Math.random() * particleColors.size()));
-                    if (currentIndex > 0) ply.getWorld().playSound(ply.getLocation(), SOUND_GENERIC_SWING, 1f, 1f);
-                    strikeYaw += Math.random() * 30 - 15;
-                    strikePitch += Math.random() * 30 - 15;
+            double particleInterval = size;
+            switch (weaponType) {
+                case "星光": {
+                    shouldStrike = currentIndex % 2 == 0;
+                    if (shouldStrike) {
+                        // prevent DPS loss due to damage invincibility frame
+                        damaged = new ArrayList<>();
+                        color = particleColors.get((int) (Math.random() * particleColors.size()));
+                        if (currentIndex > 0) ply.getWorld().playSound(ply.getLocation(), SOUND_GENERIC_SWING, 1f, 1f);
+                        strikeYaw += Math.random() * 30 - 15;
+                        strikePitch += Math.random() * 30 - 15;
+                    }
+                    break;
                 }
-            } else {
-                shouldStrike = currentIndex <= 5;
-                if (shouldStrike && particleColors.size() > 0) {
-                    color = particleColors.get(0);
+                case "钨钢螺丝刀_RIGHT_CLICK": {
+                    shouldStrike = currentIndex == 0;
+                    double finalStrikeYaw = strikeYaw;
+                    double finalStrikePitch = strikePitch;
+                    strikeLineInfo
+                            .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                EntityHelper.getAttrMap(entityHit).put("damageMeleeMulti", 12.5);
+                                Vector projVel = MathHelper.vectorFromYawPitch_quick(finalStrikeYaw, finalStrikePitch);
+                                projVel.multiply(3);
+                                entityHit.setVelocity(projVel);
+                                hitLoc.getWorld().playSound(hitLoc, Sound.ENTITY_GENERIC_EXPLODE, 0.5f, 1);
+                            })
+                            .setShouldDamageFunction((entity) -> entity.getScoreboardTags().contains("isWulfrumScrew"))
+                            .setLingerDelay(5);
+                    break;
                 }
+                default:
+                    shouldStrike = currentIndex <= 5;
+                    if (shouldStrike && particleColors.size() > 0) {
+                        color = particleColors.get(0);
+                    }
             }
             if (shouldStrike)
-                GenericHelper.handleStrikeLine(ply, ply.getEyeLocation().add(lookDir), strikeYaw, strikePitch, size, MELEE_STRIKE_RADIUS,
+                GenericHelper.handleStrikeLine(ply, ply.getEyeLocation().add(lookDir), strikeYaw, strikePitch,
+                        size, particleInterval, MELEE_STRIKE_RADIUS,
                         weaponType, color, damaged, attrMap, strikeLineInfo);
         }
         // "swing" or "whip"
@@ -624,6 +642,19 @@ public class ItemUseHelper {
                 int loopTimes = Math.max(maxIndex, 35);
                 int indexStart = loopTimes * currentIndex / (maxIndex + 1);
                 int indexEnd = loopTimes * (currentIndex + 1) / (maxIndex + 1);
+                // special weapon mechanism
+                switch (weaponType) {
+                    case "捕虫网":
+                    case "金捕虫网":
+                        strikeLineInfo
+                                .setShouldDamageFunction( (e) ->
+                                        e.getScoreboardTags().contains("isAnimal") && !(e.isDead()) )
+                                .setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                                    ItemHelper.dropItem(hitLoc, hitEntity.getName());
+                                    hitEntity.remove();
+                                });
+                        break;
+                }
                 for (int i = indexStart; i < indexEnd; i ++) {
                     double progress = (double) i / loopTimes;
                     double actualYaw = yawMin + (yawMax - yawMin) * progress;
@@ -663,6 +694,7 @@ public class ItemUseHelper {
         size *= attrMap.getOrDefault("meleeReachMulti", 1d);
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
         double useTimeMulti = 1 / useSpeed;
+        // shoot projectile
         ConfigurationSection projectileInfo = weaponSection.getConfigurationSection("projectileInfo");
         if (projectileInfo != null) {
             HashMap<String, Double> attrMapProjectile = (HashMap<String, Double>) attrMap.clone();
@@ -670,18 +702,23 @@ public class ItemUseHelper {
             if (shootInterval < 1)
                 shootInterval = 1;
             int shootAmount = 1;
-            if (swingAmount % shootInterval == 0) {
+            if ((swingAmount + 1) % shootInterval == 0) {
                 lookDir.multiply(projectileInfo.getDouble("velocity", 1d));
                 String projectileType = projectileInfo.getString("name", "");
                 for (int i = 0; i < shootAmount; i ++) {
+                    Projectile spawnedProjectile;
                     if (stabOrSwing) {
                         Vector v = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
                         v.multiply(size);
-                        EntityHelper.spawnProjectile(ply, ply.getEyeLocation().add(v),
+                        spawnedProjectile = EntityHelper.spawnProjectile(ply, ply.getEyeLocation().add(v),
                                 lookDir, attrMapProjectile, EntityHelper.DamageType.MELEE, projectileType);
                     } else {
-                        EntityHelper.spawnProjectile(ply, ply.getEyeLocation(),
+                        spawnedProjectile = EntityHelper.spawnProjectile(ply, ply.getEyeLocation(),
                                 lookDir, attrMapProjectile, EntityHelper.DamageType.MELEE, projectileType);
+                    }
+                    if (itemType.equals("钨钢螺丝刀")) {
+                        spawnedProjectile.setVelocity(new Vector(0, 0.3, 0));
+                        spawnedProjectile.addScoreboardTag("isWulfrumScrew");
                     }
                 }
             }
@@ -1510,8 +1547,8 @@ public class ItemUseHelper {
                 if (playerUsePotion(ply, itemName, mainHandItem, QuickBuffType.NONE)) return;
             }
             // weapon
-            String weaponYMLPath = itemName + (isRightClick ? "_RIGHT_CLICK" : "");
-            ConfigurationSection weaponSection = TerrariaHelper.weaponConfig.getConfigurationSection(weaponYMLPath);
+            itemName += (isRightClick ? "_RIGHT_CLICK" : "");
+            ConfigurationSection weaponSection = TerrariaHelper.weaponConfig.getConfigurationSection(itemName);
             if (weaponSection != null) {
                 // handle loading
                 boolean autoSwing = weaponSection.getBoolean("autoSwing", false);
@@ -1543,6 +1580,12 @@ public class ItemUseHelper {
                     applyCD(ply, attrMap.getOrDefault("useTime", 10d)
                             * attrMap.getOrDefault("useTimeMulti", 1d) * loadSpeedMulti);
                     return;
+                }
+                // update attribute
+                if (weaponSection.contains("attributes")) {
+                    ConfigurationSection attributeSection = weaponSection.getConfigurationSection("attributes");
+                    for (String attributeType : attributeSection.getKeys(false))
+                        attrMap.put(attributeType, attributeSection.getDouble(attributeType, 1d));
                 }
                 // use weapon
                 String weaponType = weaponSection.getString("type", "");
