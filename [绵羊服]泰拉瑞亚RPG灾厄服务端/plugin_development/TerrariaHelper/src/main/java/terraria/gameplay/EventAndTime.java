@@ -207,13 +207,13 @@ public class EventAndTime {
                             try {
                                 NPCHelper.spawnNPC(npcType);
                                 Bukkit.broadcastMessage("§#327dff" + npcType + " 已到达！");
-                                NPCRespawnCountdown = (int) (1000 + Math.random() * 1000);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             // only revive one NPC at a time
                             break;
                         }
+                        NPCRespawnCountdown = (int) (500 + Math.random() * 1000);
                     }
                 }
                 // NPC respawn counter resets at night

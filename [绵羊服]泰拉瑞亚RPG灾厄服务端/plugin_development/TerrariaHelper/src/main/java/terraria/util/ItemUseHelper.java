@@ -34,7 +34,7 @@ public class ItemUseHelper {
     public enum QuickBuffType {
         NONE, HEALTH, MANA, BUFF;
     }
-    protected static final String SOUND_GENERIC_SWING = "item.genericSwing", SOUND_BOW_SHOOT = "item.bowShoot",
+    public static final String SOUND_GENERIC_SWING = "item.genericSwing", SOUND_BOW_SHOOT = "item.bowShoot",
             SOUND_GUN_FIRE = "item.gunfire", SOUND_GUN_FIRE_LOUD = "entity.generic.explode";
     protected static final double MELEE_STRIKE_RADIUS = 0.25;
     public static int applyCD(Player ply, double CD) {
@@ -1397,6 +1397,7 @@ public class ItemUseHelper {
             case "小骷髅":
             case "蚀骨之龙":
             case "缠怨鬼碟":
+            case "代达罗斯守卫":
             case "矮人":
                 MinionHusk huskMinion = new MinionHusk(ply, minionSlot, minionSlotMax, sentryOrMinion, hasContactDamage, type, attrMap, originalStaff);
                 minionEntity = huskMinion.getBukkitEntity();

@@ -402,15 +402,14 @@
         - "碎甲|100|1"
 星幻激光:
     penetration: 99999
-    blockHitAction: thru
-    liveTime: 80
     gravity: 0
-    projectileSize: 0.25
+    liveTime: 80
+    blockHitAction: thru
+    trailColor: 0|255|255
+    trailSize: 0.15
+    trailStepSize: 0.5
     buffInflict:
         - "幻星感染|40|1"
-    trailColor: 255|50|50
-    trailSize: 0.15
-    trailStepSize: 1
 星幻凝晶:
     blockHitAction: thru
     liveTime: 160
@@ -539,16 +538,6 @@
     maxAutoTraceTicks: 35
     buffInflict:
         - "燃烧|100|1"
-星幻激光:
-    penetration: 99999
-    gravity: 0
-    liveTime: 80
-    blockHitAction: thru
-    trailColor: 0|255|255
-    trailSize: 0.15
-    trailStepSize: 0.5
-    buffInflict:
-        - "幻星感染|40|1"
 幻星雷:
     blockHitAction: thru
     liveTime: 300
@@ -750,6 +739,15 @@
     projectileSize: 0.25
     buffInflict:
         - "瘟疫|60|1"
+瘟疫蜜蜂:
+    liveTime: 100
+    gravity: 0
+    autoTrace: true
+    autoTraceAbility: 2.25
+    autoTraceRadius: 24
+    blockHitAction: thru
+    buffInflict:
+        - "瘟疫|20|1"
 瘟疫矢:
     gravity: 0
     liveTime: 100
@@ -776,6 +774,27 @@
     trailStepSize: 0.5
     buffInflict:
         - "瘟疫|60|1"
+紫蓝色小球:
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 40
+    buffInflict:
+        - "霜火|60|1"
+橡子:
+    noGravityTicks: 0
+    liveTime: 50
+珊瑚块:
+    noGravityTicks: 0
+    liveTime: 50
+    clusterBomb:
+        amount: 2
+        damageMulti: 0.5
+        name: 珊瑚碎片
+        fireOnTimeout: false
+        velocity: 0.5
+珊瑚碎片:
+    noGravityTicks: 0
+    liveTime: 10
 蜘蛛卵:
     noGravityTicks: 0
     liveTime: 10

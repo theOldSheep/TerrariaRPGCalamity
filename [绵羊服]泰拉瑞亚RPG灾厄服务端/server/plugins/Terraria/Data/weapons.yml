@@ -830,6 +830,27 @@
   type: SENTRY
   damageType: Magic
   minionName: 月亮传送门
+松鼠召唤杖:
+  type: SENTRY
+  damageType: Arrow
+  minionName: 松鼠侍从
+珊瑚召唤杖:
+  type: SENTRY
+  damageType: Arrow
+  minionName: 珊瑚堆
+寒极法杖:
+  type: SENTRY
+  damageType: Magic
+  minionName: 冰结体
+脉冲炮塔遥控装置:
+  type: SENTRY
+  damageType: Magic
+  minionName: 脉冲炮塔
+  noDuplication: true
+地刺王法杖:
+  type: SENTRY
+  damageType: Melee
+  minionName: 岩刺
 史莱姆法杖:
   type: SUMMON
   damageType: Melee
@@ -1021,6 +1042,8 @@
   type: SUMMON
   damageType: Melee
   minionName: 瘟疫雌蜂
+  slotsRequired: 3
+  noDuplication: true
 星神圣护:
   type: SUMMON
   damageType: Magic

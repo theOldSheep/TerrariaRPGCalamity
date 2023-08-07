@@ -16,6 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import terraria.util.EntityHelper;
 import terraria.util.GenericHelper;
+import terraria.util.ItemUseHelper;
 import terraria.util.MathHelper;
 
 import java.util.ArrayList;
@@ -89,6 +90,7 @@ public class MinionHusk extends EntityZombieHusk {
         switch (minionType) {
             case "小骷髅":
             case "缠怨鬼碟":
+            case "代达罗斯守卫":
             case "矮人":
                 break;
             default:
@@ -102,6 +104,7 @@ public class MinionHusk extends EntityZombieHusk {
                 getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5d);
                 break;
             }
+            case "代达罗斯守卫":
             case "矮人": {
                 getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5d);
                 ((LivingEntity) getBukkitEntity()).addPotionEffect(new PotionEffect(
@@ -162,7 +165,7 @@ public class MinionHusk extends EntityZombieHusk {
                 if (!targetIsOwner) {
                     if (index % 15 == 0) {
                         EntityHelper.spawnProjectile(minionBukkit, new Vector(0, 0.5, 0),
-                                EntityHelper.getAttrMap(minionBukkit), "剧毒花瓣");
+                                attrMap, "剧毒花瓣");
                     }
                 }
                 break;
@@ -198,7 +201,7 @@ public class MinionHusk extends EntityZombieHusk {
                     // shoot projectile
                     if (index % 12 == 0) {
                         EntityHelper.spawnProjectile(minionBukkit, MathHelper.getDirection(minionBukkit.getEyeLocation(),
-                                target.getEyeLocation(), 1.5), EntityHelper.getAttrMap(minionBukkit), "蚀骨尖刺");
+                                target.getEyeLocation(), 1.5), attrMap, "蚀骨尖刺");
                     }
                 }
                 break;
@@ -214,6 +217,50 @@ public class MinionHusk extends EntityZombieHusk {
                 if (!targetIsOwner && ticksLived % 10 == 0) {
                     Vector projVel = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 2);
                     EntityHelper.spawnProjectile(minionBukkit, projVel, attrMap, "缠怨鬼碟");
+                }
+                break;
+            }
+            case "代达罗斯守卫": {
+                // reset attack
+                if (targetIsOwner) {
+                    index = -1;
+                }
+                // attack enemy
+                else {
+                    // attack using spheres
+                    if (index > 0) {
+                        if (index % 10 == 0) {
+                            Vector projVel = MathHelper.getDirection(
+                                    minionBukkit.getEyeLocation(), target.getEyeLocation(), 2.5);
+                            EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                    minionBukkit, projVel, attrMap, "紫蓝色小球");
+                            EntityHelper.spawnProjectile(shootInfo);
+                            // a small chance to initialize a lightning bolt section
+                            if (Math.random() < 0.2)
+                                index = -40;
+                        }
+                    }
+                    // strike lightning bolts
+                    else {
+                        switch (index) {
+                            case -20:
+                            case -15:
+                            case -10:
+                            case -5:
+                                Vector strikeDir = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(),
+                                        1, false);
+                                GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
+                                        .setLingerDelay(10);
+                                int greenBlueValue = (int) (Math.random() * 150);
+                                GenericHelper.handleStrikeLightning(minionBukkit, minionBukkit.getEyeLocation(),
+                                        MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
+                                        57.5, 6, 0.5, 1,3.5, 2,
+                                        "255|" + greenBlueValue + "|" + greenBlueValue,
+                                        new ArrayList<>(), attrMap, strikeOption);
+                                minionBukkit.getWorld().playSound(
+                                        minionBukkit.getLocation(), ItemUseHelper.SOUND_BOW_SHOOT, 3, 1);
+                        }
+                    }
                 }
                 break;
             }
