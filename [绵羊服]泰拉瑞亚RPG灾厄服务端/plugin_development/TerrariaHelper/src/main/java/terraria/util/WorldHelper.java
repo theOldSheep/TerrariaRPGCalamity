@@ -19,7 +19,8 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 public class WorldHelper {
-    public static final double CHANCE_SPECIAL_PLANT = 0.025, CHANCE_LIFE_FRUIT = 0.125, CHANCE_BULB = 0.075;
+    public static final double CHANCE_SPECIAL_PLANT_TICK = 0.075, CHANCE_SPECIAL_PLANT_GENERATION = 0.025,
+            CHANCE_LIFE_FRUIT = 0.125, CHANCE_BULB = 0.075;
     public static final String
             UUID_LIFE_FRUIT = "81834b91-513d-450f-b920-6880fd47c997",
             UUID_BULB = "50af25ef-adb9-44d0-880f-6890ea0dc182",
@@ -479,6 +480,9 @@ public class WorldHelper {
         }
     }
     public static void attemptGrowPlantAt(Block plantBlock) {
+        attemptGrowPlantAt(plantBlock, false);
+    }
+    public static void attemptGrowPlantAt(Block plantBlock, boolean generationOrTicking) {
         if (plantBlock.getType() != Material.AIR)
             return;
         if (!canGrowPlant(plantBlock.getRelative(BlockFace.DOWN)))
@@ -488,10 +492,11 @@ public class WorldHelper {
         HeightLayer height = HeightLayer.getHeightLayer(plantBlock.getLocation());
         // determine the type of plant
         PlantType plantType = PlantType.GRASS;
+        double specialPlantChance = generationOrTicking ? CHANCE_SPECIAL_PLANT_GENERATION : CHANCE_SPECIAL_PLANT_TICK;
         switch (height) {
             case SPACE:
             case SURFACE:
-                if (Math.random() < CHANCE_SPECIAL_PLANT) {
+                if (Math.random() < specialPlantChance) {
                     switch (biome) {
                         case OCEAN:
                         case DESERT:
@@ -535,7 +540,7 @@ public class WorldHelper {
                 break;
             case UNDERGROUND:
             case CAVERN:
-                if (Math.random() < CHANCE_SPECIAL_PLANT) {
+                if (Math.random() < specialPlantChance) {
                     switch (biome) {
                         case JUNGLE:
                             if (Math.random() < 0.5) {
@@ -558,7 +563,7 @@ public class WorldHelper {
                             break;
                         case NORMAL:
                         case HALLOW:
-                            plantType = PlantType.SPECIAL_OR_NONE;
+                            plantType = PlantType.BLINK_ROOT;
                             break;
                     }
                 }
@@ -574,7 +579,7 @@ public class WorldHelper {
                 }
                 break;
             case UNDERWORLD:
-                plantType = Math.random() < CHANCE_SPECIAL_PLANT ?
+                plantType = Math.random() < specialPlantChance ?
                         PlantType.FIRE_BLOSSOM : PlantType.SPECIAL_OR_NONE;
                 break;
         }

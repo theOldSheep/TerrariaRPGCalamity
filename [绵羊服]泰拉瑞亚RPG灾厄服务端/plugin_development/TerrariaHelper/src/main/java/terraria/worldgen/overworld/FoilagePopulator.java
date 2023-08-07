@@ -38,7 +38,7 @@ public class FoilagePopulator extends BlockPopulator {
                 if (Math.random() < GRASS_GROW_CHANCE) {
                     int Y = ((CraftChunk) chunk).getHandle().heightMap[j << 4 | i];
                     Block blockToGrow = chunk.getBlock(i, Y, j);
-                    WorldHelper.attemptGrowPlantAt(blockToGrow);
+                    WorldHelper.attemptGrowPlantAt(blockToGrow, true);
                 }
         // no trees if the chunk is very close to world spawn point
         if (Math.abs(chunk.getX()) > 3 || Math.abs(chunk.getZ()) > 3) {

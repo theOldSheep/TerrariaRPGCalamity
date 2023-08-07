@@ -255,7 +255,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     // this helper function is called every tick as long as the projectile is alive.
     protected void extraTicking() {
         switch (projectileType) {
-            case "风刃": {
+            case "旋风": {
                 double radius = 12, suckSpeed = 0.25;
                 // get list of entities that could get sucked in
                 Set<HitEntityInfo> hitCandidates = HitEntityInfo.getEntitiesHit(

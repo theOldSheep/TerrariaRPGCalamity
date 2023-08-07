@@ -74,6 +74,7 @@ public class GameplayHelper {
             case TRAPPED_CHEST:
             case WORKBENCH:
             case WOOD_DOOR:
+            case WOODEN_DOOR:
                 return "WOOD";
             case STONE:
             case SANDSTONE:
@@ -246,6 +247,7 @@ public class GameplayHelper {
         switch (blockMat) {
             case BED_BLOCK:
             case WOOD_DOOR:
+            case WOODEN_DOOR:
                 blockToBreak.breakNaturally();
                 break;
             default:
@@ -370,7 +372,7 @@ public class GameplayHelper {
                 if (bedLoc == null ||
                         bedLoc.getWorld() != newLoc.getWorld() ||
                         bedLoc.distanceSquared(newLoc) > 5) {
-                    ply.setBedSpawnLocation(blk.getLocation(), true);
+                    ply.setBedSpawnLocation(blk.getLocation(), false);
                     ply.sendMessage("§7出生点已设置。");
                 }
                 else {

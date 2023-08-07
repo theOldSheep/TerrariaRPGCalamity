@@ -586,7 +586,8 @@ public class ItemUseHelper {
         if (interpolateType == 0) {
             boolean shouldStrike;
             double strikeYaw = yawMin, strikePitch = pitchMin;
-            double particleInterval = size;
+            double particleInterval = MELEE_STRIKE_RADIUS;
+            Location startStrikeLoc = ply.getEyeLocation().add(lookDir);
             switch (weaponType) {
                 case "星光": {
                     shouldStrike = currentIndex % 2 == 0;
@@ -602,18 +603,53 @@ public class ItemUseHelper {
                 }
                 case "钨钢螺丝刀_RIGHT_CLICK": {
                     shouldStrike = currentIndex == 0;
-                    double finalStrikeYaw = strikeYaw;
-                    double finalStrikePitch = strikePitch;
-                    strikeLineInfo
-                            .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
-                                EntityHelper.getAttrMap(entityHit).put("damageMeleeMulti", 12.5);
-                                Vector projVel = MathHelper.vectorFromYawPitch_quick(finalStrikeYaw, finalStrikePitch);
-                                projVel.multiply(3);
-                                entityHit.setVelocity(projVel);
-                                hitLoc.getWorld().playSound(hitLoc, Sound.ENTITY_GENERIC_EXPLODE, 0.5f, 1);
-                            })
-                            .setShouldDamageFunction((entity) -> entity.getScoreboardTags().contains("isWulfrumScrew"))
-                            .setLingerDelay(5);
+                    if (shouldStrike) {
+                        double finalStrikeYaw = strikeYaw;
+                        double finalStrikePitch = strikePitch;
+                        strikeLineInfo
+                                .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                    EntityHelper.getAttrMap(entityHit).put("damageMeleeMulti", 10.0);
+                                    EntityHelper.getAttrMap(entityHit).put("crit", 100.0);
+                                    Vector projVel = MathHelper.vectorFromYawPitch_quick(finalStrikeYaw, finalStrikePitch);
+                                    projVel.multiply(3);
+                                    entityHit.setVelocity(projVel);
+                                    hitLoc.getWorld().playSound(hitLoc, Sound.ENTITY_GENERIC_EXPLODE, 0.5f, 1);
+                                })
+                                .setShouldDamageFunction((entity) -> entity.getScoreboardTags().contains("isWulfrumScrew"))
+                                .setLingerDelay(5);
+                    }
+                    break;
+                }
+                case "旧神之誓约_RIGHT_CLICK": {
+                    shouldStrike = currentIndex * 1.75 < maxIndex;
+                    if (shouldStrike) {
+                        // init dash velocity
+                        if (currentIndex == 0) {
+                            Vector plyVel = lookDir.clone();
+                            plyVel.multiply(2);
+                            ply.setVelocity(plyVel);
+                        }
+                        // hitting enemies will lock the player in a proper place
+                        strikeLineInfo
+                                .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                    if (hitIndex == 1) {
+                                        // repels the player when the strike would finish soon
+                                        if ( ( (currentIndex + 3) * 1.75) >= maxIndex) {
+                                            Vector plyVel = MathHelper.getDirection(hitLoc, startStrikeLoc, 1.25);
+                                            ply.setVelocity(plyVel);
+                                        }
+                                        // otherwise, keep a safe distance from enemy
+                                        else {
+                                            Vector offsetDir = MathHelper.getDirection(hitLoc, startStrikeLoc, 5.5);
+                                            Vector plyVel = MathHelper.getDirection(
+                                                    startStrikeLoc, hitLoc.add(offsetDir), 0.75, true);
+                                            ply.setVelocity(plyVel);
+                                        }
+                                    }
+                                })
+                                .setDamageCD(1)
+                                .setLingerDelay(1);
+                    }
                     break;
                 }
                 default:
@@ -623,9 +659,8 @@ public class ItemUseHelper {
                     }
             }
             if (shouldStrike)
-                GenericHelper.handleStrikeLine(ply, ply.getEyeLocation().add(lookDir), strikeYaw, strikePitch,
-                        size, particleInterval, MELEE_STRIKE_RADIUS,
-                        weaponType, color, damaged, attrMap, strikeLineInfo);
+                GenericHelper.handleStrikeLine(ply, startStrikeLoc, strikeYaw, strikePitch,
+                        size, MELEE_STRIKE_RADIUS, weaponType, color, damaged, attrMap, strikeLineInfo);
         }
         // "swing" or "whip"
         else {
@@ -654,6 +689,12 @@ public class ItemUseHelper {
                                     hitEntity.remove();
                                 });
                         break;
+                    case "高斯短匕":
+                        strikeLineInfo
+                                .setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                                    EntityHelper.handleEntityExplode(ply, 1, new ArrayList<>(), hitLoc);
+                                });
+                        break;
                 }
                 for (int i = indexStart; i < indexEnd; i ++) {
                     double progress = (double) i / loopTimes;
@@ -667,6 +708,20 @@ public class ItemUseHelper {
                             strikeLength, MELEE_STRIKE_RADIUS, weaponType, color, damaged, attrMap, strikeLineInfo);
                     // for strike after first, do not display additional particle effect
                     strikeLineInfo.displayParticle = false;
+                    // spawn extra on-swing projectiles
+                    switch (weaponType) {
+                        case "剑锋之誓约": {
+                            if ( i == (int) (loopTimes * 0.4) ||
+                                    i == (int) (loopTimes * 0.5) ||
+                                    i == (int) (loopTimes * 0.6) ||
+                                    i == (int) (loopTimes * 0.7)) {
+                                offsetDir.multiply(1.35);
+                                EntityHelper.spawnProjectile(ply, offsetDir,
+                                        EntityHelper.getAttrMap(ply), "血之镰刀");
+                            }
+                            break;
+                        }
+                    }
                 }
             }
         }

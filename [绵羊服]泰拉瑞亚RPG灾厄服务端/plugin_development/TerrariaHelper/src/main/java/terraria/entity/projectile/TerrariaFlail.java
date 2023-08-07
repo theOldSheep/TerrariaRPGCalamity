@@ -75,6 +75,15 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
                 Vector newVelocity = MathHelper.vectorFromYawPitch_quick(owner.getLocation().getYaw(), owner.getLocation().getPitch());
                 newVelocity.multiply(speed);
                 bukkitEntity.setVelocity(newVelocity);
+                switch (projectileType) {
+                    case "海胆链枷": {
+                        if (ticksLived > 40) {
+                            newVelocity.multiply(1.5);
+                            EntityHelper.spawnProjectile(owner, newVelocity, attrMap, "涡流");
+                        }
+                        break;
+                    }
+                }
             }
             // rotate around the player when spinning
             else {

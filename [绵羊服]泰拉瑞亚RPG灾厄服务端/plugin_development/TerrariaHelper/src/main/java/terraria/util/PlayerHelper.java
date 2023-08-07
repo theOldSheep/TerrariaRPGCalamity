@@ -200,9 +200,11 @@ public class PlayerHelper {
         return result;
     }
     public static Location getSpawnLocation(Player ply) {
-        if (ply.getBedSpawnLocation() != null)
+        if (ply.getBedSpawnLocation() != null) {
             return ply.getBedSpawnLocation();
-        return Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE).getHighestBlockAt(0, 0).getLocation().add(0, 1, 0);
+        }
+        return Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE)
+                .getHighestBlockAt(0, 0).getLocation().add(0, 1, 0);
     }
     public static GameProgress getGameProgress(Player player) {
         ConfigurationSection bossDefeatedSection = getPlayerDataFile(player).getConfigurationSection("bossDefeated");
@@ -877,9 +879,17 @@ public class PlayerHelper {
                                 hooksToRemove.add(hook);
                                 continue;
                             }
-                            if (hook.isOnGround()) {
-                                center.add(hook.getLocation());
-                                hookedAmount++;
+                            // if the hook is in place
+                            if (hook.getVelocity().lengthSquared() < 1e-5) {
+                                // only account for the pulling force when the hook is in a solid block
+                                if (hook.getLocation().getBlock().getType().isSolid()) {
+                                    center.add(hook.getLocation());
+                                    hookedAmount++;
+                                }
+                                // if the block is not solid anymore, remove this hook.
+                                else {
+                                    hook.remove();
+                                }
                             }
                             // draw chain
                             Location drawCenterLoc = ply.getLocation().add(0, 1, 0);

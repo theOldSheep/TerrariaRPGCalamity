@@ -82,6 +82,9 @@
 银短剑:
   type: STAB
   size: 1.7
+银阔剑:
+  type: SWING
+  size: 2.3
 金短剑:
   type: STAB
   size: 1.7
@@ -92,9 +95,6 @@
   size: 2.4
   particleColor:
   - 150|150|0
-银阔剑:
-  type: SWING
-  size: 2.3
 仙人掌剑:
   type: SWING
   size: 2.7
@@ -313,6 +313,73 @@
   - 255|125|125
   - 25|200|75
   - 255|155|100
+翡翠斧:
+  type: SWING
+  autoSwing: true
+  size: 3
+海耀之刃:
+  type: SWING
+  autoSwing: true
+  size: 3
+  projectileInfo:
+    interval: 1
+    velocity: 1
+    name: 水之剑气
+泪刃:
+  type: SWING
+  autoSwing: true
+  size: 4
+真菌爪:
+  type: SWING
+  autoSwing: true
+  size: 1.75
+绝望之刃:
+  type: SWING
+  autoSwing: true
+  size: 5
+阴雷:
+  type: SWING
+  autoSwing: true
+  size: 3.5
+  projectileInfo:
+    interval: 1
+    velocity: 1
+    name: 阴暗球
+风之刃:
+  type: SWING
+  autoSwing: true
+  size: 3.75
+  projectileInfo:
+    interval: 1
+    velocity: 1.5
+    name: 旋风
+高斯短匕:
+  type: SWING
+  autoSwing: true
+  size: 2.5
+凝胶波刃:
+  type: SWING
+  autoSwing: true
+  size: 4
+  projectileInfo:
+    interval: 1
+    velocity: 1.75
+    name: 凝胶波
+剑锋之誓约:
+  type: SWING
+  autoSwing: true
+  size: 4.5
+旧神之誓约:
+  type: SWING
+  autoSwing: true
+  size: 4.5
+旧神之誓约_RIGHT_CLICK:
+  type: STAB
+  autoSwing: false
+  attributes:
+    damage: 40
+    useTime: 30
+  size: 7.5
 钴薙刀:
   type: STAB
   size: 6
@@ -384,6 +451,39 @@
   size: 3.75
   attributes:
     useTime: 30
+绽花毒藤:
+  type: FLAIL
+  reach: 12
+  velocity: 1.5
+  autoSwing: true
+  attributes:
+    damage: 60
+    useTime: 22
+绽花毒藤_RIGHT_CLICK:
+  type: STAB
+  size: 3.5
+  autoSwing: true
+  attributes:
+    damage: 44
+    useTime: 30
+赤潮矛:
+  type: STAB
+  size: 3.5
+  autoSwing: true
+海王三叉戟:
+  type: STAB
+  size: 3.75
+  autoSwing: true
+  projectileInfo:
+    velocity: 1
+    name: 阿米迪亚斯漩涡
+金羽:
+  type: STAB
+  size: 3.75
+  autoSwing: true
+  projectileInfo:
+    velocity: 1.5
+    name: 信风羽
 木弓:
   type: BOW
   thruWall: true
@@ -665,6 +765,15 @@
   reach: 32
   velocity: 2.25
   autoSwing: true
+海胆链枷:
+  type: FLAIL
+  reach: 20
+  velocity: 1.5
+  autoSwing: true
+海胆链球:
+  type: FLAIL
+  reach: 16
+  velocity: 1.5
 手里剑:
   type: THROW_PROJECTILE
 尖刺球:

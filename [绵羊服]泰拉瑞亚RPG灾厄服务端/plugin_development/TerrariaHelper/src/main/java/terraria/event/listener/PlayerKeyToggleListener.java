@@ -67,10 +67,11 @@ public class PlayerKeyToggleListener implements Listener {
                 break;
             case "SPACE":
                 ply.addScoreboardTag("temp_thrusting");
-                // remove all hooks
+                // remove all hooks that are in place
                 for (Entity hook : (Collection<Entity>) EntityHelper.getMetadata(ply,
                         EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOKS).value())
-                    hook.remove();
+                    if (hook.getVelocity().lengthSquared() < 1e-5)
+                        hook.remove();
                 break;
             case "R":
                 PlayerHelper.handleGrapplingHook(ply);

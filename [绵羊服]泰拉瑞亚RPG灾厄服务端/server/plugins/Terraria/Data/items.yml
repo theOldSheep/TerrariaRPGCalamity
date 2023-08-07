@@ -1543,7 +1543,6 @@
     crit: 4
     knockback: 5
     useTime: 24
-    powerPickaxe: 100
   worth: 400000
   rarity: 1
 深渊碾碎者:
@@ -1554,11 +1553,12 @@
     crit: 4
     knockback: 5.25
     useTime: 21
-    powerPickaxe: 100
   worth: 400000
   rarity: 1
 海耀之刃:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射水刃剑气
   attributes:
     damage: 52
     damageType: Melee
@@ -1590,7 +1590,7 @@
 真菌爪:
   item: DIAMOND_SWORD
   attributes:
-    damage: 42
+    damage: 56
     damageType: Melee
     crit: 4
     knockback: 3.75
@@ -1600,17 +1600,18 @@
 绝望之刃:
   item: DIAMOND_SWORD
   attributes:
-    damage: 140
+    damage: 120
     damageType: Melee
     crit: 4
     knockback: 5
     useTime: 26
+    buffInflictMelee: 中毒|80|1
   worth: 400000
   rarity: 1
 灼炎弯刀:
   item: DIAMOND_SWORD
   attributes:
-    damage: 56
+    damage: 64
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -1619,8 +1620,10 @@
   rarity: 2
 阴雷:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射恶毒球体，黏附于物块并爆炸
   attributes:
-    damage: 96
+    damage: 48
     damageType: Melee
     crit: 4
     knockback: 4.25
@@ -1629,6 +1632,9 @@
   rarity: 3
 风之刃:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射会将敌怪吸入的旋风
+  - §r“随风而去吧！”
   attributes:
     damage: 82
     damageType: Melee
@@ -1639,34 +1645,28 @@
   rarity: 3
 高斯短匕:
   item: DIAMOND_SWORD
+  lore:
+  - §r切割敌人时会释放涡旋能量撕裂周围的敌人
   attributes:
     damage: 50
     damageType: Melee
     crit: 4
-    knockback: 5
+    knockback: 7
     useTime: 24
   worth: 800000
   rarity: 1100
 凝胶波刃:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射凝胶波
   attributes:
-    damage: 76
+    damage: 100
     damageType: Melee
     crit: 4
     knockback: 5.25
-    useTime: 36
+    useTime: 30
   worth: 2400000
   rarity: 4
-血锋:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 140
-    damageType: Melee
-    crit: 4
-    knockback: 5.25
-    useTime: 23
-  worth: 800000
-  rarity: 3
 剑鱼:
   item: STONE_SWORD
   attributes:
@@ -1882,7 +1882,7 @@
 赤潮矛:
   item: DIAMOND_SWORD
   attributes:
-    damage: 25
+    damage: 50
     damageType: Melee
     crit: 4
     knockback: 5
@@ -1892,7 +1892,7 @@
 海王三叉戟:
   item: DIAMOND_SWORD
   attributes:
-    damage: 12
+    damage: 24
     damageType: Melee
     crit: 4
     knockback: 4.5
@@ -1902,7 +1902,7 @@
 金羽:
   item: DIAMOND_SWORD
   attributes:
-    damage: 43
+    damage: 48
     damageType: Melee
     crit: 4
     knockback: 5.75
@@ -1912,7 +1912,7 @@
 绽花毒藤:
   item: DIAMOND_SWORD
   attributes:
-    damage: 30
+    damage: 60
     damageType: Melee
     crit: 4
     knockback: 5
@@ -2089,8 +2089,10 @@
   rarity: 2
 海胆链枷:
   item: STICK
+  lore:
+  - §r旋转一定时间后掷出将额外射出一股赤潮涡流
   attributes:
-    damage: 23
+    damage: 46
     damageType: Melee
     crit: 4
     knockback: 6
@@ -2100,7 +2102,7 @@
 海胆链球:
   item: STICK
   attributes:
-    damage: 33
+    damage: 66
     damageType: Melee
     crit: 4
     knockback: 6
@@ -2110,7 +2112,7 @@
 河豚链球:
   item: STICK
   attributes:
-    damage: 40
+    damage: 80
     damageType: Melee
     crit: 4
     knockback: 8
@@ -2119,8 +2121,10 @@
   rarity: 3
 剑锋之誓约:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射一连串恶魔之刃
   attributes:
-    damage: 25
+    damage: 35
     damageType: Melee
     crit: 4
     knockback: 4
@@ -2129,28 +2133,20 @@
   rarity: 3
 旧神之誓约:
   item: DIAMOND_SWORD
+  lore:
+  - §r右键将向敌人冲刺，刺中敌人时自动调整距离并急速造成伤害
   attributes:
-    damage: 60
+    damage: 120
     damageType: Melee
     crit: 4
     knockback: 7
     useTime: 34
   worth: 800000
   rarity: 3
-残缺环境刃:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 47
-    damageType: Melee
-    crit: 4
-    knockback: 5
-    useTime: 29
-  worth: 800000
-  rarity: 3
 残缺环境刃[澄澈之纯净]:
   item: DIAMOND_SWORD
   attributes:
-    damage: 47
+    damage: 94
     damageType: Melee
     crit: 4
     knockback: 5
@@ -2160,7 +2156,7 @@
 残缺环境刃[拥怀之凛冽]:
   item: DIAMOND_SWORD
   attributes:
-    damage: 57
+    damage: 114
     damageType: Melee
     crit: 4
     knockback: 5
@@ -2170,7 +2166,7 @@
 残缺环境刃[伟岸之枯涸]:
   item: DIAMOND_SWORD
   attributes:
-    damage: 70
+    damage: 140
     damageType: Melee
     crit: 4
     knockback: 5
@@ -2180,7 +2176,7 @@
 残缺环境刃[反抗之衰朽]:
   item: DIAMOND_SWORD
   attributes:
-    damage: 63
+    damage: 126
     damageType: Melee
     crit: 4
     knockback: 5
@@ -2190,7 +2186,7 @@
 残缺环境刃[林妖之轻抚]:
   item: DIAMOND_SWORD
   attributes:
-    damage: 65
+    damage: 130
     damageType: Melee
     crit: 4
     knockback: 5
@@ -2200,7 +2196,7 @@
 破碎方舟:
   item: DIAMOND_SWORD
   attributes:
-    damage: 70
+    damage: 140
     damageType: Melee
     crit: 4
     knockback: 6.25
