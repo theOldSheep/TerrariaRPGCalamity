@@ -2145,6 +2145,9 @@
   rarity: 3
 残缺环境刃[澄澈之纯净]:
   item: DIAMOND_SWORD
+  lore:
+  - §#ABB448射出薄弱的弹幕，它将击碎敌怪的防御
+  - §r右键使武器与环境相谐振，储存生物群系的力量
   attributes:
     damage: 94
     damageType: Melee
@@ -2155,6 +2158,9 @@
   rarity: 3
 残缺环境刃[拥怀之凛冽]:
   item: DIAMOND_SWORD
+  lore:
+  - §#A5EBEB以冰川凝结为剑身，施行三连剑技
+  - §r右键使武器与环境相谐振，储存生物群系的力量
   attributes:
     damage: 114
     damageType: Melee
@@ -2165,6 +2171,10 @@
   rarity: 3
 残缺环境刃[伟岸之枯涸]:
   item: DIAMOND_SWORD
+  lore:
+  - §#EE9C49于面前召唤多把炙热的剑刃，且击中敌怪次数越多，它们将愈加庞大而锋利
+  - §#EE9C49你在半空时，剑刃也能用于在物块之间弹跳
+  - §r右键使武器与环境相谐振，储存生物群系的力量
   attributes:
     damage: 140
     damageType: Melee
@@ -2175,6 +2185,10 @@
   rarity: 3
 残缺环境刃[反抗之衰朽]:
   item: DIAMOND_SWORD
+  lore:
+  - §#D34093依靠幽魅的剑影向前冲锋，汲取击中敌怪的生命，并从其身上弹开
+  - §#D34093成功击中敌人后将缩短使用冷却
+  - §r右键使武器与环境相谐振，储存生物群系的力量
   attributes:
     damage: 126
     damageType: Melee
@@ -2185,6 +2199,10 @@
   rarity: 3
 残缺环境刃[林妖之轻抚]:
   item: DIAMOND_SWORD
+  lore:
+  - §#A2C855将剑刃绑在藤蔓一端，挥舞藤鞭
+  - §#A2C855刃尖击中敌怪造成额外伤害判定，而击中物块时将把你拉去
+  - §r右键使武器与环境相谐振，储存生物群系的力量
   attributes:
     damage: 130
     damageType: Melee
@@ -2195,6 +2213,14 @@
   rarity: 3
 破碎方舟:
   item: DIAMOND_SWORD
+  lore:
+  - §#6495ED左键使用时缓慢积攒充能
+  - §#6495ED充能至少有一半时额外发射弹幕
+  - §#6495ED在充能满后，可以右键向前延展方舟进行招架
+  - §#6495ED招架击中敌人时会使你获得短暂的近战无敌帧
+  - §#6495ED招架格挡弹幕时使其造成的伤害减少200点
+  - §#6495ED招架成功后损失充能的一半，否则损失所有充能
+  - §r一把破旧生锈的剑，曾经对抗过这个世界的邪恶，现在它准备再一次发挥作用
   attributes:
     damage: 140
     damageType: Melee
@@ -2205,6 +2231,12 @@
   rarity: 4
 钨钢螺丝刀:
   item: DIAMOND_SWORD
+  lore:
+  - §r左键攻击时额外向上抛起一枚受重力影响的螺丝钉
+  - §r右键攻击只对螺丝钉生效，将其向前击飞并获得大量伤害和速度且必定暴击
+  - §#83B87E“是谁把平头螺丝刀做的这么大？？我 *灾厄粗口* 到底能用它来干啥？”
+  - §#83B87E“这东西甚至可以直接把人的眼睛挖出来！”
+  - §#83B87E“……啊。”
   attributes:
     damage: 9
     damageType: Melee
