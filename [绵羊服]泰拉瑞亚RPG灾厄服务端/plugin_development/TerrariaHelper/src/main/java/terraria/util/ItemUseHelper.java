@@ -537,10 +537,10 @@ public class ItemUseHelper {
     }
     // warning: this function modifies attrMap and damaged!
     protected static void handleMeleeSwing(Player ply, HashMap<String, Double> attrMap, Vector lookDir,
-                                         Collection<Entity> damaged, ConfigurationSection weaponSection,
-                                         double yawMin, double yawMax, double pitchMin, double pitchMax,
+                                           Collection<Entity> damaged, ConfigurationSection weaponSection,
+                                           double yawMin, double yawMax, double pitchMin, double pitchMax,
                                            String weaponType, ItemStack weaponItem, double size,
-                                         boolean dirFixed, int interpolateType, int currentIndex, int maxIndex) {
+                                           boolean dirFixed, int interpolateType, int currentIndex, int maxIndex, int swingAmount) {
         if (!PlayerHelper.isProperlyPlaying(ply)) return;
         if (!dirFixed) {
             EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
@@ -652,28 +652,46 @@ public class ItemUseHelper {
                     }
                     break;
                 }
-                case "破碎方舟_RIGHT_CLICK": {
+                case "破碎方舟_RIGHT_CLICK":
+                case "远古方舟_RIGHT_CLICK": {
                     String parryCDScoreboardTag = "temp_parryCD";
                     shouldStrike = ! ply.getScoreboardTags().contains(parryCDScoreboardTag);
                     if (shouldStrike) {
                         // parry
+                        int invulnerabilityTicks, coolDown, damageReduction;
+                        switch (weaponType) {
+                            case "破碎方舟_RIGHT_CLICK":
+                                invulnerabilityTicks = 12;
+                                coolDown = 200;
+                                damageReduction = 200;
+                                break;
+                            case "远古方舟_RIGHT_CLICK":
+                                invulnerabilityTicks = 14;
+                                coolDown = 175;
+                                damageReduction = 360;
+                                break;
+                            default:
+                                invulnerabilityTicks = 10;
+                                coolDown = 100;
+                                damageReduction = 100;
+                        }
                         strikeRadius = 0.35;
                         strikeLineInfo
                                 .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
                                     // decrease the projectile's damage
                                     if (entityHit instanceof Projectile) {
                                         HashMap<String, Double> entityHitAttrMap = EntityHelper.getAttrMap(entityHit);
-                                        double newDmg = Math.max(1d, entityHitAttrMap.getOrDefault("damage", 1d) - 200);
+                                        double newDmg = Math.max(1d, entityHitAttrMap.getOrDefault("damage", 1d) - damageReduction);
                                         entityHitAttrMap.put("damage", newDmg);
                                     }
                                     // apply melee invulnerability tick otherwise
                                     else {
                                         EntityHelper.handleEntityInvulnerabilityTicks(ply,
                                                 EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
-                                                12);
+                                                invulnerabilityTicks);
                                         EntityHelper.handleEntityInvulnerabilityTicks(ply,
                                                 EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
-                                                12);
+                                                invulnerabilityTicks);
                                     }
                                     // recharge
                                     if (hitIndex == 1) {
@@ -683,7 +701,7 @@ public class ItemUseHelper {
                                 })
                                 .setShouldDamageFunction( (e) -> EntityHelper.checkCanDamage(e, ply, true))
                                 .setLingerDelay(5);
-                        EntityHelper.handleEntityInvulnerabilityTicks(ply, parryCDScoreboardTag, 200);
+                        EntityHelper.handleEntityInvulnerabilityTicks(ply, parryCDScoreboardTag, coolDown);
                     }
                     break;
                 }
@@ -761,28 +779,20 @@ public class ItemUseHelper {
                     shouldStrike = true;
                     // add a charge
                     if (currentIndex == 0) {
-                        int currCharge = getDurability(weaponItem, 12);
-                        if (currCharge < 12)
-                            setDurability(weaponItem, 12, currCharge + 1);
+                        int currCharge = getDurability(weaponItem, 8);
+                        if (currCharge < 8)
+                            setDurability(weaponItem, 8, currCharge + 1);
                     }
                     break;
                 }
                 case "环境之刃[嫌恶之永存]_RIGHT_CLICK": {
-                    shouldStrike = getDurability(weaponItem, 12) == 12;
+                    strikeRadius = 0.5;
+                    shouldStrike = getDurability(weaponItem, 8) == 8;
                     if (shouldStrike) {
-                        // invulnerability ticks
-                        if (currentIndex == 0) {
-                            EntityHelper.handleEntityInvulnerabilityTicks(ply,
-                                    EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
-                                    20);
-                            EntityHelper.handleEntityInvulnerabilityTicks(ply,
-                                    EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
-                                    20);
-                        }
                         // dash
                         {
                             Vector plyVel = MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch);
-                            plyVel.multiply(1.25);
+                            plyVel.multiply(2);
                             ply.setVelocity(plyVel);
                         }
                         // remove all stacks on last blow
@@ -795,11 +805,14 @@ public class ItemUseHelper {
                                 .setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
                                     EntityHelper.handleEntityExplode(ply, 2.5, new ArrayList<>(), hitLoc);
                                 });
-                        if (currentIndex % 3 == 0)
+                        if (currentIndex % 2 == 0)
                             strikeLineInfo
                                     .setBlockHitFunction( (hitLoc) -> {
                                         EntityHelper.handleEntityExplode(ply, 3, new ArrayList<>(), hitLoc);
                                     });
+                    }
+                    else {
+                        applyCD(ply, 5);
                     }
                     break;
                 }
@@ -892,7 +905,7 @@ public class ItemUseHelper {
                             // use particle for this one
                             strikeLineInfo.particleInfo = null;
                             strikeLineInfo.setLingerDelay(1);
-                            strikeLength = 1 + 9d * i / loopTimes;
+                            strikeLength = 2.5 + 15d * progress;
                             Vector bladeOffsetDir = offsetDir.clone().normalize().multiply(strikeLength);
                             Location bladeStrikeInitLoc = startStrikeLoc.clone().add(bladeOffsetDir);
                             GenericHelper.StrikeLineOptions bladeStrikeOption = new GenericHelper.StrikeLineOptions()
@@ -900,7 +913,7 @@ public class ItemUseHelper {
                                     .setLingerDelay(1);
 
                             // the blade pulls the player over if it is the final blow
-                            if (i + 1 == loopTimes) {
+                            if (i + 1 == loopTimes && ply.isSneaking()) {
                                 bladeStrikeOption
                                         .setBlockHitFunction((hitLocation) -> {
                                             // pulls the player
@@ -916,6 +929,34 @@ public class ItemUseHelper {
                             GenericHelper.handleStrikeLine(ply, bladeStrikeInitLoc, actualYaw, actualPitch,
                                     2.5, strikeRadius, weaponType, "166|251|46", damaged, attrMap, bladeStrikeOption);
                             plyAttrMap.put("crit", critRate);
+                            break;
+                        }
+                        case "远古方舟": {
+                            int charge = getDurability(weaponItem, 10);
+                            // shoot enhanced projectile
+                            if (charge > 0) {
+                                if (i == 0) {
+                                    EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+                                    double projYaw = plyNMS.yaw, projPitch = plyNMS.pitch;
+                                    Vector projVel = MathHelper.vectorFromYawPitch_quick(projYaw, projPitch);
+                                    projVel.multiply(2);
+                                    EntityHelper.spawnProjectile(ply, projVel, EntityHelper.getAttrMap(ply), "真·远古剑气");
+                                    charge--;
+                                    setDurability(weaponItem, 10, charge);
+                                }
+                            }
+                            // shoot three small projectiles every second swing
+                            else if (swingAmount % 2 == 1) {
+                                if (i == (int) (loopTimes * 0.4) ||
+                                        i == (int) (loopTimes * 0.5) ||
+                                        i == (int) (loopTimes * 0.65)) {
+                                    offsetDir.multiply(1.5);
+                                    HashMap<String, Double> attrMapPly = (HashMap<String, Double>) EntityHelper.getAttrMap(ply).clone();
+                                    attrMapPly.put("damage", attrMapPly.getOrDefault("damage", 1d) * 0.35);
+                                    EntityHelper.spawnProjectile(ply, offsetDir,
+                                            attrMapPly, "远古之星");
+                                }
+                            }
                             break;
                         }
                     }
@@ -937,7 +978,8 @@ public class ItemUseHelper {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                     () -> handleMeleeSwing(ply, attrMap, finalLookDir, finalDamaged, weaponSection,
                             finalYawMin, finalYawMax, finalPitchMin, finalPitchMax,
-                            weaponType, weaponItem, size, dirFixed, interpolateType, currentIndex + 1, maxIndex), 1);
+                            weaponType, weaponItem, size, dirFixed, interpolateType,
+                            currentIndex + 1, maxIndex, swingAmount), 1);
         }
     }
     // melee helper functions below
@@ -1023,17 +1065,28 @@ public class ItemUseHelper {
                 break;
             }
             case "环境之刃[天国之神威]": {
-                double spinAmount = 3 + Math.min(swingAmount, 100) * 300 / 20 / 100;
+                double spinAmount = 40 + Math.min(swingAmount, 35) * 135 / 35;
                 MetadataValue value = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME_BLADE_SPIN_PITCH);
                 pitchMin = (value == null || swingAmount == 0) ? -180d : value.asDouble();
                 pitchMax = pitchMin + spinAmount;
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME_BLADE_SPIN_PITCH, pitchMax);
                 break;
             }
+            case "远古方舟": {
+                if (swingAmount % 2 == 0) {
+                    pitchMin = pitch - 55;
+                    pitchMax = pitch + 55;
+                }
+                else {
+                    pitchMin = pitch + 55;
+                    pitchMax = pitch - 55;
+                }
+                break;
+            }
         }
         handleMeleeSwing(ply, attrMap, lookDir, new HashSet<>(), weaponSection,
                 yawMin, yawMax, pitchMin, pitchMax, itemType, weaponItem, size,
-                dirFixed, interpolateType, 0, coolDown);
+                dirFixed, interpolateType, 0, coolDown, swingAmount);
         return true;
     }
     protected static boolean playerUseWhip(Player ply, String itemType, ItemStack weaponItem,
@@ -1060,7 +1113,7 @@ public class ItemUseHelper {
         handleMeleeSwing(ply, attrMap, lookDir, new HashSet<>(), weaponSection,
                 yaw - yawOffset, yaw + yawOffset, pitch - pitchOffset, pitch + pitchOffset,
                 itemType, weaponItem, size,
-                true, 2, 0, coolDown);
+                true, 2, 0, coolDown, swingAmount);
         return true;
     }
     protected static boolean playerUseBoomerang(Player ply, String itemType, String weaponType,
@@ -1898,15 +1951,22 @@ public class ItemUseHelper {
     public static int getDurability(ItemStack weaponItem, int maxDurability) {
         short maxVanillaDurability = weaponItem.getType().getMaxDurability();
         int currVanillaDurability = maxVanillaDurability - weaponItem.getDurability();
+        if (currVanillaDurability == maxVanillaDurability) return 0;
         double durabilityRatio = (double) currVanillaDurability / maxVanillaDurability;
         return (int) Math.round(maxDurability * durabilityRatio);
     }
     public static void setDurability(ItemStack weaponItem, int maxDurability, int currentDurability) {
-        short maxVanillaDurability = weaponItem.getType().getMaxDurability();
-        double durabilityRatio = (double) currentDurability / maxDurability;
-        // prevent breaking the item
-        int currVanillaDurability = (int) Math.max(maxVanillaDurability * durabilityRatio, 1);
-        weaponItem.setDurability((short) (maxVanillaDurability - currVanillaDurability));
+        if (currentDurability == 0)
+            weaponItem.setDurability((short) 0);
+        else if (currentDurability == maxDurability)
+            weaponItem.setDurability((short) 1);
+        else {
+            short maxVanillaDurability = weaponItem.getType().getMaxDurability();
+            double durabilityRatio = (double) currentDurability / maxDurability;
+            // prevent breaking the item
+            int currVanillaDurability = (int) Math.max(maxVanillaDurability * durabilityRatio, 1);
+            weaponItem.setDurability((short) (maxVanillaDurability - currVanillaDurability));
+        }
     }
     // note that use time CD handling are in individual helper functions.
     // also, attrMap has been already cloned in this function prior to calling individual helper function.

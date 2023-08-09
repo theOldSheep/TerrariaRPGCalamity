@@ -377,7 +377,8 @@
   type: STAB
   autoSwing: false
   attributes:
-    damage: 40
+    damage: 35
+    armorPenetration: 40
     useTime: 30
   size: 7.5
 钴薙刀:
@@ -484,6 +485,91 @@
   projectileInfo:
     velocity: 1.5
     name: 信风羽
+残缺环境刃[澄澈之纯净]:
+  type: SWING
+  autoSwing: true
+  size: 2
+  projectileInfo:
+    velocity: 1.5
+    name: 纯净
+残缺环境刃[拥怀之凛冽]:
+  type: SWING
+  autoSwing: true
+  size: 5
+残缺环境刃[伟岸之枯涸]:
+  type: STAB
+  autoSwing: true
+  size: 4
+残缺环境刃[反抗之衰朽]:
+  type: STAB
+  autoSwing: true
+  size: 6.5
+残缺环境刃[林妖之轻抚]:
+  type: SWING
+  autoSwing: true
+  particleColor:
+  - 29|51|0
+环境之刃[澄澈之纯净]:
+  type: SWING
+  autoSwing: true
+  size: 4
+  projectileInfo:
+    velocity: 2
+    name: 纯净
+环境之刃[拥怀之凛冽]:
+  type: SWING
+  autoSwing: true
+  size: 6
+环境之刃[伟岸之枯涸]:
+  type: STAB
+  autoSwing: true
+  size: 5.5
+环境之刃[反抗之衰朽]:
+  type: STAB
+  size: 7.5
+环境之刃[林妖之轻抚]:
+  type: SWING
+  autoSwing: true
+  particleColor:
+  - 29|51|0
+环境之刃[天国之神威]:
+  type: SWING
+  autoSwing: true
+  size: 6
+环境之刃[嫌恶之永存]:
+  type: STAB
+  autoSwing: true
+  size: 6
+环境之刃[嫌恶之永存]_RIGHT_CLICK:
+  type: STAB
+  attributes:
+    useTime: 30
+  size: 6.5
+环境之刃[溺死之亡姿]:
+  type: SWING
+  autoSwing: true
+  size: 6
+  projectileInfo:
+    velocity: 1.75
+    name: 水球
+破碎方舟:
+  type: SWING
+  autoSwing: true
+  size: 5
+破碎方舟_RIGHT_CLICK:
+  type: STAB
+  size: 5.5
+  attributes:
+    useTime: 8
+远古方舟:
+  type: SWING
+  autoSwing: true
+  size: 6.5
+远古方舟_RIGHT_CLICK:
+  type: STAB
+  size: 7.5
+  attributes:
+    useTime: 8
 木弓:
   type: BOW
   thruWall: true

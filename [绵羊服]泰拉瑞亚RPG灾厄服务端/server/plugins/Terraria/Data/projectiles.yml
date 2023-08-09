@@ -1118,6 +1118,44 @@ TNT:
     gravity: 0
     blockHitAction: thru
     liveTime: 30
+纯净:
+    projectileSize: 0.25
+    gravity: 0
+    liveTime: 20
+    buffInflict:
+        - "碎甲|30|1"
+水球:
+    projectileSize: 0.25
+    gravity: 0
+    liveTime: 15
+    blockHitAction: thru
+    slowedByWater: false
+    clusterBomb:
+        amount: 4
+        name: 冲击波
+        velocity: 1
+        damageMulti: 0.4
+冲击波:
+    projectileSize: 1
+    gravity: 0
+    liveTime: 20
+    blockHitAction: thru
+    slowedByWater: false
+远古剑气:
+    projectileSize: 0.25
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 10
+真·远古剑气:
+    projectileSize: 0.5
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 15
+远古之星:
+    gravity: 0
+    blockHitAction: thru
+    autoTrace: true
+    liveTime: 40
 星云烈焰:
     gravity: 0
     autoTrace: true

@@ -2147,7 +2147,7 @@
   item: DIAMOND_SWORD
   lore:
   - §#ABB448射出薄弱的弹幕，它将击碎敌怪的防御
-  - §r右键使武器与环境相谐振，储存生物群系的力量
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
     damage: 94
     damageType: Melee
@@ -2159,8 +2159,8 @@
 残缺环境刃[拥怀之凛冽]:
   item: DIAMOND_SWORD
   lore:
-  - §#A5EBEB以冰川凝结为剑身，施行三连剑技
-  - §r右键使武器与环境相谐振，储存生物群系的力量
+  - §#A5EBEB以冰川凝结为剑身，施行威力递增的三连剑技
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
     damage: 114
     damageType: Melee
@@ -2172,9 +2172,9 @@
 残缺环境刃[伟岸之枯涸]:
   item: DIAMOND_SWORD
   lore:
-  - §#EE9C49于面前召唤多把炙热的剑刃，且击中敌怪次数越多，它们将愈加庞大而锋利
+  - §#EE9C49于面前召唤炙热的剑刃
   - §#EE9C49你在半空时，剑刃也能用于在物块之间弹跳
-  - §r右键使武器与环境相谐振，储存生物群系的力量
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
     damage: 140
     damageType: Melee
@@ -2186,9 +2186,9 @@
 残缺环境刃[反抗之衰朽]:
   item: DIAMOND_SWORD
   lore:
-  - §#D34093依靠幽魅的剑影向前冲锋，汲取击中敌怪的生命，并从其身上弹开
-  - §#D34093成功击中敌人后将缩短使用冷却
-  - §r右键使武器与环境相谐振，储存生物群系的力量
+  - §#D34093在地面上使用时依靠幽魅的剑影向前冲锋
+  - §#D34093攻击汲取击中敌怪的生命，并从其身上弹开
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
     damage: 126
     damageType: Melee
@@ -2201,8 +2201,8 @@
   item: DIAMOND_SWORD
   lore:
   - §#A2C855将剑刃绑在藤蔓一端，挥舞藤鞭
-  - §#A2C855刃尖击中敌怪造成额外伤害判定，而击中物块时将把你拉去
-  - §r右键使武器与环境相谐振，储存生物群系的力量
+  - §#A2C855刃尖击中敌怪必定暴击，潜行时击中物块将把你拉去
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
     damage: 130
     damageType: Melee
@@ -2211,23 +2211,148 @@
     useTime: 29
   worth: 800000
   rarity: 3
+环境之刃[澄澈之纯净]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#A2C855射出薄弱的弹幕，它将击碎敌怪的防御
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
+  attributes:
+    damage: 160
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 20
+  worth: 7200000
+  rarity: 6
+环境之刃[拥怀之凛冽]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#A5EBEB以冰川凝结为剑身，施行威力递增的三连剑技
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
+  attributes:
+    damage: 300
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 20
+  worth: 7200000
+  rarity: 6
+环境之刃[伟岸之枯涸]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#EE9C49于面前召唤炙热的剑刃。你在半空时，剑刃能用于在物块之间弹跳
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
+  attributes:
+    damage: 244
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 20
+  worth: 7200000
+  rarity: 6
+环境之刃[反抗之衰朽]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#D34093依靠幽魅的剑影向前冲锋，汲取击中敌怪的生命，并从其身上弹开
+  - §#D34093成功击中敌怪减少使用冷却
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
+  attributes:
+    damage: 425
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 60
+  worth: 7200000
+  rarity: 6
+环境之刃[林妖之轻抚]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#A2C855将剑刃绑在藤蔓一端，挥舞藤鞭。刃尖击中敌怪必定暴击，潜行时击中物块将把你拉去
+  - §#A2C855暴击造成额外的伤害
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
+  attributes:
+    damage: 240
+    damageType: Melee
+    crit: -25
+    critDamage: 75
+    knockback: 7.5
+    useTime: 20
+  worth: 7200000
+  rarity: 6
+环境之刃[天国之神威]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#DC8FFF使用回旋斩，随按住时间增加旋转速度
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
+  - §r“■■■ ■~■~■~■~”
+  attributes:
+    damage: 225
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 20
+  worth: 7200000
+  rarity: 6
+环境之刃[嫌恶之永存]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#8A86FC左键攻击时积攒蓄力值，蓄力值充满即可使用右键攻击
+  - §#8A86FC右键攻击向前冲刺并在击中敌人或方块时造成猛烈爆炸
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
+  attributes:
+    damage: 260
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 30
+  worth: 7200000
+  rarity: 6
+环境之刃[溺死之亡姿]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#486ACC发射不受液体减速的水球，水球会爆裂成数个冲击波
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
+  attributes:
+    damage: 350
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 20
+  worth: 7200000
+  rarity: 6
 破碎方舟:
   item: DIAMOND_SWORD
   lore:
-  - §#6495ED左键使用时缓慢积攒充能
-  - §#6495ED充能至少有一半时额外发射弹幕
-  - §#6495ED在充能满后，可以右键向前延展方舟进行招架
-  - §#6495ED招架击中敌人时会使你获得短暂的近战无敌帧
-  - §#6495ED招架格挡弹幕时使其造成的伤害减少200点
-  - §#6495ED招架成功后损失充能的一半，否则损失所有充能
+  - §#6495ED右键向前延展方舟，此技能有10秒的冷却时间
+  - §#6495ED剑刃击中敌人时会进行招架，并使你短暂获得近战无敌帧
+  - §#6495ED你也可以用剑刃格挡弹幕，使其伤害减少200点
+  - §#6495ED格挡后会获得10层充能，充能会让剑刃能够发射弹幕
   - §r一把破旧生锈的剑，曾经对抗过这个世界的邪恶，现在它准备再一次发挥作用
+  - §r“惊为天人的蹭闪手法”
   attributes:
-    damage: 140
+    damage: 100
     damageType: Melee
     crit: 4
     knockback: 6.25
     useTime: 22
-  worth: 24000000
+  worth: 2400000
+  rarity: 4
+远古方舟:
+  item: DIAMOND_SWORD
+  lore:
+  - §#6495ED右键向前延展方舟，此技能有10秒的冷却时间
+  - §#6495ED剑刃击中敌人时会进行招架，并使你短暂获得近战无敌帧
+  - §#6495ED你也可以用剑刃格挡弹幕，使其伤害减少320点
+  - §#6495ED格挡后会获得10层充能，充能会让剑刃能够发射更加强大的弹幕
+  - §r锻造出来征服一切邪恶的神圣之刃
+  - §r“并不能触发时空断裂”
+  attributes:
+    damage: 360
+    damageType: Melee
+    crit: 4
+    knockback: 6.5
+    useTime: 25
+  worth: 16000000
   rarity: 4
 钨钢螺丝刀:
   item: DIAMOND_SWORD
@@ -2243,7 +2368,7 @@
     crit: 4
     knockback: 3.75
     useTime: 22
-  worth: 2000000
+  worth: 200000
   rarity: 1
 太极连枷:
   item: STICK
