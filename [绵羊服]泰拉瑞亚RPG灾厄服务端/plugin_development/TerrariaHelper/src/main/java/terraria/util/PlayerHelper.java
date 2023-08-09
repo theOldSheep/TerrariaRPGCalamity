@@ -1701,7 +1701,7 @@ public class PlayerHelper {
             // removed the first hook on blocks if trying to launch more hooks than the player has
             Entity removed = null;
             for (Entity hook : hooks) {
-                if (hook.isOnGround()) {
+                if (hook.getVelocity().lengthSquared() < 1e-5) {
                     hook.remove();
                     removed = hook;
                     break;

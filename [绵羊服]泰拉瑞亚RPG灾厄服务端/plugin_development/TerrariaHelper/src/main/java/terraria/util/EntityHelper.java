@@ -153,6 +153,7 @@ public class EntityHelper {
         DYNAMIC_DAMAGE_REDUCTION("dynamicDR"),
         EFFECTS("effects"),
         HEALTH_LOCKED_AT_AMOUNT("healthLock"),
+        INVULNERABILITY_TICK_EDITION_MAP("ivtEdiMap"),
         KNOCKBACK_SLOW_FACTOR("kbFactor"),
         KILL_CONTRIBUTE_EVENT_PROGRESS("killProgress"),
         MINION_WHIP_BONUS_CRIT("minionWhipBonusCrit"),
@@ -166,6 +167,7 @@ public class EntityHelper {
         PLAYER_CURRENT_LOCATION("currLocation"),
         PLAYER_DASH_DIRECTION("chargeDir"),
         PLAYER_DASH_KEY_PRESSED_MS("chargeDirLastPressed"),
+        PLAYER_BIOME_BLADE_SPIN_PITCH("spinPitch"),
         PLAYER_BUFF_INFLICT("effectInflict"),
         PLAYER_FORCED_BACKGROUND("forceBackground"),
         PLAYER_FORCED_BGM("forceBGM"),
@@ -1283,6 +1285,37 @@ public class EntityHelper {
             knockbackTaker.setVelocity(knockbackTaker.getVelocity().multiply(1 - kbMulti).add(dir));
         }
     }
+    public static String getInvulnerabilityTickName(DamageType damageType) {
+        return "tempDamageCD_" + damageType;
+    }
+    public static void handleEntityInvulnerabilityTicks(Entity entity, String damageInvincibilityFrameName, int damageInvulnerabilityTicks) {
+        if (damageInvulnerabilityTicks > 0) {
+            // apply the invulnerability tick
+            entity.addScoreboardTag(damageInvincibilityFrameName);
+            // record edition
+            MetadataValue metadataValue = getMetadata(entity, MetadataName.INVULNERABILITY_TICK_EDITION_MAP);
+            HashMap<String, Integer> invulnerabilityTickEditionMap;
+            if (metadataValue == null)
+                invulnerabilityTickEditionMap = new HashMap<>();
+            else
+                invulnerabilityTickEditionMap = (HashMap<String, Integer>) metadataValue.value();
+            int iTickEdition = invulnerabilityTickEditionMap.getOrDefault(damageInvincibilityFrameName, 0) + 1;
+            invulnerabilityTickEditionMap.put(damageInvincibilityFrameName, iTickEdition);
+            setMetadata(entity, MetadataName.INVULNERABILITY_TICK_EDITION_MAP, invulnerabilityTickEditionMap);
+            // remove it if the edition is not outdated
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                    () -> {
+                        HashMap<String, Integer> currITickEditionMap = (HashMap<String, Integer>) getMetadata(
+                                entity, MetadataName.INVULNERABILITY_TICK_EDITION_MAP).value();
+                        if (currITickEditionMap.get(damageInvincibilityFrameName) == iTickEdition)
+                            entity.removeScoreboardTag(damageInvincibilityFrameName);
+                        switch (damageInvincibilityFrameName) {
+                            case "temp_parryCD":
+                                entity.sendMessage("§7方舟格挡冷却结束！");
+                        }
+                    }, damageInvulnerabilityTicks);
+        }
+    }
     private static void displayDamageActionBar(Player damager, String victimName, int health, int maxHealth, int damage) {
         if (health > 0) {
             PlayerHelper.sendActionBar(damager,
@@ -1375,7 +1408,7 @@ public class EntityHelper {
                 damageType = DamageType.TRUE_MELEE;
         }
         // if the victim has invincibility frame on this damage type (usually player)
-        String damageInvincibilityFrameName = "tempDamageCD_" + damageType;
+        String damageInvincibilityFrameName = getInvulnerabilityTickName(damageType);
         if (victimScoreboardTags.contains(damageInvincibilityFrameName)) return;
 
         // projectile buff inflict
@@ -1649,11 +1682,7 @@ public class EntityHelper {
         }
 
         // handle invincibility ticks
-        if (damageInvulnerabilityTicks > 0) {
-            victim.addScoreboardTag(damageInvincibilityFrameName);
-            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> victim.removeScoreboardTag(damageInvincibilityFrameName), damageInvulnerabilityTicks);
-        }
+        handleEntityInvulnerabilityTicks(victim, damageInvincibilityFrameName, damageInvulnerabilityTicks);
     }
     public static void handleEntityExplode(Entity source, Collection<Entity> damageExceptions) {
         handleEntityExplode(source, damageExceptions, source.getLocation());

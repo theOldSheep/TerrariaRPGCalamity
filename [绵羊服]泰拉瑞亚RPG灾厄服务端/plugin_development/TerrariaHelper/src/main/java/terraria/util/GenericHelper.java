@@ -15,6 +15,7 @@ import terraria.entity.projectile.HitEntityInfo;
 
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class GenericHelper {
@@ -106,8 +107,9 @@ public class GenericHelper {
         int damageCD, lingerTime, lingerDelay, maxTargetHit;
         double damage, decayCoef, whipBonusCrit, whipBonusDamage;
         ParticleLineOptions particleInfo;
-        Predicate<Entity> shouldDamageFunction;
+        Consumer<Location> blockHitFunction;
         TriConsumer<Integer, Entity, Location> damagedFunction;
+        Predicate<Entity> shouldDamageFunction;
         // internal variables
         int amountEntitiesHit;
         public StrikeLineOptions() {
@@ -127,8 +129,9 @@ public class GenericHelper {
 
             particleInfo = null;
 
-            shouldDamageFunction = null;
+            blockHitFunction = null;
             damagedFunction = null;
+            shouldDamageFunction = null;
             // internal values
             amountEntitiesHit = 0;
         }
@@ -186,12 +189,16 @@ public class GenericHelper {
             return this;
         }
 
-        public StrikeLineOptions setShouldDamageFunction(Predicate<Entity> shouldDamageFunction) {
-            this.shouldDamageFunction = shouldDamageFunction;
+        public StrikeLineOptions setBlockHitFunction(Consumer<Location> blockHitFunction) {
+            this.blockHitFunction = blockHitFunction;
             return this;
         }
         public StrikeLineOptions setDamagedFunction(TriConsumer<Integer, Entity, Location> damagedFunction) {
             this.damagedFunction = damagedFunction;
+            return this;
+        }
+        public StrikeLineOptions setShouldDamageFunction(Predicate<Entity> shouldDamageFunction) {
+            this.shouldDamageFunction = shouldDamageFunction;
             return this;
         }
     }
@@ -448,45 +455,52 @@ public class GenericHelper {
         Vector direction = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
         direction.multiply(length);
         Location terminalLoc = startLoc.clone().add(direction);
-        // if the projectile does not go through wall, find possible collision
-        if (!thruWall) {
+        // if the projectile does not go through wall or have a block hit action, find possible collision
+        if (!thruWall || advanced.blockHitFunction != null) {
             MovingObjectPosition hitLoc = HitEntityInfo.rayTraceBlocks(wld,
                     startLoc.toVector(),
                     terminalLoc.toVector());
+            // if a block has been hit
             if (hitLoc != null && hitLoc.pos != null) {
-                terminalLoc = MathHelper.toBukkitVector(hitLoc.pos).toLocation(wld);
-                direction = terminalLoc.toVector().subtract(startLoc.toVector());
-                double distToWall = direction.length();
-                // bounce when hit block
-                if (bounceWhenHitBlock) {
-                    // make sure that the new strike line does not get stuck in wall
-                    Vector dirToHitLoc = direction.clone();
-                    if (distToWall > 0.01) {
-                        dirToHitLoc.multiply((distToWall - 0.01) / distToWall);
-                        terminalLoc = startLoc.clone().add(dirToHitLoc);
-                        distToWall -= 0.01;
+                Location blockHitLoc = MathHelper.toBukkitVector(hitLoc.pos).toLocation(wld);
+                if (advanced.blockHitFunction != null)
+                    advanced.blockHitFunction.accept(blockHitLoc.clone());
+                // if the weapon do not go thru wall
+                if (!thruWall) {
+                    terminalLoc = blockHitLoc;
+                    direction = terminalLoc.toVector().subtract(startLoc.toVector());
+                    double distToWall = direction.length();
+                    // bounce when hit block
+                    if (bounceWhenHitBlock) {
+                        // make sure that the new strike line does not get stuck in wall
+                        Vector dirToHitLoc = direction.clone();
+                        if (distToWall > 0.01) {
+                            dirToHitLoc.multiply((distToWall - 0.01) / distToWall);
+                            terminalLoc = startLoc.clone().add(dirToHitLoc);
+                            distToWall -= 0.01;
+                        }
+                        double newStrikeLength = length - Math.max(distToWall, 5);
+                        switch (hitLoc.direction) {
+                            case EAST:
+                            case WEST:
+                                dirToHitLoc.setX(dirToHitLoc.getX() * -1);
+                                break;
+                            case UP:
+                            case DOWN:
+                                dirToHitLoc.setY(dirToHitLoc.getY() * -1);
+                                break;
+                            case SOUTH:
+                            case NORTH:
+                                dirToHitLoc.setZ(dirToHitLoc.getZ() * -1);
+                                break;
+                        }
+                        Location newStartLoc = terminalLoc;
+                        Bukkit.getScheduler().runTask(TerrariaHelper.getInstance(),
+                                () -> handleStrikeLine(damager, newStartLoc,
+                                        MathHelper.getVectorYaw(dirToHitLoc), MathHelper.getVectorPitch(dirToHitLoc),
+                                        newStrikeLength, width, itemType,
+                                        color, exceptions, attrMap, advanced));
                     }
-                    double newStrikeLength = length - Math.max(distToWall, 5);
-                    switch (hitLoc.direction) {
-                        case EAST:
-                        case WEST:
-                            dirToHitLoc.setX(dirToHitLoc.getX() * -1);
-                            break;
-                        case UP:
-                        case DOWN:
-                            dirToHitLoc.setY(dirToHitLoc.getY() * -1);
-                            break;
-                        case SOUTH:
-                        case NORTH:
-                            dirToHitLoc.setZ(dirToHitLoc.getZ() * -1);
-                            break;
-                    }
-                    Location newStartLoc = terminalLoc;
-                    Bukkit.getScheduler().runTask(TerrariaHelper.getInstance(),
-                            () -> handleStrikeLine(damager, newStartLoc,
-                                    MathHelper.getVectorYaw(dirToHitLoc), MathHelper.getVectorPitch(dirToHitLoc),
-                                    newStrikeLength, width, itemType,
-                                    color, exceptions, attrMap, advanced));
                 }
             }
         }

@@ -589,6 +589,11 @@ public class ItemHelper {
                     else result.add(crit + "% 暴击率");
                     break;
                 }
+                case "critDamage": {
+                    int critDamage = attributeSection.getInt(attribute, 0);
+                    result.add(critDamage + "% 额外暴击倍率");
+                    break;
+                }
                 case "useTime": {
                     int useTime = attributeSection.getInt(attribute, 0);
                     if (useTime <= 8) result.add("超快的使用速度");
