@@ -1094,6 +1094,46 @@ TNT:
     gravity: 0
     penetration: 1
     liveTime: 75
+蓝色宙能聚爆:
+    projectileSize: 0.25
+    blockHitAction: thru
+    gravity: 0
+    liveTime: 20
+    isGrenade: true
+    blastRadius: 1
+    buffInflict:
+        - "霜火|60|1"
+红色宙能聚爆:
+    projectileSize: 0.25
+    blockHitAction: thru
+    gravity: 0
+    liveTime: 20
+    isGrenade: true
+    blastRadius: 1
+    buffInflict:
+        - "燃烧|60|1"
+沙刃:
+    projectileSize: 0.25
+    gravity: 0
+    speedMultiPerTick: 1.125
+    maxSpeed: 5
+绝望光束:
+    projectileSize: 0.25
+    blockHitAction: bounce
+    bouncePenetrationBonded: true
+    bounce: 2
+    penetration: 2
+    gravity: 0
+    trailColor: 10|118|77
+    trailSize: 0.25
+    trailStepSize: 0.5
+    trailLingerTime: 5
+风暴剑气:
+    projectileSize: 0.25
+    autoTrace: true
+    autoTraceAbility: 1.25
+    penetration: 1
+    gravity: 0
 阿米迪亚斯漩涡:
     projectileSize: 0.5
     autoTrace: true

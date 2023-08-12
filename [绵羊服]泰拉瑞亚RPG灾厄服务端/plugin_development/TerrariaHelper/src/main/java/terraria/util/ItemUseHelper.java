@@ -6,6 +6,7 @@ import net.minecraft.server.v1_12_R1.MovingObjectPosition;
 import net.minecraft.server.v1_12_R1.PacketPlayOutSetCooldown;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -25,6 +26,7 @@ import terraria.entity.minion.MinionSlime;
 import terraria.gameplay.EventAndTime;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
 public class ItemUseHelper {
@@ -621,6 +623,7 @@ public class ItemUseHelper {
                     break;
                 }
                 case "旧神之誓约_RIGHT_CLICK": {
+                    strikeRadius = 0.5;
                     shouldStrike = currentIndex * 1.75 < maxIndex;
                     if (shouldStrike) {
                         // init dash velocity
@@ -630,12 +633,13 @@ public class ItemUseHelper {
                             ply.setVelocity(plyVel);
                         }
                         // hitting enemies will lock the player in a proper place
+                        int finalCurrentIndex = currentIndex;
                         strikeLineInfo
                                 .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
                                     if (hitIndex == 1) {
                                         ply.setFallDistance(0f);
                                         // repels the player when the strike would finish soon
-                                        if ( ( (currentIndex + 3) * 1.75) >= maxIndex) {
+                                        if ( ( (finalCurrentIndex + 3) * 1.75) >= maxIndex) {
                                             Vector plyVel = MathHelper.getDirection(hitLoc, startStrikeLoc, 1.25);
                                             ply.setVelocity(plyVel);
                                         }
@@ -654,6 +658,7 @@ public class ItemUseHelper {
                 }
                 case "破碎方舟_RIGHT_CLICK":
                 case "远古方舟_RIGHT_CLICK": {
+                    strikeRadius = 0.5;
                     String parryCDScoreboardTag = "temp_parryCD";
                     shouldStrike = ! ply.getScoreboardTags().contains(parryCDScoreboardTag);
                     if (shouldStrike) {
@@ -713,7 +718,7 @@ public class ItemUseHelper {
                     strikePitch = plyNMS.pitch;
                     // hitting block will knock back the user
                     strikeLineInfo
-                            .setBlockHitFunction((hitLoc) -> {
+                            .setBlockHitFunction((hitLoc, movingObjectPosition) -> {
                                 if (!ply.isOnGround()) {
                                     ply.setFallDistance(0f);
                                     // repels the player
@@ -724,6 +729,7 @@ public class ItemUseHelper {
                     break;
                 }
                 case "残缺环境刃[反抗之衰朽]": {
+                    strikeRadius = 0.5;
                     shouldStrike = currentIndex * 2 < maxIndex;
                     if (shouldStrike) {
                         // init dash velocity
@@ -749,6 +755,7 @@ public class ItemUseHelper {
                     break;
                 }
                 case "环境之刃[反抗之衰朽]": {
+                    strikeRadius = 0.5;
                     shouldStrike = currentIndex < 8;
                     if (shouldStrike) {
                         // init dash velocity
@@ -775,6 +782,7 @@ public class ItemUseHelper {
                     }
                     break;
                 }
+                case "真·环境之刃[变幻之潮]":
                 case "环境之刃[嫌恶之永存]": {
                     shouldStrike = true;
                     // add a charge
@@ -807,13 +815,139 @@ public class ItemUseHelper {
                                 });
                         if (currentIndex % 2 == 0)
                             strikeLineInfo
-                                    .setBlockHitFunction( (hitLoc) -> {
+                                    .setBlockHitFunction( (hitLoc, movingObjectPosition) -> {
                                         EntityHelper.handleEntityExplode(ply, 3, new ArrayList<>(), hitLoc);
                                     });
                     }
+                    // prevent dash
                     else {
                         applyCD(ply, 5);
+                        currentIndex = maxIndex;
                     }
+                    break;
+                }
+                case "真·环境之刃[变幻之潮]_RIGHT_CLICK": {
+                    strikeRadius = 0.5;
+                    shouldStrike = getDurability(weaponItem, 8) == 8;
+                    if (shouldStrike) {
+                        // dash
+                        {
+                            Vector plyVel = MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch);
+                            plyVel.multiply(2);
+                            ply.setVelocity(plyVel);
+                        }
+                        // remove all stacks on last blow
+                        if (currentIndex == maxIndex) {
+                            setDurability(weaponItem, 8, 0);
+                        }
+
+                        // no direct damage
+                        strikeLineInfo.setShouldDamageFunction( (entity) -> false);
+                        // explosion
+                        if (currentIndex % 3 == 0)
+                            strikeLineInfo
+                                    .setBlockHitFunction( (hitLoc, movingObjectPosition) -> {
+                                        ArrayList<Entity> blastDamageCD = new ArrayList<>();
+                                        EntityHelper.handleEntityExplode(ply, 4, blastDamageCD, hitLoc);
+
+                                        for (int i = 5; i <= 20; i += 5) {
+                                            Location currExplodeLoc = hitLoc.clone();
+                                            switch (movingObjectPosition.direction) {
+                                                case UP:
+                                                    currExplodeLoc.add(0, i, 0);
+                                                    break;
+                                                case DOWN:
+                                                    currExplodeLoc.add(0, -i, 0);
+                                                    break;
+                                                case SOUTH:
+                                                    currExplodeLoc.add(0, 0, i);
+                                                    break;
+                                                case NORTH:
+                                                    currExplodeLoc.add(0, 0, -i);
+                                                    break;
+                                                case EAST:
+                                                    currExplodeLoc.add(i, 0, 0);
+                                                    break;
+                                                case WEST:
+                                                    currExplodeLoc.add(-i, 0, 0);
+                                                    break;
+                                            }
+                                            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                                                    () -> EntityHelper.handleEntityExplode(ply, 4, blastDamageCD, currExplodeLoc),
+                                                    i);
+                                        }
+                                    });
+                    }
+                    // prevent dash
+                    else {
+                        applyCD(ply, 5);
+                        currentIndex = maxIndex;
+                    }
+                    break;
+                }
+                case "真·环境之刃[血腾之愤]": {
+                    AtomicInteger durability = new AtomicInteger(getDurability(weaponItem, 100));
+                    double durabilityRatio = durability.get() / 100d;
+                    strikeRadius = 0.5 + 0.5 * durabilityRatio;
+                    size = 6 + 4 * durabilityRatio;
+                    shouldStrike = true;
+
+                    // durability tweak
+                    if (currentIndex % 5 == 0)
+                        durability.getAndDecrement();
+                    // save durability
+                    setDurability(weaponItem, 100, durability.get());
+                    strikeLineInfo
+                            .setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                                if (hitIdx == 1) {
+                                    setDurability(weaponItem, 100, durability.get() + 15);
+                                }
+                            })
+                            .setBlockHitFunction((hitLoc, movingObjectPosition) -> {
+                                if (!ply.isOnGround() && ply.isSneaking()) {
+                                    ply.setFallDistance(0f);
+                                    // repels the player
+                                    Vector plyVel = MathHelper.getDirection(hitLoc, startStrikeLoc, 1.5);
+                                    ply.setVelocity(plyVel);
+                                }
+                            });
+                    break;
+                }
+                case "真·环境之刃[血腾之愤]_RIGHT_CLICK": {
+                    AtomicInteger durability = new AtomicInteger(getDurability(weaponItem, 100));
+                    strikeRadius = 0.75;
+                    size = 7.5;
+                    shouldStrike = currentIndex < 8;
+
+                    // dash attempt
+                    if (currentIndex == 0) {
+                        if (durability.get() >= 50) {
+                            Vector plyVel = lookDir.clone();
+                            plyVel.multiply(2);
+                            ply.setVelocity(plyVel);
+                        }
+                        // save durability
+                        durability.addAndGet(-12);
+                        setDurability(weaponItem, 100, durability.get());
+                    }
+                    // on-hit functions
+                    int overrideCD = 8 - currentIndex;
+                    strikeLineInfo
+                            .setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                                if (hitIdx == 1) {
+                                    // save durability
+                                    setDurability(weaponItem, 100, durability.get() + 10);
+
+                                    ply.setFallDistance(0f);
+                                    // repels the player
+                                    Vector plyVel = MathHelper.getDirection(hitLoc, startStrikeLoc, 0.75);
+                                    ply.setVelocity(plyVel);
+                                    // heal for a small amount
+                                    PlayerHelper.heal(ply, 8, false);
+                                    applyCD(ply, overrideCD);
+                                }
+                            });
+
                     break;
                 }
                 default:
@@ -877,6 +1011,33 @@ public class ItemUseHelper {
                         }
                         break;
                     }
+                    case "环境之刃[天国之神威]":
+                    case "真·环境之刃[兵匠之傲]": {
+                        strikeRadius = 0.5;
+                        break;
+                    }
+                    case "屠杀": {
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+                                if (hitEntity.isDead()) {
+                                    PlayerHelper.heal(ply, 20);
+                                }
+                            }, 1);
+                        });
+                        break;
+                    }
+                    case "天神之剑": {
+                        for (int i = 0; i < 4; i ++) {
+                            Location spawnLoc = ply.getEyeLocation().add(
+                                    Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
+                            Vector projVel = ply.getEyeLocation().subtract(spawnLoc).toVector();
+                            projVel.multiply(0.04);
+                            String projectileType = Math.random() < 0.5 ? "蓝色宙能聚爆" : "红色宙能聚爆";
+                            EntityHelper.spawnProjectile(ply, spawnLoc, projVel, attrMap,
+                                    EntityHelper.DamageType.MELEE, projectileType);
+                        }
+                        break;
+                    }
                 }
                 for (int i = indexStart; i < indexEnd; i ++) {
                     double progress = (double) i / loopTimes;
@@ -901,7 +1062,8 @@ public class ItemUseHelper {
                             break;
                         }
                         case "残缺环境刃[林妖之轻抚]":
-                        case "环境之刃[林妖之轻抚]": {
+                        case "环境之刃[林妖之轻抚]":
+                        case "真·环境之刃[缚囚之悼]": {
                             // use particle for this one
                             strikeLineInfo.particleInfo = null;
                             strikeLineInfo.setLingerDelay(1);
@@ -915,10 +1077,10 @@ public class ItemUseHelper {
                             // the blade pulls the player over if it is the final blow
                             if (i + 1 == loopTimes && ply.isSneaking()) {
                                 bladeStrikeOption
-                                        .setBlockHitFunction((hitLocation) -> {
+                                        .setBlockHitFunction((hitLocation, movingObjectPosition) -> {
                                             // pulls the player
                                             ply.setFallDistance(0f);
-                                            Vector plyVel = MathHelper.getDirection(startStrikeLoc, hitLocation, 1.25);
+                                            Vector plyVel = MathHelper.getDirection(startStrikeLoc, hitLocation, 1.5);
                                             ply.setVelocity(plyVel);
                                         });
                             }
@@ -926,8 +1088,10 @@ public class ItemUseHelper {
                             HashMap<String, Double> plyAttrMap = EntityHelper.getAttrMap(ply);
                             double critRate = plyAttrMap.getOrDefault("crit", 4d);
                             plyAttrMap.put("crit", 100d);
+                            String bladeColor = weaponType.equals("真·环境之刃[缚囚之悼]") ? "255|255|255" : "166|251|46";
                             GenericHelper.handleStrikeLine(ply, bladeStrikeInitLoc, actualYaw, actualPitch,
-                                    2.5, strikeRadius, weaponType, "166|251|46", damaged, attrMap, bladeStrikeOption);
+                                    2.5, strikeRadius, weaponType, bladeColor,
+                                    damaged, attrMap, bladeStrikeOption);
                             plyAttrMap.put("crit", critRate);
                             break;
                         }
@@ -975,11 +1139,13 @@ public class ItemUseHelper {
             double finalYawMax = yawMax;
             double finalPitchMin = pitchMin;
             double finalPitchMax = pitchMax;
+            int finalCurrentIndex = currentIndex;
+            double finalSize = size;
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                     () -> handleMeleeSwing(ply, attrMap, finalLookDir, finalDamaged, weaponSection,
                             finalYawMin, finalYawMax, finalPitchMin, finalPitchMax,
-                            weaponType, weaponItem, size, dirFixed, interpolateType,
-                            currentIndex + 1, maxIndex, swingAmount), 1);
+                            weaponType, weaponItem, finalSize, dirFixed, interpolateType,
+                            finalCurrentIndex + 1, maxIndex, swingAmount), 1);
         }
     }
     // melee helper functions below
@@ -1064,12 +1230,47 @@ public class ItemUseHelper {
                 coolDown /= 3;
                 break;
             }
-            case "环境之刃[天国之神威]": {
-                double spinAmount = 40 + Math.min(swingAmount, 35) * 135 / 35;
+            case "真·环境之刃[缚囚之悼]": {
+                if (swingAmount % 2 == 0) {
+                    pitchMin = pitch - 90;
+                    pitchMax = pitch + 45;
+                }
+                else {
+                    pitchMin = pitch + 90;
+                    pitchMax = pitch - 45;
+                    attrMap.put("damage", attrMap.getOrDefault("damage", 1d) * 1.35);
+                }
+                break;
+            }
+            case "环境之刃[天国之神威]":
+            case "真·环境之刃[兵匠之傲]": {
+                double progress = Math.min(swingAmount, 35) / 35d;
+                double spinAmount = 40 + progress * 135;
+                size += progress * size;
                 MetadataValue value = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME_BLADE_SPIN_PITCH);
                 pitchMin = (value == null || swingAmount == 0) ? -180d : value.asDouble();
                 pitchMax = pitchMin + spinAmount;
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME_BLADE_SPIN_PITCH, pitchMax);
+                break;
+            }
+            case "真·环境之刃[拥怀之凛冽]": {
+                switch (swingAmount % 3) {
+                    case 0:
+                        pitchMin = pitch - 50;
+                        pitchMax = pitch + 50;
+                        break;
+                    case 1:
+                        pitchMin = pitch + 50;
+                        pitchMax = pitch - 50;
+                        attrMap.put("damage", attrMap.getOrDefault("damage", 1d) * 1.14);
+                        break;
+                    case 2:
+                        pitchMin = pitch;
+                        pitchMax = pitch;
+                        attrMap.put("damage", attrMap.getOrDefault("damage", 1d) * 1.4);
+                        break;
+                }
+                coolDown /= 3;
                 break;
             }
             case "远古方舟": {
@@ -1868,27 +2069,27 @@ public class ItemUseHelper {
                 switch (WorldHelper.BiomeType.getBiome(ply.getLocation(), false)) {
                     case TUNDRA:
                         ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
-                                prefix + "的 残缺环境刃[拥怀之凛冽]"));
+                                prefix + "的 残缺环境刃[拥怀之凛冽]", false));
                         break;
                     case DESERT:
                     case UNDERWORLD:
                         ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
-                                prefix + "的 残缺环境刃[伟岸之枯涸]"));
+                                prefix + "的 残缺环境刃[伟岸之枯涸]", false));
                         break;
                     case CORRUPTION:
                         ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
-                                prefix + "的 残缺环境刃[反抗之衰朽]"));
+                                prefix + "的 残缺环境刃[反抗之衰朽]", false));
                         break;
                     case JUNGLE:
                     case OCEAN:
                     case SULPHUROUS_OCEAN:
                         ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
-                                prefix + "的 残缺环境刃[林妖之轻抚]"));
+                                prefix + "的 残缺环境刃[林妖之轻抚]", false));
                         break;
                     case NORMAL:
                     default:
                         ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
-                                prefix + "的 残缺环境刃[澄澈之纯净]"));
+                                prefix + "的 残缺环境刃[澄澈之纯净]", false));
                 }
                 applyCD(ply, 20);
                 return true;
@@ -1904,40 +2105,72 @@ public class ItemUseHelper {
                 switch (WorldHelper.BiomeType.getBiome(ply.getLocation(), false)) {
                     case TUNDRA:
                         ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
-                                prefix + "的 环境之刃[拥怀之凛冽]"));
+                                prefix + "的 环境之刃[拥怀之凛冽]", false));
                         break;
                     case DESERT:
                     case UNDERWORLD:
                         ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
-                                prefix + "的 环境之刃[伟岸之枯涸]"));
+                                prefix + "的 环境之刃[伟岸之枯涸]", false));
                         break;
                     case CORRUPTION:
                         ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
-                                prefix + "的 环境之刃[反抗之衰朽]"));
+                                prefix + "的 环境之刃[反抗之衰朽]", false));
                         break;
                     case JUNGLE:
                     case OCEAN:
                     case SULPHUROUS_OCEAN:
                         ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
-                                prefix + "的 环境之刃[林妖之轻抚]"));
+                                prefix + "的 环境之刃[林妖之轻抚]", false));
                         break;
                     case HALLOW:
                         ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
-                                prefix + "的 环境之刃[天国之神威]"));
+                                prefix + "的 环境之刃[天国之神威]", false));
                         break;
                     case ASTRAL_INFECTION:
                         ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
-                                prefix + "的 环境之刃[嫌恶之永存]"));
+                                prefix + "的 环境之刃[嫌恶之永存]", false));
                         break;
                     case SUNKEN_SEA:
                     case ABYSS:
                         ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
-                                prefix + "的 环境之刃[溺死之亡姿]"));
+                                prefix + "的 环境之刃[溺死之亡姿]", false));
                         break;
                     case NORMAL:
                     default:
                         ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
-                                prefix + "的 环境之刃[澄澈之纯净]"));
+                                prefix + "的 环境之刃[澄澈之纯净]", false));
+                }
+                applyCD(ply, 20);
+                return true;
+            }
+            case "真·环境之刃[兵匠之傲]":
+            case "真·环境之刃[血腾之愤]":
+            case "真·环境之刃[缚囚之悼]":
+            case "真·环境之刃[变幻之潮]": {
+                switch (WorldHelper.BiomeType.getBiome(ply.getLocation(), false)) {
+                    case DESERT:
+                    case UNDERWORLD:
+                    case CORRUPTION:
+                        ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
+                                prefix + "的 真·环境之刃[血腾之愤]", false));
+                        break;
+                    case TUNDRA:
+                    case JUNGLE:
+                    case OCEAN:
+                    case SULPHUROUS_OCEAN:
+                        ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
+                                prefix + "的 真·环境之刃[缚囚之悼]", false));
+                        break;
+                    case ASTRAL_INFECTION:
+                    case SUNKEN_SEA:
+                    case ABYSS:
+                        ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
+                                prefix + "的 真·环境之刃[变幻之潮]", false));
+                        break;
+                    case NORMAL:
+                    default:
+                        ply.getInventory().setItemInMainHand(ItemHelper.getItemFromDescription(
+                                prefix + "的 真·环境之刃[兵匠之傲]", false));
                 }
                 applyCD(ply, 20);
                 return true;
@@ -1956,10 +2189,17 @@ public class ItemUseHelper {
         return (int) Math.round(maxDurability * durabilityRatio);
     }
     public static void setDurability(ItemStack weaponItem, int maxDurability, int currentDurability) {
+        // tweak current durability to prevent bug
+        if (currentDurability < 0)
+            currentDurability = 0;
+        else if (currentDurability > maxDurability)
+            currentDurability = maxDurability;
+        // default values
         if (currentDurability == 0)
             weaponItem.setDurability((short) 0);
         else if (currentDurability == maxDurability)
             weaponItem.setDurability((short) 1);
+        // calculate durability
         else {
             short maxVanillaDurability = weaponItem.getType().getMaxDurability();
             double durabilityRatio = (double) currentDurability / maxDurability;

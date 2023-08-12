@@ -2,8 +2,10 @@ package terraria.util;
 
 import eos.moe.dragoncore.api.CoreAPI;
 import net.minecraft.server.v1_12_R1.MovingObjectPosition;
+import org.apache.logging.log4j.util.BiConsumer;
 import org.apache.logging.log4j.util.TriConsumer;
 import org.bukkit.*;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -14,7 +16,6 @@ import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
 
 import java.util.*;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -107,7 +108,7 @@ public class GenericHelper {
         int damageCD, lingerTime, lingerDelay, maxTargetHit;
         double damage, decayCoef, whipBonusCrit, whipBonusDamage;
         ParticleLineOptions particleInfo;
-        Consumer<Location> blockHitFunction;
+        BiConsumer<Location, MovingObjectPosition> blockHitFunction;
         TriConsumer<Integer, Entity, Location> damagedFunction;
         Predicate<Entity> shouldDamageFunction;
         // internal variables
@@ -189,7 +190,7 @@ public class GenericHelper {
             return this;
         }
 
-        public StrikeLineOptions setBlockHitFunction(Consumer<Location> blockHitFunction) {
+        public StrikeLineOptions setBlockHitFunction(BiConsumer<Location, MovingObjectPosition> blockHitFunction) {
             this.blockHitFunction = blockHitFunction;
             return this;
         }
@@ -464,7 +465,7 @@ public class GenericHelper {
             if (hitLoc != null && hitLoc.pos != null) {
                 Location blockHitLoc = MathHelper.toBukkitVector(hitLoc.pos).toLocation(wld);
                 if (advanced.blockHitFunction != null)
-                    advanced.blockHitFunction.accept(blockHitLoc.clone());
+                    advanced.blockHitFunction.accept(blockHitLoc.clone(), hitLoc);
                 // if the weapon do not go thru wall
                 if (!thruWall) {
                     terminalLoc = blockHitLoc;

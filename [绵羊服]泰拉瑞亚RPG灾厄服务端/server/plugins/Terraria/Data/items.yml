@@ -529,6 +529,7 @@
   lore:
   - §r[饰品]
   attributes:
+    damage: 100
     useTime: 1
   worth: 20000
   rarity: 1
@@ -2217,7 +2218,7 @@
   - §#A2C855射出薄弱的弹幕，它将击碎敌怪的防御
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 160
+    damage: 240
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -2320,6 +2321,68 @@
     useTime: 20
   worth: 7200000
   rarity: 6
+真·环境之刃[兵匠之傲]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#DC69C5攻击舞动剑刃，使用大回旋斩并击碎敌人护甲
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
+  - §r“爱滴魔力转圈圈~”
+  attributes:
+    damage: 300
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 17
+    buffInflictMelee: "碎甲|30|1"
+  worth: 16000000
+  rarity: 9
+真·环境之刃[血腾之愤]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#D83716于面前召唤熔岩剑刃，击中敌怪提升充能
+  - §#D83716左键攻击时充能增加剑刃的伤害与长度但充能会随时间减少
+  - §#D83716当你在半空且处于潜行状态时，剑刃也可以用于在物块之间弹跳
+  - §#D83716右键攻击消耗部分充能并在充能超过一半时向前冲刺
+  - §#D83716右键攻击命中敌人后回复一定生命值并极大地缩短使用冷却
+  - §#D83716右键攻击借助敌人而非物块弹跳
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
+  attributes:
+    damage: 400
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 18
+  worth: 16000000
+  rarity: 9
+真·环境之刃[缚囚之悼]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#71EFB1快速挥舞链刃，刃尖击中敌怪必定暴击，潜行时击中物块将把你拉去
+  - §#71EFB1每第二次攻击造成的伤害显著增加
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
+  attributes:
+    damage: 640
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 17
+  worth: 16000000
+  rarity: 9
+真·环境之刃[变幻之潮]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#846DE9按住左键为一次碎裂天界的冲锋蓄力
+  - §#846DE9蓄力完毕后右键释放这一毁灭性打击
+  - §#846DE9撞击地面将引发山崩地裂，天地轰鸣，刹那间，一排异界巨石破土而出
+  - §r潜行右键使武器与环境相谐振，储存生物群系的力量
+  attributes:
+    damage: 1100
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 30
+  worth: 16000000
+  rarity: 9
 破碎方舟:
   item: DIAMOND_SWORD
   lore:

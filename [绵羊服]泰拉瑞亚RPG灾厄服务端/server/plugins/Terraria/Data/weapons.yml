@@ -381,6 +381,42 @@
     armorPenetration: 40
     useTime: 30
   size: 7.5
+屠杀:
+  type: SWING
+  autoSwing: true
+  size: 5
+纯净之斧:
+  type: SWING
+  autoSwing: true
+  size: 4
+天神之剑:
+  type: SWING
+  autoSwing: true
+  size: 6
+遗忘之刃:
+  type: SWING
+  autoSwing: true
+  size: 4.5
+  projectileInfo:
+    interval: 1
+    velocity: 0.1
+    name: 沙刃
+真·绝望之刃:
+  type: SWING
+  autoSwing: true
+  size: 4.5
+  projectileInfo:
+    interval: 1
+    velocity: 1.75
+    name: 绝望光束
+风暴军刀:
+  type: SWING
+  autoSwing: true
+  size: 5
+  projectileInfo:
+    interval: 1
+    velocity: 1.25
+    name: 风暴剑气
 钴薙刀:
   type: STAB
   size: 6
@@ -535,11 +571,11 @@
 环境之刃[天国之神威]:
   type: SWING
   autoSwing: true
-  size: 6
+  size: 5
 环境之刃[嫌恶之永存]:
   type: STAB
   autoSwing: true
-  size: 6
+  size: 2.5
 环境之刃[嫌恶之永存]_RIGHT_CLICK:
   type: STAB
   attributes:
@@ -552,6 +588,33 @@
   projectileInfo:
     velocity: 1.75
     name: 水球
+真·环境之刃[兵匠之傲]:
+  type: SWING
+  autoSwing: true
+  size: 6
+真·环境之刃[血腾之愤]:
+  type: STAB
+  autoSwing: true
+  size: 2.5
+真·环境之刃[血腾之愤]_RIGHT_CLICK:
+  type: STAB
+  attributes:
+    useTime: 50
+  size: 7.5
+真·环境之刃[缚囚之悼]:
+  type: SWING
+  autoSwing: true
+  particleColor:
+  - 156|205|243
+真·环境之刃[变幻之潮]:
+  type: STAB
+  autoSwing: true
+  size: 3
+真·环境之刃[变幻之潮]_RIGHT_CLICK:
+  type: STAB
+  attributes:
+    useTime: 30
+  size: 7
 破碎方舟:
   type: SWING
   autoSwing: true
