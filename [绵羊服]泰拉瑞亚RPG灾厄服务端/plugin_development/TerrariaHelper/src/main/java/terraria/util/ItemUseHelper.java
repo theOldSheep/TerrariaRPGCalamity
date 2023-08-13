@@ -989,10 +989,53 @@ public class ItemUseHelper {
                                 });
                         break;
                     }
-                    case "高斯短匕": {
+                    case "高斯短匕":
+                    case "誓约与禁忌之刃":
+                    case "炼狱":
+                    case "地狱龙锋":
+                    case "绝对零度":
+                    case "庇护之刃": {
+                        double explodeRad;
+                        double explodeRate;
+                        int explodeDuration, explodeDelay;
+                        switch (weaponType) {
+                            case "高斯短匕":
+                            case "绝对零度":
+                                explodeRad = 1.25;
+                                explodeRate = 1;
+                                explodeDuration = 1;
+                                explodeDelay = 5;
+                                break;
+                            case "誓约与禁忌之刃":
+                            case "炼狱":
+                                explodeRad = 1.5;
+                                explodeRate = attrMap.getOrDefault("crit", 4d) / 100;
+                                explodeDuration = 1;
+                                explodeDelay = 5;
+                                break;
+                            case "地狱龙锋":
+                                explodeRad = 0.75;
+                                explodeRate = 1;
+                                explodeDuration = 1;
+                                explodeDelay = 5;
+                                break;
+                            case "庇护之刃":
+                                explodeRad = 1.5;
+                                explodeRate = 1;
+                                explodeDuration = 24;
+                                explodeDelay = 5;
+                                break;
+                            default:
+                                explodeRad = 2;
+                                explodeRate = 1;
+                                explodeDuration = 1;
+                                explodeDelay = 5;
+                        }
                         strikeLineInfo
                                 .setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
-                                    EntityHelper.handleEntityExplode(ply, 1, new ArrayList<>(), hitLoc);
+                                    if (Math.random() < explodeRate)
+                                        EntityHelper.handleEntityExplode(ply, explodeRad, new ArrayList<>(), hitLoc,
+                                                explodeDuration, explodeDelay);
                                 });
                         break;
                     }
@@ -1038,6 +1081,188 @@ public class ItemUseHelper {
                         }
                         break;
                     }
+                    case "硫火之刃": {
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            EntityHelper.spawnProjectile(ply, hitLoc, new Vector(0, 0.5, 0),
+                                    attrMap, EntityHelper.DamageType.MELEE, "硫磺火间歇泉");
+                        });
+                        break;
+                    }
+                    case "雄伟之护": {
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            if (EntityHelper.hasEffect(hitEntity, "碎甲"))
+                                PlayerHelper.heal(ply, 6);
+                            else
+                                EntityHelper.applyEffect(hitEntity, "碎甲", 50);
+                        });
+                        break;
+                    }
+                    case "凋亡屠刀": {
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            EntityHelper.applyEffect(ply, "暴君之怒", 60);
+                        });
+                        break;
+                    }
+                    case "混乱之刃": {
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            double damage = ply.getMaxHealth() - ply.getHealth();
+                            EntityHelper.handleDamage(ply, hitEntity, damage, EntityHelper.DamageReason.DIRECT_DAMAGE);
+                        });
+                        break;
+                    }
+                    case "彗星陨刃":
+                    case "翡翠之潮": {
+                        String projectileName;
+                        double projectileSpeed;
+                        switch (weaponType) {
+                            case "翡翠之潮":
+                                projectileName = "利维坦毒牙";
+                                projectileSpeed = 2;
+                                break;
+                            case "彗星陨刃":
+                            default:
+                                projectileName = "陨落流星";
+                                projectileSpeed = 2.5;
+                        }
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            for (int i = (int) (Math.random() * 2); i < 3; i ++) {
+                                Location spawnLoc = hitLoc.clone().add(
+                                        Math.random() * 12 - 6,
+                                        Math.random() * 8 + 16,
+                                        Math.random() * 12 - 6);
+                                EntityHelper.spawnProjectile(ply, spawnLoc, MathHelper.getDirection(spawnLoc, hitLoc, projectileSpeed),
+                                        attrMap, EntityHelper.DamageType.MELEE, projectileName);
+                            }
+                        });
+                        break;
+                    }
+                    case "荆棘长刃": {
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            double thornYaw = Math.random() * 360;
+                            double thornPitch = Math.random() * 360;
+                            Vector offsetVec = MathHelper.vectorFromYawPitch_quick(thornYaw, thornPitch);
+                            offsetVec.multiply(5);
+                            GenericHelper.StrikeLineOptions thornStrikeOption = new GenericHelper.StrikeLineOptions()
+                                    .setDamageCD(4)
+                                    .setLingerTime(6)
+                                    .setLingerDelay(5)
+                                    .setThruWall(true);
+                            GenericHelper.handleStrikeLightning(ply, hitLoc.subtract(offsetVec), thornYaw, thornPitch,
+                                    12, 3,  0.5, 1, 4, "103|78|50",
+                                    new ArrayList<>(), attrMap, thornStrikeOption);
+                        });
+                        break;
+                    }
+                    case "大守卫者": {
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            EntityHelper.handleEntityExplode(ply, 2.5, new ArrayList<>(), hitLoc);
+
+                            if (EntityHelper.hasEffect(hitEntity, "碎甲"))
+                                PlayerHelper.heal(ply, 8);
+                            else
+                                EntityHelper.applyEffect(hitEntity, "碎甲", 50);
+
+                            if (hitEntity instanceof LivingEntity) {
+                                LivingEntity livingHitEntity = (LivingEntity) hitEntity;
+                                if (livingHitEntity.getHealth() * 2 < livingHitEntity.getMaxHealth()) {
+                                    for (int projYaw = 0; projYaw <= 360; projYaw += 120) {
+                                        EntityHelper.spawnProjectile(ply, hitLoc,
+                                                MathHelper.vectorFromYawPitch_quick(projYaw, -30), attrMap,
+                                                EntityHelper.DamageType.MELEE, "彩虹弹幕");
+                                    }
+                                }
+                            }
+                        });
+                        break;
+                    }
+                    case "狱火重剑": {
+                        if (currentIndex == 0) {
+                            EntityPlayer playerNMS = ((CraftPlayer) ply).getHandle();
+                            double fwdYaw = playerNMS.yaw;
+                            double fwdPitch = playerNMS.pitch;
+                            for (int i = 0; i < 3; i ++) {
+                                String projectileType;
+                                double damageMulti;
+                                if (i == 0) {
+                                    projectileType = "大熔岩火球";
+                                    damageMulti = 1;
+                                }
+                                else {
+                                    projectileType = "小熔岩火球";
+                                    damageMulti = 0.65;
+                                }
+                                HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
+                                projAttrMap.put("damage", projAttrMap.get("damage") * damageMulti);
+                                EntityHelper.spawnProjectile(ply, MathHelper.vectorFromYawPitch_quick(
+                                        fwdYaw + Math.random() * 10 - 5, fwdPitch + Math.random() * 10 - 5),
+                                        projAttrMap, EntityHelper.DamageType.MELEE, projectileType);
+                            }
+                        }
+                        break;
+                    }
+                    case "幻星刀": {
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            if (hitEntity instanceof LivingEntity) {
+                                LivingEntity hitEntityLiving = (LivingEntity) hitEntity;
+                                double victimHealthRatio = hitEntityLiving.getHealth() / hitEntityLiving.getMaxHealth();
+                                double damage = attrMap.get("damage") * victimHealthRatio;
+                                EntityHelper.handleDamage(ply, hitEntity, damage, EntityHelper.DamageReason.DIRECT_DAMAGE);
+                            }
+                        });
+                        break;
+                    }
+                    case "崇高誓约之剑": {
+                        if (currentIndex == 0) {
+                            EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+                            double projYaw = plyNMS.yaw;
+                            double projPitch = plyNMS.pitch;
+                            projPitch -= 15;
+                            for (int i = 0; i < 3; i ++) {
+                                EntityHelper.spawnProjectile(ply,
+                                        MathHelper.vectorFromYawPitch_quick(projYaw, projPitch), attrMap,
+                                        EntityHelper.DamageType.MELEE, "禁忌镰刀");
+                                projPitch += 15;
+                            }
+                        }
+                        strikeLineInfo
+                                .setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
+                                    if (Math.random() < attrMap.getOrDefault("crit", 4d) / 100)
+                                        EntityHelper.handleEntityExplode(ply, 1.5, new ArrayList<>(), hitLoc,
+                                                1, 5);
+                                });
+                        break;
+                    }
+                    case "海爵剑": {
+                        strikeLineInfo
+                                .setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
+                                    if (! ply.getScoreboardTags().contains("temp_sharknado")) {
+                                        EntityHelper.handleEntityInvulnerabilityTicks(ply,
+                                                "temp_sharknado", 100);
+                                        HashMap<String, Double> tornadoAttrMap = (HashMap<String, Double>) attrMap.clone();
+                                        tornadoAttrMap.put("damage", tornadoAttrMap.get("damage") * 0.5);
+                                        new PlayerTornado(
+                                                ply, hitLoc.subtract(0, 2, 0), new ArrayList<>(),
+                                                0, 18, 45, 30,
+                                                2, 0.9, "鲨鱼旋风", tornadoAttrMap);
+                                    }
+                                });
+                        break;
+                    }
+                    case "熵阔剑": {
+                        if (currentIndex == 0) {
+                            EntityPlayer playerNMS = ((CraftPlayer) ply).getHandle();
+                            double fwdYaw = playerNMS.yaw;
+                            double fwdPitch = playerNMS.pitch;
+                            for (int i = 0; i < 5; i ++) {
+                                HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
+                                projAttrMap.put("damage", projAttrMap.get("damage") * (0.5 + Math.random() * 0.3) );
+                                EntityHelper.spawnProjectile(ply, MathHelper.vectorFromYawPitch_quick(
+                                                fwdYaw + Math.random() * 10 - 5, fwdPitch + Math.random() * 10 - 5),
+                                        projAttrMap, EntityHelper.DamageType.MELEE, "熵离子球");
+                            }
+                        }
+                        break;
+                    }
                 }
                 for (int i = indexStart; i < indexEnd; i ++) {
                     double progress = (double) i / loopTimes;
@@ -1058,6 +1283,34 @@ public class ItemUseHelper {
                                 offsetDir.multiply(1.35);
                                 EntityHelper.spawnProjectile(ply, offsetDir,
                                         EntityHelper.getAttrMap(ply), "血之镰刀");
+                            }
+                            break;
+                        }
+                        case "炼狱": {
+                            if ( i == (int) (loopTimes * 0.2) ||
+                                    i == (int) (loopTimes * 0.35) ||
+                                    i == (int) (loopTimes * 0.5) ||
+                                    i == (int) (loopTimes * 0.65) ||
+                                    i == (int) (loopTimes * 0.8)) {
+                                offsetDir.multiply(1.35);
+                                HashMap<String, Double> attrMapProj = (HashMap<String, Double>) attrMap.clone();
+                                attrMapProj.put("damage", attrMapProj.get("damage") * 0.2);
+                                EntityHelper.spawnProjectile(ply, offsetDir,
+                                        attrMapProj, "小火花");
+                            }
+                            break;
+                        }
+                        case "斩首者": {
+                            if ( i == (int) (loopTimes * 0.15) ||
+                                    i == (int) (loopTimes * 0.3) ||
+                                    i == (int) (loopTimes * 0.45) ||
+                                    i == (int) (loopTimes * 0.6) ||
+                                    i == (int) (loopTimes * 0.75)) {
+                                offsetDir.multiply(1.45);
+                                HashMap<String, Double> attrMapProj = (HashMap<String, Double>) attrMap.clone();
+                                attrMapProj.put("damage", attrMapProj.get("damage") * 0.1);
+                                EntityHelper.spawnProjectile(ply, offsetDir,
+                                        attrMapProj, "蓝焰火花");
                             }
                             break;
                         }
@@ -1203,7 +1456,8 @@ public class ItemUseHelper {
         }
         switch (itemType) {
             case "残缺环境刃[拥怀之凛冽]":
-            case "环境之刃[拥怀之凛冽]": {
+            case "环境之刃[拥怀之凛冽]":
+            case "真·环境之刃[拥怀之凛冽]": {
                 switch (swingAmount % 3) {
                     case 0:
                         pitchMin = pitch - 50;
@@ -1251,26 +1505,6 @@ public class ItemUseHelper {
                 pitchMin = (value == null || swingAmount == 0) ? -180d : value.asDouble();
                 pitchMax = pitchMin + spinAmount;
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME_BLADE_SPIN_PITCH, pitchMax);
-                break;
-            }
-            case "真·环境之刃[拥怀之凛冽]": {
-                switch (swingAmount % 3) {
-                    case 0:
-                        pitchMin = pitch - 50;
-                        pitchMax = pitch + 50;
-                        break;
-                    case 1:
-                        pitchMin = pitch + 50;
-                        pitchMax = pitch - 50;
-                        attrMap.put("damage", attrMap.getOrDefault("damage", 1d) * 1.14);
-                        break;
-                    case 2:
-                        pitchMin = pitch;
-                        pitchMax = pitch;
-                        attrMap.put("damage", attrMap.getOrDefault("damage", 1d) * 1.4);
-                        break;
-                }
-                coolDown /= 3;
                 break;
             }
             case "远古方舟": {

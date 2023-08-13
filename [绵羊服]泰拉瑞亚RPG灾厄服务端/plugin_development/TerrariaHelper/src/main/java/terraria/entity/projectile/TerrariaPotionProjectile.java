@@ -22,8 +22,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
     private static final double distFromBlock = 1e-3, distCheckOnGround = 1e-1;
     // projectile info
     public String projectileType, blockHitAction = "die", trailColor = null;
-    public int autoTraceMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200, noAutoTraceTicks = 0, maxAutoTraceTicks = 999999,
-            noGravityTicks = 15, trailLingerTime = 10, penetration = 0;
+    public int autoTraceMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200,
+            noAutoTraceTicks = 0, noGravityTicks = 15, maxAutoTraceTicks = 999999, minimumDamageTicks = 0,
+            trailLingerTime = 10, penetration = 0;
     public double autoTraceAbility = 4, autoTraceEndSpeedMultiplier = 1, autoTraceRadius = 12,
             blastRadius = 1.5, bounceVelocityMulti = 1,
             frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileRadius = 0.125, speedMultiPerTick = 1,
@@ -53,8 +54,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.enemyInvincibilityFrame = (int) properties.getOrDefault("enemyInvincibilityFrame", this.enemyInvincibilityFrame);
             this.liveTime = (int) properties.getOrDefault("liveTime", this.liveTime);
             this.noAutoTraceTicks = (int) properties.getOrDefault("noAutoTraceTicks", this.noAutoTraceTicks);
-            this.maxAutoTraceTicks = (int) properties.getOrDefault("maxAutoTraceTicks", this.maxAutoTraceTicks);
             this.noGravityTicks = (int) properties.getOrDefault("noGravityTicks", this.noGravityTicks);
+            this.maxAutoTraceTicks = (int) properties.getOrDefault("maxAutoTraceTicks", this.maxAutoTraceTicks);
+            this.minimumDamageTicks = (int) properties.getOrDefault("minimumDamageTicks", this.minimumDamageTicks);
             this.trailLingerTime = (int) properties.getOrDefault("trailLingerTime", this.trailLingerTime);
             this.penetration = (int) properties.getOrDefault("penetration", this.penetration);
             // thru, bounce, stick, slide
@@ -255,8 +257,19 @@ public class TerrariaPotionProjectile extends EntityPotion {
     // this helper function is called every tick as long as the projectile is alive.
     protected void extraTicking() {
         switch (projectileType) {
-            case "旋风": {
-                double radius = 12, suckSpeed = 0.25;
+            case "旋风":
+            case "风暴管束者剑气": {
+                double radius = 15, suckSpeed = 0.1;
+                switch (projectileType) {
+                    case "旋风":
+                        radius = 5;
+                        suckSpeed = 0.65;
+                        break;
+                    case "风暴管束者剑气":
+                        radius = 12;
+                        suckSpeed = 1.75;
+                        break;
+                }
                 // get list of entities that could get sucked in
                 Set<HitEntityInfo> hitCandidates = HitEntityInfo.getEntitiesHit(
                         this.world,
@@ -274,8 +287,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     Vector velocity = new Vector(locX, locY, locZ);
                     velocity.subtract(enemy.getLocation().toVector());
                     double dist = velocity.length();
-                    velocity.multiply(Math.max(0, radius - dist) * suckSpeed / dist / radius);
-                    EntityHelper.knockback(enemy, velocity, true);
+                    velocity.multiply(Math.max(radius / 10, radius - dist) * suckSpeed / dist / radius);
+                    EntityHelper.knockback(enemy, velocity, false);
                 }
                 break;
             }
@@ -601,7 +614,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         }
 
         // handle projectile hit
-        {
+        if (ticksLived >= minimumDamageTicks) {
             // get list of entities that could get hit
             Set<HitEntityInfo> hitCandidates = HitEntityInfo.getEntitiesHit(
                     this.world,

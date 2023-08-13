@@ -1,40 +1,74 @@
 package terraria.event.listener;
 
 import net.minecraft.server.v1_12_R1.EntityFishingHook;
-import net.minecraft.server.v1_12_R1.EntityTNTPrimed;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Chest;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftFish;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftTNTPrimed;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.*;
+import org.bukkit.event.block.BlockFormEvent;
+import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.event.block.BlockGrowEvent;
+import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.PortalCreateEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.ProjectileSource;
 import terraria.TerrariaHelper;
 import terraria.entity.others.TerrariaFishingHook;
 import terraria.util.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Set;
 
 
 public class VanillaMechanicListener implements Listener {
     // entity related
+    @EventHandler(priority = EventPriority.LOW)
+    public void onInventoryCLose(InventoryCloseEvent evt) {
+        Inventory inv = evt.getInventory();
+        InventoryHolder invHolder = inv.getHolder();
+        if (! (invHolder instanceof Chest) )
+            return;
+        Chest invHolderChest = (Chest) invHolder;
+        String monsterSpawnType = null;
+        for (ItemStack item : inv.getStorageContents()) {
+            if (item == null || item.getType() == Material.AIR) continue;
+            String itemType = ItemHelper.splitItemName(item)[1];
+            if (monsterSpawnType != null)
+                return;
+            switch (itemType) {
+                case "光明钥匙":
+                    monsterSpawnType = "神圣宝箱怪";
+                    break;
+                case "夜光钥匙":
+                    monsterSpawnType = "腐化宝箱怪";
+                    break;
+                default:
+                    return;
+            }
+        }
+        if (monsterSpawnType != null) {
+            invHolder.getInventory().clear();
+            invHolderChest.getBlock().setType(Material.AIR);
+            MonsterHelper.spawnMob(monsterSpawnType, invHolderChest.getLocation(), (Player) evt.getPlayer());
+        }
+    }
     @EventHandler(priority = EventPriority.LOW)
     public void onDismount(VehicleExitEvent evt) {
         if (evt.isCancelled())

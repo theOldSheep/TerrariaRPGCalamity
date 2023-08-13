@@ -28,7 +28,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.projectile.TerrariaArrowProjectile;
 import terraria.entity.projectile.TerrariaPotionProjectile;
 import terraria.gameplay.EventAndTime;
 
@@ -1695,6 +1694,10 @@ public class EntityHelper {
         handleEntityExplode(source, radius, damageExceptions, loc, 1);
     }
     public static void handleEntityExplode(Entity source, double radius, Collection<Entity> damageExceptions, Location loc, int ticksDuration) {
+        handleEntityExplode(source, radius, damageExceptions, loc, ticksDuration, 5);
+    }
+    public static void handleEntityExplode(Entity source, double radius, Collection<Entity> damageExceptions, Location loc,
+                                           int ticksDuration, int ticksDelay) {
         boolean damageShooter = false;
         boolean destroyBlock = false;
         ConfigurationSection sourceSection = TerrariaHelper.projectileConfig.getConfigurationSection(GenericHelper.trimText(source.getName()));
@@ -1761,11 +1764,10 @@ public class EntityHelper {
             }
         }
         // lingering explosion
-        int delay = 5;
-        if (ticksDuration > delay) {
+        if (ticksDuration > ticksDelay) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> handleEntityExplode(source, radius, damageExceptions, loc, ticksDuration - delay),
-                    delay);
+                    () -> handleEntityExplode(source, radius, damageExceptions, loc, ticksDuration - ticksDelay),
+                    ticksDelay);
         }
     }
 
@@ -1801,7 +1803,8 @@ public class EntityHelper {
                     // ints
                     {
                         keys = new String[]{"autoTraceMethod", "bounce", "enemyInvincibilityFrame", "liveTime",
-                                "noAutoTraceTicks", "maxAutoTraceTicks", "noGravityTicks", "trailLingerTime", "penetration"};
+                                "noAutoTraceTicks", "noGravityTicks", "maxAutoTraceTicks", "minimumDamageTicks",
+                                "trailLingerTime", "penetration"};
                         for (String key : keys) {
                             if (section.contains(key))
                                 this.properties.put(key, section.getInt(key));
@@ -1849,15 +1852,8 @@ public class EntityHelper {
     public static Projectile spawnProjectile(ProjectileShootInfo shootInfo) {
         CraftWorld wld = (CraftWorld) shootInfo.shootLoc.getWorld();
         Projectile bukkitProjectile;
-        if (shootInfo.arrowOrPotion) {
-            TerrariaArrowProjectile entity = new TerrariaArrowProjectile(
-                    shootInfo.shootLoc, shootInfo.velocity, shootInfo.projectileName);
-            wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
-            bukkitProjectile = new CraftArrow(wld.getHandle().getServer(), entity);
-        } else {
-            TerrariaPotionProjectile entity = new TerrariaPotionProjectile(shootInfo);
-            bukkitProjectile = new CraftSplashPotion(wld.getHandle().getServer(), entity);
-        }
+        TerrariaPotionProjectile entity = new TerrariaPotionProjectile(shootInfo);
+        bukkitProjectile = new CraftSplashPotion(wld.getHandle().getServer(), entity);
         return bukkitProjectile;
     }
     // the spawn projectile below are not as flexible comparing to the function above
