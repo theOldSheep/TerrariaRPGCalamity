@@ -1241,7 +1241,7 @@ public class ItemUseHelper {
                                         HashMap<String, Double> tornadoAttrMap = (HashMap<String, Double>) attrMap.clone();
                                         tornadoAttrMap.put("damage", tornadoAttrMap.get("damage") * 0.5);
                                         new PlayerTornado(
-                                                ply, hitLoc.subtract(0, 2, 0), new ArrayList<>(),
+                                                ply, hitLoc.clone().subtract(0, 2, 0), new ArrayList<>(),
                                                 0, 18, 45, 30,
                                                 2, 0.9, "鲨鱼旋风", tornadoAttrMap);
                                     }

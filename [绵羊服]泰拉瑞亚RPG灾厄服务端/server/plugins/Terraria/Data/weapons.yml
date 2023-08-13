@@ -261,10 +261,8 @@
   size: 5
   projectileInfo:
     interval: 1
-    velocity: 0.15
-    noGravity: true
+    velocity: 1
     name: 死神镰刀
-    penetration: 99
 圣诞树剑:
   type: SWING
   autoSwing: true
@@ -417,6 +415,190 @@
     interval: 1
     velocity: 1.25
     name: 风暴剑气
+雪崩:
+  type: SWING
+  autoSwing: true
+  size: 7
+  projectileInfo:
+    interval: 1
+    velocity: 1
+    name: 冰霜炸弹
+巨剑“夜光”:
+  type: SWING
+  autoSwing: true
+  size: 9
+  projectileInfo:
+    interval: 1
+    velocity: 1.5
+    name: 夜之星光
+炎霜之刃:
+  type: SWING
+  autoSwing: true
+  size: 5
+  projectileInfo:
+    interval: 1
+    velocity: 1.5
+    name: 霜火球
+灾难巨剑:
+  type: SWING
+  autoSwing: true
+  size: 4.5
+  projectileInfo:
+    interval: 1
+    velocity: 1.6
+    name: 灾难巨剑剑气
+硫火之刃:
+  type: SWING
+  autoSwing: true
+  size: 6
+硫火之刃_RIGHT_CLICK:
+  type: STAB
+  autoSwing: true
+  size: 0.1
+  projectileInfo:
+    interval: 1
+    velocity: 2
+    name: 硫火之刃
+雄伟之护:
+  type: SWING
+  autoSwing: true
+  size: 13.5
+誓约与禁忌之刃:
+  type: SWING
+  autoSwing: true
+  size: 10
+  projectileInfo:
+    interval: 1
+    velocity: 1
+    name: 禁忌镰刀
+炼狱:
+  type: SWING
+  autoSwing: true
+  size: 6
+硫火鞭:
+  type: SWING
+  autoSwing: true
+  size: 6
+  projectileInfo:
+    interval: 1
+    velocity: 1.5
+    name: 硫火刃
+凋亡屠刀:
+  type: SWING
+  autoSwing: true
+  size: 8.5
+  projectileInfo:
+    interval: 1
+    velocity: 1.25
+    name: 炽炎幻影刃
+混乱之刃:
+  type: SWING
+  autoSwing: true
+  size: 10
+风暴管束者:
+  type: SWING
+  autoSwing: true
+  size: 9
+  projectileInfo:
+    interval: 1
+    velocity: 1.5
+    name: 风暴管束者剑气
+彗星陨刃:
+  type: SWING
+  autoSwing: true
+  size: 6.5
+荆棘长刃:
+  type: SWING
+  autoSwing: true
+  size: 6.5
+地狱龙锋:
+  type: SWING
+  autoSwing: true
+  size: 8.5
+绝对零度:
+  type: SWING
+  autoSwing: true
+  size: 5.5
+  projectileInfo:
+    interval: 1
+    velocity: 2
+    name: 暗影冰晶
+大守卫者:
+  type: SWING
+  autoSwing: true
+  size: 10.5
+翡翠之潮:
+  type: SWING
+  autoSwing: true
+  size: 8
+庇护之刃:
+  type: SWING
+  autoSwing: true
+  size: 7.5
+庇护之刃_RIGHT_CLICK:
+  type: SWING
+  autoSwing: true
+  size: 5
+  projectileInfo:
+    interval: 1
+    velocity: 1.75
+    name: 庇护之火
+狱火重剑:
+  type: SWING
+  autoSwing: true
+  size: 4.5
+幻星刀:
+  type: SWING
+  autoSwing: true
+  size: 11
+灵魂收割者:
+  type: SWING
+  autoSwing: true
+  size: 4.5
+  projectileInfo:
+    interval: 1
+    velocity: 1
+    name: 灵魂镰刀
+崇高誓约之剑:
+  type: SWING
+  autoSwing: true
+  size: 9
+瘟疫毒刃:
+  type: SWING
+  autoSwing: true
+  size: 5
+  projectileInfo:
+    interval: 1
+    velocity: 2.5
+    name: 瘟疫云
+海爵剑:
+  type: SWING
+  autoSwing: true
+  size: 8.5
+海爵剑_RIGHT_CLICK:
+  type: SWING
+  autoSwing: true
+  size: 7
+  projectileInfo:
+    interval: 1
+    velocity: 1.5
+    name: 台风
+斩首者:
+  type: SWING
+  autoSwing: true
+  size: 8
+熵阔剑:
+  type: SWING
+  autoSwing: true
+  size: 10
+邪恶收割者:
+  type: SWING
+  autoSwing: true
+  size: 8
+  projectileInfo:
+    interval: 1
+    velocity: 1.75
+    name: 燃烧头骨
 钴薙刀:
   type: STAB
   size: 6

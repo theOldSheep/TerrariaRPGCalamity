@@ -28,6 +28,8 @@
     penetration: 0
     # 无视重力飞行的帧数，不写则视为5
     noGravityTicks: 5
+    # 弹射物存在多久前无法造成伤害？不写则视为0
+    minimumDamageTicks: 0
     # 重力影响，受重力时每帧向下的速度改变（负数则为向上偏移）。不写则视为0.05
     gravity: 0.05
     # 弹射物的碰撞箱半径，不写视为0.125
@@ -1024,12 +1026,53 @@ TNT:
 夜明弹:
     gravity: 0
     penetration: 99
+永夜光束:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 40
+光明光束:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 40
+叶绿珠:
+    projectileSize: 0.5
+    penetration: 999999
+    liveTime: 60
+烈焰杰克南瓜:
+    gravity: 0
+    projectileSize: 0.5
+    penetration: 999999
+    liveTime: 60
+北极长矛:
+    gravity: 0
+    projectileSize: 0.5
+    penetration: 2
+    spawnProjectiles:
+        interval: 4
+        offset: 0
+        spawnMechanism: BOTTOM
+        damageMulti: 0.8
+        speed: 0.5
+        spawnType: 北极雪花
 装饰:
     clusterBomb:
         amount: 8
         name: 装饰弹片
         velocity: 0.5
         damageMulti: 0.85
+死神镰刀:
+    gravity: 0
+    blockHitAction: thru
+    speedMultiPerTick: 0.95
+    projectileSize: 1
+    penetration: 999999
+    enemyInvincibilityFrame: 10
+    liveTime: 125
+泰拉光束:
+    gravity: 0
+    projectileSize: 2
+    penetration: 9
+    liveTime: 40
 种子弯刀坚果:
     clusterBomb:
         amount: 8
@@ -1067,6 +1110,11 @@ TNT:
     blockHitAction: thru
     gravity: 0
     liveTime: 25
+彩虹猫之刃:
+    projectileSize: 0.5
+    blockHitAction: bounce
+    bounce: 4
+    penetration: 4
 螺丝钉:
     noGravityTicks: 0
     liveTime: 60
@@ -1134,6 +1182,228 @@ TNT:
     autoTraceAbility: 1.25
     penetration: 1
     gravity: 0
+分裂球:
+    autoTrace: true
+    autoTraceAbility: 2
+    noAutoTraceTicks: 5
+    gravity: 0
+    liveTime: 30
+    trailColor: 255|51|109
+    trailStepSize: 0.5
+    trailLingerTime: 6
+夜之星光:
+    projectileSize: 1
+    gravity: 0
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.6
+        name: 分裂球
+        velocity: 0.75
+霜火球:
+    autoTrace: true
+    autoTraceAbility: 1.5
+    noAutoTraceTicks: 5
+    gravity: 0
+    buffInflict:
+        - "狱炎|40|1"
+        - "霜火|40|1"
+灾难巨剑剑气:
+    gravity: 0
+    liveTime: 60
+    isGrenade: true
+    blastRadius: 1.25
+    buffInflict:
+        - "狱炎|40|1"
+    trailColor: 233|15|50
+    trailStepSize: 0.5
+    trailLingerTime: 6
+硫磺火间歇泉:
+    noGravityTicks: 0
+    blockHitAction: stick
+    penetration: 999999
+    minimumDamageTicks: 5
+    buffInflict:
+        - "硫磺火|60|1"
+    trailColor: 255|56|35
+    trailLingerTime: 6
+硫火之刃:
+    noGravityTicks: 20
+    liveTime: 60
+    penetration: 1
+    projectileSize: 0.5
+    isGrenade: true
+    blastRadius: 2
+    blastOnContactEnemy: true
+    blastOnContactBlock: false
+    buffInflict:
+        - "硫磺火|60|1"
+禁忌镰刀:
+    autoTrace: true
+    autoTraceAbility: 0
+    autoTraceMethod: 2
+    autoTraceRadius: 64
+    noAutoTraceTicks: 10
+    maxAutoTraceTicks: 10
+    autoTraceEndSpeedMultiplier: 2.25
+    gravity: 0
+    liveTime: 40
+    penetration: 2
+    buffInflict:
+        - "暗影焰|60|1"
+        - "狱炎|30|1"
+追踪硫火刃:
+    autoTrace: true
+    noAutoTraceTicks: 10
+    gravity: 0
+    liveTime: 50
+    buffInflict:
+        - "硫磺火|60|1"
+硫火刃:
+    gravity: 0
+    liveTime: 20
+    penetration: 999999
+    buffInflict:
+        - "硫磺火|60|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 1
+        name: 追踪硫火刃
+        velocity: 1.25
+炽炎幻影刃:
+    autoTrace: true
+    gravity: 0
+    liveTime: 60
+    penetration: 4
+    speedMultiPerTick: 0.95
+    enemyInvincibilityFrame: 4
+    buffInflict:
+        - "狱炎|60|1"
+        - "剧毒|50|1"
+风暴管束者剑气:
+    gravity: 0
+    liveTime: 100
+    speedMultiPerTick: 0.95
+    projectileSize: 1
+    penetration: 999999
+    enemyInvincibilityFrame: 15
+陨落流星:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 50
+    isGrenade: true
+    blastRadius: 1
+暗影冰晶:
+    gravity: 0
+    projectileSize: 0.25
+    liveTime: 50
+    isGrenade: true
+    blastRadius: 3
+彩虹弹幕:
+    autoTrace: true
+    noAutoTraceTicks: 15
+    gravity: 0
+    projectileSize: 0.25
+    liveTime: 65
+    minimumDamageTicks: 5
+    trailColor: 255|149|255
+    trailLingerTime: 6
+利维坦毒牙:
+    gravity: 0
+    projectileSize: 0.25
+    liveTime: 50
+    buffInflict:
+        - "剧毒|60|1"
+庇护之火:
+    gravity: 0
+    liveTime: 50
+    projectileSize: 0.5
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.5
+        name: 小火花
+        velocity: 0.6
+    trailColor: 255|255|113
+    trailStepSize: 1
+    trailLingerTime: 6
+大熔岩火球:
+    gravity: 0
+    liveTime: 35
+    projectileSize: 0.75
+    speedMultiPerTick: 0.9
+    trailColor: 78|27|62
+    trailStepSize: 0.5
+    trailLingerTime: 12
+    buffInflict:
+        - "狱炎|60|1"
+小熔岩火球:
+    gravity: 0
+    liveTime: 35
+    projectileSize: 0.5
+    speedMultiPerTick: 0.95
+    trailColor: 78|27|62
+    trailStepSize: 0.5
+    trailLingerTime: 8
+    buffInflict:
+        - "狱炎|40|1"
+灵魂镰刀:
+    gravity: 0
+    blockHitAction: thru
+    speedMultiPerTick: 0.95
+    projectileSize: 1.5
+    penetration: 999999
+    enemyInvincibilityFrame: 10
+    liveTime: 150
+    buffInflict:
+        - "瘟疫|60|1"
+        - "咒火|30|1"
+瘟疫云:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 1.5
+    penetration: 999999
+    liveTime: 15
+    trailColor: 56|208|152
+    trailSize: 0.2
+    trailStepSize: 0.75
+    buffInflict:
+        - "瘟疫|40|1"
+蓝焰火花:
+    autoTrace: true
+    noAutoTraceTicks: 10
+    blockHitAction: thru
+    liveTime: 60
+    trailColor: 148|255|255
+    trailSize: 0.2
+    trailStepSize: 0.75
+熵离子球:
+    autoTrace: true
+    autoTraceRadius: 16
+    noAutoTraceTicks: 10
+    trailColor: 144|35|255
+    trailSize: 0.2
+    trailStepSize: 0.5
+    trailLingerTime: 5
+追踪火球:
+    autoTrace: true
+    autoTraceRadius: 16
+    noAutoTraceTicks: 10
+    trailColor: 255|137|17
+    trailSize: 0.15
+    trailStepSize: 0.4
+燃烧头骨:
+    autoTrace: true
+    autoTraceRadius: 16
+    noAutoTraceTicks: 10
+    blockHitAction: thru
+    projectileSize: 1
+    trailColor: 255|137|17
+    trailSize: 0.2
+    trailStepSize: 0.5
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.5
+        name: 追踪火球
+        velocity: 1.25
 阿米迪亚斯漩涡:
     projectileSize: 0.5
     autoTrace: true

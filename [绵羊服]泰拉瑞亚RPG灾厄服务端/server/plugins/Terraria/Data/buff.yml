@@ -23,25 +23,21 @@ buffConflicts:
 
 effects:
   中毒:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/1/11/Poisoned
     isBuff: false
     damageInterval: 10
     damage: 1
     tooltip: 缓慢损失生命值
   剧毒:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/8a/Venom
     isBuff: false
     damageInterval: 4
     damage: 6
     tooltip: 在酸性毒液的腐蚀下损失生命值
   燃烧:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/dc/Frostburn
     isBuff: false
     damageInterval: 4
     damage: 1
     tooltip: 缓慢损失生命值
   霜火:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/dc/Frostburn
     isBuff: false
     damageInterval: 4
     damage: 2
@@ -52,7 +48,6 @@ effects:
     damage: 6
     tooltip: 缓慢损失生命值
   咒火:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a0/Cursed_Inferno
     isBuff: false
     damageInterval: 5
     damage: 3
@@ -131,57 +126,47 @@ effects:
       regenMulti: -1
     tooltip: 被月之射线瓦解
   破晓:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/b/b5/Stardust_Dragon
     isBuff: false
     damageInterval: 5
     damage: 10
     damageMonster: 25
     tooltip: 被日耀射线焚烧
   流血:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/33/Bleeding
     isBuff: false
     attributes:
       regenMulti: -1
     tooltip: 无法再生生命
   缓慢:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/f/f5/Slow
     isBuff: false
     attributes:
       speedMulti: -0.5
     tooltip: 移动速度降低
   恐惧:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/0/0b/Horrified
     isBuff: false
     tooltip: 你已经看到污秽之物，无可逃脱。
   破损盔甲:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/d5/Broken_Armor
     isBuff: false
     attributes:
       defenceMulti: -0.5
     tooltip: 防御力减半
   碎甲:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/d5/Broken_Armor
     isBuff: false
     attributes:
       defence: -30
       damageTakenMulti: 0.15
     tooltip: 你的护甲被撕裂了
   诅咒:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/f/f0/Cursed
     isBuff: false
     tooltip: 无法使用任何物品
   扭曲:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/d/db/Distorted
     isBuff: false
     tooltip: 你周围的重力是扭曲的
   冷冻:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a6/Chilled
     isBuff: false
     attributes:
       speedMulti: -0.5
     tooltip: 你的移动速度已降低
   冰冻:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/86/Frozen
     isBuff: false
     attributes:
       speed: -10
@@ -192,36 +177,29 @@ effects:
       flightTimeMulti: -0.25
     tooltip: 翅膀飞行时间减少25%
   耐药性:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/83/Potion_Sickness
     isBuff: false
     tooltip: 不能再使用治疗物品
   魔力疾病:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/9/93/Mana_Sickness
     isBuff: false
     tooltip: 魔法伤害降低
   失明:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/c/c0/Darkness
     isBuff: false
     tooltip: 视力下降
   阻塞:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a5/Obstructed
     isBuff: false
     tooltip: 你看不见了！
   弹药储备:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/c/c8/Ammo_Reservation
     isBuff: true
     attributes:
       ammoConsumptionRate: -0.2
     tooltip: 20%概率不消耗弹药
   箭术:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/9/98/Archery
     isBuff: true
     attributes:
       projectileSpeedArrowMulti: 0.2
       damageArrowMulti: 0.1
     tooltip: 箭矢伤害增加10%，箭矢速度增加20%
   战斗:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/7/70/Battle
     isBuff: true
     attributes:
       mobLimit: 10
@@ -229,107 +207,89 @@ effects:
       mobSpawnRateMulti: 1.5
     tooltip: 刷怪率和上限增加
   虫潮:
-    icon: https://calamitymod.wiki.gg/images/5/5c/Zerg
     isBuff: true
     attributes:
       mobLimit: 5
       mobSpawnRate: 1
     tooltip: 刷怪率和上限增加
   冷静:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/2/20/Calm
     isBuff: true
     attributes:
       mobLimit: -1
       mobSpawnRateMulti: -0.2
     tooltip: 刷怪率和上限减少
   禅定:
-    icon: https://calamitymod.wiki.gg/images/e/ee/Zen
     isBuff: true
     attributes:
       mobLimit: -2
       mobSpawnRate: -0.1
     tooltip: 刷怪率和上限减少
   耐力:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/0/0a/Endurance
     isBuff: true
     attributes:
       damageTakenMulti: -0.05
     tooltip: 伤害减免增加5%
   鱼鳃:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/f/fc/Gills
     isBuff: true
     tooltip: 你能在水下呼吸了！
   隐身:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/e/e5/Invisibility
     isBuff: true
     attributes:
       mobLimit: -1
       mobSpawnRateMulti: -0.1
     tooltip: 刷怪率和上限减少
   铁皮:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/3d/Ironskin
     isBuff: true
     attributes:
       defence: 16
     tooltip: 获得 16 防御力
   生命力:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/9/98/Lifeforce
     isBuff: true
     attributes:
       healthMulti: 0.2
     tooltip: 获得 20% 最大生命值
   魔能:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/c/cd/Magic_Power
     isBuff: true
     attributes:
       damageMagicMulti: 0.1
     tooltip: 魔法伤害增加 10%
   魔力再生:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/7/77/Mana_Regeneration
     isBuff: true
     attributes:
       manaRegen: 10
     tooltip: 魔力再生速度增加
   黑曜石皮:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/8d/Obsidian_Skin
     isBuff: true
     tooltip: 免疫岩浆和燃烧
   再生:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/5/53/Regeneration
     isBuff: true
     attributes:
       regen: 4
     tooltip: 生命再生增加
   召唤:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/1/18/Summoning_%28buff%29
     isBuff: true
     attributes:
       minionLimit: 1
     tooltip: 召唤栏 +1
   敏捷:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/af/Swiftness
     isBuff: true
     attributes:
       speedMulti: 0.15
     tooltip: 速度增加 15%
   荆棘:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/9/9e/Thorns
     isBuff: true
     tooltip: 受伤时反弹部分伤害
   泰坦:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/8/88/Titan
     isBuff: true
     attributes:
       knockbackMulti: 0.5
     tooltip: 击退增加 50%
   怒气:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/3f/Wrath
     isBuff: true
     attributes:
       damageMulti: 0.1
     tooltip: 伤害增加 10%
   吃饱:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a3/Well_Fed
     isBuff: true
     attributes:
       defence: 4
@@ -340,7 +300,6 @@ effects:
       regen: 2
     tooltip: 所有属性小幅提升
   饱足:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/2/2a/Plenty_Satisfied
     isBuff: true
     attributes:
       defence: 6
@@ -351,7 +310,6 @@ effects:
       regen: 4
     tooltip: 所有属性中幅提升
   饕餮:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/1/15/Exquisitely_Stuffed
     isBuff: true
     attributes:
       defence: 8
@@ -379,19 +337,22 @@ effects:
     attributes:
         damageTakenMulti: -0.15
     tooltip: 所受伤害减少15%
+  暴君之怒:
+    isBuff: true
+    attributes:
+        damageMeleeMulti: 0.3
+        critMelee: 10
+    tooltip: 增加30%近战伤害和10%近战暴击率
   伤害星云:
     isBuff: true
     attributes:
       damageMulti: 0.075
     tooltip: 每层使伤害增加 7.5%
   伤害星云1:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/3f/Wrath
     tooltip: 伤害增加 7.5%
   伤害星云2:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/3f/Wrath
     tooltip: 伤害增加 15%
   伤害星云3:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/3/3f/Wrath
     tooltip: 伤害增加 22.5%
   生命星云:
     isBuff: true
@@ -399,13 +360,10 @@ effects:
       regen: 10
     tooltip: 每层使每秒生命再生增加 10
   生命星云1:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/5/53/Regeneration
     tooltip: 每秒生命再生增加 10
   生命星云2:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/5/53/Regeneration
     tooltip: 每秒生命再生增加 20
   生命星云3:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/5/53/Regeneration
     tooltip: 每秒生命再生增加 30
   魔力星云:
     isBuff: true
@@ -413,11 +371,8 @@ effects:
       manaRegen: 10
     tooltip: 每层使每秒魔力再生增加 10
   魔力星云1:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/7/77/Mana_Regeneration
     tooltip: 每秒魔力再生增加 10
   魔力星云2:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/7/77/Mana_Regeneration
     tooltip: 每秒魔力再生增加 20
   魔力星云3:
-    icon: https://static.wikia.nocookie.net/terraria_gamepedia/images/7/77/Mana_Regeneration
     tooltip: 每秒魔力再生增加 30
