@@ -659,6 +659,18 @@
   - 0|0|255
   - 75|0|130
   - 143|0|255
+水电剑:
+  type: STAB
+  autoSwing: true
+  size: 3
+潜渊震荡者:
+  type: STAB
+  autoSwing: true
+  size: 3.5
+卢克雷西亚:
+  type: STAB
+  autoSwing: true
+  size: 12.5
 钨钢螺丝刀:
   type: STAB
   size: 1.5
@@ -1066,11 +1078,38 @@
   reach: 23
   velocity: 1.5
   duration: 1200
+  autoSwing: true
 泰拉悠悠球:
   type: YOYO
   reach: 32
   velocity: 2
   duration: 1200
+  recoilPoolMultiplier: 0.6
+  autoSwing: true
+烟陨彗星:
+  type: YOYO
+  reach: 13
+  velocity: 1.25
+  duration: 100
+  autoSwing: true
+涡旋:
+  type: YOYO
+  reach: 15
+  velocity: 1.25
+  duration: 100
+  autoSwing: true
+空旋:
+  type: YOYO
+  reach: 19
+  velocity: 1.3
+  duration: 120
+  autoSwing: true
+神旨:
+  type: YOYO
+  reach: 21
+  velocity: 1.35
+  duration: 120
+  autoSwing: true
 链锤:
   type: FLAIL
   reach: 16
@@ -1104,6 +1143,14 @@
 海胆链球:
   type: FLAIL
   reach: 16
+  velocity: 1.5
+海蚌锤:
+  type: FLAIL
+  reach: 32
+  velocity: 1.5
+风滚草:
+  type: FLAIL
+  reach: 24
   velocity: 1.5
 手里剑:
   type: THROW_PROJECTILE
@@ -1563,3 +1610,10 @@
   size: 48
   particleColor:
   - 255|100|50
+星云鞭:
+  type: WHIP
+  autoSwing: true
+  size: 32
+  particleColor:
+  - 66|189|181
+

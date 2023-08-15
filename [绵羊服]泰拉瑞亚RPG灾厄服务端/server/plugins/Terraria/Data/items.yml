@@ -529,8 +529,8 @@
   lore:
   - §r[饰品]
   attributes:
-    damage: 100
-    useTime: 1
+    damage: 300
+    useTime: 20
   worth: 20000
   rarity: 1
 镣铐:
@@ -6957,98 +6957,6 @@
   item: CLAY_BALL
   worth: 500000
   rarity: 4
-荒漠之羽:
-  item: CLAY_BALL
-  worth: 2000
-  rarity: 1
-风暴之颚:
-  item: CLAY_BALL
-  worth: 14000
-  rarity: 1
-血珠:
-  item: CLAY_BALL
-  worth: 12000
-  rarity: 1
-浆糊泥:
-  item: CLAY_BALL
-  worth: 20000
-  rarity: 1
-上古骨灰:
-  item: CLAY_BALL
-  worth: 10000
-  rarity: 1
-恶魔骨灰:
-  item: CLAY_BALL
-  worth: 60000
-  rarity: 3
-软体动物外壳:
-  item: CLAY_BALL
-  worth: 600000
-  rarity: 5
-冰川精华:
-  item: CLAY_BALL
-  worth: 400000
-  rarity: 4
-混乱精华:
-  item: CLAY_BALL
-  worth: 400000
-  rarity: 4
-日光精华:
-  item: CLAY_BALL
-  worth: 400000
-  rarity: 4
-星尘:
-  item: CLAY_BALL
-  worth: 300000
-  rarity: 4
-泰坦之心:
-  item: CLAY_BALL
-  worth: 1000000
-  rarity: 4
-猎捕花苞:
-  item: CLAY_BALL
-  worth: 160000
-  rarity: 5
-灾厄尘:
-  item: CLAY_BALL
-  worth: 900000
-  rarity: 7
-酸腐化石:
-  item: CLAY_BALL
-  worth: 600000
-  rarity: 5
-深渊细胞:
-  item: CLAY_BALL
-  worth: 800000
-  rarity: 7
-流明晶:
-  item: CLAY_BALL
-  worth: 800000
-  rarity: 7
-日影面纱:
-  item: CLAY_BALL
-  worth: 800000
-  rarity: 7
-大狂鲨鳞:
-  item: CLAY_BALL
-  worth: 900000
-  rarity: 7
-生命碎片:
-  item: CLAY_BALL
-  worth: 800000
-  rarity: 7
-瘟疫细胞罐:
-  item: CLAY_BALL
-  worth: 1000000
-  rarity: 8
-瘟疫装甲镀层:
-  item: CLAY_BALL
-  worth: 1000000
-  rarity: 8
-冥思溶剂:
-  item: CLAY_BALL
-  worth: 200000
-  rarity: 9
 钴锭:
   item: IRON_INGOT
   worth: 210000

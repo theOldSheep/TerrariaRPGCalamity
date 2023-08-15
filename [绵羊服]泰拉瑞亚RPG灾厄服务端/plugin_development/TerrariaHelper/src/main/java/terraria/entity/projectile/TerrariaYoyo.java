@@ -17,7 +17,7 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
     }
     Player owner;
     Vector recoilPool = new Vector();
-    double maxDistance, maxDistanceSquared, useTime, speed;
+    double maxDistance, maxDistanceSquared, useTime, speed, recoilPoolMultiplier;
     int ticksDuration, indexAI = 0;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public TerrariaYoyo(World world) {
@@ -25,13 +25,15 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
         owner = null;
         die();
     }
-    public TerrariaYoyo(EntityHelper.ProjectileShootInfo shootInfo, double maxDistance, double useTime, int ticksDuration) {
+    public TerrariaYoyo(EntityHelper.ProjectileShootInfo shootInfo,
+                        double maxDistance, double useTime, double recoilPoolMultiplier, int ticksDuration) {
         super(shootInfo);
         // initialize variables
         owner = (Player) shootInfo.shooter;
         this.maxDistance = maxDistance;
         this.maxDistanceSquared = maxDistance * maxDistance;
         this.useTime = useTime;
+        this.recoilPoolMultiplier = recoilPoolMultiplier;
         this.speed = bukkitEntity.getVelocity().length();
         this.ticksDuration = ticksDuration;
         // make the projectile return on block hit
@@ -80,7 +82,7 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
             Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, speed, true);
             // tweak velocity
             velocity.add(recoilPool);
-            recoilPool.multiply(0.9);
+            recoilPool.multiply(recoilPoolMultiplier);
             bukkitEntity.setVelocity(velocity);
         }
         // owner is offline

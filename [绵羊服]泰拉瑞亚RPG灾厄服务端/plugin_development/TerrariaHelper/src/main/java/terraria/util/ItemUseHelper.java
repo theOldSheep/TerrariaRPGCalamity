@@ -603,6 +603,33 @@ public class ItemUseHelper {
                     }
                     break;
                 }
+                case "水电剑":
+                case "潜渊震荡者": {
+                    shouldStrike = currentIndex <= 5;
+                    strikeLineInfo
+                            .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                Vector projVel = MathHelper.randomVector();
+                                projVel.multiply(0.2);
+                                EntityHelper.spawnProjectile(ply, hitLoc, projVel,
+                                        attrMap, EntityHelper.DamageType.MELEE, "电火花");
+                            });
+                    break;
+                }
+                case "卢克雷西亚": {
+                    shouldStrike = currentIndex <= 2;
+                    strikeLineInfo
+                            .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                // melee invulnerability tick
+                                int invulnerabilityTicks = 3;
+                                EntityHelper.handleEntityInvulnerabilityTicks(ply,
+                                        EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
+                                        invulnerabilityTicks);
+                                EntityHelper.handleEntityInvulnerabilityTicks(ply,
+                                        EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
+                                        invulnerabilityTicks);
+                            });
+                    break;
+                }
                 case "钨钢螺丝刀_RIGHT_CLICK": {
                     shouldStrike = currentIndex <= 3;
                     if (shouldStrike) {
@@ -1083,7 +1110,9 @@ public class ItemUseHelper {
                     }
                     case "硫火之刃": {
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
-                            EntityHelper.spawnProjectile(ply, hitLoc, new Vector(0, 0.5, 0),
+                            Vector projVel = MathHelper.randomVector();
+                            projVel.multiply(0.35);
+                            EntityHelper.spawnProjectile(ply, hitLoc, projVel,
                                     attrMap, EntityHelper.DamageType.MELEE, "硫磺火间歇泉");
                         });
                         break;
@@ -1584,7 +1613,8 @@ public class ItemUseHelper {
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
         double useTimeMulti = 1 / useSpeed;
         double useTime = attrMap.getOrDefault("useTime", 20d) * useTimeMulti;
-        TerrariaYoyo entity = new TerrariaYoyo(shootInfo, reach, useTime, duration);
+        double recoilPoolMultiplier = attrMap.getOrDefault("recoilPoolMultiplier", 0.7);
+        TerrariaYoyo entity = new TerrariaYoyo(shootInfo, reach, useTime, recoilPoolMultiplier, duration);
         plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // play sound
         playerUseItemSound(ply, weaponType, autoSwing);

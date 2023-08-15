@@ -229,7 +229,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             return;
         // validate CD
         if (extraProjectileSpawnInterval > 0 && ticksLived % extraProjectileSpawnInterval == 0) {
-            Vector velocity;
+            Vector velocity = null;
             double offset = extraProjectileConfigSection.getDouble("offset", 1d);
             extraProjectileShootInfo.shootLoc = bukkitEntity.getLocation();
             switch (extraProjectileConfigSection.getString("spawnMechanism", "BOTTOM")) {
@@ -243,15 +243,37 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     extraProjectileShootInfo.shootLoc.add(
                             (Math.random() - 0.5) * offset, (Math.random() - 0.5) * offset, (Math.random() - 0.5) * offset);
                     break;
+                case "ENEMY":
+                    Set<HitEntityInfo> hitCandidates = HitEntityInfo.getEntitiesHit(
+                            this.world,
+                            new Vec3D(locX, locY, locZ),
+                            new Vec3D(locX, locY, locZ),
+                            offset,
+                            (Entity toCheck) -> {
+                                if (this.shooter != null && this.shooter == toCheck) return false;
+                                return EntityHelper.checkCanDamage(bukkitEntity, toCheck.getBukkitEntity(), true);
+                            });
+
+                    for (HitEntityInfo hitInfo : hitCandidates) {
+                        org.bukkit.entity.Entity hitEntity = hitInfo.getHitEntity().getBukkitEntity();
+                        if (hitEntity instanceof LivingEntity) {
+                            Location targetLoc = ((LivingEntity) hitEntity).getEyeLocation();
+                            velocity = terraria.util.MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, 1);
+                            break;
+                        }
+                    }
+                    break;
                 case "BOTTOM":
                 default:
                     velocity = new Vector(0, -1, 0);
                     extraProjectileShootInfo.shootLoc.add(
                             (Math.random() - 0.5) * offset, 0, (Math.random() - 0.5) * offset);
             }
-            velocity.multiply(extraProjectileConfigSection.getDouble("speed", 1d));
-            extraProjectileShootInfo.velocity = velocity;
-            EntityHelper.spawnProjectile(extraProjectileShootInfo);
+            if (velocity != null) {
+                velocity.multiply(extraProjectileConfigSection.getDouble("speed", 1d));
+                extraProjectileShootInfo.velocity = velocity;
+                EntityHelper.spawnProjectile(extraProjectileShootInfo);
+            }
         }
     }
     // this helper function is called every tick as long as the projectile is alive.

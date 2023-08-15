@@ -99,9 +99,9 @@
     spawnProjectiles:
         # 生成间隔，整数，默认10 (2次/秒)
         interval: 10
-        # 生成位置随机偏移的直径，单位：格
+        # 生成位置随机偏移的直径(生成方式是ENEMY时则为攻击敌人最大距离)，单位：格
         offset: 1.0
-        # 生成方式：BOTTOM，向下生成; SURROUND，向周围生成；FORWARD，向前生成
+        # 生成方式：BOTTOM，向下生成; SURROUND，向周围生成；FORWARD，向前生成；ENEMY，向敌人生成
         spawnMechanism: BOTTOM
         # 生成射弹伤害比例
         damageMulti: 0.5
@@ -1110,6 +1110,54 @@ TNT:
     blockHitAction: thru
     gravity: 0
     liveTime: 25
+烟陨彗星:
+    projectileSize: 0.5
+    spawnProjectiles:
+        interval: 15
+        offset: 0.5
+        spawnMechanism: BOTTOM
+        damageMulti: 1
+        speed: 1
+        spawnType: 坠星
+涡旋:
+    spawnProjectiles:
+        interval: 10
+        offset: 0.5
+        spawnMechanism: SURROUND
+        damageMulti: 1
+        speed: 1
+        spawnType: 水流
+    slowedByWater: false
+水流:
+    noGravityTicks: 10
+    liveTime: 50
+    penetration: 1
+    slowedByWater: false
+    trailColor: 69|92|211
+    trailSize: 0.15
+    trailStepSize: 0.5
+空旋:
+    spawnProjectiles:
+        interval: 10
+        offset: 22
+        spawnMechanism: ENEMY
+        damageMulti: 0.25
+        speed: 1
+        spawnType: 信风羽
+神旨:
+    spawnProjectiles:
+        interval: 6
+        offset: 22
+        spawnMechanism: ENEMY
+        damageMulti: 0.75
+        speed: 1
+        spawnType: 凝胶束
+凝胶束:
+    gravity: 0
+    liveTime: 50
+    trailColor: 102|248|255
+    trailSize: 0.15
+    trailStepSize: 0.5
 彩虹猫之刃:
     projectileSize: 0.5
     blockHitAction: bounce
@@ -1219,6 +1267,8 @@ TNT:
     trailLingerTime: 6
 硫磺火间歇泉:
     noGravityTicks: 0
+    projectileSize: 0.25
+    liveTime: 100
     blockHitAction: stick
     penetration: 999999
     minimumDamageTicks: 5
@@ -1404,6 +1454,15 @@ TNT:
         damageMulti: 0.5
         name: 追踪火球
         velocity: 1.25
+电火花:
+    noGravityTicks: 0
+    liveTime: 80
+    projectileSize: 0.25
+    blockHitAction: stick
+    penetration: 4
+    enemyInvincibilityFrame: 5
+    trailColor: 10|215|255
+    trailLingerTime: 6
 阿米迪亚斯漩涡:
     projectileSize: 0.5
     autoTrace: true
@@ -1552,6 +1611,14 @@ TNT:
 狱炎箭:
     isGrenade: true
     blastRadius: 2
+圣箭:
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.5
+        name: 坠星
+        type: star
+        fireOnTimeout: false
+        velocity: 1.5
 诅咒箭:
     buffInflict:
         - "咒火|140|1"
