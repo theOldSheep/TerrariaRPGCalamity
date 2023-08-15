@@ -531,6 +531,7 @@
   attributes:
     damage: 300
     useTime: 20
+    crit: 35
   worth: 20000
   rarity: 1
 镣铐:

@@ -160,7 +160,7 @@ public class BossHelper {
             if (targetPlayer.getWorld() != boss.getWorld()) return false;
             if (biomeRequired != null && WorldHelper.BiomeType.getBiome(targetPlayer, false) != biomeRequired) return false;
             double distHor = GenericHelper.getHorizontalDistance(targetPlayer.getLocation(), boss.getLocation());
-            if (distHor > 100) return ignoreDistance;
+            if (distHor > 175) return ignoreDistance;
             return true;
         }
         return false;

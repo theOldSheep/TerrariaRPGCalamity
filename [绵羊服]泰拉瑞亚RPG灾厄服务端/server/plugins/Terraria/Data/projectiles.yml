@@ -119,8 +119,15 @@
     blockHitAction: stick
     liveTime: 999999
 坠星:
+    gravity: 0
     projectileSize: 0.5
     penetration: 999999
+彗星:
+    gravity: 0
+    projectileSize: 0.75
+    autoTrace: true
+    blockHitAction: thru
+    liveTime: 60
 腐蚀之云:
     penetration: 99999
     speedMultiPerTick: 0.95
@@ -1525,6 +1532,30 @@ TNT:
     blockHitAction: thru
     autoTrace: true
     liveTime: 40
+星夜光束:
+    gravity: 0
+    liveTime: 75
+    projectileSize: 0.5
+    penetration: 2
+尖刺:
+    gravity: 0
+    liveTime: 75
+    projectileSize: 0.5
+    penetration: 2
+    buffInflict:
+        - "剧毒|100|1"
+泰拉长枪枪气:
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 75
+    projectileSize: 0.5
+    penetration: 999999
+能量脉冲:
+    gravity: 0
+    liveTime: 125
+    trailColor: 242|255|179
+    trailSize: 0.15
+    trailStepSize: 0.5
 星云烈焰:
     gravity: 0
     autoTrace: true
@@ -1614,7 +1645,7 @@ TNT:
 圣箭:
     clusterBomb:
         amount: 3
-        damageMulti: 0.5
+        damageMulti: 0.4
         name: 坠星
         type: star
         fireOnTimeout: false

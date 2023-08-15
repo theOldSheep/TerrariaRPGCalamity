@@ -606,28 +606,129 @@ public class ItemUseHelper {
                 case "水电剑":
                 case "潜渊震荡者": {
                     shouldStrike = currentIndex <= 5;
-                    strikeLineInfo
-                            .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
-                                Vector projVel = MathHelper.randomVector();
-                                projVel.multiply(0.2);
-                                EntityHelper.spawnProjectile(ply, hitLoc, projVel,
-                                        attrMap, EntityHelper.DamageType.MELEE, "电火花");
-                            });
+                    if (shouldStrike) {
+                        strikeLineInfo
+                                .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                    Vector projVel = MathHelper.randomVector();
+                                    projVel.multiply(0.2);
+                                    EntityHelper.spawnProjectile(ply, hitLoc, projVel,
+                                            attrMap, EntityHelper.DamageType.MELEE, "电火花");
+                                });
+                    }
                     break;
                 }
                 case "卢克雷西亚": {
                     shouldStrike = currentIndex <= 2;
-                    strikeLineInfo
-                            .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
-                                // melee invulnerability tick
-                                int invulnerabilityTicks = 3;
-                                EntityHelper.handleEntityInvulnerabilityTicks(ply,
-                                        EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
-                                        invulnerabilityTicks);
-                                EntityHelper.handleEntityInvulnerabilityTicks(ply,
-                                        EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
-                                        invulnerabilityTicks);
-                            });
+                    if (shouldStrike) {
+                        strikeLineInfo
+                                .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                    // melee invulnerability tick
+                                    int invulnerabilityTicks = 3;
+                                    EntityHelper.handleEntityInvulnerabilityTicks(ply,
+                                            EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
+                                            invulnerabilityTicks);
+                                    EntityHelper.handleEntityInvulnerabilityTicks(ply,
+                                            EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
+                                            invulnerabilityTicks);
+                                });
+                    }
+                    break;
+                }
+                case "硫磺火矛": {
+                    shouldStrike = currentIndex <= 5;
+
+                    if (shouldStrike) {
+                        strikeLineInfo
+                                .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                    // explosion
+                                    EntityHelper.handleEntityExplode(ply, 1, new ArrayList<>(), hitLoc,
+                                            1, 5);
+                                    // projectile
+                                    for (int i = (int) (Math.random() * 3); i < 3; i++) {
+                                        Vector projVel = MathHelper.randomVector();
+                                        projVel.multiply(0.35);
+                                        EntityHelper.spawnProjectile(ply, hitLoc, projVel,
+                                                attrMap, EntityHelper.DamageType.MELEE, "硫磺火间歇泉");
+                                    }
+                                });
+                    }
+                    break;
+                }
+                case "火山之矛": {
+                    shouldStrike = currentIndex <= 5;
+                    if (shouldStrike) {
+                        double critRate = (attrMap.getOrDefault("crit", 4d) +
+                                attrMap.getOrDefault("critMelee", 0d) +
+                                attrMap.getOrDefault("critTrueMelee", 0d)) / 100;
+                        strikeLineInfo
+                                .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                    // explosion
+                                    EntityHelper.handleEntityExplode(ply, 1, new ArrayList<>(), hitLoc,
+                                            1, 5);
+                                    // projectile
+                                    if (Math.random() < critRate)
+                                        for (int i = (int) (Math.random() * 2); i < 2; i++) {
+                                            Vector projVel = MathHelper.randomVector();
+                                            projVel.multiply(1);
+                                            EntityHelper.spawnProjectile(ply, hitLoc, projVel,
+                                                    attrMap, EntityHelper.DamageType.MELEE, "追踪火球");
+                                        }
+                                });
+                    }
+                    break;
+                }
+                case "瘟疫长枪": {
+                    shouldStrike = currentIndex <= 5;
+
+                    if (shouldStrike) {
+                        HashMap<String, Double> plagueSeekerAttrMap = (HashMap<String, Double>) attrMap.clone();
+                        plagueSeekerAttrMap.put("damage", plagueSeekerAttrMap.get("damage") * 0.4);
+                        strikeLineInfo
+                                .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                    // plague seekers
+                                    for (int i = 0; i < 5; i++) {
+                                        Vector projVel = MathHelper.randomVector();
+                                        projVel.multiply(1.5);
+                                        EntityHelper.spawnProjectile(ply, hitLoc, projVel,
+                                                plagueSeekerAttrMap, EntityHelper.DamageType.MELEE, "瘟疫搜寻者");
+                                    }
+                                });
+                    }
+                    break;
+                }
+                case "磁能分割刀": {
+                    shouldStrike = currentIndex <= 5;
+                    if (shouldStrike) {
+                        Vector projVel = lookDir.clone();
+                        projVel.multiply(1.25);
+
+                        HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
+                        projAttrMap.put("damage", projAttrMap.get("damage") * 0.65);
+
+                        EntityHelper.spawnProjectile(ply, projVel,
+                                projAttrMap, EntityHelper.DamageType.MELEE, "能量脉冲");
+                    }
+                    break;
+                }
+                case "幻星矛": {
+                    shouldStrike = currentIndex <= 5;
+                    if (shouldStrike) {
+                        double critRate = (attrMap.getOrDefault("crit", 4d) +
+                                attrMap.getOrDefault("critMelee", 0d) +
+                                attrMap.getOrDefault("critTrueMelee", 0d)) / 100;
+                        strikeLineInfo
+                                .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                    // comet
+                                    if (Math.random() < critRate) {
+                                        Vector projVel = MathHelper.randomVector();
+                                        Vector locOffset = projVel.clone();
+                                        projVel.multiply(1.5);
+                                        locOffset.multiply(30);
+                                        EntityHelper.spawnProjectile(ply, hitLoc.subtract(locOffset), projVel,
+                                                attrMap, EntityHelper.DamageType.MELEE, "彗星");
+                                    }
+                                });
+                    }
                     break;
                 }
                 case "钨钢螺丝刀_RIGHT_CLICK": {
@@ -1036,7 +1137,9 @@ public class ItemUseHelper {
                             case "誓约与禁忌之刃":
                             case "炼狱":
                                 explodeRad = 1.5;
-                                explodeRate = attrMap.getOrDefault("crit", 4d) / 100;
+                                explodeRate = (attrMap.getOrDefault("crit", 4d) +
+                                        attrMap.getOrDefault("critMelee", 0d) +
+                                        attrMap.getOrDefault("critTrueMelee", 0d)) / 100;
                                 explodeDuration = 1;
                                 explodeDelay = 5;
                                 break;
@@ -1110,10 +1213,12 @@ public class ItemUseHelper {
                     }
                     case "硫火之刃": {
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
-                            Vector projVel = MathHelper.randomVector();
-                            projVel.multiply(0.35);
-                            EntityHelper.spawnProjectile(ply, hitLoc, projVel,
-                                    attrMap, EntityHelper.DamageType.MELEE, "硫磺火间歇泉");
+                            for (int i = (int) (Math.random() * 2); i < 3; i ++) {
+                                Vector projVel = MathHelper.randomVector();
+                                projVel.multiply(0.35);
+                                EntityHelper.spawnProjectile(ply, hitLoc, projVel,
+                                        attrMap, EntityHelper.DamageType.MELEE, "硫磺火间歇泉");
+                            }
                         });
                         break;
                     }
@@ -1253,9 +1358,12 @@ public class ItemUseHelper {
                                 projPitch += 15;
                             }
                         }
+                        double critRate = (attrMap.getOrDefault("crit", 4d) +
+                                attrMap.getOrDefault("critMelee", 0d) +
+                                attrMap.getOrDefault("critTrueMelee", 0d)) / 100;
                         strikeLineInfo
                                 .setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
-                                    if (Math.random() < attrMap.getOrDefault("crit", 4d) / 100)
+                                    if (Math.random() < critRate)
                                         EntityHelper.handleEntityExplode(ply, 1.5, new ArrayList<>(), hitLoc,
                                                 1, 5);
                                 });

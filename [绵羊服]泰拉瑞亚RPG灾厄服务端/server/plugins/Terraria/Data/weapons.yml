@@ -671,17 +671,6 @@
   type: STAB
   autoSwing: true
   size: 12.5
-钨钢螺丝刀:
-  type: STAB
-  size: 1.5
-  projectileInfo:
-    velocity: 0.1
-    name: 螺丝钉
-钨钢螺丝刀_RIGHT_CLICK:
-  type: STAB
-  size: 3.75
-  attributes:
-    useTime: 30
 绽花毒藤:
   type: FLAIL
   reach: 12
@@ -713,8 +702,60 @@
   size: 3.75
   autoSwing: true
   projectileInfo:
-    velocity: 1.5
+    velocity: 1.25
     name: 信风羽
+星夜长枪:
+  type: STAB
+  autoSwing: true
+  size: 7.5
+  projectileInfo:
+    velocity: 1.35
+    name: 星夜光束
+硫磺火矛:
+  type: STAB
+  autoSwing: true
+  size: 12.5
+刺花长矛:
+  type: STAB
+  autoSwing: true
+  size: 8
+  projectileInfo:
+    velocity: 1.35
+    name: 尖刺
+泰拉长枪:
+  type: STAB
+  autoSwing: true
+  size: 10
+  projectileInfo:
+    velocity: 1.5
+    name: 泰拉长枪枪气
+火山之矛:
+  type: STAB
+  autoSwing: true
+  size: 12
+瘟疫长枪:
+  type: STAB
+  autoSwing: true
+  size: 11
+磁能分割刀:
+  type: STAB
+  autoSwing: true
+  size: 8
+幻星矛:
+  type: STAB
+  autoSwing: true
+  size: 9.5
+钨钢螺丝刀:
+  type: STAB
+  size: 1.5
+  projectileInfo:
+    velocity: 0.1
+    name: 螺丝钉
+钨钢螺丝刀_RIGHT_CLICK:
+  type: STAB
+  size: 3.75
+  attributes:
+    useTime: 30
 残缺环境刃[澄澈之纯净]:
   type: SWING
   autoSwing: true

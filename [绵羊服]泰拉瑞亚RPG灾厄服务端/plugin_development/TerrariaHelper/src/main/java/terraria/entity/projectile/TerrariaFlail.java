@@ -39,7 +39,7 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
         super.canBeReflected = false;
         switch (super.projectileType) {
             case "海蚌锤":
-                super.projectileRadius = 1.5;
+                super.projectileRadius = 1;
                 super.gravity = 0.05;
                 super.noGravityTicks = 10;
                 break;
