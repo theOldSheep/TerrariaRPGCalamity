@@ -870,7 +870,6 @@
     useTime: 8
 木弓:
   type: BOW
-  thruWall: true
 钨钢弓:
   type: BOW
 铁弓:
@@ -931,11 +930,145 @@
   autoSwing: true
   shots: 3
   offSet: 40
+巴淋内德:
+  type: BOW
+  autoSwing: true
+  ammoConversion:
+    木箭:
+    - 闪电箭
+贝壳刃弓:
+  type: BOW
+  autoSwing: true
+  ammoConversion:
+    木箭:
+    - 贝壳箭
+烈风:
+  type: BOW
+  autoSwing: true
+月光弓:
+  type: BOW
+  autoSwing: true
+  shots: 2
+  ammoConversion:
+    木箭:
+    - 能量束
+黑翼蝙蝠弓:
+  type: BOW
+  autoSwing: true
+  shots: 4
+  ammoConversion:
+    木箭:
+    - 黑翼蝙蝠
+暗之回响:
+  type: BOW
+  autoSwing: true
+  shots: 2
+  offSet: 14
+白霜弓:
+  type: BOW
+  autoSwing: true
+  shots: 2
+  offSet: 24
+  ammoConversion:
+    木箭:
+    - 冰雾箭
+巴淋诺提卡:
+  type: BOW
+  autoSwing: true
+  ammoConversion:
+    木箭:
+    - 闪电箭
+硫火之怒:
+  type: BOW
+  autoSwing: true
+  shots: 3
+  offSet: 34
+  ammoConversion:
+    木箭:
+    - 硫火射线
+叶流:
+  type: BOW
+  autoSwing: true
+  fireRounds: 4
+  fireRoundsDelay: 2
+  attributes:
+    useTime: 8
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
+  ammoConversion:
+    ALL:
+    - 叶之箭
+叶流_RIGHT_CLICK:
+  type: SPECIAL_AMMO
+  autoSwing: true
+  ammo: _孢子球
+  attributes:
+    useTime: 12
+宇束弓:
+  type: BOW
+  autoSwing: true
+  shots: 3
+  ammoConversion:
+    木箭:
+    - 能量束
+破城巨弓:
+  type: BOW
+  autoSwing: true
+  ammoConversion:
+    木箭:
+    - 破城巨箭
+洲陆巨弓:
+  type: BOW
+  autoSwing: true
+  shots: 3
+  offSet: 24
+  fireRounds: 2
+  fireRoundsDelay: 8
+  ammoConversion:
+    木箭:
+    - 烈焰箭
+猎人长弓:
+  type: BOW
+  autoSwing: true
+  shots: 3
+  offSet: 30
+  ammoConversion:
+    木箭:
+    - 小丑之箭
+蜂毒:
+  type: BOW
+  autoSwing: true
+  shots: 2
+  offSet: 50
+  ammoConversion:
+    木箭:
+    - 瘟疫箭
+幻星弓:
+  type: BOW
+  autoSwing: true
+  fireRounds: 3
+  fireRoundsDelay: 3
+劲弩:
+  type: BOW
+  autoSwing: true
+  shots: 2
+  offSet: 30
+  fireRounds: 5
+  fireRoundsDelay: 2
+锋叶十字弩:
+  type: BOW
+  autoSwing: true
+  shots: 4
+  offSet: 20
+  fireRounds: 2
+  fireRoundsDelay: 5
+恒吹雪:
+  type: BOW
+  autoSwing: true
 气泵枪:
   type: SPECIAL_AMMO
   ammo: _南瓜榴弹
   autoSwing: true
-  isGranade: true
   maxLoad: 5
   loadTimeMulti: 0.6
   offSet: 10

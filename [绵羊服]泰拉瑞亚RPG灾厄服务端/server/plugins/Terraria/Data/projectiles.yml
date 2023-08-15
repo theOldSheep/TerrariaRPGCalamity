@@ -610,7 +610,7 @@
 天蓝羽毛:
     autoTrace: true
     isGrenade: true
-    blastRadius: 2
+    blastRadius: 1.5
 南瓜榴弹:
     isGrenade: true
     blastRadius: 1
@@ -1613,8 +1613,9 @@ TNT:
     buffInflict:
         - "燃烧|100|0.3"
 孢子球:
-    blockHitAction: thru
     gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.25
     liveTime: 100
     speedMultiPerTick: 0.95
     autoTrace: true
@@ -1661,6 +1662,53 @@ TNT:
     bounce: 3
 幻象箭:
     autoTrace: true
+闪电箭:
+    isGrenade: true
+    blastRadius: 1
+    buffInflict:
+        - "带电|20|1"
+贝壳箭:
+    penetration: 4
+能量束:
+    gravity: 0
+    blockHitAction: slide
+黑翼蝙蝠:
+    gravity: 0
+    blockHitAction: bounce
+    bounce: 2
+    penetration: 2
+    bouncePenetrationBonded: true
+水晶镖:
+    penetration: 3
+冰雾箭:
+    buffInflict:
+        - "霜火|50|1"
+硫火射线:
+    penetration: 2
+    buffInflict:
+        - "硫磺火|40|1"
+化石碎片:
+    liveTime: 20
+    buffInflict:
+        - "碎甲|20|1"
+破城巨箭:
+    penetration: 2
+    buffInflict:
+        - "碎甲|60|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.25
+        name: 化石碎片
+        velocity: 0.75
+瘟疫箭:
+    penetration: 2
+    buffInflict:
+        - "碎甲|60|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.35
+        name: 瘟疫矢
+        velocity: 1
 红自导能源箭:
     autoTrace: true
     autoTraceAbility: 2.5

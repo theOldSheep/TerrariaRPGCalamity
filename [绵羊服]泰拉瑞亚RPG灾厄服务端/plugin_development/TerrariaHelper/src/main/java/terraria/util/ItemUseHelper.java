@@ -1761,6 +1761,8 @@ public class ItemUseHelper {
         String ammoType = ammoTypeInitial;
         HashMap<String, Double> attrMap = (HashMap<String, Double>) attrMapOriginal.clone();
         List<String> ammoConversion = weaponSection.getStringList("ammoConversion." + ammoType);
+        if (ammoConversion.isEmpty())
+            ammoConversion = weaponSection.getStringList("ammoConversion.ALL");
         // if the ammo could get converted into multiple possible projectiles, handle them separately in the loop instead.
         if  (ammoConversion.size() <= 1) {
             if (ammoConversion.size() == 1) ammoType = ammoConversion.get(0);
@@ -1770,6 +1772,105 @@ public class ItemUseHelper {
                 ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoTypeInitial + ".attributes");
             if (ammoAttributeSection != null)
                 EntityHelper.tweakAllAttributes(attrMap, ammoAttributeSection, true);
+        }
+        // tweaks, such as extra projectiles from weapons
+        switch (itemType) {
+            // forward extra projectile
+            case "星璇机枪":
+            case "玛瑙爆破枪":
+            case "玛瑙链炮":
+            case "奥妮克希亚":
+            case "凝胶弓":
+            case "暗之回响":
+            case "恒吹雪": {
+                Location fireLoc = ply.getEyeLocation();
+                Vector fireVelocity = facingDir.clone();
+                HashMap<String, Double> attrMapExtraProjectile = (HashMap<String, Double>) attrMap.clone();
+                double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
+                boolean shouldFire = true;
+                String extraProjectileType = "";
+                int extraProjectileAmount = 1;
+                switch (itemType) {
+                    case "玛瑙爆破枪":
+                    case "玛瑙链炮":
+                    case "奥妮克希亚": {
+                        extraProjectileType = "玛瑙能量";
+                        break;
+                    }
+                    case "星璇机枪": {
+                        if (swingAmount % 5 == 4) {
+                            extraProjectileType = "星璇导弹";
+                            attrMapExtraProjectile.put("damage", 140d);
+                        } else {
+                            shouldFire = false;
+                        }
+                        break;
+                    }
+                    case "凝胶弓": {
+                        extraProjectileType = "凝胶束";
+                        attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.25);
+                        extraProjectileAmount = 2;
+                        break;
+                    }
+                    case "暗之回响": {
+                        extraProjectileType = "水晶镖";
+                        attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.5);
+                        break;
+                    }
+                    case "恒吹雪": {
+                        extraProjectileType = "冰坠箭";
+                        break;
+                    }
+                }
+                // setup projectile velocity
+                if (shouldFire) {
+                    fireVelocity.multiply(projectileSpeed);
+                    for (int i = 0; i < extraProjectileAmount; i ++) {
+                        EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMapExtraProjectile,
+                                EntityHelper.getDamageType(ply), extraProjectileType);
+                    }
+                }
+                break;
+            }
+            case "烈风": {
+                Location fireLoc = ply.getEyeLocation();
+                HashMap<String, Double> attrMapExtraProjectile = (HashMap<String, Double>) attrMap.clone();
+                attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.2);
+                double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
+
+                for (int i = -1; i <= 1; i ++) {
+                    Vector fireVelocity = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch + i * 10);
+                    EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMapExtraProjectile,
+                            EntityHelper.getDamageType(ply), "天蓝羽毛");
+                }
+                break;
+            }
+            case "巴淋诺提卡": {
+                if (ammoType.equals("闪电箭")) {
+                    fireRoundMax = 3;
+                }
+                break;
+            }
+            // multiple fire round, ammo conversion tweak
+            case "洲陆巨弓": {
+                if (fireIndex == 2) {
+                    ammoConversion = new ArrayList<>(2);
+                    ammoConversion.add("诅咒箭");
+                    ammoConversion.add("狱炎箭");
+                    fireAmount = 2;
+                }
+                break;
+            }
+            case "锋叶十字弩": {
+                if (fireIndex == 2) {
+                    // make its size > 1 so it converts the ammo in the loop
+                    ammoConversion = new ArrayList<>(2);
+                    ammoConversion.add("树叶");
+                    ammoConversion.add("树叶");
+                    fireAmount = 2;
+                }
+                break;
+            }
         }
         for (int i = 0; i < fireAmount; i ++) {
             // account for arrow attribute.
@@ -1800,9 +1901,10 @@ public class ItemUseHelper {
             }
             // handle special weapons (pre-firing)
             switch (itemType) {
-                case "海啸弓": {
+                case "海啸弓":
+                case "黑翼蝙蝠": {
                     fireLoc.add(MathHelper.vectorFromYawPitch_quick(plyNMS.yaw,
-                            plyNMS.pitch + 12.5 * (i - fireAmount / 2))
+                            plyNMS.pitch + 12.5 * (i - fireAmount / 2d))
                             .multiply(1.5));
                     break;
                 }
@@ -1830,46 +1932,6 @@ public class ItemUseHelper {
                     firedProjectile.addScoreboardTag("isVortex");
                     break;
                 }
-            }
-        }
-        // extra projectiles from weapons such as onyx blaster and its upgrades
-        switch (itemType) {
-            // single extra projectile
-            case "星璇机枪":
-            case "玛瑙爆破枪":
-            case "玛瑙链炮":
-            case "奥妮克希亚": {
-                Location fireLoc = ply.getEyeLocation();
-                Vector fireVelocity = facingDir.clone();
-                HashMap<String, Double> attrMapExtraProjectile = attrMap;
-                double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
-                boolean shouldFire = true;
-                String extraProjectileType = "";
-                switch (itemType) {
-                    case "玛瑙爆破枪":
-                    case "玛瑙链炮":
-                    case "奥妮克希亚": {
-                        extraProjectileType = "玛瑙能量";
-                        break;
-                    }
-                    case "星璇机枪": {
-                        if (swingAmount % 5 == 4) {
-                            extraProjectileType = "星璇导弹";
-                            attrMapExtraProjectile = (HashMap<String, Double>) attrMap.clone();
-                            attrMapExtraProjectile.put("damage", 140d);
-                        } else {
-                            shouldFire = false;
-                        }
-                        break;
-                    }
-                }
-                // setup projectile velocity
-                if (shouldFire) {
-                    fireVelocity.multiply(projectileSpeed);
-                    EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMapExtraProjectile,
-                            EntityHelper.getDamageType(ply), extraProjectileType);
-                }
-                break;
             }
         }
         // if this is a delayed shot, play item swing sound

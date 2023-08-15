@@ -504,72 +504,80 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                     EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, this.penetration);
                                 }
                                 // chlorophyte arrow bounce into enemies
-                                if (projectileType.equals("叶绿箭")) {
-                                    velocity.multiply(-1);
-                                    double homeInRadius = 24,
-                                            smallestDistSqr = 1e9;
-                                    Location currLoc = new Location(this.bukkitEntity.getWorld(), futureLoc.x, futureLoc.y, futureLoc.z);
-                                    for (org.bukkit.entity.Entity entity : getBukkitEntity().getNearbyEntities(homeInRadius, homeInRadius, homeInRadius)) {
-                                        // should strictly home into "proper" enemies (no critters!)
-                                        if (!EntityHelper.checkCanDamage(this.bukkitEntity, entity, true))
-                                            continue;
-                                        // make sure the closest entity is targeted
-                                        double currDistSqr = entity.getLocation().distanceSquared(currLoc);
-                                        if (currDistSqr >= smallestDistSqr)
-                                            continue;
-                                        // predicts the enemy's future location
-                                        Location predictedLoc = EntityHelper.helperAimEntity(this.bukkitEntity, entity,
-                                                new EntityHelper.AimHelperOptions()
-                                                        .setProjectileSpeed(this.speed));
-                                        // initializes direction the projectile should go to
-                                        Vector dir = predictedLoc.subtract(currLoc).toVector();
-                                        double predictedDist = dir.length();
-                                        dir.multiply(this.speed / predictedDist);
-                                        // account for gravity
-                                        double ticksToTravel = Math.ceil(predictedDist / this.speed);
-                                        // distY = acceleration(gravity) * ticksToTravel^2 / 2
-                                        // to counter that, yVelocityOffset = distY / ticksToTravel = gravity * ticksToTravel / 2
-                                        double yVelocityOffset = this.gravity * ticksToTravel / 2;
-                                        dir.setY(dir.getY() + yVelocityOffset);
-                                        // check if the direction is clear. If it is obstructed with block, skip this entity.
-                                        Vec3D checkLocVec;
-                                        if (entity instanceof LivingEntity)
-                                            checkLocVec = terraria.util.MathHelper.toNMSVector(((LivingEntity) entity).getEyeLocation().toVector());
-                                        else
-                                            checkLocVec = terraria.util.MathHelper.toNMSVector(entity.getLocation().toVector());
-                                        MovingObjectPosition blockedLocation = HitEntityInfo.rayTraceBlocks(this.world,
-                                                futureLoc, checkLocVec);
-                                        if (blockedLocation != null)
-                                            continue;
-                                        // update the smallest distance only if the target is reachable.
-                                        smallestDistSqr = currDistSqr;
-                                        // update velocity
-                                        velocity = dir;
+                                switch (projectileType) {
+                                    case "叶绿箭": {
+                                        velocity.multiply(-1);
+                                        double homeInRadius = 24,
+                                                smallestDistSqr = 1e9;
+                                        Location currLoc = new Location(this.bukkitEntity.getWorld(), futureLoc.x, futureLoc.y, futureLoc.z);
+                                        for (org.bukkit.entity.Entity entity : getBukkitEntity().getNearbyEntities(homeInRadius, homeInRadius, homeInRadius)) {
+                                            // should strictly home into "proper" enemies (no critters!)
+                                            if (!EntityHelper.checkCanDamage(this.bukkitEntity, entity, true))
+                                                continue;
+                                            // make sure the closest entity is targeted
+                                            double currDistSqr = entity.getLocation().distanceSquared(currLoc);
+                                            if (currDistSqr >= smallestDistSqr)
+                                                continue;
+                                            // predicts the enemy's future location
+                                            Location predictedLoc = EntityHelper.helperAimEntity(this.bukkitEntity, entity,
+                                                    new EntityHelper.AimHelperOptions()
+                                                            .setProjectileSpeed(this.speed));
+                                            // initializes direction the projectile should go to
+                                            Vector dir = predictedLoc.subtract(currLoc).toVector();
+                                            double predictedDist = dir.length();
+                                            dir.multiply(this.speed / predictedDist);
+                                            // account for gravity
+                                            double ticksToTravel = Math.ceil(predictedDist / this.speed);
+                                            // distY = acceleration(gravity) * ticksToTravel^2 / 2
+                                            // to counter that, yVelocityOffset = distY / ticksToTravel = gravity * ticksToTravel / 2
+                                            double yVelocityOffset = this.gravity * ticksToTravel / 2;
+                                            dir.setY(dir.getY() + yVelocityOffset);
+                                            // check if the direction is clear. If it is obstructed with block, skip this entity.
+                                            Vec3D checkLocVec;
+                                            if (entity instanceof LivingEntity)
+                                                checkLocVec = terraria.util.MathHelper.toNMSVector(((LivingEntity) entity).getEyeLocation().toVector());
+                                            else
+                                                checkLocVec = terraria.util.MathHelper.toNMSVector(entity.getLocation().toVector());
+                                            MovingObjectPosition blockedLocation = HitEntityInfo.rayTraceBlocks(this.world,
+                                                    futureLoc, checkLocVec);
+                                            if (blockedLocation != null)
+                                                continue;
+                                            // update the smallest distance only if the target is reachable.
+                                            smallestDistSqr = currDistSqr;
+                                            // update velocity
+                                            velocity = dir;
+                                        }
+                                        break;
                                     }
-                                } else {
-                                    velocity.multiply(bounceVelocityMulti);
-                                    double yVelocityThreshold = gravity * speedMulti;
-                                    switch (movingobjectposition.direction) {
-                                        case UP:
-                                            velocity.setY(velocity.getY() * -1);
-                                            // prevent projectile twitching
-                                            if (gravity > 0 && velocity.getY() < yVelocityThreshold)
-                                                velocity.setY(0);
-                                            break;
-                                        case DOWN:
-                                            velocity.setY(velocity.getY() * -1);
-                                            // prevent projectile twitching
-                                            if (gravity < 0 && velocity.getY() > yVelocityThreshold)
-                                                velocity.setY(0);
-                                            break;
-                                        case EAST:
-                                        case WEST:
-                                            velocity.setX(velocity.getX() * -1);
-                                            break;
-                                        case SOUTH:
-                                        case NORTH:
-                                            velocity.setZ(velocity.getZ() * -1);
-                                            break;
+                                    case "黑翼蝙蝠": {
+                                        velocity.multiply(-1);
+                                        break;
+                                    }
+                                    default: {
+                                        velocity.multiply(bounceVelocityMulti);
+                                        double yVelocityThreshold = gravity * speedMulti;
+                                        switch (movingobjectposition.direction) {
+                                            case UP:
+                                                velocity.setY(velocity.getY() * -1);
+                                                // prevent projectile twitching
+                                                if (gravity > 0 && velocity.getY() < yVelocityThreshold)
+                                                    velocity.setY(0);
+                                                break;
+                                            case DOWN:
+                                                velocity.setY(velocity.getY() * -1);
+                                                // prevent projectile twitching
+                                                if (gravity < 0 && velocity.getY() > yVelocityThreshold)
+                                                    velocity.setY(0);
+                                                break;
+                                            case EAST:
+                                            case WEST:
+                                                velocity.setX(velocity.getX() * -1);
+                                                break;
+                                            case SOUTH:
+                                            case NORTH:
+                                                velocity.setZ(velocity.getZ() * -1);
+                                                break;
+                                        }
                                     }
                                 }
                             } else{
