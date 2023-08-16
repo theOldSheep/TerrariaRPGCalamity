@@ -1599,7 +1599,7 @@
     useTime: 6
   worth: 400000
   rarity: 1
-污浊之刃:
+绝望之刃:
   item: DIAMOND_SWORD
   attributes:
     damage: 120
@@ -2480,7 +2480,7 @@
     useTime: 18
   worth: 7200000
   rarity: 5
-绝望之刃:
+真·绝望之刃:
   item: DIAMOND_SWORD
   lore:
   - §r发出弹射绝望光束
