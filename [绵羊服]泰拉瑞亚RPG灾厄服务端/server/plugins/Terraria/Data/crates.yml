@@ -409,6 +409,7 @@
       - 机械车轮片
     2:
       progressRequired: 机械三王
+      items:
       - 神圣锭:20:35
   渊海灾虫:
     1:
@@ -429,6 +430,7 @@
       - 机械车体片
     2:
       progressRequired: 机械三王
+      items:
       - 神圣锭:20:35
   硫磺火元素:
     1:
@@ -451,6 +453,7 @@
       - 机械电池片
     2:
       progressRequired: 机械三王
+      items:
       - 神圣锭:20:35
   灾厄之眼:
     1:

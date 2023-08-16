@@ -974,6 +974,8 @@
     - 冰雾箭
 巴淋诺提卡:
   type: BOW
+  fireRounds: 3
+  fireRoundsDelay: 2
   autoSwing: true
   ammoConversion:
     木箭:
@@ -1023,7 +1025,7 @@
   shots: 3
   offSet: 24
   fireRounds: 2
-  fireRoundsDelay: 8
+  fireRoundsDelay: 4
   ammoConversion:
     木箭:
     - 烈焰箭
@@ -1047,13 +1049,12 @@
   type: BOW
   autoSwing: true
   fireRounds: 3
-  fireRoundsDelay: 3
+  fireRoundsDelay: 1
 劲弩:
   type: BOW
   autoSwing: true
-  shots: 2
   offSet: 30
-  fireRounds: 5
+  fireRounds: 4
   fireRoundsDelay: 2
 锋叶十字弩:
   type: BOW
@@ -1061,7 +1062,7 @@
   shots: 4
   offSet: 20
   fireRounds: 2
-  fireRoundsDelay: 5
+  fireRoundsDelay: 3
 恒吹雪:
   type: BOW
   autoSwing: true
@@ -1072,6 +1073,12 @@
   maxLoad: 5
   loadTimeMulti: 0.6
   offSet: 10
+精金粒子加速器:
+  type: SPECIAL_AMMO
+  ammo: _粉色粒子光束
+  autoSwing: true
+  attributes:
+    projectileSpeed: 1280
 骨头手套:
   type: SPECIAL_AMMO
   ammo: 骨头
@@ -1148,6 +1155,169 @@
   type: GUN
 凤凰爆破枪:
   type: GUN
+鹅卵石冲击波:
+  type: GUN
+  autoSwing: true
+  fireRounds: 4
+  fireRoundsDelay: 2
+  ammoConversion:
+    ALL:
+    - 鹅卵石冲击波
+真菌枪:
+  type: GUN
+  autoSwing: true
+  ammoConversion:
+    火枪子弹:
+    - 真菌弹
+满弹霰弹枪:
+  type: GUN
+  shots: 15
+  offSet: 1.5
+  autoSwing: true
+  ammoConversion:
+    火枪子弹:
+    - 弹跳爆炸弹
+碎水霰弹枪:
+  type: GUN
+  shots: 2
+  offSet: 19
+  autoSwing: true
+  ammoConversion:
+    火枪子弹:
+    - 蓝晶碎片
+胶泥散弹枪:
+  type: GUN
+  shots: 3
+  offSet: 12
+  autoSwing: true
+屠夫:
+  type: GUN
+  shots: 4
+  autoSwing: true
+音波步枪:
+  type: GUN
+  autoSwing: true
+  ammoConversion:
+    火枪子弹:
+    - 能量弹
+诅咒手枪:
+  type: GUN
+  autoSwing: true
+  ammoConversion:
+    火枪子弹:
+    - 诅咒弹
+地狱降临:
+  type: GUN
+  autoSwing: true
+  ammoConversion:
+    绿藻弹:
+    - 火枪子弹
+霜牙冲击波:
+  type: GUN
+  autoSwing: true
+  shots: 2
+  offSet: 9
+  fireRounds: 3
+  fireRoundsDelay: 2
+  ammoConversion:
+    火枪子弹:
+    - 冰锥
+憎恨:
+  type: GUN
+  autoSwing: true
+  attributes:
+    damage: 400
+    useTime: 35
+憎恨_RIGHT_CLICK:
+  type: GUN
+  autoSwing: true
+  fireRounds: 4
+  fireRoundsDelay: 2
+  attributes:
+    damage: 66
+    useTime: 12
+深核GK2:
+  type: GUN
+  autoSwing: true
+九头蛇:
+  type: GUN
+  offSet: 22.5
+  autoSwing: true
+珍珠之神:
+  type: GUN
+  autoSwing: true
+麦格纳冲锋炮:
+  type: GUN
+  autoSwing: true
+  fireRounds: 4
+  fireRoundsDelay: 2
+  ammoConversion:
+    ALL:
+    - 鹅卵石冲击波
+    - 麦格纳冲击波
+利维坦海潮枪:
+  type: GUN
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 海水冲击波
+P90:
+  type: GUN
+  offSet: 15
+  autoSwing: true
+发条鳄鱼枪:
+  type: GUN
+  fireRounds: 3
+  fireRoundsDelay: 1
+  offSet: 32
+  autoSwing: true
+地狱风暴:
+  type: GUN
+  shots: 2
+  offSet: 75
+  autoSwing: true
+疫病污染者:
+  type: GUN
+  autoSwing: true
+  ammoConversion:
+    火枪子弹:
+    - 瘟疫子弹
+玷污之疫SMG:
+  type: GUN
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 瘟疫子弹
+玷污之疫SMG_RIGHT_CLICK:
+  type: SPECIAL_AMMO
+  ammo: _瘟疫自爆无人机
+  shots: 6
+  offSet: 9
+  autoSwing: true
+  attributes:
+    useTime: 30
+灭域者:
+  type: GUN
+  shots: 3
+  offSet: 12
+  autoSwing: true
+  ammoConversion:
+    火枪子弹:
+    - 爆炸弹
+电话会议:
+  type: GUN
+  shots: 4
+  offSet: 35
+  autoSwing: true
+蘑菇狙击枪:
+  type: GUN
+  autoSwing: true
+幻星冲击炮:
+  type: GUN
+  autoSwing: true
+  ammoConversion:
+    火枪子弹:
+    - 幻星弹
 榴弹发射器:
   type: ROCKET
   autoSwing: true

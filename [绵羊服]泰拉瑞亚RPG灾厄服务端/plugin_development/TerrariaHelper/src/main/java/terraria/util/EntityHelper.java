@@ -15,7 +15,6 @@ import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.*;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -153,6 +152,7 @@ public class EntityHelper {
         EFFECTS("effects"),
         HEALTH_LOCKED_AT_AMOUNT("healthLock"),
         INVULNERABILITY_TICK_EDITION_MAP("ivtEdiMap"),
+        LAST_ADAMANTITE_PARTICLE_TYPE("APAType"),
         KNOCKBACK_SLOW_FACTOR("kbFactor"),
         KILL_CONTRIBUTE_EVENT_PROGRESS("killProgress"),
         MINION_WHIP_BONUS_CRIT("minionWhipBonusCrit"),

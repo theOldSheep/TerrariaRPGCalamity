@@ -133,7 +133,6 @@ public class ItemUseAndAttributeListener implements Listener {
             case ENDER_PEARL:
             case EYE_OF_ENDER:
                 e.setCancelled(true);
-                return;
         }
         toolSwing(ply, true);
     }
@@ -164,7 +163,6 @@ public class ItemUseAndAttributeListener implements Listener {
                 case ENDER_PEARL:
                 case EYE_OF_ENDER:
                     e.setCancelled(true);
-                    return;
             }
         }
         if (e.useInteractedBlock() == Event.Result.DENY && e.getAction() == Action.RIGHT_CLICK_BLOCK) {

@@ -1,10 +1,9 @@
 package terraria.util;
 
-import net.minecraft.server.v1_12_R1.EntityHuman;
-import net.minecraft.server.v1_12_R1.EntityPlayer;
-import net.minecraft.server.v1_12_R1.MovingObjectPosition;
-import net.minecraft.server.v1_12_R1.PacketPlayOutSetCooldown;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.*;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
@@ -12,6 +11,7 @@ import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -1757,6 +1757,12 @@ public class ItemUseHelper {
         double spread = weaponSection.getDouble("offSet", -1d);
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+        EntityHelper.DamageType damageType = EntityHelper.getDamageType(ply);
+        double projectileSpeed = attrMapOriginal.getOrDefault("projectileSpeed", 1d);
+        projectileSpeed *= attrMapOriginal.getOrDefault("projectileSpeedMulti", 1d);
+        if (weaponType.equals("BOW"))
+            projectileSpeed *= attrMapOriginal.getOrDefault("projectileSpeedArrowMulti", 1d);
+        projectileSpeed = projectileSpeed / 20;
         // account for arrow attribute.
         String ammoType = ammoTypeInitial;
         HashMap<String, Double> attrMap = (HashMap<String, Double>) attrMapOriginal.clone();
@@ -1782,11 +1788,11 @@ public class ItemUseHelper {
             case "奥妮克希亚":
             case "凝胶弓":
             case "暗之回响":
-            case "恒吹雪": {
+            case "恒吹雪":
+            case "蘑菇狙击枪": {
                 Location fireLoc = ply.getEyeLocation();
                 Vector fireVelocity = facingDir.clone();
                 HashMap<String, Double> attrMapExtraProjectile = (HashMap<String, Double>) attrMap.clone();
-                double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
                 boolean shouldFire = true;
                 String extraProjectileType = "";
                 int extraProjectileAmount = 1;
@@ -1821,6 +1827,11 @@ public class ItemUseHelper {
                         extraProjectileType = "冰坠箭";
                         break;
                     }
+                    case "蘑菇狙击枪": {
+                        extraProjectileType = "追踪蘑菇";
+                        attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.5);
+                        break;
+                    }
                 }
                 // setup projectile velocity
                 if (shouldFire) {
@@ -1832,11 +1843,11 @@ public class ItemUseHelper {
                 }
                 break;
             }
+            // multiple fire round, ammo conversion tweak for extra fire round
             case "烈风": {
                 Location fireLoc = ply.getEyeLocation();
                 HashMap<String, Double> attrMapExtraProjectile = (HashMap<String, Double>) attrMap.clone();
                 attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.2);
-                double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
 
                 for (int i = -1; i <= 1; i ++) {
                     Vector fireVelocity = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch + i * 10);
@@ -1845,13 +1856,6 @@ public class ItemUseHelper {
                 }
                 break;
             }
-            case "巴淋诺提卡": {
-                if (ammoType.equals("闪电箭")) {
-                    fireRoundMax = 3;
-                }
-                break;
-            }
-            // multiple fire round, ammo conversion tweak
             case "洲陆巨弓": {
                 if (fireIndex == 2) {
                     ammoConversion = new ArrayList<>(2);
@@ -1861,13 +1865,74 @@ public class ItemUseHelper {
                 }
                 break;
             }
+            case "劲弩": {
+                fireAmount = fireIndex;
+                break;
+            }
             case "锋叶十字弩": {
                 if (fireIndex == 2) {
-                    // make its size > 1 so it converts the ammo in the loop
+                    // make its size > 1, so it converts the ammo in the loop
                     ammoConversion = new ArrayList<>(2);
                     ammoConversion.add("树叶");
                     ammoConversion.add("树叶");
                     fireAmount = 2;
+                }
+                break;
+            }
+            // other
+            case "屠夫": {
+                spread = Math.min(4 + swingAmount, 40);
+                break;
+            }
+            case "精金粒子加速器": {
+                ammoType = swingAmount % 2 == 0 ? "粉色粒子光束" : "蓝色粒子光束";
+                break;
+            }
+            case "九头蛇": {
+                int amountHead = Math.min( swingAmount / 5, 3);
+                fireAmount = 1 + amountHead;
+                break;
+            }
+            case "珍珠之神": {
+                switch (swingAmount % 7) {
+                    case 1:
+                    case 2:
+                        fireAmount = 3;
+                        break;
+                    case 3:
+                    case 4:
+                        fireAmount = 5;
+                        break;
+                    case 5:
+                    case 6:
+                        fireAmount = 7;
+                        break;
+                }
+                break;
+            }
+            case "电话会议": {
+                Vec3D locNMS = MathHelper.toNMSVector(ply.getLocation().toVector());
+                Set<HitEntityInfo> hitCandidates = HitEntityInfo.getEntitiesHit(
+                        plyNMS.world,
+                        locNMS,
+                        locNMS,
+                        48,
+                        (net.minecraft.server.v1_12_R1.Entity toCheck) ->
+                                toCheck instanceof EntityLiving &&
+                                        EntityHelper.checkCanDamage(ply, toCheck.getBukkitEntity(), true));
+                if (! hitCandidates.isEmpty()) {
+                    Iterator<HitEntityInfo> hitCandidateIter = hitCandidates.iterator();
+                    for (int i = 0; i < 12; i++) {
+                        if (!hitCandidateIter.hasNext()) hitCandidateIter = hitCandidates.iterator();
+                        Entity target = hitCandidateIter.next().getHitEntity().getBukkitEntity();
+                        Location shootLoc = target.getLocation().add(
+                                Math.random() * 16 - 8,
+                                Math.random() * 5 + 20,
+                                Math.random() * 16 - 8);
+                        Vector projVel = MathHelper.getDirection(shootLoc,
+                                ((LivingEntity) target).getEyeLocation(), projectileSpeed);
+                        EntityHelper.spawnProjectile(ply, shootLoc, projVel, attrMap, damageType, ammoType);
+                    }
                 }
                 break;
             }
@@ -1888,11 +1953,6 @@ public class ItemUseHelper {
             }
             Location fireLoc = ply.getEyeLocation();
             Vector fireVelocity = facingDir.clone();
-            double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
-            projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
-            if (weaponType.equals("BOW"))
-                projectileSpeed *= attrMap.getOrDefault("projectileSpeedArrowMulti", 1d);
-            projectileSpeed = Math.sqrt(projectileSpeed) * 0.5;
             // bullet spread
             if (spread > 0d) {
                 fireVelocity.multiply(spread);
@@ -1902,10 +1962,17 @@ public class ItemUseHelper {
             // handle special weapons (pre-firing)
             switch (itemType) {
                 case "海啸弓":
-                case "黑翼蝙蝠": {
+                case "黑翼蝙蝠弓": {
                     fireLoc.add(MathHelper.vectorFromYawPitch_quick(plyNMS.yaw,
-                            plyNMS.pitch + 12.5 * (i - fireAmount / 2d))
+                                    plyNMS.pitch + 12.5 * (i - fireAmount / 2))
                             .multiply(1.5));
+                    break;
+                }
+                case "珍珠之神": {
+                    Vector shootLocOffsetDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw,
+                            plyNMS.pitch + 12.5 * (i - fireAmount / 2));
+                    fireVelocity = shootLocOffsetDir.clone();
+                    fireLoc.add(shootLocOffsetDir.multiply(1.5));
                     break;
                 }
                 case "湮灭千星":
@@ -1924,12 +1991,20 @@ public class ItemUseHelper {
             // setup projectile velocity
             fireVelocity.multiply(projectileSpeed);
             Projectile firedProjectile = EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMap,
-                    EntityHelper.getDamageType(ply), ammoType);
+                    damageType, ammoType);
             // handle special weapons (post-firing)
             switch (itemType) {
                 case "幻象弓":
                 case "幻界": {
                     firedProjectile.addScoreboardTag("isVortex");
+                    break;
+                }
+                case "地狱降临": {
+                    firedProjectile.addScoreboardTag("isHellborn");
+                    break;
+                }
+                case "精金粒子加速器": {
+                    firedProjectile.addScoreboardTag("isAPA");
                     break;
                 }
             }
@@ -1997,6 +2072,28 @@ public class ItemUseHelper {
                 itemType, weaponType, ammoType, isLoadingWeapon, autoSwing);
         // apply CD
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
+        // special weapon handling
+        switch (itemType) {
+            case "屠夫": {
+                useSpeed *= Math.min(1 + (swingAmount / 6d), 6);
+                break;
+            }
+            case "九头蛇": {
+                int amountHead = Math.min( swingAmount / 5, 3);
+                switch (amountHead) {
+                    case 1:
+                        useSpeed *= 0.9;
+                        break;
+                    case 2:
+                        useSpeed *= 0.75;
+                        break;
+                    case 3:
+                        useSpeed *= 0.64;
+                        break;
+                }
+                break;
+            }
+        }
         double useTimeMulti = 1 / useSpeed;
         applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
         return true;

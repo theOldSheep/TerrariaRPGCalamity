@@ -1,16 +1,11 @@
 package terraria.event.listener;
 
-import net.minecraft.server.v1_12_R1.EntityProjectile;
-import net.minecraft.server.v1_12_R1.ItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftProjectile;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -21,10 +16,7 @@ import terraria.TerrariaHelper;
 import terraria.entity.projectile.TerrariaPotionProjectile;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.gameplay.EventAndTime;
-import terraria.util.EntityHelper;
-import terraria.util.ItemHelper;
-import terraria.util.MathHelper;
-import terraria.util.YmlHelper;
+import terraria.util.*;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -47,6 +39,7 @@ public class ArrowHitListener implements Listener {
     private void handleHitEntity(TerrariaProjectileHitEvent e, Projectile projectile, Entity entity) {
         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(projectile);
         Set<String> projectileScoreboardTags = projectile.getScoreboardTags();
+        String projectileName = projectile.getName();
         // if the projectile is reflected
         if (entity.getScoreboardTags().contains("reflectProjectile")) {
             TerrariaPotionProjectile nmsProjectile = (TerrariaPotionProjectile) ((CraftProjectile) projectile).getHandle();
@@ -71,21 +64,70 @@ public class ArrowHitListener implements Listener {
             entity.remove();
             return;
         }
+        // handle damage
+        boolean guaranteeCrit = false;
+        EntityHelper.DamageReason dmgReason = EntityHelper.DamageReason.PROJECTILE;
         if (projectileScoreboardTags.contains("hitDaawnlight")) {
             projectile.removeScoreboardTag("hitDaawnlight");
+            guaranteeCrit = true;
+            dmgReason = EntityHelper.DamageReason.DAAWNLIGHT;
+        }
+        else if (projectileName.equals("瘟疫自爆无人机") && EntityHelper.hasEffect(entity, "瘟疫"))
+            guaranteeCrit = true;
+        if (guaranteeCrit) {
             double lastCrit = attrMap.getOrDefault("crit", 0d);
             attrMap.put("crit", 100d);
-            EntityHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), EntityHelper.DamageReason.DAAWNLIGHT);
+            EntityHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), dmgReason);
             attrMap.put("crit", lastCrit);
         } else {
-            EntityHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), EntityHelper.DamageReason.PROJECTILE);
+            EntityHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), dmgReason);
         }
         // explode
         if (projectileScoreboardTags.contains("isGrenade")) {
             Location projectileDestroyLoc = MathHelper.toBukkitVector(e.movingObjectPosition.pos).toLocation(entity.getWorld());
-            if (projectileScoreboardTags.contains("blastOnContactBlock")) {
+            if (projectileScoreboardTags.contains("blastOnContactEnemy")) {
                 handleProjectileBlast(projectile, projectileDestroyLoc);
             }
+        }
+        // vortex arrow
+        if (projectileScoreboardTags.contains("isVortex")) {
+            HashMap<String, Double> attrMapProj = (HashMap<String, Double>) EntityHelper.getAttrMap(projectile).clone();
+            attrMapProj.put("damage", attrMapProj.get("damage") * 0.3);
+            attrMapProj.put("knockback", 0d);
+            Player shooter = (Player) projectile.getShooter();
+            double projectileSpeed = attrMapProj.getOrDefault("projectileSpeed", 20d) / 20;
+            int waitTime = 3 + (int) (Math.random() * 3);
+            for (int i = 0; i < 3; i ++) {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+                    Vector velocity = MathHelper.getDirection(shooter.getLocation(), entity.getLocation(), 1);
+                    velocity.multiply(17);
+                    velocity.add(MathHelper.randomVector());
+                    velocity.normalize().multiply(projectileSpeed);
+
+                    EntityHelper.spawnProjectile(shooter, velocity, attrMapProj, "幻象箭")
+                            .setGlowing(true);
+                    ItemUseHelper.playerUseItemSound(shooter, "BOW", true);
+                }, waitTime);
+
+                waitTime += 4 + (int) (Math.random() * 5);
+            }
+        }
+        // hellborn bullet
+        if (projectileScoreboardTags.contains("isHellborn")) {
+            Player shooter = (Player) projectile.getShooter();
+            ItemUseHelper.applyCD(shooter, 1);
+        }
+        // adamantite particle accelerator
+        if (projectileScoreboardTags.contains("isAPA")) {
+            MetadataValue lastParticleName = EntityHelper.getMetadata(entity,
+                    EntityHelper.MetadataName.LAST_ADAMANTITE_PARTICLE_TYPE);
+            if (lastParticleName != null && ! (lastParticleName.asString().equals(projectileName) )) {
+                HashMap<String, Double> attrMapProj = EntityHelper.getAttrMap(projectile);
+                EntityHelper.handleDamage((Entity) projectile.getShooter(), entity,
+                        attrMapProj.get("damage"), EntityHelper.DamageReason.PROJECTILE);
+            }
+            EntityHelper.setMetadata(entity, EntityHelper.MetadataName.LAST_ADAMANTITE_PARTICLE_TYPE,
+                    projectileName);
         }
     }
     private void handleProjectileBlast(Projectile projectile, Location projectileDestroyLoc) {
@@ -98,16 +140,17 @@ public class ArrowHitListener implements Listener {
         EntityHelper.handleEntityExplode(projectile, blastRadius, damageExceptions, projectileDestroyLoc, blastDuration);
     }
     private void handleDestroy(TerrariaProjectileHitEvent e, Projectile projectile) {
+        Set<String> projScoreboardTags = projectile.getScoreboardTags();
         Location projectileDestroyLoc = projectile.getLocation();
-        String destroyReason = "";
+        int destroyReason = TerrariaPotionProjectile.DESTROY_TIME_OUT;
         MetadataValue destroyReasonMetadata = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON);
-        if (destroyReasonMetadata != null) destroyReason = destroyReasonMetadata.asString();
+        if (destroyReasonMetadata != null) destroyReason = destroyReasonMetadata.asInt();
         // explode
-        if (projectile.getScoreboardTags().contains("isGrenade")) {
+        if (projScoreboardTags.contains("isGrenade")) {
             handleProjectileBlast(projectile, projectileDestroyLoc);
         }
         // fallen star
-        if (projectile.getScoreboardTags().contains("isFallenStar")) {
+        if (projScoreboardTags.contains("isFallenStar")) {
             Item droppedItem = ItemHelper.dropItem(projectileDestroyLoc,
                     "坠星", false, false);
             if (droppedItem != null) {
@@ -128,9 +171,9 @@ public class ArrowHitListener implements Listener {
             boolean shouldFire;
             if (clusterSection == null)
                 shouldFire = false;
-            else if (destroyReason.equals("hitBlock"))
+            else if (destroyReason == TerrariaPotionProjectile.DESTROY_HIT_BLOCK)
                 shouldFire = clusterSection.getBoolean("fireOnHitBlock", true);
-            else if (destroyReason.equals("hitEntity"))
+            else if (destroyReason == TerrariaPotionProjectile.DESTROY_HIT_ENTITY)
                 shouldFire = clusterSection.getBoolean("fireOnHitEntity", true);
             else
                 shouldFire = clusterSection.getBoolean("fireOnTimeout", true);
@@ -175,7 +218,6 @@ public class ArrowHitListener implements Listener {
                 }
             }
         }
-        // vortex arrow
     }
 
     @EventHandler(priority = EventPriority.LOW)

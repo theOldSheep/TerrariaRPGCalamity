@@ -20,6 +20,7 @@ import java.util.*;
 
 public class TerrariaPotionProjectile extends EntityPotion {
     private static final double distFromBlock = 1e-3, distCheckOnGround = 1e-1;
+    public static final int DESTROY_HIT_BLOCK = 0, DESTROY_HIT_ENTITY = 1, DESTROY_TIME_OUT = 2;
     // projectile info
     public String projectileType, blockHitAction = "die", trailColor = null;
     public int autoTraceMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200,
@@ -161,6 +162,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         if (shooter != null)
            bukkitEntity.setShooter(shooter);
         this.attrMap = (HashMap<String, Double>) attrMap.clone();
+        this.lastTrailDisplayLocation = loc;
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, this.attrMap);
         EntityHelper.setDamageType(bukkitEntity, damageType);
         setProperties(projectileType);
@@ -186,7 +188,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         if (bouncePenetrationBonded) bounce --;
         if (--penetration < 0) {
             setPosition(position.pos.x, position.pos.y, position.pos.z);
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, "hitEntity");
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
             die();
         }
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, this.penetration);
@@ -197,7 +199,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public void extinguish() {
         switch (projectileType) {
             case "小火花":
-                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, "hitBlock");
+                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_BLOCK);
                 this.die();
                 break;
             case "烈焰箭":
@@ -320,6 +322,41 @@ public class TerrariaPotionProjectile extends EntityPotion {
     protected void extraMovingTick() {
 
     }
+    protected void handleParticleTrail() {
+        if (trailColor != null) {
+            // init last display location as current location if it is not set
+            if (lastTrailDisplayLocation == null)
+                lastTrailDisplayLocation = bukkitEntity.getLocation();
+            // get the smooth transition from last displayed location to future location
+            Location targetDisplayLoc = bukkitEntity.getLocation().add(bukkitEntity.getVelocity());
+            Vector displayDir = targetDisplayLoc.subtract(lastTrailDisplayLocation).toVector();
+            double displayDirLen = displayDir.length();
+            // round down the number of steps between the current and future location
+            int steps = (int) (displayDirLen / trailStepSize);
+            double newDirLen = trailStepSize * steps;
+            displayDir.multiply(newDirLen / displayDirLen);
+            // display particles
+            if (ticksLived > 1 || lastTrailDisplayLocation.distance(
+                    ((LivingEntity) shooter.getBukkitEntity()).getEyeLocation() ) > (2 + trailSize) ) {
+                GenericHelper.handleParticleLine(displayDir, lastTrailDisplayLocation,
+                        new GenericHelper.ParticleLineOptions()
+                                .setLength(newDirLen)
+                                .setWidth(trailSize, false)
+                                .setStepsize(trailStepSize)
+                                .setTicksLinger(trailLingerTime)
+                                .setParticleColor(trailColor));
+            }
+            // if the particle is too close to the eye location, attempt to move further and display particle
+            else if (steps > 1) {
+                displayDir.multiply(1d / steps);
+                lastTrailDisplayLocation.add(displayDir);
+                handleParticleTrail();
+                return;
+            }
+            // update last location
+            lastTrailDisplayLocation.add(displayDir);
+        }
+    }
     @Override
     public void B_() {
         // start timing
@@ -374,7 +411,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 case "bounce":
                 case "slide":
                 case "die":
-                    EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, "hitBlock");
+                    EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_BLOCK);
                     this.die();
                     return;
                 case "stick":
@@ -495,7 +532,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                             // tweak velocity
                             if (blockHitAction.equals("bounce")) {
                                 if (--bounce < 0) {
-                                    EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, "hitBlock");
+                                    EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_BLOCK);
                                     die();
                                     return;
                                 }
@@ -675,31 +712,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
         }
 
         // draw particle trail
-        {
-            if (trailColor != null && this.ticksLived > 1) {
-                // init last display location as current location if it is not set
-                if (lastTrailDisplayLocation == null)
-                    lastTrailDisplayLocation = bukkitEntity.getLocation();
-                // get the smooth transition from last displayed location to future location
-                Location targetDisplayLoc = bukkitEntity.getLocation().add(bukkitEntity.getVelocity());
-                Vector displayDir = targetDisplayLoc.subtract(lastTrailDisplayLocation).toVector();
-                double displayDirLen = displayDir.length();
-                // round down the number of steps between the current and future location
-                int steps = (int) (displayDirLen / trailStepSize);
-                double newDirLen = trailStepSize * steps;
-                displayDir.multiply(newDirLen / displayDirLen);
-                // display particles
-                GenericHelper.handleParticleLine(displayDir, lastTrailDisplayLocation,
-                        new GenericHelper.ParticleLineOptions()
-                                .setLength(newDirLen)
-                                .setWidth(trailSize, false)
-                                .setStepsize(trailStepSize)
-                                .setTicksLinger(trailLingerTime)
-                                .setParticleColor(trailColor));
-                // update last location
-                lastTrailDisplayLocation.add(displayDir);
-            }
-        }
+        handleParticleTrail();
+
         // set position and velocity info
         setPosition(futureLoc.x, futureLoc.y, futureLoc.z);
         // spawn projectiles

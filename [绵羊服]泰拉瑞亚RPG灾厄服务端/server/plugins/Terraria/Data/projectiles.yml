@@ -614,6 +614,22 @@
 南瓜榴弹:
     isGrenade: true
     blastRadius: 1
+粉色粒子光束:
+    gravity: 0
+    projectileSize: 1
+    penetration: 999999
+    liveTime: 1
+    trailColor: 255|175|217
+    trailLingerTime: 15
+    trailStepSize: 2
+蓝色粒子光束:
+    gravity: 0
+    projectileSize: 1
+    penetration: 999999
+    liveTime: 1
+    trailColor: 161|219|249
+    trailLingerTime: 15
+    trailStepSize: 2
 玛瑙能量:
     isGrenade: true
     blastRadius: 4
@@ -1033,6 +1049,120 @@ TNT:
 夜明弹:
     gravity: 0
     penetration: 99
+鹅卵石冲击波:
+    arrowOrPotion: true
+    gravity: 0
+小孢子:
+    noGravityTicks: 0
+    autoTrace: true
+    noAutoTraceTicks: 6
+    liveTime: 20
+    trailColor: 27|157|232
+    trailSize: 0.1
+    trailLingerTime: 8
+    trailStepSize: 0.5
+真菌弹:
+    gravity: 0
+    trailColor: 27|157|232
+    trailSize: 0.1
+    trailLingerTime: 8
+    trailStepSize: 0.5
+    clusterBomb:
+        amount: 4
+        name: 小孢子
+        velocity: 0.5
+        damageMulti: 0.45
+弹跳爆炸弹:
+    gravity: 0
+    liveTime: 40
+    blockHitAction: bounce
+    bounce: 1
+    isGrenade: true
+    blastRadius: 0.75
+    blastOnContactBlock: true
+追踪蓝晶碎片:
+    gravity: 0.01
+    liveTime: 30
+    autoTrace: true
+    noAutoTraceTicks: 6
+    liveTime: 20
+蓝晶碎片:
+    gravity: 0.01
+    liveTime: 100
+    clusterBomb:
+        amount: 6
+        name: 追踪蓝晶碎片
+        velocity: 0.5
+        damageMulti: 0.25
+追踪能量弹:
+    gravity: 0.01
+    liveTime: 30
+    autoTrace: true
+    noAutoTraceTicks: 6
+    liveTime: 20
+    trailColor: 53|255|255
+    trailSize: 0.1
+    trailLingerTime: 8
+    trailStepSize: 0.5
+能量弹:
+    gravity: 0.01
+    liveTime: 100
+    trailColor: 53|255|255
+    trailSize: 0.1
+    trailLingerTime: 8
+    trailStepSize: 0.5
+    clusterBomb:
+        amount: 3
+        name: 追踪能量弹
+        velocity: 0.5
+        damageMulti: 0.5
+麦格纳冲击波:
+    arrowOrPotion: true
+    projectileSize: 0.5
+    gravity: 0
+海水冲击波:
+    gravity: 0
+    trailColor: 67|207|130
+    trailSize: 0.1
+    trailLingerTime: 5
+    trailStepSize: 0.5
+    buffInflict:
+        - "剧毒|40|0.3333"
+瘟疫子弹:
+    gravity: 0
+    liveTime: 100
+    trailColor: 102|255|72
+    trailSize: 0.1
+    trailLingerTime: 5
+    trailStepSize: 0.5
+    buffInflict:
+        - "瘟疫|60|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.45
+        name: 瘟疫搜寻者
+        velocity: 1
+瘟疫自爆无人机:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 100
+    isGrenade: true
+    blastRadius: 2.75
+    autoTrace: true
+    autoTraceRadius: 24
+追踪蘑菇:
+    gravity: 0
+    projectileSize: 0.5
+    penetration: 1
+    enemyInvincibilityFrame: 10
+    blockHitAction: thru
+    liveTime: 100
+    autoTrace: true
+    autoTraceAbility: 1.5
+幻星弹:
+    gravity: 0
+    buffInflict:
+        - "幻星感染|40|1"
 永夜光束:
     gravity: 0
     projectileSize: 0.5
@@ -1634,16 +1764,28 @@ TNT:
         - "剧毒|300|0.33"
 彩虹水晶:
     autoTrace: true
+木箭:
+    arrowOrPotion: true
 烈焰箭:
+    arrowOrPotion: true
     buffInflict:
         - "燃烧|200|0.3"
 冰焰箭:
+    arrowOrPotion: true
     buffInflict:
         - "霜火|100|0.35"
+邪箭:
+    arrowOrPotion: true
+    penetration: 4
+小丑之箭:
+    arrowOrPotion: true
+    penetration: 999
 狱炎箭:
+    arrowOrPotion: true
     isGrenade: true
     blastRadius: 2
 圣箭:
+    arrowOrPotion: true
     clusterBomb:
         amount: 3
         damageMulti: 0.4
@@ -1652,35 +1794,52 @@ TNT:
         fireOnTimeout: false
         velocity: 1.5
 诅咒箭:
+    arrowOrPotion: true
     buffInflict:
         - "咒火|140|1"
 毒液箭:
+    arrowOrPotion: true
     buffInflict:
         - "剧毒|200|1"
 叶绿箭:
+    arrowOrPotion: true
     blockHitAction: bounce
     bounce: 3
+夜明箭:
+    arrowOrPotion: true
+    penetration: 5
 幻象箭:
+    arrowOrPotion: true
+    gravity: 0
+    liveTime: 50
     autoTrace: true
 闪电箭:
+    arrowOrPotion: true
     isGrenade: true
     blastRadius: 1
     buffInflict:
         - "带电|20|1"
 贝壳箭:
+    arrowOrPotion: true
     penetration: 4
 能量束:
     gravity: 0
     blockHitAction: slide
+    trailColor: 97|255|55
+    trailSize: 0.15
+    trailStepSize: 0.5
 黑翼蝙蝠:
-    gravity: 0
+    arrowOrPotion: true
+    noGravityTicks: 10
     blockHitAction: bounce
     bounce: 2
     penetration: 2
     bouncePenetrationBonded: true
 水晶镖:
+    arrowOrPotion: true
     penetration: 3
 冰雾箭:
+    arrowOrPotion: true
     buffInflict:
         - "霜火|50|1"
 硫火射线:
@@ -1692,6 +1851,7 @@ TNT:
     buffInflict:
         - "碎甲|20|1"
 破城巨箭:
+    arrowOrPotion: true
     penetration: 2
     buffInflict:
         - "碎甲|60|1"
@@ -1701,13 +1861,13 @@ TNT:
         name: 化石碎片
         velocity: 0.75
 瘟疫箭:
-    penetration: 2
+    arrowOrPotion: true
     buffInflict:
-        - "碎甲|60|1"
+        - "瘟疫|60|1"
     clusterBomb:
         amount: 3
         damageMulti: 0.35
-        name: 瘟疫矢
+        name: 瘟疫搜寻者
         velocity: 1
 红自导能源箭:
     autoTrace: true
