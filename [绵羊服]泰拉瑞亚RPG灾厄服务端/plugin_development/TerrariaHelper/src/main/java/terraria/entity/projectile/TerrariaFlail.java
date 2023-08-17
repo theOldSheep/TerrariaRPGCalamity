@@ -55,8 +55,8 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
         }
     }
     @Override
-    public void hitEntity(Entity e, MovingObjectPosition position) {
-        super.hitEntity(e, position);
+    public Vec3D hitEntity(Entity e, MovingObjectPosition position) {
+        Vec3D result = super.hitEntity(e, position);
         // flails that returns on first hit
         switch (super.projectileType) {
             case "海蚌锤":
@@ -73,6 +73,7 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
             // preventing item use cool down reset on death again
             useTime = -1;
         }
+        return result;
     }
     @Override
     protected void extraTicking() {

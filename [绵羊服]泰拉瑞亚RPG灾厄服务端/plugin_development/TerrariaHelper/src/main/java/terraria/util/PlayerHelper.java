@@ -87,7 +87,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("minionDamagePenaltyMulti", 0.5d);
         defaultPlayerAttrMap.put("minionLimit", 1d);
         defaultPlayerAttrMap.put("mobLimit", 15d);
-        defaultPlayerAttrMap.put("mobSpawnRate", 0.1d);
+        defaultPlayerAttrMap.put("mobSpawnRate", 0.05d);
         defaultPlayerAttrMap.put("mobSpawnRateMulti", 1d);
         defaultPlayerAttrMap.put("penetration", 0d);
         defaultPlayerAttrMap.put("powerPickaxe", 0d);
@@ -695,11 +695,12 @@ public class PlayerHelper {
                     String current = "";
                     long currentTime = Calendar.getInstance().getTimeInMillis();
                     MetadataValue forceBGM = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BGM);
+                    // no jukebox
                     if (forceBGM == null) {
-                        // no jukebox
                         World plyWorld = ply.getWorld();
                         String worldName = plyWorld.getName();
                         double minBossDistance = 999999;
+                        // boss
                         for (String bossName : BossHelper.bossMap.keySet()) {
                             ArrayList<LivingEntity> bossArrayList = BossHelper.bossMap.get(bossName);
                             // if the boss has multiple phases
@@ -745,7 +746,7 @@ public class PlayerHelper {
                                     }
                             }
                         }
-                        // no event/boss, normal environment bgm
+                        // no event/boss : normal environment bgm
                         boolean isDayTime = WorldHelper.isDayTime(plyWorld);
                         if (current.equals("")) {
                             WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(ply);
@@ -947,17 +948,29 @@ public class PlayerHelper {
                 if (!isProperlyPlaying(ply)) continue;
                 // critter spawn
                 CritterHelper.naturalCritterSpawn(ply);
-                // monster spawn
+                // monster spawn rate
                 HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
-                double spawnRate;
-                if (EventAndTime.currentEvent != null) {
-                    spawnRate = 0.6;
+                double spawnRate = attrMap.getOrDefault("mobSpawnRate", 0.1) *
+                        attrMap.getOrDefault("mobSpawnRateMulti", 1d);
+                WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(ply.getLocation());
+                boolean isSurfaceOrSpace =
+                        heightLayer == WorldHelper.HeightLayer.SURFACE ||
+                                heightLayer == WorldHelper.HeightLayer.SPACE;
+                if (isSurfaceOrSpace) {
+                    // monster spawn rate when an event is present
+                    if (EventAndTime.currentEvent != null) {
+                        spawnRate = 0.35;
+                    }
+                    // monster spawn rate when near a celestial pillar
+                    for (CelestialPillar pillar : EventAndTime.pillars.values()) {
+                        if (pillar.getBukkitEntity().getWorld() != ply.getWorld())
+                            continue;
+                        if (pillar.getBukkitEntity().getLocation().distanceSquared(ply.getLocation()) < CelestialPillar.EFFECTED_RADIUS_SQR) {
+                            spawnRate = 0.6;
+                        }
+                    }
                 }
-                else {
-                    spawnRate = attrMap.getOrDefault("mobSpawnRate", 0.1) *
-                            attrMap.getOrDefault("mobSpawnRateMulti", 1d)
-                            / 2;
-                }
+                // spawn monster
                 for (int i = 0; i < MathHelper.randomRound(spawnRate); i ++) {
                     MonsterHelper.naturalMobSpawning(ply);
                 }

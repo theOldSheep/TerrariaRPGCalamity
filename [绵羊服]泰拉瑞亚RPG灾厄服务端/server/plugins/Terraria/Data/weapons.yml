@@ -188,7 +188,6 @@
     interval: 2
     velocity: 2
     noGravity: true
-    penetration: 2
     name: 泰拉光束
     damageMulti: 1.5
   particleColor:
@@ -233,7 +232,6 @@
     interval: 1
     velocity: 1.75
     name: 叶绿珠
-    penetration: 49
 无头骑士剑:
   type: SWING
   autoSwing: true
@@ -295,8 +293,6 @@
   projectileInfo:
     interval: 1
     velocity: 1.75
-    bounce: 4
-    penetration: 99
     name: 彩虹猫之刃
   particleColor:
   - 255|155|255
@@ -581,7 +577,7 @@
   size: 7
   projectileInfo:
     interval: 1
-    velocity: 1.5
+    velocity: 2
     name: 台风
 斩首者:
   type: SWING
@@ -635,7 +631,6 @@
     interval: 1
     velocity: 2.25
     name: 北极长矛
-    penetration: 99
   particleColor:
   - 75|150|255
 破晓之光:
@@ -1073,6 +1068,46 @@
   maxLoad: 5
   loadTimeMulti: 0.6
   offSet: 10
+芦苇吹管:
+  type: SPECIAL_AMMO
+  ammo: _高压气泡流
+  autoSwing: true
+珊瑚手炮:
+  type: SPECIAL_AMMO
+  ammo: _珊瑚块
+  autoSwing: true
+旋风发射器:
+  type: SPECIAL_AMMO
+  ammo: _风暴冲击波
+  autoSwing: true
+泰瑟枪:
+  type: SPECIAL_AMMO
+  ammo: _电钩
+  autoSwing: true
+海之烧灼:
+  type: SPECIAL_AMMO
+  ammo: _海之烧灼泡泡
+  fireRounds: 3
+  fireRoundsDelay: 1
+  autoSwing: true
+海之烧灼_RIGHT_CLICK:
+  type: SPECIAL_AMMO
+  ammo: _海之烧灼水弹
+  attributes:
+    useTime: 30
+  autoSwing: true
+物质调谐器:
+  type: SPECIAL_AMMO
+  ammo: _不稳定物质
+  shots: 4
+  offSet: 6
+  attributes:
+    damage: 66
+  autoSwing: true
+高斯来复枪:
+  type: SPECIAL_AMMO
+  ammo: _蓝色粒子束
+  autoSwing: true
 精金粒子加速器:
   type: SPECIAL_AMMO
   ammo: _粉色粒子光束
@@ -1086,7 +1121,6 @@
   type: SPECIAL_AMMO
   ammo: 尖桩
   autoSwing: true
-  gravity: false
 玉米糖步枪:
   type: SPECIAL_AMMO
   ammo: 玉米糖
@@ -1100,7 +1134,106 @@
   type: SPECIAL_AMMO
   ammo: 凝胶
   autoSwing: true
-  gravity: false
+  fireRounds: 5
+  fireRoundsDelay: 2
+  ammoConversion:
+    凝胶:
+    - 火焰
+火花喷射器:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  fireRounds: 3
+  fireRoundsDelay: 3
+  autoSwing: true
+  attributes:
+    projectileSpeed: 35
+  ammoConversion:
+    凝胶:
+    - 短程火焰
+影流喷射器:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  autoSwing: true
+  attributes:
+    projectileSpeed: 35
+  ammoConversion:
+    凝胶:
+    - 影流火焰
+过载凝胶发射器:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  shots: 5
+  offSet: 7.5
+  autoSwing: true
+  attributes:
+    projectileSpeed: 35
+  ammoConversion:
+    凝胶:
+    - 反弹凝胶
+彩虹喵喷射器:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  offSet: 15
+  autoSwing: true
+  attributes:
+    projectileSpeed: 35
+  ammoConversion:
+    凝胶:
+    - 蓝焰
+    - 粉焰
+混乱之息:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  fireRounds: 3
+  fireRoundsDelay: 3
+  autoSwing: true
+  attributes:
+    projectileSpeed: 35
+  ammoConversion:
+    凝胶:
+    - 硫火喷射
+泰拉喷火器:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  fireRounds: 3
+  fireRoundsDelay: 3
+  autoSwing: true
+  attributes:
+    projectileSpeed: 35
+  ammoConversion:
+    凝胶:
+    - 泰拉火焰
+极光烈焰:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  autoSwing: true
+  attributes:
+    projectileSpeed: 35
+  ammoConversion:
+    凝胶:
+    - 星辉烈焰
+枯萎散播者:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  fireRounds: 3
+  fireRoundsDelay: 3
+  autoSwing: true
+  attributes:
+    projectileSpeed: 35
+  ammoConversion:
+    凝胶:
+    - 瘟疫火焰
+神之风箱:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  fireRounds: 3
+  fireRoundsDelay: 3
+  autoSwing: true
+  attributes:
+    projectileSpeed: 35
+  ammoConversion:
+    凝胶:
+    - 紫绿色火焰
 燧发枪:
   type: GUN
   thruWall: true
@@ -1284,10 +1417,12 @@ P90:
     - 瘟疫子弹
 玷污之疫SMG:
   type: GUN
+  shots: 4
+  offSet: 20
   autoSwing: true
   ammoConversion:
     ALL:
-    - 瘟疫子弹
+    - 瘟疫搜寻者
 玷污之疫SMG_RIGHT_CLICK:
   type: SPECIAL_AMMO
   ammo: _瘟疫自爆无人机
@@ -1353,31 +1488,41 @@ P90:
   shots: 2
   offSet: 24
   ammoConversion:
-    初级火箭: 
+    ALL: 
     - 红烟花火箭
     - 黄烟花火箭
     - 绿烟花火箭
     - 蓝烟花火箭
-    二级火箭: 
-    - 红烟花火箭
-    - 黄烟花火箭
-    - 绿烟花火箭
-    - 蓝烟花火箭
-    三级火箭: 
-    - 红烟花火箭
-    - 黄烟花火箭
-    - 绿烟花火箭
-    - 蓝烟花火箭
-    四级火箭: 
-    - 红烟花火箭
-    - 黄烟花火箭
-    - 绿烟花火箭
-    - 蓝烟花火箭
-    集束火箭: 
-    - 红烟花火箭
-    - 黄烟花火箭
-    - 绿烟花火箭
-    - 蓝烟花火箭
+岩鲨发射器:
+  type: ROCKET
+  autoSwing: true
+  ammoConversion:
+    ALL: 
+    - 玛瑙火箭弹
+蜂巢发射器:
+  type: ROCKET
+  autoSwing: true
+  ammoConversion:
+    ALL: 
+    - 蜜蜂RPG
+    - 蜂巢火箭
+    - 瘟疫导弹
+    - 蜂巢炸弹
+天蝎座:
+  type: ROCKET
+  autoSwing: true
+  ammoConversion:
+    ALL: 
+    - 迷你火箭
+天蝎座_RIGHT_CLICK:
+  type: ROCKET
+  autoSwing: true
+  attributes:
+    damage: 200
+    useTime: 45
+  ammoConversion:
+    ALL: 
+    - 大号核弹
 木制回力镖:
   type: BOOMERANG
   distance: 12
@@ -1516,26 +1661,21 @@ P90:
 钨钢法杖:
   type: MAGIC_PROJECTILE
   projectileName: 钨钢光球
-  gravity: false
   autoSwing: true
 钻石法杖:
   type: MAGIC_PROJECTILE
   projectileName: 钻石射线
-  gravity: false
   autoSwing: true
 骷髅头法书:
   type: MAGIC_PROJECTILE
   projectileName: 骷髅头
-  gravity: false
   autoSwing: true
 恶魔锄刀:
   type: MAGIC_PROJECTILE
   projectileName: 恶魔之镰
-  gravity: false
 邪恶三叉戟:
   type: MAGIC_PROJECTILE
   projectileName: 邪恶三叉戟
-  gravity: false
   autoSwing: true
 海蓝权杖:
   type: MAGIC_PROJECTILE
@@ -1543,22 +1683,18 @@ P90:
 太空枪:
   type: MAGIC_PROJECTILE
   projectileName: 绿激光
-  gravity: false
   autoSwing: true
 水矢:
   type: MAGIC_PROJECTILE
   projectileName: 水矢
   autoSwing: true
-  gravity: false
 激光步枪:
   type: MAGIC_PROJECTILE
   projectileName: 激光
-  gravity: false
   autoSwing: true
 水晶风暴:
   type: MAGIC_PROJECTILE
   projectileName: 水晶碎块
-  gravity: false
   autoSwing: true
   offSet: 16
 裂天剑:
@@ -1571,18 +1707,15 @@ P90:
 吹叶机:
   type: MAGIC_PROJECTILE
   projectileName: 树叶
-  gravity: false
   autoSwing: true
   offSet: 16
 狱火叉:
   type: MAGIC_PROJECTILE
   projectileName: 狱火爆破弹
-  gravity: false
   autoSwing: true
 幽灵法杖:
   type: MAGIC_PROJECTILE
   projectileName: 亡魂
-  gravity: false
   autoSwing: true
 暗影束法杖:
   type: MAGIC_SPECIAL
@@ -1600,49 +1733,41 @@ P90:
   type: MAGIC_PROJECTILE
   projectileName: 蝙蝠
   shots: 3
-  gravity: false
   autoSwing: true
   offSet: 19
 暴雪法杖:
   type: MAGIC_PROJECTILE
   projectileName: 暴雪
   shots: 10
-  gravity: false
   autoSwing: true
 夜光:
   type: MAGIC_PROJECTILE
   projectileName: 彩虹水晶
   shots: 4
-  gravity: false
   autoSwing: true
   offSet: 8
 泡泡枪:
   type: MAGIC_PROJECTILE
   projectileName: 泡泡
   shots: 2
-  gravity: false
   autoSwing: true
   offSet: 6
 利刃台风:
   type: MAGIC_PROJECTILE
   projectileName: 台风
-  gravity: false
   autoSwing: true
 星云烈焰:
   type: MAGIC_PROJECTILE
   projectileName: 星云烈焰
-  gravity: false
   autoSwing: true
 星云奥秘:
   type: MAGIC_PROJECTILE
   projectileName: 星云奥秘
-  gravity: false
   autoSwing: true
 月之耀斑:
   type: MAGIC_PROJECTILE
   projectileName: 月之耀斑
   shots: 3
-  gravity: false
   autoSwing: true
   radius: 4.5
 终极棱镜:

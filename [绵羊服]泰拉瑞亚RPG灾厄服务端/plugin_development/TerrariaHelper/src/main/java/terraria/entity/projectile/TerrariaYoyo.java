@@ -2,6 +2,7 @@ package terraria.entity.projectile;
 
 import net.minecraft.server.v1_12_R1.Entity;
 import net.minecraft.server.v1_12_R1.MovingObjectPosition;
+import net.minecraft.server.v1_12_R1.Vec3D;
 import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -54,13 +55,14 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
     }
 
     @Override
-    public void hitEntity(Entity e, MovingObjectPosition position) {
-        super.hitEntity(e, position);
+    public Vec3D hitEntity(Entity e, MovingObjectPosition position) {
+        Vec3D result = super.hitEntity(e, position);
         // tweak the on-hit recoil
         Location hitLoc = new Location(bukkitEntity.getWorld(), position.pos.x, position.pos.y, position.pos.z);
         recoilPool = MathHelper.getDirection(hitLoc, bukkitEntity.getLocation(), speed + 0.75);
         // hit increases the index significantly
         indexAI += 6;
+        return result;
     }
 
     @Override

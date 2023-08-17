@@ -1300,8 +1300,9 @@ public class ItemUseHelper {
                                 LivingEntity livingHitEntity = (LivingEntity) hitEntity;
                                 if (livingHitEntity.getHealth() * 2 < livingHitEntity.getMaxHealth()) {
                                     for (int projYaw = 0; projYaw <= 360; projYaw += 120) {
-                                        EntityHelper.spawnProjectile(ply, hitLoc,
-                                                MathHelper.vectorFromYawPitch_quick(projYaw, -30), attrMap,
+                                        Vector projVel = MathHelper.vectorFromYawPitch_quick(projYaw, -30);
+                                        projVel.multiply(1.5);
+                                        EntityHelper.spawnProjectile(ply, hitLoc, projVel, attrMap,
                                                 EntityHelper.DamageType.MELEE, "彩虹弹幕");
                                     }
                                 }
@@ -1327,8 +1328,10 @@ public class ItemUseHelper {
                                 }
                                 HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
                                 projAttrMap.put("damage", projAttrMap.get("damage") * damageMulti);
-                                EntityHelper.spawnProjectile(ply, MathHelper.vectorFromYawPitch_quick(
-                                        fwdYaw + Math.random() * 10 - 5, fwdPitch + Math.random() * 10 - 5),
+                                Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                        fwdYaw + Math.random() * 10 - 5, fwdPitch + Math.random() * 10 - 5);
+                                projVel.multiply(1.5);
+                                EntityHelper.spawnProjectile(ply, projVel,
                                         projAttrMap, EntityHelper.DamageType.MELEE, projectileType);
                             }
                         }
@@ -1352,8 +1355,10 @@ public class ItemUseHelper {
                             double projPitch = plyNMS.pitch;
                             projPitch -= 15;
                             for (int i = 0; i < 3; i ++) {
+                                Vector projVel = MathHelper.vectorFromYawPitch_quick(projYaw, projPitch);
+                                projVel.multiply(1.5);
                                 EntityHelper.spawnProjectile(ply,
-                                        MathHelper.vectorFromYawPitch_quick(projYaw, projPitch), attrMap,
+                                        projVel, attrMap,
                                         EntityHelper.DamageType.MELEE, "禁忌镰刀");
                                 projPitch += 15;
                             }
@@ -1393,8 +1398,10 @@ public class ItemUseHelper {
                             for (int i = 0; i < 5; i ++) {
                                 HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
                                 projAttrMap.put("damage", projAttrMap.get("damage") * (0.5 + Math.random() * 0.3) );
-                                EntityHelper.spawnProjectile(ply, MathHelper.vectorFromYawPitch_quick(
-                                                fwdYaw + Math.random() * 10 - 5, fwdPitch + Math.random() * 10 - 5),
+                                Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                        fwdYaw + Math.random() * 10 - 5, fwdPitch + Math.random() * 10 - 5);
+                                projVel.multiply(2);
+                                EntityHelper.spawnProjectile(ply, projVel,
                                         projAttrMap, EntityHelper.DamageType.MELEE, "熵离子球");
                             }
                         }
@@ -1762,7 +1769,9 @@ public class ItemUseHelper {
         projectileSpeed *= attrMapOriginal.getOrDefault("projectileSpeedMulti", 1d);
         if (weaponType.equals("BOW"))
             projectileSpeed *= attrMapOriginal.getOrDefault("projectileSpeedArrowMulti", 1d);
-        projectileSpeed = projectileSpeed / 20;
+        // in Terraria, projectile speed is the amount of pixels moved for each tick, a block is 16 pixels wide
+        // however, Terraria has 60 ticks/sec while Minecraft has 20 ticks/sec
+        projectileSpeed = projectileSpeed / 5.3333;
         // account for arrow attribute.
         String ammoType = ammoTypeInitial;
         HashMap<String, Double> attrMap = (HashMap<String, Double>) attrMapOriginal.clone();
@@ -2158,9 +2167,8 @@ public class ItemUseHelper {
             Vector fireVelocity = facingDir.clone();
             double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
             projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
-            projectileSpeed /= 10;
-            if (weaponType.equals("BOW"))
-                projectileSpeed *= attrMap.getOrDefault("projectileSpeedArrowMulti", 1d);
+            // the reasoning for this number is shown in ranged projectile section
+            projectileSpeed /= 5.3333;
             // bullet spread
             if (spread > 0d) {
                 fireVelocity.multiply(spread);

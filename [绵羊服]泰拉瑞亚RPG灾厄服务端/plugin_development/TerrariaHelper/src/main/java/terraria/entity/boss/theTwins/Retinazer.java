@@ -413,17 +413,19 @@ public class Retinazer extends EntitySlime {
     @Override
     public void die() {
         super.die();
-        // disable boss bar
-        bossbar.setVisible(false);
-        BossHelper.bossMap.remove(BOSS_TYPE.msgName);
-        // if the boss has been defeated properly
-        if (getMaxHealth() > 10) {
-            // drop items
-            terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
 
-            // send loot
-            if (!twin.isAlive())
+        if (!twin.isAlive()) {
+            // disable boss bar
+            bossbar.setVisible(false);
+            BossHelper.bossMap.remove(BOSS_TYPE.msgName);
+            // if the boss has been defeated properly
+            if (getMaxHealth() > 10) {
+                // drop items
+                terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
+
+                // send loot
                 terraria.entity.boss.BossHelper.handleBossDeath(BOSS_TYPE, bossParts, targetMap);
+            }
         }
     }
     // rewrite AI

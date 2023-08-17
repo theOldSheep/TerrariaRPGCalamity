@@ -106,13 +106,13 @@ public class MonsterHelper {
             case PRE_WALL_OF_FLESH:
                 switch (playerProgress) {
                     case PRE_PLANTERA:
-                        result.healthMulti  = 6d;
-                        result.defenceMulti = 3.5d;
+                        result.healthMulti  = 4d;
+                        result.defenceMulti = 3d;
                         result.damageMulti  = 2d;
                         break;
                     case PRE_MOON_LORD:
-                        result.healthMulti  = 10d;
-                        result.defenceMulti = 5d;
+                        result.healthMulti  = 6.5d;
+                        result.defenceMulti = 4d;
                         result.damageMulti  = 3d;
                         break;
                     case PRE_PROFANED_GODDESS:
@@ -120,37 +120,37 @@ public class MonsterHelper {
                         result.defenceMulti = 5d;
                         result.damageMulti  = 3d;
                         // TODO: umcomment after finishing post-moonlord contents
-//                        result.healthMulti  = 20d;
-//                        result.defenceMulti = 10d;
-//                        result.damageMulti  = 3.5d;
+//                        result.healthMulti  = 10d;
+//                        result.defenceMulti = 5d;
+//                        result.damageMulti  = 3d;
                         break;
                     case POST_PROFANED_GODDESS:
-                        result.healthMulti  = 35d;
-                        result.defenceMulti = 15d;
-                        result.damageMulti  = 4d;
+                        result.healthMulti  = 20d;
+                        result.defenceMulti = 10d;
+                        result.damageMulti  = 3.5d;
                         break;
                 }
                 break;
             case PRE_PLANTERA:
                 switch (playerProgress) {
                     case PRE_MOON_LORD:
-                        result.healthMulti  = 5d;
-                        result.defenceMulti = 3d;
-                        result.damageMulti  = 2d;
+                        result.healthMulti  = 3d;
+                        result.defenceMulti = 2d;
+                        result.damageMulti  = 1.5d;
                         break;
                     case PRE_PROFANED_GODDESS:
-                        result.healthMulti  = 5d;
-                        result.defenceMulti = 3d;
-                        result.damageMulti  = 2d;
+                        result.healthMulti  = 3d;
+                        result.defenceMulti = 2d;
+                        result.damageMulti  = 1.5d;
                         // TODO: umcomment after finishing post-moonlord contents
-//                        result.healthMulti  = 8d;
-//                        result.defenceMulti = 4d;
-//                        result.damageMulti  = 2.75d;
+//                        result.healthMulti  = 5d;
+//                        result.defenceMulti = 3d;
+//                        result.damageMulti  = 2d;
                         break;
                     case POST_PROFANED_GODDESS:
-                        result.healthMulti  = 15d;
-                        result.defenceMulti = 6d;
-                        result.damageMulti  = 3.5d;
+                        result.healthMulti  = 8d;
+                        result.defenceMulti = 4d;
+                        result.damageMulti  = 2.75d;
                         break;
                 }
                 break;
@@ -158,21 +158,21 @@ public class MonsterHelper {
                 switch (playerProgress) {
                     case PRE_PROFANED_GODDESS:
                         // TODO: umcomment after finishing post-moonlord contents
-//                        result.healthMulti  = 4d;
-//                        result.defenceMulti = 3d;
+//                        result.healthMulti  = 3d;
+//                        result.defenceMulti = 2d;
 //                        result.damageMulti  = 1.5d;
                         break;
                     case POST_PROFANED_GODDESS:
-                        result.healthMulti  = 6d;
-                        result.defenceMulti = 5d;
-                        result.damageMulti  = 2.5d;
+                        result.healthMulti  = 4d;
+                        result.defenceMulti = 3d;
+                        result.damageMulti  = 2d;
                         break;
                 }
                 break;
             case PRE_PROFANED_GODDESS:
                 if (playerProgress == PlayerHelper.GameProgress.POST_PROFANED_GODDESS) {
-                    result.healthMulti  = 3.5d;
-                    result.defenceMulti = 2.5d;
+                    result.healthMulti  = 3d;
+                    result.defenceMulti = 2d;
                     result.damageMulti  = 1.5d;
                 }
                 break;

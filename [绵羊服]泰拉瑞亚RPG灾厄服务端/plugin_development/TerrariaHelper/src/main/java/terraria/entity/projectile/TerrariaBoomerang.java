@@ -1,9 +1,6 @@
 package terraria.entity.projectile;
 
-import net.minecraft.server.v1_12_R1.Entity;
-import net.minecraft.server.v1_12_R1.EntitySlime;
-import net.minecraft.server.v1_12_R1.MovingObjectPosition;
-import net.minecraft.server.v1_12_R1.World;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -12,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import terraria.entity.monster.MonsterHelper;
 import terraria.util.*;
+import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,9 +52,10 @@ public class TerrariaBoomerang extends TerrariaPotionProjectile {
     }
 
     @Override
-    public void hitEntity(Entity e, MovingObjectPosition position) {
-        super.hitEntity(e, position);
+    public Vec3D hitEntity(Entity e, MovingObjectPosition position) {
+        Vec3D result = super.hitEntity(e, position);
         this.returning = true;
+        return result;
     }
 
     @Override

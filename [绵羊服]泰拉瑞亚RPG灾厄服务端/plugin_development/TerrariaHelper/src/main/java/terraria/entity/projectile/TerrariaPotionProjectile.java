@@ -10,8 +10,10 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
+import org.omg.CORBA.TIMEOUT;
 import terraria.TerrariaHelper;
 import terraria.event.TerrariaProjectileHitEvent;
+import terraria.event.listener.ArrowHitListener;
 import terraria.util.EntityHelper;
 import terraria.util.GenericHelper;
 import terraria.util.WorldHelper;
@@ -162,7 +164,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         if (shooter != null)
            bukkitEntity.setShooter(shooter);
         this.attrMap = (HashMap<String, Double>) attrMap.clone();
-        this.lastTrailDisplayLocation = loc;
+        this.lastTrailDisplayLocation = loc.clone();
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, this.attrMap);
         EntityHelper.setDamageType(bukkitEntity, damageType);
         setProperties(projectileType);
@@ -181,17 +183,28 @@ public class TerrariaPotionProjectile extends EntityPotion {
         // should still be able to hit entities that are neither monster nor forbidden to hit
         return EntityHelper.checkCanDamage(bukkitEntity, bukkitE, false);
     }
-    public void hitEntity(Entity e, MovingObjectPosition position) {
+    public Vec3D hitEntity(Entity e, MovingObjectPosition position) {
         // handle damage CD before doing anything else. Otherwise, exploding projectiles will damage the enemy being hit twice.
         GenericHelper.damageCoolDown(damageCD, e.getBukkitEntity(), enemyInvincibilityFrame);
         // handles post-hit mechanism: damage is handled by a listener
         if (bouncePenetrationBonded) bounce --;
+        setPosition(position.pos.x, position.pos.y, position.pos.z);
         if (--penetration < 0) {
-            setPosition(position.pos.x, position.pos.y, position.pos.z);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
             die();
+            return new Vec3D(position.pos.x, position.pos.y, position.pos.z);
+        }
+        else {
+            boolean shouldSpawnClusterBomb = TerrariaHelper.projectileConfig.getBoolean(
+                    projectileType + ".clusterBomb.fireOnCollideEntity", false);
+            if (shouldSpawnClusterBomb) {
+                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
+                ArrowHitListener.spawnProjectileClusterBomb(bukkitEntity);
+                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, null);
+            }
         }
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, this.penetration);
+        return null;
     }
 
     // override functions
@@ -324,11 +337,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
     }
     protected void handleParticleTrail() {
         if (trailColor != null) {
-            // init last display location as current location if it is not set
-            if (lastTrailDisplayLocation == null)
-                lastTrailDisplayLocation = bukkitEntity.getLocation();
             // get the smooth transition from last displayed location to future location
-            Location targetDisplayLoc = bukkitEntity.getLocation().add(bukkitEntity.getVelocity());
+            Location targetDisplayLoc = bukkitEntity.getLocation();
             Vector displayDir = targetDisplayLoc.subtract(lastTrailDisplayLocation).toVector();
             double displayDirLen = displayDir.length();
             // round down the number of steps between the current and future location
@@ -544,7 +554,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                 switch (projectileType) {
                                     case "叶绿箭": {
                                         velocity.multiply(-1);
-                                        double homeInRadius = 24,
+                                        double homeInRadius = 32,
                                                 smallestDistSqr = 1e9;
                                         Location currLoc = new Location(this.bukkitEntity.getWorld(), futureLoc.x, futureLoc.y, futureLoc.z);
                                         for (org.bukkit.entity.Entity entity : getBukkitEntity().getNearbyEntities(homeInRadius, homeInRadius, homeInRadius)) {
@@ -579,6 +589,61 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                                     futureLoc, checkLocVec);
                                             if (blockedLocation != null)
                                                 continue;
+                                            // update the smallest distance only if the target is reachable.
+                                            smallestDistSqr = currDistSqr;
+                                            // update velocity
+                                            velocity = dir;
+                                        }
+                                        break;
+                                    }
+                                    case "不稳定物质": {
+                                        // increases damage, but disappears after striking one enemy.
+                                        attrMap.put("damage", attrMap.get("damage") * 3);
+                                        penetration = 0;
+                                        // default bounce behaviour
+                                        double yVelocityThreshold = gravity * speedMulti;
+                                        switch (movingobjectposition.direction) {
+                                            case UP:
+                                                velocity.setY(velocity.getY() * -1);
+                                                // prevent projectile twitching
+                                                if (gravity > 0 && velocity.getY() < yVelocityThreshold)
+                                                    velocity.setY(0);
+                                                break;
+                                            case DOWN:
+                                                velocity.setY(velocity.getY() * -1);
+                                                // prevent projectile twitching
+                                                if (gravity < 0 && velocity.getY() > yVelocityThreshold)
+                                                    velocity.setY(0);
+                                                break;
+                                            case EAST:
+                                            case WEST:
+                                                velocity.setX(velocity.getX() * -1);
+                                                break;
+                                            case SOUTH:
+                                            case NORTH:
+                                                velocity.setZ(velocity.getZ() * -1);
+                                                break;
+                                        }
+                                        // homing into enemy
+                                        double homeInRadius = 16,
+                                                smallestDistSqr = 1e9;
+                                        Location currLoc = new Location(this.bukkitEntity.getWorld(), futureLoc.x, futureLoc.y, futureLoc.z);
+                                        for (org.bukkit.entity.Entity entity : getBukkitEntity().getNearbyEntities(homeInRadius, homeInRadius, homeInRadius)) {
+                                            // should strictly home into "proper" enemies (no critters!)
+                                            if (!EntityHelper.checkCanDamage(this.bukkitEntity, entity, true))
+                                                continue;
+                                            // make sure the closest entity is targeted
+                                            double currDistSqr = entity.getLocation().distanceSquared(currLoc);
+                                            if (currDistSqr >= smallestDistSqr)
+                                                continue;
+                                            // predicts the enemy's future location
+                                            Location predictedLoc = EntityHelper.helperAimEntity(this.bukkitEntity, entity,
+                                                    new EntityHelper.AimHelperOptions()
+                                                            .setProjectileSpeed(this.speed));
+                                            // initializes direction the projectile should go to
+                                            Vector dir = predictedLoc.subtract(currLoc).toVector();
+                                            double predictedDist = dir.length();
+                                            dir.multiply(this.speed / predictedDist);
                                             // update the smallest distance only if the target is reachable.
                                             smallestDistSqr = currDistSqr;
                                             // update velocity
@@ -698,7 +763,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 Entity hitEntity = toHit.getHitEntity();
                 MovingObjectPosition hitInfo = new MovingObjectPosition(hitEntity, toHit.getHitLocation().pos);
                 if (TerrariaProjectileHitEvent.callProjectileHitEvent(this, hitInfo).isCancelled()) continue;
-                hitEntity(hitEntity, hitInfo);
+                Vec3D newLoc = hitEntity(hitEntity, hitInfo);
+                if (newLoc != null) futureLoc = newLoc;
                 // if the projectile reached its penetration capacity, stop damaging enemies
                 if (this.dead) break;
             }
@@ -711,15 +777,11 @@ public class TerrariaPotionProjectile extends EntityPotion {
             WorldHelper.attemptDestroyVegetation(bukkitInitialLoc, bukkitFinalLoc);
         }
 
-        // draw particle trail
-        handleParticleTrail();
-
         // set position and velocity info
         setPosition(futureLoc.x, futureLoc.y, futureLoc.z);
-        // spawn projectiles
-        spawnExtraProjectiles();
-        // extra ticking
-        extraTicking();
+        this.motX = velocity.getX();
+        this.motY = velocity.getY();
+        this.motZ = velocity.getZ();
         // send new velocity if:
         //     velocity changed
         //     the projectile has gravity
@@ -732,10 +794,12 @@ public class TerrariaPotionProjectile extends EntityPotion {
         // prevents client glitch
         this.velocityChanged = true;
         this.positionChanged = true;
-
-        this.motX = velocity.getX();
-        this.motY = velocity.getY();
-        this.motZ = velocity.getZ();
+        // draw particle trail
+        handleParticleTrail();
+        // spawn projectiles
+        spawnExtraProjectiles();
+        // extra ticking
+        extraTicking();
 
         // time out removal
         if (this.ticksLived >= liveTime) die();

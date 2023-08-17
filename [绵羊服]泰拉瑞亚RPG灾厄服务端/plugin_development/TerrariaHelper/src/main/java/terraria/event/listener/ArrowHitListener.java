@@ -13,19 +13,19 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.projectile.PlayerTornado;
 import terraria.entity.projectile.TerrariaPotionProjectile;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 
 public class ArrowHitListener implements Listener {
-    public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile(
-            TerrariaHelper.Constants.DATA_FOLDER_DIR + "projectiles.yml");
     private void handleHitBlock(TerrariaProjectileHitEvent e, Projectile projectile, Block block) {
         // explode
         Set<String> scoreboardTags = projectile.getScoreboardTags();
@@ -36,7 +36,7 @@ public class ArrowHitListener implements Listener {
             }
         }
     }
-    private void handleHitEntity(TerrariaProjectileHitEvent e, Projectile projectile, Entity entity) {
+    private static void handleHitEntity(TerrariaProjectileHitEvent e, Projectile projectile, Entity entity) {
         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(projectile);
         Set<String> projectileScoreboardTags = projectile.getScoreboardTags();
         String projectileName = projectile.getName();
@@ -130,21 +130,19 @@ public class ArrowHitListener implements Listener {
                     projectileName);
         }
     }
-    private void handleProjectileBlast(Projectile projectile, Location projectileDestroyLoc) {
+    private static void handleProjectileBlast(Projectile projectile, Location projectileDestroyLoc) {
         // explode
         HashSet<org.bukkit.entity.Entity> damageExceptions = (HashSet<Entity>) EntityHelper.getMetadata(projectile,
                 EntityHelper.MetadataName.PROJECTILE_ENTITIES_COLLIDED).value();
         String projectileName = projectile.getName();
-        int blastDuration = projectileConfig.getInt( projectileName + ".blastDuration", 1);
-        double blastRadius = projectileConfig.getDouble( projectileName + ".blastRadius", 1.5);
+        int blastDuration = TerrariaHelper.projectileConfig.getInt( projectileName + ".blastDuration", 1);
+        double blastRadius = TerrariaHelper.projectileConfig.getDouble( projectileName + ".blastRadius", 1.5);
         EntityHelper.handleEntityExplode(projectile, blastRadius, damageExceptions, projectileDestroyLoc, blastDuration);
     }
-    private void handleDestroy(TerrariaProjectileHitEvent e, Projectile projectile) {
+    private static void handleDestroy(TerrariaProjectileHitEvent e, Projectile projectile) {
+        String projectileType = projectile.getName();
         Set<String> projScoreboardTags = projectile.getScoreboardTags();
         Location projectileDestroyLoc = projectile.getLocation();
-        int destroyReason = TerrariaPotionProjectile.DESTROY_TIME_OUT;
-        MetadataValue destroyReasonMetadata = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON);
-        if (destroyReasonMetadata != null) destroyReason = destroyReasonMetadata.asInt();
         // explode
         if (projScoreboardTags.contains("isGrenade")) {
             handleProjectileBlast(projectile, projectileDestroyLoc);
@@ -158,68 +156,91 @@ public class ArrowHitListener implements Listener {
                 EventAndTime.fallenStars.add(droppedItem);
             }
         }
+        // tornado
+        switch (projectileType) {
+            case "海之烧灼水弹": {
+                new PlayerTornado(
+                        (Player) projectile.getShooter(), projectileDestroyLoc.clone().subtract(0, 2, 0),
+                        new ArrayList<>(),
+                        0, 18, 20, 9,
+                        2, 0.9, "鲨鱼旋风", EntityHelper.getAttrMap(projectile));
+                break;
+            }
+        }
         // other mechanism
-        String projectileType = projectile.getName();
-        ConfigurationSection projectileSection = projectileConfig.getConfigurationSection(projectileType);
+        ConfigurationSection projectileSection = TerrariaHelper.projectileConfig.getConfigurationSection(projectileType);
         if (projectileSection == null) return;
-        EntityHelper.DamageType damageType = EntityHelper.getDamageType(projectile);
-        Entity projectileSource = null;
-        if (projectile.getShooter() instanceof Entity) projectileSource = (Entity) projectile.getShooter();
-        // cluster bomb etc
-        {
-            ConfigurationSection clusterSection = projectileSection.getConfigurationSection("clusterBomb");
-            boolean shouldFire;
-            if (clusterSection == null)
-                shouldFire = false;
-            else if (destroyReason == TerrariaPotionProjectile.DESTROY_HIT_BLOCK)
-                shouldFire = clusterSection.getBoolean("fireOnHitBlock", true);
-            else if (destroyReason == TerrariaPotionProjectile.DESTROY_HIT_ENTITY)
-                shouldFire = clusterSection.getBoolean("fireOnHitEntity", true);
-            else
-                shouldFire = clusterSection.getBoolean("fireOnTimeout", true);
-            if (shouldFire) {
-                String clusterName = clusterSection.getString("name");
-                if (clusterName != null) {
-                    int clusterAmount = clusterSection.getInt("amount", 3);
-                    String clusterType = clusterSection.getString("type", "normal");
-                    double clusterDamageMulti = clusterSection.getDouble("damageMulti", 1d);
-                    double clusterSpeed = clusterSection.getDouble("velocity", 1d);
-                    // set damage
-                    HashMap<String, Double> attrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(projectile).clone();
-                    attrMap.put("damage", attrMap.getOrDefault("damage", 20d) * clusterDamageMulti);
-                    // tweak the spawn location a bit so that cluster projectiles would not all collide on block
-                    Location spawnLoc = projectileDestroyLoc.clone();
-                    // spawn clusters
-                    for (int i = 0; i < clusterAmount; i ++) {
-                        Vector velocity;
-                        switch (clusterType) {
-                            case "star": {
-                                spawnLoc = projectile.getLocation().add(Math.random() * 10 - 5,
-                                        Math.random() * 20 + 20,
-                                        Math.random() * 10 - 5);
-                                Location targetLoc = projectile.getLocation().add(Math.random() * 3 - 1.5,
-                                        Math.random() * 3 - 1.5,
-                                        Math.random() * 3 - 1.5);
-                                velocity = targetLoc.subtract(spawnLoc).toVector().normalize();
-                                break;
-                            }
-                            case "surround": {
-                                velocity = MathHelper.randomVector();
-                                spawnLoc = projectile.getLocation().add(velocity.clone().multiply(
-                                        10 + Math.random() * 15));
-                                break;
-                            }
-                            default:
-                                velocity = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, Math.random() * 360);
+        // cluster bomb
+        spawnProjectileClusterBomb(projectile);
+    }
+
+    public static void spawnProjectileClusterBomb(Projectile projectile) {
+        String projectileType = projectile.getName();
+        ConfigurationSection projectileSection = TerrariaHelper.projectileConfig.getConfigurationSection(projectileType);
+        ConfigurationSection clusterSection = projectileSection.getConfigurationSection("clusterBomb");
+
+        int destroyReason = TerrariaPotionProjectile.DESTROY_TIME_OUT;
+        MetadataValue destroyReasonMetadata = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON);
+        if (destroyReasonMetadata != null) destroyReason = destroyReasonMetadata.asInt();
+
+        boolean shouldFire;
+        if (clusterSection == null)
+            shouldFire = false;
+        else if (destroyReason == TerrariaPotionProjectile.DESTROY_HIT_BLOCK)
+            shouldFire = clusterSection.getBoolean("fireOnHitBlock", true);
+        else if (destroyReason == TerrariaPotionProjectile.DESTROY_HIT_ENTITY)
+            shouldFire = clusterSection.getBoolean("fireOnHitEntity", true);
+        else
+            shouldFire = clusterSection.getBoolean("fireOnTimeout", true);
+        if (shouldFire) {
+            String clusterName = clusterSection.getString("name");
+            if (clusterName != null) {
+                int clusterAmount = clusterSection.getInt("amount", 3);
+                String clusterType = clusterSection.getString("type", "normal");
+                double clusterDamageMulti = clusterSection.getDouble("damageMulti", 1d);
+                double clusterSpeed = clusterSection.getDouble("velocity", 1d);
+                // setup damage
+                HashMap<String, Double> attrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(projectile).clone();
+                attrMap.put("damage", attrMap.getOrDefault("damage", 20d) * clusterDamageMulti);
+
+                Location spawnLoc;
+                Location projectileDestroyLoc = projectile.getLocation();
+                EntityHelper.DamageType damageType = EntityHelper.getDamageType(projectile);
+                Entity projectileSource = null;
+                if (projectile.getShooter() instanceof Entity) projectileSource = (Entity) projectile.getShooter();
+                // spawn clusters
+                for (int i = 0; i < clusterAmount; i ++) {
+                    Vector velocity;
+                    switch (clusterType) {
+                        case "star": {
+                            spawnLoc = projectile.getLocation().add(Math.random() * 10 - 5,
+                                    Math.random() * 20 + 20,
+                                    Math.random() * 10 - 5);
+                            Location targetLoc = projectile.getLocation().add(Math.random() * 3 - 1.5,
+                                    Math.random() * 3 - 1.5,
+                                    Math.random() * 3 - 1.5);
+                            velocity = targetLoc.subtract(spawnLoc).toVector().normalize();
+                            break;
                         }
-                        velocity.multiply(clusterSpeed);
-                        EntityHelper.spawnProjectile(projectileSource, spawnLoc, velocity, attrMap, damageType, clusterName);
+                        case "surround": {
+                            double velYaw = Math.random() * 360;
+                            double velPitch = Math.random() * clusterSection.getDouble("surroundMaxPitch", 30d);
+                            if (Math.random() < 0.5) velPitch *= -1;
+                            velocity = MathHelper.vectorFromYawPitch_quick(velYaw, velPitch);
+                            double offsetLen = clusterSection.getDouble("surroundOffset", 10d);
+                            spawnLoc = projectile.getLocation().subtract(velocity.clone().multiply(offsetLen));
+                            break;
+                        }
+                        default:
+                            velocity = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, Math.random() * 360);
+                            spawnLoc = projectileDestroyLoc;
                     }
+                    velocity.multiply(clusterSpeed);
+                    EntityHelper.spawnProjectile(projectileSource, spawnLoc, velocity, attrMap, damageType, clusterName);
                 }
             }
         }
     }
-
     @EventHandler(priority = EventPriority.LOW)
     public void onArrowHit(TerrariaProjectileHitEvent e) {
         Projectile arrow = e.getEntity();
