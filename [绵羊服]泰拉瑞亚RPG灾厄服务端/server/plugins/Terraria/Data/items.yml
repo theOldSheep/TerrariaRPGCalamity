@@ -3167,7 +3167,7 @@
     crit: 14
     projectileSpeed: 25.5
     knockback: 0.425
-    useTime: 15
+    useTime: 30
     penetration: 99
   worth: 10000000
   rarity: 8
