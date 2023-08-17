@@ -1670,6 +1670,197 @@
     useTime: 30
   worth: 2400000
   rarity: 4
+屠杀:
+  item: DIAMOND_SWORD
+  lore:
+  - §r敌人死亡时治疗玩家
+  attributes:
+    damage: 260
+    damageType: Melee
+    crit: 4
+    knockback: 5.25
+    useTime: 21
+  worth: 2400000
+  rarity: 4
+纯净之斧:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 110
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 14
+  worth: 2400000
+  rarity: 4
+天神之剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r在玩家周围生成两秒后会爆炸的宇宙能量之火
+  attributes:
+    damage: 140
+    damageType: Melee
+    crit: 4
+    knockback: 5.25
+    useTime: 19
+  worth: 2400000
+  rarity: 4
+遗忘之刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射两把在飞行时自动变速的沙刃
+  attributes:
+    damage: 130
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 18
+  worth: 7200000
+  rarity: 5
+真·绝望之刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发出弹射绝望光束
+  - §r造成酸性毒液减益
+  attributes:
+    damage: 200
+    damageType: Melee
+    crit: 4
+    knockback: 5.75
+    useTime: 28
+    buffInflictMelee: 剧毒|50|1
+  worth: 2400000
+  rarity: 4
+风暴军刀:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射追踪的风暴剑气
+  attributes:
+    damage: 132
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 23
+  worth: 7200000
+  rarity: 5
+雪崩:
+  item: DIAMOND_SWORD
+  lore:
+  - §r生成会在接触敌人3秒钟后爆炸出冰晶的冰炸弹
+  attributes:
+    damage: 200
+    damageType: Melee
+    crit: 4
+    knockback: 7.25
+    useTime: 35
+  worth: 7200000
+  rarity: 5
+巨剑“夜光”:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射夜光刀锋
+  attributes:
+    damage: 144
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 36
+  worth: 7200000
+  rarity: 5
+########################
+炎霜之刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射追踪炎霜球
+  attributes:
+    damage: 208
+    damageType: Melee
+    crit: 4
+    knockback: 6.25
+    useTime: 36
+  worth: 7200000
+  rarity: 5
+灾难巨剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射会造成冻伤、狱火或灵液减益的火花
+  attributes:
+    damage: 170
+    damageType: Melee
+    crit: 4
+    knockback: 6.25
+    useTime: 23
+  worth: 9600000
+  rarity: 6
+硫火之刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r击中敌人时释放硫磺火间歇泉
+  - §r右键会将其像标枪一样掷出，击中时爆炸
+  attributes:
+    damage: 140
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 28
+  worth: 7200000
+  rarity: 5
+雄伟之护:
+  item: DIAMOND_SWORD
+  lore:
+  - §r击碎敌人的护甲
+  - §r当敌人护甲已经被击碎时治疗玩家
+  attributes:
+    damage: 140
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 22
+  worth: 7200000
+  rarity: 5
+誓约与禁忌之刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射恶魔镰刀，有等同于暴击率的概率造成暗影焰爆炸
+  attributes:
+    damage: 220
+    damageType: Melee
+    crit: 4
+    knockback: 6.5
+    useTime: 54
+  worth: 7200000
+  rarity: 5
+炼狱:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射恶魔镰刀，有等同于暴击率的概率造成暗影焰爆炸
+  attributes:
+    damage: 220
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 11
+  worth: 7200000
+  rarity: 5
+硫火鞭:
+凋亡屠刀:
+混乱之刃:
+风暴管束者:
+彗星陨刃:
+荆棘长刃:
+地狱龙锋:
+绝对零度:
+大守卫者:
+翡翠之潮:
+庇护之刃:
+狱火重剑:
+幻星刀:
+灵魂收割者:
+崇高誓约之剑:
+瘟疫毒刃:
+海爵剑:
+斩首者:
+熵阔剑:
+邪恶收割者:
 剑鱼:
   item: STONE_SWORD
   attributes:
@@ -2435,177 +2626,6 @@
     useTime: 22
   worth: 200000
   rarity: 1
-屠杀:
-  item: DIAMOND_SWORD
-  lore:
-  - §r敌人死亡时会炸成追踪血弹
-  attributes:
-    damage: 260
-    damageType: Melee
-    crit: 4
-    knockback: 5.25
-    useTime: 21
-  worth: 2400000
-  rarity: 4
-纯净之斧:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 110
-    damageType: Melee
-    crit: 4
-    knockback: 5
-    useTime: 14
-  worth: 2400000
-  rarity: 4
-天神之剑:
-  item: DIAMOND_SWORD
-  lore:
-  - §r在玩家周围生成两秒后会爆炸的宇宙能量之火
-  attributes:
-    damage: 140
-    damageType: Melee
-    crit: 4
-    knockback: 5.25
-    useTime: 19
-  worth: 2400000
-  rarity: 4
-遗忘之刃:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射两把在飞行时自动变速的沙刃
-  attributes:
-    damage: 130
-    damageType: Melee
-    crit: 4
-    knockback: 6
-    useTime: 18
-  worth: 7200000
-  rarity: 5
-真·绝望之刃:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发出弹射绝望光束
-  - §r伤害随弹射次数提高
-  - §r造成中毒，酸性毒液减益
-  attributes:
-    damage: 200
-    damageType: Melee
-    crit: 4
-    knockback: 5.75
-    useTime: 28
-  worth: 2400000
-  rarity: 4
-风暴军刀:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射两束追踪的风暴剑气
-  - §r一束从剑刃发出，另一束从天而降
-  attributes:
-    damage: 132
-    damageType: Melee
-    crit: 4
-    knockback: 6
-    useTime: 23
-  worth: 7200000
-  rarity: 5
-雪崩:
-  item: DIAMOND_SWORD
-  lore:
-  - §r生成会在接触敌人3秒钟后爆炸出冰晶的冰炸弹
-  attributes:
-    damage: 200
-    damageType: Melee
-    crit: 4
-    knockback: 7.25
-    useTime: 35
-  worth: 7200000
-  rarity: 5
-巨剑“夜光”:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射在消失时分裂的夜光刀锋
-  attributes:
-    damage: 144
-    damageType: Melee
-    crit: 4
-    knockback: 5
-    useTime: 36
-  worth: 7200000
-  rarity: 5
-炎霜之刃:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射追踪炎霜球
-  attributes:
-    damage: 208
-    damageType: Melee
-    crit: 4
-    knockback: 6.25
-    useTime: 36
-  worth: 7200000
-  rarity: 5
-灾难巨剑:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射会造成冻伤、狱火或灵液减益的火花
-  attributes:
-    damage: 170
-    damageType: Melee
-    crit: 4
-    knockback: 6.25
-    useTime: 23
-  worth: 9600000
-  rarity: 6
-硫火之刃:
-  item: DIAMOND_SWORD
-  lore:
-  - §r击中敌人时释放硫磺火间歇泉
-  - §r右键会将其像标枪一样掷出，击中时爆炸
-  attributes:
-    damage: 140
-    damageType: Melee
-    crit: 4
-    knockback: 7.5
-    useTime: 28
-  worth: 7200000
-  rarity: 5
-雄伟之护:
-  item: DIAMOND_SWORD
-  lore:
-  - §r有一定几率降低被击中敌人的10点防御值
-  - §r当敌人的防御值小于等于0时会治疗玩家
-  attributes:
-    damage: 140
-    damageType: Melee
-    crit: 4
-    knockback: 7.5
-    useTime: 22
-  worth: 7200000
-  rarity: 5
-誓约与禁忌之刃:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射恶魔镰刀，暴击时造成暗影焰爆炸
-  attributes:
-    damage: 220
-    damageType: Melee
-    crit: 4
-    knockback: 6.5
-    useTime: 54
-  worth: 7200000
-  rarity: 5
-炼狱:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射恶魔镰刀，暴击时造成暗影焰爆炸
-  attributes:
-    damage: 220
-    damageType: Melee
-    crit: 4
-    knockback: 7
-    useTime: 11
-  worth: 7200000
-  rarity: 5
 太极连枷:
   item: STICK
   attributes:

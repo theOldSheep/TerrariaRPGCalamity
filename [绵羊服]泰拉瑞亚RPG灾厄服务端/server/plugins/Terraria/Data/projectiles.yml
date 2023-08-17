@@ -1606,6 +1606,8 @@ TNT:
     trailSize: 0.25
     trailStepSize: 0.5
     trailLingerTime: 5
+    buffInflict:
+        - "剧毒|30|1"
 风暴剑气:
     projectileSize: 0.25
     autoTrace: true

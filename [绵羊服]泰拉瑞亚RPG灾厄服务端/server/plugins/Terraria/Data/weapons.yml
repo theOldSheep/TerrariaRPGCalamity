@@ -144,14 +144,6 @@
   size: 4.5
   particleColor:
   - 0|0|175
-翡翠斧:
-  type: SWING
-  autoSwing: true
-  size: 5
-深渊碾碎者:
-  type: SWING
-  autoSwing: true
-  size: 5
 剑鱼:
   type: STAB
   size: 4
@@ -311,6 +303,10 @@
   type: SWING
   autoSwing: true
   size: 3
+深渊碾碎者:
+  type: SWING
+  autoSwing: true
+  size: 5
 海耀之刃:
   type: SWING
   autoSwing: true
@@ -331,6 +327,10 @@
   type: SWING
   autoSwing: true
   size: 5
+灼炎弯刀:
+  type: SWING
+  autoSwing: true
+  size: 4
 阴雷:
   type: SWING
   autoSwing: true
@@ -359,22 +359,6 @@
     interval: 1
     velocity: 1.75
     name: 凝胶波
-剑锋之誓约:
-  type: SWING
-  autoSwing: true
-  size: 4.5
-旧神之誓约:
-  type: SWING
-  autoSwing: true
-  size: 4.5
-旧神之誓约_RIGHT_CLICK:
-  type: STAB
-  autoSwing: false
-  attributes:
-    damage: 35
-    armorPenetration: 40
-    useTime: 30
-  size: 7.5
 屠杀:
   type: SWING
   autoSwing: true
@@ -751,6 +735,22 @@
   size: 3.75
   attributes:
     useTime: 30
+剑锋之誓约:
+  type: SWING
+  autoSwing: true
+  size: 4.5
+旧神之誓约:
+  type: SWING
+  autoSwing: true
+  size: 4.5
+旧神之誓约_RIGHT_CLICK:
+  type: STAB
+  autoSwing: false
+  attributes:
+    damage: 35
+    armorPenetration: 40
+    useTime: 30
+  size: 7.5
 残缺环境刃[澄澈之纯净]:
   type: SWING
   autoSwing: true

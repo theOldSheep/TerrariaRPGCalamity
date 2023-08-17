@@ -1229,6 +1229,25 @@ ANVIL:
     resultItem: 海棱晶
     requireItem:
     - 棱晶碎片:5
+  '187':
+    requireLevel: 2
+    resultItem: 遗忘之刃
+    requireItem:
+    - 禁戒碎片:2
+    - 精金锭:5
+  '188':
+    requireLevel: 2
+    resultItem: 风暴军刀
+    requireItem:
+    - 日光精华:2
+    - 天蓝锭:5
+  '189':
+    requireLevel: 2
+    resultItem: 巨剑“夜光”
+    requireItem:
+    - 寒元锭:12
+    - 暗影之魂
+    - 光明之魂
 WORKBENCH:
   '1':
     requireLevel: 1
@@ -1517,6 +1536,13 @@ ENCHANTMENT_TABLE:
     - 草薙剑
     - 烈焰剑
     - 纯净凝胶:5
+  '9':
+    requireLevel: 1
+    resultItem: 真·绝望之刃
+    requireItem:
+    - 绝望之刃
+    - 诅咒焰:15
+    - 死亡草:4
 AIR:
   '1':
     requireLevel: 1
