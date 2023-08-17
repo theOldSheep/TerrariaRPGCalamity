@@ -1766,7 +1766,6 @@
     useTime: 36
   worth: 7200000
   rarity: 5
-########################
 炎霜之刃:
   item: DIAMOND_SWORD
   lore:
@@ -1782,7 +1781,7 @@
 灾难巨剑:
   item: DIAMOND_SWORD
   lore:
-  - §r发射会造成冻伤、狱火或灵液减益的火花
+  - §r发射会造成狱火减益的火花
   attributes:
     damage: 170
     damageType: Melee
@@ -1795,7 +1794,7 @@
   item: DIAMOND_SWORD
   lore:
   - §r击中敌人时释放硫磺火间歇泉
-  - §r右键会将其像标枪一样掷出，击中时爆炸
+  - §r右键会将其像标枪一样掷出，击中敌人时爆炸
   attributes:
     damage: 140
     damageType: Melee
@@ -1832,7 +1831,8 @@
 炼狱:
   item: DIAMOND_SWORD
   lore:
-  - §r发射恶魔镰刀，有等同于暴击率的概率造成暗影焰爆炸
+  - §r挥动时生成一些火星
+  - §r直接命中敌人时有等同于暴击率的概率造成小爆炸
   attributes:
     damage: 220
     damageType: Melee
@@ -1842,25 +1842,265 @@
   worth: 7200000
   rarity: 5
 硫火鞭:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一颗硫磺火弹，在爆裂时产生更多硫磺火弹
+  attributes:
+    damage: 140
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 29
+  worth: 12000000
+  rarity: 7
 凋亡屠刀:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射追踪剑气
+  - §r击中敌人时给予玩家暴君之怒增益，增加玩家30%近战伤害和10%近战暴击率
+  attributes:
+    damage: 128
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 26
+  worth: 16000000
+  rarity: 8
 混乱之刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r根据你已损失生命值附加额外伤害
+  attributes:
+    damage: 300
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 19
+    buffInflictMelee: 硫磺火|100|1
+  worth: 16000000
+  rarity: 8
 风暴管束者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r只有风暴才能击倒大树
+  - §r发射剑气将怪物吸入
+  - §r“别想逃开哦”
+  attributes:
+    damage: 160
+    damageType: Melee
+    crit: 4
+    knockback: 6.25
+    useTime: 25
+  worth: 20000000
+  rarity: 10
 彗星陨刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r击中敌人时会召唤流星
+  attributes:
+    damage: 320
+    damageType: Melee
+    crit: 4
+    knockback: 7.75
+    useTime: 22
+  worth: 16000000
+  rarity: 8
 荆棘长刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r命中时召唤荆棘
+  attributes:
+    damage: 160
+    damageType: Melee
+    crit: 4
+    knockback: 7.25
+    useTime: 13
+    buffInflictMelee: 剧毒|100|1
+  worth: 12000000
+  rarity: 7
 地狱龙锋:
+  item: DIAMOND_SWORD
+  lore:
+  - §r蕴含着一条古龙的力量
+  - §r击中敌人会产生一团爆炸性的火焰
+  attributes:
+    damage: 360
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 30
+    buffInflictMelee: 狱炎|100|1
+  worth: 12000000
+  rarity: 7
 绝对零度:
+  item: DIAMOND_SWORD
+  lore:
+  - §r被冰之大魔法师祝福的远古之刃
+  - §r发射暗影冰晶
+  - §r剑刃接触制造冰爆
+  attributes:
+    damage: 240
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 20
+    buffInflictMelee: 霜火|100|1
+  worth: 16000000
+  rarity: 8
 大守卫者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r击碎敌人的护甲
+  - §r当敌人护甲已经被击碎时治疗玩家
+  - §r击中低于半血的敌人会释放彩虹弹幕
+  attributes:
+    damage: 300
+    damageType: Melee
+    crit: 4
+    knockback: 8.5
+    useTime: 22
+  worth: 20000000
+  rarity: 10
 翡翠之潮:
+  item: DIAMOND_SWORD
+  lore:
+  - §r攻击敌人时从天空召唤利维坦毒牙
+  attributes:
+    damage: 190
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 24
+  worth: 12000000
+  rarity: 7
 庇护之刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r用剑击打敌人时，庇护之光会爆发出火焰
+  - §r右键发射庇护之火
+  attributes:
+    damage: 216
+    damageType: Melee
+    crit: 4
+    knockback: 4.25
+    useTime: 15
+  worth: 12000000
+  rarity: 8
 狱火重剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射若干个火球
+  attributes:
+    damage: 180
+    damageType: Melee
+    crit: 4
+    knockback: 7.75
+    useTime: 20
+    buffInflictMelee: 狱炎|100|1
+  worth: 16000000
+  rarity: 8
 幻星刀:
+  item: DIAMOND_SWORD
+  lore:
+  - §r根据敌人剩余生命值造成额外伤害
+  attributes:
+    damage: 170
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 12
+    buffInflictMelee: 幻星感染|100|1
+  worth: 16000000
+  rarity: 9
 灵魂收割者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射出一把灵魂镰刀
+  attributes:
+    damage: 170
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 24
+    buffInflictMelee: 瘟疫|80|1
+  worth: 16000000
+  rarity: 8
 崇高誓约之剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r射出发散的恶魔镰刀
+  - §r直接击中敌人时有等同于暴击率的概率造成爆炸
+  attributes:
+    damage: 300
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 23
+    buffInflictMelee: 暗影焰|50|1
+  worth: 16000000
+  rarity: 8
 瘟疫毒刃:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 192
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 15
+    buffInflictMelee: 瘟疫|100|1
+  worth: 16000000
+  rarity: 8
 海爵剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r用剑刃击中敌人会释放涡流台风
+  - §r右键发射水刃龙卷
+  attributes:
+    damage: 248
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 29
+  worth: 12000000
+  rarity: 8
 斩首者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射出破坏性的追踪火花
+  attributes:
+    damage: 260
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 20
+  worth: 16000000
+  rarity: 8
 熵阔剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射数个追踪离子球
+  attributes:
+    damage: 180
+    damageType: Melee
+    crit: 4
+    knockback: 5.25
+    useTime: 26
+  worth: 16000000
+  rarity: 9
 邪恶收割者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤燃烧头骨
+  - §r燃烧头骨命中敌怪时会爆炸成追踪火球
+  attributes:
+    damage: 180
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 22
+    buffInflictMelee: 狱炎|100|1
+  worth: 16000000
+  rarity: 9
 剑鱼:
   item: STONE_SWORD
   attributes:
@@ -2073,46 +2313,6 @@
     useTime: 30
   worth: 20000000
   rarity: 10
-赤潮矛:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 50
-    damageType: Melee
-    crit: 4
-    knockback: 5
-    useTime: 25
-  worth: 400000
-  rarity: 2
-海王三叉戟:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 24
-    damageType: Melee
-    crit: 4
-    knockback: 4.5
-    useTime: 17
-  worth: 400000
-  rarity: 2
-金羽:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 48
-    damageType: Melee
-    crit: 4
-    knockback: 5.75
-    useTime: 23
-  worth: 800000
-  rarity: 3
-绽花毒藤:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 60
-    damageType: Melee
-    crit: 4
-    knockback: 5
-    useTime: 22
-  worth: 400000
-  rarity: 2
 钴薙刀:
   item: DIAMOND_SWORD
   attributes:
@@ -2197,6 +2397,179 @@
     useTime: 16
   worth: 10000000
   rarity: 10
+水电剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r击中敌人时散发电火花
+  attributes:
+    damage: 46
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 18
+  worth: 400000
+  rarity: 2
+潜渊震荡者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r击中敌人时散发电火花
+  attributes:
+    damage: 180
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 10
+  worth: 7200000
+  rarity: 5
+卢克雷西亚:
+  item: DIAMOND_SWORD
+  lore:
+  - §r攻击敌人会让你获得极短暂的近战无敌帧
+  attributes:
+    damage: 180
+    damageType: Melee
+    crit: 4
+    knockback: 8.25
+    useTime: 15
+  worth: 16000000
+  rarity: 8
+赤潮矛:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 50
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 25
+  worth: 400000
+  rarity: 2
+海王三叉戟:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射追踪漩涡
+  attributes:
+    damage: 24
+    damageType: Melee
+    crit: 4
+    knockback: 4.5
+    useTime: 17
+  worth: 400000
+  rarity: 2
+金羽:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 48
+    damageType: Melee
+    crit: 4
+    knockback: 5.75
+    useTime: 23
+  worth: 800000
+  rarity: 3
+绽花毒藤:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 60
+    damageType: Melee
+    crit: 4
+    knockback: 5
+    useTime: 22
+    buffInflictMelee: 中毒|60|1
+  worth: 400000
+  rarity: 2
+星夜长枪:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射星夜光束
+  attributes:
+    damage: 220
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 23
+  worth: 7200000
+  rarity: 5
+硫磺火矛:
+  item: DIAMOND_SWORD
+  lore:
+  - §r打击敌人时会引发硫磺火爆炸并降落硫磺火
+  attributes:
+    damage: 116
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 19
+  worth: 7200000
+  rarity: 5
+刺花长矛:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射花矛尖
+  attributes:
+    damage: 270
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 20
+  worth: 12000000
+  rarity: 7
+泰拉长枪:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一个长矛状的射线
+  attributes:
+    damage: 176
+    damageType: Melee
+    crit: 4
+    knockback: 8.5
+    useTime: 17
+  worth: 16000000
+  rarity: 8
+火山之矛:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 180
+    damageType: Melee
+    crit: 4
+    knockback: 6.75
+    useTime: 22
+    buffInflictMelee: 狱炎|80|1
+  worth: 16000000
+  rarity: 8
+瘟疫长枪:
+  item: DIAMOND_SWORD
+  lore:
+  - §r打击敌人会发射瘟疫搜寻者
+  attributes:
+    damage: 130
+    damageType: Melee
+    crit: 4
+    knockback: 8.5
+    useTime: 20
+    buffInflictMelee: 瘟疫|100|1
+  worth: 16000000
+  rarity: 8
+磁能分割刀:
+  item: DIAMOND_SWORD
+  lore:
+  - §r释放多个能量脉冲
+  attributes:
+    damage: 260
+    damageType: Melee
+    crit: 4
+    knockback: 9
+    useTime: 21
+  worth: 12000000
+  rarity: 1100
+幻星矛:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 180
+    damageType: Melee
+    crit: 29
+    knockback: 8.5
+    useTime: 13
+  worth: 16000000
+  rarity: 9
 木制回力镖:
   item: STICK
   attributes:
@@ -2313,6 +2686,46 @@
     useTime: 20
   worth: 800000
   rarity: 3
+海蚌锤:
+  item: STICK
+  lore:
+  - §r发射一个受重力影响的巨蛤，在留空一段时间后会造成更高伤害。
+  attributes:
+    damage: 300
+    damageType: Melee
+    crit: 4
+    knockback: 10
+    useTime: 50
+  worth: 7200000
+  rarity: 5
+风滚草:
+  item: STICK
+  lore:
+  - §r击中敌人后脱手而出
+  attributes:
+    damage: 250
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 20
+  worth: 12000000
+  rarity: 7
+钨钢螺丝刀:
+  item: DIAMOND_SWORD
+  lore:
+  - §r左键攻击时额外向上抛起一枚受重力影响的螺丝钉
+  - §r右键攻击只对螺丝钉生效，将其向前击飞，获得大量伤害且必定暴击
+  - §#83B87E“是谁把平头螺丝刀做的这么大？？我 *灾厄粗口* 到底能用它来干啥？”
+  - §#83B87E“这东西甚至可以直接把人的眼睛挖出来！”
+  - §#83B87E“……啊。”
+  attributes:
+    damage: 9
+    damageType: Melee
+    crit: 4
+    knockback: 3.75
+    useTime: 22
+  worth: 200000
+  rarity: 1
 剑锋之誓约:
   item: DIAMOND_SWORD
   lore:
@@ -2526,7 +2939,7 @@
     crit: 4
     knockback: 8
     useTime: 17
-    buffInflictMelee: "碎甲|30|1"
+    buffInflictMelee: 碎甲|30|1
   worth: 16000000
   rarity: 9
 真·环境之刃[血腾之愤]:
@@ -2610,22 +3023,6 @@
     useTime: 25
   worth: 16000000
   rarity: 4
-钨钢螺丝刀:
-  item: DIAMOND_SWORD
-  lore:
-  - §r左键攻击时额外向上抛起一枚受重力影响的螺丝钉
-  - §r右键攻击只对螺丝钉生效，将其向前击飞并获得大量伤害和速度且必定暴击
-  - §#83B87E“是谁把平头螺丝刀做的这么大？？我 *灾厄粗口* 到底能用它来干啥？”
-  - §#83B87E“这东西甚至可以直接把人的眼睛挖出来！”
-  - §#83B87E“……啊。”
-  attributes:
-    damage: 9
-    damageType: Melee
-    crit: 4
-    knockback: 3.75
-    useTime: 22
-  worth: 200000
-  rarity: 1
 太极连枷:
   item: STICK
   attributes:
@@ -2703,6 +3100,158 @@
     useTime: 25
   worth: 10000000
   rarity: 10
+烟陨彗星:
+  item: STICK
+  lore:
+  - §r向下召唤星星
+  - §r一只十分灵活的悠悠球
+  attributes:
+    damage: 28
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 16
+    knockback: 1.5
+    useTime: 25
+  worth: 800000
+  rarity: 3
+涡旋:
+  item: STICK
+  attributes:
+    damage: 24
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 12.5
+    knockback: 1
+    useTime: 25
+  worth: 400000
+  rarity: 2
+空旋:
+  item: STICK
+  lore:
+  - §r有敌人在附近时发射羽毛
+  - §r一只十分灵活的悠悠球
+  attributes:
+    damage: 52
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 16
+    knockback: 4
+    useTime: 22
+  worth: 800000
+  rarity: 3
+神旨:
+  item: STICK
+  lore:
+  - §r有敌人在附近时发射凝胶束
+  - §r一只十分灵活的悠悠球
+  attributes:
+    damage: 58
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 32
+    knockback: 3.5
+    useTime: 21
+  worth: 2400000
+  rarity: 4
+阴阳:
+  item: STICK
+  lore:
+  - §r来自古代东方的神秘力量
+  - §r一只十分灵活的悠悠球
+  attributes:
+    damage: 100
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 32
+    knockback: 3.5
+    useTime: 25
+  worth: 2400000
+  rarity: 4
+烁光:
+  item: STICK
+  lore:
+  - §r有敌人在附近时发射星星
+  - §r一只十分灵活的悠悠球
+  attributes:
+    damage: 82
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 36
+    knockback: 3.5
+    useTime: 25
+  worth: 4800000
+  rarity: 5
+遗殇:
+  item: STICK
+  lore:
+  - §r有敌人在附近时发射硫磺火激光
+  - §r一只十分灵活的悠悠球
+  attributes:
+    damage: 110
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 36
+    knockback: 4
+    useTime: 22
+  worth: 9600000
+  rarity: 7
+泥潭:
+  item: STICK
+  lore:
+  - §r发射孢子云
+  - §r一只十分灵活的悠悠球
+  attributes:
+    damage: 104
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 36
+    knockback: 3.5
+    useTime: 22
+  worth: 9600000
+  rarity: 7
+断层:
+  item: STICK
+  lore:
+  - §r击中敌人时产生爆炸
+  - §r一只十分灵活的悠悠球
+  attributes:
+    damage: 150
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 40
+    knockback: 4
+    useTime: 22
+  worth: 12000000
+  rarity: 8
+瘟疫狂潮:
+  item: STICK
+  lore:
+  - §r有敌人在附近时发射瘟疫搜寻者
+  - §r一只十分灵活的悠悠球
+  attributes:
+    damage: 200
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 40
+    knockback: 2.5
+    useTime: 22
+  worth: 12000000
+  rarity: 8
+微波辐照:
+  item: STICK
+  lore:
+  - §r以辐射破坏附近敌人的生物组织和机械原件
+  - §r一只十分灵活的悠悠球
+  - §r用幻星的传统方式料理你的敌人，是舌尖上的灾厄的著名菜点
+  attributes:
+    damage: 222
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 54
+    knockback: 3
+    useTime: 22
+  worth: 16000000
+  rarity: 9
 木弓:
   item: BOW
   attributes:
@@ -4641,6 +5190,17 @@
     useTime: 20
   worth: 10000000
   rarity: 10
+星云鞭:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 120
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 18
+    buffInflictMelee: 幻星感染|80|1
+  worth: 12000000
+  rarity: 7
 手里剑:
   item: IRON_NUGGET
   attributes:
@@ -7144,7 +7704,6 @@
   item: CLAY_BALL
   worth: 60000
   rarity: 3
-
 纯净凝胶:
   item: CLAY_BALL
   worth: 500000

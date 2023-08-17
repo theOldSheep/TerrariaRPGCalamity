@@ -1534,6 +1534,63 @@ TNT:
         damageMulti: 0.75
         speed: 1
         spawnType: 凝胶束
+烁光:
+    spawnProjectiles:
+        interval: 20
+        offset: 20
+        spawnMechanism: ENEMY
+        damageMulti: 1
+        speed: 1.25
+        spawnType: 坠星
+    buffInflict:
+        - "霜火|40|1"
+炼狱死光:
+    gravity: 0
+    liveTime: 40
+    trailColor: 255|55|85
+    trailLingerTime: 5
+    trailStepSize: 0.35
+    buffInflict:
+        - "硫磺火|20|1"
+遗殇:
+    spawnProjectiles:
+        interval: 7
+        offset: 25
+        spawnMechanism: ENEMY
+        damageMulti: 0.5
+        speed: 1.35
+        spawnType: 炼狱死光
+    buffInflict:
+        - "硫磺火|80|1"
+泥潭:
+    spawnProjectiles:
+        interval: 8
+        spawnMechanism: SURROUND
+        damageMulti: 0.75
+        speed: 0.35
+        spawnType: 孢子云
+    buffInflict:
+        - "剧毒|60|1"
+断层:
+    isGrenade: true
+    blastOnContactEnemy: true
+    blastRadius: 1.5
+    buffInflict:
+        - "狱炎|80|1"
+瘟疫狂潮:
+    spawnProjectiles:
+        interval: 30
+        offset: 25
+        spawnMechanism: ENEMY
+        damageMulti: 0.75
+        speed: 1.4
+        spawnType: 瘟疫搜寻者
+    buffInflict:
+        - "瘟疫|80|1"
+微波辐照:
+    projectileSize: 3
+    buffInflict:
+        - "幻星感染|80|1"
 凝胶束:
     gravity: 0
     liveTime: 50

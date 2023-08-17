@@ -46,6 +46,10 @@
     items:
     - 跳跃之瓶:1:1:0.0244
     - 航鱼靴:1:1:0.025
+  8:
+    giveAllItems: true
+    items:
+    - 钻石:1:3:0.5
 铁匣:
   1:
     giveAllItems: false
@@ -86,6 +90,10 @@
     items:
     - 跳跃之瓶:1:1:0.0404
     - 航鱼靴:1:1:0.0426
+  8:
+    giveAllItems: true
+    items:
+    - 钻石:2:6:0.75
 金匣:
   1:
     giveAllItems: false
@@ -122,6 +130,10 @@
     giveAllItems: true
     items:
     - 生命水晶:1:1:0.125
+  8:
+    giveAllItems: true
+    items:
+    - 钻石:5:10
 珍珠木匣:
   1:
     giveAllItems: false
@@ -171,6 +183,10 @@
     items:
     - 跳跃之瓶:1:1:0.0244
     - 航鱼靴:1:1:0.025
+  8:
+    giveAllItems: true
+    items:
+    - 钻石:1:3:0.5
 秘银匣:
   1:
     giveAllItems: false
@@ -215,6 +231,10 @@
     items:
     - 跳跃之瓶:1:1:0.0404
     - 航鱼靴:1:1:0.0426
+  8:
+    giveAllItems: true
+    items:
+    - 钻石:2:6:0.75
 钛金匣:
   1:
     giveAllItems: false
@@ -255,6 +275,10 @@
     giveAllItems: true
     items:
     - 生命水晶:1:1:0.125
+  8:
+    giveAllItems: true
+    items:
+    - 钻石:5:10
 # 所有专家模式福袋都在下方按克苏鲁之眼福袋的格式写
 专家模式福袋:
   史莱姆王:
@@ -526,6 +550,7 @@
       - 闪亮石
       - 甲虫外壳:18:23
       - 锯刃镐:1:1:0.3333
+      - 庇护之刃:1:1:0.1
   瘟疫使者歌莉娅:
     1:
       giveAllItems: false
@@ -568,6 +593,7 @@
     2:
       items:
       - 猪鲨之翼:1:1:0.1
+      - 海爵剑:1:1:0.1
   毁灭魔像:
     1:
       giveAllItems: false

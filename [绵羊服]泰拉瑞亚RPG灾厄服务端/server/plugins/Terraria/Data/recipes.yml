@@ -169,7 +169,7 @@ FURNACE:
     - 暗影鳞片:5
   '33':
     requireLevel: 2
-    resultItem: 黑曜石石裤
+    resultItem: 黑曜石裤
     requireItem:
     - 黑曜石:20
     - 丝绸:10
@@ -955,6 +955,26 @@ ANVIL:
     - 无头骑士剑
     - 种子弯刀
     - 铜质短剑
+  '139_1':
+    requireLevel: 2
+    resultItem: 叶绿双刃刀
+    requireItem:
+    - 叶绿锭:12
+  '139_2':
+    requireLevel: 2
+    resultItem: 叶绿军刀
+    requireItem:
+    - 叶绿锭:12
+  '139_3':
+    requireLevel: 2
+    resultItem: 叶绿镋
+    requireItem:
+    - 叶绿锭:12
+  '139_4':
+    requireLevel: 2
+    resultItem: 叶绿连弩
+    requireItem:
+    - 叶绿锭:12
   '140':
     requireLevel: 2
     resultItem: 叶绿头饰
@@ -1087,7 +1107,7 @@ ANVIL:
     - 海洋残渣:3
   '164':
     requireLevel: 1
-    resultItem: 胜潮蟹盔
+    resultItem: 胜潮贝盔
     requireItem:
     - 海洋残渣:3
   '165':
@@ -1152,37 +1172,37 @@ ANVIL:
     resultItem: 斯塔提斯盔甲
     requireItem:
     - 纯净凝胶:8
-    - 狱石锭:13
+    - 狱炎锭:13
   '175':
     requireLevel: 1
     resultItem: 斯塔提斯护胫
     requireItem:
     - 纯净凝胶:6
-    - 狱石锭:11
+    - 狱炎锭:11
   '176':
     requireLevel: 1
     resultItem: 斯塔提斯战盔
     requireItem:
     - 纯净凝胶:5
-    - 狱石锭:9
+    - 狱炎锭:9
   '177':
     requireLevel: 1
     resultItem: 斯塔提斯头饰
     requireItem:
     - 纯净凝胶:5
-    - 狱石锭:9
+    - 狱炎锭:9
   '178':
     requireLevel: 1
     resultItem: 斯塔提斯帽子
     requireItem:
     - 纯净凝胶:5
-    - 狱石锭:9
+    - 狱炎锭:9
   '179':
     requireLevel: 1
     resultItem: 斯塔提斯兜帽
     requireItem:
     - 纯净凝胶:5
-    - 狱石锭:9
+    - 狱炎锭:9
   '180':
     requireLevel: 1
     resultItem: 翡翠斧
@@ -1223,12 +1243,19 @@ ANVIL:
     requireItem:
     - 纯净凝胶:30
     - 凝胶:35
-    - 狱石锭:10
+    - 狱炎锭:10
   '186':
     requireLevel: 1
     resultItem: 海棱晶
     requireItem:
     - 棱晶碎片:5
+  '186_1':
+    requireLevel: 2
+    resultItem: 纯净之斧
+    requireItem:
+    - 翡翠斧
+    - 妖精尘:20
+    - 水晶碎块:10
   '187':
     requireLevel: 2
     resultItem: 遗忘之刃
@@ -1248,6 +1275,249 @@ ANVIL:
     - 寒元锭:12
     - 暗影之魂
     - 光明之魂
+  '190':
+    requireLevel: 2
+    resultItem: 炎霜之刃
+    requireItem:
+    - 寒元锭:8
+    - 狱炎锭:8
+    - 光明之魂:3
+  '191':
+    requireLevel: 2
+    resultItem: 灾难巨剑
+    requireItem:
+    - 神圣锭:12
+    - 力量之魂:3
+    - 恐惧之魂:3
+    - 视域之魂:3
+  '192':
+    requireLevel: 2
+    resultItem: 硫火之刃
+    requireItem:
+    - 污痕核心:6
+  '193':
+    requireLevel: 2
+    resultItem: 雄伟之护
+    requireItem:
+    - 精金剑
+    - 力量之魂:15
+  '194':
+    requireLevel: 2
+    resultItem: 誓约与禁忌之刃
+    requireItem:
+    - 剑锋之誓约
+    - 旧神之誓约
+    - 恐惧之魂:5
+  '195':
+    requireLevel: 2
+    resultItem: 炼狱
+    requireItem:
+    - 纯净之斧
+    - 混乱精华:3
+    - 恐惧之魂:8
+  '196':
+    requireLevel: 2
+    resultItem: 硫火鞭
+    requireItem:
+    - 灾厄尘:12
+    - 污痕核心:4
+  '197':
+    requireLevel: 2
+    resultItem: 混乱之刃
+    requireItem:
+    - 污痕核心:5
+    - 毁灭刃
+    - 混乱核心:3
+  '198':
+    requireLevel: 2
+    resultItem: 彗星陨刃
+    requireItem:
+    - 陨星锭:25
+    - 灵气:5
+  '199':
+    requireLevel: 2
+    resultItem: 荆棘长刃
+    requireItem:
+    - 永恒锭:12
+  '200':
+    requireLevel: 2
+    resultItem: 地狱龙锋
+    requireItem:
+    - 烈焰剑
+    - 永恒锭:8
+  '201':
+    requireLevel: 2
+    resultItem: 狱火重剑
+    requireItem:
+    - 熔渣锭:15
+  '202':
+    requireLevel: 2
+    resultItem: 灵魂收割者
+    requireItem:
+    - 死神镰刀
+    - 瘟疫细胞罐:10
+    - 诅咒焰:20
+  '203':
+    requireLevel: 2
+    resultItem: 崇高誓约之剑
+    requireItem:
+    - 誓约与禁忌之刃
+    - 断裂英雄剑
+    - 瘟疫装甲镀层:8
+    - 灾厄尘:8
+  '204':
+    requireLevel: 2
+    resultItem: 卢克雷西亚
+    requireItem:
+    - 灾劫核心
+    - 生命合金:5
+    - 暗影之魂:5
+    - 光明之魂:5
+  '205':
+    requireLevel: 1
+    resultItem: 烟陨彗星
+    requireItem:
+    - 钻石:5
+    - 坠星:15
+  '206':
+    requireLevel: 1
+    resultItem: 涡旋
+    requireItem:
+    - 海棱晶:7
+    - 沉沦渊石:10
+    - 珍珠碎片:3
+  '207':
+    requireLevel: 1
+    resultItem: 空旋
+    requireItem:
+    - 天蓝锭:6
+    - 丝绸:3
+  '208':
+    requireLevel: 1
+    resultItem: 神旨
+    requireItem:
+    - 纯净凝胶:18
+    - 枯萎凝胶:18
+  '209':
+    requireLevel: 1
+    resultItem: 阴阳
+    requireItem:
+    - 暗黑碎块
+    - 光明碎块
+  '210':
+    requireLevel: 2
+    resultItem: 烁光
+    requireItem:
+    - 寒元锭:6
+  '211':
+    requireLevel: 2
+    resultItem: 泥潭
+    requireItem:
+    - 永恒锭:6
+  '212':
+    requireLevel: 2
+    resultItem: 断层
+    requireItem:
+    - 熔渣锭:6
+  '213':
+    requireLevel: 1
+    resultItem: 赤潮矛
+    requireItem:
+    - 海洋残渣:4
+  '214':
+    requireLevel: 1
+    resultItem: 金羽
+    requireItem:
+    - 天蓝锭:10
+    - 丝绸:4
+  '215':
+    requireLevel: 1
+    resultItem: 绽花毒藤
+    requireItem:
+    - 木材:15
+    - 丛林孢子:12
+    - 毒刺:4
+    - 藤蔓:2
+  '216':
+    requireLevel: 2
+    resultItem: 星夜长枪
+    requireItem:
+    - 寒元锭:12
+  '217':
+    requireLevel: 2
+    resultItem: 刺花长矛
+    requireItem:
+    - 永恒锭:12
+  '218':
+    requireLevel: 2
+    resultItem: 泰拉长枪
+    requireItem:
+    - 叶绿镋
+    - 永恒之枪
+    - 生命碎片:12
+  '219':
+    requireLevel: 2
+    resultItem: 火山之矛
+    requireItem:
+    - 熔渣锭:10
+  '220':
+    requireLevel: 2
+    resultItem: 磁能分割刀
+    requireItem:
+    - 神秘电路:12
+    - 可疑镀层:18
+    - 生命合金:5
+    - 瘟疫装甲镀层:10
+  '221':
+    requireLevel: 1
+    resultItem: 海胆链枷
+    requireItem:
+    - 海洋残渣:3
+  '222':
+    requireLevel: 2
+    resultItem: 风滚草
+    requireItem:
+    - 火焰锤
+    - 大狂鲨鳞
+    - 力量之魂:5
+  '223':
+    requireLevel: 1
+    resultItem: 钨钢螺丝刀
+    requireItem:
+    - 钨钢金属废料:12
+    - 能源核心
+  '224':
+    requireLevel: 1
+    resultItem: 残缺环境刃[澄澈之纯净]
+    requireItem:
+    - 木剑
+    - 泥土:50
+    - 石头:50
+    - 天蓝锭:5
+    - 狱炎锭:5
+  '225':
+    requireLevel: 1
+    resultItem: 破碎方舟
+    requireItem:
+    - 钨钢螺丝刀
+    - 纯净凝胶:5
+    - 铜锭:10
+  '226':
+    requireLevel: 2
+    resultItem: 环境之刃[澄澈之纯净]
+    requireItem:
+    - 残缺环境刃[澄澈之纯净]
+    - 恐惧之魂
+    - 视域之魂
+    - 力量之魂
+    - 妖精尘:2
+    - 星尘:10
+  '227':
+    requireLevel: 2
+    resultItem: 远古方舟
+    requireItem:
+    - 破碎方舟
+    - 断裂英雄剑
 WORKBENCH:
   '1':
     requireLevel: 1
@@ -1527,15 +1797,6 @@ ENCHANTMENT_TABLE:
     - 恶魔锭:5
     - 腐烂物质:15
     - 腐肉:5
-  '8':
-    requireLevel: 1
-    resultItem: 血锋
-    requireItem:
-    - 光之驱逐
-    - 妖刀村正
-    - 草薙剑
-    - 烈焰剑
-    - 纯净凝胶:5
   '9':
     requireLevel: 1
     resultItem: 真·绝望之刃
@@ -1543,6 +1804,14 @@ ENCHANTMENT_TABLE:
     - 绝望之刃
     - 诅咒焰:15
     - 死亡草:4
+  '10':
+    requireLevel: 1
+    resultItem: 凋亡屠刀
+    requireItem:
+    - 真·绝望之刃
+    - 断裂英雄剑
+    - 小瓶毒液:15
+    - 叶绿锭:15
 AIR:
   '1':
     requireLevel: 1
@@ -2196,6 +2465,50 @@ TINKER_WORKBENCH:
     - 日耀碎片
     - 星璇碎片
     - 星云碎片
+  '39':
+    requireLevel: 1
+    resultItem: 风暴管束者
+    requireItem:
+    - 日光核心:3
+    - 风暴军刀
+    - 风之刃
+    - 日耀碎片:10
+  '40':
+    requireLevel: 1
+    resultItem: 大守卫者
+    requireItem:
+    - 雄伟之护
+    - 灼炎弯刀
+    - 星云碎片:6
+  '41':
+    requireLevel: 1
+    resultItem: 幻星刀
+    requireItem:
+    - 炫星锭:8
+  '42':
+    requireLevel: 1
+    resultItem: 熵阔剑
+    requireItem:
+    - 冥思构造体:15
+  '43':
+    requireLevel: 1
+    resultItem: 邪恶收割者
+    requireItem:
+    - 无头骑士剑
+    - 星尘碎片:12
+  '44':
+    requireLevel: 1
+    resultItem: 幻星矛
+    requireItem:
+    - 炫星锭:8
+  '45':
+    requireLevel: 1
+    resultItem: 真·环境之刃[兵匠之傲]
+    requireItem:
+    - 环境之刃[澄澈之纯净]
+    - 灾劫核心
+    - 生命合金:3
+    - 炫星锭:3
 嘉登熔炉:
   containedStations:
     # FURNACE中 requireLevel<=3的配方也会被加载（即精金熔炉）
