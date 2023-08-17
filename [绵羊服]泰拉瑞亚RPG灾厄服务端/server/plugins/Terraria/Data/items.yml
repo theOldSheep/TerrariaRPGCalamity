@@ -524,7 +524,7 @@
     damageMulti: 15
   worth: 20000
   rarity: 1
-测试饰品-使用速度:
+测试饰品-物品使用测试:
   item: LEASH
   lore:
   - §r[饰品]
@@ -532,6 +532,7 @@
     damage: 300
     useTime: 20
     crit: 35
+    projectileSpeed: 35
   worth: 20000
   rarity: 1
 镣铐:
@@ -3177,7 +3178,6 @@
     damageType: Bullet
     crit: 4
     projectileSpeed: 5
-    projectileSpeedMulti: 0.01
     knockback: 0
     useTime: 16
   worth: 1000000
