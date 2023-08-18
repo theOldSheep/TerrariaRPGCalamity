@@ -4134,17 +4134,28 @@
     useTime: 16
   worth: 1000000
   rarity: 1
-左轮手枪:
+手枪:
   item: BLAZE_ROD
   attributes:
-    damage: 40
+    damage: 52
     damageType: Bullet
     crit: 4
-    projectileSpeed: 16
+    projectileSpeed: 10
     knockback: 3
-    useTime: 22
-  worth: 2000000
+    useTime: 15
+  worth: 1750000
   rarity: 2
+凤凰爆破枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 60
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 13
+    knockback: 3
+    useTime: 14
+  worth: 3500000
+  rarity: 3
 迷你鲨:
   item: BLAZE_ROD
   attributes:
@@ -4165,9 +4176,9 @@
     damage: 34
     damageType: Bullet
     crit: 4
-    projectileSpeed: 12
+    projectileSpeed: 7.75
     knockback: 0
-    useTime: 20
+    useTime: 12
   worth: 3000000
   rarity: 4
 巨兽鲨:
@@ -4187,13 +4198,12 @@
 金星马格南:
   item: BLAZE_ROD
   attributes:
-    damage: 60
+    damage: 100
     damageType: Bullet
     crit: 4
     projectileSpeed: 13.5
-    projectileSpeedMulti: 1.5
     knockback: 5.5
-    useTime: 6
+    useTime: 9
   worth: 5000000
   rarity: 7
 狙击步枪:
@@ -4202,10 +4212,9 @@
     damage: 370
     damageType: Bullet
     crit: 29
-    projectileSpeed: 8
-    projectileSpeedMulti: 2
+    projectileSpeed: 16
     knockback: 8
-    useTime: 30
+    useTime: 36
   worth: 8000000
   rarity: 8
 战术霰弹枪:
@@ -4216,7 +4225,7 @@
     crit: 4
     projectileSpeed: 6
     knockback: 7
-    useTime: 25
+    useTime: 34
   worth: 8000000
   rarity: 8
 链式机枪:
@@ -4239,9 +4248,9 @@
     damage: 100
     damageType: Bullet
     crit: 4
-    projectileSpeed: 10
-    knockback: 0
-    useTime: 4
+    projectileSpeed: 14
+    knockback: 2
+    useTime: 5
     ammoConsumptionRate: -0.66
   worth: 10000000
   rarity: 10
@@ -4262,12 +4271,12 @@
 四管猎枪:
   item: BLAZE_ROD
   attributes:
-    damage: 47
+    damage: 28
     damageType: Bullet
     crit: 4
     projectileSpeed: 7
-    knockback: 5.5
-    useTime: 45
+    knockback: 6.5
+    useTime: 55
   worth: 7000000
   rarity: 3
 玛瑙爆破枪:
@@ -4281,28 +4290,6 @@
     useTime: 48
   worth: 5000000
   rarity: 4
-手枪:
-  item: BLAZE_ROD
-  attributes:
-    damage: 34
-    damageType: Bullet
-    crit: 4
-    projectileSpeed: 10
-    knockback: 3
-    useTime: 10
-  worth: 1750000
-  rarity: 2
-凤凰爆破枪:
-  item: BLAZE_ROD
-  attributes:
-    damage: 48
-    damageType: Bullet
-    crit: 4
-    projectileSpeed: 13
-    knockback: 3
-    useTime: 11
-  worth: 3500000
-  rarity: 3
 鹅卵石冲击波:
   item: BLAZE_ROD
   lore:
@@ -4432,7 +4419,7 @@
     crit: 4
     projectileSpeed: 5
     knockback: 3.5
-    useTime: 40
+    useTime: 50
   worth: 7200000
   rarity: 5
 精金粒子加速器:
@@ -4460,7 +4447,7 @@
     crit: 4
     projectileSpeed: 11
     knockback: 2
-    useTime: 12
+    useTime: 16
     ammoConsumptionRate: -0.5
   worth: 12000000
   rarity: 7
@@ -4652,6 +4639,8 @@ P90:
   rarity: 9
 火花魔棒:
   item: STICK
+  lore:
+  - §r可用来合成永夜射线，请妥善保管
   attributes:
     damage: 24
     damageType: Magic
@@ -5017,7 +5006,7 @@ P90:
   attributes:
     damage: 20
     damageType: Magic
-    projectileSpeed: 22
+    projectileSpeed: 11
     crit: 4
     knockback: 2
     useTime: 30
@@ -5041,11 +5030,11 @@ P90:
 水流喷射:
   item: DIAMOND_SWORD
   lore:
-  - §r发射一个会额外溅射的水柱
+  - §r发射一个水柱
   attributes:
-    damage: 28
+    damage: 32
     damageType: Magic
-    projectileSpeed: 30
+    projectileSpeed: 10
     crit: 4
     knockback: 2
     useTime: 33
@@ -5094,20 +5083,6 @@ P90:
     manaUse: 5
   worth: 400000
   rarity: 2
-寄生权杖:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射一阵会吸附敌人的水蛭，造成可叠加的持续伤害
-  attributes:
-    damage: 24
-    damageType: Magic
-    projectileSpeed: 10
-    crit: 4
-    knockback: 5
-    useTime: 35
-    manaUse: 10
-  worth: 400000
-  rarity: 2
 菌杖:
   item: DIAMOND_SWORD
   lore:
@@ -5122,22 +5097,6 @@ P90:
     manaUse: 7
   worth: 400000
   rarity: 2
-等离子射线:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射一束低伤等离子射线
-  - §r击中物块时会分裂成伤害更高的几束射线
-  - §r直接击中敌人时则会造成暗影焰减益
-  attributes:
-    damage: 16
-    damageType: Magic
-    projectileSpeed: 1111
-    crit: 4
-    knockback: 2.5
-    useTime: 20
-    manaUse: 10
-  worth: 200000
-  rarity: 1
 狱火蝙蝠杖:
   item: DIAMOND_SWORD
   lore:
@@ -5159,7 +5118,7 @@ P90:
   attributes:
     damage: 42
     damageType: Magic
-    projectileSpeed: 16
+    projectileSpeed: 6
     crit: 4
     useTime: 24
     manaUse: 10
@@ -5181,33 +5140,26 @@ P90:
   rarity: 4
 冰晶风暴:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射一个冰晶追踪你的敌人
   attributes:
     damage: 98
     damageType: Magic
+    projectileSpeed: 10
     crit: 4
     knockback: 5
     useTime: 80
     manaUse: 13
   worth: 4800000
   rarity: 5
-艺术攻击:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 160
-    damageType: Magic
-    crit: 4
-    knockback: 2
-    useTime: 24
-    manaUse: 10
-  worth: 9600000
-  rarity: 7
 冰坠三叉戟:
   item: DIAMOND_SWORD
   lore:
-  - §r发射暗影射线
+  - §r发射穿透性冰柱
   attributes:
     damage: 138
     damageType: Magic
+    projectileSpeed: 10
     crit: 4
     knockback: 7
     useTime: 25
@@ -5216,9 +5168,13 @@ P90:
   rarity: 5
 飞龙之歌:
   item: DIAMOND_SWORD
+  lore:
+  - §r我呼唤神话中的飞龙，祈求向大地降下恩泽
+  - §r召唤飞龙与羽毛从天而降
   attributes:
     damage: 90
     damageType: Magic
+    projectileSpeed: 10
     crit: 4
     knockback: 4.75
     useTime: 23
@@ -5227,9 +5183,12 @@ P90:
   rarity: 5
 烁兰:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射闪光花朵，爆炸分裂成追踪花瓣
   attributes:
     damage: 106
     damageType: Magic
+    projectileSpeed: 7.5
     crit: 4
     knockback: 5.5
     useTime: 27
@@ -5238,20 +5197,26 @@ P90:
   rarity: 5
 狱炎裂空:
   item: DIAMOND_SWORD
+  lore:
+  - §r召唤三叉戟攻击敌人
   attributes:
     damage: 100
     damageType: Magic
+    projectileSpeed: 10
     crit: 29
     knockback: 7
-    useTime: 30
+    useTime: 75
     manaUse: 15
   worth: 7200000
   rarity: 8
 水灌:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射一个水柱
   attributes:
-    damage: 100
+    damage: 120
     damageType: Magic
+    projectileSpeed: 12.5
     crit: 4
     knockback: 3
     useTime: 15
@@ -5261,10 +5226,11 @@ P90:
 硫火玫瑰:
   item: DIAMOND_SWORD
   lore:
-  - §r发射暗影射线
+  - §r发射硫磺火射线
   attributes:
     damage: 90
     damageType: Magic
+    projectileSpeed: 25
     crit: 4
     knockback: 7
     useTime: 16
@@ -5299,6 +5265,8 @@ P90:
   rarity: 8
 亚特兰蒂斯:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射海之三叉戟
   attributes:
     damage: 140
     damageType: Magic
@@ -5310,9 +5278,12 @@ P90:
   rarity: 7
 南极光羽:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射一波优美的极光束，击中后爆裂为星辰
   attributes:
     damage: 130
     damageType: Magic
+    projectileSpeed: 10
     crit: 4
     knockback: 3
     useTime: 17
@@ -5321,9 +5292,13 @@ P90:
   rarity: 7
 维苏威阿斯:
   item: DIAMOND_SWORD
+  lore:
+  - §r召唤一群熔岩陨星
+  - §r右键直接发射散开的熔岩陨星
   attributes:
     damage: 120
     damageType: Magic
+    projectileSpeed: 17.5
     crit: 4
     knockback: 3
     useTime: 15
@@ -5332,9 +5307,12 @@ P90:
   rarity: 8
 瘟疫法杖:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射瘟疫之牙
   attributes:
     damage: 156
     damageType: Magic
+    projectileSpeed: 15
     crit: 4
     knockback: 8
     useTime: 21
@@ -5343,9 +5321,13 @@ P90:
   rarity: 8
 血涌:
   item: DIAMOND_SWORD
+  lore:
+  - §r由下方召唤血之涌泉
+  - §r“咦？为什么是红色的？”
   attributes:
     damage: 150
     damageType: Magic
+    projectileSpeed: 7.5
     crit: 4
     knockback: 3.75
     useTime: 22
@@ -5354,9 +5336,12 @@ P90:
   rarity: 8
 玄法百枝莲:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射闪光花朵，爆炸分裂成追踪花瓣
   attributes:
     damage: 150
     damageType: Magic
+    projectileSpeed: 10
     crit: 4
     knockback: 7.5
     useTime: 23
@@ -5365,9 +5350,12 @@ P90:
   rarity: 10
 幻星法杖:
   item: DIAMOND_SWORD
+  lore:
+  - §r自天外召唤水晶陨落造成大面积伤害
   attributes:
     damage: 540
     damageType: Magic
+    projectileSpeed: 10
     crit: 19
     knockback: 5
     useTime: 18
@@ -5391,20 +5379,6 @@ P90:
     manaUse: 18
   worth: 22000000
   rarity: 11
-酸液枪:
-  item: DIAMOND_SWORD
-  lore:
-  - §r喷出三股酸液流
-  attributes:
-    damage: 56
-    damageType: Magic
-    projectileSpeed: 14
-    crit: 4
-    knockback: 1.5
-    useTime: 45
-    manaUse: 9
-  worth: 400000
-  rarity: 2
 麦格纳炮:
   item: DIAMOND_SWORD
   lore:
@@ -5426,7 +5400,7 @@ P90:
   attributes:
     damage: 52
     damageType: Magic
-    projectileSpeed: 525.5
+    projectileSpeed: 15
     crit: 4
     knockback: 0
     useTime: 20
@@ -5435,9 +5409,13 @@ P90:
   rarity: 1100
 恐寒症:
   item: DIAMOND_SWORD
+  lore:
+  - §r战栗
+  - §r发射多个冰锥
   attributes:
     damage: 192
     damageType: Magic
+    projectileSpeed: 10
     crit: 4
     knockback: 1.5
     useTime: 40
@@ -5446,9 +5424,13 @@ P90:
   rarity: 6
 离子冲击波:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射会加速并爆炸的离子冲击波
+  - §r魔力越充足时伤害越高
   attributes:
     damage: 58
     damageType: Magic
+    projectileSpeed: 10
     crit: 4
     knockback: 5.5
     useTime: 10
@@ -5457,9 +5439,13 @@ P90:
   rarity: 5
 高斯手枪:
   item: DIAMOND_SWORD
+  lore:
+  - §r一种由魔法驱动的简易手枪；更适合法师使用
+  - §r发射毁灭性的极强击退的高速冲击波
   attributes:
     damage: 300
     damageType: Magic
+    projectileSpeed: 1
     crit: 4
     knockback: 11
     useTime: 20
@@ -5468,9 +5454,13 @@ P90:
   rarity: 1100
 激光加特林:
   item: DIAMOND_SWORD
+  lore:
+  - §r亚利姆舰队和基地防御部队配装的大型激光炮
+  - §r短暂充能后以疯狂的速度射出激光
   attributes:
     damage: 100
     damageType: Magic
+    projectileSpeed: 24
     crit: 4
     knockback: 1
     useTime: 2
@@ -5479,6 +5469,8 @@ P90:
   rarity: 1100
 拉扎尔射线:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射弹射光束，在击中敌人时爆炸
   attributes:
     damage: 160
     damageType: Magic
@@ -5505,12 +5497,12 @@ P90:
 珊瑚泥:
   item: BOOK
   lore:
-  - §r向地面喷出能攻击敌人的刺球
+  - §r喷出一块珊瑚
   attributes:
     damage: 34
     damageType: Magic
     crit: 4
-    projectileSpeed: 16
+    projectileSpeed: 8
     knockback: 3.5
     useTime: 26
     manaUse: 4
@@ -5519,7 +5511,7 @@ P90:
 清道夫:
   item: BOOK
   lore:
-  - §r施放并不精准的水束
+  - §r喷出一团能量弹
   attributes:
     damage: 32
     damageType: Magic
@@ -5547,7 +5539,7 @@ P90:
 信风:
   item: BOOK
   lore:
-  - §r发射飞快而锋利的羽毛
+  - §r发射天蓝羽毛
   attributes:
     damage: 62
     damageType: Magic
@@ -5580,7 +5572,6 @@ P90:
     damage: 84
     damageType: Magic
     crit: 9
-    projectileSpeed: 36
     knockback: 3.5
     useTime: 21
     manaUse: 7
@@ -5588,9 +5579,12 @@ P90:
   rarity: 4
 冰火矢:
   item: BOOK
+  lore:
+  - §r发射缓慢飞行的冰火箭
   attributes:
     damage: 160
     damageType: Magic
+    projectileSpeed: 9
     crit: 4
     knockback: 5.5
     useTime: 20
@@ -5599,9 +5593,12 @@ P90:
   rarity: 4
 波塞冬:
   item: BOOK
+  lore:
+  - §r释放波塞冬的台风
   attributes:
     damage: 124
     damageType: Magic
+    projectileSpeed: 10
     crit: 4
     knockback: 6
     useTime: 45
@@ -5610,9 +5607,12 @@ P90:
   rarity: 5
 死亡之尘:
   item: BOOK
+  lore:
+  - §r丢出一团巨大的粉尘击碎敌人的防御
   attributes:
     damage: 246
     damageType: Magic
+    projectileSpeed: 15
     crit: 4
     knockback: 5
     useTime: 25
@@ -5621,9 +5621,12 @@ P90:
   rarity: 5
 遗迹圣物:
   item: BOOK
+  lore:
+  - §r放射出一圈沙之刃
   attributes:
     damage: 42
     damageType: Magic
+    projectileSpeed: 30
     crit: 4
     knockback: 4.25
     useTime: 35
@@ -5632,9 +5635,12 @@ P90:
   rarity: 5
 暗晶风暴:
   item: BOOK
+  lore:
+  - §r快速发射暗晶碎片，一次能发射两个
   attributes:
     damage: 50
     damageType: Magic
+    projectileSpeed: 10
     crit: 4
     knockback: 5.5
     useTime: 6
@@ -5643,9 +5649,12 @@ P90:
   rarity: 5
 沸腾之火:
   item: BOOK
+  lore:
+  - §r发射一团硫磺火烈焰
   attributes:
-    damage: 104
+    damage: 75
     damageType: Magic
+    projectileSpeed: 12
     crit: 4
     knockback: 6.75
     useTime: 24
@@ -5654,9 +5663,12 @@ P90:
   rarity: 5
 蒸海硫火:
   item: BOOK
+  lore:
+  - §r发射弹跳硫磺火球
   attributes:
     damage: 150
     damageType: Magic
+    projectileSpeed: 15
     crit: 4
     knockback: 6.5
     useTime: 20
@@ -5665,9 +5677,12 @@ P90:
   rarity: 5
 混乱火鞭:
   item: BOOK
+  lore:
+  - §r静看着整个世界的燃烧...
   attributes:
     damage: 130
     damageType: Magic
+    projectileSpeed: 3
     crit: 4
     knockback: 7.5
     useTime: 38
@@ -5676,9 +5691,12 @@ P90:
   rarity: 7
 常青之气:
   item: BOOK
+  lore:
+  - §r发射使敌人燃烧的灵液
   attributes:
-    damage: 56
+    damage: 96
     damageType: Magic
+    projectileSpeed: 10
     crit: 4
     knockback: 4.5
     useTime: 18
@@ -5687,9 +5705,12 @@ P90:
   rarity: 7
 天堂之泪:
   item: BOOK
+  lore:
+  - §r发射两个缓慢移动的神圣光团
   attributes:
     damage: 108
     damageType: Magic
+    projectileSpeed: 6
     crit: 4
     knockback: 5.5
     useTime: 20
@@ -5698,9 +5719,12 @@ P90:
   rarity: 8
 始源之尘:
   item: BOOK
+  lore:
+  - §r丢出一团巨大的粉尘并在击中时爆炸
   attributes:
     damage: 120
     damageType: Magic
+    projectileSpeed: 15
     crit: 4
     knockback: 7
     useTime: 20
@@ -5709,9 +5733,12 @@ P90:
   rarity: 8
 凛冬之怒:
   item: BOOK
+  lore:
+  - §r这书摸起来冷极了
   attributes:
     damage: 118
     damageType: Magic
+    projectileSpeed: 9.5
     crit: 4
     knockback: 5
     useTime: 12
@@ -5720,9 +5747,12 @@ P90:
   rarity: 8
 禁忌之阳:
   item: BOOK
+  lore:
+  - §r发射一颗火球，在消失之际产生巨型爆炸
   attributes:
     damage: 160
     damageType: Magic
+    projectileSpeed: 6
     crit: 4
     knockback: 7
     useTime: 30
@@ -5731,6 +5761,8 @@ P90:
   rarity: 8
 命运之手:
   item: BOOK
+  lore:
+  - §r召唤宇宙之触助你撕裂敌人
   attributes:
     damage: 110
     damageType: Magic
@@ -5740,11 +5772,15 @@ P90:
     manaUse: 8
   worth: 16000000
   rarity: 9
-流星雨:
+天穹流星:
   item: BOOK
+  lore:
+  - §r向上发射一颗彗星
+  - §r“What is reflected in my eyes?”
   attributes:
-    damage: 114
+    damage: 325
     damageType: Magic
+    projectileSpeed: 12
     crit: 29
     knockback: 3.25
     useTime: 14
@@ -5753,9 +5789,14 @@ P90:
   rarity: 9
 北极熊爪:
   item: DIAMOND_SWORD
+  lore:
+  - §r狂野撕咬之力被你握在掌心
+  - §r发射穿墙的幻灵熊掌
+  - §r“弹幕为纯粹魔力造物，没有动物受到伤害”
   attributes:
     damage: 180
     damageType: Magic
+    projectileSpeed: 5
     crit: 4
     knockback: 10
     useTime: 28
@@ -5764,9 +5805,12 @@ P90:
   rarity: 6
 阿娜希塔琶音:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射缓慢移动的高音音符
   attributes:
     damage: 184
     damageType: Magic
+    projectileSpeed: 5
     crit: 4
     knockback: 6.5
     useTime: 18

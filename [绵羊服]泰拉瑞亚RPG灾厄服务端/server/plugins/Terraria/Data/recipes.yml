@@ -750,12 +750,6 @@ ANVIL:
     - 光明碎块
     - 暗影之魂:7
     - 光明之魂:7
-  '107':
-    requireLevel: 2
-    resultItem: 水晶风暴
-    requireItem:
-    - 水晶碎块:20
-    - 光明之魂:15
   '108':
     requireLevel: 2
     resultItem: 魔眼法杖
@@ -1636,6 +1630,7 @@ ANVIL:
     resultItem: 麦格纳冲锋炮
     requireItem:
     - 鹅卵石冲击波
+    - 麦格纳炮
     - 灵气:5
     - 精金锭:6
   '248':
@@ -1712,6 +1707,108 @@ ANVIL:
     requireItem:
     - 可疑镀层:12
     - 神秘电路:18
+    - 生命合金:5
+    - 瘟疫装甲镀层:10
+  '259':
+    requireLevel: 1
+    resultItem: 魔法玫瑰
+    requireItem:
+    - 大自然的恩赐
+    - 月光草:5
+    - 魔力星
+  '260':
+    requireLevel: 1
+    resultItem: 海水杖
+    requireItem:
+    - 海棱晶:5
+    - 沉沦渊石:25
+    - 珍珠碎片:3
+  '261':
+    requireLevel: 1
+    resultItem: 丰收
+    requireItem:
+    - 木材:20
+    - 南瓜:20
+    - 南瓜种子:5
+  '262':
+    requireLevel: 1
+    resultItem: 狱火蝙蝠杖
+    requireItem:
+    - 狱炎锭:10
+  '263':
+    requireLevel: 2
+    resultItem: 飞龙之歌
+    requireItem:
+    - 飞翔之魂:15
+    - 秘银锭:5
+    - 天空之羽
+  '264':
+    requireLevel: 2
+    resultItem: 烁兰
+    requireItem:
+    - 魔法玫瑰
+    - 神圣锭:5
+  '265':
+    requireLevel: 2
+    resultItem: 狱炎裂空
+    requireItem:
+    - 裂天剑
+    - 熔渣锭:10
+  '266':
+    requireLevel: 2
+    resultItem: 硫火玫瑰
+    requireItem:
+    - 污痕核心:6
+  '267':
+    requireLevel: 2
+    resultItem: 女武神权杖
+    requireItem:
+    - 神圣锭:12
+    - 天蓝锭:6
+    - 力量之魂
+    - 视域之魂
+    - 恐惧之魂
+  '268':
+    requireLevel: 2
+    resultItem: 泰拉射线
+    requireItem:
+    - 生命碎片:12
+    - 永夜射线
+    - 女武神权杖
+  '269':
+    requireLevel: 1
+    resultItem: 麦格纳炮
+    requireItem:
+    - 石块:25
+    - 黑曜石:15
+  '270':
+    requireLevel: 1
+    resultItem: 脉冲手枪
+    requireItem:
+    - 可疑镀层:7
+    - 神秘电路:5
+    - 天蓝锭:4
+    - 海棱晶:7
+  '271':
+    requireLevel: 2
+    resultItem: 离子冲击波
+    requireItem:
+    - 恐惧之魂:10
+    - 精金锭:7
+  '272':
+    requireLevel: 2
+    resultItem: 高斯手枪
+    requireItem:
+    - 可疑镀层:8
+    - 神秘电路:12
+    - 秘银锭:10
+    - 力量之魂:20
+  '273':
+    requireLevel: 2
+    resultItem: 激光加特林
+    requireItem:
+    - 可疑镀层:15
+    - 神秘电路:15
     - 生命合金:5
     - 瘟疫装甲镀层:10
 WORKBENCH:
@@ -1910,6 +2007,12 @@ WORKBENCH:
     resultItem: 发光蘑菇
     requireItem:
     - 蘑菇:4
+  '35_1':
+    requireLevel: 1
+    resultItem: 水晶风暴
+    requireItem:
+    - 水晶碎块:20
+    - 光明之魂:15
   '36':
     requireLevel: 1
     resultItem: 死灵头盔
@@ -1946,6 +2049,97 @@ WORKBENCH:
     requireItem:
     - 丝绸:5
     - 荒漠之羽:1
+  '42':
+    requireLevel: 1
+    resultItem: 冰矢
+    requireItem:
+    - 冰块:20
+    - 寒颤棘:2
+    - 雪块:10
+  '43':
+    requireLevel: 1
+    resultItem: 珊瑚泥
+    requireItem:
+    - 海洋残渣:2
+    - 珊瑚:5
+  '44':
+    requireLevel: 1
+    resultItem: 火矢
+    requireItem:
+    - 狱炎锭:6
+    - 黑曜石:9
+    - 火焰花:2
+  '45':
+    requireLevel: 1
+    resultItem: 信风
+    requireItem:
+    - 天蓝锭:6
+    - 丝绸:5
+  '46':
+    requireLevel: 1
+    resultItem: 冰火矢
+    requireItem:
+    - 冰矢
+    - 火矢
+    - 冰川精华:2
+    - 混乱精华:2
+  '47':
+    requireLevel: 1
+    resultItem: 死亡之尘
+    requireItem:
+    - 禁戒碎片
+    - 沙块:25
+    - 精金锭:5
+  '48':
+    requireLevel: 1
+    resultItem: 遗迹圣物
+    requireItem:
+    - 禁戒碎片:2
+    - 精金锭:5
+  '49':
+    requireLevel: 1
+    resultItem: 暗晶风暴
+    requireItem:
+    - 水晶风暴
+    - 寒元锭:6
+  '50':
+    requireLevel: 1
+    resultItem: 蒸海硫火
+    requireItem:
+    - 污痕核心:5
+  '51':
+    requireLevel: 1
+    resultItem: 常青之气
+    requireItem:
+    - 诅咒焰:20
+    - 暗影之魂:15
+    - 永恒锭:3
+  '52':
+    requireLevel: 1
+    resultItem: 天堂之泪
+    requireItem:
+    - 冰火矢
+    - 水矢
+    - 日光核心:5
+    - 海棱晶:15
+  '53':
+    requireLevel: 1
+    resultItem: 始源之尘
+    requireItem:
+    - 死亡之尘
+    - 禁戒碎片:3
+    - 陨星锭:5
+    - 灵气:5
+  '54':
+    requireLevel: 1
+    resultItem: 禁忌之阳
+    requireItem:
+    - 熔渣锭:6
+  '55':
+    requireLevel: 1
+    resultItem: 命运之手
+    requireItem:
+    - 冥思构造体:9
 ENCHANTMENT_TABLE:
   '1':
     requireLevel: 1
@@ -2022,6 +2216,15 @@ ENCHANTMENT_TABLE:
     - 恶魔锭:7
     - 腐肉:3
     - 腐烂物质:10
+  '13':
+    requireLevel: 1
+    resultItem: 永夜射线
+    requireItem:
+    - 火花魔棒
+    - 钨钢法杖
+    - 太空枪
+    - 水矢
+    - 纯净凝胶
 AIR:
   '1':
     requireLevel: 1
@@ -2763,6 +2966,32 @@ TINKER_WORKBENCH:
     resultItem: 神之风箱
     requireItem:
     - 冥思构造体:12
+  '53':
+    requireLevel: 1
+    resultItem: 玄法百枝莲
+    requireItem:
+    - 烁兰
+    - 星云碎片:12
+  '54':
+    requireLevel: 1
+    resultItem: 幻星法杖
+    requireItem:
+    - 炫星锭:6
+  '55':
+    requireLevel: 1
+    resultItem: 元素射线
+    requireItem:
+    - 泰拉射线
+    - 星系异石:5
+    - 夜明锭:5
+    - 生命合金:5
+  '56':
+    requireLevel: 1
+    resultItem: 拉扎尔射线
+    requireItem:
+    - 高温射线枪
+    - 太空枪
+    - 日耀碎片:6
 嘉登熔炉:
   containedStations:
     # FURNACE中 requireLevel<=3的配方也会被加载（即精金熔炉）
