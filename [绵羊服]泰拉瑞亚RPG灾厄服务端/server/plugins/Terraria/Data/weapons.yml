@@ -940,6 +940,9 @@
 烈风:
   type: BOW
   autoSwing: true
+凝胶弓:
+  type: BOW
+  autoSwing: true
 月光弓:
   type: BOW
   autoSwing: true
@@ -1108,12 +1111,6 @@
   type: SPECIAL_AMMO
   ammo: _蓝色粒子束
   autoSwing: true
-精金粒子加速器:
-  type: SPECIAL_AMMO
-  ammo: _粉色粒子光束
-  autoSwing: true
-  attributes:
-    projectileSpeed: 1280
 骨头手套:
   type: SPECIAL_AMMO
   ammo: 骨头
@@ -1305,10 +1302,10 @@
 满弹霰弹枪:
   type: GUN
   shots: 15
-  offSet: 1.5
+  offSet: 7.5
   autoSwing: true
   ammoConversion:
-    火枪子弹:
+    ALL:
     - 弹跳爆炸弹
 碎水霰弹枪:
   type: GUN
@@ -1337,7 +1334,7 @@
   type: GUN
   autoSwing: true
   ammoConversion:
-    火枪子弹:
+    ALL:
     - 诅咒弹
 地狱降临:
   type: GUN
@@ -1355,6 +1352,12 @@
   ammoConversion:
     火枪子弹:
     - 冰锥
+精金粒子加速器:
+  type: SPECIAL_AMMO
+  ammo: _粉色粒子光束
+  autoSwing: true
+  attributes:
+    projectileSpeed: 320
 憎恨:
   type: GUN
   autoSwing: true
@@ -2065,6 +2068,7 @@ P90:
   type: SUMMON
   damageType: Magic
   minionName: 凋零枯花
+  slotsRequired: 2
   noDuplication: true
 代达罗斯守卫法杖:
   type: SUMMON

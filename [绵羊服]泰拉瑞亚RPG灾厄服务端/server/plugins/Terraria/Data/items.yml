@@ -2467,6 +2467,9 @@
   rarity: 3
 绽花毒藤:
   item: DIAMOND_SWORD
+  lore:
+  - §r左键当做矛使用
+  - §r右键当做链球使用
   attributes:
     damage: 60
     damageType: Melee
@@ -3340,61 +3343,6 @@
     useTime: 22
   worth: 540000
   rarity: 3
-巴淋内德:
-  item: BOW
-  attributes:
-    damage: 18
-    damageType: Arrow
-    crit: 4
-    projectileSpeed: 14
-    knockback: 2
-    useTime: 26
-  worth: 400000
-  rarity: 2
-贝壳刃弓:
-  item: BOW
-  attributes:
-    damage: 80
-    damageType: Arrow
-    crit: 19
-    projectileSpeed: 2.5
-    knockback: 6
-    useTime: 70
-  worth: 400000
-  rarity: 2
-剧毒烈弓:
-  item: BOW
-  attributes:
-    damage: 30
-    damageType: Arrow
-    crit: 4
-    projectileSpeed: 15
-    knockback: 3
-    useTime: 28
-  worth: 400000
-  rarity: 2
-烈风:
-  item: BOW
-  attributes:
-    damage: 16
-    damageType: Arrow
-    crit: 4
-    projectileSpeed: 20
-    knockback: 3
-    useTime: 20
-  worth: 800000
-  rarity: 3
-凝胶弓:
-  item: BOW
-  attributes:
-    damage: 66
-    damageType: Arrow
-    crit: 4
-    projectileSpeed: 12
-    knockback: 4
-    useTime: 31
-  worth: 2400000
-  rarity: 3
 代达罗斯风暴弓:
   item: BOW
   attributes:
@@ -3481,7 +3429,6 @@
     projectileSpeed: 10
     knockback: 2.5
     useTime: 20
-    penetration: 4
   worth: 5000000
   rarity: 8
 幻象弓:
@@ -3496,24 +3443,298 @@
     ammoConsumptionRate: -0.66
   worth: 10000000
   rarity: 10
+巴淋内德:
+  item: BOW
+  lore:
+  - §r将木箭转化为闪电箭
+  attributes:
+    damage: 18
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 14
+    knockback: 2
+    useTime: 26
+  worth: 400000
+  rarity: 2
+贝壳刃弓:
+  item: BOW
+  lore:
+  - §r将木箭转化为锋利的贝壳箭
+  attributes:
+    damage: 80
+    damageType: Arrow
+    crit: 19
+    projectileSpeed: 2.5
+    knockback: 6
+    useTime: 70
+  worth: 400000
+  rarity: 2
+烈风:
+  item: BOW
+  lore:
+  - §r额外发射三支低伤害天羽
+  - §r“并不能将自己发射出去”
+  attributes:
+    damage: 16
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 20
+    knockback: 3
+    useTime: 20
+  worth: 800000
+  rarity: 3
+凝胶弓:
+  item: BOW
+  lore:
+  - §r额外发射两束凝胶
+  attributes:
+    damage: 66
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12
+    knockback: 4
+    useTime: 31
+  worth: 2400000
+  rarity: 3
+月光弓:
+  item: BOW
+  lore:
+  - §r同时发射两支箭
+  - §r将木箭转化为能在物块表面滑动的能量束
+  - §r“啊摩擦~摩↓→↗擦→”
+  attributes:
+    damage: 38
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 8
+    knockback: 2
+    useTime: 22
+  worth: 2400000
+  rarity: 4
+黑翼蝙蝠弓:
+  item: BOW
+  lore:
+  - §r一次发射四支箭
+  - §r木箭转化为能反弹的黑翼蝙蝠
+  attributes:
+    damage: 34
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 16
+    knockback: 1.5
+    useTime: 30
+  worth: 2400000
+  rarity: 4
+暗之回响:
+  item: BOW
+  lore:
+  - §r一次发射两支箭
+  - §r发射一个额外的水晶飞镖
+  attributes:
+    damage: 90
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12
+    knockback: 4
+    useTime: 22
+  worth: 7200000
+  rarity: 5
+白霜弓:
+  item: BOW
+  lore:
+  - §r一次发射两支冰雾箭
+  attributes:
+    damage: 112
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12
+    knockback: 4
+    useTime: 25
+  worth: 7200000
+  rarity: 5
+巴淋诺提卡:
+  item: BOW
+  lore:
+  - §r将木箭转化为闪电箭
+  attributes:
+    damage: 64
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 15
+    knockback: 2
+    useTime: 24
+  worth: 7200000
+  rarity: 5
+硫火之怒:
+  item: BOW
+  lore:
+  - §r一次发射三支箭
+  - §r将木箭转化为硫火射线
+  attributes:
+    damage: 50
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 13
+    knockback: 3.75
+    useTime: 22
+  worth: 7200000
+  rarity: 5
+叶流:
+  item: BOW
+  lore:
+  - §r发射如水流般密集的叶之箭
+  - §r右键发射会散发毒云的孢子球
+  attributes:
+    damage: 40
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 10
+    knockback: 0.15
+    useTime: 16
+  worth: 12000000
+  rarity: 7
+宇束弓:
+  item: BOW
+  lore:
+  - §r同时发射三支箭
+  - §r将木箭转化为沿物块滑行的能量束
+  - §r“阴暗地滑行”
+  attributes:
+    damage: 96
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 10
+    knockback: 2.75
+    useTime: 20
+  worth: 16000000
+  rarity: 8
+破城巨弓:
+  item: BOW
+  lore:
+  - §r将木箭转化为能击碎敌人的装甲并且会碎裂为化石碎片的破城巨箭
+  attributes:
+    damage: 216
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 20
+    knockback: 8
+    useTime: 22
+  worth: 16000000
+  rarity: 8
+洲陆巨弓:
+  item: BOW
+  lore:
+  - §r一次发射三支箭矢
+  - §r额外发射两支诅咒箭或狱炎箭
+  attributes:
+    damage: 68
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 17
+    knockback: 4
+    useTime: 20
+  worth: 16000000
+  rarity: 8
+猎人长弓:
+  item: BOW
+  lore:
+  - §r一次性发射三发箭矢
+  - §r将木箭转化为小丑之箭
+  - §r“满足了小时候随便用小丑之箭的梦想”
+  attributes:
+    damage: 60
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 10
+    knockback: 6
+    useTime: 18
+  worth: 12000000
+  rarity: 8
+蜂毒:
+  item: BOW
+  lore:
+  - §r一次发射两支箭矢
+  - §r将木箭转化为接触后爆炸成蜜蜂的瘟疫箭
+  attributes:
+    damage: 112
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12
+    knockback: 3
+    useTime: 18
+  worth: 16000000
+  rarity: 8
+幻星弓:
+  item: BOW
+  lore:
+  - §r一次发射三支箭
+  - §r“一箭三连”
+  attributes:
+    damage: 198
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 16
+    knockback: 2.5
+    useTime: 15
+  worth: 16000000
+  rarity: 9
 湮灭千星:
   item: BOW
   lore:
   - §r从天空发射七发箭矢风暴
   - §r将木箭转化为自导能源箭
   attributes:
-    damage: 116
+    damage: 132
     damageType: Arrow
     crit: 4
     projectileSpeed: 12
-    knockback: 2.25
+    knockback: 5.5
     useTime: 22
   worth: 22000000
   rarity: 11
+劲弩:
+  item: BOW
+  lore:
+  - §r发射10支高速箭
+  attributes:
+    damage: 56
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12
+    knockback: 4
+    useTime: 40
+  worth: 4800000
+  rarity: 5
+锋叶十字弩:
+  item: BOW
+  lore:
+  - §r一次发射四只箭
+  - §r同时发射两片锋叶
+  attributes:
+    damage: 70
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 16
+    knockback: 3.5
+    useTime: 26
+  worth: 12000000
+  rarity: 7
+恒吹雪:
+  item: BOW
+  lore:
+  - §r额外发射一支命中后碎裂的冰坠箭
+  attributes:
+    damage: 160
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 11
+    knockback: 3
+    useTime: 18
+  worth: 16000000
+  rarity: 8
 榴弹发射器:
   item: BLAZE_ROD
   attributes:
-    bounce: 4
     damage: 120
     damageType: Rocket
     crit: 4
@@ -3546,6 +3767,46 @@
     useTime: 30
   worth: 16000000
   rarity: 10
+岩鲨发射器:
+  item: BLAZE_ROD
+  lore:
+  - §r发射一个玛瑙火箭弹，爆炸时生成远古岩鲨
+  attributes:
+    damage: 60
+    damageType: Rocket
+    crit: 4
+    projectileSpeed: 14
+    knockback: 5
+    useTime: 33
+  worth: 7200000
+  rarity: 5
+蜂巢发射器:
+  item: BLAZE_ROD
+  lore:
+  - §r发射多种瘟疫火箭，爆炸时生成瘟疫蜜蜂
+  attributes:
+    damage: 160
+    damageType: Rocket
+    crit: 4
+    projectileSpeed: 13
+    knockback: 3.5
+    useTime: 21
+  worth: 16000000
+  rarity: 8
+天蝎座:
+  item: BLAZE_ROD
+  lore:
+  - §rBOOM
+  - §r右键发射不会摧毁物块的核弹
+  attributes:
+    damage: 160
+    damageType: Rocket
+    crit: 4
+    projectileSpeed: 20
+    knockback: 6.5
+    useTime: 13
+  worth: 20000000
+  rarity: 10
 气泵枪:
   item: BLAZE_ROD
   lore:
@@ -3575,7 +3836,7 @@
 珊瑚手炮:
   item: BLAZE_ROD
   lore:
-  - §r发射高压气泡流
+  - §r发射一块珊瑚
   attributes:
     damage: 48
     damageType: Bullet
@@ -3585,12 +3846,23 @@
     useTime: 20
   worth: 400000
   rarity: 2
+旋风发射器:
+  item: BLAZE_ROD
+  attributes:
+    damage: 36
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 5
+    useTime: 18
+  worth: 400000
+  rarity: 2
 泰瑟枪:
   item: BLAZE_ROD
   lore:
-  - §r发射会吸附在敌人身上的钩爪，在返回前持续电击敌人
+  - §r发射电击敌人的钩爪
   attributes:
-    damage: 30
+    damage: 120
     damageType: Bullet
     crit: 14
     projectileSpeed: 15
@@ -3598,44 +3870,49 @@
     useTime: 28
   worth: 800000
   rarity: 1100
-火花喷射器:
-  item: BOW
+海之烧灼:
+  item: BLAZE_ROD
+  lore:
+  - §r发射一束泡泡，击中敌人时召唤更多泡泡
+  - §r右键以发射一个慢而大的水弹，击中敌人时召唤水龙卷
   attributes:
-    damage: 14
-    damageType: Arrow
+    damage: 80
+    damageType: Bullet
     crit: 4
-    projectileSpeed: 10
-    knockback: 1
-    useTime: 30
-    penetration: 4
-    ammoConsumptionRate: -0.7
-  worth: 200000
-  rarity: 1
-影流喷射器:
-  item: BOW
+    projectileSpeed: 11
+    knockback: 5
+    useTime: 15
+  worth: 4800000
+  rarity: 5
+物质调谐器:
+  item: BLAZE_ROD
+  lore:
+  - §r使用与固体物质碰撞中获得的额外质量造成额外伤害
+  - §r发射不稳定物质，碰撞物块后造成更多伤害
+  - §r不稳定物质击中物块前可以无限穿透敌怪，但造成的伤害变低
   attributes:
-    damage: 48
-    damageType: Arrow
+    damage: 200
+    damageType: Bullet
     crit: 4
-    projectileSpeed: 32
-    knockback: 1.5
-    useTime: 10
-    penetration: 99
-    ammoConsumptionRate: -0.66
-  worth: 800000
-  rarity: 3
-过载凝胶发射器:
-  item: BOW
+    projectileSpeed: 12
+    knockback: 11
+    useTime: 33
+  worth: 4800000
+  rarity: 1100
+高斯来复枪:
+  item: BLAZE_ROD
+  lore:
+  - §r巨大且笨重的武器，但其射出的大威力子弹在清理成群的敌人时十分出色。
+  - §r发射毁灭性的荒谬击退的高速冲击波
   attributes:
-    damage: 32
-    damageType: Arrow
+    damage: 300
+    damageType: Bullet
     crit: 4
-    projectileSpeed: 6.5
-    knockback: 1.5
-    useTime: 16
-    ammoConsumptionRate: -0.33
-  worth: 2400000
-  rarity: 4
+    projectileSpeed: 27
+    knockback: 30
+    useTime: 28
+  worth: 12000000
+  rarity: 1100
 骨头手套:
   item: BOW
   lore:
@@ -3648,8 +3925,6 @@
     projectileSpeed: 8
     knockback: 2.3
     useTime: 12
-    penetration: 2
-    bounce: 1
   worth: 2000000
   rarity: 1000
 尖桩发射器:
@@ -3662,7 +3937,6 @@
     projectileSpeedMulti: 3
     knockback: 11
     useTime: 12
-    penetration: 9
   worth: 10000000
   rarity: 8
 尖桩:
@@ -3687,8 +3961,6 @@
     projectileSpeed: 14
     knockback: 3.5
     useTime: 9
-    penetration: 9
-    bounce: 4
     ammoConsumptionRate: -0.33
   worth: 10000000
   rarity: 8
@@ -3713,7 +3985,6 @@
     projectileSpeed: 11
     knockback: 8
     useTime: 25
-    bounce: 9
   worth: 10000000
   rarity: 8
 爆炸杰克南瓜灯:
@@ -3737,9 +4008,121 @@
     projectileSpeed: 25.5
     knockback: 0.425
     useTime: 30
-    penetration: 99
   worth: 10000000
   rarity: 8
+火花喷射器:
+  item: BOW
+  attributes:
+    damage: 14
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 5
+    knockback: 1
+    useTime: 30
+    ammoConsumptionRate: -0.7
+  worth: 200000
+  rarity: 1
+影流喷射器:
+  item: BOW
+  lore:
+  - §r“如果让你重新来~过~”
+  attributes:
+    damage: 48
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 8
+    knockback: 1.5
+    useTime: 10
+    ammoConsumptionRate: -0.6666
+  worth: 800000
+  rarity: 3
+过载凝胶发射器:
+  item: BOW
+  lore:
+  - §r发射一大片反弹凝胶
+  attributes:
+    damage: 32
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 6.5
+    knockback: 1.5
+    useTime: 16
+    ammoConsumptionRate: -0.3333
+  worth: 2400000
+  rarity: 4
+彩虹喵喷射器:
+  item: BOW
+  lore:
+  - §r发射蓝焰或粉焰
+  attributes:
+    damage: 96
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 5.5
+    knockback: 1.25
+    useTime: 5
+    ammoConsumptionRate: -0.85
+  worth: 2400000
+  rarity: 4
+混乱之息:
+  item: BOW
+  attributes:
+    damage: 134
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 8.5
+    knockback: 1.5
+    useTime: 30
+    ammoConsumptionRate: -0.5
+  worth: 12000000
+  rarity: 7
+泰拉喷火器:
+  item: BOW
+  attributes:
+    damage: 110
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 7.5
+    knockback: 3.25
+    useTime: 15
+    ammoConsumptionRate: -0.8
+  worth: 16000000
+  rarity: 8
+极光烈焰:
+  item: BOW
+  attributes:
+    damage: 98
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 7.5
+    knockback: 2
+    useTime: 18
+    ammoConsumptionRate: -0.6
+  worth: 12000000
+  rarity: 7
+枯萎散播者:
+  item: BOW
+  attributes:
+    damage: 220
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 7.5
+    knockback: 2
+    useTime: 30
+  worth: 16000000
+  rarity: 8
+神之风箱:
+  item: BOW
+  attributes:
+    damage: 160
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 9
+    knockback: 3.5
+    useTime: 18
+    ammoConsumptionRate: -0.7
+  worth: 16000000
+  rarity: 9
 燧发枪:
   item: BLAZE_ROD
   attributes:
@@ -3774,62 +4157,6 @@
     ammoConsumptionRate: -0.33
   worth: 7000000
   rarity: 2
-鹅卵石冲击波:
-  item: BLAZE_ROD
-  attributes:
-    damage: 18
-    damageType: Bullet
-    crit: 4
-    projectileSpeed: 6
-    knockback: 0
-    useTime: 20
-    ammoConsumptionRate: -0.5
-  worth: 400000
-  rarity: 2
-真菌枪:
-  item: BLAZE_ROD
-  attributes:
-    damage: 40
-    damageType: Bullet
-    crit: 4
-    projectileSpeed: 14
-    knockback: 2.5
-    useTime: 20
-  worth: 400000
-  rarity: 2
-碎水霰弹枪:
-  item: BLAZE_ROD
-  attributes:
-    damage: 28
-    damageType: Bullet
-    crit: 10
-    projectileSpeed: 22
-    knockback: 5.5
-    useTime: 26
-  worth: 800000
-  rarity: 3
-射水鱼:
-  item: BLAZE_ROD
-  attributes:
-    damage: 32
-    damageType: Bullet
-    crit: 4
-    projectileSpeed: 33
-    knockback: 2
-    useTime: 11
-  worth: 800000
-  rarity: 3
-胶泥散弹枪:
-  item: BLAZE_ROD
-  attributes:
-    damage: 46
-    damageType: Bullet
-    crit: 4
-    projectileSpeed: 5
-    knockback: 3.5
-    useTime: 32
-  worth: 2400000
-  rarity: 4
 发条突击步枪:
   item: BLAZE_ROD
   lore:
@@ -3976,6 +4303,353 @@
     useTime: 11
   worth: 3500000
   rarity: 3
+鹅卵石冲击波:
+  item: BLAZE_ROD
+  lore:
+  - §r发射一串鹅卵石冲击波
+  attributes:
+    damage: 18
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 6
+    knockback: 0
+    useTime: 20
+    ammoConsumptionRate: -0.50
+  worth: 400000
+  rarity: 2
+真菌枪:
+  item: BLAZE_ROD
+  lore:
+  - §r将火枪子弹转化为命中后分裂的真菌弹
+  attributes:
+    damage: 40
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 14
+    knockback: 2.5
+    useTime: 20
+  worth: 400000
+  rarity: 2
+满弹霰弹枪:
+  item: BLAZE_ROD
+  lore:
+  - §r发射出一大片弹跳子弹
+  - §r“瞄准？那是啥？”
+  attributes:
+    damage: 2
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 9
+    knockback: 0
+    useTime: 35
+  worth: 800000
+  rarity: 3
+碎水霰弹枪:
+  item: BLAZE_ROD
+  lore:
+  - §r将火枪子弹转化为蓝晶碎片，击中敌人时分裂为追踪碎片
+  attributes:
+    damage: 28
+    damageType: Bullet
+    crit: 10
+    projectileSpeed: 22
+    knockback: 5.5
+    useTime: 26
+  worth: 800000
+  rarity: 3
+胶泥散弹枪:
+  item: BLAZE_ROD
+  lore:
+  - §r发射数颗子弹
+  attributes:
+    damage: 46
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 5
+    knockback: 3.5
+    useTime: 32
+  worth: 2400000
+  rarity: 4
+屠夫:
+  item: BLAZE_ROD
+  lore:
+  - §r使用时间越长，发射速度和精确度越高
+  attributes:
+    damage: 30
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 1
+    useTime: 40
+  worth: 2400000
+  rarity: 4
+音波步枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 72
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 15
+    knockback: 2.5
+    useTime: 15
+  worth: 7200000
+  rarity: 5
+诅咒手枪:
+  item: BLAZE_ROD
+  lore:
+  - §r发射诅咒弹
+  attributes:
+    damage: 62
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 14
+    knockback: 2.25
+    useTime: 10
+  worth: 2400000
+  rarity: 4
+地狱降临:
+  item: BLAZE_ROD
+  lore:
+  - §r将绿藻弹转化为火枪子弹
+  - §r子弹命中敌人时即可发射下一发子弹
+  attributes:
+    damage: 120
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 2
+    useTime: 50
+  worth: 4800000
+  rarity: 5
+霜牙冲击波:
+  item: BLAZE_ROD
+  lore:
+  - §r一次发射六发子弹
+  - §r将火枪子弹转化为冰锥
+  attributes:
+    damage: 100
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 5
+    knockback: 3.5
+    useTime: 40
+  worth: 7200000
+  rarity: 5
+精金粒子加速器:
+  item: BLAZE_ROD
+  lore:
+  - §r轮流发射两种极性相反的粒子光束
+  - §r被极性相反的粒子光束轮流击中时额外造成一次伤害判定
+  attributes:
+    damage: 130
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 480
+    knockback: 3
+    useTime: 25
+  worth: 7200000
+  rarity: 5
+憎恨:
+  item: BLAZE_ROD
+  lore:
+  - §r发射一发强大的狙击弹
+  - §r右键以发射一连串子弹
+  attributes:
+    damage: 66
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 11
+    knockback: 2
+    useTime: 12
+    ammoConsumptionRate: -0.5
+  worth: 12000000
+  rarity: 7
+深核GK2:
+  item: BLAZE_ROD
+  lore:
+  - §r“挖到手软，赚到盆满！”
+  attributes:
+    damage: 90
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 20
+    knockback: 7
+    useTime: 14
+  worth: 4800000
+  rarity: 5
+九头蛇:
+  item: BLAZE_ROD
+  lore:
+  - §r连续射击会发射额外的弹药并减慢使用速度
+  attributes:
+    damage: 240
+    damageType: Bullet
+    crit: 0
+    projectileSpeed: 12
+    knockback: 10
+    useTime: 33
+  worth: 16000000
+  rarity: 8
+珍珠之神:
+  item: BLAZE_ROD
+  lore:
+  - §r汝命归我……
+  - §r连续攻击时在不同发射数量间循环
+  attributes:
+    damage: 80
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 3
+    useTime: 20
+  worth: 12000000
+  rarity: 8
+麦格纳冲锋炮:
+  item: BLAZE_ROD
+  lore:
+  - §r发射鹅卵石和麦格纳冲击波
+  attributes:
+    damage: 100
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 15
+    knockback: 2.25
+    useTime: 20
+  worth: 16000000
+  rarity: 8
+利维坦海潮枪:
+  item: BLAZE_ROD
+  lore:
+  - §r将火枪子弹转化为毒水弹
+  attributes:
+    damage: 160
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 5
+    useTime: 9
+  worth: 12000000
+  rarity: 7
+P90:
+  item: BLAZE_ROD
+  lore:
+  - §r“P90 rush B！”
+  attributes:
+    damage: 16
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 7
+    knockback: 1.5
+    useTime: 5
+    ammoConsumptionRate: -0.5
+  worth: 2400000
+  rarity: 4
+发条鳄鱼枪:
+  item: BLAZE_ROD
+  attributes:
+    damage: 110
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 20
+    knockback: 3.75
+    useTime: 9
+  worth: 16000000
+  rarity: 8
+地狱风暴:
+  item: BLAZE_ROD
+  lore:
+  - §r一次发射两颗子弹
+  attributes:
+    damage: 75
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 11.5
+    knockback: 2.5
+    useTime: 7
+  worth: 16000000
+  rarity: 8
+疫病污染者:
+  item: BLAZE_ROD
+  lore:
+  - §r将火枪子弹转化为消失时爆裂成瘟疫碎片的瘟疫子弹
+  attributes:
+    damage: 270
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 9.5
+    useTime: 37
+  worth: 16000000
+  rarity: 8
+玷污之疫SMG:
+  item: BLAZE_ROD
+  lore:
+  - §r发射数个瘟疫搜寻者
+  - §r右键发射无人机群
+  - §r无人机击中有瘟疫减益的敌怪时必定暴击
+  attributes:
+    damage: 170
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 2
+    useTime: 10
+  worth: 12000000
+  rarity: 8
+灭域者:
+  item: BLAZE_ROD
+  lore:
+  - §r一次发射三颗子弹
+  - §r将火枪子弹转化为爆炸弹
+  attributes:
+    damage: 100
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 30
+    knockback: 4
+    useTime: 22
+  worth: 16000000
+  rarity: 8
+电话会议:
+  item: BLAZE_ROD
+  lore:
+  - §r@全体成员
+  attributes:
+    damage: 64
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 4.5
+    useTime: 32
+    ammoConsumptionRate: -0.5
+  worth: 16000000
+  rarity: 9
+蘑菇狙击枪:
+  item: BLAZE_ROD
+  lore:
+  - §r额外发射强大的追踪蘑菇
+  attributes:
+    damage: 300
+    damageType: Bullet
+    crit: 39
+    projectileSpeed: 10
+    knockback: 9.75
+    useTime: 27
+  worth: 20000000
+  rarity: 10
+幻星冲击炮:
+  item: BLAZE_ROD
+  lore:
+  - §r将火枪子弹转化为幻星弹
+  attributes:
+    damage: 240
+    damageType: Bullet
+    crit: 29
+    projectileSpeed: 12
+    knockback: 2.75
+    useTime: 15
+  worth: 16000000
+  rarity: 9
 火花魔棒:
   item: STICK
   attributes:
@@ -3988,21 +4662,6 @@
     manaUse: 4
   worth: 100000
   rarity: 1
-钨钢法杖:
-  item: STICK
-  lore:
-  - §r发射钨钢光球
-  attributes:
-    damage: 26
-    damageType: Magic
-    crit: 4
-    projectileSpeed: 9
-    knockback: 3
-    useTime: 20
-    manaUse: 2
-    penetration: 1
-  worth: 200000
-  rarity: 1
 钻石法杖:
   item: DIAMOND_SWORD
   attributes:
@@ -4013,7 +4672,6 @@
     knockback: 5.5
     useTime: 26
     manaUse: 16
-    penetration: 1
   worth: 600000
   rarity: 2
 海蓝权杖:
@@ -4026,7 +4684,6 @@
     knockback: 5
     useTime: 16
     manaUse: 12
-    penetration: 99
   worth: 1750000
   rarity: 2
 太空枪:
@@ -4039,7 +4696,6 @@
     knockback: 0.75
     useTime: 17
     manaUse: 14
-    penetration: 2
   worth: 400000
   rarity: 1
 水矢:
@@ -4052,8 +4708,6 @@
     knockback: 5
     useTime: 17
     manaUse: 20
-    penetration: 9
-    bounce: 4
   worth: 1500000
   rarity: 2
 骷髅头法书:
@@ -4066,7 +4720,6 @@
     knockback: 3.5
     useTime: 26
     manaUse: 18
-    penetration: 2
   worth: 1500000
   rarity: 2
 恶魔锄刀:
@@ -4091,7 +4744,6 @@
     knockback: 6.5
     useTime: 17
     manaUse: 19
-    penetration: 2
   worth: 10000000
   rarity: 5
 激光步枪:
@@ -4104,7 +4756,6 @@
     knockback: 2.5
     useTime: 11
     manaUse: 8
-    penetration: 2
   worth: 3000000
   rarity: 4
 水晶风暴:
@@ -4119,7 +4770,6 @@
     knockback: 3
     useTime: 6
     manaUse: 5
-    bounce: 5
   worth: 4000000
   rarity: 4
 裂天剑:
@@ -4199,8 +4849,6 @@
     knockback: 4
     useTime: 24
     manaUse: 15
-    penetration: 2
-    bounce: 10
   worth: 6000000
   rarity: 8
 高温射线枪:
@@ -4260,8 +4908,6 @@
     damageType: Magic
     crit: 4
     projectileSpeed: 1
-    penetration: 2
-    bounce: 10
     knockback: 2.5
     useTime: 26
     manaUse: 20
@@ -4293,8 +4939,6 @@
     knockback: 5
     useTime: 40
     manaUse: 16
-    penetration: 15
-    bounce: 9
   worth: 5000000
   rarity: 8
 星云烈焰:
@@ -4323,8 +4967,6 @@
     knockback: 5
     useTime: 30
     manaUse: 30
-    bounce: 4
-    penetration: 2
   worth: 10000000
   rarity: 10
 月之耀斑:
@@ -4354,6 +4996,20 @@
     manaUse: 12
   worth: 10000000
   rarity: 10
+钨钢法杖:
+  item: STICK
+  lore:
+  - §r发射钨钢光球
+  attributes:
+    damage: 26
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 9
+    knockback: 3
+    useTime: 20
+    manaUse: 2
+  worth: 200000
+  rarity: 1
 冰坠法杖:
   item: DIAMOND_SWORD
   lore:
@@ -4394,7 +5050,6 @@
     knockback: 2
     useTime: 33
     manaUse: 8
-    penetration: 99
   worth: 400000
   rarity: 2
 海水杖:
@@ -4437,7 +5092,6 @@
     knockback: 5
     useTime: 23
     manaUse: 5
-    penetration: 1
   worth: 400000
   rarity: 2
 寄生权杖:
@@ -4511,6 +5165,63 @@
     manaUse: 10
   worth: 800000
   rarity: 3
+永夜射线:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射暗影射线
+  - §r射线命中的第一个敌怪会受到额外的攻击
+  attributes:
+    damage: 48
+    damageType: Magic
+    crit: 4
+    knockback: 3.25
+    useTime: 20
+    manaUse: 10
+  worth: 2400000
+  rarity: 4
+女武神权杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r释放拥有神圣之力的毁灭射线
+  attributes:
+    damage: 146
+    damageType: Magic
+    crit: 4
+    knockback: 8.5
+    useTime: 47
+    manaUse: 26
+  worth: 7200000
+  rarity: 5
+泰拉射线:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射能量射线，命中后分解为自然能量
+  attributes:
+    damage: 100
+    damageType: Magic
+    crit: 4
+    knockback: 4
+    useTime: 24
+    manaUse: 10
+  worth: 16000000
+  rarity: 8
+元素射线:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射四道天体射线
+  - §#ff6432耀斑射线§r命中敌怪后爆炸
+  - §#e196e1星云射线§r相较其余射线更粗
+  - §#7dffe1星旋射线§r命中后造成带电减益
+  - §#19c8e1星尘射线§r命中敌怪后产生追踪的星尘流星
+  attributes:
+    damage: 180
+    damageType: Magic
+    crit: 4
+    knockback: 7.5
+    useTime: 16
+    manaUse: 18
+  worth: 22000000
+  rarity: 11
 酸液枪:
   item: DIAMOND_SWORD
   lore:
@@ -4694,63 +5405,6 @@
     manaUse: 5
   worth: 400000
   rarity: 2
-永夜射线:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射暗影射线
-  - §r射线命中的第一个敌怪会受到额外的攻击
-  attributes:
-    damage: 48
-    damageType: Magic
-    crit: 4
-    knockback: 3.25
-    useTime: 20
-    manaUse: 10
-  worth: 2400000
-  rarity: 4
-女武神权杖:
-  item: DIAMOND_SWORD
-  lore:
-  - §r释放拥有神圣之力的毁灭射线
-  attributes:
-    damage: 146
-    damageType: Magic
-    crit: 4
-    knockback: 8.5
-    useTime: 47
-    manaUse: 26
-  worth: 7200000
-  rarity: 5
-泰拉射线:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射能量射线，命中后分解为自然能量
-  attributes:
-    damage: 100
-    damageType: Magic
-    crit: 4
-    knockback: 4
-    useTime: 24
-    manaUse: 10
-  worth: 16000000
-  rarity: 8
-元素射线:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射四道天体射线
-  - §#ff6432耀斑射线§r命中敌怪后爆炸
-  - §#e196e1星云射线§r相较其余射线更粗
-  - §#7dffe1星旋射线§r命中后造成带电减益
-  - §#19c8e1星尘射线§r命中敌怪后产生追踪的星尘流星
-  attributes:
-    damage: 180
-    damageType: Magic
-    crit: 4
-    knockback: 7.5
-    useTime: 16
-    manaUse: 18
-  worth: 22000000
-  rarity: 11
 蜘蛛女王法杖:
   item: DIAMOND_SWORD
   lore:
@@ -4792,6 +5446,66 @@
     manaUse: 10
   worth: 10000000
   rarity: 10
+松鼠召唤杖:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤一只松鼠为你而战
+  attributes:
+    damage: 16
+    damageType: Summon
+    knockback: 0.5
+    useTime: 34
+    manaUse: 10
+  worth: 100000
+  rarity: 0
+珊瑚召唤杖:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤一个珊瑚堆为你而战
+  attributes:
+    damage: 24
+    damageType: Summon
+    knockback: 0
+    useTime: 34
+    manaUse: 10
+  worth: 400000
+  rarity: 2
+寒极法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一个冰结体为你而战
+  attributes:
+    damage: 100
+    damageType: Summon
+    knockback: 4
+    useTime: 24
+    manaUse: 10
+  worth: 7200000
+  rarity: 6
+脉冲炮塔遥控装置:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一个脉冲炮塔为你而战
+  attributes:
+    damage: 300
+    damageType: Summon
+    knockback: 0
+    useTime: 24
+    manaUse: 10
+  worth: 12000000
+  rarity: 1100
+地刺王法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一个岩刺为你而战
+  attributes:
+    damage: 112
+    damageType: Summon
+    knockback: 2
+    useTime: 19
+    manaUse: 10
+  worth: 12000000
+  rarity: 8
 史莱姆法杖:
   item: WOOD_SWORD
   lore:
@@ -4805,12 +5519,125 @@
     manaUse: 20
   worth: 2000000
   rarity: 4
+小鬼法杖:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤小鬼来为你战斗
+  attributes:
+    damage: 34
+    damageType: Summon
+    knockback: 2
+    useTime: 36
+    manaUse: 20
+  worth: 200000
+  rarity: 3
+蜘蛛法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤蜘蛛来为你战斗
+  - §r“这个好像……是一个……蜘蛛！”
+  attributes:
+    damage: 52
+    damageType: Summon
+    knockback: 1
+    useTime: 36
+    manaUse: 10
+  worth: 1000000
+  rarity: 4
+刃杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤附魔飞刀来为你战斗
+  - §r“千刀万剐”
+  attributes:
+    armorPenetration: 50
+    damage: 12
+    damageType: Summon
+    knockback: 0
+    useTime: 36
+    manaUse: 10
+  worth: 1000000
+  rarity: 5
+魔眼法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤双子魔眼来为你战斗
+  attributes:
+    damage: 60
+    damageType: Summon
+    knockback: 2
+    useTime: 36
+    manaUse: 10
+  worth: 2000000
+  rarity: 5
+矮人法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤矮人来为你战斗
+  attributes:
+    damage: 70
+    damageType: Summon
+    knockback: 3
+    useTime: 28
+    manaUse: 10
+  worth: 7000000
+  rarity: 7
+致命球法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤致命球来为你战斗
+  attributes:
+    damage: 100
+    damageType: Summon
+    knockback: 3
+    useTime: 36
+    manaUse: 10
+  worth: 10000000
+  rarity: 8
+泰拉棱镜:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤附魔剑来为你战斗
+  attributes:
+    damage: 180
+    damageType: Summon
+    knockback: 1
+    useTime: 36
+    manaUse: 10
+  worth: 20000000
+  rarity: 8
+星尘细胞法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤星尘细胞来为你战斗
+  - §r“培养最美丽的细胞感染”
+  attributes:
+    damage: 120
+    damageType: Summon
+    knockback: 2
+    useTime: 36
+    manaUse: 10
+  worth: 10000000
+  rarity: 10
+星尘之龙法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤星尘之龙来为你战斗
+  - §r“有了星尘之龙后，谁还需要一群仆从呢？”
+  attributes:
+    damage: 80
+    damageType: Summon
+    knockback: 2
+    useTime: 36
+    manaUse: 10
+  worth: 10000000
+  rarity: 10
 钨钢控制器:
   item: WOOD_SWORD
   lore:
   - §r召唤钨钢机器人为你而战
   attributes:
-    damage: 20
+    damage: 32
     damageType: Summon
     knockback: 0.5
     useTime: 34
@@ -5004,131 +5831,295 @@
     manaUse: 10
   worth: 800000
   rarity: 3
-松鼠召唤杖:
-  item: WOOD_SWORD
-  lore:
-  - §r召唤一只松鼠为你而战
-  attributes:
-    damage: 16
-    damageType: Summon
-    knockback: 0.5
-    useTime: 34
-    manaUse: 10
-  worth: 100000
-  rarity: 0
-小鬼法杖:
-  item: WOOD_SWORD
-  lore:
-  - §r召唤小鬼来为你战斗
-  attributes:
-    damage: 34
-    damageType: Summon
-    knockback: 2
-    useTime: 36
-    manaUse: 20
-  worth: 200000
-  rarity: 3
-蜘蛛法杖:
+黑鹰遥控器:
   item: DIAMOND_SWORD
   lore:
-  - §r召唤蜘蛛来为你战斗
-  - §r“这个好像……是一个……蜘蛛！”
+  - §r召唤黑鹰战斗机为你而战
   attributes:
-    damage: 52
+    damage: 50
     damageType: Summon
     knockback: 1
-    useTime: 36
+    useTime: 24
     manaUse: 10
-  worth: 1000000
+  worth: 2400000
   rarity: 4
-刃杖:
+蚀骨法杖:
   item: DIAMOND_SWORD
   lore:
-  - §r召唤附魔飞刀来为你战斗
-  - §r“千刀万剐”
+  - §r召唤蚀骨之龙为你而战
   attributes:
-    armorPenetration: 50
-    damage: 12
-    damageType: Summon
-    knockback: 0
-    useTime: 36
-    manaUse: 10
-  worth: 1000000
-  rarity: 5
-魔眼法杖:
-  item: DIAMOND_SWORD
-  lore:
-  - §r召唤双子魔眼来为你战斗
-  attributes:
-    damage: 60
+    damage: 30
     damageType: Summon
     knockback: 2
-    useTime: 36
+    useTime: 24
     manaUse: 10
-  worth: 2000000
+  worth: 2400000
+  rarity: 4
+失落极峰:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤远古岩鲨为你而战
+  attributes:
+    damage: 56
+    damageType: Summon
+    knockback: 4
+    useTime: 24
+    manaUse: 10
+  worth: 4800000
   rarity: 5
-矮人法杖:
+闹鬼卷轴:
   item: DIAMOND_SWORD
   lore:
-  - §r召唤矮人来为你战斗
+  - §r召唤缠怨鬼碟为你而战
   attributes:
-    damage: 70
+    damage: 50
     damageType: Summon
     knockback: 3
-    useTime: 28
+    useTime: 24
     manaUse: 10
-  worth: 7000000
-  rarity: 7
-致命球法杖:
+  worth: 2400000
+  rarity: 4
+海贝法杖:
   item: DIAMOND_SWORD
   lore:
-  - §r召唤致命球来为你战斗
+  - §r召唤海贝为你而战
+  - §r每只海贝占据两个召唤栏
   attributes:
-    damage: 100
-    damageType: Summon
-    knockback: 3
-    useTime: 36
-    manaUse: 10
-  worth: 10000000
-  rarity: 8
-泰拉棱镜:
-  item: DIAMOND_SWORD
-  lore:
-  - §r召唤附魔剑来为你战斗
-  attributes:
-    damage: 180
-    damageType: Summon
-    knockback: 1
-    useTime: 36
-    manaUse: 10
-  worth: 20000000
-  rarity: 8
-星尘细胞法杖:
-  item: DIAMOND_SWORD
-  lore:
-  - §r召唤星尘细胞来为你战斗
-  - §r“培养最美丽的细胞感染”
-  attributes:
-    damage: 120
+    damage: 140
     damageType: Summon
     knockback: 2
-    useTime: 36
+    useTime: 24
     manaUse: 10
-  worth: 10000000
-  rarity: 10
-星尘之龙法杖:
+  worth: 4800000
+  rarity: 5
+冰寒神性:
   item: DIAMOND_SWORD
   lore:
-  - §r召唤星尘之龙来为你战斗
-  - §r“有了星尘之龙后，谁还需要一群仆从呢？”
+  - §r召唤极寒冰块为你而战
+  - §r同时只能存在至多一个极寒冰块
+  attributes:
+    damage: 96
+    damageType: Summon
+    knockback: 4.5
+    useTime: 24
+    manaUse: 10
+  worth: 4800000
+  rarity: 5
+永冻之焱华:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤永冻之焱华为你而战
+  - §r同时只能存在至多一个永冻之焱华
+  attributes:
+    damage: 80
+    damageType: Summon
+    knockback: 3
+    useTime: 24
+    manaUse: 10
+  worth: 4800000
+  rarity: 5
+深海权杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤深海海星为你而战
   attributes:
     damage: 80
     damageType: Summon
     knockback: 2
-    useTime: 36
+    useTime: 24
     manaUse: 10
-  worth: 10000000
-  rarity: 10
+  worth: 4800000
+  rarity: 5
+沉眠寻焰者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤硫火搜寻者为你而战
+  attributes:
+    damage: 84
+    damageType: Summon
+    knockback: 3
+    useTime: 24
+    manaUse: 10
+  worth: 4800000
+  rarity: 5
+淬焰之升华:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤熔火古刀为你而战
+  attributes:
+    damage: 68
+    damageType: Summon
+    knockback: 4.5
+    useTime: 24
+    manaUse: 10
+  worth: 4800000
+  rarity: 5
+架式扫射机:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤架式扫射机为你而战
+  attributes:
+    damage: 82
+    damageType: Summon
+    knockback: 2
+    useTime: 24
+    manaUse: 10
+  worth: 4800000
+  rarity: 1100
+太阳神法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤太阳神之灵为你而战
+  - §r同时只能存在至多一个太阳神之灵
+  attributes:
+    damage: 120
+    damageType: Summon
+    knockback: 1.25
+    useTime: 24
+    manaUse: 10
+  worth: 7200000
+  rarity: 6
+混乱之祈祷:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤灾厄三兄妹为你而战
+  - §r灾厄三兄妹占据两个召唤栏
+  attributes:
+    damage: 80
+    damageType: Summon
+    knockback: 2
+    useTime: 24
+    manaUse: 10
+  worth: 9600000
+  rarity: 7
+苍华之庭:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤迷你世纪之花为你而战
+  - §r迷你世纪之花占据三个召唤栏
+  - §r同时只能存在至多一个迷你世纪之花
+  attributes:
+    damage: 110
+    damageType: Summon
+    knockback: 1
+    useTime: 19
+    manaUse: 10
+  worth: 12000000
+  rarity: 8
+沙龙卷法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤沙龙卷为你而战
+  attributes:
+    damage: 94
+    damageType: Summon
+    knockback: 2
+    useTime: 19
+    manaUse: 10
+  worth: 9600000
+  rarity: 7
+畸变吞食者法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤畸变吞食者为你而战
+  attributes:
+    damage: 120
+    damageType: Summon
+    knockback: 1
+    useTime: 19
+    manaUse: 10
+  worth: 9600000
+  rarity: 7
+反魂蝶:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤两只蝴蝶为你而战
+  - §r“回归于花下好了，春之亡灵！”
+  - §r“沉眠于花下好了，红白之蝶！”
+  attributes:
+    damage: 110
+    damageType: Summon
+    knockback: 1
+    useTime: 19
+    manaUse: 10
+  worth: 12000000
+  rarity: 8
+燃料电池组:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一个小而特别的瘟疫携带者变种
+  attributes:
+    damage: 40
+    damageType: Summon
+    knockback: 7
+    useTime: 19
+    manaUse: 10
+  worth: 12000000
+  rarity: 8
+瘟疫控制器:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤瘟疫雌蜂为你而战
+  - §r瘟疫雌蜂占据三个召唤栏
+  - §r同时只能存在至多一个瘟疫雌蜂
+  attributes:
+    damage: 100
+    damageType: Summon
+    knockback: 5
+    useTime: 19
+    manaUse: 10
+  worth: 12000000
+  rarity: 8
+星神圣护:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤幻星探测器为你而战
+  attributes:
+    damage: 150
+    damageType: Summon
+    knockback: 1.25
+    useTime: 19
+    manaUse: 10
+  worth: 16000000
+  rarity: 9
+剧毒芽孢:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤鼠尾草之灵为你而战
+  attributes:
+    damage: 48
+    damageType: Summon
+    knockback: 2
+    useTime: 19
+    manaUse: 10
+  worth: 9600000
+  rarity: 7
+凋零绽放法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤凋零枯花为你而战
+  - §r凋零枯花占据三个召唤栏
+  - §r同时只能存在至多一个凋零枯花
+  attributes:
+    damage: 100
+    damageType: Summon
+    knockback: 3
+    useTime: 19
+    manaUse: 10
+  worth: 12000000
+  rarity: 8
+代达罗斯守卫法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤代达罗斯守卫为你而战
+  attributes:
+    damage: 140
+    damageType: Summon
+    knockback: 3
+    useTime: 24
+    manaUse: 10
+  worth: 4800000
+  rarity: 5
 鞭炮:
   item: DIAMOND_SWORD
   attributes:
@@ -5210,7 +6201,6 @@
     knockback: 0
     projectileSpeed: 9
     useTime: 15
-    penetration: 3
   worth: 300
   rarity: 0
 尖刺球:
@@ -5222,8 +6212,6 @@
     knockback: 1
     projectileSpeed: 5
     useTime: 15
-    penetration: 4
-    bounce: 8
   worth: 1600
   rarity: 0
 手榴弹:
@@ -5319,7 +6307,6 @@
     crit: 4
     knockback: 3
     projectileSpeed: 3.4
-    penetration: 4
   worth: 800
   rarity: 1
 小丑之箭:
@@ -5331,7 +6318,6 @@
     knockback: 4
     projectileSpeed: 0.5
     projectileSpeedMulti: 2
-    penetration: 999
   worth: 2000
   rarity: 1
 狱炎箭:
@@ -5388,8 +6374,6 @@
     knockback: 3.5
     projectileSpeed: 4.5
     projectileSpeedMulti: 2
-    bounce: 3
-    penetration: -3
   worth: 2000
   rarity: 7
 毒液箭:
@@ -5416,7 +6400,6 @@
     knockback: 3.5
     projectileSpeed: 3
     projectileSpeedMulti: 2
-    penetration: 5
   worth: 200
   rarity: 9
 火枪子弹:
@@ -5437,8 +6420,6 @@
     crit: 4
     knockback: 1
     projectileSpeed: 3
-    penetration: 1
-    bounce: 1
   worth: 100
   rarity: 1
 银子弹:
@@ -5476,7 +6457,6 @@
     knockback: 2
     projectileSpeed: 5
     projectileSpeedMulti: 3
-    bounce: 10
   worth: 1000
   rarity: 7
 水晶子弹:
@@ -5527,7 +6507,6 @@
     knockback: 3
     projectileSpeed: 2
     projectileSpeedMulti: 6
-    penetration: 49
   worth: 200
   rarity: 9
 初级火箭:

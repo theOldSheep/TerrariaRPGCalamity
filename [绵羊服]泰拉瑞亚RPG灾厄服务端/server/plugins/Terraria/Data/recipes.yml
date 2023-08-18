@@ -1217,12 +1217,6 @@ ANVIL:
     - 沉沦渊石:10
     - 海棱晶:7
     - 珍珠碎片:3
-  '182':
-    requireLevel: 1
-    resultItem: 痛击者
-    requireItem:
-    - 硫磺鳞片:12
-    - 酸蚀木:30
   '183':
     requireLevel: 1
     resultItem: 风之刃
@@ -1518,6 +1512,208 @@ ANVIL:
     requireItem:
     - 破碎方舟
     - 断裂英雄剑
+  '228':
+    requireLevel: 1
+    resultItem: 烈风
+    requireItem:
+    - 天蓝锭:8
+    - 丝绸:3
+  '229':
+    requireLevel: 1
+    resultItem: 凝胶弓
+    requireItem:
+    - 纯净凝胶:18
+    - 枯萎凝胶:18
+  '230':
+    requireLevel: 2
+    resultItem: 黑翼蝙蝠弓
+    requireItem:
+    - 熔火之怒
+    - 日光精华:5
+    - 黑曜石:10
+  '231':
+    requireLevel: 2
+    resultItem: 暗之回响
+    requireItem:
+    - 寒元锭:8
+  '232':
+    requireLevel: 2
+    resultItem: 硫火之怒
+    requireItem:
+    - 污痕核心:5
+  '233':
+    requireLevel: 2
+    resultItem: 宇束弓
+    requireItem:
+    - 月光弓
+    - 神圣连弩
+    - 生命碎片:12
+  '234':
+    requireLevel: 2
+    resultItem: 破城巨弓
+    requireItem:
+    - 金弓
+    - 禁戒碎片
+    - 灵气:10
+  '235':
+    requireLevel: 2
+    resultItem: 洲陆巨弓
+    requireItem:
+    - 熔渣锭:10
+  '236':
+    requireLevel: 2
+    resultItem: 猎人长弓
+    requireItem:
+    - 灵气:31
+  '237':
+    requireLevel: 2
+    resultItem: 锋叶十字弩
+    requireItem:
+    - 永恒锭:12
+  '238':
+    requireLevel: 1
+    resultItem: 鹅卵石冲击波
+    requireItem:
+    - 石块:20
+    - 钻石:3
+  '239':
+    requireLevel: 1
+    resultItem: 满弹霰弹枪
+    requireItem:
+    - 火枪子弹:96
+    - 铁锭:7
+    - 天蓝锭:3
+  '240':
+    requireLevel: 1
+    resultItem: 碎水霰弹枪
+    requireItem:
+    - 燧发枪
+    - 海棱晶:10
+    - 天蓝锭:2
+  '241':
+    requireLevel: 1
+    resultItem: 胶泥散弹枪
+    requireItem:
+    - 纯净凝胶:18
+    - 枯萎凝胶:18
+  '242':
+    requireLevel: 1
+    resultItem: 屠夫
+    requireItem:
+    - 四管猎枪
+    - 钴锭:5
+    - 混乱精华:4
+    - 非法枪械部件
+  '243':
+    requireLevel: 1
+    resultItem: 诅咒手枪
+    requireItem:
+    - 凤凰爆破枪
+    - 诅咒焰:10
+  '244':
+    requireLevel: 2
+    resultItem: 精金粒子加速器
+    requireItem:
+    - 精金锭:10
+    - 光明之魂:3
+    - 暗影之魂:3
+  '245':
+    requireLevel: 2
+    resultItem: 九头蛇
+    requireItem:
+    - 纳米机器人:25
+    - 四管猎枪
+    - 小瓶毒液:25
+  '246':
+    requireLevel: 2
+    resultItem: 珍珠之神
+    requireItem:
+    - 蘑菇锭:5
+    - 幽灵锭:5
+    - 诅咒手枪
+  '247':
+    requireLevel: 2
+    resultItem: 麦格纳冲锋炮
+    requireItem:
+    - 鹅卵石冲击波
+    - 灵气:5
+    - 精金锭:6
+  '248':
+    requireLevel: 2
+    resultItem: 发条鳄鱼枪
+    requireItem:
+    - 金星马格南
+    - 发条突击步枪
+    - 生命合金:3
+  '249':
+    requireLevel: 2
+    resultItem: 地狱风暴
+    requireItem:
+    - 熔渣锭:7
+  '250':
+    requireLevel: 2
+    resultItem: 玷污之疫SMG
+    requireItem:
+    - 黑鹰遥控器
+    - 地狱风暴
+    - 瘟疫装甲镀层:25
+  '251':
+    requireLevel: 2
+    resultItem: 岩鲨发射器
+    requireItem:
+    - 禁戒碎片
+    - 精金锭:13
+  '252':
+    requireLevel: 1
+    resultItem: 火花喷射器
+    requireItem:
+    - 金锭:10
+    - 凝胶:12
+  '253':
+    requireLevel: 2
+    resultItem: 泰拉喷火器
+    requireItem:
+    - 火花喷射器
+    - 生命碎片:7
+    - 日光精华:5
+    - 彩虹喵喷射器
+  '254':
+    requireLevel: 1
+    resultItem: 芦苇吹管
+    requireItem:
+    - 海洋残渣:2
+  '255':
+    requireLevel: 1
+    resultItem: 旋风发射器
+    requireItem:
+    - 沉沦渊石:10
+    - 海棱晶:7
+    - 风暴之颚
+    - 珍珠碎片:3
+  '256':
+    requireLevel: 1
+    resultItem: 泰瑟枪
+    requireItem:
+    - 可疑镀层:5
+    - 神秘电路:7
+    - 天蓝锭:4
+    - 海棱晶:7
+  '257':
+    requireLevel: 2
+    resultItem: 物质调谐器
+    requireItem:
+    - 可疑镀层:8
+    - 神秘电路:12
+    - 秘银锭:10
+    - 恐惧之魂:20
+  '258':
+    requireLevel: 2
+    resultItem: 高斯来复枪
+    requireItem:
+    - 可疑镀层:12
+    - 神秘电路:18
+    - 生命合金:5
+    - 瘟疫装甲镀层:10
 WORKBENCH:
   '1':
     requireLevel: 1
@@ -1787,7 +1983,7 @@ ENCHANTMENT_TABLE:
     resultItem: 绝望之刃
     requireItem:
     - 岩浆桶
-    - 酸蚀木:10
+    - 木材:10
     - 暗影鳞甲:8
     - 死亡草:2
   '7':
@@ -1812,6 +2008,20 @@ ENCHANTMENT_TABLE:
     - 断裂英雄剑
     - 小瓶毒液:15
     - 叶绿锭:15
+  '11':
+    requireLevel: 1
+    resultItem: 月光弓
+    requireItem:
+    - 恶魔弓
+    - 熔火之怒
+    - 纯净凝胶:10
+  '12':
+    requireLevel: 1
+    resultItem: 影流喷射器
+    requireItem:
+    - 恶魔锭:7
+    - 腐肉:3
+    - 腐烂物质:10
 AIR:
   '1':
     requireLevel: 1
@@ -2509,6 +2719,50 @@ TINKER_WORKBENCH:
     - 灾劫核心
     - 生命合金:3
     - 炫星锭:3
+  '46':
+    requireLevel: 1
+    resultItem: 幻星弓
+    requireItem:
+    - 炫星锭:7
+  '47':
+    requireLevel: 1
+    resultItem: 湮灭千星
+    requireItem:
+    - 星系异石:5
+    - 夜明锭:5
+    - 宇束弓
+    - 代达罗斯风暴弓
+    - 生命合金:5
+  '48':
+    requireLevel: 1
+    resultItem: 电话会议
+    requireItem:
+    - 战术霰弹枪
+    - 星璇碎片:12
+  '49':
+    requireLevel: 1
+    resultItem: 蘑菇狙击枪
+    requireItem:
+    - 狙击步枪
+    - 真菌枪
+    - 星尘碎片:6
+  '50':
+    requireLevel: 1
+    resultItem: 幻星冲击炮
+    requireItem:
+    - 炫星锭:6
+  '51':
+    requireLevel: 1
+    resultItem: 天蝎座
+    requireItem:
+    - 雪人炮
+    - 星云碎片:6
+    - 纳米机器人:96
+  '52':
+    requireLevel: 1
+    resultItem: 神之风箱
+    requireItem:
+    - 冥思构造体:12
 嘉登熔炉:
   containedStations:
     # FURNACE中 requireLevel<=3的配方也会被加载（即精金熔炉）
