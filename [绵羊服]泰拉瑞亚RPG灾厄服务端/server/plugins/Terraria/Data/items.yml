@@ -5179,18 +5179,110 @@ P90:
     manaUse: 10
   worth: 2400000
   rarity: 4
+冰晶风暴:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 98
+    damageType: Magic
+    crit: 4
+    knockback: 5
+    useTime: 80
+    manaUse: 13
+  worth: 4800000
+  rarity: 5
+艺术攻击:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 160
+    damageType: Magic
+    crit: 4
+    knockback: 2
+    useTime: 24
+    manaUse: 10
+  worth: 9600000
+  rarity: 7
+冰坠三叉戟:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射暗影射线
+  attributes:
+    damage: 138
+    damageType: Magic
+    crit: 4
+    knockback: 7
+    useTime: 25
+    manaUse: 21
+  worth: 4800000
+  rarity: 5
+飞龙之歌:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 90
+    damageType: Magic
+    crit: 4
+    knockback: 4.75
+    useTime: 23
+    manaUse: 10
+  worth: 4800000
+  rarity: 5
+烁兰:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 106
+    damageType: Magic
+    crit: 4
+    knockback: 5.5
+    useTime: 27
+    manaUse: 11
+  worth: 4800000
+  rarity: 5
+狱炎裂空:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 100
+    damageType: Magic
+    crit: 29
+    knockback: 7
+    useTime: 30
+    manaUse: 15
+  worth: 7200000
+  rarity: 8
+水灌:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 100
+    damageType: Magic
+    crit: 4
+    knockback: 3
+    useTime: 15
+    manaUse: 10
+  worth: 4800000
+  rarity: 5
+硫火玫瑰:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射暗影射线
+  attributes:
+    damage: 90
+    damageType: Magic
+    crit: 4
+    knockback: 7
+    useTime: 16
+    manaUse: 6
+  worth: 4800000
+  rarity: 5
 女武神权杖:
   item: DIAMOND_SWORD
   lore:
   - §r释放拥有神圣之力的毁灭射线
   attributes:
-    damage: 146
+    damage: 106
     damageType: Magic
     crit: 4
     knockback: 8.5
     useTime: 47
     manaUse: 26
-  worth: 7200000
+  worth: 4800000
   rarity: 5
 泰拉射线:
   item: DIAMOND_SWORD
@@ -5203,8 +5295,85 @@ P90:
     knockback: 4
     useTime: 24
     manaUse: 10
-  worth: 16000000
+  worth: 12000000
   rarity: 8
+亚特兰蒂斯:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 140
+    damageType: Magic
+    crit: 4
+    knockback: 5
+    useTime: 25
+    manaUse: 12
+  worth: 9600000
+  rarity: 7
+南极光羽:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 130
+    damageType: Magic
+    crit: 4
+    knockback: 3
+    useTime: 17
+    manaUse: 8
+  worth: 9600000
+  rarity: 7
+维苏威阿斯:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 120
+    damageType: Magic
+    crit: 4
+    knockback: 3
+    useTime: 15
+    manaUse: 9
+  worth: 12000000
+  rarity: 8
+瘟疫法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 156
+    damageType: Magic
+    crit: 4
+    knockback: 8
+    useTime: 21
+    manaUse: 22
+  worth: 12000000
+  rarity: 8
+血涌:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 150
+    damageType: Magic
+    crit: 4
+    knockback: 3.75
+    useTime: 22
+    manaUse: 14
+  worth: 12000000
+  rarity: 8
+玄法百枝莲:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 150
+    damageType: Magic
+    crit: 4
+    knockback: 7.5
+    useTime: 23
+    manaUse: 10
+  worth: 20000000
+  rarity: 10
+幻星法杖:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 540
+    damageType: Magic
+    crit: 19
+    knockback: 5
+    useTime: 18
+    manaUse: 26
+  worth: 16000000
+  rarity: 9
 元素射线:
   item: DIAMOND_SWORD
   lore:
@@ -5229,7 +5398,7 @@ P90:
   attributes:
     damage: 56
     damageType: Magic
-    projectileSpeed: 42
+    projectileSpeed: 14
     crit: 4
     knockback: 1.5
     useTime: 45
@@ -5241,7 +5410,7 @@ P90:
   lore:
   - §r发射一束能量冲击波
   attributes:
-    damage: 56
+    damage: 52
     damageType: Magic
     projectileSpeed: 12
     crit: 4
@@ -5264,20 +5433,61 @@ P90:
     manaUse: 6
   worth: 800000
   rarity: 1100
-深渊电击者:
+恐寒症:
   item: DIAMOND_SWORD
-  lore:
-  - §r发射一道不准确的电击，在敌人之间形成弹射电弧
   attributes:
-    damage: 56
+    damage: 192
     damageType: Magic
-    projectileSpeed: 14
     crit: 4
-    knockback: 0
-    useTime: 19
-    manaUse: 10
-  worth: 800000
-  rarity: 3
+    knockback: 1.5
+    useTime: 40
+    manaUse: 18
+  worth: 7200000
+  rarity: 6
+离子冲击波:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 58
+    damageType: Magic
+    crit: 4
+    knockback: 5.5
+    useTime: 10
+    manaUse: 6
+  worth: 4800000
+  rarity: 5
+高斯手枪:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 300
+    damageType: Magic
+    crit: 4
+    knockback: 11
+    useTime: 20
+    manaUse: 6
+  worth: 4800000
+  rarity: 1100
+激光加特林:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 100
+    damageType: Magic
+    crit: 4
+    knockback: 1
+    useTime: 2
+    manaUse: 1
+  worth: 12000000
+  rarity: 1100
+拉扎尔射线:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 160
+    damageType: Magic
+    crit: 4
+    knockback: 5
+    useTime: 7
+    manaUse: 4
+  worth: 20000000
+  rarity: 10
 冰矢:
   item: BOOK
   lore:
@@ -5376,35 +5586,193 @@ P90:
     manaUse: 7
   worth: 2400000
   rarity: 4
-黑尿鱼:
-  item: DIAMOND_SWORD
-  lore:
-  - §r喷射泡泡和追踪浮游物
+冰火矢:
+  item: BOOK
+  attributes:
+    damage: 160
+    damageType: Magic
+    crit: 4
+    knockback: 5.5
+    useTime: 20
+    manaUse: 13
+  worth: 2400000
+  rarity: 4
+波塞冬:
+  item: BOOK
+  attributes:
+    damage: 124
+    damageType: Magic
+    crit: 4
+    knockback: 6
+    useTime: 45
+    manaUse: 20
+  worth: 4800000
+  rarity: 5
+死亡之尘:
+  item: BOOK
+  attributes:
+    damage: 246
+    damageType: Magic
+    crit: 4
+    knockback: 5
+    useTime: 25
+    manaUse: 9
+  worth: 4800000
+  rarity: 5
+遗迹圣物:
+  item: BOOK
   attributes:
     damage: 42
     damageType: Magic
-    projectileSpeed: 8
     crit: 4
-    knockback: 2.75
-    useTime: 14
-    manaUse: 10
-  worth: 800000
-  rarity: 3
-闪光皇后鱼:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射一道聚焦激光来歼灭你的敌人
-  - §r被击杀的敌人会爆出棱晶碎片
+    knockback: 4.25
+    useTime: 35
+    manaUse: 16
+  worth: 4800000
+  rarity: 5
+暗晶风暴:
+  item: BOOK
   attributes:
-    damage: 20
+    damage: 50
     damageType: Magic
-    projectileSpeed: 14
     crit: 4
-    knockback: 0
+    knockback: 5.5
+    useTime: 6
+    manaUse: 4
+  worth: 4800000
+  rarity: 5
+沸腾之火:
+  item: BOOK
+  attributes:
+    damage: 104
+    damageType: Magic
+    crit: 4
+    knockback: 6.75
+    useTime: 24
+    manaUse: 15
+  worth: 4800000
+  rarity: 5
+蒸海硫火:
+  item: BOOK
+  attributes:
+    damage: 150
+    damageType: Magic
+    crit: 4
+    knockback: 6.5
     useTime: 20
-    manaUse: 5
-  worth: 400000
-  rarity: 2
+    manaUse: 15
+  worth: 4800000
+  rarity: 5
+混乱火鞭:
+  item: BOOK
+  attributes:
+    damage: 130
+    damageType: Magic
+    crit: 4
+    knockback: 7.5
+    useTime: 38
+    manaUse: 20
+  worth: 9600000
+  rarity: 7
+常青之气:
+  item: BOOK
+  attributes:
+    damage: 56
+    damageType: Magic
+    crit: 4
+    knockback: 4.5
+    useTime: 18
+    manaUse: 8
+  worth: 9600000
+  rarity: 7
+天堂之泪:
+  item: BOOK
+  attributes:
+    damage: 108
+    damageType: Magic
+    crit: 4
+    knockback: 5.5
+    useTime: 20
+    manaUse: 18
+  worth: 12000000
+  rarity: 8
+始源之尘:
+  item: BOOK
+  attributes:
+    damage: 120
+    damageType: Magic
+    crit: 4
+    knockback: 7
+    useTime: 20
+    manaUse: 19
+  worth: 12000000
+  rarity: 8
+凛冬之怒:
+  item: BOOK
+  attributes:
+    damage: 118
+    damageType: Magic
+    crit: 4
+    knockback: 5
+    useTime: 12
+    manaUse: 7
+  worth: 12000000
+  rarity: 8
+禁忌之阳:
+  item: BOOK
+  attributes:
+    damage: 160
+    damageType: Magic
+    crit: 4
+    knockback: 7
+    useTime: 30
+    manaUse: 33
+  worth: 12000000
+  rarity: 8
+命运之手:
+  item: BOOK
+  attributes:
+    damage: 110
+    damageType: Magic
+    crit: 7
+    knockback: 3.5
+    useTime: 20
+    manaUse: 8
+  worth: 16000000
+  rarity: 9
+流星雨:
+  item: BOOK
+  attributes:
+    damage: 114
+    damageType: Magic
+    crit: 29
+    knockback: 3.25
+    useTime: 14
+    manaUse: 15
+  worth: 16000000
+  rarity: 9
+北极熊爪:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 180
+    damageType: Magic
+    crit: 4
+    knockback: 10
+    useTime: 28
+    manaUse: 18
+  worth: 7200000
+  rarity: 6
+阿娜希塔琶音:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 184
+    damageType: Magic
+    crit: 4
+    knockback: 6.5
+    useTime: 18
+    manaUse: 7
+  worth: 9600000
+  rarity: 7
 蜘蛛女王法杖:
   item: DIAMOND_SWORD
   lore:

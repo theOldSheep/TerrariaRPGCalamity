@@ -390,43 +390,41 @@ public class EntityHelper {
             // tweak double value in attribute map
             if (!attrMap.containsKey(key)) return;
             double value_number = Double.parseDouble(value);
+            if ("useTime".equals(key)) {
+                value_number /= 3;
+            }
+            // tweak attribute
             switch (key) {
-                case "useTime":
-                    value_number /= 2;
+                // damage reduction handled in a special way to prevent unreasonable accumulation of DR
+                case "damageTakenMulti": {
+                    // calamity change: DR scale by 1 - 1/(1+DR)
+                    // damage taken multiplier = 1/(1+DR)
+                    // original: DR
+                    // value_number(modified above) = 1 - DR = damage multi
+                    // 2 - value_number(modified above) = 2 - 1 + DR = 1 + DR
+                    if (addOrRemove)
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / (2 - value_number));
+                    else
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * (2 - value_number));
                     break;
-                case "arrowConsumptionRate":
+                }
+                // multiplying
                 case "ammoConsumptionRate":
+                case "arrowConsumptionRate":
+                case "mobSpawnRateMulti": {
                     value_number = 1 + value_number;
+                    if (addOrRemove)
+                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) * value_number);
+                    else
+                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) / value_number);
                     break;
+                }
+                // scalar adding
                 default:
-                    if (key.endsWith("Multi"))
-                        value_number = 1 + value_number;
-            }
-            // damage reduction handled in a special way to prevent unreasonable accumulation of DR
-            if (key.equals("damageTakenMulti")) {
-                // calamity change: DR scale by 1 - 1/(1+DR)
-                // damage taken multiplier = 1/(1+DR)
-                // original: DR
-                // value_number(modified above) = 1 - DR = damage multi
-                // 2 - value_number(modified above) = 2 - 1 + DR = 1 + DR
-                if (addOrRemove)
-                    attrMap.put(key, attrMap.getOrDefault(key, 1d) / (2 - value_number));
-                else
-                    attrMap.put(key, attrMap.getOrDefault(key, 1d) * (2 - value_number));
-            }
-            // ammo consumption rate
-            else if (key.endsWith("Rate") || key.endsWith("Multi")) {
-                if (addOrRemove)
-                    attrMap.put(key, (attrMap.getOrDefault(key, 1d)) * value_number);
-                else
-                    attrMap.put(key, (attrMap.getOrDefault(key, 1d)) / value_number);
-            }
-            // scalar attributes
-            else {
-                if (addOrRemove)
-                    attrMap.put(key, (attrMap.getOrDefault(key, 1d)) + value_number);
-                else
-                    attrMap.put(key, (attrMap.getOrDefault(key, 1d)) - value_number);
+                    if (addOrRemove)
+                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) + value_number);
+                    else
+                        attrMap.put(key, (attrMap.getOrDefault(key, 1d)) - value_number);
             }
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
@@ -1395,9 +1393,8 @@ public class EntityHelper {
             if (dmgTaker instanceof LivingEntity)
                 damageTaker = (LivingEntity) dmgTaker;
         }
-        // setup damager attribute and buff inflict
+        // setup damage type and damager attribute
         HashMap<String, Double> damagerAttrMap = getAttrMap(damager);
-        List<String> buffInflict = new ArrayList<>();
         DamageType damageType = damageReason.getDamageType();
         if (isDirectAttackDamage) {
             // if no mandatory damage type for the damage reason, default to the attacker(can be a projectile) damage type
@@ -1410,46 +1407,50 @@ public class EntityHelper {
         String damageInvincibilityFrameName = getInvulnerabilityTickName(damageType);
         if (victimScoreboardTags.contains(damageInvincibilityFrameName)) return;
 
-        // projectile buff inflict
-        if (damager instanceof Projectile) {
-            buffInflict.addAll(TerrariaHelper.projectileConfig.getStringList(damager.getName() + ".buffInflict"));
-        }
-        // player buff inflict
-        if (damageSource instanceof Player) {
-            // player minion buff inflict
-            HashMap<String, ArrayList<String>> buffInflictMap = PlayerHelper.getPlayerEffectInflict(damageSource);
-            buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict", new ArrayList<>(0)));
-            switch (damageType) {
-                case ARROW:
-                case BULLET:
-                case ROCKET:
-                    buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictRanged", new ArrayList<>(0)));
-                    break;
-                case TRUE_MELEE:
-                    buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
-                    buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictTrueMelee", new ArrayList<>(0)));
-                    break;
-                // Summon, Melee, Magic
-                default:
-                    // whip
-                    if (damageType == DamageType.SUMMON && damageReason == DamageReason.DIRECT_DAMAGE)
-                        buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
-                    buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict" + damageType, new ArrayList<>(0)));
+        // inflict debuff
+        if (isDirectAttackDamage) {
+            List<String> buffInflict = new ArrayList<>();
+            // projectile buff inflict
+            if (damager instanceof Projectile) {
+                buffInflict.addAll(TerrariaHelper.projectileConfig.getStringList(damager.getName() + ".buffInflict"));
             }
-        }
-        // monster buff inflict
-        else {
-            buffInflict.addAll(TerrariaHelper.entityConfig.getStringList(GenericHelper.trimText(damageSource.getName()) + ".buffInflict"));
-        }
-        // apply (de)buff(s) to victim
-        for (String buff : buffInflict) {
-            String[] buffInfo = buff.split("\\|");
-            double chance;
-            try {
-                chance = Double.parseDouble(buffInfo[2]);
-                if (Math.random() < chance)
-                    applyEffect(victim, buffInfo[0], Integer.parseInt(buffInfo[1]));
-            } catch (Exception ignored) {
+            // player buff inflict
+            if (damageSource instanceof Player) {
+                // player minion buff inflict
+                HashMap<String, ArrayList<String>> buffInflictMap = PlayerHelper.getPlayerEffectInflict(damageSource);
+                buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict", new ArrayList<>(0)));
+                switch (damageType) {
+                    case ARROW:
+                    case BULLET:
+                    case ROCKET:
+                        buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictRanged", new ArrayList<>(0)));
+                        break;
+                    case TRUE_MELEE:
+                        buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
+                        buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictTrueMelee", new ArrayList<>(0)));
+                        break;
+                    // Summon, Melee, Magic
+                    default:
+                        // whip
+                        if (damageType == DamageType.SUMMON && damageReason == DamageReason.DIRECT_DAMAGE)
+                            buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
+                        buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict" + damageType, new ArrayList<>(0)));
+                }
+            }
+            // monster buff inflict
+            else {
+                buffInflict.addAll(TerrariaHelper.entityConfig.getStringList(GenericHelper.trimText(damageSource.getName()) + ".buffInflict"));
+            }
+            // apply (de)buff(s) to victim
+            for (String buff : buffInflict) {
+                String[] buffInfo = buff.split("\\|");
+                double chance;
+                try {
+                    chance = Double.parseDouble(buffInfo[2]);
+                    if (Math.random() < chance)
+                        applyEffect(victim, buffInfo[0], Integer.parseInt(buffInfo[1]));
+                } catch (Exception ignored) {
+                }
             }
         }
 

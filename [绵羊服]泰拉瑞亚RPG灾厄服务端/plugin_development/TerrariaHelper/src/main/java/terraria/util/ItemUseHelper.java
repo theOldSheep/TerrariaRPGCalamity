@@ -1200,24 +1200,28 @@ public class ItemUseHelper {
                         break;
                     }
                     case "天神之剑": {
-                        for (int i = 0; i < 4; i ++) {
-                            Location spawnLoc = ply.getEyeLocation().add(
-                                    Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
-                            Vector projVel = ply.getEyeLocation().subtract(spawnLoc).toVector();
-                            projVel.multiply(0.04);
-                            String projectileType = Math.random() < 0.5 ? "蓝色宙能聚爆" : "红色宙能聚爆";
-                            EntityHelper.spawnProjectile(ply, spawnLoc, projVel, attrMap,
-                                    EntityHelper.DamageType.MELEE, projectileType);
+                        if (currentIndex == 0) {
+                            for (int i = 0; i < 4; i++) {
+                                Location spawnLoc = ply.getEyeLocation().add(
+                                        Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
+                                Vector projVel = ply.getEyeLocation().subtract(spawnLoc).toVector();
+                                projVel.multiply(0.04);
+                                String projectileType = Math.random() < 0.5 ? "蓝色宙能聚爆" : "红色宙能聚爆";
+                                EntityHelper.spawnProjectile(ply, spawnLoc, projVel, attrMap,
+                                        EntityHelper.DamageType.MELEE, projectileType);
+                            }
                         }
                         break;
                     }
                     case "硫火之刃": {
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
-                            for (int i = (int) (Math.random() * 2); i < 3; i ++) {
-                                Vector projVel = MathHelper.randomVector();
-                                projVel.multiply(0.35);
-                                EntityHelper.spawnProjectile(ply, hitLoc, projVel,
-                                        attrMap, EntityHelper.DamageType.MELEE, "硫磺火间歇泉");
+                            if (hitIdx == 1) {
+                                for (int i = (int) (Math.random() * 2); i < 3; i++) {
+                                    Vector projVel = MathHelper.randomVector();
+                                    projVel.multiply(0.35);
+                                    EntityHelper.spawnProjectile(ply, hitLoc, projVel,
+                                            attrMap, EntityHelper.DamageType.MELEE, "硫磺火间歇泉");
+                                }
                             }
                         });
                         break;
@@ -1719,7 +1723,7 @@ public class ItemUseHelper {
         // use the weapon
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
-        double projectileSpeed = weaponSection.getDouble("velocity", 0.5d);
+        double projectileSpeed = weaponSection.getDouble("velocity", 1.5d);
         double reach = weaponSection.getDouble("reach", 10d);
         int duration = weaponSection.getInt("duration", 100);
         facingDir.multiply(projectileSpeed);
@@ -2765,11 +2769,6 @@ public class ItemUseHelper {
         // variable setup
         HashMap<String, Double> attrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(ply).clone();
         boolean isRightClick = scoreboardTags.contains("isSecondaryAttack");
-        // pickaxe
-        if (attrMap.getOrDefault("powerPickaxe", 0d) > 1) {
-            playerSwingPickaxe(ply, attrMap, isRightClick);
-            return;
-        }
         // other items that require item type info
         ItemStack mainHandItem = ply.getInventory().getItemInMainHand();
         String[] splitItemName = ItemHelper.splitItemName(mainHandItem);
@@ -2895,6 +2894,10 @@ public class ItemUseHelper {
                     ply.removeScoreboardTag("temp_autoSwing");
                 }
             }
+        }
+        // pickaxe
+        if (attrMap.getOrDefault("powerPickaxe", 0d) > 1) {
+            playerSwingPickaxe(ply, attrMap, isRightClick);
         }
     }
     // this function is called when the player right-clicks an item in inventory.

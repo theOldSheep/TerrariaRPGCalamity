@@ -13,10 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockFormEvent;
-import org.bukkit.event.block.BlockFromToEvent;
-import org.bukkit.event.block.BlockGrowEvent;
-import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
@@ -222,6 +219,12 @@ public class VanillaMechanicListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onExplode(ExplosionPrimeEvent e) {
         e.setCancelled(true);
+    }
+    // spider web can not be placed
+    @EventHandler(priority = EventPriority.LOW)
+    public void onBlockPlace(BlockPlaceEvent e) {
+        if (e.getBlockPlaced().getType() == Material.WEB)
+            e.setCancelled(true);
     }
 
     // world related

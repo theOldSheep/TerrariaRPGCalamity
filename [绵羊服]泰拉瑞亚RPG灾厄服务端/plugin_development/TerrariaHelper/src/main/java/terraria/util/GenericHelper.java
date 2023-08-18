@@ -719,6 +719,7 @@ public class GenericHelper {
                 break;
             case "Debuff_霜火":
             case "Debuff_带电":
+            case "Debuff_幻星感染":
                 colorCode = "b";
                 break;
             case "Debuff_硫磺火":
