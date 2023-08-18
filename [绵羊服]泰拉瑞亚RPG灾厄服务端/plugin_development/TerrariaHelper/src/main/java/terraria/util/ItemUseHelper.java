@@ -2159,12 +2159,20 @@ public class ItemUseHelper {
         return false;
     }
     protected static void handleMagicProjectileFire(Player ply, HashMap<String, Double> attrMap, ConfigurationSection weaponSection,
-                                                  int fireIndex, String itemType, String weaponType, boolean autoSwing) {
+                                                  int swingAmount, int fireIndex, String itemType, String weaponType, boolean autoSwing) {
         int fireRoundMax = weaponSection.getInt("fireRounds", 1);
         int fireAmount = weaponSection.getInt("shots", 1);
         double spread = weaponSection.getDouble("offSet", -1d);
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+        // handle special weapons
+        switch (itemType) {
+            case "暗晶风暴": {
+                if (Math.random() < 0.5)
+                    fireAmount = 2;
+                break;
+            }
+        }
         for (int i = 0; i < fireAmount; i ++) {
             String projectileName = weaponSection.getString("projectileName", "小火花");
             Location fireLoc = ply.getEyeLocation();
@@ -2182,14 +2190,28 @@ public class ItemUseHelper {
             // handle special weapons (pre-firing)
             switch (itemType) {
                 case "月之耀斑":
-                case "暴雪法杖": {
+                case "暴雪法杖":
+                case "冰坠法杖":
+                case "天空之羽":
+                case "飞龙之歌":
+                case "维苏威阿斯":
+                case "幻星法杖": {
                     Vector offset = new Vector(Math.random() * 30 - 15, 20 + Math.random() * 20, Math.random() * 30 - 15);
                     fireVelocity = offset.clone().multiply(-1).normalize();
                     EntityHelper.AimHelperOptions options = new EntityHelper.AimHelperOptions()
                             .setAimMode(true)
                             .setTicksOffset(offset.length() / projectileSpeed);
-                    if (itemType.equals("暴雪法杖"))
-                        options.setRandomOffsetRadius(3);
+                    switch (itemType) {
+                        case "月之耀斑":
+                            options.setRandomOffsetRadius(1);
+                            break;
+                        case "暴雪法杖":
+                            options.setRandomOffsetRadius(2.5);
+                            break;
+                        default:
+                            options.setRandomOffsetRadius(0.5);
+                            break;
+                    }
                     Location destination = getPlayerTargetLoc(ply, 64, 4, options, true);
                     fireLoc = destination.add(offset);
                     break;
@@ -2202,11 +2224,96 @@ public class ItemUseHelper {
                     }
                     break;
                 }
+                case "菌杖": {
+                    fireVelocity = MathHelper.randomVector();
+                    fireLoc = ply.getEyeLocation().add(
+                            Math.random() * 5 - 2.5,
+                            Math.random() * 5 - 2.5,
+                            Math.random() * 5 - 2.5);
+                    break;
+                }
+                case "裂天剑":
+                case "狱炎裂空": {
+                    EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                            .setProjectileSpeed(projectileSpeed);
+                    Location aimLoc = getPlayerTargetLoc(ply, 64, 5, aimHelper, true);
+                    fireLoc = ply.getEyeLocation().add(
+                            Math.random() * 4 - 2,
+                            Math.random() * 4 - 2,
+                            Math.random() * 4 - 2);
+                    fireVelocity = MathHelper.getDirection(fireLoc, aimLoc, 1);
+                    break;
+                }
+                case "血涌": {
+                    EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                            .setAimMode(true)
+                            .setTicksOffset(10);
+                    Location aimLoc = getPlayerTargetLoc(ply, 64, 5, aimHelper, true);
+                    aimLoc.add(Math.random() * 12 - 6, projectileSpeed * -10, Math.random() * 12 - 6);
+                    fireLoc = aimLoc;
+                    fireVelocity = new Vector(0, 1, 0);
+                    break;
+                }
+                case "离子冲击波": {
+                    double maxMana = attrMap.getOrDefault("maxMana", 20d);
+                    double manaRatio = ply.getLevel() / maxMana;
+                    attrMap.put("damage", attrMap.get("damage") * (0.2 + 1.4 * manaRatio));
+                    break;
+                }
+                case "激光加特林": {
+                    if (swingAmount < 25)
+                        projectileName = null;
+                    break;
+                }
+                case "遗迹圣物": {
+                    fireVelocity = MathHelper.vectorFromYawPitch_quick(360d * i / fireAmount, 0);
+                    break;
+                }
+                case "沸腾之火": {
+                    // fires two darts that are slower and a major projectile unaffected by random offset
+                    if (i > 0) {
+                        projectileName = "硫火飞弹";
+                        projectileSpeed /= 2;
+                    }
+                    else {
+                        fireVelocity = facingDir.clone();
+                    }
+                    break;
+                }
+                case "天穹流星": {
+                    fireVelocity = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, -70 - Math.random() * 20);
+                    break;
+                }
             }
-            // setup projectile velocity
-            fireVelocity.multiply(projectileSpeed);
-            Projectile firedProjectile = EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMap,
-                    EntityHelper.getDamageType(ply), projectileName);
+            if (projectileName != null) {
+                // setup projectile velocity
+                fireVelocity.multiply(projectileSpeed);
+                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                        ply, fireLoc, fireVelocity, attrMap,
+                        EntityHelper.getDamageType(ply), projectileName);
+                switch (itemType) {
+                    case "水晶风暴": {
+                        shootInfo.properties.put("gravity", 0d);
+                        shootInfo.properties.put("blockHitAction", "bounce");
+                        shootInfo.properties.put("bounce", 3);
+                        shootInfo.properties.put("liveTime", 60);
+                        shootInfo.properties.put("speedMultiPerTick", 0.98);
+                        break;
+                    }
+                    case "蒸海硫火": {
+                        shootInfo.properties.put("gravity", 0.05d);
+                        shootInfo.properties.put("blockHitAction", "bounce");
+                        shootInfo.properties.put("bounce", 3);
+                        break;
+                    }
+                    case "凛冬之怒": {
+                        if (fireIndex > 0)
+                            shootInfo.properties.put("gravity", 0.05d);
+                        break;
+                    }
+                }
+                Projectile firedProjectile = EntityHelper.spawnProjectile(shootInfo);
+            }
         }
         // if this is a delayed shot, play item swing sound
         playerUseItemSound(ply, weaponType, autoSwing);
@@ -2214,8 +2321,8 @@ public class ItemUseHelper {
         if (fireIndex < fireRoundMax) {
             int fireRoundDelay = weaponSection.getInt("fireRoundsDelay", 20);
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> handleMagicProjectileFire(ply, attrMap, weaponSection, fireIndex + 1,
-                            itemType, weaponType, autoSwing)
+                    () -> handleMagicProjectileFire(ply, attrMap, weaponSection, swingAmount,
+                            fireIndex + 1, itemType, weaponType, autoSwing)
                     , fireRoundDelay);
         }
     }
@@ -2231,7 +2338,11 @@ public class ItemUseHelper {
             case "永夜射线":
             case "女武神权杖":
             case "泰拉射线":
+            case "亚特兰蒂斯":
+            case "拉扎尔射线":
             case "元素射线":
+            case "诡触之书":
+            case "命运之手":
             {
                 Collection<Entity> damageExceptions;
                 if (damageCD == null) damageExceptions = new HashSet<>();
@@ -2243,7 +2354,7 @@ public class ItemUseHelper {
                 Location startLoc = ply.getEyeLocation().add(fireDir).add(fireDir);
                 double length = 8, width = 0.5;
                 String particleColor = "255|255|0";
-                // some weapons do not need smart targeting, they shoot exactly ticksBeforeHookingFish the cursor
+                // some weapons do not need smart targeting, they shoot exactly towards the cursor
                 boolean useSmartTargeting = itemType.equals("元素射线");
                 if (!useSmartTargeting) {
                     EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
@@ -2358,6 +2469,35 @@ public class ItemUseHelper {
                                 });
                         break;
                     }
+                    case "亚特兰蒂斯": {
+                        length = 24;
+                        width = 1.75;
+                        particleColor = "119|145|197";
+                        strikeInfo
+                                .setDamageCD(4)
+                                .setLingerTime(5)
+                                .setLingerDelay(5);
+                        // particle must not block the vision
+                        startLoc.add(fireDir);
+                        GenericHelper.handleStrikeLightning(ply, startLoc, yaw, pitch, length,
+                                3,  width, 0, 1, particleColor,
+                                damageExceptions, attrMap, strikeInfo);
+                        // prevent redundant strike
+                        strikeInfo = null;
+                        break;
+                    }
+                    case "拉扎尔射线": {
+                        length = 48;
+                        particleColor = "255|225|0";
+                        yaw += Math.random() * 10 - 5;
+                        pitch += Math.random() * 10 - 5;
+                        strikeInfo
+                                .setThruWall(false)
+                                .setMaxTargetHit(1)
+                                .setDamagedFunction((hitIndex, hitEntity, hitLoc) ->
+                                    EntityHelper.handleEntityExplode(ply, 1, new ArrayList<>(), hitLoc));
+                        break;
+                    }
                     case "元素射线": {
                         length = 56;
                         fireAmount = 4;
@@ -2438,6 +2578,28 @@ public class ItemUseHelper {
                         }
                         break;
                     }
+                    case "诡触之书": {
+                        length = 7.5;
+                        particleColor = "243|144|157";
+                        strikeInfo
+                                .setThruWall(false);
+                        yaw += Math.random() * 20 - 10;
+                        pitch += Math.random() * 20 - 10;
+                        fireAmount = 3;
+                        fireDelay = 3;
+                        break;
+                    }
+                    case "命运之手": {
+                        length = 12;
+                        particleColor = "131|55|183";
+                        strikeInfo
+                                .setThruWall(false);
+                        yaw += Math.random() * 20 - 10;
+                        pitch += Math.random() * 20 - 10;
+                        fireAmount = 3;
+                        fireDelay = 2;
+                        break;
+                    }
                 }
                 if (strikeInfo != null)
                     GenericHelper.handleStrikeLine(ply, startLoc, yaw, pitch, length, width, itemType, particleColor,
@@ -2473,7 +2635,7 @@ public class ItemUseHelper {
         }
         if (!consumeMana(ply, manaConsumption)) return false;
         if (weaponType.equals("MAGIC_PROJECTILE")) {
-            handleMagicProjectileFire(ply, attrMap, weaponSection, 1, itemType, weaponType, autoSwing);
+            handleMagicProjectileFire(ply, attrMap, weaponSection, swingAmount, 1, itemType, weaponType, autoSwing);
         } else {
             Location targetedLocation = getPlayerTargetLoc(ply, 64, 4,
                     new EntityHelper.AimHelperOptions()

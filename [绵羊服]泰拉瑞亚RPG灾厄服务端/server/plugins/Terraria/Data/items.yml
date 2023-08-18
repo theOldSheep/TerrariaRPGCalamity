@@ -4671,8 +4671,8 @@ P90:
     crit: 4
     projectileSpeed: 37.5
     knockback: 5
-    useTime: 16
-    manaUse: 12
+    useTime: 10
+    manaUse: 7
   worth: 1750000
   rarity: 2
 太空枪:
@@ -4896,7 +4896,7 @@ P90:
     damage: 100
     damageType: Magic
     crit: 4
-    projectileSpeed: 1
+    projectileSpeed: 10
     knockback: 2.5
     useTime: 26
     manaUse: 20
@@ -4910,7 +4910,7 @@ P90:
     damage: 140
     damageType: Magic
     crit: 4
-    projectileSpeed: 1
+    projectileSpeed: 7.5
     knockback: 3
     useTime: 9
     manaUse: 4
@@ -4921,13 +4921,13 @@ P90:
   lore:
   - §r发射快速移动的利刃台风
   attributes:
-    damage: 120
+    damage: 170
     damageType: Magic
     crit: 4
-    projectileSpeed: 18
+    projectileSpeed: 8
     knockback: 5
     useTime: 40
-    manaUse: 16
+    manaUse: 20
   worth: 5000000
   rarity: 8
 星云烈焰:
@@ -5058,7 +5058,7 @@ P90:
 天空之羽:
   item: DIAMOND_SWORD
   lore:
-  - §r召唤羽毛从天而降，会附着在敌人和物块上并爆炸
+  - §r召唤羽毛从天而降
   attributes:
     damage: 30
     damageType: Magic
@@ -5413,7 +5413,7 @@ P90:
   - §r战栗
   - §r发射多个冰锥
   attributes:
-    damage: 192
+    damage: 100
     damageType: Magic
     projectileSpeed: 10
     crit: 4
@@ -5464,7 +5464,7 @@ P90:
     crit: 4
     knockback: 1
     useTime: 2
-    manaUse: 1
+    manaUse: 3
   worth: 12000000
   rarity: 1100
 拉扎尔射线:
@@ -5626,7 +5626,7 @@ P90:
   attributes:
     damage: 42
     damageType: Magic
-    projectileSpeed: 30
+    projectileSpeed: 20
     crit: 4
     knockback: 4.25
     useTime: 35
@@ -5694,7 +5694,7 @@ P90:
   lore:
   - §r发射使敌人燃烧的灵液
   attributes:
-    damage: 96
+    damage: 75
     damageType: Magic
     projectileSpeed: 10
     crit: 4
@@ -5810,7 +5810,7 @@ P90:
   attributes:
     damage: 184
     damageType: Magic
-    projectileSpeed: 5
+    projectileSpeed: 3
     crit: 4
     knockback: 6.5
     useTime: 18

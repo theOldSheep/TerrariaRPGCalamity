@@ -32,9 +32,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
             blastRadius = 1.5, bounceVelocityMulti = 1,
             frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileRadius = 0.125, speedMultiPerTick = 1,
             trailSize = -1, trailStepSize = -1;
-    public boolean autoTrace = false, autoTraceSharpTurning = true, blastDamageShooter = false,
-            blastOnContactBlock = false, blastOnContactEnemy = false, bouncePenetrationBonded = false,
-            canBeReflected = true, isGrenade = false, slowedByWater = true;
+    public boolean arrowOrPotion = false, autoTrace = false, autoTraceSharpTurning = true, blastDamageShooter = false,
+            blastOnContactBlock = false, blastOnContactEnemy = false, blastOnTimeout = true,
+            bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = true;
 
     public double speed;
     public boolean lastOnGround = false;
@@ -79,11 +79,13 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.trailSize = (double) properties.getOrDefault("trailSize", this.projectileRadius);
             this.trailStepSize = (double) properties.getOrDefault("trailStepSize", this.projectileRadius);
 
+            this.arrowOrPotion = (boolean) properties.getOrDefault("arrowOrPotion", this.arrowOrPotion);
             this.autoTrace = (boolean) properties.getOrDefault("autoTrace", this.autoTrace);
             this.autoTraceSharpTurning = (boolean) properties.getOrDefault("autoTraceSharpTurning", this.autoTraceSharpTurning);
             this.blastDamageShooter = (boolean) properties.getOrDefault("blastDamageShooter", this.blastDamageShooter);
             this.blastOnContactBlock = (boolean) properties.getOrDefault("blastOnContactBlock", this.blastOnContactBlock);
             this.blastOnContactEnemy = (boolean) properties.getOrDefault("blastOnContactEnemy", this.blastOnContactEnemy);
+            this.blastOnTimeout = (boolean) properties.getOrDefault("blastOnTimeout", this.blastOnTimeout);
             this.bouncePenetrationBonded = (boolean) properties.getOrDefault("bouncePenetrationBonded", this.bouncePenetrationBonded);
             this.canBeReflected = (boolean) properties.getOrDefault("canBeReflected", this.canBeReflected);
             this.isGrenade = (boolean) properties.getOrDefault("isGrenade", this.isGrenade);
@@ -91,7 +93,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         }
         this.setNoGravity(true);
         this.noclip = true;
-        this.damageCD = new HashSet<>((int) (penetration * 1.5));
+        this.damageCD = new HashSet<>(5);
     }
 
     private void setupExtraProjectileInfo() {
@@ -119,9 +121,12 @@ public class TerrariaPotionProjectile extends EntityPotion {
         else removeScoreboardTag("blastOnContactBlock");
         if (blastOnContactEnemy) addScoreboardTag("blastOnContactEnemy");
         else removeScoreboardTag("blastOnContactEnemy");
+        if (blastOnTimeout) addScoreboardTag("blastOnTimeout");
+        else removeScoreboardTag("blastOnTimeout");
         if (blastDamageShooter) addScoreboardTag("blastDamageShooter");
         else removeScoreboardTag("blastDamageShooter");
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, this.penetration);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_BOUNCE_LEFT, this.bounce);
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_ENTITIES_COLLIDED, this.damageCD);
     }
     // setup properties of the specific type, including its item displayed
@@ -187,9 +192,12 @@ public class TerrariaPotionProjectile extends EntityPotion {
         // handle damage CD before doing anything else. Otherwise, exploding projectiles will damage the enemy being hit twice.
         GenericHelper.damageCoolDown(damageCD, e.getBukkitEntity(), enemyInvincibilityFrame);
         // handles post-hit mechanism: damage is handled by a listener
-        if (bouncePenetrationBonded) bounce --;
+        if (bouncePenetrationBonded) {
+            updateBounce(bounce - 1);
+        }
         setPosition(position.pos.x, position.pos.y, position.pos.z);
-        if (--penetration < 0) {
+        updatePenetration(penetration - 1);
+        if (penetration < 0) {
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
             die();
             return new Vec3D(position.pos.x, position.pos.y, position.pos.z);
@@ -203,7 +211,6 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, null);
             }
         }
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, this.penetration);
         return null;
     }
 
@@ -329,6 +336,28 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 }
                 break;
             }
+            case "遗忘沙刃": {
+                double speedScaleMultiplier = 20d;
+                switch (ticksLived % 15) {
+                    case 10:
+                        noAutoTraceTicks = 0;
+                        break;
+                    case 11:
+                        noAutoTraceTicks = 999999;
+                        speed *= speedScaleMultiplier;
+                        motX *= speedScaleMultiplier;
+                        motY *= speedScaleMultiplier;
+                        motZ *= speedScaleMultiplier;
+                        break;
+                    case 1:
+                        speed /= speedScaleMultiplier;
+                        motX /= speedScaleMultiplier;
+                        motY /= speedScaleMultiplier;
+                        motZ /= speedScaleMultiplier;
+                        break;
+                }
+                break;
+            }
         }
     }
     // this helper function is called every tick only if the projectile would move(not homing into enemies and not stuck on wall)
@@ -366,6 +395,14 @@ public class TerrariaPotionProjectile extends EntityPotion {
             // update last location
             lastTrailDisplayLocation.add(displayDir);
         }
+    }
+    protected void updateBounce(int newBounce) {
+        bounce = newBounce;
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_BOUNCE_LEFT, newBounce);
+    }
+    protected void updatePenetration(int newPenetration) {
+        penetration = newPenetration;
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, newPenetration);
     }
     @Override
     public void B_() {
@@ -421,6 +458,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 case "bounce":
                 case "slide":
                 case "die":
+                    updateBounce(-1);
                     EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_BLOCK);
                     this.die();
                     return;
@@ -541,14 +579,14 @@ public class TerrariaPotionProjectile extends EntityPotion {
                             futureLoc = new Vec3D(this.locX + travelled.getX(), this.locY + travelled.getY(), this.locZ + travelled.getZ());
                             // tweak velocity
                             if (blockHitAction.equals("bounce")) {
-                                if (--bounce < 0) {
+                                updateBounce(bounce - 1);
+                                if (bounce < 0) {
                                     EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_BLOCK);
                                     die();
                                     return;
                                 }
                                 if (bouncePenetrationBonded) {
-                                    penetration--;
-                                    EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, this.penetration);
+                                    updatePenetration(penetration - 1);
                                 }
                                 // chlorophyte arrow bounce into enemies
                                 switch (projectileType) {
@@ -599,7 +637,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                     case "不稳定物质": {
                                         // increases damage, but disappears after striking one enemy.
                                         attrMap.put("damage", attrMap.get("damage") * 3);
-                                        penetration = 0;
+                                        updatePenetration(0);
                                         // default bounce behaviour
                                         double yVelocityThreshold = gravity * speedMulti;
                                         switch (movingobjectposition.direction) {

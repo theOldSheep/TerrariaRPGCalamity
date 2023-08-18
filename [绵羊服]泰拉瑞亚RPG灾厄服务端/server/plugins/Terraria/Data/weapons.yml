@@ -809,7 +809,9 @@
 环境之刃[嫌恶之永存]_RIGHT_CLICK:
   type: STAB
   attributes:
-    useTime: 45
+    useTime: 26
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
   size: 6.5
 环境之刃[溺死之亡姿]:
   type: SWING
@@ -829,7 +831,9 @@
 真·环境之刃[血腾之愤]_RIGHT_CLICK:
   type: STAB
   attributes:
-    useTime: 75
+    useTime: 50
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
   size: 7.5
 真·环境之刃[缚囚之悼]:
   type: SWING
@@ -843,7 +847,9 @@
 真·环境之刃[变幻之潮]_RIGHT_CLICK:
   type: STAB
   attributes:
-    useTime: 45
+    useTime: 26
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
   size: 7
 破碎方舟:
   type: SWING
@@ -853,7 +859,9 @@
   type: STAB
   size: 5.5
   attributes:
-    useTime: 8
+    useTime: 5
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
 远古方舟:
   type: SWING
   autoSwing: true
@@ -862,7 +870,9 @@
   type: STAB
   size: 7.5
   attributes:
-    useTime: 8
+    useTime: 5
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
 木弓:
   type: BOW
 钨钢弓:
@@ -992,7 +1002,7 @@
   fireRounds: 4
   fireRoundsDelay: 1
   attributes:
-    useTime: 12
+    useTime: 5
     useSpeedMulti: 1
     useSpeedRangedMulti: 1
   ammoConversion:
@@ -1003,7 +1013,9 @@
   autoSwing: true
   ammo: _孢子球
   attributes:
-    useTime: 20
+    useTime: 10
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
 宇束弓:
   type: BOW
   autoSwing: true
@@ -1097,7 +1109,9 @@
   type: SPECIAL_AMMO
   ammo: _海之烧灼水弹
   attributes:
-    useTime: 45
+    useTime: 10
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
   autoSwing: true
 物质调谐器:
   type: SPECIAL_AMMO
@@ -1361,15 +1375,15 @@
   autoSwing: true
   attributes:
     damage: 400
-    useTime: 35
+    useTime: 12
 憎恨_RIGHT_CLICK:
   type: GUN
   autoSwing: true
-  fireRounds: 4
+  fireRounds: 3
   fireRoundsDelay: 1
   attributes:
     damage: 66
-    useTime: 12
+    useTime: 4
 深核GK2:
   type: GUN
   autoSwing: true
@@ -1701,6 +1715,7 @@ P90:
 火花魔棒:
   type: MAGIC_PROJECTILE
   projectileName: 小火花
+  autoSwing: true
 钻石法杖:
   type: MAGIC_PROJECTILE
   projectileName: 钻石射线
@@ -1712,6 +1727,7 @@ P90:
 恶魔锄刀:
   type: MAGIC_PROJECTILE
   projectileName: 恶魔之镰
+  autoSwing: true
 邪恶三叉戟:
   type: MAGIC_PROJECTILE
   projectileName: 邪恶三叉戟
@@ -1719,6 +1735,7 @@ P90:
 海蓝权杖:
   type: MAGIC_PROJECTILE
   projectileName: 海蓝射线
+  autoSwing: true
 太空枪:
   type: MAGIC_PROJECTILE
   projectileName: 绿激光
@@ -1790,7 +1807,7 @@ P90:
 泡泡枪:
   type: MAGIC_PROJECTILE
   projectileName: 泡泡
-  shots: 2
+  shots: 4
   autoSwing: true
   offSet: 6
 利刃台风:
@@ -1808,9 +1825,7 @@ P90:
 月之耀斑:
   type: MAGIC_PROJECTILE
   projectileName: 月之耀斑
-  shots: 3
   autoSwing: true
-  radius: 4.5
 终极棱镜:
   type: MAGIC_SPECIAL
   autoSwing: true
@@ -1830,6 +1845,8 @@ P90:
 水流喷射:
   type: MAGIC_PROJECTILE
   projectileName: 海蓝射线
+  fireRounds: 3
+  fireRoundsDelay: 2
   autoSwing: true
 海水杖:
   type: MAGIC_PROJECTILE
@@ -1849,7 +1866,7 @@ P90:
 菌杖:
   type: MAGIC_PROJECTILE
   projectileName: 孢子
-  shots: 3
+  shots: 5
   autoSwing: true
 狱火蝙蝠杖:
   type: MAGIC_PROJECTILE
@@ -1891,6 +1908,8 @@ P90:
 水灌:
   type: MAGIC_PROJECTILE
   projectileName: 海蓝射线
+  fireRounds: 3
+  fireRoundsDelay: 2
   autoSwing: true
 硫火玫瑰:
   type: MAGIC_PROJECTILE
@@ -1953,7 +1972,7 @@ P90:
 恐寒症:
   type: MAGIC_PROJECTILE
   projectileName: 冰锥
-  shots: 6
+  shots: 4
   offSet: 10
   autoSwing: true
 离子冲击波:
@@ -1967,7 +1986,7 @@ P90:
 激光加特林:
   type: MAGIC_PROJECTILE
   projectileName: 激光
-  offSet: 5
+  offSet: 15
   autoSwing: true
 拉扎尔射线:
   type: MAGIC_SPECIAL
@@ -2038,6 +2057,8 @@ P90:
 常青之气:
   type: MAGIC_PROJECTILE
   projectileName: 咒焰流
+  fireRounds: 5
+  fireRoundsDelay: 1
   autoSwing: true
 天堂之泪:
   type: MAGIC_PROJECTILE
@@ -2065,7 +2086,6 @@ P90:
 天穹流星:
   type: MAGIC_PROJECTILE
   projectileName: 彗星
-  shots: 3
   autoSwing: true
 北极熊爪:
   type: MAGIC_PROJECTILE

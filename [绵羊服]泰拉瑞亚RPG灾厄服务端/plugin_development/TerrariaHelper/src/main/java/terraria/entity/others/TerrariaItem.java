@@ -59,7 +59,7 @@ public class TerrariaItem extends EntityItem {
             case "生命强化焰":
             case "伤害强化焰":
             case "魔力强化焰":
-                reach += 6.25;
+                reach += 17.5;
                 break;
             case "心":
                 if (potionEffects.containsKey("拾心"))

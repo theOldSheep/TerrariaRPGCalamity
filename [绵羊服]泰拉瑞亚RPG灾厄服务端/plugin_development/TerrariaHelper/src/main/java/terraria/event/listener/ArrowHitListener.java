@@ -31,7 +31,8 @@ public class ArrowHitListener implements Listener {
         Set<String> scoreboardTags = projectile.getScoreboardTags();
         if (scoreboardTags.contains("isGrenade")) {
             Location projectileDestroyLoc = MathHelper.toBukkitVector(e.movingObjectPosition.pos).toLocation(block.getWorld());
-            if (scoreboardTags.contains("blastOnContactBlock")) {
+            MetadataValue bounceRemain = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.PROJECTILE_BOUNCE_LEFT);
+            if (bounceRemain == null || bounceRemain.asInt() < 0 || scoreboardTags.contains("blastOnContactBlock")) {
                 handleProjectileBlast(projectile, projectileDestroyLoc);
             }
         }
@@ -144,7 +145,7 @@ public class ArrowHitListener implements Listener {
         Set<String> projScoreboardTags = projectile.getScoreboardTags();
         Location projectileDestroyLoc = projectile.getLocation();
         // explode
-        if (projScoreboardTags.contains("isGrenade")) {
+        if (projScoreboardTags.contains("isGrenade") && projScoreboardTags.contains("blastOnTimeout")) {
             handleProjectileBlast(projectile, projectileDestroyLoc);
         }
         // fallen star
@@ -236,7 +237,9 @@ public class ArrowHitListener implements Listener {
                             spawnLoc = projectileDestroyLoc;
                     }
                     velocity.multiply(clusterSpeed);
-                    EntityHelper.spawnProjectile(projectileSource, spawnLoc, velocity, attrMap, damageType, clusterName);
+                    EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                            projectileSource, spawnLoc, velocity, attrMap, damageType, clusterName);
+                    EntityHelper.spawnProjectile(shootInfo);
                 }
             }
         }

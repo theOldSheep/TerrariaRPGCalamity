@@ -197,6 +197,7 @@ public class EntityHelper {
         PLAYER_TELEPORT_TARGET("teleportTarget"),
         PLAYER_THRUST_INDEX("thrustIndex"),
         PLAYER_THRUST_PROGRESS("thrustProgress"),
+        PROJECTILE_BOUNCE_LEFT("bounce"),
         PROJECTILE_DESTROY_REASON("destroyReason"),
         PROJECTILE_PENETRATION_LEFT("penetration"),
         PROJECTILE_ENTITIES_COLLIDED("collided"),
@@ -1846,7 +1847,6 @@ public class EntityHelper {
             this.projectileName = projectileName;
             boolean arrowOrPotion = projectileName.endsWith("箭");
             this.arrowOrPotion = TerrariaHelper.projectileConfig.getBoolean(projectileName + ".arrowOrPotion", arrowOrPotion);
-            this.arrowOrPotion = false; // chlorophyte arrows glitch on client side
         }
 
     }

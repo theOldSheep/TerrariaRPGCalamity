@@ -44,6 +44,8 @@
     blastOnContactEnemy: false
     # 是否在接触方块且弹跳未用尽时爆炸？此爆炸不会损坏弹射物。不写则视为false
     blastOnContactBlock: false
+    # 是否在弹射物超时消失时爆炸？不写则视为true
+    blastOnTimeout: true
     # 爆炸半径，不写则视为1.5
     blastRadius: 1.5
     # 爆炸持续时间（20为一秒），不写则视为1（不持续）
@@ -1127,6 +1129,25 @@ TNT:
     blastRadius: 7.5
     blastDamageShooter: true
     blastDestroyBlock: true
+骨头:
+    projectileSize: 0.5
+    blockHitAction: bounce
+    bounce: 2
+    penetration: 2
+尖桩:
+    gravity: 0
+    penetration: 9
+玉米糖:
+    blockHitAction: bounce
+    bounce: 4
+    penetration: 2
+爆炸杰克南瓜灯:
+    liveTime: 120
+    projectileSize: 0.5
+    blockHitAction: bounce
+    bounce: 999999
+    isGrenade: true
+    blastRadius: 2.75
 火焰:
     gravity: 0
     liveTime: 15
@@ -2032,7 +2053,7 @@ TNT:
     blockHitAction: bounce
     bounce: 4
     penetration: 9
-    trailColor: 168|253|3
+    trailColor: 77|151|251
     trailSize: 0.1
     trailStepSize: 0.35
 激光:
@@ -2047,6 +2068,7 @@ TNT:
     arrowOrPotion: true
     liveTime: 40
 狱火爆破弹:
+    gravity: 0
     isGrenade: true
     blastRadius: 4.5
     buffInflict:
@@ -2056,7 +2078,9 @@ TNT:
     gravity: 0
     liveTime: 75
     autoTrace: true
+    penetration: 2
     trailColor: 255|255|255
+    trailStepSize: 0.35
 松针:
     arrowOrPotion: true
     noGravityTicks: 15
@@ -2074,13 +2098,14 @@ TNT:
     blockHitAction: bounce
     bounce: 5
     penetration: 2
+    speedMultiPerTick: 0.75
     autoTrace: true
     autoTraceSharpTurning: false
     noAutoTraceTicks: 8
 泡泡:
     gravity: 0
     liveTime: 25
-    speedMultiPerTick: 0.95
+    speedMultiPerTick: 0.9
 台风:
     liveTime: 60
     projectileSize: 0.5
@@ -2100,8 +2125,9 @@ TNT:
     autoTrace: true
 星云奥秘爆炸弹碎块:
     noGravityTicks: 0
-    liveTime: 15
+    liveTime: 30
 星云奥秘:
+    liveTime: 50
     autoTrace: true
     autoTraceMethod: 2
     autoTraceAbility: 0.5
@@ -2113,6 +2139,7 @@ TNT:
     gravity: 0
     penetration: 4
     projectileSize: 1
+    speedMultiPerTick: 0.9
     clusterBomb:
         amount: 12
         name: 星云奥秘爆炸弹碎块
@@ -2137,8 +2164,8 @@ TNT:
 魔法花朵:
     gravity: 0
     projectileSize: 0.25
-    liveTime: 60
-    speedMultiPerTick: 0.95
+    liveTime: 30
+    speedMultiPerTick: 0.9
     trailColor: 101|255|65
     trailSize: 0.1
     trailStepSize: 0.5
@@ -2180,6 +2207,14 @@ TNT:
         damageMulti: 1
         speed: 1.0
         spawnType: 暗影之雨
+暗影射线分支:
+    autoTrace: true
+    autoTraceAbility: 2
+    gravity: 0
+    liveTime: 20
+    blockHitAction: thru
+    trailColor: 0|0|175
+    trailStepSize: 0.5
 冰晶雪花:
     gravity: 0
     liveTime: 60
@@ -2207,14 +2242,14 @@ TNT:
     gravity: 0
     liveTime: 40
     autoTrace: true
-    noAutoTraceTicks: 10
+    noAutoTraceTicks: 8
     trailColor: 226|202|70
     trailSize: 0.1
     trailStepSize: 0.5
 闪光花朵:
     gravity: 0
     projectileSize: 0.25
-    liveTime: 100
+    liveTime: 40
     speedMultiPerTick: 0.95
     trailColor: 226|202|70
     trailSize: 0.25
@@ -2230,6 +2265,14 @@ TNT:
     liveTime: 60
     buffInflict:
         - "狱炎|60|1"
+自然能量:
+    autoTrace: true
+    autoTraceAbility: 3
+    gravity: 0
+    liveTime: 20
+    blockHitAction: thru
+    trailColor: 100|255|150
+    trailStepSize: 0.6
 极光光束:
     gravity: 0
     projectileSize: 0.5
@@ -2267,14 +2310,14 @@ TNT:
     gravity: 0
     liveTime: 40
     autoTrace: true
-    noAutoTraceTicks: 10
+    noAutoTraceTicks: 5
     trailColor: 225|90|175
     trailSize: 0.1
     trailStepSize: 0.5
 玄法花朵:
     gravity: 0
     projectileSize: 0.25
-    liveTime: 100
+    liveTime: 50
     speedMultiPerTick: 0.95
     trailColor: 225|90|175
     trailSize: 0.25
@@ -2293,13 +2336,24 @@ TNT:
     blastRadius: 2
     buffInflict:
         - "幻星感染|80|1"
+星尘流星:
+    autoTrace: true
+    autoTraceAbility: 2
+    autoTraceSharpTurning: false
+    gravity: 0
+    liveTime: 20
+    blockHitAction: thru
+    trailColor: 25|200|225
+    trailStepSize: 0.6
 追踪粉色脉冲:
     gravity: 0
+    blockHitAction: thru
     projectileSize: 0.25
     liveTime: 60
     minimumDamageTicks: 5
     autoTrace: true
     autoTraceRadius: 24
+    noAutoTraceTicks: 8
     trailColor: 211|111|178
     trailSize: 0.15
     trailStepSize: 0.5
@@ -2315,6 +2369,8 @@ TNT:
         name: 追踪粉色脉冲
         velocity: 1.5
         damageMulti: 1
+        fireOnTimeout: false
+        fireOnHitBlock: false
 离子光波:
     arrowOrPotion: true
     gravity: 0
@@ -2373,19 +2429,19 @@ TNT:
     bouncePenetrationBonded: true
     bounce: 4
     penetration: 4
-    trailColor: 255,255|125
+    trailColor: 255|255|125
     trailSize: 0.15
     trailStepSize: 0.5
     buffInflict:
         - "狱炎|60|1"
-        - "燃烧|60|1"
+        - "霜火|60|1"
 海神之台风:
     gravity: 0
-    liveTime: 55
+    liveTime: 30
     projectileSize: 0.75
     blockHitAction: bounce
     bounce: 9
-    penetration: 9
+    penetration: 4
     autoTrace: true
     autoTraceAbility: 1.5
     autoTraceMethod: 2
@@ -2403,13 +2459,16 @@ TNT:
     liveTime: 60
     projectileSize: 0.25
     autoTrace: true
-    autoTraceRadius: 10
+    autoTraceAbility: 999
+    noAutoTraceTicks: 999
 暗晶碎片:
     gravity: 0
     blockHitAction: bounce
     bounce: 9
     liveTime: 60
     speedMultiPerTick: 0.99
+    buffInflict:
+        - "霜火|40|1"
 混乱火球:
     liveTime: 30
     gravity: 0
@@ -2451,6 +2510,7 @@ TNT:
     blastRadius: 2
     blastOnContactBlock: false
     blastOnContactEnemy: true
+    blastOnTimeout: false
     blastDuration: 16
     penetration: 999999
     buffInflict:
@@ -2471,37 +2531,17 @@ TNT:
     liveTime: 75
     projectileSize: 0.5
     speedMultiPerTick: 0.95
+    penetration: 999999
     buffInflict:
         - "霜火|60|1"
 高音谱号:
-    penetration: 99999
+    projectileSize: 0.75
     blockHitAction: bounce
     bounce: 9
     liveTime: 175
     gravity: 0
-    projectileSize: 0.75
-暗影射线分支:
-    autoTrace: true
-    autoTraceAbility: 2
-    gravity: 0
-    liveTime: 20
-    blockHitAction: thru
-    trailColor: 0|0|175
-自然能量:
-    autoTrace: true
-    autoTraceAbility: 3
-    gravity: 0
-    liveTime: 20
-    blockHitAction: thru
-    trailColor: 100|255|150
-星尘流星:
-    autoTrace: true
-    autoTraceAbility: 2
-    autoTraceSharpTurning: false
-    gravity: 0
-    liveTime: 20
-    blockHitAction: thru
-    trailColor: 25|200|225
+    penetration: 99999
+    speedMultiPerTick: 0.99
 孢子球:
     gravity: 0
     blockHitAction: thru
@@ -2522,8 +2562,6 @@ TNT:
     buffInflict:
         - "中毒|300|1"
         - "剧毒|300|0.33"
-彩虹水晶:
-    autoTrace: true
 木箭:
     arrowOrPotion: true
 烈焰箭:

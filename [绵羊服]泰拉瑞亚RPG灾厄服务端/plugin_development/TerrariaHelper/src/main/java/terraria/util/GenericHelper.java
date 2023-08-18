@@ -222,8 +222,10 @@ public class GenericHelper {
         }
     }
     public static <T> void damageCoolDown(Collection<T> list, T victim, int cd) {
-        list.add(victim);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> list.remove(victim), cd);
+        if (!list.contains(victim)) {
+            list.add(victim);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> list.remove(victim), cd);
+        }
     }
     public static int[] coinConversion(int amount, boolean copperOrRaw) {
         int amountCopper;
