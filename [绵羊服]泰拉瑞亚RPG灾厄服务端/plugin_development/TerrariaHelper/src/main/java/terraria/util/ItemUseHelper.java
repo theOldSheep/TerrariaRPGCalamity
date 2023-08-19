@@ -341,7 +341,9 @@ public class ItemUseHelper {
                                     int duration = 1200;
                                     if (itemType.equals("恢复药水")) duration *= 0.75;
                                     if (accessories.contains("炼金石") ||
-                                            accessories.contains("神话护身符"))
+                                            accessories.contains("神话护身符") ||
+                                            accessories.contains("神圣护符") ||
+                                            accessories.contains("神之壁垒"))
                                         duration *= 0.75;
                                     EntityHelper.applyEffect(ply, "耐药性", duration);
                                     break;
@@ -349,7 +351,10 @@ public class ItemUseHelper {
                                 // if the potion recovers mana
                                 case "mana": {
                                     PlayerHelper.restoreMana(ply, potionPotency);
-                                    EntityHelper.applyEffect(ply, "魔力疾病", 200);
+                                    EntityHelper.applyEffect(
+                                            ply,
+                                            accessories.contains("混乱石") ? "魔力烧蚀" : "魔力疾病",
+                                            200);
                                     break;
                                 }
                                 // otherwise, apply the potion effect

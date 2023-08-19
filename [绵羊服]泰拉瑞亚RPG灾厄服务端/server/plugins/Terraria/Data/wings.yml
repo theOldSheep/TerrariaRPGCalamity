@@ -4,7 +4,7 @@
     maxAcceleration: 100
     horizontalSpeed: 0.6
 气球束:
-    extraJumpTime: 3
+    extraJumpTime: 2
     maxSpeed: 0.8
     maxAcceleration: 100
     horizontalSpeed: 0.6
@@ -72,3 +72,8 @@
     maxAcceleration: 0.2
     horizontalSpeed: 1.65
     isWing: true
+气球之母:
+    extraJumpTime: 4
+    maxSpeed: 0.8
+    maxAcceleration: 100
+    horizontalSpeed: 0.6

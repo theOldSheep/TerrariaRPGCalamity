@@ -128,6 +128,7 @@ STAINED_CLAY_0:
   totalProgress: 200
   dropItem:
   - 珍珠石
+  - 水晶碎块:1:1:0.05
 STAINED_CLAY_7:
   powerPickaxe: 65
   totalProgress: 200
@@ -385,8 +386,8 @@ CHEST:
   dropItem:
   - 箱子
 # unbreakables
-ENCHANTMENT_TABLE:
-  powerPickaxe: 999999
+# ENCHANTMENT_TABLE:
+#   powerPickaxe: 999999
 SMOOTH_BRICK_1:
   powerPickaxe: 200
   totalProgress: 750

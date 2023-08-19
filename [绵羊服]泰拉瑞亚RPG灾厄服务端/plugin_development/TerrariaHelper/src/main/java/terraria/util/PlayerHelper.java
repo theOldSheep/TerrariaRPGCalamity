@@ -150,7 +150,8 @@ public class PlayerHelper {
     }
     public static HashSet<String> getAccessories(Entity entity) {
         try {
-            return (HashSet<String>) EntityHelper.getMetadata(entity, EntityHelper.MetadataName.ACCESSORIES).value();
+            MetadataValue value = EntityHelper.getMetadata(entity, EntityHelper.MetadataName.ACCESSORIES);
+            return value != null ? (HashSet<String>) (value.value()) : new HashSet<>();
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] getAccessories", e);
         }
@@ -513,7 +514,7 @@ public class PlayerHelper {
                         for (String accessory : accessories) {
                             switch (accessory) {
                                 case "新手版挥发明胶":
-                                case "挥发明胶":
+                                case "挥发明胶": {
                                     int shootInterval = accessory.equals("新手版挥发明胶") ? 10 : 5;
                                     if (tickIndex.get() % shootInterval == 0) {
                                         double distanceSqr = 10000d;
@@ -531,21 +532,23 @@ public class PlayerHelper {
                                         }
                                         if (target != null) {
                                             Vector v;
-                                            if (target instanceof LivingEntity) v = ((LivingEntity) target).getEyeLocation().subtract(ply.getEyeLocation()).toVector();
+                                            if (target instanceof LivingEntity)
+                                                v = ((LivingEntity) target).getEyeLocation().subtract(ply.getEyeLocation()).toVector();
                                             else v = target.getLocation().subtract(ply.getEyeLocation()).toVector();
                                             if (accessory.equals("新手版挥发明胶")) {
                                                 v.normalize().multiply(0.5);
                                                 EntityHelper.spawnProjectile(ply, v, attrMapVolatileGelatinJr,
-                                                        EntityHelper.DamageType.ARROW,"新手版挥发明胶");
+                                                        EntityHelper.DamageType.ARROW, "新手版挥发明胶");
                                             } else {
                                                 v.normalize().multiply(0.6);
                                                 EntityHelper.spawnProjectile(ply, v, attrMapVolatileGelatin,
-                                                        EntityHelper.DamageType.ARROW,"挥发明胶");
+                                                        EntityHelper.DamageType.ARROW, "挥发明胶");
                                             }
                                         }
                                     }
                                     break;
-                                case "孢子囊":
+                                }
+                                case "孢子囊": {
                                     if (tickIndex.get() % 3 == 0) {
                                         Vector velocity = MathHelper.randomVector();
                                         velocity.multiply(0.25);
@@ -555,23 +558,36 @@ public class PlayerHelper {
                                                 EntityHelper.DamageType.MAGIC, "孢子球");
                                     }
                                     break;
+                                }
                                 // equipments that provide buff
-                                case "冰冻海龟壳":
+                                case "冰冻海龟壳": {
                                     if (health * 2 > maxHealth)
                                         EntityHelper.applyEffect(ply, "冰障", 20);
                                     break;
-                                case "圣骑士护盾":
+                                }
+                                case "圣骑士护盾": {
                                     if (health * 4 > maxHealth)
                                         EntityHelper.applyEffect(ply, "圣骑士护盾", 20);
                                     break;
+                                }
                                 case "冰冻护盾":
                                 case "寒霜壁垒":
-                                case "神之壁垒":
+                                case "神之壁垒": {
                                     if (health * 4 > maxHealth)
                                         EntityHelper.applyEffect(ply, "圣骑士护盾", 20);
                                     if (health * 2 > maxHealth)
                                         EntityHelper.applyEffect(ply, "冰障", 20);
                                     break;
+                                }
+                                case "血肉图腾": {
+                                    EntityHelper.applyEffect(ply, "血肉图腾", 1220);
+                                    break;
+                                }
+                                case "钨钢屏障生成仪": {
+                                    if (! EntityHelper.hasEffect(ply, "钨钢屏障"))
+                                        EntityHelper.applyEffect(ply, "钨钢屏障", 1600);
+                                    break;
+                                }
                             }
                         }
                     }
@@ -1280,6 +1296,9 @@ public class PlayerHelper {
                             }
                             // regen
                             double regenAmount = (regenerationRate + additionalHealthRegen) * perTickMulti * attrMap.getOrDefault("regenMulti", 1d);
+                            if (accessories.contains("再生护符") && (ply.getHealth() + regenAmount) * 2 >= maxHealth) {
+                                regenAmount = - Math.abs(regenAmount);
+                            }
                             double healthAmount = Math.min(ply.getHealth() + regenAmount, maxHealth);
                             if (healthAmount > 0) {
                                 ply.setHealth(healthAmount);
@@ -1497,16 +1516,28 @@ public class PlayerHelper {
     public static void setupAttribute(Player ply) {
         try {
             ply.removeScoreboardTag("toolChanged");
+            // reset damage type, buff immunity etc.
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.DAMAGE_TYPE, EntityHelper.DamageType.MELEE);
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.BUFF_IMMUNE, new HashMap<String, Integer>());
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BUFF_INFLICT, getDefaultPlayerEffectInflict());
             // re-initialize attribute map
             // attrMap is being overridden after newAttrMap is ready to prevent client glitch (especially on max mana)
+            HashMap<String, Double> formerAttrMap = EntityHelper.getAttrMap(ply);
             HashMap<String, Double> newAttrMap = getDefaultPlayerAttributes();
-            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BUFF_INFLICT, getDefaultPlayerEffectInflict());
+            newAttrMap.put("maxHealth", (double) getMaxHealthByTier(getPlayerHealthTier(ply)) );
+            newAttrMap.put("maxMana", (double) getMaxManaByTier(getPlayerManaTier(ply)) );
             // potion effect
             HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
             for (Map.Entry<String, Integer> effectInfo : effectMap.entrySet()) {
                 String effect = effectInfo.getKey();
                 int ticksRemaining = effectInfo.getValue();
                 switch (effect) {
+                    case "魔力烧蚀":
+                        double potency = ticksRemaining / 400d;
+                        // sqrt(i) * 6^(i + 1) = sqrt(i) * e^( ln6 * (i + 1) )
+                        double healthLoss = 2 * Math.sqrt(potency) * Math.exp(1.791759 * (potency + 1));
+                        EntityHelper.tweakAttribute(ply, newAttrMap, "regen", healthLoss + "", false);
+                        break;
                     case "魔力疾病":
                         EntityHelper.tweakAttribute(ply, newAttrMap, "damageMagicMulti",
                                 ((double)-ticksRemaining / 800) + "", true);
@@ -1630,12 +1661,120 @@ public class PlayerHelper {
                         case "太阳石": {
                             if (!WorldHelper.isDayTime(ply.getWorld()))
                                 continue;
-                            return;
+                            break;
                         }
                         case "月亮石": {
                             if (WorldHelper.isDayTime(ply.getWorld()))
                                 continue;
-                            return;
+                            break;
+                        }
+                        case "魔能谐振仪": {
+                            if (ply.getLevel() * 2 > formerAttrMap.getOrDefault("maxMana", 20d))
+                                EntityHelper.tweakAttribute(ply, newAttrMap,
+                                        "regen", "6", false);
+                            break;
+                        }
+                        case "恼怒项链": {
+                            if (ply.getHealth() * 2 > ply.getMaxHealth())
+                                EntityHelper.tweakAttribute(ply, newAttrMap,
+                                        "damageMulti", "0.2", true);
+                            break;
+                        }
+                        case "归一心元石": {
+                            HashMap<String, String> toTweak = new HashMap<>(17);
+                            if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.SUPREME_WITCH_CALAMITAS.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.1");
+                                toTweak.put("useSpeedMeleeMulti", "0.05");
+                                toTweak.put("regen", "6");
+                                toTweak.put("crit", "5");
+                                toTweak.put("damageMulti", "0.1");
+                                toTweak.put("damageTakenMulti", "-0.05");
+                                toTweak.put("defence", "20");
+                                toTweak.put("speedMulti", "0.1");
+                                toTweak.put("flightTimeMulti", "0.2");
+                            }
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.EXO_MECHS.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.09");
+                                toTweak.put("useSpeedMeleeMulti", "0.049");
+                                toTweak.put("regen", "4");
+                                toTweak.put("crit", "4");
+                                toTweak.put("damageMulti", "0.098");
+                                toTweak.put("damageTakenMulti", "-0.049");
+                                toTweak.put("defence", "18");
+                                toTweak.put("speedMulti", "0.098");
+                                toTweak.put("flightTimeMulti", "0.196");
+                            }
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.THE_DEVOURER_OF_GODS.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.09");
+                                toTweak.put("useSpeedMeleeMulti", "0.047");
+                                toTweak.put("regen", "4");
+                                toTweak.put("crit", "4");
+                                toTweak.put("damageMulti", "0.095");
+                                toTweak.put("damageTakenMulti", "-0.047");
+                                toTweak.put("defence", "18");
+                                toTweak.put("speedMulti", "0.095");
+                                toTweak.put("flightTimeMulti", "0.189");
+                            }
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.08");
+                                toTweak.put("useSpeedMeleeMulti", "0.042");
+                                toTweak.put("regen", "4");
+                                toTweak.put("crit", "4");
+                                toTweak.put("damageMulti", "0.084");
+                                toTweak.put("damageTakenMulti", "-0.042");
+                                toTweak.put("defence", "16");
+                                toTweak.put("speedMulti", "0.084");
+                                toTweak.put("flightTimeMulti", "0.168");
+                            }
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.MOON_LORD.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.07");
+                                toTweak.put("useSpeedMeleeMulti", "0.039");
+                                toTweak.put("regen", "4");
+                                toTweak.put("crit", "3");
+                                toTweak.put("damageMulti", "0.079");
+                                toTweak.put("damageTakenMulti", "-0.039");
+                                toTweak.put("defence", "14");
+                                toTweak.put("speedMulti", "0.079");
+                                toTweak.put("flightTimeMulti", "0.157");
+                            }
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.PLANTERA.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.06");
+                                toTweak.put("useSpeedMeleeMulti", "0.03");
+                                toTweak.put("regen", "4");
+                                toTweak.put("crit", "3");
+                                toTweak.put("damageMulti", "0.061");
+                                toTweak.put("damageTakenMulti", "-0.03");
+                                toTweak.put("defence", "12");
+                                toTweak.put("speedMulti", "0.061");
+                                toTweak.put("flightTimeMulti", "0.121");
+                            }
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.WALL_OF_FLESH.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.04");
+                                toTweak.put("useSpeedMeleeMulti", "0.022");
+                                toTweak.put("regen", "2");
+                                toTweak.put("crit", "2");
+                                toTweak.put("damageMulti", "0.045");
+                                toTweak.put("damageTakenMulti", "-0.022");
+                                toTweak.put("defence", "8");
+                                toTweak.put("speedMulti", "0.045");
+                                toTweak.put("flightTimeMulti", "0.089");
+                            }
+                            else {
+                                toTweak.put("maxHealthMulti", "0.02");
+                                toTweak.put("useSpeedMeleeMulti", "0.012");
+                                toTweak.put("regen", "2");
+                                toTweak.put("crit", "1");
+                                toTweak.put("damageMulti", "0.025");
+                                toTweak.put("damageTakenMulti", "-0.012");
+                                toTweak.put("defence", "4");
+                                toTweak.put("speedMulti", "0.025");
+                                toTweak.put("flightTimeMulti", "0.05");
+                            }
+                            for (String attributeKey : toTweak.keySet()) {
+                                EntityHelper.tweakAttribute(ply, newAttrMap,
+                                        attributeKey, toTweak.get(attributeKey), true);
+                            }
+                            break;
                         }
                     }
                     // attribute
@@ -1648,8 +1787,6 @@ public class PlayerHelper {
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES_LIST, accessoryList);
             }
             // setup max health and max mana
-            newAttrMap.put("maxHealth", (double) getMaxHealthByTier(getPlayerHealthTier(ply)) );
-            newAttrMap.put("maxMana", (double) getMaxManaByTier(getPlayerManaTier(ply)) );
             ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(
                     newAttrMap.getOrDefault("maxHealth", 200d) *
                             newAttrMap.getOrDefault("maxHealthMulti", 1d));
@@ -1961,21 +2098,37 @@ public class PlayerHelper {
                     dPly.addScoreboardTag("tempSpectreCD");
                     int coolDownTicks;
                     if (armorSet.equals("幽灵吸血套装")) {
-                        double projectilePower = (int) Math.ceil(dmg * 0.08);
-                        createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), Math.ceil(projectilePower), true, "255|255|255");
+                        int projectilePower = (int) Math.min( 200, Math.ceil(dmg * 0.08) );
+                        createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), projectilePower, true, "255|255|255");
                         // 40 health/second = 2 health/tick
-                        coolDownTicks = (int) Math.ceil(projectilePower / 2);
+                        coolDownTicks = (int) Math.ceil(projectilePower / 2d);
                     } else {
-                        double projectilePower = (int) Math.ceil(dmg * 0.5);
-                        createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), Math.ceil(projectilePower), false, "255|255|255");
+                        int projectilePower = (int) Math.ceil(dmg * 0.5);
+                        createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), projectilePower, false, "255|255|255");
                         // 400 dmg/second = 20 dmg/tick
-                        coolDownTicks = (int) Math.ceil(projectilePower / 20);
+                        coolDownTicks = (int) Math.ceil(projectilePower / 20d);
                     }
                     Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
                         if (dPly.isOnline()) dPly.removeScoreboardTag("tempSpectreCD");
                     }, coolDownTicks);
                 }
                 break;
+            }
+        }
+        HashSet<String> accessories = PlayerHelper.getAccessories(dPly);
+        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(dPly);
+        if (accessories.contains("魔能谐振仪")) {
+            if (dmg > 2 && !(dPly.getScoreboardTags().contains("tempSpectreCD"))) {
+                dPly.addScoreboardTag("tempSpectreCD");
+                int projectilePower = (int) Math.min( 50, Math.ceil(dmg * 0.125) );
+                double manaRatio = dPly.getLevel() / attrMap.getOrDefault("maxMana", 20d);
+                createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0),
+                        Math.ceil(projectilePower * manaRatio), true, "90|127|197");
+                // 10 health/second = 0.5 health/tick
+                int coolDownTicks = (int) Math.ceil(projectilePower / 0.5);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+                    if (dPly.isOnline()) dPly.removeScoreboardTag("tempSpectreCD");
+                }, coolDownTicks);
             }
         }
     }
@@ -2008,6 +2161,14 @@ public class PlayerHelper {
                     case "克苏鲁之眼盾":
                         dashSpeed = 1;
                         dashCD = 35;
+                        break;
+                    case "宝光盾牌":
+                        dashSpeed = 1.2;
+                        dashCD = 30;
+                        break;
+                    case "阿斯加德之英勇":
+                        dashSpeed = 1.5;
+                        dashCD = 30;
                         break;
                 }
                 if (dashCD > 0) break;

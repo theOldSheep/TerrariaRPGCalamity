@@ -288,8 +288,8 @@ public class EntityHelper {
     }
     // helper functions
     public static void initEntityMetadata(Entity entity) {
-        setMetadata(entity, MetadataName.DAMAGE_TYPE, DamageType.MELEE);
         setMetadata(entity, MetadataName.EFFECTS, new HashMap<String, Integer>());
+        setMetadata(entity, MetadataName.DAMAGE_TYPE, DamageType.MELEE);
         setMetadata(entity, MetadataName.BUFF_IMMUNE, new HashMap<String, Integer>());
     }
     public static DamageType getDamageType(Metadatable entity) {
@@ -397,21 +397,20 @@ public class EntityHelper {
             // tweak attribute
             switch (key) {
                 // damage reduction handled in a special way to prevent unreasonable accumulation of DR
-                case "damageTakenMulti": {
+                case "damageTakenMulti":
+                case "damageContactTakenMulti": {
                     // calamity change: DR scale by 1 - 1/(1+DR)
                     // damage taken multiplier = 1/(1+DR)
-                    // original: DR
-                    // value_number(modified above) = 1 - DR = damage multi
-                    // 2 - value_number(modified above) = 2 - 1 + DR = 1 + DR
                     if (addOrRemove)
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / (2 - value_number));
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) / (1 - value_number));
                     else
-                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * (2 - value_number));
+                        attrMap.put(key, attrMap.getOrDefault(key, 1d) * (1 - value_number));
                     break;
                 }
                 // multiplying
                 case "ammoConsumptionRate":
                 case "arrowConsumptionRate":
+                case "manaUseMulti":
                 case "mobSpawnRateMulti": {
                     value_number = 1 + value_number;
                     if (addOrRemove)
@@ -637,7 +636,20 @@ public class EntityHelper {
     private static void tickEffect(Entity entity, String effect, int delay, double damagePerDelay) {
         try {
             HashMap<String, Integer> allEffects = getEffectMap(entity);
-            int timeRemaining = allEffects.getOrDefault(effect, 0) - delay;
+            int timeRemaining = allEffects.getOrDefault(effect, 0);
+            // some buff should not disappear over time, they disappear over some other criterion.
+            switch (effect) {
+                case "血肉图腾":
+                    if (! PlayerHelper.getAccessories(entity).contains("血肉图腾"))
+                        timeRemaining = -1;
+                    break;
+                case "钨钢屏障":
+                    if (! PlayerHelper.getAccessories(entity).contains("钨钢屏障生成仪"))
+                        timeRemaining = -1;
+                    break;
+                default:
+                    timeRemaining -= delay;
+            }
             boolean shouldStop = false, removeEffectOnStop = true;
             // validate if the entity still needs ticking effect
             if (entity instanceof Player) {
@@ -784,6 +796,7 @@ public class EntityHelper {
                 case "护甲损伤":
                     finalDurationTicks = currentDurationTicks + durationTicks;
                     break;
+                case "魔力烧蚀":
                 case "魔力疾病":
                     finalDurationTicks = currentDurationTicks + durationTicks;
                     if (finalDurationTicks > 400 && durationTicks < 400) finalDurationTicks = 400;
@@ -800,6 +813,10 @@ public class EntityHelper {
                         finalDurationTicks = Math.min(currentLevel + 1, maxLevel) * levelTime;
                     else
                         finalDurationTicks = currentLevel * levelTime;
+                    break;
+                }
+                case "钨钢屏障": {
+                    finalDurationTicks = durationTicks;
                     break;
                 }
                 default:
@@ -1408,6 +1425,8 @@ public class EntityHelper {
         String damageInvincibilityFrameName = getInvulnerabilityTickName(damageType);
         if (victimScoreboardTags.contains(damageInvincibilityFrameName)) return;
 
+        HashSet<String> damagerAccessories = PlayerHelper.getAccessories(damageSource);
+        HashSet<String> victimAccessories = PlayerHelper.getAccessories(victim);
         // inflict debuff
         if (isDirectAttackDamage) {
             List<String> buffInflict = new ArrayList<>();
@@ -1558,6 +1577,13 @@ public class EntityHelper {
         boolean crit = false;
         if (!damageFixed) {
             double damageTakenMulti = victimAttrMap.getOrDefault("damageTakenMulti", 1d);
+            switch (damageType) {
+                case MELEE:
+                case TRUE_MELEE:
+                    damageTakenMulti *= victimAttrMap.getOrDefault("damageContactTakenMulti", 1d);
+                    if (hasEffect(victim, "血肉图腾"))
+                        applyEffect(victim, "血肉图腾冷却", 400);
+            }
             dmg *= Math.random() * 0.3 + 0.85;
             if (isMinionDmg) {
                 MetadataValue temp;
@@ -1566,14 +1592,39 @@ public class EntityHelper {
                 dmg += dmgBonus;
                 temp = getMetadata(victim, MetadataName.MINION_WHIP_BONUS_CRIT);
                 critRate += temp != null ? temp.asDouble() : 0;
+                // on-hit effects from accessory
+                if (damagerAccessories.contains("神圣符文")) {
+                    double rdm = Math.random();
+                    if (rdm < 0.3333)
+                        EntityHelper.applyEffect(damageSource, "神圣之辉", 20);
+                    else if (rdm < 0.6666)
+                        EntityHelper.applyEffect(damageSource, "神圣之佑", 20);
+                    else
+                        EntityHelper.applyEffect(damageSource, "神圣之力", 20);
+                }
+                else if (damagerAccessories.contains("灵魂浮雕")) {
+                    double rdm = Math.random();
+                    if (rdm < 0.3333)
+                        EntityHelper.applyEffect(damageSource, "灵魂恢复", 20);
+                    else if (rdm < 0.6666)
+                        EntityHelper.applyEffect(damageSource, "灵魂防御", 20);
+                    else
+                        EntityHelper.applyEffect(damageSource, "灵魂力量", 20);
+                }
             }
             if (!(victim instanceof Player)) {
-                // crit, only applies to non-player victims
+                // crit to non-player victims
                 if (Math.random() * 100 < critRate) {
                     crit = true;
                     dmg *= 1 + (damagerAttrMap.getOrDefault("critDamage", 1d) / 100);
                 }
             } else {
+                // crit to player due to blood pact
+                if (victimAccessories.contains("血契") && Math.random() < 0.25) {
+                    crit = true;
+                    dmg *= 2.25;
+                }
+
                 // paladin shield, only applies to player victims
                 if (! hasEffect(victim, "圣骑士护盾")) {
                     String team = getMetadata(victim, MetadataName.PLAYER_TEAM).asString();
@@ -1599,6 +1650,17 @@ public class EntityHelper {
             dmg *= damageTakenMulti;
             defence = Math.max(defence - damagerAttrMap.getOrDefault("armorPenetration", 0d), 0);
             dmg -= defence * 0.75;
+            // wulfrum barrier
+            if (hasEffect(victim, "钨钢屏障")) {
+                int damageShield = getEffectMap(victim).get("钨钢屏障") / 20;
+                int damageBlock = (int) Math.min(Math.ceil(dmg), damageShield);
+                damageShield -= damageBlock;
+                dmg -= damageBlock;
+                if (damageShield <= 0)
+                    applyEffect(victim, "保护矩阵充能", 400);
+                else
+                    applyEffect(victim, "钨钢屏障", damageShield * 20);
+            }
             if (victimScoreboardTags.contains("isBOSS")) {
                 double dynamicDR = 1;
                 MetadataValue temp = getMetadata(victim, MetadataName.DYNAMIC_DAMAGE_REDUCTION);
