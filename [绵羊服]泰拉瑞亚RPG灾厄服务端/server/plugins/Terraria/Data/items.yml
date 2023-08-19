@@ -1087,6 +1087,8 @@
   - §r算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
+  attributes:
+    speedMulti: 0.2
   worth: 8000000
   rarity: 5
 喜庆之翼:
@@ -1096,6 +1098,8 @@
   - §r算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
+  attributes:
+    maxHealth: 80
   worth: 8000000
   rarity: 5
 女皇之翼:
@@ -1123,6 +1127,11 @@
   - §r算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
+  attributes:
+    maxMana: 20
+    damageMagicMulti: 0.05
+    critMagic: 5
+    manaUseMulti: -0.05
   worth: 8000000
   rarity: 10
 星璇之翼:
@@ -1132,6 +1141,9 @@
   - §r算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
+  attributes:
+    damageRangedMulti: 0.05
+    critRanged: 10
   worth: 8000000
   rarity: 10
 日耀之翼:
@@ -1141,6 +1153,9 @@
   - §r算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
+  attributes:
+    damageMeleeMulti: 0.07
+    critMelee: 3
   worth: 8000000
   rarity: 10
 星尘之翼:
@@ -1150,6 +1165,8 @@
   - §r算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
+  attributes:
+    damageSummonMulti: 0.1
   worth: 8000000
   rarity: 10
 天界之翼:
@@ -1468,6 +1485,7 @@
   attributes:
     damageMulti: 0.07
     buffInflictMelee: 霜火|40|1
+    buffInflictRanged: 霜火|40|1
   worth: 4800000
   rarity: 5
 气球之母:
@@ -1508,8 +1526,8 @@
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   attributes:
-    damageMulti: 0.05
-    crit: 5
+    damageMulti: 0.03
+    crit: 3
   worth: 16000000
   rarity: 10
 再生护符:
@@ -8600,7 +8618,7 @@ P90:
   attributes:
     defence: 24
     crit: 5
-    manaUse: -0.1
+    manaUseMulti: -0.1
   worth: 2000000
   rarity: 5
 水晶刺客上衣:
@@ -8820,7 +8838,7 @@ P90:
     defence: 10
     damageMagicMulti: 0.13
     critMagic: 7
-    manaUse: -0.1
+    manaUseMulti: -0.1
     maxMana: 60
   worth: 4800000
   rarity: 5
