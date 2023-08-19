@@ -486,25 +486,22 @@ public class PlayerHelper {
                             case "叶绿射手套装":
                             case "叶绿战士套装":
                                 // chlorophyte
-                                if (tickIndex.get() % 8 == 0) {
-                                    double distanceSqr = 10000d;
+                                if (tickIndex.get() % 3 == 0) {
+                                    double distanceSqr = 999999;
                                     Entity target = null;
                                     for (Entity e : ply.getWorld().getNearbyEntities(ply.getEyeLocation(), 25, 25, 25)) {
-                                        // is not a valid enemy
+                                        // ignore if is not a valid enemy
                                         if (!(EntityHelper.checkCanDamage(ply, e, true))) break;
                                         double distSqr = e.getLocation().distanceSquared(ply.getLocation());
-                                        // further than current
+                                        // ignore if is further than current
                                         if (distSqr > distanceSqr) break;
-                                        // player can not see it
-                                        if (!ply.hasLineOfSight(e)) break;
                                         distanceSqr = distSqr;
                                         target = e;
                                     }
                                     if (target != null) {
-                                        Vector v;
-                                        if (target instanceof LivingEntity) v = ((LivingEntity) target).getEyeLocation().subtract(ply.getEyeLocation()).toVector();
-                                        else v = target.getLocation().subtract(ply.getEyeLocation()).toVector();
-                                        v.normalize().multiply(1.5);
+                                        Vector v = MathHelper.getDirection(ply.getEyeLocation(),
+                                                target instanceof  LivingEntity ?
+                                                        ((LivingEntity) target).getEyeLocation() : target.getLocation(), 1.5);
                                         EntityHelper.spawnProjectile(ply, v, attrMapChlorophyte,
                                                 EntityHelper.DamageType.ARROW,"叶绿树叶");
                                     }
@@ -1856,7 +1853,7 @@ public class PlayerHelper {
         // ticking mechanism
         Location targetLoc = target.getEyeLocation();
         if (idx > 5) {
-            if (idx == 6) speed = 1;
+            if (idx == 6) speed = 1.5;
             double distSqr = loc.distanceSquared(targetLoc);
             if (distSqr < speed * speed) {
                 // if the projectile reaches its target
@@ -1872,7 +1869,7 @@ public class PlayerHelper {
                         MathHelper.setVectorLengthSquared(currDir, Math.min(dV.length(), 16));
                     MathHelper.setVectorLength(dV, 4);
                     currDir.add(dV);
-                    speed += 0.1;
+                    speed += 0.15;
                 }
             }
             // hits its target
@@ -1891,6 +1888,7 @@ public class PlayerHelper {
                 new GenericHelper.ParticleLineOptions()
                         .setLength(speed)
                         .setWidth(0.2)
+                        .setStepsize(0.6)
                         .setTicksLinger(4)
                         .setAlpha(0.75f)
                         .setParticleColor(color));
@@ -1965,13 +1963,13 @@ public class PlayerHelper {
                     if (armorSet.equals("幽灵吸血套装")) {
                         double projectilePower = (int) Math.ceil(dmg * 0.08);
                         createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), Math.ceil(projectilePower), true, "255|255|255");
-                        // 80 health/second
-                        coolDownTicks = (int) Math.ceil(projectilePower / 4);
+                        // 40 health/second = 2 health/tick
+                        coolDownTicks = (int) Math.ceil(projectilePower / 2);
                     } else {
                         double projectilePower = (int) Math.ceil(dmg * 0.5);
                         createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), Math.ceil(projectilePower), false, "255|255|255");
-                        // 800 dmg/second
-                        coolDownTicks = (int) Math.ceil(projectilePower / 40);
+                        // 400 dmg/second = 20 dmg/tick
+                        coolDownTicks = (int) Math.ceil(projectilePower / 20);
                     }
                     Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
                         if (dPly.isOnline()) dPly.removeScoreboardTag("tempSpectreCD");

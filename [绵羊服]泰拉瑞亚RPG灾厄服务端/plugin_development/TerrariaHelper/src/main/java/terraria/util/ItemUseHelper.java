@@ -1117,6 +1117,27 @@ public class ItemUseHelper {
                                 });
                         break;
                     }
+                    case "狂星之怒": {
+                        if (currentIndex == 0) {
+                            EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                                    .setAimMode(true)
+                                    .setTicksOffset(10);
+                            Location aimLoc = getPlayerTargetLoc(ply, 96, 5,
+                                    aimHelper, true);
+                            for (int i = 0; i < 3; i ++) {
+                                Location targetLoc = aimLoc.clone();
+                                targetLoc.add(
+                                        Math.random() * 2 - 1,
+                                        Math.random() * 2 - 1,
+                                        Math.random() * 2 - 1);
+                                Location shootLoc = aimLoc.add(Math.random() * 16 - 8, 25, Math.random() * 16 - 8);
+                                Vector velocity = targetLoc.clone().subtract(shootLoc).toVector().multiply(0.1);
+                                EntityHelper.spawnProjectile(ply, shootLoc, velocity, attrMap,
+                                        EntityHelper.DamageType.MELEE, "狂星之怒");
+                            }
+                        }
+                        break;
+                    }
                     case "高斯短匕":
                     case "誓约与禁忌之刃":
                     case "炼狱":
@@ -2249,7 +2270,7 @@ public class ItemUseHelper {
                             .setAimMode(true)
                             .setTicksOffset(10);
                     Location aimLoc = getPlayerTargetLoc(ply, 64, 5, aimHelper, true);
-                    aimLoc.add(Math.random() * 12 - 6, projectileSpeed * -10, Math.random() * 12 - 6);
+                    aimLoc.add(Math.random() * 8 - 4, projectileSpeed * -10, Math.random() * 8 - 4);
                     fireLoc = aimLoc;
                     fireVelocity = new Vector(0, 1, 0);
                     break;

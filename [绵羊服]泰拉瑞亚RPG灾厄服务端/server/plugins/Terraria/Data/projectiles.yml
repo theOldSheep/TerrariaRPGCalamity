@@ -888,25 +888,25 @@
 集束破片:
     noGravityTicks: 0
     isGrenade: true
-    blastRadius: 1.25
+    blastRadius: 1
     blastDamageShooter: true
 初级雪人火箭:
     gravity: 0
     autoTrace: true
     isGrenade: true
-    blastRadius: 2.25
+    blastRadius: 1.75
     blastDamageShooter: true
 二级雪人火箭:
     gravity: 0
     autoTrace: true
     isGrenade: true
-    blastRadius: 2.75
+    blastRadius: 2.5
     blastDamageShooter: true
     blastDestroyBlock: true
 三级雪人火箭:
     gravity: 0
     autoTrace: true
-    blastRadius: 3.25
+    blastRadius: 2.25
     blastDamageShooter: true
 四级雪人火箭:
     gravity: 0
@@ -944,35 +944,55 @@
     blastRadius: 5
 初级榴弹:
     noGravityTicks: 0
+    liveTime: 75
+    blockHitAction: bounce
+    bounce: 999999
+    bounceVelocityMulti: 0.5
     isGrenade: true
-    blastRadius: 2.5
+    blastRadius: 1.75
     blastDamageShooter: true
 二级榴弹:
     noGravityTicks: 0
+    liveTime: 75
+    blockHitAction: bounce
+    bounce: 999999
+    bounceVelocityMulti: 0.5
     isGrenade: true
-    blastRadius: 2.9
+    blastRadius: 2.5
     blastDamageShooter: true
     blastDestroyBlock: true
 三级榴弹:
     noGravityTicks: 0
+    liveTime: 75
+    blockHitAction: bounce
+    bounce: 999999
+    bounceVelocityMulti: 0.5
     isGrenade: true
-    blastRadius: 3.6
+    blastRadius: 2.25
     blastDamageShooter: true
 四级榴弹:
     noGravityTicks: 0
+    liveTime: 75
+    blockHitAction: bounce
+    bounce: 999999
+    bounceVelocityMulti: 0.5
     isGrenade: true
-    blastRadius: 4.25
+    blastRadius: 3.5
     blastDamageShooter: true
     blastDestroyBlock: true
 集束榴弹:
     noGravityTicks: 0
+    liveTime: 75
+    blockHitAction: bounce
+    bounce: 999999
+    bounceVelocityMulti: 0.5
     clusterBomb:
         amount: 5
         name: 集束破片
         velocity: 0.5
         damageMulti: 0.5
     isGrenade: true
-    blastRadius: 2.35
+    blastRadius: 2
     blastDamageShooter: true
 远古岩鲨:
     blockHitAction: thru
@@ -1253,14 +1273,14 @@ TNT:
     buffInflict:
         - "燃烧|200|1"
 手里剑:
-    noGravityTicks: 10
     penetration: 3
 尖刺球:
-    penetration: 999999
     noGravityTicks: 0
+    penetration: 999999
     projectileSize: 0.5
     blockHitAction: bounce
     bounce: 999999
+    bounceVelocityMulti: 0.5
 寒霜碎块:
     buffInflict:
         - "冷冻|150|0.67"
@@ -1441,7 +1461,6 @@ TNT:
     penetration: 999999
     liveTime: 60
 北极长矛:
-    gravity: 0
     projectileSize: 0.5
     penetration: 2
     spawnProjectiles:
@@ -1465,6 +1484,11 @@ TNT:
     penetration: 999999
     enemyInvincibilityFrame: 10
     liveTime: 125
+狂星之怒:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.5
+    liveTime: 20
 泰拉光束:
     gravity: 0
     projectileSize: 2

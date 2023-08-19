@@ -2358,7 +2358,7 @@
   lore:
   - §r射出孢子球
   attributes:
-    damage: 98
+    damage: 80
     damageType: Melee
     crit: 4
     knockback: 6.2
@@ -3266,17 +3266,6 @@
     useTime: 30
   worth: 2000
   rarity: 0
-钨钢弓:
-  item: BOW
-  attributes:
-    damage: 22
-    damageType: Arrow
-    crit: 4
-    projectileSpeed: 12
-    knockback: 2.25
-    useTime: 25
-  worth: 200000
-  rarity: 1
 铜质短弓:
   item: BOW
   attributes:
@@ -3428,7 +3417,7 @@
     crit: 4
     projectileSpeed: 10
     knockback: 2.5
-    useTime: 20
+    useTime: 32
   worth: 5000000
   rarity: 8
 幻象弓:
@@ -3439,10 +3428,21 @@
     crit: 4
     projectileSpeed: 10
     knockback: 2
-    useTime: 12
+    useTime: 18
     ammoConsumptionRate: -0.66
   worth: 10000000
   rarity: 10
+钨钢弓:
+  item: BOW
+  attributes:
+    damage: 22
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12
+    knockback: 2.25
+    useTime: 25
+  worth: 200000
+  rarity: 1
 巴淋内德:
   item: BOW
   lore:
@@ -3675,7 +3675,7 @@
     crit: 4
     projectileSpeed: 16
     knockback: 2.5
-    useTime: 15
+    useTime: 24
   worth: 16000000
   rarity: 9
 湮灭千星:
@@ -3764,7 +3764,7 @@
     crit: 4
     projectileSpeed: 15
     knockback: 4
-    useTime: 30
+    useTime: 10
   worth: 16000000
   rarity: 10
 岩鲨发射器:
@@ -3881,7 +3881,7 @@
     crit: 4
     projectileSpeed: 11
     knockback: 5
-    useTime: 15
+    useTime: 24
   worth: 4800000
   rarity: 5
 物质调谐器:
@@ -4178,7 +4178,7 @@
     crit: 4
     projectileSpeed: 7.75
     knockback: 0
-    useTime: 12
+    useTime: 21
   worth: 3000000
   rarity: 4
 巨兽鲨:
@@ -4300,7 +4300,7 @@
     crit: 4
     projectileSpeed: 6
     knockback: 0
-    useTime: 20
+    useTime: 32
     ammoConsumptionRate: -0.50
   worth: 400000
   rarity: 2
@@ -4501,7 +4501,7 @@
     crit: 4
     projectileSpeed: 15
     knockback: 2.25
-    useTime: 20
+    useTime: 32
   worth: 16000000
   rarity: 8
 利维坦海潮枪:
@@ -4539,7 +4539,7 @@ P90:
     crit: 4
     projectileSpeed: 20
     knockback: 3.75
-    useTime: 9
+    useTime: 18
   worth: 16000000
   rarity: 8
 地狱风暴:
@@ -6181,19 +6181,6 @@ P90:
     manaUse: 10
   worth: 800000
   rarity: 3
-鲱鱼法杖:
-  item: WOOD_SWORD
-  lore:
-  - §r召唤鲱鱼为你而战
-  - §r仅占据半格召唤栏位
-  attributes:
-    damage: 34
-    damageType: Summon
-    knockback: 1.25
-    useTime: 29
-    manaUse: 10
-  worth: 800000
-  rarity: 3
 腐化史莱姆召唤杖:
   item: WOOD_SWORD
   lore:
@@ -6218,6 +6205,18 @@ P90:
     manaUse: 10
   worth: 2400000
   rarity: 4
+真菌块:
+  item: WOOD_SWORD
+  lore:
+  - §r召唤真菌块为你而战
+  attributes:
+    damage: 20
+    damageType: Summon
+    knockback: 2
+    useTime: 29
+    manaUse: 10
+  worth: 400000
+  rarity: 2
 死亡凝视法杖:
   item: WOOD_SWORD
   lore:
@@ -6611,7 +6610,7 @@ P90:
     damageType: Arrow
     crit: 4
     knockback: 0
-    projectileSpeed: 9
+    projectileSpeed: 2
     useTime: 15
   worth: 300
   rarity: 0
@@ -6622,7 +6621,7 @@ P90:
     damageType: Arrow
     crit: 4
     knockback: 1
-    projectileSpeed: 5
+    projectileSpeed: 1
     useTime: 15
   worth: 1600
   rarity: 0
@@ -8814,7 +8813,7 @@ P90:
   worth: 20000
   rarity: 0
 暗影鳞片:
-  item: CLAY
+  item: CLAY_BALL
   worth: 160000
   rarity: 1
 火把:

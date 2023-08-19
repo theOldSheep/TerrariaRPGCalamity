@@ -1538,6 +1538,7 @@ public class EntityHelper {
                             critRate += damagerAttrMap.getOrDefault("critRanged", 0d);
                             break;
                         case MAGIC:
+                        case SPECTRE:
                             critRate += damagerAttrMap.getOrDefault("critMagic", 0d);
                         case SUMMON:
                             if (canGetPercentageBonus)

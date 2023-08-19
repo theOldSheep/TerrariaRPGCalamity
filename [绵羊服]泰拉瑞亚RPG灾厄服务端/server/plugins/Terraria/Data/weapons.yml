@@ -604,16 +604,15 @@
   projectileInfo:
     interval: 1
     velocity: 0.5
-    noGravity: true
-    isGranade: true
     name: 孢子球
+  autoSwing: true
 北极:
   type: STAB
   size: 8
   autoSwing: true
   projectileInfo:
     interval: 1
-    velocity: 2.25
+    velocity: 1.6
     name: 北极长矛
   particleColor:
   - 75|150|255
@@ -1383,7 +1382,7 @@
   fireRoundsDelay: 1
   attributes:
     damage: 66
-    useTime: 4
+    useTime: 7
 深核GK2:
   type: GUN
   autoSwing: true

@@ -96,14 +96,13 @@ public class ArrowHitListener implements Listener {
             attrMapProj.put("damage", attrMapProj.get("damage") * 0.3);
             attrMapProj.put("knockback", 0d);
             Player shooter = (Player) projectile.getShooter();
-            double projectileSpeed = attrMapProj.getOrDefault("projectileSpeed", 20d) / 20;
             int waitTime = 3 + (int) (Math.random() * 3);
             for (int i = 0; i < 3; i ++) {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
                     Vector velocity = MathHelper.getDirection(shooter.getLocation(), entity.getLocation(), 1);
                     velocity.multiply(17);
                     velocity.add(MathHelper.randomVector());
-                    velocity.normalize().multiply(projectileSpeed);
+                    velocity.normalize().multiply(1.75);
 
                     EntityHelper.spawnProjectile(shooter, velocity, attrMapProj, "幻象箭")
                             .setGlowing(true);

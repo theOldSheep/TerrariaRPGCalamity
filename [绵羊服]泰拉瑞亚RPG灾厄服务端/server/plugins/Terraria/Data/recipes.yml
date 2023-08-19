@@ -1811,6 +1811,122 @@ ANVIL:
     - 神秘电路:15
     - 生命合金:5
     - 瘟疫装甲镀层:10
+  '274':
+    requireLevel: 1
+    resultItem: 霜华法杖
+    requireItem:
+    - 寒颤棘:5
+    - 木材:10
+    - 冰块:50
+  '275':
+    requireLevel: 1
+    resultItem: 太阳之灵法杖
+    requireItem:
+    - 砂岩:20
+    - 风暴之颚:2
+  '276':
+    requireLevel: 1
+    resultItem: 颠茄灵杖
+    requireItem:
+    - 藤蔓:4
+    - 毒刺:8
+    - 木材:25
+    - 丛林孢子:5
+  '277':
+    requireLevel: 1
+    resultItem: 腐化吞噬者
+    requireItem:
+    - 恶魔锭:5
+    - 暗影鳞片:9
+    - 木材:20
+  '278':
+    requireLevel: 1
+    resultItem: 烬英法杖
+    requireItem:
+    - 火焰花:5
+    - 狱炎锭:10
+  '279':
+    requireLevel: 1
+    resultItem: 噬星者控制元件
+    requireItem:
+    - 可疑镀层:4
+    - 神秘电路:8
+    - 天蓝锭:4
+    - 海棱晶:7
+  '280':
+    requireLevel: 2
+    resultItem: 失落极峰
+    requireItem:
+    - 禁戒碎片:2
+    - 精金锭:5
+  '281':
+    requireLevel: 1
+    resultItem: 闹鬼卷轴
+    requireItem:
+    - 木材:10
+    - 光明之魂:5
+    - 暗影之魂:5
+  '282':
+    requireLevel: 2
+    resultItem: 永冻之焱华
+    requireItem:
+    - 烬英法杖
+    - 霜华法杖
+    - 秘银锭:5
+  '283':
+    requireLevel: 2
+    resultItem: 淬焰之升华
+    requireItem:
+    - 污痕核心:10
+    - 混乱精华:5
+  '284':
+    requireLevel: 2
+    resultItem: 架式扫射机
+    requireItem:
+    - 可疑镀层:5
+    - 神秘电路:15
+    - 秘银锭:10
+    - 恐惧之魂:20
+  '285':
+    requireLevel: 2
+    resultItem: 太阳神法杖
+    requireItem:
+    - 太阳之灵法杖
+    - 日光精华:5
+    - 力量之魂:3
+    - 视域之魂:3
+    - 恐惧之魂:3
+  '286':
+    requireLevel: 2
+    resultItem: 苍华之庭
+    requireItem:
+    - 刃杖
+    - 永夜之眼
+    - 生命碎片:12
+  '287':
+    requireLevel: 2
+    resultItem: 沙龙卷法杖
+    requireItem:
+    - 失落极峰
+    - 大狂鲨鳞
+    - 天蓝锭:10
+    - 丝绸:5
+  '288':
+    requireLevel: 2
+    resultItem: 剧毒芽孢
+    requireItem:
+    - 永恒锭:12
+  '289':
+    requireLevel: 2
+    resultItem: 凋零绽放法杖
+    requireItem:
+    - 永冻之焱华
+    - 瘟疫细胞罐:15
+  '290':
+    requireLevel: 2
+    resultItem: 代达罗斯守卫法杖
+    requireItem:
+    - 寒元锭:12
 WORKBENCH:
   '1':
     requireLevel: 1
@@ -2140,6 +2256,13 @@ WORKBENCH:
     resultItem: 命运之手
     requireItem:
     - 冥思构造体:9
+  '56':
+    requireLevel: 1
+    resultItem: 反魂蝶
+    requireItem:
+    - 丝绸:40
+    - 灵气:20
+    - 生命合金:5
 ENCHANTMENT_TABLE:
   '1':
     requireLevel: 1
@@ -2225,6 +2348,23 @@ ENCHANTMENT_TABLE:
     - 太空枪
     - 水矢
     - 纯净凝胶
+  '14':
+    requireLevel: 1
+    resultItem: 永夜之眼
+    requireItem:
+    - 颠茄灵杖
+    - 死灵骨髓杖
+    - 腐化吞噬者
+    - 小鬼法杖
+    - 纯净凝胶:10
+  '15':
+    requireLevel: 1
+    resultItem: 蚀骨法杖
+    requireItem:
+    - 诅咒焰:10
+    - 死亡草:2
+    - 暗影之魂:10
+    - 恶魔锭:10
 AIR:
   '1':
     requireLevel: 1
