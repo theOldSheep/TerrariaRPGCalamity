@@ -16,3 +16,10 @@
   model: "渊海灾虫/尾/custom_model.obj"
   texture: "渊海灾虫/尾/texture.png"
   scale: 45
+白金星舰:
+  entity: "白金星舰"
+  contains: true
+  model: "白金星舰/custom_model.obj"
+  texture: "白金星舰/texture.png"
+  scale: 20
+

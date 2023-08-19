@@ -65,6 +65,18 @@ Script:
       }
       return false;
     }
+    function isBoots(itemStack){
+      var lore = itemStack.getItemMeta().getLore();
+      if(lore!=null){
+        for(var i=0;i<lore.size();i++){
+          var line = lore.get(i);
+          if(line!=null && line.contains("算作鞋子")){
+            return true;
+          }
+        }
+      }
+      return false;
+    }
     function hasAccessoryConflictSingle(currItem, otherAccessoryName){
       if (currItem == otherAccessoryName) return true;
       switch(currItem) {
@@ -154,6 +166,15 @@ Script:
         for (var i = 0; i < otherAccessories.length; i ++) {
           var otherAcc = otherAccessories[i];
           if (isWing(otherAcc) === true) {
+            return false;
+          }          
+        }
+      }
+      // do not allow multiple boots
+      if (isBoots(itemStack) === true) {
+        for (var i = 0; i < otherAccessories.length; i ++) {
+          var otherAcc = otherAccessories[i];
+          if (isBoots(otherAcc) === true) {
             return false;
           }          
         }
