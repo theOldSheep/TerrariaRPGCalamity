@@ -328,8 +328,9 @@ public class TerrariaNPC extends EntityVillager {
     @Override
     public void die() {
         super.die();
-        for (Player ply : GUIViewers) {
-            ply.closeInventory();
-        }
+        if (GUIViewers != null)
+            for (Player ply : GUIViewers) {
+                ply.closeInventory();
+            }
     }
 }

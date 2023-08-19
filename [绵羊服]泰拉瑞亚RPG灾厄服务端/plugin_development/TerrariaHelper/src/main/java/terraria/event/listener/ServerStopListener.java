@@ -1,12 +1,14 @@
 package terraria.event.listener;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import terraria.gameplay.EventAndTime;
+import terraria.util.NPCHelper;
 import terraria.util.PlayerHelper;
 
 public class ServerStopListener implements Listener {
@@ -19,5 +21,8 @@ public class ServerStopListener implements Listener {
             PlayerHelper.saveData(ply);
             ply.kickPlayer("服务器已关闭！");
         }
+        // kill all NPC
+        for (Entity NPC : NPCHelper.NPCMap.values())
+            NPC.remove();
     }
 }

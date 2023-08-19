@@ -115,6 +115,16 @@ FURNACE:
     resultItem: 黑曜石头骨
     requireItem:
     - 黑曜石:20
+  '23_1':
+    requireLevel: 1
+    resultItem: 禁戒碎片
+    requireItem:
+    - 沙块:32
+    - 砂岩:16
+    - 光明之魂:4
+    - 暗影之魂:4
+    - 光明碎块
+    - 暗黑碎块
   '24':
     requireLevel: 2
     resultItem: 钴锭
@@ -174,12 +184,61 @@ FURNACE:
     - 黑曜石:20
     - 丝绸:10
     - 暗影鳞片:5
+  '33_0_1':
+    requireLevel: 3
+    resultItem: 寒元锭
+    requireItem:
+    - 寒元矿:4
+  '33_0_2':
+    requireLevel: 3
+    resultItem: 永恒锭
+    requireItem:
+    - 永恒矿:4
+  '33_0_3':
+    requireLevel: 3
+    resultItem: 熔渣锭
+    requireItem:
+    - 熔渣矿:4
+  '33_1':
+    requireLevel: 1
+    resultItem: 海洋残渣
+    requireItem:
+    - 珍珠碎片:2
+    - 珊瑚:2
+    - 海星:2
+    - 贝壳:2
+  '33_2':
+    requireLevel: 2
+    resultItem: 污痕核心
+    requireItem:
+    - 狱炎矿:4
+    - 焦炭矿:4
   '34':
     requireLevel: 1
     resultItem: 天蓝锭
     requireItem:
     - 天蓝矿:4
 ANVIL:
+  '0_1':
+    requireLevel: 1
+    resultItem: 钨钢钓竿
+    requireItem:
+    - 钨钢金属废料:6
+  '0_2':
+    requireLevel: 2
+    resultItem: 寒元钓竿
+    requireItem:
+    - 寒元锭:6
+  '0_3':
+    requireLevel: 2
+    resultItem: 野性双头钓竿
+    requireItem:
+    - 永恒锭:6
+  '0_4':
+    requireLevel: 2
+    resultItem: 岩缝取鱼者
+    requireItem:
+    - 熔渣锭:6
   '1':
     requireLevel: 1
     resultItem: 钨钢刀
@@ -331,27 +390,27 @@ ANVIL:
     - 钻石:10
   '29':
     requireLevel: 1
-    resultItem: 银子弹:70
+    resultItem: 银子弹:64
     requireItem:
+    - 火枪子弹:64
     - 银锭
-    - 火枪子弹:70
   '30':
     requireLevel: 1
-    resultItem: 陨星弹:70
+    resultItem: 陨星弹:64
     requireItem:
+    - 火枪子弹:64
     - 陨星锭
-    - 火枪子弹:70
   '31':
     requireLevel: 1
-    resultItem: 邪箭:25
+    resultItem: 邪箭:24
     requireItem:
-    - 木箭:25
+    - 木箭:24
     - 恶魔锭
   '32':
     requireLevel: 1
-    resultItem: 狱炎箭:100
+    resultItem: 狱炎箭:96
     requireItem:
-    - 木箭:100
+    - 木箭:96
     - 狱炎锭
   '33':
     requireLevel: 1
@@ -760,9 +819,9 @@ ANVIL:
     - 视域之魂:20
   '109':
     requireLevel: 2
-    resultItem: 圣箭:100
+    resultItem: 圣箭:96
     requireItem:
-    - 木箭:100
+    - 木箭:96
     - 独角兽角
     - 妖精尘:3
   '110':
@@ -778,10 +837,23 @@ ANVIL:
     - 叶绿锭
   '112':
     requireLevel: 2
-    resultItem: 毒液箭:35
+    resultItem: 毒液箭:48
     requireItem:
-    - 木箭:35
+    - 木箭:48
     - 小瓶毒液
+  '112_1':
+    requireLevel: 1
+    resultItem: 汽油箭:240
+    requireItem:
+    - 混乱精华
+    - 火把:4
+    - 木箭:240
+  '112_2':
+    requireLevel: 1
+    resultItem: 泰拉箭:240
+    requireItem:
+    - 生命碎片
+    - 木箭:240
   '113':
     requireLevel: 2
     resultItem: 绿藻弹:64
@@ -789,16 +861,52 @@ ANVIL:
     - 叶绿锭
   '114':
     requireLevel: 2
-    resultItem: 水晶子弹:100
+    resultItem: 水晶子弹:96
     requireItem:
-    - 火枪子弹:100
+    - 火枪子弹:96
     - 水晶碎块
   '115':
     requireLevel: 2
-    resultItem: 诅咒弹:100
+    resultItem: 诅咒弹:96
     requireItem:
-    - 火枪子弹:100
+    - 火枪子弹:96
     - 诅咒焰
+  '115_1':
+    requireLevel: 1
+    resultItem: 加速弹:144
+    requireItem:
+    - 火枪子弹:144
+    - 珍珠碎片
+  '115_2':
+    requireLevel: 2
+    resultItem: 鼠疫弹:144
+    requireItem:
+    - 火枪子弹:144
+    - 瘟疫细胞罐
+  '115_3':
+    requireLevel: 2
+    resultItem: 海伯里斯弹:144
+    requireItem:
+    - 火枪子弹:144
+    - 生命合金
+  '115_4':
+    requireLevel: 1
+    resultItem: 弹球弹:144
+    requireItem:
+    - 陨星弹:144
+    - 珍珠碎片
+  '115_5':
+    requireLevel: 2
+    resultItem: 泰拉弹:144
+    requireItem:
+    - 水晶子弹:96
+    - 生命碎片
+  '115_6':
+    requireLevel: 2
+    resultItem: 钫弹:96
+    requireItem:
+    - 火枪子弹:96
+    - 寒元锭
   '116':
     requireLevel: 2
     resultItem: 寒霜头盔
@@ -1101,12 +1209,12 @@ ANVIL:
     - 海洋残渣:3
   '164':
     requireLevel: 1
-    resultItem: 胜潮贝盔
+    resultItem: 胜潮隐帽
     requireItem:
     - 海洋残渣:3
   '165':
     requireLevel: 1
-    resultItem: 胜潮隐帽
+    resultItem: 胜潮瑚巾
     requireItem:
     - 海洋残渣:3
   '166':
@@ -1197,13 +1305,172 @@ ANVIL:
     requireItem:
     - 纯净凝胶:5
     - 狱炎锭:9
+  '179_1':
+    requireLevel: 1
+    resultItem: 软壳贝盔
+    requireItem:
+    - 海棱晶:15
+    - 软体动物外壳:6
+  '179_2':
+    requireLevel: 1
+    resultItem: 软壳贝甲
+    requireItem:
+    - 海棱晶:25
+    - 软体动物外壳:15
+  '179_3':
+    requireLevel: 1
+    resultItem: 软壳护胫
+    requireItem:
+    - 海棱晶:20
+    - 软体动物外壳:10
+  '179_4':
+    requireLevel: 2
+    resultItem: 代达罗斯胸甲
+    requireItem:
+    - 寒元锭:15
+    - 冰川精华:3
+  '179_5':
+    requireLevel: 2
+    resultItem: 代达罗斯护胫
+    requireItem:
+    - 寒元锭:10
+    - 冰川精华:2
+  '179_6':
+    requireLevel: 2
+    resultItem: 代达罗斯头盔
+    requireItem:
+    - 寒元锭:8
+    - 冰川精华
+  '179_7':
+    requireLevel: 2
+    resultItem: 代达罗斯头罩
+    requireItem:
+    - 寒元锭:8
+    - 冰川精华
+  '179_8':
+    requireLevel: 2
+    resultItem: 代达罗斯兜帽
+    requireItem:
+    - 寒元锭:8
+    - 冰川精华
+  '179_9':
+    requireLevel: 2
+    resultItem: 代达罗斯面具
+    requireItem:
+    - 寒元锭:8
+    - 冰川精华
+  '179_10':
+    requireLevel: 2
+    resultItem: 硫火兜帽
+    requireItem:
+    - 灾厄尘:4
+    - 污痕核心:2
+  '179_11':
+    requireLevel: 2
+    resultItem: 硫火长袍
+    requireItem:
+    - 灾厄尘:8
+    - 污痕核心:4
+  '179_12':
+    requireLevel: 2
+    resultItem: 硫火靴子
+    requireItem:
+    - 灾厄尘:5
+    - 污痕核心:3
+  '179_13':
+    requireLevel: 2
+    resultItem: 掠夺者鳞甲
+    requireItem:
+    - 永恒锭:15
+    - 生命碎片:3
+  '179_14':
+    requireLevel: 2
+    resultItem: 掠夺者护胫
+    requireItem:
+    - 永恒锭:10
+    - 生命碎片:2
+  '179_15':
+    requireLevel: 2
+    resultItem: 掠夺者战盔
+    requireItem:
+    - 永恒锭:7
+    - 生命碎片
+  '179_16':
+    requireLevel: 2
+    resultItem: 掠夺者面罩
+    requireItem:
+    - 永恒锭:7
+    - 生命碎片
+  '179_17':
+    requireLevel: 2
+    resultItem: 掠夺者头套
+    requireItem:
+    - 永恒锭:7
+    - 生命碎片
+  '179_18':
+    requireLevel: 2
+    resultItem: 渊泉盔甲
+    requireItem:
+    - 熔渣锭:15
+    - 混乱核心:3
+  '179_19':
+    requireLevel: 2
+    resultItem: 渊泉战裙
+    requireItem:
+    - 熔渣锭:10
+    - 混乱核心:2
+  '179_20':
+    requireLevel: 2
+    resultItem: 渊泉战盔
+    requireItem:
+    - 熔渣锭:7
+    - 混乱核心
+  '179_21':
+    requireLevel: 2
+    resultItem: 渊泉头饰
+    requireItem:
+    - 熔渣锭:7
+    - 混乱核心
+  '179_22':
+    requireLevel: 2
+    resultItem: 渊泉面具
+    requireItem:
+    - 熔渣锭:7
+    - 混乱核心
+  '179_23':
+    requireLevel: 2
+    resultItem: 渊泉头盔
+    requireItem:
+    - 熔渣锭:7
+    - 混乱核心
+  '179_24':
+    requireLevel: 2
+    resultItem: 瘟疫死神面罩
+    requireItem:
+    - 死灵头盔
+    - 瘟疫细胞罐:15
+    - 纳米机器人:11
+  '179_25':
+    requireLevel: 2
+    resultItem: 瘟疫死神夹克
+    requireItem:
+    - 死灵胸甲
+    - 瘟疫细胞罐:29
+    - 纳米机器人:19
+  '179_26':
+    requireLevel: 2
+    resultItem: 瘟疫死神长靴
+    requireItem:
+    - 死灵护胫
+    - 瘟疫细胞罐:21
+    - 纳米机器人:17
   '180':
     requireLevel: 1
     resultItem: 翡翠斧
     requireItem:
     - 木材:15
     - 银锭:10
-    - 银稿
+    - 银镐
   '181':
     requireLevel: 1
     resultItem: 海耀之刃
@@ -1385,7 +1652,7 @@ ANVIL:
     resultItem: 神旨
     requireItem:
     - 纯净凝胶:18
-    - 枯萎凝胶:18
+    - 凝胶:18
   '209':
     requireLevel: 1
     resultItem: 阴阳
@@ -1517,7 +1784,7 @@ ANVIL:
     resultItem: 凝胶弓
     requireItem:
     - 纯净凝胶:18
-    - 枯萎凝胶:18
+    - 凝胶:18
   '230':
     requireLevel: 2
     resultItem: 黑翼蝙蝠弓
@@ -1568,7 +1835,7 @@ ANVIL:
     requireLevel: 1
     resultItem: 鹅卵石冲击波
     requireItem:
-    - 石块:20
+    - 石头:20
     - 钻石:3
   '239':
     requireLevel: 1
@@ -1589,7 +1856,7 @@ ANVIL:
     resultItem: 胶泥散弹枪
     requireItem:
     - 纯净凝胶:18
-    - 枯萎凝胶:18
+    - 凝胶:18
   '242':
     requireLevel: 1
     resultItem: 屠夫
@@ -1779,7 +2046,7 @@ ANVIL:
     requireLevel: 1
     resultItem: 麦格纳炮
     requireItem:
-    - 石块:25
+    - 石头:25
     - 黑曜石:15
   '270':
     requireLevel: 1
@@ -1927,6 +2194,39 @@ ANVIL:
     resultItem: 代达罗斯守卫法杖
     requireItem:
     - 寒元锭:12
+  '291':
+    requireLevel: 2
+    resultItem: 冰川核心:3
+    requireItem:
+    - 灵气
+    - 冰川精华
+  '292':
+    requireLevel: 2
+    resultItem: 日光核心:3
+    requireItem:
+    - 灵气
+    - 日光精华
+  '293':
+    requireLevel: 2
+    resultItem: 混乱核心:3
+    requireItem:
+    - 灵气
+    - 混乱精华
+  '294':
+    requireLevel: 2
+    resultItem: 灾劫核心:3
+    requireItem:
+    - 混乱核心:3
+    - 日光核心:3
+    - 冰川核心:3
+    - 灾厄尘
+  '295':
+    requireLevel: 2
+    resultItem: 生命合金
+    requireItem:
+    - 寒元锭
+    - 永恒锭
+    - 熔渣锭
 WORKBENCH:
   '1':
     requireLevel: 1
@@ -1940,10 +2240,10 @@ WORKBENCH:
     - 木材:20
   '3':
     requireLevel: 1
-    resultItem: 木箭:25
+    resultItem: 木箭:24
     requireItem:
-    - 木材:2
-    - 石头:2
+    - 木材
+    - 石头
   '4':
     requireLevel: 1
     resultItem: 木制悠悠球
@@ -2062,15 +2362,15 @@ WORKBENCH:
     - 木材:22
   '25':
     requireLevel: 1
-    resultItem: 爆炸弹:50
+    resultItem: 爆炸弹:48
     requireItem:
-    - 弹壳:50
+    - 弹壳:48
     - 火药
   '26':
     requireLevel: 1
-    resultItem: 毒液弹:50
+    resultItem: 毒液弹:48
     requireItem:
-    - 弹壳:50
+    - 弹壳:48
     - 小瓶毒液
   '27':
     requireLevel: 1
@@ -2143,28 +2443,28 @@ WORKBENCH:
     - 蛛丝:50
   '38':
     requireLevel: 1
-    resultItem: 死灵胸甲
+    resultItem: 死灵护胫
     requireItem:
     - 骨头:50
     - 蛛丝:45
   '39':
     requireLevel: 1
-    requireItem: 沙漠巡游者帽
+    resultItem: 沙漠巡游者帽
     requireItem:
     - 丝绸:8
     - 荒漠之羽:2
   '40':
     requireLevel: 1
-    requireItem: 沙漠巡游者衣
+    resultItem: 沙漠巡游者衣
     requireItem:
     - 丝绸:10
     - 荒漠之羽:3
   '41':
     requireLevel: 1
-    requireItem: 沙漠巡游者裤
+    resultItem: 沙漠巡游者裤
     requireItem:
     - 丝绸:5
-    - 荒漠之羽:1
+    - 荒漠之羽
   '42':
     requireLevel: 1
     resultItem: 冰矢
@@ -2299,9 +2599,9 @@ ENCHANTMENT_TABLE:
     requireLevel: 1
     resultItem: 绝望之刃
     requireItem:
-    - 岩浆桶
     - 木材:10
     - 暗影鳞甲:8
+    - 火焰花:2
     - 死亡草:2
   '7':
     requireLevel: 1
@@ -2374,22 +2674,27 @@ AIR:
     - 木材
   '2':
     requireLevel: 1
-    resultItem: 烈焰箭:10
+    resultItem: 烈焰箭:16
     requireItem:
-    - 木箭:10
+    - 木箭:16
     - 火把
   '3':
     requireLevel: 1
-    resultItem: 小丑之箭:20
+    resultItem: 小丑之箭:24
     requireItem:
-    - 木箭:20
+    - 木箭:24
     - 坠星
   '4':
     requireLevel: 1
-    resultItem: 冰焰箭:10
+    resultItem: 冰焰箭:16
     requireItem:
-    - 木箭:10
+    - 木箭:16
     - 冰冻火把
+  '4_1':
+    requireLevel: 1
+    resultItem: 北极箭:240
+    requireItem:
+    - 寒元锭
   '5':
     requireLevel: 1
     resultItem: 冰冻火把:3
@@ -3330,6 +3635,44 @@ TINKER_WORKBENCH:
     - 高温射线枪
     - 太空枪
     - 日耀碎片:6
+  '57':
+    requireLevel: 1
+    resultItem: 星幻头盔
+    requireItem:
+    - 炫星锭:8
+    - 陨星锭:6
+  '58':
+    requireLevel: 1
+    resultItem: 星幻胸甲
+    requireItem:
+    - 炫星锭:12
+    - 陨星锭:9
+  '59':
+    requireLevel: 1
+    resultItem: 星幻护胫
+    requireItem:
+    - 炫星锭:10
+    - 陨星锭:8
+  '59_1':
+    requireLevel: 1
+    resultItem: 炫星锭
+    requireItem:
+    - 炫星矿:2
+    - 星尘:3
+  '60':
+    requireLevel: 1
+    resultItem: 星系异石
+    requireItem:
+    - 星璇碎片
+    - 星云碎片
+    - 星尘碎片
+    - 日耀碎片
+  '61':
+    requireLevel: 1
+    resultItem: 冥思构造体:3
+    requireItem:
+    - 星尘:3
+    - 冥思溶剂:6
 嘉登熔炉:
   containedStations:
     # FURNACE中 requireLevel<=3的配方也会被加载（即精金熔炉）

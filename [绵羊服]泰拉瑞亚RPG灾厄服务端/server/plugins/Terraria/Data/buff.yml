@@ -37,6 +37,12 @@ buffConflicts:
   10:
     钨钢屏障: 0
     保护矩阵充能: 1
+  11:
+    硫火狂怒: 0
+    硫火狂怒冷却: 1
+  12:
+    瘟疫狂暴: 0
+    瘟疫狂暴冷却: 1
 
 effects:
   中毒:
@@ -417,6 +423,8 @@ effects:
     isBuff: true
     attributes:
         damageSummonMulti: -0.5
+    buffOnTimeout: 血肉图腾冷却
+    buffOnTimeoutDuration: 400
     tooltip: 下一次接触伤害减半
   血肉图腾冷却:
     isBuff: false
@@ -425,10 +433,41 @@ effects:
     isBuff: true
     attributes:
         defence: 20
+    buffOnTimeout: 保护矩阵充能
+    buffOnTimeoutDuration: 400
     tooltip: 保护你并为你阻挡伤害
   保护矩阵充能:
     isBuff: false
     tooltip: 钨钢屏障被摧毁，正在充能
+  硫火狂怒:
+    isBuff: false
+    attributes:
+        damageMagicMulti: 0.5
+        regen: -84
+    buffOnTimeout: 硫火狂怒冷却
+    buffOnTimeoutDuration: 600
+    tooltip: 以生命为代价，黑魔法大大增强了你的力量
+  硫火狂怒冷却:
+    isBuff: false
+    tooltip: 燃烧生命的黑魔法令你精疲力尽
+  掠夺者之怒:
+    isBuff: true
+    attributes:
+        damageMulti: 0.3
+        useSpeedMeleeMulti: 0.05
+        defence: 10
+    tooltip: 爷怒了
+  瘟疫狂暴:
+    isBuff: true
+    attributes:
+        damageRangedMulti: 0.6
+        critRanged: 20
+    buffOnTimeout: 瘟疫狂暴冷却
+    buffOnTimeoutDuration: 500
+    tooltip: 远程伤害增加60%，远程暴击率增加20%
+  瘟疫狂暴冷却:
+    isBuff: false
+    tooltip: 你需要稍等片刻才能再次使用瘟疫狂暴
   暴君之怒:
     isBuff: true
     attributes:

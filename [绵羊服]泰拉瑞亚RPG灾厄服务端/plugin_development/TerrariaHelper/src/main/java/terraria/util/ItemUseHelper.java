@@ -5,7 +5,6 @@ import org.bukkit.*;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -629,10 +628,10 @@ public class ItemUseHelper {
                                 .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
                                     // melee invulnerability tick
                                     int invulnerabilityTicks = 3;
-                                    EntityHelper.handleEntityInvulnerabilityTicks(ply,
+                                    EntityHelper.handleEntityTemporaryScoreboard(ply,
                                             EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
                                             invulnerabilityTicks);
-                                    EntityHelper.handleEntityInvulnerabilityTicks(ply,
+                                    EntityHelper.handleEntityTemporaryScoreboard(ply,
                                             EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
                                             invulnerabilityTicks);
                                 });
@@ -824,10 +823,10 @@ public class ItemUseHelper {
                                     }
                                     // apply melee invulnerability tick otherwise
                                     else {
-                                        EntityHelper.handleEntityInvulnerabilityTicks(ply,
+                                        EntityHelper.handleEntityTemporaryScoreboard(ply,
                                                 EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
                                                 invulnerabilityTicks);
-                                        EntityHelper.handleEntityInvulnerabilityTicks(ply,
+                                        EntityHelper.handleEntityTemporaryScoreboard(ply,
                                                 EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
                                                 invulnerabilityTicks);
                                     }
@@ -839,7 +838,7 @@ public class ItemUseHelper {
                                 })
                                 .setShouldDamageFunction( (e) -> EntityHelper.checkCanDamage(e, ply, true))
                                 .setLingerDelay(5);
-                        EntityHelper.handleEntityInvulnerabilityTicks(ply, parryCDScoreboardTag, coolDown);
+                        EntityHelper.handleEntityTemporaryScoreboard(ply, parryCDScoreboardTag, coolDown);
                     }
                     break;
                 }
@@ -1408,7 +1407,7 @@ public class ItemUseHelper {
                         strikeLineInfo
                                 .setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
                                     if (! ply.getScoreboardTags().contains("temp_sharknado")) {
-                                        EntityHelper.handleEntityInvulnerabilityTicks(ply,
+                                        EntityHelper.handleEntityTemporaryScoreboard(ply,
                                                 "temp_sharknado", 100);
                                         HashMap<String, Double> tornadoAttrMap = (HashMap<String, Double>) attrMap.clone();
                                         tornadoAttrMap.put("damage", tornadoAttrMap.get("damage") * 0.5);
@@ -2135,6 +2134,25 @@ public class ItemUseHelper {
         }
         double useTimeMulti = 1 / useSpeed;
         applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
+        // armor set
+        if (PlayerHelper.getArmorSet(ply).equals("渊泉远程套装")) {
+            String coolDownTag = "temp_hydroThermicFireball";
+            if (! ply.getScoreboardTags().contains(coolDownTag)) {
+                // cool down
+                EntityHelper.handleEntityTemporaryScoreboard(ply, coolDownTag, 10);
+                // damage setup
+                EntityPlayer dPlyNMS = ((CraftPlayer) ply).getHandle();
+                HashMap<String, Double> fireballAttrMap = (HashMap<String, Double>) attrMap.clone();
+                double fireballDmg = Math.min(125, fireballAttrMap.getOrDefault("damage", 100d) * 0.25);
+                fireballAttrMap.put("damage", fireballDmg);
+                // projectile
+                Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                        dPlyNMS.yaw + Math.random(), dPlyNMS.pitch + Math.random());
+                projVel.multiply(1.75);
+                EntityHelper.spawnProjectile(ply, projVel,
+                        fireballAttrMap, EntityHelper.getDamageType(ply), "大熔岩火球");
+            }
+        }
         return true;
     }
     protected static boolean playerUseThrowingProjectile(Player ply, String itemType, String weaponType,

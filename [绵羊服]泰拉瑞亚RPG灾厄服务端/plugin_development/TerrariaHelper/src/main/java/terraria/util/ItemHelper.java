@@ -53,7 +53,8 @@ public class ItemHelper {
                 ConfigurationSection recipeSection = blockSection.getConfigurationSection(recipeName);
                 int requireLevel = recipeSection.getInt("requireLevel", 0);
                 if (requireLevel <= level) {
-                    ItemStack resultItem = getItemFromDescription(recipeSection.getString("resultItem", ""), false);
+                    ItemStack resultItem = getItemFromDescription(
+                            recipeSection.getString("resultItem", ""), false);
                     resultItem.setAmount(1);
                     VexSlot slotComp = new VexSlot(recipeIndex, 5, (recipeIndex - 1) * 20, resultItem);
                     itemSlots.add(slotComp);
@@ -198,7 +199,9 @@ public class ItemHelper {
         attributeDisplayName.put("damageBulletMulti", "子弹伤害");
         attributeDisplayName.put("damageRocketMulti", "火箭伤害");
         attributeDisplayName.put("damageTrueMeleeMulti", "真近战伤害");
+        attributeDisplayName.put("flightTimeMulti", "飞行时长");
         attributeDisplayName.put("manaUseMulti", "魔力消耗");
+        attributeDisplayName.put("maxHealthMulti", "最大生命值");
         attributeDisplayName.put("mobSpawnRateMulti", "怪物生成速度");
         attributeDisplayName.put("speedMulti", "移动速度");
         attributeDisplayName.put("meleeReachMulti", "近战攻击距离");
@@ -206,6 +209,7 @@ public class ItemHelper {
         attributeDisplayName.put("useSpeedMulti", "攻击速度");
         attributeDisplayName.put("useSpeedMagicMulti", "魔法攻击速度");
         attributeDisplayName.put("useSpeedMeleeMulti", "近战攻击速度");
+        attributeDisplayName.put("useSpeedMiningMulti", "挖掘速度");
         attributeDisplayName.put("useSpeedRangedMulti", "远程攻击速度");
         attributeDisplayName.put("knockbackMeleeMulti", "近战击退");
         attributeDisplayName.put("projectileSpeedMulti", "弹射物速度");
@@ -459,18 +463,18 @@ public class ItemHelper {
                 ItemStack resultItem;
                 try {
                     resultItem = itemMap.get(itemType);
+                    // attempt to return the item from vanilla material
                     if (resultItem == null || resultItem.getType() == Material.AIR) {
-                        // check if the itemType is a material
                         try {
                             Material.matchMaterial(itemType);
                         } catch (Exception e) {
-                            Bukkit.getLogger().log(Level.SEVERE, "item " + itemType + " not found in mapping.");
+                            Bukkit.getLogger().log(Level.SEVERE, "item " + itemType + " not found in material.");
                         }
                         return new ItemStack(Material.matchMaterial(itemType));
                     }
                     resultItem = resultItem.clone();
                 } catch (Exception e) {
-                    Bukkit.getLogger().log(Level.SEVERE, "ItemHelper.getItemFromDescription " + information, e);
+                    Bukkit.getLogger().log(Level.SEVERE, "ItemHelper.getItemFromDescription (" + information + ")", e);
                     return notFoundDefault;
                 }
                 // setup prefix
@@ -523,16 +527,25 @@ public class ItemHelper {
         Set<String> attributes = attributeSection.getKeys(false);
         String[] attributeLoreOrder = {
                 // usually found in weapon lore
-                "damage", "knockback", "crit", "useTime", "manaUse", "armorPenetration", "powerPickaxe", "reachExtra",
+                "damage", "knockback", "crit", "critDamage", "useTime", "manaUse",
+                "armorPenetration", "powerPickaxe", "fishingPower", "reachExtra",
                 // multipliers, usually found in armor/accessory lore
-                "damageTakenMulti", "damageContactTakenMulti", "damageMulti", "damageMeleeMulti", "damageRangedMulti", "damageMagicMulti", "damageSummonMulti", "damageArrowMulti", "damageBulletMulti", "damageRocketMulti", "damageTrueMeleeMulti",
-                "manaUseMulti", "ammoConsumptionRate", "arrowConsumptionRate", "mobSpawnRateMulti", "speedMulti", "meleeReachMulti", "regenMulti",
-                "useSpeedMulti", "useSpeedMagicMulti", "useSpeedMeleeMulti", "useSpeedRangedMulti", "knockbackMeleeMulti", "projectileSpeedArrowMulti",
-                "maxMana", "regen", "manaRegen", "critMelee", "critMagic", "critRanged", "critTrueMelee",
+                "damageTakenMulti", "damageContactTakenMulti",
+                "damageMulti", "damageMeleeMulti", "damageRangedMulti", "damageMagicMulti",
+                "damageSummonMulti", "damageArrowMulti", "damageBulletMulti", "damageRocketMulti", "damageTrueMeleeMulti",
+                "manaUseMulti", "ammoConsumptionRate", "arrowConsumptionRate", "mobSpawnRateMulti",
+                "speedMulti", "flightTimeMulti", "meleeReachMulti", "regenMulti", "maxHealthMulti",
+                "useSpeedMulti", "useSpeedMagicMulti", "useSpeedMeleeMulti", "useSpeedRangedMulti", "useSpeedMiningMulti",
+                "knockbackMeleeMulti", "projectileSpeedArrowMulti",
+                // mana/health/crit/regen
+                "maxMana", "maxHealth", "regen", "manaRegen", "critMelee", "critMagic", "critRanged", "critTrueMelee",
                 // other attributes usually found in armor/accessory lore
                 "defence", "invulnerabilityTick", "minionLimit", "sentryLimit", "mobLimit", "knockbackResistance",
                 // these attributes are not displayed; however, they are put in this list to prevent sending warning message.
-                "damageType", "buffInflictMelee", "bounce", "projectileSpeed", "projectileSpeedMulti", "penetration",
+                "damageType", "fishingHooks",
+                "buffInflict", "buffInflictMagic", "buffInflictMelee", "buffInflictRanged",
+                "buffInflictSummon", "buffInflictTrueMelee", "buffImmune",
+                "bounce", "projectileSpeed", "projectileSpeedMulti", "penetration",
         };
         // send warning message if the attribute is not handled
         for (String attribute : attributes) {
@@ -616,9 +629,11 @@ public class ItemHelper {
                     result.add("无视敌人" + penetration + "防御");
                     break;
                 }
-                case "powerPickaxe": {
+                case "powerPickaxe":
+                case "fishingPower": {
                     int power = attributeSection.getInt(attribute, 0);
-                    result.add(power + "% 镐力");
+                    String suffixName = attribute.equals("powerPickaxe") ? "镐力" : "渔力";
+                    result.add(power + "% " + suffixName);
                     break;
                 }
                 case "reachExtra": {
@@ -644,6 +659,11 @@ public class ItemHelper {
                 case "maxMana": {
                     int amount = attributeSection.getInt(attribute, 0);
                     result.add((amount > 0 ? "+" : "") + amount + " 魔力上限");
+                    break;
+                }
+                case "maxHealth": {
+                    int amount = attributeSection.getInt(attribute, 0);
+                    result.add(amount + " 最大生命值");
                     break;
                 }
                 case "regen": {
@@ -692,7 +712,7 @@ public class ItemHelper {
                     break;
                 }
                 case "mobLimit": {
-                    if (attributeSection.getDouble(attribute, 0) < 0) result.add("增加最高刷怪量");
+                    if (attributeSection.getDouble(attribute, 0) > 0) result.add("增加最高刷怪量");
                     else result.add("减少最高刷怪量");
                     break;
                 }
@@ -704,11 +724,18 @@ public class ItemHelper {
                     break;
                 }
                 // these attributes are not shown.
+                case "fishingHooks":
                 case "damageType":
                 case "bounce":
                 case "projectileSpeed":
                 case "penetration":
+                case "buffInflict":
+                case "buffInflictMagic":
                 case "buffInflictMelee":
+                case "buffInflictRanged":
+                case "buffInflictSummon":
+                case "buffInflictTrueMelee":
+                case "buffImmune":
                     break;
                 // multiplier-style attributes
                 default:

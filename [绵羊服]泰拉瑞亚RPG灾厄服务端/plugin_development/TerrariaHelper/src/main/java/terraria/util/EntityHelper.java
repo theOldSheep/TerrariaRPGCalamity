@@ -411,7 +411,8 @@ public class EntityHelper {
                 case "ammoConsumptionRate":
                 case "arrowConsumptionRate":
                 case "manaUseMulti":
-                case "mobSpawnRateMulti": {
+                case "mobSpawnRateMulti":
+                case "speedMulti": {
                     value_number = 1 + value_number;
                     if (addOrRemove)
                         attrMap.put(key, (attrMap.getOrDefault(key, 1d)) * value_number);
@@ -620,6 +621,7 @@ public class EntityHelper {
         ArrayList<PotionEffectType> result = new ArrayList<>(3);
         switch (effect) {
             case "阻塞":
+            case "瘟疫狂暴":
                 result.add(PotionEffectType.BLINDNESS);
                 break;
             case "鱼鳃":
@@ -630,6 +632,7 @@ public class EntityHelper {
                 break;
             case "隐身":
                 result.add(PotionEffectType.INVISIBILITY);
+                break;
         }
         return result;
     }
@@ -723,15 +726,24 @@ public class EntityHelper {
     }
     private static void endTickEffect(Entity entity, String effect, HashMap<String, Integer> allEffects, boolean removeEffectOnStop) {
         try {
+            String effectPath = "effects." + effect;
+            ConfigurationSection effectSection = TerrariaHelper.buffConfig.getConfigurationSection(effectPath);
+            // if the effect should be removed from metadata
             // this is to prevent removing effect from a player logging out
-            if (removeEffectOnStop) allEffects.remove(effect);
+            if (removeEffectOnStop) {
+                allEffects.remove(effect);
+                // as the original effect is removed, apply subsequent effect if available
+                String effectToApply = effectSection.getString("buffOnTimeout");
+                if (effectToApply != null) {
+                    applyEffect(entity, effectToApply, effectSection.getInt("buffOnTimeoutDuration", 200));
+                }
+            }
             // tweak attribute if the entity is alive
             if (entity instanceof Player)
                 PlayerHelper.setupAttribute((Player) entity);
             else if (!entity.isDead()) {
-                String attributesPath = "effects." + effect + ".attributes.";
-                ConfigurationSection effectSection = TerrariaHelper.buffConfig.getConfigurationSection(attributesPath);
-                tweakAllAttributes(entity, effectSection, false);
+                ConfigurationSection effectAttributeSection = effectSection.getConfigurationSection("attributes");
+                tweakAllAttributes(entity, effectAttributeSection, false);
             }
             // remove the buff applied if the entity is a player
             if (entity instanceof Player) {
@@ -770,7 +782,7 @@ public class EntityHelper {
             Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] prepareTickEffect", e);
         }
     }
-    public static void applyEffect(Entity entity, String effect, int durationTicks) {
+    public static void applyEffect(Entity entity, String effect, int applyDurationTicks) {
         try {
             // if the buff is not in config, do not do anything
             if (!TerrariaHelper.buffConfig.contains("effects." + effect)) return;
@@ -788,18 +800,18 @@ public class EntityHelper {
                 if (allEffects.containsKey(effectInferior)) allEffects.put(effectInferior, 0);
             // apply the buff
             for (PotionEffectType effectInflict : getVanillaEffectInflict(effect))
-                ((LivingEntity) entity).addPotionEffect(new PotionEffect(effectInflict, durationTicks, 0), true);
+                ((LivingEntity) entity).addPotionEffect(new PotionEffect(effectInflict, applyDurationTicks, 0), true);
             // tweak duration of some special effects
             int finalDurationTicks;
             int currentDurationTicks = allEffects.getOrDefault(effect, 0);
             switch (effect) {
                 case "护甲损伤":
-                    finalDurationTicks = currentDurationTicks + durationTicks;
+                    finalDurationTicks = currentDurationTicks + applyDurationTicks;
                     break;
                 case "魔力烧蚀":
                 case "魔力疾病":
-                    finalDurationTicks = currentDurationTicks + durationTicks;
-                    if (finalDurationTicks > 400 && durationTicks < 400) finalDurationTicks = 400;
+                    finalDurationTicks = currentDurationTicks + applyDurationTicks;
+                    if (finalDurationTicks > 400 && applyDurationTicks < 400) finalDurationTicks = 400;
                     break;
                 case "破晓":
                 case "伤害星云":
@@ -808,19 +820,26 @@ public class EntityHelper {
                     int maxLevel = getEffectLevelMax(effect),
                             levelTime = getEffectLevelDuration(effect);
                     int currentLevel = getEffectLevel(effect, currentDurationTicks);
-                    int applyLevel = getEffectLevel(effect, durationTicks);
+                    int applyLevel = getEffectLevel(effect, applyDurationTicks);
                     if (applyLevel > currentLevel)
                         finalDurationTicks = Math.min(currentLevel + 1, maxLevel) * levelTime;
                     else
                         finalDurationTicks = currentLevel * levelTime;
                     break;
                 }
-                case "钨钢屏障": {
-                    finalDurationTicks = durationTicks;
+                // if the effect is active, the lower amount will be taken; otherwise the buff is applied.
+                case "钨钢屏障":
+                case "血肉图腾":
+                case "硫火狂怒":
+                case "瘟疫狂暴": {
+                    if (allEffects.containsKey(effect))
+                        finalDurationTicks = Math.min(currentDurationTicks, applyDurationTicks);
+                    else
+                        finalDurationTicks = applyDurationTicks;
                     break;
                 }
                 default:
-                    finalDurationTicks = Math.max(currentDurationTicks, durationTicks);
+                    finalDurationTicks = Math.max(currentDurationTicks, applyDurationTicks);
             }
             // record effect info
             allEffects.put(effect, finalDurationTicks);
@@ -856,7 +875,7 @@ public class EntityHelper {
         dm = dm.replaceAll("<victim>", v.getName());
         Bukkit.broadcastMessage("§4" + dm);
     }
-    public static boolean entityDamageEvent(Entity damager, Entity dPly, LivingEntity victim, LivingEntity damageTaker, double dmg,
+    public static boolean entityDamageEvent(Entity damager, Entity damageSource, LivingEntity victim, LivingEntity damageTaker, double dmg,
                                             DamageType damageType, DamageReason damageReason) {
         if (damager == null) return true;
         String nameV = GenericHelper.trimText(victim.getName());
@@ -878,18 +897,18 @@ public class EntityHelper {
         // special victim behaviour
         switch (nameV) {
             case "史莱姆王": {
-                if (dPly instanceof Player) {
+                if (damageSource instanceof Player) {
                     MonsterHelper.spawnMob(Math.random() < 0.1 ? "尖刺史莱姆" : "史莱姆",
-                            victim.getLocation(), (Player) dPly);
+                            victim.getLocation(), (Player) damageSource);
                 }
                 break;
             }
             case "毁灭者": {
-                if (dPly instanceof Player) {
+                if (damageSource instanceof Player) {
                     if (victim.getScoreboardTags().contains("hasProbe") && Math.random() < 0.25) {
                         victim.setCustomName("毁灭者" + ChatColor.COLOR_CHAR + "4");
                         victim.removeScoreboardTag("hasProbe");
-                        MonsterHelper.spawnMob("探测怪", victim.getLocation(), (Player) dPly);
+                        MonsterHelper.spawnMob("探测怪", victim.getLocation(), (Player) damageSource);
                     }
                 }
                 break;
@@ -952,8 +971,47 @@ public class EntityHelper {
                 PlayerHelper.restoreMana(vPly, recovery);
             }
             String victimPlayerArmorSet = PlayerHelper.getArmorSet(vPly);
-            if (victimPlayerArmorSet.equals("耀斑套装") && damageType == DamageType.MELEE) {
-                handleDamage(damageTaker, damager, Math.min(Math.max(dmg, 300), 1500), DamageReason.THORN);
+            switch (victimPlayerArmorSet) {
+                case "耀斑套装": {
+                    if (damageType == DamageType.MELEE) {
+                        handleDamage(damageTaker, damager, Math.min(Math.max(dmg, 300), 1500), DamageReason.THORN);
+                    }
+                    break;
+                }
+                case "掠夺者坦克套装": {
+                    if (Math.random() < 0.25)
+                        applyEffect(damageTaker, "掠夺者之怒", 60);
+                    handleDamage(damageTaker, damager, Math.min(Math.max(dmg, 100), 500), DamageReason.THORN);
+                    break;
+                }
+            }
+        }
+        // player damage other entity
+        if (damageSource instanceof Player) {
+            Player dPly = (Player) damageSource;
+            String armorSet = PlayerHelper.getArmorSet(dPly);
+            if (damageType == DamageType.MAGIC && !(damageReason == DamageReason.SPECTRE)) {
+                PlayerHelper.playerMagicArmorSet(dPly, victim, dmg);
+            }
+            else if (damageType == DamageType.MELEE && armorSet.equals("渊泉近战套装")) {
+                String coolDownTag = "temp_hydroThermicFireball";
+                if (! dPly.getScoreboardTags().contains(coolDownTag)) {
+                    // cool down
+                    handleEntityTemporaryScoreboard(dPly, coolDownTag, 30);
+                    // damage setup
+                    EntityPlayer dPlyNMS = ((CraftPlayer) dPly).getHandle();
+                    HashMap<String, Double> fireballAttrMap = (HashMap<String, Double>) getAttrMap(damager).clone();
+                    double fireballDmg = Math.min(90, fireballAttrMap.getOrDefault("damage", 100d) * 0.15);
+                    fireballAttrMap.put("damage", fireballDmg);
+                    // projectiles
+                    for (int i = 0; i < 3; i ++) {
+                        Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                dPlyNMS.yaw + Math.random() * 10 - 5, dPlyNMS.pitch + Math.random() * 10 - 5);
+                        projVel.multiply(1.5);
+                        EntityHelper.spawnProjectile(dPly, projVel,
+                                fireballAttrMap, EntityHelper.DamageType.MELEE, "小熔岩火球");
+                    }
+                }
             }
         }
         // thorn effect
@@ -964,9 +1022,6 @@ public class EntityHelper {
         if (victim.getScoreboardTags().contains("destroyOnDamage")) {
             victim.remove();
             return false;
-        }
-        if (dPly instanceof Player && damageType == DamageType.MAGIC && !(damageReason == DamageReason.SPECTRE)) {
-            PlayerHelper.playerMagicArmorSet((Player) dPly, victim, dmg);
         }
         return true;
     }
@@ -1303,7 +1358,7 @@ public class EntityHelper {
     public static String getInvulnerabilityTickName(DamageType damageType) {
         return "tempDamageCD_" + damageType;
     }
-    public static void handleEntityInvulnerabilityTicks(Entity entity, String damageInvincibilityFrameName, int damageInvulnerabilityTicks) {
+    public static void handleEntityTemporaryScoreboard(Entity entity, String damageInvincibilityFrameName, int damageInvulnerabilityTicks) {
         if (damageInvulnerabilityTicks > 0) {
             // apply the invulnerability tick
             entity.addScoreboardTag(damageInvincibilityFrameName);
@@ -1582,47 +1637,51 @@ public class EntityHelper {
                 case TRUE_MELEE:
                     damageTakenMulti *= victimAttrMap.getOrDefault("damageContactTakenMulti", 1d);
                     if (hasEffect(victim, "血肉图腾"))
-                        applyEffect(victim, "血肉图腾冷却", 400);
+                        applyEffect(victim, "血肉图腾", 0);
             }
             dmg *= Math.random() * 0.3 + 0.85;
-            if (isMinionDmg) {
-                MetadataValue temp;
-                temp = getMetadata(victim, MetadataName.MINION_WHIP_BONUS_DAMAGE);
-                double dmgBonus = temp != null ? temp.asDouble() : 0;
-                dmg += dmgBonus;
-                temp = getMetadata(victim, MetadataName.MINION_WHIP_BONUS_CRIT);
-                critRate += temp != null ? temp.asDouble() : 0;
-                // on-hit effects from accessory
-                if (damagerAccessories.contains("神圣符文")) {
-                    double rdm = Math.random();
-                    if (rdm < 0.3333)
-                        EntityHelper.applyEffect(damageSource, "神圣之辉", 20);
-                    else if (rdm < 0.6666)
-                        EntityHelper.applyEffect(damageSource, "神圣之佑", 20);
-                    else
-                        EntityHelper.applyEffect(damageSource, "神圣之力", 20);
-                }
-                else if (damagerAccessories.contains("灵魂浮雕")) {
-                    double rdm = Math.random();
-                    if (rdm < 0.3333)
-                        EntityHelper.applyEffect(damageSource, "灵魂恢复", 20);
-                    else if (rdm < 0.6666)
-                        EntityHelper.applyEffect(damageSource, "灵魂防御", 20);
-                    else
-                        EntityHelper.applyEffect(damageSource, "灵魂力量", 20);
-                }
-            }
+            // extra tweak on damage when victim is not a player
             if (!(victim instanceof Player)) {
+                // minion damage effects and whips
+                if (isMinionDmg) {
+                    MetadataValue temp;
+                    temp = getMetadata(victim, MetadataName.MINION_WHIP_BONUS_DAMAGE);
+                    double dmgBonus = temp != null ? temp.asDouble() : 0;
+                    dmg += dmgBonus;
+                    temp = getMetadata(victim, MetadataName.MINION_WHIP_BONUS_CRIT);
+                    critRate += temp != null ? temp.asDouble() : 0;
+                    // on-hit effects from accessory
+                    if (damagerAccessories.contains("神圣符文")) {
+                        double rdm = Math.random();
+                        if (rdm < 0.3333)
+                            EntityHelper.applyEffect(damageSource, "神圣之辉", 20);
+                        else if (rdm < 0.6666)
+                            EntityHelper.applyEffect(damageSource, "神圣之佑", 20);
+                        else
+                            EntityHelper.applyEffect(damageSource, "神圣之力", 20);
+                    }
+                    else if (damagerAccessories.contains("灵魂浮雕")) {
+                        double rdm = Math.random();
+                        if (rdm < 0.3333)
+                            EntityHelper.applyEffect(damageSource, "灵魂恢复", 20);
+                        else if (rdm < 0.6666)
+                            EntityHelper.applyEffect(damageSource, "灵魂防御", 20);
+                        else
+                            EntityHelper.applyEffect(damageSource, "灵魂力量", 20);
+                    }
+                }
                 // crit to non-player victims
                 if (Math.random() * 100 < critRate) {
                     crit = true;
                     dmg *= 1 + (damagerAttrMap.getOrDefault("critDamage", 1d) / 100);
                 }
-            } else {
+            }
+            // extra tweak on damage when victim is a player
+            else {
                 // crit to player due to blood pact
                 if (victimAccessories.contains("血契") && Math.random() < 0.25) {
                     crit = true;
-                    dmg *= 2.25;
+                    dmg *= 1.75;
                 }
 
                 // paladin shield, only applies to player victims
@@ -1657,7 +1716,7 @@ public class EntityHelper {
                 damageShield -= damageBlock;
                 dmg -= damageBlock;
                 if (damageShield <= 0)
-                    applyEffect(victim, "保护矩阵充能", 400);
+                    applyEffect(victim, "钨钢屏障", 0);
                 else
                     applyEffect(victim, "钨钢屏障", damageShield * 20);
             }
@@ -1746,7 +1805,7 @@ public class EntityHelper {
         }
 
         // handle invincibility ticks
-        handleEntityInvulnerabilityTicks(victim, damageInvincibilityFrameName, damageInvulnerabilityTicks);
+        handleEntityTemporaryScoreboard(victim, damageInvincibilityFrameName, damageInvulnerabilityTicks);
     }
     public static void handleEntityExplode(Entity source, Collection<Entity> damageExceptions) {
         handleEntityExplode(source, damageExceptions, source.getLocation());

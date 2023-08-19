@@ -212,16 +212,6 @@
   - §r右键土壤可以播撒邪恶
   worth: 10000
   rarity: 0
-钨钢金属废料:
-  item: CLAY_BALL
-  worth: 8000
-  rarity: 1
-能源核心:
-  item: CLAY_BALL
-  lore:
-  - §r能量在其中脉动
-  worth: 8000
-  rarity: 1
 骨头:
   item: BONE
   worth: 1000
@@ -313,6 +303,10 @@
   - §r“腐化之地的地表生物有时会携带”
   worth: 90000
   rarity: 2
+禁戒碎片:
+  item: CLAY_BALL
+  worth: 1000000
+  rarity: 5
 光明之魂:
   item: NETHER_STAR
   lore:
@@ -331,6 +325,10 @@
   - §r“强大飞行生物的精华”
   worth: 20000
   rarity: 3
+纳米机器人:
+  item: CLAY_BALL
+  worth: 30000
+  rarity: 0
 日耀碑牌碎片:
   item: CLAY_BALL
   rarity: 8
@@ -344,12 +342,331 @@
   lore:
   - §r放置后破坏以转化为普通木材
   rarity: 0
+钨钢金属废料:
+  item: CLAY_BALL
+  worth: 8000
+  rarity: 1
+能源核心:
+  item: CLAY_BALL
+  lore:
+  - §r能量在其中脉动
+  worth: 8000
+  rarity: 1
+可疑镀层:
+  item: CLAY_BALL
+  worth: 60000
+  rarity: 1100
+神秘电路:
+  item: CLAY_BALL
+  worth: 60000
+  rarity: 1100
 荒漠之羽:
   item: FEATHER
   lore:
   - §r秃鹫的羽毛
   worth: 2000
   rarity: 3
+珍珠碎片:
+  item: IRON_INGOT
+  worth: 30000
+  rarity: 1
+珊瑚:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 0
+海星:
+  item: CLAY_BALL
+  rarity: 0
+贝壳:
+  item: CLAY_BALL
+  rarity: 0
+风暴之颚:
+  item: IRON_INGOT
+  worth: 14000
+  rarity: 1
+腐烂物质:
+  item: CLAY_BALL
+  worth: 100000
+  rarity: 1
+纯净凝胶:
+  item: CLAY_BALL
+  worth: 500000
+  rarity: 4
+软体动物外壳:
+  item: CLAY_BALL
+  lore:
+  - §r软体动物的遗留物
+  worth: 600000
+  rarity: 5
+冰川精华:
+  item: CLAY_BALL
+  lore:
+  - §r寒冰生命之精华
+  worth: 400000
+  rarity: 4
+日光精华:
+  item: CLAY_BALL
+  lore:
+  - §r天空，圣光及沙暴生命之精华
+  worth: 400000
+  rarity: 4
+混乱精华:
+  item: CLAY_BALL
+  lore:
+  - §r混沌生命之精华
+  worth: 400000
+  rarity: 4
+星尘:
+  item: CLAY_BALL
+  lore:
+  - §r“荣耀永远属于星尘十字军”
+  worth: 30000
+  rarity: 4
+灾厄尘:
+  item: CLAY_BALL
+  lore:
+  - §r它散发着诡异的温度
+  worth: 900000
+  rarity: 7
+大狂鲨鳞:
+  item: CLAY_BALL
+  lore:
+  - §r顶级捕食者的巨大鳞片
+  worth: 900000
+  rarity: 7
+生命碎片:
+  item: CLAY_BALL
+  worth: 800000
+  rarity: 7
+瘟疫细胞罐:
+  item: CLAY_BALL
+  worth: 1000000
+  rarity: 8
+瘟疫装甲镀层:
+  item: CLAY_BALL
+  worth: 1000000
+  rarity: 8
+冥思溶剂:
+  item: CLAY_BALL
+  worth: 200000
+  rarity: 9
+海洋残渣:
+  item: CLAY_BALL
+  worth: 60000
+  rarity: 1
+污痕核心:
+  item: CLAY_BALL
+  worth: 800000
+  rarity: 5
+冰川核心:
+  item: CLAY_BALL
+  worth: 400000
+  rarity: 8
+日光核心:
+  item: CLAY_BALL
+  worth: 400000
+  rarity: 8
+混乱核心:
+  item: CLAY_BALL
+  worth: 400000
+  rarity: 8
+灾劫核心:
+  item: CLAY_BALL
+  worth: 4000000
+  rarity: 8
+生命合金:
+  item: CLAY_BALL
+  worth: 3000000
+  rarity: 8
+星系异石:
+  item: CLAY_BALL
+  lore:
+  - §r“异石一个，一个一个一个”
+  worth: 960000
+  rarity: 10
+冥思构造体:
+  item: CLAY_BALL
+  worth: 1200000
+  rarity: 9
+海棱晶:
+  item: CLAY_BALL
+  worth: 100000
+  rarity: 1
+棱晶碎片:
+  item: CLAY_BALL
+  worth: 30000
+  rarity: 1
+陨星矿:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 0
+陨星锭:
+  item: IRON_INGOT
+  worth: 60000
+  rarity: 0
+铜锭:
+  item: IRON_INGOT
+  worth: 15000
+  rarity: 0
+铜矿石:
+  item: CLAY_BALL
+  worth: 5000
+  rarity: 0
+铁锭:
+  item: IRON_INGOT
+  worth: 30000
+  rarity: 0
+铁矿石:
+  item: CLAY_BALL
+  worth: 10000
+  rarity: 0
+银锭:
+  item: IRON_INGOT
+  worth: 60000
+  rarity: 0
+银矿石:
+  item: CLAY_BALL
+  worth: 15000
+  rarity: 0
+金锭:
+  item: GOLD_INGOT
+  worth: 120000
+  rarity: 0
+金矿石:
+  item: CLAY_BALL
+  worth: 30000
+  rarity: 0
+恶魔锭:
+  item: IRON_INGOT
+  worth: 300000
+  rarity: 1
+恶魔矿:
+  item: CLAY_BALL
+  worth: 100000
+  rarity: 1
+狱炎锭:
+  item: IRON_INGOT
+  worth: 400000
+  rarity: 2
+狱炎矿:
+  item: CLAY_BALL
+  worth: 25000
+  rarity: 2
+天蓝锭:
+  item: IRON_INGOT
+  worth: 300000
+  rarity: 3
+天蓝矿:
+  item: CLAY_BALL
+  worth: 60000
+  rarity: 3
+钴锭:
+  item: IRON_INGOT
+  worth: 210000
+  rarity: 3
+钴矿:
+  item: CLAY_BALL
+  worth: 70000
+  rarity: 3
+秘银锭:
+  item: IRON_INGOT
+  worth: 440000
+  rarity: 3
+秘银矿:
+  item: CLAY_BALL
+  worth: 110000
+  rarity: 3
+精金锭:
+  item: IRON_INGOT
+  worth: 750000
+  rarity: 3
+精金矿:
+  item: CLAY_BALL
+  worth: 150000
+  rarity: 3
+焦炭矿:
+  item: CLAY_BALL
+  worth: 120000
+  rarity: 5
+寒元锭:
+  item: IRON_INGOT
+  worth: 600000
+  rarity: 5
+寒元矿:
+  item: CLAY_BALL
+  worth: 120000
+  rarity: 5
+神圣锭:
+  item: IRON_INGOT
+  worth: 400000
+  rarity: 6
+叶绿矿:
+  item: CLAY_BALL
+  lore:
+  - §r右键丛林洞穴层的石头可以把它埋进去
+  - §r在丛林洞穴层时会缓慢同化附近的石头
+  worth: 150000
+  rarity: 7
+叶绿锭:
+  item: IRON_INGOT
+  worth: 900000
+  rarity: 7
+永恒锭:
+  item: IRON_INGOT
+  worth: 1000000
+  rarity: 7
+永恒矿:
+  item: CLAY_BALL
+  worth: 180000
+  rarity: 7
+幽灵锭:
+  item: IRON_INGOT
+  worth: 1000000
+  rarity: 7
+蘑菇锭:
+  item: IRON_INGOT
+  worth: 1000000
+  rarity: 7
+熔渣锭:
+  item: IRON_INGOT
+  lore:
+  - §r冒出来的烟尚有余温
+  worth: 1200000
+  rarity: 8
+熔渣矿:
+  item: CLAY_BALL
+  worth: 240000
+  rarity: 8
+炫星锭:
+  item: IRON_INGOT
+  worth: 1200000
+  rarity: 9
+炫星矿:
+  item: CLAY_BALL
+  worth: 360000
+  rarity: 9
+夜明锭:
+  item: IRON_INGOT
+  lore:
+  - §r它汇聚了闪耀的天界能量
+  worth: 1200000
+  rarity: 10
+夜明矿:
+  item: CLAY_BALL
+  lore:
+  - §r天堂卵石
+  worth: 300000
+  rarity: 10
+新手礼包:
+  item: LEATHER
+  lore:
+  - §r在背包里右键打开获得你的新手物资
+  rarity: 2
+血肉晶簇:
+  item: LEATHER
+  lore:
+  - §r右键打开，可以获得各种锭以及核心
+  rarity: 8
 专家模式福袋:
   item: LEATHER
   lore:
@@ -650,8 +967,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  attributes:
-    damageTakenMulti: -0.15
+  - §r生命值低于一半时减少受到的伤害
   worth: 4500000
   rarity: 5
 孢子囊:
@@ -685,9 +1001,9 @@
   - §r-> 受到相当于本次伤害5%的真实伤害
   - §r-> 使本次伤害降低15%
   - §r你受到的伤害无法被其他玩家以此方式减少
+  - §r生命值低于一半时减少受到的伤害
   attributes:
     defence: 12
-    damageTakenMulti: -0.1
     knockbackResistance: 1
   worth: 10000000
   rarity: 5
@@ -1478,9 +1794,8 @@
   - §r[饰品]
   - §6专家模式物品
   - §r广大泰拉玩家的精神结晶
-  - §r在最早时期你会获得所有属性的微量增幅
+  - §r在最早时期你会获得多个属性的少量增幅
   - §r击败里程碑级别的BOSS后增幅更加强力
-  - §r减少伤害性减益造成的伤害
   - §r感谢众多支持者的努力，让泰拉瑞亚以及灾厄成为现实
   worth: 12000000
   rarity: 1000
@@ -4427,7 +4742,7 @@
     damageType: Arrow
     crit: 14
     projectileSpeed: 12
-    projectileSpeedMulti: 3
+    projectileSpeedMulti: 2
     knockback: 11
     useTime: 12
   worth: 10000000
@@ -4441,7 +4756,7 @@
     damageType: Arrow
     crit: 4
     projectileSpeed: 3
-    projectileSpeedMulti: 3
+    projectileSpeedMulti: 2
     knockback: 4.5
   worth: 300
   rarity: 0
@@ -6554,6 +6869,7 @@ P90:
   lore:
   - §r在你的头顶召唤一朵冰霜之花
   - §r同时只能存在至多一朵冰霜之花
+  - §r“要三连啊”
   attributes:
     damage: 20
     damageType: Summon
@@ -7221,7 +7537,7 @@ P90:
     crit: 4
     knockback: 4
     projectileSpeed: 0.5
-    projectileSpeedMulti: 2
+    projectileSpeedMulti: 1
   worth: 2000
   rarity: 1
 狱炎箭:
@@ -7242,7 +7558,7 @@ P90:
     crit: 4
     knockback: 2.2
     projectileSpeed: 3.75
-    projectileSpeedMulti: 2
+    projectileSpeedMulti: 1
   worth: 300
   rarity: 0
 圣箭:
@@ -7277,7 +7593,7 @@ P90:
     crit: 4
     knockback: 3.5
     projectileSpeed: 4.5
-    projectileSpeedMulti: 2
+    projectileSpeedMulti: 1
   worth: 2000
   rarity: 7
 毒液箭:
@@ -7290,7 +7606,7 @@ P90:
     crit: 4
     knockback: 4.2
     projectileSpeed: 4.3
-    projectileSpeedMulti: 2
+    projectileSpeedMulti: 1
   worth: 1800
   rarity: 3
 夜明箭:
@@ -7303,9 +7619,60 @@ P90:
     crit: 4
     knockback: 3.5
     projectileSpeed: 3
-    projectileSpeedMulti: 2
+    projectileSpeedMulti: 1
   worth: 200
   rarity: 9
+北极箭:
+  item: ARROW
+  lore:
+  - §r冰冷刺骨的箭矢
+  attributes:
+    damage: 36
+    damageType: Arrow
+    crit: 4
+    knockback: 1.5
+    projectileSpeed: 13
+  worth: 1200
+  rarity: 3
+冰坠箭:
+  item: ARROW
+  lore:
+  - §r命中后碎裂
+  attributes:
+    damage: 30
+    damageType: Arrow
+    crit: 4
+    knockback: 2.5
+    projectileSpeed: 1
+    projectileSpeedMulti: 1
+  worth: 1600
+  rarity: 6
+汽油箭:
+  item: ARROW
+  lore:
+  - §r爆裂出火星子
+  - §r“你就像那，一把火~”
+  attributes:
+    damage: 22
+    damageType: Arrow
+    crit: 4
+    knockback: 1.5
+    projectileSpeed: 13
+  worth: 20000
+  rarity: 3
+泰拉箭:
+  item: ARROW
+  lore:
+  - §r高速移动并爆裂成更多箭
+  attributes:
+    damage: 30
+    damageType: Arrow
+    crit: 4
+    knockback: 1.5
+    projectileSpeed: 15
+    projectileSpeedMulti: 1
+  worth: 2000
+  rarity: 7
 火枪子弹:
   item: SLIME_BALL
   attributes:
@@ -7346,7 +7713,7 @@ P90:
     crit: 4
     knockback: 6.6
     projectileSpeed: 4.7
-    projectileSpeedMulti: 3
+    projectileSpeedMulti: 2
   worth: 800
   rarity: 3
 绿藻弹:
@@ -7360,7 +7727,7 @@ P90:
     crit: 4
     knockback: 2
     projectileSpeed: 5
-    projectileSpeedMulti: 3
+    projectileSpeedMulti: 2
   worth: 1000
   rarity: 7
 水晶子弹:
@@ -7373,7 +7740,7 @@ P90:
     crit: 4
     knockback: 1
     projectileSpeed: 5
-    projectileSpeedMulti: 2
+    projectileSpeedMulti: 1
   worth: 600
   rarity: 3
 诅咒弹:
@@ -7384,7 +7751,7 @@ P90:
     crit: 4
     knockback: 4
     projectileSpeed: 5
-    projectileSpeedMulti: 3
+    projectileSpeedMulti: 2
   worth: 600
   rarity: 3
 毒液弹:
@@ -7397,7 +7764,7 @@ P90:
     crit: 4
     knockback: 4.1
     projectileSpeed: 5.3
-    projectileSpeedMulti: 3
+    projectileSpeedMulti: 2
   worth: 800
   rarity: 3
 夜明弹:
@@ -7410,9 +7777,105 @@ P90:
     crit: 4
     knockback: 3
     projectileSpeed: 2
-    projectileSpeedMulti: 6
+    projectileSpeedMulti: 5
   worth: 200
   rarity: 9
+加速弹:
+  item: SLIME_BALL
+  lore:
+  - §r速度随时间加快
+  - §r“速~~度加快~速~~度加快~”
+  attributes:
+    damage: 22
+    damageType: Bullet
+    crit: 4
+    knockback: 1.25
+    projectileSpeed: 1
+    projectileSpeedMulti: 3
+  worth: 5000
+  rarity: 1
+鼠疫弹:
+  item: SLIME_BALL
+  lore:
+  - §r无视敌人的部分防御
+  attributes:
+    armorPenetration: 35
+    damage: 40
+    damageType: Bullet
+    crit: 4
+    knockback: 1.5
+    projectileSpeed: 10
+    projectileSpeedMulti: 3
+  worth: 25000
+  rarity: 8
+海伯里斯弹:
+  item: SLIME_BALL
+  lore:
+  - §r你的敌人不会好过了...
+  - §r击中敌人后产生额外弹幕
+  attributes:
+    damage: 36
+    damageType: Bullet
+    crit: 4
+    knockback: 1.5
+    projectileSpeed: 16
+    projectileSpeedMulti: 3
+  worth: 1600
+  rarity: 9
+冰砾弹:
+  item: SLIME_BALL
+  lore:
+  - §r可以命中至多三次
+  - §r第三次打击分裂成碎冰
+  attributes:
+    damage: 20
+    damageType: Bullet
+    crit: 4
+    knockback: 2
+    projectileSpeed: 5
+    projectileSpeedMulti: 3
+  worth: 1600
+  rarity: 6
+弹球弹:
+  item: SLIME_BALL
+  lore:
+  - §r快速弹跳
+  attributes:
+    damage: 12
+    damageType: Bullet
+    crit: 4
+    knockback: 1.5
+    projectileSpeed: 1
+    projectileSpeedMulti: 1
+  worth: 5000
+  rarity: 2
+泰拉弹:
+  item: SLIME_BALL
+  lore:
+  - §r爆炸并分裂出死亡追踪射线
+  attributes:
+    damage: 18
+    damageType: Bullet
+    crit: 4
+    knockback: 1.25
+    projectileSpeed: 10
+    projectileSpeedMulti: 3
+  worth: 40000
+  rarity: 7
+钫弹:
+  item: SLIME_BALL
+  lore:
+  - §r你逃不掉了！
+  - §r穿透一次后获得追踪能力
+  attributes:
+    damage: 16
+    damageType: Bullet
+    crit: 4
+    knockback: 1.25
+    projectileSpeed: 16
+    projectileSpeedMulti: 1
+  worth: 10000
+  rarity: 3
 初级火箭:
   item: BLAZE_POWDER
   attributes:
@@ -8098,6 +8561,38 @@ P90:
     damageSummonMulti: 0.06
   worth: 750000
   rarity: 4
+软壳贝盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 36
+    damageMulti: 0.05
+    crit: 4
+  worth: 4800000
+  rarity: 5
+软壳贝甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 44
+    damageMulti: 0.1
+    crit: 6
+    speedMulti: -0.15
+  worth: 4800000
+  rarity: 5
+软壳护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 30
+    damageMulti: 0.12
+    crit: 4
+    speedMulti: -0.07
+  worth: 4800000
+  rarity: 5
 水晶刺客兜帽:
   item: DIAMOND_HELMET
   lore:
@@ -8276,6 +8771,129 @@ P90:
     speedMulti: 0.05
   worth: 1800000
   rarity: 4
+代达罗斯胸甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 38
+    damageMulti: 0.03
+    crit: 3
+  worth: 4800000
+  rarity: 5
+代达罗斯护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 30
+    crit: 3
+    speedMulti: 0.1
+  worth: 4800000
+  rarity: 5
+代达罗斯头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 42
+    damageMeleeMulti: 0.15
+    critMelee: 10
+  worth: 4800000
+  rarity: 5
+代达罗斯头罩:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 18
+    damageRangedMulti: 0.13
+    critRanged: 7
+    ammoConsumptionRate: -0.2
+  worth: 4800000
+  rarity: 5
+代达罗斯兜帽:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 10
+    damageMagicMulti: 0.13
+    critMagic: 7
+    manaUse: -0.1
+    maxMana: 60
+  worth: 4800000
+  rarity: 5
+代达罗斯面具:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 6
+    damageSummonMulti: 0.05
+  worth: 4800000
+  rarity: 5
+神圣头饰:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 10
+    maxMana: 100
+    damageMagicMulti: 0.12
+    crit: 12
+  worth: 5000000
+  rarity: 5
+神圣面具:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 48
+    crit: 10
+    damageMeleeMulti: 0.1
+    useSpeedMeleeMulti: 0.1
+  worth: 5000000
+  rarity: 5
+神圣头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 18
+    damageRangedMulti: 0.15
+    crit: 8
+  worth: 5000000
+  rarity: 5
+神圣兜帽:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 2
+    damageSummonMulti: 0.1
+    minionLimit: 1
+  worth: 5000000
+  rarity: 5
+神圣板甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 30
+    crit: 7
+  worth: 4000000
+  rarity: 5
+神圣护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 22
+    damageMulti: 0.07
+    speedMulti: 0.08
+  worth: 3000000
+  rarity: 5
 叶绿头饰:
   item: DIAMOND_HELMET
   lore:
@@ -8326,6 +8944,90 @@ P90:
     crit: 8
     speedMulti: 0.05
   worth: 3600000
+  rarity: 7
+硫火兜帽:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 22
+    damageMagicMulti: 0.05
+    critMagic: 5
+    maxMana: 70
+    manaUseMulti: -0.1
+  worth: 9600000
+  rarity: 7
+硫火长袍:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 30
+    damageMagicMulti: 0.05
+    critMagic: 5
+  worth: 9600000
+  rarity: 7
+硫火靴子:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 30
+    damageMagicMulti: 0.05
+    speedMulti: 0.05
+  worth: 9600000
+  rarity: 7
+掠夺者鳞甲:
+  item: GOLD_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 38
+    damageMulti: 0.09
+    crit: 4
+    maxHealth: 40
+  worth: 9600000
+  rarity: 7
+掠夺者护胫:
+  item: GOLD_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 28
+    crit: 5
+    speedMulti: 0.12
+  worth: 9600000
+  rarity: 7
+掠夺者战盔:
+  item: GOLD_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 60
+    damageTakenMulti: -0.15
+    damageMulti: -0.3
+    maxHealth: 100
+    regen: 2
+  worth: 9600000
+  rarity: 7
+掠夺者面罩:
+  item: GOLD_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 26
+    speedMulti: 0.2
+  worth: 9600000
+  rarity: 7
+掠夺者头套:
+  item: GOLD_HELMET
+  lore:
+  - §r[装备]
+  - §r“并不会死亡掉落”
+  attributes:
+    defence: 14
+    useSpeedMiningMulti: 0.25
+  worth: 9600000
   rarity: 7
 幽灵兜帽:
   item: DIAMOND_HELMET
@@ -8466,96 +9168,35 @@ P90:
     speedMulti: 0.12
   worth: 4500000
   rarity: 8
-神圣头饰:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 10
-    maxMana: 100
-    damageMagicMulti: 0.12
-    crit: 12
-  worth: 5000000
-  rarity: 5
-神圣面具:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 48
-    crit: 10
-    damageMeleeMulti: 0.1
-    useSpeedMeleeMulti: 0.1
-  worth: 5000000
-  rarity: 5
-神圣头盔:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 18
-    damageRangedMulti: 0.15
-    crit: 8
-  worth: 5000000
-  rarity: 5
-神圣兜帽:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 2
-    damageSummonMulti: 0.1
-    minionLimit: 1
-  worth: 5000000
-  rarity: 5
-神圣板甲:
-  item: DIAMOND_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 30
-    crit: 7
-  worth: 4000000
-  rarity: 5
-神圣护胫:
-  item: DIAMOND_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 22
-    damageMulti: 0.07
-    speedMulti: 0.08
-  worth: 3000000
-  rarity: 5
 寒霜头盔:
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
   attributes:
-    defence: 25
-    damageMeleeMulti: 0.2
-    damageRangedMulti: 0.2
+    defence: 40
+    damageMeleeMulti: 0.25
+    damageRangedMulti: 0.25
   worth: 5000000
-  rarity: 5
+  rarity: 8
 寒霜胸甲:
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
   attributes:
     defence: 50
-    crit: 15
+    crit: 20
   worth: 4000000
-  rarity: 5
+  rarity: 8
 寒霜护腿:
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
   attributes:
-    defence: 33
+    defence: 30
     speedMulti: 0.1
-    useSpeedMeleeMulti: 0.13
+    useSpeedMeleeMulti: 0.15
   worth: 3000000
-  rarity: 5
+  rarity: 8
 阴森头盔:
   item: LEATHER_HELMET
   lore:
@@ -8587,6 +9228,125 @@ P90:
     speedMulti: 0.2
   worth: 1000000
   rarity: 8
+渊泉盔甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 40
+    maxHealth: 40
+    damageMulti: 0.08
+    crit: 4
+  worth: 12000000
+  rarity: 8
+渊泉战裙:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 28
+    crit: 5
+    speedMulti: 0.1
+  worth: 12000000
+  rarity: 8
+渊泉战盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  - §r近战伤害造成狱炎减益
+  attributes:
+    defence: 66
+    damageMeleeMulti: 0.17
+    critMelee: 10
+    buffInflictMelee: 狱炎|30|1
+  worth: 12000000
+  rarity: 8
+渊泉头饰:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 30
+    damageRangedMulti: 0.12
+    critRanged: 10
+    ammoConsumptionRate: -0.25
+  worth: 12000000
+  rarity: 8
+渊泉面具:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 18
+    damageMagicMulti: 0.12
+    maxMana: 100
+    critMagic: 10
+  worth: 12000000
+  rarity: 8
+渊泉头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 12
+    damageSummonMulti: 0.05
+  worth: 12000000
+  rarity: 8
+瘟疫死神面罩:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 18
+    damageRangedMulti: 0.1
+    critRanged: 8
+  worth: 12000000
+  rarity: 8
+瘟疫死神夹克:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 28
+    damageRangedMulti: 0.15
+    critRanged: 5
+  worth: 12000000
+  rarity: 8
+瘟疫死神长靴:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 22
+  worth: 12000000
+  rarity: 8
+星幻头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 34
+  worth: 16000000
+  rarity: 9
+星幻胸甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 50
+    maxMana: 80
+    maxHealth: 40
+  worth: 16000000
+  rarity: 9
+星幻护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 42
+    speedMulti: 0.1
+  worth: 16000000
+  rarity: 9
 星云头盔:
   item: DIAMOND_HELMET
   lore:
@@ -8730,6 +9490,10 @@ P90:
   - §b虚空袋中的弹药将会被优先消耗
   worth: 2000000
   rarity: 3
+空瓶:
+  item: CLAY_BALL
+  worth: 400
+  rarity: 0
 弹药储备药水:
   item: CLAY_BALL
   lore:
@@ -9485,171 +10249,6 @@ P90:
   - §r“维持月亮的血腥部分”
   worth: 1000000
   rarity: 3
-陨星矿:
-  item: CLAY_BALL
-  worth: 20000
-  rarity: 0
-陨星锭:
-  item: IRON_INGOT
-  worth: 60000
-  rarity: 0
-铜锭:
-  item: IRON_INGOT
-  worth: 15000
-  rarity: 0
-铜矿石:
-  item: CLAY_BALL
-  worth: 5000
-  rarity: 0
-铁锭:
-  item: IRON_INGOT
-  worth: 30000
-  rarity: 0
-铁矿石:
-  item: CLAY_BALL
-  worth: 10000
-  rarity: 0
-银锭:
-  item: IRON_INGOT
-  worth: 60000
-  rarity: 0
-银矿石:
-  item: CLAY_BALL
-  worth: 15000
-  rarity: 0
-金锭:
-  item: GOLD_INGOT
-  worth: 120000
-  rarity: 0
-金矿石:
-  item: CLAY_BALL
-  worth: 30000
-  rarity: 0
-海洋残渣:
-  item: CLAY_BALL
-  worth: 60000
-  rarity: 1
-珍珠碎片:
-  item: IRON_INGOT
-  worth: 30000
-  rarity: 1
-珊瑚:
-  item: CLAY_BALL
-  worth: 20000
-  rarity: 0
-海星:
-  item: CLAY_BALL
-  rarity: 0
-贝壳:
-  item: CLAY_BALL
-  rarity: 0
-海棱晶:
-  item: CLAY_BALL
-  worth: 100000
-  rarity: 1
-棱晶碎片:
-  item: CLAY_BALL
-  worth: 30000
-  rarity: 1
-恶魔锭:
-  item: IRON_INGOT
-  worth: 300000
-  rarity: 1
-恶魔矿:
-  item: CLAY_BALL
-  worth: 100000
-  rarity: 1
-腐烂物质:
-  item: CLAY_BALL
-  worth: 100000
-  rarity: 1
-可疑镀层:
-  item: CLAY_BALL
-  worth: 60000
-  rarity: 1100
-神秘电路:
-  item: CLAY_BALL
-  worth: 60000
-  rarity: 1100
-狱炎锭:
-  item: IRON_INGOT
-  worth: 400000
-  rarity: 2
-狱炎矿:
-  item: CLAY_BALL
-  worth: 25000
-  rarity: 2
-天蓝锭:
-  item: IRON_INGOT
-  worth: 300000
-  rarity: 3
-天蓝矿:
-  item: CLAY_BALL
-  worth: 60000
-  rarity: 3
-纯净凝胶:
-  item: CLAY_BALL
-  worth: 500000
-  rarity: 4
-钴锭:
-  item: IRON_INGOT
-  worth: 210000
-  rarity: 3
-钴矿:
-  item: CLAY_BALL
-  worth: 70000
-  rarity: 3
-秘银锭:
-  item: IRON_INGOT
-  worth: 440000
-  rarity: 3
-秘银矿:
-  item: CLAY_BALL
-  worth: 110000
-  rarity: 3
-精金锭:
-  item: IRON_INGOT
-  worth: 750000
-  rarity: 3
-精金矿:
-  item: CLAY_BALL
-  worth: 150000
-  rarity: 3
-神圣锭:
-  item: IRON_INGOT
-  worth: 400000
-  rarity: 3
-叶绿矿:
-  item: CLAY_BALL
-  lore:
-  - §r右键丛林洞穴层的石头可以把它埋进去
-  - §r在丛林洞穴层时会缓慢同化附近的石头
-  worth: 150000
-  rarity: 7
-叶绿锭:
-  item: IRON_INGOT
-  worth: 900000
-  rarity: 7
-幽灵锭:
-  item: IRON_INGOT
-  worth: 1000000
-  rarity: 7
-蘑菇锭:
-  item: IRON_INGOT
-  worth: 1000000
-  rarity: 7
-夜明锭:
-  item: IRON_INGOT
-  lore:
-  - §r“它汇聚了闪耀的天界能量”
-  worth: 1200000
-  rarity: 10
-夜明矿:
-  item: CLAY_BALL
-  lore:
-  - §r“天堂卵石”
-  worth: 300000
-  rarity: 10
 铜币:
   item: CLAY_BALL
   worth: 100
@@ -9665,10 +10264,6 @@ P90:
 铂金币:
   item: CLAY_BALL
   worth: 100000000
-  rarity: 0
-空瓶:
-  item: CLAY_BALL
-  worth: 400
   rarity: 0
 空桶:
   item: BUCKET

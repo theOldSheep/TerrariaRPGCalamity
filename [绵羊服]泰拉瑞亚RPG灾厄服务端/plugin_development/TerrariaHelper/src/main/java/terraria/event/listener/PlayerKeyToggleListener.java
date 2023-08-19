@@ -76,6 +76,9 @@ public class PlayerKeyToggleListener implements Listener {
             case "R":
                 PlayerHelper.handleGrapplingHook(ply);
                 break;
+            case "V":
+                PlayerHelper.handleArmorSetActiveEffect(ply);
+                break;
             case "B":
                 ItemUseHelper.playerQuickUsePotion(ply, ItemUseHelper.QuickBuffType.BUFF);
                 break;

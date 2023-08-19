@@ -345,8 +345,11 @@ public class PlayerHelper {
                 return 350;
         }
     }
+    public static String getPlayerDataFilePath(Player ply) {
+        return TerrariaHelper.Constants.DATA_PLAYER_FOLDER_DIR + ply.getName() + ".yml";
+    }
     public static YmlHelper.YmlSection getPlayerDataFile(Player ply) {
-        String filePath = TerrariaHelper.Constants.DATA_PLAYER_FOLDER_DIR + ply.getName() + ".yml";
+        String filePath = getPlayerDataFilePath(ply);
         return YmlHelper.getFile(filePath);
     }
     public static boolean hasDefeated(Player player, String progressToCheck) {
@@ -561,7 +564,7 @@ public class PlayerHelper {
                                 }
                                 // equipments that provide buff
                                 case "冰冻海龟壳": {
-                                    if (health * 2 > maxHealth)
+                                    if (health * 2 < maxHealth)
                                         EntityHelper.applyEffect(ply, "冰障", 20);
                                     break;
                                 }
@@ -575,7 +578,7 @@ public class PlayerHelper {
                                 case "神之壁垒": {
                                     if (health * 4 > maxHealth)
                                         EntityHelper.applyEffect(ply, "圣骑士护盾", 20);
-                                    if (health * 2 > maxHealth)
+                                    if (health * 2 < maxHealth)
                                         EntityHelper.applyEffect(ply, "冰障", 20);
                                     break;
                                 }
@@ -1841,6 +1844,20 @@ public class PlayerHelper {
                 result.add(ItemHelper.getItemDescription(currInv.getItem(i)));
             }
             plyFile.set("inventory." + invType, result);
+        }
+    }
+    public static void handleArmorSetActiveEffect(Player ply) {
+        if (!PlayerHelper.isProperlyPlaying(ply))
+            return;
+        switch (getArmorSet(ply)) {
+            case "硫火套装": {
+                EntityHelper.applyEffect(ply, "硫火狂怒", 200);
+                break;
+            }
+            case "瘟疫死神套装": {
+                EntityHelper.applyEffect(ply, "瘟疫狂暴", 100);
+                break;
+            }
         }
     }
     public static void handleGrapplingHook(Player ply) {

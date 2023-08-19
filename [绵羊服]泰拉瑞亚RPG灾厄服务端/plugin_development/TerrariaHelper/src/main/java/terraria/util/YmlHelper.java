@@ -80,12 +80,13 @@ public class YmlHelper {
         public void saveIfModified(String path) {
             if (hasChanged) {
                 hasChanged = false;
-                if (path.startsWith(TerrariaHelper.Constants.DATA_PLAYER_FOLDER_DIR)) {
-                    try {
-                        save(path);
-                    } catch (IOException e) {
-                        Bukkit.getLogger().log(Level.SEVERE, "[YML ERROR] Cannot save into " + path, e);
-                    }
+                if (! path.startsWith(TerrariaHelper.Constants.DATA_PLAYER_FOLDER_DIR)) {
+                    Bukkit.getLogger().log(Level.INFO, "[YML INFO] aborted saving into path " + path);
+                }
+                try {
+                    save(path);
+                } catch (IOException e) {
+                    Bukkit.getLogger().log(Level.SEVERE, "[YML ERROR] Cannot save into " + path, e);
                 }
             }
         }

@@ -15,14 +15,16 @@ import terraria.util.PlayerHelper;
 import terraria.util.YmlHelper;
 import terraria.worldgen.overworld.NoiseGeneratorTest;
 
+import java.io.File;
 import java.util.*;
 
 
 public class TerrariaHelper extends JavaPlugin {
     public static class Constants {
         public static final String
-                DATA_FOLDER_DIR = "plugins/Terraria/Data/",
-                DATA_PLAYER_FOLDER_DIR = "plugins/Terraria/PlayerData/",
+                DATA_FOLDER_DIR = "plugins" + File.separator + "Terraria" + File.separator + "Data" + File.separator + "",
+                DATA_PLAYER_FOLDER_DIR = "plugins" + File.separator + "Terraria" + File.separator + "PlayerData" + File.separator + "";
+        public static final String
                 WORLD_NAME_SURFACE = "world_surface",
                 WORLD_NAME_CAVERN = "world_cavern",
                 WORLD_NAME_UNDERWORLD = "world_underworld",

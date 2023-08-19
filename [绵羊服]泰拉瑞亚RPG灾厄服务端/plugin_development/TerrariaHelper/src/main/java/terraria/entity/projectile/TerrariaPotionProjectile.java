@@ -197,6 +197,13 @@ public class TerrariaPotionProjectile extends EntityPotion {
         }
         setPosition(position.pos.x, position.pos.y, position.pos.z);
         updatePenetration(penetration - 1);
+        // special projectile
+        {
+            if (projectileType.equals("钫弹")) {
+                noAutoTraceTicks = ticksLived + 5;
+            }
+        }
+        // returns the hit location if the projectile breaks (returns null if the projectile is still alive)
         if (penetration < 0) {
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
             die();

@@ -1533,7 +1533,7 @@ P90:
   autoSwing: true
   attributes:
     damage: 200
-    useTime: 45
+    useTime: 13
   ammoConversion:
     ALL: 
     - 大号核弹

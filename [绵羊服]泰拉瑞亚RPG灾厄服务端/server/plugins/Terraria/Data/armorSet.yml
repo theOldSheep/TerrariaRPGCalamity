@@ -163,6 +163,12 @@ pieces:
   - 蜘蛛套装
   蜘蛛护胫:
   - 蜘蛛套装
+  软壳贝盔:
+  - 软壳套装
+  软壳贝甲:
+  - 软壳套装
+  软壳护胫:
+  - 软壳套装
   水晶刺客兜帽:
   - 水晶刺客套装
   水晶刺客上衣:
@@ -211,6 +217,24 @@ pieces:
   - 精金战士套装
   - 精金魔法套装
   - 精金射手套装
+  代达罗斯头盔:
+  - 代达罗斯战士套装
+  代达罗斯头罩:
+  - 代达罗斯射手套装
+  代达罗斯兜帽:
+  - 代达罗斯魔法套装
+  代达罗斯面具:
+  - 代达罗斯召唤套装
+  代达罗斯胸甲:
+  - 代达罗斯战士套装
+  - 代达罗斯射手套装
+  - 代达罗斯魔法套装
+  - 代达罗斯召唤套装
+  代达罗斯护胫:
+  - 代达罗斯战士套装
+  - 代达罗斯射手套装
+  - 代达罗斯魔法套装
+  - 代达罗斯召唤套装
   神圣头盔:
   - 神圣射手套装
   神圣兜帽:
@@ -243,6 +267,26 @@ pieces:
   - 叶绿魔法套装
   - 叶绿射手套装
   - 叶绿战士套装
+  硫火兜帽:
+  - 硫火套装
+  硫火长袍:
+  - 硫火套装
+  硫火靴子:
+  - 硫火套装
+  掠夺者鳞甲:
+  - 掠夺者坦克套装
+  - 掠夺者探索套装
+  - 掠夺者挖掘套装
+  掠夺者护胫:
+  - 掠夺者坦克套装
+  - 掠夺者探索套装
+  - 掠夺者挖掘套装
+  掠夺者战盔:
+  - 掠夺者坦克套装
+  掠夺者面罩:
+  - 掠夺者探索套装
+  掠夺者头套:
+  - 掠夺者挖掘套装
   幽灵面具:
   - 幽灵输出套装
   幽灵兜帽:
@@ -285,6 +329,36 @@ pieces:
   - 阴森套装
   阴森护腿:
   - 阴森套装
+  渊泉盔甲:
+  - 渊泉近战套装
+  - 渊泉远程套装
+  - 渊泉魔法套装
+  - 渊泉召唤套装
+  渊泉战裙:
+  - 渊泉近战套装
+  - 渊泉远程套装
+  - 渊泉魔法套装
+  - 渊泉召唤套装
+  渊泉战盔:
+  - 渊泉近战套装
+  渊泉头饰:
+  - 渊泉远程套装
+  渊泉面具:
+  - 渊泉魔法套装
+  渊泉头盔:
+  - 渊泉召唤套装
+  瘟疫死神面罩:
+  - 瘟疫死神套装
+  瘟疫死神夹克:
+  - 瘟疫死神套装
+  瘟疫死神长靴:
+  - 瘟疫死神套装
+  星幻头盔:
+  - 星幻套装
+  星幻胸甲:
+  - 星幻套装
+  星幻护胫:
+  - 星幻套装
   星云头盔:
   - 星云套装
   星云胸甲:
@@ -329,7 +403,7 @@ sets:
     - §a增加刷怪量和刷怪率
     attributes:
       defence: 6
-      mobLimit: 1
+      mobLimit: 2
       mobSpawnRateMulti: 0.1
   钨钢远程魔法套装:
     lore:
@@ -350,57 +424,122 @@ sets:
     - ''
     - §a套装效果： 
     - §a+12 防御
-    - §a+1 远程伤害
-    - §a+9% 远程暴击
+    - §a+3 远程伤害
+    - §a+10% 远程暴击
     - §a-20% 弹药消耗
     - §a+10% 移动速度
-    - §a远程伤害暴击有概率召唤一个沙龙卷，沙龙卷持续15秒，对接触到的敌人造成伤害。它所造成的伤害等同于你引发它的那一发弹幕的伤害，而它的暴击率等同于你所持武器的暴击率。
     attributes:
       defence: 12
-      critRanged: 9
-      damage: 1
+      critRanged: 10
+      damage: 3
       ammoConsumptionRate: -0.2
       speedMulti: 0.1
+  铜套装:
+    lore:
+    - ''
+    - §a套装效果： +2 防御
+    attributes:
+      defence: 2
+  铁套装:
+    lore:
+    - ''
+    - §a套装效果： +4 防御
+    attributes:
+      defence: 4
+  银套装:
+    lore:
+    - ''
+    - §a套装效果： +6 防御
+    attributes:
+      defence: 6
+  金套装:
+    lore:
+    - ''
+    - §a套装效果： +8 防御
+    attributes:
+      defence: 8
+  忍者套装:
+    lore:
+    - ''
+    - §a套装效果： -20% 弹药消耗
+    attributes:
+      ammoConsumptionRate: -0.2
+  丛林法师套:
+    lore:
+    - ''
+    - §a套装效果： -16% 魔力消耗
+    attributes:
+      manaUseMulti: -0.16
   胜潮近战套装:
     lore:
     - ''
     - §a套装效果： 
-    - §a+6 生命恢复
+    - §a+3 生命恢复
     - §a+10% 近战伤害
     - §a加快敌人刷新
     attributes:
       damageMeleeMulti: 0.1
-      regen: 6
+      regen: 3
       mobSpawnRateMulti: 0.2
   胜潮远程套装:
     lore:
     - ''
     - §a套装效果： 
-    - §a+6 生命恢复
+    - §a+3 生命恢复
     - §a+10% 远程伤害
     attributes:
       damageRangedMulti: 0.1
-      regen: 6
+      regen: 3
   胜潮魔法套装:
     lore:
     - ''
     - §a套装效果：
-    - §a+6 生命恢复
+    - §a+3 生命恢复
     - §a+10% 魔法伤害
     attributes:
       damageMagicMulti: 0.1
-      regen: 6
+      regen: 3
   胜潮召唤套装:
     lore:
     - ''
     - §a套装效果：
-    - §a+6 生命恢复
+    - §a+3 生命恢复
     - §a+10% 召唤伤害
     - §a+2 召唤栏
     attributes:
       damageSummonMulti: 0.1
-      regen: 6
+      regen: 3
       minionLimit: 2
+  流星套装:
+    lore:
+    - ''
+    - §a套装效果： 太空枪不消耗魔力
+  黑曜石套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a+15% 召唤伤害
+    - §a+15% 近战速度
+    - §a+30% 近战范围
+    attributes:
+      damageSummonMulti: 0.15
+      meleeReachMulti: 0.3
+      useSpeedMeleeMulti: 0.15
+  暗影套装:
+    lore:
+    - ''
+    - §a套装效果： +25% 移动速度
+    attributes:
+      speedMulti: 0.25
+  死灵射手套:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a-20% 弹药消耗
+    - §a+10% 远程暴击
+    attributes:
+      ammoConsumptionRate: -0.2
+      critRanged: 10
   天蓝近战套装:
     lore:
     - ''
@@ -437,6 +576,13 @@ sets:
     attributes:
       damageSummonMulti: 0.11
       minionLimit: 2
+  熔岩套装:
+    lore:
+    - ''
+    - §a套装效果： +15% 近战伤害与速度
+    attributes:
+      damageMeleeMulti: 0.15
+      useSpeedMeleeMulti: 0.15
   斯塔提斯近战套装:
     lore:
     - ''
@@ -473,84 +619,32 @@ sets:
     attributes:
       damageSummonMulti: 0.18
       minionLimit: 2
-  忍者套装:
+  斯塔提斯召唤套装:
     lore:
     - ''
-    - §a套装效果： -20% 弹药消耗
+    - §a套装效果： 
+    - §a+18% 召唤伤害
+    - §a+2 召唤栏
     attributes:
-      ammoConsumptionRate: -0.2
-  铜套装:
-    lore:
-    - ''
-    - §a套装效果： +2 防御
-    attributes:
-      defence: 2
-  铁套装:
-    lore:
-    - ''
-    - §a套装效果： +4 防御
-    attributes:
-      defence: 4
-  银套装:
-    lore:
-    - ''
-    - §a套装效果： +6 防御
-    attributes:
-      defence: 6
-  金套装:
-    lore:
-    - ''
-    - §a套装效果： +8 防御
-    attributes:
-      defence: 8
-  丛林法师套:
-    lore:
-    - ''
-    - §a套装效果： -16% 魔力消耗
-    attributes:
-      manaUseMulti: -0.16
-  流星套装:
-    lore:
-    - ''
-    - §a套装效果： 太空枪不消耗魔力
-  黑曜石套装:
-    lore:
-    - ''
-    - §a套装效果：
-    - §a+15% 召唤伤害
-    - §a+15% 近战速度
-    - §a+30% 近战范围
-    attributes:
-      damageSummonMulti: 0.15
-      meleeReachMulti: 0.3
-      useSpeedMeleeMulti: 0.15
-  暗影套装:
-    lore:
-    - ''
-    - §a套装效果： +25% 移动速度
-    attributes:
-      speedMulti: 0.25
-  死灵射手套:
-    lore:
-    - ''
-    - §a套装效果：
-    - §a-20% 弹药消耗
-    - §a+10% 远程暴击
-    attributes:
-      speedMulti: 0.25
-  熔岩套装:
-    lore:
-    - ''
-    - §a套装效果： +15% 近战伤害与速度
-    attributes:
-      damageMeleeMulti: 0.15
-      useSpeedMeleeMulti: 0.15
+      damageSummonMulti: 0.18
+      minionLimit: 2
   蜘蛛套装:
     lore:
     - ''
     - §a套装效果： +12% 仆从伤害
     attributes:
       damageSummonMulti: 0.12
+  软壳套装:
+    lore:
+    - ''
+    - §a套装效果： 
+    - §a+10% 伤害
+    - §a+3 召唤栏
+    - §a移动速度略微减少
+    attributes:
+      damageMulti: 0.1
+      minionLimit: 3
+      speedMulti: -0.1
   水晶刺客套装:
     lore:
     - ''
@@ -614,6 +708,39 @@ sets:
     - §a套装效果： 25% 几率不消耗弹药
     attributes:
       ammoConsumptionRate: -0.25
+  代达罗斯战士套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a+10% 近战攻速
+    - §a+10% 伤害减免
+    attributes:
+      useSpeedMeleeMulti: 0.1
+      damageTakenMulti: -0.1
+  代达罗斯射手套装:
+    lore:
+    - ''
+    - §a套装效果： +10% 远程伤害
+    attributes:
+      damageRangedMulti: 0.1
+  代达罗斯魔法套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a+5% 魔法伤害
+    - §a受到的接触伤害减少7%
+    attributes:
+      damageMagicMulti: 0.05
+      damageContactTakenMulti: 0.07
+  代达罗斯召唤套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a提升20%召唤伤害
+    - §a+2 召唤栏
+    attributes:
+      damageSummonMulti: 0.2
+      minionLimit: 2
   神圣魔法套装:
     lore:
     - ''
@@ -654,6 +781,50 @@ sets:
     lore:
     - ''
     - §a套装效果：朝最近的敌人射出叶片
+  硫火套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a额外增加15%魔法伤害和暴击率
+    - §a你可以按下套装增益键[V]进入十秒钟的硫火狂暴模式
+    - §a在此模式下，以快速的生命流失作为代价，你造成的魔法伤害会显著增加
+    - §a硫火狂暴有30秒冷却时间
+    attributes:
+      damageMagicMulti: 0.15
+      critMagic: 15
+  掠夺者坦克套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a+20防御力并+6生命回复
+    - §a刷怪效率增加
+    - §a减少10%移动速度与飞行时间
+    - §a敌人会受到你的反伤
+    - §a当你受伤时有25%的几率获得掠夺者之怒增益
+    attributes:
+        defence: 20
+        regen: 6
+        mobSpawnRateMulti: 0.12
+        speedMulti: -0.1
+        flightTimeMulti: -0.1
+  掠夺者探索套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a增加20%移动速度与飞行时间
+    attributes:
+        speedMulti: 0.2
+        flightTimeMulti: 0.2
+  掠夺者挖掘套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a+3 挖掘触及范围
+    - §a减少刷怪量和刷怪率
+    attributes:
+        reachExtra: 3
+        mobLimit: -2
+        mobSpawnRateMulti: -0.3
   幽灵吸血套装:
     lore:
     - ''
@@ -661,7 +832,7 @@ sets:
   幽灵输出套装:
     lore:
     - ''
-    - §a套装效果：所造成的魔法伤害还能伤及附近的其他敌人
+    - §a套装效果：所造成的魔法伤害伤及附近的其他敌人
   甲虫铠甲套装:
     lore:
     - ''
@@ -705,6 +876,65 @@ sets:
     - §a套装效果： 仆从伤害增加25%
     attributes:
       damageSummonMulti: 0.25
+  渊泉近战套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a提升15% 近战攻速
+    - §a刷怪效率增加
+    - §a造成近战伤害时发射出数个熔岩火球
+    attributes:
+      useSpeedMeleeMulti: 0.15
+      mobSpawnRateMulti: 0.1
+  渊泉远程套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a提升5% 远程伤害
+    - §a使用远程武器时发射出一个熔岩火球
+    attributes:
+      damageRangedMulti: 0.05
+  渊泉魔法套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a提升15% 魔法伤害
+    - §a降低15% 魔力消耗
+    attributes:
+      damageMagicMulti: 0.15
+      manaUseMulti: -0.15
+  渊泉召唤套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a提升40% 召唤伤害
+    - §a+3 召唤栏
+    attributes:
+      damageSummonMulti: 0.4
+      minionLimit: 3
+  瘟疫死神套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a减少25% 弹药消耗
+    - §a增加5% 飞行时间
+    - §a你可以按下套装增益键[V]进入五秒钟的瘟疫狂暴模式
+    attributes:
+      damageSummonMulti: 0.4
+      minionLimit: 3
+  星幻套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a提升5% 移动速度并+3 召唤栏
+    - §a手持其他职业武器导致的召唤物伤害惩罚 -50%
+    - §a提升35% 伤害和25% 暴击率
+    attributes:
+      speedMulti: 0.05
+      minionLimit: 3
+      minionDamagePenaltyMulti: 0.5
+      damageMulti: 0.35
+      crit: 25
   星云套装:
     lore:
     - ''
@@ -724,17 +954,19 @@ sets:
   星尘套装:
     lore:
     - ''
-    - §a套装效果：星尘守卫将保护你不受附近敌人的伤害
+    - §a套装效果： +2 仆从容量
+    attributes:
+      minionLimit: 2
   星璇套装:
     lore:
     - ''
     - §a套装效果：
-    - §a略微减少移动速度
+    - §a移动速度减少10%
     - §a远程伤害和暴击率提升20%
     - §a减少刷怪量和刷怪率
     attributes:
+      speed: -0.1
       damageRangedMulti: 0.2
       critRanged: 20
-      speed: -0.05
       mobLimit: -2
       mobSpawnRateMulti: -0.2

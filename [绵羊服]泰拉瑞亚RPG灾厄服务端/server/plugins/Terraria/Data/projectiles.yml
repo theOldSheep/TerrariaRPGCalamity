@@ -802,7 +802,7 @@
     gravity: 0
     blockHitAction: thru
     isGrenade: true
-    blastRadius: 2
+    blastRadius: 2.75
     projectileSize: 0.25
     buffInflict:
         - "瘟疫|60|1"
@@ -812,7 +812,7 @@
     autoTrace: true
     blockHitAction: thru
     isGrenade: true
-    blastRadius: 1.5
+    blastRadius: 2.25
     projectileSize: 0.25
     buffInflict:
         - "瘟疫|60|1"
@@ -845,6 +845,7 @@
     gravity: 0
     autoTrace: true
     blockHitAction: thru
+    minimumDamageTicks: 5
     noAutoTraceTicks: 5
     liveTime: 60
     trailColor: "100|255|100"
@@ -1005,7 +1006,7 @@
     gravity: 0
     projectileSize: 0.25
     isGrenade: true
-    blastRadius: 0.75
+    blastRadius: 1.75
     clusterBomb:
         amount: 4
         name: 远古岩鲨
@@ -1022,7 +1023,7 @@
     gravity: 0
     projectileSize: 0.25
     isGrenade: true
-    blastRadius: 0.75
+    blastRadius: 1
     trailColor: 255|187|174
     trailSize: 0.1
     trailStepSize: 0.5
@@ -1077,7 +1078,7 @@
     autoTrace: true
     autoTraceAbility: 1.5
     isGrenade: true
-    blastRadius: 1
+    blastRadius: 2.5
     trailColor: 255|187|174
     trailSize: 0.1
     trailStepSize: 0.5
@@ -1290,45 +1291,118 @@ TNT:
         - "破晓|800|1"
 火枪子弹:
     gravity: 0
+    liveTime: 100
 陨星弹:
     gravity: 0
+    liveTime: 150
     blockHitAction: bounce
     bounce: 2
     penetration: 2
     bouncePenetrationBonded: true
 银子弹:
     gravity: 0
+    liveTime: 100
 爆炸弹:
     gravity: 0
+    liveTime: 100
     isGrenade: true
     blastRadius: 0.75
     blastDamageShooter: true
 绿藻弹:
     gravity: 0
+    liveTime: 100
     autoTrace: true
     autoTraceAbility: 8.0
     trailColor: "100|255|100"
     trailStepSize: 1.5
 水晶子弹:
     gravity: 0
+    liveTime: 100
     clusterBomb:
         amount: 4
         name: 水晶碎块
         velocity: 0.5
         damageMulti: 0.45
 水晶碎块:
+    noGravityTicks: 0
     liveTime: 10
 诅咒弹:
     gravity: 0
+    liveTime: 100
     buffInflict:
         - "咒火|140|1"
 毒液弹:
     gravity: 0
+    liveTime: 100
     buffInflict:
         - "剧毒|200|1"
 夜明弹:
     gravity: 0
+    liveTime: 100
     penetration: 99
+加速弹:
+    gravity: 0
+    liveTime: 100
+    speedMultiPerTick: 1.1
+    maxSpeed: 4
+鼠疫弹:
+    gravity: 0
+    liveTime: 100
+海伯里斯弹:
+    gravity: 0
+    liveTime: 100
+    clusterBomb:
+        amount: 1
+        name: 诅咒弹
+        type: surround
+        velocity: 2.75
+        damageMulti: 0.6
+        fireOnTimeout: false
+        fireOnHitBlock: false
+冰砾弹:
+    gravity: 0
+    liveTime: 100
+    penetration: 2
+    buffInflict:
+        - "霜火|60|1"
+    clusterBomb:
+        amount: 4
+        name: 水晶碎块
+        velocity: 0.5
+        damageMulti: 0.5
+弹球弹:
+    gravity: 0
+    liveTime: 150
+    blockHitAction: bounce
+    bounce: 4
+    penetration: 4
+    bounceVelocityMulti: 1.25
+    bouncePenetrationBonded: true
+泰拉追踪弹:
+    gravity: 0
+    autoTrace: true
+    blockHitAction: thru
+    minimumDamageTicks: 5
+    noAutoTraceTicks: 5
+    liveTime: 30
+    trailColor: "3|233|82"
+    trailStepSize: 0.5
+泰拉弹:
+    gravity: 0
+    liveTime: 40
+    clusterBomb:
+        amount: 2
+        name: 泰拉追踪弹
+        velocity: 1.5
+        damageMulti: 0.3
+钫弹:
+    gravity: 0
+    liveTime: 100
+    autoTrace: true
+    autoTraceRadius: 16
+    noAutoTraceTicks: 999999
+    penetration: 1
+###
 鹅卵石冲击波:
     arrowOrPotion: true
     gravity: 0
@@ -1613,7 +1687,7 @@ TNT:
 断层:
     isGrenade: true
     blastOnContactEnemy: true
-    blastRadius: 1.5
+    blastRadius: 2.25
     buffInflict:
         - "狱炎|80|1"
 瘟疫狂潮:
@@ -1656,7 +1730,7 @@ TNT:
     projectileSize: 0.25
     blockHitAction: stick
     isGrenade: true
-    blastRadius: 1
+    blastRadius: 1.5
     liveTime: 80
 旋风:
     projectileSize: 0.5
@@ -1674,7 +1748,7 @@ TNT:
     gravity: 0
     liveTime: 20
     isGrenade: true
-    blastRadius: 1
+    blastRadius: 1.25
     buffInflict:
         - "霜火|60|1"
 红色宙能聚爆:
@@ -1683,7 +1757,7 @@ TNT:
     gravity: 0
     liveTime: 20
     isGrenade: true
-    blastRadius: 1
+    blastRadius: 1.25
     buffInflict:
         - "燃烧|60|1"
 沙刃:
@@ -1739,7 +1813,7 @@ TNT:
     gravity: 0
     liveTime: 60
     isGrenade: true
-    blastRadius: 1.25
+    blastRadius: 1.75
     buffInflict:
         - "狱炎|40|1"
     trailColor: 233|15|50
@@ -1859,7 +1933,7 @@ TNT:
     gravity: 0
     liveTime: 35
     projectileSize: 0.75
-    speedMultiPerTick: 0.9
+    speedMultiPerTick: 0.98
     trailColor: 78|27|62
     trailStepSize: 0.5
     trailLingerTime: 12
@@ -1869,7 +1943,7 @@ TNT:
     gravity: 0
     liveTime: 35
     projectileSize: 0.5
-    speedMultiPerTick: 0.95
+    speedMultiPerTick: 0.99
     trailColor: 78|27|62
     trailStepSize: 0.5
     trailLingerTime: 8
@@ -2401,7 +2475,7 @@ TNT:
     projectileSize: 0.25
     liveTime: 30
     isGrenade: true
-    blastRadius: 0.25
+    blastRadius: 1
 绿色螺旋弹:
     gravity: 0
     projectileSize: 0.25
@@ -2445,7 +2519,7 @@ TNT:
     speedMultiPerTick: 0.9
     gravity: 0
     isGrenade: true
-    blastRadius: 1.25
+    blastRadius: 1.5
 冰火矢:
     gravity: 0
     liveTime: 100
@@ -2630,6 +2704,55 @@ TNT:
 夜明箭:
     arrowOrPotion: true
     penetration: 5
+北极箭:
+    arrowOrPotion: true
+    buffInflict:
+        - "霜火|100|1"
+冰坠箭:
+    noGravityTicks: 0
+    gravity: 0.065
+    arrowOrPotion: true
+    buffInflict:
+        - "霜火|60|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.3333
+        name: 水晶碎块
+        velocity: 0.35
+火焰碎片:
+    penetration: 999999
+    liveTime: 30
+    noGravityTicks: 0
+    projectileSize: 0.25
+    speedMultiPerTick: 0.9
+    blockHitAction: stick
+    buffInflict:
+        - "燃烧|80|1"
+汽油箭:
+    arrowOrPotion: true
+    isGrenade: true
+    blastRadius: 0.75
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.3
+        name: 火焰碎片
+        velocity: 1
+泰拉追踪箭:
+    arrowOrPotion: true
+    gravity: 0
+    liveTime: 40
+    minimumDamageTicks: 3
+    autoTrace: true
+    autoTraceRadius: 16
+    noAutoTraceTicks: 6
+泰拉箭:
+    arrowOrPotion: true
+    liveTime: 40
+    clusterBomb:
+        amount: 2
+        damageMulti: 0.25
+        name: 泰拉追踪箭
+        velocity: 2
 幻象箭:
     arrowOrPotion: true
     gravity: 0
