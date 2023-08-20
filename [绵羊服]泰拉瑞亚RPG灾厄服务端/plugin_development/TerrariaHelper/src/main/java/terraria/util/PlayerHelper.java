@@ -1517,8 +1517,7 @@ public class PlayerHelper {
     public static void setupAttribute(Player ply) {
         try {
             ply.removeScoreboardTag("toolChanged");
-            // reset damage type, buff immunity etc.
-            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.DAMAGE_TYPE, EntityHelper.DamageType.MELEE);
+            // reset buff immunity etc. Do not reset damage type, doing such will cause faulty minion damage.
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.BUFF_IMMUNE, new HashMap<String, Integer>());
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BUFF_INFLICT, getDefaultPlayerEffectInflict());
             // re-initialize attribute map

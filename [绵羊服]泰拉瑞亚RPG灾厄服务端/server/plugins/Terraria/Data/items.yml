@@ -380,6 +380,10 @@
 贝壳:
   item: CLAY_BALL
   rarity: 0
+蚁狮上颚:
+  item: CLAY_BALL
+  worth: 1000
+  rarity: 0
 风暴之颚:
   item: IRON_INGOT
   worth: 14000
@@ -724,6 +728,77 @@
   lore:
   - §r召唤冰霜月
   rarity: 8
+荒漠吊坠:
+  item: CLAY_BALL
+  lore:
+  - §r在沙漠使用时召唤荒漠灾虫
+  rarity: 2
+节肢动物芽孢:
+  item: CLAY_BALL
+  lore:
+  - §r在洞穴层丛林使用，召唤菌生蟹
+  rarity: 2
+畸形肿瘤:
+  item: CLAY_BALL
+  lore:
+  - §r在腐化之地使用，召唤腐巢意志
+  rarity: 3
+过载淤泥:
+  item: CLAY_BALL
+  lore:
+  - §r它看起来有点被腐化了
+  - §r召唤史莱姆之神
+  rarity: 4
+极寒之匙:
+  item: CLAY_BALL
+  lore:
+  - §r在雪原使用，召唤极地之灵
+  rarity: 5
+海鲜饵料:
+  item: CLAY_BALL
+  lore:
+  - §r在硫磺海使用，召唤渊海灾虫
+  rarity: 5
+焦炭玩偶:
+  item: CLAY_BALL
+  lore:
+  - §r在硫火之崖使用，召唤硫磺火元素
+  rarity: 5
+荒芜之眼:
+  item: CLAY_BALL
+  lore:
+  - §r这将会是一个恐怖的夜晚...
+  - §r在夜间使用，召唤灾厄
+  rarity: 6
+星辉碎块:
+  item: CLAY_BALL
+  lore:
+  - §r夜间在星辉瘟疫使用，召唤白金星舰
+  rarity: 7
+瘟疫起动装置:
+  item: CLAY_BALL
+  lore:
+  - §r呼叫瘟疫传播者
+  - §r在丛林使用，召唤瘟疫使者歌莉娅
+  rarity: 8
+唤死笛哨:
+  item: CLAY_BALL
+  lore:
+  - §r非常老旧的神庙笛哨
+  - §r召唤毁灭魔像
+  rarity: 8
+泰坦之心:
+  item: CLAY_BALL
+  lore:
+  - §r在星辉信标处使用，召唤星神游龙
+  rarity: 4
+星核:
+  item: CLAY_BALL
+  lore:
+  - §r愿群星指引你的前路
+  - §r在星辉信标处使用，召唤星神游龙
+  - §r泰坦之心也能起到同样作用，但星核在使用时不会被消耗
+  rarity: 9
 向导巫毒娃娃:
   item: LEASH
   lore:
@@ -3505,16 +3580,6 @@
     useTime: 25
   worth: 400000
   rarity: 2
-河豚链球:
-  item: STICK
-  attributes:
-    damage: 80
-    damageType: Melee
-    crit: 4
-    knockback: 8
-    useTime: 20
-  worth: 800000
-  rarity: 3
 海蚌锤:
   item: STICK
   lore:
@@ -3697,7 +3762,7 @@
     damageType: Melee
     crit: 4
     knockback: 7.5
-    useTime: 60
+    useTime: 100
   worth: 7200000
   rarity: 6
 环境之刃[林妖之轻抚]:
@@ -4833,7 +4898,7 @@
     crit: 14
     projectileSpeed: 25.5
     knockback: 0.425
-    useTime: 30
+    useTime: 15
   worth: 10000000
   rarity: 8
 火花喷射器:
@@ -7073,6 +7138,8 @@ P90:
   item: DIAMOND_SWORD
   lore:
   - §r召唤黑鹰战斗机为你而战
+  - §r向敌人发射你背包内的子弹
+  - §r50% 概率不消耗弹药
   attributes:
     damage: 50
     damageType: Summon
@@ -9688,6 +9755,12 @@ P90:
   - §r使用回复80法力值
   worth: 30000
   rarity: 1
+星舰电池:
+  item: CLAY_BALL
+  lore:
+  - §r获得魔力再生及魔能增益
+  worth: 900000
+  rarity: 7
 生命水晶:
   item: CLAY_BALL
   lore:
@@ -10136,11 +10209,11 @@ P90:
   worth: 1000
   rarity: 0
 毒刺:
-  item: RED_ROSE
+  item: CLAY_BALL
   worth: 4000
   rarity: 0
 丛林孢子:
-  item: WEB
+  item: CLAY_BALL
   worth: 2000
   rarity: 0
 仙人掌:
@@ -10148,7 +10221,7 @@ P90:
   worth: 200
   rarity: 0
 藤蔓:
-  item: VINE
+  item: CLAY_BALL
   worth: 20000
   rarity: 0
 冰冻火把:

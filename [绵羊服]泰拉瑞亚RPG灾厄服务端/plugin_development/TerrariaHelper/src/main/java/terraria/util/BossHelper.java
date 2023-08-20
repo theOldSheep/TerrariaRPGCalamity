@@ -2,6 +2,7 @@ package terraria.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import terraria.entity.boss.aquaticScourge.AquaticScourge;
@@ -70,6 +71,9 @@ public class BossHelper {
             switch (this) {
                 case EMPRESS_OF_LIGHT:
                     loc.getWorld().playSound(loc, "entity.eol.summoned", 10, 1);
+                    break;
+                case RAVAGER:
+                    loc.getWorld().playSound(loc, Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
                     break;
                 default:
                     loc.getWorld().playSound(loc, "entity.enderdragon.growl", 10, 1);

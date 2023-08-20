@@ -4,6 +4,7 @@ import net.minecraft.server.v1_12_R1.Entity;
 import net.minecraft.server.v1_12_R1.MovingObjectPosition;
 import net.minecraft.server.v1_12_R1.Vec3D;
 import net.minecraft.server.v1_12_R1.World;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -39,7 +40,7 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
         super.canBeReflected = false;
         switch (super.projectileType) {
             case "海蚌锤":
-                super.projectileRadius = 1;
+                super.projectileRadius = 0.75;
                 super.gravity = 0.05;
                 super.noGravityTicks = 10;
                 break;
@@ -79,7 +80,7 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
     protected void extraTicking() {
         switch (projectileType) {
             case "海蚌锤": {
-                if (ticksLived == super.noGravityTicks) {
+                if (ticksLived == noGravityTicks) {
                     attrMap.put("damage", attrMap.get("damage") * 4);
                 }
                 break;

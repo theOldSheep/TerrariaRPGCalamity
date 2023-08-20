@@ -218,6 +218,13 @@ FURNACE:
     resultItem: 天蓝锭
     requireItem:
     - 天蓝矿:4
+  '35':
+    requireLevel: 2
+    resultItem: 焦炭玩偶
+    requireItem:
+    - 暗影之魂:3
+    - 混乱精华:4
+    - 污痕核心
 ANVIL:
   '0_1':
     requireLevel: 1
@@ -1005,6 +1012,47 @@ ANVIL:
     - 腐肉:6
     - 铁锭:5
     - 暗影之魂:6
+  '132_1':
+    requireLevel: 1
+    resultItem: 极寒之匙
+    requireItem:
+    - 冰块:16
+    - 光明之魂:5
+    - 暗影之魂:5
+    - 冰川精华:8
+  '132_2':
+    requireLevel: 1
+    resultItem: 海鲜饵料
+    requireItem:
+    - 沙块:16
+    - 海星:5
+    - 贝壳:5
+    - 珊瑚:5
+  '132_3':
+    requireLevel: 2
+    resultItem: 荒芜之眼
+    requireItem:
+    - 狱炎锭:10
+    - 混乱精华:5
+  '132_4':
+    requireLevel: 2
+    resultItem: 星辉碎块
+    requireItem:
+    - 星尘:24
+    - 坠星:16
+  '132_5':
+    requireLevel: 2
+    resultItem: 瘟疫起动装置
+    requireItem:
+    - 瘟疫细胞罐:16
+    - 铁锭:8
+    - 黑曜石:3
+  '132_6':
+    requireLevel: 2
+    resultItem: 唤死笛哨
+    requireItem:
+    - 日耀碑牌碎片:16
+    - 丛林蜥蜴砖:24
   '133':
     requireLevel: 2
     resultItem: 真·永夜之刃
@@ -2588,6 +2636,31 @@ ENCHANTMENT_TABLE:
     requireItem:
     - 凝胶:64
     - 金锭:5
+  '4_1':
+    requireLevel: 1
+    resultItem: 荒漠吊坠
+    requireItem:
+    - 沙块:16
+    - 蚁狮上颚:4
+    - 风暴之颚:2
+  '4_2':
+    requireLevel: 1
+    resultItem: 节肢动物芽孢
+    requireItem:
+    - 发光蘑菇:24
+  '4_3':
+    requireLevel: 1
+    resultItem: 畸形肿瘤
+    requireItem:
+    - 腐肉:13
+    - 腐烂物质:7
+    - 恶魔锭:3
+  '4_4':
+    requireLevel: 1
+    resultItem: 过载淤泥
+    requireItem:
+    - 凝胶:40
+    - 黑檀石:40
   '5':
     requireLevel: 1
     resultItem: 虚空袋
@@ -3309,6 +3382,12 @@ TINKER_WORKBENCH:
     - 星璇碎片:20
     - 星云碎片:20
     - 星尘碎片:20
+  '1_1':
+    requireLevel: 1
+    resultItem: 星核
+    requireItem:
+    - 星尘:64
+    - 炫星锭:8
   '2':
     requireLevel: 1
     resultItem: 破晓之光

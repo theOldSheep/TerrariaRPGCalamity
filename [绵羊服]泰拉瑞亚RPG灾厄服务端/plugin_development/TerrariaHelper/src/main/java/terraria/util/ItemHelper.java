@@ -323,6 +323,9 @@ public class ItemHelper {
         return result;
     }
     public static ItemStack regularizeItemDropped(ItemStack item) {
+        return regularizeItemDropped(item, Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE).getSpawnLocation());
+    }
+    public static ItemStack regularizeItemDropped(ItemStack item, Location dropLoc) {
         if (item.getItemMeta().hasDisplayName())
             return item;
         String regularizedItemType = null;
@@ -361,7 +364,23 @@ public class ItemHelper {
                 regularizedItemType = "牌子";
                 break;
             case SEEDS:
-                regularizedItemType = "草种";
+                double rdm = Math.random();
+                if (rdm < 0.05)
+                    regularizedItemType = "草种";
+                if (WorldHelper.BiomeType.getBiome(dropLoc) == WorldHelper.BiomeType.JUNGLE) {
+                    if (rdm < 0.002) {
+                        regularizedItemType = "大自然的恩赐";
+                    }
+                    else if (rdm < 0.02) {
+                        regularizedItemType = "毒刺";
+                    }
+                    else if (rdm < 0.03) {
+                        regularizedItemType = "丛林孢子";
+                    }
+                    else if (rdm < 0.0325) {
+                        regularizedItemType = "藤蔓";
+                    }
+                }
                 break;
             case CACTUS:
                 regularizedItemType = "仙人掌";

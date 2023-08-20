@@ -353,7 +353,7 @@ public class ItemUseHelper {
                                     EntityHelper.applyEffect(
                                             ply,
                                             accessories.contains("混乱石") ? "魔力烧蚀" : "魔力疾病",
-                                            200);
+                                            160);
                                     break;
                                 }
                                 // otherwise, apply the potion effect
@@ -704,7 +704,7 @@ public class ItemUseHelper {
                     shouldStrike = currentIndex <= 5;
                     if (shouldStrike) {
                         Vector projVel = lookDir.clone();
-                        projVel.multiply(1.25);
+                        projVel.multiply(4);
 
                         HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
                         projAttrMap.put("damage", projAttrMap.get("damage") * 0.65);
@@ -1211,7 +1211,7 @@ public class ItemUseHelper {
                     }
                     case "环境之刃[天国之神威]":
                     case "真·环境之刃[兵匠之傲]": {
-                        strikeRadius = 0.5;
+                        strikeRadius = 1.5;
                         break;
                     }
                     case "屠杀": {
@@ -1429,7 +1429,7 @@ public class ItemUseHelper {
                                 projAttrMap.put("damage", projAttrMap.get("damage") * (0.5 + Math.random() * 0.3) );
                                 Vector projVel = MathHelper.vectorFromYawPitch_quick(
                                         fwdYaw + Math.random() * 10 - 5, fwdPitch + Math.random() * 10 - 5);
-                                projVel.multiply(2);
+                                projVel.multiply(2.25);
                                 EntityHelper.spawnProjectile(ply, projVel,
                                         projAttrMap, EntityHelper.DamageType.MELEE, "熵离子球");
                             }

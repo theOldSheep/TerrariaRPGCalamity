@@ -199,8 +199,11 @@ public class TerrariaPotionProjectile extends EntityPotion {
         updatePenetration(penetration - 1);
         // special projectile
         {
-            if (projectileType.equals("钫弹")) {
-                noAutoTraceTicks = ticksLived + 5;
+            switch (projectileType) {
+                case "钫弹":
+                case "粉色脉冲":
+                    noAutoTraceTicks = ticksLived + 5;
+                    break;
             }
         }
         // returns the hit location if the projectile breaks (returns null if the projectile is still alive)
@@ -567,7 +570,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 TerrariaProjectileHitEvent evt = TerrariaProjectileHitEvent.callProjectileHitEvent(this, movingobjectposition);
                 if (!evt.isCancelled()) {
                     // gravity turns on after bouncing
-                    this.noGravityTicks = this.ticksLived;
+                    this.noGravityTicks = this.ticksLived - 1;
                     this.inGround = true;
                     switch (blockHitAction) {
                         case "bounce":

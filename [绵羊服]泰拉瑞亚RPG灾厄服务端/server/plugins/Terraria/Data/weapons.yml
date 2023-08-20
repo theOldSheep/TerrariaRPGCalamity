@@ -377,7 +377,7 @@
   size: 4.5
   projectileInfo:
     interval: 1
-    velocity: 0.1
+    velocity: 0.25
     name: 沙刃
 真·绝望之刃:
   type: SWING
@@ -461,7 +461,7 @@
   size: 6
   projectileInfo:
     interval: 1
-    velocity: 1.875
+    velocity: 2
     name: 硫火刃
 凋亡屠刀:
   type: SWING
@@ -622,13 +622,13 @@
   autoSwing: true
   projectileInfo:
     interval: 1
-    velocity: 3
+    velocity: 4.5
     name: 破晓之光
     isGranade: true
 星光:
   type: STAB
   autoSwing: true
-  size: 3.75
+  size: 5.5
   particleColor:
   - 255|0|0
   - 255|127|0
@@ -665,7 +665,7 @@
   size: 3.75
   autoSwing: true
   projectileInfo:
-    velocity: 1.25
+    velocity: 1.5
     name: 信风羽
 绽花毒藤:
   type: FLAIL
@@ -687,7 +687,7 @@
   autoSwing: true
   size: 7.5
   projectileInfo:
-    velocity: 1.35
+    velocity: 1.5
     name: 星夜光束
 硫磺火矛:
   type: STAB
@@ -698,14 +698,14 @@
   autoSwing: true
   size: 8
   projectileInfo:
-    velocity: 1.35
+    velocity: 1.75
     name: 尖刺
 泰拉长枪:
   type: STAB
   autoSwing: true
   size: 10
   projectileInfo:
-    velocity: 1.5
+    velocity: 2.25
     name: 泰拉长枪枪气
 火山之矛:
   type: STAB
@@ -1527,7 +1527,7 @@ P90:
   autoSwing: true
   ammoConversion:
     ALL: 
-    - 迷你火箭
+    - 天蝎座迷你火箭
 天蝎座_RIGHT_CLICK:
   type: ROCKET
   autoSwing: true
@@ -1536,23 +1536,23 @@ P90:
     useTime: 13
   ammoConversion:
     ALL: 
-    - 大号核弹
+    - 天蝎座大号核弹
 木制回力镖:
   type: BOOMERANG
   distance: 12
-  velocity: 0.8
+  velocity: 1
 附魔回力镖:
   type: BOOMERANG
   distance: 12
-  velocity: 1
+  velocity: 1.8
 荆棘旋刃:
   type: BOOMERANG
   distance: 15
-  velocity: 1
+  velocity: 5
 烈焰回旋镖:
   type: BOOMERANG
   distance: 17.5
-  velocity: 1.1
+  velocity: 3
 疯狂飞斧:
   autoSwing: true
   type: STAB
