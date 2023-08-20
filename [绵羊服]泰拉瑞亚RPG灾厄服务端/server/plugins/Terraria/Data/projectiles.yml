@@ -2325,9 +2325,9 @@ TNT:
     autoTraceAbility: 3
 三叉戟冰锥:
     gravity: 0
+    projectileSize: 0.5
     liveTime: 60
     penetration: 1
-    projectileSize: 0.5
 迷你飞龙:
     gravity: 0
     liveTime: 100
