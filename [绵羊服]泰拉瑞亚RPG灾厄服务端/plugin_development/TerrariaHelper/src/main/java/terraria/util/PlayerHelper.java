@@ -528,8 +528,6 @@ public class PlayerHelper {
                                             double distSqr = e.getLocation().distanceSquared(ply.getLocation());
                                             // further than current
                                             if (distSqr > distanceSqr) break;
-                                            // player can not see it
-                                            if (!ply.hasLineOfSight(e)) break;
                                             distanceSqr = distSqr;
                                             target = e;
                                         }
@@ -541,7 +539,7 @@ public class PlayerHelper {
                                             if (accessory.equals("新手版挥发明胶")) {
                                                 v.normalize().multiply(0.5);
                                                 EntityHelper.spawnProjectile(ply, v, attrMapVolatileGelatinJr,
-                                                        EntityHelper.DamageType.ARROW, "新手版挥发明胶");
+                                                        EntityHelper.DamageType.ARROW, "挥发明胶");
                                             } else {
                                                 v.normalize().multiply(0.6);
                                                 EntityHelper.spawnProjectile(ply, v, attrMapVolatileGelatin,

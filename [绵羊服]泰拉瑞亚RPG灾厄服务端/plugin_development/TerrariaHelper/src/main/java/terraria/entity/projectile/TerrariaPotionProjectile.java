@@ -74,7 +74,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.frictionFactor = (double) properties.getOrDefault("frictionFactor", this.frictionFactor);
             this.gravity = (double) properties.getOrDefault("gravity", this.gravity);
             this.maxSpeed = (double) properties.getOrDefault("maxSpeed", this.maxSpeed);
-            this.projectileRadius = (double) properties.getOrDefault("projectileSize", this.projectileRadius);
+            this.projectileRadius = (double) properties.getOrDefault("projectileSize", this.projectileRadius * 2) / 2;
             this.speedMultiPerTick = (double) properties.getOrDefault("speedMultiPerTick", this.speedMultiPerTick);
             this.trailSize = (double) properties.getOrDefault("trailSize", this.projectileRadius);
             this.trailStepSize = (double) properties.getOrDefault("trailStepSize", this.projectileRadius);

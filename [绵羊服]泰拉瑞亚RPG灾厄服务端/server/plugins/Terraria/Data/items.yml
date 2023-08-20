@@ -2712,7 +2712,7 @@
   - §r发射剑气将怪物吸入
   - §r“别想逃开哦”
   attributes:
-    damage: 160
+    damage: 120
     damageType: Melee
     crit: 4
     knockback: 6.25
@@ -3026,7 +3026,7 @@
   lore:
   - §r射出孢子球
   attributes:
-    damage: 114
+    damage: 75
     damageType: Melee
     crit: 4
     knockback: 4
