@@ -10,20 +10,16 @@ import org.bukkit.generator.BlockPopulator;
 import terraria.TerrariaHelper;
 import terraria.util.MathHelper;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Random;
 
 public class OrePopulator extends BlockPopulator {
     int yOffset;
-    HashMap<String, Material> oreMaterials;
-    static int SURFACE = 50,
-            UNDERGROUND = 0,
-            CAVERN = -100,
-            DEEP_CAVERN = -150;
-    public OrePopulator(int yOffset) {
-        this.yOffset = yOffset;
-        oreMaterials = new HashMap<>(50);
+    public static HashMap<String, Material> oreMaterials;
+    static {
+        oreMaterials = new HashMap<>(30);
         oreMaterials.put("COPPER",              Material.COAL_ORE);
         oreMaterials.put("IRON",                Material.IRON_ORE);
         oreMaterials.put("SILVER",              Material.LAPIS_ORE);
@@ -46,40 +42,86 @@ public class OrePopulator extends BlockPopulator {
         oreMaterials.put("UELIBLOOM",           Material.BROWN_GLAZED_TERRACOTTA);
         oreMaterials.put("AURIC",               Material.YELLOW_GLAZED_TERRACOTTA);
     }
+    static int SURFACE = 50,
+            UNDERGROUND = 0,
+            CAVERN = -100,
+            DEEP_CAVERN = -150;
+    public OrePopulator(int yOffset) {
+        this.yOffset = yOffset;
+    }
     // helper functions
-    void generateSingleVein(World wld, Material oreType, int blockX, int blockY, int blockZ, int size) {
-        double radius = (double) (size - 1) / 2,
+    void generateSingleVein(World wld, Chunk chunk, Material oreType, int blockX, int blockY, int blockZ, int size) {
+        double radius = (size - 1d) / 2d,
                 maxDistSqr = radius * radius * 1.25; // (radius * ) ^ 2
-        for (int i = 0; i < size; i ++)
-            for (int j = 0; j < size; j ++)
-                for (int k = 0; k < size; k ++) {
-                    if (blockY + j <= 0 || blockY + j >= 255) continue; // no overriding bedrock/outside of world
+        for (int i = 0; i < size; i ++) {
+            int oreX = blockX + i;
+            for (int j = 0; j < size; j++) {
+                int oreY = blockY + j;
+                for (int k = 0; k < size; k++) {
+                    int oreZ = blockZ + k;
+                    if (oreY <= 0 || oreY >= 255) continue; // no overriding bedrock/outside of world
                     double xDistFromCenter = i - radius,
                             yDistFromCenter = j - radius,
                             zDistFromCenter = k - radius;
                     double distSqr = xDistFromCenter * xDistFromCenter + yDistFromCenter * yDistFromCenter + zDistFromCenter * zDistFromCenter;
                     if (distSqr > maxDistSqr) continue; // make the shape less sharp
 
-                    Block blk = wld.getBlockAt(blockX + i, blockY + j, blockZ + k);
+                    Block blk = wld.getBlockAt(oreX, oreY, oreZ);
                     if (blk.getType().isSolid() && blk.getType() != Material.BEDROCK) blk.setType(oreType);
                 }
+            }
+        }
     }
     void generateGenericOre(World wld, Random rdm, Chunk chunk, int yMax, int yMin, int stepSize, String oreName, int size) {
         Material oreType = oreMaterials.getOrDefault(oreName, Material.STONE);
-        int blockXStart = chunk.getX() * 16, blockZStart = chunk.getZ() * 16;
+        int blockXStart = chunk.getX() << 4, blockZStart = chunk.getZ() << 4;
         yMax = Math.min(256, yMax - yOffset);
-        int margin = (size / 2), modulo = 16 - size;
+        int modulo = 15 - size;
         for (int y = yMax; y >= yMin; y -= stepSize) {
-            generateSingleVein(wld,
+            int rdmNum = rdm.nextInt();
+            double xRdm = rdmNum & 63;
+            rdmNum = rdmNum >> 6;
+            double yRdm = rdmNum & 255;
+            rdmNum = rdmNum >> 8;
+            double zRdm = rdmNum & 63;
+            // rescale x, y and z so the ore do not generate beyond the chunk
+            xRdm = modulo *   xRdm / 63;
+            yRdm = stepSize * yRdm / 255;
+            zRdm = modulo *   zRdm / 63;
+            generateSingleVein(wld, chunk,
                     oreType,
-                    blockXStart + margin + rdm.nextInt(modulo),
-                    y - rdm.nextInt(stepSize),
-                    blockZStart + margin + rdm.nextInt(modulo),
+                    blockXStart + (int) xRdm,
+                    y + (int) yRdm,
+                    blockZStart + (int) zRdm,
                     size);
         }
     }
 
     // first, all ores from vanilla Terraria
+    void generateLifeCrystal(World wld, Random rdm, Chunk chunk) {
+        // there is 10% chance for a chunk to spawn a life crystal
+        if (rdm.nextDouble() > 0.1) return;
+        int rdmNum = rdm.nextInt();
+        int xRdm = rdmNum & 15;
+        rdmNum = rdmNum >> 6;
+        int zRdm = rdmNum & 15;
+        ArrayList<Integer> appropriateY = new ArrayList<>(3);
+        // find appropriate heights that crystal can spawn at
+        boolean solidBelow, solidCurr = chunk.getBlock(xRdm, 1, zRdm).getType().isSolid();
+        for (int i = 2; i < 253; i ++) {
+            solidBelow = solidCurr;
+            solidCurr = chunk.getBlock(xRdm, i, zRdm).getType().isSolid();
+            if (solidBelow && !solidCurr)
+                appropriateY.add(i);
+        }
+        // return if no place is available
+        if (appropriateY.isEmpty())
+            return;
+        // set block
+        Material lifeCrystalMat = oreMaterials.getOrDefault("LIFE_CRYSTAL", Material.EMERALD_ORE);
+        chunk.getBlock(xRdm, appropriateY.get( (int) (rdm.nextDouble() * appropriateY.size()) ), zRdm)
+                .setType(lifeCrystalMat);
+    }
     void generateCopper(World wld, Random rdm, Chunk chunk) {
         generateGenericOre(wld, rdm, chunk, SURFACE, 0, 32, "COPPER", 4);
     }
@@ -95,8 +137,8 @@ public class OrePopulator extends BlockPopulator {
     void generateMeteorite(World wld, Random rdm, Chunk chunk) {
         if (yOffset != 0) return; // only surface world get this ore
         if (rdm.nextDouble() < 0.001) {
-            int xCenter = chunk.getX() * 16 + (int) (Math.random() * 16),
-                    zCenter = chunk.getZ() * 16 + (int) (Math.random() * 16);
+            int xCenter = chunk.getX() << 4 + 5 + (int) (rdm.nextDouble() * 6),
+                    zCenter = chunk.getZ() << 4 + 5 + (int) (rdm.nextDouble() * 6);
             int height = wld.getHighestBlockYAt(xCenter, zCenter);
             if (height < OverworldChunkGenerator.LAND_HEIGHT || height > OverworldChunkGenerator.LAND_HEIGHT + 20) return;
             Material oreMat = oreMaterials.getOrDefault("METEORITE", Material.STONE);
@@ -163,8 +205,8 @@ public class OrePopulator extends BlockPopulator {
         if (yOffset < 0) return; // only surface world get this ore
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) != Biome.MESA) return;
         if (rdm.nextDouble() < 0.01) {
-            int xCenter = chunk.getX() * 16 + (int) (Math.random() * 16),
-                    zCenter = chunk.getZ() * 16 + (int) (Math.random() * 16);
+            int xCenter = chunk.getX() * 16 + (int) (rdm.nextDouble() * 16),
+                    zCenter = chunk.getZ() * 16 + (int) (rdm.nextDouble() * 16);
             int height = wld.getHighestBlockYAt(xCenter, zCenter);
             Material oreMat = oreMaterials.getOrDefault("ASTRAL", Material.STONE);
             // set spherical cluster of ore
@@ -187,8 +229,8 @@ public class OrePopulator extends BlockPopulator {
     void generateExodium(World wld, Random rdm, Chunk chunk) {
         if (yOffset < 0) return; // only surface world get this ore
         if (rdm.nextDouble() < 0.001) {
-            int xCenter = chunk.getX() * 16 + (int) (Math.random() * 16),
-                    zCenter = chunk.getZ() * 16 + (int) (Math.random() * 16),
+            int xCenter = chunk.getX() * 16 + (int) (rdm.nextDouble() * 16),
+                    zCenter = chunk.getZ() * 16 + (int) (rdm.nextDouble() * 16),
                     height = 215 + rdm.nextInt(20);
             int worldHeight = wld.getHighestBlockYAt(xCenter, zCenter);
             if (worldHeight > 125) return; // prevents getting too close to ground
@@ -306,12 +348,13 @@ public class OrePopulator extends BlockPopulator {
     @Override
     public void populate(World wld, Random rdm, Chunk chunk) {
 //        generateUndergroundLake(wld, rdm, chunk);
-        // overworld
+        // underworld
         if (wld.getName().equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)) {
-            // nether
             generateHellstone(wld, rdm, chunk);
             generateCharred(wld, rdm, chunk);
-        } else {
+        }
+        // overworld
+        else {
             // vanilla Terraria
             generateCopper(wld, rdm, chunk);
             generateIron(wld, rdm, chunk);
@@ -334,6 +377,10 @@ public class OrePopulator extends BlockPopulator {
             generateExodium(wld, rdm, chunk);
             generateUelibloom(wld, rdm, chunk);
             generateAuric(wld, rdm, chunk);
+            // life crystal should spawn as the last one, otherwise other ore would override it
+            if (wld.getName().equals(TerrariaHelper.Constants.WORLD_NAME_CAVERN)) {
+                generateLifeCrystal(wld, rdm, chunk);
+            }
         }
     }
 }
