@@ -293,7 +293,7 @@
     blockHitAction: thru
     liveTime: 80
     gravity: 0
-    projectileSize: 2
+    projectileSize: 1.5
     buffInflict:
         - "硫磺火|60|1"
 无际裂变:
