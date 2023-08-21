@@ -1,6 +1,5 @@
 package terraria.worldgen.overworld;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -8,10 +7,8 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.generator.BlockPopulator;
 import terraria.TerrariaHelper;
-import terraria.util.MathHelper;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -72,12 +69,12 @@ public class OrePopulator extends BlockPopulator {
             }
         }
     }
-    void generateGenericOre(World wld, Random rdm, Chunk chunk, int yMax, int yMin, int stepSize, String oreName, int size) {
+    void generateGenericOre(World wld, Random rdm, Chunk chunk, int yMax, int stepSize, String oreName, int size) {
         Material oreType = oreMaterials.getOrDefault(oreName, Material.STONE);
         int blockXStart = chunk.getX() << 4, blockZStart = chunk.getZ() << 4;
-        yMax = Math.min(256, yMax - yOffset);
+        yMax = Math.min(256, yMax - yOffset) - stepSize;
         int modulo = 15 - size;
-        for (int y = yMax; y >= yMin; y -= stepSize) {
+        for (int y = yMax; y >= -stepSize; y -= stepSize) {
             int rdmNum = rdm.nextInt();
             double xRdm = rdmNum & 63;
             rdmNum = rdmNum >> 6;
@@ -123,16 +120,16 @@ public class OrePopulator extends BlockPopulator {
                 .setType(lifeCrystalMat);
     }
     void generateCopper(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, SURFACE, 0, 32, "COPPER", 4);
+        generateGenericOre(wld, rdm, chunk, SURFACE, 32, "COPPER", 4);
     }
     void generateIron(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, UNDERGROUND, 0, 48, "IRON", 4);
+        generateGenericOre(wld, rdm, chunk, UNDERGROUND, 40, "IRON", 4);
     }
     void generateSilver(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, CAVERN, 0, 64, "SILVER", 4);
+        generateGenericOre(wld, rdm, chunk, CAVERN, 48, "SILVER", 4);
     }
     void generateGold(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, DEEP_CAVERN, 0, 96, "GOLD", 4);
+        generateGenericOre(wld, rdm, chunk, DEEP_CAVERN, 64, "GOLD", 4);
     }
     void generateMeteorite(World wld, Random rdm, Chunk chunk) {
         if (yOffset != 0) return; // only surface world get this ore
@@ -166,40 +163,40 @@ public class OrePopulator extends BlockPopulator {
         }
     }
     void generateCobalt(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, UNDERGROUND, 0, 64, "COBALT", 4);
+        generateGenericOre(wld, rdm, chunk, UNDERGROUND, 48, "COBALT", 4);
     }
     void generateMythril(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, CAVERN, 0, 96, "MYTHRIL", 5);
+        generateGenericOre(wld, rdm, chunk, CAVERN, 64, "MYTHRIL", 5);
     }
     void generateAdamantite(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, DEEP_CAVERN, 0, 150, "ADAMANTITE", 5);
+        generateGenericOre(wld, rdm, chunk, DEEP_CAVERN, 72, "ADAMANTITE", 5);
     }
     void generateChlorophyte(World wld, Random rdm, Chunk chunk) {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.MUTATED_JUNGLE)
-            generateGenericOre(wld, rdm, chunk, CAVERN, 0, 150, "CHLOROPHYTE", 5);
+            generateGenericOre(wld, rdm, chunk, CAVERN, 128, "CHLOROPHYTE", 5);
     }
     // Calamity
     // pre-hardmode
     void generateSeaPrism(World wld, Random rdm, Chunk chunk) {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.MUTATED_DESERT)
-            generateGenericOre(wld, rdm, chunk, UNDERGROUND, 0, 75, "SEA_PRISM", 5);
+            generateGenericOre(wld, rdm, chunk, UNDERGROUND, 72, "SEA_PRISM", 5);
     }
     void generateAerialite(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, CAVERN, 0, 150, "AERIALITE", 6);
+        generateGenericOre(wld, rdm, chunk, CAVERN, 80, "AERIALITE", 6);
     }
     // hardmode
     // charred ore only generates in the hell level.
     void generateCryonic(World wld, Random rdm, Chunk chunk) {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.TAIGA_COLD)
-            generateGenericOre(wld, rdm, chunk, UNDERGROUND, 0, 150, "CRYONIC", 6);
+            generateGenericOre(wld, rdm, chunk, UNDERGROUND, 96, "CRYONIC", 6);
     }
     void generatePerennial(World wld, Random rdm, Chunk chunk) {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.JUNGLE)
-            generateGenericOre(wld, rdm, chunk, UNDERGROUND, 0, 150, "PERENNIAL", 6);
+            generateGenericOre(wld, rdm, chunk, UNDERGROUND, 96, "PERENNIAL", 6);
     }
     void generateScoria(World wld, Random rdm, Chunk chunk) {
-        if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.FROZEN_OCEAN)
-            generateGenericOre(wld, rdm, chunk, CAVERN, 0, 150, "SCORIA", 5);
+        if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.DEEP_OCEAN)
+            generateGenericOre(wld, rdm, chunk, CAVERN, 80, "SCORIA", 5);
     }
     void generateAstral(World wld, Random rdm, Chunk chunk) {
         if (yOffset < 0) return; // only surface world get this ore
@@ -251,17 +248,17 @@ public class OrePopulator extends BlockPopulator {
     }
     void generateUelibloom(World wld, Random rdm, Chunk chunk) {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.MUTATED_JUNGLE)
-            generateGenericOre(wld, rdm, chunk, CAVERN, 0, 125, "UELIBLOOM", 6);
+            generateGenericOre(wld, rdm, chunk, CAVERN, 160, "UELIBLOOM", 6);
     }
     void generateAuric(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, DEEP_CAVERN, 0, 500, "AURIC", 8);
+        generateGenericOre(wld, rdm, chunk, DEEP_CAVERN, 256, "AURIC", 8);
     }
     void generateHellstone(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, 75, 0, 24, "HELLSTONE", 4);
+        generateGenericOre(wld, rdm, chunk, 75, 24, "HELLSTONE", 4);
     }
     void generateCharred(World wld, Random rdm, Chunk chunk) {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.SAVANNA)
-            generateGenericOre(wld, rdm, chunk, 60, 0, 32, "CHARRED", 5);
+            generateGenericOre(wld, rdm, chunk, 60, 32, "CHARRED", 5);
     }
     void generateUndergroundLake(World world, Random random, Chunk chunk) {
         // source code from https://bukkit.fandom.com/wiki/Developing_a_World_Generator_Plugin

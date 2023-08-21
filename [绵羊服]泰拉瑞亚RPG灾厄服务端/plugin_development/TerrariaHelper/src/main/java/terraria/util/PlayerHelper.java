@@ -135,7 +135,8 @@ public class PlayerHelper {
             BigDecimal money = Economy.getMoneyExact(ply.getUniqueId());
             return money == null ? 0d : money.doubleValue();
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] getMoney ", e);
+            Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] getMoney ");
+            e.printStackTrace();
             return 0d;
         }
     }
@@ -147,7 +148,7 @@ public class PlayerHelper {
         return EntityHelper.getMetadata(ply, EntityHelper.MetadataName.ARMOR_SET).asString();
     }
     public static int getAccessoryAmount(Player ply) {
-        return getPlayerDataFile(ply).getInt("stats.maxAccessories", 5);
+        return getPlayerDataFile(ply).getInt("stats.maxAccessories", 6);
     }
     public static HashSet<String> getAccessories(Entity entity) {
         try {

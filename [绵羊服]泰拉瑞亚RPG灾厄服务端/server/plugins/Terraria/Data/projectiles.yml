@@ -148,6 +148,7 @@
         speed: 1.0
         spawnType: 暗影之雨
 暗影之雨:
+    noGravityTicks: 0
     penetration: 99999
     buffInflict:
         - "暗影焰|100|1"
@@ -180,6 +181,7 @@
 冰霜爆:
     penetration: 99999
     blockHitAction: thru
+    projectileSize: 1
     liveTime: 100
     gravity: 0
     noAutoTraceTicks: 10
@@ -215,6 +217,7 @@
     penetration: 99999
     gravity: 0
     blockHitAction: thru
+    projectileSize: 0.75
     autoTrace: true
     autoTraceMethod: 2
     autoTraceRadius: 8
@@ -224,7 +227,7 @@
 渊海灾虫沙爆:
     penetration: 99999
     gravity: 0
-    projectileSize: 3
+    projectileSize: 2
     blockHitAction: thru
     speedMultiPerTick: 0.98
     buffInflict:
@@ -232,7 +235,7 @@
 渊海灾虫毒云:
     penetration: 99999
     gravity: 0
-    projectileSize: 3
+    projectileSize: 2
     blockHitAction: thru
     speedMultiPerTick: 0.98
     buffInflict:
@@ -273,6 +276,7 @@
         - "咒火|100|1"
 硫火飞弹:
     penetration: 99999
+    projectileSize: 0.5
     blockHitAction: thru
     liveTime: 100
     gravity: 0
@@ -281,6 +285,7 @@
         - "孱弱巫咒|40|1"
 炼狱硫火球:
     penetration: 99999
+    projectileSize: 1
     liveTime: 60
     gravity: 0
     isGrenade: true
@@ -290,17 +295,17 @@
         - "硫磺火|100|1"
 深渊亡魂:
     penetration: 99999
+    projectileSize: 1.5
     blockHitAction: thru
     liveTime: 80
     gravity: 0
-    projectileSize: 1.5
     buffInflict:
         - "硫磺火|60|1"
 无际裂变:
     penetration: 99999
     blockHitAction: thru
     gravity: 0
-    projectileSize: 2
+    projectileSize: 1.5
     speedMultiPerTick: 0.975
     autoTrace: true
     autoTraceMethod: 2
@@ -493,7 +498,7 @@
     blockHitAction: thru
     trailColor: 50|255|150
     trailSize: 0.15
-    trailStepSize: 1
+    trailStepSize: 0.75
     isGrenade: true
     blastRadius: 3.5
     buffInflict:
@@ -504,7 +509,7 @@
     liveTime: 20
     blockHitAction: thru
     trailColor: 50|255|150
-    trailSize: 0.15
+    trailSize: 0.75
     trailStepSize: 1
     isGrenade: true
     blastRadius: 3.5
@@ -561,7 +566,7 @@
     liveTime: 300
     gravity: 0
     speedMultiPerTick: 0.95
-    projectileSize: 2
+    projectileSize: 1.5
     autoTrace: true
     autoTraceMethod: 2
     autoTraceRadius: 128
@@ -1509,6 +1514,10 @@ TNT:
     liveTime: 100
     isGrenade: true
     blastRadius: 1
+    trailColor: 0|150|0
+    trailSize: 0.6
+    trailLingerTime: 1.25
+    trailStepSize: 0.5
     autoTrace: true
     autoTraceRadius: 24
 追踪蘑菇:
@@ -1865,6 +1874,7 @@ TNT:
         - "狱炎|30|1"
 追踪硫火刃:
     autoTrace: true
+    projectileSize: 0.5
     noAutoTraceTicks: 10
     gravity: 0
     liveTime: 50

@@ -5931,7 +5931,7 @@ P90:
   worth: 10000000
   rarity: 10
 钨钢法杖:
-  item: STICK
+  item: DIAMOND_SWORD
   lore:
   - §r发射钨钢光球
   attributes:
@@ -7306,7 +7306,7 @@ P90:
   lore:
   - §r召唤熔火古刀为你而战
   attributes:
-    damage: 68
+    damage: 100
     damageType: Summon
     knockback: 4.5
     useTime: 24
@@ -9825,14 +9825,41 @@ P90:
   item: CLAY_BALL
   lore:
   - §r使用增加15生命值上限
+  - §r需要打败血肉之墙才能使用
   worth: 400000
   rarity: 7
+血橙:
+  item: CLAY_BALL
+  lore:
+  - §r它很甜，也很香
+  - §r永久增加50点最大生命值，仅能使用一次
+  - §r仅在使用过全部20个生命果后才能使用
+  rarity: 6
+奇迹之果:
+  item: CLAY_BALL
+  lore:
+  - §r令人神清气爽，甚至好像略带薄荷的香气
+  - §r永久增加50点最大生命值，仅能使用一次
+  - §r仅在使用过血橙后才能使用
+  rarity: 8
 魔力星:
   item: CLAY_BALL
   lore:
   - §r使用增加20法力上限
   worth: 2000000
   rarity: 2
+彗星碎片:
+  item: CLAY_BALL
+  lore:
+  - §r永久增加50点最大魔力值，仅能使用一次
+  - §r仅在使用过全部9个魔力星后才能使用
+  rarity: 4
+飘渺之核:
+  item: CLAY_BALL
+  lore:
+  - §r永久增加50点最大魔力值，仅能使用一次
+  - §r仅在使用过彗星碎片后才能使用
+  rarity: 10
 恶魔之心:
   item: CLAY_BALL
   lore:

@@ -55,10 +55,11 @@ public class CalamitasClone extends EntitySlime {
             dashVelocity = new Vector();
     double bulletHellViewYaw, bulletHellViewPitch;
     boolean brothersAlive = false;
-    int indexAI = -40, attackMethod = 1, bulletHellTicksLeft = -1, healthLockProgress = 1;
+    int indexAI = -40, attackMethod = 1, bulletHellTicksLeft = -1, lastBulletHellDuration = 300, healthLockProgress = 1;
     HashSet<Entity> bulletHellProjectiles = new HashSet<>();
     // 1: fireball   2: hell blast
     private void beginBulletHell(int ticksDuration) {
+        lastBulletHellDuration = ticksDuration;
         bulletHellTicksLeft = ticksDuration;
         addScoreboardTag("noDamage");
         Bukkit.broadcastMessage(BULLET_HELL_WARNING);
@@ -232,9 +233,9 @@ public class CalamitasClone extends EntitySlime {
                 if ( duringBulletHell ) {
                     // spawn and handle bullet hell projectiles
                     handleBulletHell();
-                    // on player kill, restore 15 seconds of bullet hell duration
+                    // on player kill, restore bullet hell duration
                     if (lastTarget != target)
-                        bulletHellTicksLeft += 300;
+                        beginBulletHell(lastBulletHellDuration);
                     // stay far above the player
                     bukkitEntity.setVelocity(MathHelper.getDirection(
                             bukkitEntity.getLocation(), target.getEyeLocation().add(0, 24, 0),
@@ -251,7 +252,7 @@ public class CalamitasClone extends EntitySlime {
                         // 70%
                         case 1:
                             if (healthRatio < 0.7) {
-                                beginBulletHell(400);
+                                beginBulletHell(300);
                                 EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, getMaxHealth() * 0.39);
                                 healthLockProgress = 2;
                             }
@@ -271,7 +272,7 @@ public class CalamitasClone extends EntitySlime {
                         // 10%
                         case 3:
                             if (healthRatio < 0.1) {
-                                beginBulletHell(500);
+                                beginBulletHell(400);
                                 EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, null);
                                 healthLockProgress = 4;
                             }

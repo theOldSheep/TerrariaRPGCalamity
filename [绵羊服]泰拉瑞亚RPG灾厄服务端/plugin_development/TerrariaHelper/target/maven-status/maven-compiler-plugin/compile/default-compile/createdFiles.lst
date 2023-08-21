@@ -128,6 +128,7 @@ terraria\util\CritterHelper.class
 terraria\util\EntityHelper$AimHelperOptions.class
 terraria\entity\projectile\PlayerTornado.class
 terraria\entity\projectile\TerrariaPotionProjectile$1.class
+terraria\event\listener\CraftingListener$CRAFTING_FILTER.class
 terraria\util\EntityHelper$1.class
 terraria\entity\boss\theSlimeGod\EbonianSlime$SlimeSize.class
 terraria\event\listener\WorldRegisterListener.class

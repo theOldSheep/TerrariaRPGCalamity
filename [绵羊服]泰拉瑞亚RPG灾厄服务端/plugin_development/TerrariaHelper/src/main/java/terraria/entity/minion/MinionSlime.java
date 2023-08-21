@@ -138,15 +138,15 @@ public class MinionSlime extends EntitySlime {
             case "迷你灾厄": {
                 new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                         this.sentryOrMinion, true,
-                        "迷你灾难之眼", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                        "迷你灾难", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
                 new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                         this.sentryOrMinion, false,
-                        "迷你灾祸之眼", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                        "迷你灾祸", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
                 noclip = true;
                 setNoGravity(true);
                 break;
             }
-            case "迷你灾祸之眼": {
+            case "迷你灾祸": {
                 attrMap.put("damage", attrMap.getOrDefault("damage", 10d) * 0.4);
                 noclip = true;
                 setNoGravity(true);
@@ -237,17 +237,20 @@ public class MinionSlime extends EntitySlime {
                 extraVariables.put("dmgCDs", new ArrayList<Entity>());
                 break;
             }
-            case "松鼠侍从":
+            case "松鼠侍从": {
+                setNoGravity(true);
+                break;
+            }
             case "冰结体": {
                 setSize(3, false);
                 setNoGravity(true);
                 break;
             }
+            case "蜘蛛女王":
             case "珊瑚堆": {
                 setSize(2, false);
                 break;
             }
-            case "蜘蛛女王":
             case "脉冲炮塔": {
                 setSize(3, false);
                 break;
@@ -641,7 +644,7 @@ public class MinionSlime extends EntitySlime {
                 }
                 break;
             }
-            case "迷你灾难之眼": {
+            case "迷你灾难": {
                 // velocity
                 switch (index % 12) {
                     case 0: {
@@ -672,7 +675,7 @@ public class MinionSlime extends EntitySlime {
                 }
                 break;
             }
-            case "迷你灾祸之眼": {
+            case "迷你灾祸": {
                 boolean shouldUpdateVelocity = index % (targetIsOwner ? 20 : 4) == 0;
                 // velocity
                 if (shouldUpdateVelocity) {

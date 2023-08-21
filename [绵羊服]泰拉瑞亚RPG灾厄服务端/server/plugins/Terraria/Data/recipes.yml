@@ -2275,6 +2275,28 @@ ANVIL:
     - 寒元锭
     - 永恒锭
     - 熔渣锭
+  '296_1':
+    requireLevel: 1
+    resultItem: 彗星碎片
+    requireItem:
+    - 陨星锭:10
+    - 坠星:10
+    - 星尘:50
+  '296_2':
+    requireLevel: 2
+    resultItem: 血橙
+    requireItem:
+    - 生命果:5
+    - 恐惧之魂:5
+    - 力量之魂:5
+    - 视域之魂:5
+  '296_3':
+    requireLevel: 2
+    resultItem: 奇迹之果
+    requireItem:
+    - 生命合金:5
+    - 生命果:5
+    - 生命碎片:10
 WORKBENCH:
   '1':
     requireLevel: 1
@@ -3747,6 +3769,13 @@ TINKER_WORKBENCH:
     requireItem:
     - 星尘:3
     - 冥思溶剂:6
+  '62':
+    requireLevel: 1
+    resultItem: 飘渺之核
+    requireItem:
+    - 炫星锭:10
+    - 星云碎片:20
+    - 坠星:20
 嘉登熔炉:
   containedStations:
     # FURNACE中 requireLevel<=3的配方也会被加载（即精金熔炉）

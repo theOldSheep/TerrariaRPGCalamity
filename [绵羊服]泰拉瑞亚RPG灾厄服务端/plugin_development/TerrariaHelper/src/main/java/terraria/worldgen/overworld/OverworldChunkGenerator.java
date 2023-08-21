@@ -173,7 +173,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 case DEEP_OCEAN: // abyss
                     matTopSoil = Material.SAND;
                     matSoil = Material.SAND;
-                    matStone = Material.STAINED_CLAY;
+                    matStone = Material.PRISMARINE;
                     break;
                 case TAIGA_COLD: // tundra
                 case MUTATED_TAIGA_COLD: // tundra

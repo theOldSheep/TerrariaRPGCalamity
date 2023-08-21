@@ -18,7 +18,9 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
     }
     Player owner;
     Vector recoilPool = new Vector();
-    double maxDistance, maxDistanceSquared, useTime, speed, recoilPoolMultiplier;
+    double maxDistance, maxDistanceSquared, useTime, speed, recoilPoolMultiplier,
+            // microwave would not recoil when hitting with enlarged bound box
+            actualRadiusSqr;
     int ticksDuration, indexAI = 0;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public TerrariaYoyo(World world) {
@@ -43,6 +45,9 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
         super.liveTime = 999999;
         super.blockHitAction = "thru";
         super.canBeReflected = false;
+        actualRadiusSqr = projectileRadius * projectileRadius + 1e-5;
+        if (projectileType.equals("微波辐照"))
+            actualRadiusSqr = 0.125 * 0.125 + 1e-5;
         // give infinite use CD temporarily
         ItemUseHelper.applyCD(owner, -1);
     }
@@ -59,9 +64,11 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
         Vec3D result = super.hitEntity(e, position);
         // tweak the on-hit recoil
         Location hitLoc = new Location(bukkitEntity.getWorld(), position.pos.x, position.pos.y, position.pos.z);
-        recoilPool = MathHelper.getDirection(hitLoc, bukkitEntity.getLocation(), speed + 0.75);
-        // hit increases the index significantly
-        indexAI += 6;
+        if (hitLoc.distanceSquared(bukkitEntity.getLocation()) <= actualRadiusSqr) {
+            recoilPool = MathHelper.getDirection(hitLoc, bukkitEntity.getLocation(), speed + 0.75);
+            // hit increases the index significantly
+            indexAI += 6;
+        }
         return result;
     }
 
@@ -80,7 +87,7 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
         }
         // update velocity
         else {
-            Location targetLoc = ItemUseHelper.getPlayerTargetLoc(owner, maxDistance, 5, aimHelper, true);
+            Location targetLoc = ItemUseHelper.getPlayerTargetLoc(owner, maxDistance, 2, aimHelper, true);
             Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, speed, true);
             // tweak velocity
             velocity.add(recoilPool);

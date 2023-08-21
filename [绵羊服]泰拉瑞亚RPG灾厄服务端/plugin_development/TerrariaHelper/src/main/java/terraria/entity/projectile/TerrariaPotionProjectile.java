@@ -224,36 +224,6 @@ public class TerrariaPotionProjectile extends EntityPotion {
         return null;
     }
 
-    // override functions
-    @Override
-    public void extinguish() {
-        switch (projectileType) {
-            case "小火花":
-                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_BLOCK);
-                this.die();
-                break;
-            case "烈焰箭":
-                setType("木箭");
-                break;
-        }
-    }
-    @Override
-    // tick water
-    public boolean aq() {
-        if (this.world.a(this.getBoundingBox().grow(0.0, -0.4, 0.0).shrink(0.001), Material.WATER, this)) {
-            this.inWater = true;
-            this.extinguish();
-        } else {
-            this.inWater = false;
-        }
-        return this.inWater;
-    }
-    // die
-    @Override
-    public void die() {
-        super.die();
-        TerrariaProjectileHitEvent.callProjectileHitEvent(this);
-    }
     // tick
     // this helper function is called every tick as long as the projectile is alive.
     protected void spawnExtraProjectiles() {
@@ -413,6 +383,44 @@ public class TerrariaPotionProjectile extends EntityPotion {
     protected void updatePenetration(int newPenetration) {
         penetration = newPenetration;
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, newPenetration);
+    }
+    // override functions
+    @Override
+    public void extinguish() {
+        switch (projectileType) {
+            case "小火花":
+                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_BLOCK);
+                this.die();
+                break;
+            case "烈焰箭":
+                setType("木箭");
+                break;
+        }
+    }
+    @Override
+    // tick water
+    public boolean aq() {
+        if (this.world.a(this.getBoundingBox().grow(0.0, -0.4, 0.0).shrink(0.001), Material.WATER, this)) {
+            this.inWater = true;
+            this.extinguish();
+        } else {
+            this.inWater = false;
+        }
+        return this.inWater;
+    }
+    // die
+    @Override
+    public void die() {
+        super.die();
+        TerrariaProjectileHitEvent.callProjectileHitEvent(this);
+    }
+    // bounding box override on location update
+    @Override
+    public void setPosition(double x, double y, double z) {
+        super.setPosition(x, y, z);
+        // bounding box
+        this.a(new AxisAlignedBB(x - projectileRadius, y, z - projectileRadius,
+                x + projectileRadius, y + projectileRadius * 2, z + projectileRadius) );
     }
     @Override
     public void B_() {

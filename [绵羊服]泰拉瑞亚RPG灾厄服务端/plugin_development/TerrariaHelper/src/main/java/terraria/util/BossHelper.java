@@ -73,7 +73,7 @@ public class BossHelper {
                     loc.getWorld().playSound(loc, "entity.eol.summoned", 10, 1);
                     break;
                 case RAVAGER:
-                    loc.getWorld().playSound(loc, Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+                    loc.getWorld().playSound(loc, Sound.ENTITY_TNT_PRIMED, 10, 1);
                     break;
                 default:
                     loc.getWorld().playSound(loc, "entity.enderdragon.growl", 10, 1);

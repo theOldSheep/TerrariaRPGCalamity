@@ -217,10 +217,10 @@ public class Crabulon extends EntitySlime {
         {
             psiSpore = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSpore,
                     EntityHelper.DamageType.ARROW, "-");
-            psiSpore.projectileName = "真菌孢子";
+            psiSpore.projectileName = "孢子";
             psiShroom = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapShroom,
                     EntityHelper.DamageType.ARROW, "-");
-            psiShroom.projectileName = "真菌孢子";
+            psiShroom.projectileName = "孢子";
             psiShroom.properties.put("gravity", 0.01);
             psiShroom.properties.put("blockHitAction", "thru");
         }

@@ -199,7 +199,7 @@ public class ItemUseHelper {
     protected static boolean playerUsePotion(Player ply, String itemType, ItemStack potion, QuickBuffType quickBuffType) {
         // to prevent vanilla items being regarded as a proper potion and consumed.
         if (itemType.length() == 0) return false;
-        // potion can not be consumed when cursed.
+        // potion can not be consumed when cursed. Do not delete this line as this is also triggered from key strike.
         if (EntityHelper.hasEffect(ply, "诅咒")) return false;
         boolean successful = false;
         switch (itemType) {
@@ -219,6 +219,19 @@ public class ItemUseHelper {
                     } else {
                         ply.sendMessage("§a您上次服用的虫洞药水还未生效哦~");
                     }
+                }
+                break;
+            }
+            case "恶魔之心": {
+                ConfigurationSection plyData = PlayerHelper.getPlayerDataFile(ply);
+                int accessoryAmount = plyData.getInt("stats.maxAccessories", 6);
+                if (accessoryAmount < 7) {
+                    plyData.set("stats.maxAccessories", 7);
+                    ply.sendMessage("§a使用成功，已解锁第七个饰品栏");
+                    successful = true;
+                }
+                else {
+                    ply.sendMessage("§a您已经使用过恶魔之心了");
                 }
                 break;
             }
@@ -3100,10 +3113,10 @@ public class ItemUseHelper {
                     ply.removeScoreboardTag("temp_autoSwing");
                 }
             }
-        }
-        // pickaxe
-        if (attrMap.getOrDefault("powerPickaxe", 0d) > 1) {
-            playerSwingPickaxe(ply, attrMap, isRightClick);
+            // pickaxe
+            if (attrMap.getOrDefault("powerPickaxe", 0d) > 1) {
+                playerSwingPickaxe(ply, attrMap, isRightClick);
+            }
         }
     }
     // this function is called when the player right-clicks an item in inventory.

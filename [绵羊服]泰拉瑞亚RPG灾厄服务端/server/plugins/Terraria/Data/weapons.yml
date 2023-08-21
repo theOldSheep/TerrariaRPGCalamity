@@ -1434,7 +1434,7 @@ P90:
   offSet: 9
   autoSwing: true
   attributes:
-    useTime: 40
+    useTime: 25
 灭域者:
   type: GUN
   shots: 3

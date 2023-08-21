@@ -2235,6 +2235,10 @@ public class MonsterHelper {
                     }
                     break;
                 }
+                case "???": {
+                    monsterBkt.setVelocity(new Vector());
+                    break;
+                }
                 case "": {
                     if (monster.getHealth() > 0) {
 
