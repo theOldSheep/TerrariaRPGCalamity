@@ -246,11 +246,6 @@ ANVIL:
     resultItem: 岩缝取鱼者
     requireItem:
     - 熔渣锭:6
-  '1':
-    requireLevel: 1
-    resultItem: 钨钢刀
-    requireItem:
-    - 钨钢金属废料:12
   '2':
     requireLevel: 1
     resultItem: 钨钢法杖
@@ -856,6 +851,11 @@ ANVIL:
     - 火把:4
     - 木箭:240
   '112_2':
+    requireLevel: 1
+    resultItem: 北极箭:240
+    requireItem:
+    - 寒元锭
+  '112_3':
     requireLevel: 1
     resultItem: 泰拉箭:240
     requireItem:
@@ -2763,11 +2763,6 @@ AIR:
     requireItem:
     - 木箭:16
     - 冰冻火把
-  '4_1':
-    requireLevel: 1
-    resultItem: 北极箭:240
-    requireItem:
-    - 寒元锭
   '5':
     requireLevel: 1
     resultItem: 冰冻火把:3

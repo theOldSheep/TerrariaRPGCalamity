@@ -100,12 +100,6 @@
   size: 2.7
   particleColor:
   - 0|150|0
-钨钢刀:
-  type: SWING
-  autoSwing: true
-  size: 3
-  particleColor:
-  - 125|200|125
 光之驱逐:
   type: SWING
   size: 2.4
@@ -303,10 +297,6 @@
   type: SWING
   autoSwing: true
   size: 3
-深渊碾碎者:
-  type: SWING
-  autoSwing: true
-  size: 5
 海耀之刃:
   type: SWING
   autoSwing: true
@@ -518,7 +508,7 @@
 庇护之刃_RIGHT_CLICK:
   type: SWING
   autoSwing: true
-  size: 5
+  size: 3
   projectileInfo:
     interval: 1
     velocity: 2.625
@@ -558,7 +548,7 @@
 海爵剑_RIGHT_CLICK:
   type: SWING
   autoSwing: true
-  size: 7
+  size: 5
   projectileInfo:
     interval: 1
     velocity: 2

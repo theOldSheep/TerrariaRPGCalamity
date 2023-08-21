@@ -213,7 +213,7 @@ public class WallOfFleshMouth extends EntitySlime {
     }
     // validate if the condition for spawning is met
     public static boolean canSpawn(Player player) {
-        return NPCHelper.NPCMap.containsKey(NPCHelper.NPCType.GUIDE);
+        return NPCHelper.NPCMap.containsKey(NPCHelper.NPCType.GUIDE) && !( NPCHelper.NPCMap.get(NPCHelper.NPCType.GUIDE).isDead() );
     }
     // a constructor for actual spawning
     public WallOfFleshMouth(Location burntItemLocation) {
@@ -221,6 +221,7 @@ public class WallOfFleshMouth extends EntitySlime {
         // attempt to summon wall of flesh kills the guide
         LivingEntity guideNPC = NPCHelper.NPCMap.get(NPCHelper.NPCType.GUIDE);
         if (guideNPC == null || guideNPC.isDead()) {
+            getAttributeInstance(GenericAttributes.maxHealth).setValue(1);
             die();
             return;
         }
@@ -242,6 +243,7 @@ public class WallOfFleshMouth extends EntitySlime {
             }
         }
         if (summonedPlayer == null) {
+            getAttributeInstance(GenericAttributes.maxHealth).setValue(1);
             die();
             return;
         }
@@ -317,7 +319,9 @@ public class WallOfFleshMouth extends EntitySlime {
     public void die() {
         super.die();
         // disable boss bar
-        bossbar.setVisible(false);
+        // this function is called elsewhere before boss bar is set up, so it is necessary to check if the bar is valid
+        if (bossbar != null)
+            bossbar.setVisible(false);
         BossHelper.bossMap.remove(BOSS_TYPE.msgName);
         // if the boss has been defeated properly
         if (getMaxHealth() > 10) {

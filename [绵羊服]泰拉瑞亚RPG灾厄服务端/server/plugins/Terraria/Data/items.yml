@@ -150,6 +150,38 @@
   item: SMOOTH_STAIRS
   worth: 200
   rarity: 0
+蛛丝:
+  item: WEB
+  worth: 1000
+  rarity: 0
+丝绸:
+  item: LEATHER
+  worth: 20000
+  rarity: 0
+毒刺:
+  item: CLAY_BALL
+  worth: 4000
+  rarity: 0
+丛林孢子:
+  item: CLAY_BALL
+  worth: 2000
+  rarity: 0
+藤蔓:
+  item: CLAY_BALL
+  worth: 20000
+  rarity: 0
+坠星:
+  item: CLAY_BALL
+  worth: 50000
+  rarity: 1
+钻石:
+  item: DIAMOND
+  worth: 300000
+  rarity: 0
+仙人掌:
+  item: CACTUS
+  worth: 200
+  rarity: 0
 死亡草:
   item: CLAY_BALL
   worth: 2000
@@ -231,6 +263,10 @@
   - §r“看上去很好吃！”
   worth: 20000
   rarity: 0
+暗影鳞片:
+  item: CLAY_BALL
+  worth: 160000
+  rarity: 1
 羽毛:
   item: FEATHER
   worth: 1000
@@ -325,6 +361,42 @@
   - §r“强大飞行生物的精华”
   worth: 20000
   rarity: 3
+力量之魂:
+  item: NETHER_STAR
+  lore:
+  - §r“毁灭者的精华”
+  worth: 800000
+  rarity: 5
+视域之魂:
+  item: NETHER_STAR
+  lore:
+  - §r“全知看守人的精华”
+  worth: 800000
+  rarity: 5
+恐惧之魂:
+  item: NETHER_STAR
+  lore:
+  - §r“纯粹恐惧的精华”
+  worth: 800000
+  rarity: 5
+机械电池片:
+  item: DIAMOND
+  lore:
+  - §6专家模式物品
+  worth: 500000
+  rarity: 1000
+机械车轮片:
+  item: IRON_INGOT
+  lore:
+  - §6专家模式物品
+  worth: 500000
+  rarity: 1000
+机械车体片:
+  item: IRON_INGOT
+  lore:
+  - §6专家模式物品
+  worth: 500000
+  rarity: 1000
 纳米机器人:
   item: CLAY_BALL
   worth: 30000
@@ -337,6 +409,30 @@
   lore:
   - §r召唤日食
   rarity: 8
+日耀碎片:
+  item: NETHER_STAR
+  lore:
+  - §r“宇宙之怒存在于此碎片内”
+  worth: 200000
+  rarity: 9
+星璇碎片:
+  item: NETHER_STAR
+  lore:
+  - §r“旋涡能量源于此碎片”
+  worth: 200000
+  rarity: 9
+星云碎片:
+  item: NETHER_STAR
+  lore:
+  - §r“星系之力存在于此碎片内”
+  worth: 200000
+  rarity: 9
+星尘碎片:
+  item: NETHER_STAR
+  lore:
+  - §r“引人入胜的微粒围绕此碎片旋转”
+  worth: 200000
+  rarity: 9
 阴森木:
   item: LOG_2
   lore:
@@ -367,7 +463,7 @@
   worth: 2000
   rarity: 3
 珍珠碎片:
-  item: IRON_INGOT
+  item: CLAY_BALL
   worth: 30000
   rarity: 1
 珊瑚:
@@ -385,7 +481,7 @@
   worth: 1000
   rarity: 0
 风暴之颚:
-  item: IRON_INGOT
+  item: CLAY_BALL
   worth: 14000
   rarity: 1
 腐烂物质:
@@ -1611,7 +1707,7 @@
   - §r[饰品]
   - §r作为代价，生命值在高于生命上限一半时生命再生将减少玩家生命
   attributes:
-    regen: 12
+    regen: 24
   worth: 9600000
   rarity: 7
 绚彩明胶:
@@ -1671,18 +1767,6 @@
   - §r使用魔力药水时获得魔力烧蚀而非魔力疾病
   worth: 9600000
   rarity: 7
-魔能谐振仪:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  - §r高于50%总魔力时，减少6点生命恢复速度
-  - §r造成魔法伤害时触发治疗效果
-  - §r伤害越高治疗效果越强；魔力越少治疗效果越弱
-  attributes:
-    maxMana: 50
-    damageMagicMulti: 0.06
-  worth: 2400000
-  rarity: 4
 魔能谐振仪:
   item: LEASH
   lore:
@@ -2277,16 +2361,6 @@
     useTime: 32
   worth: 36000
   rarity: 0
-钨钢刀:
-  item: IRON_SWORD
-  attributes:
-    damage: 24
-    damageType: Melee
-    crit: 4
-    knockback: 3.75
-    useTime: 19
-  worth: 200000
-  rarity: 1
 铜质短剑:
   item: IRON_SWORD
   attributes:
@@ -2440,23 +2514,13 @@
   worth: 4000000
   rarity: 3
 翡翠斧:
-  item: DIAMOND_PICKAXE
+  item: DIAMOND_SWORD
   attributes:
     damage: 36
     damageType: Melee
     crit: 4
     knockback: 5
     useTime: 24
-  worth: 400000
-  rarity: 1
-深渊碾碎者:
-  item: DIAMOND_PICKAXE
-  attributes:
-    damage: 72
-    damageType: Melee
-    crit: 4
-    knockback: 5.25
-    useTime: 21
   worth: 400000
   rarity: 1
 海耀之刃:
@@ -2481,16 +2545,6 @@
     useTime: 23
   worth: 400000
   rarity: 1
-痛击者:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 60
-    damageType: Melee
-    crit: 4
-    knockback: 7
-    useTime: 25
-  worth: 200000
-  rarity: 2
 真菌爪:
   item: DIAMOND_SWORD
   attributes:
@@ -10156,14 +10210,6 @@ P90:
   item: ANVIL
   worth: 20000
   rarity: 0
-丝绸:
-  item: LEATHER
-  worth: 20000
-  rarity: 0
-暗影鳞片:
-  item: CLAY_BALL
-  worth: 160000
-  rarity: 1
 火把:
   item: TORCH
   worth: 1000
@@ -10204,56 +10250,10 @@ P90:
   - §r放置在副手，按R射出钩爪，按空格收回钩爪
   worth: 10000000
   rarity: 4
-蛛丝:
-  item: WEB
-  worth: 1000
-  rarity: 0
-毒刺:
-  item: CLAY_BALL
-  worth: 4000
-  rarity: 0
-丛林孢子:
-  item: CLAY_BALL
-  worth: 2000
-  rarity: 0
-仙人掌:
-  item: CACTUS
-  worth: 200
-  rarity: 0
-藤蔓:
-  item: CLAY_BALL
-  worth: 20000
-  rarity: 0
 冰冻火把:
   item: TORCH
   worth: 1200
   rarity: 0
-坠星:
-  item: CLAY_BALL
-  worth: 50000
-  rarity: 1
-钻石:
-  item: DIAMOND
-  worth: 300000
-  rarity: 0
-机械电池片:
-  item: DIAMOND
-  lore:
-  - §6专家模式物品
-  worth: 500000
-  rarity: 1000
-机械车轮片:
-  item: IRON_INGOT
-  lore:
-  - §6专家模式物品
-  worth: 500000
-  rarity: 1000
-机械车体片:
-  item: IRON_INGOT
-  lore:
-  - §6专家模式物品
-  worth: 500000
-  rarity: 1000
 机械矿车:
   item: IRON_INGOT
   worth: 3000000
@@ -10262,48 +10262,6 @@ P90:
   item: IRON_INGOT
   worth: 10000000
   rarity: 10
-力量之魂:
-  item: NETHER_STAR
-  lore:
-  - §r“毁灭者的精华”
-  worth: 800000
-  rarity: 5
-视域之魂:
-  item: NETHER_STAR
-  lore:
-  - §r“全知看守人的精华”
-  worth: 800000
-  rarity: 5
-恐惧之魂:
-  item: NETHER_STAR
-  lore:
-  - §r“纯粹恐惧的精华”
-  worth: 800000
-  rarity: 5
-日耀碎片:
-  item: NETHER_STAR
-  lore:
-  - §r“宇宙之怒存在于此碎片内”
-  worth: 200000
-  rarity: 9
-星璇碎片:
-  item: NETHER_STAR
-  lore:
-  - §r“旋涡能量源于此碎片”
-  worth: 200000
-  rarity: 9
-星云碎片:
-  item: NETHER_STAR
-  lore:
-  - §r“星系之力存在于此碎片内”
-  worth: 200000
-  rarity: 9
-星尘碎片:
-  item: NETHER_STAR
-  lore:
-  - §r“引人入胜的微粒围绕此碎片旋转”
-  worth: 200000
-  rarity: 9
 日耀天塔柱:
   item: STICK
   lore:

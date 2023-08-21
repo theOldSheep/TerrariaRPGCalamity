@@ -132,7 +132,8 @@ public class PlayerHelper {
     }
     public static double getMoney(Player ply) {
         try {
-            return Economy.getMoneyExact(ply.getUniqueId()).doubleValue();
+            BigDecimal money = Economy.getMoneyExact(ply.getUniqueId());
+            return money == null ? 0d : money.doubleValue();
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] getMoney ", e);
             return 0d;
