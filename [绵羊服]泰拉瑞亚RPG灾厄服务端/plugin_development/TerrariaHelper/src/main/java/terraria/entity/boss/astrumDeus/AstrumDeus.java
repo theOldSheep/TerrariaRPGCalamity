@@ -136,6 +136,8 @@ public class AstrumDeus extends EntitySlime {
         if (--spawnAnimationIndex <= 0) {
             bukkitEntity.teleport(summonedLocation);
             Bukkit.broadcastMessage("§d§l" + BOSS_TYPE + " 苏醒了！");
+            // now add the true segments to boss map
+            BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
         }
     }
     // AI related
@@ -388,15 +390,15 @@ public class AstrumDeus extends EntitySlime {
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
         if (index == 0) {
-            setCustomName(BOSS_TYPE.msgName);
+            setCustomName(BOSS_TYPE.msgName + "头");
             this.head = null;
         }
         else {
             this.head = (AstrumDeus) ((CraftEntity) bossParts.get(0)).getHandle();
             if (index + 1 < TOTAL_LENGTH)
-                setCustomName(BOSS_TYPE.msgName + "§1");
+                setCustomName(BOSS_TYPE.msgName + "体节");
             else
-                setCustomName(BOSS_TYPE.msgName + "§2");
+                setCustomName(BOSS_TYPE.msgName + "尾");
         }
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
@@ -451,8 +453,9 @@ public class AstrumDeus extends EntitySlime {
         // boss parts and other properties
         {
             bossParts.add((LivingEntity) bukkitEntity);
+            // put a placeholder in boss map so no BGM will play before it is summoned
             if (index == 0)
-                BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
+                BossHelper.bossMap.put(BOSS_TYPE.msgName, new ArrayList<>());
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;

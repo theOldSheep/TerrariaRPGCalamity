@@ -1,3 +1,39 @@
+荒漠灾虫头:
+  entity: "荒漠灾虫头"
+  contains: false
+  model: "荒漠灾虫/头/head.obj"
+  texture: "荒漠灾虫/头/head.png"
+  scale: 65
+荒漠灾虫体节:
+  entity: "荒漠灾虫体节"
+  contains: false
+  model: "荒漠灾虫/体节/body.obj"
+  texture: "荒漠灾虫/体节/body.png"
+  scale: 65
+荒漠灾虫尾:
+  entity: "荒漠灾虫尾"
+  contains: false
+  model: "荒漠灾虫/尾/tail.obj"
+  texture: "荒漠灾虫/尾/tail.png"
+  scale: 65
+黄沙恶虫头:
+  entity: "黄沙恶虫头"
+  contains: false
+  model: "荒漠灾虫/头/head.obj"
+  texture: "荒漠灾虫/头/head.png"
+  scale: 32
+黄沙恶虫体节:
+  entity: "黄沙恶虫体节"
+  contains: false
+  model: "荒漠灾虫/体节/body.obj"
+  texture: "荒漠灾虫/体节/body.png"
+  scale: 32
+黄沙恶虫尾:
+  entity: "黄沙恶虫尾"
+  contains: false
+  model: "荒漠灾虫/尾/tail.obj"
+  texture: "荒漠灾虫/尾/tail.png"
+  scale: 32
 渊海灾虫头:
   entity: "渊海灾虫头"
   contains: false
@@ -5,7 +41,7 @@
   texture: "渊海灾虫/头/texture.png"
   scale: 45
 渊海灾虫体节:
-  entity: "渊海灾虫身体"
+  entity: "渊海灾虫体节"
   contains: false
   model: "渊海灾虫/体节/custom_model.obj"
   texture: "渊海灾虫/体节/texture.png"
@@ -22,4 +58,22 @@
   model: "白金星舰/custom_model.obj"
   texture: "白金星舰/texture.png"
   scale: 20
+星神游龙头:
+  entity: "星神游龙头"
+  contains: false
+  model: "星神游龙/头/head.obj"
+  texture: "星神游龙/头/head.png"
+  scale: 100
+星神游龙体节:
+  entity: "星神游龙体节"
+  contains: false
+  model: "星神游龙/体节/body.obj"
+  texture: "星神游龙/体节/body.png"
+  scale: 100
+星神游龙尾:
+  entity: "星神游龙尾"
+  contains: false
+  model: "星神游龙/体节/body.obj"
+  texture: "星神游龙/体节/body.png"
+  scale: 100
 

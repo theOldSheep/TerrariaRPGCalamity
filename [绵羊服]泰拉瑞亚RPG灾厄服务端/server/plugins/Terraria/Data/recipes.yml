@@ -2695,7 +2695,7 @@ ENCHANTMENT_TABLE:
     resultItem: 绝望之刃
     requireItem:
     - 木材:10
-    - 暗影鳞甲:8
+    - 暗影鳞片:8
     - 火焰花:2
     - 死亡草:2
   '7':

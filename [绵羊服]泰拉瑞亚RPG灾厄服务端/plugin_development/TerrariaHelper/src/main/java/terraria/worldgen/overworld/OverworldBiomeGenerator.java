@@ -86,7 +86,9 @@ public class OverworldBiomeGenerator {
         Bukkit.getLogger().info("Cache size: " + biomeCache.size() + " / " + CACHE_SIZE);
         for (int i = 0; i < scale; i++)
             for (int j = 0; j < scale; j++) {
-                int blockX = (i - (scale / 2)) * jump + center, blockZ = (j - (scale / 2)) * jump + center;
+                // i : x-coordinate corresponding to the point on map increases as we move to the right (bigger i)
+                // j : z-coordinate corresponding to the point on map increases as we move to the top (smaller j)
+                int blockX = (i - (scale / 2)) * jump + center, blockZ = ((scale / 2) - j) * jump + center;
                 Biome currBiome = getBiome(seed, blockX, blockZ);
                 biomeMap.setRGB(i, j, biomeColors.getOrDefault(currBiome, new Color(0, 255, 0).getRGB()));
                 progress++;

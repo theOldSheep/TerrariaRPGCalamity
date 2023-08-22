@@ -299,6 +299,7 @@ public class TerrariaItem extends EntityItem {
             case "星璇碎片":
             case "星云碎片":
             case "星尘碎片":
+            case "冥思溶剂":
                 this.setNoGravity(true);
         }
         // setup live time

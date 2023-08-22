@@ -77,6 +77,18 @@ Script:
       }
       return false;
     }
+    function isBalloon(itemStack){
+      var lore = itemStack.getItemMeta().getLore();
+      if(lore!=null){
+        for(var i=0;i<lore.size();i++){
+          var line = lore.get(i);
+          if(line!=null && line.contains("算作气球")){
+            return true;
+          }
+        }
+      }
+      return false;
+    }
     function hasAccessoryConflictSingle(currItem, otherAccessoryName){
       if (currItem == otherAccessoryName) return true;
       switch(currItem) {
@@ -175,6 +187,15 @@ Script:
         for (var i = 0; i < otherAccessories.length; i ++) {
           var otherAcc = otherAccessories[i];
           if (isBoots(otherAcc) === true) {
+            return false;
+          }          
+        }
+      }
+      // do not allow multiple balloons
+      if (isBalloon(itemStack) === true) {
+        for (var i = 0; i < otherAccessories.length; i ++) {
+          var otherAcc = otherAccessories[i];
+          if (isBalloon(otherAcc) === true) {
             return false;
           }          
         }

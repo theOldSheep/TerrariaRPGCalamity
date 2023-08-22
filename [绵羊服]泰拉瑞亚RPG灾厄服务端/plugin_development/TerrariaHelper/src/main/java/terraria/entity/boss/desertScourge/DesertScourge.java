@@ -211,15 +211,15 @@ public class DesertScourge extends EntitySlime {
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
         if (index == 0) {
-            setCustomName(BOSS_TYPE.msgName);
+            setCustomName(BOSS_TYPE.msgName + "头");
             this.head = this;
         }
         else {
             this.head = (DesertScourge) ((CraftEntity) bossParts.get(0)).getHandle();
             if (index + 1 < TOTAL_LENGTH)
-                setCustomName(BOSS_TYPE.msgName + "§1");
+                setCustomName(BOSS_TYPE.msgName + "体节");
             else
-                setCustomName(BOSS_TYPE.msgName + "§2");
+                setCustomName(BOSS_TYPE.msgName + "尾");
         }
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");

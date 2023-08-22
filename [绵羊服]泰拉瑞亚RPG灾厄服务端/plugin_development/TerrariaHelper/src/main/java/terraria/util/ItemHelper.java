@@ -364,6 +364,7 @@ public class ItemHelper {
                 regularizedItemType = "牌子";
                 break;
             case SEEDS:
+                item.setType(Material.AIR);
                 double rdm = Math.random();
                 if (rdm < 0.05)
                     regularizedItemType = "草种";
@@ -422,10 +423,8 @@ public class ItemHelper {
             case SNOW_BALL:
             // pumpkin stem being destroyed by flowing water
             case PUMPKIN_SEEDS:
+                item.setType(Material.AIR);
                 break;
-            default:
-                TerrariaHelper.getInstance().getLogger().log(Level.WARNING,
-                        "UNHANDLED VANILLA DROPPED ITEM: " + item.getType());
         }
         if (regularizedItemType == null)
             return item;
