@@ -1,0 +1,20 @@
+# These are Global Settings for Residence.
+DynMap:
+  Use: false
+  ShowFlags: true
+  HideHidden: true
+  Layer:
+    3dRegions: true
+    SubZoneDepth: 2
+  Border:
+    Color: '#FF0000'
+    Opacity: 0.3
+    Weight: 3
+  Fill:
+    Opacity: 0.3
+    Color: '#FFFF00'
+    ForRent: '#33cc33'
+    Rented: '#99ff33'
+    ForSale: '#0066ff'
+  VisibleRegions: []
+  HiddenRegions: []
