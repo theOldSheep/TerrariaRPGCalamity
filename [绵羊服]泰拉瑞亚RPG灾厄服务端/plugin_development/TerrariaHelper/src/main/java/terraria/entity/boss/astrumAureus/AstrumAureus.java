@@ -42,8 +42,8 @@ public class AstrumAureus extends EntitySlime {
     static final int SPREAD_JUMP_MIN = 11, SPREAD_JUMP_MAX = 11, SPREAD_CRAWL_MIN = 8, SPREAD_CRAWL_MAX = 8;
     static final double SPEED_LASER = 2.25, SPEED_CRYSTAL = 1.5,
             HORIZONTAL_SPEED = 1.75, HORIZONTAL_ACC = 0.125,
-            SPEED_CRAWL_MULTI_MIN = 1, SPEED_CRAWL_MULTI_MAX = 1,
-            SPEED_JUMP_MULTI_MIN = 1, SPEED_JUMP_MULTI_MAX = 1;
+            SPEED_CRAWL_MULTI_MIN = 0.15, SPEED_CRAWL_MULTI_MAX = 0.25,
+            SPEED_JUMP_MULTI_MIN = 0.5, SPEED_JUMP_MULTI_MAX = 1;
     EntityHelper.ProjectileShootInfo shootInfoLaser, shootInfoCrystal;
     static {
         attrMapLaser = new HashMap<>();

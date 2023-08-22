@@ -479,7 +479,7 @@
     trailColor: 255|200|50
     trailSize: 0.15
     trailStepSize: 0.5
-瘟疫导弹:
+歌莉娅瘟疫导弹:
     penetration: 99999
     gravity: 0
     liveTime: 40
@@ -570,10 +570,9 @@
     autoTrace: true
     autoTraceMethod: 2
     autoTraceRadius: 128
-    autoTraceSharpTurning: false
     autoTraceAbility: 0.4
-    noAutoTraceTicks: 10
-    maxAutoTraceTicks: 35
+    noAutoTraceTicks: 20
+    maxAutoTraceTicks: 30
     buffInflict:
         - "幻星感染|60|1"
 幻影眼:

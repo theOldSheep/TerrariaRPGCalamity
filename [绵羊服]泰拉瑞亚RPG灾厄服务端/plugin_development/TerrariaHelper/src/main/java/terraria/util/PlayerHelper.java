@@ -719,6 +719,9 @@ public class PlayerHelper {
                         // boss
                         for (String bossName : BossHelper.bossMap.keySet()) {
                             ArrayList<LivingEntity> bossArrayList = BossHelper.bossMap.get(bossName);
+                            // if a placeholder is in the boss map, move on
+                            if (bossArrayList.isEmpty())
+                                continue;
                             // if the boss has multiple phases
                             switch (bossName) {
                                 case "阿娜希塔和利维坦":
@@ -2267,11 +2270,11 @@ public class PlayerHelper {
                         dashCD = 35;
                         break;
                     case "宝光盾牌":
-                        dashSpeed = 1.2;
+                        dashSpeed = 1.15;
                         dashCD = 30;
                         break;
                     case "阿斯加德之英勇":
-                        dashSpeed = 1.5;
+                        dashSpeed = 1.3;
                         dashCD = 30;
                         break;
                 }

@@ -186,7 +186,7 @@ public class Ravager extends EntitySlime {
                     phase2AI();
                 }
                 // rock pillars
-                if (indexAI % 35 == 0) {
+                if (indexAI % 50 == 0) {
                     spawnRockPillars();
                 }
                 // setup orthogonal direction

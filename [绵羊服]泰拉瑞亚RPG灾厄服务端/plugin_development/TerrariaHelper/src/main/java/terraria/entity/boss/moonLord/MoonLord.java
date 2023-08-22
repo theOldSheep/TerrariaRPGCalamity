@@ -133,8 +133,8 @@ public class MoonLord extends EntitySlime {
             }
             // spawn other parts, record actual boss part instead of placeholder and broadcast summon message
             if (--indexSpawnAnimation == 0) {
-                spawnOtherParts();
                 BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
+                spawnOtherParts();
                 Bukkit.broadcastMessage("§d§l" + BOSS_TYPE + " 苏醒了！");
             }
         }

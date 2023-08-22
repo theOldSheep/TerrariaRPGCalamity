@@ -42,7 +42,7 @@ public class RavagerRockPillar extends EntitySlime {
                 bukkitEntity.teleport(base.bukkitEntity.getLocation().add(0, 2 * heightIndex, 0));
             }
             // remove on timeout
-            if (ticksLived > 80)
+            if (ticksLived > 200)
                 die();
         }
         // face the player

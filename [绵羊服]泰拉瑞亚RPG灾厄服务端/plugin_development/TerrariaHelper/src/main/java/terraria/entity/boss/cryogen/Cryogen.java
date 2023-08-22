@@ -104,7 +104,6 @@ public class Cryogen extends EntitySlime {
         }
         indexAI = -30;
         phaseAI = newPhase;
-        setCustomName(BOSS_TYPE.msgName + "§" + newPhase);
         // give the player some time to react
         bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
         bukkitEntity.setVelocity(new Vector());
@@ -446,7 +445,7 @@ public class Cryogen extends EntitySlime {
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName(BOSS_TYPE.msgName + "§1");
+        setCustomName(BOSS_TYPE.msgName);
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");

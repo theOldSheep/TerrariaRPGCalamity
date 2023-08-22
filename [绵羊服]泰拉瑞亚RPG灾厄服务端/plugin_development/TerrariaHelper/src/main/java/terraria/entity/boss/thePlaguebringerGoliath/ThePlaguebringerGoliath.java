@@ -308,7 +308,7 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         // shoot info's
         {
             shootInfoStinger = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapStingerMissile,
-                    EntityHelper.DamageType.ARROW, "瘟疫导弹");
+                    EntityHelper.DamageType.ARROW, "歌莉娅瘟疫导弹");
             shootInfoMissile = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapStingerMissile,
                     EntityHelper.DamageType.ROCKET, "瘟疫火箭");
             shootInfoNukeBarrage = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapNukeBarrage,
