@@ -7116,7 +7116,7 @@ P90:
     useTime: 30
     manaUse: 10
   worth: 800000
-  rarity: 1110
+  rarity: 1100
 死灵骨髓杖:
   item: WOOD_SWORD
   lore:

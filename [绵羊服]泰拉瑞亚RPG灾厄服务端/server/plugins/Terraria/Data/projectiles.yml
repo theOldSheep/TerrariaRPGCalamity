@@ -1105,7 +1105,7 @@
 手榴弹:
     blockHitAction: bounce
     bounce: 999999
-    bounceVelocityMulti: 0.65
+    bounceVelocityMulti: 0.4
     frictionFactor: 0.1
     canBeReflected: false
     liveTime: 100
@@ -1116,7 +1116,7 @@
 炸弹:
     blockHitAction: bounce
     bounce: 999999
-    bounceVelocityMulti: 0.65
+    bounceVelocityMulti: 0.4
     frictionFactor: 0.1
     canBeReflected: false
     liveTime: 100
@@ -1137,7 +1137,7 @@
 雷管:
     blockHitAction: bounce
     bounce: 999999
-    bounceVelocityMulti: 0.65
+    bounceVelocityMulti: 0.4
     frictionFactor: 0.1
     canBeReflected: false
     liveTime: 100

@@ -20,9 +20,7 @@ rarity:
   '14': §#2B5ED2§l
   '15': §#481E86§l
   '16': §#CB07CA§l
-  # 专家饰品
   '1000': §l
-  # 嘉登类
   '1100': §#C94622§l
 deathMessages:
   Generic:

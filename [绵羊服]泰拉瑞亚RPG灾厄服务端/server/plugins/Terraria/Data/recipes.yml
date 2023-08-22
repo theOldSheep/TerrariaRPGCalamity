@@ -1530,8 +1530,8 @@ ANVIL:
     requireLevel: 1
     resultItem: 风之刃
     requireItem:
-    - 天蓝矿:9
-    - 陨星锭:3
+    - 天蓝锭:9
+    - 丝绸:3
   '184':
     requireLevel: 1
     resultItem: 高斯短匕
@@ -2242,6 +2242,14 @@ ANVIL:
     resultItem: 代达罗斯守卫法杖
     requireItem:
     - 寒元锭:12
+  '290_1':
+    requireLevel: 2
+    resultItem: 脉冲炮塔遥控装置
+    requireItem:
+    - 可疑镀层:18
+    - 神秘电路:12
+    - 生命合金:5
+    - 瘟疫装甲镀层:10
   '291':
     requireLevel: 2
     resultItem: 冰川核心:3
@@ -3197,7 +3205,7 @@ TINKER_WORKBENCH:
     resultItem: 气球束
     requireItem:
     - 跳跃之瓶
-    - 跳跃之瓶
+    - 天蓝锭:3
   '25':
     requireLevel: 1
     resultItem: 天使之靴
