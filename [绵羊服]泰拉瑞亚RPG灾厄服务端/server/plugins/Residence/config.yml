@@ -9,10 +9,10 @@ Global:
   versionCheck: true
   # This loads the <language>.yml file in the Residence Language folder
   # All Residence text comes from this file. (NOT DONE YET)
-  Language: English
+  Language: Chinese
   # Wooden Hoe is the default selection tool for Residence.
   # You can change it to another item ID listed here: http://www.minecraftwiki.net/wiki/Data_values
-  SelectionToolId: 280
+  SelectionToolId: 290
   Selection:
     # By setting this to true, all selections will be made from bedrock to sky ignoring Y coordinates
     IgnoreY: false
@@ -124,8 +124,8 @@ Global:
     - slowness
     # Defines speed for particular wspeed1 and wspeed2 flags. It can be from 0 up to 5
     WalkSpeed:
-      '1': 0.5
-      '2': 2.0
+      '1': 0.3
+      '2': 0.4
   # The interval, in milliseconds, between movement checks.
   # Reducing this will increase the load on the server.
   # Increasing this will allow players to move further in movement restricted zones before they are teleported out.

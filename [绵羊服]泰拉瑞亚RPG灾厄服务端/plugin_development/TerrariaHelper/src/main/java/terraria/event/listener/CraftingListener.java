@@ -18,6 +18,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -396,9 +397,12 @@ public class CraftingListener implements Listener {
     // opens a new crafting gui to the player when a work station is interacted
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent e) {
-        if (e.isCancelled()) return;
+        // do nothing if the player is not right-clicking the block, or the event is canceled
+        if (e.isCancelled() || e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         Block block = e.getClickedBlock();
+        // if no block is being clicked, just in case
         if (block == null) return;
+        // deny further player interaction if a GUI is successfully opened
         boolean guiOpened = handleCrafting(e.getPlayer(), block);
         if (guiOpened) {
             e.setCancelled(true);

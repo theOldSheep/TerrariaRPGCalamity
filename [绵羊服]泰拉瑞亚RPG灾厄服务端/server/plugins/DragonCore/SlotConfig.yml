@@ -93,7 +93,6 @@ Script:
       if (currItem == otherAccessoryName) return true;
       switch(currItem) {
         case "核子之源":
-          if (otherAccessoryName == "核子之源") return true;
           if (otherAccessoryName == "玷星之源") return true;
           if (otherAccessoryName == "斯塔提斯的诅咒") return true;
           break;
@@ -107,6 +106,15 @@ Script:
           if (otherAccessoryName == "核子之源") return true;
           if (otherAccessoryName == "斯塔提斯的祝福") return true;
           if (otherAccessoryName == "始源暗影炎") return true;
+          break;
+        case "斯塔提斯的祝福":
+        case "始源暗影炎":
+          if (otherAccessoryName == "斯塔提斯的诅咒") return true;
+          break;
+        case "核子之源":
+        case "凝胶充能电池":
+        case "核燃料棒":
+          if (otherAccessoryName == "玷星之源") return true;
           break;
       }
       return false;

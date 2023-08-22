@@ -60,6 +60,9 @@ public class PlayerJoinListener implements Listener {
         // show the event progress bar if applicable
         if (EventAndTime.eventProgressBar != null)
             EventAndTime.eventProgressBar.addPlayer( playerNMS );
+        // give permission to show item in chat
+        joinedPly.addAttachment(TerrariaHelper.getInstance())
+                .setPermission("chatitem.use", true);
     }
 
 }
