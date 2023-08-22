@@ -73,7 +73,7 @@ public class OverworldBiomeGenerator {
         int center = 0;
         int scale = 1000;
         int jump = 20;
-        File dir_biome_map = new File("worldGenDebug/biomesMap(20000x20000).png");
+        File dir_biome_map = new File("worldGenDebug" + File.separator + "biomesMap(20000x20000).png");
         Bukkit.getLogger().info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         if (dir_biome_map.exists()) {
             Bukkit.getLogger().info("BIOME MAP FILE ALREADY EXISTS. DELETE THE FILE IF YOU WISH FOR GENERATING A NEW ONE.");

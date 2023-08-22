@@ -526,10 +526,16 @@ public class PlayerHelper {
                                         Entity target = null;
                                         for (Entity e : ply.getWorld().getNearbyEntities(ply.getEyeLocation(), 12, 12, 12)) {
                                             // is not a valid enemy
-                                            if (!(EntityHelper.checkCanDamage(ply, e, true))) break;
-                                            double distSqr = e.getLocation().distanceSquared(ply.getLocation());
+                                            if (!(EntityHelper.checkCanDamage(ply, e, true)))
+                                                continue;
+                                            // has no vision
+                                            if (! ply.hasLineOfSight(e))
+                                                continue;
                                             // further than current
-                                            if (distSqr > distanceSqr) break;
+                                            double distSqr = e.getLocation().distanceSquared(ply.getLocation());
+                                            if (distSqr > distanceSqr)
+                                                continue;
+                                            // record target
                                             distanceSqr = distSqr;
                                             target = e;
                                         }

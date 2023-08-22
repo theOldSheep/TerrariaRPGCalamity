@@ -9,10 +9,10 @@ Global:
   versionCheck: true
   # This loads the <language>.yml file in the Residence Language folder
   # All Residence text comes from this file. (NOT DONE YET)
-  Language: Chinese
+  Language: English
   # Wooden Hoe is the default selection tool for Residence.
   # You can change it to another item ID listed here: http://www.minecraftwiki.net/wiki/Data_values
-  SelectionToolId: 290
+  SelectionToolId: 280
   Selection:
     # By setting this to true, all selections will be made from bedrock to sky ignoring Y coordinates
     IgnoreY: false
@@ -107,8 +107,21 @@ Global:
       Heal: 1
       Feed: 5
     # Potions containing one of thos effects will be ignored if residence dont have pvp true flag set
-    NegativePotionEffects: []
-    NegativeLingeringPotions: []
+    NegativePotionEffects:
+    - blindness
+    - confusion
+    - harm
+    - hunger
+    - poison
+    - slow
+    - slow_digging
+    - weakness
+    - wither
+    NegativeLingeringPotions:
+    - slowness
+    - instant_damage
+    - poison
+    - slowness
     # Defines speed for particular wspeed1 and wspeed2 flags. It can be from 0 up to 5
     WalkSpeed:
       '1': 0.5
@@ -120,13 +133,13 @@ Global:
   Tp:
     # The interval, in seconds, for teleportation.
     # Use 0 to disable
-    TeleportDelay: 10
+    TeleportDelay: 3
     # Show aditional message in title message area when player is teleporting to residence
     TeleportTitleMessage: true
   RandomTeleportation:
     Worlds:
       # World name to use this feature. Add annother one with appropriate name to enable random teleportation
-      world_nether:
+      world:
         Enabled: true
         # Max coordinate to teleport, setting to 1000, player can be teleported between -1000 and 1000 coordinates
         MaxCoord: 1000
@@ -140,17 +153,17 @@ Global:
         MinCord: 500
         CenterX: 0
         CenterZ: 0
-      world:
+      world_nether:
         Enabled: true
         MaxCoord: 1000
         MinCord: 500
         CenterX: 0
         CenterZ: 0
     # How long force player to wait before using command again.
-    Cooldown: 30
+    Cooldown: 5
     # How many times to try find correct location for teleportation.
     # Keep it at low number, as player always can try again after delay
-    MaxTries: 10
+    MaxTries: 20
   # The interval, in minutes, between residence saves.
   SaveInterval: 10
   # New save mechanic can minimize save file couple times and speedup save/load time in general
@@ -214,9 +227,9 @@ Global:
       # This dont have effect in residence area
       Level: 63
       # With this set to true, lava flow outside residence is blocked
-      NoLavaFlow: false
+      NoLavaFlow: true
       # With this set to true, water flow outside residence is blocked
-      NoWaterFlow: false
+      NoWaterFlow: true
       Worlds:
       - world
     Place:
@@ -224,14 +237,14 @@ Global:
       # This don't have effect in residence area
       Level: 63
       # With this set to true, playrs cant place lava outside residence
-      NoLavaPlace: false
+      NoLavaPlace: true
       # With this set to true, playrs cant place water outside residence
-      NoWaterPlace: false
+      NoWaterPlace: true
       Worlds:
       - world
     BlockFall:
       # With this set to true, falling blocks will be deleted if they will land in different area
-      Use: false
+      Use: true
       # Level from which one to start block block's fall
       # This don't have effect in residence area or outside
       Level: 62

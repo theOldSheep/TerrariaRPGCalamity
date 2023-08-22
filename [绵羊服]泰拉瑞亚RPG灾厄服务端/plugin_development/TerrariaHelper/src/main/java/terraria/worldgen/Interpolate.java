@@ -70,7 +70,7 @@ public class Interpolate {
     public void printTestImage(String interpolateName) {
         int length = 1000, height = 250;
         double range = 2.25; // 2 is the minimum for drawing out the entire noise map
-        File dir_biome_map = new File("worldGenDebug/" + interpolateName + ".png");
+        File dir_biome_map = new File("worldGenDebug" + File.separator + interpolateName + ".png");
         Bukkit.getLogger().info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         Bukkit.getLogger().info("START GENERATING INTERPOLATE MAP " + interpolateName);
         Bukkit.getLogger().info("Interpolate Pivots: " + Arrays.toString(points));
