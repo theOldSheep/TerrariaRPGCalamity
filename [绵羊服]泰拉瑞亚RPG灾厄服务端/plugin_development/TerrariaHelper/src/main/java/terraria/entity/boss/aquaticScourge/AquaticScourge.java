@@ -266,7 +266,7 @@ public class AquaticScourge extends EntitySlime {
         else {
             this.head = (AquaticScourge) ((CraftEntity) bossParts.get(0)).getHandle();
             if (index + 1 < TOTAL_LENGTH)
-                setCustomName(BOSS_TYPE.msgName + "身体");
+                setCustomName(BOSS_TYPE.msgName + "体节");
             else
                 setCustomName(BOSS_TYPE.msgName + "尾");
         }

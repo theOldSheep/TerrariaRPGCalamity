@@ -1797,7 +1797,7 @@ public class EntityHelper {
 
         // send info message to damager player
         if (damageSource instanceof Player && victim != damageSource) {
-            String vName = damageTaker.getName();
+            String vName = victim.getName();
             int dmgInt = (int) dmg;
             int healthInt = (int) damageTaker.getHealth();
             int maxHealthInt = (int) damageTaker.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();

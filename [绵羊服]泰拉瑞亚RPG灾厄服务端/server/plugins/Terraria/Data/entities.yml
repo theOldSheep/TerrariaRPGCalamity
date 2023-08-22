@@ -618,12 +618,19 @@
         - "咒火"
         - "燃烧"
     soundKilled: "ENTITY.CLTST.DEATH"
-星神游龙:
-    drop:
-        - "日耀碎片:20:32:1"
-        - "星璇碎片:20:32:1"
-        - "星云碎片:20:32:1"
-        - "星尘碎片:20:32:1"
+星神游龙头:
+    buffInflict:
+        - "幻星感染|160|1"
+    buffImmute:
+        - "中毒"
+        - "幻星感染"
+星神游龙体节:
+    buffInflict:
+        - "幻星感染|160|1"
+    buffImmute:
+        - "中毒"
+        - "幻星感染"
+星神游龙尾:
     buffInflict:
         - "幻星感染|160|1"
     buffImmute:

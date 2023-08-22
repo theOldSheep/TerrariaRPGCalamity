@@ -1147,9 +1147,9 @@ public class PlayerHelper {
                         thrustProgressMax *= EntityHelper.getAttrMap(ply).getOrDefault("flightTimeMulti", 1d);
                         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
                         double speedMultiAttribute = attrMap.getOrDefault("speedMulti", 1d);
-                        // speed multiplier that exceeds 100% are only 40% as effective on wings
+                        // speed multiplier that exceeds 100% are only 50% as effective on wings
                         if (speedMultiAttribute > 1d)
-                            speedMultiAttribute = 1 + (speedMultiAttribute - 1) * 0.4;
+                            speedMultiAttribute = 1 + (speedMultiAttribute - 1) * 0.5;
                         speedMulti *= speedMultiAttribute;
                         accelerationMulti *= speedMultiAttribute / 2;
                     }
@@ -1706,6 +1706,17 @@ public class PlayerHelper {
                                 toTweak.put("speedMulti", "0.098");
                                 toTweak.put("flightTimeMulti", "0.196");
                             }
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.YHARON_DRAGON_OF_REBIRTH.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.09");
+                                toTweak.put("useSpeedMeleeMulti", "0.048");
+                                toTweak.put("regen", "4");
+                                toTweak.put("crit", "4");
+                                toTweak.put("damageMulti", "0.095");
+                                toTweak.put("damageTakenMulti", "-0.047");
+                                toTweak.put("defence", "18");
+                                toTweak.put("speedMulti", "0.096");
+                                toTweak.put("flightTimeMulti", "0.193");
+                            }
                             else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.THE_DEVOURER_OF_GODS.msgName)) {
                                 toTweak.put("maxHealthMulti", "0.09");
                                 toTweak.put("useSpeedMeleeMulti", "0.047");
@@ -1739,6 +1750,28 @@ public class PlayerHelper {
                                 toTweak.put("speedMulti", "0.079");
                                 toTweak.put("flightTimeMulti", "0.157");
                             }
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.ASTRUM_DEUS.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.07");
+                                toTweak.put("useSpeedMeleeMulti", "0.038");
+                                toTweak.put("regen", "4");
+                                toTweak.put("crit", "3");
+                                toTweak.put("damageMulti", "0.077");
+                                toTweak.put("damageTakenMulti", "-0.038");
+                                toTweak.put("defence", "14");
+                                toTweak.put("speedMulti", "0.077");
+                                toTweak.put("flightTimeMulti", "0.154");
+                            }
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.EMPRESS_OF_LIGHT.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.06");
+                                toTweak.put("useSpeedMeleeMulti", "0.035");
+                                toTweak.put("regen", "4");
+                                toTweak.put("crit", "3");
+                                toTweak.put("damageMulti", "0.07");
+                                toTweak.put("damageTakenMulti", "-0.035");
+                                toTweak.put("defence", "12");
+                                toTweak.put("speedMulti", "0.07");
+                                toTweak.put("flightTimeMulti", "0.139");
+                            }
                             else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.PLANTERA.msgName)) {
                                 toTweak.put("maxHealthMulti", "0.06");
                                 toTweak.put("useSpeedMeleeMulti", "0.03");
@@ -1750,6 +1783,28 @@ public class PlayerHelper {
                                 toTweak.put("speedMulti", "0.061");
                                 toTweak.put("flightTimeMulti", "0.121");
                             }
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.BRIMSTONE_ELEMENTAL.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.05");
+                                toTweak.put("useSpeedMeleeMulti", "0.028");
+                                toTweak.put("regen", "4");
+                                toTweak.put("crit", "2");
+                                toTweak.put("damageMulti", "0.055");
+                                toTweak.put("damageTakenMulti", "-0.028");
+                                toTweak.put("defence", "10");
+                                toTweak.put("speedMulti", "0.057");
+                                toTweak.put("flightTimeMulti", "0.114");
+                            }
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.CRYOGEN.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.04");
+                                toTweak.put("useSpeedMeleeMulti", "0.024");
+                                toTweak.put("regen", "2");
+                                toTweak.put("crit", "2");
+                                toTweak.put("damageMulti", "0.048");
+                                toTweak.put("damageTakenMulti", "-0.024");
+                                toTweak.put("defence", "8");
+                                toTweak.put("speedMulti", "0.048");
+                                toTweak.put("flightTimeMulti", "0.096");
+                            }
                             else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.WALL_OF_FLESH.msgName)) {
                                 toTweak.put("maxHealthMulti", "0.04");
                                 toTweak.put("useSpeedMeleeMulti", "0.022");
@@ -1760,6 +1815,39 @@ public class PlayerHelper {
                                 toTweak.put("defence", "8");
                                 toTweak.put("speedMulti", "0.045");
                                 toTweak.put("flightTimeMulti", "0.089");
+                            }
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.THE_SLIME_GOD.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.04");
+                                toTweak.put("useSpeedMeleeMulti", "0.021");
+                                toTweak.put("regen", "2");
+                                toTweak.put("crit", "2");
+                                toTweak.put("damageMulti", "0.043");
+                                toTweak.put("damageTakenMulti", "-0.021");
+                                toTweak.put("defence", "8");
+                                toTweak.put("speedMulti", "0.043");
+                                toTweak.put("flightTimeMulti", "0.086");
+                            }
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.THE_HIVE_MIND.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.03");
+                                toTweak.put("useSpeedMeleeMulti", "0.018");
+                                toTweak.put("regen", "2");
+                                toTweak.put("crit", "2");
+                                toTweak.put("damageMulti", "0.036");
+                                toTweak.put("damageTakenMulti", "-0.018");
+                                toTweak.put("defence", "6");
+                                toTweak.put("speedMulti", "0.036");
+                                toTweak.put("flightTimeMulti", "0.071");
+                            }
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.EYE_OF_CTHULHU.msgName)) {
+                                toTweak.put("maxHealthMulti", "0.03");
+                                toTweak.put("useSpeedMeleeMulti", "0.015");
+                                toTweak.put("regen", "2");
+                                toTweak.put("crit", "2");
+                                toTweak.put("damageMulti", "0.03");
+                                toTweak.put("damageTakenMulti", "-0.015");
+                                toTweak.put("defence", "6");
+                                toTweak.put("speedMulti", "0.03");
+                                toTweak.put("flightTimeMulti", "0.061");
                             }
                             else {
                                 toTweak.put("maxHealthMulti", "0.02");

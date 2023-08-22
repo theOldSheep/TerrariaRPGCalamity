@@ -419,7 +419,7 @@
 流星喷射:
     blockHitAction: thru
     gravity: 0
-    projectileSize: 10
+    projectileSize: 5
     liveTime: 100
     buffInflict:
         - "碎甲|100|1"

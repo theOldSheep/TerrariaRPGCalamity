@@ -131,9 +131,10 @@ public class MoonLord extends EntitySlime {
                             PotionEffectType.CONFUSION, ticksDuration, 0, false, false), true);
                 }
             }
-            // spawn other parts and summon message
+            // spawn other parts, record actual boss part instead of placeholder and broadcast summon message
             if (--indexSpawnAnimation == 0) {
                 spawnOtherParts();
+                BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
                 Bukkit.broadcastMessage("§d§l" + BOSS_TYPE + " 苏醒了！");
             }
         }
@@ -229,7 +230,8 @@ public class MoonLord extends EntitySlime {
         {
             bossParts = new ArrayList<>();
             bossParts.add((LivingEntity) bukkitEntity);
-            BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
+            // placeholder
+            BossHelper.bossMap.put(BOSS_TYPE.msgName, new ArrayList<>());
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;

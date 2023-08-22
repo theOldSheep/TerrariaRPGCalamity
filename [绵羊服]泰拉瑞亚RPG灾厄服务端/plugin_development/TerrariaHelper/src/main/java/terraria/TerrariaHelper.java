@@ -96,8 +96,8 @@ public class TerrariaHelper extends JavaPlugin {
                                     .append(effectLore).append(separator)
                                     .append(effectDisplayTime);
                         }
-                        long offset = ((Calendar.getInstance().getTimeInMillis() / 500)) % 50;
                         Set<String> allBuff = buffConfig.getConfigurationSection("effects").getKeys(false);
+                        long offset = ((Calendar.getInstance().getTimeInMillis() / 500)) % allBuff.size();
                         for (int i = 0; i < 0; i ++) {
                             for (String effectDisplayName : allBuff) {
                                 if (offset > 0) {

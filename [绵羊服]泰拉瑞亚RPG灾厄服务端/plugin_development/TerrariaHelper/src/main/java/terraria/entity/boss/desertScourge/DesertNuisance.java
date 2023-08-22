@@ -193,15 +193,15 @@ public class DesertNuisance extends EntitySlime {
         // basic characteristics
         this.owner = owner;
         if (index == 0) {
-            setCustomName("黄沙恶虫");
+            setCustomName("黄沙恶虫头");
             this.head = this;
         }
         else {
             this.head = (DesertNuisance) ((CraftEntity) bossParts.get(0)).getHandle();
             if (index + 1 < TOTAL_LENGTH)
-                setCustomName("黄沙恶虫" + "§1");
+                setCustomName("黄沙恶虫体节");
             else
-                setCustomName("黄沙恶虫" + "§2");
+                setCustomName("黄沙恶虫尾");
         }
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
