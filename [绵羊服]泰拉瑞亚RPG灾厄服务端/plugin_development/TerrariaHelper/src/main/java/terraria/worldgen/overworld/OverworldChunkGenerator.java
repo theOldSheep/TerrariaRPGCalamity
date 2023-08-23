@@ -182,7 +182,6 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                     matStone = Material.PACKED_ICE;
                     break;
                 case DESERT: // desert
-                case MUTATED_DESERT: // desert
                 case OCEAN: // ocean
                 case BEACHES: // beach
                 case FROZEN_OCEAN: // sulphurous ocean
@@ -190,6 +189,11 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                     matTopSoil = Material.SAND;
                     matSoil = Material.SAND;
                     matStone = Material.SANDSTONE;
+                    break;
+                case MUTATED_DESERT: // sunken sea
+                    matTopSoil = Material.STAINED_CLAY;
+                    matSoil = Material.WATER;
+                    matStone = Material.STAINED_CLAY;
                     break;
                 case MUSHROOM_ISLAND: // corruption
                 case MUSHROOM_ISLAND_SHORE: // corruption

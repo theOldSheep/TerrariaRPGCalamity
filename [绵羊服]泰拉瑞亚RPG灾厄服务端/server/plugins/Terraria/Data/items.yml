@@ -3059,6 +3059,82 @@
     buffInflictMelee: 狱炎|100|1
   worth: 16000000
   rarity: 9
+破坏重剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射会爆炸的宇宙冲击波
+  attributes:
+    damage: 264
+    damageType: Melee
+    crit: 4
+    knockback: 4.25
+    useTime: 24
+  worth: 20000000
+  rarity: 10
+制裁大剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r遗忘之地的苍白之剑
+  - §r发射一个白球并降下追踪白雨
+  - §r你可以听见这把剑微弱的安抚和低语
+  - §r“无论你在何方，你都绝非孤身一人。我永远会在你身旁，我的王”
+  attributes:
+    damage: 96
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 17
+  worth: 20000000
+  rarity: 10
+瘟疫大剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射蜜蜂和瘟疫云
+  attributes:
+    damage: 160
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 20
+    buffInflictMelee: 瘟疫|100|1
+  worth: 20000000
+  rarity: 10
+季节长剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r依照现实时间，发射出颜色不同的剑气
+  - §r剑气在白天造成破晓减益，在晚上造成夜魇
+  - §r“打破次元壁”
+  attributes:
+    damage: 600
+    damageType: Melee
+    crit: 4
+    knockback: 6.5
+    useTime: 16
+  worth: 20000000
+  rarity: 10
+月炎之锋:
+  item: DIAMOND_SWORD
+  lore:
+  - §r击中敌人时会天降月火
+  attributes:
+    damage: 960
+    damageType: Melee
+    crit: 4
+    knockback: 7.75
+    useTime: 12
+  worth: 20000000
+  rarity: 10
+爆破剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 96
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 16
+  worth: 22000000
+  rarity: 11
 剑鱼:
   item: STONE_SWORD
   attributes:

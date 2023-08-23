@@ -73,8 +73,10 @@ public class SkeletronHead extends EntitySlime {
         if (target == null) return;
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                 bukkitEntity, new Vector(), skull_attrMap, EntityHelper.DamageType.MAGIC, "--");
-        shootInfo.projectileName = "诅咒骷髅头";
+        shootInfo.projectileName = "骷髅头";
         shootInfo.properties.put("gravity", 0d);
+        shootInfo.properties.put("autoTrace", false);
+        shootInfo.properties.put("trailColor", null);
         shootInfo.properties.put("blockHitAction", "thru");
         double offsetSize = 4.5;
         int i = -3, j = -3, k = -3;

@@ -2029,6 +2029,74 @@ TNT:
         damageMulti: 0.5
         name: 追踪火球
         velocity: 1.25
+破坏重剑剑气:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 60
+    isGrenade: true
+    blastRadius: 1.75
+    buffInflict:
+        - "狱炎|60|1"
+        - "霜火|40|1"
+    trailColor: 71|121|253
+    trailStepSize: 0.5
+    trailLingerTime: 6
+制裁大剑分裂剑气:
+    gravity: 0
+    liveTime: 40
+    autoTrace: true
+    trailColor: 255|255|255
+    trailStepSize: 1
+    trailLingerTime: 6
+制裁大剑剑气:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 60
+    trailColor: 255|255|255
+    trailStepSize: 1
+    trailLingerTime: 6
+    spawnProjectiles:
+        interval: 4
+        offset: 0.5
+        spawnMechanism: BOTTOM
+        damageMulti: 1
+        speed: 1.75
+        spawnType: 制裁大剑分裂剑气
+毒刃瘟疫云:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 3
+    penetration: 999999
+    liveTime: 15
+    trailColor: 56|208|152
+    trailSize: 0.2
+    trailStepSize: 0.75
+    buffInflict:
+        - "瘟疫|40|1"
+    spawnProjectiles:
+        interval: 1
+        offset: 3
+        spawnMechanism: FORWARD
+        damageMulti: 0.35
+        speed: 1.85
+        spawnType: 瘟疫蜜蜂
+白天剑气:
+    gravity: 0
+    projectileSize: 0.75
+    liveTime: 100
+    buffInflict:
+        - "破晓|60|1"
+夜晚剑气:
+    gravity: 0
+    projectileSize: 0.75
+    liveTime: 100
+    buffInflict:
+        - "夜魇|60|1"
+爆破剑气:
+    gravity: 0
+    projectileSize: 0.75
+    liveTime: 60
+####
 电火花:
     noGravityTicks: 0
     liveTime: 80

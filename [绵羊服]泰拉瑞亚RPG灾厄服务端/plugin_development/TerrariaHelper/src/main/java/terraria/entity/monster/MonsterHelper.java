@@ -936,7 +936,6 @@ public class MonsterHelper {
                                     indexAI = 0;
                                 }
                             }
-                            Bukkit.broadcastMessage(indexAI + ", " + monsterBkt.getScoreboardTags());
                             if (indexAI > 30) {
                                 monster.noclip = true;
                                 monsterBkt.teleport(target.getLocation().add(0, 16, 0));
@@ -1102,7 +1101,7 @@ public class MonsterHelper {
                 case "水晶史莱姆": {
                     if (indexAI >= 0 && monster.getHealth() > 0) {
                         if (monsterBkt.getLocation().subtract(0, 1, 0).getBlock().getType().isSolid()) {
-                            String projectileName = type.equals("尖刺史莱姆") ? "尖刺" : "水晶";
+                            String projectileName = type.equals("尖刺史莱姆") ? "史莱姆尖刺" : "史莱姆水晶";
                             HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
                             for (int i = 0; i < 25; i++) {
                                 Vector projVel = new Vector(Math.random() * 2 - 1, 0, Math.random() * 2 - 1);

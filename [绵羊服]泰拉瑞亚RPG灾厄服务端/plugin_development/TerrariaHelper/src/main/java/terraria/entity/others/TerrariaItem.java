@@ -22,7 +22,7 @@ public class TerrariaItem extends EntityItem {
     static final int
             BOOSTER_LIVE_TIME = 600,
             HEART_LIVE_TIME = 1200,
-            GENERIC_LIVE_TIME = 6000;
+            GENERIC_LIVE_TIME = 3000;
     static final double maxPickupRadius = 27.5;
     public int liveTime, baseRarity, lastTick, age;
     public String itemType;
@@ -295,6 +295,10 @@ public class TerrariaItem extends EntityItem {
             case "魔力强化焰":
             case "光明之魂":
             case "暗影之魂":
+            case "飞翔之魂":
+            case "日光精华":
+            case "冰川精华":
+            case "混乱精华":
             case "日耀碎片":
             case "星璇碎片":
             case "星云碎片":

@@ -3656,6 +3656,38 @@ TINKER_WORKBENCH:
     requireItem:
     - 无头骑士剑
     - 星尘碎片:12
+  '43_1':
+    requireLevel: 1
+    resultItem: 破坏重剑
+    requireItem:
+    - 灾难巨剑
+    - 陨星锭:10
+    - 炫星锭:10
+    - 夜明锭:5
+  '43_2':
+    requireLevel: 1
+    resultItem: 制裁大剑
+    requireItem:
+    - 夜明锭:7
+  '43_3':
+    requireLevel: 1
+    resultItem: 瘟疫大剑
+    requireItem:
+    - 瘟疫毒刃
+    - 夜明锭:5
+  '43_4':
+    requireLevel: 1
+    resultItem: 季节长剑
+    requireItem:
+    - 夜明锭:5
+    - 炫星锭:20
+    - 星系异石:5
+  '43_5':
+    requireLevel: 1
+    resultItem: 月炎之锋
+    requireItem:
+    - 彗星陨刃
+    - 夜明锭:5
   '44':
     requireLevel: 1
     resultItem: 幻星矛

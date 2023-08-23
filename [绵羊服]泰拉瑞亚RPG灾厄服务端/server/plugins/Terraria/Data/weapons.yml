@@ -569,6 +569,43 @@
     interval: 1
     velocity: 2.25
     name: 燃烧头骨
+破坏重剑:
+  type: SWING
+  autoSwing: true
+  size: 6
+  projectileInfo:
+    interval: 1
+    velocity: 3
+    name: 破坏重剑剑气
+制裁大剑:
+  type: SWING
+  autoSwing: true
+  size: 7
+  projectileInfo:
+    interval: 1
+    velocity: 2
+    name: 制裁大剑剑气
+瘟疫大剑:
+  type: SWING
+  autoSwing: true
+  size: 6
+  projectileInfo:
+    interval: 1
+    velocity: 1.85
+    name: 毒刃瘟疫云
+季节长剑:
+  type: SWING
+  autoSwing: true
+  size: 6
+月炎之锋:
+  type: SWING
+  autoSwing: true
+  size: 12.5
+爆破剑:
+  type: SWING
+  autoSwing: true
+  size: 7.5
+####
 钴薙刀:
   type: STAB
   size: 6

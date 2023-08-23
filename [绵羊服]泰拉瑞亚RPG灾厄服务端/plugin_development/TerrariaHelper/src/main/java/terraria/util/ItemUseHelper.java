@@ -1287,26 +1287,42 @@ public class ItemUseHelper {
                         break;
                     }
                     case "彗星陨刃":
-                    case "翡翠之潮": {
+                    case "翡翠之潮":
+                    case "月炎之锋": {
                         String projectileName;
                         double projectileSpeed;
+                        int shootAmountMin = 2, shootAmountMax = 3;
                         switch (weaponType) {
                             case "翡翠之潮":
                                 projectileName = "利维坦毒牙";
                                 projectileSpeed = 2;
                                 break;
                             case "彗星陨刃":
-                            default:
                                 projectileName = "陨落流星";
                                 projectileSpeed = 2.5;
+                                shootAmountMax = 4;
+                                break;
+                            case "月炎之锋":
+                                projectileName = "月之耀斑";
+                                projectileSpeed = 2.25;
+                                shootAmountMin = 1;
+                                break;
+                            default:
+                                projectileName = "木箭";
+                                projectileSpeed = 1;
                         }
+                        int terminateIdx = shootAmountMax;
+                        int initialRdmIdx = shootAmountMax - shootAmountMin + 1;
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
-                            for (int i = (int) (Math.random() * 2); i < 3; i ++) {
-                                Location spawnLoc = hitLoc.clone().add(
+                            for (int i = (int) (Math.random() * initialRdmIdx); i < terminateIdx; i ++) {
+                                Location spawnLoc;
+                                Vector projVel;
+                                spawnLoc = hitLoc.clone().add(
                                         Math.random() * 12 - 6,
                                         Math.random() * 8 + 16,
                                         Math.random() * 12 - 6);
-                                EntityHelper.spawnProjectile(ply, spawnLoc, MathHelper.getDirection(spawnLoc, hitLoc, projectileSpeed),
+                                projVel = MathHelper.getDirection(spawnLoc, hitLoc, projectileSpeed);
+                                EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
                                         attrMap, EntityHelper.DamageType.MELEE, projectileName);
                             }
                         });
@@ -1448,6 +1464,60 @@ public class ItemUseHelper {
                             }
                         }
                         break;
+                    }
+                    case "季节长剑": {
+                        if (currentIndex == 0) {
+                            EntityPlayer playerNMS = ((CraftPlayer) ply).getHandle();
+                            double fwdYaw = playerNMS.yaw;
+                            double fwdPitch = playerNMS.pitch;
+                            Calendar calendar = Calendar.getInstance();
+                            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                            boolean isDay = hour > 8 && hour < 19;
+                            HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
+                            projAttrMap.put("damage", projAttrMap.get("damage") * (0.5 + Math.random() * 0.3) );
+                            Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                    fwdYaw + Math.random() * 10 - 5, fwdPitch + Math.random() * 10 - 5);
+                            projVel.multiply(3);
+                            EntityHelper.spawnProjectile(ply, projVel,
+                                    projAttrMap, EntityHelper.DamageType.MELEE,
+                                    isDay ? "白天剑气" : "夜晚剑气");
+                        }
+                        break;
+                    }
+                    case "破坏重剑": {
+                        if (currentIndex == 0) {
+                            EntityPlayer playerNMS = ((CraftPlayer) ply).getHandle();
+                            for (int i = 1; i <= 8; i ++) {
+                                Location targetLoc = getPlayerTargetLoc(ply, 48, 2,
+                                        new EntityHelper.AimHelperOptions().setAimMode(true).setTicksOffset(0), true);
+                                Location spawnLoc = targetLoc.clone().add(
+                                        Math.random() * 10 - 5, Math.random() * 10 + 15, Math.random() * 10 - 5);
+                                Vector projVel = MathHelper.getDirection(spawnLoc, targetLoc, 3);
+                                EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
+                                        attrMap, EntityHelper.DamageType.MELEE, "破坏重剑剑气");
+                            }
+                        }
+                    }
+                    case "爆破剑": {
+                        if (currentIndex == 0) {
+                            EntityPlayer playerNMS = ((CraftPlayer) ply).getHandle();
+                            for (int i = 1; i <= 8; i ++) {
+                                Location spawnLoc;
+                                Vector projVel;
+                                spawnLoc = ply.getEyeLocation().add(0, i * 2, 0);
+                                if (i <= 4) {
+                                    Location targetLoc = getPlayerTargetLoc(ply, 48, 2,
+                                            new EntityHelper.AimHelperOptions().setAimMode(true).setTicksOffset(0), true);
+                                    projVel = MathHelper.getDirection(spawnLoc, targetLoc, 3);
+                                }
+                                else {
+                                    projVel = new Vector(Math.random() - 0.5, -1, Math.random() - 0.5);
+                                    projVel.multiply(3);
+                                }
+                                EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
+                                        attrMap, EntityHelper.DamageType.MELEE, "爆破剑气");
+                            }
+                        }
                     }
                 }
                 for (int i = indexStart; i < indexEnd; i ++) {

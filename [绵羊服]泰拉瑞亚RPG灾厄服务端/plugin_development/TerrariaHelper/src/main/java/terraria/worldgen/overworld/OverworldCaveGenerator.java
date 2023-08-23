@@ -40,6 +40,8 @@ public class OverworldCaveGenerator {
     public static double getCavernNoiseMulti(Biome biome) {
         switch (biome) {
             case DESERT:            // desert
+                // TODO: customize these caves
+                return 1;
             case MUTATED_DESERT:    // sunken sea
             case COLD_BEACH:        // sulphurous beach
             case FROZEN_OCEAN:      // sulphurous ocean

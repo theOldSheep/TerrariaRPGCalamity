@@ -37,7 +37,7 @@ public class OverworldBlockGenericPopulator extends BlockPopulator {
                             break;
                         case STAINED_CLAY:
                             switch (biome) {
-                                case MUTATED_DESERT: // sunken sea : blue stained clay
+                                case DESERT: // sunken sea : blue stained clay (not spawned in surface desert)
                                     currBlock.setData((byte) 11);
                                     break;
                                 case ICE_FLATS: // hallow : white stained clay
