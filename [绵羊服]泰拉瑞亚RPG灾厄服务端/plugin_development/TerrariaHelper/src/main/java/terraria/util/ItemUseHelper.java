@@ -1475,8 +1475,7 @@ public class ItemUseHelper {
                             boolean isDay = hour > 8 && hour < 19;
                             HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
                             projAttrMap.put("damage", projAttrMap.get("damage") * (0.5 + Math.random() * 0.3) );
-                            Vector projVel = MathHelper.vectorFromYawPitch_quick(
-                                    fwdYaw + Math.random() * 10 - 5, fwdPitch + Math.random() * 10 - 5);
+                            Vector projVel = MathHelper.vectorFromYawPitch_quick(fwdYaw, fwdPitch);
                             projVel.multiply(3);
                             EntityHelper.spawnProjectile(ply, projVel,
                                     projAttrMap, EntityHelper.DamageType.MELEE,
@@ -1486,7 +1485,6 @@ public class ItemUseHelper {
                     }
                     case "破坏重剑": {
                         if (currentIndex == 0) {
-                            EntityPlayer playerNMS = ((CraftPlayer) ply).getHandle();
                             for (int i = 1; i <= 8; i ++) {
                                 Location targetLoc = getPlayerTargetLoc(ply, 48, 2,
                                         new EntityHelper.AimHelperOptions().setAimMode(true).setTicksOffset(0), true);
@@ -1497,10 +1495,10 @@ public class ItemUseHelper {
                                         attrMap, EntityHelper.DamageType.MELEE, "破坏重剑剑气");
                             }
                         }
+                        break;
                     }
                     case "爆破剑": {
                         if (currentIndex == 0) {
-                            EntityPlayer playerNMS = ((CraftPlayer) ply).getHandle();
                             for (int i = 1; i <= 8; i ++) {
                                 Location spawnLoc;
                                 Vector projVel;
@@ -1518,6 +1516,41 @@ public class ItemUseHelper {
                                         attrMap, EntityHelper.DamageType.MELEE, "爆破剑气");
                             }
                         }
+                        break;
+                    }
+                    case "圣火之刃": {
+                        strikeLineInfo.setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
+                            HashMap<String, Double> projAttrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(ply).clone();
+                            projAttrMap.put("damage", projAttrMap.get("damage") * 0.3);
+                            for (int i = 0; i < 8; i ++) {
+                                Vector projVel = MathHelper.vectorFromYawPitch_quick(45 * i, 0);
+                                projVel.multiply(0.75);
+                                EntityHelper.spawnProjectile(ply, hitLoc, projVel, projAttrMap,
+                                        EntityHelper.DamageType.MELEE,"神圣之火");
+                            }
+                        });
+                        break;
+                    }
+                    case "星河之刃": {
+                        if (currentIndex == 0) {
+                            Location targetLoc = getPlayerTargetLoc(ply, 48, 2,
+                                    new EntityHelper.AimHelperOptions().setAimMode(true).setTicksOffset(10), true);
+                            for (int i = 0; i < 5; i ++) {
+                                Location spawnLoc = targetLoc.clone().add(
+                                        Math.random() * 8 - 4, Math.random() * 5 + 15, Math.random() * 8 - 4);
+                                Location aimLoc = targetLoc.clone().add(
+                                        Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1);
+                                Vector projVel = MathHelper.getDirection(spawnLoc, aimLoc, 2);
+                                EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
+                                        attrMap, EntityHelper.DamageType.MELEE, "星河陨石");
+                            }
+                        }
+                        break;
+                    }
+                    case "格拉克斯": {
+                        strikeLineInfo.setDamagedFunction((hitIdx, hitEntity, hitLoc) ->
+                                EntityHelper.applyEffect(ply, "格拉克斯之助", 200));
+                        break;
                     }
                 }
                 for (int i = indexStart; i < indexEnd; i ++) {

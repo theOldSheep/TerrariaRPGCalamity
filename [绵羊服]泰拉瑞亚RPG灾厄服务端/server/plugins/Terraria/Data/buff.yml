@@ -474,3 +474,10 @@ effects:
         damageMeleeMulti: 0.3
         critMelee: 10
     tooltip: 增加30%近战伤害和10%近战暴击率
+  格拉克斯之助:
+    isBuff: true
+    attributes:
+        defence: 60
+        damageTakenMulti: -0.1
+        damageMeleeMulti: 0.2
+    tooltip: 提高防御力，你的肌肉更加强壮

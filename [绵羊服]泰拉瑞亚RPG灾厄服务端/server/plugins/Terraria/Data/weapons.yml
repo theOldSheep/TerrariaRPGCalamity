@@ -605,6 +605,18 @@
   type: SWING
   autoSwing: true
   size: 7.5
+圣火之刃:
+  type: SWING
+  autoSwing: true
+  size: 11
+星河之刃:
+  type: SWING
+  autoSwing: true
+  size: 6
+格拉克斯:
+  type: SWING
+  autoSwing: true
+  size: 7
 ####
 钴薙刀:
   type: STAB

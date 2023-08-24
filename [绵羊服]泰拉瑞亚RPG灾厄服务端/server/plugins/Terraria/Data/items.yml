@@ -3135,6 +3135,45 @@
     useTime: 16
   worth: 22000000
   rarity: 11
+圣火之刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r命中敌人会爆发神圣之火
+  attributes:
+    damage: 540
+    damageType: Melee
+    crit: 4
+    knockback: 7.75
+    useTime: 22
+    buffInflictMelee: 神圣之火|100|1
+  worth: 24000000
+  rarity: 12
+星河之刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r以混沌之核的愤怒铸造而成
+  - §r召唤大量从天而降的陨石
+  attributes:
+    damage: 168
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 17
+  worth: 24000000
+  rarity: 12
+格拉克斯:
+  item: DIAMOND_SWORD
+  lore:
+  - §r击中敌人会在短时间内大幅提升你的防御、近战伤害和暴击率
+  attributes:
+    damage: 944
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 15
+  worth: 24000000
+  rarity: 11
+####
 剑鱼:
   item: STONE_SWORD
   attributes:

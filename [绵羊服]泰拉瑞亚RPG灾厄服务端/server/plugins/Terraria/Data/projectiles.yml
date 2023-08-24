@@ -575,22 +575,6 @@
     maxAutoTraceTicks: 30
     buffInflict:
         - "幻星感染|60|1"
-幻影眼:
-    blockHitAction: thru
-    trailColor: 100|255|255
-    trailSize: 0.15
-    trailStepSize: 1
-    isGrenade: true
-    blastRadius: 4
-    liveTime: 100
-    gravity: 0
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 128
-    autoTraceSharpTurning: false
-    autoTraceAbility: 0.4
-    noAutoTraceTicks: 20
-    maxAutoTraceTicks: 40
 星旋激光:
     blockHitAction: thru
     liveTime: 100
@@ -621,6 +605,35 @@
     projectileSize: 0.5
     speedMultiPerTick: 0.98
     gravity: 0
+幻影眼:
+    blockHitAction: thru
+    trailColor: 100|255|255
+    trailSize: 0.15
+    trailStepSize: 1
+    isGrenade: true
+    blastRadius: 4
+    liveTime: 100
+    gravity: 0
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceRadius: 128
+    autoTraceSharpTurning: false
+    autoTraceAbility: 0.4
+    noAutoTraceTicks: 20
+    maxAutoTraceTicks: 40
+神圣之火:
+    blockHitAction: thru
+    projectileSize: 0.5
+    liveTime: 100
+    gravity: 0
+    minimumDamageTicks: 5
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceRadius: 24
+    autoTraceSharpTurning: false
+    autoTraceAbility: 1.5
+    noAutoTraceTicks: 15
+    maxAutoTraceTicks: 30
 南瓜榴弹:
     isGrenade: true
     blastRadius: 1
@@ -2096,6 +2109,13 @@ TNT:
     gravity: 0
     projectileSize: 0.75
     liveTime: 60
+星河陨石:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.75
+    liveTime: 60
+    buffInflict:
+        - "神圣之火|60|1"
 ####
 电火花:
     noGravityTicks: 0
