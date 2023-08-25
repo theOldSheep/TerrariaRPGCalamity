@@ -63,7 +63,7 @@ Global:
     keepinv: false
     keepexp: false
     shop: true
-    bank: false
+    bank: true
     anvil: true
     admin: true
     anvilbreak: true

@@ -76,7 +76,7 @@ BROWN_MUSHROOM:
 PUMPKIN:
   totalProgress: 1
   dropItem:
-  - 南瓜:5:10
+  - 南瓜
 # natural blocks
 SAND:
   totalProgress: 65

@@ -2181,7 +2181,7 @@
   - §r1、分别左右键点击领地长方体的两个对角
   - §r2、根据粒子效果查看领地范围
   - §r然后，您可以输入/res create 领地名进行圈地。
-  - §r圈地后，您可以使用命令/convertmoney来将自己随身携带的钱转换为实体货币，方便放在领地箱子里妥善保管，以免死亡掉落。
+  - §r圈地后，您可以使用命令/res bank将钱币存放在领地银行内以免死亡掉落。
   rarity: 0
 仙人掌镐:
   item: STONE_PICKAXE
@@ -3173,6 +3173,44 @@
     useTime: 15
   worth: 24000000
   rarity: 11
+猎命镰刀:
+  item: DIAMOND_SWORD
+  lore:
+  - §r击中敌人会恢复生命值
+  attributes:
+    damage: 312
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 18
+  worth: 24000000
+  rarity: 12
+不洁巨剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射三种具有不同追踪能力的剑气
+  attributes:
+    damage: 224
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 18
+  worth: 24000000
+  rarity: 12
+泰拉阔剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射能量矢与近距离弹幕
+  - §r击中敌人后召唤斩切光束
+  - §r能量矢命中后爆炸
+  attributes:
+    damage: 520
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 60
+  worth: 24000000
+  rarity: 12
 ####
 剑鱼:
   item: STONE_SWORD

@@ -239,7 +239,7 @@ effects:
     isBuff: true
     attributes:
       mobLimit: -1
-      mobSpawnRateMulti: -0.2
+      mobSpawnRateMulti: -0.75
     tooltip: 刷怪率和上限减少
   禅定:
     isBuff: true
