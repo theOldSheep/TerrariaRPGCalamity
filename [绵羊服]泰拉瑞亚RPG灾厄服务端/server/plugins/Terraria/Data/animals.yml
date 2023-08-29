@@ -76,14 +76,14 @@ subTypes:
       biome:
       - underworld
   Firefly:
-    萤火虫:
+    七彩草蛉:
       weight: 1
       biome:
       - hallow
     萤火虫:
-      weight: 8
-    荧光虫:
       weight: 10
+    荧光虫:
+      weight: 5
       biome:
       - hallow
   Ground:

@@ -242,6 +242,19 @@
     buffInflict:
         - "中毒|80|1"
         - "剧毒|80|1"
+追踪导弹:
+    liveTime: 100
+    gravity: 0
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceRadius: 32
+    autoTraceSharpTurning: false
+    autoTraceAbility: 1
+    noAutoTraceTicks: 15
+    trailColor: 255|0|0
+    trailSize: 0.15
+    trailStepSize: 1
 死亡激光:
     penetration: 99999
     liveTime: 100
