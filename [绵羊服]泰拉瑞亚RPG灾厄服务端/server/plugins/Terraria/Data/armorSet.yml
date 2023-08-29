@@ -545,36 +545,36 @@ sets:
     - ''
     - §a套装效果： 
     - §a+5% 移动速度
-    - §a+5% 近战暴击
+    - §a+15% 近战暴击
     attributes:
       critMelee: 5
-      speedMulti: 0.05
+      speedMulti: 0.15
   天蓝远程套装:
     lore:
     - ''
     - §a套装效果： 
     - §a+5% 移动速度
-    - §a+5% 远程暴击
+    - §a+15% 远程暴击
     attributes:
       critRanged: 5
-      speedMulti: 0.05
+      speedMulti: 0.15
   天蓝魔法套装:
     lore:
     - ''
     - §a套装效果： 
     - §a+5% 移动速度
-    - §a+5% 魔法暴击
+    - §a+15% 魔法暴击
     attributes:
       critMagic: 5
-      speedMulti: 0.05
+      speedMulti: 0.15
   天蓝召唤套装:
     lore:
     - ''
     - §a套装效果： 
-    - §a+11% 召唤伤害
+    - §a+16% 召唤伤害
     - §a+2 召唤栏
     attributes:
-      damageSummonMulti: 0.11
+      damageSummonMulti: 0.16
       minionLimit: 2
   熔岩套装:
     lore:

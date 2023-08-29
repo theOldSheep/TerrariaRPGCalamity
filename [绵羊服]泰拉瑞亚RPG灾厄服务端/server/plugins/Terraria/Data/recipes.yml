@@ -443,62 +443,62 @@ ANVIL:
     requireLevel: 1
     resultItem: 铜头盔
     requireItem:
-    - 铜锭:20
+    - 铜锭:10
   '38':
     requireLevel: 1
     resultItem: 铜链甲
     requireItem:
-    - 铜锭:30
+    - 铜锭:16
   '39':
     requireLevel: 1
     resultItem: 铜护胫
     requireItem:
-    - 铜锭:25
+    - 铜锭:14
   '40':
     requireLevel: 1
     resultItem: 铁头盔
     requireItem:
-    - 铁锭:25
+    - 铁锭:10
   '41':
     requireLevel: 1
     resultItem: 铁链甲
     requireItem:
-    - 铁锭:35
+    - 铁锭:16
   '42':
     requireLevel: 1
     resultItem: 铁护胫
     requireItem:
-    - 铁锭:30
+    - 铁锭:14
   '43':
     requireLevel: 1
     resultItem: 银头盔
     requireItem:
-    - 银锭:25
+    - 银锭:10
   '44':
     requireLevel: 1
     resultItem: 银链甲
     requireItem:
-    - 银锭:35
+    - 银锭:16
   '45':
     requireLevel: 1
     resultItem: 银护胫
     requireItem:
-    - 银锭:30
+    - 银锭:14
   '46':
     requireLevel: 1
     resultItem: 金头盔
     requireItem:
-    - 金锭:30
+    - 金锭:10
   '47':
     requireLevel: 1
     resultItem: 金链甲
     requireItem:
-    - 金锭:40
+    - 金锭:16
   '48':
     requireLevel: 1
     resultItem: 金护胫
     requireItem:
-    - 金锭:35
+    - 金锭:14
   '49':
     requireLevel: 1
     resultItem: 流星头盔
@@ -536,17 +536,17 @@ ANVIL:
     requireLevel: 1
     resultItem: 熔岩头盔
     requireItem:
-    - 狱炎锭:20
+    - 狱炎锭:10
   '56':
     requireLevel: 1
     resultItem: 熔岩胸甲
     requireItem:
-    - 狱炎锭:30
+    - 狱炎锭:20
   '57':
     requireLevel: 1
     resultItem: 熔岩护胫
     requireItem:
-    - 狱炎锭:25
+    - 狱炎锭:15
   '58':
     requireLevel: 1
     resultItem: 空桶
@@ -762,27 +762,27 @@ ANVIL:
     requireLevel: 2
     resultItem: 精金头饰
     requireItem:
-    - 精金锭:12
+    - 精金锭:10
   '99':
     requireLevel: 2
     resultItem: 精金头盔
     requireItem:
-    - 精金锭:12
+    - 精金锭:10
   '100':
     requireLevel: 2
     resultItem: 精金面具
     requireItem:
-    - 精金锭:12
+    - 精金锭:10
   '101':
     requireLevel: 2
     resultItem: 精金胸甲
     requireItem:
-    - 精金锭:24
+    - 精金锭:20
   '102':
     requireLevel: 2
     resultItem: 精金护腿
     requireItem:
-    - 精金锭:18
+    - 精金锭:15
   '103':
     requireLevel: 2
     resultItem: 巨兽鲨
@@ -991,7 +991,7 @@ ANVIL:
     requireItem:
     - 神圣锭:18
   '130':
-    requireLevel: 2
+    requireLevel: 1
     resultItem: 机械骷髅头
     requireItem:
     - 骨头:30
@@ -999,14 +999,14 @@ ANVIL:
     - 光明之魂:3
     - 暗影之魂:3
   '131':
-    requireLevel: 2
+    requireLevel: 1
     resultItem: 机械魔眼
     requireItem:
     - 晶状体:3
     - 铁锭:5
     - 光明之魂:6
   '132':
-    requireLevel: 2
+    requireLevel: 1
     resultItem: 机械蠕虫
     requireItem:
     - 腐肉:6
@@ -1566,7 +1566,7 @@ ANVIL:
     - 禁戒碎片:2
     - 精金锭:5
   '188':
-    requireLevel: 2
+    requireLevel: 1
     resultItem: 风暴军刀
     requireItem:
     - 日光精华:2
@@ -2306,6 +2306,11 @@ ANVIL:
     - 生命果:5
     - 生命碎片:10
 WORKBENCH:
+  'glass_platform':
+    requireLevel: 1
+    resultItem: 玻璃平台
+    requireItem:
+    - 玻璃:64
   '1':
     requireLevel: 1
     resultItem: 木剑
@@ -2750,7 +2755,7 @@ ENCHANTMENT_TABLE:
     - 钨钢法杖
     - 太空枪
     - 水矢
-    - 纯净凝胶
+    - 纯净凝胶:10
   '14':
     requireLevel: 1
     resultItem: 永夜之眼
@@ -2837,6 +2842,27 @@ AIR:
     resultItem: 粘性雷管
     requireItem:
     - 雷管
+    - 凝胶
+  '13':
+    requireLevel: 1
+    resultItem: 初学者鱼饵:2
+    requireItem:
+    - 发光蘑菇
+    - 南瓜
+  '14':
+    requireLevel: 1
+    resultItem: 专家鱼饵:4
+    requireItem:
+    - 初学者鱼饵:4
+    - 腐烂物质
+    - 腐肉
+  '15':
+    requireLevel: 1
+    resultItem: 大师鱼饵:8
+    requireItem:
+    - 专家鱼饵:8
+    - 妖精尘:8
+    - 星尘:4
     - 凝胶
 BREWING_STAND:
   '1':
@@ -3170,6 +3196,7 @@ TINKER_WORKBENCH:
     requireItem:
     - 机械手套
     - 岩浆石
+    - 熔渣锭:5
   '19':
     requireLevel: 1
     resultItem: 天界石

@@ -76,7 +76,7 @@ BROWN_MUSHROOM:
 PUMPKIN:
   totalProgress: 1
   dropItem:
-  - 南瓜
+  - 南瓜:6:10
 # natural blocks
 SAND:
   totalProgress: 65
@@ -129,6 +129,7 @@ STAINED_CLAY_0:
   dropItem:
   - 珍珠石
   - 水晶碎块:1:1:0.05
+  - 明胶水晶:1:1:0.001
 STAINED_CLAY_7:
   powerPickaxe: 65
   totalProgress: 200
@@ -189,6 +190,7 @@ GOLD_ORE:
   dropItem:
   - 金矿石
 RED_GLAZED_TERRACOTTA:
+  progress: 世界吞噬者
   powerPickaxe: 50
   totalProgress: 135
   dropItem:
@@ -235,6 +237,7 @@ MOSSY_COBBLESTONE:
 # calamity ores
 SEA_LANTERN:
   powerPickaxe: 55
+  progress: 荒漠灾虫
   totalProgress: 150
   dropItem:
   - 海棱晶:1:1:0.5
@@ -246,16 +249,19 @@ DIAMOND_ORE:
   dropItem:
   - 天蓝矿
 DIAMOND_BLOCK:
+  progress: 极地之灵
   powerPickaxe: 180
   totalProgress: 650
   dropItem:
   - 寒元矿
 LIME_GLAZED_TERRACOTTA:
+  progress: 世纪之花
   powerPickaxe: 200
   totalProgress: 750
   dropItem:
   - 永恒矿
 COAL_BLOCK:
+  progress: 石巨人
   powerPickaxe: 210
   totalProgress: 800
   dropItem:

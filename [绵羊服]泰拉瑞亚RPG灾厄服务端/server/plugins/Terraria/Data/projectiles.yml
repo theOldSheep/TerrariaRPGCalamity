@@ -214,13 +214,14 @@
         name: 冰锥
         velocity: 2.5
 渊海灾虫毒牙:
+    liveTime: 125
     penetration: 99999
     gravity: 0
     blockHitAction: thru
     projectileSize: 0.75
     autoTrace: true
     autoTraceMethod: 2
-    autoTraceRadius: 8
+    autoTraceRadius: 12
     autoTraceSharpTurning: false
     autoTraceAbility: 0.15
     noAutoTraceTicks: 15
@@ -229,7 +230,7 @@
     gravity: 0
     projectileSize: 2
     blockHitAction: thru
-    speedMultiPerTick: 0.98
+    speedMultiPerTick: 0.925
     buffInflict:
         - "辐射|80|1"
 渊海灾虫毒云:
@@ -237,7 +238,7 @@
     gravity: 0
     projectileSize: 2
     blockHitAction: thru
-    speedMultiPerTick: 0.98
+    speedMultiPerTick: 0.925
     buffInflict:
         - "中毒|80|1"
         - "剧毒|80|1"
@@ -250,7 +251,7 @@
         - "燃烧|80|1"
     trailColor: 255|0|0
     trailSize: 0.15
-    trailStepSize: 0.75
+    trailStepSize: 1
 诅咒激光:
     penetration: 99999
     liveTime: 100
@@ -260,7 +261,7 @@
         - "咒火|60|1"
     trailColor: 200|255|0
     trailSize: 0.15
-    trailStepSize: 0.75
+    trailStepSize: 1
 电击激光:
     penetration: 99999
     liveTime: 100
@@ -270,7 +271,7 @@
         - "带电|40|1"
     trailColor: 0|255|200
     trailSize: 0.15
-    trailStepSize: 0.75
+    trailStepSize: 1
 咒火球:
     buffInflict:
         - "咒火|100|1"
@@ -322,7 +323,7 @@
     gravity: 0
     trailColor: 255|46|46
     trailSize: 0.2
-    trailStepSize: 0.75
+    trailStepSize: 1
     buffInflict:
         - "硫磺火|60|1"
 硫火喷射:
@@ -430,7 +431,7 @@
     blockHitAction: thru
     trailColor: 0|255|255
     trailSize: 0.15
-    trailStepSize: 0.5
+    trailStepSize: 1.25
     buffInflict:
         - "幻星感染|40|1"
 星幻凝晶:
@@ -470,7 +471,7 @@
         - "燃烧|280|1"
     trailColor: 255|50|50
     trailSize: 0.15
-    trailStepSize: 0.5
+    trailStepSize: 0.75
 石巨人激光:
     penetration: 99999
     gravity: 0
@@ -478,7 +479,7 @@
     blockHitAction: thru
     trailColor: 255|200|50
     trailSize: 0.15
-    trailStepSize: 0.5
+    trailStepSize: 0.75
 歌莉娅瘟疫导弹:
     penetration: 99999
     gravity: 0
@@ -685,7 +686,7 @@
     bounce: 1
     penetration: 999999
     trailColor: 191|255|223
-    trailStepSize: 0.5
+    trailStepSize: 0.75
 蓝色粒子束:
     gravity: 0
     projectileSize: 1.5
@@ -693,7 +694,7 @@
     blastRadius: 5
     blastDuration: 18
     trailColor: 82|255|255
-    trailStepSize: 0.5
+    trailStepSize: 0.65
 粉色粒子光束:
     gravity: 0
     projectileSize: 1.5
@@ -733,7 +734,7 @@
     autoTraceEndSpeedMultiplier: 7.5
     blockHitAction: thru
     trailColor: "0|200|0"
-    trailStepSize: 0.5
+    trailStepSize: 0.75
     buffInflict:
         - "中毒|80|1"
 黑鹰子弹:
@@ -745,7 +746,7 @@
     penetration: 999999
     blockHitAction: thru
     trailColor: "255|100|0"
-    trailStepSize: 0.5
+    trailStepSize: 1.25
     buffInflict:
         - "剧毒|40|0.25"
         - "狱炎|40|0.25"
@@ -787,7 +788,7 @@
     projectileSize: 2
     trailColor: 150|0|0
     trailSize: 0.2
-    trailStepSize: 0.5
+    trailStepSize: 0.75
     trailLingerTime: 10
     buffInflict:
         - "硫磺火|60|1"
@@ -818,7 +819,7 @@
     blockHitAction: thru
     trailColor: "233|52|115"
     trailSize: 0.1
-    trailStepSize: 0.5
+    trailStepSize: 0.75
 爆炸导弹:
     liveTime: 60
     gravity: 0
@@ -862,7 +863,7 @@
     noAutoTraceTicks: 5
     liveTime: 60
     trailColor: "100|255|100"
-    trailStepSize: 0.5
+    trailStepSize: 0.65
     buffInflict:
         - "瘟疫|60|1"
 紫蓝色小球:
@@ -945,18 +946,26 @@
     gravity: 0
     isGrenade: true
     blastRadius: 5
+    trailColor: "255|0|0"
+    trailStepSize: 0.75
 绿烟花火箭:
     gravity: 0
     isGrenade: true
     blastRadius: 5
+    trailColor: "0|255|0"
+    trailStepSize: 0.75
 蓝烟花火箭:
     gravity: 0
     isGrenade: true
     blastRadius: 5
+    trailColor: "0|0|255"
+    trailStepSize: 0.75
 黄烟花火箭:
     gravity: 0
     isGrenade: true
     blastRadius: 5
+    trailColor: "255|255|0"
+    trailStepSize: 0.75
 初级榴弹:
     noGravityTicks: 0
     liveTime: 75
@@ -1049,7 +1058,7 @@
     blastRadius: 1
     trailColor: 255|187|174
     trailSize: 0.1
-    trailStepSize: 0.5
+    trailStepSize: 1
     clusterBomb:
         amount: 10
         name: 蜜蜂
@@ -1063,7 +1072,7 @@
     blastRadius: 4
     trailColor: 255|187|174
     trailSize: 0.1
-    trailStepSize: 0.5
+    trailStepSize: 1
     clusterBomb:
         amount: 5
         name: 瘟疫蜜蜂
@@ -1076,7 +1085,7 @@
     blastRadius: 2
     trailColor: 255|187|174
     trailSize: 0.1
-    trailStepSize: 0.5
+    trailStepSize: 1
     clusterBomb:
         amount: 2
         name: 瘟疫蜜蜂
@@ -1089,7 +1098,7 @@
     blastRadius: 2
     trailColor: 255|187|174
     trailSize: 0.1
-    trailStepSize: 0.5
+    trailStepSize: 1
     clusterBomb:
         amount: 5
         name: 瘟疫蜜蜂
@@ -1104,7 +1113,7 @@
     blastRadius: 2.5
     trailColor: 255|187|174
     trailSize: 0.1
-    trailStepSize: 0.5
+    trailStepSize: 1
 天蝎座大号核弹:
     gravity: 0
     projectileSize: 1.5
@@ -1114,7 +1123,7 @@
     blastRadius: 12.5
     trailColor: 255|187|174
     trailSize: 0.1
-    trailStepSize: 0.5
+    trailStepSize: 1
 手榴弹:
     blockHitAction: bounce
     bounce: 999999
@@ -1208,7 +1217,7 @@ TNT:
     penetration: 999999
     trailColor: 255|207|139
     trailLingerTime: 6
-    trailStepSize: 0.5
+    trailStepSize: 0.65
     buffInflict:
         - "燃烧|40|1"
 影流火焰:
@@ -1235,7 +1244,7 @@ TNT:
     penetration: 999999
     trailColor: 133|226|255
     trailLingerTime: 6
-    trailStepSize: 0.5
+    trailStepSize: 1
 粉焰:
     gravity: 0
     projectileSize: 1
@@ -1243,7 +1252,7 @@ TNT:
     penetration: 999999
     trailColor: 255|143|255
     trailLingerTime: 6
-    trailStepSize: 0.5
+    trailStepSize: 1
 泰拉火焰:
     gravity: 0
     projectileSize: 1
@@ -1251,7 +1260,7 @@ TNT:
     penetration: 999999
     trailColor: 191|255|223
     trailLingerTime: 6
-    trailStepSize: 0.5
+    trailStepSize: 1
     buffInflict:
         - "咒火|30|1"
 星辉烈焰:
@@ -1261,7 +1270,7 @@ TNT:
     penetration: 999999
     trailColor: 197|144|123
     trailLingerTime: 6
-    trailStepSize: 0.5
+    trailStepSize: 1
     buffInflict:
         - "幻星感染|80|1"
 瘟疫火焰:
@@ -1271,7 +1280,7 @@ TNT:
     penetration: 999999
     trailColor: 122|149|169
     trailLingerTime: 6
-    trailStepSize: 0.5
+    trailStepSize: 1
     buffInflict:
         - "瘟疫|80|1"
 紫绿色火焰:
@@ -1281,7 +1290,7 @@ TNT:
     penetration: 999999
     trailColor: 168|94|213
     trailLingerTime: 6
-    trailStepSize: 0.5
+    trailStepSize: 1
 烈焰木:
     penetration: 999999
     projectileSize: 0.5
@@ -1411,7 +1420,7 @@ TNT:
     noAutoTraceTicks: 5
     liveTime: 30
     trailColor: "3|233|82"
-    trailStepSize: 0.5
+    trailStepSize: 0.75
 泰拉弹:
     gravity: 0
     liveTime: 40
@@ -1438,13 +1447,13 @@ TNT:
     trailColor: 27|157|232
     trailSize: 0.1
     trailLingerTime: 8
-    trailStepSize: 0.5
+    trailStepSize: 0.75
 真菌弹:
     gravity: 0
     trailColor: 27|157|232
     trailSize: 0.1
     trailLingerTime: 8
-    trailStepSize: 0.5
+    trailStepSize: 1
     clusterBomb:
         amount: 4
         name: 小孢子
@@ -1460,7 +1469,7 @@ TNT:
     blastOnContactBlock: true
 追踪蓝晶碎片:
     gravity: 0.01
-    liveTime: 30
+    liveTime: 50
     autoTrace: true
     noAutoTraceTicks: 6
     liveTime: 20
@@ -1481,14 +1490,14 @@ TNT:
     trailColor: 53|255|255
     trailSize: 0.1
     trailLingerTime: 8
-    trailStepSize: 0.5
+    trailStepSize: 0.75
 能量弹:
     gravity: 0.01
     liveTime: 100
     trailColor: 53|255|255
     trailSize: 0.1
     trailLingerTime: 8
-    trailStepSize: 0.5
+    trailStepSize: 1
     clusterBomb:
         amount: 3
         name: 追踪能量弹
@@ -1503,7 +1512,7 @@ TNT:
     trailColor: 67|207|130
     trailSize: 0.1
     trailLingerTime: 5
-    trailStepSize: 0.5
+    trailStepSize: 0.75
     buffInflict:
         - "剧毒|40|0.3333"
 瘟疫子弹:
@@ -1512,7 +1521,7 @@ TNT:
     trailColor: 102|255|72
     trailSize: 0.1
     trailLingerTime: 5
-    trailStepSize: 0.5
+    trailStepSize: 1
     buffInflict:
         - "瘟疫|60|1"
     clusterBomb:
@@ -1529,7 +1538,7 @@ TNT:
     trailColor: 0|150|0
     trailSize: 0.6
     trailLingerTime: 1.25
-    trailStepSize: 0.5
+    trailStepSize: 1
     autoTrace: true
     autoTraceRadius: 24
 追踪蘑菇:
@@ -1540,7 +1549,7 @@ TNT:
     blockHitAction: thru
     liveTime: 100
     autoTrace: true
-    autoTraceAbility: 1.5
+    autoTraceAbility: 2
 幻星弹:
     gravity: 0
     buffInflict:
@@ -1658,7 +1667,7 @@ TNT:
     slowedByWater: false
     trailColor: 69|92|211
     trailSize: 0.15
-    trailStepSize: 0.5
+    trailStepSize: 0.75
 空旋:
     spawnProjectiles:
         interval: 10
@@ -1690,7 +1699,7 @@ TNT:
     liveTime: 40
     trailColor: 255|55|85
     trailLingerTime: 5
-    trailStepSize: 0.35
+    trailStepSize: 0.65
     buffInflict:
         - "硫磺火|20|1"
 遗殇:
@@ -1808,7 +1817,7 @@ TNT:
 风暴剑气:
     projectileSize: 0.5
     autoTrace: true
-    autoTraceAbility: 1.25
+    autoTraceAbility: 1.75
     penetration: 1
     gravity: 0
 分裂球:
@@ -1830,7 +1839,7 @@ TNT:
         velocity: 0.75
 霜火球:
     autoTrace: true
-    autoTraceAbility: 1.5
+    autoTraceAbility: 1.75
     noAutoTraceTicks: 5
     gravity: 0
     buffInflict:

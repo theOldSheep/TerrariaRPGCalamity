@@ -250,8 +250,8 @@ effects:
   耐力:
     isBuff: true
     attributes:
-      damageTakenMulti: -0.05
-    tooltip: 伤害减免增加5%
+      damageTakenMulti: -0.1
+    tooltip: 伤害减免增加10%
   鱼鳃:
     isBuff: true
     tooltip: 你能在水下呼吸了！
@@ -348,8 +348,8 @@ effects:
   冰障:
     isBuff: true
     attributes:
-        damageTakenMulti: -0.15
-    tooltip: 所受伤害减少15%
+        damageTakenMulti: -0.25
+    tooltip: 所受伤害减少25%
   伤害星云:
     isBuff: true
     attributes:

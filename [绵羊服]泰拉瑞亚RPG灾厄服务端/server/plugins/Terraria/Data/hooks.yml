@@ -9,7 +9,7 @@
     amount: 1
     reach: 30
     velocity: 16
-    playerSpeed: 50
+    playerSpeed: 3
     particleItem:
         - "204|0|204"
 刺钩:

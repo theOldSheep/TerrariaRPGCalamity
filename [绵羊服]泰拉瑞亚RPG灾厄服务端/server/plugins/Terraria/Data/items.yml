@@ -90,6 +90,11 @@
 玻璃:
   item: GLASS
   rarity: 0
+玻璃平台:
+  item: PAPER
+  lore:
+  - §r右键在脚下31*31的范围内生成玻璃
+  rarity: 1
 箱子:
   item: CHEST
   worth: 10000
@@ -1071,7 +1076,7 @@
   - §r[饰品]
   - §6专家模式物品
   attributes:
-    damageTakenMulti: -0.1
+    damageTakenMulti: -0.17
   worth: 2000000
   rarity: 1000
 钴盾:
@@ -1460,9 +1465,9 @@
   lore:
   - §r[饰品]
   attributes:
-    knockbackMeleeMulti: 0.8
+    knockbackMeleeMulti: 1
     meleeReachMulti: 0.1
-    damageMeleeMulti: 0.09
+    damageMeleeMulti: 0.15
     buffInflictMelee: 狱炎|80|1
   worth: 6000000
   rarity: 7
@@ -8704,7 +8709,7 @@ P90:
   - §r[装备]
   attributes:
     defence: 6
-    damageMeleeMulti: 0.08
+    damageMagicMulti: 0.08
     maxMana: 20
   worth: 800000
   rarity: 3
@@ -9980,7 +9985,7 @@ P90:
 生命果:
   item: CLAY_BALL
   lore:
-  - §r使用增加15生命值上限
+  - §r使用增加10生命值上限
   - §r需要打败血肉之墙才能使用
   worth: 400000
   rarity: 7
