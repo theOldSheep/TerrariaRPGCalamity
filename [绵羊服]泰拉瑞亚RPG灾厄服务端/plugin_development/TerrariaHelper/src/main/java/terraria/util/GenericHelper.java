@@ -5,22 +5,21 @@ import net.minecraft.server.v1_12_R1.MovingObjectPosition;
 import org.apache.logging.log4j.util.BiConsumer;
 import org.apache.logging.log4j.util.TriConsumer;
 import org.bukkit.*;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
 
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class GenericHelper {
     static long nextWorldTextureIndex = 0;
+    // actually, 64*64 = 4096
+    static double PARTICLE_DISPLAY_RADIUS_SQR = 5000;
     public static class ParticleLineOptions {
         boolean particleOrItem;
         ItemStack spriteItem;
@@ -352,6 +351,7 @@ public class GenericHelper {
             // tweak color
             Color currentColor = getInterpolateColor((double) i / (loopTime + 1), allColors);
             // spawn "particles"
+            /*
             String rCode = Integer.toHexString(currentColor.getRed()),
                     gCode = Integer.toHexString(currentColor.getGreen()),
                     bCode = Integer.toHexString(currentColor.getBlue());
@@ -360,6 +360,18 @@ public class GenericHelper {
             if (bCode.length() == 1) bCode = "0" + bCode;
             String colorCode = rCode + gCode + bCode;
             displayHoloText(currLoc, "§#" + colorCode + particleCharacter, ticksLinger, (float) width, (float) width, alpha);
+            */
+            int particleAmount = (int) Math.ceil(stepsize * 4);
+            double rVal = (currentColor.getRed() / 255d) - 1;
+            double gVal = (currentColor.getGreen() / 255d);
+            double bVal = (currentColor.getBlue() / 255d);
+            for (int spawnIdx = 0; spawnIdx < particleAmount; spawnIdx ++) {
+                Location currParticleLoc = currLoc.clone().add(
+                        Math.random() * width * 2 - width,
+                        Math.random() * width * 2 - width,
+                        Math.random() * width * 2 - width);
+                currParticleLoc.getWorld().spawnParticle(Particle.REDSTONE, currParticleLoc, 0, rVal, gVal, bVal);
+            }
             // add vector to location
             currLoc.add(dVec);
         }
@@ -582,9 +594,9 @@ public class GenericHelper {
     public static void displayHoloText(Location displayLoc, String text, int ticksDisplay, float width, float height, float alpha) {
         String holoInd = "" + (nextWorldTextureIndex++);
         // all players in radius of 64 blocks can see the hologram
-        ArrayList<Player> playersSent = new ArrayList<>(100);
+        ArrayList<Player> playersSent = new ArrayList<>(10);
         for (Player p : displayLoc.getWorld().getPlayers())
-            if (p.getLocation().distanceSquared(displayLoc) < 40000) playersSent.add(p);
+            if (p.getLocation().distanceSquared(displayLoc) < PARTICLE_DISPLAY_RADIUS_SQR) playersSent.add(p);
         for (Player p : playersSent)
             CoreAPI.setPlayerWorldTexture(p, holoInd, displayLoc, 0, 0, 0, "[text]" + text, width, height, alpha, true, true);
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
@@ -674,9 +686,9 @@ public class GenericHelper {
     public static void displayHoloItem(Location displayLoc, ItemStack item, int ticksDisplay, float size, Vector displayDir, Vector rightOrthogonalDirection) {
         String holoInd = "" + (nextWorldTextureIndex++);
         // all players in radius of 64 blocks can see the hologram
-        ArrayList<Player> playersSent = new ArrayList<>(100);
+        ArrayList<Player> playersSent = new ArrayList<>(10);
         for (Player p : displayLoc.getWorld().getPlayers())
-            if (p.getLocation().distanceSquared(displayLoc) < 40000) playersSent.add(p);
+            if (p.getLocation().distanceSquared(displayLoc) < PARTICLE_DISPLAY_RADIUS_SQR) playersSent.add(p);
         // init rotation
         float rotateX, rotateY, rotateZ;
         // if no special rotation, use pre-calculated default.
@@ -735,6 +747,9 @@ public class GenericHelper {
                 break;
             case "Debuff_破晓":
                 colorCode = "4";
+                break;
+            case "Debuff_暗影焰":
+                colorCode = "d";
                 break;
             default:
                 colorCode = isCrit ? "c" : "6";

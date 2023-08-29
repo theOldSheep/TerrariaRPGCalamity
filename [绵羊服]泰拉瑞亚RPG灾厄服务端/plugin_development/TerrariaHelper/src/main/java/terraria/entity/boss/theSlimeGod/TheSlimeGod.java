@@ -18,6 +18,7 @@ import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class TheSlimeGod extends EntitySlime {
     // basic variables
@@ -26,7 +27,7 @@ public class TheSlimeGod extends EntitySlime {
     public static final double BASIC_HEALTH = 4000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -84,6 +85,8 @@ public class TheSlimeGod extends EntitySlime {
                 die();
                 return;
             }
+            // increase player aggro duration
+            targetMap.get(target.getUniqueId()).addAggressionTick();
             // if target is valid, attack
             if (ticksLived % 3 == 0) {
                 // test if the slimes are defeated

@@ -24,6 +24,26 @@ import terraria.util.*;
 import java.util.*;
 
 public class BossHelper {
+    public static class BossTargetInfo {
+        public double damageDealt = 0d;
+        public int ticksAggression = 0;
+        public BossTargetInfo addDamageDealt(double damageDealt) {
+            this.damageDealt += damageDealt;
+            return this;
+        }
+        public BossTargetInfo setDamageDealt(double damageDealt) {
+            this.damageDealt = damageDealt;
+            return this;
+        }
+        public BossTargetInfo setAggressionDuration(int ticksAggression) {
+            this.ticksAggression = ticksAggression;
+            return this;
+        }
+        public BossTargetInfo addAggressionTick() {
+            this.ticksAggression ++;
+            return this;
+        }
+    }
     public static double[] getHealthInfo(ArrayList<LivingEntity> bossParts, terraria.util.BossHelper.BossType bossType) {
         double[] result = new double[] {0d, 0d};
         for (LivingEntity e : bossParts) {
@@ -116,10 +136,15 @@ public class BossHelper {
         if (numPly >= 10) multi = (multi * 2 + 8) / 3;
         return multi;
     }
-    public static HashMap<Player, Double> setupBossTarget(Entity boss, String bossDefeatRequirement,
+    public static HashMap<UUID, BossTargetInfo> setupBossTarget(Entity boss, String bossDefeatRequirement,
                                                           Player ply, boolean hasDistanceRestriction, BossBattleServer bossbar) {
-        HashMap<Player, Double> targets = new HashMap<>();
+        HashMap<UUID, BossTargetInfo> targets = new HashMap<>();
         String team = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_TEAM).asString();
+        // print out targets of the boss
+        StringBuilder msg = new StringBuilder();
+        boolean firstAppend = true;
+        msg.append("BOSS的挑战者为：");
+        // setup targets of the boss
         for (Player currPly : boss.getWorld().getPlayers()) {
             if (!currPly.getName().equals(ply.getName())) {
                 // unauthorized
@@ -133,22 +158,18 @@ public class BossHelper {
                         GenericHelper.getHorizontalDistance(currPly.getLocation(), ply.getLocation()) > 192) continue;
             }
             bossbar.addPlayer(((CraftPlayer) currPly).getHandle());
-            targets.put(currPly, 0d);
-        }
-        bossbar.setVisible(true);
-        EntityHelper.setMetadata(boss, EntityHelper.MetadataName.BOSS_BAR, bossbar);
-        EntityHelper.setMetadata(boss, EntityHelper.MetadataName.BOSS_TARGET_MAP, targets);
-        // print out targets of the boss
-        StringBuilder msg = new StringBuilder();
-        boolean firstAppend = true;
-        msg.append("BOSS的挑战者为：");
-        for (Player target : targets.keySet()) {
+            targets.put(currPly.getUniqueId(), new BossTargetInfo());
+            // append target message
             if (!firstAppend)
                 msg.append(", ");
             else
                 firstAppend = false;
-            msg.append(target.getName());
+            msg.append(currPly.getName());
         }
+        bossbar.setVisible(true);
+        EntityHelper.setMetadata(boss, EntityHelper.MetadataName.BOSS_BAR, bossbar);
+        EntityHelper.setMetadata(boss, EntityHelper.MetadataName.BOSS_TARGET_MAP, targets);
+        // print targets
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                 () -> Bukkit.broadcastMessage(msg.toString()), 1);
         return targets;
@@ -166,12 +187,15 @@ public class BossHelper {
         return false;
     }
     public static Player updateBossTarget(Player currentTarget, Entity boss, boolean ignoreDistance,
-                                          WorldHelper.BiomeType biomeRequired, Collection<Player> availableTargets) {
+                                          WorldHelper.BiomeType biomeRequired, Collection<UUID> availableTargets) {
         Player finalTarget = currentTarget;
         if (!checkBossTarget(currentTarget, boss, ignoreDistance, biomeRequired)) {
             // save all applicable targets
             ArrayList<Player> candidates = new ArrayList<>();
-            for (Player ply : availableTargets) {
+            for (UUID plyID : availableTargets) {
+                Player ply = Bukkit.getPlayer(plyID);
+                if (ply == null)
+                    continue;
                 if ( checkBossTarget(ply, boss, ignoreDistance, biomeRequired) )
                     candidates.add(ply);
             }
@@ -201,7 +225,7 @@ public class BossHelper {
         }
     }
     public static void handleBossDeath(terraria.util.BossHelper.BossType bossType,
-                                       ArrayList<LivingEntity> bossParts, HashMap<Player, Double> targetMap) {
+                                       ArrayList<LivingEntity> bossParts, HashMap<UUID, BossTargetInfo> targetMap) {
         double[] healthInfo = terraria.entity.boss.BossHelper.getHealthInfo(bossParts, bossType);
         // boss death message
         Bukkit.broadcastMessage("§d§l" + bossType.msgName + " 被击败了.");
@@ -261,43 +285,84 @@ public class BossHelper {
                 Bukkit.broadcastMessage("§#FFD700神之光环祝福了这个世界的洞穴。");
                 break;
         }
+        // calculate and broadcast boss aggression time
+        int ticksAggressionReq;
+        {
+            // calculate total boss fight duration and required aggression duration
+            int bossFightDuration = 0;
+            for (BossTargetInfo fightInfo : targetMap.values()) {
+                bossFightDuration += fightInfo.ticksAggression;
+            }
+            ticksAggressionReq = bossFightDuration / targetMap.size() / 2;
+            // record aggro duration for each player
+            TreeSet<Map.Entry<Integer, String>> aggroList = new TreeSet<>(Comparator.comparingDouble(Map.Entry::getKey));
+            for (Map.Entry<UUID, BossTargetInfo> entry : targetMap.entrySet()) {
+                Player ply = Bukkit.getPlayer(entry.getKey());
+                if (ply == null)
+                    continue;
+                int plyDmg = entry.getValue().ticksAggression;
+                aggroList.add(new AbstractMap.SimpleImmutableEntry<>(plyDmg,
+                        "[" + ply.getDisplayName() + "]") );
+            }
+            aggroList.add(new AbstractMap.SimpleImmutableEntry<>(bossFightDuration, "§7BOSS战总时长") );
+            aggroList.add(new AbstractMap.SimpleImmutableEntry<>(ticksAggressionReq, "§7获得战利品所需仇恨时长") );
+            // send damage dealt
+            Bukkit.broadcastMessage("————————BOSS仇恨时长————————");
+            for (Iterator<Map.Entry<Integer, String>> it = aggroList.descendingIterator(); it.hasNext(); ) {
+                Map.Entry<Integer, String> aggroInfo = it.next();
+                // player, damage, percent damage dealt
+                Bukkit.broadcastMessage(String.format("%1$s 时长：%2$.1f秒 (占比%3$.1f%%)",
+                        aggroInfo.getValue(), aggroInfo.getKey() / 20d,
+                        (double) aggroInfo.getKey() * 100 / bossFightDuration));
+            }
+        }
         // calculate and broadcast damage dealt
         double dmgDealtReq;
         {
             double totalPlyDmg = 0;
             TreeSet<Map.Entry<Double, String>> damageList = new TreeSet<>(Comparator.comparingDouble(Map.Entry::getKey));
-            for (Map.Entry<Player, Double> entry : targetMap.entrySet()) {
-                damageList.add(new AbstractMap.SimpleImmutableEntry<>(entry.getValue(),
-                        "[" + entry.getKey().getDisplayName() + "]") );
-                totalPlyDmg += entry.getValue();
+            for (Map.Entry<UUID, BossTargetInfo> entry : targetMap.entrySet()) {
+                Player ply = Bukkit.getPlayer(entry.getKey());
+                if (ply == null)
+                    continue;
+                double plyDmg = entry.getValue().damageDealt;
+                damageList.add(new AbstractMap.SimpleImmutableEntry<>(plyDmg,
+                        "[" + ply.getDisplayName() + "]") );
+                totalPlyDmg += plyDmg;
             }
             // prevent having player damage over 100%
             double actualBossHealth = Math.max(healthInfo[1], totalPlyDmg);
-            dmgDealtReq = actualBossHealth / targetMap.size() / 10;
+            dmgDealtReq = actualBossHealth / targetMap.size() / 5;
             double debuffDmg = actualBossHealth - totalPlyDmg;
             if (debuffDmg < 1e-5) debuffDmg = 0;
-            damageList.add(new AbstractMap.SimpleImmutableEntry<>(debuffDmg, "§7减益等非直接伤害来源") );
+            damageList.add(new AbstractMap.SimpleImmutableEntry<>(debuffDmg, "§7减益等未记录伤害来源") );
             damageList.add(new AbstractMap.SimpleImmutableEntry<>(dmgDealtReq, "§7获得战利品所需最低伤害") );
             // send damage dealt
-            Bukkit.broadcastMessage("————————伤害信息————————");
+            Bukkit.broadcastMessage("—————————伤害信息—————————");
             for (Iterator<Map.Entry<Double, String>> it = damageList.descendingIterator(); it.hasNext(); ) {
                 Map.Entry<Double, String> damageInfo = it.next();
                 // player, damage, percent damage dealt
                 Bukkit.broadcastMessage(String.format("%1$s 伤害：%2$.0f (占比%3$.1f%%)",
                         damageInfo.getValue(), damageInfo.getKey(), damageInfo.getKey() * 100 / actualBossHealth));
             }
-            Bukkit.broadcastMessage("————————伤害信息————————");
+            Bukkit.broadcastMessage("————————————————————————");
         }
         // send out loot
         if (bossType.hasTreasureBag) {
             ItemStack loopBag = ItemHelper.getItemFromDescription(bossType.msgName + "的 专家模式福袋");
-            for (Player ply : targetMap.keySet()) {
-                if (targetMap.get(ply) >= dmgDealtReq) {
+            for (UUID plyID : targetMap.keySet()) {
+                Player ply = Bukkit.getPlayer(plyID);
+                if (ply == null)
+                    continue;
+                boolean hasEnoughContribution = targetMap.get(plyID).damageDealt >= dmgDealtReq ||
+                        targetMap.get(plyID).ticksAggression >= ticksAggressionReq;
+                if (hasEnoughContribution) {
                     ply.sendMessage("§a恭喜你击败了BOSS[§r" + bossType.msgName + "§a]!");
                     PlayerHelper.setDefeated(ply, bossType.msgName, true);
                     PlayerHelper.giveItem(ply, loopBag, true);
                 } else {
-                    ply.sendMessage("§aBOSS " + bossType.msgName + " 已经被击败。很遗憾，您的输出不足以获得一份战利品。");
+                    ply.sendMessage("§aBOSS " + bossType.msgName + " 已经被击败。很遗憾，您对BOSS战的贡献不足以获得一份战利品。");
+                    ply.sendMessage("若要获得一份战利品，请在BOSS战中贡献更多的伤害或吸引更久的仇恨。");
                 }
             }
         }

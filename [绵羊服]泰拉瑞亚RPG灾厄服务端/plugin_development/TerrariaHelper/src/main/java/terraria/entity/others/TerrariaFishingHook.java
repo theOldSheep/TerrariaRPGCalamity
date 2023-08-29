@@ -178,21 +178,21 @@ public class TerrariaFishingHook extends EntityFishingHook {
             result = FishingResultRarity.COMMON;
         return result;
     }
-    protected String catchCrateItem(boolean inHardMode, String biome, FishingResultRarity rarity) {
+    protected String catchCrateItem(Player ply, boolean inHardMode, String biome, FishingResultRarity rarity) {
         String result;
         switch (rarity) {
             case EXTREMELY_RARE:
             case VERY_RARE:
-                result = inHardMode ? "钛金匣" : "金匣";
+                result = PlayerHelper.hasDefeated(ply, "机械二王") ? "钛金匣" : "金匣";
                 break;
             // try getting the biome-specific crate, returns iron/mythril crate if none exists
             case RARE: {
-                result = inHardMode ? "秘银匣" : "铁匣";
+                result = PlayerHelper.hasDefeated(ply, "机械一王") ? "秘银匣" : "铁匣";
                 result = TerrariaHelper.fishingConfig.getString("biomeCrates." + biome, result);
                 break;
             }
             case UNCOMMON:
-                result = inHardMode ? "秘银匣" : "铁匣";
+                result = PlayerHelper.hasDefeated(ply, "机械一王") ? "秘银匣" : "铁匣";
                 break;
             default:
                 result = inHardMode ? "珍珠木匣" : "木匣";
@@ -274,7 +274,7 @@ public class TerrariaFishingHook extends EntityFishingHook {
         // crates
         double crateChance = EntityHelper.hasEffect(ply, "宝匣") ? 0.125 : 0.075;
         if (Math.random() < crateChance) {
-            return catchCrateItem(inHardMode, biome.toString(), rarity);
+            return catchCrateItem(ply, inHardMode, biome.toString(), rarity);
         }
         // quest fish
         if (TerrariaHelper.fishingConfig.getStringList("questFish." + EventAndTime.questFish).contains(biome + "_" + height) &&

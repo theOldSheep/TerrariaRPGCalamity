@@ -10,13 +10,14 @@ import terraria.util.MathHelper;
 import terraria.util.*;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class HiveBlob extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.THE_HIVE_MIND;
     public static final double BASIC_HEALTH = 100 * 2;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     Player target = null;
     // other variables and AI
     TheHiveMind owner;
@@ -130,7 +131,7 @@ public class HiveBlob extends EntitySlime {
         }
         // init target map
         {
-            targetMap = (HashMap<Player, Double>) owner.targetMap.clone();
+            targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) owner.targetMap.clone();
             target = owner.target;
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }

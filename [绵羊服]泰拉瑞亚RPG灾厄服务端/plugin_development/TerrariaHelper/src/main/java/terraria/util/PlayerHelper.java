@@ -87,7 +87,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("minionDamagePenaltyMulti", 0.5d);
         defaultPlayerAttrMap.put("minionLimit", 1d);
         defaultPlayerAttrMap.put("mobLimit", 15d);
-        defaultPlayerAttrMap.put("mobSpawnRate", 0.125d);
+        defaultPlayerAttrMap.put("mobSpawnRate", 0.05d);
         defaultPlayerAttrMap.put("mobSpawnRateMulti", 1d);
         defaultPlayerAttrMap.put("penetration", 0d);
         defaultPlayerAttrMap.put("powerPickaxe", 0d);
@@ -1521,9 +1521,9 @@ public class PlayerHelper {
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MONSTER_SPAWNED_AMOUNT, 0);
             // remove teleportation target
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TELEPORT_TARGET, null);
-            // attribute
-            setupAttribute(ply);
         }
+        // reset attribute
+        setupAttribute(ply);
     }
     public static void setupAttribute(Player ply) {
         try {

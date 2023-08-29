@@ -342,8 +342,7 @@ public class WorldHelper {
                         Block blockToSpread = getSpreadBlock(blockToTick, true, Material.DIRT, Material.GRASS, Material.MYCEL);
                         if (blockToSpread != null &&
                                 BiomeType.getBiome(blockToSpread.getLocation()) == BiomeType.CORRUPTION) {
-                            blockToSpread.setType(Material.DIRT);
-                            blockToSpread.setData((byte) 2);
+                            blockToSpread.setType(Material.MYCEL);
                         }
                     } else
                         blockToTick.setType(Material.DIRT);

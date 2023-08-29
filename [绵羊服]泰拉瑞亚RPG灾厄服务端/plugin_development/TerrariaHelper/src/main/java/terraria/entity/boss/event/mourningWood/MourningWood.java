@@ -17,6 +17,7 @@ import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class MourningWood extends EntitySlime {
     // basic variables
@@ -27,7 +28,7 @@ public class MourningWood extends EntitySlime {
     public static final int EVENT_BOSS_INDEX = 0;
     public static final double HORIZONTAL_ACC = 0.1, HORIZONTAL_SPEED = 0.5;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -72,6 +73,8 @@ public class MourningWood extends EntitySlime {
             }
             // AI
 
+            // increase player aggro duration
+            targetMap.get(target.getUniqueId()).addAggressionTick();
             // flaming wood
             if (indexAI < 100) {
                 bukkitEntity.setVelocity(new Vector());

@@ -18,6 +18,7 @@ import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class ThePlaguebringerGoliath extends EntitySlime {
     // basic variables
@@ -26,7 +27,7 @@ public class ThePlaguebringerGoliath extends EntitySlime {
     public static final double BASIC_HEALTH = 255600 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -209,6 +210,9 @@ public class ThePlaguebringerGoliath extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // increase player aggro duration
+                targetMap.get(target.getUniqueId()).addAggressionTick();
+
                 healthRatio = getHealth() / getMaxHealth();
                 if (!secondPhase && healthRatio < 0.5)
                     toSecondPhase();

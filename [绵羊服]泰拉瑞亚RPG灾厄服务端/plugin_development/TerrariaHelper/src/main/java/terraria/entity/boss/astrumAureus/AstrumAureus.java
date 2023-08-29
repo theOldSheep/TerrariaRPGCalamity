@@ -18,6 +18,7 @@ import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class AstrumAureus extends EntitySlime {
     // basic variables
@@ -26,7 +27,7 @@ public class AstrumAureus extends EntitySlime {
     public static final double BASIC_HEALTH = 282240 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -124,7 +125,7 @@ public class AstrumAureus extends EntitySlime {
                 getShootSpread(), 3, 60,
                 target, shootInfoLaser.shootLoc, SPEED_LASER)) {
             shootInfoLaser.velocity = shootVelocity;
-            EntityHelper.spawnProjectile(shootInfoLaser).setGlowing(true);
+            EntityHelper.spawnProjectile(shootInfoLaser);
         }
     }
     private void AIPhaseRecharge() {
@@ -230,22 +231,22 @@ public class AstrumAureus extends EntitySlime {
                 }
                 return;
             }
+            // increase player aggro duration
+            targetMap.get(target.getUniqueId()).addAggressionTick();
             // if target is valid, attack
-            else {
-                healthRatio = getHealth() / getMaxHealth();
-                switch (phaseAI) {
-                    case RECHARGE:
-                        AIPhaseRecharge();
-                        break;
-                    case CRAWL:
-                        AIPhaseCrawl();
-                        break;
-                    case JUMP:
-                        AIPhaseJump();
-                        break;
-                }
-                indexAI ++;
+            healthRatio = getHealth() / getMaxHealth();
+            switch (phaseAI) {
+                case RECHARGE:
+                    AIPhaseRecharge();
+                    break;
+                case CRAWL:
+                    AIPhaseCrawl();
+                    break;
+                case JUMP:
+                    AIPhaseJump();
+                    break;
             }
+            indexAI ++;
         }
         // face the player
         this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );

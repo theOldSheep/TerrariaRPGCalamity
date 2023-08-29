@@ -11,6 +11,7 @@ depend:
   - VexView
 softdepend:
   - AuthMe
+  - Residence
 load: STARTUP
 commands:
   findNoise:

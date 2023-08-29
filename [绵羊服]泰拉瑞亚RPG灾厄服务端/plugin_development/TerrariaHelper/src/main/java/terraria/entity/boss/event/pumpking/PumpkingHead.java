@@ -17,6 +17,7 @@ import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class PumpkingHead extends EntitySlime {
     // basic variables
@@ -26,7 +27,7 @@ public class PumpkingHead extends EntitySlime {
     public static final boolean IGNORE_DISTANCE = false;
     public static final int EVENT_BOSS_INDEX = 1;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -73,6 +74,8 @@ public class PumpkingHead extends EntitySlime {
             }
             // AI
 
+            // increase player aggro duration
+            targetMap.get(target.getUniqueId()).addAggressionTick();
             // move
             Vector vHead = target.getLocation().add(0, 8, 0).subtract(bukkitEntity.getLocation()).toVector();
             vHead.multiply(1d / 25);

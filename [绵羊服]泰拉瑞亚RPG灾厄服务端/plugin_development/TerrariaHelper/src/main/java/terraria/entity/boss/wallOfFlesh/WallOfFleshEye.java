@@ -14,6 +14,7 @@ import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class WallOfFleshEye extends EntitySlime {
     // basic variables
@@ -22,7 +23,7 @@ public class WallOfFleshEye extends EntitySlime {
     public static final double BASIC_HEALTH = 54834;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     Player target = null;
     // other variables and AI
@@ -61,7 +62,7 @@ public class WallOfFleshEye extends EntitySlime {
         shootInfo.properties.put("liveTime", 100);
         shootInfo.properties.put("gravity", 0d);
         shootInfo.properties.put("blockHitAction", "thru");
-        EntityHelper.spawnProjectile(shootInfo).setGlowing(true);
+        EntityHelper.spawnProjectile(shootInfo);
     }
     private void AI() {
         // no AI after death

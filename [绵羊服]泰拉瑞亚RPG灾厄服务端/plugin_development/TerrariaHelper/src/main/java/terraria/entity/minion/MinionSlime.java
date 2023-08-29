@@ -1,7 +1,6 @@
 package terraria.entity.minion;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -388,6 +387,9 @@ public class MinionSlime extends EntitySlime {
                 // the minion will attempt to dash a bit under enemy's eye location
                 if (!targetIsOwner) {
                     targetLoc.multiply(0.75).add(target.getLocation().toVector().multiply(0.25));
+                }
+                else {
+                    targetLoc.add(0, 4, 0);
                 }
                 // setup velocity
                 boolean shouldUpdateVelocity = targetIsOwner || index % 10 == 0;
@@ -1708,8 +1710,13 @@ public class MinionSlime extends EntitySlime {
             switch (minionType) {
                 // heals the owner
                 case "真菌块":
-                    if (!hitInfo.isEmpty())
-                        PlayerHelper.heal(owner, 1, false);
+                    if (!hitInfo.isEmpty()) {
+                        String scoreboardTagHealCD = "temp_healCD";
+                        if (! getScoreboardTags().contains(scoreboardTagHealCD)) {
+                            PlayerHelper.heal(owner, 1, false);
+                            EntityHelper.handleEntityTemporaryScoreboardTag(minionBukkit, scoreboardTagHealCD, 8);
+                        }
+                    }
                     break;
                 // receives knockback on hit
                 case "远古岩鲨":

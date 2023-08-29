@@ -65,7 +65,13 @@ public class MonsterHelper {
                     boolean currLocValid = spawnLoc.getY() > 0 && spawnLoc.getY() < 256;
                     Material currBlockMat = spawnLoc.getBlock().getType();
                     // no spawning in liquid!
-                    if (currBlockMat == Material.WATER || currBlockMat == Material.LAVA) return true;
+                    switch (currBlockMat) {
+                        case WATER:
+                        case STATIONARY_WATER:
+                        case LAVA:
+                        case STATIONARY_LAVA:
+                            return true;
+                    }
                     if (currBlockMat.isSolid()) currLocValid = false;
                     // the block became valid
                     if (!lastLocValid && currLocValid) {
@@ -90,7 +96,13 @@ public class MonsterHelper {
             }
             case "WATER": {
                 Material currBlockMat = spawnLoc.getBlock().getType();
-                if (currBlockMat != Material.WATER) return true;
+                switch (currBlockMat) {
+                    case WATER:
+                    case STATIONARY_WATER:
+                        break;
+                    default:
+                        return true;
+                }
                 break;
             }
             case "SOLID": {
@@ -197,7 +209,11 @@ public class MonsterHelper {
         ConfigurationSection mobInfoSection = TerrariaHelper.mobSpawningConfig.getConfigurationSection("mobInfo." + type);
         boolean unique = mobInfoSection.getBoolean("unique", false);
         if (unique && uniqueMonsters.containsKey(type)) {
-            if (!uniqueMonsters.get(type).isDead())
+            Entity currMonster = uniqueMonsters.get(type);
+            // timeout after 2.5 minutes (150 seconds)
+            if (currMonster.getTicksLived() > 3000)
+                currMonster.remove();
+            if (!currMonster.isDead())
                 return null;
         }
         String entityType = mobInfoSection.getString("monsterType", "SLIME");

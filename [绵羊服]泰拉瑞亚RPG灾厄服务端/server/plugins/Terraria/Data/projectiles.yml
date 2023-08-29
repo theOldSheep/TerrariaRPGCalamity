@@ -252,6 +252,7 @@
     autoTraceSharpTurning: false
     autoTraceAbility: 1
     noAutoTraceTicks: 15
+    maxAutoTraceTicks: 30
     trailColor: 255|0|0
     trailSize: 0.15
     trailStepSize: 1

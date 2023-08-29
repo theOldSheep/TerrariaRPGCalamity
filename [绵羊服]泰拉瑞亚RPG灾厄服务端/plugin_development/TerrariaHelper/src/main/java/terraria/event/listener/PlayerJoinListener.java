@@ -50,6 +50,8 @@ public class PlayerJoinListener implements Listener {
                 pillar.bossbar.addPlayer( playerNMS );
         // show boss bars
         for (ArrayList<LivingEntity> bossList : BossHelper.bossMap.values()) {
+            if (bossList.isEmpty())
+                continue;
             MetadataValue bossbarMetadata = EntityHelper.getMetadata(bossList.get(0), EntityHelper.MetadataName.BOSS_BAR);
             if (bossbarMetadata == null)
                 Bukkit.getLogger().log(Level.SEVERE, "Boss " + bossList.get(0) +

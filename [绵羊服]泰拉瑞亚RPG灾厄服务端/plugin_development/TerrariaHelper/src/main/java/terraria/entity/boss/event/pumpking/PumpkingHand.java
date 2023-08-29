@@ -14,6 +14,7 @@ import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class PumpkingHand extends EntitySlime {
     // basic variables
@@ -21,7 +22,7 @@ public class PumpkingHand extends EntitySlime {
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     Player target = null;
     // other variables and AI

@@ -329,6 +329,7 @@ public class ItemHelper {
         if (item.getItemMeta().hasDisplayName())
             return item;
         String regularizedItemType = null;
+        int itemAmount = item.getAmount();
         switch (item.getType()) {
             case TORCH:
                 regularizedItemType = "火把";
@@ -365,20 +366,20 @@ public class ItemHelper {
                 break;
             case SEEDS:
                 item.setType(Material.AIR);
-                double rdm = Math.random();
-                if (rdm < 0.05)
+                if (Math.random() < 0.1)
                     regularizedItemType = "草种";
                 if (WorldHelper.BiomeType.getBiome(dropLoc) == WorldHelper.BiomeType.JUNGLE) {
-                    if (rdm < 0.002) {
+                    double rdm = Math.random();
+                    if (rdm < 0.015) {
                         regularizedItemType = "大自然的恩赐";
                     }
-                    else if (rdm < 0.02) {
+                    else if (rdm < 0.09) {
                         regularizedItemType = "毒刺";
                     }
-                    else if (rdm < 0.03) {
+                    else if (rdm < 0.2) {
                         regularizedItemType = "丛林孢子";
                     }
-                    else if (rdm < 0.0325) {
+                    else if (rdm < 0.25) {
                         regularizedItemType = "藤蔓";
                     }
                 }
@@ -428,7 +429,7 @@ public class ItemHelper {
         }
         if (regularizedItemType == null)
             return item;
-        return getItemFromDescription(regularizedItemType + ":" + item.getAmount(), false);
+        return getItemFromDescription(regularizedItemType + ":" + itemAmount, false);
     }
     public static ItemStack randomPrefix(ItemStack item) {
         String[] itemInfo = splitItemName(item);
@@ -786,7 +787,7 @@ public class ItemHelper {
                 meta.setDisplayName(rarityColor + itemName);
                 List<String> lore = itemSection.getStringList("lore");
                 List<String> loreDescription = getLoreDescription(itemSection.getConfigurationSection("attributes"));
-                ArrayList<String> finalLore = new ArrayList<>(20);
+                ArrayList<String> finalLore = new ArrayList<>(10);
                 while (lore.size() > 0 && lore.get(0).endsWith("]")) finalLore.add(lore.remove(0));
                 finalLore.addAll(loreDescription);
                 finalLore.addAll(lore);

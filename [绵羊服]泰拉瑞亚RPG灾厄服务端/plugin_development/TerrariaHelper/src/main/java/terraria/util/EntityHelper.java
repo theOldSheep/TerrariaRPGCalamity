@@ -539,7 +539,6 @@ public class EntityHelper {
                     ((PotionMeta) itemMeta).setColor(Color.fromRGB(255, 255, 255));
                     disguiseItem.setItemMeta(itemMeta);
                     ((ThrownPotion) projectile).setItem(disguiseItem);
-                    if (name.contains("激光")) projectile.setGlowing(true);
                 }
                 break;
             }
@@ -997,7 +996,7 @@ public class EntityHelper {
                 String coolDownTag = "temp_hydroThermicFireball";
                 if (! dPly.getScoreboardTags().contains(coolDownTag)) {
                     // cool down
-                    handleEntityTemporaryScoreboard(dPly, coolDownTag, 30);
+                    handleEntityTemporaryScoreboardTag(dPly, coolDownTag, 30);
                     // damage setup
                     EntityPlayer dPlyNMS = ((CraftPlayer) dPly).getHandle();
                     HashMap<String, Double> fireballAttrMap = (HashMap<String, Double>) getAttrMap(damager).clone();
@@ -1033,8 +1032,10 @@ public class EntityHelper {
             // respawn time, default to 15 seconds and increases if boss is alive
             int respawnTime = 15;
             for (ArrayList<LivingEntity> bossList : BossHelper.bossMap.values()) {
-                HashMap<Player, Double> targets = (HashMap<Player, Double>) getMetadata(bossList.get(0), MetadataName.BOSS_TARGET_MAP).value();
-                if (targets.containsKey(vPly)) {
+                HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targets =
+                        (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>)
+                                getMetadata(bossList.get(0), MetadataName.BOSS_TARGET_MAP).value();
+                if (targets.containsKey(vPly.getUniqueId())) {
                     respawnTime = Math.max(respawnTime, Math.min(targets.size() * 15, 75));
                 }
             }
@@ -1358,10 +1359,10 @@ public class EntityHelper {
     public static String getInvulnerabilityTickName(DamageType damageType) {
         return "tempDamageCD_" + damageType;
     }
-    public static void handleEntityTemporaryScoreboard(Entity entity, String damageInvincibilityFrameName, int damageInvulnerabilityTicks) {
-        if (damageInvulnerabilityTicks > 0) {
+    public static void handleEntityTemporaryScoreboardTag(Entity entity, String scoreboardTagName, int scoreboardTagDuration) {
+        if (scoreboardTagDuration > 0) {
             // apply the invulnerability tick
-            entity.addScoreboardTag(damageInvincibilityFrameName);
+            entity.addScoreboardTag(scoreboardTagName);
             // record edition
             MetadataValue metadataValue = getMetadata(entity, MetadataName.INVULNERABILITY_TICK_EDITION_MAP);
             HashMap<String, Integer> invulnerabilityTickEditionMap;
@@ -1369,21 +1370,21 @@ public class EntityHelper {
                 invulnerabilityTickEditionMap = new HashMap<>();
             else
                 invulnerabilityTickEditionMap = (HashMap<String, Integer>) metadataValue.value();
-            int iTickEdition = invulnerabilityTickEditionMap.getOrDefault(damageInvincibilityFrameName, 0) + 1;
-            invulnerabilityTickEditionMap.put(damageInvincibilityFrameName, iTickEdition);
+            int iTickEdition = invulnerabilityTickEditionMap.getOrDefault(scoreboardTagName, 0) + 1;
+            invulnerabilityTickEditionMap.put(scoreboardTagName, iTickEdition);
             setMetadata(entity, MetadataName.INVULNERABILITY_TICK_EDITION_MAP, invulnerabilityTickEditionMap);
             // remove it if the edition is not outdated
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                     () -> {
                         HashMap<String, Integer> currITickEditionMap = (HashMap<String, Integer>) getMetadata(
                                 entity, MetadataName.INVULNERABILITY_TICK_EDITION_MAP).value();
-                        if (currITickEditionMap.get(damageInvincibilityFrameName) == iTickEdition)
-                            entity.removeScoreboardTag(damageInvincibilityFrameName);
-                        switch (damageInvincibilityFrameName) {
+                        if (currITickEditionMap.get(scoreboardTagName) == iTickEdition)
+                            entity.removeScoreboardTag(scoreboardTagName);
+                        switch (scoreboardTagName) {
                             case "temp_parryCD":
                                 entity.sendMessage("§7方舟格挡冷却结束！");
                         }
-                    }, damageInvulnerabilityTicks);
+                    }, scoreboardTagDuration);
         }
     }
     private static void displayDamageActionBar(Player damager, String victimName, int health, int maxHealth, int damage) {
@@ -1445,7 +1446,8 @@ public class EntityHelper {
                 boolean canProperlyDamage = false;
                 if (damageSource instanceof Player) {
                     if ( bossTargets == null ||
-                            (((HashMap<Player, Double>) (bossTargets.value())).containsKey(damageSource)) )
+                            (((HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) (bossTargets.value()))
+                                    .containsKey(damageSource.getUniqueId())) )
                         canProperlyDamage = true;
                 }
                 // damage source of a boss is not a target
@@ -1750,10 +1752,12 @@ public class EntityHelper {
             if (victimScoreboardTags.contains("isBOSS") && damageSource instanceof Player) {
                 MetadataValue temp = getMetadata(damageTaker, MetadataName.BOSS_TARGET_MAP);
                 if (temp != null) {
-                    HashMap<Player, Double> targets = (HashMap<Player, Double>) temp.value();
+                    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targets =
+                            (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) temp.value();
                     Player ply = (Player) damageSource;
-                    if (targets.containsKey(ply))
-                        targets.put(ply, targets.get(ply) + dmg);
+                    UUID plyID = ply.getUniqueId();
+                    if (targets.containsKey(plyID))
+                        targets.get(plyID).addDamageDealt(dmg);
                 }
             }
             if (damageTaker.getHealth() <= dmg) {
@@ -1805,7 +1809,7 @@ public class EntityHelper {
         }
 
         // handle invincibility ticks
-        handleEntityTemporaryScoreboard(victim, damageInvincibilityFrameName, damageInvulnerabilityTicks);
+        handleEntityTemporaryScoreboardTag(victim, damageInvincibilityFrameName, damageInvulnerabilityTicks);
     }
     public static void handleEntityExplode(Entity source, Collection<Entity> damageExceptions) {
         handleEntityExplode(source, damageExceptions, source.getLocation());

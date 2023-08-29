@@ -335,15 +335,6 @@ public class MonsterHelper {
             case "克苏鲁的仆从":
                 monster.noclip = true;
         }
-        // glowing
-        switch (type) {
-            case "诅咒骷髅头":
-            case "妖精":
-            case "巨型诅咒骷髅头":
-            case "巨像蛤":
-            case "肉后巨像蛤":
-                monster.glowing = true;
-        }
         // AI removed for certain monsters to prevent bug
         {
             boolean removeAI = false;
@@ -883,11 +874,11 @@ public class MonsterHelper {
                         // periodically becomes invincible
                         {
                             if (indexAI % 200 == 0) {
-                                monsterBkt.setGlowing(true);
+                                EntityHelper.slimeResize((Slime) monsterBkt, 3);
                                 monsterBkt.addScoreboardTag("noDamage");
                                 EntityHelper.tweakAttribute(monsterBkt, "damageMulti", "0.3", true);
                             } else if (indexAI % 200 == 100) {
-                                monsterBkt.setGlowing(false);
+                                EntityHelper.slimeResize((Slime) monsterBkt, 2);
                                 monsterBkt.removeScoreboardTag("noDamage");
                                 EntityHelper.tweakAttribute(monsterBkt, "damageMulti", "0.3", false);
                             }
@@ -2171,9 +2162,6 @@ public class MonsterHelper {
                 case "观星怪": {
                     if (monster.getHealth() > 0) {
                         switch (indexAI % 120) {
-                            case 105:
-                                monsterBkt.setGlowing(true);
-                                break;
                             case 116:
                                 Location targetEyeLoc = target.getEyeLocation();
                                 extraVariables.put("L", targetEyeLoc);
@@ -2187,7 +2175,6 @@ public class MonsterHelper {
                                         MathHelper.getVectorYaw(dir), MathHelper.getVectorPitch(dir), 48, 1,
                                         "", "100|150|255", new ArrayList<>(), EntityHelper.getAttrMap(monsterBkt),
                                         new GenericHelper.StrikeLineOptions());
-                                monsterBkt.setGlowing(false);
                                 break;
                         }
                     }

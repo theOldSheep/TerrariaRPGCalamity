@@ -17,6 +17,7 @@ import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class SantaNK1 extends EntitySlime {
     // basic variables
@@ -27,7 +28,7 @@ public class SantaNK1 extends EntitySlime {
     public static final int EVENT_BOSS_INDEX = 1;
     public static final double HORIZONTAL_ACC = 0.05, HORIZONTAL_SPEED = 0.25, ROCKET_SPEED = 2.25;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -80,6 +81,8 @@ public class SantaNK1 extends EntitySlime {
             }
             // AI
 
+            // increase player aggro duration
+            targetMap.get(target.getUniqueId()).addAggressionTick();
             // bullets
             if (indexAI % 4 == 0) {
                 shootInfoBullet.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();

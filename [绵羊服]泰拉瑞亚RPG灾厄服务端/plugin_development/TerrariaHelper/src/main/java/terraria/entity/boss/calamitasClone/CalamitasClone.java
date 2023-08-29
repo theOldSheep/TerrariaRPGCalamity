@@ -22,6 +22,7 @@ import terraria.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.UUID;
 
 public class CalamitasClone extends EntitySlime {
     // basic variables
@@ -30,7 +31,7 @@ public class CalamitasClone extends EntitySlime {
     public static final double BASIC_HEALTH = 108000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -116,7 +117,6 @@ public class CalamitasClone extends EntitySlime {
                 displayProjectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_TICKS_LIVED, ticksLive);
         EntityHelper.setMetadata(
                 displayProjectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_ORIGINAL, projectileSpawned);
-        displayProjectile.setGlowing(true);
         bulletHellProjectiles.add(displayProjectile);
     }
     private void handleBulletHell() {
@@ -220,6 +220,9 @@ public class CalamitasClone extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // increase player aggro duration
+                targetMap.get(target.getUniqueId()).addAggressionTick();
+                // calculate brothers alive
                 if (brothersAlive) {
                     if (bossParts.get(2).isDead() && bossParts.get(3).isDead())
                         brothersAlive = false;

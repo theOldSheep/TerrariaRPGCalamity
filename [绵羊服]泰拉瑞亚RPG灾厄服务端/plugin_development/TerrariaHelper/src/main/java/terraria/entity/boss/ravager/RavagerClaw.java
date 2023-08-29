@@ -14,13 +14,14 @@ import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class RavagerClaw extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.RAVAGER;
     public static final double BASIC_HEALTH = 38364 * 2, BASIC_HEALTH_POST_PROVIDENCE = 153456 * 2;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;

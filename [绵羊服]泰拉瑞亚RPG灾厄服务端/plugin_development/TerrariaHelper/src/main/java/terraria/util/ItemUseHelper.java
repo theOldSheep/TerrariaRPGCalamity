@@ -5,12 +5,15 @@ import org.bukkit.*;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -143,6 +146,7 @@ public class ItemUseHelper {
     protected static boolean playerUseEventSummon(Player ply, String itemName, ItemStack itemStack) {
         boolean successful = false;
         boolean isDayTime = WorldHelper.isDayTime(ply.getWorld());
+        int useCD = 20;
         switch (itemName) {
             case "日耀碑牌":
                 if (isDayTime) {
@@ -159,9 +163,39 @@ public class ItemUseHelper {
                     successful = EventAndTime.initializeEvent(EventAndTime.Events.PUMPKIN_MOON);
                 }
                 break;
+            case "玻璃平台":
+                // init blocks
+                HashMap<Integer, ArrayList<Location>> blocks = new HashMap<>();
+                for (int i = -15; i <= 15; i ++)
+                    for (int j = -15; j <= 15; j ++) {
+                        int delay = Math.abs(i) + Math.abs(j);
+                        if (!blocks.containsKey(delay))
+                            blocks.put(delay, new ArrayList<>());
+                        blocks.get(delay).add(ply.getLocation().add(i, -1, j));
+                    }
+                // schedule task
+                for (int delay : blocks.keySet()) {
+                    Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), () -> {
+                        for (Location loc : blocks.get(delay)) {
+                            Block blk = loc.getBlock();
+                            if (blk.getType().isSolid()) continue;
+                            // validate permission
+                            BlockBreakEvent evt = new BlockBreakEvent(blk, ply);
+                            Bukkit.getPluginManager().callEvent(evt);
+                            // change block
+                            if (!evt.isCancelled()) {
+                                if (GameplayHelper.playerBreakBlock(blk, ply, true, true))
+                                    blk.setType(Material.GLASS);
+                            }
+                        }
+                    }, delay);
+                }
+                successful = true;
+                break;
         }
         if (successful) {
             itemStack.setAmount( itemStack.getAmount() - 1 );
+            applyCD(ply, useCD);
         }
         return successful;
     }
@@ -641,10 +675,10 @@ public class ItemUseHelper {
                                 .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
                                     // melee invulnerability tick
                                     int invulnerabilityTicks = 3;
-                                    EntityHelper.handleEntityTemporaryScoreboard(ply,
+                                    EntityHelper.handleEntityTemporaryScoreboardTag(ply,
                                             EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
                                             invulnerabilityTicks);
-                                    EntityHelper.handleEntityTemporaryScoreboard(ply,
+                                    EntityHelper.handleEntityTemporaryScoreboardTag(ply,
                                             EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
                                             invulnerabilityTicks);
                                 });
@@ -785,14 +819,14 @@ public class ItemUseHelper {
                                         ply.setFallDistance(0f);
                                         // repels the player when the strike would finish soon
                                         if ( ( (finalCurrentIndex + 3) * 1.75) >= maxIndex) {
-                                            Vector plyVel = MathHelper.getDirection(hitLoc, startStrikeLoc, 1.25);
+                                            Vector plyVel = MathHelper.getDirection(hitLoc, startStrikeLoc, 2);
                                             ply.setVelocity(plyVel);
                                         }
                                         // otherwise, keep a safe distance from enemy
                                         else {
                                             Vector offsetDir = MathHelper.getDirection(hitLoc, startStrikeLoc, 5.5);
                                             Vector plyVel = MathHelper.getDirection(
-                                                    startStrikeLoc, hitLoc.add(offsetDir), 0.75, true);
+                                                    startStrikeLoc, hitLoc.add(offsetDir), 1.75, true);
                                             ply.setVelocity(plyVel);
                                         }
                                     }
@@ -836,10 +870,10 @@ public class ItemUseHelper {
                                     }
                                     // apply melee invulnerability tick otherwise
                                     else {
-                                        EntityHelper.handleEntityTemporaryScoreboard(ply,
+                                        EntityHelper.handleEntityTemporaryScoreboardTag(ply,
                                                 EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
                                                 invulnerabilityTicks);
-                                        EntityHelper.handleEntityTemporaryScoreboard(ply,
+                                        EntityHelper.handleEntityTemporaryScoreboardTag(ply,
                                                 EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
                                                 invulnerabilityTicks);
                                     }
@@ -851,7 +885,7 @@ public class ItemUseHelper {
                                 })
                                 .setShouldDamageFunction( (e) -> EntityHelper.checkCanDamage(e, ply, true))
                                 .setLingerDelay(5);
-                        EntityHelper.handleEntityTemporaryScoreboard(ply, parryCDScoreboardTag, coolDown);
+                        EntityHelper.handleEntityTemporaryScoreboardTag(ply, parryCDScoreboardTag, coolDown);
                     }
                     break;
                 }
@@ -1436,7 +1470,7 @@ public class ItemUseHelper {
                         strikeLineInfo
                                 .setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
                                     if (! ply.getScoreboardTags().contains("temp_sharknado")) {
-                                        EntityHelper.handleEntityTemporaryScoreboard(ply,
+                                        EntityHelper.handleEntityTemporaryScoreboardTag(ply,
                                                 "temp_sharknado", 100);
                                         HashMap<String, Double> tornadoAttrMap = (HashMap<String, Double>) attrMap.clone();
                                         tornadoAttrMap.put("damage", tornadoAttrMap.get("damage") * 0.5);
@@ -2255,7 +2289,7 @@ public class ItemUseHelper {
             String coolDownTag = "temp_hydroThermicFireball";
             if (! ply.getScoreboardTags().contains(coolDownTag)) {
                 // cool down
-                EntityHelper.handleEntityTemporaryScoreboard(ply, coolDownTag, 10);
+                EntityHelper.handleEntityTemporaryScoreboardTag(ply, coolDownTag, 10);
                 // damage setup
                 EntityPlayer dPlyNMS = ((CraftPlayer) ply).getHandle();
                 HashMap<String, Double> fireballAttrMap = (HashMap<String, Double>) attrMap.clone();
@@ -3104,7 +3138,7 @@ public class ItemUseHelper {
         // if itemName == "", some bug may occur. Also, vanilla items are not useful at all.
         if (itemName.length() > 0) {
             if (isRightClick) {
-                // to summon an event
+                // to summon an invasion event/platform event
                 if (playerUseEventSummon(ply, itemName, mainHandItem)) return;
                 // to release a critter
                 if (playerUseCritter(ply, itemName, mainHandItem)) return;

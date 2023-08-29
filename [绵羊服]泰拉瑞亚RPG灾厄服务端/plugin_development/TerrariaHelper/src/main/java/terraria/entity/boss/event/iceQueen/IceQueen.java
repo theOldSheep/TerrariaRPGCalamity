@@ -17,6 +17,7 @@ import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class IceQueen extends EntitySlime {
     // basic variables
@@ -26,7 +27,7 @@ public class IceQueen extends EntitySlime {
     public static final boolean IGNORE_DISTANCE = false;
     public static final int EVENT_BOSS_INDEX = 2;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -62,6 +63,8 @@ public class IceQueen extends EntitySlime {
             }
             // AI
 
+            // increase player aggro duration
+            targetMap.get(target.getUniqueId()).addAggressionTick();
             // frost waves
             if (indexAI < 100) {
                 Vector direction = MathHelper.getDirection(
@@ -79,8 +82,7 @@ public class IceQueen extends EntitySlime {
                 if (indexAI % 4 == 0) {
                     shootInfoFrostShard.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
                     shootInfoFrostShard.velocity = new Vector(0, -0.75, 0);
-                    EntityHelper.spawnProjectile(shootInfoFrostShard)
-                            .setGlowing(true);
+                    EntityHelper.spawnProjectile(shootInfoFrostShard);
                 }
             }
             // ice shard
@@ -94,8 +96,7 @@ public class IceQueen extends EntitySlime {
                             Math.random() * 8 - 4);
                     shootInfoFrostShard.velocity = MathHelper.getDirection(shootInfoFrostShard.shootLoc,
                             targetLoc, 1.4);
-                    EntityHelper.spawnProjectile(shootInfoFrostShard)
-                            .setGlowing(true);
+                    EntityHelper.spawnProjectile(shootInfoFrostShard);
                 }
             }
 

@@ -19,6 +19,7 @@ import terraria.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.UUID;
 
 public class Crabulon extends EntitySlime {
     // basic variables
@@ -27,7 +28,7 @@ public class Crabulon extends EntitySlime {
     public static final double BASIC_HEALTH = 9600 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -121,6 +122,8 @@ public class Crabulon extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // increase player aggro duration
+                targetMap.get(target.getUniqueId()).addAggressionTick();
                 // AI
                 handleShroomFollow();
                 if (ticksLived % 2 == 0) {

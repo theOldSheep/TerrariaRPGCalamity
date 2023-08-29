@@ -18,6 +18,7 @@ import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class HeadlessHorseman extends EntitySlime {
     // basic variables
@@ -27,7 +28,7 @@ public class HeadlessHorseman extends EntitySlime {
     public static final boolean IGNORE_DISTANCE = false;
     public static final int EVENT_BOSS_INDEX = 2;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -51,6 +52,8 @@ public class HeadlessHorseman extends EntitySlime {
                 }
                 return;
             }
+            // increase player aggro duration
+            targetMap.get(target.getUniqueId()).addAggressionTick();
             // force target
             setGoalTarget( ((CraftPlayer) target).getHandle(), EntityTargetEvent.TargetReason.CLOSEST_PLAYER, false );
         }

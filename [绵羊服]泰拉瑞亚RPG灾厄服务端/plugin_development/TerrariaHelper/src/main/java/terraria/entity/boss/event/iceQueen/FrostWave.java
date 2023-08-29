@@ -90,7 +90,6 @@ public class FrostWave extends EntitySlime {
         {
             this.noclip = true;
             this.setNoGravity(true);
-            this.glowing = true;
             this.persistent = true;
         }
     }

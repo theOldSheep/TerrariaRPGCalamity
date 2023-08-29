@@ -20,16 +20,16 @@ import terraria.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.UUID;
 
 public class DukeFishron extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.DUKE_FISHRON;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.OCEAN;
-    public static final double BASIC_HEALTH = 21420 * 2;
-//    public static final double BASIC_HEALTH = 214200 * 2;
+    public static final double BASIC_HEALTH = 214200 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -379,6 +379,9 @@ public class DukeFishron extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // increase player aggro duration
+                targetMap.get(target.getUniqueId()).addAggressionTick();
+
                 healthRatio = getHealth() / getMaxHealth();
                 if (indexAI >= 0) {
                     switch (phaseAI) {

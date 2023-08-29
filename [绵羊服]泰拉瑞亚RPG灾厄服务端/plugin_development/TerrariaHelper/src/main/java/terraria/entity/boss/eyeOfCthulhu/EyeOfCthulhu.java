@@ -18,6 +18,7 @@ import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class EyeOfCthulhu extends EntitySlime {
     // basic variables
@@ -26,7 +27,7 @@ public class EyeOfCthulhu extends EntitySlime {
     public static final double BASIC_HEALTH = 12132;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -57,6 +58,8 @@ public class EyeOfCthulhu extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // increase player aggro duration
+                targetMap.get(target.getUniqueId()).addAggressionTick();
                 // AI
                 if (ticksLived % 3 == 0) {
                     double healthRatio = this.getHealth() / this.getMaxHealth();

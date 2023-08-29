@@ -18,6 +18,7 @@ import terraria.util.*;
 import javax.lang.model.element.VariableElement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Retinazer extends EntitySlime {
     // basic variables
@@ -26,7 +27,7 @@ public class Retinazer extends EntitySlime {
     public static final double BASIC_HEALTH = 50490 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -156,7 +157,7 @@ public class Retinazer extends EntitySlime {
                     else {
                         if ((indexAI - 60) % 40 == 0) {
                             dashVelocity = MathHelper.getDirection(
-                                    ((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), 2.5);
+                                    ((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), 1.75);
                         }
                         // maintain dash velocity
                         bukkitEntity.setVelocity(dashVelocity);
@@ -259,7 +260,7 @@ public class Retinazer extends EntitySlime {
                     else {
                         if ((indexAI - 90) % 40 == 0) {
                             dashVelocity = MathHelper.getDirection(
-                                    ((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), 2.5);
+                                    ((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), 2);
                         }
                         // maintain dash velocity
                         bukkitEntity.setVelocity(dashVelocity);
@@ -300,6 +301,9 @@ public class Retinazer extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // increase player aggro duration
+                targetMap.get(target.getUniqueId()).addAggressionTick();
+
                 attackAI();
             }
         }
@@ -387,25 +391,8 @@ public class Retinazer extends EntitySlime {
         this.twin = new Spazmatism(summonedPlayer, this);
         // shoot info's
         {
-            shootInfoGenericLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapEyeLaser, "");
-            shootInfoGenericLaser.projectileName = "死亡激光";
-            shootInfoGenericLaser.properties.put("liveTime", 100);
-            shootInfoGenericLaser.properties.put("penetration", 99);
-            shootInfoGenericLaser.properties.put("gravity", 0d);
-            shootInfoGenericLaser.properties.put("blockHitAction", "thru");
-            shootInfoGenericLaser.properties.put("trailColor", "255|0|0");
-            shootInfoGenericLaser.properties.put("trailLingerTime", 2);
-            shootInfoMissile = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHomingMissile, "");
-            shootInfoMissile.projectileName = "追踪导弹";
-            shootInfoMissile.properties.put("liveTime", 100);
-            shootInfoMissile.properties.put("gravity", 0d);
-            shootInfoMissile.properties.put("blockHitAction", "thru");
-            shootInfoMissile.properties.put("autoTrace", true);
-            shootInfoMissile.properties.put("autoTraceMethod", 2);
-            shootInfoMissile.properties.put("autoTraceRadius", 32d);
-            shootInfoMissile.properties.put("autoTraceSharpTurning", false);
-            shootInfoMissile.properties.put("autoTraceAbility", 1d);
-            shootInfoMissile.properties.put("noAutoTraceTicks", 15);
+            shootInfoGenericLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapEyeLaser, "死亡激光");
+            shootInfoMissile = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHomingMissile, "追踪导弹");
         }
     }
 

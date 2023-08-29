@@ -19,6 +19,7 @@ import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class EaterOfWorld extends EntitySlime {
     // basic variables
@@ -27,7 +28,7 @@ public class EaterOfWorld extends EntitySlime {
     public static final double BASIC_HEALTH = 372 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -168,6 +169,17 @@ public class EaterOfWorld extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // increase player aggro duration
+                boolean isFirstSegAlive = true;
+                for (int i = 0; i < index; i ++) {
+                    LivingEntity validateSegment = bossParts.get(i);
+                    if (validateSegment.getHealth() > 1e-5 && !validateSegment.isDead()) {
+                        isFirstSegAlive = false;
+                        break;
+                    }
+                }
+                if (isFirstSegAlive)
+                    targetMap.get(target.getUniqueId()).addAggressionTick();
                 // update facing direction
                 {
                     MetadataValue valYaw = EntityHelper.getMetadata(bukkitEntity, "yaw");
@@ -285,7 +297,7 @@ public class EaterOfWorld extends EntitySlime {
                 targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                         getBukkitEntity(), "", summonedPlayer, true, bossbar);
             } else {
-                targetMap = (HashMap<Player, Double>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
+                targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
             }
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
             target = summonedPlayer;

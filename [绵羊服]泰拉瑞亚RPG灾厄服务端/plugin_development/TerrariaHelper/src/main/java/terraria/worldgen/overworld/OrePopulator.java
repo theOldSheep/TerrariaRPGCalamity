@@ -134,8 +134,8 @@ public class OrePopulator extends BlockPopulator {
     void generateMeteorite(World wld, Random rdm, Chunk chunk) {
         if (yOffset != 0) return; // only surface world get this ore
         if (rdm.nextDouble() < 0.001) {
-            int xCenter = chunk.getX() << 4 + 5 + (int) (rdm.nextDouble() * 6),
-                    zCenter = chunk.getZ() << 4 + 5 + (int) (rdm.nextDouble() * 6);
+            int xCenter = (chunk.getX() << 4) + 5 + (int) (rdm.nextDouble() * 6),
+                    zCenter = (chunk.getZ() << 4) + 5 + (int) (rdm.nextDouble() * 6);
             int height = wld.getHighestBlockYAt(xCenter, zCenter);
             if (height < OverworldChunkGenerator.LAND_HEIGHT || height > OverworldChunkGenerator.LAND_HEIGHT + 20) return;
             Material oreMat = oreMaterials.getOrDefault("METEORITE", Material.STONE);
@@ -187,11 +187,11 @@ public class OrePopulator extends BlockPopulator {
     // hardmode
     // charred ore only generates in the hell level.
     void generateCryonic(World wld, Random rdm, Chunk chunk) {
-        if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.TAIGA_COLD)
+        if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.MUTATED_TAIGA_COLD)
             generateGenericOre(wld, rdm, chunk, UNDERGROUND, 96, "CRYONIC", 6);
     }
     void generatePerennial(World wld, Random rdm, Chunk chunk) {
-        if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.JUNGLE)
+        if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.MUTATED_JUNGLE)
             generateGenericOre(wld, rdm, chunk, UNDERGROUND, 96, "PERENNIAL", 6);
     }
     void generateScoria(World wld, Random rdm, Chunk chunk) {
@@ -226,8 +226,8 @@ public class OrePopulator extends BlockPopulator {
     void generateExodium(World wld, Random rdm, Chunk chunk) {
         if (yOffset < 0) return; // only surface world get this ore
         if (rdm.nextDouble() < 0.001) {
-            int xCenter = chunk.getX() * 16 + (int) (rdm.nextDouble() * 16),
-                    zCenter = chunk.getZ() * 16 + (int) (rdm.nextDouble() * 16),
+            int xCenter = (chunk.getX() << 4) + (int) (rdm.nextDouble() * 16),
+                    zCenter = (chunk.getZ() << 4) + (int) (rdm.nextDouble() * 16),
                     height = 215 + rdm.nextInt(20);
             int worldHeight = wld.getHighestBlockYAt(xCenter, zCenter);
             if (worldHeight > 125) return; // prevents getting too close to ground

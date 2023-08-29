@@ -19,6 +19,7 @@ import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Destroyer extends EntitySlime {
     // basic variables
@@ -27,7 +28,7 @@ public class Destroyer extends EntitySlime {
     public static final double BASIC_HEALTH = 191250 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -197,6 +198,8 @@ public class Destroyer extends EntitySlime {
                 }
                 // head
                 if (index == 0) {
+                    // increase player aggro duration
+                    targetMap.get(target.getUniqueId()).addAggressionTick();
                     // attack
                     headRushEnemy();
                     // face the charging direction
@@ -313,7 +316,7 @@ public class Destroyer extends EntitySlime {
                 targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                         getBukkitEntity(), BossHelper.BossType.WALL_OF_FLESH.msgName, summonedPlayer, true, bossbar);
             } else {
-                targetMap = (HashMap<Player, Double>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
+                targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
             }
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
             target = summonedPlayer;

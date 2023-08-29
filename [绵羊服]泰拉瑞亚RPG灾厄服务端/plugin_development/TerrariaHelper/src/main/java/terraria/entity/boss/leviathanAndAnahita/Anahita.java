@@ -18,6 +18,7 @@ import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Anahita extends EntityZombieHusk {
     // basic variables
@@ -26,7 +27,7 @@ public class Anahita extends EntityZombieHusk {
     public static final double BASIC_HEALTH = 99840 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -222,6 +223,9 @@ public class Anahita extends EntityZombieHusk {
             }
             // if target is valid, attack
             else {
+                // increase player aggro duration
+                targetMap.get(target.getUniqueId()).addAggressionTick();
+
                 attackAI();
             }
         }

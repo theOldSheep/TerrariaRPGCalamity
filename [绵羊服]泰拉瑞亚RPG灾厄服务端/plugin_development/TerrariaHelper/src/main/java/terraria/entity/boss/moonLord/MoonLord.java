@@ -18,6 +18,7 @@ import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class MoonLord extends EntitySlime {
     // basic variables
@@ -26,7 +27,7 @@ public class MoonLord extends EntitySlime {
     public static final double BASIC_HEALTH = 211140 * 2;
     public static final boolean IGNORE_DISTANCE = true;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -126,7 +127,10 @@ public class MoonLord extends EntitySlime {
                     break;
             }
             if (ticksDuration > 0) {
-                for (Player toApplyEffect : targetMap.keySet()) {
+                for (UUID targetID : targetMap.keySet()) {
+                    Player toApplyEffect = Bukkit.getPlayer(targetID);
+                    if (toApplyEffect == null)
+                        continue;
                     toApplyEffect.addPotionEffect(new PotionEffect(
                             PotionEffectType.CONFUSION, ticksDuration, 0, false, false), true);
                 }
@@ -151,6 +155,8 @@ public class MoonLord extends EntitySlime {
                 }
                 return;
             }
+            // increase player aggro duration
+            targetMap.get(target.getUniqueId()).addAggressionTick();
             // if target is valid, teleport parts to location
             setupLocation();
             // if the eyes are destroyed, the heart can now be damaged.

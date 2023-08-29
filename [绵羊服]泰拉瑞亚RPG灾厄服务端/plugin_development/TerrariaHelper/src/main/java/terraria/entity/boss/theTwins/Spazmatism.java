@@ -16,6 +16,7 @@ import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Spazmatism extends EntitySlime {
     // basic variables
@@ -24,7 +25,7 @@ public class Spazmatism extends EntitySlime {
     public static final double BASIC_HEALTH = 59670 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -137,7 +138,7 @@ public class Spazmatism extends EntitySlime {
                         // dash init
                         if ((indexAI - 60) % 15 == 0) {
                             dashVelocity = MathHelper.getDirection(
-                                    ((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), 1.5);
+                                    ((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), 1.25);
                         }
                         // maintain dash velocity
                         bukkitEntity.setVelocity(dashVelocity);
@@ -150,7 +151,7 @@ public class Spazmatism extends EntitySlime {
                 // follow and shoot flame
                 if (indexAI < 60) {
                     // fly towards the player
-                    bukkitEntity.setVelocity(MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 1));
+                    bukkitEntity.setVelocity(MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 0.75));
                     // shoot flame
                     shootCursedFlame(2);
                 }
@@ -161,7 +162,7 @@ public class Spazmatism extends EntitySlime {
                     else {
                         if ((indexAI - 60) % 30 == 0) {
                             bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
-                            dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 3);
+                            dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 2.25);
                         }
                         // maintain dash velocity
                         bukkitEntity.setVelocity(dashVelocity);
@@ -174,7 +175,8 @@ public class Spazmatism extends EntitySlime {
                 // follow and shoot flame
                 if (indexAI < 40) {
                     // fly towards the player
-                    bukkitEntity.setVelocity(MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 1.25));
+                    bukkitEntity.setVelocity(MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(),
+                            0.75, true));
                     // shoot flame
                     shootCursedFlame(2);
                 }
@@ -183,7 +185,7 @@ public class Spazmatism extends EntitySlime {
                     Location targetLoc = target.getLocation().subtract(0, 16, 0);
                     Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                     double velLen = velocity.length();
-                    double maxSpeed = 2;
+                    double maxSpeed = 1.5;
                     if (velLen > maxSpeed) {
                         velocity.multiply(maxSpeed / velLen);
                     }
@@ -205,7 +207,7 @@ public class Spazmatism extends EntitySlime {
                     else {
                         if ((indexAI - 80) % 30 == 0) {
                             bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
-                            dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 3);
+                            dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 2.5);
                         }
                         // maintain dash velocity
                         bukkitEntity.setVelocity(dashVelocity);
@@ -243,6 +245,10 @@ public class Spazmatism extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // increase player aggro duration
+                if (!twin.isAlive())
+                    targetMap.get(target.getUniqueId()).addAggressionTick();
+
                 attackAI();
             }
         }
@@ -326,6 +332,7 @@ public class Spazmatism extends EntitySlime {
             shootInfoCursedFlame.properties.put("gravity", 0d);
             shootInfoCursedFlame.properties.put("blockHitAction", "thru");
             shootInfoCursedFlame.properties.put("trailColor", "160|255|160");
+            shootInfoCursedFlame.properties.put("trailStepSize", 1d);
             shootInfoCursedFlame.properties.put("trailLingerTime", 3);
             shootInfoFlameThrower = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFlameThrower, "");
             shootInfoFlameThrower.projectileName = "咒火球";
@@ -335,6 +342,7 @@ public class Spazmatism extends EntitySlime {
             shootInfoFlameThrower.properties.put("projectileSize", 0.25d);
             shootInfoFlameThrower.properties.put("blockHitAction", "thru");
             shootInfoFlameThrower.properties.put("trailColor", "160|255|160");
+            shootInfoCursedFlame.properties.put("trailStepSize", 0.75);
             shootInfoFlameThrower.properties.put("trailLingerTime", 10);
             shootInfoHomingFlame = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHomingFlame, "");
             shootInfoHomingFlame.projectileName = "咒火球";
@@ -349,6 +357,7 @@ public class Spazmatism extends EntitySlime {
             shootInfoHomingFlame.properties.put("autoTraceSharpTurning", false);
             shootInfoHomingFlame.properties.put("autoTraceAbility", 0.5);
             shootInfoHomingFlame.properties.put("noAutoTraceTicks", 15);
+            shootInfoHomingFlame.properties.put("maxAutoTraceTicks", 30);
         }
     }
 

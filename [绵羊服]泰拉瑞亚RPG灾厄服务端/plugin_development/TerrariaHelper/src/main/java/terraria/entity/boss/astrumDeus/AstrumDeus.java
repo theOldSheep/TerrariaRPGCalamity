@@ -19,6 +19,7 @@ import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class AstrumDeus extends EntitySlime {
     // basic variables
@@ -27,7 +28,7 @@ public class AstrumDeus extends EntitySlime {
     public static final double BASIC_HEALTH = 1728000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -298,6 +299,10 @@ public class AstrumDeus extends EntitySlime {
             return;
         // AI
         {
+            // increase player aggro duration
+            if (index == 0)
+                targetMap.get(target.getUniqueId()).addAggressionTick();
+
             healthRatio = getHealth() / getMaxHealth();
             boolean isHead = head == null;
             // update target
@@ -437,7 +442,7 @@ public class AstrumDeus extends EntitySlime {
                 targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                         getBukkitEntity(), BossHelper.BossType.WALL_OF_FLESH.msgName, summonedPlayer, true, bossbar);
             } else {
-                targetMap = (HashMap<Player, Double>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
+                targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
             }
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
             target = summonedPlayer;

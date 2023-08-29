@@ -15,6 +15,7 @@ import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Ravager extends EntitySlime {
     // basic variables
@@ -23,7 +24,7 @@ public class Ravager extends EntitySlime {
     public static final double BASIC_HEALTH = 128400 * 2, BASIC_HEALTH_POST_PROVIDENCE = 513600 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -176,6 +177,8 @@ public class Ravager extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // increase player aggro duration
+                targetMap.get(target.getUniqueId()).addAggressionTick();
                 // phase transition and jump
                 if (phaseAI == 1) {
                     if (!attemptChangePhase())

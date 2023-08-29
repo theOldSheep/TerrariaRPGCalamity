@@ -17,6 +17,7 @@ import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class WallOfFleshMouth extends EntitySlime {
     // basic variables
@@ -25,7 +26,7 @@ public class WallOfFleshMouth extends EntitySlime {
     public static final double BASIC_HEALTH = 54834;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -59,7 +60,7 @@ public class WallOfFleshMouth extends EntitySlime {
         shootInfo.properties.put("liveTime", 100);
         shootInfo.properties.put("gravity", 0d);
         shootInfo.properties.put("projectileSize", 0.25);
-        EntityHelper.spawnProjectile(shootInfo).setGlowing(true);
+        EntityHelper.spawnProjectile(shootInfo);
     }
     private void spawnHungry() {
         for (int i = 0; i < 1; i ++) {
@@ -96,6 +97,8 @@ public class WallOfFleshMouth extends EntitySlime {
                 die();
                 return;
             }
+            // increase player aggro duration
+            targetMap.get(target.getUniqueId()).addAggressionTick();
             // AI
             if (ticksLived % 3 == 0) {
                 double healthRatio = getHealth() / getMaxHealth();
@@ -256,7 +259,7 @@ public class WallOfFleshMouth extends EntitySlime {
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName(BOSS_TYPE.msgName);
+        setCustomName(BOSS_TYPE.msgName + "§1");
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");

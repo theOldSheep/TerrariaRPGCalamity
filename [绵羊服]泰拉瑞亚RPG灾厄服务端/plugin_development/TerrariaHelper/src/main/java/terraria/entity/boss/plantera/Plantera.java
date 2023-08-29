@@ -16,6 +16,7 @@ import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Plantera extends EntitySlime {
     // basic variables
@@ -24,7 +25,7 @@ public class Plantera extends EntitySlime {
     public static final double BASIC_HEALTH = 160650 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -152,6 +153,9 @@ public class Plantera extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // increase player aggro duration
+                targetMap.get(target.getUniqueId()).addAggressionTick();
+
                 double healthRatio = getHealth() / getMaxHealth();
                 // phase transition
                 if (healthRatio < 0.5 && !secondPhase) {

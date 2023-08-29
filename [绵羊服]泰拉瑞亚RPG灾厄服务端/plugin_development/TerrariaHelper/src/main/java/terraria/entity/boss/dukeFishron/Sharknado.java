@@ -18,6 +18,7 @@ import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Sharknado extends EntitySlime {
     // basic variables
@@ -25,7 +26,7 @@ public class Sharknado extends EntitySlime {
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.OCEAN;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     Player target = null;
     Vector velocity;
     // other variables and AI
@@ -109,7 +110,7 @@ public class Sharknado extends EntitySlime {
         }
         // init target map
         {
-            targetMap = (HashMap<Player, Double>) owner.targetMap.clone();
+            targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) owner.targetMap.clone();
             target = owner.target;
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }

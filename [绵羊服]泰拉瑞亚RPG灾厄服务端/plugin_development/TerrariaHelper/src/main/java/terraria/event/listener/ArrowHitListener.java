@@ -104,8 +104,7 @@ public class ArrowHitListener implements Listener {
                     velocity.add(MathHelper.randomVector());
                     velocity.normalize().multiply(1.75);
 
-                    EntityHelper.spawnProjectile(shooter, velocity, attrMapProj, "幻象箭")
-                            .setGlowing(true);
+                    EntityHelper.spawnProjectile(shooter, velocity, attrMapProj, "幻象箭");
                     ItemUseHelper.playerUseItemSound(shooter, "BOW", true);
                 }, waitTime);
 

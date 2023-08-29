@@ -17,6 +17,7 @@ import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class LunaticCultist extends EntityZombie {
     // basic variables
@@ -25,7 +26,7 @@ public class LunaticCultist extends EntityZombie {
     public static final double BASIC_HEALTH = 85104 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -220,6 +221,8 @@ public class LunaticCultist extends EntityZombie {
                 }
                 return;
             }
+            // increase player aggro duration
+            targetMap.get(target.getUniqueId()).addAggressionTick();
             // if target is valid, attack
             if (ticksBeforeAttack > 0) {
                 bukkitEntity.teleport(target.getLocation().add(0, 16, 0));

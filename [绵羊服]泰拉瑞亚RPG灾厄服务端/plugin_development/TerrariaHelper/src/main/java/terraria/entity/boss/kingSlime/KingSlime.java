@@ -19,6 +19,7 @@ import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class KingSlime extends EntitySlime {
     // basic variables
@@ -27,7 +28,7 @@ public class KingSlime extends EntitySlime {
     public static final double BASIC_HEALTH = 7140;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -80,7 +81,7 @@ public class KingSlime extends EntitySlime {
                 if (sizeChangeTimeIndex >= DISAPPEAR_TIME) {
                     sizeChangeState = SizeState.GROWING;
                     sizeChangeTimeIndex = 1;
-                    Location targetLoc = target.getWorld().getHighestBlockAt(target.getLocation()).getLocation().add(0, 1, 0);
+                    Location targetLoc = target.getLocation();
                     bukkitEntity.teleport(targetLoc);
                 }
                 return true;
@@ -120,6 +121,8 @@ public class KingSlime extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // increase player aggro duration
+                targetMap.get(target.getUniqueId()).addAggressionTick();
                 // AI
                 if (ticksLived % 2 == 0) {
                     double healthRatio = getHealth() / getMaxHealth();

@@ -19,6 +19,7 @@ import terraria.util.MathHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.UUID;
 
 public class EmpressOfLight extends EntitySlime {
     // basic variables
@@ -27,7 +28,7 @@ public class EmpressOfLight extends EntitySlime {
     public static final double BASIC_HEALTH = 224910 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -464,6 +465,9 @@ public class EmpressOfLight extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // increase player aggro duration
+                targetMap.get(target.getUniqueId()).addAggressionTick();
+
                 healthRatio = getHealth() / getMaxHealth();
                 if (!secondPhase && healthRatio < 0.5)
                     toSecondPhase();

@@ -18,6 +18,7 @@ import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class TheHiveMind extends EntitySlime {
     // basic variables
@@ -26,7 +27,7 @@ public class TheHiveMind extends EntitySlime {
     public static final double BASIC_HEALTH = 24480 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -61,7 +62,6 @@ public class TheHiveMind extends EntitySlime {
             // shader rain
             if (rdm < 0.25) {
                 if (!canSpawnRain) {
-                    spawnMonsters(false);
                     return;
                 }
                 EntityHelper.spawnProjectile(bukkitEntity, spawnLoc, new Vector(), attrMapShaderRain,
@@ -102,6 +102,8 @@ public class TheHiveMind extends EntitySlime {
                 }
                 return;
             }
+            // increase player aggro duration
+            targetMap.get(target.getUniqueId()).addAggressionTick();
             // if target is valid, attack
             double healthRatio = getHealth() / getMaxHealth();
             if (!secondPhase && healthRatio < 0.8) {
@@ -111,7 +113,7 @@ public class TheHiveMind extends EntitySlime {
             switch (typeAI) {
                 case CHARGE: {
                     if (ticksLived % 3 == 0) {
-                        double chargeSpd = (1 - healthRatio) * 1.5;
+                        double chargeSpd = (1 - healthRatio) * 0.55;
                         Vector velocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
                         double velLen = velocity.length();
                         if (velLen > 1e-5) {
@@ -181,7 +183,7 @@ public class TheHiveMind extends EntitySlime {
                         }
                         bukkitEntity.setVelocity(dashVelocity);
                         // spawn monsters
-                        if (Math.random() < 0.2)
+                        if (Math.random() < 0.15)
                             spawnMonsters(true);
                         // next AI phase
                         if (indexAI >= 10) {
@@ -227,7 +229,7 @@ public class TheHiveMind extends EntitySlime {
                         new HiveBlob(this);
                     }
                     // other random monsters
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < 8; i++)
                         spawnMonsters(false);
                 }
             }

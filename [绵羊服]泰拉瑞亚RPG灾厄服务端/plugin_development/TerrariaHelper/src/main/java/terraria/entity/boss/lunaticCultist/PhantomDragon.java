@@ -21,6 +21,7 @@ import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class PhantomDragon extends EntitySlime {
     // basic variables
@@ -29,7 +30,7 @@ public class PhantomDragon extends EntitySlime {
     public static final double BASIC_HEALTH = 79560 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     Player target = null;
     // other variables and AI
@@ -222,7 +223,7 @@ public class PhantomDragon extends EntitySlime {
         }
         // init target map
         {
-            targetMap = (HashMap<Player, Double>) EntityHelper.getMetadata(owner.getBukkitEntity(), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
+            targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) EntityHelper.getMetadata(owner.getBukkitEntity(), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
             target = summonedPlayer;
         }

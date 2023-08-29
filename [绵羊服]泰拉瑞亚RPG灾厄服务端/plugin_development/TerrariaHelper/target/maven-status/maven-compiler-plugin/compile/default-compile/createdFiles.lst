@@ -231,6 +231,7 @@ terraria\entity\minion\MinionCaveSpider.class
 terraria\entity\CustomEntities.class
 terraria\event\listener\ItemUseAndAttributeListener.class
 terraria\entity\boss\moonLord\MoonLordBackground$MoonLordBackgroundType.class
+terraria\entity\boss\BossHelper$BossTargetInfo.class
 terraria\entity\boss\ravager\Ravager.class
 terraria\entity\boss\ravager\RavagerHead.class
 terraria\entity\boss\calamitasClone\Cataclysm.class

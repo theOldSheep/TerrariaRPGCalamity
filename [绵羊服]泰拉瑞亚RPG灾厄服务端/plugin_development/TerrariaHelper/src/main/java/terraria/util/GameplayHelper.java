@@ -120,7 +120,7 @@ public class GameplayHelper {
         } if (TerrariaHelper.blockConfig.contains(material)) {
             return TerrariaHelper.blockConfig.getConfigurationSection(material);
         }
-        Bukkit.broadcastMessage("Not handled block type: " + blockToBreak.getType() + " with data " + blockToBreak.getData() + " and state " + state);
+//        Bukkit.broadcastMessage("Not handled block type: " + blockToBreak.getType() + " with data " + blockToBreak.getData() + " and state " + state);
         return null;
     }
     public static boolean isBreakable(Block block, Player ply) {

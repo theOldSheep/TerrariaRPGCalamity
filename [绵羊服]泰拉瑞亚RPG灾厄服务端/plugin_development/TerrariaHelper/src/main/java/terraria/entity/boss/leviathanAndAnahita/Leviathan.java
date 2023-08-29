@@ -16,6 +16,7 @@ import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Leviathan extends EntitySlime {
     // basic variables
@@ -24,7 +25,7 @@ public class Leviathan extends EntitySlime {
     public static final double BASIC_HEALTH = 174144 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -164,6 +165,10 @@ public class Leviathan extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // increase player aggro duration
+                if (!anahita.isAlive())
+                    targetMap.get(target.getUniqueId()).addAggressionTick();
+
                 attackAI();
             }
         }

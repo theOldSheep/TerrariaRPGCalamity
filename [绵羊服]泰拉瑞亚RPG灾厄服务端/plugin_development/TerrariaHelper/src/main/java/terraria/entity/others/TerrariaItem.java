@@ -281,13 +281,6 @@ public class TerrariaItem extends EntityItem {
 
         String[] itemInfo = ItemHelper.splitItemName(getItemStack().getName());
         itemType = itemInfo[1];
-        // those items should be glowing
-        switch (itemInfo[1]) {
-            case "坠星":
-            case "落星":
-            case "坠落之星":
-                g(true);
-        }
         // those items should have no gravity
         switch (itemInfo[1]) {
             case "生命强化焰":

@@ -31,6 +31,7 @@ import terraria.TerrariaHelper;
 import terraria.entity.others.TerrariaFishingHook;
 import terraria.util.*;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 
@@ -88,12 +89,24 @@ public class VanillaMechanicListener implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onTeleport(PlayerTeleportEvent e) {
+        // no teleport from those reasons
         switch (e.getCause()) {
             case END_PORTAL:
             case NETHER_PORTAL:
             case END_GATEWAY:
             case SPECTATE:
                 e.setCancelled(true);
+        }
+        // remove sentries and minions on teleport
+        if (! e.isCancelled()) {
+            for (Entity entity :
+                    ((ArrayList<Entity>) EntityHelper.getMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_SENTRY_LIST).value()) ) {
+                entity.remove();
+            }
+            for (Entity entity :
+                    ((ArrayList<Entity>) EntityHelper.getMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_MINION_LIST).value()) ) {
+                entity.remove();
+            }
         }
     }
     @EventHandler(priority = EventPriority.LOW)
@@ -169,12 +182,12 @@ public class VanillaMechanicListener implements Listener {
                 e.getPlayer().getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
                 Block currLiquidBlock = liquidBlock.getLocation().getBlock();
-                switch (liquidBlock.getType()) {
+                switch (currLiquidBlock.getType()) {
                     case WATER:
                     case STATIONARY_WATER:
-                        liquidBlock.setType(Material.AIR);
+                        currLiquidBlock.setType(Material.AIR);
                 }
-            }, 8);
+            }, 15);
         }
         // life fruit etc. should be broken by placing water here
         if (liquidBlock.getType() == Material.SKULL) {

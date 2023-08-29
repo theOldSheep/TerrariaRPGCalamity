@@ -18,6 +18,7 @@ import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class SkeletronPrimeHead extends EntitySlime {
     // basic variables
@@ -26,7 +27,7 @@ public class SkeletronPrimeHead extends EntitySlime {
     public static final double BASIC_HEALTH = 64260 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<Player, Double> targetMap;
+    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
@@ -55,7 +56,7 @@ public class SkeletronPrimeHead extends EntitySlime {
         shootInfoSkull.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         shootInfoSkull.velocity = MathHelper.getDirection(
                 shootInfoSkull.shootLoc, target.getEyeLocation(), 1);
-        EntityHelper.spawnProjectile(shootInfoSkull).setGlowing(true);
+        EntityHelper.spawnProjectile(shootInfoSkull);
     }
     private void shootRocket() {
         shootInfoRocket.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
@@ -131,6 +132,8 @@ public class SkeletronPrimeHead extends EntitySlime {
                 }
                 return;
             }
+            // increase player aggro duration
+            targetMap.get(target.getUniqueId()).addAggressionTick();
             // AI
             double healthRatio = getHealth() / getMaxHealth();
             handsAlive = 0;

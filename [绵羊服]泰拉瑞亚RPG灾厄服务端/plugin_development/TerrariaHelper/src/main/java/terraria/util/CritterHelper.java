@@ -1,6 +1,8 @@
 package terraria.util;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -37,7 +39,7 @@ public class CritterHelper {
                     Vector offsetDir = MathHelper.randomVector();
                     offsetDir.multiply(16 + Math.random() * 8);
                     Location spawnLoc = ply.getLocation().add(offsetDir);
-                    if (!spawnLoc.getBlock().getType().isSolid())
+                    if (spawnLoc.getBlock().getType() == Material.AIR)
                         return spawnLoc;
                 }
             }
@@ -111,10 +113,10 @@ public class CritterHelper {
         for (String type : spawnCandidateSection.getKeys(false)) {
             ConfigurationSection currTypeSection = spawnCandidateSection.getConfigurationSection(type);
             List<String> biomesAllowed = currTypeSection.getStringList("biome");
-            if (! (biomesAllowed.size() == 0 || biomesAllowed.contains(biomeStr)) )
+            if (! (biomesAllowed.isEmpty() || biomesAllowed.contains(biomeStr)) )
                 continue;
             List<String> heightsAllowed = currTypeSection.getStringList("height");
-            if (! (heightsAllowed.size() == 0 || heightsAllowed.contains(heightStr)) )
+            if (! (heightsAllowed.isEmpty() || heightsAllowed.contains(heightStr)) )
                 continue;
             candidates.put(type, currTypeSection.getDouble("weight", 1d) );
         }
