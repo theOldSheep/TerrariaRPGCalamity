@@ -443,7 +443,7 @@ effects:
     isBuff: false
     attributes:
         damageMagicMulti: 0.5
-        regen: -84
+        regen: -42
     buffOnTimeout: 硫火狂怒冷却
     buffOnTimeoutDuration: 600
     tooltip: 以生命为代价，黑魔法大大增强了你的力量

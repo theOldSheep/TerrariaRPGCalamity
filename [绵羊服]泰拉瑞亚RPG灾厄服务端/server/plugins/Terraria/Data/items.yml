@@ -1014,7 +1014,7 @@
   lore:
   - §r[饰品]
   attributes:
-    damageMulti: 15
+    damageMulti: 7.5
   worth: 20000
   rarity: 1
 测试饰品-物品使用测试:
@@ -1555,8 +1555,9 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r让翅膀和火箭靴获得四倍飞行时间
   - §6专家模式物品
+  attributes:
+    flightTimeMulti: 0.5
   worth: 10000000
   rarity: 1000
 矮人项链:
@@ -2020,7 +2021,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r增加受伤无敌帧
   - §r提供生命恢复并减少治疗药水的冷却时间
   attributes:
     regen: 2
@@ -9826,7 +9826,7 @@ P90:
 耐力药水:
   item: CLAY_BALL
   lore:
-  - §a所受伤害减少5%
+  - §a所受伤害减少10%
   - §a4分钟持续时间
   worth: 20000
   rarity: 1

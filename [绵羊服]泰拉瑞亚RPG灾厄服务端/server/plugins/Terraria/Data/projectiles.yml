@@ -73,6 +73,8 @@
     trailStepSize: -1.0
     # 轨迹停留时间（单位：帧，1秒=20帧）。不写则视为10。
     trailLingerTime: 10
+    # 轨迹是否使用原版MC的粒子效果（原版粒子效果无法控制持续时间，颜色会略有偏差，观感略差但性能影响较小）。不写则视为true。
+    trailVanillaParticle: true
     # blockHitAction为bounce（手榴弹）或slide的弹射物在与地面摩擦时的阻力，0为无阻力，1为马上停止。不写则视为0.05。
     frictionFactor: 0.05
     # 攻击造成的buff，格式为  buff名|buff时长（单位：帧）|几率。可不写。
@@ -355,23 +357,6 @@
     blockHitAction: thru
     liveTime: 75
     gravity: 0
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 32
-    autoTraceSharpTurning: false
-    autoTraceAbility: 0.35
-    maxAutoTraceTicks: 40
-毒种子:
-    penetration: 99999
-    blockHitAction: thru
-    liveTime: 75
-    gravity: 0
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 32
-    autoTraceSharpTurning: false
-    autoTraceAbility: 0.35
-    maxAutoTraceTicks: 40
     buffInflict:
         - "中毒|80|1"
 刺球:
@@ -407,7 +392,7 @@
     autoTraceMethod: 2
     autoTraceRadius: 32
     autoTraceSharpTurning: false
-    autoTraceAbility: 0.25
+    autoTraceAbility: 0.2
     noAutoTraceTicks: 15
     maxAutoTraceTicks: 60
     buffInflict:
@@ -458,8 +443,8 @@
     autoTraceRadius: 64
     autoTraceSharpTurning: false
     autoTraceAbility: 0.2
-    noAutoTraceTicks: 15
-    maxAutoTraceTicks: 75
+    noAutoTraceTicks: 20
+    maxAutoTraceTicks: 60
     buffInflict:
         - "幻星感染|60|1"
 石巨人火球:
@@ -527,24 +512,25 @@
     trailSize: 0.75
     trailStepSize: 1
     isGrenade: true
-    blastRadius: 3.5
+    blastRadius: 3
     buffInflict:
         - "瘟疫|300|1"
 水晶矢:
     penetration: 99999
     gravity: 0
-    liveTime: 50
+    liveTime: 75
     blockHitAction: thru
     trailColor: 255|0|0
     trailSize: 0.15
-    trailStepSize: 1
+    trailStepSize: 0.75
+    trailVanillaParticle: false
     autoTrace: true
     autoTraceMethod: 2
     autoTraceRadius: 64
     autoTraceSharpTurning: false
     autoTraceAbility: 0.25
     noAutoTraceTicks: 10
-    maxAutoTraceTicks: 30
+    maxAutoTraceTicks: 45
     buffInflict:
         - "神圣之火|60|1"
         - "夜魇|60|1"
@@ -2301,6 +2287,7 @@ TNT:
     liveTime: 60
 树叶:
     arrowOrPotion: true
+    noGravityTicks: 10
     liveTime: 40
 狱火爆破弹:
     gravity: 0
@@ -2382,7 +2369,6 @@ TNT:
         velocity: 0.5
         damageMulti: 0.65
 月之耀斑:
-    blockHitAction: thru
     gravity: 0
     isGrenade: true
     blastRadius: 4.5
