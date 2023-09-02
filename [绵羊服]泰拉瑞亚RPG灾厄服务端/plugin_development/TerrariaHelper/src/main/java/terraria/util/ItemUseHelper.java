@@ -1586,6 +1586,45 @@ public class ItemUseHelper {
                                 EntityHelper.applyEffect(ply, "格拉克斯之助", 200));
                         break;
                     }
+                    case "猎命镰刀": {
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            if (hitIdx == 1)
+                                PlayerHelper.heal(ply, 5);
+                        });
+                        break;
+                    }
+                    case "不洁巨剑": {
+                        if (currentIndex == 0) {
+                            String projType;
+                            double rdm = Math.random();
+                            if (rdm < 0.33333)
+                                projType = "烈火不洁剑气";
+                            else if (rdm < 0.66666)
+                                projType = "至高不洁剑气";
+                            else
+                                projType = "日炎不洁剑气";
+                            EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+                            Vector projVel = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+                            projVel.multiply(2.25);
+                            EntityHelper.spawnProjectile(ply, projVel, EntityHelper.getAttrMap(ply), projType);
+                        }
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            EntityHelper.applyEffect(ply, "暴君之怒", 100);
+                        });
+                        break;
+                    }
+                    case "泰拉阔剑": {
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            Vector projVel = MathHelper.randomVector();
+                            projVel.multiply(8);
+                            Location spawnLoc = hitLoc.add(hitEntity.getLocation()).multiply(0.5);
+                            spawnLoc.subtract(projVel);
+                            projVel.multiply(2);
+                            EntityHelper.spawnProjectile(ply, spawnLoc, projVel, EntityHelper.getAttrMap(ply),
+                                    EntityHelper.DamageType.MELEE, "泰拉斩切光束");
+                        });
+                        break;
+                    }
                 }
                 for (int i = indexStart; i < indexEnd; i ++) {
                     double progress = (double) i / loopTimes;

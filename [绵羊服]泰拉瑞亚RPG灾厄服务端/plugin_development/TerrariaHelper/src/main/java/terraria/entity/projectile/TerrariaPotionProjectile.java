@@ -235,12 +235,20 @@ public class TerrariaPotionProjectile extends EntityPotion {
         if (extraProjectileSpawnInterval > 0 && ticksLived % extraProjectileSpawnInterval == 0) {
             Vector velocity = null;
             double offset = extraProjectileConfigSection.getDouble("offset", 1d);
+            double extraProjectileSpeed = extraProjectileConfigSection.getDouble("speed", 1d);
             extraProjectileShootInfo.shootLoc = bukkitEntity.getLocation();
             switch (extraProjectileConfigSection.getString("spawnMechanism", "BOTTOM")) {
                 case "SURROUND":
                     velocity = terraria.util.MathHelper.randomVector();
-                    extraProjectileShootInfo.shootLoc.add(
-                            (Math.random() - 0.5) * offset, (Math.random() - 0.5) * offset, (Math.random() - 0.5) * offset);
+                    switch (projectileType) {
+                        case "泰拉能量爆炸":
+                            extraProjectileShootInfo.shootLoc.subtract(
+                                    velocity.clone().multiply(extraProjectileSpeed / 2));
+                            break;
+                        default:
+                            extraProjectileShootInfo.shootLoc.add(
+                                    (Math.random() - 0.5) * offset, (Math.random() - 0.5) * offset, (Math.random() - 0.5) * offset);
+                    }
                     break;
                 case "FORWARD":
                     velocity = bukkitEntity.getVelocity().normalize();
@@ -274,7 +282,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                             (Math.random() - 0.5) * offset, 0, (Math.random() - 0.5) * offset);
             }
             if (velocity != null) {
-                velocity.multiply(extraProjectileConfigSection.getDouble("speed", 1d));
+                velocity.multiply(extraProjectileSpeed);
                 extraProjectileShootInfo.velocity = velocity;
                 EntityHelper.spawnProjectile(extraProjectileShootInfo);
             }

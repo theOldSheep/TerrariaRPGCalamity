@@ -439,7 +439,7 @@
   size: 10
   projectileInfo:
     interval: 1
-    velocity: 1
+    velocity: 2.5
     name: 禁忌镰刀
 炼狱:
   type: SWING
@@ -616,7 +616,27 @@
 格拉克斯:
   type: SWING
   autoSwing: true
-  size: 7
+  size: 5
+猎命镰刀:
+  type: SWING
+  autoSwing: true
+  size: 10
+  projectileInfo:
+    interval: 1
+    velocity: 1.65
+    name: 猎命镰刀
+不洁巨剑:
+  type: SWING
+  autoSwing: true
+  size: 10
+泰拉阔剑:
+  type: SWING
+  autoSwing: true
+  size: 8.5
+  projectileInfo:
+    interval: 1
+    velocity: 5
+    name: 泰拉能量矢
 ####
 钴薙刀:
   type: STAB

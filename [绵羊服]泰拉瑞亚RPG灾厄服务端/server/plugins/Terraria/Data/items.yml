@@ -78,7 +78,7 @@
   item: SMOOTH_BRICK
   data: 1
   rarity: 0
-  worth: 10000
+  worth: 2500
 地牢砖:
   item: SMOOTH_BRICK
   data: 2
@@ -3183,7 +3183,7 @@
 猎命镰刀:
   item: DIAMOND_SWORD
   lore:
-  - §r击中敌人会恢复生命值
+  - §r直接击中敌人会恢复生命值
   attributes:
     damage: 312
     damageType: Melee
@@ -3196,18 +3196,20 @@
   item: DIAMOND_SWORD
   lore:
   - §r发射三种具有不同追踪能力的剑气
+  - §r剑刃直接击中敌人时给予玩家暴君之怒增益，增加玩家30%近战伤害和10%近战暴击率
   attributes:
     damage: 224
     damageType: Melee
     crit: 4
     knockback: 7.5
     useTime: 18
+    buffInflictMelee: 剧毒|50|1
   worth: 24000000
   rarity: 12
 泰拉阔剑:
   item: DIAMOND_SWORD
   lore:
-  - §r发射能量矢与近距离弹幕
+  - §r发射能量矢
   - §r击中敌人后召唤斩切光束
   - §r能量矢命中后爆炸
   attributes:

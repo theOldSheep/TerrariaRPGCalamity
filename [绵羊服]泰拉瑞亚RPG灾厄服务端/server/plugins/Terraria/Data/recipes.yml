@@ -3715,6 +3715,39 @@ TINKER_WORKBENCH:
     requireItem:
     - 彗星陨刃
     - 夜明锭:5
+  '43_6':
+    requireLevel: 1
+    resultItem: 星河之刃
+    requireItem:
+    - 狂星之怒
+    - 星系异石:5
+    - 神圣晶石:10
+  '43_7':
+    requireLevel: 1
+    resultItem: 格拉克斯
+    requireItem:
+    - 炼狱
+    - 龙蒿锭:5
+  '43_8':
+    requireLevel: 1
+    resultItem: 猎命镰刀
+    requireItem:
+    - 龙蒿锭:15
+  '43_9':
+    requireLevel: 1
+    resultItem: 不洁巨剑
+    requireItem:
+    - 凋亡屠刀
+    - 灾劫核心
+    - 龙蒿锭:15
+  '43_10':
+    requireLevel: 1
+    resultItem: 泰拉阔剑
+    requireItem:
+    - 龙蒿锭:7
+    - 海爵剑
+    - 泰拉之刃
+    - 地狱龙锋
   '44':
     requireLevel: 1
     resultItem: 幻星矛

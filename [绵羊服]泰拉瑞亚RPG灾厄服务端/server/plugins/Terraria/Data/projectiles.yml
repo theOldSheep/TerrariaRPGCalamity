@@ -1879,14 +1879,12 @@ TNT:
     buffInflict:
         - "硫磺火|60|1"
 禁忌镰刀:
+    blockHitAction: thru
     projectileSize: 0.5
     autoTrace: true
-    autoTraceAbility: 0
-    autoTraceMethod: 2
+    autoTraceAbility: 3
     autoTraceRadius: 64
     noAutoTraceTicks: 10
-    maxAutoTraceTicks: 10
-    autoTraceEndSpeedMultiplier: 2.25
     gravity: 0
     liveTime: 40
     penetration: 2
@@ -2125,6 +2123,86 @@ TNT:
     liveTime: 60
     buffInflict:
         - "神圣之火|60|1"
+猎命镰刀:
+    gravity: 0
+    blockHitAction: thru
+    speedMultiPerTick: 0.95
+    projectileSize: 3
+    penetration: 4
+    enemyInvincibilityFrame: 2
+    liveTime: 100
+烈火不洁剑气:
+    gravity: 0
+    projectileSize: 2
+    speedMultiPerTick: 0.95
+    blockHitAction: thru
+    liveTime: 50
+    autoTrace: true
+    autoTraceAbility: 2
+    autoTraceRadius: 16
+    penetration: 4
+    enemyInvincibilityFrame: 2
+    buffInflict:
+        - "燃烧|60|1"
+至高不洁剑气:
+    gravity: 0
+    projectileSize: 2
+    speedMultiPerTick: 0.95
+    blockHitAction: thru
+    liveTime: 50
+    autoTrace: true
+    autoTraceAbility: 4
+    autoTraceRadius: 16
+    penetration: 2
+    enemyInvincibilityFrame: 1
+    buffInflict:
+        - "咒火|40|1"
+日炎不洁剑气:
+    gravity: 0
+    projectileSize: 2
+    speedMultiPerTick: 0.95
+    blockHitAction: thru
+    liveTime: 50
+    penetration: 4
+    enemyInvincibilityFrame: 1
+    buffInflict:
+        - "神圣之火|60|1"
+泰拉能量矢:
+    gravity: 0
+    projectileSize: 1
+    blockHitAction: thru
+    liveTime: 10
+    enemyInvincibilityFrame: 1
+    trailColor: 128|255|64
+    isGrenade: true
+    blastRadius: 5
+    clusterBomb:
+        amount: 1
+        damageMulti: 1
+        name: 泰拉能量爆炸
+        velocity: 0
+泰拉能量爆炸:
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 20
+    projectileSize: 5
+    penetration: 999999
+    enemyInvincibilityFrame: 4
+    spawnProjectiles:
+        interval: 1
+        spawnMechanism: SURROUND
+        damageMulti: 1
+        speed: 16
+        spawnType: 泰拉斩切光束
+泰拉斩切光束:
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 1
+    penetration: 999999
+    trailColor: 128|255|64
+    trailVanillaParticle: false
+    trailStepSize: 0.75
+    trailLingerTime: 5
 ####
 电火花:
     noGravityTicks: 0
