@@ -201,8 +201,8 @@ public class EmpressOfLight extends EntitySlime {
                 offset.multiply(16);
             }
             else {
-                offset.multiply(12);
-                offset.setY(8 + Math.random() * 4);
+                offset.multiply(24);
+                offset.setY(12 + Math.random() * 4);
             }
             attackLoc.add(offset);
         }
@@ -327,6 +327,7 @@ public class EmpressOfLight extends EntitySlime {
                             new ArrayList<>(), attrMapSunDance, strikeLineOptionsSunDance);
                 else {
                     particleLineOptionsSunDance
+                            .setVanillaParticle(false)
                             .setWidth(width)
                             .setLength(length);
                     GenericHelper.handleParticleLine(MathHelper.vectorFromYawPitch_quick(angleCurrentRay, 0),
@@ -375,12 +376,13 @@ public class EmpressOfLight extends EntitySlime {
         double strikeYaw = MathHelper.getVectorYaw(strikeDirection);
         double strikePitch = MathHelper.getVectorPitch(strikeDirection);
         GenericHelper.ParticleLineOptions particleLineOptionsTemp = new GenericHelper.ParticleLineOptions()
+                .setVanillaParticle(false)
                 .setParticleColor(GenericHelper.getStringFromColor( GenericHelper.getInterpolateColor(
                         (double) index / 121, particleLineOptionsEverlastingRainbow.getParticleColorObjects() ) ))
                 .setTicksLinger(EVERLASTING_RAINBOW_DURATION);
         strikeLineOptionsEverlastingRainbow.setParticleInfo(particleLineOptionsTemp);
         GenericHelper.handleStrikeLine(bukkitEntity, lastLoc, strikeYaw, strikePitch,
-                strikeDirection.length(), ETERNAL_RAINBOW_WIDTH, "", "",
+                strikeDirection.length(), ETERNAL_RAINBOW_WIDTH / 2d, "", "",
                 new ArrayList<>(), attrMapEverlastingRainbow, strikeLineOptionsEverlastingRainbow);
         // next tick
         if (index < 120)
@@ -567,26 +569,30 @@ public class EmpressOfLight extends EntitySlime {
         // particle and strike options
         {
             particleLineOptionsSunDance = new GenericHelper.ParticleLineOptions()
+                    .setVanillaParticle(false)
                     .setParticleColor(particleColor)
                     .setTicksLinger(1);
             strikeLineOptionsSunDance = new GenericHelper.StrikeLineOptions()
                     .setParticleInfo(particleLineOptionsSunDance)
                     .setThruWall(true);
             particleLineOptionsEverlastingRainbow = new GenericHelper.ParticleLineOptions()
+                    .setVanillaParticle(false)
                     .setParticleColor(particleColor)
                     .setTicksLinger(EVERLASTING_RAINBOW_DURATION);
             strikeLineOptionsEverlastingRainbow = new GenericHelper.StrikeLineOptions()
                     .setParticleInfo(particleLineOptionsEverlastingRainbow)
                     .setLingerDelay(2)
-                    .setLingerTime(EVERLASTING_RAINBOW_DURATION)
+                    .setLingerTime(EVERLASTING_RAINBOW_DURATION / 2)
                     .setThruWall(true);
             particleLineOptionsLance = new GenericHelper.ParticleLineOptions()
+                    .setVanillaParticle(false)
                     .setParticleColor(particleColor)
                     .setTicksLinger(1);
             strikeLineOptionsLance = new GenericHelper.StrikeLineOptions()
                     .setParticleInfo(particleLineOptionsLance)
                     .setThruWall(true);
             particleLineOptionsLanceWindup = new GenericHelper.ParticleLineOptions()
+                    .setVanillaParticle(false)
                     .setParticleColor(particleColor)
                     .setTicksLinger(20)
                     .setLength(32)

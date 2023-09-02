@@ -362,9 +362,9 @@ public class PlayerHelper {
             case "机械二王":
             case "机械三王":
                 int amountDefeated = 0;
-                if (hasDefeated(player, "双子魔眼")) amountDefeated ++;
-                if (hasDefeated(player, "机械骷髅王")) amountDefeated ++;
-                if (hasDefeated(player, "毁灭者")) amountDefeated ++;
+                if (hasDefeated(player, BossHelper.BossType.THE_TWINS.msgName)) amountDefeated ++;
+                if (hasDefeated(player, BossHelper.BossType.SKELETRON_PRIME.msgName)) amountDefeated ++;
+                if (hasDefeated(player, BossHelper.BossType.THE_DESTROYER.msgName)) amountDefeated ++;
                 switch (progressToCheck) {
                     case "机械一王":
                         return amountDefeated >= 1;
@@ -497,10 +497,12 @@ public class PlayerHelper {
                                     Entity target = null;
                                     for (Entity e : ply.getWorld().getNearbyEntities(ply.getEyeLocation(), 25, 25, 25)) {
                                         // ignore if is not a valid enemy
-                                        if (!(EntityHelper.checkCanDamage(ply, e, true))) break;
+                                        if (!(EntityHelper.checkCanDamage(ply, e, true)))
+                                            continue;
                                         double distSqr = e.getLocation().distanceSquared(ply.getLocation());
                                         // ignore if is further than current
-                                        if (distSqr > distanceSqr) break;
+                                        if (distSqr > distanceSqr)
+                                            continue;
                                         distanceSqr = distSqr;
                                         target = e;
                                     }
@@ -509,7 +511,7 @@ public class PlayerHelper {
                                                 target instanceof  LivingEntity ?
                                                         ((LivingEntity) target).getEyeLocation() : target.getLocation(), 1.5);
                                         EntityHelper.spawnProjectile(ply, v, attrMapChlorophyte,
-                                                EntityHelper.DamageType.ARROW,"叶绿树叶");
+                                                EntityHelper.DamageType.ARROW,"树叶");
                                     }
                                 }
                                 break;
@@ -629,18 +631,20 @@ public class PlayerHelper {
                     String current = "";
                     MetadataValue forceBackground = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BACKGROUND);
                     if (forceBackground == null) {
-                        if (BossHelper.bossMap.containsKey("月球领主")) current = "虚空";
-                        if (ply.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE)) {
-                            // sky darkens when fighting duke fishron
-                            if (BossHelper.bossMap.containsKey(BossHelper.BossType.DUKE_FISHRON.msgName)) {
-                                LivingEntity fishron = BossHelper.bossMap.get(BossHelper.BossType.DUKE_FISHRON.msgName).get(0);
-                                if (fishron.getHealth() / fishron.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() <= 0.4)
-                                    current = "猪鲨";
-                            }
-                            // sky darkens when fighting goliath too
-                            else if ( BossHelper.bossMap.containsKey(BossHelper.BossType.THE_PLAGUEBRINGER_GOLIATH.msgName) )
+                        // sky darkens when fighting duke fishron in tier 3
+                        if (BossHelper.bossMap.containsKey(BossHelper.BossType.DUKE_FISHRON.msgName)) {
+                            LivingEntity fishron = BossHelper.bossMap.get(BossHelper.BossType.DUKE_FISHRON.msgName).get(0);
+                            if (fishron.getHealth() / fishron.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() <= 0.4)
                                 current = "猪鲨";
-                            else if (EventAndTime.currentEvent != EventAndTime.Events.NONE)
+                        }
+                        if (BossHelper.bossMap.containsKey(BossHelper.BossType.MOON_LORD.msgName))
+                            current = "虚空";
+                        else if (BossHelper.bossMap.containsKey(BossHelper.BossType.CALAMITAS_CLONE.msgName))
+                            current = "血月";
+                        else if (BossHelper.bossMap.containsKey(BossHelper.BossType.THE_PLAGUEBRINGER_GOLIATH.msgName) )
+                            current = "猪鲨";
+                        else if (ply.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE)) {
+                            if (EventAndTime.currentEvent != EventAndTime.Events.NONE)
                                 current = EventAndTime.currentEvent.toString();
                             // background for celestial pillars
                             for (CelestialPillar pillar : EventAndTime.pillars.values())
@@ -711,7 +715,7 @@ public class PlayerHelper {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 try {
                     String last = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM).asString();
-                    long lastTime = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM_TIME).asLong();
+                    long startedPlayingTime = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM_TIME).asLong();
 
                     // setup proper music to play
                     String current = "";
@@ -832,15 +836,18 @@ public class PlayerHelper {
                             if (! last.equals(current)) {
                                 // just started playing this music
                                 current += "_full";
+                                // prevent instantly switching out from the full version
+                                if (! last.equals(current))
+                                    startedPlayingTime = currentTime;
                             }
                             break;
                     }
                     // play music if needed
                     long musicDuration = TerrariaHelper.soundConfig.getLong("lengths." + current, 0L);
-                    if (printBGMDebugInfo) ply.sendMessage(current + ", " + (musicDuration + lastTime - currentTime) + " ms left.");
+                    if (printBGMDebugInfo) ply.sendMessage(current + ", " + (musicDuration + startedPlayingTime - currentTime) + " ms left.");
                     boolean shouldPlayMusic = false;
                     // full song finished playing
-                    if (musicDuration + lastTime < currentTime) {
+                    if (musicDuration + startedPlayingTime < currentTime) {
                         shouldPlayMusic = true;
                         // if the current one playing is the full version, next one shall be reduced version
                         if (current.endsWith("_full")) current = current.replace("_full", "");
@@ -1546,7 +1553,7 @@ public class PlayerHelper {
                     case "魔力烧蚀":
                         double potency = ticksRemaining / 400d;
                         // sqrt(i) * 6^(i + 1) = sqrt(i) * e^( ln6 * (i + 1) )
-                        double healthLoss = 2 * Math.sqrt(potency) * Math.exp(1.791759 * (potency + 1));
+                        double healthLoss = Math.sqrt(potency) * Math.exp(1.791759 * (potency + 1));
                         EntityHelper.tweakAttribute(ply, newAttrMap, "regen", healthLoss + "", false);
                         break;
                     case "魔力疾病":

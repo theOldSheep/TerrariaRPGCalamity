@@ -1610,14 +1610,14 @@ public class ItemUseHelper {
                             break;
                         }
                         case "炼狱": {
-                            if ( i == (int) (loopTimes * 0.2) ||
-                                    i == (int) (loopTimes * 0.35) ||
-                                    i == (int) (loopTimes * 0.5) ||
-                                    i == (int) (loopTimes * 0.65) ||
-                                    i == (int) (loopTimes * 0.8)) {
+                            if ( i == (int) (loopTimes * 0.15) ||
+                                    i == (int) (loopTimes * 0.3) ||
+                                    i == (int) (loopTimes * 0.45) ||
+                                    i == (int) (loopTimes * 0.6) ||
+                                    i == (int) (loopTimes * 0.75)) {
                                 offsetDir.multiply(1.35);
                                 HashMap<String, Double> attrMapProj = (HashMap<String, Double>) attrMap.clone();
-                                attrMapProj.put("damage", attrMapProj.get("damage") * 0.2);
+                                attrMapProj.put("damage", attrMapProj.get("damage") * 0.4);
                                 EntityHelper.spawnProjectile(ply, offsetDir,
                                         attrMapProj, "小火花");
                             }
@@ -1631,7 +1631,7 @@ public class ItemUseHelper {
                                     i == (int) (loopTimes * 0.75)) {
                                 offsetDir.multiply(1.45);
                                 HashMap<String, Double> attrMapProj = (HashMap<String, Double>) attrMap.clone();
-                                attrMapProj.put("damage", attrMapProj.get("damage") * 0.1);
+                                attrMapProj.put("damage", attrMapProj.get("damage") * 0.35);
                                 EntityHelper.spawnProjectile(ply, offsetDir,
                                         attrMapProj, "蓝焰火花");
                             }

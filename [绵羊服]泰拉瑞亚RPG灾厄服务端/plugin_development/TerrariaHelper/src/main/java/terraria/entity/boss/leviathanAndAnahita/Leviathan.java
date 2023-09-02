@@ -40,13 +40,17 @@ public class Leviathan extends EntitySlime {
     int indexAI = -40;
     double healthRatio = 1d;
     static HashMap<String, Double> attrMapMeteor;
-    static final double SPEED_METEOR = 2, SPEED_HOVER = 2, SPEED_DASH = 3;
+    static final double SPEED_METEOR = 2.75, SPEED_HOVER = 2, SPEED_DASH = 3;
+    static final double SPEED_METEOR_ANAHITA_ALIVE = 1.75, SPEED_HOVER_ANAHITA_ALIVE = 1.75, SPEED_DASH_ANAHITA_ALIVE = 2;
     static final int DASH_DURATION = 60;
     EntityHelper.ProjectileShootInfo shootInfoMeteor;
     static {
         attrMapMeteor = new HashMap<>();
         attrMapMeteor.put("damage", 600d);
         attrMapMeteor.put("knockback", 5d);
+    }
+    private boolean isAnahitaActive() {
+        return anahita.phaseAI != Anahita.AIPhase.HOVER && anahita.isAlive();
     }
     private void changePhase() {
         // change phase
@@ -63,7 +67,8 @@ public class Leviathan extends EntitySlime {
     }
     private void shootMeteor() {
         shootInfoMeteor.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-        shootInfoMeteor.velocity = MathHelper.getDirection(shootInfoMeteor.shootLoc, target.getEyeLocation(), SPEED_METEOR);
+        shootInfoMeteor.velocity = MathHelper.getDirection(shootInfoMeteor.shootLoc, target.getEyeLocation(),
+                isAnahitaActive() ? SPEED_METEOR_ANAHITA_ALIVE : SPEED_METEOR);
         EntityHelper.spawnProjectile(shootInfoMeteor);
     }
     private void attackAI() {
@@ -83,7 +88,8 @@ public class Leviathan extends EntitySlime {
                             bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
                             Location targetLoc = target.getLocation();
                             targetLoc.setY(bukkitEntity.getLocation().getY());
-                            dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, SPEED_DASH);
+                            dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc,
+                                    isAnahitaActive() ? SPEED_DASH_ANAHITA_ALIVE : SPEED_DASH);
                         }
                         bukkitEntity.setVelocity(dashVelocity);
                     }
@@ -103,7 +109,8 @@ public class Leviathan extends EntitySlime {
                 Vector offsetVec = MathHelper.getDirection(tempLoc, eyeLoc, 32);
                 Location hoverTargetLocation = target.getEyeLocation().add(offsetVec);
                 bukkitEntity.setVelocity(
-                        MathHelper.getDirection(eyeLoc, hoverTargetLocation, SPEED_HOVER, true));
+                        MathHelper.getDirection(eyeLoc, hoverTargetLocation,
+                                isAnahitaActive() ? SPEED_HOVER_ANAHITA_ALIVE : SPEED_HOVER, true));
             }
         }
         // projectiles and phase transition

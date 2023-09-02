@@ -1,8 +1,6 @@
 package terraria.entity.boss.moonLord;
 
-import net.minecraft.server.v1_12_R1.EntitySlime;
-import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
-import net.minecraft.server.v1_12_R1.World;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -54,6 +52,7 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
                 .setThruWall(true)
                 .setParticleInfo(
                         new GenericHelper.ParticleLineOptions()
+                                .setVanillaParticle(false)
                                 .setTicksLinger(1)
                                 .setParticleColor("100|255|255"));
     }
@@ -70,9 +69,24 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
         attackMethod = attackMethodCycle[0];
         indexAttackMethod = -1;
     }
-    protected static void nextAttackPattern() {
+    protected void nextAttackPattern() {
         indexAttackMethod = (indexAttackMethod + 1) % attackMethodCycle.length;
         attackMethod = attackMethodCycle[indexAttackMethod];
+        switch (attackMethod) {
+            case PHANTASMAL_EYE:
+                owner.bossbar.color = BossBattle.BarColor.GREEN;
+                break;
+            case PHANTASMAL_DEATH_RAY:
+                owner.bossbar.color = BossBattle.BarColor.PURPLE;
+                break;
+            case PHANTASMAL_BOLT:
+                owner.bossbar.color = BossBattle.BarColor.YELLOW;
+                break;
+            case PHANTASMAL_SPHERE:
+                owner.bossbar.color = BossBattle.BarColor.RED;
+                break;
+        }
+        owner.bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
     }
     private void teleportToLocation() {
         Vector offset = MathHelper.vectorFromYawPitch_quick(angleOffset + (owner.ticksLived * 0.5), 0);

@@ -22,6 +22,7 @@ public class GenericHelper {
     static double PARTICLE_DISPLAY_RADIUS_SQR = 5000;
     public static class ParticleLineOptions {
         boolean particleOrItem;
+        boolean vanillaParticle;
         ItemStack spriteItem;
         Vector rightOrthogonalDir;
         double length, width, stepsize;
@@ -32,6 +33,7 @@ public class GenericHelper {
         ArrayList<Color> particleColorObjects;
         public ParticleLineOptions() {
             particleOrItem = true;
+            vanillaParticle = true;
             spriteItem = null;
             rightOrthogonalDir = null;
             length = 1;
@@ -45,6 +47,10 @@ public class GenericHelper {
         }
         public ParticleLineOptions setParticleOrItem(boolean particleOrItem) {
             this.particleOrItem = particleOrItem;
+            return this;
+        }
+        public ParticleLineOptions setVanillaParticle(boolean vanillaParticle) {
+            this.vanillaParticle = vanillaParticle;
             return this;
         }
         public ParticleLineOptions setSpriteItem(ItemStack spriteItem) {
@@ -351,26 +357,28 @@ public class GenericHelper {
             // tweak color
             Color currentColor = getInterpolateColor((double) i / (loopTime + 1), allColors);
             // spawn "particles"
-            /*
-            String rCode = Integer.toHexString(currentColor.getRed()),
-                    gCode = Integer.toHexString(currentColor.getGreen()),
-                    bCode = Integer.toHexString(currentColor.getBlue());
-            if (rCode.length() == 1) rCode = "0" + rCode;
-            if (gCode.length() == 1) gCode = "0" + gCode;
-            if (bCode.length() == 1) bCode = "0" + bCode;
-            String colorCode = rCode + gCode + bCode;
-            displayHoloText(currLoc, "§#" + colorCode + particleCharacter, ticksLinger, (float) width, (float) width, alpha);
-            */
-            int particleAmount = (int) Math.ceil(stepsize * 4);
-            double rVal = (currentColor.getRed() / 255d) - 1;
-            double gVal = (currentColor.getGreen() / 255d);
-            double bVal = (currentColor.getBlue() / 255d);
-            for (int spawnIdx = 0; spawnIdx < particleAmount; spawnIdx ++) {
-                Location currParticleLoc = currLoc.clone().add(
-                        Math.random() * width * 2 - width,
-                        Math.random() * width * 2 - width,
-                        Math.random() * width * 2 - width);
-                currParticleLoc.getWorld().spawnParticle(Particle.REDSTONE, currParticleLoc, 0, rVal, gVal, bVal);
+            if (options.vanillaParticle) {
+                int particleAmount = MathHelper.randomRound((stepsize + width) / 2);
+                double rVal = (currentColor.getRed() / 255d) - 1;
+                double gVal = (currentColor.getGreen() / 255d);
+                double bVal = (currentColor.getBlue() / 255d);
+                for (int spawnIdx = 0; spawnIdx < particleAmount; spawnIdx ++) {
+                    Location currParticleLoc = currLoc.clone().add(
+                            Math.random() * width * 2 - width,
+                            Math.random() * width * 2 - width,
+                            Math.random() * width * 2 - width);
+                    currParticleLoc.getWorld().spawnParticle(Particle.REDSTONE, currParticleLoc, 0, rVal, gVal, bVal);
+                }
+            }
+            else {
+                String rCode = Integer.toHexString(currentColor.getRed()),
+                        gCode = Integer.toHexString(currentColor.getGreen()),
+                        bCode = Integer.toHexString(currentColor.getBlue());
+                if (rCode.length() == 1) rCode = "0" + rCode;
+                if (gCode.length() == 1) gCode = "0" + gCode;
+                if (bCode.length() == 1) bCode = "0" + bCode;
+                String colorCode = rCode + gCode + bCode;
+                displayHoloText(currLoc, "§#" + colorCode + particleCharacter, ticksLinger, (float) width, (float) width, alpha);
             }
             // add vector to location
             currLoc.add(dVec);
@@ -540,7 +548,7 @@ public class GenericHelper {
         // display particle
         particleInfo
                 .setLength(direction.length())
-                .setWidth(width)
+                .setWidth(width * 2)
                 .setStepsize(particleInterval);
         if (advanced.displayParticle)
             handleParticleLine(direction, startLoc, particleInfo);

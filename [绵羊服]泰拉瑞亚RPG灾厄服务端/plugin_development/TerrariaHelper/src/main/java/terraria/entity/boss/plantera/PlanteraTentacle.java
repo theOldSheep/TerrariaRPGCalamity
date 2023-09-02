@@ -80,6 +80,7 @@ public class PlanteraTentacle extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 552d);
+            attrMap.put("damageTakenMulti", 0.9);
             attrMap.put("defence", 40d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
@@ -94,7 +95,7 @@ public class PlanteraTentacle extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(2, false);
+            setSize(4, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(owner.targetMap.size());
             double health = 5100 * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);

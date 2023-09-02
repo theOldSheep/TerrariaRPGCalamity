@@ -74,6 +74,7 @@ public class MoonLordEye extends EntitySlime {
                 .setThruWall(true)
                 .setParticleInfo(
                         new GenericHelper.ParticleLineOptions()
+                                .setVanillaParticle(false)
                                 .setTicksLinger(1)
                                 .setParticleColor("100|255|255"));
     }

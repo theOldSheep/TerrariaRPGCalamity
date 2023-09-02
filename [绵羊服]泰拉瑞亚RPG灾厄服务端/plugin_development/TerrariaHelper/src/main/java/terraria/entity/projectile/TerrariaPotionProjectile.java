@@ -34,7 +34,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
             trailSize = -1, trailStepSize = -1;
     public boolean arrowOrPotion = false, autoTrace = false, autoTraceSharpTurning = true, blastDamageShooter = false,
             blastOnContactBlock = false, blastOnContactEnemy = false, blastOnTimeout = true,
-            bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = true;
+            bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = true,
+            trailVanillaParticle = true;
 
     public double speed;
     public boolean lastOnGround = false;
@@ -90,6 +91,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.canBeReflected = (boolean) properties.getOrDefault("canBeReflected", this.canBeReflected);
             this.isGrenade = (boolean) properties.getOrDefault("isGrenade", this.isGrenade);
             this.slowedByWater = (boolean) properties.getOrDefault("slowedByWater", this.slowedByWater);
+            this.trailVanillaParticle = (boolean) properties.getOrDefault("trailVanillaParticle", this.trailVanillaParticle);
         }
         this.setNoGravity(true);
         this.noclip = true;
@@ -359,6 +361,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     ((LivingEntity) shooter.getBukkitEntity()).getEyeLocation() ) > (2 + trailSize) ) {
                 GenericHelper.handleParticleLine(displayDir, lastTrailDisplayLocation,
                         new GenericHelper.ParticleLineOptions()
+                                .setVanillaParticle(trailVanillaParticle)
                                 .setLength(newDirLen)
                                 .setWidth(trailSize, false)
                                 .setStepsize(trailStepSize)

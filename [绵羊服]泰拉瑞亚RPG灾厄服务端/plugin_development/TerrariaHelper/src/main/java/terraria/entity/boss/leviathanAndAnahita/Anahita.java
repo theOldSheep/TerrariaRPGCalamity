@@ -129,7 +129,7 @@ public class Anahita extends EntityZombieHusk {
         else {
             for (Vector offset : MathHelper.getCircularProjectileDirections(
                     shootAmount, 2, 180, new Vector(0, 1, 0), 1)) {
-                Vector offsetActual = offset.clone().multiply(12);
+                Vector offsetActual = offset.clone().multiply(16);
                 shootInfo.shootLoc = target.getEyeLocation().add(offsetActual);
                 shootInfo.velocity = offset.multiply(-projectileSpeed);
                 EntityHelper.spawnProjectile(shootInfo);

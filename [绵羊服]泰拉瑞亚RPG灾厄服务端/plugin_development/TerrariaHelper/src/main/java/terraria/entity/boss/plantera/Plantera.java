@@ -31,14 +31,11 @@ public class Plantera extends EntitySlime {
     Player target = null;
     // other variables and AI
     static double SEED_SPEED = 1.25, THORN_BALL_SPEED = 1, SPORE_GAS_SPEED = 1.5;
-    static HashMap<String, Double> attrMapSeed, attrMapPoisonSeed, attrMapThornBall, attrMapSporeGas;
+    static HashMap<String, Double> attrMapSeed, attrMapThornBall, attrMapSporeGas;
     static {
         attrMapSeed = new HashMap<>();
-        attrMapSeed.put("damage", 372d);
+        attrMapSeed.put("damage", 420d);
         attrMapSeed.put("knockback", 1.5d);
-        attrMapPoisonSeed = new HashMap<>();
-        attrMapPoisonSeed.put("damage", 420d);
-        attrMapPoisonSeed.put("knockback", 1.5d);
         attrMapThornBall = new HashMap<>();
         attrMapThornBall.put("damage", 468d);
         attrMapThornBall.put("knockback", 2.5d);
@@ -47,7 +44,7 @@ public class Plantera extends EntitySlime {
         attrMapSporeGas.put("knockback", 1d);
     }
 
-    EntityHelper.ProjectileShootInfo shootInfoSeed, shootInfoPoisonSeed, shootInfoThornBall, shootInfoSporeGas;
+    EntityHelper.ProjectileShootInfo shootInfoSeed, shootInfoThornBall, shootInfoSporeGas;
     Vector dashVelocity = new Vector();
     boolean secondPhase = false;
     int dashIndex = 0, indexAI = 0;
@@ -72,10 +69,9 @@ public class Plantera extends EntitySlime {
                 poisonSeedChance = 0;
             }
             if (indexAI % shootInterval == 0) {
-                EntityHelper.ProjectileShootInfo shootInfo = (Math.random() < poisonSeedChance) ? shootInfoPoisonSeed : shootInfoSeed;
-                shootInfo.shootLoc = shootLoc;
-                shootInfo.velocity = MathHelper.getDirection(shootLoc, target.getEyeLocation(), SEED_SPEED);
-                EntityHelper.spawnProjectile(shootInfo);
+                shootInfoSeed.shootLoc = shootLoc;
+                shootInfoSeed.velocity = MathHelper.getDirection(shootLoc, target.getEyeLocation(), SEED_SPEED);
+                EntityHelper.spawnProjectile(shootInfoSeed);
             }
         }
         // spike ball
@@ -103,13 +99,13 @@ public class Plantera extends EntitySlime {
         if (indexAI % 20 == 0) {
             int perArcAmount;
             if (healthRatio < 0.1)
-                perArcAmount = 6;
-            else if (healthRatio < 0.15)
                 perArcAmount = 5;
-            else if (healthRatio < 0.2)
+            else if (healthRatio < 0.15)
                 perArcAmount = 4;
-            else
+            else if (healthRatio < 0.2)
                 perArcAmount = 3;
+            else
+                perArcAmount = 2;
 
             shootInfoSeed.shootLoc = shootLoc;
             for (Vector velocity : MathHelper.getCircularProjectileDirections(perArcAmount, 1, 45,
@@ -118,16 +114,29 @@ public class Plantera extends EntitySlime {
                 EntityHelper.spawnProjectile(shootInfoSeed);
             }
         }
+        // spike ball
+        {
+            int shootInterval;
+            if (healthRatio < 0.15)
+                shootInterval = 10;
+            else
+                shootInterval = 15;
+            if (indexAI % shootInterval == 0) {
+                shootInfoThornBall.shootLoc = shootLoc;
+                shootInfoThornBall.velocity = MathHelper.getDirection(shootLoc, target.getEyeLocation(), THORN_BALL_SPEED);
+                EntityHelper.spawnProjectile(shootInfoThornBall);
+            }
+        }
         // spore cloud
         if (indexAI % 20 == 10) {
             int perArcAmount;
             if (healthRatio < 0.15)
                 perArcAmount = 5;
             else
-                perArcAmount = 4;
+                perArcAmount = 3;
 
             shootInfoSporeGas.shootLoc = shootLoc;
-            for (Vector velocity : MathHelper.getCircularProjectileDirections(perArcAmount, 1, 45,
+            for (Vector velocity : MathHelper.getCircularProjectileDirections(perArcAmount, 2, 45,
                     target, shootLoc, SPORE_GAS_SPEED)) {
                 shootInfoSporeGas.velocity = velocity;
                 EntityHelper.spawnProjectile(shootInfoSporeGas);
@@ -174,14 +183,14 @@ public class Plantera extends EntitySlime {
                     dashIndex ++;
                     if (dashIndex >= 0) {
                         double dist = bukkitEntity.getLocation().distance(target.getLocation());
-                        double speed = secondPhase ? Math.max(dist / 12.5, 0.8) : Math.max(dist / 17.5, 0.6);
+                        double speed = Math.max(dist / 30, 0.6);
                         boolean keepShorterDirection = true;
                         switch (dashIndex) {
                             case 80:
                                 bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
                                 break;
                             case 100:
-                                speed *= 2;
+                                speed *= 3;
                                 keepShorterDirection = false;
                                 dashIndex = -20;
                                 break;
@@ -243,6 +252,7 @@ public class Plantera extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 414d);
+            attrMap.put("damageTakenMulti", 0.85);
             attrMap.put("defence", 64d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
@@ -256,7 +266,7 @@ public class Plantera extends EntitySlime {
         // init target map
         {
             targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
-                    getBukkitEntity(), BossHelper.BossType.WALL_OF_FLESH.msgName, summonedPlayer, true, bossbar);
+                    getBukkitEntity(), "机械三王", summonedPlayer, true, bossbar);
             target = summonedPlayer;
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
@@ -281,8 +291,6 @@ public class Plantera extends EntitySlime {
         {
             shootInfoSeed = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSeed,
                     EntityHelper.DamageType.ARROW, "种子");
-            shootInfoPoisonSeed = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPoisonSeed,
-                    EntityHelper.DamageType.ARROW, "毒种子");
             shootInfoThornBall = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapThornBall,
                     EntityHelper.DamageType.ARROW, "刺球");
             shootInfoSporeGas = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSporeGas,

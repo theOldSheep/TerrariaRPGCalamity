@@ -113,6 +113,10 @@ public class Sharkron extends EntitySlime {
             targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) owner.targetMap.clone();
             target = owner.target;
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
+            if (target == null) {
+                die();
+                return;
+            }
         }
         // init health and slime size
         {

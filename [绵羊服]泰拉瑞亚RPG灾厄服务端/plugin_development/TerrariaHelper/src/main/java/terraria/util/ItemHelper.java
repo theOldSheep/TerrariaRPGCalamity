@@ -370,16 +370,16 @@ public class ItemHelper {
                     regularizedItemType = "草种";
                 if (WorldHelper.BiomeType.getBiome(dropLoc) == WorldHelper.BiomeType.JUNGLE) {
                     double rdm = Math.random();
-                    if (rdm < 0.015) {
+                    if (rdm < 0.025) {
                         regularizedItemType = "大自然的恩赐";
                     }
-                    else if (rdm < 0.09) {
+                    else if (rdm < 0.135) {
                         regularizedItemType = "毒刺";
                     }
-                    else if (rdm < 0.2) {
+                    else if (rdm < 0.275) {
                         regularizedItemType = "丛林孢子";
                     }
-                    else if (rdm < 0.25) {
+                    else if (rdm < 0.35) {
                         regularizedItemType = "藤蔓";
                     }
                 }
@@ -742,6 +742,11 @@ public class ItemHelper {
                     else result.add((resistance > 0 ? "+" : "") + resistancePercentage + "% 击退抗性");
                     break;
                 }
+                case "buffImmune": {
+                    String buffImmune = attributeSection.getString(attribute, "锟斤拷");
+                    result.add("免疫" + buffImmune);
+                    break;
+                }
                 // these attributes are not shown.
                 case "fishingHooks":
                 case "damageType":
@@ -754,7 +759,6 @@ public class ItemHelper {
                 case "buffInflictRanged":
                 case "buffInflictSummon":
                 case "buffInflictTrueMelee":
-                case "buffImmune":
                     break;
                 // multiplier-style attributes
                 default:

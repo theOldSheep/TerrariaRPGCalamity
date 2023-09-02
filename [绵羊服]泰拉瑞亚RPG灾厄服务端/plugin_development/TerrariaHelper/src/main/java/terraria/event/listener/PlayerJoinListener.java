@@ -4,6 +4,7 @@ import net.minecraft.server.v1_12_R1.BossBattleServer;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -30,10 +31,11 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player joinedPly = e.getPlayer();
         // if this is a new player
-        {
-            if (! new File(PlayerHelper.getPlayerDataFilePath(joinedPly)).exists())
-                PlayerHelper.giveItem(joinedPly,
-                        ItemHelper.getItemFromDescription("新手礼包", false), false);
+        if (! new File(PlayerHelper.getPlayerDataFilePath(joinedPly)).exists()) {
+            PlayerHelper.giveItem(joinedPly,
+                    ItemHelper.getItemFromDescription("新手礼包", false), false);
+            joinedPly.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(200);
+            joinedPly.setHealth(200);
         }
         // init stats
         PlayerHelper.initPlayerStats(joinedPly, true);

@@ -980,7 +980,8 @@ public class EntityHelper {
                 case "掠夺者坦克套装": {
                     if (Math.random() < 0.25)
                         applyEffect(damageTaker, "掠夺者之怒", 60);
-                    handleDamage(damageTaker, damager, Math.min(Math.max(dmg, 100), 500), DamageReason.THORN);
+                    if (damageType == DamageType.MELEE)
+                        handleDamage(damageTaker, damager, Math.min(Math.max(dmg, 100), 500), DamageReason.THORN);
                     break;
                 }
             }
@@ -1069,7 +1070,9 @@ public class EntityHelper {
             }
             // initialize respawn countdown and other features
             vPly.closeInventory();
-            vPly.setHealth(Math.min(400, vPly.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
+            double respawnHealth = Math.max(400, vPly.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 2);
+            // make sure the new health do not exceed maximum health
+            vPly.setHealth(Math.min(respawnHealth, vPly.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
             setMetadata(vPly, MetadataName.RESPAWN_COUNTDOWN, respawnTime * 20);
             vPly.setGameMode(GameMode.SPECTATOR);
             vPly.setFlySpeed(0);
@@ -1246,7 +1249,6 @@ public class EntityHelper {
     public static boolean checkCanDamage(Entity entity, Entity target, boolean strict) {
         // dead target
         if (target.isDead()) return false;
-        if (target instanceof LivingEntity && ((LivingEntity) target).getHealth() <= 0) return false;
         // store scoreboard tags as it is requested frequently below
         Set<String> targetScoreboardTags = target.getScoreboardTags();
         Set<String> entityScoreboardTags = entity.getScoreboardTags();
@@ -1961,7 +1963,7 @@ public class EntityHelper {
                     {
                         keys = new String[]{"autoTrace", "autoTraceSharpTurning", "blastDamageShooter",
                                 "blastOnContactBlock", "blastOnContactEnemy", "bouncePenetrationBonded",
-                                "canBeReflected", "isGrenade", "slowedByWater"};
+                                "canBeReflected", "isGrenade", "slowedByWater", "trailVanillaParticle"};
                         for (String key : keys) {
                             if (section.contains(key))
                                 this.properties.put(key, section.getBoolean(key));

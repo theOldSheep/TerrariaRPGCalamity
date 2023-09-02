@@ -196,6 +196,7 @@ public class MinionSlime extends EntitySlime {
                         new GenericHelper.StrikeLineOptions()
                                 .setDamageCD(damageInvincibilityTicks)
                                 .setParticleInfo(new GenericHelper.ParticleLineOptions()
+                                        .setVanillaParticle(false)
                                         .setWidth(0.2)
                                         .setLength(3)
                                         .setTicksLinger(2)

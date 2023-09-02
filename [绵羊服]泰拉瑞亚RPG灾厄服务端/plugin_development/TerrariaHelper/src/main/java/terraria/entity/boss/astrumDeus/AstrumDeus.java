@@ -95,10 +95,12 @@ public class AstrumDeus extends EntitySlime {
     static GenericHelper.ParticleLineOptions summonParticle1, summonParticle2;
     static {
         summonParticle1 = new GenericHelper.ParticleLineOptions()
+                .setVanillaParticle(false)
                 .setParticleColor("0|255|255")
                 .setWidth(0.15)
                 .setTicksLinger(10);
         summonParticle2 = new GenericHelper.ParticleLineOptions()
+                .setVanillaParticle(false)
                 .setParticleColor("255|255|0")
                 .setWidth(0.15)
                 .setTicksLinger(10);

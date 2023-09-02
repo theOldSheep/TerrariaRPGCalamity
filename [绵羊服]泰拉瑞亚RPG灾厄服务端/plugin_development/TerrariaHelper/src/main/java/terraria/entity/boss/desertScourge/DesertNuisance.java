@@ -129,8 +129,7 @@ public class DesertNuisance extends EntitySlime {
             if (owner.isAlive())
                 target = owner.target;
             else
-                target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                        IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+                target = null;
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity segment : bossParts) {

@@ -48,6 +48,7 @@ public class LunaticCultist extends EntityZombie {
         attrMapFireball.put("knockback", 1.5d);
 
         summonParticle = new GenericHelper.ParticleLineOptions()
+                .setVanillaParticle(false)
                 .setParticleColor("255|255|255")
                 .setWidth(1);
     }

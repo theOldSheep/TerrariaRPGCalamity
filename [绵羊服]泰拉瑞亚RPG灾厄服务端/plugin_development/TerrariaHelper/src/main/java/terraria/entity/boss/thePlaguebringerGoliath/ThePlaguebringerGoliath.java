@@ -73,6 +73,21 @@ public class ThePlaguebringerGoliath extends EntitySlime {
                 phaseAI = AIPhase.DASH;
                 break;
         }
+        switch (phaseAI) {
+            case DASH:
+                bossbar.color = BossBattle.BarColor.RED;
+                break;
+            case NUKE:
+                bossbar.color = BossBattle.BarColor.PURPLE;
+                break;
+            case SUMMON:
+                bossbar.color = BossBattle.BarColor.YELLOW;
+                break;
+            case SHOOT:
+                bossbar.color = BossBattle.BarColor.GREEN;
+                break;
+        }
+        bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
         // aftermath
         attacksDuringPhase = 0;
     }
@@ -85,6 +100,8 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         Location targetLoc = target.getLocation();
         Location currLoc = bukkitEntity.getLocation();
         targetLoc.setY(currLoc.getY());
+        if (currLoc.distanceSquared(targetLoc) < 1e-5)
+            return new Vector(1, 0, 0);
         return MathHelper.getDirection(currLoc, targetLoc, 1);
     }
 
@@ -111,13 +128,14 @@ public class ThePlaguebringerGoliath extends EntitySlime {
             Location targetLoc = target.getEyeLocation();
             double speed;
             if (dashCountdown == 0) {
+                bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
                 speed = SPEED_DASH;
             }
             else {
-                speed = SPEED_NORMAL / 2;
+                speed = SPEED_NORMAL;
                 Vector offset = getHorizontalDirection();
                 offset.multiply(24);
-                targetLoc.add(offset);
+                targetLoc.subtract(offset);
             }
             dashVelocity = MathHelper.getDirection(eyeLoc, targetLoc, speed);
             bukkitEntity.setVelocity(dashVelocity);
@@ -164,8 +182,18 @@ public class ThePlaguebringerGoliath extends EntitySlime {
             changePhase();
     }
     private void AIPhaseNuke() {
+        // hover diagonally above player
+        if (indexAI < 20) {
+            Location targetLoc = target.getEyeLocation();
+            Vector offset = getHorizontalDirection();
+            offset.multiply(24);
+            targetLoc.subtract(offset);
+            targetLoc.add(0, 20, 0);
+            dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, SPEED_NORMAL);
+            bukkitEntity.setVelocity(dashVelocity);
+        }
         // dash and fire a spread of nuke
-        if (indexAI == 0) {
+        else if (indexAI == 20) {
             // dash
             {
                 dashVelocity = getHorizontalDirection();
@@ -185,7 +213,7 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         else {
             // maintain the original dash velocity
             bukkitEntity.setVelocity(dashVelocity);
-            if (indexAI > 50) {
+            if (indexAI > 30) {
                 attacksDuringPhase ++;
                 changePhase();
             }
@@ -283,7 +311,7 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         }
         // init boss bar
         bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
-                BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
+                BossBattle.BarColor.RED, BossBattle.BarStyle.PROGRESS);
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
         // init target map
         {

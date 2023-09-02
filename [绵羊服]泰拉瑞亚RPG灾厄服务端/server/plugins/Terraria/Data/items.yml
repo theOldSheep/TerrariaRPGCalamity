@@ -1532,7 +1532,8 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r免疫破损盔甲
+  attributes:
+    buffImmune: 破损盔甲
   worth: 2000000
   rarity: 4
 新手版挥发明胶:
@@ -1994,6 +1995,7 @@
     defence: 32
     damageTakenMulti: -0.05
     maxHealth: 40
+    knockbackResistance: 1
   worth: 9600000
   rarity: 7
 宝光盾牌:

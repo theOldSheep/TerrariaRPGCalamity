@@ -2,6 +2,7 @@ package terraria.entity.boss.ravager;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -29,7 +30,7 @@ public class Ravager extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    static double HORIZONTAL_SPEED = 1.5, VERTICAL_SPEED = 3, FLY_SPEED_MIN = 2, SMASH_SPEED = 3, PILLAR_OFFSET = 8;
+    static double HORIZONTAL_SPEED = 1, VERTICAL_SPEED = 2.5, FLY_SPEED_MIN = 2.25, SMASH_SPEED = 2, PILLAR_OFFSET = 6.5;
     static final EntityHelper.AimHelperOptions spawnAimHelper;
     static {
         spawnAimHelper = new EntityHelper.AimHelperOptions()
@@ -76,6 +77,9 @@ public class Ravager extends EntitySlime {
     }
 
     private void spawnRockPillars() {
+        // sound
+        bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+        // spawn
         Location currTargetLoc = target.getLocation();
         Location predictedTargetLoc = EntityHelper.helperAimEntity(getBukkitEntity(), target, spawnAimHelper);
         Vector offset = predictedTargetLoc.subtract(currTargetLoc).toVector();
@@ -134,8 +138,9 @@ public class Ravager extends EntitySlime {
             Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
             double velLen = velocity.length();
             double speed = Math.max(velLen * indexAI / 39, FLY_SPEED_MIN);
-            //
+            // if the ravager is horizontally aligned, roar and prepare to smash
             if (speed > velLen) {
+                bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), Sound.ENTITY_ENDERDRAGON_GROWL, 10, 1);
                 speed = velLen;
                 indexAI = 40;
             }
@@ -189,8 +194,14 @@ public class Ravager extends EntitySlime {
                     phase2AI();
                 }
                 // rock pillars
-                if (indexAI % 50 == 0) {
+                if (ticksLived % 50 == 40) {
+                    bossbar.color = BossBattle.BarColor.RED;
+                    bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+                }
+                else if (ticksLived % 50 == 0) {
                     spawnRockPillars();
+                    bossbar.color = BossBattle.BarColor.GREEN;
+                    bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
                 }
                 // setup orthogonal direction
                 {

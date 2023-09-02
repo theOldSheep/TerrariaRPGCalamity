@@ -181,7 +181,7 @@ public class DukeFishron extends EntitySlime {
                 }
                 // init dash
                 else if (indexAI % 25 == 0) {
-                    initDash(DASH_SPEED_1, 12, 0.4);
+                    initDash(DASH_SPEED_1, 12, 0);
                 }
                 // keep the dash
                 else if (indexAI % 25 < 20) {
@@ -238,15 +238,15 @@ public class DukeFishron extends EntitySlime {
         switch (attackPhase) {
             case DASH: {
                 // change attack method after dash * 3
-                if (indexAI >= 60) {
+                if (indexAI >= 75) {
                     changeAttackPhase();
                 }
                 // dash
                 else {
-                    int dashIndex = indexAI % 20;
+                    int dashIndex = indexAI % 25;
                     // init dash
                     if (dashIndex == 0) {
-                        initDash(DASH_SPEED_2, 10, 0.5);
+                        initDash(DASH_SPEED_2, 12, 0.5);
                     }
                     // keep the dash
                     else if (dashIndex < 15) {
