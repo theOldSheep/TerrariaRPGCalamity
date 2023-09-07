@@ -1025,6 +1025,13 @@ public class EntityHelper {
         }
         return true;
     }
+    public static void dropHeart(Location loc) {
+        ItemStack heart = new ItemStack(Material.CLAY_BALL);
+        ItemMeta meta = heart.getItemMeta();
+        meta.setDisplayName("§c§l心");
+        heart.setItemMeta(meta);
+        ItemHelper.dropItem(loc, heart, false);
+    }
     public static void handleDeath(Entity v, Entity dPly, Entity d, DamageType damageType, String debuffType) {
         if (v instanceof Player) {
             Player vPly = (Player) v;
@@ -1133,12 +1140,8 @@ public class EntityHelper {
                 // drop heart
                 if (dPlayer.getHealth() < dPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() &&
                         vScoreboardTags.contains("isMonster") && Math.random() < 0.2) {
-                        ItemStack heart = new ItemStack(Material.CLAY_BALL);
-                        ItemMeta meta = heart.getItemMeta();
-                        meta.setDisplayName("§c§l心");
-                        heart.setItemMeta(meta);
-                        ItemHelper.dropItem(v.getLocation(), heart, false);
-                    }
+                    dropHeart(v.getLocation());
+                }
             }
             // set health/directly remove
             if (v instanceof LivingEntity) ((LivingEntity) v).setHealth(0);

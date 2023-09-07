@@ -549,6 +549,8 @@
   type: SWING
   autoSwing: true
   size: 5
+  attributes:
+    damage: 125
   projectileInfo:
     interval: 1
     velocity: 2
@@ -633,10 +635,46 @@
   type: SWING
   autoSwing: true
   size: 8.5
+血石斩切刃:
+  type: SWING
+  autoSwing: true
+  size: 11
+镜之刃:
+  type: SWING
+  autoSwing: true
+  size: 6
+末晓之殇:
+  type: SWING
+  autoSwing: true
+  size: 12
   projectileInfo:
     interval: 1
-    velocity: 5
-    name: 泰拉能量矢
+    velocity: 3
+    name: 恐惧骷髅
+狮心圣裁:
+  type: SWING
+  autoSwing: true
+  size: 12
+  projectileInfo:
+    interval: 1
+    velocity: 3
+    name: 恐惧骷髅
+海神之馈赠:
+  type: SWING
+  autoSwing: true
+  size: 12
+  projectileInfo:
+    interval: 1
+    velocity: 3
+    name: 恐惧骷髅
+灵魂之锋:
+  type: SWING
+  autoSwing: true
+  size: 12
+  projectileInfo:
+    interval: 1
+    velocity: 3
+    name: 恐惧骷髅
 ####
 钴薙刀:
   type: STAB

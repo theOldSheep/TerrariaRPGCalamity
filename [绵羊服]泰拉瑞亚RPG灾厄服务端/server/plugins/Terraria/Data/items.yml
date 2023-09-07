@@ -3021,7 +3021,7 @@
   - §r用剑刃击中敌人会释放涡流台风
   - §r右键发射水刃龙卷
   attributes:
-    damage: 248
+    damage: 360
     damageType: Melee
     crit: 4
     knockback: 4
@@ -3220,6 +3220,282 @@
     useTime: 60
   worth: 24000000
   rarity: 12
+血石斩切刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r击中生命值低于20%的敌怪时会产生血爆
+  - §r血爆会掉落可以治愈玩家的红心
+  attributes:
+    damage: 966
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 18
+  worth: 24000000
+  rarity: 12
+镜之刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r被攻击的敌人至多1000点的接触伤害会被添加到此剑的伤害之上
+  - §r你必须用剑身击中敌人才能触发此效果
+  - §r射出的弹幕将跟随玩家并保持一定距离
+  attributes:
+    damage: 200
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 12
+  worth: 24000000
+  rarity: 12
+末晓之殇:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射追踪并在击中时召唤追踪并在击中时召唤追踪火球的恐惧骷髅的烈焰头骨
+  - §r“禁止禁止套娃”
+  attributes:
+    damage: 720
+    damageType: Melee
+    crit: 4
+    knockback: 8.5
+    useTime: 20
+  worth: 26000000
+  rarity: 13
+狮心圣裁:
+  item: DIAMOND_SWORD
+  lore:
+  - §r击中敌人时产生能量爆炸
+  - §r右键召唤可以使伤害减半的能量庇护
+  - §r此效果有45秒冷却时间
+  attributes:
+    damage: 646
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 15
+  worth: 26000000
+  rarity: 13
+海神之馈赠:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一个无限穿透的渊海三叉戟
+  - §r渊海三叉戟在飞行途中降下更多三叉戟
+  attributes:
+    damage: 502
+    damageType: Melee
+    crit: 4
+    knockback: 9
+    useTime: 22
+  worth: 26000000
+  rarity: 13
+灵魂之锋:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射出深渊原住民的的恐惧幽魂
+  attributes:
+    damage: 348
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 23
+  worth: 26000000
+  rarity: 13
+惊惧魂刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r射出会在砖块上弹射的恐惧光束
+  - §r每次弹射时爆炸
+  attributes:
+    damage: 1000
+    damageType: Melee
+    crit: 4
+    knockback: 8.5
+    useTime: 18
+  worth: 26000000
+  rarity: 13
+宙能波纹剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r射出发散的旋转刀刃
+  - §r剑刃击中敌人时产生激光束
+  attributes:
+    damage: 558
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 15
+    buffInflictMelee: 神弑者之怒焰|60|1
+  worth: 28000000
+  rarity: 14
+暴政:
+  item: DIAMOND_SWORD
+  lore:
+  - §r命中时生成弑神之焰
+  attributes:
+    damage: 1780
+    damageType: Melee
+    crit: 4
+    knockback: 9
+    useTime: 16
+  worth: 28000000
+  rarity: 14
+精元劫掠者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射击杀敌人时释放治愈光线的精元镰刀
+  attributes:
+    damage: 360
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 19
+    buffInflictMelee: 神弑者之怒焰|100|1
+  worth: 28000000
+  rarity: 14
+破灭魔王剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射发散的恶魔之镰和爆炸光束
+  - §r暴击会造成暗影焰爆炸
+  attributes:
+    damage: 332
+    damageType: Melee
+    crit: 4
+    knockback: 6.75
+    useTime: 20
+    buffInflictMelee: 暗影焰|100|1
+  worth: 28000000
+  rarity: 14
+携序之剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r来自遗忘之地的苍白之剑
+  - §r发射一个消失时降下彩虹雨的彩虹宝珠
+  - §r你可以听见这把剑微弱的安抚和低语
+  - §r“无论你在何方，你都绝非孤身一人。我永远会在你身旁，我的王”
+  attributes:
+    damage: 276
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 18
+  worth: 28000000
+  rarity: 14
+光棱破碎者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r看上去属于一位魔法少女。辐射出强烈的宇宙魔能
+  - §r充能发射一束彩虹光炮
+  - §r右键挥舞此剑，释放虹光剑气
+  attributes:
+    damage: 1324
+    damageType: Melee
+    crit: 12
+    knockback: 7
+    useTime: 13
+  worth: 28000000
+  rarity: 14
+禅心剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r安宁
+  attributes:
+    damage: 910
+    damageType: Melee
+    crit: 4
+    knockback: 2.5
+    useTime: 19
+  worth: 30000000
+  rarity: 15
+盖尔大剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r来，快给我——把你的黑暗灵魂给我。
+  - §r第一次挥动发射追踪骷髅
+  - §r第二次挥动发射巨大的强力骷髅
+  - §r第三次挥动造成巨大伤害
+  attributes:
+    damage: 1560
+    damageType: Melee
+    crit: 4
+    knockback: 9
+    useTime: 12
+  worth: 30000000
+  rarity: 15
+星流之刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r左键释放大量能量光束追踪并在命中时切碎敌人
+  - §r右键使你向鼠标方向冲刺并斩击
+  - §r冲刺时命中敌人会造成巨量伤害并反弹自己
+  - §r反弹后下一次左键攻击更加强大并在命中敌人时爆炸
+  attributes:
+    damage: 1650
+    damageType: Melee
+    crit: 4
+    knockback: 9
+    useTime: 49
+    buffInflictMelee: 超位崩解|100|1
+  worth: 30000000
+  rarity: 15
+红日:
+  item: DIAMOND_SWORD
+  lore:
+  - §r圣堂之上
+  - §r日炎火球从天而降
+  attributes:
+    damage: 1000
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 30
+    buffInflictMelee: 神圣之火|100|1
+  worth: 40000000
+  rarity: 16
+龙破斩:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射符文剑气，击中敌人时爆炸产生新的剑气
+  - §r新的剑气会上下翻飞继续攻击敌人
+  attributes:
+    damage: 500
+    damageType: Melee
+    crit: 4
+    knockback: 7.25
+    useTime: 24
+    buffInflictMelee: 破晓|200|1
+  worth: 40000000
+  rarity: 16
+无限大地:
+  item: DIAMOND_SWORD
+  lore:
+  - §r你的攻击会大幅治疗你
+  - §r召唤会分裂的红蓝绿陨石
+  - §r蓝陨石造成冰冻
+  - §r红陨石会爆炸
+  - §r绿陨石生成治疗球
+  attributes:
+    damage: 340
+    damageType: Melee
+    crit: 4
+    knockback: 9.5
+    useTime: 16
+  worth: 40000000
+  rarity: 16
+绚辉圣剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r击中敌人时治疗自己
+  - §r发射彩虹光束，效果取决于它们的颜色
+  - §r右击施展真近战攻击
+  attributes:
+    damage: 4000
+    damageType: Melee
+    crit: 14
+    knockback: 8
+    useTime: 14
+    buffInflictMelee: 超位崩解|200|1
+  worth: 40000000
+  rarity: 16
 ####
 剑鱼:
   item: STONE_SWORD
@@ -7703,6 +7979,7 @@ P90:
     crit: 4
     knockback: 2
     useTime: 20
+    buffInflictMelee: 破晓|100|1
   worth: 10000000
   rarity: 10
 星云鞭:

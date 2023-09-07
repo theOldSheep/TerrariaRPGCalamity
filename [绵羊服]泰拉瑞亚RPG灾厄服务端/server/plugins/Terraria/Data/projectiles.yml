@@ -2038,7 +2038,8 @@ TNT:
 燃烧头骨:
     autoTrace: true
     autoTraceRadius: 16
-    noAutoTraceTicks: 10
+    noAutoTraceTicks: 5
+    minimumDamageTicks: 1
     blockHitAction: thru
     projectileSize: 1
     trailColor: 255|137|17
@@ -2048,7 +2049,7 @@ TNT:
         amount: 3
         damageMulti: 0.5
         name: 追踪火球
-        velocity: 1.25
+        velocity: 1.5
 破坏重剑剑气:
     gravity: 0
     projectileSize: 0.5
@@ -2203,6 +2204,23 @@ TNT:
     trailVanillaParticle: false
     trailStepSize: 0.75
     trailLingerTime: 5
+镜之刃镜子:
+    gravity: 0
+    penetration: 999999
+恐惧骷髅:
+    autoTrace: true
+    autoTraceRadius: 24
+    noAutoTraceTicks: 5
+    blockHitAction: thru
+    projectileSize: 1.5
+    trailColor: 255|137|17
+    trailSize: 0.35
+    trailStepSize: 0.5
+    clusterBomb:
+        amount: 2
+        damageMulti: 0.75
+        name: 燃烧头骨
+        velocity: 2.25
 ####
 电火花:
     noGravityTicks: 0

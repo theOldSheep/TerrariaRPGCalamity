@@ -15,6 +15,7 @@ import terraria.entity.boss.event.celestialPillar.CelestialPillar;
 import terraria.entity.monster.*;
 import terraria.gameplay.EventAndTime;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -22,7 +23,15 @@ import java.util.logging.Level;
 public class MonsterHelper {
     // prevent spawning next to any player
     public static final double NO_MONSTER_SPAWN_RADIUS = 16d;
-    public static HashMap<String, Entity> uniqueMonsters = new HashMap<>();
+    public static class UniqueMonsterInfo {
+        Entity uniqueMonster;
+        long spawnedTime;
+        public UniqueMonsterInfo(Entity monster) {
+            this.uniqueMonster = monster;
+            spawnedTime = Calendar.getInstance().getTimeInMillis();
+        }
+    }
+    public static HashMap<String, UniqueMonsterInfo> uniqueMonsters = new HashMap<>();
     private static boolean naturalMobSpawnType(Player ply, String spawnType) {
         // determine the monster spawning location
         WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(ply.getLocation());
@@ -209,11 +218,11 @@ public class MonsterHelper {
         ConfigurationSection mobInfoSection = TerrariaHelper.mobSpawningConfig.getConfigurationSection("mobInfo." + type);
         boolean unique = mobInfoSection.getBoolean("unique", false);
         if (unique && uniqueMonsters.containsKey(type)) {
-            Entity currMonster = uniqueMonsters.get(type);
-            // timeout after 2.5 minutes (150 seconds)
-            if (currMonster.getTicksLived() > 3000)
-                currMonster.remove();
-            if (!currMonster.isDead())
+            UniqueMonsterInfo currMonster = uniqueMonsters.get(type);
+            // timeout after 2.5 minutes (150 seconds or 150 000 ms)
+            if (currMonster.spawnedTime < Calendar.getInstance().getTimeInMillis() - 150000)
+                currMonster.uniqueMonster.remove();
+            else if (!currMonster.uniqueMonster.isDead())
                 return null;
         }
         String entityType = mobInfoSection.getString("monsterType", "SLIME");
@@ -292,7 +301,7 @@ public class MonsterHelper {
         EntityHelper.setMetadata(entity, EntityHelper.MetadataName.MONSTER_PARENT_TYPE, type);
         // unique monster cache
         if (unique) {
-            uniqueMonsters.put(type, entity);
+            uniqueMonsters.put(type, new UniqueMonsterInfo(entity) );
         }
         return entity;
     }

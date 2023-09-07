@@ -1668,6 +1668,49 @@ ANVIL:
     - 断裂英雄剑
     - 瘟疫装甲镀层:8
     - 灾厄尘:8
+  '203_1':
+    requireLevel: 3
+    resultItem: 暴政
+    requireItem:
+    - 宇宙锭:12
+  '203_2':
+    requireLevel: 3
+    resultItem: 精元劫掠者
+    requireItem:
+    - 宇宙锭:12
+  '203_3':
+    requireLevel: 3
+    resultItem: 破灭魔王剑
+    requireItem:
+    - 破坏重剑
+    - 崇高誓约之剑
+    - 宇宙锭:8
+    - 梦魇魔能:20
+  '203_4':
+    requireLevel: 3
+    resultItem: 携序之剑
+    requireItem:
+    - 制裁大剑
+    - 宇宙锭:8
+    - 恒温能量:20
+  '203_5':
+    requireLevel: 3
+    resultItem: 光棱破碎者
+    requireItem:
+    - 季节长剑
+    - 生命合金:3
+    - 星系异石:5
+    - 宇宙锭:8
+    - 恒温能量:20
+  '203_6':
+    requireLevel: 3
+    resultItem: 禅心剑
+    requireItem:
+    - 断裂英雄剑
+    - 宇宙锭:8
+    - 化神魂精:4
+    - 梦魇魔能:20
+    - 圣金源锭:5
   '204':
     requireLevel: 2
     resultItem: 卢克雷西亚
@@ -3748,6 +3791,26 @@ TINKER_WORKBENCH:
     - 海爵剑
     - 泰拉之刃
     - 地狱龙锋
+  '43_11':
+    requireLevel: 1
+    resultItem: 血石斩切刃
+    requireItem:
+    - 血石核心:5
+  '43_12':
+    requireLevel: 1
+    resultItem: 末晓之殇
+    requireItem:
+    - 邪恶收割者
+    - 暗影之魂:30
+    - 猎魂鲨牙:5
+    - 毁灭之灵:3
+  '43_13':
+    requireLevel: 1
+    resultItem: 海神之馈赠
+    requireItem:
+    - 深渊之刃
+    - 毁灭之灵:5
+    - 猎魂鲨牙:6
   '44':
     requireLevel: 1
     resultItem: 幻星矛
@@ -3887,25 +3950,45 @@ TINKER_WORKBENCH:
     # 远古操纵机中 requireLevel<=1的配方也会被加载
     远古操纵机: 1
   # 在下面可以写此工作台的其他配方
-  '示例':
+  '1':
     requireLevel: 1
-    resultItem: 天界符:4
+    resultItem: 星流之刃
     requireItem:
-    - 日耀碎片:20
-    - 星璇碎片:20
-    - 星云碎片:20
-    - 星尘碎片:20
-    - 石头:64
-    - 铜锭:4
-    - 铁锭:4
-    - 银锭:4
-    - 金锭:4
-  '这里的配方名不能和同工作站点的其他配方名重合':
+    - 泰拉阔剑
+    - 混乱之刃
+    - 炎霜之刃
+    - 狱火重剑
+    - 熵阔剑
+    - 圣火之刃
+    - 奇迹物质
+  '2':
     requireLevel: 1
-    resultItem: 钻石:4
+    resultItem: 红日
     requireItem:
-    - 石头:64
-    - 铜锭:4
-    - 铁锭:4
-    - 银锭:4
-    - 金锭:4
+    - 灼炎弯刀
+    - 遗忘之刃
+    - 日光核心:5
+    - 魔影锭:5
+  '3':
+    requireLevel: 1
+    resultItem: 龙破斩
+    requireItem:
+    - 魔影锭:5
+    - 日光核心:3
+    - 冰川核心:3
+    - 日耀碎片:10
+  '4':
+    requireLevel: 1
+    resultItem: 无限大地
+    requireItem:
+    - 大守卫者
+    - 星河之刃
+    - 魔影锭:5
+  '5':
+    requireLevel: 1
+    resultItem: 绚辉圣剑
+    requireItem:
+    - 魔影锭:5
+    - 真·圣剑
+    - 化神魂精:5
+    - 携序之剑

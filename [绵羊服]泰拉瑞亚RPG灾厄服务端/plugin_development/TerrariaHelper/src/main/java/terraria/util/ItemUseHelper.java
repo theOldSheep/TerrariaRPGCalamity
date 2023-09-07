@@ -1142,7 +1142,7 @@ public class ItemUseHelper {
         // "swing" or "whip"
         else {
             if (weaponType.equals("天顶剑")) {
-                if (currentIndex % 4 == 0) {
+                if (currentIndex % 2 == 0) {
                     String[] candidateItems = {"泰拉之刃", "彩虹猫之刃", "狂星之怒", "无头骑士剑", "种子弯刀", "铜质短剑"};
                     strikeLineInfo.particleInfo.setSpriteItem(ItemHelper.getRawItem(
                             candidateItems[(int) (Math.random() * candidateItems.length) ]));
@@ -1625,6 +1625,42 @@ public class ItemUseHelper {
                         });
                         break;
                     }
+                    case "血石斩切刃": {
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            if (hitEntity instanceof LivingEntity && ! hitEntity.getScoreboardTags().contains("isBOSS")) {
+                                LivingEntity hitLivingEntity = (LivingEntity) hitEntity;
+                                if (hitLivingEntity.getHealth() * 5 < hitLivingEntity.getMaxHealth()) {
+                                    ArrayList<Entity> dmgExceptions = new ArrayList<>();
+                                    dmgExceptions.add(hitEntity);
+                                    EntityHelper.handleEntityExplode(ply, 2, dmgExceptions, hitLoc);
+                                    EntityHelper.dropHeart(hitLoc);
+                                }
+                            }
+                        });
+                        break;
+                    }
+                    case "镜之刃": {
+                        if (currentIndex == 0) {
+                            EntityPlayer playerNMS = ((CraftPlayer) ply).getHandle();
+                            double fwdYaw = playerNMS.yaw;
+                            double fwdPitch = playerNMS.pitch;
+                            for (int i = 0; i < 3; i ++) {
+                                Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                        fwdYaw + Math.random() * 20 - 10, fwdPitch + Math.random() * 20 - 10);
+                                projVel.multiply(3);
+                                EntityHelper.spawnProjectile(ply, projVel,
+                                        attrMap, EntityHelper.DamageType.MELEE, "镜之刃镜子");
+                            }
+                        }
+
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            HashMap<String, Double> victimAttrMap = EntityHelper.getAttrMap(hitEntity);
+                            double extraDamage = Math.min(1000, victimAttrMap.getOrDefault("damage", 1d) );
+                            EntityHelper.handleDamage(ply, hitEntity, extraDamage,
+                                    EntityHelper.DamageReason.DIRECT_DAMAGE);
+                        });
+                        break;
+                    }
                 }
                 for (int i = indexStart; i < indexEnd; i ++) {
                     double progress = (double) i / loopTimes;
@@ -1735,6 +1771,30 @@ public class ItemUseHelper {
                                     EntityHelper.spawnProjectile(ply, offsetDir,
                                             attrMapPly, "远古之星");
                                 }
+                            }
+                            break;
+                        }
+                        case "泰拉阔剑": {
+                            if (progress < 0.5) {
+                                EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+                                yawMin = plyNMS.yaw;
+                                yawMax = plyNMS.yaw;
+                                pitchMin = plyNMS.pitch;
+                                pitchMax = plyNMS.pitch;
+
+                                double temp = 1 - 2 * progress;
+                                temp *= temp;
+                                actualPitch = pitchMin - 120 + 45 * temp * temp;
+                            }
+                            else {
+                                double temp = 4 * progress - 3;
+                                actualPitch = pitchMin + temp * 120;
+                            }
+                            // shoot projectile
+                            if (i == (int) (loopTimes * 0.5)) {
+                                Vector projVel = MathHelper.vectorFromYawPitch_quick(yawMin, pitchMin);
+                                projVel.multiply(5.5);
+                                EntityHelper.spawnProjectile(ply, projVel, attrMap, "泰拉能量矢");
                             }
                             break;
                         }
@@ -1878,6 +1938,11 @@ public class ItemUseHelper {
                     pitchMin = pitch + 55;
                     pitchMax = pitch - 55;
                 }
+                break;
+            }
+            case "泰拉阔剑": {
+                pitchMin = pitch;
+                pitchMax = pitch;
                 break;
             }
         }

@@ -65,6 +65,7 @@ terraria\entity\npc\TerrariaNPCBlockSeller.class
 terraria\entity\others\TerrariaEntityPlayer.class
 terraria\entity\boss\moonLord\MoonLordPhantasmalBolt.class
 terraria\entity\boss\leviathanAndAnahita\Leviathan$1.class
+terraria\util\MonsterHelper$UniqueMonsterInfo.class
 terraria\util\WorldHelper$LeafLayerShape.class
 terraria\entity\boss\astrumAureus\AstrumAureus$AIPhase.class
 terraria\entity\boss\theHiveMind\TheHiveMind$AIPhase.class

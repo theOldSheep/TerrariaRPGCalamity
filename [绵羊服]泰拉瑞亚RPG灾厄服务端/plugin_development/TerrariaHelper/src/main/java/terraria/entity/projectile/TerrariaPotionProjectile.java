@@ -348,6 +348,17 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 }
                 break;
             }
+            case "镜之刃镜子": {
+                Location eyeLoc = ((LivingEntity) shooter.getBukkitEntity()).getEyeLocation();
+                Vector dir = terraria.util.MathHelper.getDirection(eyeLoc, bukkitEntity.getLocation(), 8);
+                Location targetLoc = eyeLoc.add(dir);
+                Vector newVel = terraria.util.MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc,
+                        this.speed, true);
+
+                motX = newVel.getX();
+                motY = newVel.getY();
+                motZ = newVel.getZ();
+            }
         }
     }
     // this helper function is called every tick only if the projectile would move(not homing into enemies and not stuck on wall)
