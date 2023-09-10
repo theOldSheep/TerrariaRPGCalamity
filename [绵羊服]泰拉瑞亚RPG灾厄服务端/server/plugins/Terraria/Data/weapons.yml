@@ -654,27 +654,39 @@
 狮心圣裁:
   type: SWING
   autoSwing: true
-  size: 12
-  projectileInfo:
-    interval: 1
-    velocity: 3
-    name: 恐惧骷髅
+  size: 8
 海神之馈赠:
   type: SWING
   autoSwing: true
-  size: 12
+  size: 11.5
   projectileInfo:
     interval: 1
     velocity: 3
-    name: 恐惧骷髅
+    name: 海神之馈赠三叉戟
 灵魂之锋:
   type: SWING
   autoSwing: true
   size: 12
   projectileInfo:
     interval: 1
-    velocity: 3
-    name: 恐惧骷髅
+    velocity: 2.5
+    name: 惧魂
+惊惧魂刃:
+  type: SWING
+  autoSwing: true
+  size: 7
+  projectileInfo:
+    interval: 1
+    velocity: 2.5
+    name: 惊惧光束
+宙能波纹剑:
+  type: SWING
+  autoSwing: true
+  size: 7.5
+暴政:
+  type: SWING
+  autoSwing: true
+  size: 13.5
 ####
 钴薙刀:
   type: STAB

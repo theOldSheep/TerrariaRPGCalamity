@@ -43,6 +43,9 @@ buffConflicts:
   12:
     瘟疫狂暴: 0
     瘟疫狂暴冷却: 1
+  13:
+    狮心圣裁能量外壳: 0
+    狮心圣裁能量外壳冷却: 1
 
 effects:
   中毒:
@@ -440,7 +443,7 @@ effects:
     isBuff: false
     tooltip: 钨钢屏障被摧毁，正在充能
   硫火狂怒:
-    isBuff: false
+    isBuff: true
     attributes:
         damageMagicMulti: 0.5
         regen: -42
@@ -481,3 +484,11 @@ effects:
         damageTakenMulti: -0.1
         damageMeleeMulti: 0.2
     tooltip: 提高防御力，你的肌肉更加强壮
+  狮心圣裁能量外壳:
+    isBuff: true
+    attributes:
+        damageTakenMulti: -0.5
+    tooltip: 提高防御力，你的肌肉更加强壮
+  狮心圣裁能量外壳冷却:
+    isBuff: false
+    tooltip: 狮心圣裁能量外壳正在冷却

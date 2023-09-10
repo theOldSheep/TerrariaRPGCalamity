@@ -2221,6 +2221,55 @@ TNT:
         damageMulti: 0.75
         name: 燃烧头骨
         velocity: 2.25
+追踪海神之馈赠三叉戟:
+    penetration: 1
+    liveTime: 100
+    autoTrace: true
+    autoTraceAbility: 3
+    autoTraceRadius: 24
+    projectileSize: 1
+海神之馈赠三叉戟:
+    projectileSize: 1
+    spawnProjectiles:
+        interval: 4
+        offset: 1.0
+        spawnMechanism: BOTTOM
+        damageMulti: 0.5
+        speed: 1.0
+        spawnType: 追踪海神之馈赠三叉戟
+惧魂:
+    penetration: 3
+    liveTime: 100
+    autoTrace: true
+    autoTraceRadius: 24
+    projectileSize: 2
+    enemyInvincibilityFrame: 2
+惊惧光束:
+    blockHitAction: bounce
+    penetration: 3
+    bounce: 3
+    bouncePenetrationBonded: true
+    liveTime: 100
+    projectileSize: 1
+    isGrenade: true
+    blastOnContactEnemy: true
+    blastOnContactBlock: true
+    blastOnTimeout: false
+    blastRadius: 6
+宙魔之纹:
+    blockHitAction: slide
+    penetration: 999999
+    liveTime: 100
+    projectileSize: 3
+    enemyInvincibilityFrame: 10
+精华火焰:
+    blockHitAction: thru
+    liveTime: 75
+    autoTrace: true
+    autoTraceRadius: 27.5
+    trailColor: 252|109|202
+    buffInflict:
+        - "神弑者之怒焰|100|1"
 ####
 电火花:
     noGravityTicks: 0

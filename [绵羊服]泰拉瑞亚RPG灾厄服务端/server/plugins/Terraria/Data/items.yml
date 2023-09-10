@@ -3263,11 +3263,9 @@
 狮心圣裁:
   item: DIAMOND_SWORD
   lore:
-  - §r击中敌人时产生能量爆炸
-  - §r右键召唤可以使伤害减半的能量庇护
-  - §r此效果有45秒冷却时间
+  - §r击中敌人时试图召唤可以使伤害减半的能量庇护，此效果持续5秒且有45秒冷却时间
   attributes:
-    damage: 646
+    damage: 1200
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -3302,10 +3300,10 @@
 惊惧魂刃:
   item: DIAMOND_SWORD
   lore:
-  - §r射出会在砖块上弹射的恐惧光束
-  - §r每次弹射时爆炸
+  - §r射出会弹射的恐惧光束
+  - §r每次弹射或命中敌人时猛烈爆炸
   attributes:
-    damage: 1000
+    damage: 375
     damageType: Melee
     crit: 4
     knockback: 8.5
@@ -3316,7 +3314,6 @@
   item: DIAMOND_SWORD
   lore:
   - §r射出发散的旋转刀刃
-  - §r剑刃击中敌人时产生激光束
   attributes:
     damage: 558
     damageType: Melee
