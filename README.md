@@ -1,2 +1,2 @@
 # TerrariaRPGCalamity
-看什么看，淦就完了
+Terraria and Calamity mod gameplay in Minecraft
