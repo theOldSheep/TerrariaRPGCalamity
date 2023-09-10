@@ -1727,6 +1727,9 @@ public class EntityHelper {
                 else
                     applyEffect(victim, "钨钢屏障", damageShield * 20);
             }
+            if (hasEffect(victim, "狮心圣裁能量外壳")) {
+                applyEffect(victim, "狮心圣裁能量外壳冷却", 900);
+            }
             if (victimScoreboardTags.contains("isBOSS")) {
                 double dynamicDR = 1;
                 MetadataValue temp = getMetadata(victim, MetadataName.DYNAMIC_DAMAGE_REDUCTION);

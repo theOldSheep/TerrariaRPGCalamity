@@ -2208,6 +2208,7 @@ TNT:
     gravity: 0
     penetration: 999999
 恐惧骷髅:
+    gravity: 0
     autoTrace: true
     autoTraceRadius: 24
     noAutoTraceTicks: 5
@@ -2229,6 +2230,7 @@ TNT:
     autoTraceRadius: 24
     projectileSize: 1
 海神之馈赠三叉戟:
+    gravity: 0
     projectileSize: 1
     spawnProjectiles:
         interval: 4
@@ -2238,6 +2240,7 @@ TNT:
         speed: 1.0
         spawnType: 追踪海神之馈赠三叉戟
 惧魂:
+    gravity: 0
     penetration: 3
     liveTime: 100
     autoTrace: true
@@ -2245,6 +2248,7 @@ TNT:
     projectileSize: 2
     enemyInvincibilityFrame: 2
 惊惧光束:
+    gravity: 0
     blockHitAction: bounce
     penetration: 3
     bounce: 3
@@ -2257,17 +2261,20 @@ TNT:
     blastOnTimeout: false
     blastRadius: 6
 宙魔之纹:
+    gravity: 0
     blockHitAction: slide
-    penetration: 999999
+    penetration: 2
     liveTime: 100
     projectileSize: 3
     enemyInvincibilityFrame: 10
+    speedMultiPerTick: 0.975
 精华火焰:
+    gravity: 0
     blockHitAction: thru
     liveTime: 75
     autoTrace: true
     autoTraceRadius: 27.5
-    trailColor: 252|109|202
+    trailColor: 255|174|255
     buffInflict:
         - "神弑者之怒焰|100|1"
 ####

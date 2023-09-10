@@ -635,11 +635,12 @@ public class ItemUseHelper {
                                 .setParticleColor(particleColors)
                                 .setTicksLinger(1));
         }
+
+        double strikeRadius = Math.max(size * 0.1, MELEE_STRIKE_RADIUS);
         // "stab"
         if (interpolateType == 0) {
             boolean shouldStrike;
             double strikeYaw = yawMin, strikePitch = pitchMin;
-            double strikeRadius = MELEE_STRIKE_RADIUS;
             Location startStrikeLoc = ply.getEyeLocation().add(lookDir);
             switch (weaponType) {
                 case "星光": {
@@ -1154,7 +1155,6 @@ public class ItemUseHelper {
                 int loopTimes = Math.max(maxIndex, 35);
                 int indexStart = loopTimes * currentIndex / (maxIndex + 1);
                 int indexEnd = loopTimes * (currentIndex + 1) / (maxIndex + 1);
-                double strikeRadius = MELEE_STRIKE_RADIUS;
                 // special weapon mechanism
                 switch (weaponType) {
                     case "捕虫网":
@@ -1658,6 +1658,42 @@ public class ItemUseHelper {
                             double extraDamage = Math.min(1000, victimAttrMap.getOrDefault("damage", 1d) );
                             EntityHelper.handleDamage(ply, hitEntity, extraDamage,
                                     EntityHelper.DamageReason.DIRECT_DAMAGE);
+                        });
+                        break;
+                    }
+                    case "狮心圣裁": {
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            EntityHelper.applyEffect(ply, "狮心圣裁能量外壳", 100);
+                        });
+                        break;
+                    }
+                    case "宙能波纹剑": {
+                        if (currentIndex == 0) {
+                            EntityPlayer playerNMS = ((CraftPlayer) ply).getHandle();
+                            double fwdYaw = playerNMS.yaw;
+                            double fwdPitch = playerNMS.pitch;
+                            for (int i = 0; i < 3; i ++) {
+                                Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                        fwdYaw + Math.random() * 20 - 10, fwdPitch + Math.random() * 20 - 10);
+                                projVel.multiply(2);
+                                EntityHelper.spawnProjectile(ply, projVel,
+                                        attrMap, EntityHelper.DamageType.MELEE, "宙魔之纹");
+                            }
+                        }
+                        break;
+                    }
+                    case "暴政": {
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            if (hitIdx == 1) {
+                                Location shootLoc = hitLoc.add(
+                                        Math.random() * 16 - 8,
+                                        Math.random() * 10,
+                                        Math.random() * 16 - 8);
+                                Vector projVel = MathHelper.randomVector();
+                                projVel.multiply(3);
+                                EntityHelper.spawnProjectile(ply, shootLoc, projVel,
+                                        attrMap, EntityHelper.DamageType.MELEE, "精华火焰");
+                            }
                         });
                         break;
                     }
