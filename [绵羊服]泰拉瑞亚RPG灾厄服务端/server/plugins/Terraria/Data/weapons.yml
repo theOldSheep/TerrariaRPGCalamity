@@ -687,6 +687,26 @@
   type: SWING
   autoSwing: true
   size: 13.5
+精元劫掠者:
+  type: SWING
+  autoSwing: true
+  size: 7
+  projectileInfo:
+    interval: 1
+    velocity: 2.5
+    name: 精元镰刀
+破灭魔王剑:
+  type: SWING
+  autoSwing: true
+  size: 11
+携序之剑:
+  type: SWING
+  autoSwing: true
+  size: 10
+  projectileInfo:
+    interval: 1
+    velocity: 3
+    name: 携序之剑剑气
 ####
 钴薙刀:
   type: STAB

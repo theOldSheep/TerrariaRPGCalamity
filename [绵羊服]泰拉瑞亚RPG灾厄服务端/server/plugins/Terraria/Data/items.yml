@@ -3338,7 +3338,7 @@
 精元劫掠者:
   item: DIAMOND_SWORD
   lore:
-  - §r发射击杀敌人时释放治愈光线的精元镰刀
+  - §r发射命中敌人时治愈自身的精元镰刀
   attributes:
     damage: 360
     damageType: Melee
@@ -3351,10 +3351,10 @@
 破灭魔王剑:
   item: DIAMOND_SWORD
   lore:
-  - §r发射发散的恶魔之镰和爆炸光束
+  - §r发射发散的恶魔之镰
   - §r暴击会造成暗影焰爆炸
   attributes:
-    damage: 332
+    damage: 450
     damageType: Melee
     crit: 4
     knockback: 6.75
@@ -3366,9 +3366,10 @@
   item: DIAMOND_SWORD
   lore:
   - §r来自遗忘之地的苍白之剑
-  - §r发射一个消失时降下彩虹雨的彩虹宝珠
+  - §r发射一个降下彩虹雨的彩虹宝珠
   - §r你可以听见这把剑微弱的安抚和低语
   - §r“无论你在何方，你都绝非孤身一人。我永远会在你身旁，我的王”
+  - §7§m“这把刀在之前的版本名字不是巨剑“巴拉”，绝 对 不 是”
   attributes:
     damage: 276
     damageType: Melee

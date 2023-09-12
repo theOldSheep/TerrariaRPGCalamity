@@ -2277,6 +2277,39 @@ TNT:
     trailColor: 255|174|255
     buffInflict:
         - "神弑者之怒焰|100|1"
+精元镰刀:
+    gravity: 0
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceRadius: 24
+    noAutoTraceTicks: 5
+    penetration: 3
+    liveTime: 100
+    projectileSize: 3
+    enemyInvincibilityFrame: 2
+    speedMultiPerTick: 0.95
+携序之剑分裂剑气:
+    gravity: 0
+    liveTime: 40
+    autoTrace: true
+    autoTraceRadius: 24
+    trailColor: 255|255|255
+    trailStepSize: 1
+    trailLingerTime: 6
+携序之剑剑气:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 40
+    trailColor: 255|255|255
+    trailStepSize: 1
+    trailLingerTime: 6
+    spawnProjectiles:
+        interval: 3
+        offset: 0.5
+        spawnMechanism: BOTTOM
+        damageMulti: 1
+        speed: 2
+        spawnType: 携序之剑分裂剑气
 ####
 电火花:
     noGravityTicks: 0

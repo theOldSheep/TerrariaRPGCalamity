@@ -1466,6 +1466,32 @@ public class ItemUseHelper {
                                 });
                         break;
                     }
+                    case "破灭魔王剑": {
+                        if (currentIndex == 0) {
+                            EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+                            double projYaw = plyNMS.yaw;
+                            double projPitch = plyNMS.pitch;
+                            projPitch -= 15;
+                            for (int i = 0; i < 3; i ++) {
+                                Vector projVel = MathHelper.vectorFromYawPitch_quick(projYaw, projPitch);
+                                projVel.multiply(2.25);
+                                EntityHelper.spawnProjectile(ply,
+                                        projVel, attrMap,
+                                        EntityHelper.DamageType.MELEE, "禁忌镰刀");
+                                projPitch += 15;
+                            }
+                        }
+                        double critRate = (attrMap.getOrDefault("crit", 4d) +
+                                attrMap.getOrDefault("critMelee", 0d) +
+                                attrMap.getOrDefault("critTrueMelee", 0d)) / 100;
+                        strikeLineInfo
+                                .setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
+                                    if (Math.random() < critRate)
+                                        EntityHelper.handleEntityExplode(ply, 1.5, new ArrayList<>(), hitLoc,
+                                                1, 5);
+                                });
+                        break;
+                    }
                     case "海爵剑": {
                         strikeLineInfo
                                 .setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {

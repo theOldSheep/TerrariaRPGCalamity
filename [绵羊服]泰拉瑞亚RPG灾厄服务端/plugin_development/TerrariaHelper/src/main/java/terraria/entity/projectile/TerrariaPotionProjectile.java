@@ -7,6 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
@@ -16,6 +17,7 @@ import terraria.event.TerrariaProjectileHitEvent;
 import terraria.event.listener.ArrowHitListener;
 import terraria.util.EntityHelper;
 import terraria.util.GenericHelper;
+import terraria.util.PlayerHelper;
 import terraria.util.WorldHelper;
 
 import java.util.*;
@@ -190,6 +192,17 @@ public class TerrariaPotionProjectile extends EntityPotion {
         // should still be able to hit entities that are neither monster nor forbidden to hit
         return EntityHelper.checkCanDamage(bukkitEntity, bukkitE, false);
     }
+    public void hitEntityExtraHandling(Entity e, MovingObjectPosition position) {
+        switch (projectileType) {
+            case "钫弹":
+            case "粉色脉冲":
+                noAutoTraceTicks = ticksLived + 5;
+                break;
+            case "精元镰刀":
+                PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 1, false);
+                break;
+        }
+    }
     public Vec3D hitEntity(Entity e, MovingObjectPosition position) {
         // handle damage CD before doing anything else. Otherwise, exploding projectiles will damage the enemy being hit twice.
         GenericHelper.damageCoolDown(damageCD, e.getBukkitEntity(), enemyInvincibilityFrame);
@@ -200,14 +213,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         setPosition(position.pos.x, position.pos.y, position.pos.z);
         updatePenetration(penetration - 1);
         // special projectile
-        {
-            switch (projectileType) {
-                case "钫弹":
-                case "粉色脉冲":
-                    noAutoTraceTicks = ticksLived + 5;
-                    break;
-            }
-        }
+        hitEntityExtraHandling(e, position);
         // returns the hit location if the projectile breaks (returns null if the projectile is still alive)
         if (penetration < 0) {
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
