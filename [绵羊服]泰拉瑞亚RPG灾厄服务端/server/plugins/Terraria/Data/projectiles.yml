@@ -2310,6 +2310,103 @@ TNT:
         damageMulti: 1
         speed: 2
         spawnType: 携序之剑分裂剑气
+虹光剑气:
+    gravity: 0
+    blockHitAction: thru
+    penetration: 1
+    projectileSize: 1.5
+    liveTime: 150
+    buffInflict:
+        - "夜魇|100|1"
+爆炸禅心导弹:
+    gravity: 0
+    projectileSize: 1
+    liveTime: 30
+    isGrenade: true
+    blastRadius: 4
+    buffInflict:
+        - "暗影焰|60|1"
+针形禅心导弹:
+    gravity: 0
+    liveTime: 50
+    autoTrace: true
+    noAutoTraceTicks: 5
+    autoTraceRadius: 16
+    buffInflict:
+        - "暗影焰|60|1"
+分裂禅心导弹:
+    gravity: 0
+    liveTime: 30
+    autoTrace: true
+    noAutoTraceTicks: 5
+    autoTraceRadius: 16
+    isGrenade: true
+    blastRadius: 2.5
+    buffInflict:
+        - "暗影焰|60|1"
+    clusterBomb:
+        amount: 6
+        damageMulti: 0.5
+        name: 针形禅心导弹
+        velocity: 2.75
+巨大血骷髅:
+    gravity: 0
+    projectileSize: 4
+    penetration: 2
+    liveTime: 100
+    isGrenade: true
+    blastRadius: 6
+跟踪血骷髅:
+    gravity: 0
+    projectileSize: 1.5
+    blockHitAction: thru
+    penetration: 1
+    liveTime: 100
+    autoTrace: true
+    autoTraceRadius: 24
+    isGrenade: true
+    blastRadius: 4
+星流能量矢:
+    gravity: 0
+    projectileSize: 1
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceRadius: 32
+    liveTime: 100
+    speedMultiPerTick: 0.99
+    trailColor: 128|255|64
+    buffInflict:
+        - "超位崩解|100|1"
+    clusterBomb:
+        amount: 1
+        damageMulti: 1
+        name: 星流斩切光束
+        velocity: 0
+        type: surround
+        surroundMaxPitch: 60.0
+        surroundOffset: 8.0
+        velocity: 16
+星流能量爆炸:
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 20
+    projectileSize: 7.5
+    penetration: 999999
+    enemyInvincibilityFrame: 5
+    buffInflict:
+        - "超位崩解|100|1"
+星流斩切光束:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.5
+    liveTime: 1
+    penetration: 999999
+    trailColor: 169|237|101
+    trailVanillaParticle: false
+    trailStepSize: 0.75
+    trailLingerTime: 5
+    buffInflict:
+        - "超位崩解|100|1"
 ####
 电火花:
     noGravityTicks: 0

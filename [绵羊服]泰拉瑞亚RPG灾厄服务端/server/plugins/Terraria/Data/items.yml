@@ -3382,14 +3382,15 @@
   item: DIAMOND_SWORD
   lore:
   - §r看上去属于一位魔法少女。辐射出强烈的宇宙魔能
-  - §r充能发射一束彩虹光炮
+  - §r左键发射一束彩虹光炮
   - §r右键挥舞此剑，释放虹光剑气
   attributes:
-    damage: 1324
+    damage: 1398
     damageType: Melee
     crit: 12
     knockback: 7
     useTime: 13
+    buffInflictMelee: 破晓|100|1
   worth: 28000000
   rarity: 14
 禅心剑:
@@ -3402,6 +3403,7 @@
     crit: 4
     knockback: 2.5
     useTime: 19
+    buffInflictMelee: 暗影焰|160|1
   worth: 30000000
   rarity: 15
 盖尔大剑:
@@ -3410,7 +3412,7 @@
   - §r来，快给我——把你的黑暗灵魂给我。
   - §r第一次挥动发射追踪骷髅
   - §r第二次挥动发射巨大的强力骷髅
-  - §r第三次挥动造成巨大伤害
+  - §r第三次挥动造成两次伤害判定
   attributes:
     damage: 1560
     damageType: Melee
@@ -3424,8 +3426,9 @@
   lore:
   - §r左键释放大量能量光束追踪并在命中时切碎敌人
   - §r右键使你向鼠标方向冲刺并斩击
-  - §r冲刺时命中敌人会造成巨量伤害并反弹自己
-  - §r反弹后下一次左键攻击更加强大并在命中敌人时爆炸
+  - §r冲刺时获得充能，若命中敌人则会造成巨量伤害，反弹自己且获得最大充能
+  - §r充能将用作强化左键攻击，满充能时本次攻击在命中敌人时爆炸
+  - §r“嘉登喷流之刃”
   attributes:
     damage: 1650
     damageType: Melee

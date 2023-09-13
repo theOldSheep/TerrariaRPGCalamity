@@ -1130,6 +1130,98 @@ public class ItemUseHelper {
 
                     break;
                 }
+                case "光棱破碎者": {
+                    shouldStrike = true;
+                    double strikeRatio = (double) currentIndex / maxIndex;
+                    // interpolate yaw and pitch
+                    {
+                        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+                        double interpolateOffset[] = GenericHelper.getDirectionInterpolateOffset(
+                                strikeYaw, strikePitch, plyNMS.yaw, plyNMS.pitch, 0.4);
+                        double interpolatedDir[] = GenericHelper.interpolateDirection(
+                                strikeYaw, strikePitch, interpolateOffset[0], interpolateOffset[1]);
+                        strikeYaw = interpolatedDir[0];
+                        strikePitch = interpolatedDir[1];
+                    }
+                    // shoot rainbow instead of normal blade on later swing animation
+                    int swingIdx = swingAmount % 32;
+                    if (swingIdx >= 8) {
+                        double interpolateRatio = (swingIdx - 8) / 32d + (double) currentIndex / maxIndex;
+                        ArrayList<Color> rainbowColor = new ArrayList<>();
+                        rainbowColor.add(Color.fromRGB(255, 0, 0));
+                        rainbowColor.add(Color.fromRGB(255, 255, 0));
+                        rainbowColor.add(Color.fromRGB(0, 255, 0));
+                        rainbowColor.add(Color.fromRGB(0, 255, 255));
+                        rainbowColor.add(Color.fromRGB(0, 0, 255));
+                        rainbowColor.add(Color.fromRGB(255, 0, 255));
+                        Color particleColor = GenericHelper.getInterpolateColor(interpolateRatio, rainbowColor);
+                        size = 64;
+                        strikeRadius = 1.5;
+                        strikeLineInfo.particleInfo
+                                .setParticleOrItem(true)
+                                .setParticleColor(
+                                        particleColor.getRed() + "|" + particleColor.getGreen() + "|" + particleColor.getBlue())
+                                .setTicksLinger(1);
+                        strikeLineInfo.setThruWall(false);
+                    }
+                    break;
+                }
+                case "星流之刃_RIGHT_CLICK": {
+                    double dashVel = 2.25;
+                    shouldStrike = true;
+                    int currCharge = getDurability(weaponItem, 5);
+                    // cancel attack if charge remains
+                    if (currentIndex == 0 && currCharge > 0) {
+                        applyCD(ply, 2);
+                        currentIndex = maxIndex;
+                    }
+                    // dash
+                    else {
+                        // init and maintain dash velocity as well as init base charge gain
+                        Vector plyVel;
+                        if (currentIndex == 0) {
+                            // base charge gain (4 stacks out of 5)
+                            setDurability(weaponItem, 5, 4);
+                            plyVel = lookDir.clone();
+                        }
+                        else
+                            plyVel = ply.getVelocity().normalize();
+                        // end dash earlier after recoil (hitting entity)
+                        if (plyVel.dot(lookDir) < 0 && currentIndex + 5 < maxIndex) {
+                            currentIndex = maxIndex - 5;
+                            applyCD(ply, 5);
+                        }
+                        plyVel.multiply(dashVel);
+                        ply.setVelocity(plyVel);
+                        // remove dash velocity on timeout
+                        if (currentIndex == maxIndex)
+                            ply.setVelocity(new Vector());
+
+                        // hitting enemies will knock back the player and fully charge the weapon
+                        Vector lookDirCopy = lookDir;
+                        strikeLineInfo
+                                .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                    // full durability gain
+                                    setDurability(weaponItem, 5, 5);
+                                    // damaging beams
+                                    for (int i = 1; i <= 5; i ++) {
+                                        Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), () -> {
+                                            Vector projVel = MathHelper.randomVector();
+                                            projVel.multiply(8);
+                                            Location spawnLoc = hitLoc.clone().add(entityHit.getLocation()).multiply(0.5);
+                                            spawnLoc.subtract(projVel);
+                                            projVel.multiply(2);
+                                            EntityHelper.spawnProjectile(ply, spawnLoc, projVel, attrMap,
+                                                    EntityHelper.DamageType.MELEE, "星流斩切光束");
+                                        }, i);
+                                    }
+                                    // recoil
+                                    ply.setVelocity(lookDirCopy.clone().multiply(-dashVel));
+                                })
+                                .setLingerDelay(1);
+                    }
+                    break;
+                }
                 default:
                     shouldStrike = currentIndex <= 5;
                     if (shouldStrike && particleColors.size() > 0) {
@@ -1723,6 +1815,77 @@ public class ItemUseHelper {
                         });
                         break;
                     }
+                    case "禅心剑": {
+                        if (currentIndex == 0) {
+                            EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+                            Vector projVel = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+                            projVel.multiply(3);
+                            for (int i = -1; i <= 1; i ++) {
+                                Vector spawnLocOffset = MathHelper.vectorFromYawPitch_quick(
+                                        plyNMS.yaw, plyNMS.pitch + i * 15);
+                                Location spawnLoc = ply.getEyeLocation().add(spawnLocOffset);
+                                EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
+                                        attrMap, EntityHelper.DamageType.MELEE,
+                                        i == 0 ? "爆炸禅心导弹" : "分裂禅心导弹");
+                            }
+                        }
+                        break;
+                    }
+                    case "盖尔大剑": {
+                        if (currentIndex == 0) {
+                            EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+                            Vector projVel = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+                            switch (swingAmount % 3) {
+                                case 0:
+                                    projVel.multiply(3);
+                                    for (int i = -1; i <= 1; i += 2) {
+                                        Vector spawnLocOffset = MathHelper.vectorFromYawPitch_quick(
+                                                plyNMS.yaw, plyNMS.pitch + i * 15);
+                                        Location spawnLoc = ply.getEyeLocation().add(spawnLocOffset);
+                                        EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
+                                                attrMap, EntityHelper.DamageType.MELEE, "跟踪血骷髅");
+                                    }
+                                    break;
+                                case 1:
+                                    projVel.multiply(1.75);
+                                    Location spawnLoc = ply.getEyeLocation();
+                                    EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
+                                            attrMap, EntityHelper.DamageType.MELEE, "巨大血骷髅");
+                                    break;
+                                case 2:
+                                default:
+                                    double dmg = attrMap.getOrDefault("damage", 100d);
+                                    strikeLineInfo.setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
+                                        EntityHelper.handleDamage(ply, hitEntity, dmg, EntityHelper.DamageReason.DIRECT_DAMAGE);
+                                    });
+                            }
+                        }
+                        break;
+                    }
+                    case "星流之刃": {
+                        int currCharge = getDurability(weaponItem, 5);
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            Vector projVel = MathHelper.randomVector();
+                            projVel.multiply(8);
+                            Location spawnLoc = hitLoc.add(hitEntity.getLocation()).multiply(0.5);
+                            spawnLoc.subtract(projVel);
+                            projVel.multiply(2);
+                            EntityHelper.spawnProjectile(ply, spawnLoc, projVel, attrMap,
+                                    EntityHelper.DamageType.MELEE, "星流斩切光束");
+                            // explode on hit when fully charged
+                            if (currCharge == 5) {
+                                EntityHelper.spawnProjectile(ply, hitLoc, new Vector(0, 0, 0), attrMap,
+                                        EntityHelper.DamageType.MELEE, "星流能量爆炸");
+                            }
+                        });
+                        // charge also increases the blade size
+                        if (currCharge > 0)
+                            size = 16;
+                        // decrease charge on strike end
+                        if (currentIndex == maxIndex)
+                            setDurability(weaponItem, 5, currCharge - 1);
+                        break;
+                    }
                 }
                 for (int i = indexStart; i < indexEnd; i ++) {
                     double progress = (double) i / loopTimes;
@@ -1857,6 +2020,43 @@ public class ItemUseHelper {
                                 Vector projVel = MathHelper.vectorFromYawPitch_quick(yawMin, pitchMin);
                                 projVel.multiply(5.5);
                                 EntityHelper.spawnProjectile(ply, projVel, attrMap, "泰拉能量矢");
+                            }
+                            break;
+                        }
+                        case "星流之刃": {
+                            actualPitch = pitchMin - 120;
+                            if (progress < 0.5) {
+                                EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+                                yawMin = plyNMS.yaw;
+                                yawMax = plyNMS.yaw;
+                                pitchMin = plyNMS.pitch;
+                                pitchMax = plyNMS.pitch;
+
+                                strikeLength *= progress + 0.5;
+                            }
+                            else {
+                                double temp = 2 * progress - 1;
+                                actualPitch += temp * 300;
+
+                                strikeLength *= 1.5 - progress;
+                            }
+                            // shoot projectile
+                            int weaponCharge = getDurability(weaponItem, 5);
+                            int shootThreshold = weaponCharge > 0 ? 1 : 0;
+                            if (Math.abs(i - (int) (loopTimes * 0.5)) <= shootThreshold) {
+                                Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                        yawMin + Math.random() * 30 - 15, pitchMin + Math.random() * 30 - 15);
+                                projVel.multiply(3);
+                                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                        ply, projVel, attrMap, "星流能量矢");
+                                String[] trailColorCandidates = {
+                                        "234|205|134", // orange
+                                        "125|255|255", // light blue
+                                        "189|255|179", // light green
+                                };
+                                shootInfo.properties.put("trailColor",
+                                        trailColorCandidates[ (int) (Math.random() * trailColorCandidates.length) ]);
+                                EntityHelper.spawnProjectile(shootInfo);
                             }
                             break;
                         }
@@ -2002,7 +2202,8 @@ public class ItemUseHelper {
                 }
                 break;
             }
-            case "泰拉阔剑": {
+            case "泰拉阔剑":
+            case "星流之刃": {
                 pitchMin = pitch;
                 pitchMax = pitch;
                 break;
