@@ -1146,7 +1146,7 @@ public class ItemUseHelper {
                     // shoot rainbow instead of normal blade on later swing animation
                     int swingIdx = swingAmount % 32;
                     if (swingIdx >= 8) {
-                        double interpolateRatio = (swingIdx - 8) / 32d + (double) currentIndex / maxIndex;
+                        double interpolateRatio = ( (swingIdx - 8) + ((double) currentIndex / maxIndex) ) / 32.000001d;
                         ArrayList<Color> rainbowColor = new ArrayList<>();
                         rainbowColor.add(Color.fromRGB(255, 0, 0));
                         rainbowColor.add(Color.fromRGB(255, 255, 0));
@@ -1162,64 +1162,69 @@ public class ItemUseHelper {
                                 .setParticleColor(
                                         particleColor.getRed() + "|" + particleColor.getGreen() + "|" + particleColor.getBlue())
                                 .setTicksLinger(1);
-                        strikeLineInfo.setThruWall(false);
+                        strikeLineInfo
+                                .setThruWall(false)
+                                .setDamageCD(15);
                     }
                     break;
                 }
                 case "星流之刃_RIGHT_CLICK": {
                     double dashVel = 2.25;
                     shouldStrike = true;
-                    int currCharge = getDurability(weaponItem, 5);
+                    int currCharge = getDurability(weaponItem, 8);
                     // cancel attack if charge remains
                     if (currentIndex == 0 && currCharge > 0) {
                         applyCD(ply, 2);
                         currentIndex = maxIndex;
+                        return;
                     }
-                    // dash
-                    else {
-                        // init and maintain dash velocity as well as init base charge gain
-                        Vector plyVel;
-                        if (currentIndex == 0) {
-                            // base charge gain (4 stacks out of 5)
-                            setDurability(weaponItem, 5, 4);
-                            plyVel = lookDir.clone();
-                        }
-                        else
-                            plyVel = ply.getVelocity().normalize();
-                        // end dash earlier after recoil (hitting entity)
-                        if (plyVel.dot(lookDir) < 0 && currentIndex + 5 < maxIndex) {
+                    // dash velocity as well as base charge gain
+                    Vector plyVel;
+                    if (currentIndex == 0) {
+                        // base charge gain (4 stacks out of 5)
+                        setDurability(weaponItem, 8, 7);
+                        plyVel = lookDir.clone();
+                    }
+                    else
+                        plyVel = ply.getVelocity().normalize();
+                    // end dash earlier after recoil (hitting entity); do not update velocity
+                    if (plyVel.dot(lookDir) < 0) {
+                        if (currentIndex + 5 < maxIndex) {
                             currentIndex = maxIndex - 5;
                             applyCD(ply, 5);
                         }
+                    }
+                    // init and maintain dash velocity as well as init base charge gain
+                    else {
                         plyVel.multiply(dashVel);
                         ply.setVelocity(plyVel);
-                        // remove dash velocity on timeout
-                        if (currentIndex == maxIndex)
-                            ply.setVelocity(new Vector());
-
-                        // hitting enemies will knock back the player and fully charge the weapon
-                        Vector lookDirCopy = lookDir;
-                        strikeLineInfo
-                                .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
-                                    // full durability gain
-                                    setDurability(weaponItem, 5, 5);
-                                    // damaging beams
-                                    for (int i = 1; i <= 5; i ++) {
-                                        Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), () -> {
-                                            Vector projVel = MathHelper.randomVector();
-                                            projVel.multiply(8);
-                                            Location spawnLoc = hitLoc.clone().add(entityHit.getLocation()).multiply(0.5);
-                                            spawnLoc.subtract(projVel);
-                                            projVel.multiply(2);
-                                            EntityHelper.spawnProjectile(ply, spawnLoc, projVel, attrMap,
-                                                    EntityHelper.DamageType.MELEE, "星流斩切光束");
-                                        }, i);
-                                    }
-                                    // recoil
-                                    ply.setVelocity(lookDirCopy.clone().multiply(-dashVel));
-                                })
-                                .setLingerDelay(1);
                     }
+                    // remove dash velocity on timeout
+                    if (currentIndex == maxIndex)
+                        ply.setVelocity(new Vector());
+
+                    // hitting enemies will knock back the player and fully charge the weapon
+                    Vector lookDirCopy = lookDir;
+                    strikeLineInfo
+                            .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                // full durability gain
+                                setDurability(weaponItem, 8, 8);
+                                // damaging beams
+                                for (int i = 1; i <= 5; i ++) {
+                                    Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), () -> {
+                                        Vector projVel = MathHelper.randomVector();
+                                        projVel.multiply(8);
+                                        Location spawnLoc = hitLoc.clone().add(entityHit.getLocation()).multiply(0.5);
+                                        spawnLoc.subtract(projVel);
+                                        projVel.multiply(2);
+                                        EntityHelper.spawnProjectile(ply, spawnLoc, projVel, attrMap,
+                                                EntityHelper.DamageType.MELEE, "星流斩切光束");
+                                    }, i);
+                                }
+                                // recoil
+                                ply.setVelocity(lookDirCopy.clone().multiply(-1));
+                            })
+                            .setLingerDelay(1);
                     break;
                 }
                 default:
@@ -1863,19 +1868,20 @@ public class ItemUseHelper {
                         break;
                     }
                     case "星流之刃": {
-                        int currCharge = getDurability(weaponItem, 5);
+                        int currCharge = getDurability(weaponItem, 8);
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
                             Vector projVel = MathHelper.randomVector();
                             projVel.multiply(8);
-                            Location spawnLoc = hitLoc.add(hitEntity.getLocation()).multiply(0.5);
+                            Location spawnLoc = hitLoc.clone().add(hitEntity.getLocation()).multiply(0.5);
                             spawnLoc.subtract(projVel);
                             projVel.multiply(2);
                             EntityHelper.spawnProjectile(ply, spawnLoc, projVel, attrMap,
                                     EntityHelper.DamageType.MELEE, "星流斩切光束");
                             // explode on hit when fully charged
-                            if (currCharge == 5) {
-                                EntityHelper.spawnProjectile(ply, hitLoc, new Vector(0, 0, 0), attrMap,
+                            if (currCharge == 8) {
+                                EntityHelper.spawnProjectile(ply, hitLoc, new Vector(), attrMap,
                                         EntityHelper.DamageType.MELEE, "星流能量爆炸");
+                                hitLoc.getWorld().playSound(hitLoc, Sound.ENTITY_GENERIC_EXPLODE, 3, 1);
                             }
                         });
                         // charge also increases the blade size
@@ -1883,7 +1889,7 @@ public class ItemUseHelper {
                             size = 16;
                         // decrease charge on strike end
                         if (currentIndex == maxIndex)
-                            setDurability(weaponItem, 5, currCharge - 1);
+                            setDurability(weaponItem, 8, currCharge - 1);
                         break;
                     }
                 }
@@ -2041,14 +2047,16 @@ public class ItemUseHelper {
                                 strikeLength *= 1.5 - progress;
                             }
                             // shoot projectile
-                            int weaponCharge = getDurability(weaponItem, 5);
+                            int weaponCharge = getDurability(weaponItem, 8);
                             int shootThreshold = weaponCharge > 0 ? 1 : 0;
                             if (Math.abs(i - (int) (loopTimes * 0.5)) <= shootThreshold) {
+                                HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
+                                projAttrMap.put("damage", projAttrMap.getOrDefault("damage", 100d) * 0.5);
                                 Vector projVel = MathHelper.vectorFromYawPitch_quick(
                                         yawMin + Math.random() * 30 - 15, pitchMin + Math.random() * 30 - 15);
                                 projVel.multiply(3);
                                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                        ply, projVel, attrMap, "星流能量矢");
+                                        ply, projVel, projAttrMap, "星流能量矢");
                                 String[] trailColorCandidates = {
                                         "234|205|134", // orange
                                         "125|255|255", // light blue
