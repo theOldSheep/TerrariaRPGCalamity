@@ -736,6 +736,27 @@
   size: 12
   attributes:
     useTime: 20
+红日:
+  type: SWING
+  autoSwing: true
+  size: 5
+龙破斩:
+  type: SWING
+  autoSwing: true
+  size: 8
+  projectileInfo:
+    interval: 1
+    velocity: 3
+    name: 龙破斩剑气
+无限大地:
+  type: SWING
+  autoSwing: true
+  size: 15
+## TODO
+绚辉圣剑:
+  type: SWING
+  autoSwing: true
+  size: 11.5
 ####
 钴薙刀:
   type: STAB

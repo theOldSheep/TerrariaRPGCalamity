@@ -364,6 +364,22 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 motX = newVel.getX();
                 motY = newVel.getY();
                 motZ = newVel.getZ();
+                break;
+            }
+            case "龙破斩分裂剑气": {
+                switch (ticksLived % 60) {
+                    case 29:
+                        motX = 0;
+                        motY = -this.speed;
+                        motZ = 0;
+                        break;
+                    case 59:
+                        motX = 0;
+                        motY = this.speed;
+                        motZ = 0;
+                        break;
+                }
+                break;
             }
         }
     }

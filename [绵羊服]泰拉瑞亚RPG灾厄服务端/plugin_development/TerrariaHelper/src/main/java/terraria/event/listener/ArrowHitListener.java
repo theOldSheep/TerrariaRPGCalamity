@@ -235,6 +235,15 @@ public class ArrowHitListener implements Listener {
                             spawnLoc = projectileDestroyLoc;
                     }
                     velocity.multiply(clusterSpeed);
+                    if (projectileType.equals("三色大地流星")) {
+                        double rdm = Math.random();
+                        if (rdm < 0.3333)
+                            clusterName = "红色大地流星";
+                        else if (rdm < 0.6666)
+                            clusterName = "绿色大地流星";
+                        else
+                            clusterName = "蓝色大地流星";
+                    }
                     EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                             projectileSource, spawnLoc, velocity, attrMap, damageType, clusterName);
                     EntityHelper.spawnProjectile(shootInfo);

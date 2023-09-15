@@ -1892,6 +1892,41 @@ public class ItemUseHelper {
                             setDurability(weaponItem, 8, currCharge - 1);
                         break;
                     }
+                    case "红日": {
+                        if (currentIndex == 0) {
+                            for (int i = 0; i < 12; i ++) {
+                                Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                        Math.random() * 360, 60 + Math.random() * 30);
+                                projVel.multiply(1.75);
+                                Location spawnLoc = ply.getEyeLocation().add(
+                                        Math.random() * 25 - 12.5,
+                                        Math.random() * 10 + 15,
+                                        Math.random() * 25 - 12.5);
+                                EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
+                                        attrMap, EntityHelper.DamageType.MELEE, "日炎火球");
+                            }
+                        }
+                        break;
+                    }
+                    case "无限大地": {
+                        EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                                .setAimMode(true).setTicksOffset(10);
+                        strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
+                            // heal
+                            PlayerHelper.heal(ply, (int) (Math.random() * 50));
+                            // spawn projectiles
+                            Location aimLoc = EntityHelper.helperAimEntity(ply, hitEntity, aimHelper);
+                            Location spawnLoc = aimLoc.clone().add(
+                                    Math.random() * 12 - 6,
+                                    Math.random() * 4 + 12,
+                                    Math.random() * 12 - 6);
+                            Vector projVel = aimLoc.clone().subtract(spawnLoc).toVector();
+                            projVel.multiply(0.1);
+                            EntityHelper.spawnProjectile(ply, spawnLoc, projVel, attrMap,
+                                    EntityHelper.DamageType.MELEE, "三色大地流星");
+                        });
+                        break;
+                    }
                 }
                 for (int i = indexStart; i < indexEnd; i ++) {
                     double progress = (double) i / loopTimes;

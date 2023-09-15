@@ -2381,7 +2381,6 @@ TNT:
         amount: 1
         damageMulti: 1
         name: 星流斩切光束
-        velocity: 0
         type: surround
         surroundMaxPitch: 60.0
         surroundOffset: 8.0
@@ -2407,6 +2406,84 @@ TNT:
     trailLingerTime: 5
     buffInflict:
         - "超位崩解|100|1"
+日炎火球碎片:
+    gravity: 0
+    blockHitAction: thru
+    autoTrace: true
+    liveTime: 40
+    trailColor: 252|241|35
+    buffInflict:
+        - "神圣之火|40|1"
+日炎火球:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 3
+    liveTime: 60
+    speedMultiPerTick: 0.98
+    isGrenade: true
+    blastRadius: 2
+    buffInflict:
+        - "神圣之火|80|1"
+    clusterBomb:
+        amount: 2
+        damageMulti: 0.6666
+        name: 日炎火球碎片
+        velocity: 2.75
+龙破斩分裂剑气:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 1.5
+    penetration: 999999
+    liveTime: 115
+    speedMultiPerTick: 0.98
+    buffInflict:
+        - "破晓|60|1"
+龙破斩剑气:
+    gravity: 0
+    projectileSize: 1.5
+    liveTime: 60
+    buffInflict:
+        - "破晓|60|1"
+    clusterBomb:
+        amount: 8
+        damageMulti: 1
+        name: 龙破斩分裂剑气
+        velocity: 1.5
+三色大地流星:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 3
+    liveTime: 40
+    buffInflict:
+        - "神圣之火|100|1"
+        - "咒火|100|1"
+        - "霜火|100|1"
+    clusterBomb:
+        amount: 8
+        damageMulti: 1
+        name: 红色大地流星
+        velocity: 1.5
+红色大地流星:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 3
+    liveTime: 50
+    isGrenade: true
+    blastRadius: 2.75
+    buffInflict:
+        - "神圣之火|80|1"
+绿色大地流星:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 3
+    liveTime: 50
+蓝色大地流星:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 3
+    liveTime: 50
+    buffInflict:
+        - "瘟疫|80|1"
 ####
 电火花:
     noGravityTicks: 0
