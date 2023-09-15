@@ -2391,7 +2391,7 @@ TNT:
     liveTime: 20
     projectileSize: 7.5
     penetration: 999999
-    enemyInvincibilityFrame: 5
+    enemyInvincibilityFrame: 3
     buffInflict:
         - "超位崩解|100|1"
 星流斩切光束:
