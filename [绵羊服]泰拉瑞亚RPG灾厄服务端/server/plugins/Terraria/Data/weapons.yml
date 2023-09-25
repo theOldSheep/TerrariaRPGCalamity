@@ -752,11 +752,22 @@
   type: SWING
   autoSwing: true
   size: 15
-## TODO
 绚辉圣剑:
   type: SWING
   autoSwing: true
   size: 11.5
+  attributes:
+    damage: 4000
+  projectileInfo:
+    interval: 1
+    velocity: 3
+    name: 红色绚辉圣剑光束
+绚辉圣剑_RIGHT_CLICK:
+  type: SWING
+  autoSwing: true
+  size: 12.5
+  attributes:
+    damage: 8000
 ####
 钴薙刀:
   type: STAB

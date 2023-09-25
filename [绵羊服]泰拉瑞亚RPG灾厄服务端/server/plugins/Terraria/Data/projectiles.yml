@@ -2484,6 +2484,43 @@ TNT:
     liveTime: 50
     buffInflict:
         - "瘟疫|80|1"
+红色绚辉圣剑光束:
+    gravity: 0
+    projectileSize: 3
+    liveTime: 40
+    trailColor: 255|0|0
+    buffInflict:
+        - "超位崩解|200|1"
+绿色绚辉圣剑光束:
+    gravity: 0
+    autoTrace: true
+    autoTraceAbility: 5.5
+    autoTraceRadius: 24
+    projectileSize: 3
+    liveTime: 50
+    trailColor: 0|255|0
+    buffInflict:
+        - "超位崩解|200|1"
+黄色绚辉圣剑光束:
+    gravity: 0
+    projectileSize: 3
+    blockHitAction: thru
+    speedMultiPerTick: 1.1
+    maxSpeed: 5
+    liveTime: 30
+    trailColor: 255|255|0
+    buffInflict:
+        - "超位崩解|200|1"
+蓝色绚辉圣剑光束:
+    gravity: 0
+    projectileSize: 3
+    blockHitAction: bounce
+    bounce: 10
+    penetration: 10
+    liveTime: 50
+    trailColor: 0|255|255
+    buffInflict:
+        - "超位崩解|200|1"
 ####
 电火花:
     noGravityTicks: 0
