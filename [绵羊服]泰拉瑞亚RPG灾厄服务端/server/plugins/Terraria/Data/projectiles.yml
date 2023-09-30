@@ -2521,7 +2521,6 @@ TNT:
     trailColor: 0|255|255
     buffInflict:
         - "超位崩解|200|1"
-####
 电火花:
     noGravityTicks: 0
     liveTime: 80
@@ -2531,6 +2530,70 @@ TNT:
     enemyInvincibilityFrame: 5
     trailColor: 10|215|255
     trailLingerTime: 6
+元素短剑:
+    gravity: 0
+    liveTime: 60
+    autoTrace: true
+    projectileSize: 0.25
+    blockHitAction: thru
+    trailColor: 255|255|255
+    clusterBomb:
+        amount: 3
+        damageMulti: 1
+        name: 元素短剑分裂弹幕
+        type: surround
+        surroundOffset: 20.0
+        fireOnTimeout: false
+        velocity: 2
+元素短剑分裂弹幕:
+    gravity: 0
+    liveTime: 20
+    projectileSize: 0.25
+    blockHitAction: thru
+伽利略新月:
+    gravity: 0
+    liveTime: 50
+    penetration: 4
+    autoTrace: true
+    autoTraceRadius: 16
+    projectileSize: 0.5
+    blockHitAction: thru
+    enemyInvincibilityFrame: 15
+    buffInflict:
+        - "夜魇|60|1"
+伽利略小行星:
+    gravity: 0
+    liveTime: 100
+    projectileSize: 3
+    isGrenade: true
+    blastRadius: 3.5
+    buffInflict:
+        - "夜魇|80|1"
+宇宙之刃:
+    gravity: 0
+    liveTime: 60
+    autoTrace: true
+    autoTraceRadius: 24
+    projectileSize: 0.25
+    blockHitAction: thru
+    trailColor: 255|199|238
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.5
+        name: 宇宙之刃分裂弹幕
+        type: surround
+        surroundOffset: 20.0
+        fireOnTimeout: false
+        velocity: 2.75
+宇宙之刃分裂弹幕:
+    gravity: 0
+    liveTime: 20
+    penetration: 4
+    autoTrace: true
+    autoTraceRadius: 16
+    projectileSize: 0.25
+    blockHitAction: thru
+####
 阿米迪亚斯漩涡:
     projectileSize: 0.5
     autoTrace: true

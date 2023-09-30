@@ -757,7 +757,7 @@
   autoSwing: true
   size: 11.5
   attributes:
-    damage: 4000
+    damage: 2000
   projectileInfo:
     interval: 1
     velocity: 3
@@ -767,7 +767,7 @@
   autoSwing: true
   size: 12.5
   attributes:
-    damage: 8000
+    damage: 4000
 ####
 钴薙刀:
   type: STAB
@@ -838,7 +838,28 @@
 卢克雷西亚:
   type: STAB
   autoSwing: true
-  size: 12.5
+  size: 5
+元素短剑:
+  type: STAB
+  autoSwing: true
+  size: 4
+  projectileInfo:
+    velocity: 2
+    name: 元素短剑
+伽利略短剑:
+  type: STAB
+  autoSwing: true
+  size: 6
+  projectileInfo:
+    velocity: 2.5
+    name: 伽利略新月
+宇宙短剑:
+  type: STAB
+  autoSwing: true
+  projectileInfo:
+    velocity: 2.5
+    name: 宇宙之刃
+  size: 5
 赤潮矛:
   type: STAB
   size: 3.5

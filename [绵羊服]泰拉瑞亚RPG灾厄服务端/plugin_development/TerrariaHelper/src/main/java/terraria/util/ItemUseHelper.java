@@ -686,6 +686,28 @@ public class ItemUseHelper {
                     }
                     break;
                 }
+                case "伽利略短剑": {
+                    shouldStrike = currentIndex <= 5;
+                    if (shouldStrike) {
+                        strikeLineInfo
+                                .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                    // predict enemy location
+                                    EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                                            .setAimMode(true)
+                                            .setTicksOffset(8)
+                                            .setRandomOffsetRadius(1.5);
+                                    Location predictedLoc = EntityHelper.helperAimEntity(ply, entityHit, aimHelper);
+                                    Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                            Math.random() * 360, 70 + Math.random() * 20);
+                                    projVel.multiply(24);
+                                    predictedLoc.subtract(projVel);
+                                    projVel.multiply(1/8d);
+                                    EntityHelper.spawnProjectile(ply, predictedLoc, projVel, attrMap,
+                                            EntityHelper.DamageType.MELEE, "伽利略小行星");
+                                });
+                    }
+                    break;
+                }
                 case "硫磺火矛": {
                     shouldStrike = currentIndex <= 5;
 
@@ -2150,6 +2172,17 @@ public class ItemUseHelper {
             if ((swingAmount + 1) % shootInterval == 0) {
                 lookDir.multiply(projectileInfo.getDouble("velocity", 1d));
                 String projectileType = projectileInfo.getString("name", "");
+                if (itemType.equals("绚辉圣剑")) {
+                    double rdm = Math.random();
+                    if (rdm < 0.25)
+                        projectileType = "红色绚辉圣剑光束";
+                    else if (rdm < 0.5)
+                        projectileType = "绿色绚辉圣剑光束";
+                    else if (rdm < 0.75)
+                        projectileType = "黄色绚辉圣剑光束";
+                    else
+                        projectileType = "蓝色绚辉圣剑光束";
+                }
                 for (int i = 0; i < shootAmount; i ++) {
                     Projectile spawnedProjectile;
                     if (stabOrSwing) {

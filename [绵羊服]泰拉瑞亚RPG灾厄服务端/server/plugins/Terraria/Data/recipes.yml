@@ -1719,6 +1719,12 @@ ANVIL:
     - 生命合金:5
     - 暗影之魂:5
     - 光明之魂:5
+  '204_1':
+    requireLevel: 3
+    resultItem: 宇宙短剑
+    requireItem:
+    - 元素短剑
+    - 宇宙锭:8
   '205':
     requireLevel: 1
     resultItem: 烟陨彗星
@@ -3816,6 +3822,21 @@ TINKER_WORKBENCH:
     resultItem: 幻星矛
     requireItem:
     - 炫星锭:8
+  '44_1':
+    requireLevel: 1
+    resultItem: 元素短剑
+    requireItem:
+    - 星系异石:5
+    - 生命合金:5
+    - 星光
+    - 夜明锭:5
+  '44_2':
+    requireLevel: 1
+    resultItem: 伽利略短剑
+    requireItem:
+    - 流明晶:8
+    - 毁灭之灵:5
+    - 起源之簇:15
   '45':
     requireLevel: 1
     resultItem: 真·环境之刃[兵匠之傲]

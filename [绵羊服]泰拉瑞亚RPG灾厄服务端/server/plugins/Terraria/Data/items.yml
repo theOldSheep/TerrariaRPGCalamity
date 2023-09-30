@@ -304,6 +304,18 @@
   - §r不要让它沾到身上，否则水都很难扑灭！
   worth: 80000
   rarity: 3
+流明晶:
+  item: CLAY_BALL
+  lore:
+  - §r蕴含着闪光能量的晶片
+  worth: 800000
+  rarity: 7
+深渊细胞:
+  item: CLAY_BALL
+  lore:
+  - §r深渊生物的细胞
+  worth: 800000
+  rarity: 7
 小瓶毒液:
   item: CLAY_BALL
   lore:
@@ -3490,11 +3502,11 @@
   - §r发射彩虹光束，效果取决于它们的颜色
   - §r右击施展真近战攻击
   attributes:
-    damage: 4000
+    damage: 2000
     damageType: Melee
     crit: 14
     knockback: 8
-    useTime: 14
+    useTime: 20
     buffInflictMelee: 超位崩解|200|1
   worth: 40000000
   rarity: 16
@@ -3831,6 +3843,48 @@
     useTime: 15
   worth: 16000000
   rarity: 8
+元素短剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r生成彩虹短剑，击中敌人后会发出额外的短剑弹幕
+  attributes:
+    damage: 336
+    damageType: Melee
+    crit: 4
+    knockback: 8.5
+    useTime: 13
+  worth: 22000000
+  rarity: 11
+伽利略短剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r不要低估了小号太空剑的杀伤力
+  - §r发射追踪新月
+  - §r击中敌人时生成小行星
+  - §r“发射的弹幕并不能使敌人内外翻转”
+  attributes:
+    damage: 220
+    damageType: Melee
+    crit: 4
+    knockback: 10
+    useTime: 10
+    buffInflictMelee: 夜魇|100|1
+  worth: 26000000
+  rarity: 13
+宇宙短剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r万万不可低估短剑的杀伤力
+  - §r发射一束追踪敌人的宇宙射线
+  - §r在击中敌人后在较远处生成追踪弹幕
+  attributes:
+    damage: 436
+    damageType: Melee
+    crit: 4
+    knockback: 9
+    useTime: 18
+  worth: 28000000
+  rarity: 14
 赤潮矛:
   item: DIAMOND_SWORD
   attributes:
