@@ -1771,6 +1771,13 @@ ANVIL:
     resultItem: 断层
     requireItem:
     - 熔渣锭:6
+  '212_1':
+    requireLevel: 2
+    resultItem: 神谕
+    requireItem:
+    - 混沌射线
+    - 日炎
+    - 圣金源锭:5
   '213':
     requireLevel: 1
     resultItem: 赤潮矛
@@ -3837,6 +3844,11 @@ TINKER_WORKBENCH:
     - 流明晶:8
     - 毁灭之灵:5
     - 起源之簇:15
+  '44_3':
+    requireLevel: 1
+    resultItem: 裂魔
+    requireItem:
+    - 血石核心:4
   '45':
     requireLevel: 1
     resultItem: 真·环境之刃[兵匠之傲]
@@ -4014,3 +4026,10 @@ TINKER_WORKBENCH:
     - 真·圣剑
     - 化神魂精:5
     - 携序之剑
+  '6':
+    requireLevel: 1
+    resultItem: 阿撒托斯
+    requireItem:
+    - 泰拉悠悠球
+    - 魔影锭:5
+    - 灾劫核心:2

@@ -1741,6 +1741,77 @@ TNT:
     projectileSize: 6
     buffInflict:
         - "幻星感染|80|1"
+日炎:
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.75
+        name: 日炎爆炸余烬
+        fireOnTimeout: false
+        fireOnCollideEntity: true
+        velocity: 0.5
+    buffInflict:
+        - "神圣之火|80|1"
+日炎爆炸余烬:
+    noGravityTicks: 0
+    liveTime: 50
+    buffInflict:
+        - "神圣之火|40|1"
+混沌射线:
+    spawnProjectiles:
+        interval: 5
+        offset: 17.5
+        spawnMechanism: ENEMY
+        damageMulti: 1
+        speed: 25
+        spawnType: 混沌射线分支
+    buffInflict:
+        - "神弑者之怒焰|60|1"
+混沌射线分支:
+    gravity: 0
+    liveTime: 1
+    trailColor: 252|109|202
+    trailLingerTime: 5
+    trailStepSize: 0.5
+    buffInflict:
+        - "神弑者之怒焰|20|1"
+神谕:
+    spawnProjectiles:
+        interval: 3
+        offset: 22.5
+        spawnMechanism: ENEMY
+        damageMulti: 1
+        speed: 30
+        spawnType: 神谕射线
+神谕射线:
+    gravity: 0
+    liveTime: 1
+    trailColor: 224|67|98
+    trailLingerTime: 5
+    trailStepSize: 0.5
+阿撒托斯:
+    spawnProjectiles:
+        interval: 2
+        offset: 0.5
+        spawnMechanism: SURROUND
+        damageMulti: 1
+        speed: 0.65
+        spawnType: 寰宇之球
+寰宇之球:
+    liveTime: 20
+    penetration: 999999
+    spawnProjectiles:
+        interval: 3
+        offset: 20
+        spawnMechanism: ENEMY
+        damageMulti: 1
+        speed: 25
+        spawnType: 寰宇之球死亡射线
+寰宇之球死亡射线:
+    gravity: 0
+    liveTime: 1
+    trailColor: 255|171|254
+    trailLingerTime: 5
+    trailStepSize: 0.5
 凝胶束:
     gravity: 0
     liveTime: 50
@@ -2593,7 +2664,6 @@ TNT:
     autoTraceRadius: 16
     projectileSize: 0.25
     blockHitAction: thru
-####
 阿米迪亚斯漩涡:
     projectileSize: 0.5
     autoTrace: true

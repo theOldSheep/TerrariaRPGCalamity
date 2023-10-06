@@ -768,7 +768,6 @@
   size: 12.5
   attributes:
     damage: 4000
-####
 钴薙刀:
   type: STAB
   size: 6
@@ -1790,13 +1789,13 @@ P90:
 克苏鲁之眼悠悠球:
   type: YOYO
   reach: 23
-  velocity: 1.5
+  velocity: 1.75
   duration: 1200
   autoSwing: true
 泰拉悠悠球:
   type: YOYO
   reach: 32
-  velocity: 2
+  velocity: 2.5
   duration: 1200
   recoilPoolMultiplier: 0.6
   autoSwing: true
@@ -1839,32 +1838,62 @@ P90:
 遗殇:
   type: YOYO
   reach: 32
-  velocity: 1.6
+  velocity: 1.65
   duration: 180
   autoSwing: true
 泥潭:
   type: YOYO
   reach: 30
-  velocity: 1.6
-  duration: 180
+  velocity: 1.75
+  duration: 225
   autoSwing: true
 断层:
   type: YOYO
   reach: 30
-  velocity: 1.75
-  duration: 200
+  velocity: 2
+  duration: 250
   autoSwing: true
 瘟疫狂潮:
   type: YOYO
   reach: 30
-  velocity: 1.75
-  duration: 225
+  velocity: 2.15
+  duration: 350
   autoSwing: true
 微波辐照:
   type: YOYO
   reach: 32
-  velocity: 1.85
-  duration: 250
+  velocity: 2.25
+  duration: 400
+  autoSwing: true
+日炎:
+  type: YOYO
+  reach: 35
+  velocity: 2.5
+  duration: 800
+  autoSwing: true
+裂魔:
+  type: YOYO
+  reach: 40
+  velocity: 2.5
+  duration: 700
+  autoSwing: true
+混沌射线:
+  type: YOYO
+  reach: 45
+  velocity: 2.75
+  duration: 1500
+  autoSwing: true
+神谕:
+  type: YOYO
+  reach: 50
+  velocity: 3
+  duration: 1750
+  autoSwing: true
+阿撒托斯:
+  type: YOYO
+  reach: 55
+  velocity: 2.5
+  duration: 1500
   autoSwing: true
 链锤:
   type: FLAIL

@@ -199,6 +199,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 noAutoTraceTicks = ticksLived + 5;
                 break;
             case "精元镰刀":
+            case "裂魔":
                 PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 1, false);
                 break;
         }

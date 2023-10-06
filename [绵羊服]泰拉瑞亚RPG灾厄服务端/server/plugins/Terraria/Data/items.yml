@@ -3510,7 +3510,6 @@
     buffInflictMelee: 超位崩解|200|1
   worth: 40000000
   rarity: 16
-####
 剑鱼:
   item: STONE_SWORD
   attributes:
@@ -4697,6 +4696,79 @@
     useTime: 22
   worth: 16000000
   rarity: 9
+日炎:
+  item: STICK
+  lore:
+  - §r击中敌人时产生强大的圣火爆炸
+  - §r一只十分灵活的悠悠球
+  attributes:
+    damage: 240
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 54
+    knockback: 7.5
+    useTime: 20
+  worth: 24000000
+  rarity: 12
+裂魔:
+  item: STICK
+  lore:
+  - §r接近这个悠悠球的敌人的生命会被汲取
+  - §r一只十分灵活的悠悠球
+  attributes:
+    damage: 260
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 48
+    knockback: 7
+    useTime: 20
+  worth: 24000000
+  rarity: 12
+混沌射线:
+  item: STICK
+  lore:
+  - §r以死亡激光抹除周围敌人的存在
+  - §r一只超级灵活的悠悠球
+  attributes:
+    damage: 444
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 54
+    knockback: 7.5
+    useTime: 20
+  worth: 28000000
+  rarity: 14
+神谕:
+  item: STICK
+  lore:
+  - §r我看到了过去，当下，将来...还有你的死期
+  - §r电击附近敌人
+  - §r一只超级灵活的悠悠球
+  attributes:
+    damage: 340
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 54
+    knockback: 7.5
+    useTime: 20
+  worth: 30000000
+  rarity: 15
+阿撒托斯:
+  item: STICK
+  lore:
+  - §r眨眼之间摧毁宇宙
+  - §r发射能爆裂出死亡射线的寰宇之球攻击敌人
+  - §r一只十分灵活的悠悠球
+  attributes:
+    damage: 160
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 60
+    knockback: 6
+    useTime: 20
+  worth: 40000000
+  rarity: 16
+####
 木弓:
   item: BOW
   attributes:
