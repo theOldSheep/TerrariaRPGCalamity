@@ -84,17 +84,23 @@ effects:
     damageInterval: 4
     damage: 3
     tooltip: 正在损失生命值
+  带电:
+    isBuff: false
+    damageInterval: 4
+    damage: 6
+    tooltip: 极速损失生命值
+  破晓:
+    isBuff: false
+    damageInterval: 5
+    damage: 10
+    damageMonster: 25
+    tooltip: 被日耀射线焚烧
   硫磺火:
     isBuff: false
     damageInterval: 5
     damage: 4
     damageMonster: 10
     tooltip: 被漆黑的火焰吞噬
-  带电:
-    isBuff: false
-    damageInterval: 4
-    damage: 6
-    tooltip: 极速损失生命值
   辐射:
     isBuff: false
     damageInterval: 10
@@ -151,12 +157,11 @@ effects:
     attributes:
       regenMulti: -1
     tooltip: 被月之射线瓦解
-  破晓:
+  硫磺海剧毒:
     isBuff: false
     damageInterval: 5
-    damage: 10
-    damageMonster: 25
-    tooltip: 被日耀射线焚烧
+    damage: 45
+    tooltip: 有毒的硫磺海水正在烧灼你的皮肤
   流血:
     isBuff: false
     attributes:

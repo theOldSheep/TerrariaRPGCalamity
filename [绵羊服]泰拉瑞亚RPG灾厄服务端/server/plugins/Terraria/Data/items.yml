@@ -4016,6 +4016,8 @@
   rarity: 1100
 幻星矛:
   item: DIAMOND_SWORD
+  lore:
+  - §r有等同于暴击率的概率在命中后召唤一枚幻星
   attributes:
     damage: 180
     damageType: Melee
@@ -4024,6 +4026,57 @@
     useTime: 13
   worth: 16000000
   rarity: 9
+元素长枪:
+  item: DIAMOND_SWORD
+  lore:
+  - §r撕裂宇宙！
+  - §r发射一只元素之矛，飞行过程中会分裂数次
+  attributes:
+    damage: 320
+    damageType: Melee
+    crit: 4
+    knockback: 9.5
+    useTime: 30
+  worth: 22000000
+  rarity: 11
+镀金鸟喙:
+  item: DIAMOND_SWORD
+  lore:
+  - §r命中敌怪时治疗玩家
+  attributes:
+    damage: 630
+    damageType: Melee
+    crit: 4
+    knockback: 8.75
+    useTime: 19
+  worth: 22000000
+  rarity: 11
+女妖之爪:
+  item: DIAMOND_SWORD
+  lore:
+  - §r放出五个灵魂鬼爪
+  attributes:
+    damage: 476
+    damageType: Melee
+    crit: 4
+    knockback: 8.5
+    useTime: 21
+  worth: 26000000
+  rarity: 13
+阴险穿刺者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一柄巨大的鱼叉穿刺敌人，鱼叉会附着在方块上
+  attributes:
+    damage: 750
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 20
+    buffInflictMelee: 硫磺海剧毒|60|1
+  worth: 26000000
+  rarity: 13
+####
 木制回力镖:
   item: STICK
   attributes:
@@ -4768,7 +4821,6 @@
     useTime: 20
   worth: 40000000
   rarity: 16
-####
 木弓:
   item: BOW
   attributes:
@@ -7292,12 +7344,12 @@ P90:
   - §r向上发射一颗彗星
   - §r“What is reflected in my eyes?”
   attributes:
-    damage: 325
+    damage: 370
     damageType: Magic
     projectileSpeed: 12
     crit: 29
     knockback: 3.25
-    useTime: 14
+    useTime: 12
     manaUse: 15
   worth: 16000000
   rarity: 9

@@ -358,7 +358,10 @@ public class GenericHelper {
             Color currentColor = getInterpolateColor((double) i / (loopTime + 1), allColors);
             // spawn "particles"
             if (options.vanillaParticle) {
-                int particleAmount = MathHelper.randomRound((stepsize + width) / 2);
+                double particleEstDist = (stepsize + width) / 2;
+                // basically, max(estimated dist, estimated dist^2)
+                int particleAmount = MathHelper.randomRound(
+                        particleEstDist < 1 ? particleEstDist : particleEstDist * particleEstDist );
                 double rVal = (currentColor.getRed() / 255d) - 1;
                 double gVal = (currentColor.getGreen() / 255d);
                 double bVal = (currentColor.getBlue() / 255d);
@@ -751,6 +754,7 @@ public class GenericHelper {
             case "Debuff_中毒":
             case "Debuff_剧毒":
             case "Debuff_瘟疫":
+            case "Debuff_硫磺海剧毒":
                 colorCode = "2";
                 break;
             case "Debuff_破晓":

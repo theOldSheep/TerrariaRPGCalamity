@@ -805,6 +805,25 @@ public class ItemUseHelper {
                     }
                     break;
                 }
+                case "镀金鸟喙": {
+                    shouldStrike = currentIndex <= 5;
+                    if (shouldStrike) {
+                        strikeLineInfo
+                                .setDamagedFunction((hitIndex, entityHit, hitLoc) -> PlayerHelper.heal(ply, 3));
+                    }
+                    break;
+                }
+                case "女妖之爪": {
+                    shouldStrike = currentIndex <= 5;
+                    if (shouldStrike) {
+                        Vector projVel = lookDir.clone();
+                        projVel.multiply(2.5);
+
+                        EntityHelper.spawnProjectile(ply, projVel,
+                                attrMap, EntityHelper.DamageType.MELEE, "灵魂鬼爪");
+                    }
+                    break;
+                }
                 case "钨钢螺丝刀_RIGHT_CLICK": {
                     shouldStrike = currentIndex <= 3;
                     if (shouldStrike) {

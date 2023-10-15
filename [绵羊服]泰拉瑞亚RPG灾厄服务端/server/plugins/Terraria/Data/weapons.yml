@@ -932,7 +932,30 @@
 幻星矛:
   type: STAB
   autoSwing: true
-  size: 9.5
+  size: 12.5
+元素长枪:
+  type: STAB
+  autoSwing: true
+  size: 6
+  projectileInfo:
+    velocity: 2.5
+    name: 绿色元素光束
+镀金鸟喙:
+  type: STAB
+  autoSwing: true
+  size: 13.5
+女妖之爪:
+  type: STAB
+  autoSwing: true
+  size: 6.5
+阴险穿刺者:
+  type: STAB
+  autoSwing: true
+  size: 7
+  projectileInfo:
+    velocity: 4
+    name: 阴险穿刺者鱼叉
+####
 钨钢螺丝刀:
   type: STAB
   size: 1.5
