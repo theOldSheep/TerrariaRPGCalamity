@@ -3829,6 +3829,14 @@ TINKER_WORKBENCH:
     resultItem: 幻星矛
     requireItem:
     - 炫星锭:8
+  '44_0':
+    requireLevel: 1
+    resultItem: 元素长枪
+    requireItem:
+    - 泰拉长枪
+    - 生命合金:5
+    - 星系异石:5
+    - 夜明锭:5
   '44_1':
     requireLevel: 1
     resultItem: 元素短剑
