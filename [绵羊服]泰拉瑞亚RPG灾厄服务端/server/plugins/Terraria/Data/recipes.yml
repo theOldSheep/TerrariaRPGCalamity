@@ -3852,6 +3852,36 @@ TINKER_WORKBENCH:
     - 流明晶:8
     - 毁灭之灵:5
     - 起源之簇:15
+  '44_2_1':
+    requireLevel: 1
+    resultItem: 雷姆的复仇
+    requireItem:
+    - 蓝月
+    - 夜明锭:5
+    - 流明晶:10
+  '44_2_2':
+    requireLevel: 1
+    resultItem: 晨星链刃
+    requireItem:
+    - 混乱核心:6
+    - 日光核心:6
+    - 神圣晶石:6
+    - 日耀喷发剑
+  '44_2_3':
+    requireLevel: 1
+    resultItem: 脉冲龙链枷
+    requireItem:
+    - 可疑镀层:18
+    - 神秘电路:12
+    - 龙蒿锭:8
+    - 夜明锭:4
+  '44_2_4':
+    requireLevel: 1
+    resultItem: 新月链刃
+    requireItem:
+    - 流明晶:8
+    - 毁灭之灵:3
+    - 起源之簇:16
   '44_3':
     requireLevel: 1
     resultItem: 裂魔
@@ -4041,3 +4071,15 @@ TINKER_WORKBENCH:
     - 泰拉悠悠球
     - 魔影锭:5
     - 灾劫核心:2
+  '7':
+    requireLevel: 1
+    resultItem: 龙魂破
+    requireItem:
+    - 晨星链刃
+    - 太极连枷
+    - 猪鲨链球
+    - 海胆链球
+    - 海胆链枷
+    - 风滚草
+    - 龙魂碎片:4
+    - 圣金源锭:5

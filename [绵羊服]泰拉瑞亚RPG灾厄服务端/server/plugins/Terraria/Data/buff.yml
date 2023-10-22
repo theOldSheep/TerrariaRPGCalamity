@@ -186,6 +186,11 @@ effects:
       defence: -30
       damageTakenMulti: 0.15
     tooltip: 你的护甲被撕裂了
+  枯萎:
+    isBuff: false
+    attributes:
+      defence: -40
+    tooltip: 软弱无力
   诅咒:
     isBuff: false
     tooltip: 无法使用任何物品

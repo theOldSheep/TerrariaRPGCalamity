@@ -4076,7 +4076,6 @@
     buffInflictMelee: 硫磺海剧毒|60|1
   worth: 26000000
   rarity: 13
-####
 木制回力镖:
   item: STICK
   attributes:
@@ -4161,6 +4160,39 @@
     useTime: 45
   worth: 1750000
   rarity: 2
+太极连枷:
+  item: STICK
+  attributes:
+    damage: 126
+    damageType: Melee
+    crit: 4
+    knockback: 6
+    useTime: 45
+  worth: 2880000
+  rarity: 5
+猪鲨链球:
+  item: STICK
+  lore:
+  - §r喷出自动寻敌泡泡
+  attributes:
+    damage: 132
+    damageType: Melee
+    crit: 4
+    knockback: 4.5
+    useTime: 19
+  worth: 5000000
+  rarity: 8
+日耀喷发剑:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 210
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 20
+    buffInflictMelee: 破晓|100|1
+  worth: 10000000
+  rarity: 10
 海胆链枷:
   item: STICK
   lore:
@@ -4207,6 +4239,108 @@
     useTime: 20
   worth: 12000000
   rarity: 7
+星云鞭:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 120
+    damageType: Melee
+    crit: 4
+    knockback: 2
+    useTime: 18
+    buffInflictMelee: 幻星感染|80|1
+  worth: 12000000
+  rarity: 7
+雷姆的复仇:
+  item: STICK
+  lore:
+  - §r由最勇敢的战士使用
+  - §r击中敌人时降低其防御
+  attributes:
+    damage: 750
+    damageType: Melee
+    crit: 4
+    knockback: 10
+    useTime: 15
+  worth: 20000000
+  rarity: 10
+晨星链刃:
+  item: STICK
+  lore:
+  - §r发射两个日耀链剑
+  attributes:
+    damage: 254
+    damageType: Melee
+    crit: 4
+    knockback: 2.5
+    useTime: 10
+  worth: 24000000
+  rarity: 12
+脉冲龙链枷:
+  item: STICK
+  lore:
+  - §r重型链枷，每一个都内置有在挥舞时启动的强劲发电机
+  - §r丢出龙首，龙首会释放电场
+  attributes:
+    damage: 500
+    damageType: Melee
+    crit: 4
+    knockback: 2.5
+    useTime: 10
+  worth: 24000000
+  rarity: 1100
+新月链刃:
+  item: STICK
+  lore:
+  - §r以寒锋恰似拜月者希冀之月
+  attributes:
+    damage: 1000
+    damageType: Melee
+    crit: 4
+    knockback: 4
+    useTime: 16
+  worth: 28000000
+  rarity: 13
+寒宙弹刃:
+  item: STICK
+  lore:
+  - §r“神，不掉弹刃！”
+  attributes:
+    damage: 1600
+    damageType: Melee
+    crit: 4
+    knockback: 0.5
+    useTime: 15
+  worth: 28000000
+  rarity: 14
+龙魂破:
+  item: STICK
+  lore:
+  - §r发射龙头，释放龙息火星
+  - §r击中敌人时召唤花瓣
+  attributes:
+    damage: 1320
+    damageType: Melee
+    crit: 4
+    knockback: 9
+    useTime: 20
+    buffInflictMelee: 神圣之火|60|1
+  worth: 30000000
+  rarity: 15
+塔纳托斯的脊柱:
+  item: STICK
+  lore:
+  - §r挥出由星流金属构成的鞭子
+  - §r“这何尝不是一种脊髓剑”
+  attributes:
+    damage: 3000
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 20
+    buffInflictMelee: 超位崩解|100|1
+  worth: 30000000
+  rarity: 15
+####
 钨钢螺丝刀:
   item: DIAMOND_SWORD
   lore:
@@ -4520,28 +4654,6 @@
     useTime: 25
   worth: 16000000
   rarity: 4
-太极连枷:
-  item: STICK
-  attributes:
-    damage: 126
-    damageType: Melee
-    crit: 4
-    knockback: 6
-    useTime: 45
-  worth: 2880000
-  rarity: 5
-猪鲨链球:
-  item: STICK
-  lore:
-  - §r喷出自动寻敌泡泡
-  attributes:
-    damage: 132
-    damageType: Melee
-    crit: 4
-    knockback: 4.5
-    useTime: 19
-  worth: 5000000
-  rarity: 8
 木制悠悠球:
   item: STICK
   attributes:
@@ -8151,28 +8263,6 @@ P90:
     useTime: 30
   worth: 5000000
   rarity: 8
-日耀喷发剑:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 210
-    damageType: Melee
-    crit: 4
-    knockback: 2
-    useTime: 20
-    buffInflictMelee: 破晓|100|1
-  worth: 10000000
-  rarity: 10
-星云鞭:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 120
-    damageType: Melee
-    crit: 4
-    knockback: 2
-    useTime: 18
-    buffInflictMelee: 幻星感染|80|1
-  worth: 12000000
-  rarity: 7
 手里剑:
   item: IRON_NUGGET
   attributes:

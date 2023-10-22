@@ -1626,6 +1626,43 @@ TNT:
     autoTrace: true
     gravity: 0
     liveTime: 35
+雷姆的复仇:
+    buffInflict:
+        - "枯萎|80|1"
+龙魂破:
+    buffInflict:
+        - "神圣之火|60|1"
+    spawnProjectiles:
+        interval: 1
+        offset: 1.0
+        spawnMechanism: SURROUND
+        damageMulti: 0.15
+        speed: 2
+        spawnType: 龙魂破火星
+    clusterBomb:
+        amount: 12
+        damageMulti: 0.15
+        name: 龙魂破花瓣
+        type: surround
+        fireOnTimeout: false
+        fireOnCollideEntity: true
+        velocity: 2
+龙魂破火星:
+    autoTrace: true
+    autoTraceRadius: 16
+    gravity: 0
+    liveTime: 30
+    trailColor: 255|255|113
+    buffInflict:
+        - "破晓|60|1"
+龙魂破花瓣:
+    blockHitAction: thru
+    projectileSize: 0.25
+    gravity: 0
+    liveTime: 10
+    buffInflict:
+        - "神圣之火|60|1"
+####
 泰拉悠悠球:
     spawnProjectiles:
         interval: 4
@@ -2803,7 +2840,6 @@ TNT:
     projectileSize: 3
     buffInflict:
         - "硫磺海剧毒|20|1"
-####
 小火花:
     buffInflict:
         - "燃烧|100|0.3"

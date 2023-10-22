@@ -5,7 +5,6 @@ import org.bukkit.*;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -13,7 +12,6 @@ import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -37,7 +35,7 @@ public class ItemUseHelper {
     }
     public static final String SOUND_GENERIC_SWING = "item.genericSwing", SOUND_BOW_SHOOT = "item.bowShoot",
             SOUND_GUN_FIRE = "item.gunfire", SOUND_GUN_FIRE_LOUD = "entity.generic.explode";
-    protected static final double MELEE_STRIKE_RADIUS = 0.25;
+    protected static final double MELEE_MIN_STRIKE_RADIUS = 0.25;
     public static int applyCD(Player ply, double CD) {
         int coolDown = (int) CD;
         if (Math.random() < CD % 1) coolDown ++;
@@ -636,7 +634,12 @@ public class ItemUseHelper {
                                 .setTicksLinger(1));
         }
 
-        double strikeRadius = Math.max(size * 0.1, MELEE_STRIKE_RADIUS);
+        double strikeRadius;
+        // whip
+        if (interpolateType == 2)
+            strikeRadius = MELEE_MIN_STRIKE_RADIUS;
+        else
+            strikeRadius = Math.max(size * 0.1, MELEE_MIN_STRIKE_RADIUS);
         // "stab"
         if (interpolateType == 0) {
             boolean shouldStrike;
@@ -2319,21 +2322,28 @@ public class ItemUseHelper {
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
         double useTimeMulti = 1 / useSpeed;
         int coolDown = applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
-        // get swing offset
-        double yawOffset, pitchOffset;
-        switch (itemType) {
-            case "日耀喷发剑":
-                yawOffset = Math.random() * 180 - 90;
-                pitchOffset = Math.random() * 100 - 50;
-                break;
-            default:
-                yawOffset = Math.random() * 30 - 15;
-                pitchOffset = 45;
+        // how many rays does this swing produce
+        int meleeSwingAmount = 1;
+        if (itemType.equals("晨星链刃"))
+            meleeSwingAmount = 2;
+        for (int swingIdx = 0; swingIdx < meleeSwingAmount; swingIdx ++) {
+            // get swing offset
+            double yawOffset, pitchOffset;
+            switch (itemType) {
+                case "日耀喷发剑":
+                case "晨星链刃":
+                    yawOffset = Math.random() * 180 - 90;
+                    pitchOffset = Math.random() * 100 - 50;
+                    break;
+                default:
+                    yawOffset = Math.random() * 30 - 15;
+                    pitchOffset = 45;
+            }
+            handleMeleeSwing(ply, attrMap, lookDir, new HashSet<>(), weaponSection,
+                    yaw - yawOffset, yaw + yawOffset, pitch - pitchOffset, pitch + pitchOffset,
+                    itemType, weaponItem, size,
+                    true, 2, 0, coolDown, swingAmount);
         }
-        handleMeleeSwing(ply, attrMap, lookDir, new HashSet<>(), weaponSection,
-                yaw - yawOffset, yaw + yawOffset, pitch - pitchOffset, pitch + pitchOffset,
-                itemType, weaponItem, size,
-                true, 2, 0, coolDown, swingAmount);
         return true;
     }
     protected static boolean playerUseBoomerang(Player ply, String itemType, String weaponType,

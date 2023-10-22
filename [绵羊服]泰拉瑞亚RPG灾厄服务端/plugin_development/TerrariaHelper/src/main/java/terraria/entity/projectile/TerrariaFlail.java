@@ -44,6 +44,13 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
                 super.gravity = 0.05;
                 super.noGravityTicks = 10;
                 break;
+            case "雷姆的复仇":
+                super.projectileRadius = 0.75;
+                break;
+            case "脉冲龙链枷":
+            case "龙魂破":
+                super.projectileRadius = 1.5;
+                break;
         }
         // give infinite use CD temporarily
         ItemUseHelper.applyCD(owner, -1);

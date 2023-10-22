@@ -955,7 +955,6 @@
   projectileInfo:
     velocity: 4
     name: 阴险穿刺者鱼叉
-####
 钨钢螺丝刀:
   type: STAB
   size: 1.5
@@ -1941,8 +1940,14 @@ P90:
 猪鲨链球:
   type: FLAIL
   reach: 32
-  velocity: 2.25
+  velocity: 2.5
   autoSwing: true
+日耀喷发剑:
+  type: WHIP
+  autoSwing: true
+  size: 48
+  particleColor:
+  - 255|100|50
 海胆链枷:
   type: FLAIL
   reach: 20
@@ -1955,11 +1960,53 @@ P90:
 海蚌锤:
   type: FLAIL
   reach: 32
-  velocity: 1.5
+  velocity: 1.75
 风滚草:
   type: FLAIL
   reach: 24
-  velocity: 1.5
+  velocity: 2.25
+星云鞭:
+  type: WHIP
+  autoSwing: true
+  size: 32
+  particleColor:
+  - 66|189|181
+雷姆的复仇:
+  type: FLAIL
+  reach: 32
+  velocity: 2.75
+晨星链刃:
+  type: WHIP
+  autoSwing: true
+  size: 32
+  particleColor:
+  - 255|100|50
+脉冲龙链枷:
+  type: FLAIL
+  reach: 40
+  velocity: 3
+新月链刃:
+  type: WHIP
+  autoSwing: true
+  size: 24
+  particleColor:
+  - 143|255|227
+寒宙弹刃:
+  type: WHIP
+  autoSwing: true
+  size: 32
+  particleColor:
+  - 81|159|192
+龙魂破:
+  type: FLAIL
+  reach: 40
+  velocity: 4
+塔纳托斯的脊柱:
+  type: WHIP
+  autoSwing: true
+  size: 32
+  particleColor:
+  - 166|240|105
 手里剑:
   type: THROW_PROJECTILE
 尖刺球:
@@ -2647,16 +2694,3 @@ P90:
   - 255|0|255
   damageMultiPerHit: 0.5
   bonusDamage: 40
-日耀喷发剑:
-  type: WHIP
-  autoSwing: true
-  size: 48
-  particleColor:
-  - 255|100|50
-星云鞭:
-  type: WHIP
-  autoSwing: true
-  size: 32
-  particleColor:
-  - 66|189|181
-
