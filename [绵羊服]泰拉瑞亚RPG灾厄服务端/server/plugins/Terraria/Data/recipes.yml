@@ -1877,6 +1877,33 @@ ANVIL:
     requireItem:
     - 破碎方舟
     - 断裂英雄剑
+  '227_1':
+    requireLevel: 3
+    resultItem: 相位剑
+    requireItem:
+    - 可疑镀层:25
+    - 神秘电路:15
+    - 宇宙锭:8
+    - 化神魂精:2
+  '227_2':
+    requireLevel: 3
+    resultItem: 宇宙暗流
+    requireItem:
+    - 宇宙锭:12
+  '227_3':
+    requireLevel: 3
+    resultItem: 银河[凤凰之耀]
+    requireItem:
+    - 真·环境之刃[兵匠之傲]
+    - 宇宙锭:8
+    - 日蚀之阴碎片:8
+  '227_4':
+    requireLevel: 3
+    resultItem: 鸿蒙方舟
+    requireItem:
+    - 元素方舟
+    - 银河[凤凰之耀]
+    - 圣金源锭:5
   '228':
     requireLevel: 1
     resultItem: 烈风
@@ -3887,6 +3914,22 @@ TINKER_WORKBENCH:
     resultItem: 裂魔
     requireItem:
     - 血石核心:4
+  '44_4':
+    requireLevel: 1
+    resultItem: 元素方舟
+    requireItem:
+    - 夜明锭:5
+    - 星系异石:5
+    - 生命合金:5
+    - 远古方舟
+  '44_5':
+    requireLevel: 1
+    resultItem: 死神擢升
+    requireItem:
+    - 灵魂收割者
+    - 毁灭之灵:4
+    - 扭曲虚空
+    - 暗影之魂:15
   '45':
     requireLevel: 1
     resultItem: 真·环境之刃[兵匠之傲]

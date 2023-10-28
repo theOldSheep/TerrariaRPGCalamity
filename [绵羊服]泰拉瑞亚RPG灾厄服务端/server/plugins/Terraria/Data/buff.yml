@@ -162,6 +162,22 @@ effects:
     damageInterval: 5
     damage: 45
     tooltip: 有毒的硫磺海水正在烧灼你的皮肤
+  弑神怒焰:
+    isBuff: false
+    damageInterval: 4
+    damage: 6
+    damageMonster: 50
+    attributes:
+      regenMulti: -1
+    tooltip: 你的血肉在燃烧
+  龙焰:
+    isBuff: false
+    damageInterval: 4
+    damage: 6
+    damageMonster: 72
+    attributes:
+      regenMulti: -1
+    tooltip: 被咆哮的火焰吞没
   流血:
     isBuff: false
     attributes:

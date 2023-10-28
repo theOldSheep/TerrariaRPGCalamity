@@ -4340,7 +4340,6 @@
     buffInflictMelee: 超位崩解|100|1
   worth: 30000000
   rarity: 15
-####
 钨钢螺丝刀:
   item: DIAMOND_SWORD
   lore:
@@ -4654,6 +4653,195 @@
     useTime: 25
   worth: 16000000
   rarity: 4
+元素方舟:
+  item: DIAMOND_SWORD
+  lore:
+  - §#DC143C左键进行一次五连斩，斩击以掷出剑刃结束
+  - §#DC143C剑刃掷出后会进行一次剪击，造成额外伤害并获得2层充能
+  - §#FFA403右键用剑刃向前方剪出
+  - §#FFA403剑刃击中敌人时会进行招架，并使你短暂无敌
+  - §#FFA403你也可以用剑刃格挡弹幕，并短暂使其伤害造成的伤害减少200点
+  - §#FFA403格挡后会获得10层充能，充能会强化普通攻击，让你可以同时使用两把剑刃
+  - §r一对注入了泰拉大陆精华的天赐之刃，其威力足以切割现实的结构
+  attributes:
+    damage: 1200
+    damageType: Melee
+    crit: 14
+    knockback: 8.5
+    useTime: 20
+  worth: 22000000
+  rarity: 11
+死神擢升:
+  item: DIAMOND_SWORD
+  lore:
+  - §r你感到死神之手掌控着你
+  - §r发射一连串追踪镰刀
+  attributes:
+    damage: 2400
+    damageType: Melee
+    crit: 4
+    knockback: 9
+    useTime: 30
+  worth: 26000000
+  rarity: 13
+相位剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r利用相位剑进行攻击并释放热熔光刃
+  attributes:
+    damage: 2000
+    damageType: Melee
+    crit: 4
+    knockback: 7
+    useTime: 24
+  worth: 28000000
+  rarity: 1100
+宇宙暗流:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一个让长矛穿过的传送门
+  - §r短暂延迟后在目标周围释放长矛的复制体刺穿敌人
+  attributes:
+    damage: 800
+    damageType: Melee
+    crit: 4
+    knockback: 9.75
+    useTime: 19
+    buffInflictMelee: 弑神怒焰|100|1
+  worth: 28000000
+  rarity: 14
+银河[凤凰之耀]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#FF5700回旋挥舞银河，随时间加速
+  - §#FF5700旋转的星云将持续释放银河之雷
+  - §#4C89ED攻击时召唤能削弱敌怪的星环
+  - §#4C89ED星环会离你而去，逐渐变慢
+  - §r寰宇自在，毋需调谐
+  - §r全部环境调谐已存在其中
+  - §r潜行时鼠标右键切换当前调谐
+  attributes:
+    damage: 1600
+    damageType: Melee
+    crit: 4
+    knockback: 9
+    useTime: 18
+  worth: 28000000
+  rarity: 14
+银河[白羊之怒]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#CB61BF将银河掷向目标位置，以群星将其拉住
+  - §#CB61BF击中敌人释放银河之雷
+  - §#4C89ED攻击时召唤能削弱敌怪的星环
+  - §#4C89ED星环会离你而去，逐渐变慢
+  - §r寰宇自在，毋需调谐
+  - §r全部环境调谐已存在其中
+  - §r潜行时鼠标右键切换当前调谐
+  attributes:
+    damage: 1900
+    damageType: Melee
+    crit: 4
+    knockback: 9
+    useTime: 18
+  worth: 28000000
+  rarity: 14
+银河[北斗之眸]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#80BDFF引导北极星之力，化为星环簇拥的星系能量旋涡
+  - §#80BDFF随着时间流逝或击中敌怪，旋涡将逐渐成长
+  - §#80BDFF此后再次攻击，你将追随北极星的步伐高速冲刺，并化身超新星爆发，四散银河之雷
+  - §#CB1977攻击时在身旁召唤吸取敌怪生命的星环
+  - §#CB1977星环会朝你飞去，逐渐变慢
+  - §r寰宇自在，毋需调谐
+  - §r全部环境调谐已存在其中
+  - §r潜行时鼠标右键切换当前调谐
+  attributes:
+    damage: 2400
+    damageType: Melee
+    crit: 4
+    knockback: 9
+    useTime: 18
+  worth: 28000000
+  rarity: 14
+银河[仙女之跃]:
+  item: DIAMOND_SWORD
+  lore:
+  - §#8480FF左键释放抹杀神明的冲锋，击中时获得无敌帧，释放银河之雷且获得充能
+  - §#8480FF撞击地面消耗所有充能，使得寰宇崩塌，时空撕裂，末世风暴般的宇宙能量轰鸣而至
+  - §#CB1977攻击时在身旁召唤吸取敌怪生命的星环
+  - §#CB1977星环会朝你飞去，逐渐变慢
+  - §r寰宇自在，毋需调谐
+  - §r全部环境调谐已存在其中
+  - §r潜行时鼠标右键切换当前调谐
+  attributes:
+    damage: 2000
+    damageType: Melee
+    crit: 4
+    knockback: 9
+    useTime: 18
+  worth: 28000000
+  rarity: 14
+巨龙之怒:
+  item: DIAMOND_SWORD
+  lore:
+  - §r旋转武器，命中敌怪时产生爆炸
+  - §r“石猴出世”
+  attributes:
+    damage: 2150
+    damageType: Melee
+    crit: 4
+    knockback: 7.5
+    useTime: 25
+    buffInflictMelee: 龙焰|100|1
+  worth: 30000000
+  rarity: 14
+焚灭天惩:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤巨量燃烧陨石从天而降
+  - §r天降正义！
+  - §r“你怎么穿着法师的贴图，还用人家攻击方式”
+  attributes:
+    damage: 295
+    damageType: Melee
+    crit: 4
+    knockback: 2.5
+    useTime: 8
+  worth: 30000000
+  rarity: 15
+鸿蒙方舟:
+  item: DIAMOND_SWORD
+  lore:
+  - §#DC143C左键进行一次五连斩，斩击以掷出剑刃结束
+  - §#DC143C剑刃掷出后会进行一次剪击，造成额外伤害并获得2层充能
+  - §#FFA403右键用剑刃向前方剪出
+  - §#FFA403剑刃击中敌人时会进行招架，并使你短暂无敌
+  - §#FFA403你也可以用剑刃格挡弹幕，并短暂使其伤害造成的伤害减少200点
+  - §#FFA403格挡后会获得10层充能，充能会强化普通攻击，让你可以同时使用两把剑刃
+  - §r“你的旅程的物理顶点，拥有着能使神明§m笑嘻§r分崩离析的力量”
+  attributes:
+    damage: 4000
+    damageType: Melee
+    crit: 19
+    knockback: 9.5
+    useTime: 15
+  worth: 30000000
+  rarity: 15
+恣睢:
+  item: DIAMOND_SWORD
+  lore:
+  - §r掷出会在你鼠标附近旋转的硫火三叉戟，撕裂你的敌人
+  attributes:
+    damage: 888
+    damageType: Melee
+    crit: 4
+    knockback: 9
+    useTime: 25
+  worth: 30000000
+  rarity: 15
+####
 木制悠悠球:
   item: STICK
   attributes:
