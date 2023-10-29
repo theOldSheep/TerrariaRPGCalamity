@@ -2762,7 +2762,7 @@ TNT:
 远古之星:
     gravity: 0
     blockHitAction: thru
-    speedMultiPerTick: 0.95
+    speedMultiPerTick: 0.98
     autoTrace: true
     liveTime: 40
 元素日炎针:
@@ -2774,7 +2774,7 @@ TNT:
     projectileSize: 0.5
     gravity: 0
     blockHitAction: thru
-    speedMultiPerTick: 0.95
+    speedMultiPerTick: 0.98
     autoTrace: true
     autoTraceRadius: 24
     liveTime: 60

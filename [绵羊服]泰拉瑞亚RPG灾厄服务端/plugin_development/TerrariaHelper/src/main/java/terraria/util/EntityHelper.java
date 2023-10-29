@@ -193,6 +193,7 @@ public class EntityHelper {
         PLAYER_NEXT_SENTRY_INDEX("nextSentryIndex"),
         PLAYER_NPC_INTERACTING("NPCViewing"),
         PLAYER_SENTRY_LIST("sentries"),
+        PLAYER_TARGET_LOC_CACHE("targetLocCache"),
         PLAYER_TEAM("team"),
         PLAYER_TELEPORT_TARGET("teleportTarget"),
         PLAYER_THRUST_INDEX("thrustIndex"),
