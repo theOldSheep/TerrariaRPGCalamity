@@ -1104,6 +1104,21 @@
     useTime: 5
     useSpeedMulti: 1
     useSpeedMeleeMulti: 1
+元素方舟:
+  type: SWING
+  autoSwing: true
+  size: 8
+  attributes:
+    useTime: 7
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
+元素方舟_RIGHT_CLICK:
+  type: STAB
+  size: 9
+  attributes:
+    useTime: 5
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
 木弓:
   type: BOW
 钨钢弓:

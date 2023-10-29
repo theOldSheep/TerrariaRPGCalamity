@@ -15,6 +15,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
@@ -586,6 +587,13 @@ public class ItemUseHelper {
         if (colors != null && colors.size() > 0) color = colors.get((int) (Math.random() * colors.size()));
         handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVec, offsetVec, new HashSet<>(), color, strikeLineInfo, 0, loopAmount, true);
     }
+    protected static Location getScissorBladeLoc(Location alternativeBladeStartStrikeLoc, Vector alternativeBladeDir, Vector targetBladeDir,
+                                                 double bladeSize, double intersectionLength) {
+        double offsetLen = bladeSize * intersectionLength;
+        return alternativeBladeStartStrikeLoc.clone()
+                .add(alternativeBladeDir.clone().multiply(offsetLen))
+                .subtract(targetBladeDir.clone().multiply(offsetLen));
+    }
     // warning: this function modifies attrMap and damaged!
     protected static void handleMeleeSwing(Player ply, HashMap<String, Double> attrMap, Vector lookDir,
                                            Collection<Entity> damaged, ConfigurationSection weaponSection,
@@ -621,7 +629,7 @@ public class ItemUseHelper {
                 if (EntityHelper.getDamageType(ply) == EntityHelper.DamageType.MELEE)
                     strikeLineInfo.setParticleInfo(new GenericHelper.ParticleLineOptions()
                             .setParticleOrItem(false)
-                            .setSpriteItem(weaponItem)
+                            .setSpriteItem(weaponItem.clone())
                             .setTicksLinger(1));
                 break;
             // special settings for whips
@@ -639,7 +647,7 @@ public class ItemUseHelper {
         if (interpolateType == 2)
             strikeRadius = MELEE_MIN_STRIKE_RADIUS;
         else
-            strikeRadius = Math.max(size * 0.1, MELEE_MIN_STRIKE_RADIUS);
+            strikeRadius = Math.max(size / 32d, MELEE_MIN_STRIKE_RADIUS);
         // "stab"
         if (interpolateType == 0) {
             boolean shouldStrike;
@@ -881,7 +889,8 @@ public class ItemUseHelper {
                     break;
                 }
                 case "破碎方舟_RIGHT_CLICK":
-                case "远古方舟_RIGHT_CLICK": {
+                case "远古方舟_RIGHT_CLICK":
+                case "元素方舟_RIGHT_CLICK": {
                     strikeRadius = 0.5;
                     String parryCDScoreboardTag = "temp_parryCD";
                     shouldStrike = ! ply.getScoreboardTags().contains(parryCDScoreboardTag);
@@ -895,9 +904,14 @@ public class ItemUseHelper {
                                 damageReduction = 200;
                                 break;
                             case "远古方舟_RIGHT_CLICK":
-                                invulnerabilityTicks = 14;
+                                invulnerabilityTicks = 13;
                                 coolDown = 175;
                                 damageReduction = 360;
+                                break;
+                            case "元素方舟_RIGHT_CLICK":
+                                invulnerabilityTicks = 14;
+                                coolDown = 150;
+                                damageReduction = 400;
                                 break;
                             default:
                                 invulnerabilityTicks = 10;
@@ -2037,11 +2051,12 @@ public class ItemUseHelper {
 
                             // the blade pulls the player over if it is the final blow
                             if (i + 1 == loopTimes && ply.isSneaking()) {
+                                Location finalStartStrikeLoc = startStrikeLoc;
                                 bladeStrikeOption
                                         .setBlockHitFunction((hitLocation, movingObjectPosition) -> {
                                             // pulls the player
                                             ply.setFallDistance(0f);
-                                            Vector plyVel = MathHelper.getDirection(startStrikeLoc, hitLocation, 1.5);
+                                            Vector plyVel = MathHelper.getDirection(finalStartStrikeLoc, hitLocation, 1.5);
                                             ply.setVelocity(plyVel);
                                         });
                             }
@@ -2081,6 +2096,190 @@ public class ItemUseHelper {
                                     EntityHelper.spawnProjectile(ply, offsetDir,
                                             attrMapPly, "远古之星");
                                 }
+                            }
+                            break;
+                        }
+                        case "元素方舟": {
+                            int attackPhase = swingAmount % 5;
+                            EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+                            double plyYaw = plyNMS.yaw, plyPitch = plyNMS.pitch;
+                            // consume charge
+                            int charge = getDurability(weaponItem, 10);
+                            boolean isCharged = charge > 0;
+                            if (isCharged && i + 1 == maxIndex) {
+                                charge--;
+                                setDurability(weaponItem, 10, charge);
+                            }
+                            // charges increase damage and size
+                            strikeLength = isCharged ? 8 : 7;
+                            attrMap.put("damage", isCharged ? 1600d : 1200d );
+                            // should not have excessive damage check
+                            strikeLineInfo.setDamageCD(20);
+                            // tweak strike info to render the first half of scissors
+                            ItemStack scissorItem = strikeLineInfo.particleInfo.spriteItem;
+                            {
+                                ItemMeta newMeta = scissorItem.getItemMeta();
+                                // TODO
+                                newMeta.setDisplayName("元素方舟1");
+                                newMeta.setDisplayName("彩虹猫之刃");
+                                scissorItem.setItemMeta(newMeta);
+                                strikeLineInfo.particleInfo.setSpriteItem(scissorItem);
+                            }
+                            // special attack mechanism for last swing
+                            if (attackPhase == 4) {
+                                Location startStrikeLocOriginal = startStrikeLoc.clone();
+                                // this is the player's target location (equivalent to cursor pos. in Terraria)
+                                Location targetLoc = getPlayerTargetLoc(ply, 64, 5,
+                                        new EntityHelper.AimHelperOptions().setAimMode(true), true);
+                                Vector targetLocDir = targetLoc.clone().subtract(startStrikeLoc).toVector();
+                                // spin and reach out for enemy
+                                if (progress < 0.55) {
+                                    double spinProgress = progress / 0.55;
+                                    // damage-handling piece of scissors
+                                    // find the middle position of scissors
+                                    Location targetCenterLoc = startStrikeLoc.clone().add( targetLocDir.clone().multiply(spinProgress) );
+                                    // get rotation
+                                    actualPitch = MathHelper.getVectorPitch(targetLocDir) - 55 + (415 * spinProgress);
+                                    // setup startStrikeLoc
+                                    Vector startLocOffset = MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch);
+                                    startLocOffset.multiply(strikeLength / 2d);
+                                    startStrikeLoc = targetCenterLoc.clone().subtract(startLocOffset);
+
+
+                                    // render additional scissor part if empowered
+                                    if (isCharged && i == indexStart) {
+                                        // strike
+                                        strikeLineInfo.particleInfo.setRightOrthogonalDir(
+                                                MathHelper.vectorFromYawPitch_quick(plyYaw - 90, 0) );
+                                        double bladePitch = actualPitch + 20;
+                                        Location bladeLoc = getScissorBladeLoc(startStrikeLoc,
+                                                MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch),
+                                                MathHelper.vectorFromYawPitch_quick(actualYaw, bladePitch),
+                                                strikeLength, 0.25);
+                                        GenericHelper.handleStrikeLine(ply, bladeLoc,
+                                                actualYaw, bladePitch,
+                                                strikeLength, strikeRadius, weaponType, color, damaged, attrMap, strikeLineInfo);
+                                    }
+                                }
+                                // open scissors
+                                else if (progress < 0.8) {
+                                    double openProgress = (progress - 0.55) / 0.25;
+                                    // damage-handling piece of scissors
+                                    // get rotation
+                                    double targetLocDirPitch = MathHelper.getVectorPitch(targetLocDir);
+                                    actualPitch = targetLocDirPitch - (45 * openProgress);
+                                    // setup startStrikeLoc
+                                    Vector startLocOffset = MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch);
+                                    startLocOffset.multiply(strikeLength / 2d);
+                                    startStrikeLoc = targetLoc.clone().subtract(startLocOffset);
+
+
+                                    // render additional scissor part
+                                    if (i == indexStart) {
+                                        // charged: scissors is already in place
+                                        // get center
+                                        Vector targetCenterDir = startStrikeLoc.clone().subtract(startStrikeLocOriginal).toVector();
+                                        Location targetCenterLoc = isCharged ? startStrikeLoc :
+                                                startStrikeLocOriginal.clone().add( targetCenterDir.clone().multiply(openProgress) );
+                                        // set direction and orientation
+                                        double scissorPartPitch = targetLocDirPitch + (45 * openProgress);
+                                        Location bladeLoc = getScissorBladeLoc(targetCenterLoc,
+                                                MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch),
+                                                MathHelper.vectorFromYawPitch_quick(actualYaw, scissorPartPitch),
+                                                strikeLength, 0.25);
+                                        strikeLineInfo.particleInfo.setRightOrthogonalDir(
+                                                MathHelper.vectorFromYawPitch_quick(plyYaw - 90, 0) );
+                                        // damage
+                                        GenericHelper.handleStrikeLine(ply, bladeLoc,
+                                                actualYaw, scissorPartPitch,
+                                                strikeLength, strikeRadius, weaponType, color, damaged, attrMap, strikeLineInfo);
+                                    }
+                                }
+                                // cut
+                                else {
+                                    // reset damage CD and increase damage
+                                    if ( (i - 1d) / loopTimes < 0.8 ) {
+                                        damaged.clear();
+                                    }
+                                    attrMap.put("damage", isCharged ? 2500d : 2000d );
+                                    // play cutting sound effect on finish
+                                    if (progress < 0.95 && (i + 1d) / loopTimes > 0.95) {
+                                        ply.getWorld().playSound(ply.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 5f, 1f);
+                                    }
+                                    double cutProgress = Math.min( (progress - 0.8) / 0.15, 1);
+                                    // damage-handling piece of scissors
+                                    double targetLocDirPitch = MathHelper.getVectorPitch(targetLocDir);
+                                    // get rotation
+                                    actualPitch = targetLocDirPitch - (45 * (1 - cutProgress));
+                                    // setup startStrikeLoc
+                                    Vector startLocOffset = MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch);
+                                    startLocOffset.multiply(strikeLength / 2d);
+                                    startStrikeLoc = targetLoc.clone().subtract(startLocOffset);
+
+
+                                    // render additional scissor part
+                                    if (i == indexStart) {
+                                        // set direction and orientation
+                                        double scissorPartPitch = targetLocDirPitch + (45 * (1 - cutProgress));
+                                        Location bladeLoc = getScissorBladeLoc(startStrikeLoc,
+                                                MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch),
+                                                MathHelper.vectorFromYawPitch_quick(actualYaw, scissorPartPitch),
+                                                strikeLength, 0.25);
+                                        strikeLineInfo.particleInfo.setRightOrthogonalDir(
+                                                MathHelper.vectorFromYawPitch_quick(plyYaw - 90, 0) );
+                                        // damage
+                                        GenericHelper.handleStrikeLine(ply, bladeLoc,
+                                                actualYaw, scissorPartPitch,
+                                                strikeLength, strikeRadius, weaponType, color, damaged, attrMap, strikeLineInfo);
+                                    }
+                                }
+                                // damage-handling scissor part orientation
+                                strikeLineInfo.particleInfo.setRightOrthogonalDir(
+                                        MathHelper.vectorFromYawPitch_quick(plyYaw + 90, 0) );
+                            }
+                            // for simpler upward/downward swings
+                            else {
+                                boolean isDownwardSwing = attackPhase == 1 || attackPhase == 3;
+                                // downward swings should spawn projectiles
+                                if (isDownwardSwing && i == 0) {
+                                    Vector projVel = MathHelper.vectorFromYawPitch_quick(plyYaw, plyPitch);
+                                    projVel.multiply(3);
+                                    EntityHelper.spawnProjectile(ply, projVel, attrMap, "元素日炎针");
+                                    HashMap<String, Double> attrMapStar = (HashMap<String, Double>) attrMap.clone();
+                                    attrMapStar.put("damage", attrMapStar.get("damage") * 0.35);
+                                    for (int idxStar = 0; idxStar < 4; idxStar++) {
+                                        Vector starProjVel = MathHelper.vectorFromYawPitch_quick(
+                                                plyYaw + Math.random() * 10 - 5, plyPitch + Math.random() * 10 - 5);
+                                        starProjVel.multiply(2);
+                                        EntityHelper.spawnProjectile(ply, starProjVel, attrMapStar, "元素之星");
+                                    }
+                                }
+                                // render additional scissor part if empowered
+                                if (isCharged && i == indexStart) {
+                                    // strike
+                                    strikeLineInfo.particleInfo.setRightOrthogonalDir(
+                                            MathHelper.vectorFromYawPitch_quick(plyYaw - (isDownwardSwing ? 90 : -90), 0) );
+                                    double bladePitch = actualPitch + (isDownwardSwing ? 20 : -20);
+                                    Location bladeLoc = getScissorBladeLoc(startStrikeLoc,
+                                            MathHelper.vectorFromYawPitch_quick(actualYaw, bladePitch),
+                                            MathHelper.vectorFromYawPitch_quick(actualYaw, bladePitch),
+                                            strikeLength, 0.25);
+                                    GenericHelper.handleStrikeLine(ply, bladeLoc,
+                                            actualYaw, bladePitch,
+                                            strikeLength, strikeRadius, weaponType, color, damaged, attrMap, strikeLineInfo);
+                                }
+                                // damage-handling scissor part orientation
+                                strikeLineInfo.particleInfo.setRightOrthogonalDir(
+                                        MathHelper.vectorFromYawPitch_quick(plyYaw + (isDownwardSwing ? 90 : -90), 0) );
+                            }
+                            // reset strike info to render the other half of scissors (in default mechanism below)
+                            {
+                                ItemMeta newMeta = scissorItem.getItemMeta();
+                                // TODO
+                                newMeta.setDisplayName("元素方舟2");
+                                newMeta.setDisplayName("种子弯刀");
+                                scissorItem.setItemMeta(newMeta);
+                                strikeLineInfo.particleInfo.setSpriteItem(scissorItem);
                             }
                             break;
                         }
@@ -2223,6 +2422,10 @@ public class ItemUseHelper {
                 }
             }
         }
+
+        // cool down, shoot direction and preparation for swing call
+        if (itemType.equals("元素方舟") && swingAmount % 5 == 4)
+            useTimeMulti *= 3;
         int coolDown = applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
         boolean dirFixed = weaponSection.getBoolean("dirFixed", true);
         int interpolateType = stabOrSwing ? 0 : 1;
@@ -2293,6 +2496,22 @@ public class ItemUseHelper {
                 if (swingAmount % 2 == 0) {
                     pitchMin = pitch - 55;
                     pitchMax = pitch + 55;
+                }
+                else {
+                    pitchMin = pitch + 55;
+                    pitchMax = pitch - 55;
+                }
+                break;
+            }
+            case "元素方舟": {
+                int swingPhase = swingAmount % 5;
+                if (swingPhase == 1 || swingPhase == 3) {
+                    pitchMin = pitch - 55;
+                    pitchMax = pitch + 55;
+                }
+                else if (swingPhase == 4) {
+                    pitchMin = pitch - 55;
+                    pitchMax = pitch - 55;
                 }
                 else {
                     pitchMin = pitch + 55;

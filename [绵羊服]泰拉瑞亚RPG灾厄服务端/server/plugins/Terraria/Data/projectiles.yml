@@ -1662,7 +1662,6 @@ TNT:
     liveTime: 10
     buffInflict:
         - "神圣之火|60|1"
-####
 泰拉悠悠球:
     spawnProjectiles:
         interval: 4
@@ -2763,8 +2762,23 @@ TNT:
 远古之星:
     gravity: 0
     blockHitAction: thru
+    speedMultiPerTick: 0.95
     autoTrace: true
     liveTime: 40
+元素日炎针:
+    projectileSize: 2
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 25
+元素之星:
+    projectileSize: 0.5
+    gravity: 0
+    blockHitAction: thru
+    speedMultiPerTick: 0.95
+    autoTrace: true
+    autoTraceRadius: 24
+    liveTime: 60
+####
 星夜光束:
     gravity: 0
     projectileSize: 0.75

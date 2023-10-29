@@ -550,7 +550,8 @@ public class GenericHelper {
         }
         // display particle
         particleInfo
-                .setLength(direction.length())
+                // melee weapon sprite size etc. should not depend on block that is in its way!
+                .setLength( particleInfo.particleOrItem ? direction.length() : length )
                 .setWidth(width * 2)
                 .setStepsize(particleInterval);
         if (advanced.displayParticle)
