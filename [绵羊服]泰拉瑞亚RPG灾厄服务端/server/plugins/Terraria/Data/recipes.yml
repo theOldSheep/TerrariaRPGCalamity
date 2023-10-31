@@ -1957,6 +1957,42 @@ ANVIL:
     resultItem: 猎人长弓
     requireItem:
     - 灵气:31
+  '236_1':
+    requireLevel: 3
+    resultItem: 啸流
+    requireItem:
+    - 季风
+    - 宇宙锭:8
+    - 恒温能量:20
+    - 流明晶:20
+  '236_2':
+    requireLevel: 3
+    resultItem: 幻魔
+    requireItem:
+    - 幻象弓
+    - 宇宙锭:8
+    - 灵质:20
+    - 梦魇魔能:20
+  '236_3':
+    requireLevel: 3
+    resultItem: 创世纪
+    requireItem:
+    - 激光步枪
+    - 洲陆巨弓
+    - 幻星弓
+    - 风暴
+    - 宇宙锭:8
+    - 起源之簇:15
+    - 日蚀之阴碎片:8
+  '236_4':
+    requireLevel: 3
+    resultItem: 赤陨霸龙弓
+    requireItem:
+    - 叶流
+    - 荆棘藤
+    - 闪耀金羽:12
+    - 圣金源锭:5
+    - 龙魂碎片:4
   '237':
     requireLevel: 2
     resultItem: 锋叶十字弩
@@ -3952,6 +3988,47 @@ TINKER_WORKBENCH:
     - 宇束弓
     - 代达罗斯风暴弓
     - 生命合金:5
+  '47_1':
+    requireLevel: 1
+    resultItem: 灵星寂灭
+    requireItem:
+    - 坠星:5
+    - 星尘:5
+    - 星系异石:5
+    - 夜明锭:5
+    - 灾厄尘:5
+  '47_2':
+    requireLevel: 1
+    resultItem: 发条弓
+    requireItem:
+    - 气泵枪
+    - 夜明锭:5
+  '47_3':
+    requireLevel: 1
+    resultItem: 荆棘藤
+    requireItem:
+    - 龙蒿锭:12
+  '47_4':
+    requireLevel: 1
+    resultItem: 血陨
+    requireItem:
+    - 血石核心:5
+  '47_5':
+    requireLevel: 1
+    resultItem: 幽漩风暴
+    requireItem:
+    - 风暴
+    - 猎魂鲨牙:3
+    - 神圣晶石:20
+    - 虚空石:64
+  '47_6':
+    requireLevel: 1
+    resultItem: 季风
+    requireItem:
+    - 海啸弓
+    - 黑翼蝙蝠弓
+    - 猎魂鲨牙:6
+    - 深渊细胞:10
   '48':
     requireLevel: 1
     resultItem: 电话会议
@@ -4126,3 +4203,22 @@ TINKER_WORKBENCH:
     - 风滚草
     - 龙魂碎片:4
     - 圣金源锭:5
+  '8':
+    requireLevel: 1
+    resultItem: 天堂之风
+    requireItem:
+    - 地核之炎
+    - 破城巨弓
+    - 发条弓
+    - 灵星寂灭
+    - 幻魔
+    - 湮灭千星
+    - 奇迹物质
+  '9':
+    requireLevel: 1
+    resultItem: 瘟疫
+    requireItem:
+    - 幻魔
+    - 魔影锭:5
+    - 瘟疫细胞罐:20
+    - 瘟疫装甲镀层:5

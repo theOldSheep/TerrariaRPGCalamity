@@ -4842,7 +4842,6 @@
     useTime: 25
   worth: 30000000
   rarity: 15
-####
 木制悠悠球:
   item: STICK
   attributes:
@@ -5559,6 +5558,235 @@
     useTime: 22
   worth: 22000000
   rarity: 11
+灵星寂灭:
+  item: BOW
+  lore:
+  - §r将所有箭矢转化为星能之箭，飞行时生成追踪的魂灵星炎
+  attributes:
+    damage: 306
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 4
+    knockback: 5.5
+    useTime: 20
+  worth: 22000000
+  rarity: 11
+发条弓:
+  item: BOW
+  lore:
+  - §r蓄力以逐渐填装威力强大的箭矢
+  - §r最多装填六发
+  - §r箭矢装填的越多，威力就越大
+  attributes:
+    damage: 1540
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 15
+    knockback: 4.25
+    useTime: 30
+  worth: 20000000
+  rarity: 10
+地核之炎:
+  item: BOW
+  lore:
+  - §r发射四支可穿透物块的爆炸辐射箭
+  attributes:
+    damage: 432
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 18
+    knockback: 7.5
+    useTime: 20
+  worth: 24000000
+  rarity: 12
+荆棘藤:
+  item: BOW
+  lore:
+  - §r一次发射四支箭
+  - §r额外发射两支毒液箭或叶绿箭
+  attributes:
+    damage: 146
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 16
+    knockback: 3
+    useTime: 18
+  worth: 24000000
+  rarity: 12
+风暴:
+  item: BOW
+  lore:
+  - §r发射巨量从天而降的箭矢
+  - §r将木箭转化为能源箭矢
+  attributes:
+    damage: 70
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 28
+    knockback: 3.5
+    useTime: 14
+  worth: 28000000
+  rarity: 12
+鬼火弓:
+  item: BOW
+  lore:
+  - §r发射正常箭矢的同时发射恶魔焰火球
+  attributes:
+    damage: 300
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 20
+    knockback: 4
+    useTime: 12
+    ammoConsumptionRate: -0.66
+  worth: 26000000
+  rarity: 13
+血陨:
+  item: BOW
+  lore:
+  - §r自天空中发射五支箭
+  - §r所有箭都将迅速的跟踪敌人
+  attributes:
+    damage: 220
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 30
+    knockback: 4.25
+    useTime: 15
+  worth: 24000000
+  rarity: 12
+幽漩风暴:
+  item: BOW
+  lore:
+  - §r发射能够产生水爆炸的充能猎魂鲨
+  attributes:
+    damage: 1060
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 20
+    knockback: 3
+    useTime: 45
+  worth: 26000000
+  rarity: 13
+季风:
+  item: BOW
+  lore:
+  - §r一次发射五支箭矢
+  - §r将木箭转化为鲨鱼和台风箭
+  attributes:
+    damage: 304
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12
+    knockback: 2.5
+    useTime: 20
+  worth: 26000000
+  rarity: 13
+死亡之风:
+  item: BOW
+  lore:
+  - §r一次发射四支箭矢
+  - §r将木箭转化为星云射线
+  - §r“死亡如风，常伴吾身”
+  attributes:
+    damage: 496
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 20
+    knockback: 5
+    useTime: 14
+  worth: 28000000
+  rarity: 14
+啸流:
+  item: BOW
+  lore:
+  - §r一次发射六支箭
+  - §r将木箭转化为鲨鱼，能量射线和台风箭
+  attributes:
+    damage: 330
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 35
+    knockback: 4
+    useTime: 30
+  worth: 28000000
+  rarity: 14
+幻魔:
+  item: BOW
+  lore:
+  - §r发射五发普通箭，击中敌怪后生成幻影箭
+  attributes:
+    damage: 320
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 20
+    knockback: 3
+    useTime: 12
+    ammoConsumptionRate: -0.66
+  worth: 28000000
+  rarity: 14
+创世纪:
+  item: BOW
+  lore:
+  - §r射出连续的电浆光矢
+  - §r随使用时间的增加，光矢会被替换成镭射死光
+  - §r持续射击时，光矢将会充能形成实体光束
+  attributes:
+    damage: 232
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 18
+    knockback: 2
+    useTime: 8
+    ammoConsumptionRate: -0.9
+  worth: 28000000
+  rarity: 14
+赤陨霸龙弓:
+  item: BOW
+  lore:
+  - §r发射一连串龙焰火球，发射速度随使用时间增加而加快
+  - §r火球会降下陨石雨，留下龙尘造成伤害。在最大速度时会发射额外的火球，触发“火球激流”效果，火球具有追踪能力
+  - §r火球激流发动时，如果受到伤害，攻击会被打断，同时降低飞行时间
+  - §r右键点击发射两团毁灭性的强大火球
+  - §r“区区之事，无伤尔”"
+  attributes:
+    damage: 258
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 18
+    knockback: 1
+    useTime: 24
+  worth: 30000000
+  rarity: 15
+天堂之风:
+  item: BOW
+  lore:
+  - §r发射一连串迅速的增压星流晶体箭
+  - §r连续攻击会使武器充能
+  - §r充能达到最大值时攻击会消耗所有充能且在被击中的任何目标上方召唤星流闪电激流
+  attributes:
+    damage: 430
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12
+    knockback: 4
+    useTime: 40
+  worth: 30000000
+  rarity: 15
+瘟疫:
+  item: BOW
+  lore:
+  - §r发射瘟疫箭，在飞行过程中产生瘟疫爆弹
+  attributes:
+    damage: 1760
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 20
+    knockback: 4
+    useTime: 20
+  worth: 40000000
+  rarity: 16
+####
 劲弩:
   item: BOW
   lore:
@@ -5599,6 +5827,21 @@
     useTime: 18
   worth: 16000000
   rarity: 8
+诘责:
+  item: BOW
+  lore:
+  - §r发射出注入了仇恨魔法的绯红弩箭
+  - §r左键长按以填充箭矢，最多填充八支箭矢，松开以将其一起发射出
+  - §r右键可使其连续发射
+  attributes:
+    damage: 4260
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 14.5
+    knockback: 5
+    useTime: 23
+  worth: 30000000
+  rarity: 15
 榴弹发射器:
   item: BLAZE_ROD
   attributes:
