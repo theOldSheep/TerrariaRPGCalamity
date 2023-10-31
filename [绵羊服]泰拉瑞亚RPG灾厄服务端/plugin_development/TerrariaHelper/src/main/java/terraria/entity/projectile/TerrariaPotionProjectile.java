@@ -202,6 +202,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
             case "裂魔":
                 PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 1, false);
                 break;
+            case "巨蟹之礼星环":
+                PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 5, false);
+                break;
         }
     }
     public Vec3D hitEntity(Entity e, MovingObjectPosition position) {

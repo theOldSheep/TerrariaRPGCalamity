@@ -1119,6 +1119,50 @@
     useTime: 5
     useSpeedMulti: 1
     useSpeedMeleeMulti: 1
+死神擢升:
+  type: SWING
+  autoSwing: true
+  size: 8
+相位剑:
+  type: SWING
+  autoSwing: true
+  size: 15
+宇宙暗流:
+  type: SWING
+  autoSwing: true
+  size: 6
+银河[凤凰之耀]:
+  type: SWING
+  autoSwing: true
+  size: 8.5
+银河[白羊之怒]:
+  type: SWING
+  autoSwing: true
+  size: 10
+银河[北斗之眸]:
+  type: STAB
+  attributes:
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
+  autoSwing: true
+  size: 9
+银河[北斗之眸]_RIGHT_CLICK:
+  type: STAB
+  attributes:
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 0.5
+  size: 9
+银河[仙女之跃]:
+  type: STAB
+  autoSwing: true
+  size: 4
+银河[仙女之跃]_RIGHT_CLICK:
+  type: STAB
+  attributes:
+    useTime: 25
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
+  size: 9
 木弓:
   type: BOW
 钨钢弓:

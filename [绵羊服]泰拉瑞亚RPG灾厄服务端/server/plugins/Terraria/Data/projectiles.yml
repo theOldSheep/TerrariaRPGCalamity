@@ -2778,6 +2778,59 @@ TNT:
     autoTrace: true
     autoTraceRadius: 24
     liveTime: 60
+死神擢升镰刀:
+    gravity: 0
+    autoTrace: true
+    autoTraceRadius: 16
+    blockHitAction: thru
+    speedMultiPerTick: 0.95
+    projectileSize: 3
+    penetration: 2
+    enemyInvincibilityFrame: 10
+    liveTime: 100
+热熔光刃:
+    gravity: 0
+    autoTrace: true
+    autoTraceRadius: 24
+    autoTraceAbility: 5.0
+    blockHitAction: thru
+    projectileSize: 3
+    penetration: 2
+    enemyInvincibilityFrame: 10
+    liveTime: 60
+银河之雷:
+    gravity: 0
+    autoTrace: true
+    autoTraceRadius: 24
+    autoTraceAbility: 5.0
+    noAutoTraceTicks: 5
+    blockHitAction: thru
+    projectileSize: 1.5
+    minimumDamageTicks: 5
+    liveTime: 60
+    trailColor: 240|77|220
+摩羯之祈星环:
+    gravity: 0
+    blockHitAction: thru
+    autoTrace: true
+    noAutoTraceTicks: 10
+    autoTraceRadius: 24
+    autoTraceAbility: 2
+    projectileSize: 5
+    liveTime: 60
+    speedMultiPerTick: 0.95
+    buffInflict:
+        - "碎甲|66|1"
+巨蟹之礼星环:
+    gravity: 0
+    blockHitAction: thru
+    autoTrace: true
+    noAutoTraceTicks: 10
+    autoTraceRadius: 24
+    autoTraceAbility: 2
+    projectileSize: 5
+    liveTime: 60
+    speedMultiPerTick: 0.95
 ####
 星夜光束:
     gravity: 0
