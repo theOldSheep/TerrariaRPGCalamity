@@ -2750,12 +2750,12 @@ TNT:
     penetration: 999999
     slowedByWater: false
 远古剑气:
-    projectileSize: 0.5
+    projectileSize: 1
     gravity: 0
     blockHitAction: thru
     liveTime: 10
 真·远古剑气:
-    projectileSize: 1
+    projectileSize: 2
     gravity: 0
     blockHitAction: thru
     liveTime: 15
@@ -2766,7 +2766,7 @@ TNT:
     autoTrace: true
     liveTime: 40
 元素日炎针:
-    projectileSize: 2
+    projectileSize: 3
     gravity: 0
     blockHitAction: thru
     liveTime: 25
@@ -2813,7 +2813,7 @@ TNT:
     gravity: 0
     blockHitAction: thru
     autoTrace: true
-    noAutoTraceTicks: 10
+    noAutoTraceTicks: 5
     autoTraceRadius: 24
     autoTraceAbility: 2
     projectileSize: 5
@@ -2825,12 +2825,45 @@ TNT:
     gravity: 0
     blockHitAction: thru
     autoTrace: true
-    noAutoTraceTicks: 10
+    noAutoTraceTicks: 5
     autoTraceRadius: 24
     autoTraceAbility: 2
     projectileSize: 5
     liveTime: 60
     speedMultiPerTick: 0.95
+巨龙之怒火球:
+    gravity: 0
+    blockHitAction: thru
+    minimumDamageTicks: 5
+    autoTrace: true
+    noAutoTraceTicks: 5
+    autoTraceRadius: 24
+    projectileSize: 2
+    isGrenade: true
+    blastRadius: 4
+    blastOnTimeout: false
+    liveTime: 50
+焚灭天惩燃烧陨石:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 3
+    liveTime: 20
+    buffInflict:
+        - "龙焰|60|1"
+撕裂之针:
+    projectileSize: 3
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 30
+永恒之雷:
+    projectileSize: 0.75
+    gravity: 0
+    blockHitAction: thru
+    speedMultiPerTick: 0.98
+    autoTrace: true
+    autoTraceRadius: 24
+    autoTraceAbility: 5
+    liveTime: 50
 ####
 星夜光束:
     gravity: 0

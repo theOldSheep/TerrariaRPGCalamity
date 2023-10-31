@@ -1138,7 +1138,7 @@
 银河[白羊之怒]:
   type: SWING
   autoSwing: true
-  size: 10
+  size: 6
 银河[北斗之眸]:
   type: STAB
   attributes:
@@ -1163,6 +1163,33 @@
     useSpeedMulti: 1
     useSpeedMeleeMulti: 1
   size: 9
+巨龙之怒:
+  type: SWING
+  autoSwing: true
+  size: 16
+焚灭天惩:
+  type: STAB
+  autoSwing: true
+  size: 5
+鸿蒙方舟:
+  type: SWING
+  autoSwing: true
+  size: 10
+  attributes:
+    useTime: 7
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
+鸿蒙方舟_RIGHT_CLICK:
+  type: STAB
+  size: 10
+  attributes:
+    useTime: 6
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
+恣睢:
+  type: SWING
+  autoSwing: true
+  size: 8.5
 木弓:
   type: BOW
 钨钢弓:

@@ -35,7 +35,8 @@ public class ItemUseHelper {
         NONE, HEALTH, MANA, BUFF;
     }
     public static final String SOUND_GENERIC_SWING = "item.genericSwing", SOUND_BOW_SHOOT = "item.bowShoot",
-            SOUND_GUN_FIRE = "item.gunfire", SOUND_GUN_FIRE_LOUD = "entity.generic.explode";
+            SOUND_GUN_FIRE = "item.gunfire", SOUND_GUN_FIRE_LOUD = "entity.generic.explode",
+            SOUND_ARK_PARRY = "entity.generic.explode", SOUND_ARK_SCISSOR_CUT = "entity.generic.explode";
     protected static final double MELEE_MIN_STRIKE_RADIUS = 0.25;
     public static int applyCD(Player ply, double CD) {
         int coolDown = (int) CD;
@@ -673,7 +674,7 @@ public class ItemUseHelper {
         if (interpolateType == 2)
             strikeRadius = MELEE_MIN_STRIKE_RADIUS;
         else
-            strikeRadius = Math.max(size / 32d, MELEE_MIN_STRIKE_RADIUS);
+            strikeRadius = Math.max(size / 24d, MELEE_MIN_STRIKE_RADIUS);
         // "stab"
         if (interpolateType == 0) {
             boolean shouldStrike;
@@ -873,7 +874,7 @@ public class ItemUseHelper {
                                     Vector projVel = MathHelper.vectorFromYawPitch_quick(finalStrikeYaw, finalStrikePitch);
                                     projVel.multiply(3);
                                     entityHit.setVelocity(projVel);
-                                    hitLoc.getWorld().playSound(hitLoc, Sound.ENTITY_GENERIC_EXPLODE, 0.5f, 1);
+                                    hitLoc.getWorld().playSound(hitLoc, SOUND_ARK_PARRY, 0.5f, 1);
                                 })
                                 .setShouldDamageFunction((entity) -> entity.getScoreboardTags().contains("isWulfrumScrew"))
                                 .setLingerDelay(5);
@@ -917,7 +918,8 @@ public class ItemUseHelper {
                 }
                 case "破碎方舟_RIGHT_CLICK":
                 case "远古方舟_RIGHT_CLICK":
-                case "元素方舟_RIGHT_CLICK": {
+                case "元素方舟_RIGHT_CLICK":
+                case "鸿蒙方舟_RIGHT_CLICK": {
                     double scissorsConnLen = 0.3333;
                     String parryCDScoreboardTag = "temp_parryCD";
                     shouldStrike = ! ply.getScoreboardTags().contains(parryCDScoreboardTag);
@@ -928,20 +930,22 @@ public class ItemUseHelper {
                             case "破碎方舟_RIGHT_CLICK":
                                 strikeRadius = 0.4;
                                 invulnerabilityTicks = 12;
-                                coolDown = 200;
+                                coolDown = 160;
                                 damageReduction = 200;
                                 break;
                             case "远古方舟_RIGHT_CLICK":
                                 strikeRadius = 0.55;
                                 invulnerabilityTicks = 13;
-                                coolDown = 175;
+                                coolDown = 140;
                                 damageReduction = 300;
                                 break;
                             case "元素方舟_RIGHT_CLICK":
-                                strikeRadius = 0.65;
-                                invulnerabilityTicks = 14;
-                                coolDown = 150;
-                                damageReduction = 350;
+                            case "鸿蒙方舟_RIGHT_CLICK":
+                                boolean isArkOfElements = weaponType.equals("元素方舟_RIGHT_CLICK");
+                                strikeRadius = isArkOfElements ? 0.65 : 0.75;
+                                invulnerabilityTicks = isArkOfElements ? 14 : 15;
+                                coolDown = 120;
+                                damageReduction = isArkOfElements ? 350 : 400;
                                 // render scissors
                                 {
                                     int cutIndex = maxIndex - 2;
@@ -949,7 +953,7 @@ public class ItemUseHelper {
                                     if (currentIndex >= cutIndex) {
                                         // play cut sound
                                         if (currentIndex == cutIndex) {
-                                            ply.getWorld().playSound(ply.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 5f, 1f);
+                                            ply.getWorld().playSound(ply.getLocation(), SOUND_ARK_SCISSOR_CUT, 5f, 1f);
                                         }
                                         rotationOffset = 0;
                                     }
@@ -962,7 +966,7 @@ public class ItemUseHelper {
                                         // sprite for blade
                                         {
                                             ItemMeta newMeta = scissorItem.getItemMeta();
-                                            newMeta.setDisplayName("元素方舟1");
+                                            newMeta.setDisplayName( (isArkOfElements ? "元素方舟" : "鸿蒙方舟") + "1");
                                             scissorItem.setItemMeta(newMeta);
                                             strikeLineInfo.particleInfo.setSpriteItem(scissorItem);
                                         }
@@ -982,7 +986,7 @@ public class ItemUseHelper {
                                     // sprite for blade
                                     {
                                         ItemMeta newMeta = scissorItem.getItemMeta();
-                                        newMeta.setDisplayName("元素方舟2");
+                                        newMeta.setDisplayName( (isArkOfElements ? "元素方舟" : "鸿蒙方舟") + "2");
                                         scissorItem.setItemMeta(newMeta);
                                         strikeLineInfo.particleInfo.setSpriteItem(scissorItem);
                                     }
@@ -1022,7 +1026,7 @@ public class ItemUseHelper {
                                     // recharge
                                     if (hitIndex == 1) {
                                         setDurability(weaponItem, 10, 10);
-                                        ply.playSound(ply.getEyeLocation(), Sound.ENTITY_GENERIC_EXPLODE, 0.5f, 2f);
+                                        ply.playSound(ply.getEyeLocation(), SOUND_ARK_PARRY, 0.5f, 2f);
                                     }
                                 })
                                 // should not damage an enemy twice
@@ -1499,6 +1503,23 @@ public class ItemUseHelper {
                             });
                     break;
                 }
+                case "焚灭天惩": {
+                    shouldStrike = true;
+                    // update strike direction; this weapon is held like a wand
+                    strikePitch = -45;
+                    // summons meteors from the sky
+                    int hitDelay = 5 + (int) (Math.random() * 5);
+                    Location targetLoc = getPlayerTargetLoc(ply, 48, 3.5,
+                            new EntityHelper.AimHelperOptions()
+                                    .setAimMode(true)
+                                    .setTicksOffset(hitDelay), true);
+                    Vector projVel = MathHelper.vectorFromYawPitch_quick(Math.random() * 360d, -70 - Math.random() * 30d);
+                    projVel.multiply(2.5 + Math.random());
+                    targetLoc.subtract(projVel.clone().multiply(hitDelay));
+
+                    EntityHelper.spawnProjectile(ply, targetLoc, projVel, attrMap, EntityHelper.DamageType.MELEE, "焚灭天惩燃烧陨石");
+                    break;
+                }
                 case "光棱破碎者": {
                     shouldStrike = true;
                     double strikeRatio = (double) currentIndex / maxIndex;
@@ -1842,6 +1863,19 @@ public class ItemUseHelper {
                             EntityHelper.spawnProjectile(ply, projVel, passiveProjAttrMap,
                                     EntityHelper.DamageType.MELEE, "摩羯之祈星环");
                         }
+                        break;
+                    }
+                    case "巨龙之怒": {
+                        strikeRadius = 1;
+                        // on-hit projectiles
+                        HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
+                        projAttrMap.put("damage", projAttrMap.get("damage") * 0.15);
+                        strikeLineInfo.setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
+                            Vector projVel = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, Math.random() * 360);
+                            projVel.multiply(2.5);
+                            EntityHelper.spawnProjectile(ply, hitLoc, projVel, projAttrMap,
+                                    EntityHelper.DamageType.MELEE, "巨龙之怒火球");
+                        });
                         break;
                     }
                     case "屠杀": {
@@ -2483,7 +2517,34 @@ public class ItemUseHelper {
                             EntityHelper.AimHelperOptions aimOption = new EntityHelper.AimHelperOptions().setAimMode(true);
                             // only initialize target once to prevent dashing into multiple enemies with one swing
                             if (i == 0)
-                                targetLoc = getPlayerTargetLoc(ply, 64, 5, strikeLength * 0.75,
+                                targetLoc = getPlayerTargetLoc(ply, 64, 3.5, strikeLength * 0.75,
+                                        aimOption, true);
+                            else
+                                targetLoc = getPlayerCachedTargetLoc(ply, aimOption);
+                            // rotation
+                            actualYaw = plyYaw + 90;
+                            actualPitch = 360d * i / loopTimes;
+                            startStrikeLoc = targetLoc.subtract(
+                                    MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch)
+                                            .multiply(strikeLength / 2d));
+                            break;
+                        }
+                        case "巨龙之怒": {
+                            // strike direction; a swing is a full rotation
+                            actualPitch = -45 + (360d * i / loopTimes);
+                            // this weapon is held at the handle, which is around 30%~40% of its size (different from midpoint in vanilla Calamity)
+                            startStrikeLoc.subtract( MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch)
+                                    .multiply(strikeLength * 0.35) );
+                            break;
+                        }
+                        case "恣睢": {
+                            strikeRadius = 1;
+                            // yoyo-like behaviour
+                            Location targetLoc;
+                            EntityHelper.AimHelperOptions aimOption = new EntityHelper.AimHelperOptions().setAimMode(true);
+                            // only initialize target once to prevent dashing into multiple enemies with one swing
+                            if (i == 0)
+                                targetLoc = getPlayerTargetLoc(ply, 64, 4, strikeLength * 0.75,
                                         aimOption, true);
                             else
                                 targetLoc = getPlayerCachedTargetLoc(ply, aimOption);
@@ -2521,26 +2582,30 @@ public class ItemUseHelper {
                             }
                             break;
                         }
-                        case "元素方舟": {
+                        case "元素方舟":
+                        case "鸿蒙方舟": {
+                            boolean isArkOfElements = weaponType.equals("元素方舟");
+                            double baseDmg = isArkOfElements ? 1200 : 5000;
+                            double baseBladeSize = isArkOfElements ? 6 : 7.5;
                             double scissorsConnLen = 0.3333;
                             int attackPhase = swingAmount % 5;
                             // consume charge
-                            int charge = getDurability(weaponItem, 11);
+                            int charge = getDurability(weaponItem, 16);
                             boolean isCharged = charge > 0;
                             if (isCharged && i + 1 == maxIndex) {
                                 charge--;
-                                setDurability(weaponItem, 11, charge);
+                                setDurability(weaponItem, 16, charge);
                             }
                             // charges increase damage and size
-                            strikeLength = isCharged ? 8 : 7;
-                            attrMap.put("damage", isCharged ? 1600d : 1200d );
+                            strikeLength = baseBladeSize * (isCharged ? 1.3333d : 1d);
+                            attrMap.put("damage", baseDmg * (isCharged ? 1.25d : 1d) );
                             // should not have excessive damage check
                             strikeLineInfo.setDamageCD(30);
                             // tweak strike info to render the first half of scissors
                             ItemStack scissorItem = strikeLineInfo.particleInfo.spriteItem;
                             {
                                 ItemMeta newMeta = scissorItem.getItemMeta();
-                                newMeta.setDisplayName("元素方舟1");
+                                newMeta.setDisplayName(weaponType + "1");
                                 scissorItem.setItemMeta(newMeta);
                                 strikeLineInfo.particleInfo.setSpriteItem(scissorItem);
                             }
@@ -2626,11 +2691,11 @@ public class ItemUseHelper {
                                     if ( (i - 1d) / loopTimes < 0.8 ) {
                                         damaged.clear();
                                     }
-                                    attrMap.put("damage", isCharged ? 2500d : 2000d );
+                                    attrMap.put("damage", baseDmg * (isCharged ? 2.5d : 1.75d) );
                                     // find cut progress; splay cutting sound effect on finish
                                     double cutProgress = Math.min( (progress - 0.8) / 0.125, 1);
                                     if (progress < 0.925 && (i + 1d) / loopTimes >= 0.925) {
-                                        ply.getWorld().playSound(ply.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 5f, 1f);
+                                        ply.getWorld().playSound(ply.getLocation(), SOUND_ARK_SCISSOR_CUT, 5f, 1f);
                                     }
                                     // damage-handling piece of scissors
                                     double targetLocDirPitch = MathHelper.getVectorPitch(targetLocDir);
@@ -2665,18 +2730,22 @@ public class ItemUseHelper {
                             // for simpler upward/downward swings
                             else {
                                 boolean isDownwardSwing = attackPhase == 1 || attackPhase == 3;
+                                // ark of the cosmos should swing additional 360 degrees during downward swings
+                                if (!isArkOfElements && isDownwardSwing) {
+                                    actualPitch += 360d * i / loopTimes;
+                                }
                                 // downward swings should spawn projectiles
                                 if (isDownwardSwing && i == 0) {
                                     Vector projVel = MathHelper.vectorFromYawPitch_quick(plyYaw, plyPitch);
                                     projVel.multiply(3);
-                                    EntityHelper.spawnProjectile(ply, projVel, attrMap, "元素日炎针");
+                                    EntityHelper.spawnProjectile(ply, projVel, attrMap, isArkOfElements ? "元素日炎针" : "撕裂之针");
                                     HashMap<String, Double> attrMapStar = (HashMap<String, Double>) attrMap.clone();
                                     attrMapStar.put("damage", attrMapStar.get("damage") * 0.35);
                                     for (int idxStar = 0; idxStar < 4; idxStar++) {
                                         Vector starProjVel = MathHelper.vectorFromYawPitch_quick(
                                                 plyYaw + Math.random() * 10 - 5, plyPitch + Math.random() * 10 - 5);
-                                        starProjVel.multiply(2);
-                                        EntityHelper.spawnProjectile(ply, starProjVel, attrMapStar, "元素之星");
+                                        starProjVel.multiply(isArkOfElements ? 2 : 2.5);
+                                        EntityHelper.spawnProjectile(ply, starProjVel, attrMapStar, isArkOfElements ? "元素之星" : "永恒之雷");
                                     }
                                 }
                                 // render additional scissor part if empowered
@@ -2700,7 +2769,7 @@ public class ItemUseHelper {
                             // reset strike info to render the other half of scissors (in default mechanism below)
                             {
                                 ItemMeta newMeta = scissorItem.getItemMeta();
-                                newMeta.setDisplayName("元素方舟2");
+                                newMeta.setDisplayName(weaponType + "2");
                                 scissorItem.setItemMeta(newMeta);
                                 strikeLineInfo.particleInfo.setSpriteItem(scissorItem);
                             }
@@ -2747,8 +2816,16 @@ public class ItemUseHelper {
                             }
                             // shoot projectile
                             int weaponCharge = getDurability(weaponItem, 8);
-                            int shootThreshold = weaponCharge > 0 ? 1 : 0;
-                            if (Math.abs(i - (int) (loopTimes * 0.5)) <= shootThreshold) {
+                            // the weapon spawns a projectile as long as the current frame is at most shoot threshold away from half way
+                            // in another word, the weapon shoots (threshold * 2 + 1) projectiles, each with 1 frame difference in time
+                            int shootThreshold;
+                            if (weaponCharge > 4)
+                                shootThreshold = 2;
+                            else if (weaponCharge > 0)
+                                shootThreshold = 1;
+                            else
+                                shootThreshold = 0;
+                            if (i == indexStart && Math.abs(currentIndex - (int) (maxIndex * 0.5)) <= shootThreshold) {
                                 HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
                                 projAttrMap.put("damage", projAttrMap.getOrDefault("damage", 100d) * 0.5);
                                 Vector projVel = MathHelper.vectorFromYawPitch_quick(
@@ -2845,8 +2922,14 @@ public class ItemUseHelper {
         }
 
         // cool down, shoot direction and preparation for swing call
-        if (itemType.equals("元素方舟") && swingAmount % 5 == 4)
-            useTimeMulti *= 2.5;
+        switch (itemType) {
+            case "元素方舟":
+            case "鸿蒙方舟": {
+                if (swingAmount % 5 == 4)
+                    useTimeMulti *= 2.5;
+                break;
+            }
+        }
         int coolDown = applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
         boolean dirFixed = weaponSection.getBoolean("dirFixed", true);
         int interpolateType = stabOrSwing ? 0 : 1;
@@ -2925,7 +3008,8 @@ public class ItemUseHelper {
                 }
                 break;
             }
-            case "元素方舟": {
+            case "元素方舟":
+            case "鸿蒙方舟": {
                 int swingPhase = swingAmount % 5;
                 if (swingPhase == 1 || swingPhase == 3) {
                     pitchMin = pitch - 55;
