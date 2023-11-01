@@ -2846,7 +2846,7 @@ TNT:
 焚灭天惩燃烧陨石:
     gravity: 0
     blockHitAction: thru
-    projectileSize: 3
+    projectileSize: 2
     liveTime: 20
     buffInflict:
         - "龙焰|60|1"

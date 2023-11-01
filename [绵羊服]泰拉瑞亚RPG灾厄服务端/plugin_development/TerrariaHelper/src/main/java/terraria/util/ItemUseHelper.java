@@ -501,6 +501,7 @@ public class ItemUseHelper {
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
         Vector lookDir = MathHelper.vectorFromYawPitch_quick(nmsPly.yaw, nmsPly.pitch);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE, null);
+        boolean tracedEntity = false;
         {
             Vector eyeLoc = ply.getEyeLocation().toVector();
             Vector endLoc = eyeLoc.clone().add(lookDir.clone().multiply(traceDist));
@@ -533,6 +534,7 @@ public class ItemUseHelper {
                     Entity hitEntity = hitInfo.getHitEntity().getBukkitEntity();
                     targetLoc = EntityHelper.helperAimEntity(ply, hitEntity, aimHelperInfo);
                     EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE, hitEntity);
+                    tracedEntity = true;
                 }
             }
             // if the target location is still null, that is, no block/entity being hit
@@ -540,9 +542,14 @@ public class ItemUseHelper {
                 targetLoc = ply.getEyeLocation().add(lookDir.clone().multiply(traceDist));
             }
         }
-        // set cache to the location if entity is not set
-        if (EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE) == null)
-            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE, targetLoc);
+        // add random offset and set cache to the location if entity is not found
+        if (!tracedEntity) {
+            double randomOffset = aimHelperInfo.randomOffsetRadius, randomOffsetHalved = randomOffset / 2d;
+            targetLoc.add(Math.random() * randomOffset - randomOffsetHalved,
+                    Math.random() * randomOffset - randomOffsetHalved,
+                    Math.random() * randomOffset - randomOffsetHalved);
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE, targetLoc.clone());
+        }
         return targetLoc;
     }
     public static Location getPlayerCachedTargetLoc(Player ply, EntityHelper.AimHelperOptions aimHelperInfo) {
@@ -554,6 +561,9 @@ public class ItemUseHelper {
             return ((Location) metadataValue.value()).clone();
         // otherwise, this must be an entity cached
         Entity targetEntity = (Entity) metadataValue.value();
+        // if the entity is below bedrock layer (usually boss AI phase that should not be targeted)
+        if (targetEntity.getLocation().getY() < 0d)
+            return ply.getEyeLocation();
         return EntityHelper.helperAimEntity(ply, targetEntity, aimHelperInfo);
     }
     // special weapon attack helper functions below
@@ -1306,7 +1316,8 @@ public class ItemUseHelper {
                                 EntityHelper.DamageType.MELEE, "巨蟹之礼星环");
                     }
                     // durability tweak
-                    setDurability(weaponItem, 100, durability.incrementAndGet());
+                    if (currentIndex % 2 == 0)
+                        setDurability(weaponItem, 100, durability.incrementAndGet());
                     strikeLineInfo
                             .setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
                                 if (hitIdx == 1) {
@@ -1320,7 +1331,7 @@ public class ItemUseHelper {
                     double durabilityRatio = durability.get() / 100d;
                     strikeRadius = 0.75 * (1 + durabilityRatio);
                     size = 10 + 5 * durabilityRatio;
-                    shouldStrike = true;
+                    shouldStrike = currentIndex < 10;
 
                     // passive projectile
                     if (currentIndex == 0) {
@@ -1344,6 +1355,7 @@ public class ItemUseHelper {
                         setDurability(weaponItem, 100, durability.get());
                     }
                     // on-hit functions
+                    int overrideCD = 10 - currentIndex;
                     Location finalStartStrikeLoc5 = startStrikeLoc;
                     strikeLineInfo
                             .setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
@@ -1357,6 +1369,7 @@ public class ItemUseHelper {
                                     ply.setVelocity(plyVel);
                                     // heal for a small amount
                                     PlayerHelper.heal(ply, 10, false);
+                                    applyCD(ply, overrideCD);
                                 }
                             });
 
@@ -1422,7 +1435,7 @@ public class ItemUseHelper {
                     ply.setVelocity(plyVel);
 
                     // strike options
-                    Vector finalLookDir1 = lookDir;
+                    Vector finalLookDir1 = lookDir.clone();
                     Location traceStartLoc = startStrikeLoc.subtract(lookDir.clone().multiply(3));
                     strikeLineInfo
                             // invulnerability tick on-hit
@@ -1512,8 +1525,9 @@ public class ItemUseHelper {
                     Location targetLoc = getPlayerTargetLoc(ply, 48, 3.5,
                             new EntityHelper.AimHelperOptions()
                                     .setAimMode(true)
-                                    .setTicksOffset(hitDelay), true);
-                    Vector projVel = MathHelper.vectorFromYawPitch_quick(Math.random() * 360d, -70 - Math.random() * 30d);
+                                    .setTicksOffset(hitDelay)
+                                    .setRandomOffsetRadius(5), true);
+                    Vector projVel = MathHelper.vectorFromYawPitch_quick(Math.random() * 360d, 70 + Math.random() * 30d);
                     projVel.multiply(2.5 + Math.random());
                     targetLoc.subtract(projVel.clone().multiply(hitDelay));
 
@@ -1593,7 +1607,7 @@ public class ItemUseHelper {
                         ply.setVelocity(new Vector());
 
                     // hitting enemies will knock back the player and fully charge the weapon
-                    Vector lookDirCopy = lookDir;
+                    Vector lookDirCopy = lookDir.clone().multiply(-1);
                     strikeLineInfo
                             .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
                                 // full durability gain
@@ -1611,7 +1625,7 @@ public class ItemUseHelper {
                                     }, i);
                                 }
                                 // recoil
-                                ply.setVelocity(lookDirCopy.clone().multiply(-1));
+                                ply.setVelocity(lookDirCopy);
                             })
                             .setLingerDelay(1);
                     break;
@@ -2640,7 +2654,7 @@ public class ItemUseHelper {
                                     if (isCharged && i == indexStart) {
                                         // strike
                                         strikeLineInfo.particleInfo.setRightOrthogonalDir(
-                                                MathHelper.vectorFromYawPitch_quick(plyYaw - 90, 0) );
+                                                MathHelper.vectorFromYawPitch_quick(actualYaw - 90, 0) );
                                         double bladePitch = actualPitch + 20;
                                         Location bladeLoc = getScissorBladeLoc(startStrikeLoc,
                                                 MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch),
@@ -2678,7 +2692,7 @@ public class ItemUseHelper {
                                                 MathHelper.vectorFromYawPitch_quick(actualYaw, scissorPartPitch),
                                                 strikeLength, scissorsConnLen);
                                         strikeLineInfo.particleInfo.setRightOrthogonalDir(
-                                                MathHelper.vectorFromYawPitch_quick(plyYaw - 90, 0) );
+                                                MathHelper.vectorFromYawPitch_quick(actualYaw - 90, 0) );
                                         // damage
                                         GenericHelper.handleStrikeLine(ply, bladeLoc,
                                                 actualYaw, scissorPartPitch,
@@ -2716,7 +2730,7 @@ public class ItemUseHelper {
                                                 MathHelper.vectorFromYawPitch_quick(actualYaw, scissorPartPitch),
                                                 strikeLength, scissorsConnLen);
                                         strikeLineInfo.particleInfo.setRightOrthogonalDir(
-                                                MathHelper.vectorFromYawPitch_quick(plyYaw - 90, 0) );
+                                                MathHelper.vectorFromYawPitch_quick(actualYaw - 90, 0) );
                                         // damage
                                         GenericHelper.handleStrikeLine(ply, bladeLoc,
                                                 actualYaw, scissorPartPitch,
@@ -2725,7 +2739,7 @@ public class ItemUseHelper {
                                 }
                                 // damage-handling scissor part orientation
                                 strikeLineInfo.particleInfo.setRightOrthogonalDir(
-                                        MathHelper.vectorFromYawPitch_quick(plyYaw + 90, 0) );
+                                        MathHelper.vectorFromYawPitch_quick(actualYaw + 90, 0) );
                             }
                             // for simpler upward/downward swings
                             else {
@@ -2736,14 +2750,19 @@ public class ItemUseHelper {
                                 }
                                 // downward swings should spawn projectiles
                                 if (isDownwardSwing && i == 0) {
-                                    Vector projVel = MathHelper.vectorFromYawPitch_quick(plyYaw, plyPitch);
+                                    Vector projVel = MathHelper.vectorFromYawPitch_quick(actualYaw, plyPitch);
                                     projVel.multiply(3);
                                     EntityHelper.spawnProjectile(ply, projVel, attrMap, isArkOfElements ? "元素日炎针" : "撕裂之针");
                                     HashMap<String, Double> attrMapStar = (HashMap<String, Double>) attrMap.clone();
                                     attrMapStar.put("damage", attrMapStar.get("damage") * 0.35);
                                     for (int idxStar = 0; idxStar < 4; idxStar++) {
-                                        Vector starProjVel = MathHelper.vectorFromYawPitch_quick(
-                                                plyYaw + Math.random() * 10 - 5, plyPitch + Math.random() * 10 - 5);
+                                        Vector starProjVel;
+                                        // element shoots projectile fwd, while cosmos spans their projectile around the circumference
+                                        if (isArkOfElements)
+                                            starProjVel = MathHelper.vectorFromYawPitch_quick(
+                                                    actualYaw + Math.random() * 10 - 5, plyPitch + Math.random() * 10 - 5);
+                                        else
+                                            starProjVel = MathHelper.vectorFromYawPitch_quick(actualYaw, Math.random() * 360d);
                                         starProjVel.multiply(isArkOfElements ? 2 : 2.5);
                                         EntityHelper.spawnProjectile(ply, starProjVel, attrMapStar, isArkOfElements ? "元素之星" : "永恒之雷");
                                     }
@@ -2752,7 +2771,7 @@ public class ItemUseHelper {
                                 if (isCharged && i == indexStart) {
                                     // strike
                                     strikeLineInfo.particleInfo.setRightOrthogonalDir(
-                                            MathHelper.vectorFromYawPitch_quick(plyYaw - (isDownwardSwing ? 90 : -90), 0) );
+                                            MathHelper.vectorFromYawPitch_quick(actualYaw - (isDownwardSwing ? 90 : -90), 0) );
                                     double bladePitch = actualPitch + (isDownwardSwing ? 20 : -20);
                                     Location bladeLoc = getScissorBladeLoc(startStrikeLoc,
                                             MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch),
@@ -2764,7 +2783,7 @@ public class ItemUseHelper {
                                 }
                                 // damage-handling scissor part orientation
                                 strikeLineInfo.particleInfo.setRightOrthogonalDir(
-                                        MathHelper.vectorFromYawPitch_quick(plyYaw + (isDownwardSwing ? 90 : -90), 0) );
+                                        MathHelper.vectorFromYawPitch_quick(actualYaw + (isDownwardSwing ? 90 : -90), 0) );
                             }
                             // reset strike info to render the other half of scissors (in default mechanism below)
                             {
@@ -2816,7 +2835,7 @@ public class ItemUseHelper {
                             }
                             // shoot projectile
                             int weaponCharge = getDurability(weaponItem, 8);
-                            // the weapon spawns a projectile as long as the current frame is at most shoot threshold away from half way
+                            // the weapon spawns a projectile as long as the current frame is at most shoot threshold away from halfway
                             // in another word, the weapon shoots (threshold * 2 + 1) projectiles, each with 1 frame difference in time
                             int shootThreshold;
                             if (weaponCharge > 4)

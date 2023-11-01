@@ -1149,8 +1149,9 @@
 银河[北斗之眸]_RIGHT_CLICK:
   type: STAB
   attributes:
+    useTime: 40
     useSpeedMulti: 1
-    useSpeedMeleeMulti: 0.5
+    useSpeedMeleeMulti: 1
   size: 9
 银河[仙女之跃]:
   type: STAB
