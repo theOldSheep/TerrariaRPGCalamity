@@ -2552,10 +2552,11 @@ public class ItemUseHelper {
                             break;
                         }
                         case "恣睢": {
-                            strikeRadius = 1;
                             // yoyo-like behaviour
                             Location targetLoc;
                             EntityHelper.AimHelperOptions aimOption = new EntityHelper.AimHelperOptions().setAimMode(true);
+                            // its base damage is low, hence damage check should be very frequent
+                            strikeLineInfo.setDamageCD(1);
                             // only initialize target once to prevent dashing into multiple enemies with one swing
                             if (i == 0)
                                 targetLoc = getPlayerTargetLoc(ply, 64, 4, strikeLength * 0.75,
