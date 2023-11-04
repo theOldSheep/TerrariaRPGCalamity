@@ -5566,7 +5566,8 @@
     damage: 306
     damageType: Arrow
     crit: 4
-    projectileSpeed: 4
+    projectileSpeed: 6
+    projectileSpeedArrowMulti: 1
     knockback: 5.5
     useTime: 20
   worth: 22000000
@@ -5576,7 +5577,6 @@
   lore:
   - §r蓄力以逐渐填装威力强大的箭矢
   - §r最多装填六发
-  - §r箭矢装填的越多，威力就越大
   attributes:
     damage: 1540
     damageType: Arrow
@@ -5594,7 +5594,8 @@
     damage: 432
     damageType: Arrow
     crit: 4
-    projectileSpeed: 18
+    projectileSpeed: 9
+    projectileSpeedArrowMulti: 1
     knockback: 7.5
     useTime: 20
   worth: 24000000
@@ -5645,12 +5646,12 @@
   item: BOW
   lore:
   - §r自天空中发射五支箭
-  - §r所有箭都将迅速的跟踪敌人
+  - §r将所有箭转化为跟踪箭
   attributes:
     damage: 220
     damageType: Arrow
     crit: 4
-    projectileSpeed: 30
+    projectileSpeed: 20
     knockback: 4.25
     useTime: 15
   worth: 24000000

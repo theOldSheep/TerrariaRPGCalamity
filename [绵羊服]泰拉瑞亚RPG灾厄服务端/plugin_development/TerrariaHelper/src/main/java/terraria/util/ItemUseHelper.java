@@ -461,7 +461,14 @@ public class ItemUseHelper {
         return successfullyConsumed;
     }
     // weapon use helper functions below
-    protected static void displayLoadingProgress(Player ply, int currLoad, int maxLoad) {
+    protected static void handleFinishLoading(Player ply, ItemStack weapon) {
+        // weapon durability
+        setDurability(weapon, 1, 0);
+    }
+    protected static void displayLoadingProgress(Player ply, ItemStack weapon, int currLoad, int maxLoad) {
+        // weapon durability
+        setDurability(weapon, maxLoad, currLoad);
+        // title message
         double fillProgress = (double) currLoad / maxLoad;
         String colorCode;
         switch ((int) fillProgress * 5) {
@@ -3194,7 +3201,8 @@ public class ItemUseHelper {
             case "凝胶弓":
             case "暗之回响":
             case "恒吹雪":
-            case "蘑菇狙击枪": {
+            case "蘑菇狙击枪":
+            case "鬼火弓": {
                 Location fireLoc = ply.getEyeLocation();
                 Vector fireVelocity = facingDir.clone();
                 HashMap<String, Double> attrMapExtraProjectile = (HashMap<String, Double>) attrMap.clone();
@@ -3237,6 +3245,10 @@ public class ItemUseHelper {
                         attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.5);
                         break;
                     }
+                    case "鬼火弓": {
+                        extraProjectileType = "恶魔焰火球";
+                        break;
+                    }
                 }
                 // setup projectile velocity
                 if (shouldFire) {
@@ -3266,6 +3278,15 @@ public class ItemUseHelper {
                     ammoConversion = new ArrayList<>(2);
                     ammoConversion.add("诅咒箭");
                     ammoConversion.add("狱炎箭");
+                    fireAmount = 2;
+                }
+                break;
+            }
+            case "荆棘藤": {
+                if (fireIndex == 2) {
+                    ammoConversion = new ArrayList<>(2);
+                    ammoConversion.add("叶绿箭");
+                    ammoConversion.add("毒液箭");
                     fireAmount = 2;
                 }
                 break;
@@ -3367,7 +3388,8 @@ public class ItemUseHelper {
             // handle special weapons (pre-firing)
             switch (itemType) {
                 case "海啸弓":
-                case "黑翼蝙蝠弓": {
+                case "黑翼蝙蝠弓":
+                case "荆棘藤": {
                     fireLoc.add(MathHelper.vectorFromYawPitch_quick(plyNMS.yaw,
                                     plyNMS.pitch + 12.5 * (i - fireAmount / 2))
                             .multiply(1.5));
@@ -3381,7 +3403,9 @@ public class ItemUseHelper {
                     break;
                 }
                 case "湮灭千星":
-                case "代达罗斯风暴弓": {
+                case "代达罗斯风暴弓":
+                case "风暴":
+                case "血陨": {
                     Vector offset = new Vector(Math.random() * 30 - 15, 20 + Math.random() * 20, Math.random() * 30 - 15);
                     fireVelocity = offset.clone().multiply(-1).normalize();
                     Location destination = getPlayerTargetLoc(ply, 64, 4,
@@ -4401,16 +4425,20 @@ public class ItemUseHelper {
                 int swingAmount = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT).asInt();
                 if (maxLoad > 0) {
                     swingAmount = Math.min(swingAmount, maxLoad);
+                    // this is not first loading attempt
                     if (scoreboardTags.contains("temp_autoSwing")) {
+                        // still loading
                         if (scoreboardTags.contains("temp_isLoadingWeapon")) {
-                            // still loading
                             isLoading = true;
-                        } else {
-                            // finished loading
+                        }
+                        // finished loading
+                        else {
+                            handleFinishLoading(ply, mainHandItem);
                             autoSwing = false;
                         }
-                    } else {
-                        // start loading, as the auto swing scoreboard tag is added later.
+                    }
+                    // start loading, as the auto swing scoreboard tag is added later.
+                    else {
                         ply.addScoreboardTag("temp_isLoadingWeapon");
                         isLoading = true;
                     }
@@ -4419,7 +4447,7 @@ public class ItemUseHelper {
                     swingAmount = Math.min(swingAmount + 1, maxLoad);
                     ply.addScoreboardTag("temp_autoSwing");
                     EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, swingAmount);
-                    displayLoadingProgress(ply, swingAmount, maxLoad);
+                    displayLoadingProgress(ply, mainHandItem, swingAmount, maxLoad);
                     double loadSpeedMulti = weaponSection.getDouble("loadTimeMulti", 0.5d);
                     applyCD(ply, attrMap.getOrDefault("useTime", 10d)
                             * attrMap.getOrDefault("useTimeMulti", 1d) * loadSpeedMulti);

@@ -2864,7 +2864,6 @@ TNT:
     autoTraceRadius: 24
     autoTraceAbility: 5
     liveTime: 50
-####
 星夜光束:
     gravity: 0
     projectileSize: 0.75
@@ -3705,3 +3704,55 @@ TNT:
     blockHitAction: thru
     trailColor: 255|150|50
     trailStepSize: 1
+星能之箭:
+    gravity: 0
+    liveTime: 50
+    trailColor: 176|115|218
+    spawnProjectiles:
+        interval: 15
+        offset: 1.0
+        spawnMechanism: SURROUND
+        damageMulti: 0.5
+        speed: 2.0
+        spawnType: 魂灵星炎
+    buffInflict:
+        - "暗影焰|120|1"
+魂灵星炎:
+    gravity: 0
+    liveTime: 20
+    autoTrace: true
+发条精密箭:
+    gravity: 0
+    projectileSize: 0.5
+    blockHitAction: thru
+    liveTime: 30
+    autoTrace: true
+    autoTraceRadius: 20
+    autoTraceAbility: 3.5
+    trailColor: 255|212|16
+    trailStepSize: 1.5
+地核燃弧箭:
+    gravity: 0
+    projectileSize: 0.75
+    blockHitAction: thru
+    liveTime: 50
+风暴能源箭矢:
+    gravity: 0
+    projectileSize: 0.5
+    blockHitAction: thru
+    liveTime: 50
+恶魔焰火球:
+    gravity: 0
+    projectileSize: 0.5
+    blockHitAction: thru
+    autoTrace: true
+    isGrenade: true
+    liveTime: 50
+血陨之炎箭:
+    gravity: 0
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceAbility: 4.5
+    autoTraceRadius: 16
+    liveTime: 50
+###

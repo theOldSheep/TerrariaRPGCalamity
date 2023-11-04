@@ -1223,19 +1223,6 @@
   autoSwing: true
   shots: 4
   offSet: 49
-湮灭千星:
-  type: BOW
-  autoSwing: true
-  shots: 7
-  ammoConversion:
-    木箭:
-    - 红自导能源箭
-    - 绿自导能源箭
-    - 蓝自导能源箭
-    - 粉自导能源箭
-    - 黄自导能源箭
-    - 紫自导能源箭
-    - 橙自导能源箭
 钴连弩:
   type: BOW
   autoSwing: true
@@ -1378,6 +1365,75 @@
   autoSwing: true
   fireRounds: 3
   fireRoundsDelay: 1
+湮灭千星:
+  type: BOW
+  autoSwing: true
+  shots: 7
+  ammoConversion:
+    木箭:
+    - 红自导能源箭
+    - 绿自导能源箭
+    - 蓝自导能源箭
+    - 粉自导能源箭
+    - 黄自导能源箭
+    - 紫自导能源箭
+    - 橙自导能源箭
+灵星寂灭:
+  type: BOW
+  autoSwing: true
+  fireRounds: 5
+  fireRoundsDelay: 1
+  offSet: 15
+  attributes:
+    useTime: 6
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
+  ammoConversion:
+    ALL:
+    - 星能之箭
+发条弓:
+  type: BOW
+  autoSwing: true
+  maxLoad: 6
+  loadTimeMulti: 0.6
+  offSet: 15
+  ammoConversion:
+    ALL:
+    - 发条精密箭
+地核之炎:
+  type: BOW
+  autoSwing: true
+  fireRounds: 4
+  fireRoundsDelay: 1
+  ammoConversion:
+    ALL:
+    - 地核燃弧箭
+荆棘藤:
+  type: BOW
+  autoSwing: true
+  shots: 4
+  fireRounds: 2
+  fireRoundsDelay: 1
+风暴:
+  type: BOW
+  autoSwing: true
+  shots: 18
+  ammoConversion:
+    木箭:
+    - 风暴能源箭矢
+鬼火弓:
+  type: BOW
+  autoSwing: true
+  shots: 4
+  offSet: 30
+血陨:
+  type: BOW
+  autoSwing: true
+  shots: 5
+  ammoConversion:
+    ALL:
+    - 血陨之炎箭
+####
 劲弩:
   type: BOW
   autoSwing: true
