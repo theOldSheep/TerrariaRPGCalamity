@@ -157,7 +157,8 @@ public class ArrowHitListener implements Listener {
         }
         // tornado
         switch (projectileType) {
-            case "海之烧灼水弹": {
+            case "海之烧灼水弹":
+            case "台风箭": {
                 new PlayerTornado(
                         (Player) projectile.getShooter(), projectileDestroyLoc.clone().subtract(0, 2, 0),
                         new ArrayList<>(),

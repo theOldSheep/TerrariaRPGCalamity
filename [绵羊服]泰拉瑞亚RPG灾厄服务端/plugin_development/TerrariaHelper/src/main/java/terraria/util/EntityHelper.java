@@ -524,10 +524,10 @@ public class EntityHelper {
                     e);
         }
     }
-    public static void damageCD(List<Entity> dmgCdList, Entity damager, int cdTick) {
-        dmgCdList.add(damager);
+    public static void damageCD(Collection<Entity> dmgCdList, Entity entityToAdd, int cdTick) {
+        dmgCdList.add(entityToAdd);
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                () -> dmgCdList.remove(damager), cdTick);
+                () -> dmgCdList.remove(entityToAdd), cdTick);
     }
     public static void disguiseProjectile(Projectile projectile) {
         switch (projectile.getType()) {
@@ -953,6 +953,7 @@ public class EntityHelper {
         if (victim instanceof Player) {
             // health regen time reset
             setMetadata(victim, MetadataName.REGEN_TIME, 0);
+            // special damager
             Player vPly = (Player) victim;
             switch (damager.getName()) {
                 case "水螺旋": {
@@ -964,12 +965,14 @@ public class EntityHelper {
                     break;
                 }
             }
+            // accessories
             HashSet<String> accessories = PlayerHelper.getAccessories(victim);
             boolean hasMagicCuff = accessories.contains("魔法手铐") || accessories.contains("天界手铐");
             if (hasMagicCuff) {
                 int recovery = (int) Math.max(1, Math.floor(dmg / 4));
                 PlayerHelper.restoreMana(vPly, recovery);
             }
+            // armor sets
             String victimPlayerArmorSet = PlayerHelper.getArmorSet(vPly);
             switch (victimPlayerArmorSet) {
                 case "耀斑套装": {
@@ -983,6 +986,14 @@ public class EntityHelper {
                         applyEffect(damageTaker, "掠夺者之怒", 60);
                     if (damageType == DamageType.MELEE)
                         handleDamage(damageTaker, damager, Math.min(Math.max(dmg, 100), 500), DamageReason.THORN);
+                    break;
+                }
+            }
+            // special item
+            ItemStack plyTool = vPly.getEquipment().getItemInMainHand();
+            switch (ItemHelper.splitItemName(plyTool)[1]) {
+                case "赤陨霸龙弓": {
+                    setMetadata(vPly, MetadataName.PLAYER_ITEM_SWING_AMOUNT, 0);
                     break;
                 }
             }

@@ -766,6 +766,25 @@ public class GenericHelper {
             case "Debuff_弑神怒焰":
                 colorCode = "d";
                 break;
+            case "Debuff_超位崩解":
+                int rdm = (int) (Math.random() * 4);
+                // a random color from dark red, yellow, light blue and dark green
+                switch (rdm) {
+                    case 0:
+                        colorCode = "4";
+                        break;
+                    case 1:
+                        colorCode = "e";
+                        break;
+                    case 2:
+                        colorCode = "b";
+                        break;
+                    case 3:
+                    default:
+                        colorCode = "2";
+                        break;
+                }
+                break;
             default:
                 colorCode = isCrit ? "c" : "6";
         }

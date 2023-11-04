@@ -3755,4 +3755,192 @@ TNT:
     autoTraceAbility: 4.5
     autoTraceRadius: 16
     liveTime: 50
+充能猎魂鲨:
+    gravity: 0
+    projectileSize: 1.5
+    liveTime: 50
+    trailColor: 40|248|250
+    clusterBomb:
+        amount: 1
+        damageMulti: 1
+        name: 幽漩水爆炸
+        velocity: 0
+幽漩水爆炸:
+    gravity: 0
+    projectileSize: 3
+    penetration: 999999
+    blockHitAction: thru
+    liveTime: 21
+    enemyInvincibilityFrame: 10
+    spawnProjectiles:
+        interval: 2
+        offset: 0
+        spawnMechanism: SURROUND
+        damageMulti: 0.35
+        speed: 5
+        spawnType: 幽漩水爆炸冲击波
+幽漩水爆炸冲击波:
+    gravity: 0
+    liveTime: 1
+    penetration: 2
+    blockHitAction: thru
+    trailColor: 40|248|250
+台风箭:
+    liveTime: 75
+死亡之风紫色星云射线:
+    projectileSize: 0.5
+    liveTime: 2
+    speedMultiPerTick: 100
+    maxSpeed: 48
+    trailColor: 159|255|255
+死亡之风蓝色星云射线:
+    projectileSize: 0.5
+    liveTime: 2
+    speedMultiPerTick: 100
+    maxSpeed: 48
+    trailColor: 255|188|255
+创世之光:
+    gravity: 0
+    projectileSize: 0.5
+    blockHitAction: bounce
+    bounce: 1
+    liveTime: 120
+红创世之光束:
+    projectileSize: 0.75
+    blockHitAction: thru
+    penetration: 999999
+    liveTime: 2
+    speedMultiPerTick: 100
+    maxSpeed: 48
+    trailColor: 255|0|0
+黄创世之光束:
+    projectileSize: 0.75
+    blockHitAction: thru
+    penetration: 999999
+    liveTime: 2
+    speedMultiPerTick: 100
+    maxSpeed: 48
+    trailColor: 255|255|0
+绿创世之光束:
+    projectileSize: 0.75
+    blockHitAction: thru
+    penetration: 999999
+    liveTime: 2
+    speedMultiPerTick: 100
+    maxSpeed: 48
+    trailColor: 0|255|0
+蓝创世之光束:
+    projectileSize: 0.75
+    blockHitAction: thru
+    penetration: 999999
+    liveTime: 2
+    speedMultiPerTick: 100
+    maxSpeed: 48
+    trailColor: 0|255|255
+炎龙崩啸:
+    gravity: 0
+    projectileSize: 0.75
+    isGrenade: true
+    blastRadius: 2.25
+    liveTime: 75
+    buffInflict:
+        - "破晓|100|1"
+追踪炎龙崩啸:
+    gravity: 0
+    projectileSize: 0.75
+    isGrenade: true
+    blastRadius: 2.75
+    autoTrace: true
+    autoTraceRadius: 24
+    liveTime: 75
+    buffInflict:
+        - "破晓|100|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 1
+        name: 炎龙陨石
+        type: star
+        fireOnTimeout: false
+        velocity: 4
+充能炎龙崩啸:
+    gravity: 0
+    projectileSize: 0.75
+    isGrenade: true
+    blastRadius: 2.75
+    liveTime: 75
+    buffInflict:
+        - "破晓|100|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 1
+        name: 炎龙陨石
+        type: star
+        fireOnTimeout: false
+        velocity: 4
+炎龙陨石:
+    gravity: 0
+    blockHitAction: thru
+    isGrenade: true
+    projectileSize: 1.5
+    liveTime: 10
+天堂星流晶体:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.5
+    autoTrace: true
+    autoTraceRadius: 24
+    autoTraceAbility: 5
+    noAutoTraceTicks: 5
+    liveTime: 100
+    buffInflict:
+        - "超位崩解|100|1"
+    trailColor: 174|255|152
+    trailStepSize: 2
+天堂充能星流晶体:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.5
+    autoTrace: true
+    autoTraceRadius: 24
+    autoTraceAbility: 6
+    noAutoTraceTicks: 5
+    isGrenade: true
+    liveTime: 120
+    buffInflict:
+        - "超位崩解|100|1"
+    trailColor: 255|253|191
+    trailStepSize: 2
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.75
+        name: 天堂星流闪电
+        type: star
+        fireOnTimeout: false
+        velocity: 64
+天堂星流闪电:
+    blockHitAction: thru
+    projectileSize: 3
+    liveTime: 1
+    trailColor: 127|255|147
+    buffInflict:
+        - "超位崩解|100|1"
+瘟疫疫毒箭:
+    projectileSize: 0.5
+    liveTime: 40
+    spawnProjectiles:
+        interval: 5
+        offset: 0
+        spawnMechanism: SURROUND
+        damageMulti: 1
+        speed: 2.5
+        spawnType: 瘟疫疫病球
+瘟疫疫病球:
+    projectileSize: 0.5
+    gravity: 0
+    liveTime: 20
+    autoTrace: true
+    autoTraceRadius: 16
+    speedMultiPerTick: 0.5
+    isGrenade: true
+    blastRadius: 2.5
 ###

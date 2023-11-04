@@ -3159,7 +3159,7 @@ public class ItemUseHelper {
     }
     // ranged helper functions below
     protected static void handleRangedFire(Player ply, HashMap<String, Double> attrMapOriginal, ConfigurationSection weaponSection,
-                                         int fireIndex, int swingAmount,
+                                         ItemStack weaponItem, int fireIndex, int swingAmount,
                                          String itemType, String weaponType, String ammoTypeInitial,
                                          boolean isLoadingWeapon, boolean autoSwing) {
         int fireRoundMax = weaponSection.getInt("fireRounds", 1);
@@ -3181,16 +3181,6 @@ public class ItemUseHelper {
         List<String> ammoConversion = weaponSection.getStringList("ammoConversion." + ammoType);
         if (ammoConversion.isEmpty())
             ammoConversion = weaponSection.getStringList("ammoConversion.ALL");
-        // if the ammo could get converted into multiple possible projectiles, handle them separately in the loop instead.
-        if  (ammoConversion.size() <= 1) {
-            if (ammoConversion.size() == 1) ammoType = ammoConversion.get(0);
-            ConfigurationSection ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoType + ".attributes");
-            // if the converted ammo does not have attributes that overrides the original, default to the original
-            if (ammoAttributeSection == null)
-                ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoTypeInitial + ".attributes");
-            if (ammoAttributeSection != null)
-                EntityHelper.tweakAllAttributes(attrMap, ammoAttributeSection, true);
-        }
         // tweaks, such as extra projectiles from weapons
         switch (itemType) {
             // forward extra projectile
@@ -3305,6 +3295,28 @@ public class ItemUseHelper {
                 }
                 break;
             }
+            case "创世纪": {
+                double conversionRatio = (swingAmount - 20) / 30d;
+                // it converts merely into a plasma bolt if it is not powerful enough yet
+                if (Math.random() > conversionRatio) {
+                    ammoConversion = new ArrayList<>(1);
+                    ammoConversion.add("创世之光");
+                }
+                break;
+            }
+            case "赤陨霸龙弓": {
+                ammoConversion = new ArrayList<>(2);
+                if (swingAmount <= 40) {
+                    ammoConversion.add("炎龙崩啸");
+                }
+                else {
+                    ammoConversion.add("充能炎龙崩啸");
+                    if (swingAmount >= 50) {
+                        ammoConversion.add("追踪炎龙崩啸");
+                    }
+                }
+                break;
+            }
             // other
             case "屠夫": {
                 spread = Math.min(4 + swingAmount, 40);
@@ -3362,7 +3374,40 @@ public class ItemUseHelper {
                 }
                 break;
             }
+            case "天堂之风": {
+                int maxCharge = 15;
+                int currCharge = getDurability(weaponItem, maxCharge);
+                double chargeRatio = (double) currCharge / maxCharge;
+                // charges increases damage
+                // the quadratic style makes extra damage obvious only when it is almost fully charged
+                attrMap.put("damage", attrMapOriginal.get("damage") * (1 + chargeRatio * chargeRatio * 3));
+                // first shot of each fire round increases the charge
+                if (fireIndex == 1)
+                    currCharge ++;
+                // if fully charged, convert into empowered bolts
+                if (currCharge >= maxCharge) {
+                    ammoConversion = new ArrayList<>(1);
+                    ammoConversion.add("天堂充能星流晶体");
+                    // on last shot of charged attack, remove all charges
+                    if (fireIndex == fireRoundMax)
+                        currCharge = 0;
+                }
+                // update durability
+                setDurability(weaponItem, maxCharge, currCharge);
+                break;
+            }
         }
+        // if the ammo could get converted into multiple possible projectiles, handle them separately in the loop instead.
+        if  (ammoConversion.size() <= 1) {
+            if (ammoConversion.size() == 1) ammoType = ammoConversion.get(0);
+            ConfigurationSection ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoType + ".attributes");
+            // if the converted ammo does not have attributes that overrides the original, default to the original
+            if (ammoAttributeSection == null)
+                ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoTypeInitial + ".attributes");
+            if (ammoAttributeSection != null)
+                EntityHelper.tweakAllAttributes(attrMap, ammoAttributeSection, true);
+        }
+        // spawn projectiles in the loop body
         for (int i = 0; i < fireAmount; i ++) {
             // account for arrow attribute.
             // if the ammo could get converted into multiple possible projectiles, handle them separately here in the loop.
@@ -3389,7 +3434,10 @@ public class ItemUseHelper {
             switch (itemType) {
                 case "海啸弓":
                 case "黑翼蝙蝠弓":
-                case "荆棘藤": {
+                case "荆棘藤":
+                case "季风":
+                case "啸流":
+                case "赤陨霸龙弓_RIGHT_CLICK": {
                     fireLoc.add(MathHelper.vectorFromYawPitch_quick(plyNMS.yaw,
                                     plyNMS.pitch + 12.5 * (i - fireAmount / 2))
                             .multiply(1.5));
@@ -3416,6 +3464,11 @@ public class ItemUseHelper {
                     fireLoc = destination.add(offset);
                     break;
                 }
+                case "天堂之风": {
+                    double pitchOffset = -20 * MathHelper.xsin_degree( 360d * (fireIndex - 1d) / fireRoundMax );
+                    fireVelocity = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch + pitchOffset);
+                    break;
+                }
             }
             // setup projectile velocity
             fireVelocity.multiply(projectileSpeed);
@@ -3424,7 +3477,7 @@ public class ItemUseHelper {
             // handle special weapons (post-firing)
             switch (itemType) {
                 case "幻象弓":
-                case "幻界": {
+                case "幻魔": {
                     firedProjectile.addScoreboardTag("isVortex");
                     break;
                 }
@@ -3444,7 +3497,8 @@ public class ItemUseHelper {
         if (fireIndex < fireRoundMax) {
             int fireRoundDelay = weaponSection.getInt("fireRoundsDelay", 20);
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> handleRangedFire(ply, attrMapOriginal, weaponSection, fireIndex + 1, swingAmount,
+                    () -> handleRangedFire(ply, attrMapOriginal, weaponSection, weaponItem,
+                            fireIndex + 1, swingAmount,
                             itemType, weaponType, ammoTypeInitial, isLoadingWeapon, autoSwing)
                     , fireRoundDelay);
         }
@@ -3456,9 +3510,9 @@ public class ItemUseHelper {
         if (Math.random() < consumptionRate) ammo.setAmount(ammo.getAmount() - 1);
         return ammoName;
     }
-    protected static boolean playerUseRanged(Player ply, String itemType, int swingAmount, String weaponType,
-                                           boolean isLoadingWeapon, boolean autoSwing,
-                                           ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
+    protected static boolean playerUseRanged(Player ply, String itemType, int swingAmount, ItemStack weaponItem,
+                                             String weaponType, boolean isLoadingWeapon, boolean autoSwing,
+                                             ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
         Predicate<ItemStack> ammoPredicate = null;
         String ammoType = null;
         double consumptionRate = attrMap.getOrDefault("ammoConsumptionRate", 1d);
@@ -3497,7 +3551,7 @@ public class ItemUseHelper {
         // if no suitable ammo exists
         if (ammoType == null) return false;
         // otherwise, use the weapon.
-        handleRangedFire(ply, attrMap, weaponSection, 1, swingAmount,
+        handleRangedFire(ply, attrMap, weaponSection, weaponItem,1, swingAmount,
                 itemType, weaponType, ammoType, isLoadingWeapon, autoSwing);
         // apply CD
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
@@ -3520,6 +3574,14 @@ public class ItemUseHelper {
                         useSpeed *= 0.64;
                         break;
                 }
+                break;
+            }
+            case "赤陨霸龙弓": {
+                useSpeed *= 1 + (Math.min(swingAmount, 50) ) / 15d;
+                break;
+            }
+            case "瘟疫": {
+                useSpeed *= 1 + Math.min(swingAmount, 30) / 15d;
                 break;
             }
         }
@@ -4476,8 +4538,8 @@ public class ItemUseHelper {
                     case "GUN":
                     case "ROCKET":
                     case "SPECIAL_AMMO":
-                        success = playerUseRanged(ply, itemName, swingAmount, weaponType,
-                                maxLoad > 0, autoSwing, weaponSection, attrMap);
+                        success = playerUseRanged(ply, itemName, swingAmount, mainHandItem,
+                                weaponType, maxLoad > 0, autoSwing, weaponSection, attrMap);
                         break;
                     case "MAGIC_PROJECTILE":
                     case "MAGIC_SPECIAL":

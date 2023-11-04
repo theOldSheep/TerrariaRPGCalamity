@@ -5294,7 +5294,7 @@
     crit: 4
     projectileSpeed: 10
     knockback: 2
-    useTime: 18
+    useTime: 15
     ammoConsumptionRate: -0.66
   worth: 10000000
   rarity: 10
@@ -5702,7 +5702,7 @@
   item: BOW
   lore:
   - §r一次发射六支箭
-  - §r将木箭转化为鲨鱼，能量射线和台风箭
+  - §r将木箭转化为鲨鱼，充能猎魂鲨和台风箭
   attributes:
     damage: 330
     damageType: Arrow
@@ -5722,7 +5722,7 @@
     crit: 4
     projectileSpeed: 20
     knockback: 3
-    useTime: 12
+    useTime: 15
     ammoConsumptionRate: -0.66
   worth: 28000000
   rarity: 14
@@ -5731,7 +5731,6 @@
   lore:
   - §r射出连续的电浆光矢
   - §r随使用时间的增加，光矢会被替换成镭射死光
-  - §r持续射击时，光矢将会充能形成实体光束
   attributes:
     damage: 232
     damageType: Arrow
@@ -5745,11 +5744,11 @@
 赤陨霸龙弓:
   item: BOW
   lore:
-  - §r发射一连串龙焰火球，发射速度随使用时间增加而加快
-  - §r火球会降下陨石雨，留下龙尘造成伤害。在最大速度时会发射额外的火球，触发“火球激流”效果，火球具有追踪能力
-  - §r火球激流发动时，如果受到伤害，攻击会被打断，同时降低飞行时间
-  - §r右键点击发射两团毁灭性的强大火球
-  - §r“区区之事，无伤尔”"
+  - §r发射一连串炎龙崩啸，持续使用获得攻速且发射的炎龙崩啸获得增强
+  - §r增强后的炎龙崩啸击中后降下陨石雨
+  - §r如果受到伤害，持续使用增益将重新计数
+  - §r右键发射的炎龙崩啸必定属于增强状态，但伤害较低且射速较慢
+  - §r“区区之事，无伤尔”
   attributes:
     damage: 258
     damageType: Arrow
@@ -5757,13 +5756,14 @@
     projectileSpeed: 18
     knockback: 1
     useTime: 24
+    ammoConsumptionRate: -0.5
   worth: 30000000
   rarity: 15
 天堂之风:
   item: BOW
   lore:
   - §r发射一连串迅速的增压星流晶体箭
-  - §r连续攻击会使武器充能
+  - §r连续攻击会使武器充能，提供额外的攻击力
   - §r充能达到最大值时攻击会消耗所有充能且在被击中的任何目标上方召唤星流闪电激流
   attributes:
     damage: 430

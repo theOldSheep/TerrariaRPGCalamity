@@ -178,6 +178,14 @@ effects:
     attributes:
       regenMulti: -1
     tooltip: 被咆哮的火焰吞没
+  超位崩解:
+    isBuff: false
+    damageInterval: 3
+    damage: 4
+    damageMonster: 100
+    attributes:
+      regenMulti: -1
+    tooltip: 星流共振撕碎了组成你身体的物质
   流血:
     isBuff: false
     attributes:

@@ -6,6 +6,7 @@ import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
@@ -15,12 +16,14 @@ import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class PlayerTornado extends EntitySlime {
     // basic variables
     HashMap<String, Double> attrMap;
     ArrayList<PlayerTornado> tornadoList;
     PlayerTornado base;
+    HashSet<Entity> damageCD;
     int index = 0, rotationAngleOffsetPerLayer = 18, lastTime = 300;
     double angle = 0, horizontalOffset, verticalOffset;
     Player owner;
@@ -51,7 +54,7 @@ public class PlayerTornado extends EntitySlime {
         // face the charge direction
         this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
         // collision dmg
-        terraria.entity.boss.BossHelper.collisionDamage(this);
+        terraria.entity.boss.BossHelper.collisionDamage(this, damageCD, 8);
     }
     // default constructor to handle chunk unload
     public PlayerTornado(World world) {
@@ -75,6 +78,8 @@ public class PlayerTornado extends EntitySlime {
         this.rotationAngleOffsetPerLayer = rotationAngleOffsetPerLayer;
         this.lastTime = lastTime;
         this.attrMap = (HashMap<String, Double>) attrMap.clone();
+        // damage CD is shared for every layer
+        this.damageCD = index == 0 ? new HashSet<>() : tornadoList.get(0).damageCD;
         setCustomName(name);
         setCustomNameVisible(false);
         bukkitEntity.addScoreboardTag("noDamage");

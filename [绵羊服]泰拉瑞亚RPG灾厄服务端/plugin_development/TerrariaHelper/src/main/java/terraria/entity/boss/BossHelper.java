@@ -21,6 +21,7 @@ import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class BossHelper {
@@ -208,6 +209,9 @@ public class BossHelper {
         return finalTarget;
     }
     public static void collisionDamage(net.minecraft.server.v1_12_R1.Entity boss) {
+        collisionDamage(boss, null, 1);
+    }
+    public static void collisionDamage(net.minecraft.server.v1_12_R1.Entity boss, @Nullable Collection<Entity> damageExceptions, int damageCDTicks) {
         Entity monsterBkt = boss.getBukkitEntity();
         AxisAlignedBB bb = boss.getBoundingBox();
         double xWidth = (bb.d - bb.a) / 2, zWidth = (bb.f - bb.c) / 2, height = (bb.e - bb.b) / 2;
@@ -220,8 +224,16 @@ public class BossHelper {
                 (net.minecraft.server.v1_12_R1.Entity entity) -> EntityHelper.checkCanDamage(monsterBkt, entity.getBukkitEntity(), false));
         double damage = EntityHelper.getAttrMap(monsterBkt).getOrDefault("damage", 1d);
         for (HitEntityInfo hitEntityInfo : toDamage) {
-            EntityHelper.handleDamage(monsterBkt, hitEntityInfo.getHitEntity().getBukkitEntity(),
+            Entity victimEntity = hitEntityInfo.getHitEntity().getBukkitEntity();
+            // do not damage an entity with exception
+            if (damageExceptions != null && damageExceptions.contains(victimEntity))
+                continue;
+            EntityHelper.handleDamage(monsterBkt, victimEntity,
                     damage, EntityHelper.DamageReason.DIRECT_DAMAGE);
+            // record damage CD
+            if (damageExceptions != null) {
+                EntityHelper.damageCD(damageExceptions, victimEntity, damageCDTicks);
+            }
         }
     }
     public static void handleBossDeath(terraria.util.BossHelper.BossType bossType,

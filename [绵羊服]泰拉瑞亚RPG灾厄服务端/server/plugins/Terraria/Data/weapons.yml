@@ -1433,6 +1433,96 @@
   ammoConversion:
     ALL:
     - 血陨之炎箭
+幽漩风暴:
+  type: BOW
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 充能猎魂鲨
+季风:
+  type: BOW
+  shots: 5
+  autoSwing: true
+  ammoConversion:
+    木箭:
+    - 台风箭
+    - 迷你鲨鱼龙
+    - 迷你鲨鱼龙
+    - 迷你鲨鱼龙
+    - 迷你鲨鱼龙
+死亡之风:
+  type: BOW
+  shots: 4
+  offSet: 35
+  autoSwing: true
+  ammoConversion:
+    木箭:
+    - 死亡之风蓝色星云射线
+    - 死亡之风紫色星云射线
+啸流:
+  type: BOW
+  shots: 6
+  fireRounds: 2
+  fireRoundsDelay: 5
+  autoSwing: true
+  ammoConversion:
+    木箭:
+    - 台风箭
+    - 迷你鲨鱼龙
+    - 充能猎魂鲨
+幻魔:
+  type: BOW
+  autoSwing: true
+  shots: 5
+  offSet: 49
+创世纪:
+  type: BOW
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 红创世之光束
+    - 黄创世之光束
+    - 绿创世之光束
+    - 蓝创世之光束
+赤陨霸龙弓:
+  type: BOW
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 炎龙崩啸
+    - 追踪炎龙崩啸
+    - 充能炎龙崩啸
+赤陨霸龙弓_RIGHT_CLICK:
+  type: BOW
+  shots: 5
+  fireRounds: 2
+  fireRoundsDelay: 4
+  autoSwing: true
+  attributes:
+    damage: 155
+    useTime: 20
+  ammoConversion:
+    ALL:
+    - 充能炎龙崩啸
+天堂之风:
+  type: BOW
+  fireRounds: 10
+  fireRoundsDelay: 1
+  autoSwing: true
+  attributes:
+    useTime: 10
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
+  ammoConversion:
+    ALL:
+    - 天堂星流晶体
+瘟疫:
+  type: BOW
+  offSet: 30
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 瘟疫疫毒箭
 ####
 劲弩:
   type: BOW
