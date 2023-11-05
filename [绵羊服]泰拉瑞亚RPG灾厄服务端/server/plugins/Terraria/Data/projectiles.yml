@@ -3943,4 +3943,24 @@ TNT:
     speedMultiPerTick: 0.5
     isGrenade: true
     blastRadius: 2.5
-###
+诘责之矢:
+    projectileSize: 2
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceRadius: 16
+    gravity: 0
+    liveTime: 75
+    spawnProjectiles:
+        interval: 8
+        offset: 0
+        spawnMechanism: SURROUND
+        damageMulti: 0.5
+        speed: 2.75
+        spawnType: 诘责分裂箭
+诘责分裂箭:
+    projectileSize: 1.5
+    autoTrace: true
+    autoTraceRadius: 24
+    autoTraceAbility: 5
+    gravity: 0
+    liveTime: 40

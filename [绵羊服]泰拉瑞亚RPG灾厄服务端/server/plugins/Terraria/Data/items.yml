@@ -5787,7 +5787,6 @@
     useTime: 20
   worth: 40000000
   rarity: 16
-####
 劲弩:
   item: BOW
   lore:
@@ -5832,7 +5831,7 @@
   item: BOW
   lore:
   - §r发射出注入了仇恨魔法的绯红弩箭
-  - §r左键长按以填充箭矢，最多填充八支箭矢，松开以将其一起发射出
+  - §r左键可填充至多八支箭矢并将其一起发射出
   - §r右键可使其连续发射
   attributes:
     damage: 4260
@@ -5840,7 +5839,7 @@
     crit: 4
     projectileSpeed: 14.5
     knockback: 5
-    useTime: 23
+    useTime: 35
   worth: 30000000
   rarity: 15
 榴弹发射器:

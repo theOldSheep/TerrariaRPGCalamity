@@ -1523,7 +1523,6 @@
   ammoConversion:
     ALL:
     - 瘟疫疫毒箭
-####
 劲弩:
   type: BOW
   autoSwing: true
@@ -1540,6 +1539,21 @@
 恒吹雪:
   type: BOW
   autoSwing: true
+诘责:
+  type: BOW
+  autoSwing: true
+  maxLoad: 8
+  loadTimeMulti: 0.75
+  fireRoundsDelay: 1
+  ammoConversion:
+    ALL:
+    - 诘责之矢
+诘责_RIGHT_CLICK:
+  type: BOW
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 诘责之矢
 气泵枪:
   type: SPECIAL_AMMO
   ammo: _南瓜榴弹

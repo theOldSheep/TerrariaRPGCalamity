@@ -3396,6 +3396,12 @@ public class ItemUseHelper {
                 setDurability(weaponItem, maxCharge, currCharge);
                 break;
             }
+            case "诘责": {
+                // shots are fired with a delay instead of launched all at once
+                fireRoundMax = swingAmount;
+                fireAmount = 1;
+                break;
+            }
         }
         // if the ammo could get converted into multiple possible projectiles, handle them separately in the loop instead.
         if  (ammoConversion.size() <= 1) {
