@@ -6747,6 +6747,352 @@ P90:
     useTime: 15
   worth: 16000000
   rarity: 9
+散播者:
+  item: BLAZE_ROD
+  lore:
+  - §r@全体成员
+  attributes:
+    damage: 104
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 13
+    knockback: 4.5
+    useTime: 30
+    ammoConsumptionRate: -0.5
+  worth: 20000000
+  rarity: 10
+玛瑙链炮:
+  item: BLAZE_ROD
+  lore:
+  - §r发射数颗子弹和一个玛瑙碎片
+  attributes:
+    damage: 102
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 4.5
+    useTime: 15
+    ammoConsumptionRate: -0.5
+  worth: 20000000
+  rarity: 10
+解离者:
+  item: BLAZE_ROD
+  lore:
+  - §r神话，传说，这把枪能让你的电脑爆炸
+  - §r发射一团会分裂弹射的能量子弹
+  - §r右键发射一团普通子弹
+  - §r“在这个时期看到这样的面板伤害时，你就知道它是个什么货色了”
+  attributes:
+    damage: 54
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 1.5
+    useTime: 32
+  worth: 22000000
+  rarity: 11
+黄金之鹰:
+  item: BLAZE_ROD
+  lore:
+  - §r一次发射五颗子弹
+  attributes:
+    damage: 170
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 20
+    knockback: 3
+    useTime: 19
+  worth: 22000000
+  rarity: 11
+极光:
+  item: BLAZE_ROD
+  lore:
+  - §r发射可以削减敌人防线的高速闪光子弹
+  attributes:
+    damage: 1400
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 7.5
+    knockback: 10
+    useTime: 30
+  worth: 24000000
+  rarity: 12
+天使圣火炮:
+  item: BLAZE_ROD
+  lore:
+  - §r射出八颗子弹，将火枪子弹转化为光爆弹
+  - §r战斗直到胜利
+  attributes:
+    damage: 225
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 3
+    useTime: 24
+  worth: 24000000
+  rarity: 12
+海龙:
+  item: BLAZE_ROD
+  lore:
+  - §r每隔一发子弹就会射出强劲水流
+  - §r每18发子弹会发射一枚追踪火箭，爆炸后产生火焰碎片
+  attributes:
+    damage: 120
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 16
+    knockback: 2.5
+    useTime: 5
+    ammoConsumptionRate: -0.5
+  worth: 24000000
+  rarity: 12
+风暴龙骑士:
+  item: BLAZE_ROD
+  lore:
+  - §r发射数颗子弹
+  attributes:
+    damage: 192
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 18
+    knockback: 3.25
+    useTime: 20
+    ammoConsumptionRate: -0.9
+  worth: 24000000
+  rarity: 12
+深红手炮:
+  item: BLAZE_ROD
+  lore:
+  - §r将火枪子弹转化为三发吸血的血泪弹
+  attributes:
+    damage: 280
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 18
+    knockback: 5.5
+    useTime: 9
+  worth: 24000000
+  rarity: 12
+Dodu的手炮:
+  item: BLAZE_ROD
+  lore:
+  - §r坚果之力被你握在手中
+  - §r发射高爆花生壳
+  - §r嗯，就是你想的那个“花生壳”
+  attributes:
+    damage: 2040
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 24
+    knockback: 6
+    useTime: 30
+  worth: 26000000
+  rarity: 13
+腐臭倾泻者:
+  item: BLAZE_ROD
+  lore:
+  - §r有一定几率射出腐烂肉块而不是子弹
+  attributes:
+    damage: 260
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 16
+    knockback: 3
+    useTime: 6
+    ammoConsumptionRate: -0.4
+  worth: 26000000
+  rarity: 13
+无穷:
+  item: BLAZE_ROD
+  lore:
+  - §r发射一团会分裂弹射的能量子弹
+  - §r右键发射一团普通子弹
+  - §r只要你把它握在手中，无限的电脑解离就不会停止
+  attributes:
+    damage: 240
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 1
+    useTime: 18
+  worth: 28000000
+  rarity: 14
+宇宙之源:
+  item: BLAZE_ROD
+  lore:
+  - §r将普通子弹转化为击中后召唤额外坠星的唤星弹
+  - §r令星空坠落到敌人头上
+  - §r“宇宙万法的那个源头，他是什么？”
+  attributes:
+    damage: 384
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 20
+    knockback: 6.5
+    useTime: 26
+    ammoConsumptionRate: -0.5
+  worth: 28000000
+  rarity: 14
+反器材狙击步枪:
+  item: BLAZE_ROD
+  lore:
+  - §r将子弹转化为.50口径的狙击子弹，撕裂敌人的防御和伤害减免
+  - §r暴击会在敌人两侧释放第二轮含有5发子弹的弹雨
+  attributes:
+    damage: 3720
+    damageType: Bullet
+    crit: 24
+    projectileSpeed: 12
+    knockback: 9.5
+    useTime: 60
+  worth: 28000000
+  rarity: 14
+太空公爵机枪:
+  item: BLAZE_ROD
+  lore:
+  - §r来自于泰拉大陆之边界
+  attributes:
+    damage: 200
+    damageType: Bullet
+    crit: 19
+    projectileSpeed: 16
+    knockback: 2.75
+    useTime: 2
+    ammoConsumptionRate: -0.5
+  worth: 28000000
+  rarity: 14
+奥妮克希亚:
+  item: BLAZE_ROD
+  lore:
+  - §r向敌人倾泻弹雨与玛瑙碎片
+  attributes:
+    damage: 180
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 16
+    knockback: 4.5
+    useTime: 10
+    ammoConsumptionRate: -0.5
+  worth: 28000000
+  rarity: 14
+巨龙之息:
+  item: BLAZE_ROD
+  lore:
+  - §r左键发射两束散弹
+  - §r第一束为六发普通子弹
+  - §r第二束为六发密集龙息弹
+  - §r右键全自动发射两种子弹，但伤害降低20%
+  - §r会发射爆炸的子弹
+  attributes:
+    damage: 324
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 6.5
+    useTime: 18
+    ammoConsumptionRate: -0.66
+  worth: 30000000
+  rarity: 15
+迷你加特林:
+  item: BLAZE_ROD
+  attributes:
+    damage: 550
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 22
+    knockback: 2.5
+    useTime: 3
+    ammoConsumptionRate: -0.8
+  worth: 30000000
+  rarity: 15
+暴政之终:
+  item: BLAZE_ROD
+  lore:
+  - §r将子弹转化为.70口径的狙击弹，造成毁灭性伤害
+  - §r击中敌人时造成死亡标记
+  - §r暴击会召唤6发额外子弹
+  - §r“击穿即便是拥有着最精良武装的敌人心脏”
+  attributes:
+    damage: 4000
+    damageType: Bullet
+    crit: 39
+    projectileSpeed: 12
+    knockback: 9.5
+    useTime: 65
+  worth: 30000000
+  rarity: 15
+煌晖御流炮:
+  item: BLAZE_ROD
+  lore:
+  - §r左键攻击会发射出击中时产生爆炸的激光
+  - §r右键攻击会发射出多束激光，击中敌怪时释放出追踪能量流
+  attributes:
+    damage: 280
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 11
+    knockback: 8
+    useTime: 28
+  worth: 30000000
+  rarity: 15
+斯万科技枪:
+  item: BLAZE_ROD
+  lore:
+  - §r发射出巨量子弹
+  attributes:
+    damage: 300
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 3.5
+    useTime: 2
+    ammoConsumptionRate: -0.9
+  worth: 40000000
+  rarity: 16
+太虚星龙炮:
+  item: BLAZE_ROD
+  lore:
+  - §r每隔一发就会发射虚空爆破弹
+  - §r每一发都会射出魔火之触
+  attributes:
+    damage: 480
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 18
+    knockback: 5
+    useTime: 5
+    ammoConsumptionRate: -0.75
+  worth: 40000000
+  rarity: 16
+月神Prime:
+  item: BLAZE_ROD
+  lore:
+  - §r获得相当于暴击率的暴击伤害加成
+  - §r将火枪子弹转化为极强的高速子弹，造成强大的流血减益
+  - §r该减益每秒造成100点伤害，最多叠加10层
+  attributes:
+    damage: 750
+    damageType: Bullet
+    crit: 34
+    projectileSpeed: 9
+    knockback: 2
+    useTime: 5
+    ammoConsumptionRate: -0.8
+  worth: 40000000
+  rarity: 16
+大比目鱼炮:
+  item: BLAZE_ROD
+  lore:
+  - §r是的，这把武器现在还是强得过分
+  attributes:
+    damage: 200
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 1
+    useTime: 20
+  worth: 40000000
+  rarity: 16
 火花魔棒:
   item: STICK
   lore:

@@ -2087,6 +2087,54 @@ ANVIL:
     - 黑鹰遥控器
     - 地狱风暴
     - 瘟疫装甲镀层:25
+  '250_1':
+    requireLevel: 3
+    resultItem: 无穷
+    requireItem:
+    - 解离者
+    - 宇宙锭:10
+  '250_2':
+    requireLevel: 3
+    resultItem: 宇宙之源
+    requireItem:
+    - 化神魂精:4
+    - 坠星:5
+    - 宇宙锭:5
+    - 散播者
+  '250_3':
+    requireLevel: 3
+    resultItem: 反器材狙击步枪
+    requireItem:
+    - 极光
+    - 宇宙锭:10
+  '250_4':
+    requireLevel: 3
+    resultItem: 太空公爵机枪
+    requireItem:
+    - 太空海豚机枪
+    - 腐臭倾泻者
+    - 宇宙锭:10
+  '250_5':
+    requireLevel: 3
+    resultItem: 奥妮克希亚
+    requireItem:
+    - 玛瑙链炮
+    - 宇宙锭:8
+    - 日蚀之阴碎片:8
+  '250_6':
+    requireLevel: 3
+    resultItem: 迷你加特林
+    requireItem:
+    - 链式机枪
+    - 发条鳄鱼枪
+    - 圣金源锭:5
+  '250_7':
+    requireLevel: 3
+    resultItem: 暴政之终
+    requireItem:
+    - 黄金之鹰
+    - 反器材狙击步枪
+    - 圣金源锭:5
   '251':
     requireLevel: 2
     resultItem: 岩鲨发射器
@@ -4048,6 +4096,62 @@ TINKER_WORKBENCH:
     resultItem: 幻星冲击炮
     requireItem:
     - 炫星锭:6
+  '50_1':
+    requireLevel: 1
+    resultItem: 散播者
+    requireItem:
+    - 电话会议
+    - 夜明锭:5
+  '50_2':
+    requireLevel: 1
+    resultItem: 玛瑙链炮
+    requireItem:
+    - 玛瑙爆破枪
+    - 链式机枪
+    - 夜明锭:5
+  '50_3':
+    requireLevel: 1
+    resultItem: 解离者
+    requireItem:
+    - 霜牙冲击波
+    - 满弹霰弹枪
+    - 夜明锭:5
+  '50_4':
+    requireLevel: 1
+    resultItem: 极光
+    requireItem:
+    - 龙蒿锭:5
+    - 星舰电池:5
+    - 星尘:50
+    - 蘑菇狙击枪
+  '50_5':
+    requireLevel: 1
+    resultItem: 天使圣火炮
+    requireItem:
+    - 坠星:5
+    - 龙蒿锭:10
+    - 神圣晶石:15
+    - 日光核心:7
+  '50_6':
+    requireLevel: 1
+    resultItem: 海龙
+    requireItem:
+    - 装甲外壳:3
+    - 灵质:9
+    - 海棱晶:10
+    - 巨兽鲨
+  '50_7':
+    requireLevel: 1
+    resultItem: 深红手炮
+    requireItem:
+    - 血石核心:4
+  '50_8':
+    requireLevel: 1
+    resultItem: Dodu的手炮
+    requireItem:
+    - 珍珠之神
+    - 毁灭之灵:5
+    - 夜明锭:15
   '51':
     requireLevel: 1
     resultItem: 天蝎座
@@ -4223,3 +4327,26 @@ TINKER_WORKBENCH:
     - 魔影锭:5
     - 瘟疫细胞罐:20
     - 瘟疫装甲镀层:5
+  '10':
+    requireLevel: 1
+    resultItem: 斯万科技枪
+    requireItem:
+    - 太空公爵机枪
+    - 魔影锭:5
+    - 恐惧之魂:10
+    - 视域之魂:10
+    - 力量之魂:10
+  '11':
+    requireLevel: 1
+    resultItem: 太虚星龙炮
+    requireItem:
+    - 海龙
+    - 魔影锭:5
+    - 恐惧之魂:30
+  '12':
+    requireLevel: 1
+    resultItem: 月神Prime
+    requireItem:
+    - P90
+    - 魔影锭:5
+    - 迷你加特林

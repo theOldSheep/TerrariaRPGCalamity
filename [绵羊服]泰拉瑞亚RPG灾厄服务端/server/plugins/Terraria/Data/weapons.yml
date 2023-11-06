@@ -1954,26 +1954,26 @@ P90:
     - 初级榴弹
     二级火箭:
     - 二级榴弹
-    三级火箭: 
+    三级火箭:
     - 三级榴弹
-    四级火箭: 
+    四级火箭:
     - 四级榴弹
-    集束火箭: 
+    集束火箭:
     - 集束榴弹
 雪人炮:
   type: ROCKET
   autoSwing: true
   offSet: 49
   ammoConversion:
-    初级火箭: 
+    初级火箭:
     - 初级雪人火箭
-    二级火箭: 
+    二级火箭:
     - 二级雪人火箭
-    三级火箭: 
+    三级火箭:
     - 三级雪人火箭
-    四级火箭: 
+    四级火箭:
     - 四级雪人火箭
-    集束火箭: 
+    集束火箭:
     - 集束雪人火箭
 喜庆弹射器:
   type: ROCKET
@@ -1981,7 +1981,7 @@ P90:
   shots: 2
   offSet: 24
   ammoConversion:
-    ALL: 
+    ALL:
     - 红烟花火箭
     - 黄烟花火箭
     - 绿烟花火箭
@@ -1990,13 +1990,13 @@ P90:
   type: ROCKET
   autoSwing: true
   ammoConversion:
-    ALL: 
+    ALL:
     - 玛瑙火箭弹
 蜂巢发射器:
   type: ROCKET
   autoSwing: true
   ammoConversion:
-    ALL: 
+    ALL:
     - 蜜蜂RPG
     - 蜂巢火箭
     - 瘟疫导弹
@@ -2005,7 +2005,7 @@ P90:
   type: ROCKET
   autoSwing: true
   ammoConversion:
-    ALL: 
+    ALL:
     - 天蝎座迷你火箭
 天蝎座_RIGHT_CLICK:
   type: ROCKET
@@ -2014,7 +2014,7 @@ P90:
     damage: 200
     useTime: 13
   ammoConversion:
-    ALL: 
+    ALL:
     - 天蝎座大号核弹
 木制回力镖:
   type: BOOMERANG
