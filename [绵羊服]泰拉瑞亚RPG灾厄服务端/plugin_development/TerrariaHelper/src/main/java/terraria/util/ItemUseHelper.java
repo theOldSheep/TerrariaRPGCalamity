@@ -3337,7 +3337,8 @@ public class ItemUseHelper {
             }
             case "巨龙之息_RIGHT_CLICK": {
                 if (Math.random() < 0.5) {
-                    ammoConversion = new ArrayList<>(1);
+                    ammoConversion = new ArrayList<>(2);
+                    ammoConversion.add("龙息弹");
                     ammoConversion.add("龙息弹");
                 }
                 break;
@@ -3503,7 +3504,7 @@ public class ItemUseHelper {
                             break;
                         case "黄金之鹰":
                             pitchOffset = 1;
-                            shootLocOffsetLen = 1;
+                            shootLocOffsetLen = 1.25;
                             break;
                         case "无穷":
                         case "无穷_RIGHT_CLICK":
@@ -3511,32 +3512,33 @@ public class ItemUseHelper {
                             if (swingAmount % 2 == 1)
                                 progress = 1 - progress;
                             pitchOffset = 10 * progress;
-                            shootLocOffsetLen = 1;
+                            shootLocOffsetLen = 2;
                             // skip the middle bullet
                             if (i == 1)
                                 i ++;
                             break;
                         case "宇宙之源":
                             pitchOffset = 0.5;
-                            shootLocOffsetLen = 1;
+                            shootLocOffsetLen = 1.25;
                             break;
                         case "巨龙之息":
                             pitchOffset = 0.5;
-                            shootLocOffsetLen = 0.75;
+                            shootLocOffsetLen = 1.5;
                             break;
                         case "巨龙之息_RIGHT_CLICK":
                             pitchOffset = 1.5;
-                            shootLocOffsetLen = 0.75;
-                            Bukkit.broadcastMessage(ammoConversion.toString() + "(bef " + i);
+                            shootLocOffsetLen = 1.5;
                             // randomize the ammo conversion after each shot
+                            ammoConversion = new ArrayList<>(2);
                             if (Math.random() < 0.5) {
-                                ammoConversion = new ArrayList<>(2);
                                 ammoConversion.add("龙息弹");
                                 ammoConversion.add("龙息弹");
                             }
-                            else
-                                ammoConversion.clear();
-                            Bukkit.broadcastMessage(ammoConversion.toString() + "(aft" + i);
+                            // convert it back to original, otherwise it will not be updated
+                            else {
+                                ammoConversion.add(ammoTypeInitial);
+                                ammoConversion.add(ammoTypeInitial);
+                            }
                             break;
                         default:
                             pitchOffset = 1;

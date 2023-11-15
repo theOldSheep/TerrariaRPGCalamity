@@ -2025,6 +2025,10 @@ Dodu的手炮:
   fireRoundsDelay: 1
   shots: 3
   autoSwing: true
+  attributes:
+    useTime: 10
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
   ammoConversion:
     ALL:
     - 解离弹

@@ -6066,7 +6066,7 @@
     damageType: Arrow
     crit: 4
     projectileSpeed: 3
-    projectileSpeedMulti: 2
+    projectileSpeedMulti: 0.5
     knockback: 4.5
   worth: 300
   rarity: 0
@@ -9175,7 +9175,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4
     projectileSpeed: 0.5
-    projectileSpeedMulti: 1
+    projectileSpeedMulti: 0.25
   worth: 2000
   rarity: 1
 狱炎箭:
@@ -9196,7 +9196,7 @@ Dodu的手炮:
     crit: 4
     knockback: 2.2
     projectileSpeed: 3.75
-    projectileSpeedMulti: 1
+    projectileSpeedMulti: 0.25
   worth: 300
   rarity: 0
 圣箭:
@@ -9231,7 +9231,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3.5
     projectileSpeed: 4.5
-    projectileSpeedMulti: 1
+    projectileSpeedMulti: 0.25
   worth: 2000
   rarity: 7
 毒液箭:
@@ -9244,7 +9244,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4.2
     projectileSpeed: 4.3
-    projectileSpeedMulti: 1
+    projectileSpeedMulti: 0.25
   worth: 1800
   rarity: 3
 夜明箭:
@@ -9257,7 +9257,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3.5
     projectileSpeed: 3
-    projectileSpeedMulti: 1
+    projectileSpeedMulti: 0.25
   worth: 200
   rarity: 9
 北极箭:
@@ -9282,7 +9282,7 @@ Dodu的手炮:
     crit: 4
     knockback: 2.5
     projectileSpeed: 1
-    projectileSpeedMulti: 1
+    projectileSpeedMulti: 0.25
   worth: 1600
   rarity: 6
 汽油箭:
@@ -9308,7 +9308,7 @@ Dodu的手炮:
     crit: 4
     knockback: 1.5
     projectileSpeed: 15
-    projectileSpeedMulti: 1
+    projectileSpeedMulti: 0.25
   worth: 2000
   rarity: 7
 火枪子弹:
@@ -9351,7 +9351,7 @@ Dodu的手炮:
     crit: 4
     knockback: 6.6
     projectileSpeed: 4.7
-    projectileSpeedMulti: 2
+    projectileSpeedMulti: 0.5
   worth: 800
   rarity: 3
 绿藻弹:
@@ -9365,7 +9365,7 @@ Dodu的手炮:
     crit: 4
     knockback: 2
     projectileSpeed: 5
-    projectileSpeedMulti: 2
+    projectileSpeedMulti: 0.5
   worth: 1000
   rarity: 7
 水晶子弹:
@@ -9378,7 +9378,7 @@ Dodu的手炮:
     crit: 4
     knockback: 1
     projectileSpeed: 5
-    projectileSpeedMulti: 1
+    projectileSpeedMulti: 0.25
   worth: 600
   rarity: 3
 诅咒弹:
@@ -9389,7 +9389,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4
     projectileSpeed: 5
-    projectileSpeedMulti: 2
+    projectileSpeedMulti: 0.5
   worth: 600
   rarity: 3
 毒液弹:
@@ -9402,7 +9402,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4.1
     projectileSpeed: 5.3
-    projectileSpeedMulti: 2
+    projectileSpeedMulti: 0.5
   worth: 800
   rarity: 3
 夜明弹:
@@ -9415,7 +9415,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3
     projectileSpeed: 2
-    projectileSpeedMulti: 5
+    projectileSpeedMulti: 1
   worth: 200
   rarity: 9
 加速弹:
@@ -9429,7 +9429,7 @@ Dodu的手炮:
     crit: 4
     knockback: 1.25
     projectileSpeed: 1
-    projectileSpeedMulti: 3
+    projectileSpeedMulti: 0.5
   worth: 5000
   rarity: 1
 鼠疫弹:
@@ -9443,7 +9443,7 @@ Dodu的手炮:
     crit: 4
     knockback: 1.5
     projectileSpeed: 10
-    projectileSpeedMulti: 3
+    projectileSpeedMulti: 0.5
   worth: 25000
   rarity: 8
 海伯里斯弹:
@@ -9457,7 +9457,7 @@ Dodu的手炮:
     crit: 4
     knockback: 1.5
     projectileSpeed: 16
-    projectileSpeedMulti: 3
+    projectileSpeedMulti: 0.5
   worth: 1600
   rarity: 9
 冰砾弹:
@@ -9471,7 +9471,7 @@ Dodu的手炮:
     crit: 4
     knockback: 2
     projectileSpeed: 5
-    projectileSpeedMulti: 3
+    projectileSpeedMulti: 0.5
   worth: 1600
   rarity: 6
 弹球弹:
@@ -9484,7 +9484,7 @@ Dodu的手炮:
     crit: 4
     knockback: 1.5
     projectileSpeed: 1
-    projectileSpeedMulti: 1
+    projectileSpeedMulti: 0.25
   worth: 5000
   rarity: 2
 泰拉弹:
@@ -9497,7 +9497,7 @@ Dodu的手炮:
     crit: 4
     knockback: 1.25
     projectileSpeed: 10
-    projectileSpeedMulti: 3
+    projectileSpeedMulti: 0.5
   worth: 40000
   rarity: 7
 钫弹:
@@ -9511,8 +9511,19 @@ Dodu的手炮:
     crit: 4
     knockback: 1.25
     projectileSpeed: 16
-    projectileSpeedMulti: 1
+    projectileSpeedMulti: 0.25
   worth: 10000
+  rarity: 3
+极光弹:
+  item: SLIME_BALL
+  attributes:
+    damage: 22
+    damageType: Bullet
+    crit: 4
+    knockback: 4
+    projectileSpeed: 4
+    projectileSpeedMulti: 4
+  worth: 800
   rarity: 3
 .50狙击弹:
   item: SLIME_BALL
@@ -9522,7 +9533,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4
     projectileSpeed: 4
-    projectileSpeedMulti: 8
+    projectileSpeedMulti: 4
   worth: 800
   rarity: 3
 .70狙击弹:
@@ -9533,7 +9544,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4
     projectileSpeed: 4
-    projectileSpeedMulti: 8
+    projectileSpeedMulti: 4
   worth: 800
   rarity: 3
 月神高速弹:
@@ -9544,7 +9555,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4
     projectileSpeed: 4
-    projectileSpeedMulti: 8
+    projectileSpeedMulti: 4
   worth: 800
   rarity: 3
 初级火箭:

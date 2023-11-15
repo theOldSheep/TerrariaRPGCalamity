@@ -1566,7 +1566,7 @@ TNT:
 极光弹:
     gravity: 0
     projectileSize: 0.5
-    liveTime: 20
+    liveTime: 10
     trailColor: 87|255|255
     trailSize: 0.1
     trailStepSize: 1
@@ -1704,7 +1704,7 @@ TNT:
     trailStepSize: 3
 月神高速弹:
     gravity: 0
-    liveTime: 40
+    liveTime: 10
     penetration: 2
     trailColor: 220|213|47
     trailStepSize: 3
