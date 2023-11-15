@@ -1946,6 +1946,184 @@ P90:
   ammoConversion:
     火枪子弹:
     - 幻星弹
+散播者:
+  type: GUN
+  shots: 4
+  offSet: 35
+  autoSwing: true
+玛瑙链炮:
+  type: GUN
+  shots: 4
+  offSet: 25
+  autoSwing: true
+解离者:
+  type: GUN
+  fireRounds: 8
+  fireRoundsDelay: 1
+  shots: 3
+  offSet: 25
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 解离弹
+解离者_RIGHT_CLICK:
+  type: GUN
+  fireRounds: 8
+  fireRoundsDelay: 1
+  shots: 4
+  offSet: 25
+  autoSwing: true
+黄金之鹰:
+  type: GUN
+  shots: 5
+  autoSwing: true
+极光:
+  type: GUN
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 极光弹
+天使圣火炮:
+  type: GUN
+  shots: 8
+  offSet: 25
+  autoSwing: true
+海龙:
+  type: GUN
+  autoSwing: true
+  offSet: 50
+风暴龙骑士:
+  type: GUN
+  fireRounds: 5
+  fireRoundsDelay: 1
+  shots: 2
+  offSet: 25
+  autoSwing: true
+深红手炮:
+  type: GUN
+  fireRounds: 3
+  fireRoundsDelay: 1
+  autoSwing: true
+  ammoConversion:
+    火枪子弹:
+    - 血炎弹
+Dodu的手炮:
+  type: GUN
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 花生壳
+腐臭倾泻者:
+  type: GUN
+  autoSwing: true
+  ammoConversion:
+    火枪子弹:
+    - 腐烂肉块
+无穷:
+  type: GUN
+  fireRounds: 10
+  fireRoundsDelay: 1
+  shots: 3
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 解离弹
+无穷_RIGHT_CLICK:
+  type: GUN
+  fireRounds: 10
+  fireRoundsDelay: 1
+  shots: 3
+  autoSwing: true
+  attributes:
+    useTime: 10
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
+宇宙之源:
+  type: GUN
+  shots: 6
+  autoSwing: true
+  ammoConversion:
+    火枪子弹:
+    - 唤星弹
+反器材狙击步枪:
+  type: GUN
+  autoSwing: true
+  ammoConversion:
+    火枪子弹:
+    - .50狙击弹
+太空公爵机枪:
+  type: GUN
+  autoSwing: true
+  ammoConversion:
+    火枪子弹:
+    - 泰拉弹
+奥妮克希亚:
+  type: GUN
+  shots: 4
+  offSet: 30
+  autoSwing: true
+巨龙之息:
+  type: GUN
+  shots: 6
+  fireRounds: 2
+  fireRoundsDelay: 2
+  autoSwing: true
+巨龙之息_RIGHT_CLICK:
+  type: GUN
+  shots: 6
+  fireRounds: 2
+  fireRoundsDelay: 3
+  autoSwing: true
+  attributes:
+    damage: 260
+迷你加特林:
+  type: GUN
+  autoSwing: true
+暴政之终:
+  type: GUN
+  autoSwing: true
+  ammoConversion:
+    火枪子弹:
+    - .70狙击弹
+煌晖御流炮:
+  type: SPECIAL_AMMO
+  ammo: _煌晖御流激光
+  autoSwing: true
+  attributes:
+    damage: 1680
+    useTime: 10
+煌晖御流炮_RIGHT_CLICK:
+  type: SPECIAL_AMMO
+  ammo: _煌晖御流射线
+  shots: 2
+  offSet: 25
+  autoSwing: true
+  attributes:
+    useTime: 3
+斯万科技枪:
+  type: GUN
+  shots: 5
+  offSet: 40
+  autoSwing: true
+太虚星龙炮:
+  type: GUN
+  autoSwing: true
+  offSet: 50
+月神Prime:
+  type: GUN
+  autoSwing: true
+  offSet: 50
+  ammoConversion:
+    火枪子弹:
+    - 月神高速弹
+大比目鱼炮:
+  type: GUN
+  shots: 30
+  offSet: 50
+  fireRounds: 2
+  fireRoundsDelay: 3
+  autoSwing: true
+####
 榴弹发射器:
   type: ROCKET
   autoSwing: true

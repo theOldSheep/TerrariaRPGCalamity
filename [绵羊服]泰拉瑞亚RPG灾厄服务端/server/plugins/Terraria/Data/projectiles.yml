@@ -1345,8 +1345,6 @@ TNT:
     liveTime: 100
     autoTrace: true
     autoTraceAbility: 8.0
-    trailColor: "100|255|100"
-    trailStepSize: 1.5
 水晶子弹:
     gravity: 0
     liveTime: 100
@@ -1417,8 +1415,6 @@ TNT:
     minimumDamageTicks: 5
     noAutoTraceTicks: 5
     liveTime: 30
-    trailColor: "3|233|82"
-    trailStepSize: 0.75
 泰拉弹:
     gravity: 0
     liveTime: 40
@@ -1552,6 +1548,169 @@ TNT:
     gravity: 0
     buffInflict:
         - "幻星感染|40|1"
+解离弹:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 25
+    clusterBomb:
+        amount: 3
+        name: 解离分裂弹
+        velocity: 2.5
+        damageMulti: 0.85
+解离分裂弹:
+    gravity: 0
+    projectileSize: 0.5
+    blockHitAction: bounce
+    bounce: 1
+    liveTime: 20
+极光弹:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 20
+    trailColor: 87|255|255
+    trailSize: 0.1
+    trailStepSize: 1
+    buffInflict:
+        - "死亡标记|140|1"
+海龙追踪火箭:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 20
+    autoTrace: true
+    isGrenade: true
+    blastRadius: 2.5
+    clusterBomb:
+        amount: 3
+        name: 火焰碎片
+        velocity: 1.25
+        damageMulti: 0.75
+花生壳:
+    gravity: 0
+    projectileSize: 1
+    liveTime: 20
+    isGrenade: true
+    blastRadius: 4.5
+腐烂肉块:
+    gravity: 0
+    projectileSize: 0.75
+    liveTime: 100
+    buffInflict:
+        - "硫磺海剧毒|50|1"
+唤星弹:
+    gravity: 0
+    projectileSize: 0.75
+    liveTime: 60
+    clusterBomb:
+        amount: 2
+        damageMulti: 0.5
+        name: 五彩星
+        type: star
+        fireOnTimeout: false
+        velocity: 2.5
+五彩星:
+    gravity: 0
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 0.5
+    liveTime: 50
+.50狙击弹:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 10
+    trailColor: 220|213|47
+    trailStepSize: 3
+    buffInflict:
+        - "死亡标记|100|1"
+    clusterBomb:
+        amount: 5
+        damageMulti: 0.2
+        name: .50狙击分裂弹
+        type: surround
+        fireOnTimeout: false
+        fireOnHitBlock: false
+        velocity: 4
+.50狙击分裂弹:
+    gravity: 0
+    liveTime: 5
+    trailColor: 220|213|47
+    trailStepSize: 1
+龙息弹:
+    gravity: 0
+    liveTime: 100
+    isGrenade: true
+    blastRadius: 2
+    buffInflict:
+        - "龙焰|100|1"
+.70狙击弹:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 10
+    trailColor: 220|213|47
+    trailStepSize: 3
+    buffInflict:
+        - "死亡标记|100|1"
+    clusterBomb:
+        amount: 6
+        damageMulti: 0.35
+        name: .70狙击分裂弹
+        type: surround
+        fireOnTimeout: false
+        fireOnHitBlock: false
+        velocity: 4
+.70狙击分裂弹:
+    gravity: 0
+    liveTime: 5
+    trailColor: 220|213|47
+    trailStepSize: 1
+煌晖御流激光:
+    gravity: 0
+    projectileSize: 2
+    speedMultiPerTick: 9999
+    maxSpeed: 64
+    liveTime: 2
+    trailColor: 255|255|255
+    trailStepSize: 3
+    buffInflict:
+        - "超位崩解|100|1"
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.5
+        name: 星流能量爆炸
+        velocity: 0
+煌晖御流射线:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 1
+    liveTime: 60
+    trailColor: 255|255|82
+    trailStepSize: 3
+    clusterBomb:
+        amount: 3
+        damageMulti: 1
+        name: 煌晖御流追踪能量
+        fireOnTimeout: false
+        fireOnHitBlock: false
+        fireOnCollideEntity: true
+        velocity: 3
+煌晖御流追踪能量:
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 40
+    autoTrace: true
+    autoTraceRadius: 24
+    autoTraceAbility: 5.5
+    noAutoTraceTicks: 3
+    trailColor: 167|255|255
+    trailStepSize: 3
+月神高速弹:
+    gravity: 0
+    liveTime: 40
+    penetration: 2
+    trailColor: 220|213|47
+    trailStepSize: 3
+    buffInflict:
+        - "解离|1000|1"
+###
 永夜光束:
     gravity: 0
     projectileSize: 1

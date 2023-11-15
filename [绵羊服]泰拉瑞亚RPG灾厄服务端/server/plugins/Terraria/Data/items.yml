@@ -1029,6 +1029,14 @@
     damageMulti: 7.5
   worth: 20000
   rarity: 1
+测试饰品-超高暴击:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    crit: 666
+  worth: 20000
+  rarity: 1
 测试饰品-物品使用测试:
   item: LEASH
   lore:
@@ -6783,7 +6791,7 @@ P90:
   - §r右键发射一团普通子弹
   - §r“在这个时期看到这样的面板伤害时，你就知道它是个什么货色了”
   attributes:
-    damage: 54
+    damage: 72
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -6820,7 +6828,7 @@ P90:
 天使圣火炮:
   item: BLAZE_ROD
   lore:
-  - §r射出八颗子弹，将火枪子弹转化为光爆弹
+  - §r射出八颗子弹
   - §r战斗直到胜利
   attributes:
     damage: 225
@@ -6837,7 +6845,7 @@ P90:
   - §r每隔一发子弹就会射出强劲水流
   - §r每18发子弹会发射一枚追踪火箭，爆炸后产生火焰碎片
   attributes:
-    damage: 120
+    damage: 225
     damageType: Bullet
     crit: 4
     projectileSpeed: 16
@@ -6863,14 +6871,14 @@ P90:
 深红手炮:
   item: BLAZE_ROD
   lore:
-  - §r将火枪子弹转化为三发吸血的血泪弹
+  - §r将火枪子弹转化为血炎弹
   attributes:
     damage: 280
     damageType: Bullet
     crit: 4
     projectileSpeed: 18
     knockback: 5.5
-    useTime: 9
+    useTime: 18
   worth: 24000000
   rarity: 12
 Dodu的手炮:
@@ -6883,7 +6891,7 @@ Dodu的手炮:
     damage: 2040
     damageType: Bullet
     crit: 4
-    projectileSpeed: 24
+    projectileSpeed: 32
     knockback: 6
     useTime: 30
   worth: 26000000
@@ -6891,7 +6899,7 @@ Dodu的手炮:
 腐臭倾泻者:
   item: BLAZE_ROD
   lore:
-  - §r有一定几率射出腐烂肉块而不是子弹
+  - §r将火枪子弹转化为腐烂肉块
   attributes:
     damage: 260
     damageType: Bullet
@@ -6936,8 +6944,8 @@ Dodu的手炮:
 反器材狙击步枪:
   item: BLAZE_ROD
   lore:
-  - §r将子弹转化为.50口径的狙击子弹，撕裂敌人的防御和伤害减免
-  - §r暴击会在敌人两侧释放第二轮含有5发子弹的弹雨
+  - §r将火枪子弹转化为.50口径的狙击子弹，撕裂敌人的防御和伤害减免
+  - §r狙击子弹会在敌人四周释放第二轮含有5发子弹的弹雨
   attributes:
     damage: 3720
     damageType: Bullet
@@ -6951,6 +6959,7 @@ Dodu的手炮:
   item: BLAZE_ROD
   lore:
   - §r来自于泰拉大陆之边界
+  - §r将火枪子弹转化为泰拉弹
   attributes:
     damage: 200
     damageType: Bullet
@@ -7019,6 +7028,7 @@ Dodu的手炮:
     projectileSpeed: 12
     knockback: 9.5
     useTime: 65
+    armorPenetration: 100
   worth: 30000000
   rarity: 15
 煌晖御流炮:
@@ -7052,8 +7062,7 @@ Dodu的手炮:
 太虚星龙炮:
   item: BLAZE_ROD
   lore:
-  - §r每隔一发就会发射虚空爆破弹
-  - §r每一发都会射出魔火之触
+  - §r每隔一发就会发射海龙追踪火箭
   attributes:
     damage: 480
     damageType: Bullet
@@ -7067,7 +7076,7 @@ Dodu的手炮:
 月神Prime:
   item: BLAZE_ROD
   lore:
-  - §r获得相当于暴击率的暴击伤害加成
+  - §r获得相当于暴击率50%的暴击伤害加成
   - §r将火枪子弹转化为极强的高速子弹，造成强大的流血减益
   - §r该减益每秒造成100点伤害，最多叠加10层
   attributes:
@@ -9504,6 +9513,39 @@ Dodu的手炮:
     projectileSpeed: 16
     projectileSpeedMulti: 1
   worth: 10000
+  rarity: 3
+.50狙击弹:
+  item: SLIME_BALL
+  attributes:
+    damage: 22
+    damageType: Bullet
+    crit: 4
+    knockback: 4
+    projectileSpeed: 4
+    projectileSpeedMulti: 8
+  worth: 800
+  rarity: 3
+.70狙击弹:
+  item: SLIME_BALL
+  attributes:
+    damage: 22
+    damageType: Bullet
+    crit: 4
+    knockback: 4
+    projectileSpeed: 4
+    projectileSpeedMulti: 8
+  worth: 800
+  rarity: 3
+月神高速弹:
+  item: SLIME_BALL
+  attributes:
+    damage: 22
+    damageType: Bullet
+    crit: 4
+    knockback: 4
+    projectileSpeed: 4
+    projectileSpeedMulti: 8
+  worth: 800
   rarity: 3
 初级火箭:
   item: BLAZE_POWDER

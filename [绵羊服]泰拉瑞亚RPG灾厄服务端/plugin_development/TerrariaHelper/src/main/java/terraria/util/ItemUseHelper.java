@@ -3158,6 +3158,16 @@ public class ItemUseHelper {
         return true;
     }
     // ranged helper functions below
+    protected static double calculateProjectileSpeed(HashMap<String, Double> attrMap) {
+        double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
+        projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
+        if (attrMap.equals("BOW"))
+            projectileSpeed *= attrMap.getOrDefault("projectileSpeedArrowMulti", 1d);
+        // in Terraria, projectile speed is the amount of pixels moved for each tick, a block is 16 pixels wide
+        // however, Terraria has 60 ticks/sec while Minecraft has 20 ticks/sec
+        projectileSpeed = projectileSpeed / 5.3333;
+        return projectileSpeed;
+    }
     protected static void handleRangedFire(Player ply, HashMap<String, Double> attrMapOriginal, ConfigurationSection weaponSection,
                                          ItemStack weaponItem, int fireIndex, int swingAmount,
                                          String itemType, String weaponType, String ammoTypeInitial,
@@ -3168,13 +3178,7 @@ public class ItemUseHelper {
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
         EntityHelper.DamageType damageType = EntityHelper.getDamageType(ply);
-        double projectileSpeed = attrMapOriginal.getOrDefault("projectileSpeed", 1d);
-        projectileSpeed *= attrMapOriginal.getOrDefault("projectileSpeedMulti", 1d);
-        if (weaponType.equals("BOW"))
-            projectileSpeed *= attrMapOriginal.getOrDefault("projectileSpeedArrowMulti", 1d);
-        // in Terraria, projectile speed is the amount of pixels moved for each tick, a block is 16 pixels wide
-        // however, Terraria has 60 ticks/sec while Minecraft has 20 ticks/sec
-        projectileSpeed = projectileSpeed / 5.3333;
+        double projectileSpeed = calculateProjectileSpeed(attrMapOriginal);
         // account for arrow attribute.
         String ammoType = ammoTypeInitial;
         HashMap<String, Double> attrMap = (HashMap<String, Double>) attrMapOriginal.clone();
@@ -3317,6 +3321,34 @@ public class ItemUseHelper {
                 }
                 break;
             }
+            case "海龙": {
+                if (swingAmount % 2 == 1) {
+                    ammoConversion = new ArrayList<>(1);
+                    ammoConversion.add(swingAmount % 18 == 1 ? "海龙追踪火箭" : "水流");
+                }
+                break;
+            }
+            case "巨龙之息": {
+                if (fireIndex == 2) {
+                    ammoConversion = new ArrayList<>(1);
+                    ammoConversion.add("龙息弹");
+                }
+                break;
+            }
+            case "巨龙之息_RIGHT_CLICK": {
+                if (Math.random() < 0.5) {
+                    ammoConversion = new ArrayList<>(1);
+                    ammoConversion.add("龙息弹");
+                }
+                break;
+            }
+            case "太虚星龙炮": {
+                if (swingAmount % 2 == 1) {
+                    ammoConversion = new ArrayList<>(1);
+                    ammoConversion.add("海龙追踪火箭");
+                }
+                break;
+            }
             // other
             case "屠夫": {
                 spread = Math.min(4 + swingAmount, 40);
@@ -3348,7 +3380,8 @@ public class ItemUseHelper {
                 }
                 break;
             }
-            case "电话会议": {
+            case "电话会议":
+            case "散播者": {
                 Vec3D locNMS = MathHelper.toNMSVector(ply.getLocation().toVector());
                 Set<HitEntityInfo> hitCandidates = HitEntityInfo.getEntitiesHit(
                         plyNMS.world,
@@ -3410,8 +3443,11 @@ public class ItemUseHelper {
             // if the converted ammo does not have attributes that overrides the original, default to the original
             if (ammoAttributeSection == null)
                 ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoTypeInitial + ".attributes");
-            if (ammoAttributeSection != null)
+            if (ammoAttributeSection != null) {
                 EntityHelper.tweakAllAttributes(attrMap, ammoAttributeSection, true);
+                // update projectile speed
+                projectileSpeed = calculateProjectileSpeed(attrMap);
+            }
         }
         // spawn projectiles in the loop body
         for (int i = 0; i < fireAmount; i ++) {
@@ -3425,8 +3461,11 @@ public class ItemUseHelper {
                 // if the converted ammo does not have attributes that overrides the original, default to the original
                 if (ammoAttributeSection == null)
                     ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoTypeInitial + ".attributes");
-                if (ammoAttributeSection != null)
+                if (ammoAttributeSection != null) {
                     EntityHelper.tweakAllAttributes(attrMap, ammoAttributeSection, true);
+                    // update projectile speed
+                    projectileSpeed = calculateProjectileSpeed(attrMap);
+                }
             }
             Location fireLoc = ply.getEyeLocation();
             Vector fireVelocity = facingDir.clone();
@@ -3449,11 +3488,64 @@ public class ItemUseHelper {
                             .multiply(1.5));
                     break;
                 }
-                case "珍珠之神": {
+                case "珍珠之神":
+                case "黄金之鹰":
+                case "无穷":
+                case "无穷_RIGHT_CLICK":
+                case "宇宙之源":
+                case "巨龙之息":
+                case "巨龙之息_RIGHT_CLICK": {
+                    double pitchOffset, shootLocOffsetLen;
+                    switch (itemType) {
+                        case "珍珠之神":
+                            pitchOffset = 7.5;
+                            shootLocOffsetLen = 1.5;
+                            break;
+                        case "黄金之鹰":
+                            pitchOffset = 1;
+                            shootLocOffsetLen = 1;
+                            break;
+                        case "无穷":
+                        case "无穷_RIGHT_CLICK":
+                            double progress = (double) fireIndex / fireRoundMax;
+                            if (swingAmount % 2 == 1)
+                                progress = 1 - progress;
+                            pitchOffset = 10 * progress;
+                            shootLocOffsetLen = 1;
+                            // skip the middle bullet
+                            if (i == 1)
+                                i ++;
+                            break;
+                        case "宇宙之源":
+                            pitchOffset = 0.5;
+                            shootLocOffsetLen = 1;
+                            break;
+                        case "巨龙之息":
+                            pitchOffset = 0.5;
+                            shootLocOffsetLen = 0.75;
+                            break;
+                        case "巨龙之息_RIGHT_CLICK":
+                            pitchOffset = 1.5;
+                            shootLocOffsetLen = 0.75;
+                            Bukkit.broadcastMessage(ammoConversion.toString() + "(bef " + i);
+                            // randomize the ammo conversion after each shot
+                            if (Math.random() < 0.5) {
+                                ammoConversion = new ArrayList<>(2);
+                                ammoConversion.add("龙息弹");
+                                ammoConversion.add("龙息弹");
+                            }
+                            else
+                                ammoConversion.clear();
+                            Bukkit.broadcastMessage(ammoConversion.toString() + "(aft" + i);
+                            break;
+                        default:
+                            pitchOffset = 1;
+                            shootLocOffsetLen = 1;
+                    }
                     Vector shootLocOffsetDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw,
-                            plyNMS.pitch + 12.5 * (i - fireAmount / 2));
+                            plyNMS.pitch + pitchOffset * (i - fireAmount / 2));
                     fireVelocity = shootLocOffsetDir.clone();
-                    fireLoc.add(shootLocOffsetDir.multiply(1.5));
+                    fireLoc.add(shootLocOffsetDir.multiply(shootLocOffsetLen));
                     break;
                 }
                 case "湮灭千星":

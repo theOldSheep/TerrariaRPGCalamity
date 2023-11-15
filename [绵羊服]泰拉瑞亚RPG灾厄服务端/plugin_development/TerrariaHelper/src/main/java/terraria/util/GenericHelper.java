@@ -760,6 +760,7 @@ public class GenericHelper {
                 break;
             case "Debuff_破晓":
             case "Debuff_龙焰":
+            case "Debuff_解离":
                 colorCode = "4";
                 break;
             case "Debuff_暗影焰":

@@ -186,6 +186,11 @@ effects:
     attributes:
       regenMulti: -1
     tooltip: 星流共振撕碎了组成你身体的物质
+  解离:
+    isBuff: false
+    damageInterval: 4
+    damage: 20
+    tooltip: 有人造了十把三尖匕首……
   流血:
     isBuff: false
     attributes:
@@ -210,6 +215,12 @@ effects:
       defence: -30
       damageTakenMulti: 0.15
     tooltip: 你的护甲被撕裂了
+  死亡标记:
+    isBuff: false
+    attributes:
+      defence: -10
+      damageTakenMulti: 0.35
+    tooltip: 降低防御力和伤害减免
   枯萎:
     isBuff: false
     attributes:

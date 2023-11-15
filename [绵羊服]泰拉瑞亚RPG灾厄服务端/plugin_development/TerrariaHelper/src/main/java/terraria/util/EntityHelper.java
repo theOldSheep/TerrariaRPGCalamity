@@ -596,6 +596,8 @@ public class EntityHelper {
             case "生命星云":
             case "魔力星云":
                 return 3;
+            case "解离":
+                return 10;
             default:
                 return 1;
         }
@@ -603,6 +605,7 @@ public class EntityHelper {
     public static int getEffectLevelDuration(String effect) {
         switch (effect) {
             case "破晓":
+            case "解离":
                 return 100;
             case "伤害星云":
             case "生命星云":
@@ -680,8 +683,8 @@ public class EntityHelper {
             allEffects.put(effect, timeRemaining);
             // tick mechanism
             if (damagePerDelay > 0) {
-                double damageMulti = 1;
-                if (effect.equals("破晓")) damageMulti = getEffectLevel(effect, timeRemaining);
+                // for stacking damage effects such as day-break, its damage should also be stacked
+                double damageMulti = getEffectLevel(effect, timeRemaining);
                 handleDamage(entity, entity, damagePerDelay * damageMulti, DamageReason.DEBUFF, effect);
             }
             switch (effect) {
@@ -813,20 +816,6 @@ public class EntityHelper {
                     finalDurationTicks = currentDurationTicks + applyDurationTicks;
                     if (finalDurationTicks > 400 && applyDurationTicks < 400) finalDurationTicks = 400;
                     break;
-                case "破晓":
-                case "伤害星云":
-                case "生命星云":
-                case "魔力星云": {
-                    int maxLevel = getEffectLevelMax(effect),
-                            levelTime = getEffectLevelDuration(effect);
-                    int currentLevel = getEffectLevel(effect, currentDurationTicks);
-                    int applyLevel = getEffectLevel(effect, applyDurationTicks);
-                    if (applyLevel > currentLevel)
-                        finalDurationTicks = Math.min(currentLevel + 1, maxLevel) * levelTime;
-                    else
-                        finalDurationTicks = currentLevel * levelTime;
-                    break;
-                }
                 // if the effect is active, the lower amount will be taken; otherwise the buff is applied.
                 case "钨钢屏障":
                 case "血肉图腾":
@@ -839,7 +828,21 @@ public class EntityHelper {
                     break;
                 }
                 default:
-                    finalDurationTicks = Math.max(currentDurationTicks, applyDurationTicks);
+                    // check if this buff is stackable
+                    int maxLevel = getEffectLevelMax(effect);
+                    // for stackable buffs, attempt to add a stack
+                    if (maxLevel > 1) {
+                        int levelTime = getEffectLevelDuration(effect);
+                        int currentLevel = getEffectLevel(effect, currentDurationTicks);
+                        int applyLevel = getEffectLevel(effect, applyDurationTicks);
+                        if (applyLevel > currentLevel)
+                            finalDurationTicks = Math.min(currentLevel + 1, maxLevel) * levelTime;
+                        else
+                            finalDurationTicks = currentLevel * levelTime;
+                    }
+                    // otherwise, default to the maximum of current duration and applied duration
+                    else
+                        finalDurationTicks = Math.max(currentDurationTicks, applyDurationTicks);
             }
             // record effect info
             allEffects.put(effect, finalDurationTicks);

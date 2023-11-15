@@ -1582,12 +1582,12 @@ public class PlayerHelper {
                 }
             }
             PlayerInventory plyInv = ply.getInventory();
+            ItemStack plyTool = plyInv.getItemInMainHand();
             // weapon
             {
-                ItemStack tool = plyInv.getItemInMainHand();
-                String toolCombatType = ItemHelper.getItemCombatType(tool);
+                String toolCombatType = ItemHelper.getItemCombatType(plyTool);
                 if (toolCombatType.equals("武器")) {
-                    EntityHelper.tweakAttribute(ply, newAttrMap, tool, true);
+                    EntityHelper.tweakAttribute(ply, newAttrMap, plyTool, true);
                 }
             }
             // armor
@@ -1892,6 +1892,13 @@ public class PlayerHelper {
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES, accessories);
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES_LIST, accessoryList);
             }
+            // extra handling
+            if (ItemHelper.splitItemName(plyTool)[1].equals("月神Prime")) {
+                EntityHelper.tweakAttribute(ply, newAttrMap, "critDamage",
+                        (newAttrMap.getOrDefault("crit", 4d) * 0.5) + "", true);
+            }
+
+            // post-initialization
             // setup max health and max mana
             ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(
                     newAttrMap.getOrDefault("maxHealth", 200d) *
