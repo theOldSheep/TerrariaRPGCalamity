@@ -2127,7 +2127,6 @@ Dodu的手炮:
   fireRounds: 2
   fireRoundsDelay: 3
   autoSwing: true
-####
 榴弹发射器:
   type: ROCKET
   autoSwing: true

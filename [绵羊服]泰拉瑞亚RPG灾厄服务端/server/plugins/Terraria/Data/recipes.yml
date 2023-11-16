@@ -2141,6 +2141,23 @@ ANVIL:
     requireItem:
     - 禁戒碎片
     - 精金锭:13
+  '251_1':
+    requireLevel: 3
+    resultItem: 集束火箭
+    requireItem:
+    - 天蝎座
+    - 装甲外壳:4
+    - 石头:50
+    - 宇宙锭:8
+    - 恒温能量:20
+  '251_2':
+    requireLevel: 3
+    resultItem: 焦土
+    requireItem:
+    - 极乐升天炮
+    - 日蚀之阴碎片:10
+    - 日耀碎片:50
+    - 精金锭:15
   '252':
     requireLevel: 1
     resultItem: 火花喷射器
@@ -2155,6 +2172,11 @@ ANVIL:
     - 生命碎片:7
     - 日光精华:5
     - 彩虹喵喷射器
+  '253_1':
+    requireLevel: 3
+    resultItem: 净化怒焰
+    requireItem:
+    - 宇宙锭:12
   '254':
     requireLevel: 1
     resultItem: 芦苇吹管
@@ -4164,6 +4186,28 @@ TINKER_WORKBENCH:
     resultItem: 神之风箱
     requireItem:
     - 冥思构造体:12
+  '52_1':
+    requireLevel: 1
+    resultItem: 元素喷射器
+    requireItem:
+    - 星系异石:5
+    - 泰拉喷火器
+    - 生命合金:5
+    - 枯萎散播者
+    - 混乱之息
+    - 夜明锭:5
+  '52_2':
+    requireLevel: 1
+    resultItem: 血祸沸炉
+    requireItem:
+    - 血石核心:6
+  '52_3':
+    requireLevel: 1
+    resultItem: 哈雷彗星炮
+    requireItem:
+    - 流明晶:6
+    - 毁灭之灵:4
+    - 起源之簇:12
   '53':
     requireLevel: 1
     resultItem: 玄法百枝莲
@@ -4350,3 +4394,19 @@ TINKER_WORKBENCH:
     - P90
     - 魔影锭:5
     - 迷你加特林
+  '13':
+    requireLevel: 1
+    resultItem: 磁极异变
+    requireItem:
+    - 焦土
+    - 榴弹发射器
+    - 集束火箭
+    - 奇迹物质
+  '14':
+    requireLevel: 1
+    resultItem: 星火解离者
+    requireItem:
+    - 元素喷射器
+    - 净化怒焰
+    - 哈雷彗星炮
+    - 奇迹物质

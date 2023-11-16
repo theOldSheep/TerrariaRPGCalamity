@@ -1710,7 +1710,6 @@ TNT:
     trailStepSize: 3
     buffInflict:
         - "解离|1000|1"
-###
 永夜光束:
     gravity: 0
     projectileSize: 1

@@ -5925,6 +5925,76 @@
     useTime: 13
   worth: 20000000
   rarity: 10
+极乐升天炮:
+  item: BLAZE_ROD
+  lore:
+  - §r发射圣火火箭
+  - §r“自动追踪重度依赖”
+  attributes:
+    damage: 168
+    damageType: Rocket
+    crit: 4
+    projectileSpeed: 24
+    knockback: 7.5
+    useTime: 15
+  worth: 24000000
+  rarity: 12
+集束火箭:
+  item: BLAZE_ROD
+  lore:
+  - §r发射一个大的追踪火箭，接近敌人时爆炸出小的追踪火箭
+  attributes:
+    damage: 2000
+    damageType: Rocket
+    crit: 12
+    projectileSpeed: 24
+    knockback: 7.5
+    useTime: 52
+  worth: 28000000
+  rarity: 14
+焦土:
+  item: BLAZE_ROD
+  lore:
+  - §r发射一束四发空气燃料火箭，火箭会爆炸成集簇炸弹
+  - §r鸡肉味，嘎嘣脆
+  attributes:
+    damage: 1000
+    damageType: Rocket
+    crit: 4
+    projectileSpeed: 12.6
+    knockback: 8.7
+    useTime: 32
+  worth: 28000000
+  rarity: 14
+小鸡大炮:
+  item: BLAZE_ROD
+  lore:
+  - §r发射小鸡火箭，产生巨大燃爆
+  - §r“哇真的是你啊”
+  attributes:
+    damage: 580
+    damageType: Rocket
+    crit: 4
+    projectileSpeed: 14.5
+    knockback: 1.5
+    useTime: 33
+  worth: 30000000
+  rarity: 15
+磁极异变:
+  item: BLAZE_ROD
+  lore:
+  - §r发射一颗强大的嘉登火箭，击溃万物
+  - §r火箭击中敌人时分裂出激光
+  attributes:
+    damage: 850
+    damageType: Rocket
+    crit: 4
+    projectileSpeed: 15
+    knockback: 9.5
+    useTime: 15
+    ammoConsumptionRate: -0.66
+  worth: 30000000
+  rarity: 15
 气泵枪:
   item: BLAZE_ROD
   lore:
@@ -6241,6 +6311,89 @@
     ammoConsumptionRate: -0.7
   worth: 16000000
   rarity: 9
+元素喷射器:
+  item: BOW
+  attributes:
+    damage: 154
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 10
+    knockback: 3.5
+    useTime: 14
+    ammoConsumptionRate: -0.9
+  worth: 22000000
+  rarity: 11
+纯元怒焰:
+  item: BOW
+  lore:
+  - §r射出一束猛烈的烈焰螺旋，爆炸成一列火柱
+  - §r右击发射一团短程余晖烈焰
+  attributes:
+    damage: 154
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 11
+    knockback: 5
+    useTime: 15
+  worth: 24000000
+  rarity: 12
+血祸沸炉:
+  item: BOW
+  lore:
+  - §r射出一股生命血火
+  - §r使你与敌人的血液沸腾
+  - §r命中时有概率恢复生命值
+  attributes:
+    damage: 290
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 12
+    knockback: 4
+    useTime: 15
+  worth: 24000000
+  rarity: 12
+哈雷彗星炮:
+  item: BOW
+  lore:
+  - §r哈雷彗星比想象中来得早
+  - §r发射一颗燃烧彗星
+  attributes:
+    damage: 2250
+    damageType: Arrow
+    crit: 24
+    projectileSpeed: 14.6
+    knockback: 5
+    useTime: 30
+  worth: 28000000
+  rarity: 13
+净化怒焰:
+  item: BOW
+  attributes:
+    damage: 260
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 14
+    knockback: 4
+    useTime: 12
+    ammoConsumptionRate: -0.9
+  worth: 28000000
+  rarity: 14
+星火解离者:
+  item: BOW
+  lore:
+  - §r发射一束嘉登火焰和星焱，星焱会爆炸成追踪火星
+  - §r右键发射追踪星焱，附着于敌人并将其焚化
+  - §r“请勿用来烤制吐司披萨”
+  attributes:
+    damage: 260
+    damageType: Arrow
+    crit: 4
+    projectileSpeed: 18
+    knockback: 2
+    useTime: 10
+    ammoConsumptionRate: -0.9
+  worth: 30000000
+  rarity: 15
 燧发枪:
   item: BLAZE_ROD
   attributes:
