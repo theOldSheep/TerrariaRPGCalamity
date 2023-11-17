@@ -200,6 +200,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 break;
             case "精元镰刀":
             case "裂魔":
+            case "生命血火":
                 PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 1, false);
                 break;
             case "巨蟹之礼星环":

@@ -95,6 +95,12 @@ effects:
     damage: 10
     damageMonster: 25
     tooltip: 被日耀射线焚烧
+  血液沸腾:
+    isBuff: false
+    damageInterval: 10
+    damage: 4
+    damageMonster: 25
+    tooltip: 你的血液沸腾了
   硫磺火:
     isBuff: false
     damageInterval: 5

@@ -1118,10 +1118,89 @@
     projectileSize: 1.5
     autoTrace: true
     isGrenade: true
-    blastRadius: 12.5
+    blastRadius: 7.5
     trailColor: 255|187|174
     trailSize: 0.1
     trailStepSize: 1
+圣火火箭:
+    gravity: 0
+    projectileSize: 0.75
+    isGrenade: true
+    blastRadius: 5
+    buffInflict:
+        - "神圣之火|150|1"
+大集束火箭:
+    gravity: 0
+    projectileSize: 5
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceAbility: 5
+    autoTraceRadius: 32
+    isGrenade: true
+    blastRadius: 7.5
+    clusterBomb:
+        amount: 5
+        name: 集束迷你火箭
+        velocity: 2.5
+        damageMulti: 0.25
+集束迷你火箭:
+    gravity: 0
+    projectileSize: 0.5
+    autoTrace: true
+    autoTraceRadius: 16
+    isGrenade: true
+    blastRadius: 2.75
+空气燃料焦土火箭:
+    gravity: 0
+    projectileSize: 1
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceRadius: 16
+    isGrenade: true
+    blastRadius: 2.75
+    clusterBomb:
+        amount: 13
+        name: 火焰碎片
+        velocity: 1.5
+        damageMulti: 0.25
+小鸡火箭:
+    projectileSize: 1
+    liveTime: 20
+    isGrenade: true
+    blastRadius: 10
+    blastDuration: 50
+    trailColor: 255|129|16
+    trailSize: 0.01
+    trailStepSize: 1
+    buffInflict:
+        - "龙焰|100|1"
+嘉登火箭:
+    projectileSize: 1
+    blockHitAction: thru
+    liveTime: 100
+    isGrenade: true
+    autoTrace: true
+    autoTraceRadius: 24
+    blastRadius: 2.75
+    trailColor: 87|255|51
+    trailSize: 0.01
+    trailStepSize: 1
+    buffInflict:
+        - "超位崩解|100|1"
+    clusterBomb:
+        amount: 8
+        name: 嘉登火箭光束
+        velocity: 16
+        damageMulti: 0.5
+嘉登火箭光束:
+    liveTime: 1
+    projectileSize: 1.5
+    penetration: 999999
+    blockHitAction: thru
+    trailColor: 5|255|197
+    buffInflict:
+        - "超位崩解|100|1"
+####
 手榴弹:
     blockHitAction: bounce
     bounce: 999999
@@ -1201,17 +1280,18 @@ TNT:
     blastRadius: 2.75
 火焰:
     gravity: 0
-    liveTime: 15
+    liveTime: 10
     projectileSize: 1.5
     penetration: 999999
     trailColor: 112|252|255
     trailLingerTime: 4
+    trailStepSize: 3
     buffInflict:
         - "燃烧|400|1"
         - "霜火|400|1"
 短程火焰:
     gravity: 0
-    liveTime: 20
+    liveTime: 5
     penetration: 999999
     trailColor: 255|207|139
     trailLingerTime: 6
@@ -1220,7 +1300,7 @@ TNT:
         - "燃烧|40|1"
 影流火焰:
     gravity: 0
-    liveTime: 20
+    liveTime: 8
     penetration: 999999
     trailColor: 60|69|103
     trailLingerTime: 6
@@ -1238,57 +1318,217 @@ TNT:
 蓝焰:
     gravity: 0
     projectileSize: 1
-    liveTime: 20
+    liveTime: 10
     penetration: 999999
     trailColor: 133|226|255
     trailLingerTime: 6
-    trailStepSize: 1
+    trailStepSize: 1.5
 粉焰:
     gravity: 0
     projectileSize: 1
-    liveTime: 20
+    liveTime: 10
     penetration: 999999
     trailColor: 255|143|255
     trailLingerTime: 6
-    trailStepSize: 1
+    trailStepSize: 1.5
 泰拉火焰:
     gravity: 0
     projectileSize: 1
-    liveTime: 30
+    liveTime: 12
     penetration: 999999
     trailColor: 191|255|223
     trailLingerTime: 6
-    trailStepSize: 1
+    trailStepSize: 1.5
     buffInflict:
         - "咒火|30|1"
 星辉烈焰:
     gravity: 0
     projectileSize: 1
-    liveTime: 30
+    liveTime: 12
     penetration: 999999
     trailColor: 197|144|123
     trailLingerTime: 6
-    trailStepSize: 1
+    trailStepSize: 1.5
     buffInflict:
         - "幻星感染|80|1"
 瘟疫火焰:
     gravity: 0
     projectileSize: 1
-    liveTime: 20
+    liveTime: 12
     penetration: 999999
     trailColor: 122|149|169
     trailLingerTime: 6
-    trailStepSize: 1
+    trailStepSize: 1.5
     buffInflict:
         - "瘟疫|80|1"
 紫绿色火焰:
     gravity: 0
     projectileSize: 1
-    liveTime: 30
+    liveTime: 15
     penetration: 999999
     trailColor: 168|94|213
     trailLingerTime: 6
-    trailStepSize: 1
+    trailStepSize: 1.5
+红元素彩虹烈焰:
+    gravity: 0
+    projectileSize: 1.5
+    liveTime: 15
+    penetration: 1
+    trailColor: 255|0|0
+    trailLingerTime: 6
+    trailSize: 1
+    trailStepSize: 5
+黄元素彩虹烈焰:
+    gravity: 0
+    projectileSize: 1.5
+    liveTime: 15
+    penetration: 1
+    trailColor: 255|255|0
+    trailLingerTime: 6
+    trailSize: 1
+    trailStepSize: 5
+绿元素彩虹烈焰:
+    gravity: 0
+    projectileSize: 1.5
+    liveTime: 15
+    penetration: 1
+    trailColor: 100|255|100
+    trailLingerTime: 6
+    trailSize: 1
+    trailStepSize: 5
+蓝元素彩虹烈焰:
+    gravity: 0
+    projectileSize: 1.5
+    liveTime: 15
+    penetration: 1
+    trailColor: 0|255|255
+    trailLingerTime: 6
+    trailSize: 1
+    trailStepSize: 5
+品红元素彩虹烈焰:
+    gravity: 0
+    projectileSize: 1.5
+    liveTime: 15
+    penetration: 1
+    trailColor: 255|0|255
+    trailLingerTime: 6
+    trailSize: 1
+    trailStepSize: 5
+纯元烈焰:
+    gravity: 0
+    projectileSize: 1.5
+    liveTime: 8
+    trailColor: 255|255|196
+    trailLingerTime: 6
+    trailSize: 1
+    trailStepSize: 5
+    buffInflict:
+        - "神圣之火|80|1"
+生命血火:
+    gravity: 0
+    projectileSize: 1.5
+    penetration: 999999
+    liveTime: 12
+    trailColor: 133|9|11
+    trailLingerTime: 6
+    trailSize: 1
+    trailStepSize: 5
+    buffInflict:
+        - "血液沸腾|80|1"
+燃烧哈雷彗星:
+    gravity: 0
+    projectileSize: 1.5
+    penetration: 9
+    liveTime: 10
+    trailColor: 87|24|128
+    trailLingerTime: 6
+    trailSize: 1
+    trailStepSize: 5
+    buffInflict:
+        - "夜魇|80|1"
+弑神火焰:
+    gravity: 0
+    projectileSize: 1.5
+    penetration: 999999
+    liveTime: 10
+    trailColor: 235|146|255
+    trailLingerTime: 6
+    trailSize: 1
+    trailStepSize: 5
+    buffInflict:
+        - "弑神怒焰|80|1"
+星流火星:
+    gravity: 0
+    projectileSize: 1.5
+    penetration: 999999
+    liveTime: 10
+    trailColor: 106|255|76
+    trailLingerTime: 6
+    trailSize: 1
+    trailStepSize: 5
+    buffInflict:
+        - "超位崩解|100|1"
+橙色追踪星流火星:
+    gravity: 0
+    projectileSize: 0.5
+    blockHitAction: thru
+    maxSpeed: 2.5
+    liveTime: 60
+    autoTrace: true
+    autoTraceAbility: 10
+    autoTraceRadius: 24
+    trailColor: 255|150|0
+    trailLingerTime: 6
+    trailSize: 1
+    trailStepSize: 5
+    buffInflict:
+        - "超位崩解|100|1"
+绿色追踪星流火星:
+    gravity: 0
+    projectileSize: 0.5
+    blockHitAction: thru
+    maxSpeed: 2.5
+    liveTime: 60
+    autoTrace: true
+    autoTraceAbility: 10
+    autoTraceRadius: 24
+    trailColor: 100|255|100
+    trailLingerTime: 6
+    trailSize: 1
+    trailStepSize: 5
+    buffInflict:
+        - "超位崩解|100|1"
+紫色追踪星流火星:
+    gravity: 0
+    projectileSize: 0.5
+    blockHitAction: thru
+    maxSpeed: 2.5
+    liveTime: 60
+    autoTrace: true
+    autoTraceAbility: 10
+    autoTraceRadius: 24
+    trailColor: 100|100|255
+    trailLingerTime: 6
+    trailSize: 1
+    trailStepSize: 5
+    buffInflict:
+        - "超位崩解|100|1"
+追踪星焱:
+    gravity: 0
+    projectileSize: 1.5
+    blockHitAction: thru
+    penetration: 9
+    liveTime: 100
+    autoTrace: true
+    autoTraceAbility: 6
+    autoTraceRadius: 24
+    trailColor: 255|255|255
+    trailLingerTime: 6
+    trailSize: 1
+    trailStepSize: 5
+    buffInflict:
+        - "超位崩解|100|1"
+####
 烈焰木:
     penetration: 999999
     projectileSize: 0.5
@@ -3704,14 +3944,15 @@ TNT:
         name: 水晶碎块
         velocity: 0.35
 火焰碎片:
+    gravity: 0.1
     penetration: 999999
     liveTime: 30
     noGravityTicks: 0
     speedMultiPerTick: 0.9
     blockHitAction: stick
     trailColor: 255|171|83
-    trailSize: 0.15
-    trailStepSize: 0.4
+    trailSize: 0.01
+    trailStepSize: 0.2
     trailLingerTime: 5
     buffInflict:
         - "燃烧|80|1"

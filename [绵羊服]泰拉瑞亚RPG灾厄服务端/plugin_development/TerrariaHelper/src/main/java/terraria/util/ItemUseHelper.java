@@ -3436,6 +3436,11 @@ public class ItemUseHelper {
                 fireAmount = 1;
                 break;
             }
+            case "血祸沸炉": {
+                // applies a damaging debuff to the user
+                EntityHelper.applyEffect(ply, "血液沸腾", 20);
+                break;
+            }
         }
         // if the ammo could get converted into multiple possible projectiles, handle them separately in the loop instead.
         if  (ammoConversion.size() <= 1) {

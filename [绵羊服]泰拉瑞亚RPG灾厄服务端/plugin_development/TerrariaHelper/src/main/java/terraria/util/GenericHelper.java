@@ -359,9 +359,11 @@ public class GenericHelper {
             // spawn "particles"
             if (options.vanillaParticle) {
                 double particleEstDist = (stepsize + width) / 2;
-                // basically, max(estimated dist, estimated dist^2)
-                int particleAmount = MathHelper.randomRound(
-                        particleEstDist < 1 ? particleEstDist : particleEstDist * particleEstDist );
+//                // basically, max(estimated dist, estimated dist^2)
+//                int particleAmount = MathHelper.randomRound(
+//                        particleEstDist < 1 ? particleEstDist : particleEstDist * particleEstDist );
+                // to prevent lagg, it is now set to random rounded estimated particle distance.
+                int particleAmount = MathHelper.randomRound(particleEstDist);
                 double rVal = (currentColor.getRed() / 255d) - 1;
                 double gVal = (currentColor.getGreen() / 255d);
                 double bVal = (currentColor.getBlue() / 255d);
@@ -759,6 +761,7 @@ public class GenericHelper {
                 colorCode = "2";
                 break;
             case "Debuff_破晓":
+            case "Debuff_血液沸腾":
             case "Debuff_龙焰":
             case "Debuff_解离":
                 colorCode = "4";

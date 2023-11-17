@@ -2143,7 +2143,7 @@ ANVIL:
     - 精金锭:13
   '251_1':
     requireLevel: 3
-    resultItem: 集束火箭
+    resultItem: 集束火箭发射器
     requireItem:
     - 天蝎座
     - 装甲外壳:4
@@ -4400,7 +4400,7 @@ TINKER_WORKBENCH:
     requireItem:
     - 焦土
     - 榴弹发射器
-    - 集束火箭
+    - 集束火箭发射器
     - 奇迹物质
   '14':
     requireLevel: 1

@@ -1723,6 +1723,102 @@
   ammoConversion:
     凝胶:
     - 紫绿色火焰
+元素喷射器:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  shots: 2
+  offSet: 35
+  autoSwing: true
+  attributes:
+    projectileSpeed: 35
+  ammoConversion:
+    凝胶:
+    - 红元素彩虹烈焰
+    - 黄元素彩虹烈焰
+    - 绿元素彩虹烈焰
+    - 蓝元素彩虹烈焰
+    - 品红元素彩虹烈焰
+纯元怒焰:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  fireRounds: 5
+  fireRoundsDelay: 1
+  autoSwing: true
+  attributes:
+    projectileSpeed: 50
+    useTime: 5
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
+  ammoConversion:
+    凝胶:
+    - 纯元烈焰
+血祸沸炉:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  fireRounds: 3
+  fireRoundsDelay: 1
+  autoSwing: true
+  attributes:
+    projectileSpeed: 35
+    useTime: 3
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
+  ammoConversion:
+    凝胶:
+    - 生命血火
+哈雷彗星炮:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  autoSwing: true
+  attributes:
+    projectileSpeed: 50
+  ammoConversion:
+    凝胶:
+    - 燃烧哈雷彗星
+净化怒焰:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  fireRounds: 5
+  fireRoundsDelay: 1
+  autoSwing: true
+  attributes:
+    projectileSpeed: 50
+    useTime: 5
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
+  ammoConversion:
+    凝胶:
+    - 弑神火焰
+星火解离者:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  shots: 2
+  fireRounds: 5
+  fireRoundsDelay: 1
+  autoSwing: true
+  attributes:
+    projectileSpeed: 50
+    useTime: 5
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
+  ammoConversion:
+    凝胶:
+    - 星流火星
+    - 橙色追踪星流火星
+    - 绿色追踪星流火星
+    - 紫色追踪星流火星
+星火解离者_RIGHT_CLICK:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  shots: 2
+  offSet: 35
+  autoSwing: true
+  attributes:
+    useTime: 10
+  ammoConversion:
+    凝胶:
+    - 追踪星焱
+####
 燧发枪:
   type: GUN
   thruWall: true
@@ -2197,6 +2293,38 @@ Dodu的手炮:
   ammoConversion:
     ALL:
     - 天蝎座大号核弹
+极乐升天炮:
+  type: ROCKET
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 圣火火箭
+集束火箭发射器:
+  type: ROCKET
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 大集束火箭
+焦土:
+  type: ROCKET
+  autoSwing: true
+  fireRounds: 4
+  fireRoundsDelay: 1
+  ammoConversion:
+    ALL:
+    - 空气燃料焦土火箭
+小鸡大炮:
+  type: ROCKET
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 小鸡火箭
+磁极异变:
+  type: ROCKET
+  autoSwing: true
+  ammoConversion:
+    ALL:
+    - 嘉登火箭
 木制回力镖:
   type: BOOMERANG
   distance: 12

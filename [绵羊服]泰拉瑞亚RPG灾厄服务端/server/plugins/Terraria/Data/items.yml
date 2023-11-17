@@ -2599,7 +2599,7 @@
 灼炎弯刀:
   item: DIAMOND_SWORD
   attributes:
-    damage: 64
+    damage: 30
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -5931,7 +5931,7 @@
   - §r发射圣火火箭
   - §r“自动追踪重度依赖”
   attributes:
-    damage: 168
+    damage: 328
     damageType: Rocket
     crit: 4
     projectileSpeed: 24
@@ -5939,7 +5939,7 @@
     useTime: 15
   worth: 24000000
   rarity: 12
-集束火箭:
+集束火箭发射器:
   item: BLAZE_ROD
   lore:
   - §r发射一个大的追踪火箭，接近敌人时爆炸出小的追踪火箭
@@ -5955,10 +5955,10 @@
 焦土:
   item: BLAZE_ROD
   lore:
-  - §r发射一束四发空气燃料火箭，火箭会爆炸成集簇炸弹
+  - §r发射一束四发空气燃料火箭，火箭会爆炸成大量火花
   - §r鸡肉味，嘎嘣脆
   attributes:
-    damage: 1000
+    damage: 350
     damageType: Rocket
     crit: 4
     projectileSpeed: 12.6
@@ -5970,7 +5970,7 @@
   item: BLAZE_ROD
   lore:
   - §r发射小鸡火箭，产生巨大燃爆
-  - §r“哇真的是你啊”
+  - §r“你↓干↑嘛→↗啊嗨→哟↓”
   attributes:
     damage: 580
     damageType: Rocket
@@ -6342,7 +6342,7 @@
   lore:
   - §r射出一股生命血火
   - §r使你与敌人的血液沸腾
-  - §r命中时有概率恢复生命值
+  - §r命中时恢复生命值
   attributes:
     damage: 290
     damageType: Arrow
@@ -6350,6 +6350,7 @@
     projectileSpeed: 12
     knockback: 4
     useTime: 15
+    ammoConsumptionRate: -0.25
   worth: 24000000
   rarity: 12
 哈雷彗星炮:
@@ -6381,8 +6382,8 @@
 星火解离者:
   item: BOW
   lore:
-  - §r发射一束嘉登火焰和星焱，星焱会爆炸成追踪火星
-  - §r右键发射追踪星焱，附着于敌人并将其焚化
+  - §r发射一束嘉登火焰和追踪火星
+  - §r右键发射追踪星焱，追踪、穿透敌人并将其焚化
   - §r“请勿用来烤制吐司披萨”
   attributes:
     damage: 260
