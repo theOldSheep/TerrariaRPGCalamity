@@ -3574,8 +3574,17 @@ public class ItemUseHelper {
                     fireVelocity = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch + pitchOffset);
                     break;
                 }
+                // should not shoot for some reason
+                case "异象纳米枪": {
+                    if (fireIndex <= 5)
+                        fireVelocity = null;
+                    break;
+                }
             }
-            // setup projectile velocity
+            // do not shoot if velocity is not set
+            if (fireVelocity == null)
+                continue;
+            // set up projectile velocity
             fireVelocity.multiply(projectileSpeed);
             Projectile firedProjectile = EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMap,
                     damageType, ammoType);

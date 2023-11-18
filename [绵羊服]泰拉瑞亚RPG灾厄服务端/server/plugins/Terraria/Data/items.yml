@@ -6101,6 +6101,74 @@
     useTime: 28
   worth: 12000000
   rarity: 1100
+重型激光步枪:
+  item: BLAZE_ROD
+  lore:
+  - §r亚利姆军队的重装步兵部队使用的激光武器
+  attributes:
+    damage: 420
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 5
+    knockback: 4
+    useTime: 25
+  worth: 24000000
+  rarity: 1100
+自由之星:
+  item: BLAZE_ROD
+  lore:
+  - §r发射爆炸能量球
+  attributes:
+    damage: 200
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 22
+    knockback: 3
+    useTime: 10
+  worth: 24000000
+  rarity: 12
+剧毒叉枪:
+  item: BLAZE_ROD
+  lore:
+  - §r发射一个剧毒鱼叉并释放出细菌
+  attributes:
+    damage: 600
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 25
+    knockback: 7.5
+    useTime: 12
+  worth: 26000000
+  rarity: 13
+脉冲步枪:
+  item: BLAZE_ROD
+  lore:
+  - §r嘉登的高效电磁脉冲步枪，让他能够应对自己的创造物叛变时的突发状况
+  - §r当脉冲击中目标时，它将可以追踪敌人
+  attributes:
+    damage: 2400
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 25
+    knockback: 0
+    useTime: 35
+  worth: 28000000
+  rarity: 1100
+异象纳米枪:
+  item: BLAZE_ROD
+  lore:
+  - §r“欢迎参加狂欢，老友”
+  - §r左键可以充能并快速发射5道离子光束
+  - §r右键发射一颗裂变炸弹，其制造的冲击波可以对敌人造成难以想象的巨量伤害
+  attributes:
+    damage: 3700
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 15
+    knockback: 4.5
+    useTime: 140
+  worth: 28000000
+  rarity: 1100
 骨头手套:
   item: BOW
   lore:
@@ -6326,7 +6394,7 @@
 纯元怒焰:
   item: BOW
   lore:
-  - §r射出一束猛烈的烈焰螺旋，爆炸成一列火柱
+  - §r射出一束猛烈的烈焰螺旋
   - §r右击发射一团短程余晖烈焰
   attributes:
     damage: 154

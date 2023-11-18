@@ -33,7 +33,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public double autoTraceAbility = 4, autoTraceEndSpeedMultiplier = 1, autoTraceRadius = 12,
             blastRadius = 1.5, bounceVelocityMulti = 1,
             frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileRadius = 0.125, speedMultiPerTick = 1,
-            trailSize = -1, trailStepSize = -1;
+            trailIntensityMulti = 1, trailSize = -1, trailStepSize = -1;
     public boolean arrowOrPotion = false, autoTrace = false, autoTraceSharpTurning = true, blastDamageShooter = false,
             blastOnContactBlock = false, blastOnContactEnemy = false, blastOnTimeout = true,
             bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = true,
@@ -79,6 +79,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.maxSpeed = (double) properties.getOrDefault("maxSpeed", this.maxSpeed);
             this.projectileRadius = (double) properties.getOrDefault("projectileSize", this.projectileRadius * 2) / 2;
             this.speedMultiPerTick = (double) properties.getOrDefault("speedMultiPerTick", this.speedMultiPerTick);
+            this.trailIntensityMulti = (double) properties.getOrDefault("trailIntensityMulti", this.trailIntensityMulti);
             this.trailSize = (double) properties.getOrDefault("trailSize", this.projectileRadius);
             this.trailStepSize = (double) properties.getOrDefault("trailStepSize", this.projectileRadius);
 
@@ -197,6 +198,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
             case "钫弹":
             case "粉色脉冲":
                 noAutoTraceTicks = ticksLived + 5;
+                break;
+            case "脉冲步枪电弧":
+                noAutoTraceTicks = ticksLived + 2;
                 break;
             case "精元镰刀":
             case "裂魔":
@@ -412,6 +416,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                 .setWidth(trailSize, false)
                                 .setStepsize(trailStepSize)
                                 .setTicksLinger(trailLingerTime)
+                                .setIntensityMulti(trailIntensityMulti)
                                 .setParticleColor(trailColor));
             }
             // if the particle is too close to the eye location, attempt to move further and display particle

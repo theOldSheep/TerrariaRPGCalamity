@@ -1974,7 +1974,7 @@ public class EntityHelper {
                         keys = new String[]{"autoTraceAbility", "autoTraceEndSpeedMultiplier", "autoTraceRadius",
                                 "blastRadius", "bounceVelocityMulti",
                                 "frictionFactor", "gravity", "maxSpeed", "projectileSize", "speedMultiPerTick",
-                                "trailSize", "trailStepSize"};
+                                "trailIntensityMulti", "trailSize", "trailStepSize"};
                         for (String key : keys) {
                             if (section.contains(key))
                                 this.properties.put(key, section.getDouble(key));

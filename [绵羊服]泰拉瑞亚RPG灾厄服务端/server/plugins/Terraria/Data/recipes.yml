@@ -2214,6 +2214,22 @@ ANVIL:
     - 神秘电路:18
     - 生命合金:5
     - 瘟疫装甲镀层:10
+  '258_1':
+    requireLevel: 3
+    resultItem: 脉冲步枪
+    requireItem:
+    - 可疑镀层:20
+    - 神秘电路:20
+    - 宇宙锭:8
+    - 化神魂精:2
+  '258_2':
+    requireLevel: 3
+    resultItem: 异象纳米枪
+    requireItem:
+    - 可疑镀层:20
+    - 神秘电路:20
+    - 宇宙锭:8
+    - 化神魂精:2
   '259':
     requireLevel: 1
     resultItem: 魔法玫瑰
@@ -4208,6 +4224,22 @@ TINKER_WORKBENCH:
     - 流明晶:6
     - 毁灭之灵:4
     - 起源之簇:12
+  '52_1_1':
+    requireLevel: 1
+    resultItem: 重型激光步枪
+    requireItem:
+    - 可疑镀层:15
+    - 神秘电路:15
+    - 龙蒿锭:8
+    - 夜明锭:4
+  '52_1_2':
+    requireLevel: 1
+    resultItem: 自由之星
+    requireItem:
+    - 可疑镀层:18
+    - 神秘电路:12
+    - 龙蒿锭:8
+    - 夜明锭:4
   '53':
     requireLevel: 1
     resultItem: 玄法百枝莲

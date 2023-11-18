@@ -73,6 +73,8 @@
     trailStepSize: -1.0
     # 轨迹停留时间（单位：帧，1秒=20帧）。不写则视为10。
     trailLingerTime: 10
+    # 轨迹粒子数量乘数。不写则视为1。
+    trailIntensityMulti: 1
     # 轨迹是否使用原版MC的粒子效果（原版粒子效果无法控制持续时间，颜色会略有偏差，观感略差但性能影响较小）。不写则视为true。
     trailVanillaParticle: true
     # blockHitAction为bounce（手榴弹）或slide的弹射物在与地面摩擦时的阻力，0为无阻力，1为马上停止。不写则视为0.05。
@@ -687,7 +689,7 @@
     penetration: 999999
     trailColor: 191|255|223
     trailStepSize: 0.75
-蓝色粒子束:
+蓝色高斯粒子束:
     gravity: 0
     projectileSize: 1.5
     isGrenade: true
@@ -695,6 +697,289 @@
     blastDuration: 18
     trailColor: 82|255|255
     trailStepSize: 0.65
+重型激光步枪光束:
+    gravity: 0
+    liveTime: 2
+    speedMultiPerTick: 999
+    maxSpeed: 64
+    projectileSize: 0.5
+    isGrenade: true
+    blastRadius: 2.75
+    trailColor: 255|76|19
+自由之星能量球:
+    gravity: 0
+    liveTime: 100
+    projectileSize: 2
+    isGrenade: true
+    blastRadius: 2.75
+剧毒鱼叉:
+    liveTime: 20
+    projectileSize: 2
+    penetration: 999999
+    buffInflict:
+        - "硫磺海剧毒|60|1"
+    spawnProjectiles:
+        interval: 2
+        offset: 1.0
+        spawnMechanism: SURROUND
+        damageMulti: 0.4
+        speed: 1.5
+        spawnType: 剧毒鱼叉细菌颗粒
+剧毒鱼叉细菌颗粒:
+    liveTime: 100
+    projectileSize: 1
+    autoTrace: true
+    autoTraceRadius: 24
+    speedMultiPerTick: 0.99
+    trailColor: 129|255|85
+    buffInflict:
+        - "硫磺海剧毒|40|1"
+脉冲步枪电弧:
+    gravity: 0
+    blockHitAction: thru
+    penetration: 2
+    projectileSize: 2
+    liveTime: 60
+    autoTrace: true
+    autoTraceAbility: 6.5
+    autoTraceRadius: 24
+    noAutoTraceTicks: 999999
+    trailColor: 159|96|255
+异象纳米离子束:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    speedMultiPerTick: 999
+    maxSpeed: 80
+    projectileSize: 1.5
+    trailColor: 215|25|0
+异象纳米裂变炸弹:
+    gravity: 0
+    liveTime: 100
+    projectileSize: 1.5
+    isGrenade: true
+    blastRadius: 2.75
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.15
+        name: 冲击波1
+        velocity: 0
+冲击波1:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 5
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波2
+        velocity: 0
+冲击波2:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 7.5
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波3
+        velocity: 0
+冲击波3:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 10
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波4
+        velocity: 0
+冲击波4:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 12.5
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波5
+        velocity: 0
+冲击波5:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 15
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波6
+        velocity: 0
+冲击波6:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 17.5
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波7
+        velocity: 0
+冲击波7:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 20
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波8
+        velocity: 0
+冲击波8:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 22.5
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波9
+        velocity: 0
+冲击波9:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 25
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波10
+        velocity: 0
+冲击波10:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 27.5
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波11
+        velocity: 0
+冲击波11:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 30
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波12
+        velocity: 0
+冲击波12:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 32.5
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波13
+        velocity: 0
+冲击波13:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 35
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波14
+        velocity: 0
+冲击波14:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 37.5
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波15
+        velocity: 0
+冲击波15:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 40
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波16
+        velocity: 0
+冲击波16:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 42
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波17
+        velocity: 0
+冲击波17:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 44
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波18
+        velocity: 0
+冲击波18:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 46
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波19
+        velocity: 0
+冲击波19:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 48
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.975
+        name: 冲击波20
+        velocity: 0
+冲击波20:
+    gravity: 0
+    liveTime: 2
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 50
+##
 粉色粒子光束:
     gravity: 0
     projectileSize: 1.5
@@ -1170,8 +1455,8 @@
     blastRadius: 10
     blastDuration: 50
     trailColor: 255|129|16
-    trailSize: 0.01
-    trailStepSize: 1
+    trailSize: 0.25
+    trailStepSize: 0.5
     buffInflict:
         - "龙焰|100|1"
 嘉登火箭:
@@ -1183,8 +1468,8 @@
     autoTraceRadius: 24
     blastRadius: 2.75
     trailColor: 87|255|51
-    trailSize: 0.01
-    trailStepSize: 1
+    trailSize: 0.25
+    trailStepSize: 0.5
     buffInflict:
         - "超位崩解|100|1"
     clusterBomb:
@@ -1198,9 +1483,9 @@
     penetration: 999999
     blockHitAction: thru
     trailColor: 5|255|197
+    trailIntensityMulti: 2
     buffInflict:
         - "超位崩解|100|1"
-####
 手榴弹:
     blockHitAction: bounce
     bounce: 999999
@@ -1285,7 +1570,7 @@ TNT:
     penetration: 999999
     trailColor: 112|252|255
     trailLingerTime: 4
-    trailStepSize: 3
+    trailIntensityMulti: 0.75
     buffInflict:
         - "燃烧|400|1"
         - "霜火|400|1"
@@ -1295,7 +1580,7 @@ TNT:
     penetration: 999999
     trailColor: 255|207|139
     trailLingerTime: 6
-    trailStepSize: 0.65
+    trailIntensityMulti: 2
     buffInflict:
         - "燃烧|40|1"
 影流火焰:
@@ -1304,7 +1589,7 @@ TNT:
     penetration: 999999
     trailColor: 60|69|103
     trailLingerTime: 6
-    trailStepSize: 1
+    trailIntensityMulti: 2
 反弹凝胶:
     gravity: 0
     projectileSize: 0.5
@@ -1314,7 +1599,7 @@ TNT:
     penetration: 999999
     trailColor: 236|255|255
     trailLingerTime: 6
-    trailStepSize: 1
+    trailIntensityMulti: 1
 蓝焰:
     gravity: 0
     projectileSize: 1
@@ -1322,7 +1607,7 @@ TNT:
     penetration: 999999
     trailColor: 133|226|255
     trailLingerTime: 6
-    trailStepSize: 1.5
+    trailIntensityMulti: 1
 粉焰:
     gravity: 0
     projectileSize: 1
@@ -1330,7 +1615,7 @@ TNT:
     penetration: 999999
     trailColor: 255|143|255
     trailLingerTime: 6
-    trailStepSize: 1.5
+    trailIntensityMulti: 1
 泰拉火焰:
     gravity: 0
     projectileSize: 1
@@ -1338,7 +1623,7 @@ TNT:
     penetration: 999999
     trailColor: 191|255|223
     trailLingerTime: 6
-    trailStepSize: 1.5
+    trailIntensityMulti: 0.75
     buffInflict:
         - "咒火|30|1"
 星辉烈焰:
@@ -1348,7 +1633,7 @@ TNT:
     penetration: 999999
     trailColor: 197|144|123
     trailLingerTime: 6
-    trailStepSize: 1.5
+    trailIntensityMulti: 1
     buffInflict:
         - "幻星感染|80|1"
 瘟疫火焰:
@@ -1358,7 +1643,7 @@ TNT:
     penetration: 999999
     trailColor: 122|149|169
     trailLingerTime: 6
-    trailStepSize: 1.5
+    trailIntensityMulti: 1
     buffInflict:
         - "瘟疫|80|1"
 紫绿色火焰:
@@ -1368,7 +1653,7 @@ TNT:
     penetration: 999999
     trailColor: 168|94|213
     trailLingerTime: 6
-    trailStepSize: 1.5
+    trailIntensityMulti: 1
 红元素彩虹烈焰:
     gravity: 0
     projectileSize: 1.5
@@ -1376,8 +1661,7 @@ TNT:
     penetration: 1
     trailColor: 255|0|0
     trailLingerTime: 6
-    trailSize: 1
-    trailStepSize: 5
+    trailIntensityMulti: 0.75
 黄元素彩虹烈焰:
     gravity: 0
     projectileSize: 1.5
@@ -1385,8 +1669,7 @@ TNT:
     penetration: 1
     trailColor: 255|255|0
     trailLingerTime: 6
-    trailSize: 1
-    trailStepSize: 5
+    trailIntensityMulti: 0.75
 绿元素彩虹烈焰:
     gravity: 0
     projectileSize: 1.5
@@ -1394,8 +1677,7 @@ TNT:
     penetration: 1
     trailColor: 100|255|100
     trailLingerTime: 6
-    trailSize: 1
-    trailStepSize: 5
+    trailIntensityMulti: 0.75
 蓝元素彩虹烈焰:
     gravity: 0
     projectileSize: 1.5
@@ -1403,8 +1685,7 @@ TNT:
     penetration: 1
     trailColor: 0|255|255
     trailLingerTime: 6
-    trailSize: 1
-    trailStepSize: 5
+    trailIntensityMulti: 0.75
 品红元素彩虹烈焰:
     gravity: 0
     projectileSize: 1.5
@@ -1412,16 +1693,25 @@ TNT:
     penetration: 1
     trailColor: 255|0|255
     trailLingerTime: 6
-    trailSize: 1
-    trailStepSize: 5
+    trailIntensityMulti: 0.75
 纯元烈焰:
     gravity: 0
     projectileSize: 1.5
     liveTime: 8
     trailColor: 255|255|196
     trailLingerTime: 6
-    trailSize: 1
-    trailStepSize: 5
+    trailIntensityMulti: 0.5
+    buffInflict:
+        - "神圣之火|80|1"
+余晖烈焰:
+    gravity: 0
+    projectileSize: 3
+    blockHitAction: thru
+    penetration: 999999
+    liveTime: 30
+    trailColor: 255|255|196
+    trailLingerTime: 6
+    trailIntensityMulti: 0.5
     buffInflict:
         - "神圣之火|80|1"
 生命血火:
@@ -1431,8 +1721,7 @@ TNT:
     liveTime: 12
     trailColor: 133|9|11
     trailLingerTime: 6
-    trailSize: 1
-    trailStepSize: 5
+    trailIntensityMulti: 0.5
     buffInflict:
         - "血液沸腾|80|1"
 燃烧哈雷彗星:
@@ -1440,10 +1729,9 @@ TNT:
     projectileSize: 1.5
     penetration: 9
     liveTime: 10
-    trailColor: 87|24|128
+    trailColor: 13|78|167
     trailLingerTime: 6
-    trailSize: 1
-    trailStepSize: 5
+    trailIntensityMulti: 1
     buffInflict:
         - "夜魇|80|1"
 弑神火焰:
@@ -1453,8 +1741,7 @@ TNT:
     liveTime: 10
     trailColor: 235|146|255
     trailLingerTime: 6
-    trailSize: 1
-    trailStepSize: 5
+    trailIntensityMulti: 0.5
     buffInflict:
         - "弑神怒焰|80|1"
 星流火星:
@@ -1464,8 +1751,7 @@ TNT:
     liveTime: 10
     trailColor: 106|255|76
     trailLingerTime: 6
-    trailSize: 1
-    trailStepSize: 5
+    trailIntensityMulti: 0.35
     buffInflict:
         - "超位崩解|100|1"
 橙色追踪星流火星:
@@ -1479,8 +1765,7 @@ TNT:
     autoTraceRadius: 24
     trailColor: 255|150|0
     trailLingerTime: 6
-    trailSize: 1
-    trailStepSize: 5
+    trailIntensityMulti: 0.35
     buffInflict:
         - "超位崩解|100|1"
 绿色追踪星流火星:
@@ -1494,8 +1779,7 @@ TNT:
     autoTraceRadius: 24
     trailColor: 100|255|100
     trailLingerTime: 6
-    trailSize: 1
-    trailStepSize: 5
+    trailIntensityMulti: 0.35
     buffInflict:
         - "超位崩解|100|1"
 紫色追踪星流火星:
@@ -1509,8 +1793,7 @@ TNT:
     autoTraceRadius: 24
     trailColor: 100|100|255
     trailLingerTime: 6
-    trailSize: 1
-    trailStepSize: 5
+    trailIntensityMulti: 0.35
     buffInflict:
         - "超位崩解|100|1"
 追踪星焱:
@@ -1524,11 +1807,9 @@ TNT:
     autoTraceRadius: 24
     trailColor: 255|255|255
     trailLingerTime: 6
-    trailSize: 1
-    trailStepSize: 5
+    trailIntensityMulti: 1
     buffInflict:
         - "超位崩解|100|1"
-####
 烈焰木:
     penetration: 999999
     projectileSize: 0.5
@@ -3682,6 +3963,7 @@ TNT:
 粉色脉冲:
     gravity: 0
     blockHitAction: thru
+    penetration: 1
     projectileSize: 0.5
     liveTime: 60
     minimumDamageTicks: 5

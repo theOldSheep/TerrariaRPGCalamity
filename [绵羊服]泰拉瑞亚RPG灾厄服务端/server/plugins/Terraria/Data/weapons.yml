@@ -1601,8 +1601,47 @@
   autoSwing: true
 高斯来复枪:
   type: SPECIAL_AMMO
-  ammo: _蓝色粒子束
+  ammo: _蓝色高斯粒子束
   autoSwing: true
+重型激光步枪:
+  type: SPECIAL_AMMO
+  shots: 2
+  offSet: 35
+  ammo: _重型激光步枪光束
+  autoSwing: true
+自由之星:
+  type: SPECIAL_AMMO
+  ammo: _自由之星能量球
+  autoSwing: true
+剧毒叉枪:
+  type: SPECIAL_AMMO
+  ammo: _剧毒鱼叉
+  autoSwing: true
+脉冲步枪:
+  type: SPECIAL_AMMO
+  ammo: _脉冲步枪电弧
+  autoSwing: true
+异象纳米枪:
+  type: SPECIAL_AMMO
+  ammo: _异象纳米离子束
+  fireRounds: 10
+  fireRoundsDelay: 5
+  attributes:
+    useTime: 50
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
+  autoSwing: true
+异象纳米枪_RIGHT_CLICK:
+  type: SPECIAL_AMMO
+  ammo: _异象纳米裂变炸弹
+  attributes:
+    damage: 1850
+    knockback: 5
+    useTime: 15
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
+  autoSwing: true
+####
 骨头手套:
   type: SPECIAL_AMMO
   ammo: 骨头
@@ -1752,6 +1791,20 @@
   ammoConversion:
     凝胶:
     - 纯元烈焰
+纯元怒焰_RIGHT_CLICK:
+  type: SPECIAL_AMMO
+  ammo: 凝胶
+  fireRounds: 3
+  fireRoundsDelay: 2
+  autoSwing: true
+  attributes:
+    projectileSpeed: 8
+    useTime: 6
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
+  ammoConversion:
+    凝胶:
+    - 余晖烈焰
 血祸沸炉:
   type: SPECIAL_AMMO
   ammo: 凝胶
@@ -1818,7 +1871,6 @@
   ammoConversion:
     凝胶:
     - 追踪星焱
-####
 燧发枪:
   type: GUN
   thruWall: true

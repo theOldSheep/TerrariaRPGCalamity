@@ -25,7 +25,7 @@ public class GenericHelper {
         boolean vanillaParticle;
         ItemStack spriteItem;
         Vector rightOrthogonalDir;
-        double length, width, stepsize;
+        double length, width, stepsize, intensityMulti;
         float alpha;
         int ticksLinger;
         String particleChar;
@@ -39,6 +39,7 @@ public class GenericHelper {
             length = 1;
             width = 0.25;
             stepsize = width;
+            intensityMulti = 1;
             ticksLinger = 5;
             particleChar = "█";
             particleColor = new ArrayList<>();
@@ -78,6 +79,10 @@ public class GenericHelper {
         }
         public ParticleLineOptions setStepsize(double stepsize) {
             this.stepsize = stepsize;
+            return this;
+        }
+        public ParticleLineOptions setIntensityMulti(double intensityMulti) {
+            this.intensityMulti = intensityMulti;
             return this;
         }
         public ParticleLineOptions setTicksLinger(int ticksLinger) {
@@ -359,11 +364,9 @@ public class GenericHelper {
             // spawn "particles"
             if (options.vanillaParticle) {
                 double particleEstDist = (stepsize + width) / 2;
-//                // basically, max(estimated dist, estimated dist^2)
-//                int particleAmount = MathHelper.randomRound(
-//                        particleEstDist < 1 ? particleEstDist : particleEstDist * particleEstDist );
-                // to prevent lagg, it is now set to random rounded estimated particle distance.
-                int particleAmount = MathHelper.randomRound(particleEstDist);
+                // basically, max(estimated dist, estimated dist^2) * intensityMulti
+                int particleAmount = MathHelper.randomRound(options.intensityMulti *
+                        (particleEstDist < 1 ? particleEstDist : particleEstDist * particleEstDist ) );
                 double rVal = (currentColor.getRed() / 255d) - 1;
                 double gVal = (currentColor.getGreen() / 255d);
                 double bVal = (currentColor.getBlue() / 255d);

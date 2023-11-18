@@ -905,6 +905,7 @@
   至尊灾厄:
     1:
       giveAllItems: false
+      amountToGive: 2
       items:
       - 诘责
       - 狞桀
