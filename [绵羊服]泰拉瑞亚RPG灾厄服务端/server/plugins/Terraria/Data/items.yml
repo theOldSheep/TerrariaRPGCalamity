@@ -7527,6 +7527,18 @@ Dodu的手炮:
     manaUse: 15
   worth: 6000000
   rarity: 8
+磁球:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 80
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 1.2
+    knockback: 6
+    useTime: 20
+    manaUse: 14
+  worth: 10000000
+  rarity: 8
 高温射线枪:
   item: DIAMOND_SWORD
   lore:
@@ -8049,6 +8061,19 @@ Dodu的手炮:
     manaUse: 26
   worth: 16000000
   rarity: 9
+行星法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤小行星从天而降
+  attributes:
+    damage: 290
+    damageType: Magic
+    crit: 4
+    knockback: 6.75
+    useTime: 10
+    manaUse: 18
+  worth: 20000000
+  rarity: 10
 元素射线:
   item: DIAMOND_SWORD
   lore:
@@ -8066,6 +8091,319 @@ Dodu的手炮:
     manaUse: 18
   worth: 22000000
   rarity: 11
+终结裂空戟:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤终结三叉戟
+  - §r三叉戟会造成灵液、诅咒狱火和硫磺火减益
+  attributes:
+    damage: 250
+    damageType: Magic
+    crit: 4
+    knockback: 5
+    useTime: 15
+    manaUse: 25
+  worth: 22000000
+  rarity: 11
+荆棘烁兰:
+  item: DIAMOND_SWORD
+  lore:
+  - §r每朵玫瑰都有刺
+  attributes:
+    damage: 120
+    damageType: Magic
+    crit: 4
+    knockback: 2
+    useTime: 23
+    manaUse: 10
+  worth: 24000000
+  rarity: 12
+王子:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一枚会爆炸成6个火焰的神圣火球
+  - §r所以现在你告诉我王子爆炸了，变成了一朵花？
+  - §r-Dain
+  attributes:
+    damage: 332
+    damageType: Magic
+    crit: 4
+    knockback: 4.25
+    useTime: 21
+    manaUse: 12
+  worth: 24000000
+  rarity: 12
+槲叶暴风:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射针叶风暴
+  attributes:
+    damage: 108
+    damageType: Magic
+    crit: 4
+    knockback: 3.5
+    useTime: 6
+    manaUse: 5
+  worth: 24000000
+  rarity: 12
+猩红烈焰:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一阵从敌人身上吸取生命的猩红火焰
+  attributes:
+    damage: 286
+    damageType: Magic
+    crit: 4
+    knockback: 8
+    useTime: 25
+    manaUse: 22
+  worth: 24000000
+  rarity: 12
+心泵血杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射血炎束，命中敌怪后治疗自己
+  attributes:
+    damage: 200
+    damageType: Magic
+    crit: 4
+    knockback: 6
+    useTime: 14
+    manaUse: 15
+  worth: 24000000
+  rarity: 12
+磁场之融:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射菱形十字排列的磁球
+  attributes:
+    damage: 200
+    damageType: Magic
+    crit: 4
+    knockback: 4
+    useTime: 49
+    manaUse: 40
+  worth: 24000000
+  rarity: 12
+命运神启:
+  item: DIAMOND_SWORD
+  lore:
+  - §r在身边召唤跟踪玩家的魂火
+  attributes:
+    damage: 240
+    damageType: Magic
+    crit: 4
+    knockback: 5.5
+    useTime: 16
+    manaUse: 20
+  worth: 26000000
+  rarity: 13
+幻象之怒:
+  item: DIAMOND_SWORD
+  lore:
+  - §r释放会分裂的幻象球
+  attributes:
+    damage: 520
+    damageType: Magic
+    crit: 4
+    knockback: 7.5
+    useTime: 20
+    manaUse: 20
+  worth: 26000000
+  rarity: 13
+影流法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r弹射的次数越多，穿透的敌人越多，伤害越高
+  - §r“……也会带来折磨”
+  attributes:
+    damage: 500
+    damageType: Magic
+    crit: 4
+    knockback: 8
+    useTime: 14
+    manaUse: 20
+  worth: 26000000
+  rarity: 13
+金星三叉戟:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一团狱炎三叉戟，造成巨大爆炸并释放熔岩火焰碎片
+  attributes:
+    damage: 216
+    damageType: Magic
+    crit: 4
+    knockback: 9
+    useTime: 25
+    manaUse: 20
+  worth: 26000000
+  rarity: 13
+星龙破空杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r令天幕坠落
+  - §r召唤暗夜飞龙与繁星从天而降，会附着在物块上并爆炸
+  attributes:
+    damage: 540
+    damageType: Magic
+    crit: 4
+    knockback: 5.2
+    useTime: 21
+    manaUse: 12
+  worth: 26000000
+  rarity: 13
+酸蚀毒蝰:
+  item: DIAMOND_SWORD
+  lore:
+  - §r释放一束毒牙和喷吐物
+  attributes:
+    damage: 186
+    damageType: Magic
+    crit: 4
+    knockback: 4
+    useTime: 16
+    manaUse: 15
+  worth: 26000000
+  rarity: 13
+死亡冰雹:
+  item: DIAMOND_SWORD
+  lore:
+  - §r在你的敌人头顶降下死亡之雨！
+  - §r释放星云激光从天而降
+  attributes:
+    damage: 656
+    damageType: Magic
+    crit: 4
+    knockback: 4
+    useTime: 22
+    manaUse: 16
+  worth: 28000000
+  rarity: 14
+灵魂穿透者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射威力强大的光束，首次命中时会生成更多光束
+  attributes:
+    damage: 620
+    damageType: Magic
+    crit: 4
+    knockback: 8
+    useTime: 25
+    manaUse: 19
+  worth: 28000000
+  rarity: 14
+星云法师圣杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r你的手中掌握着星云法师真正的力量……
+  attributes:
+    damage: 1024
+    damageType: Magic
+    crit: 4
+    knockback: 6
+    useTime: 30
+    manaUse: 60
+  worth: 26000000
+  rarity: 14
+星火凤凰雨:
+  item: DIAMOND_SWORD
+  lore:
+  - §r圣火洗礼
+  - §r召唤火幕从天而降
+  - §r“可以在施法时按E打开物品栏”
+  attributes:
+    damage: 280
+    damageType: Magic
+    crit: 4
+    knockback: 3.5
+    useTime: 30
+    manaUse: 35
+  worth: 30000000
+  rarity: 14
+氦闪:
+  item: DIAMOND_SWORD
+  lore:
+  - §r“于刹那之间瞥见星海浩瀚之威”
+  - §r发射挥发性星核，随即引发巨大聚变爆炸
+  attributes:
+    damage: 3600
+    damageType: Magic
+    crit: 4
+    knockback: 9.5
+    useTime: 40
+    manaUse: 40
+  worth: 30000000
+  rarity: 14
+极点光伏:
+  item: DIAMOND_SWORD
+  lore:
+  - §r在目标位置圆形散射出电磁球
+  attributes:
+    damage: 246
+    damageType: Magic
+    crit: 4
+    knockback: 5
+    useTime: 33
+    manaUse: 30
+  worth: 28000000
+  rarity: 14
+虚空漩涡:
+  item: DIAMOND_SWORD
+  lore:
+  - §r在目标位置圆形散射出电磁球
+  attributes:
+    damage: 212
+    damageType: Magic
+    crit: 4
+    knockback: 0
+    useTime: 80
+    manaUse: 60
+  worth: 30000000
+  rarity: 15
+耀界之光:
+  item: DIAMOND_SWORD
+  lore:
+  - §r向光标位置发射五道元素能量束
+  - §r命中敌怪或击中物块时，元素能量束会分裂出元素能量体
+  - §r或召唤可以反弹的元素射线从天而降
+  - §r元素射线会分裂出额外的射线攻击敌怪
+  - §r它的威严激发了无与伦比的天才壮举
+  attributes:
+    damage: 266
+    damageType: Magic
+    crit: 4
+    knockback: 7.5
+    useTime: 20
+    manaUse: 42
+  worth: 30000000
+  rarity: 15
+狞桀:
+  item: DIAMOND_SWORD
+  lore:
+  - §r释放地狱之力，击中物块或飞行一段时间后爆炸成骷髅
+  attributes:
+    damage: 10370
+    damageType: Magic
+    crit: 4
+    knockback: 5.75
+    useTime: 43
+    manaUse: 41
+  worth: 30000000
+  rarity: 15
+绝学法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一道在接近敌人时会自动分裂的弹射光束
+  attributes:
+    damage: 250
+    damageType: Magic
+    crit: 4
+    knockback: 5
+    useTime: 20
+    manaUse: 50
+  worth: 40000000
+  rarity: 16
+####
 麦格纳炮:
   item: DIAMOND_SWORD
   lore:

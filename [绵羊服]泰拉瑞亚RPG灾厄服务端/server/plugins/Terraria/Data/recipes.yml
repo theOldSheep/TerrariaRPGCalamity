@@ -2296,6 +2296,33 @@ ANVIL:
     - 生命碎片:12
     - 永夜射线
     - 女武神权杖
+  '268_1':
+    requireLevel: 3
+    resultItem: 灵魂穿透者
+    requireItem:
+    - 宇宙锭:12
+  '268_2':
+    requireLevel: 3
+    resultItem: 极点光伏
+    requireItem:
+    - 磁场之融
+    - 日蚀之阴碎片:8
+  '268_3':
+    requireLevel: 3
+    resultItem: 氦闪
+    requireItem:
+    - 金星三叉戟
+    - 混乱火鞭
+    - 禁忌之阳
+    - 圣金源锭:5
+    - 日耀碎片:20
+    - 星云碎片:5
+  '268_4':
+    requireLevel: 3
+    resultItem: 虚空漩涡
+    requireItem:
+    - 极点光伏
+    - 圣金源锭:5
   '269':
     requireLevel: 1
     resultItem: 麦格纳炮
@@ -4251,6 +4278,12 @@ TINKER_WORKBENCH:
     resultItem: 幻星法杖
     requireItem:
     - 炫星锭:6
+  '54_1':
+    requireLevel: 1
+    resultItem: 行星法杖
+    requireItem:
+    - 维苏威阿斯
+    - 夜明锭:5
   '55':
     requireLevel: 1
     resultItem: 元素射线
@@ -4259,6 +4292,89 @@ TINKER_WORKBENCH:
     - 星系异石:5
     - 夜明锭:5
     - 生命合金:5
+  '55_1':
+    requireLevel: 1
+    resultItem: 终结裂空戟
+    requireItem:
+    - 海蓝权杖
+    - 狱炎裂空
+    - 星系异石:5
+    - 夜明锭:5
+  '55_2':
+    requireLevel: 1
+    resultItem: 荆棘烁兰
+    requireItem:
+    - 玄法百枝莲
+    - 龙蒿锭:10
+    - 浊火精华:10
+  '55_3':
+    requireLevel: 1
+    resultItem: 王子
+    requireItem:
+    - 玄法百枝莲
+    - 神圣晶石:15
+    - 浊火精华:10
+  '55_4':
+    requireLevel: 1
+    resultItem: 槲叶暴风
+    requireItem:
+    - 剃刀松
+    - 吹叶机
+    - 龙蒿锭:7
+    - 暗离子体
+  '55_5':
+    requireLevel: 1
+    resultItem: 猩红烈焰
+    requireItem:
+    - 血石核心:5
+  '55_6':
+    requireLevel: 1
+    resultItem: 心泵血杖
+    requireItem:
+    - 血石核心:4
+  '55_6_1':
+    requireLevel: 1
+    resultItem: 磁场之融
+    requireItem:
+    - 幽灵法杖
+    - 磁球
+    - 暗离子体
+  '55_7':
+    requireLevel: 1
+    resultItem: 幻象之怒
+    requireItem:
+    - 幽灵法杖
+    - 暗离子体
+    - 毁灭之灵:2
+  '55_8':
+    requireLevel: 1
+    resultItem: 影流法杖
+    requireItem:
+    - 暗影束法杖
+    - 装甲外壳:3
+    - 毁灭之灵:2
+  '55_9':
+    requireLevel: 1
+    resultItem: 金星三叉戟
+    requireItem:
+    - 狱火叉
+    - 扭曲虚空
+    - 毁灭之灵:2
+  '55_10':
+    requireLevel: 1
+    resultItem: 星龙破空杖
+    requireItem:
+    - 飞龙之歌
+    - 流明晶:6
+    - 毁灭之灵:5
+    - 起源之簇:10
+  '55_11':
+    requireLevel: 1
+    resultItem: 星云法师圣杖
+    requireItem:
+    - 星云奥秘
+    - 星云烈焰
+    - 宇宙锭:8
   '56':
     requireLevel: 1
     resultItem: 拉扎尔射线
@@ -4442,3 +4558,18 @@ TINKER_WORKBENCH:
     - 净化怒焰
     - 哈雷彗星炮
     - 奇迹物质
+  '15':
+    requireLevel: 1
+    resultItem: 耀界之光
+    requireItem:
+    - 元素射线
+    - 终结裂空戟
+    - 幻象之怒
+    - 影流法杖
+    - 奇迹物质
+  '16':
+    requireLevel: 1
+    resultItem: 绝学法杖
+    requireItem:
+    - 魔影锭:5
+    - 灵质:10

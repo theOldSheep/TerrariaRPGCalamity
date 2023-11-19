@@ -1641,7 +1641,6 @@
     useSpeedMulti: 1
     useSpeedRangedMulti: 1
   autoSwing: true
-####
 骨头手套:
   type: SPECIAL_AMMO
   ammo: 骨头

@@ -979,7 +979,6 @@
     penetration: 999999
     blockHitAction: thru
     projectileSize: 50
-##
 粉色粒子光束:
     gravity: 0
     projectileSize: 1.5
