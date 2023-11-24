@@ -1044,6 +1044,7 @@
   attributes:
     damage: 300
     useTime: 20
+    useSpeedMulti: 20
     crit: 35
     projectileSpeed: 35
   worth: 20000
@@ -7528,14 +7529,16 @@ Dodu的手炮:
   worth: 6000000
   rarity: 8
 磁球:
-  item: DIAMOND_SWORD
+  item: BOOK
+  lore:
+  - §r射出弹跳磁球，向敌人发射电磁波
   attributes:
     damage: 80
     damageType: Magic
     crit: 4
     projectileSpeed: 1.2
     knockback: 6
-    useTime: 20
+    useTime: 60
     manaUse: 14
   worth: 10000000
   rarity: 8
@@ -7719,7 +7722,7 @@ Dodu的手炮:
   attributes:
     damage: 40
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 8
     crit: 4
     knockback: 3.25
     useTime: 38
@@ -7887,7 +7890,7 @@ Dodu的手炮:
   attributes:
     damage: 106
     damageType: Magic
-    projectileSpeed: 7.5
+    projectileSpeed: 9
     crit: 4
     knockback: 5.5
     useTime: 27
@@ -8040,7 +8043,7 @@ Dodu的手炮:
   attributes:
     damage: 150
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 12
     crit: 4
     knockback: 7.5
     useTime: 23
@@ -8068,6 +8071,7 @@ Dodu的手炮:
   attributes:
     damage: 290
     damageType: Magic
+    projectileSpeed: 20
     crit: 4
     knockback: 6.75
     useTime: 10
@@ -8095,13 +8099,14 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r召唤终结三叉戟
-  - §r三叉戟会造成灵液、诅咒狱火和硫磺火减益
+  - §r三叉戟会造成诅咒狱火和硫磺火减益
   attributes:
     damage: 250
     damageType: Magic
+    projectileSpeed: 16
     crit: 4
     knockback: 5
-    useTime: 15
+    useTime: 25
     manaUse: 25
   worth: 22000000
   rarity: 11
@@ -8112,6 +8117,7 @@ Dodu的手炮:
   attributes:
     damage: 120
     damageType: Magic
+    projectileSpeed: 15
     crit: 4
     knockback: 2
     useTime: 23
@@ -8127,6 +8133,7 @@ Dodu的手炮:
   attributes:
     damage: 332
     damageType: Magic
+    projectileSpeed: 23.5
     crit: 4
     knockback: 4.25
     useTime: 21
@@ -8140,6 +8147,7 @@ Dodu的手炮:
   attributes:
     damage: 108
     damageType: Magic
+    projectileSpeed: 24
     crit: 4
     knockback: 3.5
     useTime: 6
@@ -8153,6 +8161,7 @@ Dodu的手炮:
   attributes:
     damage: 286
     damageType: Magic
+    projectileSpeed: 21
     crit: 4
     knockback: 8
     useTime: 25
@@ -8166,6 +8175,7 @@ Dodu的手炮:
   attributes:
     damage: 200
     damageType: Magic
+    projectileSpeed: 6
     crit: 4
     knockback: 6
     useTime: 14
@@ -8179,6 +8189,7 @@ Dodu的手炮:
   attributes:
     damage: 200
     damageType: Magic
+    projectileSpeed: 12
     crit: 4
     knockback: 4
     useTime: 49
@@ -8192,6 +8203,7 @@ Dodu的手炮:
   attributes:
     damage: 240
     damageType: Magic
+    projectileSpeed: 2.5
     crit: 4
     knockback: 5.5
     useTime: 16
@@ -8205,6 +8217,7 @@ Dodu的手炮:
   attributes:
     damage: 520
     damageType: Magic
+    projectileSpeed: 12
     crit: 4
     knockback: 7.5
     useTime: 20
@@ -8214,8 +8227,8 @@ Dodu的手炮:
 影流法杖:
   item: DIAMOND_SWORD
   lore:
-  - §r弹射的次数越多，穿透的敌人越多，伤害越高
-  - §r“……也会带来折磨”
+  - §r穿透的敌人越多，伤害越高
+  - §r“……也会带~来折磨~”
   attributes:
     damage: 500
     damageType: Magic
@@ -8232,6 +8245,7 @@ Dodu的手炮:
   attributes:
     damage: 216
     damageType: Magic
+    projectileSpeed: 19
     crit: 4
     knockback: 9
     useTime: 25
@@ -8246,6 +8260,7 @@ Dodu的手炮:
   attributes:
     damage: 540
     damageType: Magic
+    projectileSpeed: 25
     crit: 4
     knockback: 5.2
     useTime: 21
@@ -8259,6 +8274,7 @@ Dodu的手炮:
   attributes:
     damage: 186
     damageType: Magic
+    projectileSpeed: 20
     crit: 4
     knockback: 4
     useTime: 16
@@ -8271,8 +8287,9 @@ Dodu的手炮:
   - §r在你的敌人头顶降下死亡之雨！
   - §r释放星云激光从天而降
   attributes:
-    damage: 656
+    damage: 300
     damageType: Magic
+    projectileSpeed: 18
     crit: 4
     knockback: 4
     useTime: 22
@@ -8282,10 +8299,11 @@ Dodu的手炮:
 灵魂穿透者:
   item: DIAMOND_SWORD
   lore:
-  - §r发射威力强大的光束，首次命中时会生成更多光束
+  - §r发射威力强大的光束，命中时会生成更多光束
   attributes:
     damage: 620
     damageType: Magic
+    projectileSpeed: 6
     crit: 4
     knockback: 8
     useTime: 25
@@ -8299,6 +8317,7 @@ Dodu的手炮:
   attributes:
     damage: 1024
     damageType: Magic
+    projectileSpeed: 10
     crit: 4
     knockback: 6
     useTime: 30
@@ -8314,6 +8333,7 @@ Dodu的手炮:
   attributes:
     damage: 280
     damageType: Magic
+    projectileSpeed: 30
     crit: 4
     knockback: 3.5
     useTime: 30
@@ -8328,6 +8348,7 @@ Dodu的手炮:
   attributes:
     damage: 3600
     damageType: Magic
+    projectileSpeed: 15
     crit: 4
     knockback: 9.5
     useTime: 40
@@ -8341,6 +8362,7 @@ Dodu的手炮:
   attributes:
     damage: 246
     damageType: Magic
+    projectileSpeed: 2
     crit: 4
     knockback: 5
     useTime: 33
@@ -8354,6 +8376,7 @@ Dodu的手炮:
   attributes:
     damage: 212
     damageType: Magic
+    projectileSpeed: 2
     crit: 4
     knockback: 0
     useTime: 80
@@ -8366,11 +8389,11 @@ Dodu的手炮:
   - §r向光标位置发射五道元素能量束
   - §r命中敌怪或击中物块时，元素能量束会分裂出元素能量体
   - §r或召唤可以反弹的元素射线从天而降
-  - §r元素射线会分裂出额外的射线攻击敌怪
   - §r它的威严激发了无与伦比的天才壮举
   attributes:
     damage: 266
     damageType: Magic
+    projectileSpeed: 6
     crit: 4
     knockback: 7.5
     useTime: 20
@@ -8384,6 +8407,7 @@ Dodu的手炮:
   attributes:
     damage: 10370
     damageType: Magic
+    projectileSpeed: 30
     crit: 4
     knockback: 5.75
     useTime: 43
@@ -8394,9 +8418,11 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r发射一道在接近敌人时会自动分裂的弹射光束
+  - §r“漂亮滴很呐！”
   attributes:
     damage: 250
     damageType: Magic
+    projectileSpeed: 13.5
     crit: 4
     knockback: 5
     useTime: 20

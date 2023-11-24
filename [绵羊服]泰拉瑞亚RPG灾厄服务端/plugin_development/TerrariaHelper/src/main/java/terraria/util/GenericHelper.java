@@ -319,6 +319,8 @@ public class GenericHelper {
     }
     public static ArrayList<Color> getColorListFromStrings(List<String> colorStrings) {
         ArrayList<Color> colors = new ArrayList<>();
+        if (colorStrings.get(0).equals("RAINBOW"))
+            return colors;
         for (String currColor : colorStrings) {
             colors.add( getColorFromString(currColor) );
         }
@@ -343,6 +345,27 @@ public class GenericHelper {
         }
         return Color.fromRGB(rInt, gInt, bInt);
     }
+    public static Color getRainbowColor(long singleColorDuration) {
+        long seed = Calendar.getInstance().getTimeInMillis();
+        long internal = seed % singleColorDuration, phase = ((seed - internal) / singleColorDuration) % 3;
+        int interpolate = (int) (255 * internal / singleColorDuration), interpolateOther = 255 - interpolate;
+        int r = 0, g = 0, b = 0;
+        switch ((int) phase) {
+            case 0:
+                r = interpolateOther;
+                g = interpolate;
+                break;
+            case 1:
+                g = interpolateOther;
+                b = interpolate;
+                break;
+            case 2:
+                b = interpolateOther;
+                r = interpolate;
+                break;
+        }
+        return Color.fromRGB(r, g, b);
+    }
     public static void handleParticleLine_particle(Vector vector, Location startLoc, ParticleLineOptions options) {
         // variables copied from options
         double length = options.length;
@@ -360,7 +383,8 @@ public class GenericHelper {
         Location currLoc = startLoc.clone();
         for (int i = 0; i <= loopTime; i ++) {
             // tweak color
-            Color currentColor = getInterpolateColor((double) i / (loopTime + 1), allColors);
+            Color currentColor = options.particleColor.get(0).equals("RAINBOW") ?
+                    getRainbowColor(2500) : getInterpolateColor((double) i / (loopTime + 1), allColors);
             // spawn "particles"
             if (options.vanillaParticle) {
                 double particleEstDist = (stepsize + width) / 2;
@@ -446,9 +470,8 @@ public class GenericHelper {
         WorldHelper.attemptDestroyVegetation(startLoc, terminalLoc);
         // schedule lingering
         if (lingerTime > 1) {
-            double finalDamage = damage;
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> handleStrikeLineDamage(wld, startLoc, terminalLoc, width, predication, damager, finalDamage,
+                    () -> handleStrikeLineDamage(wld, startLoc, terminalLoc, width, predication, damager, advanced.damage,
                             attrMap, itemType, exceptions, lingerTime - 1, advanced),
                     lingerDelay);
         }

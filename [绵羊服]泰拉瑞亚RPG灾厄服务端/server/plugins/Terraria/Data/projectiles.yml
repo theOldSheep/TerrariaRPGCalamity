@@ -65,7 +65,7 @@
     bouncePenetrationBonded: false
     # 弹跳时速度乘的倍数，不写则视为1。仅在blockHitAction: bounce时有作用。
     bounceVelocityMulti: 1.0
-    # 轨迹的颜色(R|G|B)，可不写。
+    # 轨迹的颜色(R|G|B)，可不写。为RAINBOW时将变为彩虹轨迹；用";"分割多个随机颜色
     trailColor: 255|125|125
     # 轨迹大小（单位：格）。不写则默认为弹射物直径。
     trailSize: -1.0
@@ -2080,8 +2080,7 @@ TNT:
 解离分裂弹:
     gravity: 0
     projectileSize: 0.5
-    blockHitAction: bounce
-    bounce: 1
+    blockHitAction: slide
     liveTime: 20
 极光弹:
     gravity: 0
@@ -3678,7 +3677,6 @@ TNT:
     liveTime: 60
 树叶:
     arrowOrPotion: true
-    noGravityTicks: 10
     liveTime: 40
 狱火爆破弹:
     gravity: 0
@@ -3785,7 +3783,7 @@ TNT:
     clusterBomb:
         amount: 4
         name: 魔法花瓣
-        velocity: 0.5
+        velocity: 0.75
         damageMulti: 0.6
 海耀弹:
     gravity: 0
@@ -3864,13 +3862,16 @@ TNT:
     projectileSize: 1
     liveTime: 40
     speedMultiPerTick: 0.95
+    autoTrace: true
+    autoTraceRadius: 8
+    autoTraceAbility: 2.5
     trailColor: 226|202|70
     trailSize: 0.25
     trailStepSize: 0.65
     clusterBomb:
         amount: 6
         name: 闪光花瓣
-        velocity: 1
+        velocity: 1.25
         damageMulti: 0.75
 狱炎三叉戟:
     arrowOrPotion: true
@@ -3933,13 +3934,16 @@ TNT:
     projectileSize: 1
     liveTime: 50
     speedMultiPerTick: 0.95
+    autoTrace: true
+    autoTraceRadius: 12
+    autoTraceAbility: 2.75
     trailColor: 225|90|175
     trailSize: 0.25
     trailStepSize: 0.65
     clusterBomb:
         amount: 8
         name: 玄法花瓣
-        velocity: 1.5
+        velocity: 1.75
         damageMulti: 0.75
 幻星水晶:
     gravity: 0
@@ -3950,6 +3954,326 @@ TNT:
     blastRadius: 2
     buffInflict:
         - "幻星感染|80|1"
+行星法杖小行星:
+    gravity: 0
+    projectileSize: 1.5
+    liveTime: 60
+    isGrenade: true
+    blastRadius: 1.5
+终结裂空戟:
+    arrowOrPotion: true
+    gravity: 0
+    projectileSize: 0.75
+    liveTime: 60
+    buffInflict:
+        - "狱炎|60|0.5"
+        - "硫磺火|60|0.5"
+荆棘烁兰花瓣:
+    gravity: 0
+    liveTime: 40
+    autoTrace: true
+    autoTraceRadius: 16
+    minimumDamageTicks: 5
+    noAutoTraceTicks: 5
+    trailColor: 212|80|194
+    trailSize: 0.1
+    trailStepSize: 0.5
+荆棘烁兰花朵:
+    gravity: 0
+    projectileSize: 1
+    liveTime: 50
+    speedMultiPerTick: 0.95
+    autoTrace: true
+    autoTraceRadius: 16
+    autoTraceAbility: 3
+    trailColor: 212|80|194
+    trailSize: 0.25
+    trailStepSize: 0.65
+    clusterBomb:
+        amount: 8
+        name: 玄法花瓣
+        velocity: 2.25
+        damageMulti: 0.75
+王子火焰:
+    gravity: 0
+    liveTime: 40
+    autoTrace: true
+    autoTraceRadius: 16
+    minimumDamageTicks: 2
+    noAutoTraceTicks: 2
+    buffInflict:
+        - "神圣之火|20|1"
+王子火球:
+    gravity: 0
+    projectileSize: 2
+    liveTime: 10
+    buffInflict:
+        - "神圣之火|60|1"
+    clusterBomb:
+        amount: 6
+        name: 王子火焰
+        velocity: 2.5
+        damageMulti: 0.6
+磁场之融磁球:
+    gravity: 0
+    blockHitAction: thru
+    penetration: 999999
+    enemyInvincibilityFrame: 100
+    liveTime: 60
+    spawnProjectiles:
+        interval: 6
+        offset: 20
+        spawnMechanism: ENEMY
+        damageMulti: 1
+        speed: 20
+        spawnType: 磁场之融电磁波
+磁场之融电磁波:
+    gravity: 0
+    liveTime: 2
+    blockHitAction: thru
+    trailColor: 120|91|255
+命运幽灵魂火:
+    gravity: 0
+    liveTime: 80
+    blockHitAction: thru
+    projectileSize: 0.5
+    isGrenade: true
+    blastRadius: 1
+幻象亡魂之怒:
+    gravity: 0
+    liveTime: 40
+    projectileSize: 0.5
+    trailColor: 255|255|255
+    clusterBomb:
+        amount: 8
+        damageMulti: 0.35
+        name: 幻象幻魂
+        type: normal
+        velocity: 1.75
+    spawnProjectiles:
+        interval: 4
+        offset: 0
+        spawnMechanism: SURROUND
+        damageMulti: 0.25
+        speed: 2
+        spawnType: 幻象幻魂
+幻象幻魂:
+    gravity: 0
+    liveTime: 35
+    penetration: 1
+    autoTrace: true
+    autoTraceRadius: 16
+    noAutoTraceTicks: 2
+    minimumDamageTicks: 2
+    trailColor: 255|255|255
+金星狱炎三叉戟:
+    gravity: 0
+    liveTime: 50
+    isGrenade: true
+    blastRadius: 6
+    blastDuration: 32
+    trailColor: 255|255|137
+    clusterBomb:
+        amount: 8
+        damageMulti: 0.75
+        name: 火焰碎片
+        type: normal
+        velocity: 1.5
+破空暗夜飞龙:
+    gravity: 0
+    liveTime: 50
+破空星辰:
+    gravity: 0
+    blockHitAction: stick
+    liveTime: 40
+    isGrenade: true
+    blastRadius: 2
+    buffInflict:
+        - "夜魇|60|1"
+毒蝰之牙:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 60
+    penetration: 3
+    buffInflict:
+        - "硫磺海剧毒|60|1"
+毒蝰喷吐物:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 60
+    buffInflict:
+        - "硫磺海剧毒|20|1"
+弑神星云激光:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.5
+    liveTime: 2
+    speedMultiPerTick: 999
+    maxSpeed: 32
+    trailColor: 194|148|248;100|200|255
+    buffInflict:
+        - "弑神怒焰|60|1"
+灵魂穿透者主光束:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 2
+    speedMultiPerTick: 999
+    maxSpeed: 64
+    trailColor: 171|152|236
+    buffInflict:
+        - "弑神怒焰|60|1"
+    clusterBomb:
+        amount: 5
+        damageMulti: 1
+        name: 灵魂穿透者衍生光束
+        type: surround
+        surroundMaxPitch: 90.0
+        surroundOffset: 10.0
+        fireOnTimeout: false
+        fireOnHitBlock: false
+        velocity: 20
+灵魂穿透者衍生光束:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.25
+    penetration: 999999
+    liveTime: 1
+    trailColor: 171|152|236
+    buffInflict:
+        - "弑神怒焰|60|1"
+圣杖星云:
+    gravity: 0
+    blockHitAction: slide
+    projectileSize: 5
+    penetration: 3
+    liveTime: 100
+    autoTrace: true
+    autoTraceRadius: 24
+    isGrenade: true
+    blastRadius: 4
+    trailColor: 207|91|197
+    trailIntensityMulti: 0.2
+    clusterBomb:
+        amount: 6
+        damageMulti: 0.5
+        name: 圣杖星云爆炸
+        type: normal
+        velocity: 0.35
+圣杖星云爆炸:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 3
+    penetration: 999999
+    liveTime: 25
+星火凤凰雨:
+    gravity: 0
+    liveTime: 30
+氦闪挥发性星核:
+    gravity: 0
+    liveTime: 30
+    isGrenade: true
+    trailColor: 239|193|119
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.1
+        name: 冲击波1
+        velocity: 0
+磁球:
+    gravity: 0
+    blockHitAction: bounce
+    bounce: 999999
+    penetration: 999999
+    enemyInvincibilityFrame: 100
+    liveTime: 200
+    spawnProjectiles:
+        interval: 5
+        offset: 16
+        spawnMechanism: ENEMY
+        damageMulti: 1
+        speed: 16
+        spawnType: 光伏电磁波
+极点光伏磁球:
+    gravity: 0
+    blockHitAction: thru
+    penetration: 999999
+    enemyInvincibilityFrame: 100
+    liveTime: 30
+    spawnProjectiles:
+        interval: 5
+        offset: 24
+        spawnMechanism: ENEMY
+        damageMulti: 1
+        speed: 24
+        spawnType: 光伏电磁波
+漩涡光伏磁球:
+    gravity: 0
+    blockHitAction: thru
+    penetration: 999999
+    enemyInvincibilityFrame: 100
+    liveTime: 60
+    spawnProjectiles:
+        interval: 6
+        offset: 24
+        spawnMechanism: ENEMY
+        damageMulti: 1
+        speed: 24
+        spawnType: 光伏电磁波
+光伏电磁波:
+    gravity: 0
+    liveTime: 2
+    blockHitAction: thru
+    trailColor: 6|255|255
+耀界之光能量体:
+    gravity: 0
+    liveTime: 60
+    autoTrace: true
+    autoTraceRadius: 24
+    autoTraceAbility: 5
+    minimumDamageTicks: 2
+    noAutoTraceTicks: 2
+    trailColor: RAINBOW
+    buffInflict:
+        - "超位崩解|100|1"
+狞桀:
+    gravity: 0
+    liveTime: 20
+    projectileSize: 1
+    trailColor: 255|7|10
+    clusterBomb:
+        amount: 25
+        damageMulti: 0.075
+        name: 颅骨云
+        type: normal
+        fireOnTimeout: false
+        velocity: 1.5
+颅骨云:
+    gravity: 0
+    blockHitAction: thru
+    penetration: 99999
+    projectileSize: 3
+    speedMultiPerTick: 0.925
+绝学光束:
+    gravity: 0
+    blockHitAction: bounce
+    bounce: 99999
+    penetration: 99999
+    liveTime: 40
+    projectileSize: 0.5
+    trailColor: 0|100|255;255|100|255
+    spawnProjectiles:
+        interval: 2
+        offset: 24
+        spawnMechanism: ENEMY
+        damageMulti: 1
+        speed: 3.0
+        spawnType: 绝学衍生光束
+绝学衍生光束:
+    gravity: 0
+    penetration: 99999
+    liveTime: 10
+    projectileSize: 0.5
+    trailColor: 0|100|255;255|100|255
+####
 星尘流星:
     autoTrace: true
     autoTraceAbility: 2
@@ -4467,18 +4791,12 @@ TNT:
     trailColor: 40|248|250
 台风箭:
     liveTime: 75
-死亡之风紫色星云射线:
+死亡之风星云射线:
     projectileSize: 0.5
     liveTime: 2
     speedMultiPerTick: 100
     maxSpeed: 48
-    trailColor: 159|255|255
-死亡之风蓝色星云射线:
-    projectileSize: 0.5
-    liveTime: 2
-    speedMultiPerTick: 100
-    maxSpeed: 48
-    trailColor: 255|188|255
+    trailColor: 159|255|255;255|188|255
 创世之光:
     gravity: 0
     projectileSize: 0.5

@@ -28,6 +28,7 @@ import terraria.gameplay.EventAndTime;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class ItemUseHelper {
@@ -3783,6 +3784,13 @@ public class ItemUseHelper {
                     fireAmount = 2;
                 break;
             }
+            case "酸蚀毒蝰": {
+                if (fireIndex == 2) {
+                    fireAmount = 5;
+                    spread = 30;
+                }
+                break;
+            }
         }
         for (int i = 0; i < fireAmount; i ++) {
             String projectileName = weaponSection.getString("projectileName", "小火花");
@@ -3805,8 +3813,12 @@ public class ItemUseHelper {
                 case "冰坠法杖":
                 case "天空之羽":
                 case "飞龙之歌":
+                case "星龙破空杖":
                 case "维苏威阿斯":
-                case "幻星法杖": {
+                case "幻星法杖":
+                case "行星法杖":
+                case "死亡冰雹":
+                case "星火凤凰雨": {
                     Vector offset = new Vector(Math.random() * 30 - 15, 20 + Math.random() * 20, Math.random() * 30 - 15);
                     fireVelocity = offset.clone().multiply(-1).normalize();
                     EntityHelper.AimHelperOptions options = new EntityHelper.AimHelperOptions()
@@ -3818,6 +3830,26 @@ public class ItemUseHelper {
                             break;
                         case "暴雪法杖":
                             options.setRandomOffsetRadius(2.5);
+                            break;
+                        case "星火凤凰雨":
+                            options.setRandomOffsetRadius(2);
+                            break;
+                        case "星龙破空杖":
+                            options.setRandomOffsetRadius(3);
+                            if (Math.random() < 0.35) {
+                                projectileName = "破空暗夜飞龙";
+                                attrMap.put("damageMagicMulti", 3.75);
+                            }
+                            else {
+                                projectileName = "破空星辰";
+                                attrMap.put("damageMagicMulti", 1.5);
+                            }
+                            break;
+                        case "死亡冰雹":
+                            options.setRandomOffsetRadius(1);
+                            offset = new Vector(Math.random() * 20 - 10, 16, Math.random() * 20 - 10);
+                            fireVelocity = offset.clone().multiply(-1).normalize();
+                            options.setTicksOffset(1);
                             break;
                         default:
                             options.setRandomOffsetRadius(0.5);
@@ -3835,7 +3867,8 @@ public class ItemUseHelper {
                     }
                     break;
                 }
-                case "菌杖": {
+                case "菌杖":
+                case "命运神启": {
                     fireVelocity = MathHelper.randomVector();
                     fireLoc = ply.getEyeLocation().add(
                             Math.random() * 5 - 2.5,
@@ -3844,7 +3877,8 @@ public class ItemUseHelper {
                     break;
                 }
                 case "裂天剑":
-                case "狱炎裂空": {
+                case "狱炎裂空":
+                case "终结裂空戟": {
                     EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
                             .setProjectileSpeed(projectileSpeed);
                     Location aimLoc = getPlayerTargetLoc(ply, 64, 5, aimHelper, true);
@@ -3863,6 +3897,30 @@ public class ItemUseHelper {
                     aimLoc.add(Math.random() * 8 - 4, projectileSpeed * -10, Math.random() * 8 - 4);
                     fireLoc = aimLoc;
                     fireVelocity = new Vector(0, 1, 0);
+                    break;
+                }
+                case "槲叶暴风": {
+                    if (fireIndex == 2)
+                        projectileName = "树叶";
+                    break;
+                }
+                case "酸蚀毒蝰": {
+                    if (fireIndex == 2) {
+                        projectileName = "毒蝰之牙";
+                    }
+                    break;
+                }
+                case "极点光伏":
+                case "虚空漩涡": {
+                    EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions()
+                            .setAimMode(true)
+                            .setTicksOffset(0);
+                    if (i == 0)
+                        fireLoc = getPlayerTargetLoc(ply, 80, 3.5,
+                                aimHelperOptions, true);
+                    else
+                        fireLoc = getPlayerCachedTargetLoc(ply, aimHelperOptions);
+                    fireVelocity = MathHelper.vectorFromYawPitch_quick(i * 360d / fireAmount, 0);
                     break;
                 }
                 case "离子冲击波": {
@@ -3942,18 +4000,7 @@ public class ItemUseHelper {
                                                boolean autoSwing, int swingAmount, Collection<Entity> damageCD) {
         int fireAmount = 1, fireDelay = 0;
         switch (itemType) {
-            case "爆裂藤蔓":
-            case "暗影束法杖":
-            case "高温射线枪":
-            case "终极棱镜":
-            case "永夜射线":
-            case "女武神权杖":
-            case "泰拉射线":
-            case "亚特兰蒂斯":
-            case "拉扎尔射线":
-            case "元素射线":
-            case "诡触之书":
-            case "命运之手":
+            default:
             {
                 Collection<Entity> damageExceptions;
                 if (damageCD == null) damageExceptions = new HashSet<>();
@@ -4002,6 +4049,15 @@ public class ItemUseHelper {
                         particleColor = "255|125|255";
                         strikeInfo
                                 .setBounceWhenHitBlock(true);
+                        break;
+                    }
+                    case "影流法杖": {
+                        length = 100;
+                        particleColor = "255|125|255";
+                        strikeInfo
+                                .setBounceWhenHitBlock(true)
+                                .setMaxTargetHit(6)
+                                .setDecayCoef(1.25);
                         break;
                     }
                     case "终极棱镜": {
@@ -4187,6 +4243,71 @@ public class ItemUseHelper {
                             default:
                                 return;
                         }
+                        break;
+                    }
+                    case "耀界之光": {
+                        length = 80;
+                        fireAmount = 5;
+                        particleColor = "RAINBOW";
+                        startLoc.add(fireDir.clone().multiply(2));
+                        startLoc.add(Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2);
+                        fireDir = targetedLocation.clone().subtract(startLoc).toVector();
+                        yaw = MathHelper.getVectorYaw(fireDir) + Math.random() * 10 - 5;
+                        pitch = MathHelper.getVectorPitch(fireDir) + Math.random() * 10 - 5;
+                        Consumer<Location> onHitFunction = (Location location) -> {
+                            // bouncing ray
+                            if (Math.random() < 0.5) {
+                                double extraRayYaw = Math.random() * 360, extraRayPitch = 60 + Math.random() * 30;
+                                double extraRayLength = 40;
+                                Location shootLoc = location.clone().subtract(
+                                        MathHelper.vectorFromYawPitch_quick(extraRayYaw, extraRayPitch).multiply(16));
+                                GenericHelper.StrikeLineOptions strikeLineOptions = new GenericHelper.StrikeLineOptions()
+                                        .setThruWall(false)
+                                        .setBounceWhenHitBlock(true)
+                                        .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
+                                            EntityHelper.applyEffect(hitEntity, "超位崩解", 100);
+                                        });
+                                GenericHelper.handleStrikeLine(ply, shootLoc, extraRayYaw, extraRayPitch, extraRayLength,
+                                        0.5, itemType, "RAINBOW",
+                                        new HashSet<>(), attrMap, strikeLineOptions);
+                            }
+                            // 8 homing projectiles
+                            else {
+                                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                        ply, location, new Vector(), attrMap, EntityHelper.DamageType.MAGIC, "耀界之光能量体");
+                                for (int i = 0; i < 8; i ++) {
+                                    shootInfo.velocity = MathHelper.randomVector().multiply(2);
+                                    EntityHelper.spawnProjectile(shootInfo);
+                                }
+                            }
+                        };
+                        strikeInfo
+                                .setThruWall(false)
+                                .setMaxTargetHit(1)
+                                .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
+                                    EntityHelper.applyEffect(hitEntity, "超位崩解", 100);
+                                    onHitFunction.accept(hitLoc);
+                                })
+                                .setBlockHitFunction((Location hitLoc, MovingObjectPosition mop) -> {
+                                    onHitFunction.accept(hitLoc);
+                                });
+                        break;
+                    }
+                    case "心泵血杖": {
+                        length = 128;
+                        particleColor = "109|26|27";
+                        strikeInfo
+                                .setThruWall(false)
+                                .setBounceWhenHitBlock(true)
+                                .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
+                                    if (hitEntity instanceof LivingEntity) {
+                                        PlayerHelper.heal(ply, 2);
+                                    }
+                                })
+                                // resets damage CD on block hit
+                                .setBlockHitFunction((Location hitLoc, MovingObjectPosition mop) -> {
+                                    damageExceptions.clear();
+                                });
                         break;
                     }
                     case "诡触之书": {

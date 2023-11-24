@@ -68,6 +68,11 @@ public class TerrariaPotionProjectile extends EntityPotion {
             // thru, bounce, stick, slide
             this.blockHitAction = (String) properties.getOrDefault("blockHitAction", this.blockHitAction);
             this.trailColor = (String) properties.getOrDefault("trailColor", this.trailColor);
+            // multiple trail color: select one at random
+            if (this.trailColor != null && this.trailColor.contains(";")) {
+                String[] candidates = this.trailColor.split(";");
+                this.trailColor = candidates[(int) (Math.random() * candidates.length)];
+            }
 
             this.autoTraceAbility = (double) properties.getOrDefault("autoTraceAbility", this.autoTraceAbility);
             this.autoTraceEndSpeedMultiplier = (double) properties.getOrDefault("autoTraceEndSpeedMultiplier", this.autoTraceEndSpeedMultiplier);
@@ -205,6 +210,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             case "精元镰刀":
             case "裂魔":
             case "生命血火":
+            case "猩红烈焰珠":
                 PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 1, false);
                 break;
             case "巨蟹之礼星环":
@@ -369,6 +375,17 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 Location targetLoc = eyeLoc.add(dir);
                 Vector newVel = terraria.util.MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc,
                         this.speed, true);
+
+                motX = newVel.getX();
+                motY = newVel.getY();
+                motZ = newVel.getZ();
+                break;
+            }
+            case "命运幽灵魂火": {
+                Location eyeLoc = ((LivingEntity) shooter.getBukkitEntity()).getEyeLocation();
+                Vector acc = terraria.util.MathHelper.getDirection(bukkitEntity.getLocation(), eyeLoc, this.speed * 0.15);
+                Vector newVel = bukkitEntity.getVelocity().add(acc);
+                newVel.normalize().multiply(this.speed);
 
                 motX = newVel.getX();
                 motY = newVel.getY();

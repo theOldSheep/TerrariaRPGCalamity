@@ -1457,8 +1457,7 @@
   autoSwing: true
   ammoConversion:
     木箭:
-    - 死亡之风蓝色星云射线
-    - 死亡之风紫色星云射线
+    - 死亡之风星云射线
 啸流:
   type: BOW
   shots: 6
@@ -2681,6 +2680,7 @@ Dodu的手炮:
 吹叶机:
   type: MAGIC_PROJECTILE
   projectileName: 树叶
+  shots: 2
   autoSwing: true
   offSet: 16
 狱火叉:
@@ -2693,6 +2693,10 @@ Dodu的手炮:
   autoSwing: true
 暗影束法杖:
   type: MAGIC_SPECIAL
+  autoSwing: true
+磁球:
+  type: MAGIC_PROJECTILE
+  projectileName: 磁球
   autoSwing: true
 高温射线枪:
   type: MAGIC_SPECIAL
@@ -2874,9 +2878,128 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 幻星水晶
   autoSwing: true
+行星法杖:
+  type: MAGIC_PROJECTILE
+  projectileName: 行星法杖小行星
+  shots: 3
+  autoSwing: true
 元素射线:
   type: MAGIC_SPECIAL
   autoSwing: true
+终结裂空戟:
+  type: MAGIC_PROJECTILE
+  projectileName: 终结裂空戟
+  fireRounds: 5
+  fireRoundsDelay: 1
+  autoSwing: true
+荆棘烁兰:
+  type: MAGIC_PROJECTILE
+  projectileName: 荆棘烁兰花朵
+  autoSwing: true
+王子:
+  type: MAGIC_PROJECTILE
+  projectileName: 王子火球
+  autoSwing: true
+槲叶暴风:
+  type: MAGIC_PROJECTILE
+  projectileName: 松针
+  shots: 3
+  fireRounds: 2
+  fireRoundsDelay: 1
+  autoSwing: true
+  offSet: 25
+猩红烈焰:
+  type: MAGIC_PROJECTILE
+  projectileName: 猩红烈焰珠
+  shots: 8
+  autoSwing: true
+  offSet: 25
+心泵血杖:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+磁场之融:
+  type: MAGIC_PROJECTILE
+  projectileName: 磁场之融磁球
+  shots: 4
+  offSet: 17.5
+  autoSwing: true
+命运神启:
+  type: MAGIC_PROJECTILE
+  projectileName: 命运幽灵魂火
+  shots: 5
+  autoSwing: true
+幻象之怒:
+  type: MAGIC_PROJECTILE
+  projectileName: 幻象亡魂之怒
+  autoSwing: true
+影流法杖:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+金星三叉戟:
+  type: MAGIC_PROJECTILE
+  projectileName: 金星狱炎三叉戟
+  autoSwing: true
+星龙破空杖:
+  type: MAGIC_PROJECTILE
+  projectileName: 破空暗夜飞龙
+  shots: 3
+  autoSwing: true
+酸蚀毒蝰:
+  type: MAGIC_PROJECTILE
+  projectileName: 毒蝰喷吐物
+  shots: 9
+  offSet: 40
+  fireRounds: 2
+  fireRoundsDelay: 4
+  autoSwing: true
+死亡冰雹:
+  type: MAGIC_PROJECTILE
+  projectileName: 弑神星云激光
+  shots: 2
+  fireRounds: 2
+  fireRoundsDelay: 3
+  autoSwing: true
+灵魂穿透者:
+  type: MAGIC_PROJECTILE
+  projectileName: 灵魂穿透者主光束
+  autoSwing: true
+星云法师圣杖:
+  type: MAGIC_PROJECTILE
+  projectileName: 圣杖星云
+  autoSwing: true
+星火凤凰雨:
+  type: MAGIC_PROJECTILE
+  projectileName: 星火凤凰雨
+  shots: 2
+  fireRounds: 10
+  fireRoundsDelay: 1
+  autoSwing: true
+氦闪:
+  type: MAGIC_PROJECTILE
+  projectileName: 氦闪挥发性星核
+  autoSwing: true
+极点光伏:
+  type: MAGIC_PROJECTILE
+  projectileName: 极点光伏磁球
+  shots: 8
+  autoSwing: true
+虚空漩涡:
+  type: MAGIC_PROJECTILE
+  projectileName: 漩涡光伏磁球
+  shots: 12
+  autoSwing: true
+耀界之光:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+狞桀:
+  type: MAGIC_PROJECTILE
+  projectileName: 狞桀
+  autoSwing: true
+绝学法杖:
+  type: MAGIC_PROJECTILE
+  projectileName: 绝学光束
+  autoSwing: true
+####
 麦格纳炮:
   type: MAGIC_PROJECTILE
   projectileName: 麦格纳冲击波
