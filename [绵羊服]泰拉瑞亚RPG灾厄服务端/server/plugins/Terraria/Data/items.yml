@@ -8429,7 +8429,6 @@ Dodu的手炮:
     manaUse: 50
   worth: 40000000
   rarity: 16
-####
 麦格纳炮:
   item: DIAMOND_SWORD
   lore:
@@ -8531,6 +8530,150 @@ Dodu的手炮:
     manaUse: 4
   worth: 20000000
   rarity: 10
+泡沫冲锋枪:
+  item: DIAMOND_SWORD
+  lore:
+  - §r射出一大串泡沫
+  attributes:
+    damage: 120
+    damageType: Magic
+    projectileSpeed: 13
+    crit: 4
+    knockback: 3.75
+    useTime: 15
+    manaUse: 20
+  worth: 20000000
+  rarity: 10
+凋亡射线:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射会加速并爆炸的离子冲击波
+  - §r你的魔力值越高，它的威力越大
+  attributes:
+    damage: 200
+    damageType: Magic
+    projectileSpeed: 12
+    crit: 4
+    knockback: 6.75
+    useTime: 7
+    manaUse: 12
+  worth: 20000000
+  rarity: 10
+净化激光炮:
+  item: DIAMOND_SWORD
+  lore:
+  - §r三连发神圣能量射线
+  attributes:
+    damage: 240
+    damageType: Magic
+    crit: 4
+    knockback: 4.5
+    useTime: 19
+    manaUse: 22
+  worth: 24000000
+  rarity: 12
+等离子液铸器:
+  item: DIAMOND_SWORD
+  lore:
+  - §r左键发射一道大型爆炸等离子束
+  - §r右键启用过载模式，开火速度提升但精度降低
+  attributes:
+    damage: 1410
+    damageType: Magic
+    projectileSpeed: 15
+    crit: 4
+    knockback: 7
+    useTime: 45
+    manaUse: 24
+  worth: 24000000
+  rarity: 1100
+等离子步枪:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射会爆炸的离子射线
+  - §r右键快速发射离子束
+  attributes:
+    damage: 300
+    damageType: Magic
+    projectileSpeed: 12
+    crit: 4
+    knockback: 4
+    useTime: 8
+    manaUse: 40
+  worth: 24000000
+  rarity: 12
+雷暴雨:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一束爆炸性绿色等离子子弹，同时召唤额外的等离子子弹从天而降
+  - §r“暴雨倾盆”
+  attributes:
+    damage: 264
+    damageType: Magic
+    projectileSpeed: 18
+    crit: 4
+    knockback: 2
+    useTime: 24
+    manaUse: 50
+  worth: 24000000
+  rarity: 12
+以太之低语:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一束激光
+  attributes:
+    damage: 1008
+    damageType: Magic
+    crit: 4
+    knockback: 5.5
+    useTime: 24
+    manaUse: 30
+  worth: 24000000
+  rarity: 12
+幻妖龙吟:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一串弹射声波，移动距离越远威力越强
+  - §r全损音质，贯耳魔音
+  attributes:
+    damage: 252
+    damageType: Magic
+    projectileSpeed: 8
+    crit: 4
+    knockback: 1
+    useTime: 36
+    manaUse: 10
+  worth: 26000000
+  rarity: 13
+特斯拉巨炮:
+  item: DIAMOND_SWORD
+  lore:
+  - §r轻型能量炮，能发射出会爆炸的强电束
+  - §r光束可以向附近的目标发射电弧
+  attributes:
+    damage: 2440
+    damageType: Magic
+    crit: 4
+    knockback: 10
+    useTime: 90
+    manaUse: 60
+  worth: 28000000
+  rarity: 1100
+以太流光炮:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射可以穿过任何东西的聚焦光子
+  attributes:
+    damage: 570
+    damageType: Magic
+    projectileSpeed: 24
+    crit: 4
+    knockback: 4
+    useTime: 36
+    manaUse: 7
+  worth: 30000000
+  rarity: 15
+####
 冰矢:
   item: BOOK
   lore:

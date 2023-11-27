@@ -2359,6 +2359,22 @@ ANVIL:
     - 神秘电路:15
     - 生命合金:5
     - 瘟疫装甲镀层:10
+  '273_1':
+    requireLevel: 3
+    resultItem: 特斯拉巨炮
+    requireItem:
+    - 可疑镀层:15
+    - 神秘电路:25
+    - 宇宙锭:8
+    - 化神魂精:2
+  '273_2':
+    requireLevel: 3
+    resultItem: 以太流光炮
+    requireItem:
+    - 净化激光炮
+    - 圣金源锭:5
+    - 龙蒿锭:12
+    - 神圣晶石:8
   '274':
     requireLevel: 1
     resultItem: 霜华法杖
@@ -4382,6 +4398,39 @@ TINKER_WORKBENCH:
     - 高温射线枪
     - 太空枪
     - 日耀碎片:6
+  '56_1':
+    requireLevel: 1
+    resultItem: 泡沫冲锋枪
+    requireItem:
+    - 泡泡枪
+    - 夜明锭:5
+    - 海棱晶:15
+  '56_2':
+    requireLevel: 1
+    resultItem: 凋亡射线
+    requireItem:
+    - 离子冲击波
+    - 夜明锭:5
+  '56_3':
+    requireLevel: 1
+    resultItem: 等离子液铸器
+    requireItem:
+    - 可疑镀层:12
+    - 神秘电路:18
+    - 龙蒿锭:8
+    - 夜明锭:4
+  '56_4':
+    requireLevel: 1
+    resultItem: 等离子步枪
+    requireItem:
+    - 激光步枪
+    - 龙蒿锭:7
+  '56_5':
+    requireLevel: 1
+    resultItem: 以太之低语
+    requireItem:
+    - 拉扎尔射线
+    - 扭曲虚空:3
   '57':
     requireLevel: 1
     resultItem: 星幻头盔
