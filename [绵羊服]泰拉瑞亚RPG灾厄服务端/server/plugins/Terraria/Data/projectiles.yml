@@ -4273,7 +4273,6 @@ TNT:
     liveTime: 10
     projectileSize: 0.5
     trailColor: 0|100|255;255|100|255
-####
 星尘流星:
     autoTrace: true
     autoTraceAbility: 2
@@ -4299,7 +4298,7 @@ TNT:
 离子光波:
     arrowOrPotion: true
     gravity: 0
-    projectileSize: 0.5
+    projectileSize: 0.75
     liveTime: 30
     isGrenade: true
     blastRadius: 1
@@ -4318,6 +4317,27 @@ TNT:
     trailSize: 0.25
     trailStepSize: 0.5
     trailLingerTime: 6
+紫色泡沫:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 12
+    penetration: 999999
+    isGrenade: true
+    blastRadius: 2.5
+    spawnProjectiles:
+        interval: 1
+        offset: 0.5
+        spawnMechanism: FORWARD
+        damageMulti: 1
+        speed: 1.75
+        spawnType: 淡蓝色泡沫
+淡蓝色泡沫:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 20
+    autoTrace: true
+    autoTraceAbility: 3
+####
 冰矢:
     gravity: 0
     liveTime: 100

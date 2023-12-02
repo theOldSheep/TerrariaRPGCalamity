@@ -2999,7 +2999,6 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 绝学光束
   autoSwing: true
-####
 麦格纳炮:
   type: MAGIC_PROJECTILE
   projectileName: 麦格纳冲击波
@@ -3030,6 +3029,21 @@ Dodu的手炮:
 拉扎尔射线:
   type: MAGIC_SPECIAL
   autoSwing: true
+泡沫冲锋枪:
+  type: MAGIC_PROJECTILE
+  projectileName: 紫色泡沫
+  shots: 4
+  offSet: 25
+  autoSwing: true
+凋亡射线:
+  type: MAGIC_PROJECTILE
+  projectileName: 离子光波
+  shots: 2
+  autoSwing: true
+净化激光炮:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+####
 冰矢:
   type: MAGIC_PROJECTILE
   projectileName: 冰矢

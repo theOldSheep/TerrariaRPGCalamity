@@ -3923,7 +3923,8 @@ public class ItemUseHelper {
                     fireVelocity = MathHelper.vectorFromYawPitch_quick(i * 360d / fireAmount, 0);
                     break;
                 }
-                case "离子冲击波": {
+                case "离子冲击波":
+                case "凋亡射线": {
                     double maxMana = attrMap.getOrDefault("maxMana", 20d);
                     double manaRatio = ply.getLevel() / maxMana;
                     attrMap.put("damage", attrMap.get("damage") * (0.2 + 1.4 * manaRatio));
@@ -4308,6 +4309,20 @@ public class ItemUseHelper {
                                 .setBlockHitFunction((Location hitLoc, MovingObjectPosition mop) -> {
                                     damageExceptions.clear();
                                 });
+                        break;
+                    }
+                    case "净化激光炮": {
+                        length = 64;
+                        fireAmount = 3;
+                        particleColor = "255|255|151";
+                        strikeInfo
+                                .setMaxTargetHit(2)
+                                .setThruWall(false)
+                                .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
+                                    EntityHelper.applyEffect(hitEntity, "神圣之火", 60);
+                                });
+                        yaw += Math.random() * 2 - 1;
+                        pitch += Math.random() * 2 - 1;
                         break;
                     }
                     case "诡触之书": {
