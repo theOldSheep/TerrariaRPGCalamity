@@ -166,8 +166,19 @@ effects:
   硫磺海剧毒:
     isBuff: false
     damageInterval: 5
-    damage: 45
+    damage: 2
+    damageMonster: 45
+    attributes:
+      regenMulti: -1
     tooltip: 有毒的硫磺海水正在烧灼你的皮肤
+  深渊水压:
+    isBuff: false
+    damageInterval: 10
+    damage: 9
+    damageMonster: 50
+    attributes:
+      regenMulti: -1
+    tooltip: 深海压强似乎作用于身
   弑神怒焰:
     isBuff: false
     damageInterval: 4

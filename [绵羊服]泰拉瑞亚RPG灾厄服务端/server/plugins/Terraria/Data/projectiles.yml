@@ -4325,7 +4325,7 @@ TNT:
     isGrenade: true
     blastRadius: 2.5
     spawnProjectiles:
-        interval: 1
+        interval: 4
         offset: 0.5
         spawnMechanism: FORWARD
         damageMulti: 1
@@ -4337,6 +4337,96 @@ TNT:
     liveTime: 20
     autoTrace: true
     autoTraceAbility: 3
+等离子液铸器脉冲:
+    gravity: 0
+    projectileSize: 1
+    liveTime: 20
+    trailColor: 245|255|134
+    isGrenade: true
+    blastRadius: 3.5
+等离子步枪弹:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 20
+    trailColor: 58|234|24
+雷暴雨额外弹幕:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 10
+    trailColor: 71|255|255
+    trailIntensityMulti: 0.5
+雷暴雨:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 20
+    trailColor: 71|255|255
+    clusterBomb:
+        amount: 5
+        damageMulti: 1
+        name: 雷暴雨额外弹幕
+        type: star
+        fireOnTimeout: false
+        velocity: 10
+以太之低语额外弹幕:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.5
+    liveTime: 20
+    trailColor: 255|142|255
+    buffInflict:
+        - "暗影焰|200|1"
+以太之低语:
+    gravity: 0
+    projectileSize: 0.75
+    liveTime: 20
+    trailColor: 255|142|255
+    buffInflict:
+        - "暗影焰|200|1"
+    clusterBomb:
+        amount: 8
+        damageMulti: 0.4
+        name: 以太之低语额外弹幕
+        fireOnTimeout: false
+        velocity: 10
+哀怨之声:
+    gravity: 0
+    blockHitAction: bounce
+    bounce: 999999
+    penetration: 4
+    projectileSize: 3
+    liveTime: 100
+    buffInflict:
+        - "深渊水压|80|1"
+特斯拉强电弧:
+    gravity: 0
+    projectileSize: 1
+    liveTime: 1
+    isGrenade: true
+    blastRadius: 2.5
+    trailColor: 96|255|255
+特斯拉强电束:
+    gravity: 0
+    projectileSize: 1
+    liveTime: 100
+    isGrenade: true
+    blastRadius: 3
+    trailColor: 96|255|255
+    spawnProjectiles:
+        interval: 2
+        offset: 32
+        spawnMechanism: ENEMY
+        damageMulti: 1
+        speed: 32
+        spawnType: 特斯拉强电弧
+以太流光:
+    gravity: 0
+    blockHitAction: thru
+    penetration: 4
+    projectileSize: 1
+    liveTime: 20
+    trailColor: 255|255|172
+    buffInflict:
+        - "神圣之火|60|1"
 ####
 冰矢:
     gravity: 0

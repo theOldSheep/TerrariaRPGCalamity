@@ -3043,6 +3043,47 @@ Dodu的手炮:
 净化激光炮:
   type: MAGIC_SPECIAL
   autoSwing: true
+等离子液铸器:
+  type: MAGIC_PROJECTILE
+  projectileName: 等离子液铸器脉冲
+  autoSwing: true
+等离子液铸器_RIGHT_CLICK:
+  type: MAGIC_PROJECTILE
+  projectileName: 等离子液铸器脉冲
+  offSet: 20
+  attributes:
+    damage: 900
+    useTime: 5
+    manaUse: 8
+  autoSwing: true
+等离子步枪:
+  type: MAGIC_PROJECTILE
+  projectileName: 等离子步枪弹
+  autoSwing: true
+雷暴雨:
+  type: MAGIC_PROJECTILE
+  projectileName: 雷暴雨
+  shots: 5
+  offSet: 20
+  autoSwing: true
+以太之低语:
+  type: MAGIC_PROJECTILE
+  projectileName: 以太之低语
+  autoSwing: true
+幻妖龙吟:
+  type: MAGIC_PROJECTILE
+  projectileName: 哀怨之声
+  fireRounds: 3
+  fireRoundsDelay: 2
+  autoSwing: true
+特斯拉巨炮:
+  type: MAGIC_PROJECTILE
+  projectileName: 特斯拉强电束
+  autoSwing: true
+以太流光炮:
+  type: MAGIC_PROJECTILE
+  projectileName: 以太流光
+  autoSwing: true
 ####
 冰矢:
   type: MAGIC_PROJECTILE

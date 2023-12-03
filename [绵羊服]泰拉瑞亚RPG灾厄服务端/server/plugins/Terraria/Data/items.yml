@@ -8534,6 +8534,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r射出一大串泡沫
+  - §r“化作，浮沫吧！”
   attributes:
     damage: 120
     damageType: Magic
@@ -8552,7 +8553,7 @@ Dodu的手炮:
   attributes:
     damage: 200
     damageType: Magic
-    projectileSpeed: 12
+    projectileSpeed: 24
     crit: 4
     knockback: 6.75
     useTime: 7
@@ -8578,9 +8579,9 @@ Dodu的手炮:
   - §r左键发射一道大型爆炸等离子束
   - §r右键启用过载模式，开火速度提升但精度降低
   attributes:
-    damage: 1410
+    damage: 2700
     damageType: Magic
-    projectileSpeed: 15
+    projectileSpeed: 30
     crit: 4
     knockback: 7
     useTime: 45
@@ -8590,27 +8591,26 @@ Dodu的手炮:
 等离子步枪:
   item: DIAMOND_SWORD
   lore:
-  - §r发射会爆炸的离子射线
-  - §r右键快速发射离子束
+  - §r快速发射离子束
   attributes:
     damage: 300
     damageType: Magic
-    projectileSpeed: 12
+    projectileSpeed: 25
     crit: 4
     knockback: 4
     useTime: 8
-    manaUse: 40
+    manaUse: 10
   worth: 24000000
   rarity: 12
 雷暴雨:
   item: DIAMOND_SWORD
   lore:
-  - §r发射一束爆炸性绿色等离子子弹，同时召唤额外的等离子子弹从天而降
+  - §r发射爆炸性绿色等离子子弹，同时召唤额外的等离子子弹从天而降
   - §r“暴雨倾盆”
   attributes:
     damage: 264
     damageType: Magic
-    projectileSpeed: 18
+    projectileSpeed: 20
     crit: 4
     knockback: 2
     useTime: 24
@@ -8624,6 +8624,7 @@ Dodu的手炮:
   attributes:
     damage: 1008
     damageType: Magic
+    projectileSpeed: 15
     crit: 4
     knockback: 5.5
     useTime: 24
@@ -8653,6 +8654,7 @@ Dodu的手炮:
   attributes:
     damage: 2440
     damageType: Magic
+    projectileSpeed: 40
     crit: 4
     knockback: 10
     useTime: 90
@@ -8669,8 +8671,8 @@ Dodu的手炮:
     projectileSpeed: 24
     crit: 4
     knockback: 4
-    useTime: 36
-    manaUse: 7
+    useTime: 6
+    manaUse: 5
   worth: 30000000
   rarity: 15
 ####
