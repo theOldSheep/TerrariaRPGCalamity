@@ -2888,6 +2888,63 @@ WORKBENCH:
     resultItem: 命运之手
     requireItem:
     - 冥思构造体:9
+  '55_1':
+    requireLevel: 1
+    resultItem: 原核之怒
+    requireItem:
+    - 利刃台风
+    - 波塞冬
+    - 夜明锭:5
+  '55_2':
+    requireLevel: 1
+    resultItem: 先兆元素
+    requireItem:
+    - 诡触之书
+    - 命运之手
+    - 星系异石:5
+    - 夜明锭:5
+    - 生命合金:5
+  '55_3':
+    requireLevel: 1
+    resultItem: 生命光流
+    requireItem:
+    - 丝绸:5
+    - 龙蒿锭:8
+  '55_4':
+    requireLevel: 1
+    resultItem: 始源之遗
+    requireItem:
+    - 始源之尘
+    - 禁戒碎片:5
+    - 宇宙锭:8
+    - 恒温能量:20
+  '55_5':
+    requireLevel: 1
+    resultItem: 狂野复诵
+    requireItem:
+    - 恶魔锄刀
+    - 混乱核心:12
+    - 宇宙锭:8
+    - 梦魇魔能:20
+  '55_6':
+    requireLevel: 1
+    resultItem: 圣神光辉
+    requireItem:
+    - 暗晶风暴
+    - 深渊之书
+    - 宇宙锭:8
+    - 光明之魂:30
+    - 闪耀金羽:5
+    - 梦魇魔能:20
+  '55_7':
+    requireLevel: 1
+    resultItem: 黑洞边缘
+    requireItem:
+    - 天穹流星
+    - 原核之怒
+    - 遗迹圣物
+    - 宇宙锭:8
+    - 日蚀之阴碎片:8
   '56':
     requireLevel: 1
     resultItem: 反魂蝶
@@ -4050,6 +4107,7 @@ TINKER_WORKBENCH:
     resultItem: 雷姆的复仇
     requireItem:
     - 蓝月
+    - 独角兽角
     - 夜明锭:5
     - 流明晶:10
   '44_2_2':
@@ -4622,3 +4680,18 @@ TINKER_WORKBENCH:
     requireItem:
     - 魔影锭:5
     - 灵质:10
+  '17':
+    requireLevel: 1
+    resultItem: 归元漩涡
+    requireItem:
+    - 先兆元素
+    - 黑洞边缘
+    - 天堂之泪
+    - 奇迹物质
+  '18':
+    requireLevel: 1
+    resultItem: 光之舞
+    requireItem:
+    - 终结裂空戟
+    - 月之耀斑
+    - 魔影锭:5

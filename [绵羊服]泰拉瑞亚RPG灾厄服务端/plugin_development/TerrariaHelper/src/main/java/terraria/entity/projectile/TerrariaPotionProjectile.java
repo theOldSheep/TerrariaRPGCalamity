@@ -314,15 +314,15 @@ public class TerrariaPotionProjectile extends EntityPotion {
         switch (projectileType) {
             case "旋风":
             case "风暴管束者剑气": {
-                double radius = 15, suckSpeed = 0.1;
+                double radius = 1, suckSpeed = 0.1;
                 switch (projectileType) {
                     case "旋风":
-                        radius = 5;
-                        suckSpeed = 0.65;
+                        radius = 6;
+                        suckSpeed = 0.25;
                         break;
                     case "风暴管束者剑气":
-                        radius = 12;
-                        suckSpeed = 1.75;
+                        radius = 15;
+                        suckSpeed = 0.5;
                         break;
                 }
                 // get list of entities that could get sucked in
@@ -342,8 +342,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     Vector velocity = new Vector(locX, locY, locZ);
                     velocity.subtract(enemy.getLocation().toVector());
                     double dist = velocity.length();
-                    velocity.multiply(Math.max(radius / 10, radius - dist) * suckSpeed / dist / radius);
-                    EntityHelper.knockback(enemy, velocity, false);
+                    // pulling force decays as distance increases, to a min of 0.25x
+                    velocity.multiply(Math.max(radius / 4, radius - dist) * suckSpeed / dist / radius);
+                    EntityHelper.knockback(enemy, velocity, true);
                 }
                 break;
             }

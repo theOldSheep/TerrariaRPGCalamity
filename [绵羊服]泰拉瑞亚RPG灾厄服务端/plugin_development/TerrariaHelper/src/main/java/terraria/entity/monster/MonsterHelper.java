@@ -2244,6 +2244,7 @@ public class MonsterHelper {
                 monsterBkt.addScoreboardTag("dropHandled");
             }
         }
+        // contact damage
         if (hasContactDamage && monster.getHealth() > 0) {
             AxisAlignedBB bb = monster.getBoundingBox();
             double xWidth = (bb.d - bb.a) / 2, zWidth = (bb.f - bb.c) / 2, height = (bb.e - bb.b) / 2;
@@ -2257,6 +2258,13 @@ public class MonsterHelper {
                 EntityHelper.handleDamage(monsterBkt, hitEntityInfo.getHitEntity().getBukkitEntity(),
                         damage, EntityHelper.DamageReason.DIRECT_DAMAGE);
             }
+        }
+        // update saved velocity
+        {
+            MetadataValue currVel = EntityHelper.getMetadata(monsterBkt, EntityHelper.MetadataName.ENTITY_CURRENT_VELOCITY);
+            if (currVel != null)
+                EntityHelper.setMetadata(monsterBkt, EntityHelper.MetadataName.ENTITY_LAST_VELOCITY, currVel.value());
+            EntityHelper.setMetadata(monsterBkt, EntityHelper.MetadataName.ENTITY_CURRENT_VELOCITY, monsterBkt.getVelocity());
         }
         return indexAI + 1;
     }

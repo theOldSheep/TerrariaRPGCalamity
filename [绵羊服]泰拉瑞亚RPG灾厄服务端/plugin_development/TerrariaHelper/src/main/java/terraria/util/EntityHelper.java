@@ -81,14 +81,29 @@ public class EntityHelper {
         Bukkit.getLogger().info("[Entity Helper] buffInferior: " + buffInferior);
     }
     public static class AimHelperOptions {
-        double projectileSpeed = 0d, intensity = 1d, randomOffsetRadius = 0d, ticksOffset = 0;
-        boolean useTickOrSpeedEstimation = false;
+        double projectileGravity = 0d, projectileSpeed = 0d, projectileSpeedMax = 99d, projectileSpeedMulti = 1d,
+                intensity = 1d, randomOffsetRadius = 0d, ticksOffset = 0;
+        boolean useAcceleration = false, useTickOrSpeedEstimation = false;
+        int epoch = 3, noGravityTicks = 5;
+        Vector accelerationOffset = new Vector();
         public AimHelperOptions setTicksOffset(double ticksOffset) {
             this.ticksOffset = ticksOffset;
             return this;
         }
+        public AimHelperOptions setProjectileGravity(double projectileGravity) {
+            this.projectileGravity = projectileGravity;
+            return this;
+        }
         public AimHelperOptions setProjectileSpeed(double projectileSpeed) {
             this.projectileSpeed = projectileSpeed;
+            return this;
+        }
+        public AimHelperOptions setProjectileSpeedMax(double projectileSpeedMax) {
+            this.projectileSpeedMax = projectileSpeedMax;
+            return this;
+        }
+        public AimHelperOptions setProjectileSpeedMulti(double projectileSpeedMulti) {
+            this.projectileSpeedMulti = projectileSpeedMulti;
             return this;
         }
         public AimHelperOptions setIntensity(double intensity) {
@@ -99,8 +114,32 @@ public class EntityHelper {
             this.randomOffsetRadius = randomOffsetRadius;
             return this;
         }
+        public AimHelperOptions setEpoch(int epoch) {
+            this.epoch = epoch;
+            return this;
+        }
+        public AimHelperOptions setNoGravityTicks(int noGravityTicks) {
+            this.noGravityTicks = noGravityTicks;
+            return this;
+        }
+        public AimHelperOptions setAccelerationMode(boolean useAcceleration) {
+            this.useAcceleration = useAcceleration;
+            return this;
+        }
         public AimHelperOptions setAimMode(boolean useTickOrSpeedEstimation) {
             this.useTickOrSpeedEstimation = useTickOrSpeedEstimation;
+            return this;
+        }
+        public AimHelperOptions setAccOffset(Vector accelerationOffset) {
+            this.accelerationOffset = accelerationOffset;
+            return this;
+        }
+        public AimHelperOptions addAccOffset(Vector accelerationOffset) {
+            this.accelerationOffset.add(accelerationOffset);
+            return this;
+        }
+        public AimHelperOptions subtractAccOffset(Vector accelerationOffset) {
+            this.accelerationOffset.subtract(accelerationOffset);
             return this;
         }
     }
@@ -150,6 +189,8 @@ public class EntityHelper {
         DAMAGE_TYPE("damageType"),
         DYNAMIC_DAMAGE_REDUCTION("dynamicDR"),
         EFFECTS("effects"),
+        ENTITY_CURRENT_VELOCITY("eCurrVel"),
+        ENTITY_LAST_VELOCITY("eLastVel"),
         HEALTH_LOCKED_AT_AMOUNT("healthLock"),
         INVULNERABILITY_TICK_EDITION_MAP("ivtEdiMap"),
         LAST_ADAMANTITE_PARTICLE_TYPE("APAType"),
@@ -192,6 +233,7 @@ public class EntityHelper {
         PLAYER_NEXT_MINION_INDEX("nextMinionIndex"),
         PLAYER_NEXT_SENTRY_INDEX("nextSentryIndex"),
         PLAYER_NPC_INTERACTING("NPCViewing"),
+        PLAYER_SECOND_LAST_LOCATION("secondLastLocation"),
         PLAYER_SENTRY_LIST("sentries"),
         PLAYER_TARGET_LOC_CACHE("targetLocCache"),
         PLAYER_TEAM("team"),
@@ -1692,6 +1734,15 @@ public class EntityHelper {
                             EntityHelper.applyEffect(damageSource, "灵魂力量", 20);
                     }
                 }
+                // special enemy damage tweak
+                switch (victim.getName()) {
+                    case "猪鲨公爵":
+                    case "硫海遗爵":
+                        if (damager.getName().equals("雷姆的复仇"))
+                            dmg *= 5;
+                        break;
+
+                }
                 // crit to non-player victims
                 if (Math.random() * 100 < critRate) {
                     crit = true;
@@ -2020,44 +2071,114 @@ public class EntityHelper {
         ProjectileShootInfo shootInfo = new ProjectileShootInfo(shooter, shootLoc, velocity, attrMap, damageType, projectileName);
         return spawnProjectile(shootInfo);
     }
+    // helps aim at an entity
     public static Location helperAimEntity(Location shootLoc, Entity target, AimHelperOptions aimHelperOption) {
-        Location targetLoc;
+        shootLoc.checkFinite();
+        Vector enemyVel, enemyAcc;
+        // get target velocity and acceleration
+        if (target instanceof Player) {
+            Location lastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_CURRENT_LOCATION).value();
+            Location secondLastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_LAST_LOCATION).value();
+            if (lastLoc.distanceSquared(target.getLocation()) < 1e-5) {
+                lastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_LAST_LOCATION).value();
+                secondLastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_SECOND_LAST_LOCATION).value();
+            }
+            enemyVel = target.getLocation().subtract(lastLoc).toVector();
+            Vector enemyVelSecondLast = secondLastLoc.clone().subtract(lastLoc).toVector();
+            enemyAcc = enemyVel.clone().subtract(enemyVelSecondLast);
+        }
+        else {
+            MetadataValue currVelMetadata = getMetadata(target, MetadataName.ENTITY_CURRENT_VELOCITY);
+            MetadataValue lastVelMetadata = getMetadata(target, MetadataName.ENTITY_LAST_VELOCITY);
+            enemyVel = target.getVelocity();
+            // if any of the two are not yet recorded, assume acceleration is none.
+            if (currVelMetadata == null || lastVelMetadata == null) {
+                enemyAcc = new Vector();
+            }
+            // otherwise, calculate acceleration.
+            else {
+                Vector currSavedVel = (Vector) currVelMetadata.value();
+                Vector lastSavedVel = (Vector) lastVelMetadata.value();
+                enemyAcc = currSavedVel.clone().subtract(lastSavedVel);
+            }
+            Bukkit.broadcastMessage("Enemy" + target + " acc. " + enemyAcc);
+        }
+        // offset enemyAcc
+        enemyAcc.add(aimHelperOption.accelerationOffset);
+
         // setup target location
+        Location targetLoc, predictedLoc;
         if (target instanceof LivingEntity) targetLoc = ((LivingEntity) target).getEyeLocation();
         else targetLoc = target.getLocation();
-        // estimate the distance that the entity will move
+        // a placeholder, so that the function does not report an error
+        predictedLoc = targetLoc.clone();
+        // "hyper-params" for prediction
         double predictionIntensity = aimHelperOption.intensity;
-        shootLoc.checkFinite();
-        if (predictionIntensity > 1e-5) {
-            double ticksOffset = 0;
-            if (aimHelperOption.useTickOrSpeedEstimation) ticksOffset = aimHelperOption.ticksOffset;
-            else if (aimHelperOption.projectileSpeed > 0.2) {
-                double distance = targetLoc.distance(shootLoc);
-                ticksOffset = distance / aimHelperOption.projectileSpeed;
+        double ticksOffset = 0, lastTicksOffset;
+        // approximate the velocity to use with epochs requested
+        for (int currEpoch = 0; currEpoch < aimHelperOption.epoch; currEpoch ++) {
+            // calculate the predicted enemy location
+            {
+                predictedLoc = targetLoc.clone();
+                // account for displacement that are caused by velocity
+                predictedLoc.add(enemyVel.clone().multiply(ticksOffset * predictionIntensity));
+                Bukkit.broadcastMessage("Vel Offset" + enemyVel.clone().multiply(ticksOffset * predictionIntensity));
+                // first tick acc. is in effect for (n-1) times, second for (n-2) and so on
+                // in total = sum(1, 2, ..., n-2, n-1) = n(n-1) / 2
+                predictedLoc.add(enemyAcc.clone().multiply(ticksOffset * (ticksOffset - 1) * predictionIntensity / 2d));
+                Bukkit.broadcastMessage("Acc Offset" + enemyAcc.clone().multiply(ticksOffset * (ticksOffset - 1) * predictionIntensity / 2d));
+                // projectile gravity, it is equivalent to target acceleration, for the ease of computation
+                // yet, it is different - it only takes effect after a certain time
+                if (ticksOffset > aimHelperOption.noGravityTicks) {
+                    predictedLoc.add(new Vector(0,
+                            (ticksOffset - aimHelperOption.noGravityTicks) * (ticksOffset - aimHelperOption.noGravityTicks - 1)
+                                    * aimHelperOption.projectileGravity * predictionIntensity / 2d, 0));
+                    Bukkit.broadcastMessage("PjGrv Offset" + new Vector(0,
+                            (ticksOffset - aimHelperOption.noGravityTicks) * (ticksOffset - aimHelperOption.noGravityTicks - 1)
+                                    * aimHelperOption.projectileGravity * predictionIntensity / 2d, 0) );
+                }
+                // random offset
+                {
+                    double randomOffset = aimHelperOption.randomOffsetRadius;
+                    if (randomOffset > 1e-5) {
+                        double randomOffsetHalved = randomOffset / 2;
+                        predictedLoc.add(Math.random() * randomOffset - randomOffsetHalved,
+                                Math.random() * randomOffset - randomOffsetHalved,
+                                Math.random() * randomOffset - randomOffsetHalved);
+                    }
+                }
             }
-            ticksOffset = Math.ceil(ticksOffset);
-            ticksOffset *= aimHelperOption.intensity;
-            // get the prediction vector
-            Vector velocity;
-            if (target instanceof Player) {
-                Location lastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_CURRENT_LOCATION).value();
-                if (lastLoc.distanceSquared(target.getLocation()) < 1e-5)
-                    lastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_LAST_LOCATION).value();
-                velocity = target.getLocation().subtract(lastLoc).toVector();
+
+            // then, update actual ticks needed to reach the designated point
+            lastTicksOffset = ticksOffset;
+            if (aimHelperOption.useTickOrSpeedEstimation)
+                ticksOffset = aimHelperOption.ticksOffset;
+            else {
+                double distance = predictedLoc.distance(shootLoc), currSpd = aimHelperOption.projectileSpeed;
+                // if speed does not change over time, use that speed
+                if (aimHelperOption.projectileSpeedMulti == 1) {
+                    ticksOffset = distance / currSpd;
+                }
+                // if a speed multiplier is in place, account for it.
+                else {
+                    double distTraveled = 0;
+                    // prevent possible inf loop IF the projectile has decaying speed
+                    while (distTraveled < distance && (aimHelperOption.projectileSpeedMulti >= 1d || ticksOffset < 20)) {
+                        ticksOffset ++;
+                        distTraveled += currSpd;
+                        currSpd *= aimHelperOption.projectileSpeedMulti;
+                        if (currSpd > aimHelperOption.projectileSpeedMax)
+                            currSpd = aimHelperOption.projectileSpeedMax;
+                    }
+                }
+                ticksOffset = Math.ceil(ticksOffset);
             }
-            else
-                velocity = target.getVelocity();
-            targetLoc.add(velocity.multiply(ticksOffset));
+
+            // end the loop early if the last tick offset agrees with the current
+            if (lastTicksOffset == ticksOffset)
+                break;
         }
-        // random offset for projectiles
-        double randomOffset = aimHelperOption.randomOffsetRadius;
-        if (randomOffset > 1e-5) {
-            double randomOffsetHalved = randomOffset / 2;
-            targetLoc.add(Math.random() * randomOffset - randomOffsetHalved,
-                    Math.random() * randomOffset - randomOffsetHalved,
-                    Math.random() * randomOffset - randomOffsetHalved);
-        }
-        return targetLoc;
+        return predictedLoc;
     }
     public static Location helperAimEntity(Entity source, Entity target, AimHelperOptions aimHelperOption) {
         Location shootLoc = source.getLocation();

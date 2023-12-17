@@ -315,8 +315,8 @@ effects:
   耐力:
     isBuff: true
     attributes:
-      damageTakenMulti: -0.1
-    tooltip: 伤害减免增加10%
+      damageTakenMulti: -0.05
+    tooltip: 伤害减免增加5%
   鱼鳃:
     isBuff: true
     tooltip: 你能在水下呼吸了！

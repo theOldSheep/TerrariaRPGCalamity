@@ -1097,7 +1097,7 @@
   - §r[饰品]
   - §6专家模式物品
   attributes:
-    damageTakenMulti: -0.17
+    damageTakenMulti: -0.1
   worth: 2000000
   rarity: 1000
 钴盾:
@@ -4264,6 +4264,7 @@
   lore:
   - §r由最勇敢的战士使用
   - §r击中敌人时降低其防御
+  - §r似乎可以在与某种海洋生物的战斗中立下汗马功劳……
   attributes:
     damage: 750
     damageType: Melee
@@ -7623,7 +7624,7 @@ Dodu的手炮:
   lore:
   - §r发射快速移动的利刃台风
   attributes:
-    damage: 170
+    damage: 200
     damageType: Magic
     crit: 4
     projectileSpeed: 8
@@ -8637,13 +8638,13 @@ Dodu的手炮:
   - §r发射一串弹射声波，移动距离越远威力越强
   - §r全损音质，贯耳魔音
   attributes:
-    damage: 252
+    damage: 2500
     damageType: Magic
     projectileSpeed: 8
     crit: 4
     knockback: 1
     useTime: 36
-    manaUse: 10
+    manaUse: 30
   worth: 26000000
   rarity: 13
 特斯拉巨炮:
@@ -8675,7 +8676,6 @@ Dodu的手炮:
     manaUse: 5
   worth: 30000000
   rarity: 15
-####
 冰矢:
   item: BOOK
   lore:
@@ -8983,6 +8983,191 @@ Dodu的手炮:
     manaUse: 15
   worth: 16000000
   rarity: 9
+原核之怒:
+  item: BOOK
+  lore:
+  - §r发射高能台风
+  - §r“原神，启动！”
+  attributes:
+    damage: 280
+    damageType: Magic
+    projectileSpeed: 16
+    crit: 4
+    knockback: 5
+    useTime: 25
+    manaUse: 22
+  worth: 20000000
+  rarity: 10
+先兆元素:
+  item: BOOK
+  lore:
+  - §r创造元素触手戳刺你的敌人
+  attributes:
+    damage: 260
+    damageType: Magic
+    crit: 4
+    knockback: 5.5
+    useTime: 10
+    manaUse: 14
+  worth: 22000000
+  rarity: 11
+殷红鞭笞:
+  item: BOOK
+  lore:
+  - §r一次发射3道空气斩
+  - §r“鞭笞我吧，公瑾！”
+  attributes:
+    damage: 265
+    damageType: Magic
+    projectileSpeed: 24
+    crit: 4
+    knockback: 7.5
+    useTime: 19
+    manaUse: 30
+  worth: 22000000
+  rarity: 11
+生命光流:
+  item: BOOK
+  lore:
+  - §r发射能量集中的生命射线
+  attributes:
+    damage: 160
+    damageType: Magic
+    projectileSpeed: 20
+    crit: 4
+    knockback: 3
+    useTime: 3
+    manaUse: 4
+  worth: 24000000
+  rarity: 12
+始源之遗:
+  item: BOOK
+  lore:
+  - §r丢出一团巨大的粉尘
+  - §r“源神，启动！”
+  attributes:
+    damage: 290
+    damageType: Magic
+    projectileSpeed: 8
+    crit: 4
+    knockback: 5
+    useTime: 18
+    manaUse: 16
+  worth: 28000000
+  rarity: 14
+狂野复诵:
+  item: BOOK
+  lore:
+  - §r向光标处发射狂野之镰并追踪敌人
+  attributes:
+    damage: 256
+    damageType: Magic
+    projectileSpeed: 10
+    crit: 4
+    knockback: 8.5
+    useTime: 18
+    manaUse: 17
+  worth: 28000000
+  rarity: 14
+圣神光辉:
+  item: BOOK
+  lore:
+  - §r释放追踪小光球和爆破光球
+  attributes:
+    damage: 200
+    damageType: Magic
+    projectileSpeed: 25
+    crit: 4
+    knockback: 3
+    useTime: 4
+    manaUse: 4
+  worth: 28000000
+  rarity: 14
+黑洞边缘:
+  item: BOOK
+  lore:
+  - §r发射一圈追踪敌人的星星
+  - §r星星在击中敌人时会产生黑洞
+  - §r“万物被悉数卷入其中，连光也无法幸免”
+  - §r“缘神，启动！”
+  attributes:
+    damage: 400
+    damageType: Magic
+    projectileSpeed: 25
+    crit: 4
+    knockback: 3.5
+    useTime: 32
+    manaUse: 12
+  worth: 28000000
+  rarity: 14
+归元漩涡:
+  item: BOOK
+  lore:
+  - §r左键释放一连串会冲向敌人的漩涡
+  - §r右键在你的前方投射一个偏向光标位置的巨大旋涡
+  - §r当漩涡的附近有敌人时，漩涡会向敌人发射多个快速移动的小漩涡
+  - §r经过足够时间后松开右键会将大漩涡向光标方向释放
+  - §r伤害随手持漩涡时长的增加而增加
+  - §r“元神，启动！”
+  attributes:
+    damage: 932
+    damageType: Magic
+    projectileSpeed: 20
+    crit: 4
+    knockback: 5
+    useTime: 60
+    manaUse: 22
+  worth: 30000000
+  rarity: 15
+怨戾:
+  item: BOOK
+  lore:
+  - §r召唤一个圆形法阵，法阵会逐渐蓄力，最终会发射出一束强大的怨戾激光
+  - §r被激光照射的物块会迸发出岩浆，随后出现亡魂之手
+  - §#C61B40“当被原谅之人尚未能饶恕自身时，
+  - §#C61B40得到宽恕所带来的安慰也仅限于此了。”
+  - §r“怨神，启动！”
+  attributes:
+    damage: 444
+    damageType: Magic
+    crit: 4
+    knockback: 5
+    useTime: 25
+    manaUse: 20
+  worth: 30000000
+  rarity: 15
+异端:
+  item: BOOK
+  lore:
+  - §r从翻开的书页中召唤火焰与灵魂
+  - §r你翻书的时间越长，攻击越强
+  attributes:
+    damage: 1920
+    damageType: Magic
+    projectileSpeed: 20
+    crit: 4
+    knockback: 0
+    useTime: 15
+    manaUse: 15
+  worth: 30000000
+  rarity: 15
+光之舞:
+  item: BOOK
+  lore:
+  - §r将敌人以光刃弹雨湮灭
+  - §r“炫目闪光过后，一切荡然无存”
+  - §r“哦哦 哦齐!”
+  attributes:
+    damage: 830
+    damageType: Magic
+    projectileSpeed: 14
+    crit: 4
+    knockback: 4
+    useTime: 8
+    manaUse: 6
+  worth: 40000000
+  rarity: 16
+####
 北极熊爪:
   item: DIAMOND_SWORD
   lore:
@@ -11939,8 +12124,8 @@ Dodu的手炮:
 耐力药水:
   item: CLAY_BALL
   lore:
-  - §a所受伤害减少10%
-  - §a4分钟持续时间
+  - §a所受伤害减少5%
+  - §a8分钟持续时间
   worth: 20000
   rarity: 1
 鱼鳃药水:

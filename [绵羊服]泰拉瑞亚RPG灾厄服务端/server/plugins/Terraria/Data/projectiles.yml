@@ -627,7 +627,7 @@
 神圣之火:
     blockHitAction: thru
     projectileSize: 0.5
-    liveTime: 100
+    liveTime: 60
     gravity: 0
     minimumDamageTicks: 5
     autoTrace: true
@@ -1748,12 +1748,12 @@ TNT:
     projectileSize: 1.5
     penetration: 999999
     liveTime: 10
-    trailColor: 106|255|76
+    trailColor: 106|255|76;255|150|0;100|255|100;100|100|255
     trailLingerTime: 6
     trailIntensityMulti: 0.35
     buffInflict:
         - "超位崩解|100|1"
-橙色追踪星流火星:
+追踪星流火星:
     gravity: 0
     projectileSize: 0.5
     blockHitAction: thru
@@ -1762,35 +1762,7 @@ TNT:
     autoTrace: true
     autoTraceAbility: 10
     autoTraceRadius: 24
-    trailColor: 255|150|0
-    trailLingerTime: 6
-    trailIntensityMulti: 0.35
-    buffInflict:
-        - "超位崩解|100|1"
-绿色追踪星流火星:
-    gravity: 0
-    projectileSize: 0.5
-    blockHitAction: thru
-    maxSpeed: 2.5
-    liveTime: 60
-    autoTrace: true
-    autoTraceAbility: 10
-    autoTraceRadius: 24
-    trailColor: 100|255|100
-    trailLingerTime: 6
-    trailIntensityMulti: 0.35
-    buffInflict:
-        - "超位崩解|100|1"
-紫色追踪星流火星:
-    gravity: 0
-    projectileSize: 0.5
-    blockHitAction: thru
-    maxSpeed: 2.5
-    liveTime: 60
-    autoTrace: true
-    autoTraceAbility: 10
-    autoTraceRadius: 24
-    trailColor: 100|100|255
+    trailColor: 106|255|76;255|150|0;100|255|100;100|100|255
     trailLingerTime: 6
     trailIntensityMulti: 0.35
     buffInflict:
@@ -2710,7 +2682,7 @@ TNT:
     liveTime: 100
     speedMultiPerTick: 0.95
     penetration: 999999
-    enemyInvincibilityFrame: 15
+    enemyInvincibilityFrame: 8
 陨落流星:
     gravity: 0
     projectileSize: 1
@@ -4427,7 +4399,6 @@ TNT:
     trailColor: 255|255|172
     buffInflict:
         - "神圣之火|60|1"
-####
 冰矢:
     gravity: 0
     liveTime: 100
@@ -4563,6 +4534,7 @@ TNT:
     blastDuration: 30
     buffInflict:
         - "狱炎|100|1"
+####
 冰爪:
     arrowOrPotion: true
     gravity: 0

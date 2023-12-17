@@ -303,7 +303,7 @@
   size: 3
   projectileInfo:
     interval: 1
-    velocity: 1
+    velocity: 1.5
     name: 水之剑气
 泪刃:
   type: SWING
@@ -327,7 +327,7 @@
   size: 3.5
   projectileInfo:
     interval: 1
-    velocity: 1
+    velocity: 1.25
     name: 阴暗球
 风之刃:
   type: SWING
@@ -1855,9 +1855,7 @@
   ammoConversion:
     凝胶:
     - 星流火星
-    - 橙色追踪星流火星
-    - 绿色追踪星流火星
-    - 紫色追踪星流火星
+    - 追踪星流火星
 星火解离者_RIGHT_CLICK:
   type: SPECIAL_AMMO
   ammo: 凝胶
