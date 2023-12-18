@@ -37,8 +37,7 @@ public class HitEntityInfo {
     }
     public static MovingObjectPosition rayTraceBlocks(World world, Vec3D startLoc, Vec3D terminalLoc) {
         // do not care about grass etc.
-        MovingObjectPosition movingobjectposition = world.rayTrace(startLoc, terminalLoc, false, true, false);
-        return movingobjectposition;
+        return world.rayTrace(startLoc, terminalLoc, false, true, false);
     }
 
     public static TreeSet<HitEntityInfo> getEntitiesHit(org.bukkit.World world, Vector startLoc, Vector terminalLoc, double radius, com.google.common.base.Predicate<? super Entity> predication) {

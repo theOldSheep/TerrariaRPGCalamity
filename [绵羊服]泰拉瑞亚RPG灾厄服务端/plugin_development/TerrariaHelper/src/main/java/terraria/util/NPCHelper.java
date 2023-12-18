@@ -186,7 +186,7 @@ public class NPCHelper {
                         // btn display name
                         btnW += 20;
                         healBtnDisplay = new StringBuilder("治疗§7(需要");
-                        int[] coinNeeded = GenericHelper.coinConversion(getHealingCost(ply), false);
+                        long[] coinNeeded = GenericHelper.coinConversion(getHealingCost(ply), false);
                         String[] additionalStr = {"§r■铂", "§e■金", "§7■银", "§c■铜"};
                         for (int index = 0; index < 4; index++) {
                             if (coinNeeded[index] > 0) {

@@ -1,16 +1,2 @@
 # 该文件存放世界贴图数据
 # 可通过/core createTexture生成配置
-test:
-  world: world_surface
-  x: 0.5
-  y: 140.52714717917866
-  z: 0.5
-  rotateX: 0.0
-  rotateY: 0.0
-  rotateZ: 0
-  path: '[text]■'
-  width: 2.0
-  height: 2.0
-  alpha: 1
-  follow: true
-  glow: true

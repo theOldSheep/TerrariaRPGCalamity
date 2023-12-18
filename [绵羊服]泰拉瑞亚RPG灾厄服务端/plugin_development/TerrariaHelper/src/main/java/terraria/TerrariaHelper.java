@@ -73,7 +73,7 @@ public class TerrariaHelper extends JavaPlugin {
                             return "笑死，身无分文";
                         } else {
                             return GenericHelper.getCoinDisplay(
-                                    GenericHelper.coinConversion((int) (amount + 0.01), false) );
+                                    GenericHelper.coinConversion((long) (amount + 0.01), false) );
                         }
                     }
                     case "effects": {
@@ -98,6 +98,7 @@ public class TerrariaHelper extends JavaPlugin {
                         }
                         Set<String> allBuff = buffConfig.getConfigurationSection("effects").getKeys(false);
                         long offset = ((Calendar.getInstance().getTimeInMillis() / 500)) % allBuff.size();
+                        // test purpose: see if all buff sprites are good to go
                         for (int i = 0; i < 0; i ++) {
                             for (String effectDisplayName : allBuff) {
                                 if (offset > 0) {

@@ -237,16 +237,16 @@ public class GenericHelper {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> list.remove(victim), cd);
         }
     }
-    public static int[] coinConversion(int amount, boolean copperOrRaw) {
-        int amountCopper;
+    public static long[] coinConversion(long amount, boolean copperOrRaw) {
+        long amountCopper;
         if (copperOrRaw) amountCopper = amount;
         else amountCopper = amount / 100;
         return coinConversion(amountCopper);
     }
-    public static int[] coinConversion(int copperAmount) {
-        int copper = copperAmount;
-        int[] result = new int[]{0, 0, 0, 0};
-        if (copper >= 1000000) {
+    public static long[] coinConversion(long copperAmount) {
+        long copper = copperAmount;
+        long[] result = new long[]{0, 0, 0, 0};
+        if (copper >= 1000000L) {
             result[0] = copper / 1000000;
             copper = copper % 1000000;
         }
@@ -261,10 +261,10 @@ public class GenericHelper {
         result[3] = copper;
         return result;
     }
-    public static String getCoinDisplay(int[] coins) {
+    public static String getCoinDisplay(long[] coins) {
         return getCoinDisplay(coins, defaultMoneySuffixes);
     }
-    public static String getCoinDisplay(int[] coins, String[] formatStr) {
+    public static String getCoinDisplay(long[] coins, String[] formatStr) {
         StringBuilder result = new StringBuilder();
         for (int index = 0; index < 4; index++) {
             if (coins[index] > 0) {
@@ -274,14 +274,14 @@ public class GenericHelper {
         }
         return result.toString();
     }
-    public static void dropMoney(Location loc, int amount, boolean copperOrRaw) {
-        int amountCopper;
+    public static void dropMoney(Location loc, long amount, boolean copperOrRaw) {
+        long amountCopper;
         if (copperOrRaw) amountCopper = amount;
         else amountCopper = amount / 100;
         dropMoney(loc, amountCopper);
     }
-    public static void dropMoney(Location loc, int amount) {
-        int[] stackSize = coinConversion(amount);
+    public static void dropMoney(Location loc, long amount) {
+        long[] stackSize = coinConversion(amount);
         if (stackSize[0] > 0)
             ItemHelper.dropItem(loc, "铂金币:" + stackSize[0],
                     false, false, false);

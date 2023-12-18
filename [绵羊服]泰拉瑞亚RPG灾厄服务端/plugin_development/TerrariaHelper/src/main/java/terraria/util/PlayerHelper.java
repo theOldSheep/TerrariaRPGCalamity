@@ -2022,19 +2022,19 @@ public class PlayerHelper {
         switch (itemType) {
             case "铜币":
                 ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
-                setMoney(ply, getMoney(ply) + 100 * amountRemaining);
+                setMoney(ply, getMoney(ply) + 100d * amountRemaining);
                 return 0;
             case "银币":
                 ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
-                setMoney(ply, getMoney(ply) + 10000 * amountRemaining);
+                setMoney(ply, getMoney(ply) + 10000d * amountRemaining);
                 return 0;
             case "金币":
                 ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
-                setMoney(ply, getMoney(ply) + 1000000 * amountRemaining);
+                setMoney(ply, getMoney(ply) + 1000000d * amountRemaining);
                 return 0;
             case "铂金币":
                 ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
-                setMoney(ply, getMoney(ply) + 100000000 * amountRemaining);
+                setMoney(ply, getMoney(ply) + 100000000d * amountRemaining);
                 return 0;
             case "心":
                 ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);

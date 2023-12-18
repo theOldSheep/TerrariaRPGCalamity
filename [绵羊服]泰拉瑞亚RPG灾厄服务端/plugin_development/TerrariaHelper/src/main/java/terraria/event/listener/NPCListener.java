@@ -181,7 +181,7 @@ public class NPCListener implements Listener {
                 }
                 // clicked in the shop GUI
                 int firstSell = firstSellMetadata.asInt();
-                int basicWorth = ItemHelper.getWorth(clickedItem);
+                long basicWorth = ItemHelper.getWorth(clickedItem);
                 int clickType = 0;
                 if (evt.getClick() == ClickType.LEFT) clickType = 1;
                 else if (evt.getClick() == ClickType.SHIFT_LEFT) clickType = 2;

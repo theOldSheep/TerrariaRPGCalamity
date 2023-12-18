@@ -190,7 +190,7 @@ public class MathHelper {
     }
     public static Vector setVectorLength(Vector vec, double targetLength) {
         if (vec.lengthSquared() < 1e-9) vec.setY(targetLength);
-        else vec.normalize().multiply(targetLength);
+        else vec.multiply(targetLength / vec.length() );
         return vec;
     }
     public static Vector setVectorLengthSquared(Vector vec, double targetLengthSquared) {

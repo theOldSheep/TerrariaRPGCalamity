@@ -3251,6 +3251,7 @@ public class ItemUseHelper {
 
 
         // tweaks before firing, such as extra projectiles from weapons
+        // note that in this section, the attributes from arrow used are not accounted for.
         switch (itemType) {
             // forward extra projectile
             case "星璇机枪":
@@ -3286,13 +3287,13 @@ public class ItemUseHelper {
                     }
                     case "凝胶弓": {
                         extraProjectileType = "凝胶束";
-                        attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.25);
+                        attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.5);
                         extraProjectileAmount = 2;
                         break;
                     }
                     case "暗之回响": {
                         extraProjectileType = "水晶镖";
-                        attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.5);
+                        attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.75);
                         break;
                     }
                     case "恒吹雪": {
@@ -3301,7 +3302,7 @@ public class ItemUseHelper {
                     }
                     case "蘑菇狙击枪": {
                         extraProjectileType = "追踪蘑菇";
-                        attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.5);
+                        attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.65);
                         break;
                     }
                     case "鬼火弓": {
@@ -3323,7 +3324,7 @@ public class ItemUseHelper {
             case "烈风": {
                 Location fireLoc = ply.getEyeLocation();
                 HashMap<String, Double> attrMapExtraProjectile = (HashMap<String, Double>) attrMap.clone();
-                attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.2);
+                attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.5);
 
                 for (int i = -1; i <= 1; i ++) {
                     Vector fireVelocity = MathHelper.vectorFromYawPitch_quick(facingDirYaw, facingDirPitch + i * 10);
@@ -3508,8 +3509,11 @@ public class ItemUseHelper {
             }
         }
         // if the ammo could get converted into multiple possible projectiles, handle them separately in the loop instead.
+        // ammo attribute and its contribution to projectile speed is in this section. DO NOT change condition to == 1
         if  (ammoConversion.size() <= 1) {
-            if (ammoConversion.size() == 1) ammoType = ammoConversion.get(0);
+            // ammo conversion if applicable
+            if  (ammoConversion.size() == 1)
+                ammoType = ammoConversion.get(0);
             ConfigurationSection ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoType + ".attributes");
             // if the converted ammo does not have attributes that overrides the original, default to the original
             if (ammoAttributeSection == null)

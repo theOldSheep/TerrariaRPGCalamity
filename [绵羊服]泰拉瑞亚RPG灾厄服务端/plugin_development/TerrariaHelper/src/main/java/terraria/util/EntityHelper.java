@@ -27,6 +27,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.projectile.HitEntityInfo;
 import terraria.entity.projectile.TerrariaPotionProjectile;
 import terraria.gameplay.EventAndTime;
 
@@ -84,7 +85,7 @@ public class EntityHelper {
         double projectileGravity = 0d, projectileSpeed = 0d, projectileSpeedMax = 99d, projectileSpeedMulti = 1d,
                 intensity = 1d, randomOffsetRadius = 0d, ticksOffset = 0;
         boolean useAcceleration = false, useTickOrSpeedEstimation = false;
-        int epoch = 3, noGravityTicks = 5;
+        int epoch = 50, noGravityTicks = 5;
         Vector accelerationOffset = new Vector();
         public AimHelperOptions setTicksOffset(double ticksOffset) {
             this.ticksOffset = ticksOffset;
@@ -1114,7 +1115,7 @@ public class EntityHelper {
             String moneyMsg = "";
             if (moneyDrop > 0) {
                 moneyMsg = "§c§l掉了";
-                int[] moneyConverted = GenericHelper.coinConversion(moneyDrop, false);
+                long[] moneyConverted = GenericHelper.coinConversion(moneyDrop, false);
                 if (moneyConverted[0] > 0)
                     moneyMsg += "§c§l " + moneyConverted[0] + "§f§l 铂";
                 if (moneyConverted[1] > 0)
@@ -1404,19 +1405,34 @@ public class EntityHelper {
         return source;
     }
     public static void knockback(Entity entity, Vector dir, boolean addOrReplace) {
+        knockback(entity, dir, addOrReplace, -1);
+    }
+    public static void knockback(Entity entity, Vector dir, boolean addOrReplace, double speedLimit) {
+        // entities immune to knockback should not be effected at all
         double kbResistance = getAttrMap(entity).getOrDefault("knockbackResistance", 0d);
         if (kbResistance >= 1) return;
+        // determine the knockback acceleration
         double kbMulti = Math.max(1 - kbResistance, 0);
-        dir.multiply(kbMulti);
+        dir = dir.clone().multiply(kbMulti);
+        // update the knockback slow factor, which effects the walking speed of zombies etc.
         setMetadata(entity, MetadataName.KNOCKBACK_SLOW_FACTOR, kbMulti);
+        // the entity subject to that knockback
         Entity knockbackTaker = entity.getVehicle();
         if (knockbackTaker == null) knockbackTaker = entity;
+        // calculate the final velocity
+        Vector finalVel = knockbackTaker.getVelocity();
         if (addOrReplace) {
-            knockbackTaker.setVelocity(knockbackTaker.getVelocity().add(dir));
+            finalVel.add(dir);
         } else {
             // multiply by 1-kbMulti, as some enemies have negative knockback resistance
-            knockbackTaker.setVelocity(knockbackTaker.getVelocity().multiply(1 - kbMulti).add(dir));
+            finalVel.multiply(1 - kbMulti);
+            finalVel.add(dir);
         }
+        // for knockback with a speed limit, make sure it does not exceed the limit
+        if (speedLimit > 0 && finalVel.lengthSquared() > speedLimit * speedLimit) {
+            MathHelper.setVectorLength(finalVel, speedLimit);
+        }
+        knockbackTaker.setVelocity(finalVel);
     }
     public static String getInvulnerabilityTickName(DamageType damageType) {
         return "tempDamageCD_" + damageType;
@@ -2084,7 +2100,7 @@ public class EntityHelper {
                 secondLastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_SECOND_LAST_LOCATION).value();
             }
             enemyVel = target.getLocation().subtract(lastLoc).toVector();
-            Vector enemyVelSecondLast = secondLastLoc.clone().subtract(lastLoc).toVector();
+            Vector enemyVelSecondLast = lastLoc.clone().subtract(secondLastLoc).toVector();
             enemyAcc = enemyVel.clone().subtract(enemyVelSecondLast);
         }
         else {
@@ -2101,7 +2117,6 @@ public class EntityHelper {
                 Vector lastSavedVel = (Vector) lastVelMetadata.value();
                 enemyAcc = currSavedVel.clone().subtract(lastSavedVel);
             }
-            Bukkit.broadcastMessage("Enemy" + target + " acc. " + enemyAcc);
         }
         // offset enemyAcc
         enemyAcc.add(aimHelperOption.accelerationOffset);
@@ -2122,20 +2137,57 @@ public class EntityHelper {
                 predictedLoc = targetLoc.clone();
                 // account for displacement that are caused by velocity
                 predictedLoc.add(enemyVel.clone().multiply(ticksOffset * predictionIntensity));
-                Bukkit.broadcastMessage("Vel Offset" + enemyVel.clone().multiply(ticksOffset * predictionIntensity));
+                // account for displacement that are caused by acceleration, IF NEEDED
                 // first tick acc. is in effect for (n-1) times, second for (n-2) and so on
                 // in total = sum(1, 2, ..., n-2, n-1) = n(n-1) / 2
-                predictedLoc.add(enemyAcc.clone().multiply(ticksOffset * (ticksOffset - 1) * predictionIntensity / 2d));
-                Bukkit.broadcastMessage("Acc Offset" + enemyAcc.clone().multiply(ticksOffset * (ticksOffset - 1) * predictionIntensity / 2d));
+                if (aimHelperOption.useAcceleration)
+                    predictedLoc.add(enemyAcc.clone().multiply(ticksOffset * (ticksOffset - 1) * predictionIntensity / 2d));
+                // before handling gravity, make sure entities that clip with block do not go through blocks
+                // note that the loop is done with the "foot" position
+                if ( ! ((CraftEntity) target).getHandle().noclip ) {
+                    // loopBeginLoc is the position from where the rough entity movement check STARTS in the current loop call
+                    Location loopBeginLoc = target.getLocation().add(0, 1e-5, 0);
+                    Vector locOffset = targetLoc.clone().subtract(loopBeginLoc).toVector();
+                    // the loop end loc should be the "foot" of entity, because they are effected by gravity.
+                    Location loopEndLoc = predictedLoc.clone().subtract(locOffset);
+                    World loopWorld = loopBeginLoc.getWorld();
+                    // check for block collision for max of 3 times (this is meant to be a rough estimation after all).
+                    for (int blockCheckIdx = 0; blockCheckIdx < 3; blockCheckIdx ++) {
+                        // terminate if the initial loc and final loc are really close to each other
+                        if (loopBeginLoc.distanceSquared(loopEndLoc) < 1e-5)
+                            break;
+                        MovingObjectPosition blockCollInfo = HitEntityInfo.rayTraceBlocks(loopWorld, loopBeginLoc.toVector(), loopEndLoc.toVector());
+                        // no block hit: terminate loop
+                        if (blockCollInfo == null)
+                            break;
+                        // block hit: handle velocity change
+                        loopBeginLoc = MathHelper.toBukkitVector(blockCollInfo.pos).toLocation(loopWorld);
+                        Vector updatedMoveDir = loopEndLoc.subtract(loopBeginLoc).toVector();
+                        switch (blockCollInfo.direction) {
+                            case UP:
+                            case DOWN:
+                                updatedMoveDir.setY(0);
+                                break;
+                            case EAST:
+                            case WEST:
+                                updatedMoveDir.setX(0);
+                                break;
+                            default:
+                                updatedMoveDir.setZ(0);
+                                break;
+                        }
+                        // update the expected new location based on new velocity
+                        loopEndLoc = loopBeginLoc.clone().add(updatedMoveDir);
+                    }
+                    // account for the foot loc offset
+                    predictedLoc = loopEndLoc.add(locOffset);
+                }
                 // projectile gravity, it is equivalent to target acceleration, for the ease of computation
-                // yet, it is different - it only takes effect after a certain time
-                if (ticksOffset > aimHelperOption.noGravityTicks) {
+                // it is not simply acceleration - it only takes effect after some time, usually 5 ticks
+                if (ticksOffset >= aimHelperOption.noGravityTicks) {
                     predictedLoc.add(new Vector(0,
-                            (ticksOffset - aimHelperOption.noGravityTicks) * (ticksOffset - aimHelperOption.noGravityTicks - 1)
+                            (ticksOffset - aimHelperOption.noGravityTicks + 1) * (ticksOffset - aimHelperOption.noGravityTicks + 2)
                                     * aimHelperOption.projectileGravity * predictionIntensity / 2d, 0));
-                    Bukkit.broadcastMessage("PjGrv Offset" + new Vector(0,
-                            (ticksOffset - aimHelperOption.noGravityTicks) * (ticksOffset - aimHelperOption.noGravityTicks - 1)
-                                    * aimHelperOption.projectileGravity * predictionIntensity / 2d, 0) );
                 }
                 // random offset
                 {
@@ -2167,11 +2219,17 @@ public class EntityHelper {
                         ticksOffset ++;
                         distTraveled += currSpd;
                         currSpd *= aimHelperOption.projectileSpeedMulti;
-                        if (currSpd > aimHelperOption.projectileSpeedMax)
-                            currSpd = aimHelperOption.projectileSpeedMax;
+                        // after reaching the max speed, do not bother using the loop
+                        if (currSpd > aimHelperOption.projectileSpeedMax) {
+                            ticksOffset += (distance - distTraveled) / aimHelperOption.projectileSpeedMax;
+                        }
                     }
                 }
-                ticksOffset = Math.ceil(ticksOffset);
+                // account for at most 3 seconds
+                ticksOffset = Math.min( Math.floor(ticksOffset),  60  );
+                // for faster convergence, the increment from the second epoch is doubled.
+                if (currEpoch == 1)
+                    ticksOffset += ticksOffset - lastTicksOffset;
             }
 
             // end the loop early if the last tick offset agrees with the current

@@ -7456,7 +7456,7 @@ Dodu的手炮:
     damage: 76
     damageType: Magic
     crit: 24
-    projectileSpeed: 14
+    projectileSpeed: 12
     knockback: 4
     useTime: 12
     manaUse: 17
@@ -7905,11 +7905,11 @@ Dodu的手炮:
   attributes:
     damage: 100
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 14
     crit: 29
     knockback: 7
     useTime: 75
-    manaUse: 15
+    manaUse: 50
   worth: 7200000
   rarity: 8
 水灌:
@@ -8535,7 +8535,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r射出一大串泡沫
-  - §r“化作，浮沫吧！”
+  - §r“化为，浮沫吧！”
   attributes:
     damage: 120
     damageType: Magic
@@ -8959,6 +8959,7 @@ Dodu的手炮:
   item: BOOK
   lore:
   - §r召唤宇宙之触助你撕裂敌人
+  - §r“震撼脑髓！”
   attributes:
     damage: 110
     damageType: Magic
@@ -10350,8 +10351,6 @@ Dodu的手炮:
   rarity: 1
 鼠疫弹:
   item: SLIME_BALL
-  lore:
-  - §r无视敌人的部分防御
   attributes:
     armorPenetration: 35
     damage: 40

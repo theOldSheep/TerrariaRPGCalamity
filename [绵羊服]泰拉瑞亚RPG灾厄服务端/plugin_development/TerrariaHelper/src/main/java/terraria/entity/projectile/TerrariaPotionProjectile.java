@@ -28,7 +28,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     // projectile info
     public String projectileType, blockHitAction = "die", trailColor = null;
     public int autoTraceMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200,
-            noAutoTraceTicks = 0, noGravityTicks = 15, maxAutoTraceTicks = 999999, minimumDamageTicks = 0,
+            noAutoTraceTicks = 0, noGravityTicks = 5, maxAutoTraceTicks = 999999, minimumDamageTicks = 0,
             trailLingerTime = 10, penetration = 0;
     public double autoTraceAbility = 4, autoTraceEndSpeedMultiplier = 1, autoTraceRadius = 12,
             blastRadius = 1.5, bounceVelocityMulti = 1,
@@ -201,6 +201,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public void hitEntityExtraHandling(Entity e, MovingObjectPosition position) {
         switch (projectileType) {
             case "钫弹":
+                noAutoTraceTicks = ticksLived + 1;
+                break;
             case "粉色脉冲":
                 noAutoTraceTicks = ticksLived + 5;
                 break;
@@ -314,15 +316,17 @@ public class TerrariaPotionProjectile extends EntityPotion {
         switch (projectileType) {
             case "旋风":
             case "风暴管束者剑气": {
-                double radius = 1, suckSpeed = 0.1;
+                double radius = 1, suckSpeed = 0.1, maxSpeed = 0.5;
                 switch (projectileType) {
                     case "旋风":
                         radius = 6;
-                        suckSpeed = 0.25;
+                        suckSpeed = 0.35;
+                        maxSpeed = 0.75;
                         break;
                     case "风暴管束者剑气":
                         radius = 15;
-                        suckSpeed = 0.5;
+                        suckSpeed = 0.75;
+                        maxSpeed = 2;
                         break;
                 }
                 // get list of entities that could get sucked in
@@ -344,7 +348,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     double dist = velocity.length();
                     // pulling force decays as distance increases, to a min of 0.25x
                     velocity.multiply(Math.max(radius / 4, radius - dist) * suckSpeed / dist / radius);
-                    EntityHelper.knockback(enemy, velocity, true);
+                    EntityHelper.knockback(enemy, velocity, true, maxSpeed);
                 }
                 break;
             }
@@ -627,12 +631,13 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 }
             } else {
                 extraMovingTick();
+                // friction if on ground
                 if (this.onGround && this.lastOnGround) {
                     velocity.multiply(1 - frictionFactor);
-                    // friction
-                } else if (this.ticksLived >= noGravityTicks) {
-                    // gravity
-                    velocity.subtract(new Vector(0, gravity, 0));
+                }
+                // gravity if not on ground
+                else if (this.ticksLived >= noGravityTicks) {
+                    velocity.subtract( new Vector(0, gravity, 0) );
                 }
                 // regulate velocity
                 velocity.multiply(speedMultiPerTick);
