@@ -2923,6 +2923,7 @@ WORKBENCH:
     resultItem: 狂野复诵
     requireItem:
     - 恶魔锄刀
+    - 邪恶三叉戟
     - 混乱核心:12
     - 宇宙锭:8
     - 梦魇魔能:20
@@ -4684,9 +4685,10 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 归元漩涡
     requireItem:
+    - 天堂之泪
     - 先兆元素
     - 黑洞边缘
-    - 天堂之泪
+    - 氦闪
     - 奇迹物质
   '18':
     requireLevel: 1

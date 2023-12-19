@@ -3861,6 +3861,7 @@
     crit: 4
     knockback: 8.5
     useTime: 13
+    buffInflictMelee: 元素谐鸣|80|1
   worth: 22000000
   rarity: 11
 伽利略短剑:
@@ -4046,6 +4047,7 @@
     crit: 4
     knockback: 9.5
     useTime: 30
+    buffInflictMelee: 元素谐鸣|80|1
   worth: 22000000
   rarity: 11
 镀金鸟喙:
@@ -4264,7 +4266,7 @@
   lore:
   - §r由最勇敢的战士使用
   - §r击中敌人时降低其防御
-  - §r似乎可以在与某种海洋生物的战斗中立下汗马功劳……
+  - §r似乎可以在与某种海洋巨兽的战斗中立下汗马功劳……
   attributes:
     damage: 750
     damageType: Melee
@@ -4291,7 +4293,7 @@
   - §r重型链枷，每一个都内置有在挥舞时启动的强劲发电机
   - §r丢出龙首，龙首会释放电场
   attributes:
-    damage: 500
+    damage: 1250
     damageType: Melee
     crit: 4
     knockback: 2.5
@@ -4679,6 +4681,7 @@
     crit: 14
     knockback: 8.5
     useTime: 21
+    buffInflictMelee: 元素谐鸣|80|1
   worth: 22000000
   rarity: 11
 死神擢升:
@@ -7406,7 +7409,7 @@ Dodu的手炮:
     damage: 70
     damageType: Magic
     crit: 4
-    projectileSpeed: 0.2
+    projectileSpeed: 1
     knockback: 5
     useTime: 20
     manaUse: 30
@@ -7624,7 +7627,7 @@ Dodu的手炮:
   lore:
   - §r发射快速移动的利刃台风
   attributes:
-    damage: 200
+    damage: 120
     damageType: Magic
     crit: 4
     projectileSpeed: 8
@@ -8916,11 +8919,11 @@ Dodu的手炮:
 始源之尘:
   item: BOOK
   lore:
-  - §r丢出一团巨大的粉尘并在击中时爆炸
+  - §r丢出一团巨大的粉尘，击碎敌人的护甲
   attributes:
     damage: 120
     damageType: Magic
-    projectileSpeed: 15
+    projectileSpeed: 5
     crit: 4
     knockback: 7
     useTime: 20
@@ -8990,12 +8993,12 @@ Dodu的手炮:
   - §r发射高能台风
   - §r“原神，启动！”
   attributes:
-    damage: 280
+    damage: 108
     damageType: Magic
     projectileSpeed: 16
     crit: 4
     knockback: 5
-    useTime: 25
+    useTime: 40
     manaUse: 22
   worth: 20000000
   rarity: 10
@@ -9049,7 +9052,7 @@ Dodu的手炮:
   attributes:
     damage: 290
     damageType: Magic
-    projectileSpeed: 8
+    projectileSpeed: 15
     crit: 4
     knockback: 5
     useTime: 18
@@ -9063,7 +9066,7 @@ Dodu的手炮:
   attributes:
     damage: 256
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 0.5
     crit: 4
     knockback: 8.5
     useTime: 18
@@ -9077,7 +9080,7 @@ Dodu的手炮:
   attributes:
     damage: 200
     damageType: Magic
-    projectileSpeed: 25
+    projectileSpeed: 15
     crit: 4
     knockback: 3
     useTime: 4
@@ -9094,7 +9097,7 @@ Dodu的手炮:
   attributes:
     damage: 400
     damageType: Magic
-    projectileSpeed: 25
+    projectileSpeed: 12.5
     crit: 4
     knockback: 3.5
     useTime: 32
@@ -9105,10 +9108,8 @@ Dodu的手炮:
   item: BOOK
   lore:
   - §r左键释放一连串会冲向敌人的漩涡
-  - §r右键在你的前方投射一个偏向光标位置的巨大旋涡
-  - §r当漩涡的附近有敌人时，漩涡会向敌人发射多个快速移动的小漩涡
-  - §r经过足够时间后松开右键会将大漩涡向光标方向释放
-  - §r伤害随手持漩涡时长的增加而增加
+  - §r右键持续充能，开始时每次攻击发射一个快速移动的小漩涡
+  - §r充能完毕时向你的前方投射一个巨大旋涡并造成猛烈爆炸
   - §r“元神，启动！”
   attributes:
     damage: 932
@@ -9116,24 +9117,23 @@ Dodu的手炮:
     projectileSpeed: 20
     crit: 4
     knockback: 5
-    useTime: 60
+    useTime: 15
     manaUse: 22
   worth: 30000000
   rarity: 15
 怨戾:
   item: BOOK
   lore:
-  - §r召唤一个圆形法阵，法阵会逐渐蓄力，最终会发射出一束强大的怨戾激光
+  - §r发射出一束强大的怨戾激光
   - §r被激光照射的物块会迸发出岩浆，随后出现亡魂之手
   - §#C61B40“当被原谅之人尚未能饶恕自身时，
   - §#C61B40得到宽恕所带来的安慰也仅限于此了。”
-  - §r“怨神，启动！”
   attributes:
     damage: 444
     damageType: Magic
     crit: 4
     knockback: 5
-    useTime: 25
+    useTime: 24
     manaUse: 20
   worth: 30000000
   rarity: 15
@@ -9141,25 +9141,25 @@ Dodu的手炮:
   item: BOOK
   lore:
   - §r从翻开的书页中召唤火焰与灵魂
-  - §r你翻书的时间越长，攻击越强
+  - §r翻书的时间越长，召唤成功率越高
   attributes:
     damage: 1920
     damageType: Magic
-    projectileSpeed: 20
+    projectileSpeed: 15
     crit: 4
     knockback: 0
-    useTime: 15
+    useTime: 5
     manaUse: 15
   worth: 30000000
   rarity: 15
 光之舞:
-  item: BOOK
+  item: DIAMOND_SWORD
   lore:
   - §r将敌人以光刃弹雨湮灭
   - §r“炫目闪光过后，一切荡然无存”
-  - §r“哦哦 哦齐!”
+  - §r“比！太！阳！更！光！”
   attributes:
-    damage: 830
+    damage: 648
     damageType: Magic
     projectileSpeed: 14
     crit: 4
@@ -10470,7 +10470,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4
     projectileSpeed: 4
-    projectileSpeedMulti: 4
+    projectileSpeedMulti: 2
   worth: 800
   rarity: 3
 初级火箭:

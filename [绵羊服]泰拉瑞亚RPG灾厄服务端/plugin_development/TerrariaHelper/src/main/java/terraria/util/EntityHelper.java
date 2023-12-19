@@ -85,7 +85,7 @@ public class EntityHelper {
         double projectileGravity = 0d, projectileSpeed = 0d, projectileSpeedMax = 99d, projectileSpeedMulti = 1d,
                 intensity = 1d, randomOffsetRadius = 0d, ticksOffset = 0;
         boolean useAcceleration = false, useTickOrSpeedEstimation = false;
-        int epoch = 50, noGravityTicks = 5;
+        int epoch = 5, noGravityTicks = 5;
         Vector accelerationOffset = new Vector();
         public AimHelperOptions setTicksOffset(double ticksOffset) {
             this.ticksOffset = ticksOffset;
@@ -832,6 +832,8 @@ public class EntityHelper {
         try {
             // if the buff is not in config, do not do anything
             if (!TerrariaHelper.buffConfig.contains("effects." + effect)) return;
+            // returns if the entity is not applicable to this effect (e.g. a projectile)
+            if (! (entity instanceof LivingEntity) ) return;
             // returns if the entity is immune to this effect (i.e. debuff)
             MetadataValue buffImmuneMetadata = getMetadata(entity, MetadataName.BUFF_IMMUNE);
             if (buffImmuneMetadata != null) {
@@ -1106,8 +1108,8 @@ public class EntityHelper {
                 }
             }
             // drop money
-            int moneyDrop = (int) Math.floor(PlayerHelper.getMoney(vPly) / 100);
-            moneyDrop = (int) Math.ceil(moneyDrop * 0.75);
+            long moneyDrop = (long) Math.floor(PlayerHelper.getMoney(vPly) / 100);
+            moneyDrop = (long) Math.ceil(moneyDrop * 0.75);
             moneyDrop *= 100;
             PlayerHelper.setMoney(vPly, PlayerHelper.getMoney(vPly) - moneyDrop);
             GenericHelper.dropMoney(vPly.getEyeLocation(), moneyDrop, false);
@@ -2227,9 +2229,9 @@ public class EntityHelper {
                 }
                 // account for at most 3 seconds
                 ticksOffset = Math.min( Math.floor(ticksOffset),  60  );
-                // for faster convergence, the increment from the second epoch is doubled.
+                // for faster convergence, the increment from the second epoch is multiplied by 1.5
                 if (currEpoch == 1)
-                    ticksOffset += ticksOffset - lastTicksOffset;
+                    ticksOffset += (ticksOffset - lastTicksOffset) * 0.5;
             }
 
             // end the loop early if the last tick offset agrees with the current

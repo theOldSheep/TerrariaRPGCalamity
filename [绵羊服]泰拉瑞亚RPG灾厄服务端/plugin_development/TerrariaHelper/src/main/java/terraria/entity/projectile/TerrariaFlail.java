@@ -48,6 +48,8 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
                 super.projectileRadius = 0.75;
                 break;
             case "脉冲龙链枷":
+                super.projectileRadius = 2.5;
+                break;
             case "龙魂破":
                 super.projectileRadius = 1.5;
                 break;
@@ -74,8 +76,9 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
         // frees the flail on hit
         if (super.projectileType.equals("风滚草") && shouldUpdateSpeed) {
             shouldUpdateSpeed = false;
+            super.gravity = 0.05;
             super.liveTime = ticksLived + 100;
-            super.blockHitAction = "die";
+            super.blockHitAction = "slide";
             super.canBeReflected = true;
             ItemUseHelper.applyCD(owner, useTime);
             // preventing item use cool down reset on death again
@@ -119,7 +122,9 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
                     spinning = false;
                     super.blockHitAction = "stick";
                     // update velocity
-                    Vector newVelocity = MathHelper.vectorFromYawPitch_quick(owner.getLocation().getYaw(), owner.getLocation().getPitch());
+                    Vector newVelocity = ItemUseHelper.getPlayerAimDir(owner, owner.getEyeLocation(),
+                            speed, projectileType, false, 0);
+                    newVelocity.normalize();
                     newVelocity.multiply(speed);
                     bukkitEntity.setVelocity(newVelocity);
                     switch (projectileType) {

@@ -35,7 +35,7 @@ public class MathHelper {
         return xsin_regularize(x, Math.PI * 2, Math.PI, Math.PI / 2);
     }
     public static double xcos_radian(double x) {
-        return xsin_degree(x + Math.PI / 2);
+        return xsin_radian(x + Math.PI / 2);
     }
     private static double xsin_regularize(double x, double cycle, double half_cycle, double quarter_cycle) {
         double effectiveX = x % cycle;

@@ -163,6 +163,14 @@ effects:
     attributes:
       regenMulti: -1
     tooltip: 被月之射线瓦解
+  元素谐鸣:
+    isBuff: false
+    damageInterval: 4
+    damage: 10
+    damageMonster: 80
+    attributes:
+      regenMulti: -1
+    tooltip: 美妙的元素交响乐正在活剥你
   硫磺海剧毒:
     isBuff: false
     damageInterval: 5
@@ -197,16 +205,16 @@ effects:
     tooltip: 被咆哮的火焰吞没
   超位崩解:
     isBuff: false
-    damageInterval: 3
-    damage: 4
-    damageMonster: 100
+    damageInterval: 2
+    damage: 8
+    damageMonster: 250
     attributes:
       regenMulti: -1
     tooltip: 星流共振撕碎了组成你身体的物质
   解离:
     isBuff: false
     damageInterval: 4
-    damage: 20
+    damage: 60
     tooltip: 有人造了十把三尖匕首……
   流血:
     isBuff: false

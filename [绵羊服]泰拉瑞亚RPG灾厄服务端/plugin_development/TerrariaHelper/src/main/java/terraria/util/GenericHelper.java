@@ -796,25 +796,43 @@ public class GenericHelper {
             case "Debuff_弑神怒焰":
                 colorCode = "d";
                 break;
-            case "Debuff_超位崩解":
+            case "Debuff_元素谐鸣": {
                 int rdm = (int) (Math.random() * 4);
-                // a random color from dark red, yellow, light blue and dark green
+                // a random color from the four pillars
                 switch (rdm) {
                     case 0:
-                        colorCode = "4";
+                        colorCode = "#EF00FF";
                         break;
                     case 1:
-                        colorCode = "e";
+                        colorCode = "#FF8000";
                         break;
                     case 2:
-                        colorCode = "b";
+                        colorCode = "#00CC92";
                         break;
                     case 3:
                     default:
-                        colorCode = "2";
+                        colorCode = "#00B4FF";
                         break;
                 }
                 break;
+            }
+            case "Debuff_超位崩解": {
+                int rdm = (int) (Math.random() * 3);
+                // a random color from red, light blue and light green
+                switch (rdm) {
+                    case 0:
+                        colorCode = "#F27049";
+                        break;
+                    case 1:
+                        colorCode = "#A6F069";
+                        break;
+                    case 2:
+                    default:
+                        colorCode = "#69F0DC";
+                        break;
+                }
+                break;
+            }
             default:
                 colorCode = isCrit ? "c" : "6";
         }

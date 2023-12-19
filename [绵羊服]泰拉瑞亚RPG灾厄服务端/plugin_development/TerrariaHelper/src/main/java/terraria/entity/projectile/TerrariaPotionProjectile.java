@@ -51,6 +51,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public ConfigurationSection extraProjectileConfigSection;
     int extraProjectileSpawnInterval;
     EntityHelper.ProjectileShootInfo extraProjectileShootInfo;
+    // init with a small capacity, as this variable is not needed in most cases.
+    HashMap<String, Object> extraVariables = new HashMap<>(1);
 
 
     private void setupProjectileProperties() {
@@ -374,6 +376,62 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 }
                 break;
             }
+            case "黑蚀之星": {
+                // once a target is spotted, do not rotate ever again.
+                if (autoTraceTarget != null)
+                    noAutoTraceTicks = 0;
+                // only spin if no target is ever spotted
+                else if (ticksLived <= 64 && noAutoTraceTicks != 0) {
+                    // get angle and radius
+                    double angle, radius;
+                    Location center;
+                    {
+                        if (extraVariables.containsKey("a")) {
+                            angle = (double) extraVariables.get("a");
+                        }
+                        else {
+                            // 90 deg and 270( = -90) deg
+                            if (motX < 1e-5 && motX > -1e-5)
+                                angle = motZ > 0 ? Math.PI / 2 : Math.PI / -2;
+                            // otherwise, use arc tan.
+                            else {
+                                angle = Math.atan(motZ / motX);
+                                if (motZ < 0)
+                                    angle += Math.PI;
+                            }
+                        }
+
+                        radius = (double) extraVariables.getOrDefault("r", 3d);
+
+                        if (!extraVariables.containsKey("c"))
+                            extraVariables.put("c", bukkitEntity.getLocation().subtract(motX, motY, motZ));
+                        center = (Location) extraVariables.get("c");
+                    }
+                    // increment angle and radius
+                    int phase = ticksLived % 21;
+                    // expanding phase
+                    if (phase < 10) {
+                        radius += 0.6;
+                    }
+                    // retraction phase
+                    else if (phase > 14) {
+                        radius -= 0.2;
+                    }
+                    angle += Math.PI / 14;
+                    // update speed
+                    Vector vel = center.clone().add(
+                                    terraria.util.MathHelper.xcos_radian(angle) * radius, 0,
+                                    terraria.util.MathHelper.xsin_radian(angle) * radius)
+                            .subtract(bukkitEntity.getLocation()).toVector();
+                    motX = vel.getX();
+                    motY = vel.getY();
+                    motZ = vel.getZ();
+                    // save angle and radius
+                    extraVariables.put("a", angle);
+                    extraVariables.put("r", radius);
+                }
+                break;
+            }
             case "镜之刃镜子": {
                 Location eyeLoc = ((LivingEntity) shooter.getBukkitEntity()).getEyeLocation();
                 Vector dir = terraria.util.MathHelper.getDirection(eyeLoc, bukkitEntity.getLocation(), 8);
@@ -410,6 +468,46 @@ public class TerrariaPotionProjectile extends EntityPotion {
                         motZ = 0;
                         break;
                 }
+                break;
+            }
+            case "狂野之镰": {
+                if (ticksLived + 1 == noAutoTraceTicks) {
+                    this.speed = maxSpeed;
+                }
+                break;
+            }
+            case "舞光之刃": {
+                // on first tick, save the forward direction, initialize twitch direction
+                if (!extraVariables.containsKey("v")) {
+                    Vector fwdDir = bukkitEntity.getVelocity();
+                    // make sure twitch one and two are linearly independent
+                    double speedRatio = 0.05;
+                    Vector twitchOne = new Vector();
+                    while (twitchOne.lengthSquared() < 1e-5) {
+                        twitchOne = terraria.util.MathHelper.randomVector();
+                        twitchOne.subtract(terraria.util.MathHelper.vectorProjection(fwdDir, twitchOne));
+                    }
+                    twitchOne.normalize().multiply(speed * speedRatio);
+                    Vector twitchTwo = fwdDir.getCrossProduct(twitchOne);
+                    twitchTwo.normalize().multiply(speed * speedRatio);
+                    // random twitch two's direction so some projectiles are going CW and some are CCW.
+                    if (Math.random() < 0.5)
+                        twitchTwo.multiply(-1);
+                    // save variables
+                    extraVariables.put("v", fwdDir);
+                    extraVariables.put("o1", twitchOne);
+                    extraVariables.put("o2", twitchTwo);
+                }
+                // update the projectile's velocity
+                Vector fwd = (Vector) extraVariables.get("v");
+                Vector offset1 = (Vector) extraVariables.get("o1");
+                Vector offset2 = (Vector) extraVariables.get("o2");
+                fwd = fwd.clone().add(
+                        offset1.clone().multiply(terraria.util.MathHelper.xsin_degree(ticksLived * 18) ) ).add(
+                        offset2.clone().multiply(terraria.util.MathHelper.xcos_degree(ticksLived * 18) ) );
+                motX = fwd.getX();
+                motY = fwd.getY();
+                motZ = fwd.getZ();
                 break;
             }
         }
@@ -892,6 +990,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     });
 
             // hit entities
+            if (projectileType.equals("光之舞闪光")) {
+                attrMap.put("damage", attrMap.getOrDefault("damage", 6666d) / hitCandidates.size());
+            }
             for (HitEntityInfo toHit : hitCandidates) {
                 Entity hitEntity = toHit.getHitEntity();
                 MovingObjectPosition hitInfo = new MovingObjectPosition(hitEntity, toHit.getHitLocation().pos);

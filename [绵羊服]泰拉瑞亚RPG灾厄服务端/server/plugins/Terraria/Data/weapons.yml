@@ -1371,13 +1371,7 @@
   shots: 7
   ammoConversion:
     木箭:
-    - 红自导能源箭
-    - 绿自导能源箭
-    - 蓝自导能源箭
-    - 粉自导能源箭
-    - 黄自导能源箭
-    - 紫自导能源箭
-    - 橙自导能源箭
+    - 湮灭自导能源箭
 灵星寂灭:
   type: BOW
   autoSwing: true
@@ -1770,11 +1764,7 @@
     projectileSpeed: 35
   ammoConversion:
     凝胶:
-    - 红元素彩虹烈焰
-    - 黄元素彩虹烈焰
-    - 绿元素彩虹烈焰
-    - 蓝元素彩虹烈焰
-    - 品红元素彩虹烈焰
+    - 元素彩虹烈焰
 纯元怒焰:
   type: SPECIAL_AMMO
   ammo: 凝胶
@@ -2524,27 +2514,27 @@ Dodu的手炮:
 链锤:
   type: FLAIL
   reach: 16
-  velocity: 1.5
+  velocity: 2.5
   autoSwing: true
 火焰锤:
   type: FLAIL
   reach: 16
-  velocity: 1.5
+  velocity: 2.5
   autoSwing: true
 蓝月:
   type: FLAIL
   reach: 24
-  velocity: 1.75
+  velocity: 2.75
   autoSwing: true
 太极连枷:
   type: FLAIL
   reach: 27.5
-  velocity: 2
+  velocity: 3
   autoSwing: true
 猪鲨链球:
   type: FLAIL
   reach: 32
-  velocity: 2.5
+  velocity: 3.5
   autoSwing: true
 日耀喷发剑:
   type: WHIP
@@ -2555,12 +2545,12 @@ Dodu的手炮:
 海胆链枷:
   type: FLAIL
   reach: 20
-  velocity: 1.5
+  velocity: 2.5
   autoSwing: true
 海胆链球:
   type: FLAIL
   reach: 16
-  velocity: 1.5
+  velocity: 2.5
 海蚌锤:
   type: FLAIL
   reach: 32
@@ -2568,7 +2558,7 @@ Dodu的手炮:
 风滚草:
   type: FLAIL
   reach: 24
-  velocity: 2.25
+  velocity: 2.75
 星云鞭:
   type: WHIP
   autoSwing: true
@@ -2577,8 +2567,8 @@ Dodu的手炮:
   - 66|189|181
 雷姆的复仇:
   type: FLAIL
-  reach: 32
-  velocity: 2.75
+  reach: 48
+  velocity: 3.75
 晨星链刃:
   type: WHIP
   autoSwing: true
@@ -2587,28 +2577,28 @@ Dodu的手炮:
   - 255|100|50
 脉冲龙链枷:
   type: FLAIL
-  reach: 40
-  velocity: 3
+  reach: 48
+  velocity: 4
 新月链刃:
   type: WHIP
   autoSwing: true
-  size: 24
+  size: 40
   particleColor:
   - 143|255|227
 寒宙弹刃:
   type: WHIP
   autoSwing: true
-  size: 32
+  size: 48
   particleColor:
   - 81|159|192
 龙魂破:
   type: FLAIL
-  reach: 40
-  velocity: 4
+  reach: 48
+  velocity: 4.5
 塔纳托斯的脊柱:
   type: WHIP
   autoSwing: true
-  size: 32
+  size: 48
   particleColor:
   - 166|240|105
 手里剑:
@@ -2731,6 +2721,8 @@ Dodu的手炮:
 利刃台风:
   type: MAGIC_PROJECTILE
   projectileName: 台风
+  fireRounds: 2
+  fireRoundsDelay: 5
   autoSwing: true
 星云烈焰:
   type: MAGIC_PROJECTILE
@@ -2988,6 +2980,7 @@ Dodu的手炮:
   autoSwing: true
 耀界之光:
   type: MAGIC_SPECIAL
+  fireRounds: 8
   autoSwing: true
 狞桀:
   type: MAGIC_PROJECTILE
@@ -3082,7 +3075,6 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 以太流光
   autoSwing: true
-####
 冰矢:
   type: MAGIC_PROJECTILE
   projectileName: 冰矢
@@ -3179,6 +3171,73 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 彗星
   autoSwing: true
+原核之怒:
+  type: MAGIC_PROJECTILE
+  projectileName: 原核台风
+  shots: 8
+  autoSwing: true
+先兆元素:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+殷红鞭笞:
+  type: MAGIC_PROJECTILE
+  projectileName: 殷红利刃
+  shots: 3
+  autoSwing: true
+生命光流:
+  type: MAGIC_PROJECTILE
+  projectileName: 生命光流射线
+  autoSwing: true
+始源之遗:
+  type: MAGIC_PROJECTILE
+  projectileName: 始源之遗粉尘
+  autoSwing: true
+狂野复诵:
+  type: MAGIC_PROJECTILE
+  projectileName: 狂野之镰
+  shots: 6
+  autoSwing: true
+圣神光辉:
+  type: MAGIC_PROJECTILE
+  projectileName: 圣神追踪光球
+  autoSwing: true
+黑洞边缘:
+  type: MAGIC_PROJECTILE
+  projectileName: 黑蚀之星
+  shots: 8
+  autoSwing: true
+归元漩涡:
+  type: MAGIC_PROJECTILE
+  projectileName: 小型归元漩涡
+  shots: 3
+  offSet: 10
+  attributes:
+    damage: 280
+    useTime: 5
+  autoSwing: true
+归元漩涡_RIGHT_CLICK:
+  type: MAGIC_PROJECTILE
+  projectileName: 小型归元漩涡
+  attributes:
+    useTime: 7
+  autoSwing: true
+怨戾:
+  type: MAGIC_SPECIAL
+  fireRounds: 8
+  fireRoundsDelay: 1
+  attributes:
+    useTime: 8
+  autoSwing: true
+异端:
+  type: MAGIC_PROJECTILE
+  projectileName: 异端火焰
+  autoSwing: true
+光之舞:
+  type: MAGIC_PROJECTILE
+  projectileName: 舞光之刃
+  shots: 4
+  autoSwing: true
+####
 北极熊爪:
   type: MAGIC_PROJECTILE
   projectileName: 冰爪

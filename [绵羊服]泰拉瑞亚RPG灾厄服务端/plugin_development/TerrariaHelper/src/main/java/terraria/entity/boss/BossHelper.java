@@ -187,8 +187,17 @@ public class BossHelper {
         }
         return false;
     }
+    // generally, this function also handles misc aspects like cached velocity
     public static Player updateBossTarget(Player currentTarget, Entity boss, boolean ignoreDistance,
                                           WorldHelper.BiomeType biomeRequired, Collection<UUID> availableTargets) {
+        // update saved velocity
+        {
+            MetadataValue currVel = EntityHelper.getMetadata(boss, EntityHelper.MetadataName.ENTITY_CURRENT_VELOCITY);
+            if (currVel != null)
+                EntityHelper.setMetadata(boss, EntityHelper.MetadataName.ENTITY_LAST_VELOCITY, currVel.value());
+            EntityHelper.setMetadata(boss, EntityHelper.MetadataName.ENTITY_CURRENT_VELOCITY, boss.getVelocity());
+        }
+        // update target
         Player finalTarget = currentTarget;
         if (!checkBossTarget(currentTarget, boss, ignoreDistance, biomeRequired)) {
             // save all applicable targets

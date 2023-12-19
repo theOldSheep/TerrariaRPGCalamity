@@ -1653,46 +1653,16 @@ TNT:
     trailColor: 168|94|213
     trailLingerTime: 6
     trailIntensityMulti: 1
-红元素彩虹烈焰:
+元素彩虹烈焰:
     gravity: 0
     projectileSize: 1.5
     liveTime: 15
     penetration: 1
-    trailColor: 255|0|0
+    trailColor: 255|0|0;255|255|0;100|255|100;0|255|255;255|0|255
     trailLingerTime: 6
     trailIntensityMulti: 0.75
-黄元素彩虹烈焰:
-    gravity: 0
-    projectileSize: 1.5
-    liveTime: 15
-    penetration: 1
-    trailColor: 255|255|0
-    trailLingerTime: 6
-    trailIntensityMulti: 0.75
-绿元素彩虹烈焰:
-    gravity: 0
-    projectileSize: 1.5
-    liveTime: 15
-    penetration: 1
-    trailColor: 100|255|100
-    trailLingerTime: 6
-    trailIntensityMulti: 0.75
-蓝元素彩虹烈焰:
-    gravity: 0
-    projectileSize: 1.5
-    liveTime: 15
-    penetration: 1
-    trailColor: 0|255|255
-    trailLingerTime: 6
-    trailIntensityMulti: 0.75
-品红元素彩虹烈焰:
-    gravity: 0
-    projectileSize: 1.5
-    liveTime: 15
-    penetration: 1
-    trailColor: 255|0|255
-    trailLingerTime: 6
-    trailIntensityMulti: 0.75
+    buffInflict:
+        - "元素谐鸣|80|1"
 纯元烈焰:
     gravity: 0
     projectileSize: 1.5
@@ -3290,7 +3260,9 @@ TNT:
     autoTrace: true
     projectileSize: 0.25
     blockHitAction: thru
-    trailColor: 255|255|255
+    trailColor: RAINBOW
+    buffInflict:
+        - "元素谐鸣|40|1"
     clusterBomb:
         amount: 3
         damageMulti: 1
@@ -3304,6 +3276,8 @@ TNT:
     liveTime: 20
     projectileSize: 0.25
     blockHitAction: thru
+    buffInflict:
+        - "元素谐鸣|40|1"
 伽利略新月:
     gravity: 0
     liveTime: 50
@@ -3419,6 +3393,8 @@ TNT:
     gravity: 0
     blockHitAction: thru
     liveTime: 25
+    buffInflict:
+        - "元素谐鸣|80|1"
 元素之星:
     projectileSize: 0.5
     gravity: 0
@@ -3427,6 +3403,8 @@ TNT:
     autoTrace: true
     autoTraceRadius: 24
     liveTime: 60
+    buffInflict:
+        - "元素谐鸣|80|1"
 死神擢升镰刀:
     gravity: 0
     autoTrace: true
@@ -3543,6 +3521,8 @@ TNT:
     liveTime: 15
     blockHitAction: thru
     projectileSize: 3
+    buffInflict:
+        - "元素谐鸣|40|1"
     clusterBomb:
         amount: 9
         damageMulti: 0.4
@@ -3553,6 +3533,8 @@ TNT:
     liveTime: 10
     blockHitAction: thru
     projectileSize: 3
+    buffInflict:
+        - "元素谐鸣|40|1"
     clusterBomb:
         amount: 5
         damageMulti: 0.6
@@ -3563,6 +3545,8 @@ TNT:
     liveTime: 8
     blockHitAction: thru
     projectileSize: 3
+    buffInflict:
+        - "元素谐鸣|40|1"
     clusterBomb:
         amount: 2
         damageMulti: 0.8
@@ -3573,6 +3557,8 @@ TNT:
     liveTime: 20
     blockHitAction: thru
     projectileSize: 3
+    buffInflict:
+        - "元素谐鸣|40|1"
 灵魂鬼爪:
     gravity: 0
     liveTime: 100
@@ -3612,7 +3598,7 @@ TNT:
     penetration: 5
     projectileSize: 1
     speedMultiPerTick: 1.2
-    maxSpeed: 10
+    maxSpeed: 3
 邪恶三叉戟:
     arrowOrPotion: true
     projectileSize: 0.5
@@ -3699,6 +3685,7 @@ TNT:
     gravity: 0
     autoTrace: true
     autoTraceMethod: 2
+    autoTraceRadius: 16
     slowedByWater: false
 星云烈焰:
     gravity: 0
@@ -4461,7 +4448,7 @@ TNT:
     liveTime: 10
     projectileSize: 3
     blockHitAction: thru
-    penetration: 999999
+    penetration: 2
     buffInflict:
         - "碎甲|60|1"
 遗忘沙刃:
@@ -4512,18 +4499,18 @@ TNT:
         - "神圣之火|60|1"
 始源粉尘:
     gravity: 0
-    liveTime: 10
-    projectileSize: 3
+    liveTime: 30
+    projectileSize: 5
     blockHitAction: thru
     isGrenade: true
-    blastRadius: 2
+    blastRadius: 3
     blastOnContactBlock: false
     blastOnContactEnemy: true
     blastOnTimeout: false
     blastDuration: 16
-    penetration: 999999
+    penetration: 2
     buffInflict:
-        - "碎甲|60|1"
+        - "碎甲|80|1"
 禁忌烈阳:
     arrowOrPotion: true
     gravity: 0
@@ -4534,6 +4521,178 @@ TNT:
     blastDuration: 30
     buffInflict:
         - "狱炎|100|1"
+原核台风:
+    liveTime: 60
+    projectileSize: 1
+    enemyInvincibilityFrame: 15
+    blockHitAction: bounce
+    bounce: 8
+    penetration: 2
+    gravity: 0
+    autoTrace: true
+    noAutoTraceTicks: 2
+    autoTraceMethod: 2
+    autoTraceAbility: 5
+    autoTraceRadius: 32
+    slowedByWater: false
+大殷红利刃:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 1.5
+    penetration: 2
+    liveTime: 60
+中殷红利刃:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 1
+    penetration: 1
+    liveTime: 60
+小殷红利刃:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.5
+    liveTime: 60
+生命光流射线:
+    liveTime: 40
+    projectileSize: 0.5
+    gravity: 0
+始源之遗粉尘:
+    gravity: 0
+    liveTime: 20
+    projectileSize: 5
+    blockHitAction: thru
+    penetration: 4
+    buffInflict:
+        - "碎甲|80|1"
+狂野之镰:
+    gravity: 0
+    liveTime: 60
+    blockHitAction: thru
+    projectileSize: 1.5
+    speedMultiPerTick: 2
+    autoTrace: true
+    noAutoTraceTicks: 5
+    autoTraceRadius: 24
+    maxSpeed: 3
+圣神爆破光球:
+    gravity: 0
+    liveTime: 60
+    blockHitAction: thru
+    projectileSize: 1.5
+    isGrenade: true
+    blastRadius: 5
+圣神追踪光球:
+    gravity: 0
+    liveTime: 40
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceRadius: 24
+    autoTraceAbility: 4.5
+黑蚀之星:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 1
+    liveTime: 100
+    autoTrace: true
+    noAutoTraceTicks: 30
+    autoTraceRadius: 24
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.5
+        name: 黑蚀黑洞
+        fireOnTimeout: false
+        velocity: 0
+黑蚀黑洞:
+    gravity: 0
+    blockHitAction: thru
+    penetration: 999999
+    projectileSize: 1.5
+    liveTime: 15
+    enemyInvincibilityFrame: 6
+小型归元漩涡:
+    liveTime: 40
+    projectileSize: 1.5
+    blockHitAction: thru
+    penetration: 999999
+    gravity: 0
+    autoTrace: true
+    noAutoTraceTicks: 5
+    autoTraceMethod: 2
+    autoTraceAbility: 8
+    autoTraceRadius: 32
+    slowedByWater: false
+归元漩涡:
+    liveTime: 40
+    projectileSize: 5
+    blockHitAction: thru
+    gravity: 0
+    isGrenade: true
+    blastRadius: 5
+    slowedByWater: false
+    clusterBomb:
+        amount: 1
+        damageMulti: 1
+        name: 冲击波1
+        fireOnTimeout: false
+        velocity: 0
+怨戾熔岩:
+    liveTime: 60
+    projectileSize: 3
+    blockHitAction: thru
+    gravity: 0
+    penetration: 999999
+怨戾之手:
+    liveTime: 60
+    projectileSize: 3
+    blockHitAction: thru
+    gravity: 0
+    penetration: 999999
+异端火焰:
+    liveTime: 40
+    blockHitAction: thru
+    gravity: 0
+    autoTrace: true
+    autoTraceRadius: 32
+    autoTraceAbility: 5
+    noAutoTraceTicks: 3
+异端镀金灵魂:
+    liveTime: 50
+    blockHitAction: thru
+    gravity: 0
+    projectileSize: 1
+    autoTrace: true
+    autoTraceRadius: 32
+    autoTraceAbility: 5
+    noAutoTraceTicks: 1
+异端迷失灵魂:
+    liveTime: 50
+    blockHitAction: thru
+    gravity: 0
+    projectileSize: 0.5
+    autoTrace: true
+    autoTraceRadius: 32
+    autoTraceAbility: 6
+    noAutoTraceTicks: 2
+异端复仇灵魂:
+    liveTime: 50
+    blockHitAction: thru
+    gravity: 0
+    projectileSize: 1.5
+    autoTrace: true
+    autoTraceRadius: 32
+舞光之刃:
+    liveTime: 50
+    blockHitAction: thru
+    projectileSize: 1
+    gravity: 0
+    penetration: 1
+光之舞闪光:
+    liveTime: 20
+    blockHitAction: thru
+    projectileSize: 96
+    gravity: 0
+    penetration: 999999
+    minimumDamageTicks: 20
 ####
 冰爪:
     arrowOrPotion: true
@@ -4734,62 +4893,15 @@ TNT:
         damageMulti: 0.35
         name: 瘟疫搜寻者
         velocity: 1
-红自导能源箭:
+湮灭自导能源箭:
     gravity: 0
     autoTrace: true
-    autoTraceAbility: 2.5
-    autoTraceRadius: 24
+    autoTraceRadius: 16
     blockHitAction: thru
-    trailColor: 255|0|0
-    trailStepSize: 1
-蓝自导能源箭:
-    gravity: 0
-    autoTrace: true
-    autoTraceAbility: 2.5
-    autoTraceRadius: 24
-    blockHitAction: thru
-    trailColor: 150|200|255
-    trailStepSize: 1
-绿自导能源箭:
-    gravity: 0
-    autoTrace: true
-    autoTraceAbility: 2.5
-    autoTraceRadius: 24
-    blockHitAction: thru
-    trailColor: 150|255|150
-    trailStepSize: 1
-粉自导能源箭:
-    gravity: 0
-    autoTrace: true
-    autoTraceAbility: 2.5
-    autoTraceRadius: 24
-    blockHitAction: thru
-    trailColor: 255|150|200
-    trailStepSize: 1
-黄自导能源箭:
-    gravity: 0
-    autoTrace: true
-    autoTraceAbility: 2.5
-    autoTraceRadius: 24
-    blockHitAction: thru
-    trailColor: 255|255|0
-    trailStepSize: 1
-紫自导能源箭:
-    gravity: 0
-    autoTrace: true
-    autoTraceAbility: 2.5
-    autoTraceRadius: 24
-    blockHitAction: thru
-    trailColor: 255|0|255
-    trailStepSize: 1
-橙自导能源箭:
-    gravity: 0
-    autoTrace: true
-    autoTraceAbility: 2.5
-    autoTraceRadius: 24
-    blockHitAction: thru
-    trailColor: 255|150|50
-    trailStepSize: 1
+    trailColor: 255|0|0;150|200|255;150|255|150;255|150|200;255|255|0;255|0|255;255|150|50
+    trailIntensityMulti: 0.5
+    buffInflict:
+        - "元素谐鸣|80|1"
 星能之箭:
     gravity: 0
     liveTime: 50
