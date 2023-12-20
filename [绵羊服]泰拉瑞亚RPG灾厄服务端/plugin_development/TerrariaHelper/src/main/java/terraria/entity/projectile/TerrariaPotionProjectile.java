@@ -1,6 +1,7 @@
 package terraria.entity.projectile;
 
 import net.minecraft.server.v1_12_R1.*;
+import net.minecraft.server.v1_12_R1.MathHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
@@ -9,16 +10,14 @@ import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import org.omg.CORBA.TIMEOUT;
 import terraria.TerrariaHelper;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.event.listener.ArrowHitListener;
-import terraria.util.EntityHelper;
-import terraria.util.GenericHelper;
-import terraria.util.PlayerHelper;
-import terraria.util.WorldHelper;
+import terraria.util.*;
 
 import java.util.*;
 
@@ -476,20 +475,34 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 }
                 break;
             }
+            case "以太流光":
             case "舞光之刃": {
+                double offsetRatio, rotationFreq;
+                switch (projectileType) {
+                    case "以太流光":
+                        offsetRatio = 0.05;
+                        // 2 full rotation per second
+                        rotationFreq = 72;
+                        break;
+                    case "舞光之刃":
+                    default:
+                        offsetRatio = 0.1;
+                        // a full rotation per second
+                        rotationFreq = 36;
+                        break;
+                }
                 // on first tick, save the forward direction, initialize twitch direction
                 if (!extraVariables.containsKey("v")) {
                     Vector fwdDir = bukkitEntity.getVelocity();
                     // make sure twitch one and two are linearly independent
-                    double speedRatio = 0.05;
                     Vector twitchOne = new Vector();
                     while (twitchOne.lengthSquared() < 1e-5) {
                         twitchOne = terraria.util.MathHelper.randomVector();
                         twitchOne.subtract(terraria.util.MathHelper.vectorProjection(fwdDir, twitchOne));
                     }
-                    twitchOne.normalize().multiply(speed * speedRatio);
+                    twitchOne.normalize().multiply(speed * offsetRatio);
                     Vector twitchTwo = fwdDir.getCrossProduct(twitchOne);
-                    twitchTwo.normalize().multiply(speed * speedRatio);
+                    twitchTwo.normalize().multiply(speed * offsetRatio);
                     // random twitch two's direction so some projectiles are going CW and some are CCW.
                     if (Math.random() < 0.5)
                         twitchTwo.multiply(-1);
@@ -502,12 +515,58 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 Vector fwd = (Vector) extraVariables.get("v");
                 Vector offset1 = (Vector) extraVariables.get("o1");
                 Vector offset2 = (Vector) extraVariables.get("o2");
+                double angle = ticksLived * rotationFreq;
                 fwd = fwd.clone().add(
-                        offset1.clone().multiply(terraria.util.MathHelper.xsin_degree(ticksLived * 18) ) ).add(
-                        offset2.clone().multiply(terraria.util.MathHelper.xcos_degree(ticksLived * 18) ) );
+                        offset1.clone().multiply(terraria.util.MathHelper.xsin_degree(angle) ) ).add(
+                        offset2.clone().multiply(terraria.util.MathHelper.xcos_degree(angle) ) );
                 motX = fwd.getX();
                 motY = fwd.getY();
                 motZ = fwd.getZ();
+                break;
+            }
+            case "小异端诡灵":
+            case "异端诡灵": {
+                Player owner = (Player) (shooter.getBukkitEntity());
+                // continue moving if the owner is still properly swinging and is close to owner
+                if (PlayerHelper.isProperlyPlaying(owner) && owner.getScoreboardTags().contains("temp_autoSwing") &&
+                        bukkitEntity.getWorld() == owner.getWorld() && bukkitEntity.getLocation().distanceSquared(owner.getLocation()) < 10000 ) {
+                    addScoreboardTag("ignoreCanDamageCheck");
+                    if (projectileType.equals("小异端诡灵")) {
+                        // dash into the owner
+                        if (ticksLived % 15 == 14) {
+                            Vector newVelocity = owner.getEyeLocation().subtract(bukkitEntity.getLocation()).toVector();
+                            terraria.util.MathHelper.setVectorLength(newVelocity, speed);
+                            this.motX = newVelocity.getX();
+                            this.motY = newVelocity.getY();
+                            this.motZ = newVelocity.getZ();
+                        }
+                        // transform into the mature form
+                        if (ticksLived >= 280)
+                            setProperties("异端诡灵");
+                    }
+                    // ram into the owner's target
+                    else {
+                        Location targetLoc;
+                        MetadataValue targetCache = EntityHelper.getMetadata(owner, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE);
+                        if (targetCache != null &&
+                                targetCache.value() instanceof LivingEntity &&
+                                EntityHelper.checkCanDamage(owner, ((LivingEntity) targetCache.value()), true))
+                            targetLoc = ((LivingEntity) targetCache.value()).getEyeLocation();
+                        else
+                            targetLoc = ItemUseHelper.getPlayerTargetLoc(owner, 80, 5,
+                                    new EntityHelper.AimHelperOptions().setAimMode(true).setTicksOffset(0), true);
+                        // move towards the owner's target
+                        Vector dir = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
+                        terraria.util.MathHelper.setVectorLength(dir, speed);
+                        this.motX = dir.getX();
+                        this.motY = dir.getY();
+                        this.motZ = dir.getZ();
+                    }
+                }
+                else {
+                    die();
+                    owner.removeScoreboardTag("temp_autoSwing");
+                }
                 break;
             }
         }
@@ -984,10 +1043,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     new Vec3D(locX, locY, locZ),
                     futureLoc,
                     this.projectileRadius,
-                    (Entity toCheck) -> {
-                        if (this.shooter != null && this.shooter == toCheck) return false;
-                        return checkCanHit(toCheck);
-                    });
+                    this::checkCanHit);
 
             // hit entities
             if (projectileType.equals("光之舞闪光")) {

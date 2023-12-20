@@ -1172,8 +1172,6 @@
   lore:
   - §r[饰品]
   - §r在身边随机产生孢子球
-  - §r孢子球内部成熟孢子的压力令其一被触碰就会炸裂开来
-  - §r另外，手持它右键石砖会让石砖上长出青苔——这在地下丛林中可能会吸引某些生物……
   - §6专家模式物品
   worth: 4000000
   rarity: 1000
@@ -2693,9 +2691,9 @@
 遗忘之刃:
   item: DIAMOND_SWORD
   lore:
-  - §r发射两把在飞行时自动变速的沙刃
+  - §r发射在飞行时自动变速的沙刃
   attributes:
-    damage: 130
+    damage: 160
     damageType: Melee
     crit: 4
     knockback: 6
@@ -3244,7 +3242,7 @@
 血石斩切刃:
   item: DIAMOND_SWORD
   lore:
-  - §r击中生命值低于20%的敌怪时会产生血爆
+  - §r击中生命值低于20%的非BOSS敌怪时会产生血爆
   - §r血爆会掉落可以治愈玩家的红心
   attributes:
     damage: 966
@@ -3434,6 +3432,7 @@
   - §r第一次挥动发射追踪骷髅
   - §r第二次挥动发射巨大的强力骷髅
   - §r第三次挥动造成两次伤害判定
+  - §r挥刀时逐渐积攒力量，最终将四散发射大量追踪骷髅
   attributes:
     damage: 1560
     damageType: Melee
@@ -3618,7 +3617,7 @@
   lore:
   - §r射出孢子球
   attributes:
-    damage: 75
+    damage: 60
     damageType: Melee
     crit: 4
     knockback: 4
@@ -4361,7 +4360,7 @@
   - §#83B87E“这东西甚至可以直接把人的眼睛挖出来！”
   - §#83B87E“……啊。”
   attributes:
-    damage: 9
+    damage: 20
     damageType: Melee
     crit: 4
     knockback: 3.75
@@ -7683,7 +7682,7 @@ Dodu的手炮:
   lore:
   - §r“发射生命解离彩虹”
   attributes:
-    damage: 125
+    damage: 400
     damageType: Magic
     crit: 4
     knockback: 0
@@ -9168,7 +9167,6 @@ Dodu的手炮:
     manaUse: 6
   worth: 40000000
   rarity: 16
-####
 北极熊爪:
   item: DIAMOND_SWORD
   lore:
@@ -9199,6 +9197,66 @@ Dodu的手炮:
     manaUse: 7
   worth: 9600000
   rarity: 7
+鬼之形:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射会追踪敌人并爆炸的幽魂能量球
+  attributes:
+    damage: 240
+    damageType: Magic
+    projectileSpeed: 17.5
+    crit: 4
+    knockback: 5
+    useTime: 27
+    manaUse: 20
+  worth: 26000000
+  rarity: 13
+寂虚之光:
+  item: DIAMOND_SWORD
+  lore:
+  - §r“炫日下的一切是如此的和谐一致
+  - §r但炎日光辉已被暗月所侵蚀”
+  attributes:
+    damage: 666
+    damageType: Magic
+    crit: 4
+    knockback: 0
+    useTime: 10
+    manaUse: 10
+  worth: 26000000
+  rarity: 13
+亚利姆水晶:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射猛烈的破坏死光
+  attributes:
+    damage: 666
+    damageType: Magic
+    crit: 4
+    knockback: 0
+    useTime: 10
+    manaUse: 10
+    buffInflictMagic: 龙焰|60|1
+  worth: 30000000
+  rarity: 15
+异端僭越:
+  item: DIAMOND_SWORD
+  lore:
+  - §r在身旁召唤一团对任何单位都会造成伤害的腥邪诡灵
+  - §r起初，诡灵会每隔一段时间就冲向玩家
+  - §r随着时间流逝，诡灵会成长为一个可控制的巨灵
+  - §#C61B40“聚合成那地牢怪物的灵魂永远无法进入他们所期望的来世，
+  - §#C61B40被愤怒玷污、融化，他们终将如此。”
+  attributes:
+    damage: 666
+    damageType: Magic
+    projectileSpeed: 17.5
+    crit: 4
+    knockback: 5
+    useTime: 27
+    manaUse: 8
+  worth: 30000000
+  rarity: 15
 蜘蛛女王法杖:
   item: DIAMOND_SWORD
   lore:

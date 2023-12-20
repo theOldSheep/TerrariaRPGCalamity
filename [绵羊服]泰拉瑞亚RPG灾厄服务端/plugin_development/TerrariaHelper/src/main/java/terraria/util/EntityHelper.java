@@ -1753,11 +1753,12 @@ public class EntityHelper {
                     }
                 }
                 // special enemy damage tweak
-                switch (victim.getName()) {
+                switch (GenericHelper.trimText( victim.getName() ) ) {
                     case "猪鲨公爵":
                     case "硫海遗爵":
+                    case "利维坦":
                         if (damager.getName().equals("雷姆的复仇"))
-                            dmg *= 5;
+                            dmg *= 50;
                         break;
 
                 }
@@ -2124,9 +2125,13 @@ public class EntityHelper {
         enemyAcc.add(aimHelperOption.accelerationOffset);
 
         // setup target location
-        Location targetLoc, predictedLoc;
-        if (target instanceof LivingEntity) targetLoc = ((LivingEntity) target).getEyeLocation();
-        else targetLoc = target.getLocation();
+        Location targetLoc = target.getLocation(), predictedLoc;
+        // aim at the middle of the entity
+        if (target instanceof LivingEntity) {
+            EntityLiving targetNMS = ((CraftLivingEntity) target).getHandle();
+            AxisAlignedBB boundingBox = targetNMS.getBoundingBox();
+            targetLoc.add(0, boundingBox.e - boundingBox.b, 0);
+        }
         // a placeholder, so that the function does not report an error
         predictedLoc = targetLoc.clone();
         // "hyper-params" for prediction
@@ -2215,6 +2220,7 @@ public class EntityHelper {
                 }
                 // if a speed multiplier is in place, account for it.
                 else {
+                    ticksOffset = 0;
                     double distTraveled = 0;
                     // prevent possible inf loop IF the projectile has decaying speed
                     while (distTraveled < distance && (aimHelperOption.projectileSpeedMulti >= 1d || ticksOffset < 20)) {

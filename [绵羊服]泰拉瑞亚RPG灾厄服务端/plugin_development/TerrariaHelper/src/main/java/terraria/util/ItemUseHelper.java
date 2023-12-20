@@ -32,8 +32,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class ItemUseHelper {
-    // static variable for certain weapons
-    static int DANCE_OF_LIGHT_CHARGE = 0;
     public enum QuickBuffType {
         NONE, HEALTH, MANA, BUFF;
     }
@@ -2188,7 +2186,7 @@ public class ItemUseHelper {
                         if (currentIndex == 0) {
                             for (int i = 0; i < 5; i ++) {
                                 HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
-                                projAttrMap.put("damage", projAttrMap.get("damage") * (0.5 + Math.random() * 0.3) );
+                                projAttrMap.put("damage", projAttrMap.get("damage") * (0.3 + Math.random() * 0.4) );
                                 Vector projVel = MathHelper.vectorFromYawPitch_quick(
                                         plyYaw + Math.random() * 10 - 5, plyPitch + Math.random() * 10 - 5);
                                 projVel.multiply(2.25);
@@ -2405,6 +2403,7 @@ public class ItemUseHelper {
                     }
                     case "盖尔大剑": {
                         if (currentIndex == 0) {
+                            // extra projectiles
                             Vector projVel;
                             switch (swingAmount % 3) {
                                 case 0:
@@ -2432,6 +2431,19 @@ public class ItemUseHelper {
                                         EntityHelper.handleDamage(ply, hitEntity, dmg, EntityHelper.DamageReason.DIRECT_DAMAGE);
                                     });
                             }
+                            // charge up
+                            int charge = getDurability(weaponItem, 100);
+                            if (charge++ >= 100) {
+                                charge = 0;
+                                for (int i = 0; i < 20; i ++) {
+                                    projVel = MathHelper.vectorFromYawPitch_quick(
+                                            Math.random() * 360, Math.random() * -90);
+                                    projVel.multiply(2.5);
+                                    EntityHelper.spawnProjectile(ply, projVel,
+                                            attrMap, EntityHelper.DamageType.MELEE, "跟踪血骷髅");
+                                }
+                            }
+                            setDurability(weaponItem, 100, charge);
                         }
                         break;
                     }
@@ -2896,8 +2908,13 @@ public class ItemUseHelper {
                             // the weapon spawns a projectile as long as the current frame is at most shoot threshold away from halfway
                             // in another word, the weapon shoots (threshold * 2 + 1) projectiles, each with 1 frame difference in time
                             int shootThreshold;
-                            if (weaponCharge > 4)
+                            // 6 7 8
+                            if (weaponCharge >= 6)
+                                shootThreshold = 3;
+                            // 4 5
+                            else if (weaponCharge >= 4)
                                 shootThreshold = 2;
+                            // 1 2 3
                             else if (weaponCharge > 0)
                                 shootThreshold = 1;
                             else
@@ -3904,6 +3921,12 @@ public class ItemUseHelper {
                 }
                 break;
             }
+            case "异端僭越": {
+                // no projectile fired after first swing
+                if (swingAmount != 0)
+                    fireAmount = 0;
+                break;
+            }
         }
         for (int i = 0; i < fireAmount; i ++) {
             Location fireLoc = ply.getEyeLocation();
@@ -3998,16 +4021,18 @@ public class ItemUseHelper {
                     if (itemType.equals("光之舞") && i == 0) {
                         // charge up a powerful attack
                         ItemStack weaponItem = ply.getInventory().getItemInMainHand();
-                        if (DANCE_OF_LIGHT_CHARGE++ >= 90) {
-                            DANCE_OF_LIGHT_CHARGE = 0;
+                        int charge = getDurability(weaponItem, 90);
+                        if (charge++ >= 90) {
+                            charge = 0;
                             HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
                             projAttrMap.put("damage", 66666d);
+                            projAttrMap.put("damageMulti", 1d);
                             projAttrMap.put("crit", 100d);
                             EntityHelper.spawnProjectile(ply, ply.getEyeLocation().add(0, 10, 0), new Vector(),
                                     projAttrMap, EntityHelper.DamageType.MAGIC, "光之舞闪光");
                             ply.getWorld().playSound(ply.getEyeLocation(), SOUND_DANCE_OF_LIGHT_FLASH, 1f, 1f);
                         }
-                        setDurability(weaponItem, 90, DANCE_OF_LIGHT_CHARGE);
+                        setDurability(weaponItem, 90, charge);
                     }
                     fireVelocity.normalize();
                     break;
@@ -4227,31 +4252,82 @@ public class ItemUseHelper {
                                 .setDecayCoef(1.25);
                         break;
                     }
-                    case "终极棱镜": {
-                        double convergeProgress = Math.min((double) swingAmount / 25, 1);
-                        length = 40 + 24 * convergeProgress;
+                    case "终极棱镜":
+                    case "寂虚之光":
+                    case "亚利姆水晶": {
+                        // do not use "helper aim" results, as diverged beam can not hit in that way.
+                        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+                        yaw = plyNMS.yaw;
+                        pitch = plyNMS.pitch;
+
+                        double convergeProgress = swingAmount / 25d;
+                        length = 40 + 24 * Math.min(convergeProgress, 1);
                         // particle color
+                        String[] particleColors = new String[0];
                         if (convergeProgress < 1) {
-                            String[] particleColors = new String[]{"255|0|0", "255|165|0", "255|255|0", "0|128|0",
-                                    "0|0|255", "75|0|130", "238|130|238"};
-                            fireAmount = 7;
+                            switch (itemType) {
+                                case "终极棱镜":
+                                    particleColors = new String[]{"255|0|0", "255|165|0", "255|255|0", "0|128|0",
+                                            "0|0|255", "75|0|130", "238|130|238"};
+                                    fireAmount = 7;
+                                    break;
+                                case "寂虚之光":
+                                    particleColor = "0|0|0";
+                                    width = 1;
+                                    break;
+                                case "亚利姆水晶":
+                                default:
+                                    particleColors = new String[]{"232|143|90", "116|50|46"};
+                                    fireAmount = 6;
+                            }
                             // so that enemies do not get damaged for an unreasonable amount of times
                             damageCD = damageExceptions;
-                            particleColor = particleColors[fireIndex % particleColors.length];
-                        } else {
-                            particleColor = "255|255|255";
-                            width = 1;
-                            // converged ray deals 3x damage
-                            attrMap.put("damage", attrMap.getOrDefault("damage", 125d) * 3);
+                        }
+                        else {
+                            double convergenceDamageFactor;
+                            switch (itemType) {
+                                case "终极棱镜":
+                                    particleColor = "255|255|255";
+                                    convergenceDamageFactor = 3;
+                                    width = 1;
+                                    break;
+                                case "寂虚之光":
+                                    // after completely converges (or, "diverge" in this case)
+                                    if (convergeProgress > 2) {
+                                        particleColors = new String[]{"255|0|0", "255|165|0", "255|255|0", "0|128|0",
+                                                "0|0|255", "75|0|130", "238|130|238"};
+                                        convergenceDamageFactor = 3;
+                                    }
+                                    // first phase of divergence
+                                    else {
+                                        particleColors = new String[]{"255|255|255"};
+                                        convergenceDamageFactor = 2;
+                                    }
+                                    fireAmount = 7;
+                                    convergeProgress = 0;
+                                    break;
+                                case "亚利姆水晶":
+                                default:
+                                    particleColor = "255|255|175";
+                                    convergenceDamageFactor = 3;
+                                    width = 1;
+                            }
+                            // converged ray deals more damage
+                            if (fireIndex == 1)
+                                attrMap.put("damage", attrMap.getOrDefault("damage", 10d) * convergenceDamageFactor);
                         }
                         // strike line additional information
                         strikeInfo
                                 .setThruWall(false);
-                        // tweak shooting direction
-                        if (convergeProgress < 1) {
+                        // tweak shooting direction, if applicable
+                        if (fireAmount > 1) {
+                            particleColor = particleColors[fireIndex % particleColors.length];
                             double angle = (360 * (double) fireIndex / fireAmount) - (swingAmount * 20);
-                            yaw += MathHelper.xsin_degree(angle) * 20 * (1 - convergeProgress);
-                            pitch += MathHelper.xcos_degree(angle) * 20 * (1 - convergeProgress);
+                            double divergenceMulti = 20 * (1 - Math.min(1, convergeProgress) );
+                            if (itemType.equals("寂虚之光") )
+                                divergenceMulti /= 4;
+                            yaw += MathHelper.xsin_degree(angle) * divergenceMulti;
+                            pitch += MathHelper.xcos_degree(angle) * divergenceMulti;
                         }
                         break;
                     }

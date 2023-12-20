@@ -2946,6 +2946,18 @@ WORKBENCH:
     - 遗迹圣物
     - 宇宙锭:8
     - 日蚀之阴碎片:8
+  '55_8':
+    requireLevel: 1
+    resultItem: 怨戾
+    requireItem:
+    - 蒸海硫火
+    - 灾厄尘
+  '55_9':
+    requireLevel: 1
+    resultItem: 异端僭越
+    requireItem:
+    - 鬼之形
+    - 灾厄尘
   '56':
     requireLevel: 1
     resultItem: 反魂蝶
@@ -4490,6 +4502,14 @@ TINKER_WORKBENCH:
     requireItem:
     - 拉扎尔射线
     - 扭曲虚空:3
+  '56_6':
+    requireLevel: 1
+    resultItem: 寂虚之光
+    requireItem:
+    - 终极棱镜
+    - 暗离子体:10
+    - 毁灭之灵:20
+    - 神圣晶石:30
   '57':
     requireLevel: 1
     resultItem: 星幻头盔

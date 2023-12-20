@@ -172,7 +172,7 @@
   size: 6
   projectileInfo:
     interval: 2
-    velocity: 2
+    velocity: 3
     noGravity: true
     name: 泰拉光束
     damageMulti: 1.5
@@ -184,7 +184,7 @@
   size: 4.5
   projectileInfo:
     interval: 2
-    velocity: 1.5
+    velocity: 2
     noGravity: true
     name: 永夜光束
 真·圣剑:
@@ -193,7 +193,7 @@
   size: 6
   projectileInfo:
     interval: 2
-    velocity: 1.5
+    velocity: 2
     noGravity: true
     name: 光明光束
 叶绿军刀:
@@ -204,7 +204,7 @@
   - 91|217|74
   projectileInfo:
     interval: 1
-    velocity: 0.5
+    velocity: 1.5
     noGravity: true
     isGranade: true
     name: 孢子球
@@ -216,7 +216,7 @@
   - 91|217|74
   projectileInfo:
     interval: 1
-    velocity: 1.75
+    velocity: 2.5
     name: 叶绿珠
 无头骑士剑:
   type: SWING
@@ -226,7 +226,7 @@
   - 255|125|125
   projectileInfo:
     interval: 1
-    velocity: 1.5
+    velocity: 2.5
     noGravity: true
     name: 烈焰杰克南瓜
 吉他斧:
@@ -245,7 +245,7 @@
   size: 5
   projectileInfo:
     interval: 1
-    velocity: 1
+    velocity: 1.25
     name: 死神镰刀
 圣诞树剑:
   type: SWING
@@ -253,7 +253,7 @@
   size: 6
   projectileInfo:
     interval: 1
-    velocity: 1
+    velocity: 2
     name: 装饰
 种子弯刀:
   type: SWING
@@ -261,7 +261,7 @@
   size: 5
   projectileInfo:
     interval: 1
-    velocity: 1.25
+    velocity: 1.5
     isGranade: true
     name: 种子弯刀坚果
   particleColor:
@@ -278,7 +278,7 @@
   size: 6
   projectileInfo:
     interval: 1
-    velocity: 1.75
+    velocity: 2.25
     name: 彩虹猫之刃
   particleColor:
   - 255|155|255
@@ -303,7 +303,7 @@
   size: 3
   projectileInfo:
     interval: 1
-    velocity: 1.5
+    velocity: 1.75
     name: 水之剑气
 泪刃:
   type: SWING
@@ -327,7 +327,7 @@
   size: 3.5
   projectileInfo:
     interval: 1
-    velocity: 1.25
+    velocity: 1.5
     name: 阴暗球
 风之刃:
   type: SWING
@@ -347,7 +347,7 @@
   size: 4
   projectileInfo:
     interval: 1
-    velocity: 1.75
+    velocity: 2
     name: 凝胶波
 屠杀:
   type: SWING
@@ -367,7 +367,7 @@
   size: 4.5
   projectileInfo:
     interval: 1
-    velocity: 0.25
+    velocity: 0.5
     name: 沙刃
 真·绝望之刃:
   type: SWING
@@ -792,7 +792,7 @@
   size: 7.5
   projectileInfo:
     interval: 1
-    velocity: 0.5
+    velocity: 1.5
     name: 孢子球
   autoSwing: true
 北极:
@@ -801,7 +801,7 @@
   autoSwing: true
   projectileInfo:
     interval: 1
-    velocity: 1.6
+    velocity: 2
     name: 北极长矛
   particleColor:
   - 75|150|255
@@ -881,6 +881,7 @@
   type: FLAIL
   reach: 12
   velocity: 1.5
+  canRotate: true
   autoSwing: true
   attributes:
     damage: 60
@@ -897,7 +898,7 @@
   autoSwing: true
   size: 7.5
   projectileInfo:
-    velocity: 1.5
+    velocity: 2.5
     name: 星夜光束
 硫磺火矛:
   type: STAB
@@ -908,14 +909,14 @@
   autoSwing: true
   size: 8
   projectileInfo:
-    velocity: 1.75
+    velocity: 2.75
     name: 尖刺
 泰拉长枪:
   type: STAB
   autoSwing: true
   size: 10
   projectileInfo:
-    velocity: 2.25
+    velocity: 3
     name: 泰拉长枪枪气
 火山之矛:
   type: STAB
@@ -938,7 +939,7 @@
   autoSwing: true
   size: 6
   projectileInfo:
-    velocity: 2.5
+    velocity: 3
     name: 绿色元素光束
 镀金鸟喙:
   type: STAB
@@ -2515,26 +2516,31 @@ Dodu的手炮:
   type: FLAIL
   reach: 16
   velocity: 2.5
+  canRotate: true
   autoSwing: true
 火焰锤:
   type: FLAIL
   reach: 16
   velocity: 2.5
+  canRotate: true
   autoSwing: true
 蓝月:
   type: FLAIL
   reach: 24
   velocity: 2.75
+  canRotate: true
   autoSwing: true
 太极连枷:
   type: FLAIL
   reach: 27.5
   velocity: 3
+  canRotate: true
   autoSwing: true
 猪鲨链球:
   type: FLAIL
   reach: 32
   velocity: 3.5
+  canRotate: true
   autoSwing: true
 日耀喷发剑:
   type: WHIP
@@ -2546,19 +2552,23 @@ Dodu的手炮:
   type: FLAIL
   reach: 20
   velocity: 2.5
+  canRotate: true
   autoSwing: true
 海胆链球:
   type: FLAIL
   reach: 16
   velocity: 2.5
+  autoSwing: true
 海蚌锤:
   type: FLAIL
   reach: 32
   velocity: 1.75
+  autoSwing: true
 风滚草:
   type: FLAIL
   reach: 24
   velocity: 2.75
+  autoSwing: true
 星云鞭:
   type: WHIP
   autoSwing: true
@@ -2569,6 +2579,7 @@ Dodu的手炮:
   type: FLAIL
   reach: 48
   velocity: 3.75
+  autoSwing: true
 晨星链刃:
   type: WHIP
   autoSwing: true
@@ -2579,6 +2590,7 @@ Dodu的手炮:
   type: FLAIL
   reach: 48
   velocity: 4
+  autoSwing: true
 新月链刃:
   type: WHIP
   autoSwing: true
@@ -2595,6 +2607,7 @@ Dodu的手炮:
   type: FLAIL
   reach: 48
   velocity: 4.5
+  autoSwing: true
 塔纳托斯的脊柱:
   type: WHIP
   autoSwing: true
@@ -3237,7 +3250,6 @@ Dodu的手炮:
   projectileName: 舞光之刃
   shots: 4
   autoSwing: true
-####
 北极熊爪:
   type: MAGIC_PROJECTILE
   projectileName: 冰爪
@@ -3246,6 +3258,20 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 高音谱号
   offSet: 10
+  autoSwing: true
+鬼之形:
+  type: MAGIC_PROJECTILE
+  projectileName: 鬼魂能量球
+  autoSwing: true
+寂虚之光:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+亚利姆水晶:
+  type: MAGIC_SPECIAL
+  autoSwing: true
+异端僭越:
+  type: MAGIC_PROJECTILE
+  projectileName: 小异端诡灵
   autoSwing: true
 蜘蛛女王法杖:
   type: SENTRY

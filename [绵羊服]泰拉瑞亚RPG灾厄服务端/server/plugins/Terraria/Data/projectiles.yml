@@ -2523,8 +2523,8 @@ TNT:
 沙刃:
     projectileSize: 0.5
     gravity: 0
-    speedMultiPerTick: 1.125
-    maxSpeed: 5
+    speedMultiPerTick: 1.15
+    maxSpeed: 3
 绝望光束:
     projectileSize: 0.5
     blockHitAction: bounce
@@ -3087,6 +3087,7 @@ TNT:
     penetration: 1
     liveTime: 100
     autoTrace: true
+    noAutoTraceTicks: 5
     autoTraceRadius: 24
     isGrenade: true
     blastRadius: 4
@@ -4693,7 +4694,6 @@ TNT:
     gravity: 0
     penetration: 999999
     minimumDamageTicks: 20
-####
 冰爪:
     arrowOrPotion: true
     gravity: 0
@@ -4711,6 +4711,46 @@ TNT:
     gravity: 0
     penetration: 99999
     speedMultiPerTick: 0.99
+鬼魂能量球:
+    gravity: 0
+    projectileSize: 1.5
+    blockHitAction: thru
+    liveTime: 100
+    penetration: 4
+    enemyInvincibilityFrame: 2
+    slowedByWater: false
+    autoTrace: true
+    noAutoTraceTicks: 8
+    autoTraceRadius: 24
+    clusterBomb:
+        amount: 25
+        damageMulti: 0.67
+        name: 鬼魂追踪焰
+        fireOnTimeout: false
+        velocity: 1.75
+鬼魂追踪焰:
+    gravity: 0
+    liveTime: 50
+    minimumDamageTicks: 5
+    autoTrace: true
+    autoTraceRadius: 16
+    noAutoTraceTicks: 5
+    slowedByWater: false
+    trailColor: 149|255|255;208|132|145
+小异端诡灵:
+    projectileSize: 1.5
+    blockHitAction: thru
+    liveTime: 999999
+    penetration: 999999
+    slowedByWater: false
+    enemyInvincibilityFrame: 1
+异端诡灵:
+    projectileSize: 5
+    blockHitAction: thru
+    liveTime: 999999
+    penetration: 999999
+    slowedByWater: false
+    enemyInvincibilityFrame: 1
 孢子球:
     gravity: 0
     blockHitAction: thru

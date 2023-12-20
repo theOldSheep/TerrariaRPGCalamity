@@ -8,6 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+import org.omg.IOP.TaggedComponentHelper;
+import terraria.TerrariaHelper;
 import terraria.util.*;
 
 import java.util.Set;
@@ -15,7 +17,7 @@ import java.util.Set;
 public class TerrariaFlail extends TerrariaPotionProjectile {
     Player owner;
     Location spawnedLoc;
-    boolean returning = false, spinning = true, shouldUpdateSpeed = true;
+    boolean returning = false, spinning = true, shouldUpdateSpeed = true, canRotate;
     double maxDistanceSquared, useTime, speed;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public TerrariaFlail(World world) {
@@ -38,6 +40,8 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
         super.liveTime = 999999;
         super.blockHitAction = "thru";
         super.canBeReflected = false;
+        // see if the flail supports rotation
+        canRotate = TerrariaHelper.weaponConfig.getBoolean(super.projectileType + ".canRotate", false);
         switch (super.projectileType) {
             case "海蚌锤":
                 super.projectileRadius = 0.75;
@@ -117,7 +121,7 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
             // if the player is spinning the flail before throwing out
             else if (spinning) {
                 // end of spinning
-                if (!owner.getScoreboardTags().contains("temp_autoSwing")) {
+                if ( ! (canRotate && owner.getScoreboardTags().contains("temp_autoSwing")) ) {
                     bukkitEntity.teleport(owner.getEyeLocation());
                     spinning = false;
                     super.blockHitAction = "stick";
