@@ -9974,6 +9974,388 @@ Dodu的手炮:
     manaUse: 10
   worth: 4800000
   rarity: 5
+战术瘟疫引擎:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一架瘟疫战机，打得敌人叫妈妈
+  - §r战机会消耗你物品栏中的子弹
+  - §r有时会发射导弹而非子弹
+  - §r66%几率节省弹药
+  attributes:
+    damage: 280
+    damageType: Summon
+    knockback: 0.5
+    useTime: 14
+    manaUse: 10
+  worth: 20000000
+  rarity: 10
+元素之斧:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤元素之斧为你而战
+  - §r“放心使用，并不会劈坏你的木门”
+  attributes:
+    damage: 114
+    damageType: Summon
+    knockback: 5
+    useTime: 14
+    manaUse: 10
+  worth: 22000000
+  rarity: 11
+告死之花:
+  item: DIAMOND_SWORD
+  lore:
+  - §r在你的头顶召唤元素之花
+  - §r共占据3格仆从栏位
+  attributes:
+    damage: 144
+    damageType: Summon
+    knockback: 5
+    useTime: 14
+    manaUse: 10
+  worth: 22000000
+  rarity: 11
+耀目穿刺者杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤圣刃为你而战
+  attributes:
+    damage: 254
+    damageType: Summon
+    knockback: 2
+    useTime: 14
+    manaUse: 10
+  worth: 24000000
+  rarity: 12
+葱茏之锋:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一把环绕着你旋转的刀锋切碎附近的敌人
+  - §r“所以说到底↑为什↓么↑~”
+  - §r“都←是→我←的→错←~”
+  attributes:
+    damage: 146
+    damageType: Summon
+    knockback: 5
+    useTime: 14
+    manaUse: 10
+  worth: 24000000
+  rarity: 12
+蛇眼:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一架悬空无人机发射穿透且高度校准的能量矢
+  - §r如果能量矢击中敌怪，无人机会传送到能量矢的路径上并反弹能量矢
+  - §r被反弹的能量矢会追踪并在接触敌怪时爆炸
+  - §#1FFBFF“装备有高端的传感器，几乎无人可以避开它们。能逃脱它们目光的则更少了。
+  - §#1FFBFF在我基于视觉灵魂的动力机器实验和我最新的项目之间的一座优秀桥梁。”
+  attributes:
+    damage: 400
+    damageType: Summon
+    knockback: 3
+    useTime: 14
+    manaUse: 12
+  worth: 24000000
+  rarity: 1100
+无限之灯:
+  item: DIAMOND_SWORD
+  lore:
+  - §r在你的头顶召唤一盏宇宙灯为你而战
+  - §r每盏宇宙灯占据两格仆从栏位
+  attributes:
+    damage: 254
+    damageType: Summon
+    knockback: 4
+    useTime: 14
+    manaUse: 10
+  worth: 24000000
+  rarity: 12
+天龙，群星的君王:
+  item: DIAMOND_SWORD
+  lore:
+  - §r使用4召唤栏，召唤一对天体巨龙为你而战
+  - §r同一时间只能存在一对巨龙
+  - §r“吞噬恒星的巨龙”
+  attributes:
+    damage: 426
+    damageType: Summon
+    knockback: 2
+    useTime: 25
+    manaUse: 30
+  worth: 24000000
+  rarity: 12
+龙血弃族:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一只骨龙和她的两个孩子
+  - §r孩子会吐出血珠治疗玩家
+  - §r需要至少6格仆从栏位才能使用
+  - §r同时只能存在至多一家骨龙
+  attributes:
+    damage: 430
+    damageType: Summon
+    knockback: 4
+    useTime: 14
+    manaUse: 30
+  worth: 24000000
+  rarity: 12
+幽花之主:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤花灵来保护你
+  attributes:
+    damage: 400
+    damageType: Summon
+    knockback: 1
+    useTime: 9
+    manaUse: 10
+  worth: 26000000
+  rarity: 13
+乌贼之哀歌:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一只小乌贼使用恶毒墨汁攻击敌人
+  - §r在远距离，乌贼会进行攻击性跟踪墨汁齐射
+  - §r在近距离，乌贼会抓住敌人并造成更高的伤害
+  - §r“深渊之中，任何资源都是稀缺的，每个物种都孤苦伶仃，仅是因为它们根本没有可共享的资源。”
+  attributes:
+    damage: 220
+    damageType: Summon
+    knockback: 2.5
+    useTime: 9
+    manaUse: 10
+  worth: 26000000
+  rarity: 13
+天狼星:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤夜空中最亮的星来闪瞎你的敌人
+  - §r需要至少6格仆从栏位才能使用
+  - §r同时只能存在至多一个幻云星体
+  attributes:
+    damage: 1200
+    damageType: Summon
+    knockback: 3
+    useTime: 15
+    manaUse: 30
+  worth: 26000000
+  rarity: 13
+突变松露:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一只年轻猪龙鱼辐射你的敌人
+  - §r需要至少3格仆从栏位才能使用
+  - §r同时只能存在至多一个年轻猪龙鱼
+  attributes:
+    damage: 550
+    damageType: Summon
+    knockback: 5
+    useTime: 15
+    manaUse: 30
+  worth: 26000000
+  rarity: 13
+星宇神卫召唤杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤星宇护卫为你而战
+  - §r“神，永不护主！”
+  attributes:
+    damage: 200
+    damageType: Summon
+    knockback: 2
+    useTime: 9
+    manaUse: 10
+  worth: 28000000
+  rarity: 14
+宙极毒蝰引擎:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一艘宇宙炮艇射击你的敌人
+  - §r炮艇会消耗你物品栏中的子弹
+  - §r交替发射火箭和子弹
+  - §r75%几率节省弹药
+  attributes:
+    damage: 200
+    damageType: Summon
+    knockback: 2
+    useTime: 9
+    manaUse: 10
+  worth: 28000000
+  rarity: 14
+灭兆渡鸦杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一只强大的渡鸦，可以传送和猛冲
+  - §r“永不复焉”
+  attributes:
+    damage: 228
+    damageType: Summon
+    knockback: 2
+    useTime: 9
+    manaUse: 10
+  worth: 28000000
+  rarity: 14
+星律之握揽:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一个可以取得对光芒本身绝对控制的璀璨光环
+  - §r光环会发射辐射光球消灭敌人
+  - §r同时只能存在至多一个光环
+  - §r需要8格仆从栏位
+  attributes:
+    damage: 1000
+    damageType: Summon
+    knockback: 4
+    useTime: 15
+    manaUse: 30
+  worth: 28000000
+  rarity: 14
+电极解离机:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一对磁铁无人机，无情的撕裂敌人
+  attributes:
+    damage: 620
+    damageType: Summon
+    knockback: 8
+    useTime: 10
+    manaUse: 12
+  worth: 28000000
+  rarity: 1100
+巨龙七星灯:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一只炽焰天龙为你而战
+  - §r需要至少5格仆从栏位才能使用
+  attributes:
+    damage: 600
+    damageType: Summon
+    knockback: 7
+    useTime: 12
+    manaUse: 20
+  worth: 30000000
+  rarity: 15
+极昼信标:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一个UFO来蒸发你的敌人
+  attributes:
+    damage: 300
+    damageType: Summon
+    knockback: 1
+    useTime: 9
+    manaUse: 10
+  worth: 30000000
+  rarity: 15
+硫心恶殖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤灾坟魔物为你而战
+  - §r占据4格仆从栏位并且同时只能存在至多一个灾坟魔物
+  - §r灾坟魔物在闲暇时偶尔会向拥有者发射弹幕，造成较低的伤害
+  - §#C61B40宇宙之虫可能的未来，对力量的饥渴蒙蔽双眼，这可是一个可怕的警告，但不影响你走向这样的结局。
+  attributes:
+    damage: 800
+    damageType: Summon
+    knockback: 2
+    useTime: 20
+    manaUse: 40
+  worth: 30000000
+  rarity: 15
+恂戒:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一个探魂者为你而战
+  attributes:
+    damage: 230
+    damageType: Summon
+    knockback: 4
+    useTime: 9
+    manaUse: 10
+  worth: 30000000
+  rarity: 15
+永劫:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一个永劫信标
+  - §r它会从其下方召唤出灵魂之流，将敌人湮没在永劫地狱中
+  - §r需要5个仆从栏位召唤且同时只能存在至多一个永劫信标
+  attributes:
+    damage: 750
+    damageType: Summon
+    knockback: 4
+    useTime: 20
+    manaUse: 40
+  worth: 30000000
+  rarity: 15
+阿瑞斯外骨骼:
+  item: DIAMOND_SWORD
+  lore:
+  - §r占据10格仆从栏位
+  - §r使用后构建出拥有四个不同武器的外骨骼：
+  - §r离子加农炮，特斯拉加农炮，镭射加农炮，高斯核弹加农炮
+  - §r右键可以打开编辑面板，点击一个武装槽位可以循环更改对应加农炮的种类
+  attributes:
+    damage: 1250
+    damageType: Summon
+    knockback: 1
+    useTime: 20
+    manaUse: 40
+  worth: 30000000
+  rarity: 15
+归虚之灵:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一个宇宙之灵为你而战
+  - §r宇宙之灵在探测到敌人时会发射大量的跟踪能源箭
+  - §r需要至少10格仆从栏位才能使用并且同时只能存在至多一个宇宙之灵
+  attributes:
+    damage: 1120
+    damageType: Summon
+    knockback: 0
+    useTime: 20
+    manaUse: 40
+  worth: 30000000
+  rarity: 15
+源生寒晶:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤一个升格的冰晶结构来保护你
+  - §r再次使用或重新召唤可以改变攻击形态
+  - §r第一形态：发射多束锁定敌人的激光
+  - §r第二形态：发射大量追踪冰晶
+  - §r第三形态：连续冲撞敌人
+  - §r第四形态：旋转并向四周喷射极寒之火
+  - §r需要至少10格仆从栏位才能使用
+  - §r同时只能存在至多一个冰晶结构
+  attributes:
+    damage: 2600
+    damageType: Summon
+    knockback: 4
+    useTime: 20
+    manaUse: 40
+  worth: 40000000
+  rarity: 16
+光阴流时伞:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤各种工具协助你作战：
+  - §r一支朱红色箭矢会穿透你的对手
+  - §r一个果酱锤会别具风格的锤打敌人
+  - §r一柄翡翠斧会劈开怪物并且偶尔会砍倒一棵树
+  - §r一把青色雨伞会优雅的击败你的敌人
+  - §r一杆淡紫色步枪会射击那些阻碍你前进的人
+  - §r需要至少5格仆从栏位才能使用并且同时只能存在至多一套工具
+  - §r“如此结实，我敢说它一击就能打趴那些黑手党”
+  attributes:
+    damage: 386
+    damageType: Summon
+    knockback: 1
+    useTime: 20
+    manaUse: 40
+  worth: 40000000
+  rarity: 16
+####
 鞭炮:
   item: DIAMOND_SWORD
   attributes:

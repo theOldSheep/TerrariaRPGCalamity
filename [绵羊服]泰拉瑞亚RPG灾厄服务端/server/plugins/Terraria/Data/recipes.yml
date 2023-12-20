@@ -2491,7 +2491,48 @@ ANVIL:
     resultItem: 代达罗斯守卫法杖
     requireItem:
     - 寒元锭:12
-  '290_1':
+  '290_1_1':
+    requireLevel: 3
+    resultItem: 宙极毒蝰引擎
+    requireItem:
+    - 战术瘟疫引擎
+    - 宇宙锭:10
+  '290_1_2':
+    requireLevel: 3
+    resultItem: 灭兆渡鸦杖
+    requireItem:
+    - 阴森木:64
+    - 宇宙锭:8
+    - 梦魇魔能:20
+  '290_1_3':
+    requireLevel: 3
+    resultItem: 星律之握揽
+    requireItem:
+    - 天狼星
+    - 宇宙锭:8
+    - 梦魇魔能:8
+  '290_1_4':
+    requireLevel: 3
+    resultItem: 电极解离机
+    requireItem:
+    - 可疑镀层:15
+    - 神秘电路:25
+    - 宇宙锭:8
+    - 化神魂精:2
+  '290_1_5':
+    requireLevel: 3
+    resultItem: 极昼信标
+    requireItem:
+    - 宙极毒蝰引擎
+    - 月亮传送门法杖
+    - 圣金源锭:5
+  '290_1_6':
+    requireLevel: 3
+    resultItem: 硫心恶殖
+    requireItem:
+    - 星宇神卫召唤杖
+    - 湮灭余烬
+  '290_2_1':
     requireLevel: 2
     resultItem: 脉冲炮塔遥控装置
     requireItem:
@@ -2951,13 +2992,13 @@ WORKBENCH:
     resultItem: 怨戾
     requireItem:
     - 蒸海硫火
-    - 灾厄尘
+    - 湮灭余烬
   '55_9':
     requireLevel: 1
     resultItem: 异端僭越
     requireItem:
     - 鬼之形
-    - 灾厄尘
+    - 湮灭余烬
   '56':
     requireLevel: 1
     resultItem: 反魂蝶
@@ -4512,29 +4553,87 @@ TINKER_WORKBENCH:
     - 神圣晶石:30
   '57':
     requireLevel: 1
+    resultItem: 战术瘟疫引擎
+    requireItem:
+    - 黑鹰遥控器
+    - 燃料电池组
+    - 夜明锭:5
+  '57_1':
+    requireLevel: 1
+    resultItem: 元素之斧
+    requireItem:
+    - 苍华之庭
+    - 泰拉棱镜
+    - 生命合金:5
+    - 夜明锭:5
+    - 星系异石:5
+  '57_2':
+    requireLevel: 1
+    resultItem: 告死之花
+    requireItem:
+    - 凋零绽放法杖
+    - 生命合金:5
+    - 夜明锭:5
+    - 星系异石:5
+  '57_3':
+    requireLevel: 1
+    resultItem: 葱茏之锋
+    requireItem:
+    - 龙蒿锭:15
+  '57_4':
+    requireLevel: 1
+    resultItem: 蛇眼
+    requireItem:
+    - 可疑镀层:12
+    - 神秘电路:18
+    - 龙蒿锭:8
+    - 夜明锭
+  '57_5':
+    requireLevel: 1
+    resultItem: 天龙，群星的君王
+    requireItem:
+    - 星尘之龙法杖
+    - 光明碎块
+    - 暗黑碎块
+    - 扭曲虚空:3
+  '57_6':
+    requireLevel: 1
+    resultItem: 龙血弃族
+    requireItem:
+    - 血石核心:12
+  '57_7':
+    requireLevel: 1
+    resultItem: 天狼星
+    requireItem:
+    - 流明晶:5
+    - 毁灭之灵:2
+    - 起源之簇:12
+    - 太阳神法杖
+  '58':
+    requireLevel: 1
     resultItem: 星幻头盔
     requireItem:
     - 炫星锭:8
     - 陨星锭:6
-  '58':
+  '59':
     requireLevel: 1
     resultItem: 星幻胸甲
     requireItem:
     - 炫星锭:12
     - 陨星锭:9
-  '59':
+  '60':
     requireLevel: 1
     resultItem: 星幻护胫
     requireItem:
     - 炫星锭:10
     - 陨星锭:8
-  '59_1':
+  '61':
     requireLevel: 1
     resultItem: 炫星锭
     requireItem:
     - 炫星矿:2
     - 星尘:3
-  '60':
+  '62':
     requireLevel: 1
     resultItem: 星系异石
     requireItem:
@@ -4542,13 +4641,13 @@ TINKER_WORKBENCH:
     - 星云碎片
     - 星尘碎片
     - 日耀碎片
-  '61':
+  '63':
     requireLevel: 1
     resultItem: 冥思构造体:3
     requireItem:
     - 星尘:3
     - 冥思溶剂:6
-  '62':
+  '64':
     requireLevel: 1
     resultItem: 飘渺之核
     requireItem:
@@ -4716,4 +4815,32 @@ TINKER_WORKBENCH:
     requireItem:
     - 终结裂空戟
     - 月之耀斑
+    - 魔影锭:5
+  '19':
+    requireLevel: 1
+    resultItem: 归虚之灵
+    requireItem:
+    - 元素之斧
+    - 幽花之主
+    - 无限之灯
+    - 乌贼之哀歌
+    - 奇迹物质
+  '20':
+    requireLevel: 1
+    resultItem: 源生寒晶
+    requireItem:
+    - 寒极法杖
+    - 暴雪法杖
+    - 告死之花
+    - 恒温能量:64
+    - 魔影锭:5
+    - 冰川核心:15
+  '21':
+    requireLevel: 1
+    resultItem: 光阴流时伞
+    requireItem:
+    - 葱茏之锋
+    - 龙血弃族
+    - 极昼信标
+    - 星律之握揽
     - 魔影锭:5
