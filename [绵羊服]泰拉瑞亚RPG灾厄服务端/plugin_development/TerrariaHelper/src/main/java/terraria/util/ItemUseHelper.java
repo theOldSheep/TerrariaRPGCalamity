@@ -4745,6 +4745,7 @@ public class ItemUseHelper {
             case "缠怨鬼碟":
             case "代达罗斯守卫":
             case "矮人":
+            case "葱茏之锋":
                 MinionHusk huskMinion = new MinionHusk(ply, minionSlot, minionSlotMax, sentryOrMinion, hasContactDamage, type, attrMap, originalStaff);
                 minionEntity = huskMinion.getBukkitEntity();
                 break;

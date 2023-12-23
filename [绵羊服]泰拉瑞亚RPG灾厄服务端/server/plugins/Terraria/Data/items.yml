@@ -9434,6 +9434,18 @@ Dodu的手炮:
     manaUse: 10
   worth: 7000000
   rarity: 7
+乌鸦法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤乌鸦仆从来为你战斗
+  attributes:
+    damage: 110
+    damageType: Summon
+    knockback: 3
+    useTime: 28
+    manaUse: 10
+  worth: 10000000
+  rarity: 8
 致命球法杖:
   item: DIAMOND_SWORD
   lore:
@@ -9712,7 +9724,8 @@ Dodu的手炮:
 失落极峰:
   item: DIAMOND_SWORD
   lore:
-  - §r召唤远古岩鲨为你而战
+  - §r召唤远古岩鲨为你而战，击碎敌人的防御
+  - §r看起来，它在很久之前就失去了颚骨
   attributes:
     damage: 56
     damageType: Summon
@@ -9725,6 +9738,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r召唤缠怨鬼碟为你而战
+  - §r“这些盘子不能拿走”
   attributes:
     damage: 50
     damageType: Summon
@@ -9865,7 +9879,7 @@ Dodu的手炮:
   lore:
   - §r召唤沙龙卷为你而战
   attributes:
-    damage: 94
+    damage: 180
     damageType: Summon
     knockback: 2
     useTime: 19
@@ -10008,7 +10022,7 @@ Dodu的手炮:
   - §r在你的头顶召唤元素之花
   - §r共占据3格仆从栏位
   attributes:
-    damage: 144
+    damage: 235
     damageType: Summon
     knockback: 5
     useTime: 14
@@ -10030,11 +10044,11 @@ Dodu的手炮:
 葱茏之锋:
   item: DIAMOND_SWORD
   lore:
-  - §r召唤一把环绕着你旋转的刀锋切碎附近的敌人
-  - §r“所以说到底↑为什↓么↑~”
-  - §r“都←是→我←的→错←~”
+  - §r召唤一把环绕着你旋转的刀锋，以惊人的速度切碎附近的敌人
+  - §r“你说到底↑为什↓么↑~”
+  - §r“都→是←我→的←错→~”
   attributes:
-    damage: 146
+    damage: 100
     damageType: Summon
     knockback: 5
     useTime: 14
@@ -10073,14 +10087,14 @@ Dodu的手炮:
 天龙，群星的君王:
   item: DIAMOND_SWORD
   lore:
-  - §r使用4召唤栏，召唤一对天体巨龙为你而战
+  - §r使用6召唤栏，召唤一对天体巨龙为你而战
   - §r同一时间只能存在一对巨龙
   - §r“吞噬恒星的巨龙”
   attributes:
-    damage: 426
+    damage: 225
     damageType: Summon
     knockback: 2
-    useTime: 25
+    useTime: 30
     manaUse: 30
   worth: 24000000
   rarity: 12
@@ -10089,13 +10103,13 @@ Dodu的手炮:
   lore:
   - §r召唤一只骨龙和她的两个孩子
   - §r孩子会吐出血珠治疗玩家
-  - §r需要至少6格仆从栏位才能使用
+  - §r需要至少3格仆从栏位才能使用
   - §r同时只能存在至多一家骨龙
   attributes:
     damage: 430
     damageType: Summon
     knockback: 4
-    useTime: 14
+    useTime: 30
     manaUse: 30
   worth: 24000000
   rarity: 12
@@ -10104,10 +10118,10 @@ Dodu的手炮:
   lore:
   - §r召唤花灵来保护你
   attributes:
-    damage: 400
+    damage: 300
     damageType: Summon
     knockback: 1
-    useTime: 9
+    useTime: 14
     manaUse: 10
   worth: 26000000
   rarity: 13
@@ -10115,14 +10129,14 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r召唤一只小乌贼使用恶毒墨汁攻击敌人
-  - §r在远距离，乌贼会进行攻击性跟踪墨汁齐射
-  - §r在近距离，乌贼会抓住敌人并造成更高的伤害
+  - §r在远距离，乌贼会发射跟踪墨汁
+  - §r在近距离，乌贼会扑向敌人并造成高频伤害
   - §r“深渊之中，任何资源都是稀缺的，每个物种都孤苦伶仃，仅是因为它们根本没有可共享的资源。”
   attributes:
     damage: 220
     damageType: Summon
     knockback: 2.5
-    useTime: 9
+    useTime: 14
     manaUse: 10
   worth: 26000000
   rarity: 13
@@ -10130,13 +10144,14 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r召唤夜空中最亮的星来闪瞎你的敌人
-  - §r需要至少6格仆从栏位才能使用
+  - §r需要至少3格仆从栏位才能使用
   - §r同时只能存在至多一个幻云星体
+  - §r“我祈祷拥有一颗透明的心灵~”
   attributes:
     damage: 1200
     damageType: Summon
     knockback: 3
-    useTime: 15
+    useTime: 30
     manaUse: 30
   worth: 26000000
   rarity: 13
@@ -10150,7 +10165,7 @@ Dodu的手炮:
     damage: 550
     damageType: Summon
     knockback: 5
-    useTime: 15
+    useTime: 30
     manaUse: 30
   worth: 26000000
   rarity: 13
@@ -10160,10 +10175,10 @@ Dodu的手炮:
   - §r召唤星宇护卫为你而战
   - §r“神，永不护主！”
   attributes:
-    damage: 200
+    damage: 555
     damageType: Summon
     knockback: 2
-    useTime: 9
+    useTime: 14
     manaUse: 10
   worth: 28000000
   rarity: 14
@@ -10175,10 +10190,10 @@ Dodu的手炮:
   - §r交替发射火箭和子弹
   - §r75%几率节省弹药
   attributes:
-    damage: 200
+    damage: 642
     damageType: Summon
-    knockback: 2
-    useTime: 9
+    knockback: 6
+    useTime: 14
     manaUse: 10
   worth: 28000000
   rarity: 14
@@ -10191,7 +10206,7 @@ Dodu的手炮:
     damage: 228
     damageType: Summon
     knockback: 2
-    useTime: 9
+    useTime: 14
     manaUse: 10
   worth: 28000000
   rarity: 14
@@ -10201,12 +10216,12 @@ Dodu的手炮:
   - §r召唤一个可以取得对光芒本身绝对控制的璀璨光环
   - §r光环会发射辐射光球消灭敌人
   - §r同时只能存在至多一个光环
-  - §r需要8格仆从栏位
+  - §r需要5格仆从栏位
   attributes:
     damage: 1000
     damageType: Summon
     knockback: 4
-    useTime: 15
+    useTime: 30
     manaUse: 30
   worth: 28000000
   rarity: 14
@@ -10218,7 +10233,7 @@ Dodu的手炮:
     damage: 620
     damageType: Summon
     knockback: 8
-    useTime: 10
+    useTime: 14
     manaUse: 12
   worth: 28000000
   rarity: 1100
@@ -10227,12 +10242,13 @@ Dodu的手炮:
   lore:
   - §r召唤一只炽焰天龙为你而战
   - §r需要至少5格仆从栏位才能使用
+  - §r“巨龙撞击”
   attributes:
-    damage: 600
+    damage: 1200
     damageType: Summon
     knockback: 7
-    useTime: 12
-    manaUse: 20
+    useTime: 30
+    manaUse: 30
   worth: 30000000
   rarity: 15
 极昼信标:
@@ -10243,7 +10259,7 @@ Dodu的手炮:
     damage: 300
     damageType: Summon
     knockback: 1
-    useTime: 9
+    useTime: 14
     manaUse: 10
   worth: 30000000
   rarity: 15
@@ -10258,7 +10274,7 @@ Dodu的手炮:
     damage: 800
     damageType: Summon
     knockback: 2
-    useTime: 20
+    useTime: 40
     manaUse: 40
   worth: 30000000
   rarity: 15
@@ -10270,7 +10286,7 @@ Dodu的手炮:
     damage: 230
     damageType: Summon
     knockback: 4
-    useTime: 9
+    useTime: 14
     manaUse: 10
   worth: 30000000
   rarity: 15
@@ -10284,14 +10300,14 @@ Dodu的手炮:
     damage: 750
     damageType: Summon
     knockback: 4
-    useTime: 20
+    useTime: 40
     manaUse: 40
   worth: 30000000
   rarity: 15
 阿瑞斯外骨骼:
   item: DIAMOND_SWORD
   lore:
-  - §r占据10格仆从栏位
+  - §r占据10格仆从栏位，只能召唤一次
   - §r使用后构建出拥有四个不同武器的外骨骼：
   - §r离子加农炮，特斯拉加农炮，镭射加农炮，高斯核弹加农炮
   - §r右键可以打开编辑面板，点击一个武装槽位可以循环更改对应加农炮的种类
@@ -10299,7 +10315,7 @@ Dodu的手炮:
     damage: 1250
     damageType: Summon
     knockback: 1
-    useTime: 20
+    useTime: 40
     manaUse: 40
   worth: 30000000
   rarity: 15
@@ -10313,7 +10329,7 @@ Dodu的手炮:
     damage: 1120
     damageType: Summon
     knockback: 0
-    useTime: 20
+    useTime: 40
     manaUse: 40
   worth: 30000000
   rarity: 15
@@ -10332,7 +10348,7 @@ Dodu的手炮:
     damage: 2600
     damageType: Summon
     knockback: 4
-    useTime: 20
+    useTime: 40
     manaUse: 40
   worth: 40000000
   rarity: 16
@@ -10351,7 +10367,7 @@ Dodu的手炮:
     damage: 386
     damageType: Summon
     knockback: 1
-    useTime: 20
+    useTime: 40
     manaUse: 40
   worth: 40000000
   rarity: 16

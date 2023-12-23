@@ -1571,6 +1571,11 @@ public class EntityHelper {
             if (damager instanceof Projectile) {
                 buffInflict.addAll(TerrariaHelper.projectileConfig.getStringList(damager.getName() + ".buffInflict"));
             }
+            // monster/minion direct damage buff inflict
+            else if (! (damager instanceof Player)) {
+                buffInflict.addAll(TerrariaHelper.entityConfig.getStringList(
+                        GenericHelper.trimText(damager.getName()) + ".buffInflict"));
+            }
             // player buff inflict
             if (damageSource instanceof Player) {
                 // player minion buff inflict
@@ -1593,10 +1598,6 @@ public class EntityHelper {
                             buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
                         buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict" + damageType, new ArrayList<>(0)));
                 }
-            }
-            // monster buff inflict
-            else {
-                buffInflict.addAll(TerrariaHelper.entityConfig.getStringList(GenericHelper.trimText(damageSource.getName()) + ".buffInflict"));
             }
             // apply (de)buff(s) to victim
             for (String buff : buffInflict) {
@@ -2274,6 +2275,7 @@ public class EntityHelper {
                     segmentCurrent.setVelocity(velocity);
                 } else {
                     segmentCurrent.teleport(targetLoc);
+                    segmentCurrent.setVelocity(new Vector());
                 }
                 setMetadata(segmentCurrent, "yaw", (float) MathHelper.getVectorYaw( dVec ));
                 setMetadata(segmentCurrent, "pitch", (float) MathHelper.getVectorPitch( dVec ));

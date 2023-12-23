@@ -204,6 +204,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
             case "钫弹":
                 noAutoTraceTicks = ticksLived + 1;
                 break;
+            case "宇宙灯笼光束":
+                noAutoTraceTicks = ticksLived + 2;
+                break;
             case "粉色脉冲":
                 noAutoTraceTicks = ticksLived + 5;
                 break;
@@ -214,6 +217,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             case "裂魔":
             case "生命血火":
             case "猩红烈焰珠":
+            case "血炎龙息":
                 PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 1, false);
                 break;
             case "巨蟹之礼星环":
@@ -316,7 +320,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
     protected void extraTicking() {
         switch (projectileType) {
             case "旋风":
-            case "风暴管束者剑气": {
+            case "风暴管束者剑气":
+            case "小遗爵硫海漩涡": {
                 double radius = 1, suckSpeed = 0.1, maxSpeed = 0.5;
                 switch (projectileType) {
                     case "旋风":
@@ -328,6 +333,11 @@ public class TerrariaPotionProjectile extends EntityPotion {
                         radius = 15;
                         suckSpeed = 0.75;
                         maxSpeed = 2;
+                        break;
+                    case "小遗爵硫海漩涡":
+                        radius = 32;
+                        suckSpeed = 1.75;
+                        maxSpeed = 2.5;
                         break;
                 }
                 // get list of entities that could get sucked in
@@ -569,9 +579,17 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 }
                 break;
             }
+            case "幽花追踪能量弹": {
+                if (ticksLived == 10) {
+                    speedMultiPerTick = 0;
+                    speed = 3;
+                }
+                break;
+            }
         }
     }
-    // this helper function is called every tick only if the projectile would move(not homing into enemies and not stuck on wall)
+    // this helper function is called every tick only if the projectile would move
+    // (NOT homing into enemies and NOT stuck on wall)
     protected void extraMovingTick() {
 
     }
@@ -768,9 +786,12 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     acceleration = autoTraceTarget.getBukkitEntity().getLocation().subtract(this.locX, this.locY, this.locZ).toVector();
 
                 if (acceleration.lengthSquared() > 1e-5) {
+                    // fixed homing efficiency
                     if (autoTraceMethod == 2) {
                         acceleration.multiply(autoTraceAbility / acceleration.length());
-                    } else {
+                    }
+                    // homing efficiency proportional to (projectile speed / distance)
+                    else {
                         acceleration.multiply(autoTraceAbility * velocity.length() / acceleration.lengthSquared());
                     }
                 }

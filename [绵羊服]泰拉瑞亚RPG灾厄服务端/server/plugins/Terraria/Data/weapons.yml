@@ -3330,22 +3330,32 @@ Dodu的手炮:
   type: SUMMON
   damageType: Arrow
   minionName: 矮人
+  autoSwing: true
+乌鸦法杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 乌鸦仆从
+  autoSwing: true
 致命球法杖:
   type: SUMMON
   damageType: Melee
   minionName: 致命球
+  autoSwing: true
 泰拉棱镜:
   type: SUMMON
   damageType: Melee
   minionName: 泰拉棱镜
+  autoSwing: true
 星尘细胞法杖:
   type: SUMMON
   damageType: Arrow
   minionName: 星尘细胞
+  autoSwing: true
 星尘之龙法杖:
   type: SUMMON
   damageType: Melee
   minionName: 星尘之龙
+  autoSwing: true
 钨钢控制器:
   type: SUMMON
   damageType: Magic
@@ -3471,6 +3481,7 @@ Dodu的手炮:
   damageType: Magic
   minionName: 迷你灾厄
   slotsRequired: 2
+  autoSwing: true
 苍华之庭:
   type: SUMMON
   damageType: Melee
@@ -3481,18 +3492,22 @@ Dodu的手炮:
   type: SUMMON
   damageType: Melee
   minionName: 沙龙卷
+  autoSwing: true
 畸变吞食者法杖:
   type: SUMMON
   damageType: Arrow
   minionName: 畸变吞食者
+  autoSwing: true
 反魂蝶:
   type: SUMMON
   damageType: Melee
   minionName: 紫蝶
+  autoSwing: true
 燃料电池组:
   type: SUMMON
   damageType: Rocket
   minionName: 迷你瘟疫使者
+  autoSwing: true
 瘟疫控制器:
   type: SUMMON
   damageType: Melee
@@ -3503,10 +3518,12 @@ Dodu的手炮:
   type: SUMMON
   damageType: Magic
   minionName: 幻星探测器
+  autoSwing: true
 剧毒芽孢:
   type: SUMMON
   damageType: Arrow
   minionName: 鼠尾草之灵
+  autoSwing: true
 凋零绽放法杖:
   type: SUMMON
   damageType: Magic
@@ -3517,6 +3534,111 @@ Dodu的手炮:
   type: SUMMON
   damageType: Magic
   minionName: 代达罗斯守卫
+  autoSwing: true
+战术瘟疫引擎:
+  type: SUMMON
+  damageType: Bullet
+  minionName: 瘟疫战机
+  autoSwing: true
+元素之斧:
+  type: SUMMON
+  damageType: Melee
+  minionName: 元素斧头
+  autoSwing: true
+告死之花:
+  type: SUMMON
+  damageType: Magic
+  minionName: 告死之花
+  slotsRequired: 3
+  noDuplication: true
+耀目穿刺者杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 耀目圣刃
+  autoSwing: true
+葱茏之锋:
+  type: SUMMON
+  damageType: Melee
+  minionName: 葱茏之锋
+  autoSwing: true
+蛇眼:
+  type: SUMMON
+  damageType: Bullet
+  minionName: 蛇眼
+  autoSwing: true
+无限之灯:
+  type: SUMMON
+  damageType: Magic
+  minionName: 宇宙灯笼
+  slotsRequired: 2
+  autoSwing: true
+天龙，群星的君王:
+  type: SUMMON
+  damageType: Melee
+  minionName: 黑色天龙
+  slotsRequired: 6
+  noDuplication: true
+幽花之主:
+  type: SUMMON
+  damageType: Magic
+  minionName: 小幽花
+  autoSwing: true
+龙血弃族:
+  type: SUMMON
+  damageType: Melee
+  minionName: 血炎骨龙
+  slotsRequired: 3
+  noDuplication: true
+乌贼之哀歌:
+  type: SUMMON
+  damageType: Melee
+  minionName: 小乌贼
+  autoSwing: true
+天狼星:
+  type: SUMMON
+  damageType: Magic
+  minionName: 天狼星
+  slotsRequired: 3
+  noDuplication: true
+突变松露:
+  type: SUMMON
+  damageType: Melee
+  minionName: 小硫海遗爵
+  slotsRequired: 3
+  noDuplication: true
+星宇神卫召唤杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 小星宇神卫
+  autoSwing: true
+宙极毒蝰引擎:
+  type: SUMMON
+  damageType: Bullet
+  minionName: 宇宙炮艇
+  autoSwing: true
+灭兆渡鸦杖:
+  type: SUMMON
+  damageType: Melee
+  minionName: 灭兆渡鸦
+  autoSwing: true
+星律之握揽:
+  type: SUMMON
+  damageType: Magic
+  minionName: 灿烂光环
+  slotsRequired: 5
+  noDuplication: true
+电极解离机:
+  type: SUMMON
+  damageType: Melee
+  minionName: 磁铁无人机
+  autoSwing: true
+巨龙七星灯:
+  type: SUMMON
+  damageType: Melee
+  minionName: 炽焰天龙
+  slotsRequired: 5
+  autoSwing: true
+####
 鞭炮:
   type: WHIP
   autoSwing: true

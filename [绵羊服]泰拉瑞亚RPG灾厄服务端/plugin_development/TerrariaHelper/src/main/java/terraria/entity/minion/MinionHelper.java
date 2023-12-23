@@ -4,7 +4,9 @@ import net.minecraft.server.v1_12_R1.EntityInsentient;
 import net.minecraft.server.v1_12_R1.EntityLiving;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.Vec3D;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Server;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -12,14 +14,16 @@ import org.bukkit.entity.Slime;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
+import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.util.EntityHelper;
 import terraria.util.PlayerHelper;
 
 import java.util.*;
+import java.util.logging.Level;
 
 public class MinionHelper {
-    private static final double maxDistBeforeReturn = 64, maxDistBeforeTeleport = 80, targetRadius = 64;
+    private static final double maxDistBeforeReturn = 90, maxDistBeforeTeleport = 90, targetRadius = 75;
     public static void updateAttrMap(HashMap<String, Double> attrMap, Player owner, ItemStack originalStaff) {
         HashMap<String, Double> ownerAttrMap = EntityHelper.getAttrMap(owner);
         for (String attribute : ownerAttrMap.keySet())
@@ -65,6 +69,7 @@ public class MinionHelper {
         if (minionList.get(minionSlot) != minionInList) return false;
         // world is different
         if (owner.getWorld() != minion.getWorld()) return false;
+        // the minion is valid
         return true;
     }
     public static Set<HitEntityInfo> handleContactDamage(net.minecraft.server.v1_12_R1.Entity minion, boolean hasTeleported, double size, double basicDamage, ArrayList<Entity> damageCD, int invincibilityTick) {
@@ -114,28 +119,33 @@ public class MinionHelper {
         if (needLineOfSight)
             return (entity) ->
                     entity != null &&
-                    EntityHelper.checkCanDamage(minionBukkit, entity.getBukkitEntity(), true) &&
+                            EntityHelper.checkCanDamage(minionBukkit, entity.getBukkitEntity(), true) &&
                             (minion.hasLineOfSight(entity) || owner.hasLineOfSight(entity));
         else
             return (entity) ->
                     entity != null &&
-                    EntityHelper.checkCanDamage(minionBukkit, entity.getBukkitEntity(), true);
+                            EntityHelper.checkCanDamage(minionBukkit, entity.getBukkitEntity(), true);
     }
     public static boolean checkTargetIsValidEnemy(EntityInsentient minion, EntityPlayer owner, EntityLiving target, boolean needLineOfSight) {
         com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication = getTargetPredication(minion, owner, needLineOfSight);
         return target != owner && predication.test(target);
     }
+    public static boolean checkDistanceIsValid(EntityInsentient minion, EntityPlayer owner) {
+        double horDistSqrToOwner = getHorDistSqr(minion.locX, owner.locX, minion.locZ, owner.locZ);
+        if (horDistSqrToOwner > maxDistBeforeReturn * maxDistBeforeReturn) {
+            minion.setGoalTarget(owner, EntityTargetEvent.TargetReason.CUSTOM, false);
+            if (horDistSqrToOwner > maxDistBeforeTeleport * maxDistBeforeTeleport) {
+                attemptTeleport(minion.getBukkitEntity(), owner.getBukkitEntity().getLocation().add(0, 5, 0));
+            }
+            return false;
+        }
+        return true;
+    }
     public static void setTarget(EntityInsentient minion, EntityPlayer owner,
                                  boolean sentryOrMinion, boolean needLineOfSight, boolean protectOwner) {
         // check distance from the player
         if (!sentryOrMinion) {
-            double horDistSqrToOwner = getHorDistSqr(minion.locX, owner.locX, minion.locZ, owner.locZ);
-            if (horDistSqrToOwner > maxDistBeforeReturn * maxDistBeforeReturn) {
-                minion.setGoalTarget(owner, EntityTargetEvent.TargetReason.CUSTOM, false);
-                if (horDistSqrToOwner > maxDistBeforeTeleport * maxDistBeforeTeleport)
-                    minion.setLocation(owner.locX, owner.locY, owner.locZ, 0f, 0f);
-                return;
-            }
+            checkDistanceIsValid(minion, owner);
         }
         EntityLiving finalTarget = owner;
         // strict mode is on so that the minion does not target critters.
@@ -182,5 +192,19 @@ public class MinionHelper {
             }
         }
         minion.setGoalTarget(finalTarget, EntityTargetEvent.TargetReason.CUSTOM, finalTarget != owner);
+    }
+    public static void attemptTeleport(Entity minion, Location loc) {
+        if (minion.isDead())
+            return;
+        minion.teleport(loc);
+        net.minecraft.server.v1_12_R1.Entity minionNMS = ((CraftEntity) minion).getHandle();
+        if (minionNMS instanceof MinionSlime)
+            ((MinionSlime) minionNMS).hasTeleported = true;
+        else if (minionNMS instanceof MinionHusk)
+            ((MinionHusk) minionNMS).hasTeleported = true;
+        else if (minionNMS instanceof MinionCaveSpider)
+            ((MinionCaveSpider) minionNMS).hasTeleported = true;
+        else
+            TerrariaHelper.getInstance().getLogger().log(Level.SEVERE, "Minion teleport flag set issue: unknown minion class " + minion);
     }
 }

@@ -217,16 +217,16 @@ public class WorldHelper {
     private static long randomGenerator = new Random().nextLong();
     public static void worldRandomTick(World wld) {
         HashSet<Chunk> chunksToLoop = new HashSet<>();
-        // chunks within radius 5 of any player would be ticked
+        // chunks within radius 6 of any player would be ticked, higher frequency for chunks closer to the player
         for (Player ply : wld.getPlayers()) {
             Chunk centerChunk = ply.getLocation().getChunk();
             int chunkX = centerChunk.getX();
             int chunkZ = centerChunk.getZ();
-            for (int i = -8; i <= 8; i ++)
-                for (int j = -8; j <= 8; j ++) {
+            for (int i = -6; i <= 6; i ++)
+                for (int j = -6; j <= 6; j ++) {
                     int dist = Math.abs(i) + Math.abs(j);
                     double chance = 1;
-                    if (dist >= 12)
+                    if (dist >= 10)
                         chance = 0.25;
                     else if (dist >= 8)
                         chance = 0.4;

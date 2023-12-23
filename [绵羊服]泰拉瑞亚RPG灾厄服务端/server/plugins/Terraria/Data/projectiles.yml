@@ -3,7 +3,7 @@
     arrowOrPotion: false
     # 是否自动追踪，不写则视为false
     autoTrace: false
-    # 自动追踪方式。1: 自动追踪效率与距离的平方成反比；2：自动追踪效率恒定。不写则视为1
+    # 自动追踪方式。1: 自动追踪效率与(速度/距离)成正比；2：自动追踪效率恒定。不写则视为1
     autoTraceMethod: 1
     # 自动追踪的寻敌半径，单位（格）。不写则视为12
     autoTraceRadius: 12
@@ -1156,6 +1156,132 @@
     liveTime: 40
     buffInflict:
         - "霜火|60|1"
+告死之花弹幕:
+    gravity: 0
+    liveTime: 60
+    autoTrace: true
+    projectileSize: 0.5
+    autoTraceRadius: 64
+    blockHitAction: thru
+    trailColor: RAINBOW
+    buffInflict:
+        - "元素谐鸣|30|1"
+蛇眼光电矢:
+    gravity: 0
+    liveTime: 20
+    projectileSize: 1
+    blockHitAction: thru
+    penetration: 999999
+蛇眼反弹光电矢:
+    gravity: 0
+    liveTime: 25
+    projectileSize: 1
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceRadius: 20
+    isGrenade: true
+    blastRadius: 2.75
+宇宙灯笼光束:
+    gravity: 0
+    liveTime: 80
+    blockHitAction: thru
+    penetration: 2
+    autoTrace: true
+    autoTraceRadius: 24
+    noAutoTraceTicks: 10
+幽花追踪能量弹:
+    gravity: 0
+    liveTime: 60
+    blockHitAction: thru
+    projectileSize: 1.5
+    autoTrace: true
+    autoTraceMethod: 2
+    autoTraceRadius: 40
+    autoTraceAbility: 5.5
+    noAutoTraceTicks: 20
+血炎龙息:
+    gravity: 0
+    liveTime: 30
+    blockHitAction: thru
+鲜血龙息:
+    gravity: 0
+    liveTime: 10
+    blockHitAction: thru
+    projectileSize: 1.5
+    penetration: 999999
+    trailColor: 157|36|43
+    buffInflict:
+        - "血液沸腾|60|1"
+追踪墨汁:
+    gravity: 0
+    liveTime: 60
+    blockHitAction: thru
+    autoTrace: true
+    noAutoTraceTicks: 10
+    autoTraceRadius: 24
+小遗爵鲨牙刺球:
+    gravity: 0
+    liveTime: 40
+    blockHitAction: thru
+    projectileSize: 3
+    penetration: 999999
+    speedMultiPerTick: 0.95
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.25
+        name: 小遗爵鲨牙尖刺
+        velocity: 2.5
+小遗爵鲨牙尖刺:
+    gravity: 0
+    liveTime: 60
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceRadius: 32
+小遗爵硫海漩涡:
+    gravity: 0
+    liveTime: 100
+    blockHitAction: thru
+    projectileSize: 5
+    penetration: 999999
+    enemyInvincibilityFrame: 1
+宙蝰制导火箭:
+    gravity: 0
+    liveTime: 100
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceRadius: 24
+    noAutoTraceTicks: 5
+    minimumDamageTicks: 2
+    isGrenade: true
+    blastRadius: 1.75
+宙蝰子母火箭:
+    gravity: 0
+    liveTime: 100
+    blockHitAction: thru
+    isGrenade: true
+    blastRadius: 1.75
+    clusterBomb:
+        amount: 4
+        damageMulti: 0.25
+        name: 宙蝰制导火箭
+        velocity: 2.5
+星律辐射溶解球:
+    gravity: 0
+    liveTime: 75
+    blockHitAction: thru
+    projectileSize: 1.5
+    isGrenade: true
+    blastRadius: 1
+    autoTrace: true
+    autoTraceRadius: 64
+炽焰天龙火球:
+    gravity: 0
+    liveTime: 75
+    blockHitAction: thru
+    projectileSize: 1.5
+    autoTrace: true
+    autoTraceRadius: 32
+####
 橡子:
     noGravityTicks: 0
     liveTime: 50

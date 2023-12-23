@@ -2509,6 +2509,7 @@ ANVIL:
     resultItem: 星律之握揽
     requireItem:
     - 天狼星
+    - 告死之花
     - 宇宙锭:8
     - 梦魇魔能:8
   '290_1_4':
@@ -2531,7 +2532,7 @@ ANVIL:
     resultItem: 硫心恶殖
     requireItem:
     - 星宇神卫召唤杖
-    - 湮灭余烬
+    - 湮灭余烬:5
   '290_2_1':
     requireLevel: 2
     resultItem: 脉冲炮塔遥控装置
@@ -2992,13 +2993,13 @@ WORKBENCH:
     resultItem: 怨戾
     requireItem:
     - 蒸海硫火
-    - 湮灭余烬
+    - 湮灭余烬:5
   '55_9':
     requireLevel: 1
     resultItem: 异端僭越
     requireItem:
     - 鬼之形
-    - 湮灭余烬
+    - 湮灭余烬:5
   '56':
     requireLevel: 1
     resultItem: 反魂蝶
@@ -4563,7 +4564,7 @@ TINKER_WORKBENCH:
     resultItem: 元素之斧
     requireItem:
     - 苍华之庭
-    - 泰拉棱镜
+    - 致命球法杖
     - 生命合金:5
     - 夜明锭:5
     - 星系异石:5
@@ -4579,6 +4580,7 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 葱茏之锋
     requireItem:
+    - 泰拉棱镜
     - 龙蒿锭:15
   '57_4':
     requireLevel: 1
@@ -4587,7 +4589,7 @@ TINKER_WORKBENCH:
     - 可疑镀层:12
     - 神秘电路:18
     - 龙蒿锭:8
-    - 夜明锭
+    - 夜明锭:4
   '57_5':
     requireLevel: 1
     resultItem: 天龙，群星的君王
@@ -4831,7 +4833,6 @@ TINKER_WORKBENCH:
     requireItem:
     - 寒极法杖
     - 暴雪法杖
-    - 告死之花
     - 恒温能量:64
     - 魔影锭:5
     - 冰川核心:15

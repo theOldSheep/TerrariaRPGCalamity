@@ -135,11 +135,13 @@ public class MinionCaveSpider extends EntityCaveSpider {
             die();
             return;
         }
-        // setup target
-        if (!MinionHelper.checkTargetIsValidEnemy(this, ((CraftPlayer) owner).getHandle(), getGoalTarget(), targetNeedLineOfSight)
+        // setup target, mandatory twice per second AND if the current target is invalid
+        EntityPlayer ownerNMS = ((CraftPlayer) owner).getHandle();
+        if ( !(MinionHelper.checkTargetIsValidEnemy(
+                this, ownerNMS, getGoalTarget(), targetNeedLineOfSight) &&
+                MinionHelper.checkDistanceIsValid(this, ownerNMS) )
                 || ticksLived % 10 == 0)
-            MinionHelper.setTarget(this, ((CraftPlayer) owner).getHandle(),
-                    sentryOrMinion, targetNeedLineOfSight, protectOwner);
+            MinionHelper.setTarget(this, ownerNMS, sentryOrMinion, targetNeedLineOfSight, protectOwner);
         // extra ticking AI
         Vector velocity = new Vector(motX, motY, motZ);
         Collection<Entity> allMinions = (Collection<Entity>) EntityHelper.getMetadata(owner,
@@ -151,8 +153,7 @@ public class MinionCaveSpider extends EntityCaveSpider {
         switch (minionType) {
             case "蜘蛛": {
                 if (!targetIsOwner && damageCD.contains(target)) {
-                    hasTeleported = true;
-                    minionBukkit.teleport(target.getEyeLocation());
+                    MinionHelper.attemptTeleport(minionBukkit, target.getEyeLocation());
                 }
                 break;
             }
@@ -172,8 +173,7 @@ public class MinionCaveSpider extends EntityCaveSpider {
                 else {
                     // stuck to enemy that has been attacked
                     if (damageCD.contains(target)) {
-                        hasTeleported = true;
-                        minionBukkit.teleport(target.getEyeLocation());
+                        MinionHelper.attemptTeleport(minionBukkit, target.getEyeLocation());
                     }
                     // if not yet attached to target, dash into it
                     else {

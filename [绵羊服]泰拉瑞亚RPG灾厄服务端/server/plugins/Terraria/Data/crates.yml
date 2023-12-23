@@ -643,7 +643,7 @@
   瘟疫使者歌莉娅:
     1:
       giveAllItems: false
-      amountToGive: 2
+      amountToGive: 3
       items:
       - 疫病污染者
       - 瘟疫狂潮

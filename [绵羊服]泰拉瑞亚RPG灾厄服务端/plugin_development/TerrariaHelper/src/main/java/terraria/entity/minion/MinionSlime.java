@@ -1,19 +1,23 @@
 package terraria.entity.minion;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftProjectile;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import terraria.entity.projectile.HitEntityInfo;
+import terraria.entity.projectile.TerrariaPotionProjectile;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
@@ -96,7 +100,7 @@ public class MinionSlime extends EntitySlime {
             case "史莱姆宝宝":
             case "噬星者":
             case "小腐化史莱姆":
-            case "小血腥史莱姆":{
+            case "小血腥史莱姆": {
                 this.damageInvincibilityTicks = 5;
                 getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(1d);
                 break;
@@ -121,10 +125,20 @@ public class MinionSlime extends EntitySlime {
                 break;
             }
             case "沼泽之眼":
-            case "附魔飞刀": {
+            case "附魔飞刀":
+            case "耀目圣刃":
+            case "乌鸦仆从":
+            case "灭兆渡鸦": {
                 damageInvincibilityTicks = 5;
                 noclip = true;
                 setNoGravity(true);
+                break;
+            }
+            case "元素斧头": {
+                damageInvincibilityTicks = 5;
+                noclip = true;
+                setNoGravity(true);
+                setSize(3, false);
                 break;
             }
             case "小激光眼": {
@@ -158,6 +172,37 @@ public class MinionSlime extends EntitySlime {
                 setNoGravity(true);
                 break;
             }
+            case "血炎骨龙": {
+                for (int i = 0; i < 2; i ++)
+                    new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                            this.sentryOrMinion, false,
+                            "血炎骨龙宝宝", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                setSize(3, false);
+                noclip = true;
+                setNoGravity(true);
+                break;
+            }
+            case "血炎骨龙宝宝": {
+                index = (int) (Math.random() * 100);
+                noclip = true;
+                setNoGravity(true);
+                break;
+            }
+            case "磁铁无人机": {
+                if (this.minionInList == bukkitEntity)
+                    new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                            this.sentryOrMinion, false,
+                            "磁铁无人机", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                noclip = true;
+                setNoGravity(true);
+                break;
+            }
+            case "小乌贼": {
+                index = (int) (Math.random() * 100);
+                damageInvincibilityTicks = 7;
+                noclip = true;
+                setNoGravity(true);
+            }
             case "致命球": {
                 damageInvincibilityTicks = 10;
                 setNoGravity(true);
@@ -187,6 +232,63 @@ public class MinionSlime extends EntitySlime {
                 damageInvincibilityTicks = 10;
                 protectOwner = false;
                 targetNeedLineOfSight = false;
+                noclip = true;
+                setNoGravity(true);
+                break;
+            }
+            case "小星宇神卫": {
+                setSize(2, false);
+                damageInvincibilityTicks = 5;
+                protectOwner = false;
+                targetNeedLineOfSight = false;
+                noclip = true;
+                setNoGravity(true);
+                break;
+            }
+            case "黑色天龙":
+            case "黑色天龙体节":
+            case "黑色天龙尾":
+            case "白色天龙":
+            case "白色天龙体节":
+            case "白色天龙尾": {
+                // for heads only
+                switch (minionType) {
+                    case "黑色天龙":
+                        new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                            this.sentryOrMinion, true,
+                            "白色天龙", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                    case "白色天龙": {
+                        ArrayList<LivingEntity> segments = new ArrayList<>(11);
+                        // add this head
+                        segments.add((LivingEntity) bukkitEntity);
+                        // add body
+                        for (int i = 0; i < 9; i ++) {
+                            MinionSlime newSeg = new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                                    this.sentryOrMinion, true,
+                                    minionType + "体节", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                            segments.add((LivingEntity) newSeg.getBukkitEntity());
+                        }
+                        // add tail
+                        MinionSlime tailSeg = new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                                this.sentryOrMinion, true,
+                                minionType + "尾", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                        segments.add((LivingEntity) tailSeg.getBukkitEntity());
+                        // save segment info
+                        extraVariables.put("s", segments);
+                    }
+                }
+                // basic attributes
+                index = -10;
+                setSize(2, false);
+                damageInvincibilityTicks = 10;
+                targetNeedLineOfSight = false;
+                noclip = true;
+                setNoGravity(true);
+                break;
+            }
+            case "炽焰天龙": {
+                setSize(5, false);
+                damageInvincibilityTicks = 7;
                 noclip = true;
                 setNoGravity(true);
                 break;
@@ -241,7 +343,8 @@ public class MinionSlime extends EntitySlime {
                 setNoGravity(true);
                 break;
             }
-            case "冰结体": {
+            case "冰结体":
+            case "告死之花": {
                 setSize(3, false);
                 setNoGravity(true);
                 break;
@@ -260,8 +363,18 @@ public class MinionSlime extends EntitySlime {
                 damageInvincibilityTicks = 4;
                 break;
             }
-            case "霜之华": {
+            case "霜之华":
+            case "天狼星":
+            case "灿烂光环": {
                 setSize(2, false);
+                noclip = true;
+                setNoGravity(true);
+                break;
+            }
+            case "小硫海遗爵": {
+                setSize(2, false);
+                damageInvincibilityTicks = 8;
+                noclip = true;
                 setNoGravity(true);
                 break;
             }
@@ -277,7 +390,7 @@ public class MinionSlime extends EntitySlime {
     // jumping CD
     @Override
     protected int df() {
-        return 2;
+        return 5;
     }
     // basic ticking
     @Override
@@ -292,10 +405,13 @@ public class MinionSlime extends EntitySlime {
             die();
             return;
         }
-        // setup target
-        if (!MinionHelper.checkTargetIsValidEnemy(this, ((CraftPlayer) owner).getHandle(), getGoalTarget(), targetNeedLineOfSight)
+        // setup target, mandatory twice per second AND if the current target is invalid
+        EntityPlayer ownerNMS = ((CraftPlayer) owner).getHandle();
+        if ( !(MinionHelper.checkTargetIsValidEnemy(
+                this, ownerNMS, getGoalTarget(), targetNeedLineOfSight) &&
+                MinionHelper.checkDistanceIsValid(this, ownerNMS) )
                 || ticksLived % 10 == 0)
-            MinionHelper.setTarget(this, ((CraftPlayer) owner).getHandle(), sentryOrMinion, targetNeedLineOfSight, protectOwner);
+            MinionHelper.setTarget(this, ownerNMS, sentryOrMinion, targetNeedLineOfSight, protectOwner);
         // extra ticking AI
         Vector velocity = new Vector(motX / 0.91, motY / 0.98, motZ / 0.91);
         Collection<Entity> allMinions = (Collection<Entity>) EntityHelper.getMetadata(owner,
@@ -304,6 +420,7 @@ public class MinionSlime extends EntitySlime {
         if (getGoalTarget() != null) target = (LivingEntity) (getGoalTarget().getBukkitEntity());
         else target = owner;
         boolean targetIsOwner = target == owner;
+
         switch (minionType) {
             case "小鬼":
                 // no breaking here. AI is handled below.
@@ -343,41 +460,79 @@ public class MinionSlime extends EntitySlime {
                 extraVariables.put("shootDelay", shootDelay);
                 break;
             }
-            case "黑鹰战斗机": {
+            case "黑鹰战斗机":
+            case "瘟疫战机":
+            case "宇宙炮艇": {
+                double flightSpd = 0.5;
+                double ammoConsumptionRate = 0.5;
+                switch (minionType) {
+                    case "黑鹰战斗机":
+                        flightSpd = 0.75;
+                        break;
+                    case "瘟疫战机":
+                        flightSpd = 1.5;
+                        ammoConsumptionRate = 0.33;
+                        break;
+                    case "宇宙炮艇":
+                        flightSpd = 2;
+                        ammoConsumptionRate = 0.25;
+                        break;
+                }
                 if (!targetIsOwner) {
                     // velocity
                     velocity = target.getEyeLocation().subtract(minionBukkit.getEyeLocation()).toVector();
                     double distance = velocity.length();
-                    if (distance < 1e-9) velocity = new Vector(0, 0.5, 0);
-                    else if (distance < 6) velocity.multiply(-0.5 / distance);
-                    else velocity.multiply(0.5 / distance);
+                    if (distance < 1e-9) velocity = new Vector(0, flightSpd, 0);
+                    else if (distance < 6) velocity.multiply(-flightSpd / distance);
+                    else velocity.multiply(flightSpd / distance);
                     // basic fire
                     if (index % 25 == 0) {
                         String ammoItem = ItemUseHelper.consumePlayerAmmo(owner,
-                                (itemStack) -> itemStack.getType() == Material.SLIME_BALL, 0.5);
+                                (itemStack) -> itemStack.getType() == Material.SLIME_BALL, ammoConsumptionRate);
                         if (ammoItem != null) {
-                            if (ammoItem.equals("火枪子弹")) ammoItem = "黑鹰子弹";
+                            double projSpd = 3;
+                            EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions();
+                            switch (minionType) {
+                                case "黑鹰战斗机":
+                                    if (ammoItem.equals("火枪子弹")) ammoItem = "黑鹰子弹";
+                                    projSpd = 2;
+                                    aimHelper.setAccelerationMode(false);
+                                    break;
+                                case "瘟疫战机":
+                                    projSpd = 2.25;
+                                    aimHelper.setAccelerationMode(true);
+                                    if (Math.random() < 0.35) ammoItem = "瘟疫导弹";
+                                    break;
+                                case "宇宙炮艇":
+                                    projSpd = 2.5;
+                                    aimHelper.setAccelerationMode(true);
+                                    if (index % 50 == 0) {
+                                        ammoItem = Math.random() < 0.35 ? "宙蝰子母火箭" : "宙蝰制导火箭";
+                                    }
+                                    break;
+                            }
+                            aimHelper.setProjectileSpeed(projSpd);
+                            Location aimLoc = EntityHelper.helperAimEntity(minionBukkit, target, aimHelper);
                             Vector projectileDir = MathHelper.getDirection(
-                                    minionBukkit.getEyeLocation(), target.getEyeLocation(), 2.25);
+                                    minionBukkit.getEyeLocation(), aimLoc, projSpd);
                             EntityHelper.spawnProjectile(minionBukkit, projectileDir, attrMap, ammoItem);
                         }
                     }
                 } else {
                     Location targetLoc = target.getLocation().add(
                             Math.random() * 2 - 1,
-                            Math.random() + 5,
+                            Math.random() + 6,
                             Math.random() * 2 - 1);
                     if (minionBukkit.getLocation().distanceSquared(targetLoc) > 4) {
                         velocity = targetLoc.subtract(minionBukkit.getLocation()).toVector();
-                        velocity.normalize().multiply(0.6);
+                        velocity.normalize().multiply(flightSpd * 1.25);
                     }
                 }
                 break;
             }
             case "海贝": {
                 if (!targetIsOwner && damageCD.contains(target)) {
-                    hasTeleported = true;
-                    minionBukkit.teleport(target.getEyeLocation());
+                    MinionHelper.attemptTeleport(minionBukkit, target.getEyeLocation());
                 }
                 break;
             }
@@ -448,6 +603,241 @@ public class MinionSlime extends EntitySlime {
                 }
                 break;
             }
+            case "磁铁无人机": {
+                boolean shouldUpdateVelocity = targetIsOwner || index % 20 == 0;
+                double maxSpeed = targetIsOwner ? 2 : 3;
+                // setup velocity
+                if (shouldUpdateVelocity) {
+                    // setup target location
+                    double indexCurr = 0, indexMax = 0;
+                    Location targetLoc;
+                    if (targetIsOwner) {
+                        // the next time an enemy is spotted, dash at once
+                        index = -1;
+                        // get location
+                        Entity firstMinion = minionInList;
+                        for (Entity currMinion : allMinions) {
+                            if (currMinion.isDead()) continue;
+                            if (!GenericHelper.trimText(currMinion.getName()).equals(minionType)) continue;
+                            if (indexMax == 0) firstMinion = currMinion;
+                            if (currMinion == minionInList) indexCurr = indexMax;
+                            indexMax ++;
+                        }
+                        double angle = 360 * indexCurr / indexMax + firstMinion.getTicksLived() * 6;
+                        double radius = 7.5;
+                        if (minionInList != minionBukkit)
+                            radius = 10;
+                        targetLoc = target.getEyeLocation().add(
+                                MathHelper.vectorFromYawPitch_quick(angle, 0).multiply(radius) );
+                    }
+                    else {
+                        // predict enemy location
+                        targetLoc = EntityHelper.helperAimEntity(minionBukkit, target,
+                                new EntityHelper.AimHelperOptions()
+                                        .setProjectileSpeed(maxSpeed)
+                                        .setAccelerationMode(true));
+                    }
+                    velocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), targetLoc, maxSpeed, targetIsOwner);
+                }
+                break;
+            }
+            case "乌鸦仆从":
+            case "灭兆渡鸦": {
+                // setup velocity
+                boolean shouldUpdateVelocity = targetIsOwner || index % 8 == 0;
+                boolean isCrow = minionType.equals("乌鸦仆从");
+                double speed;
+                if (isCrow)
+                    speed = targetIsOwner ? 1.75 : 2;
+                else
+                    speed = targetIsOwner ? 2 : 3;
+                // setup target location
+                Location targetLoc = target.getEyeLocation();
+                if (targetIsOwner) {
+                    targetLoc.add(0, 5, 0);
+                }
+                else {
+                    // FOR RAVEN ONLY:
+                    // teleport if not close enough to target ( 12 blocks, squared = 144 )
+                    if (!isCrow && minionBukkit.getLocation().distanceSquared(target.getEyeLocation() ) > 144) {
+                        // update velocity at the current and the next tick
+                        index = -1;
+                        shouldUpdateVelocity = true;
+                        // updated raven should teleport to a closer location
+                        MinionHelper.attemptTeleport( minionBukkit, target.getEyeLocation().add(
+                                MathHelper.randomVector().multiply(10) ) );
+                    }
+                    // predict target location
+                    targetLoc = EntityHelper.helperAimEntity(
+                        minionBukkit.getEyeLocation(), target,
+                        new EntityHelper.AimHelperOptions()
+                                .setProjectileSpeed(speed)
+                                .setAccelerationMode(minionType.equals("灭兆渡鸦")) );
+                }
+                if (shouldUpdateVelocity) {
+                    velocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), targetLoc, speed);
+                }
+                break;
+            }
+            case "宇宙灯笼": {
+                // hover above the owner
+                {
+                    double indexCurr = 0, indexMax = 0;
+                    Location targetLoc = owner.getEyeLocation();
+                    Entity firstMinion = minionBukkit;
+                    for (Entity currMinion : allMinions) {
+                        if (currMinion.isDead()) continue;
+                        if (!GenericHelper.trimText(currMinion.getName()).equals(minionType)) continue;
+                        if (indexMax == 0) firstMinion = currMinion;
+                        if (currMinion == minionBukkit) indexCurr = indexMax;
+                        indexMax++;
+                    }
+                    targetLoc.add(0, 2 + MathHelper.xsin_degree(firstMinion.getTicksLived() * 6), 0);
+                    if (indexMax > 1) {
+                        double angle = 360 * indexCurr / indexMax + firstMinion.getTicksLived() * 5;
+                        targetLoc.add(MathHelper.xsin_degree(angle) * 2, 0, MathHelper.xcos_degree(angle) * 2);
+                    }
+                    MinionHelper.attemptTeleport(minionBukkit, targetLoc);
+                }
+                // fire projectiles
+                if (!targetIsOwner && index % 20 == 0) {
+                    Vector projVel = MathHelper.getDirection(minionBukkit.getEyeLocation(),
+                            target.getEyeLocation().add(MathHelper.randomVector().multiply(3) ), 2.5);
+                    EntityHelper.spawnProjectile(minionBukkit, projVel, attrMap, "宇宙灯笼光束");
+                }
+                break;
+            }
+            case "小乌贼": {
+                boolean noMeleeAttack =
+                        owner.getLocation().distanceSquared(target.getLocation()) > 400 ||
+                        targetIsOwner;
+                Location targetLoc = target.getEyeLocation();
+                // set target location if using ranged attack / idle
+                if (noMeleeAttack) {
+                    targetLoc = owner.getLocation().add(
+                            Math.random() * 20 - 10, Math.random() * 8 + 8, Math.random() * 20 - 10);
+                    if (! targetIsOwner && index % 15 == 0 )
+                        EntityHelper.spawnProjectile(minionBukkit,
+                                MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 2.5),
+                                attrMap, "追踪墨汁");
+                }
+                // set velocity
+                velocity = MathHelper.getDirection(minionBukkit.getLocation(), targetLoc, 2.25, true);
+                break;
+            }
+            case "炽焰天龙": {
+                double speed = 3.5;
+                // if no target is spotted
+                if (targetIsOwner) {
+                    if (index % 10 == 0)
+                        velocity = MathHelper.getDirection(
+                                minionBukkit.getEyeLocation(), target.getEyeLocation().add(0, 8, 0), speed);
+                }
+                // if enemy is present
+                else {
+                    boolean shouldFireProjectile = false;
+                    // if close to enemy (20 blocks), dash and fire an additional projectile per dash
+                    if (minionBukkit.getLocation().distanceSquared(target.getLocation()) < 400) {
+                        if (index % 10 == 0) {
+                            shouldFireProjectile = true;
+                            addScoreboardTag("dashed");
+                            Location dashAimLoc = EntityHelper.helperAimEntity(minionBukkit, target,
+                                    new EntityHelper.AimHelperOptions()
+                                            .setProjectileSpeed(speed)
+                                            .setAccelerationMode(true));
+                            velocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), dashAimLoc, speed);
+                        }
+                    }
+                    // otherwise, approach enemy and fire projectiles
+                    else {
+                        shouldFireProjectile = index % 4 == 0;
+                        velocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), speed);
+                    }
+                    // projectile
+                    if (shouldFireProjectile) {
+                        HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
+                        projAttrMap.put("damage", projAttrMap.get("damage") * 0.5);
+                        EntityHelper.spawnProjectile(minionBukkit,
+                                MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 3),
+                                projAttrMap, "炽焰天龙火球");
+                    }
+                }
+                break;
+            }
+            case "小硫海遗爵": {
+                Location targetLoc = null;
+                // if no target is there, sit behind the player
+                if (targetIsOwner) {
+                    index = -1;
+
+                    targetLoc = target.getLocation().subtract(
+                            MathHelper.vectorFromYawPitch_quick(ownerNMS.yaw, 0).multiply(2) );
+                }
+                // if target is present
+                else {
+                    // quick dash for 8 times, each for 10 tick
+                    if (index < 80) {
+                        if (index % 10 == 0) {
+                            targetLoc = EntityHelper.helperAimEntity(minionBukkit, target,
+                                    new EntityHelper.AimHelperOptions()
+                                            .setProjectileSpeed(3)
+                                            .setAccelerationMode(true));
+                        }
+                    }
+                    // launch 6 spike balls, each for 20 tick; 80 + 120 = 200
+                    else if (index < 200) {
+                        // keep a nice distance
+                        Vector offsetDir = MathHelper.getDirection(target.getEyeLocation(), minionBukkit.getEyeLocation(), 16);
+                        targetLoc = target.getEyeLocation().add(offsetDir);
+                        // projectile
+                        if (index % 20 == 0) {
+                            EntityHelper.spawnProjectile(minionBukkit,
+                                    MathHelper.getDirection( minionBukkit.getEyeLocation(), target.getEyeLocation(), 3),
+                                    attrMap, "小遗爵鲨牙刺球");
+                        }
+                    }
+                    // finally, spin around the target for 5 second ( 100 ticks ), accumulating a projectile that sucks in enemies
+                    else {
+                        switch (index) {
+                            // projectile at enemy location
+                            case 200:
+                                EntityHelper.spawnProjectile(minionBukkit, target.getEyeLocation(), new Vector(),
+                                        attrMap, EntityHelper.DamageType.MAGIC, "小遗爵硫海漩涡");
+                                extraVariables.put("c", target.getEyeLocation());
+                                break;
+                            // AI phase reset
+                            case 300:
+                                index = -1;
+                                break;
+                        }
+                        // spin around the vortex
+                        targetLoc = ((Location) extraVariables.get("c")).clone().add(
+                                MathHelper.vectorFromYawPitch_quick(ticksLived * 12, 0).multiply(12.5) );
+                    }
+                }
+                if (targetLoc != null)
+                    velocity = MathHelper.getDirection(minionBukkit.getLocation(),
+                            targetLoc, 3);
+                break;
+            }
+            case "元素斧头": {
+                // setup target location
+                Location targetLoc = target.getEyeLocation();
+                if (targetIsOwner) {
+                    targetLoc.add(0, 5, 0);
+                } else {
+                    // a bit under the eye
+                    targetLoc.multiply(0.75).add(target.getLocation().toVector().multiply(0.25));
+                }
+                // setup velocity
+                boolean shouldUpdateVelocity = index % 8 == 0;
+                double moveSpd = targetIsOwner ? 2 : 3;
+                if (shouldUpdateVelocity) {
+                    velocity = targetLoc.subtract(minionBukkit.getLocation()).toVector();
+                    MathHelper.setVectorLength(velocity, moveSpd);
+                }
+                break;
+            }
             case "远古岩鲨": {
                 // wonder around the owner
                 if (targetIsOwner) {
@@ -503,10 +893,35 @@ public class MinionSlime extends EntitySlime {
                 }
                 break;
             }
-            case "致命球": {
-                int roundDuration = 12;
+            case "致命球":
+            case "耀目圣刃": {
+                boolean isDeadlySphere = minionType.equals("致命球");
+                int roundDuration = isDeadlySphere ? 12 : 8;
                 int round = (index / roundDuration) % 4;
-                if (round < 3 || targetIsOwner) {
+                if (! isDeadlySphere)
+                    round = 0;
+                // dazzling stabber should hover above the player in a circle
+                if (!isDeadlySphere && targetIsOwner) {
+                    double indexCurr = 0, indexMax = 0;
+                    Location targetLoc = target.getEyeLocation();
+                    Entity firstMinion = minionBukkit;
+                    for (Entity currMinion : allMinions) {
+                        if (currMinion.isDead()) continue;
+                        if (!GenericHelper.trimText(currMinion.getName()).equals(minionType)) continue;
+                        if (indexMax == 0) firstMinion = currMinion;
+                        if (currMinion == minionBukkit) indexCurr = indexMax;
+                        indexMax ++;
+                    }
+                    targetLoc.add(0, 1, 0);
+                    if (indexMax > 1) {
+                        double angle = 360 * indexCurr / indexMax + firstMinion.getTicksLived() * 5;
+                        targetLoc.add(MathHelper.xsin_degree(angle), 0, MathHelper.xcos_degree(angle));
+                    }
+                    // set velocity
+                    velocity = MathHelper.getDirection(
+                            bukkitEntity.getLocation(), targetLoc, 2.25, true);
+                }
+                else if (round < 3 || targetIsOwner) {
                     int roundPhase = index % roundDuration;
                     // velocity init
                     if (roundPhase == 0) {
@@ -520,11 +935,14 @@ public class MinionSlime extends EntitySlime {
                             targetLoc = target.getEyeLocation();
                         velocity = targetLoc.subtract(minionBukkit.getEyeLocation()).toVector();
                         double distance = velocity.length();
+                        double expectedDist;
                         if (targetIsOwner) {
-                            velocity.multiply(Math.max(1.25, distance / roundDuration) / distance);
+                            expectedDist = Math.max(6, distance / roundDuration);
                         } else {
-                            velocity.multiply(Math.max(3, distance / roundDuration * 1.5) / distance);
+                            expectedDist = Math.max(10, distance * 2 / roundDuration);
                         }
+                        // then, upper cap the speed at 4
+                        velocity.multiply(Math.min(4, expectedDist) / distance);
                     }
                     // slow down; float up if target is not the owner
                     if (roundPhase * 1.5 >= roundDuration) {
@@ -539,7 +957,14 @@ public class MinionSlime extends EntitySlime {
                 break;
             }
             case "小激光眼": {
+                double speed, projSpeed;
+                int shootInterval;
+                String projectileType;
                 this.noclip = targetIsOwner;
+                speed = 1.5;
+                projSpeed = 1.75;
+                shootInterval = 20;
+                projectileType = "激光";
                 boolean shouldUpdateVelocity = index % (targetIsOwner ? 20 : 4) == 0;
                 // velocity
                 if (shouldUpdateVelocity) {
@@ -552,14 +977,14 @@ public class MinionSlime extends EntitySlime {
                         velocity = targetLoc.subtract(minionBukkit.getEyeLocation()).toVector();
                         double distance = velocity.length();
                         if (distance > 1e-9) {
-                            velocity.multiply(Math.max(distance / 15, 1) / distance);
+                            velocity.multiply(Math.max(distance / 20, speed) / distance);
                         }
                     } else {
                         targetLoc = target.getEyeLocation();
                         velocity = targetLoc.subtract(minionBukkit.getEyeLocation()).toVector();
                         double distance = velocity.length();
                         if (distance > 1e-9) {
-                            velocity.multiply(1.5 / distance);
+                            velocity.multiply(speed / distance);
                             if (distance < 16)
                                 velocity.multiply(-1);
                         }
@@ -567,11 +992,11 @@ public class MinionSlime extends EntitySlime {
                 }
                 // shoot laser
                 if (!targetIsOwner) {
-                    if (index % 20 == 0) {
+                    if (index % shootInterval == 0) {
                         Vector projectileVelocity = target.getEyeLocation().subtract(minionBukkit.getEyeLocation()).toVector();
                         if (projectileVelocity.lengthSquared() > 1e-9) {
-                            projectileVelocity.normalize().multiply(1.75);
-                            EntityHelper.spawnProjectile(minionBukkit, projectileVelocity, attrMap, "激光");
+                            projectileVelocity.normalize().multiply(projSpeed);
+                            EntityHelper.spawnProjectile(minionBukkit, projectileVelocity, attrMap, projectileType);
                         }
                     }
                 }
@@ -773,6 +1198,69 @@ public class MinionSlime extends EntitySlime {
                 }
                 break;
             }
+            case "血炎骨龙": {
+                Location targetLoc = target.getEyeLocation().add(0, 3, 0);
+                targetLoc.add( MathHelper.vectorFromYawPitch_quick(ticksLived * 9, 0).multiply(5) );
+                velocity = MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, 3, true);
+                // fire projectile
+                if (! targetIsOwner) {
+                    if (index % 30 >= 20)
+                        EntityHelper.spawnProjectile(minionBukkit,
+                                MathHelper.getDirection(
+                                        minionBukkit.getEyeLocation(), target.getEyeLocation(), 2.5),
+                                attrMap, "鲜血龙息");
+                }
+                else
+                    index = -1;
+                break;
+            }
+            case "血炎骨龙宝宝": {
+                double speed, projSpeed;
+                int shootInterval;
+                String projectileType;
+                this.noclip = true;
+                speed = 2.5;
+                projSpeed = 3;
+                shootInterval = 10;
+                projectileType = "血炎龙息";
+                boolean shouldUpdateVelocity = index % (targetIsOwner ? 20 : 4) == 0;
+                // velocity
+                if (shouldUpdateVelocity) {
+                    Location targetLoc;
+                    if (targetIsOwner) {
+                        targetLoc = target.getEyeLocation().add(
+                                Math.random() * 10 - 5,
+                                Math.random() * 5 - 2,
+                                Math.random() * 10 - 5);
+                        velocity = targetLoc.subtract(minionBukkit.getEyeLocation()).toVector();
+                        double distance = velocity.length();
+                        if (distance > 1e-9) {
+                            velocity.multiply(Math.max(distance / 20, speed) / distance);
+                        }
+                    } else {
+                        targetLoc = target.getEyeLocation();
+                        velocity = targetLoc.subtract(minionBukkit.getEyeLocation()).toVector();
+                        double distance = velocity.length();
+                        if (distance > 1e-9) {
+                            velocity.multiply(speed / distance);
+                            if (distance < 16)
+                                velocity.multiply(-1);
+                        }
+                    }
+                }
+                // shoot projectile
+                if (!targetIsOwner) {
+                    if (index % shootInterval == 0) {
+                        Vector projectileVelocity = target.getEyeLocation().subtract(minionBukkit.getEyeLocation()).toVector();
+                        if (projectileVelocity.lengthSquared() > 1e-9) {
+                            projectileVelocity.normalize().multiply(projSpeed);
+                            EntityHelper.spawnProjectile(owner, minionBukkit.getEyeLocation(), projectileVelocity,
+                                    attrMap, EntityHelper.DamageType.MAGIC, projectileType);
+                        }
+                    }
+                }
+                break;
+            }
             case "真菌块":
             case "沼泽之眼": {
                 // setup target location
@@ -935,7 +1423,7 @@ public class MinionSlime extends EntitySlime {
                 double velLen = velocity.length();
                 if (velLen > 1.5) velocity.multiply(1.5 / velLen);
                 // shoot projectiles
-                if (!targetIsOwner && index % 10 == 0) {
+                if (!targetIsOwner && index % 15 == 0) {
                     EntityHelper.spawnProjectile(minionBukkit,
                             MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 1.75),
                             attrMap, minionType.equals("沙龙卷") ? "微型沙鲨" : "迷你鲨鱼龙");
@@ -1138,7 +1626,7 @@ public class MinionSlime extends EntitySlime {
                                 new GenericHelper.ParticleLineOptions()
                                         .setParticleColor("102|204|255")
                                         .setLength(particleLineLength));
-                        minionBukkit.teleport(destination);
+                        MinionHelper.attemptTeleport(minionBukkit, destination);
                         amountFired ++;
                     }
                     for (int i = 0; i < amountFired; i ++) {
@@ -1164,7 +1652,34 @@ public class MinionSlime extends EntitySlime {
                 extraVariables.put("teleportCD", teleportCD);
                 break;
             }
-            case "星尘之龙": {
+            case "小幽花": {
+                // hover above the target
+                {
+                    Location hoverDestination = target.getLocation().add(
+                            Math.random() * 16 - 8, 7.5, Math.random() * 16 - 8);
+                    if (bukkitEntity.getLocation().distanceSquared(hoverDestination) > 25)
+                        velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverDestination,
+                                targetIsOwner ? 2 : 3, true);
+                }
+                // reset fire index when no target is available
+                if (targetIsOwner) {
+                    index = -1;
+                }
+                // shoot 3 projectiles then rest for a brief duration
+                else {
+                    switch (index % 50) {
+                        case 5:
+                        case 10:
+                        case 15: {
+                            Vector projVel = MathHelper.randomVector();
+                            EntityHelper.spawnProjectile(minionBukkit, projVel, attrMap, "幽花追踪能量弹");
+                        }
+                    }
+                }
+                break;
+            }
+            case "星尘之龙":
+            case "小星宇神卫": {
                 // get all segments
                 boolean isHeadSegment = true;
                 ArrayList<LivingEntity> allSegments = new ArrayList<>(allMinions.size());
@@ -1179,8 +1694,16 @@ public class MinionSlime extends EntitySlime {
                 }
                 // if the segment is the head, handle strike and segments following
                 if (isHeadSegment) {
+                    boolean isStardust = minionType.equals("星尘之龙");
+                    // mech-worm teleport should freeze the target
+                    if (! isStardust && index < 0) {
+                        target = (LivingEntity) extraVariables.get("t");
+                        targetIsOwner = false;
+                    }
                     // tweak speed
                     if (targetIsOwner) {
+                        // when spotting the next target, it will attempt to dash right into it
+                        index = -1;
                         if (minionBukkit.getLocation().distanceSquared(owner.getEyeLocation()) > 400 || index % 30 == 0) {
                             Vector v = target.getEyeLocation().add(
                                     Math.random() * 16 - 8,
@@ -1191,36 +1714,73 @@ public class MinionSlime extends EntitySlime {
                             v.multiply(Math.max(distance / 15, 1)  / distance);
                             velocity = v;
                         }
-                    } else {
-                        // speed: 1 to 6(max at 20 segments)
-                        double speed = 1 + Math.min( (double) (allSegments.size()) / 4, 5);
-                        double distanceSqr = target.getEyeLocation().distanceSquared(minionBukkit.getEyeLocation()),
-                                distMax = ((double) allSegments.size() + 1) / 2;
-                        Vector v = EntityHelper.helperAimEntity(minionBukkit, target,
-                                new EntityHelper.AimHelperOptions()
-                                        .setProjectileSpeed(speed))
-                                .subtract(minionBukkit.getEyeLocation())
-                                .toVector();
-                        double vLen = v.length();
-                        if (vLen < 1e-9) {
-                            v = new Vector(0, 1, 0);
-                            vLen = 1;
+                    }
+                    else {
+                        // mech-worm teleports near the target if far away ( all segment 15 blocks away basically )
+                        if ( (!isStardust) ) {
+                            // only if index >= 0, otherwise it will be always set to -3
+                            if ( index >= 0 &&
+                                    allSegments.get(allSegments.size() - 1).getLocation().distanceSquared(target.getLocation()) > 225 &&
+                                    minionBukkit.getLocation().distanceSquared(target.getLocation()) > 225) {
+                                index = -5;
+                                extraVariables.put("t", target);
+                            }
+                            // sit below y=0 for at least 2 ticks to eliminate client interpolation
+                            if (index < 0) {
+                                Location teleportLoc;
+                                if ( index == -1 )
+                                    teleportLoc = target.getEyeLocation().add( MathHelper.randomVector().multiply( 14 ) );
+                                else {
+                                    teleportLoc = target.getLocation();
+                                    teleportLoc.setY(-50);
+                                }
+                                for (Entity e : allSegments) {
+                                    MinionHelper.attemptTeleport(e, teleportLoc);
+                                }
+                            }
                         }
-                        if (velocity.lengthSquared() < 1e-5 || distanceSqr > distMax * distMax) {
-                            v.multiply( speed / vLen);
-                            velocity = v;
+
+
+                        boolean shouldUpdateDirection = false;
+                        if (isStardust)
+                            shouldUpdateDirection = true;
+                        else if (index <= 1)
+                            shouldUpdateDirection = true;
+                        if (shouldUpdateDirection) {
+                            // speed:
+                            // for stardust dragon, 1 to 4 (max at 12 segments)
+                            // for mech-worm (DOG), 2 to 5 (max at 12 segments)
+                            double speed;
+                            if (isStardust)
+                                speed = 1 + Math.min((double) (allSegments.size()) / 4, 3);
+                            else
+                                speed = 2 + Math.min((double) (allSegments.size()) / 4, 3);
+                            double distanceSqr = target.getEyeLocation().distanceSquared(minionBukkit.getEyeLocation()),
+                                    distMax = ((double) allSegments.size() + 1) / 2;
+
+                            Vector v = EntityHelper.helperAimEntity(minionBukkit, target,
+                                            new EntityHelper.AimHelperOptions()
+                                                    .setProjectileSpeed(speed)
+                                                    .setAccelerationMode(!isStardust))
+                                    .subtract(minionBukkit.getEyeLocation())
+                                    .toVector();
+                            double vLen = v.length();
+                            if (vLen < 1e-9) {
+                                v = new Vector(0, 1, 0);
+                                vLen = 1;
+                            }
+                            if (velocity.lengthSquared() < 1e-5 || distanceSqr > distMax * distMax) {
+                                v.multiply(speed / vLen);
+                                velocity = v;
+                            }
                         }
                     }
                     EntityHelper.handleSegmentsFollow(allSegments,
                             new EntityHelper.WormSegmentMovementOptions()
                                     .setStraighteningMultiplier(-0.75)
                                     .setFollowingMultiplier(1)
-                                    .setFollowDistance(0.5)
+                                    .setFollowDistance(isStardust ? 0.5 : 1)
                                     .setVelocityOrTeleport(false));
-                }
-                // body segments should not have velocity
-                else {
-                    velocity = new Vector(0, 0, 0);
                 }
                 // set display name according to segment info
                 if (isHeadSegment) {
@@ -1228,6 +1788,46 @@ public class MinionSlime extends EntitySlime {
                 } else {
                     setCustomName(minionType);
                 }
+                break;
+            }
+            case "黑色天龙":
+            case "白色天龙": {
+                // get all segments
+                ArrayList<LivingEntity> allSegments = (ArrayList<LivingEntity>) extraVariables.get("s");
+                // the segment is the head, handle segments following
+                // tweak speed
+                if (targetIsOwner) {
+                    // dash into the next target
+                    index = -10;
+                    // fly around the player
+                    Location flightTargetLoc = owner.getLocation().add(0, 6, 0);
+                    Vector locRotationOffset = MathHelper.vectorFromYawPitch_quick(ticksLived * 6, 0)
+                            .multiply(minionType.equals("白色天龙") ? 6 : -6);
+                    flightTargetLoc.add(locRotationOffset);
+                    velocity = MathHelper.getDirection(bukkitEntity.getLocation(), flightTargetLoc, 3, true);
+                } else {
+                    double speed = 3;
+                    double distanceSqr = target.getEyeLocation().distanceSquared( minionBukkit.getEyeLocation() );
+                    // aim for dash after 16 blocks away
+                    if (distanceSqr > 256)
+                        index = -10;
+                    // dash after closer than 5 blocks
+                    else if (distanceSqr < 25 && velocity.lengthSquared() > 1e-9)
+                        index = 0;
+                    if (index < 0) {
+                        Location targetLoc = EntityHelper.helperAimEntity(minionBukkit, target,
+                                new EntityHelper.AimHelperOptions()
+                                        .setProjectileSpeed(speed)
+                                        .setAccelerationMode(true));
+                        velocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), targetLoc, speed);
+                    }
+                }
+                EntityHelper.handleSegmentsFollow(allSegments,
+                        new EntityHelper.WormSegmentMovementOptions()
+                                .setStraighteningMultiplier(-0.75)
+                                .setFollowingMultiplier(1)
+                                .setFollowDistance(1)
+                                .setVelocityOrTeleport(false));
                 break;
             }
             case "幻星探测器": {
@@ -1285,7 +1885,7 @@ public class MinionSlime extends EntitySlime {
                             firstMinion.getTicksLived() * 6 + indexCurr * 360d / indexMax, 0);
                     locOffset.multiply(3);
                     targetLoc.add(locOffset);
-                    minionBukkit.teleport(targetLoc);
+                    MinionHelper.attemptTeleport(minionBukkit, targetLoc);
                 }
                 // strike the target if it comes close
                 if (!targetIsOwner && index % 10 == 0 &&
@@ -1357,7 +1957,7 @@ public class MinionSlime extends EntitySlime {
                             idxCurr = totalPrism;
                         totalPrism ++;
                     }
-                    double ownerYaw = ((CraftPlayer) owner).getHandle().yaw;
+                    double ownerYaw = ownerNMS.yaw;
                     double  idleIndex = MathHelper.xsin_degree(firstPrism.getTicksLived() * 12),
                             targetYaw = ownerYaw < 0 ? ownerYaw + 180 : ownerYaw - 180,
                             targetPitch = -20 - idleIndex * 5;
@@ -1386,9 +1986,89 @@ public class MinionSlime extends EntitySlime {
                 extraVariables.put("dPitch", dPitch);
                 break;
             }
+            case "蛇眼": {
+                // this minion does not move; instead it teleports.
+                velocity.zero();
+                Location teleportLoc = null;
+                if (targetIsOwner) {
+                    extraVariables.remove("c");
+                    extraVariables.remove("p");
+                    index = -1;
+                    if (bukkitEntity.getLocation().distanceSquared( owner.getLocation() ) > 100)
+                        teleportLoc = owner.getLocation().add( MathHelper.randomVector().multiply(
+                                5 + Math.random() * 5 ) );
+                }
+                // fire projectile at enemy
+                else {
+                    // if the fired projectile is still available, check if bounce is needed
+                    if (extraVariables.containsKey("p") ) {
+                        // do not create a new projectile IMMEDIATELY after bouncing the former
+                        index = -15;
+
+                        Projectile proj = (Projectile) extraVariables.get("p");
+                        // if the projectile is destroyed, remove cached info
+                        if (proj.isDead()) {
+                            extraVariables.remove("c");
+                            extraVariables.remove("p");
+                        }
+                        else {
+                            int bounceCountdown = -1;
+                            if (extraVariables.containsKey("c"))
+                                bounceCountdown = (int) extraVariables.get("c");
+                                // first detection of collision: init countdown
+                            else {
+                                TerrariaPotionProjectile projNMS = (TerrariaPotionProjectile) ((CraftProjectile) proj).getHandle();
+                                if (projNMS.penetration < 999999) {
+                                    bounceCountdown = 5;
+                                    extraVariables.put("c", bounceCountdown);
+                                }
+                            }
+                            // check if bounce is needed
+                            if (bounceCountdown > 0) {
+                                bounceCountdown--;
+                                if (bounceCountdown == 0) {
+                                    extraVariables.remove("c");
+                                    extraVariables.remove("p");
+                                    teleportLoc = proj.getLocation();
+                                    proj.remove();
+                                    // fire reflected projectile
+                                    Location fireLoc = teleportLoc.clone();
+                                    EntityHelper.spawnProjectile(bukkitEntity, fireLoc, MathHelper.getDirection(
+                                                    fireLoc, target.getEyeLocation(), 2.5),
+                                            attrMap, EntityHelper.DamageType.BULLET, "蛇眼反弹光电矢");
+                                } else {
+                                    extraVariables.put("c", bounceCountdown);
+                                }
+                            }
+                        }
+                    }
+                    // if no projectile is available, teleport around the target and fire a new one.
+                    else if (index >= 0) {
+                        teleportLoc = target.getLocation().add( MathHelper.randomVector().multiply(
+                                10 ) );
+                        // fire original projectile
+                        Location fireLoc = teleportLoc.clone();
+                        Location predictedLoc = EntityHelper.helperAimEntity(fireLoc, target,
+                                new EntityHelper.AimHelperOptions()
+                                        .setAimMode(false)
+                                        .setAccelerationMode(true)
+                                        .setProjectileSpeed(3));
+                        Projectile spawnedProj = EntityHelper.spawnProjectile(bukkitEntity, fireLoc, MathHelper.getDirection(
+                                        fireLoc, predictedLoc, 3),
+                                attrMap, EntityHelper.DamageType.BULLET, "蛇眼光电矢");
+                        extraVariables.put("p", spawnedProj);
+                    }
+                }
+                // teleport if needed
+                if (teleportLoc != null) {
+                    MinionHelper.attemptTeleport(minionBukkit, teleportLoc);
+                }
+                break;
+            }
             case "霜之华": {
                 // teleport above owner
-                minionBukkit.teleport(owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
+                MinionHelper.attemptTeleport(minionBukkit,
+                        owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
                 // attack
                 if (!targetIsOwner && index % 20 == 0) {
                     Vector strikeDir = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(),
@@ -1410,28 +2090,10 @@ public class MinionSlime extends EntitySlime {
                 }
                 break;
             }
-            case "太阳之灵": {
-                // teleport above owner
-                minionBukkit.teleport(owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
-                // attack
-                if (!targetIsOwner && index % 20 == 0) {
-                    Vector strikeDir = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(),
-                            512, true);
-                    double length = strikeDir.length();
-                    if (length < 32) {
-                        GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
-                                .setMaxTargetHit(2);
-                        GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
-                                MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
-                                length, 0.1, 0.5, "", "255|225|122",
-                                new ArrayList<>(), attrMap, strikeOption);
-                    }
-                }
-                break;
-            }
             case "烬之英": {
                 // teleport above owner
-                minionBukkit.teleport(owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
+                MinionHelper.attemptTeleport(minionBukkit,
+                        owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
                 // attack
                 if (!targetIsOwner && index % 10 == 0) {
                     Vector strikeDir = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(),
@@ -1453,7 +2115,8 @@ public class MinionSlime extends EntitySlime {
             }
             case "微型克苏鲁之眼": {
                 // teleport above owner
-                minionBukkit.teleport(owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
+                MinionHelper.attemptTeleport(minionBukkit,
+                        owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
                 // attack
                 if (!targetIsOwner && index % 30 == 0) {
                     Vector strikeDir = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(),
@@ -1472,7 +2135,8 @@ public class MinionSlime extends EntitySlime {
             }
             case "极寒冰块": {
                 // teleport above owner
-                minionBukkit.teleport(owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
+                MinionHelper.attemptTeleport(minionBukkit,
+                        owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
                 // attack
                 if (!targetIsOwner && index % 10 == 0) {
                     Vector shootDir = MathHelper.vectorFromYawPitch_quick(index * 4.5, 0);
@@ -1484,7 +2148,8 @@ public class MinionSlime extends EntitySlime {
             }
             case "永冻之焱华": {
                 // teleport above owner
-                minionBukkit.teleport(owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
+                MinionHelper.attemptTeleport(minionBukkit,
+                        owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
                 // attack
                 if (!targetIsOwner && index % 20 == 0) {
                     double shootYaw = Math.random() * 360;
@@ -1516,7 +2181,7 @@ public class MinionSlime extends EntitySlime {
                         double angle = 360d * indexCurr / indexMax + firstMinion.getTicksLived() * 5;
                         location.add(MathHelper.xsin_degree(angle) * 2, 0, MathHelper.xcos_degree(angle) * 2);
                     }
-                    minionBukkit.teleport(location);
+                    MinionHelper.attemptTeleport(minionBukkit, location);
                 }
                 // shoots a laser at the target
                 if (!targetIsOwner && index % 15 == 0) {
@@ -1531,11 +2196,12 @@ public class MinionSlime extends EntitySlime {
                 }
                 break;
             }
-            case "太阳神之灵": {
+            case "太阳之灵": {
                 // teleport above owner
-                minionBukkit.teleport(owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
+                MinionHelper.attemptTeleport(minionBukkit,
+                        owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
                 // attack
-                if (!targetIsOwner && index % 8 == 0) {
+                if (!targetIsOwner && index % 20 == 0) {
                     Vector strikeDir = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(),
                             512, true);
                     double length = strikeDir.length();
@@ -1550,17 +2216,93 @@ public class MinionSlime extends EntitySlime {
                 }
                 break;
             }
+            case "太阳神之灵": {
+                // teleport above owner
+                MinionHelper.attemptTeleport(minionBukkit,
+                        owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
+                // attack
+                if (!targetIsOwner && index % 8 == 0) {
+                    Vector strikeDir = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(),
+                            512, true);
+                    double length = strikeDir.length();
+                    if (length < 64) {
+                        GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
+                                .setMaxTargetHit(2);
+                        GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
+                                MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
+                                length, 0.1, 0.5, "", "255|225|122",
+                                new ArrayList<>(), attrMap, strikeOption);
+                    }
+                }
+                break;
+            }
+            case "天狼星": {
+                // teleport above owner
+                MinionHelper.attemptTeleport(minionBukkit,
+                        owner.getLocation().add(0, 7.5 + 2.5 * MathHelper.xsin_degree(index * 5), 0));
+                // attack
+                if (!targetIsOwner && index % 15 == 0) {
+                    Vector strikeDir = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(),
+                            512, true);
+                    double length = strikeDir.length();
+                    if (length < 80) {
+                        GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
+                                .setDamagedFunction( (Integer hitIdx, Entity hitEntity, Location hitLoc) ->
+                                        EntityHelper.applyEffect(hitEntity, "夜魇", 60) );
+                        GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
+                                MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
+                                80, 0.25, 0.25, "", "150|255|255",
+                                new ArrayList<>(), attrMap, strikeOption);
+                    }
+                }
+                break;
+            }
             case "凋零枯花": {
                 // teleport above owner
-                minionBukkit.teleport(owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
+                MinionHelper.attemptTeleport(minionBukkit,
+                        owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
                 // attack
                 if (!targetIsOwner && index % 20 == 0) {
                     double shootYaw = Math.random() * 360;
                     for (int i = 0; i < 4; i ++) {
                         Vector shootDir = MathHelper.vectorFromYawPitch_quick(shootYaw, 0);
+                        shootDir.multiply(1.5);
                         EntityHelper.spawnProjectile(minionBukkit, shootDir,
                                 attrMap, "瘟疫矢");
                         shootYaw += 90;
+                    }
+                }
+                break;
+            }
+            case "告死之花": {
+                // teleport above owner
+                MinionHelper.attemptTeleport(minionBukkit,
+                        owner.getLocation().add(0, 6 + 3 * MathHelper.xsin_degree(index * 5), 0));
+                // attack
+                if (!targetIsOwner && index % 15 == 0) {
+                    double shootYaw = Math.random() * 360;
+                    for (int i = 0; i < 5; i ++) {
+                        Vector shootDir = MathHelper.vectorFromYawPitch_quick(shootYaw, 0);
+                        shootDir.multiply(1.75);
+                        EntityHelper.spawnProjectile(minionBukkit, shootDir,
+                                attrMap, "告死之花弹幕");
+                        shootYaw += 72;
+                    }
+                }
+                break;
+            }
+            case "灿烂光环": {
+                // teleport above owner
+                MinionHelper.attemptTeleport(minionBukkit, owner.getLocation().add(0, 7.5, 0) );
+                // attack
+                if (!targetIsOwner && index % 20 == 0) {
+                    double shootYaw = Math.random() * 360;
+                    for (int i = 0; i < 3; i ++) {
+                        Vector shootDir = MathHelper.vectorFromYawPitch_quick(shootYaw, 0);
+                        shootDir.multiply(2.25);
+                        EntityHelper.spawnProjectile(minionBukkit, shootDir,
+                                attrMap, "星律辐射溶解球");
+                        shootYaw += 120;
                     }
                 }
                 break;
@@ -1721,6 +2463,7 @@ public class MinionSlime extends EntitySlime {
                     break;
                 // receives knockback on hit
                 case "远古岩鲨":
+                case "炽焰天龙":
                     if (!hitInfo.isEmpty() && minionBukkit.getScoreboardTags().contains("dashed")) {
                         velocity.multiply(-1);
                         minionBukkit.removeScoreboardTag("dashed");

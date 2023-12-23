@@ -1,6 +1,7 @@
 package terraria.entity.minion;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -116,6 +117,13 @@ public class MinionHusk extends EntityZombieHusk {
                 ));
                 break;
             }
+            case "葱茏之锋": {
+                damageInvincibilityTicks = 5;
+                setBaby(false);
+                noclip = true;
+                setNoGravity(true);
+                break;
+            }
             default:
                 noclip = true;
                 setNoGravity(true);
@@ -137,11 +145,13 @@ public class MinionHusk extends EntityZombieHusk {
             die();
             return;
         }
-        // setup target
-        if (!MinionHelper.checkTargetIsValidEnemy(this, ((CraftPlayer) owner).getHandle(), getGoalTarget(), targetNeedLineOfSight)
+        // setup target, mandatory twice per second AND if the current target is invalid
+        EntityPlayer ownerNMS = ((CraftPlayer) owner).getHandle();
+        if ( !(MinionHelper.checkTargetIsValidEnemy(
+                this, ownerNMS, getGoalTarget(), targetNeedLineOfSight) &&
+                MinionHelper.checkDistanceIsValid(this, ownerNMS) )
                 || ticksLived % 10 == 0)
-            MinionHelper.setTarget(this, ((CraftPlayer) owner).getHandle(),
-                    sentryOrMinion, targetNeedLineOfSight, protectOwner);
+            MinionHelper.setTarget(this, ownerNMS, sentryOrMinion, targetNeedLineOfSight, protectOwner);
         // extra ticking AI
         Vector velocity = new Vector(motX, motY, motZ);
         Collection<Entity> allMinions = (Collection<Entity>) EntityHelper.getMetadata(owner,
@@ -266,11 +276,81 @@ public class MinionHusk extends EntityZombieHusk {
             }
             case "矮人": {
                 if (!targetIsOwner && ticksLived % 12 == 0) {
-                    Vector v = target.getEyeLocation().subtract(minionBukkit.getEyeLocation()).toVector();
-                    double dist = v.length();
-                    if (dist > 1e-9) {
-                        v.multiply(2.5 / dist);
-                        EntityHelper.spawnProjectile(minionBukkit, v, attrMap, "投矛");
+                    Location targetLoc = EntityHelper.helperAimEntity(minionBukkit, target,
+                            new EntityHelper.AimHelperOptions()
+                                    .setProjectileSpeed(2.5));
+                    Vector v = MathHelper.getDirection(minionBukkit.getEyeLocation(), targetLoc, 2.5);
+                    EntityHelper.spawnProjectile(minionBukkit, v, attrMap, "投矛");
+                }
+                break;
+            }
+            case "葱茏之锋": {
+                // this minion is constantly being teleported to destination.
+                // rotate around owner if idle
+                if (targetIsOwner || index < 0) {
+                    // next attack for all blades should be almost identical
+                    if (targetIsOwner)
+                        index = (int) (Math.random() * -3) - 15;
+
+                    double indexCurr = 0, indexMax = 0;
+                    Location targetLoc = target.getLocation();
+                    Entity firstMinion = minionBukkit;
+                    for (Entity currMinion : allMinions) {
+                        if (currMinion.isDead()) continue;
+                        if (!GenericHelper.trimText(currMinion.getName()).equals(minionType)) continue;
+                        if (indexMax == 0) firstMinion = currMinion;
+                        if (currMinion == minionBukkit) indexCurr = indexMax;
+                        indexMax ++;
+                    }
+                    double angle = firstMinion.getTicksLived() * 5;
+                    if (indexMax > 1)
+                        angle += 360 * indexCurr / indexMax;
+                    targetLoc.add(MathHelper.xsin_degree(angle) * 3, 0, MathHelper.xcos_degree(angle) * 3);
+
+                    velocity = MathHelper.getDirection(
+                            bukkitEntity.getLocation(), targetLoc, 3, true);
+                }
+                else {
+                    // ↑↓↑
+                    int subIdx = index % 86;
+                    if (subIdx < 36) {
+                        double phaseProgress = Math.sqrt( (subIdx % 9) / 9d );
+                        double verticalOffsetMulti;
+                        if (subIdx < 9)
+                            verticalOffsetMulti = 2 * phaseProgress - 1;
+                        else if (subIdx < 18)
+                            verticalOffsetMulti = 1 - 2 * phaseProgress;
+                        else if (subIdx < 27)
+                            verticalOffsetMulti = 1.75 * phaseProgress - 1;
+                        else
+                            verticalOffsetMulti = 0.75 + (subIdx % 9) / 36d;
+                        Location targetLoc = target.getEyeLocation().add(0, verticalOffsetMulti * 10, 0);
+
+                        velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
+                    }
+                    // ←→←→←
+                    else {
+                        subIdx -= 36;
+                        double phaseProgress = ( subIdx % 7) / 7d;
+                        double horizontalOffsetMulti;
+                        if (subIdx < 7)
+                            horizontalOffsetMulti = 2 * phaseProgress - 1;
+                        else if (subIdx < 14)
+                            horizontalOffsetMulti = 1 - 2 * phaseProgress;
+                        else if (subIdx < 21)
+                            horizontalOffsetMulti = 2 * phaseProgress - 1;
+                        else if (subIdx < 28)
+                            horizontalOffsetMulti = 1 - 2 * phaseProgress;
+                        else if (subIdx < 35)
+                            horizontalOffsetMulti = 1.75 * phaseProgress - 1;
+                        else
+                            // 15 * 4
+                            horizontalOffsetMulti = 0.75 + (subIdx - 35) / 60d;
+                        Vector offset = target.getLocation().subtract(owner.getLocation()).toVector();
+                        offset = MathHelper.vectorFromYawPitch_quick( MathHelper.getVectorYaw(offset) + 90, 0 );
+                        Location targetLoc = target.getEyeLocation().add( offset.multiply( horizontalOffsetMulti * 10 ) );
+
+                        velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                     }
                 }
                 break;

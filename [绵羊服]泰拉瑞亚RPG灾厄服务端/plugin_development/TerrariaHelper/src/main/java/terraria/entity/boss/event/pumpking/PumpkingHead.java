@@ -195,7 +195,10 @@ public class PumpkingHead extends EntitySlime {
             // drop one of special items
             double chance = EventAndTime.getWaveEventBossDropRate();
             if (Math.random() < chance) {
-                if (Math.random() < 1d/5) {
+                if (Math.random() < 1d/6) {
+                    ItemHelper.dropItem(bukkitEntity.getLocation(), "乌鸦法杖");
+                }
+                else if (Math.random() < 1d/5) {
                     ItemHelper.dropItem(bukkitEntity.getLocation(), "无头骑士剑");
                 }
                 else if (Math.random() < 1d/4) {
