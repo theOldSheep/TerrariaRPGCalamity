@@ -11,9 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Furnace;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftArmorStand;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Vex;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -76,7 +74,7 @@ public class CraftingListener implements Listener {
         boolean hasVoidBag = PlayerHelper.hasVoidBag(player);
         Inventory plyVoidBag = PlayerHelper.getInventory(player, "voidBag");
         if (hasVoidBag) {
-            for (int i = 0; i < PlayerHelper.playerExtraInventorySize; i ++) {
+            for (int i = 0; i < PlayerHelper.PLAYER_EXTRA_INVENTORY_SIZE; i ++) {
                 ItemStack currItem = plyVoidBag.getItem(i);
                 if (currItem == null) continue;
                 String[] itemInfo = ItemHelper.splitItemName(currItem);

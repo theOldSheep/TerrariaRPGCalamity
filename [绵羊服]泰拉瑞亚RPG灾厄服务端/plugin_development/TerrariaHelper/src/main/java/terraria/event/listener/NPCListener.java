@@ -246,6 +246,11 @@ public class NPCListener implements Listener {
                                 new String[]{" §r§l■铂 ", " §e§l■金 ", " §7§l■银 ", " §c§l■铜 "}));
                 break;
             }
+            case PlayerHelper.ARES_EXOSKELETON_CONFIG_PAGE_NAME: {
+                evt.setCancelled(true);
+                PlayerHelper.clickAresExoskeletonConfig(ply, upperInventory, evt.getSlot());
+                break;
+            }
         }
     }
 }

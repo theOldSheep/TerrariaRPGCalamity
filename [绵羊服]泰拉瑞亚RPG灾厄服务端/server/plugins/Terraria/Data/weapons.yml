@@ -3638,6 +3638,34 @@ Dodu的手炮:
   minionName: 炽焰天龙
   slotsRequired: 5
   autoSwing: true
+极昼信标:
+  type: SUMMON
+  damageType: Bullet
+  minionName: 极昼飞行物
+  autoSwing: true
+硫心恶殖:
+  type: SUMMON
+  damageType: Magic
+  minionName: 灾坟仆从
+  slotsRequired: 4
+  noDuplication: true
+恂戒:
+  type: SUMMON
+  damageType: Melee
+  minionName: 恂戒探魂者
+  autoSwing: true
+永劫:
+  type: SUMMON
+  damageType: Magic
+  minionName: 永劫信标
+  slotsRequired: 5
+  noDuplication: true
+阿瑞斯外骨骼:
+  type: SUMMON
+  damageType: Rocket
+  minionName: 阿瑞斯外骨骼
+  slotsRequired: 10
+  noDuplication: true
 ####
 鞭炮:
   type: WHIP

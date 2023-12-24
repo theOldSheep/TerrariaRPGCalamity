@@ -1,5 +1,6 @@
 package terraria.util;
 
+import com.comphenix.protocol.PacketType;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
@@ -210,6 +211,7 @@ public class EntityHelper {
         PLAYER_DASH_KEY_PRESSED_MS("chargeDirLastPressed"),
         PLAYER_BIOME_BLADE_SPIN_PITCH("spinPitch"),
         PLAYER_BUFF_INFLICT("effectInflict"),
+        PLAYER_EXOSKELETON("plyAresESklt"),
         PLAYER_FORCED_BACKGROUND("forceBackground"),
         PLAYER_FORCED_BGM("forceBGM"),
         PLAYER_GRAPPLING_HOOKS("hooks"),
@@ -899,26 +901,35 @@ public class EntityHelper {
     }
     private static void sendDeathMessage(Entity d, Entity v, DamageType damageType, String debuffType) {
         String dm = "";
-        String killer = null;
-        if (d != null) {
-            killer = d.getCustomName();
+        // special cases
+        if (v instanceof Player) {
+            Player plyV = (Player) v;
+            if ( ItemHelper.splitItemName(plyV.getInventory().getItemInMainHand() )[1].equals("雷姆的复仇") )
+                dm = "<victim>……是谁？";
         }
+        if (dm.length() == 0) {
+            // general msg
+            String killer = null;
+            if (d != null) {
+                killer = d.getCustomName();
+            }
 
-        String deathMessageConfigDir;
-        if (damageType == DamageType.DEBUFF)
-            deathMessageConfigDir = "deathMessages.Debuff_" + debuffType;
-        else
-            deathMessageConfigDir = "deathMessages." + damageType.toString();
+            String deathMessageConfigDir;
+            if (damageType == DamageType.DEBUFF)
+                deathMessageConfigDir = "deathMessages.Debuff_" + debuffType;
+            else
+                deathMessageConfigDir = "deathMessages." + damageType.toString();
 
-        List<String> deathMessages;
-        if (TerrariaHelper.settingConfig.contains(deathMessageConfigDir)) {
-            deathMessages = TerrariaHelper.settingConfig.getStringList(deathMessageConfigDir);
-        } else {
-            deathMessages = TerrariaHelper.settingConfig.getStringList("deathMessages.Generic");
-        }
-        dm = deathMessages.get((int) (Math.random() * deathMessages.size()));
-        if (killer != null && d != v) {
-            dm += "，凶手是" + killer;
+            List<String> deathMessages;
+            if (TerrariaHelper.settingConfig.contains(deathMessageConfigDir)) {
+                deathMessages = TerrariaHelper.settingConfig.getStringList(deathMessageConfigDir);
+            } else {
+                deathMessages = TerrariaHelper.settingConfig.getStringList("deathMessages.Generic");
+            }
+            dm = deathMessages.get((int) (Math.random() * deathMessages.size()));
+            if (killer != null && d != v) {
+                dm += "，凶手是" + killer;
+            }
         }
         dm = dm.replaceAll("<victim>", v.getName());
         Bukkit.broadcastMessage("§4" + dm);
@@ -1127,7 +1138,10 @@ public class EntityHelper {
                 if (moneyConverted[3] > 0)
                     moneyMsg += "§c§l " + moneyConverted[3] + "§c§l 铜";
             }
-            vPly.sendTitle("§c§l你死了！", moneyMsg, 0, respawnTime * 20, 0);
+            String deathTitle = "你死了！";
+            if ( ItemHelper.splitItemName( vPly.getInventory().getItemInMainHand() )[1].equals("雷姆的复仇") )
+                deathTitle = "感谢款待！";
+            vPly.sendTitle("§c§l" + deathTitle, moneyMsg, 0, respawnTime * 20, 0);
             sendDeathMessage(d, v, damageType, debuffType);
             // remove vanilla potion effects except for mining fatigue
             // terraria potion effects are removed in their threads

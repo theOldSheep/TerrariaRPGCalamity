@@ -4588,7 +4588,8 @@ public class ItemUseHelper {
                                                         e.getBukkitEntity().getName().equals(lavaName));
                                         if (lavaNearby.size() == 0) {
                                             EntityHelper.spawnProjectile(ply, hitLoc, new Vector(),
-                                                    attrMap, EntityHelper.DamageType.MAGIC, lavaName);
+                                                    attrMap, EntityHelper.DamageType.MAGIC, lavaName)
+                                                    .addScoreboardTag("ignoreCanDamageCheck");
                                         }
                                     }
                                     // has a chance to spawn a hand
@@ -4596,7 +4597,8 @@ public class ItemUseHelper {
                                         if (Math.random() < 0.1) {
                                             Location spawnLoc = hitLoc.clone().add(0, 2, 0);
                                             EntityHelper.spawnProjectile(ply, spawnLoc, new Vector(),
-                                                    attrMap, EntityHelper.DamageType.MAGIC, "怨戾之手");
+                                                    attrMap, EntityHelper.DamageType.MAGIC, "怨戾之手")
+                                                    .addScoreboardTag("ignoreCanDamageCheck");
                                         }
                                     }
                                 });

@@ -9125,6 +9125,7 @@ Dodu的手炮:
   lore:
   - §r发射出一束强大的怨戾激光
   - §r被激光照射的物块会迸发出岩浆，随后出现亡魂之手
+  - §r岩浆与亡魂之手会对接触的单位强行造成伤害
   - §#C61B40“当被原谅之人尚未能饶恕自身时，
   - §#C61B40得到宽恕所带来的安慰也仅限于此了。”
   attributes:
@@ -9242,7 +9243,7 @@ Dodu的手炮:
 异端僭越:
   item: DIAMOND_SWORD
   lore:
-  - §r在身旁召唤一团对任何单位都会造成伤害的腥邪诡灵
+  - §r在身旁召唤一团对所接触单位强行造成伤害的腥邪诡灵
   - §r起初，诡灵会每隔一段时间就冲向玩家
   - §r随着时间流逝，诡灵会成长为一个可控制的巨灵
   - §#C61B40“聚合成那地牢怪物的灵魂永远无法进入他们所期望的来世，
@@ -10221,8 +10222,8 @@ Dodu的手炮:
     damage: 1000
     damageType: Summon
     knockback: 4
-    useTime: 30
-    manaUse: 30
+    useTime: 40
+    manaUse: 40
   worth: 28000000
   rarity: 14
 电极解离机:
@@ -10266,12 +10267,13 @@ Dodu的手炮:
 硫心恶殖:
   item: DIAMOND_SWORD
   lore:
-  - §r召唤灾坟魔物为你而战
-  - §r占据4格仆从栏位并且同时只能存在至多一个灾坟魔物
-  - §r灾坟魔物在闲暇时偶尔会向拥有者发射弹幕，造成较低的伤害
+  - §r召唤缩小版的灾坟魔物为你而战
+  - §r占据4格仆从栏位并且同时只能存在至多一个灾坟仆从
+  - §r灾坟仆从在闲暇时会转而向拥有者发射弹幕
+  - §r无论何时，灾坟仆从的弹幕将强行对击中的目标造成伤害
   - §#C61B40宇宙之虫可能的未来，对力量的饥渴蒙蔽双眼，这可是一个可怕的警告，但不影响你走向这样的结局。
   attributes:
-    damage: 800
+    damage: 350
     damageType: Summon
     knockback: 2
     useTime: 40
@@ -10283,7 +10285,7 @@ Dodu的手炮:
   lore:
   - §r召唤一个探魂者为你而战
   attributes:
-    damage: 230
+    damage: 460
     damageType: Summon
     knockback: 4
     useTime: 14
@@ -10308,17 +10310,41 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r占据10格仆从栏位，只能召唤一次
-  - §r使用后构建出拥有四个不同武器的外骨骼：
+  - §r使用后构建出可以装载四种不同武器的外骨骼：
   - §r离子加农炮，特斯拉加农炮，镭射加农炮，高斯核弹加农炮
   - §r右键可以打开编辑面板，点击一个武装槽位可以循环更改对应加农炮的种类
   attributes:
     damage: 1250
     damageType: Summon
     knockback: 1
-    useTime: 40
-    manaUse: 40
+    useTime: 50
+    manaUse: 80
   worth: 30000000
   rarity: 15
+阿瑞斯离子加农炮:
+  item: PAPER
+  lore:
+  - §r阿瑞斯外骨骼可装载的武器
+  - §r每0.5秒发射一道挥发性等离子光球
+  rarity: 14
+阿瑞斯特斯拉加农炮:
+  item: PAPER
+  lore:
+  - §r阿瑞斯外骨骼可装载的武器
+  - §r每0.6秒发射一个向附近敌人射出电弧的特斯拉球状闪电。
+  rarity: 14
+阿瑞斯镭射加农炮:
+  item: PAPER
+  lore:
+  - §r阿瑞斯外骨骼可装载的武器
+  - §r每0.25秒发射一道红色星流脉冲激光，发射五次后转而发射一道持续1.25秒的星流致命光
+  rarity: 14
+阿瑞斯高斯核弹发射井:
+  item: PAPER
+  lore:
+  - §r阿瑞斯外骨骼可装载的武器
+  - §r每4秒向敌怪发射高斯核弹，带有强追踪性。击中敌怪或实体物块时引发巨大爆炸。
+  rarity: 14
 归虚之灵:
   item: DIAMOND_SWORD
   lore:
@@ -10329,8 +10355,8 @@ Dodu的手炮:
     damage: 1120
     damageType: Summon
     knockback: 0
-    useTime: 40
-    manaUse: 40
+    useTime: 50
+    manaUse: 80
   worth: 30000000
   rarity: 15
 源生寒晶:
@@ -10348,8 +10374,8 @@ Dodu的手炮:
     damage: 2600
     damageType: Summon
     knockback: 4
-    useTime: 40
-    manaUse: 40
+    useTime: 60
+    manaUse: 80
   worth: 40000000
   rarity: 16
 光阴流时伞:
@@ -10367,8 +10393,8 @@ Dodu的手炮:
     damage: 386
     damageType: Summon
     knockback: 1
-    useTime: 40
-    manaUse: 40
+    useTime: 50
+    manaUse: 60
   worth: 40000000
   rarity: 16
 ####

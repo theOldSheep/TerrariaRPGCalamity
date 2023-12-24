@@ -9,7 +9,6 @@ import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
@@ -40,7 +39,10 @@ public class PlayerHelper {
     // constants
     private static HashMap<String, Double> defaultPlayerAttrMap = new HashMap<>(60);
     private static HashSet<String> defaultPlayerEffectInflict = new HashSet<>(8);
-    public static final int playerExtraInventorySize = 54;
+    public static final int PLAYER_EXTRA_INVENTORY_SIZE = 54;
+    public static final String ARES_EXOSKELETON_CONFIG_PAGE_NAME = "阿瑞斯外骨骼配置";
+    public static final String[] ARES_EXOSKELETON_WEAPON_NAMES =
+            {"阿瑞斯离子加农炮", "阿瑞斯特斯拉加农炮", "阿瑞斯镭射加农炮", "阿瑞斯高斯核弹发射井"};
     static {
         // init default player attribute map
         defaultPlayerAttrMap.put("armorPenetration", 0d);
@@ -1928,7 +1930,7 @@ public class PlayerHelper {
             String title = TerrariaHelper.settingConfig.getString("settings.playerInventoryTitles." + invName, "");
             List<String> contents = plyFile.getStringList("inventory." + invName);
             if (contents == null) contents = new ArrayList<>(1);
-            Inventory inv = Bukkit.createInventory(ply, playerExtraInventorySize, title);
+            Inventory inv = Bukkit.createInventory(ply, PLAYER_EXTRA_INVENTORY_SIZE, title);
             int slot = 0;
             for (String itemInfo : contents) {
                 inv.setItem(slot, ItemHelper.getItemFromDescription(itemInfo, false));
@@ -1952,8 +1954,8 @@ public class PlayerHelper {
         YmlHelper.YmlSection plyFile = getPlayerDataFile(ply);
         for (String invType : inventories.keySet()) {
             Inventory currInv = inventories.get(invType);
-            ArrayList<String> result = new ArrayList<>(playerExtraInventorySize);
-            for (int i = 0; i < playerExtraInventorySize; i ++) {
+            ArrayList<String> result = new ArrayList<>(PLAYER_EXTRA_INVENTORY_SIZE);
+            for (int i = 0; i < PLAYER_EXTRA_INVENTORY_SIZE; i ++) {
                 result.add(ItemHelper.getItemDescription(currInv.getItem(i)));
             }
             plyFile.set("inventory." + invType, result);
@@ -2314,5 +2316,47 @@ public class PlayerHelper {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                     () -> ply.removeScoreboardTag("temp_dashCD"), dashCD);
         }
+    }
+    public static void initAresExoskeletonConfig(Player ply, boolean force) {
+        // if the metadata is in place AND it is not forced to be renewed, do nothing.
+        if (EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_EXOSKELETON) != null && (! force))
+            return;
+        // init the cannon config
+        ArrayList<Short> cannons = new ArrayList<>(4);
+        for (short i = 0; i < 4; i ++)
+            cannons.add(i);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_EXOSKELETON, cannons);
+    }
+    public static ArrayList<Short> getAresExoskeletonConfig(Player ply) {
+        // make sure the config is present.
+        initAresExoskeletonConfig(ply, false);
+        // fetch the value.
+        return (ArrayList<Short>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_EXOSKELETON).value();
+    }
+    public static void showAresExoskeletonConfig(Player ply) {
+        // make sure the config is present.
+        ArrayList<Short> config = getAresExoskeletonConfig(ply);
+        // init the inventory
+        Inventory inv = Bukkit.createInventory(ply, 9, ARES_EXOSKELETON_CONFIG_PAGE_NAME);
+        ItemStack placeholder = new ItemStack(Material.STAINED_GLASS_PANE);
+        for (int slot = 0; slot < 9; slot ++) {
+            if (slot < config.size())
+                inv.setItem(slot, ItemHelper.getItemFromDescription( ARES_EXOSKELETON_WEAPON_NAMES[ config.get(slot) ] ));
+            else
+                inv.setItem(slot, placeholder);
+        }
+        // show inventory
+        ply.openInventory(inv);
+    }
+    public static void clickAresExoskeletonConfig(Player ply, Inventory inv, int idx) {
+        // make sure the config is present.
+        ArrayList<Short> config = getAresExoskeletonConfig(ply);
+        // check for out of bound
+        if (idx >= 4)
+            return;
+        // get item
+        short newItemIdx = (short) ((config.get(idx) + 1) % 4);
+        config.set(idx, newItemIdx);
+        inv.setItem(idx, ItemHelper.getItemFromDescription( ARES_EXOSKELETON_WEAPON_NAMES[ newItemIdx ] ));
     }
 }

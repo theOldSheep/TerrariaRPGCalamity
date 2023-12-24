@@ -1281,6 +1281,66 @@
     projectileSize: 1.5
     autoTrace: true
     autoTraceRadius: 32
+极昼激光:
+    gravity: 0
+    liveTime: 60
+    blockHitAction: thru
+    projectileSize: 0.5
+硫火仆从飞弹:
+    gravity: 0
+    liveTime: 60
+    blockHitAction: thru
+    projectileSize: 0.5
+    buffInflict:
+        - "硫磺火|80|1"
+阿瑞斯外骨骼等离子光球:
+    gravity: 0
+    liveTime: 80
+    blockHitAction: thru
+    penetration: 2
+    projectileSize: 0.5
+    autoTrace: true
+    autoTraceRadius: 32
+阿瑞斯外骨骼球状闪电:
+    gravity: 0
+    liveTime: 60
+    blockHitAction: thru
+    penetration: 999999
+    spawnProjectiles:
+        interval: 8
+        offset: 24
+        spawnMechanism: ENEMY
+        damageMulti: 0.75
+        speed: 24
+        spawnType: 阿瑞斯外骨骼球状闪电电弧
+阿瑞斯外骨骼球状闪电电弧:
+    gravity: 0
+    liveTime: 1
+    blockHitAction: thru
+    trailColor: 138|227|237
+    trailIntensityMulti: 2
+    buffInflict:
+        - "带电|100|1"
+阿瑞斯外骨骼热能激光:
+    gravity: 0
+    liveTime: 60
+    projectileSize: 0.5
+    penetration: 999999
+阿瑞斯外骨骼高斯核弹:
+    gravity: 0
+    liveTime: 100
+    blockHitAction: thru
+    projectileSize: 1.5
+    autoTrace: true
+    autoTraceRadius: 48
+    autoTraceAbility: 6
+    isGrenade: true
+    blastRadius: 4
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.5
+        name: 冲击波1
+        velocity: 0
 ####
 橡子:
     noGravityTicks: 0
@@ -4901,11 +4961,11 @@ TNT:
 烈焰箭:
     arrowOrPotion: true
     buffInflict:
-        - "燃烧|200|0.3"
+        - "燃烧|200|0.5"
 冰焰箭:
     arrowOrPotion: true
     buffInflict:
-        - "霜火|100|0.35"
+        - "霜火|100|0.5"
 邪箭:
     arrowOrPotion: true
     penetration: 4

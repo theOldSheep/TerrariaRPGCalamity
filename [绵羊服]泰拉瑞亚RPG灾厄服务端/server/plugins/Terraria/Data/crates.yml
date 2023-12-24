@@ -893,13 +893,11 @@
   星流巨械:
     1:
       giveAllItems: false
-      amountToGive: 2
+      amountToGive: 1
       items:
-      - 光子撕裂者
       - 塔纳托斯的脊柱
       - 煌晖御流炮
       - 阿瑞斯外骨骼
-      - 擎天军用信标
     2:
       items:
       - 嘉登之心

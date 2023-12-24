@@ -286,9 +286,13 @@ public class TerrariaItem extends EntityItem {
             case "生命强化焰":
             case "伤害强化焰":
             case "魔力强化焰":
+            case "星尘":
             case "光明之魂":
             case "暗影之魂":
             case "飞翔之魂":
+            case "力量之魂":
+            case "视域之魂":
+            case "恐惧之魂":
             case "日光精华":
             case "冰川精华":
             case "混乱精华":
