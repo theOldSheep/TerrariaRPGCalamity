@@ -736,18 +736,6 @@
   size: 12
   attributes:
     useTime: 20
-红日:
-  type: SWING
-  autoSwing: true
-  size: 5
-龙破斩:
-  type: SWING
-  autoSwing: true
-  size: 8
-  projectileInfo:
-    interval: 1
-    velocity: 3
-    name: 龙破斩剑气
 无限大地:
   type: SWING
   autoSwing: true
@@ -3665,6 +3653,24 @@ Dodu的手炮:
   damageType: Rocket
   minionName: 阿瑞斯外骨骼
   slotsRequired: 10
+  noDuplication: true
+归虚之灵:
+  type: SUMMON
+  damageType: Magic
+  minionName: 归虚之灵
+  slotsRequired: 10
+  noDuplication: true
+源生寒晶:
+  type: SUMMON
+  damageType: Magic
+  minionName: 源生寒晶
+  slotsRequired: 10
+  noDuplication: true
+光阴流时伞:
+  type: SUMMON
+  damageType: Melee
+  minionName: 光阴流时伞
+  slotsRequired: 5
   noDuplication: true
 ####
 鞭炮:

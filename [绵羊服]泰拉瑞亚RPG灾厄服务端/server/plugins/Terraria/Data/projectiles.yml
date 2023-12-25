@@ -1341,6 +1341,43 @@
         damageMulti: 0.5
         name: 冲击波1
         velocity: 0
+归墟跟踪能源箭:
+    gravity: 0
+    liveTime: 80
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceRadius: 32
+    autoTraceAbility: 5
+    buffInflict:
+        - "超位崩解|100|1"
+归墟爆破之星:
+    gravity: 0
+    liveTime: 80
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceRadius: 32
+    autoTraceAbility: 6
+    isGrenade: true
+    blastRadius: 6
+    buffInflict:
+        - "超位崩解|100|1"
+源生冰片:
+    gravity: 0
+    liveTime: 80
+    blockHitAction: thru
+    autoTrace: true
+    autoTraceRadius: 64
+    autoTraceAbility: 6
+    noAutoTraceTicks: 5
+    buffInflict:
+        - "夜魇|100|1"
+源生冰锥:
+    gravity: 0
+    liveTime: 15
+    blockHitAction: thru
+    penetration: 999999
+    buffInflict:
+        - "夜魇|100|1"
 ####
 橡子:
     noGravityTicks: 0
@@ -3317,49 +3354,6 @@ TNT:
     trailLingerTime: 5
     buffInflict:
         - "超位崩解|100|1"
-日炎火球碎片:
-    gravity: 0
-    blockHitAction: thru
-    autoTrace: true
-    liveTime: 40
-    trailColor: 252|241|35
-    buffInflict:
-        - "神圣之火|40|1"
-日炎火球:
-    gravity: 0
-    blockHitAction: thru
-    projectileSize: 3
-    liveTime: 60
-    speedMultiPerTick: 0.98
-    isGrenade: true
-    blastRadius: 2
-    buffInflict:
-        - "神圣之火|80|1"
-    clusterBomb:
-        amount: 2
-        damageMulti: 0.6666
-        name: 日炎火球碎片
-        velocity: 2.75
-龙破斩分裂剑气:
-    gravity: 0
-    blockHitAction: thru
-    projectileSize: 1.5
-    penetration: 999999
-    liveTime: 115
-    speedMultiPerTick: 0.98
-    buffInflict:
-        - "破晓|60|1"
-龙破斩剑气:
-    gravity: 0
-    projectileSize: 1.5
-    liveTime: 60
-    buffInflict:
-        - "破晓|60|1"
-    clusterBomb:
-        amount: 8
-        damageMulti: 1
-        name: 龙破斩分裂剑气
-        velocity: 1.5
 三色大地流星:
     gravity: 0
     blockHitAction: thru

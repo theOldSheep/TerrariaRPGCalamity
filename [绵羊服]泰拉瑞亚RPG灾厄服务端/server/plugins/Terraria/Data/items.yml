@@ -3458,34 +3458,6 @@
     buffInflictMelee: 超位崩解|100|1
   worth: 30000000
   rarity: 15
-红日:
-  item: DIAMOND_SWORD
-  lore:
-  - §r圣堂之上
-  - §r日炎火球从天而降
-  attributes:
-    damage: 1000
-    damageType: Melee
-    crit: 4
-    knockback: 4
-    useTime: 30
-    buffInflictMelee: 神圣之火|100|1
-  worth: 40000000
-  rarity: 16
-龙破斩:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射符文剑气，击中敌人时爆炸产生新的剑气
-  - §r新的剑气会上下翻飞继续攻击敌人
-  attributes:
-    damage: 500
-    damageType: Melee
-    crit: 4
-    knockback: 7.25
-    useTime: 24
-    buffInflictMelee: 破晓|200|1
-  worth: 40000000
-  rarity: 16
 无限大地:
   item: DIAMOND_SWORD
   lore:
@@ -9514,7 +9486,7 @@ Dodu的手炮:
   lore:
   - §r在你的头顶召唤一朵冰霜之花
   - §r同时只能存在至多一朵冰霜之花
-  - §r“要三连啊”
+  - §r“要三连啊~~”
   attributes:
     damage: 20
     damageType: Summon
@@ -10314,7 +10286,7 @@ Dodu的手炮:
   - §r离子加农炮，特斯拉加农炮，镭射加农炮，高斯核弹加农炮
   - §r右键可以打开编辑面板，点击一个武装槽位可以循环更改对应加农炮的种类
   attributes:
-    damage: 1250
+    damage: 1000
     damageType: Summon
     knockback: 1
     useTime: 50
@@ -10364,14 +10336,15 @@ Dodu的手炮:
   lore:
   - §r召唤一个升格的冰晶结构来保护你
   - §r再次使用或重新召唤可以改变攻击形态
-  - §r第一形态：发射多束锁定敌人的激光
+  - §r第一形态：迅速发射锁定敌人的激光
   - §r第二形态：发射大量追踪冰晶
-  - §r第三形态：连续冲撞敌人
-  - §r第四形态：旋转并向四周喷射极寒之火
+  - §r第三形态：冲向敌人
+  - §r第四形态：向敌人喷射极寒之火
   - §r需要至少10格仆从栏位才能使用
   - §r同时只能存在至多一个冰晶结构
+  - §#83EFFF“不包含冰的双关语”
   attributes:
-    damage: 2600
+    damage: 650
     damageType: Summon
     knockback: 4
     useTime: 60
@@ -10381,13 +10354,15 @@ Dodu的手炮:
 光阴流时伞:
   item: DIAMOND_SWORD
   lore:
-  - §r召唤各种工具协助你作战：
-  - §r一支朱红色箭矢会穿透你的对手
-  - §r一个果酱锤会别具风格的锤打敌人
-  - §r一柄翡翠斧会劈开怪物并且偶尔会砍倒一棵树
-  - §r一把青色雨伞会优雅的击败你的敌人
-  - §r一杆淡紫色步枪会射击那些阻碍你前进的人
-  - §r需要至少5格仆从栏位才能使用并且同时只能存在至多一套工具
+  - §r召唤一把光阴流时伞，号令多种仆从协助你作战：
+  - §r泰拉棱镜x2
+  - §r元素斧头
+  - §r耀目圣刃
+  - §r葱茏之锋
+  - §r灭兆渡鸦
+  - §r宇宙炮艇（注：需要消耗背包中的子弹）
+  - §r极昼飞行物
+  - §r需要至少5格仆从栏位才能使用并且最多召唤一次
   - §r“如此结实，我敢说它一击就能打趴那些黑手党”
   attributes:
     damage: 386

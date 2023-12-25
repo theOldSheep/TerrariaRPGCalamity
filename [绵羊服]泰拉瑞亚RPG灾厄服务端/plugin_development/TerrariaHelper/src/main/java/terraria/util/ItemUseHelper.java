@@ -220,6 +220,10 @@ public class ItemUseHelper {
                 ply.openInventory(PlayerHelper.getInventory(ply, "voidBag"));
                 return true;
             }
+            case "阿瑞斯外骨骼": {
+                PlayerHelper.showAresExoskeletonConfig(ply);
+                return true;
+            }
         }
         return false;
     }
@@ -2472,22 +2476,6 @@ public class ItemUseHelper {
                             setDurability(weaponItem, 8, currCharge - 1);
                         break;
                     }
-                    case "红日": {
-                        if (currentIndex == 0) {
-                            for (int i = 0; i < 12; i ++) {
-                                Vector projVel = MathHelper.vectorFromYawPitch_quick(
-                                        Math.random() * 360, 60 + Math.random() * 30);
-                                projVel.multiply(1.75);
-                                Location spawnLoc = ply.getEyeLocation().add(
-                                        Math.random() * 25 - 12.5,
-                                        Math.random() * 10 + 15,
-                                        Math.random() * 25 - 12.5);
-                                EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
-                                        attrMap, EntityHelper.DamageType.MELEE, "日炎火球");
-                            }
-                        }
-                        break;
-                    }
                     case "无限大地": {
                         EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
                                 .setAimMode(true).setTicksOffset(10);
@@ -4728,8 +4716,10 @@ public class ItemUseHelper {
             // for minions with no duplication allowed, abort the summoning attempt if a minion exists already.
             if (noDuplication) {
                 for (Entity toCheck : minionList) {
-                    if (GenericHelper.trimText(toCheck.getName()).equals(type) && !toCheck.isDead())
+                    if (GenericHelper.trimText(toCheck.getName()).equals(type) && !toCheck.isDead()) {
+                        toCheck.addScoreboardTag("reSummoned");
                         return false;
+                    }
                 }
             }
             // check if the minion limit satisfies the requirement

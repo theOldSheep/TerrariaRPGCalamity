@@ -477,11 +477,13 @@
   极地之灵:
     1:
       giveAllItems: false
+      amountToGive: 2
       items:
       - 冰寒神性
       - 白霜弓
       - 雪崩
       - 冰晶风暴
+      - 寒极法杖
     2:
       items:
       - 极寒之魂
@@ -893,7 +895,6 @@
   星流巨械:
     1:
       giveAllItems: false
-      amountToGive: 1
       items:
       - 塔纳托斯的脊柱
       - 煌晖御流炮

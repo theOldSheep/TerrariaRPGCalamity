@@ -1797,6 +1797,18 @@ ANVIL:
     - 丛林孢子:12
     - 毒刺:4
     - 藤蔓:2
+  '215_1':
+    requireLevel: 3
+    resultItem: 龙魂破
+    requireItem:
+    - 晨星链刃
+    - 太极连枷
+    - 猪鲨链球
+    - 海胆链球
+    - 海胆链枷
+    - 风滚草
+    - 龙魂碎片:4
+    - 圣金源锭:5
   '216':
     requireLevel: 2
     resultItem: 星夜长枪
@@ -4679,22 +4691,6 @@ TINKER_WORKBENCH:
     - 圣火之刃
     - 破灭魔王剑
     - 奇迹物质
-  '2':
-    requireLevel: 1
-    resultItem: 红日
-    requireItem:
-    - 灼炎弯刀
-    - 遗忘之刃
-    - 日光核心:5
-    - 魔影锭:5
-  '3':
-    requireLevel: 1
-    resultItem: 龙破斩
-    requireItem:
-    - 魔影锭:5
-    - 日光核心:3
-    - 冰川核心:3
-    - 日耀碎片:10
   '4':
     requireLevel: 1
     resultItem: 无限大地
@@ -4717,18 +4713,6 @@ TINKER_WORKBENCH:
     - 泰拉悠悠球
     - 魔影锭:5
     - 灾劫核心:2
-  '7':
-    requireLevel: 1
-    resultItem: 龙魂破
-    requireItem:
-    - 晨星链刃
-    - 太极连枷
-    - 猪鲨链球
-    - 海胆链球
-    - 海胆链枷
-    - 风滚草
-    - 龙魂碎片:4
-    - 圣金源锭:5
   '8':
     requireLevel: 1
     resultItem: 天堂之风
@@ -4840,8 +4824,9 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 光阴流时伞
     requireItem:
+    - 元素之斧
     - 葱茏之锋
-    - 龙血弃族
+    - 耀目穿刺者杖
+    - 灭兆渡鸦杖
     - 极昼信标
-    - 星律之握揽
     - 魔影锭:5
