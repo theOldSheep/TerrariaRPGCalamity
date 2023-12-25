@@ -717,7 +717,8 @@ public class ItemUseHelper {
                     strikeLineInfo.setParticleInfo(new GenericHelper.ParticleLineOptions()
                             .setParticleOrItem(false)
                             .setSpriteItem(weaponItem.clone())
-                            .setTicksLinger(1));
+                            .setTicksLinger(1)
+                            .setRightOrthogonalDir(MathHelper.vectorFromYawPitch_quick(yawMin + 90, 0)));
                 break;
             // special settings for whips
             case 2:
