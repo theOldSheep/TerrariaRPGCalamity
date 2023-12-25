@@ -3294,6 +3294,10 @@ Dodu的手炮:
   type: SENTRY
   damageType: Melee
   minionName: 岩刺
+干缩腐尸:
+  type: SENTRY
+  damageType: Arrow
+  minionName: 硫海遗爵之首
 史莱姆法杖:
   type: SUMMON
   damageType: Melee
@@ -3672,7 +3676,6 @@ Dodu的手炮:
   minionName: 光阴流时伞
   slotsRequired: 5
   noDuplication: true
-####
 鞭炮:
   type: WHIP
   autoSwing: true

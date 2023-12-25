@@ -1378,7 +1378,6 @@
     penetration: 999999
     buffInflict:
         - "夜魇|100|1"
-####
 橡子:
     noGravityTicks: 0
     liveTime: 50
@@ -1400,6 +1399,11 @@
     liveTime: 10
     isGrenade: true
     blastRadius: 1
+干缩硫海龙鲨:
+    liveTime: 60
+    projectileSize: 1.5
+    autoTrace: true
+    autoTraceRadius: 24
 星尘细胞弹:
     autoTrace: true
     buffInflict:

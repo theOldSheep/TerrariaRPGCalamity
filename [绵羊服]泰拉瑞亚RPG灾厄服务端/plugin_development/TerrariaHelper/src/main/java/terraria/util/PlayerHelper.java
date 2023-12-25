@@ -99,7 +99,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("reachExtra", 0d);
         defaultPlayerAttrMap.put("regen", 0d);
         defaultPlayerAttrMap.put("regenMulti", 1d);
-        defaultPlayerAttrMap.put("sentryLimit", 2d);
+        defaultPlayerAttrMap.put("sentryLimit", 1d);
         defaultPlayerAttrMap.put("speed", 0.2d);
         defaultPlayerAttrMap.put("speedMulti", 1d);
         defaultPlayerAttrMap.put("useSpeedMagicMulti", 1d);

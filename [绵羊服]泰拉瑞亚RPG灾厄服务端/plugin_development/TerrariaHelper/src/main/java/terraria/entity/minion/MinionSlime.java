@@ -436,6 +436,10 @@ public class MinionSlime extends EntitySlime {
                 damageInvincibilityTicks = 4;
                 break;
             }
+            case "硫海遗爵之首": {
+                setSize(5, false);
+                break;
+            }
             case "霜之华":
             case "天狼星":
             case "灿烂光环":
@@ -2946,6 +2950,20 @@ public class MinionSlime extends EntitySlime {
                     }
                 }
 
+                break;
+            }
+            case "硫海遗爵之首": {
+                // fire every 3 ticks, IF the distance is less than 32 blocks (32 * 32 = 1024)
+                if ( !targetIsOwner && index % 3 == 0 &&
+                        target.getLocation().distanceSquared( minionBukkit.getLocation() ) < 1024 ) {
+                    Vector projVel = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 1);
+                    double projVelPitch = MathHelper.getVectorPitch(projVel), minPitch = -45;
+                    if (projVelPitch > minPitch)
+                        projVel = MathHelper.vectorFromYawPitch_quick(MathHelper.getVectorYaw(projVel), minPitch);
+                    projVel.multiply(1.25);
+
+                    EntityHelper.spawnProjectile(minionBukkit, projVel, attrMap, "干缩硫海龙鲨");
+                }
                 break;
             }
         }
