@@ -2040,7 +2040,7 @@ public class EntityHelper {
                     {
                         keys = new String[]{"autoTraceMethod", "bounce", "enemyInvincibilityFrame", "liveTime",
                                 "noAutoTraceTicks", "noGravityTicks", "maxAutoTraceTicks", "minimumDamageTicks",
-                                "trailLingerTime", "penetration"};
+                                "penetration", "trailLingerTime", "worldSpriteUpdateInterval"};
                         for (String key : keys) {
                             if (section.contains(key))
                                 this.properties.put(key, section.getInt(key));
@@ -2048,7 +2048,7 @@ public class EntityHelper {
                     }
                     // strings
                     {
-                        keys = new String[]{"blockHitAction", "trailColor"};
+                        keys = new String[]{"blockHitAction", "trailColor", "spawnSound"};
                         for (String key : keys) {
                             if (section.contains(key))
                                 this.properties.put(key, section.getString(key));
@@ -2058,8 +2058,9 @@ public class EntityHelper {
                     {
                         keys = new String[]{"autoTraceAbility", "autoTraceEndSpeedMultiplier", "autoTraceRadius",
                                 "blastRadius", "bounceVelocityMulti",
-                                "frictionFactor", "gravity", "maxSpeed", "projectileSize", "speedMultiPerTick",
-                                "trailIntensityMulti", "trailSize", "trailStepSize"};
+                                "frictionFactor", "gravity", "maxSpeed", "projectileSize", "spawnSoundPitch",
+                                "spawnSoundVolume", "speedMultiPerTick", "trailIntensityMulti", "trailSize",
+                                "trailStepSize"};
                         for (String key : keys) {
                             if (section.contains(key))
                                 this.properties.put(key, section.getDouble(key));
@@ -2069,7 +2070,8 @@ public class EntityHelper {
                     {
                         keys = new String[]{"autoTrace", "autoTraceSharpTurning", "blastDamageShooter",
                                 "blastOnContactBlock", "blastOnContactEnemy", "bouncePenetrationBonded",
-                                "canBeReflected", "isGrenade", "slowedByWater", "trailVanillaParticle"};
+                                "canBeReflected", "isGrenade", "slowedByWater", "trailVanillaParticle",
+                                "worldSpriteMode"};
                         for (String key : keys) {
                             if (section.contains(key))
                                 this.properties.put(key, section.getBoolean(key));
