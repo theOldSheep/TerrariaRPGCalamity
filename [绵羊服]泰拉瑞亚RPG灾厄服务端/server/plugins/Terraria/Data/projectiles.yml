@@ -3018,14 +3018,14 @@ TNT:
     liveTime: 40
     autoTrace: true
     trailColor: 255|255|255
-    trailStepSize: 1
+    trailStepSize: 0.5
     trailLingerTime: 6
 制裁大剑剑气:
     gravity: 0
     projectileSize: 0.5
     liveTime: 60
     trailColor: 255|255|255
-    trailStepSize: 1
+    trailStepSize: 0.5
     trailLingerTime: 6
     spawnProjectiles:
         interval: 4
@@ -3041,8 +3041,7 @@ TNT:
     penetration: 999999
     liveTime: 15
     trailColor: 56|208|152
-    trailSize: 0.2
-    trailStepSize: 0.75
+    trailIntensityMulti: 0.25
     buffInflict:
         - "瘟疫|40|1"
     spawnProjectiles:
@@ -3056,12 +3055,16 @@ TNT:
     gravity: 0
     projectileSize: 0.75
     liveTime: 100
+    trailColor: 255|150|0
+    trailIntensityMulti: 0.5
     buffInflict:
         - "破晓|60|1"
 夜晚剑气:
     gravity: 0
     projectileSize: 0.75
     liveTime: 100
+    trailColor: 0|150|255
+    trailIntensityMulti: 0.5
     buffInflict:
         - "夜魇|60|1"
 爆破剑气:
@@ -3245,14 +3248,14 @@ TNT:
     autoTrace: true
     autoTraceRadius: 24
     trailColor: 255|255|255
-    trailStepSize: 1
+    trailStepSize: 0.5
     trailLingerTime: 6
 携序之剑剑气:
     gravity: 0
     projectileSize: 0.5
     liveTime: 40
     trailColor: 255|255|255
-    trailStepSize: 1
+    trailStepSize: 0.5
     trailLingerTime: 6
     spawnProjectiles:
         interval: 3
@@ -3288,6 +3291,7 @@ TNT:
 分裂禅心导弹:
     gravity: 0
     liveTime: 30
+    projectileSize: 0.5
     autoTrace: true
     noAutoTraceTicks: 5
     autoTraceRadius: 16
@@ -3398,6 +3402,7 @@ TNT:
     projectileSize: 3
     liveTime: 40
     trailColor: 255|0|0
+    trailIntensityMulti: 0.5
     buffInflict:
         - "超位崩解|200|1"
 绿色绚辉圣剑光束:
@@ -3408,6 +3413,7 @@ TNT:
     projectileSize: 3
     liveTime: 50
     trailColor: 0|255|0
+    trailIntensityMulti: 0.5
     buffInflict:
         - "超位崩解|200|1"
 黄色绚辉圣剑光束:
@@ -3418,6 +3424,7 @@ TNT:
     maxSpeed: 5
     liveTime: 30
     trailColor: 255|255|0
+    trailIntensityMulti: 0.5
     buffInflict:
         - "超位崩解|200|1"
 蓝色绚辉圣剑光束:
@@ -3428,6 +3435,7 @@ TNT:
     penetration: 10
     liveTime: 50
     trailColor: 0|255|255
+    trailIntensityMulti: 0.5
     buffInflict:
         - "超位崩解|200|1"
 电火花:
