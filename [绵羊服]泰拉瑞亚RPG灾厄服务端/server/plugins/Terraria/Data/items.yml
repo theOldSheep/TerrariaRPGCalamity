@@ -1,5 +1,5 @@
 南瓜:
-  item: PUMPKIN
+  item: CLAY_BALL
   worth: 2500
   rarity: 0
 南瓜种子:
@@ -451,9 +451,7 @@
   worth: 200000
   rarity: 9
 阴森木:
-  item: LOG_2
-  lore:
-  - §r放置后破坏以转化为普通木材
+  item: CLAY_BALL
   rarity: 0
 钨钢金属废料:
   item: CLAY_BALL
@@ -3371,7 +3369,7 @@
   item: DIAMOND_SWORD
   lore:
   - §r发射发散的恶魔之镰
-  - §r暴击会造成暗影焰爆炸
+  - §r直接命中敌人时有等同于暴击率的概率造成暗影焰爆炸
   attributes:
     damage: 450
     damageType: Melee
