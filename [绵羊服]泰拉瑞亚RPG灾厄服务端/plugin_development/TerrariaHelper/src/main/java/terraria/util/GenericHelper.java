@@ -18,8 +18,8 @@ import java.util.function.Predicate;
 
 public class GenericHelper {
     static long nextWorldTextureIndex = 0;
-    // actually, 64*64 = 4096
-    static double PARTICLE_DISPLAY_RADIUS_SQR = 5000;
+    // 80 * 80 = 6400
+    static double PARTICLE_DISPLAY_RADIUS_SQR = 6400;
     public static class ParticleLineOptions {
         boolean particleOrItem;
         boolean vanillaParticle;
@@ -722,6 +722,21 @@ public class GenericHelper {
         }
         // return the answer
         return result;
+    }
+    public static void displayNonDirectionalHoloItem(Location displayLoc, ItemStack item, int ticksDisplay, float size) {
+        String holoInd = "" + (nextWorldTextureIndex++);
+        // all players in radius of 64 blocks can see the hologram
+        ArrayList<Player> playersSent = new ArrayList<>(10);
+        for (Player p : displayLoc.getWorld().getPlayers())
+            if (p.getLocation().distanceSquared(displayLoc) < PARTICLE_DISPLAY_RADIUS_SQR) playersSent.add(p);
+        // send packets
+        for (Player p : playersSent)
+            CoreAPI.setPlayerWorldTextureItem(p, holoInd, displayLoc,
+                    0, 0, 0, item, size * 2, true);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+            for (Player p : playersSent)
+                CoreAPI.removePlayerWorldTexture(p, holoInd);
+        }, ticksDisplay);
     }
     public static void displayHoloItem(Location displayLoc, ItemStack item, int ticksDisplay, float size, Vector displayDir, Vector rightOrthogonalDirection) {
         String holoInd = "" + (nextWorldTextureIndex++);

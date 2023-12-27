@@ -2,7 +2,6 @@ package terraria.entity.projectile;
 
 import net.minecraft.server.v1_12_R1.*;
 import net.minecraft.server.v1_12_R1.MathHelper;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -13,7 +12,6 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
-import org.omg.CORBA.TIMEOUT;
 import terraria.TerrariaHelper;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.event.listener.ArrowHitListener;
@@ -25,19 +23,22 @@ public class TerrariaPotionProjectile extends EntityPotion {
     private static final double distFromBlock = 1e-3, distCheckOnGround = 1e-1;
     public static final int DESTROY_HIT_BLOCK = 0, DESTROY_HIT_ENTITY = 1, DESTROY_TIME_OUT = 2;
     // projectile info
-    public String projectileType, blockHitAction = "die", trailColor = null;
+    public String projectileType, blockHitAction = "die", spawnSound = "", trailColor = null;
     public int autoTraceMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200,
             noAutoTraceTicks = 0, noGravityTicks = 5, maxAutoTraceTicks = 999999, minimumDamageTicks = 0,
-            trailLingerTime = 10, penetration = 0;
+            penetration = 0, trailLingerTime = 10, worldSpriteUpdateInterval = 1;
     public double autoTraceAbility = 4, autoTraceEndSpeedMultiplier = 1, autoTraceRadius = 12,
             blastRadius = 1.5, bounceVelocityMulti = 1,
-            frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileRadius = 0.125, speedMultiPerTick = 1,
+            frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileRadius = 0.125,
+            spawnSoundPitch = 1, spawnSoundVolume = 1.5, speedMultiPerTick = 1,
             trailIntensityMulti = 1, trailSize = -1, trailStepSize = -1;
     public boolean arrowOrPotion = false, autoTrace = false, autoTraceSharpTurning = true, blastDamageShooter = false,
             blastOnContactBlock = false, blastOnContactEnemy = false, blastOnTimeout = true,
             bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = true,
-            trailVanillaParticle = true;
+            trailVanillaParticle = true, worldSpriteMode = false;
 
+    // projectile variables
+    public int worldSpriteIdx = 0;
     public double speed;
     public boolean lastOnGround = false;
     public HashSet<org.bukkit.entity.Entity> damageCD;
@@ -64,10 +65,12 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.noGravityTicks = (int) properties.getOrDefault("noGravityTicks", this.noGravityTicks);
             this.maxAutoTraceTicks = (int) properties.getOrDefault("maxAutoTraceTicks", this.maxAutoTraceTicks);
             this.minimumDamageTicks = (int) properties.getOrDefault("minimumDamageTicks", this.minimumDamageTicks);
-            this.trailLingerTime = (int) properties.getOrDefault("trailLingerTime", this.trailLingerTime);
             this.penetration = (int) properties.getOrDefault("penetration", this.penetration);
+            this.trailLingerTime = (int) properties.getOrDefault("trailLingerTime", this.trailLingerTime);
+            this.worldSpriteUpdateInterval = (int) properties.getOrDefault("worldSpriteUpdateInterval", this.worldSpriteUpdateInterval);
             // thru, bounce, stick, slide
             this.blockHitAction = (String) properties.getOrDefault("blockHitAction", this.blockHitAction);
+            this.spawnSound = (String) properties.getOrDefault("spawnSound", this.spawnSound);
             this.trailColor = (String) properties.getOrDefault("trailColor", this.trailColor);
             // multiple trail color: select one at random
             if (this.trailColor != null && this.trailColor.contains(";")) {
@@ -84,6 +87,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.gravity = (double) properties.getOrDefault("gravity", this.gravity);
             this.maxSpeed = (double) properties.getOrDefault("maxSpeed", this.maxSpeed);
             this.projectileRadius = (double) properties.getOrDefault("projectileSize", this.projectileRadius * 2) / 2;
+            this.spawnSoundPitch = (double) properties.getOrDefault("spawnSoundPitch", this.spawnSoundPitch);
+            this.spawnSoundVolume = (double) properties.getOrDefault("spawnSoundVolume", this.spawnSoundVolume);
             this.speedMultiPerTick = (double) properties.getOrDefault("speedMultiPerTick", this.speedMultiPerTick);
             this.trailIntensityMulti = (double) properties.getOrDefault("trailIntensityMulti", this.trailIntensityMulti);
             this.trailSize = (double) properties.getOrDefault("trailSize", this.projectileRadius);
@@ -101,6 +106,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.isGrenade = (boolean) properties.getOrDefault("isGrenade", this.isGrenade);
             this.slowedByWater = (boolean) properties.getOrDefault("slowedByWater", this.slowedByWater);
             this.trailVanillaParticle = (boolean) properties.getOrDefault("trailVanillaParticle", this.trailVanillaParticle);
+            this.worldSpriteMode = (boolean) properties.getOrDefault("worldSpriteMode", this.worldSpriteMode);
         }
         this.setNoGravity(true);
         this.noclip = true;
@@ -142,16 +148,21 @@ public class TerrariaPotionProjectile extends EntityPotion {
     }
     // setup properties of the specific type, including its item displayed
     public void setType(String type) {
-        setItem(generateItemStack(type));
+        // if world sprite mode is on, do not give the projectile an item sprite that may interfere with the world sprite.
+        if (! worldSpriteMode)
+            setItem(generateItemStack(type));
         setProperties(type);
     }
-    public static ItemStack generateItemStack(String projectileType) {
+    public static org.bukkit.inventory.ItemStack generateBukkitItemStack(String projectileType) {
         org.bukkit.inventory.ItemStack item = new org.bukkit.inventory.ItemStack(org.bukkit.Material.SPLASH_POTION);
         org.bukkit.inventory.meta.PotionMeta meta = (org.bukkit.inventory.meta.PotionMeta) item.getItemMeta();
         meta.setDisplayName(projectileType);
         meta.setColor(org.bukkit.Color.fromRGB(255, 255, 255));
         item.setItemMeta(meta);
-        return CraftItemStack.asNMSCopy(item);
+        return item;
+    }
+    public static ItemStack generateItemStack(String projectileType) {
+        return CraftItemStack.asNMSCopy(generateBukkitItemStack(projectileType));
     }
     // constructor
     public TerrariaPotionProjectile(World world) {
@@ -184,6 +195,10 @@ public class TerrariaPotionProjectile extends EntityPotion {
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, this.attrMap);
         EntityHelper.setDamageType(bukkitEntity, damageType);
         setProperties(projectileType);
+        // play spawned sound
+        if (spawnSound.length() > 0) {
+            bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), spawnSound, (float) spawnSoundVolume, (float) spawnSoundPitch);
+        }
     }
 
     protected double getAutoTraceInterest(Entity target) {
@@ -571,6 +586,12 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 }
                 break;
             }
+            case "冲击波1": {
+                // after 30 ticks, the radius is 30 + 1 = 31, total size = 62
+                projectileRadius += 1;
+                attrMap.put("damage", attrMap.getOrDefault("damage", 10d) * 0.95);
+                break;
+            }
         }
     }
     // this helper function is called every tick only if the projectile would move
@@ -578,7 +599,18 @@ public class TerrariaPotionProjectile extends EntityPotion {
     protected void extraMovingTick() {
 
     }
-    protected void handleParticleTrail() {
+    protected void handleWorldSpriteParticleTrail() {
+        // world sprite
+        if (worldSpriteMode) {
+            if (worldSpriteIdx % worldSpriteUpdateInterval == 0) {
+                int currSpriteIdx = worldSpriteIdx / worldSpriteUpdateInterval + 1;
+                org.bukkit.inventory.ItemStack displaySprite = generateBukkitItemStack(projectileType + "_" + currSpriteIdx);
+                GenericHelper.displayNonDirectionalHoloItem(bukkitEntity.getLocation(), displaySprite,
+                        worldSpriteUpdateInterval, (float) (projectileRadius * 2));
+            }
+            worldSpriteIdx++;
+        }
+        // trail
         if (trailColor != null) {
             // get the smooth transition from last displayed location to future location
             Location targetDisplayLoc = bukkitEntity.getLocation();
@@ -605,7 +637,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             else if (steps > 1) {
                 displayDir.multiply(1d / steps);
                 lastTrailDisplayLocation.add(displayDir);
-                handleParticleTrail();
+                handleWorldSpriteParticleTrail();
                 return;
             }
             // update last location
@@ -1091,7 +1123,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         this.velocityChanged = true;
         this.positionChanged = true;
         // draw particle trail
-        handleParticleTrail();
+        handleWorldSpriteParticleTrail();
         // spawn projectiles
         spawnExtraProjectiles();
         // extra ticking

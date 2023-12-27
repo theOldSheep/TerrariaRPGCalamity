@@ -38,6 +38,12 @@
     speedMultiPerTick: 1.0
     # 最大速度（单位：格/帧），防止恶魔锄刀类武器的速度突破天际，不写则视为100
     maxSpeed: 100
+    # 弹幕产生时播放的音效，默认为""(无)
+    spawnSound: ""
+    # 弹幕产生时播放的音效播放速度，默认为1.0（正常播放速度）
+    spawnSoundPitch: 1.0
+    # 弹幕产生时播放的音效音量，默认为1.5
+    spawnSoundVolume: 1.5
     # 是否为爆炸弹幕（损毁时爆炸）？不写则视为false
     isGrenade: false
     # 是否在接触敌人且穿透未用尽时爆炸？此爆炸不会损坏弹射物。不写则视为false
@@ -59,6 +65,8 @@
     # 击中方块时的反应，不写则视为die
     # die: 击中方块时损毁； thru：穿透方块； bounce：弹跳； stick：黏在方块上； slide：像月光弓一样，在方块表面摩擦
     blockHitAction: die
+    # blockHitAction为bounce（手榴弹）或slide的弹射物在与地面摩擦时的阻力，0为无阻力，1为马上停止。不写则视为0.05。
+    frictionFactor: 0.05
     # 弹跳次数，不写则视为0。仅在blockHitAction: bounce时有作用。
     bounce: 0
     # 弹跳次数和穿透次数是否绑定（弹跳时穿透次数也减少1，反之亦然）？不写则视为false。仅在blockHitAction: bounce时有作用。
@@ -77,8 +85,10 @@
     trailIntensityMulti: 1
     # 轨迹是否使用原版MC的粒子效果（原版粒子效果无法控制持续时间，颜色会略有偏差，观感略差但性能影响较小）。不写则视为true。
     trailVanillaParticle: true
-    # blockHitAction为bounce（手榴弹）或slide的弹射物在与地面摩擦时的阻力，0为无阻力，1为马上停止。不写则视为0.05。
-    frictionFactor: 0.05
+    # 贴图使用药水瓶还是在世界中显示物品贴图（爆炸动画类在原地的弹射物较为适合）？默认为false
+    worldSpriteMode: false
+    # 世界贴图更新的间隔，默认1刻（1/20秒）；世界中的贴图物品名为"弹射物名_1", "弹射物名_2"...以此类推
+    worldSpriteUpdateInterval: 1
     # 攻击造成的buff，格式为  buff名|buff时长（单位：帧）|几率。可不写。
     buffInflict:
         - "霜火|100|0.35"
@@ -757,8 +767,6 @@
     gravity: 0
     liveTime: 100
     projectileSize: 1.5
-    isGrenade: true
-    blastRadius: 2.75
     clusterBomb:
         amount: 1
         damageMulti: 0.15
@@ -766,219 +774,13 @@
         velocity: 0
 冲击波1:
     gravity: 0
-    liveTime: 2
+    liveTime: 30
+    enemyInvincibilityFrame: 1
     penetration: 999999
     blockHitAction: thru
-    projectileSize: 5
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波2
-        velocity: 0
-冲击波2:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 7.5
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波3
-        velocity: 0
-冲击波3:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 10
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波4
-        velocity: 0
-冲击波4:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 12.5
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波5
-        velocity: 0
-冲击波5:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 15
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波6
-        velocity: 0
-冲击波6:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 17.5
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波7
-        velocity: 0
-冲击波7:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 20
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波8
-        velocity: 0
-冲击波8:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 22.5
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波9
-        velocity: 0
-冲击波9:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 25
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波10
-        velocity: 0
-冲击波10:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 27.5
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波11
-        velocity: 0
-冲击波11:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 30
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波12
-        velocity: 0
-冲击波12:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 32.5
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波13
-        velocity: 0
-冲击波13:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 35
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波14
-        velocity: 0
-冲击波14:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 37.5
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波15
-        velocity: 0
-冲击波15:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 40
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波16
-        velocity: 0
-冲击波16:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 42
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波17
-        velocity: 0
-冲击波17:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 44
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波18
-        velocity: 0
-冲击波18:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 46
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波19
-        velocity: 0
-冲击波19:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 48
-    clusterBomb:
-        amount: 1
-        damageMulti: 0.975
-        name: 冲击波20
-        velocity: 0
-冲击波20:
-    gravity: 0
-    liveTime: 2
-    penetration: 999999
-    blockHitAction: thru
-    projectileSize: 50
+    projectileSize: 2
+    worldSpriteMode: true
+    worldSpriteUpdateInterval: 1
 粉色粒子光束:
     gravity: 0
     projectileSize: 1.5
@@ -1334,8 +1136,6 @@
     autoTrace: true
     autoTraceRadius: 48
     autoTraceAbility: 6
-    isGrenade: true
-    blastRadius: 4
     clusterBomb:
         amount: 1
         damageMulti: 0.5
@@ -3129,8 +2929,6 @@ TNT:
     liveTime: 10
     enemyInvincibilityFrame: 1
     trailColor: 128|255|64
-    isGrenade: true
-    blastRadius: 5
     clusterBomb:
         amount: 1
         damageMulti: 1
@@ -3139,10 +2937,12 @@ TNT:
 泰拉能量爆炸:
     gravity: 0
     blockHitAction: thru
-    liveTime: 20
-    projectileSize: 5
+    liveTime: 31
+    projectileSize: 7.5
     penetration: 999999
     enemyInvincibilityFrame: 4
+    worldSpriteMode: true
+    worldSpriteUpdateInterval: 2
     spawnProjectiles:
         interval: 1
         spawnMechanism: SURROUND
@@ -3155,8 +2955,7 @@ TNT:
     liveTime: 1
     penetration: 999999
     trailColor: 128|255|64
-    trailVanillaParticle: false
-    trailStepSize: 0.75
+    trailIntensityMulti: 1.5
     trailLingerTime: 5
 镜之刃镜子:
     gravity: 0
@@ -3344,10 +3143,12 @@ TNT:
 星流能量爆炸:
     gravity: 0
     blockHitAction: thru
-    liveTime: 20
-    projectileSize: 7.5
+    liveTime: 31
+    projectileSize: 10
     penetration: 999999
     enemyInvincibilityFrame: 3
+    worldSpriteMode: true
+    worldSpriteUpdateInterval: 2
     buffInflict:
         - "超位崩解|100|1"
 星流斩切光束:
@@ -3357,8 +3158,7 @@ TNT:
     liveTime: 1
     penetration: 999999
     trailColor: 169|237|101
-    trailVanillaParticle: false
-    trailStepSize: 0.75
+    trailIntensityMulti: 2
     trailLingerTime: 5
     buffInflict:
         - "超位崩解|100|1"
@@ -4323,7 +4123,6 @@ TNT:
 氦闪挥发性星核:
     gravity: 0
     liveTime: 30
-    isGrenade: true
     trailColor: 239|193|119
     clusterBomb:
         amount: 1
@@ -4819,8 +4618,6 @@ TNT:
     projectileSize: 5
     blockHitAction: thru
     gravity: 0
-    isGrenade: true
-    blastRadius: 5
     slowedByWater: false
     clusterBomb:
         amount: 1
