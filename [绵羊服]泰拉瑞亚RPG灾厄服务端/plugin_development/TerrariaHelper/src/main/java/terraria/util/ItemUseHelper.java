@@ -713,12 +713,20 @@ public class ItemUseHelper {
             // if the player is dealing melee damage, display the player's weapon instead of particle
             case 0:
             case 1:
-                if (EntityHelper.getDamageType(ply) == EntityHelper.DamageType.MELEE)
+                if (EntityHelper.getDamageType(ply) == EntityHelper.DamageType.MELEE) {
+                    // create a new weapon item that has the same material and name of the weapon used, but without lore
+                    // it is used as a holographic display, the absence of lore prevents lag.
+                    ItemStack displayItem = new ItemStack(weaponItem.getType());
+                    ItemMeta displayMeta = displayItem.getItemMeta();
+                    displayMeta.setDisplayName(weaponItem.getItemMeta().getDisplayName());
+                    displayItem.setItemMeta(displayMeta);
+
                     strikeLineInfo.setParticleInfo(new GenericHelper.ParticleLineOptions()
                             .setParticleOrItem(false)
-                            .setSpriteItem(weaponItem.clone())
+                            .setSpriteItem(displayItem)
                             .setTicksLinger(1)
                             .setRightOrthogonalDir(MathHelper.vectorFromYawPitch_quick(yawMin + 90, 0)));
+                }
                 break;
             // special settings for whips
             case 2:
@@ -1007,6 +1015,36 @@ public class ItemUseHelper {
                                 invulnerabilityTicks = isArkOfElements ? 14 : 15;
                                 coolDown = 120;
                                 damageReduction = isArkOfElements ? 350 : 400;
+                                // parry function
+                                Collection<Entity> finalDamagedList = damaged;
+                                strikeLineInfo
+                                        .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                            // hit projectile: decrease the projectile's damage
+                                            if (entityHit instanceof Projectile) {
+                                                HashMap<String, Double> entityHitAttrMap = EntityHelper.getAttrMap(entityHit);
+                                                double newDmg = Math.max(1d, entityHitAttrMap.getOrDefault("damage", 1d) - damageReduction);
+                                                entityHitAttrMap.put("damage", newDmg);
+                                            }
+                                            // hit entity: apply melee invulnerability tick
+                                            else {
+                                                EntityHelper.handleEntityTemporaryScoreboardTag(ply,
+                                                        EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
+                                                        invulnerabilityTicks);
+                                                EntityHelper.handleEntityTemporaryScoreboardTag(ply,
+                                                        EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
+                                                        invulnerabilityTicks);
+                                            }
+                                            // recharge
+                                            if (hitIndex == 1) {
+                                                setDurability(weaponItem, 10, 10);
+                                                ply.playSound(ply.getEyeLocation(), SOUND_ARK_PARRY, 0.5f, 2f);
+                                            }
+                                        })
+                                        // should not damage an enemy twice
+                                        .setDamageCD(30)
+                                        // should parry entities that can damage player (and not in damage CD list)
+                                        .setShouldDamageFunction( (e) ->
+                                                EntityHelper.checkCanDamage(e, ply, true) && !finalDamagedList.contains(e));
                                 // render scissors
                                 {
                                     int cutIndex = maxIndex - 2;
@@ -1033,8 +1071,6 @@ public class ItemUseHelper {
                                         }
                                         // strike
                                         double alternativeStrikePitch = strikePitch + rotationOffset;
-                                        strikeLineInfo.particleInfo.setRightOrthogonalDir(
-                                                MathHelper.vectorFromYawPitch_quick(strikeYaw - 90, 0) );
                                         Location bladeLoc = getScissorBladeLoc(startStrikeLoc,
                                                 MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch),
                                                 MathHelper.vectorFromYawPitch_quick(strikeYaw, alternativeStrikePitch),
@@ -1046,13 +1082,13 @@ public class ItemUseHelper {
                                     // damage-handling scissor part orientation
                                     // sprite for blade
                                     {
+                                        strikeLineInfo = strikeLineInfo.clone();
+                                        scissorItem = strikeLineInfo.particleInfo.spriteItem;
                                         ItemMeta newMeta = scissorItem.getItemMeta();
                                         newMeta.setDisplayName( (isArkOfElements ? "元素方舟" : "鸿蒙方舟") + "2");
                                         scissorItem.setItemMeta(newMeta);
                                         strikeLineInfo.particleInfo.setSpriteItem(scissorItem);
                                     }
-                                    strikeLineInfo.particleInfo.setRightOrthogonalDir(
-                                            MathHelper.vectorFromYawPitch_quick(strikeYaw + 90, 0) );
                                     double strikePitchOriginal = strikePitch;
                                     strikePitch -= rotationOffset;
                                     startStrikeLoc = getScissorBladeLoc(startStrikeLoc,
@@ -1066,35 +1102,6 @@ public class ItemUseHelper {
                                 coolDown = 100;
                                 damageReduction = 100;
                         }
-                        Collection<Entity> finalDamagedList = damaged;
-                        strikeLineInfo
-                                .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
-                                    // hit projectile: decrease the projectile's damage
-                                    if (entityHit instanceof Projectile) {
-                                        HashMap<String, Double> entityHitAttrMap = EntityHelper.getAttrMap(entityHit);
-                                        double newDmg = Math.max(1d, entityHitAttrMap.getOrDefault("damage", 1d) - damageReduction);
-                                        entityHitAttrMap.put("damage", newDmg);
-                                    }
-                                    // hit entity: apply melee invulnerability tick
-                                    else {
-                                        EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                                EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
-                                                invulnerabilityTicks);
-                                        EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                                EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
-                                                invulnerabilityTicks);
-                                    }
-                                    // recharge
-                                    if (hitIndex == 1) {
-                                        setDurability(weaponItem, 10, 10);
-                                        ply.playSound(ply.getEyeLocation(), SOUND_ARK_PARRY, 0.5f, 2f);
-                                    }
-                                })
-                                // should not damage an enemy twice
-                                .setDamageCD(30)
-                                // should parry entities that can damage player (and not in damage CD list)
-                                .setShouldDamageFunction( (e) ->
-                                        EntityHelper.checkCanDamage(e, ply, true) && !finalDamagedList.contains(e));
                         // handle cool down after fully finishing this swing
                         if (currentIndex == maxIndex)
                             EntityHelper.handleEntityTemporaryScoreboardTag(ply, parryCDScoreboardTag, coolDown);
@@ -1873,6 +1880,7 @@ public class ItemUseHelper {
                             targetLoc.subtract(
                                     MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch)
                                             .multiply(size * 0.75));
+                            strikeLineInfo.particleInfo.setRightOrthogonalDir(null);
                             GenericHelper.handleStrikeLine(ply, targetLoc, strikeYaw, strikePitch,
                                     size, strikeRadius, weaponType, color, damaged, attrMap, strikeLineInfo);
                             // set tick linger back to 1
@@ -2466,7 +2474,6 @@ public class ItemUseHelper {
                             if (currCharge == 8) {
                                 EntityHelper.spawnProjectile(ply, hitLoc, new Vector(), attrMap,
                                         EntityHelper.DamageType.MELEE, "星流能量爆炸");
-                                hitLoc.getWorld().playSound(hitLoc, Sound.ENTITY_GENERIC_EXPLODE, 3, 1);
                             }
                         });
                         // charge also increases the blade size
@@ -2598,14 +2605,12 @@ public class ItemUseHelper {
                             startStrikeLoc = targetLoc.subtract(
                                     MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch)
                                             .multiply(strikeLength / 2d));
+                            strikeLineInfo.particleInfo.setRightOrthogonalDir(null);
                             break;
                         }
                         case "巨龙之怒": {
                             // strike direction; a swing is a full rotation
                             actualPitch = -45 + (360d * i / loopTimes);
-                            // this weapon is held at the handle, which is around 30%~40% of its size (different from midpoint in vanilla Calamity)
-                            startStrikeLoc.subtract( MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch)
-                                    .multiply(strikeLength * 0.35) );
                             break;
                         }
                         case "恣睢": {
@@ -2626,6 +2631,7 @@ public class ItemUseHelper {
                             startStrikeLoc = targetLoc.subtract(
                                     MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch)
                                             .multiply(strikeLength / 2d));
+                            strikeLineInfo.particleInfo.setRightOrthogonalDir(null);
                             break;
                         }
                         case "远古方舟": {
@@ -2675,7 +2681,7 @@ public class ItemUseHelper {
                             strikeLineInfo.setDamageCD(30);
                             // tweak strike info to render the first half of scissors
                             ItemStack scissorItem = strikeLineInfo.particleInfo.spriteItem;
-                            {
+                            if (strikeLineInfo.displayParticle) {
                                 ItemMeta newMeta = scissorItem.getItemMeta();
                                 newMeta.setDisplayName(weaponType + "1");
                                 scissorItem.setItemMeta(newMeta);
@@ -2711,9 +2717,7 @@ public class ItemUseHelper {
                                     // render additional scissor part if empowered
                                     if (isCharged && i == indexStart) {
                                         // strike
-                                        strikeLineInfo.particleInfo.setRightOrthogonalDir(
-                                                MathHelper.vectorFromYawPitch_quick(actualYaw - 90, 0) );
-                                        double bladePitch = actualPitch + 20;
+                                        double bladePitch = actualPitch + 30;
                                         Location bladeLoc = getScissorBladeLoc(startStrikeLoc,
                                                 MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch),
                                                 MathHelper.vectorFromYawPitch_quick(actualYaw, bladePitch),
@@ -2749,8 +2753,6 @@ public class ItemUseHelper {
                                                 MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch),
                                                 MathHelper.vectorFromYawPitch_quick(actualYaw, scissorPartPitch),
                                                 strikeLength, scissorsConnLen);
-                                        strikeLineInfo.particleInfo.setRightOrthogonalDir(
-                                                MathHelper.vectorFromYawPitch_quick(actualYaw - 90, 0) );
                                         // damage
                                         GenericHelper.handleStrikeLine(ply, bladeLoc,
                                                 actualYaw, scissorPartPitch,
@@ -2787,21 +2789,20 @@ public class ItemUseHelper {
                                                 MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch),
                                                 MathHelper.vectorFromYawPitch_quick(actualYaw, scissorPartPitch),
                                                 strikeLength, scissorsConnLen);
-                                        strikeLineInfo.particleInfo.setRightOrthogonalDir(
-                                                MathHelper.vectorFromYawPitch_quick(actualYaw - 90, 0) );
                                         // damage
                                         GenericHelper.handleStrikeLine(ply, bladeLoc,
                                                 actualYaw, scissorPartPitch,
                                                 strikeLength, strikeRadius, weaponType, color, damaged, attrMap, strikeLineInfo);
                                     }
                                 }
-                                // damage-handling scissor part orientation
-                                strikeLineInfo.particleInfo.setRightOrthogonalDir(
-                                        MathHelper.vectorFromYawPitch_quick(actualYaw + 90, 0) );
                             }
                             // for simpler upward/downward swings
                             else {
                                 boolean isDownwardSwing = attackPhase == 1 || attackPhase == 3;
+                                // the blade is rotated by 180 degrees while upward swing
+                                if (strikeLineInfo.displayParticle)
+                                    strikeLineInfo.particleInfo.setRightOrthogonalDir(MathHelper.vectorFromYawPitch_quick(
+                                            actualYaw + (isDownwardSwing ? 90 : -90), 0));
                                 // ark of the cosmos should swing additional 360 degrees during downward swings
                                 if (!isArkOfElements && isDownwardSwing) {
                                     actualPitch += 360d * i / loopTimes;
@@ -2829,9 +2830,7 @@ public class ItemUseHelper {
                                 // render additional scissor part if empowered
                                 if (isCharged && i == indexStart) {
                                     // strike
-                                    strikeLineInfo.particleInfo.setRightOrthogonalDir(
-                                            MathHelper.vectorFromYawPitch_quick(actualYaw - (isDownwardSwing ? 90 : -90), 0) );
-                                    double bladePitch = actualPitch + (isDownwardSwing ? 20 : -20);
+                                    double bladePitch = actualPitch + (isDownwardSwing ? 30 : -30);
                                     Location bladeLoc = getScissorBladeLoc(startStrikeLoc,
                                             MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch),
                                             MathHelper.vectorFromYawPitch_quick(actualYaw, bladePitch),
@@ -2840,12 +2839,11 @@ public class ItemUseHelper {
                                             actualYaw, bladePitch,
                                             strikeLength, strikeRadius, weaponType, color, damaged, attrMap, strikeLineInfo);
                                 }
-                                // damage-handling scissor part orientation
-                                strikeLineInfo.particleInfo.setRightOrthogonalDir(
-                                        MathHelper.vectorFromYawPitch_quick(actualYaw + (isDownwardSwing ? 90 : -90), 0) );
                             }
                             // reset strike info to render the other half of scissors (in default mechanism below)
-                            {
+                            if (strikeLineInfo.displayParticle) {
+                                strikeLineInfo = strikeLineInfo.clone();
+                                scissorItem = strikeLineInfo.particleInfo.spriteItem;
                                 ItemMeta newMeta = scissorItem.getItemMeta();
                                 newMeta.setDisplayName(weaponType + "2");
                                 scissorItem.setItemMeta(newMeta);

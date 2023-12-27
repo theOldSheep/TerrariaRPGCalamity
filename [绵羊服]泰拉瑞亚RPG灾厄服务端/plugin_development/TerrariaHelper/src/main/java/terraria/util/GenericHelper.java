@@ -46,6 +46,22 @@ public class GenericHelper {
             setParticleColor("255|255|255");
             alpha = 0.5f;
         }
+        public ParticleLineOptions clone() {
+            ParticleLineOptions result = new ParticleLineOptions();
+            result.setParticleOrItem(particleOrItem)
+                    .setVanillaParticle(vanillaParticle)
+                    .setSpriteItem(spriteItem.clone())
+                    .setRightOrthogonalDir(rightOrthogonalDir.clone())
+                    .setLength(length)
+                    .setWidth(width, false)
+                    .setStepsize(stepsize)
+                    .setIntensityMulti(intensityMulti)
+                    .setTicksLinger(ticksLinger)
+                    .setAlpha(alpha)
+                    .setParticleChar(particleChar)
+                    .setParticleColor((ArrayList<String>) particleColor.clone());
+            return result;
+        }
         public ParticleLineOptions setParticleOrItem(boolean particleOrItem) {
             this.particleOrItem = particleOrItem;
             return this;
@@ -59,6 +75,10 @@ public class GenericHelper {
             return this;
         }
         public ParticleLineOptions setRightOrthogonalDir(Vector rightOrthogonalDir) {
+            if (rightOrthogonalDir == null) {
+                this.rightOrthogonalDir = null;
+                return this;
+            }
             if (rightOrthogonalDir.lengthSquared() < 1e-9)
                 return this;
             this.rightOrthogonalDir = rightOrthogonalDir;
@@ -145,6 +165,26 @@ public class GenericHelper {
             shouldDamageFunction = null;
             // internal values
             amountEntitiesHit = 0;
+        }
+        public StrikeLineOptions clone() {
+            StrikeLineOptions result = new StrikeLineOptions();
+            result
+                    .setDisplayParticle(displayParticle)
+                    .setBounceWhenHitBlock(bounceWhenHitBlock)
+                    .setThruWall(thruWall)
+                    .setDamageCD(damageCD)
+                    .setLingerTime(lingerTime)
+                    .setLingerDelay(lingerDelay)
+                    .setMaxTargetHit(maxTargetHit)
+                    .setDamage(damage)
+                    .setDecayCoef(decayCoef)
+                    .setWhipBonusCrit(whipBonusCrit)
+                    .setWhipBonusDamage(whipBonusDamage)
+                    .setParticleInfo(particleInfo.clone())
+                    .setBlockHitFunction(blockHitFunction)
+                    .setDamagedFunction(damagedFunction)
+                    .setShouldDamageFunction(shouldDamageFunction);
+            return result;
         }
         public StrikeLineOptions setDisplayParticle(boolean displayParticle) {
             this.displayParticle = displayParticle;

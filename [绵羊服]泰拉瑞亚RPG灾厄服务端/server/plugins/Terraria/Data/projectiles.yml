@@ -3251,7 +3251,7 @@ TNT:
     gravity: 0
     liveTime: 60
     autoTrace: true
-    projectileSize: 0.25
+    projectileSize: 0.5
     blockHitAction: thru
     trailColor: RAINBOW
     buffInflict:
@@ -3267,7 +3267,7 @@ TNT:
 元素短剑分裂弹幕:
     gravity: 0
     liveTime: 20
-    projectileSize: 0.25
+    projectileSize: 0.5
     blockHitAction: thru
     buffInflict:
         - "元素谐鸣|40|1"
@@ -3295,7 +3295,7 @@ TNT:
     liveTime: 60
     autoTrace: true
     autoTraceRadius: 24
-    projectileSize: 0.25
+    projectileSize: 0.5
     blockHitAction: thru
     trailColor: 255|199|238
     clusterBomb:
@@ -3422,7 +3422,7 @@ TNT:
     gravity: 0
     autoTrace: true
     autoTraceRadius: 24
-    autoTraceAbility: 5.0
+    autoTraceAbility: 6.0
     noAutoTraceTicks: 5
     blockHitAction: thru
     projectileSize: 1.5
@@ -3436,7 +3436,7 @@ TNT:
     noAutoTraceTicks: 5
     autoTraceRadius: 24
     autoTraceAbility: 2
-    projectileSize: 5
+    projectileSize: 4
     liveTime: 60
     speedMultiPerTick: 0.95
     buffInflict:
@@ -3448,7 +3448,7 @@ TNT:
     noAutoTraceTicks: 5
     autoTraceRadius: 24
     autoTraceAbility: 2
-    projectileSize: 5
+    projectileSize: 4
     liveTime: 60
     speedMultiPerTick: 0.95
 巨龙之怒火球:
@@ -3482,7 +3482,7 @@ TNT:
     speedMultiPerTick: 0.98
     autoTrace: true
     autoTraceRadius: 24
-    autoTraceAbility: 5
+    autoTraceAbility: 6
     liveTime: 50
 星夜光束:
     gravity: 0
