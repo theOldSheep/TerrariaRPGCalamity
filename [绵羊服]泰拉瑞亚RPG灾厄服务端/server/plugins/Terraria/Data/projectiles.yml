@@ -788,7 +788,7 @@
     liveTime: 1
     trailColor: 255|175|217
     trailLingerTime: 15
-    trailStepSize: 2
+    trailIntensityMulti: 0.5
 蓝色粒子光束:
     gravity: 0
     projectileSize: 1.5
@@ -796,7 +796,7 @@
     liveTime: 1
     trailColor: 161|219|249
     trailLingerTime: 15
-    trailStepSize: 2
+    trailIntensityMulti: 0.5
 玛瑙能量:
     gravity: 0
     isGrenade: true
@@ -2054,7 +2054,7 @@ TNT:
 极光弹:
     gravity: 0
     projectileSize: 0.5
-    liveTime: 10
+    liveTime: 20
     trailColor: 87|255|255
     trailSize: 0.1
     trailStepSize: 1
@@ -2063,7 +2063,7 @@ TNT:
 海龙追踪火箭:
     gravity: 0
     projectileSize: 0.5
-    liveTime: 20
+    liveTime: 30
     autoTrace: true
     isGrenade: true
     blastRadius: 2.5
@@ -2075,7 +2075,7 @@ TNT:
 花生壳:
     gravity: 0
     projectileSize: 1
-    liveTime: 20
+    liveTime: 30
     isGrenade: true
     blastRadius: 4.5
 腐烂肉块:
@@ -2104,9 +2104,8 @@ TNT:
 .50狙击弹:
     gravity: 0
     projectileSize: 0.5
-    liveTime: 10
+    liveTime: 20
     trailColor: 220|213|47
-    trailStepSize: 3
     buffInflict:
         - "死亡标记|100|1"
     clusterBomb:
@@ -2121,7 +2120,6 @@ TNT:
     gravity: 0
     liveTime: 5
     trailColor: 220|213|47
-    trailStepSize: 1
 龙息弹:
     gravity: 0
     liveTime: 100
@@ -2132,9 +2130,8 @@ TNT:
 .70狙击弹:
     gravity: 0
     projectileSize: 0.5
-    liveTime: 10
+    liveTime: 20
     trailColor: 220|213|47
-    trailStepSize: 3
     buffInflict:
         - "死亡标记|100|1"
     clusterBomb:
@@ -2149,7 +2146,6 @@ TNT:
     gravity: 0
     liveTime: 5
     trailColor: 220|213|47
-    trailStepSize: 1
 煌晖御流激光:
     gravity: 0
     projectileSize: 2
@@ -2157,7 +2153,7 @@ TNT:
     maxSpeed: 64
     liveTime: 2
     trailColor: 255|255|255
-    trailStepSize: 3
+    trailIntensityMulti: 0.5
     buffInflict:
         - "超位崩解|100|1"
     clusterBomb:
@@ -2171,7 +2167,7 @@ TNT:
     projectileSize: 1
     liveTime: 60
     trailColor: 255|255|82
-    trailStepSize: 3
+    trailIntensityMulti: 0.5
     clusterBomb:
         amount: 3
         damageMulti: 1
@@ -2189,13 +2185,13 @@ TNT:
     autoTraceAbility: 5.5
     noAutoTraceTicks: 3
     trailColor: 167|255|255
-    trailStepSize: 3
+    trailIntensityMulti: 0.5
 月神高速弹:
     gravity: 0
-    liveTime: 10
+    liveTime: 20
     penetration: 2
     trailColor: 220|213|47
-    trailStepSize: 3
+    trailIntensityMulti: 0.2
     buffInflict:
         - "解离|1000|1"
 永夜光束:
@@ -4957,7 +4953,7 @@ TNT:
     autoTraceRadius: 20
     autoTraceAbility: 3.5
     trailColor: 255|212|16
-    trailStepSize: 1.5
+    trailIntensityMulti: 0.5
 地核燃弧箭:
     gravity: 0
     projectileSize: 0.75
@@ -5012,7 +5008,9 @@ TNT:
     penetration: 2
     blockHitAction: thru
     trailColor: 40|248|250
+    trailIntensityMulti: 1.5
 台风箭:
+    gravity: 0
     liveTime: 75
 死亡之风星云射线:
     projectileSize: 0.5
@@ -5026,38 +5024,14 @@ TNT:
     blockHitAction: bounce
     bounce: 1
     liveTime: 120
-红创世之光束:
+创世之光束:
     projectileSize: 0.75
     blockHitAction: thru
     penetration: 999999
     liveTime: 2
     speedMultiPerTick: 100
     maxSpeed: 48
-    trailColor: 255|0|0
-黄创世之光束:
-    projectileSize: 0.75
-    blockHitAction: thru
-    penetration: 999999
-    liveTime: 2
-    speedMultiPerTick: 100
-    maxSpeed: 48
-    trailColor: 255|255|0
-绿创世之光束:
-    projectileSize: 0.75
-    blockHitAction: thru
-    penetration: 999999
-    liveTime: 2
-    speedMultiPerTick: 100
-    maxSpeed: 48
-    trailColor: 0|255|0
-蓝创世之光束:
-    projectileSize: 0.75
-    blockHitAction: thru
-    penetration: 999999
-    liveTime: 2
-    speedMultiPerTick: 100
-    maxSpeed: 48
-    trailColor: 0|255|255
+    trailColor: 255|0|0;255|255|0;0|255|0;0|255|255
 炎龙崩啸:
     gravity: 0
     projectileSize: 0.75
@@ -5116,7 +5090,7 @@ TNT:
     buffInflict:
         - "超位崩解|100|1"
     trailColor: 174|255|152
-    trailStepSize: 2
+    trailIntensityMulti: 0.25
 天堂充能星流晶体:
     gravity: 0
     blockHitAction: thru
@@ -5130,7 +5104,7 @@ TNT:
     buffInflict:
         - "超位崩解|100|1"
     trailColor: 255|253|191
-    trailStepSize: 2
+    trailIntensityMulti: 0.25
     clusterBomb:
         amount: 1
         damageMulti: 0.75
@@ -5140,9 +5114,12 @@ TNT:
         velocity: 64
 天堂星流闪电:
     blockHitAction: thru
+    penetration: 999999
     projectileSize: 3
     liveTime: 1
-    trailColor: 127|255|147
+    trailColor: 127|255|14
+    trailSize: 0.25
+    trailIntensityMulti: 2
     buffInflict:
         - "超位崩解|100|1"
 瘟疫疫毒箭:

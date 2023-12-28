@@ -1243,7 +1243,7 @@ public class EntityHelper {
                 MetadataValue parentType = getMetadata(v, MetadataName.MONSTER_PARENT_TYPE);
                 if (parentType != null) {
                     switch (parentType.asString()) {
-                        // lava slimes leave lava ticksBeforeHookingFish death
+                        // lava slimes leave lava at death
                         case "史莱姆": {
                             if (v.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)) {
                                 Location deathLoc = vLiving.getEyeLocation();
@@ -2247,6 +2247,7 @@ public class EntityHelper {
                         // after reaching the max speed, do not bother using the loop
                         if (currSpd > aimHelperOption.projectileSpeedMax) {
                             ticksOffset += (distance - distTraveled) / aimHelperOption.projectileSpeedMax;
+                            break;
                         }
                     }
                 }

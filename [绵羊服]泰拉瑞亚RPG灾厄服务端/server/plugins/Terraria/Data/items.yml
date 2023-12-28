@@ -7112,6 +7112,7 @@ Dodu的手炮:
   - §r发射一团会分裂弹射的能量子弹
   - §r右键发射一团普通子弹
   - §r只要你把它握在手中，无限的电脑解离就不会停止
+  - §r所以说……不要停下来啊……
   attributes:
     damage: 240
     damageType: Bullet
@@ -7215,7 +7216,7 @@ Dodu的手炮:
   lore:
   - §r将子弹转化为.70口径的狙击弹，造成毁灭性伤害
   - §r击中敌人时造成死亡标记
-  - §r暴击会召唤6发额外子弹
+  - §r命中时召唤6发额外子弹
   - §r“击穿即便是拥有着最精良武装的敌人心脏”
   attributes:
     damage: 4000
@@ -7241,20 +7242,6 @@ Dodu的手炮:
     useTime: 28
   worth: 30000000
   rarity: 15
-斯万科技枪:
-  item: BLAZE_ROD
-  lore:
-  - §r发射出巨量子弹
-  attributes:
-    damage: 300
-    damageType: Bullet
-    crit: 4
-    projectileSpeed: 12
-    knockback: 3.5
-    useTime: 2
-    ammoConsumptionRate: -0.9
-  worth: 40000000
-  rarity: 16
 太虚星龙炮:
   item: BLAZE_ROD
   lore:
