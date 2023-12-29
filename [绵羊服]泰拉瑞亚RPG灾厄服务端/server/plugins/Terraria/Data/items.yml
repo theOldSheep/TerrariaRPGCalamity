@@ -463,6 +463,12 @@
   - §r能量在其中脉动
   worth: 8000
   rarity: 1
+血珠:
+  item: FEATHER
+  lore:
+  - §r秃鹫的羽毛
+  worth: 12000
+  rarity: 1
 可疑镀层:
   item: CLAY_BALL
   worth: 60000
@@ -565,6 +571,94 @@
   item: CLAY_BALL
   worth: 200000
   rarity: 9
+浊火精华:
+  item: CLAY_BALL
+  lore:
+  - §r亵渎生物的精华
+  worth: 1300000
+  rarity: 11
+灵质:
+  item: CLAY_BALL
+  lore:
+  - §r可怖恶意涌动不已
+  worth: 1000000
+  rarity: 11
+闪耀金羽:
+  item: CLAY_BALL
+  lore:
+  - §r流动着蓬松的金色能量
+  worth: 1300000
+  rarity: 11
+神圣晶石:
+  item: CLAY_BALL
+  lore:
+  - §r蕴藏着神圣能量的晶石
+  worth: 1300000
+  rarity: 12
+血石:
+  item: CLAY_BALL
+  worth: 600000
+  rarity: 12
+装甲外壳:
+  item: CLAY_BALL
+  worth: 1400000
+  rarity: 12
+暗离子体:
+  item: CLAY_BALL
+  worth: 1400000
+  rarity: 12
+扭曲虚空:
+  item: CLAY_BALL
+  worth: 1400000
+  rarity: 12
+毁灭之灵:
+  item: CLAY_BALL
+  lore:
+  - §r遥远的过去的残片
+  worth: 1400000
+  rarity: 13
+猎魂鲨牙:
+  item: CLAY_BALL
+  lore:
+  - §r坚硬到足以斩开钻石的程度
+  worth: 1400000
+  rarity: 13
+恒温能量:
+  item: CLAY_BALL
+  lore:
+  - §r预防中暑的绝佳材料
+  worth: 2000000
+  rarity: 14
+梦魇魔能:
+  item: CLAY_BALL
+  lore:
+  - §r会扰乱你的心智
+  worth: 2000000
+  rarity: 14
+日蚀之阴碎片:
+  item: CLAY_BALL
+  lore:
+  - §r曜日与皎月，两种相斥天体的能量聚合进这一块晶体中
+  worth: 12000000
+  rarity: 14
+龙魂碎片:
+  item: CLAY_BALL
+  lore:
+  - §r神一样灵魂的其中一小片
+  worth: 45000000
+  rarity: 15
+湮灭余烬:
+  item: CLAY_BALL
+  lore:
+  - §r至尊女巫怒火的炽热精华
+  worth: 66666600
+  rarity: 15
+星流棱晶:
+  item: CLAY_BALL
+  lore:
+  - §r分形能量在其表面闪烁
+  worth: 60000000
+  rarity: 15
 海洋残渣:
   item: CLAY_BALL
   worth: 60000
@@ -603,6 +697,23 @@
   item: CLAY_BALL
   worth: 1200000
   rarity: 9
+血石核心:
+  item: CLAY_BALL
+  worth: 4000000
+  rarity: 12
+化神魂精:
+  item: CLAY_BALL
+  lore:
+  - §r融合强大灵魂而制成的最高级催化剂
+  worth: 40000000
+  rarity: 14
+奇迹物质:
+  item: CLAY_BALL
+  lore:
+  - §r无所定形，但潜力无穷
+  - §r用以合成星流武器
+  worth: 650000000
+  rarity: 15
 海棱晶:
   item: CLAY_BALL
   worth: 100000
@@ -772,6 +883,42 @@
   - §r天堂卵石
   worth: 300000
   rarity: 10
+起源之簇:
+  item: CLAY_BALL
+  lore:
+  - §r来自未知的冰冷奇物
+  worth: 1600000
+  rarity: 10
+龙蒿锭:
+  item: GOLD_INGOT
+  worth: 5000000
+  rarity: 12
+龙蒿矿:
+  item: CLAY_BALL
+  worth: 1000000
+  rarity: 12
+宇宙锭:
+  item: GOLD_INGOT
+  lore:
+  - §r一团高硬度的宇宙金属
+  worth: 20000000
+  rarity: 14
+圣金源锭:
+  item: GOLD_INGOT
+  lore:
+  - §r散发出神圣的能量
+  worth: 60000000
+  rarity: 15
+圣金源矿:
+  item: CLAY_BALL
+  worth: 4000000
+  rarity: 15
+魔影锭:
+  item: GOLD_INGOT
+  lore:
+  - §r邪祟的、漆黑的金属，其悚骇与伟力超逾理解
+  worth: 192000000
+  rarity: 16
 新手礼包:
   item: LEATHER
   lore:
@@ -782,6 +929,11 @@
   lore:
   - §r右键打开，可以获得各种锭以及核心
   rarity: 8
+死灵晶簇:
+  item: LEATHER
+  lore:
+  - §r右键打开，可以获得各种锭以及核心
+  rarity: 12
 专家模式福袋:
   item: LEATHER
   lore:
@@ -2368,6 +2520,34 @@
     reachExtra: 1
   worth: 4320000
   rarity: 7
+创世镐:
+  item: DIAMOND_PICKAXE
+  lore:
+  - §r“可挖掘龙蒿”
+  attributes:
+    damage: 160
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 6
+    powerPickaxe: 225
+    reachExtra: 4
+  worth: 20000000
+  rarity: 10
+繁花镐:
+  item: DIAMOND_PICKAXE
+  lore:
+  - §r“可挖掘圣金源矿”
+  attributes:
+    damage: 184
+    damageType: Melee
+    crit: 4
+    knockback: 6.5
+    useTime: 4
+    powerPickaxe: 250
+    reachExtra: 5
+  worth: 24000000
+  rarity: 12
 木剑:
   item: WOOD_SWORD
   attributes:

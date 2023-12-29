@@ -4015,7 +4015,7 @@ public class ItemUseHelper {
                             projAttrMap.put("damage", 66666d);
                             projAttrMap.put("damageMulti", 1d);
                             projAttrMap.put("crit", 100d);
-                            EntityHelper.spawnProjectile(ply, ply.getEyeLocation().add(0, 10, 0), new Vector(),
+                            EntityHelper.spawnProjectile(ply, ply.getEyeLocation().add(0, 15, 0), new Vector(),
                                     projAttrMap, EntityHelper.DamageType.MAGIC, "光之舞闪光");
                             ply.getWorld().playSound(ply.getEyeLocation(), SOUND_DANCE_OF_LIGHT_FLASH, 1f, 1f);
                         }
@@ -4561,23 +4561,26 @@ public class ItemUseHelper {
                         yaw = plyNMS.yaw;
                         pitch = plyNMS.pitch;
                         length = 64;
-                        width = 0.75;
+                        width = 0.5;
                         particleColor = "248|89|118";
                         strikeInfo
                                 .setThruWall(false)
                                 .setBlockHitFunction((Location hitLoc, MovingObjectPosition hitInfo) -> {
-                                    // spawn lava IF no lava is really close to hit loc
-                                    {
-                                        String lavaName = "怨戾熔岩";
+                                    // spawn lava 10 times per second, or if no lava is close to the hit loc
+                                    String lavaName = "怨戾熔岩";
+                                    boolean spawnLava = swingAmount % 2 == 0;
+                                    if (!spawnLava) {
                                         TreeSet<HitEntityInfo> lavaNearby = HitEntityInfo.getEntitiesHit(
                                                 hitLoc.getWorld(), hitLoc.toVector(), hitLoc.toVector(),
                                                 0.1, (net.minecraft.server.v1_12_R1.Entity e) ->
                                                         e.getBukkitEntity().getName().equals(lavaName));
-                                        if (lavaNearby.size() == 0) {
-                                            EntityHelper.spawnProjectile(ply, hitLoc, new Vector(),
-                                                    attrMap, EntityHelper.DamageType.MAGIC, lavaName)
-                                                    .addScoreboardTag("ignoreCanDamageCheck");
-                                        }
+                                        if (lavaNearby.size() == 0)
+                                            spawnLava = true;
+                                    }
+                                    if (spawnLava) {
+                                        EntityHelper.spawnProjectile(ply, hitLoc, new Vector(),
+                                                attrMap, EntityHelper.DamageType.MAGIC, lavaName)
+                                                .addScoreboardTag("ignoreCanDamageCheck");
                                     }
                                     // has a chance to spawn a hand
                                     {

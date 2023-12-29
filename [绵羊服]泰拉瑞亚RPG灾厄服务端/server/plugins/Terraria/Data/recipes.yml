@@ -185,21 +185,6 @@ FURNACE:
     - 丝绸:10
     - 暗影鳞片:5
   '33_0_1':
-    requireLevel: 3
-    resultItem: 寒元锭
-    requireItem:
-    - 寒元矿:4
-  '33_0_2':
-    requireLevel: 3
-    resultItem: 永恒锭
-    requireItem:
-    - 永恒矿:4
-  '33_0_3':
-    requireLevel: 3
-    resultItem: 熔渣锭
-    requireItem:
-    - 熔渣矿:4
-  '33_1':
     requireLevel: 1
     resultItem: 海洋残渣
     requireItem:
@@ -207,17 +192,50 @@ FURNACE:
     - 珊瑚:2
     - 海星:2
     - 贝壳:2
-  '33_2':
+  '33_0_2':
+    requireLevel: 1
+    resultItem: 天蓝锭
+    requireItem:
+    - 天蓝矿:4
+  '33_1_1':
+    requireLevel: 3
+    resultItem: 寒元锭
+    requireItem:
+    - 寒元矿:4
+  '33_1_2':
+    requireLevel: 3
+    resultItem: 永恒锭
+    requireItem:
+    - 永恒矿:4
+  '33_1_3':
+    requireLevel: 3
+    resultItem: 熔渣锭
+    requireItem:
+    - 熔渣矿:4
+  '33_1_4':
+    requireLevel: 3
+    resultItem: 龙蒿锭
+    requireItem:
+    - 龙蒿矿:4
+  '33_1_5':
+    requireLevel: 3
+    resultItem: 圣金源锭:5
+    requireItem:
+    - 圣金源矿:64
+    - 龙魂碎片
+  '33_2_1':
     requireLevel: 2
     resultItem: 污痕核心
     requireItem:
     - 狱炎矿:4
     - 焦炭矿:4
-  '34':
-    requireLevel: 1
-    resultItem: 天蓝锭
+  '33_2_2':
+    requireLevel: 3
+    resultItem: 血石核心:2
     requireItem:
-    - 天蓝矿:4
+    - 血石:5
+    - 血珠
+    - 灵质
   '35':
     requireLevel: 2
     resultItem: 焦炭玩偶
@@ -2597,6 +2615,7 @@ ANVIL:
     requireLevel: 2
     resultItem: 血橙
     requireItem:
+    - 血珠:10
     - 生命果:5
     - 恐惧之魂:5
     - 力量之魂:5
@@ -4175,8 +4194,8 @@ TINKER_WORKBENCH:
     requireItem:
     - 蓝月
     - 独角兽角
+    - 再生药水
     - 夜明锭:5
-    - 流明晶:10
   '44_2_2':
     requireLevel: 1
     resultItem: 晨星链刃
@@ -4623,6 +4642,21 @@ TINKER_WORKBENCH:
     - 毁灭之灵:2
     - 起源之簇:12
     - 太阳神法杖
+  '58_0_1':
+    requireLevel: 1
+    resultItem: 创世镐
+    requireItem:
+    - 冥思构造体:12
+    - 夜明锭:10
+    - 日耀碎片
+    - 星璇碎片
+    - 星云碎片
+    - 星尘碎片
+  '58_0_2':
+    requireLevel: 1
+    resultItem: 繁花镐
+    requireItem:
+    - 龙蒿锭:7
   '58':
     requireLevel: 1
     resultItem: 星幻头盔
@@ -4661,6 +4695,14 @@ TINKER_WORKBENCH:
     requireItem:
     - 星尘:3
     - 冥思溶剂:6
+  '63_1':
+    requireLevel: 1
+    resultItem: 化神魂精
+    requireItem:
+    - 灵质:2
+    - 梦魇魔能:5
+    - 恒温能量:5
+    - 日蚀之阴碎片:2
   '64':
     requireLevel: 1
     resultItem: 飘渺之核
@@ -4821,3 +4863,27 @@ TINKER_WORKBENCH:
     - 灭兆渡鸦杖
     - 极昼信标
     - 魔影锭:5
+  '22':
+    requireLevel: 1
+    resultItem: 奇迹物质
+    requireItem:
+    - 星流棱晶:5
+    - 圣金源锭:5
+    - 生命合金
+    - 灾劫核心
+    - 化神魂精
+    - 星系异石:3
+  '22_1':
+    requireLevel: 1
+    resultItem: 魔影锭
+    requireItem:
+    - 天蓝锭
+    - 寒元锭
+    - 永恒锭
+    - 熔渣锭
+    - 炫星锭
+    - 龙蒿锭
+    - 宇宙锭
+    - 圣金源锭
+    - 星流棱晶
+    - 湮灭余烬

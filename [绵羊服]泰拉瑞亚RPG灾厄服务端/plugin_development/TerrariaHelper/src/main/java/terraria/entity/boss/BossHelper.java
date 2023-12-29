@@ -264,15 +264,12 @@ public class BossHelper {
             case CRYOGEN:
                 Bukkit.broadcastMessage("§#87CEFA寒晶能量从冰之洞穴中迸发而出。");
                 break;
-            case AQUATIC_SCOURGE:
-                Bukkit.broadcastMessage("§#73C293硫磺色的天空变暗了...");
-                break;
-            case CALAMITAS_CLONE:
-                Bukkit.broadcastMessage("§#4169E1海洋的深处传来震动。");
-                break;
             case PLANTERA:
                 Bukkit.broadcastMessage("§#ADFF2F富含能量的植物物质已在地下形成。");
                 Bukkit.broadcastMessage("§#DAA520沙漠正在剧烈动荡！");
+                break;
+            case CALAMITAS_CLONE:
+                Bukkit.broadcastMessage("§#4169E1海洋的深处传来震动。");
                 break;
             case ASTRUM_AUREUS:
                 Bukkit.broadcastMessage("§#FFD700星幻敌人得到了增强！");
@@ -295,7 +292,6 @@ public class BossHelper {
                 break;
             case POLTERGHAST:
                 Bukkit.broadcastMessage("§#4169E1深渊之灵受到了威胁。");
-                Bukkit.broadcastMessage("§#73C293喷涌而出的灵魂扰乱了这场酸性风暴...");
                 break;
             case THE_DEVOURER_OF_GODS:
                 Bukkit.broadcastMessage("§#FFA500收割之月散布着诡异的光芒。");

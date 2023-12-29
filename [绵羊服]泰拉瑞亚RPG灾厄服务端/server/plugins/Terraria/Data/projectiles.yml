@@ -4627,12 +4627,14 @@ TNT:
     blockHitAction: thru
     gravity: 0
     penetration: 999999
+    enemyInvincibilityFrame: 10
 怨戾之手:
     liveTime: 60
     projectileSize: 3
     blockHitAction: thru
     gravity: 0
     penetration: 999999
+    enemyInvincibilityFrame: 1
 异端火焰:
     liveTime: 40
     blockHitAction: thru
@@ -4641,6 +4643,7 @@ TNT:
     autoTraceRadius: 32
     autoTraceAbility: 5
     noAutoTraceTicks: 3
+    trailColor: 255|255|100
 异端镀金灵魂:
     liveTime: 50
     blockHitAction: thru
@@ -4679,6 +4682,8 @@ TNT:
     gravity: 0
     penetration: 999999
     minimumDamageTicks: 20
+    worldSpriteMode: true
+    worldSpriteUpdateInterval: 50
 冰爪:
     arrowOrPotion: true
     gravity: 0

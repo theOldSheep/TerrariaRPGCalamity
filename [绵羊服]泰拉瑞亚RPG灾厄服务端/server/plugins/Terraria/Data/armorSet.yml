@@ -962,11 +962,12 @@ sets:
     - ''
     - §a套装效果：
     - §a移动速度减少10%
-    - §a远程伤害和暴击率提升20%
+    - §a远程伤害提升30%
+    - §a远程暴击率提升15%
     - §a减少刷怪量和刷怪率
     attributes:
       speed: -0.1
-      damageRangedMulti: 0.2
-      critRanged: 20
+      damageRangedMulti: 0.3
+      critRanged: 15
       mobLimit: -2
       mobSpawnRateMulti: -0.2
