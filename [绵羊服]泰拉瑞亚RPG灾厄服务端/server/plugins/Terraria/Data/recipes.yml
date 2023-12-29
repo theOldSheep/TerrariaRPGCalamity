@@ -4732,15 +4732,6 @@ TINKER_WORKBENCH:
     - 魔影锭:5
     - 瘟疫细胞罐:20
     - 瘟疫装甲镀层:5
-  '10':
-    requireLevel: 1
-    resultItem: 斯万科技枪
-    requireItem:
-    - 太空公爵机枪
-    - 魔影锭:5
-    - 恐惧之魂:10
-    - 视域之魂:10
-    - 力量之魂:10
   '11':
     requireLevel: 1
     resultItem: 太虚星龙炮

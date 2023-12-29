@@ -2676,8 +2676,8 @@ public class MinionSlime extends EntitySlime {
                                 }
                                 else if (internalIdx < 50) {
                                     if (internalIdx % 3 == 0) {
-                                        Vector laserDir = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 1);
-                                        GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
+                                        Vector laserDir = MathHelper.getDirection(shootLoc, target.getEyeLocation(), 1);
+                                        GenericHelper.handleStrikeLine(minionBukkit, shootLoc,
                                                 MathHelper.getVectorYaw(laserDir), MathHelper.getVectorPitch(laserDir), 64.0, 0.2,
                                                 "", "0|0|0", damageCD, (HashMap<String, Double>) attrMap.clone(),
                                                 (GenericHelper.StrikeLineOptions) extraVariables.get("sLO"));

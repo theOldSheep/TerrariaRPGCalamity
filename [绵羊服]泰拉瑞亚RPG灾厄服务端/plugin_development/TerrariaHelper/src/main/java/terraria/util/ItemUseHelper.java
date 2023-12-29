@@ -555,7 +555,7 @@ public class ItemUseHelper {
         {
             Vector eyeLoc = ply.getEyeLocation().toVector();
             Vector endLoc = eyeLoc.clone().add(lookDir.clone().multiply(traceDist));
-            // the block the player is looking ticksBeforeHookingFish, if near enough
+            // the block the player is looking at, if near enough
             {
                 MovingObjectPosition rayTraceResult = HitEntityInfo.rayTraceBlocks(
                         plyWorld,
@@ -4953,17 +4953,23 @@ public class ItemUseHelper {
     // note that the "durability" stored in items are actually damage value.
     public static int getDurability(ItemStack weaponItem, int maxDurability) {
         short maxVanillaDurability = weaponItem.getType().getMaxDurability();
+        if (maxVanillaDurability <= 1)
+            return maxDurability;
         int currVanillaDurability = maxVanillaDurability - weaponItem.getDurability();
         if (currVanillaDurability == maxVanillaDurability) return 0;
         double durabilityRatio = (double) currVanillaDurability / maxVanillaDurability;
         return (int) Math.round(maxDurability * durabilityRatio);
     }
     public static void setDurability(ItemStack weaponItem, int maxDurability, int currentDurability) {
-        // tweak current durability to prevent bug
+        // tweak current durability to prevent out of bound bugs
         if (currentDurability < 0)
             currentDurability = 0;
         else if (currentDurability > maxDurability)
             currentDurability = maxDurability;
+        // prevent bug from items with no durability
+        short maxVanillaDurability = weaponItem.getType().getMaxDurability();
+        if (maxVanillaDurability <= 1)
+            return;
         // default values
         if (currentDurability == 0)
             weaponItem.setDurability((short) 0);
@@ -4971,7 +4977,6 @@ public class ItemUseHelper {
             weaponItem.setDurability((short) 1);
         // calculate durability
         else {
-            short maxVanillaDurability = weaponItem.getType().getMaxDurability();
             double durabilityRatio = (double) currentDurability / maxDurability;
             // prevent breaking the item
             int currVanillaDurability = (int) Math.max(maxVanillaDurability * durabilityRatio, 1);

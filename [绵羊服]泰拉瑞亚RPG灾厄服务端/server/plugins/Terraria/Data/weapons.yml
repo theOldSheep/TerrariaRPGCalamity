@@ -1451,6 +1451,7 @@
     木箭:
     - 台风箭
     - 迷你鲨鱼龙
+    - 迷你鲨鱼龙
     - 充能猎魂鲨
 幻魔:
   type: BOW
@@ -1462,10 +1463,7 @@
   autoSwing: true
   ammoConversion:
     ALL:
-    - 红创世之光束
-    - 黄创世之光束
-    - 绿创世之光束
-    - 蓝创世之光束
+    - 创世之光束
 赤陨霸龙弓:
   type: BOW
   autoSwing: true
@@ -2227,11 +2225,6 @@ Dodu的手炮:
   autoSwing: true
   attributes:
     useTime: 3
-斯万科技枪:
-  type: GUN
-  shots: 5
-  offSet: 40
-  autoSwing: true
 太虚星龙炮:
   type: GUN
   autoSwing: true
@@ -2245,7 +2238,7 @@ Dodu的手炮:
     - 月神高速弹
 大比目鱼炮:
   type: GUN
-  shots: 30
+  shots: 15
   offSet: 50
   fireRounds: 2
   fireRoundsDelay: 3

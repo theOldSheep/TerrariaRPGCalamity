@@ -221,7 +221,7 @@ public class TerrariaItem extends EntityItem {
         float f = 0.95F;
         if (pickedUpBy == null) {
             // if it is on ground and nobody would pick it up, slow down according to friction factor
-            // if it has no gravity and nobody would pick it up, slow it down ticksBeforeHookingFish a much faster rate
+            // if it has no gravity and nobody would pick it up, slow it down at a much faster rate
             if (this.onGround) {
                 f *= this.world.getType(new BlockPosition(MathHelper.floor(this.locX), MathHelper.floor(this.getBoundingBox().b) - 1, MathHelper.floor(this.locZ))).getBlock().frictionFactor;
             }
