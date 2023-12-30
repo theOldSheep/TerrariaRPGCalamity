@@ -876,14 +876,23 @@ public class MinionSlime extends EntitySlime {
                 {
                     double indexCurr = 0, indexMax = 0;
                     Location targetLoc = owner.getEyeLocation();
-                    Entity firstMinion = minionBukkit;
+                    Entity firstMinion = null, lastLoopedMinion = null;
                     for (Entity currMinion : allMinions) {
+                        // the minion takes up 2 slots.
+                        // the following two lines makes sure that minions correctly spread out when idle.
+                        if (firstMinion != null && currMinion == firstMinion) continue;
+                        if (lastLoopedMinion != null && currMinion == lastLoopedMinion) continue;
+                        lastLoopedMinion = currMinion;
                         if (currMinion.isDead()) continue;
                         if (!GenericHelper.trimText(currMinion.getName()).equals(minionType)) continue;
                         if (indexMax == 0) firstMinion = currMinion;
                         if (currMinion == minionBukkit) indexCurr = indexMax;
-                        indexMax++;
+                        indexMax ++;
                     }
+                    // this technically is never true, but it is here just in case.
+                    if (firstMinion == null)
+                        firstMinion = minionBukkit;
+
                     targetLoc.add(0, 2 + MathHelper.xsin_degree(firstMinion.getTicksLived() * 6), 0);
                     if (indexMax > 1) {
                         double angle = 360 * indexCurr / indexMax + firstMinion.getTicksLived() * 5;
