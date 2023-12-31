@@ -295,26 +295,45 @@ public class CraftingListener implements Listener {
                     Inventory inv = ((Furnace) block.getState()).getInventory();
                     String name = GenericHelper.trimText(inv.getTitle());
                     station = "FURNACE";
-                    switch (name) {
-                        case "火炉":
-                            break;
-                        case "地狱熔炉":
-                            level = 2;
-                            break;
-                        case "钛金熔炉":
-                        case "精金熔炉":
-                            level = 3;
-                            break;
-                        case "山铜砧":
-                        case "秘银砧":
-                            level = 2;
-                            station = "ANVIL";
-                            break;
-                        case "工匠合成台":
+                    if (! name.equals("火炉")) {
+                        station = name;
+                    }
+                    break;
+                }
+                // most crafting stations ideally uses concrete blocks of different data (color), for block texture purposes.
+                case CONCRETE: {
+                    switch ( block.getData() ) {
+                        // 工匠合成台
+                        case 1:
                             station = "TINKER_WORKBENCH";
                             break;
-                        default:
-                            station = name;
+                        // 秘银砧
+                        case 2:
+                            station = "ANVIL";
+                            level = 2;
+                            break;
+                        // 星宇砧
+                        case 3:
+                            station = "ANVIL";
+                            level = 3;
+                            break;
+                        // 地狱熔炉
+                        case 4:
+                            station = "FURNACE";
+                            level = 2;
+                            break;
+                        // 精金熔炉
+                        case 5:
+                            station = "FURNACE";
+                            level = 3;
+                            break;
+                        // 远古操纵机
+                        case 6:
+                            station = "远古操纵机";
+                            break;
+                        // 嘉登熔炉
+                        case 7:
+                            station = "嘉登熔炉";
                             break;
                     }
                     break;

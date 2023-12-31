@@ -1122,6 +1122,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         // prevents client glitch
         this.velocityChanged = true;
         this.positionChanged = true;
+        this.impulse = true;
         // draw particle trail
         handleWorldSpriteParticleTrail();
         // spawn projectiles

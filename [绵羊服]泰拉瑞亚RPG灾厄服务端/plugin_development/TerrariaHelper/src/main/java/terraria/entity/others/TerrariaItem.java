@@ -2,7 +2,9 @@ package terraria.entity.others;
 
 import net.minecraft.server.v1_12_R1.MathHelper;
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.event.CraftEventFactory;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
@@ -129,9 +131,11 @@ public class TerrariaItem extends EntityItem {
     public void merge() {
         if (pickupDelay > 0) return;
         if (!canBeMerged) return;
-        for (TerrariaItem toMerge : this.world.a(TerrariaItem.class, this.getBoundingBox().grow(3, 2, 3))) {
-            this.mergeWith(toMerge);
-        }
+        // only merge twice per second, to reduce lag
+        if (ticksLived % 10 == 0)
+            for (TerrariaItem toMerge : this.world.a(TerrariaItem.class, this.getBoundingBox().grow(3, 2, 3))) {
+                this.mergeWith(toMerge);
+            }
     }
     @Override
     public Entity b(int i) {
@@ -162,22 +166,31 @@ public class TerrariaItem extends EntityItem {
         // if the item can be picked up, find the player that will pick it up.
         if (this.pickupDelay <= 0 && ticksLived % 5 == 0) {
             pickedUpBy = null;
-            for (EntityPlayer p : this.world.a(EntityPlayer.class, this.getBoundingBox().grow(maxPickupRadius, maxPickupRadius, maxPickupRadius))) {
-                if (p.playerInteractManager.getGameMode() != EnumGamemode.SURVIVAL) continue;
-                if (p.getScoreboardTags().contains("unauthorized")) continue;
-                double distX = p.locX - this.locX;
-                double distY = p.locY - this.locY;
-                double distZ = p.locZ - this.locZ;
+            for (Player ply : Bukkit.getOnlinePlayers()) {
+                // players that are not properly playing (waiting for revive etc.) should not be considered
+                if (! PlayerHelper.isProperlyPlaying(ply))
+                    continue;
+                // players in a different world would not be considered
+                if (ply.getWorld() != bukkitEntity.getWorld())
+                    continue;
+                EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+                // calculate distance
+                double distX = plyNMS.locX - this.locX;
+                double distY = plyNMS.locY - this.locY;
+                double distZ = plyNMS.locZ - this.locZ;
                 double distSqr = distX * distX + distY * distY + distZ * distZ;
-                double pickUpDistSqr = getPickUpDistance(p);
+                // get pick up distance
+                double pickUpDistSqr = getPickUpDistance(plyNMS);
                 pickUpDistSqr *= pickUpDistSqr;
+                // players too far away should not be considered
                 if (distSqr > pickUpDistSqr) continue;
+
                 double pickupAbility = 1 - (distSqr / pickUpDistSqr);
                 if (greatestPickupAbility < pickupAbility) {
-                    // player can not hold new item
-                    if (!PlayerHelper.canHoldAny(p.getBukkitEntity(), bukkitItemStack)) continue;
+                    // player can not hold new item should not be considered
+                    if (!PlayerHelper.canHoldAny(plyNMS.getBukkitEntity(), bukkitItemStack)) continue;
                     greatestPickupAbility = distSqr;
-                    pickedUpBy = p;
+                    pickedUpBy = plyNMS;
                 }
             }
         }
@@ -256,7 +269,7 @@ public class TerrariaItem extends EntityItem {
         this.lastZ = this.locZ;
         this.lastPitch = this.pitch;
         this.lastYaw = this.yaw;
-        // items in terraria shall never burn
+        // items in terraria shall never "burn" on fire
         this.extinguish();
         this.setFlag(0, false);
 

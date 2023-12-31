@@ -1649,6 +1649,13 @@ ANVIL:
     - 污痕核心:5
     - 毁灭刃
     - 混乱核心:3
+  '197_1':
+    requireLevel: 2
+    resultItem: 深渊之刃
+    requireItem:
+    - 海耀之刃
+    - 深渊细胞:20
+    - 虚空石:20
   '198':
     requireLevel: 2
     resultItem: 彗星陨刃
@@ -2076,6 +2083,14 @@ ANVIL:
     - 精金锭:10
     - 光明之魂:3
     - 暗影之魂:3
+  '244_1':
+    requireLevel: 2
+    resultItem: 巨舰鲨
+    requireItem:
+    - 碎水霰弹枪
+    - 巨兽鲨
+    - 深渊细胞:10
+    - 虚空石:10
   '245':
     requireLevel: 2
     resultItem: 九头蛇
@@ -2319,6 +2334,13 @@ ANVIL:
     - 力量之魂
     - 视域之魂
     - 恐惧之魂
+  '267_1':
+    requireLevel: 2
+    resultItem: 深渊女神之复仇
+    requireItem:
+    - 海水杖
+    - 深渊细胞:30
+    - 虚空石:30
   '268':
     requireLevel: 2
     resultItem: 泰拉射线
@@ -3256,6 +3278,19 @@ AIR:
     - 妖精尘:8
     - 星尘:4
     - 凝胶
+  '16':
+    requireLevel: 1
+    resultItem: 嘉登熔炉
+    requireItem:
+    - 木制工作台
+    - 祭坛
+    - 工匠合成台
+    - 精金熔炉
+    - 远古操纵机
+    - 星宇砧
+    - 圣金源锭:15
+    - 星流棱晶:12
+    - 化神魂精:25
 BREWING_STAND:
   '1':
     requireLevel: 1
@@ -4196,6 +4231,7 @@ TINKER_WORKBENCH:
     - 独角兽角
     - 再生药水
     - 夜明锭:5
+    - 流明晶:10
   '44_2_2':
     requireLevel: 1
     resultItem: 晨星链刃
@@ -4364,7 +4400,7 @@ TINKER_WORKBENCH:
     - 装甲外壳:3
     - 灵质:9
     - 海棱晶:10
-    - 巨兽鲨
+    - 巨舰鲨
   '50_7':
     requireLevel: 1
     resultItem: 深红手炮
@@ -4460,6 +4496,14 @@ TINKER_WORKBENCH:
     - 狱炎裂空
     - 星系异石:5
     - 夜明锭:5
+  '55_1_1':
+    requireLevel: 1
+    resultItem: 神圣天罚
+    requireItem:
+    - 深渊女神之复仇
+    - 龙蒿锭:6
+    - 神圣晶石:8
+    - 浊火精华:10
   '55_2':
     requireLevel: 1
     resultItem: 荆棘烁兰
@@ -4710,14 +4754,27 @@ TINKER_WORKBENCH:
     - 炫星锭:10
     - 星云碎片:20
     - 坠星:20
+  '65':
+    requireLevel: 1
+    resultItem: 星宇砧
+    requireItem:
+    - 秘银砧
+    - 宇宙锭:10
+    - 夜明锭:10
+    - 星系异石:12
+    - 起源之簇:20
 嘉登熔炉:
   containedStations:
+    # WORKBENCH中 requireLevel<=1的配方也会被加载
+    WORKBENCH: 1
+    # TINKER_WORKBENCH中 requireLevel<=1的配方也会被加载
+    TINKER_WORKBENCH: 1
+    # ENCHANTMENT_TABLE中 requireLevel<=1的配方也会被加载
+    ENCHANTMENT_TABLE: 1
     # FURNACE中 requireLevel<=3的配方也会被加载（即精金熔炉）
     FURNACE: 3
     # ANVIL中 requireLevel<=3的配方也会被加载（即星宇砧）
     ANVIL: 3
-    # TINKER_WORKBENCH中 requireLevel<=1的配方也会被加载
-    TINKER_WORKBENCH: 1
     # 远古操纵机中 requireLevel<=1的配方也会被加载
     远古操纵机: 1
   # 在下面可以写此工作台的其他配方

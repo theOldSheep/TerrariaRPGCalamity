@@ -465,6 +465,14 @@
   type: SWING
   autoSwing: true
   size: 10
+深渊之刃:
+  type: SWING
+  autoSwing: true
+  size: 6.5
+  projectileInfo:
+    interval: 1
+    velocity: 2
+    name: 深渊三叉戟
 风暴管束者:
   type: SWING
   autoSwing: true
@@ -1931,6 +1939,10 @@
   shots: 3
   offSet: 12
   autoSwing: true
+P90:
+  type: GUN
+  offSet: 15
+  autoSwing: true
 屠夫:
   type: GUN
   shots: 4
@@ -1986,6 +1998,10 @@
 深核GK2:
   type: GUN
   autoSwing: true
+巨舰鲨:
+  type: GUN
+  offSet: 35
+  autoSwing: true
 九头蛇:
   type: GUN
   offSet: 22.5
@@ -2008,10 +2024,6 @@
   ammoConversion:
     ALL:
     - 海水冲击波
-P90:
-  type: GUN
-  offSet: 15
-  autoSwing: true
 发条鳄鱼枪:
   type: GUN
   fireRounds: 3
@@ -2822,6 +2834,12 @@ Dodu的手炮:
 女武神权杖:
   type: MAGIC_SPECIAL
   autoSwing: true
+深渊女神之复仇:
+  type: MAGIC_PROJECTILE
+  projectileName: 深渊女神标枪
+  fireRounds: 3
+  fireRoundsDelay: 2
+  autoSwing: true
 泰拉射线:
   type: MAGIC_SPECIAL
   autoSwing: true
@@ -2873,6 +2891,12 @@ Dodu的手炮:
 终结裂空戟:
   type: MAGIC_PROJECTILE
   projectileName: 终结裂空戟
+  fireRounds: 5
+  fireRoundsDelay: 1
+  autoSwing: true
+神圣天罚:
+  type: MAGIC_PROJECTILE
+  projectileName: 神圣天罚
   fireRounds: 5
   fireRoundsDelay: 1
   autoSwing: true

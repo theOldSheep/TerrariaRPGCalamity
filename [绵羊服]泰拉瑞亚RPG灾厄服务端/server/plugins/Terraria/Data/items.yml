@@ -264,7 +264,6 @@
 腐肉:
   item: ROTTEN_FLESH
   lore:
-  - §r15 饵力
   - §r“看上去很好吃！”
   worth: 20000
   rarity: 0
@@ -464,9 +463,7 @@
   worth: 8000
   rarity: 1
 血珠:
-  item: FEATHER
-  lore:
-  - §r秃鹫的羽毛
+  item: CLAY_BALL
   worth: 12000
   rarity: 1
 可疑镀层:
@@ -3041,6 +3038,19 @@
     buffInflictMelee: 硫磺火|100|1
   worth: 16000000
   rarity: 8
+深渊之刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射短距离三叉戟
+  attributes:
+    damage: 260
+    damageType: Melee
+    crit: 4
+    knockback: 8
+    useTime: 18
+    buffInflictMelee: 深渊水压|100|1
+  worth: 12000000
+  rarity: 7
 风暴管束者:
   item: DIAMOND_SWORD
   lore:
@@ -6851,6 +6861,21 @@
     useTime: 32
   worth: 2400000
   rarity: 4
+P90:
+  item: BLAZE_ROD
+  lore:
+  - §r“P90 rush B！”
+  attributes:
+    damage: 10
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 7
+    knockback: 1.5
+    useTime: 4
+    ammoConsumptionRate: -0.75
+    armorPenetration: 50
+  worth: 2400000
+  rarity: 4
 屠夫:
   item: BLAZE_ROD
   lore:
@@ -6958,6 +6983,19 @@
     useTime: 14
   worth: 4800000
   rarity: 5
+巨舰鲨:
+  item: BLAZE_ROD
+  lore:
+  - §r每隔一发就会射出强劲水流
+  attributes:
+    damage: 60
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 16
+    knockback: 2.5
+    useTime: 5
+  worth: 12000000
+  rarity: 7
 九头蛇:
   item: BLAZE_ROD
   lore:
@@ -7011,20 +7049,6 @@
     useTime: 9
   worth: 12000000
   rarity: 7
-P90:
-  item: BLAZE_ROD
-  lore:
-  - §r“P90 rush B！”
-  attributes:
-    damage: 16
-    damageType: Bullet
-    crit: 4
-    projectileSpeed: 7
-    knockback: 1.5
-    useTime: 5
-    ammoConsumptionRate: -0.5
-  worth: 2400000
-  rarity: 4
 发条鳄鱼枪:
   item: BLAZE_ROD
   attributes:
@@ -7226,7 +7250,7 @@ P90:
     crit: 4
     projectileSpeed: 16
     knockback: 2.5
-    useTime: 5
+    useTime: 4
     ammoConsumptionRate: -0.5
   worth: 24000000
   rarity: 12
@@ -7432,7 +7456,7 @@ Dodu的手炮:
     crit: 4
     projectileSpeed: 18
     knockback: 5
-    useTime: 5
+    useTime: 4
     ammoConsumptionRate: -0.75
   worth: 40000000
   rarity: 16
@@ -8092,6 +8116,20 @@ Dodu的手炮:
     manaUse: 26
   worth: 4800000
   rarity: 5
+深渊女神之复仇:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射能量射线，命中后分解为自然能量
+  attributes:
+    damage: 76
+    damageType: Magic
+    projectileSpeed: 12
+    crit: 4
+    knockback: 3.5
+    useTime: 18
+    manaUse: 15
+  worth: 9600000
+  rarity: 7
 泰拉射线:
   item: DIAMOND_SWORD
   lore:
@@ -8250,6 +8288,18 @@ Dodu的手炮:
     manaUse: 25
   worth: 22000000
   rarity: 11
+神圣天罚:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 96
+    damageType: Magic
+    projectileSpeed: 19
+    crit: 4
+    knockback: 3.5
+    useTime: 12
+    manaUse: 15
+  worth: 24000000
+  rarity: 12
 荆棘烁兰:
   item: DIAMOND_SWORD
   lore:
@@ -13251,13 +13301,10 @@ Dodu的手炮:
   item: CLAY_BALL
   lore:
   - §r使用回复30生命值
-  - §r10 饵力
   worth: 500
   rarity: 0
 发光蘑菇:
   item: CLAY_BALL
-  lore:
-  - §r20 饵力
   worth: 1000
   rarity: 0
 水瓶:
@@ -13302,32 +13349,52 @@ Dodu的手炮:
   item: WORKBENCH
   rarity: 0
 工匠合成台:
-  item: FURNACE
+  item: CONCRETE
+  data: 1
   worth: 2000000
-  rarity: 0
-秘银砧:
-  item: FURNACE
-  worth: 500000
-  rarity: 3
-精金熔炉:
-  item: FURNACE
-  worth: 1000000
-  rarity: 3
-远古操纵机:
-  item: FURNACE
-  rarity: 10
-火炉:
-  item: FURNACE
-  worth: 2000
-  rarity: 0
-地狱熔炉:
-  item: FURNACE
-  worth: 60000
   rarity: 0
 铁砧:
   item: ANVIL
   worth: 20000
   rarity: 0
+秘银砧:
+  item: CONCRETE
+  data: 2
+  worth: 500000
+  rarity: 3
+星宇砧:
+  item: CONCRETE
+  data: 3
+  lore:
+  - §r超凡之砧，能够承受恒星崩塌的压力
+  worth: 500000
+  rarity: 3
+火炉:
+  item: FURNACE
+  worth: 2000
+  rarity: 0
+地狱熔炉:
+  item: CONCRETE
+  data: 4
+  worth: 60000
+  rarity: 0
+精金熔炉:
+  item: CONCRETE
+  data: 5
+  worth: 1000000
+  rarity: 3
+远古操纵机:
+  item: CONCRETE
+  data: 6
+  rarity: 10
+嘉登熔炉:
+  item: CONCRETE
+  data: 7
+  lore:
+  - §r由无尽星流能源驱动的脉冲格纳米锻造厂
+  - §r具有大部分主要合成站的功能
+  worth: 1000000
+  rarity: 3
 火把:
   item: TORCH
   worth: 1000

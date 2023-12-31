@@ -97,8 +97,9 @@ public class VanillaMechanicListener implements Listener {
             case SPECTATE:
                 e.setCancelled(true);
         }
-        // remove sentries and minions on teleport to somewhere far away ( 30 blocks)
-        if (! e.isCancelled() && e.getFrom().distanceSquared(e.getTo()) > 900 ) {
+        // remove sentries and minions on teleport to somewhere far away ( another world or 30 blocks away )
+        if (! e.isCancelled() &&
+                (e.getFrom().getWorld() != e.getTo().getWorld() || e.getFrom().distanceSquared(e.getTo()) > 900) ) {
             for (Entity entity :
                     ((ArrayList<Entity>) EntityHelper.getMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_SENTRY_LIST).value()) ) {
                 entity.remove();
