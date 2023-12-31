@@ -3407,10 +3407,17 @@ public class ItemUseHelper {
                 }
                 break;
             }
+            case "巨舰鲨": {
+                if (swingAmount % 2 == 1) {
+                    ammoConversion = new ArrayList<>(1);
+                    ammoConversion.add("巨舰水流");
+                }
+                break;
+            }
             case "海龙": {
                 if (swingAmount % 2 == 1) {
                     ammoConversion = new ArrayList<>(1);
-                    ammoConversion.add(swingAmount % 18 == 1 ? "海龙追踪火箭" : "水流");
+                    ammoConversion.add(swingAmount % 18 == 1 ? "海龙追踪火箭" : "巨舰水流");
                 }
                 break;
             }
@@ -3968,6 +3975,28 @@ public class ItemUseHelper {
                             offset = new Vector(Math.random() * 20 - 10, 16, Math.random() * 20 - 10);
                             fireVelocity = offset.clone().multiply(-1).normalize();
                             options.setTicksOffset(1);
+                            break;
+                        default:
+                            options.setRandomOffsetRadius(0.5);
+                            break;
+                    }
+                    Location destination = getPlayerTargetLoc(ply, 64, 4, options, true);
+                    fireLoc = destination.add(offset);
+                    break;
+                }
+                case "深渊女神之复仇":
+                case "神圣天罚": {
+                    Vector offset = new Vector(Math.random() * 30 - 15, -20 - Math.random() * 20, Math.random() * 30 - 15);
+                    fireVelocity = offset.clone().multiply(-1).normalize();
+                    EntityHelper.AimHelperOptions options = new EntityHelper.AimHelperOptions()
+                            .setAimMode(true)
+                            .setTicksOffset(offset.length() / projectileSpeed);
+                    switch (itemType) {
+                        case "深渊女神之复仇":
+                            options.setRandomOffsetRadius(3);
+                            break;
+                        case "神圣天罚":
+                            options.setRandomOffsetRadius(2);
                             break;
                         default:
                             options.setRandomOffsetRadius(0.5);

@@ -1996,6 +1996,12 @@ TNT:
         name: 追踪能量弹
         velocity: 0.5
         damageMulti: 0.5
+巨舰水流:
+    gravity: 0
+    liveTime: 50
+    penetration: 1
+    slowedByWater: false
+    trailColor: 69|92|211
 麦格纳冲击波:
     arrowOrPotion: true
     projectileSize: 2
@@ -2679,6 +2685,13 @@ TNT:
     buffInflict:
         - "狱炎|60|1"
         - "剧毒|50|1"
+深渊三叉戟:
+    projectileSize: 0.5
+    gravity: 0
+    liveTime: 25
+    penetration: 2
+    buffInflict:
+        - "深渊水压|40|1"
 风暴管束者剑气:
     gravity: 0
     projectileSize: 3
@@ -3846,6 +3859,14 @@ TNT:
     blockHitAction: thru
     trailColor: 100|255|150
     trailStepSize: 0.6
+深渊女神标枪:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.5
+    autoTrace: true
+    liveTime: 75
+    buffInflict:
+        - "深渊水压|60|1"
 极光光束:
     gravity: 0
     projectileSize: 0.5
@@ -3926,6 +3947,15 @@ TNT:
     buffInflict:
         - "狱炎|60|0.5"
         - "硫磺火|60|0.5"
+神圣天罚:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.75
+    autoTrace: true
+    autoTraceRadius: 24
+    liveTime: 75
+    buffInflict:
+        - "神圣之火|60|1"
 荆棘烁兰花瓣:
     gravity: 0
     liveTime: 40

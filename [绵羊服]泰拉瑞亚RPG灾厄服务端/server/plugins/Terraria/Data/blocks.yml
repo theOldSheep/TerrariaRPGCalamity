@@ -359,11 +359,11 @@ WORKBENCH:
   totalProgress: 120
   dropItem:
   - 火炉
-地狱熔炉:
+CONCRETE_4:
   totalProgress: 180
   dropItem:
   - 地狱熔炉
-精金熔炉:
+CONCRETE_5:
   totalProgress: 350
   dropItem:
   - 精金熔炉
@@ -371,29 +371,39 @@ ANVIL:
   totalProgress: 120
   dropItem:
   - 铁砧
-秘银砧:
+CONCRETE_2:
   totalProgress: 250
   dropItem:
   - 秘银砧
+CONCRETE_3:
+  totalProgress: 600
+  dropItem:
+  - 星宇砧
+ENCHANTMENT_TABLE:
+  totalProgress: 200
+  dropItem:
+  - 祭坛
 BREWING_STAND:
   totalProgress: 120
   dropItem:
   - 酿造台
-工匠合成台:
+CONCRETE_1:
   totalProgress: 120
   dropItem:
   - 工匠合成台
-远古操纵机:
+CONCRETE_6:
   totalProgress: 650
   dropItem:
   - 远古操纵机
+CONCRETE_7:
+  totalProgress: 1000
+  dropItem:
+  - 嘉登熔炉
 CHEST:
   totalProgress: 150
   dropItem:
   - 箱子
 # unbreakables
-# ENCHANTMENT_TABLE:
-#   powerPickaxe: 999999
 SMOOTH_BRICK_1:
   powerPickaxe: 200
   totalProgress: 750
