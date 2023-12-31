@@ -973,6 +973,8 @@
     liveTime: 20
     projectileSize: 1
     blockHitAction: thru
+    trailColor: 7|199|200
+    trailSize: 0.25
     penetration: 999999
 蛇眼反弹光电矢:
     gravity: 0
@@ -983,10 +985,13 @@
     autoTraceRadius: 20
     isGrenade: true
     blastRadius: 2.75
+    trailColor: 255|255|255
+    trailSize: 0.25
 宇宙灯笼光束:
     gravity: 0
     liveTime: 80
     blockHitAction: thru
+    projectileSize: 0.5
     penetration: 2
     autoTrace: true
     autoTraceRadius: 24
@@ -1023,7 +1028,7 @@
     autoTraceRadius: 24
 小遗爵鲨牙刺球:
     gravity: 0
-    liveTime: 40
+    liveTime: 20
     blockHitAction: thru
     projectileSize: 3
     penetration: 999999
@@ -1043,9 +1048,11 @@
     gravity: 0
     liveTime: 100
     blockHitAction: thru
-    projectileSize: 5
+    projectileSize: 10
     penetration: 999999
     enemyInvincibilityFrame: 1
+    worldSpriteMode: true
+    worldSpriteUpdateInterval: 105
 宙蝰制导火箭:
     gravity: 0
     liveTime: 100
@@ -1060,6 +1067,7 @@
     gravity: 0
     liveTime: 100
     blockHitAction: thru
+    projectileSize: 0.75
     isGrenade: true
     blastRadius: 1.75
     clusterBomb:
@@ -1148,12 +1156,14 @@
     autoTrace: true
     autoTraceRadius: 32
     autoTraceAbility: 5
+    trailColor: RAINBOW
     buffInflict:
         - "超位崩解|100|1"
 归墟爆破之星:
     gravity: 0
     liveTime: 80
     blockHitAction: thru
+    projectileSize: 3
     autoTrace: true
     autoTraceRadius: 32
     autoTraceAbility: 6
@@ -4018,6 +4028,7 @@ TNT:
     gravity: 0
     liveTime: 50
     isGrenade: true
+    projectileSize: 1.5
     blastRadius: 6
     blastDuration: 32
     trailColor: 255|255|137
@@ -4030,11 +4041,13 @@ TNT:
 破空暗夜飞龙:
     gravity: 0
     liveTime: 50
+    projectileSize: 3
 破空星辰:
     gravity: 0
     blockHitAction: stick
     liveTime: 40
     isGrenade: true
+    projectileSize: 0.5
     blastRadius: 2
     buffInflict:
         - "夜魇|60|1"
@@ -4054,11 +4067,13 @@ TNT:
 弑神星云激光:
     gravity: 0
     blockHitAction: thru
+    penetration: 7
     projectileSize: 0.5
     liveTime: 2
     speedMultiPerTick: 999
     maxSpeed: 32
     trailColor: 194|148|248;100|200|255
+    trailIntensityMulti: 2
     buffInflict:
         - "弑神怒焰|60|1"
 灵魂穿透者主光束:
@@ -4068,6 +4083,7 @@ TNT:
     speedMultiPerTick: 999
     maxSpeed: 64
     trailColor: 171|152|236
+    trailIntensityMulti: 2
     buffInflict:
         - "弑神怒焰|60|1"
     clusterBomb:
@@ -4087,6 +4103,7 @@ TNT:
     penetration: 999999
     liveTime: 1
     trailColor: 171|152|236
+    trailIntensityMulti: 1.5
     buffInflict:
         - "弑神怒焰|60|1"
 圣杖星云:
@@ -4119,6 +4136,7 @@ TNT:
 氦闪挥发性星核:
     gravity: 0
     liveTime: 30
+    projectileSize: 0.75
     trailColor: 239|193|119
     clusterBomb:
         amount: 1
@@ -4184,17 +4202,18 @@ TNT:
 狞桀:
     gravity: 0
     liveTime: 20
-    projectileSize: 1
+    projectileSize: 2
     trailColor: 255|7|10
     clusterBomb:
-        amount: 25
-        damageMulti: 0.075
-        name: 颅骨云
+        amount: 15
+        damageMulti: 0.1
+        name: 狞桀颅骨云
         type: normal
         fireOnTimeout: false
         velocity: 1.5
-颅骨云:
+狞桀颅骨云:
     gravity: 0
+    liveTime: 50
     blockHitAction: thru
     penetration: 99999
     projectileSize: 3
