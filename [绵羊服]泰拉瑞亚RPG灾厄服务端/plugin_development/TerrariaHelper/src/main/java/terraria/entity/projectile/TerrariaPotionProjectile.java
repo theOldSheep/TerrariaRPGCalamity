@@ -46,6 +46,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public org.bukkit.entity.Projectile bukkitEntity;
     HashMap<String, Double> attrMap, attrMapExtraProjectile;
     public Entity autoTraceTarget = null;
+    Vector lastImpulseVelocity = null;
     Location lastTrailDisplayLocation = null;
     // extra projectile variables
     public ConfigurationSection extraProjectileConfigSection;
@@ -761,7 +762,6 @@ public class TerrariaPotionProjectile extends EntityPotion {
         Vec3D initialLoc = new Vec3D(this.locX, this.locY, this.locZ);
         Vec3D futureLoc = new Vec3D(this.locX, this.locY, this.locZ);
         Vector velocity = new Vector(this.motX, this.motY, this.motZ);
-        Vector velocityInitial = velocity.clone();
         this.setNoGravity(true);
         if (shouldMove) {
             // optimize auto trace target
@@ -1120,16 +1120,21 @@ public class TerrariaPotionProjectile extends EntityPotion {
 //                !isNoGravity()))
 //            this.velocityChanged = true;
 
-        // prevents client glitch
-        this.positionChanged = true;
-        this.velocityChanged = true;
-        this.impulse = true;
         // draw particle trail
         handleWorldSpriteParticleTrail();
         // spawn projectiles
         spawnExtraProjectiles();
         // extra ticking
         extraTicking();
+
+        // prevents client glitch
+        // if velocity changed by more than 0.1 from last impulsed (length squared = 0.01)
+        if (lastImpulseVelocity == null || new Vector(motX, motY, motZ).subtract(lastImpulseVelocity).lengthSquared() > 0.01) {
+            lastImpulseVelocity = new Vector(motX, motY, motZ);
+            this.positionChanged = true;
+            this.velocityChanged = true;
+            this.impulse = true;
+        }
 
         // time out removal
         if (this.ticksLived >= liveTime) die();

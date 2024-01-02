@@ -711,7 +711,7 @@ public class PlayerHelper {
         }, 0, 10);
     }
     public static void threadBGM() {
-        boolean printBGMDebugInfo = false;
+        final boolean printBGMDebugInfo = false;
         // every 4 ticks (1/5 second)
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
@@ -723,7 +723,7 @@ public class PlayerHelper {
                     String current = "";
                     long currentTime = Calendar.getInstance().getTimeInMillis();
                     MetadataValue forceBGM = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BGM);
-                    // no jukebox
+                    // if no jukebox is present
                     if (forceBGM == null) {
                         World plyWorld = ply.getWorld();
                         String worldName = plyWorld.getName();
@@ -740,6 +740,27 @@ public class PlayerHelper {
                                     if (bossArrayList.get(1).isDead()) bossName += "1";
                                     else bossName += "2";
                                     break;
+                                case "神明吞噬者": {
+                                    LivingEntity bossPart = bossArrayList.get(1);
+                                    if (bossPart.getHealth() / bossPart.getMaxHealth() >= 0.6) bossName += "1";
+                                    else bossName += "2";
+                                    break;
+                                }
+                                case "丛林龙，犽戎": {
+                                    LivingEntity bossPart = bossArrayList.get(1);
+                                    if (bossPart.getHealth() / bossPart.getMaxHealth() >= 0.55) bossName += "1";
+                                    else bossName += "2";
+                                    break;
+                                }
+                                case "至尊灾厄": {
+                                    LivingEntity bossPart = bossArrayList.get(1);
+                                    double healthRatio = bossPart.getHealth() / bossPart.getMaxHealth();
+                                    if (healthRatio >= 0.5) bossName += "1";
+                                    else if (healthRatio >= 0.3) bossName += "2";
+                                    else if (bossPart.getHealth() >= 2) bossName += "3";
+                                    else bossName += "4";
+                                    break;
+                                }
                             }
                             // get the first living component of current boss
                             double currDist = 99999;
@@ -833,12 +854,22 @@ public class PlayerHelper {
                     else {
                         current = forceBGM.asString();
                     }
+                    // these music have a full version
                     switch (current) {
                         case "return_to_slime":
+                        case "unholy_ambush":
+                        case "unholy_insurgency":
+                        case "toxic_wisdom":
+                        case "scourge_of_the_universe":
+                        case "universal_collapse":
+                        case "threats_of_the_ocean_floor":
+                            // this if statement triggers in two cases:
+                            // in the last tick, if: full was playing OR some other random music was playing
                             if (! last.equals(current)) {
                                 // just started playing this music
                                 current += "_full";
-                                // prevent instantly switching out from the full version
+                                // this if statement is true only if some other random music was playing the last tick
+                                // refreshing started time will prevent instantly switching out from the full version
                                 if (! last.equals(current))
                                     startedPlayingTime = currentTime;
                             }
@@ -849,7 +880,7 @@ public class PlayerHelper {
                     if (printBGMDebugInfo) ply.sendMessage(current + ", " + (musicDuration + startedPlayingTime - currentTime) + " ms left.");
                     boolean shouldPlayMusic = false;
                     // full song finished playing
-                    if (musicDuration + startedPlayingTime < currentTime) {
+                    if (musicDuration + startedPlayingTime <= currentTime) {
                         shouldPlayMusic = true;
                         // if the current one playing is the full version, next one shall be reduced version
                         if (current.endsWith("_full")) current = current.replace("_full", "");
@@ -868,7 +899,7 @@ public class PlayerHelper {
                     Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadBGM ", e);
                 }
             }
-        }, 0, 4);
+        }, 0, 1);
     }
     public static void threadGrapplingHook() {
         // every 3 ticks (~1/7 second)

@@ -643,6 +643,7 @@
   type: SWING
   autoSwing: true
   size: 8.5
+  useSound: item.exoblade.swing
 血石斩切刃:
   type: SWING
   autoSwing: true
@@ -739,6 +740,7 @@
   type: SWING
   autoSwing: true
   size: 10
+  useSound: item.exoblade.swing
 星流之刃_RIGHT_CLICK:
   type: STAB
   size: 12
@@ -1083,9 +1085,11 @@
   type: SWING
   autoSwing: true
   size: 5
+  useSound: item.ark.use
 破碎方舟_RIGHT_CLICK:
   type: STAB
   size: 5.5
+  useSound: item.ark.use
   attributes:
     useTime: 5
     useSpeedMulti: 1
@@ -1094,9 +1098,11 @@
   type: SWING
   autoSwing: true
   size: 6.5
+  useSound: item.ark.use
 远古方舟_RIGHT_CLICK:
   type: STAB
   size: 7.5
+  useSound: item.ark.use
   attributes:
     useTime: 5
     useSpeedMulti: 1
@@ -1105,6 +1111,7 @@
   type: SWING
   autoSwing: true
   size: 8
+  useSound: item.ark.use
   attributes:
     useTime: 7
     useSpeedMulti: 1
@@ -1112,6 +1119,7 @@
 元素方舟_RIGHT_CLICK:
   type: STAB
   size: 9
+  useSound: item.ark.use
   attributes:
     useTime: 5
     useSpeedMulti: 1
@@ -1173,6 +1181,7 @@
   type: SWING
   autoSwing: true
   size: 10
+  useSound: item.ark.use
   attributes:
     useTime: 7
     useSpeedMulti: 1
@@ -1180,6 +1189,7 @@
 鸿蒙方舟_RIGHT_CLICK:
   type: STAB
   size: 10
+  useSound: item.ark.use
   attributes:
     useTime: 6
     useSpeedMulti: 1
@@ -3424,6 +3434,7 @@ Dodu的手炮:
   type: SUMMON
   damageType: Melee
   minionName: 真菌块
+  slotsRequired: 2
   noDuplication: true
 死亡凝视法杖:
   type: SUMMON
