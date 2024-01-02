@@ -441,8 +441,6 @@
     liveTime: 80
     blockHitAction: thru
     trailColor: 0|255|255
-    trailSize: 0.15
-    trailStepSize: 1.25
     buffInflict:
         - "幻星感染|40|1"
 星幻凝晶:
@@ -468,8 +466,6 @@
     buffInflict:
         - "燃烧|140|1"
     trailColor: 255|50|50
-    trailSize: 0.15
-    trailStepSize: 1
 爆裂火球:
     penetration: 99999
     projectileSize: 2
@@ -481,24 +477,18 @@
     buffInflict:
         - "燃烧|280|1"
     trailColor: 255|50|50
-    trailSize: 0.15
-    trailStepSize: 0.75
 石巨人激光:
     penetration: 99999
     gravity: 0
     liveTime: 80
     blockHitAction: thru
     trailColor: 255|200|50
-    trailSize: 0.15
-    trailStepSize: 0.75
 歌莉娅瘟疫导弹:
     penetration: 99999
     gravity: 0
     liveTime: 40
     blockHitAction: thru
     trailColor: 50|255|150
-    trailSize: 0.15
-    trailStepSize: 1
     isGrenade: true
     blastRadius: 3.5
     buffInflict:
@@ -509,8 +499,6 @@
     liveTime: 30
     blockHitAction: thru
     trailColor: 50|255|150
-    trailSize: 0.15
-    trailStepSize: 0.75
     isGrenade: true
     blastRadius: 3.5
     buffInflict:
@@ -521,8 +509,6 @@
     liveTime: 20
     blockHitAction: thru
     trailColor: 50|255|150
-    trailSize: 0.75
-    trailStepSize: 1
     isGrenade: true
     blastRadius: 3
     buffInflict:
@@ -621,8 +607,6 @@
 幻影眼:
     blockHitAction: thru
     trailColor: 100|255|255
-    trailSize: 0.15
-    trailStepSize: 1
     isGrenade: true
     blastRadius: 4
     liveTime: 100
@@ -832,7 +816,7 @@
     penetration: 999999
     blockHitAction: thru
     trailColor: "255|100|0"
-    trailStepSize: 1.25
+    trailIntensityMulti: 0.35
     buffInflict:
         - "剧毒|40|0.25"
         - "狱炎|40|0.25"
@@ -2035,9 +2019,6 @@ TNT:
     isGrenade: true
     blastRadius: 1
     trailColor: 0|150|0
-    trailSize: 0.6
-    trailLingerTime: 1.25
-    trailStepSize: 1
     autoTrace: true
     autoTraceRadius: 24
 追踪蘑菇:
@@ -2736,7 +2717,6 @@ TNT:
         name: 小火花
         velocity: 0.6
     trailColor: 255|255|113
-    trailStepSize: 1
     trailLingerTime: 6
 大熔岩火球:
     gravity: 0
@@ -4507,8 +4487,7 @@ TNT:
     liveTime: 30
     gravity: 0
     trailColor: 255|7|8
-    trailSize: 0.2
-    trailStepSize: 0.75
+    trailStepSize: 0.5
     speedMultiPerTick: 1.1
     maxSpeed: 3.5
     isGrenade: true

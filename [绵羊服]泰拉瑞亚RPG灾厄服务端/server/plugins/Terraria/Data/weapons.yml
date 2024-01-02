@@ -3424,6 +3424,7 @@ Dodu的手炮:
   type: SUMMON
   damageType: Melee
   minionName: 真菌块
+  noDuplication: true
 死亡凝视法杖:
   type: SUMMON
   damageType: Magic
@@ -3587,17 +3588,17 @@ Dodu的手炮:
   minionName: 黑色天龙
   slotsRequired: 6
   noDuplication: true
-幽花之主:
-  type: SUMMON
-  damageType: Magic
-  minionName: 小幽花
-  autoSwing: true
 龙血弃族:
   type: SUMMON
   damageType: Melee
   minionName: 血炎骨龙
   slotsRequired: 3
   noDuplication: true
+幽花之主:
+  type: SUMMON
+  damageType: Magic
+  minionName: 小幽花
+  autoSwing: true
 乌贼之哀歌:
   type: SUMMON
   damageType: Melee

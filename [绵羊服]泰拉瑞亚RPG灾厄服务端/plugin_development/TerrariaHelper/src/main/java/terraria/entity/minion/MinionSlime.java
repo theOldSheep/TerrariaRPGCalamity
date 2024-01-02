@@ -163,6 +163,7 @@ public class MinionSlime extends EntitySlime {
                 attrMap.put("damage", attrMap.getOrDefault("damage", 10d) * 0.4);
                 noclip = true;
                 setNoGravity(true);
+                break;
             }
             case "紫蝶": {
                 new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
@@ -268,10 +269,8 @@ public class MinionSlime extends EntitySlime {
             }
             case "黑色天龙":
             case "黑色天龙体节":
-            case "黑色天龙尾":
             case "白色天龙":
-            case "白色天龙体节":
-            case "白色天龙尾": {
+            case "白色天龙体节": {
                 // for heads only
                 switch (minionType) {
                     case "黑色天龙":
@@ -283,17 +282,12 @@ public class MinionSlime extends EntitySlime {
                         // add this head
                         segments.add((LivingEntity) bukkitEntity);
                         // add body
-                        for (int i = 0; i < 9; i ++) {
+                        for (int i = 0; i < 10; i ++) {
                             MinionSlime newSeg = new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                                     this.sentryOrMinion, true,
                                     minionType + "体节", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
                             segments.add((LivingEntity) newSeg.getBukkitEntity());
                         }
-                        // add tail
-                        MinionSlime tailSeg = new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
-                                this.sentryOrMinion, true,
-                                minionType + "尾", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
-                        segments.add((LivingEntity) tailSeg.getBukkitEntity());
                         // save segment info
                         extraVariables.put("s", segments);
                     }

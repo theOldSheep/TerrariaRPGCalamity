@@ -9839,7 +9839,7 @@ Dodu的手炮:
   lore:
   - §r召唤腐化史莱姆为你而战
   attributes:
-    damage: 48
+    damage: 96
     damageType: Summon
     knockback: 2
     useTime: 29
@@ -9851,7 +9851,7 @@ Dodu的手炮:
   lore:
   - §r召唤血腥史莱姆为你而战
   attributes:
-    damage: 48
+    damage: 96
     damageType: Summon
     knockback: 2
     useTime: 29
@@ -9862,8 +9862,9 @@ Dodu的手炮:
   item: WOOD_SWORD
   lore:
   - §r召唤真菌块为你而战
+  - §r真菌块击中敌人后为拥有者恢复生命值，最多存在一个真菌块
   attributes:
-    damage: 20
+    damage: 40
     damageType: Summon
     knockback: 2
     useTime: 29
@@ -9886,7 +9887,7 @@ Dodu的手炮:
 永夜之眼:
   item: WOOD_SWORD
   lore:
-  - §r召唤会发射瘟疫细胞的永夜眼球，瘟疫细胞会附着在敌怪身上
+  - §r召唤会发射瘟疫细胞的永夜眼球
   attributes:
     damage: 56
     damageType: Summon
@@ -10015,7 +10016,7 @@ Dodu的手炮:
   lore:
   - §r召唤熔火古刀为你而战
   attributes:
-    damage: 100
+    damage: 175
     damageType: Summon
     knockback: 4.5
     useTime: 24

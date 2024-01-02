@@ -761,6 +761,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
         Vec3D initialLoc = new Vec3D(this.locX, this.locY, this.locZ);
         Vec3D futureLoc = new Vec3D(this.locX, this.locY, this.locZ);
         Vector velocity = new Vector(this.motX, this.motY, this.motZ);
+        Vector velocityInitial = velocity.clone();
         this.setNoGravity(true);
         if (shouldMove) {
             // optimize auto trace target
@@ -1120,8 +1121,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
 //            this.velocityChanged = true;
 
         // prevents client glitch
-        this.velocityChanged = true;
         this.positionChanged = true;
+        this.velocityChanged = true;
         this.impulse = true;
         // draw particle trail
         handleWorldSpriteParticleTrail();
