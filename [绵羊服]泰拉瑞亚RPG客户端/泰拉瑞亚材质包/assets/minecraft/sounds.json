@@ -211,6 +211,86 @@
 			}
 		]
 	},
+	"item.largeWeaponFire": {
+        "category": "master",
+		"subtitle": "\u5927\u578b\u6b66\u5668:\u53d1\u5c04",
+		"sounds": [
+			{
+				"name": "item/largeweaponfire",
+				"attenuation_distance": 32
+			}
+		]
+	},
+	"item.giantExplosion": {
+        "category": "master",
+		"subtitle": "\u6838\u5f39\u7ea7\u7206\u70b8",
+		"sounds": [
+			{
+				"name": "item/giantexplosion",
+				"attenuation_distance": 64
+			}
+		]
+	},
+	"item.ark.use": {
+        "category": "master",
+		"subtitle": "\u65b9\u821f:\u6325\u821e",
+		"sounds": [
+			{
+				"name": "item/arks/use",
+				"attenuation_distance": 16
+			}
+		]
+	},
+	"item.ark.snap": {
+        "category": "master",
+		"subtitle": "\u65b9\u821f:\u526a\u51fb",
+		"sounds": [
+			{
+				"name": "item/arks/snap",
+				"attenuation_distance": 40
+			}
+		]
+	},
+	"item.ark.parry": {
+        "category": "master",
+		"subtitle": "\u65b9\u821f:\u683c\u6321",
+		"sounds": [
+			{
+				"name": "item/arks/parry",
+				"attenuation_distance": 24
+			}
+		]
+	},
+	"item.exoblade.beam": {
+        "category": "master",
+		"subtitle": "\u5251\u6c14\u65a9\u5207",
+		"sounds": [
+			{
+				"name": "item/exoblade/beam",
+				"attenuation_distance": 24
+			}
+		]
+	},
+	"item.exoblade.explode": {
+        "category": "master",
+		"subtitle": "\u5251\u6c14\u7206\u70b8",
+		"sounds": [
+			{
+				"name": "item/exoblade/explode",
+				"attenuation_distance": 32
+			}
+		]
+	},
+	"item.exoblade.swing": {
+        "category": "master",
+		"subtitle": "\u5229\u5203:\u6325\u821e",
+		"sounds": [
+			{
+				"name": "item/exoblade/swing",
+				"attenuation_distance": 16
+			}
+		]
+	},
 	"item.guitar": {
         "category": "master",
 		"sounds": [
