@@ -100,6 +100,87 @@
 			}
 		]
 	},
+	"entity.hit.astral": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "damage/entity_hit_astral",
+				"attenuation_distance": 24
+			}
+		]
+	},
+	"entity.hit.bone": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "damage/entity_hit_bone",
+				"attenuation_distance": 24
+			}
+		]
+	},
+	"entity.hit.crystal": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "damage/entity_hit_crystal",
+				"attenuation_distance": 32
+			}
+		]
+	},
+	"entity.hit.flesh": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "damage/entity_hit_flesh",
+				"attenuation_distance": 20
+			}
+		]
+	},
+	"entity.hit.insect": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "damage/entity_hit_insect",
+				"attenuation_distance": 24
+			}
+		]
+	},
+	"entity.hit.otherworldly": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "damage/entity_hit_otherworldly",
+				"attenuation_distance": 40
+			}
+		]
+	},
+	"entity.hit.pixie": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "damage/entity_hit_pixie",
+				"attenuation_distance": 24
+			}
+		]
+	},
+	"entity.hit.rock": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "damage/entity_hit_rock",
+				"attenuation_distance": 32
+			}
+		]
+	},
+	"entity.hit.tortoise": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "damage/entity_hit_tortoise",
+				"attenuation_distance": 24
+			}
+		]
+	},
 	"item.bowShoot": {
         "category": "master",
 		"subtitle": "\u5f13:\u5c04\u7bad",
@@ -730,6 +811,222 @@
 		"sounds": [
 			{
 				"name": "music/calamity/pest_of_the_cosmos",
+				"stream": true
+			}
+		]
+	},
+	"music.unholy_ambush": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/unholy_ambush",
+				"stream": true
+			}
+		]
+	},
+	"music.unholy_ambush_full": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/unholy_ambush_full",
+				"stream": true
+			}
+		]
+	},
+	"music.murderswarm": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/murderswarm",
+				"stream": true
+			}
+		]
+	},
+	"music.unholy_insurgency": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/unholy_insurgency",
+				"stream": true
+			}
+		]
+	},
+	"music.unholy_insurgency_full": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/unholy_insurgency_full",
+				"stream": true
+			}
+		]
+	},
+	"music.feral_amalgamation": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/feral_amalgamation",
+				"stream": true
+			}
+		]
+	},
+	"music.storm_weaver": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/storm_weaver",
+				"stream": true
+			}
+		]
+	},
+	"music.ceaseless_void": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/ceaseless_void",
+				"stream": true
+			}
+		]
+	},
+	"music.signus": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/signus",
+				"stream": true
+			}
+		]
+	},
+	"music.toxic_wisdom": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/toxic_wisdom",
+				"stream": true
+			}
+		]
+	},
+	"music.toxic_wisdom_full": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/toxic_wisdom_full",
+				"stream": true
+			}
+		]
+	},
+	"music.scourge_of_the_universe": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/scourge_of_the_universe",
+				"stream": true
+			}
+		]
+	},
+	"music.scourge_of_the_universe_full": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/scourge_of_the_universe_full",
+				"stream": true
+			}
+		]
+	},
+	"music.universal_collapse": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/universal_collapse",
+				"stream": true
+			}
+		]
+	},
+	"music.universal_collapse_full": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/universal_collapse_full",
+				"stream": true
+			}
+		]
+	},
+	"music.infernal_catharsis": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/infernal_catharsis",
+				"stream": true
+			}
+		]
+	},
+	"music.roar_of_the_jungle_dragon": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/roar_of_the_jungle_dragon",
+				"stream": true
+			}
+		]
+	},
+	"music.inferior_fabrications": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/inferior_fabrications",
+				"stream": true
+			}
+		]
+	},
+	"music.stained_brutal_calamity_grief": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/stained_brutal_calamity_grief",
+				"stream": true
+			}
+		]
+	},
+	"music.stained_brutal_calamity_lament": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/stained_brutal_calamity_lament",
+				"stream": true
+			}
+		]
+	},
+	"music.stained_brutal_calamity_epiphany": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/stained_brutal_calamity_epiphany",
+				"stream": true
+			}
+		]
+	},
+	"music.stained_brutal_calamity_acceptance": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/stained_brutal_calamity_acceptance",
+				"stream": true
+			}
+		]
+	},
+	"music.threats_of_the_ocean_floor": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/threats_of_the_ocean_floor",
+				"stream": true
+			}
+		]
+	},
+	"music.threats_of_the_ocean_floor_full": {
+        "category": "music",
+		"sounds": [
+			{
+				"name": "music/calamity/threats_of_the_ocean_floor_full",
 				"stream": true
 			}
 		]
