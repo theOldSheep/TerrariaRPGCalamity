@@ -41,6 +41,7 @@ lengths:
     frost_moon: 68574
     lunar_tower: 87111
     # below: calamity music
+    # environment
     sunken_sea: 328000
     brimstone_crag: 278000
     sulphurous_ocean: 340000
@@ -49,11 +50,13 @@ lengths:
     abyss_1: 267000
     abyss_2: 267000
     abyss_3: 408000
+    # pre-hardmode
     guardian_of_the_former_seas: 242000
     infestation: 252160
     the_filthy_mind: 116000
     return_to_slime: 127500
     return_to_slime_full: 24000
+    # hardmode
     antarctic_reinforcement: 129000
     left_alone: 145500
     outcast_of_the_sulphurous_seas: 161750
@@ -64,6 +67,31 @@ lengths:
     fly_of_beelzebub: 125666
     open_frenzy: 134000
     pest_of_the_cosmos: 112000
+    # post-moonlord
+    unholy_ambush: 106630
+    unholy_ambush_full: 21300
+    murderswarm: 177090
+    unholy_insurgency: 142500
+    unholy_insurgency_full: 32000
+    feral_amalgamation: 290650
+    storm_weaver: 111100
+    ceaseless_void: 111100
+    signus: 111150
+    toxic_wisdom: 99400
+    toxic_wisdom_full: 21800
+    scourge_of_the_universe: 207030
+    scourge_of_the_universe_full: 22700
+    universal_collapse: 134300
+    universal_collapse_full: 9613
+    infernal_catharsis: 234500
+    roar_of_the_jungle_dragon: 239000
+    inferior_fabrications: 190500
+    stained_brutal_calamity_grief: 173900
+    stained_brutal_calamity_lament: 159900
+    stained_brutal_calamity_epiphany: 265100
+    stained_brutal_calamity_acceptance: 94350
+    threats_of_the_ocean_floor: 107970
+    threats_of_the_ocean_floor_full: 3000
 
 boss:
     史莱姆王: boss1
@@ -95,19 +123,24 @@ boss:
     拜月教邪教徒: boss4
     星神游龙: pest_of_the_cosmos
     月球领主: lunar_boss
-    亵渎守卫: 1800
-    痴愚金龙: 2400
-    亵渎天神: 4800
-    无尽虚空: 3600
-    风暴编织者: 2700
-    神之使徒西格纳斯: 2400
-    噬魂幽花: 3600
-    硫海遗爵: 3600
-    神明吞噬者: 4800
-    丛林龙，犽戎: 5100
-    星流巨械: 7200
-    至尊灾厄: 6000
-    成年幻海妖龙: 4800
+    亵渎守卫: unholy_ambush
+    痴愚金龙: murderswarm
+    亵渎天神: unholy_insurgency
+    噬魂幽花: feral_amalgamation
+    风暴编织者: storm_weaver
+    无尽虚空: ceaseless_void
+    神之使徒西格纳斯: signus
+    硫海遗爵: toxic_wisdom
+    神明吞噬者1: scourge_of_the_universe
+    神明吞噬者2: universal_collapse
+    丛林龙，犽戎1: infernal_catharsis
+    丛林龙，犽戎2: roar_of_the_jungle_dragon
+    星流巨械: inferior_fabrications
+    至尊灾厄1: stained_brutal_calamity_grief
+    至尊灾厄2: stained_brutal_calamity_lament
+    至尊灾厄3: stained_brutal_calamity_epiphany
+    至尊灾厄4: stained_brutal_calamity_acceptance
+    成年幻海妖龙: threats_of_the_ocean_floor
 event:
     哥布林军团: goblin_army
     史莱姆雨: slime_rain

@@ -38,7 +38,7 @@ public class ItemUseHelper {
     public static final String SOUND_GENERIC_SWING = "item.genericSwing", SOUND_BOW_SHOOT = "item.bowShoot",
             SOUND_GUN_FIRE = "item.gunfire", SOUND_GUN_FIRE_LOUD = "entity.generic.explode",
             SOUND_DANCE_OF_LIGHT_FLASH = "item.danceOfLight",
-            SOUND_ARK_PARRY = "entity.generic.explode", SOUND_ARK_SCISSOR_CUT = "entity.generic.explode";
+            SOUND_ARK_PARRY = "item.ark.parry", SOUND_ARK_SCISSOR_CUT = "item.ark.snap";
     protected static final double MELEE_MIN_STRIKE_RADIUS = 0.25;
     public static int applyCD(Player ply, double CD) {
         int coolDown = (int) CD;
@@ -943,7 +943,7 @@ public class ItemUseHelper {
                                     Vector projVel = MathHelper.vectorFromYawPitch_quick(finalStrikeYaw, finalStrikePitch);
                                     projVel.multiply(3);
                                     entityHit.setVelocity(projVel);
-                                    hitLoc.getWorld().playSound(hitLoc, SOUND_ARK_PARRY, 0.5f, 1);
+                                    hitLoc.getWorld().playSound(hitLoc, SOUND_ARK_PARRY, 1f, 1);
                                 })
                                 .setShouldDamageFunction((entity) -> entity.getScoreboardTags().contains("isWulfrumScrew"))
                                 .setLingerDelay(5);
@@ -1015,92 +1015,97 @@ public class ItemUseHelper {
                                 invulnerabilityTicks = isArkOfElements ? 14 : 15;
                                 coolDown = 120;
                                 damageReduction = isArkOfElements ? 350 : 400;
-                                // parry function
-                                Collection<Entity> finalDamagedList = damaged;
-                                strikeLineInfo
-                                        .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
-                                            // hit projectile: decrease the projectile's damage
-                                            if (entityHit instanceof Projectile) {
-                                                HashMap<String, Double> entityHitAttrMap = EntityHelper.getAttrMap(entityHit);
-                                                double newDmg = Math.max(1d, entityHitAttrMap.getOrDefault("damage", 1d) - damageReduction);
-                                                entityHitAttrMap.put("damage", newDmg);
-                                            }
-                                            // hit entity: apply melee invulnerability tick
-                                            else {
-                                                EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                                        EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
-                                                        invulnerabilityTicks);
-                                                EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                                        EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
-                                                        invulnerabilityTicks);
-                                            }
-                                            // recharge
-                                            if (hitIndex == 1) {
-                                                setDurability(weaponItem, 10, 10);
-                                                ply.playSound(ply.getEyeLocation(), SOUND_ARK_PARRY, 0.5f, 2f);
-                                            }
-                                        })
-                                        // should not damage an enemy twice
-                                        .setDamageCD(30)
-                                        // should parry entities that can damage player (and not in damage CD list)
-                                        .setShouldDamageFunction( (e) ->
-                                                EntityHelper.checkCanDamage(e, ply, true) && !finalDamagedList.contains(e));
-                                // render scissors
-                                {
-                                    int cutIndex = maxIndex - 2;
-                                    double rotationOffset;
-                                    if (currentIndex >= cutIndex) {
-                                        // play cut sound
-                                        if (currentIndex == cutIndex) {
-                                            ply.getWorld().playSound(ply.getLocation(), SOUND_ARK_SCISSOR_CUT, 5f, 1f);
-                                        }
-                                        rotationOffset = 0;
-                                    }
-                                    else {
-                                        rotationOffset = 45d - 45d * (currentIndex) / cutIndex;
-                                    }
-                                    // second scissor part handling
-                                    ItemStack scissorItem = strikeLineInfo.particleInfo.spriteItem;
-                                    {
-                                        // sprite for blade
-                                        {
-                                            ItemMeta newMeta = scissorItem.getItemMeta();
-                                            newMeta.setDisplayName( (isArkOfElements ? "元素方舟" : "鸿蒙方舟") + "1");
-                                            scissorItem.setItemMeta(newMeta);
-                                            strikeLineInfo.particleInfo.setSpriteItem(scissorItem);
-                                        }
-                                        // strike
-                                        double alternativeStrikePitch = strikePitch + rotationOffset;
-                                        Location bladeLoc = getScissorBladeLoc(startStrikeLoc,
-                                                MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch),
-                                                MathHelper.vectorFromYawPitch_quick(strikeYaw, alternativeStrikePitch),
-                                                size, scissorsConnLen);
-                                        GenericHelper.handleStrikeLine(ply, bladeLoc,
-                                                strikeYaw, alternativeStrikePitch,
-                                                size, strikeRadius, weaponType, color, damaged, attrMap, strikeLineInfo);
-                                    }
-                                    // damage-handling scissor part orientation
-                                    // sprite for blade
-                                    {
-                                        strikeLineInfo = strikeLineInfo.clone();
-                                        scissorItem = strikeLineInfo.particleInfo.spriteItem;
-                                        ItemMeta newMeta = scissorItem.getItemMeta();
-                                        newMeta.setDisplayName( (isArkOfElements ? "元素方舟" : "鸿蒙方舟") + "2");
-                                        scissorItem.setItemMeta(newMeta);
-                                        strikeLineInfo.particleInfo.setSpriteItem(scissorItem);
-                                    }
-                                    double strikePitchOriginal = strikePitch;
-                                    strikePitch -= rotationOffset;
-                                    startStrikeLoc = getScissorBladeLoc(startStrikeLoc,
-                                            MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitchOriginal),
-                                            MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch),
-                                            size, scissorsConnLen);
-                                }
                                 break;
                             default:
                                 invulnerabilityTicks = 10;
                                 coolDown = 100;
                                 damageReduction = 100;
+                        }
+                        // parry function
+                        Collection<Entity> finalDamagedList = damaged;
+                        strikeLineInfo
+                                .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
+                                    // hit projectile: decrease the projectile's damage
+                                    if (entityHit instanceof Projectile) {
+                                        HashMap<String, Double> entityHitAttrMap = EntityHelper.getAttrMap(entityHit);
+                                        double newDmg = Math.max(1d, entityHitAttrMap.getOrDefault("damage", 1d) - damageReduction);
+                                        entityHitAttrMap.put("damage", newDmg);
+                                    }
+                                    // hit entity: apply melee invulnerability tick
+                                    else {
+                                        EntityHelper.handleEntityTemporaryScoreboardTag(ply,
+                                                EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
+                                                invulnerabilityTicks);
+                                        EntityHelper.handleEntityTemporaryScoreboardTag(ply,
+                                                EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
+                                                invulnerabilityTicks);
+                                    }
+                                    // recharge
+                                    if (hitIndex == 1) {
+                                        setDurability(weaponItem, 10, 10);
+                                        ply.playSound(ply.getEyeLocation(), SOUND_ARK_PARRY, 2f, 2f);
+                                    }
+                                })
+                                // should not damage an enemy twice
+                                .setDamageCD(30)
+                                // should parry entities that can damage player (and not in damage CD list)
+                                .setShouldDamageFunction( (e) ->
+                                        EntityHelper.checkCanDamage(e, ply, true) && !finalDamagedList.contains(e));
+                        // render scissors
+                        switch (weaponType) {
+                            case "元素方舟_RIGHT_CLICK":
+                            case "鸿蒙方舟_RIGHT_CLICK": {
+                                boolean isArkOfElements = weaponType.equals("元素方舟_RIGHT_CLICK");
+                                int cutIndex = maxIndex - 2;
+                                double rotationOffset;
+                                if (currentIndex >= cutIndex) {
+                                    // play cut sound
+                                    if (currentIndex == cutIndex) {
+                                        ply.getWorld().playSound(ply.getLocation(), SOUND_ARK_SCISSOR_CUT, 5f, 1f);
+                                    }
+                                    rotationOffset = 0;
+                                }
+                                else {
+                                    rotationOffset = 45d - 45d * (currentIndex) / cutIndex;
+                                }
+                                // second scissor part handling
+                                ItemStack scissorItem = strikeLineInfo.particleInfo.spriteItem;
+                                {
+                                    // sprite for blade
+                                    {
+                                        ItemMeta newMeta = scissorItem.getItemMeta();
+                                        newMeta.setDisplayName( (isArkOfElements ? "元素方舟" : "鸿蒙方舟") + "1");
+                                        scissorItem.setItemMeta(newMeta);
+                                        strikeLineInfo.particleInfo.setSpriteItem(scissorItem);
+                                    }
+                                    // strike
+                                    double alternativeStrikePitch = strikePitch + rotationOffset;
+                                    Location bladeLoc = getScissorBladeLoc(startStrikeLoc,
+                                            MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch),
+                                            MathHelper.vectorFromYawPitch_quick(strikeYaw, alternativeStrikePitch),
+                                            size, scissorsConnLen);
+                                    GenericHelper.handleStrikeLine(ply, bladeLoc,
+                                            strikeYaw, alternativeStrikePitch,
+                                            size, strikeRadius, weaponType, color, damaged, attrMap, strikeLineInfo);
+                                }
+                                // damage-handling scissor part orientation
+                                // sprite for blade
+                                {
+                                    strikeLineInfo = strikeLineInfo.clone();
+                                    scissorItem = strikeLineInfo.particleInfo.spriteItem;
+                                    ItemMeta newMeta = scissorItem.getItemMeta();
+                                    newMeta.setDisplayName( (isArkOfElements ? "元素方舟" : "鸿蒙方舟") + "2");
+                                    scissorItem.setItemMeta(newMeta);
+                                    strikeLineInfo.particleInfo.setSpriteItem(scissorItem);
+                                }
+                                double strikePitchOriginal = strikePitch;
+                                strikePitch -= rotationOffset;
+                                startStrikeLoc = getScissorBladeLoc(startStrikeLoc,
+                                        MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitchOriginal),
+                                        MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch),
+                                        size, scissorsConnLen);
+                            }
+                            break;
                         }
                         // handle cool down after fully finishing this swing
                         if (currentIndex == maxIndex)
@@ -3193,7 +3198,7 @@ public class ItemUseHelper {
         TerrariaBoomerang entity = new TerrariaBoomerang(shootInfo, distance, useTime);
         plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // play sound
-        playerUseItemSound(ply, weaponType, autoSwing);
+        playerUseItemSound(ply, weaponType, itemType, autoSwing);
         return true;
     }
     protected static boolean playerUseYoyo(Player ply, String itemType, String weaponType,
@@ -3214,7 +3219,7 @@ public class ItemUseHelper {
         TerrariaYoyo entity = new TerrariaYoyo(shootInfo, reach, useTime, recoilPoolMultiplier, duration);
         plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // play sound
-        playerUseItemSound(ply, weaponType, autoSwing);
+        playerUseItemSound(ply, weaponType, itemType, autoSwing);
         return true;
     }
     protected static boolean playerUseFlail(Player ply, String itemType, String weaponType,
@@ -3234,7 +3239,7 @@ public class ItemUseHelper {
         TerrariaFlail entity = new TerrariaFlail(shootInfo, reach, useTime);
         plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // play sound
-        playerUseItemSound(ply, weaponType, autoSwing);
+        playerUseItemSound(ply, weaponType, itemType, autoSwing);
         return true;
     }
     // ranged helper functions below
@@ -3712,7 +3717,7 @@ public class ItemUseHelper {
             }
         }
         // if this is a delayed shot, play item swing sound
-        playerUseItemSound(ply, weaponType, autoSwing);
+        playerUseItemSound(ply, weaponType, itemType, autoSwing);
         // extra delayed shots
         if (fireIndex < fireRoundMax) {
             int fireRoundDelay = weaponSection.getInt("fireRoundsDelay", 20);
@@ -3844,7 +3849,7 @@ public class ItemUseHelper {
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, facingDir, attrMap, itemType);
         EntityHelper.spawnProjectile(shootInfo);
         // play sound
-        playerUseItemSound(ply, weaponType, autoSwing);
+        playerUseItemSound(ply, weaponType, itemType, autoSwing);
         // apply CD
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
         double useTimeMulti = 1 / useSpeed;
@@ -4199,7 +4204,7 @@ public class ItemUseHelper {
             }
         }
         // if this is a delayed shot, play item swing sound
-        playerUseItemSound(ply, weaponType, autoSwing);
+        playerUseItemSound(ply, weaponType, itemType, autoSwing);
         // extra delayed shots
         if (fireIndex < fireRoundMax) {
             int fireRoundDelay = weaponSection.getInt("fireRoundsDelay", 20);
@@ -4814,10 +4819,10 @@ public class ItemUseHelper {
         return spawnSentryMinion(ply, minionName, attrMap, slotsConsumed, sentryOrMinion, hasContactDamage, noDuplication, originalStaff);
     }
     // other helper functions for item using
-    public static void playerUseItemSound(Entity ply, String weaponType, boolean autoSwing) {
+    public static void playerUseItemSound(Entity ply, String weaponCategory, String weaponItemType, boolean autoSwing) {
         String itemUseSound;
         float volume = 1f, pitch = 1f;
-        switch (weaponType) {
+        switch (weaponCategory) {
             case "BOW":
                 itemUseSound = SOUND_BOW_SHOOT;
                 volume = 2f;
@@ -4834,6 +4839,7 @@ public class ItemUseHelper {
             default:
                 itemUseSound = SOUND_GENERIC_SWING;
         }
+        itemUseSound = TerrariaHelper.weaponConfig.getString(weaponItemType + ".useSound", itemUseSound);
         ply.getWorld().playSound(ply.getLocation(), itemUseSound, volume, pitch);
     }
     public static boolean playerBiomeBladeResonate(Player ply, String itemType, String prefix) {
@@ -5155,7 +5161,7 @@ public class ItemUseHelper {
                         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, swingAmount + 1);
                     }
                     // play item use sound
-                    playerUseItemSound(ply, weaponType, autoSwing);
+                    playerUseItemSound(ply, weaponType, itemName, autoSwing);
                 } else {
                     // prevent bug, if the item is not being used successfully, cancel auto swing
                     // this mainly happens when mana has depleted or ammo runs out

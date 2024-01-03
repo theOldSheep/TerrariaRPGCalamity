@@ -1326,7 +1326,7 @@ public class MonsterHelper {
                         monsterBkt.setVelocity(v);
                         // shoot projectile
                         if (indexAI % 7 == 6) {
-                            ItemUseHelper.playerUseItemSound(monsterBkt, "GUN", true);
+                            ItemUseHelper.playerUseItemSound(monsterBkt, "GUN", "链式机枪",true);
                             Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(),
                                     target.getEyeLocation().add(
                                             5 * (Math.random() - 0.5), 5 * (Math.random() - 0.5), 5 * (Math.random() - 0.5)),
@@ -1578,7 +1578,7 @@ public class MonsterHelper {
                                         }
                                         // fire projectile
                                         if (indexAI % shootInterval == 0) {
-                                            ItemUseHelper.playerUseItemSound(monsterBkt, "GUN", type.equals("骷髅特警"));
+                                            ItemUseHelper.playerUseItemSound(monsterBkt, "GUN", "狙击步枪", type.equals("骷髅特警"));
                                             for (int i = 0; i < shootAmount; i ++) {
                                                 Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), spd);
                                                 if (type.equals("骷髅特警")) {

@@ -765,6 +765,8 @@
     projectileSize: 2
     worldSpriteMode: true
     worldSpriteUpdateInterval: 1
+    spawnSound: item.giantExplosion
+    spawnSoundVolume: 10
 粉色粒子光束:
     gravity: 0
     projectileSize: 1.5
@@ -1128,6 +1130,8 @@
     autoTrace: true
     autoTraceRadius: 48
     autoTraceAbility: 6
+    spawnSound: item.largeWeaponFire
+    spawnSoundVolume: 0.2
     clusterBomb:
         amount: 1
         damageMulti: 0.5
@@ -2942,6 +2946,8 @@ TNT:
     enemyInvincibilityFrame: 4
     worldSpriteMode: true
     worldSpriteUpdateInterval: 2
+    spawnSound: item.exoblade.explode
+    spawnSoundVolume: 10
     spawnProjectiles:
         interval: 1
         spawnMechanism: SURROUND
@@ -2956,6 +2962,8 @@ TNT:
     trailColor: 128|255|64
     trailIntensityMulti: 1.5
     trailLingerTime: 5
+    spawnSound: item.exoblade.beam
+    spawnSoundVolume: 0.3
 镜之刃镜子:
     gravity: 0
     penetration: 999999
@@ -3148,6 +3156,8 @@ TNT:
     enemyInvincibilityFrame: 3
     worldSpriteMode: true
     worldSpriteUpdateInterval: 2
+    spawnSound: item.exoblade.explode
+    spawnSoundVolume: 10
     buffInflict:
         - "超位崩解|100|1"
 星流斩切光束:
@@ -3159,6 +3169,8 @@ TNT:
     trailColor: 169|237|101
     trailIntensityMulti: 2
     trailLingerTime: 5
+    spawnSound: item.exoblade.beam
+    spawnSoundVolume: 1
     buffInflict:
         - "超位崩解|100|1"
 三色大地流星:

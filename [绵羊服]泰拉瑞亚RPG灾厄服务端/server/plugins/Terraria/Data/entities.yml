@@ -17,6 +17,7 @@
         - "黑晶状体:1:1:0.01"
         - "铜币:150:300:1"
 血滴怪:
+    soundDamaged: entity.hit.flesh
     drop:
         - "铜币:100:200:1"
         - "鲨牙项链:1:1:0.0133"
@@ -69,10 +70,12 @@
     drop:
         - "生命凝胶:1:1:0.125"
 巨像蛤:
+    soundDamaged: entity.irongolem.hurt
     drop:
         - "铜币:7500:12500:1"
         - "沉沦渊石:25:35:1"
 肉后巨像蛤:
+    soundDamaged: entity.irongolem.hurt
     drop:
         - "铜币:40000:60000:1"
         - "软体动物外壳:6:11:1"
@@ -81,6 +84,7 @@
         - "海贝法杖:1:1:0.25"
         - "海蚌锤:1:1:0.25"
 噬魂怪:
+    soundDamaged: entity.hit.flesh
     drop:
         - "铜币:200:250:1"
         - "腐肉:1:1:0.33"
@@ -89,11 +93,13 @@
         - "铜币:100:200:1"
         - "荒漠之羽:1:2:1"
 蚁狮马:
+    soundDamaged: entity.hit.insect
     drop:
         - "铜币:200:400:1"
         - "蚁狮上颚:1:2:0.33"
         - "灼炎弯刀:1:1:0.0667"
 风暴蚁狮:
+    soundDamaged: entity.hit.insect
     buffImmute:
         - "带电"
     buffInflict:
@@ -197,6 +203,7 @@
         - "巨型羽毛:1:1:0.02"
         - "天空之羽:1:1:0.035"
 骷髅:
+    soundDamaged: entity.hit.bone
     drop:
         - "铜币:200:400:1"
         - "骨头:1:3:0.9807"
@@ -211,6 +218,7 @@
     buffImmute:
         - "中毒"
 装甲幻影魔:
+    soundDamaged: entity.irongolem.hurt
     drop:
         - "铜币:500:1500:1"
     buffImmute:
@@ -233,10 +241,12 @@
     buffImmute:
         - "中毒"
 巨型陆龟:
+    soundDamaged: entity.hit.tortoise
     drop:
         - "铜币:1000:1500:1"
         - "海龟壳:1:1:0.0588"
 冰雪陆龟:
+    soundDamaged: entity.hit.tortoise
     drop:
         - "铜币:1000:1300:1"
         - "冰冻海龟壳:1:1:0.05"
@@ -262,6 +272,7 @@
         - "中毒"
         - "燃烧"
 妖精:
+    soundDamaged: entity.hit.pixie
     buffInflict:
         - "诅咒|100|0.1"
         - "缓慢|600|0.125"
@@ -281,6 +292,7 @@
         - "铜币:1500:2000:1"
         - "暗黑碎块:1:1:0.1"
 白羊座:
+    soundDamaged: entity.hit.astral
     drop:
         - "铜币:300:500:1"
         - "星尘:1:3:0.5"
@@ -290,6 +302,7 @@
         - "中毒"
         - "幻星感染"
 擎星者:
+    soundDamaged: entity.hit.rock
     drop:
         - "铜币:1500:2000:1"
         - "星尘:7:9:1"
@@ -317,6 +330,7 @@
         - "丛林蜥蜴电池:1:1:0.02"
         - "日耀碑牌碎片:1:2:0.1429"
 瘟疫龟:
+    soundDamaged: entity.hit.tortoise
     buffInflict:
         - "瘟疫|60|1"
     buffImmute:
@@ -327,6 +341,7 @@
         - "铜币:1000:3000:1"
         - "瘟疫细胞罐:3:4:1"
 装甲骷髅:
+    soundDamaged: entity.hit.bone
     drop:
         - "铜币:2000:3000:1"
         - "钥匙剑:1:1:0.01"
@@ -338,6 +353,7 @@
     buffImmute:
         - "中毒"
 诅咒骷髅头:
+    soundDamaged: entity.hit.bone
     drop:
         - "铜币:300:1000:1"
         - "骨头:2:6:1"
@@ -346,6 +362,7 @@
     buffImmute:
         - "中毒"
 巨型诅咒骷髅头:
+    soundDamaged: entity.hit.bone
     drop:
         - "铜币:500:1000:1"
         - "骨头:2:6:1"
@@ -360,6 +377,7 @@
     buffImmute:
         - "中毒"
 死灵法师:
+    soundDamaged: entity.hit.bone
     drop:
         - "铜币:3000:4500:1"
         - "暗影束法杖:1:1:0.0975"
@@ -368,6 +386,7 @@
     buffImmute:
         - "中毒"
 褴褛邪教徒法师:
+    soundDamaged: entity.hit.bone
     drop:
         - "铜币:3000:4500:1"
         - "幽灵法杖:1:1:0.0738"
@@ -376,6 +395,7 @@
     buffImmute:
         - "中毒"
 魔教徒:
+    soundDamaged: entity.hit.bone
     drop:
         - "铜币:3000:4500:1"
         - "狱火叉:1:1:0.0738"
@@ -384,6 +404,7 @@
     buffImmute:
         - "中毒"
 骷髅狙击手:
+    soundDamaged: entity.hit.bone
     drop:
         - "铜币:2000:3000:1"
         - "步枪瞄准镜:1:1:0.1597"
@@ -391,6 +412,7 @@
     buffImmute:
         - "中毒"
 骷髅特警:
+    soundDamaged: entity.hit.bone
     drop:
         - "铜币:2000:3000:1"
         - "战术霰弹枪:1:1:0.1597"
@@ -421,21 +443,25 @@
         - "凝胶:1:1:0.5"
         - "史莱姆法杖:1:1:0.00014"
 世界吞噬者:
+    soundDamaged: entity.hit.flesh
     drop:
         - "铜币:500:800:1"
 骷髅王:
+    soundDamaged: entity.hit.bone
     buffInflict:
         - "流血|600|1"
     buffImmute:
         - "咒火"
         - "剧毒"
 骷髅王左手:
+    soundDamaged: entity.hit.bone
     buffInflict:
         - "缓慢|100|0.33"
     buffImmute:
         - "咒火"
         - "剧毒"
 骷髅王右手:
+    soundDamaged: entity.hit.bone
     buffInflict:
         - "缓慢|100|0.33"
     buffImmute:
@@ -499,6 +525,14 @@
     buffImmute:
         - "中毒"
 极地之灵:
+    soundDamaged: entity.hit.pixie
+    buffInflict:
+        - "霜火|100|1"
+        - "冷冻|50|1"
+    buffImmute:
+        - "霜火"
+冰川护盾:
+    soundDamaged: entity.hit.pixie
     buffInflict:
         - "霜火|100|1"
         - "冷冻|50|1"
@@ -544,25 +578,32 @@
     buffInflict:
         - "流血|80|1"
 白金星舰:
+    soundDamaged: entity.irongolem.hurt
+    soundKilled: entity.generic.explode
     buffInflict:
         - "幻星感染|160|1"
     buffImmute:
         - "中毒"
         - "幻星感染"
 石巨人:
+    soundDamaged: entity.hit.rock
     buffInflict:
         - "碎甲|160|1"
 石巨人拳头:
+    soundDamaged: entity.hit.rock
     buffInflict:
         - "碎甲|80|1"
         - "破损盔甲|60|1"
 石巨人脚:
+    soundDamaged: entity.hit.rock
     buffInflict:
         - "碎甲|160|1"
 石巨人头:
+    soundDamaged: entity.hit.rock
     buffInflict:
         - "碎甲|80|1"
 瘟疫使者歌莉娅:
+    soundDamaged: entity.irongolem.hurt
     buffInflict:
         - "瘟疫|200|1"
     buffImmute:
@@ -570,6 +611,7 @@
         - "剧毒"
         - "瘟疫"
 制导瘟疫弹:
+    soundDamaged: entity.irongolem.hurt
     buffInflict:
         - "瘟疫|80|1"
     buffImmute:
@@ -577,6 +619,7 @@
         - "剧毒"
         - "瘟疫"
 瘟疫之雷:
+    soundDamaged: entity.irongolem.hurt
     buffInflict:
         - "瘟疫|100|1"
     buffImmute:
@@ -598,15 +641,19 @@
         - "燃烧"
         - "霜火"
 毁灭魔像:
+    soundDamaged: entity.hit.rock
     buffInflict:
         - "碎甲|160|1"
 毁灭魔像手爪:
+    soundDamaged: entity.hit.rock
     buffInflict:
         - "碎甲|80|1"
 毁灭魔像导弹:
+    soundDamaged: entity.hit.rock
     buffInflict:
         - "燃烧|60|1"
 石元柱:
+    soundDamaged: entity.hit.rock
     buffInflict:
         - "碎甲|80|1"
 拜月教邪教徒:
@@ -829,6 +876,8 @@
     drop:
         - 冥思溶剂:1:1:0.25
 日耀柱:
+    soundDamaged: entity.hit.rock
+    soundKilled: entity.hit.pixie
     buffImmute:
         - "中毒"
         - "剧毒"
@@ -848,6 +897,8 @@
     drop:
         - 冥思溶剂:1:1:0.25
 星璇柱:
+    soundDamaged: entity.hit.rock
+    soundKilled: entity.hit.pixie
     buffImmute:
         - "中毒"
         - "剧毒"
@@ -867,6 +918,8 @@
     drop:
         - 冥思溶剂:1:1:0.25
 星云柱:
+    soundDamaged: entity.hit.rock
+    soundKilled: entity.hit.pixie
     buffImmute:
         - "中毒"
         - "剧毒"
@@ -889,6 +942,8 @@
     drop:
         - 冥思溶剂:1:1:0.25
 星尘柱:
+    soundDamaged: entity.hit.rock
+    soundKilled: entity.hit.pixie
     buffImmute:
         - "中毒"
         - "剧毒"
