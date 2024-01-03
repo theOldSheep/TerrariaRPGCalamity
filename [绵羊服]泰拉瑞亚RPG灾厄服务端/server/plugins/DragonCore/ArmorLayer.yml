@@ -1,6 +1,285 @@
-随便一个名称啦:
+# 困难模式前护甲
+木头盔:
   # 当盔甲的 lore 或 name 或 某个nbt【包含】测试材质  -> 穿在身上的盔甲外壳就会显示为xxx材质
-  match: "阿巴阿巴"
+  match: "木头盔"
   # 贴图名称,需要在客户端放置盔甲贴图
   # DragonCore/armor/你这里填的_layer_1.png和DragonCore/armor/你这里填的_layer_2.png
-  texture: "diamond"
+  texture: "wood/wood"
+木胸甲:
+  match: "木胸甲"
+  texture: "wood/wood"
+木护胫:
+  match: "木护胫"
+  texture: "wood/wood"
+仙人掌头盔:
+  match: "仙人掌头盔"
+  texture: "cactus/cactus"
+仙人掌胸甲:
+  match: "仙人掌胸甲"
+  texture: "cactus/cactus"
+仙人掌护腿:
+  match: "仙人掌护腿"
+  texture: "cactus/cactus"
+铜头盔:
+  match: "铜头盔"
+  texture: "copper/copper"
+铜链甲:
+  match: "铜链甲"
+  texture: "copper/copper"
+铜护胫:
+  match: "铜护胫"
+  texture: "copper/copper"
+忍者头盔:
+  match: "忍者头盔"
+  texture: "ninja/ninja"
+忍者胸甲:
+  match: "忍者胸甲"
+  texture: "ninja/ninja"
+忍者护腿:
+  match: "忍者护腿"
+  texture: "ninja/ninja"
+白银头盔:
+  match: "白银头盔"
+  texture: "silver/silver"
+白银链甲:
+  match: "白银链甲"
+  texture: "silver/silver"
+白银护胫:
+  match: "白银护胫"
+  texture: "silver/silver"
+丛林帽:
+  match: "丛林帽"
+  texture: "jungle/jungle"
+丛林衣:
+  match: "丛林衣"
+  texture: "jungle/jungle"
+丛林裤:
+  match: "丛林裤"
+  texture: "jungle/jungle"
+黑曜石逃犯帽:
+  match: "黑曜石逃犯帽"
+  texture: "obsidian/obsidian"
+黑曜石风衣:
+  match: "黑曜石风衣"
+  texture: "obsidian/obsidian"
+黑曜石裤:
+  match: "黑曜石裤"
+  texture: "obsidian/obsidian"
+流星头盔:
+  match: "流星头盔"
+  texture: "meteor/meteor"
+流星护甲:
+  match: "流星护甲"
+  texture: "meteor/meteor"
+流星护腿:
+  match: "流星护腿"
+  texture: "meteor/meteor"
+暗影头盔:
+  match: "暗影头盔"
+  texture: "shadow/shadow"
+暗影鳞甲:
+  match: "暗影鳞甲"
+  texture: "shadow/shadow"
+暗影护胫:
+  match: "暗影护胫"
+  texture: "shadow/shadow"
+熔岩头盔:
+  match: "熔岩头盔"
+  texture: "molten/molten"
+熔岩胸甲:
+  match: "熔岩胸甲"
+  texture: "molten/molten"
+熔岩护胫:
+  match: "熔岩护胫"
+  texture: "molten/molten"
+# 困难模式（肉后）护甲
+蜘蛛面具:
+  match: "蜘蛛面具"
+  texture: "spider/spider"
+蜘蛛胸甲:
+  match: "蜘蛛胸甲"
+  texture: "spider/spider"
+蜘蛛护胫:
+  match: "蜘蛛护胫"
+  texture: "spider/spider"
+水晶刺客兜帽:
+  match: "水晶刺客兜帽"
+  texture: "crystal_assassin/crystal_assassin"
+水晶刺客上衣:
+  match: "水晶刺客上衣"
+  texture: "crystal_assassin/crystal_assassin"
+水晶刺客裤:
+  match: "水晶刺客裤"
+  texture: "crystal_assassin/crystal_assassin"
+钴帽:
+  match: "钴帽"
+  texture: "cobalt/cobalt_magic"
+钴头盔:
+  match: "钴头盔"
+  texture: "cobalt/cobalt_melee"
+钴面具:
+  match: "钴面具"
+  texture: "cobalt/cobalt_ranged"
+钴胸甲:
+  match: "钴胸甲"
+  texture: "cobalt/cobalt"
+钴护腿:
+  match: "钴护腿"
+  texture: "cobalt/cobalt"
+秘银帽:
+  match: "秘银帽"
+  texture: "mythril/mythril_magic"
+秘银头盔:
+  match: "秘银头盔"
+  texture: "mythril/mythril_melee"
+秘银兜帽:
+  match: "秘银兜帽"
+  texture: "mythril/mythril_ranged"
+秘银链甲:
+  match: "秘银链甲"
+  texture: "mythril/mythril"
+秘银护胫:
+  match: "秘银护胫"
+  texture: "mythril/mythril"
+精金头盔:
+  match: "精金头盔"
+  texture: "adamantite/adamantite_melee"
+精金面具:
+  match: "精金面具"
+  texture: "adamantite/adamantite_ranged"
+精金头饰:
+  match: "精金头饰"
+  texture: "adamantite/adamantite_magic"
+精金胸甲:
+  match: "精金胸甲"
+  texture: "adamantite/adamantite"
+精金护腿:
+  match: "精金护腿"
+  texture: "adamantite/adamantite"
+神圣面具:
+  match: "神圣面具"
+  texture: "hallowed/hallowed_melee"
+神圣头盔:
+  match: "神圣头盔"
+  texture: "hallowed/hallowed_ranged"
+神圣头饰:
+  match: "神圣头饰"
+  texture: "hallowed/hallowed_magic"
+神圣兜帽:
+  match: "神圣兜帽"
+  texture: "hallowed/hallowed_summon"
+神圣板甲:
+  match: "神圣板甲"
+  texture: "hallowed/hallowed"
+神圣护胫:
+  match: "神圣护胫"
+  texture: "hallowed/hallowed"
+叶绿面具:
+  match: "叶绿面具"
+  texture: "chlorophyte/chlorophyte_melee"
+叶绿头盔:
+  match: "叶绿头盔"
+  texture: "chlorophyte/chlorophyte_ranged"
+叶绿头饰:
+  match: "叶绿头饰"
+  texture: "chlorophyte/chlorophyte_magic"
+叶绿板甲:
+  match: "叶绿板甲"
+  texture: "chlorophyte/chlorophyte"
+叶绿护胫:
+  match: "叶绿护胫"
+  texture: "chlorophyte/chlorophyte"
+幽灵兜帽:
+  match: "幽灵兜帽"
+  texture: "spectre/spectre_vamp"
+幽灵面具:
+  match: "幽灵面具"
+  texture: "spectre/spectre_dmg"
+幽灵长袍:
+  match: "幽灵长袍"
+  texture: "spectre/spectre"
+幽灵裤:
+  match: "幽灵裤"
+  texture: "spectre/spectre"
+甲虫头盔:
+  match: "甲虫头盔"
+  texture: "beetle/beetle"
+甲虫壳:
+  match: "甲虫壳"
+  texture: "beetle/beetle_def"
+甲虫铠甲:
+  match: "甲虫铠甲"
+  texture: "beetle/beetle_dmg"
+甲虫护腿:
+  match: "甲虫护腿"
+  texture: "beetle/beetle"
+蘑菇矿头饰:
+  match: "蘑菇矿头饰"
+  texture: "shroomite/shroomite_arrow"
+蘑菇矿面具:
+  match: "蘑菇矿面具"
+  texture: "shroomite/shroomite_bullet"
+蘑菇矿头盔:
+  match: "蘑菇矿头盔"
+  texture: "shroomite/shroomite_rocket"
+蘑菇矿胸甲:
+  match: "蘑菇矿胸甲"
+  texture: "shroomite/shroomite"
+蘑菇矿护腿:
+  match: "蘑菇矿护腿"
+  texture: "shroomite/shroomite"
+寒霜头盔:
+  match: "寒霜头盔"
+  texture: "frost/frost"
+寒霜胸甲:
+  match: "寒霜胸甲"
+  texture: "frost/frost"
+寒霜护腿:
+  match: "寒霜护腿"
+  texture: "frost/frost"
+阴森头盔:
+  match: "阴森头盔"
+  texture: "spooky_wood/spooky_wood"
+阴森胸甲:
+  match: "阴森胸甲"
+  texture: "spooky_wood/spooky_wood"
+阴森护腿:
+  match: "阴森护腿"
+  texture: "spooky_wood/spooky_wood"
+# 月后护甲
+星云头盔:
+  match: "星云头盔"
+  texture: "nebula/nebula"
+星云胸甲:
+  match: "星云胸甲"
+  texture: "nebula/nebula"
+星云护腿:
+  match: "星云护腿"
+  texture: "nebula/nebula"
+耀斑头盔:
+  match: "耀斑头盔"
+  texture: "solar/solar"
+耀斑胸甲:
+  match: "耀斑胸甲"
+  texture: "solar/solar"
+耀斑护腿:
+  match: "耀斑护腿"
+  texture: "solar/solar"
+星尘头盔:
+  match: "星尘头盔"
+  texture: "stardust/stardust"
+星尘板甲:
+  match: "星尘板甲"
+  texture: "stardust/stardust"
+星尘护腿:
+  match: "星尘护腿"
+  texture: "stardust/stardust"
+星璇头盔:
+  match: "星璇头盔"
+  texture: "vortex/vortex"
+星璇胸甲:
+  match: "星璇胸甲"
+  texture: "vortex/vortex"
+星璇护腿:
+  match: "星璇护腿"
+  texture: "vortex/vortex"

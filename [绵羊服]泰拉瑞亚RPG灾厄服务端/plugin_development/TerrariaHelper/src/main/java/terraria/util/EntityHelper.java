@@ -1830,6 +1830,7 @@ public class EntityHelper {
             if (hasEffect(victim, "狮心圣裁能量外壳")) {
                 applyEffect(victim, "狮心圣裁能量外壳冷却", 900);
             }
+            // boss damage reduction
             if (victimScoreboardTags.contains("isBOSS")) {
                 double dynamicDR = 1;
                 MetadataValue temp = getMetadata(victim, MetadataName.DYNAMIC_DAMAGE_REDUCTION);
@@ -1837,6 +1838,10 @@ public class EntityHelper {
                 BossHelper.BossType type = (BossHelper.BossType) getMetadata(victim, MetadataName.BOSS_TYPE).value();
                 if (damageSource instanceof Player &&  ! PlayerHelper.hasDefeated((Player) damageSource, type.msgName) )
                     dmg *= dynamicDR;
+            }
+            // NPC damage reduction ( for non-fixed damage, the damage is decreased by a factor of 4, and is upper capped at 50
+            else if (victimScoreboardTags.contains("isNPC")) {
+                dmg = Math.min(dmg / 4d, 50);
             }
         }
         // round damage

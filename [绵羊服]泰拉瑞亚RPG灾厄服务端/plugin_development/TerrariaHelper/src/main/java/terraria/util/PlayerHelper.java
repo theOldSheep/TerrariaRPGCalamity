@@ -509,9 +509,13 @@ public class PlayerHelper {
                                         target = e;
                                     }
                                     if (target != null) {
-                                        Vector v = MathHelper.getDirection(ply.getEyeLocation(),
-                                                target instanceof  LivingEntity ?
-                                                        ((LivingEntity) target).getEyeLocation() : target.getLocation(), 1.5);
+                                        double projSpd = 1.5;
+                                        EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions()
+                                                .setProjectileSpeed(projSpd)
+                                                .setProjectileGravity(0.05);
+                                        Location aimedLoc = EntityHelper.helperAimEntity(ply, target, aimHelperOptions);
+
+                                        Vector v = MathHelper.getDirection(ply.getEyeLocation(), aimedLoc, 1.5);
                                         EntityHelper.spawnProjectile(ply, v, attrMapChlorophyte,
                                                 EntityHelper.DamageType.ARROW,"树叶");
                                     }

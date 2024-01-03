@@ -46,7 +46,6 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public org.bukkit.entity.Projectile bukkitEntity;
     HashMap<String, Double> attrMap, attrMapExtraProjectile;
     public Entity autoTraceTarget = null;
-    Vector lastImpulseVelocity = null;
     Location lastTrailDisplayLocation = null;
     // extra projectile variables
     public ConfigurationSection extraProjectileConfigSection;
@@ -436,11 +435,11 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     int phase = ticksLived % 21;
                     // expanding phase
                     if (phase < 10) {
-                        radius += 0.6;
+                        radius += 0.8;
                     }
                     // retraction phase
                     else if (phase > 14) {
-                        radius -= 0.2;
+                        radius -= 0.3;
                     }
                     angle += Math.PI / 14;
                     // update speed
@@ -1128,13 +1127,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
         extraTicking();
 
         // prevents client glitch
-        // if velocity changed by more than 0.1 from last impulsed (length squared = 0.01)
-        if (lastImpulseVelocity == null || new Vector(motX, motY, motZ).subtract(lastImpulseVelocity).lengthSquared() > 0.01) {
-            lastImpulseVelocity = new Vector(motX, motY, motZ);
-            this.positionChanged = true;
-            this.velocityChanged = true;
-            this.impulse = true;
-        }
+        this.positionChanged = true;
+        this.velocityChanged = true;
+        this.impulse = true;
 
         // time out removal
         if (this.ticksLived >= liveTime) die();

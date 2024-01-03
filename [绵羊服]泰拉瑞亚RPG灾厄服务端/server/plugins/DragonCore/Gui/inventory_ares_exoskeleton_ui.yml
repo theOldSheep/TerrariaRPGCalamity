@@ -1,0 +1,103 @@
+# 匹配界面名,hud为自动开启
+# GuiInventory可以替换背包
+# GuiIngameMenu可以替换ESC
+# 或者直接填写箱子界面名称，即可替换箱子界面(颜色符号需写为§)
+# PS：当你打开任意界面时，客户端的log内会提示本次打开的界面名哦
+match: "阿瑞斯外骨骼配置"
+allowEscClose: true
+interactHud: true # 可以看到血量/魔力提示
+through: true # 可以同时交互多个组件
+
+Functions:
+  # 通过判断按键，异步执行下面的这个【延时关闭界面】，它会延时100毫秒后才关闭，延时的这段时间是用来做背包的关闭动画的
+  # 判断的格式是  (条件)?{达成执行;}:{否则执行;};  如果没有否则执行  可以用0代替 写成 (条件)?{达成执行;}:0;
+  # || 是或的意思，也就是说当 当前的按键为 E或ESC,就关闭界面   && 则是且的意思
+  keyPress: "(方法.取当前按下键=='E' || 方法.取当前按下键=='ESCAPE')?{方法.关闭界面;}:0"
+  
+  # 更新界面大小
+  preRender: |-
+    界面变量.leftMargin = 方法.取屏幕宽度 / 3;
+    界面变量.totalWidth = 方法.取屏幕宽度 / 3;
+    界面变量.upMargin = 方法.取屏幕高度 / 6;
+    界面变量.totalHeight = 界面变量.totalWidth * 62 / 174;
+    界面变量.btnUpMargin = 界面变量.totalHeight * 22 / 62;
+    界面变量.btnSeparation = 界面变量.totalWidth * 6 / 174;
+    界面变量.btnSize = 界面变量.totalWidth * 36 / 174;
+
+
+
+# 物品栏内容
+
+
+# 背景图片
+background_texture:
+  x: 界面变量.leftMargin
+  y: 界面变量.upMargin
+  width: 界面变量.totalWidth
+  height: 界面变量.totalHeight
+  texture: "gui/ares_exoskeleton_ui.png"
+# 物品槽
+choice1_slot:
+  x: 界面变量.leftMargin + 界面变量.btnSeparation
+  y: 界面变量.upMargin + 界面变量.btnUpMargin
+  width: 界面变量.btnSize
+  height: 界面变量.btnSize
+  identifier: "container_0"
+  enable: false
+  drawBackground: false
+choice1_texture:
+  x: 界面变量.leftMargin + 界面变量.btnSeparation
+  y: 界面变量.upMargin + 界面变量.btnUpMargin
+  width: 界面变量.btnSize
+  height: 界面变量.btnSize
+  alpha: 0
+  actions:
+    click: "方法.模拟点击槽位('container_0', 0, 'CLONE', 1)"
+choice2_slot:
+  x: 界面变量.leftMargin + 界面变量.btnSeparation * 2 + 界面变量.btnSize
+  y: 界面变量.upMargin + 界面变量.btnUpMargin
+  width: 界面变量.btnSize
+  height: 界面变量.btnSize
+  identifier: "container_1"
+  enable: false
+  drawBackground: false
+choice2_texture:
+  x: 界面变量.leftMargin + 界面变量.btnSeparation * 2 + 界面变量.btnSize
+  y: 界面变量.upMargin + 界面变量.btnUpMargin
+  width: 界面变量.btnSize
+  height: 界面变量.btnSize
+  alpha: 0
+  actions:
+    click: "方法.模拟点击槽位('container_1', 0, 'CLONE', 1)"
+choice3_slot:
+  x: 界面变量.leftMargin + 界面变量.btnSeparation * 3 + 界面变量.btnSize * 2
+  y: 界面变量.upMargin + 界面变量.btnUpMargin
+  width: 界面变量.btnSize
+  height: 界面变量.btnSize
+  identifier: "container_2"
+  enable: false
+  drawBackground: false
+choice3_texture:
+  x: 界面变量.leftMargin + 界面变量.btnSeparation * 3 + 界面变量.btnSize * 2
+  y: 界面变量.upMargin + 界面变量.btnUpMargin
+  width: 界面变量.btnSize
+  height: 界面变量.btnSize
+  alpha: 0
+  actions:
+    click: "方法.模拟点击槽位('container_2', 0, 'CLONE', 1)"
+choice4_slot:
+  x: 界面变量.leftMargin + 界面变量.btnSeparation * 4 + 界面变量.btnSize * 3
+  y: 界面变量.upMargin + 界面变量.btnUpMargin
+  width: 界面变量.btnSize
+  height: 界面变量.btnSize
+  identifier: "container_3"
+  enable: false
+  drawBackground: false
+choice4_texture:
+  x: 界面变量.leftMargin + 界面变量.btnSeparation * 4 + 界面变量.btnSize * 3
+  y: 界面变量.upMargin + 界面变量.btnUpMargin
+  width: 界面变量.btnSize
+  height: 界面变量.btnSize
+  alpha: 0
+  actions:
+    click: "方法.模拟点击槽位('container_3', 0, 'CLONE', 1)"

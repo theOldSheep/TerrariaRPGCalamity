@@ -11230,26 +11230,26 @@ Dodu的手炮:
   worth: 4000000
   rarity: 1
 木头盔:
-  item: LEATHER_HELMET
+  item: CHAINMAIL_HELMET
   lore:
   - §r[装备]
   attributes:
     defence: 2
   rarity: 0
 木胸甲:
-  item: LEATHER_CHESTPLATE
+  item: CHAINMAIL_CHESTPLATE
   lore:
   - §r[装备]
   attributes:
     defence: 2
   rarity: 0
 木护胫:
-  item: LEATHER_LEGGINGS
+  item: CHAINMAIL_LEGGINGS
   lore:
   - §r[装备]
   rarity: 0
 仙人掌头盔:
-  item: LEATHER_HELMET
+  item: CHAINMAIL_HELMET
   lore:
   - §r[装备]
   attributes:
@@ -11257,7 +11257,7 @@ Dodu的手炮:
   worth: 4000
   rarity: 0
 仙人掌胸甲:
-  item: LEATHER_CHESTPLATE
+  item: CHAINMAIL_CHESTPLATE
   lore:
   - §r[装备]
   attributes:
@@ -11265,7 +11265,7 @@ Dodu的手炮:
   worth: 6000
   rarity: 0
 仙人掌护腿:
-  item: LEATHER_LEGGINGS
+  item: CHAINMAIL_LEGGINGS
   lore:
   - §r[装备]
   attributes:
@@ -11401,15 +11401,16 @@ Dodu的手炮:
     defence: 4
   worth: 80000
   rarity: 0
-银头盔:
+白银头盔:
   item: IRON_HELMET
   lore:
   - §r[装备]
+  - §r“脱下时并不会为你恢复生命值”
   attributes:
     defence: 6
   worth: 250000
   rarity: 0
-银链甲:
+白银链甲:
   item: IRON_CHESTPLATE
   lore:
   - §r[装备]
@@ -11417,7 +11418,7 @@ Dodu的手炮:
     defence: 8
   worth: 200000
   rarity: 0
-银护胫:
+白银护胫:
   item: IRON_LEGGINGS
   lore:
   - §r[装备]
@@ -11426,7 +11427,7 @@ Dodu的手炮:
   worth: 150000
   rarity: 0
 忍者头盔:
-  item: LEATHER_HELMET
+  item: CHAINMAIL_HELMET
   lore:
   - §r[装备]
   attributes:
@@ -11435,7 +11436,7 @@ Dodu的手炮:
   worth: 200000
   rarity: 1
 忍者胸甲:
-  item: LEATHER_CHESTPLATE
+  item: CHAINMAIL_CHESTPLATE
   lore:
   - §r[装备]
   attributes:
@@ -11444,7 +11445,7 @@ Dodu的手炮:
   worth: 100000
   rarity: 1
 忍者护腿:
-  item: LEATHER_LEGGINGS
+  item: CHAINMAIL_LEGGINGS
   lore:
   - §r[装备]
   attributes:
@@ -12479,7 +12480,7 @@ Dodu的手炮:
   worth: 3000000
   rarity: 8
 阴森头盔:
-  item: LEATHER_HELMET
+  item: CHAINMAIL_HELMET
   lore:
   - §r[装备]
   attributes:
@@ -12489,7 +12490,7 @@ Dodu的手炮:
   worth: 1000000
   rarity: 8
 阴森胸甲:
-  item: LEATHER_CHESTPLATE
+  item: CHAINMAIL_CHESTPLATE
   lore:
   - §r[装备]
   attributes:
@@ -12499,7 +12500,7 @@ Dodu的手炮:
   worth: 1000000
   rarity: 8
 阴森护腿:
-  item: LEATHER_LEGGINGS
+  item: CHAINMAIL_LEGGINGS
   lore:
   - §r[装备]
   attributes:
@@ -13350,7 +13351,7 @@ Dodu的手炮:
   item: WORKBENCH
   rarity: 0
 工匠合成台:
-  item: CONCRETE
+  item: STAINED_GLASS
   data: 1
   worth: 2000000
   rarity: 0
@@ -13359,12 +13360,12 @@ Dodu的手炮:
   worth: 20000
   rarity: 0
 秘银砧:
-  item: CONCRETE
+  item: STAINED_GLASS
   data: 2
   worth: 500000
   rarity: 3
 星宇砧:
-  item: CONCRETE
+  item: STAINED_GLASS
   data: 3
   lore:
   - §r超凡之砧，能够承受恒星崩塌的压力
@@ -13375,21 +13376,21 @@ Dodu的手炮:
   worth: 2000
   rarity: 0
 地狱熔炉:
-  item: CONCRETE
+  item: STAINED_GLASS
   data: 4
   worth: 60000
   rarity: 0
 精金熔炉:
-  item: CONCRETE
+  item: STAINED_GLASS
   data: 5
   worth: 1000000
   rarity: 3
 远古操纵机:
-  item: CONCRETE
+  item: STAINED_GLASS
   data: 6
   rarity: 10
 嘉登熔炉:
-  item: CONCRETE
+  item: STAINED_GLASS
   data: 7
   lore:
   - §r由无尽星流能源驱动的脉冲格纳米锻造厂

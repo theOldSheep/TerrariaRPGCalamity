@@ -179,11 +179,18 @@ public class WorldHelper {
         if (traceLengthDouble < 1e-5)
             return;
         int traceLength = (int) traceLengthDouble;
-        if (traceLength < 1)
+        if (traceLength < 1) {
+            direction.multiply( 1d / traceLengthDouble );
             traceLength = 1;
-        BlockIterator blockIterator = new BlockIterator(startLoc.getWorld(),
-                startLoc.toVector(), direction, 0d, traceLength);
-        blockIterator.forEachRemaining(WorldHelper::attemptDestroyVegetation);
+        }
+        try {
+            BlockIterator blockIterator = new BlockIterator(startLoc.getWorld(),
+                    startLoc.toVector(), direction, 0d, traceLength);
+            blockIterator.forEachRemaining(WorldHelper::attemptDestroyVegetation);
+        }
+        // this happens if the projectile is in a location where blocks can not be placed
+        catch (IllegalStateException ignored) {
+        }
     }
     public static void attemptDestroyVegetation(Block block) {
         switch (block.getType()) {

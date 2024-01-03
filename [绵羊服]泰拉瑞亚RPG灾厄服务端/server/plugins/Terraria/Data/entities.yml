@@ -446,6 +446,10 @@
     soundDamaged: entity.hit.flesh
     drop:
         - "铜币:500:800:1"
+血肉囊:
+    soundDamaged: entity.hit.flesh
+腐巢意志:
+    soundDamaged: entity.hit.flesh
 骷髅王:
     soundDamaged: entity.hit.bone
     buffInflict:

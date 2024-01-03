@@ -266,7 +266,6 @@ public class BossHelper {
                 break;
             case PLANTERA:
                 Bukkit.broadcastMessage("§#ADFF2F富含能量的植物物质已在地下形成。");
-                Bukkit.broadcastMessage("§#DAA520沙漠正在剧烈动荡！");
                 break;
             case CALAMITAS_CLONE:
                 Bukkit.broadcastMessage("§#4169E1海洋的深处传来震动。");

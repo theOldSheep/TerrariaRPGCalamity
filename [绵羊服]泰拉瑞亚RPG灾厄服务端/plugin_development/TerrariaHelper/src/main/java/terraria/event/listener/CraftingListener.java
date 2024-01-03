@@ -300,8 +300,9 @@ public class CraftingListener implements Listener {
                     }
                     break;
                 }
-                // most crafting stations ideally uses concrete blocks of different data (color), for block texture purposes.
-                case CONCRETE: {
+                // most crafting stations ideally uses stained-glass blocks of different data (color), for block texture purposes.
+                // do not use solid block for this purpose; block face culling will make it look really wierd.
+                case STAINED_GLASS: {
                     switch ( block.getData() ) {
                         // 工匠合成台
                         case 1:

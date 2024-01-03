@@ -359,11 +359,11 @@ WORKBENCH:
   totalProgress: 120
   dropItem:
   - 火炉
-CONCRETE_4:
+STAINED_GLASS_4:
   totalProgress: 180
   dropItem:
   - 地狱熔炉
-CONCRETE_5:
+STAINED_GLASS_5:
   totalProgress: 350
   dropItem:
   - 精金熔炉
@@ -371,11 +371,11 @@ ANVIL:
   totalProgress: 120
   dropItem:
   - 铁砧
-CONCRETE_2:
+STAINED_GLASS_2:
   totalProgress: 250
   dropItem:
   - 秘银砧
-CONCRETE_3:
+STAINED_GLASS_3:
   totalProgress: 600
   dropItem:
   - 星宇砧
@@ -387,15 +387,15 @@ BREWING_STAND:
   totalProgress: 120
   dropItem:
   - 酿造台
-CONCRETE_1:
+STAINED_GLASS_1:
   totalProgress: 120
   dropItem:
   - 工匠合成台
-CONCRETE_6:
+STAINED_GLASS_6:
   totalProgress: 650
   dropItem:
   - 远古操纵机
-CONCRETE_7:
+STAINED_GLASS_7:
   totalProgress: 1000
   dropItem:
   - 嘉登熔炉
