@@ -1,8 +1,7 @@
 {
-    "parent": "block/anvil",
+    "parent": "block/general_anvil",
     "textures": {
-        "particle": "blocks/anvil_cosmic_base",
-        "body": "blocks/anvil_cosmic_base",
-        "top": "blocks/anvil_cosmic_top"
+        "particle": "blocks/glass_light_blue",
+        "sprite": "blocks/glass_light_blue"
     }
 }

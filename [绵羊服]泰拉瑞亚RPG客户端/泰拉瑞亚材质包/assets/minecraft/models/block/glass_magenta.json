@@ -1,8 +1,7 @@
 {
-    "parent": "block/anvil",
+    "parent": "block/general_anvil",
     "textures": {
-        "particle": "blocks/anvil_mythril_base",
-        "body": "blocks/anvil_mythril_base",
-        "top": "blocks/anvil_mythril_top"
+        "particle": "blocks/glass_magenta",
+        "sprite": "blocks/glass_magenta"
     }
 }

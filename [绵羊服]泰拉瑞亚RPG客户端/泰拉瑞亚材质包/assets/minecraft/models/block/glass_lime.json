@@ -1,12 +1,7 @@
 {
-    "parent": "block/cube",
+    "parent": "block/general_crafting_station",
     "textures": {
-        "particle": "blocks/furnace_adamantite_side",
-        "down": "blocks/furnace_adamantite_bottom",
-        "up": "blocks/furnace_adamantite_top",
-        "north": "blocks/furnace_adamantite_side",
-        "east": "blocks/furnace_adamantite_side",
-        "south": "blocks/furnace_adamantite_side",
-        "west": "blocks/furnace_adamantite_side"
+        "particle": "blocks/glass_lime",
+        "sprite": "blocks/glass_lime"
     }
 }

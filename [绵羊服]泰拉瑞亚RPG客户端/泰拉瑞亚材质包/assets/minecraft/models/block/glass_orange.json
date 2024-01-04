@@ -1,12 +1,7 @@
 {
-    "parent": "block/cube",
+    "parent": "block/general_crafting_station",
     "textures": {
-        "particle": "blocks/tinkers_workbench_side",
-        "down": "blocks/planks_oak",
-        "up": "blocks/tinkers_workbench_top",
-        "north": "blocks/tinkers_workbench_side",
-        "east": "blocks/tinkers_workbench_side",
-        "south": "blocks/tinkers_workbench_side",
-        "west": "blocks/tinkers_workbench_side"
+        "particle": "blocks/glass_orange",
+        "sprite": "blocks/glass_orange"
     }
 }
