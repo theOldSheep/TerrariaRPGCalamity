@@ -211,6 +211,65 @@
 			}
 		]
 	},
+	"item.genericLaser": {
+        "category": "master",
+		"subtitle": "\u6fc0\u5149:\u53d1\u5c04",
+		"sounds": [
+			{
+				"name": "item/genericlaser",
+				"attenuation_distance": 32
+			}
+		]
+	},
+	"item.genericStar": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "item/genericstar",
+				"attenuation_distance": 24
+			}
+		]
+	},
+	"item.genericMeteorStaff": {
+        "category": "master",
+		"subtitle": "\u6d41\u661f:\u53ec\u5524",
+		"sounds": [
+			{
+				"name": "item/genericmeteorstaff",
+				"attenuation_distance": 24
+			}
+		]
+	},
+	"item.genericSpray": {
+        "category": "master",
+		"subtitle": "\u6c34\u6d41:\u55b7\u5c04",
+		"sounds": [
+			{
+				"name": "item/genericspray",
+				"attenuation_distance": 16
+			}
+		]
+	},
+	"item.genericBubble": {
+        "category": "master",
+		"subtitle": "\u5410\u6ce1\u6ce1",
+		"sounds": [
+			{
+				"name": "item/genericbubble",
+				"attenuation_distance": 16
+			}
+		]
+	},
+	"item.genericTyphoon": {
+        "category": "master",
+		"subtitle": "\u6fc0\u5149:\u53d1\u5c04",
+		"sounds": [
+			{
+				"name": "item/generictyphoon",
+				"attenuation_distance": 24
+			}
+		]
+	},
 	"item.largeWeaponFire": {
         "category": "master",
 		"subtitle": "\u5927\u578b\u6b66\u5668:\u53d1\u5c04",
@@ -304,6 +363,16 @@
 		"sounds": [
 			{
 				"name": "item/harp"
+			}
+		]
+	},
+	"item.danceOfLight": {
+        "category": "master",
+		"subtitle": "\u25a0\u25a0\uff0c\u25a0\u25a0\uff01",
+		"sounds": [
+			{
+				"name": "item/danceoflight",
+				"attenuation_distance": 32
 			}
 		]
 	},
