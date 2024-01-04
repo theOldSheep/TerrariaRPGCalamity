@@ -37,7 +37,6 @@ public class ItemUseHelper {
     }
     public static final String SOUND_GENERIC_SWING = "item.genericSwing", SOUND_BOW_SHOOT = "item.bowShoot",
             SOUND_GUN_FIRE = "item.gunfire", SOUND_GUN_FIRE_LOUD = "entity.generic.explode",
-            SOUND_DANCE_OF_LIGHT_FLASH = "item.danceOfLight",
             SOUND_ARK_PARRY = "item.ark.parry", SOUND_ARK_SCISSOR_CUT = "item.ark.snap";
     protected static final double MELEE_MIN_STRIKE_RADIUS = 0.25;
     public static int applyCD(Player ply, double CD) {
@@ -4046,12 +4045,11 @@ public class ItemUseHelper {
                         if (charge++ >= 90) {
                             charge = 0;
                             HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
-                            projAttrMap.put("damage", 66666d);
+                            projAttrMap.put("damage", 233333d);
                             projAttrMap.put("damageMulti", 1d);
                             projAttrMap.put("crit", 100d);
                             EntityHelper.spawnProjectile(ply, ply.getEyeLocation().add(0, 15, 0), new Vector(),
                                     projAttrMap, EntityHelper.DamageType.MAGIC, "光之舞闪光");
-                            ply.getWorld().playSound(ply.getEyeLocation(), SOUND_DANCE_OF_LIGHT_FLASH, 1f, 1f);
                         }
                         setDurability(weaponItem, 90, charge);
                     }
@@ -4530,6 +4528,7 @@ public class ItemUseHelper {
                                 GenericHelper.StrikeLineOptions strikeLineOptions = new GenericHelper.StrikeLineOptions()
                                         .setThruWall(false)
                                         .setBounceWhenHitBlock(true)
+                                        .setParticleIntensityMulti(0.2)
                                         .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
                                             EntityHelper.applyEffect(hitEntity, "超位崩解", 100);
                                         });
@@ -4599,6 +4598,7 @@ public class ItemUseHelper {
                         particleColor = "248|89|118";
                         strikeInfo
                                 .setThruWall(false)
+                                .setParticleIntensityMulti(0.5)
                                 .setBlockHitFunction((Location hitLoc, MovingObjectPosition hitInfo) -> {
                                     // spawn lava 10 times per second, or if no lava is close to the hit loc
                                     String lavaName = "怨戾熔岩";
@@ -4670,7 +4670,8 @@ public class ItemUseHelper {
                         strikeInfo.setParticleInfo(
                                 new GenericHelper.ParticleLineOptions()
                                         .setParticleColor(particleColor)
-                                        .setVanillaParticle(true));
+                                        .setVanillaParticle(true)
+                                        .setIntensityMulti(0.35));
                         yaw += Math.random() * (randomOffset * 2) - randomOffset;
                         pitch += Math.random() * (randomOffset * 2) - randomOffset;
                         break;
@@ -4821,11 +4822,10 @@ public class ItemUseHelper {
     // other helper functions for item using
     public static void playerUseItemSound(Entity ply, String weaponCategory, String weaponItemType, boolean autoSwing) {
         String itemUseSound;
-        float volume = 1f, pitch = 1f;
+        float volume = 3f, pitch = 1f;
         switch (weaponCategory) {
             case "BOW":
                 itemUseSound = SOUND_BOW_SHOOT;
-                volume = 2f;
                 break;
             case "GUN":
                 if (autoSwing) {
@@ -4834,7 +4834,7 @@ public class ItemUseHelper {
                     itemUseSound = SOUND_GUN_FIRE_LOUD;
                     pitch = 1.2f;
                 }
-                volume = 3f;
+                volume = 5f;
                 break;
             default:
                 itemUseSound = SOUND_GENERIC_SWING;

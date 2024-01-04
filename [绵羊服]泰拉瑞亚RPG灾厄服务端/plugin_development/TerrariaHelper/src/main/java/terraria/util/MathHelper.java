@@ -232,6 +232,10 @@ public class MathHelper {
         return new Vector(vec.x, vec.y, vec.z);
     }
     public static Vector getDirection(Location initialLoc, Location finalLoc, double length, boolean keepOriginalBelowLength) {
+        // handle different world
+        if (initialLoc.getWorld() != finalLoc.getWorld())
+            return new Vector(0, length, 0);
+
         Vector dir = finalLoc.clone().subtract(initialLoc).toVector();
         double len = dir.length();
         // if the direction is shorter than length,  keep it intact.

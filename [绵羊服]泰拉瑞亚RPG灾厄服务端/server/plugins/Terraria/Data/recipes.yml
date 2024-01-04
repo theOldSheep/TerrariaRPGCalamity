@@ -4900,6 +4900,7 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 光之舞
     requireItem:
+    - 原核之怒
     - 终结裂空戟
     - 月之耀斑
     - 魔影锭:5

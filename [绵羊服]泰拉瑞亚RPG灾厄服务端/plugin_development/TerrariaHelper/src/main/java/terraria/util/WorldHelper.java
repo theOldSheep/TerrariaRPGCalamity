@@ -271,7 +271,7 @@ public class WorldHelper {
                 randomGenerator.nextInt(diameter) - radius);
     }
     private static boolean blockPosValidForGrass(Block block) {
-        return ! block.getRelative(BlockFace.UP).getType().isSolid();
+        return block.getRelative(BlockFace.UP).getType().isTransparent();
     }
     private static boolean validateSpreadBlock(Block testBlock, boolean isGrass,
                                             Material blockMat, byte blockData,

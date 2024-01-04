@@ -220,11 +220,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 noAutoTraceTicks = ticksLived + 1;
                 break;
             case "宇宙灯笼光束":
-                noAutoTraceTicks = ticksLived + 2;
-                break;
             case "粉色脉冲":
-                noAutoTraceTicks = ticksLived + 5;
-                break;
             case "脉冲步枪电弧":
                 noAutoTraceTicks = ticksLived + 2;
                 break;

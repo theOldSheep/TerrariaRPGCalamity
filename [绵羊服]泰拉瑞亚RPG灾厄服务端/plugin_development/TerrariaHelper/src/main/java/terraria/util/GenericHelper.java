@@ -136,7 +136,7 @@ public class GenericHelper {
     public static class StrikeLineOptions {
         boolean displayParticle, bounceWhenHitBlock, thruWall;
         int damageCD, lingerTime, lingerDelay, maxTargetHit;
-        double damage, decayCoef, whipBonusCrit, whipBonusDamage;
+        double damage, decayCoef, particleIntensityMulti, whipBonusCrit, whipBonusDamage;
         ParticleLineOptions particleInfo;
         BiConsumer<Location, MovingObjectPosition> blockHitFunction;
         TriConsumer<Integer, Entity, Location> damagedFunction;
@@ -155,6 +155,7 @@ public class GenericHelper {
 
             damage = 0d;
             decayCoef = 1d;
+            particleIntensityMulti = 1d;
             whipBonusCrit = 0d;
             whipBonusDamage = 0d;
 
@@ -178,6 +179,7 @@ public class GenericHelper {
                     .setMaxTargetHit(maxTargetHit)
                     .setDamage(damage)
                     .setDecayCoef(decayCoef)
+                    .setParticleIntensityMulti(particleIntensityMulti)
                     .setWhipBonusCrit(whipBonusCrit)
                     .setWhipBonusDamage(whipBonusDamage)
                     .setParticleInfo(particleInfo.clone())
@@ -223,6 +225,10 @@ public class GenericHelper {
         }
         public StrikeLineOptions setDecayCoef(double decayCoef) {
             this.decayCoef = decayCoef;
+            return this;
+        }
+        public StrikeLineOptions setParticleIntensityMulti(double particleIntensityMulti) {
+            this.particleIntensityMulti = particleIntensityMulti;
             return this;
         }
         public StrikeLineOptions setWhipBonusCrit(double whipBonusCrit) {
@@ -542,6 +548,7 @@ public class GenericHelper {
             particleInfo = new ParticleLineOptions()
                     .setParticleColor(color)
                     .setAlpha(0.5f)
+                    .setIntensityMulti(advanced.particleIntensityMulti)
                     .setTicksLinger(lingerTime > 1 ? (lingerTime - 1) * lingerDelay : lingerDelay);
         }
         // find terminal location ( hit block etc. )

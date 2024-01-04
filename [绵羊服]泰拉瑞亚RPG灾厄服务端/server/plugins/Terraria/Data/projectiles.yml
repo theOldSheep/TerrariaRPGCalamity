@@ -1125,13 +1125,12 @@
 阿瑞斯外骨骼高斯核弹:
     gravity: 0
     liveTime: 100
-    blockHitAction: thru
     projectileSize: 1.5
     autoTrace: true
     autoTraceRadius: 48
     autoTraceAbility: 6
     spawnSound: item.largeWeaponFire
-    spawnSoundVolume: 0.2
+    spawnSoundVolume: 0.75
     clusterBomb:
         amount: 1
         damageMulti: 0.5
@@ -2474,6 +2473,9 @@ TNT:
         speed: 0.65
         spawnType: 寰宇之球
 寰宇之球:
+    gravity: 0
+    blockHitAction: bounce
+    bounce: 2
     liveTime: 20
     penetration: 999999
     spawnProjectiles:
@@ -3633,6 +3635,8 @@ TNT:
     gravity: 0
     liveTime: 600
     penetration: 2
+    spawnSound: item.genericLaser
+    spawnSoundVolume: 1.5
 裂天剑:
     arrowOrPotion: true
     gravity: 0
@@ -3700,6 +3704,8 @@ TNT:
 星云奥秘爆炸弹碎块:
     noGravityTicks: 0
     liveTime: 30
+    autoTrace: true
+    noAutoTraceTicks: 8
 星云奥秘:
     liveTime: 50
     autoTrace: true
@@ -4219,6 +4225,7 @@ TNT:
     minimumDamageTicks: 2
     noAutoTraceTicks: 2
     trailColor: RAINBOW
+    trailIntensityMulti: 0.35
     buffInflict:
         - "超位崩解|100|1"
 狞桀:
@@ -4294,13 +4301,7 @@ TNT:
     gravity: 0
     projectileSize: 0.5
     liveTime: 75
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 64
-    autoTraceAbility: 0
-    noAutoTraceTicks: 20
-    maxAutoTraceTicks: 20
-    autoTraceEndSpeedMultiplier: 12.5
+    speedMultiPerTick: 1.2
     trailColor: 255|255|145
     trailSize: 0.25
     trailStepSize: 0.5
@@ -4716,14 +4717,16 @@ TNT:
     gravity: 0
     penetration: 1
 光之舞闪光:
-    liveTime: 20
+    liveTime: 40
     blockHitAction: thru
-    projectileSize: 96
+    projectileSize: 128
     gravity: 0
     penetration: 999999
-    minimumDamageTicks: 20
+    minimumDamageTicks: 40
     worldSpriteMode: true
-    worldSpriteUpdateInterval: 50
+    worldSpriteUpdateInterval: 75
+    spawnSound: item.danceOfLight
+    spawnSoundVolume: 10
 冰爪:
     arrowOrPotion: true
     gravity: 0
