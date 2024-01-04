@@ -264,6 +264,17 @@ ANVIL:
     resultItem: 岩缝取鱼者
     requireItem:
     - 熔渣锭:6
+  '0_5':
+    requireLevel: 2
+    resultItem: 龙蒿钓竿
+    requireItem:
+    - 钓鱼竿
+    - 龙蒿锭:6
+  '0_6':
+    requireLevel: 3
+    resultItem: 鳕鱼吞噬者
+    requireItem:
+    - 宇宙锭:6
   '2':
     requireLevel: 1
     resultItem: 钨钢法杖
@@ -489,17 +500,17 @@ ANVIL:
     - 铁锭:14
   '43':
     requireLevel: 1
-    resultItem: 银头盔
+    resultItem: 白银头盔
     requireItem:
     - 银锭:10
   '44':
     requireLevel: 1
-    resultItem: 银链甲
+    resultItem: 白银链甲
     requireItem:
     - 银锭:16
   '45':
     requireLevel: 1
-    resultItem: 银护胫
+    resultItem: 白银护胫
     requireItem:
     - 银锭:14
   '46':

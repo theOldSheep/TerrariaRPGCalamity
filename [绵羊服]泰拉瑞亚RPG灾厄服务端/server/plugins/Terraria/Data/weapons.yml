@@ -13,24 +13,22 @@
   size: 2.2
 仙人掌镐:
   type: SWING
-  size: 2.2
+  size: 2.5
 铜镐:
   type: SWING
-  size: 1.7
-  particleColor:
-  - 255|155|100
+  size: 2
 铁镐:
   type: SWING
-  size: 2
+  size: 2.25
 银镐:
   type: SWING
-  size: 2.1
+  size: 2.5
 金镐:
   type: SWING
-  size: 2.2
+  size: 2.75
 恶魔镐:
   type: SWING
-  size: 2.3
+  size: 3
 熔火镐:
   type: SWING
   size: 2.5
@@ -60,7 +58,13 @@
   size: 5
 锯刃镐:
   type: SWING
-  size: 5
+  size: 6
+创世镐:
+  type: SWING
+  size: 7
+繁花镐:
+  type: SWING
+  size: 7.5
 铜质短剑:
   type: STAB
   size: 1.7

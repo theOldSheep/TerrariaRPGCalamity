@@ -146,7 +146,7 @@ public class NPCListener implements Listener {
                                 double cost = ItemHelper.getReforgeCost(toReforge);
                                 double plyMoney = PlayerHelper.getMoney(ply);
                                 if (plyMoney >= cost) {
-                                    ply.playSound(ply.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
+                                    ply.playSound(ply.getEyeLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
                                     // reforge
                                     String itemType = ItemHelper.splitItemName(toReforge)[1];
                                     ItemStack reforged = ItemHelper.getItemFromDescription(itemType, true);

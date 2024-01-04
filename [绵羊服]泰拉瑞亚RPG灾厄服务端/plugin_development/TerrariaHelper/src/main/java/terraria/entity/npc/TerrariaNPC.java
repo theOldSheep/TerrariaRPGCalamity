@@ -156,28 +156,28 @@ public class TerrariaNPC extends EntityVillager {
             case GUIDE:
             case ANGLER:
             {
-                shootInterval = 12;
+                shootInterval = 8;
                 break;
             }
             case CLOTHIER:
             {
-                shootInterval = 35;
+                shootInterval = 15;
                 break;
             }
             case ARMS_DEALER:
             {
-                shootInterval = 25;
+                shootInterval = 5;
                 break;
             }
             case BLOCK_SELLER:
             case GOBLIN_TINKERER:
             {
-                shootInterval = 20;
+                shootInterval = 12;
                 break;
             }
             case DEMOLITIONIST:
             {
-                shootInterval = 50;
+                shootInterval = 20;
                 break;
             }
         }
@@ -187,16 +187,13 @@ public class TerrariaNPC extends EntityVillager {
             double minDistance;
             switch (NPCType) {
                 case BLOCK_SELLER:
-                    minDistance = 5 * 5;
-                    break;
-                case ANGLER:
-                    minDistance = 16 * 16;
+                    minDistance = 6 * 6;
                     break;
                 case ARMS_DEALER:
                     minDistance = 48 * 48;
                     break;
                 default:
-                    minDistance = 24 * 24;
+                    minDistance = 32 * 32;
             }
             org.bukkit.entity.LivingEntity finalTarget = null;
             for (Entity toCheck : toLoop) {
@@ -211,11 +208,12 @@ public class TerrariaNPC extends EntityVillager {
             }
             // attack final target
             if (finalTarget != null) {
-                Vector dir = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), finalTarget.getEyeLocation(), 1d);
-                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, dir, attrMap, "");
+                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMap, "");
                 shootInfo.properties.put("liveTime", 80);
+                double projectileSpd = 1;
                 switch (NPCType) {
                     case BLOCK_SELLER: {
+                        Vector dir = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), finalTarget.getEyeLocation(), 1d);
                         GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
                                 MathHelper.getVectorYaw(dir), MathHelper.getVectorPitch(dir), 6.0, 0.25,
                                 "", "150|150|0", new ArrayList<>(),
@@ -224,30 +222,30 @@ public class TerrariaNPC extends EntityVillager {
                     }
                     case GUIDE: {
                         shootInfo.projectileName = "木箭";
-                        shootInfo.velocity.multiply(1.5);
+                        projectileSpd = 2;
                         break;
                     }
                     case ANGLER: {
                         shootInfo.projectileName = "木箭";
-                        shootInfo.properties.put("penetration", 2);
+                        projectileSpd = 1.5;
                         break;
                     }
                     case CLOTHIER: {
                         shootInfo.projectileName = "骷髅头";
-                        shootInfo.velocity.multiply(1.25);
+                        projectileSpd = 1.25;
                         shootInfo.properties.put("gravity", 0d);
                         shootInfo.properties.put("penetration", 2);
                         break;
                     }
                     case ARMS_DEALER: {
                         shootInfo.projectileName = "火枪子弹";
-                        shootInfo.velocity.multiply(2);
+                        projectileSpd = 2.5;
                         shootInfo.properties.put("gravity", 0d);
                         break;
                     }
                     case GOBLIN_TINKERER: {
                         shootInfo.projectileName = "尖刺球";
-                        shootInfo.velocity.multiply(0.35);
+                        projectileSpd = 0.4;
                         shootInfo.properties.put("noGravityTicks", 0);
                         shootInfo.properties.put("penetration", 9);
                         shootInfo.properties.put("blockHitAction", "bounce");
@@ -258,7 +256,7 @@ public class TerrariaNPC extends EntityVillager {
                     }
                     case DEMOLITIONIST: {
                         shootInfo.projectileName = "手榴弹";
-                        shootInfo.velocity.multiply(0.75);
+                        projectileSpd = 0.75;
                         shootInfo.properties.put("noGravityTicks", 0);
                         shootInfo.properties.put("blockHitAction", "bounce");
                         shootInfo.properties.put("bounce", 999999);
@@ -269,6 +267,15 @@ public class TerrariaNPC extends EntityVillager {
                         break;
                     }
                 }
+                // help aim enemy
+                EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions();
+                aimHelper.setAccelerationMode(true)
+                        .setProjectileSpeed(projectileSpd)
+                        .setProjectileGravity((double) shootInfo.properties.getOrDefault("gravity", 0.05))
+                        .setNoGravityTicks((int) shootInfo.properties.getOrDefault("noGravityTicks", 5));
+                Location aimLoc = EntityHelper.helperAimEntity(shootInfo.shootLoc, finalTarget, aimHelper);
+                shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, aimLoc, projectileSpd);
+
                 EntityHelper.spawnProjectile(shootInfo);
             }
         }
