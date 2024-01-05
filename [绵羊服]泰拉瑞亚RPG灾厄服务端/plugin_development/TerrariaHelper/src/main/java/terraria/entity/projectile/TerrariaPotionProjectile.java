@@ -231,6 +231,15 @@ public class TerrariaPotionProjectile extends EntityPotion {
             case "血炎龙息":
                 PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 1, false);
                 break;
+            case "血炎箭":
+                if (Math.random() < 0.5)
+                    PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 1, false);
+                break;
+            case "血炎弹":
+                double healthRegenTime = EntityHelper.getMetadata(shooter.getBukkitEntity(), EntityHelper.MetadataName.REGEN_TIME)
+                        .asDouble();
+                EntityHelper.setMetadata(shooter.getBukkitEntity(), EntityHelper.MetadataName.REGEN_TIME, healthRegenTime + 2);
+                break;
             case "巨蟹之礼星环":
                 PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 5, false);
                 break;

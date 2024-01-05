@@ -271,7 +271,24 @@ public class WorldHelper {
                 randomGenerator.nextInt(diameter) - radius);
     }
     private static boolean blockPosValidForGrass(Block block) {
-        return block.getRelative(BlockFace.UP).getType().isTransparent();
+        Material blockAboveMat = block.getRelative(BlockFace.UP).getType();
+        // this version of minecraft does not recognize these as transparent blocks
+        switch (blockAboveMat) {
+            case ANVIL:
+            case BREWING_STAND:
+            case ENCHANTMENT_TABLE:
+            case FURNACE:
+            case WORKBENCH:
+            case GLASS:
+            case STAINED_GLASS:
+            case STAINED_GLASS_PANE:
+            case WATER:
+            case STATIONARY_WATER:
+            case BED_BLOCK:
+                return true;
+            default:
+                return blockAboveMat.isTransparent();
+        }
     }
     private static boolean validateSpreadBlock(Block testBlock, boolean isGrass,
                                             Material blockMat, byte blockData,

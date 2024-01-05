@@ -19,10 +19,7 @@ import terraria.event.TerrariaProjectileHitEvent;
 import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 public class ArrowHitListener implements Listener {
@@ -83,6 +80,7 @@ public class ArrowHitListener implements Listener {
         } else {
             EntityHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), dmgReason);
         }
+        // projectile-specific characteristics:
         // explode
         if (projectileScoreboardTags.contains("isGrenade")) {
             Location projectileDestroyLoc = MathHelper.toBukkitVector(e.movingObjectPosition.pos).toLocation(entity.getWorld());
@@ -111,6 +109,31 @@ public class ArrowHitListener implements Listener {
                 waitTime += 4 + (int) (Math.random() * 5);
             }
         }
+        // god slayer slug
+        if (projectileName.equals("弑神弹")) {
+            // only handle extra projectile once per bullet
+            if (! projectileScoreboardTags.contains("godSlyHandled")) {
+                HashMap<String, Double> attrMapProj = (HashMap<String, Double>) EntityHelper.getAttrMap(projectile).clone();
+                attrMapProj.put("damage", attrMapProj.get("damage") * 0.35);
+                Player shooter = (Player) projectile.getShooter();
+                projectile.addScoreboardTag("godSlyHandled");
+                // after 5 ticks, remove current bullet and fire a new one
+                Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+                    projectile.remove();
+
+                    double projSpd = projectile.getVelocity().length();
+                    String projType = "弑神折返弹";
+                    Location fireLoc = shooter.getEyeLocation().add(MathHelper.randomVector().multiply(3.5));
+                    Vector velocity = ItemUseHelper.getPlayerAimDir(
+                            shooter, fireLoc, projSpd, projType, false, 0);
+                    MathHelper.setVectorLength(velocity, projSpd);
+
+                    EntityHelper.spawnProjectile(shooter, fireLoc, velocity, attrMapProj, EntityHelper.DamageType.BULLET, projType);
+                }, 5);
+            }
+        }
+
+        // weapon-specific characteristics:
         // hellborn bullet
         if (projectileScoreboardTags.contains("isHellborn")) {
             Player shooter = (Player) projectile.getShooter();
@@ -127,6 +150,39 @@ public class ArrowHitListener implements Listener {
             }
             EntityHelper.setMetadata(entity, EntityHelper.MetadataName.LAST_ADAMANTITE_PARTICLE_TYPE,
                     projectileName);
+        }
+
+        // armor set specific characteristics:
+        if (projectile.getShooter() instanceof Player) {
+            Player shooter = (Player) projectile.getShooter();
+            String armorSet = PlayerHelper.getArmorSet(shooter);
+            EntityHelper.DamageType damageType = EntityHelper.getDamageType(projectile);
+            Set<String> plyScoreboardTags = shooter.getScoreboardTags();
+            switch (armorSet) {
+                case "龙蒿远程套装": {
+                    switch ( damageType ) {
+                        case ARROW:
+                        case BULLET:
+                        case ROCKET: {
+                            // cool down
+                            String coolDownTag = "temp_tarragonRanged";
+                            if (plyScoreboardTags.contains(coolDownTag))
+                                break;
+                            // apply cool down
+                            EntityHelper.handleEntityTemporaryScoreboardTag(shooter, coolDownTag, 20);
+                            // fire projectile
+                            HashMap<String, Double> extraProjAttrMap = (HashMap<String, Double>) attrMap.clone();
+                            extraProjAttrMap.put("damage", extraProjAttrMap.getOrDefault("damage", 20d) * 0.45);
+                            for (int i = 0; i < 2; i ++) {
+                                EntityHelper.spawnProjectile(shooter, projectile.getLocation(),
+                                        MathHelper.randomVector().multiply(2), extraProjAttrMap,
+                                        EntityHelper.DamageType.MAGIC, "龙蒿生命能量");
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
         }
     }
     private static void handleProjectileBlast(Projectile projectile, Location projectileDestroyLoc) {

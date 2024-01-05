@@ -3818,16 +3818,17 @@ public class ItemUseHelper {
                 // cool down
                 EntityHelper.handleEntityTemporaryScoreboardTag(ply, coolDownTag, 10);
                 // damage setup
-                EntityPlayer dPlyNMS = ((CraftPlayer) ply).getHandle();
+                String projType = "大熔岩火球";
+                double projSpd = 2;
+
+                Vector aimDir = getPlayerAimDir(ply, ply.getEyeLocation(), projSpd, projType, false, 0);
                 HashMap<String, Double> fireballAttrMap = (HashMap<String, Double>) attrMap.clone();
                 double fireballDmg = Math.min(125, fireballAttrMap.getOrDefault("damage", 100d) * 0.25);
                 fireballAttrMap.put("damage", fireballDmg);
                 // projectile
-                Vector projVel = MathHelper.vectorFromYawPitch_quick(
-                        dPlyNMS.yaw + Math.random() * 1.5 - 0.75, dPlyNMS.pitch + Math.random() * 1.5 - 0.75);
-                projVel.multiply(1.75);
-                EntityHelper.spawnProjectile(ply, projVel,
-                        fireballAttrMap, EntityHelper.getDamageType(ply), "大熔岩火球");
+                aimDir.normalize().multiply(projSpd);
+                EntityHelper.spawnProjectile(ply, aimDir,
+                        fireballAttrMap, EntityHelper.getDamageType(ply), projType);
             }
         }
         return true;
@@ -4723,6 +4724,33 @@ public class ItemUseHelper {
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMagicMulti", 1d);
         double useTimeMulti = 1 / useSpeed;
         applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
+        // armor set
+        String armorSet = PlayerHelper.getArmorSet(ply);
+        switch (armorSet) {
+            case "龙蒿魔法套装": {
+                if (swingAmount % 8 == 7) {
+                    // damage setup
+                    String projType = "树叶";
+                    double projSpd = 3;
+
+                    Vector aimDir = getPlayerAimDir(ply, ply.getEyeLocation(), projSpd, projType, false, 0);
+                    HashMap<String, Double> fireballAttrMap = (HashMap<String, Double>) attrMap.clone();
+                    double fireballDmg = fireballAttrMap.getOrDefault("damage", 100d) * 0.5;
+                    fireballAttrMap.put("damage", fireballDmg);
+                    // projectile
+                    double centerYaw = MathHelper.getVectorYaw(aimDir);
+                    double centerPitch = MathHelper.getVectorPitch(aimDir);
+                    for (int i = 0; i < 8; i ++) {
+                        Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                centerYaw + Math.random() * 10 - 5, centerPitch + Math.random() * 10 - 5);
+                        projVel.multiply(projSpd);
+                        EntityHelper.spawnProjectile(ply, projVel,
+                                fireballAttrMap, EntityHelper.getDamageType(ply), projType);
+                    }
+                }
+                break;
+            }
+        }
         return true;
     }
     // summoning helper functions below

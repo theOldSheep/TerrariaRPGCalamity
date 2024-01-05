@@ -1047,6 +1047,11 @@ public class EntityHelper {
                         handleDamage(damageTaker, damager, Math.min(Math.max(dmg, 100), 500), DamageReason.THORN);
                     break;
                 }
+                case "龙蒿近战套装": {
+                    if (Math.random() < 0.25)
+                        applyEffect(damageTaker, "生命涌流", 80);
+                    break;
+                }
             }
             // special item
             ItemStack plyTool = vPly.getEquipment().getItemInMainHand();
@@ -2142,6 +2147,9 @@ public class EntityHelper {
                 Vector lastSavedVel = (Vector) lastVelMetadata.value();
                 enemyAcc = currSavedVel.clone().subtract(lastSavedVel);
             }
+            // for enemies with gravity, upper cap the acceleration at y = -0.08
+            if (target.hasGravity())
+                enemyAcc.setY( Math.min(enemyAcc.getY(), -0.08) );
         }
         // offset enemyAcc
         enemyAcc.add(aimHelperOption.accelerationOffset);

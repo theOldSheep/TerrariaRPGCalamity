@@ -89,7 +89,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("minionDamagePenaltyMulti", 0.5d);
         defaultPlayerAttrMap.put("minionLimit", 1d);
         defaultPlayerAttrMap.put("mobLimit", 15d);
-        defaultPlayerAttrMap.put("mobSpawnRate", 0.05d);
+        defaultPlayerAttrMap.put("mobSpawnRate", 0.02d);
         defaultPlayerAttrMap.put("mobSpawnRateMulti", 1d);
         defaultPlayerAttrMap.put("penetration", 0d);
         defaultPlayerAttrMap.put("powerPickaxe", 0d);
@@ -1018,7 +1018,8 @@ public class PlayerHelper {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 if (!isProperlyPlaying(ply)) continue;
                 // critter spawn
-                CritterHelper.naturalCritterSpawn(ply);
+                if (Math.random() < 0.75)
+                    CritterHelper.naturalCritterSpawn(ply);
                 // monster spawn rate
                 HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
                 double spawnRate = attrMap.getOrDefault("mobSpawnRate", 0.1) *
@@ -1028,7 +1029,7 @@ public class PlayerHelper {
                         heightLayer == WorldHelper.HeightLayer.SURFACE ||
                                 heightLayer == WorldHelper.HeightLayer.SPACE;
                 if (isSurfaceOrSpace) {
-                    // monster spawn rate when an event is present
+                    // monster spawn rate when an event is absent is lower
                     if (EventAndTime.currentEvent != null) {
                         spawnRate = 0.35;
                     }
@@ -2006,6 +2007,10 @@ public class PlayerHelper {
             }
             case "瘟疫死神套装": {
                 EntityHelper.applyEffect(ply, "瘟疫狂暴", 100);
+                break;
+            }
+            case "龙蒿近战套装": {
+                EntityHelper.applyEffect(ply, "龙蒿披风", 200);
                 break;
             }
         }

@@ -12,8 +12,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.Dye;
-import org.bukkit.material.MaterialData;
 import terraria.TerrariaHelper;
 import terraria.entity.others.TerrariaItem;
 
@@ -24,9 +22,9 @@ public class ItemHelper {
     public static final String placeholderItemNamePrefix = "§1§1§4§5§1§4";
     public static HashMap<String, String> attributeDisplayName = new HashMap<>();
     private static HashMap<String, ItemStack> itemMap;
-    public static HashMap<String, VexGui> craftingGuiMap;
-    public static HashMap<String, String> craftingGuisRecipeIndexMap;
-    public static HashMap<String, Integer> craftingGuiLengthMap;
+    public static HashMap<String, VexGui> CRAFTING_GUI_MAP;
+    public static HashMap<String, String> CRAFTING_GUIS_RECIPE_INDEX_MAP;
+    public static HashMap<String, Integer> CRAFTING_GUI_LENGTH_MAP;
     // recipe init helpers
     private static int getMaxRecipeLevel(String station) {
         int maxLevel = 1;
@@ -58,7 +56,7 @@ public class ItemHelper {
                     resultItem.setAmount(1);
                     VexSlot slotComp = new VexSlot(recipeIndex, 5, (recipeIndex - 1) * 20, resultItem);
                     itemSlots.add(slotComp);
-                    craftingGuisRecipeIndexMap.put(station + "_" + level + "_" + recipeIndex, station + "." + recipeName);
+                    CRAFTING_GUIS_RECIPE_INDEX_MAP.put(station + "_" + level + "_" + recipeIndex, station + "." + recipeName);
                     recipeIndex++;
                 }
             }
@@ -84,7 +82,7 @@ public class ItemHelper {
                         itemSlots.add(slotComp);
                         // the level below is used as the player crafts, so it should remain as level instead of subStationLevel
                         // the subStationLevel is used to validate the recipe only
-                        craftingGuisRecipeIndexMap.put(station + "_" + level + "_" + recipeIndex, subStation + "." + recipeName);
+                        CRAFTING_GUIS_RECIPE_INDEX_MAP.put(station + "_" + level + "_" + recipeIndex, subStation + "." + recipeName);
                         recipeIndex++;
                     }
                 }
@@ -99,17 +97,17 @@ public class ItemHelper {
         gui.addComponent(scrList);
         // save the GUI to mapping
         String craftGuiMappingKey = station + "_" + level;
-        craftingGuiMap.put(craftGuiMappingKey, gui);
-        craftingGuiLengthMap.put(craftGuiMappingKey, recipeIndex);
+        CRAFTING_GUI_MAP.put(craftGuiMappingKey, gui);
+        CRAFTING_GUI_LENGTH_MAP.put(craftGuiMappingKey, recipeIndex);
     }
     public static void setupItemRecipe(boolean printDebugMessage) {
         Bukkit.clearRecipes();
         Set<String> items = TerrariaHelper.itemConfig.getKeys(false);
         Set<String> craftStations = TerrariaHelper.recipeConfig.getKeys(false);
         itemMap = new HashMap<>();
-        craftingGuiMap = new HashMap<>();
-        craftingGuisRecipeIndexMap = new HashMap<>();
-        craftingGuiLengthMap = new HashMap<>();
+        CRAFTING_GUI_MAP = new HashMap<>();
+        CRAFTING_GUIS_RECIPE_INDEX_MAP = new HashMap<>();
+        CRAFTING_GUI_LENGTH_MAP = new HashMap<>();
         // items
         for (String itemInfo : items) {
             ItemStack item = getItemFromYML(itemInfo);
@@ -855,14 +853,20 @@ public class ItemHelper {
         if (noOverStack) {
             int maxStackSize = itemToDrop.getType().getMaxStackSize();
             if (itemAmount > maxStackSize) {
-                // drop extras
-                itemToDrop.setAmount(itemAmount - maxStackSize);
-                dropItem(loc, itemToDrop, canMerge, true);
-                // update current drop amount to max stack size
                 itemToDrop.setAmount(maxStackSize);
+                while (itemAmount > maxStackSize) {
+                    // drop extras
+                    itemAmount -= maxStackSize;
+                    dropItemWithoutCheck(loc, itemToDrop, canMerge);
+                }
+                // update current drop amount
+                itemToDrop.setAmount(itemAmount);
             }
         }
         // drop item
+        return dropItemWithoutCheck(loc, itemToDrop, canMerge);
+    }
+    public static CraftItem dropItemWithoutCheck(Location loc, ItemStack itemToDrop, boolean canMerge) {
         TerrariaItem entity = new TerrariaItem(loc, itemToDrop);
         if (!canMerge)
             entity.canBeMerged = false;

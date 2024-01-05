@@ -254,11 +254,11 @@
   worth: 1000
   rarity: 0
 晶状体:
-  item: EYE_OF_ENDER
+  item: CLAY_BALL
   worth: 10000
   rarity: 0
 黑晶状体:
-  item: EYE_OF_ENDER
+  item: CLAY_BALL
   worth: 100000
   rarity: 0
 腐肉:
@@ -938,7 +938,7 @@
   - §6专家模式物品
   rarity: 1000
 可疑的眼球:
-  item: EYE_OF_ENDER
+  item: CLAY_BALL
   rarity: 1
 史莱姆王冠:
   item: COAL
@@ -10912,6 +10912,46 @@ Dodu的手炮:
     projectileSpeedMulti: 0.25
   worth: 2000
   rarity: 7
+极乐之箭:
+  item: ARROW
+  lore:
+  - §r命中敌人时天降陨石
+  - §r“回应我吧，极乐之箭！”
+  attributes:
+    damage: 40
+    damageType: Arrow
+    crit: 4
+    knockback: 3
+    projectileSpeed: 10
+  worth: 2400
+  rarity: 11
+血炎箭:
+  item: ARROW
+  lore:
+  - §r命中时有概率回复生命值
+  attributes:
+    damage: 58
+    damageType: Arrow
+    crit: 4
+    knockback: 3.5
+    projectileSpeed: 10
+  worth: 8000
+  rarity: 12
+征戮箭:
+  item: ARROW
+  lore:
+  - §r穿透实体方块
+  - §r随时间推移，分裂出最多两支小型追踪箭矢
+  - §r“很好的合成全部，使我的背包旋转”
+  attributes:
+    damage: 48
+    damageType: Arrow
+    crit: 4
+    knockback: 3.5
+    projectileSpeed: 10
+    projectileSpeedMulti: 0.125
+  worth: 2800
+  rarity: 14
 火枪子弹:
   item: SLIME_BALL
   attributes:
@@ -10958,7 +10998,7 @@ Dodu的手炮:
 绿藻弹:
   item: SLIME_BALL
   lore:
-  - §r“你跑不掉了……”
+  - §r追踪你的敌人
   attributes:
     damage: 18
     damageBulletMulti: -0.25
@@ -11113,6 +11153,47 @@ Dodu的手炮:
     projectileSpeedMulti: 0.25
   worth: 10000
   rarity: 3
+圣火弹:
+  item: SLIME_BALL
+  lore:
+  - §r会爆炸的圣火子弹
+  attributes:
+    damage: 44
+    damageType: Bullet
+    crit: 4
+    knockback: 2
+    projectileSpeed: 6
+    projectileSpeedMulti: 0.375
+  worth: 2400
+  rarity: 11
+血炎弹:
+  item: SLIME_BALL
+  lore:
+  - §r击中敌人时加快你的自然生命恢复
+  attributes:
+    damage: 60
+    damageType: Bullet
+    crit: 4
+    knockback: 4.5
+    projectileSpeed: 4.8
+    projectileSpeedMulti: 0.375
+  worth: 8000
+  rarity: 12
+弑神弹:
+  item: SLIME_BALL
+  lore:
+  - §r具有无限穿透力的重型弹药，能够撕裂时空
+  - §r穿透第一个敌怪后飞行一段时间就会消失
+  - §r然后撕裂时空出现在玩家身后，加速射出并在接触时爆炸
+  attributes:
+    damage: 56
+    damageType: Bullet
+    crit: 4
+    knockback: 3
+    projectileSpeed: 6
+    projectileSpeedMulti: 0.375
+  worth: 2800
+  rarity: 14
 极光弹:
   item: SLIME_BALL
   attributes:
@@ -12759,6 +12840,80 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 10500000
   rarity: 10
+龙蒿战盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  - §r“远古信徒的头盔”
+  attributes:
+    defence: 66
+    crit: 5
+    damageMeleeMulti: 0.1
+    damageTakenMulti: -0.05
+  worth: 24000000
+  rarity: 12
+龙蒿兜帽:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  - §r“远古信徒的头盔”
+  attributes:
+    defence: 42
+    critRanged: 10
+    damageRangedMulti: 0.1
+    damageTakenMulti: -0.05
+  worth: 24000000
+  rarity: 12
+龙蒿面具:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  - §r“远古信徒的头盔”
+  attributes:
+    defence: 20
+    critMagic: 10
+    damageMagicMulti: 0.2
+    damageTakenMulti: -0.05
+    maxMana: 100
+    manaUseMulti: -0.15
+  worth: 24000000
+  rarity: 12
+龙蒿角盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  - §r“远古信徒的头盔”
+  attributes:
+    defence: 6
+    damageSummonMulti: 0.05
+    damageTakenMulti: -0.05
+  worth: 24000000
+  rarity: 12
+龙蒿胸甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  - §r“被放逐者的胸甲”
+  attributes:
+    defence: 74
+    crit: 5
+    damageMulti: 0.1
+    regen: 2
+    maxHealth: 80
+  worth: 24000000
+  rarity: 12
+龙蒿护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  - §r“传奇探险家的护胫”
+  attributes:
+    defence: 64
+    crit: 8
+    damageMulti: 0.08
+    speedMulti: 0.1
+  worth: 24000000
+  rarity: 12
 钱币槽:
   item: PAPER
   lore:

@@ -431,6 +431,65 @@ ANVIL:
     requireItem:
     - 火枪子弹:64
     - 陨星锭
+  '113':
+    requireLevel: 2
+    resultItem: 绿藻弹:64
+    requireItem:
+    - 叶绿锭
+  '114':
+    requireLevel: 2
+    resultItem: 水晶子弹:96
+    requireItem:
+    - 火枪子弹:96
+    - 水晶碎块
+  '115':
+    requireLevel: 2
+    resultItem: 诅咒弹:96
+    requireItem:
+    - 火枪子弹:96
+    - 诅咒焰
+  '115_1':
+    requireLevel: 1
+    resultItem: 加速弹:144
+    requireItem:
+    - 火枪子弹:144
+    - 珍珠碎片
+  '115_2':
+    requireLevel: 2
+    resultItem: 鼠疫弹:144
+    requireItem:
+    - 火枪子弹:144
+    - 瘟疫细胞罐
+  '115_3':
+    requireLevel: 2
+    resultItem: 海伯里斯弹:144
+    requireItem:
+    - 火枪子弹:144
+    - 生命合金
+  '115_4':
+    requireLevel: 1
+    resultItem: 弹球弹:144
+    requireItem:
+    - 陨星弹:144
+    - 珍珠碎片
+  '115_5':
+    requireLevel: 2
+    resultItem: 泰拉弹:144
+    requireItem:
+    - 水晶子弹:96
+    - 生命碎片
+  '115_6':
+    requireLevel: 2
+    resultItem: 钫弹:96
+    requireItem:
+    - 火枪子弹:96
+    - 寒元锭
+  '115_7':
+    requireLevel: 3
+    resultItem: 弑神弹:960
+    requireItem:
+    - 宇宙锭
+    - 弹壳:960
   '31':
     requireLevel: 1
     resultItem: 邪箭:24
@@ -443,6 +502,53 @@ ANVIL:
     requireItem:
     - 木箭:96
     - 狱炎锭
+  '109':
+    requireLevel: 2
+    resultItem: 圣箭:96
+    requireItem:
+    - 木箭:96
+    - 独角兽角
+    - 妖精尘:3
+  '110':
+    requireLevel: 2
+    resultItem: 诅咒箭:64
+    requireItem:
+    - 木箭:64
+    - 诅咒焰
+  '111':
+    requireLevel: 2
+    resultItem: 叶绿箭:96
+    requireItem:
+    - 叶绿锭
+  '112':
+    requireLevel: 2
+    resultItem: 毒液箭:48
+    requireItem:
+    - 木箭:48
+    - 小瓶毒液
+  '112_1':
+    requireLevel: 1
+    resultItem: 汽油箭:240
+    requireItem:
+    - 混乱精华
+    - 火把:4
+    - 木箭:240
+  '112_2':
+    requireLevel: 2
+    resultItem: 北极箭:240
+    requireItem:
+    - 寒元锭
+  '112_3':
+    requireLevel: 2
+    resultItem: 泰拉箭:240
+    requireItem:
+    - 生命碎片
+    - 木箭:240
+  '112_4':
+    requireLevel: 3
+    resultItem: 征戮箭:960
+    requireItem:
+    - 宇宙锭
   '33':
     requireLevel: 1
     resultItem: 荆棘旋刃
@@ -848,101 +954,6 @@ ANVIL:
     - 晶状体:2
     - 神圣锭:12
     - 视域之魂:20
-  '109':
-    requireLevel: 2
-    resultItem: 圣箭:96
-    requireItem:
-    - 木箭:96
-    - 独角兽角
-    - 妖精尘:3
-  '110':
-    requireLevel: 2
-    resultItem: 诅咒箭:64
-    requireItem:
-    - 木箭:64
-    - 诅咒焰
-  '111':
-    requireLevel: 2
-    resultItem: 叶绿箭:96
-    requireItem:
-    - 叶绿锭
-  '112':
-    requireLevel: 2
-    resultItem: 毒液箭:48
-    requireItem:
-    - 木箭:48
-    - 小瓶毒液
-  '112_1':
-    requireLevel: 1
-    resultItem: 汽油箭:240
-    requireItem:
-    - 混乱精华
-    - 火把:4
-    - 木箭:240
-  '112_2':
-    requireLevel: 1
-    resultItem: 北极箭:240
-    requireItem:
-    - 寒元锭
-  '112_3':
-    requireLevel: 1
-    resultItem: 泰拉箭:240
-    requireItem:
-    - 生命碎片
-    - 木箭:240
-  '113':
-    requireLevel: 2
-    resultItem: 绿藻弹:64
-    requireItem:
-    - 叶绿锭
-  '114':
-    requireLevel: 2
-    resultItem: 水晶子弹:96
-    requireItem:
-    - 火枪子弹:96
-    - 水晶碎块
-  '115':
-    requireLevel: 2
-    resultItem: 诅咒弹:96
-    requireItem:
-    - 火枪子弹:96
-    - 诅咒焰
-  '115_1':
-    requireLevel: 1
-    resultItem: 加速弹:144
-    requireItem:
-    - 火枪子弹:144
-    - 珍珠碎片
-  '115_2':
-    requireLevel: 2
-    resultItem: 鼠疫弹:144
-    requireItem:
-    - 火枪子弹:144
-    - 瘟疫细胞罐
-  '115_3':
-    requireLevel: 2
-    resultItem: 海伯里斯弹:144
-    requireItem:
-    - 火枪子弹:144
-    - 生命合金
-  '115_4':
-    requireLevel: 1
-    resultItem: 弹球弹:144
-    requireItem:
-    - 陨星弹:144
-    - 珍珠碎片
-  '115_5':
-    requireLevel: 2
-    resultItem: 泰拉弹:144
-    requireItem:
-    - 水晶子弹:96
-    - 生命碎片
-  '115_6':
-    requireLevel: 2
-    resultItem: 钫弹:96
-    requireItem:
-    - 火枪子弹:96
-    - 寒元锭
   '116':
     requireLevel: 2
     resultItem: 寒霜头盔
@@ -3928,11 +3939,34 @@ TINKER_WORKBENCH:
     resultItem: 夜明箭:96
     requireItem:
     - 夜明锭
+  '11_1':
+    requireLevel: 1
+    resultItem: 极乐之箭:128
+    requireItem:
+    - 圣箭:128
+    - 浊火精华
+  '11_2':
+    requireLevel: 1
+    resultItem: 血炎箭:320
+    requireItem:
+    - 血石核心
   '12':
     requireLevel: 1
     resultItem: 夜明弹:96
     requireItem:
     - 夜明锭
+  '12_1':
+    requireLevel: 1
+    resultItem: 圣火弹:96
+    requireItem:
+    - 爆炸弹:96
+    - 浊火精华
+  '12_2':
+    requireLevel: 1
+    resultItem: 血炎弹:320
+    requireItem:
+    - 血石核心
+    - 弹壳:320
   '13':
     requireLevel: 1
     resultItem: 月钩

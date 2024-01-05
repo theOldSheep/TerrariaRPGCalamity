@@ -36,7 +36,7 @@ public class CraftingListener implements Listener {
     private static final YmlHelper.YmlSection recipeConfig = YmlHelper.getFile(
             TerrariaHelper.Constants.DATA_FOLDER_DIR + "recipes.yml");
     private static HashMap<String, Integer> getRecipeIngredientMap(String station, String vexSlotIndex) {
-        String recipeConfigName = ItemHelper.craftingGuisRecipeIndexMap.get(station + "_" + vexSlotIndex);
+        String recipeConfigName = ItemHelper.CRAFTING_GUIS_RECIPE_INDEX_MAP.get(station + "_" + vexSlotIndex);
         return getRecipeIngredientMap(recipeConfig.getConfigurationSection(recipeConfigName));
     }
     private static HashMap<String, Integer> getRecipeIngredientMap(ConfigurationSection recipeConfigSection) {
@@ -104,7 +104,7 @@ public class CraftingListener implements Listener {
     }
     private void handlePlayerCraft(Player player, int recipeIndex, String station, boolean shouldCraftAll) {
         player.sendMessage("§a正在处理合成请求中....");
-        String recipeConfigName = ItemHelper.craftingGuisRecipeIndexMap.get(station + "_" + recipeIndex);
+        String recipeConfigName = ItemHelper.CRAFTING_GUIS_RECIPE_INDEX_MAP.get(station + "_" + recipeIndex);
         // get config section for later use
         ConfigurationSection recipeConfigSection = recipeConfig.getConfigurationSection(recipeConfigName);
         // setup ingredient required
@@ -121,8 +121,12 @@ public class CraftingListener implements Listener {
             player.sendMessage("§c材料不足....");
             return;
         }
+        String resultItemType = recipeConfigSection.getString("resultItem");
+        ItemStack resultItem = ItemHelper.getItemFromDescription(resultItemType, true);
+        // upper cap the total amount of result item to 4800 if the player would like to craft as many as possible
+        if (shouldCraftAll) amountToCraft = Math.min(4800 / resultItem.getAmount(), amountToCraft);
         // set max amount crafted if the player would like to craft only one
-        if (!shouldCraftAll) amountToCraft = 1;
+        else amountToCraft = 1;
         // removes all ingredients required
         for (String itemType : ingredients.keySet()) {
             int amountToTakeLeft = ingredients.get(itemType) * amountToCraft;
@@ -141,18 +145,16 @@ public class CraftingListener implements Listener {
             }
         }
         // gives the result item to the player
-        String resultItemType = recipeConfigSection.getString("resultItem");
         player.sendMessage("§a合成成功！~");
         // if the result is sword etc. that could be reforged, give items individually to the player
-        if (ItemHelper.canReforge(ItemHelper.getItemFromDescription(resultItemType, false))) {
+        if (ItemHelper.canReforge(resultItem) ) {
             for (int i = 0; i < amountToCraft; i ++) {
-                ItemStack resultItem = ItemHelper.getItemFromDescription(resultItemType, true);
+                resultItem = ItemHelper.randomPrefix(resultItem);
                 PlayerHelper.giveItem(player, resultItem, true);
             }
         }
         // otherwise, give all items at once to the player to prevent lag and a loud pickup sound effect buildup
         else {
-            ItemStack resultItem = ItemHelper.getItemFromDescription(resultItemType, true);
             resultItem.setAmount(resultItem.getAmount() * amountToCraft);
             PlayerHelper.giveItem(player, resultItem, true);
         }
@@ -183,7 +185,7 @@ public class CraftingListener implements Listener {
         String station = EntityHelper.getMetadata(player, EntityHelper.MetadataName.PLAYER_CRAFTING_STATION).asString();
         int recipeIndex = e.getID();
         // get next index to display(prevent index collision)
-        int index = ItemHelper.craftingGuiLengthMap.get(station);
+        int index = ItemHelper.CRAFTING_GUI_LENGTH_MAP.get(station);
         // if the slot clicked > index, that is, the player clicked on a descriptive itemstack on the right
         if (recipeIndex >= index) return;
         // test if the slot clicked is for display purpose only
@@ -191,7 +193,7 @@ public class CraftingListener implements Listener {
         VexSlot slot = gui.getSlotById(recipeIndex);
         if (slot == null || slot.getX() > 10) return;
         // get config section for later use
-        String recipeConfigName = ItemHelper.craftingGuisRecipeIndexMap.get(station + "_" + recipeIndex);
+        String recipeConfigName = ItemHelper.CRAFTING_GUIS_RECIPE_INDEX_MAP.get(station + "_" + recipeIndex);
         ConfigurationSection recipeConfigSection = recipeConfig.getConfigurationSection(recipeConfigName);
         // setup ingredient required
         HashMap<String, Integer> ingredients = getRecipeIngredientMap(recipeConfigSection);
@@ -342,7 +344,7 @@ public class CraftingListener implements Listener {
             }
         }
         String guiKey = station + "_" + level;
-        VexGui originalGui = ItemHelper.craftingGuiMap.get(guiKey);
+        VexGui originalGui = ItemHelper.CRAFTING_GUI_MAP.get(guiKey);
         if (originalGui == null) return false;
         // setup gui to display
         int windowWidth = VexViewAPI.getPlayerClientWindowWidth(ply);

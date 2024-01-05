@@ -1976,6 +1976,7 @@ P90:
 地狱降临:
   type: GUN
   autoSwing: true
+  useSound: entity.generic.explode
   ammoConversion:
     绿藻弹:
     - 火枪子弹
@@ -2076,6 +2077,7 @@ P90:
   shots: 3
   offSet: 12
   autoSwing: true
+  useSound: entity.generic.explode
   ammoConversion:
     火枪子弹:
     - 爆炸弹
@@ -2087,6 +2089,7 @@ P90:
 蘑菇狙击枪:
   type: GUN
   autoSwing: true
+  useSound: entity.generic.explode
 幻星冲击炮:
   type: GUN
   autoSwing: true
@@ -2124,9 +2127,11 @@ P90:
   type: GUN
   shots: 5
   autoSwing: true
+  useSound: entity.generic.explode
 极光:
   type: GUN
   autoSwing: true
+  useSound: entity.generic.explode
   ammoConversion:
     ALL:
     - 极光弹
@@ -2157,6 +2162,7 @@ P90:
 Dodu的手炮:
   type: GUN
   autoSwing: true
+  useSound: entity.generic.explode
   ammoConversion:
     ALL:
     - 花生壳
@@ -2199,6 +2205,7 @@ Dodu的手炮:
 反器材狙击步枪:
   type: GUN
   autoSwing: true
+  useSound: item.largeWeaponFire
   ammoConversion:
     火枪子弹:
     - .50狙击弹
@@ -2233,6 +2240,7 @@ Dodu的手炮:
 暴政之终:
   type: GUN
   autoSwing: true
+  useSound: item.largeWeaponFire
   ammoConversion:
     火枪子弹:
     - .70狙击弹

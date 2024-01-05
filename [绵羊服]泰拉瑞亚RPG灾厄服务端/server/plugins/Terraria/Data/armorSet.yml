@@ -383,6 +383,24 @@ pieces:
   - 星璇套装
   星璇护腿:
   - 星璇套装
+  龙蒿战盔:
+  - 龙蒿近战套装
+  龙蒿兜帽:
+  - 龙蒿远程套装
+  龙蒿面具:
+  - 龙蒿魔法套装
+  龙蒿角盔:
+  - 龙蒿召唤套装
+  龙蒿胸甲:
+  - 龙蒿近战套装
+  - 龙蒿远程套装
+  - 龙蒿魔法套装
+  - 龙蒿召唤套装
+  龙蒿护胫:
+  - 龙蒿近战套装
+  - 龙蒿远程套装
+  - 龙蒿魔法套装
+  - 龙蒿召唤套装
 sets:
   木套装:
     lore:
@@ -786,7 +804,7 @@ sets:
     - ''
     - §a套装效果：
     - §a额外增加15%魔法伤害和暴击率
-    - §a你可以按下套装增益键[V]进入十秒钟的硫火狂暴模式
+    - §a你可以按下套装增益键[默认为V]进入十秒钟的硫火狂暴模式
     - §a在此模式下，以快速的生命流失作为代价，你造成的魔法伤害会显著增加
     - §a硫火狂暴有30秒冷却时间
     attributes:
@@ -804,7 +822,7 @@ sets:
     attributes:
         defence: 20
         regen: 6
-        mobSpawnRateMulti: 0.12
+        mobSpawnRateMulti: 0.2
         speedMulti: -0.1
         flightTimeMulti: -0.1
   掠夺者探索套装:
@@ -824,7 +842,7 @@ sets:
     attributes:
         reachExtra: 3
         mobLimit: -2
-        mobSpawnRateMulti: -0.3
+        mobSpawnRateMulti: -0.5
   幽灵吸血套装:
     lore:
     - ''
@@ -858,7 +876,7 @@ sets:
       critRanged: 10
       speed: -0.075
       mobLimit: -1
-      mobSpawnRateMulti: -0.1
+      mobSpawnRateMulti: -0.15
   寒霜套装:
     lore:
     - ''
@@ -885,7 +903,7 @@ sets:
     - §a造成近战伤害时发射出数个熔岩火球
     attributes:
       useSpeedMeleeMulti: 0.15
-      mobSpawnRateMulti: 0.1
+      mobSpawnRateMulti: 0.2
   渊泉远程套装:
     lore:
     - ''
@@ -918,7 +936,7 @@ sets:
     - §a套装效果：
     - §a减少25% 弹药消耗
     - §a增加5% 飞行时间
-    - §a你可以按下套装增益键[V]进入五秒钟的瘟疫狂暴模式
+    - §a你可以按下套装增益键[默认为V]进入五秒钟的瘟疫狂暴模式
     attributes:
       damageSummonMulti: 0.4
       minionLimit: 3
@@ -970,4 +988,47 @@ sets:
       damageRangedMulti: 0.3
       critRanged: 15
       mobLimit: -2
-      mobSpawnRateMulti: -0.2
+      mobSpawnRateMulti: -0.35
+  龙蒿近战套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a近战攻速提升15%
+    - §a增加刷怪量和刷怪率
+    - §a受到伤害时有25%的几率获得4秒的生命涌流增益，增加6点生命恢复。
+    - §a你可以按下套装增益键[默认为V]来被生命能量包裹，获得龙蒿披风增益10秒。
+    - §a这个效果结束之后有30秒的冷却时间。
+    attributes:
+      useSpeedMeleeMulti: 0.15
+      mobLimit: 2
+      mobSpawnRateMulti: 0.3
+  龙蒿远程套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a减少刷怪量和刷怪率
+    - §a远程弹幕在击中敌人后分裂为2个追踪生命能量，分别造成45%的魔法伤害。
+    - §a这个效果有1秒的冷却。
+    attributes:
+      mobLimit: -2
+      mobSpawnRateMulti: -0.5
+  龙蒿魔法套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a减少刷怪量和刷怪率
+    - §a每8次挥舞魔法武器就会发射出数个叶片，造成伤害的50%
+    attributes:
+      mobLimit: -2
+      mobSpawnRateMulti: -0.5
+  龙蒿召唤套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a增加50%召唤伤害和4个仆从栏
+    - §a减少刷怪量和刷怪率
+    attributes:
+      damageSummonMulti: 0.5
+      minionLimit: 4
+      mobLimit: -2
+      mobSpawnRateMulti: -0.5

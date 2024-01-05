@@ -131,11 +131,14 @@ public class TerrariaItem extends EntityItem {
     public void merge() {
         if (pickupDelay > 0) return;
         if (!canBeMerged) return;
-        // only merge twice per second, to reduce lag
-        if (ticksLived % 10 == 0)
-            for (TerrariaItem toMerge : this.world.a(TerrariaItem.class, this.getBoundingBox().grow(3, 2, 3))) {
-                this.mergeWith(toMerge);
-            }
+        // do not bother handle dropped items that are fully stacked
+        if (bukkitItemStack.getAmount() < bukkitItemStack.getMaxStackSize()) {
+            // only merge twice per second, to reduce lag
+            if (ticksLived % 10 == 0)
+                for (TerrariaItem toMerge : this.world.a(TerrariaItem.class, this.getBoundingBox().grow(3, 2, 3))) {
+                    this.mergeWith(toMerge);
+                }
+        }
     }
     @Override
     public Entity b(int i) {
