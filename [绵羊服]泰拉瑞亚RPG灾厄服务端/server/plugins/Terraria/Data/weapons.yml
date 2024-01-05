@@ -2659,14 +2659,17 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 海蓝射线
   autoSwing: true
+  useSound: item.genericSpray
 太空枪:
   type: MAGIC_PROJECTILE
   projectileName: 绿激光
   autoSwing: true
+  useSound: item.genericLaser
 水矢:
   type: MAGIC_PROJECTILE
   projectileName: 水矢
   autoSwing: true
+  useSound: item.genericSpray
 激光步枪:
   type: MAGIC_PROJECTILE
   projectileName: 激光
@@ -2676,12 +2679,14 @@ Dodu的手炮:
   projectileName: 水晶碎块
   autoSwing: true
   offSet: 16
+  useSound: item.genericStar
 裂天剑:
   type: MAGIC_PROJECTILE
   projectileName: 裂天剑
   fireRounds: 3
   fireRoundsDelay: 2
   autoSwing: true
+  useSound: item.genericStar
 爆裂藤蔓:
   type: MAGIC_SPECIAL
   autoSwing: true
@@ -2695,6 +2700,7 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 狱火爆破弹
   autoSwing: true
+  useSound: item.genericMeteorStaff
 幽灵法杖:
   type: MAGIC_PROJECTILE
   projectileName: 亡魂
@@ -2702,6 +2708,7 @@ Dodu的手炮:
 暗影束法杖:
   type: MAGIC_SPECIAL
   autoSwing: true
+  useSound: item.genericLaser
 磁球:
   type: MAGIC_PROJECTILE
   projectileName: 磁球
@@ -2709,6 +2716,7 @@ Dodu的手炮:
 高温射线枪:
   type: MAGIC_SPECIAL
   autoSwing: true
+  useSound: item.genericLaser
 剃刀松:
   type: MAGIC_PROJECTILE
   projectileName: 松针
@@ -2738,12 +2746,14 @@ Dodu的手炮:
   shots: 4
   autoSwing: true
   offSet: 6
+  useSound: item.genericBubble
 利刃台风:
   type: MAGIC_PROJECTILE
   projectileName: 台风
   fireRounds: 2
   fireRoundsDelay: 5
   autoSwing: true
+  useSound: item.genericTyphoon
 星云烈焰:
   type: MAGIC_PROJECTILE
   projectileName: 星云烈焰
@@ -2752,6 +2762,7 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 星云奥秘
   autoSwing: true
+  useSound: item.genericStar
 月之耀斑:
   type: MAGIC_PROJECTILE
   projectileName: 月之耀斑
@@ -2778,12 +2789,14 @@ Dodu的手炮:
   fireRounds: 3
   fireRoundsDelay: 2
   autoSwing: true
+  useSound: item.genericSpray
 海水杖:
   type: MAGIC_PROJECTILE
   projectileName: 海耀弹
   shots: 2
   offSet: 12
   autoSwing: true
+  useSound: item.genericSpray
 天空之羽:
   type: MAGIC_PROJECTILE
   projectileName: 天蓝羽毛
@@ -2810,6 +2823,7 @@ Dodu的手炮:
 永夜射线:
   type: MAGIC_SPECIAL
   autoSwing: true
+  useSound: item.genericLaser
 冰晶风暴:
   type: MAGIC_PROJECTILE
   projectileName: 冰晶雪花
@@ -2835,19 +2849,23 @@ Dodu的手炮:
   fireRounds: 15
   fireRoundsDelay: 1
   autoSwing: true
+  useSound: item.genericStar
 水灌:
   type: MAGIC_PROJECTILE
   projectileName: 海蓝射线
   fireRounds: 3
   fireRoundsDelay: 2
   autoSwing: true
+  useSound: item.genericSpray
 硫火玫瑰:
   type: MAGIC_PROJECTILE
   projectileName: 硫火射线
   autoSwing: true
+  useSound: item.genericLaser
 女武神权杖:
   type: MAGIC_SPECIAL
   autoSwing: true
+  useSound: item.genericLaser
 深渊女神之复仇:
   type: MAGIC_PROJECTILE
   projectileName: 深渊女神标枪
@@ -2857,6 +2875,7 @@ Dodu的手炮:
 泰拉射线:
   type: MAGIC_SPECIAL
   autoSwing: true
+  useSound: item.genericLaser
 亚特兰蒂斯:
   type: MAGIC_SPECIAL
   autoSwing: true
@@ -2869,12 +2888,14 @@ Dodu的手炮:
   projectileName: 熔岩陨星
   shots: 3
   autoSwing: true
+  useSound: item.genericMeteorStaff
 维苏威阿斯_RIGHT_CLICK:
   type: MAGIC_PROJECTILE
   projectileName: 熔岩陨星
   shots: 3
   offSet: 30
   autoSwing: true
+  useSound: item.genericMeteorStaff
 瘟疫法杖:
   type: MAGIC_PROJECTILE
   projectileName: 瘟疫毒牙
@@ -2894,20 +2915,24 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 幻星水晶
   autoSwing: true
+  useSound: item.genericStar
 行星法杖:
   type: MAGIC_PROJECTILE
   projectileName: 行星法杖小行星
   shots: 3
   autoSwing: true
+  useSound: item.genericMeteorStaff
 元素射线:
   type: MAGIC_SPECIAL
   autoSwing: true
+  useSound: item.genericLaser
 终结裂空戟:
   type: MAGIC_PROJECTILE
   projectileName: 终结裂空戟
   fireRounds: 5
   fireRoundsDelay: 1
   autoSwing: true
+  useSound: item.genericStar
 神圣天罚:
   type: MAGIC_PROJECTILE
   projectileName: 神圣天罚
@@ -2957,15 +2982,18 @@ Dodu的手炮:
 影流法杖:
   type: MAGIC_SPECIAL
   autoSwing: true
+  useSound: item.genericLaser
 金星三叉戟:
   type: MAGIC_PROJECTILE
   projectileName: 金星狱炎三叉戟
   autoSwing: true
+  useSound: item.genericMeteorStaff
 星龙破空杖:
   type: MAGIC_PROJECTILE
   projectileName: 破空暗夜飞龙
   shots: 3
   autoSwing: true
+  useSound: item.genericStar
 酸蚀毒蝰:
   type: MAGIC_PROJECTILE
   projectileName: 毒蝰喷吐物
@@ -2981,14 +3009,17 @@ Dodu的手炮:
   fireRounds: 2
   fireRoundsDelay: 3
   autoSwing: true
+  useSound: item.genericLaser
 灵魂穿透者:
   type: MAGIC_PROJECTILE
   projectileName: 灵魂穿透者主光束
   autoSwing: true
+  useSound: item.genericLaser
 星云法师圣杖:
   type: MAGIC_PROJECTILE
   projectileName: 圣杖星云
   autoSwing: true
+  useSound: item.genericTyphoon
 星火凤凰雨:
   type: MAGIC_PROJECTILE
   projectileName: 星火凤凰雨
@@ -2996,10 +3027,12 @@ Dodu的手炮:
   fireRounds: 10
   fireRoundsDelay: 1
   autoSwing: true
+  useSound: item.genericMeteorStaff
 氦闪:
   type: MAGIC_PROJECTILE
   projectileName: 氦闪挥发性星核
   autoSwing: true
+  useSound: item.genericMeteorStaff
 极点光伏:
   type: MAGIC_PROJECTILE
   projectileName: 极点光伏磁球
@@ -3014,6 +3047,7 @@ Dodu的手炮:
   type: MAGIC_SPECIAL
   fireRounds: 8
   autoSwing: true
+  useSound: item.genericLaser
 狞桀:
   type: MAGIC_PROJECTILE
   projectileName: 狞桀
@@ -3022,14 +3056,17 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 绝学光束
   autoSwing: true
+  useSound: item.genericStar
 麦格纳炮:
   type: MAGIC_PROJECTILE
   projectileName: 麦格纳冲击波
   autoSwing: true
+  useSound: entity.generic.explode
 脉冲手枪:
   type: MAGIC_PROJECTILE
   projectileName: 粉色脉冲
   autoSwing: true
+  useSound: item.genericLaser
 恐寒症:
   type: MAGIC_PROJECTILE
   projectileName: 冰锥
@@ -3040,10 +3077,12 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 离子光波
   autoSwing: true
+  useSound: item.genericStar
 高斯手枪:
   type: MAGIC_PROJECTILE
   projectileName: 绿色螺旋弹
   autoSwing: true
+  useSound: entity.generic.explode
 激光加特林:
   type: MAGIC_PROJECTILE
   projectileName: 激光
@@ -3052,24 +3091,29 @@ Dodu的手炮:
 拉扎尔射线:
   type: MAGIC_SPECIAL
   autoSwing: true
+  useSound: item.genericLaser
 泡沫冲锋枪:
   type: MAGIC_PROJECTILE
   projectileName: 紫色泡沫
   shots: 4
   offSet: 25
   autoSwing: true
+  useSound: item.genericBubble
 凋亡射线:
   type: MAGIC_PROJECTILE
   projectileName: 离子光波
   shots: 2
   autoSwing: true
+  useSound: item.genericStar
 净化激光炮:
   type: MAGIC_SPECIAL
   autoSwing: true
+  useSound: item.genericLaser
 等离子液铸器:
   type: MAGIC_PROJECTILE
   projectileName: 等离子液铸器脉冲
   autoSwing: true
+  useSound: item.largeWeaponFire
 等离子液铸器_RIGHT_CLICK:
   type: MAGIC_PROJECTILE
   projectileName: 等离子液铸器脉冲
@@ -3079,34 +3123,41 @@ Dodu的手炮:
     useTime: 5
     manaUse: 8
   autoSwing: true
+  useSound: item.largeWeaponFire
 等离子步枪:
   type: MAGIC_PROJECTILE
   projectileName: 等离子步枪弹
   autoSwing: true
+  useSound: item.genericLaser
 雷暴雨:
   type: MAGIC_PROJECTILE
   projectileName: 雷暴雨
   shots: 5
   offSet: 20
   autoSwing: true
+  useSound: item.genericLaser
 以太之低语:
   type: MAGIC_PROJECTILE
   projectileName: 以太之低语
   autoSwing: true
+  useSound: item.genericLaser
 幻妖龙吟:
   type: MAGIC_PROJECTILE
   projectileName: 哀怨之声
   fireRounds: 3
   fireRoundsDelay: 2
   autoSwing: true
+  useSound: item.genericTyphoon
 特斯拉巨炮:
   type: MAGIC_PROJECTILE
   projectileName: 特斯拉强电束
   autoSwing: true
+  useSound: item.largeWeaponFire
 以太流光炮:
   type: MAGIC_PROJECTILE
   projectileName: 以太流光
   autoSwing: true
+  useSound: item.genericStar
 冰矢:
   type: MAGIC_PROJECTILE
   projectileName: 冰矢
@@ -3156,6 +3207,7 @@ Dodu的手炮:
   projectileName: 暗晶碎片
   offSet: 17.5
   autoSwing: true
+  useSound: item.genericStar
 沸腾之火:
   type: MAGIC_PROJECTILE
   projectileName: 深渊亡魂
@@ -3176,6 +3228,7 @@ Dodu的手炮:
   fireRounds: 5
   fireRoundsDelay: 1
   autoSwing: true
+  useSound: item.genericSpray
 天堂之泪:
   type: MAGIC_PROJECTILE
   projectileName: 天堂之泪
@@ -3203,11 +3256,13 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 彗星
   autoSwing: true
+  useSound: item.genericStar
 原核之怒:
   type: MAGIC_PROJECTILE
   projectileName: 原核台风
   shots: 8
   autoSwing: true
+  useSound: item.genericTyphoon
 先兆元素:
   type: MAGIC_SPECIAL
   autoSwing: true
@@ -3220,6 +3275,7 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 生命光流射线
   autoSwing: true
+  useSound: item.genericSpray
 始源之遗:
   type: MAGIC_PROJECTILE
   projectileName: 始源之遗粉尘
@@ -3233,33 +3289,38 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 圣神追踪光球
   autoSwing: true
+  useSound: item.genericStar
 黑洞边缘:
   type: MAGIC_PROJECTILE
   projectileName: 黑蚀之星
   shots: 8
   autoSwing: true
+  useSound: item.genericTyphoon
 归元漩涡:
   type: MAGIC_PROJECTILE
   projectileName: 小型归元漩涡
-  shots: 3
+  shots: 2
   offSet: 10
-  attributes:
-    damage: 280
-    useTime: 5
   autoSwing: true
+  useSound: item.genericTyphoon
+  attributes:
+    damage: 325
+    useTime: 5
 归元漩涡_RIGHT_CLICK:
   type: MAGIC_PROJECTILE
   projectileName: 小型归元漩涡
-  attributes:
-    useTime: 7
   autoSwing: true
+  useSound: item.genericTyphoon
+  attributes:
+    damage: 932
+    useTime: 7
 怨戾:
   type: MAGIC_SPECIAL
   fireRounds: 8
   fireRoundsDelay: 1
+  autoSwing: true
   attributes:
     useTime: 8
-  autoSwing: true
 异端:
   type: MAGIC_PROJECTILE
   projectileName: 异端火焰
@@ -3269,6 +3330,7 @@ Dodu的手炮:
   projectileName: 舞光之刃
   shots: 4
   autoSwing: true
+  useSound: item.genericStar
 北极熊爪:
   type: MAGIC_PROJECTILE
   projectileName: 冰爪
@@ -3278,6 +3340,7 @@ Dodu的手炮:
   projectileName: 高音谱号
   offSet: 10
   autoSwing: true
+  useSound: item.harp
 鬼之形:
   type: MAGIC_PROJECTILE
   projectileName: 鬼魂能量球

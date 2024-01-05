@@ -8023,7 +8023,7 @@ Dodu的手炮:
   lore:
   - §r发射穿透性冰柱
   attributes:
-    damage: 138
+    damage: 150
     damageType: Magic
     projectileSpeed: 10
     crit: 4
@@ -12305,7 +12305,7 @@ Dodu的手炮:
   item: GOLD_HELMET
   lore:
   - §r[装备]
-  - §r“并不会死亡掉落”
+  - §r“被击杀时不会被薅一地”
   attributes:
     defence: 14
     useSpeedMiningMulti: 0.25
