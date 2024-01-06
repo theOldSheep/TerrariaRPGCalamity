@@ -3812,23 +3812,46 @@ public class ItemUseHelper {
         double useTimeMulti = 1 / useSpeed;
         applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
         // armor set
-        if (PlayerHelper.getArmorSet(ply).equals("渊泉远程套装")) {
-            String coolDownTag = "temp_hydroThermicFireball";
-            if (! ply.getScoreboardTags().contains(coolDownTag)) {
-                // cool down
-                EntityHelper.handleEntityTemporaryScoreboardTag(ply, coolDownTag, 10);
-                // damage setup
-                String projType = "大熔岩火球";
-                double projSpd = 2;
+        switch (PlayerHelper.getArmorSet(ply)) {
+            case "渊泉远程套装": {
+                String coolDownTag = "temp_hydroThermicFireball";
+                if (! ply.getScoreboardTags().contains(coolDownTag)) {
+                    // cool down
+                    EntityHelper.handleEntityTemporaryScoreboardTag(ply, coolDownTag, 10);
+                    // damage setup
+                    String projType = "大熔岩火球";
+                    double projSpd = 2;
 
-                Vector aimDir = getPlayerAimDir(ply, ply.getEyeLocation(), projSpd, projType, false, 0);
-                HashMap<String, Double> fireballAttrMap = (HashMap<String, Double>) attrMap.clone();
-                double fireballDmg = Math.min(125, fireballAttrMap.getOrDefault("damage", 100d) * 0.25);
-                fireballAttrMap.put("damage", fireballDmg);
-                // projectile
-                aimDir.normalize().multiply(projSpd);
-                EntityHelper.spawnProjectile(ply, aimDir,
-                        fireballAttrMap, EntityHelper.getDamageType(ply), projType);
+                    Vector aimDir = getPlayerAimDir(ply, ply.getEyeLocation(), projSpd, projType, false, 0);
+                    HashMap<String, Double> fireballAttrMap = (HashMap<String, Double>) attrMap.clone();
+                    double fireballDmg = Math.min(125, fireballAttrMap.getOrDefault("damage", 100d) * 0.25);
+                    fireballAttrMap.put("damage", fireballDmg);
+                    // projectile
+                    aimDir.normalize().multiply(projSpd);
+                    EntityHelper.spawnProjectile(ply, aimDir,
+                            fireballAttrMap, EntityHelper.getDamageType(ply), projType);
+                }
+                break;
+            }
+            case "弑神者远程套装": {
+                String coolDownTag = "temp_godSlayerRanged";
+                if (! ply.getScoreboardTags().contains(coolDownTag)) {
+                    // cool down
+                    EntityHelper.handleEntityTemporaryScoreboardTag(ply, coolDownTag, 50);
+                    // damage setup
+                    String projType = "弑神榴霰弹";
+                    double projSpd = 3;
+
+                    Vector aimDir = getPlayerAimDir(ply, ply.getEyeLocation(), projSpd, projType, false, 0);
+                    HashMap<String, Double> fireballAttrMap = (HashMap<String, Double>) attrMap.clone();
+                    double fireballDmg = Math.min(1600, fireballAttrMap.getOrDefault("damage", 100d) * 1.25);
+                    fireballAttrMap.put("damage", fireballDmg);
+                    // projectile
+                    aimDir.normalize().multiply(projSpd);
+                    EntityHelper.spawnProjectile(ply, aimDir,
+                            fireballAttrMap, EntityHelper.getDamageType(ply), projType);
+                }
+                break;
             }
         }
         return true;
@@ -4747,6 +4770,26 @@ public class ItemUseHelper {
                         EntityHelper.spawnProjectile(ply, projVel,
                                 fireballAttrMap, EntityHelper.getDamageType(ply), projType);
                     }
+                }
+                break;
+            }
+            case "血炎魔法套装": {
+                String coolDownTag = "temp_bloodFlareMagic";
+                if (! ply.getScoreboardTags().contains(coolDownTag)) {
+                    // cool down
+                    EntityHelper.handleEntityTemporaryScoreboardTag(ply, coolDownTag, 25);
+                    // damage setup
+                    String projType = "血炎魔法射弹";
+                    double projSpd = 2;
+
+                    HashMap<String, Double> fireballAttrMap = (HashMap<String, Double>) attrMap.clone();
+                    double fireballDmg = Math.min( fireballAttrMap.getOrDefault("damage", 100d) * 1.1, 4000 );
+                    fireballAttrMap.put("damage", fireballDmg);
+                    // projectile
+                    Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), projSpd, projType, false, 0);
+                    MathHelper.setVectorLength(projVel, projSpd);
+                    EntityHelper.spawnProjectile(ply, projVel,
+                            fireballAttrMap, EntityHelper.getDamageType(ply), projType);
                 }
                 break;
             }

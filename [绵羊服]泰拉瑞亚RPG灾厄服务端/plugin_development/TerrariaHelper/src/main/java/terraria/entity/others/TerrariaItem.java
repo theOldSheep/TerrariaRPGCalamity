@@ -22,14 +22,17 @@ public class TerrariaItem extends EntityItem {
             TerrariaHelper.Constants.DATA_FOLDER_DIR + "items.yml");
     // boosters live for 30 seconds, heart for 60 seconds, and generic for 300 seconds (5 minutes)
     static final int
+            // 30 seconds
             BOOSTER_LIVE_TIME = 600,
-            HEART_LIVE_TIME = 1200,
-            GENERIC_LIVE_TIME = 3000;
-    static final double maxPickupRadius = 27.5;
+            // 15 seconds
+            HEART_LIVE_TIME = 300,
+            // 1.5 minutes (90 seconds)
+            GENERIC_LIVE_TIME = 1800;
     public int liveTime, baseRarity, lastTick, age;
     public String itemType;
     public org.bukkit.inventory.ItemStack bukkitItemStack;
-    public boolean canBeMerged;
+    public boolean canBeMerged = true, hasNoGravity = false;
+    boolean lastTickNoGravity = false;
     EntityPlayer pickedUpBy = null;
     public TerrariaItem (World world) {
         super(world);
@@ -55,13 +58,12 @@ public class TerrariaItem extends EntityItem {
             case "银币":
             case "金币":
             case "铂金币":
-                if (accessories.contains("金戒指") || accessories.contains("钱币戒指") || accessories.contains("贪婪戒指"))
-                    reach += 21.875;
+                reach = 8;
                 break;
             case "生命强化焰":
             case "伤害强化焰":
             case "魔力强化焰":
-                reach += 17.5;
+                reach = 22.5;
                 break;
             case "心":
                 if (potionEffects.containsKey("拾心"))
@@ -76,6 +78,13 @@ public class TerrariaItem extends EntityItem {
                         accessories.contains("灾厄符章"))
                     reach += 18.75;
                 break;
+        }
+        if (potionEffects.containsKey("无尽空虚")) {
+            reach += 12.5;
+            reach *= 2;
+        }
+        else if (potionEffects.containsKey("磁铁")) {
+            reach += 9;
         }
         return reach;
     }
@@ -110,10 +119,10 @@ public class TerrariaItem extends EntityItem {
                 return false;
             } else if (itemstack1.getItem().k() && itemstack1.getData() != itemstack.getData()) {
                 return false;
-            } else if (itemstack1.getCount() < itemstack.getCount()) {
-                return itemToMerge.mergeWith(this);
             } else if (itemstack1.getCount() + itemstack.getCount() > itemstack1.getMaxStackSize()) {
                 return false;
+            } else if (itemstack1.getCount() < itemstack.getCount()) {
+                return itemToMerge.mergeWith(this);
             } else if (CraftEventFactory.callItemMergeEvent(this, itemToMerge).isCancelled()) {
                 return false;
             } else {
@@ -164,36 +173,53 @@ public class TerrariaItem extends EntityItem {
         }
         this.lastTick = MinecraftServer.currentTick;
 
+        boolean currTickNoGravity =hasNoGravity;
         // find the player that could pick it up
         double greatestPickupAbility = 0;
         // if the item can be picked up, find the player that will pick it up.
         if (this.pickupDelay <= 0 && ticksLived % 5 == 0) {
-            pickedUpBy = null;
-            for (Player ply : Bukkit.getOnlinePlayers()) {
-                // players that are not properly playing (waiting for revive etc.) should not be considered
-                if (! PlayerHelper.isProperlyPlaying(ply))
-                    continue;
-                // players in a different world would not be considered
-                if (ply.getWorld() != bukkitEntity.getWorld())
-                    continue;
-                EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
-                // calculate distance
-                double distX = plyNMS.locX - this.locX;
-                double distY = plyNMS.locY - this.locY;
-                double distZ = plyNMS.locZ - this.locZ;
+            // validate if the pick-up target is valid
+            if (pickedUpBy != null) {
+                // calculate distance squared
+                double distX = pickedUpBy.locX - this.locX;
+                double distY = pickedUpBy.locY - this.locY;
+                double distZ = pickedUpBy.locZ - this.locZ;
                 double distSqr = distX * distX + distY * distY + distZ * distZ;
-                // get pick up distance
-                double pickUpDistSqr = getPickUpDistance(plyNMS);
+                // get pick up distance squared
+                double pickUpDistSqr = getPickUpDistance(pickedUpBy);
                 pickUpDistSqr *= pickUpDistSqr;
-                // players too far away should not be considered
-                if (distSqr > pickUpDistSqr) continue;
+                // players too far away OR has a full inventory should stop picking up this item
+                if (! (distSqr <= pickUpDistSqr && PlayerHelper.canHoldAny(pickedUpBy.getBukkitEntity(), bukkitItemStack) ) )
+                    pickedUpBy = null;
+            }
+            // update if not currently picked up
+            if (pickedUpBy == null) {
+                for (Player ply : Bukkit.getOnlinePlayers()) {
+                    // players that are not properly playing (waiting for revive etc.) should not be considered
+                    if (!PlayerHelper.isProperlyPlaying(ply))
+                        continue;
+                    // players in a different world would not be considered
+                    if (ply.getWorld() != bukkitEntity.getWorld())
+                        continue;
+                    EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+                    // calculate distance
+                    double distX = plyNMS.locX - this.locX;
+                    double distY = plyNMS.locY - this.locY;
+                    double distZ = plyNMS.locZ - this.locZ;
+                    double distSqr = distX * distX + distY * distY + distZ * distZ;
+                    // get pick up distance
+                    double pickUpDistSqr = getPickUpDistance(plyNMS);
+                    pickUpDistSqr *= pickUpDistSqr;
+                    // players too far away should not be considered
+                    if (distSqr > pickUpDistSqr) continue;
 
-                double pickupAbility = 1 - (distSqr / pickUpDistSqr);
-                if (greatestPickupAbility < pickupAbility) {
-                    // player can not hold new item should not be considered
-                    if (!PlayerHelper.canHoldAny(plyNMS.getBukkitEntity(), bukkitItemStack)) continue;
-                    greatestPickupAbility = distSqr;
-                    pickedUpBy = plyNMS;
+                    double pickupAbility = 1 - (distSqr / pickUpDistSqr);
+                    if (greatestPickupAbility < pickupAbility) {
+                        // player can not hold new item should not be considered
+                        if (!PlayerHelper.canHoldAny(plyNMS.getBukkitEntity(), bukkitItemStack)) continue;
+                        greatestPickupAbility = distSqr;
+                        pickedUpBy = plyNMS;
+                    }
                 }
             }
         }
@@ -203,6 +229,9 @@ public class TerrariaItem extends EntityItem {
         double d2 = this.motZ;
         Vector currVelocity = new Vector(this.motX, this.motY, this.motZ);
         if (pickedUpBy != null) {
+            // when being picked up, item should be unaffected by gravity
+            currTickNoGravity = true;
+
             double speed = currVelocity.length() + 0.1;
             this.noclip = true;
             Vector acceleration = new Vector(pickedUpBy.locX - this.locX, pickedUpBy.locY - this.locY, pickedUpBy.locZ - this.locZ);
@@ -219,17 +248,23 @@ public class TerrariaItem extends EntityItem {
         } else {
             // no player is picking it up
             // if it has gravity: fall to the ground
-            if (!this.isNoGravity())
+            if (! hasNoGravity)
                 currVelocity.add(new Vector(0, -0.03999999910593033, 0));
             // below: do not use noclip from vanilla, creating glitch when dropped item trapped in blocks
 //            this.noclip = this.i(this.locX, (this.getBoundingBox().b + this.getBoundingBox().e) / 2.0, this.locZ);
             this.noclip = false;
         }
-        if (currVelocity.lengthSquared() > 1) currVelocity.normalize();
+        // normalize speed
+        if (currVelocity.lengthSquared() > 1.5)
+            terraria.util.MathHelper.setVectorLength(currVelocity, 1.5);
         this.motX = currVelocity.getX();
         this.motY = currVelocity.getY();
         this.motZ = currVelocity.getZ();
+        // handle gravity
+        if (currTickNoGravity != lastTickNoGravity)
+            setNoGravity(currTickNoGravity);
 
+        // movement tick
         this.move(EnumMoveType.SELF, this.motX, this.motY, this.motZ);
         this.merge();
 
@@ -241,7 +276,7 @@ public class TerrariaItem extends EntityItem {
             if (this.onGround) {
                 f *= this.world.getType(new BlockPosition(MathHelper.floor(this.locX), MathHelper.floor(this.getBoundingBox().b) - 1, MathHelper.floor(this.locZ))).getBlock().frictionFactor;
             }
-            else if (this.isNoGravity()) f = 0.75F;
+            else if (hasNoGravity) f = 0.75F;
         }
         this.motX *= f;
         this.motY *= f;
@@ -317,6 +352,7 @@ public class TerrariaItem extends EntityItem {
             case "星云碎片":
             case "星尘碎片":
             case "冥思溶剂":
+                hasNoGravity = true;
                 this.setNoGravity(true);
         }
         // setup live time

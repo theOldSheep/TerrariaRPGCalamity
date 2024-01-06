@@ -11,12 +11,6 @@ buffConflicts:
   3:
     怒气: 1
     圣神之怒: 2
-  # 拾心，再生，生命力的优先级为0，此时不判定为冲突因此不会互相覆盖，但心律和谐buff会覆盖掉上述三种
-  4:
-    拾心: 0
-    再生: 0
-    生命力: 0
-    心律和谐: 1
   5:
     燃烧: 0
     黑曜石皮: 1
@@ -30,22 +24,35 @@ buffConflicts:
   8:
     灵魂力量: 0
     神圣之力: 1
-  # 冷却类buff
+  # 物品拾取相关的两种buff
   9:
+    磁铁: 0
+    无尽空虚: 1
+  # 冷却类buff
+  19:
     血肉图腾: 0
     血肉图腾冷却: 1
-  10:
+  20:
     钨钢屏障: 0
     保护矩阵充能: 1
-  11:
+  21:
     硫火狂怒: 0
     硫火狂怒冷却: 1
-  12:
+  22:
     瘟疫狂暴: 0
     瘟疫狂暴冷却: 1
-  13:
+  23:
     龙蒿披风: 0
     龙蒿披风冷却: 1
+  24:
+    鲜血狂怒: 0
+    鲜血狂怒冷却: 1
+  25:
+    深渊狂乱: 0
+    深渊狂乱冷却: 1
+  26:
+    弑神者冲刺: 0
+    弑神者冲刺冷却: 1
   100:
     狮心圣裁能量外壳: 0
     狮心圣裁能量外壳冷却: 1
@@ -314,14 +321,14 @@ effects:
     isBuff: true
     attributes:
       mobLimit: -1
-      mobSpawnRateMulti: -0.75
+      mobSpawnRateMulti: -0.5
     tooltip: 刷怪率和上限减少
   禅定:
     isBuff: true
     attributes:
       mobLimit: -2
-      mobSpawnRate: -0.1
-    tooltip: 刷怪率和上限减少
+      mobSpawnRate: -0.9
+    tooltip: 刷怪率和上限大幅度减少
   耐力:
     isBuff: true
     attributes:
@@ -417,6 +424,15 @@ effects:
       speedMulti: 0.1
       regen: 6
     tooltip: 所有属性大幅提升
+  拾心:
+    isBuff: true
+    tooltip: 提升拾取心的范围
+  磁铁:
+    isBuff: true
+    tooltip: “看，吸铁石！”
+  无尽空虚:
+    isBuff: true
+    tooltip: 物品拾取范围获得极大加强
   圣骑士护盾:
     isBuff: true
     tooltip: 代替附近的队友承受部分伤害
@@ -558,6 +574,42 @@ effects:
   龙蒿披风冷却:
     isBuff: false
     tooltip: 你需要稍等片刻才能再次使用龙蒿披风
+  鲜血狂怒:
+    isBuff: true
+    attributes:
+        damageMeleeMulti: 0.25
+        critMelee: 25
+        damageContactTakenMulti: -0.5
+    buffOnTimeout: 鲜血狂怒冷却
+    buffOnTimeoutDuration: 400
+    tooltip: 怪物接触伤害降低，近战属性大幅提高
+  鲜血狂怒冷却:
+    isBuff: false
+    tooltip: 你需要稍等片刻才能再次使用鲜血狂怒
+  幽火游魂冷却:
+    isBuff: false
+    tooltip: 你需要稍等片刻才能再次使用幽火游魂
+  深渊狂乱:
+    isBuff: true
+    attributes:
+        damageMulti: 0.1
+        crit: 10
+        lifeSteal: 0.004
+    buffOnTimeout: 深渊狂乱冷却
+    buffOnTimeoutDuration: 500
+    tooltip: 增加伤害，暴击率和生命汲取
+  深渊狂乱冷却:
+    isBuff: false
+    tooltip: 你需要稍等片刻才能再次使用深渊狂乱
+  弑神者冲刺:
+    isBuff: true
+    attributes:
+        damageTakenMulti: -0.85
+        knockbackResistance: 1
+    tooltip: 下次收到攻击时减少85%收到伤害并无视击退
+  弑神者冲刺冷却:
+    isBuff: false
+    tooltip: 你需要稍等片刻才能再次使用弑神者冲刺
   暴君之怒:
     isBuff: true
     attributes:

@@ -5282,3 +5282,27 @@ TNT:
     autoTraceAbility: 5
     noAutoTraceTicks: 5
     trailColor: 91|255|7
+血炎灵魂:
+    gravity: 0
+    blockHitAction: bounce
+    projectileSize: 2
+    liveTime: 100
+    bounce: 5
+    penetration: 1
+    enemyInvincibilityFrame: 1
+    autoTrace: true
+    autoTraceRadius: 24
+    autoTraceAbility: 5
+血炎魔法射弹:
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 80
+    penetration: 999999
+    trailColor: 255|255|255
+弑神榴霰弹:
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 40
+    isGrenade: true
+    blastRadius: 1
+    trailColor: 209|79|255

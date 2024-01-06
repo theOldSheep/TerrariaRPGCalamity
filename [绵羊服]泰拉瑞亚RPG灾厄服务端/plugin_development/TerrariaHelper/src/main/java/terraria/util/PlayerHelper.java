@@ -78,6 +78,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("knockbackResistance", 0d);
         defaultPlayerAttrMap.put("knockbackMeleeMulti", 1d);
         defaultPlayerAttrMap.put("knockbackMulti", 1d);
+        defaultPlayerAttrMap.put("lifeSteal", 0.0d);
         defaultPlayerAttrMap.put("manaRegen", 0d);
         defaultPlayerAttrMap.put("manaRegenMulti", 1d);
         defaultPlayerAttrMap.put("manaUse", 0d);
@@ -89,7 +90,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("minionDamagePenaltyMulti", 0.5d);
         defaultPlayerAttrMap.put("minionLimit", 1d);
         defaultPlayerAttrMap.put("mobLimit", 15d);
-        defaultPlayerAttrMap.put("mobSpawnRate", 0.02d);
+        defaultPlayerAttrMap.put("mobSpawnRate", 0.1d);
         defaultPlayerAttrMap.put("mobSpawnRateMulti", 1d);
         defaultPlayerAttrMap.put("penetration", 0d);
         defaultPlayerAttrMap.put("powerPickaxe", 0d);
@@ -1014,40 +1015,45 @@ public class PlayerHelper {
     }
     public static void threadMonsterCritterSpawn() {
         // every 5 ticks
+        final int delay = 5;
+        final double spawnRateAdjustFactor = delay / 20d;
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 if (!isProperlyPlaying(ply)) continue;
-                // critter spawn
-                if (Math.random() < 0.75)
+                // spawn rate multipliers apply to critters as well
+                HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+                double spawnRateMulti = attrMap.getOrDefault("mobSpawnRateMulti", 1d);
+                // critter spawn, expected 1 critter per second (may change according to spawn rate).
+                if (Math.random() < spawnRateMulti * spawnRateAdjustFactor)
                     CritterHelper.naturalCritterSpawn(ply);
                 // monster spawn rate
-                HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
-                double spawnRate = attrMap.getOrDefault("mobSpawnRate", 0.1) *
-                        attrMap.getOrDefault("mobSpawnRateMulti", 1d);
+                double mobSpawnRate = attrMap.getOrDefault("mobSpawnRate", 0.1);
                 WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(ply.getLocation());
                 boolean isSurfaceOrSpace =
                         heightLayer == WorldHelper.HeightLayer.SURFACE ||
                                 heightLayer == WorldHelper.HeightLayer.SPACE;
                 if (isSurfaceOrSpace) {
-                    // monster spawn rate when an event is absent is lower
+                    // monster spawn rate when an event is present is doubled
                     if (EventAndTime.currentEvent != null) {
-                        spawnRate = 0.35;
+                        mobSpawnRate *= 2;
                     }
                     // monster spawn rate when near a celestial pillar
                     for (CelestialPillar pillar : EventAndTime.pillars.values()) {
                         if (pillar.getBukkitEntity().getWorld() != ply.getWorld())
                             continue;
                         if (pillar.getBukkitEntity().getLocation().distanceSquared(ply.getLocation()) < CelestialPillar.EFFECTED_RADIUS_SQR) {
-                            spawnRate = 0.6;
+                            mobSpawnRate = 1;
+                            break;
                         }
                     }
                 }
-                // spawn monster
-                for (int i = 0; i < MathHelper.randomRound(spawnRate); i ++) {
+                // spawn monster. Note that mobSpawnRate above is expected monster amount per second
+                mobSpawnRate *= spawnRateAdjustFactor;
+                for (int i = 0; i < MathHelper.randomRound(mobSpawnRate); i ++) {
                     MonsterHelper.naturalMobSpawning(ply);
                 }
             }
-        }, 0, 5);
+        }, 0, delay);
     }
     public static void threadMovement() {
         // every 1 tick
@@ -1704,6 +1710,22 @@ public class PlayerHelper {
                     }
                 }
                 setArmorSet(ply, armorSet);
+                // special armor sets
+                switch (armorSet) {
+                    case "血炎召唤套装": {
+                        double plyHealthRatio = ply.getHealth() / ply.getMaxHealth();
+                        if (plyHealthRatio > 0.9)
+                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                                    "damageSummonMulti", "0.15", true);
+                        else if (plyHealthRatio <= 0.5) {
+                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                                    "defence", "40", true);
+                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                                    "regen", "4", true);
+                        }
+                        break;
+                    }
+                }
             }
             // accessories
             {
@@ -2011,6 +2033,22 @@ public class PlayerHelper {
             }
             case "龙蒿近战套装": {
                 EntityHelper.applyEffect(ply, "龙蒿披风", 200);
+                break;
+            }
+            case "血炎远程套装": {
+                if (! EntityHelper.hasEffect(ply, "幽火游魂冷却")) {
+                    EntityHelper.applyEffect(ply, "幽火游魂冷却", 600);
+                    // projectiles
+                    HashMap<String, Double> projAttrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(ply).clone();
+                    projAttrMap.put("damage", 600d);
+                    for (int i = 0; i < 12; i ++) {
+                        EntityHelper.spawnProjectile(ply, MathHelper.randomVector().multiply(2.5), projAttrMap, "血炎灵魂");
+                    }
+                }
+                break;
+            }
+            case "蓝色欧米茄套装": {
+                EntityHelper.applyEffect(ply, "深渊狂乱", 100);
                 break;
             }
         }
@@ -2355,6 +2393,14 @@ public class PlayerHelper {
             ply.addScoreboardTag("temp_dashCD");
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                     () -> ply.removeScoreboardTag("temp_dashCD"), dashCD);
+            // god slayer armor bonus
+            switch (armorSet) {
+                case "弑神者近战套装":
+                case "弑神者远程套装": {
+                    EntityHelper.applyEffect(ply, "弑神者冲刺", 20);
+                    break;
+                }
+            }
         }
     }
     public static void initAresExoskeletonConfig(Player ply, boolean force) {
