@@ -1552,6 +1552,126 @@ ANVIL:
     - 死灵护胫
     - 瘟疫细胞罐:21
     - 纳米机器人:17
+  '179_27':
+    requireLevel: 3
+    resultItem: 弑神者头盔
+    requireItem:
+    - 宇宙锭:7
+    - 化神魂精:2
+  '179_28':
+    requireLevel: 3
+    resultItem: 弑神者头套
+    requireItem:
+    - 宇宙锭:7
+    - 化神魂精:2
+  '179_29':
+    requireLevel: 3
+    resultItem: 弑神者胸甲
+    requireItem:
+    - 宇宙锭:15
+    - 化神魂精:3
+  '179_30':
+    requireLevel: 3
+    resultItem: 弑神者腿甲
+    requireItem:
+    - 宇宙锭:10
+    - 化神魂精:2
+  '179_31':
+    requireLevel: 3
+    resultItem: 始源林海兜帽
+    requireItem:
+    - 化神魂精:2
+    - 闪耀金羽:5
+    - 龙蒿锭:6
+    - 金锭:2
+  '179_32':
+    requireLevel: 3
+    resultItem: 始源林海头盔
+    requireItem:
+    - 化神魂精:2
+    - 闪耀金羽:5
+    - 龙蒿锭:6
+    - 金锭:2
+  '179_33':
+    requireLevel: 3
+    resultItem: 始源林海盔甲
+    requireItem:
+    - 化神魂精:3
+    - 闪耀金羽:10
+    - 龙蒿锭:12
+    - 金锭:4
+  '179_34':
+    requireLevel: 3
+    resultItem: 始源林海护胫
+    requireItem:
+    - 化神魂精:2
+    - 闪耀金羽:7
+    - 龙蒿锭:9
+    - 金锭:3
+  '179_35':
+    requireLevel: 3
+    resultItem: 金源耀日盔
+    requireItem:
+    - 龙蒿战盔
+    - 血碾溃阵盔
+    - 弑神者头盔
+    - 圣金源锭:12
+  '179_36':
+    requireLevel: 3
+    resultItem: 金兜铁面盔
+    requireItem:
+    - 龙蒿兜帽
+    - 血弑曲角盔
+    - 弑神者头套
+    - 圣金源锭:12
+  '179_37':
+    requireLevel: 3
+    resultItem: 金虚万象盔
+    requireItem:
+    - 龙蒿面具
+    - 血魇九头盔
+    - 始源林海兜帽
+    - 圣金源锭:12
+  '179_38':
+    requireLevel: 3
+    resultItem: 金宇星界盔
+    requireItem:
+    - 龙蒿角盔
+    - 血戮狂龙盔
+    - 始源林海头盔
+    - 圣金源锭:12
+  '179_39':
+    requireLevel: 3
+    resultItem: 古圣金源盔甲
+    requireItem:
+    - 龙蒿胸甲
+    - 血炎铠甲
+    - 始源林海盔甲
+    - 圣金源锭:18
+  '179_40':
+    requireLevel: 3
+    resultItem: 古圣金源盔甲
+    requireItem:
+    - 龙蒿胸甲
+    - 血炎铠甲
+    - 弑神者胸甲
+    - 圣金源锭:18
+  '179_41':
+    requireLevel: 3
+    resultItem: 古圣金源腿甲
+    requireItem:
+    - 龙蒿护胫
+    - 血炎护胫
+    - 弑神者腿甲
+    - 圣金源锭:15
+  '179_42':
+    requireLevel: 3
+    resultItem: 古圣金源腿甲
+    requireItem:
+    - 龙蒿护胫
+    - 血炎护胫
+    - 始源林海护胫
+    - 圣金源锭:15
   '180':
     requireLevel: 1
     resultItem: 翡翠斧
@@ -4764,6 +4884,123 @@ TINKER_WORKBENCH:
     requireItem:
     - 炫星锭:10
     - 陨星锭:8
+  '60_1':
+    requireLevel: 1
+    resultItem: 龙蒿战盔
+    requireItem:
+    - 龙蒿锭:7
+    - 神圣晶石:6
+  '60_2':
+    requireLevel: 1
+    resultItem: 龙蒿兜帽
+    requireItem:
+    - 龙蒿锭:7
+    - 神圣晶石:6
+  '60_3':
+    requireLevel: 1
+    resultItem: 龙蒿面具
+    requireItem:
+    - 龙蒿锭:7
+    - 神圣晶石:6
+  '60_4':
+    requireLevel: 1
+    resultItem: 龙蒿角盔
+    requireItem:
+    - 龙蒿锭:7
+    - 神圣晶石:6
+  '60_5':
+    requireLevel: 1
+    resultItem: 龙蒿胸甲
+    requireItem:
+    - 龙蒿锭:15
+    - 神圣晶石:18
+  '60_6':
+    requireLevel: 1
+    resultItem: 龙蒿护胫
+    requireItem:
+    - 龙蒿锭:11
+    - 神圣晶石:12
+  '60_7':
+    requireLevel: 1
+    resultItem: 光棱头盔
+    requireItem:
+    - 装甲外壳:3
+    - 起源之簇:5
+    - 神圣晶石:4
+    - 纳米机器人:64
+  '60_8':
+    requireLevel: 1
+    resultItem: 光棱斗篷
+    requireItem:
+    - 装甲外壳:3
+    - 起源之簇:5
+    - 神圣晶石:8
+    - 纳米机器人:64
+  '60_9':
+    requireLevel: 1
+    resultItem: 光棱护胫
+    requireItem:
+    - 装甲外壳:3
+    - 起源之簇:5
+    - 神圣晶石:6
+    - 纳米机器人:64
+  '60_10':
+    requireLevel: 1
+    resultItem: 血碾溃阵盔
+    requireItem:
+    - 血石核心:11
+    - 毁灭之灵:2
+  '60_11':
+    requireLevel: 1
+    resultItem: 血弑曲角盔
+    requireItem:
+    - 血石核心:11
+    - 毁灭之灵:2
+  '60_12':
+    requireLevel: 1
+    resultItem: 血魇九头盔
+    requireItem:
+    - 血石核心:11
+    - 毁灭之灵:2
+  '60_13':
+    requireLevel: 1
+    resultItem: 血戮狂龙盔
+    requireItem:
+    - 血石核心:11
+    - 毁灭之灵:2
+  '60_14':
+    requireLevel: 1
+    resultItem: 血炎铠甲
+    requireItem:
+    - 血石核心:16
+    - 毁灭之灵:4
+  '60_15':
+    requireLevel: 1
+    resultItem: 血炎护胫
+    requireItem:
+    - 血石核心:13
+    - 毁灭之灵:3
+  '60_16':
+    requireLevel: 1
+    resultItem: 蓝色欧米茄头盔
+    requireItem:
+    - 毁灭之灵
+    - 猎魂鲨牙:8
+    - 深渊细胞:12
+  '60_17':
+    requireLevel: 1
+    resultItem: 蓝色欧米茄胸甲
+    requireItem:
+    - 毁灭之灵:3
+    - 猎魂鲨牙:12
+    - 深渊细胞:18
+  '60_18':
+    requireLevel: 1
+    resultItem: 蓝色欧米茄触手
+    requireItem:
+    - 毁灭之灵:2
+    - 猎魂鲨牙:10
+    - 深渊细胞:15
   '61':
     requireLevel: 1
     resultItem: 炫星锭
@@ -4976,7 +5213,7 @@ TINKER_WORKBENCH:
     - 灾劫核心
     - 化神魂精
     - 星系异石:3
-  '22_1':
+  '23':
     requireLevel: 1
     resultItem: 魔影锭
     requireItem:
@@ -4990,3 +5227,46 @@ TINKER_WORKBENCH:
     - 圣金源锭
     - 星流棱晶
     - 湮灭余烬
+  '24':
+    requireLevel: 1
+    resultItem: 天钻头饰
+    requireItem:
+    - 星流棱晶:10
+    - 星系异石:3
+    - 灾劫核心:2
+  '25':
+    requireLevel: 1
+    resultItem: 天钻胸甲
+    requireItem:
+    - 星流棱晶:16
+    - 星系异石:5
+    - 灾劫核心:2
+  '26':
+    requireLevel: 1
+    resultItem: 天钻战裙
+    requireItem:
+    - 星流棱晶:12
+    - 星系异石:4
+    - 灾劫核心:2
+  '27':
+    requireLevel: 1
+    resultItem: 魔影头盔
+    requireItem:
+    - 魔影锭:12
+    - 晶状体
+    - 湮灭余烬
+  '28':
+    requireLevel: 1
+    resultItem: 魔影装甲
+    requireItem:
+    - 魔影锭:12
+    - 岩浆石
+    - 金锭
+  '29':
+    requireLevel: 1
+    resultItem: 魔影护胫
+    requireItem:
+    - 魔影锭:12
+    - 灵质:3
+    - 秘银锭:7
+    - 灵气:9

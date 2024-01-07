@@ -159,7 +159,8 @@ public class ArrowHitListener implements Listener {
             EntityHelper.DamageType damageType = EntityHelper.getDamageType(projectile);
             Set<String> plyScoreboardTags = shooter.getScoreboardTags();
             switch (armorSet) {
-                case "龙蒿远程套装": {
+                case "龙蒿远程套装":
+                case "金源远程套装": {
                     switch ( damageType ) {
                         case ARROW:
                         case BULLET:

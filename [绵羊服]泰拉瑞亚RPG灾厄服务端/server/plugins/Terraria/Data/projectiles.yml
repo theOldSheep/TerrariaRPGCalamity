@@ -5306,3 +5306,8 @@ TNT:
     isGrenade: true
     blastRadius: 1
     trailColor: 209|79|255
+始源林海爆炸:
+    liveTime: 1
+    minimumDamageTicks: 10
+    isGrenade: true
+    blastRadius: 3.25

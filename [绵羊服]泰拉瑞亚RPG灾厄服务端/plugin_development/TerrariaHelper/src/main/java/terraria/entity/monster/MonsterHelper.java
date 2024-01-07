@@ -3,7 +3,6 @@ package terraria.entity.monster;
 
 import net.minecraft.server.v1_12_R1.*;
 import net.minecraft.server.v1_12_R1.Entity;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -215,7 +214,7 @@ public class MonsterHelper {
                     break;
                 case "damageType":
                     EntityHelper.setDamageType(bukkitMonster,
-                            EntityHelper.damageTypeInternalNameMapping.getOrDefault(
+                            EntityHelper.DAMAGE_TYPE_INTERNAL_NAME_MAPPING.getOrDefault(
                                     attributeConfigSection.getString(attribute), EntityHelper.DamageType.MELEE));
                     break;
                 default:
