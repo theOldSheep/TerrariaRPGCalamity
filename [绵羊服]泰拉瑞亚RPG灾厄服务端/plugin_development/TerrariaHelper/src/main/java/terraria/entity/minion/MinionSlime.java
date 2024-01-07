@@ -238,12 +238,7 @@ public class MinionSlime extends EntitySlime {
             }
             case "远古岩鲨":
             case "极寒冰块":
-            case "永劫信标": {
-                setSize(3, false);
-                noclip = true;
-                setNoGravity(true);
-                break;
-            }
+            case "永劫信标":
             case "瘟疫雌蜂": {
                 setSize(3, false);
                 noclip = true;
@@ -518,7 +513,7 @@ public class MinionSlime extends EntitySlime {
     public void B_() {
         super.B_();
         // update attribute
-        if (this.ticksLived % 10 == 0) {
+        if (this.ticksLived <= 1 || this.ticksLived % 10 == 0) {
             MinionHelper.updateAttrMap(this.attrMap, owner, originalStaff);
         }
         // validation

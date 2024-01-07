@@ -11,12 +11,6 @@ buffConflicts:
   3:
     怒气: 1
     圣神之怒: 2
-  # 拾心，再生，生命力的优先级为0，此时不判定为冲突因此不会互相覆盖，但心律和谐buff会覆盖掉上述三种
-  4:
-    拾心: 0
-    再生: 0
-    生命力: 0
-    心律和谐: 1
   5:
     燃烧: 0
     黑曜石皮: 1
@@ -30,20 +24,57 @@ buffConflicts:
   8:
     灵魂力量: 0
     神圣之力: 1
-  # 冷却类buff
+  # 物品拾取相关的两种buff
   9:
+    磁铁: 0
+    无尽空虚: 1
+  # 冷却类buff
+  19:
     血肉图腾: 0
     血肉图腾冷却: 1
-  10:
+  20:
     钨钢屏障: 0
     保护矩阵充能: 1
-  11:
+  21:
     硫火狂怒: 0
     硫火狂怒冷却: 1
-  12:
+  22:
     瘟疫狂暴: 0
     瘟疫狂暴冷却: 1
-  13:
+  23:
+    龙蒿披风: 0
+    龙蒿披风冷却: 1
+  24:
+    鲜血狂怒: 0
+    鲜血狂怒冷却: 1
+  25:
+    深渊狂乱: 0
+    深渊狂乱冷却: 1
+  26:
+    弑神者冲刺: 0
+    弑神者冲刺冷却: 1
+  27:
+    始源林海无敌: 0
+    始源林海无敌冷却: 1
+  28:
+    黄色天钻宝石: 0
+    黄色天钻宝石冷却: 1
+  29:
+    绿色天钻宝石: 0
+    绿色天钻宝石冷却: 1
+  30:
+    紫色天钻宝石: 0
+    紫色天钻宝石冷却: 1
+  31:
+    蓝色天钻宝石: 0
+    蓝色天钻宝石冷却: 1
+  32:
+    红色天钻宝石: 0
+    红色天钻宝石冷却: 1
+  33:
+    粉色天钻宝石: 0
+    粉色天钻宝石冷却: 1
+  100:
     狮心圣裁能量外壳: 0
     狮心圣裁能量外壳冷却: 1
 
@@ -299,27 +330,26 @@ effects:
     isBuff: true
     attributes:
       mobLimit: 10
-      mobSpawnRate: 0.1
-      mobSpawnRateMulti: 1.5
-    tooltip: 刷怪率和上限增加
+      mobSpawnRate: 0.5
+    tooltip: 刷怪效率和上限增加
   虫潮:
     isBuff: true
     attributes:
       mobLimit: 5
-      mobSpawnRate: 1
-    tooltip: 刷怪率和上限增加
+      mobSpawnRate: 5
+    tooltip: 刷怪倍率和上限增加
   冷静:
     isBuff: true
     attributes:
       mobLimit: -1
-      mobSpawnRateMulti: -0.75
+      mobSpawnRateMulti: -0.5
     tooltip: 刷怪率和上限减少
   禅定:
     isBuff: true
     attributes:
       mobLimit: -2
-      mobSpawnRate: -0.1
-    tooltip: 刷怪率和上限减少
+      mobSpawnRate: -0.9
+    tooltip: 刷怪率和上限大幅度减少
   耐力:
     isBuff: true
     attributes:
@@ -415,6 +445,15 @@ effects:
       speedMulti: 0.1
       regen: 6
     tooltip: 所有属性大幅提升
+  拾心:
+    isBuff: true
+    tooltip: 提升拾取心的范围
+  磁铁:
+    isBuff: true
+    tooltip: “看，吸铁石！”
+  无尽空虚:
+    isBuff: true
+    tooltip: 物品拾取范围获得极大加强
   圣骑士护盾:
     isBuff: true
     tooltip: 代替附近的队友承受部分伤害
@@ -541,6 +580,130 @@ effects:
   瘟疫狂暴冷却:
     isBuff: false
     tooltip: 你需要稍等片刻才能再次使用瘟疫狂暴
+  生命涌流:
+    isBuff: true
+    attributes:
+        critRanged: 6
+    tooltip: 极速生命恢复
+  龙蒿披风:
+    isBuff: true
+    attributes:
+        damageTakenMulti: -0.5
+    buffOnTimeout: 龙蒿披风冷却
+    buffOnTimeoutDuration: 600
+    tooltip: 降低接触伤害
+  龙蒿披风冷却:
+    isBuff: false
+    tooltip: 你需要稍等片刻才能再次使用龙蒿披风
+  鲜血狂怒:
+    isBuff: true
+    attributes:
+        damageMeleeMulti: 0.25
+        critMelee: 25
+        damageContactTakenMulti: -0.5
+    buffOnTimeout: 鲜血狂怒冷却
+    buffOnTimeoutDuration: 400
+    tooltip: 怪物接触伤害降低，近战属性大幅提高
+  鲜血狂怒冷却:
+    isBuff: false
+    tooltip: 你需要稍等片刻才能再次使用鲜血狂怒
+  幽火游魂冷却:
+    isBuff: false
+    tooltip: 你需要稍等片刻才能再次使用幽火游魂
+  深渊狂乱:
+    isBuff: true
+    attributes:
+        damageMulti: 0.1
+        crit: 10
+        lifeSteal: 0.004
+    buffOnTimeout: 深渊狂乱冷却
+    buffOnTimeoutDuration: 500
+    tooltip: 增加伤害，暴击率和生命汲取
+  深渊狂乱冷却:
+    isBuff: false
+    tooltip: 你需要稍等片刻才能再次使用深渊狂乱
+  弑神者冲刺:
+    isBuff: true
+    attributes:
+        damageTakenMulti: -0.85
+        knockbackResistance: 1
+    tooltip: 下次收到攻击时减少85%收到伤害并无视击退
+  弑神者冲刺冷却:
+    isBuff: false
+    tooltip: 你需要稍等片刻才能再次使用弑神者冲刺
+  始源林海无敌:
+    isBuff: true
+    buffOnTimeout: 始源林海无敌冷却
+    buffOnTimeoutDuration: 6000
+    tooltip: 短暂的无敌效果
+  始源林海无敌冷却:
+    isBuff: false
+    tooltip: 你需要稍等片刻才能再次使用始源林海无敌
+  黄色天钻宝石:
+    isBuff: true
+    attributes:
+        damageMeleeMulti: 0.45
+        useSpeedMeleeMulti: 0.26
+        critMelee: 12
+    tooltip: 近战属性大幅提高
+  黄色天钻宝石冷却:
+    isBuff: false
+    tooltip: 黄色天钻宝石破碎了！
+  绿色天钻宝石:
+    isBuff: true
+    attributes:
+        damageRangedMulti: 0.5
+        critRanged: 16
+    tooltip: 远程属性大幅提高
+  绿色天钻宝石冷却:
+    isBuff: false
+    tooltip: 绿色天钻宝石破碎了！
+  紫色天钻宝石:
+    isBuff: true
+    attributes:
+        damageMagicMulti: 0.5
+        critMagic: 16
+        maxMana: 100
+    tooltip: 魔法属性大幅提高
+  紫色天钻宝石冷却:
+    isBuff: false
+    tooltip: 紫色天钻宝石破碎了！
+  蓝色天钻宝石:
+    isBuff: true
+    attributes:
+        damageSummonMulti: 0.72
+        minionLimit: 4
+        minionDamagePenaltyFactor: 0.5
+    tooltip: 召唤属性大幅提高
+  蓝色天钻宝石冷却:
+    isBuff: false
+    tooltip: 蓝色天钻宝石破碎了！
+  红色天钻宝石:
+    isBuff: true
+    attributes:
+        defence: 150
+        damageTakenMulti: -0.12
+    tooltip: 防御属性大幅提高
+  红色天钻宝石冷却:
+    isBuff: false
+    tooltip: 红色天钻宝石破碎了！
+  粉色天钻宝石:
+    isBuff: true
+    attributes:
+        flightTimeMulti: 0.4
+        regen: 8
+        invulnerabilityTick: 10
+    tooltip: 杂项属性大幅提高
+  粉色天钻宝石冷却:
+    isBuff: false
+    tooltip: 粉色天钻宝石破碎了！
+  魔影激怒:
+    isBuff: false
+    attributes:
+        defenceMulti: -0.35
+        damageTakenMulti: 0.35
+        damageMulti: 0.75
+    tooltip: 你以防御和伤害减免为代价大大提升自身的攻击力
   暴君之怒:
     isBuff: true
     attributes:

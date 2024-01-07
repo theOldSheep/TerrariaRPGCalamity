@@ -6,6 +6,7 @@ import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.Vec3D;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
@@ -24,22 +25,33 @@ import java.util.logging.Level;
 
 public class MinionHelper {
     private static final double maxDistBeforeReturn = 90, maxDistBeforeTeleport = 90, targetRadius = 75;
+    public static final String[] minionRelevantAttributes = {
+            "armorPenetration", "damage", "damageMulti", "damageSummonMulti", "knockback", "knockbackMulti"
+    };
     public static void updateAttrMap(HashMap<String, Double> attrMap, Player owner, ItemStack originalStaff) {
         HashMap<String, Double> ownerAttrMap = EntityHelper.getAttrMap(owner);
-        for (String attribute : ownerAttrMap.keySet())
+        // clear the attribute
+        attrMap.clear();
+
+        // update attributes
+        for (String attribute : minionRelevantAttributes)
             attrMap.put(attribute, ownerAttrMap.getOrDefault(attribute, 1d));
+
         org.bukkit.inventory.ItemStack currentTool = owner.getInventory().getItemInMainHand();
+        if (currentTool == null)
+            currentTool = new ItemStack(Material.AIR);
         // account for changed player tool
         if (!currentTool.isSimilar(originalStaff)) {
             EntityHelper.tweakAttribute(attrMap, originalStaff, true);
             EntityHelper.tweakAttribute(attrMap, currentTool, false);
         }
         // account for non-summon tool
-        if (! (EntityHelper.getDamageType(owner) == EntityHelper.DamageType.SUMMON) ) {
+        if (EntityHelper.getDamageType(owner) != EntityHelper.DamageType.SUMMON) {
             attrMap.put("damageMulti",
                     attrMap.getOrDefault("damageMulti", 1d) *
-                    ownerAttrMap.getOrDefault("minionDamagePenaltyMulti", 0.5d));
+                    ownerAttrMap.getOrDefault("minionDamagePenaltyFactor", 0.5d));
         }
+
         attrMap.put("crit", 0d);
     }
     public static boolean validate(Entity minion, Player owner, int minionSlot, int minionSlotMax, Entity minionInList, boolean sentryOrMinion) {

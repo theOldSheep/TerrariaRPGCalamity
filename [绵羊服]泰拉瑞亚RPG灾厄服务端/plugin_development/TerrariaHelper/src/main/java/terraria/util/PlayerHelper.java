@@ -43,6 +43,8 @@ public class PlayerHelper {
     public static final String ARES_EXOSKELETON_CONFIG_PAGE_NAME = "阿瑞斯外骨骼配置";
     public static final String[] ARES_EXOSKELETON_WEAPON_NAMES =
             {"阿瑞斯离子加农炮", "阿瑞斯特斯拉加农炮", "阿瑞斯镭射加农炮", "阿瑞斯高斯核弹发射井"};
+    public static final String[] GEM_TECH_GEMS = {
+            "黄色天钻宝石", "绿色天钻宝石", "紫色天钻宝石", "蓝色天钻宝石", "红色天钻宝石", "粉色天钻宝石"};
     static {
         // init default player attribute map
         defaultPlayerAttrMap.put("armorPenetration", 0d);
@@ -78,6 +80,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("knockbackResistance", 0d);
         defaultPlayerAttrMap.put("knockbackMeleeMulti", 1d);
         defaultPlayerAttrMap.put("knockbackMulti", 1d);
+        defaultPlayerAttrMap.put("lifeSteal", 0.0d);
         defaultPlayerAttrMap.put("manaRegen", 0d);
         defaultPlayerAttrMap.put("manaRegenMulti", 1d);
         defaultPlayerAttrMap.put("manaUse", 0d);
@@ -86,10 +89,10 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("maxHealthMulti", 1d);
         defaultPlayerAttrMap.put("maxMana", 20d);
         defaultPlayerAttrMap.put("meleeReachMulti", 1d);
-        defaultPlayerAttrMap.put("minionDamagePenaltyMulti", 0.5d);
+        defaultPlayerAttrMap.put("minionDamagePenaltyFactor", 0.5d);
         defaultPlayerAttrMap.put("minionLimit", 1d);
         defaultPlayerAttrMap.put("mobLimit", 15d);
-        defaultPlayerAttrMap.put("mobSpawnRate", 0.05d);
+        defaultPlayerAttrMap.put("mobSpawnRate", 0.1d);
         defaultPlayerAttrMap.put("mobSpawnRateMulti", 1d);
         defaultPlayerAttrMap.put("penetration", 0d);
         defaultPlayerAttrMap.put("powerPickaxe", 0d);
@@ -490,10 +493,10 @@ public class PlayerHelper {
                         double health = ply.getHealth(), maxHealth = ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
                         // handle armor sets
                         switch (getArmorSet(ply)) {
+                            // chlorophyte armors
                             case "叶绿魔法套装":
                             case "叶绿射手套装":
-                            case "叶绿战士套装":
-                                // chlorophyte
+                            case "叶绿战士套装": {
                                 if (tickIndex.get() % 3 == 0) {
                                     double distanceSqr = 999999;
                                     Entity target = null;
@@ -517,10 +520,17 @@ public class PlayerHelper {
 
                                         Vector v = MathHelper.getDirection(ply.getEyeLocation(), aimedLoc, 1.5);
                                         EntityHelper.spawnProjectile(ply, v, attrMapChlorophyte,
-                                                EntityHelper.DamageType.ARROW,"树叶");
+                                                EntityHelper.DamageType.ARROW, "树叶");
                                     }
                                 }
                                 break;
+                            }
+                            // gem tech armor
+                            case "天钻套装": {
+                                for (String gem : GEM_TECH_GEMS)
+                                    EntityHelper.applyEffect(ply, gem, 20);
+                                break;
+                            }
                         }
                         // handle accessories
                         HashSet<String> accessories = getAccessories(ply);
@@ -1014,39 +1024,45 @@ public class PlayerHelper {
     }
     public static void threadMonsterCritterSpawn() {
         // every 5 ticks
+        final int delay = 5;
+        final double spawnRateAdjustFactor = delay / 20d;
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 if (!isProperlyPlaying(ply)) continue;
-                // critter spawn
-                CritterHelper.naturalCritterSpawn(ply);
-                // monster spawn rate
+                // spawn rate multipliers apply to critters as well
                 HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
-                double spawnRate = attrMap.getOrDefault("mobSpawnRate", 0.1) *
-                        attrMap.getOrDefault("mobSpawnRateMulti", 1d);
+                double spawnRateMulti = attrMap.getOrDefault("mobSpawnRateMulti", 1d);
+                // critter spawn, expected 1 critter per second (may change according to spawn rate).
+                if (Math.random() < spawnRateMulti * spawnRateAdjustFactor)
+                    CritterHelper.naturalCritterSpawn(ply);
+                // monster spawn rate
+                double mobSpawnRate = attrMap.getOrDefault("mobSpawnRate", 0.1);
                 WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(ply.getLocation());
                 boolean isSurfaceOrSpace =
                         heightLayer == WorldHelper.HeightLayer.SURFACE ||
                                 heightLayer == WorldHelper.HeightLayer.SPACE;
                 if (isSurfaceOrSpace) {
-                    // monster spawn rate when an event is present
+                    // monster spawn rate when an event is present is doubled
                     if (EventAndTime.currentEvent != null) {
-                        spawnRate = 0.35;
+                        mobSpawnRate *= 2;
                     }
                     // monster spawn rate when near a celestial pillar
                     for (CelestialPillar pillar : EventAndTime.pillars.values()) {
                         if (pillar.getBukkitEntity().getWorld() != ply.getWorld())
                             continue;
                         if (pillar.getBukkitEntity().getLocation().distanceSquared(ply.getLocation()) < CelestialPillar.EFFECTED_RADIUS_SQR) {
-                            spawnRate = 0.6;
+                            mobSpawnRate = 1;
+                            break;
                         }
                     }
                 }
-                // spawn monster
-                for (int i = 0; i < MathHelper.randomRound(spawnRate); i ++) {
+                // spawn monster. Note that mobSpawnRate above is expected monster amount per second
+                mobSpawnRate *= spawnRateAdjustFactor;
+                for (int i = 0; i < MathHelper.randomRound(mobSpawnRate); i ++) {
                     MonsterHelper.naturalMobSpawning(ply);
                 }
             }
-        }, 0, 5);
+        }, 0, delay);
     }
     public static void threadMovement() {
         // every 1 tick
@@ -1703,6 +1719,23 @@ public class PlayerHelper {
                     }
                 }
                 setArmorSet(ply, armorSet);
+                // special armor sets
+                switch (armorSet) {
+                    case "血炎召唤套装":
+                    case "金源召唤套装": {
+                        double plyHealthRatio = ply.getHealth() / ply.getMaxHealth();
+                        if (plyHealthRatio > 0.9)
+                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                                    "damageSummonMulti", "0.15", true);
+                        else if (plyHealthRatio <= 0.5) {
+                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                                    "defence", "40", true);
+                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                                    "regen", "4", true);
+                        }
+                        break;
+                    }
+                }
             }
             // accessories
             {
@@ -2008,6 +2041,39 @@ public class PlayerHelper {
                 EntityHelper.applyEffect(ply, "瘟疫狂暴", 100);
                 break;
             }
+            case "龙蒿近战套装":
+            case "金源近战套装": {
+                EntityHelper.applyEffect(ply, "龙蒿披风", 200);
+                break;
+            }
+            case "血炎远程套装":
+            case "金源远程套装": {
+                if (! EntityHelper.hasEffect(ply, "幽火游魂冷却")) {
+                    EntityHelper.applyEffect(ply, "幽火游魂冷却", 600);
+                    // projectiles
+                    HashMap<String, Double> projAttrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(ply).clone();
+                    projAttrMap.put("damage", 600d);
+                    for (int i = 0; i < 12; i ++) {
+                        EntityHelper.spawnProjectile(ply, MathHelper.randomVector().multiply(2.5), projAttrMap, "血炎灵魂");
+                    }
+                }
+                break;
+            }
+            case "蓝色欧米茄套装": {
+                EntityHelper.applyEffect(ply, "深渊狂乱", 100);
+                break;
+            }
+            case "始源林海魔法套装":
+            case "始源林海召唤套装":
+            case "金源魔法套装":
+            case "金源召唤套装": {
+                EntityHelper.applyEffect(ply, "始源林海无敌", 120);
+                break;
+            }
+            case "魔影套装": {
+                EntityHelper.applyEffect(ply, "魔影激怒", 600);
+                break;
+            }
         }
     }
     public static void handleGrapplingHook(Player ply) {
@@ -2237,6 +2303,7 @@ public class PlayerHelper {
     public static void playerMagicArmorSet(Player dPly, Entity v, double dmg) {
         if (!v.getScoreboardTags().contains("isMonster")) return;
         String armorSet = getArmorSet(dPly);
+        String spectreCD = "tempSpectreCD";
         switch (armorSet) {
             case "星云套装": {
                 if (dPly.getScoreboardTags().contains("tempNebulaCD")) break;
@@ -2261,8 +2328,7 @@ public class PlayerHelper {
             case "幽灵吸血套装":
             case "幽灵输出套装": {
                 if (dmg > 2) {
-                    if (dPly.getScoreboardTags().contains("tempSpectreCD")) break;
-                    dPly.addScoreboardTag("tempSpectreCD");
+                    if (dPly.getScoreboardTags().contains(spectreCD) ) break;
                     int coolDownTicks;
                     if (armorSet.equals("幽灵吸血套装")) {
                         int projectilePower = (int) Math.min( 200, Math.ceil(dmg * 0.08) );
@@ -2275,9 +2341,8 @@ public class PlayerHelper {
                         // 400 dmg/second = 20 dmg/tick
                         coolDownTicks = (int) Math.ceil(projectilePower / 20d);
                     }
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
-                        if (dPly.isOnline()) dPly.removeScoreboardTag("tempSpectreCD");
-                    }, coolDownTicks);
+                    // apply CD
+                    EntityHelper.handleEntityTemporaryScoreboardTag(dPly, spectreCD, coolDownTicks);
                 }
                 break;
             }
@@ -2285,17 +2350,14 @@ public class PlayerHelper {
         HashSet<String> accessories = PlayerHelper.getAccessories(dPly);
         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(dPly);
         if (accessories.contains("魔能谐振仪")) {
-            if (dmg > 2 && !(dPly.getScoreboardTags().contains("tempSpectreCD"))) {
-                dPly.addScoreboardTag("tempSpectreCD");
+            if (dmg > 2 && !(dPly.getScoreboardTags().contains(spectreCD))) {
                 int projectilePower = (int) Math.min( 50, Math.ceil(dmg * 0.125) );
                 double manaRatio = dPly.getLevel() / attrMap.getOrDefault("maxMana", 20d);
                 createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0),
                         Math.ceil(projectilePower * manaRatio), true, "90|127|197");
                 // 10 health/second = 0.5 health/tick
                 int coolDownTicks = (int) Math.ceil(projectilePower / 0.5);
-                Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
-                    if (dPly.isOnline()) dPly.removeScoreboardTag("tempSpectreCD");
-                }, coolDownTicks);
+                EntityHelper.handleEntityTemporaryScoreboardTag(dPly, spectreCD, coolDownTicks);
             }
         }
     }
@@ -2350,6 +2412,16 @@ public class PlayerHelper {
             ply.addScoreboardTag("temp_dashCD");
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                     () -> ply.removeScoreboardTag("temp_dashCD"), dashCD);
+            // god slayer armor bonus
+            switch (armorSet) {
+                case "弑神者近战套装":
+                case "弑神者远程套装":
+                case "金源近战套装":
+                case "金源远程套装": {
+                    EntityHelper.applyEffect(ply, "弑神者冲刺", 20);
+                    break;
+                }
+            }
         }
     }
     public static void initAresExoskeletonConfig(Player ply, boolean force) {

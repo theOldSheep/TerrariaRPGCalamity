@@ -1916,6 +1916,25 @@ TNT:
     autoTraceRadius: 16
     noAutoTraceTicks: 999999
     penetration: 1
+圣火弹:
+    gravity: 0
+    liveTime: 80
+    isGrenade: true
+    blastRadius: 1
+    buffInflict:
+        - "神圣之火|100|1"
+血炎弹:
+    gravity: 0
+    liveTime: 80
+弑神折返弹:
+    gravity: 0
+    liveTime: 50
+    isGrenade: true
+    blastRadius: 0.5
+弑神弹:
+    gravity: 0
+    liveTime: 80
+    penetration: 999999
 鹅卵石冲击波:
     arrowOrPotion: true
     gravity: 0
@@ -4900,6 +4919,48 @@ TNT:
         damageMulti: 0.25
         name: 泰拉追踪箭
         velocity: 2
+极乐陨石:
+    gravity: 0
+    isGrenade: true
+    projectileSize: 1.5
+    blastRadius: 1
+    liveTime: 100
+极乐之箭:
+    arrowOrPotion: true
+    projectileSize: 0.5
+    buffInflict:
+        - "神圣之火|60|1"
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.5
+        name: 极乐陨石
+        type: star
+        fireOnTimeout: false
+        velocity: 2.5
+血炎箭:
+    arrowOrPotion: true
+    projectileSize: 0.5
+征戮分裂箭:
+    liveTime: 15
+    projectileSize: 0.5
+    autoTrace: true
+    autoTraceRadius: 24
+    autoTraceAbility: 5
+    buffInflict:
+        - "弑神怒焰|40|1"
+征戮箭:
+    arrowOrPotion: true
+    blockHitAction: thru
+    projectileSize: 0.5
+    liveTime: 20
+    buffInflict:
+        - "弑神怒焰|60|1"
+    spawnProjectiles:
+        interval: 7
+        spawnMechanism: FORWARD
+        damageMulti: 0.5
+        speed: 2.5
+        spawnType: 征戮分裂箭
 幻象箭:
     arrowOrPotion: true
     gravity: 0
@@ -5022,7 +5083,9 @@ TNT:
 血陨之炎箭:
     gravity: 0
     blockHitAction: thru
+    projectileSize: 0.5
     autoTrace: true
+    autoTraceMethod: 2
     autoTraceAbility: 4.5
     autoTraceRadius: 16
     liveTime: 50
@@ -5210,3 +5273,41 @@ TNT:
     autoTraceAbility: 5
     gravity: 0
     liveTime: 40
+龙蒿生命能量:
+    gravity: 0
+    liveTime: 50
+    minimumDamageTicks: 5
+    autoTrace: true
+    autoTraceRadius: 24
+    autoTraceAbility: 5
+    noAutoTraceTicks: 5
+    trailColor: 91|255|7
+血炎灵魂:
+    gravity: 0
+    blockHitAction: bounce
+    projectileSize: 2
+    liveTime: 100
+    bounce: 5
+    penetration: 1
+    enemyInvincibilityFrame: 1
+    autoTrace: true
+    autoTraceRadius: 24
+    autoTraceAbility: 5
+血炎魔法射弹:
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 80
+    penetration: 999999
+    trailColor: 255|255|255
+弑神榴霰弹:
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 40
+    isGrenade: true
+    blastRadius: 1
+    trailColor: 209|79|255
+始源林海爆炸:
+    liveTime: 1
+    minimumDamageTicks: 10
+    isGrenade: true
+    blastRadius: 3.25

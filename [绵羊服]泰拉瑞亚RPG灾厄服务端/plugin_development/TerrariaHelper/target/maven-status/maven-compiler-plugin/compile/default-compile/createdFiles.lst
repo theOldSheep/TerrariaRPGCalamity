@@ -31,6 +31,7 @@ terraria\entity\monster\MonsterHelper$1.class
 terraria\entity\boss\theSlimeGod\CrimulanSlime.class
 terraria\event\listener\PlayerQuitListener.class
 terraria\entity\npc\TerrariaNPCGoblinTinkerer.class
+terraria\event\listener\ArrowHitListener$1.class
 terraria\entity\boss\queenSlime\QueenSlime.class
 terraria\entity\boss\empressOfLight\EmpressOfLight$1.class
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu$1.class

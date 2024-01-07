@@ -1,6 +1,5 @@
 package terraria.util;
 
-import com.comphenix.protocol.PacketType;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
@@ -38,8 +37,8 @@ import java.util.logging.Level;
 public class EntityHelper {
     // constants
     static HashMap<String, Set<String>> buffInferior, buffSuperior;
-    public static final HashMap<String, DamageType> damageTypeInternalNameMapping = new HashMap<>(30);
-    private static final HashMap<String, MetadataName> metadataNameMapping = new HashMap<>();
+    public static final HashMap<String, DamageType> DAMAGE_TYPE_INTERNAL_NAME_MAPPING = new HashMap<>(30);
+    private static final HashMap<String, MetadataName> METADATA_NAME_MAPPING = new HashMap<>();
     static {
         buffSuperior = new HashMap<>(50);
         buffInferior = new HashMap<>(50);
@@ -258,12 +257,12 @@ public class EntityHelper {
         MetadataName(String metadataName) {
             this.metadataName = metadataName;
             // test for collision
-            if (metadataNameMapping.containsKey(metadataName)) {
+            if (METADATA_NAME_MAPPING.containsKey(metadataName)) {
                 TerrariaHelper.getInstance().getLogger().log(
-                        Level.SEVERE, "Metadata Name Collision: " + metadataNameMapping +
-                                " between " + metadataNameMapping.get(metadataName) + " and " + this);
+                        Level.SEVERE, "Metadata Name Collision: " + METADATA_NAME_MAPPING +
+                                " between " + METADATA_NAME_MAPPING.get(metadataName) + " and " + this);
             }
-            metadataNameMapping.put(metadataName, this);
+            METADATA_NAME_MAPPING.put(metadataName, this);
         }
 
         @Override
@@ -324,7 +323,7 @@ public class EntityHelper {
         // constructor
         DamageType(String internalName) {
             this.internalName = internalName;
-            damageTypeInternalNameMapping.put(internalName, this);
+            DAMAGE_TYPE_INTERNAL_NAME_MAPPING.put(internalName, this);
         }
         // getter
         @Override
@@ -334,7 +333,11 @@ public class EntityHelper {
     }
     // helper functions
     public static void initEntityMetadata(Entity entity) {
-        setMetadata(entity, MetadataName.EFFECTS, new HashMap<String, Integer>());
+        // only initialize potion effects when needed
+        MetadataValue metadataValue = getMetadata(entity, MetadataName.EFFECTS);
+        if (metadataValue == null)
+            setMetadata(entity, MetadataName.EFFECTS, new HashMap<String, Integer>());
+
         setMetadata(entity, MetadataName.DAMAGE_TYPE, DamageType.MELEE);
         setMetadata(entity, MetadataName.BUFF_IMMUNE, new HashMap<String, Integer>());
     }
@@ -379,7 +382,7 @@ public class EntityHelper {
     public static void tweakAttribute(Entity entity, String key, String value, boolean addOrRemove) {
         if (key.equals(MetadataName.DAMAGE_TYPE.toString())) {
             if (addOrRemove) setMetadata(entity, MetadataName.DAMAGE_TYPE,
-                    damageTypeInternalNameMapping.getOrDefault(value, DamageType.MELEE));
+                    DAMAGE_TYPE_INTERNAL_NAME_MAPPING.getOrDefault(value, DamageType.MELEE));
             return;
         }
         try {
@@ -490,7 +493,7 @@ public class EntityHelper {
     public static void tweakAttribute(Entity entity, HashMap<String, Double> attrMap, String key, String value, boolean addOrRemove) {
         if (key.equals(MetadataName.DAMAGE_TYPE.toString())) {
             if (addOrRemove) setMetadata(entity, MetadataName.DAMAGE_TYPE,
-                    damageTypeInternalNameMapping.getOrDefault(value, DamageType.MELEE));
+                    DAMAGE_TYPE_INTERNAL_NAME_MAPPING.getOrDefault(value, DamageType.MELEE));
             return;
         }
         try {
@@ -688,7 +691,7 @@ public class EntityHelper {
         try {
             HashMap<String, Integer> allEffects = getEffectMap(entity);
             int timeRemaining = allEffects.getOrDefault(effect, 0);
-            // some buff should not disappear over time, they disappear over some other criterion.
+            // some buff should not (solely) disappear over time, they disappear over some other criterion.
             switch (effect) {
                 case "血肉图腾":
                     if (! PlayerHelper.getAccessories(entity).contains("血肉图腾"))
@@ -696,6 +699,11 @@ public class EntityHelper {
                     break;
                 case "钨钢屏障":
                     if (! PlayerHelper.getAccessories(entity).contains("钨钢屏障生成仪"))
+                        timeRemaining = -1;
+                    break;
+                case "魔影激怒":
+                    timeRemaining -= delay;
+                    if (! PlayerHelper.getArmorSet((Player) entity).equals("魔影套装"))
                         timeRemaining = -1;
                     break;
                 default:
@@ -863,33 +871,32 @@ public class EntityHelper {
                     finalDurationTicks = currentDurationTicks + applyDurationTicks;
                     if (finalDurationTicks > 400 && applyDurationTicks < 400) finalDurationTicks = 400;
                     break;
-                // if the effect is active, the lower amount will be taken; otherwise the buff is applied.
-                case "钨钢屏障":
-                case "血肉图腾":
-                case "硫火狂怒":
-                case "瘟疫狂暴": {
-                    if (allEffects.containsKey(effect))
-                        finalDurationTicks = Math.min(currentDurationTicks, applyDurationTicks);
-                    else
-                        finalDurationTicks = applyDurationTicks;
-                    break;
-                }
                 default:
-                    // check if this buff is stackable
-                    int maxLevel = getEffectLevelMax(effect);
-                    // for stackable buffs, attempt to add a stack
-                    if (maxLevel > 1) {
-                        int levelTime = getEffectLevelDuration(effect);
-                        int currentLevel = getEffectLevel(effect, currentDurationTicks);
-                        int applyLevel = getEffectLevel(effect, applyDurationTicks);
-                        if (applyLevel > currentLevel)
-                            finalDurationTicks = Math.min(currentLevel + 1, maxLevel) * levelTime;
+                    // if a buff has a cool down effect, do not refresh its duration.
+                    if (TerrariaHelper.buffConfig.getString("effects." + effect + ".buffOnTimeout") != null) {
+                        if (allEffects.containsKey(effect))
+                            finalDurationTicks = Math.min(currentDurationTicks, applyDurationTicks);
                         else
-                            finalDurationTicks = currentLevel * levelTime;
+                            finalDurationTicks = applyDurationTicks;
                     }
-                    // otherwise, default to the maximum of current duration and applied duration
-                    else
-                        finalDurationTicks = Math.max(currentDurationTicks, applyDurationTicks);
+                    // for other buffs
+                    else {
+                        // check if this buff is stackable
+                        int maxLevel = getEffectLevelMax(effect);
+                        // for stackable buffs, attempt to add a stack
+                        if (maxLevel > 1) {
+                            int levelTime = getEffectLevelDuration(effect);
+                            int currentLevel = getEffectLevel(effect, currentDurationTicks);
+                            int applyLevel = getEffectLevel(effect, applyDurationTicks);
+                            if (applyLevel > currentLevel)
+                                finalDurationTicks = Math.min(currentLevel + 1, maxLevel) * levelTime;
+                            else
+                                finalDurationTicks = currentLevel * levelTime;
+                        }
+                        // otherwise, default to the maximum of current duration and applied duration
+                        else
+                            finalDurationTicks = Math.max(currentDurationTicks, applyDurationTicks);
+                    }
             }
             // record effect info
             allEffects.put(effect, finalDurationTicks);
@@ -939,6 +946,20 @@ public class EntityHelper {
         if (damager == null) return true;
         String nameV = GenericHelper.trimText(victim.getName());
         Entity minion = damager;
+        // validate if the damage is direct (or more specifically, contact damage)
+        boolean isContactDmg = false, isDirectDmg = false;
+        switch (damageType) {
+            case MELEE:
+            case TRUE_MELEE:
+                isContactDmg = true;
+            case ARROW:
+            case BULLET:
+            case MAGIC:
+            case SPECTRE:
+            case ROCKET:
+            case SUMMON:
+                isDirectDmg = true;
+        }
         // special minion behaviour
         if (minion instanceof Projectile) {
             ProjectileSource projSrc = ((Projectile) minion).getShooter();
@@ -1008,6 +1029,17 @@ public class EntityHelper {
                 break;
             }
         }
+
+        // thorn effect
+        HashMap<String, Integer> victimEffects = getEffectMap(victim);
+        if (victimEffects.containsKey("荆棘") && isContactDmg) {
+            handleDamage(damageTaker, damager, Math.min(Math.max(dmg / 3, 25), 500), DamageReason.THORN);
+        }
+        if (victim.getScoreboardTags().contains("destroyOnDamage")) {
+            victim.remove();
+            return false;
+        }
+
         // player being damaged
         if (victim instanceof Player) {
             // health regen time reset
@@ -1034,17 +1066,76 @@ public class EntityHelper {
             // armor sets
             String victimPlayerArmorSet = PlayerHelper.getArmorSet(vPly);
             switch (victimPlayerArmorSet) {
-                case "耀斑套装": {
-                    if (damageType == DamageType.MELEE) {
-                        handleDamage(damageTaker, damager, Math.min(Math.max(dmg, 300), 1500), DamageReason.THORN);
+                case "掠夺者坦克套装": {
+                    if (isDirectDmg && Math.random() < 0.25)
+                        applyEffect(damageTaker, "掠夺者之怒", 60);
+                    if (isContactDmg) {
+                        handleDamage(damageTaker, damager, Math.min(Math.max(dmg, 100), 500), DamageReason.THORN);
                     }
                     break;
                 }
-                case "掠夺者坦克套装": {
-                    if (Math.random() < 0.25)
-                        applyEffect(damageTaker, "掠夺者之怒", 60);
-                    if (damageType == DamageType.MELEE)
-                        handleDamage(damageTaker, damager, Math.min(Math.max(dmg, 100), 500), DamageReason.THORN);
+                case "耀斑套装": {
+                    if (isContactDmg) {
+                        handleDamage(damageTaker, damager, Math.min(Math.max(dmg * 1.5, 300), 1000), DamageReason.THORN);
+                    }
+                    break;
+                }
+                case "龙蒿近战套装": {
+                    if (isDirectDmg && Math.random() < 0.25)
+                        applyEffect(damageTaker, "生命涌流", 80);
+                    break;
+                }
+                case "弑神者近战套装": {
+                    if (isContactDmg) {
+                        handleDamage(damageTaker, damager, Math.min(Math.max(dmg * 2.5, 500), 2500), DamageReason.THORN);
+                    }
+                    break;
+                }
+                case "金源近战套装": {
+                    if (isDirectDmg && Math.random() < 0.25)
+                        applyEffect(damageTaker, "生命涌流", 80);
+                    if (isContactDmg) {
+                        handleDamage(damageTaker, damager, Math.min(Math.max(dmg * 2.5, 500), 2500), DamageReason.THORN);
+                    }
+                    break;
+                }
+                case "始源林海魔法套装":
+                case "始源林海召唤套装":
+                case "金源魔法套装":
+                case "金源召唤套装": {
+                    if (dmg >= vPly.getHealth()) {
+                        applyEffect(vPly, "始源林海无敌", 160);
+                    }
+                    break;
+                }
+                case "天钻套装": {
+                    if (isDirectDmg) {
+                        int[] removeIndexOrder = {0, 4, 5};
+                        switch (getDamageType(vPly)) {
+                            // ranged
+                            case ARROW:
+                            case BULLET:
+                            case ROCKET:
+                                removeIndexOrder[0] = 1;
+                                break;
+                            // magic
+                            case MAGIC:
+                                removeIndexOrder[0] = 2;
+                                break;
+                            // summon
+                            case SUMMON:
+                                removeIndexOrder[0] = 3;
+                                break;
+                        }
+                        // remove ONE gem, is possible.
+                        for (int removeIdx : removeIndexOrder) {
+                            String gemToRemove = PlayerHelper.GEM_TECH_GEMS[removeIdx];
+                            if (hasEffect(vPly, gemToRemove)) {
+                                applyEffect(vPly, gemToRemove + "冷却", 600);
+                                break;
+                            }
+                        }
+                    }
                     break;
                 }
             }
@@ -1052,47 +1143,155 @@ public class EntityHelper {
             ItemStack plyTool = vPly.getEquipment().getItemInMainHand();
             switch (ItemHelper.splitItemName(plyTool)[1]) {
                 case "赤陨霸龙弓": {
-                    setMetadata(vPly, MetadataName.PLAYER_ITEM_SWING_AMOUNT, 0);
+                    if (isDirectDmg)
+                        setMetadata(vPly, MetadataName.PLAYER_ITEM_SWING_AMOUNT, 0);
                     break;
                 }
             }
+            // buff
+            if (isDirectDmg) {
+                if (hasEffect(vPly, "弑神者冲刺"))
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                            () -> applyEffect(vPly, "弑神者冲刺冷却", 600), 5);
+            }
+            if (hasEffect(vPly, "始源林海无敌") )
+                return false;
         }
         // player damage other entity
         if (damageSource instanceof Player) {
             Player dPly = (Player) damageSource;
             String armorSet = PlayerHelper.getArmorSet(dPly);
-            if (damageType == DamageType.MAGIC && !(damageReason == DamageReason.SPECTRE)) {
-                PlayerHelper.playerMagicArmorSet(dPly, victim, dmg);
+
+            // life steal
+            String lifeStealTempCD = "temp_lifeStealCD";
+            if (! dPly.getScoreboardTags().contains(lifeStealTempCD)) {
+                // cool down
+                EntityHelper.handleEntityTemporaryScoreboardTag(dPly, lifeStealTempCD, 1);
+
+                HashMap<String, Double> plyAttrMap = getAttrMap(dPly);
+                double lifeStealFactor = plyAttrMap.getOrDefault("lifeSteal", 0d);
+                if (lifeStealFactor > 1e-9) {
+                    double healAmount = dmg * lifeStealFactor;
+                    PlayerHelper.heal(dPly, healAmount);
+                }
             }
-            else if (damageType == DamageType.MELEE && armorSet.equals("渊泉近战套装")) {
-                String coolDownTag = "temp_hydroThermicFireball";
-                if (! dPly.getScoreboardTags().contains(coolDownTag)) {
-                    // cool down
-                    handleEntityTemporaryScoreboardTag(dPly, coolDownTag, 30);
-                    // damage setup
-                    EntityPlayer dPlyNMS = ((CraftPlayer) dPly).getHandle();
-                    HashMap<String, Double> fireballAttrMap = (HashMap<String, Double>) getAttrMap(damager).clone();
-                    double fireballDmg = Math.min(90, fireballAttrMap.getOrDefault("damage", 100d) * 0.15);
-                    fireballAttrMap.put("damage", fireballDmg);
-                    // projectiles
-                    for (int i = 0; i < 3; i ++) {
-                        Vector projVel = MathHelper.vectorFromYawPitch_quick(
-                                dPlyNMS.yaw + Math.random() * 10 - 5, dPlyNMS.pitch + Math.random() * 10 - 5);
-                        projVel.multiply(1.5);
-                        EntityHelper.spawnProjectile(dPly, projVel,
-                                fireballAttrMap, EntityHelper.DamageType.MELEE, "小熔岩火球");
+
+            // generic armor set (damage-type restricted armor set properties are handled below)
+            if (isDirectDmg) {
+                switch (armorSet) {
+                    case "血炎近战套装":
+                    case "血炎远程套装":
+                    case "血炎魔法套装":
+                    case "血炎召唤套装":
+                    case "金源近战套装":
+                    case "金源远程套装": {
+                        String coolDownTag = "temp_bloodFlareHeart";
+                        if (!dPly.getScoreboardTags().contains(coolDownTag)) {
+                            // cool down (5 seconds)
+                            handleEntityTemporaryScoreboardTag(dPly, coolDownTag, 100);
+                            // drop a heart
+                            dropHeart(victim.getLocation());
+                        }
+                        break;
+                    }
+                    case "始源林海魔法套装":
+                    case "始源林海召唤套装": {
+                        String coolDownTag = "temp_silvaHealing";
+                        if (!dPly.getScoreboardTags().contains(coolDownTag)) {
+                            // cool down (1 second)
+                            handleEntityTemporaryScoreboardTag(dPly, coolDownTag, 20);
+                            PlayerHelper.createSpectreProjectile(dPly, victim.getLocation().add(0, 1.5d, 0),
+                                    10, true, "96|169|92");
+                        }
+                        break;
+                    }
+                    case "金源魔法套装":
+                    case "金源召唤套装": {
+                        // drop a heart
+                        String coolDownTagHeart = "temp_bloodFlareHeart";
+                        if (!dPly.getScoreboardTags().contains(coolDownTagHeart)) {
+                            // cool down (5 seconds)
+                            handleEntityTemporaryScoreboardTag(dPly, coolDownTagHeart, 100);
+                            dropHeart(victim.getLocation());
+                        }
+                        // healing orb
+                        String coolDownTagHealingOrb = "temp_silvaHealing";
+                        if (!dPly.getScoreboardTags().contains(coolDownTagHealingOrb)) {
+                            // cool down (1 second)
+                            handleEntityTemporaryScoreboardTag(dPly, coolDownTagHealingOrb, 20);
+                            PlayerHelper.createSpectreProjectile(dPly, victim.getLocation().add(0, 1.5d, 0),
+                                    10, true, "96|169|92");
+                        }
+                        break;
                     }
                 }
             }
-        }
-        // thorn effect
-        HashMap<String, Integer> victimEffects = getEffectMap(victim);
-        if (victimEffects.containsKey("荆棘") && damageType == DamageType.MELEE) {
-            handleDamage(damageTaker, damager, Math.min(Math.max(dmg / 3, 25), 500), DamageReason.THORN);
-        }
-        if (victim.getScoreboardTags().contains("destroyOnDamage")) {
-            victim.remove();
-            return false;
+            // magic damage
+            switch (damageType) {
+                case MAGIC: {
+                    if (! (damageReason == DamageReason.SPECTRE)) {
+                        PlayerHelper.playerMagicArmorSet(dPly, victim, dmg);
+                    }
+
+                    switch (armorSet) {
+                        case "始源林海魔法套装":
+                        case "金源魔法套装": {
+                            String coolDownTag = "temp_silvaMagicBlast";
+                            if (! dPly.getScoreboardTags().contains(coolDownTag)) {
+                                // cool down (5 second)
+                                handleEntityTemporaryScoreboardTag(dPly, coolDownTag, 100);
+                                // explosion
+                                HashMap<String, Double> explosionAttribute = (HashMap<String, Double>) getAttrMap(dPly).clone();
+                                double explosionDmg = 1600 + explosionAttribute.getOrDefault("damage", 10d) * 0.6;
+                                explosionAttribute.put("damage", Math.min(explosionDmg, 2800d));
+                                spawnProjectile(dPly, victim.getEyeLocation(), new Vector(),
+                                        explosionAttribute, DamageType.MAGIC, "始源林海爆炸");
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case MELEE:
+                case TRUE_MELEE: {
+                    switch (armorSet) {
+                        case "渊泉近战套装": {
+                            String coolDownTag = "temp_hydroThermicFireball";
+                            if (!dPly.getScoreboardTags().contains(coolDownTag)) {
+                                // cool down
+                                handleEntityTemporaryScoreboardTag(dPly, coolDownTag, 30);
+                                // damage setup
+                                HashMap<String, Double> fireballAttrMap = (HashMap<String, Double>) getAttrMap(damager).clone();
+                                double fireballDmg = Math.min(90, fireballAttrMap.getOrDefault("damage", 100d) * 0.15);
+                                fireballAttrMap.put("damage", fireballDmg);
+
+                                String projType = "小熔岩火球";
+                                double projSpd = 1.75;
+                                Vector aimDir = ItemUseHelper.getPlayerAimDir(dPly, dPly.getEyeLocation(),
+                                        projSpd, projType, false, 0);
+                                double aimYaw = MathHelper.getVectorYaw(aimDir);
+                                double aimPitch = MathHelper.getVectorPitch(aimDir);
+                                // projectiles
+                                for (int i = 0; i < 3; i++) {
+                                    Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                            aimYaw + Math.random() * 10 - 5, aimPitch + Math.random() * 10 - 5);
+                                    projVel.multiply(projSpd);
+                                    EntityHelper.spawnProjectile(dPly, projVel,
+                                            fireballAttrMap, EntityHelper.DamageType.MELEE, projType);
+                                }
+                            }
+                            break;
+                        }
+                        case "血炎近战套装":
+                        case "金源近战套装": {
+                            if (damageType == DamageType.TRUE_MELEE)
+                                applyEffect(dPly, "鲜血狂怒", 100);
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
         }
         return true;
     }
@@ -2021,6 +2220,30 @@ public class EntityHelper {
         public DamageType damageType;
         public String projectileName;
         public boolean arrowOrPotion;
+        // extracts the attributes that may impact the projectile's damage to prevent excessive memory usage
+        private static HashMap<String, Double> extractAttrMap(HashMap<String, Double> original) {
+            HashMap<String, Double> result = new HashMap<>();
+            for (String key : original.keySet()) {
+                boolean shouldInclude = false;
+                switch (key) {
+                    case "armorPenetration":
+                    case "knockback":
+                    case "knockbackMulti":
+                    case "liveSteal":
+                        shouldInclude = true;
+                        break;
+                    default:
+                        if (key.startsWith("damage") && ! (key.endsWith("TakenMulti") ))
+                            shouldInclude = true;
+                        else if (key.startsWith("crit"))
+                            shouldInclude = true;
+
+                }
+                if (shouldInclude)
+                    result.put(key, original.get(key));
+            }
+            return result;
+        }
         // constructors
         public ProjectileShootInfo(Entity shooter, Vector velocity, HashMap<String, Double> attrMap, String projectileName) {
             this(shooter, velocity, attrMap, getDamageType(shooter), projectileName);
@@ -2035,7 +2258,7 @@ public class EntityHelper {
             if (shooter instanceof ProjectileSource) this.shooter = (ProjectileSource) shooter;
             this.shootLoc = shootLoc;
             this.velocity = velocity;
-            this.attrMap = attrMap;
+            this.attrMap = extractAttrMap(attrMap);
             this.properties = new HashMap<>(25);
             if (projectileName.length() > 0) {
                 ConfigurationSection section = TerrariaHelper.projectileConfig.getConfigurationSection(projectileName);
@@ -2142,6 +2365,9 @@ public class EntityHelper {
                 Vector lastSavedVel = (Vector) lastVelMetadata.value();
                 enemyAcc = currSavedVel.clone().subtract(lastSavedVel);
             }
+            // for enemies with gravity, upper cap the acceleration at y = -0.08
+            if (target.hasGravity())
+                enemyAcc.setY( Math.min(enemyAcc.getY(), -0.08) );
         }
         // offset enemyAcc
         enemyAcc.add(aimHelperOption.accelerationOffset);

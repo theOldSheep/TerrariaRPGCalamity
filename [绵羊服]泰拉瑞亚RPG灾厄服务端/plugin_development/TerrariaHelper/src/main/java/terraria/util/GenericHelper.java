@@ -912,7 +912,9 @@ public class GenericHelper {
                     ticksDisplay = 8;
                 } else if (isCrit) ticksDisplay = 30;
         }
-        // display the message
+        // display the message (display damage/healing of 0 as 1 instead)
+        if (dmg < 1)
+            dmg = 1;
         String text = ChatColor.COLOR_CHAR + colorCode + (int) Math.round(dmg);
         Location displayLoc;
         if (e instanceof LivingEntity) displayLoc = ((LivingEntity) e).getEyeLocation().add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);

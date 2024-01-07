@@ -254,11 +254,11 @@
   worth: 1000
   rarity: 0
 晶状体:
-  item: EYE_OF_ENDER
+  item: CLAY_BALL
   worth: 10000
   rarity: 0
 黑晶状体:
-  item: EYE_OF_ENDER
+  item: CLAY_BALL
   worth: 100000
   rarity: 0
 腐肉:
@@ -938,7 +938,7 @@
   - §6专家模式物品
   rarity: 1000
 可疑的眼球:
-  item: EYE_OF_ENDER
+  item: CLAY_BALL
   rarity: 1
 史莱姆王冠:
   item: COAL
@@ -7557,7 +7557,7 @@ Dodu的手炮:
     damage: 56
     damageType: Magic
     crit: 4
-    projectileSpeed: 3.5
+    projectileSpeed: 5
     knockback: 3.5
     useTime: 26
     manaUse: 18
@@ -9148,9 +9148,9 @@ Dodu的手炮:
   item: BOOK
   lore:
   - §r召唤宇宙之触助你撕裂敌人
-  - §r“震撼脑髓！”
+  - §r“§#305F4F大脑在颤抖!§r”
   attributes:
-    damage: 110
+    damage: 220
     damageType: Magic
     crit: 7
     knockback: 3.5
@@ -10912,6 +10912,46 @@ Dodu的手炮:
     projectileSpeedMulti: 0.25
   worth: 2000
   rarity: 7
+极乐之箭:
+  item: ARROW
+  lore:
+  - §r命中敌人时天降陨石
+  - §r“回应我吧，极乐之箭！”
+  attributes:
+    damage: 40
+    damageType: Arrow
+    crit: 4
+    knockback: 3
+    projectileSpeed: 10
+  worth: 2400
+  rarity: 11
+血炎箭:
+  item: ARROW
+  lore:
+  - §r命中时有概率回复生命值
+  attributes:
+    damage: 58
+    damageType: Arrow
+    crit: 4
+    knockback: 3.5
+    projectileSpeed: 10
+  worth: 8000
+  rarity: 12
+征戮箭:
+  item: ARROW
+  lore:
+  - §r穿透实体方块
+  - §r随时间推移，分裂出最多两支小型追踪箭矢
+  - §r“很好的合成全部，使我的背包旋转”
+  attributes:
+    damage: 48
+    damageType: Arrow
+    crit: 4
+    knockback: 3.5
+    projectileSpeed: 10
+    projectileSpeedMulti: 0.125
+  worth: 2800
+  rarity: 14
 火枪子弹:
   item: SLIME_BALL
   attributes:
@@ -10958,7 +10998,7 @@ Dodu的手炮:
 绿藻弹:
   item: SLIME_BALL
   lore:
-  - §r“你跑不掉了……”
+  - §r追踪你的敌人
   attributes:
     damage: 18
     damageBulletMulti: -0.25
@@ -11113,6 +11153,47 @@ Dodu的手炮:
     projectileSpeedMulti: 0.25
   worth: 10000
   rarity: 3
+圣火弹:
+  item: SLIME_BALL
+  lore:
+  - §r会爆炸的圣火子弹
+  attributes:
+    damage: 44
+    damageType: Bullet
+    crit: 4
+    knockback: 2
+    projectileSpeed: 6
+    projectileSpeedMulti: 0.375
+  worth: 2400
+  rarity: 11
+血炎弹:
+  item: SLIME_BALL
+  lore:
+  - §r击中敌人时加快你的自然生命恢复
+  attributes:
+    damage: 60
+    damageType: Bullet
+    crit: 4
+    knockback: 4.5
+    projectileSpeed: 4.8
+    projectileSpeedMulti: 0.375
+  worth: 8000
+  rarity: 12
+弑神弹:
+  item: SLIME_BALL
+  lore:
+  - §r具有无限穿透力的重型弹药，能够撕裂时空
+  - §r穿透第一个敌怪后飞行一段时间就会消失
+  - §r然后撕裂时空出现在玩家身后，加速射出并在接触时爆炸
+  attributes:
+    damage: 56
+    damageType: Bullet
+    crit: 4
+    knockback: 3
+    projectileSpeed: 6
+    projectileSpeedMulti: 0.375
+  worth: 2800
+  rarity: 14
 极光弹:
   item: SLIME_BALL
   attributes:
@@ -12259,27 +12340,6 @@ Dodu的手炮:
     speedMulti: 0.05
   worth: 9600000
   rarity: 7
-掠夺者鳞甲:
-  item: GOLD_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 38
-    damageMulti: 0.09
-    crit: 4
-    maxHealth: 40
-  worth: 9600000
-  rarity: 7
-掠夺者护胫:
-  item: GOLD_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 28
-    crit: 5
-    speedMulti: 0.12
-  worth: 9600000
-  rarity: 7
 掠夺者战盔:
   item: GOLD_HELMET
   lore:
@@ -12309,6 +12369,27 @@ Dodu的手炮:
   attributes:
     defence: 14
     useSpeedMiningMulti: 0.25
+  worth: 9600000
+  rarity: 7
+掠夺者鳞甲:
+  item: GOLD_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 38
+    damageMulti: 0.09
+    crit: 4
+    maxHealth: 40
+  worth: 9600000
+  rarity: 7
+掠夺者护胫:
+  item: GOLD_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 28
+    crit: 5
+    speedMulti: 0.12
   worth: 9600000
   rarity: 7
 幽灵兜帽:
@@ -12510,27 +12591,6 @@ Dodu的手炮:
     speedMulti: 0.2
   worth: 1000000
   rarity: 8
-渊泉盔甲:
-  item: DIAMOND_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 40
-    maxHealth: 40
-    damageMulti: 0.08
-    crit: 4
-  worth: 12000000
-  rarity: 8
-渊泉战裙:
-  item: DIAMOND_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 28
-    crit: 5
-    speedMulti: 0.1
-  worth: 12000000
-  rarity: 8
 渊泉战盔:
   item: DIAMOND_HELMET
   lore:
@@ -12572,6 +12632,27 @@ Dodu的手炮:
   attributes:
     defence: 12
     damageSummonMulti: 0.05
+  worth: 12000000
+  rarity: 8
+渊泉盔甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 40
+    maxHealth: 40
+    damageMulti: 0.08
+    crit: 4
+  worth: 12000000
+  rarity: 8
+渊泉战裙:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 28
+    crit: 5
+    speedMulti: 0.1
   worth: 12000000
   rarity: 8
 瘟疫死神面罩:
@@ -12759,6 +12840,423 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 10500000
   rarity: 10
+龙蒿战盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  - §r“远古信徒的头盔”
+  attributes:
+    defence: 66
+    crit: 5
+    damageMeleeMulti: 0.1
+    damageTakenMulti: -0.05
+  worth: 24000000
+  rarity: 12
+龙蒿兜帽:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  - §r“远古信徒的头盔”
+  attributes:
+    defence: 42
+    critRanged: 10
+    damageRangedMulti: 0.1
+    damageTakenMulti: -0.05
+  worth: 24000000
+  rarity: 12
+龙蒿面具:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  - §r“远古信徒的头盔”
+  attributes:
+    defence: 20
+    critMagic: 10
+    damageMagicMulti: 0.2
+    damageTakenMulti: -0.05
+    maxMana: 100
+    manaUseMulti: -0.15
+  worth: 24000000
+  rarity: 12
+龙蒿角盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  - §r“远古信徒的头盔”
+  attributes:
+    defence: 6
+    damageSummonMulti: 0.05
+    damageTakenMulti: -0.05
+  worth: 24000000
+  rarity: 12
+龙蒿胸甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  - §r“被放逐者的胸甲”
+  attributes:
+    defence: 74
+    crit: 5
+    damageMulti: 0.1
+    regen: 2
+    maxHealth: 80
+  worth: 24000000
+  rarity: 12
+龙蒿护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  - §r“传奇探险家的护胫”
+  attributes:
+    defence: 64
+    crit: 8
+    damageMulti: 0.08
+    speedMulti: 0.1
+  worth: 24000000
+  rarity: 12
+光棱头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 36
+    damageMagicMulti: 0.18
+    critMagic: 12
+    damageMeleeMulti: -0.2
+    damageRangedMulti: -0.2
+    damageSummonMulti: -0.2
+  worth: 24000000
+  rarity: 12
+光棱斗篷:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 66
+    damageMagicMulti: 0.12
+    critMagic: 15
+    damageMeleeMulti: -0.2
+    damageRangedMulti: -0.2
+    damageSummonMulti: -0.2
+    maxHealth: 40
+    maxMana: 40
+  worth: 24000000
+  rarity: 12
+光棱护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 42
+    damageMagicMulti: 0.1
+    critMagic: 12
+    damageMeleeMulti: -0.2
+    damageRangedMulti: -0.2
+    damageSummonMulti: -0.2
+    flightTimeMulti: 0.1
+    speedMulti: 0.1
+  worth: 24000000
+  rarity: 12
+血碾溃阵盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 98
+    damageMeleeMulti: 0.1
+  worth: 26000000
+  rarity: 13
+血弑曲角盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 68
+    damageRangedMulti: 0.1
+    critRanged: 10
+  worth: 26000000
+  rarity: 13
+血魇九头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 44
+    damageMagicMulti: 0.2
+    critMagic: 10
+    maxMana: 100
+    manaUseMulti: -0.17
+  worth: 26000000
+  rarity: 13
+血戮狂龙盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 32
+    damageSummonMulti: 0.05
+  worth: 26000000
+  rarity: 13
+血炎铠甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 70
+    damageMulti: 0.12
+    crit: 8
+    maxHealth: 80
+  worth: 26000000
+  rarity: 13
+血炎护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 58
+    damageMulti: 0.1
+    crit: 7
+    speedMulti: 0.17
+  worth: 26000000
+  rarity: 13
+蓝色欧米茄头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 38
+    damageMulti: 0.12
+    crit: 8
+  worth: 26000000
+  rarity: 13
+蓝色欧米茄胸甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 56
+    damageMulti: 0.12
+    crit: 8
+    regenMulti: -1
+  worth: 26000000
+  rarity: 13
+蓝色欧米茄触手:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 44
+    damageMulti: 0.12
+    crit: 12
+    speedMulti: 0.12
+  worth: 26000000
+  rarity: 13
+弑神者头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 96
+    damageMeleeMulti: 0.17
+    crit: 7
+  worth: 28000000
+  rarity: 14
+弑神者头套:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  - §r“我徒弟呢？”
+  attributes:
+    defence: 70
+    damageRangedMulti: 0.14
+    critRanged: 14
+  worth: 28000000
+  rarity: 14
+弑神者胸甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 82
+    maxHealth: 120
+    damageMulti: 0.11
+    crit: 6
+  worth: 28000000
+  rarity: 14
+弑神者腿甲:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 70
+    damageMulti: 0.1
+    crit: 10
+    speedMulti: 0.05
+  worth: 28000000
+  rarity: 14
+始源林海兜帽:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 42
+    damageMagicMulti: 0.23
+    critMagic: 13
+    maxMana: 100
+    manaUseMulti: -0.19
+  worth: 28000000
+  rarity: 14
+始源林海头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 26
+    damageSummonMulti: 0.1
+  worth: 28000000
+  rarity: 14
+始源林海盔甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 88
+    maxHealth: 160
+    damageMulti: 0.12
+    crit: 8
+  worth: 28000000
+  rarity: 14
+始源林海护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 78
+    damageMulti: 0.12
+    crit: 12
+    speedMulti: 0.1
+  worth: 28000000
+  rarity: 14
+金源耀日盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 108
+    damageMeleeMulti: 0.2
+    crit: 10
+  worth: 30000000
+  rarity: 15
+金兜铁面盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 80
+    damageRangedMulti: 0.3
+    critRanged: 30
+  worth: 30000000
+  rarity: 15
+金虚万象盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 48
+    damageMagicMulti: 0.3
+    critMagic: 20
+    maxMana: 100
+    manaUseMulti: -0.2
+  worth: 30000000
+  rarity: 15
+金宇星界盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 24
+    damageSummonMulti: 0.15
+  worth: 30000000
+  rarity: 15
+古圣金源盔甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 96
+    maxHealth: 200
+    damageMulti: 0.08
+    crit: 5
+  worth: 30000000
+  rarity: 15
+古圣金源腿甲:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 88
+    speedMulti: 0.1
+    damageMulti: 0.12
+    crit: 5
+  worth: 30000000
+  rarity: 15
+天钻头饰:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  - §r恶魔说：好了你赢了，收拾东西滚蛋吧
+  attributes:
+    defence: 28
+  worth: 30000000
+  rarity: 15
+天钻胸甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  - §r你怎么可以如此堕落！先前的作战方案都让你喂猪了吗？
+  attributes:
+    defence: 62
+  worth: 30000000
+  rarity: 15
+天钻战裙:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  - §r以眼还眼，以牙还牙
+  attributes:
+    defence: 48
+  worth: 30000000
+  rarity: 15
+魔影头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 100
+    damageMulti: 0.3
+    crit: 15
+  worth: 100000000
+  rarity: 16
+魔影装甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 100
+    damageMulti: 0.15
+    crit: 15
+    maxHealth: 200
+    maxMana: 100
+  worth: 100000000
+  rarity: 16
+魔影护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 100
+  worth: 100000000
+  rarity: 16
 钱币槽:
   item: PAPER
   lore:

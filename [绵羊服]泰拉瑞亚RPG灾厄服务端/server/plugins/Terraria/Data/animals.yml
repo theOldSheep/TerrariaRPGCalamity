@@ -77,7 +77,7 @@ subTypes:
       - underworld
   Firefly:
     七彩草蛉:
-      weight: 1
+      weight: 3
       biome:
       - hallow
     萤火虫:
@@ -183,7 +183,7 @@ subTypes:
       height:
       - cavern
     松露虫:
-      weight: 1
+      weight: 3
       biome:
       - jungle
       height:

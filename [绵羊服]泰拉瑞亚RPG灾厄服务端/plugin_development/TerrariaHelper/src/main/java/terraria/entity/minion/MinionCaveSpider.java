@@ -127,7 +127,7 @@ public class MinionCaveSpider extends EntityCaveSpider {
     public void B_() {
         super.B_();
         // update attribute
-        if (this.ticksLived % 10 == 0) {
+        if (this.ticksLived <= 1 || this.ticksLived % 10 == 0) {
             MinionHelper.updateAttrMap(this.attrMap, owner, originalStaff);
         }
         // validation
