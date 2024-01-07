@@ -474,8 +474,10 @@ public class TerrariaFishingHook extends EntityFishingHook {
             this.motZ *= speedOffset;
             this.setPosition(this.locX, this.locY, this.locZ);
 
-            velocityChanged = true;
-            positionChanged = true;
+            // try to prevent client glitch
+            this.positionChanged = true;
+            this.velocityChanged = true;
+            this.impulse = true;
 //            PlayerHelper.sendActionBar(ownerPly, this.waitingTimeRemaining + ", " + this.hookedTimeRemaining);
 //            Bukkit.broadcastMessage(this.waitingTimeRemaining + ", " + this.hookedTimeRemaining);
 //            Bukkit.broadcastMessage(this.motX + ", " + this.motY + ", " + this.motZ);

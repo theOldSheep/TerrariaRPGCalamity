@@ -5259,14 +5259,16 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 魔影装甲
     requireItem:
-    - 魔影锭:12
+    - 魔影锭:18
     - 岩浆石
     - 金锭
+    - 湮灭余烬
   '29':
     requireLevel: 1
     resultItem: 魔影护胫
     requireItem:
-    - 魔影锭:12
-    - 灵质:3
-    - 秘银锭:7
+    - 魔影锭:15
+    - 秘银锭
+    - 金锭:2
+    - 钻石:7
     - 灵气:9

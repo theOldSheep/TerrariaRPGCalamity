@@ -148,16 +148,6 @@ fish:
     七彩矿鱼:
       biome:
       - HALLOW
-    臭味鱼:
-      height:
-      - UNDERGROUND
-      - CAVERN
-      - UNDERWORLD
-      biomeException:
-      - CORRUPTION
-      - HALLOW
-      - DESERT
-      - SUNKEN_SEA
   VERY_RARE:
     闪鳍锦鲤:
       biome:

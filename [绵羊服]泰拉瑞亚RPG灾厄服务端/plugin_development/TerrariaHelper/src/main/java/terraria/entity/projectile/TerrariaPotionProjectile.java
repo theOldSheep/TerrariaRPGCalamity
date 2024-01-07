@@ -20,7 +20,7 @@ import terraria.util.*;
 import java.util.*;
 
 public class TerrariaPotionProjectile extends EntityPotion {
-    private static final double distFromBlock = 1e-3, distCheckOnGround = 1e-1;
+    private static final double distFromBlock = 1e-5, distCheckOnGround = 1e-1;
     public static final int DESTROY_HIT_BLOCK = 0, DESTROY_HIT_ENTITY = 1, DESTROY_TIME_OUT = 2;
     // projectile info
     public String projectileType, blockHitAction = "die", spawnSound = "", trailColor = null;
@@ -872,7 +872,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                 travelled.multiply(0);
                             }
                             futureLoc = new Vec3D(this.locX + travelled.getX(), this.locY + travelled.getY(), this.locZ + travelled.getZ());
-                            // tweak velocity
+                            // tweak velocity: bounce
                             if (blockHitAction.equals("bounce")) {
                                 updateBounce(bounce - 1);
                                 if (bounce < 0) {
@@ -1015,26 +1015,39 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                         }
                                     }
                                 }
-                            } else{
-                                // slide
+                            }
+                            // tweak velocity: slide
+                            else {
                                 switch (movingobjectposition.direction) {
                                     case UP:
                                     case DOWN:
-                                        velocity.setY(0);
+                                        // prevent homing projectiles constantly ramming into block and twitch
+                                        if (autoTraceTarget != null)
+                                            velocity.setY(velocity.getY() > 0 ? -0.1 : 0.1);
+                                        else
+                                            velocity.setY(0);
                                         break;
                                     case EAST:
                                     case WEST:
-                                        velocity.setX(0);
+                                        // prevent homing projectiles constantly ramming into block and twitch
+                                        if (autoTraceTarget != null)
+                                            velocity.setX(velocity.getX() > 0 ? -0.1 : 0.1);
+                                        else
+                                            velocity.setX(0);
                                         break;
                                     case SOUTH:
                                     case NORTH:
-                                        velocity.setZ(0);
+                                        // prevent homing projectiles constantly ramming into block and twitch
+                                        if (autoTraceTarget != null)
+                                            velocity.setZ(velocity.getZ() > 0 ? -0.1 : 0.1);
+                                        else
+                                            velocity.setZ(0);
                                         break;
                                 }
                             }
                             break;
                         }
-                        // thru: it never gets stuck, so make a break here
+                        // thru: it never gets stuck, so directly break here
                         case "thru":
                             break;
                         // stick: it is supposed to get stuck in the wall

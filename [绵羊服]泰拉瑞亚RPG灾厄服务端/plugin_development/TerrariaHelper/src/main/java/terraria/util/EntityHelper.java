@@ -1152,7 +1152,7 @@ public class EntityHelper {
             if (isDirectDmg) {
                 if (hasEffect(vPly, "弑神者冲刺"))
                     Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                            () -> applyEffect(vPly, "弑神者冲刺冷却", 600), 5);
+                            () -> applyEffect(vPly, "神弑者之停息", 600), 5);
             }
             if (hasEffect(vPly, "始源林海无敌") )
                 return false;

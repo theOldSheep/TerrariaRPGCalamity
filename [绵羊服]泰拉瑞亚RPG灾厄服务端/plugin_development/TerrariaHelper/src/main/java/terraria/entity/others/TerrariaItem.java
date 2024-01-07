@@ -55,13 +55,13 @@ public class TerrariaItem extends EntityItem {
     public double getPickUpDistance(Player ply) {
         Set<String> accessories = PlayerHelper.getAccessories(ply);
         HashMap<String, Integer> potionEffects = EntityHelper.getEffectMap(ply);
-        double reach = 3;
+        double reach = 2.75;
         switch (itemType) {
             case "铜币":
             case "银币":
             case "金币":
             case "铂金币":
-                reach = 8;
+                reach = 3;
                 break;
             case "生命强化焰":
             case "伤害强化焰":

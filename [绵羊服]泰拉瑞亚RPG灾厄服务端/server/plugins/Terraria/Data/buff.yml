@@ -52,7 +52,7 @@ buffConflicts:
     深渊狂乱冷却: 1
   26:
     弑神者冲刺: 0
-    弑神者冲刺冷却: 1
+    神弑者之停息: 1
   27:
     始源林海无敌: 0
     始源林海无敌冷却: 1
@@ -627,8 +627,8 @@ effects:
     attributes:
         damageTakenMulti: -0.85
         knockbackResistance: 1
-    tooltip: 下次收到攻击时减少85%收到伤害并无视击退
-  弑神者冲刺冷却:
+    tooltip: 下次受到攻击时减少85%受到伤害并无视击退
+  神弑者之停息:
     isBuff: false
     tooltip: 你需要稍等片刻才能再次使用弑神者冲刺
   始源林海无敌:

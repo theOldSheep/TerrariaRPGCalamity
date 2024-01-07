@@ -2258,7 +2258,6 @@ public class PlayerHelper {
                 new GenericHelper.ParticleLineOptions()
                         .setLength(speed)
                         .setWidth(0.2)
-                        .setStepsize(0.6)
                         .setTicksLinger(4)
                         .setAlpha(0.75f)
                         .setParticleColor(color));
