@@ -92,6 +92,33 @@
 熔岩护胫:
   match: "熔岩护胫"
   texture: "molten/molten"
+天蓝战盔:
+  match: "天蓝战盔"
+  texture: "aerospec/aerospec_melee"
+天蓝兜帽:
+  match: "天蓝兜帽"
+  texture: "aerospec/aerospec_ranged"
+天蓝帽:
+  match: "天蓝帽"
+  texture: "aerospec/aerospec_magic"
+天蓝头盔:
+  match: "天蓝头盔"
+  texture: "aerospec/aerospec_summon"
+天蓝胸甲:
+  match: "天蓝胸甲"
+  texture: "aerospec/aerospec"
+天蓝护胫:
+  match: "天蓝护胫"
+  texture: "aerospec/aerospec"
+死灵头盔:
+  match: "死灵头盔"
+  texture: "necro/necro"
+死灵胸甲:
+  match: "死灵胸甲"
+  texture: "necro/necro"
+死灵护胫:
+  match: "死灵护胫"
+  texture: "necro/necro"
 # 困难模式（肉后）护甲
 蜘蛛面具:
   match: "蜘蛛面具"
@@ -102,6 +129,15 @@
 蜘蛛护胫:
   match: "蜘蛛护胫"
   texture: "spider/spider"
+软壳贝盔:
+  match: "软壳贝盔"
+  texture: "mollusk/mollusk"
+软壳贝甲:
+  match: "软壳贝甲"
+  texture: "mollusk/mollusk"
+软壳护胫:
+  match: "软壳护胫"
+  texture: "mollusk/mollusk"
 水晶刺客兜帽:
   match: "水晶刺客兜帽"
   texture: "crystal_assassin/crystal_assassin"
