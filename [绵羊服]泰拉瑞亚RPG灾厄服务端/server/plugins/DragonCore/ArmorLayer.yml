@@ -47,6 +47,15 @@
 白银护胫:
   match: "白银护胫"
   texture: "silver/silver"
+沙漠巡游者帽:
+  match: "沙漠巡游者帽"
+  texture: "desert_prowler/desert_prowler"
+沙漠巡游者衣:
+  match: "沙漠巡游者衣"
+  texture: "desert_prowler/desert_prowler"
+沙漠巡游者裤:
+  match: "沙漠巡游者裤"
+  texture: "desert_prowler/desert_prowler"
 丛林帽:
   match: "丛林帽"
   texture: "jungle/jungle"
