@@ -47,6 +47,24 @@
 白银护胫:
   match: "白银护胫"
   texture: "silver/silver"
+钨钢战盔:
+  match: "钨钢战盔"
+  texture: "wulfrum/wulfrum_melee"
+钨钢头饰:
+  match: "钨钢头饰"
+  texture: "wulfrum/wulfrum_ranged"
+钨钢兜帽:
+  match: "钨钢兜帽"
+  texture: "wulfrum/wulfrum_magic"
+钨钢头罩:
+  match: "钨钢头罩"
+  texture: "wulfrum/wulfrum_summon"
+钨钢盔甲:
+  match: "钨钢盔甲"
+  texture: "wulfrum/wulfrum"
+钨钢护胫:
+  match: "钨钢护胫"
+  texture: "wulfrum/wulfrum"
 沙漠巡游者帽:
   match: "沙漠巡游者帽"
   texture: "desert_prowler/desert_prowler"
@@ -65,6 +83,24 @@
 丛林裤:
   match: "丛林裤"
   texture: "jungle/jungle"
+胜潮贝盔:
+  match: "胜潮贝盔"
+  texture: "victide/victide_melee"
+胜潮瑚巾:
+  match: "胜潮瑚巾"
+  texture: "victide/victide_ranged"
+胜潮隐帽:
+  match: "胜潮隐帽"
+  texture: "victide/victide_magic"
+胜潮面罩:
+  match: "胜潮面罩"
+  texture: "victide/victide_summon"
+胜潮胸甲:
+  match: "胜潮胸甲"
+  texture: "victide/victide"
+胜潮护胫:
+  match: "胜潮护胫"
+  texture: "victide/victide"
 黑曜石逃犯帽:
   match: "黑曜石逃犯帽"
   texture: "obsidian/obsidian"
@@ -128,6 +164,24 @@
 死灵护胫:
   match: "死灵护胫"
   texture: "necro/necro"
+斯塔提斯战盔:
+  match: "斯塔提斯战盔"
+  texture: "statigel/statigel_melee"
+斯塔提斯头饰:
+  match: "斯塔提斯头饰"
+  texture: "statigel/statigel_ranged"
+斯塔提斯帽子:
+  match: "斯塔提斯帽子"
+  texture: "statigel/statigel_magic"
+斯塔提斯兜帽:
+  match: "斯塔提斯兜帽"
+  texture: "statigel/statigel_summon"
+斯塔提斯盔甲:
+  match: "斯塔提斯盔甲"
+  texture: "statigel/statigel"
+斯塔提斯护胫:
+  match: "斯塔提斯护胫"
+  texture: "statigel/statigel"
 # 困难模式（肉后）护甲
 蜘蛛面具:
   match: "蜘蛛面具"
@@ -186,6 +240,24 @@
 秘银护胫:
   match: "秘银护胫"
   texture: "mythril/mythril"
+代达罗斯头盔:
+  match: "代达罗斯头盔"
+  texture: "daedalus/daedalus_melee"
+代达罗斯头罩:
+  match: "代达罗斯头罩"
+  texture: "daedalus/daedalus_ranged"
+代达罗斯兜帽:
+  match: "代达罗斯兜帽"
+  texture: "daedalus/daedalus_magic"
+代达罗斯面具:
+  match: "代达罗斯面具"
+  texture: "daedalus/daedalus_summon"
+代达罗斯胸甲:
+  match: "代达罗斯胸甲"
+  texture: "daedalus/daedalus"
+代达罗斯护胫:
+  match: "代达罗斯护胫"
+  texture: "daedalus/daedalus"
 精金头盔:
   match: "精金头盔"
   texture: "adamantite/adamantite_melee"
