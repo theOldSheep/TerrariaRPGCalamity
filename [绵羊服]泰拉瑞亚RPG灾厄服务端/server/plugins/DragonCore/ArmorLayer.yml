@@ -306,6 +306,30 @@
 叶绿护胫:
   match: "叶绿护胫"
   texture: "chlorophyte/chlorophyte"
+硫火兜帽:
+  match: "硫火兜帽"
+  texture: "brimflame/brimflame"
+硫火长袍:
+  match: "硫火长袍"
+  texture: "brimflame/brimflame"
+硫火靴子:
+  match: "硫火靴子"
+  texture: "brimflame/brimflame"
+掠夺者战盔:
+  match: "掠夺者战盔"
+  texture: "reaver/reaver_helm"
+掠夺者面罩:
+  match: "掠夺者面罩"
+  texture: "reaver/reaver_visage"
+掠夺者头套:
+  match: "掠夺者头套"
+  texture: "reaver/reaver_headgear"
+掠夺者鳞甲:
+  match: "掠夺者鳞甲"
+  texture: "reaver/reaver"
+掠夺者护胫:
+  match: "掠夺者护胫"
+  texture: "reaver/reaver"
 幽灵兜帽:
   match: "幽灵兜帽"
   texture: "spectre/spectre_vamp"
@@ -363,6 +387,15 @@
 阴森护腿:
   match: "阴森护腿"
   texture: "spooky_wood/spooky_wood"
+瘟疫死神面罩:
+  match: "瘟疫死神面罩"
+  texture: "plague_reaper/plague_reaper"
+瘟疫死神夹克:
+  match: "瘟疫死神夹克"
+  texture: "plague_reaper/plague_reaper"
+瘟疫死神长靴:
+  match: "瘟疫死神长靴"
+  texture: "plague_reaper/plague_reaper"
 # 月后护甲
 星云头盔:
   match: "星云头盔"
