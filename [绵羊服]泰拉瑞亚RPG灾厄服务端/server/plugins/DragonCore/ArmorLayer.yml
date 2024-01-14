@@ -387,6 +387,24 @@
 阴森护腿:
   match: "阴森护腿"
   texture: "spooky_wood/spooky_wood"
+渊泉战盔:
+  match: "渊泉战盔"
+  texture: "hydrothermic/hydrothermic_melee"
+渊泉头饰:
+  match: "渊泉头饰"
+  texture: "hydrothermic/hydrothermic_ranged"
+渊泉面具:
+  match: "渊泉面具"
+  texture: "hydrothermic/hydrothermic_magic"
+渊泉头盔:
+  match: "渊泉头盔"
+  texture: "hydrothermic/hydrothermic_summon"
+渊泉盔甲:
+  match: "渊泉盔甲"
+  texture: "hydrothermic/hydrothermic"
+渊泉战裙:
+  match: "渊泉战裙"
+  texture: "hydrothermic/hydrothermic"
 瘟疫死神面罩:
   match: "瘟疫死神面罩"
   texture: "plague_reaper/plague_reaper"
@@ -396,6 +414,15 @@
 瘟疫死神长靴:
   match: "瘟疫死神长靴"
   texture: "plague_reaper/plague_reaper"
+星幻头盔:
+  match: "星幻头盔"
+  texture: "astral/astral"
+星幻胸甲:
+  match: "星幻胸甲"
+  texture: "astral/astral"
+星幻护胫:
+  match: "星幻护胫"
+  texture: "astral/astral"
 # 月后护甲
 星云头盔:
   match: "星云头盔"
