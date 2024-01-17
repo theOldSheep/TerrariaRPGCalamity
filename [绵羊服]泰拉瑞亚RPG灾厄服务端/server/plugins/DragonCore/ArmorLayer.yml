@@ -460,3 +460,21 @@
 星璇护腿:
   match: "星璇护腿"
   texture: "vortex/vortex"
+龙蒿战盔:
+  match: "龙蒿战盔"
+  texture: "tarragon/tarragon_melee"
+龙蒿兜帽:
+  match: "龙蒿兜帽"
+  texture: "tarragon/tarragon_ranged"
+龙蒿面具:
+  match: "龙蒿面具"
+  texture: "tarragon/tarragon_magic"
+龙蒿角盔:
+  match: "龙蒿角盔"
+  texture: "tarragon/tarragon_summon"
+龙蒿胸甲:
+  match: "龙蒿胸甲"
+  texture: "tarragon/tarragon"
+龙蒿护胫:
+  match: "龙蒿护胫"
+  texture: "tarragon/tarragon"
