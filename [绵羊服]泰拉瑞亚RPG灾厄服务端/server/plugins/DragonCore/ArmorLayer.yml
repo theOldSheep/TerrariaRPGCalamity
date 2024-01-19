@@ -478,3 +478,21 @@
 龙蒿护胫:
   match: "龙蒿护胫"
   texture: "tarragon/tarragon"
+光棱头盔:
+  match: "光棱头盔"
+  texture: "prismatic/prismatic"
+光棱斗篷:
+  match: "光棱斗篷"
+  texture: "prismatic/prismatic"
+光棱护胫:
+  match: "光棱护胫"
+  texture: "prismatic/prismatic"
+蓝色欧米茄头盔:
+  match: "蓝色欧米茄头盔"
+  texture: "omega_blue/omega_blue"
+蓝色欧米茄胸甲:
+  match: "蓝色欧米茄胸甲"
+  texture: "omega_blue/omega_blue"
+蓝色欧米茄触手:
+  match: "蓝色欧米茄触手"
+  texture: "omega_blue/omega_blue"
