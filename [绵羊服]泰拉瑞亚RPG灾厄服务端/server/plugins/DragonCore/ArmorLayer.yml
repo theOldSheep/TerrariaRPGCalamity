@@ -487,6 +487,24 @@
 光棱护胫:
   match: "光棱护胫"
   texture: "prismatic/prismatic"
+血碾溃阵盔:
+  match: "血碾溃阵盔"
+  texture: "blood_flare/blood_flare_melee"
+血弑曲角盔:
+  match: "血弑曲角盔"
+  texture: "blood_flare/blood_flare_ranged"
+血魇九头盔:
+  match: "血魇九头盔"
+  texture: "blood_flare/blood_flare_magic"
+血戮狂龙盔:
+  match: "血戮狂龙盔"
+  texture: "blood_flare/blood_flare_summon"
+血炎铠甲:
+  match: "血炎铠甲"
+  texture: "blood_flare/blood_flare"
+血炎护胫:
+  match: "血炎护胫"
+  texture: "blood_flare/blood_flare"
 蓝色欧米茄头盔:
   match: "蓝色欧米茄头盔"
   texture: "omega_blue/omega_blue"
