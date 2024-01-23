@@ -514,3 +514,45 @@
 蓝色欧米茄触手:
   match: "蓝色欧米茄触手"
   texture: "omega_blue/omega_blue"
+弑神者头盔:
+  match: "弑神者头盔"
+  texture: "god_slayer/god_slayer_melee"
+弑神者头套:
+  match: "弑神者头套"
+  texture: "god_slayer/god_slayer_ranged"
+弑神者胸甲:
+  match: "弑神者胸甲"
+  texture: "god_slayer/god_slayer"
+弑神者腿甲:
+  match: "弑神者腿甲"
+  texture: "god_slayer/god_slayer"
+始源林海兜帽:
+  match: "始源林海兜帽"
+  texture: "silva/silva_magic"
+始源林海头盔:
+  match: "始源林海头盔"
+  texture: "silva/silva_summon"
+始源林海盔甲:
+  match: "始源林海盔甲"
+  texture: "silva/silva"
+始源林海护胫:
+  match: "始源林海护胫"
+  texture: "silva/silva"
+金源耀日盔:
+  match: "金源耀日盔"
+  texture: "auric_tesla/auric_tesla_melee"
+金兜铁面盔:
+  match: "金兜铁面盔"
+  texture: "auric_tesla/auric_tesla_ranged"
+金虚万象盔:
+  match: "金虚万象盔"
+  texture: "auric_tesla/auric_tesla_magic"
+金宇星界盔:
+  match: "金宇星界盔"
+  texture: "auric_tesla/auric_tesla_summon"
+古圣金源盔甲:
+  match: "古圣金源盔甲"
+  texture: "auric_tesla/auric_tesla"
+古圣金源腿甲:
+  match: "古圣金源腿甲"
+  texture: "auric_tesla/auric_tesla"
