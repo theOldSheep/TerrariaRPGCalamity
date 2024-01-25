@@ -14,11 +14,14 @@ import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.util.*;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,22 +29,25 @@ import java.util.Set;
 
 public class TerrariaMinecart extends EntityMinecartRideable {
     static HashMap<String, MinecartType> minecartTypeHashMap = new HashMap<>();
+    static
     enum MinecartType {
         // total speed: 0.5
-        NORMAL("矿车", 1, 0.25, 30, 170),
+        NORMAL("矿车", 1, 0.25, 30, 135),
         // total speed: 0.7
-        MECHANIC("机械矿车", 1,0.35, 100, 570),
-        // total speed: 0.9
-        RAINBOW("彩虹猫矿车", 2,0.3, 50, 310);
+        MECHANIC("机械矿车", 1,0.35, 50, 360),
+        // total speed: 1
+        RAINBOW("彩虹猫矿车", 3,0.25, 100, 666),
+        // total speed: 1.2
+        GOD_CART("神明矿车", 3,0.3, 175, 1250);
         public final String name;
         public final int movementTickAdditional;
         public final double maxSpeed, damageBasic, damageAdaptive;
-        MinecartType(String name, int movementTickAdditional, double maxSpeed, double damageBasic, double damageAdaptive) {
+        MinecartType(String name, int movementTickAdditional, double maxSpeed, double damageBasic, double damageMax) {
             this.name = name;
             this.maxSpeed = maxSpeed;
             this.movementTickAdditional = movementTickAdditional;
             this.damageBasic = damageBasic;
-            this.damageAdaptive = damageAdaptive;
+            this.damageAdaptive = damageMax - damageBasic;
 
             minecartTypeHashMap.put(name, this);
         }
@@ -49,6 +55,7 @@ public class TerrariaMinecart extends EntityMinecartRideable {
     MinecartType type;
     HashMap<String, Double> attrMap;
     ArrayList<org.bukkit.entity.Entity> damageCD = new ArrayList<>();
+    boolean collisionDamage = false;
     Player owner;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public TerrariaMinecart(World world) {
@@ -68,6 +75,7 @@ public class TerrariaMinecart extends EntityMinecartRideable {
         ((CraftWorld) spawnLoc.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // other settings
         addScoreboardTag("noDamage");
+        addScoreboardTag("ignoreCanDamageCheck");
         // attribute
         {
             attrMap = new HashMap<>();
@@ -99,22 +107,33 @@ public class TerrariaMinecart extends EntityMinecartRideable {
 
     public void initCollisionDamage() {
         double speedRatio = bukkitEntity.getVelocity().length() / maxSpeed;
+        if (speedRatio < 0.1) {
+            collisionDamage = false;
+            return;
+        }
+        collisionDamage = true;
         double damage = type.damageBasic + speedRatio * type.damageAdaptive;
-        double knockback = 2 + speedRatio * 8;
+        // knockback force between 3 and 25
+        double knockback = 3 + speedRatio * 22;
         attrMap.put("damage", damage);
         attrMap.put("knockback", knockback);
     }
     // handle collision
     public void handleCollisionDamage() {
+        if (!collisionDamage)
+            return;
         AxisAlignedBB bb = getBoundingBox();
         double xWidth = (bb.d - bb.a) / 2, zWidth = (bb.f - bb.c) / 2, height = (bb.e - bb.b) / 2;
         Vector initLoc = new Vector(bb.a + xWidth, bb.b + height, bb.c + zWidth);
         Set<HitEntityInfo> toDamage = HitEntityInfo.getEntitiesHit(bukkitEntity.getWorld(),
                 initLoc, initLoc.clone().add(bukkitEntity.getVelocity()),
-                xWidth, height, zWidth,
+                xWidth * 2, height * 2, zWidth * 2,
                 (Entity entity) -> EntityHelper.checkCanDamage(bukkitEntity, entity.getBukkitEntity(), false));
         for (HitEntityInfo hitEntityInfo : toDamage) {
             org.bukkit.entity.Entity victimBukkit = hitEntityInfo.getHitEntity().getBukkitEntity();
+            // do not collide with passenger
+            if (bukkitEntity.getPassengers().contains(victimBukkit))
+                continue;
             if (!damageCD.contains(victimBukkit)) {
                 EntityHelper.damageCD(damageCD, victimBukkit, 10);
                 EntityHelper.handleDamage(bukkitEntity, victimBukkit,

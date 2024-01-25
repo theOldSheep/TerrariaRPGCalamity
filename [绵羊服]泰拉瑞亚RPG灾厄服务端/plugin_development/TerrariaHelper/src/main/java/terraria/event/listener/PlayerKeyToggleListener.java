@@ -74,6 +74,9 @@ public class PlayerKeyToggleListener implements Listener {
                         hook.remove();
                 break;
             case "R":
+                PlayerHelper.handleMount(ply);
+                break;
+            case "F":
                 PlayerHelper.handleGrapplingHook(ply);
                 break;
             case "V":

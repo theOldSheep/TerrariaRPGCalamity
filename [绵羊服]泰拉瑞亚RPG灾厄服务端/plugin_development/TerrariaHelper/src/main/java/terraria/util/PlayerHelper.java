@@ -1103,7 +1103,7 @@ public class PlayerHelper {
                     entityToPush = ply.getVehicle();
                     // get mount (jump/flight) info
                     String mountType = GenericHelper.trimText(entityToPush.getName());
-                    ConfigurationSection mountSection = TerrariaHelper.mountConfig.getConfigurationSection(mountType);
+                    ConfigurationSection mountSection = TerrariaHelper.mountConfig.getConfigurationSection("mounts." + mountType);
                     if (mountSection != null) {
                         thrustProgressMax = mountSection.getInt("maxProgress", 0);
                         maxSpeed = mountSection.getDouble("maxSpeed", 1d);
@@ -2116,6 +2116,24 @@ public class PlayerHelper {
         // mark hook entity as a hook
         hookEntity.addScoreboardTag("isHook");
         hooks.add(hookEntity);
+    }
+    public static void handleMount(Player ply) {
+        if (!PlayerHelper.isProperlyPlaying(ply))
+            return;
+        // if the player has a mount, unmount the player
+        if (ply.getVehicle() != null) {
+            ply.getVehicle().eject();
+            ply.getVehicle().remove();
+        }
+        // otherwise, spawn the mount if needed
+        else {
+            ItemStack plyMountItem = DragoncoreHelper.getSlotItem(ply, "mount");
+            ConfigurationSection mountSection = TerrariaHelper.mountConfig.getConfigurationSection(
+                    "items." + ItemHelper.splitItemName(plyMountItem)[1]);
+            if (mountSection != null) {
+                // TODO
+            }
+        }
     }
     public static int giveItem(Player ply, ItemStack item, boolean dropExtra) {
         if (item == null) return 0;

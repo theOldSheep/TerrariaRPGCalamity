@@ -154,6 +154,7 @@ terraria\entity\boss\dukeFishron\WaterBlob.class
 terraria\entity\monster\MonsterSilverfish.class
 terraria\entity\monster\MonsterSlime.class
 terraria\entity\boss\lunaticCultist\PhantomDragon.class
+terraria\entity\others\TerrariaMount.class
 terraria\event\listener\RandomTitleListener.class
 terraria\util\EntityHelper$MetadataName.class
 terraria\entity\others\TerrariaCritter.class

@@ -20,6 +20,7 @@ import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.PortalCreateEvent;
@@ -159,6 +160,14 @@ public class VanillaMechanicListener implements Listener {
                 break;
             }
         }
+    }
+    @EventHandler(priority = EventPriority.LOW)
+    public void onVehicleHit(VehicleEntityCollisionEvent e) {
+        e.setCancelled(true);
+    }
+    @EventHandler(priority = EventPriority.LOW)
+    public void onHandItemSwap(PlayerSwapHandItemsEvent e) {
+        e.setCancelled(true);
     }
 
     // stop any portal from forming
