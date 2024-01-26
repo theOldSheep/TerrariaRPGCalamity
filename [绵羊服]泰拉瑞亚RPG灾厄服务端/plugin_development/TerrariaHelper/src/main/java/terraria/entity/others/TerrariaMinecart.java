@@ -1,44 +1,34 @@
 package terraria.entity.others;
 
-import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.DisguiseType;
-import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
-import me.libraryaddict.disguise.disguisetypes.watchers.DroppedItemWatcher;
 import net.minecraft.server.v1_12_R1.*;
-import net.minecraft.server.v1_12_R1.MathHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
-import terraria.util.*;
+import terraria.util.EntityHelper;
+import terraria.util.PlayerHelper;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 
 public class TerrariaMinecart extends EntityMinecartRideable {
     static HashMap<String, MinecartType> minecartTypeHashMap = new HashMap<>();
-    static
     enum MinecartType {
-        // total speed: 0.5
-        NORMAL("矿车", 1, 0.25, 30, 135),
-        // total speed: 0.7
-        MECHANIC("机械矿车", 1,0.35, 50, 360),
+        // total speed: 0.675
+        NORMAL("矿车", 2, 0.225, 30, 135),
         // total speed: 1
-        RAINBOW("彩虹猫矿车", 3,0.25, 100, 666),
-        // total speed: 1.2
-        GOD_CART("神明矿车", 3,0.3, 175, 1250);
+        MECHANIC("机械矿车", 3,0.25, 50, 360),
+        // total speed: 1.25
+        RAINBOW("彩虹猫矿车", 4,0.25, 100, 666),
+        // total speed: 1.5
+        GOD_CART("神明矿车", 5,0.25, 175, 1250);
         public final String name;
         public final int movementTickAdditional;
         public final double maxSpeed, damageBasic, damageAdaptive;
@@ -52,6 +42,11 @@ public class TerrariaMinecart extends EntityMinecartRideable {
             minecartTypeHashMap.put(name, this);
         }
     }
+    // Leave this line intact. Otherwise, the MinecartType will not initialize.
+    static {
+        if (MinecartType.values().length > 0)
+            TerrariaHelper.getInstance().getLogger().log(Level.SEVERE, "No minecart type is currently available!");
+    }
     MinecartType type;
     HashMap<String, Double> attrMap;
     ArrayList<org.bukkit.entity.Entity> damageCD = new ArrayList<>();
@@ -64,8 +59,13 @@ public class TerrariaMinecart extends EntityMinecartRideable {
     }
     public TerrariaMinecart(String playerTool, Location spawnLoc, Player owner) {
         super(((CraftWorld) spawnLoc.getWorld()).getHandle());
+        // if no proper minecart is provided, cancel this initialization
+        if (! minecartTypeHashMap.containsKey(playerTool)) {
+            die();
+            return;
+        }
         // setup variables
-        this.type = minecartTypeHashMap.getOrDefault(playerTool, MinecartType.NORMAL);
+        this.type = minecartTypeHashMap.get(playerTool);
         this.maxSpeed = type.maxSpeed;
         this.owner = owner;
         // set location
@@ -95,13 +95,12 @@ public class TerrariaMinecart extends EntityMinecartRideable {
         initCollisionDamage();
         super.B_();
         handleCollisionDamage();
-        for (int i = 0; i < type.movementTickAdditional; i ++) {
-            super.B_();
-            handleCollisionDamage();
-        }
-        // remove on empty
-        if (passengers.isEmpty()) {
-            die();
+        // additional ticking available only if owner is not targeted by a boss
+        if (! PlayerHelper.isTargetedByBOSS(owner)) {
+            for (int i = 0; i < type.movementTickAdditional; i++) {
+                super.B_();
+                handleCollisionDamage();
+            }
         }
     }
 
@@ -124,10 +123,11 @@ public class TerrariaMinecart extends EntityMinecartRideable {
             return;
         AxisAlignedBB bb = getBoundingBox();
         double xWidth = (bb.d - bb.a) / 2, zWidth = (bb.f - bb.c) / 2, height = (bb.e - bb.b) / 2;
-        Vector initLoc = new Vector(bb.a + xWidth, bb.b + height, bb.c + zWidth);
+        // collision damage also includes the player's height
+        Vector initLoc = new Vector(bb.a + xWidth, bb.b + height + 1, bb.c + zWidth);
         Set<HitEntityInfo> toDamage = HitEntityInfo.getEntitiesHit(bukkitEntity.getWorld(),
                 initLoc, initLoc.clone().add(bukkitEntity.getVelocity()),
-                xWidth * 2, height * 2, zWidth * 2,
+                xWidth * 1.25, height * 1.25 + 1, zWidth * 1.25,
                 (Entity entity) -> EntityHelper.checkCanDamage(bukkitEntity, entity.getBukkitEntity(), false));
         for (HitEntityInfo hitEntityInfo : toDamage) {
             org.bukkit.entity.Entity victimBukkit = hitEntityInfo.getHitEntity().getBukkitEntity();

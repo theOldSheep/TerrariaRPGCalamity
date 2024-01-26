@@ -758,10 +758,16 @@ ANVIL:
     - 狱炎锭:20
   '71':
     requireLevel: 1
-    resultItem: 铁轨:50
+    resultItem: 铁轨:48
     requireItem:
     - 铁锭:2
     - 木材:2
+  '71_1':
+    requireLevel: 1
+    resultItem: 充能铁轨:32
+    requireItem:
+    - 铁轨:32
+    - 金锭
   '72':
     requireLevel: 1
     resultItem: 蜘蛛法杖
@@ -1115,12 +1121,24 @@ ANVIL:
     - 真·圣剑
     - 断裂英雄剑
   '136':
+    requireLevel: 1
+    resultItem: 矿车
+    requireItem:
+    - 铁锭:5
+    - 木材:10
+  '136_1':
     requireLevel: 2
     resultItem: 机械矿车
     requireItem:
     - 机械电池片
     - 机械车轮片
     - 机械车体片
+  '136_2':
+    requireLevel: 3
+    resultItem: 神明矿车
+    requireItem:
+    - 宇宙锭:10
+    - 化神魂精
   '137':
     requireLevel: 2
     resultItem: 南瓜月勋章

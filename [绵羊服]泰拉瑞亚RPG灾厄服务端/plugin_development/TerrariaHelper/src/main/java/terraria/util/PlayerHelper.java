@@ -214,6 +214,17 @@ public class PlayerHelper {
         return Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE)
                 .getHighestBlockAt(0, 0).getLocation().add(0, 1, 0);
     }
+    // gets the accurate location (when mounted, ply.getLocation() may be inaccurate)
+    public static Location getAccurateLocation(Player ply) {
+        Location currLoc;
+        if (ply.getVehicle() == null)
+            currLoc = ply.getLocation();
+        else {
+            currLoc = ply.getVehicle().getLocation();
+            currLoc.setY(ply.getLocation().getY());
+        }
+        return currLoc;
+    }
     public static GameProgress getGameProgress(Player player) {
         ConfigurationSection bossDefeatedSection = getPlayerDataFile(player).getConfigurationSection("bossDefeated");
         if (bossDefeatedSection == null)
@@ -390,6 +401,25 @@ public class PlayerHelper {
         if (!player.isOnline()) return false;
         if (player.getGameMode() == GameMode.SPECTATOR) return false;
         return !player.getScoreboardTags().contains("unauthorized");
+    }
+    public static boolean isTargetedByBOSS(Player player) {
+        for (String bossName : BossHelper.bossMap.keySet()) {
+            ArrayList<LivingEntity> bossArrayList = BossHelper.bossMap.get(bossName);
+            // if a placeholder is in the boss map, move on
+            if (bossArrayList.isEmpty())
+                continue;
+            // find the target map of the boss
+            try {
+                HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targets =
+                        (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>)
+                                EntityHelper.getMetadata(bossArrayList.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
+                if (targets.containsKey(player.getUniqueId()))
+                    return true;
+            }
+            catch (Exception ignored) {
+            }
+        }
+        return false;
     }
     public static boolean hasVoidBag(Player ply) {
         ItemStack voidBag = ItemHelper.getItemFromDescription("虚空袋", false, new ItemStack(Material.BEDROCK));
@@ -1018,7 +1048,7 @@ public class PlayerHelper {
                         EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION).value());
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION,
                         EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_CURRENT_LOCATION).value());
-                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CURRENT_LOCATION, ply.getLocation());
+                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CURRENT_LOCATION, getAccurateLocation(ply));
             }
         }, 0, 1);
     }

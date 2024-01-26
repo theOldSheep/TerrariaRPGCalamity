@@ -11720,33 +11720,33 @@ Dodu的手炮:
     defence: 12
   worth: 450000
   rarity: 1
-死灵头盔:
+熔岩头盔:
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
   attributes:
-    defence: 12
-    damageRangedMulti: 0.05
+    defence: 16
+    critMelee: 7
   worth: 900000
-  rarity: 2
-死灵胸甲:
+  rarity: 3
+熔岩胸甲:
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
   attributes:
-    defence: 14
-    damageRangedMulti: 0.05
+    defence: 18
+    damageMeleeMulti: 0.07
   worth: 600000
-  rarity: 2
-死灵护胫:
+  rarity: 3
+熔岩护胫:
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
   attributes:
-    defence: 12
-    damageRangedMulti: 0.05
+    defence: 16
+    useSpeedMeleeMulti: 0.07
   worth: 600000
-  rarity: 2
+  rarity: 3
 天蓝战盔:
   item: IRON_HELMET
   lore:
@@ -11803,33 +11803,33 @@ Dodu的手炮:
     speedMulti: 0.24
   worth: 800000
   rarity: 3
-熔岩头盔:
+死灵头盔:
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
   attributes:
-    defence: 16
-    critMelee: 7
+    defence: 12
+    damageRangedMulti: 0.05
   worth: 900000
-  rarity: 3
-熔岩胸甲:
+  rarity: 2
+死灵胸甲:
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
   attributes:
-    defence: 18
-    damageMeleeMulti: 0.07
+    defence: 14
+    damageRangedMulti: 0.05
   worth: 600000
-  rarity: 3
-熔岩护胫:
+  rarity: 2
+死灵护胫:
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
   attributes:
-    defence: 16
-    useSpeedMeleeMulti: 0.07
+    defence: 12
+    damageRangedMulti: 0.05
   worth: 600000
-  rarity: 3
+  rarity: 2
 斯塔提斯战盔:
   item: IRON_HELMET
   lore:
@@ -12133,26 +12133,6 @@ Dodu的手炮:
     speedMulti: 0.05
   worth: 1800000
   rarity: 4
-代达罗斯胸甲:
-  item: DIAMOND_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 38
-    damageMulti: 0.03
-    crit: 3
-  worth: 4800000
-  rarity: 5
-代达罗斯护胫:
-  item: DIAMOND_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 30
-    crit: 3
-    speedMulti: 0.1
-  worth: 4800000
-  rarity: 5
 代达罗斯头盔:
   item: DIAMOND_HELMET
   lore:
@@ -12193,6 +12173,26 @@ Dodu的手炮:
   attributes:
     defence: 6
     damageSummonMulti: 0.05
+  worth: 4800000
+  rarity: 5
+代达罗斯胸甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 38
+    damageMulti: 0.03
+    crit: 3
+  worth: 4800000
+  rarity: 5
+代达罗斯护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 30
+    crit: 3
+    speedMulti: 0.1
   worth: 4800000
   rarity: 5
 神圣头饰:
@@ -13901,51 +13901,68 @@ Dodu的手炮:
 钩爪:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按空格收回钩爪
+  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 400000
   rarity: 1
 失谐钩爪:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按空格收回钩爪
+  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 5000000
   rarity: 4
 刺钩:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按空格收回钩爪
+  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 6000000
   rarity: 5
 阴森钩:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按空格收回钩爪
+  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 4000000
   rarity: 7
 圣诞钩:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按空格收回钩爪
+  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 4000000
   rarity: 7
 月钩:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按空格收回钩爪
+  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 10000000
   rarity: 4
 冰冻火把:
   item: TORCH
   worth: 1200
   rarity: 0
+矿车:
+  item: IRON_INGOT
+  lore:
+  - §r在主手时，右键铁轨将乘坐普通矿车
+  worth: 100000
+  rarity: 1
 机械矿车:
   item: IRON_INGOT
+  lore:
+  - §6专家模式物品
+  - §r在主手时，右键铁轨将乘坐机械矿车
   worth: 3000000
-  rarity: 3
+  rarity: 1000
 彩虹猫矿车:
   item: IRON_INGOT
+  lore:
+  - §r在主手时，右键铁轨将乘坐彩虹猫矿车
   worth: 10000000
   rarity: 10
+神明矿车:
+  item: IRON_INGOT
+  lore:
+  - §r在主手时，右键铁轨将乘坐神明矿车
+  worth: 30000000
+  rarity: 14
 日耀天塔柱:
   item: STICK
   lore:

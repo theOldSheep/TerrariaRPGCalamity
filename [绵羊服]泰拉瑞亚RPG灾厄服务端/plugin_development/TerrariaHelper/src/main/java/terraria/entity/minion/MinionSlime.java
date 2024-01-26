@@ -844,6 +844,7 @@ public class MinionSlime extends EntitySlime {
                         // update velocity at the current and the next tick
                         index = -1;
                         shouldUpdateVelocity = true;
+                        impulse = false;
                         // updated raven should teleport to a closer location
                         MinionHelper.attemptTeleport( minionBukkit, target.getEyeLocation().add(
                                 MathHelper.randomVector().multiply(10) ) );

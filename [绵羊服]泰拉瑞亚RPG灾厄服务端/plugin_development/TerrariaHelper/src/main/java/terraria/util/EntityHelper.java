@@ -1,5 +1,6 @@
 package terraria.util;
 
+import com.comphenix.protocol.PacketType;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
@@ -743,10 +744,11 @@ public class EntityHelper {
             switch (effect) {
                 case "扭曲": {
                     if (entity instanceof Player) {
-                        World entityWorld = entity.getWorld();
-                        double targetLocY = entityWorld.getHighestBlockAt(entity.getLocation()).getLocation().getY();
+                        Entity twistedEntity = entity.getVehicle() == null ? entity : entity.getVehicle();
+                        World entityWorld = twistedEntity.getWorld();
+                        double targetLocY = entityWorld.getHighestBlockAt(twistedEntity.getLocation()).getLocation().getY();
                         targetLocY += 8 + MathHelper.xsin_degree(timeRemaining * 2.5) * 2;
-                        double velY = targetLocY - entity.getLocation().getY();
+                        double velY = targetLocY - twistedEntity.getLocation().getY();
                         velY /= 6;
                         double maxVerticalSpeed = 0.5;
                         if (velY < -maxVerticalSpeed) {
@@ -754,9 +756,9 @@ public class EntityHelper {
                         } else if (velY > maxVerticalSpeed) {
                             velY = maxVerticalSpeed;
                         }
-                        Vector velocity = entity.getVelocity();
+                        Vector velocity = twistedEntity.getVelocity();
                         velocity.setY(velY);
-                        entity.setVelocity(velocity);
+                        twistedEntity.setVelocity(velocity);
                         entity.setFallDistance(0);
                     }
                     break;
@@ -1634,6 +1636,9 @@ public class EntityHelper {
         // the entity subject to that knockback
         Entity knockbackTaker = entity.getVehicle();
         if (knockbackTaker == null) knockbackTaker = entity;
+        // minecart takes no knockback
+        if (knockbackTaker instanceof Minecart)
+            return;
         // calculate the final velocity
         Vector finalVel = knockbackTaker.getVelocity();
         if (addOrReplace) {
@@ -2340,18 +2345,23 @@ public class EntityHelper {
         shootLoc.checkFinite();
         Vector enemyVel, enemyAcc;
         // get target velocity and acceleration
+        Location targetLoc;
         if (target instanceof Player) {
+            Player targetPly = (Player) target;
+            targetLoc = PlayerHelper.getAccurateLocation(targetPly);
+
             Location lastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_CURRENT_LOCATION).value();
             Location secondLastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_LAST_LOCATION).value();
-            if (lastLoc.distanceSquared(target.getLocation()) < 1e-5) {
+            if (lastLoc.distanceSquared(targetLoc) < 1e-5) {
                 lastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_LAST_LOCATION).value();
                 secondLastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_SECOND_LAST_LOCATION).value();
             }
-            enemyVel = target.getLocation().subtract(lastLoc).toVector();
+            enemyVel = targetLoc.clone().subtract(lastLoc).toVector();
             Vector enemyVelSecondLast = lastLoc.clone().subtract(secondLastLoc).toVector();
             enemyAcc = enemyVel.clone().subtract(enemyVelSecondLast);
         }
         else {
+            targetLoc = target.getLocation();
             MetadataValue currVelMetadata = getMetadata(target, MetadataName.ENTITY_CURRENT_VELOCITY);
             MetadataValue lastVelMetadata = getMetadata(target, MetadataName.ENTITY_LAST_VELOCITY);
             enemyVel = target.getVelocity();
@@ -2373,7 +2383,7 @@ public class EntityHelper {
         enemyAcc.add(aimHelperOption.accelerationOffset);
 
         // setup target location
-        Location targetLoc = target.getLocation(), predictedLoc;
+        Location predictedLoc;
         // aim at the middle of the entity
         if (target instanceof LivingEntity) {
             EntityLiving targetNMS = ((CraftLivingEntity) target).getHandle();
@@ -2382,9 +2392,15 @@ public class EntityHelper {
         }
         // a placeholder, so that the function does not report an error
         predictedLoc = targetLoc.clone();
-        // "hyper-params" for prediction
+        // "hyper-params" for prediction; note that ticks offset is roughly estimated before entering the loop.
+        boolean checkBlockColl;
+        if (target.getVehicle() == null)
+            checkBlockColl = ! ((CraftEntity) target).getHandle().noclip;
+        else {
+            checkBlockColl = !(target.getVehicle() instanceof Minecart);
+        }
         double predictionIntensity = aimHelperOption.intensity;
-        double ticksOffset = 0, lastTicksOffset;
+        double ticksOffset = targetLoc.distance(shootLoc) / aimHelperOption.projectileSpeed, lastTicksOffset;
         // approximate the velocity to use with epochs requested
         for (int currEpoch = 0; currEpoch < aimHelperOption.epoch; currEpoch ++) {
             // calculate the predicted enemy location
@@ -2399,7 +2415,7 @@ public class EntityHelper {
                     predictedLoc.add(enemyAcc.clone().multiply(ticksOffset * (ticksOffset - 1) * predictionIntensity / 2d));
                 // before handling gravity, make sure entities that clip with block do not go through blocks
                 // note that the loop is done with the "foot" position
-                if ( ! ((CraftEntity) target).getHandle().noclip ) {
+                if ( checkBlockColl ) {
                     // loopBeginLoc is the position from where the rough entity movement check STARTS in the current loop call
                     Location loopBeginLoc = target.getLocation().add(0, 1e-5, 0);
                     Vector locOffset = targetLoc.clone().subtract(loopBeginLoc).toVector();
@@ -2484,9 +2500,6 @@ public class EntityHelper {
                 }
                 // account for at most 3 seconds
                 ticksOffset = Math.min( Math.floor(ticksOffset),  60  );
-                // for faster convergence, the increment from the second epoch is multiplied by 1.5
-                if (currEpoch == 1)
-                    ticksOffset += (ticksOffset - lastTicksOffset) * 0.5;
             }
 
             // end the loop early if the last tick offset agrees with the current
