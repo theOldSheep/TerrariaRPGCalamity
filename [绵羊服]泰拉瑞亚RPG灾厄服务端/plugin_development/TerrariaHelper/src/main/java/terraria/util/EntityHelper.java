@@ -370,6 +370,7 @@ public class EntityHelper {
     public static MetadataValue getMetadata(Metadatable owner, MetadataName metadataName) {
         return getMetadata(owner, metadataName.toString());
     }
+    @Deprecated
     public static void setMetadata(Metadatable owner, String key, Object value) {
         if (value == null)
             owner.removeMetadata(key, TerrariaHelper.getInstance());

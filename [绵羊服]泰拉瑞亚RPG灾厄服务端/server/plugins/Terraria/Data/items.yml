@@ -13963,6 +13963,43 @@ Dodu的手炮:
   - §r在主手时，右键铁轨将乘坐神明矿车
   worth: 30000000
   rarity: 14
+黏鞍:
+  item: IRON_INGOT
+  lore:
+  - §r[坐骑]
+  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐史莱姆坐骑
+  - §r“亡了亡了，我没有史莱姆ang啊”
+  worth: 5000000
+  rarity: 8
+恩赐苹果:
+  item: IRON_INGOT
+  lore:
+  - §r[坐骑]
+  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐独角兽坐骑
+  - §r“创似他，克利希娜！”
+  worth: 5000000
+  rarity: 8
+明胶鞍:
+  item: IRON_INGOT
+  lore:
+  - §r[坐骑]
+  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐羽翼史莱姆坐骑
+  worth: 5000000
+  rarity: 8
+女巫扫帚:
+  item: IRON_INGOT
+  lore:
+  - §r[坐骑]
+  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐女巫扫帚
+  worth: 5000000
+  rarity: 10
+虾松露:
+  item: IRON_INGOT
+  lore:
+  - §r[坐骑]
+  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐猪龙鱼坐骑
+  worth: 5000000
+  rarity: 10
 日耀天塔柱:
   item: STICK
   lore:

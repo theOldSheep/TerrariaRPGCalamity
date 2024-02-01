@@ -8,6 +8,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftFish;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,15 +21,13 @@ import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.event.vehicle.VehicleCollisionEvent;
-import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
-import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.ProjectileSource;
+import org.spigotmc.event.entity.EntityDismountEvent;
 import terraria.TerrariaHelper;
 import terraria.entity.others.TerrariaFishingHook;
 import terraria.util.*;
@@ -70,11 +69,10 @@ public class VanillaMechanicListener implements Listener {
         }
     }
     @EventHandler(priority = EventPriority.LOW)
-    public void onDismount(VehicleExitEvent evt) {
-        if (evt.isCancelled())
-            return;
-        if (evt.getExited() instanceof Player)
-            evt.getVehicle().remove();
+    public void onDismount(EntityDismountEvent evt) {
+        if (evt.getEntity() instanceof Player) {
+            evt.getDismounted().remove();
+        }
     }
     @EventHandler(priority = EventPriority.LOW)
     public void onEntityDeath(EntityDeathEvent evt) {

@@ -73,6 +73,7 @@ import terraria.entity.monster.*;
 import terraria.entity.npc.*;
 import terraria.entity.others.TerrariaCritter;
 import terraria.entity.others.TerrariaItem;
+import terraria.entity.others.TerrariaMount;
 import terraria.entity.projectile.PlayerTornado;
 import terraria.util.NMSUtils;
 
@@ -181,6 +182,7 @@ public enum CustomEntities {
     NPC_NURSE               ("NPCNurse",               120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPCNurse.class),
     PLAYER_TORNADO          ("PlayerTornado",          55,  EntityType.SLIME,           EntitySlime.class,           PlayerTornado.class),
     TERRARIA_CRITTER        ("TerrariaCritter",        60,  EntityType.SILVERFISH,      EntitySilverfish.class,      TerrariaCritter.class),
+    TERRARIA_MOUNT          ("TerrariaMount",          55,  EntityType.SLIME,           EntitySlime.class,           TerrariaMount.class),
     TERRARIA_NPC            ("TerrariaNPC",            120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPC.class);
 
     private String name;

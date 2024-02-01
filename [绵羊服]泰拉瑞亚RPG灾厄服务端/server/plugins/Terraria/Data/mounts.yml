@@ -1,0 +1,57 @@
+黏鞍:
+  type: 史莱姆坐骑
+  gravity: true
+  slimeSize: 3
+  damage: 80
+  horSpdMax: 0.5
+  verSpdMax: 2
+  horAcc: 0.2
+  verAcc: 2
+  gravityAcc: 0.2
+  speedMultiWater: 1
+  speedMultiGround: 0.75
+恩赐苹果:
+  type: 独角兽坐骑
+  slimeSize: 3
+  gravity: true
+  horSpdMax: 1
+  verSpdMax: 1.6
+  horAcc: 0.4
+  verAcc: 1.6
+  speedMultiWater: 1
+  speedMultiGround: 1
+明胶鞍:
+  type: 羽翼史莱姆坐骑
+  gravity: true
+  slimeSize: 3
+  damage: 300
+  horSpdMax: 0.8
+  verSpdMax: 1
+  horAcc: 0.15
+  verAcc: 0.3
+  gravityAcc: 0.2
+  flightDuration: 45
+  speedMultiWater: 1
+  speedMultiGround: 0.75
+女巫扫帚:
+  type: 女巫扫帚
+  slimeSize: 2
+  gravity: false
+  horSpdMax: 1.2
+  verSpdMax: 0.8
+  horAcc: 0.1
+  verAcc: 0.1
+  flightDuration: 999999
+  speedMultiWater: 0.6
+  speedMultiGround: 1
+虾松露:
+  type: 猪龙鱼坐骑
+  slimeSize: 3
+  gravity: false
+  horSpdMax: 1.35
+  verSpdMax: 1
+  horAcc: 0.175
+  verAcc: 0.175
+  flightDuration: 999999
+  speedMultiWater: 1
+  speedMultiGround: 0.1

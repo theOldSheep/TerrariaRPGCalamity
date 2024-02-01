@@ -23,6 +23,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.event.celestialPillar.CelestialPillar;
+import terraria.entity.others.TerrariaMount;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.EventAndTime;
 
@@ -277,8 +278,11 @@ public class PlayerHelper {
         }
         return GameProgress.PRE_WALL_OF_FLESH;
     }
+    public static HashSet<String> getPlayerKeyPressed(Player ply) {
+        return (HashSet<String>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_KEYS_PRESSED).value();
+    }
     public static double getPlayerMoveYaw(Player ply) {
-        HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_KEYS_PRESSED).value();
+        HashSet<String> allKeysPressed = getPlayerKeyPressed(ply);
         String movementKeyDown = "";
         boolean fwd = allKeysPressed.contains("W"),
                 rev = allKeysPressed.contains("S"),
@@ -1129,21 +1133,8 @@ public class PlayerHelper {
                 boolean gliding = false;
                 // if the player is mounting
                 if (ply.getVehicle() != null) {
-//                    Bukkit.broadcastMessage("FLYING WITH VEHICLE");
-                    entityToPush = ply.getVehicle();
-                    // get mount (jump/flight) info
-                    String mountType = GenericHelper.trimText(entityToPush.getName());
-                    ConfigurationSection mountSection = TerrariaHelper.mountConfig.getConfigurationSection("mounts." + mountType);
-                    if (mountSection != null) {
-                        thrustProgressMax = mountSection.getInt("maxProgress", 0);
-                        maxSpeed = mountSection.getDouble("maxSpeed", 1d);
-                        maxAcceleration = mountSection.getDouble("maxAcceleration", 0.5d);
-                        horizontalSpeed = mountSection.getDouble("horizontalSpeed", 0.5d);
-                        extraJumpTime = mountSection.getInt("extraJumpTime", 0);
-                        accessoryUsed = mountType;
-                        // after mounting, accessory (wings etc.) can not be used until landed.
-                        thrustIndex = 999999;
-                    }
+                    // after mounting, accessory (wings etc.) can not be used until landed.
+                    thrustIndex = 999999;
                 }
                 // the player is not on mount
                 else {
@@ -1240,95 +1231,95 @@ public class PlayerHelper {
                             }
                         }
                     }
-                }
-                // update velocity
-                if (isThrusting) {
-                    double speedMulti = 1, accelerationMulti = 1;
-                    {
-                        thrustProgressMax *= EntityHelper.getAttrMap(ply).getOrDefault("flightTimeMulti", 1d);
-                        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
-                        double speedMultiAttribute = attrMap.getOrDefault("speedMulti", 1d);
-                        // speed multiplier that exceeds 100% are only 50% as effective on wings
-                        if (speedMultiAttribute > 1d)
-                            speedMultiAttribute = 1 + (speedMultiAttribute - 1) * 0.5;
-                        speedMulti *= speedMultiAttribute;
-                        accelerationMulti *= speedMultiAttribute / 2;
-                    }
-                    if (thrustProgress < extraJumpTime + thrustProgressMax) {
+                    // update velocity
+                    if (isThrusting) {
+                        double speedMulti = 1, accelerationMulti = 1;
+                        {
+                            thrustProgressMax *= EntityHelper.getAttrMap(ply).getOrDefault("flightTimeMulti", 1d);
+                            HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+                            double speedMultiAttribute = attrMap.getOrDefault("speedMulti", 1d);
+                            // speed multiplier that exceeds 100% are only 50% as effective on wings
+                            if (speedMultiAttribute > 1d)
+                                speedMultiAttribute = 1 + (speedMultiAttribute - 1) * 0.5;
+                            speedMulti *= speedMultiAttribute;
+                            accelerationMulti *= speedMultiAttribute / 2;
+                        }
+                        if (thrustProgress < extraJumpTime + thrustProgressMax) {
 //                        Bukkit.broadcastMessage(thrustProgress + "/" + extraJumpTime + ", " + thrustProgressMax);
-                        ply.setFallDistance(0);
-                        // movement direction
-                        Vector moveDir;
-                        {
-                            if (gliding) moveDir = new Vector(0, maxSpeed * -1, 0);
-                            else moveDir = new Vector(0, maxSpeed, 0);
-                            double horizontalMoveYaw = getPlayerMoveYaw(ply);
-                            if (horizontalMoveYaw < 1e5) {
-                                moveDir.add(MathHelper.vectorFromYawPitch_quick(horizontalMoveYaw, 0).multiply(horizontalSpeed));
-                            }
-                        }
-                        moveDir.multiply(speedMulti);
-                        Vector acceleration = moveDir.clone().subtract(entityToPush.getVelocity());
-                        double accLength = acceleration.length();
-                        if (accLength > maxAcceleration) {
-                            acceleration.multiply(maxAcceleration * accelerationMulti / accLength);
-                        }
-                        // regularize acceleration so that horizontal speed (especially from dash) do not get decreased
-                        {
-                            Vector moveDirHor = moveDir.clone().setY(0);
-                            Vector accelerationComponent = MathHelper.vectorProjection(moveDirHor, acceleration);
-                            // acceleration has a component that goes in the opposite direction
-                            if (moveDirHor.dot(accelerationComponent) < 0) {
-                                acceleration.subtract(accelerationComponent);
-                            }
-                        }
-                        entityToPush.setVelocity(entityToPush.getVelocity().add(acceleration));
-                        // extra jump
-                        if (thrustProgress < extraJumpTime) {
-                            // particles
-                            for (int xOffset = -1; xOffset <= 1; xOffset++) {
-                                for (int zOffset = -1; zOffset <= 1; zOffset++) {
-                                    for (int i = 0; i < 4; i++)
-                                        entityToPush.getWorld().spawnParticle(Particle.CLOUD,
-                                                entityToPush.getLocation().add((double) xOffset / 2, 0, (double) zOffset / 2)
-                                                        .add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5),
-                                                0, xOffset, 0, zOffset, 0.1);
+                            ply.setFallDistance(0);
+                            // movement direction
+                            Vector moveDir;
+                            {
+                                if (gliding) moveDir = new Vector(0, maxSpeed * -1, 0);
+                                else moveDir = new Vector(0, maxSpeed, 0);
+                                double horizontalMoveYaw = getPlayerMoveYaw(ply);
+                                if (horizontalMoveYaw < 1e5) {
+                                    moveDir.add(MathHelper.vectorFromYawPitch_quick(horizontalMoveYaw, 0).multiply(horizontalSpeed));
                                 }
                             }
-                            // extra jump do not get consumed continuously
+                            moveDir.multiply(speedMulti);
+                            Vector acceleration = moveDir.clone().subtract(entityToPush.getVelocity());
+                            double accLength = acceleration.length();
+                            if (accLength > maxAcceleration) {
+                                acceleration.multiply(maxAcceleration * accelerationMulti / accLength);
+                            }
+                            // regularize acceleration so that horizontal speed (especially from dash) do not get decreased
+                            {
+                                Vector moveDirHor = moveDir.clone().setY(0);
+                                Vector accelerationComponent = MathHelper.vectorProjection(moveDirHor, acceleration);
+                                // acceleration has a component that goes in the opposite direction
+                                if (moveDirHor.dot(accelerationComponent) < 0) {
+                                    acceleration.subtract(accelerationComponent);
+                                }
+                            }
+                            entityToPush.setVelocity(entityToPush.getVelocity().add(acceleration));
+                            // extra jump
+                            if (thrustProgress < extraJumpTime) {
+                                // particles
+                                for (int xOffset = -1; xOffset <= 1; xOffset++) {
+                                    for (int zOffset = -1; zOffset <= 1; zOffset++) {
+                                        for (int i = 0; i < 4; i++)
+                                            entityToPush.getWorld().spawnParticle(Particle.CLOUD,
+                                                    entityToPush.getLocation().add((double) xOffset / 2, 0, (double) zOffset / 2)
+                                                            .add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5),
+                                                    0, xOffset, 0, zOffset, 0.1);
+                                    }
+                                }
+                                // extra jump do not get consumed continuously
+                                ply.removeScoreboardTag("temp_thrusting");
+                            }
+                            // rocket boots / wings
+                            else {
+                                // particles
+                                switch (accessoryUsed) {
+                                    case "火箭靴":
+                                    case "幽灵靴": {
+                                        entityToPush.getWorld().spawnParticle(Particle.CLOUD,
+                                                entityToPush.getLocation()
+                                                        .add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5),
+                                                0, 0, -1, 0, 0.175);
+                                        break;
+                                    }
+                                }
+                                // make sure that gravity does not work against the wings
+                                ply.setGravity(false);
+                            }
+                            if (!gliding) {
+                                thrustProgress++;
+                            }
+                        }
+                        // flight time depleted
+                        if (thrustProgress >= extraJumpTime + thrustProgressMax) {
+//                    Bukkit.broadcastMessage("FLIGHT TIME DEPLETED!");
+                            // if the player is using accessory to fly
+                            ply.setGravity(true);
+                            if (!ply.isInsideVehicle()) {
+                                thrustProgress = 0;
+                                thrustIndex++;
+                            }
+                            // so that the next flying accessory do not automatically start using
                             ply.removeScoreboardTag("temp_thrusting");
                         }
-                        // rocket boots / wings
-                        else {
-                            // particles
-                            switch (accessoryUsed) {
-                                case "火箭靴":
-                                case "幽灵靴": {
-                                    entityToPush.getWorld().spawnParticle(Particle.CLOUD,
-                                            entityToPush.getLocation()
-                                                    .add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5),
-                                            0, 0, -1, 0, 0.175);
-                                    break;
-                                }
-                            }
-                            // make sure that gravity does not work against the wings
-                            ply.setGravity(false);
-                        }
-                        if (!gliding) {
-                            thrustProgress++;
-                        }
-                    }
-                    // flight time depleted
-                    if (thrustProgress >= extraJumpTime + thrustProgressMax) {
-//                    Bukkit.broadcastMessage("FLIGHT TIME DEPLETED!");
-                        // if the player is using accessory to fly
-                        ply.setGravity(true);
-                        if (!ply.isInsideVehicle()) {
-                            thrustProgress = 0;
-                            thrustIndex++;
-                        }
-                        // so that the next flying accessory do not automatically start using
-                        ply.removeScoreboardTag("temp_thrusting");
                     }
                 }
                 // save variables
@@ -2152,16 +2143,22 @@ public class PlayerHelper {
             return;
         // if the player has a mount, unmount the player
         if (ply.getVehicle() != null) {
-            ply.getVehicle().eject();
-            ply.getVehicle().remove();
+            Entity mount = ply.getVehicle();
+            mount.eject();
+            mount.remove();
         }
         // otherwise, spawn the mount if needed
         else {
+            if (ply.getScoreboardTags().contains("temp_useCD"))
+                return;
+            ItemUseHelper.applyCD(ply, 20);
             ItemStack plyMountItem = DragoncoreHelper.getSlotItem(ply, "mount");
-            ConfigurationSection mountSection = TerrariaHelper.mountConfig.getConfigurationSection(
-                    "items." + ItemHelper.splitItemName(plyMountItem)[1]);
-            if (mountSection != null) {
-                // TODO
+            String splitName = ItemHelper.splitItemName(plyMountItem)[1];
+            if (splitName.length() > 0) {
+                ConfigurationSection mountSection = TerrariaHelper.mountConfig.getConfigurationSection(splitName);
+                if (mountSection != null) {
+                    new TerrariaMount(ply, mountSection);
+                }
             }
         }
     }

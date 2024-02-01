@@ -49,6 +49,7 @@ public class PlayerKeyToggleListener implements Listener {
         if (allKeysPressed.contains(keyPressed))
             return;
         allKeysPressed.add(keyPressed);
+        int removeAllGrapplingHooks = 0;
         switch (keyPressed) {
             case "W":
             case "A":
@@ -67,17 +68,22 @@ public class PlayerKeyToggleListener implements Listener {
                 break;
             case "SPACE":
                 ply.addScoreboardTag("temp_thrusting");
-                // remove all hooks that are in place
-                for (Entity hook : (Collection<Entity>) EntityHelper.getMetadata(ply,
-                        EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOKS).value())
-                    if (hook.getVelocity().lengthSquared() < 1e-5)
-                        hook.remove();
+                // only remove hooks already in blocks
+                removeAllGrapplingHooks = 1;
                 break;
             case "R":
                 PlayerHelper.handleMount(ply);
+                // remove all hooks
+                removeAllGrapplingHooks = 2;
                 break;
             case "F":
                 PlayerHelper.handleGrapplingHook(ply);
+                // dismount on using hook
+                if (ply.getVehicle() != null) {
+                    Entity mount = ply.getVehicle();
+                    mount.eject();
+                    mount.remove();
+                }
                 break;
             case "V":
                 PlayerHelper.handleArmorSetActiveEffect(ply);
@@ -92,5 +98,12 @@ public class PlayerKeyToggleListener implements Listener {
                 ItemUseHelper.playerQuickUsePotion(ply, ItemUseHelper.QuickBuffType.MANA);
                 break;
         }
+
+        // remove all hooks that are in place
+        if (removeAllGrapplingHooks > 0)
+            for (Entity hook : (Collection<Entity>) EntityHelper.getMetadata(ply,
+                    EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOKS).value())
+                if (removeAllGrapplingHooks != 1 || hook.getVelocity().lengthSquared() < 1e-5)
+                    hook.remove();
     }
 }

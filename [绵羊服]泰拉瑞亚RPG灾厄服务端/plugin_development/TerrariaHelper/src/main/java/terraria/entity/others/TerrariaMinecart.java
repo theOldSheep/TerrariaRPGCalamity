@@ -1,7 +1,9 @@
 package terraria.entity.others;
 
-import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
+import net.minecraft.server.v1_12_R1.AxisAlignedBB;
+import net.minecraft.server.v1_12_R1.Entity;
+import net.minecraft.server.v1_12_R1.EntityMinecartRideable;
+import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.Player;
@@ -13,7 +15,6 @@ import terraria.util.EntityHelper;
 import terraria.util.PlayerHelper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.logging.Level;
@@ -25,10 +26,10 @@ public class TerrariaMinecart extends EntityMinecartRideable {
         NORMAL("矿车", 2, 0.225, 30, 135),
         // total speed: 1
         MECHANIC("机械矿车", 3,0.25, 50, 360),
-        // total speed: 1.25
-        RAINBOW("彩虹猫矿车", 4,0.25, 100, 666),
-        // total speed: 1.5
-        GOD_CART("神明矿车", 5,0.25, 175, 1250);
+        // total speed: 1.375
+        RAINBOW("彩虹猫矿车", 4,0.275, 100, 666),
+        // total speed: 1.6
+        GOD_CART("神明矿车", 3,0.4, 175, 1250);
         public final String name;
         public final int movementTickAdditional;
         public final double maxSpeed, damageBasic, damageAdaptive;
@@ -92,6 +93,11 @@ public class TerrariaMinecart extends EntityMinecartRideable {
 
     @Override
     public void B_() {
+        // remove when dismounted
+        if (! bukkitEntity.getPassengers().contains(owner)) {
+            die();
+            return;
+        }
         initCollisionDamage();
         super.B_();
         handleCollisionDamage();

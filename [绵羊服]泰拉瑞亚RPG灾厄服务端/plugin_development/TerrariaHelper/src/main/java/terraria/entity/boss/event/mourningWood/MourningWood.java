@@ -216,7 +216,10 @@ public class MourningWood extends EntitySlime {
             // drop one of special items
             double chance = EventAndTime.getWaveEventBossDropRate();
             if (Math.random() < chance) {
-                if (Math.random() < 1d/3) {
+                if (Math.random() < 1d/4) {
+                    ItemHelper.dropItem(bukkitEntity.getLocation(), "女巫扫帚");
+                }
+                else if (Math.random() < 1d/3) {
                     ItemHelper.dropItem(bukkitEntity.getLocation(), "阴森钩");
                 }
                 else if (Math.random() < 1d/2) {
