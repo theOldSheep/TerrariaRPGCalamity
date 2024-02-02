@@ -69,12 +69,6 @@ public class VanillaMechanicListener implements Listener {
         }
     }
     @EventHandler(priority = EventPriority.LOW)
-    public void onDismount(EntityDismountEvent evt) {
-        if (evt.getEntity() instanceof Player) {
-            evt.getDismounted().remove();
-        }
-    }
-    @EventHandler(priority = EventPriority.LOW)
     public void onEntityDeath(EntityDeathEvent evt) {
         evt.setDroppedExp(0);
         evt.getDrops().clear();

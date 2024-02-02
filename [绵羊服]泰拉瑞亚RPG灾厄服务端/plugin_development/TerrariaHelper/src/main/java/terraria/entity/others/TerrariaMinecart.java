@@ -16,6 +16,7 @@ import terraria.util.PlayerHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -50,7 +51,7 @@ public class TerrariaMinecart extends EntityMinecartRideable {
     }
     MinecartType type;
     HashMap<String, Double> attrMap;
-    ArrayList<org.bukkit.entity.Entity> damageCD = new ArrayList<>();
+    HashSet<org.bukkit.entity.Entity> damageCD = new HashSet<>();
     boolean collisionDamage = false;
     Player owner;
     // default constructor when the chunk loads with one of these custom entity to prevent bug

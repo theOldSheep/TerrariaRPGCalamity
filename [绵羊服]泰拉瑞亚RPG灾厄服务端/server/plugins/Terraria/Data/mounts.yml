@@ -5,18 +5,21 @@
   damage: 80
   horSpdMax: 0.5
   verSpdMax: 2
-  horAcc: 0.2
+  horAcc: 0.15
   verAcc: 2
   gravityAcc: 0.2
+  velIdleDecayMulti: 0
   speedMultiWater: 1
   speedMultiGround: 0.75
 恩赐苹果:
   type: 独角兽坐骑
   slimeSize: 3
   gravity: true
-  horSpdMax: 1
+  damage: 500
+  knockback: 16
+  horSpdMax: 1.2
   verSpdMax: 1.6
-  horAcc: 0.4
+  horAcc: 0.3
   verAcc: 1.6
   speedMultiWater: 1
   speedMultiGround: 1
@@ -26,11 +29,12 @@
   slimeSize: 3
   damage: 300
   horSpdMax: 0.8
-  verSpdMax: 1
+  verSpdMax: 2
   horAcc: 0.15
   verAcc: 0.3
   gravityAcc: 0.2
-  flightDuration: 45
+  velIdleDecayMulti: 0
+  flightDuration: 25
   speedMultiWater: 1
   speedMultiGround: 0.75
 女巫扫帚:

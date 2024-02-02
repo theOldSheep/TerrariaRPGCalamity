@@ -9,22 +9,26 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
+import terraria.entity.projectile.HitEntityInfo;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 import terraria.util.PlayerHelper;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 public class TerrariaMount extends EntitySlime {
-    protected double entityHalfWidth = 0.25, entityHalfHeight = 0.25,
-            horSpdMax = 0.5, verSpdMax = 1, horAcc = 0.1, verAcc = 0.2, gravityAcc = 0.1,
-            speedMultiWater = 0.5, speedMultiGround = 0.75;
+    public static final double DEFAULT_GRAVITY = 0.05, DEFAULT_VEL_IDLE_DECAY_MULTI = 0.95;
+    protected double contactDmg = 0, entityHalfWidth = 0.25, entityHalfHeight = 0.25,
+            horSpdMax = 0.5, verSpdMax = 1, horAcc = 0.1, verAcc = 0.2, gravityAcc = DEFAULT_GRAVITY,
+            speedMultiWater = 0.5, speedMultiGround = 0.75, velIdleDecayMulti = DEFAULT_VEL_IDLE_DECAY_MULTI;
     protected int flightIndex = 0, flightDuration = 1, slimeSize = 1;
     protected boolean hasGravity = true;
-    protected String minionType;
+    protected String mountType;
 
     protected HashMap<String, Double> attrMap;
+    HashSet<org.bukkit.entity.Entity> damageCD = new HashSet<>();
     protected AxisAlignedBB boundingBox = null;
     protected Player owner = null;
 
@@ -43,6 +47,7 @@ public class TerrariaMount extends EntitySlime {
         // init variables
         this.owner = owner;
 
+        contactDmg = mountSection.getDouble("damage", contactDmg);
         entityHalfWidth = mountSection.getDouble("entityHalfWidth", entityHalfWidth * slimeSize);
         entityHalfHeight = mountSection.getDouble("entityHalfHeight", entityHalfHeight * slimeSize);
         horSpdMax = mountSection.getDouble("horSpdMax", horSpdMax);
@@ -52,12 +57,13 @@ public class TerrariaMount extends EntitySlime {
         gravityAcc = mountSection.getDouble("gravityAcc", gravityAcc);
         speedMultiWater = mountSection.getDouble("speedMultiWater", speedMultiWater);
         speedMultiGround = mountSection.getDouble("speedMultiGround", speedMultiGround);
+        velIdleDecayMulti = mountSection.getDouble("velIdleDecayMulti", velIdleDecayMulti);
 
         flightDuration = mountSection.getInt("flightDuration", flightDuration);
         slimeSize = mountSection.getInt("slimeSize", slimeSize);
         flightIndex = flightDuration;
 
-        minionType = mountSection.getString("type", "坐骑");
+        mountType = mountSection.getString("type", "坐骑");
 
         hasGravity = mountSection.getBoolean("gravity", true);
         // no goal selector / target selector
@@ -65,14 +71,16 @@ public class TerrariaMount extends EntitySlime {
         this.targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute
         attrMap = new HashMap<>(5);
-        attrMap.put("damage", mountSection.getDouble("damage", 0d));
-        attrMap.put("knockback", 2d);
+        attrMap.put("damage", contactDmg);
+        attrMap.put("knockback", mountSection.getDouble("knockback", 2d));
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+        Bukkit.broadcastMessage(attrMap + ", " + attrMap.get("knockback"));
         // init properties
         setNoGravity(! hasGravity);
         setSize(slimeSize, false);
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, owner);
-        setCustomName(minionType);
+        addScoreboardTag("noDamage");
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_SOURCE, owner);
+        setCustomName(mountType);
         setCustomNameVisible(false);
         getAttributeInstance(GenericAttributes.maxHealth).setValue(444);
         setHealth(444f);
@@ -80,6 +88,8 @@ public class TerrariaMount extends EntitySlime {
         updateBoundingBox();
         // make player mount
         bukkitEntity.addPassenger(owner);
+        // prevent unexpected dismount
+        owner.setVelocity(new Vector());
     }
 
     protected void updateBoundingBox() {
@@ -96,7 +106,6 @@ public class TerrariaMount extends EntitySlime {
 
     @Override
     public void B_() {
-        Bukkit.broadcastMessage("-1");
         // remove when dismounted
         if (! bukkitEntity.getPassengers().contains(owner)) {
             die();
@@ -106,7 +115,6 @@ public class TerrariaMount extends EntitySlime {
         // TODO: mount disappear in water fixture (the player gets teleported?)
         super.B_();
 
-        Bukkit.broadcastMessage("0");
         // update AABB
         updateBoundingBox();
         // movement
@@ -124,6 +132,7 @@ public class TerrariaMount extends EntitySlime {
         // horizontal movement
         Vector finalHorComp = new Vector(motX, 0, motZ);
         {
+            Bukkit.broadcastMessage("B: " + finalHorComp);
             double plyHorMoveDir = PlayerHelper.getPlayerMoveYaw(owner);
             if (plyHorMoveDir < 1e5) {
                 Vector horMoveDir = MathHelper.vectorFromYawPitch_quick(plyHorMoveDir, 0);
@@ -131,30 +140,36 @@ public class TerrariaMount extends EntitySlime {
                 finalHorComp.add(horMoveDir);
             }
             else {
-                finalHorComp.multiply((isOnGround && hasGravity) ? 0.75 : 0.95);
+                finalHorComp.multiply((isOnGround && hasGravity) ? Math.pow(velIdleDecayMulti, 5) : velIdleDecayMulti);
             }
+            Bukkit.broadcastMessage("A: " + finalHorComp);
             MathHelper.setVectorLength(finalHorComp, horSpdLmt, true);
         }
         // vertical movement
-        Bukkit.broadcastMessage("1");
         double verticalVel = motY;
         {
             // reset flight duration
             if (isOnGround || super.onGround)
                 flightIndex = 0;
             // flight handling
-            if (ownerTags.contains("temp_thrusting") && flightIndex < flightDuration) {
+            boolean canFly = flightIndex < flightDuration;
+            if (ownerTags.contains("temp_thrusting") && canFly) {
                 verticalVel += verAcc;
                 verticalVel = Math.min(verticalVel, verSpdLmt);
+                flightIndex ++;
+            }
+            else if (PlayerHelper.getPlayerKeyPressed(owner).contains("LEFT_SHIFT") && flightDuration > 10000 && canFly) {
+                verticalVel -= verAcc;
+                verticalVel = Math.max(verticalVel, -verSpdLmt);
                 flightIndex ++;
             }
             // other mechanics
             else {
                 // vertical velocity decay
-                verticalVel *= 0.95;
+                verticalVel *= DEFAULT_VEL_IDLE_DECAY_MULTI;
 
                 boolean shouldHandleGravity = hasGravity;
-                switch (minionType) {
+                switch (mountType) {
                     // slimes float when on water
                     case "史莱姆坐骑":
                     case "羽翼史莱姆坐骑": {
@@ -168,18 +183,51 @@ public class TerrariaMount extends EntitySlime {
                 }
                 // gravity if applicable
                 if (shouldHandleGravity) {
-                    verticalVel -= gravityAcc;
+                    // if entity is moving upward, slime quick falling will not work
+                    verticalVel -= verticalVel > 0 ? DEFAULT_GRAVITY : gravityAcc;
                     verticalVel = Math.max(verticalVel, gravityAcc * -30);
                 }
                 // otherwise, reset fall distance
                 else
                     fallDistance = 0f;
-                Bukkit.broadcastMessage("2");
             }
         }
         // combine speed
         finalHorComp.setY(verticalVel);
         bukkitEntity.setVelocity(finalHorComp);
-        Bukkit.broadcastMessage("3");
+        // handle contact damage
+        handleCollisionDamage();
+        // update facing dir
+        yaw = ((CraftPlayer) owner).getHandle().yaw;
+        // prevent unexpected dismount
+        owner.setVelocity(bukkitEntity.getVelocity());
+    }
+    public void handleCollisionDamage() {
+        if (contactDmg <= 0d)
+            return;
+        // collision damage also includes the player's height
+        Vector initLoc = new Vector(locX, locY + entityHalfHeight, locZ);
+        Set<HitEntityInfo> toDamage = HitEntityInfo.getEntitiesHit(bukkitEntity.getWorld(),
+                initLoc, initLoc.clone().add(bukkitEntity.getVelocity()),
+                entityHalfWidth, entityHalfHeight, entityHalfWidth,
+                (Entity entity) -> EntityHelper.checkCanDamage(bukkitEntity, entity.getBukkitEntity(), false));
+        for (HitEntityInfo hitEntityInfo : toDamage) {
+            org.bukkit.entity.Entity victimBukkit = hitEntityInfo.getHitEntity().getBukkitEntity();
+            // do not collide with passenger
+            if (bukkitEntity.getPassengers().contains(victimBukkit))
+                continue;
+            if (!damageCD.contains(victimBukkit)) {
+                EntityHelper.damageCD(damageCD, victimBukkit, 5);
+                EntityHelper.handleDamage(bukkitEntity, victimBukkit,
+                        contactDmg, EntityHelper.DamageReason.DIRECT_DAMAGE);
+                // slimes also bounce upward
+                switch (mountType) {
+                    case "史莱姆坐骑":
+                    case "羽翼史莱姆坐骑":
+                        motY = 2;
+                        break;
+                }
+            }
+        }
     }
 }
