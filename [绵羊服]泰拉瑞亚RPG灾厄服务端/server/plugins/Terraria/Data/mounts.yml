@@ -10,17 +10,18 @@
   gravityAcc: 0.2
   velIdleDecayMulti: 0
   speedMultiWater: 1
-  speedMultiGround: 0.75
+  speedMultiGround: 1
 恩赐苹果:
   type: 独角兽坐骑
-  slimeSize: 3
+  slimeSize: 5
   gravity: true
   damage: 500
-  knockback: 16
+  knockback: 35
   horSpdMax: 1.2
   verSpdMax: 1.6
   horAcc: 0.3
   verAcc: 1.6
+  velIdleDecayMulti: 0.6
   speedMultiWater: 1
   speedMultiGround: 1
 明胶鞍:
@@ -36,10 +37,11 @@
   velIdleDecayMulti: 0
   flightDuration: 25
   speedMultiWater: 1
-  speedMultiGround: 0.75
+  speedMultiGround: 1
 女巫扫帚:
   type: 女巫扫帚
-  slimeSize: 2
+  slimeSize: 1
+  entityHalfWidth: 0.75
   gravity: false
   horSpdMax: 1.2
   verSpdMax: 0.8
@@ -50,7 +52,7 @@
   speedMultiGround: 1
 虾松露:
   type: 猪龙鱼坐骑
-  slimeSize: 3
+  slimeSize: 4
   gravity: false
   horSpdMax: 1.35
   verSpdMax: 1

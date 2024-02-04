@@ -2097,12 +2097,16 @@ public class EntityHelper {
                     sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundDamaged", sound);
                     victim.getWorld().playSound(victim.getLocation(), sound, 3, 1);
                 }
-                // knockback
-                if (knockback > 0) {
-                    Vector vec = victim.getLocation().subtract(damager.getLocation()).toVector();
-                    MathHelper.setVectorLength(vec, knockback / 20);
-                    knockback(victim, vec, false);
-                }
+            }
+            // knockback
+            if (knockback > 0) {
+                Vector vec = victim.getLocation().subtract(damager.getLocation()).toVector();
+                double kbForce = knockback / 20;
+                MathHelper.setVectorLength(vec, kbForce);
+                // for non-downward knockback, amplify the upward component and push the victim off ground
+                if (victim.isOnGround() && vec.getY() > -1e-3)
+                    vec.setY(vec.getY() + Math.min(kbForce * 0.35, 1));
+                knockback(victim, vec, false);
             }
         }
         // remove the not damaged marker scoreboard tag

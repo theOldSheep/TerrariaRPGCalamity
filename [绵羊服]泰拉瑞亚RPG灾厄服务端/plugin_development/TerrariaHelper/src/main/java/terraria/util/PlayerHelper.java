@@ -1204,8 +1204,8 @@ public class PlayerHelper {
                         // if the player is jumping
                         else {
                             thrustProgressMax = 6;
-                            maxSpeed = 0.6;
-                            maxAcceleration = 0.35;
+                            maxSpeed = 0.5;
+                            maxAcceleration = 0.6;
                             horizontalSpeed = 0.2;
                         }
                         // if no valid accessory is being selected, attempt to glide

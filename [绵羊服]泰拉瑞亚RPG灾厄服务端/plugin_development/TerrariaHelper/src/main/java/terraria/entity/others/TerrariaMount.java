@@ -23,13 +23,12 @@ public class TerrariaMount extends EntitySlime {
     protected double contactDmg = 0, entityHalfWidth = 0.25, entityHalfHeight = 0.25,
             horSpdMax = 0.5, verSpdMax = 1, horAcc = 0.1, verAcc = 0.2, gravityAcc = DEFAULT_GRAVITY,
             speedMultiWater = 0.5, speedMultiGround = 0.75, velIdleDecayMulti = DEFAULT_VEL_IDLE_DECAY_MULTI;
-    protected int flightIndex = 0, flightDuration = 1, slimeSize = 1;
-    protected boolean hasGravity = true;
+    protected int flightIndex = 0, flightDuration = 0, slimeSize = 1;
+    protected boolean hasGravity = true, isInfFlight = false;
     protected String mountType;
 
     protected HashMap<String, Double> attrMap;
     HashSet<org.bukkit.entity.Entity> damageCD = new HashSet<>();
-    protected AxisAlignedBB boundingBox = null;
     protected Player owner = null;
 
     // default constructor accounting for default behaviour (removal)
@@ -47,6 +46,9 @@ public class TerrariaMount extends EntitySlime {
         // init variables
         this.owner = owner;
 
+        flightDuration = mountSection.getInt("flightDuration", flightDuration);
+        slimeSize = mountSection.getInt("slimeSize", slimeSize);
+
         contactDmg = mountSection.getDouble("damage", contactDmg);
         entityHalfWidth = mountSection.getDouble("entityHalfWidth", entityHalfWidth * slimeSize);
         entityHalfHeight = mountSection.getDouble("entityHalfHeight", entityHalfHeight * slimeSize);
@@ -58,10 +60,9 @@ public class TerrariaMount extends EntitySlime {
         speedMultiWater = mountSection.getDouble("speedMultiWater", speedMultiWater);
         speedMultiGround = mountSection.getDouble("speedMultiGround", speedMultiGround);
         velIdleDecayMulti = mountSection.getDouble("velIdleDecayMulti", velIdleDecayMulti);
-
-        flightDuration = mountSection.getInt("flightDuration", flightDuration);
-        slimeSize = mountSection.getInt("slimeSize", slimeSize);
-        flightIndex = flightDuration;
+        // for non-inf flight, the player needs to reset the flight time (hit the ground)
+        isInfFlight = flightDuration > 10000;
+        flightIndex = isInfFlight ? 0 : flightDuration;
 
         mountType = mountSection.getString("type", "坐骑");
 
@@ -74,7 +75,6 @@ public class TerrariaMount extends EntitySlime {
         attrMap.put("damage", contactDmg);
         attrMap.put("knockback", mountSection.getDouble("knockback", 2d));
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
-        Bukkit.broadcastMessage(attrMap + ", " + attrMap.get("knockback"));
         // init properties
         setNoGravity(! hasGravity);
         setSize(slimeSize, false);
@@ -84,25 +84,20 @@ public class TerrariaMount extends EntitySlime {
         setCustomNameVisible(false);
         getAttributeInstance(GenericAttributes.maxHealth).setValue(444);
         setHealth(444f);
-        // init AABB
-        updateBoundingBox();
+        initBoundingBox();
+        bukkitEntity.setVelocity(owner.getVelocity());
         // make player mount
         bukkitEntity.addPassenger(owner);
         // prevent unexpected dismount
         owner.setVelocity(new Vector());
     }
 
-    protected void updateBoundingBox() {
-//        this.boundingBox = new AxisAlignedBB(
-//                locX + entityHalfWidth, locY + entityHalfHeight, locZ + entityHalfWidth,
-//                locX - entityHalfWidth, locY - entityHalfHeight, locZ - entityHalfWidth);
+    protected void initBoundingBox() {
+        a(new AxisAlignedBB(
+                locX + entityHalfWidth, locY + entityHalfHeight * 2, locZ + entityHalfWidth,
+                locX - entityHalfWidth, locY, locZ - entityHalfWidth) );
     }
 
-    @Override
-    public AxisAlignedBB getBoundingBox() {
-        return super.getBoundingBox();
-//        return this.boundingBox;
-    }
 
     @Override
     public void B_() {
@@ -111,12 +106,30 @@ public class TerrariaMount extends EntitySlime {
             die();
             return;
         }
-        // TODO: press "SHIFT" to fly downward; contact dmg
         // TODO: mount disappear in water fixture (the player gets teleported?)
-        super.B_();
 
-        // update AABB
-        updateBoundingBox();
+        // basic tick; undo the horizontal resistance done
+        {
+            Vector prevVel = bukkitEntity.getVelocity();
+            super.B_();
+            Vector aftVel = bukkitEntity.getVelocity();
+
+            double yComp = aftVel.getY();
+            aftVel.setY(0);
+
+            double aVLS = aftVel.lengthSquared();
+            if (aVLS > 1e-9) {
+                Vector projected = MathHelper.vectorProjection(aftVel, prevVel);
+                double factor = Math.sqrt(projected.lengthSquared() / aVLS);
+
+                aftVel.multiply(factor);
+                aftVel.setY(yComp);
+                bukkitEntity.setVelocity(aftVel);
+            }
+        }
+
+        // handle contact damage
+        handleCollisionDamage();
         // movement
         Set<String> ownerTags = owner.getScoreboardTags();
         double horSpdLmt = horSpdMax;
@@ -132,7 +145,6 @@ public class TerrariaMount extends EntitySlime {
         // horizontal movement
         Vector finalHorComp = new Vector(motX, 0, motZ);
         {
-            Bukkit.broadcastMessage("B: " + finalHorComp);
             double plyHorMoveDir = PlayerHelper.getPlayerMoveYaw(owner);
             if (plyHorMoveDir < 1e5) {
                 Vector horMoveDir = MathHelper.vectorFromYawPitch_quick(plyHorMoveDir, 0);
@@ -142,7 +154,6 @@ public class TerrariaMount extends EntitySlime {
             else {
                 finalHorComp.multiply((isOnGround && hasGravity) ? Math.pow(velIdleDecayMulti, 5) : velIdleDecayMulti);
             }
-            Bukkit.broadcastMessage("A: " + finalHorComp);
             MathHelper.setVectorLength(finalHorComp, horSpdLmt, true);
         }
         // vertical movement
@@ -152,13 +163,13 @@ public class TerrariaMount extends EntitySlime {
             if (isOnGround || super.onGround)
                 flightIndex = 0;
             // flight handling
-            boolean canFly = flightIndex < flightDuration;
+            boolean canFly = flightIndex < flightDuration || isOnGround;
             if (ownerTags.contains("temp_thrusting") && canFly) {
                 verticalVel += verAcc;
                 verticalVel = Math.min(verticalVel, verSpdLmt);
                 flightIndex ++;
             }
-            else if (PlayerHelper.getPlayerKeyPressed(owner).contains("LEFT_SHIFT") && flightDuration > 10000 && canFly) {
+            else if (PlayerHelper.getPlayerKeyPressed(owner).contains("LSHIFT") && isInfFlight && canFly) {
                 verticalVel -= verAcc;
                 verticalVel = Math.max(verticalVel, -verSpdLmt);
                 flightIndex ++;
@@ -166,7 +177,7 @@ public class TerrariaMount extends EntitySlime {
             // other mechanics
             else {
                 // vertical velocity decay
-                verticalVel *= DEFAULT_VEL_IDLE_DECAY_MULTI;
+                verticalVel *= isInfFlight ? velIdleDecayMulti : DEFAULT_VEL_IDLE_DECAY_MULTI;
 
                 boolean shouldHandleGravity = hasGravity;
                 switch (mountType) {
@@ -195,16 +206,33 @@ public class TerrariaMount extends EntitySlime {
         // combine speed
         finalHorComp.setY(verticalVel);
         bukkitEntity.setVelocity(finalHorComp);
-        // handle contact damage
-        handleCollisionDamage();
         // update facing dir
         yaw = ((CraftPlayer) owner).getHandle().yaw;
-        // prevent unexpected dismount
+        // TODO: prevent unexpected dismount (?)
         owner.setVelocity(bukkitEntity.getVelocity());
     }
     public void handleCollisionDamage() {
         if (contactDmg <= 0d)
             return;
+        // tweak damage based on mount type
+        double currDmg = contactDmg;
+        switch (mountType) {
+            case "史莱姆坐骑":
+            case "羽翼史莱姆坐骑":
+                // only deal damage when sitting onto enemy
+                if (motY > -gravityAcc)
+                    return;
+                break;
+            case "独角兽坐骑":
+                // damage proportional to speed
+                Vector temp = bukkitEntity.getVelocity();
+                temp.setY(0);
+                double dmgMulti = temp.length() / horSpdMax;
+                if (dmgMulti < 0.2)
+                    return;
+                currDmg *= dmgMulti;
+                break;
+        }
         // collision damage also includes the player's height
         Vector initLoc = new Vector(locX, locY + entityHalfHeight, locZ);
         Set<HitEntityInfo> toDamage = HitEntityInfo.getEntitiesHit(bukkitEntity.getWorld(),
@@ -219,7 +247,7 @@ public class TerrariaMount extends EntitySlime {
             if (!damageCD.contains(victimBukkit)) {
                 EntityHelper.damageCD(damageCD, victimBukkit, 5);
                 EntityHelper.handleDamage(bukkitEntity, victimBukkit,
-                        contactDmg, EntityHelper.DamageReason.DIRECT_DAMAGE);
+                        currDmg, EntityHelper.DamageReason.DIRECT_DAMAGE);
                 // slimes also bounce upward
                 switch (mountType) {
                     case "史莱姆坐骑":
