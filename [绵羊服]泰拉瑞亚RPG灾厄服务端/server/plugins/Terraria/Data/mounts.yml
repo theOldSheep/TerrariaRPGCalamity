@@ -19,9 +19,9 @@
   knockback: 35
   horSpdMax: 1.2
   verSpdMax: 1.6
-  horAcc: 0.3
+  horAcc: 0.05
   verAcc: 1.6
-  velIdleDecayMulti: 0.6
+  velIdleDecayMulti: 0.975
   speedMultiWater: 1
   speedMultiGround: 1
 明胶鞍:
@@ -47,6 +47,8 @@
   verSpdMax: 0.8
   horAcc: 0.1
   verAcc: 0.1
+  stepHeight: 0.55
+  velIdleDecayMulti: 0.9
   flightDuration: 999999
   speedMultiWater: 0.6
   speedMultiGround: 1
@@ -58,6 +60,21 @@
   verSpdMax: 1
   horAcc: 0.175
   verAcc: 0.175
+  stepHeight: 0.55
+  velIdleDecayMulti: 0.9
   flightDuration: 999999
   speedMultiWater: 1
   speedMultiGround: 0.1
+星流之盒:
+  type: 星流飞椅
+  slimeSize: 2
+  gravity: false
+  horSpdMax: 1.6
+  verSpdMax: 1.6
+  horAcc: 2
+  verAcc: 2
+  stepHeight: 0.55
+  velIdleDecayMulti: 0
+  flightDuration: 999999
+  speedMultiWater: 1
+  speedMultiGround: 1

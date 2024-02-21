@@ -3,25 +3,28 @@ package terraria.entity.others;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Vehicle;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityCombustByBlockEvent;
+import org.bukkit.event.entity.EntityCombustEvent;
+import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
 import org.bukkit.util.Vector;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 import terraria.util.PlayerHelper;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class TerrariaMount extends EntitySlime {
     public static final double DEFAULT_GRAVITY = 0.05, DEFAULT_VEL_IDLE_DECAY_MULTI = 0.95;
     protected double contactDmg = 0, entityHalfWidth = 0.25, entityHalfHeight = 0.25,
-            horSpdMax = 0.5, verSpdMax = 1, horAcc = 0.1, verAcc = 0.2, gravityAcc = DEFAULT_GRAVITY,
+            horSpdMax = 0.5, verSpdMax = 1, horAcc = 0.1, verAcc = 0.2, gravityAcc = DEFAULT_GRAVITY, stepHeight = 1.01,
             speedMultiWater = 0.5, speedMultiGround = 0.75, velIdleDecayMulti = DEFAULT_VEL_IDLE_DECAY_MULTI;
     protected int flightIndex = 0, flightDuration = 0, slimeSize = 1;
     protected boolean hasGravity = true, isInfFlight = false;
@@ -30,6 +33,10 @@ public class TerrariaMount extends EntitySlime {
     protected HashMap<String, Double> attrMap;
     HashSet<org.bukkit.entity.Entity> damageCD = new HashSet<>();
     protected Player owner = null;
+
+    // variables from Entity.class
+    protected final double[] move_aJ = new double[]{0.0, 0.0, 0.0};
+    protected float move_ay = 1.0F;
 
     // default constructor accounting for default behaviour (removal)
     public TerrariaMount(World world) {
@@ -57,6 +64,7 @@ public class TerrariaMount extends EntitySlime {
         horAcc = mountSection.getDouble("horAcc", horAcc);
         verAcc = mountSection.getDouble("verAcc", verAcc);
         gravityAcc = mountSection.getDouble("gravityAcc", gravityAcc);
+        stepHeight = mountSection.getDouble("stepHeight", stepHeight);
         speedMultiWater = mountSection.getDouble("speedMultiWater", speedMultiWater);
         speedMultiGround = mountSection.getDouble("speedMultiGround", speedMultiGround);
         velIdleDecayMulti = mountSection.getDouble("velIdleDecayMulti", velIdleDecayMulti);
@@ -86,6 +94,16 @@ public class TerrariaMount extends EntitySlime {
         setHealth(444f);
         initBoundingBox();
         bukkitEntity.setVelocity(owner.getVelocity());
+        // step height
+        super.P = (float) this.stepHeight;
+        // disguise (?)
+//        if (mountType.equals("独角兽坐骑")) {
+//            MobDisguise disguise = new MobDisguise(DisguiseType.SKELETON_HORSE);
+//
+//            disguise.setReplaceSounds(true);
+//            disguise.setEntity(bukkitEntity);
+//            DisguiseAPI.disguiseEntity(bukkitEntity, disguise);
+//        }
         // make player mount
         bukkitEntity.addPassenger(owner);
         // prevent unexpected dismount
@@ -98,7 +116,25 @@ public class TerrariaMount extends EntitySlime {
                 locX - entityHalfWidth, locY, locZ - entityHalfWidth) );
     }
 
+    protected void movementTicking() {
+        // undo the horizontal resistance done
+        Vector prevVel = bukkitEntity.getVelocity();
+        super.B_();
+        Vector aftVel = bukkitEntity.getVelocity();
 
+        double yComp = aftVel.getY();
+        aftVel.setY(0);
+
+        double aVLS = aftVel.lengthSquared();
+        if (aVLS > 1e-9) {
+            Vector projected = MathHelper.vectorProjection(aftVel, prevVel);
+            double factor = Math.sqrt(projected.lengthSquared() / aVLS);
+
+            aftVel.multiply(factor);
+            aftVel.setY(yComp);
+            bukkitEntity.setVelocity(aftVel);
+        }
+    }
     @Override
     public void B_() {
         // remove when dismounted
@@ -108,29 +144,14 @@ public class TerrariaMount extends EntitySlime {
         }
         // TODO: mount disappear in water fixture (the player gets teleported?)
 
-        // basic tick; undo the horizontal resistance done
-        {
-            Vector prevVel = bukkitEntity.getVelocity();
-            super.B_();
-            Vector aftVel = bukkitEntity.getVelocity();
+        // basic tick
 
-            double yComp = aftVel.getY();
-            aftVel.setY(0);
-
-            double aVLS = aftVel.lengthSquared();
-            if (aVLS > 1e-9) {
-                Vector projected = MathHelper.vectorProjection(aftVel, prevVel);
-                double factor = Math.sqrt(projected.lengthSquared() / aVLS);
-
-                aftVel.multiply(factor);
-                aftVel.setY(yComp);
-                bukkitEntity.setVelocity(aftVel);
-            }
-        }
+        movementTicking();
 
         // handle contact damage
         handleCollisionDamage();
         // movement
+        Set<String> playerKeyPressed = PlayerHelper.getPlayerKeyPressed(owner);
         Set<String> ownerTags = owner.getScoreboardTags();
         double horSpdLmt = horSpdMax;
         double verSpdLmt = verSpdMax;
@@ -141,6 +162,10 @@ public class TerrariaMount extends EntitySlime {
         }
         else if (isOnGround) {
             horSpdLmt *= speedMultiGround;
+        }
+        if (mountType.equals("星流飞椅") && playerKeyPressed.contains("X")) {
+            horSpdLmt *= 0.35;
+            verSpdLmt *= 0.35;
         }
         // horizontal movement
         Vector finalHorComp = new Vector(motX, 0, motZ);
@@ -169,7 +194,7 @@ public class TerrariaMount extends EntitySlime {
                 verticalVel = Math.min(verticalVel, verSpdLmt);
                 flightIndex ++;
             }
-            else if (PlayerHelper.getPlayerKeyPressed(owner).contains("LSHIFT") && isInfFlight && canFly) {
+            else if (playerKeyPressed.contains("LSHIFT") && isInfFlight && canFly) {
                 verticalVel -= verAcc;
                 verticalVel = Math.max(verticalVel, -verSpdLmt);
                 flightIndex ++;

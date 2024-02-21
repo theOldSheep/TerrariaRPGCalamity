@@ -2,6 +2,8 @@ terraria\util\GameplayHelper$BlockTreePart.class
 terraria\entity\boss\aquaticScourge\AquaticScourge.class
 terraria\util\NMSUtils.class
 terraria\entity\others\TerrariaMinecart.class
+terraria\TerrariaHelper$1.class
+terraria\event\listener\ItemUseAndAttributeListener$1.class
 terraria\util\GenericHelper$StrikeLineOptions.class
 terraria\entity\boss\empressOfLight\EmpressOfLight.class
 terraria\entity\boss\golem\GolemHead.class
@@ -11,6 +13,9 @@ terraria\entity\boss\ravager\RavagerLeg.class
 terraria\entity\monster\MonsterZombie.class
 terraria\entity\boss\cryogen\Cryogen.class
 terraria\entity\boss\ravager\RavagerClaw.class
+terraria\entity\boss\theHiveMind\DarkHeart.class
+terraria\entity\npc\TerrariaNPCAngler.class
+terraria\util\ItemUseHelper$QuickBuffType.class
 terraria\entity\boss\BossHelper$1.class
 terraria\util\WorldHelper$PlantType.class
 terraria\entity\boss\theHiveMind\HiveBlob.class
@@ -26,6 +31,7 @@ terraria\worldgen\overworld\FoilagePopulator$1.class
 terraria\util\ItemHelper$1.class
 terraria\util\BossHelper$BossType.class
 terraria\entity\boss\event\mourningWood\MourningWood.class
+terraria\util\ItemUseHelper$1.class
 terraria\util\PlayerHelper$GameProgress.class
 terraria\entity\monster\MonsterHelper$1.class
 terraria\entity\boss\theSlimeGod\CrimulanSlime.class
@@ -42,6 +48,7 @@ terraria\entity\minion\MinionSlime.class
 terraria\entity\boss\thePlaguebringerGoliath\ThePlaguebringerGoliath$1.class
 terraria\entity\boss\theHiveMind\TheHiveMind.class
 terraria\entity\monster\MonsterWitherSkeleton.class
+terraria\entity\npc\TerrariaNPCNurse.class
 terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
 terraria\entity\boss\kingSlime\KingSlime.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
@@ -56,6 +63,7 @@ terraria\entity\projectile\TerrariaBoomerang.class
 terraria\entity\boss\wallOfFlesh\WallOfFleshEye.class
 terraria\entity\boss\wallOfFlesh\WallOfFleshMouth.class
 terraria\entity\boss\event\pumpking\PumpkingScythe.class
+terraria\util\ItemUseHelper.class
 terraria\gameplay\EventAndTime$EventInfoMapKeys.class
 terraria\entity\boss\moonLord\MoonLordEye.class
 terraria\util\WorldHelper$1.class
@@ -72,10 +80,13 @@ terraria\entity\boss\astrumAureus\AstrumAureus$AIPhase.class
 terraria\entity\boss\theHiveMind\TheHiveMind$AIPhase.class
 terraria\entity\others\TerrariaFishingHook.class
 terraria\util\WorldHelper.class
+terraria\entity\boss\plantera\Plantera.class
+terraria\event\listener\NPCListener.class
 terraria\event\listener\VanillaMechanicListener$1.class
 terraria\util\WorldHelper$BiomeType.class
 terraria\util\PlayerHelper.class
 terraria\entity\projectile\TerrariaYoyo.class
+terraria\TerrariaHelper.class
 terraria\util\NMSUtils$SpawnData.class
 terraria\entity\boss\moonLord\MoonLordEye$1.class
 terraria\worldgen\overworld\OverworldChunkGenerator.class
@@ -94,6 +105,7 @@ terraria\entity\boss\skeletronPrime\SkeletronPrimeHand$HandType.class
 terraria\entity\boss\desertScourge\DesertNuisance.class
 terraria\worldgen\overworld\FoilagePopulator.class
 terraria\worldgen\overworld\OverworldBiomeGenerator.class
+terraria\util\EntityHelper$DamageType.class
 terraria\util\NMSUtils$NBTTagType.class
 terraria\entity\boss\lunaticCultist\LunaticAncientLight.class
 terraria\entity\others\TerrariaFishingHook$FishingState.class
@@ -101,6 +113,7 @@ terraria\entity\boss\skeletron\SkeletronHand.class
 terraria\util\YmlHelper.class
 terraria\worldgen\overworld\OrePopulator.class
 terraria\util\MathHelper.class
+terraria\util\EntityHelper$DamageReason.class
 terraria\util\GenericHelper.class
 terraria\worldgen\underworld\UnderworldChunkGenerator.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHead.class
@@ -124,6 +137,8 @@ terraria\entity\monster\MonsterCaveSpider.class
 terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
 terraria\util\NPCHelper$NPCType.class
+terraria\event\listener\PlayerJoinListener.class
+terraria\entity\boss\theSlimeGod\EbonianSlime.class
 terraria\entity\boss\leviathanAndAnahita\Leviathan.class
 terraria\util\CritterHelper$1.class
 terraria\util\CritterHelper.class
@@ -141,6 +156,7 @@ terraria\util\NMSUtils$Biome.class
 terraria\util\NMSUtils$Type.class
 terraria\entity\minion\MinionHelper.class
 terraria\entity\boss\golem\GolemFoot.class
+terraria\TerrariaHelper$Constants.class
 terraria\event\listener\ArrowHitListener.class
 terraria\entity\boss\queenSlime\QueenSlime$SizeState.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
@@ -168,6 +184,7 @@ terraria\event\listener\DamageListener$1.class
 terraria\entity\boss\astrumAureus\AureusSpawn.class
 terraria\entity\boss\brimstoneElemental\BrimstoneElemental.class
 terraria\util\NMSUtils$MobMeta.class
+terraria\event\listener\CraftingListener$1.class
 terraria\entity\boss\calamitasClone\CalamitasDummyPlayer.class
 terraria\event\listener\PlayerChatListener.class
 terraria\entity\npc\TerrariaNPCArmsDealer.class
@@ -199,6 +216,7 @@ terraria\entity\boss\astrumDeus\AstrumDeus.class
 terraria\entity\boss\BossHelper.class
 terraria\entity\boss\desertScourge\DesertScourge.class
 terraria\entity\boss\theTwins\Retinazer.class
+terraria\event\listener\BossSpawnListener.class
 terraria\entity\boss\astrumAureus\AstrumAureus.class
 terraria\util\ItemHelper.class
 terraria\entity\boss\theDestroyer\Destroyer.class
@@ -236,6 +254,7 @@ terraria\event\listener\ItemUseAndAttributeListener.class
 terraria\entity\boss\moonLord\MoonLordBackground$MoonLordBackgroundType.class
 terraria\entity\boss\BossHelper$BossTargetInfo.class
 terraria\entity\boss\ravager\Ravager.class
+terraria\event\listener\CraftingListener.class
 terraria\entity\boss\ravager\RavagerHead.class
 terraria\entity\boss\calamitasClone\Cataclysm.class
 terraria\entity\others\TerrariaMinecart$MinecartType.class
