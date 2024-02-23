@@ -1724,7 +1724,7 @@
   - §r[饰品]
   - §6专家模式物品
   attributes:
-    flightTimeMulti: 0.5
+    flightTimeMulti: 0.35
   worth: 10000000
   rarity: 1000
 矮人项链:
@@ -1797,6 +1797,16 @@
     flightTimeMulti: 0.2
   worth: 800000
   rarity: 3
+进升证章:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §6专家模式物品
+  attributes:
+    flightTimeMulti: 0.5
+    speedMulti: 0.1
+  worth: 24000000
+  rarity: 1000
 天羽之翼:
   item: LEASH
   lore:
@@ -1874,6 +1884,86 @@
     crit: 3
   worth: 16000000
   rarity: 10
+天界翼靴:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
+  - §r“六翼天使之靴”
+  attributes:
+    speedMulti: 0.15
+  worth: 20000000
+  rarity: 10
+龙蒿叶之翼:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
+  attributes:
+    defence: 15
+    regen: 2
+  worth: 24000000
+  rarity: 12
+极乐之翼:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
+  attributes:
+    speedMulti: 0.1
+  worth: 24000000
+  rarity: 12
+极乐翼靴:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
+  attributes:
+    speedMulti: 0.175
+  worth: 28000000
+  rarity: 14
+始源林海之翼:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
+  - §r“纯粹的自然之力”
+  attributes:
+    defence: 20
+    regen: 3
+  worth: 28000000
+  rarity: 14
+Drew之翼:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
+  - §r“山猪今天喝醉没”
+  worth: 30000000
+  rarity: 15
+炽天使翼靴:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
+  attributes:
+    speedMulti: 0.2
+  worth: 30000000
+  rarity: 15
 再生护符:
   item: LEASH
   lore:

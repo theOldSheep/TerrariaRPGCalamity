@@ -50,6 +50,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     // extra projectile variables
     public ConfigurationSection extraProjectileConfigSection;
     int extraProjectileSpawnInterval;
+    String worldSpriteIndex = null;
     EntityHelper.ProjectileShootInfo extraProjectileShootInfo;
     // init with a small capacity, as this variable is not needed in most cases.
     HashMap<String, Object> extraVariables = new HashMap<>(1);
@@ -610,8 +611,13 @@ public class TerrariaPotionProjectile extends EntityPotion {
             if (worldSpriteIdx % worldSpriteUpdateInterval == 0) {
                 int currSpriteIdx = worldSpriteIdx / worldSpriteUpdateInterval + 1;
                 org.bukkit.inventory.ItemStack displaySprite = generateBukkitItemStack(projectileType + "_" + currSpriteIdx);
-                GenericHelper.displayNonDirectionalHoloItem(bukkitEntity.getLocation(), displaySprite,
-                        worldSpriteUpdateInterval, (float) (projectileRadius * 2));
+                if (worldSpriteIndex == null)
+                    worldSpriteIndex = GenericHelper.displayNonDirectionalHoloItem(bukkitEntity.getLocation(), displaySprite,
+                            liveTime, (float) (projectileRadius * 2));
+                else
+                    // do not set display interval to -1; sprite may not be removed for all players.
+                    GenericHelper.displayNonDirectionalHoloItem(bukkitEntity.getLocation(), displaySprite,
+                            liveTime - ticksLived, (float) (projectileRadius * 2), worldSpriteIndex);
             }
             worldSpriteIdx++;
         }

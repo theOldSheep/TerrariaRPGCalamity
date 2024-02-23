@@ -3837,6 +3837,14 @@ TINKER_WORKBENCH:
     - 天蓝锭:2
     - 羽毛:5
     - 丝绸:2
+  '26_1':
+    requireLevel: 1
+    resultItem: 进升证章
+    requireItem:
+    - 翱翔徽章
+    - 飞翔之魂:10
+    - 闪耀金羽:5
+    - 毁灭之灵:5
   '27':
     requireLevel: 1
     resultItem: 天羽之翼
@@ -3878,6 +3886,42 @@ TINKER_WORKBENCH:
     - 冥思构造体:14
     - 夜明锭:10
     - 飞翔之魂:20
+  '32_1':
+    requireLevel: 1
+    resultItem: 天界翼靴
+    requireItem:
+    - 天使之靴
+    - 天界之翼
+    - 夜明锭:5
+  '32_2':
+    requireLevel: 1
+    resultItem: 龙蒿叶之翼
+    requireItem:
+    - 龙蒿锭:5
+    - 飞翔之魂:30
+  '32_3':
+    requireLevel: 1
+    resultItem: 极乐翼靴
+    requireItem:
+    - 天界翼靴
+    - 极乐之翼
+    - 宇宙锭:5
+    - 化神魂精:4
+  '32_4':
+    requireLevel: 1
+    resultItem: 始源林海之翼
+    requireItem:
+    - 金锭:3
+    - 闪耀金羽:5
+    - 飞翔之魂:20
+    - 化神魂精:2
+  '32_5':
+    requireLevel: 1
+    resultItem: 炽天使翼靴
+    requireItem:
+    - 极乐翼靴
+    - Drew之翼
+    - 圣金源锭:5
   '33':
     requireLevel: 1
     resultItem: 绚彩明胶

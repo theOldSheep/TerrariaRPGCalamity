@@ -13,7 +13,7 @@
   speedMultiGround: 1
 恩赐苹果:
   type: 独角兽坐骑
-  slimeSize: 5
+  slimeSize: 4
   gravity: true
   damage: 500
   knockback: 35
@@ -69,8 +69,8 @@
   type: 星流飞椅
   slimeSize: 2
   gravity: false
-  horSpdMax: 1.6
-  verSpdMax: 1.6
+  horSpdMax: 1.5
+  verSpdMax: 1.5
   horAcc: 2
   verAcc: 2
   stepHeight: 0.55

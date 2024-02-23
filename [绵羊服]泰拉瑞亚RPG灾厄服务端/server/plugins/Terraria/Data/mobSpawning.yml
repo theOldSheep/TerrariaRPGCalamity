@@ -417,6 +417,7 @@ mobInfo:
     僵尸夫妇:
         name: "僵尸"
         monsterType: "ZOMBIE"
+        stepHeight: 1.15
         variants:
             血月1:
                 attributes:
@@ -439,6 +440,7 @@ mobInfo:
     僵尸:
         name: "僵尸"
         monsterType: "ZOMBIE"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -566,6 +568,7 @@ mobInfo:
         name: "钨钢回转器"
         monsterType: "HUSK"
         disguiseType: "SLIME_3"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -605,6 +608,7 @@ mobInfo:
         name: "钨钢漫步者"
         monsterType: "HUSK"
         disguiseType: "SLIME_3"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -728,6 +732,7 @@ mobInfo:
     蚁狮马:
         name: "蚁狮马"
         monsterType: "SPIDER"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -750,6 +755,7 @@ mobInfo:
     风暴蚁狮:
         name: "风暴蚁狮"
         monsterType: "SPIDER"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -880,6 +886,7 @@ mobInfo:
     骷髅:
         name: "骷髅"
         monsterType: "SKELETON"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -968,6 +975,7 @@ mobInfo:
         name: "独角兽"
         monsterType: "SLIME"
         disguiseType: "HORSE"
+        stepHeight: 1.15
         slimeSize: 4
         variants:
             default1:
@@ -981,6 +989,7 @@ mobInfo:
     光明木乃伊:
         name: "光明木乃伊"
         monsterType: "HUSK"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -993,6 +1002,7 @@ mobInfo:
     暗黑木乃伊:
         name: "暗黑木乃伊"
         monsterType: "HUSK"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1030,6 +1040,7 @@ mobInfo:
     擎星者:
         name: "擎星者"
         monsterType: "ZOMBIE"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1043,6 +1054,7 @@ mobInfo:
     装甲幻影魔:
         name: "装甲幻影魔"
         monsterType: "ZOMBIE"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1068,6 +1080,7 @@ mobInfo:
     黑隐士:
         name: "黑隐士"
         monsterType: "CAVE_SPIDER"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1081,6 +1094,7 @@ mobInfo:
         name: "巨型陆龟"
         monsterType: "BABY_HUSK"
         disguiseType: "SLIME_4"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1094,6 +1108,7 @@ mobInfo:
         name: "冰雪陆龟"
         monsterType: "BABY_HUSK"
         disguiseType: "SLIME_4"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1135,6 +1150,7 @@ mobInfo:
         name: "瘟疫龟"
         monsterType: "BABY_HUSK"
         disguiseType: "SLIME_4"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1147,6 +1163,7 @@ mobInfo:
     装甲骷髅:
         name: "装甲骷髅"
         monsterType: "SKELETON"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1197,6 +1214,7 @@ mobInfo:
     圣骑士:
         name: "圣骑士"
         monsterType: "HUSK"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1265,6 +1283,7 @@ mobInfo:
         name: "骷髅特警"
         monsterType: "HUSK"
         disguiseType: "SKELETON"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1291,6 +1310,7 @@ mobInfo:
     蜥蜴人:
         name: "蜥蜴人"
         monsterType: "ZOMBIE"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1525,6 +1545,7 @@ mobInfo:
         name: "哥布林弓箭手"
         monsterType: "SKELETON"
         disguiseType: "HUSK"
+        stepHeight: 1.15
         variants:
             哥布林军团1:
                 attributes:
@@ -1537,6 +1558,7 @@ mobInfo:
     哥布林战士:
         name: "哥布林战士"
         monsterType: "HUSK"
+        stepHeight: 1.15
         variants:
             哥布林军团1:
                 attributes:
@@ -1549,6 +1571,7 @@ mobInfo:
     哥布林盗贼:
         name: "哥布林盗贼"
         monsterType: "HUSK"
+        stepHeight: 1.15
         variants:
             哥布林军团1:
                 attributes:
@@ -1561,6 +1584,7 @@ mobInfo:
     哥布林苦力:
         name: "哥布林苦力"
         monsterType: "HUSK"
+        stepHeight: 1.15
         variants:
             哥布林军团1:
                 attributes:
@@ -1574,6 +1598,7 @@ mobInfo:
         name: "眼怪"
         monsterType: "HUSK"
         disguiseType: "ZOMBIE"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1587,6 +1612,7 @@ mobInfo:
         name: "科学怪人"
         monsterType: "HUSK"
         disguiseType: "ZOMBIE"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1600,6 +1626,7 @@ mobInfo:
         name: "沼泽怪"
         monsterType: "HUSK"
         disguiseType: "ZOMBIE"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1613,6 +1640,7 @@ mobInfo:
         name: "吸血鬼"
         monsterType: "HUSK"
         disguiseType: "ZOMBIE"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1626,6 +1654,7 @@ mobInfo:
         name: "水月怪"
         monsterType: "HUSK"
         disguiseType: "ZOMBIE"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1639,6 +1668,7 @@ mobInfo:
         name: "弗里茨"
         monsterType: "BABY_HUSK"
         disguiseType: "BABY_ZOMBIE"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1652,6 +1682,7 @@ mobInfo:
         name: "攀爬魔"
         monsterType: "CAVE_SPIDER"
         disguiseType: "BABY_ZOMBIE"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1705,6 +1736,7 @@ mobInfo:
     稻草人:
         name: "稻草人"
         monsterType: "ZOMBIE"
+        stepHeight: 1.15
         eventProgress: 2.5
         variants:
             南瓜月1:
@@ -1750,6 +1782,7 @@ mobInfo:
     树精:
         name: "树精"
         monsterType: "WITHER_SKELETON"
+        stepHeight: 1.15
         eventProgress: 5
         variants:
             南瓜月1:
@@ -1766,6 +1799,7 @@ mobInfo:
         spawnLocationType: GROUND
         slimeSize: 4
         disguiseType: "HORSE"
+        stepHeight: 1.15
         eventProgress: 12.5
         variants:
             南瓜月1:
@@ -1822,6 +1856,7 @@ mobInfo:
     姜饼人:
         name: "姜饼人"
         monsterType: "ZOMBIE"
+        stepHeight: 1.15
         eventProgress: 5
         variants:
             冰霜月1:
@@ -1835,6 +1870,7 @@ mobInfo:
     僵尸精灵:
         name: "僵尸精灵"
         monsterType: "ZOMBIE"
+        stepHeight: 1.15
         eventProgress: 2.5
         variants:
             冰霜月1:
@@ -1864,6 +1900,7 @@ mobInfo:
     精灵弓箭手:
         name: "精灵弓箭手"
         monsterType: "SKELETON"
+        stepHeight: 1.15
         eventProgress: 7.5
         variants:
             冰霜月1:
@@ -1878,6 +1915,7 @@ mobInfo:
     胡桃夹士:
         name: "胡桃夹士"
         monsterType: "ZOMBIE"
+        stepHeight: 1.15
         eventProgress: 10
         variants:
             冰霜月1:
@@ -1891,6 +1929,7 @@ mobInfo:
     雪兽:
         name: "雪兽"
         monsterType: "ZOMBIE"
+        stepHeight: 1.15
         eventProgress: 45
         variants:
             冰霜月1:
@@ -1921,6 +1960,7 @@ mobInfo:
     坎卜斯:
         name: "坎卜斯"
         monsterType: "WITHER_SKELETON"
+        stepHeight: 1.6
         eventProgress: 25
         variants:
             冰霜月1:
@@ -1949,6 +1989,7 @@ mobInfo:
         name: "火龙战士"
         monsterType: "ZOMBIE"
         spawnLocationType: GROUND
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1964,6 +2005,7 @@ mobInfo:
         spawnLocationType: GROUND
         slimeSize: 4
         disguiseType: "HORSE"
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1977,6 +2019,7 @@ mobInfo:
         name: "火月怪"
         monsterType: "ZOMBIE"
         spawnLocationType: GROUND
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -1990,6 +2033,7 @@ mobInfo:
         name: "火滚怪"
         monsterType: "ZOMBIE"
         spawnLocationType: GROUND
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -2032,6 +2076,7 @@ mobInfo:
         name: "星璇怪"
         monsterType: "ZOMBIE"
         spawnLocationType: GROUND
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -2045,6 +2090,7 @@ mobInfo:
         name: "漩泥怪"
         monsterType: "ZOMBIE"
         spawnLocationType: AIR
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -2098,6 +2144,7 @@ mobInfo:
         name: "预言怪"
         monsterType: "ZOMBIE"
         spawnLocationType: GROUND
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -2125,6 +2172,7 @@ mobInfo:
         name: "进化兽"
         monsterType: "BABY_ZOMBIE"
         spawnLocationType: GROUND
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -2193,6 +2241,7 @@ mobInfo:
         name: "观星怪"
         monsterType: "ZOMBIE"
         spawnLocationType: GROUND
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:
@@ -2220,6 +2269,7 @@ mobInfo:
         name: "闪耀怪"
         monsterType: "SILVERFISH"
         spawnLocationType: AIR
+        stepHeight: 1.15
         variants:
             default1:
                 attributes:

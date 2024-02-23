@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityTargetEvent;
@@ -252,6 +253,8 @@ public class MonsterHelper {
         bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_FOLLOW_RANGE).setBaseValue(444);
         bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.25);
         bukkitMonsterLivingEntity.setHealth(health);
+        // step height
+        monster.P = (float) typeConfigSection.getDouble("stepHeight", monster.P);
         // add 1 to target's amount of active monster
         if (!isMonsterPart)
             tweakPlayerMonsterSpawnedAmount(target, true);

@@ -770,8 +770,12 @@ public class GenericHelper {
         // return the answer
         return result;
     }
-    public static void displayNonDirectionalHoloItem(Location displayLoc, ItemStack item, int ticksDisplay, float size) {
+    public static String displayNonDirectionalHoloItem(Location displayLoc, ItemStack item, int ticksDisplay, float size) {
         String holoInd = "" + (nextWorldTextureIndex++);
+        displayNonDirectionalHoloItem(displayLoc, item, ticksDisplay, size, holoInd);
+        return holoInd;
+    }
+    public static void displayNonDirectionalHoloItem(Location displayLoc, ItemStack item, int ticksDisplay, float size, String holoInd) {
         // all players in radius of 64 blocks can see the hologram
         ArrayList<Player> playersSent = new ArrayList<>(10);
         for (Player p : displayLoc.getWorld().getPlayers())
@@ -780,10 +784,12 @@ public class GenericHelper {
         for (Player p : playersSent)
             CoreAPI.setPlayerWorldTextureItem(p, holoInd, displayLoc,
                     0, 0, 0, item, size * 2, true);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
-            for (Player p : playersSent)
-                CoreAPI.removePlayerWorldTexture(p, holoInd);
-        }, ticksDisplay);
+        if (ticksDisplay >= 0) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+                for (Player p : playersSent)
+                    CoreAPI.removePlayerWorldTexture(p, holoInd);
+            }, ticksDisplay);
+        }
     }
     public static void displayHoloItem(Location displayLoc, ItemStack item, int ticksDisplay, float size, Vector displayDir, Vector rightOrthogonalDirection) {
         String holoInd = "" + (nextWorldTextureIndex++);
