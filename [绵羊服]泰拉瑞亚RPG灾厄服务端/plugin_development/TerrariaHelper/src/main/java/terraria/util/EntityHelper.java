@@ -28,6 +28,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.others.TerrariaMount;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.entity.projectile.TerrariaPotionProjectile;
 import terraria.gameplay.EventAndTime;
@@ -745,7 +746,8 @@ public class EntityHelper {
             switch (effect) {
                 case "扭曲": {
                     if (entity instanceof Player) {
-                        Entity twistedEntity = entity.getVehicle() == null ? entity : entity.getVehicle();
+                        Entity mount = PlayerHelper.getMount((Player) entity);
+                        Entity twistedEntity = mount == null ? entity : mount;
                         World entityWorld = twistedEntity.getWorld();
                         double targetLocY = entityWorld.getHighestBlockAt(twistedEntity.getLocation()).getLocation().getY();
                         targetLocY += 8 + MathHelper.xsin_degree(timeRemaining * 2.5) * 2;
@@ -1622,6 +1624,11 @@ public class EntityHelper {
             source = (Entity) damageSourceMetadata.value();
         return source;
     }
+    public static Entity getMount(Entity entity) {
+        if (entity instanceof Player)
+            return PlayerHelper.getMount((Player) entity);
+        return entity.getVehicle();
+    }
     public static void knockback(Entity entity, Vector dir, boolean addOrReplace) {
         knockback(entity, dir, addOrReplace, -1);
     }
@@ -1635,7 +1642,7 @@ public class EntityHelper {
         // update the knockback slow factor, which effects the walking speed of zombies etc.
         setMetadata(entity, MetadataName.KNOCKBACK_SLOW_FACTOR, kbMulti);
         // the entity subject to that knockback
-        Entity knockbackTaker = entity.getVehicle();
+        Entity knockbackTaker = getMount(entity);
         if (knockbackTaker == null) knockbackTaker = entity;
         // minecart takes no knockback
         if (knockbackTaker instanceof Minecart)
@@ -2399,10 +2406,11 @@ public class EntityHelper {
         predictedLoc = targetLoc.clone();
         // "hyper-params" for prediction; note that ticks offset is roughly estimated before entering the loop.
         boolean checkBlockColl;
-        if (target.getVehicle() == null)
+        Entity targetMount = EntityHelper.getMount(target);
+        if (targetMount == null)
             checkBlockColl = ! ((CraftEntity) target).getHandle().noclip;
         else {
-            checkBlockColl = !(target.getVehicle() instanceof Minecart);
+            checkBlockColl = !(targetMount instanceof Minecart);
         }
         double predictionIntensity = aimHelperOption.intensity;
         double ticksOffset = targetLoc.distance(shootLoc) / aimHelperOption.projectileSpeed, lastTicksOffset;

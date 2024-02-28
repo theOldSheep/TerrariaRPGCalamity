@@ -3,23 +3,25 @@ package terraria.entity.others;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Vehicle;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityCombustByBlockEvent;
-import org.bukkit.event.entity.EntityCombustEvent;
-import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
+import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.util.Vector;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 import terraria.util.PlayerHelper;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public class TerrariaMount extends EntitySlime {
     public static final double DEFAULT_GRAVITY = 0.05, DEFAULT_VEL_IDLE_DECAY_MULTI = 0.95;
@@ -33,6 +35,9 @@ public class TerrariaMount extends EntitySlime {
     protected HashMap<String, Double> attrMap;
     HashSet<org.bukkit.entity.Entity> damageCD = new HashSet<>();
     protected Player owner = null;
+    protected EntityPlayer ownerNMS = null;
+
+    public static HashMap<UUID, TerrariaMount> MOUNTS_MAP = new HashMap<>();
 
     // variables from Entity.class
     protected final double[] move_aJ = new double[]{0.0, 0.0, 0.0};
@@ -52,6 +57,7 @@ public class TerrariaMount extends EntitySlime {
         ((CraftWorld) owner.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // init variables
         this.owner = owner;
+        this.ownerNMS = ((CraftPlayer) owner).getHandle();
 
         flightDuration = mountSection.getInt("flightDuration", flightDuration);
         slimeSize = mountSection.getInt("slimeSize", slimeSize);
@@ -106,6 +112,9 @@ public class TerrariaMount extends EntitySlime {
 //        }
         // make player mount
         bukkitEntity.addPassenger(owner);
+        // prevent later glitch; the internal representation is left as single-sided.
+        owner.leaveVehicle();
+        MOUNTS_MAP.put(owner.getUniqueId(), this);
         // prevent unexpected dismount
         owner.setVelocity(new Vector());
     }
@@ -116,6 +125,14 @@ public class TerrariaMount extends EntitySlime {
                 locX - entityHalfWidth, locY, locZ - entityHalfWidth) );
     }
 
+    protected void updatePlyLoc() {
+        ownerNMS.locX = this.locX;
+        ownerNMS.locY = this.locY;
+        ownerNMS.locZ = this.locZ;
+        ownerNMS.motX = this.motX;
+        ownerNMS.motY = this.motY;
+        ownerNMS.motZ = this.motZ;
+    }
     protected void movementTicking() {
         // undo the horizontal resistance done
         Vector prevVel = bukkitEntity.getVelocity();
@@ -134,15 +151,34 @@ public class TerrariaMount extends EntitySlime {
             aftVel.setY(yComp);
             bukkitEntity.setVelocity(aftVel);
         }
+        // update player location
+        updatePlyLoc();
+    }
+
+    // override dismount-related function
+    @Override
+    public void die() {
+        MOUNTS_MAP.remove(owner.getUniqueId());
+        super.die();
+    }
+
+    @Override
+    protected void p(Entity entity) {
+        boolean dismountCancelled = PlayerHelper.isProperlyPlaying(owner) && this.isAlive();
+        if (dismountCancelled) {
+            // DO NOT USE addPassenger. This will create a terrible amount of twitching.
+            return;
+        }
+        MOUNTS_MAP.remove(owner.getUniqueId());
+        super.p(entity);
     }
     @Override
     public void B_() {
-        // remove when dismounted
-        if (! bukkitEntity.getPassengers().contains(owner)) {
+        // remove when dismounted for some reason
+        if (! (bukkitEntity.getPassengers().contains(owner) && MOUNTS_MAP.get(owner.getUniqueId()) == this) ) {
             die();
             return;
         }
-        // TODO: mount disappear in water fixture (the player gets teleported?)
 
         // basic tick
 
@@ -232,7 +268,7 @@ public class TerrariaMount extends EntitySlime {
         finalHorComp.setY(verticalVel);
         bukkitEntity.setVelocity(finalHorComp);
         // update facing dir
-        yaw = ((CraftPlayer) owner).getHandle().yaw;
+        yaw = ownerNMS.yaw;
         // TODO: prevent unexpected dismount (?)
         owner.setVelocity(bukkitEntity.getVelocity());
     }

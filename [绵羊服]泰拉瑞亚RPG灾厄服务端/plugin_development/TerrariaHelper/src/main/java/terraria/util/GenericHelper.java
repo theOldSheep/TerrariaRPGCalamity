@@ -134,7 +134,7 @@ public class GenericHelper {
         }
     }
     public static class StrikeLineOptions {
-        boolean displayParticle, bounceWhenHitBlock, thruWall;
+        boolean displayParticle, bounceWhenHitBlock, thruWall, vanillaParticle;
         int damageCD, lingerTime, lingerDelay, maxTargetHit;
         double damage, decayCoef, particleIntensityMulti, whipBonusCrit, whipBonusDamage;
         ParticleLineOptions particleInfo;
@@ -147,6 +147,7 @@ public class GenericHelper {
             displayParticle = true;
             bounceWhenHitBlock = false;
             thruWall = true;
+            vanillaParticle = true;
 
             damageCD = 10;
             lingerTime = 1;
@@ -170,24 +171,30 @@ public class GenericHelper {
         public StrikeLineOptions clone() {
             StrikeLineOptions result = new StrikeLineOptions();
             result
+                    // booleans
                     .setDisplayParticle(displayParticle)
                     .setBounceWhenHitBlock(bounceWhenHitBlock)
                     .setThruWall(thruWall)
+                    .setVanillaParticle(vanillaParticle)
+                    // ints
                     .setDamageCD(damageCD)
                     .setLingerTime(lingerTime)
                     .setLingerDelay(lingerDelay)
                     .setMaxTargetHit(maxTargetHit)
+                    // doubles
                     .setDamage(damage)
                     .setDecayCoef(decayCoef)
                     .setParticleIntensityMulti(particleIntensityMulti)
                     .setWhipBonusCrit(whipBonusCrit)
                     .setWhipBonusDamage(whipBonusDamage)
+                    // objects
                     .setParticleInfo(particleInfo.clone())
                     .setBlockHitFunction(blockHitFunction)
                     .setDamagedFunction(damagedFunction)
                     .setShouldDamageFunction(shouldDamageFunction);
             return result;
         }
+        // boolean setters
         public StrikeLineOptions setDisplayParticle(boolean displayParticle) {
             this.displayParticle = displayParticle;
             return this;
@@ -201,7 +208,11 @@ public class GenericHelper {
             this.thruWall = thruWall;
             return this;
         }
-
+        public StrikeLineOptions setVanillaParticle(boolean vanillaParticle) {
+            this.vanillaParticle = vanillaParticle;
+            return this;
+        }
+        // int setters
         public StrikeLineOptions setDamageCD(int damageCD) {
             this.damageCD = damageCD;
             return this;
@@ -218,7 +229,7 @@ public class GenericHelper {
             this.maxTargetHit = maxTargetHit;
             return this;
         }
-
+        // double setters
         public StrikeLineOptions setDamage(double damage) {
             this.damage = damage;
             return this;
@@ -240,7 +251,7 @@ public class GenericHelper {
             return this;
         }
 
-
+        // object setters
         public StrikeLineOptions setParticleInfo(ParticleLineOptions particleInfo) {
             this.particleInfo = particleInfo;
             return this;
@@ -549,6 +560,7 @@ public class GenericHelper {
                     .setParticleColor(color)
                     .setAlpha(0.5f)
                     .setIntensityMulti(advanced.particleIntensityMulti)
+                    .setVanillaParticle(advanced.vanillaParticle)
                     .setTicksLinger(lingerTime > 1 ? (lingerTime - 1) * lingerDelay : lingerDelay);
         }
         // find terminal location ( hit block etc. )
@@ -637,6 +649,7 @@ public class GenericHelper {
                                                   double width, double particleInterval, int delay, String color,
                                                   Collection<Entity> exceptions, HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
         // find the current direction
+        Bukkit.broadcastMessage(attrMap + "");
         Location startLoc = locations[currIndex];
         Vector currDir = locations[currIndex + 1].clone().subtract(startLoc).toVector();
         handleStrikeLine(damager, startLoc, MathHelper.getVectorYaw(currDir), MathHelper.getVectorPitch(currDir), currDir.length(),

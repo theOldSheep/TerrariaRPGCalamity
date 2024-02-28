@@ -7893,7 +7893,7 @@ Dodu的手炮:
     damage: 260
     damageType: Magic
     crit: 4
-    projectileSpeed: 13
+    projectileSpeed: 8
     knockback: 0
     useTime: 12
     manaUse: 12

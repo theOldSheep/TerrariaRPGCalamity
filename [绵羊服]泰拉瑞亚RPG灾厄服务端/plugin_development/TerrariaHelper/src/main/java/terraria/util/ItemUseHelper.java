@@ -4265,7 +4265,8 @@ public class ItemUseHelper {
                                 .setDamageCD(4)
                                 .setLingerTime(6)
                                 .setLingerDelay(5)
-                                .setThruWall(true);
+                                .setThruWall(true)
+                                .setVanillaParticle(false);
                         GenericHelper.handleStrikeLightning(ply, startLoc, yaw, pitch, length, 4,  width, 1, 3, particleColor,
                                 damageExceptions, attrMap, strikeInfo);
                         // prevent redundant strike
@@ -4425,12 +4426,13 @@ public class ItemUseHelper {
                     }
                     case "亚特兰蒂斯": {
                         length = 24;
-                        width = 1.75;
+                        width = 1.25;
                         particleColor = "119|145|197";
                         strikeInfo
                                 .setDamageCD(4)
                                 .setLingerTime(5)
-                                .setLingerDelay(5);
+                                .setLingerDelay(5)
+                                .setVanillaParticle(false);
                         // particle must not block the vision
                         startLoc.add(fireDir);
                         GenericHelper.handleStrikeLightning(ply, startLoc, yaw, pitch, length,

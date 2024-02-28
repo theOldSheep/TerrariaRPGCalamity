@@ -91,17 +91,27 @@ public class VanillaMechanicListener implements Listener {
             case SPECTATE:
                 e.setCancelled(true);
         }
-        // remove sentries and minions on teleport to somewhere far away ( another world or 30 blocks away )
-        if (! e.isCancelled() &&
-                (e.getFrom().getWorld() != e.getTo().getWorld() || e.getFrom().distanceSquared(e.getTo()) > 900) ) {
-            for (Entity entity :
-                    ((ArrayList<Entity>) EntityHelper.getMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_SENTRY_LIST).value()) ) {
-                entity.remove();
+        // remove sentries, minions and mount
+        if (! e.isCancelled()) {
+            double distSqr = e.getFrom().getWorld() != e.getTo().getWorld() ? Double.MAX_VALUE :
+                            e.getFrom().distanceSquared(e.getTo());
+            // remove sentry and minion on teleport to somewhere far away ( another world or 30 blocks away )
+            if (distSqr > 900) {
+                // sentry
+                for (Entity entity :
+                        ((ArrayList<Entity>) EntityHelper.getMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_SENTRY_LIST).value()) ) {
+                    entity.remove();
+                }
+                // minion
+                for (Entity entity :
+                        ((ArrayList<Entity>) EntityHelper.getMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_MINION_LIST).value()) ) {
+                    entity.remove();
+                }
             }
-            for (Entity entity :
-                    ((ArrayList<Entity>) EntityHelper.getMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_MINION_LIST).value()) ) {
-                entity.remove();
-            }
+            // dismount on any teleport
+            Entity mount = PlayerHelper.getMount(e.getPlayer());
+            if (mount != null)
+                mount.remove();
         }
     }
     @EventHandler(priority = EventPriority.LOW)

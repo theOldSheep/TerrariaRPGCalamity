@@ -45,6 +45,8 @@ public class PlayerKeyToggleListener implements Listener {
         HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply,
                 EntityHelper.MetadataName.PLAYER_KEYS_PRESSED).value();
         String keyPressed = e.getKey();
+        if (! PlayerHelper.isProperlyPlaying(ply))
+            return;
         // prevent excessive handling when the player is pressing a single key for a prolonged time
         if (allKeysPressed.contains(keyPressed))
             return;
@@ -79,10 +81,8 @@ public class PlayerKeyToggleListener implements Listener {
             case "F":
                 PlayerHelper.handleGrapplingHook(ply);
                 // dismount on using hook
-                if (ply.getVehicle() != null) {
-                    Entity mount = ply.getVehicle();
-                    mount.eject();
-                    mount.remove();
+                if (PlayerHelper.getMount(ply) != null) {
+                    PlayerHelper.handleMount(ply);
                 }
                 break;
             case "V":

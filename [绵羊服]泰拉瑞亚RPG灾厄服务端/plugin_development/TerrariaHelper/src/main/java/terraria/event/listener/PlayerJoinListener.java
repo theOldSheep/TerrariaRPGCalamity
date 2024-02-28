@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.metadata.MetadataValue;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.event.celestialPillar.CelestialPillar;
@@ -43,7 +44,7 @@ public class PlayerJoinListener implements Listener {
         MetadataValue respawnCD = EntityHelper.getMetadata(joinedPly, EntityHelper.MetadataName.RESPAWN_COUNTDOWN);
         if (respawnCD == null) {
             joinedPly.setGameMode(GameMode.SURVIVAL);
-            joinedPly.teleport(PlayerHelper.getSpawnLocation(joinedPly));
+            joinedPly.teleport(PlayerHelper.getSpawnLocation(joinedPly), PlayerTeleportEvent.TeleportCause.PLUGIN);
         }
         // for players after golem, show the celestial pillar boss bar to them
         EntityPlayer playerNMS = ((CraftPlayer) joinedPly).getHandle();

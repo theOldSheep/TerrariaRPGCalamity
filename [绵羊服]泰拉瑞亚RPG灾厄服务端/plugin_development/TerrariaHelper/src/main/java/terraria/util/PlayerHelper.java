@@ -12,6 +12,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -218,10 +219,10 @@ public class PlayerHelper {
     // gets the accurate location (when mounted, ply.getLocation() may be inaccurate)
     public static Location getAccurateLocation(Player ply) {
         Location currLoc;
-        if (ply.getVehicle() == null)
+        if (PlayerHelper.getMount(ply) == null)
             currLoc = ply.getLocation();
         else {
-            currLoc = ply.getVehicle().getLocation();
+            currLoc = PlayerHelper.getMount(ply).getLocation();
             currLoc.setY(ply.getLocation().getY());
         }
         return currLoc;
@@ -1132,7 +1133,7 @@ public class PlayerHelper {
                 boolean isWing = false;
                 boolean gliding = false;
                 // if the player is mounting
-                if (ply.getVehicle() != null) {
+                if (PlayerHelper.getMount(ply) != null) {
                     // after mounting, accessory (wings etc.) can not be used until landed.
                     thrustIndex = 999999;
                 }
@@ -1350,7 +1351,7 @@ public class PlayerHelper {
                         } else {
                             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.RESPAWN_COUNTDOWN, null);
                             ply.setGameMode(GameMode.SURVIVAL);
-                            ply.teleport(getSpawnLocation(ply));
+                            ply.teleport(getSpawnLocation(ply), PlayerTeleportEvent.TeleportCause.PLUGIN);
                             sendActionBar(ply, "");
                             // reset minion index, sentry index etc.
                             initPlayerStats(ply, false);
@@ -2138,14 +2139,17 @@ public class PlayerHelper {
         hookEntity.addScoreboardTag("isHook");
         hooks.add(hookEntity);
     }
+    public static Entity getMount(Player ply) {
+        TerrariaMount mountNMS = TerrariaMount.MOUNTS_MAP.get(ply.getUniqueId());
+        return mountNMS == null ? null : mountNMS.getBukkitEntity();
+    }
     public static void handleMount(Player ply) {
         if (!PlayerHelper.isProperlyPlaying(ply))
             return;
         // if the player has a mount, unmount the player
-        if (ply.getVehicle() != null) {
-            Entity mount = ply.getVehicle();
-            mount.eject();
-            mount.remove();
+        if (TerrariaMount.MOUNTS_MAP.containsKey(ply.getUniqueId())) {
+            TerrariaMount mount = TerrariaMount.MOUNTS_MAP.get(ply.getUniqueId());
+            mount.die();
         }
         // otherwise, spawn the mount if needed
         else {

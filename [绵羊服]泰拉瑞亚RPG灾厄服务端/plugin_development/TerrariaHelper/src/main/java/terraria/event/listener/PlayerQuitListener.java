@@ -14,7 +14,7 @@ public class PlayerQuitListener implements Listener {
     public void onQuit(PlayerQuitEvent e) {
         Player ply = e.getPlayer();
         // kill mount if applicable
-        Entity vehicle = ply.getVehicle();
+        Entity vehicle = PlayerHelper.getMount(ply);
         if (vehicle != null)
             vehicle.remove();
         // save data
