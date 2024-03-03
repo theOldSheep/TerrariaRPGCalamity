@@ -993,6 +993,25 @@ public class PlayerHelper {
             }
         }, 0, delay);
     }
+    // account for velocity change by block collision
+    private static Vector accountVelChangeMovement(Player ply, Vector vel) {
+        Vector aftVel = ply.getVelocity();
+        // ignore vertical component
+        aftVel.setY(0);
+        // adjust the length of horizontal component according to previously saved move direction
+        double aVLS = aftVel.lengthSquared();
+        if (aVLS > 1e-9) {
+            Vector projected = MathHelper.vectorProjection(aftVel, vel);
+            double factor = Math.sqrt(projected.lengthSquared() / aVLS);
+
+            aftVel.multiply(factor);
+        }
+        // reapply vertical component
+        // TODO
+        Bukkit.broadcastMessage(vel.getY() + "|" + aftVel.getY());
+        aftVel.setY( vel.getY() );
+        return aftVel;
+    }
     // grappling hook
     private static Vector grapplingHookMovement(Player ply, Vector vel) {
         try {
@@ -1095,7 +1114,6 @@ public class PlayerHelper {
         }
     }
     // wing & jump speed tweak
-
     private static Vector wingMovement(Player ply, Vector vel) {
         // reset thrust variable if player is on ground
         if (ply.isOnGround()) {
@@ -1237,9 +1255,11 @@ public class PlayerHelper {
                     accelerationMulti *= speedMultiAttribute / 2;
                     maxAcceleration *= accelerationMulti;
                 }
+                boolean movingHor = false, movingVer = false;
                 // horizontal movement
                 double horizontalMoveYaw = getPlayerMoveYaw(ply);
                 if (horizontalMoveYaw < 1e5) {
+                    movingHor = true;
                     moveDir.add(MathHelper.vectorFromYawPitch_quick(horizontalMoveYaw, 0).multiply(horizontalSpeed));
                 }
                 // vertical movement if thrusting
@@ -1303,15 +1323,20 @@ public class PlayerHelper {
                 }
 
                 // gravity if applicable
-                if (moveDir.getY() == 0) {
-                    vel.subtract(new Vector(0, -0.08, 0));
+                if (Math.abs(moveDir.getY()) < 1e-5) {
+                    vel.subtract(new Vector(0, 0.08, 0));
                 }
+                else
+                    movingVer = true;
                 // if the player is not trying to move, handle speed decay multiplier
                 if (moveDir.lengthSquared() < 1e-5) {
                     if (ply.isOnGround())
                         vel.multiply(0.75);
-                    else
+                    else {
+                        double y = vel.getY();
+                        // if not on ground, 0.975 for horizontal component and 0.99 for vertical
                         vel.multiply(0.975);
+                    }
                 }
                 // otherwise, change the player's velocity according to targeted move direction
                 else {
@@ -1323,15 +1348,23 @@ public class PlayerHelper {
                     if (accLength > maxAcceleration) {
                         acceleration.multiply(maxAcceleration / accLength);
                     }
+                    // TODO:
                     // regularize acceleration so that horizontal speed (especially from dash) do not get decreased too rapidly
-                    {
-                        Vector moveDirHor = moveDir.clone().setY(0);
-                        Vector accelerationComponent = MathHelper.vectorProjection(moveDirHor, acceleration);
-                        // if acceleration's horizontal component goes in the opposite direction, cancel 95% of it
-                        if (moveDirHor.dot(accelerationComponent) < 0) {
-                            acceleration.subtract(accelerationComponent.multiply(0.95));
-                        }
+//                    {
+//                        Vector moveDirHor = moveDir.clone().setY(0);
+//                        Vector accelerationComponent = MathHelper.vectorProjection(moveDirHor, acceleration);
+//                        // if acceleration's horizontal component goes in the opposite direction, cancel 95% of it
+//                        if (moveDirHor.dot(accelerationComponent) < 0) {
+//                            acceleration.subtract(accelerationComponent.multiply(0.95));
+//                        }
+//                    }
+                    // do not change the corresponding component if not moving in the direction.
+                    if (! movingHor) {
+                        acceleration.setX(0);
+                        acceleration.setZ(0);
                     }
+                    if (! movingVer)
+                        acceleration.setY(0);
                     // update the player's speed
                     vel.add(acceleration);
                 }
@@ -1395,8 +1428,9 @@ public class PlayerHelper {
         {
             // water affinity partially removes slow introduced by water
             if (isInLiquid) {
-                // (2x + 0.1) / (2x + 1) = (x + 0.05) / (x + 0.5)
-                double moveSpdMulti = (waterAffinity + 0.05) / (waterAffinity + 0.5);
+                // e^x / (e^x + 1), sigmoid
+                double ex = Math.pow(Math.E, waterAffinity);
+                double moveSpdMulti = ex / (ex + 1);
                 vel.multiply(moveSpdMulti);
             }
         }
@@ -1424,10 +1458,13 @@ public class PlayerHelper {
                     continue;
                 // get player speed
                 Vector plySpd = (Vector) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY).value();
-                // grappling hook
-                plySpd = grapplingHookMovement(ply, plySpd);
+                // account for speed direction changed by basic tick (block collision)
+                plySpd = accountVelChangeMovement(ply, plySpd);
+
                 // wing/jump movement
                 plySpd = wingMovement(ply, plySpd);
+                // grappling hook (override wing/jump)
+                plySpd = grapplingHookMovement(ply, plySpd);
                 // underwater speed adjusting & oxygen bar
                 plySpd = underwaterMovement(ply, plySpd);
                 // update speed
@@ -1687,6 +1724,7 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOK_ITEM, "");
         resetPlayerFlightTime(ply);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_DIRECTION, "");
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY, new Vector());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS, Calendar.getInstance().getTimeInMillis());
         setArmorSet(ply, "");
         // bgm, biome and background
