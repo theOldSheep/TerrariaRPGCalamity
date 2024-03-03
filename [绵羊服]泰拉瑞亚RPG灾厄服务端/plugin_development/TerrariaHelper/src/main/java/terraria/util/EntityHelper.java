@@ -204,6 +204,7 @@ public class EntityHelper {
         MONSTER_PARENT_TYPE("parentType"),
         NPC_FIRST_SELL_INDEX("firstSell"),
         NPC_GUI_VIEWERS("GUIViewers"),
+        PLAYER_AIR("playerAir"),
         PLAYER_BIOME("playerBiome"),
         PLAYER_CRAFTING_RECIPE_INDEX("recipeNumber"),
         PLAYER_CRAFTING_STATION("craftingStation"),
@@ -244,6 +245,7 @@ public class EntityHelper {
         PLAYER_TELEPORT_TARGET("teleportTarget"),
         PLAYER_THRUST_INDEX("thrustIndex"),
         PLAYER_THRUST_PROGRESS("thrustProgress"),
+        PLAYER_VELOCITY("plyVel"),
         PROJECTILE_BOUNCE_LEFT("bounce"),
         PROJECTILE_DESTROY_REASON("destroyReason"),
         PROJECTILE_PENETRATION_LEFT("penetration"),
@@ -761,7 +763,7 @@ public class EntityHelper {
                         }
                         Vector velocity = twistedEntity.getVelocity();
                         velocity.setY(velY);
-                        twistedEntity.setVelocity(velocity);
+                        setVelocity(twistedEntity, velocity);
                         entity.setFallDistance(0);
                     }
                     break;
@@ -1311,7 +1313,7 @@ public class EntityHelper {
         if (v instanceof Player) {
             Player vPly = (Player) v;
             // prevent spectator getting in a wall
-            vPly.setVelocity(new Vector());
+            setVelocity(vPly, new Vector());
             // respawn time, default to 15 seconds and increases if boss is alive
             int respawnTime = 15;
             for (ArrayList<LivingEntity> bossList : BossHelper.bossMap.values()) {
@@ -1629,6 +1631,15 @@ public class EntityHelper {
             return PlayerHelper.getMount((Player) entity);
         return entity.getVehicle();
     }
+    public static void setVelocity(Entity entity, Vector spd) {
+        // handle unreasonable magnitude (> 100)
+        if (spd.lengthSquared() > 1e5)
+            spd.zero();
+        if (entity instanceof Player) {
+            setMetadata(entity, MetadataName.PLAYER_VELOCITY, spd);
+        }
+        entity.setVelocity(spd);
+    }
     public static void knockback(Entity entity, Vector dir, boolean addOrReplace) {
         knockback(entity, dir, addOrReplace, -1);
     }
@@ -1660,7 +1671,7 @@ public class EntityHelper {
         if (speedLimit > 0 && finalVel.lengthSquared() > speedLimit * speedLimit) {
             MathHelper.setVectorLength(finalVel, speedLimit);
         }
-        knockbackTaker.setVelocity(finalVel);
+        setVelocity(knockbackTaker, finalVel);
     }
     public static String getInvulnerabilityTickName(DamageType damageType) {
         return "tempDamageCD_" + damageType;
@@ -2121,12 +2132,20 @@ public class EntityHelper {
             victim.removeScoreboardTag("notDamaged");
 
         // display damage
-        String hologramInfo;
-        if (damageType == DamageType.DEBUFF)
-            hologramInfo = "Debuff_" + debuffType;
-        else
-            hologramInfo = damageType.toString();
-        GenericHelper.displayHolo(victim, dmg, crit, hologramInfo);
+        boolean displayDmg = true;
+        switch (damageReason) {
+            case SUFFOCATION:
+            case DROWNING:
+                displayDmg = false;
+        }
+        if (displayDmg) {
+            String hologramInfo;
+            if (damageType == DamageType.DEBUFF)
+                hologramInfo = "Debuff_" + debuffType;
+            else
+                hologramInfo = damageType.toString();
+            GenericHelper.displayHolo(victim, dmg, crit, hologramInfo);
+        }
 
         // send info message to damager player
         if (damageSource instanceof Player && victim != damageSource) {

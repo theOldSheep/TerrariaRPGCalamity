@@ -30,8 +30,8 @@ public class DamageListener implements Listener {
             case LAVA:
                 EntityHelper.handleDamage(victim, victim, 200, EntityHelper.DamageReason.LAVA);
                 break;
+            // drowning damage is handled in extra ticking
             case DROWNING:
-                EntityHelper.handleDamage(victim, victim, 50, EntityHelper.DamageReason.DROWNING);
                 break;
             case FALL:
                 if (victim.getType() == EntityType.SLIME) break;

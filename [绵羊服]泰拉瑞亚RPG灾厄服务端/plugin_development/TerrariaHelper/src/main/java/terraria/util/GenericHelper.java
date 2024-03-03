@@ -527,8 +527,9 @@ public class GenericHelper {
         WorldHelper.attemptDestroyVegetation(startLoc, terminalLoc);
         // schedule lingering
         if (lingerTime > 1) {
+            double finalDamage = damage;
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> handleStrikeLineDamage(wld, startLoc, terminalLoc, width, predication, damager, advanced.damage,
+                    () -> handleStrikeLineDamage(wld, startLoc, terminalLoc, width, predication, damager, finalDamage,
                             attrMap, itemType, exceptions, lingerTime - 1, advanced),
                     lingerDelay);
         }
@@ -649,7 +650,6 @@ public class GenericHelper {
                                                   double width, double particleInterval, int delay, String color,
                                                   Collection<Entity> exceptions, HashMap<String, Double> attrMap, StrikeLineOptions advanced) {
         // find the current direction
-        Bukkit.broadcastMessage(attrMap + "");
         Location startLoc = locations[currIndex];
         Vector currDir = locations[currIndex + 1].clone().subtract(startLoc).toVector();
         handleStrikeLine(damager, startLoc, MathHelper.getVectorYaw(currDir), MathHelper.getVectorPitch(currDir), currDir.length(),

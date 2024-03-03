@@ -11,6 +11,7 @@ import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 
+import javax.xml.bind.annotation.XmlType;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -59,6 +60,39 @@ public class WorldHelper {
             BlockFace.WEST,
     };
 
+    public enum WaterRegionType {
+        NORMAL(1d), UNDERWORLD(2.25d),
+        OCEAN(1.15d), SULPHUROUS_OCEAN(1.2d),
+        SUNKEN_SEA(1.35d),
+        ABYSS_1(2d), ABYSS_2(3.5d), ABYSS_3(5d);
+
+        public final double oxygenDepletionLevel;
+        WaterRegionType(double oxygenDepletionLevel) {
+            this.oxygenDepletionLevel = oxygenDepletionLevel;
+        }
+        public static WaterRegionType getWaterRegionType(Location loc) {
+            switch (BiomeType.getBiome(loc)) {
+                case OCEAN:
+                    return OCEAN;
+                case SULPHUROUS_OCEAN:
+                    return SULPHUROUS_OCEAN;
+                case UNDERWORLD:
+                case BRIMSTONE_CRAG:
+                    return UNDERWORLD;
+                case ABYSS:
+                    double locY = loc.getY();
+                    if (locY < 100)
+                        return ABYSS_3;
+                    if (locY < 175)
+                        return ABYSS_2;
+                    return ABYSS_1;
+                case SUNKEN_SEA:
+                    return SUNKEN_SEA;
+                default:
+                    return NORMAL;
+            }
+        }
+    }
     public enum HeightLayer {
         SPACE("太空"), SURFACE("地表"), UNDERGROUND("地下"), CAVERN("洞穴"), UNDERWORLD("地狱");
         public final String name;
@@ -447,7 +481,6 @@ public class WorldHelper {
             TerrariaHelper.getInstance().getLogger().log(Level.SEVERE,
                     "FAILED PLACING SPECIAL SKULL AT BLOCK " + block);
     }
-    // TODO: different sprite of vegetation
     private enum PlantType {
         GRASS(Material.LONG_GRASS, (byte) 1),
         GRASS_HALLOW(Material.LONG_GRASS, (byte) 1),

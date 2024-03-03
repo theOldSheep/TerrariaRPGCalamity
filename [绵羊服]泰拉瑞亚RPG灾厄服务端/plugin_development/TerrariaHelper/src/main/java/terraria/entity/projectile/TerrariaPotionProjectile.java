@@ -34,7 +34,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             trailIntensityMulti = 1, trailSize = -1, trailStepSize = -1;
     public boolean arrowOrPotion = false, autoTrace = false, autoTraceSharpTurning = true, blastDamageShooter = false,
             blastOnContactBlock = false, blastOnContactEnemy = false, blastOnTimeout = true,
-            bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = true,
+            bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = false,
             trailVanillaParticle = true, worldSpriteMode = false;
 
     // projectile variables

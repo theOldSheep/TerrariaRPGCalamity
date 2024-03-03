@@ -15,10 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.ExplosionPrimeEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.world.ChunkUnloadEvent;
@@ -80,6 +77,14 @@ public class VanillaMechanicListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onSprint(PlayerToggleSprintEvent e) {
         e.setCancelled(true);
+    }
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onAirChange(EntityAirChangeEvent e) {
+        if (e.getEntity() instanceof Player) {
+            Player ply = (Player) e.getEntity();
+            if (e.getAmount() != EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR).asInt())
+                e.setCancelled(true);
+        }
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onTeleport(PlayerTeleportEvent e) {

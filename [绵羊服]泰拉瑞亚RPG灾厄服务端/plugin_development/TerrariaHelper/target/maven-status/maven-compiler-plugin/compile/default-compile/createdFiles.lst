@@ -216,6 +216,7 @@ terraria\entity\boss\astrumDeus\AstrumDeus.class
 terraria\entity\boss\BossHelper.class
 terraria\entity\boss\desertScourge\DesertScourge.class
 terraria\entity\boss\theTwins\Retinazer.class
+terraria\util\WorldHelper$WaterRegionType.class
 terraria\event\listener\BossSpawnListener.class
 terraria\entity\boss\astrumAureus\AstrumAureus.class
 terraria\util\ItemHelper.class

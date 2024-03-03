@@ -23,6 +23,14 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+/*
+ * Note: do not use Player.dismount()
+ * Use the method provided in PlayerHelper.
+ * The player will be tricked into thinking it has dismounted (while the mount still has player as a passenger)
+ * This is to prevent dismount when pressing shift/in water
+ * Killing this mount can also release the player.
+ * Be careful when teleporting the player: it will also force dismount
+ */
 public class TerrariaMount extends EntitySlime {
     public static final double DEFAULT_GRAVITY = 0.05, DEFAULT_VEL_IDLE_DECAY_MULTI = 0.95;
     protected double contactDmg = 0, entityHalfWidth = 0.25, entityHalfHeight = 0.25,
