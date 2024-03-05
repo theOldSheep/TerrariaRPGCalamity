@@ -997,6 +997,7 @@ public class PlayerHelper {
     private static Vector accountVelChangeMovement(Player ply, Vector vel) {
         Vector aftVel = ply.getVelocity();
         // ignore vertical component
+        double afterY = aftVel.getY();
         aftVel.setY(0);
         // adjust the length of horizontal component according to previously saved move direction
         double aVLS = aftVel.lengthSquared();
@@ -1006,10 +1007,12 @@ public class PlayerHelper {
 
             aftVel.multiply(factor);
         }
-        // reapply vertical component
-        // TODO
-        Bukkit.broadcastMessage(vel.getY() + "|" + aftVel.getY());
-        aftVel.setY( vel.getY() );
+        // reapply vertical component: if on ground or touched ceiling (afterY < 0 while vel.getY > 0), clear y component
+        if (ply.isOnGround() || (afterY < 0 && vel.getY() > 0) )
+            aftVel.setY(0);
+        // otherwise, the vertical component is fine.
+        else
+            aftVel.setY( vel.getY() );
         return aftVel;
     }
     // grappling hook
@@ -1096,7 +1099,8 @@ public class PlayerHelper {
                     ply.setFallDistance(0);
                     center.multiply(1 / (double) hookedAmount);
                     Vector thrust = center.subtract(ply.getEyeLocation()).toVector();
-                    if (thrust.lengthSquared() > hookPullSpeed * hookPullSpeed * 36)
+                    // if length * 1/2 > hookPullSpeed
+                    if (thrust.lengthSquared() > hookPullSpeed * hookPullSpeed * 4)
                         thrust.normalize().multiply(hookPullSpeed);
                     else if (thrust.lengthSquared() > 0)
                         thrust.multiply(0.5);
@@ -1348,7 +1352,8 @@ public class PlayerHelper {
                     if (accLength > maxAcceleration) {
                         acceleration.multiply(maxAcceleration / accLength);
                     }
-                    // TODO:
+                    // TODO: Is it correct?
+                    // TODO: when pressing space, horizontal acceleration is not present
                     // regularize acceleration so that horizontal speed (especially from dash) do not get decreased too rapidly
 //                    {
 //                        Vector moveDirHor = moveDir.clone().setY(0);
@@ -1379,6 +1384,7 @@ public class PlayerHelper {
         return vel;
     }
     // underwater movement & oxygen bar
+    // TODO: speed do not exponentially decay underwater; it receives a multiplier
     private static Vector underwaterMovement(Player ply, Vector vel) {
         // basic settings
         WorldHelper.WaterRegionType waterRegion = WorldHelper.WaterRegionType.getWaterRegionType(ply.getLocation());
@@ -2149,13 +2155,17 @@ public class PlayerHelper {
                     newAttrMap.getOrDefault("maxHealth", 200d) *
                             newAttrMap.getOrDefault("maxHealthMulti", 1d));
             // setup walking speed
-            double walkingSpeed = newAttrMap.getOrDefault("speed", 0.2d) *
-                    newAttrMap.getOrDefault("speedMulti", 1d);
-            if (walkingSpeed < 0d)
-                walkingSpeed = 0d;
-            if (Math.abs(ply.getWalkSpeed() - walkingSpeed) > 1e-9) {
-                ply.setWalkSpeed((float) walkingSpeed);
-            }
+//            double walkingSpeed = newAttrMap.getOrDefault("speed", 0.2d) *
+//                    newAttrMap.getOrDefault("speedMulti", 1d);
+//            if (walkingSpeed < 0d)
+//                walkingSpeed = 0d;
+//            if (Math.abs(ply.getWalkSpeed() - walkingSpeed) > 1e-9) {
+//                ply.setWalkSpeed((float) walkingSpeed);
+//            }
+            // updated: the on-ground movement is also handled with velocity...
+            if (ply.getWalkSpeed() != 0f)
+                ply.setWalkSpeed(0f);
+            // save new attribute map
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ATTRIBUTE_MAP, newAttrMap);
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setupAttribute ", e);
