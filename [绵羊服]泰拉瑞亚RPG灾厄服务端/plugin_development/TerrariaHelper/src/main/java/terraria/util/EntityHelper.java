@@ -246,6 +246,7 @@ public class EntityHelper {
         PLAYER_THRUST_INDEX("thrustIndex"),
         PLAYER_THRUST_PROGRESS("thrustProgress"),
         PLAYER_VELOCITY("plyVel"),
+        PLAYER_VELOCITY_MULTI("plyVelMulti"),
         PROJECTILE_BOUNCE_LEFT("bounce"),
         PROJECTILE_DESTROY_REASON("destroyReason"),
         PROJECTILE_PENETRATION_LEFT("penetration"),
@@ -761,7 +762,7 @@ public class EntityHelper {
                         } else if (velY > maxVerticalSpeed) {
                             velY = maxVerticalSpeed;
                         }
-                        Vector velocity = twistedEntity.getVelocity();
+                        Vector velocity = getVelocity(twistedEntity);
                         velocity.setY(velY);
                         setVelocity(twistedEntity, velocity);
                         entity.setFallDistance(0);
@@ -1631,12 +1632,23 @@ public class EntityHelper {
             return PlayerHelper.getMount((Player) entity);
         return entity.getVehicle();
     }
+    // for player, use either this getVelocity or the getPlayerVelocity in PlayerHelper
+    public static Vector getVelocity(Entity entity) {
+        if (entity instanceof Player)
+            return PlayerHelper.getPlayerVelocity((Player) entity);
+        return entity.getVelocity();
+    }
+    // for player, use this setVelocity instead of vanilla one
     public static void setVelocity(Entity entity, Vector spd) {
         // handle unreasonable magnitude (> 100)
         if (spd.lengthSquared() > 1e5)
             spd.zero();
         if (entity instanceof Player) {
             setMetadata(entity, MetadataName.PLAYER_VELOCITY, spd);
+            MetadataValue mtv = getMetadata(entity, MetadataName.PLAYER_VELOCITY_MULTI);
+            spd = spd.clone();
+            if (mtv != null)
+                spd.multiply(mtv.asDouble());
         }
         entity.setVelocity(spd);
     }
@@ -1659,7 +1671,7 @@ public class EntityHelper {
         if (knockbackTaker instanceof Minecart)
             return;
         // calculate the final velocity
-        Vector finalVel = knockbackTaker.getVelocity();
+        Vector finalVel = getVelocity(knockbackTaker);
         if (addOrReplace) {
             finalVel.add(dir);
         } else {

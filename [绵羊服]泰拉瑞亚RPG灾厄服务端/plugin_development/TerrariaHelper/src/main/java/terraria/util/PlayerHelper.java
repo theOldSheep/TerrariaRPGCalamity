@@ -283,6 +283,14 @@ public class PlayerHelper {
     public static HashSet<String> getPlayerKeyPressed(Player ply) {
         return (HashSet<String>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_KEYS_PRESSED).value();
     }
+    public static Vector getPlayerVelocity(Player ply) {
+        MetadataValue mtv = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY);
+        if (mtv == null) {
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY, new Vector());
+            return new Vector();
+        }
+        return (Vector) mtv.value();
+    }
     public static double getPlayerMoveYaw(Player ply) {
         HashSet<String> allKeysPressed = getPlayerKeyPressed(ply);
         String movementKeyDown = "";
@@ -1008,11 +1016,17 @@ public class PlayerHelper {
             aftVel.multiply(factor);
         }
         // reapply vertical component: if on ground or touched ceiling (afterY < 0 while vel.getY > 0), clear y component
-        if (ply.isOnGround() || (afterY < 0 && vel.getY() > 0) )
-            aftVel.setY(0);
-        // otherwise, the vertical component is fine.
-        else
-            aftVel.setY( vel.getY() );
+        boolean hitBlock = false;
+        if (ply.isOnGround()) {
+            hitBlock = true;
+        }
+        else {
+            // if vel.getY is significant, consider this as hitting a ceiling
+            // if the threshold is set to 0, the player would have trouble taking off
+            if (afterY < 0 && vel.getY() > 0.08)
+                hitBlock = true;
+        }
+        aftVel.setY(hitBlock ? 0 : vel.getY());
         return aftVel;
     }
     // grappling hook
@@ -1274,8 +1288,8 @@ public class PlayerHelper {
                         ply.setFallDistance(0);
                         // vertical movement direction
                         {
-                            if (gliding) moveDir = new Vector(0, maxSpeed * -1, 0);
-                            else moveDir = new Vector(0, maxSpeed, 0);
+                            if (gliding) moveDir.add( new Vector(0, maxSpeed * -1, 0) );
+                            else moveDir.add( new Vector(0, maxSpeed, 0) );
                         }
                         // extra jump
                         if (thrustProgress < extraJumpTime) {
@@ -1332,18 +1346,19 @@ public class PlayerHelper {
                 }
                 else
                     movingVer = true;
-                // if the player is not trying to move, handle speed decay multiplier
-                if (moveDir.lengthSquared() < 1e-5) {
+                // handle speed decay multiplier
+                {
+                    double horVelMulti;
                     if (ply.isOnGround())
-                        vel.multiply(0.75);
-                    else {
-                        double y = vel.getY();
-                        // if not on ground, 0.975 for horizontal component and 0.99 for vertical
-                        vel.multiply(0.975);
-                    }
+                        horVelMulti = 0.6;
+                    else
+                        horVelMulti = movingHor ? 0.99 : 0.95;
+                    double y = vel.getY();
+                    vel.multiply(horVelMulti);
+                    vel.setY(y * 0.99);
                 }
-                // otherwise, change the player's velocity according to targeted move direction
-                else {
+                // if the player is moving, change the player's velocity according to targeted move direction
+                if (moveDir.lengthSquared() > 1e-5) {
                     // speed multiplier handling
                     moveDir.multiply(speedMulti);
                     Vector acceleration = moveDir.clone().subtract(vel);
@@ -1354,16 +1369,7 @@ public class PlayerHelper {
                     }
                     // TODO: Is it correct?
                     // TODO: when pressing space, horizontal acceleration is not present
-                    // regularize acceleration so that horizontal speed (especially from dash) do not get decreased too rapidly
-//                    {
-//                        Vector moveDirHor = moveDir.clone().setY(0);
-//                        Vector accelerationComponent = MathHelper.vectorProjection(moveDirHor, acceleration);
-//                        // if acceleration's horizontal component goes in the opposite direction, cancel 95% of it
-//                        if (moveDirHor.dot(accelerationComponent) < 0) {
-//                            acceleration.subtract(accelerationComponent.multiply(0.95));
-//                        }
-//                    }
-                    // do not change the corresponding component if not moving in the direction.
+                    // do not change the corresponding component (most likely unreasonably de-accelerate) if not moving in the direction.
                     if (! movingHor) {
                         acceleration.setX(0);
                         acceleration.setZ(0);
@@ -1433,12 +1439,13 @@ public class PlayerHelper {
         // movement slow handling
         {
             // water affinity partially removes slow introduced by water
+            double velMulti = 1d;
             if (isInLiquid) {
                 // e^x / (e^x + 1), sigmoid
                 double ex = Math.pow(Math.E, waterAffinity);
-                double moveSpdMulti = ex / (ex + 1);
-                vel.multiply(moveSpdMulti);
+                velMulti = ex / (ex + 1);
             }
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_MULTI, velMulti);
         }
         return vel;
     }
@@ -1463,7 +1470,7 @@ public class PlayerHelper {
                 if (!PlayerHelper.isProperlyPlaying(ply))
                     continue;
                 // get player speed
-                Vector plySpd = (Vector) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY).value();
+                Vector plySpd = getPlayerVelocity(ply);
                 // account for speed direction changed by basic tick (block collision)
                 plySpd = accountVelChangeMovement(ply, plySpd);
 
@@ -1731,6 +1738,7 @@ public class PlayerHelper {
         resetPlayerFlightTime(ply);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_DIRECTION, "");
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY, new Vector());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_MULTI, 1d);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS, Calendar.getInstance().getTimeInMillis());
         setArmorSet(ply, "");
         // bgm, biome and background
@@ -2616,7 +2624,7 @@ public class PlayerHelper {
             HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
             dashSpeed *= attrMap.getOrDefault("speedMulti", 1d);
             Vector dashVelocity = MathHelper.vectorFromYawPitch_quick(yaw, pitch).multiply(dashSpeed);
-            ply.setVelocity(ply.getVelocity().add(dashVelocity));
+            EntityHelper.setVelocity(ply, getPlayerVelocity(ply).add(dashVelocity));
             ply.addScoreboardTag("temp_dashCD");
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                     () -> ply.removeScoreboardTag("temp_dashCD"), dashCD);

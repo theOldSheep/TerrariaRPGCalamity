@@ -23,6 +23,7 @@ import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.projectiles.ProjectileSource;
 import org.spigotmc.event.entity.EntityDismountEvent;
 import terraria.TerrariaHelper;
@@ -82,7 +83,8 @@ public class VanillaMechanicListener implements Listener {
     public void onAirChange(EntityAirChangeEvent e) {
         if (e.getEntity() instanceof Player) {
             Player ply = (Player) e.getEntity();
-            if (e.getAmount() != EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR).asInt())
+            MetadataValue mtv = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR);
+            if (mtv != null && e.getAmount() != mtv.asInt())
                 e.setCancelled(true);
         }
     }
