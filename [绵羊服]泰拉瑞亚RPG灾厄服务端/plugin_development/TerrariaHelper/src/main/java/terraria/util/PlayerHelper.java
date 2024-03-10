@@ -1001,7 +1001,51 @@ public class PlayerHelper {
             }
         }, 0, delay);
     }
+
+
     // account for velocity change by block collision
+    private static HashMap<Material, HashSet<Integer>> getContactBlocks(Player ply) {
+        HashMap<Material, HashSet<Integer>> result = new HashMap<>();
+        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+        net.minecraft.server.v1_12_R1.World worldNMS = plyNMS.getWorld();
+        World worldBkt = ply.getWorld();
+        AxisAlignedBB plyBB = plyNMS.getBoundingBox().grow(0.05, 0.05, 0.05);
+        // algorithm from Net.Minecraft.Server World.class
+        int i = net.minecraft.server.v1_12_R1.MathHelper.floor(plyBB.a);
+        int j = net.minecraft.server.v1_12_R1.MathHelper.f(plyBB.d);
+        int k = net.minecraft.server.v1_12_R1.MathHelper.floor(plyBB.b);
+        int l = net.minecraft.server.v1_12_R1.MathHelper.f(plyBB.e);
+        int i1 = net.minecraft.server.v1_12_R1.MathHelper.floor(plyBB.c);
+        int j1 = net.minecraft.server.v1_12_R1.MathHelper.f(plyBB.f);
+        if (worldNMS.areChunksLoadedBetween(new BlockPosition(i, k, i1), new BlockPosition(j, l, j1), true)) {
+            BlockPosition.PooledBlockPosition blockposition_pooledblockposition = BlockPosition.PooledBlockPosition.s();
+
+            for (int k1 = i; k1 < j; ++k1) {
+                for (int l1 = k; l1 < l; ++l1) {
+                    for (int i2 = i1; i2 < j1; ++i2) {
+                        blockposition_pooledblockposition.f(k1, l1, i2);
+                        IBlockData iblockdata = worldNMS.getType(blockposition_pooledblockposition);
+                        boolean inContact = true;
+                        net.minecraft.server.v1_12_R1.Material material = iblockdata.getMaterial();
+                        // handle liquid surface y level
+                        if (net.minecraft.server.v1_12_R1.Material.WATER.equals(material) || net.minecraft.server.v1_12_R1.Material.LAVA.equals(material)) {
+                            double d0 = (float) (l1 + 0.9) - BlockFluids.b(iblockdata.get(BlockFluids.LEVEL));
+                            if (d0 < plyBB.b)
+                                inContact = false;
+                        }
+                        if (inContact) {
+                            Block bukkitBlock = worldBkt.getBlockAt(k1, l1, i2);
+                            Material blockMat = bukkitBlock.getType();
+                            if (! result.containsKey(blockMat))
+                                result.put(blockMat, new HashSet<>());
+                            result.get(blockMat).add((int) bukkitBlock.getData());
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
     private static Vector accountVelChangeMovement(Player ply, Vector vel) {
         Vector aftVel = ply.getVelocity();
         // ignore vertical component
@@ -1391,35 +1435,38 @@ public class PlayerHelper {
     }
     // underwater movement & oxygen bar
     // TODO: speed do not exponentially decay underwater; it receives a multiplier
-    private static Vector underwaterMovement(Player ply, Vector vel) {
+    private static Vector underwaterMovement(Player ply, Vector vel, HashMap<Material, HashSet<Integer>> contactBlocks) {
         // basic settings
-        WorldHelper.WaterRegionType waterRegion = WorldHelper.WaterRegionType.getWaterRegionType(ply.getLocation());
-        boolean isInLiquid;
+        boolean isInLiquid = false, isInLava = false, submerged = false;
+        if (contactBlocks.containsKey(Material.LAVA) || contactBlocks.containsKey(Material.STATIONARY_LAVA)) {
+            isInLiquid = true;
+            isInLava = true;
+        }
+        else if (contactBlocks.containsKey(Material.WATER) || contactBlocks.containsKey(Material.STATIONARY_WATER))
+            isInLiquid = true;
         switch (ply.getEyeLocation().getBlock().getType()) {
             case WATER:
             case STATIONARY_WATER:
             case LAVA:
             case STATIONARY_LAVA:
+                submerged = true;
+        }
+        WorldHelper.WaterRegionType waterRegion = WorldHelper.WaterRegionType.getWaterRegionType(ply.getLocation(), isInLava);
+        // oxygen will deplete in the abyss no matter what
+        switch (waterRegion) {
+            case ABYSS_1:
+            case ABYSS_2:
+            case ABYSS_3:
                 isInLiquid = true;
+                submerged = true;
                 break;
-            default:
-                // oxygen will deplete in the abyss no matter what
-                switch (waterRegion) {
-                    case ABYSS_1:
-                    case ABYSS_2:
-                    case ABYSS_3:
-                        isInLiquid = true;
-                        break;
-                    default:
-                        isInLiquid = false;
-                }
         }
         double waterAffinity = EntityHelper.getAttrMap(ply).getOrDefault("waterAffinity", 0d);
         // oxygen handling
         {
             int oxygen = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR).asInt();
             // update variable
-            if (isInLiquid) {
+            if (submerged) {
                 double oxygenDepleteRate = Math.max(waterRegion.oxygenDepletionLevel - waterAffinity, 0);
                 oxygen -= MathHelper.randomRound(oxygenDepleteRate);
                 // drowning damage
@@ -1439,18 +1486,24 @@ public class PlayerHelper {
         // movement slow handling
         {
             // water affinity partially removes slow introduced by water
-            double velMulti = 1d;
+            double extraDragModifier = isInLava ? 1 : 0.25;
+            double velMulti;
+            MetadataValue mdv = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_MULTI);
+            if (mdv != null)
+                velMulti = mdv.asDouble();
+            else
+                velMulti = 1d;
             if (isInLiquid) {
                 // e^x / (e^x + 1), sigmoid
-                double ex = Math.pow(Math.E, waterAffinity);
-                velMulti = ex / (ex + 1);
+                double ex = Math.pow(Math.E, waterAffinity - extraDragModifier);
+                velMulti *= ex / (ex + 1);
             }
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_MULTI, velMulti);
         }
         return vel;
     }
     // special block coll.
-    private static void specialBlockMovement(Player ply) {
+    private static void specialBlockMovement(Player ply, HashMap<Material, HashSet<Integer>> contactBlocks) {
 
     }
     // saving location info
@@ -1469,6 +1522,11 @@ public class PlayerHelper {
                 // validate the current player
                 if (!PlayerHelper.isProperlyPlaying(ply))
                     continue;
+                // get contact blocks
+                HashMap<Material, HashSet<Integer>> contactBlocks = getContactBlocks(ply);
+                // player that are sneaking on ground move more slowly
+                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_MULTI,
+                        ply.isOnGround() && ply.isSneaking() ? 0.5 : 1);
                 // get player speed
                 Vector plySpd = getPlayerVelocity(ply);
                 // account for speed direction changed by basic tick (block collision)
@@ -1479,12 +1537,12 @@ public class PlayerHelper {
                 // grappling hook (override wing/jump)
                 plySpd = grapplingHookMovement(ply, plySpd);
                 // underwater speed adjusting & oxygen bar
-                plySpd = underwaterMovement(ply, plySpd);
+                plySpd = underwaterMovement(ply, plySpd, contactBlocks);
                 // update speed
                 EntityHelper.setVelocity(ply, plySpd);
 
                 // block collision handling
-                specialBlockMovement(ply);
+                specialBlockMovement(ply, contactBlocks);
                 // save location info
                 saveLastLoc(ply);
             }

@@ -61,7 +61,7 @@ public class WorldHelper {
     };
 
     public enum WaterRegionType {
-        NORMAL(1d), UNDERWORLD(2.25d),
+        NORMAL(1d), LAVA(2.25d),
         OCEAN(1.15d), SULPHUROUS_OCEAN(1.2d),
         SUNKEN_SEA(1.35d),
         ABYSS_1(2d), ABYSS_2(3.5d), ABYSS_3(5d);
@@ -70,27 +70,31 @@ public class WorldHelper {
         WaterRegionType(double oxygenDepletionLevel) {
             this.oxygenDepletionLevel = oxygenDepletionLevel;
         }
-        public static WaterRegionType getWaterRegionType(Location loc) {
+        public static WaterRegionType getWaterRegionType(Location loc, boolean hasLava) {
+            WaterRegionType result = NORMAL;
             switch (BiomeType.getBiome(loc)) {
                 case OCEAN:
-                    return OCEAN;
+                    result = OCEAN;
+                    break;
                 case SULPHUROUS_OCEAN:
-                    return SULPHUROUS_OCEAN;
-                case UNDERWORLD:
-                case BRIMSTONE_CRAG:
-                    return UNDERWORLD;
+                    result = SULPHUROUS_OCEAN;
+                    break;
                 case ABYSS:
                     double locY = loc.getY();
                     if (locY < 100)
-                        return ABYSS_3;
-                    if (locY < 175)
-                        return ABYSS_2;
-                    return ABYSS_1;
+                        result = ABYSS_3;
+                    else if (locY < 175)
+                        result = ABYSS_2;
+                    else
+                        result = ABYSS_1;
+                    break;
                 case SUNKEN_SEA:
-                    return SUNKEN_SEA;
-                default:
-                    return NORMAL;
+                    result = SUNKEN_SEA;
+                    break;
             }
+            if (hasLava && result.oxygenDepletionLevel < LAVA.oxygenDepletionLevel)
+                result = LAVA;
+            return result;
         }
     }
     public enum HeightLayer {
