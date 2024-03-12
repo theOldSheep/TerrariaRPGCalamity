@@ -60,8 +60,8 @@
     blastDamageShooter: false
     # 爆炸是否会破坏方块，不写则视为false
     blastDestroyBlock: false
-    # 是否被水减速？不写则视为true
-    slowedByWater: true
+    # 是否被水减速？不写则视为false
+    slowedByWater: false
     # 击中方块时的反应，不写则视为die
     # die: 击中方块时损毁； thru：穿透方块； bounce：弹跳； stick：黏在方块上； slide：像月光弓一样，在方块表面摩擦
     blockHitAction: die
@@ -135,7 +135,6 @@
 钩爪:
     gravity: 0
     speedMultiPerTick: 1
-    slowedByWater: false
     penetration: 999999
     blockHitAction: stick
     liveTime: 999999
@@ -876,12 +875,10 @@
     liveTime: 75
     gravity: 0
     speedMultiPerTick: 0.9
-    slowedByWater: false
 呕吐物:
     liveTime: 60
     noGravityTicks: 10
     penetration: 2
-    slowedByWater: false
     buffInflict:
         - "剧毒|40|1"
 樱花弹:
@@ -1810,6 +1807,7 @@ TNT:
 火枪子弹:
     gravity: 0
     liveTime: 100
+    slowedByWater: true
 陨星弹:
     gravity: 0
     liveTime: 150
@@ -1817,9 +1815,11 @@ TNT:
     bounce: 2
     penetration: 2
     bouncePenetrationBonded: true
+    slowedByWater: true
 银子弹:
     gravity: 0
     liveTime: 100
+    slowedByWater: true
 爆炸弹:
     gravity: 0
     liveTime: 100
@@ -2006,7 +2006,6 @@ TNT:
     gravity: 0
     liveTime: 50
     penetration: 1
-    slowedByWater: false
     trailColor: 69|92|211
 麦格纳冲击波:
     arrowOrPotion: true
@@ -2274,7 +2273,6 @@ TNT:
     autoTrace: true
     liveTime: 100
 猪鲨链球:
-    slowedByWater: false
     spawnProjectiles:
         interval: 2
         offset: 1.0
@@ -2283,7 +2281,6 @@ TNT:
         speed: 0.4
         spawnType: 气泡弹
 气泡弹:
-    slowedByWater: false
     autoTrace: true
     gravity: 0
     liveTime: 35
@@ -2354,12 +2351,10 @@ TNT:
         damageMulti: 1
         speed: 1
         spawnType: 水流
-    slowedByWater: false
 水流:
     noGravityTicks: 10
     liveTime: 50
     penetration: 1
-    slowedByWater: false
     trailColor: 69|92|211
     trailSize: 0.15
     trailStepSize: 0.75
@@ -2524,6 +2519,7 @@ TNT:
 螺丝钉:
     noGravityTicks: 0
     liveTime: 60
+    slowedByWater: true
 水之剑气:
     gravity: 0
     projectileSize: 0.5
@@ -3383,7 +3379,6 @@ TNT:
     gravity: 0
     liveTime: 15
     blockHitAction: thru
-    slowedByWater: false
     clusterBomb:
         amount: 4
         name: 冲击波
@@ -3396,7 +3391,6 @@ TNT:
     blockHitAction: slide
     liveTime: 30
     penetration: 999999
-    slowedByWater: false
 远古剑气:
     projectileSize: 1
     gravity: 0
@@ -3713,7 +3707,6 @@ TNT:
     autoTrace: true
     autoTraceMethod: 2
     autoTraceRadius: 16
-    slowedByWater: false
 星云烈焰:
     gravity: 0
     autoTrace: true
@@ -4582,7 +4575,6 @@ TNT:
     autoTraceMethod: 2
     autoTraceAbility: 5
     autoTraceRadius: 32
-    slowedByWater: false
 大殷红利刃:
     gravity: 0
     blockHitAction: thru
@@ -4668,13 +4660,11 @@ TNT:
     autoTraceMethod: 2
     autoTraceAbility: 8
     autoTraceRadius: 32
-    slowedByWater: false
 归元漩涡:
     liveTime: 40
     projectileSize: 5
     blockHitAction: thru
     gravity: 0
-    slowedByWater: false
     clusterBomb:
         amount: 1
         damageMulti: 1
@@ -4770,7 +4760,6 @@ TNT:
     liveTime: 100
     penetration: 4
     enemyInvincibilityFrame: 2
-    slowedByWater: false
     autoTrace: true
     noAutoTraceTicks: 8
     autoTraceRadius: 24
@@ -4787,21 +4776,18 @@ TNT:
     autoTrace: true
     autoTraceRadius: 16
     noAutoTraceTicks: 5
-    slowedByWater: false
     trailColor: 149|255|255;208|132|145
 小异端诡灵:
     projectileSize: 1.5
     blockHitAction: thru
     liveTime: 999999
     penetration: 999999
-    slowedByWater: false
     enemyInvincibilityFrame: 1
 异端诡灵:
     projectileSize: 5
     blockHitAction: thru
     liveTime: 999999
     penetration: 999999
-    slowedByWater: false
     enemyInvincibilityFrame: 1
 孢子球:
     gravity: 0
@@ -4824,16 +4810,20 @@ TNT:
         - "剧毒|300|0.33"
 木箭:
     arrowOrPotion: true
+    slowedByWater: true
 烈焰箭:
     arrowOrPotion: true
+    slowedByWater: true
     buffInflict:
         - "燃烧|200|0.5"
 冰焰箭:
     arrowOrPotion: true
+    slowedByWater: true
     buffInflict:
         - "霜火|100|0.5"
 邪箭:
     arrowOrPotion: true
+    slowedByWater: true
     penetration: 4
 小丑之箭:
     arrowOrPotion: true

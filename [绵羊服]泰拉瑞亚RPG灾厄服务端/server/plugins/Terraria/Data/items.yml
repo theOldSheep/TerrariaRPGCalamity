@@ -11,7 +11,7 @@
 橡实:
   item: CLAY_BALL
   lore:
-  - §r右键种树
+  - §r右键种下一棵快乐的小树
   worth: 200
   rarity: 0
 雪块:
@@ -13502,6 +13502,15 @@ Dodu的手炮:
   - §a饮用后可以请求TP到玩家身边
   worth: 20000
   rarity: 1
+树之祭祀:
+  item: CLAY_BALL
+  lore:
+  - §r右键木板或树木使用，摧毁它并获得生命再生效果
+  - §r对木板使用时为10秒，对树木使用时为16秒
+  - §r可于建材商人处购买更多
+  - §r“是的，它严重减缓了我的工作效率”
+  worth: 600
+  rarity: 2
 蜂蜜瓶:
   item: CLAY_BALL
   lore:
@@ -13549,6 +13558,7 @@ Dodu的手炮:
   item: CLAY_BALL
   lore:
   - §r使用增加25生命值上限
+  - §r“它是鲜活的，使我感受到生命”
   worth: 1500000
   rarity: 2
 生命果:

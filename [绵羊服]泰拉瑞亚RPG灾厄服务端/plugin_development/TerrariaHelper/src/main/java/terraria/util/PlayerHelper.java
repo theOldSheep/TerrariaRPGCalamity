@@ -1003,8 +1003,8 @@ public class PlayerHelper {
     }
 
 
-    // account for velocity change by block collision
-    private static HashMap<Material, HashSet<Integer>> getContactBlocks(Player ply) {
+    // get the blocks colliding the player, handle on-hit events and return a summary of collided block types
+    private static HashMap<Material, HashSet<Integer>> handleContactBlocks(Player ply) {
         HashMap<Material, HashSet<Integer>> result = new HashMap<>();
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         net.minecraft.server.v1_12_R1.World worldNMS = plyNMS.getWorld();
@@ -1046,6 +1046,7 @@ public class PlayerHelper {
         }
         return result;
     }
+    // account for velocity change by block collision
     private static Vector accountVelChangeMovement(Player ply, Vector vel) {
         Vector aftVel = ply.getVelocity();
         // ignore vertical component
@@ -1396,7 +1397,7 @@ public class PlayerHelper {
                     if (ply.isOnGround())
                         horVelMulti = 0.6;
                     else
-                        horVelMulti = movingHor ? 0.99 : 0.95;
+                        horVelMulti = movingHor ? 0.99 : 0.925;
                     double y = vel.getY();
                     vel.multiply(horVelMulti);
                     vel.setY(y * 0.99);
@@ -1496,15 +1497,14 @@ public class PlayerHelper {
             if (isInLiquid) {
                 // e^x / (e^x + 1), sigmoid
                 double ex = Math.pow(Math.E, waterAffinity - extraDragModifier);
-                velMulti *= ex / (ex + 1);
+                double multiplier = ex / (ex + 1);
+                velMulti *= multiplier;
+                // water also vertically slows the player. The slow multiplier is applied over the duration of 20 ticks.
+                vel.setY(vel.getY() * Math.pow(multiplier, 0.05));
             }
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_MULTI, velMulti);
         }
         return vel;
-    }
-    // special block coll.
-    private static void specialBlockMovement(Player ply, HashMap<Material, HashSet<Integer>> contactBlocks) {
-
     }
     // saving location info
     private static void saveLastLoc(Player ply) {
@@ -1523,7 +1523,7 @@ public class PlayerHelper {
                 if (!PlayerHelper.isProperlyPlaying(ply))
                     continue;
                 // get contact blocks
-                HashMap<Material, HashSet<Integer>> contactBlocks = getContactBlocks(ply);
+                HashMap<Material, HashSet<Integer>> contactBlocks = handleContactBlocks(ply);
                 // player that are sneaking on ground move more slowly
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_MULTI,
                         ply.isOnGround() && ply.isSneaking() ? 0.5 : 1);
@@ -1541,8 +1541,6 @@ public class PlayerHelper {
                 // update speed
                 EntityHelper.setVelocity(ply, plySpd);
 
-                // block collision handling
-                specialBlockMovement(ply, contactBlocks);
                 // save location info
                 saveLastLoc(ply);
             }

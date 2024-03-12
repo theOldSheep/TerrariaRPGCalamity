@@ -1890,8 +1890,8 @@ public class EntityHelper {
                 damageInvulnerabilityTicks = Math.max(damageInvulnerabilityTicks, 30);
                 break;
             case DROWNING:
-                dmg = 50;
                 damageFixed = true;
+                damageInvulnerabilityTicks = 0;
                 break;
             case SUFFOCATION:
                 damageInvulnerabilityTicks = 0;
