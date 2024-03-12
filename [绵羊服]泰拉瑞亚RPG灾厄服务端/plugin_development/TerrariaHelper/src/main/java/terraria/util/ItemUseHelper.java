@@ -957,7 +957,7 @@ public class ItemUseHelper {
                         if (currentIndex == 0) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(2);
-                            ply.setVelocity(plyVel);
+                            EntityHelper.setVelocity(ply, plyVel);
                         }
                         // hitting enemies will lock the player in a proper place
                         int finalCurrentIndex = currentIndex;
@@ -969,14 +969,14 @@ public class ItemUseHelper {
                                         // repels the player when the strike would finish soon
                                         if ( ( (finalCurrentIndex + 3) * 1.75) >= maxIndex) {
                                             Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc, 2);
-                                            ply.setVelocity(plyVel);
+                                            EntityHelper.setVelocity(ply, plyVel);
                                         }
                                         // otherwise, keep a safe distance from enemy
                                         else {
                                             Vector offsetDir = MathHelper.getDirection(hitLoc, finalStartStrikeLoc, 5.5);
                                             Vector plyVel = MathHelper.getDirection(
                                                     finalStartStrikeLoc, hitLoc.add(offsetDir), 1.75, true);
-                                            ply.setVelocity(plyVel);
+                                            EntityHelper.setVelocity(ply, plyVel);
                                         }
                                     }
                                 })
@@ -1129,7 +1129,7 @@ public class ItemUseHelper {
                                     ply.setFallDistance(0f);
                                     // repels the player
                                     Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc1, 1.5);
-                                    ply.setVelocity(plyVel);
+                                    EntityHelper.setVelocity(ply, plyVel);
                                 }
                             });
                     break;
@@ -1142,7 +1142,7 @@ public class ItemUseHelper {
                         if (currentIndex == 0 && ply.isOnGround()) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(1.5);
-                            ply.setVelocity(plyVel);
+                            EntityHelper.setVelocity(ply, plyVel);
                         }
                         // hitting enemies will knock back the player
                         Location finalStartStrikeLoc2 = startStrikeLoc;
@@ -1152,7 +1152,7 @@ public class ItemUseHelper {
                                         ply.setFallDistance(0f);
                                         // repels the player
                                         Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc2, 0.75);
-                                        ply.setVelocity(plyVel);
+                                        EntityHelper.setVelocity(ply, plyVel);
                                         // heal for a small amount
                                         PlayerHelper.heal(ply, 3, false);
                                     }
@@ -1169,7 +1169,7 @@ public class ItemUseHelper {
                         if (currentIndex == 0) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(1.75);
-                            ply.setVelocity(plyVel);
+                            EntityHelper.setVelocity(ply, plyVel);
                         }
                         // hitting enemies will knock back the player
                         int overrideCD = 12 - currentIndex;
@@ -1180,7 +1180,7 @@ public class ItemUseHelper {
                                         ply.setFallDistance(0f);
                                         // repels the player
                                         Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc3, 1);
-                                        ply.setVelocity(plyVel);
+                                        EntityHelper.setVelocity(ply, plyVel);
                                         // heal for a small amount
                                         PlayerHelper.heal(ply, 4, false);
                                         applyCD(ply, overrideCD);
@@ -1209,7 +1209,7 @@ public class ItemUseHelper {
                         {
                             Vector plyVel = MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch);
                             plyVel.multiply(2);
-                            ply.setVelocity(plyVel);
+                            EntityHelper.setVelocity(ply, plyVel);
                         }
                         // remove all stacks on last blow
                         if (currentIndex == maxIndex) {
@@ -1242,7 +1242,7 @@ public class ItemUseHelper {
                         {
                             Vector plyVel = MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch);
                             plyVel.multiply(2);
-                            ply.setVelocity(plyVel);
+                            EntityHelper.setVelocity(ply, plyVel);
                         }
                         // remove all stacks on last blow
                         if (currentIndex == maxIndex) {
@@ -1317,7 +1317,7 @@ public class ItemUseHelper {
                                     ply.setFallDistance(0f);
                                     // repels the player
                                     Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc4, 1.5);
-                                    ply.setVelocity(plyVel);
+                                    EntityHelper.setVelocity(ply, plyVel);
                                 }
                             });
                     break;
@@ -1333,7 +1333,7 @@ public class ItemUseHelper {
                         if (durability.get() >= 50) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(2.25);
-                            ply.setVelocity(plyVel);
+                            EntityHelper.setVelocity(ply, plyVel);
                         }
                         // save durability
                         durability.addAndGet(-12);
@@ -1351,7 +1351,7 @@ public class ItemUseHelper {
                                     ply.setFallDistance(0f);
                                     // repels the player
                                     Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc5, 1.5);
-                                    ply.setVelocity(plyVel);
+                                    EntityHelper.setVelocity(ply, plyVel);
                                     // heal for a small amount
                                     PlayerHelper.heal(ply, 8, false);
                                     applyCD(ply, overrideCD);
@@ -1410,7 +1410,7 @@ public class ItemUseHelper {
                         if (durability.get() >= 25) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(3);
-                            ply.setVelocity(plyVel);
+                            EntityHelper.setVelocity(ply, plyVel);
                         }
                         // save durability
                         durability.addAndGet(-25);
@@ -1428,7 +1428,7 @@ public class ItemUseHelper {
                                     ply.setFallDistance(0f);
                                     // repels the player
                                     Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc5, 1.5);
-                                    ply.setVelocity(plyVel);
+                                    EntityHelper.setVelocity(ply, plyVel);
                                     // heal for a small amount
                                     PlayerHelper.heal(ply, 10, false);
                                     applyCD(ply, overrideCD);
@@ -1494,7 +1494,7 @@ public class ItemUseHelper {
                     // maintain the dash
                     Vector plyVel = lookDir.clone();
                     plyVel.multiply(3);
-                    ply.setVelocity(plyVel);
+                    EntityHelper.setVelocity(ply, plyVel);
 
                     // strike options
                     Vector finalLookDir1 = lookDir.clone();
@@ -1652,7 +1652,7 @@ public class ItemUseHelper {
                         plyVel = lookDir.clone();
                     }
                     else
-                        plyVel = ply.getVelocity().normalize();
+                        plyVel = EntityHelper.getVelocity(ply).normalize();
                     // end dash earlier after recoil (hitting entity); do not update velocity
                     if (plyVel.dot(lookDir) < 0) {
                         if (currentIndex + 5 < maxIndex) {
@@ -1663,11 +1663,11 @@ public class ItemUseHelper {
                     // init and maintain dash velocity as well as init base charge gain
                     else {
                         plyVel.multiply(dashVel);
-                        ply.setVelocity(plyVel);
+                        EntityHelper.setVelocity(ply, plyVel);
                     }
                     // remove dash velocity on timeout
                     if (currentIndex == maxIndex)
-                        ply.setVelocity(new Vector());
+                        EntityHelper.setVelocity(ply, new Vector());
 
                     // hitting enemies will knock back the player and fully charge the weapon
                     Vector lookDirCopy = lookDir.clone().multiply(-1);
@@ -1688,7 +1688,7 @@ public class ItemUseHelper {
                                     }, i);
                                 }
                                 // recoil
-                                ply.setVelocity(lookDirCopy);
+                                EntityHelper.setVelocity(ply, lookDirCopy);
                             })
                             .setLingerDelay(1);
                     break;
@@ -2579,7 +2579,7 @@ public class ItemUseHelper {
                                             // pulls the player
                                             ply.setFallDistance(0f);
                                             Vector plyVel = MathHelper.getDirection(finalStartStrikeLoc, hitLocation, 1.5);
-                                            ply.setVelocity(plyVel);
+                                            EntityHelper.setVelocity(ply, plyVel);
                                         });
                             }
                             // cache the crit rate, set it to 100, handle hit and reset to normal

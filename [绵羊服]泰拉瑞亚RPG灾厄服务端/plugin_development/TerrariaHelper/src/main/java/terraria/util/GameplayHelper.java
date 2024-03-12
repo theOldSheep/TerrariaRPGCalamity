@@ -514,6 +514,9 @@ public class GameplayHelper {
                 break;
             }
             case "树之祭祀": {
+                // do not use when on CD
+                if (ply.getScoreboardTags().contains("temp_useCD"))
+                    break;
                 int buffDuration = -1;
                 switch (blk.getType()) {
                     case WOOD:
@@ -531,6 +534,7 @@ public class GameplayHelper {
                         plyTool.setAmount(plyTool.getAmount() - 1);
                         EntityHelper.applyEffect(ply, "再生", buffDuration);
                     }
+                    ItemUseHelper.applyCD(ply, 10);
                 }
                 break;
             }

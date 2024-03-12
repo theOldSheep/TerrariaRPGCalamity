@@ -206,7 +206,7 @@ public class NPCListener implements Listener {
                         // buy
                         else {
                             basicWorth *= 5;
-                            int amountBuy = Math.min(clickType == 1 ? 1 : clickedItem.getMaxStackSize(),
+                            int amountBuy = Math.min(clickType == 1 ? clickedItem.getAmount() : clickedItem.getMaxStackSize(),
                                     (int) (plyMoney / basicWorth));
                             if (amountBuy <= 0)
                                 PlayerHelper.sendActionBar(ply, "§c您的余额不足以购买该物品。");
@@ -242,7 +242,7 @@ public class NPCListener implements Listener {
                     basicWorth *= 5;
                 }
                 PlayerHelper.sendActionBar(ply, "§a§l物品价值: " +
-                        GenericHelper.getCoinDisplay(GenericHelper.coinConversion(basicWorth, false),
+                        GenericHelper.getCoinDisplay(GenericHelper.coinConversion(basicWorth * clickedItem.getAmount(), false),
                                 new String[]{" §r§l■铂 ", " §e§l■金 ", " §7§l■银 ", " §c§l■铜 "}));
                 break;
             }
