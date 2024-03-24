@@ -1003,6 +1003,33 @@ public class PlayerHelper {
     }
 
 
+    // block collision mechanism
+    private static void handleContactBlockEffect(Player ply, Block block, boolean isFirstContact) {
+        switch (block.getType()) {
+            // meteorite
+            case RED_GLAZED_TERRACOTTA:
+                EntityHelper.applyEffect(ply, "燃烧", 300);
+                break;
+            // hellstone
+            case MAGMA:
+                EntityHelper.applyEffect(ply, "狱炎", 100);
+                break;
+            // astral ore
+            case REDSTONE_BLOCK:
+                EntityHelper.applyEffect(ply, "幻星感染", 200);
+                break;
+            // auric ore
+            case YELLOW_GLAZED_TERRACOTTA:
+                if (isFirstContact) {
+                    Vector knockbackDir = ply.getEyeLocation().subtract( block.getLocation().add(0.5, 0.5, 0.5) ).toVector();
+                    MathHelper.setVectorLength(knockbackDir, 2);
+                    EntityHelper.setVelocity(ply, knockbackDir);
+                    block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 3f, 1f);
+                    EntityHelper.applyEffect(ply, "带电", 100);
+                }
+                break;
+        }
+    }
     // get the blocks colliding the player, handle on-hit events and return a summary of collided block types
     private static HashMap<Material, HashSet<Integer>> handleContactBlocks(Player ply) {
         HashMap<Material, HashSet<Integer>> result = new HashMap<>();
@@ -1036,9 +1063,13 @@ public class PlayerHelper {
                         if (inContact) {
                             Block bukkitBlock = worldBkt.getBlockAt(k1, l1, i2);
                             Material blockMat = bukkitBlock.getType();
-                            if (! result.containsKey(blockMat))
+                            boolean isFirstContact = false;
+                            if (! result.containsKey(blockMat)) {
                                 result.put(blockMat, new HashSet<>());
+                                isFirstContact = true;
+                            }
                             result.get(blockMat).add((int) bukkitBlock.getData());
+                            handleContactBlockEffect(ply, bukkitBlock, isFirstContact);
                         }
                     }
                 }
@@ -1063,7 +1094,7 @@ public class PlayerHelper {
         // reapply vertical component: if on ground or touched ceiling (afterY < 0 while vel.getY > 0), clear y component
         boolean hitBlock = false;
         if (ply.isOnGround()) {
-            hitBlock = true;
+            hitBlock = vel.getY() < 0;
         }
         else {
             // if vel.getY is significant, consider this as hitting a ceiling
@@ -1522,11 +1553,13 @@ public class PlayerHelper {
                 // validate the current player
                 if (!PlayerHelper.isProperlyPlaying(ply))
                     continue;
+
                 // get contact blocks
                 HashMap<Material, HashSet<Integer>> contactBlocks = handleContactBlocks(ply);
                 // player that are sneaking on ground move more slowly
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_MULTI,
                         ply.isOnGround() && ply.isSneaking() ? 0.5 : 1);
+
                 // get player speed
                 Vector plySpd = getPlayerVelocity(ply);
                 // account for speed direction changed by basic tick (block collision)
