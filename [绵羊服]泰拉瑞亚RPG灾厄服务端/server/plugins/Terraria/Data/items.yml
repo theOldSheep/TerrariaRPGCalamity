@@ -13402,7 +13402,7 @@ Dodu的手炮:
 鱼鳃药水:
   item: CLAY_BALL
   lore:
-  - §a水下呼吸
+  - §a增加水下适应性
   - §a4分钟持续时间
   worth: 20000
   rarity: 1

@@ -575,28 +575,34 @@ sets:
     - §a+3 生命恢复
     - §a+10% 近战伤害
     - §a加快敌人刷新
+    - §a增加水下适应性
     attributes:
       damageMeleeMulti: 0.1
       regen: 3
       mobSpawnRateMulti: 0.2
+      waterAffinity: 1
   胜潮远程套装:
     lore:
     - ''
     - §a套装效果： 
     - §a+3 生命恢复
     - §a+10% 远程伤害
+    - §a增加水下适应性
     attributes:
       damageRangedMulti: 0.1
       regen: 3
+      waterAffinity: 1
   胜潮魔法套装:
     lore:
     - ''
     - §a套装效果：
     - §a+3 生命恢复
     - §a+10% 魔法伤害
+    - §a增加水下适应性
     attributes:
       damageMagicMulti: 0.1
       regen: 3
+      waterAffinity: 1
   胜潮召唤套装:
     lore:
     - ''
@@ -604,10 +610,12 @@ sets:
     - §a+3 生命恢复
     - §a+10% 召唤伤害
     - §a+2 召唤栏
+    - §a增加水下适应性
     attributes:
       damageSummonMulti: 0.1
       regen: 3
       minionLimit: 2
+      waterAffinity: 1
   流星套装:
     lore:
     - ''
@@ -739,10 +747,12 @@ sets:
     - §a+10% 伤害
     - §a+3 召唤栏
     - §a移动速度略微减少
+    - §a增加水下适应性
     attributes:
       damageMulti: 0.1
       minionLimit: 3
       speedMulti: -0.1
+      waterAffinity: 1
   水晶刺客套装:
     lore:
     - ''

@@ -357,7 +357,9 @@ effects:
     tooltip: 伤害减免增加5%
   鱼鳃:
     isBuff: true
-    tooltip: 你能在水下呼吸了！
+    attributes:
+      waterAffinity: 1
+    tooltip: 水下适应性增加！
   隐身:
     isBuff: true
     attributes:
