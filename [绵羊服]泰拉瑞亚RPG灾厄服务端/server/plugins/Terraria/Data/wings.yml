@@ -124,43 +124,43 @@
     isWing: true
 天界翼靴:
     flightTime: 60
-    maxSpeed: 1.4
+    maxSpeed: 1.45
     maxAcceleration: 0.225
-    horizontalSpeed: 1.4
+    horizontalSpeed: 1.45
     isWing: true
 龙蒿叶之翼:
-    flightTime: 60
+    flightTime: 85
     maxSpeed: 1.4
     maxAcceleration: 0.225
     horizontalSpeed: 1.4
     isWing: true
 极乐之翼:
-    flightTime: 60
+    flightTime: 80
     maxSpeed: 1.4
-    maxAcceleration: 0.225
+    maxAcceleration: 0.235
     horizontalSpeed: 1.4
     isWing: true
 极乐翼靴:
-    flightTime: 60
-    maxSpeed: 1.4
-    maxAcceleration: 0.225
-    horizontalSpeed: 1.4
+    flightTime: 80
+    maxSpeed: 1.5
+    maxAcceleration: 0.2375
+    horizontalSpeed: 1.5
     isWing: true
 始源林海之翼:
-    flightTime: 60
-    maxSpeed: 1.4
-    maxAcceleration: 0.225
-    horizontalSpeed: 1.4
+    flightTime: 80
+    maxSpeed: 1.5
+    maxAcceleration: 0.34
+    horizontalSpeed: 1.5
     isWing: true
 Drew之翼:
-    flightTime: 60
-    maxSpeed: 1.4
-    maxAcceleration: 0.225
-    horizontalSpeed: 1.4
+    flightTime: 80
+    maxSpeed: 1.5
+    maxAcceleration: 0.35
+    horizontalSpeed: 1.5
     isWing: true
 炽天使翼靴:
-    flightTime: 60
-    maxSpeed: 1.4
-    maxAcceleration: 0.225
-    horizontalSpeed: 1.4
+    flightTime: 85
+    maxSpeed: 1.6
+    maxAcceleration: 0.35
+    horizontalSpeed: 1.6
     isWing: true

@@ -3892,6 +3892,7 @@ TINKER_WORKBENCH:
     requireItem:
     - 天使之靴
     - 天界之翼
+    - 逸界之翼
     - 夜明锭:5
   '32_2':
     requireLevel: 1
