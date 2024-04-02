@@ -401,11 +401,13 @@ public class ItemUseHelper {
                                 }
                                 // if the potion recovers mana
                                 case "mana": {
+                                    String debuffType = "魔力疾病";
+                                    if ( accessories.contains("魔能熔毁仪") )
+                                        debuffType = "魔力熔蚀";
+                                    else if (accessories.contains("混乱石") )
+                                        debuffType = "魔力烧蚀";
                                     PlayerHelper.restoreMana(ply, potionPotency);
-                                    EntityHelper.applyEffect(
-                                            ply,
-                                            accessories.contains("混乱石") ? "魔力烧蚀" : "魔力疾病",
-                                            160);
+                                    EntityHelper.applyEffect(ply, debuffType, 160);
                                     break;
                                 }
                                 // otherwise, apply the potion effect
@@ -4117,7 +4119,7 @@ public class ItemUseHelper {
                 }
                 case "离子冲击波":
                 case "凋亡射线": {
-                    double maxMana = attrMap.getOrDefault("maxMana", 20d);
+                    double maxMana = PlayerHelper.getMaxMana(ply);
                     double manaRatio = ply.getLevel() / maxMana;
                     attrMap.put("damage", attrMap.get("damage") * (0.2 + 1.4 * manaRatio));
                     break;

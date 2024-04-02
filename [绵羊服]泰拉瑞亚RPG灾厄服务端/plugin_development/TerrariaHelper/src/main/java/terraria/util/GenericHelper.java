@@ -872,6 +872,7 @@ public class GenericHelper {
             case "Debuff_血液沸腾":
             case "Debuff_龙焰":
             case "Debuff_解离":
+            case "Debuff_血神之凋零":
                 colorCode = "4";
                 break;
             case "Debuff_暗影焰":

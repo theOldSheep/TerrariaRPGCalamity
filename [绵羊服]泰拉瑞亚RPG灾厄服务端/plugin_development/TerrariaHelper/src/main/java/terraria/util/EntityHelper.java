@@ -359,7 +359,8 @@ public class EntityHelper {
     }
     public static HashMap<String, Double> getAttrMap(Metadatable entity) {
         try {
-            return (HashMap<String, Double>) getMetadata(entity, MetadataName.ATTRIBUTE_MAP).value();
+            MetadataValue mdv = getMetadata(entity, MetadataName.ATTRIBUTE_MAP);
+            return mdv == null ? new HashMap<>(0) : (HashMap<String, Double>) mdv.value();
         } catch (Exception e) {
             return new HashMap<>(0);
         }
@@ -516,15 +517,17 @@ public class EntityHelper {
             }
             if (key.equals("buffImmune")) {
                 Map<String, Integer> buffImmune = (Map<String, Integer>) getMetadata(entity, MetadataName.BUFF_IMMUNE).value();
-                int layers = buffImmune.getOrDefault(value, 0);
-                if (addOrRemove)
-                    layers ++;
-                else
-                    layers --;
-                if (layers > 0)
-                    buffImmune.put(value, layers);
-                else
-                    buffImmune.remove(value);
+                for (String immune : value.split("\\|")) {
+                    int layers = buffImmune.getOrDefault(immune, 0);
+                    if (addOrRemove)
+                        layers++;
+                    else
+                        layers--;
+                    if (layers > 0)
+                        buffImmune.put(immune, layers);
+                    else
+                        buffImmune.remove(immune);
+                }
                 return;
             }
             // tweak double value in attribute map
@@ -703,9 +706,20 @@ public class EntityHelper {
                     if (! PlayerHelper.getAccessories(entity).contains("血肉图腾"))
                         timeRemaining = -1;
                     break;
-                case "钨钢屏障":
-                    if (! PlayerHelper.getAccessories(entity).contains("钨钢屏障生成仪"))
-                        timeRemaining = -1;
+                case "血炎防御损毁":
+                    PlayerHelper.heal((LivingEntity) entity, 2);
+                    timeRemaining -= 2;
+                    break;
+                case "保护矩阵":
+                    HashMap<String, Double> attrMap = getAttrMap(entity);
+                    // 1 second = 20 ticks = 10 damage
+                    int barrierLimit = (int) Math.round( attrMap.getOrDefault("barrierMax", 0d) ) * 2;
+                    // discharge slowly if exceeds the current limit / out of charge
+                    if (timeRemaining > barrierLimit || timeRemaining == 0)
+                        timeRemaining -= delay * 2;
+                    // recharge slowly if below the current limit AND not on recharge cool down
+                    else if (timeRemaining < barrierLimit && (! allEffects.containsKey("保护矩阵充能") ) )
+                        timeRemaining += delay * 2;
                     break;
                 case "魔影激怒":
                     timeRemaining -= delay;
@@ -822,13 +836,17 @@ public class EntityHelper {
         try {
             // setup constants
             int delay = 10, damagePerDelay = 0;
-            if (effect.equals("扭曲")) {
-                delay = 1;
-            } else {
-                delay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageInterval", delay);
-                damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damage", damagePerDelay);
-                if (!(entity instanceof Player))
-                    damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageMonster", damagePerDelay);
+            switch (effect) {
+                case "保护矩阵":
+                case "扭曲":
+                case "血炎防御损毁":
+                    delay = 1;
+                    break;
+                default:
+                    delay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageInterval", delay);
+                    damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damage", damagePerDelay);
+                    if (!(entity instanceof Player))
+                        damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageMonster", damagePerDelay);
             }
             // tweak attrMap
             if (entity instanceof Player)
@@ -871,10 +889,12 @@ public class EntityHelper {
             int finalDurationTicks;
             int currentDurationTicks = allEffects.getOrDefault(effect, 0);
             switch (effect) {
-                case "护甲损伤":
+                case "血炎防御损毁":
+                case "血神之凋零":
                     finalDurationTicks = currentDurationTicks + applyDurationTicks;
                     break;
                 case "魔力烧蚀":
+                case "魔力熔蚀":
                 case "魔力疾病":
                     finalDurationTicks = currentDurationTicks + applyDurationTicks;
                     if (finalDurationTicks > 400 && applyDurationTicks < 400) finalDurationTicks = 400;
@@ -1050,10 +1070,13 @@ public class EntityHelper {
 
         // player being damaged
         if (victim instanceof Player) {
+            Player vPly = (Player) victim;
+            // prevent damage and damage handling if in invulnerability
+            if (hasEffect(vPly, "始源林海无敌") )
+                return false;
             // health regen time reset
             setMetadata(victim, MetadataName.REGEN_TIME, 0);
             // special damager
-            Player vPly = (Player) victim;
             switch (damager.getName()) {
                 case "水螺旋": {
                     damager.remove();
@@ -1066,10 +1089,45 @@ public class EntityHelper {
             }
             // accessories
             HashSet<String> accessories = PlayerHelper.getAccessories(victim);
-            boolean hasMagicCuff = accessories.contains("魔法手铐") || accessories.contains("天界手铐");
-            if (hasMagicCuff) {
-                int recovery = (int) Math.max(1, Math.floor(dmg / 4));
-                PlayerHelper.restoreMana(vPly, recovery);
+            HashMap<String, Double> victimAttrMap = getAttrMap(victim);
+            for (String accessory : accessories) {
+                switch (accessory) {
+                    // mana recovery on damage
+                    case "魔法手铐":
+                    case "天界手铐": {
+                        int recovery = (int) Math.max(1, Math.floor(dmg / 4));
+                        PlayerHelper.restoreMana(vPly, recovery);
+                        break;
+                    }
+                    // defence-damage style damage reduction POST damage calculation
+                    case "血炎晶核": {
+                        if (isDirectDmg && dmg >= 50d) {
+                            int duration = (int) Math.min(victimAttrMap.getOrDefault("defence", 0d), dmg);
+                            applyEffect(victim, "血炎防御损毁", duration);
+                        }
+                        break;
+                    }
+                    case "血神圣杯": {
+                        if (isDirectDmg && dmg >= 100d) {
+                            int duration = (int) Math.min(victimAttrMap.getOrDefault("defence", 0d), dmg * 0.75);
+                            applyEffect(victim, "血炎防御损毁", duration);
+                            double recovery = Math.min(vPly.getMaxHealth() - vPly.getHealth(), dmg * 0.95);
+                            PlayerHelper.heal(vPly, recovery);
+                            applyEffect(victim, "血神之凋零", (int) Math.ceil(recovery / 10));
+                        }
+                        break;
+                    }
+                    // "revive" (heal by factor of 1.75, minimum of 200)
+                    case "星云之核": {
+                        if (dmg >= vPly.getHealth() && (! victimEffects.containsKey("星云之核冷却")) ) {
+                            // cool down for 180 seconds (3600 ticks)
+                            applyEffect(vPly, "星云之核冷却", 3600);
+                            // heal for the damage amount
+                            PlayerHelper.heal(vPly, Math.max(dmg * 1.75, 200) );
+                        }
+                        break;
+                    }
+                }
             }
             // armor sets
             String victimPlayerArmorSet = PlayerHelper.getArmorSet(vPly);
@@ -1111,8 +1169,9 @@ public class EntityHelper {
                 case "始源林海召唤套装":
                 case "金源魔法套装":
                 case "金源召唤套装": {
-                    if (dmg >= vPly.getHealth()) {
+                    if (dmg >= vPly.getHealth() && (! victimEffects.containsKey("始源林海无敌冷却")) ) {
                         applyEffect(vPly, "始源林海无敌", 160);
+                        return false;
                     }
                     break;
                 }
@@ -1162,8 +1221,6 @@ public class EntityHelper {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                             () -> applyEffect(vPly, "神弑者之停息", 600), 5);
             }
-            if (hasEffect(vPly, "始源林海无敌") )
-                return false;
         }
         // player damage other entity
         if (damageSource instanceof Player) {
@@ -1811,6 +1868,7 @@ public class EntityHelper {
         String damageInvincibilityFrameName = getInvulnerabilityTickName(damageType);
         if (victimScoreboardTags.contains(damageInvincibilityFrameName)) return;
 
+
         HashSet<String> damagerAccessories = PlayerHelper.getAccessories(damageSource);
         HashSet<String> victimAccessories = PlayerHelper.getAccessories(victim);
         // inflict debuff
@@ -1861,7 +1919,7 @@ public class EntityHelper {
             }
         }
 
-        // further setup damage info
+        // further setup damage info (fixed amount etc.); damage setup for special damage types
         damageInvulnerabilityTicks = victimAttrMap.getOrDefault("invulnerabilityTick", 0d).intValue();
         double dmg = damage;
         double knockback = 0d, critRate = -1e9;
@@ -1960,7 +2018,7 @@ public class EntityHelper {
                 }
         }
 
-        // tweak damage, including minion whip bonus, paladin shield, random damage floating and crit
+        // tweak damage, including minion whip bonus, accessories such as paladin shield, random damage floating and crit
         boolean crit = false;
         if (!damageFixed) {
             double damageTakenMulti = victimAttrMap.getOrDefault("damageTakenMulti", 1d);
@@ -1983,7 +2041,16 @@ public class EntityHelper {
                     temp = getMetadata(victim, MetadataName.MINION_WHIP_BONUS_CRIT);
                     critRate += temp != null ? temp.asDouble() : 0;
                     // on-hit effects from accessory
-                    if (damagerAccessories.contains("神圣符文")) {
+                    if (damagerAccessories.contains("幻魂神物")) {
+                        double rdm = Math.random();
+                        if (rdm < 0.3333)
+                            EntityHelper.applyEffect(damageSource, "幻魂还生", 20);
+                        else if (rdm < 0.6666)
+                            EntityHelper.applyEffect(damageSource, "幻魂坚盾", 20);
+                        else
+                            EntityHelper.applyEffect(damageSource, "幻魂之力", 20);
+                    }
+                    else if (damagerAccessories.contains("神圣符文")) {
                         double rdm = Math.random();
                         if (rdm < 0.3333)
                             EntityHelper.applyEffect(damageSource, "神圣之辉", 20);
@@ -2007,10 +2074,30 @@ public class EntityHelper {
                     case "猪鲨公爵":
                     case "硫海遗爵":
                     case "利维坦":
+                        // the damager is the flail
                         if (damager.getName().equals("雷姆的复仇"))
                             dmg *= 50;
                         break;
 
+                }
+                // accessories
+                if (damageSource instanceof Player) {
+                    Player damageSourcePly = (Player) damageSource;
+                    for (String plyAcc : damagerAccessories) {
+                        switch (plyAcc) {
+                            case "魔能过载仪":
+                            case "魔能熔毁仪": {
+                                if (getDamageType(damageSourcePly) == DamageType.MAGIC) {
+                                    int mana = damageSourcePly.getLevel();
+                                    int consumption = plyAcc.equals("魔能过载仪") ? 5 : Math.max(mana / 20, 10);
+                                    if (ItemUseHelper.consumeMana(damageSourcePly, consumption)) {
+                                        dmg += consumption * 10;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
                 }
                 // crit to non-player victims
                 if (Math.random() * 100 < critRate) {
@@ -2020,7 +2107,7 @@ public class EntityHelper {
             }
             // extra tweak on damage when victim is a player
             else {
-                // crit to player due to blood pact
+                // crit to player pre-defence due to blood pact
                 if (victimAccessories.contains("血契") && Math.random() < 0.25) {
                     crit = true;
                     dmg *= 1.75;
@@ -2029,8 +2116,8 @@ public class EntityHelper {
                 // paladin shield, only applies to player victims
                 if (! hasEffect(victim, "圣骑士护盾")) {
                     String team = getMetadata(victim, MetadataName.PLAYER_TEAM).asString();
-                    // works with players within 64 blocks
-                    double dist = 4096;
+                    // works with players within 96 blocks
+                    double dist = 9216;
                     Entity shieldPly = null;
                     for (Player ply : victim.getWorld().getPlayers()) {
                         if (!PlayerHelper.isProperlyPlaying(ply)) continue;
@@ -2051,16 +2138,15 @@ public class EntityHelper {
             dmg *= damageTakenMulti;
             defence = Math.max(defence - damagerAttrMap.getOrDefault("armorPenetration", 0d), 0);
             dmg -= defence * 0.75;
-            // wulfrum barrier
-            if (hasEffect(victim, "钨钢屏障")) {
-                int damageShield = getEffectMap(victim).get("钨钢屏障") / 20;
+            // damage barrier
+            if (hasEffect(victim, "保护矩阵")) {
+                // 20 ticks = 10 dmg
+                int damageShield = getEffectMap(victim).get("保护矩阵") / 2;
                 int damageBlock = (int) Math.min(Math.ceil(dmg), damageShield);
-                damageShield -= damageBlock;
                 dmg -= damageBlock;
-                if (damageShield <= 0)
-                    applyEffect(victim, "钨钢屏障", 0);
-                else
-                    applyEffect(victim, "钨钢屏障", damageShield * 20);
+                applyEffect(victim, "保护矩阵", (damageShield - damageBlock) * 2);
+                // interrupt barrier regen
+                applyEffect(victim, "保护矩阵充能", 175);
             }
             if (hasEffect(victim, "狮心圣裁能量外壳")) {
                 applyEffect(victim, "狮心圣裁能量外壳冷却", 900);

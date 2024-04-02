@@ -18,12 +18,15 @@ buffConflicts:
   6:
     灵魂恢复: 0
     神圣之辉: 1
+    幻魂还生: 2
   7:
     灵魂防御: 0
     神圣之佑: 1
+    幻魂坚盾: 2
   8:
     灵魂力量: 0
     神圣之力: 1
+    幻魂之力: 2
   # 物品拾取相关的两种buff
   9:
     磁铁: 0
@@ -32,9 +35,6 @@ buffConflicts:
   19:
     血肉图腾: 0
     血肉图腾冷却: 1
-  20:
-    钨钢屏障: 0
-    保护矩阵充能: 1
   21:
     硫火狂怒: 0
     硫火狂怒冷却: 1
@@ -462,8 +462,16 @@ effects:
   冰障:
     isBuff: true
     attributes:
-        damageTakenMulti: -0.25
-    tooltip: 所受伤害减少25%
+        damageTakenMulti: -0.15
+    tooltip: 所受伤害减少15%
+  血炎防御损毁:
+    isBuff: false
+    tooltip: 缓慢恢复损伤的防御力与生命值
+  血神之凋零:
+    isBuff: false
+    damageInterval: 1
+    damage: 10
+    tooltip: 血神短暂允诺于你的生命正在消散……
   伤害星云:
     isBuff: true
     attributes:
@@ -489,33 +497,21 @@ effects:
   魔力星云:
     isBuff: true
     attributes:
-      manaRegen: 10
-    tooltip: 每层使每秒魔力再生增加 10
+      manaRegen: 5
+      manaRegenFixed: 5
+    tooltip: 每层使每秒被动和闲置魔力再生增加 5
   魔力星云1:
-    tooltip: 每秒魔力再生增加 10
+    tooltip: 每秒被动和闲置魔力再生增加 5
   魔力星云2:
-    tooltip: 每秒魔力再生增加 20
+    tooltip: 每秒被动和闲置魔力再生增加 10
   魔力星云3:
-    tooltip: 每秒魔力再生增加 30
+    tooltip: 每秒被动和闲置魔力再生增加 15
   魔力烧蚀:
     isBuff: false
     tooltip: 过多的魔力正在烧蚀你的身心
-  神圣之辉:
-    isBuff: true
-    attributes:
-        regen: 6
-    tooltip: 恢复生命
-  神圣之佑:
-    isBuff: true
-    attributes:
-        defence: 16
-        damageTakenMulti: -0.04
-    tooltip: 增加16点防御力和4%伤害减免
-  神圣之力:
-    isBuff: true
-    attributes:
-        damageSummonMulti: 0.1
-    tooltip: 增加10%召唤伤害
+  魔力熔蚀:
+    isBuff: false
+    tooltip: 你的生命正在升华为魔力
   灵魂恢复:
     isBuff: true
     attributes:
@@ -533,6 +529,38 @@ effects:
     attributes:
         damageSummonMulti: 0.1
     tooltip: 增加10%召唤伤害
+  神圣之辉:
+    isBuff: true
+    attributes:
+        regen: 5
+    tooltip: 恢复生命
+  神圣之佑:
+    isBuff: true
+    attributes:
+        defence: 16
+        damageTakenMulti: -0.04
+    tooltip: 增加16点防御力和4%伤害减免
+  神圣之力:
+    isBuff: true
+    attributes:
+        damageSummonMulti: 0.1
+    tooltip: 增加10%召唤伤害
+  幻魂还生:
+    isBuff: true
+    attributes:
+        regen: 6
+    tooltip: 恢复生命
+  幻魂坚盾:
+    isBuff: true
+    attributes:
+        defence: 20
+        damageTakenMulti: -0.05
+    tooltip: 增加20点防御力和5%伤害减免
+  幻魂之力:
+    isBuff: true
+    attributes:
+        damageSummonMulti: 0.1
+    tooltip: 增加10%召唤伤害
   血肉图腾:
     isBuff: true
     attributes:
@@ -543,21 +571,22 @@ effects:
   血肉图腾冷却:
     isBuff: false
     tooltip: 血肉图腾效果冷却
-  钨钢屏障:
+  保护矩阵:
     isBuff: true
-    attributes:
-        defence: 20
     buffOnTimeout: 保护矩阵充能
-    buffOnTimeoutDuration: 400
+    buffOnTimeoutDuration: 175
     tooltip: 保护你并为你阻挡伤害
   保护矩阵充能:
     isBuff: false
-    tooltip: 钨钢屏障被摧毁，正在充能
+    tooltip: 保护矩阵被攻击扰乱，正在准备充能
+  星云之核冷却:
+    isBuff: false
+    tooltip: 星云之核复活仍未就绪
   硫火狂怒:
     isBuff: true
     attributes:
         damageMagicMulti: 0.5
-        regen: -42
+        regen: -60
     buffOnTimeout: 硫火狂怒冷却
     buffOnTimeoutDuration: 600
     tooltip: 以生命为代价，黑魔法大大增强了你的力量

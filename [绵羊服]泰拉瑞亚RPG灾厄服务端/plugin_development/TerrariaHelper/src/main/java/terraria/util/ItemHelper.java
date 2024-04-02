@@ -555,8 +555,8 @@ public class ItemHelper {
                 "speedMulti", "flightTimeMulti", "meleeReachMulti", "regenMulti", "maxHealthMulti",
                 "useSpeedMulti", "useSpeedMagicMulti", "useSpeedMeleeMulti", "useSpeedRangedMulti", "useSpeedMiningMulti",
                 "knockbackMeleeMulti", "projectileSpeedArrowMulti",
-                // mana/health/crit/regen
-                "maxMana", "maxHealth", "regen", "manaRegen", "critMelee", "critMagic", "critRanged", "critTrueMelee",
+                // barrier/mana/health/crit/regen
+                "barrierMax", "maxMana", "maxHealth", "regen", "manaRegen", "critMelee", "critMagic", "critRanged", "critTrueMelee",
                 // other attributes usually found in armor/accessory lore
                 "defence", "invulnerabilityTick", "minionLimit", "sentryLimit", "mobLimit", "knockbackResistance",
                 // these attributes are not displayed; however, they are put in this list to prevent sending warning message.
@@ -684,6 +684,11 @@ public class ItemHelper {
                     result.add(amount + " 最大生命值");
                     break;
                 }
+                case "barrierMax": {
+                    int amount = attributeSection.getInt(attribute, 0);
+                    result.add(amount + " 保护矩阵能量上限");
+                    break;
+                }
                 case "regen": {
                     if (attributeSection.getDouble(attribute, 0) < 0) result.add("减缓生命恢复");
                     else result.add("加快生命恢复");
@@ -743,7 +748,7 @@ public class ItemHelper {
                 }
                 case "buffImmune": {
                     String buffImmune = attributeSection.getString(attribute, "锟斤拷");
-                    result.add("免疫" + buffImmune);
+                    result.add("免疫" + buffImmune.replace("|", "，"));
                     break;
                 }
                 // these attributes are not shown.

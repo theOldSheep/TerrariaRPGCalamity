@@ -52,6 +52,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("armorPenetration", 0d);
         defaultPlayerAttrMap.put("ammoConsumptionRate", 1d);
         defaultPlayerAttrMap.put("arrowConsumptionRate", 1d);
+        defaultPlayerAttrMap.put("barrierMax", 0d);
         defaultPlayerAttrMap.put("bounce", 0d);
         defaultPlayerAttrMap.put("crit", 0d);
         defaultPlayerAttrMap.put("critDamage", 100d);
@@ -84,6 +85,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("knockbackMulti", 1d);
         defaultPlayerAttrMap.put("lifeSteal", 0.0d);
         defaultPlayerAttrMap.put("manaRegen", 0d);
+        defaultPlayerAttrMap.put("manaRegenFixed", 0d);
         defaultPlayerAttrMap.put("manaRegenMulti", 1d);
         defaultPlayerAttrMap.put("manaUse", 0d);
         defaultPlayerAttrMap.put("manaUseMulti", 1d);
@@ -377,6 +379,9 @@ public class PlayerHelper {
                 return 350;
         }
     }
+    public static int getMaxMana(Player ply) {
+        return EntityHelper.getAttrMap(ply).getOrDefault("maxMana", 20d).intValue();
+    }
     public static String getPlayerDataFilePath(Player ply) {
         return TerrariaHelper.Constants.DATA_PLAYER_FOLDER_DIR + ply.getName() + ".yml";
     }
@@ -504,6 +509,7 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_THRUST_INDEX, 0);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_THRUST_PROGRESS, 0);
     }
+
     // threads
     public static void threadArmorAccessory() {
         // setup projectile attributes
@@ -642,7 +648,6 @@ public class PlayerHelper {
                                     break;
                                 }
                                 case "冰冻护盾":
-                                case "寒霜壁垒":
                                 case "神之壁垒": {
                                     if (health * 4 > maxHealth)
                                         EntityHelper.applyEffect(ply, "圣骑士护盾", 20);
@@ -652,11 +657,6 @@ public class PlayerHelper {
                                 }
                                 case "血肉图腾": {
                                     EntityHelper.applyEffect(ply, "血肉图腾", 1220);
-                                    break;
-                                }
-                                case "钨钢屏障生成仪": {
-                                    if (! EntityHelper.hasEffect(ply, "钨钢屏障"))
-                                        EntityHelper.applyEffect(ply, "钨钢屏障", 1600);
                                     break;
                                 }
                             }
@@ -1001,8 +1001,6 @@ public class PlayerHelper {
             }
         }, 0, delay);
     }
-
-
     // block collision mechanism
     private static void handleContactBlockEffect(Player ply, Block block, boolean isFirstContact) {
         switch (block.getType()) {
@@ -1291,7 +1289,7 @@ public class PlayerHelper {
                         thrustProgressMax = wingSection.getInt("flightTime", 0);
                         maxSpeed = wingSection.getDouble("maxSpeed", 1d);
                         maxAcceleration = wingSection.getDouble("maxAcceleration", 0.5d);
-                        horizontalSpeed = wingSection.getDouble("horizontalSpeed", 0.5d);
+                        horizontalSpeed = wingSection.getDouble("horizontalSpeed", 0.2d);
                         isWing = wingSection.getBoolean("isWing", false);
                         accessoryUsed = currAcc;
 //                                Bukkit.broadcastMessage("FLYING WITH ACCESSORY, " + thrustIndex + "(" + accessoryUsed);
@@ -1615,9 +1613,15 @@ public class PlayerHelper {
                         Location currLoc = ply.getLocation();
                         Location lastLoc = (Location) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION).value();
                         boolean moved = lastLoc.getWorld().equals(currLoc.getWorld()) && lastLoc.distanceSquared(currLoc) > 1e-5;
+                        // attempt regenerating the player's damage barrier
+                        {
+                            if (attrMap.getOrDefault("barrierMax", 0d) > 0d &&
+                                    (! effectMap.containsKey("保护矩阵充能")) && (! effectMap.containsKey("保护矩阵")) )
+                                EntityHelper.applyEffect(ply, "保护矩阵", 1);
+                        }
                         // make sure mana do not exceed maximum
                         {
-                            int level = Math.min(ply.getLevel(), attrMap.get("maxMana").intValue());
+                            int level = Math.min(ply.getLevel(), getMaxMana(ply));
                             ply.setLevel(level);
                         }
                         // health regen
@@ -1640,7 +1644,9 @@ public class PlayerHelper {
                                 healthRegenTime += delay * 4;
                             }
                             // regen
-                            double regenAmount = (regenerationRate + additionalHealthRegen) * perTickMulti * attrMap.getOrDefault("regenMulti", 1d);
+                            double regenAmount = (regenerationRate + additionalHealthRegen) * perTickMulti;
+                            if (regenAmount > 0)
+                                 regenAmount *= attrMap.getOrDefault("regenMulti", 1d);
                             if (accessories.contains("再生护符") && (ply.getHealth() + regenAmount) * 2 >= maxHealth) {
                                 regenAmount = - Math.abs(regenAmount);
                             }
@@ -1655,6 +1661,10 @@ public class PlayerHelper {
                         }
                         // mana regen
                         {
+                            // fixed mana regen; do NOT get increased whatsoever.
+                            int fixedManaRegen = MathHelper.randomRound( attrMap.getOrDefault("manaRegenFixed", 0d) * perTickMulti );
+                            restoreMana(ply, fixedManaRegen, false);
+                            // below: natural mana regen
                             double manaRegenDelay = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_DELAY).asDouble();
                             double manaRegenCounter = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_COUNTER).asDouble();
                             boolean hasManaRegenBand = accessories.contains("魔力再生手环");
@@ -1668,7 +1678,7 @@ public class PlayerHelper {
                             } else {
                                 // regeneration
                                 double manaRegenBonus = attrMap.getOrDefault("manaRegen", 0d);
-                                double maxMana = attrMap.getOrDefault("maxMana", 20d);
+                                double maxMana = getMaxMana(ply);
                                 // players with mana regen buff regenerates mana as if their mana is full
                                 double manaRatio = hasManaRegenPotionEffect ? 1d : (double) ply.getLevel() / maxMana;
                                 double manaRegenRate = ((maxMana * (moved ? 1d / 6 : 1d / 2)) + 1 + manaRegenBonus) * (manaRatio * 0.8 + 0.2) * 1.15;
@@ -1882,14 +1892,27 @@ public class PlayerHelper {
                 int ticksRemaining = effectInfo.getValue();
                 switch (effect) {
                     case "魔力烧蚀":
+                    case "魔力熔蚀":
                         double potency = ticksRemaining / 400d;
-                        // sqrt(i) * 6^(i + 1) = sqrt(i) * e^( ln6 * (i + 1) )
-                        double healthLoss = Math.sqrt(potency) * Math.exp(1.791759 * (potency + 1));
+                        // max damage: 8.5 * 8.5 = 72.25
+                        // sqrt(i) * (8.5)^(i + 1) = sqrt(i) * e^( ln(8.5) * (i + 1) )
+                        double healthLoss = Math.sqrt(potency) * Math.exp(2.14 * (potency + 1));
+
+                        // the greater effect also converts the health loss into mana regen
+                        if (effect.equals("魔力熔蚀")) {
+                            EntityHelper.tweakAttribute(ply, newAttrMap, "manaRegenFixed",
+                                    (healthLoss * 1.75) + "", true);
+                        }
                         EntityHelper.tweakAttribute(ply, newAttrMap, "regen", healthLoss + "", false);
                         break;
                     case "魔力疾病":
+                        // maximum: 20s = 400 tick, -400/800 = -50% damage
                         EntityHelper.tweakAttribute(ply, newAttrMap, "damageMagicMulti",
                                 ((double)-ticksRemaining / 800) + "", true);
+                        break;
+                    case "血炎防御损毁":
+                        // -1 defence per tick
+                        EntityHelper.tweakAttribute(ply, newAttrMap, "defence", ticksRemaining + "", false);
                         break;
                     default: {
                         String attributesPath = "effects." + effect + ".attributes";
@@ -2024,6 +2047,26 @@ public class PlayerHelper {
                     String currAccType = ItemHelper.splitItemName(currAcc)[1];
                     // special accessory activation restrictions
                     switch (currAccType) {
+                        case "钨钢屏障生成仪": {
+                            if (effectMap.containsKey("保护矩阵")) {
+                                EntityHelper.tweakAttribute(ply, newAttrMap, "defence", "20", true);
+                            }
+                            break;
+                        }
+                        case "化绵留香石": {
+                            if (effectMap.containsKey("保护矩阵")) {
+                                EntityHelper.tweakAttribute(ply, newAttrMap, "defence", "40", true);
+                                EntityHelper.tweakAttribute(ply, newAttrMap, "damageTakenMulti", "-0.075", true);
+                            }
+                            break;
+                        }
+                        case "嘉登之心": {
+                            if (effectMap.containsKey("保护矩阵")) {
+                                EntityHelper.tweakAttribute(ply, newAttrMap, "regen", "6", true);
+                                EntityHelper.tweakAttribute(ply, newAttrMap, "damageTakenMulti", "-0.1", true);
+                            }
+                            break;
+                        }
                         case "太阳石": {
                             if (!WorldHelper.isDayTime(ply.getWorld()))
                                 continue;
@@ -2035,7 +2078,7 @@ public class PlayerHelper {
                             break;
                         }
                         case "魔能谐振仪": {
-                            if (ply.getLevel() * 2 > formerAttrMap.getOrDefault("maxMana", 20d))
+                            if (ply.getLevel() * 2 > getMaxMana(ply))
                                 EntityHelper.tweakAttribute(ply, newAttrMap,
                                         "regen", "6", false);
                             break;
@@ -2507,9 +2550,14 @@ public class PlayerHelper {
         GenericHelper.displayHolo(ply, displayActualAmount ? healAmount : amount, false, "回血");
     }
     public static void restoreMana(Player ply, double amount) {
-        int restoreAmount = (int) Math.min(EntityHelper.getAttrMap(ply).getOrDefault("maxMana", 20d) - ply.getLevel(), amount);
+        restoreMana(ply, amount, true);
+    }
+    public static void restoreMana(Player ply, double amount, boolean hologram) {
+        int restoreAmount = (int) Math.min(getMaxMana(ply) - ply.getLevel(), amount);
         ply.setLevel(ply.getLevel() + restoreAmount);
-        GenericHelper.displayHolo(ply, amount, false, "回蓝");
+        if (hologram) {
+            GenericHelper.displayHolo(ply, amount, false, "回蓝");
+        }
     }
     public static void sendActionBar(Player player, String message) {
         IChatBaseComponent actionBar = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + message + "\"}");
@@ -2657,7 +2705,7 @@ public class PlayerHelper {
         if (accessories.contains("魔能谐振仪")) {
             if (dmg > 2 && !(dPly.getScoreboardTags().contains(spectreCD))) {
                 int projectilePower = (int) Math.min( 50, Math.ceil(dmg * 0.125) );
-                double manaRatio = dPly.getLevel() / attrMap.getOrDefault("maxMana", 20d);
+                double manaRatio = (double) dPly.getLevel() / getMaxMana(dPly);
                 createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0),
                         Math.ceil(projectilePower * manaRatio), true, "90|127|197");
                 // 10 health/second = 0.5 health/tick
@@ -2697,12 +2745,20 @@ public class PlayerHelper {
                         dashCD = 35;
                         break;
                     case "宝光盾牌":
-                        dashSpeed = 1.15;
+                        dashSpeed = 1.2;
                         dashCD = 30;
                         break;
                     case "阿斯加德之英勇":
-                        dashSpeed = 1.3;
-                        dashCD = 30;
+                        dashSpeed = 1.35;
+                        dashCD = 28;
+                        break;
+                    case "极乐之庇护":
+                        dashSpeed = 1.5;
+                        dashCD = 26;
+                        break;
+                    case "阿斯加德之庇护":
+                        dashSpeed = 1.6;
+                        dashCD = 25;
                         break;
                 }
                 if (dashCD > 0) break;
