@@ -25,6 +25,7 @@ import terraria.util.PlayerHelper;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 
 public class PlayerJoinListener implements Listener {
@@ -40,6 +41,13 @@ public class PlayerJoinListener implements Listener {
         }
         // init stats
         PlayerHelper.initPlayerStats(joinedPly, true);
+        // tick existing effects
+        {
+            HashMap<String, Integer> effects = EntityHelper.getEffectMap(joinedPly);
+            for (String effect : effects.keySet()) {
+                EntityHelper.prepareTickEffect(joinedPly, effect);
+            }
+        }
         // teleport to spawn point if the player is not waiting for revive
         MetadataValue respawnCD = EntityHelper.getMetadata(joinedPly, EntityHelper.MetadataName.RESPAWN_COUNTDOWN);
         if (respawnCD == null) {

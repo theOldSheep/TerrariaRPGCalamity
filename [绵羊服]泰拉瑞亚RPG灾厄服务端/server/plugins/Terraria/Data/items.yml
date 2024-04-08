@@ -1152,50 +1152,6 @@
     manaUseMulti: -0.08
   worth: 4000000
   rarity: 5
-测试饰品-禁止刷怪:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  attributes:
-    mobLimit: -9999
-  worth: 20000
-  rarity: 1
-测试饰品-生命再生:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  attributes:
-    regen: 2000
-  worth: 20000
-  rarity: 1
-测试饰品-伤害增加:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  attributes:
-    damageMulti: 7.5
-  worth: 20000
-  rarity: 1
-测试饰品-超高暴击:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  attributes:
-    crit: 666
-  worth: 20000
-  rarity: 1
-测试饰品-物品使用测试:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  attributes:
-    damage: 300
-    useTime: 20
-    useSpeedMulti: 20
-    crit: 35
-    projectileSpeed: 35
-  worth: 20000
-  rarity: 1
 镣铐:
   item: LEASH
   lore:
@@ -2140,7 +2096,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   - §r手持魔法武器时对敌人造成魔法伤害则触发以下效果：
-  - §r尝试额外消耗5点魔力，若成功则使本次暴击前伤害增加50点
+  - §r尝试额外消耗8点魔力，若成功则使本次暴击前伤害增加60点
   attributes:
     regen: -10
     maxMana: 60
@@ -2167,8 +2123,10 @@ Drew之翼:
   - §r使用魔力药水时获得魔力熔蚀而非魔力疾病
   - §r魔力熔蚀在对玩家造成伤害的同时提供额外魔力恢复
   - §r手持魔法武器时对敌人造成魔法伤害则触发以下效果：
-  - §r尝试额外消耗当前魔力的5%（至少为10）
-  - §r若成功，则将本次暴击前伤害提升额外魔力损耗的10倍
+  - §r尝试额外消耗当前魔力的3.5%（至少为5）
+  - §r若成功，则将本次暴击前伤害提升额外魔力损耗的15倍
+  - §r实际损毁的魔力值将基于魔力熔蚀效果剩余时长减少（伤害提升不变）
+  - §r“……目光呆滞……”
   attributes:
     maxMana: 80
   worth: 40000000
@@ -2315,7 +2273,6 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r使你免疫死亡低语减益
   attributes:
     useSpeedMeleeMulti: 0.1
     projectileSpeedMulti: 0.1
@@ -2377,7 +2334,6 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r免疫硫磺火减益
   attributes:
     damageMulti: 0.12
     buffImmune: 硫磺火
@@ -2389,6 +2345,7 @@ Drew之翼:
   - §r[饰品]
   attributes:
     damageMulti: 0.1
+    damageTakenMulti: -0.03
   worth: 800000
   rarity: 3
 融合之脑:
@@ -2399,6 +2356,7 @@ Drew之翼:
     damageMulti: 0.1
     crit: 3
     damageSummonMulti: 0.03
+    damageTakenMulti: -0.04
   worth: 2400000
   rarity: 4
 聚合之脑:
@@ -2409,6 +2367,7 @@ Drew之翼:
     damageMulti: 0.15
     crit: 5
     damageSummonMulti: 0.05
+    damageTakenMulti: -0.05
   worth: 28000000
   rarity: 14
 旱海鲨牙项链:
@@ -2677,7 +2636,6 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r免疫硫磺火减益
   attributes:
     buffImmune: 硫磺火
   worth: 4800000
@@ -2688,6 +2646,8 @@ Drew之翼:
   - §r[饰品]
   - §r受到致死伤害前会受到相当于本次伤害最终值1.75倍的治疗效果
   - §r此效果有180秒冷却时间，最低治疗量为200
+  attributes:
+    damageMulti: 0.1
   worth: 28000000
   rarity: 14
 魔君的礼物:
@@ -2701,6 +2661,45 @@ Drew之翼:
     speedMulti: 0.1
   worth: 30000000
   rarity: 15
+海波项链:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    waterAffinity: 1
+  worth: 400000
+  rarity: 2
+海波纹章:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    waterAffinity: 2
+    defence: 20
+    speedMulti: -0.05
+  worth: 4800000
+  rarity: 5
+深渊潜游装:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    waterAffinity: 3.5
+    defence: 25
+    speedMulti: -0.05
+  worth: 9000000
+  rarity: 6
+深渊潜游服:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r不可与深渊潜游装同时装备
+  attributes:
+    waterAffinity: 5
+    defence: 25
+    barrierMax: 100
+  worth: 22000000
+  rarity: 11
 钓鱼竿:
   item: FISHING_ROD
   lore:
@@ -13741,14 +13740,14 @@ Dodu的手炮:
 战斗药水:
   item: CLAY_BALL
   lore:
-  - §a刷怪的数量上限增加
+  - §a刷怪的效率和数量上限增加
   - §a7分钟持续时间
   worth: 20000
   rarity: 1
 镇静药水:
   item: CLAY_BALL
   lore:
-  - §a刷怪的数量上限和效率减少
+  - §a刷怪的数量上限和倍率减少
   - §a8分钟持续时间
   worth: 20000
   rarity: 1
@@ -13763,7 +13762,8 @@ Dodu的手炮:
   item: CLAY_BALL
   lore:
   - §a增加水下适应性
-  - §a4分钟持续时间
+  - §a获得水下视野
+  - §a6分钟持续时间
   worth: 20000
   rarity: 1
 隐身药水:
@@ -13871,6 +13871,38 @@ Dodu的手炮:
   - §r“是的，它严重减缓了我的工作效率”
   worth: 600
   rarity: 2
+虫潮药水:
+  item: CLAY_BALL
+  lore:
+  - §a刷怪的倍率和数量上限增加
+  - §a15分钟持续时间
+  - §r建议和战斗药水、磁力药水同时使用
+  worth: 400000
+  rarity: 4
+禅定药水:
+  item: CLAY_BALL
+  lore:
+  - §a刷怪的倍率和数量上限减少
+  - §a15分钟持续时间
+  worth: 400000
+  rarity: 4
+磁力药水:
+  item: CLAY_BALL
+  lore:
+  - §a使你将大范围内的物品吸入囊中
+  - §a15分钟持续时间
+  - §r“桌面清理大师”
+  worth: 20000
+  rarity: 1
+无尽吞噬药水:
+  item: CLAY_BALL
+  lore:
+  - §a使你将极大范围内的物品吸入囊中
+  - §a15分钟持续时间
+  - §a无法与磁力药水效果叠加
+  - §r“暴风吸入”
+  worth: 400000
+  rarity: 13
 蜂蜜瓶:
   item: CLAY_BALL
   lore:
@@ -13901,6 +13933,48 @@ Dodu的手炮:
   - §r使用回复400生命值
   worth: 300000
   rarity: 7
+至尊治疗药水:
+  item: CLAY_BALL
+  lore:
+  - §r使用回复500生命值
+  worth: 1300000
+  rarity: 11
+终极治疗药水:
+  item: CLAY_BALL
+  lore:
+  - §r使用回复600生命值
+  worth: 2500000
+  rarity: 14
+弱效魔力药水:
+  item: CLAY_BALL
+  lore:
+  - §r使用回复50法力值
+  worth: 2000
+  rarity: 0
+魔力药水:
+  item: CLAY_BALL
+  lore:
+  - §r使用回复100法力值
+  worth: 5000
+  rarity: 1
+强效魔力药水:
+  item: CLAY_BALL
+  lore:
+  - §r使用回复200法力值
+  worth: 10000
+  rarity: 3
+超级魔力药水:
+  item: CLAY_BALL
+  lore:
+  - §r使用回复300法力值
+  worth: 30000
+  rarity: 4
+至尊魔力药水:
+  item: CLAY_BALL
+  lore:
+  - §r使用回复400法力值
+  worth: 1300000
+  rarity: 11
 恢复药水:
   item: CLAY_BALL
   lore:
@@ -13942,6 +14016,20 @@ Dodu的手炮:
   - §r永久增加50点最大生命值，仅能使用一次
   - §r仅在使用过血橙后才能使用
   rarity: 8
+旧神浆果:
+  item: CLAY_BALL
+  lore:
+  - §r摸上去像是土做的，尝起来酸甜香浓
+  - §r永久增加50点最大生命值，仅能使用一次
+  - §r仅在使用过奇迹之果后才能使用
+  rarity: 12
+龙果:
+  item: CLAY_BALL
+  lore:
+  - §r尽管味道有些寡淡，但这味道绝对堪称是种全新的体验
+  - §r永久增加50点最大生命值，仅能使用一次
+  - §r仅在使用过旧神浆果后才能使用
+  rarity: 15
 魔力星:
   item: CLAY_BALL
   lore:
@@ -13960,6 +14048,12 @@ Dodu的手炮:
   - §r永久增加50点最大魔力值，仅能使用一次
   - §r仅在使用过彗星碎片后才能使用
   rarity: 10
+幻影之心:
+  item: CLAY_BALL
+  lore:
+  - §r永久增加50点最大魔力值，仅能使用一次
+  - §r仅在使用过飘渺之核后才能使用
+  rarity: 13
 恶魔之心:
   item: CLAY_BALL
   lore:
@@ -14272,30 +14366,6 @@ Dodu的手炮:
   - §r使用回复40生命值
   worth: 400
   rarity: 0
-弱效魔力药水:
-  item: CLAY_BALL
-  lore:
-  - §r使用回复50法力值
-  worth: 2000
-  rarity: 0
-魔力药水:
-  item: CLAY_BALL
-  lore:
-  - §r使用回复100法力值
-  worth: 5000
-  rarity: 1
-强效魔力药水:
-  item: CLAY_BALL
-  lore:
-  - §r使用回复200法力值
-  worth: 10000
-  rarity: 3
-超级魔力药水:
-  item: CLAY_BALL
-  lore:
-  - §r使用回复300法力值
-  worth: 30000
-  rarity: 4
 祭坛:
   item: ENCHANTMENT_TABLE
   worth: 600000

@@ -182,8 +182,12 @@ public class TerrariaMount extends EntitySlime {
     }
     @Override
     public void B_() {
-        // remove when dismounted for some reason
-        if (! (bukkitEntity.getPassengers().contains(owner) && MOUNTS_MAP.get(owner.getUniqueId()) == this) ) {
+        // remove when dismounted for some reason OR the owner is not properly playing
+        boolean shouldRemove = ! (
+                    bukkitEntity.getPassengers().contains(owner) &&
+                    MOUNTS_MAP.get(owner.getUniqueId()) == this &&
+                    PlayerHelper.isProperlyPlaying(owner));
+        if (shouldRemove) {
             die();
             return;
         }

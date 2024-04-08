@@ -35,10 +35,11 @@ import java.util.function.Predicate;
 import java.util.logging.Level;
 
 public class PlayerHelper {
+    public static HashMap<UUID, HashMap<String, Integer>> PLY_EFFECT_MAPS = new HashMap<>();
+    // constants
     public enum GameProgress {
         PRE_WALL_OF_FLESH, PRE_PLANTERA, PRE_MOON_LORD, PRE_PROFANED_GODDESS, POST_PROFANED_GODDESS;
     }
-    // constants
     private static HashMap<String, Double> defaultPlayerAttrMap = new HashMap<>(60);
     private static HashSet<String> defaultPlayerEffectInflict = new HashSet<>(8);
     public static final int PLAYER_EXTRA_INVENTORY_SIZE = 54, PLAYER_MAX_OXYGEN = 300;
@@ -1221,7 +1222,7 @@ public class PlayerHelper {
                     accessorySet.clone());
         int extraJumpTime = 0;
         int thrustProgressMax = 0;
-        double maxSpeed = 1, horizontalSpeed = 0.5;
+        double verticalSpeed = 0.5, horizontalSpeed = 0.2;
         double maxAcceleration = 0.5;
         List<String> accessory = (List<String>) EntityHelper.getMetadata(ply,
                 EntityHelper.MetadataName.ACCESSORIES_LIST).value();
@@ -1248,7 +1249,7 @@ public class PlayerHelper {
             }
             // if the space bar is being pressed and the player should continue jumping/flying
             else {
-                // handle jump
+                // handle jump/fly from ground
                 if (ply.isOnGround()) {
                     thrustIndex = -1;
                     // if the player has any wing accessory, do not jump.
@@ -1287,9 +1288,9 @@ public class PlayerHelper {
                         // the accessory should be good to go here
                         extraJumpTime = wingSection.getInt("extraJumpTime", 0);
                         thrustProgressMax = wingSection.getInt("flightTime", 0);
-                        maxSpeed = wingSection.getDouble("maxSpeed", 1d);
+                        verticalSpeed = wingSection.getDouble("verticalSpeed", 1d);
                         maxAcceleration = wingSection.getDouble("maxAcceleration", 0.5d);
-                        horizontalSpeed = wingSection.getDouble("horizontalSpeed", 0.2d);
+                        horizontalSpeed = wingSection.getDouble("horizontalSpeed", 0.5d);
                         isWing = wingSection.getBoolean("isWing", false);
                         accessoryUsed = currAcc;
 //                                Bukkit.broadcastMessage("FLYING WITH ACCESSORY, " + thrustIndex + "(" + accessoryUsed);
@@ -1304,7 +1305,7 @@ public class PlayerHelper {
                 // if the player is jumping
                 else {
                     thrustProgressMax = 6;
-                    maxSpeed = 0.5;
+                    verticalSpeed = 0.5;
                     maxAcceleration = 0.6;
                     horizontalSpeed = 0.2;
                 }
@@ -1323,7 +1324,7 @@ public class PlayerHelper {
 //                                    Bukkit.broadcastMessage("GLIDE");
                         gliding = true;
                         thrustProgressMax = 999999;
-                        maxSpeed = 0.5;
+                        verticalSpeed = 0.5;
                         maxAcceleration = 0.05;
                         // when gliding, horizontal mobility is reduced
                         horizontalSpeed = wingSection.getDouble("horizontalSpeed", 0.5d) * 0.75;
@@ -1362,8 +1363,8 @@ public class PlayerHelper {
                         ply.setFallDistance(0);
                         // vertical movement direction
                         {
-                            if (gliding) moveDir.add( new Vector(0, maxSpeed * -1, 0) );
-                            else moveDir.add( new Vector(0, maxSpeed, 0) );
+                            if (gliding) moveDir.add( new Vector(0, verticalSpeed * -1, 0) );
+                            else moveDir.add( new Vector(0, verticalSpeed, 0) );
                         }
                         // extra jump
                         if (thrustProgress < extraJumpTime) {
@@ -1431,6 +1432,8 @@ public class PlayerHelper {
                     vel.multiply(horVelMulti);
                     vel.setY(y * 0.99);
                 }
+                // TODO
+                Bukkit.broadcastMessage(horizontalSpeed + ", " + verticalSpeed);
                 // if the player is moving, change the player's velocity according to targeted move direction
                 if (moveDir.lengthSquared() > 1e-5) {
                     // speed multiplier handling
@@ -1827,7 +1830,6 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CURRENT_LOCATION, ply.getLocation());
         // the accessory set cached when first thrusting, to prevent buggy behaviour.
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES_FLIGHT_BACKUP, new HashSet<String>());
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.EFFECTS, new HashMap<String, Integer>());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ATTRIBUTE_MAP, PlayerHelper.getDefaultPlayerAttributes());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BUFF_INFLICT, PlayerHelper.getDefaultPlayerEffectInflict());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOKS, new ArrayList<Entity>());

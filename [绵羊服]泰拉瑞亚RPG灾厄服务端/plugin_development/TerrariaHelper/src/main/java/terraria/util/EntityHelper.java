@@ -338,10 +338,8 @@ public class EntityHelper {
     }
     // helper functions
     public static void initEntityMetadata(Entity entity) {
-        // only initialize potion effects when needed
-        MetadataValue metadataValue = getMetadata(entity, MetadataName.EFFECTS);
-        if (metadataValue == null)
-            setMetadata(entity, MetadataName.EFFECTS, new HashMap<String, Integer>());
+        // in this function call, potion effect map is initialized when needed
+        getEffectMap(entity);
 
         setMetadata(entity, MetadataName.DAMAGE_TYPE, DamageType.MELEE);
         setMetadata(entity, MetadataName.BUFF_IMMUNE, new HashMap<String, Integer>());
@@ -637,13 +635,13 @@ public class EntityHelper {
         return false;
     }
     public static HashMap<String, Integer> getEffectMap(Entity entity) {
-        try {
-            return (HashMap<String, Integer>) getMetadata(entity, MetadataName.EFFECTS).value();
-        } catch (Exception e) {
+        MetadataValue mdv = getMetadata(entity, MetadataName.EFFECTS);
+        if (mdv == null) {
             HashMap<String, Integer> effectMap = new HashMap<>();
             setMetadata(entity, MetadataName.EFFECTS, effectMap);
             return effectMap;
         }
+        return (HashMap<String, Integer>) mdv.value();
     }
     public static int getEffectLevelMax(String effect) {
         switch (effect) {
@@ -832,7 +830,7 @@ public class EntityHelper {
             Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] endTickEffect", e);
         }
     }
-    private static void prepareTickEffect(Entity entity, String effect) {
+    public static void prepareTickEffect(Entity entity, String effect) {
         try {
             // setup constants
             int delay = 10, damagePerDelay = 0;
@@ -936,11 +934,18 @@ public class EntityHelper {
     }
     private static void sendDeathMessage(Entity d, Entity v, DamageType damageType, String debuffType) {
         String dm = "";
-        // special cases
+        // special death message cases
         if (v instanceof Player) {
             Player plyV = (Player) v;
             if ( ItemHelper.splitItemName(plyV.getInventory().getItemInMainHand() )[1].equals("雷姆的复仇") )
                 dm = "<victim>……是谁？";
+            if ( PlayerHelper.getAccessories(plyV).contains("空灵护符") && Math.random() < 0.1 ) {
+                String msg = "§4<victim>死了    <victim>死了".replaceAll("<victim>", v.getName());
+                for (int i = 0; i < 3; i ++) {
+                    Bukkit.broadcastMessage(msg);
+                }
+                return;
+            }
         }
         if (dm.length() == 0) {
             // general msg
@@ -1415,9 +1420,10 @@ public class EntityHelper {
             }
             // initialize respawn countdown and other features
             vPly.closeInventory();
-            double respawnHealth = Math.max(400, vPly.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 2);
+            double maxHealth = vPly.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+            double respawnHealth = Math.max(400, maxHealth / 2);
             // make sure the new health do not exceed maximum health
-            vPly.setHealth(Math.min(respawnHealth, vPly.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
+            vPly.setHealth(Math.min(respawnHealth, maxHealth) );
             setMetadata(vPly, MetadataName.RESPAWN_COUNTDOWN, respawnTime * 20);
             vPly.setGameMode(GameMode.SPECTATOR);
             vPly.setFlySpeed(0);
@@ -2089,9 +2095,22 @@ public class EntityHelper {
                             case "魔能熔毁仪": {
                                 if (getDamageType(damageSourcePly) == DamageType.MAGIC) {
                                     int mana = damageSourcePly.getLevel();
-                                    int consumption = plyAcc.equals("魔能过载仪") ? 5 : Math.max(mana / 20, 10);
-                                    if (ItemUseHelper.consumeMana(damageSourcePly, consumption)) {
-                                        dmg += consumption * 10;
+                                    double consumption;
+                                    double manaToDamageRate;
+                                    double consumptionRatio;
+                                    if (plyAcc.equals("魔能过载仪")) {
+                                        consumption = 8;
+                                        manaToDamageRate = 7.5;
+                                        consumptionRatio = 1;
+                                    }
+                                    else {
+                                        consumption = (int) Math.max(mana * 0.035, 5);
+                                        manaToDamageRate = 15;
+                                        double effectDuration = EntityHelper.getEffectMap(damageSourcePly).getOrDefault("魔力熔蚀", 0);
+                                        consumptionRatio = 1 - (effectDuration / 800);
+                                    }
+                                    if (ItemUseHelper.consumeMana(damageSourcePly, MathHelper.randomRound(consumption * consumptionRatio) )) {
+                                        dmg += consumption * manaToDamageRate;
                                     }
                                 }
                                 break;

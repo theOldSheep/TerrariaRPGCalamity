@@ -2809,6 +2809,14 @@ ANVIL:
     - 生命合金:5
     - 生命果:5
     - 生命碎片:10
+  '296_4':
+    requireLevel: 3
+    resultItem: 龙果
+    requireItem:
+    - 龙魂碎片:5
+    - 生命果:5
+    - 日耀碎片:15
+    - 化神魂精:2
 WORKBENCH:
   'glass_platform':
     requireLevel: 1
@@ -3589,6 +3597,34 @@ BREWING_STAND:
     - 水瓶
     - 死亡草
     - 黑檀锦鲤
+  '19_1':
+    requireLevel: 1
+    resultItem: 虫潮药水
+    requireItem:
+    - 水瓶
+    - 纯净凝胶:2
+    - 腐烂物质
+  '19_2':
+    requireLevel: 1
+    resultItem: 禅定药水
+    requireItem:
+    - 水瓶
+    - 纯净凝胶:2
+    - 太阳花:3
+  '19_3':
+    requireLevel: 1
+    resultItem: 磁力药水:2
+    requireItem:
+    - 水瓶:2
+    - 铁锭
+    - 火焰花:2
+  '19_4':
+    requireLevel: 1
+    resultItem: 无尽吞噬药水:4
+    requireItem:
+    - 水瓶:4
+    - 暗离子体
+    - 星系异石
   '20':
     requireLevel: 1
     resultItem: 回城药水
@@ -3632,6 +3668,18 @@ BREWING_STAND:
     - 日耀碎片
     - 星尘碎片
     - 星璇碎片
+  '25_1':
+    requireLevel: 1
+    resultItem: 至尊治疗药水:4
+    requireItem:
+    - 超级治疗药水:4
+    - 血石:3
+  '25_2':
+    requireLevel: 1
+    resultItem: 终极治疗药水:20
+    requireItem:
+    - 至尊治疗药水:20
+    - 化神魂精
   '26':
     requireLevel: 1
     resultItem: 恢复药水
@@ -3647,25 +3695,31 @@ BREWING_STAND:
     - 坠星
   '28':
     requireLevel: 1
-    resultItem: 魔力药水:2
+    resultItem: 魔力药水:4
     requireItem:
-    - 弱效魔力药水:2
+    - 弱效魔力药水:4
     - 发光蘑菇
   '29':
     requireLevel: 1
     resultItem: 强效魔力药水:12
     requireItem:
     - 水瓶:12
-    - 发光蘑菇:4
-    - 坠星:2
+    - 妖精尘:4
+    - 坠星
   '30':
     requireLevel: 1
-    resultItem: 超级魔力药水:32
+    resultItem: 超级魔力药水:15
     requireItem:
-    - 强效魔力药水:32
-    - 坠星:2
-    - 独角兽角:2
-    - 水晶碎块:8
+    - 强效魔力药水:15
+    - 坠星
+    - 独角兽角
+    - 水晶碎块:3
+  '31':
+    requireLevel: 1
+    resultItem: 至尊魔力药水:15
+    requireItem:
+    - 超级魔力药水:15
+    - 灵质
 TINKER_WORKBENCH:
   '1':
     requireLevel: 1
@@ -4110,7 +4164,7 @@ TINKER_WORKBENCH:
     resultItem: 融合之脑
     requireItem:
     - 腐烂之脑
-    - 暗影之魂:3
+    - 冰川精华:9
   '42_1':
     requireLevel: 1
     resultItem: 聚合之脑
@@ -4163,6 +4217,13 @@ TINKER_WORKBENCH:
     requireItem:
     - 归一心元石
     - 湮灭余烬:8
+  '45_2':
+    requireLevel: 1
+    resultItem: 钨钢屏障生成仪
+    requireItem:
+    - 钨钢电池
+    - 钨钢金属废料:8
+    - 能源核心
   '46':
     requireLevel: 1
     resultItem: 海之盾
@@ -4235,6 +4296,22 @@ TINKER_WORKBENCH:
     - 可疑镀层:16
     - 宇宙锭:5
     - 化神魂精:4
+  '52':
+    requireLevel: 1
+    resultItem: 深渊潜游装
+    requireItem:
+    - 海波项链
+    - 海波纹章
+    - 深渊细胞:10
+    - 流明晶:10
+  '53':
+    requireLevel: 1
+    resultItem: 深渊潜游服
+    requireItem:
+    - 深渊潜游装
+    - 钨钢屏障生成仪
+    - 夜明锭:5
+    - 软体动物外壳:15
 远古操纵机:
   '1':
     requireLevel: 1
@@ -5272,11 +5349,25 @@ TINKER_WORKBENCH:
     - 日蚀之阴碎片:2
   '64':
     requireLevel: 1
+    resultItem: 旧神浆果
+    requireItem:
+    - 龙蒿锭:10
+    - 生命果:5
+    - 神圣晶石:10
+    - 浊火精华:20
+  '64_1':
+    requireLevel: 1
     resultItem: 飘渺之核
     requireItem:
     - 炫星锭:10
     - 星云碎片:20
     - 坠星:20
+  '64_2':
+    requireLevel: 1
+    resultItem: 幻影之心
+    requireItem:
+    - 毁灭之灵:5
+    - 灵质:25
   '65':
     requireLevel: 1
     resultItem: 星宇砧

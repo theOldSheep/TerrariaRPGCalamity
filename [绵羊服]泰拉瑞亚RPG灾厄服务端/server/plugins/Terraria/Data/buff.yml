@@ -330,26 +330,26 @@ effects:
     isBuff: true
     attributes:
       mobLimit: 10
-      mobSpawnRate: 0.5
+      mobSpawnRate: 1.5
     tooltip: 刷怪效率和上限增加
   虫潮:
     isBuff: true
     attributes:
       mobLimit: 5
-      mobSpawnRate: 5
+      mobSpawnRateMulti: 5
     tooltip: 刷怪倍率和上限增加
   冷静:
     isBuff: true
     attributes:
       mobLimit: -1
       mobSpawnRateMulti: -0.5
-    tooltip: 刷怪率和上限减少
+    tooltip: 刷怪倍率和上限减少
   禅定:
     isBuff: true
     attributes:
       mobLimit: -2
-      mobSpawnRate: -0.9
-    tooltip: 刷怪率和上限大幅度减少
+      mobSpawnRateMulti: -0.9
+    tooltip: 刷怪倍率和上限大幅度减少
   耐力:
     isBuff: true
     attributes:
@@ -359,7 +359,7 @@ effects:
     isBuff: true
     attributes:
       waterAffinity: 1
-    tooltip: 水下适应性增加！
+    tooltip: 水下适应性和视野增加！
   隐身:
     isBuff: true
     attributes:

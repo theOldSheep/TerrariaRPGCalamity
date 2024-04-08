@@ -226,6 +226,8 @@ public class CraftingListener implements Listener {
             yOffset = gui.getHeight() / 5;
             ItemStack parsedItem = ItemHelper.getItemFromDescription(craftingResult, false);
             int resultAmount = parsedItem.getAmount();
+            // prevent duplicated number display; use a new text field to display amount larger than 127
+            parsedItem.setAmount(1);
             newComps.add(new VexSlot(++index, xOffset, yOffset, parsedItem) );
             if (resultAmount > 1) {
                 List<String> textDisplay = new ArrayList<>();
