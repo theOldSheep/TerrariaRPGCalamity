@@ -4131,6 +4131,14 @@ TINKER_WORKBENCH:
     - 夜明锭:8
     - 星系异石:4
     - 化神魂精:4
+  '41_1_1':
+    requireLevel: 1
+    resultItem: 余烬挽歌
+    requireItem:
+    - 灾厄
+    - 混乱之祈祷
+    - 湮灭余烬:8
+    - 化神魂精:2
   '41_2':
     requireLevel: 1
     resultItem: 惧魂神物

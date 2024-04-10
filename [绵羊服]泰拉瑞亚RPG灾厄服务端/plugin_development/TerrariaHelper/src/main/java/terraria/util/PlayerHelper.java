@@ -1433,7 +1433,7 @@ public class PlayerHelper {
                     vel.setY(y * 0.99);
                 }
                 // TODO
-                Bukkit.broadcastMessage(horizontalSpeed + ", " + verticalSpeed);
+//                Bukkit.broadcastMessage(horizontalSpeed + ", " + verticalSpeed);
                 // if the player is moving, change the player's velocity according to targeted move direction
                 if (moveDir.lengthSquared() > 1e-5) {
                     // speed multiplier handling

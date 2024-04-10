@@ -150,9 +150,9 @@ effects:
     tooltip: 你的皮肤正被侵蚀
   孱弱巫咒:
     isBuff: false
-    damageInterval: 10
-    damage: 8
-    damageMonster: 1332
+    damageInterval: 4
+    damage: 6
+    damageMonster: 525
     attributes:
       regenMulti: -1
       defence: -40

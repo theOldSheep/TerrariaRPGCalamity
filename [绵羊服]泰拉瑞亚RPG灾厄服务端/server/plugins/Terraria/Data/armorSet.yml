@@ -1240,6 +1240,7 @@ sets:
     lore:
     - ''
     - §a套装效果：
+    - §a+28% 近战攻速
     - §a继承龙蒿套装、血炎套装和弑神者套装近战头盔的效果
     - §b-> §a继承自龙蒿套装的效果：
     - §a受到伤害时有25%的几率获得4秒的生命涌流增益，增加6点生命恢复
@@ -1257,6 +1258,7 @@ sets:
     - §a敌人在对你造成接触伤害后会受到2.5倍伤害
     attributes:
       regen: 6
+      useSpeedMeleeMulti: 0.28
   金源远程套装:
     lore:
     - ''
@@ -1283,6 +1285,7 @@ sets:
     lore:
     - ''
     - §a套装效果：
+    - §a+5% 移动速度
     - §a继承龙蒿套装、血炎套装和始源林海套装魔法头盔的效果
     - §b-> §a继承自龙蒿套装的效果：
     - §a减少刷怪量和刷怪率
@@ -1301,10 +1304,13 @@ sets:
       regen: 6
       mobLimit: -2
       mobSpawnRateMulti: -0.5
+      speedMulti: 0.05
   金源召唤套装:
     lore:
     - ''
     - §a套装效果：
+    - §a+5% 移动速度
+    - §a+6 仆从容量和 50% 仆从伤害
     - §a继承龙蒿套装、血炎套装和始源林海套装召唤头盔的效果
     - §b-> §a继承自龙蒿套装的效果：
     - §a减少刷怪量和刷怪率
@@ -1322,6 +1328,9 @@ sets:
       regen: 6
       mobLimit: -2
       mobSpawnRateMulti: -0.5
+      speedMulti: 0.05
+      minionLimit: 6
+      damageSummonMulti: 0.5
   天钻套装:
     lore:
     - ''

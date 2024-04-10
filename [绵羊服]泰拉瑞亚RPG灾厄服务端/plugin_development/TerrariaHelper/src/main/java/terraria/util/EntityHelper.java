@@ -1234,7 +1234,8 @@ public class EntityHelper {
 
             // life steal
             String lifeStealTempCD = "temp_lifeStealCD";
-            if (! dPly.getScoreboardTags().contains(lifeStealTempCD)) {
+            // debuff and self-damage may not trigger life steal
+            if (damager != victim && ! dPly.getScoreboardTags().contains(lifeStealTempCD)) {
                 // cool down
                 EntityHelper.handleEntityTemporaryScoreboardTag(dPly, lifeStealTempCD, 1);
 

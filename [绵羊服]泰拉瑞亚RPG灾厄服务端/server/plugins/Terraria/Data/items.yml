@@ -2264,11 +2264,23 @@ Drew之翼:
   - §r召唤物命中后造成夜魇减益
   - §r不能与下位合成同时装备
   attributes:
-    minionLimit: 5
+    minionLimit: 4
     damageSummonMulti: 0.15
     buffInflictSummon: 夜魇|60|1
   worth: 28000000
   rarity: 14
+余烬挽歌:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r召唤物命中后造成孱弱巫咒减益
+  - §#C61B40“女巫是罪人，自己的罪人，她将自己拖入无尽的因果苦海。
+  - §#C61B40念想中的恶魔一直安静着，等待着，直到终结。”
+  attributes:
+    damageSummonMulti: 0.35
+    buffInflictSummon: 孱弱巫咒|40|1
+  worth: 40000000
+  rarity: 16
 惧魂神物:
   item: LEASH
   lore:
@@ -8418,7 +8430,7 @@ Dodu的手炮:
   attributes:
     damage: 44
     damageType: Magic
-    projectileSpeed: 36
+    projectileSpeed: 20
     crit: 4
     knockback: 5
     useTime: 30
