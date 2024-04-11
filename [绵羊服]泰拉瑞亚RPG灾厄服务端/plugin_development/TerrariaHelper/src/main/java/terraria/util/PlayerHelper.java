@@ -441,6 +441,10 @@ public class PlayerHelper {
         }
         return false;
     }
+    public static boolean hasPiggyBank(Player ply) {
+        ItemStack piggyBank = ItemHelper.getItemFromDescription("钱币槽", false, new ItemStack(Material.BEDROCK));
+        return ply.getInventory().contains(piggyBank);
+    }
     public static boolean hasVoidBag(Player ply) {
         ItemStack voidBag = ItemHelper.getItemFromDescription("虚空袋", false, new ItemStack(Material.BEDROCK));
         return ply.getInventory().contains(voidBag);

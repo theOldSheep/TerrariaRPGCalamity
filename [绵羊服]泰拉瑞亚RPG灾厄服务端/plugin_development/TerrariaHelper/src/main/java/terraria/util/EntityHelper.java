@@ -1243,6 +1243,7 @@ public class EntityHelper {
                 double lifeStealFactor = plyAttrMap.getOrDefault("lifeSteal", 0d);
                 if (lifeStealFactor > 1e-9) {
                     double healAmount = dmg * lifeStealFactor;
+                    healAmount = Math.min(healAmount, dPly.getMaxHealth() * 0.05);
                     PlayerHelper.heal(dPly, healAmount);
                 }
             }
@@ -1391,6 +1392,9 @@ public class EntityHelper {
             // drop money
             long moneyDrop = (long) Math.floor(PlayerHelper.getMoney(vPly) / 100);
             moneyDrop = (long) Math.ceil(moneyDrop * 0.75);
+            if (PlayerHelper.hasPiggyBank(vPly)) {
+                moneyDrop = Math.min(moneyDrop, 1145);
+            }
             moneyDrop *= 100;
             PlayerHelper.setMoney(vPly, PlayerHelper.getMoney(vPly) - moneyDrop);
             GenericHelper.dropMoney(vPly.getEyeLocation(), moneyDrop, false);
@@ -1440,30 +1444,22 @@ public class EntityHelper {
                 switch (victimName) {
                     // the Hive Mind
                     case "腐化囊": {
-                        if (dPly instanceof Player) {
-                            BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.THE_HIVE_MIND);
-                        }
+                        BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.THE_HIVE_MIND);
                         break;
                     }
                     // anahita and leviathan spawns after killing ???
                     case "???": {
-                        if (dPly instanceof Player) {
-                            BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LEVIATHAN_AND_ANAHITA);
-                        }
+                        BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LEVIATHAN_AND_ANAHITA);
                         break;
                     }
                     // empress of light
                     case "七彩草蛉": {
-                        if (dPly instanceof Player) {
-                            BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.EMPRESS_OF_LIGHT);
-                        }
+                        BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.EMPRESS_OF_LIGHT);
                         break;
                     }
                     // lunatic cultist spawns after killing the mob in the dungeon
                     case "拜月教教徒": {
-                        if (dPly instanceof Player) {
-                            BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LUNATIC_CULTIST, v.getLocation());
-                        }
+                        BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LUNATIC_CULTIST, v.getLocation());
                         break;
                     }
                 }
