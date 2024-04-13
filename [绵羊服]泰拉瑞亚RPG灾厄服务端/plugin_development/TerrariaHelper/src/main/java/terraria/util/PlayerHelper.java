@@ -1211,6 +1211,31 @@ public class PlayerHelper {
         }
     }
     // wing & jump speed tweak
+    private static double getHorMoveSpd(Player ply, HashSet<String> accessorySet, double speedMulti, double speedMultiWing) {
+        double groundSneakMulti = (ply.isOnGround() && ply.isSneaking()) ? 0.35 : 1d;
+        for (String accessory : accessorySet) {
+            ConfigurationSection wingSection = TerrariaHelper.wingConfig.getConfigurationSection(accessory);
+            // if the accessory does not provide any flying/extra jump
+            if (wingSection == null)
+                continue;
+            // only boots can apply for on-ground players; this "short circuit" operation will make sure wing-boots are not faster on ground
+            if (ply.isOnGround()) {
+                if (! wingSection.getBoolean("isBoot", false))
+                    continue;
+            }
+            // wings will apply for players off ground
+            else {
+                if (! wingSection.getBoolean("isWing", false))
+                    continue;
+            }
+
+            // return the speed
+            double multiUse = wingSection.getBoolean("isWing", false) ? speedMultiWing : speedMulti;
+            return wingSection.getDouble("horizontalSpeed", 0.5d) * multiUse * groundSneakMulti;
+        }
+        // default speed
+        return 0.25 * speedMulti * groundSneakMulti;
+    }
     private static Vector wingMovement(Player ply, Vector vel) {
         // reset thrust variable if player is on ground
         if (ply.isOnGround()) {
@@ -1226,7 +1251,7 @@ public class PlayerHelper {
                     accessorySet.clone());
         int extraJumpTime = 0;
         int thrustProgressMax = 0;
-        double verticalSpeed = 0.5, horizontalSpeed = 0.2;
+        double verticalSpeed = 0.5, horizontalSpeed;
         double maxAcceleration = 0.5;
         List<String> accessory = (List<String>) EntityHelper.getMetadata(ply,
                 EntityHelper.MetadataName.ACCESSORIES_LIST).value();
@@ -1243,6 +1268,20 @@ public class PlayerHelper {
         }
         // the player is not on mount
         else {
+            // speed multiplier
+            double speedMulti = 1d, speedMultiWing = 1d;
+            {
+                HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+                speedMulti = attrMap.getOrDefault("speedMulti", 1d);
+                speedMultiWing = speedMulti;
+                // speed multiplier that exceeds 100% are only 10% as effective on wings, 35% as effective otherwise.
+                if (speedMulti > 1d) {
+                    speedMulti = 1 + (speedMulti - 1) * 0.35;
+                    speedMultiWing = 1 + (speedMultiWing - 1) * 0.1;
+                }
+            }
+            // set up horizontal speed
+            horizontalSpeed = getHorMoveSpd(ply, accessorySet, speedMulti, speedMultiWing);
             // if the player is not flying
             if (!isThrusting) {
                 // the player can not save a part of jumping progress for a "double jump" after leaving the ground
@@ -1290,11 +1329,12 @@ public class PlayerHelper {
                         availableAccessory.remove(currAcc);
 //                                Bukkit.broadcastMessage("AVAILABLE ACCESSORIES AFTER DELETION: " + availableAccessory);
                         // the accessory should be good to go here
+                        double speedMultiplier = wingSection.contains("flightTime") ? speedMultiWing : speedMulti;
                         extraJumpTime = wingSection.getInt("extraJumpTime", 0);
                         thrustProgressMax = wingSection.getInt("flightTime", 0);
-                        verticalSpeed = wingSection.getDouble("verticalSpeed", 1d);
-                        maxAcceleration = wingSection.getDouble("maxAcceleration", 0.5d);
-                        horizontalSpeed = wingSection.getDouble("horizontalSpeed", 0.5d);
+                        verticalSpeed = wingSection.getDouble("verticalSpeed", 1d) * speedMultiplier;
+                        maxAcceleration = wingSection.getDouble("maxAcceleration", 0.5d) * speedMultiplier;
+                        horizontalSpeed = wingSection.getDouble("horizontalSpeed", 0.5d) * speedMultiplier;
                         isWing = wingSection.getBoolean("isWing", false);
                         accessoryUsed = currAcc;
 //                                Bukkit.broadcastMessage("FLYING WITH ACCESSORY, " + thrustIndex + "(" + accessoryUsed);
@@ -1309,9 +1349,8 @@ public class PlayerHelper {
                 // if the player is jumping
                 else {
                     thrustProgressMax = 6;
-                    verticalSpeed = 0.5;
+                    verticalSpeed *= speedMulti;
                     maxAcceleration = 0.6;
-                    horizontalSpeed = 0.2;
                 }
                 // if no valid accessory is being selected, attempt to glide
                 if (extraJumpTime + thrustProgressMax <= 0) {
@@ -1329,9 +1368,6 @@ public class PlayerHelper {
                         gliding = true;
                         thrustProgressMax = 999999;
                         verticalSpeed = 0.5;
-                        maxAcceleration = 0.05;
-                        // when gliding, horizontal mobility is reduced
-                        horizontalSpeed = wingSection.getDouble("horizontalSpeed", 0.5d) * 0.75;
                         accessoryUsed = currAcc;
                         break;
                     }
@@ -1340,18 +1376,6 @@ public class PlayerHelper {
             // update velocity
             Vector moveDir = new Vector();
             {
-                // speed multiplier
-                double speedMulti = 1, accelerationMulti = 1;
-                {
-                    HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
-                    double speedMultiAttribute = attrMap.getOrDefault("speedMulti", 1d);
-                    // speed multiplier that exceeds 100% are only 50% as effective on wings
-                    if (speedMultiAttribute > 1d)
-                        speedMultiAttribute = 1 + (speedMultiAttribute - 1) * 0.5;
-                    speedMulti *= speedMultiAttribute;
-                    accelerationMulti *= speedMultiAttribute / 2;
-                    maxAcceleration *= accelerationMulti;
-                }
                 boolean movingHor = false, movingVer = false;
                 // horizontal movement
                 double horizontalMoveYaw = getPlayerMoveYaw(ply);
@@ -1359,7 +1383,7 @@ public class PlayerHelper {
                     movingHor = true;
                     moveDir.add(MathHelper.vectorFromYawPitch_quick(horizontalMoveYaw, 0).multiply(horizontalSpeed));
                 }
-                // vertical movement if thrusting
+                // thrust tick and misc mechanism
                 if (isThrusting) {
                     thrustProgressMax *= EntityHelper.getAttrMap(ply).getOrDefault("flightTimeMulti", 1d);
                     if (thrustProgress < extraJumpTime + thrustProgressMax) {
@@ -1428,32 +1452,40 @@ public class PlayerHelper {
                 // handle speed decay multiplier
                 {
                     double horVelMulti;
-                    if (ply.isOnGround())
+                    if (ply.isOnGround() && ! movingHor)
                         horVelMulti = 0.6;
                     else
-                        horVelMulti = movingHor ? 0.99 : 0.925;
+                        horVelMulti = 0.925;
                     double y = vel.getY();
                     vel.multiply(horVelMulti);
                     vel.setY(y * 0.99);
                 }
-                // TODO
 //                Bukkit.broadcastMessage(horizontalSpeed + ", " + verticalSpeed);
+
                 // if the player is moving, change the player's velocity according to targeted move direction
                 if (moveDir.lengthSquared() > 1e-5) {
-                    // speed multiplier handling
-                    moveDir.multiply(speedMulti);
                     Vector acceleration = moveDir.clone().subtract(vel);
                     double accLength = acceleration.length();
                     // maxAcceleration has already accounted for multiplier in the section above
                     if (accLength > maxAcceleration) {
                         acceleration.multiply(maxAcceleration / accLength);
                     }
-                    // TODO: Is it correct?
-                    // TODO: when pressing space, horizontal acceleration is not present
                     // do not change the corresponding component (most likely unreasonably de-accelerate) if not moving in the direction.
                     if (! movingHor) {
                         acceleration.setX(0);
                         acceleration.setZ(0);
+                    }
+                    // if moving horizontally, drop the "dragging" component in the target direction
+                    else {
+                        // angle between move direction and velocity <= 90
+                        if (moveDir.dot(vel) > -1e-5) {
+                            Vector accComp = MathHelper.vectorProjection(vel, acceleration);
+                            accComp.setY(0d);
+                            // if the acceleration is slowing down the speed
+                            if (accComp.dot(vel) < 0) {
+                                acceleration.subtract(accComp);
+                            }
+                        }
                     }
                     if (! movingVer)
                         acceleration.setY(0);
@@ -2723,7 +2755,7 @@ public class PlayerHelper {
     public static void handleDash(Player ply, double yaw, double pitch) {
         if (!PlayerHelper.isProperlyPlaying(ply))
             return;
-        // can not dash if player has dash cooldown
+        // can not dash if player has dash cool down
         if (ply.getScoreboardTags().contains("temp_dashCD"))
             return;
         Collection<Entity> hooks = (Collection<Entity>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOKS).value();
@@ -2737,7 +2769,7 @@ public class PlayerHelper {
         String armorSet = getArmorSet(ply);
         switch (armorSet) {
             case "水晶刺客套装":
-                dashSpeed = 0.9;
+                dashSpeed = 1.15;
                 dashCD = 30;
                 break;
         }
@@ -2755,11 +2787,11 @@ public class PlayerHelper {
                         dashCD = 30;
                         break;
                     case "阿斯加德之英勇":
-                        dashSpeed = 1.35;
+                        dashSpeed = 1.3;
                         dashCD = 28;
                         break;
                     case "极乐之庇护":
-                        dashSpeed = 1.5;
+                        dashSpeed = 1.45;
                         dashCD = 26;
                         break;
                     case "阿斯加德之庇护":
@@ -2773,7 +2805,9 @@ public class PlayerHelper {
         // dash if applicable
         if (dashCD > 0) {
             HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+            // speed multiplier works at 100% potency
             dashSpeed *= attrMap.getOrDefault("speedMulti", 1d);
+
             Vector dashVelocity = MathHelper.vectorFromYawPitch_quick(yaw, pitch).multiply(dashSpeed);
             EntityHelper.setVelocity(ply, getPlayerVelocity(ply).add(dashVelocity));
             ply.addScoreboardTag("temp_dashCD");

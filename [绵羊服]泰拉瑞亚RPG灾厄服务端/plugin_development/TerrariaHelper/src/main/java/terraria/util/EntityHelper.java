@@ -1393,7 +1393,7 @@ public class EntityHelper {
             long moneyDrop = (long) Math.floor(PlayerHelper.getMoney(vPly) / 100);
             moneyDrop = (long) Math.ceil(moneyDrop * 0.75);
             if (PlayerHelper.hasPiggyBank(vPly)) {
-                moneyDrop = Math.min(moneyDrop, 1145);
+                moneyDrop = Math.min(moneyDrop, 1104);
             }
             moneyDrop *= 100;
             PlayerHelper.setMoney(vPly, PlayerHelper.getMoney(vPly) - moneyDrop);
