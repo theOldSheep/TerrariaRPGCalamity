@@ -117,6 +117,12 @@ FURNACE:
     - 黑曜石:20
   '23_1':
     requireLevel: 1
+    resultItem: 水晶碎块:3
+    requireItem:
+    - 珍珠石:2
+    - 冰川精华
+  '23_2':
+    requireLevel: 1
     resultItem: 禁戒碎片
     requireItem:
     - 沙块:32

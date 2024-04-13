@@ -1550,7 +1550,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r提供生命再生并使治疗药水的冷却时间缩短25%
+  - §r使治疗药水的冷却时间缩短25%
   attributes:
     regen: 2
   worth: 4000000
@@ -2322,6 +2322,7 @@ Drew之翼:
   - §r“忠！诚！”
   attributes:
     minionLimit: 2
+    damageSummonMulti: 0.1
   worth: 30000000
   rarity: 15
 焦热地狱:

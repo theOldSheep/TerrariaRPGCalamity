@@ -1274,9 +1274,9 @@ public class PlayerHelper {
                 HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
                 speedMulti = attrMap.getOrDefault("speedMulti", 1d);
                 speedMultiWing = speedMulti;
-                // speed multiplier that exceeds 100% are only 10% as effective on wings, 35% as effective otherwise.
+                // speed multiplier that exceeds 100% are only 10% as effective on wings, 20% as effective otherwise.
                 if (speedMulti > 1d) {
-                    speedMulti = 1 + (speedMulti - 1) * 0.35;
+                    speedMulti = 1 + (speedMulti - 1) * 0.2;
                     speedMultiWing = 1 + (speedMultiWing - 1) * 0.1;
                 }
             }
@@ -1477,15 +1477,19 @@ public class PlayerHelper {
                     }
                     // if moving horizontally, drop the "dragging" component in the target direction
                     else {
+                        double moveY = moveDir.getY(), velY = vel.getY();
+                        moveDir.setY(0);
+                        vel.setY(0);
                         // angle between move direction and velocity <= 90
                         if (moveDir.dot(vel) > -1e-5) {
                             Vector accComp = MathHelper.vectorProjection(vel, acceleration);
-                            accComp.setY(0d);
                             // if the acceleration is slowing down the speed
                             if (accComp.dot(vel) < 0) {
                                 acceleration.subtract(accComp);
                             }
                         }
+                        moveDir.setY(moveY);
+                        vel.setY(velY);
                     }
                     if (! movingVer)
                         acceleration.setY(0);
@@ -2805,8 +2809,11 @@ public class PlayerHelper {
         // dash if applicable
         if (dashCD > 0) {
             HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
-            // speed multiplier works at 100% potency
-            dashSpeed *= attrMap.getOrDefault("speedMulti", 1d);
+            // speed multiplier above 100% will contribute 25%
+            double speedMulti = attrMap.getOrDefault("speedMulti", 1d);
+            if (speedMulti > 1)
+                speedMulti = 1 + (speedMulti - 1) * 0.25;
+            dashSpeed *= attrMap.getOrDefault("speedMulti", 1d) * speedMulti;
 
             Vector dashVelocity = MathHelper.vectorFromYawPitch_quick(yaw, pitch).multiply(dashSpeed);
             EntityHelper.setVelocity(ply, getPlayerVelocity(ply).add(dashVelocity));
