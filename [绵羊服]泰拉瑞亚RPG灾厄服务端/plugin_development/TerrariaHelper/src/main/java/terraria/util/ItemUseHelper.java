@@ -219,6 +219,10 @@ public class ItemUseHelper {
                 ply.openInventory(PlayerHelper.getInventory(ply, "voidBag"));
                 return true;
             }
+            case "垃圾桶": {
+                ply.openInventory(PlayerHelper.getInventory(ply, "trashBin"));
+                return true;
+            }
             case "阿瑞斯外骨骼": {
                 PlayerHelper.showAresExoskeletonConfig(ply);
                 return true;

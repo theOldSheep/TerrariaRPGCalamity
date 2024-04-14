@@ -449,6 +449,22 @@ public class PlayerHelper {
         ItemStack voidBag = ItemHelper.getItemFromDescription("虚空袋", false, new ItemStack(Material.BEDROCK));
         return ply.getInventory().contains(voidBag);
     }
+    public static boolean hasTrashBin(Player ply) {
+        ItemStack voidBag = ItemHelper.getItemFromDescription("垃圾桶", false, new ItemStack(Material.BEDROCK));
+        return ply.getInventory().contains(voidBag);
+    }
+    public static void updateTrashBinInfo(Player ply) {
+        HashSet<String> itemsInTrash = new HashSet<>();
+        Inventory trashBinInv = getInventory(ply, "trashBin");
+        if (hasTrashBin(ply) && trashBinInv != null) {
+            for (ItemStack currItem : trashBinInv.getContents()) {
+                if (currItem == null || currItem.getType() == Material.AIR)
+                    continue;
+                itemsInTrash.add( ItemHelper.splitItemName(currItem)[1] );
+            }
+        }
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TRASH_ITEMS, itemsInTrash);
+    }
     public static boolean canHoldAny(Player ply, ItemStack item) {
         if (item == null) return true;
         String itemType = ItemHelper.splitItemName(item)[1];
@@ -1753,11 +1769,12 @@ public class PlayerHelper {
         }, 0, delay);
     }
     public static void threadSaveInventories() {
-        // thread to save player inventories every 5 seconds
+        // thread to save player inventories every 5 seconds; trashcan item update is also handled here.
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(),
                 () -> {
                     for (Player ply : Bukkit.getOnlinePlayers()) {
                         PlayerHelper.saveData(ply);
+                        updateTrashBinInfo(ply);
                     }
                 }, 100, 100);
     }
@@ -1905,6 +1922,8 @@ public class PlayerHelper {
         if (joinOrRespawn) {
             // load inventories
             loadInventories(ply);
+            // setup trash
+            updateTrashBinInfo(ply);
             // join team
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TEAM, "red");
             // reset monsters spawned to 0
@@ -2562,21 +2581,29 @@ public class PlayerHelper {
             }
         }
         try {
-            amountRemaining = ItemHelper.addItemToGenericInventory(item, ply.getInventory());
-            if (amountRemaining > 0) {
+            HashSet<String> trashedItems = (HashSet<String>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_TRASH_ITEMS).value();
+            // destroy trashed items
+            if (trashedItems.contains(itemType)) {
+                amountRemaining = 0;
+                ply.getWorld().playSound(ply.getEyeLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 1, 1);
+            }
+            // give non-trashed items; return the leftover amount
+            else {
+                amountRemaining = ItemHelper.addItemToGenericInventory(item, ply.getInventory());
                 // put the item in the player's void bag, if the player has a void bag in the inventory
-                if (hasVoidBag(ply)) {
+                if (amountRemaining > 0 && hasVoidBag(ply)) {
                     Inventory voidBagInv = getInventory(ply, "voidBag");
                     if (voidBagInv != null)
                         amountRemaining = ItemHelper.addItemToGenericInventory(item, voidBagInv);
                 }
+                if (dropExtra && amountRemaining > 0) {
+                    ItemStack itemToDrop = item.clone();
+                    itemToDrop.setAmount(amountRemaining);
+                    ItemHelper.dropItem(ply.getEyeLocation(), itemToDrop);
+                }
+                if (amountRemaining < amountInitial)
+                    ply.getWorld().playSound(ply.getEyeLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
             }
-            if (dropExtra && amountRemaining > 0) {
-                ItemStack itemToDrop = item.clone();
-                itemToDrop.setAmount(amountRemaining);
-                ItemHelper.dropItem(ply.getEyeLocation(), itemToDrop);
-            }
-            if (amountRemaining < amountInitial) ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
             return amountRemaining;
         } catch (Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "PlayerHelper.giveItem", e);
@@ -2863,7 +2890,7 @@ public class PlayerHelper {
         // show inventory
         ply.openInventory(inv);
     }
-    public static void clickAresExoskeletonConfig(Player ply, Inventory inv, int idx) {
+    public static void handleAresExoskeletonConfigClick(Player ply, Inventory inv, int idx) {
         // make sure the config is present.
         ArrayList<Short> config = getAresExoskeletonConfig(ply);
         // check for out of bound

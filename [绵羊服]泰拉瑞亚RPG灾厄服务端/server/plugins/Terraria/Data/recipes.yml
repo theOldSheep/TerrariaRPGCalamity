@@ -3286,6 +3286,12 @@ ENCHANTMENT_TABLE:
     - 黑檀石:40
   '5':
     requireLevel: 1
+    resultItem: 垃圾桶
+    requireItem:
+    - 铁锭:8
+    - 箱子
+  '5_1':
+    requireLevel: 1
     resultItem: 虚空袋
     requireItem:
     - 骨头:30

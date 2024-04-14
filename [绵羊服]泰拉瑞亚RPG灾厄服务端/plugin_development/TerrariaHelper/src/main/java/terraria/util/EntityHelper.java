@@ -245,6 +245,7 @@ public class EntityHelper {
         PLAYER_TELEPORT_TARGET("teleportTarget"),
         PLAYER_THRUST_INDEX("thrustIndex"),
         PLAYER_THRUST_PROGRESS("thrustProgress"),
+        PLAYER_TRASH_ITEMS("trashItems"),
         PLAYER_VELOCITY("plyVel"),
         PLAYER_VELOCITY_MULTI("plyVelMulti"),
         PROJECTILE_BOUNCE_LEFT("bounce"),
