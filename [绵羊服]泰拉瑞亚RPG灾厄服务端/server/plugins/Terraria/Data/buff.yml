@@ -213,10 +213,11 @@ effects:
   深渊水压:
     isBuff: false
     damageInterval: 10
-    damage: 9
+    damage: 25
     damageMonster: 50
     attributes:
       regenMulti: -1
+      waterAffinity: -1.5
     tooltip: 深海压强似乎作用于身
   弑神怒焰:
     isBuff: false
