@@ -1105,6 +1105,29 @@ ANVIL:
     requireItem:
     - 日耀碑牌碎片:16
     - 丛林蜥蜴砖:24
+  '132_7':
+    requireLevel: 3
+    resultItem: 金源量子冷却电池:2
+    requireItem:
+    - 圣金源锭
+    - 神秘电路:2
+    - 可疑镀层:2
+    - 恒温能量:5
+    - 冰川核心
+  '132_8':
+    requireLevel: 3
+    resultItem: 祭魂瓮
+    requireItem:
+    - 灾厄尘:3
+    - 硫磺火石砖
+    - 圣金源锭
+  '132_9':
+    requireLevel: 3
+    resultItem: 终末石
+    requireItem:
+    - 石头:16
+    - 湮灭余烬
+    - 星流棱晶
   '133':
     requireLevel: 2
     resultItem: 真·永夜之刃
@@ -2325,6 +2348,7 @@ ANVIL:
     - 太空海豚机枪
     - 腐臭倾泻者
     - 宇宙锭:10
+    - 恒温能量:20
   '250_5':
     requireLevel: 3
     resultItem: 奥妮克希亚
@@ -4347,6 +4371,44 @@ TINKER_WORKBENCH:
     requireItem:
     - 星尘:64
     - 炫星锭:8
+  '1_2':
+    requireLevel: 1
+    resultItem: 奇异信息素
+    requireItem:
+    - 生命合金:2
+    - 日耀碎片:5
+  '1_3':
+    requireLevel: 1
+    resultItem: 亵渎碎片
+    requireItem:
+    - 夜明锭:2
+    - 浊火精华:5
+  '1_4':
+    requireLevel: 1
+    resultItem: 死灵魂炬
+    requireItem:
+    - 灵质:12
+    - 木材:8
+  '1_5':
+    requireLevel: 1
+    resultItem: 宇宙符文
+    requireItem:
+    - 神圣晶石
+    - 夜明锭
+    - 日耀碎片
+  '1_6':
+    requireLevel: 1
+    resultItem: 宇宙之虫
+    requireItem:
+    - 装甲外壳
+    - 扭曲虚空
+    - 暗离子体
+  '1_7':
+    requireLevel: 1
+    resultItem: 圣佑烬昭龙蛋
+    requireItem:
+    - 闪耀金羽:5
+    - 生命合金:2
   '2':
     requireLevel: 1
     resultItem: 破晓之光

@@ -223,6 +223,27 @@ public class ItemUseHelper {
                 ply.openInventory(PlayerHelper.getInventory(ply, "trashBin"));
                 return true;
             }
+            case "日耀天塔柱":
+            case "星璇天塔柱":
+            case "星云天塔柱":
+            case "星尘天塔柱":
+            case "虚空天塔柱":
+            case "血月天塔柱": {
+                if ( ! ply.getScoreboardTags().contains("temp_useCD") ) {
+                    String targetBackground = itemName.replace("天塔柱", "");
+                    MetadataValue forceBackground = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BACKGROUND);
+                    // update force background
+                    if (forceBackground == null || ! forceBackground.asString().equals(targetBackground)) {
+                        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BACKGROUND, targetBackground);
+                    }
+                    // remove force background
+                    else {
+                        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BACKGROUND, null);
+                    }
+                    applyCD(ply, 20);
+                }
+                return true;
+            }
             case "阿瑞斯外骨骼": {
                 PlayerHelper.showAresExoskeletonConfig(ply);
                 return true;

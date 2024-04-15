@@ -1059,6 +1059,65 @@
   - §r在星辉信标处使用，召唤星神游龙
   - §r泰坦之心也能起到同样作用，但星核在使用时不会被消耗
   rarity: 9
+奇异信息素:
+  item: CLAY_BALL
+  lore:
+  - §r在丛林使用以召唤痴愚金龙
+  - §r“用以狩猎巨龙分支的信息素。”
+  rarity: 10
+亵渎碎片:
+  item: CLAY_BALL
+  lore:
+  - §r白天时在地狱或神圣之地使用以召唤亵渎守卫
+  - §r“她的守护者正在搜寻如此浩瀚能量的盗取者。”
+  rarity: 11
+亵渎晶核:
+  item: CLAY_BALL
+  lore:
+  - §r在神圣之地或地狱使用以召唤亵渎天神
+  - §r在不同的群落与其战斗会掉落不同的战利品
+  - §r“她的守卫的心脏，她将会用污亵的烈焰焚尽现在正掌控它的人。”
+  rarity: 11
+死灵魂炬:
+  item: CLAY_BALL
+  lore:
+  - §r在地牢使用以召唤噬魂幽花
+  - §r“幽魂的哀嚎惊动了更可怕的东西。”
+  rarity: 12
+宇宙符文:
+  item: CLAY_BALL
+  lore:
+  - §r亵渎火焰的华贵符文
+  - §r仇恨还在它的顶部燃烧
+  - §r这种能力会吸引异界的存在
+  - §r在太空，地牢和地狱使用时效果似乎有所不同……
+  rarity: 12
+宇宙之虫:
+  item: CLAY_BALL
+  lore:
+  - §r“无名的巨蟒已经准备对你动手了。”
+  rarity: 12
+圣佑烬昭龙蛋:
+  item: CLAY_BALL
+  lore:
+  - §r“巨龙正在监视与等候你的象征。”
+  rarity: 14
+金源量子冷却电池:
+  item: CLAY_BALL
+  lore:
+  - §r它的创造者已经准备好了，他希望你也准备好了
+  rarity: 15
+祭魂瓮:
+  item: CLAY_BALL
+  lore:
+  - §r召唤至尊女巫，灾厄
+  - §r“女巫不会允许这种事情再次发生。”
+  rarity: 15
+终末石:
+  item: CLAY_BALL
+  lore:
+  - §r在没有BOSS存活时激活Boss Rush模式
+  rarity: 1
 向导巫毒娃娃:
   item: LEASH
   lore:
@@ -14356,6 +14415,13 @@ Dodu的手炮:
   - §r666 饵力
   worth: 10000000
   rarity: 3
+血蠕虫:
+  item: RABBIT_HIDE
+  lore:
+  - §r右键放生此小动物
+  - §r4444 饵力
+  worth: 500000
+  rarity: 13
 捕虫网:
   item: STICK
   worth: 20000

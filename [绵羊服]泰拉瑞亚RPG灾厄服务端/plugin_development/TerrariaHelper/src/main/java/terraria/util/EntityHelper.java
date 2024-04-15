@@ -1508,26 +1508,31 @@ public class EntityHelper {
                     }
                 }
                 // generic death drop etc.
-                MetadataValue parentType = getMetadata(v, MetadataName.MONSTER_PARENT_TYPE);
-                if (parentType != null) {
-                    switch (parentType.asString()) {
-                        // lava slimes leave lava at death
-                        case "史莱姆": {
-                            if (v.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)) {
-                                Location deathLoc = vLiving.getEyeLocation();
-                                Block deathBlock = deathLoc.getBlock();
-                                WorldHelper.createTemporaryLava(deathBlock);
-                            }
-                            break;
+                MetadataValue parentTypeMetadata = getMetadata(v, MetadataName.MONSTER_PARENT_TYPE);
+                MetadataValue bossTypeMetadata = getMetadata(v, MetadataName.BOSS_TYPE);
+                String parentType = "";
+                if (bossTypeMetadata != null)
+                    parentType = bossTypeMetadata.value().toString();
+                if (parentTypeMetadata != null)
+                    parentType = parentTypeMetadata.asString();
+
+                switch (parentType) {
+                    // lava slimes leave lava at death
+                    case "史莱姆": {
+                        if (v.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)) {
+                            Location deathLoc = vLiving.getEyeLocation();
+                            Block deathBlock = deathLoc.getBlock();
+                            WorldHelper.createTemporaryLava(deathBlock);
                         }
-                        // the hungry flies towards the player after breaking free
-                        case "饿鬼Attached": {
-                            if (dPly instanceof Player) {
-                                MonsterHelper.spawnMob("饿鬼", v.getLocation(), (Player) dPly);
-                                v.remove();
-                            }
-                            break;
+                        break;
+                    }
+                    // the hungry flies towards the player after breaking free
+                    case "饿鬼Attached": {
+                        if (dPly instanceof Player) {
+                            MonsterHelper.spawnMob("饿鬼", v.getLocation(), (Player) dPly);
+                            v.remove();
                         }
+                        break;
                     }
                 }
                 // special, player-progression specific drops
@@ -1584,6 +1589,107 @@ public class EntityHelper {
                             }
                         }
                     }
+                    // post-DoG essences
+                    if (spawnEvt != null && PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.THE_DEVOURER_OF_GODS.msgName)) {
+                        String itemType = null;
+                        int dropAmountMin = 1, dropAmountMax = 1;
+                        double dropChance = 0d;
+                        EventAndTime.Events evt = (EventAndTime.Events) spawnEvt.value();
+                        switch (evt) {
+                            case PUMPKIN_MOON:
+                                itemType = "梦魇魔能";
+                                switch (parentType) {
+                                    case "树精":
+                                        dropChance = 0.5d;
+                                        break;
+                                    case "地狱犬":
+                                    case "胡闹鬼":
+                                        dropChance = 0.5d;
+                                        dropAmountMax = 2;
+                                        break;
+                                    case "无头骑士":
+                                        dropChance = 1d;
+                                        dropAmountMin = 3;
+                                        dropAmountMax = 5;
+                                        break;
+                                    case "哀木":
+                                        dropChance = 1d;
+                                        dropAmountMin = 5;
+                                        dropAmountMax = 10;
+                                        break;
+                                    case "南瓜王":
+                                        dropChance = 1d;
+                                        dropAmountMin = 10;
+                                        dropAmountMax = 20;
+                                        break;
+                                }
+                                break;
+                            case FROST_MOON:
+                                itemType = "恒温能量";
+                                switch (parentType) {
+                                    case "胡桃夹士":
+                                    case "精灵直升机":
+                                    case "雪花怪":
+                                        dropChance = 0.5d;
+                                        break;
+                                    case "坎卜斯":
+                                    case "雪兽":
+                                    case "礼物宝箱怪":
+                                        dropChance = 0.5d;
+                                        dropAmountMax = 2;
+                                        break;
+                                    case "常绿尖叫怪":
+                                        dropChance = 1d;
+                                        dropAmountMin = 3;
+                                        dropAmountMax = 5;
+                                        break;
+                                    case "圣诞坦克":
+                                        dropChance = 1d;
+                                        dropAmountMin = 5;
+                                        dropAmountMax = 10;
+                                        break;
+                                    case "冰雪女王":
+                                        dropChance = 1d;
+                                        dropAmountMin = 10;
+                                        dropAmountMax = 20;
+                                        break;
+                                }
+                                break;
+                            case SOLAR_ECLIPSE:
+                                itemType = "日蚀之阴碎片";
+                                switch (parentType) {
+                                    case "水月怪":
+                                    case "弗里茨":
+                                    case "沼泽怪":
+                                    case "科学怪人":
+                                        dropChance = 0.1d;
+                                        break;
+                                    case "死神":
+                                    case "吸血鬼":
+                                    case "攀爬魔":
+                                    case "致命球":
+                                        dropChance = 0.5d;
+                                        break;
+                                    case "眼怪":
+                                        dropChance = 1d;
+                                        dropAmountMax = 2;
+                                        break;
+                                    case "蛾怪":
+                                        dropChance = 1d;
+                                        dropAmountMin = 20;
+                                        dropAmountMax = 30;
+                                        break;
+                                }
+                                break;
+                        }
+                        // drop
+                        if (itemType != null && Math.random() < dropChance) {
+                            int dropAmountFinal = dropAmountMin + (int) (Math.random() * (dropAmountMax - dropAmountMin + 1));
+                            ItemHelper.dropItem(vLiving.getEyeLocation(),
+                                    itemType + ":" + dropAmountFinal, false);
+                        }
+                    }
+
                 }
             }
         }

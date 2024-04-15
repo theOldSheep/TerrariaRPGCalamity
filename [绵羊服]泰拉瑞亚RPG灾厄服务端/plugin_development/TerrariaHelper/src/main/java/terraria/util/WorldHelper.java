@@ -314,6 +314,7 @@ public class WorldHelper {
         switch (blockAboveMat) {
             case ANVIL:
             case BREWING_STAND:
+            case CHEST:
             case ENCHANTMENT_TABLE:
             case FURNACE:
             case WORKBENCH:

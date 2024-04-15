@@ -1600,7 +1600,7 @@ mobInfo:
         disguiseType: "ZOMBIE"
         stepHeight: 1.15
         variants:
-            default1:
+            日食1:
                 attributes:
                     damage: 360
                     damageType: "Magic"
@@ -1614,7 +1614,7 @@ mobInfo:
         disguiseType: "ZOMBIE"
         stepHeight: 1.15
         variants:
-            default1:
+            日食1:
                 attributes:
                     damage: 390
                     damageType: "Melee"
@@ -1628,7 +1628,7 @@ mobInfo:
         disguiseType: "ZOMBIE"
         stepHeight: 1.15
         variants:
-            default1:
+            日食1:
                 attributes:
                     damage: 420
                     damageType: "Melee"
@@ -1642,7 +1642,7 @@ mobInfo:
         disguiseType: "ZOMBIE"
         stepHeight: 1.15
         variants:
-            default1:
+            日食1:
                 attributes:
                     damage: 480
                     damageType: "Melee"
@@ -1656,7 +1656,7 @@ mobInfo:
         disguiseType: "ZOMBIE"
         stepHeight: 1.15
         variants:
-            default1:
+            日食1:
                 attributes:
                     damage: 360
                     damageType: "Melee"
@@ -1670,7 +1670,7 @@ mobInfo:
         disguiseType: "BABY_ZOMBIE"
         stepHeight: 1.15
         variants:
-            default1:
+            日食1:
                 attributes:
                     damage: 420
                     damageType: "Melee"
@@ -1684,7 +1684,7 @@ mobInfo:
         disguiseType: "BABY_ZOMBIE"
         stepHeight: 1.15
         variants:
-            default1:
+            日食1:
                 attributes:
                     damage: 408
                     damageType: "Melee"
@@ -1698,7 +1698,7 @@ mobInfo:
         spawnLocationType: ANY
         disguiseType: "ZOMBIE"
         variants:
-            default1:
+            日食1:
                 attributes:
                     damage: 480
                     damageType: "Melee"
@@ -1711,7 +1711,7 @@ mobInfo:
         monsterType: "SLIME"
         spawnLocationType: ANY
         variants:
-            default1:
+            日食1:
                 attributes:
                     damage: 600
                     damageType: "Melee"
@@ -1725,7 +1725,7 @@ mobInfo:
         spawnLocationType: ANY
         slimeSize: 6
         variants:
-            default1:
+            日食1:
                 attributes:
                     damage: 480
                     damageType: "Melee"
