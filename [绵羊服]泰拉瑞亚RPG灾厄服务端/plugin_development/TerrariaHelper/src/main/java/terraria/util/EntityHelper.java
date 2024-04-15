@@ -235,6 +235,7 @@ public class EntityHelper {
         PLAYER_MINION_LIST("minions"),
         PLAYER_MINION_WHIP_FOCUS("minionWhipFocus"),
         PLAYER_MONSTER_SPAWNED_AMOUNT("mobAmount"),
+        PLAYER_NEG_REGEN_CAUSE("negRegenSrc"),
         PLAYER_NEXT_MINION_INDEX("nextMinionIndex"),
         PLAYER_NEXT_SENTRY_INDEX("nextSentryIndex"),
         PLAYER_NPC_INTERACTING("NPCViewing"),
@@ -955,11 +956,21 @@ public class EntityHelper {
                 killer = d.getCustomName();
             }
 
-            String deathMessageConfigDir;
-            if (damageType == DamageType.DEBUFF)
-                deathMessageConfigDir = "deathMessages.Debuff_" + debuffType;
-            else
-                deathMessageConfigDir = "deathMessages." + damageType.toString();
+            String deathMessageConfigDir = "deathMessages." + damageType;
+            switch (damageType) {
+                case DEBUFF:
+                    deathMessageConfigDir = "deathMessages.Debuff_" + debuffType;
+                    break;
+                case NEGATIVE_REGEN: {
+                    MetadataValue mdv = EntityHelper.getMetadata(v, EntityHelper.MetadataName.PLAYER_NEG_REGEN_CAUSE);
+                    if (mdv != null) {
+                        HashMap<String, Double> negRegenCause = (HashMap<String, Double>) mdv.value();
+                        String randomizedCause = MathHelper.selectWeighedRandom(negRegenCause);
+                        deathMessageConfigDir = "deathMessages.NegRegen_" + randomizedCause;
+                    }
+                    break;
+                }
+            }
 
             List<String> deathMessages;
             if (TerrariaHelper.settingConfig.contains(deathMessageConfigDir)) {

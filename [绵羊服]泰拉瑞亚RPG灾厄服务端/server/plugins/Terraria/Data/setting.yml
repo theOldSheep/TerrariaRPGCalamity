@@ -110,6 +110,7 @@ deathMessages:
   - <victim> 在英灵殿中安息
   - <victim> 在死后的世界冲浪
   - <victim> 的运气用光了
+  - <victim> 满身疮痍
   - <victim> 被登dua郎
   - <victim> 心花怒放
   - <victim> 脑洞大开
@@ -209,6 +210,17 @@ deathMessages:
   - <victim> 的灵魂已支离破碎
   Debuff_血神之凋零:
   - <victim> 成为了血神的祭品
+  NegRegen_魔力烧蚀:
+  - <victim> 被魔力焚毁
+  NegRegen_魔力熔蚀:
+  - <victim> 被魔力融化
+  NegRegen_魔能谐振仪:
+  - <victim> 的生命完全升华为了魔力
+  - <victim> 与魔力合为一体
+  NegRegen_魔能过载仪:
+  - <victim> 的身形被过载的魔法摧毁了
+  NegRegen_幻灭心元石:
+  - <victim> 于仇恨中幻灭
 settings:
   playerInventories:
   - piggyBank

@@ -1882,6 +1882,7 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_SENTRY_LIST, new ArrayList<Entity>());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES, new HashSet<String>());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES_LIST, new ArrayList<String>());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_NEG_REGEN_CAUSE, new HashMap<String, Double>());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_SECOND_LAST_LOCATION, ply.getLocation());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION, ply.getLocation());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CURRENT_LOCATION, ply.getLocation());
@@ -1944,6 +1945,7 @@ public class PlayerHelper {
             // attrMap is being overridden after newAttrMap is ready to prevent client glitch (especially on max mana)
             HashMap<String, Double> formerAttrMap = EntityHelper.getAttrMap(ply);
             HashMap<String, Double> newAttrMap = getDefaultPlayerAttributes();
+            HashMap<String, Double> negRegenCause = (HashMap<String, Double>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_NEG_REGEN_CAUSE).value();
             newAttrMap.put("maxHealth", (double) getMaxHealthByTier(getPlayerHealthTier(ply)) );
             newAttrMap.put("maxMana", (double) getMaxManaByTier(getPlayerManaTier(ply)) );
             // potion effect
@@ -1965,6 +1967,7 @@ public class PlayerHelper {
                                     (healthLoss * 1.75) + "", true);
                         }
                         EntityHelper.tweakAttribute(ply, newAttrMap, "regen", healthLoss + "", false);
+                        negRegenCause.put(effect, healthLoss);
                         break;
                     case "魔力疾病":
                         // maximum: 20s = 400 tick, -400/800 = -50% damage
@@ -1991,6 +1994,11 @@ public class PlayerHelper {
                                 else
                                     EntityHelper.tweakAttribute(ply, newAttrMap, attr,
                                             effectSection.getString(attr), true);
+                                if (attr.equals("regen")) {
+                                    double attrVal = effectSection.getDouble(attr);
+                                    if (attrVal < 0)
+                                        negRegenCause.put(effect, -attrVal);
+                                }
                             }
                         }
                     }
@@ -2106,7 +2114,7 @@ public class PlayerHelper {
                     ItemStack currAcc = DragoncoreHelper.getSlotItem(ply, "accessory" + idx);
                     if (currAcc == null || currAcc.getType() == Material.AIR) continue;
                     String currAccType = ItemHelper.splitItemName(currAcc)[1];
-                    // special accessory activation restrictions
+                    // special accessory activation restrictions and conditional attributes
                     switch (currAccType) {
                         case "钨钢屏障生成仪": {
                             if (effectMap.containsKey("保护矩阵")) {
@@ -2139,9 +2147,11 @@ public class PlayerHelper {
                             break;
                         }
                         case "魔能谐振仪": {
-                            if (ply.getLevel() * 2 > getMaxMana(ply))
+                            if (ply.getLevel() * 2 > getMaxMana(ply)) {
                                 EntityHelper.tweakAttribute(ply, newAttrMap,
                                         "regen", "6", false);
+                                negRegenCause.put(currAccType, 6d);
+                            }
                             break;
                         }
                         case "恼怒项链": {
@@ -2337,7 +2347,10 @@ public class PlayerHelper {
                     }
                     // attribute
                     EntityHelper.tweakAttribute(ply, newAttrMap, currAcc, true);
-                    // accessory type
+                    double regen = TerrariaHelper.itemConfig.getDouble(currAccType + ".attributes.regen", 0);
+                    if (regen < 0)
+                        negRegenCause.put(currAccType, -regen);
+                    // save accessory info
                     accessories.add(currAccType);
                     accessoryList.add(currAccType);
                 }
