@@ -38,7 +38,7 @@ public class PlayerHelper {
     public static HashMap<UUID, HashMap<String, Integer>> PLY_EFFECT_MAPS = new HashMap<>();
     // constants
     public enum GameProgress {
-        PRE_WALL_OF_FLESH, PRE_PLANTERA, PRE_MOON_LORD, PRE_PROFANED_GODDESS, POST_PROFANED_GODDESS;
+        PRE_WALL_OF_FLESH, PRE_PLANTERA, PRE_MOON_LORD, PRE_DEVOURER_OF_GODS, POST_DEVOURER_OF_GODS;
     }
     private static HashMap<String, Double> defaultPlayerAttrMap = new HashMap<>(60);
     private static HashSet<String> defaultPlayerEffectInflict = new HashSet<>(8);
@@ -233,16 +233,16 @@ public class PlayerHelper {
     }
     public static GameProgress getGameProgress(Player player) {
         ConfigurationSection bossDefeatedSection = getPlayerDataFile(player).getConfigurationSection("bossDefeated");
-        if (bossDefeatedSection == null)
-            return GameProgress.PRE_WALL_OF_FLESH;
-        if (bossDefeatedSection.getBoolean("亵渎天神", false))
-            return GameProgress.POST_PROFANED_GODDESS;
-        if (bossDefeatedSection.getBoolean("月球领主", false))
-            return GameProgress.PRE_PROFANED_GODDESS;
-        if (bossDefeatedSection.getBoolean("世纪之花", false))
-            return GameProgress.PRE_MOON_LORD;
-        if (bossDefeatedSection.getBoolean("血肉之墙", false))
-            return GameProgress.PRE_PLANTERA;
+        if (bossDefeatedSection != null) {
+            if (bossDefeatedSection.getBoolean("神明吞噬者", false))
+                return GameProgress.POST_DEVOURER_OF_GODS;
+            if (bossDefeatedSection.getBoolean("月球领主", false))
+                return GameProgress.PRE_DEVOURER_OF_GODS;
+            if (bossDefeatedSection.getBoolean("世纪之花", false))
+                return GameProgress.PRE_MOON_LORD;
+            if (bossDefeatedSection.getBoolean("血肉之墙", false))
+                return GameProgress.PRE_PLANTERA;
+        }
         return GameProgress.PRE_WALL_OF_FLESH;
     }
     public static GameProgress getGameProgress(String bossProgress) {
@@ -255,6 +255,9 @@ public class PlayerHelper {
             case "毁灭者":
             case "渊海灾虫":
             case "机械骷髅王":
+            case "机械一王":
+            case "机械二王":
+            case "机械三王":
             case "灾厄之眼":
                 return GameProgress.PRE_PLANTERA;
             case "世纪之花":
@@ -272,14 +275,18 @@ public class PlayerHelper {
             case "亵渎守卫":
             case "痴愚金龙":
             case "噬魂幽花":
-                return GameProgress.PRE_PROFANED_GODDESS;
-            case "亵渎天神":
+            case "亵渎天神，普罗维登斯":
+            case "无尽虚空":
+            case "风暴编织者":
+            case "神之使徒西格纳斯":
             case "硫海遗爵":
+                return GameProgress.PRE_DEVOURER_OF_GODS;
             case "神明吞噬者":
             case "丛林龙，犽戎":
             case "星流巨械":
             case "至尊灾厄":
-                return GameProgress.POST_PROFANED_GODDESS;
+            case "成年幻海妖龙":
+                return GameProgress.POST_DEVOURER_OF_GODS;
         }
         return GameProgress.PRE_WALL_OF_FLESH;
     }

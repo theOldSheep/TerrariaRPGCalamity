@@ -2695,6 +2695,11 @@ Dodu的手炮:
   fireRoundsDelay: 2
   autoSwing: true
   useSound: item.genericStar
+水晶蛇:
+  type: MAGIC_PROJECTILE
+  projectileName: 水晶蛇爆炸水晶
+  autoSwing: true
+  useSound: item.genericStar
 爆裂藤蔓:
   type: MAGIC_SPECIAL
   autoSwing: true

@@ -54,11 +54,26 @@ FURNACE:
     resultItem: 炸鱼
     requireItem:
     - 金枪鱼
+  '11_1':
+    requireLevel: 1
+    resultItem: 炸鱼
+    requireItem:
+    - 棱晶孔雀鱼
+  '11_2':
+    requireLevel: 1
+    resultItem: 炸鱼
+    requireItem:
+    - 北河三烁光鱼
   '12':
     requireLevel: 1
     resultItem: 熟虾
     requireItem:
     - 虾
+  '12_1':
+    requireLevel: 1
+    resultItem: 熟虾
+    requireItem:
+    - 南河三明虾
   '13':
     requireLevel: 1
     resultItem: 熟龙虾尾
@@ -79,6 +94,11 @@ FURNACE:
     resultItem: 海鲜大餐
     requireItem:
     - 双鳍鳕鱼:2
+  '16_1':
+    requireLevel: 1
+    resultItem: 海鲜大餐
+    requireItem:
+    - 闪鳍锦鲤:2
   '17':
     requireLevel: 1
     resultItem: 海鲜大餐
@@ -104,6 +124,16 @@ FURNACE:
     resultItem: 海鲜大餐
     requireItem:
     - 雀鲷:2
+  '21_1':
+    requireLevel: 1
+    resultItem: 海鲜大餐
+    requireItem:
+    - 毕宿五灰西鲱:2
+  '21_2':
+    requireLevel: 1
+    resultItem: 海鲜大餐
+    requireItem:
+    - 海岸恶魔鱼:2
   '22':
     requireLevel: 2
     resultItem: 狱炎锭
@@ -1069,8 +1099,8 @@ ANVIL:
     resultItem: 极寒之匙
     requireItem:
     - 冰块:16
-    - 光明之魂:5
-    - 暗影之魂:5
+    - 光明之魂:2
+    - 暗影之魂:2
     - 冰川精华:8
   '132_2':
     requireLevel: 1
@@ -1084,14 +1114,14 @@ ANVIL:
     requireLevel: 2
     resultItem: 荒芜之眼
     requireItem:
-    - 狱炎锭:10
+    - 狱炎锭:3
     - 混乱精华:5
   '132_4':
     requireLevel: 2
     resultItem: 星辉碎块
     requireItem:
-    - 星尘:24
-    - 坠星:16
+    - 星尘:15
+    - 坠星:8
   '132_5':
     requireLevel: 2
     resultItem: 瘟疫起动装置
@@ -1103,8 +1133,8 @@ ANVIL:
     requireLevel: 2
     resultItem: 唤死笛哨
     requireItem:
-    - 日耀碑牌碎片:16
-    - 丛林蜥蜴砖:24
+    - 日耀碑牌碎片:8
+    - 灾劫核心:4
   '132_7':
     requireLevel: 3
     resultItem: 金源量子冷却电池:2
@@ -2970,6 +3000,11 @@ WORKBENCH:
     resultItem: 刺身
     requireItem:
     - 金枪鱼
+  '21_1':
+    requireLevel: 1
+    resultItem: 刺身
+    requireItem:
+    - 硫火崖回鱼
   '22':
     requireLevel: 1
     resultItem: 仙人掌镐
@@ -3281,8 +3316,8 @@ ENCHANTMENT_TABLE:
     requireLevel: 1
     resultItem: 史莱姆王冠
     requireItem:
-    - 凝胶:64
-    - 金锭:5
+    - 凝胶:16
+    - 金锭
   '4_1':
     requireLevel: 1
     resultItem: 荒漠吊坠
@@ -3294,7 +3329,7 @@ ENCHANTMENT_TABLE:
     requireLevel: 1
     resultItem: 节肢动物芽孢
     requireItem:
-    - 发光蘑菇:24
+    - 发光蘑菇:16
   '4_3':
     requireLevel: 1
     resultItem: 畸形肿瘤
@@ -3306,8 +3341,8 @@ ENCHANTMENT_TABLE:
     requireLevel: 1
     resultItem: 过载淤泥
     requireItem:
-    - 凝胶:40
-    - 黑檀石:40
+    - 凝胶:16
+    - 黑檀石:16
   '5':
     requireLevel: 1
     resultItem: 垃圾桶
@@ -3767,8 +3802,8 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 魔力再生手环
     requireItem:
-    - 再生手环
     - 星力手环
+    - 魔力再生药水
   '3':
     requireLevel: 1
     resultItem: 魔法手铐

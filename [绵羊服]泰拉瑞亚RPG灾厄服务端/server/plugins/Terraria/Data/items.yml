@@ -1028,7 +1028,7 @@
   item: CLAY_BALL
   lore:
   - §r这将会是一个恐怖的夜晚...
-  - §r在夜间使用，召唤灾厄
+  - §r在夜晚使用以召唤灾厄之影
   rarity: 6
 星辉碎块:
   item: CLAY_BALL
@@ -2336,7 +2336,7 @@ Drew之翼:
   - §#C61B40“女巫是罪人，自己的罪人，她将自己拖入无尽的因果苦海。
   - §#C61B40念想中的恶魔一直安静着，等待着，直到终结。”
   attributes:
-    damageSummonMulti: 0.35
+    damageSummonMulti: 0.25
     buffInflictSummon: 孱弱巫咒|40|1
   worth: 40000000
   rarity: 16
@@ -2384,6 +2384,16 @@ Drew之翼:
     damageSummonMulti: 0.1
   worth: 30000000
   rarity: 15
+深渊护身符:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r你的任何攻击都会附带深渊水压减益
+  - §r“直到深海的尽头……”
+  attributes:
+    buffInflict: 深渊水压|40|1
+  worth: 800000
+  rarity: 3
 焦热地狱:
   item: LEASH
   lore:
@@ -2398,7 +2408,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    damageMulti: 0.12
+    damageMulti: 0.2
     damageTakenMulti: 0.1
   worth: 9600000
   rarity: 7
@@ -2407,7 +2417,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    damageMulti: 0.12
+    damageMulti: 0.15
     buffImmune: 硫磺火
   worth: 12000000
   rarity: 8
@@ -2486,6 +2496,7 @@ Drew之翼:
   - §r[饰品]
   - §r攻击将附带孱弱巫咒减益，造成伤害的同时削弱敌人的护甲与伤害抗性
   attributes:
+    damageMulti: 0.15
     buffInflict: 孱弱巫咒|30|1
   worth: 30000000
   rarity: 15
@@ -8095,18 +8106,6 @@ Dodu的手炮:
     manaUse: 30
   worth: 1500000
   rarity: 3
-邪恶三叉戟:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 130
-    damageType: Magic
-    crit: 4
-    projectileSpeed: 13
-    knockback: 6.5
-    useTime: 17
-    manaUse: 19
-  worth: 10000000
-  rarity: 5
 激光步枪:
   item: DIAMOND_SWORD
   attributes:
@@ -8145,6 +8144,30 @@ Dodu的手炮:
     manaUse: 17
   worth: 6000000
   rarity: 4
+水晶蛇:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 80
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 13
+    knockback: 4.4
+    useTime: 29
+    manaUse: 9
+  worth: 4000000
+  rarity: 5
+邪恶三叉戟:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 130
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 13
+    knockback: 6.5
+    useTime: 17
+    manaUse: 19
+  worth: 10000000
+  rarity: 5
 爆裂藤蔓:
   item: DIAMOND_SWORD
   attributes:
@@ -14781,6 +14804,60 @@ Dodu的手炮:
   - §r右键点击可打开
   worth: 2000000
   rarity: 3
+天空匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+绿洲匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+冰冻匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+海洋匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+丛林匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+腐化匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+黑曜石匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+地牢匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+神圣匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
 装甲洞穴鱼:
   item: RAW_FISH
   worth: 150000
@@ -14813,6 +14890,10 @@ Dodu的手炮:
   item: RAW_FISH
   worth: 150000
   rarity: 1
+闪鳍锦鲤:
+  item: RAW_FISH
+  worth: 500000
+  rarity: 2
 七彩矿鱼:
   item: RAW_FISH
   worth: 1000000
@@ -14849,6 +14930,133 @@ Dodu的手炮:
   item: RAW_FISH
   worth: 150000
   rarity: 1
+填充草药鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“它的肚子里装满了各式草药和种子”
+  worth: 500000
+  rarity: 2
+闪光宝石鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“它不仅看起来像颗钻石”
+  worth: 500000
+  rarity: 2
+日光鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“它沐浴在空岛的日光中”
+  worth: 100000
+  rarity: 2
+冰川鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“它带有来自冰川的严寒”
+  worth: 100000
+  rarity: 2
+混乱鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“它的角将诅咒任何触碰它的人”
+  worth: 100000
+  rarity: 2
+飞翔之鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“钓鱼让你飞起来”
+  worth: 1000000
+  rarity: 3
+光明之鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“它在神圣的光晕中遨游”
+  worth: 1000000
+  rarity: 3
+暗影之鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“它在腐化的暗影中寻得庇护”
+  worth: 1000000
+  rarity: 3
+硫海匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+沉沦匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+硫磺火匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+星幻匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+棱晶孔雀鱼:
+  item: RAW_FISH
+  lore:
+  - §r鳞片闪烁着水晶的微光
+  worth: 50000
+  rarity: 2
+硫火崖回鱼:
+  item: RAW_FISH
+  lore:
+  - §r岩浆中的鱼儿，味道刺激，无需调味
+  - §r对于能够在硫火熔岩中遨游的鱼儿而言，地狱中普通的岩浆更是得心应手
+  worth: 50000
+  rarity: 1
+北河三烁光鱼:
+  item: RAW_FISH
+  lore:
+  - §r“建议高温消毒后食用”
+  worth: 50000
+  rarity: 1
+毕宿五灰西鲱:
+  item: RAW_FISH
+  lore:
+  - §r被幻星击中的一条鱼
+  worth: 80000
+  rarity: 1
+海岸恶魔鱼:
+  item: RAW_FISH
+  lore:
+  - §r它的角将诅咒任何触碰它的人
+  worth: 80000
+  rarity: 1
+南河三明虾:
+  item: RAW_FISH
+  worth: 50000
+  rarity: 1
+焦黑鞭笞者:
+  item: RAW_FISH
+  lore:
+  - §r这条稀有的鱼可以卖个好价钱
+  worth: 10000000
+  rarity: 3
+绿波泥鳅:
+  item: RAW_FISH
+  lore:
+  - §r应该会有人出高价买下它
+  worth: 10000000
+  rarity: 3
 天使鱼:
   item: RAW_FISH
   worth: 2000000
@@ -14889,9 +15097,34 @@ Dodu的手炮:
   item: RAW_FISH
   worth: 2000000
   rarity: 3
+蝎子鱼:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
+碎浪蛤:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
+饮食者鱼:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
 蜂蜜鱼:
   item: RAW_FISH
   lore:
   - §r使用回复240生命值
   worth: 80000
   rarity: 1
+血鳍:
+  item: RAW_FISH
+  lore:
+  - §r使用回复480生命值
+  - §r给予增益，提升生命再生效果10秒钟
+  worth: 5000000
+  rarity: 12
+附魔星鱼:
+  item: RAW_FISH
+  lore:
+  - §r永久提升魔力上限20点
+  worth: 500000
+  rarity: 2

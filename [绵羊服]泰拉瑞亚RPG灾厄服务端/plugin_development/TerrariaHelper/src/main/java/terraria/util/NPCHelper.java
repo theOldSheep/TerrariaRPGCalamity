@@ -221,7 +221,7 @@ public class NPCHelper {
                     }
                     for (String availableBiome : TerrariaHelper.fishingConfig.getStringList(
                             "questFish." + EventAndTime.questFish)) {
-                        String[] splitInfo = availableBiome.split("_");
+                        String[] splitInfo = availableBiome.split(":");
                         StringBuilder locationInfoStr = new StringBuilder();
                         locationInfoStr.append("§7[提示] §r");
                         locationInfoStr.append(EventAndTime.questFish);

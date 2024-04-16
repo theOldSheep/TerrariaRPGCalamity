@@ -153,7 +153,7 @@ public class Catastrophe extends EntitySlime {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
         this.owner = owner;
-        Location spawnLoc = owner.getBukkitEntity().getLocation().subtract(0, 12, 0);
+        Location spawnLoc = owner.getBukkitEntity().getLocation().add(0, 6, 0);
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);

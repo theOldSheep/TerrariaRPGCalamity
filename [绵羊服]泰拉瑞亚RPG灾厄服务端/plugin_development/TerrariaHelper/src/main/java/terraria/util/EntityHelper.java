@@ -2722,7 +2722,7 @@ public class EntityHelper {
                 if (ticksOffset >= aimHelperOption.noGravityTicks) {
                     predictedLoc.add(new Vector(0,
                             (ticksOffset - aimHelperOption.noGravityTicks + 1) * (ticksOffset - aimHelperOption.noGravityTicks + 2)
-                                    * aimHelperOption.projectileGravity * predictionIntensity / 2d, 0));
+                                    * aimHelperOption.projectileGravity / 2d, 0));
                 }
                 // random offset
                 {

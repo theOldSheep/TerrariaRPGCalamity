@@ -158,14 +158,6 @@ public class VanillaMechanicListener implements Listener {
                 break;
             }
             case ARROW: {
-                ProjectileSource source = e.getEntity().getShooter();
-                if (source instanceof LivingEntity) {
-                    LivingEntity shooter = (LivingEntity) source;
-                    EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                            shooter, spawned.getVelocity(), EntityHelper.getAttrMap(shooter), "木箭");
-                    shootInfo.properties.put("noGravityTicks", 0);
-                    EntityHelper.spawnProjectile(shootInfo);
-                }
                 e.setCancelled(true);
                 break;
             }
