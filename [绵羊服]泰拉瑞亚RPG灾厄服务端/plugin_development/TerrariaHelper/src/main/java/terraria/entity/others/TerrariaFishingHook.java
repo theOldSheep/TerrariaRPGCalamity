@@ -277,7 +277,7 @@ public class TerrariaFishingHook extends EntityFishingHook {
             return catchCrateItem(ply, inHardMode, biome.toString(), rarity);
         }
         // quest fish
-        if (TerrariaHelper.fishingConfig.getStringList("questFish." + EventAndTime.questFish).contains(biome + "_" + height) &&
+        if (TerrariaHelper.fishingConfig.getStringList("questFish." + EventAndTime.questFish).contains(biome + ":" + height) &&
                 Math.random() < 0.05) {
             return EventAndTime.questFish.toString();
         }

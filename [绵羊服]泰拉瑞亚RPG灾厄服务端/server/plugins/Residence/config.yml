@@ -6,7 +6,7 @@ Global:
   # If you running offline server, better to check this as true. This will help to solve issues with changing players UUID.
   OfflineMode: false
   # Players with residence.versioncheck permission node will be noticed about new residence version on login
-  versionCheck: true
+  versionCheck: false
   # This loads the <language>.yml file in the Residence Language folder
   # All Residence text comes from this file. (NOT DONE YET)
   Language: Chinese
@@ -133,7 +133,7 @@ Global:
   Tp:
     # The interval, in seconds, for teleportation.
     # Use 0 to disable
-    TeleportDelay: 3
+    TeleportDelay: 15
     # Show aditional message in title message area when player is teleporting to residence
     TeleportTitleMessage: true
   RandomTeleportation:
@@ -155,6 +155,24 @@ Global:
         CenterZ: 0
       world_nether:
         Enabled: true
+        MaxCoord: 1000
+        MinCord: 500
+        CenterX: 0
+        CenterZ: 0
+      world_surface:
+        Enabled: true
+        MaxCoord: 1000
+        MinCord: 500
+        CenterX: 0
+        CenterZ: 0
+      world_underworld:
+        Enabled: false
+        MaxCoord: 2500
+        MinCord: 500
+        CenterX: 0
+        CenterZ: 0
+      world_cavern:
+        Enabled: false
         MaxCoord: 1000
         MinCord: 500
         CenterX: 0

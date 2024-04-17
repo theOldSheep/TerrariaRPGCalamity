@@ -54,11 +54,26 @@ FURNACE:
     resultItem: 炸鱼
     requireItem:
     - 金枪鱼
+  '11_1':
+    requireLevel: 1
+    resultItem: 炸鱼
+    requireItem:
+    - 棱晶孔雀鱼
+  '11_2':
+    requireLevel: 1
+    resultItem: 炸鱼
+    requireItem:
+    - 北河三烁光鱼
   '12':
     requireLevel: 1
     resultItem: 熟虾
     requireItem:
     - 虾
+  '12_1':
+    requireLevel: 1
+    resultItem: 熟虾
+    requireItem:
+    - 南河三明虾
   '13':
     requireLevel: 1
     resultItem: 熟龙虾尾
@@ -79,6 +94,11 @@ FURNACE:
     resultItem: 海鲜大餐
     requireItem:
     - 双鳍鳕鱼:2
+  '16_1':
+    requireLevel: 1
+    resultItem: 海鲜大餐
+    requireItem:
+    - 闪鳍锦鲤:2
   '17':
     requireLevel: 1
     resultItem: 海鲜大餐
@@ -104,6 +124,16 @@ FURNACE:
     resultItem: 海鲜大餐
     requireItem:
     - 雀鲷:2
+  '21_1':
+    requireLevel: 1
+    resultItem: 海鲜大餐
+    requireItem:
+    - 毕宿五灰西鲱:2
+  '21_2':
+    requireLevel: 1
+    resultItem: 海鲜大餐
+    requireItem:
+    - 海岸恶魔鱼:2
   '22':
     requireLevel: 2
     resultItem: 狱炎锭
@@ -116,6 +146,12 @@ FURNACE:
     requireItem:
     - 黑曜石:20
   '23_1':
+    requireLevel: 1
+    resultItem: 水晶碎块:3
+    requireItem:
+    - 珍珠石:2
+    - 冰川精华
+  '23_2':
     requireLevel: 1
     resultItem: 禁戒碎片
     requireItem:
@@ -758,10 +794,16 @@ ANVIL:
     - 狱炎锭:20
   '71':
     requireLevel: 1
-    resultItem: 铁轨:50
+    resultItem: 铁轨:48
     requireItem:
     - 铁锭:2
     - 木材:2
+  '71_1':
+    requireLevel: 1
+    resultItem: 充能铁轨:32
+    requireItem:
+    - 铁轨:32
+    - 金锭
   '72':
     requireLevel: 1
     resultItem: 蜘蛛法杖
@@ -1057,8 +1099,8 @@ ANVIL:
     resultItem: 极寒之匙
     requireItem:
     - 冰块:16
-    - 光明之魂:5
-    - 暗影之魂:5
+    - 光明之魂:2
+    - 暗影之魂:2
     - 冰川精华:8
   '132_2':
     requireLevel: 1
@@ -1072,14 +1114,14 @@ ANVIL:
     requireLevel: 2
     resultItem: 荒芜之眼
     requireItem:
-    - 狱炎锭:10
+    - 狱炎锭:3
     - 混乱精华:5
   '132_4':
     requireLevel: 2
     resultItem: 星辉碎块
     requireItem:
-    - 星尘:24
-    - 坠星:16
+    - 星尘:15
+    - 坠星:8
   '132_5':
     requireLevel: 2
     resultItem: 瘟疫起动装置
@@ -1091,8 +1133,31 @@ ANVIL:
     requireLevel: 2
     resultItem: 唤死笛哨
     requireItem:
-    - 日耀碑牌碎片:16
-    - 丛林蜥蜴砖:24
+    - 日耀碑牌碎片:8
+    - 灾劫核心:4
+  '132_7':
+    requireLevel: 3
+    resultItem: 金源量子冷却电池:2
+    requireItem:
+    - 圣金源锭
+    - 神秘电路:2
+    - 可疑镀层:2
+    - 恒温能量:5
+    - 冰川核心
+  '132_8':
+    requireLevel: 3
+    resultItem: 祭魂瓮
+    requireItem:
+    - 灾厄尘:3
+    - 硫磺火石砖
+    - 圣金源锭
+  '132_9':
+    requireLevel: 3
+    resultItem: 终末石
+    requireItem:
+    - 石头:16
+    - 湮灭余烬
+    - 星流棱晶
   '133':
     requireLevel: 2
     resultItem: 真·永夜之刃
@@ -1115,12 +1180,24 @@ ANVIL:
     - 真·圣剑
     - 断裂英雄剑
   '136':
+    requireLevel: 1
+    resultItem: 矿车
+    requireItem:
+    - 铁锭:5
+    - 木材:10
+  '136_1':
     requireLevel: 2
     resultItem: 机械矿车
     requireItem:
     - 机械电池片
     - 机械车轮片
     - 机械车体片
+  '136_2':
+    requireLevel: 3
+    resultItem: 神明矿车
+    requireItem:
+    - 宇宙锭:10
+    - 化神魂精
   '137':
     requireLevel: 2
     resultItem: 南瓜月勋章
@@ -2301,6 +2378,7 @@ ANVIL:
     - 太空海豚机枪
     - 腐臭倾泻者
     - 宇宙锭:10
+    - 恒温能量:20
   '250_5':
     requireLevel: 3
     resultItem: 奥妮克希亚
@@ -2791,6 +2869,14 @@ ANVIL:
     - 生命合金:5
     - 生命果:5
     - 生命碎片:10
+  '296_4':
+    requireLevel: 3
+    resultItem: 龙果
+    requireItem:
+    - 龙魂碎片:5
+    - 生命果:5
+    - 日耀碎片:15
+    - 化神魂精:2
 WORKBENCH:
   'glass_platform':
     requireLevel: 1
@@ -2914,6 +3000,11 @@ WORKBENCH:
     resultItem: 刺身
     requireItem:
     - 金枪鱼
+  '21_1':
+    requireLevel: 1
+    resultItem: 刺身
+    requireItem:
+    - 硫火崖回鱼
   '22':
     requireLevel: 1
     resultItem: 仙人掌镐
@@ -3225,8 +3316,8 @@ ENCHANTMENT_TABLE:
     requireLevel: 1
     resultItem: 史莱姆王冠
     requireItem:
-    - 凝胶:64
-    - 金锭:5
+    - 凝胶:16
+    - 金锭
   '4_1':
     requireLevel: 1
     resultItem: 荒漠吊坠
@@ -3238,7 +3329,7 @@ ENCHANTMENT_TABLE:
     requireLevel: 1
     resultItem: 节肢动物芽孢
     requireItem:
-    - 发光蘑菇:24
+    - 发光蘑菇:16
   '4_3':
     requireLevel: 1
     resultItem: 畸形肿瘤
@@ -3250,9 +3341,15 @@ ENCHANTMENT_TABLE:
     requireLevel: 1
     resultItem: 过载淤泥
     requireItem:
-    - 凝胶:40
-    - 黑檀石:40
+    - 凝胶:16
+    - 黑檀石:16
   '5':
+    requireLevel: 1
+    resultItem: 垃圾桶
+    requireItem:
+    - 铁锭:8
+    - 箱子
+  '5_1':
     requireLevel: 1
     resultItem: 虚空袋
     requireItem:
@@ -3571,6 +3668,34 @@ BREWING_STAND:
     - 水瓶
     - 死亡草
     - 黑檀锦鲤
+  '19_1':
+    requireLevel: 1
+    resultItem: 虫潮药水
+    requireItem:
+    - 水瓶
+    - 纯净凝胶:2
+    - 腐烂物质
+  '19_2':
+    requireLevel: 1
+    resultItem: 禅定药水
+    requireItem:
+    - 水瓶
+    - 纯净凝胶:2
+    - 太阳花:3
+  '19_3':
+    requireLevel: 1
+    resultItem: 磁力药水:2
+    requireItem:
+    - 水瓶:2
+    - 铁锭
+    - 火焰花:2
+  '19_4':
+    requireLevel: 1
+    resultItem: 无尽吞噬药水:4
+    requireItem:
+    - 水瓶:4
+    - 暗离子体
+    - 星系异石
   '20':
     requireLevel: 1
     resultItem: 回城药水
@@ -3614,6 +3739,18 @@ BREWING_STAND:
     - 日耀碎片
     - 星尘碎片
     - 星璇碎片
+  '25_1':
+    requireLevel: 1
+    resultItem: 至尊治疗药水:4
+    requireItem:
+    - 超级治疗药水:4
+    - 血石:3
+  '25_2':
+    requireLevel: 1
+    resultItem: 终极治疗药水:20
+    requireItem:
+    - 至尊治疗药水:20
+    - 化神魂精
   '26':
     requireLevel: 1
     resultItem: 恢复药水
@@ -3629,25 +3766,31 @@ BREWING_STAND:
     - 坠星
   '28':
     requireLevel: 1
-    resultItem: 魔力药水:2
+    resultItem: 魔力药水:4
     requireItem:
-    - 弱效魔力药水:2
+    - 弱效魔力药水:4
     - 发光蘑菇
   '29':
     requireLevel: 1
     resultItem: 强效魔力药水:12
     requireItem:
     - 水瓶:12
-    - 发光蘑菇:4
-    - 坠星:2
+    - 妖精尘:4
+    - 坠星
   '30':
     requireLevel: 1
-    resultItem: 超级魔力药水:32
+    resultItem: 超级魔力药水:15
     requireItem:
-    - 强效魔力药水:32
-    - 坠星:2
-    - 独角兽角:2
-    - 水晶碎块:8
+    - 强效魔力药水:15
+    - 坠星
+    - 独角兽角
+    - 水晶碎块:3
+  '31':
+    requireLevel: 1
+    resultItem: 至尊魔力药水:15
+    requireItem:
+    - 超级魔力药水:15
+    - 灵质
 TINKER_WORKBENCH:
   '1':
     requireLevel: 1
@@ -3659,8 +3802,8 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 魔力再生手环
     requireItem:
-    - 再生手环
     - 星力手环
+    - 魔力再生药水
   '3':
     requireLevel: 1
     resultItem: 魔法手铐
@@ -3819,6 +3962,14 @@ TINKER_WORKBENCH:
     - 天蓝锭:2
     - 羽毛:5
     - 丝绸:2
+  '26_1':
+    requireLevel: 1
+    resultItem: 进升证章
+    requireItem:
+    - 翱翔徽章
+    - 飞翔之魂:10
+    - 闪耀金羽:5
+    - 毁灭之灵:5
   '27':
     requireLevel: 1
     resultItem: 天羽之翼
@@ -3860,6 +4011,43 @@ TINKER_WORKBENCH:
     - 冥思构造体:14
     - 夜明锭:10
     - 飞翔之魂:20
+  '32_1':
+    requireLevel: 1
+    resultItem: 天界翼靴
+    requireItem:
+    - 天使之靴
+    - 天界之翼
+    - 逸界之翼
+    - 夜明锭:5
+  '32_2':
+    requireLevel: 1
+    resultItem: 龙蒿叶之翼
+    requireItem:
+    - 龙蒿锭:5
+    - 飞翔之魂:30
+  '32_3':
+    requireLevel: 1
+    resultItem: 极乐翼靴
+    requireItem:
+    - 天界翼靴
+    - 极乐之翼
+    - 宇宙锭:5
+    - 化神魂精:4
+  '32_4':
+    requireLevel: 1
+    resultItem: 始源林海之翼
+    requireItem:
+    - 金锭:3
+    - 闪耀金羽:5
+    - 飞翔之魂:20
+    - 化神魂精:2
+  '32_5':
+    requireLevel: 1
+    resultItem: 炽天使翼靴
+    requireItem:
+    - 极乐翼靴
+    - Drew之翼
+    - 圣金源锭:5
   '33':
     requireLevel: 1
     resultItem: 绚彩明胶
@@ -3869,12 +4057,56 @@ TINKER_WORKBENCH:
     - 活力凝胶
     - 光明之魂:2
     - 暗影之魂:2
+  '33_1':
+    requireLevel: 1
+    resultItem: 勇气勋章
+    requireItem:
+    - 龙蒿锭:8
+    - 泰坦手套
+  '33_2':
+    requireLevel: 1
+    resultItem: 元素之握
+    requireItem:
+    - 烈火手套
+    - 夜明锭:8
+    - 星系异石:4
+    - 化神魂精:4
+  '33_3':
+    requireLevel: 1
+    resultItem: 星流之握
+    requireItem:
+    - 元素之握
+    - 星流棱晶:8
+    - 化神魂精:2
   '34':
     requireLevel: 1
     resultItem: 神射手胸针
     requireItem:
     - 灾劫核心:2
     - 游侠徽章
+  '34_1':
+    requireLevel: 1
+    resultItem: 虚无箭袋
+    requireItem:
+    - 潜行者箭袋
+    - 暗离子体:3
+    - 星系异石:5
+  '34_2':
+    requireLevel: 1
+    resultItem: 元素箭袋
+    requireItem:
+    - 虚无箭袋
+    - 神射手胸针
+    - 夜明锭:8
+    - 星系异石:4
+    - 化神魂精:4
+  '34_3':
+    requireLevel: 1
+    resultItem: 星流箭袋
+    requireItem:
+    - 元素箭袋
+    - 星流棱晶:8
+    - 化神魂精:2
   '35':
     requireLevel: 1
     resultItem: 灾厄符章
@@ -3882,7 +4114,38 @@ TINKER_WORKBENCH:
     - 天界徽章
     - 灾厄尘:15
     - 熔渣锭:5
+  '35_1':
+    requireLevel: 1
+    resultItem: 魔能过载仪
+    requireItem:
+    - 魔能谐振仪
+    - 夜明锭:4
+    - 星系异石:4
+    - 灵质:2
+  '35_2':
+    requireLevel: 1
+    resultItem: 空灵护符
+    requireItem:
+    - 灾厄符章
+    - 魔力花
+    - 夜明锭:8
+    - 星系异石:4
+    - 化神魂精:4
+  '35_3':
+    requireLevel: 1
+    resultItem: 魔能熔毁仪
+    requireItem:
+    - 魔能过载仪
+    - 混乱石
+    - 湮灭余烬:8
+    - 化神魂精:2
   '36':
+    requireLevel: 1
+    resultItem: 灵魂浮雕
+    requireItem:
+    - 黑曜石:15
+    - 钻石:5
+  '37':
     requireLevel: 1
     resultItem: 神圣符文
     requireItem:
@@ -3891,19 +4154,22 @@ TINKER_WORKBENCH:
     - 恐惧之魂:5
     - 力量之魂:5
     - 视域之魂:5
-  '37':
+  '37_1':
     requireLevel: 1
-    resultItem: 灵魂浮雕
+    resultItem: 幻魂神物
     requireItem:
-    - 黑曜石:15
-    - 钻石:5
+    - 神圣符文
+    - 毁灭之灵:5
+    - 黑曜石:16
+    - 起源之簇:25
   '38':
     requireLevel: 1
-    resultItem: 斯塔提斯的诅咒
+    resultItem: 凝胶充能电池
     requireItem:
-    - 星尘碎片:10
-    - 斯塔提斯的祝福
-    - 始源暗影炎
+    - 钨钢电池
+    - 伏打凝胶
+    - 纯净凝胶:10
+    - 风暴之颚:2
   '39':
     requireLevel: 1
     resultItem: 斯塔提斯的祝福
@@ -3922,18 +4188,72 @@ TINKER_WORKBENCH:
     - 生命合金:3
   '41':
     requireLevel: 1
-    resultItem: 凝胶充能电池
+    resultItem: 斯塔提斯的诅咒
     requireItem:
-    - 钨钢电池
-    - 伏打凝胶
-    - 纯净凝胶:10
-    - 风暴之颚:2
+    - 星尘碎片:10
+    - 斯塔提斯的祝福
+    - 始源暗影炎
+  '41_1':
+    requireLevel: 1
+    resultItem: 核子之源
+    requireItem:
+    - 玷星之源
+    - 斯塔提斯的诅咒
+    - 夜明锭:8
+    - 星系异石:4
+    - 化神魂精:4
+  '41_1_1':
+    requireLevel: 1
+    resultItem: 余烬挽歌
+    requireItem:
+    - 灾厄
+    - 混乱之祈祷
+    - 湮灭余烬:8
+    - 化神魂精:2
+  '41_2':
+    requireLevel: 1
+    resultItem: 惧魂神物
+    requireItem:
+    - 灵质:5
+    - 黑曜石:16
+    - 起源之簇:25
+  '41_3':
+    requireLevel: 1
+    resultItem: 渎魂神物
+    requireItem:
+    - 神圣晶石:5
+    - 黑曜石:16
+    - 起源之簇:25
+  '41_4':
+    requireLevel: 1
+    resultItem: 维魂神物
+    requireItem:
+    - 宇宙锭:5
+    - 黑曜石:16
+    - 起源之簇:25
+  '41_5':
+    requireLevel: 1
+    resultItem: 圣魂神物
+    requireItem:
+    - 龙魂碎片:5
+    - 黑曜石:16
+    - 起源之簇:25
   '42':
     requireLevel: 1
     resultItem: 融合之脑
     requireItem:
     - 腐烂之脑
-    - 暗影之魂:3
+    - 冰川精华:9
+  '42_1':
+    requireLevel: 1
+    resultItem: 聚合之脑
+    requireItem:
+    - 融合之脑
+    - 污痕核心:5
+    - 软体动物外壳:10
+    - 瘟疫细胞罐:15
+    - 宇宙锭:5
+    - 化神魂精:4
   '43':
     requireLevel: 1
     resultItem: 旱海鲨牙项链
@@ -3941,12 +4261,25 @@ TINKER_WORKBENCH:
     - 鲨牙项链
     - 复仇者徽章
     - 大狂鲨鳞
+  '43_1':
+    requireLevel: 1
+    resultItem: 猎魂鲨齿项链
+    requireItem:
+    - 旱海鲨牙项链
+    - 猎魂鲨牙:6
+    - 深渊细胞:15
   '44':
     requireLevel: 1
     resultItem: 恼怒项链
     requireItem:
     - 复仇者徽章
     - 永恒锭:2
+  '44_1':
+    requireLevel: 1
+    resultItem: 蚀日尊戒
+    requireItem:
+    - 龙蒿锭:10
+    - 日蚀之阴碎片:20
   '45':
     requireLevel: 1
     resultItem: 终结虚空
@@ -3957,15 +4290,25 @@ TINKER_WORKBENCH:
     - 混乱核心
     - 熔渣锭:3
     - 魔鬼之庇护
+  '45_1':
+    requireLevel: 1
+    resultItem: 幻灭心元石
+    requireItem:
+    - 归一心元石
+    - 湮灭余烬:8
+  '45_2':
+    requireLevel: 1
+    resultItem: 钨钢屏障生成仪
+    requireItem:
+    - 钨钢电池
+    - 钨钢金属废料:8
+    - 能源核心
   '46':
     requireLevel: 1
-    resultItem: 阿斯加德之英勇
+    resultItem: 海之盾
     requireItem:
-    - 黑曜石护盾
-    - 宝光盾牌
-    - 海之盾
-    - 克苏鲁之眼盾
-    - 灾劫核心
+    - 海星:5
+    - 海洋残渣:5
   '47':
     requireLevel: 1
     resultItem: 宝光盾牌
@@ -3974,10 +4317,30 @@ TINKER_WORKBENCH:
     - 水晶碎块:10
   '48':
     requireLevel: 1
-    resultItem: 海之盾
+    resultItem: 阿斯加德之英勇
     requireItem:
-    - 海星:5
-    - 海洋残渣:5
+    - 黑曜石护盾
+    - 宝光盾牌
+    - 海之盾
+    - 克苏鲁之眼盾
+    - 灾劫核心
+  '48_1':
+    requireLevel: 1
+    resultItem: 阿斯加德之庇护
+    requireItem:
+    - 阿斯加德之英勇
+    - 极乐之庇护
+    - 宇宙锭:10
+    - 化神魂精:4
+  '48_2':
+    requireLevel: 1
+    resultItem: 血神圣杯
+    requireItem:
+    - 血契
+    - 血肉图腾
+    - 血炎晶核
+    - 血石核心:5
+    - 化神魂精:4
   '49':
     requireLevel: 1
     resultItem: 神圣护符
@@ -3986,6 +4349,14 @@ TINKER_WORKBENCH:
     - 十字项链
     - 炫星锭:10
     - 海棱晶:15
+  '49_1':
+    requireLevel: 1
+    resultItem: 神之壁垒
+    requireItem:
+    - 冰冻护盾
+    - 神圣护符
+    - 圣金源锭:10
+    - 化神魂精:4
   '50':
     requireLevel: 1
     resultItem: 阴阳吸星石
@@ -3994,6 +4365,32 @@ TINKER_WORKBENCH:
     - 软体动物外壳
     - 炫星锭:10
     - 星系异石:5
+  '51':
+    requireLevel: 1
+    resultItem: 化绵留香石
+    requireItem:
+    - 钨钢屏障生成仪
+    - 阴阳吸星石
+    - 神秘电路:16
+    - 可疑镀层:16
+    - 宇宙锭:5
+    - 化神魂精:4
+  '52':
+    requireLevel: 1
+    resultItem: 深渊潜游装
+    requireItem:
+    - 海波项链
+    - 海波纹章
+    - 深渊细胞:10
+    - 流明晶:10
+  '53':
+    requireLevel: 1
+    resultItem: 深渊潜游服
+    requireItem:
+    - 深渊潜游装
+    - 钨钢屏障生成仪
+    - 夜明锭:5
+    - 软体动物外壳:15
 远古操纵机:
   '1':
     requireLevel: 1
@@ -4009,6 +4406,44 @@ TINKER_WORKBENCH:
     requireItem:
     - 星尘:64
     - 炫星锭:8
+  '1_2':
+    requireLevel: 1
+    resultItem: 奇异信息素
+    requireItem:
+    - 生命合金:2
+    - 日耀碎片:5
+  '1_3':
+    requireLevel: 1
+    resultItem: 亵渎碎片
+    requireItem:
+    - 夜明锭:2
+    - 浊火精华:5
+  '1_4':
+    requireLevel: 1
+    resultItem: 死灵魂炬
+    requireItem:
+    - 灵质:12
+    - 木材:8
+  '1_5':
+    requireLevel: 1
+    resultItem: 宇宙符文
+    requireItem:
+    - 神圣晶石
+    - 夜明锭
+    - 日耀碎片
+  '1_6':
+    requireLevel: 1
+    resultItem: 宇宙之虫
+    requireItem:
+    - 装甲外壳
+    - 扭曲虚空
+    - 暗离子体
+  '1_7':
+    requireLevel: 1
+    resultItem: 圣佑烬昭龙蛋
+    requireItem:
+    - 闪耀金羽:5
+    - 生命合金:2
   '2':
     requireLevel: 1
     resultItem: 破晓之光
@@ -5031,11 +5466,25 @@ TINKER_WORKBENCH:
     - 日蚀之阴碎片:2
   '64':
     requireLevel: 1
+    resultItem: 旧神浆果
+    requireItem:
+    - 龙蒿锭:10
+    - 生命果:5
+    - 神圣晶石:10
+    - 浊火精华:20
+  '64_1':
+    requireLevel: 1
     resultItem: 飘渺之核
     requireItem:
     - 炫星锭:10
     - 星云碎片:20
     - 坠星:20
+  '64_2':
+    requireLevel: 1
+    resultItem: 幻影之心
+    requireItem:
+    - 毁灭之灵:5
+    - 灵质:25
   '65':
     requireLevel: 1
     resultItem: 星宇砧

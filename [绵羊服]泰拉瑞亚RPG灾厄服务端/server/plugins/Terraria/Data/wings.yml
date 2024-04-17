@@ -1,123 +1,174 @@
 # 二段跳
 跳跃之瓶:
     extraJumpTime: 1
-    maxSpeed: 0.8
+    verticalSpeed: 0.8
     maxAcceleration: 100
     horizontalSpeed: 0.6
 气球束:
     extraJumpTime: 2
-    maxSpeed: 0.9
+    verticalSpeed: 0.9
     maxAcceleration: 100
     horizontalSpeed: 0.7
 气球之母:
     extraJumpTime: 4
-    maxSpeed: 1
+    verticalSpeed: 1
     maxAcceleration: 100
     horizontalSpeed: 0.8
-# 火箭靴
+航鱼靴:
+    horizontalSpeed: 0.4
+    isBoot: true
 火箭靴:
     flightTime: 32
-    maxSpeed: 0.75
+    verticalSpeed: 0.75
     maxAcceleration: 0.125
-    horizontalSpeed: 0.75
+    horizontalSpeed: 0.375
+    isBoot: true
 幽灵靴:
     flightTime: 32
-    maxSpeed: 0.75
+    verticalSpeed: 0.75
     maxAcceleration: 0.125
-    horizontalSpeed: 0.8
+    horizontalSpeed: 0.4
+    isBoot: true
 天使之靴:
     flightTime: 32
-    maxSpeed: 0.75
+    verticalSpeed: 0.75
     maxAcceleration: 0.125
-    horizontalSpeed: 0.85
-# 翅膀，maxAcceleration = 0.1 + 加速度 / 100% / 20
-鸟妖之翼:
-    flightTime: 43
-    maxSpeed: 0.92
-    maxAcceleration: 0.15
-    horizontalSpeed: 1
-    isWing: true
-喜庆之翼:
-    flightTime: 60
-    maxSpeed: 1.2
-    maxAcceleration: 0.15
-    horizontalSpeed: 1.15
-    isWing: true
-猪鲨之翼:
-    flightTime: 60
-    maxSpeed: 1.3
-    maxAcceleration: 0.225
-    horizontalSpeed: 1.25
-    isWing: true
-女皇之翼:
-    flightTime: 50
-    maxSpeed: 1.25
-    maxAcceleration: 0.2375
-    horizontalSpeed: 1.2
-    isWing: true
-日耀之翼:
-    flightTime: 60
-    maxSpeed: 1.4
-    maxAcceleration: 0.225
-    horizontalSpeed: 1.35
-    isWing: true
-星尘之翼:
-    flightTime: 60
-    maxSpeed: 1.4
-    maxAcceleration: 0.225
-    horizontalSpeed: 1.35
-    isWing: true
-星云之翼:
-    flightTime: 60
-    maxSpeed: 1.35
-    maxAcceleration: 0.175
-    horizontalSpeed: 1.25
-    isWing: true
-星璇之翼:
-    flightTime: 60
-    maxSpeed: 1.35
-    maxAcceleration: 0.15
-    horizontalSpeed: 1.25
-    isWing: true
-天界之翼:
-    flightTime: 60
-    maxSpeed: 1.35
-    maxAcceleration: 0.325
-    horizontalSpeed: 1.4
-    isWing: true
+    horizontalSpeed: 0.425
+    isBoot: true
+# 翅膀
+# maxAcceleration = 0.1 + 加速度 / 100% / 20
 天羽之翼:
     flightTime: 27
-    maxSpeed: 1
+    verticalSpeed: 1
     maxAcceleration: 0.15
-    horizontalSpeed: 0.85
+    horizontalSpeed: 0.425
+    isWing: true
+鸟妖之翼:
+    flightTime: 43
+    verticalSpeed: 0.92
+    maxAcceleration: 0.15
+    horizontalSpeed: 0.55
     isWing: true
 星光之翼:
     flightTime: 50
-    maxSpeed: 1.1
+    verticalSpeed: 1.1
     maxAcceleration: 0.15
-    horizontalSpeed: 1
+    horizontalSpeed: 0.6
     isWing: true
 极寒之魂:
     flightTime: 40
-    maxSpeed: 1.2
+    verticalSpeed: 1.2
     maxAcceleration: 0.15
-    horizontalSpeed: 1.15
+    horizontalSpeed: 0.65
     isWing: true
 玉金喷射器:
     flightTime: 40
-    maxSpeed: 1.4
+    verticalSpeed: 1.4
     maxAcceleration: 0.15
-    horizontalSpeed: 1.4
+    horizontalSpeed: 0.75
+    isWing: true
+喜庆之翼:
+    flightTime: 60
+    verticalSpeed: 1.2
+    maxAcceleration: 0.15
+    horizontalSpeed: 0.65
     isWing: true
 幽渊斗篷:
     flightTime: 60
-    maxSpeed: 1.3
+    verticalSpeed: 1.3
     maxAcceleration: 0.175
-    horizontalSpeed: 1.3
+    horizontalSpeed: 0.7
+    isWing: true
+猪鲨之翼:
+    flightTime: 60
+    verticalSpeed: 1.3
+    maxAcceleration: 0.225
+    horizontalSpeed: 0.725
+    isWing: true
+女皇之翼:
+    flightTime: 50
+    verticalSpeed: 1.25
+    maxAcceleration: 0.2375
+    horizontalSpeed: 0.725
+    isWing: true
+日耀之翼:
+    flightTime: 60
+    verticalSpeed: 1.4
+    maxAcceleration: 0.225
+    horizontalSpeed: 0.7
+    isWing: true
+星尘之翼:
+    flightTime: 60
+    verticalSpeed: 1.4
+    maxAcceleration: 0.225
+    horizontalSpeed: 0.7
+    isWing: true
+星云之翼:
+    flightTime: 60
+    verticalSpeed: 1.35
+    maxAcceleration: 0.175
+    horizontalSpeed: 0.65
+    isWing: true
+星璇之翼:
+    flightTime: 60
+    verticalSpeed: 1.35
+    maxAcceleration: 0.15
+    horizontalSpeed: 0.65
+    isWing: true
+天界之翼:
+    flightTime: 60
+    verticalSpeed: 1.35
+    maxAcceleration: 0.325
+    horizontalSpeed: 0.75
     isWing: true
 逸界之翼:
     flightTime: 60
-    maxSpeed: 1.4
+    verticalSpeed: 1.4
     maxAcceleration: 0.225
-    horizontalSpeed: 1.4
+    horizontalSpeed: 0.7
+    isWing: true
+天界翼靴:
+    flightTime: 60
+    verticalSpeed: 1.45
+    maxAcceleration: 0.225
+    horizontalSpeed: 0.75
+    isBoot: true
+    isWing: true
+龙蒿叶之翼:
+    flightTime: 85
+    verticalSpeed: 1.4
+    maxAcceleration: 0.225
+    horizontalSpeed: 0.8
+    isWing: true
+极乐之翼:
+    flightTime: 80
+    verticalSpeed: 1.4
+    maxAcceleration: 0.235
+    horizontalSpeed: 0.9
+    isWing: true
+极乐翼靴:
+    flightTime: 80
+    verticalSpeed: 1.4
+    maxAcceleration: 0.2375
+    horizontalSpeed: 0.9
+    isBoot: true
+    isWing: true
+始源林海之翼:
+    flightTime: 80
+    verticalSpeed: 1.4
+    maxAcceleration: 0.34
+    horizontalSpeed: 0.9
+    isWing: true
+Drew之翼:
+    flightTime: 80
+    verticalSpeed: 1.5
+    maxAcceleration: 0.35
+    horizontalSpeed: 1
+    isWing: true
+炽天使翼靴:
+    flightTime: 85
+    verticalSpeed: 1.5
+    maxAcceleration: 0.35
+    horizontalSpeed: 1
+    isBoot: true
     isWing: true

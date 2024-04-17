@@ -546,7 +546,7 @@ public class ItemHelper {
         String[] attributeLoreOrder = {
                 // usually found in weapon lore
                 "damage", "knockback", "crit", "critDamage", "useTime", "manaUse",
-                "armorPenetration", "powerPickaxe", "fishingPower", "reachExtra",
+                "powerPickaxe", "fishingPower", "reachExtra",
                 // multipliers, usually found in armor/accessory lore
                 "damageTakenMulti", "damageContactTakenMulti",
                 "damageMulti", "damageMeleeMulti", "damageRangedMulti", "damageMagicMulti",
@@ -555,10 +555,11 @@ public class ItemHelper {
                 "speedMulti", "flightTimeMulti", "meleeReachMulti", "regenMulti", "maxHealthMulti",
                 "useSpeedMulti", "useSpeedMagicMulti", "useSpeedMeleeMulti", "useSpeedRangedMulti", "useSpeedMiningMulti",
                 "knockbackMeleeMulti", "projectileSpeedArrowMulti",
-                // mana/health/crit/regen
-                "maxMana", "maxHealth", "regen", "manaRegen", "critMelee", "critMagic", "critRanged", "critTrueMelee",
+                // barrier/mana/health/crit/regen
+                "barrierMax", "maxMana", "maxHealth", "regen", "manaRegen", "critMelee", "critMagic", "critRanged", "critTrueMelee",
                 // other attributes usually found in armor/accessory lore
-                "defence", "invulnerabilityTick", "minionLimit", "sentryLimit", "mobLimit", "knockbackResistance",
+                "armorPenetration", "defence", "invulnerabilityTick", "waterAffinity",
+                "minionLimit", "sentryLimit", "mobLimit", "knockbackResistance",
                 // these attributes are not displayed; however, they are put in this list to prevent sending warning message.
                 "damageType", "fishingHooks",
                 "buffInflict", "buffInflictMagic", "buffInflictMelee", "buffInflictRanged",
@@ -642,11 +643,6 @@ public class ItemHelper {
                     result.add("消耗" + mana + "魔力");
                     break;
                 }
-                case "armorPenetration": {
-                    int penetration = attributeSection.getInt(attribute, 0);
-                    result.add("无视敌人" + penetration + "防御");
-                    break;
-                }
                 case "powerPickaxe":
                 case "fishingPower": {
                     int power = attributeSection.getInt(attribute, 0);
@@ -657,6 +653,12 @@ public class ItemHelper {
                 case "reachExtra": {
                     int reach = attributeSection.getInt(attribute, 0);
                     result.add((reach > 0 ? "+" : "") + reach + " 触及范围");
+                    break;
+                }
+
+                case "armorPenetration": {
+                    int penetration = attributeSection.getInt(attribute, 0);
+                    result.add("无视敌人" + penetration + "防御");
                     break;
                 }
                 case "defence": {
@@ -682,6 +684,18 @@ public class ItemHelper {
                 case "maxHealth": {
                     int amount = attributeSection.getInt(attribute, 0);
                     result.add(amount + " 最大生命值");
+                    break;
+                }
+                case "barrierMax": {
+                    int amount = attributeSection.getInt(attribute, 0);
+                    result.add(amount + " 保护矩阵能量上限");
+                    break;
+                }
+                case "waterAffinity": {
+                    double attrVal = attributeSection.getDouble(attribute, 0);
+                    if (attrVal < 0) result.add("减少水下适应性");
+                    else if (attrVal <= 2) result.add("增加水下适应性");
+                    else result.add("增加大量水下适应性");
                     break;
                 }
                 case "regen": {
@@ -743,7 +757,7 @@ public class ItemHelper {
                 }
                 case "buffImmune": {
                     String buffImmune = attributeSection.getString(attribute, "锟斤拷");
-                    result.add("免疫" + buffImmune);
+                    result.add("免疫" + buffImmune.replace("|", "，"));
                     break;
                 }
                 // these attributes are not shown.

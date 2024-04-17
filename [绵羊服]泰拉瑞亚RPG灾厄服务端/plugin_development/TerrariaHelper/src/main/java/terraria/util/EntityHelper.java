@@ -1,5 +1,6 @@
 package terraria.util;
 
+import com.comphenix.protocol.PacketType;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
@@ -27,6 +28,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.others.TerrariaMount;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.entity.projectile.TerrariaPotionProjectile;
 import terraria.gameplay.EventAndTime;
@@ -202,6 +204,7 @@ public class EntityHelper {
         MONSTER_PARENT_TYPE("parentType"),
         NPC_FIRST_SELL_INDEX("firstSell"),
         NPC_GUI_VIEWERS("GUIViewers"),
+        PLAYER_AIR("playerAir"),
         PLAYER_BIOME("playerBiome"),
         PLAYER_CRAFTING_RECIPE_INDEX("recipeNumber"),
         PLAYER_CRAFTING_STATION("craftingStation"),
@@ -232,6 +235,7 @@ public class EntityHelper {
         PLAYER_MINION_LIST("minions"),
         PLAYER_MINION_WHIP_FOCUS("minionWhipFocus"),
         PLAYER_MONSTER_SPAWNED_AMOUNT("mobAmount"),
+        PLAYER_NEG_REGEN_CAUSE("negRegenSrc"),
         PLAYER_NEXT_MINION_INDEX("nextMinionIndex"),
         PLAYER_NEXT_SENTRY_INDEX("nextSentryIndex"),
         PLAYER_NPC_INTERACTING("NPCViewing"),
@@ -242,6 +246,9 @@ public class EntityHelper {
         PLAYER_TELEPORT_TARGET("teleportTarget"),
         PLAYER_THRUST_INDEX("thrustIndex"),
         PLAYER_THRUST_PROGRESS("thrustProgress"),
+        PLAYER_TRASH_ITEMS("trashItems"),
+        PLAYER_VELOCITY("plyVel"),
+        PLAYER_VELOCITY_MULTI("plyVelMulti"),
         PROJECTILE_BOUNCE_LEFT("bounce"),
         PROJECTILE_DESTROY_REASON("destroyReason"),
         PROJECTILE_PENETRATION_LEFT("penetration"),
@@ -333,10 +340,8 @@ public class EntityHelper {
     }
     // helper functions
     public static void initEntityMetadata(Entity entity) {
-        // only initialize potion effects when needed
-        MetadataValue metadataValue = getMetadata(entity, MetadataName.EFFECTS);
-        if (metadataValue == null)
-            setMetadata(entity, MetadataName.EFFECTS, new HashMap<String, Integer>());
+        // in this function call, potion effect map is initialized when needed
+        getEffectMap(entity);
 
         setMetadata(entity, MetadataName.DAMAGE_TYPE, DamageType.MELEE);
         setMetadata(entity, MetadataName.BUFF_IMMUNE, new HashMap<String, Integer>());
@@ -354,7 +359,8 @@ public class EntityHelper {
     }
     public static HashMap<String, Double> getAttrMap(Metadatable entity) {
         try {
-            return (HashMap<String, Double>) getMetadata(entity, MetadataName.ATTRIBUTE_MAP).value();
+            MetadataValue mdv = getMetadata(entity, MetadataName.ATTRIBUTE_MAP);
+            return mdv == null ? new HashMap<>(0) : (HashMap<String, Double>) mdv.value();
         } catch (Exception e) {
             return new HashMap<>(0);
         }
@@ -369,6 +375,7 @@ public class EntityHelper {
     public static MetadataValue getMetadata(Metadatable owner, MetadataName metadataName) {
         return getMetadata(owner, metadataName.toString());
     }
+    @Deprecated
     public static void setMetadata(Metadatable owner, String key, Object value) {
         if (value == null)
             owner.removeMetadata(key, TerrariaHelper.getInstance());
@@ -510,15 +517,17 @@ public class EntityHelper {
             }
             if (key.equals("buffImmune")) {
                 Map<String, Integer> buffImmune = (Map<String, Integer>) getMetadata(entity, MetadataName.BUFF_IMMUNE).value();
-                int layers = buffImmune.getOrDefault(value, 0);
-                if (addOrRemove)
-                    layers ++;
-                else
-                    layers --;
-                if (layers > 0)
-                    buffImmune.put(value, layers);
-                else
-                    buffImmune.remove(value);
+                for (String immune : value.split("\\|")) {
+                    int layers = buffImmune.getOrDefault(immune, 0);
+                    if (addOrRemove)
+                        layers++;
+                    else
+                        layers--;
+                    if (layers > 0)
+                        buffImmune.put(immune, layers);
+                    else
+                        buffImmune.remove(immune);
+                }
                 return;
             }
             // tweak double value in attribute map
@@ -628,13 +637,13 @@ public class EntityHelper {
         return false;
     }
     public static HashMap<String, Integer> getEffectMap(Entity entity) {
-        try {
-            return (HashMap<String, Integer>) getMetadata(entity, MetadataName.EFFECTS).value();
-        } catch (Exception e) {
+        MetadataValue mdv = getMetadata(entity, MetadataName.EFFECTS);
+        if (mdv == null) {
             HashMap<String, Integer> effectMap = new HashMap<>();
             setMetadata(entity, MetadataName.EFFECTS, effectMap);
             return effectMap;
         }
+        return (HashMap<String, Integer>) mdv.value();
     }
     public static int getEffectLevelMax(String effect) {
         switch (effect) {
@@ -697,9 +706,20 @@ public class EntityHelper {
                     if (! PlayerHelper.getAccessories(entity).contains("血肉图腾"))
                         timeRemaining = -1;
                     break;
-                case "钨钢屏障":
-                    if (! PlayerHelper.getAccessories(entity).contains("钨钢屏障生成仪"))
-                        timeRemaining = -1;
+                case "血炎防御损毁":
+                    PlayerHelper.heal((LivingEntity) entity, 2);
+                    timeRemaining -= 2;
+                    break;
+                case "保护矩阵":
+                    HashMap<String, Double> attrMap = getAttrMap(entity);
+                    // 1 second = 20 ticks = 10 damage
+                    int barrierLimit = (int) Math.round( attrMap.getOrDefault("barrierMax", 0d) ) * 2;
+                    // discharge slowly if exceeds the current limit / out of charge
+                    if (timeRemaining > barrierLimit || timeRemaining == 0)
+                        timeRemaining -= delay * 2;
+                    // recharge slowly if below the current limit AND not on recharge cool down
+                    else if (timeRemaining < barrierLimit && (! allEffects.containsKey("保护矩阵充能") ) )
+                        timeRemaining += delay * 2;
                     break;
                 case "魔影激怒":
                     timeRemaining -= delay;
@@ -743,10 +763,12 @@ public class EntityHelper {
             switch (effect) {
                 case "扭曲": {
                     if (entity instanceof Player) {
-                        World entityWorld = entity.getWorld();
-                        double targetLocY = entityWorld.getHighestBlockAt(entity.getLocation()).getLocation().getY();
+                        Entity mount = PlayerHelper.getMount((Player) entity);
+                        Entity twistedEntity = mount == null ? entity : mount;
+                        World entityWorld = twistedEntity.getWorld();
+                        double targetLocY = entityWorld.getHighestBlockAt(twistedEntity.getLocation()).getLocation().getY();
                         targetLocY += 8 + MathHelper.xsin_degree(timeRemaining * 2.5) * 2;
-                        double velY = targetLocY - entity.getLocation().getY();
+                        double velY = targetLocY - twistedEntity.getLocation().getY();
                         velY /= 6;
                         double maxVerticalSpeed = 0.5;
                         if (velY < -maxVerticalSpeed) {
@@ -754,9 +776,9 @@ public class EntityHelper {
                         } else if (velY > maxVerticalSpeed) {
                             velY = maxVerticalSpeed;
                         }
-                        Vector velocity = entity.getVelocity();
+                        Vector velocity = getVelocity(twistedEntity);
                         velocity.setY(velY);
-                        entity.setVelocity(velocity);
+                        setVelocity(twistedEntity, velocity);
                         entity.setFallDistance(0);
                     }
                     break;
@@ -810,17 +832,21 @@ public class EntityHelper {
             Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] endTickEffect", e);
         }
     }
-    private static void prepareTickEffect(Entity entity, String effect) {
+    public static void prepareTickEffect(Entity entity, String effect) {
         try {
             // setup constants
             int delay = 10, damagePerDelay = 0;
-            if (effect.equals("扭曲")) {
-                delay = 1;
-            } else {
-                delay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageInterval", delay);
-                damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damage", damagePerDelay);
-                if (!(entity instanceof Player))
-                    damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageMonster", damagePerDelay);
+            switch (effect) {
+                case "保护矩阵":
+                case "扭曲":
+                case "血炎防御损毁":
+                    delay = 1;
+                    break;
+                default:
+                    delay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageInterval", delay);
+                    damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damage", damagePerDelay);
+                    if (!(entity instanceof Player))
+                        damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageMonster", damagePerDelay);
             }
             // tweak attrMap
             if (entity instanceof Player)
@@ -863,10 +889,12 @@ public class EntityHelper {
             int finalDurationTicks;
             int currentDurationTicks = allEffects.getOrDefault(effect, 0);
             switch (effect) {
-                case "护甲损伤":
+                case "血炎防御损毁":
+                case "血神之凋零":
                     finalDurationTicks = currentDurationTicks + applyDurationTicks;
                     break;
                 case "魔力烧蚀":
+                case "魔力熔蚀":
                 case "魔力疾病":
                     finalDurationTicks = currentDurationTicks + applyDurationTicks;
                     if (finalDurationTicks > 400 && applyDurationTicks < 400) finalDurationTicks = 400;
@@ -908,11 +936,18 @@ public class EntityHelper {
     }
     private static void sendDeathMessage(Entity d, Entity v, DamageType damageType, String debuffType) {
         String dm = "";
-        // special cases
+        // special death message cases
         if (v instanceof Player) {
             Player plyV = (Player) v;
             if ( ItemHelper.splitItemName(plyV.getInventory().getItemInMainHand() )[1].equals("雷姆的复仇") )
                 dm = "<victim>……是谁？";
+            if ( PlayerHelper.getAccessories(plyV).contains("空灵护符") && Math.random() < 0.1 ) {
+                String msg = "§4<victim>死了    <victim>死了".replaceAll("<victim>", v.getName());
+                for (int i = 0; i < 3; i ++) {
+                    Bukkit.broadcastMessage(msg);
+                }
+                return;
+            }
         }
         if (dm.length() == 0) {
             // general msg
@@ -921,11 +956,21 @@ public class EntityHelper {
                 killer = d.getCustomName();
             }
 
-            String deathMessageConfigDir;
-            if (damageType == DamageType.DEBUFF)
-                deathMessageConfigDir = "deathMessages.Debuff_" + debuffType;
-            else
-                deathMessageConfigDir = "deathMessages." + damageType.toString();
+            String deathMessageConfigDir = "deathMessages." + damageType;
+            switch (damageType) {
+                case DEBUFF:
+                    deathMessageConfigDir = "deathMessages.Debuff_" + debuffType;
+                    break;
+                case NEGATIVE_REGEN: {
+                    MetadataValue mdv = EntityHelper.getMetadata(v, EntityHelper.MetadataName.PLAYER_NEG_REGEN_CAUSE);
+                    if (mdv != null) {
+                        HashMap<String, Double> negRegenCause = (HashMap<String, Double>) mdv.value();
+                        String randomizedCause = MathHelper.selectWeighedRandom(negRegenCause);
+                        deathMessageConfigDir = "deathMessages.NegRegen_" + randomizedCause;
+                    }
+                    break;
+                }
+            }
 
             List<String> deathMessages;
             if (TerrariaHelper.settingConfig.contains(deathMessageConfigDir)) {
@@ -1042,10 +1087,13 @@ public class EntityHelper {
 
         // player being damaged
         if (victim instanceof Player) {
+            Player vPly = (Player) victim;
+            // prevent damage and damage handling if in invulnerability
+            if (hasEffect(vPly, "始源林海无敌") )
+                return false;
             // health regen time reset
             setMetadata(victim, MetadataName.REGEN_TIME, 0);
             // special damager
-            Player vPly = (Player) victim;
             switch (damager.getName()) {
                 case "水螺旋": {
                     damager.remove();
@@ -1058,10 +1106,45 @@ public class EntityHelper {
             }
             // accessories
             HashSet<String> accessories = PlayerHelper.getAccessories(victim);
-            boolean hasMagicCuff = accessories.contains("魔法手铐") || accessories.contains("天界手铐");
-            if (hasMagicCuff) {
-                int recovery = (int) Math.max(1, Math.floor(dmg / 4));
-                PlayerHelper.restoreMana(vPly, recovery);
+            HashMap<String, Double> victimAttrMap = getAttrMap(victim);
+            for (String accessory : accessories) {
+                switch (accessory) {
+                    // mana recovery on damage
+                    case "魔法手铐":
+                    case "天界手铐": {
+                        int recovery = (int) Math.max(1, Math.floor(dmg / 4));
+                        PlayerHelper.restoreMana(vPly, recovery);
+                        break;
+                    }
+                    // defence-damage style damage reduction POST damage calculation
+                    case "血炎晶核": {
+                        if (isDirectDmg && dmg >= 50d) {
+                            int duration = (int) Math.min(victimAttrMap.getOrDefault("defence", 0d), dmg);
+                            applyEffect(victim, "血炎防御损毁", duration);
+                        }
+                        break;
+                    }
+                    case "血神圣杯": {
+                        if (isDirectDmg && dmg >= 100d) {
+                            int duration = (int) Math.min(victimAttrMap.getOrDefault("defence", 0d), dmg * 0.75);
+                            applyEffect(victim, "血炎防御损毁", duration);
+                            double recovery = Math.min(vPly.getMaxHealth() - vPly.getHealth(), dmg * 0.95);
+                            PlayerHelper.heal(vPly, recovery);
+                            applyEffect(victim, "血神之凋零", (int) Math.ceil(recovery / 10));
+                        }
+                        break;
+                    }
+                    // "revive" (heal by factor of 1.75, minimum of 200)
+                    case "星云之核": {
+                        if (dmg >= vPly.getHealth() && (! victimEffects.containsKey("星云之核冷却")) ) {
+                            // cool down for 180 seconds (3600 ticks)
+                            applyEffect(vPly, "星云之核冷却", 3600);
+                            // heal for the damage amount
+                            PlayerHelper.heal(vPly, Math.max(dmg * 1.75, 200) );
+                        }
+                        break;
+                    }
+                }
             }
             // armor sets
             String victimPlayerArmorSet = PlayerHelper.getArmorSet(vPly);
@@ -1103,8 +1186,9 @@ public class EntityHelper {
                 case "始源林海召唤套装":
                 case "金源魔法套装":
                 case "金源召唤套装": {
-                    if (dmg >= vPly.getHealth()) {
+                    if (dmg >= vPly.getHealth() && (! victimEffects.containsKey("始源林海无敌冷却")) ) {
                         applyEffect(vPly, "始源林海无敌", 160);
+                        return false;
                     }
                     break;
                 }
@@ -1154,8 +1238,6 @@ public class EntityHelper {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                             () -> applyEffect(vPly, "神弑者之停息", 600), 5);
             }
-            if (hasEffect(vPly, "始源林海无敌") )
-                return false;
         }
         // player damage other entity
         if (damageSource instanceof Player) {
@@ -1164,7 +1246,8 @@ public class EntityHelper {
 
             // life steal
             String lifeStealTempCD = "temp_lifeStealCD";
-            if (! dPly.getScoreboardTags().contains(lifeStealTempCD)) {
+            // debuff and self-damage may not trigger life steal
+            if (damager != victim && ! dPly.getScoreboardTags().contains(lifeStealTempCD)) {
                 // cool down
                 EntityHelper.handleEntityTemporaryScoreboardTag(dPly, lifeStealTempCD, 1);
 
@@ -1172,6 +1255,7 @@ public class EntityHelper {
                 double lifeStealFactor = plyAttrMap.getOrDefault("lifeSteal", 0d);
                 if (lifeStealFactor > 1e-9) {
                     double healAmount = dmg * lifeStealFactor;
+                    healAmount = Math.min(healAmount, dPly.getMaxHealth() * 0.05);
                     PlayerHelper.heal(dPly, healAmount);
                 }
             }
@@ -1306,7 +1390,7 @@ public class EntityHelper {
         if (v instanceof Player) {
             Player vPly = (Player) v;
             // prevent spectator getting in a wall
-            vPly.setVelocity(new Vector());
+            setVelocity(vPly, new Vector());
             // respawn time, default to 15 seconds and increases if boss is alive
             int respawnTime = 15;
             for (ArrayList<LivingEntity> bossList : BossHelper.bossMap.values()) {
@@ -1320,6 +1404,9 @@ public class EntityHelper {
             // drop money
             long moneyDrop = (long) Math.floor(PlayerHelper.getMoney(vPly) / 100);
             moneyDrop = (long) Math.ceil(moneyDrop * 0.75);
+            if (PlayerHelper.hasPiggyBank(vPly)) {
+                moneyDrop = Math.min(moneyDrop, 1104);
+            }
             moneyDrop *= 100;
             PlayerHelper.setMoney(vPly, PlayerHelper.getMoney(vPly) - moneyDrop);
             GenericHelper.dropMoney(vPly.getEyeLocation(), moneyDrop, false);
@@ -1350,9 +1437,10 @@ public class EntityHelper {
             }
             // initialize respawn countdown and other features
             vPly.closeInventory();
-            double respawnHealth = Math.max(400, vPly.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 2);
+            double maxHealth = vPly.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+            double respawnHealth = Math.max(400, maxHealth / 2);
             // make sure the new health do not exceed maximum health
-            vPly.setHealth(Math.min(respawnHealth, vPly.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
+            vPly.setHealth(Math.min(respawnHealth, maxHealth) );
             setMetadata(vPly, MetadataName.RESPAWN_COUNTDOWN, respawnTime * 20);
             vPly.setGameMode(GameMode.SPECTATOR);
             vPly.setFlySpeed(0);
@@ -1368,30 +1456,22 @@ public class EntityHelper {
                 switch (victimName) {
                     // the Hive Mind
                     case "腐化囊": {
-                        if (dPly instanceof Player) {
-                            BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.THE_HIVE_MIND);
-                        }
+                        BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.THE_HIVE_MIND);
                         break;
                     }
                     // anahita and leviathan spawns after killing ???
                     case "???": {
-                        if (dPly instanceof Player) {
-                            BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LEVIATHAN_AND_ANAHITA);
-                        }
+                        BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LEVIATHAN_AND_ANAHITA);
                         break;
                     }
                     // empress of light
                     case "七彩草蛉": {
-                        if (dPly instanceof Player) {
-                            BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.EMPRESS_OF_LIGHT);
-                        }
+                        BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.EMPRESS_OF_LIGHT);
                         break;
                     }
                     // lunatic cultist spawns after killing the mob in the dungeon
                     case "拜月教教徒": {
-                        if (dPly instanceof Player) {
-                            BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LUNATIC_CULTIST, v.getLocation());
-                        }
+                        BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LUNATIC_CULTIST, v.getLocation());
                         break;
                     }
                 }
@@ -1439,26 +1519,31 @@ public class EntityHelper {
                     }
                 }
                 // generic death drop etc.
-                MetadataValue parentType = getMetadata(v, MetadataName.MONSTER_PARENT_TYPE);
-                if (parentType != null) {
-                    switch (parentType.asString()) {
-                        // lava slimes leave lava at death
-                        case "史莱姆": {
-                            if (v.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)) {
-                                Location deathLoc = vLiving.getEyeLocation();
-                                Block deathBlock = deathLoc.getBlock();
-                                WorldHelper.createTemporaryLava(deathBlock);
-                            }
-                            break;
+                MetadataValue parentTypeMetadata = getMetadata(v, MetadataName.MONSTER_PARENT_TYPE);
+                MetadataValue bossTypeMetadata = getMetadata(v, MetadataName.BOSS_TYPE);
+                String parentType = "";
+                if (bossTypeMetadata != null)
+                    parentType = bossTypeMetadata.value().toString();
+                if (parentTypeMetadata != null)
+                    parentType = parentTypeMetadata.asString();
+
+                switch (parentType) {
+                    // lava slimes leave lava at death
+                    case "史莱姆": {
+                        if (v.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)) {
+                            Location deathLoc = vLiving.getEyeLocation();
+                            Block deathBlock = deathLoc.getBlock();
+                            WorldHelper.createTemporaryLava(deathBlock);
                         }
-                        // the hungry flies towards the player after breaking free
-                        case "饿鬼Attached": {
-                            if (dPly instanceof Player) {
-                                MonsterHelper.spawnMob("饿鬼", v.getLocation(), (Player) dPly);
-                                v.remove();
-                            }
-                            break;
+                        break;
+                    }
+                    // the hungry flies towards the player after breaking free
+                    case "饿鬼Attached": {
+                        if (dPly instanceof Player) {
+                            MonsterHelper.spawnMob("饿鬼", v.getLocation(), (Player) dPly);
+                            v.remove();
                         }
+                        break;
                     }
                 }
                 // special, player-progression specific drops
@@ -1515,6 +1600,107 @@ public class EntityHelper {
                             }
                         }
                     }
+                    // post-DoG essences
+                    if (spawnEvt != null && PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.THE_DEVOURER_OF_GODS.msgName)) {
+                        String itemType = null;
+                        int dropAmountMin = 1, dropAmountMax = 1;
+                        double dropChance = 0d;
+                        EventAndTime.Events evt = (EventAndTime.Events) spawnEvt.value();
+                        switch (evt) {
+                            case PUMPKIN_MOON:
+                                itemType = "梦魇魔能";
+                                switch (parentType) {
+                                    case "树精":
+                                        dropChance = 0.5d;
+                                        break;
+                                    case "地狱犬":
+                                    case "胡闹鬼":
+                                        dropChance = 0.5d;
+                                        dropAmountMax = 2;
+                                        break;
+                                    case "无头骑士":
+                                        dropChance = 1d;
+                                        dropAmountMin = 3;
+                                        dropAmountMax = 5;
+                                        break;
+                                    case "哀木":
+                                        dropChance = 1d;
+                                        dropAmountMin = 5;
+                                        dropAmountMax = 10;
+                                        break;
+                                    case "南瓜王":
+                                        dropChance = 1d;
+                                        dropAmountMin = 10;
+                                        dropAmountMax = 20;
+                                        break;
+                                }
+                                break;
+                            case FROST_MOON:
+                                itemType = "恒温能量";
+                                switch (parentType) {
+                                    case "胡桃夹士":
+                                    case "精灵直升机":
+                                    case "雪花怪":
+                                        dropChance = 0.5d;
+                                        break;
+                                    case "坎卜斯":
+                                    case "雪兽":
+                                    case "礼物宝箱怪":
+                                        dropChance = 0.5d;
+                                        dropAmountMax = 2;
+                                        break;
+                                    case "常绿尖叫怪":
+                                        dropChance = 1d;
+                                        dropAmountMin = 3;
+                                        dropAmountMax = 5;
+                                        break;
+                                    case "圣诞坦克":
+                                        dropChance = 1d;
+                                        dropAmountMin = 5;
+                                        dropAmountMax = 10;
+                                        break;
+                                    case "冰雪女王":
+                                        dropChance = 1d;
+                                        dropAmountMin = 10;
+                                        dropAmountMax = 20;
+                                        break;
+                                }
+                                break;
+                            case SOLAR_ECLIPSE:
+                                itemType = "日蚀之阴碎片";
+                                switch (parentType) {
+                                    case "水月怪":
+                                    case "弗里茨":
+                                    case "沼泽怪":
+                                    case "科学怪人":
+                                        dropChance = 0.1d;
+                                        break;
+                                    case "死神":
+                                    case "吸血鬼":
+                                    case "攀爬魔":
+                                    case "致命球":
+                                        dropChance = 0.5d;
+                                        break;
+                                    case "眼怪":
+                                        dropChance = 1d;
+                                        dropAmountMax = 2;
+                                        break;
+                                    case "蛾怪":
+                                        dropChance = 1d;
+                                        dropAmountMin = 20;
+                                        dropAmountMax = 30;
+                                        break;
+                                }
+                                break;
+                        }
+                        // drop
+                        if (itemType != null && Math.random() < dropChance) {
+                            int dropAmountFinal = dropAmountMin + (int) (Math.random() * (dropAmountMax - dropAmountMin + 1));
+                            ItemHelper.dropItem(vLiving.getEyeLocation(),
+                                    itemType + ":" + dropAmountFinal, false);
+                        }
+                    }
+
                 }
             }
         }
@@ -1619,6 +1805,31 @@ public class EntityHelper {
             source = (Entity) damageSourceMetadata.value();
         return source;
     }
+    public static Entity getMount(Entity entity) {
+        if (entity instanceof Player)
+            return PlayerHelper.getMount((Player) entity);
+        return entity.getVehicle();
+    }
+    // for player, use either this getVelocity or the getPlayerVelocity in PlayerHelper
+    public static Vector getVelocity(Entity entity) {
+        if (entity instanceof Player)
+            return PlayerHelper.getPlayerVelocity((Player) entity);
+        return entity.getVelocity();
+    }
+    // for player, use this setVelocity instead of vanilla one
+    public static void setVelocity(Entity entity, Vector spd) {
+        // handle unreasonable magnitude (> 100)
+        if (spd.lengthSquared() > 1e5)
+            spd.zero();
+        if (entity instanceof Player) {
+            setMetadata(entity, MetadataName.PLAYER_VELOCITY, spd);
+            MetadataValue mtv = getMetadata(entity, MetadataName.PLAYER_VELOCITY_MULTI);
+            spd = spd.clone();
+            if (mtv != null)
+                spd.multiply(mtv.asDouble());
+        }
+        entity.setVelocity(spd);
+    }
     public static void knockback(Entity entity, Vector dir, boolean addOrReplace) {
         knockback(entity, dir, addOrReplace, -1);
     }
@@ -1632,10 +1843,13 @@ public class EntityHelper {
         // update the knockback slow factor, which effects the walking speed of zombies etc.
         setMetadata(entity, MetadataName.KNOCKBACK_SLOW_FACTOR, kbMulti);
         // the entity subject to that knockback
-        Entity knockbackTaker = entity.getVehicle();
+        Entity knockbackTaker = getMount(entity);
         if (knockbackTaker == null) knockbackTaker = entity;
+        // minecart takes no knockback
+        if (knockbackTaker instanceof Minecart)
+            return;
         // calculate the final velocity
-        Vector finalVel = knockbackTaker.getVelocity();
+        Vector finalVel = getVelocity(knockbackTaker);
         if (addOrReplace) {
             finalVel.add(dir);
         } else {
@@ -1647,7 +1861,7 @@ public class EntityHelper {
         if (speedLimit > 0 && finalVel.lengthSquared() > speedLimit * speedLimit) {
             MathHelper.setVectorLength(finalVel, speedLimit);
         }
-        knockbackTaker.setVelocity(finalVel);
+        setVelocity(knockbackTaker, finalVel);
     }
     public static String getInvulnerabilityTickName(DamageType damageType) {
         return "tempDamageCD_" + damageType;
@@ -1775,6 +1989,7 @@ public class EntityHelper {
         String damageInvincibilityFrameName = getInvulnerabilityTickName(damageType);
         if (victimScoreboardTags.contains(damageInvincibilityFrameName)) return;
 
+
         HashSet<String> damagerAccessories = PlayerHelper.getAccessories(damageSource);
         HashSet<String> victimAccessories = PlayerHelper.getAccessories(victim);
         // inflict debuff
@@ -1825,7 +2040,7 @@ public class EntityHelper {
             }
         }
 
-        // further setup damage info
+        // further setup damage info (fixed amount etc.); damage setup for special damage types
         damageInvulnerabilityTicks = victimAttrMap.getOrDefault("invulnerabilityTick", 0d).intValue();
         double dmg = damage;
         double knockback = 0d, critRate = -1e9;
@@ -1854,8 +2069,8 @@ public class EntityHelper {
                 damageInvulnerabilityTicks = Math.max(damageInvulnerabilityTicks, 30);
                 break;
             case DROWNING:
-                dmg = 50;
                 damageFixed = true;
+                damageInvulnerabilityTicks = 0;
                 break;
             case SUFFOCATION:
                 damageInvulnerabilityTicks = 0;
@@ -1924,7 +2139,7 @@ public class EntityHelper {
                 }
         }
 
-        // tweak damage, including minion whip bonus, paladin shield, random damage floating and crit
+        // tweak damage, including minion whip bonus, accessories such as paladin shield, random damage floating and crit
         boolean crit = false;
         if (!damageFixed) {
             double damageTakenMulti = victimAttrMap.getOrDefault("damageTakenMulti", 1d);
@@ -1947,7 +2162,16 @@ public class EntityHelper {
                     temp = getMetadata(victim, MetadataName.MINION_WHIP_BONUS_CRIT);
                     critRate += temp != null ? temp.asDouble() : 0;
                     // on-hit effects from accessory
-                    if (damagerAccessories.contains("神圣符文")) {
+                    if (damagerAccessories.contains("幻魂神物")) {
+                        double rdm = Math.random();
+                        if (rdm < 0.3333)
+                            EntityHelper.applyEffect(damageSource, "幻魂还生", 20);
+                        else if (rdm < 0.6666)
+                            EntityHelper.applyEffect(damageSource, "幻魂坚盾", 20);
+                        else
+                            EntityHelper.applyEffect(damageSource, "幻魂之力", 20);
+                    }
+                    else if (damagerAccessories.contains("神圣符文")) {
                         double rdm = Math.random();
                         if (rdm < 0.3333)
                             EntityHelper.applyEffect(damageSource, "神圣之辉", 20);
@@ -1971,10 +2195,43 @@ public class EntityHelper {
                     case "猪鲨公爵":
                     case "硫海遗爵":
                     case "利维坦":
+                        // the damager is the flail
                         if (damager.getName().equals("雷姆的复仇"))
                             dmg *= 50;
                         break;
 
+                }
+                // accessories
+                if (damageSource instanceof Player) {
+                    Player damageSourcePly = (Player) damageSource;
+                    for (String plyAcc : damagerAccessories) {
+                        switch (plyAcc) {
+                            case "魔能过载仪":
+                            case "魔能熔毁仪": {
+                                if (getDamageType(damageSourcePly) == DamageType.MAGIC) {
+                                    int mana = damageSourcePly.getLevel();
+                                    double consumption;
+                                    double manaToDamageRate;
+                                    double consumptionRatio;
+                                    if (plyAcc.equals("魔能过载仪")) {
+                                        consumption = 8;
+                                        manaToDamageRate = 7.5;
+                                        consumptionRatio = 1;
+                                    }
+                                    else {
+                                        consumption = (int) Math.max(mana * 0.035, 5);
+                                        manaToDamageRate = 15;
+                                        double effectDuration = EntityHelper.getEffectMap(damageSourcePly).getOrDefault("魔力熔蚀", 0);
+                                        consumptionRatio = 1 - (effectDuration / 800);
+                                    }
+                                    if (ItemUseHelper.consumeMana(damageSourcePly, MathHelper.randomRound(consumption * consumptionRatio) )) {
+                                        dmg += consumption * manaToDamageRate;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
                 }
                 // crit to non-player victims
                 if (Math.random() * 100 < critRate) {
@@ -1984,7 +2241,7 @@ public class EntityHelper {
             }
             // extra tweak on damage when victim is a player
             else {
-                // crit to player due to blood pact
+                // crit to player pre-defence due to blood pact
                 if (victimAccessories.contains("血契") && Math.random() < 0.25) {
                     crit = true;
                     dmg *= 1.75;
@@ -1993,8 +2250,8 @@ public class EntityHelper {
                 // paladin shield, only applies to player victims
                 if (! hasEffect(victim, "圣骑士护盾")) {
                     String team = getMetadata(victim, MetadataName.PLAYER_TEAM).asString();
-                    // works with players within 64 blocks
-                    double dist = 4096;
+                    // works with players within 96 blocks
+                    double dist = 9216;
                     Entity shieldPly = null;
                     for (Player ply : victim.getWorld().getPlayers()) {
                         if (!PlayerHelper.isProperlyPlaying(ply)) continue;
@@ -2015,16 +2272,15 @@ public class EntityHelper {
             dmg *= damageTakenMulti;
             defence = Math.max(defence - damagerAttrMap.getOrDefault("armorPenetration", 0d), 0);
             dmg -= defence * 0.75;
-            // wulfrum barrier
-            if (hasEffect(victim, "钨钢屏障")) {
-                int damageShield = getEffectMap(victim).get("钨钢屏障") / 20;
+            // damage barrier
+            if (hasEffect(victim, "保护矩阵")) {
+                // 20 ticks = 10 dmg
+                int damageShield = getEffectMap(victim).get("保护矩阵") / 2;
                 int damageBlock = (int) Math.min(Math.ceil(dmg), damageShield);
-                damageShield -= damageBlock;
                 dmg -= damageBlock;
-                if (damageShield <= 0)
-                    applyEffect(victim, "钨钢屏障", 0);
-                else
-                    applyEffect(victim, "钨钢屏障", damageShield * 20);
+                applyEffect(victim, "保护矩阵", (damageShield - damageBlock) * 2);
+                // interrupt barrier regen
+                applyEffect(victim, "保护矩阵充能", 175);
             }
             if (hasEffect(victim, "狮心圣裁能量外壳")) {
                 applyEffect(victim, "狮心圣裁能量外壳冷却", 900);
@@ -2091,12 +2347,16 @@ public class EntityHelper {
                     sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundDamaged", sound);
                     victim.getWorld().playSound(victim.getLocation(), sound, 3, 1);
                 }
-                // knockback
-                if (knockback > 0) {
-                    Vector vec = victim.getLocation().subtract(damager.getLocation()).toVector();
-                    MathHelper.setVectorLength(vec, knockback / 20);
-                    knockback(victim, vec, false);
-                }
+            }
+            // knockback
+            if (knockback > 0) {
+                Vector vec = victim.getLocation().subtract(damager.getLocation()).toVector();
+                double kbForce = knockback / 20;
+                MathHelper.setVectorLength(vec, kbForce);
+                // for non-downward knockback, amplify the upward component and push the victim off ground
+                if (victim.isOnGround() && vec.getY() > -1e-3)
+                    vec.setY(vec.getY() + Math.min(kbForce * 0.35, 1));
+                knockback(victim, vec, false);
             }
         }
         // remove the not damaged marker scoreboard tag
@@ -2104,12 +2364,20 @@ public class EntityHelper {
             victim.removeScoreboardTag("notDamaged");
 
         // display damage
-        String hologramInfo;
-        if (damageType == DamageType.DEBUFF)
-            hologramInfo = "Debuff_" + debuffType;
-        else
-            hologramInfo = damageType.toString();
-        GenericHelper.displayHolo(victim, dmg, crit, hologramInfo);
+        boolean displayDmg = true;
+        switch (damageReason) {
+            case SUFFOCATION:
+            case DROWNING:
+                displayDmg = false;
+        }
+        if (displayDmg) {
+            String hologramInfo;
+            if (damageType == DamageType.DEBUFF)
+                hologramInfo = "Debuff_" + debuffType;
+            else
+                hologramInfo = damageType.toString();
+            GenericHelper.displayHolo(victim, dmg, crit, hologramInfo);
+        }
 
         // send info message to damager player
         if (damageSource instanceof Player && victim != damageSource) {
@@ -2340,18 +2608,23 @@ public class EntityHelper {
         shootLoc.checkFinite();
         Vector enemyVel, enemyAcc;
         // get target velocity and acceleration
+        Location targetLoc;
         if (target instanceof Player) {
+            Player targetPly = (Player) target;
+            targetLoc = PlayerHelper.getAccurateLocation(targetPly);
+
             Location lastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_CURRENT_LOCATION).value();
             Location secondLastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_LAST_LOCATION).value();
-            if (lastLoc.distanceSquared(target.getLocation()) < 1e-5) {
+            if (lastLoc.distanceSquared(targetLoc) < 1e-5) {
                 lastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_LAST_LOCATION).value();
                 secondLastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_SECOND_LAST_LOCATION).value();
             }
-            enemyVel = target.getLocation().subtract(lastLoc).toVector();
+            enemyVel = targetLoc.clone().subtract(lastLoc).toVector();
             Vector enemyVelSecondLast = lastLoc.clone().subtract(secondLastLoc).toVector();
             enemyAcc = enemyVel.clone().subtract(enemyVelSecondLast);
         }
         else {
+            targetLoc = target.getLocation();
             MetadataValue currVelMetadata = getMetadata(target, MetadataName.ENTITY_CURRENT_VELOCITY);
             MetadataValue lastVelMetadata = getMetadata(target, MetadataName.ENTITY_LAST_VELOCITY);
             enemyVel = target.getVelocity();
@@ -2373,7 +2646,7 @@ public class EntityHelper {
         enemyAcc.add(aimHelperOption.accelerationOffset);
 
         // setup target location
-        Location targetLoc = target.getLocation(), predictedLoc;
+        Location predictedLoc;
         // aim at the middle of the entity
         if (target instanceof LivingEntity) {
             EntityLiving targetNMS = ((CraftLivingEntity) target).getHandle();
@@ -2382,9 +2655,16 @@ public class EntityHelper {
         }
         // a placeholder, so that the function does not report an error
         predictedLoc = targetLoc.clone();
-        // "hyper-params" for prediction
+        // "hyper-params" for prediction; note that ticks offset is roughly estimated before entering the loop.
+        boolean checkBlockColl;
+        Entity targetMount = EntityHelper.getMount(target);
+        if (targetMount == null)
+            checkBlockColl = ! ((CraftEntity) target).getHandle().noclip;
+        else {
+            checkBlockColl = !(targetMount instanceof Minecart);
+        }
         double predictionIntensity = aimHelperOption.intensity;
-        double ticksOffset = 0, lastTicksOffset;
+        double ticksOffset = targetLoc.distance(shootLoc) / aimHelperOption.projectileSpeed, lastTicksOffset;
         // approximate the velocity to use with epochs requested
         for (int currEpoch = 0; currEpoch < aimHelperOption.epoch; currEpoch ++) {
             // calculate the predicted enemy location
@@ -2399,7 +2679,7 @@ public class EntityHelper {
                     predictedLoc.add(enemyAcc.clone().multiply(ticksOffset * (ticksOffset - 1) * predictionIntensity / 2d));
                 // before handling gravity, make sure entities that clip with block do not go through blocks
                 // note that the loop is done with the "foot" position
-                if ( ! ((CraftEntity) target).getHandle().noclip ) {
+                if ( checkBlockColl ) {
                     // loopBeginLoc is the position from where the rough entity movement check STARTS in the current loop call
                     Location loopBeginLoc = target.getLocation().add(0, 1e-5, 0);
                     Vector locOffset = targetLoc.clone().subtract(loopBeginLoc).toVector();
@@ -2442,7 +2722,7 @@ public class EntityHelper {
                 if (ticksOffset >= aimHelperOption.noGravityTicks) {
                     predictedLoc.add(new Vector(0,
                             (ticksOffset - aimHelperOption.noGravityTicks + 1) * (ticksOffset - aimHelperOption.noGravityTicks + 2)
-                                    * aimHelperOption.projectileGravity * predictionIntensity / 2d, 0));
+                                    * aimHelperOption.projectileGravity / 2d, 0));
                 }
                 // random offset
                 {
@@ -2484,9 +2764,6 @@ public class EntityHelper {
                 }
                 // account for at most 3 seconds
                 ticksOffset = Math.min( Math.floor(ticksOffset),  60  );
-                // for faster convergence, the increment from the second epoch is multiplied by 1.5
-                if (currEpoch == 1)
-                    ticksOffset += (ticksOffset - lastTicksOffset) * 0.5;
             }
 
             // end the loop early if the last tick offset agrees with the current

@@ -222,16 +222,13 @@ public class CraftingListener implements Listener {
         // setup result slot
         {
             String craftingResult = recipeConfigSection.getString("resultItem");
-            int resultAmount = 1;
-            if (craftingResult.contains(":")) {
-                String[] itemInfo = craftingResult.split(":");
-                craftingResult = itemInfo[0];
-                resultAmount = Integer.parseInt(itemInfo[1]);
-            }
             xOffset = (int) ((gui.getWidth() * 0.55) + 10);
             yOffset = gui.getHeight() / 5;
-            newComps.add(new VexSlot(++index, xOffset, yOffset,
-                    ItemHelper.getItemFromDescription(craftingResult, false)));
+            ItemStack parsedItem = ItemHelper.getItemFromDescription(craftingResult, false);
+            int resultAmount = parsedItem.getAmount();
+            // prevent duplicated number display; use a new text field to display amount larger than 127
+            parsedItem.setAmount(1);
+            newComps.add(new VexSlot(++index, xOffset, yOffset, parsedItem) );
             if (resultAmount > 1) {
                 List<String> textDisplay = new ArrayList<>();
                 textDisplay.add("" + resultAmount);

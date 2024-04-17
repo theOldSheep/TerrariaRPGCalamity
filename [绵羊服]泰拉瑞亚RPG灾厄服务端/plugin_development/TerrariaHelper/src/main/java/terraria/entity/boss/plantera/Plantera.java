@@ -10,9 +10,10 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.empressOfLight.EmpressOfLight;
+import terraria.util.BossHelper;
+import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
-import terraria.util.*;
+import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -91,12 +91,14 @@ subTypes:
       weight: 0.5
       biome:
       - normal
+      - hallow
       height:
       - surface
     蚱蜢:
       weight: 10
       biome:
       - normal
+      - hallow
       height:
       - surface
     兔兔:
@@ -138,6 +140,7 @@ subTypes:
       weight: 3
       biome:
       - normal
+      - hallow
       height:
       - surface
       - underground
@@ -146,6 +149,7 @@ subTypes:
       weight: 0.5
       biome:
       - normal
+      - hallow
       height:
       - surface
       - underground
@@ -188,6 +192,12 @@ subTypes:
       - jungle
       height:
       - cavern
+    血蠕虫:
+      weight: 3
+      biome:
+      - sulphurous_ocean
+      height:
+      - surface
     老鼠:
       weight: 10
       height:
@@ -221,6 +231,7 @@ subTypes:
       weight: 10
       biome:
       - normal
+      - hallow
       height:
       - surface
       - underground
@@ -229,6 +240,7 @@ subTypes:
       weight: 0.5
       biome:
       - normal
+      - hallow
       height:
       - surface
       - underground
@@ -268,6 +280,7 @@ animalType:
   金蛙: Ground
   发光蜗牛: Ground
   松露虫: Ground
+  血蠕虫: Ground
   老鼠: Ground
   企鹅: Ground
   蜗牛: Ground
@@ -314,3 +327,5 @@ particleColor:
   - 255|100|100
   松露虫:
   - 0|100|255
+  血蠕虫:
+  - 255|0|0

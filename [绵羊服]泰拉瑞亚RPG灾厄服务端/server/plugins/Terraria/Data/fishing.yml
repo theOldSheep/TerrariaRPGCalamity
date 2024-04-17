@@ -28,8 +28,9 @@ baitsAndPower:
   蠕虫: 25
   附魔夜行者: 35
   松露虫: 0
+  血蠕虫: 0
 biomeCrates:
-  ABYSS: 深渊匣
+  ABYSS: 硫海匣
   ASTRAL_INFECTION: 星幻匣
   BRIMSTONE_CRAG: 硫磺火匣
   CORRUPTION: 腐化匣
@@ -40,7 +41,7 @@ biomeCrates:
   NORMAL: 铁匣
   OCEAN: 海洋匣
   SPACE: 天空匣
-  SULPHUROUS_OCEAN: 深渊匣
+  SULPHUROUS_OCEAN: 硫海匣
   SUNKEN_SEA: 沉沦匣
   TEMPLE: 丛林匣
   TUNDRA: 冰冻匣
@@ -52,6 +53,7 @@ fish:
       - DESERT
       - SUNKEN_SEA
       - UNDERWORLD
+      - BRIMSTONE_CRAG
     偏口鱼:
       biome:
       - DESERT
@@ -64,6 +66,16 @@ fish:
       - SURFACE
       biome:
       - OCEAN
+    棱晶孔雀鱼:
+      biome:
+      - SUNKEN_SEA
+    硫火崖回鱼:
+      biome:
+      - UNDERWORLD
+      - BRIMSTONE_CRAG
+    北河三烁光鱼:
+      biome:
+      - ASTRAL_INFECTION
   COMMON:
     大西洋鳕鱼:
       biome:
@@ -97,6 +109,11 @@ fish:
       - SURFACE
       biome:
       - OCEAN
+    植物混融块:
+      height:
+      - SURFACE
+      biome:
+      - SULPHUROUS_OCEAN
   UNCOMMON:
     装甲洞穴鱼:
       height:
@@ -141,6 +158,47 @@ fish:
       - CAVERN
       biome:
       - JUNGLE
+    蜂蜜鱼:
+      height:
+      - UNDERGROUND
+      - CAVERN
+      biome:
+      - JUNGLE
+    填充草药鱼:
+      height:
+      - SURFACE
+    闪光宝石鱼:
+      height:
+      - UNDERGROUND
+      - CAVERN
+    日光鱼:
+      height:
+      - SPACE
+    冰川鱼:
+      biome:
+      - TUNDRA
+    混乱鱼:
+      biome:
+      - BRIMSTONE_CRAG
+    飞翔之鱼:
+      height:
+      - SPACE
+    光明之鱼:
+      biome:
+      - HALLOW
+    暗影之鱼:
+      height:
+      - CORRUPTION
+    毕宿五灰西鲱:
+      biome:
+      - ASTRAL_INFECTION
+    海岸恶魔鱼:
+      biome:
+      - BRIMSTONE_CRAG
+      - UNDERWORLD
+    南河三明虾:
+      biome:
+      - ASTRAL_INFECTION
   RARE:
     黑曜石鱼:
       biome:
@@ -148,10 +206,29 @@ fish:
     七彩矿鱼:
       biome:
       - HALLOW
+    剑鱼:
+      biome:
+      - OCEAN
+    紫挥棒鱼:
+      biome:
+      - CORRUPTION
+    血鳍:
+      biome:
+      - BRIMSTONE_CRAG
+      progressRequired: 亵渎天神，普罗维登斯
   VERY_RARE:
     闪鳍锦鲤:
       biome:
       - UNDERWORLD
+    掠夺鲨:
+      biome:
+      - OCEAN
+    水晶蛇:
+      biome:
+      - HALLOW
+    深渊护身符:
+      biome:
+      - SULPHUROUS_OCEAN
   EXTREMELY_RARE:
     金鲤鱼:
       height:
@@ -160,6 +237,12 @@ fish:
       - UNDERWORLD
       biomeException:
       - DESERT
+    焦黑鞭笞者:
+      biome:
+      - BRIMSTONE_CRAG
+    绿波泥鳅:
+      biome:
+      - SUNKEN_SEA
   示例:
     示例:
       height:
@@ -190,40 +273,45 @@ fish:
       fishingPower: 100
 questFish:
   天使鱼:
-  - NORMAL_SPACE
+  - NORMAL:SPACE
   蝙蝠鱼:
-  - NORMAL_CAVERN
-  - NORMAL_UNDERWORLD
+  - NORMAL:CAVERN
+  - NORMAL:UNDERWORLD
   骷髅鱼:
-  - NORMAL_CAVERN
-  - NORMAL_UNDERWORLD
+  - NORMAL:CAVERN
+  - NORMAL:UNDERWORLD
   兔兔鱼:
-  - NORMAL_SURFACE
+  - NORMAL:SURFACE
   小丑鱼:
-  - OCEAN_SURFACE
+  - OCEAN:SURFACE
   泥鱼:
-  - JUNGLE_SURFACE
-  - JUNGLE_UNDERGROUND
-  - JUNGLE_CAVERN
+  - JUNGLE:SURFACE
+  - JUNGLE:UNDERGROUND
+  - JUNGLE:CAVERN
   土鱼:
-  - NORMAL_SURFACE
-  - NORMAL_UNDERGROUND
+  - NORMAL:SURFACE
+  - NORMAL:UNDERGROUND
   克苏鲁鱼:
-  - NORMAL_SPACE
-  - NORMAL_SURFACE
+  - NORMAL:SPACE
+  - NORMAL:SURFACE
   向导巫毒鱼:
-  - NORMAL_CAVERN
-  - NORMAL_UNDERWORLD
+  - NORMAL:CAVERN
+  - NORMAL:UNDERWORLD
   突变弗林鱼:
-  - TUNDRA_CAVERN
+  - TUNDRA:CAVERN
+  蝎子鱼:
+  - DESERT:SURFACE
+  碎浪蛤:
+  - SUNKEN_SEA:CAVERN
+  饮食者鱼:
+  - BRIMSTONE_CRAG:UNDERWORLD
 questRewards:
-- 金币:5:3:1
-- 蘑菇:25:10:0.6
-- 发光蘑菇:15:5:0.25
+- 金币:5:15:1
+- 钻石
 - 跳跃之瓶:1:1:0.05
-- 航鱼靴:1:1:0.03
-- 初学者鱼饵:10:5:0.5
-- 专家鱼饵:10:5:0.3
-- 大师鱼饵:10:5:0.2
+- 航鱼靴:1:1:0.05
+- 初学者鱼饵:5:10:0.5
+- 专家鱼饵:5:10:0.3
+- 大师鱼饵:5
 - 金捕虫网:1:1:0.05
 - 金钓竿:1:1:0.1

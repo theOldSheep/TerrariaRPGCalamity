@@ -1,16 +1,10 @@
 package terraria.event.listener;
 
-import lk.vexview.api.VexViewAPI;
 import lk.vexview.event.ButtonClickEvent;
-import lk.vexview.gui.VexGui;
-import lk.vexview.gui.components.VexButton;
-import lk.vexview.gui.components.VexComponents;
-import lk.vexview.gui.components.VexText;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -23,17 +17,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.metadata.Metadatable;
 import terraria.TerrariaHelper;
-import terraria.gameplay.EventAndTime;
 import terraria.util.*;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class NPCListener implements Listener {
     // some listeners to prevent bug
@@ -206,7 +192,7 @@ public class NPCListener implements Listener {
                         // buy
                         else {
                             basicWorth *= 5;
-                            int amountBuy = Math.min(clickType == 1 ? 1 : clickedItem.getMaxStackSize(),
+                            int amountBuy = Math.min(clickType == 1 ? clickedItem.getAmount() : clickedItem.getMaxStackSize(),
                                     (int) (plyMoney / basicWorth));
                             if (amountBuy <= 0)
                                 PlayerHelper.sendActionBar(ply, "§c您的余额不足以购买该物品。");
@@ -242,13 +228,13 @@ public class NPCListener implements Listener {
                     basicWorth *= 5;
                 }
                 PlayerHelper.sendActionBar(ply, "§a§l物品价值: " +
-                        GenericHelper.getCoinDisplay(GenericHelper.coinConversion(basicWorth, false),
+                        GenericHelper.getCoinDisplay(GenericHelper.coinConversion(basicWorth * clickedItem.getAmount(), false),
                                 new String[]{" §r§l■铂 ", " §e§l■金 ", " §7§l■银 ", " §c§l■铜 "}));
                 break;
             }
             case PlayerHelper.ARES_EXOSKELETON_CONFIG_PAGE_NAME: {
                 evt.setCancelled(true);
-                PlayerHelper.clickAresExoskeletonConfig(ply, upperInventory, evt.getSlot());
+                PlayerHelper.handleAresExoskeletonConfigClick(ply, upperInventory, evt.getSlot());
                 break;
             }
         }

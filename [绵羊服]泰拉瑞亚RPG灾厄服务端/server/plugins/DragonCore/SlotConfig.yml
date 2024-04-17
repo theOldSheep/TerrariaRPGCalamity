@@ -116,6 +116,12 @@ Script:
         case "核燃料棒":
           if (otherAccessoryName == "玷星之源") return true;
           break;
+        case "深渊潜游服":
+          if (otherAccessoryName == "深渊潜游装") return true;
+          break;
+        case "深渊潜游装":
+          if (otherAccessoryName == "深渊潜游服") return true;
+          break;
       }
       return false;
     }

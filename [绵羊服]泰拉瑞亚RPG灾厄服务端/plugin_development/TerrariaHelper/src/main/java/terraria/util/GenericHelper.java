@@ -134,7 +134,7 @@ public class GenericHelper {
         }
     }
     public static class StrikeLineOptions {
-        boolean displayParticle, bounceWhenHitBlock, thruWall;
+        boolean displayParticle, bounceWhenHitBlock, thruWall, vanillaParticle;
         int damageCD, lingerTime, lingerDelay, maxTargetHit;
         double damage, decayCoef, particleIntensityMulti, whipBonusCrit, whipBonusDamage;
         ParticleLineOptions particleInfo;
@@ -147,6 +147,7 @@ public class GenericHelper {
             displayParticle = true;
             bounceWhenHitBlock = false;
             thruWall = true;
+            vanillaParticle = true;
 
             damageCD = 10;
             lingerTime = 1;
@@ -170,24 +171,30 @@ public class GenericHelper {
         public StrikeLineOptions clone() {
             StrikeLineOptions result = new StrikeLineOptions();
             result
+                    // booleans
                     .setDisplayParticle(displayParticle)
                     .setBounceWhenHitBlock(bounceWhenHitBlock)
                     .setThruWall(thruWall)
+                    .setVanillaParticle(vanillaParticle)
+                    // ints
                     .setDamageCD(damageCD)
                     .setLingerTime(lingerTime)
                     .setLingerDelay(lingerDelay)
                     .setMaxTargetHit(maxTargetHit)
+                    // doubles
                     .setDamage(damage)
                     .setDecayCoef(decayCoef)
                     .setParticleIntensityMulti(particleIntensityMulti)
                     .setWhipBonusCrit(whipBonusCrit)
                     .setWhipBonusDamage(whipBonusDamage)
+                    // objects
                     .setParticleInfo(particleInfo.clone())
                     .setBlockHitFunction(blockHitFunction)
                     .setDamagedFunction(damagedFunction)
                     .setShouldDamageFunction(shouldDamageFunction);
             return result;
         }
+        // boolean setters
         public StrikeLineOptions setDisplayParticle(boolean displayParticle) {
             this.displayParticle = displayParticle;
             return this;
@@ -201,7 +208,11 @@ public class GenericHelper {
             this.thruWall = thruWall;
             return this;
         }
-
+        public StrikeLineOptions setVanillaParticle(boolean vanillaParticle) {
+            this.vanillaParticle = vanillaParticle;
+            return this;
+        }
+        // int setters
         public StrikeLineOptions setDamageCD(int damageCD) {
             this.damageCD = damageCD;
             return this;
@@ -218,7 +229,7 @@ public class GenericHelper {
             this.maxTargetHit = maxTargetHit;
             return this;
         }
-
+        // double setters
         public StrikeLineOptions setDamage(double damage) {
             this.damage = damage;
             return this;
@@ -240,7 +251,7 @@ public class GenericHelper {
             return this;
         }
 
-
+        // object setters
         public StrikeLineOptions setParticleInfo(ParticleLineOptions particleInfo) {
             this.particleInfo = particleInfo;
             return this;
@@ -516,8 +527,9 @@ public class GenericHelper {
         WorldHelper.attemptDestroyVegetation(startLoc, terminalLoc);
         // schedule lingering
         if (lingerTime > 1) {
+            double finalDamage = damage;
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                    () -> handleStrikeLineDamage(wld, startLoc, terminalLoc, width, predication, damager, advanced.damage,
+                    () -> handleStrikeLineDamage(wld, startLoc, terminalLoc, width, predication, damager, finalDamage,
                             attrMap, itemType, exceptions, lingerTime - 1, advanced),
                     lingerDelay);
         }
@@ -549,6 +561,7 @@ public class GenericHelper {
                     .setParticleColor(color)
                     .setAlpha(0.5f)
                     .setIntensityMulti(advanced.particleIntensityMulti)
+                    .setVanillaParticle(advanced.vanillaParticle)
                     .setTicksLinger(lingerTime > 1 ? (lingerTime - 1) * lingerDelay : lingerDelay);
         }
         // find terminal location ( hit block etc. )
@@ -770,8 +783,12 @@ public class GenericHelper {
         // return the answer
         return result;
     }
-    public static void displayNonDirectionalHoloItem(Location displayLoc, ItemStack item, int ticksDisplay, float size) {
+    public static String displayNonDirectionalHoloItem(Location displayLoc, ItemStack item, int ticksDisplay, float size) {
         String holoInd = "" + (nextWorldTextureIndex++);
+        displayNonDirectionalHoloItem(displayLoc, item, ticksDisplay, size, holoInd);
+        return holoInd;
+    }
+    public static void displayNonDirectionalHoloItem(Location displayLoc, ItemStack item, int ticksDisplay, float size, String holoInd) {
         // all players in radius of 64 blocks can see the hologram
         ArrayList<Player> playersSent = new ArrayList<>(10);
         for (Player p : displayLoc.getWorld().getPlayers())
@@ -780,10 +797,12 @@ public class GenericHelper {
         for (Player p : playersSent)
             CoreAPI.setPlayerWorldTextureItem(p, holoInd, displayLoc,
                     0, 0, 0, item, size * 2, true);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
-            for (Player p : playersSent)
-                CoreAPI.removePlayerWorldTexture(p, holoInd);
-        }, ticksDisplay);
+        if (ticksDisplay >= 0) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
+                for (Player p : playersSent)
+                    CoreAPI.removePlayerWorldTexture(p, holoInd);
+            }, ticksDisplay);
+        }
     }
     public static void displayHoloItem(Location displayLoc, ItemStack item, int ticksDisplay, float size, Vector displayDir, Vector rightOrthogonalDirection) {
         String holoInd = "" + (nextWorldTextureIndex++);
@@ -853,6 +872,7 @@ public class GenericHelper {
             case "Debuff_血液沸腾":
             case "Debuff_龙焰":
             case "Debuff_解离":
+            case "Debuff_血神之凋零":
                 colorCode = "4";
                 break;
             case "Debuff_暗影焰":

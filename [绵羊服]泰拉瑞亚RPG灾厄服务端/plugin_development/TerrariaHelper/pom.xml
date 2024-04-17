@@ -30,12 +30,27 @@
     </repositories>
 
     <dependencies>
+        <!--Spigot API and NMS-->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>nms-api</artifactId>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/craftbukkit/craftbukkit-1.12.2.jar</systemPath>
+        </dependency>
+        <!--Spigot API-->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.12.2-R0.1-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/craftbukkit/craftbukkit-1.12.2.jar</systemPath>
+            <scope>provided</scope>
+        </dependency>
+        <!--Bukkit API-->
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.papermc</groupId>

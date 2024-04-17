@@ -11,7 +11,7 @@
 橡实:
   item: CLAY_BALL
   lore:
-  - §r右键种树
+  - §r右键种下一棵快乐的小树
   worth: 200
   rarity: 0
 雪块:
@@ -1028,7 +1028,7 @@
   item: CLAY_BALL
   lore:
   - §r这将会是一个恐怖的夜晚...
-  - §r在夜间使用，召唤灾厄
+  - §r在夜晚使用以召唤灾厄之影
   rarity: 6
 星辉碎块:
   item: CLAY_BALL
@@ -1059,6 +1059,65 @@
   - §r在星辉信标处使用，召唤星神游龙
   - §r泰坦之心也能起到同样作用，但星核在使用时不会被消耗
   rarity: 9
+奇异信息素:
+  item: CLAY_BALL
+  lore:
+  - §r在丛林使用以召唤痴愚金龙
+  - §r“用以狩猎巨龙分支的信息素。”
+  rarity: 10
+亵渎碎片:
+  item: CLAY_BALL
+  lore:
+  - §r白天时在地狱或神圣之地使用以召唤亵渎守卫
+  - §r“她的守护者正在搜寻如此浩瀚能量的盗取者。”
+  rarity: 11
+亵渎晶核:
+  item: CLAY_BALL
+  lore:
+  - §r在神圣之地或地狱使用以召唤亵渎天神
+  - §r在不同的群落与其战斗会掉落不同的战利品
+  - §r“她的守卫的心脏，她将会用污亵的烈焰焚尽现在正掌控它的人。”
+  rarity: 11
+死灵魂炬:
+  item: CLAY_BALL
+  lore:
+  - §r在地牢使用以召唤噬魂幽花
+  - §r“幽魂的哀嚎惊动了更可怕的东西。”
+  rarity: 12
+宇宙符文:
+  item: CLAY_BALL
+  lore:
+  - §r亵渎火焰的华贵符文
+  - §r仇恨还在它的顶部燃烧
+  - §r这种能力会吸引异界的存在
+  - §r在太空，地牢和地狱使用时效果似乎有所不同……
+  rarity: 12
+宇宙之虫:
+  item: CLAY_BALL
+  lore:
+  - §r“无名的巨蟒已经准备对你动手了。”
+  rarity: 12
+圣佑烬昭龙蛋:
+  item: CLAY_BALL
+  lore:
+  - §r“巨龙正在监视与等候你的象征。”
+  rarity: 14
+金源量子冷却电池:
+  item: CLAY_BALL
+  lore:
+  - §r它的创造者已经准备好了，他希望你也准备好了
+  rarity: 15
+祭魂瓮:
+  item: CLAY_BALL
+  lore:
+  - §r召唤至尊女巫，灾厄
+  - §r“女巫不会允许这种事情再次发生。”
+  rarity: 15
+终末石:
+  item: CLAY_BALL
+  lore:
+  - §r在没有BOSS存活时激活Boss Rush模式
+  rarity: 1
 向导巫毒娃娃:
   item: LEASH
   lore:
@@ -1152,50 +1211,6 @@
     manaUseMulti: -0.08
   worth: 4000000
   rarity: 5
-测试饰品-禁止刷怪:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  attributes:
-    mobLimit: -9999
-  worth: 20000
-  rarity: 1
-测试饰品-生命再生:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  attributes:
-    regen: 2000
-  worth: 20000
-  rarity: 1
-测试饰品-伤害增加:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  attributes:
-    damageMulti: 7.5
-  worth: 20000
-  rarity: 1
-测试饰品-超高暴击:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  attributes:
-    crit: 666
-  worth: 20000
-  rarity: 1
-测试饰品-物品使用测试:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  attributes:
-    damage: 300
-    useTime: 20
-    useSpeedMulti: 20
-    crit: 35
-    projectileSpeed: 35
-  worth: 20000
-  rarity: 1
 镣铐:
   item: LEASH
   lore:
@@ -1594,7 +1609,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r提供生命再生并使治疗药水的冷却时间缩短25%
+  - §r使治疗药水的冷却时间缩短25%
   attributes:
     regen: 2
   worth: 4000000
@@ -1724,7 +1739,7 @@
   - §r[饰品]
   - §6专家模式物品
   attributes:
-    flightTimeMulti: 0.5
+    flightTimeMulti: 0.35
   worth: 10000000
   rarity: 1000
 矮人项链:
@@ -1797,6 +1812,16 @@
     flightTimeMulti: 0.2
   worth: 800000
   rarity: 3
+进升证章:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §6专家模式物品
+  attributes:
+    flightTimeMulti: 0.5
+    speedMulti: 0.1
+  worth: 24000000
+  rarity: 1000
 天羽之翼:
   item: LEASH
   lore:
@@ -1874,6 +1899,86 @@
     crit: 3
   worth: 16000000
   rarity: 10
+天界翼靴:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
+  - §r“六翼天使之靴”
+  attributes:
+    speedMulti: 0.15
+  worth: 20000000
+  rarity: 10
+龙蒿叶之翼:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
+  attributes:
+    defence: 15
+    regen: 2
+  worth: 24000000
+  rarity: 12
+极乐之翼:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
+  attributes:
+    speedMulti: 0.1
+  worth: 24000000
+  rarity: 12
+极乐翼靴:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
+  attributes:
+    speedMulti: 0.175
+  worth: 28000000
+  rarity: 14
+始源林海之翼:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
+  - §r“纯粹的自然之力”
+  attributes:
+    defence: 20
+    regen: 3
+  worth: 28000000
+  rarity: 14
+Drew之翼:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
+  - §r“山猪今天喝醉没”
+  worth: 30000000
+  rarity: 15
+炽天使翼靴:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r算作翅膀
+  - §r按住空格短暂飞行
+  - §r飞行时间结束后按住空格缓降
+  attributes:
+    speedMulti: 0.2
+  worth: 30000000
+  rarity: 15
 再生护符:
   item: LEASH
   lore:
@@ -1910,6 +2015,54 @@
     maxMana: 20
   worth: 200000
   rarity: 1
+阳炎战旗:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    damageMeleeMulti: 0.1
+    damageTrueMeleeMulti: 0.1
+    useSpeedMeleeMulti: 0.1
+  worth: 22000000
+  rarity: 11
+勇气勋章:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    damageMeleeMulti: 0.1
+    critMelee: 10
+    armorPenetration: 10
+  worth: 24000000
+  rarity: 12
+元素之握:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r近战伤害造成元素谐鸣减益
+  attributes:
+    knockbackMeleeMulti: 1
+    meleeReachMulti: 0.15
+    damageMeleeMulti: 0.15
+    critMelee: 5
+    damageTrueMeleeMulti: 0.2
+    buffInflictMelee: 元素谐鸣|80|1
+  worth: 28000000
+  rarity: 14
+星流之握:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r近战伤害造成超位崩解减益
+  attributes:
+    knockbackMeleeMulti: 1
+    meleeReachMulti: 0.15
+    damageMeleeMulti: 0.15
+    critMelee: 15
+    damageTrueMeleeMulti: 0.2
+    buffInflictMelee: 超位崩解|80|1
+  worth: 40000000
+  rarity: 16
 神射手胸针:
   item: LEASH
   lore:
@@ -1922,24 +2075,51 @@
     projectileSpeedArrowMulti: 0.2
   worth: 12000000
   rarity: 8
-灾厄符章:
+痴愚金龙干细胞:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r将大范围内的魔力星牵引向自身
   attributes:
-    damageMagicMulti: 0.15
-    maxMana: 100
-    manaUseMulti: -0.1
-  worth: 12000000
-  rarity: 8
-混乱石:
+    speedMulti: 0.1
+    damageRangedMulti: 0.1
+    critRanged: 5
+  worth: 22000000
+  rarity: 11
+虚无箭袋:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r使用魔力药水时获得魔力烧蚀而非魔力疾病
-  worth: 9600000
-  rarity: 7
+  - §r“充满比夜空更暗的物质”
+  attributes:
+    critRanged: 5
+    damageRangedMulti: 0.15
+    projectileSpeedMulti: 0.25
+  worth: 24000000
+  rarity: 12
+元素箭袋:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r远程伤害造成元素谐鸣减益
+  attributes:
+    critRanged: 10
+    damageRangedMulti: 0.15
+    projectileSpeedMulti: 0.35
+    buffInflictRanged: 元素谐鸣|80|1
+  worth: 28000000
+  rarity: 14
+星流箭袋:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r远程伤害造成超位崩解减益
+  attributes:
+    critRanged: 15
+    damageRangedMulti: 0.15
+    projectileSpeedMulti: 0.4
+    buffInflictRanged: 超位崩解|80|1
+  worth: 40000000
+  rarity: 16
 魔能谐振仪:
   item: LEASH
   lore:
@@ -1952,81 +2132,114 @@
     damageMagicMulti: 0.06
   worth: 2400000
   rarity: 4
-神圣符文:
+混乱石:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r仆从攻击敌人时，玩家将获得下列增益中的任意一个：
-  - §r神圣之辉：+6生命再生速度
-  - §r神圣之佑：增加16点防御力和4%伤害减免
-  - §r神圣之力：+10%召唤伤害
-  worth: 4800000
-  rarity: 5
+  - §r使用魔力药水时获得魔力烧蚀而非魔力疾病
+  worth: 9600000
+  rarity: 7
+灾厄符章:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r将大范围内的魔力星牵引向自身
+  attributes:
+    damageMagicMulti: 0.15
+    maxMana: 100
+    manaUseMulti: -0.1
+  worth: 12000000
+  rarity: 8
+魔能过载仪:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r手持魔法武器时对敌人造成魔法伤害则触发以下效果：
+  - §r尝试额外消耗8点魔力，若成功则使本次暴击前伤害增加60点
+  attributes:
+    regen: -10
+    maxMana: 60
+  worth: 22000000
+  rarity: 11
+空灵护符:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r将大范围内的魔力星牵引向自身
+  - §r需要时自动使用魔力药水
+  - §r“一枚无暇的护符♪”
+  attributes:
+    damageMagicMulti: 0.15
+    critMagic: 5
+    manaUseMulti: -0.1
+    maxMana: 120
+  worth: 28000000
+  rarity: 14
+魔能熔毁仪:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r使用魔力药水时获得魔力熔蚀而非魔力疾病
+  - §r魔力熔蚀在对玩家造成伤害的同时提供额外魔力恢复
+  - §r手持魔法武器时对敌人造成魔法伤害则触发以下效果：
+  - §r尝试额外消耗当前魔力的3.5%（至少为5）
+  - §r若成功，则将本次暴击前伤害提升额外魔力损耗的15倍
+  - §r实际损毁的魔力值将基于魔力熔蚀效果剩余时长减少（伤害提升不变）
+  - §r“……目光呆滞……”
+  attributes:
+    maxMana: 80
+  worth: 40000000
+  rarity: 16
 灵魂浮雕:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r仆从攻击敌人时，玩家将获得下列增益中的任意一个：
+  - §r仆从攻击敌人时，玩家将随机获得下列增益中的一个：
   - §r灵魂恢复：+4生命再生速度
   - §r灵魂防御：增加12点防御力和3%伤害减免
   - §r灵魂力量：+10%召唤伤害
   worth: 400000
   rarity: 2
-斯塔提斯的诅咒:
+神圣符文:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r召唤物命中后造成神圣之火减益
-  - §r不能与下位合成同时装备
-  attributes:
-    minionLimit: 3
-    damageSummonMulti: 0.1
-    buffInflictSummon: 神圣之火|60|1
-  worth: 20000000
-  rarity: 10
-斯塔提斯的祝福:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  - §r召唤物命中后造成神圣之火减益
-  attributes:
-    minionLimit: 2
-    damageSummonMulti: 0.1
-    buffInflictSummon: 神圣之火|60|1
-  worth: 9600000
-  rarity: 7
-始源暗影炎:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  - §r召唤物命中后造成暗影焰减益
-  attributes:
-    minionLimit: 1
-    buffInflictSummon: 暗影焰|60|1
+  - §r仆从攻击敌人时，玩家将随机获得下列增益中的一个：
+  - §r神圣之辉：+5生命再生速度
+  - §r神圣之佑：增加16点防御力和4%伤害减免
+  - §r神圣之力：+10%召唤伤害
   worth: 4800000
   rarity: 5
-玷星之源:
+幻魂神物:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r召唤物命中后造成幻星感染减益
-  - §r不能与下位合成同时装备
-  attributes:
-    minionLimit: 2
-    damageSummonMulti: 0.07
-    buffInflictSummon: 幻星感染|40|1
-  worth: 12000000
-  rarity: 8
-星爆核心:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  - §r召唤物命中后小概率造成幻星感染减益
+  - §r仆从攻击敌人时，玩家将随机获得下列增益中的一个：
+  - §r神圣之辉：+6生命再生速度
+  - §r神圣之佑：增加20点防御力和5%伤害减免
+  - §r神圣之力：+10%召唤伤害
   attributes:
     minionLimit: 1
-    buffInflictSummon: 幻星感染|40|0.1
-  worth: 9600000
-  rarity: 7
+  worth: 26000000
+  rarity: 13
+钨钢电池:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    damageSummonMulti: 0.07
+  worth: 200000
+  rarity: 1
+伏打凝胶:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r召唤物命中后有概率造成带电减益
+  attributes:
+    minionLimit: 1
+    buffInflictSummon: 带电|40|0.2
+  worth: 400000
+  rarity: 2
 凝胶充能电池:
   item: LEASH
   lore:
@@ -2048,24 +2261,175 @@
     buffInflictSummon: 辐射|40|1
   worth: 4800000
   rarity: 5
-伏打凝胶:
+始源暗影炎:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r召唤物命中后有概率造成带电减益
+  - §r召唤物命中后造成暗影焰减益
   attributes:
     minionLimit: 1
-    buffInflictSummon: 带电|40|0.2
-  worth: 400000
-  rarity: 2
-钨钢电池:
+    buffInflictSummon: 暗影焰|60|1
+  worth: 4800000
+  rarity: 5
+星爆核心:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r召唤物命中后小概率造成幻星感染减益
+  attributes:
+    minionLimit: 1
+    buffInflictSummon: 幻星感染|40|0.1
+  worth: 9600000
+  rarity: 7
+斯塔提斯的祝福:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r召唤物命中后造成神圣之火减益
+  attributes:
+    minionLimit: 2
+    damageSummonMulti: 0.1
+    buffInflictSummon: 神圣之火|60|1
+  worth: 9600000
+  rarity: 7
+玷星之源:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r召唤物命中后造成幻星感染减益
+  - §r不能与下位合成同时装备
+  attributes:
+    minionLimit: 2
+    damageSummonMulti: 0.07
+    buffInflictSummon: 幻星感染|40|1
+  worth: 12000000
+  rarity: 8
+斯塔提斯的诅咒:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r召唤物命中后造成夜魇减益
+  - §r不能与下位合成同时装备
+  attributes:
+    minionLimit: 3
+    damageSummonMulti: 0.1
+    buffInflictSummon: 夜魇|60|1
+  worth: 20000000
+  rarity: 10
+核子之源:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r召唤物命中后造成夜魇减益
+  - §r不能与下位合成同时装备
+  attributes:
+    minionLimit: 4
+    damageSummonMulti: 0.15
+    buffInflictSummon: 夜魇|60|1
+  worth: 28000000
+  rarity: 14
+余烬挽歌:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r召唤物命中后造成孱弱巫咒减益
+  - §#C61B40“女巫是罪人，自己的罪人，她将自己拖入无尽的因果苦海。
+  - §#C61B40念想中的恶魔一直安静着，等待着，直到终结。”
+  attributes:
+    damageSummonMulti: 0.25
+    buffInflictSummon: 孱弱巫咒|40|1
+  worth: 40000000
+  rarity: 16
+惧魂神物:
   item: LEASH
   lore:
   - §r[饰品]
   attributes:
-    damageSummonMulti: 0.07
-  worth: 200000
-  rarity: 1
+    useSpeedMeleeMulti: 0.1
+    projectileSpeedMulti: 0.1
+    minionLimit: 1
+    manaUseMulti: -0.15
+    buffImmune: 死亡低语
+  worth: 22000000
+  rarity: 11
+渎魂神物:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r使你的召唤物附带神圣之火debuff
+  attributes:
+    regen: 6
+    barrierMax: 50
+    minionLimit: 1
+    buffInflictSummon: 神圣之火|30|1
+  worth: 24000000
+  rarity: 12
+维魂神物:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r“致命失误！”
+  attributes:
+    damageMulti: 0.25
+    damageTakenMulti: 0.15
+  worth: 28000000
+  rarity: 14
+圣魂神物:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r“忠！诚！”
+  attributes:
+    minionLimit: 2
+    damageSummonMulti: 0.1
+  worth: 30000000
+  rarity: 15
+深渊护身符:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r你的任何攻击都会附带深渊水压减益
+  - §r“直到深海的尽头……”
+  attributes:
+    buffInflict: 深渊水压|40|1
+  worth: 800000
+  rarity: 3
+焦热地狱:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r你的任何攻击都会附带硫磺火减益
+  attributes:
+    buffInflict: 硫磺火|80|1
+  worth: 4800000
+  rarity: 5
+灾劫虚空:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    damageMulti: 0.2
+    damageTakenMulti: 0.1
+  worth: 9600000
+  rarity: 7
+终结虚空:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    damageMulti: 0.15
+    buffImmune: 硫磺火
+  worth: 12000000
+  rarity: 8
+腐烂之脑:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    damageMulti: 0.1
+    damageTakenMulti: -0.03
+  worth: 800000
+  rarity: 3
 融合之脑:
   item: LEASH
   lore:
@@ -2074,16 +2438,20 @@
     damageMulti: 0.1
     crit: 3
     damageSummonMulti: 0.03
+    damageTakenMulti: -0.04
   worth: 2400000
   rarity: 4
-腐烂之脑:
+聚合之脑:
   item: LEASH
   lore:
   - §r[饰品]
   attributes:
-    damageMulti: 0.1
-  worth: 800000
-  rarity: 3
+    damageMulti: 0.15
+    crit: 5
+    damageSummonMulti: 0.05
+    damageTakenMulti: -0.05
+  worth: 28000000
+  rarity: 14
 旱海鲨牙项链:
   item: LEASH
   lore:
@@ -2093,6 +2461,16 @@
     damageMulti: 0.06
   worth: 9600000
   rarity: 7
+猎魂鲨齿项链:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r取自顶级掠食者的恐怖战利品
+  attributes:
+    armorPenetration: 30
+    damageMulti: 0.15
+  worth: 26000000
+  rarity: 13
 恼怒项链:
   item: LEASH
   lore:
@@ -2100,6 +2478,44 @@
   - §r当玩家的生命值低于50%时，伤害增加20%
   worth: 12000000
   rarity: 7
+蚀日尊戒:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r蕴含着日蚀之阴的力量
+  attributes:
+    damageMulti: 0.12
+    regen: 2
+    minionLimit: 2
+    defence: 10
+  worth: 28000000
+  rarity: 14
+灾厄:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r攻击将附带孱弱巫咒减益，造成伤害的同时削弱敌人的护甲与伤害抗性
+  attributes:
+    damageMulti: 0.15
+    buffInflict: 孱弱巫咒|30|1
+  worth: 30000000
+  rarity: 15
+幻灭心元石:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r幻灭于不可知的仇恨中，它仍然包含着归一心元石大部分的力量......
+  attributes:
+    crit: 10
+    damageMulti: 0.2
+    maxHealthMulti: -0.1
+    regen: -6
+    damageTakenMulti: 0.05
+    defence: -20
+    speedMulti: 0.1
+    flightTimeMulti: 0.2
+  worth: 40000000
+  rarity: 16
 利维坦龙涎香:
   item: LEASH
   lore:
@@ -2110,34 +2526,6 @@
     defence: 20
   worth: 9600000
   rarity: 7
-终结虚空:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  - §r免疫硫磺火减益
-  attributes:
-    damageMulti: 0.12
-    buffImmune: 硫磺火
-  worth: 12000000
-  rarity: 8
-灾劫虚空:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  attributes:
-    damageMulti: 0.12
-    damageTakenMulti: 0.1
-  worth: 9600000
-  rarity: 7
-焦热地狱:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  - §r你的任何攻击都会附带硫磺火减益
-  attributes:
-    buffInflict: 硫磺火|80|1
-  worth: 4800000
-  rarity: 5
 归一心元石:
   item: LEASH
   lore:
@@ -2152,6 +2540,27 @@
   - §r感谢众多支持者的努力，让泰拉瑞亚以及灾厄成为现实
   worth: 12000000
   rarity: 1000
+海之盾:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    defence: 4
+    regen: 4
+    speedMulti: 0.1
+  worth: 7200000
+  rarity: 5
+宝光盾牌:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r双击一个方向可以冲刺
+  attributes:
+    defence: 16
+    damageTakenMulti: -0.08
+    maxHealth: 40
+  worth: 7200000
+  rarity: 5
 阿斯加德之英勇:
   item: LEASH
   lore:
@@ -2164,37 +2573,56 @@
     knockbackResistance: 1
   worth: 9600000
   rarity: 7
-宝光盾牌:
+极乐之庇护:
   item: LEASH
   lore:
   - §r[饰品]
   - §r双击一个方向可以冲刺
   attributes:
-    defence: 16
-    damageTakenMulti: -0.08
-    maxHealth: 40
-  worth: 7200000
-  rarity: 5
-海之盾:
+    defence: 32
+    damageTakenMulti: -0.05
+    knockbackResistance: 1
+    buffImmune: 燃烧|霜火|狱炎|咒火|暗影焰|硫磺火|破晓|夜魇|神圣之火
+  worth: 24000000
+  rarity: 12
+阿斯加德之庇护:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r双击一个方向可以冲刺
   attributes:
-    defence: 4
-    regen: 4
-    speedMulti: 0.1
-  worth: 7200000
-  rarity: 5
+    defence: 40
+    damageTakenMulti: -0.1
+    knockbackResistance: 1
+    buffImmune: 燃烧|霜火|狱炎|咒火|暗影焰|硫磺火|破晓|夜魇|神圣之火|弑神怒焰
+  worth: 28000000
+  rarity: 14
 神圣护符:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r提供生命恢复并减少治疗药水的冷却时间
+  - §r减少治疗药水的冷却时间
   attributes:
     regen: 2
     invulnerabilityTick: 8
   worth: 16000000
   rarity: 9
+神之壁垒:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r减少治疗药水的冷却时间
+  - §r当团队中附近玩家受伤时，若生命值高于25%则在计算一切减免前：
+  - §r-> 受到相当于本次伤害5%的真实伤害
+  - §r-> 使本次伤害降低15%
+  - §r你受到的伤害无法被其他玩家以此方式减少
+  - §r生命值低于一半时减少受到的伤害
+  attributes:
+    regen: 2
+    invulnerabilityTick: 10
+    knockbackResistance: 1
+  worth: 28000000
+  rarity: 14
 血契:
   item: LEASH
   lore:
@@ -2211,13 +2639,39 @@
   - §r减半接触伤害，此效果有20秒冷却时间
   worth: 12000000
   rarity: 8
+血炎晶核:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r受到伤害时会按照最终伤害损失防御
+  - §r因此损失的防御会随着时间流逝而逐渐恢复
+  - §r每恢复1点防御便为你回复1点生命值
+  - §r只对超过50点的伤害有效
+  - §r“哦天哪！那是接近的！”
+  worth: 24000000
+  rarity: 12
+血神圣杯:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r伤害结算前会分别进行以下尝试：
+  - §r-> 试图损失至多为最终伤害75%的防御
+  - §r-> 短暂恢复最多为最终伤害95%的生命值，但成功恢复的生命值将被快速扣除
+  - §r因此损失的防御会随着时间流逝而逐渐恢复
+  - §r每恢复1点防御便为你回复1点生命值
+  - §r只对超过100点的伤害有效
+  - §r“竟然为了一滴血付出了这么多”
+  attributes:
+    maxHealthMulti: 0.25
+  worth: 28000000
+  rarity: 14
 钨钢屏障生成仪:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r为你提供一个钨钢屏障
-  - §r屏障在吸收80点伤害后破碎，破碎后进入20秒冷却
-  - §r屏障存在时你额外获得20防御
+  - §r拥有屏障时额外获得20防御
+  attributes:
+    barrierMax: 50
   worth: 200000
   rarity: 1
 阴阳吸星石:
@@ -2228,10 +2682,29 @@
     maxHealth: 40
     maxMana: 20
     speedMulti: 0.05
-    damageTakenMulti: -0.15
+    damageTakenMulti: -0.1
     regen: 4
   worth: 16000000
   rarity: 9
+化绵留香石:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r屏障激活时会提供40点防御并降低7.5%所受伤害
+  attributes:
+    barrierMax: 360
+  worth: 28000000
+  rarity: 14
+嘉登之心:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r屏障激活时会提供6生命再生并降低10%所受伤害
+  - §r“纳米机器，小子。”
+  attributes:
+    barrierMax: 275
+  worth: 30000000
+  rarity: 15
 舐火甲壳:
   item: LEASH
   lore:
@@ -2246,11 +2719,70 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r免疫硫磺火减益
   attributes:
     buffImmune: 硫磺火
   worth: 4800000
   rarity: 5
+星云之核:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r受到致死伤害前会受到相当于本次伤害最终值1.75倍的治疗效果
+  - §r此效果有180秒冷却时间，最低治疗量为200
+  attributes:
+    damageMulti: 0.1
+  worth: 28000000
+  rarity: 14
+魔君的礼物:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r神的力量蕴藏于其中
+  attributes:
+    defence: 45
+    damageMulti: 0.15
+    speedMulti: 0.1
+  worth: 30000000
+  rarity: 15
+海波项链:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    waterAffinity: 1
+  worth: 400000
+  rarity: 2
+海波纹章:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    waterAffinity: 2
+    defence: 20
+    speedMulti: -0.05
+  worth: 4800000
+  rarity: 5
+深渊潜游装:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    waterAffinity: 3.5
+    defence: 25
+    speedMulti: -0.05
+  worth: 9000000
+  rarity: 6
+深渊潜游服:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r不可与深渊潜游装同时装备
+  attributes:
+    waterAffinity: 5
+    defence: 25
+    barrierMax: 100
+  worth: 22000000
+  rarity: 11
 钓鱼竿:
   item: FISHING_ROD
   lore:
@@ -7574,18 +8106,6 @@ Dodu的手炮:
     manaUse: 30
   worth: 1500000
   rarity: 3
-邪恶三叉戟:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 130
-    damageType: Magic
-    crit: 4
-    projectileSpeed: 13
-    knockback: 6.5
-    useTime: 17
-    manaUse: 19
-  worth: 10000000
-  rarity: 5
 激光步枪:
   item: DIAMOND_SWORD
   attributes:
@@ -7624,6 +8144,30 @@ Dodu的手炮:
     manaUse: 17
   worth: 6000000
   rarity: 4
+水晶蛇:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 80
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 13
+    knockback: 4.4
+    useTime: 29
+    manaUse: 9
+  worth: 4000000
+  rarity: 5
+邪恶三叉戟:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 130
+    damageType: Magic
+    crit: 4
+    projectileSpeed: 13
+    knockback: 6.5
+    useTime: 17
+    manaUse: 19
+  worth: 10000000
+  rarity: 5
 爆裂藤蔓:
   item: DIAMOND_SWORD
   attributes:
@@ -7803,7 +8347,7 @@ Dodu的手炮:
     damage: 260
     damageType: Magic
     crit: 4
-    projectileSpeed: 13
+    projectileSpeed: 8
     knockback: 0
     useTime: 12
     manaUse: 12
@@ -7969,7 +8513,7 @@ Dodu的手炮:
   attributes:
     damage: 44
     damageType: Magic
-    projectileSpeed: 36
+    projectileSpeed: 20
     crit: 4
     knockback: 5
     useTime: 30
@@ -11720,33 +12264,33 @@ Dodu的手炮:
     defence: 12
   worth: 450000
   rarity: 1
-死灵头盔:
+熔岩头盔:
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
   attributes:
-    defence: 12
-    damageRangedMulti: 0.05
+    defence: 16
+    critMelee: 7
   worth: 900000
-  rarity: 2
-死灵胸甲:
+  rarity: 3
+熔岩胸甲:
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
   attributes:
-    defence: 14
-    damageRangedMulti: 0.05
+    defence: 18
+    damageMeleeMulti: 0.07
   worth: 600000
-  rarity: 2
-死灵护胫:
+  rarity: 3
+熔岩护胫:
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
   attributes:
-    defence: 12
-    damageRangedMulti: 0.05
+    defence: 16
+    useSpeedMeleeMulti: 0.07
   worth: 600000
-  rarity: 2
+  rarity: 3
 天蓝战盔:
   item: IRON_HELMET
   lore:
@@ -11803,33 +12347,33 @@ Dodu的手炮:
     speedMulti: 0.24
   worth: 800000
   rarity: 3
-熔岩头盔:
+死灵头盔:
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
   attributes:
-    defence: 16
-    critMelee: 7
+    defence: 12
+    damageRangedMulti: 0.05
   worth: 900000
-  rarity: 3
-熔岩胸甲:
+  rarity: 2
+死灵胸甲:
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
   attributes:
-    defence: 18
-    damageMeleeMulti: 0.07
+    defence: 14
+    damageRangedMulti: 0.05
   worth: 600000
-  rarity: 3
-熔岩护胫:
+  rarity: 2
+死灵护胫:
   item: DIAMOND_LEGGINGS
   lore:
   - §r[装备]
   attributes:
-    defence: 16
-    useSpeedMeleeMulti: 0.07
+    defence: 12
+    damageRangedMulti: 0.05
   worth: 600000
-  rarity: 3
+  rarity: 2
 斯塔提斯战盔:
   item: IRON_HELMET
   lore:
@@ -12133,26 +12677,6 @@ Dodu的手炮:
     speedMulti: 0.05
   worth: 1800000
   rarity: 4
-代达罗斯胸甲:
-  item: DIAMOND_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 38
-    damageMulti: 0.03
-    crit: 3
-  worth: 4800000
-  rarity: 5
-代达罗斯护胫:
-  item: DIAMOND_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 30
-    crit: 3
-    speedMulti: 0.1
-  worth: 4800000
-  rarity: 5
 代达罗斯头盔:
   item: DIAMOND_HELMET
   lore:
@@ -12193,6 +12717,26 @@ Dodu的手炮:
   attributes:
     defence: 6
     damageSummonMulti: 0.05
+  worth: 4800000
+  rarity: 5
+代达罗斯胸甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 38
+    damageMulti: 0.03
+    crit: 3
+  worth: 4800000
+  rarity: 5
+代达罗斯护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 30
+    crit: 3
+    speedMulti: 0.1
   worth: 4800000
   rarity: 5
 神圣头饰:
@@ -13260,6 +13804,7 @@ Dodu的手炮:
   item: PAPER
   lore:
   - §a右键打开存钱罐
+  - §r背包中有钱币槽时死亡掉落钱币数量大大降低
   worth: 2000000
   rarity: 3
 虚空袋:
@@ -13267,6 +13812,14 @@ Dodu的手炮:
   lore:
   - §b右键打开虚空袋
   - §b虚空袋中的弹药将会被优先消耗
+  worth: 2000000
+  rarity: 3
+垃圾桶:
+  item: PAPER
+  lore:
+  - §2右键打开垃圾桶
+  - §2拾取物品时，若垃圾桶中有同类物品则直接销毁
+  - §c警告：不同宝藏袋均视为同类物品，请勿将宝藏袋放入垃圾桶
   worth: 2000000
   rarity: 3
 空瓶:
@@ -13291,14 +13844,14 @@ Dodu的手炮:
 战斗药水:
   item: CLAY_BALL
   lore:
-  - §a刷怪的数量上限增加
+  - §a刷怪的效率和数量上限增加
   - §a7分钟持续时间
   worth: 20000
   rarity: 1
 镇静药水:
   item: CLAY_BALL
   lore:
-  - §a刷怪的数量上限和效率减少
+  - §a刷怪的数量上限和倍率减少
   - §a8分钟持续时间
   worth: 20000
   rarity: 1
@@ -13312,8 +13865,9 @@ Dodu的手炮:
 鱼鳃药水:
   item: CLAY_BALL
   lore:
-  - §a水下呼吸
-  - §a4分钟持续时间
+  - §a增加水下适应性
+  - §a获得水下视野
+  - §a6分钟持续时间
   worth: 20000
   rarity: 1
 隐身药水:
@@ -13412,6 +13966,47 @@ Dodu的手炮:
   - §a饮用后可以请求TP到玩家身边
   worth: 20000
   rarity: 1
+树之祭祀:
+  item: CLAY_BALL
+  lore:
+  - §r右键木板或树木使用，摧毁它并获得生命再生效果
+  - §r对木板使用时为10秒，对树木使用时为16秒
+  - §r可于建材商人处购买更多
+  - §r“是的，它严重减缓了我的工作效率”
+  worth: 600
+  rarity: 2
+虫潮药水:
+  item: CLAY_BALL
+  lore:
+  - §a刷怪的倍率和数量上限增加
+  - §a15分钟持续时间
+  - §r建议和战斗药水、磁力药水同时使用
+  worth: 400000
+  rarity: 4
+禅定药水:
+  item: CLAY_BALL
+  lore:
+  - §a刷怪的倍率和数量上限减少
+  - §a15分钟持续时间
+  worth: 400000
+  rarity: 4
+磁力药水:
+  item: CLAY_BALL
+  lore:
+  - §a使你将大范围内的物品吸入囊中
+  - §a15分钟持续时间
+  - §r“桌面清理大师”
+  worth: 20000
+  rarity: 1
+无尽吞噬药水:
+  item: CLAY_BALL
+  lore:
+  - §a使你将极大范围内的物品吸入囊中
+  - §a15分钟持续时间
+  - §a无法与磁力药水效果叠加
+  - §r“暴风吸入”
+  worth: 400000
+  rarity: 13
 蜂蜜瓶:
   item: CLAY_BALL
   lore:
@@ -13442,6 +14037,48 @@ Dodu的手炮:
   - §r使用回复400生命值
   worth: 300000
   rarity: 7
+至尊治疗药水:
+  item: CLAY_BALL
+  lore:
+  - §r使用回复500生命值
+  worth: 1300000
+  rarity: 11
+终极治疗药水:
+  item: CLAY_BALL
+  lore:
+  - §r使用回复600生命值
+  worth: 2500000
+  rarity: 14
+弱效魔力药水:
+  item: CLAY_BALL
+  lore:
+  - §r使用回复50法力值
+  worth: 2000
+  rarity: 0
+魔力药水:
+  item: CLAY_BALL
+  lore:
+  - §r使用回复100法力值
+  worth: 5000
+  rarity: 1
+强效魔力药水:
+  item: CLAY_BALL
+  lore:
+  - §r使用回复200法力值
+  worth: 10000
+  rarity: 3
+超级魔力药水:
+  item: CLAY_BALL
+  lore:
+  - §r使用回复300法力值
+  worth: 30000
+  rarity: 4
+至尊魔力药水:
+  item: CLAY_BALL
+  lore:
+  - §r使用回复400法力值
+  worth: 1300000
+  rarity: 11
 恢复药水:
   item: CLAY_BALL
   lore:
@@ -13459,6 +14096,7 @@ Dodu的手炮:
   item: CLAY_BALL
   lore:
   - §r使用增加25生命值上限
+  - §r“它是鲜活的，使我感受到生命”
   worth: 1500000
   rarity: 2
 生命果:
@@ -13482,6 +14120,20 @@ Dodu的手炮:
   - §r永久增加50点最大生命值，仅能使用一次
   - §r仅在使用过血橙后才能使用
   rarity: 8
+旧神浆果:
+  item: CLAY_BALL
+  lore:
+  - §r摸上去像是土做的，尝起来酸甜香浓
+  - §r永久增加50点最大生命值，仅能使用一次
+  - §r仅在使用过奇迹之果后才能使用
+  rarity: 12
+龙果:
+  item: CLAY_BALL
+  lore:
+  - §r尽管味道有些寡淡，但这味道绝对堪称是种全新的体验
+  - §r永久增加50点最大生命值，仅能使用一次
+  - §r仅在使用过旧神浆果后才能使用
+  rarity: 15
 魔力星:
   item: CLAY_BALL
   lore:
@@ -13500,6 +14152,12 @@ Dodu的手炮:
   - §r永久增加50点最大魔力值，仅能使用一次
   - §r仅在使用过彗星碎片后才能使用
   rarity: 10
+幻影之心:
+  item: CLAY_BALL
+  lore:
+  - §r永久增加50点最大魔力值，仅能使用一次
+  - §r仅在使用过飘渺之核后才能使用
+  rarity: 13
 恶魔之心:
   item: CLAY_BALL
   lore:
@@ -13780,6 +14438,13 @@ Dodu的手炮:
   - §r666 饵力
   worth: 10000000
   rarity: 3
+血蠕虫:
+  item: RABBIT_HIDE
+  lore:
+  - §r右键放生此小动物
+  - §r4444 饵力
+  worth: 500000
+  rarity: 13
 捕虫网:
   item: STICK
   worth: 20000
@@ -13812,30 +14477,6 @@ Dodu的手炮:
   - §r使用回复40生命值
   worth: 400
   rarity: 0
-弱效魔力药水:
-  item: CLAY_BALL
-  lore:
-  - §r使用回复50法力值
-  worth: 2000
-  rarity: 0
-魔力药水:
-  item: CLAY_BALL
-  lore:
-  - §r使用回复100法力值
-  worth: 5000
-  rarity: 1
-强效魔力药水:
-  item: CLAY_BALL
-  lore:
-  - §r使用回复200法力值
-  worth: 10000
-  rarity: 3
-超级魔力药水:
-  item: CLAY_BALL
-  lore:
-  - §r使用回复300法力值
-  worth: 30000
-  rarity: 4
 祭坛:
   item: ENCHANTMENT_TABLE
   worth: 600000
@@ -13901,51 +14542,113 @@ Dodu的手炮:
 钩爪:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按空格收回钩爪
+  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 400000
   rarity: 1
 失谐钩爪:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按空格收回钩爪
+  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 5000000
   rarity: 4
 刺钩:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按空格收回钩爪
+  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 6000000
   rarity: 5
 阴森钩:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按空格收回钩爪
+  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 4000000
   rarity: 7
 圣诞钩:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按空格收回钩爪
+  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 4000000
   rarity: 7
 月钩:
   item: LEASH
   lore:
-  - §r放置在副手，按R射出钩爪，按空格收回钩爪
+  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 10000000
   rarity: 4
 冰冻火把:
   item: TORCH
   worth: 1200
   rarity: 0
+矿车:
+  item: IRON_INGOT
+  lore:
+  - §r在主手时，右键铁轨将乘坐普通矿车
+  worth: 100000
+  rarity: 1
 机械矿车:
   item: IRON_INGOT
+  lore:
+  - §6专家模式物品
+  - §r在主手时，右键铁轨将乘坐机械矿车
   worth: 3000000
-  rarity: 3
+  rarity: 1000
 彩虹猫矿车:
   item: IRON_INGOT
+  lore:
+  - §r在主手时，右键铁轨将乘坐彩虹猫矿车
   worth: 10000000
   rarity: 10
+神明矿车:
+  item: IRON_INGOT
+  lore:
+  - §r在主手时，右键铁轨将乘坐神明矿车
+  worth: 30000000
+  rarity: 14
+黏鞍:
+  item: IRON_INGOT
+  lore:
+  - §r[坐骑]
+  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐史莱姆坐骑
+  - §r“亡了亡了，我没有史莱姆ang啊”
+  worth: 5000000
+  rarity: 8
+恩赐苹果:
+  item: IRON_INGOT
+  lore:
+  - §r[坐骑]
+  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐独角兽坐骑
+  - §r“创似他，克利希娜！”
+  worth: 5000000
+  rarity: 8
+明胶鞍:
+  item: IRON_INGOT
+  lore:
+  - §r[坐骑]
+  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐羽翼史莱姆坐骑
+  worth: 5000000
+  rarity: 8
+女巫扫帚:
+  item: IRON_INGOT
+  lore:
+  - §r[坐骑]
+  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐女巫扫帚
+  worth: 5000000
+  rarity: 10
+虾松露:
+  item: IRON_INGOT
+  lore:
+  - §r[坐骑]
+  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐猪龙鱼坐骑
+  worth: 5000000
+  rarity: 10
+星流之盒:
+  item: IRON_INGOT
+  lore:
+  - §r[坐骑]
+  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐星流飞椅
+  - §r坐在飞椅上时按住星流飞椅减速键[默认为X]将会以较低速度飞行
+  worth: 30000000
+  rarity: 15
 日耀天塔柱:
   item: STICK
   lore:
@@ -14101,6 +14804,60 @@ Dodu的手炮:
   - §r右键点击可打开
   worth: 2000000
   rarity: 3
+天空匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+绿洲匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+冰冻匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+海洋匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+丛林匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+腐化匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+黑曜石匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+地牢匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+神圣匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
 装甲洞穴鱼:
   item: RAW_FISH
   worth: 150000
@@ -14133,6 +14890,10 @@ Dodu的手炮:
   item: RAW_FISH
   worth: 150000
   rarity: 1
+闪鳍锦鲤:
+  item: RAW_FISH
+  worth: 500000
+  rarity: 2
 七彩矿鱼:
   item: RAW_FISH
   worth: 1000000
@@ -14169,6 +14930,133 @@ Dodu的手炮:
   item: RAW_FISH
   worth: 150000
   rarity: 1
+填充草药鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“它的肚子里装满了各式草药和种子”
+  worth: 500000
+  rarity: 2
+闪光宝石鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“它不仅看起来像颗钻石”
+  worth: 500000
+  rarity: 2
+日光鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“它沐浴在空岛的日光中”
+  worth: 100000
+  rarity: 2
+冰川鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“它带有来自冰川的严寒”
+  worth: 100000
+  rarity: 2
+混乱鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“它的角将诅咒任何触碰它的人”
+  worth: 100000
+  rarity: 2
+飞翔之鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“钓鱼让你飞起来”
+  worth: 1000000
+  rarity: 3
+光明之鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“它在神圣的光晕中遨游”
+  worth: 1000000
+  rarity: 3
+暗影之鱼:
+  item: RAW_FISH
+  lore:
+  - §r右键点击可打开
+  - §r“它在腐化的暗影中寻得庇护”
+  worth: 1000000
+  rarity: 3
+硫海匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+沉沦匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+硫磺火匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+星幻匣:
+  item: CLAY_BALL
+  lore:
+  - §r右键点击可打开
+  worth: 1000000
+  rarity: 2
+棱晶孔雀鱼:
+  item: RAW_FISH
+  lore:
+  - §r鳞片闪烁着水晶的微光
+  worth: 50000
+  rarity: 2
+硫火崖回鱼:
+  item: RAW_FISH
+  lore:
+  - §r岩浆中的鱼儿，味道刺激，无需调味
+  - §r对于能够在硫火熔岩中遨游的鱼儿而言，地狱中普通的岩浆更是得心应手
+  worth: 50000
+  rarity: 1
+北河三烁光鱼:
+  item: RAW_FISH
+  lore:
+  - §r“建议高温消毒后食用”
+  worth: 50000
+  rarity: 1
+毕宿五灰西鲱:
+  item: RAW_FISH
+  lore:
+  - §r被幻星击中的一条鱼
+  worth: 80000
+  rarity: 1
+海岸恶魔鱼:
+  item: RAW_FISH
+  lore:
+  - §r它的角将诅咒任何触碰它的人
+  worth: 80000
+  rarity: 1
+南河三明虾:
+  item: RAW_FISH
+  worth: 50000
+  rarity: 1
+焦黑鞭笞者:
+  item: RAW_FISH
+  lore:
+  - §r这条稀有的鱼可以卖个好价钱
+  worth: 10000000
+  rarity: 3
+绿波泥鳅:
+  item: RAW_FISH
+  lore:
+  - §r应该会有人出高价买下它
+  worth: 10000000
+  rarity: 3
 天使鱼:
   item: RAW_FISH
   worth: 2000000
@@ -14209,9 +15097,34 @@ Dodu的手炮:
   item: RAW_FISH
   worth: 2000000
   rarity: 3
+蝎子鱼:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
+碎浪蛤:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
+饮食者鱼:
+  item: RAW_FISH
+  worth: 2000000
+  rarity: 3
 蜂蜜鱼:
   item: RAW_FISH
   lore:
   - §r使用回复240生命值
   worth: 80000
   rarity: 1
+血鳍:
+  item: RAW_FISH
+  lore:
+  - §r使用回复480生命值
+  - §r给予增益，提升生命再生效果10秒钟
+  worth: 5000000
+  rarity: 12
+附魔星鱼:
+  item: RAW_FISH
+  lore:
+  - §r永久提升魔力上限20点
+  worth: 500000
+  rarity: 2

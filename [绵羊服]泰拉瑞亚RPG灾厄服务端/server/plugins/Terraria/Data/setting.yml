@@ -110,6 +110,8 @@ deathMessages:
   - <victim> 在英灵殿中安息
   - <victim> 在死后的世界冲浪
   - <victim> 的运气用光了
+  - <victim> 满身疮痍
+  - <victim> 面带安详
   - <victim> 被登dua郎
   - <victim> 心花怒放
   - <victim> 脑洞大开
@@ -148,12 +150,14 @@ deathMessages:
   - <victim> 被烧成了焦炭
   - <victim> 被烧得只剩渣了
   - <victim> 成了全熟牛排
-  Debuff_咒火:
+  Debuff_霜火:
   - <victim> 无法把火扑灭
   - <victim> 被烧成了焦炭
   - <victim> 被烧得只剩渣了
   - <victim> 成了全熟牛排
-  Debuff_霜火:
+  Debuff_狱炎:
+  - <victim> 被狱火吞噬了
+  Debuff_咒火:
   - <victim> 无法把火扑灭
   - <victim> 被烧成了焦炭
   - <victim> 被烧得只剩渣了
@@ -169,28 +173,64 @@ deathMessages:
   - <victim> 变成了电池
   - <victim> 的生命力从正变负
   - <victim> 成了避雷针
+  Debuff_深渊水压:
+  - <victim> 被压力碾碎了
+  - <victim> 的肺坍缩成了一团
+  Debuff_血液沸腾:
+  - <victim> 血如泉涌
   Debuff_硫磺火:
   - <victim> 被漆黑的烈焰燃尽
   Debuff_辐射:
   - <victim> 死于辐射
-  Debuff_孱弱巫咒:
-  - <victim> 被硫磺烈焰烧焦了
   Debuff_幻星感染:
   - <victim> 成为了星辉瘟疫的一部分
+  - <victim> 的皮肤被星体病毒侵蚀了
   Debuff_瘟疫:
   - <victim> 的血肉被瘟疫所融化
   - <victim> 已无药可医
+  Debuff_破晓:
+  - <victim> 被日耀射线焚烧殆尽
   Debuff_神圣之火:
   - <victim> 被自己的罪孽吞噬了
   Debuff_夜魇:
   - <victim> 被月之射线焚烧殆尽
+  Debuff_元素谐鸣:
+  - <victim> 融入了元素交响乐
+  Debuff_硫磺海剧毒:
+  - <victim> 被剧毒废物融化了
+  Debuff_弑神怒焰:
+  - <victim> 的灵魂消散了
+  Debuff_龙焰:
+  - <victim> 离解成灰
+  Debuff_超位崩解:
+  - <victim> 被奇迹般的科技进步扫进了历史的垃圾堆
+  - <victim> 与星流能量共振而塌缩了
+  Debuff_孱弱巫咒:
+  - <victim> 被硫磺烈焰烧焦了
+  Debuff_解离:
+  - <victim> 的灵魂已支离破碎
+  Debuff_血神之凋零:
+  - <victim> 成为了血神的祭品
+  NegRegen_魔力烧蚀:
+  - <victim> 被魔力焚毁
+  NegRegen_魔力熔蚀:
+  - <victim> 被魔力融化
+  NegRegen_魔能谐振仪:
+  - <victim> 的生命完全升华为了魔力
+  - <victim> 与魔力合为一体
+  NegRegen_魔能过载仪:
+  - <victim> 的身形被过载的魔法摧毁了
+  NegRegen_幻灭心元石:
+  - <victim> 于仇恨中幻灭
 settings:
   playerInventories:
   - piggyBank
   - voidBag
+  - trashBin
   playerInventoryTitles:
     piggyBank: §a§l存钱罐
     voidBag: §b§l虚空袋
+    trashBin: §b§l垃圾桶
 BossDefeatTime:
   史莱姆王: 1200
   荒漠灾虫: 1200

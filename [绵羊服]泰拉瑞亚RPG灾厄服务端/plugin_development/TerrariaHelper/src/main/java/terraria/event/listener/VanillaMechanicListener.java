@@ -8,25 +8,24 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftFish;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.ExplosionPrimeEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.projectiles.ProjectileSource;
+import org.spigotmc.event.entity.EntityDismountEvent;
 import terraria.TerrariaHelper;
 import terraria.entity.others.TerrariaFishingHook;
 import terraria.util.*;
@@ -68,13 +67,6 @@ public class VanillaMechanicListener implements Listener {
         }
     }
     @EventHandler(priority = EventPriority.LOW)
-    public void onDismount(VehicleExitEvent evt) {
-        if (evt.isCancelled())
-            return;
-        if (evt.getExited() instanceof Player)
-            evt.getVehicle().remove();
-    }
-    @EventHandler(priority = EventPriority.LOW)
     public void onEntityDeath(EntityDeathEvent evt) {
         evt.setDroppedExp(0);
         evt.getDrops().clear();
@@ -88,6 +80,15 @@ public class VanillaMechanicListener implements Listener {
         e.setCancelled(true);
     }
     @EventHandler(priority = EventPriority.NORMAL)
+    public void onAirChange(EntityAirChangeEvent e) {
+        if (e.getEntity() instanceof Player) {
+            Player ply = (Player) e.getEntity();
+            MetadataValue mtv = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR);
+            if (mtv != null && e.getAmount() != mtv.asInt())
+                e.setCancelled(true);
+        }
+    }
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onTeleport(PlayerTeleportEvent e) {
         // no teleport from those reasons
         switch (e.getCause()) {
@@ -97,17 +98,27 @@ public class VanillaMechanicListener implements Listener {
             case SPECTATE:
                 e.setCancelled(true);
         }
-        // remove sentries and minions on teleport to somewhere far away ( another world or 30 blocks away )
-        if (! e.isCancelled() &&
-                (e.getFrom().getWorld() != e.getTo().getWorld() || e.getFrom().distanceSquared(e.getTo()) > 900) ) {
-            for (Entity entity :
-                    ((ArrayList<Entity>) EntityHelper.getMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_SENTRY_LIST).value()) ) {
-                entity.remove();
+        // remove sentries, minions and mount
+        if (! e.isCancelled()) {
+            double distSqr = e.getFrom().getWorld() != e.getTo().getWorld() ? Double.MAX_VALUE :
+                            e.getFrom().distanceSquared(e.getTo());
+            // remove sentry and minion on teleport to somewhere far away ( another world or 30 blocks away )
+            if (distSqr > 900) {
+                // sentry
+                for (Entity entity :
+                        ((ArrayList<Entity>) EntityHelper.getMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_SENTRY_LIST).value()) ) {
+                    entity.remove();
+                }
+                // minion
+                for (Entity entity :
+                        ((ArrayList<Entity>) EntityHelper.getMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_MINION_LIST).value()) ) {
+                    entity.remove();
+                }
             }
-            for (Entity entity :
-                    ((ArrayList<Entity>) EntityHelper.getMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_MINION_LIST).value()) ) {
-                entity.remove();
-            }
+            // dismount on any teleport
+            Entity mount = PlayerHelper.getMount(e.getPlayer());
+            if (mount != null)
+                mount.remove();
         }
     }
     @EventHandler(priority = EventPriority.LOW)
@@ -147,18 +158,14 @@ public class VanillaMechanicListener implements Listener {
                 break;
             }
             case ARROW: {
-                ProjectileSource source = e.getEntity().getShooter();
-                if (source instanceof LivingEntity) {
-                    LivingEntity shooter = (LivingEntity) source;
-                    EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                            shooter, spawned.getVelocity(), EntityHelper.getAttrMap(shooter), "木箭");
-                    shootInfo.properties.put("noGravityTicks", 0);
-                    EntityHelper.spawnProjectile(shootInfo);
-                }
                 e.setCancelled(true);
                 break;
             }
         }
+    }
+    @EventHandler(priority = EventPriority.LOW)
+    public void onHandItemSwap(PlayerSwapHandItemsEvent e) {
+        e.setCancelled(true);
     }
 
     // stop any portal from forming

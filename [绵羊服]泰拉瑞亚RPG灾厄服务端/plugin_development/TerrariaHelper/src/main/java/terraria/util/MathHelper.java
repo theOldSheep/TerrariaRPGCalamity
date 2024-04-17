@@ -189,12 +189,19 @@ public class MathHelper {
         return "";
     }
     public static Vector setVectorLength(Vector vec, double targetLength) {
-        if (vec.lengthSquared() < 1e-9) vec.setY(targetLength);
-        else vec.multiply(targetLength / vec.length() );
-        return vec;
+        return setVectorLength(vec, targetLength, false);
+    }
+    public static Vector setVectorLength(Vector vec, double targetLength, boolean keepOriginalBelowLength) {
+        return setVectorLengthSquared(vec, targetLength * targetLength, keepOriginalBelowLength);
     }
     public static Vector setVectorLengthSquared(Vector vec, double targetLengthSquared) {
-        if (vec.lengthSquared() < 1e-9) vec.setY(Math.sqrt(targetLengthSquared));
+        return setVectorLengthSquared(vec, targetLengthSquared, false);
+    }
+    public static Vector setVectorLengthSquared(Vector vec, double targetLengthSquared, boolean keepOriginalBelowLength) {
+        double vLS = vec.lengthSquared();
+        if (keepOriginalBelowLength && vLS <= targetLengthSquared)
+            return vec;
+        if (vLS < 1e-9) vec.setY(Math.sqrt(targetLengthSquared));
         else vec.multiply(Math.sqrt(targetLengthSquared / vec.lengthSquared()));
         return vec;
     }

@@ -298,7 +298,7 @@ public class BossHelper {
                 Bukkit.broadcastMessage("§#FFA500黑蚀之日蓄势待发。");
                 break;
             case YHARON_DRAGON_OF_REBIRTH:
-                Bukkit.broadcastMessage("§#FFD700神之光环祝福了这个世界的洞穴。");
+                Bukkit.broadcastMessage("§#FFD700远古巨龙的力量在洞穴中显现，交织着穿过岩石。");
                 break;
         }
         // calculate and broadcast boss aggression time

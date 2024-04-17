@@ -219,6 +219,31 @@ public class ItemUseHelper {
                 ply.openInventory(PlayerHelper.getInventory(ply, "voidBag"));
                 return true;
             }
+            case "垃圾桶": {
+                ply.openInventory(PlayerHelper.getInventory(ply, "trashBin"));
+                return true;
+            }
+            case "日耀天塔柱":
+            case "星璇天塔柱":
+            case "星云天塔柱":
+            case "星尘天塔柱":
+            case "虚空天塔柱":
+            case "血月天塔柱": {
+                if ( ! ply.getScoreboardTags().contains("temp_useCD") ) {
+                    String targetBackground = itemName.replace("天塔柱", "");
+                    MetadataValue forceBackground = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BACKGROUND);
+                    // update force background
+                    if (forceBackground == null || ! forceBackground.asString().equals(targetBackground)) {
+                        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BACKGROUND, targetBackground);
+                    }
+                    // remove force background
+                    else {
+                        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BACKGROUND, null);
+                    }
+                    applyCD(ply, 20);
+                }
+                return true;
+            }
             case "阿瑞斯外骨骼": {
                 PlayerHelper.showAresExoskeletonConfig(ply);
                 return true;
@@ -401,11 +426,13 @@ public class ItemUseHelper {
                                 }
                                 // if the potion recovers mana
                                 case "mana": {
+                                    String debuffType = "魔力疾病";
+                                    if ( accessories.contains("魔能熔毁仪") )
+                                        debuffType = "魔力熔蚀";
+                                    else if (accessories.contains("混乱石") )
+                                        debuffType = "魔力烧蚀";
                                     PlayerHelper.restoreMana(ply, potionPotency);
-                                    EntityHelper.applyEffect(
-                                            ply,
-                                            accessories.contains("混乱石") ? "魔力烧蚀" : "魔力疾病",
-                                            160);
+                                    EntityHelper.applyEffect(ply, debuffType, 160);
                                     break;
                                 }
                                 // otherwise, apply the potion effect
@@ -957,7 +984,7 @@ public class ItemUseHelper {
                         if (currentIndex == 0) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(2);
-                            ply.setVelocity(plyVel);
+                            EntityHelper.setVelocity(ply, plyVel);
                         }
                         // hitting enemies will lock the player in a proper place
                         int finalCurrentIndex = currentIndex;
@@ -969,14 +996,14 @@ public class ItemUseHelper {
                                         // repels the player when the strike would finish soon
                                         if ( ( (finalCurrentIndex + 3) * 1.75) >= maxIndex) {
                                             Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc, 2);
-                                            ply.setVelocity(plyVel);
+                                            EntityHelper.setVelocity(ply, plyVel);
                                         }
                                         // otherwise, keep a safe distance from enemy
                                         else {
                                             Vector offsetDir = MathHelper.getDirection(hitLoc, finalStartStrikeLoc, 5.5);
                                             Vector plyVel = MathHelper.getDirection(
                                                     finalStartStrikeLoc, hitLoc.add(offsetDir), 1.75, true);
-                                            ply.setVelocity(plyVel);
+                                            EntityHelper.setVelocity(ply, plyVel);
                                         }
                                     }
                                 })
@@ -1129,7 +1156,7 @@ public class ItemUseHelper {
                                     ply.setFallDistance(0f);
                                     // repels the player
                                     Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc1, 1.5);
-                                    ply.setVelocity(plyVel);
+                                    EntityHelper.setVelocity(ply, plyVel);
                                 }
                             });
                     break;
@@ -1142,7 +1169,7 @@ public class ItemUseHelper {
                         if (currentIndex == 0 && ply.isOnGround()) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(1.5);
-                            ply.setVelocity(plyVel);
+                            EntityHelper.setVelocity(ply, plyVel);
                         }
                         // hitting enemies will knock back the player
                         Location finalStartStrikeLoc2 = startStrikeLoc;
@@ -1152,7 +1179,7 @@ public class ItemUseHelper {
                                         ply.setFallDistance(0f);
                                         // repels the player
                                         Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc2, 0.75);
-                                        ply.setVelocity(plyVel);
+                                        EntityHelper.setVelocity(ply, plyVel);
                                         // heal for a small amount
                                         PlayerHelper.heal(ply, 3, false);
                                     }
@@ -1169,7 +1196,7 @@ public class ItemUseHelper {
                         if (currentIndex == 0) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(1.75);
-                            ply.setVelocity(plyVel);
+                            EntityHelper.setVelocity(ply, plyVel);
                         }
                         // hitting enemies will knock back the player
                         int overrideCD = 12 - currentIndex;
@@ -1180,7 +1207,7 @@ public class ItemUseHelper {
                                         ply.setFallDistance(0f);
                                         // repels the player
                                         Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc3, 1);
-                                        ply.setVelocity(plyVel);
+                                        EntityHelper.setVelocity(ply, plyVel);
                                         // heal for a small amount
                                         PlayerHelper.heal(ply, 4, false);
                                         applyCD(ply, overrideCD);
@@ -1209,7 +1236,7 @@ public class ItemUseHelper {
                         {
                             Vector plyVel = MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch);
                             plyVel.multiply(2);
-                            ply.setVelocity(plyVel);
+                            EntityHelper.setVelocity(ply, plyVel);
                         }
                         // remove all stacks on last blow
                         if (currentIndex == maxIndex) {
@@ -1242,7 +1269,7 @@ public class ItemUseHelper {
                         {
                             Vector plyVel = MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch);
                             plyVel.multiply(2);
-                            ply.setVelocity(plyVel);
+                            EntityHelper.setVelocity(ply, plyVel);
                         }
                         // remove all stacks on last blow
                         if (currentIndex == maxIndex) {
@@ -1317,7 +1344,7 @@ public class ItemUseHelper {
                                     ply.setFallDistance(0f);
                                     // repels the player
                                     Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc4, 1.5);
-                                    ply.setVelocity(plyVel);
+                                    EntityHelper.setVelocity(ply, plyVel);
                                 }
                             });
                     break;
@@ -1333,7 +1360,7 @@ public class ItemUseHelper {
                         if (durability.get() >= 50) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(2.25);
-                            ply.setVelocity(plyVel);
+                            EntityHelper.setVelocity(ply, plyVel);
                         }
                         // save durability
                         durability.addAndGet(-12);
@@ -1351,7 +1378,7 @@ public class ItemUseHelper {
                                     ply.setFallDistance(0f);
                                     // repels the player
                                     Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc5, 1.5);
-                                    ply.setVelocity(plyVel);
+                                    EntityHelper.setVelocity(ply, plyVel);
                                     // heal for a small amount
                                     PlayerHelper.heal(ply, 8, false);
                                     applyCD(ply, overrideCD);
@@ -1410,7 +1437,7 @@ public class ItemUseHelper {
                         if (durability.get() >= 25) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(3);
-                            ply.setVelocity(plyVel);
+                            EntityHelper.setVelocity(ply, plyVel);
                         }
                         // save durability
                         durability.addAndGet(-25);
@@ -1428,7 +1455,7 @@ public class ItemUseHelper {
                                     ply.setFallDistance(0f);
                                     // repels the player
                                     Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc5, 1.5);
-                                    ply.setVelocity(plyVel);
+                                    EntityHelper.setVelocity(ply, plyVel);
                                     // heal for a small amount
                                     PlayerHelper.heal(ply, 10, false);
                                     applyCD(ply, overrideCD);
@@ -1494,7 +1521,7 @@ public class ItemUseHelper {
                     // maintain the dash
                     Vector plyVel = lookDir.clone();
                     plyVel.multiply(3);
-                    ply.setVelocity(plyVel);
+                    EntityHelper.setVelocity(ply, plyVel);
 
                     // strike options
                     Vector finalLookDir1 = lookDir.clone();
@@ -1652,7 +1679,7 @@ public class ItemUseHelper {
                         plyVel = lookDir.clone();
                     }
                     else
-                        plyVel = ply.getVelocity().normalize();
+                        plyVel = EntityHelper.getVelocity(ply).normalize();
                     // end dash earlier after recoil (hitting entity); do not update velocity
                     if (plyVel.dot(lookDir) < 0) {
                         if (currentIndex + 5 < maxIndex) {
@@ -1663,11 +1690,11 @@ public class ItemUseHelper {
                     // init and maintain dash velocity as well as init base charge gain
                     else {
                         plyVel.multiply(dashVel);
-                        ply.setVelocity(plyVel);
+                        EntityHelper.setVelocity(ply, plyVel);
                     }
                     // remove dash velocity on timeout
                     if (currentIndex == maxIndex)
-                        ply.setVelocity(new Vector());
+                        EntityHelper.setVelocity(ply, new Vector());
 
                     // hitting enemies will knock back the player and fully charge the weapon
                     Vector lookDirCopy = lookDir.clone().multiply(-1);
@@ -1688,7 +1715,7 @@ public class ItemUseHelper {
                                     }, i);
                                 }
                                 // recoil
-                                ply.setVelocity(lookDirCopy);
+                                EntityHelper.setVelocity(ply, lookDirCopy);
                             })
                             .setLingerDelay(1);
                     break;
@@ -2579,7 +2606,7 @@ public class ItemUseHelper {
                                             // pulls the player
                                             ply.setFallDistance(0f);
                                             Vector plyVel = MathHelper.getDirection(finalStartStrikeLoc, hitLocation, 1.5);
-                                            ply.setVelocity(plyVel);
+                                            EntityHelper.setVelocity(ply, plyVel);
                                         });
                             }
                             // cache the crit rate, set it to 100, handle hit and reset to normal
@@ -4117,7 +4144,7 @@ public class ItemUseHelper {
                 }
                 case "离子冲击波":
                 case "凋亡射线": {
-                    double maxMana = attrMap.getOrDefault("maxMana", 20d);
+                    double maxMana = PlayerHelper.getMaxMana(ply);
                     double manaRatio = ply.getLevel() / maxMana;
                     attrMap.put("damage", attrMap.get("damage") * (0.2 + 1.4 * manaRatio));
                     break;
@@ -4265,7 +4292,8 @@ public class ItemUseHelper {
                                 .setDamageCD(4)
                                 .setLingerTime(6)
                                 .setLingerDelay(5)
-                                .setThruWall(true);
+                                .setThruWall(true)
+                                .setVanillaParticle(false);
                         GenericHelper.handleStrikeLightning(ply, startLoc, yaw, pitch, length, 4,  width, 1, 3, particleColor,
                                 damageExceptions, attrMap, strikeInfo);
                         // prevent redundant strike
@@ -4425,12 +4453,13 @@ public class ItemUseHelper {
                     }
                     case "亚特兰蒂斯": {
                         length = 24;
-                        width = 1.75;
+                        width = 1.25;
                         particleColor = "119|145|197";
                         strikeInfo
                                 .setDamageCD(4)
                                 .setLingerTime(5)
-                                .setLingerDelay(5);
+                                .setLingerDelay(5)
+                                .setVanillaParticle(false);
                         // particle must not block the vision
                         startLoc.add(fireDir);
                         GenericHelper.handleStrikeLightning(ply, startLoc, yaw, pitch, length,

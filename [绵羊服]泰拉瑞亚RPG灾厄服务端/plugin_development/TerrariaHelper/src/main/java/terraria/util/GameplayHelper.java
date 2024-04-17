@@ -236,6 +236,9 @@ public class GameplayHelper {
         return playerBreakBlock(blockToBreak, ply, true, true);
     }
     public static boolean playerBreakBlock(Block blockToBreak, Player ply, boolean validateBreakable, boolean playSound) {
+        return playerBreakBlock(blockToBreak, ply, validateBreakable, playSound, false);
+    }
+    public static boolean playerBreakBlock(Block blockToBreak, Player ply, boolean validateBreakable, boolean playSound, boolean noDrop) {
         Material blockMat = blockToBreak.getType();
         if (blockMat == Material.AIR)
             return true;
@@ -251,24 +254,26 @@ public class GameplayHelper {
                 blockToBreak.breakNaturally();
                 break;
             default:
-                ConfigurationSection configSection = getBlockConfigSection(blockToBreak);
-                if (configSection != null) {
-                    // item to drop
-                    List<String> itemsToDrop = configSection.getStringList("dropItem");
-                    Location locToDrop = blockToBreak.getLocation().add(0.5, 0.4, 0.5);
-                    for (String currItem : itemsToDrop) {
-                        org.bukkit.inventory.ItemStack itemToDrop = ItemHelper.getItemFromDescription(currItem);
-                        ItemHelper.dropItem(locToDrop, itemToDrop);
+                if (! noDrop) {
+                    ConfigurationSection configSection = getBlockConfigSection(blockToBreak);
+                    if (configSection != null) {
+                        // item to drop
+                        List<String> itemsToDrop = configSection.getStringList("dropItem");
+                        Location locToDrop = blockToBreak.getLocation().add(0.5, 0.4, 0.5);
+                        for (String currItem : itemsToDrop) {
+                            org.bukkit.inventory.ItemStack itemToDrop = ItemHelper.getItemFromDescription(currItem);
+                            ItemHelper.dropItem(locToDrop, itemToDrop);
+                        }
+                        // boss spawn
+                        String bossSpawn = configSection.getString("spawnBoss");
+                        if (bossSpawn != null)
+                            BossHelper.spawnBoss(ply, BossHelper.BossType.valueOf(bossSpawn));
                     }
-                    // boss spawn
-                    String bossSpawn = configSection.getString("spawnBoss");
-                    if (bossSpawn != null)
-                        BossHelper.spawnBoss(ply, BossHelper.BossType.valueOf(bossSpawn));
                 }
                 blockToBreak.setType(Material.AIR);
         }
         // special handling
-        handleTreeConsecutiveBreak(ply, blockToBreak, blockMat);
+        handleTreeConsecutiveBreak(ply, blockToBreak, blockMat, noDrop);
         handleGrassConsecutiveBreak(ply, blockToBreak);
         handleSpecialBlockBreakMechanism(ply, blockToBreak, blockMat);
         return true;
@@ -289,7 +294,7 @@ public class GameplayHelper {
                 return BlockTreePart.NONE;
         }
     }
-    private static void handleTreeConsecutiveBreak(Player ply, Block brokenBlock, Material brokenMaterial) {
+    private static void handleTreeConsecutiveBreak(Player ply, Block brokenBlock, Material brokenMaterial, boolean noDrop) {
         BlockTreePart originalBlockTreePart = getBlockTreePart(brokenMaterial);
         if (originalBlockTreePart == BlockTreePart.NONE) return;
         BlockFace[] directionsToTest = {
@@ -318,7 +323,7 @@ public class GameplayHelper {
                     shouldBreak = true;
             }
             if (shouldBreak) {
-                playerBreakBlock(currBlock, ply, false, false);
+                playerBreakBlock(currBlock, ply, false, false, noDrop);
             }
         }
     }
@@ -496,13 +501,43 @@ public class GameplayHelper {
             }
         }
 
-        if (plyToolType.equals("橡实") && WorldHelper.canGrowPlant(blk, true) ) {
-            Block blockToPlant = blk.getRelative(BlockFace.UP);
-            WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(blockToPlant.getLocation());
-            byte data = WorldHelper.getSaplingVariantByBiome(biomeType);
-            blockToPlant.setType(Material.SAPLING, false);
-            blockToPlant.setData(data, false);
-            plyTool.setAmount(plyTool.getAmount() - 1);
+        switch (plyToolType) {
+            case "橡实": {
+                if (WorldHelper.canGrowPlant(blk, true)) {
+                    Block blockToPlant = blk.getRelative(BlockFace.UP);
+                    WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(blockToPlant.getLocation());
+                    byte data = WorldHelper.getSaplingVariantByBiome(biomeType);
+                    blockToPlant.setType(Material.SAPLING, false);
+                    blockToPlant.setData(data, false);
+                    plyTool.setAmount(plyTool.getAmount() - 1);
+                }
+                break;
+            }
+            case "树之祭祀": {
+                // do not use when on CD
+                if (ply.getScoreboardTags().contains("temp_useCD"))
+                    break;
+                int buffDuration = -1;
+                switch (blk.getType()) {
+                    case WOOD:
+                        // 10 seconds
+                        buffDuration = 200;
+                        break;
+                    case LOG:
+                    case LOG_2:
+                        // 16 seconds
+                        buffDuration = 320;
+                        break;
+                }
+                if (buffDuration > 0) {
+                    if (playerBreakBlock(blk, ply, true, true, true)) {
+                        plyTool.setAmount(plyTool.getAmount() - 1);
+                        EntityHelper.applyEffect(ply, "再生", buffDuration);
+                    }
+                    ItemUseHelper.applyCD(ply, 10);
+                }
+                break;
+            }
         }
     }
 }

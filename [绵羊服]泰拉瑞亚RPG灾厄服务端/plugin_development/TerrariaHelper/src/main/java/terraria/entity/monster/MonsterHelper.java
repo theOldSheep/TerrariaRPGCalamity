@@ -105,74 +105,65 @@ public class MonsterHelper {
             case PRE_WALL_OF_FLESH:
                 switch (playerProgress) {
                     case PRE_PLANTERA:
-                        result.healthMulti  = 4d;
-                        result.defenceMulti = 3d;
+                        result.healthMulti  = 3d;
+                        result.defenceMulti = 2d;
                         result.damageMulti  = 2d;
                         break;
                     case PRE_MOON_LORD:
-                        result.healthMulti  = 6.5d;
-                        result.defenceMulti = 4d;
-                        result.damageMulti  = 3d;
+                        result.healthMulti  = 6d;
+                        result.defenceMulti = 3d;
+                        result.damageMulti  = 2.25d;
                         break;
-                    case PRE_PROFANED_GODDESS:
-                        result.healthMulti  = 10d;
-                        result.defenceMulti = 5d;
-                        result.damageMulti  = 3d;
-                        // TODO: umcomment after finishing post-moonlord contents
-//                        result.healthMulti  = 10d;
-//                        result.defenceMulti = 5d;
-//                        result.damageMulti  = 3d;
+                    case PRE_DEVOURER_OF_GODS:
+                        result.healthMulti  = 12d;
+                        result.defenceMulti = 7.5d;
+                        result.damageMulti  = 2.5d;
                         break;
-                    case POST_PROFANED_GODDESS:
-                        result.healthMulti  = 20d;
-                        result.defenceMulti = 10d;
-                        result.damageMulti  = 3.5d;
+                    case POST_DEVOURER_OF_GODS:
+                        result.healthMulti  = 30d;
+                        result.defenceMulti = 15d;
+                        result.damageMulti  = 2.75d;
                         break;
                 }
                 break;
             case PRE_PLANTERA:
                 switch (playerProgress) {
                     case PRE_MOON_LORD:
-                        result.healthMulti  = 3d;
-                        result.defenceMulti = 2d;
-                        result.damageMulti  = 1.5d;
+                        result.healthMulti  = 2d;
+                        result.defenceMulti = 1.25d;
+                        result.damageMulti  = 1.05d;
                         break;
-                    case PRE_PROFANED_GODDESS:
+                    case PRE_DEVOURER_OF_GODS:
                         result.healthMulti  = 3d;
-                        result.defenceMulti = 2d;
-                        result.damageMulti  = 1.5d;
-                        // TODO: umcomment after finishing post-moonlord contents
-//                        result.healthMulti  = 5d;
-//                        result.defenceMulti = 3d;
-//                        result.damageMulti  = 2d;
+                        result.defenceMulti = 1.5d;
+                        result.damageMulti  = 1.1d;
                         break;
-                    case POST_PROFANED_GODDESS:
-                        result.healthMulti  = 8d;
-                        result.defenceMulti = 4d;
-                        result.damageMulti  = 2.75d;
+                    case POST_DEVOURER_OF_GODS:
+                        result.healthMulti  = 5d;
+                        result.defenceMulti = 2d;
+                        result.damageMulti  = 1.25d;
                         break;
                 }
                 break;
             case PRE_MOON_LORD:
                 switch (playerProgress) {
-                    case PRE_PROFANED_GODDESS:
-                        // TODO: umcomment after finishing post-moonlord contents
-//                        result.healthMulti  = 3d;
-//                        result.defenceMulti = 2d;
-//                        result.damageMulti  = 1.5d;
+                    case PRE_DEVOURER_OF_GODS:
+                        result.healthMulti  = 1.75d;
+                        result.defenceMulti = 1.25d;
+                        result.damageMulti  = 1.15d;
                         break;
-                    case POST_PROFANED_GODDESS:
-                        result.healthMulti  = 4d;
-                        result.defenceMulti = 3d;
-                        result.damageMulti  = 2d;
+                    case POST_DEVOURER_OF_GODS:
+                        result.healthMulti  = 2.5d;
+                        result.defenceMulti = 1.5d;
+                        result.damageMulti  = 1.35d;
                         break;
                 }
                 break;
-            case PRE_PROFANED_GODDESS:
-                if (playerProgress == PlayerHelper.GameProgress.POST_PROFANED_GODDESS) {
-                    result.healthMulti  = 3d;
+            case PRE_DEVOURER_OF_GODS:
+                if (playerProgress == PlayerHelper.GameProgress.POST_DEVOURER_OF_GODS) {
+                    result.healthMulti  = 2.5d;
                     result.defenceMulti = 2d;
-                    result.damageMulti  = 1.5d;
+                    result.damageMulti  = 1.15d;
                 }
                 break;
         }
@@ -252,6 +243,8 @@ public class MonsterHelper {
         bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_FOLLOW_RANGE).setBaseValue(444);
         bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.25);
         bukkitMonsterLivingEntity.setHealth(health);
+        // step height
+        monster.P = (float) typeConfigSection.getDouble("stepHeight", monster.P);
         // add 1 to target's amount of active monster
         if (!isMonsterPart)
             tweakPlayerMonsterSpawnedAmount(target, true);
@@ -686,6 +679,45 @@ public class MonsterHelper {
         boolean lookAtPlayer = true;
         if (!isMonsterPart) {
             switch (type) {
+                case "哥布林弓箭手":
+                case "精灵弓箭手": {
+                    if (monster.getHealth() > 0) {
+                        if (indexAI == 0)
+                            indexAI = (int) (Math.random() * 10);
+                        // shoot projectile
+                        else if (indexAI > 25) {
+                            indexAI = (int) (Math.random() * 10);
+                            double projSpd = 1.75, randOffset = 0.75, aimPrecision = 0d;
+                            boolean useAcc = false;
+                            if (type.equals("精灵弓箭手")) {
+                                aimPrecision = 1d;
+                                if (PlayerHelper.hasDefeated(target, BossHelper.BossType.THE_DEVOURER_OF_GODS.msgName)) {
+                                    projSpd = 2.5;
+                                    randOffset = 1.75;
+                                    useAcc = true;
+                                }
+                                else {
+                                    projSpd = 2.25;
+                                    randOffset = 1.25;
+                                }
+                            }
+                            EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                                    .setNoGravityTicks(5)
+                                    .setProjectileGravity(0.05)
+                                    .setProjectileSpeed(projSpd)
+                                    .setRandomOffsetRadius(randOffset)
+                                    .setAccelerationMode(useAcc)
+                                    .setIntensity(aimPrecision);
+                            Location aimLoc = EntityHelper.helperAimEntity(monsterBkt, target, aimHelper);
+                            Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(), aimLoc, projSpd);
+                            // fire projectile
+                            EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                    monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "烈焰箭");
+                            EntityHelper.spawnProjectile(shootInfo);
+                        }
+                    }
+                    break;
+                }
                 case "僵尸":
                 case "钨钢回转器":
                 case "稻草人": {

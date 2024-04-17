@@ -844,6 +844,7 @@ public class MinionSlime extends EntitySlime {
                         // update velocity at the current and the next tick
                         index = -1;
                         shouldUpdateVelocity = true;
+                        impulse = false;
                         // updated raven should teleport to a closer location
                         MinionHelper.attemptTeleport( minionBukkit, target.getEyeLocation().add(
                                 MathHelper.randomVector().multiply(10) ) );
@@ -1943,7 +1944,7 @@ public class MinionSlime extends EntitySlime {
                 // if the segment is the head, handle strike and segments following
                 if (isHeadSegment) {
                     boolean isStardust = minionType.equals("星尘之龙");
-                    // mech-worm teleport should freeze the target
+                    // mech-worm should not retarget during teleport
                     if (! isStardust && index < 0) {
                         target = (LivingEntity) extraVariables.get("t");
                         targetIsOwner = false;
@@ -1952,7 +1953,7 @@ public class MinionSlime extends EntitySlime {
                     if (targetIsOwner) {
                         // when spotting the next target, it will attempt to dash right into it
                         index = -1;
-                        if (minionBukkit.getLocation().distanceSquared(owner.getEyeLocation()) > 400 || index % 30 == 0) {
+                        if (minionBukkit.getLocation().distanceSquared(owner.getEyeLocation()) > 400 || ticksLived % 30 == 1) {
                             Vector v = target.getEyeLocation().add(
                                     Math.random() * 16 - 8,
                                     4,

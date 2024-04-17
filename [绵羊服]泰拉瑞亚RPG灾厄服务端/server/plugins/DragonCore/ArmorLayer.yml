@@ -556,3 +556,21 @@
 古圣金源腿甲:
   match: "古圣金源腿甲"
   texture: "auric_tesla/auric_tesla"
+天钻头饰:
+  match: "天钻头饰"
+  texture: "gem_tech/gem_tech"
+天钻胸甲:
+  match: "天钻胸甲"
+  texture: "gem_tech/gem_tech"
+天钻战裙:
+  match: "天钻战裙"
+  texture: "gem_tech/gem_tech"
+魔影头盔:
+  match: "魔影头盔"
+  texture: "demon_shade/demon_shade"
+魔影装甲:
+  match: "魔影装甲"
+  texture: "demon_shade/demon_shade"
+魔影护胫:
+  match: "魔影护胫"
+  texture: "demon_shade/demon_shade"

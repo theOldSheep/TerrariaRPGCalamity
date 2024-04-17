@@ -170,9 +170,12 @@ public class Everscream extends EntitySlime {
                 BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
         // init target map
+        boolean postDoG = PlayerHelper.hasDefeated(summonedPlayer, BossHelper.BossType.THE_DEVOURER_OF_GODS.msgName);
         {
             targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
-                    getBukkitEntity(), BossHelper.BossType.PLANTERA.msgName, summonedPlayer, true, bossbar);
+                    getBukkitEntity(),
+                    (postDoG ? BossHelper.BossType.THE_DEVOURER_OF_GODS : BossHelper.BossType.PLANTERA).msgName,
+                    summonedPlayer, true, bossbar);
             target = summonedPlayer;
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
@@ -181,6 +184,8 @@ public class Everscream extends EntitySlime {
             setSize(15, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = BASIC_HEALTH * healthMulti;
+            if (postDoG)
+                health *= 2.5d;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

@@ -11,6 +11,7 @@ import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 
+import javax.xml.bind.annotation.XmlType;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -59,6 +60,43 @@ public class WorldHelper {
             BlockFace.WEST,
     };
 
+    public enum WaterRegionType {
+        NORMAL(1d), LAVA(2.25d),
+        OCEAN(1.15d), SULPHUROUS_OCEAN(1.2d),
+        SUNKEN_SEA(1.35d),
+        ABYSS_1(2d), ABYSS_2(3.5d), ABYSS_3(5d);
+
+        public final double oxygenDepletionLevel;
+        WaterRegionType(double oxygenDepletionLevel) {
+            this.oxygenDepletionLevel = oxygenDepletionLevel;
+        }
+        public static WaterRegionType getWaterRegionType(Location loc, boolean hasLava) {
+            WaterRegionType result = NORMAL;
+            switch (BiomeType.getBiome(loc)) {
+                case OCEAN:
+                    result = OCEAN;
+                    break;
+                case SULPHUROUS_OCEAN:
+                    result = SULPHUROUS_OCEAN;
+                    break;
+                case ABYSS:
+                    double locY = loc.getY();
+                    if (locY < 100)
+                        result = ABYSS_3;
+                    else if (locY < 175)
+                        result = ABYSS_2;
+                    else
+                        result = ABYSS_1;
+                    break;
+                case SUNKEN_SEA:
+                    result = SUNKEN_SEA;
+                    break;
+            }
+            if (hasLava && result.oxygenDepletionLevel < LAVA.oxygenDepletionLevel)
+                result = LAVA;
+            return result;
+        }
+    }
     public enum HeightLayer {
         SPACE("太空"), SURFACE("地表"), UNDERGROUND("地下"), CAVERN("洞穴"), UNDERWORLD("地狱");
         public final String name;
@@ -276,6 +314,7 @@ public class WorldHelper {
         switch (blockAboveMat) {
             case ANVIL:
             case BREWING_STAND:
+            case CHEST:
             case ENCHANTMENT_TABLE:
             case FURNACE:
             case WORKBENCH:
@@ -447,7 +486,6 @@ public class WorldHelper {
             TerrariaHelper.getInstance().getLogger().log(Level.SEVERE,
                     "FAILED PLACING SPECIAL SKULL AT BLOCK " + block);
     }
-    // TODO: different sprite of vegetation
     private enum PlantType {
         GRASS(Material.LONG_GRASS, (byte) 1),
         GRASS_HALLOW(Material.LONG_GRASS, (byte) 1),

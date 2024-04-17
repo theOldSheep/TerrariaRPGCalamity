@@ -130,7 +130,7 @@ prefixInfo:
     lore:
     - ''
     - §c-15%伤害
-    - §r“这把武器看起来已经菠萝菠萝哒了”
+    - §r“这把武器看起来已然菠萝菠萝哒”
     attributes:
       damageMulti: -0.15
     priceMultiplier: 0.75
