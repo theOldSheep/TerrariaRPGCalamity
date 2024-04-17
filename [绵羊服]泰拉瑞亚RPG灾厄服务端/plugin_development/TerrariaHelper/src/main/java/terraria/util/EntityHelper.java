@@ -2222,7 +2222,8 @@ public class EntityHelper {
                                         consumption = (int) Math.max(mana * 0.035, 5);
                                         manaToDamageRate = 15;
                                         double effectDuration = EntityHelper.getEffectMap(damageSourcePly).getOrDefault("魔力熔蚀", 0);
-                                        consumptionRatio = 1 - (effectDuration / 800);
+                                        // at 20 second = 400 ticks, mana use reduced by roughly 65%
+                                        consumptionRatio = 1 - (effectDuration / 615);
                                     }
                                     if (ItemUseHelper.consumeMana(damageSourcePly, MathHelper.randomRound(consumption * consumptionRatio) )) {
                                         dmg += consumption * manaToDamageRate;
@@ -2328,26 +2329,33 @@ public class EntityHelper {
                         targets.get(plyID).addDamageDealt(dmg);
                 }
             }
+            String sound = null;
+            // kills the target
             if (damageTaker.getHealth() <= dmg) {
-                // kills the target
                 handleDeath(damageTaker, damageSource, damager, damageType, debuffType);
-                String sound;
                 if (victimScoreboardTags.contains("isMechanic")) sound = "entity.generic.explode";
                 else sound = "entity." + damageTaker.getType() + ".death";
                 sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundKilled", sound);
-                victim.getWorld().playSound(victim.getLocation(), sound, 3, 1);
-            } else {
-                // hurts the target
+            }
+            // hurts the target
+            else {
                 damageTaker.setHealth(Math.max(0, damageTaker.getHealth() - dmg));
                 if (!(damageType == DamageType.DEBUFF)) {
                     // if damage cause is not debuff, play hurt sound
-                    String sound;
                     if (victimScoreboardTags.contains("isMechanic")) sound = "entity.irongolem.hurt";
                     else sound = "entity." + damageTaker.getType() + ".hurt";
                     sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundDamaged", sound);
-                    victim.getWorld().playSound(victim.getLocation(), sound, 3, 1);
                 }
             }
+            // fall damage sound
+            if (damageReason == DamageReason.FALL) {
+                if (dmg < 200)
+                    sound = "entity.generic.fallSmall";
+                else
+                    sound = "entity.generic.fallBig";
+            }
+            if (sound != null)
+                victim.getWorld().playSound(victim.getLocation(), sound, 3, 1);
             // knockback
             if (knockback > 0) {
                 Vector vec = victim.getLocation().subtract(damager.getLocation()).toVector();

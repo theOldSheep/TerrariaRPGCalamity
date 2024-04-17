@@ -230,8 +230,10 @@ public class WallOfFleshMouth extends EntitySlime {
         }
         guideNPC.getLocation().getChunk().load();
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
-            LivingEntity NPCGuide = NPCHelper.NPCMap.get(NPCHelper.NPCType.GUIDE);
-            EntityHelper.handleDamage(NPCGuide, NPCGuide, 114514d, EntityHelper.DamageReason.LAVA);
+            LivingEntity NpcGuide = NPCHelper.NPCMap.get(NPCHelper.NPCType.GUIDE);
+            // make sure guide will not survive this damage
+            NpcGuide.setHealth(1d);
+            EntityHelper.handleDamage(NpcGuide, NpcGuide, 114514d, EntityHelper.DamageReason.LAVA);
         }, 1);
         // target player
         Player summonedPlayer = null;

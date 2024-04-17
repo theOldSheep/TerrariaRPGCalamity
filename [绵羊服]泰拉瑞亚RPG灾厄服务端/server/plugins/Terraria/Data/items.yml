@@ -2024,7 +2024,7 @@ Drew之翼:
     damageTrueMeleeMulti: 0.1
     useSpeedMeleeMulti: 0.1
   worth: 22000000
-  rarity: 11
+  rarity: 10
 勇气勋章:
   item: LEASH
   lore:
@@ -2044,8 +2044,8 @@ Drew之翼:
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.15
     damageMeleeMulti: 0.15
-    critMelee: 5
-    damageTrueMeleeMulti: 0.2
+    critMelee: 10
+    damageTrueMeleeMulti: 0.1
     buffInflictMelee: 元素谐鸣|80|1
   worth: 28000000
   rarity: 14
@@ -2079,10 +2079,12 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r远程伤害造成带电减益
   attributes:
     speedMulti: 0.1
     damageRangedMulti: 0.1
     critRanged: 5
+    buffInflictRanged: 带电|40|0
   worth: 22000000
   rarity: 11
 虚无箭袋:
@@ -2104,6 +2106,7 @@ Drew之翼:
   attributes:
     critRanged: 10
     damageRangedMulti: 0.15
+    ammoConsumptionRate: -0.2
     projectileSpeedMulti: 0.35
     buffInflictRanged: 元素谐鸣|80|1
   worth: 28000000
@@ -2115,8 +2118,9 @@ Drew之翼:
   - §r远程伤害造成超位崩解减益
   attributes:
     critRanged: 15
-    damageRangedMulti: 0.15
+    damageRangedMulti: 0.2
     projectileSpeedMulti: 0.4
+    ammoConsumptionRate: -0.2
     buffInflictRanged: 超位崩解|80|1
   worth: 40000000
   rarity: 16
@@ -2381,7 +2385,7 @@ Drew之翼:
   - §r“忠！诚！”
   attributes:
     minionLimit: 2
-    damageSummonMulti: 0.1
+    damageSummonMulti: 0.15
   worth: 30000000
   rarity: 15
 深渊护身符:
@@ -2438,7 +2442,7 @@ Drew之翼:
     damageMulti: 0.1
     crit: 3
     damageSummonMulti: 0.03
-    damageTakenMulti: -0.04
+    damageTakenMulti: -0.05
   worth: 2400000
   rarity: 4
 聚合之脑:
@@ -2449,7 +2453,7 @@ Drew之翼:
     damageMulti: 0.15
     crit: 5
     damageSummonMulti: 0.05
-    damageTakenMulti: -0.05
+    damageTakenMulti: -0.1
   worth: 28000000
   rarity: 14
 旱海鲨牙项链:
