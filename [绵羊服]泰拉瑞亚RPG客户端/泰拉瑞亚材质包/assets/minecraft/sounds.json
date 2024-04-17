@@ -1,4 +1,20 @@
 {
+	"entity.generic.fallSmall": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "mob/generic/fallsmall"
+			}
+		]
+	},
+	"entity.generic.fallBig": {
+        "category": "master",
+		"sounds": [
+			{
+				"name": "mob/generic/fallbig"
+			}
+		]
+	},
 	"entity.cltst.death": {
         "category": "master",
 		"sounds": [
