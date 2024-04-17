@@ -211,6 +211,8 @@ deathMessages:
   - <victim> 的灵魂已支离破碎
   Debuff_血神之凋零:
   - <victim> 成为了血神的祭品
+  NegRegen_硫火狂怒:
+  - <victim> 试图在怒火中与敌人同归于尽
   NegRegen_魔力烧蚀:
   - <victim> 被魔力焚毁
   NegRegen_魔力熔蚀:

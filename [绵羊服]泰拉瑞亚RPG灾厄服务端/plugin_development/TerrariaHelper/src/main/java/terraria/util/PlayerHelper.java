@@ -1478,7 +1478,7 @@ public class PlayerHelper {
                     if (ply.isOnGround() && ! movingHor)
                         horVelMulti = 0.6;
                     else
-                        horVelMulti = 0.925;
+                        horVelMulti = 0.9;
                     double y = vel.getY();
                     vel.multiply(horVelMulti);
                     vel.setY(y * 0.99);
