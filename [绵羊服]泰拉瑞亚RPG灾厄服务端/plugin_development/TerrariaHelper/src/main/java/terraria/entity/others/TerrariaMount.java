@@ -1,5 +1,8 @@
 package terraria.entity.others;
 
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
+import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -111,6 +114,7 @@ public class TerrariaMount extends EntitySlime {
         // step height
         super.P = (float) this.stepHeight;
         // disguise (?)
+        // this seems to create some lag and glitch
 //        if (mountType.equals("独角兽坐骑")) {
 //            MobDisguise disguise = new MobDisguise(DisguiseType.SKELETON_HORSE);
 //

@@ -520,13 +520,13 @@ public class GameplayHelper {
                 int buffDuration = -1;
                 switch (blk.getType()) {
                     case WOOD:
-                        // 10 seconds
-                        buffDuration = 200;
+                        // 16 seconds
+                        buffDuration = 320;
                         break;
                     case LOG:
                     case LOG_2:
-                        // 16 seconds
-                        buffDuration = 320;
+                        // 10 seconds
+                        buffDuration = 200;
                         break;
                 }
                 if (buffDuration > 0) {
