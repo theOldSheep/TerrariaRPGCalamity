@@ -58,6 +58,10 @@ RED_ROSE_5:
   totalProgress: 1
   dropItem:
   - 闪耀根
+RED_ROSE_6:
+  totalProgress: 1
+  dropItem:
+  - 丛林孢子:2:3
 81834b91-513d-450f-b920-6880fd47c997:
   totalProgress: 1
   dropItem:
@@ -128,8 +132,8 @@ STAINED_CLAY_0:
   totalProgress: 200
   dropItem:
   - 珍珠石
-  - 水晶碎块:1:1:0.05
-  - 明胶水晶:1:1:0.001
+  - 水晶碎块:1:1:0.1
+  - 明胶水晶:1:1:0.01
 STAINED_CLAY_7:
   powerPickaxe: 65
   totalProgress: 200

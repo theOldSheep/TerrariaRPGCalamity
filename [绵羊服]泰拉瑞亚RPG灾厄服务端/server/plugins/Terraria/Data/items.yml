@@ -14878,6 +14878,10 @@ Dodu的手炮:
   item: RAW_FISH
   worth: 50000
   rarity: 0
+偏口鱼:
+  item: RAW_FISH
+  worth: 15000
+  rarity: 0
 雀鲷:
   item: RAW_FISH
   worth: 300000
@@ -14938,6 +14942,12 @@ Dodu的手炮:
   item: RAW_FISH
   worth: 150000
   rarity: 1
+金鲤鱼:
+  item: RAW_FISH
+  lore:
+  - §r一条闪亮的鱼，应该能卖个好价钱
+  worth: 10000000
+  rarity: 4
 填充草药鱼:
   item: RAW_FISH
   lore:

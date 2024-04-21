@@ -19,7 +19,7 @@
   knockback: 35
   horSpdMax: 1.2
   verSpdMax: 1.6
-  horAcc: 0.1
+  horAcc: 0.125
   verAcc: 1.6
   velIdleDecayMulti: 0.95
   speedMultiWater: 1
@@ -31,8 +31,8 @@
   damage: 300
   horSpdMax: 0.8
   verSpdMax: 2
-  horAcc: 0.25
-  verAcc: 0.3
+  horAcc: 0.35
+  verAcc: 0.4
   gravityAcc: 0.2
   velIdleDecayMulti: 0
   flightDuration: 25
@@ -45,8 +45,8 @@
   gravity: false
   horSpdMax: 0.85
   verSpdMax: 0.85
-  horAcc: 0.2
-  verAcc: 0.2
+  horAcc: 0.275
+  verAcc: 0.275
   stepHeight: 0.55
   velIdleDecayMulti: 0.6
   flightDuration: 999999
@@ -58,8 +58,8 @@
   gravity: false
   horSpdMax: 1
   verSpdMax: 1
-  horAcc: 0.225
-  verAcc: 0.225
+  horAcc: 0.3
+  verAcc: 0.3
   stepHeight: 0.55
   velIdleDecayMulti: 0.75
   flightDuration: 999999

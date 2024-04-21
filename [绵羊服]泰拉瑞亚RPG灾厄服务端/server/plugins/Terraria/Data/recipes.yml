@@ -2984,6 +2984,11 @@ WORKBENCH:
     requireLevel: 1
     resultItem: 刺身
     requireItem:
+    - 偏口鱼
+  '18_1':
+    requireLevel: 1
+    resultItem: 刺身
+    requireItem:
     - 红鲷鱼
   '19':
     requireLevel: 1

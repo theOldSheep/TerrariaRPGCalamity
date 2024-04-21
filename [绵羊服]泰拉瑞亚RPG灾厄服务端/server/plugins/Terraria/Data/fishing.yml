@@ -51,6 +51,7 @@ fish:
     鲈鱼:
       biomeException:
       - DESERT
+      - ASTRAL_INFECTION
       - SUNKEN_SEA
       - UNDERWORLD
       - BRIMSTONE_CRAG
@@ -93,8 +94,9 @@ fish:
       height:
       - SPACE
       - SURFACE
-      biomeException:
-      - UNDERWORLD
+      biome:
+      - NORMAL
+      - HALLOW
     镜面鱼:
       height:
       - UNDERGROUND
@@ -103,6 +105,7 @@ fish:
       biomeException:
       - DESERT
       - SUNKEN_SEA
+      - BRIMSTONE_CRAG
     金枪鱼:
       height:
       - SPACE
@@ -167,6 +170,8 @@ fish:
     填充草药鱼:
       height:
       - SURFACE
+      biomeException:
+      - ASTRAL_INFECTION
     闪光宝石鱼:
       height:
       - UNDERGROUND
@@ -187,7 +192,7 @@ fish:
       biome:
       - HALLOW
     暗影之鱼:
-      height:
+      biome:
       - CORRUPTION
     毕宿五灰西鲱:
       biome:
@@ -200,18 +205,9 @@ fish:
       biome:
       - ASTRAL_INFECTION
   RARE:
-    黑曜石鱼:
-      biome:
-      - UNDERWORLD
     七彩矿鱼:
       biome:
       - HALLOW
-    剑鱼:
-      biome:
-      - OCEAN
-    紫挥棒鱼:
-      biome:
-      - CORRUPTION
     血鳍:
       biome:
       - BRIMSTONE_CRAG
@@ -223,6 +219,12 @@ fish:
     掠夺鲨:
       biome:
       - OCEAN
+    剑鱼:
+      biome:
+      - OCEAN
+    紫挥棒鱼:
+      biome:
+      - CORRUPTION
     水晶蛇:
       biome:
       - HALLOW

@@ -46,37 +46,37 @@
 鸟妖之翼:
     flightTime: 43
     verticalSpeed: 0.92
-    maxAcceleration: 0.15
+    maxAcceleration: 0.175
     horizontalSpeed: 0.55
     isWing: true
 星光之翼:
     flightTime: 50
     verticalSpeed: 1.1
-    maxAcceleration: 0.15
+    maxAcceleration: 0.185
     horizontalSpeed: 0.6
     isWing: true
 极寒之魂:
     flightTime: 40
     verticalSpeed: 1.2
-    maxAcceleration: 0.15
+    maxAcceleration: 0.2
     horizontalSpeed: 0.65
     isWing: true
 玉金喷射器:
     flightTime: 40
     verticalSpeed: 1.4
-    maxAcceleration: 0.15
+    maxAcceleration: 0.225
     horizontalSpeed: 0.75
     isWing: true
 喜庆之翼:
     flightTime: 60
     verticalSpeed: 1.2
-    maxAcceleration: 0.15
+    maxAcceleration: 0.2
     horizontalSpeed: 0.65
     isWing: true
 幽渊斗篷:
     flightTime: 60
     verticalSpeed: 1.3
-    maxAcceleration: 0.175
+    maxAcceleration: 0.225
     horizontalSpeed: 0.7
     isWing: true
 猪鲨之翼:
@@ -88,7 +88,7 @@
 女皇之翼:
     flightTime: 50
     verticalSpeed: 1.25
-    maxAcceleration: 0.2375
+    maxAcceleration: 0.25
     horizontalSpeed: 0.725
     isWing: true
 日耀之翼:
@@ -106,13 +106,13 @@
 星云之翼:
     flightTime: 60
     verticalSpeed: 1.35
-    maxAcceleration: 0.175
+    maxAcceleration: 0.2
     horizontalSpeed: 0.65
     isWing: true
 星璇之翼:
     flightTime: 60
     verticalSpeed: 1.35
-    maxAcceleration: 0.15
+    maxAcceleration: 0.2
     horizontalSpeed: 0.65
     isWing: true
 天界之翼:
@@ -137,26 +137,26 @@
 龙蒿叶之翼:
     flightTime: 85
     verticalSpeed: 1.4
-    maxAcceleration: 0.225
+    maxAcceleration: 0.275
     horizontalSpeed: 0.8
     isWing: true
 极乐之翼:
     flightTime: 80
     verticalSpeed: 1.4
-    maxAcceleration: 0.235
+    maxAcceleration: 0.275
     horizontalSpeed: 0.9
     isWing: true
 极乐翼靴:
     flightTime: 80
     verticalSpeed: 1.4
-    maxAcceleration: 0.2375
+    maxAcceleration: 0.275
     horizontalSpeed: 0.9
     isBoot: true
     isWing: true
 始源林海之翼:
     flightTime: 80
     verticalSpeed: 1.4
-    maxAcceleration: 0.34
+    maxAcceleration: 0.325
     horizontalSpeed: 0.9
     isWing: true
 Drew之翼:
