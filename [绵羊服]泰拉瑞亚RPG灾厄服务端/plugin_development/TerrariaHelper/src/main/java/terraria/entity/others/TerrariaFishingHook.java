@@ -257,8 +257,11 @@ public class TerrariaFishingHook extends EntityFishingHook {
         Location hookLoc = bukkitEntity.getLocation();
         WorldHelper.BiomeType biome = WorldHelper.BiomeType.getBiome(hookLoc, false);
         WorldHelper.HeightLayer height = WorldHelper.HeightLayer.getHeightLayer(hookLoc);
-        if (isInLava)
-            biome = WorldHelper.BiomeType.UNDERWORLD;
+        // in lava, the biome is set to underworld if it is not in the brimstone crag.
+        if (isInLava) {
+            if (biome != WorldHelper.BiomeType.BRIMSTONE_CRAG)
+                biome = WorldHelper.BiomeType.UNDERWORLD;
+        }
         else {
             // regularize some biomes
             // those biomes will only appear in hardmode but the player is in pre-hardmode
@@ -305,7 +308,7 @@ public class TerrariaFishingHook extends EntityFishingHook {
                         if (Math.random() < 1 / (1 + baitPower / 6))
                             shouldConsumeBait = true;
                         this.hookedItem = ItemHelper.dropItem(getBukkitEntity().getLocation(),
-                                getFishingResult(ownerPly, fishingPower + baitPower), false, false);
+                                getFishingResult(ownerPly, fishingPower + baitPower), true, false);
                 }
                 if (shouldConsumeBait)
                     bait.setAmount(bait.getAmount() - 1);

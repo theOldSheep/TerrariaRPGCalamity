@@ -1023,8 +1023,13 @@ public class EntityHelper {
         switch (nameV) {
             case "史莱姆王": {
                 if (damageSource instanceof Player) {
-                    MonsterHelper.spawnMob(Math.random() < 0.1 ? "尖刺史莱姆" : "史莱姆",
-                            victim.getLocation(), (Player) damageSource);
+                    // 100 slimes to spawn in total
+                    int amountRemaining = (int) (100 * victim.getHealth() / victim.getMaxHealth());
+                    int amountRemainingAfterDmg = (int) (100 * (victim.getHealth() - dmg) / victim.getMaxHealth());
+                    int amountSpawn = amountRemaining - amountRemainingAfterDmg;
+                    for (int i = 0; i < amountSpawn; i ++)
+                        MonsterHelper.spawnMob(Math.random() < 0.2 ? "尖刺史莱姆" : "史莱姆",
+                                victim.getLocation(), (Player) damageSource);
                 }
                 break;
             }

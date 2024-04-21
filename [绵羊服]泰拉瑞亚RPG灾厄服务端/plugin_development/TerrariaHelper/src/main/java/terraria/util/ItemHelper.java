@@ -416,6 +416,10 @@ public class ItemHelper {
                     case 5:
                         regularizedItemType = "闪耀根";
                         break;
+                    case 6:
+                        regularizedItemType = "丛林孢子";
+                        itemAmount = MathHelper.randomRound(itemAmount * 2.5);
+                        break;
                 }
                 break;
             // these items simply should not be dropped

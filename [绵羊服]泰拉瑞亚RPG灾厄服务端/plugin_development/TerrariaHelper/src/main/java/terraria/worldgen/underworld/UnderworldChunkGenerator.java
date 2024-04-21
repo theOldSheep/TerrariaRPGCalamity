@@ -77,14 +77,22 @@ public class UnderworldChunkGenerator extends ChunkGenerator {
         if (variance > -10) variance *= Math.abs(noiseMulti);
         return CEIL_LEVEL + variance;
     }
-    public static void tweakBiome(int x, int z, BiomeGrid biome) {
+    private static double[][] generateNoise(int x, int z) {
+        double[][] result = new double[16][16];
         for (int i = 0; i < 16; i++)
             for (int j = 0; j < 16; j++) {
-                int blockX = x * 16 + i, blockZ = z * 16 + j;
-                if (Math.abs(biomeGenerator.noise(blockX, blockZ, 0.5, 0.5, false)) > 0.5)
+                int blockX = (x << 4) + i, blockZ = (z << 4) + j;
+                result[i][j] = Math.abs(biomeGenerator.noise(blockX, blockZ, 0.5, 0.5, false));
+            }
+        return result;
+    }
+    public static void tweakBiome(double[][] noise, BiomeGrid biome) {
+        for (int i = 0; i < 16; i++)
+            for (int j = 0; j < 16; j++) {
+                if (noise[i][j] > 0.5)
                     biome.setBiome(i, j, Biome.SAVANNA);
                 else
-                    biome.setBiome(i, j, Biome.HELL);
+                    biome.setBiome(i, j, Biome.SAVANNA_ROCK);
             }
     }
     public static UnderworldChunkGenerator getInstance() {
@@ -92,7 +100,7 @@ public class UnderworldChunkGenerator extends ChunkGenerator {
     }
     // helper functions
     // init terrain (rough + detail)
-    public static void initializeTerrain(ChunkData chunk, int blockXStart, int blockZStart, BiomeGrid biome) {
+    public static void initializeTerrain(ChunkData chunk, int blockXStart, int blockZStart, double[][] noise, BiomeGrid biome) {
         // this function creates the raw terrain of the chunk, consisting of only air, lava or netherrack.
         int currX, currZ;
 
@@ -103,20 +111,35 @@ public class UnderworldChunkGenerator extends ChunkGenerator {
                 currZ = blockZStart + j;
 
                 // setup height info according to nearby biomes.
+                double brimstoneCragFactor = 0;
+                if (noise[i][j] > 0.4) {
+                    if (noise[i][j] > 0.6)
+                        brimstoneCragFactor = 1d;
+                    else
+                        brimstoneCragFactor = (noise[i][j] - 0.4) * 5;
+                }
 
-                double floorNoise = floorGenerator.noise(currX, currZ, 0.5, 0.5, false);
-                double floorDetail = floorDetailGenerator.noise(currX, currZ, 0.5, 0.5, false);
-                double ceilNoise = ceilGenerator.noise(currX, currZ, 0.5, 0.5, false);
-                double ceilDetail = ceilDetailGenerator.noise(currX, currZ, 0.5, 0.5, false);
-                double floorHeight = getFloorHeight(floorNoise, floorDetail);
-                double ceilHeight = getCeilHeight(ceilNoise, ceilDetail) + Math.random() * 2;
+                double floorHeight = LAVA_LEVEL + 2;
+                double ceilHeight = CEIL_LEVEL;
+                if (brimstoneCragFactor < 0.9999) {
+                    double floorNoise = floorGenerator.noise(currX, currZ, 0.5, 0.5, false);
+                    double floorDetail = floorDetailGenerator.noise(currX, currZ, 0.5, 0.5, false);
+                    double ceilNoise = ceilGenerator.noise(currX, currZ, 0.5, 0.5, false);
+                    double ceilDetail = ceilDetailGenerator.noise(currX, currZ, 0.5, 0.5, false);
+
+                    double underworldFactor = 1 - brimstoneCragFactor;
+                    floorHeight *= brimstoneCragFactor;
+                    floorHeight += underworldFactor * getFloorHeight(floorNoise, floorDetail);
+                    ceilHeight *= brimstoneCragFactor;
+                    ceilHeight += underworldFactor * getCeilHeight(ceilNoise, ceilDetail) + Math.random() * 2;
+                }
 
                 // loop through y to set blocks
                 for (int y_coord = 0; y_coord <= 128; y_coord++) {
                     if (y_coord == 0 || y_coord == 128)
                         chunk.setBlock(i, y_coord, j, Material.BEDROCK);
                     else if (y_coord < floorHeight || y_coord > ceilHeight)
-                        if (biome.getBiome(i, j) == Biome.HELL)
+                        if (biome.getBiome(i, j) == Biome.SAVANNA_ROCK)
                             chunk.setBlock(i, y_coord, j, Material.NETHERRACK);
                         else
                             chunk.setBlock(i, y_coord, j, Material.RED_NETHER_BRICK);
@@ -130,11 +153,12 @@ public class UnderworldChunkGenerator extends ChunkGenerator {
     }
     @Override
     public ChunkData generateChunkData(World world, Random random, int x, int z, BiomeGrid biome) {
+        double[][] noise = generateNoise(x, z);
         // setup biome
-        tweakBiome(x, z, biome);
+        tweakBiome(noise, biome);
         // init terrain
         ChunkData chunk = createChunkData(world);
-        initializeTerrain(chunk, x << 4, z << 4, biome);
+        initializeTerrain(chunk, x << 4, z << 4, noise, biome);
         return chunk;
     }
     @Override

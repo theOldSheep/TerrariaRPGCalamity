@@ -151,6 +151,7 @@ public class WorldHelper {
             Biome biome = loc.getWorld().getBiome(loc.getBlockX(), loc.getBlockZ());
             switch (biome) {
                 case HELL:
+                case SAVANNA_ROCK:
                     return UNDERWORLD;
                 case SAVANNA:
                     return BRIMSTONE_CRAG;
@@ -493,6 +494,7 @@ public class WorldHelper {
         CACTUS(Material.CACTUS),
         MUSHROOM(Material.RED_MUSHROOM),
         GLOWING_MUSHROOM(Material.BROWN_MUSHROOM),
+        JUNGLE_SPORE(Material.RED_ROSE, (byte) 6),
         BLINK_ROOT(Material.RED_ROSE, (byte) 5),
         DAY_BLOOM(Material.YELLOW_FLOWER),
         DEATH_WEED(Material.RED_ROSE, (byte) 1),
@@ -534,6 +536,8 @@ public class WorldHelper {
                 return !strict && blockMat == Material.SAND;
             case HALLOW:
                 return blockMat == Material.DIRT && data == 2;
+            case ASTRAL_INFECTION:
+                return blockMat == Material.DIRT && data == 1;
             case CORRUPTION:
                 return blockMat == Material.MYCEL;
             default:
@@ -581,12 +585,16 @@ public class WorldHelper {
                                 plantType = PlantType.DAY_BLOOM;
                             }
                             break;
+                        case ASTRAL_INFECTION:
+                            plantType = PlantType.SPECIAL_OR_NONE;
+                            break;
                     }
                 }
                 else {
                     switch (biome) {
                         case TUNDRA:
                         case CORRUPTION:
+                        case ASTRAL_INFECTION:
                             plantType = PlantType.SPECIAL_OR_NONE;
                             break;
                         case OCEAN:
@@ -606,6 +614,9 @@ public class WorldHelper {
                         case JUNGLE:
                             if (Math.random() < 0.5) {
                                 plantType = PlantType.GLOWING_MUSHROOM;
+                            }
+                            else if (Math.random() < 0.15) {
+                                plantType = PlantType.JUNGLE_SPORE;
                             }
                             if (Math.random() < CHANCE_BULB) {
                                 plantType = PlantType.SPECIAL_OR_NONE;
@@ -950,23 +961,32 @@ public class WorldHelper {
         }
         // validate if the tree has enough space to grow
         {
-            HashSet<Block> validateBlocks = new HashSet<>();
+            HashSet<Block> validateBlocksNotTree = new HashSet<>();
+            HashSet<Block> validateBlocksNotSolid = new HashSet<>();
             // leaves
             for (Block leafBlock : leafBlocks) {
+                validateBlocksNotSolid.add(leafBlock);
                 for (BlockFace face : DIRECT_CONTACT_DIRECTIONS)
-                    validateBlocks.add(leafBlock.getRelative(face));
+                    validateBlocksNotTree.add(leafBlock.getRelative(face));
             }
             // trunk
             for (Block trunkBlock : trunkBlocks) {
+                validateBlocksNotSolid.add(trunkBlock);
                 for (BlockFace face : DIRECT_CONTACT_DIRECTIONS)
-                    validateBlocks.add(trunkBlock.getRelative(face));
+                    validateBlocksNotTree.add(trunkBlock.getRelative(face));
             }
-            // the dirt below the root should not hinder the tree from growing
-            validateBlocks.remove(rootBlock.getRelative(BlockFace.DOWN));
             // validate
-            for (Block validateBlock : validateBlocks)
+            for (Block validateBlock : validateBlocksNotSolid)
                 if (validateBlock.getType().isSolid()) {
                     return;
+                }
+            for (Block validateBlock : validateBlocksNotTree)
+                switch (validateBlock.getType()) {
+                    case LOG:
+                    case LOG_2:
+                    case LEAVES:
+                    case LEAVES_2:
+                        return;
                 }
         }
         // place the tree

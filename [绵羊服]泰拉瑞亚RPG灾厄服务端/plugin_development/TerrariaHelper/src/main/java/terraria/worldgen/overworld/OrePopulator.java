@@ -260,6 +260,7 @@ public class OrePopulator extends BlockPopulator {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.SAVANNA)
             generateGenericOre(wld, rdm, chunk, 60, 32, "CHARRED", 5);
     }
+    // TODO
     void generateUndergroundLake(World world, Random random, Chunk chunk) {
         // source code from https://bukkit.fandom.com/wiki/Developing_a_World_Generator_Plugin
         // which is converted from vanilla minecraft's lake generator
