@@ -257,6 +257,7 @@ terraria\entity\boss\BossHelper$BossTargetInfo.class
 terraria\entity\boss\ravager\Ravager.class
 terraria\event\listener\CraftingListener.class
 terraria\entity\boss\ravager\RavagerHead.class
+terraria\worldgen\overworld\OverworldBiomeGenerator$BiomeFeature.class
 terraria\entity\boss\calamitasClone\Cataclysm.class
 terraria\entity\others\TerrariaMinecart$MinecartType.class
 terraria\entity\npc\TerrariaNPCDemolitionist.class

@@ -165,7 +165,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     // chunk block material details
     public static void generateTopSoil(ChunkData chunk, boolean[][][] stoneVeinFlag, int i, int height, int j, int blockX, int blockZ, Biome biome, int yOffset) {
         // although it is named as such, this actually generates stone layers too.
-        double topSoilThicknessRandomizer = stoneVeinGenerator.noise(blockX, blockZ, 0.5, 0.5, false);
+        double topSoilThicknessRandomizer = stoneVeinGenerator.noise(blockX, blockZ, 2, 0.5, false);
         double topSoilThickness;
             Material matTopSoil, matSoil, matStone;
             // setup biome block info
@@ -265,9 +265,9 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     // compute the desired terrain height at a specific column
     static double getTerrainHeight(Biome currBiome, int currX, int currZ) {
         double result;
-        double terrainScalingFactor = terrainScalingGenerator.noise(currX, currZ, 0.5, 0.5, true);
-        double riverNoise = riverGenerator.noise(currX, currZ, 0.5, 0.5, false);
-        double lakeNoise = lakeGenerator.noise(currX, currZ, 0.5, 0.5, false);
+        double terrainScalingFactor = terrainScalingGenerator.noise(currX, currZ, 2, 0.5, true);
+        double riverNoise = riverGenerator.noise(currX, currZ, 2, 0.5, false);
+        double lakeNoise = lakeGenerator.noise(currX, currZ, 2, 0.5, false);
         terrainScalingFactor = terrainScalingFactor * 0.75 + 0.5;
         switch (currBiome) {
             case FROZEN_OCEAN:              // sulphurous ocean
@@ -278,14 +278,14 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             case OCEAN:                     // ocean
                 return SEA_LEVEL - 30;
             case MESA:                      // astral infection
-                double astralNoise = astralInfectionGenerator.noise(currX, currZ, 0.5, 0.5, false);
+                double astralNoise = astralInfectionGenerator.noise(currX, currZ, 2, 0.5, false);
                 result = astralInfectionHeightProvider.getY(astralNoise);
                 return LAND_HEIGHT + result * terrainScalingFactor;
             case JUNGLE:                    // jungle
                 return SEA_LEVEL;
             default:
                 // first: plains, mountains, rolling hills, plateau etc.
-                double plateauHeightNoise = plateauHeightGenerator.noise(currX, currZ, 0.5, 0.5, false);
+                double plateauHeightNoise = plateauHeightGenerator.noise(currX, currZ, 2, 0.5, false);
                 double variationNoise = landscapeVariationGenerator.noise(currX, currZ, 0.5, 0.5, false);
                 double heightOffset = 0;
                 // handle special landscapes: the rolling hills/mountains/plateau etc.
@@ -331,7 +331,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             height = LAND_HEIGHT * (1 - spawnMulti) + height * spawnMulti;
         if (height > 50) {
             double randomHeightMulti = Math.min(Math.max(4, (height - SEA_LEVEL) * 2), 10);
-            height += randomHeightMulti * terrainDetailGenerator.noise(currX, currZ, 0.5, 0.5, true);
+            height += randomHeightMulti * terrainDetailGenerator.noise(currX, currZ, 2, 0.5, true);
         }
         // save height into heightmap
         heightMap[i][j] = (int) Math.ceil(height);
@@ -448,7 +448,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
      */
     // checks if dirt and stone should swap here
     protected static boolean checkStoneNoise(double blockX, double effectualY, double blockZ) {
-        return stoneVeinGenerator.noise(blockX, effectualY, blockZ, 0.5, 0.5, false) > 0.5;
+        return stoneVeinGenerator.noise(blockX, effectualY, blockZ, 2, 0.5, false) > 0.5;
     }
     protected static boolean isDetailedCheckNeeded(boolean[][][] greaterGrid, int indexX, int indexY, int indexZ) {
         // checks the nearby 2*2 greater grid and tells if they are the same.

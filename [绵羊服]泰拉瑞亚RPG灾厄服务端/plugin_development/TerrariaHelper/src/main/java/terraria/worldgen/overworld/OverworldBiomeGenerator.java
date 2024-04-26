@@ -2,59 +2,132 @@ package terraria.worldgen.overworld;
 
 import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
-import terraria.util.MathHelper;
-import terraria.worldgen.RandomGenerator;
+import org.bukkit.util.noise.PerlinNoiseGenerator;
+import org.bukkit.util.noise.PerlinOctaveGenerator;
+import terraria.util.WorldHelper;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Random;
+import java.util.function.ToDoubleFunction;
 
 public class OverworldBiomeGenerator {
-    static long seed = 0;
+
+    static boolean generatedImg = false;
+    static long SEED = 0;
     static final int
-            BIOME_GRID_GENERATE_RADIUS = 9,
-            CACHE_SIZE = 15000000,
-            CACHE_DELETION_SIZE = 10000000,
-            SPAWN_LOC_PROTECTION_RADIUS = 500;
-    static final double SPECIAL_BIOME_RATE = 0.75;
+            CACHE_SIZE = 150000,
+            CACHE_DELETION_SIZE = 100000,
+            SPAWN_LOC_PROTECTION_RADIUS = 750;
+
+    static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseEros, noiseHum, noiseWrd;
+
+    public static class BiomeFeature {
+        public static final int
+                // large mag. negative: sulphurous ocean, large mag. positive: ocean
+                CONTINENTALNESS = 0,
+                // has to do with desert identification
+                TEMPERATURE = 1,
+                EROSION = 2,
+                HUMIDITY = 3,
+                WEIRDNESS = 4;
+        // the functions below produce non-normal feature vectors (prob. distribution). Normalize them after produced!
+        public static final HashMap<WorldHelper.BiomeType, ToDoubleFunction<Double[]>> biomeFeatureConversion = new HashMap<>();
+        static {
+            biomeFeatureConversion.put(WorldHelper.BiomeType.NORMAL, (lst) -> 0.5);
+            // 10 is a really high weight, just to ensure low spaces are indeed initialized as the two types of ocean
+            biomeFeatureConversion.put(WorldHelper.BiomeType.OCEAN, (Double[] lst) ->
+                    lst[CONTINENTALNESS] < -0.5 ? 10 : 0);
+            biomeFeatureConversion.put(WorldHelper.BiomeType.SULPHUROUS_OCEAN, (Double[] lst) ->
+                    lst[CONTINENTALNESS] > 0.5 ? 10 : 0);
+            // note that multiplication makes astral and jungle significantly more rare
+
+            // astral infection: prefer areas further from ocean and dryer; this associates this infection with less foliage.
+            biomeFeatureConversion.put(WorldHelper.BiomeType.ASTRAL_INFECTION, (Double[] lst) ->
+                    Math.max(0, (0.5 - Math.abs(lst[CONTINENTALNESS]) ) * 2 + lst[HUMIDITY] )
+                            * Math.max(0, -lst[WEIRDNESS] * 2.5 ) );
+            // hallow: prefer non-weird places
+            biomeFeatureConversion.put(WorldHelper.BiomeType.HALLOW, (Double[] lst) ->
+                    Math.max(0, -lst[WEIRDNESS] * 1.25 ) );
+            // corruption: prefer wet places
+            biomeFeatureConversion.put(WorldHelper.BiomeType.CORRUPTION, (Double[] lst) ->
+                    Math.max(0, lst[HUMIDITY] * 1.25 ) );
+            // desert: prefer dry, hot places
+            biomeFeatureConversion.put(WorldHelper.BiomeType.DESERT, (Double[] lst) ->
+                    Math.max(0, -lst[HUMIDITY] + lst[TEMPERATURE]) * 0.75 );
+            // tundra: prefer cold places
+            biomeFeatureConversion.put(WorldHelper.BiomeType.TUNDRA, (Double[] lst) ->
+                    Math.max(0, -lst[TEMPERATURE] * 1.25 ) );
+            // jungle: prefer hot, wet places that are not weird
+            biomeFeatureConversion.put(WorldHelper.BiomeType.JUNGLE, (Double[] lst) ->
+                    Math.max(0, lst[HUMIDITY] * 2.5)
+                            * Math.max(0, lst[TEMPERATURE] - lst[WEIRDNESS] ) );
+
+        }
+
+        public final Double[] features = new Double[6];
+        public final HashMap<WorldHelper.BiomeType, Double> biomeFeatures = new HashMap<>();
+        public final WorldHelper.BiomeType evaluatedBiome;
+
+        public BiomeFeature(int x, int z) {
+            double distFromSpawn = Math.sqrt(x * x + z * z);
+            double distFromSpawnFactor = distFromSpawn / SPAWN_LOC_PROTECTION_RADIUS;
+
+            features[CONTINENTALNESS] =     noiseCont.noise(x, z, 2, 0.5);
+            features[TEMPERATURE] =         noiseTemp.noise(x, z, 2, 0.5);
+            features[EROSION] =             noiseEros.noise(x, z, 2, 0.5);
+            features[HUMIDITY] =            noiseHum .noise(x, z, 2, 0.5);
+            features[WEIRDNESS] =           noiseWrd .noise(x, z, 2, 0.5);
+            // spawn protection: feature tweak
+            if (distFromSpawn < SPAWN_LOC_PROTECTION_RADIUS) {
+                features[CONTINENTALNESS] *= distFromSpawnFactor;
+            }
+            // convert to biome features
+            for (WorldHelper.BiomeType biomeType : biomeFeatureConversion.keySet()) {
+                double magnitude = biomeFeatureConversion.get(biomeType).applyAsDouble(features);
+                biomeFeatures.put(biomeType, magnitude);
+            }
+            // spawn protection: biome tweak
+            if (distFromSpawn < SPAWN_LOC_PROTECTION_RADIUS) {
+                double protectedValue = Math.max(
+                        (1 - distFromSpawnFactor) * 5,
+                        biomeFeatures.get(WorldHelper.BiomeType.NORMAL)
+                );
+                biomeFeatures.put(WorldHelper.BiomeType.NORMAL, protectedValue);
+            }
+            // compute total magSqr
+            double totalMagSqr = 0;
+            for (double magnitude : biomeFeatures.values()) {
+                totalMagSqr += magnitude * magnitude;
+            }
+
+            // normalize biome features and record the most possible biome
+            double magMultiplier = 1 / Math.sqrt(totalMagSqr);
+            // record the most possible biome; only consider prob > 0.1
+            double mostProb = 0.1;
+            WorldHelper.BiomeType mostProbType = WorldHelper.BiomeType.NORMAL;
+            for (WorldHelper.BiomeType biomeType : biomeFeatureConversion.keySet()) {
+                double updated = biomeFeatures.get(biomeType) * magMultiplier;
+                biomeFeatures.put(biomeType, updated);
+                if (updated > mostProb) {
+                    mostProb = updated;
+                    mostProbType = biomeType;
+                }
+            }
+            // save the most possible biome
+            evaluatedBiome = mostProbType;
+        }
+    }
+
+    static HashMap<Long, BiomeFeature> biomeCache = new HashMap<>(CACHE_SIZE, 0.8f);
 
 
-    static HashMap<Long, Integer> biomeCache = new HashMap<>(CACHE_SIZE, 0.8f);
-    static HashMap<Long, Integer> biomeGridCache = new HashMap<>(CACHE_SIZE, 0.8f);
-    // biomeCache ONLY STORES biome info, while biomeGridCache ONLY STORES biome grid info that are used to derive biome info
-    // further info about the key format can be seen in the comment of function getCacheKey
-    static boolean test = false; // should we always return forest to test out other functionalities?
-
-    static String[] biomeGenProcess = new String[] {
-        "zoom_in",
-        "add_islands",
-        "add_islands",
-        "fill_ocean",
-        "zoom_in_smooth",
-        "zoom_in_smooth",
-        "setup_rough_biome",
-        "zoom_in",
-        "zoom_in",
-        "zoom_in_smooth",
-        "smooth_biome",
-        "add_beach",
-        "add_beach",
-        "zoom_in_smooth",
-        "zoom_in_smooth",
-        "zoom_in_smooth",
-        "zoom_in_smooth",
-//        remove two zoom in smooth and divide actual x and z by 4 if we wish for faster biome generation
-//        "zoom_in_smooth",
-//        "zoom_in_smooth",
-        "smooth_biome",
-    };
-
-
+    // save the biome image for testing purposes and so on
     private static void generateBiomeImage() {
         HashMap<Biome, Integer> biomeColors = new HashMap<>();
         biomeColors.put(Biome.FOREST,               new Color(0, 175, 0).getRGB()); //forest(normal)
@@ -89,7 +162,7 @@ public class OverworldBiomeGenerator {
                 // i : x-coordinate corresponding to the point on map increases as we move to the right (bigger i)
                 // j : z-coordinate corresponding to the point on map increases as we move to the top (smaller j)
                 int blockX = (i - (scale / 2)) * jump + center, blockZ = ((scale / 2) - j) * jump + center;
-                Biome currBiome = getBiome(seed, blockX, blockZ);
+                Biome currBiome = getBiome(SEED, blockX, blockZ);
                 biomeMap.setRGB(i, j, biomeColors.getOrDefault(currBiome, new Color(0, 255, 0).getRGB()));
                 progress++;
                 if (lastPrinted + 1000 < Calendar.getInstance().getTimeInMillis()) {
@@ -111,15 +184,13 @@ public class OverworldBiomeGenerator {
         Bukkit.getLogger().info("FINISHED GENERATING BIOME MAP.");
         Bukkit.getLogger().info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
-    private static long getCacheKey(int recursion, int x, int z) {
+    // get the key in the biome cache
+    private static long getCacheKey(int x, int z) {
         long result = 0;
-        // first two bytes denotes x and z
-        if (x < 0) result ++;
+        // first two bytes denotes x and z sign
+        if (x < 0) result |= 1;
         result = result << 1;
-        if (z < 0) result ++;
-        // reserve 6 bytes for recursion level
-        result = result << 6;
-        result += recursion;
+        if (z < 0) result |= 1;
         // reserve 25 bytes for each of x and z
         result = result << 25;
         result += Math.abs(x);
@@ -127,364 +198,28 @@ public class OverworldBiomeGenerator {
         result += Math.abs(z);
         return result;
     }
-    // biome enlarge helper functions
-    private static int[][] zoom_in(int[][] original, int x, int z, int scale, boolean is_smooth) {
-        int sizeOriginal = original.length;
-        int size = original.length * 2 - 1;
-        int[][] result = new int[size][size];
-        // * · *
-        // · · ·
-        // * · *
-        for (int i = 0; i < sizeOriginal; i ++)
-            for (int j = 0; j < sizeOriginal; j ++) {
-                result[i * 2][j * 2] = original[i][j];
-            }
-        for (int i = 0; i < sizeOriginal; i ++)
-            for (int j = 0; j + 1 < sizeOriginal; j ++) {
-                // · * ·
-                // · · ·
-                // · * ·
-                double rdmResult = RandomGenerator.getRandom(seed, x + ((j * 2 + 1) * scale), z + (i * 2 * scale));
-                if (rdmResult < 0.5) {
-                    result[i * 2][j * 2 + 1] = original[i][j];
-                } else {
-                    result[i * 2][j * 2 + 1] = original[i][j + 1];
-                }
-            }
-        for (int i = 0; i + 1 < sizeOriginal; i ++)
-            for (int j = 0; j < sizeOriginal; j ++) {
-                // · · ·
-                // * · *
-                // · · ·
-                double rdmResult = RandomGenerator.getRandom(seed, x + (j * 2 * scale), z + ((i * 2 + 1) * scale));
-                if (rdmResult < 0.5) {
-                    result[i * 2 + 1][j * 2] = original[i][j];
-                } else {
-                    result[i * 2 + 1][j * 2] = original[i + 1][j];
-                }
-            }
-        for (int i = 0; i + 1 < sizeOriginal; i ++)
-            for (int j = 0; j + 1 < sizeOriginal; j ++) {
-                // · · ·
-                // · * ·
-                // · · ·
-                if (is_smooth) {
-                    ArrayList<Integer> candidates = new ArrayList<>(5);
-                    HashMap<Integer, Integer> occurrence = new HashMap<>(8);
-                    for (int indX = j; indX <= j + 1; indX++)
-                        for (int indZ = i; indZ <= i + 1; indZ++) {
-                            int gridType = original[indZ][indX];
-                            occurrence.put(gridType, occurrence.getOrDefault(gridType, 0) + 1);
-                        }
-                    // only the biome that have the highest rate of occurrence can be the result.
-                    int maxOccurrence = 0;
-                    for (int createdGrid : occurrence.keySet()) {
-                        int currOccurrence = occurrence.get(createdGrid);
-                        if (currOccurrence > maxOccurrence) {
-                            maxOccurrence = currOccurrence;
-                            candidates.clear();
-                        }
-                        if (currOccurrence == maxOccurrence)
-                            candidates.add(createdGrid);
-                    }
-                    int rdmResult = RandomGenerator.getRandomGenerator(seed, x + ((j * 2 + 1) * scale), z + ((i * 2 + 1) * scale)).nextInt();
-                    result[i * 2 + 1][j * 2 + 1] = candidates.get(Math.abs(rdmResult) % candidates.size());
-                } else {
-                    double rdmResult = RandomGenerator.getRandom(seed, x + ((j * 2 + 1) * scale), z + ((i * 2 + 1) * scale));
-                    if (rdmResult < 0.25)
-                        result[i * 2 + 1][j * 2 + 1] = original[i][j];
-                    else if (rdmResult < 0.5)
-                        result[i * 2 + 1][j * 2 + 1] = original[i + 1][j];
-                    else if (rdmResult < 0.75)
-                        result[i * 2 + 1][j * 2 + 1] = original[i][j + 1];
-                    else
-                        result[i * 2 + 1][j * 2 + 1] = original[i + 1][j + 1];
-                }
-            }
-        return result;
-    }
-    private static int[][] add_islands(int[][] mapLand, int x, int z, int scale) {
-        int size = mapLand.length;
-        int[][] result = new int[size][size];
-        for (int i = 0; i < size; i ++)
-            for (int j = 0; j < size; j ++) {
-                int blockX = x + (j * scale), blockZ = z + (i * scale);
-                boolean isNearSpawnloc = (Math.abs(blockX) < SPAWN_LOC_PROTECTION_RADIUS * 2 && Math.abs(blockZ) < SPAWN_LOC_PROTECTION_RADIUS * 2);
-                result[i][j] = mapLand[i][j];
-                if (i == 0 || j == 0 || i + 1 == size || j + 1 == size) continue; // skip margins
-                boolean hasAdjacentLand = false;
-                boolean hasAdjacentOcean = false;
-                for (int checkI = i - 1; checkI <= i + 1; checkI += 2) {
-                    for (int checkJ = j - 1; checkJ <= j + 1; checkJ += 2) {
-                        if (mapLand[checkI][checkJ] >= 1) hasAdjacentLand = true;
-                        else hasAdjacentOcean = true;
-                        if (hasAdjacentLand && hasAdjacentOcean) break;
-                    }
-                    if (hasAdjacentLand && hasAdjacentOcean) break;
-                }
-                double rdmResult = RandomGenerator.getRandom(seed, x + (j * scale), z + (i * scale));
-                if (hasAdjacentLand && mapLand[i][j] <= 0 && rdmResult < 0.33) result[i][j] = 1;
-                else if (hasAdjacentOcean && mapLand[i][j] >= 1 && rdmResult < 0.2 && !isNearSpawnloc) result[i][j] = 0;
-                else result[i][j] = mapLand[i][j];
-            }
-        return result;
-    }
-    private static int[][] fill_ocean(int[][] mapLand, int x, int z, int scale) {
-        int size = mapLand.length;
-        int[][] result = new int[size][size];
-        for (int i = 0; i < size; i ++)
-            for (int j = 0; j < size; j ++) {
-                int blockX = x + (j * scale), blockZ = z + (i * scale);
-                boolean isNearSpawnloc = (Math.abs(blockX) + Math.abs(blockZ) < (SPAWN_LOC_PROTECTION_RADIUS + scale) * 2);
-                if (isNearSpawnloc) result[i][j] = 1;
-                else {
-                    result[i][j] = mapLand[i][j];
-                    if (i == 0 || j == 0 || i + 1 == size || j + 1 == size) continue; // skip margins
-                    if (mapLand[i][j] >= 1) continue; // do nothing to lands
-                    boolean hasAdjacentLand = false;
-                    for (int checkI = i - 1; checkI < i + 1; checkI += 2) {
-                        if (checkI < 0) continue;
-                        if (mapLand[checkI][j] >= 1) {
-                            hasAdjacentLand = true;
-                            break;
-                        }
-                    }
-                    if (!hasAdjacentLand)
-                        for (int checkJ = j - 1; checkJ < j + 1; checkJ += 2) {
-                            if (checkJ < 0) continue;
-                            if (mapLand[i][checkJ] == 1) {
-                                hasAdjacentLand = true;
-                                break;
-                            }
-                        }
-                    if (!hasAdjacentLand) {
-                        // only try to make ocean a land when it has all water around
-                        if (RandomGenerator.getRandom(seed, x + (j * scale), z + (i * scale)) < 0.5)
-                            result[i][j] = 1;
-                    }
-                }
-            }
-        return result;
-    }
-    private static boolean biome_need_forest_margin(int toCheck) {
-        return toCheck >= 2 && toCheck <= 7;
-    }
-    private static int[][] smooth_biome(int[][] mapLand, int x, int z, int scale) {
-        int size = mapLand.length;
-        int[][] result = new int[size][size];
-        for (int i = 0; i < size; i ++)
-            for (int j = 0; j < size; j ++) {
-                result[i][j] = mapLand[i][j];
-                if (i == 0 || j == 0 || i + 1 == size || j + 1 == size) continue; // skip margins
-                // smooth biome: put all biomes in adjacent grid in a hashmap
-                ArrayList<Integer> candidates = new ArrayList<>(5);
-                HashMap<Integer, Integer> occurrence = new HashMap<>(8);
-                for (int xOffset = -1; xOffset <= 1; xOffset ++) {
-                    for (int zOffset = -1; zOffset <= 1; zOffset++) {
-                        if (xOffset == 0 && zOffset == 0) continue;
-                        int gridType;
-                        gridType = mapLand[i + zOffset][j + xOffset];
-                        occurrence.put(gridType, occurrence.getOrDefault(gridType, 0) + 1);
-                    }
-                }
-                // only the biome that have the highest rate of occurrence can be the result.
-                int maxOccurrence = 0, numBiomeNeedMargin = 0;
-                for (int createdGrid : occurrence.keySet()) {
-                    // if two conflicting biomes around this grid needed a margin
-                    if (biome_need_forest_margin(createdGrid) && ++numBiomeNeedMargin > 1)
-                        break;
-                    int currOccurrence = occurrence.get(createdGrid);
-                    if (currOccurrence > maxOccurrence) {
-                        maxOccurrence = currOccurrence;
-                        candidates.clear();
-                    }
-                    if (currOccurrence == maxOccurrence)
-                        candidates.add(createdGrid);
-                }
-                // smoothed biome
-                if (numBiomeNeedMargin > 1)
-                    result[i][j] = 1;
-                else {
-                    int rdmResult = RandomGenerator.getRandomGenerator(seed, x + j * scale, z + i * scale).nextInt();
-                    result[i][j] = candidates.get(Math.abs(rdmResult) % candidates.size());
-                }
-            }
-        return result;
-    }
-    private static int[][] add_beach(int[][] mapLand, int x, int z, int scale) {
-        int size = mapLand.length;
-        int[][] result = new int[size][size];
-        for (int i = 0; i < size; i ++)
-            for (int j = 0; j < size; j ++) {
-                result[i][j] = mapLand[i][j];
-                if (i == 0 || j == 0 || i + 1 == size || j + 1 == size) continue; // skip margins
-                if (mapLand[i][j] <= 0) continue; // no beach in oceans!
-                int adjacentOcean = 0, adjacentSulphurous = 0;
-                for (int idxOffset = -1; idxOffset <= 1; idxOffset += 2) {
-                    int toCheck;
-                    toCheck = mapLand[i + idxOffset][j];
-                    if (toCheck == -1 || toCheck == 8) adjacentSulphurous ++;
-                    else if (toCheck == 0 || toCheck == 9) adjacentOcean ++;
-                    toCheck = mapLand[i][j + idxOffset];
-                    if (toCheck == -1 || toCheck == 8) adjacentSulphurous ++;
-                    else if (toCheck == 0 || toCheck == 9) adjacentOcean ++;
-                }
-                if (adjacentSulphurous >= adjacentOcean && adjacentSulphurous > 0) result[i][j] = 8;
-                else if (adjacentOcean > adjacentSulphurous) result[i][j] = 9;
-            }
-        return result;
-    }
-    private static boolean biomeNeedTemperatureBuffer(int biome) {
-        switch(biome) {
-            case 2:
-            case 3:
-            case 4:
-                return true;
-        }
-        return false;
-    }
-    private static int[][] setup_rough_biome(int[][] mapLand, int x, int z, int scale) {
-        // -1: sulphurous ocean  0: ocean
-        // 1: forest  2: jungle  3: tundra  4: desert  5: corruption  6: hallow  7: astral infection
-        // 8: sulphurous beach  9: beach
-        int size = mapLand.length;
-        int[][] result = new int[size][size];
-        for (int i = 0; i < size; i ++)
-            for (int j = 0; j < size; j ++) {
-                result[i][j] = mapLand[i][j];
-                int blockX = x + (j * scale), blockZ = z + (i * scale);
-                boolean isNearSpawnloc = (Math.abs(blockX) < SPAWN_LOC_PROTECTION_RADIUS && Math.abs(blockZ) < SPAWN_LOC_PROTECTION_RADIUS);
-                double randomNum = RandomGenerator.getRandom(seed, blockX, blockZ);
-                if (mapLand[i][j] <= 0) {
-                    // ocean
-                    if (randomNum < 0.2)
-                        result[i][j] = -1;
-                } else if (!isNearSpawnloc && mapLand[i][j] <= 7) {
-                    // land (not beach)
-                    if      (randomNum < SPECIAL_BIOME_RATE / 6)        result[i][j] = 2; // jungle
-                    else if (randomNum < SPECIAL_BIOME_RATE / 3)        result[i][j] = 3; // tundra
-                    else if (randomNum < SPECIAL_BIOME_RATE / 2)        result[i][j] = 4; // desert
-                    else if (randomNum < SPECIAL_BIOME_RATE * 2 / 3)    result[i][j] = 5; // corruption
-                    else if (randomNum < SPECIAL_BIOME_RATE * 5 / 6)    result[i][j] = 6; // hallow
-                    else if (randomNum < SPECIAL_BIOME_RATE)            result[i][j] = 7; // astral infection
-                }
-            }
-        // make sure tundra, jungle and desert do not meet each other
-        for (int i = 1; i + 1 < size; i ++)
-            for (int j = 1; j + 1 < size; j ++) {
-                if (biomeNeedTemperatureBuffer(result[i][j])) {
-                    if (biomeNeedTemperatureBuffer(result[i + 1][j]) && result[i + 1][j] != result[i][j])
-                        result[i][j] = 1;
-                    else if (biomeNeedTemperatureBuffer(result[i][j + 1]) && result[i][j + 1] != result[i][j])
-                        result[i][j] = 1;
-                    else if (biomeNeedTemperatureBuffer(result[i + 1][j + 1]) && result[i + 1][j + 1] != result[i][j])
-                        result[i][j] = 1;
-                    else if (biomeNeedTemperatureBuffer(result[i + 1][j - 1]) && result[i + 1][j - 1] != result[i][j])
-                        result[i][j] = 1;
-                }
-            }
-        return result;
-    }
 
-    private static int[][] getUpperLevelBiomeGrid(int radius, int x_begin, int z_begin, int gridSizeOffset, int recursion) {
-        int land_grid[][] = new int[radius * 2 + 1][radius * 2 + 1];
-        // load the grid 1 recursion level higher than current
-        for (int i = 0; i < radius * 2 + 1; i++) {
-            for (int j = 0; j < radius * 2 + 1; j++) {
-                int blockX, blockZ;
-                blockX = x_begin + (j * gridSizeOffset);
-                blockZ = z_begin + (i * gridSizeOffset);
-                if (recursion < biomeGenProcess.length) {
-                    // up 1 recursion level
-                    land_grid[i][j] = getGeneralBiomeGrid(blockX, blockZ, gridSizeOffset, recursion + 1);
-                } else {
-                    // initialize the highest level grid
-                    if (RandomGenerator.getRandom(seed, blockX, blockZ) < 0.1)
-                        land_grid[i][j] = 1;
-                    else land_grid[i][j] = 0;
-                }
-            }
-        }
-        return land_grid;
-    }
-    private static int[][] manipulateBiomeGrid(int[][] land_grid, String operation, int x_begin, int z_begin, int gridSize) {
-        // manipulate the grid according to current operation
-        int[][] result;
-        switch (operation) {
-            case "setup_rough_biome":
-                result = setup_rough_biome(land_grid, x_begin, z_begin, gridSize);
-                break;
-            case "zoom_in":
-                result = zoom_in(land_grid, x_begin, z_begin, gridSize, false);
-                break;
-            case "zoom_in_smooth":
-                result = zoom_in(land_grid, x_begin, z_begin, gridSize, true);
-                break;
-            case "add_islands":
-                result = add_islands(land_grid, x_begin, z_begin, gridSize);
-                break;
-            case "fill_ocean":
-                result = fill_ocean(land_grid, x_begin, z_begin, gridSize);
-                break;
-            case "add_beach":
-                result = add_beach(land_grid, x_begin, z_begin, gridSize);
-                break;
+    public static Biome getBiomeFromType(WorldHelper.BiomeType biome) {
+        switch (biome) {
+            case HALLOW:
+                return Biome.ICE_FLATS;
+            case CORRUPTION:
+                return Biome.MUSHROOM_ISLAND;
+            case ASTRAL_INFECTION:
+                return Biome.MESA;
+            case OCEAN:
+                return Biome.OCEAN;
+            case SULPHUROUS_OCEAN:
+                return Biome.FROZEN_OCEAN;
+            case TUNDRA:
+                return Biome.TAIGA_COLD;
+            case JUNGLE:
+                return Biome.JUNGLE;
+            case DESERT:
+                return Biome.DESERT;
             default:
-                result = smooth_biome(land_grid, x_begin, z_begin, gridSize);
+                return Biome.FOREST;
         }
-        return result;
-    }
-    private static void saveBiomeGrid(int[][] land_grid, int marginDiscard, int x_begin, int z_begin, int gridSize, int recursion) {
-        int grid_x_save_start = MathHelper.betterFloorDivision(x_begin, gridSize),
-                grid_z_save_start = MathHelper.betterFloorDivision(z_begin, gridSize);
-        for (int i = marginDiscard; i + marginDiscard < land_grid.length; i++) {
-            for (int j = marginDiscard; j + marginDiscard < land_grid[i].length; j++) {
-                int grid_x_save = grid_x_save_start + j, grid_z_save = grid_z_save_start + i;
-                long tempKey = getCacheKey(recursion, grid_x_save, grid_z_save);
-                if (recursion == 1)
-                    biomeCache.put(tempKey, land_grid[i][j]);
-                else
-                    biomeGridCache.put(tempKey, land_grid[i][j]);
-            }
-        }
-    }
-    private static int getGeneralBiomeGrid(int x, int z, int gridSize, int recursion) {
-        int gridX = MathHelper.betterFloorDivision(x, gridSize), gridZ = MathHelper.betterFloorDivision(z, gridSize);
-        long biomeLocKey = getCacheKey(recursion, gridX, gridZ);
-        HashMap<Long, Integer> cache = recursion == 1 ? biomeCache : biomeGridCache;
-        if (!cache.containsKey(biomeLocKey)) {
-            // setup original position info.
-            String operation = biomeGenProcess[biomeGenProcess.length - recursion];
-            int[][] land_grid;
-            int grid_x_begin, grid_z_begin, gridSizeOffset;
-            if (operation.startsWith("zoom_in")) {
-                gridSizeOffset = gridSize * 2;
-            } else {
-                gridSizeOffset = gridSize;
-            }
-            grid_x_begin = MathHelper.betterFloorDivision(x, gridSizeOffset * (BIOME_GRID_GENERATE_RADIUS - 2));
-            grid_z_begin = MathHelper.betterFloorDivision(z, gridSizeOffset * (BIOME_GRID_GENERATE_RADIUS - 2));
-            // we do a floor division by BIOME_GRID_GENERATE_RADIUS - 2 (margins are removed later).
-            // so that the chunks we divide biome grid into can largely be independent
-            // reducing unnecessary performance consumption
-            grid_x_begin --;
-            grid_z_begin --;
-            int x_begin = grid_x_begin * gridSizeOffset * (BIOME_GRID_GENERATE_RADIUS - 2), z_begin = grid_z_begin * gridSizeOffset * (BIOME_GRID_GENERATE_RADIUS - 2);
-
-            // load the grid 1 recursion level higher than current
-            land_grid = getUpperLevelBiomeGrid(BIOME_GRID_GENERATE_RADIUS, x_begin, z_begin, gridSizeOffset, recursion);
-            // manipulate the grid according to current operation
-            int[][] manipulated_grid = manipulateBiomeGrid(land_grid, operation, x_begin, z_begin, gridSize);
-            int marginDiscard = 1;
-            if (operation.startsWith("zoom_in")) marginDiscard = 0;
-            //save the grid info
-            saveBiomeGrid(manipulated_grid, marginDiscard, x_begin, z_begin, gridSize, recursion);
-        }
-        int result = cache.get(biomeLocKey);
-        if (cache.size() > CACHE_DELETION_SIZE) {
-            cache.clear();
-        }
-        return result;
     }
     public static Biome getUndergroundEquivalent(Biome biome) {
         switch (biome) {
@@ -506,57 +241,63 @@ public class OverworldBiomeGenerator {
                 return Biome.MUTATED_FOREST;
         }
     }
-    public static Biome getBiome(long seed, int actualX, int actualZ) {
-        if (test)
-            return Biome.FOREST;
+    // get the biome feature at position; this should be used outside this function for tree growth etc.
+    public static BiomeFeature getBiomeFeature(int actualX, int actualZ) {
         int x = actualX >> 2, z = actualZ >> 2;
-        long biomeLocKey = getCacheKey(1, x, z);
-        int rst;
-        if (biomeCache.containsKey(biomeLocKey)) {
-            rst = biomeCache.get(biomeLocKey);
-        } else {
-            if (OverworldBiomeGenerator.seed == 0) {
-                OverworldBiomeGenerator.seed = seed;
-                generateBiomeImage();
-            }
-            rst = getGeneralBiomeGrid(x, z, 1, 1);
-        }
 
-        Biome result;
-        switch (rst) {
-            case -1:
-                result = Biome.FROZEN_OCEAN; // sulphurous ocean
-                break;
-            case 0:
-                result = Biome.OCEAN; // ocean
-                break;
-            case 2:
-                result = Biome.JUNGLE; // jungle
-                break;
-            case 3:
-                result = Biome.TAIGA_COLD; // tundra
-                break;
-            case 4:
-                result = Biome.DESERT; // desert
-                break;
-            case 5:
-                result = Biome.MUSHROOM_ISLAND; // corruption
-                break;
-            case 6:
-                result = Biome.ICE_FLATS; // hallow
-                break;
-            case 7:
-                result = Biome.MESA; // astral infection
-                break;
-            case 8:
-                result = Biome.COLD_BEACH; // sulphurous beach
-                break;
-            case 9:
-                result = Biome.BEACHES; // beach
-                break;
-            default:
-                result = Biome.FOREST; //forest
+        long biomeLocKey = getCacheKey(x, z);
+        if (biomeCache.containsKey(biomeLocKey)) {
+            return biomeCache.get(biomeLocKey);
         }
-        return result;
+        // evaluate the
+        else {
+            return getBiomeFeature(0, actualX, actualZ);
+        }
+    }
+    // this should be called if possible!
+    public static BiomeFeature getBiomeFeature(long seed, int actualX, int actualZ) {
+//        int x = actualX >> 2, z = actualZ >> 2;
+        int x = actualX, z = actualZ;
+
+        long biomeLocKey = getCacheKey(x, z);
+        if (biomeCache.containsKey(biomeLocKey)) {
+            return biomeCache.get(biomeLocKey);
+        }
+        // evaluate the biome features
+        else {
+            if (noiseCont == null) {
+                SEED = seed;
+                Random rdm = new Random(seed);
+                // temperature
+                noiseTemp = new PerlinOctaveGenerator(rdm.nextLong(), 5);
+                noiseTemp.setScale(0.001);
+                // erosion
+                noiseEros = new PerlinOctaveGenerator(rdm.nextLong(), 5);
+                noiseEros.setScale(0.005);
+                // humidity
+                noiseHum =  new PerlinOctaveGenerator(rdm.nextLong(), 5);
+                noiseHum.setScale(0.0015);
+                // weirdness
+                noiseWrd =  new PerlinOctaveGenerator(rdm.nextLong(), 5);
+                noiseWrd.setScale(0.001);
+                // update continentalness finally, so there is less chance things get broken
+                noiseCont = new PerlinOctaveGenerator(rdm.nextLong(), 5);
+                noiseCont.setScale(0.001);
+            }
+            BiomeFeature result = new BiomeFeature(actualX, actualZ);
+            // clear cache when needed
+            if (biomeCache.size() > CACHE_DELETION_SIZE)
+                biomeCache.clear();
+            // save the result and return
+            biomeCache.put(biomeLocKey, result);
+            return result;
+        }
+    }
+    public static Biome getBiome(long seed, int actualX, int actualZ) {
+        if (! generatedImg) {
+            generatedImg = true;
+            generateBiomeImage();
+        }
+        return getBiomeFromType( getBiomeFeature(seed, actualX, actualZ).evaluatedBiome );
     }
 }

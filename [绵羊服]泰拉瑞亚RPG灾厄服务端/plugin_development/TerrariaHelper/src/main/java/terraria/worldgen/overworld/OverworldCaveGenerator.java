@@ -58,7 +58,7 @@ public class OverworldCaveGenerator {
             boolean hasRiver = height - yOffset - 2 < OverworldChunkGenerator.SEA_LEVEL;
             double caveNoiseOffset = ((double) (effectualY - 30)) / 20;
             if (caveNoiseOffset < 2) {
-                result[0] = cheeseCaveGenerator.noise(currX, effectualY, currZ, 0.5, 0.5, false) - caveNoiseOffset;
+                result[0] = cheeseCaveGenerator.noise(currX, effectualY, currZ, 2, 0.5, false) - caveNoiseOffset;
             }
             switch (biome) {
                 case FOREST:        // forest
@@ -67,8 +67,8 @@ public class OverworldCaveGenerator {
                 case ICE_FLATS:     // hallow
                 case MESA:          // astral infection
                     // only these biomes may have surface spaghetti caves!
-                    result[1] = spaghettiGeneratorOne.noise(currX, effectualY, currZ, 0.5, 0.5, false);
-                    result[2] = spaghettiGeneratorTwo.noise(currX, effectualY, currZ, 0.5, 0.5, false);
+                    result[1] = spaghettiGeneratorOne.noise(currX, effectualY, currZ, 2, 0.5, false);
+                    result[2] = spaghettiGeneratorTwo.noise(currX, effectualY, currZ, 2, 0.5, false);
                     if (hasRiver) {
                         if (result[1] < 0)
                             result[1] -= caveNoiseOffset;
@@ -81,9 +81,9 @@ public class OverworldCaveGenerator {
                     }
             }
         } else {
-            result[0] = cheeseCaveGenerator.noise(currX, effectualY, currZ, 0.5, 0.5, false);
-            result[1] = spaghettiGeneratorOne.noise(currX, effectualY, currZ, 0.5, 0.5, false);
-            result[2] = spaghettiGeneratorTwo.noise(currX, effectualY, currZ, 0.5, 0.5, false);
+            result[0] = cheeseCaveGenerator.noise(currX, effectualY, currZ, 2, 0.5, false);
+            result[1] = spaghettiGeneratorOne.noise(currX, effectualY, currZ, 2, 0.5, false);
+            result[2] = spaghettiGeneratorTwo.noise(currX, effectualY, currZ, 2, 0.5, false);
         }
         double complementNoise = 1 - noiseMulti;
         result[0] = result[0] * noiseMulti - complementNoise;
@@ -92,15 +92,15 @@ public class OverworldCaveGenerator {
         return result;
     }
     private boolean validateCaveEstimate(double[] noise) {
-        double cheeseThreshold = 0.8;
-        double spaghettiThreshold = 0.05;
+        double cheeseThreshold = 0.75;
+        double spaghettiThreshold = 0.1;
         return (noise[0] > cheeseThreshold) || (
                     (Math.abs(noise[1]) < spaghettiThreshold) &&
                     (Math.abs(noise[2]) < spaghettiThreshold));
     }
     private boolean validateCave(double[] noise) {
-        double cheeseThreshold = 0.8;
-        double spaghettiThreshold = 0.05;
+        double cheeseThreshold = 0.75;
+        double spaghettiThreshold = 0.1;
         return (noise[0] > cheeseThreshold) || (
                     (Math.abs(noise[1]) < spaghettiThreshold) &&
                     (Math.abs(noise[2]) < spaghettiThreshold));
