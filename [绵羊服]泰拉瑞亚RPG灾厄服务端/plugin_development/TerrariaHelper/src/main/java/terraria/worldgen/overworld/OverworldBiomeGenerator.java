@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
 import org.bukkit.util.noise.PerlinNoiseGenerator;
 import org.bukkit.util.noise.PerlinOctaveGenerator;
+import terraria.TerrariaHelper;
 import terraria.util.WorldHelper;
 
 import javax.imageio.ImageIO;
@@ -25,7 +26,8 @@ public class OverworldBiomeGenerator {
             CACHE_DELETION_SIZE = 100000,
             SPAWN_LOC_PROTECTION_RADIUS = 750;
 
-    static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseEros, noiseHum, noiseWrd;
+    static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseHum, noiseWrd,
+            noiseEros, noiseTrH;
 
     public static class BiomeFeature {
         public static final int
@@ -33,9 +35,10 @@ public class OverworldBiomeGenerator {
                 CONTINENTALNESS = 0,
                 // has to do with desert identification
                 TEMPERATURE = 1,
-                EROSION = 2,
-                HUMIDITY = 3,
-                WEIRDNESS = 4;
+                HUMIDITY = 2,
+                WEIRDNESS = 3,
+                EROSION = 4,
+                TERRAIN_H = 5;
         // the functions below produce non-normal feature vectors (prob. distribution). Normalize them after produced!
         public static final HashMap<WorldHelper.BiomeType, ToDoubleFunction<Double[]>> biomeFeatureConversion = new HashMap<>();
         static {
@@ -47,26 +50,26 @@ public class OverworldBiomeGenerator {
                     lst[CONTINENTALNESS] > 0.5 ? 10 : 0);
             // note that multiplication makes astral and jungle significantly more rare
 
-            // astral infection: prefer areas further from ocean and dryer; this associates this infection with less foliage.
+            // astral infection: prefer areas higher and dryer; this associates this infection with less foliage.
             biomeFeatureConversion.put(WorldHelper.BiomeType.ASTRAL_INFECTION, (Double[] lst) ->
-                    Math.max(0, (0.5 - Math.abs(lst[CONTINENTALNESS]) ) * 2 + lst[HUMIDITY] )
+                    Math.max(0, lst[TERRAIN_H] - lst[HUMIDITY] )
                             * Math.max(0, -lst[WEIRDNESS] * 2.5 ) );
             // hallow: prefer non-weird places
             biomeFeatureConversion.put(WorldHelper.BiomeType.HALLOW, (Double[] lst) ->
-                    Math.max(0, -lst[WEIRDNESS] * 1.25 ) );
+                    Math.max(0, -lst[WEIRDNESS] * 1.5 ) );
             // corruption: prefer wet places
             biomeFeatureConversion.put(WorldHelper.BiomeType.CORRUPTION, (Double[] lst) ->
-                    Math.max(0, lst[HUMIDITY] * 1.25 ) );
+                    Math.max(0, lst[WEIRDNESS] - lst[HUMIDITY] ) * 0.75 );
             // desert: prefer dry, hot places
             biomeFeatureConversion.put(WorldHelper.BiomeType.DESERT, (Double[] lst) ->
                     Math.max(0, -lst[HUMIDITY] + lst[TEMPERATURE]) * 0.75 );
             // tundra: prefer cold places
             biomeFeatureConversion.put(WorldHelper.BiomeType.TUNDRA, (Double[] lst) ->
-                    Math.max(0, -lst[TEMPERATURE] * 1.25 ) );
-            // jungle: prefer hot, wet places that are not weird
+                    Math.max(0, -lst[TEMPERATURE] * 1.35 ) );
+            // jungle: prefer hot, wet places that are low
             biomeFeatureConversion.put(WorldHelper.BiomeType.JUNGLE, (Double[] lst) ->
-                    Math.max(0, lst[HUMIDITY] * 2.5)
-                            * Math.max(0, lst[TEMPERATURE] - lst[WEIRDNESS] ) );
+                    Math.max(0, lst[HUMIDITY] * 2)
+                            * Math.max(0, lst[TEMPERATURE] * 0.6 - lst[TERRAIN_H] * 1.4 ) * 1.75 );
 
         }
 
@@ -80,9 +83,10 @@ public class OverworldBiomeGenerator {
 
             features[CONTINENTALNESS] =     noiseCont.noise(x, z, 2, 0.5);
             features[TEMPERATURE] =         noiseTemp.noise(x, z, 2, 0.5);
-            features[EROSION] =             noiseEros.noise(x, z, 2, 0.5);
             features[HUMIDITY] =            noiseHum .noise(x, z, 2, 0.5);
             features[WEIRDNESS] =           noiseWrd .noise(x, z, 2, 0.5);
+            features[EROSION] =             noiseEros.noise(x, z, 2, 0.5);
+            features[TERRAIN_H] =           noiseTrH .noise(x, z, 2, 0.5);
             // spawn protection: feature tweak
             if (distFromSpawn < SPAWN_LOC_PROTECTION_RADIUS) {
                 features[CONTINENTALNESS] *= distFromSpawnFactor;
@@ -127,6 +131,29 @@ public class OverworldBiomeGenerator {
     static HashMap<Long, BiomeFeature> biomeCache = new HashMap<>(CACHE_SIZE, 0.8f);
 
 
+    // set up the generator based on seed
+    private static void setupGenerators(long seed) {
+        SEED = seed;
+        Random rdm = new Random(seed);
+        // temperature
+        noiseTemp = new PerlinOctaveGenerator(rdm.nextLong(), 3);
+        noiseTemp.setScale(0.001);
+        // humidity
+        noiseHum =  new PerlinOctaveGenerator(rdm.nextLong(), 3);
+        noiseHum.setScale(0.001);
+        // weirdness
+        noiseWrd =  new PerlinOctaveGenerator(rdm.nextLong(), 3);
+        noiseWrd.setScale(0.001);
+        // erosion
+        noiseEros = new PerlinOctaveGenerator(rdm.nextLong(), 8);
+        noiseEros.setScale(0.0025);
+        // terrain height
+        noiseTrH = new PerlinOctaveGenerator(rdm.nextLong(), 8);
+        noiseTrH.setScale(0.001);
+        // update continentalness finally, so there is less chance things get broken
+        noiseCont = new PerlinOctaveGenerator(rdm.nextLong(), 5);
+        noiseCont.setScale(0.00025);
+    }
     // save the biome image for testing purposes and so on
     private static void generateBiomeImage() {
         HashMap<Biome, Integer> biomeColors = new HashMap<>();
@@ -145,8 +172,8 @@ public class OverworldBiomeGenerator {
         // test: save a map of biomes for testing purposes
         int center = 0;
         int scale = 1000;
-        int jump = 20;
-        File dir_biome_map = new File("worldGenDebug" + File.separator + "biomesMap(20000x20000).png");
+        int jump = 50;
+        File dir_biome_map = new File("worldGenDebug" + File.separator + "biomesMap(50000x50000).png");
         Bukkit.getLogger().info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         if (dir_biome_map.exists()) {
             Bukkit.getLogger().info("BIOME MAP FILE ALREADY EXISTS. DELETE THE FILE IF YOU WISH FOR GENERATING A NEW ONE.");
@@ -266,23 +293,7 @@ public class OverworldBiomeGenerator {
         // evaluate the biome features
         else {
             if (noiseCont == null) {
-                SEED = seed;
-                Random rdm = new Random(seed);
-                // temperature
-                noiseTemp = new PerlinOctaveGenerator(rdm.nextLong(), 5);
-                noiseTemp.setScale(0.001);
-                // erosion
-                noiseEros = new PerlinOctaveGenerator(rdm.nextLong(), 5);
-                noiseEros.setScale(0.005);
-                // humidity
-                noiseHum =  new PerlinOctaveGenerator(rdm.nextLong(), 5);
-                noiseHum.setScale(0.0015);
-                // weirdness
-                noiseWrd =  new PerlinOctaveGenerator(rdm.nextLong(), 5);
-                noiseWrd.setScale(0.001);
-                // update continentalness finally, so there is less chance things get broken
-                noiseCont = new PerlinOctaveGenerator(rdm.nextLong(), 5);
-                noiseCont.setScale(0.001);
+                setupGenerators(seed);
             }
             BiomeFeature result = new BiomeFeature(actualX, actualZ);
             // clear cache when needed

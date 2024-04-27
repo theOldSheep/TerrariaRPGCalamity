@@ -70,6 +70,10 @@ public class Interpolate {
     public void printTestImage(String interpolateName) {
         int length = 1000, height = 250;
         double range = 2.25; // 2 is the minimum for drawing out the entire noise map
+        double maxY = 0;
+        for (InterpolatePoint pt : points) {
+            maxY = Math.max(maxY, pt.y);
+        }
         File dir_biome_map = new File("worldGenDebug" + File.separator + interpolateName + ".png");
         Bukkit.getLogger().info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         Bukkit.getLogger().info("START GENERATING INTERPOLATE MAP " + interpolateName);
@@ -79,7 +83,7 @@ public class Interpolate {
             double x = (double) i * range / length - range / 2;
             double y = getY(x);
             for (int j = 0; j < height; j ++) {
-                if ((height - j) < y)
+                if ((height - j) * maxY / height <= y)
                     heightMap.setRGB(i, j, new Color(0, 255, 0).getRGB());
                 else if (Math.abs(x) < 1)
                     heightMap.setRGB(i, j, new Color(255, 255, 255).getRGB());
