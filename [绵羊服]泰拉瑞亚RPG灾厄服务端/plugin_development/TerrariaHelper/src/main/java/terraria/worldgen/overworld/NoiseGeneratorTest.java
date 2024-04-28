@@ -40,7 +40,8 @@ public class NoiseGeneratorTest implements CommandExecutor {
                         }
                         Location loc = new Location(player.getWorld(), blockX, 150, blockZ);
                         if (Math.abs(noise - toFind) < 0.001 &&
-                                loc.getBlock().getBiome() != Biome.OCEAN && loc.getBlock().getBiome() != Biome.FROZEN_OCEAN) {
+                                (args[1].equals("0") ||
+                                        (loc.getBlock().getBiome() != Biome.OCEAN && loc.getBlock().getBiome() != Biome.FROZEN_OCEAN)) ) {
                             player.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN);
                             player.sendMessage("Found!" + toFind + ", actual noise: " + noise);
                             return true;
@@ -55,8 +56,6 @@ public class NoiseGeneratorTest implements CommandExecutor {
                         OverworldChunkGenerator.riverGenerator.noise(blockX, blockZ, 2, 0.5, false));
                 player.sendMessage("lake: " +
                         OverworldChunkGenerator.lakeGenerator.noise(blockX, blockZ, 2, 0.5, false));
-                player.sendMessage("platH: " +
-                        OverworldChunkGenerator.terrainDetailGenerator.noise(blockX, blockZ, 2, 0.5, false));
                 player.sendMessage("features: " +
                         Arrays.toString(OverworldBiomeGenerator.getBiomeFeature(blockX, blockZ).features));
             }

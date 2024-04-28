@@ -215,14 +215,20 @@ public class OverworldBiomeGenerator {
     private static long getCacheKey(int x, int z) {
         long result = 0;
         // first two bytes denotes x and z sign
-        if (x < 0) result |= 1;
-        result = result << 1;
-        if (z < 0) result |= 1;
+        if (x < 0) {
+            result ++;
+            x *= -1;
+        }
+        result <<= 1;
+        if (z < 0) {
+            result ++;
+            z *= -1;
+        }
         // reserve 25 bytes for each of x and z
-        result = result << 25;
-        result += Math.abs(x);
-        result = result << 25;
-        result += Math.abs(z);
+        result <<= 25;
+        result += x;
+        result <<= 25;
+        result += z;
         return result;
     }
 

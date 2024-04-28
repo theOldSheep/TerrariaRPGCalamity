@@ -1,7 +1,6 @@
 package terraria.worldgen.overworld;
 
-import com.sun.org.apache.bcel.internal.generic.LAND;
-import org.bukkit.Bukkit;
+import fr.xephi.authme.libs.ch.jalu.configme.beanmapper.leafvaluehandler.StandardLeafValueHandlers;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -16,11 +15,11 @@ import java.util.*;
 
 public class OverworldChunkGenerator extends ChunkGenerator {
     static long seed = TerrariaHelper.worldSeed;
-    public static final int OCTAVES = 6, OCTAVES_CAVE = 4,
-            NEARBY_BIOME_SAMPLE_RADIUS = 10, NEARBY_BIOME_SAMPLE_STEPSIZE = 2,
-            LAND_HEIGHT = 100, RIVER_DEPTH = 25, LAKE_DEPTH = 30, PLATEAU_HEIGHT = 20, SEA_LEVEL = 90, LAVA_LEVEL = -150,
+    public static final int OCTAVES_CAVE = 4,
+            NEARBY_BIOME_SAMPLE_RADIUS = 25, NEARBY_BIOME_SAMPLE_STEPSIZE = 1,
+            LAND_HEIGHT = 100, RIVER_DEPTH = 25, LAKE_DEPTH = 30, PLATEAU_HEIGHT = 40, SEA_LEVEL = 90, LAVA_LEVEL = -150,
             Y_OFFSET_OVERWORLD = 0, HEIGHT_SAMPLING_DIAMETER;
-    private static final double FREQUENCY = 0.05221649073, HEIGHT_SAMPLE_FACTOR_SUM;
+    private static final double HEIGHT_SAMPLE_FACTOR_SUM;
     private static final double[][] HEIGHT_INFLUENCE_FACTOR;
     // initialize the mapping in which nearby heights influences the current block
     static {
@@ -44,12 +43,10 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 sum += currFactor;
         HEIGHT_SAMPLE_FACTOR_SUM = sum;
     }
-    public static PerlinOctaveGenerator terrainDetailGenerator,
-                                        riverGenerator, lakeGenerator,
+    public static PerlinOctaveGenerator riverGenerator, lakeGenerator,
                                         stoneVeinGenerator;
-    public static Interpolate terrainHeightProvider,
-                                variationHeightProvider,
-                                continentalnessRatioProvider, erosionRatioProvider,
+    public static Interpolate terrainHeightProvider, jungleHeightProvider, astralHeightProvider, desertHeightProvider, oceanHeightProvider,
+                                erosionRatioProvider,
                                 riverRatioProvider, lakeRatioProvider;
     static OverworldChunkGenerator instance = new OverworldChunkGenerator();
     static List<BlockPopulator> populators;
@@ -58,13 +55,11 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         super();
         // terrain noise functions
         Random rdm = new Random(seed);
-        terrainDetailGenerator = new PerlinOctaveGenerator(rdm.nextLong(), OCTAVES);
-        terrainDetailGenerator.setScale(0.025);
 
         riverGenerator = new PerlinOctaveGenerator(rdm.nextLong(), 1);
         riverGenerator.setScale(0.0005);
         lakeGenerator = new PerlinOctaveGenerator(rdm.nextLong(), 1);
-        lakeGenerator.setScale(0.0025);
+        lakeGenerator.setScale(0.005);
 
         stoneVeinGenerator = new PerlinOctaveGenerator(rdm.nextLong(), 1);
         stoneVeinGenerator.setScale(0.05);
@@ -72,61 +67,83 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         seed = TerrariaHelper.worldSeed;
         // interpolates
         terrainHeightProvider = new Interpolate(new InterpolatePoint[]{
-                InterpolatePoint.create(-0.5     , SEA_LEVEL),
+                InterpolatePoint.create(-1       , LAND_HEIGHT + 10),
                 InterpolatePoint.create(-0.4     , LAND_HEIGHT),
-                InterpolatePoint.create(-0.3     , LAND_HEIGHT),
-                InterpolatePoint.create(-0.2     , LAND_HEIGHT + 25),
+                InterpolatePoint.create(-0.3     , LAND_HEIGHT + 15),
                 InterpolatePoint.create(-0.15    , LAND_HEIGHT + 40),
-                InterpolatePoint.create(-0.1     , LAND_HEIGHT + 30),
-                InterpolatePoint.create(0        , LAND_HEIGHT + 20),
-                InterpolatePoint.create(0.15     , LAND_HEIGHT + 15),
+                InterpolatePoint.create(0        , LAND_HEIGHT + 25),
+                InterpolatePoint.create(0.15     , LAND_HEIGHT + 10),
                 InterpolatePoint.create(0.25     , LAND_HEIGHT),
-                InterpolatePoint.create(0.5      , LAND_HEIGHT),
+                InterpolatePoint.create(0.5      , LAND_HEIGHT + 10),
                 InterpolatePoint.create(0.6      , LAND_HEIGHT + 25),
-                InterpolatePoint.create(0.7      , LAND_HEIGHT + 50),
-                InterpolatePoint.create(0.85     , LAND_HEIGHT + 50),
+                InterpolatePoint.create(0.7      , LAND_HEIGHT + 40),
+                InterpolatePoint.create(0.85     , LAND_HEIGHT + 60),
                 InterpolatePoint.create(1        , LAND_HEIGHT + 80),
         }, "terrain_heightmap");
-        variationHeightProvider = new Interpolate(new InterpolatePoint[]{
-                InterpolatePoint.create(-0.35     , -10),
-                InterpolatePoint.create(-0.25     , 10),
-                InterpolatePoint.create(-0.1     , 10),
-                InterpolatePoint.create(0     , 5),
-                InterpolatePoint.create(0.1     , 5),
-                InterpolatePoint.create(0.15     , 0),
-                InterpolatePoint.create(0.25     , 0),
-                InterpolatePoint.create(0.35     , 10),
-        }, "variations_heightmap");
+        jungleHeightProvider = new Interpolate(new InterpolatePoint[]{
+                InterpolatePoint.create(-1       , SEA_LEVEL - 10),
+                InterpolatePoint.create(-0.8     , LAND_HEIGHT),
+                InterpolatePoint.create(-0.6     , SEA_LEVEL - 5),
+                InterpolatePoint.create(-0.4     , LAND_HEIGHT),
+                InterpolatePoint.create(0        , LAND_HEIGHT + 10),
+                InterpolatePoint.create(0.4      , LAND_HEIGHT),
+                InterpolatePoint.create(0.6      , SEA_LEVEL - 5),
+                InterpolatePoint.create(0.8      , LAND_HEIGHT),
+                InterpolatePoint.create(1        , SEA_LEVEL - 10),
+        }, "jungle_heightmap");
+        astralHeightProvider = new Interpolate(new InterpolatePoint[]{
+                InterpolatePoint.create(-1       , LAND_HEIGHT + PLATEAU_HEIGHT),
+                InterpolatePoint.create(-0.35    , LAND_HEIGHT + PLATEAU_HEIGHT - 10),
+                InterpolatePoint.create(-0.25    , LAND_HEIGHT + 10),
+                InterpolatePoint.create(0        , LAND_HEIGHT),
+                InterpolatePoint.create(0.25     , LAND_HEIGHT + 10),
+                InterpolatePoint.create(0.35     , LAND_HEIGHT + PLATEAU_HEIGHT - 10),
+                InterpolatePoint.create(1        , LAND_HEIGHT + PLATEAU_HEIGHT),
+        }, "astral_heightmap");
+        desertHeightProvider = new Interpolate(new InterpolatePoint[]{
+                InterpolatePoint.create(-1       , LAND_HEIGHT),
+                InterpolatePoint.create(-0.6     , LAND_HEIGHT + 40),
+                InterpolatePoint.create(-0.2     , LAND_HEIGHT),
+                InterpolatePoint.create(0        , LAND_HEIGHT + 30),
+                InterpolatePoint.create(0.35     , LAND_HEIGHT),
+                InterpolatePoint.create(0.5      , LAND_HEIGHT + 25),
+                InterpolatePoint.create(1        , LAND_HEIGHT + 55),
+        }, "desert_heightmap");
+        oceanHeightProvider = new Interpolate(new InterpolatePoint[]{
+                InterpolatePoint.create(-1    ,   SEA_LEVEL - 35),
+                InterpolatePoint.create(-0.575,   SEA_LEVEL - 20),
+                InterpolatePoint.create(-0.55 , SEA_LEVEL + 2),
+                InterpolatePoint.create(-0.5  ,   LAND_HEIGHT),
+                InterpolatePoint.create(0.5   ,   LAND_HEIGHT),
+                InterpolatePoint.create(0.55  ,   SEA_LEVEL + 2),
+                InterpolatePoint.create(0.625 ,   -10),
+        }, "ocean_heightmap");
 
-        continentalnessRatioProvider = new Interpolate(new InterpolatePoint[]{
-                InterpolatePoint.create(-0.6  ,   1),
-                InterpolatePoint.create(-0.55 ,   0),
-                InterpolatePoint.create( 0.55 ,   0),
-                InterpolatePoint.create( 0.6  ,   1),
-        }, "continentalness_ratio_map");
         erosionRatioProvider = new Interpolate(new InterpolatePoint[]{
-                InterpolatePoint.create(-0.2     , 1),
-                InterpolatePoint.create(0        , 0.75),
-                InterpolatePoint.create(0.35     , 0.6),
-                InterpolatePoint.create(0.5      , 0.4),
+                InterpolatePoint.create(-1       , 0.25),
+                InterpolatePoint.create(-0.6     , 1),
+                InterpolatePoint.create(0        , 1),
                 InterpolatePoint.create(0.6      , 0),
+                InterpolatePoint.create(1        , 0.6),
         }, "erosion_ratio_map");
         riverRatioProvider = new Interpolate(new InterpolatePoint[]{
-                InterpolatePoint.create(-0.075  , 0),
-                InterpolatePoint.create(-0.06  , 0.2),
-                InterpolatePoint.create(-0.05  , 0.5),
+                InterpolatePoint.create(-0.075 , 0),
+                InterpolatePoint.create(-0.05  , 0.1),
+                InterpolatePoint.create(-0.035 , 0.5),
                 InterpolatePoint.create(0      , 1),
-                InterpolatePoint.create(0.05   , 0.5),
-                InterpolatePoint.create(0.06   , 0.2),
-                InterpolatePoint.create(0.075   , 0),
+                InterpolatePoint.create(0.035  , 0.5),
+                InterpolatePoint.create(0.05   , 0.1),
+                InterpolatePoint.create(0.075  , 0),
         }, "river_ratio_map");
         lakeRatioProvider = new Interpolate(new InterpolatePoint[]{
-                InterpolatePoint.create(-0.5  , 1),
-                InterpolatePoint.create(-0.4   , 0.5),
-                InterpolatePoint.create(-0.3   , 0),
+                InterpolatePoint.create(-1    , 1),
+                InterpolatePoint.create(-0.65 , 0.8),
+                InterpolatePoint.create(-0.5  , 0.5),
+                InterpolatePoint.create(-0.3  , 0),
                 InterpolatePoint.create(0.3   , 0),
-                InterpolatePoint.create(0.4   , 0.5),
-                InterpolatePoint.create(0.5  , 1),
+                InterpolatePoint.create(0.5   , 0.5),
+                InterpolatePoint.create(0.65  , 0.8),
+                InterpolatePoint.create(1     , 1),
         }, "lake_ratio_map");
         // block populators
         caveGen = new OverworldCaveGenerator(Y_OFFSET_OVERWORLD, seed, OCTAVES_CAVE);
@@ -254,18 +271,37 @@ public class OverworldChunkGenerator extends ChunkGenerator {
      */
 
     // compute the desired terrain height at a specific column
-    static double getTerrainHeight(int currX, int currZ) {
+    static double getTerrainHeight(Biome biome, int currX, int currZ) {
+        // special biome setup
+        Interpolate heightProvider;
         OverworldBiomeGenerator.BiomeFeature features = OverworldBiomeGenerator.getBiomeFeature(seed, currX, currZ);
 
-        double result = terrainHeightProvider.getY(
+        switch (biome) {
+            case OCEAN:
+            case FROZEN_OCEAN: {
+                double continentalnessFeature = features.features[OverworldBiomeGenerator.BiomeFeature.CONTINENTALNESS];
+                return oceanHeightProvider.getY(continentalnessFeature);
+            }
+            case JUNGLE:
+                heightProvider = jungleHeightProvider;
+                break;
+            case MESA:
+                heightProvider = astralHeightProvider;
+                break;
+            case DESERT:
+                heightProvider = desertHeightProvider;
+                break;
+            default:
+                heightProvider = terrainHeightProvider;
+        }
+
+        double result = heightProvider.getY(
                 features.features[OverworldBiomeGenerator.BiomeFeature.TERRAIN_H] );
 
         double riverNoise = riverGenerator.noise(currX, currZ, 2, 0.5, false);
         double lakeNoise = lakeGenerator.noise(currX, currZ, 2, 0.5, false);
-        double detailNoise = terrainDetailGenerator.noise(currX, currZ, 2, 0.5, false);
 
         double heightOffset = result - LAND_HEIGHT;
-        heightOffset += variationHeightProvider.getY( detailNoise );
         double terrainScalingFactor = erosionRatioProvider.getY(
                 features.features[OverworldBiomeGenerator.BiomeFeature.EROSION] );
         // account for rivers and lakes
@@ -280,23 +316,34 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             heightOffset *= terrainScalingFactor;
         result = LAND_HEIGHT + heightOffset;
 
-        // account for ocean
-        double continentalnessFeature = features.features[OverworldBiomeGenerator.BiomeFeature.CONTINENTALNESS];
-        double oceanRatio = continentalnessRatioProvider.getY( continentalnessFeature );
-        if (oceanRatio > 1e-9) {
-            double oceanFloor = (continentalnessFeature < 0) ? SEA_LEVEL - 30 : -10;
-            result *= 1 - oceanRatio;
-            result += oceanRatio * oceanFloor;
-        }
-
         return result;
     }
     // set up the "desired" block height and special cave ratio at a specific column of a chunk.
     private static void setupHeightAndCaveRatioAtLocation(int currX, int currZ, int i, int j,
                                               int[][] heightMap, double[][] caveMultiMap,
                                               HashMap<Biome, Double> nearbyBiomeMap) {
-        // save height into heightmap
-        heightMap[i][j] = (int) Math.round(getTerrainHeight(currX, currZ));
+        // calculate each nearby biome's contribution to the current land height
+        HashMap<Biome, Double> biomeWeights = new HashMap<>();
+        double totalWeight = 0;
+        for (Map.Entry<Biome, Double> pair : nearbyBiomeMap.entrySet()) {
+            double valSqr = pair.getValue() * pair.getValue();
+            biomeWeights.put(pair.getKey(), valSqr);
+            totalWeight += valSqr;
+        }
+        // save normalized height sum
+        double totalHeight = 0;
+        for (Biome b : nearbyBiomeMap.keySet()) {
+            double weightCurr = biomeWeights.get(b) / totalWeight;
+            totalHeight += getTerrainHeight(b, currX, currZ) * weightCurr;
+        }
+        // terrain near the spawning point will be around LAND_HEIGHT
+        double distToSpawn = Math.sqrt(currX * currX + currZ * currZ);
+        if (distToSpawn < OverworldBiomeGenerator.SPAWN_LOC_PROTECTION_RADIUS) {
+            distToSpawn /= OverworldBiomeGenerator.SPAWN_LOC_PROTECTION_RADIUS;
+            totalHeight *= distToSpawn;
+            totalHeight += (1 - distToSpawn) * LAND_HEIGHT;
+        }
+        heightMap[i][j] = (int) Math.round( totalHeight );
 
         //
         // setup cave multi according to nearby biomes
