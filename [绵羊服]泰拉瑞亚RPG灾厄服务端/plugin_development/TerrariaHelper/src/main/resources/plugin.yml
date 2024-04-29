@@ -1,5 +1,5 @@
 name: TerrariaHelper
-version: 1.0
+version: 2.0
 main: terraria.TerrariaHelper
 prefix: 泰拉瑞亚
 depend:

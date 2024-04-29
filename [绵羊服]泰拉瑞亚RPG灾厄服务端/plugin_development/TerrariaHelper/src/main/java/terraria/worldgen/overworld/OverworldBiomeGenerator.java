@@ -16,15 +16,18 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.function.ToDoubleFunction;
+import java.util.logging.Level;
 
 public class OverworldBiomeGenerator {
 
     static boolean generatedImg = false;
     static long SEED = 0;
     static final int
-            CACHE_SIZE = 150000,
-            CACHE_DELETION_SIZE = 100000,
-            SPAWN_LOC_PROTECTION_RADIUS = 750;
+            SINGLE_CACHE_SIZE = 100000,
+            // when the cache is full, the more recent generations do not get removed.
+            CACHE_GENERATIONS = 5,
+            SPAWN_LOC_PROTECTION_RADIUS = 750,
+            XZ_HASH_MASK = (1 << 26) - 1;
 
     static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseHum, noiseWrd,
             noiseEros, noiseTrH;
@@ -78,7 +81,9 @@ public class OverworldBiomeGenerator {
         public final WorldHelper.BiomeType evaluatedBiome;
 
         public BiomeFeature(int x, int z) {
-            double distFromSpawn = Math.sqrt(x * x + z * z);
+            // IMPORTANT: prevent overflow. THIS IS NOT REDUNDANT!
+            double xDouble = x, zDouble = z;
+            double distFromSpawn = Math.sqrt(xDouble * xDouble + zDouble * zDouble);
             double distFromSpawnFactor = distFromSpawn / SPAWN_LOC_PROTECTION_RADIUS;
 
             features[CONTINENTALNESS] =     noiseCont.noise(x, z, 2, 0.5);
@@ -128,7 +133,14 @@ public class OverworldBiomeGenerator {
         }
     }
 
-    static HashMap<Long, BiomeFeature> biomeCache = new HashMap<>(CACHE_SIZE, 0.8f);
+    // biome cache
+    static HashMap<Long, BiomeFeature>[] biomeCache;
+    static int biomeCacheIdx = 0;
+    static {
+        biomeCache = new HashMap[CACHE_GENERATIONS];
+        for (int i = 0; i < CACHE_GENERATIONS; i ++)
+            biomeCache[i] = new HashMap<>(SINGLE_CACHE_SIZE, 0.8f);
+    }
 
 
     // set up the generator based on seed
@@ -183,7 +195,6 @@ public class OverworldBiomeGenerator {
         double progress = 0, progressMax = scale * scale;
         long lastPrinted = Calendar.getInstance().getTimeInMillis();
         BufferedImage biomeMap = new BufferedImage(scale, scale, BufferedImage.TYPE_INT_RGB);
-        Bukkit.getLogger().info("Cache size: " + biomeCache.size() + " / " + CACHE_SIZE);
         for (int i = 0; i < scale; i++)
             for (int j = 0; j < scale; j++) {
                 // i : x-coordinate corresponding to the point on map increases as we move to the right (bigger i)
@@ -196,12 +207,10 @@ public class OverworldBiomeGenerator {
                     lastPrinted = Calendar.getInstance().getTimeInMillis();
                     Bukkit.getLogger().info("Generation progress: " + progress / progressMax);
                     Bukkit.getLogger().info("Progress detail: " + progress + "/" + progressMax);
-                    Bukkit.getLogger().info("Cache size: " + biomeCache.size() + " / " + CACHE_SIZE);
                 }
             }
         Bukkit.getLogger().info("Generation progress: " + progress / progressMax);
         Bukkit.getLogger().info("Progress detail: " + progress + "/" + progressMax);
-        Bukkit.getLogger().info("Cache size: " + biomeCache.size() + " / " + CACHE_SIZE);
         try {
             ImageIO.write(biomeMap, "png", dir_biome_map);
         } catch (IOException e) {
@@ -216,19 +225,20 @@ public class OverworldBiomeGenerator {
         long result = 0;
         // first two bytes denotes x and z sign
         if (x < 0) {
-            result ++;
+            result |= 1;
             x *= -1;
         }
         result <<= 1;
         if (z < 0) {
-            result ++;
+            result |= 1;
             z *= -1;
         }
         // reserve 25 bytes for each of x and z
         result <<= 25;
-        result += x;
+        result |= (x & XZ_HASH_MASK);
         result <<= 25;
-        result += z;
+        result |= (z & XZ_HASH_MASK);
+
         return result;
     }
 
@@ -275,17 +285,20 @@ public class OverworldBiomeGenerator {
         }
     }
     // get the biome feature at position; this should be used outside this function for tree growth etc.
+    public static BiomeFeature getBiomeFeature(double actualX, double actualZ) {
+        return getBiomeFeature((int) actualX, (int) actualZ);
+    }
     public static BiomeFeature getBiomeFeature(int actualX, int actualZ) {
         int x = actualX >> 2, z = actualZ >> 2;
 
         long biomeLocKey = getCacheKey(x, z);
-        if (biomeCache.containsKey(biomeLocKey)) {
-            return biomeCache.get(biomeLocKey);
+        for (HashMap<Long, BiomeFeature> cache : biomeCache) {
+            if (cache.containsKey(biomeLocKey)) {
+                return cache.get(biomeLocKey);
+            }
         }
-        // evaluate the
-        else {
-            return getBiomeFeature(0, actualX, actualZ);
-        }
+        // evaluate the feature. Technically the world seed do not need to be initialized here, but just in case.
+        return getBiomeFeature(TerrariaHelper.worldSeed, actualX, actualZ);
     }
     // this should be called if possible!
     public static BiomeFeature getBiomeFeature(long seed, int actualX, int actualZ) {
@@ -293,22 +306,24 @@ public class OverworldBiomeGenerator {
         int x = actualX, z = actualZ;
 
         long biomeLocKey = getCacheKey(x, z);
-        if (biomeCache.containsKey(biomeLocKey)) {
-            return biomeCache.get(biomeLocKey);
-        }
-        // evaluate the biome features
-        else {
-            if (noiseCont == null) {
-                setupGenerators(seed);
+        for (HashMap<Long, BiomeFeature> cache : biomeCache) {
+            if (cache.containsKey(biomeLocKey)) {
+                return cache.get(biomeLocKey);
             }
-            BiomeFeature result = new BiomeFeature(actualX, actualZ);
-            // clear cache when needed
-            if (biomeCache.size() > CACHE_DELETION_SIZE)
-                biomeCache.clear();
-            // save the result and return
-            biomeCache.put(biomeLocKey, result);
-            return result;
         }
+        // evaluate & save the biome features
+        if (noiseCont == null) {
+            setupGenerators(seed);
+        }
+        BiomeFeature result = new BiomeFeature(actualX, actualZ);
+        // go to the next generation when needed
+        if (biomeCache[biomeCacheIdx].size() > SINGLE_CACHE_SIZE) {
+            biomeCacheIdx = (biomeCacheIdx + 1) % CACHE_GENERATIONS;
+            biomeCache[biomeCacheIdx].clear();
+        }
+        // save the result and return
+        biomeCache[biomeCacheIdx].put(biomeLocKey, result);
+        return result;
     }
     public static Biome getBiome(long seed, int actualX, int actualZ) {
         if (! generatedImg) {

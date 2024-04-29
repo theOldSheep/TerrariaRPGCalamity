@@ -4,18 +4,20 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.PlaceholderHook;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 import terraria.entity.CustomEntities;
 import terraria.event.listener.*;
 import terraria.gameplay.EventAndTime;
-import terraria.util.EntityHelper;
-import terraria.util.GenericHelper;
-import terraria.util.PlayerHelper;
-import terraria.util.YmlHelper;
+import terraria.util.*;
 import terraria.worldgen.overworld.NoiseGeneratorTest;
+import terraria.worldgen.overworld.OverworldChunkGenerator;
+import terraria.worldgen.overworld.cavern.CavernChunkGenerator;
+import terraria.worldgen.underworld.UnderworldChunkGenerator;
 
 import java.io.File;
 import java.util.*;
+import java.util.logging.Level;
 
 
 public class TerrariaHelper extends JavaPlugin {
@@ -56,8 +58,8 @@ public class TerrariaHelper extends JavaPlugin {
 
     public TerrariaHelper() {
         super();
-        instance = this;
         worldSeed = settingConfig.getLong("worldSeed", 114514);
+        instance = this;
     }
 
     private static void setupPlaceholders() {
@@ -176,7 +178,23 @@ public class TerrariaHelper extends JavaPlugin {
     }
 
     @Override
+    public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+        Bukkit.broadcastMessage(worldName);
+        if (worldName.equalsIgnoreCase("test"))
+            return OverworldChunkGenerator.getInstance();
+        if (worldName.equalsIgnoreCase(Constants.WORLD_NAME_SURFACE))
+            return OverworldChunkGenerator.getInstance();
+        if (worldName.equalsIgnoreCase(Constants.WORLD_NAME_CAVERN))
+            return CavernChunkGenerator.getInstance();
+        if (worldName.equalsIgnoreCase(Constants.WORLD_NAME_UNDERWORLD))
+            return UnderworldChunkGenerator.getInstance();
+        getLogger().log(Level.SEVERE, "UNKNOWN WORLD GENERATOR REQUESTED! (" + worldName + ")");
+        return super.getDefaultWorldGenerator(worldName, id);
+    }
+    @Override
     public void onEnable() {
+        WorldHelper.initWorlds();
+
         registerEvents();
         initThreads();
         setupPlaceholders();

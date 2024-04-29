@@ -74,10 +74,9 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 InterpolatePoint.create(0        , LAND_HEIGHT + 25),
                 InterpolatePoint.create(0.15     , LAND_HEIGHT + 10),
                 InterpolatePoint.create(0.25     , LAND_HEIGHT),
-                InterpolatePoint.create(0.5      , LAND_HEIGHT + 10),
-                InterpolatePoint.create(0.6      , LAND_HEIGHT + 25),
-                InterpolatePoint.create(0.7      , LAND_HEIGHT + 40),
-                InterpolatePoint.create(0.85     , LAND_HEIGHT + 60),
+                InterpolatePoint.create(0.5      , LAND_HEIGHT + 25),
+                InterpolatePoint.create(0.6      , LAND_HEIGHT + 40),
+                InterpolatePoint.create(0.7      , LAND_HEIGHT + 60),
                 InterpolatePoint.create(1        , LAND_HEIGHT + 80),
         }, "terrain_heightmap");
         jungleHeightProvider = new Interpolate(new InterpolatePoint[]{
@@ -129,20 +128,20 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         riverRatioProvider = new Interpolate(new InterpolatePoint[]{
                 InterpolatePoint.create(-0.075 , 0),
                 InterpolatePoint.create(-0.05  , 0.1),
-                InterpolatePoint.create(-0.035 , 0.5),
+                InterpolatePoint.create(-0.035 , 0.4),
+                InterpolatePoint.create(-0.025 , 0.5),
                 InterpolatePoint.create(0      , 1),
-                InterpolatePoint.create(0.035  , 0.5),
+                InterpolatePoint.create(0.025  , 0.5),
+                InterpolatePoint.create(0.035  , 0.4),
                 InterpolatePoint.create(0.05   , 0.1),
                 InterpolatePoint.create(0.075  , 0),
         }, "river_ratio_map");
         lakeRatioProvider = new Interpolate(new InterpolatePoint[]{
                 InterpolatePoint.create(-1    , 1),
-                InterpolatePoint.create(-0.65 , 0.8),
-                InterpolatePoint.create(-0.5  , 0.5),
+                InterpolatePoint.create(-0.6  , 0.6),
                 InterpolatePoint.create(-0.3  , 0),
                 InterpolatePoint.create(0.3   , 0),
-                InterpolatePoint.create(0.5   , 0.5),
-                InterpolatePoint.create(0.65  , 0.8),
+                InterpolatePoint.create(0.6   , 0.6),
                 InterpolatePoint.create(1     , 1),
         }, "lake_ratio_map");
         // block populators
@@ -336,8 +335,9 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             double weightCurr = biomeWeights.get(b) / totalWeight;
             totalHeight += getTerrainHeight(b, currX, currZ) * weightCurr;
         }
-        // terrain near the spawning point will be around LAND_HEIGHT
-        double distToSpawn = Math.sqrt(currX * currX + currZ * currZ);
+        // terrain near the spawning point will be around LAND_HEIGHT; use the double value to prevent overflow. THIS IS NOT REDUNDANT!
+        double currXDouble = currX, currZDouble = currZ;
+        double distToSpawn = Math.sqrt(currXDouble * currXDouble + currZDouble * currZDouble);
         if (distToSpawn < OverworldBiomeGenerator.SPAWN_LOC_PROTECTION_RADIUS) {
             distToSpawn /= OverworldBiomeGenerator.SPAWN_LOC_PROTECTION_RADIUS;
             totalHeight *= distToSpawn;
