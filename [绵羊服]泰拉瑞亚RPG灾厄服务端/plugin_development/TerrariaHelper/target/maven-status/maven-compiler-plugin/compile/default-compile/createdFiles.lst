@@ -148,7 +148,6 @@ terraria\entity\projectile\TerrariaPotionProjectile$1.class
 terraria\event\listener\CraftingListener$CRAFTING_FILTER.class
 terraria\util\EntityHelper$1.class
 terraria\entity\boss\theSlimeGod\EbonianSlime$SlimeSize.class
-terraria\event\listener\WorldRegisterListener.class
 terraria\entity\boss\dukeFishron\DukeFishron$1.class
 terraria\entity\npc\TerrariaNPCGuide.class
 terraria\entity\others\TerrariaFishingHook$1.class

@@ -23,10 +23,8 @@ public class OverworldBiomeGenerator {
     static boolean generatedImg = false;
     static long SEED = 0;
     static final int
-            SINGLE_CACHE_SIZE = 100000,
-            // when the cache is full, the more recent generations do not get removed.
-            CACHE_GENERATIONS = 5,
-            SPAWN_LOC_PROTECTION_RADIUS = 750,
+            SINGLE_CACHE_SIZE = 1000000,
+            SPAWN_LOC_PROTECTION_RADIUS = 1500,
             XZ_HASH_MASK = (1 << 26) - 1;
 
     static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseHum, noiseWrd,
@@ -42,42 +40,8 @@ public class OverworldBiomeGenerator {
                 WEIRDNESS = 3,
                 EROSION = 4,
                 TERRAIN_H = 5;
-        // the functions below produce non-normal feature vectors (prob. distribution). Normalize them after produced!
-        public static final HashMap<WorldHelper.BiomeType, ToDoubleFunction<Double[]>> biomeFeatureConversion = new HashMap<>();
-        static {
-            biomeFeatureConversion.put(WorldHelper.BiomeType.NORMAL, (lst) -> 0.5);
-            // 10 is a really high weight, just to ensure low spaces are indeed initialized as the two types of ocean
-            biomeFeatureConversion.put(WorldHelper.BiomeType.OCEAN, (Double[] lst) ->
-                    lst[CONTINENTALNESS] < -0.5 ? 10 : 0);
-            biomeFeatureConversion.put(WorldHelper.BiomeType.SULPHUROUS_OCEAN, (Double[] lst) ->
-                    lst[CONTINENTALNESS] > 0.5 ? 10 : 0);
-            // note that multiplication makes astral and jungle significantly more rare
-
-            // astral infection: prefer areas higher and dryer; this associates this infection with less foliage.
-            biomeFeatureConversion.put(WorldHelper.BiomeType.ASTRAL_INFECTION, (Double[] lst) ->
-                    Math.max(0, lst[TERRAIN_H] - lst[HUMIDITY] )
-                            * Math.max(0, -lst[WEIRDNESS] * 2.5 ) );
-            // hallow: prefer non-weird places
-            biomeFeatureConversion.put(WorldHelper.BiomeType.HALLOW, (Double[] lst) ->
-                    Math.max(0, -lst[WEIRDNESS] * 1.5 ) );
-            // corruption: prefer wet places
-            biomeFeatureConversion.put(WorldHelper.BiomeType.CORRUPTION, (Double[] lst) ->
-                    Math.max(0, lst[WEIRDNESS] - lst[HUMIDITY] ) * 0.75 );
-            // desert: prefer dry, hot places
-            biomeFeatureConversion.put(WorldHelper.BiomeType.DESERT, (Double[] lst) ->
-                    Math.max(0, -lst[HUMIDITY] + lst[TEMPERATURE]) * 0.75 );
-            // tundra: prefer cold places
-            biomeFeatureConversion.put(WorldHelper.BiomeType.TUNDRA, (Double[] lst) ->
-                    Math.max(0, -lst[TEMPERATURE] * 1.35 ) );
-            // jungle: prefer hot, wet places that are low
-            biomeFeatureConversion.put(WorldHelper.BiomeType.JUNGLE, (Double[] lst) ->
-                    Math.max(0, lst[HUMIDITY] * 2)
-                            * Math.max(0, lst[TEMPERATURE] * 0.6 - lst[TERRAIN_H] * 1.4 ) * 1.75 );
-
-        }
-
         public final Double[] features = new Double[6];
-        public final HashMap<WorldHelper.BiomeType, Double> biomeFeatures = new HashMap<>();
+        public final double biomeSignificance;
         public final WorldHelper.BiomeType evaluatedBiome;
 
         public BiomeFeature(int x, int z) {
@@ -95,41 +59,58 @@ public class OverworldBiomeGenerator {
             // spawn protection: feature tweak
             if (distFromSpawn < SPAWN_LOC_PROTECTION_RADIUS) {
                 features[CONTINENTALNESS] *= distFromSpawnFactor;
+                features[TEMPERATURE] *= distFromSpawnFactor;
+                features[HUMIDITY] *= distFromSpawnFactor;
+                features[WEIRDNESS] *= distFromSpawnFactor;
             }
-            // convert to biome features
-            for (WorldHelper.BiomeType biomeType : biomeFeatureConversion.keySet()) {
-                double magnitude = biomeFeatureConversion.get(biomeType).applyAsDouble(features);
-                biomeFeatures.put(biomeType, magnitude);
+            // evaluate the biome for this noise
+            double tmp = features[TEMPERATURE], hum = features[HUMIDITY],
+                    cnt = features[CONTINENTALNESS], wrd = features[WEIRDNESS];
+            // sulphurous ocean
+            if (cnt > 0.5) {
+                evaluatedBiome = WorldHelper.BiomeType.SULPHUROUS_OCEAN;
+                biomeSignificance = cnt;
             }
-            // spawn protection: biome tweak
-            if (distFromSpawn < SPAWN_LOC_PROTECTION_RADIUS) {
-                double protectedValue = Math.max(
-                        (1 - distFromSpawnFactor) * 5,
-                        biomeFeatures.get(WorldHelper.BiomeType.NORMAL)
-                );
-                biomeFeatures.put(WorldHelper.BiomeType.NORMAL, protectedValue);
+            // ocean
+            else if (cnt < -0.5) {
+                evaluatedBiome = WorldHelper.BiomeType.OCEAN;
+                biomeSignificance = -cnt;
             }
-            // compute total magSqr
-            double totalMagSqr = 0;
-            for (double magnitude : biomeFeatures.values()) {
-                totalMagSqr += magnitude * magnitude;
+            // astral infection
+            else if (Math.abs(cnt) < 0.25 && hum < -0.5) {
+                evaluatedBiome = WorldHelper.BiomeType.ASTRAL_INFECTION;
+                biomeSignificance = -hum - Math.abs(cnt);
             }
-
-            // normalize biome features and record the most possible biome
-            double magMultiplier = 1 / Math.sqrt(totalMagSqr);
-            // record the most possible biome; only consider prob > 0.1
-            double mostProb = 0.1;
-            WorldHelper.BiomeType mostProbType = WorldHelper.BiomeType.NORMAL;
-            for (WorldHelper.BiomeType biomeType : biomeFeatureConversion.keySet()) {
-                double updated = biomeFeatures.get(biomeType) * magMultiplier;
-                biomeFeatures.put(biomeType, updated);
-                if (updated > mostProb) {
-                    mostProb = updated;
-                    mostProbType = biomeType;
-                }
+            // hallow
+            else if (wrd < -0.5) {
+                evaluatedBiome = WorldHelper.BiomeType.HALLOW;
+                biomeSignificance = -wrd;
             }
-            // save the most possible biome
-            evaluatedBiome = mostProbType;
+            // corruption
+            else if (wrd > 0.5) {
+                evaluatedBiome = WorldHelper.BiomeType.CORRUPTION;
+                biomeSignificance = wrd;
+            }
+            // jungle
+            else if (tmp > 0.3 && hum > 0.3) {
+                evaluatedBiome = WorldHelper.BiomeType.JUNGLE;
+                biomeSignificance = tmp + hum;
+            }
+            // desert
+            else if (tmp > 0.3 && hum < -0.3) {
+                evaluatedBiome = WorldHelper.BiomeType.DESERT;
+                biomeSignificance = tmp - hum;
+            }
+            // tundra
+            else if (tmp < -0.5) {
+                evaluatedBiome = WorldHelper.BiomeType.TUNDRA;
+                biomeSignificance = -tmp;
+            }
+            // normal
+            else {
+                evaluatedBiome = WorldHelper.BiomeType.NORMAL;
+                biomeSignificance = 5 - Math.abs(hum) - Math.abs(tmp) - Math.abs(cnt) - Math.abs(wrd);
+            }
         }
     }
 
@@ -137,8 +118,8 @@ public class OverworldBiomeGenerator {
     static HashMap<Long, BiomeFeature>[] biomeCache;
     static int biomeCacheIdx = 0;
     static {
-        biomeCache = new HashMap[CACHE_GENERATIONS];
-        for (int i = 0; i < CACHE_GENERATIONS; i ++)
+        biomeCache = new HashMap[2];
+        for (int i = 0; i < 2; i ++)
             biomeCache[i] = new HashMap<>(SINGLE_CACHE_SIZE, 0.8f);
     }
 
@@ -148,22 +129,22 @@ public class OverworldBiomeGenerator {
         SEED = seed;
         Random rdm = new Random(seed);
         // temperature
-        noiseTemp = new PerlinOctaveGenerator(rdm.nextLong(), 3);
+        noiseTemp = new PerlinOctaveGenerator(rdm.nextLong(), 1);
         noiseTemp.setScale(0.001);
         // humidity
-        noiseHum =  new PerlinOctaveGenerator(rdm.nextLong(), 3);
+        noiseHum =  new PerlinOctaveGenerator(rdm.nextLong(), 1);
         noiseHum.setScale(0.001);
         // weirdness
-        noiseWrd =  new PerlinOctaveGenerator(rdm.nextLong(), 3);
+        noiseWrd =  new PerlinOctaveGenerator(rdm.nextLong(), 1);
         noiseWrd.setScale(0.001);
         // erosion
-        noiseEros = new PerlinOctaveGenerator(rdm.nextLong(), 8);
+        noiseEros = new PerlinOctaveGenerator(rdm.nextLong(), 4);
         noiseEros.setScale(0.0025);
         // terrain height
         noiseTrH = new PerlinOctaveGenerator(rdm.nextLong(), 8);
         noiseTrH.setScale(0.001);
         // update continentalness finally, so there is less chance things get broken
-        noiseCont = new PerlinOctaveGenerator(rdm.nextLong(), 5);
+        noiseCont = new PerlinOctaveGenerator(rdm.nextLong(), 3);
         noiseCont.setScale(0.00025);
     }
     // save the biome image for testing purposes and so on
@@ -306,10 +287,8 @@ public class OverworldBiomeGenerator {
         int x = actualX, z = actualZ;
 
         long biomeLocKey = getCacheKey(x, z);
-        for (HashMap<Long, BiomeFeature> cache : biomeCache) {
-            if (cache.containsKey(biomeLocKey)) {
-                return cache.get(biomeLocKey);
-            }
+        if (biomeCache[biomeCacheIdx].containsKey(biomeLocKey)) {
+            return biomeCache[biomeCacheIdx].get(biomeLocKey);
         }
         // evaluate & save the biome features
         if (noiseCont == null) {
@@ -318,8 +297,12 @@ public class OverworldBiomeGenerator {
         BiomeFeature result = new BiomeFeature(actualX, actualZ);
         // go to the next generation when needed
         if (biomeCache[biomeCacheIdx].size() > SINGLE_CACHE_SIZE) {
-            biomeCacheIdx = (biomeCacheIdx + 1) % CACHE_GENERATIONS;
-            biomeCache[biomeCacheIdx].clear();
+            biomeCacheIdx = (biomeCacheIdx + 1) % 2;
+        }
+        // when the current generation is half-full, clear the other one.
+        // this means the next time you switch cache, the most recent half is still recorded.
+        if (biomeCache[biomeCacheIdx].size() == SINGLE_CACHE_SIZE / 2) {
+            biomeCache[(biomeCacheIdx + 1) % 2].clear();
         }
         // save the result and return
         biomeCache[biomeCacheIdx].put(biomeLocKey, result);

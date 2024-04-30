@@ -175,18 +175,23 @@ public class MathHelper {
         ArrayList<Vector> result = getCircularProjectileDirections(amountPerArc, amountArcs, halfArcAngleDeg, fwdDir, length);
         return result;
     }
-    public static String selectWeighedRandom(HashMap<String, Double> weighedMap) {
+    public static <T> T selectWeighedRandom(HashMap<T, Double> weighedMap, T defaultVal) {
         double total = 0;
         for (double curr : weighedMap.values()) total += curr;
-        if (total == 0) return "";
+        if (total == 0) {
+            return defaultVal;
+        }
         double rdm = Math.random() * total;
-        for (String curr : weighedMap.keySet()) {
+        for (T curr : weighedMap.keySet()) {
             double currWeight = weighedMap.get(curr);
             if (rdm <= currWeight) return curr;
             rdm -= currWeight;
         }
         // this is technically never reachable. It is here to prevent IDE reporting an error.
-        return "";
+        return defaultVal;
+    }
+    public static String selectWeighedRandom(HashMap<String, Double> weighedMap) {
+        return selectWeighedRandom(weighedMap, "");
     }
     public static Vector setVectorLength(Vector vec, double targetLength) {
         return setVectorLength(vec, targetLength, false);

@@ -11,16 +11,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.worldgen.overworld.OverworldBiomeGenerator;
 import terraria.worldgen.overworld.OverworldChunkGenerator;
 import terraria.worldgen.overworld.cavern.CavernChunkGenerator;
 import terraria.worldgen.underworld.UnderworldChunkGenerator;
 
 import javax.xml.bind.annotation.XmlType;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 
 public class WorldHelper {
@@ -251,7 +249,7 @@ public class WorldHelper {
                 Bukkit.shutdown();
             }
             Bukkit.getLogger().info("世界初始化尝试完毕！");
-        }, 1);
+        }, 0);
     }
     public static void initWorldRules(World wld) {
         // game rules
@@ -717,7 +715,11 @@ public class WorldHelper {
     //                  trees
     public static class LeafShape {
         LeafLayerShape[] layers;
-        public LeafShape(LeafLayerShape... layers) {
+        double idealTemperature, idealHumidity, weight;
+        public LeafShape(double idealTemperature, double idealHumidity, double weight, LeafLayerShape... layers) {
+            this.idealTemperature = idealTemperature;
+            this.idealHumidity = idealHumidity;
+            this.weight = weight;
             this.layers = layers;
         }
     }
@@ -728,18 +730,44 @@ public class WorldHelper {
             this.roundness = roundness;
         }
     }
+    // static code block which initializes the canopy&branch info
     static ArrayList<LeafShape> candidateCanopyShapes, candidateBranchShapes;
     static {
         candidateCanopyShapes = new ArrayList<>(50);
         {
-            // empty
+            /*
+             * BELOW: DESERT-ISH, DRY&HOT CANOPIES
+             */
+            // empty; really dry and hot
             {
-                LeafShape empty = new LeafShape();
+                LeafShape empty = new LeafShape(0.4, -0.4, 1);
                 candidateCanopyShapes.add(empty);
             }
-            // round
+            // boxy(spiky), for very hot places with low hum.
             {
-                LeafShape round = new LeafShape(
+                LeafShape boxy = new LeafShape(0.3, -0.2, 2,
+                        new LeafLayerShape(1, 0),
+                        new LeafLayerShape(2, 0),
+                        new LeafLayerShape(1, 0),
+                        new LeafLayerShape(0, 0)
+                );
+                candidateCanopyShapes.add(boxy);
+            }
+            // tiny, for very hot places with even lower hum.
+            {
+                LeafShape tiny = new LeafShape(0.3, -0.3, 2,
+                        new LeafLayerShape(1, 0),
+                        new LeafLayerShape(0, 0)
+                );
+                candidateCanopyShapes.add(tiny);
+            }
+
+            /*
+             * BELOW: NORMAL SITUATION CANOPIES
+             */
+            // round; normal temperature & hum.
+            {
+                LeafShape round = new LeafShape( 0, 0, 5,
                         new LeafLayerShape(1, 0),
                         new LeafLayerShape(2, 0),
                         new LeafLayerShape(3, 1),
@@ -747,26 +775,20 @@ public class WorldHelper {
                         new LeafLayerShape(1, 0)
                 );
                 candidateCanopyShapes.add(round);
-                candidateCanopyShapes.add(round);
-                candidateCanopyShapes.add(round);
-                candidateCanopyShapes.add(round);
-                candidateCanopyShapes.add(round);
             }
-            // small round
+            // small round; for normal temperature and slightly smaller hum.
             {
-                LeafShape small_round = new LeafShape(
+                LeafShape small_round = new LeafShape(0, -0.1, 3,
                         new LeafLayerShape(2, 1),
                         new LeafLayerShape(3, 1),
                         new LeafLayerShape(3, 1),
                         new LeafLayerShape(2, 1)
                 );
                 candidateCanopyShapes.add(small_round);
-                candidateCanopyShapes.add(small_round);
-                candidateCanopyShapes.add(small_round);
             }
-            // tall
+            // cluster with the thickest place near the top; for places a little cold and a little wet
             {
-                LeafShape tall = new LeafShape(
+                LeafShape tall = new LeafShape(-0.1, 0.1, 3,
                         new LeafLayerShape(1, 0),
                         new LeafLayerShape(2, 1),
                         new LeafLayerShape(2, 0),
@@ -775,31 +797,14 @@ public class WorldHelper {
                         new LeafLayerShape(0, 0)
                 );
                 candidateCanopyShapes.add(tall);
-                candidateCanopyShapes.add(tall);
-                candidateCanopyShapes.add(tall);
             }
-            // boxy
+
+            /*
+             * BELOW: TUNDRA-ISH CANOPIES
+             */
+            // large spiky, for very cold places with more positive hum.
             {
-                LeafShape boxy = new LeafShape(
-                        new LeafLayerShape(1, 0),
-                        new LeafLayerShape(2, 0),
-                        new LeafLayerShape(1, 0),
-                        new LeafLayerShape(0, 0)
-                );
-                candidateCanopyShapes.add(boxy);
-                candidateCanopyShapes.add(boxy);
-            }
-            // tiny
-            {
-                LeafShape tiny = new LeafShape(
-                        new LeafLayerShape(1, 0),
-                        new LeafLayerShape(0, 0)
-                );
-                candidateCanopyShapes.add(tiny);
-            }
-            // large spiky
-            {
-                LeafShape large_spiky = new LeafShape(
+                LeafShape large_spiky = new LeafShape(-0.4, 0.1, 2,
                         new LeafLayerShape(1, 0),
                         new LeafLayerShape(2, 0),
                         new LeafLayerShape(3, 0),
@@ -811,11 +816,10 @@ public class WorldHelper {
                         new LeafLayerShape(0, 0)
                 );
                 candidateCanopyShapes.add(large_spiky);
-                candidateCanopyShapes.add(large_spiky);
             }
-            // small spiky
+            // small spiky, for very cold places with more negative hum.
             {
-                LeafShape small_spiky = new LeafShape(
+                LeafShape small_spiky = new LeafShape(-0.4, -0.1, 2,
                         new LeafLayerShape(1, 0),
                         new LeafLayerShape(2, 0),
                         new LeafLayerShape(2, 0),
@@ -826,9 +830,9 @@ public class WorldHelper {
                 );
                 candidateCanopyShapes.add(small_spiky);
             }
-            // tower
+            // tower, for cold regions as an alternative
             {
-                LeafShape tower = new LeafShape(
+                LeafShape tower = new LeafShape(-0.5, 0, 5,
                         new LeafLayerShape(3, 1),
                         new LeafLayerShape(1, 0),
                         new LeafLayerShape(3, 1),
@@ -840,64 +844,67 @@ public class WorldHelper {
                         new LeafLayerShape(0, 0)
                 );
                 candidateCanopyShapes.add(tower);
-                candidateCanopyShapes.add(tower);
-                candidateCanopyShapes.add(tower);
             }
-            // minecraft
+
+            /*
+             * BELOW: JUNGLE STYLE CANOPIES
+             */
+            // minecraft-style, fits better in the jungle.
             {
-                LeafShape minecraft = new LeafShape(
+                LeafShape minecraft = new LeafShape(0.3, 0.3, 3,
                         new LeafLayerShape(3, 0),
                         new LeafLayerShape(4, 1),
                         new LeafLayerShape(2, 0),
                         new LeafLayerShape(1, 0)
                 );
                 candidateCanopyShapes.add(minecraft);
-                candidateCanopyShapes.add(minecraft);
             }
         }
 
         candidateBranchShapes = new ArrayList<>(10);
         {
-            // empty
+            // empty for extremely hot places
             {
-                LeafShape empty = new LeafShape();
-                candidateBranchShapes.add(empty);
+                LeafShape empty = new LeafShape(0.5, 0, 2);
                 candidateBranchShapes.add(empty);
             }
-            // small
+            // empty for freezing places
             {
-                LeafShape small = new LeafShape(
+                LeafShape empty = new LeafShape(-0.5, 0, 2);
+                candidateBranchShapes.add(empty);
+            }
+            // empty for very dry places
+            {
+                LeafShape empty = new LeafShape(0, -0.5, 2);
+                candidateBranchShapes.add(empty);
+            }
+            // small, good in general
+            {
+                LeafShape small = new LeafShape(0, 0, 5,
                         new LeafLayerShape(1, 0),
                         new LeafLayerShape(0, 0)
                 );
                 candidateBranchShapes.add(small);
-                candidateBranchShapes.add(small);
-                candidateBranchShapes.add(small);
-                candidateBranchShapes.add(small);
-                candidateBranchShapes.add(small);
-                candidateBranchShapes.add(small);
             }
-            // small short
+            // small short, still good in general, perhaps prefer less hum.
             {
-                LeafShape small_short = new LeafShape(
+                LeafShape small_short = new LeafShape(0, -0.15, 2,
                         new LeafLayerShape(1, 0)
                 );
                 candidateBranchShapes.add(small_short);
             }
-            // medium
+            // medium, good for great hum.
             {
-                LeafShape medium = new LeafShape(
+                LeafShape medium = new LeafShape(0, 0.5, 3,
                         new LeafLayerShape(1, 0),
                         new LeafLayerShape(1, 0),
                         new LeafLayerShape(0, 0)
                 );
                 candidateBranchShapes.add(medium);
-                candidateBranchShapes.add(medium);
-                candidateBranchShapes.add(medium);
             }
-            // medium short
+            // medium short, with slightly less hum. compared to medium
             {
-                LeafShape medium_short = new LeafShape(
+                LeafShape medium_short = new LeafShape(0, 0.25, 2,
                         new LeafLayerShape(1, 0),
                         new LeafLayerShape(1, 0)
                 );
@@ -960,7 +967,7 @@ public class WorldHelper {
             topTrunk = topTrunk.getRelative(dir);
         }
     }
-    private static Block generateSideBranch(Block branchTrunk, ArrayList<BlockFace> directions,
+    private static void generateSideBranch(Block branchTrunk, ArrayList<BlockFace> directions,
                                             ArrayList<Block> trunkBlocks, ArrayList<Block> leafBlocks, LeafShape shape) {
         // randomize branch direction
         BlockFace branchDir = directions.remove( (int) (Math.random() * directions.size()) );
@@ -969,17 +976,64 @@ public class WorldHelper {
         trunkBlocks.add(branchBlock);
         // leaves
         generateLeaves(branchBlock, trunkBlocks, leafBlocks, shape, branchDir);
-
-        return branchBlock;
     }
-    public static void attemptGenerateTreeAt(Block rootBlock) {
-        attemptGenerateTreeAt(rootBlock, 4 + (int) (Math.random() * 8) );
+    // tree generation helper functions
+    private static HashMap<LeafShape, Double> getSingleTreeStyleProbabilities(boolean canopyOrBranch, double temperature, double moisture) {
+        ArrayList<LeafShape> shapes = canopyOrBranch ? candidateCanopyShapes : candidateBranchShapes;
+        HashMap<LeafShape, Double> result = new HashMap<>();
+        // first initialize the probabilities
+        double offset = 0;
+        double maxSim = -999999d;
+        // make sure there is at least one positive candidate before release this mapping
+        while (true) {
+            for (LeafShape shape : shapes) {
+                double tempDiff = shape.idealTemperature - temperature;
+                double moistDiff = shape.idealHumidity - moisture;
+                for (int i = 0; i < 2; i ++) {
+                    tempDiff *= tempDiff;
+                    moistDiff *= moistDiff;
+                }
+                // 0.3^4 * 2 = 0.0162
+                double similarity = (0.0162 - (tempDiff + moistDiff)) * shape.weight + offset;
+                if (similarity > 0)
+                    result.put(shape, similarity);
+                // set up the smallest difference
+                if (similarity > maxSim)
+                    maxSim = similarity;
+            }
+            // good to go
+            if (result.size() > 0) {
+                return result;
+            }
+            // still one iteration to go
+            offset = (-maxSim) + 1e-3;
+        }
     }
-    public static void attemptGenerateTreeAt(Block rootBlock, int trunkHeight) {
+    private static HashMap<LeafShape, Double>[] getTreeStyleProbabilities(double temperature, double moisture) {
+        // index 0 = canopy, 1 = branch
+        HashMap<LeafShape, Double>[] results = new HashMap[2];
+        results[0] = getSingleTreeStyleProbabilities(true, temperature, moisture);
+        results[1] = getSingleTreeStyleProbabilities(false, temperature, moisture);
+        return results;
+    }
+    public static HashMap<LeafShape, Double>[] attemptGenerateTreeAt(Block rootBlock) {
+        OverworldBiomeGenerator.BiomeFeature feature = OverworldBiomeGenerator.getBiomeFeature(rootBlock.getX(), rootBlock.getZ());
+        double temperature = feature.features[OverworldBiomeGenerator.BiomeFeature.TEMPERATURE];
+        double moisture = feature.features[OverworldBiomeGenerator.BiomeFeature.HUMIDITY];
+        return attemptGenerateTreeAt(rootBlock, temperature, moisture, null);
+    }
+    public static HashMap<LeafShape, Double>[] attemptGenerateTreeAt(Block rootBlock, double temperature, double moisture, HashMap<LeafShape, Double>[] treeStylePref) {
+        int trunkHeight = (int) Math.max(4, 5 + (Math.random() * 6) + (moisture * 4));
+        return attemptGenerateTreeAt(rootBlock, trunkHeight, temperature, moisture, treeStylePref);
+    }
+    public static HashMap<LeafShape, Double>[] attemptGenerateTreeAt(Block rootBlock, int trunkHeight, double temperature, double moisture, HashMap<LeafShape, Double>[] treeStylePref) {
         // validate the block below
         if ( ! canGrowPlant(rootBlock.getRelative(BlockFace.DOWN), true, false) ) {
-            return;
+            return null;
         }
+        if (treeStylePref == null)
+            treeStylePref = getTreeStyleProbabilities(temperature, moisture);
+
         ArrayList<Block> trunkBlocks = new ArrayList<>();
         ArrayList<Block> leafBlocks = new ArrayList<>();
         // pre-generate trunks
@@ -987,7 +1041,8 @@ public class WorldHelper {
             trunkBlocks.add(rootBlock.getRelative(0, i, 0));
         }
         // pre-generate canopy leaves
-        LeafShape leafShapeCanopy = candidateCanopyShapes.get((int) (Math.random() * candidateCanopyShapes.size()) );
+        LeafShape leafShapeCanopy = MathHelper.selectWeighedRandom(treeStylePref[0], candidateCanopyShapes.get(0));
+
         Block topTrunkBlock = rootBlock.getRelative(0, trunkHeight - 1, 0);
         generateLeaves(topTrunkBlock, trunkBlocks, leafBlocks, leafShapeCanopy, BlockFace.UP);
         // pre-generate branch, if the tree is tall enough
@@ -1008,7 +1063,8 @@ public class WorldHelper {
                 candidateBranchHeights.remove( Integer.valueOf(branchHeight) );
                 candidateBranchHeights.remove( Integer.valueOf(branchHeight + 1) );
                 Block branchTrunk = rootBlock.getRelative(0, branchHeight, 0);
-                LeafShape leafShapeBranch = candidateBranchShapes.get((int) (Math.random() * candidateBranchShapes.size()));
+
+                LeafShape leafShapeBranch = MathHelper.selectWeighedRandom(treeStylePref[1], candidateBranchShapes.get(0));
                 generateSideBranch(branchTrunk, directions, trunkBlocks, leafBlocks, leafShapeBranch);
             }
         }
@@ -1028,18 +1084,19 @@ public class WorldHelper {
                 for (BlockFace face : DIRECT_CONTACT_DIRECTIONS)
                     validateBlocksNotTree.add(trunkBlock.getRelative(face));
             }
-            // validate
+            // validation: any of the exact blocks occupied must not be solid.
             for (Block validateBlock : validateBlocksNotSolid)
                 if (validateBlock.getType().isSolid()) {
-                    return;
+                    return treeStylePref;
                 }
+            // validation: any of the adjacent blocks must not be a tree.
             for (Block validateBlock : validateBlocksNotTree)
                 switch (validateBlock.getType()) {
                     case LOG:
                     case LOG_2:
                     case LEAVES:
                     case LEAVES_2:
-                        return;
+                        return treeStylePref;
                 }
         }
         // place the tree
@@ -1065,6 +1122,8 @@ public class WorldHelper {
                     trunkBlock.setData((byte) (treeData + 8));
             }
         }
+
+        return treeStylePref;
     }
     private static void worldRandomTickVegetation(Chunk chunk) {
         // grass

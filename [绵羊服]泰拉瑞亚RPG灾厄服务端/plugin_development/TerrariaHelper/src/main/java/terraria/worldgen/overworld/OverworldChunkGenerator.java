@@ -1,6 +1,7 @@
 package terraria.worldgen.overworld;
 
 import fr.xephi.authme.libs.ch.jalu.configme.beanmapper.leafvaluehandler.StandardLeafValueHandlers;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -12,6 +13,7 @@ import terraria.worldgen.Interpolate;
 import terraria.worldgen.Interpolate.InterpolatePoint;
 
 import java.util.*;
+import java.util.logging.Level;
 
 public class OverworldChunkGenerator extends ChunkGenerator {
     static long seed = TerrariaHelper.worldSeed;
@@ -551,6 +553,8 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     }
     @Override
     public ChunkData generateChunkData(World world, Random random, int x, int z, BiomeGrid biome) {
+        long time = Calendar.getInstance().getTimeInMillis();
+
         // setup biome
         tweakBiome(x, z, biome, Y_OFFSET_OVERWORLD);
         // init info maps
@@ -567,6 +571,9 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         for (int i = 0; i < 16; i ++)
             for (int j = 0; j < 16; j ++)
                 generateTopSoil(chunk, stoneFlags, i, heightMap[i][j], j, (x << 4) + i, (z << 4) + j, biome.getBiome(i, j), Y_OFFSET_OVERWORLD);
+
+        TerrariaHelper.getInstance().getLogger().log(Level.INFO, "CHUNK GENERATION TIME: " +
+                (Calendar.getInstance().getTimeInMillis() - time));
         return chunk;
     }
     @Override

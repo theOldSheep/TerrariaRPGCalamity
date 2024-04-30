@@ -161,7 +161,6 @@ public class TerrariaHelper extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new RandomTitleListener(), this);
         Bukkit.getPluginManager().registerEvents(new ServerStopListener(), this);
         Bukkit.getPluginManager().registerEvents(new VanillaMechanicListener(), this);
-        Bukkit.getPluginManager().registerEvents(new WorldRegisterListener(), this);
     }
     private void initThreads() {
         YmlHelper.threadSaveYml();
