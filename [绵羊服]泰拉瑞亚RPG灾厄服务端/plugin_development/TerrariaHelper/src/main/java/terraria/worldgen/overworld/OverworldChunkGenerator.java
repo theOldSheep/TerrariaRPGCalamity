@@ -83,13 +83,13 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         }, "terrain_heightmap");
         jungleHeightProvider = new Interpolate(new InterpolatePoint[]{
                 InterpolatePoint.create(-1       , SEA_LEVEL - 10),
-                InterpolatePoint.create(-0.8     , LAND_HEIGHT),
-                InterpolatePoint.create(-0.6     , SEA_LEVEL - 5),
-                InterpolatePoint.create(-0.4     , LAND_HEIGHT),
+                InterpolatePoint.create(-0.6     , LAND_HEIGHT),
+                InterpolatePoint.create(-0.4     , SEA_LEVEL - 5),
+                InterpolatePoint.create(-0.2     , LAND_HEIGHT),
                 InterpolatePoint.create(0        , LAND_HEIGHT + 10),
-                InterpolatePoint.create(0.4      , LAND_HEIGHT),
-                InterpolatePoint.create(0.6      , SEA_LEVEL - 5),
-                InterpolatePoint.create(0.8      , LAND_HEIGHT),
+                InterpolatePoint.create(0.2      , LAND_HEIGHT),
+                InterpolatePoint.create(0.4      , SEA_LEVEL - 5),
+                InterpolatePoint.create(0.6      , LAND_HEIGHT),
                 InterpolatePoint.create(1        , SEA_LEVEL - 10),
         }, "jungle_heightmap");
         astralHeightProvider = new Interpolate(new InterpolatePoint[]{
@@ -111,9 +111,12 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 InterpolatePoint.create(1        , LAND_HEIGHT + 55),
         }, "desert_heightmap");
         oceanHeightProvider = new Interpolate(new InterpolatePoint[]{
-                InterpolatePoint.create(-1    ,   SEA_LEVEL - 35),
+                InterpolatePoint.create(-1    ,   LAND_HEIGHT + 40),
+                InterpolatePoint.create(-0.7  ,   LAND_HEIGHT),
+                InterpolatePoint.create(-0.675 ,   SEA_LEVEL - 20),
+                InterpolatePoint.create(-0.625  ,   SEA_LEVEL - 35),
                 InterpolatePoint.create(-0.575,   SEA_LEVEL - 20),
-                InterpolatePoint.create(-0.55 , SEA_LEVEL + 2),
+                InterpolatePoint.create(-0.535 , SEA_LEVEL + 2),
                 InterpolatePoint.create(-0.5  ,   LAND_HEIGHT),
                 InterpolatePoint.create(0.5   ,   LAND_HEIGHT),
                 InterpolatePoint.create(0.55  ,   SEA_LEVEL + 2),

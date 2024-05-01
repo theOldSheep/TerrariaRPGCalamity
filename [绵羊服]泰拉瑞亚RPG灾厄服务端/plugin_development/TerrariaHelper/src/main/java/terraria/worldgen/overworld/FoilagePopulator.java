@@ -14,10 +14,10 @@ import java.util.Random;
 public class FoilagePopulator extends BlockPopulator {
     public static final double GRASS_GROW_CHANCE = 0.1;
     double getTreeAmount(double temp, double moisture) {
-        double result = 12d;
+        double result = 6d;
         // dry+hot=desert, dry+cold=tundra(even less tree?), moist+hot=jungle, moist+cold=tundra
-        result += moisture * 8 * (1 + Math.abs(temp) * 0.5);
-        return result;
+        result += moisture * 5 * (1 + Math.abs(temp) * 0.5);
+        return Math.max(result, 0);
     }
     @Override
     public void populate(World wld, Random rdm, Chunk chunk) {

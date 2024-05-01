@@ -743,23 +743,23 @@ public class WorldHelper {
                 LeafShape empty = new LeafShape(0.4, -0.4, 1);
                 candidateCanopyShapes.add(empty);
             }
-            // boxy(spiky), for very hot places with low hum.
+            // tiny, work with "empty" to make hot&dry places look less lifeless.
             {
-                LeafShape boxy = new LeafShape(0.3, -0.2, 2,
+                LeafShape tiny = new LeafShape(0.4, -0.4, 2,
+                        new LeafLayerShape(1, 0),
+                        new LeafLayerShape(0, 0)
+                );
+                candidateCanopyShapes.add(tiny);
+            }
+            // boxy(spiky), for somewhat hot places with lower hum.
+            {
+                LeafShape boxy = new LeafShape(0.25, -0.25, 2,
                         new LeafLayerShape(1, 0),
                         new LeafLayerShape(2, 0),
                         new LeafLayerShape(1, 0),
                         new LeafLayerShape(0, 0)
                 );
                 candidateCanopyShapes.add(boxy);
-            }
-            // tiny, for very hot places with even lower hum.
-            {
-                LeafShape tiny = new LeafShape(0.3, -0.3, 2,
-                        new LeafLayerShape(1, 0),
-                        new LeafLayerShape(0, 0)
-                );
-                candidateCanopyShapes.add(tiny);
             }
 
             /*
@@ -776,9 +776,9 @@ public class WorldHelper {
                 );
                 candidateCanopyShapes.add(round);
             }
-            // small round; for normal temperature and slightly smaller hum.
+            // small round; for dry places.
             {
-                LeafShape small_round = new LeafShape(0, -0.1, 3,
+                LeafShape small_round = new LeafShape(0, -0.25, 3,
                         new LeafLayerShape(2, 1),
                         new LeafLayerShape(3, 1),
                         new LeafLayerShape(3, 1),
@@ -786,9 +786,9 @@ public class WorldHelper {
                 );
                 candidateCanopyShapes.add(small_round);
             }
-            // cluster with the thickest place near the top; for places a little cold and a little wet
+            // cluster with the thickest place near the top; for wet places
             {
-                LeafShape tall = new LeafShape(-0.1, 0.1, 3,
+                LeafShape tall = new LeafShape(0, 0.25, 3,
                         new LeafLayerShape(1, 0),
                         new LeafLayerShape(2, 1),
                         new LeafLayerShape(2, 0),
@@ -830,6 +830,20 @@ public class WorldHelper {
                 );
                 candidateCanopyShapes.add(small_spiky);
             }
+            // tiny spiky, for dry & cold places.
+            {
+                LeafShape small_spiky = new LeafShape(-0.35, -0.35, 2,
+                        new LeafLayerShape(1, 0),
+                        new LeafLayerShape(0, 0),
+                        new LeafLayerShape(1, 0),
+                        new LeafLayerShape(3, 1),
+                        new LeafLayerShape(1, 0),
+                        new LeafLayerShape(0, 0),
+                        new LeafLayerShape(1, 0),
+                        new LeafLayerShape(0, 0)
+                );
+                candidateCanopyShapes.add(small_spiky);
+            }
             // tower, for cold regions as an alternative
             {
                 LeafShape tower = new LeafShape(-0.5, 0, 5,
@@ -859,18 +873,27 @@ public class WorldHelper {
                 );
                 candidateCanopyShapes.add(minecraft);
             }
+            // smaller minecraft-style, use as a transition between jungle and dryer places.
+            {
+                LeafShape minecraft = new LeafShape(0.5, 0, 3,
+                        new LeafLayerShape(2, 1),
+                        new LeafLayerShape(2, 0),
+                        new LeafLayerShape(0, 0)
+                );
+                candidateCanopyShapes.add(minecraft);
+            }
         }
 
         candidateBranchShapes = new ArrayList<>(10);
         {
-            // empty for extremely hot places
+            // empty for extremely hot & dry places
             {
-                LeafShape empty = new LeafShape(0.5, 0, 2);
+                LeafShape empty = new LeafShape(0.5, -0.2, 2);
                 candidateBranchShapes.add(empty);
             }
-            // empty for freezing places
+            // empty for freezing & dry places
             {
-                LeafShape empty = new LeafShape(-0.5, 0, 2);
+                LeafShape empty = new LeafShape(-0.5, -0.2, 2);
                 candidateBranchShapes.add(empty);
             }
             // empty for very dry places
@@ -888,7 +911,7 @@ public class WorldHelper {
             }
             // small short, still good in general, perhaps prefer less hum.
             {
-                LeafShape small_short = new LeafShape(0, -0.15, 2,
+                LeafShape small_short = new LeafShape(0, -0.1, 2,
                         new LeafLayerShape(1, 0)
                 );
                 candidateBranchShapes.add(small_short);
@@ -1023,7 +1046,7 @@ public class WorldHelper {
         return attemptGenerateTreeAt(rootBlock, temperature, moisture, null);
     }
     public static HashMap<LeafShape, Double>[] attemptGenerateTreeAt(Block rootBlock, double temperature, double moisture, HashMap<LeafShape, Double>[] treeStylePref) {
-        int trunkHeight = (int) Math.max(4, 5 + (Math.random() * 6) + (moisture * 4));
+        int trunkHeight = (int) Math.max(4, 5 + (Math.random() * 6) + (moisture * 8));
         return attemptGenerateTreeAt(rootBlock, trunkHeight, temperature, moisture, treeStylePref);
     }
     public static HashMap<LeafShape, Double>[] attemptGenerateTreeAt(Block rootBlock, int trunkHeight, double temperature, double moisture, HashMap<LeafShape, Double>[] treeStylePref) {
