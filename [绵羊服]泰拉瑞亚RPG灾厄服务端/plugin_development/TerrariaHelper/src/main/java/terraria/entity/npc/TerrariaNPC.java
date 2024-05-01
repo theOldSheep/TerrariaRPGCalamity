@@ -28,7 +28,7 @@ public class TerrariaNPC extends EntityVillager {
     }
     public TerrariaNPC(World world, NPCHelper.NPCType type) {
         super(world);
-        Location spawnLoc = world.getWorld().getHighestBlockAt((int) (Math.random() * 64 - 32), (int) (Math.random() * 64 - 32)).getLocation();
+        Location spawnLoc = world.getWorld().getHighestBlockAt((int) (Math.random() * 32 - 16), (int) (Math.random() * 32 - 16)).getLocation();
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         initTypeInfo(type);
     }

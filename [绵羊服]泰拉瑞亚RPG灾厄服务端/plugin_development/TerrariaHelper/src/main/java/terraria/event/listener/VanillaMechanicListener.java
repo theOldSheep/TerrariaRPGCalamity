@@ -181,7 +181,19 @@ public class VanillaMechanicListener implements Listener {
             e.setCancelled(true);
     }
     @EventHandler(priority = EventPriority.LOW)
+    public void onBucketFill(PlayerBucketFillEvent e) {
+        if (WorldHelper.isSpawnProtected(e.getBlockClicked().getLocation())) {
+            PlayerHelper.sendActionBar(e.getPlayer(), "请勿破坏出生点附近的方块！");
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler(priority = EventPriority.LOW)
     public void onBucketEmpty(PlayerBucketEmptyEvent e) {
+        if (WorldHelper.isSpawnProtected(
+                e.getBlockClicked().getRelative(e.getBlockFace() ).getLocation())) {
+            PlayerHelper.sendActionBar(e.getPlayer(), "请勿在出生点附近放置方块！");
+            e.setCancelled(true);
+        }
         if (e.isCancelled())
             return;
         Block liquidBlock = e.getBlockClicked().getRelative(e.getBlockFace());
@@ -241,11 +253,14 @@ public class VanillaMechanicListener implements Listener {
     public void onExplode(ExplosionPrimeEvent e) {
         e.setCancelled(true);
     }
-    // spider web can not be placed
     @EventHandler(priority = EventPriority.LOW)
     public void onBlockPlace(BlockPlaceEvent e) {
         if (e.getBlockPlaced().getType() == Material.WEB)
             e.setCancelled(true);
+        else if (WorldHelper.isSpawnProtected(e.getBlock().getLocation())) {
+            PlayerHelper.sendActionBar(e.getPlayer(), "请勿在出生点附近放置方块！");
+            e.setCancelled(true);
+        }
     }
 
     // world related

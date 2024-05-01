@@ -1,7 +1,6 @@
 package terraria.worldgen.overworld;
 
 import org.bukkit.*;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_12_R1.CraftChunk;
 import org.bukkit.generator.BlockPopulator;
@@ -11,7 +10,7 @@ import terraria.util.WorldHelper;
 import java.util.HashMap;
 import java.util.Random;
 
-public class FoilagePopulator extends BlockPopulator {
+public class FoliagePopulator extends BlockPopulator {
     public static final double GRASS_GROW_CHANCE = 0.1;
     double getTreeAmount(double temp, double moisture) {
         double result = 6d;
@@ -37,9 +36,6 @@ public class FoilagePopulator extends BlockPopulator {
             double moisture = biomeFeature.features[OverworldBiomeGenerator.BiomeFeature.HUMIDITY];
 
             double amount = getTreeAmount( temp, moisture );
-            // astral infection has very sparse trees
-            if (biomeFeature.evaluatedBiome == WorldHelper.BiomeType.ASTRAL_INFECTION)
-                amount *= 0.35;
             // slightly randomize the amount generated
             if (amount > 0) {
                 amount /= 2;

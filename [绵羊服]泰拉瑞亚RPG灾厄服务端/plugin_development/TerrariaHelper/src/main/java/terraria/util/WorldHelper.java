@@ -202,6 +202,10 @@ public class WorldHelper {
     public static boolean isDayTime(long timeInTick) {
         return ! (MathHelper.isBetween(timeInTick, 13500, 22500));
     }
+    public static boolean isSpawnProtected(Location loc) {
+        return loc.getWorld().getName().equals( TerrariaHelper.Constants.WORLD_NAME_SURFACE) &&
+                Math.abs(loc.getX()) < 32 && Math.abs(loc.getZ()) < 32;
+    }
     public static void initWorlds() {
         // create worlds
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {

@@ -1,7 +1,5 @@
 package terraria.worldgen.overworld;
 
-import fr.xephi.authme.libs.ch.jalu.configme.beanmapper.leafvaluehandler.StandardLeafValueHandlers;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -154,7 +152,8 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         populators = new ArrayList<>();
         populators.add(new OverworldBlockGenericPopulator());
         populators.add(new OrePopulator(Y_OFFSET_OVERWORLD));
-        populators.add(new FoilagePopulator());
+        populators.add(new FoliagePopulator());
+        populators.add(new StructurePopulator(true));
     }
     public static void tweakBiome(int x, int z, BiomeGrid biome, int yOffset) {
         for (int i = 0; i < 16; i++)

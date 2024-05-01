@@ -19,6 +19,7 @@ import terraria.worldgen.overworld.OverworldBiomeGenerator;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class GameplayHelper {
@@ -125,6 +126,11 @@ public class GameplayHelper {
     }
     public static boolean isBreakable(Block block, Player ply) {
         if (noMiningSet.contains(block.getType())) return false;
+        // blocks near the spawn point can not be broken
+        if (WorldHelper.isSpawnProtected(block.getLocation())) {
+            PlayerHelper.sendActionBar(ply, "请勿破坏出生点附近的方块！");
+            return false;
+        }
         // the block directly below a tree can not be mined, unless it is also a log.
         {
             Block logBlock = block.getRelative(BlockFace.UP);
