@@ -117,6 +117,7 @@ terraria\util\EntityHelper$DamageReason.class
 terraria\util\GenericHelper.class
 terraria\worldgen\underworld\UnderworldChunkGenerator.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHead.class
+terraria\worldgen\overworld\StructurePopulator$1.class
 terraria\entity\projectile\TerrariaPotionProjectile.class
 terraria\entity\boss\theHiveMind\TheHiveMind$1.class
 terraria\util\GenericHelper$1.class

@@ -5,10 +5,7 @@ import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import terraria.TerrariaHelper;
-import terraria.worldgen.overworld.OrePopulator;
-import terraria.worldgen.overworld.OverworldBlockGenericPopulator;
-import terraria.worldgen.overworld.OverworldCaveGenerator;
-import terraria.worldgen.overworld.OverworldChunkGenerator;
+import terraria.worldgen.overworld.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +27,7 @@ public class CavernChunkGenerator extends ChunkGenerator {
         populators = new ArrayList<>();
         populators.add(new OverworldBlockGenericPopulator());
         populators.add(new OrePopulator(yOffset));
+        populators.add(new StructurePopulator(false));
     }
 
     @Override

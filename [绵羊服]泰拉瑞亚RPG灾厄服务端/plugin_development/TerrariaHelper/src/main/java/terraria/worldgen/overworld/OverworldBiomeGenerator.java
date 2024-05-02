@@ -24,7 +24,7 @@ public class OverworldBiomeGenerator {
     static long SEED = 0;
     static final int
             SINGLE_CACHE_SIZE = 1000000,
-            SPAWN_LOC_PROTECTION_RADIUS = 1500,
+            SPAWN_LOC_PROTECTION_RADIUS = 750,
             XZ_HASH_MASK = (1 << 26) - 1;
 
     static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseHum, noiseWrd,
@@ -45,9 +45,8 @@ public class OverworldBiomeGenerator {
         public final WorldHelper.BiomeType evaluatedBiome;
 
         public BiomeFeature(int x, int z) {
-            // IMPORTANT: prevent overflow. THIS IS NOT REDUNDANT!
-            double xDouble = x, zDouble = z;
-            double distFromSpawn = Math.sqrt(xDouble * xDouble + zDouble * zDouble);
+            // IMPORTANT: prevent overflow.
+            double distFromSpawn = Math.sqrt((double) x * (double) x + (double) z * (double) z);
             double distFromSpawnFactor = distFromSpawn / SPAWN_LOC_PROTECTION_RADIUS;
 
             features[CONTINENTALNESS] =     noiseCont.noise(x, z, 2, 0.5);
@@ -109,7 +108,7 @@ public class OverworldBiomeGenerator {
             // normal
             else {
                 evaluatedBiome = WorldHelper.BiomeType.NORMAL;
-                biomeSignificance = 5 - Math.abs(hum) - Math.abs(tmp) - Math.abs(cnt) - Math.abs(wrd);
+                biomeSignificance = -Math.abs(cnt);
             }
         }
     }

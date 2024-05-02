@@ -339,9 +339,8 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             double weightCurr = biomeWeights.get(b) / totalWeight;
             totalHeight += getTerrainHeight(b, currX, currZ) * weightCurr;
         }
-        // terrain near the spawning point will be around LAND_HEIGHT; use the double value to prevent overflow. THIS IS NOT REDUNDANT!
-        double currXDouble = currX, currZDouble = currZ;
-        double distToSpawn = Math.sqrt(currXDouble * currXDouble + currZDouble * currZDouble);
+        // terrain near the spawning point will be around LAND_HEIGHT; use the double value to prevent overflow.
+        double distToSpawn = Math.sqrt((double) currX * (double) currX + (double) currZ * (double) currZ);
         if (distToSpawn < OverworldBiomeGenerator.SPAWN_LOC_PROTECTION_RADIUS) {
             distToSpawn /= OverworldBiomeGenerator.SPAWN_LOC_PROTECTION_RADIUS;
             totalHeight *= distToSpawn;

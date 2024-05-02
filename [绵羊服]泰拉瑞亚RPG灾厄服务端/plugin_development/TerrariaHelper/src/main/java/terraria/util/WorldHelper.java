@@ -380,6 +380,9 @@ public class WorldHelper {
             case WATER:
             case STATIONARY_WATER:
             case BED_BLOCK:
+            case FENCE:
+            case WOOD_DOOR:
+            case WOODEN_DOOR:
                 return true;
             default:
                 return blockAboveMat.isTransparent();
