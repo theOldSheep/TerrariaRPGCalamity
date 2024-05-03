@@ -64,7 +64,16 @@ public class OrePopulator extends BlockPopulator {
                     if (distSqr > maxDistSqr) continue; // make the shape less sharp
 
                     Block blk = wld.getBlockAt(oreX, oreY, oreZ);
-                    if (blk.getType().isSolid() && blk.getType() != Material.BEDROCK) blk.setType(oreType);
+                    if (blk.getType().isSolid()) {
+                        switch (blk.getType()) {
+                            case BEDROCK:
+                            // lizard temple/dungeon
+                            case SMOOTH_BRICK:
+                                break;
+                            default:
+                                blk.setType(oreType);
+                        }
+                    }
                 }
             }
         }

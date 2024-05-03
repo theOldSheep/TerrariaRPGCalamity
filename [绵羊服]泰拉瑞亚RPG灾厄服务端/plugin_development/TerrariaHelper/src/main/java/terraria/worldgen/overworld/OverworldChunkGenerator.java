@@ -7,6 +7,7 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.noise.PerlinOctaveGenerator;
 import terraria.TerrariaHelper;
+import terraria.util.WorldHelper;
 import terraria.worldgen.Interpolate;
 import terraria.worldgen.Interpolate.InterpolatePoint;
 
@@ -233,7 +234,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             }
             double soilLayerHeight = 50 + topSoilThicknessRandomizer * 10;
             // setup soil/stone layers
-            for (int y = Math.min(height - yOffset, 254); y > 0; y--) {
+            for (int y = Math.min(height - yOffset, WorldHelper.CAVERN_Y_BELOW_BEDROCK); y > 0; y--) {
                 if (! chunk.getType(i, y, j).isSolid()) continue;
                 Material matToSet;
                 int effectualY = y + yOffset;

@@ -113,6 +113,7 @@ terraria\entity\boss\skeletron\SkeletronHand.class
 terraria\util\YmlHelper.class
 terraria\worldgen\overworld\OrePopulator.class
 terraria\util\MathHelper.class
+terraria\worldgen\overworld\OrePopulator$1.class
 terraria\util\EntityHelper$DamageReason.class
 terraria\util\GenericHelper.class
 terraria\worldgen\underworld\UnderworldChunkGenerator.class
@@ -229,6 +230,7 @@ terraria\entity\boss\eaterOfWorld\EaterOfWorld.class
 terraria\entity\boss\thePlaguebringerGoliath\PlagueHomingMissile.class
 terraria\util\EntityHelper$WormSegmentMovementOptions.class
 terraria\util\GameplayHelper$1.class
+terraria\worldgen\overworld\StructurePopulator$DungeonPosInfo.class
 terraria\entity\boss\queenSlime\QueenSlime$1.class
 terraria\entity\boss\lunaticCultist\LunaticCultist.class
 terraria\entity\boss\thePlaguebringerGoliath\PlagueMine.class

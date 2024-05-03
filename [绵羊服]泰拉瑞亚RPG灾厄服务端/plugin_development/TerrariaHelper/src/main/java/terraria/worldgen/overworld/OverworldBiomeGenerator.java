@@ -108,7 +108,7 @@ public class OverworldBiomeGenerator {
             // normal
             else {
                 evaluatedBiome = WorldHelper.BiomeType.NORMAL;
-                biomeSignificance = -Math.abs(cnt);
+                biomeSignificance = features[EROSION];
             }
         }
     }
