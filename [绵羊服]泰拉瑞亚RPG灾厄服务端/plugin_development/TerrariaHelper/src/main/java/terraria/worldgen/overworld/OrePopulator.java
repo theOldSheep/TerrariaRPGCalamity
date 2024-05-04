@@ -207,29 +207,6 @@ public class OrePopulator extends BlockPopulator {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.DEEP_OCEAN)
             generateGenericOre(wld, rdm, chunk, CAVERN, 80, "SCORIA", 5);
     }
-    void generateAstral(World wld, Random rdm, Chunk chunk) {
-        if (yOffset < 0) return; // only surface world get this ore
-        if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) != Biome.MESA) return;
-        if (rdm.nextDouble() < 0.01) {
-            int xCenter = chunk.getX() * 16 + (int) (rdm.nextDouble() * 16),
-                    zCenter = chunk.getZ() * 16 + (int) (rdm.nextDouble() * 16);
-            int height = wld.getHighestBlockYAt(xCenter, zCenter);
-            Material oreMat = oreMaterials.getOrDefault("ASTRAL", Material.STONE);
-            // set spherical cluster of ore
-            for (int xOffset = -8; xOffset <= 8; xOffset ++) {
-                for (int zOffset = -8; zOffset <= 8; zOffset ++) {
-                    int horDistSqr = (xOffset * xOffset) + (zOffset * zOffset);
-                    if (horDistSqr > 64) continue;
-                    int xSet = xCenter + xOffset, zSet = zCenter + zOffset;
-                    for (int ySet = wld.getHighestBlockYAt(xSet, zSet); (ySet - height) * (ySet - height) + horDistSqr < 64; ySet --) {
-                        wld.getBlockAt(xSet, ySet, zSet).setType(oreMat);
-                    }
-                }
-            }
-            // the altar on the top
-            wld.getBlockAt(xCenter, height + 1, zCenter).setType(Material.ENDER_PORTAL_FRAME);
-        }
-    }
     // post-moon lord
 
     void generateExodium(World wld, Random rdm, Chunk chunk) {
@@ -379,7 +356,6 @@ public class OrePopulator extends BlockPopulator {
             generateCryonic(wld, rdm, chunk);
             generatePerennial(wld, rdm, chunk);
             generateScoria(wld, rdm, chunk);
-            generateAstral(wld, rdm, chunk);
             // Calamity, post-moon lord
             generateExodium(wld, rdm, chunk);
             generateUelibloom(wld, rdm, chunk);

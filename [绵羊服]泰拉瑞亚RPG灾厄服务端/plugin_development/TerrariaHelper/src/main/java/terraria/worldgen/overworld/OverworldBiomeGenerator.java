@@ -78,7 +78,7 @@ public class OverworldBiomeGenerator {
             // astral infection
             else if (Math.abs(cnt) < 0.25 && hum < -0.5) {
                 evaluatedBiome = WorldHelper.BiomeType.ASTRAL_INFECTION;
-                biomeSignificance = -hum - Math.abs(cnt);
+                biomeSignificance = -hum;
             }
             // hallow
             else if (wrd < -0.5) {
@@ -108,7 +108,7 @@ public class OverworldBiomeGenerator {
             // normal
             else {
                 evaluatedBiome = WorldHelper.BiomeType.NORMAL;
-                biomeSignificance = features[EROSION];
+                biomeSignificance = -Math.abs( Math.abs(cnt) - 0.35 );
             }
         }
     }
@@ -269,14 +269,6 @@ public class OverworldBiomeGenerator {
         return getBiomeFeature((int) actualX, (int) actualZ);
     }
     public static BiomeFeature getBiomeFeature(int actualX, int actualZ) {
-        int x = actualX >> 2, z = actualZ >> 2;
-
-        long biomeLocKey = getCacheKey(x, z);
-        for (HashMap<Long, BiomeFeature> cache : biomeCache) {
-            if (cache.containsKey(biomeLocKey)) {
-                return cache.get(biomeLocKey);
-            }
-        }
         // evaluate the feature. Technically the world seed do not need to be initialized here, but just in case.
         return getBiomeFeature(TerrariaHelper.worldSeed, actualX, actualZ);
     }

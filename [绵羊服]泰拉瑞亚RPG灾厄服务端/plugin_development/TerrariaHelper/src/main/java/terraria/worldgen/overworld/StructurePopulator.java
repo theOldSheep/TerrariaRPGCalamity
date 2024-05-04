@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.generator.BlockPopulator;
@@ -15,9 +16,10 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class StructurePopulator extends BlockPopulator {
-    static final int STRUCT_INTERVAL = 1, CHECK_STEPS_RADIUS = 1;
-    static final Material MAT_BRICK = Material.SMOOTH_BRICK;
-    static final byte DATA_DUNGEON = 2, DATA_LIZARD = 1, DATA_NONE = 0;
+    // no duplication within 300 blocks (20 chunks)
+    static final int STRUCT_INTERVAL = 5, CHECK_STEPS_RADIUS = 4;
+    static final Material MAT_BRICK = Material.SMOOTH_BRICK, MAT_ASTRAL_STONE = Material.STAINED_CLAY;
+    static final byte DATA_ASTRAL = 15, DATA_DUNGEON = 2, DATA_LIZARD = 1, DATA_NONE = 0;
     boolean isSurface;
 
     public StructurePopulator(boolean surfaceOrUnderground) {
@@ -38,6 +40,11 @@ public class StructurePopulator extends BlockPopulator {
         }
     }
 
+    protected void registerSingleBlock(HashMap<Block, Boolean> blocks, Block blk, boolean boolReg, boolean override) {
+        if (!override && blocks.containsKey(blk))
+            return;
+        blocks.put(blk, boolReg);
+    }
     protected void registerBlockPlane(World wld, HashMap<Block, Boolean> blocks,
                                       int centerX, int y, int centerZ, int radius, boolean boolReg) {
         registerBlockPlane(wld, blocks, centerX - radius, centerZ - radius, y,
@@ -53,9 +60,32 @@ public class StructurePopulator extends BlockPopulator {
         for (int x = minX; x <= maxX; x ++) {
             for (int z = minZ; z <= maxZ; z ++) {
                 Block blk = wld.getBlockAt(x, y, z);
-                if (!override && blocks.containsKey(blk))
+                registerSingleBlock(blocks, blk, boolReg, override);
+            }
+        }
+    }
+    protected void registerBlockPlanarCircle(World wld, HashMap<Block, Boolean> blocks,
+                                      int centerX, int y, int centerZ, int radius, boolean boolReg, boolean override) {
+        double radSqr = radius * radius + 1e-3;
+        double[] offsetSqr = new double[radius + 1];
+        for (int i = 0; i <= radius; i ++)
+            offsetSqr[i] = i * i;
+        // do not attempt to "optimize" the loop - it will cause funny-looking circles.
+        for (int xOffset = 0; xOffset <= radius; xOffset ++) {
+            for (int zOffset = 0; zOffset <= radius; zOffset ++) {
+                if (offsetSqr[xOffset] + offsetSqr[zOffset] > radSqr)
                     continue;
-                blocks.put(blk, boolReg);
+
+                registerSingleBlock(blocks, wld.getBlockAt(centerX + xOffset, y, centerZ + zOffset), boolReg, override);
+                // flipped z
+                if (zOffset != 0)
+                    registerSingleBlock(blocks, wld.getBlockAt(centerX + xOffset, y, centerZ - zOffset), boolReg, override);
+                // flipped x
+                if (xOffset != 0)
+                    registerSingleBlock(blocks, wld.getBlockAt(centerX - xOffset, y, centerZ + zOffset), boolReg, override);
+                // flipped both
+                if (xOffset != 0 && zOffset != 0)
+                    registerSingleBlock(blocks, wld.getBlockAt(centerX - xOffset, y, centerZ - zOffset), boolReg, override);
             }
         }
     }
@@ -73,7 +103,7 @@ public class StructurePopulator extends BlockPopulator {
             }
         }
     }
-    protected int getSurfaceY(World wld, int x, int z) {
+    protected int getSurfaceY(World wld, int x, int z, boolean ignoreWater) {
         Block highestBlk = wld.getHighestBlockAt(x, z);
         boolean invalid = true;
         while (invalid) {
@@ -88,7 +118,7 @@ public class StructurePopulator extends BlockPopulator {
                 // do not place structures lower than water surface
                 case WATER:
                 case STATIONARY_WATER:
-                    invalid = false;
+                    invalid = ignoreWater;
                     break;
                 default:
                     invalid = ! (highestBlk.getType().isSolid());
@@ -130,7 +160,7 @@ public class StructurePopulator extends BlockPopulator {
             posInfo.z += zOffset;
             offsetRemainingDuration --;
             if (offsetRemainingDuration % 2 == 0) {
-                posInfo.y = getSurfaceY(wld, posInfo.x, posInfo.z);
+                posInfo.y = getSurfaceY(wld, posInfo.x, posInfo.z, false);
             }
         }
         setBlocks(struct, MAT_BRICK, Material.AIR, DATA_DUNGEON, DATA_NONE);
@@ -265,8 +295,7 @@ public class StructurePopulator extends BlockPopulator {
     // the overall dungeon generation mechanism
     protected void generateDungeon(World wld, int blockX, int blockZ) {
         if (isSurface) {
-            Bukkit.broadcastMessage("DG: " + blockX + ", " + blockZ);
-            int surfaceLevel = getSurfaceY(wld, blockX, blockZ);
+            int surfaceLevel = getSurfaceY(wld, blockX, blockZ, false);
             DungeonPosInfo posInfo = new DungeonPosInfo(blockX, blockZ, surfaceLevel);
             generateDungeonEntrance(wld, posInfo);
             generateDungeonEntranceBuilding(wld, posInfo);
@@ -275,6 +304,73 @@ public class StructurePopulator extends BlockPopulator {
             DungeonPosInfo posInfo = new DungeonPosInfo(blockX, blockZ, WorldHelper.CAVERN_Y_BELOW_BEDROCK);
             planDungeonUnderground(wld, posInfo);
         }
+    }
+
+    // astral infection altar
+    void generateAstral(World wld, int blockX, int blockZ) {
+        int height = getSurfaceY(wld, blockX, blockZ, true);
+        // the base; true-ore, false-astral dirt
+        HashMap<Block, Boolean> struct = new HashMap<>();
+        {
+            int radius = 1;
+            // the base
+            height -= 3;
+            for (int i = -3; i < 21; i ++) {
+                registerBlockPlanarCircle(wld, struct, blockX, height, blockZ, radius, false, true);
+                height ++;
+                switch (i) {
+                    case 0:
+                    case 1:
+                        radius -= 2;
+                        break;
+                    case 2:
+                    case 4:
+                    case 16:
+                    case 17:
+                    case 19:
+                        radius --;
+                        break;
+                    case 11:
+                    case 12:
+                    case 14:
+                        radius ++;
+                        break;
+                    case -2:
+                    case -1:
+                        radius += 2;
+                        break;
+                    case -3:
+                        radius += 3;
+                        break;
+                }
+            }
+            // the sphere of ores
+            height -= 2;
+            radius = 1;
+            for (int i = 0; i < 10; i ++) {
+                registerBlockPlanarCircle(wld, struct, blockX, height, blockZ, radius, true, true);
+                height ++;
+                switch (i) {
+                    case 0:
+                    case 3:
+                    case 4:
+                        radius ++;
+                        break;
+                    case 5:
+                    case 6:
+                        radius += 2;
+                        break;
+                    case 8:
+                        radius --;
+                        break;
+                }
+            }
+        }
+        // set the base&ore
+        Material oreMat = OrePopulator.oreMaterials.getOrDefault("ASTRAL", Material.STONE);
+        setBlocks(struct, oreMat, MAT_ASTRAL_STONE, DATA_NONE, DATA_ASTRAL);
+        // the altar on the top
+        wld.getBlockAt(blockX, height, blockZ).setType(Material.ENDER_PORTAL_FRAME);
     }
 
 
@@ -296,18 +392,23 @@ public class StructurePopulator extends BlockPopulator {
                 if (i == 0 && j == 0)
                     continue;
                 OverworldBiomeGenerator.BiomeFeature feature = OverworldBiomeGenerator.getBiomeFeature(
-                        chunkXCoord[i + CHECK_STEPS_RADIUS], chunkZCoord[i + CHECK_STEPS_RADIUS] );
+                        chunkXCoord[i + CHECK_STEPS_RADIUS], chunkZCoord[j + CHECK_STEPS_RADIUS] );
                 if (feature.evaluatedBiome == curr.evaluatedBiome) {
                     double diff = feature.biomeSignificance - curr.biomeSignificance;
+                    boolean lessSignificant = false;
                     // the other chunk is more significant
                     if (diff > 0)
-                        return false;
+                        lessSignificant = true;
                     // equally significant: break tie by chunk X, then by chunk Z.
-                    if (diff == 0) {
+                    else if (diff == 0) {
                         if (i > 0)
-                            return false;
-                        if (j > 0)
-                            return false;
+                            lessSignificant = true;
+                        else if (j > 0)
+                            lessSignificant = true;
+                    }
+                    // deny the generation
+                    if (lessSignificant) {
+                        return false;
                     }
 
                 }
@@ -334,19 +435,21 @@ public class StructurePopulator extends BlockPopulator {
             switch (feature.evaluatedBiome) {
                 case NORMAL:
                 case JUNGLE:
+                case ASTRAL_INFECTION:
                     break;
                 default:
                     return;
             }
             // determine if the structure should be generated
             if (shouldGenerateStructure(feature, chunkX, chunkZ)) {
-                Bukkit.broadcastMessage("YES");
                 switch (feature.evaluatedBiome) {
                     case NORMAL:
                         generateDungeon(wld, blockX, blockZ);
                         break;
                     case JUNGLE:
-                        generateDungeon(wld, blockX, blockZ);
+                        break;
+                    case ASTRAL_INFECTION:
+                        generateAstral(wld, blockX, blockZ);
                         break;
                 }
             }
