@@ -5594,6 +5594,7 @@ TINKER_WORKBENCH:
     resultItem: 星火解离者
     requireItem:
     - 元素喷射器
+    - 神之风箱
     - 净化怒焰
     - 哈雷彗星炮
     - 奇迹物质

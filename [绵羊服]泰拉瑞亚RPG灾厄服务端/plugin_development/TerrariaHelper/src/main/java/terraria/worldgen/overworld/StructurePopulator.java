@@ -1,18 +1,14 @@
 package terraria.worldgen.overworld;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.generator.BlockPopulator;
-import org.bukkit.util.Vector;
 import terraria.util.MathHelper;
 import terraria.util.WorldHelper;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class StructurePopulator extends BlockPopulator {
@@ -26,14 +22,14 @@ public class StructurePopulator extends BlockPopulator {
         super();
         this.isSurface = surfaceOrUnderground;
     }
-    protected static class DungeonPosInfo {
+    protected static class StructPosInfo {
         int x, z, y;
-        public DungeonPosInfo(int x, int z, int y) {
+        public StructPosInfo(int x, int y, int z) {
             this.x = x;
-            this.z = z;
             this.y = y;
+            this.z = z;
         }
-        public DungeonPosInfo(DungeonPosInfo posOther) {
+        public StructPosInfo(StructPosInfo posOther) {
             this.x = posOther.x;
             this.z = posOther.z;
             this.y = posOther.y;
@@ -91,6 +87,19 @@ public class StructurePopulator extends BlockPopulator {
     }
     protected void setBlocks(HashMap<Block, Boolean> blocks, Material trueMat, Material falseMat, byte trueDt, byte falseDt) {
         for (Block b : blocks.keySet()) {
+            // break trees/grass
+            switch (b.getType()) {
+                case LOG:
+                case LOG_2:
+                case LEAVES:
+                case LEAVES_2:
+                    WorldHelper.attemptDestroyVegetation(b, true, false);
+                    break;
+                case DIRT:
+                case GRASS:
+                    WorldHelper.attemptDestroyVegetation(b.getRelative(BlockFace.UP), true, false);
+            }
+
             if (blocks.get(b)) {
                 b.setType( trueMat );
                 if (trueDt != 0)
@@ -141,7 +150,7 @@ public class StructurePopulator extends BlockPopulator {
     }
 
     // helper functions to generate the dungeon parts
-    protected void generateDungeonEntrance(World wld, DungeonPosInfo posInfo) {
+    protected void generateDungeonEntrance(World wld, StructPosInfo posInfo) {
         HashMap<Block, Boolean> struct = new HashMap<>();
         int xOffset = 0, zOffset = 0, offsetRemainingDuration = -999;
         for (int y = 1; y < posInfo.y - 6; y ++) {
@@ -165,7 +174,7 @@ public class StructurePopulator extends BlockPopulator {
         }
         setBlocks(struct, MAT_BRICK, Material.AIR, DATA_DUNGEON, DATA_NONE);
     }
-    protected void generateDungeonEntranceBuilding(World wld, DungeonPosInfo posInfo) {
+    protected void generateDungeonEntranceBuilding(World wld, StructPosInfo posInfo) {
         HashMap<Block, Boolean> struct = new HashMap<>();
         // floor
         int currY = posInfo.y - 6;
@@ -195,8 +204,8 @@ public class StructurePopulator extends BlockPopulator {
         setBlocks(struct, MAT_BRICK, Material.AIR, DATA_DUNGEON, DATA_NONE);
     }
     // dungeon underground parts
-    protected void generateDungeonUndergroundCorridor(World wld,  DungeonPosInfo posInfo, int maxRec,
-                                                      ArrayList<DungeonPosInfo> allRooms, ArrayList<Integer> allRoomSize,
+    protected void generateDungeonUndergroundCorridor(World wld, StructPosInfo posInfo, int maxRec,
+                                                      ArrayList<StructPosInfo> allRooms, ArrayList<Integer> allRoomSize,
                                                       HashMap<Block, Boolean> struct) {
         int xOffset = 0, zOffset = 0,
                 // the main branch would start vertical, so the player would not get stuck.
@@ -222,8 +231,8 @@ public class StructurePopulator extends BlockPopulator {
         // generate room
         generateDungeonUndergroundRoom(wld, posInfo, maxRec - 1, allRooms, allRoomSize, struct);
     }
-    protected void generateDungeonUndergroundRoom(World wld, DungeonPosInfo posInfo, int subsequentRooms,
-                                                  ArrayList<DungeonPosInfo> allRooms, ArrayList<Integer> allRoomSize,
+    protected void generateDungeonUndergroundRoom(World wld, StructPosInfo posInfo, int subsequentRooms,
+                                                  ArrayList<StructPosInfo> allRooms, ArrayList<Integer> allRoomSize,
                                                   HashMap<Block, Boolean> struct) {
         int roomRadius = (int) (16 + Math.random() * 8), roomHeight = (int) (16 + Math.random() * 8);
         // the final, the biggest room
@@ -250,7 +259,7 @@ public class StructurePopulator extends BlockPopulator {
             posInfo.y --;
         }
         // register the room!
-        allRooms.add(new DungeonPosInfo(posInfo));
+        allRooms.add(new StructPosInfo(posInfo));
         allRoomSize.add(roomRadius);
         // next corridor if needed
         if (subsequentRooms != 0) {
@@ -258,14 +267,14 @@ public class StructurePopulator extends BlockPopulator {
         }
     }
     protected void generateDungeonSubsequentCorridor(World wld, int roomIdx, int recLevel,
-                                                  ArrayList<DungeonPosInfo> allRooms, ArrayList<Integer> allRoomSize,
-                                                  HashMap<Block, Boolean> struct) {
-        DungeonPosInfo posRandomRoom = allRooms.get( roomIdx );
+                                                     ArrayList<StructPosInfo> allRooms, ArrayList<Integer> allRoomSize,
+                                                     HashMap<Block, Boolean> struct) {
+        StructPosInfo posRandomRoom = allRooms.get( roomIdx );
         // ensure the deepest room is not broken by other room generation
         if (recLevel > 0 && posRandomRoom.y < 100)
             return;
         // initialize the position to generate the new path
-        DungeonPosInfo posNewCorridor = new DungeonPosInfo(posRandomRoom);
+        StructPosInfo posNewCorridor = new StructPosInfo(posRandomRoom);
         posNewCorridor.y += 4;
         int offset = allRoomSize.get(roomIdx);
         if (Math.random() < 0.5)
@@ -277,10 +286,10 @@ public class StructurePopulator extends BlockPopulator {
         // generate the new branch
         generateDungeonUndergroundCorridor(wld, posNewCorridor, recLevel, allRooms, allRoomSize, struct);
     }
-    protected void planDungeonUnderground(World wld, DungeonPosInfo posInfo) {
+    protected void planDungeonUnderground(World wld, StructPosInfo posInfo) {
         HashMap<Block, Boolean> struct = new HashMap<>();
         int roomsTotal = 15 + (int) ( Math.random() * 5 );
-        ArrayList<DungeonPosInfo> allRooms = new ArrayList<>();
+        ArrayList<StructPosInfo> allRooms = new ArrayList<>();
         ArrayList<Integer> allRoomSize = new ArrayList<>();
         // initialize the main branch
         generateDungeonUndergroundCorridor(wld, posInfo, -1, allRooms, allRoomSize, struct);
@@ -296,18 +305,18 @@ public class StructurePopulator extends BlockPopulator {
     protected void generateDungeon(World wld, int blockX, int blockZ) {
         if (isSurface) {
             int surfaceLevel = getSurfaceY(wld, blockX, blockZ, false);
-            DungeonPosInfo posInfo = new DungeonPosInfo(blockX, blockZ, surfaceLevel);
+            StructPosInfo posInfo = new StructPosInfo(blockX, surfaceLevel, blockZ);
             generateDungeonEntrance(wld, posInfo);
             generateDungeonEntranceBuilding(wld, posInfo);
         }
         else {
-            DungeonPosInfo posInfo = new DungeonPosInfo(blockX, blockZ, WorldHelper.CAVERN_Y_BELOW_BEDROCK);
+            StructPosInfo posInfo = new StructPosInfo(blockX, WorldHelper.CAVERN_Y_BELOW_BEDROCK, blockZ);
             planDungeonUnderground(wld, posInfo);
         }
     }
 
     // astral infection altar
-    void generateAstral(World wld, int blockX, int blockZ) {
+    protected void generateAstral(World wld, int blockX, int blockZ) {
         int height = getSurfaceY(wld, blockX, blockZ, true);
         // the base; true-ore, false-astral dirt
         HashMap<Block, Boolean> struct = new HashMap<>();
@@ -371,6 +380,13 @@ public class StructurePopulator extends BlockPopulator {
         setBlocks(struct, oreMat, MAT_ASTRAL_STONE, DATA_NONE, DATA_ASTRAL);
         // the altar on the top
         wld.getBlockAt(blockX, height, blockZ).setType(Material.ENDER_PORTAL_FRAME);
+    }
+
+    // jungle temple
+    protected void generateLizardTemple(World wld, int blockX, int blockZ) {
+        StructPosInfo structPos = new StructPosInfo(blockX, 50 + (int) (Math.random() * 100), blockZ);
+        // TODO
+
     }
 
 
@@ -447,9 +463,12 @@ public class StructurePopulator extends BlockPopulator {
                         generateDungeon(wld, blockX, blockZ);
                         break;
                     case JUNGLE:
+                        if (! isSurface)
+                            generateAstral(wld, blockX, blockZ);
                         break;
                     case ASTRAL_INFECTION:
-                        generateAstral(wld, blockX, blockZ);
+                        if (isSurface)
+                            generateAstral(wld, blockX, blockZ);
                         break;
                 }
             }

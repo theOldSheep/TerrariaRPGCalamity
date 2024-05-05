@@ -288,13 +288,32 @@ public class WorldHelper {
         }
     }
     public static void attemptDestroyVegetation(Block block) {
+        attemptDestroyVegetation(block, false, true);
+    }
+    public static void attemptDestroyVegetation(Block block, boolean destroyTree, boolean dropItems) {
         switch (block.getType()) {
             case LONG_GRASS:
             case RED_ROSE:
             case YELLOW_FLOWER:
             case RED_MUSHROOM:
             case BROWN_MUSHROOM:
-                block.breakNaturally();
+                if (dropItems)
+                    block.breakNaturally();
+                else
+                    block.setType(Material.AIR);
+                break;
+            case LOG:
+            case LOG_2:
+            case LEAVES:
+            case LEAVES_2:
+                if (destroyTree) {
+                    // don't break naturally, it drops log, not planks
+                    block.setType(Material.AIR);
+                    for (BlockFace dir : DIRECT_CONTACT_DIRECTIONS) {
+                        attemptDestroyVegetation(block.getRelative(dir), true, false);
+                    }
+                }
+                break;
         }
     }
     public static void createTemporaryLava(Block block) {

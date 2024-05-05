@@ -7069,6 +7069,8 @@ Drew之翼:
   rarity: 8
 神之风箱:
   item: BOW
+  lore:
+  - §r“湮阳冥风”
   attributes:
     damage: 160
     damageType: Arrow
