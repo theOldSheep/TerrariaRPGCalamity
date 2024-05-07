@@ -10,6 +10,7 @@ terraria\entity\boss\golem\GolemHead.class
 terraria\entity\boss\lunaticCultist\LunaticIceMist.class
 terraria\entity\npc\TerrariaNPCClothier.class
 terraria\entity\boss\ravager\RavagerLeg.class
+terraria\worldgen\MazeGenerator$CellEdge.class
 terraria\entity\monster\MonsterZombie.class
 terraria\entity\boss\cryogen\Cryogen.class
 terraria\entity\boss\ravager\RavagerClaw.class
@@ -45,6 +46,7 @@ terraria\util\GenericHelper$ParticleLineOptions.class
 terraria\entity\boss\moonLord\MoonLordTrueEyeOfCthulhu$EyeAttackMethod.class
 terraria\entity\minion\MinionSlime.class
 terraria\entity\boss\thePlaguebringerGoliath\ThePlaguebringerGoliath$1.class
+terraria\worldgen\Maze.class
 terraria\entity\boss\theHiveMind\TheHiveMind.class
 terraria\entity\monster\MonsterWitherSkeleton.class
 terraria\entity\npc\TerrariaNPCNurse.class
@@ -122,6 +124,7 @@ terraria\worldgen\overworld\StructurePopulator$1.class
 terraria\entity\projectile\TerrariaPotionProjectile.class
 terraria\entity\boss\theHiveMind\TheHiveMind$1.class
 terraria\util\GenericHelper$1.class
+terraria\worldgen\overworld\StructurePopulator$StructPosInfo.class
 terraria\event\listener\ServerStopListener.class
 terraria\util\WorldHelper$HeightLayer.class
 terraria\entity\boss\leviathanAndAnahita\Anahita.class
@@ -230,7 +233,6 @@ terraria\entity\boss\eaterOfWorld\EaterOfWorld.class
 terraria\entity\boss\thePlaguebringerGoliath\PlagueHomingMissile.class
 terraria\util\EntityHelper$WormSegmentMovementOptions.class
 terraria\util\GameplayHelper$1.class
-terraria\worldgen\overworld\StructurePopulator$DungeonPosInfo.class
 terraria\entity\boss\queenSlime\QueenSlime$1.class
 terraria\entity\boss\lunaticCultist\LunaticCultist.class
 terraria\entity\boss\thePlaguebringerGoliath\PlagueMine.class
@@ -260,8 +262,10 @@ terraria\entity\boss\BossHelper$BossTargetInfo.class
 terraria\entity\boss\ravager\Ravager.class
 terraria\event\listener\CraftingListener.class
 terraria\entity\boss\ravager\RavagerHead.class
+terraria\worldgen\MazeGenerator.class
 terraria\worldgen\overworld\OverworldBiomeGenerator$BiomeFeature.class
 terraria\entity\boss\calamitasClone\Cataclysm.class
 terraria\entity\others\TerrariaMinecart$MinecartType.class
 terraria\entity\npc\TerrariaNPCDemolitionist.class
 terraria\worldgen\overworld\OverworldChunkGenerator$1.class
+terraria\worldgen\MazeGeneratorPrim.class

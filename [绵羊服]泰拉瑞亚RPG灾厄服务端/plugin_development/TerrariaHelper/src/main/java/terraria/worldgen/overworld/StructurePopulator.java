@@ -1,6 +1,7 @@
 package terraria.worldgen.overworld;
 
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -8,6 +9,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.generator.BlockPopulator;
 import terraria.util.MathHelper;
 import terraria.util.WorldHelper;
+import terraria.worldgen.Maze;
+import terraria.worldgen.MazeGeneratorPrim;
 
 import java.util.*;
 
@@ -383,6 +386,47 @@ public class StructurePopulator extends BlockPopulator {
     }
 
     // jungle temple
+    public void buildMaze(Location startLocation, int width, int height, MazeGeneratorPrim generator,
+                          Material wallBlock, Material corridorBlock, int wallHeight, int zoomSize) {
+        // Generate the maze (exterior walls already included)
+        Maze maze = new Maze(width, height);
+        generator.generate(maze);
+
+        // Entrance and Exit Determination
+        boolean entranceTop = (new Random()).nextBoolean();
+        int entranceX = entranceTop ? 1 : width - 2;
+        int exitX = entranceTop ? width - 2 : 1;
+        int entranceZ = 0;
+        int exitZ = height - 1;
+
+        // Carve the entrance & exit into the maze info
+        maze.setWall(entranceX, entranceZ, false);
+        maze.setWall(exitX, exitZ, false);
+
+        // Use HashMap to store the block plan
+        HashMap<Block, Boolean> blocks = new HashMap<>();
+        int startX = startLocation.getBlockX(), startY = startLocation.getBlockY(), startZ = startLocation.getBlockZ();
+        World world = startLocation.getWorld();
+
+        // build the floor; -1 accounts for that maxX and maxZ are inclusive.
+        registerBlockPlane(world, blocks, startX, startZ, startY,
+                startX + maze.getWidth() * zoomSize - 1, startZ + maze.getHeight() * zoomSize - 1, true, true);
+
+        // Build the structure using your registerBlockPlane function
+        for (int x = 0; x < maze.getWidth(); x++) {
+            for (int z = 0; z < maze.getHeight(); z++) {
+                // Build walls with height; -1 accounts for that maxX and maxZ are inclusive.
+                boolean wallFlag = maze.hasWall(x, z);
+                for (int y = 1; y <= wallHeight; y++) {
+                    registerBlockPlane(world, blocks, startX + x * zoomSize, startZ + z * zoomSize, startY + y,
+                            startX + (x + 1) * zoomSize - 1, startZ + (z + 1) * zoomSize - 1, wallFlag, true);
+                }
+            }
+        }
+
+        // Finally, place the structure in the world
+        setBlocks(blocks, wallBlock, corridorBlock, (byte) 0, (byte) 0);
+    }
     protected void generateLizardTemple(World wld, int blockX, int blockZ) {
         StructPosInfo structPos = new StructPosInfo(blockX, 50 + (int) (Math.random() * 100), blockZ);
         // TODO
@@ -464,7 +508,7 @@ public class StructurePopulator extends BlockPopulator {
                         break;
                     case JUNGLE:
                         if (! isSurface)
-                            generateAstral(wld, blockX, blockZ);
+                            generateLizardTemple(wld, blockX, blockZ);
                         break;
                     case ASTRAL_INFECTION:
                         if (isSurface)
