@@ -1813,9 +1813,10 @@ public class PlayerHelper {
     public static void threadSpecialBiome() {
         double distCheck = 48;
         Vector[] vectorsToCheck = new Vector[] {
-                new Vector(distCheck, distCheck, distCheck), new Vector(-distCheck, -distCheck, -distCheck),
-                new Vector(distCheck, -distCheck, distCheck), new Vector(-distCheck, distCheck, -distCheck),
-                new Vector(distCheck, distCheck, -distCheck), new Vector(-distCheck, -distCheck, distCheck)};
+                new Vector(distCheck, distCheck, distCheck), new Vector(-distCheck, distCheck, distCheck),
+                new Vector(distCheck, -distCheck, distCheck), new Vector(-distCheck, -distCheck, distCheck),
+                new Vector(distCheck, distCheck, -distCheck), new Vector(-distCheck, distCheck, -distCheck),
+                new Vector(distCheck, -distCheck, -distCheck), new Vector(-distCheck, -distCheck, -distCheck)};
         // every 20 ticks (1 second)
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
@@ -1845,9 +1846,9 @@ public class PlayerHelper {
                             specialBlocks[ index ] = specialBlocks[ index ] + 1;
                         }
                     }
-                    if (specialBlocks[1] >= 3)
+                    if (specialBlocks[1] > 4)
                         plyBiome = WorldHelper.BiomeType.DUNGEON;
-                    else if (specialBlocks[2] >= 3)
+                    else if (specialBlocks[2] > 4)
                         plyBiome = WorldHelper.BiomeType.TEMPLE;
                     else if (specialBlocks[3] > 1)
                         plyBiome = WorldHelper.BiomeType.METEOR;

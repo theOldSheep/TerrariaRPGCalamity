@@ -17,8 +17,8 @@ public class MazeGeneratorPrim extends MazeGenerator {
     public void generate(Maze maze) {
         PriorityQueue<CellEdge> cellList = new PriorityQueue<>(Comparator.comparingDouble(a -> a.weight));
 
-        int startX = 1;
-        int startY = 1;
+        int startX = 0;
+        int startY = 0;
 
         maze.setWall( startX, startY, false);
         addNeighborsToCellList(maze, cellList, startX, startY); // Add the initial neighbors

@@ -10,9 +10,11 @@ import org.bukkit.generator.BlockPopulator;
 import terraria.util.MathHelper;
 import terraria.util.WorldHelper;
 import terraria.worldgen.Maze;
+import terraria.worldgen.MazeGenerator;
 import terraria.worldgen.MazeGeneratorPrim;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class StructurePopulator extends BlockPopulator {
     // no duplication within 300 blocks (20 chunks)
@@ -386,51 +388,61 @@ public class StructurePopulator extends BlockPopulator {
     }
 
     // jungle temple
-    public void buildMaze(Location startLocation, int width, int height, MazeGeneratorPrim generator,
-                          Material wallBlock, Material corridorBlock, int wallHeight, int zoomSize) {
-        // Generate the maze (exterior walls already included)
-        Maze maze = new Maze(width, height);
+    public void buildMaze(HashMap<Block, Boolean> structure, World wld, StructPosInfo posInfo,
+                          int mazeRadius, MazeGenerator generator, int wallHeight, int zoomSize) {
+        int mazeSize = mazeRadius * 2 + 1, zoomRadius = zoomSize / 2;
+        Maze maze = new Maze(mazeSize, mazeSize);
         generator.generate(maze);
 
-        // Entrance and Exit Determination
-        boolean entranceTop = (new Random()).nextBoolean();
-        int entranceX = entranceTop ? 1 : width - 2;
-        int exitX = entranceTop ? width - 2 : 1;
-        int entranceZ = 0;
-        int exitZ = height - 1;
-
-        // Carve the entrance & exit into the maze info
-        maze.setWall(entranceX, entranceZ, false);
-        maze.setWall(exitX, exitZ, false);
-
-        // Use HashMap to store the block plan
-        HashMap<Block, Boolean> blocks = new HashMap<>();
-        int startX = startLocation.getBlockX(), startY = startLocation.getBlockY(), startZ = startLocation.getBlockZ();
-        World world = startLocation.getWorld();
-
-        // build the floor; -1 accounts for that maxX and maxZ are inclusive.
-        registerBlockPlane(world, blocks, startX, startZ, startY,
-                startX + maze.getWidth() * zoomSize - 1, startZ + maze.getHeight() * zoomSize - 1, true, true);
-
-        // Build the structure using your registerBlockPlane function
-        for (int x = 0; x < maze.getWidth(); x++) {
-            for (int z = 0; z < maze.getHeight(); z++) {
-                // Build walls with height; -1 accounts for that maxX and maxZ are inclusive.
-                boolean wallFlag = maze.hasWall(x, z);
-                for (int y = 1; y <= wallHeight; y++) {
-                    registerBlockPlane(world, blocks, startX + x * zoomSize, startZ + z * zoomSize, startY + y,
-                            startX + (x + 1) * zoomSize - 1, startZ + (z + 1) * zoomSize - 1, wallFlag, true);
+        // carve the maze
+        for (int x = -mazeRadius; x <= mazeRadius; x++) {
+            for (int z = -mazeRadius; z <= mazeRadius; z++) {
+                if (maze.hasWall(x + mazeRadius, z + mazeRadius))
+                    continue;
+                for (int y = 0; y < wallHeight; y++) {
+                    registerBlockPlane(wld, structure,
+                            posInfo.x + x * zoomSize, posInfo.y + y, posInfo.z + z * zoomSize,
+                            zoomRadius, false);
                 }
             }
         }
-
-        // Finally, place the structure in the world
-        setBlocks(blocks, wallBlock, corridorBlock, (byte) 0, (byte) 0);
     }
     protected void generateLizardTemple(World wld, int blockX, int blockZ) {
-        StructPosInfo structPos = new StructPosInfo(blockX, 50 + (int) (Math.random() * 100), blockZ);
-        // TODO
-
+        int startY = 50 + (int) (Math.random() * 100);
+        HashMap<Block, Boolean> structure = new HashMap<>();
+        // pyramid structure itself
+        for (int i = 0; i < 28; i ++) {
+            registerBlockPlane(wld, structure, blockX, startY + i, blockZ, 56, true);
+            if (i >= 4)
+                registerBlockPlane(wld, structure, blockX, startY + i, blockZ, 36, false);
+        }
+        for (int i = 28; i < 64; i ++) {
+            registerBlockPlane(wld, structure, blockX, startY + i, blockZ, 84-i, true);
+        }
+        // the maze
+        MazeGeneratorPrim mazeGen = new MazeGeneratorPrim();
+        // the top levels
+        {
+            int topLevelY = startY + 60, topMazeRad = 20;
+            for (int i = 0; i < 2; i++) {
+                buildMaze(structure, wld, new StructPosInfo(blockX, topLevelY, blockZ),
+                        topMazeRad, mazeGen, 2, 1);
+                topLevelY -= 4;
+                topMazeRad += 2;
+            }
+        }
+        // the bottom levels
+        {
+            int bottomLevelY = startY + 48, bottomMazeRad = 9;
+            for (int i = 0; i < 3; i++) {
+                buildMaze(structure, wld, new StructPosInfo(blockX, bottomLevelY, blockZ),
+                        bottomMazeRad, mazeGen, 4, 3);
+                bottomLevelY -= 8;
+                bottomMazeRad += 2;
+            }
+        }
+        // place the blocks
+        setBlocks(structure, MAT_BRICK, Material.AIR, DATA_LIZARD, DATA_NONE);
     }
 
 
