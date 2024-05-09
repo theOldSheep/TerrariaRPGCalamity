@@ -409,12 +409,12 @@ CHEST:
   - 箱子
 # unbreakables
 SMOOTH_BRICK_1:
-  powerPickaxe: 200
-  totalProgress: 750
+  powerPickaxe: 999999
+  totalProgress: 999999
   dropItem:
   - 丛林蜥蜴砖
 SMOOTH_BRICK_2:
-  powerPickaxe: 65
-  totalProgress: 225
+  powerPickaxe: 999999
+  totalProgress: 999999
   dropItem:
   - 地牢砖

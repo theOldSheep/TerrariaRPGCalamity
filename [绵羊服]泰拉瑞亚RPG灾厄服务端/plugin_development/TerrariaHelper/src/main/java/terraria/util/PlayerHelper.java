@@ -8,6 +8,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
@@ -1785,38 +1786,43 @@ public class PlayerHelper {
                     }
                 }, 100, 100);
     }
-    private static int getSpecialBiomeBlockType(Block blockToCheck, boolean isInUndergroundOrCavern) {
-        switch (blockToCheck.getType()) {
-            // lizard or dungeon
-            case SMOOTH_BRICK: {
-                if (isInUndergroundOrCavern) {
+    private static int getSpecialBiomeBlockType(Block footBlock, BlockFace dir, boolean isInUndergroundOrCavern) {
+        Block blockToCheck = footBlock;
+        // lizard/dungeon
+        if (isInUndergroundOrCavern) {
+            for (int i = 0; i < 50; i ++) {
+                if (blockToCheck.getType() == Material.SMOOTH_BRICK) {
                     int data = blockToCheck.getData();
                     switch (data) {
                         case 1:
                             // lizard
-                            if (WorldHelper.BiomeType.getBiome(blockToCheck.getLocation()) == WorldHelper.BiomeType.JUNGLE)
-                                return 2;
+                            return 2;
                         case 2:
                             // dungeon
                             return 1;
                     }
                 }
-                break;
+                blockToCheck = blockToCheck.getRelative(dir);
             }
-            // meteor
-            case RED_GLAZED_TERRACOTTA:
-                return 3;
+        }
+        // meteor
+        else {
+            for (int i = 0; i < 5; i ++) {
+                // meteor
+                if (blockToCheck.getType() == Material.RED_GLAZED_TERRACOTTA)
+                    return 3;
+                blockToCheck = blockToCheck.getRelative(dir);
+            }
         }
         // not a special biome
         return 0;
     }
     public static void threadSpecialBiome() {
-        double distCheck = 48;
-        Vector[] vectorsToCheck = new Vector[] {
-                new Vector(distCheck, distCheck, distCheck), new Vector(-distCheck, distCheck, distCheck),
-                new Vector(distCheck, -distCheck, distCheck), new Vector(-distCheck, -distCheck, distCheck),
-                new Vector(distCheck, distCheck, -distCheck), new Vector(-distCheck, distCheck, -distCheck),
-                new Vector(distCheck, -distCheck, -distCheck), new Vector(-distCheck, -distCheck, -distCheck)};
+        BlockFace[] BLOCK_FACES_TO_CHECK = {
+                BlockFace.UP, BlockFace.DOWN,
+                BlockFace.WEST, BlockFace.EAST,
+                BlockFace.NORTH, BlockFace.SOUTH
+        };
         // every 20 ticks (1 second)
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
@@ -1834,21 +1840,14 @@ public class PlayerHelper {
                     WorldHelper.BiomeType plyBiome = WorldHelper.BiomeType.NORMAL;
                     // check dungeon and lizard temple
                     int[] specialBlocks = {0, 0, 0, 0};
-                    World wld = ply.getWorld();
-                    for (Vector vector : vectorsToCheck) {
-                        MovingObjectPosition blockMovePos = HitEntityInfo.rayTraceBlocks(
-                                wld, ply.getEyeLocation().toVector(), ply.getEyeLocation().toVector().add(vector));
-                        if (blockMovePos != null) {
-                            Vector locVec = MathHelper.toBukkitVector(blockMovePos.pos)
-                                    .add(vector.clone().multiply(1e-9));
-                            Block blk = wld.getBlockAt(locVec.toLocation(wld));
-                            int index = getSpecialBiomeBlockType(blk, isInUndergroundOrCavern);
-                            specialBlocks[ index ] = specialBlocks[ index ] + 1;
-                        }
+                    Block footBlock = ply.getLocation().getBlock();
+                    for (BlockFace dir : BLOCK_FACES_TO_CHECK) {
+                        int index = getSpecialBiomeBlockType(footBlock, dir , isInUndergroundOrCavern);
+                        specialBlocks[ index ] ++;
                     }
-                    if (specialBlocks[1] > 4)
+                    if (specialBlocks[1] >= 3)
                         plyBiome = WorldHelper.BiomeType.DUNGEON;
-                    else if (specialBlocks[2] > 4)
+                    else if (specialBlocks[2] >= 3)
                         plyBiome = WorldHelper.BiomeType.TEMPLE;
                     else if (specialBlocks[3] > 1)
                         plyBiome = WorldHelper.BiomeType.METEOR;

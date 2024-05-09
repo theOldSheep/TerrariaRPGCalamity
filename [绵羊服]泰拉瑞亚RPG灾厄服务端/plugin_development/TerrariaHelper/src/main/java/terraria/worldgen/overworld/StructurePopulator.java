@@ -1,12 +1,13 @@
 package terraria.worldgen.overworld;
 
+import io.netty.util.internal.EmptyArrays;
 import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.generator.BlockPopulator;
+import org.bukkit.util.Vector;
 import terraria.util.MathHelper;
 import terraria.util.WorldHelper;
 import terraria.worldgen.Maze;
@@ -14,7 +15,6 @@ import terraria.worldgen.MazeGenerator;
 import terraria.worldgen.MazeGeneratorPrim;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class StructurePopulator extends BlockPopulator {
     // no duplication within 300 blocks (20 chunks)
@@ -242,7 +242,7 @@ public class StructurePopulator extends BlockPopulator {
         int roomRadius = (int) (16 + Math.random() * 8), roomHeight = (int) (16 + Math.random() * 8);
         // the final, the biggest room
         if (subsequentRooms < 0 && posInfo.y < 100) {
-            roomRadius = (int) (40 + Math.random() * 16);
+            roomRadius = (int) (40 + Math.random() * 8);
             roomHeight = Math.min(posInfo.y - 10, 48);
             // do not add further rooms!
             subsequentRooms = 1;
@@ -388,8 +388,8 @@ public class StructurePopulator extends BlockPopulator {
     }
 
     // jungle temple
-    public void buildMaze(HashMap<Block, Boolean> structure, World wld, StructPosInfo posInfo,
-                          int mazeRadius, MazeGenerator generator, int wallHeight, int zoomSize) {
+    protected void buildLizardMaze(HashMap<Block, Boolean> structure, World wld, StructPosInfo posInfo,
+                                int mazeRadius, MazeGenerator generator, int wallHeight, int zoomSize) {
         int mazeSize = mazeRadius * 2 + 1, zoomRadius = zoomSize / 2;
         Maze maze = new Maze(mazeSize, mazeSize);
         generator.generate(maze);
@@ -406,6 +406,146 @@ public class StructurePopulator extends BlockPopulator {
                 }
             }
         }
+    }
+    protected void buildStair(HashMap<Block, Boolean> structure, StructPosInfo startPos, StructPosInfo centerPos,
+                              World wld, int radius, int heightTotal, int stairWidth, int stairClearingHeight) {
+        int phase;
+        if (Math.abs(startPos.x - centerPos.x) >= radius) {
+            phase = (startPos.x > centerPos.x) ? 0 : 2;
+        }
+        else {
+            phase = (startPos.z > centerPos.z) ? 1 : 3;
+        }
+        int stairRad = stairWidth / 2;
+        for (int i = 0; i <= heightTotal; i ++) {
+            // set blocks
+            registerBlockPlane(wld, structure, startPos.x, startPos.y, startPos.z, stairRad, true);
+            for (int j = 1; j <= stairClearingHeight; j ++)
+                registerBlockPlane(wld, structure, startPos.x, startPos.y + j, startPos.z, stairRad, false);
+
+            // update pos
+            if (i != heightTotal) {
+                switch (phase) {
+                    case 0:
+                        startPos.z += stairWidth;
+                        break;
+                    case 1:
+                        startPos.x -= stairWidth;
+                        break;
+                    case 2:
+                        startPos.z -= stairWidth;
+                        break;
+                    case 3:
+                        startPos.x += stairWidth;
+                        break;
+                }
+                startPos.y --;
+            }
+            // next direction
+            if (Math.abs(startPos.x - centerPos.x) >= radius && Math.abs(startPos.z - centerPos.z) >= radius) {
+                phase = (phase + 1) % 4;
+            }
+        }
+    }
+    protected void fineTuneLizardTemple(World wld, HashMap<Block, Boolean> structure, StructPosInfo basePos) {
+        double lastXOffset, lastZOffset;
+        Random rdm = new Random();
+        Block baseBlk = wld.getBlockAt(basePos.x, basePos.y, basePos.z);
+        // the entrance
+        {
+            Vector fwd, side;
+            int randomNum = rdm.nextInt(4);
+            switch (randomNum) {
+                case 0:
+                    fwd = new Vector(0, 0, 1);
+                    side = new Vector(1, 0, 0);
+                    break;
+                case 1:
+                    fwd = new Vector(0, 0, -1);
+                    side = new Vector(1, 0, 0);
+                    break;
+                case 2:
+                    fwd = new Vector(1, 0, 0);
+                    side = new Vector(0, 0, 1);
+                    break;
+                case 3:
+                default:
+                    fwd = new Vector(-1, 0, 0);
+                    side = new Vector(0, 0, 1);
+                    break;
+            }
+            // arrays of [fwd, up, sideMin, sideMax]
+            int[][] positions = {
+                    {20, 63, -1, 1},
+                    {21, 60, 0, 0}, {21, 61, 0, 0}, {21, 62, -1, 1}, {21, 63, -2, 2},
+                    {22, 60, 0, 0}, {22, 61, -1, 1}, {22, 62, -2, 2},
+                    {23, 60, -2, 2}, {23, 61, -3, 3},
+                    {24, 60, -3, 3},
+            };
+            lastXOffset = fwd.getX() * 20;
+            lastZOffset = fwd.getZ() * 20;
+            for (int[] pos : positions) {
+                Vector dir = fwd.clone().multiply(pos[0])
+                        .add(side.clone().multiply(pos[2]))
+                        .add(new Vector(0, pos[1], 0) );
+                for (int offset = pos[2]; offset <= pos[3]; offset ++) {
+                    registerSingleBlock(structure, baseBlk.getRelative(dir.getBlockX(), dir.getBlockY(), dir.getBlockZ()),
+                            false, true);
+                    dir.add(side);
+                }
+            }
+        }
+        // two top levels
+        int levelY = 60, mazeRadius = 10;
+        for (int i = 0; i < 2; i ++) {
+            int newXOffset = (int) lastXOffset, newZOffset = (int) lastZOffset;
+            while ( (Math.abs(newXOffset - lastXOffset) < 6 && Math.abs(newZOffset - lastZOffset) < 6) ||
+                    (newXOffset % 6 < 3 || newZOffset % 6 < 3)) {
+                newXOffset = rdm.nextInt(mazeRadius + 1) * 2 - mazeRadius;
+                newZOffset = rdm.nextInt(mazeRadius + 1) * 2 - mazeRadius;
+            }
+            // place the hole
+            for (int j = 1; j <= 4; j ++)
+                registerSingleBlock(structure, baseBlk.getRelative(newXOffset, levelY - j, newZOffset), false, true);
+            // setup for next iteration
+            lastXOffset = newXOffset;
+            lastZOffset = newZOffset;
+            levelY -= 4;
+            mazeRadius += 2;
+        }
+        // bottom 2/3 levels
+        levelY = 48;
+        mazeRadius = 9;
+        int[][] stairPositions = {
+                {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}};
+        for (int i = 0; i < 2; i ++) {
+            int newXOffset = (int) lastXOffset, newZOffset = (int) lastZOffset;
+            while ( Math.abs(newXOffset - lastXOffset) < 10 && Math.abs(newZOffset - lastZOffset) < 10) {
+                newXOffset = (rdm.nextInt(mazeRadius + 1) * 2 - mazeRadius) * 3;
+                newZOffset = (rdm.nextInt(mazeRadius + 1) * 2 - mazeRadius) * 3;
+            }
+            // place the stairs
+            
+            for (int j = 1; j <= 4; j ++) {
+                registerBlockPlane(wld, structure,
+                        basePos.x + newXOffset, basePos.y + levelY - j, basePos.z + newZOffset,
+                        1, false);
+            }
+            int stairStartIdx = rdm.nextInt(8), stairDirection = Math.random() < 0.5 ? 1 : 7;
+            for (int j = 1; j <= 8; j ++) {
+                registerSingleBlock(structure, baseBlk.getRelative(newXOffset, levelY - j, newZOffset), false, true);
+                int[] currStairPos = stairPositions[ (stairStartIdx + j * stairDirection) % stairPositions.length];
+                registerSingleBlock(structure,
+                        baseBlk.getRelative(newXOffset + currStairPos[0], levelY - j, newZOffset + currStairPos[1]),
+                        true, true);
+            }
+            // setup for next iteration
+            lastXOffset = newXOffset;
+            lastZOffset = newZOffset;
+            levelY -= 8;
+            mazeRadius += 2;
+        }
+        // last bottom level; connect to the boss room
     }
     protected void generateLizardTemple(World wld, int blockX, int blockZ) {
         int startY = 50 + (int) (Math.random() * 100);
@@ -425,7 +565,7 @@ public class StructurePopulator extends BlockPopulator {
         {
             int topLevelY = startY + 60, topMazeRad = 20;
             for (int i = 0; i < 2; i++) {
-                buildMaze(structure, wld, new StructPosInfo(blockX, topLevelY, blockZ),
+                buildLizardMaze(structure, wld, new StructPosInfo(blockX, topLevelY, blockZ),
                         topMazeRad, mazeGen, 2, 1);
                 topLevelY -= 4;
                 topMazeRad += 2;
@@ -435,12 +575,14 @@ public class StructurePopulator extends BlockPopulator {
         {
             int bottomLevelY = startY + 48, bottomMazeRad = 9;
             for (int i = 0; i < 3; i++) {
-                buildMaze(structure, wld, new StructPosInfo(blockX, bottomLevelY, blockZ),
+                buildLizardMaze(structure, wld, new StructPosInfo(blockX, bottomLevelY, blockZ),
                         bottomMazeRad, mazeGen, 4, 3);
                 bottomLevelY -= 8;
                 bottomMazeRad += 2;
             }
         }
+        // fine tune (entrance, stairs etc.)
+        fineTuneLizardTemple(wld, structure, new StructPosInfo(blockX, startY, blockZ));
         // place the blocks
         setBlocks(structure, MAT_BRICK, Material.AIR, DATA_LIZARD, DATA_NONE);
     }
