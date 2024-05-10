@@ -1002,24 +1002,34 @@ public class PlayerHelper {
                 if (Math.random() < spawnRateMulti * spawnRateAdjustFactor)
                     CritterHelper.naturalCritterSpawn(ply);
                 // monster spawn rate
-                double mobSpawnRate = attrMap.getOrDefault("mobSpawnRate", 0.1);
+                double mobSpawnRate = attrMap.getOrDefault("mobSpawnRate", 0.1d);
                 WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(ply.getLocation());
                 boolean isSurfaceOrSpace =
                         heightLayer == WorldHelper.HeightLayer.SURFACE ||
                                 heightLayer == WorldHelper.HeightLayer.SPACE;
+                // surface/space level
                 if (isSurfaceOrSpace) {
-                    // monster spawn rate when an event is present is doubled
-                    if (EventAndTime.currentEvent != null) {
-                        mobSpawnRate *= 2;
+                    // monster spawn rate when an event is present is increased then doubled
+                    if (EventAndTime.currentEvent != null && EventAndTime.currentEvent != EventAndTime.Events.NONE) {
+                        mobSpawnRate = (mobSpawnRate + 0.75) * 2;
                     }
                     // monster spawn rate when near a celestial pillar
                     for (CelestialPillar pillar : EventAndTime.pillars.values()) {
                         if (pillar.getBukkitEntity().getWorld() != ply.getWorld())
                             continue;
                         if (pillar.getBukkitEntity().getLocation().distanceSquared(ply.getLocation()) < CelestialPillar.EFFECTED_RADIUS_SQR) {
-                            mobSpawnRate = 1;
+                            mobSpawnRate += 1;
                             break;
                         }
+                    }
+                }
+                // underground or lower
+                else {
+                    // mob spawning rate hugely increased in dungeon or lizard temple
+                    switch (WorldHelper.BiomeType.getBiome(ply)) {
+                        case DUNGEON:
+                        case TEMPLE:
+                            mobSpawnRate += 1;
                     }
                 }
                 // spawn monster. Note that mobSpawnRate above is expected monster amount per second

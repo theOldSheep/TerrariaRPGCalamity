@@ -417,7 +417,7 @@ public class StructurePopulator extends BlockPopulator {
             phase = (startPos.z > centerPos.z) ? 1 : 3;
         }
         int stairRad = stairWidth / 2;
-        for (int i = 0; i <= heightTotal; i ++) {
+        for (int i = 1; i <= heightTotal; i ++) {
             // set blocks
             registerBlockPlane(wld, structure, startPos.x, startPos.y, startPos.z, stairRad, true);
             for (int j = 1; j <= stairClearingHeight; j ++)
@@ -442,7 +442,18 @@ public class StructurePopulator extends BlockPopulator {
                 startPos.y --;
             }
             // next direction
-            if (Math.abs(startPos.x - centerPos.x) >= radius && Math.abs(startPos.z - centerPos.z) >= radius) {
+            boolean shouldTurn = false;
+            switch (phase) {
+                case 0:
+                case 2:
+                    shouldTurn = Math.abs(startPos.z - centerPos.z) >= radius;
+                    break;
+                case 1:
+                case 3:
+                    shouldTurn = Math.abs(startPos.x - centerPos.x) >= radius;
+                    break;
+            }
+            if (shouldTurn) {
                 phase = (phase + 1) % 4;
             }
         }
@@ -516,29 +527,17 @@ public class StructurePopulator extends BlockPopulator {
         // bottom 2/3 levels
         levelY = 48;
         mazeRadius = 9;
-        int[][] stairPositions = {
-                {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}};
         for (int i = 0; i < 2; i ++) {
             int newXOffset = (int) lastXOffset, newZOffset = (int) lastZOffset;
-            while ( Math.abs(newXOffset - lastXOffset) < 10 && Math.abs(newZOffset - lastZOffset) < 10) {
+            while ( Math.abs(newXOffset - lastXOffset) < 16 && Math.abs(newZOffset - lastZOffset) < 16) {
                 newXOffset = (rdm.nextInt(mazeRadius + 1) * 2 - mazeRadius) * 3;
                 newZOffset = (rdm.nextInt(mazeRadius + 1) * 2 - mazeRadius) * 3;
             }
             // place the stairs
-            
-            for (int j = 1; j <= 4; j ++) {
-                registerBlockPlane(wld, structure,
-                        basePos.x + newXOffset, basePos.y + levelY - j, basePos.z + newZOffset,
-                        1, false);
-            }
-            int stairStartIdx = rdm.nextInt(8), stairDirection = Math.random() < 0.5 ? 1 : 7;
-            for (int j = 1; j <= 8; j ++) {
-                registerSingleBlock(structure, baseBlk.getRelative(newXOffset, levelY - j, newZOffset), false, true);
-                int[] currStairPos = stairPositions[ (stairStartIdx + j * stairDirection) % stairPositions.length];
-                registerSingleBlock(structure,
-                        baseBlk.getRelative(newXOffset + currStairPos[0], levelY - j, newZOffset + currStairPos[1]),
-                        true, true);
-            }
+            StructPosInfo startPos = new StructPosInfo(basePos.x + newXOffset,
+                    basePos.y + levelY - 1, basePos.z + newZOffset);
+            StructPosInfo centerPos = new StructPosInfo(basePos.x + newXOffset,basePos.y + levelY, basePos.z + newZOffset);
+            buildStair(structure, startPos, centerPos, wld, 1, 8, 1, 4);
             // setup for next iteration
             lastXOffset = newXOffset;
             lastZOffset = newZOffset;
@@ -546,6 +545,55 @@ public class StructurePopulator extends BlockPopulator {
             mazeRadius += 2;
         }
         // last bottom level; connect to the boss room
+        {
+            int newXOffset = (int) lastXOffset, newZOffset = (int) lastZOffset;
+            while ( Math.abs(newXOffset - lastXOffset) < 24 && Math.abs(newZOffset - lastZOffset) < 24) {
+                int rdmInt = rdm.nextInt(4);
+                switch (rdmInt) {
+                    case 0:
+                        newXOffset = 3;
+                        newZOffset = 39;
+                        break;
+                    case 1:
+                        newXOffset = -3;
+                        newZOffset = -39;
+                        break;
+                    case 2:
+                        newXOffset = 39;
+                        newZOffset = -3;
+                        break;
+                    case 3:
+                        newXOffset = -39;
+                        newZOffset = 3;
+                        break;
+                }
+            }
+            StructPosInfo startPosSmallerStair = new StructPosInfo(basePos.x + newXOffset, basePos.y + levelY - 1, basePos.z + newZOffset);
+            StructPosInfo centerPosSmallerStair = new StructPosInfo(startPosSmallerStair);
+            StructPosInfo largerStairPos = new StructPosInfo(centerPosSmallerStair);
+            // place the larger stairs
+            {
+                largerStairPos.y -= 7;
+                buildStair(structure, largerStairPos, basePos, wld, 39, 22, 3, 5);
+            }
+            // place the smaller stairs
+            {
+                buildStair(structure, startPosSmallerStair, centerPosSmallerStair, wld, 1, 8, 1, 4);
+            }
+            // place the corridor to the boss room
+            int dx = 0, dz = 0, height = 4;
+            if (Math.abs(largerStairPos.x - basePos.x) > Math.abs(largerStairPos.z - basePos.z)) {
+                dx = largerStairPos.x > basePos.x ? -1 : 1;
+            }
+            else {
+                dz = largerStairPos.z > basePos.z ? -1 : 1;
+            }
+            largerStairPos.x += dx;
+            largerStairPos.z += dz;
+            for (int h = 1; h <= height; h ++) {
+                registerBlockPlane(wld, structure, largerStairPos.x, largerStairPos.y + h, largerStairPos.z, 1, false);
+            }
+        }
     }
     protected void generateLizardTemple(World wld, int blockX, int blockZ) {
         int startY = 50 + (int) (Math.random() * 100);
