@@ -182,7 +182,7 @@ public class VanillaMechanicListener implements Listener {
     }
     @EventHandler(priority = EventPriority.LOW)
     public void onBucketFill(PlayerBucketFillEvent e) {
-        if (WorldHelper.isSpawnProtected(e.getBlockClicked().getLocation())) {
+        if (WorldHelper.isSpawnProtected(e.getBlockClicked().getLocation(), e.getPlayer())) {
             PlayerHelper.sendActionBar(e.getPlayer(), "请勿破坏出生点附近的方块！");
             e.setCancelled(true);
         }
@@ -190,7 +190,7 @@ public class VanillaMechanicListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onBucketEmpty(PlayerBucketEmptyEvent e) {
         if (WorldHelper.isSpawnProtected(
-                e.getBlockClicked().getRelative(e.getBlockFace() ).getLocation())) {
+                e.getBlockClicked().getRelative(e.getBlockFace() ).getLocation(), e.getPlayer())) {
             PlayerHelper.sendActionBar(e.getPlayer(), "请勿在出生点附近放置方块！");
             e.setCancelled(true);
         }
@@ -257,7 +257,7 @@ public class VanillaMechanicListener implements Listener {
     public void onBlockPlace(BlockPlaceEvent e) {
         if (e.getBlockPlaced().getType() == Material.WEB)
             e.setCancelled(true);
-        else if (WorldHelper.isSpawnProtected(e.getBlock().getLocation())) {
+        else if (WorldHelper.isSpawnProtected(e.getBlock().getLocation(), e.getPlayer())) {
             PlayerHelper.sendActionBar(e.getPlayer(), "请勿在出生点附近放置方块！");
             e.setCancelled(true);
         }

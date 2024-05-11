@@ -127,7 +127,7 @@ public class GameplayHelper {
     public static boolean isBreakable(Block block, Player ply) {
         if (noMiningSet.contains(block.getType())) return false;
         // blocks near the spawn point can not be broken
-        if (WorldHelper.isSpawnProtected(block.getLocation())) {
+        if (WorldHelper.isSpawnProtected(block.getLocation(), ply)) {
             PlayerHelper.sendActionBar(ply, "请勿破坏出生点附近的方块！");
             return false;
         }

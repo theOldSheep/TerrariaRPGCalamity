@@ -1009,16 +1009,16 @@ public class PlayerHelper {
                                 heightLayer == WorldHelper.HeightLayer.SPACE;
                 // surface/space level
                 if (isSurfaceOrSpace) {
-                    // monster spawn rate when an event is present is increased then doubled
+                    // monster spawn rate when an event is present is increased
                     if (EventAndTime.currentEvent != null && EventAndTime.currentEvent != EventAndTime.Events.NONE) {
-                        mobSpawnRate = (mobSpawnRate + 0.75) * 2;
+                        mobSpawnRate += 1.25;
                     }
-                    // monster spawn rate when near a celestial pillar
+                    // monster spawn rate massively increase when near a celestial pillar
                     for (CelestialPillar pillar : EventAndTime.pillars.values()) {
                         if (pillar.getBukkitEntity().getWorld() != ply.getWorld())
                             continue;
                         if (pillar.getBukkitEntity().getLocation().distanceSquared(ply.getLocation()) < CelestialPillar.EFFECTED_RADIUS_SQR) {
-                            mobSpawnRate += 1;
+                            mobSpawnRate += 2;
                             break;
                         }
                     }

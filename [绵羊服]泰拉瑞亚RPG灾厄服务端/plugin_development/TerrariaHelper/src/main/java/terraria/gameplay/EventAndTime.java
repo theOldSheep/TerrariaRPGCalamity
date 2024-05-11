@@ -142,7 +142,7 @@ public class EventAndTime {
     public static QuestFish questFish = QuestFish.randomFish();
     public static HashSet<String> questFishSubmitted = new HashSet<>();
     // celestial pillars
-    public static HashMap<CelestialPillar.PillarTypes, CelestialPillar> pillars = new HashMap<>(8);
+    public static HashMap<CelestialPillar.PillarTypes, CelestialPillar> pillars = new HashMap<>(6);
     // fallen stars
     static final HashMap<String, Double> attrMapFallenStar;
     static {

@@ -224,6 +224,11 @@ public class MonsterHelper {
                 currMonster.uniqueMonster.remove();
             else if (!currMonster.uniqueMonster.isDead())
                 return null;
+            // lunatic cultist / celestial pillar will prevent this from spawning
+            if (type.equals("拜月教教徒")) {
+                if (BossHelper.bossMap.containsKey(BossHelper.BossType.LUNATIC_CULTIST.msgName) || EventAndTime.pillars.size() > 0)
+                    return null;
+            }
         }
         String entityType = mobInfoSection.getString("monsterType", "SLIME");
         Entity entity;

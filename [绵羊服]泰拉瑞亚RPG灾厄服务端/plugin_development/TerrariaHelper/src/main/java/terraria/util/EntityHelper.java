@@ -636,14 +636,14 @@ public class EntityHelper {
         }
         return false;
     }
-    public static HashMap<String, Integer> getEffectMap(Entity entity) {
+    public static LinkedHashMap<String, Integer> getEffectMap(Entity entity) {
         MetadataValue mdv = getMetadata(entity, MetadataName.EFFECTS);
         if (mdv == null) {
-            HashMap<String, Integer> effectMap = new HashMap<>();
+            LinkedHashMap<String, Integer> effectMap = new LinkedHashMap<>();
             setMetadata(entity, MetadataName.EFFECTS, effectMap);
             return effectMap;
         }
-        return (HashMap<String, Integer>) mdv.value();
+        return (LinkedHashMap<String, Integer>) mdv.value();
     }
     public static int getEffectLevelMax(String effect) {
         switch (effect) {

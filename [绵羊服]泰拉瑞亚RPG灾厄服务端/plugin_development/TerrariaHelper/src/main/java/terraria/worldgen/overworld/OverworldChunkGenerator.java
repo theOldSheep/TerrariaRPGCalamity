@@ -47,7 +47,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     public static PerlinOctaveGenerator riverGenerator, lakeGenerator,
                                         stoneVeinGenerator;
     public static Interpolate terrainHeightProvider, jungleHeightProvider, astralHeightProvider, desertHeightProvider, oceanHeightProvider,
-                                erosionRatioProvider,
+                                erosionRatioProvider, oceanErosionHeightProvider,
                                 riverRatioProvider, lakeRatioProvider;
     static OverworldChunkGenerator instance = new OverworldChunkGenerator();
     static List<BlockPopulator> populators;
@@ -110,8 +110,6 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 InterpolatePoint.create(1        , LAND_HEIGHT + 55),
         }, "desert_heightmap");
         oceanHeightProvider = new Interpolate(new InterpolatePoint[]{
-                InterpolatePoint.create(-1    ,   LAND_HEIGHT + 40),
-                InterpolatePoint.create(-0.7  ,   LAND_HEIGHT),
                 InterpolatePoint.create(-0.675 ,   SEA_LEVEL - 20),
                 InterpolatePoint.create(-0.625  ,   SEA_LEVEL - 35),
                 InterpolatePoint.create(-0.575,   SEA_LEVEL - 20),
@@ -129,6 +127,13 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 InterpolatePoint.create(0.6      , 0),
                 InterpolatePoint.create(1        , 0.6),
         }, "erosion_ratio_map");
+        oceanErosionHeightProvider = new Interpolate(new InterpolatePoint[]{
+                InterpolatePoint.create(-1       , 50),
+                InterpolatePoint.create(-0.5     , 30),
+                InterpolatePoint.create(0        , 10),
+                InterpolatePoint.create(0.5      , 0),
+                InterpolatePoint.create(1        , -10),
+        }, "erosion_ocean_height_map");
         riverRatioProvider = new Interpolate(new InterpolatePoint[]{
                 InterpolatePoint.create(-0.075 , 0),
                 InterpolatePoint.create(-0.05  , 0.1),
@@ -284,7 +289,16 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             case OCEAN:
             case FROZEN_OCEAN: {
                 double continentalnessFeature = features.features[OverworldBiomeGenerator.BiomeFeature.CONTINENTALNESS];
-                return oceanHeightProvider.getY(continentalnessFeature);
+                double erosionFeature = features.features[OverworldBiomeGenerator.BiomeFeature.EROSION];
+
+                double oceanHeight = oceanHeightProvider.getY(continentalnessFeature);
+                double randomOffset = oceanErosionHeightProvider.getY(erosionFeature);
+                // for abyss near the bottom, this random terrain offset should gradually disappear.
+                if (oceanHeight > 50)
+                    return oceanHeight + randomOffset;
+                if (oceanHeight > 0)
+                    return oceanHeight + randomOffset * (oceanHeight / 50);
+                return oceanHeight;
             }
             case JUNGLE:
                 heightProvider = jungleHeightProvider;

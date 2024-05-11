@@ -1,6 +1,7 @@
 package terraria.util;
 
 import com.bekvon.bukkit.residence.Residence;
+import com.comphenix.protocol.PacketType;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.*;
@@ -203,7 +204,9 @@ public class WorldHelper {
     public static boolean isDayTime(long timeInTick) {
         return ! (MathHelper.isBetween(timeInTick, 13500, 22500));
     }
-    public static boolean isSpawnProtected(Location loc) {
+    public static boolean isSpawnProtected(Location loc, Player ply) {
+        if (ply.getGameMode() == GameMode.CREATIVE)
+            return false;
         return loc.getWorld().getName().equals( TerrariaHelper.Constants.WORLD_NAME_SURFACE) &&
                 Math.abs(loc.getX()) < 32 && Math.abs(loc.getZ()) < 32;
     }
