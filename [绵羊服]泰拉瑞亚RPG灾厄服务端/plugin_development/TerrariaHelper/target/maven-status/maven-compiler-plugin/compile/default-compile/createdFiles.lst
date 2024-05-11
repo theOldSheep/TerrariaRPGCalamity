@@ -54,6 +54,7 @@ terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
 terraria\entity\boss\kingSlime\KingSlime.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
 terraria\event\TerrariaProjectileHitEvent.class
+terraria\worldgen\overworld\OverworldBiomeGenerator$2.class
 terraria\entity\boss\moonLord\MoonLordEye$MoonLordEyeLocation.class
 terraria\util\PlayerHelper$1.class
 terraria\entity\boss\astrumAureus\AstrumAureus$1.class

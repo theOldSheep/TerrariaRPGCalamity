@@ -2,7 +2,6 @@ package terraria.worldgen.overworld;
 
 import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
-import org.bukkit.util.noise.PerlinNoiseGenerator;
 import org.bukkit.util.noise.PerlinOctaveGenerator;
 import terraria.TerrariaHelper;
 import terraria.util.WorldHelper;
@@ -12,20 +11,15 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.function.ToDoubleFunction;
-import java.util.logging.Level;
+import java.util.*;
 
 public class OverworldBiomeGenerator {
 
     static boolean generatedImg = false;
     static long SEED = 0;
     static final int
-            SINGLE_CACHE_SIZE = 1000000,
-            SPAWN_LOC_PROTECTION_RADIUS = 750,
-            XZ_HASH_MASK = (1 << 26) - 1;
+            BIOME_FEATURE_CACHE_SIZE = 500000,
+            SPAWN_LOC_PROTECTION_RADIUS = 750;
 
     static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseHum, noiseWrd,
             noiseEros, noiseTrH;
@@ -114,13 +108,13 @@ public class OverworldBiomeGenerator {
     }
 
     // biome cache
-    static HashMap<Long, BiomeFeature>[] biomeCache;
-    static int biomeCacheIdx = 0;
-    static {
-        biomeCache = new HashMap[2];
-        for (int i = 0; i < 2; i ++)
-            biomeCache[i] = new HashMap<>(SINGLE_CACHE_SIZE, 0.8f);
-    }
+    static LinkedHashMap<Long, BiomeFeature> biomeCache = new LinkedHashMap<Long, BiomeFeature>(BIOME_FEATURE_CACHE_SIZE, 0.75f) {
+        @Override
+        // the eldest entry should be removed once the cache reaches its designed capacity
+        protected boolean removeEldestEntry(Map.Entry entry) {
+            return size() > BIOME_FEATURE_CACHE_SIZE;
+        }
+    };
 
 
     // set up the generator based on seed
@@ -203,21 +197,12 @@ public class OverworldBiomeGenerator {
     // get the key in the biome cache
     private static long getCacheKey(int x, int z) {
         long result = 0;
-        // first two bytes denotes x and z sign
-        if (x < 0) {
-            result |= 1;
-            x *= -1;
-        }
-        result <<= 1;
-        if (z < 0) {
-            result |= 1;
-            z *= -1;
-        }
-        // reserve 25 bytes for each of x and z
-        result <<= 25;
-        result |= (x & XZ_HASH_MASK);
-        result <<= 25;
-        result |= (z & XZ_HASH_MASK);
+
+        result |= x;
+        result <<= 32;
+        // only keep the last 32 bits of z! It gets converted to long during this operation.
+        // otherwise, negative z will cause grief.
+        result |= (z & 0xFFFFFFFFL);
 
         return result;
     }
@@ -268,42 +253,33 @@ public class OverworldBiomeGenerator {
     public static BiomeFeature getBiomeFeature(double actualX, double actualZ) {
         return getBiomeFeature((int) actualX, (int) actualZ);
     }
-    public static BiomeFeature getBiomeFeature(int actualX, int actualZ) {
+    public static BiomeFeature getBiomeFeature(int blockX, int blockZ) {
         // evaluate the feature. Technically the world seed do not need to be initialized here, but just in case.
-        return getBiomeFeature(TerrariaHelper.worldSeed, actualX, actualZ);
+        return getBiomeFeature(TerrariaHelper.worldSeed, blockX, blockZ);
     }
     // this should be called if possible!
-    public static BiomeFeature getBiomeFeature(long seed, int actualX, int actualZ) {
-//        int x = actualX >> 2, z = actualZ >> 2;
-        int x = actualX, z = actualZ;
+    public static BiomeFeature getBiomeFeature(long seed, int blockX, int blockZ) {
 
-        long biomeLocKey = getCacheKey(x, z);
-        if (biomeCache[biomeCacheIdx].containsKey(biomeLocKey)) {
-            return biomeCache[biomeCacheIdx].get(biomeLocKey);
+        long biomeLocKey = getCacheKey(blockX, blockZ);
+        // return the cached value if available
+        if (biomeCache.containsKey(biomeLocKey)) {
+            return biomeCache.get(biomeLocKey);
         }
-        // evaluate & save the biome features
+        // lazy initialization of noise functions
         if (noiseCont == null) {
             setupGenerators(seed);
         }
-        BiomeFeature result = new BiomeFeature(actualX, actualZ);
-        // go to the next generation when needed
-        if (biomeCache[biomeCacheIdx].size() > SINGLE_CACHE_SIZE) {
-            biomeCacheIdx = (biomeCacheIdx + 1) % 2;
-        }
-        // when the current generation is half-full, clear the other one.
-        // this means the next time you switch cache, the most recent half is still recorded.
-        if (biomeCache[biomeCacheIdx].size() == SINGLE_CACHE_SIZE / 2) {
-            biomeCache[(biomeCacheIdx + 1) % 2].clear();
-        }
+        // the biome feature content is generated within the constructor
+        BiomeFeature result = new BiomeFeature(blockX, blockZ);
         // save the result and return
-        biomeCache[biomeCacheIdx].put(biomeLocKey, result);
+        biomeCache.put(biomeLocKey, result);
         return result;
     }
-    public static Biome getBiome(long seed, int actualX, int actualZ) {
+    public static Biome getBiome(long seed, int blockX, int blockZ) {
         if (! generatedImg) {
             generatedImg = true;
             generateBiomeImage();
         }
-        return getBiomeFromType( getBiomeFeature(seed, actualX, actualZ).evaluatedBiome );
+        return getBiomeFromType( getBiomeFeature(seed, blockX, blockZ).evaluatedBiome );
     }
 }
