@@ -14,7 +14,7 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
     static {
         aimHelper = new EntityHelper.AimHelperOptions()
                 .setAimMode(true)
-                .setTicksOffset(1);
+                .setTicksTotal(1);
     }
     Player owner;
     Vector recoilPool = new Vector();

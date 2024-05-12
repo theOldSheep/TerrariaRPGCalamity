@@ -20,7 +20,7 @@ public class CalamitasDummyPlayer extends EntityZombieHusk {
     static {
         velocityHandler = new EntityHelper.AimHelperOptions()
                 .setAimMode(true)
-                .setTicksOffset(1);
+                .setTicksTotal(1);
     }
     Player lastDisguisedPlayer = null;
     CalamitasClone owner;

@@ -10,6 +10,7 @@ terraria\entity\boss\golem\GolemHead.class
 terraria\entity\boss\lunaticCultist\LunaticIceMist.class
 terraria\entity\npc\TerrariaNPCClothier.class
 terraria\entity\boss\ravager\RavagerLeg.class
+terraria\util\Quaternion.class
 terraria\worldgen\MazeGenerator$CellEdge.class
 terraria\entity\monster\MonsterZombie.class
 terraria\entity\boss\cryogen\Cryogen.class

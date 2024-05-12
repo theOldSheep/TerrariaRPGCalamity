@@ -20,6 +20,7 @@ public class OverworldBiomeGenerator {
     static final int
             BIOME_FEATURE_CACHE_SIZE = 500000,
             SPAWN_LOC_PROTECTION_RADIUS = 750;
+    static final long MASK_FIRST = 0xFFFF0000L, MASK_LAST = 0xFFFFL;
 
     static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseHum, noiseWrd,
             noiseEros, noiseTrH;
@@ -202,7 +203,11 @@ public class OverworldBiomeGenerator {
         result <<= 32;
         // only keep the last 32 bits of z! It gets converted to long during this operation.
         // otherwise, negative z will cause grief.
-        result |= (z & 0xFFFFFFFFL);
+        // note: due to the java's hashing for long, it is better to flip the order of the first and last halves of z
+        // so that the lower digits do not cancel out frequently
+        result |= (z & MASK_FIRST);
+        result <<= 16;
+        result |= (z & MASK_LAST);
 
         return result;
     }

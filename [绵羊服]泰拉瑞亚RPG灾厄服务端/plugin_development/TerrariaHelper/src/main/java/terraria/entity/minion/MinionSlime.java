@@ -1,8 +1,6 @@
 package terraria.entity.minion;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.apache.logging.log4j.core.lookup.MainMapLookup;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -2785,7 +2783,7 @@ public class MinionSlime extends EntitySlime {
                             targetLoc = EntityHelper.helperAimEntity(minionBukkit, target,
                                     new EntityHelper.AimHelperOptions()
                                             .setAimMode(true)
-                                            .setTicksOffset(1));
+                                            .setTicksTotal(1));
                             break;
                         }
                         // fire blasts of ice shards
@@ -2899,7 +2897,7 @@ public class MinionSlime extends EntitySlime {
                         Location predictedLoc = EntityHelper.helperAimEntity(bukkitEntity, target,
                                 new EntityHelper.AimHelperOptions()
                                         .setAimMode(true)
-                                        .setTicksOffset(10));
+                                        .setTicksTotal(10));
                         GenericHelper.ParticleLineOptions particleInfo = new GenericHelper.ParticleLineOptions()
                                 .setWidth(0.25)
                                 .setStepsize(0.6)

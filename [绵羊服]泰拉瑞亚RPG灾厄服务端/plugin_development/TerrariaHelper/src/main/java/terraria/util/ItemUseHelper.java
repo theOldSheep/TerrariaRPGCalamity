@@ -539,7 +539,7 @@ public class ItemUseHelper {
         EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions()
                 .setAccelerationMode(true)
                 .setAimMode(tickOffsetOrSpeed)
-                .setTicksOffset(tickOffset)
+                .setTicksTotal(tickOffset)
                 .setProjectileSpeed(projectileVelocity);
         // these could cause null pointer issues, so wrap it with an if-statement
         if (projConfSec == null) {
@@ -671,14 +671,10 @@ public class ItemUseHelper {
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
         Vector lookDir = MathHelper.vectorFromYawPitch_quick(nmsPly.yaw, nmsPly.pitch);
         Location targetLoc = getPlayerTargetLoc(ply, 96, 5, 4,
-                new EntityHelper.AimHelperOptions().setTicksOffset(8).setAimMode(true), true);
+                new EntityHelper.AimHelperOptions().setTicksTotal(8).setAimMode(true), true);
         Location centerLoc = targetLoc.clone().add(ply.getEyeLocation()).multiply(0.5);
         Vector reachVec = centerLoc.clone().subtract(ply.getEyeLocation()).toVector();
-        Vector offsetVec = null;
-        while (offsetVec == null || offsetVec.lengthSquared() < 1e-5) {
-            offsetVec = MathHelper.randomVector();
-            offsetVec.subtract(MathHelper.vectorProjection(reachVec, offsetVec));
-        }
+        Vector offsetVec = MathHelper.getNonZeroCrossProd(reachVec, reachVec);
         // set the display rotation of item sprite
         Vector orthogonalVec = offsetVec.getCrossProduct(reachVec);
         strikeLineInfo.particleInfo.setRightOrthogonalDir( orthogonalVec );
@@ -827,7 +823,7 @@ public class ItemUseHelper {
                                     // predict enemy location
                                     EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
                                             .setAimMode(true)
-                                            .setTicksOffset(8)
+                                            .setTicksTotal(8)
                                             .setRandomOffsetRadius(1.5);
                                     Location predictedLoc = EntityHelper.helperAimEntity(ply, entityHit, aimHelper);
                                     Vector projVel = MathHelper.vectorFromYawPitch_quick(
@@ -1614,7 +1610,7 @@ public class ItemUseHelper {
                     Location targetLoc = getPlayerTargetLoc(ply, 48, 3.5,
                             new EntityHelper.AimHelperOptions()
                                     .setAimMode(true)
-                                    .setTicksOffset(hitDelay)
+                                    .setTicksTotal(hitDelay)
                                     .setRandomOffsetRadius(5), true);
                     Vector projVel = MathHelper.vectorFromYawPitch_quick(Math.random() * 360d, 70 + Math.random() * 30d);
                     projVel.multiply(2.5 + Math.random());
@@ -1762,7 +1758,7 @@ public class ItemUseHelper {
                         if (currentIndex == 0) {
                             EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
                                     .setAimMode(true)
-                                    .setTicksOffset(10);
+                                    .setTicksTotal(10);
                             Location aimLoc = getPlayerTargetLoc(ply, 96, 5,
                                     aimHelper, true);
                             for (int i = 0; i < 3; i ++) {
@@ -2307,7 +2303,7 @@ public class ItemUseHelper {
                     case "星河之刃": {
                         if (currentIndex == 0) {
                             Location targetLoc = getPlayerTargetLoc(ply, 48, 2,
-                                    new EntityHelper.AimHelperOptions().setAimMode(true).setTicksOffset(10), true);
+                                    new EntityHelper.AimHelperOptions().setAimMode(true).setTicksTotal(10), true);
                             for (int i = 0; i < 5; i ++) {
                                 Location spawnLoc = targetLoc.clone().add(
                                         Math.random() * 8 - 4, Math.random() * 5 + 15, Math.random() * 8 - 4);
@@ -2517,7 +2513,7 @@ public class ItemUseHelper {
                     }
                     case "无限大地": {
                         EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
-                                .setAimMode(true).setTicksOffset(10);
+                                .setAimMode(true).setTicksTotal(10);
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
                             // heal
                             PlayerHelper.heal(ply, (int) (Math.random() * 50));
@@ -3702,7 +3698,7 @@ public class ItemUseHelper {
                             new EntityHelper.AimHelperOptions()
                                     .setAimMode(true)
                                     .setRandomOffsetRadius(5)
-                                    .setTicksOffset(offset.length() / projectileSpeed), true);
+                                    .setTicksTotal(offset.length() / projectileSpeed), true);
                     fireLoc = destination.add(offset);
                     break;
                 }
@@ -4004,7 +4000,7 @@ public class ItemUseHelper {
                     fireVelocity = offset.clone().multiply(-1).normalize();
                     EntityHelper.AimHelperOptions options = new EntityHelper.AimHelperOptions()
                             .setAimMode(true)
-                            .setTicksOffset(offset.length() / projectileSpeed);
+                            .setTicksTotal(offset.length() / projectileSpeed);
                     switch (itemType) {
                         case "月之耀斑":
                             options.setRandomOffsetRadius(1);
@@ -4030,7 +4026,7 @@ public class ItemUseHelper {
                             options.setRandomOffsetRadius(1);
                             offset = new Vector(Math.random() * 20 - 10, 16, Math.random() * 20 - 10);
                             fireVelocity = offset.clone().multiply(-1).normalize();
-                            options.setTicksOffset(1);
+                            options.setTicksTotal(1);
                             break;
                         default:
                             options.setRandomOffsetRadius(0.5);
@@ -4046,7 +4042,7 @@ public class ItemUseHelper {
                     fireVelocity = offset.clone().multiply(-1).normalize();
                     EntityHelper.AimHelperOptions options = new EntityHelper.AimHelperOptions()
                             .setAimMode(true)
-                            .setTicksOffset(offset.length() / projectileSpeed);
+                            .setTicksTotal(offset.length() / projectileSpeed);
                     switch (itemType) {
                         case "深渊女神之复仇":
                             options.setRandomOffsetRadius(3);
@@ -4111,7 +4107,7 @@ public class ItemUseHelper {
                 case "血涌": {
                     EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
                             .setAimMode(true)
-                            .setTicksOffset(10);
+                            .setTicksTotal(10);
                     Location aimLoc = getPlayerTargetLoc(ply, 64, 5, aimHelper, true);
                     aimLoc.add(Math.random() * 8 - 4, projectileSpeed * -10, Math.random() * 8 - 4);
                     fireLoc = aimLoc;
@@ -4133,7 +4129,7 @@ public class ItemUseHelper {
                 case "虚空漩涡": {
                     EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions()
                             .setAimMode(true)
-                            .setTicksOffset(0);
+                            .setTicksTotal(0);
                     if (i == 0)
                         fireLoc = getPlayerTargetLoc(ply, 80, 3.5,
                                 aimHelperOptions, true);

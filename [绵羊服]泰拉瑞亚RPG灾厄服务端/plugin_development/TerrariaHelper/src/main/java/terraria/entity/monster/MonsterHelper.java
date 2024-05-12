@@ -11,6 +11,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
@@ -500,7 +502,18 @@ public class MonsterHelper {
                 break;
             }
         }
-        ((LivingEntity) monster.getBukkitEntity()).getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+        // set items as needed
+        EntityEquipment equipment = ((LivingEntity) monster.getBukkitEntity()).getEquipment();
+        equipment.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+        if (monster.getBukkitEntity().getType() == EntityType.SKELETON) {
+            switch (type) {
+                case "哥布林弓箭手":
+                case "精灵弓箭手":
+                    break;
+                default:
+                    equipment.setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+            }
+        }
     }
     public static void tweakPlayerMonsterSpawnedAmount(Player target, boolean addOrRemove) {
         if (target == null) return;
@@ -723,9 +736,9 @@ public class MonsterHelper {
                 case "稻草人": {
                     if (monster.getHealth() > 0) {
                         if (indexAI == 0)
-                            indexAI = (int) (Math.random() * 100);
-                        else if (indexAI > 160 && monster.onGround) {
-                            indexAI = (int) (Math.random() * 100);
+                            indexAI = (int) (Math.random() * 40);
+                        else if (indexAI > 80 && monster.onGround) {
+                            indexAI = (int) (Math.random() * 40);
                             monster.motY = speedMultiKnockback;
                         }
                     }
@@ -1124,18 +1137,11 @@ public class MonsterHelper {
                     if (indexAI >= 0 && monster.getHealth() > 0) {
                         if (monsterBkt.getLocation().subtract(0, 1, 0).getBlock().getType().isSolid()) {
                             String projectileName = type.equals("尖刺史莱姆") ? "史莱姆尖刺" : "史莱姆水晶";
+                            double projectileSpd = type.equals("尖刺史莱姆") ? 0.6 : 1.2;
                             HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
-                            for (int i = 0; i < 25; i++) {
-                                Vector projVel = new Vector(Math.random() * 2 - 1, 0, Math.random() * 2 - 1);
-                                double projVelLen = projVel.length();
-                                if (projVelLen < 1e-9) continue;
-                                if (type.equals("尖刺史莱姆")) {
-                                    projVel.multiply((0.3 + Math.random() * 0.2) / projVelLen);
-                                    projVel.setY(0.4 + Math.random() * 0.2);
-                                } else {
-                                    projVel.multiply((0.4 + Math.random() * 0.4) / projVelLen);
-                                    projVel.setY(0.4 + Math.random() * 0.6);
-                                }
+                            Location shootLoc = monsterBkt.getEyeLocation();
+                            for (Vector projVel : MathHelper.getCircularProjectileDirections(
+                                    3, 3, 75, target, shootLoc, projectileSpd)) {
                                 EntityHelper.ProjectileShootInfo projInfo = new EntityHelper.ProjectileShootInfo(
                                         monsterBkt, projVel, attrMap, projectileName);
                                 EntityHelper.spawnProjectile(projInfo);

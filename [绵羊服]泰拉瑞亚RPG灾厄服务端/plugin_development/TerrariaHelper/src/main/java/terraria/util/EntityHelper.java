@@ -1,6 +1,5 @@
 package terraria.util;
 
-import com.comphenix.protocol.PacketType;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
@@ -28,7 +27,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.others.TerrariaMount;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.entity.projectile.TerrariaPotionProjectile;
 import terraria.gameplay.EventAndTime;
@@ -85,12 +83,16 @@ public class EntityHelper {
     }
     public static class AimHelperOptions {
         double projectileGravity = 0d, projectileSpeed = 0d, projectileSpeedMax = 99d, projectileSpeedMulti = 1d,
-                intensity = 1d, randomOffsetRadius = 0d, ticksOffset = 0;
+                intensity = 1d, randomOffsetRadius = 0d, ticksTotal = 0, ticksMonsterExtra = 0;
         boolean useAcceleration = false, useTickOrSpeedEstimation = false;
         int epoch = 5, noGravityTicks = 5;
         Vector accelerationOffset = new Vector();
-        public AimHelperOptions setTicksOffset(double ticksOffset) {
-            this.ticksOffset = ticksOffset;
+        public AimHelperOptions setTicksTotal(double ticksTotal) {
+            this.ticksTotal = ticksTotal;
+            return this;
+        }
+        public AimHelperOptions setTicksMonsterExtra(double ticksMonsterExtra) {
+            this.ticksMonsterExtra = ticksMonsterExtra;
             return this;
         }
         public AimHelperOptions setProjectileGravity(double projectileGravity) {
@@ -2547,8 +2549,8 @@ public class EntityHelper {
                     String[] keys;
                     // ints
                     {
-                        keys = new String[]{"autoTraceMethod", "bounce", "enemyInvincibilityFrame", "liveTime",
-                                "noAutoTraceTicks", "noGravityTicks", "maxAutoTraceTicks", "minimumDamageTicks",
+                        keys = new String[]{"homingMethod", "bounce", "enemyInvincibilityFrame", "liveTime",
+                                "noHomingTicks", "noGravityTicks", "maxHomingTicks", "minimumDamageTicks",
                                 "penetration", "trailLingerTime", "worldSpriteUpdateInterval"};
                         for (String key : keys) {
                             if (section.contains(key))
@@ -2565,7 +2567,7 @@ public class EntityHelper {
                     }
                     // doubles
                     {
-                        keys = new String[]{"autoTraceAbility", "autoTraceEndSpeedMultiplier", "autoTraceRadius",
+                        keys = new String[]{"homingAbility", "homingEndSpeedMultiplier", "homingRadius",
                                 "blastRadius", "bounceVelocityMulti",
                                 "frictionFactor", "gravity", "maxSpeed", "projectileSize", "spawnSoundPitch",
                                 "spawnSoundVolume", "speedMultiPerTick", "trailIntensityMulti", "trailSize",
@@ -2577,7 +2579,7 @@ public class EntityHelper {
                     }
                     // booleans
                     {
-                        keys = new String[]{"autoTrace", "autoTraceSharpTurning", "blastDamageShooter",
+                        keys = new String[]{"homing", "homingSharpTurning", "homingRetarget", "blastDamageShooter",
                                 "blastOnContactBlock", "blastOnContactEnemy", "bouncePenetrationBonded",
                                 "canBeReflected", "isGrenade", "slowedByWater", "trailVanillaParticle",
                                 "worldSpriteMode"};
@@ -2677,19 +2679,20 @@ public class EntityHelper {
             checkBlockColl = !(targetMount instanceof Minecart);
         }
         double predictionIntensity = aimHelperOption.intensity;
-        double ticksOffset = targetLoc.distance(shootLoc) / aimHelperOption.projectileSpeed, lastTicksOffset;
+        double ticksElapse = targetLoc.distance(shootLoc) / aimHelperOption.projectileSpeed, lastTicksOffset;
         // approximate the velocity to use with epochs requested
         for (int currEpoch = 0; currEpoch < aimHelperOption.epoch; currEpoch ++) {
             // calculate the predicted enemy location
+            double ticksMonsterMovement = ticksElapse + aimHelperOption.ticksMonsterExtra;
             {
                 predictedLoc = targetLoc.clone();
                 // account for displacement that are caused by velocity
-                predictedLoc.add(enemyVel.clone().multiply(ticksOffset * predictionIntensity));
+                predictedLoc.add(enemyVel.clone().multiply(ticksMonsterMovement * predictionIntensity));
                 // account for displacement that are caused by acceleration, IF NEEDED
                 // first tick acc. is in effect for (n-1) times, second for (n-2) and so on
                 // in total = sum(1, 2, ..., n-2, n-1) = n(n-1) / 2
                 if (aimHelperOption.useAcceleration)
-                    predictedLoc.add(enemyAcc.clone().multiply(ticksOffset * (ticksOffset - 1) * predictionIntensity / 2d));
+                    predictedLoc.add(enemyAcc.clone().multiply(ticksMonsterMovement * (ticksMonsterMovement - 1) * predictionIntensity / 2d));
                 // before handling gravity, make sure entities that clip with block do not go through blocks
                 // note that the loop is done with the "foot" position
                 if ( checkBlockColl ) {
@@ -2732,9 +2735,9 @@ public class EntityHelper {
                 }
                 // projectile gravity, it is equivalent to target acceleration, for the ease of computation
                 // it is not simply acceleration - it only takes effect after some time, usually 5 ticks
-                if (ticksOffset >= aimHelperOption.noGravityTicks) {
+                if (ticksElapse >= aimHelperOption.noGravityTicks) {
                     predictedLoc.add(new Vector(0,
-                            (ticksOffset - aimHelperOption.noGravityTicks + 1) * (ticksOffset - aimHelperOption.noGravityTicks + 2)
+                            (ticksElapse - aimHelperOption.noGravityTicks + 1) * (ticksElapse - aimHelperOption.noGravityTicks + 2)
                                     * aimHelperOption.projectileGravity / 2d, 0));
                 }
                 // random offset
@@ -2750,37 +2753,37 @@ public class EntityHelper {
             }
 
             // then, update actual ticks needed to reach the designated point
-            lastTicksOffset = ticksOffset;
+            lastTicksOffset = ticksElapse;
             if (aimHelperOption.useTickOrSpeedEstimation)
-                ticksOffset = aimHelperOption.ticksOffset;
+                ticksElapse = aimHelperOption.ticksTotal;
             else {
                 double distance = predictedLoc.distance(shootLoc), currSpd = aimHelperOption.projectileSpeed;
                 // if speed does not change over time, use that speed
                 if (aimHelperOption.projectileSpeedMulti == 1) {
-                    ticksOffset = distance / currSpd;
+                    ticksElapse = distance / currSpd;
                 }
                 // if a speed multiplier is in place, account for it.
                 else {
-                    ticksOffset = 0;
+                    ticksElapse = 0;
                     double distTraveled = 0;
                     // prevent possible inf loop IF the projectile has decaying speed
-                    while (distTraveled < distance && (aimHelperOption.projectileSpeedMulti >= 1d || ticksOffset < 20)) {
-                        ticksOffset ++;
+                    while (distTraveled < distance && (aimHelperOption.projectileSpeedMulti >= 1d || ticksElapse < 20)) {
+                        ticksElapse ++;
                         distTraveled += currSpd;
                         currSpd *= aimHelperOption.projectileSpeedMulti;
                         // after reaching the max speed, do not bother using the loop
                         if (currSpd > aimHelperOption.projectileSpeedMax) {
-                            ticksOffset += (distance - distTraveled) / aimHelperOption.projectileSpeedMax;
+                            ticksElapse += (distance - distTraveled) / aimHelperOption.projectileSpeedMax;
                             break;
                         }
                     }
                 }
                 // account for at most 3 seconds
-                ticksOffset = Math.min( Math.floor(ticksOffset),  60  );
+                ticksElapse = Math.min( Math.floor(ticksElapse),  60  );
             }
 
             // end the loop early if the last tick offset agrees with the current
-            if (lastTicksOffset == ticksOffset)
+            if (lastTicksOffset == ticksElapse)
                 break;
         }
         return predictedLoc;

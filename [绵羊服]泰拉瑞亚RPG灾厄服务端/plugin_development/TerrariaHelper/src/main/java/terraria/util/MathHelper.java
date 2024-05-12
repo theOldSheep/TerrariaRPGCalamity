@@ -3,7 +3,6 @@ package terraria.util;
 import net.minecraft.server.v1_12_R1.Vec3D;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -260,5 +259,16 @@ public class MathHelper {
     }
     public static Vector getDirection(Location initialLoc, Location finalLoc, double length) {
         return getDirection(initialLoc, finalLoc, length, false);
+    }
+
+    // creates the non-zero cross product: if the two vectors are collinear, return a random one that is orthogonal to them. DOES NOT NORMALIZE.
+    public static Vector getNonZeroCrossProd(Vector vec1, Vector vec2) {
+        Vector result = vec1.getCrossProduct(vec2);
+        // within the loop, vec1 and vec2 are collinear.
+        while (result.lengthSquared() < 1e-6) {
+            result = randomVector();
+            result.subtract(vectorProjection(vec1, result));
+        }
+        return result;
     }
 }

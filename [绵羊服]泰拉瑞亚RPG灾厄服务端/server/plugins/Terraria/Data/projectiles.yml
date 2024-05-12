@@ -2,22 +2,25 @@
     # 贴图使用箭矢还是药水？不写则将名称以"箭"结尾的视为箭矢，否则视为药水
     arrowOrPotion: false
     # 是否自动追踪，不写则视为false
-    autoTrace: false
+    homing: false
     # 自动追踪方式。1: 自动追踪效率与(速度/距离)成正比；2：自动追踪效率恒定。不写则视为1
-    autoTraceMethod: 1
+    # 仅于homingSharpTurning为false时生效
+    homingMethod: 1
     # 自动追踪的寻敌半径，单位（格）。不写则视为12
-    autoTraceRadius: 12
-    # 自动追踪时是否可以进行尖锐转向。不写则视为true
-    # 当此处为false时，敌人位置越接近移动方向的相反方向，则转弯越缓慢
-    autoTraceSharpTurning: true
+    homingRadius: 12
+    # 决定自动追踪时进行尖锐转向还是以恒定角度转弯。不写则视为true
+    # 当此处为true时，homingAbility决定每刻的转弯效率，单位：degree
+    homingSharpTurning: true
+    # 决定自动追踪时是否在击中敌人后重新决定目标。不写则视为false
+    homingRetarget: false
     # 自动追踪的能力，数字越高则追踪转向的最高效率越高。不写则视为4
-    autoTraceAbility: 4.0
+    homingAbility: 4.0
     # 自动追踪时长结束但未丢失目标时速度增加的倍数。不写则视为1
-    autoTraceEndSpeedMultiplier: 1.0
+    homingEndSpeedMultiplier: 1.0
     # 弹射物存在多久前无法自动追踪？不写则视为0
-    noAutoTraceTicks: 0
+    noHomingTicks: 0
     # 弹射物生成多久后无法自动追踪？不写则视为999999
-    maxAutoTraceTicks: 999999
+    maxHomingTicks: 999999
     # 这个弹射物会不会被闭合的宝箱怪，旋转的火月怪等反弹？不写则视为true
     canBeReflected: true
     # 击中怪物后敌人多少帧后才能被本弹射物再次伤害？（一秒=20帧）不写则视为5
@@ -145,7 +148,7 @@
 彗星:
     gravity: 0
     projectileSize: 2
-    autoTrace: true
+    homing: true
     blockHitAction: thru
     liveTime: 60
 腐蚀之云:
@@ -197,7 +200,7 @@
     projectileSize: 1
     liveTime: 100
     gravity: 0
-    noAutoTraceTicks: 10
+    noHomingTicks: 10
     buffInflict:
         - "霜火|40|1"
         - "冷冻|30|1"
@@ -232,12 +235,12 @@
     gravity: 0
     blockHitAction: thru
     projectileSize: 0.75
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 12
-    autoTraceSharpTurning: false
-    autoTraceAbility: 0.15
-    noAutoTraceTicks: 15
+    homing: true
+    homingMethod: 2
+    homingRadius: 12
+    homingSharpTurning: false
+    homingAbility: 12
+    noHomingTicks: 15
 渊海灾虫沙爆:
     penetration: 99999
     gravity: 0
@@ -259,13 +262,13 @@
     liveTime: 100
     gravity: 0
     blockHitAction: thru
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 32
-    autoTraceSharpTurning: false
-    autoTraceAbility: 1
-    noAutoTraceTicks: 15
-    maxAutoTraceTicks: 30
+    homing: true
+    homingMethod: 2
+    homingRadius: 32
+    homingSharpTurning: false
+    homingAbility: 18
+    noHomingTicks: 15
+    maxHomingTicks: 30
     trailColor: 255|0|0
     trailSize: 0.15
     trailStepSize: 1
@@ -335,11 +338,11 @@
     gravity: 0
     projectileSize: 1.5
     speedMultiPerTick: 0.975
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 32
-    autoTraceSharpTurning: false
-    autoTraceAbility: 0.1
+    homing: true
+    homingMethod: 2
+    homingRadius: 32
+    homingSharpTurning: false
+    homingAbility: 6
     buffInflict:
         - "硫磺火|60|1"
         - "孱弱巫咒|60|1"
@@ -399,13 +402,13 @@
     liveTime: 80
     gravity: 0
     projectileSize: 2
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 32
-    autoTraceSharpTurning: false
-    autoTraceAbility: 0.2
-    noAutoTraceTicks: 15
-    maxAutoTraceTicks: 60
+    homing: true
+    homingMethod: 2
+    homingRadius: 32
+    homingSharpTurning: false
+    homingAbility: 9
+    noHomingTicks: 15
+    maxHomingTicks: 60
     buffInflict:
         - "冷冻|80|1"
 魅惑之音:
@@ -422,11 +425,11 @@
     gravity: 0
     projectileSize: 2
     speedMultiPerTick: 0.99
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 64
-    autoTraceSharpTurning: false
-    autoTraceAbility: 0.15
+    homing: true
+    homingMethod: 2
+    homingRadius: 64
+    homingSharpTurning: false
+    homingAbility: 18
 流星喷射:
     blockHitAction: thru
     gravity: 0
@@ -447,13 +450,13 @@
     liveTime: 160
     gravity: 0
     projectileSize: 2
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 64
-    autoTraceSharpTurning: false
-    autoTraceAbility: 0.2
-    noAutoTraceTicks: 20
-    maxAutoTraceTicks: 60
+    homing: true
+    homingMethod: 2
+    homingRadius: 64
+    homingSharpTurning: false
+    homingAbility: 18
+    noHomingTicks: 20
+    maxHomingTicks: 60
     buffInflict:
         - "幻星感染|60|1"
 石巨人火球:
@@ -521,13 +524,13 @@
     trailSize: 0.15
     trailStepSize: 0.75
     trailVanillaParticle: false
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 64
-    autoTraceSharpTurning: false
-    autoTraceAbility: 0.25
-    noAutoTraceTicks: 10
-    maxAutoTraceTicks: 45
+    homing: true
+    homingMethod: 2
+    homingRadius: 64
+    homingSharpTurning: false
+    homingAbility: 18
+    noHomingTicks: 10
+    maxHomingTicks: 45
     buffInflict:
         - "神圣之火|60|1"
         - "夜魇|60|1"
@@ -536,13 +539,13 @@
     liveTime: 100
     gravity: 0
     projectileSize: 1
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 64
-    autoTraceSharpTurning: false
-    autoTraceAbility: 0.4
-    noAutoTraceTicks: 10
-    maxAutoTraceTicks: 35
+    homing: true
+    homingMethod: 2
+    homingRadius: 64
+    homingSharpTurning: false
+    homingAbility: 18
+    noHomingTicks: 10
+    maxHomingTicks: 35
     buffInflict:
         - "暗影焰|40|1"
 火球:
@@ -550,13 +553,13 @@
     liveTime: 100
     gravity: 0
     projectileSize: 1
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 64
-    autoTraceSharpTurning: false
-    autoTraceAbility: 0.5
-    noAutoTraceTicks: 10
-    maxAutoTraceTicks: 35
+    homing: true
+    homingMethod: 2
+    homingRadius: 64
+    homingSharpTurning: false
+    homingAbility: 18
+    noHomingTicks: 10
+    maxHomingTicks: 35
     buffInflict:
         - "燃烧|100|1"
 幻星雷:
@@ -565,12 +568,12 @@
     gravity: 0
     speedMultiPerTick: 0.95
     projectileSize: 1.5
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 128
-    autoTraceAbility: 0.4
-    noAutoTraceTicks: 20
-    maxAutoTraceTicks: 30
+    homing: true
+    homingMethod: 2
+    homingRadius: 128
+    homingAbility: 0.4
+    noHomingTicks: 20
+    maxHomingTicks: 30
     buffInflict:
         - "幻星感染|60|1"
 星旋激光:
@@ -610,26 +613,26 @@
     blastRadius: 4
     liveTime: 100
     gravity: 0
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 128
-    autoTraceSharpTurning: false
-    autoTraceAbility: 0.4
-    noAutoTraceTicks: 20
-    maxAutoTraceTicks: 40
+    homing: true
+    homingMethod: 2
+    homingRadius: 128
+    homingSharpTurning: false
+    homingAbility: 18
+    noHomingTicks: 20
+    maxHomingTicks: 40
 神圣之火:
     blockHitAction: thru
     projectileSize: 0.5
     liveTime: 60
     gravity: 0
     minimumDamageTicks: 5
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 24
-    autoTraceSharpTurning: false
-    autoTraceAbility: 1.5
-    noAutoTraceTicks: 15
-    maxAutoTraceTicks: 30
+    homing: true
+    homingMethod: 2
+    homingRadius: 24
+    homingSharpTurning: false
+    homingAbility: 27
+    noHomingTicks: 15
+    maxHomingTicks: 30
 南瓜榴弹:
     isGrenade: true
     blastRadius: 1
@@ -721,8 +724,8 @@
 剧毒鱼叉细菌颗粒:
     liveTime: 100
     projectileSize: 1
-    autoTrace: true
-    autoTraceRadius: 24
+    homing: true
+    homingRadius: 24
     speedMultiPerTick: 0.99
     trailColor: 129|255|85
     buffInflict:
@@ -733,10 +736,10 @@
     penetration: 2
     projectileSize: 2
     liveTime: 60
-    autoTrace: true
-    autoTraceAbility: 6.5
-    autoTraceRadius: 24
-    noAutoTraceTicks: 999999
+    homing: true
+    homingAbility: 6.5
+    homingRadius: 24
+    noHomingTicks: 999999
     trailColor: 159|96|255
 异象纳米离子束:
     gravity: 0
@@ -789,20 +792,20 @@
     blastRadius: 4
 星璇导弹:
     gravity: 0
-    autoTrace: true
+    homing: true
     isGrenade: true
     blastRadius: 5
 剧毒花瓣:
     gravity: 0
     speedMultiPerTick: 0.95
     liveTime: 45
-    autoTrace: true
-    autoTraceAbility: 999999
-    autoTraceMethod: 2
-    autoTraceRadius: 40
-    noAutoTraceTicks: 20
-    maxAutoTraceTicks: 20
-    autoTraceEndSpeedMultiplier: 7.5
+    homing: true
+    homingAbility: 999999
+    homingMethod: 2
+    homingRadius: 40
+    noHomingTicks: 20
+    maxHomingTicks: 20
+    homingEndSpeedMultiplier: 7.5
     blockHitAction: thru
     trailColor: "0|200|0"
     trailStepSize: 0.75
@@ -831,10 +834,10 @@
 冰钉:
     gravity: 0
     liveTime: 120
-    autoTrace: true
-    autoTraceAbility: 2
-    autoTraceRadius: 48
-    noAutoTraceTicks: 5
+    homing: true
+    homingAbility: 2
+    homingRadius: 48
+    noHomingTicks: 5
     projectileSize: 1.5
     blockHitAction: thru
     buffInflict:
@@ -842,10 +845,10 @@
 追踪花球:
     gravity: 0
     liveTime: 100
-    autoTrace: true
-    autoTraceAbility: 2.75
-    autoTraceRadius: 64
-    noAutoTraceTicks: 5
+    homing: true
+    homingAbility: 2.75
+    homingRadius: 64
+    noHomingTicks: 5
     projectileSize: 1
     blockHitAction: thru
     buffInflict:
@@ -884,7 +887,7 @@
 樱花弹:
     liveTime: 60
     gravity: 0
-    autoTrace: true
+    homing: true
     blockHitAction: thru
     trailColor: "233|52|115"
     trailSize: 0.1
@@ -901,7 +904,7 @@
 追踪瘟疫导弹:
     liveTime: 75
     gravity: 0
-    autoTrace: true
+    homing: true
     blockHitAction: thru
     isGrenade: true
     blastRadius: 2.25
@@ -911,9 +914,9 @@
 瘟疫矢:
     gravity: 0
     liveTime: 100
-    autoTrace: true
+    homing: true
     projectileSize: 0.5
-    autoTraceRadius: 64
+    homingRadius: 64
     blockHitAction: thru
     trailColor: "0|100|50"
     buffInflict:
@@ -926,10 +929,10 @@
         velocity: 2.5
 瘟疫搜寻者:
     gravity: 0
-    autoTrace: true
+    homing: true
     blockHitAction: thru
     minimumDamageTicks: 5
-    noAutoTraceTicks: 5
+    noHomingTicks: 5
     liveTime: 60
     trailColor: "100|255|100"
     trailStepSize: 0.65
@@ -944,9 +947,9 @@
 告死之花弹幕:
     gravity: 0
     liveTime: 60
-    autoTrace: true
+    homing: true
     projectileSize: 0.5
-    autoTraceRadius: 64
+    homingRadius: 64
     blockHitAction: thru
     trailColor: RAINBOW
     buffInflict:
@@ -964,8 +967,8 @@
     liveTime: 25
     projectileSize: 1
     blockHitAction: thru
-    autoTrace: true
-    autoTraceRadius: 20
+    homing: true
+    homingRadius: 20
     isGrenade: true
     blastRadius: 2.75
     trailColor: 255|255|255
@@ -976,19 +979,19 @@
     blockHitAction: thru
     projectileSize: 0.5
     penetration: 2
-    autoTrace: true
-    autoTraceRadius: 24
-    noAutoTraceTicks: 10
+    homing: true
+    homingRadius: 24
+    noHomingTicks: 10
 幽花追踪能量弹:
     gravity: 0
     liveTime: 60
     blockHitAction: thru
     projectileSize: 1.5
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 40
-    autoTraceAbility: 5.5
-    noAutoTraceTicks: 20
+    homing: true
+    homingMethod: 2
+    homingRadius: 40
+    homingAbility: 5.5
+    noHomingTicks: 20
 血炎龙息:
     gravity: 0
     liveTime: 30
@@ -1006,9 +1009,9 @@
     gravity: 0
     liveTime: 60
     blockHitAction: thru
-    autoTrace: true
-    noAutoTraceTicks: 10
-    autoTraceRadius: 24
+    homing: true
+    noHomingTicks: 10
+    homingRadius: 24
 小遗爵鲨牙刺球:
     gravity: 0
     liveTime: 20
@@ -1025,8 +1028,8 @@
     gravity: 0
     liveTime: 60
     blockHitAction: thru
-    autoTrace: true
-    autoTraceRadius: 32
+    homing: true
+    homingRadius: 32
 小遗爵硫海漩涡:
     gravity: 0
     liveTime: 100
@@ -1040,9 +1043,9 @@
     gravity: 0
     liveTime: 100
     blockHitAction: thru
-    autoTrace: true
-    autoTraceRadius: 24
-    noAutoTraceTicks: 5
+    homing: true
+    homingRadius: 24
+    noHomingTicks: 5
     minimumDamageTicks: 2
     isGrenade: true
     blastRadius: 1.75
@@ -1065,15 +1068,15 @@
     projectileSize: 1.5
     isGrenade: true
     blastRadius: 1
-    autoTrace: true
-    autoTraceRadius: 64
+    homing: true
+    homingRadius: 64
 炽焰天龙火球:
     gravity: 0
     liveTime: 75
     blockHitAction: thru
     projectileSize: 1.5
-    autoTrace: true
-    autoTraceRadius: 32
+    homing: true
+    homingRadius: 32
 极昼激光:
     gravity: 0
     liveTime: 60
@@ -1092,8 +1095,8 @@
     blockHitAction: thru
     penetration: 2
     projectileSize: 0.5
-    autoTrace: true
-    autoTraceRadius: 32
+    homing: true
+    homingRadius: 32
 阿瑞斯外骨骼球状闪电:
     gravity: 0
     liveTime: 60
@@ -1123,9 +1126,9 @@
     gravity: 0
     liveTime: 100
     projectileSize: 1.5
-    autoTrace: true
-    autoTraceRadius: 48
-    autoTraceAbility: 6
+    homing: true
+    homingRadius: 48
+    homingAbility: 6
     spawnSound: item.largeWeaponFire
     spawnSoundVolume: 0.75
     clusterBomb:
@@ -1137,9 +1140,9 @@
     gravity: 0
     liveTime: 80
     blockHitAction: thru
-    autoTrace: true
-    autoTraceRadius: 32
-    autoTraceAbility: 5
+    homing: true
+    homingRadius: 32
+    homingAbility: 5
     trailColor: RAINBOW
     buffInflict:
         - "超位崩解|100|1"
@@ -1148,9 +1151,9 @@
     liveTime: 80
     blockHitAction: thru
     projectileSize: 3
-    autoTrace: true
-    autoTraceRadius: 32
-    autoTraceAbility: 6
+    homing: true
+    homingRadius: 32
+    homingAbility: 6
     isGrenade: true
     blastRadius: 6
     buffInflict:
@@ -1159,10 +1162,10 @@
     gravity: 0
     liveTime: 80
     blockHitAction: thru
-    autoTrace: true
-    autoTraceRadius: 64
-    autoTraceAbility: 6
-    noAutoTraceTicks: 5
+    homing: true
+    homingRadius: 64
+    homingAbility: 6
+    noHomingTicks: 5
     buffInflict:
         - "夜魇|100|1"
 源生冰锥:
@@ -1196,10 +1199,10 @@
 干缩硫海龙鲨:
     liveTime: 60
     projectileSize: 1.5
-    autoTrace: true
-    autoTraceRadius: 24
+    homing: true
+    homingRadius: 24
 星尘细胞弹:
-    autoTrace: true
+    homing: true
     buffInflict:
         - "缓慢|200|1"
         - "剧毒|200|1"
@@ -1213,32 +1216,32 @@
     blastDamageShooter: true
 初级雪人火箭:
     gravity: 0
-    autoTrace: true
+    homing: true
     isGrenade: true
     blastRadius: 1.75
     blastDamageShooter: true
 二级雪人火箭:
     gravity: 0
-    autoTrace: true
+    homing: true
     isGrenade: true
     blastRadius: 2.5
     blastDamageShooter: true
     blastDestroyBlock: true
 三级雪人火箭:
     gravity: 0
-    autoTrace: true
+    homing: true
     blastRadius: 2.25
     blastDamageShooter: true
 四级雪人火箭:
     gravity: 0
-    autoTrace: true
+    homing: true
     isGrenade: true
     blastRadius: 3.5
     blastDamageShooter: true
     blastDestroyBlock: true
 集束雪人火箭:
     gravity: 0
-    autoTrace: true
+    homing: true
     clusterBomb:
         amount: 5
         name: 集束破片
@@ -1328,8 +1331,8 @@
     minimumDamageTicks: 5
     projectileSize: 1
     liveTime: 60
-    autoTrace: true
-    noAutoTraceTicks: 10
+    homing: true
+    noHomingTicks: 10
 玛瑙火箭弹:
     gravity: 0
     projectileSize: 1
@@ -1343,16 +1346,16 @@
 蜜蜂:
     liveTime: 100
     gravity: 0
-    autoTrace: true
-    autoTraceAbility: 2.25
-    autoTraceRadius: 24
+    homing: true
+    homingAbility: 2.25
+    homingRadius: 24
     blockHitAction: thru
 瘟疫蜜蜂:
     liveTime: 100
     gravity: 0
-    autoTrace: true
-    autoTraceAbility: 2.25
-    autoTraceRadius: 24
+    homing: true
+    homingAbility: 2.25
+    homingRadius: 24
     blockHitAction: thru
     buffInflict:
         - "瘟疫|20|1"
@@ -1412,7 +1415,7 @@
 天蝎座迷你火箭:
     gravity: 0
     projectileSize: 0.5
-    autoTrace: true
+    homing: true
     isGrenade: true
     blastRadius: 2.5
     trailColor: 255|187|174
@@ -1421,7 +1424,7 @@
 天蝎座大号核弹:
     gravity: 0
     projectileSize: 1.5
-    autoTrace: true
+    homing: true
     isGrenade: true
     blastRadius: 7.5
     trailColor: 255|187|174
@@ -1438,9 +1441,9 @@
     gravity: 0
     projectileSize: 5
     blockHitAction: thru
-    autoTrace: true
-    autoTraceAbility: 5
-    autoTraceRadius: 32
+    homing: true
+    homingAbility: 5
+    homingRadius: 32
     isGrenade: true
     blastRadius: 7.5
     clusterBomb:
@@ -1451,16 +1454,16 @@
 集束迷你火箭:
     gravity: 0
     projectileSize: 0.5
-    autoTrace: true
-    autoTraceRadius: 16
+    homing: true
+    homingRadius: 16
     isGrenade: true
     blastRadius: 2.75
 空气燃料焦土火箭:
     gravity: 0
     projectileSize: 1
     blockHitAction: thru
-    autoTrace: true
-    autoTraceRadius: 16
+    homing: true
+    homingRadius: 16
     isGrenade: true
     blastRadius: 2.75
     clusterBomb:
@@ -1484,8 +1487,8 @@
     blockHitAction: thru
     liveTime: 100
     isGrenade: true
-    autoTrace: true
-    autoTraceRadius: 24
+    homing: true
+    homingRadius: 24
     blastRadius: 2.75
     trailColor: 87|255|51
     trailSize: 0.25
@@ -1750,9 +1753,9 @@ TNT:
     blockHitAction: thru
     maxSpeed: 2.5
     liveTime: 60
-    autoTrace: true
-    autoTraceAbility: 10
-    autoTraceRadius: 24
+    homing: true
+    homingAbility: 10
+    homingRadius: 24
     trailColor: 106|255|76;255|150|0;100|255|100;100|100|255
     trailLingerTime: 6
     trailIntensityMulti: 0.35
@@ -1764,9 +1767,9 @@ TNT:
     blockHitAction: thru
     penetration: 9
     liveTime: 100
-    autoTrace: true
-    autoTraceAbility: 6
-    autoTraceRadius: 24
+    homing: true
+    homingAbility: 6
+    homingRadius: 24
     trailColor: 255|255|255
     trailLingerTime: 6
     trailIntensityMulti: 1
@@ -1829,8 +1832,8 @@ TNT:
 绿藻弹:
     gravity: 0
     liveTime: 100
-    autoTrace: true
-    autoTraceAbility: 8.0
+    homing: true
+    homingAbility: 8.0
 水晶子弹:
     gravity: 0
     liveTime: 100
@@ -1896,10 +1899,10 @@ TNT:
     bouncePenetrationBonded: true
 泰拉追踪弹:
     gravity: 0
-    autoTrace: true
+    homing: true
     blockHitAction: thru
     minimumDamageTicks: 5
-    noAutoTraceTicks: 5
+    noHomingTicks: 5
     liveTime: 30
 泰拉弹:
     gravity: 0
@@ -1912,9 +1915,9 @@ TNT:
 钫弹:
     gravity: 0
     liveTime: 100
-    autoTrace: true
-    autoTraceRadius: 16
-    noAutoTraceTicks: 999999
+    homing: true
+    homingRadius: 16
+    noHomingTicks: 999999
     penetration: 1
 圣火弹:
     gravity: 0
@@ -1940,8 +1943,8 @@ TNT:
     gravity: 0
 小孢子:
     noGravityTicks: 0
-    autoTrace: true
-    noAutoTraceTicks: 6
+    homing: true
+    noHomingTicks: 6
     liveTime: 20
     trailColor: 27|157|232
     trailSize: 0.1
@@ -1969,8 +1972,8 @@ TNT:
 追踪蓝晶碎片:
     gravity: 0.01
     liveTime: 50
-    autoTrace: true
-    noAutoTraceTicks: 6
+    homing: true
+    noHomingTicks: 6
     liveTime: 20
 蓝晶碎片:
     gravity: 0.01
@@ -1983,8 +1986,8 @@ TNT:
 追踪能量弹:
     gravity: 0.01
     liveTime: 30
-    autoTrace: true
-    noAutoTraceTicks: 6
+    homing: true
+    noHomingTicks: 6
     liveTime: 20
     trailColor: 53|255|255
     trailSize: 0.1
@@ -2040,8 +2043,8 @@ TNT:
     isGrenade: true
     blastRadius: 1
     trailColor: 0|150|0
-    autoTrace: true
-    autoTraceRadius: 24
+    homing: true
+    homingRadius: 24
 追踪蘑菇:
     gravity: 0
     projectileSize: 1
@@ -2049,8 +2052,8 @@ TNT:
     enemyInvincibilityFrame: 10
     blockHitAction: thru
     liveTime: 100
-    autoTrace: true
-    autoTraceAbility: 2
+    homing: true
+    homingAbility: 2
 幻星弹:
     gravity: 0
     buffInflict:
@@ -2082,7 +2085,7 @@ TNT:
     gravity: 0
     projectileSize: 0.5
     liveTime: 30
-    autoTrace: true
+    homing: true
     isGrenade: true
     blastRadius: 2.5
     clusterBomb:
@@ -2198,10 +2201,10 @@ TNT:
     gravity: 0
     blockHitAction: thru
     liveTime: 40
-    autoTrace: true
-    autoTraceRadius: 24
-    autoTraceAbility: 5.5
-    noAutoTraceTicks: 3
+    homing: true
+    homingRadius: 24
+    homingAbility: 5.5
+    noHomingTicks: 3
     trailColor: 167|255|255
     trailIntensityMulti: 0.5
 月神高速弹:
@@ -2270,7 +2273,7 @@ TNT:
         velocity: 0.75
         damageMulti: 0.75
 疯狂飞斧:
-    autoTrace: true
+    homing: true
     liveTime: 100
 猪鲨链球:
     spawnProjectiles:
@@ -2281,7 +2284,7 @@ TNT:
         speed: 0.4
         spawnType: 气泡弹
 气泡弹:
-    autoTrace: true
+    homing: true
     gravity: 0
     liveTime: 35
 雷姆的复仇:
@@ -2306,8 +2309,8 @@ TNT:
         fireOnCollideEntity: true
         velocity: 2
 龙魂破火星:
-    autoTrace: true
-    autoTraceRadius: 16
+    homing: true
+    homingRadius: 16
     gravity: 0
     liveTime: 30
     trailColor: 255|255|113
@@ -2329,7 +2332,7 @@ TNT:
         speed: 0.5
         spawnType: 泰拉悠悠球光束
 泰拉悠悠球光束:
-    autoTrace: true
+    homing: true
     penetration: 999999
     blockHitAction: thru
     gravity: 0
@@ -2581,14 +2584,14 @@ TNT:
         - "剧毒|30|1"
 风暴剑气:
     projectileSize: 0.5
-    autoTrace: true
-    autoTraceAbility: 1.75
+    homing: true
+    homingAbility: 1.75
     penetration: 1
     gravity: 0
 分裂球:
-    autoTrace: true
-    autoTraceAbility: 2
-    noAutoTraceTicks: 5
+    homing: true
+    homingAbility: 2
+    noHomingTicks: 5
     gravity: 0
     liveTime: 30
     trailColor: 255|51|109
@@ -2603,9 +2606,9 @@ TNT:
         name: 分裂球
         velocity: 0.75
 霜火球:
-    autoTrace: true
-    autoTraceAbility: 1.75
-    noAutoTraceTicks: 5
+    homing: true
+    homingAbility: 1.75
+    noHomingTicks: 5
     gravity: 0
     buffInflict:
         - "狱炎|40|1"
@@ -2646,10 +2649,10 @@ TNT:
 禁忌镰刀:
     blockHitAction: thru
     projectileSize: 0.5
-    autoTrace: true
-    autoTraceAbility: 3
-    autoTraceRadius: 64
-    noAutoTraceTicks: 10
+    homing: true
+    homingAbility: 3
+    homingRadius: 64
+    noHomingTicks: 10
     gravity: 0
     liveTime: 40
     penetration: 2
@@ -2657,9 +2660,9 @@ TNT:
         - "暗影焰|60|1"
         - "狱炎|30|1"
 追踪硫火刃:
-    autoTrace: true
+    homing: true
     projectileSize: 0.5
-    noAutoTraceTicks: 10
+    noHomingTicks: 10
     gravity: 0
     liveTime: 50
     buffInflict:
@@ -2677,7 +2680,7 @@ TNT:
         name: 追踪硫火刃
         velocity: 1.25
 炽炎幻影刃:
-    autoTrace: true
+    homing: true
     projectileSize: 0.5
     gravity: 0
     liveTime: 60
@@ -2714,8 +2717,8 @@ TNT:
     isGrenade: true
     blastRadius: 3
 彩虹弹幕:
-    autoTrace: true
-    noAutoTraceTicks: 15
+    homing: true
+    noHomingTicks: 15
     gravity: 0
     projectileSize: 0.5
     liveTime: 65
@@ -2782,8 +2785,8 @@ TNT:
     buffInflict:
         - "瘟疫|40|1"
 蓝焰火花:
-    autoTrace: true
-    noAutoTraceTicks: 10
+    homing: true
+    noHomingTicks: 10
     blockHitAction: thru
     liveTime: 60
     trailColor: 148|255|255
@@ -2791,25 +2794,25 @@ TNT:
     trailStepSize: 0.75
 熵离子球:
     gravity: 0
-    autoTrace: true
-    autoTraceRadius: 16
-    noAutoTraceTicks: 10
+    homing: true
+    homingRadius: 16
+    noHomingTicks: 10
     trailColor: 144|35|255
     trailSize: 0.2
     trailStepSize: 0.5
     trailLingerTime: 5
 追踪火球:
-    autoTrace: true
-    autoTraceRadius: 16
+    homing: true
+    homingRadius: 16
     minimumDamageTicks: 5
-    noAutoTraceTicks: 10
+    noHomingTicks: 10
     trailColor: 255|137|17
     trailSize: 0.15
     trailStepSize: 0.4
 燃烧头骨:
-    autoTrace: true
-    autoTraceRadius: 16
-    noAutoTraceTicks: 5
+    homing: true
+    homingRadius: 16
+    noHomingTicks: 5
     minimumDamageTicks: 1
     blockHitAction: thru
     projectileSize: 1
@@ -2836,7 +2839,7 @@ TNT:
 制裁大剑分裂剑气:
     gravity: 0
     liveTime: 40
-    autoTrace: true
+    homing: true
     trailColor: 255|255|255
     trailStepSize: 0.5
     trailLingerTime: 6
@@ -2912,9 +2915,9 @@ TNT:
     speedMultiPerTick: 0.95
     blockHitAction: thru
     liveTime: 50
-    autoTrace: true
-    autoTraceAbility: 2
-    autoTraceRadius: 16
+    homing: true
+    homingAbility: 2
+    homingRadius: 16
     penetration: 4
     enemyInvincibilityFrame: 2
     buffInflict:
@@ -2925,9 +2928,9 @@ TNT:
     speedMultiPerTick: 0.95
     blockHitAction: thru
     liveTime: 50
-    autoTrace: true
-    autoTraceAbility: 4
-    autoTraceRadius: 16
+    homing: true
+    homingAbility: 4
+    homingRadius: 16
     penetration: 2
     enemyInvincibilityFrame: 1
     buffInflict:
@@ -2986,9 +2989,9 @@ TNT:
     penetration: 999999
 恐惧骷髅:
     gravity: 0
-    autoTrace: true
-    autoTraceRadius: 24
-    noAutoTraceTicks: 5
+    homing: true
+    homingRadius: 24
+    noHomingTicks: 5
     blockHitAction: thru
     projectileSize: 1.5
     trailColor: 255|137|17
@@ -3002,9 +3005,9 @@ TNT:
 追踪海神之馈赠三叉戟:
     penetration: 1
     liveTime: 100
-    autoTrace: true
-    autoTraceAbility: 3
-    autoTraceRadius: 24
+    homing: true
+    homingAbility: 3
+    homingRadius: 24
     projectileSize: 1
 海神之馈赠三叉戟:
     gravity: 0
@@ -3020,8 +3023,8 @@ TNT:
     gravity: 0
     penetration: 3
     liveTime: 100
-    autoTrace: true
-    autoTraceRadius: 24
+    homing: true
+    homingRadius: 24
     projectileSize: 2
     enemyInvincibilityFrame: 2
 惊惧光束:
@@ -3049,17 +3052,17 @@ TNT:
     gravity: 0
     blockHitAction: thru
     liveTime: 75
-    autoTrace: true
-    autoTraceRadius: 27.5
+    homing: true
+    homingRadius: 27.5
     trailColor: 255|174|255
     buffInflict:
         - "神弑者之怒焰|100|1"
 精元镰刀:
     gravity: 0
     blockHitAction: thru
-    autoTrace: true
-    autoTraceRadius: 24
-    noAutoTraceTicks: 5
+    homing: true
+    homingRadius: 24
+    noHomingTicks: 5
     penetration: 3
     liveTime: 100
     projectileSize: 3
@@ -3068,8 +3071,8 @@ TNT:
 携序之剑分裂剑气:
     gravity: 0
     liveTime: 40
-    autoTrace: true
-    autoTraceRadius: 24
+    homing: true
+    homingRadius: 24
     trailColor: 255|255|255
     trailStepSize: 0.5
     trailLingerTime: 6
@@ -3106,18 +3109,18 @@ TNT:
 针形禅心导弹:
     gravity: 0
     liveTime: 50
-    autoTrace: true
-    noAutoTraceTicks: 5
-    autoTraceRadius: 16
+    homing: true
+    noHomingTicks: 5
+    homingRadius: 16
     buffInflict:
         - "暗影焰|60|1"
 分裂禅心导弹:
     gravity: 0
     liveTime: 30
     projectileSize: 0.5
-    autoTrace: true
-    noAutoTraceTicks: 5
-    autoTraceRadius: 16
+    homing: true
+    noHomingTicks: 5
+    homingRadius: 16
     isGrenade: true
     blastRadius: 2.5
     buffInflict:
@@ -3140,17 +3143,17 @@ TNT:
     blockHitAction: thru
     penetration: 1
     liveTime: 100
-    autoTrace: true
-    noAutoTraceTicks: 5
-    autoTraceRadius: 24
+    homing: true
+    noHomingTicks: 5
+    homingRadius: 24
     isGrenade: true
     blastRadius: 4
 星流能量矢:
     gravity: 0
     projectileSize: 1
     blockHitAction: thru
-    autoTrace: true
-    autoTraceRadius: 32
+    homing: true
+    homingRadius: 32
     liveTime: 100
     speedMultiPerTick: 0.99
     trailColor: 128|255|64
@@ -3235,9 +3238,9 @@ TNT:
         - "超位崩解|200|1"
 绿色绚辉圣剑光束:
     gravity: 0
-    autoTrace: true
-    autoTraceAbility: 5.5
-    autoTraceRadius: 24
+    homing: true
+    homingAbility: 5.5
+    homingRadius: 24
     projectileSize: 3
     liveTime: 50
     trailColor: 0|255|0
@@ -3278,7 +3281,7 @@ TNT:
 元素短剑:
     gravity: 0
     liveTime: 60
-    autoTrace: true
+    homing: true
     projectileSize: 0.5
     blockHitAction: thru
     trailColor: RAINBOW
@@ -3303,8 +3306,8 @@ TNT:
     gravity: 0
     liveTime: 50
     penetration: 4
-    autoTrace: true
-    autoTraceRadius: 16
+    homing: true
+    homingRadius: 16
     projectileSize: 0.5
     blockHitAction: thru
     enemyInvincibilityFrame: 15
@@ -3321,8 +3324,8 @@ TNT:
 宇宙之刃:
     gravity: 0
     liveTime: 60
-    autoTrace: true
-    autoTraceRadius: 24
+    homing: true
+    homingRadius: 24
     projectileSize: 0.5
     blockHitAction: thru
     trailColor: 255|199|238
@@ -3338,13 +3341,13 @@ TNT:
     gravity: 0
     liveTime: 20
     penetration: 4
-    autoTrace: true
-    autoTraceRadius: 16
+    homing: true
+    homingRadius: 16
     projectileSize: 0.25
     blockHitAction: thru
 阿米迪亚斯漩涡:
     projectileSize: 0.5
-    autoTrace: true
+    homing: true
     gravity: 0
     blockHitAction: thru
     liveTime: 75
@@ -3361,8 +3364,8 @@ TNT:
     liveTime: 20
 血之镰刀:
     projectileSize: 0.5
-    autoTrace: true
-    autoTraceRadius: 25
+    homing: true
+    homingRadius: 25
     speedMultiPerTick: 0.95
     gravity: 0
     blockHitAction: thru
@@ -3405,7 +3408,7 @@ TNT:
     gravity: 0
     blockHitAction: thru
     speedMultiPerTick: 0.98
-    autoTrace: true
+    homing: true
     liveTime: 40
 元素日炎针:
     projectileSize: 3
@@ -3419,15 +3422,15 @@ TNT:
     gravity: 0
     blockHitAction: thru
     speedMultiPerTick: 0.98
-    autoTrace: true
-    autoTraceRadius: 24
+    homing: true
+    homingRadius: 24
     liveTime: 60
     buffInflict:
         - "元素谐鸣|80|1"
 死神擢升镰刀:
     gravity: 0
-    autoTrace: true
-    autoTraceRadius: 16
+    homing: true
+    homingRadius: 16
     blockHitAction: thru
     speedMultiPerTick: 0.95
     projectileSize: 3
@@ -3436,9 +3439,9 @@ TNT:
     liveTime: 100
 热熔光刃:
     gravity: 0
-    autoTrace: true
-    autoTraceRadius: 24
-    autoTraceAbility: 5.0
+    homing: true
+    homingRadius: 24
+    homingAbility: 5.0
     blockHitAction: thru
     projectileSize: 3
     penetration: 2
@@ -3446,10 +3449,10 @@ TNT:
     liveTime: 60
 银河之雷:
     gravity: 0
-    autoTrace: true
-    autoTraceRadius: 24
-    autoTraceAbility: 6.0
-    noAutoTraceTicks: 5
+    homing: true
+    homingRadius: 24
+    homingAbility: 6.0
+    noHomingTicks: 5
     blockHitAction: thru
     projectileSize: 1.5
     minimumDamageTicks: 5
@@ -3458,10 +3461,10 @@ TNT:
 摩羯之祈星环:
     gravity: 0
     blockHitAction: thru
-    autoTrace: true
-    noAutoTraceTicks: 5
-    autoTraceRadius: 24
-    autoTraceAbility: 2
+    homing: true
+    noHomingTicks: 5
+    homingRadius: 24
+    homingAbility: 2
     projectileSize: 4
     liveTime: 60
     speedMultiPerTick: 0.95
@@ -3470,10 +3473,10 @@ TNT:
 巨蟹之礼星环:
     gravity: 0
     blockHitAction: thru
-    autoTrace: true
-    noAutoTraceTicks: 5
-    autoTraceRadius: 24
-    autoTraceAbility: 2
+    homing: true
+    noHomingTicks: 5
+    homingRadius: 24
+    homingAbility: 2
     projectileSize: 4
     liveTime: 60
     speedMultiPerTick: 0.95
@@ -3481,9 +3484,9 @@ TNT:
     gravity: 0
     blockHitAction: thru
     minimumDamageTicks: 5
-    autoTrace: true
-    noAutoTraceTicks: 5
-    autoTraceRadius: 24
+    homing: true
+    noHomingTicks: 5
+    homingRadius: 24
     projectileSize: 2
     isGrenade: true
     blastRadius: 4
@@ -3506,9 +3509,9 @@ TNT:
     gravity: 0
     blockHitAction: thru
     speedMultiPerTick: 0.98
-    autoTrace: true
-    autoTraceRadius: 24
-    autoTraceAbility: 6
+    homing: true
+    homingRadius: 24
+    homingAbility: 6
     liveTime: 50
 星夜光束:
     gravity: 0
@@ -3606,9 +3609,9 @@ TNT:
     arrowOrPotion: true
     gravity: 0
     penetration: 1
-    autoTrace: true
-    autoTraceRadius: 8
-    autoTraceAbility: 2
+    homing: true
+    homingRadius: 8
+    homingAbility: 2
     trailColor: 255|190|35
     trailSize: 0.2
     trailStepSize: 0.5
@@ -3680,7 +3683,7 @@ TNT:
 亡魂:
     gravity: 0
     liveTime: 75
-    autoTrace: true
+    homing: true
     penetration: 2
     trailColor: 255|255|255
     trailStepSize: 0.35
@@ -3690,21 +3693,23 @@ TNT:
 蝙蝠:
     gravity: 0
     liveTime: 75
-    autoTrace: true
+    homing: true
 暴雪:
     arrowOrPotion: true
     gravity: 0
     liveTime: 80
 彩虹水晶:
     gravity: 0
-    liveTime: 25
+    liveTime: 45
     blockHitAction: bounce
     bounce: 5
     penetration: 2
     speedMultiPerTick: 0.75
-    autoTrace: true
-    autoTraceSharpTurning: false
-    noAutoTraceTicks: 8
+    homing: true
+    homingSharpTurning: false
+    homingRetarget: true
+    homingAbility: 27
+    noHomingTicks: 8
 泡泡:
     gravity: 0
     liveTime: 25
@@ -3712,31 +3717,33 @@ TNT:
 台风:
     liveTime: 60
     projectileSize: 1
-    enemyInvincibilityFrame: 10
+    enemyInvincibilityFrame: 15
     blockHitAction: bounce
     bounce: 8
     penetration: 999
     gravity: 0
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceRadius: 16
+    homing: true
+    homingSharpTurning: false
+    homingRetarget: true
+    homingAbility: 36
+    homingRadius: 16
 星云烈焰:
     gravity: 0
-    autoTrace: true
+    homing: true
 星云烈焰炮弹:
     gravity: 0
-    autoTrace: true
+    homing: true
 星云奥秘爆炸弹碎块:
     noGravityTicks: 0
     liveTime: 30
-    autoTrace: true
-    noAutoTraceTicks: 8
+    homing: true
+    noHomingTicks: 8
 星云奥秘:
     liveTime: 50
-    autoTrace: true
-    autoTraceRadius: 32
-    autoTraceMethod: 2
-    autoTraceAbility: 0.5
+    homing: true
+    homingRadius: 32
+    homingMethod: 2
+    homingAbility: 0.5
     isGrenade: true
     blastRadius: 2.75
     blockHitAction: bounce
@@ -3764,8 +3771,8 @@ TNT:
 魔法花瓣:
     gravity: 0
     liveTime: 15
-    autoTrace: true
-    autoTraceRadius: 8
+    homing: true
+    homingRadius: 8
 魔法花朵:
     gravity: 0
     projectileSize: 1
@@ -3786,7 +3793,7 @@ TNT:
     trailSize: 0.1
     trailStepSize: 0.5
 天蓝羽毛:
-    autoTrace: true
+    homing: true
     isGrenade: true
     blastRadius: 1.5
 南瓜:
@@ -3813,8 +3820,8 @@ TNT:
         speed: 1.0
         spawnType: 暗影之雨
 暗影射线分支:
-    autoTrace: true
-    autoTraceAbility: 2
+    homing: true
+    homingAbility: 2
     gravity: 0
     liveTime: 20
     blockHitAction: thru
@@ -3826,8 +3833,8 @@ TNT:
     blockHitAction: thru
     penetration: 99999
     projectileSize: 2
-    autoTrace: true
-    autoTraceAbility: 3
+    homing: true
+    homingAbility: 3
 三叉戟冰锥:
     gravity: 0
     liveTime: 60
@@ -3846,8 +3853,8 @@ TNT:
 闪光花瓣:
     gravity: 0
     liveTime: 40
-    autoTrace: true
-    noAutoTraceTicks: 8
+    homing: true
+    noHomingTicks: 8
     trailColor: 226|202|70
     trailSize: 0.1
     trailStepSize: 0.5
@@ -3856,9 +3863,9 @@ TNT:
     projectileSize: 1
     liveTime: 40
     speedMultiPerTick: 0.95
-    autoTrace: true
-    autoTraceRadius: 8
-    autoTraceAbility: 2.5
+    homing: true
+    homingRadius: 8
+    homingAbility: 2.5
     trailColor: 226|202|70
     trailSize: 0.25
     trailStepSize: 0.65
@@ -3875,8 +3882,8 @@ TNT:
     buffInflict:
         - "狱炎|60|1"
 自然能量:
-    autoTrace: true
-    autoTraceAbility: 3
+    homing: true
+    homingAbility: 3
     gravity: 0
     liveTime: 20
     blockHitAction: thru
@@ -3886,7 +3893,7 @@ TNT:
     gravity: 0
     blockHitAction: thru
     projectileSize: 0.5
-    autoTrace: true
+    homing: true
     liveTime: 75
     buffInflict:
         - "深渊水压|60|1"
@@ -3926,8 +3933,8 @@ TNT:
 玄法花瓣:
     gravity: 0
     liveTime: 40
-    autoTrace: true
-    noAutoTraceTicks: 5
+    homing: true
+    noHomingTicks: 5
     trailColor: 225|90|175
     trailSize: 0.1
     trailStepSize: 0.5
@@ -3936,9 +3943,9 @@ TNT:
     projectileSize: 1
     liveTime: 50
     speedMultiPerTick: 0.95
-    autoTrace: true
-    autoTraceRadius: 12
-    autoTraceAbility: 2.75
+    homing: true
+    homingRadius: 12
+    homingAbility: 2.75
     trailColor: 225|90|175
     trailSize: 0.25
     trailStepSize: 0.65
@@ -3974,18 +3981,18 @@ TNT:
     gravity: 0
     blockHitAction: thru
     projectileSize: 0.75
-    autoTrace: true
-    autoTraceRadius: 24
+    homing: true
+    homingRadius: 24
     liveTime: 75
     buffInflict:
         - "神圣之火|60|1"
 荆棘烁兰花瓣:
     gravity: 0
     liveTime: 40
-    autoTrace: true
-    autoTraceRadius: 16
+    homing: true
+    homingRadius: 16
     minimumDamageTicks: 5
-    noAutoTraceTicks: 5
+    noHomingTicks: 5
     trailColor: 212|80|194
     trailSize: 0.1
     trailStepSize: 0.5
@@ -3994,9 +4001,9 @@ TNT:
     projectileSize: 1
     liveTime: 50
     speedMultiPerTick: 0.95
-    autoTrace: true
-    autoTraceRadius: 16
-    autoTraceAbility: 3
+    homing: true
+    homingRadius: 16
+    homingAbility: 3
     trailColor: 212|80|194
     trailSize: 0.25
     trailStepSize: 0.65
@@ -4008,10 +4015,10 @@ TNT:
 王子火焰:
     gravity: 0
     liveTime: 40
-    autoTrace: true
-    autoTraceRadius: 16
+    homing: true
+    homingRadius: 16
     minimumDamageTicks: 2
-    noAutoTraceTicks: 2
+    noHomingTicks: 2
     buffInflict:
         - "神圣之火|20|1"
 王子火球:
@@ -4072,9 +4079,9 @@ TNT:
     gravity: 0
     liveTime: 35
     penetration: 1
-    autoTrace: true
-    autoTraceRadius: 16
-    noAutoTraceTicks: 2
+    homing: true
+    homingRadius: 16
+    noHomingTicks: 2
     minimumDamageTicks: 2
     trailColor: 255|255|255
 金星狱炎三叉戟:
@@ -4165,8 +4172,8 @@ TNT:
     projectileSize: 5
     penetration: 3
     liveTime: 100
-    autoTrace: true
-    autoTraceRadius: 24
+    homing: true
+    homingRadius: 24
     isGrenade: true
     blastRadius: 4
     trailColor: 207|91|197
@@ -4244,11 +4251,11 @@ TNT:
 耀界之光能量体:
     gravity: 0
     liveTime: 60
-    autoTrace: true
-    autoTraceRadius: 24
-    autoTraceAbility: 5
+    homing: true
+    homingRadius: 24
+    homingAbility: 5
     minimumDamageTicks: 2
-    noAutoTraceTicks: 2
+    noHomingTicks: 2
     trailColor: RAINBOW
     trailIntensityMulti: 0.35
     buffInflict:
@@ -4294,9 +4301,9 @@ TNT:
     projectileSize: 0.5
     trailColor: 0|100|255;255|100|255
 星尘流星:
-    autoTrace: true
-    autoTraceAbility: 2
-    autoTraceSharpTurning: false
+    homing: true
+    homingSharpTurning: false
+    homingAbility: 36
     gravity: 0
     liveTime: 20
     blockHitAction: thru
@@ -4309,9 +4316,9 @@ TNT:
     projectileSize: 0.5
     liveTime: 60
     minimumDamageTicks: 5
-    autoTrace: true
-    autoTraceRadius: 24
-    noAutoTraceTicks: 999999
+    homing: true
+    homingRadius: 24
+    noHomingTicks: 999999
     trailColor: 211|111|178
     trailSize: 0.15
     trailStepSize: 0.5
@@ -4349,8 +4356,8 @@ TNT:
     gravity: 0
     projectileSize: 0.5
     liveTime: 20
-    autoTrace: true
-    autoTraceAbility: 3
+    homing: true
+    homingAbility: 3
 等离子液铸器脉冲:
     gravity: 0
     projectileSize: 1
@@ -4489,15 +4496,14 @@ TNT:
         - "霜火|60|1"
 海神之台风:
     gravity: 0
-    liveTime: 30
+    liveTime: 50
     projectileSize: 1
     blockHitAction: bounce
     bounce: 9
     penetration: 4
-    autoTrace: true
-    autoTraceAbility: 1.5
-    autoTraceMethod: 2
-    autoTraceSharpTurning: false
+    homing: true
+    homingSharpTurning: false
+    homingAbility: 24
 死亡粉尘:
     gravity: 0
     liveTime: 10
@@ -4510,9 +4516,9 @@ TNT:
     gravity: 0
     projectileSize: 0.5
     liveTime: 60
-    autoTrace: true
-    autoTraceAbility: 999
-    noAutoTraceTicks: 999
+    homing: true
+    homingAbility: 999
+    noHomingTicks: 999
 暗晶碎片:
     gravity: 0
     blockHitAction: bounce
@@ -4547,8 +4553,8 @@ TNT:
     trailSize: 0.25
     trailStepSize: 0.75
     penetration: 1
-    autoTrace: true
-    autoTraceRadius: 10
+    homing: true
+    homingRadius: 10
     buffInflict:
         - "神圣之火|60|1"
 始源粉尘:
@@ -4576,18 +4582,18 @@ TNT:
     buffInflict:
         - "狱炎|100|1"
 原核台风:
-    liveTime: 60
+    liveTime: 50
     projectileSize: 1
-    enemyInvincibilityFrame: 15
-    blockHitAction: bounce
-    bounce: 8
-    penetration: 2
+    enemyInvincibilityFrame: 20
+    blockHitAction: thru
+    penetration: 999
     gravity: 0
-    autoTrace: true
-    noAutoTraceTicks: 2
-    autoTraceMethod: 2
-    autoTraceAbility: 5
-    autoTraceRadius: 32
+    homing: true
+    noHomingTicks: 2
+    homingSharpTurning: false
+    homingRetarget: true
+    homingAbility: 40
+    homingRadius: 32
 大殷红利刃:
     gravity: 0
     blockHitAction: thru
@@ -4623,9 +4629,9 @@ TNT:
     blockHitAction: thru
     projectileSize: 1.5
     speedMultiPerTick: 2
-    autoTrace: true
-    noAutoTraceTicks: 5
-    autoTraceRadius: 24
+    homing: true
+    noHomingTicks: 5
+    homingRadius: 24
     maxSpeed: 3
 圣神爆破光球:
     gravity: 0
@@ -4638,17 +4644,17 @@ TNT:
     gravity: 0
     liveTime: 40
     blockHitAction: thru
-    autoTrace: true
-    autoTraceRadius: 24
-    autoTraceAbility: 4.5
+    homing: true
+    homingRadius: 24
+    homingAbility: 4.5
 黑蚀之星:
     gravity: 0
     blockHitAction: thru
     projectileSize: 1
     liveTime: 100
-    autoTrace: true
-    noAutoTraceTicks: 30
-    autoTraceRadius: 24
+    homing: true
+    noHomingTicks: 30
+    homingRadius: 24
     clusterBomb:
         amount: 1
         damageMulti: 0.5
@@ -4668,11 +4674,12 @@ TNT:
     blockHitAction: thru
     penetration: 999999
     gravity: 0
-    autoTrace: true
-    noAutoTraceTicks: 5
-    autoTraceMethod: 2
-    autoTraceAbility: 8
-    autoTraceRadius: 32
+    homing: true
+    homingSharpTurning: false
+    homingRetarget: true
+    noHomingTicks: 5
+    homingAbility: 60
+    homingRadius: 32
 归元漩涡:
     liveTime: 40
     projectileSize: 5
@@ -4702,36 +4709,36 @@ TNT:
     liveTime: 40
     blockHitAction: thru
     gravity: 0
-    autoTrace: true
-    autoTraceRadius: 32
-    autoTraceAbility: 5
-    noAutoTraceTicks: 3
+    homing: true
+    homingRadius: 32
+    homingAbility: 5
+    noHomingTicks: 3
     trailColor: 255|255|100
 异端镀金灵魂:
     liveTime: 50
     blockHitAction: thru
     gravity: 0
     projectileSize: 1
-    autoTrace: true
-    autoTraceRadius: 32
-    autoTraceAbility: 5
-    noAutoTraceTicks: 1
+    homing: true
+    homingRadius: 32
+    homingAbility: 5
+    noHomingTicks: 1
 异端迷失灵魂:
     liveTime: 50
     blockHitAction: thru
     gravity: 0
     projectileSize: 0.5
-    autoTrace: true
-    autoTraceRadius: 32
-    autoTraceAbility: 6
-    noAutoTraceTicks: 2
+    homing: true
+    homingRadius: 32
+    homingAbility: 6
+    noHomingTicks: 2
 异端复仇灵魂:
     liveTime: 50
     blockHitAction: thru
     gravity: 0
     projectileSize: 1.5
-    autoTrace: true
-    autoTraceRadius: 32
+    homing: true
+    homingRadius: 32
 舞光之刃:
     liveTime: 50
     blockHitAction: thru
@@ -4773,9 +4780,9 @@ TNT:
     liveTime: 100
     penetration: 4
     enemyInvincibilityFrame: 2
-    autoTrace: true
-    noAutoTraceTicks: 8
-    autoTraceRadius: 24
+    homing: true
+    noHomingTicks: 8
+    homingRadius: 24
     clusterBomb:
         amount: 25
         damageMulti: 0.67
@@ -4786,9 +4793,9 @@ TNT:
     gravity: 0
     liveTime: 50
     minimumDamageTicks: 5
-    autoTrace: true
-    autoTraceRadius: 16
-    noAutoTraceTicks: 5
+    homing: true
+    homingRadius: 16
+    noHomingTicks: 5
     trailColor: 149|255|255;208|132|145
 小异端诡灵:
     projectileSize: 1.5
@@ -4807,7 +4814,7 @@ TNT:
     blockHitAction: thru
     liveTime: 100
     speedMultiPerTick: 0.95
-    autoTrace: true
+    homing: true
     canBeReflected: false
     buffInflict:
         - "中毒|100|1"
@@ -4911,9 +4918,9 @@ TNT:
     gravity: 0
     liveTime: 40
     minimumDamageTicks: 3
-    autoTrace: true
-    autoTraceRadius: 16
-    noAutoTraceTicks: 6
+    homing: true
+    homingRadius: 16
+    noHomingTicks: 6
 泰拉箭:
     arrowOrPotion: true
     liveTime: 40
@@ -4946,9 +4953,9 @@ TNT:
 征戮分裂箭:
     liveTime: 15
     projectileSize: 0.5
-    autoTrace: true
-    autoTraceRadius: 24
-    autoTraceAbility: 5
+    homing: true
+    homingRadius: 24
+    homingAbility: 5
     buffInflict:
         - "弑神怒焰|40|1"
 征戮箭:
@@ -4968,7 +4975,7 @@ TNT:
     arrowOrPotion: true
     gravity: 0
     liveTime: 50
-    autoTrace: true
+    homing: true
 闪电箭:
     arrowOrPotion: true
     isGrenade: true
@@ -5032,8 +5039,8 @@ TNT:
         velocity: 1
 湮灭自导能源箭:
     gravity: 0
-    autoTrace: true
-    autoTraceRadius: 16
+    homing: true
+    homingRadius: 16
     blockHitAction: thru
     trailColor: 255|0|0;150|200|255;150|255|150;255|150|200;255|255|0;255|0|255;255|150|50
     trailIntensityMulti: 0.5
@@ -5055,15 +5062,15 @@ TNT:
 魂灵星炎:
     gravity: 0
     liveTime: 20
-    autoTrace: true
+    homing: true
 发条精密箭:
     gravity: 0
     projectileSize: 0.5
     blockHitAction: thru
     liveTime: 30
-    autoTrace: true
-    autoTraceRadius: 20
-    autoTraceAbility: 3.5
+    homing: true
+    homingRadius: 20
+    homingAbility: 3.5
     trailColor: 255|212|16
     trailIntensityMulti: 0.5
 地核燃弧箭:
@@ -5080,17 +5087,17 @@ TNT:
     gravity: 0
     projectileSize: 0.5
     blockHitAction: thru
-    autoTrace: true
+    homing: true
     isGrenade: true
     liveTime: 50
 血陨之炎箭:
     gravity: 0
     blockHitAction: thru
     projectileSize: 0.5
-    autoTrace: true
-    autoTraceMethod: 2
-    autoTraceAbility: 4.5
-    autoTraceRadius: 16
+    homing: true
+    homingMethod: 2
+    homingAbility: 4.5
+    homingRadius: 16
     liveTime: 50
 充能猎魂鲨:
     gravity: 0
@@ -5159,8 +5166,8 @@ TNT:
     projectileSize: 0.75
     isGrenade: true
     blastRadius: 2.75
-    autoTrace: true
-    autoTraceRadius: 24
+    homing: true
+    homingRadius: 24
     liveTime: 75
     buffInflict:
         - "破晓|100|1"
@@ -5196,10 +5203,10 @@ TNT:
     gravity: 0
     blockHitAction: thru
     projectileSize: 0.5
-    autoTrace: true
-    autoTraceRadius: 24
-    autoTraceAbility: 5
-    noAutoTraceTicks: 5
+    homing: true
+    homingRadius: 24
+    homingAbility: 5
+    noHomingTicks: 5
     liveTime: 100
     buffInflict:
         - "超位崩解|100|1"
@@ -5209,10 +5216,10 @@ TNT:
     gravity: 0
     blockHitAction: thru
     projectileSize: 0.5
-    autoTrace: true
-    autoTraceRadius: 24
-    autoTraceAbility: 6
-    noAutoTraceTicks: 5
+    homing: true
+    homingRadius: 24
+    homingAbility: 6
+    noHomingTicks: 5
     isGrenade: true
     liveTime: 120
     buffInflict:
@@ -5250,16 +5257,16 @@ TNT:
     projectileSize: 0.5
     gravity: 0
     liveTime: 20
-    autoTrace: true
-    autoTraceRadius: 16
+    homing: true
+    homingRadius: 16
     speedMultiPerTick: 0.5
     isGrenade: true
     blastRadius: 2.5
 诘责之矢:
     projectileSize: 2
     blockHitAction: thru
-    autoTrace: true
-    autoTraceRadius: 16
+    homing: true
+    homingRadius: 16
     gravity: 0
     liveTime: 75
     spawnProjectiles:
@@ -5271,19 +5278,19 @@ TNT:
         spawnType: 诘责分裂箭
 诘责分裂箭:
     projectileSize: 1.5
-    autoTrace: true
-    autoTraceRadius: 24
-    autoTraceAbility: 5
+    homing: true
+    homingRadius: 24
+    homingAbility: 5
     gravity: 0
     liveTime: 40
 龙蒿生命能量:
     gravity: 0
     liveTime: 50
     minimumDamageTicks: 5
-    autoTrace: true
-    autoTraceRadius: 24
-    autoTraceAbility: 5
-    noAutoTraceTicks: 5
+    homing: true
+    homingRadius: 24
+    homingAbility: 5
+    noHomingTicks: 5
     trailColor: 91|255|7
 血炎灵魂:
     gravity: 0
@@ -5293,9 +5300,9 @@ TNT:
     bounce: 5
     penetration: 1
     enemyInvincibilityFrame: 1
-    autoTrace: true
-    autoTraceRadius: 24
-    autoTraceAbility: 5
+    homing: true
+    homingRadius: 24
+    homingAbility: 5
 血炎魔法射弹:
     gravity: 0
     blockHitAction: thru

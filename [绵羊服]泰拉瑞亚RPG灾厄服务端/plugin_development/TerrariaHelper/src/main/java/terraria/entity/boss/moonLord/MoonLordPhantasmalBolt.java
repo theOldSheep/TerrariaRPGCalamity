@@ -6,7 +6,6 @@ import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
@@ -14,7 +13,6 @@ import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MoonLordPhantasmalBolt extends EntitySlime {
@@ -27,7 +25,7 @@ public class MoonLordPhantasmalBolt extends EntitySlime {
     static {
         aimHelper = new EntityHelper.AimHelperOptions()
                 .setAimMode(true)
-                .setTicksOffset(8);
+                .setTicksTotal(8);
     }
     Vector velocity = new Vector();
 

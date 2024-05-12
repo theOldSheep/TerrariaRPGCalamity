@@ -1,9 +1,7 @@
 package terraria.entity.boss.brimstoneElemental;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -12,7 +10,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.cryogen.CryogenShield;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
@@ -39,7 +36,7 @@ public class BrimstoneElemental extends EntitySlime {
     static {
         rayAimHelper = new EntityHelper.AimHelperOptions()
                 .setAimMode(true)
-                .setTicksOffset(10);
+                .setTicksTotal(10);
 
         hintParticleOption = new GenericHelper.ParticleLineOptions()
                 .setLength(48)

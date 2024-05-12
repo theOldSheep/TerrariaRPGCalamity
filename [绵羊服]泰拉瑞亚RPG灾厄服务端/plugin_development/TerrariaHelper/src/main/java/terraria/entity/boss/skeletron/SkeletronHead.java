@@ -79,25 +79,7 @@ public class SkeletronHead extends EntitySlime {
         shootInfo.properties.put("autoTrace", false);
         shootInfo.properties.put("trailColor", null);
         shootInfo.properties.put("blockHitAction", "thru");
-        double offsetSize = 4.5;
-        int i = -3, j = -3, k = -3;
-        while (k <= 3) {
-            i += 1 + (int) (Math.random() * 5);
-            if (i > 3) {
-                i -= 6;
-                j ++;
-            }
-            if (j > 3) {
-                j -= 6;
-                k ++;
-            }
-            Vector velocity = target.getEyeLocation().add(j * offsetSize, i * offsetSize, k * offsetSize).subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector();
-            double velLen = velocity.length();
-            if (velLen < 1e-5) {
-                velLen = 1d;
-                velocity = new Vector(0, 1, 0);
-            }
-            velocity.multiply(1.5 / velLen);
+        for (Vector velocity : MathHelper.getCircularProjectileDirections(5, 4, 90, target, shootInfo.shootLoc, 1.5)) {
             shootInfo.velocity = velocity;
             EntityHelper.spawnProjectile(shootInfo);
         }

@@ -44,9 +44,6 @@ public class OverworldCaveGenerator {
             case COLD_BEACH:        // sulphurous beach
             case FROZEN_OCEAN:      // sulphurous ocean
             case DEEP_OCEAN:        // abyss
-            // these biomes have no surface cave, hence need some smooth transition.
-            case OCEAN:
-            case BEACHES:
                 return 0;
             default:
                 return 1;

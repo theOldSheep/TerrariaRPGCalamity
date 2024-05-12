@@ -2,6 +2,7 @@ package terraria.entity.projectile;
 
 import net.minecraft.server.v1_12_R1.*;
 import net.minecraft.server.v1_12_R1.MathHelper;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -24,16 +25,16 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public static final int DESTROY_HIT_BLOCK = 0, DESTROY_HIT_ENTITY = 1, DESTROY_TIME_OUT = 2;
     // projectile info
     public String projectileType, blockHitAction = "die", spawnSound = "", trailColor = null;
-    public int autoTraceMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200,
-            noAutoTraceTicks = 0, noGravityTicks = 5, maxAutoTraceTicks = 999999, minimumDamageTicks = 0,
+    public int homingMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200,
+            noHomingTicks = 0, noGravityTicks = 5, maxHomingTicks = 999999, minimumDamageTicks = 0,
             penetration = 0, trailLingerTime = 10, worldSpriteUpdateInterval = 1;
-    public double autoTraceAbility = 4, autoTraceEndSpeedMultiplier = 1, autoTraceRadius = 12,
+    public double homingAbility = 4, homingEndSpeedMultiplier = 1, homingRadius = 12,
             blastRadius = 1.5, bounceVelocityMulti = 1,
             frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileRadius = 0.125,
             spawnSoundPitch = 1, spawnSoundVolume = 1.5, speedMultiPerTick = 1,
             trailIntensityMulti = 1, trailSize = -1, trailStepSize = -1;
-    public boolean arrowOrPotion = false, autoTrace = false, autoTraceSharpTurning = true, blastDamageShooter = false,
-            blastOnContactBlock = false, blastOnContactEnemy = false, blastOnTimeout = true,
+    public boolean arrowOrPotion = false, homing = false, homingSharpTurning = true, homingRetarget = false,
+            blastDamageShooter = false, blastOnContactBlock = false, blastOnContactEnemy = false, blastOnTimeout = true,
             bouncePenetrationBonded = false, canBeReflected = true, isGrenade = false, slowedByWater = false,
             trailVanillaParticle = true, worldSpriteMode = false;
 
@@ -45,7 +46,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public HashMap<String, Object> properties;
     public org.bukkit.entity.Projectile bukkitEntity;
     HashMap<String, Double> attrMap, attrMapExtraProjectile;
-    public Entity autoTraceTarget = null;
+    public Entity homingTarget = null;
     Location lastTrailDisplayLocation = null;
     // extra projectile variables
     public ConfigurationSection extraProjectileConfigSection;
@@ -58,13 +59,13 @@ public class TerrariaPotionProjectile extends EntityPotion {
 
     private void setupProjectileProperties() {
         {
-            this.autoTraceMethod = (int) properties.getOrDefault("autoTraceMethod", this.autoTraceMethod);
+            this.homingMethod = (int) properties.getOrDefault("homingMethod", this.homingMethod);
             this.bounce = (int) properties.getOrDefault("bounce", this.bounce);
             this.enemyInvincibilityFrame = (int) properties.getOrDefault("enemyInvincibilityFrame", this.enemyInvincibilityFrame);
             this.liveTime = (int) properties.getOrDefault("liveTime", this.liveTime);
-            this.noAutoTraceTicks = (int) properties.getOrDefault("noAutoTraceTicks", this.noAutoTraceTicks);
+            this.noHomingTicks = (int) properties.getOrDefault("noHomingTicks", this.noHomingTicks);
             this.noGravityTicks = (int) properties.getOrDefault("noGravityTicks", this.noGravityTicks);
-            this.maxAutoTraceTicks = (int) properties.getOrDefault("maxAutoTraceTicks", this.maxAutoTraceTicks);
+            this.maxHomingTicks = (int) properties.getOrDefault("maxHomingTicks", this.maxHomingTicks);
             this.minimumDamageTicks = (int) properties.getOrDefault("minimumDamageTicks", this.minimumDamageTicks);
             this.penetration = (int) properties.getOrDefault("penetration", this.penetration);
             this.trailLingerTime = (int) properties.getOrDefault("trailLingerTime", this.trailLingerTime);
@@ -79,9 +80,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 this.trailColor = candidates[(int) (Math.random() * candidates.length)];
             }
 
-            this.autoTraceAbility = (double) properties.getOrDefault("autoTraceAbility", this.autoTraceAbility);
-            this.autoTraceEndSpeedMultiplier = (double) properties.getOrDefault("autoTraceEndSpeedMultiplier", this.autoTraceEndSpeedMultiplier);
-            this.autoTraceRadius = (double) properties.getOrDefault("autoTraceRadius", this.autoTraceRadius);
+            this.homingAbility = (double) properties.getOrDefault("homingAbility", this.homingAbility);
+            this.homingEndSpeedMultiplier = (double) properties.getOrDefault("homingEndSpeedMultiplier", this.homingEndSpeedMultiplier);
+            this.homingRadius = (double) properties.getOrDefault("homingRadius", this.homingRadius);
             this.blastRadius = (double) properties.getOrDefault("blastRadius", this.blastRadius);
             this.bounceVelocityMulti = (double) properties.getOrDefault("bounceVelocityMulti", this.bounceVelocityMulti);
             this.frictionFactor = (double) properties.getOrDefault("frictionFactor", this.frictionFactor);
@@ -96,8 +97,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.trailStepSize = (double) properties.getOrDefault("trailStepSize", this.projectileRadius);
 
             this.arrowOrPotion = (boolean) properties.getOrDefault("arrowOrPotion", this.arrowOrPotion);
-            this.autoTrace = (boolean) properties.getOrDefault("autoTrace", this.autoTrace);
-            this.autoTraceSharpTurning = (boolean) properties.getOrDefault("autoTraceSharpTurning", this.autoTraceSharpTurning);
+            this.homing = (boolean) properties.getOrDefault("homing", this.homing);
+            this.homingSharpTurning = (boolean) properties.getOrDefault("homingSharpTurning", this.homingSharpTurning);
+            this.homingRetarget = (boolean) properties.getOrDefault("homingRetarget", this.homingRetarget);
             this.blastDamageShooter = (boolean) properties.getOrDefault("blastDamageShooter", this.blastDamageShooter);
             this.blastOnContactBlock = (boolean) properties.getOrDefault("blastOnContactBlock", this.blastOnContactBlock);
             this.blastOnContactEnemy = (boolean) properties.getOrDefault("blastOnContactEnemy", this.blastOnContactEnemy);
@@ -202,12 +204,17 @@ public class TerrariaPotionProjectile extends EntityPotion {
         }
     }
 
-    protected double getAutoTraceInterest(Entity target) {
-        // should not be following critters, dead entities etc. and attempt to damage them
+    protected double getHomingInterest(Entity target) {
+        // should only home into "proper" enemies
         if (!EntityHelper.checkCanDamage(bukkitEntity, target.getBukkitEntity())) return -1e9;
-        // returns distance squared / velocity squared, that is, ticks to get there squared, * -1
-        double distSqr = target.d(this.locX, this.locY, this.locZ) - (this.projectileRadius * this.projectileRadius);
-        return distSqr * -1;
+        // check for recent damage
+        if (damageCD.contains(target.getBukkitEntity())) {
+            double effectiveDist = this.enemyInvincibilityFrame * this.speed;
+            return -effectiveDist * effectiveDist;
+        }
+        // calculate distance sqr; this is more frequent, hence should have less calculation.
+        double distance = target.d(this.locX, this.locY, this.locZ);
+        return -distance;
     }
     public boolean checkCanHit(Entity e) {
         org.bukkit.entity.Entity bukkitE = e.getBukkitEntity();
@@ -218,12 +225,12 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public void hitEntityExtraHandling(Entity e, MovingObjectPosition position) {
         switch (projectileType) {
             case "钫弹":
-                noAutoTraceTicks = ticksLived + 1;
+                noHomingTicks = ticksLived + 1;
                 break;
             case "宇宙灯笼光束":
             case "粉色脉冲":
             case "脉冲步枪电弧":
-                noAutoTraceTicks = ticksLived + 2;
+                noHomingTicks = ticksLived + 2;
                 break;
             case "精元镰刀":
             case "裂魔":
@@ -388,10 +395,10 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 double speedScaleMultiplier = 20d;
                 switch (ticksLived % 15) {
                     case 10:
-                        noAutoTraceTicks = 0;
+                        noHomingTicks = 0;
                         break;
                     case 11:
-                        noAutoTraceTicks = 999999;
+                        noHomingTicks = 999999;
                         speed *= speedScaleMultiplier;
                         motX *= speedScaleMultiplier;
                         motY *= speedScaleMultiplier;
@@ -408,10 +415,10 @@ public class TerrariaPotionProjectile extends EntityPotion {
             }
             case "黑蚀之星": {
                 // once a target is spotted, do not rotate ever again.
-                if (autoTraceTarget != null)
-                    noAutoTraceTicks = 0;
+                if (homingTarget != null)
+                    noHomingTicks = 0;
                 // only spin if no target is ever spotted
-                else if (ticksLived <= 64 && noAutoTraceTicks != 0) {
+                else if (ticksLived <= 64 && noHomingTicks != 0) {
                     // get angle and radius
                     double angle, radius;
                     Location center;
@@ -486,7 +493,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 break;
             }
             case "狂野之镰": {
-                if (ticksLived + 1 == noAutoTraceTicks) {
+                if (ticksLived + 1 == noHomingTicks) {
                     this.speed = maxSpeed;
                 }
                 break;
@@ -511,11 +518,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 if (!extraVariables.containsKey("v")) {
                     Vector fwdDir = bukkitEntity.getVelocity();
                     // make sure twitch one and two are linearly independent
-                    Vector twitchOne = new Vector();
-                    while (twitchOne.lengthSquared() < 1e-5) {
-                        twitchOne = terraria.util.MathHelper.randomVector();
-                        twitchOne.subtract(terraria.util.MathHelper.vectorProjection(fwdDir, twitchOne));
-                    }
+                    Vector twitchOne = terraria.util.MathHelper.getNonZeroCrossProd(fwdDir, fwdDir);
                     twitchOne.normalize().multiply(speed * offsetRatio);
                     Vector twitchTwo = fwdDir.getCrossProduct(twitchOne);
                     twitchTwo.normalize().multiply(speed * offsetRatio);
@@ -570,7 +573,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                             targetLoc = ((LivingEntity) targetCache.value()).getEyeLocation();
                         else
                             targetLoc = ItemUseHelper.getPlayerTargetLoc(owner, 80, 5,
-                                    new EntityHelper.AimHelperOptions().setAimMode(true).setTicksOffset(0), true);
+                                    new EntityHelper.AimHelperOptions().setAimMode(true).setTicksTotal(0), true);
                         // move towards the owner's target
                         Vector dir = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                         terraria.util.MathHelper.setVectorLength(dir, speed);
@@ -600,8 +603,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
             }
         }
     }
-    // this helper function is called every tick only if the projectile would move
-    // (NOT homing into enemies and NOT stuck on wall)
+    /* this helper function is called every tick only if the projectile would move
+     * (NOT homing into enemies and NOT stuck on wall)
+     */
     protected void extraMovingTick() {
 
     }
@@ -774,17 +778,23 @@ public class TerrariaPotionProjectile extends EntityPotion {
         Vector velocity = new Vector(this.motX, this.motY, this.motZ);
         this.setNoGravity(true);
         if (shouldMove) {
-            // optimize auto trace target
-            if (autoTrace) {
-                // auto trace should not work before the projectile's age exceeds no auto trace tick
-                if (ticksLived < noAutoTraceTicks || ticksLived > maxAutoTraceTicks) {
-                    autoTraceTarget = null;
+            // optimize homing target
+            if (homing) {
+                // homing should not work before the projectile's age exceeds no homing tick
+                if (ticksLived < noHomingTicks || ticksLived > maxHomingTicks) {
+                    homingTarget = null;
                 } else {
-                    if (autoTraceTarget != null && getAutoTraceInterest(autoTraceTarget) < -1e5)
-                        autoTraceTarget = null;
-                    if (autoTraceTarget == null) {
+                    // mechanism for resetting homing target
+                    if (homingTarget != null) {
+                        if (homingRetarget && damageCD.contains(homingTarget.getBukkitEntity()))
+                            homingTarget = null; // Reset homing target
+                        else if (getHomingInterest(homingTarget) < -1e5)
+                            homingTarget = null;
+                    }
+                    // find a new target
+                    if (homingTarget == null) {
                         double maxInterest = -1e5;
-                        List<Entity> list = this.world.getEntities(this, getBoundingBox().g(autoTraceRadius));
+                        List<Entity> list = this.world.getEntities(this, getBoundingBox().g(homingRadius));
                         for (Entity toCheck : list) {
                             // only living entities are valid targets
                             if (!toCheck.isInteractable()) continue;
@@ -795,45 +805,67 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                 MovingObjectPosition blockHitPos = HitEntityInfo.rayTraceBlocks(this.world, initialLoc, traceEnd);
                                 if (blockHitPos != null) continue;
                             }
-                            double currInterest = getAutoTraceInterest(toCheck);
+                            double currInterest = getHomingInterest(toCheck);
                             if (currInterest > maxInterest) {
                                 maxInterest = currInterest;
-                                autoTraceTarget = toCheck;
+                                homingTarget = toCheck;
                             }
                         }
                     }
                 }
             }
 
-            // tweak speed: handle auto trace or tweak by per tick speed decay and gravity
-            if (autoTrace && autoTraceTarget != null) {
-                Vector acceleration;
-                if (autoTraceTarget instanceof EntityLiving)
-                    acceleration = ((LivingEntity) autoTraceTarget.getBukkitEntity()).getEyeLocation().subtract(this.locX, this.locY, this.locZ).toVector();
-                else
-                    acceleration = autoTraceTarget.getBukkitEntity().getLocation().subtract(this.locX, this.locY, this.locZ).toVector();
+            // tweak speed: handle homing or tweak by per tick speed decay and gravity
+            if (homing && homingTarget != null) {
+                // the delta theta is not fixed
+                if (homingSharpTurning) {
+                    Vector acceleration;
+                    if (homingTarget instanceof EntityLiving)
+                        acceleration = ((LivingEntity) homingTarget.getBukkitEntity()).getEyeLocation().subtract(this.locX, this.locY, this.locZ).toVector();
+                    else
+                        acceleration = homingTarget.getBukkitEntity().getLocation().subtract(this.locX, this.locY, this.locZ).toVector();
 
-                if (acceleration.lengthSquared() > 1e-5) {
-                    // fixed homing efficiency
-                    if (autoTraceMethod == 2) {
-                        acceleration.multiply(autoTraceAbility / acceleration.length());
+                    if (acceleration.lengthSquared() > 1e-5) {
+                        // fixed homing efficiency
+                        if (homingMethod == 2) {
+                            acceleration.multiply(homingAbility / acceleration.length());
+                        }
+                        // homing efficiency proportional to (projectile speed / distance)
+                        else {
+                            acceleration.multiply(homingAbility * velocity.length() / acceleration.lengthSquared());
+                        }
                     }
-                    // homing efficiency proportional to (projectile speed / distance)
+
+                    velocity.add(acceleration);
+
+                    terraria.util.MathHelper.setVectorLength(velocity, speed, true);
+                }
+                // delta theta is constant
+                else {
+                    Vector toTarget = homingTarget.getBukkitEntity().getLocation().toVector().subtract(getBukkitEntity().getLocation().toVector());
+                    Vector targetDir = toTarget.normalize(); // Direction to target
+                    Vector currDir = this.getBukkitEntity().getVelocity().normalize(); // Current direction (velocity)
+
+                    double angle = Math.toDegrees(Math.acos(currDir.dot(targetDir))); // Angle in degrees
+
+                    Vector newVelocity;
+                    if (angle > homingAbility) {
+                        // Calculate rotation axis and quaternion
+                        Vector rotAxis = terraria.util.MathHelper.getNonZeroCrossProd(currDir, targetDir).normalize();
+                        Quaternion rotation = new Quaternion(rotAxis, Math.toRadians( homingAbility ) );
+
+                        // Rotate the velocity vector
+                        newVelocity = rotation.interpolate(currDir);
+                    }
                     else {
-                        acceleration.multiply(autoTraceAbility * velocity.length() / acceleration.lengthSquared());
+                        newVelocity = targetDir;
                     }
+                    velocity = newVelocity.multiply(this.speed);
                 }
 
-                velocity.add(acceleration);
-
-                // if no sharp turning is allowed, then as long as the velocity length is above 0, it is being regularized.
-                double normalizeThreshold = autoTraceSharpTurning ? speed * speed : 0;
-                if (velocity.lengthSquared() > normalizeThreshold)
-                    velocity.normalize().multiply(speed);
-
-                // if a target is valid when auto trace timeout, multiply the speed by the multiplier
-                if (ticksLived == maxAutoTraceTicks) {
-                    velocity.multiply(autoTraceEndSpeedMultiplier);
+                // if a target is valid when homing timeout, multiply the speed by the multiplier
+                if (ticksLived == maxHomingTicks) {
+                    velocity.multiply(homingEndSpeedMultiplier);
                 }
             } else {
                 extraMovingTick();
@@ -904,20 +936,6 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                             double currDistSqr = entity.getLocation().distanceSquared(currLoc);
                                             if (currDistSqr >= smallestDistSqr)
                                                 continue;
-                                            // predicts the enemy's future location
-                                            Location predictedLoc = EntityHelper.helperAimEntity(this.bukkitEntity, entity,
-                                                    new EntityHelper.AimHelperOptions()
-                                                            .setProjectileSpeed(this.speed));
-                                            // initializes direction the projectile should go to
-                                            Vector dir = predictedLoc.subtract(currLoc).toVector();
-                                            double predictedDist = dir.length();
-                                            dir.multiply(this.speed / predictedDist);
-                                            // account for gravity
-                                            double ticksToTravel = Math.ceil(predictedDist / this.speed);
-                                            // distY = acceleration(gravity) * ticksToTravel^2 / 2
-                                            // to counter that, yVelocityOffset = distY / ticksToTravel = gravity * ticksToTravel / 2
-                                            double yVelocityOffset = this.gravity * ticksToTravel / 2;
-                                            dir.setY(dir.getY() + yVelocityOffset);
                                             // check if the direction is clear. If it is obstructed with block, skip this entity.
                                             Vec3D checkLocVec;
                                             if (entity instanceof LivingEntity)
@@ -928,9 +946,20 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                                     futureLoc, checkLocVec);
                                             if (blockedLocation != null)
                                                 continue;
-                                            // update the smallest distance only if the target is reachable.
+                                            // predicts the enemy's future location; note that gravity is turned off in the previous code.
+                                            Location predictedLoc = EntityHelper.helperAimEntity(currLoc, entity,
+                                                    new EntityHelper.AimHelperOptions()
+                                                            .setAccelerationMode(true)
+                                                            .setProjectileSpeed(this.speed)
+                                                            .setProjectileGravity(this.gravity)
+                                                            .setNoGravityTicks(0)
+                                                            // the new velocity will be in effect the next tick.
+                                                            .setTicksMonsterExtra(1));
+                                            // initializes direction the projectile should go to
+                                            Vector dir = predictedLoc.subtract(currLoc).toVector();
+                                            terraria.util.MathHelper.setVectorLengthSquared(dir, this.speed);
+                                            // update the smallest distance & velocity
                                             smallestDistSqr = currDistSqr;
-                                            // update velocity
                                             velocity = dir;
                                         }
                                         break;
@@ -1028,7 +1057,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                     case UP:
                                     case DOWN:
                                         // prevent homing projectiles constantly ramming into block and twitch
-                                        if (autoTraceTarget != null)
+                                        if (homingTarget != null)
                                             velocity.setY(velocity.getY() > 0 ? -0.1 : 0.1);
                                         else
                                             velocity.setY(0);
@@ -1036,7 +1065,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                     case EAST:
                                     case WEST:
                                         // prevent homing projectiles constantly ramming into block and twitch
-                                        if (autoTraceTarget != null)
+                                        if (homingTarget != null)
                                             velocity.setX(velocity.getX() > 0 ? -0.1 : 0.1);
                                         else
                                             velocity.setX(0);
@@ -1044,7 +1073,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                                     case SOUTH:
                                     case NORTH:
                                         // prevent homing projectiles constantly ramming into block and twitch
-                                        if (autoTraceTarget != null)
+                                        if (homingTarget != null)
                                             velocity.setZ(velocity.getZ() > 0 ? -0.1 : 0.1);
                                         else
                                             velocity.setZ(0);

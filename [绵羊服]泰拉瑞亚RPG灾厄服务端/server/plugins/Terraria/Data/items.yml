@@ -9731,7 +9731,7 @@ Dodu的手炮:
   attributes:
     damage: 108
     damageType: Magic
-    projectileSpeed: 16
+    projectileSpeed: 14.5
     crit: 4
     knockback: 5
     useTime: 40

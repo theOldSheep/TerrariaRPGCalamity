@@ -1,25 +1,20 @@
 package terraria.entity.boss.dukeFishron;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.SandstoneType;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.TerrariaHelper;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.UUID;
 
 public class DukeFishron extends EntitySlime {
@@ -130,7 +125,7 @@ public class DukeFishron extends EntitySlime {
             targetLoc = target.getEyeLocation();
             // 50% chance to dash into predicted location of enemy
         else {
-            dashAimHelper.setAimMode(true).setTicksOffset(ticksReach);
+            dashAimHelper.setAimMode(true).setTicksTotal(ticksReach);
             targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, dashAimHelper);
         }
         dashVelocity = targetLoc.subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector();

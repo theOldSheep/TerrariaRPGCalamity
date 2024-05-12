@@ -49,7 +49,7 @@ public class ArrowHitListener implements Listener {
                             projectile.getLocation(),
                             ( (LivingEntity) projectile.getShooter() ).getEyeLocation(),
                             projectile.getVelocity().length()   ) );
-                    nmsProjectile.autoTrace = false;
+                    nmsProjectile.homing = false;
                     projectile.setShooter((ProjectileSource) entity);
                 });
                 return;

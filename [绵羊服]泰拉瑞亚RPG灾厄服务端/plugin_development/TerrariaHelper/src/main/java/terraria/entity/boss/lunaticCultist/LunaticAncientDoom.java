@@ -31,12 +31,7 @@ public class LunaticAncientDoom extends EntitySlime {
         Location spawnLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         // get directions
         Vector dirDirect = MathHelper.getDirection(spawnLoc, target.getEyeLocation(), 1);
-        Vector dirOrth1 = new Vector();
-        while (dirOrth1.lengthSquared() < 1e-5) {
-            dirOrth1 = MathHelper.randomVector();
-            dirOrth1.subtract(MathHelper.vectorProjection(dirDirect, dirOrth1));
-        }
-        dirOrth1.normalize();
+        Vector dirOrth1 = MathHelper.getNonZeroCrossProd(dirDirect, dirDirect).normalize();
         Vector dirOrth2 = dirDirect.getCrossProduct(dirOrth1);
         Vector[] directions = new Vector[] {
                 dirDirect,

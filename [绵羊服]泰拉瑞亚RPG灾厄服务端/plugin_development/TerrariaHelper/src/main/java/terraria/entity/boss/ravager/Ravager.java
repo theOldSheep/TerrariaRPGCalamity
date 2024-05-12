@@ -35,7 +35,7 @@ public class Ravager extends EntitySlime {
     static {
         spawnAimHelper = new EntityHelper.AimHelperOptions()
                 .setAimMode(true)
-                .setTicksOffset(10);
+                .setTicksTotal(10);
     }
 
     // phase 1: damage body parts only   2: body can be damaged

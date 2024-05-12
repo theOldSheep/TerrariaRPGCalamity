@@ -2,10 +2,8 @@ package terraria.entity.boss.golem;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -39,7 +37,7 @@ public class GolemHead extends EntitySlime {
                 .setProjectileSpeed(SPEED_FIREBALL);
         aimHelperBolt = new EntityHelper.AimHelperOptions()
                 .setAimMode(true)
-                .setTicksOffset(15)
+                .setTicksTotal(15)
                 .setRandomOffsetRadius(1);
     }
 

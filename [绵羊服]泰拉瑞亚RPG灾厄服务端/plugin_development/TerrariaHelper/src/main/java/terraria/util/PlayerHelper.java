@@ -1029,7 +1029,7 @@ public class PlayerHelper {
                     switch (WorldHelper.BiomeType.getBiome(ply)) {
                         case DUNGEON:
                         case TEMPLE:
-                            mobSpawnRate += 1;
+                            mobSpawnRate += 1.6;
                     }
                 }
                 // spawn monster. Note that mobSpawnRate above is expected monster amount per second
@@ -1855,10 +1855,20 @@ public class PlayerHelper {
                         int index = getSpecialBiomeBlockType(footBlock, dir , isInUndergroundOrCavern);
                         specialBlocks[ index ] ++;
                     }
-                    if (specialBlocks[1] >= 3)
+                    // dungeon; apply debuff when skeletron is not yet defeated
+                    if (specialBlocks[1] >= 3) {
                         plyBiome = WorldHelper.BiomeType.DUNGEON;
-                    else if (specialBlocks[2] >= 3)
+                        if (! hasDefeated(ply, BossHelper.BossType.SKELETRON.msgName)) {
+                            EntityHelper.applyEffect(ply, "带电", 300);
+                        }
+                    }
+                    // lizard temple; apply debuff when plantera is not yet defeated
+                    else if (specialBlocks[2] >= 3) {
                         plyBiome = WorldHelper.BiomeType.TEMPLE;
+                        if (! hasDefeated(ply, BossHelper.BossType.PLANTERA.msgName)) {
+                            EntityHelper.applyEffect(ply, "龙焰", 300);
+                        }
+                    }
                     else if (specialBlocks[3] > 1)
                         plyBiome = WorldHelper.BiomeType.METEOR;
                     EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME, plyBiome);

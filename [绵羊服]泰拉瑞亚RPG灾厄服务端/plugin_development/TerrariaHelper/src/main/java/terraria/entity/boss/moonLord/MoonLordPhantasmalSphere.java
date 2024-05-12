@@ -1,13 +1,11 @@
 package terraria.entity.boss.moonLord;
 
 import net.minecraft.server.v1_12_R1.EntitySlime;
-import net.minecraft.server.v1_12_R1.GenericAttributes;
 import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
 import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
@@ -29,7 +27,7 @@ public class MoonLordPhantasmalSphere extends EntitySlime {
     static {
         aimHelper = new EntityHelper.AimHelperOptions()
                 .setAimMode(true)
-                .setTicksOffset(15);
+                .setTicksTotal(15);
     }
     int ticksRemaining = 200;
     Vector velocity = new Vector();
