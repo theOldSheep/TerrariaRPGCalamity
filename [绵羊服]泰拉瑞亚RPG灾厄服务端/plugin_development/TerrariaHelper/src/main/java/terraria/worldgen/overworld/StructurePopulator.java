@@ -226,7 +226,7 @@ public class StructurePopulator extends BlockPopulator {
                 xOffset = (int) (Math.random() * 5) - 2;
                 zOffset = (int) (Math.random() * 5) - 2;
             }
-            registerBlockPlane(wld, struct, posInfo.x, posInfo.y, posInfo.z, 6, true, false);
+            registerBlockPlane(wld, struct, posInfo.x, posInfo.y, posInfo.z, 5, true, false);
             registerBlockPlane(wld, struct, posInfo.x, posInfo.y, posInfo.z, 4, false, true);
             posInfo.x += xOffset;
             posInfo.y --;
@@ -258,7 +258,7 @@ public class StructurePopulator extends BlockPopulator {
         posInfo.y += 3;
         posInfo.z += zOffset;
         for (int i = -3; i < roomHeight + 3; i ++) {
-            registerBlockPlane(wld, struct, posInfo.x, posInfo.y, posInfo.z, roomRadius + 3, true, false);
+            registerBlockPlane(wld, struct, posInfo.x, posInfo.y, posInfo.z, roomRadius + 1, true, false);
             if (i >= 0 && i < roomHeight)
                 registerBlockPlane(wld, struct, posInfo.x, posInfo.y, posInfo.z, roomRadius, false, true);
             posInfo.y --;
@@ -293,7 +293,7 @@ public class StructurePopulator extends BlockPopulator {
     }
     protected void planDungeonUnderground(World wld, StructPosInfo posInfo) {
         HashMap<Block, Boolean> struct = new HashMap<>();
-        int roomsTotal = 15 + (int) ( Math.random() * 5 );
+        int roomsTotal = 10 + (int) ( Math.random() * 5 );
         ArrayList<StructPosInfo> allRooms = new ArrayList<>();
         ArrayList<Integer> allRoomSize = new ArrayList<>();
         // initialize the main branch

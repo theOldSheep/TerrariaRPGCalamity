@@ -6,9 +6,9 @@ worldGen:
     # 洞穴生成时的估算大小；值越小则越准确，但世界生成也相应可能减缓
     caveSketchSize: 3
     # 洞穴生成估算时使用的线程数量；建议不要超过CPU线程数并视情况调整
-    caveSketchThreads: 2
+    caveSketchThreads: 4
     # 洞穴生成估算时使用的线程数量；强烈建议打开chunkGenDurationLog后寻找较优解
-    caveDetailThreads: 8
+    caveDetailThreads: 16
 rarity:
   '-2': §#AAAAAA§l
   '-1': §#6B6B6B§l

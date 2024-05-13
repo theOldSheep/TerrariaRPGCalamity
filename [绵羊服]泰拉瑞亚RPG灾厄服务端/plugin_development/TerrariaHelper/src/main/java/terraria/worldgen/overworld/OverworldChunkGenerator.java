@@ -569,27 +569,27 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     }
     @Override
     public ChunkData generateChunkData(World world, Random random, int x, int z, BiomeGrid biome) {
-        long time = Calendar.getInstance().getTimeInMillis();
-
         // setup biome
         tweakBiome(x, z, biome, Y_OFFSET_OVERWORLD);
+
         // init info maps
         int[][] heightMap = new int[16][16];
         double[][] caveMultiMap = new double[16][16];
         generateMaps(x << 4, z << 4, heightMap, caveMultiMap);
+
         // init terrain
         ChunkData chunk = createChunkData(world);
         initializeTerrain(chunk, x << 4, z << 4, biome, Y_OFFSET_OVERWORLD, heightMap);
         boolean[][][] stoneFlags = setupStoneFlags(x << 4, z << 4, Y_OFFSET_OVERWORLD, heightMap);
+
         // tweak terrain
         caveGen.populate(world, chunk, biome, heightMap, x, z, caveMultiMap);
 //        caveGen.populate_no_optimization(chunk, biome, heightMap, x, z, caveMultiMap);
+
         for (int i = 0; i < 16; i ++)
             for (int j = 0; j < 16; j ++)
                 generateTopSoil(chunk, stoneFlags, i, heightMap[i][j], j, (x << 4) + i, (z << 4) + j, biome.getBiome(i, j), Y_OFFSET_OVERWORLD);
 
-        TerrariaHelper.getInstance().getLogger().log(Level.INFO, "CHUNK GENERATION TIME: " +
-                (Calendar.getInstance().getTimeInMillis() - time));
         return chunk;
     }
     @Override

@@ -117,15 +117,15 @@ public class OverworldCaveGenerator {
         return result;
     }
     private boolean validateCaveEstimate(double[] noise) {
-        double cheeseThreshold = 0.75;
-        double spaghettiThreshold = 0.1;
+        double cheeseThreshold = 0.6;
+        double spaghettiThreshold = 0.15;
         return (noise[0] > cheeseThreshold) || (
                     (Math.abs(noise[1]) < spaghettiThreshold) &&
                     (Math.abs(noise[2]) < spaghettiThreshold));
     }
     private boolean validateCave(double[] noise) {
-        double cheeseThreshold = 0.75;
-        double spaghettiThreshold = 0.1;
+        double cheeseThreshold = 0.6;
+        double spaghettiThreshold = 0.15;
         return (noise[0] > cheeseThreshold) || (
                     (Math.abs(noise[1]) < spaghettiThreshold) &&
                     (Math.abs(noise[2]) < spaghettiThreshold));
@@ -219,10 +219,13 @@ public class OverworldCaveGenerator {
 
         // setup actual blocks
         try {
-            Boolean[][][] isCave = new Boolean[16][255][16];
-            fill3DArray(isCave, CAVE_DETAIL_THREADS, (info) -> {
+            Boolean[][][] temp = new Boolean[16][255][16];
+            fill3DArray(temp, CAVE_DETAIL_THREADS, (info) -> {
                 int i = info[0];
                 int y_coord = info[1];
+                // DO NOT BREAK BEDROCK!
+                if (y_coord == 0)
+                    return false;
                 int j = info[2];
 
                 int currX = chunkX + i;
@@ -249,7 +252,7 @@ public class OverworldCaveGenerator {
                     }
                 } else if (shouldCheckCave == 1) result = true;
                 if (result)
-                    chunk.setBlock(i, y_coord, j, Material.AIR);
+                    chunk.setBlock(i, y_coord, j, getAirMaterial(biome.getBiome(i, j)));
                 return result;
             });
         }
@@ -287,7 +290,7 @@ public class OverworldCaveGenerator {
                             }
                         } else if (shouldCheckCave == 1) isCave = true;
                         if (isCave)
-                            chunk.setBlock(i, y_coord, j, Material.AIR);
+                            chunk.setBlock(i, y_coord, j, getAirMaterial(biome.getBiome(i, j)));
                     }
                 }
             }
@@ -331,7 +334,7 @@ public class OverworldCaveGenerator {
     /*
      * Helper function to fill up an array with the calculation as specified.
      */
-    private static <T> void fill3DArray(T[][][] arr, int numThreads, Function<int[], T> fillFunction) throws InterruptedException, ExecutionException {
+    public static <T> void fill3DArray(T[][][] arr, int numThreads, Function<int[], T> fillFunction) throws InterruptedException, ExecutionException {
         int rows = arr.length;
         int height = arr[0].length;
         int cols = arr[0][0].length;
