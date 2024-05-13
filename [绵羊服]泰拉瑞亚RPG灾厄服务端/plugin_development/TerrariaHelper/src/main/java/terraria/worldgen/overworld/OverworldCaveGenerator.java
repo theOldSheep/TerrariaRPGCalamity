@@ -1,28 +1,40 @@
 package terraria.worldgen.overworld;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 import terraria.TerrariaHelper;
-import terraria.util.MathHelper;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.function.Function;
+import java.util.logging.Logger;
 
 public class OverworldCaveGenerator {
     int yOffset;
     SimplexOctaveGenerator cheeseCaveGenerator, spaghettiGeneratorOne, spaghettiGeneratorTwo;
 
 
-    long test_cave = 0, test_cave_time = 0,
-                test_cave_setup = 0, test_cave_setup_time = 0,
-                test_cave_rough_setup = 0, test_cave_rough_setup_time = 0,
-                blockTotal = 0, regenerated = 0;
-    static final boolean test_timing = false;
+    int testInfoIndex;
+    long[] testCaveDetailDurTotal = {0, 0},
+                testCaveSetupDurTotal = {0, 0}, testCaveGenAmount = {0, 0};
+    static final Logger LOGGER = TerrariaHelper.getInstance().getLogger();
+    static final boolean CAVE_GEN_TIME_LOG = TerrariaHelper.settingConfig.getBoolean("worldGen.caveGenDurationLog", false);
+    static final int
+            CAVE_ROUGH_SKETCH_DIAMETER = Math.max( TerrariaHelper.settingConfig.getInt("worldGen.caveSketchSize", 3), 0),
+            CAVE_ROUGH_SKETCH_THREADS = Math.max( TerrariaHelper.settingConfig.getInt("worldGen.caveSketchThreads", 3), 1),
+            CAVE_DETAIL_THREADS = Math.max( TerrariaHelper.settingConfig.getInt("worldGen.caveDetailThreads", 8), 1);
     public OverworldCaveGenerator(int yOffset, long seed, int OCTAVES) {
         this.yOffset = yOffset;
+        this.testInfoIndex = this.yOffset == OverworldChunkGenerator.Y_OFFSET_OVERWORLD ? 0 : 1;
 
         Random rdm = new Random(seed);
         rdm.nextInt();
@@ -49,8 +61,24 @@ public class OverworldCaveGenerator {
                 return 1;
         }
     }
+    // gets the "air" material for the biome
+    private static Material getAirMaterial(Biome biome) {
+        switch (biome) {
+            // caves for these biomes will be filled with water
+            case MUTATED_DESERT:    // sunken sea
+            case COLD_BEACH:        // sulphurous beach
+            case FROZEN_OCEAN:      // sulphurous ocean
+            case DEEP_OCEAN:        // abyss
+                return Material.STATIONARY_WATER;
+            default:
+                return Material.AIR;
+        }
+    }
     private double[] getCavernNoise(Biome biome, int height, int currX, int effectualY, int currZ, double noiseMulti) {
         double[] result = new double[]{-1, -1, -1};
+        // way above the terrain height? Don't even bother generating!
+        if (effectualY > height + CAVE_ROUGH_SKETCH_DIAMETER)
+            return result;
         if (effectualY > 30) {
             boolean hasRiver = height - yOffset - 2 < OverworldChunkGenerator.SEA_LEVEL;
             double caveNoiseOffset = ((double) (effectualY - 30)) / 20;
@@ -102,7 +130,7 @@ public class OverworldCaveGenerator {
                     (Math.abs(noise[1]) < spaghettiThreshold) &&
                     (Math.abs(noise[2]) < spaghettiThreshold));
     }
-    private byte hasNearbyCaveEstimate(boolean[][][] caveEstimates, int estimateX, int estimateY, int estimateZ) {
+    private byte hasNearbyCaveEstimate(Boolean[][][] caveEstimates, int estimateX, int estimateY, int estimateZ) {
         boolean allCaves = true, allSolid = true;
         for (int i = estimateX - 1; i <= estimateX + 1; i ++)
             for (int j = estimateY - 1; j <= estimateY + 1; j ++)
@@ -115,88 +143,158 @@ public class OverworldCaveGenerator {
     }
 
     public void populate(World wld, ChunkGenerator.ChunkData chunk, ChunkGenerator.BiomeGrid biome, int[][] heightMap, int x, int z, double[][] caveMultiMap) {
+        // print time benchmarking info
+        if (CAVE_GEN_TIME_LOG && testCaveGenAmount[testInfoIndex] % 10 == 9) {
+            LOGGER.info("洞穴所属世界：" + testInfoIndex + "（0为地表，1为地下）");
+            LOGGER.info("洞穴估算平均使用时间（单位：纳秒）: " + testCaveSetupDurTotal[testInfoIndex] / testCaveGenAmount[testInfoIndex]);
+            LOGGER.info("洞穴细化计算平均使用时间（单位：纳秒，不含估算时长）: " + testCaveDetailDurTotal[testInfoIndex] / testCaveGenAmount[testInfoIndex]);
+        }
         int chunkX = x << 4, chunkZ = z << 4;
         // setup cave estimates
         long timing = System.nanoTime();
-        int cacheRadius = 3;
-        int estimationWidth = Math.floorDiv(16, cacheRadius) + 2,
-                estimationHeight = Math.floorDiv(256, cacheRadius) + 2;
-        if (16 % cacheRadius != 0)
+        int estimationWidth = Math.floorDiv(16, CAVE_ROUGH_SKETCH_DIAMETER) + 2,
+                estimationHeight = Math.floorDiv(256, CAVE_ROUGH_SKETCH_DIAMETER) + 2;
+        if (16 % CAVE_ROUGH_SKETCH_DIAMETER != 0)
             estimationWidth ++;
-        if (256 % cacheRadius != 0)
+        if (256 % CAVE_ROUGH_SKETCH_DIAMETER != 0)
             estimationHeight ++;
 
-        boolean[][][] caveEstimates = new boolean[estimationWidth][estimationHeight][estimationWidth];
-        for (int i = 0; i < estimationWidth; i ++) {
-            int xBlockOffset = (i - 1) * cacheRadius;
-            int currX = chunkX + xBlockOffset;
-            // prevent out of bound
-            if (xBlockOffset < 0) xBlockOffset = 0;
-            else if (xBlockOffset >= 16) xBlockOffset = 15;
-            for (int j = 0; j < estimationWidth; j ++) {
-                int zBlockOffset = (j - 1) * cacheRadius;
+        // create estimates
+        Boolean[][][] caveEstimates = new Boolean[estimationWidth][estimationHeight][estimationWidth];
+        try {
+            fill3DArray(caveEstimates, CAVE_ROUGH_SKETCH_THREADS, (info) -> {
+                int i = info[0];
+                int y_coord = info[1];
+                int j = info[2];
+
+                // setup x info
+                int xBlockOffset = (i - 1) * CAVE_ROUGH_SKETCH_DIAMETER;
+                int currX = chunkX + xBlockOffset;
+                // prevent out of bound
+                if (xBlockOffset < 0) xBlockOffset = 0;
+                else if (xBlockOffset >= 16) xBlockOffset = 15;
+                // setup z info
+                int zBlockOffset = (j - 1) * CAVE_ROUGH_SKETCH_DIAMETER;
                 int currZ = chunkZ + zBlockOffset;
                 // prevent out of bound
                 if (zBlockOffset < 0) zBlockOffset = 0;
                 else if (zBlockOffset >= 16) zBlockOffset = 15;
+
                 Biome columnBiome = OverworldBiomeGenerator.getBiome(TerrariaHelper.worldSeed, currX, currZ);
-                for (int y_coord = 0; y_coord < estimationHeight; y_coord ++) {
-                    int effectualY = ((y_coord - 1) * cacheRadius) + yOffset;
-                    caveEstimates[i][y_coord][j] = validateCaveEstimate(getCavernNoise(
-                            columnBiome, heightMap[i][j], currX, effectualY, currZ, caveMultiMap[xBlockOffset][zBlockOffset]));
+                int effectualY = ((y_coord - 1) * CAVE_ROUGH_SKETCH_DIAMETER) + yOffset;
+                return validateCaveEstimate(getCavernNoise(
+                        columnBiome, heightMap[i][j], currX, effectualY, currZ, caveMultiMap[xBlockOffset][zBlockOffset]));
+            });
+        }
+        catch (Exception e) {
+            if (CAVE_GEN_TIME_LOG) {
+                LOGGER.info("利用线程估算洞穴信息时以下错误出现。本区块改为以单线程模式生成。");
+                e.printStackTrace();
+            }
+            for (int i = 0; i < estimationWidth; i ++) {
+                int xBlockOffset = (i - 1) * CAVE_ROUGH_SKETCH_DIAMETER;
+                int currX = chunkX + xBlockOffset;
+                // prevent out of bound
+                if (xBlockOffset < 0) xBlockOffset = 0;
+                else if (xBlockOffset >= 16) xBlockOffset = 15;
+                for (int j = 0; j < estimationWidth; j ++) {
+                    int zBlockOffset = (j - 1) * CAVE_ROUGH_SKETCH_DIAMETER;
+                    int currZ = chunkZ + zBlockOffset;
+                    // prevent out of bound
+                    if (zBlockOffset < 0) zBlockOffset = 0;
+                    else if (zBlockOffset >= 16) zBlockOffset = 15;
+                    Biome columnBiome = OverworldBiomeGenerator.getBiome(TerrariaHelper.worldSeed, currX, currZ);
+                    for (int y_coord = 0; y_coord < estimationHeight; y_coord ++) {
+                        int effectualY = ((y_coord - 1) * CAVE_ROUGH_SKETCH_DIAMETER) + yOffset;
+                        caveEstimates[i][y_coord][j] = validateCaveEstimate(getCavernNoise(
+                                columnBiome, heightMap[i][j], currX, effectualY, currZ, caveMultiMap[xBlockOffset][zBlockOffset]));
+                    }
                 }
             }
         }
-        if (test_timing){
-            test_cave_setup += (System.nanoTime() - timing);
+        if (CAVE_GEN_TIME_LOG){
+            testCaveSetupDurTotal[testInfoIndex] += (System.nanoTime() - timing);
             timing = System.nanoTime();
         }
 
-        if (test_timing && ++test_cave_setup_time % 10 == 0)
-            Bukkit.broadcastMessage("Time elapsed for setup cave estimates: " + test_cave_setup / test_cave_setup_time);
-        if (test_timing && ++test_cave_time % 10 == 0)
-            Bukkit.broadcastMessage("Time elapsed for generating cave: " + test_cave / test_cave_time);
         // setup actual blocks
-        for (int i = 0; i < 16; i ++) {
-            int currX = chunkX + i;
-            int estimateX = 1 + Math.floorDiv(i, cacheRadius);
-            for (int j = 0; j < 16; j ++) {
-                int currZ = chunkZ + j;
-                int estimateZ = 1 + Math.floorDiv(j, cacheRadius);
-                // loop through y to set blocks
-                for (int y_coord = 1; y_coord < 255; y_coord ++) {
-                    int effectualY = y_coord + yOffset;
-                    int estimateY = 1 + Math.floorDiv(y_coord, cacheRadius);
-                    Material currBlock = chunk.getType(i, y_coord, j);
-                    if (!currBlock.isSolid()) break;
-                    // check if the nearby estimates contains cave
+        try {
+            Boolean[][][] isCave = new Boolean[16][255][16];
+            fill3DArray(isCave, CAVE_DETAIL_THREADS, (info) -> {
+                int i = info[0];
+                int y_coord = info[1];
+                int j = info[2];
 
-                    byte shouldCheckCave = hasNearbyCaveEstimate(caveEstimates, estimateX, estimateY, estimateZ);
-                    boolean isCave = false;
-                    if (shouldCheckCave == 0) {
-                        if ((i%cacheRadius)==0 && (y_coord%cacheRadius)==0 && (j%cacheRadius)==0) {
-                            // if the cave is in estimate already
-                            isCave = caveEstimates[estimateX][estimateY][estimateZ];
-                        } else {
-                            // setup cave noise
-                            double[] noise = getCavernNoise(
-                                    biome.getBiome(i, j), heightMap[i][j], currX, effectualY, currZ, caveMultiMap[i][j]);
-                            // validate cave noise
-                            isCave = validateCave(noise);
-                        }
-                        if (test_timing) {
-                            blockTotal ++;
-                            if (isCave && ++ regenerated % 100000 == 0)
-                                Bukkit.getLogger().info("Cave percentage: " + (double)regenerated / blockTotal);
-                        }
-                    } else if (shouldCheckCave == 1) isCave = true;
-                    if (isCave)
-                        chunk.setBlock(i, y_coord, j, Material.AIR);
+                int currX = chunkX + i;
+                int estimateX = 1 + Math.floorDiv(i, CAVE_ROUGH_SKETCH_DIAMETER);
+
+                int currZ = chunkZ + j;
+                int estimateZ = 1 + Math.floorDiv(j, CAVE_ROUGH_SKETCH_DIAMETER);
+
+                int effectualY = y_coord + yOffset;
+                int estimateY = 1 + Math.floorDiv(y_coord, CAVE_ROUGH_SKETCH_DIAMETER);
+                // check if the nearby estimates contains cave
+                byte shouldCheckCave = hasNearbyCaveEstimate(caveEstimates, estimateX, estimateY, estimateZ);
+                boolean result = false;
+                if (shouldCheckCave == 0) {
+                    if ((i%CAVE_ROUGH_SKETCH_DIAMETER)==0 && (y_coord%CAVE_ROUGH_SKETCH_DIAMETER)==0 && (j%CAVE_ROUGH_SKETCH_DIAMETER)==0) {
+                        // if the cave is in estimate already
+                        result = caveEstimates[estimateX][estimateY][estimateZ];
+                    } else {
+                        // setup cave noise
+                        double[] noise = getCavernNoise(
+                                biome.getBiome(i, j), heightMap[i][j], currX, effectualY, currZ, caveMultiMap[i][j]);
+                        // validate cave noise
+                        result = validateCave(noise);
+                    }
+                } else if (shouldCheckCave == 1) result = true;
+                if (result)
+                    chunk.setBlock(i, y_coord, j, Material.AIR);
+                return result;
+            });
+        }
+        catch (Exception e) {
+            if (CAVE_GEN_TIME_LOG) {
+                LOGGER.info("利用线程精确计算洞穴信息时以下错误出现。本区块改为以单线程模式生成。");
+                e.printStackTrace();
+            }
+            for (int i = 0; i < 16; i ++) {
+                int currX = chunkX + i;
+                int estimateX = 1 + Math.floorDiv(i, CAVE_ROUGH_SKETCH_DIAMETER);
+                for (int j = 0; j < 16; j ++) {
+                    int currZ = chunkZ + j;
+                    int estimateZ = 1 + Math.floorDiv(j, CAVE_ROUGH_SKETCH_DIAMETER);
+                    // loop through y to set blocks
+                    for (int y_coord = 1; y_coord < 255; y_coord ++) {
+                        int effectualY = y_coord + yOffset;
+                        int estimateY = 1 + Math.floorDiv(y_coord, CAVE_ROUGH_SKETCH_DIAMETER);
+                        Material currBlock = chunk.getType(i, y_coord, j);
+                        if (!currBlock.isSolid()) break;
+                        // check if the nearby estimates contains cave
+
+                        byte shouldCheckCave = hasNearbyCaveEstimate(caveEstimates, estimateX, estimateY, estimateZ);
+                        boolean isCave = false;
+                        if (shouldCheckCave == 0) {
+                            if ((i%CAVE_ROUGH_SKETCH_DIAMETER)==0 && (y_coord%CAVE_ROUGH_SKETCH_DIAMETER)==0 && (j%CAVE_ROUGH_SKETCH_DIAMETER)==0) {
+                                // if the cave is in estimate already
+                                isCave = caveEstimates[estimateX][estimateY][estimateZ];
+                            } else {
+                                // setup cave noise
+                                double[] noise = getCavernNoise(
+                                        biome.getBiome(i, j), heightMap[i][j], currX, effectualY, currZ, caveMultiMap[i][j]);
+                                // validate cave noise
+                                isCave = validateCave(noise);
+                            }
+                        } else if (shouldCheckCave == 1) isCave = true;
+                        if (isCave)
+                            chunk.setBlock(i, y_coord, j, Material.AIR);
+                    }
                 }
             }
         }
-        if (test_timing) {
-            test_cave += (System.nanoTime() - timing);
+        if (CAVE_GEN_TIME_LOG) {
+            testCaveDetailDurTotal[testInfoIndex] += (System.nanoTime() - timing);
+            testCaveGenAmount[testInfoIndex] ++;
         }
     }
     public void populate_no_optimization(ChunkGenerator.ChunkData chunk, ChunkGenerator.BiomeGrid biome, int[][] heightMap, int x, int z, double[][] caveMultiMap) {
@@ -218,15 +316,62 @@ public class OverworldCaveGenerator {
                             biome.getBiome(i, j), heightMap[i][j], currX, effectualY, currZ, caveMultiMap[i][j]);
                     // cheese cave noise should be decreased above y=30, and completely gone above y=50
                     boolean isCave = validateCave(noise);
-                    if (test_timing){
-                        test_cave += (System.nanoTime() - timing);
+                    if (CAVE_GEN_TIME_LOG){
+                        testCaveDetailDurTotal[testInfoIndex] += (System.nanoTime() - timing);
                     }
                     if (isCave) {
-                        chunk.setBlock(i, y_coord, j, Material.AIR);
+                        chunk.setBlock(i, y_coord, j, getAirMaterial(biome.getBiome(i, j)));
                     }
                 }
             }
         }
     }
 
+
+    /*
+     * Helper function to fill up an array with the calculation as specified.
+     */
+    private static <T> void fill3DArray(T[][][] arr, int numThreads, Function<int[], T> fillFunction) throws InterruptedException, ExecutionException {
+        int rows = arr.length;
+        int height = arr[0].length;
+        int cols = arr[0][0].length;
+
+        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+        List<Future<?>> futures = new ArrayList<>();
+
+        // split the tasks into sections, where each section is vertical.
+        int maxSections = rows * cols;
+        // chunk size refer to the chunk for the thread, not the chunk in the world.
+        int chunkSize = maxSections / numThreads;
+
+        for (int i = 0; i < numThreads; i++) {
+            int startSection = i * chunkSize;
+            int endSection = (i == numThreads - 1) ? maxSections : startSection + chunkSize;
+
+            Runnable task = () -> {
+                // increase x, then "carry digit" to z
+                int[] posInfo = new int[] {startSection % rows, 0, startSection / rows};
+                for (int sectionInd = startSection; sectionInd < endSection; sectionInd++) {
+                    for (int h = 0; h < height; h++) {
+                        posInfo[1] = h;
+                        arr[ posInfo[0] ][h][ posInfo[2] ] = fillFunction.apply(posInfo);
+                    }
+                    // increment
+                    if (++posInfo[0] >= rows) {
+                        posInfo[0] = 0;
+                        posInfo[2] ++;
+                    }
+                }
+            };
+
+            futures.add(executor.submit(task));
+        }
+
+        // Wait for all tasks to complete
+        for (Future<?> future : futures) {
+            future.get();
+        }
+
+        executor.shutdown();
+    }
 }

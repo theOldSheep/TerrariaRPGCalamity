@@ -58,7 +58,7 @@ public class TerrariaHelper extends JavaPlugin {
 
     public TerrariaHelper() {
         super();
-        worldSeed = settingConfig.getLong("worldSeed", 114514);
+        worldSeed = settingConfig.getLong("worldGen.seed", 114514);
         instance = this;
     }
 
