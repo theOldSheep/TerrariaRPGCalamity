@@ -47,7 +47,7 @@ public class TerrariaMinecart extends EntityMinecartRideable {
     // Leave this line intact. Otherwise, the MinecartType will not initialize.
     static {
         if (MinecartType.values().length > 0)
-            TerrariaHelper.getInstance().getLogger().log(Level.SEVERE, "No minecart type is currently available!");
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "No minecart type is currently available!");
     }
     MinecartType type;
     HashMap<String, Double> attrMap;

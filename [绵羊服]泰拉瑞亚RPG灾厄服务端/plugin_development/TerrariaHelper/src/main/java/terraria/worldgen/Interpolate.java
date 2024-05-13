@@ -1,6 +1,7 @@
 package terraria.worldgen;
 
 import org.bukkit.Bukkit;
+import terraria.TerrariaHelper;
 import terraria.util.MathHelper;
 
 import javax.imageio.ImageIO;
@@ -31,8 +32,8 @@ public class Interpolate {
         double lastX = -10;
         for (InterpolatePoint pt : allPivots) {
             if (Math.abs(pt.x) > 1 || pt.x <= lastX) {
-                Bukkit.getLogger().warning("Interpolate Initialized with UNSORTED pivots, this will not work!");
-                Bukkit.getLogger().warning("Error pivot: " + pt);
+                TerrariaHelper.LOGGER.warning("Interpolate Initialized with UNSORTED pivots, this will not work!");
+                TerrariaHelper.LOGGER.warning("Error pivot: " + pt);
             }
             lastX = pt.x;
         }
@@ -75,9 +76,9 @@ public class Interpolate {
             maxY = Math.max(maxY, pt.y);
         }
         File dir_biome_map = new File("worldGenDebug" + File.separator + interpolateName + ".png");
-        Bukkit.getLogger().info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        Bukkit.getLogger().info("START GENERATING INTERPOLATE MAP " + interpolateName);
-        Bukkit.getLogger().info("Interpolate Pivots: " + Arrays.toString(points));
+        TerrariaHelper.LOGGER.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        TerrariaHelper.LOGGER.info("START GENERATING INTERPOLATE MAP " + interpolateName);
+        TerrariaHelper.LOGGER.info("Interpolate Pivots: " + Arrays.toString(points));
         BufferedImage heightMap = new BufferedImage(length, height, BufferedImage.TYPE_INT_RGB);
         for (int i = 0; i < length; i++) {
             double x = (double) i * range / length - range / 2;
@@ -107,9 +108,9 @@ public class Interpolate {
             ImageIO.write(heightMap, "png", dir_biome_map);
         } catch (IOException e) {
             e.printStackTrace();
-            Bukkit.getLogger().warning(e.getMessage());
+            TerrariaHelper.LOGGER.warning(e.getMessage());
         }
-        Bukkit.getLogger().info("FINISHED GENERATING INTERPOLATE MAP " + interpolateName);
-        Bukkit.getLogger().info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        TerrariaHelper.LOGGER.info("FINISHED GENERATING INTERPOLATE MAP " + interpolateName);
+        TerrariaHelper.LOGGER.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 }

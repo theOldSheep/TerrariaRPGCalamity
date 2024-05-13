@@ -208,7 +208,7 @@ public enum CustomEntities {
             ce.register();
         // override some vanilla entities
         NMSUtils.registerEntity("Terraria_Dropped_Item", NMSUtils.Type.DROPPED_ITEM, TerrariaItem.class, true);
-        TerrariaHelper.getInstance().getLogger().info("Custom entities have been registered.");
+        TerrariaHelper.LOGGER.info("Custom entities have been registered.");
     }
     public static void unregisterEntities() { for (CustomEntities ce : CustomEntities.values()) ce.unregister(); }
     private void register() {

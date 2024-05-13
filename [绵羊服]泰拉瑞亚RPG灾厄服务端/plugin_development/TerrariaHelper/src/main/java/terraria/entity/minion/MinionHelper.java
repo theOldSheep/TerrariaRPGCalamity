@@ -217,6 +217,6 @@ public class MinionHelper {
         else if (minionNMS instanceof MinionCaveSpider)
             ((MinionCaveSpider) minionNMS).hasTeleported = true;
         else
-            TerrariaHelper.getInstance().getLogger().log(Level.SEVERE, "Minion teleport flag set issue: unknown minion class " + minion);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "Minion teleport flag set issue: unknown minion class " + minion);
     }
 }

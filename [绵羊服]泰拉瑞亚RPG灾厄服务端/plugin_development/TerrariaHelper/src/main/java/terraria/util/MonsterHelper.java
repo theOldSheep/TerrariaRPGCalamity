@@ -272,7 +272,7 @@ public class MonsterHelper {
                     break;
                 }
                 default:
-                    TerrariaHelper.getInstance().getLogger().log(Level.SEVERE, "UNHANDLED MONSTER TYPE: " + entityType);
+                    TerrariaHelper.LOGGER.log(Level.SEVERE, "UNHANDLED MONSTER TYPE: " + entityType);
                     return null;
             }
         }

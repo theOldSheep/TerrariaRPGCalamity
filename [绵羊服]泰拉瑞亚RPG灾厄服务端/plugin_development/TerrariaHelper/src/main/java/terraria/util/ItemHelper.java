@@ -112,16 +112,16 @@ public class ItemHelper {
         for (String itemInfo : items) {
             ItemStack item = getItemFromYML(itemInfo);
             if (item.getType() == Material.AIR) {
-                if (printDebugMessage) Bukkit.getLogger().log(Level.SEVERE, "Could not read " + itemInfo + " from yml.");
+                if (printDebugMessage) TerrariaHelper.LOGGER.log(Level.SEVERE, "Could not read " + itemInfo + " from yml.");
                 continue;
             }
-            if (printDebugMessage) Bukkit.getLogger().log(Level.FINEST, "Loading " + itemInfo + " from yml.");
+            if (printDebugMessage) TerrariaHelper.LOGGER.log(Level.FINEST, "Loading " + itemInfo + " from yml.");
             switch (item.getType()) {
                 case ARROW:
                 case SLIME_BALL:
                 case BLAZE_POWDER:
                 case FLINT: {
-                    if (printDebugMessage) Bukkit.getLogger().log(Level.FINEST, itemInfo + " is ammunition, adding item description.");
+                    if (printDebugMessage) TerrariaHelper.LOGGER.log(Level.FINEST, itemInfo + " is ammunition, adding item description.");
                     // these are reserved for ammunition.
                     ItemMeta meta = item.getItemMeta();
                     List<String> lore;
@@ -158,10 +158,10 @@ public class ItemHelper {
             // no cloning here needed, as we are intended to tweak the item value.
             ItemStack item = itemMap.get(mat);
             if (item == null) {
-                if (printDebugMessage) Bukkit.getLogger().log(Level.SEVERE, mat + " is supposed to be an crafting material, but it is not found.");
+                if (printDebugMessage) TerrariaHelper.LOGGER.log(Level.SEVERE, mat + " is supposed to be an crafting material, but it is not found.");
                 continue;
             }
-            if (printDebugMessage) Bukkit.getLogger().log(Level.FINEST, mat + " is considered a material, adding item description.");
+            if (printDebugMessage) TerrariaHelper.LOGGER.log(Level.FINEST, mat + " is considered a material, adding item description.");
             ItemMeta meta = item.getItemMeta();
             List<String> lore;
             if (meta.hasLore()) lore = meta.getLore();
@@ -180,7 +180,7 @@ public class ItemHelper {
         for (String block : craftStations) {
             int levelMax = getMaxRecipeLevel(block);
             for (int level = 1; level <= levelMax; level ++) {
-                if (printDebugMessage) Bukkit.getLogger().log(Level.FINEST, "Setting up workbench " + block + "_" + level);
+                if (printDebugMessage) TerrariaHelper.LOGGER.log(Level.FINEST, "Setting up workbench " + block + "_" + level);
                 setupRecipesForStation(block, level);
             }
         }
@@ -490,13 +490,13 @@ public class ItemHelper {
                         try {
                             Material.matchMaterial(itemType);
                         } catch (Exception e) {
-                            Bukkit.getLogger().log(Level.SEVERE, "item " + itemType + " not found in material.");
+                            TerrariaHelper.LOGGER.log(Level.SEVERE, "item " + itemType + " not found in material.");
                         }
                         return new ItemStack(Material.matchMaterial(itemType));
                     }
                     resultItem = resultItem.clone();
                 } catch (Exception e) {
-                    Bukkit.getLogger().log(Level.SEVERE, "ItemHelper.getItemFromDescription (" + information + ")", e);
+                    TerrariaHelper.LOGGER.log(Level.SEVERE, "ItemHelper.getItemFromDescription (" + information + ")", e);
                     return notFoundDefault;
                 }
                 // setup prefix
@@ -532,7 +532,7 @@ public class ItemHelper {
                 return resultItem;
             }
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "ItemHelper.getItemFromDescription " + information, e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "ItemHelper.getItemFromDescription " + information, e);
             return notFoundDefault;
         }
     }
@@ -578,7 +578,7 @@ public class ItemHelper {
                     found = true;
                     break;
                 }
-            if (!found) Bukkit.getLogger().log(Level.WARNING, "Unhandled attribute when initializing item from yml: " + attribute);
+            if (!found) TerrariaHelper.LOGGER.log(Level.WARNING, "Unhandled attribute when initializing item from yml: " + attribute);
         }
         // loop through all attributes in the order wanted and add their lore lines
         for (String attribute : attributeLoreOrder) {
@@ -787,7 +787,7 @@ public class ItemHelper {
                         break;
                     }
                     result.add(attributeSection.getString(attribute) + " " + attribute);
-                    Bukkit.getLogger().log(Level.WARNING, "Raw attribute name used when initializing item from yml （" + attribute + ")");
+                    TerrariaHelper.LOGGER.log(Level.WARNING, "Raw attribute name used when initializing item from yml （" + attribute + ")");
             }
         }
         return result;
@@ -820,7 +820,7 @@ public class ItemHelper {
                 return new ItemStack(Material.valueOf(itemName));
             }
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "ItemHelper.getItemFromYml", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "ItemHelper.getItemFromYml", e);
             return new ItemStack(Material.AIR);
         }
     }
@@ -840,7 +840,7 @@ public class ItemHelper {
             int itemAmount = item.getAmount();
             return itemInfo + (itemAmount > 1 ? (":" + itemAmount) : "");
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "ItemHelper.getItemDescription", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "ItemHelper.getItemDescription", e);
             return item.getType().toString();
         }
     }

@@ -147,7 +147,7 @@ public class PlayerHelper {
             BigDecimal money = Economy.getMoneyExact(ply.getUniqueId());
             return money == null ? 0d : money.doubleValue();
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] getMoney ");
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Player Helper] getMoney ");
             e.printStackTrace();
             return 0d;
         }
@@ -167,7 +167,7 @@ public class PlayerHelper {
             MetadataValue value = EntityHelper.getMetadata(entity, EntityHelper.MetadataName.ACCESSORIES);
             return value != null ? (HashSet<String>) (value.value()) : new HashSet<>();
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] getAccessories", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Entity Helper] getAccessories", e);
         }
         return new HashSet<>();
     }
@@ -524,14 +524,14 @@ public class PlayerHelper {
         try {
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ARMOR_SET, armorSet);
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setArmorSet ", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Player Helper] setArmorSet ", e);
         }
     }
     public static void setMoney(Player ply, double amount) {
         try {
             Economy.setMoney(ply.getUniqueId(), BigDecimal.valueOf(amount));
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setMoney ", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Player Helper] setMoney ", e);
         }
     }
     public static void resetPlayerFlightTime(Player ply) {
@@ -692,7 +692,7 @@ public class PlayerHelper {
                         }
                     }
                 } catch (Exception e) {
-                    Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadArmorAccessory ", e);
+                    TerrariaHelper.LOGGER.log(Level.SEVERE, "[Player Helper] threadArmorAccessory ", e);
                 }
             }
             tickIndex.getAndIncrement();
@@ -792,7 +792,7 @@ public class PlayerHelper {
                         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BACKGROUND, current);
                     }
                 } catch (Exception e) {
-                    Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadBackground ", e);
+                    TerrariaHelper.LOGGER.log(Level.SEVERE, "[Player Helper] threadBackground ", e);
                 }
             }
         }, 0, 10);
@@ -983,7 +983,7 @@ public class PlayerHelper {
                         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM_TIME, currentTime);
                     }
                 } catch (Exception e) {
-                    Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadBGM ", e);
+                    TerrariaHelper.LOGGER.log(Level.SEVERE, "[Player Helper] threadBGM ", e);
                 }
             }
         }, 0, 1);
@@ -1240,7 +1240,7 @@ public class PlayerHelper {
                 }
             }
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadGrapplingHook ", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Player Helper] threadGrapplingHook ", e);
             return vel;
         }
     }
@@ -1781,7 +1781,7 @@ public class PlayerHelper {
                         }
                     }
                 } catch (Exception e) {
-                    Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] threadRegen ", e);
+                    TerrariaHelper.LOGGER.log(Level.SEVERE, "[Player Helper] threadRegen ", e);
                 }
             }
         }, 0, delay);
@@ -2409,7 +2409,7 @@ public class PlayerHelper {
             // save new attribute map
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ATTRIBUTE_MAP, newAttrMap);
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Player Helper] setupAttribute ", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Player Helper] setupAttribute ", e);
         }
     }
     public static void loadInventories(Player ply) {
@@ -2646,7 +2646,7 @@ public class PlayerHelper {
             }
             return amountRemaining;
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "PlayerHelper.giveItem", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "PlayerHelper.giveItem", e);
             return amountRemaining;
         }
     }

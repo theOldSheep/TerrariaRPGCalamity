@@ -65,7 +65,7 @@ public class PlayerJoinListener implements Listener {
                 continue;
             MetadataValue bossbarMetadata = EntityHelper.getMetadata(bossList.get(0), EntityHelper.MetadataName.BOSS_BAR);
             if (bossbarMetadata == null)
-                Bukkit.getLogger().log(Level.SEVERE, "Boss " + bossList.get(0) +
+                TerrariaHelper.LOGGER.log(Level.SEVERE, "Boss " + bossList.get(0) +
                         " has no boss bar metadata when showing bossbar to a joined player.");
             else
                 ((BossBattleServer) bossbarMetadata.value()).addPlayer(playerNMS);

@@ -9,12 +9,12 @@ public class Quaternion {
     // Constructor from axis and angle (in radians)
     public Quaternion(Vector axis, double angle) {
         double halfAngle = angle / 2.0;
-        double sinHalfAngle = Math.sin(halfAngle);
+        double sinHalfAngle = MathHelper.xsin_radian(halfAngle);
 
         this.x = axis.getX() * sinHalfAngle;
         this.y = axis.getY() * sinHalfAngle;
         this.z = axis.getZ() * sinHalfAngle;
-        this.w = Math.cos(halfAngle);
+        this.w = MathHelper.xcos_radian(halfAngle);
     }
 
     public Quaternion(double x, double y, double z, double w) {

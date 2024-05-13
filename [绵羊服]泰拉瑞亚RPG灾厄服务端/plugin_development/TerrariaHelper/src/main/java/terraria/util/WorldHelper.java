@@ -215,7 +215,7 @@ public class WorldHelper {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
             try {
                 if (Bukkit.getServer().getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE) == null) {
-                    Bukkit.getLogger().info("正在尝试初始化地面世界！");
+                    TerrariaHelper.LOGGER.info("正在尝试初始化地面世界！");
                     World surfaceWorld = new WorldCreator(TerrariaHelper.Constants.WORLD_NAME_SURFACE)
                             .generator(OverworldChunkGenerator.getInstance())
                             .environment(World.Environment.NORMAL)
@@ -226,7 +226,7 @@ public class WorldHelper {
                     initWorldRules(surfaceWorld);
                 }
                 if (Bukkit.getServer().getWorld(TerrariaHelper.Constants.WORLD_NAME_CAVERN) == null) {
-                    Bukkit.getLogger().info("正在尝试初始化洞穴世界！");
+                    TerrariaHelper.LOGGER.info("正在尝试初始化洞穴世界！");
                     World cavernWorld = new WorldCreator(TerrariaHelper.Constants.WORLD_NAME_CAVERN)
                             .generator(CavernChunkGenerator.getInstance())
                             .environment(World.Environment.NORMAL)
@@ -237,7 +237,7 @@ public class WorldHelper {
                     initWorldRules(cavernWorld);
                 }
                 if (Bukkit.getServer().getWorld(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD) == null) {
-                    Bukkit.getLogger().info("正在尝试初始化地狱世界！");
+                    TerrariaHelper.LOGGER.info("正在尝试初始化地狱世界！");
                     World underworldWorld = new WorldCreator(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD)
                             .generator(UnderworldChunkGenerator.getInstance())
                             .environment(World.Environment.NORMAL)
@@ -252,11 +252,11 @@ public class WorldHelper {
                 Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), () ->
                         Residence.getInstance().onEnable(), 1);
             } catch (Exception e) {
-                Bukkit.getLogger().info("初始化世界时发生错误；正在关闭服务器……");
+                TerrariaHelper.LOGGER.info("初始化世界时发生错误；正在关闭服务器……");
                 e.printStackTrace();
                 Bukkit.shutdown();
             }
-            Bukkit.getLogger().info("世界初始化尝试完毕！");
+            TerrariaHelper.LOGGER.info("世界初始化尝试完毕！");
         }, 0);
     }
     public static void initWorldRules(World wld) {
@@ -565,7 +565,7 @@ public class WorldHelper {
             skullState.update();
         }
         else
-            TerrariaHelper.getInstance().getLogger().log(Level.SEVERE,
+            TerrariaHelper.LOGGER.log(Level.SEVERE,
                     "FAILED PLACING SPECIAL SKULL AT BLOCK " + block);
     }
     private enum PlantType {

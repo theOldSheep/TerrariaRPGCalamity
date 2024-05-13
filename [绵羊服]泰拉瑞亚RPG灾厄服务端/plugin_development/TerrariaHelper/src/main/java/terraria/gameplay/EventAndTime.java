@@ -52,7 +52,7 @@ public class EventAndTime {
             this.keyName = keyName;
             // test for collision
             if (infoKeyMapping.containsKey(keyName)) {
-                TerrariaHelper.getInstance().getLogger().log(
+                TerrariaHelper.LOGGER.log(
                         Level.SEVERE, "Event Info Map Key Collision: " + keyName +
                                 " between " + infoKeyMapping.get(keyName) + " and " + this);
             }
@@ -81,7 +81,7 @@ public class EventAndTime {
             this.eventName = evtName;
             // test for collision
             if (eventNameMapping.containsKey(evtName)) {
-                TerrariaHelper.getInstance().getLogger().log(
+                TerrariaHelper.LOGGER.log(
                         Level.SEVERE, "Event Info Map Key Collision: " + evtName +
                                 " between " + eventNameMapping.get(evtName) + " and " + this);
             }
@@ -113,7 +113,7 @@ public class EventAndTime {
             this.fishName = fishName;
             // test for collision
             if (questFishNameMapping.containsKey(fishName)) {
-                TerrariaHelper.getInstance().getLogger().log(
+                TerrariaHelper.LOGGER.log(
                         Level.SEVERE, "Event Info Map Key Collision: " + fishName +
                                 " between " + questFishNameMapping.get(fishName) + " and " + this);
             }

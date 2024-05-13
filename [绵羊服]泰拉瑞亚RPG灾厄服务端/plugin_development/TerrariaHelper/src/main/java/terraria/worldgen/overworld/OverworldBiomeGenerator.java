@@ -161,12 +161,12 @@ public class OverworldBiomeGenerator {
         int scale = 1000;
         int jump = 50;
         File dir_biome_map = new File("worldGenDebug" + File.separator + "biomesMap(50000x50000).png");
-        Bukkit.getLogger().info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        TerrariaHelper.LOGGER.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         if (dir_biome_map.exists()) {
-            Bukkit.getLogger().info("BIOME MAP FILE ALREADY EXISTS. DELETE THE FILE IF YOU WISH FOR GENERATING A NEW ONE.");
+            TerrariaHelper.LOGGER.info("BIOME MAP FILE ALREADY EXISTS. DELETE THE FILE IF YOU WISH FOR GENERATING A NEW ONE.");
             return;
         }
-        Bukkit.getLogger().info("START GENERATING BIOME MAP");
+        TerrariaHelper.LOGGER.info("START GENERATING BIOME MAP");
         double progress = 0, progressMax = scale * scale;
         long lastPrinted = Calendar.getInstance().getTimeInMillis();
         BufferedImage biomeMap = new BufferedImage(scale, scale, BufferedImage.TYPE_INT_RGB);
@@ -180,20 +180,20 @@ public class OverworldBiomeGenerator {
                 progress++;
                 if (lastPrinted + 1000 < Calendar.getInstance().getTimeInMillis()) {
                     lastPrinted = Calendar.getInstance().getTimeInMillis();
-                    Bukkit.getLogger().info("Generation progress: " + progress / progressMax);
-                    Bukkit.getLogger().info("Progress detail: " + progress + "/" + progressMax);
+                    TerrariaHelper.LOGGER.info("Generation progress: " + progress / progressMax);
+                    TerrariaHelper.LOGGER.info("Progress detail: " + progress + "/" + progressMax);
                 }
             }
-        Bukkit.getLogger().info("Generation progress: " + progress / progressMax);
-        Bukkit.getLogger().info("Progress detail: " + progress + "/" + progressMax);
+        TerrariaHelper.LOGGER.info("Generation progress: " + progress / progressMax);
+        TerrariaHelper.LOGGER.info("Progress detail: " + progress + "/" + progressMax);
         try {
             ImageIO.write(biomeMap, "png", dir_biome_map);
         } catch (IOException e) {
             e.printStackTrace();
-            Bukkit.getLogger().warning(e.getMessage());
+            TerrariaHelper.LOGGER.warning(e.getMessage());
         }
-        Bukkit.getLogger().info("FINISHED GENERATING BIOME MAP.");
-        Bukkit.getLogger().info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        TerrariaHelper.LOGGER.info("FINISHED GENERATING BIOME MAP.");
+        TerrariaHelper.LOGGER.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
     // get the key in the biome cache
     private static long getCacheKey(int x, int z) {

@@ -103,6 +103,7 @@ import net.minecraft.server.v1_12_R1.IAttribute;
 import net.minecraft.server.v1_12_R1.Item;
 import net.minecraft.server.v1_12_R1.MinecraftKey;
 import net.minecraft.server.v1_12_R1.MinecraftServer;
+import terraria.TerrariaHelper;
 
 /**
  * A Free-to-use library class for registering custom entities in Minecraft, using the Spigot server software (ver.
@@ -1066,7 +1067,7 @@ public class NMSUtils {
             water = clazz.getDeclaredField("v");
             ambient = clazz.getDeclaredField("w");
         } catch (Exception e) {
-            Bukkit.getLogger().warning("Wrong server version / software; BiomeMeta fields not found, aborting.");
+            TerrariaHelper.LOGGER.warning("Wrong server version / software; BiomeMeta fields not found, aborting.");
         }
         META_LIST_MONSTER = monster;
         META_LIST_CREATURE = creature;

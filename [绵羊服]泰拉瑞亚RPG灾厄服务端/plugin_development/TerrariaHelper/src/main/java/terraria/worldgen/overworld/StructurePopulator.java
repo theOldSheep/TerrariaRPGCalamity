@@ -1,6 +1,5 @@
 package terraria.worldgen.overworld;
 
-import io.netty.util.internal.EmptyArrays;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -22,6 +21,7 @@ public class StructurePopulator extends BlockPopulator {
     static final Material MAT_BRICK = Material.SMOOTH_BRICK, MAT_ASTRAL_STONE = Material.STAINED_CLAY;
     static final byte DATA_ASTRAL = 15, DATA_DUNGEON = 2, DATA_LIZARD = 1, DATA_NONE = 0;
     boolean isSurface;
+
 
     public StructurePopulator(boolean surfaceOrUnderground) {
         super();
@@ -45,11 +45,6 @@ public class StructurePopulator extends BlockPopulator {
         if (!override && blocks.containsKey(blk))
             return;
         blocks.put(blk, boolReg);
-    }
-    protected void registerBlockPlane(World wld, HashMap<Block, Boolean> blocks,
-                                      int centerX, int y, int centerZ, int radius, boolean boolReg) {
-        registerBlockPlane(wld, blocks, centerX - radius, centerZ - radius, y,
-                centerX + radius, centerZ + radius, boolReg, true);
     }
     protected void registerBlockPlane(World wld, HashMap<Block, Boolean> blocks,
                                       int centerX, int y, int centerZ, int radius, boolean boolReg, boolean override) {
@@ -106,12 +101,12 @@ public class StructurePopulator extends BlockPopulator {
             }
 
             if (blocks.get(b)) {
-                b.setType( trueMat );
+                b.setType( trueMat, false );
                 if (trueDt != 0)
                     b.setData(trueDt);
             }
             else {
-                b.setType( falseMat );
+                b.setType( falseMat, false );
                 if (falseDt != 0)
                     b.setData(falseDt);
             }
@@ -147,9 +142,9 @@ public class StructurePopulator extends BlockPopulator {
     protected void generateSpawnShelter(World wld) {
         int radius = 24, radius_grass = 40;
         HashMap<Block, Boolean> floor = new HashMap<>(), fence = new HashMap<>();
-        registerBlockPlane(wld, floor, 0, OverworldChunkGenerator.LAND_HEIGHT - 1, 0, radius_grass, true);
-        registerBlockPlane(wld, fence, 0, OverworldChunkGenerator.LAND_HEIGHT, 0, radius, true);
-        registerBlockPlane(wld, fence, 0, OverworldChunkGenerator.LAND_HEIGHT, 0, radius - 1, false);
+        registerBlockPlane(wld, floor, 0, OverworldChunkGenerator.LAND_HEIGHT - 1, 0, radius_grass, true, true);
+        registerBlockPlane(wld, fence, 0, OverworldChunkGenerator.LAND_HEIGHT, 0, radius, true, true);
+        registerBlockPlane(wld, fence, 0, OverworldChunkGenerator.LAND_HEIGHT, 0, radius - 1, true, true);
         setBlocks(floor, Material.GRASS, Material.GRASS, DATA_NONE, DATA_NONE);
         setBlocks(fence, Material.FENCE, Material.AIR, DATA_NONE, DATA_NONE);
     }
@@ -168,8 +163,8 @@ public class StructurePopulator extends BlockPopulator {
                 xOffset = (int) (Math.random() * 3) - 1;
                 zOffset = (int) (Math.random() * 3) - 1;
             }
-            registerBlockPlane(wld, struct, posInfo.x, y, posInfo.z, 6, true);
-            registerBlockPlane(wld, struct, posInfo.x, y, posInfo.z, 3, false);
+            registerBlockPlane(wld, struct, posInfo.x, y, posInfo.z, 6, true, true);
+            registerBlockPlane(wld, struct, posInfo.x, y, posInfo.z, 3, true, true);
             posInfo.x += xOffset;
             posInfo.z += zOffset;
             offsetRemainingDuration --;
@@ -184,8 +179,8 @@ public class StructurePopulator extends BlockPopulator {
         // floor
         int currY = posInfo.y - 6;
         for (int i = 0; i < 9; i ++) {
-            registerBlockPlane(wld, struct, posInfo.x, currY, posInfo.z, 20 - i, true);
-            registerBlockPlane(wld, struct, posInfo.x, currY, posInfo.z, 2, false);
+            registerBlockPlane(wld, struct, posInfo.x, currY, posInfo.z, 20 - i, true, true);
+            registerBlockPlane(wld, struct, posInfo.x, currY, posInfo.z, 2, true, true);
             currY ++;
         }
         // room space and pillar
@@ -193,16 +188,16 @@ public class StructurePopulator extends BlockPopulator {
         int[] pillarZOffsets = { -9, -4,  4,  9, -9,  9, -9,  9, -9, -4,  4,  9 };
         for (int i = 0; i < 8; i ++) {
             // space
-            registerBlockPlane(wld, struct, posInfo.x, currY, posInfo.z, 12, false);
+            registerBlockPlane(wld, struct, posInfo.x, currY, posInfo.z, 12, true, true);
             // pillars
             for (int idx = 0; idx < pillarXOffsets.length; idx ++)
                 registerBlockPlane(wld, struct,
-                        posInfo.x + pillarXOffsets[idx], currY, posInfo.z + pillarZOffsets[idx], 1, true);
+                        posInfo.x + pillarXOffsets[idx], currY, posInfo.z + pillarZOffsets[idx], 1, true, true);
             currY ++;
         }
         // ceiling
         for (int i = 0; i < 2; i ++) {
-            registerBlockPlane(wld, struct, posInfo.x, currY, posInfo.z, 12, true);
+            registerBlockPlane(wld, struct, posInfo.x, currY, posInfo.z, 12, true, true);
             currY ++;
         }
         // set the blocks
@@ -211,7 +206,7 @@ public class StructurePopulator extends BlockPopulator {
     // dungeon underground parts
     protected void generateDungeonUndergroundCorridor(World wld, StructPosInfo posInfo, int maxRec,
                                                       ArrayList<StructPosInfo> allRooms, ArrayList<Integer> allRoomSize,
-                                                      HashMap<Block, Boolean> struct) {
+                                                      StructureInfo struct) {
         int xOffset = 0, zOffset = 0,
                 // the main branch would start vertical, so the player would not get stuck.
                 offsetRemainingDuration = maxRec == -1 ? 0 : -999;
@@ -226,19 +221,21 @@ public class StructurePopulator extends BlockPopulator {
                 xOffset = (int) (Math.random() * 5) - 2;
                 zOffset = (int) (Math.random() * 5) - 2;
             }
-            registerBlockPlane(wld, struct, posInfo.x, posInfo.y, posInfo.z, 5, true, false);
-            registerBlockPlane(wld, struct, posInfo.x, posInfo.y, posInfo.z, 4, false, true);
+            struct.planRegisterBlockPlane(wld, posInfo.x, posInfo.y, posInfo.z, 6, true, false);
+            struct.planRegisterBlockPlane(wld, posInfo.x, posInfo.y, posInfo.z, 4, false, true);
             posInfo.x += xOffset;
             posInfo.y --;
             posInfo.z += zOffset;
             offsetRemainingDuration --;
+
+            struct.planSetBlocks();
         }
         // generate room
         generateDungeonUndergroundRoom(wld, posInfo, maxRec - 1, allRooms, allRoomSize, struct);
     }
     protected void generateDungeonUndergroundRoom(World wld, StructPosInfo posInfo, int subsequentRooms,
                                                   ArrayList<StructPosInfo> allRooms, ArrayList<Integer> allRoomSize,
-                                                  HashMap<Block, Boolean> struct) {
+                                                  StructureInfo struct) {
         int roomRadius = (int) (16 + Math.random() * 8), roomHeight = (int) (16 + Math.random() * 8);
         // the final, the biggest room
         if (subsequentRooms < 0 && posInfo.y < 100) {
@@ -257,11 +254,12 @@ public class StructurePopulator extends BlockPopulator {
         posInfo.x += xOffset;
         posInfo.y += 3;
         posInfo.z += zOffset;
-        for (int i = -3; i < roomHeight + 3; i ++) {
-            registerBlockPlane(wld, struct, posInfo.x, posInfo.y, posInfo.z, roomRadius + 1, true, false);
-            if (i >= 0 && i < roomHeight)
-                registerBlockPlane(wld, struct, posInfo.x, posInfo.y, posInfo.z, roomRadius, false, true);
+        for (int i = -3; i <= roomHeight + 3; i ++) {
+            struct.planRegisterBlockPlane(wld, posInfo.x, posInfo.y, posInfo.z, roomRadius + 4, true, false);
+            if (i >= 0 && i <= roomHeight)
+                struct.planRegisterBlockPlane(wld, posInfo.x, posInfo.y, posInfo.z, roomRadius, false, true);
             posInfo.y --;
+            struct.planSetBlocks();
         }
         // register the room!
         allRooms.add(new StructPosInfo(posInfo));
@@ -273,15 +271,15 @@ public class StructurePopulator extends BlockPopulator {
     }
     protected void generateDungeonSubsequentCorridor(World wld, int roomIdx, int recLevel,
                                                      ArrayList<StructPosInfo> allRooms, ArrayList<Integer> allRoomSize,
-                                                     HashMap<Block, Boolean> struct) {
+                                                     StructureInfo struct) {
         StructPosInfo posRandomRoom = allRooms.get( roomIdx );
         // ensure the deepest room is not broken by other room generation
-        if (recLevel > 0 && posRandomRoom.y < 100)
+        if (recLevel > 0 && posRandomRoom.y < 150)
             return;
         // initialize the position to generate the new path
         StructPosInfo posNewCorridor = new StructPosInfo(posRandomRoom);
-        posNewCorridor.y += 4;
-        int offset = allRoomSize.get(roomIdx);
+        posNewCorridor.y += 3;
+        int offset = allRoomSize.get(roomIdx) - 3;
         if (Math.random() < 0.5)
             offset *= -1;
         if (Math.random() < 0.5)
@@ -292,7 +290,7 @@ public class StructurePopulator extends BlockPopulator {
         generateDungeonUndergroundCorridor(wld, posNewCorridor, recLevel, allRooms, allRoomSize, struct);
     }
     protected void planDungeonUnderground(World wld, StructPosInfo posInfo) {
-        HashMap<Block, Boolean> struct = new HashMap<>();
+        StructureInfo struct = new StructureInfo(MAT_BRICK, Material.AIR, DATA_DUNGEON, DATA_NONE);
         int roomsTotal = 10 + (int) ( Math.random() * 5 );
         ArrayList<StructPosInfo> allRooms = new ArrayList<>();
         ArrayList<Integer> allRoomSize = new ArrayList<>();
@@ -304,7 +302,7 @@ public class StructurePopulator extends BlockPopulator {
             generateDungeonSubsequentCorridor(wld, idx, MathHelper.randomRound(1.5), allRooms, allRoomSize, struct);
         }
         // finally, place the blocks
-        setBlocks(struct, MAT_BRICK, Material.AIR, DATA_DUNGEON, DATA_NONE);
+        struct.performOperations();
     }
     // the overall dungeon generation mechanism
     protected void generateDungeon(World wld, int blockX, int blockZ) {
@@ -384,7 +382,7 @@ public class StructurePopulator extends BlockPopulator {
         Material oreMat = OrePopulator.oreMaterials.getOrDefault("ASTRAL", Material.STONE);
         setBlocks(struct, oreMat, MAT_ASTRAL_STONE, DATA_NONE, DATA_ASTRAL);
         // the altar on the top
-        wld.getBlockAt(blockX, height, blockZ).setType(Material.ENDER_PORTAL_FRAME);
+        wld.getBlockAt(blockX, height, blockZ).setType(Material.ENDER_PORTAL_FRAME, false);
     }
 
     // jungle temple
@@ -402,7 +400,7 @@ public class StructurePopulator extends BlockPopulator {
                 for (int y = 0; y < wallHeight; y++) {
                     registerBlockPlane(wld, structure,
                             posInfo.x + x * zoomSize, posInfo.y + y, posInfo.z + z * zoomSize,
-                            zoomRadius, false);
+                            zoomRadius, true, true);
                 }
             }
         }
@@ -419,9 +417,9 @@ public class StructurePopulator extends BlockPopulator {
         int stairRad = stairWidth / 2;
         for (int i = 1; i <= heightTotal; i ++) {
             // set blocks
-            registerBlockPlane(wld, structure, startPos.x, startPos.y, startPos.z, stairRad, true);
+            registerBlockPlane(wld, structure, startPos.x, startPos.y, startPos.z, stairRad, true, true);
             for (int j = 1; j <= stairClearingHeight; j ++)
-                registerBlockPlane(wld, structure, startPos.x, startPos.y + j, startPos.z, stairRad, false);
+                registerBlockPlane(wld, structure, startPos.x, startPos.y + j, startPos.z, stairRad, true, true);
 
             // update pos
             if (i != heightTotal) {
@@ -591,7 +589,7 @@ public class StructurePopulator extends BlockPopulator {
             largerStairPos.x += dx;
             largerStairPos.z += dz;
             for (int h = 1; h <= height; h ++) {
-                registerBlockPlane(wld, structure, largerStairPos.x, largerStairPos.y + h, largerStairPos.z, 1, false);
+                registerBlockPlane(wld, structure, largerStairPos.x, largerStairPos.y + h, largerStairPos.z, 1, true, true);
             }
         }
     }
@@ -600,12 +598,12 @@ public class StructurePopulator extends BlockPopulator {
         HashMap<Block, Boolean> structure = new HashMap<>();
         // pyramid structure itself
         for (int i = 0; i < 28; i ++) {
-            registerBlockPlane(wld, structure, blockX, startY + i, blockZ, 56, true);
+            registerBlockPlane(wld, structure, blockX, startY + i, blockZ, 56, true, true);
             if (i >= 4)
-                registerBlockPlane(wld, structure, blockX, startY + i, blockZ, 36, false);
+                registerBlockPlane(wld, structure, blockX, startY + i, blockZ, 36, true, true);
         }
         for (int i = 28; i < 64; i ++) {
-            registerBlockPlane(wld, structure, blockX, startY + i, blockZ, 84-i, true);
+            registerBlockPlane(wld, structure, blockX, startY + i, blockZ, 84-i, true, true);
         }
         // the maze
         MazeGeneratorPrim mazeGen = new MazeGeneratorPrim();

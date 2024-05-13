@@ -236,7 +236,7 @@ public class OverworldCaveGenerator {
                         if (test_timing) {
                             blockTotal ++;
                             if (isCave && ++ regenerated % 100000 == 0)
-                                Bukkit.getLogger().info("Cave percentage: " + (double)regenerated / blockTotal);
+                                TerrariaHelper.LOGGER.info("Cave percentage: " + (double)regenerated / blockTotal);
                         }
                     } else if (shouldCheckCave == 1) isCave = true;
                     if (isCave)

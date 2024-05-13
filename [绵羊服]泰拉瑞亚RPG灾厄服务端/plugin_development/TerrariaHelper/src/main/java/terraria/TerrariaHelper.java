@@ -18,9 +18,12 @@ import terraria.worldgen.underworld.UnderworldChunkGenerator;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class TerrariaHelper extends JavaPlugin {
+    public static Logger LOGGER = Bukkit.getLogger();
+
     public static class Constants {
         public static final String
                 DATA_FOLDER_DIR = "plugins" + File.separator + "Terraria" + File.separator + "Data" + File.separator + "",
@@ -60,6 +63,7 @@ public class TerrariaHelper extends JavaPlugin {
         super();
         worldSeed = settingConfig.getLong("worldGen.seed", 114514);
         instance = this;
+        LOGGER = getLogger();
     }
 
     private static void setupPlaceholders() {

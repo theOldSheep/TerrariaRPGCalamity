@@ -78,8 +78,8 @@ public class EntityHelper {
                 }
             }
         }
-        Bukkit.getLogger().info("[Entity Helper] buffSuperior: " + buffSuperior);
-        Bukkit.getLogger().info("[Entity Helper] buffInferior: " + buffInferior);
+        TerrariaHelper.LOGGER.info("[Entity Helper] buffSuperior: " + buffSuperior);
+        TerrariaHelper.LOGGER.info("[Entity Helper] buffInferior: " + buffInferior);
     }
     public static class AimHelperOptions {
         double projectileGravity = 0d, projectileSpeed = 0d, projectileSpeedMax = 99d, projectileSpeedMulti = 1d,
@@ -267,7 +267,7 @@ public class EntityHelper {
             this.metadataName = metadataName;
             // test for collision
             if (METADATA_NAME_MAPPING.containsKey(metadataName)) {
-                TerrariaHelper.getInstance().getLogger().log(
+                TerrariaHelper.LOGGER.log(
                         Level.SEVERE, "Metadata Name Collision: " + METADATA_NAME_MAPPING +
                                 " between " + METADATA_NAME_MAPPING.get(metadataName) + " and " + this);
             }
@@ -423,7 +423,7 @@ public class EntityHelper {
             HashMap<String, Double> attrMap = getAttrMap(entity);
             tweakAttribute(attrMap, key, value, addOrRemove);
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
         }
     }
     public static void tweakAllAttributes(Entity entity, ConfigurationSection attributes, boolean addOrRemove) {
@@ -486,7 +486,7 @@ public class EntityHelper {
                         attrMap.put(key, (attrMap.getOrDefault(key, 1d)) - value_number);
             }
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
         }
     }
     public static void tweakAllAttributes(HashMap<String, Double> attrMap, ConfigurationSection attributes, boolean addOrRemove) {
@@ -535,7 +535,7 @@ public class EntityHelper {
             // tweak double value in attribute map
             tweakAttribute(attrMap, key, value, addOrRemove);
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Generic Helper] error when parsing value as a number (" + value + ") in tweakAttribute ", e);
         }
     }
     public static void tweakAllAttributes(Entity entity, HashMap<String, Double> attrMap, ConfigurationSection attributes, boolean addOrRemove) {
@@ -578,7 +578,7 @@ public class EntityHelper {
             EntityLiving nms_t = ((CraftLivingEntity) target).getHandle();
             nms_e.setGoalTarget(nms_t, EntityTargetEvent.TargetReason.CUSTOM, true);
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE,
+            TerrariaHelper.LOGGER.log(Level.SEVERE,
                     "[ENTITY HELPER: MAKE TARGET]: error occurred while making " + entity + " targeting " + target,
                     e);
         }
@@ -634,7 +634,7 @@ public class EntityHelper {
         try {
             return getEffectMap(entity).containsKey(effect);
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] getEffectMap", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Entity Helper] getEffectMap", e);
         }
         return false;
     }
@@ -801,7 +801,7 @@ public class EntityHelper {
             // next delayed task
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> tickEffect(entity, effect, delay, damagePerDelay), delay);
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] tickEffect", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Entity Helper] tickEffect", e);
         }
     }
     private static void endTickEffect(Entity entity, String effect, HashMap<String, Integer> allEffects, boolean removeEffectOnStop) {
@@ -831,7 +831,7 @@ public class EntityHelper {
                     ((LivingEntity) entity).removePotionEffect(effectInflict);
             }
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] endTickEffect", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Entity Helper] endTickEffect", e);
         }
     }
     public static void prepareTickEffect(Entity entity, String effect) {
@@ -863,7 +863,7 @@ public class EntityHelper {
             int finalDelay = delay;
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> tickEffect(entity, effect, finalDelay, finalDamagePerDelay), delay);
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] prepareTickEffect", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Entity Helper] prepareTickEffect", e);
         }
     }
     public static void applyEffect(Entity entity, String effect, int applyDurationTicks) {
@@ -933,7 +933,7 @@ public class EntityHelper {
             // prepare to start ticking effect if the entity does not have it yet
             if (currentDurationTicks == 0) prepareTickEffect(entity, effect);
         } catch (Exception e) {
-            Bukkit.getLogger().log(Level.SEVERE, "[Entity Helper] applyEffect", e);
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Entity Helper] applyEffect", e);
         }
     }
     private static void sendDeathMessage(Entity d, Entity v, DamageType damageType, String debuffType) {
@@ -2137,11 +2137,11 @@ public class EntityHelper {
                                 dmg *= damagerAttrMap.getOrDefault("damage" + damageType + "Multi", 1d);
                             break;
                         default:
-                            Bukkit.getLogger().log(Level.SEVERE, "Unhandled damage type: " + damageType);
+                            TerrariaHelper.LOGGER.log(Level.SEVERE, "Unhandled damage type: " + damageType);
                             return;
                     }
                 } else {
-                    Bukkit.getLogger().log(Level.SEVERE, "Unhandled damage reason: " + damageReason);
+                    TerrariaHelper.LOGGER.log(Level.SEVERE, "Unhandled damage reason: " + damageReason);
                     return;
                 }
         }

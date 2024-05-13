@@ -41,7 +41,7 @@ public class YmlHelper {
                 ymlFile.createNewFile();
             }
             catch (Throwable e) {
-                Bukkit.getLogger().log(Level.SEVERE, "[YML ERROR] Cannot create non-existing file " + tweakedPath, e);
+                TerrariaHelper.LOGGER.log(Level.SEVERE, "[YML ERROR] Cannot create non-existing file " + tweakedPath, e);
             }
         }
 
@@ -71,7 +71,7 @@ public class YmlHelper {
                 config.load(file);
             } catch (FileNotFoundException e) {
             } catch (Exception e) {
-                Bukkit.getLogger().log(Level.SEVERE, "[YML ERROR] Cannot load " + file, e);
+                TerrariaHelper.LOGGER.log(Level.SEVERE, "[YML ERROR] Cannot load " + file, e);
             }
 
             return config;
@@ -81,12 +81,12 @@ public class YmlHelper {
             if (hasChanged) {
                 hasChanged = false;
                 if (! path.startsWith(TerrariaHelper.Constants.DATA_PLAYER_FOLDER_DIR)) {
-                    Bukkit.getLogger().log(Level.INFO, "[YML INFO] aborted saving into path " + path);
+                    TerrariaHelper.LOGGER.log(Level.INFO, "[YML INFO] aborted saving into path " + path);
                 }
                 try {
                     save(path);
                 } catch (IOException e) {
-                    Bukkit.getLogger().log(Level.SEVERE, "[YML ERROR] Cannot save into " + path, e);
+                    TerrariaHelper.LOGGER.log(Level.SEVERE, "[YML ERROR] Cannot save into " + path, e);
                 }
             }
         }

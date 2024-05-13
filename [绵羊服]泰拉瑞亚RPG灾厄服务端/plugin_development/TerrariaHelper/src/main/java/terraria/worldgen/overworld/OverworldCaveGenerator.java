@@ -8,7 +8,6 @@ import org.bukkit.util.noise.SimplexOctaveGenerator;
 import terraria.TerrariaHelper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -16,7 +15,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.function.Function;
-import java.util.logging.Logger;
 
 public class OverworldCaveGenerator {
     int yOffset;
@@ -26,7 +24,6 @@ public class OverworldCaveGenerator {
     int testInfoIndex;
     long[] testCaveDetailDurTotal = {0, 0},
                 testCaveSetupDurTotal = {0, 0}, testCaveGenAmount = {0, 0};
-    static final Logger LOGGER = TerrariaHelper.getInstance().getLogger();
     static final boolean CAVE_GEN_TIME_LOG = TerrariaHelper.settingConfig.getBoolean("worldGen.caveGenDurationLog", false);
     static final int
             CAVE_ROUGH_SKETCH_DIAMETER = Math.max( TerrariaHelper.settingConfig.getInt("worldGen.caveSketchSize", 3), 0),
@@ -145,9 +142,9 @@ public class OverworldCaveGenerator {
     public void populate(World wld, ChunkGenerator.ChunkData chunk, ChunkGenerator.BiomeGrid biome, int[][] heightMap, int x, int z, double[][] caveMultiMap) {
         // print time benchmarking info
         if (CAVE_GEN_TIME_LOG && testCaveGenAmount[testInfoIndex] % 10 == 9) {
-            LOGGER.info("洞穴所属世界：" + testInfoIndex + "（0为地表，1为地下）");
-            LOGGER.info("洞穴估算平均使用时间（单位：纳秒）: " + testCaveSetupDurTotal[testInfoIndex] / testCaveGenAmount[testInfoIndex]);
-            LOGGER.info("洞穴细化计算平均使用时间（单位：纳秒，不含估算时长）: " + testCaveDetailDurTotal[testInfoIndex] / testCaveGenAmount[testInfoIndex]);
+            TerrariaHelper.LOGGER.info("洞穴所属世界：" + testInfoIndex + "（0为地表，1为地下）");
+            TerrariaHelper.LOGGER.info("洞穴估算平均使用时间（单位：纳秒）: " + testCaveSetupDurTotal[testInfoIndex] / testCaveGenAmount[testInfoIndex]);
+            TerrariaHelper.LOGGER.info("洞穴细化计算平均使用时间（单位：纳秒，不含估算时长）: " + testCaveDetailDurTotal[testInfoIndex] / testCaveGenAmount[testInfoIndex]);
         }
         int chunkX = x << 4, chunkZ = z << 4;
         // setup cave estimates
@@ -188,7 +185,7 @@ public class OverworldCaveGenerator {
         }
         catch (Exception e) {
             if (CAVE_GEN_TIME_LOG) {
-                LOGGER.info("利用线程估算洞穴信息时以下错误出现。本区块改为以单线程模式生成。");
+                TerrariaHelper.LOGGER.info("利用线程估算洞穴信息时以下错误出现。本区块改为以单线程模式生成。");
                 e.printStackTrace();
             }
             for (int i = 0; i < estimationWidth; i ++) {
@@ -258,7 +255,7 @@ public class OverworldCaveGenerator {
         }
         catch (Exception e) {
             if (CAVE_GEN_TIME_LOG) {
-                LOGGER.info("利用线程精确计算洞穴信息时以下错误出现。本区块改为以单线程模式生成。");
+                TerrariaHelper.LOGGER.info("利用线程精确计算洞穴信息时以下错误出现。本区块改为以单线程模式生成。");
                 e.printStackTrace();
             }
             for (int i = 0; i < 16; i ++) {

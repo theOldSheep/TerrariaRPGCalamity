@@ -46,6 +46,7 @@ terraria\util\DragoncoreHelper.class
 terraria\util\GenericHelper$ParticleLineOptions.class
 terraria\entity\boss\moonLord\MoonLordTrueEyeOfCthulhu$EyeAttackMethod.class
 terraria\entity\minion\MinionSlime.class
+terraria\worldgen\overworld\StructureInfo$StructureOperation.class
 terraria\entity\boss\thePlaguebringerGoliath\ThePlaguebringerGoliath$1.class
 terraria\worldgen\Maze.class
 terraria\entity\boss\theHiveMind\TheHiveMind.class
@@ -105,6 +106,7 @@ terraria\entity\boss\crabulon\Crabulon.class
 terraria\gameplay\EventAndTime$QuestFish.class
 terraria\entity\boss\thePlaguebringerGoliath\ThePlaguebringerGoliath$AIPhase.class
 terraria\util\NPCHelper.class
+terraria\worldgen\overworld\StructureInfo.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHand$HandType.class
 terraria\entity\boss\desertScourge\DesertNuisance.class
 terraria\worldgen\overworld\FoliagePopulator.class
@@ -164,6 +166,7 @@ terraria\entity\minion\MinionHelper.class
 terraria\entity\boss\golem\GolemFoot.class
 terraria\TerrariaHelper$Constants.class
 terraria\event\listener\ArrowHitListener.class
+terraria\worldgen\overworld\StructureInfo$1.class
 terraria\entity\boss\queenSlime\QueenSlime$SizeState.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
 terraria\entity\boss\kingSlime\KingSlime$1.class
