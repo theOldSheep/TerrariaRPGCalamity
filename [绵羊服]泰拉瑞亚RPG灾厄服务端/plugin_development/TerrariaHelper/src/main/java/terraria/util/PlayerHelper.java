@@ -913,6 +913,21 @@ public class PlayerHelper {
                                 default:
                                     switch (biomeType) {
                                         case ABYSS:
+                                            WorldHelper.WaterRegionType waterRegionType =
+                                                    WorldHelper.WaterRegionType.getWaterRegionType(ply.getLocation(), false);
+                                            switch (waterRegionType) {
+                                                case ABYSS_3:
+                                                    current = "abyss_3";
+                                                    break;
+                                                case ABYSS_2:
+                                                    current = "abyss_2";
+                                                    break;
+                                                case ABYSS_1:
+                                                default:
+                                                    current = "abyss_1";
+                                                    break;
+                                            }
+                                            break;
                                         case DUNGEON:
                                         case TEMPLE:
                                         case BRIMSTONE_CRAG:

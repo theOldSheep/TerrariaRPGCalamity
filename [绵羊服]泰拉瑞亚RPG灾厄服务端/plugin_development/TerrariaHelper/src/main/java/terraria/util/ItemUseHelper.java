@@ -4740,9 +4740,9 @@ public class ItemUseHelper {
                     , fireDelay);
         }
     }
-    protected static boolean playerUseMagic(Player ply, String itemType, int swingAmount, String weaponType,
-                                          boolean autoSwing,
-                                          ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
+    protected static boolean playerUseMagic(Player ply, String itemType, int swingAmount, ItemStack weaponItem,
+                                            String weaponType, boolean autoSwing,
+                                            ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
         int manaConsumption = (int) Math.round(attrMap.getOrDefault("manaUse", 10d) *
                 attrMap.getOrDefault("manaUseMulti", 1d));
         switch (itemType) {
@@ -4755,6 +4755,13 @@ public class ItemUseHelper {
                     manaConsumption *= 2;
                 else if (swingAmount >= 15)
                     manaConsumption *= 1.5;
+                break;
+            case "归元漩涡_RIGHT_CLICK":
+                int charge = getDurability(weaponItem, 9);
+                charge = (charge + 1) % 10;
+                setDurability(weaponItem, 9, charge);
+                // offset the swing amount to align with the durability display
+                swingAmount = charge + 9;
                 break;
         }
         if (!consumeMana(ply, manaConsumption)) return false;
@@ -5267,7 +5274,7 @@ public class ItemUseHelper {
                         break;
                     case "MAGIC_PROJECTILE":
                     case "MAGIC_SPECIAL":
-                        success = playerUseMagic(ply, itemName, swingAmount, weaponType,
+                        success = playerUseMagic(ply, itemName, swingAmount, mainHandItem, weaponType,
                                 autoSwing, weaponSection, attrMap);
                         break;
                     case "SUMMON":

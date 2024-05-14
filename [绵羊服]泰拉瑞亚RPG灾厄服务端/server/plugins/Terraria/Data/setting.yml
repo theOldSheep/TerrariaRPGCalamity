@@ -2,13 +2,15 @@ worldGen:
     # 世界种子，严禁在世界已经生成过之后更改，会出现地形和生物群系紊乱！
     seed: 1145141919810
     # 区块生成时在控制台提示生成洞穴信息所需时长等详细信息，以便于微调下方的参数
-    caveGenDurationLog: true
+    caveGenDurationLog: false
     # 洞穴生成时的估算大小；值越小则越准确，但世界生成也相应可能减缓
     caveSketchSize: 3
     # 洞穴生成估算时使用的线程数量；建议不要超过CPU线程数并视情况调整
     caveSketchThreads: 4
     # 洞穴生成估算时使用的线程数量；强烈建议打开chunkGenDurationLog后寻找较优解
     caveDetailThreads: 16
+    # 建筑结构生成时每刻处理时长（防止建筑生成时服务器停止响应），单位：纳秒
+    structureNanoSecond: 10000000
 rarity:
   '-2': §#AAAAAA§l
   '-1': §#6B6B6B§l

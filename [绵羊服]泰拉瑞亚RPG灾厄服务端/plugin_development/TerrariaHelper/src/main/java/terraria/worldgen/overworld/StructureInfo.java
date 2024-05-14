@@ -16,10 +16,7 @@ public class StructureInfo {
     interface StructureOperation {
         public void operate();
     }
-
-    // after at least maxNanoSecondSpike nanoseconds of lag spike introduced by the operation, wait for waitTicks ticks
-    private long maxNanoSecondSpike = 10000000;
-    private int waitTicks = 1;
+    private static final long MAX_NANO_SECOND_SPIKE = TerrariaHelper.settingConfig.getInt("structureNanoSecond.structureNanoSecond", 1000000);
     // block information
     Material trueMat, falseMat;
     byte trueDt, falseDt;
@@ -30,7 +27,6 @@ public class StructureInfo {
     // the operations that are waiting to be processed later.
     private final ArrayDeque<StructureOperation> operations;
 
-    // you can also modify the constructor to customize maxNanoSecondSpike and waitTicks
     public StructureInfo(Material trueMat, Material falseMat, byte trueDt, byte falseDt) {
         // block placement info
         this.trueMat = trueMat;
@@ -60,8 +56,8 @@ public class StructureInfo {
             operation.operate();
             // return and schedule the rest for later
             long currNS = System.nanoTime();
-            if (currNS >= nanoSecond + maxNanoSecondSpike) {
-                Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), this::performOperations, waitTicks);
+            if (currNS >= nanoSecond + MAX_NANO_SECOND_SPIKE) {
+                Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), this::performOperations, 1);
                 return;
             }
         }
@@ -129,7 +125,7 @@ public class StructureInfo {
         });
     }
 
-    public void registerBlockPlanarCircle(World wld, int centerX, int y, int centerZ, int radius, boolean boolReg, boolean override) {
+    public void planRegisterBlockPlanarCircle(World wld, int centerX, int y, int centerZ, int radius, boolean boolReg, boolean override) {
         planOperation(() -> {
             double radSqr = radius * radius + 1e-3;
             double[] offsetSqr = new double[radius + 1];

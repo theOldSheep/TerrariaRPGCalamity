@@ -16,7 +16,7 @@ import java.util.*;
 public class OverworldBiomeGenerator {
 
     static boolean generatedImg = false;
-    static long SEED = 0;
+    static long SEED = TerrariaHelper.worldSeed;
     static final int
             BIOME_FEATURE_CACHE_SIZE = 500000,
             SPAWN_LOC_PROTECTION_RADIUS = 750;
@@ -260,7 +260,7 @@ public class OverworldBiomeGenerator {
     }
     public static BiomeFeature getBiomeFeature(int blockX, int blockZ) {
         // evaluate the feature. Technically the world seed do not need to be initialized here, but just in case.
-        return getBiomeFeature(TerrariaHelper.worldSeed, blockX, blockZ);
+        return getBiomeFeature(SEED, blockX, blockZ);
     }
     // this should be called if possible!
     public static BiomeFeature getBiomeFeature(long seed, int blockX, int blockZ) {

@@ -12,7 +12,6 @@ import terraria.worldgen.Interpolate;
 import terraria.worldgen.Interpolate.InterpolatePoint;
 
 import java.util.*;
-import java.util.logging.Level;
 
 public class OverworldChunkGenerator extends ChunkGenerator {
     static long seed = TerrariaHelper.worldSeed;
@@ -51,7 +50,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                                 riverRatioProvider, lakeRatioProvider;
     static OverworldChunkGenerator instance = new OverworldChunkGenerator();
     static List<BlockPopulator> populators;
-    static OverworldCaveGenerator caveGen;
+    static OverworldCaveGenerator CAVE_GENERATOR_OVERWORLD;
     private OverworldChunkGenerator() {
         super();
         // terrain noise functions
@@ -154,7 +153,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 InterpolatePoint.create(1     , 1),
         }, "lake_ratio_map");
         // block populators
-        caveGen = new OverworldCaveGenerator(Y_OFFSET_OVERWORLD, seed, OCTAVES_CAVE);
+        CAVE_GENERATOR_OVERWORLD = new OverworldCaveGenerator(Y_OFFSET_OVERWORLD, seed, OCTAVES_CAVE);
         populators = new ArrayList<>();
         populators.add(new OverworldBlockGenericPopulator());
         populators.add(new OrePopulator(Y_OFFSET_OVERWORLD));
@@ -209,7 +208,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                     break;
                 case MUTATED_DESERT: // sunken sea
                     matTopSoil = Material.STAINED_CLAY;
-                    matSoil = Material.WATER;
+                    matSoil = Material.STAINED_CLAY;
                     matStone = Material.STAINED_CLAY;
                     break;
                 case MUSHROOM_ISLAND: // corruption
@@ -256,9 +255,14 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                         matToSet = matStone;
                 }
                 if (matToSet == matSoil) {
-                    // the block below is air and this block has gravity
-                    if (chunk.getType(i, y - 1, j) == Material.AIR && matToSet.hasGravity())
-                        matToSet = matStone;
+                    // the block below is air and this block has gravity; set the stone thickness higher, so it looks more appealing.
+                    if (matToSet.hasGravity()) {
+                        for (int check = 1; check <= 3; check++)
+                            if (chunk.getType(i, y - check, j) == Material.AIR) {
+                                matToSet = matStone;
+                                break;
+                            }
+                    }
                     // the block above is air then set a grass instead of dirt
                     else if (chunk.getType(i, y + 1, j) == Material.AIR)
                         matToSet = matTopSoil;
@@ -339,7 +343,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     // set up the "desired" block height and special cave ratio at a specific column of a chunk.
     private static void setupHeightAndCaveRatioAtLocation(int currX, int currZ, int i, int j,
                                               int[][] heightMap, double[][] caveMultiMap,
-                                              HashMap<Biome, Double> nearbyBiomeMap) {
+                                              HashMap<Biome, Double> nearbyBiomeMap, OverworldCaveGenerator caveGen) {
         // calculate each nearby biome's contribution to the current land height
         HashMap<Biome, Double> biomeWeights = new HashMap<>();
         double totalWeight = 0;
@@ -368,14 +372,14 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         //
         double caveMulti = 0;
         for (Biome bom : nearbyBiomeMap.keySet()) {
-            caveMulti += OverworldCaveGenerator.getCavernNoiseMulti(bom) * nearbyBiomeMap.get(bom);
+            caveMulti += caveGen.getCavernNoiseMulti(bom) * nearbyBiomeMap.get(bom);
         }
         caveMulti /= HEIGHT_SAMPLE_FACTOR_SUM;
         // save cave multi into caveMultiMap
         caveMultiMap[i][j] = caveMulti;
     }
     // generates the height and cave multiplier mapping of a chunk
-    public static void generateMaps(int blockXStart, int blockZStart, int[][] heightMap, double[][] caveMultiMap) {
+    public static void generateMaps(int blockXStart, int blockZStart, int[][] heightMap, double[][] caveMultiMap, OverworldCaveGenerator caveGen) {
         double height, caveMulti;
         int currX, currZ;
 
@@ -401,7 +405,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             for (int j = 0; j < 16; j++) {
                 currZ = blockZStart + j;
 
-                setupHeightAndCaveRatioAtLocation(currX, currZ, i, j, heightMap, caveMultiMap, nearbyBiomeMap);
+                setupHeightAndCaveRatioAtLocation(currX, currZ, i, j, heightMap, caveMultiMap, nearbyBiomeMap, caveGen);
 
                 // sliding window technique
                 if (j + 1 < 16) {
@@ -575,7 +579,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         // init info maps
         int[][] heightMap = new int[16][16];
         double[][] caveMultiMap = new double[16][16];
-        generateMaps(x << 4, z << 4, heightMap, caveMultiMap);
+        generateMaps(x << 4, z << 4, heightMap, caveMultiMap, CAVE_GENERATOR_OVERWORLD);
 
         // init terrain
         ChunkData chunk = createChunkData(world);
@@ -583,8 +587,8 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         boolean[][][] stoneFlags = setupStoneFlags(x << 4, z << 4, Y_OFFSET_OVERWORLD, heightMap);
 
         // tweak terrain
-        caveGen.populate(world, chunk, biome, heightMap, x, z, caveMultiMap);
-//        caveGen.populate_no_optimization(chunk, biome, heightMap, x, z, caveMultiMap);
+        CAVE_GENERATOR_OVERWORLD.populate(world, chunk, biome, heightMap, x, z, caveMultiMap);
+//        CAVE_GENERATOR_OVERWORLD.populate_no_optimization(chunk, biome, heightMap, x, z, caveMultiMap);
 
         for (int i = 0; i < 16; i ++)
             for (int j = 0; j < 16; j ++)

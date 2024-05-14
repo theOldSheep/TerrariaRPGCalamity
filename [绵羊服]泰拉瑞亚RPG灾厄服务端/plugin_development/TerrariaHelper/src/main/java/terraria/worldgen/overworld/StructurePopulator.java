@@ -18,8 +18,8 @@ import java.util.*;
 public class StructurePopulator extends BlockPopulator {
     // no duplication within 300 blocks (20 chunks)
     static final int STRUCT_INTERVAL = 5, CHECK_STEPS_RADIUS = 4;
-    static final Material MAT_BRICK = Material.SMOOTH_BRICK, MAT_ASTRAL_STONE = Material.STAINED_CLAY;
-    static final byte DATA_ASTRAL = 15, DATA_DUNGEON = 2, DATA_LIZARD = 1, DATA_NONE = 0;
+    static final Material MAT_BRICK = Material.SMOOTH_BRICK, MAT_SPECIAL_STONE = Material.STAINED_CLAY;
+    static final byte DATA_ASTRAL = 15, DATA_SUNKEN_SEA = 11, DATA_DUNGEON = 2, DATA_LIZARD = 1, DATA_NONE = 0;
     boolean isSurface;
 
 
@@ -41,77 +41,6 @@ public class StructurePopulator extends BlockPopulator {
         }
     }
 
-    protected void registerSingleBlock(HashMap<Block, Boolean> blocks, Block blk, boolean boolReg, boolean override) {
-        if (!override && blocks.containsKey(blk))
-            return;
-        blocks.put(blk, boolReg);
-    }
-    protected void registerBlockPlane(World wld, HashMap<Block, Boolean> blocks,
-                                      int centerX, int y, int centerZ, int radius, boolean boolReg, boolean override) {
-        registerBlockPlane(wld, blocks, centerX - radius, centerZ - radius, y,
-                centerX + radius, centerZ + radius, boolReg, override);
-    }
-    protected void registerBlockPlane(World wld, HashMap<Block, Boolean> blocks,
-                                      int minX, int minZ, int y, int maxX, int maxZ, boolean boolReg, boolean override) {
-        for (int x = minX; x <= maxX; x ++) {
-            for (int z = minZ; z <= maxZ; z ++) {
-                Block blk = wld.getBlockAt(x, y, z);
-                registerSingleBlock(blocks, blk, boolReg, override);
-            }
-        }
-    }
-    protected void registerBlockPlanarCircle(World wld, HashMap<Block, Boolean> blocks,
-                                      int centerX, int y, int centerZ, int radius, boolean boolReg, boolean override) {
-        double radSqr = radius * radius + 1e-3;
-        double[] offsetSqr = new double[radius + 1];
-        for (int i = 0; i <= radius; i ++)
-            offsetSqr[i] = i * i;
-        // do not attempt to "optimize" the loop - it will cause funny-looking circles.
-        for (int xOffset = 0; xOffset <= radius; xOffset ++) {
-            for (int zOffset = 0; zOffset <= radius; zOffset ++) {
-                if (offsetSqr[xOffset] + offsetSqr[zOffset] > radSqr)
-                    continue;
-
-                registerSingleBlock(blocks, wld.getBlockAt(centerX + xOffset, y, centerZ + zOffset), boolReg, override);
-                // flipped z
-                if (zOffset != 0)
-                    registerSingleBlock(blocks, wld.getBlockAt(centerX + xOffset, y, centerZ - zOffset), boolReg, override);
-                // flipped x
-                if (xOffset != 0)
-                    registerSingleBlock(blocks, wld.getBlockAt(centerX - xOffset, y, centerZ + zOffset), boolReg, override);
-                // flipped both
-                if (xOffset != 0 && zOffset != 0)
-                    registerSingleBlock(blocks, wld.getBlockAt(centerX - xOffset, y, centerZ - zOffset), boolReg, override);
-            }
-        }
-    }
-    protected void setBlocks(HashMap<Block, Boolean> blocks, Material trueMat, Material falseMat, byte trueDt, byte falseDt) {
-        for (Block b : blocks.keySet()) {
-            // break trees/grass
-            switch (b.getType()) {
-                case LOG:
-                case LOG_2:
-                case LEAVES:
-                case LEAVES_2:
-                    WorldHelper.attemptDestroyVegetation(b, true, false);
-                    break;
-                case DIRT:
-                case GRASS:
-                    WorldHelper.attemptDestroyVegetation(b.getRelative(BlockFace.UP), true, false);
-            }
-
-            if (blocks.get(b)) {
-                b.setType( trueMat, false );
-                if (trueDt != 0)
-                    b.setData(trueDt);
-            }
-            else {
-                b.setType( falseMat, false );
-                if (falseDt != 0)
-                    b.setData(falseDt);
-            }
-        }
-    }
     protected int getSurfaceY(World wld, int x, int z, boolean ignoreWater) {
         Block highestBlk = wld.getHighestBlockAt(x, z);
         boolean invalid = true;
@@ -141,17 +70,18 @@ public class StructurePopulator extends BlockPopulator {
     // helper function to generate the spawn point shelter
     protected void generateSpawnShelter(World wld) {
         int radius = 24, radius_grass = 40;
-        HashMap<Block, Boolean> floor = new HashMap<>(), fence = new HashMap<>();
-        registerBlockPlane(wld, floor, 0, OverworldChunkGenerator.LAND_HEIGHT - 1, 0, radius_grass, true, true);
-        registerBlockPlane(wld, fence, 0, OverworldChunkGenerator.LAND_HEIGHT, 0, radius, true, true);
-        registerBlockPlane(wld, fence, 0, OverworldChunkGenerator.LAND_HEIGHT, 0, radius - 1, true, true);
-        setBlocks(floor, Material.GRASS, Material.GRASS, DATA_NONE, DATA_NONE);
-        setBlocks(fence, Material.FENCE, Material.AIR, DATA_NONE, DATA_NONE);
+        StructureInfo floor = new StructureInfo(Material.GRASS, Material.GRASS, DATA_NONE, DATA_NONE),
+                fence = new StructureInfo(Material.FENCE, Material.AIR, DATA_NONE, DATA_NONE);
+        floor.planRegisterBlockPlane(wld, 0, OverworldChunkGenerator.LAND_HEIGHT - 1, 0, radius_grass, true, true);
+        fence.planRegisterBlockPlane(wld, 0, OverworldChunkGenerator.LAND_HEIGHT, 0, radius, true, true);
+        fence.planRegisterBlockPlane(wld, 0, OverworldChunkGenerator.LAND_HEIGHT, 0, radius - 1, false, true);
+        floor.performOperations();
+        fence.performOperations();
     }
 
     // helper functions to generate the dungeon parts
     protected void generateDungeonEntrance(World wld, StructPosInfo posInfo) {
-        HashMap<Block, Boolean> struct = new HashMap<>();
+        StructureInfo struct = new StructureInfo(MAT_BRICK, Material.AIR, DATA_DUNGEON, DATA_NONE);
         int xOffset = 0, zOffset = 0, offsetRemainingDuration = -999;
         for (int y = 1; y < posInfo.y - 6; y ++) {
             if (offsetRemainingDuration == 0) {
@@ -163,8 +93,9 @@ public class StructurePopulator extends BlockPopulator {
                 xOffset = (int) (Math.random() * 3) - 1;
                 zOffset = (int) (Math.random() * 3) - 1;
             }
-            registerBlockPlane(wld, struct, posInfo.x, y, posInfo.z, 6, true, true);
-            registerBlockPlane(wld, struct, posInfo.x, y, posInfo.z, 3, true, true);
+            struct.planRegisterBlockPlane(wld, posInfo.x, y, posInfo.z, 6, true, true);
+            struct.planRegisterBlockPlane(wld, posInfo.x, y, posInfo.z, 3, false, true);
+            struct.planSetBlocks();
             posInfo.x += xOffset;
             posInfo.z += zOffset;
             offsetRemainingDuration --;
@@ -172,15 +103,16 @@ public class StructurePopulator extends BlockPopulator {
                 posInfo.y = getSurfaceY(wld, posInfo.x, posInfo.z, false);
             }
         }
-        setBlocks(struct, MAT_BRICK, Material.AIR, DATA_DUNGEON, DATA_NONE);
+        struct.performOperations();
     }
     protected void generateDungeonEntranceBuilding(World wld, StructPosInfo posInfo) {
-        HashMap<Block, Boolean> struct = new HashMap<>();
+        StructureInfo struct = new StructureInfo(MAT_BRICK, Material.AIR, DATA_DUNGEON, DATA_NONE);
         // floor
         int currY = posInfo.y - 6;
         for (int i = 0; i < 9; i ++) {
-            registerBlockPlane(wld, struct, posInfo.x, currY, posInfo.z, 20 - i, true, true);
-            registerBlockPlane(wld, struct, posInfo.x, currY, posInfo.z, 2, true, true);
+            struct.planRegisterBlockPlane(wld, posInfo.x, currY, posInfo.z, 20 - i, true, true);
+            struct.planRegisterBlockPlane(wld, posInfo.x, currY, posInfo.z, 2, false, true);
+            struct.planSetBlocks();
             currY ++;
         }
         // room space and pillar
@@ -188,20 +120,22 @@ public class StructurePopulator extends BlockPopulator {
         int[] pillarZOffsets = { -9, -4,  4,  9, -9,  9, -9,  9, -9, -4,  4,  9 };
         for (int i = 0; i < 8; i ++) {
             // space
-            registerBlockPlane(wld, struct, posInfo.x, currY, posInfo.z, 12, true, true);
+            struct.planRegisterBlockPlane(wld, posInfo.x, currY, posInfo.z, 12, false, true);
             // pillars
             for (int idx = 0; idx < pillarXOffsets.length; idx ++)
-                registerBlockPlane(wld, struct,
-                        posInfo.x + pillarXOffsets[idx], currY, posInfo.z + pillarZOffsets[idx], 1, true, true);
+                struct.planRegisterBlockPlane(wld,
+                        posInfo.x + pillarXOffsets[idx], currY, posInfo.z + pillarZOffsets[idx],
+                        1, true, true);
+            struct.planSetBlocks();
             currY ++;
         }
         // ceiling
         for (int i = 0; i < 2; i ++) {
-            registerBlockPlane(wld, struct, posInfo.x, currY, posInfo.z, 12, true, true);
+            struct.planRegisterBlockPlane(wld, posInfo.x, currY, posInfo.z, 12, true, true);
             currY ++;
         }
         // set the blocks
-        setBlocks(struct, MAT_BRICK, Material.AIR, DATA_DUNGEON, DATA_NONE);
+        struct.performOperations();
     }
     // dungeon underground parts
     protected void generateDungeonUndergroundCorridor(World wld, StructPosInfo posInfo, int maxRec,
@@ -322,13 +256,14 @@ public class StructurePopulator extends BlockPopulator {
     protected void generateAstral(World wld, int blockX, int blockZ) {
         int height = getSurfaceY(wld, blockX, blockZ, true);
         // the base; true-ore, false-astral dirt
-        HashMap<Block, Boolean> struct = new HashMap<>();
+        Material oreMat = OrePopulator.OreMaterial.ASTRAL.material;
+        StructureInfo struct = new StructureInfo(oreMat, MAT_SPECIAL_STONE, DATA_NONE, DATA_ASTRAL);
         {
             int radius = 1;
             // the base
             height -= 3;
             for (int i = -3; i < 21; i ++) {
-                registerBlockPlanarCircle(wld, struct, blockX, height, blockZ, radius, false, true);
+                struct.planRegisterBlockPlanarCircle(wld, blockX, height, blockZ, radius, false, true);
                 height ++;
                 switch (i) {
                     case 0:
@@ -360,7 +295,7 @@ public class StructurePopulator extends BlockPopulator {
             height -= 2;
             radius = 1;
             for (int i = 0; i < 10; i ++) {
-                registerBlockPlanarCircle(wld, struct, blockX, height, blockZ, radius, true, true);
+                struct.planRegisterBlockPlanarCircle(wld, blockX, height, blockZ, radius, true, true);
                 height ++;
                 switch (i) {
                     case 0:
@@ -379,14 +314,13 @@ public class StructurePopulator extends BlockPopulator {
             }
         }
         // set the base&ore
-        Material oreMat = OrePopulator.oreMaterials.getOrDefault("ASTRAL", Material.STONE);
-        setBlocks(struct, oreMat, MAT_ASTRAL_STONE, DATA_NONE, DATA_ASTRAL);
+        struct.performOperations();
         // the altar on the top
         wld.getBlockAt(blockX, height, blockZ).setType(Material.ENDER_PORTAL_FRAME, false);
     }
 
     // jungle temple
-    protected void buildLizardMaze(HashMap<Block, Boolean> structure, World wld, StructPosInfo posInfo,
+    protected void buildLizardMaze(StructureInfo structure, World wld, StructPosInfo posInfo,
                                 int mazeRadius, MazeGenerator generator, int wallHeight, int zoomSize) {
         int mazeSize = mazeRadius * 2 + 1, zoomRadius = zoomSize / 2;
         Maze maze = new Maze(mazeSize, mazeSize);
@@ -398,14 +332,15 @@ public class StructurePopulator extends BlockPopulator {
                 if (maze.hasWall(x + mazeRadius, z + mazeRadius))
                     continue;
                 for (int y = 0; y < wallHeight; y++) {
-                    registerBlockPlane(wld, structure,
+                    structure.planRegisterBlockPlane(wld,
                             posInfo.x + x * zoomSize, posInfo.y + y, posInfo.z + z * zoomSize,
-                            zoomRadius, true, true);
+                            zoomRadius, false, true);
                 }
             }
+            structure.planSetBlocks();
         }
     }
-    protected void buildStair(HashMap<Block, Boolean> structure, StructPosInfo startPos, StructPosInfo centerPos,
+    protected void buildStair(StructureInfo structure, StructPosInfo startPos, StructPosInfo centerPos,
                               World wld, int radius, int heightTotal, int stairWidth, int stairClearingHeight) {
         int phase;
         if (Math.abs(startPos.x - centerPos.x) >= radius) {
@@ -417,9 +352,9 @@ public class StructurePopulator extends BlockPopulator {
         int stairRad = stairWidth / 2;
         for (int i = 1; i <= heightTotal; i ++) {
             // set blocks
-            registerBlockPlane(wld, structure, startPos.x, startPos.y, startPos.z, stairRad, true, true);
+            structure.planRegisterBlockPlane(wld, startPos.x, startPos.y, startPos.z, stairRad, true, true);
             for (int j = 1; j <= stairClearingHeight; j ++)
-                registerBlockPlane(wld, structure, startPos.x, startPos.y + j, startPos.z, stairRad, true, true);
+                structure.planRegisterBlockPlane(wld, startPos.x, startPos.y + j, startPos.z, stairRad, false, true);
 
             // update pos
             if (i != heightTotal) {
@@ -455,8 +390,9 @@ public class StructurePopulator extends BlockPopulator {
                 phase = (phase + 1) % 4;
             }
         }
+        structure.planSetBlocks();
     }
-    protected void fineTuneLizardTemple(World wld, HashMap<Block, Boolean> structure, StructPosInfo basePos) {
+    protected void fineTuneLizardTemple(World wld, StructureInfo structure, StructPosInfo basePos) {
         double lastXOffset, lastZOffset;
         Random rdm = new Random();
         Block baseBlk = wld.getBlockAt(basePos.x, basePos.y, basePos.z);
@@ -498,7 +434,7 @@ public class StructurePopulator extends BlockPopulator {
                         .add(side.clone().multiply(pos[2]))
                         .add(new Vector(0, pos[1], 0) );
                 for (int offset = pos[2]; offset <= pos[3]; offset ++) {
-                    registerSingleBlock(structure, baseBlk.getRelative(dir.getBlockX(), dir.getBlockY(), dir.getBlockZ()),
+                    structure.planRegisterSingleBlock(baseBlk.getRelative(dir.getBlockX(), dir.getBlockY(), dir.getBlockZ()),
                             false, true);
                     dir.add(side);
                 }
@@ -515,7 +451,7 @@ public class StructurePopulator extends BlockPopulator {
             }
             // place the hole
             for (int j = 1; j <= 4; j ++)
-                registerSingleBlock(structure, baseBlk.getRelative(newXOffset, levelY - j, newZOffset), false, true);
+                structure.planRegisterSingleBlock(baseBlk.getRelative(newXOffset, levelY - j, newZOffset), false, true);
             // setup for next iteration
             lastXOffset = newXOffset;
             lastZOffset = newZOffset;
@@ -589,21 +525,23 @@ public class StructurePopulator extends BlockPopulator {
             largerStairPos.x += dx;
             largerStairPos.z += dz;
             for (int h = 1; h <= height; h ++) {
-                registerBlockPlane(wld, structure, largerStairPos.x, largerStairPos.y + h, largerStairPos.z, 1, true, true);
+                structure.planRegisterBlockPlane(wld, largerStairPos.x, largerStairPos.y + h, largerStairPos.z, 1, false, true);
             }
         }
     }
     protected void generateLizardTemple(World wld, int blockX, int blockZ) {
         int startY = 50 + (int) (Math.random() * 100);
-        HashMap<Block, Boolean> structure = new HashMap<>();
+        StructureInfo structure = new StructureInfo(MAT_BRICK, Material.AIR, DATA_LIZARD, DATA_NONE);
         // pyramid structure itself
         for (int i = 0; i < 28; i ++) {
-            registerBlockPlane(wld, structure, blockX, startY + i, blockZ, 56, true, true);
+            structure.planRegisterBlockPlane(wld, blockX, startY + i, blockZ, 56, true, true);
             if (i >= 4)
-                registerBlockPlane(wld, structure, blockX, startY + i, blockZ, 36, true, true);
+                structure.planRegisterBlockPlane(wld, blockX, startY + i, blockZ, 36, false, true);
+            structure.planSetBlocks();
         }
         for (int i = 28; i < 64; i ++) {
-            registerBlockPlane(wld, structure, blockX, startY + i, blockZ, 84-i, true, true);
+            structure.planRegisterBlockPlane(wld, blockX, startY + i, blockZ, 84-i, true, true);
+            structure.planSetBlocks();
         }
         // the maze
         MazeGeneratorPrim mazeGen = new MazeGeneratorPrim();
@@ -630,7 +568,39 @@ public class StructurePopulator extends BlockPopulator {
         // fine tune (entrance, stairs etc.)
         fineTuneLizardTemple(wld, structure, new StructPosInfo(blockX, startY, blockZ));
         // place the blocks
-        setBlocks(structure, MAT_BRICK, Material.AIR, DATA_LIZARD, DATA_NONE);
+        structure.performOperations();
+    }
+
+    // the eye of sunken sea
+    protected void generateEyeOfSunkenSea(World wld, int blockX, int blockY, int blockZ, boolean oreOrRock) {
+        // struct: shell, core
+        StructureInfo struct;
+        int innerRad, outerRad;
+        if (oreOrRock) {
+            struct = new StructureInfo(OrePopulator.OreMaterial.SEA_PRISM.material, Material.STATIONARY_WATER, DATA_NONE, DATA_NONE);
+            innerRad = 4;
+            outerRad = 8;
+        }
+        else {
+            struct = new StructureInfo(Material.STATIONARY_WATER, MAT_SPECIAL_STONE, DATA_NONE, DATA_SUNKEN_SEA);
+            innerRad = 14;
+            outerRad = 32;
+        }
+        // place blocks
+        for (int yOffset = outerRad - 1; yOffset > -outerRad; yOffset --) {
+            int radOuter = (int) Math.round( Math.sqrt( outerRad * outerRad - yOffset * yOffset) );
+            struct.planRegisterBlockPlanarCircle(wld, blockX, blockY + yOffset, blockZ, radOuter, true, true);
+            if (yOffset < innerRad && yOffset > -innerRad) {
+                int radInner = (int) Math.round( Math.sqrt( innerRad * innerRad - yOffset * yOffset) );
+                struct.planRegisterBlockPlanarCircle(wld, blockX, blockY + yOffset, blockZ, radInner, false, true);
+            }
+            struct.planSetBlocks();
+        }
+        // inner ore core at last
+        if (! oreOrRock) {
+            struct.planOperation(() -> generateEyeOfSunkenSea(wld, blockX, blockY, blockZ, true));
+        }
+        struct.performOperations();
     }
 
 
@@ -693,9 +663,11 @@ public class StructurePopulator extends BlockPopulator {
             // determine the structure to generate; for non-structure biomes, do not bother further check.
             OverworldBiomeGenerator.BiomeFeature feature = getBiomeFeature(chunkX, chunkZ);
             switch (feature.evaluatedBiome) {
-                case NORMAL:
-                case JUNGLE:
                 case ASTRAL_INFECTION:
+                case JUNGLE:
+                case NORMAL:
+                case DESERT:
+                case SUNKEN_SEA:
                     break;
                 default:
                     return;
@@ -703,16 +675,21 @@ public class StructurePopulator extends BlockPopulator {
             // determine if the structure should be generated
             if (shouldGenerateStructure(feature, chunkX, chunkZ)) {
                 switch (feature.evaluatedBiome) {
-                    case NORMAL:
-                        generateDungeon(wld, blockX, blockZ);
+                    case ASTRAL_INFECTION:
+                        if (isSurface)
+                            generateAstral(wld, blockX, blockZ);
                         break;
                     case JUNGLE:
                         if (! isSurface)
                             generateLizardTemple(wld, blockX, blockZ);
                         break;
-                    case ASTRAL_INFECTION:
-                        if (isSurface)
-                            generateAstral(wld, blockX, blockZ);
+                    case NORMAL:
+                        generateDungeon(wld, blockX, blockZ);
+                        break;
+                    case DESERT:
+                    case SUNKEN_SEA:
+                        if (! isSurface)
+                            generateEyeOfSunkenSea(wld, blockX, 100 + rdm.nextInt(50), blockZ, false);
                         break;
                 }
             }

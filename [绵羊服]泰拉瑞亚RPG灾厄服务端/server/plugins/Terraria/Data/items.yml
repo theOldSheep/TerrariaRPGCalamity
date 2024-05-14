@@ -9841,7 +9841,7 @@ Dodu的手炮:
   worth: 28000000
   rarity: 14
 归元漩涡:
-  item: BOOK
+  item: DIAMOND_SWORD
   lore:
   - §r左键释放一连串会冲向敌人的漩涡
   - §r右键持续充能，开始时每次攻击发射一个快速移动的小漩涡

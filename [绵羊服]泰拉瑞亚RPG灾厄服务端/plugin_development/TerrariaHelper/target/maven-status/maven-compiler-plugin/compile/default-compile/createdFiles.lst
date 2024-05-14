@@ -106,6 +106,7 @@ terraria\entity\boss\crabulon\Crabulon.class
 terraria\gameplay\EventAndTime$QuestFish.class
 terraria\entity\boss\thePlaguebringerGoliath\ThePlaguebringerGoliath$AIPhase.class
 terraria\util\NPCHelper.class
+terraria\worldgen\overworld\OrePopulator$OreMaterial.class
 terraria\worldgen\overworld\StructureInfo.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHand$HandType.class
 terraria\entity\boss\desertScourge\DesertNuisance.class

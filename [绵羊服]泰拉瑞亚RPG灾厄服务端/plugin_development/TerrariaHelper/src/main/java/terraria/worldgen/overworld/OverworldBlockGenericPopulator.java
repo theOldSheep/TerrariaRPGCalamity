@@ -17,7 +17,6 @@ public class OverworldBlockGenericPopulator extends BlockPopulator {
     @Override
     public void populate(World wld, Random rdm, Chunk chunk) {
         int startX = chunk.getX() * 16, startZ = chunk.getZ() * 16;
-        // TODO: implement underground desert, sunken sea and abyss landscape
         for (int i = 0; i < 16; i++)
             for (int j = 0; j < 16; j++) {
                 int blockX = startX + i, blockZ = startZ + j;

@@ -14,35 +14,29 @@ import java.util.Random;
 
 public class OrePopulator extends BlockPopulator {
     int yOffset;
-    public static HashMap<String, Material> oreMaterials;
-    static {
-        oreMaterials = new HashMap<>(30);
-        oreMaterials.put("COPPER",              Material.COAL_ORE);
-        oreMaterials.put("IRON",                Material.IRON_ORE);
-        oreMaterials.put("SILVER",              Material.LAPIS_ORE);
-        oreMaterials.put("GOLD",                Material.GOLD_ORE);
-        oreMaterials.put("METEORITE",           Material.RED_GLAZED_TERRACOTTA);
-        oreMaterials.put("HELLSTONE",           Material.MAGMA);
-        oreMaterials.put("COBALT",              Material.LAPIS_BLOCK);
-        oreMaterials.put("LIFE_CRYSTAL",        Material.EMERALD_ORE);
-        oreMaterials.put("MYTHRIL",             Material.EMERALD_BLOCK);
-        oreMaterials.put("ADAMANTITE",          Material.REDSTONE_ORE);
-        oreMaterials.put("CHARRED",             Material.QUARTZ_ORE);
-        oreMaterials.put("CHLOROPHYTE",         Material.MOSSY_COBBLESTONE);
-        oreMaterials.put("SEA_PRISM",           Material.SEA_LANTERN);
-        oreMaterials.put("AERIALITE",           Material.DIAMOND_ORE);
-        oreMaterials.put("CRYONIC",             Material.DIAMOND_BLOCK);
-        oreMaterials.put("PERENNIAL",           Material.LIME_GLAZED_TERRACOTTA);
-        oreMaterials.put("SCORIA",              Material.COAL_BLOCK);
-        oreMaterials.put("ASTRAL",              Material.REDSTONE_BLOCK);
-        oreMaterials.put("EXODIUM",             Material.BLACK_GLAZED_TERRACOTTA);
-        oreMaterials.put("UELIBLOOM",           Material.BROWN_GLAZED_TERRACOTTA);
-        oreMaterials.put("AURIC",               Material.YELLOW_GLAZED_TERRACOTTA);
+    public enum OreMaterial {
+        // vanilla
+        COPPER(Material.COAL_ORE), IRON(Material.IRON_ORE), SILVER(Material.LAPIS_ORE), GOLD(Material.GOLD_ORE),
+        METEORITE(Material.RED_GLAZED_TERRACOTTA), HELLSTONE(Material.MAGMA), LIFE_CRYSTAL(Material.EMERALD_ORE),
+        COBALT(Material.LAPIS_BLOCK), MYTHRIL(Material.EMERALD_BLOCK), ADAMANTITE(Material.REDSTONE_ORE),
+        CHLOROPHYTE(Material.MOSSY_COBBLESTONE),
+        // calamity
+        SEA_PRISM(Material.SEA_LANTERN), AERIALITE(Material.DIAMOND_ORE),
+        CHARRED(Material.QUARTZ_ORE), CRYONIC(Material.DIAMOND_BLOCK),
+        PERENNIAL(Material.LIME_GLAZED_TERRACOTTA), SCORIA(Material.COAL_BLOCK),
+        ASTRAL(Material.REDSTONE_BLOCK), EXODIUM(Material.BLACK_GLAZED_TERRACOTTA),
+        UELIBLOOM(Material.BROWN_GLAZED_TERRACOTTA), AURIC(Material.YELLOW_GLAZED_TERRACOTTA);
+
+        public final Material material;
+        OreMaterial(Material mat) {
+            this.material = mat;
+        }
     }
     static int SURFACE = 50,
             UNDERGROUND = 0,
             CAVERN = -100,
-            DEEP_CAVERN = -150;
+            DEEP_CAVERN = -150,
+            ABYSS_MID = -75;
     public OrePopulator(int yOffset) {
         this.yOffset = yOffset;
     }
@@ -78,8 +72,8 @@ public class OrePopulator extends BlockPopulator {
             }
         }
     }
-    void generateGenericOre(World wld, Random rdm, Chunk chunk, int yMax, int stepSize, String oreName, int size) {
-        Material oreType = oreMaterials.getOrDefault(oreName, Material.STONE);
+    void generateGenericOre(World wld, Random rdm, Chunk chunk, int yMax, int stepSize, OreMaterial oreName, int size) {
+        Material oreType = oreName.material;
         int blockXStart = chunk.getX() << 4, blockZStart = chunk.getZ() << 4;
         yMax = Math.min(256, yMax - yOffset) - stepSize;
         int modulo = 15 - size;
@@ -124,21 +118,21 @@ public class OrePopulator extends BlockPopulator {
         if (appropriateY.isEmpty())
             return;
         // set block
-        Material lifeCrystalMat = oreMaterials.getOrDefault("LIFE_CRYSTAL", Material.EMERALD_ORE);
+        Material lifeCrystalMat = OreMaterial.LIFE_CRYSTAL.material;
         chunk.getBlock(xRdm, appropriateY.get( (int) (rdm.nextDouble() * appropriateY.size()) ), zRdm)
                 .setType(lifeCrystalMat);
     }
     void generateCopper(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, SURFACE, 32, "COPPER", 4);
+        generateGenericOre(wld, rdm, chunk, SURFACE, 32, OreMaterial.COPPER, 4);
     }
     void generateIron(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, UNDERGROUND, 40, "IRON", 4);
+        generateGenericOre(wld, rdm, chunk, UNDERGROUND, 40, OreMaterial.IRON, 4);
     }
     void generateSilver(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, CAVERN, 48, "SILVER", 4);
+        generateGenericOre(wld, rdm, chunk, CAVERN, 48, OreMaterial.SILVER, 4);
     }
     void generateGold(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, DEEP_CAVERN, 64, "GOLD", 4);
+        generateGenericOre(wld, rdm, chunk, DEEP_CAVERN, 64, OreMaterial.GOLD, 4);
     }
     void generateMeteorite(World wld, Random rdm, Chunk chunk) {
         if (yOffset != 0) return; // only surface world get this ore
@@ -147,7 +141,7 @@ public class OrePopulator extends BlockPopulator {
                     zCenter = (chunk.getZ() << 4) + 5 + (int) (rdm.nextDouble() * 6);
             int height = wld.getHighestBlockYAt(xCenter, zCenter);
             if (height < OverworldChunkGenerator.LAND_HEIGHT || height > OverworldChunkGenerator.LAND_HEIGHT + 20) return;
-            Material oreMat = oreMaterials.getOrDefault("METEORITE", Material.STONE);
+            Material oreMat = OreMaterial.METEORITE.material;
             height -= 6;
             // set spherical cluster of ore
             for (int xOffset = -10; xOffset <= 10; xOffset ++) {
@@ -172,40 +166,40 @@ public class OrePopulator extends BlockPopulator {
         }
     }
     void generateCobalt(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, UNDERGROUND, 48, "COBALT", 4);
+        generateGenericOre(wld, rdm, chunk, UNDERGROUND, 48, OreMaterial.COBALT, 4);
     }
     void generateMythril(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, CAVERN, 64, "MYTHRIL", 5);
+        generateGenericOre(wld, rdm, chunk, CAVERN, 64, OreMaterial.MYTHRIL, 5);
     }
     void generateAdamantite(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, DEEP_CAVERN, 72, "ADAMANTITE", 5);
+        generateGenericOre(wld, rdm, chunk, DEEP_CAVERN, 72, OreMaterial.ADAMANTITE, 5);
     }
     void generateChlorophyte(World wld, Random rdm, Chunk chunk) {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.MUTATED_JUNGLE)
-            generateGenericOre(wld, rdm, chunk, CAVERN, 128, "CHLOROPHYTE", 5);
+            generateGenericOre(wld, rdm, chunk, CAVERN, 128, OreMaterial.CHLOROPHYTE, 5);
     }
     // Calamity
     // pre-hardmode
     void generateSeaPrism(World wld, Random rdm, Chunk chunk) {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.MUTATED_DESERT)
-            generateGenericOre(wld, rdm, chunk, UNDERGROUND, 72, "SEA_PRISM", 5);
+            generateGenericOre(wld, rdm, chunk, UNDERGROUND, 72, OreMaterial.SEA_PRISM, 5);
     }
     void generateAerialite(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, CAVERN, 80, "AERIALITE", 6);
+        generateGenericOre(wld, rdm, chunk, CAVERN, 80, OreMaterial.AERIALITE, 6);
     }
     // hardmode
     // charred ore only generates in the hell level.
     void generateCryonic(World wld, Random rdm, Chunk chunk) {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.MUTATED_TAIGA_COLD)
-            generateGenericOre(wld, rdm, chunk, UNDERGROUND, 96, "CRYONIC", 6);
+            generateGenericOre(wld, rdm, chunk, UNDERGROUND, 96, OreMaterial.CRYONIC, 6);
     }
     void generatePerennial(World wld, Random rdm, Chunk chunk) {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.MUTATED_JUNGLE)
-            generateGenericOre(wld, rdm, chunk, UNDERGROUND, 96, "PERENNIAL", 6);
+            generateGenericOre(wld, rdm, chunk, UNDERGROUND, 96, OreMaterial.PERENNIAL, 6);
     }
     void generateScoria(World wld, Random rdm, Chunk chunk) {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.DEEP_OCEAN)
-            generateGenericOre(wld, rdm, chunk, CAVERN, 80, "SCORIA", 5);
+            generateGenericOre(wld, rdm, chunk, ABYSS_MID, 80, OreMaterial.SCORIA, 5);
     }
     // post-moon lord
 
@@ -217,7 +211,7 @@ public class OrePopulator extends BlockPopulator {
                     height = 215 + rdm.nextInt(20);
             int worldHeight = wld.getHighestBlockYAt(xCenter, zCenter);
             if (worldHeight > 125) return; // prevents getting too close to ground
-            Material oreMat = oreMaterials.getOrDefault("EXODIUM", Material.STONE);
+            Material oreMat = OreMaterial.EXODIUM.material;
             // set spherical cluster of ore
             for (int xOffset = -10; xOffset <= 10; xOffset ++) {
                 for (int zOffset = -10; zOffset <= 10; zOffset ++) {
@@ -234,17 +228,17 @@ public class OrePopulator extends BlockPopulator {
     }
     void generateUelibloom(World wld, Random rdm, Chunk chunk) {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.MUTATED_JUNGLE)
-            generateGenericOre(wld, rdm, chunk, CAVERN, 160, "UELIBLOOM", 6);
+            generateGenericOre(wld, rdm, chunk, CAVERN, 160, OreMaterial.UELIBLOOM, 6);
     }
     void generateAuric(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, DEEP_CAVERN, 256, "AURIC", 8);
+        generateGenericOre(wld, rdm, chunk, DEEP_CAVERN, 256, OreMaterial.AURIC, 8);
     }
     void generateHellstone(World wld, Random rdm, Chunk chunk) {
-        generateGenericOre(wld, rdm, chunk, 75, 24, "HELLSTONE", 4);
+        generateGenericOre(wld, rdm, chunk, 75, 24, OreMaterial.HELLSTONE, 4);
     }
     void generateCharred(World wld, Random rdm, Chunk chunk) {
         if (wld.getBiome(chunk.getX() * 16, chunk.getZ() * 16) == Biome.SAVANNA)
-            generateGenericOre(wld, rdm, chunk, 60, 32, "CHARRED", 5);
+            generateGenericOre(wld, rdm, chunk, 60, 32, OreMaterial.CHARRED, 5);
     }
     // TODO
     void generateUndergroundLake(World world, Random random, Chunk chunk) {

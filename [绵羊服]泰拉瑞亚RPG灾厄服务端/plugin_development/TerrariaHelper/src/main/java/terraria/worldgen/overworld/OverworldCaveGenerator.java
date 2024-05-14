@@ -18,7 +18,8 @@ import java.util.function.Function;
 
 public class OverworldCaveGenerator {
     int yOffset;
-    SimplexOctaveGenerator cheeseCaveGenerator, spaghettiGeneratorOne, spaghettiGeneratorTwo;
+    SimplexOctaveGenerator cheeseCaveGenerator, spaghettiGeneratorOne, spaghettiGeneratorTwo,
+            sunkenSeaAbyssCaveGenerator;
 
 
     int testInfoIndex;
@@ -44,12 +45,17 @@ public class OverworldCaveGenerator {
         spaghettiGeneratorTwo = new SimplexOctaveGenerator(rdm.nextLong(), OCTAVES);
         spaghettiGeneratorTwo.setScale(0.005);
         spaghettiGeneratorTwo.setYScale(spaghettiGeneratorTwo.getYScale() * 5 / 3);
+        sunkenSeaAbyssCaveGenerator = new SimplexOctaveGenerator(rdm.nextLong(), OCTAVES);
+        sunkenSeaAbyssCaveGenerator.setScale(0.01);
+        sunkenSeaAbyssCaveGenerator.setYScale(sunkenSeaAbyssCaveGenerator.getYScale() * 3);
 
     }
-    public static double getCavernNoiseMulti(Biome biome) {
+    public double getCavernNoiseMulti(Biome biome) {
         switch (biome) {
             // caves for these biomes will be customized
-            case MUTATED_DESERT:    // sunken sea
+            case DESERT:            // sunken sea/desert
+            case MUTATED_DESERT:    // sunken sea/desert
+                return yOffset == OverworldChunkGenerator.Y_OFFSET_OVERWORLD ? 1 : 0;
             case COLD_BEACH:        // sulphurous beach
             case FROZEN_OCEAN:      // sulphurous ocean
             case DEEP_OCEAN:        // abyss
@@ -59,25 +65,26 @@ public class OverworldCaveGenerator {
         }
     }
     // gets the "air" material for the biome
-    private static Material getAirMaterial(Biome biome) {
+    private static Material getAirMaterial(Biome biome, double caveMulti) {
         switch (biome) {
             // caves for these biomes will be filled with water
             case MUTATED_DESERT:    // sunken sea
             case COLD_BEACH:        // sulphurous beach
             case FROZEN_OCEAN:      // sulphurous ocean
             case DEEP_OCEAN:        // abyss
-                return Material.STATIONARY_WATER;
+                return caveMulti < 0.5 ? Material.STATIONARY_WATER : Material.AIR;
             default:
                 return Material.AIR;
         }
     }
-    private double[] getCavernNoise(Biome biome, int height, int currX, int effectualY, int currZ, double noiseMulti) {
+    private double[] getCavernNoise(Biome biome, int surfaceHeight, int currX, int effectualY, int currZ, double noiseMulti) {
         double[] result = new double[]{-1, -1, -1};
         // way above the terrain height? Don't even bother generating!
-        if (effectualY > height + CAVE_ROUGH_SKETCH_DIAMETER)
+        if (effectualY > surfaceHeight + CAVE_ROUGH_SKETCH_DIAMETER)
             return result;
+        // near surface
         if (effectualY > 30) {
-            boolean hasRiver = height - yOffset - 2 < OverworldChunkGenerator.SEA_LEVEL;
+            boolean hasRiver = surfaceHeight - yOffset - 2 < OverworldChunkGenerator.SEA_LEVEL;
             double caveNoiseOffset = ((double) (effectualY - 30)) / 20;
             if (caveNoiseOffset < 2) {
                 result[0] = cheeseCaveGenerator.noise(currX, effectualY, currZ, 2, 0.5, false) - caveNoiseOffset;
@@ -85,6 +92,7 @@ public class OverworldCaveGenerator {
             switch (biome) {
                 case FOREST:        // forest
                 case JUNGLE:        // jungle
+                case DESERT:        // desert
                 case TAIGA_COLD:    // tundra
                 case ICE_FLATS:     // hallow
                 case MESA:          // astral infection
@@ -102,12 +110,51 @@ public class OverworldCaveGenerator {
                             result[2] += caveNoiseOffset;
                     }
             }
-        } else {
+        }
+        // not near surface
+        else {
+            // sunken sea & abyss
+            if (yOffset != OverworldChunkGenerator.Y_OFFSET_OVERWORLD) {
+                switch (biome) {
+                    // sunken sea
+                    case DESERT:
+                    case MUTATED_DESERT:
+                        if (noiseMulti < 1e-5) {
+                            result[0] = sunkenSeaAbyssCaveGenerator.noise(currX, effectualY, currZ, 2, 0.5, false);
+                            double amplify = 0.4;
+                            result[0] += (result[0] >= 0) ? amplify : -amplify;
+                        }
+                        return result;
+                    // abyss
+                    case COLD_BEACH:
+                    case FROZEN_OCEAN:
+                    case DEEP_OCEAN:
+                        if (noiseMulti < 1e-5) {
+                            result[0] = sunkenSeaAbyssCaveGenerator.noise(currX, effectualY, currZ, 2, 0.5, false);
+                            double amplify = 0.4;
+                            // make sure the 3rd level is pretty empty (handled by modifying amplify)
+                            if (effectualY < -125) {
+                                amplify = 1;
+                                // ocean floor
+                                if (effectualY < -220)
+                                    amplify = (effectualY + 220) / 7.5d;
+                                // ceiling of 3rd level
+                                else if (effectualY > -150)
+                                    amplify = Math.max( (- effectualY - 150) / 12.5d , amplify);
+                            }
+
+                            result[0] += (result[0] >= 0) ? amplify : -amplify;
+                        }
+                        return result;
+                }
+            }
+            // normal cave noise
             result[0] = cheeseCaveGenerator.noise(currX, effectualY, currZ, 2, 0.5, false);
             result[1] = spaghettiGeneratorOne.noise(currX, effectualY, currZ, 2, 0.5, false);
             result[2] = spaghettiGeneratorTwo.noise(currX, effectualY, currZ, 2, 0.5, false);
         }
         double complementNoise = 1 - noiseMulti;
+        // equivalent to + (-1) * complementNoise
         result[0] = result[0] * noiseMulti - complementNoise;
         result[1] = result[1] * noiseMulti - complementNoise;
         result[2] = result[2] * noiseMulti - complementNoise;
@@ -249,7 +296,7 @@ public class OverworldCaveGenerator {
                     }
                 } else if (shouldCheckCave == 1) result = true;
                 if (result)
-                    chunk.setBlock(i, y_coord, j, getAirMaterial(biome.getBiome(i, j)));
+                    chunk.setBlock(i, y_coord, j, getAirMaterial(biome.getBiome(i, j), caveMultiMap[i][j]));
                 return result;
             });
         }
@@ -287,7 +334,7 @@ public class OverworldCaveGenerator {
                             }
                         } else if (shouldCheckCave == 1) isCave = true;
                         if (isCave)
-                            chunk.setBlock(i, y_coord, j, getAirMaterial(biome.getBiome(i, j)));
+                            chunk.setBlock(i, y_coord, j, getAirMaterial(biome.getBiome(i, j), caveMultiMap[i][j]));
                     }
                 }
             }
@@ -320,7 +367,7 @@ public class OverworldCaveGenerator {
                         testCaveDetailDurTotal[testInfoIndex] += (System.nanoTime() - timing);
                     }
                     if (isCave) {
-                        chunk.setBlock(i, y_coord, j, getAirMaterial(biome.getBiome(i, j)));
+                        chunk.setBlock(i, y_coord, j, getAirMaterial(biome.getBiome(i, j), caveMultiMap[i][j]));
                     }
                 }
             }
