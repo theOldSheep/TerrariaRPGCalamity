@@ -325,8 +325,11 @@ public class TerrariaPotionProjectile extends EntityPotion {
                     for (HitEntityInfo hitInfo : hitCandidates) {
                         org.bukkit.entity.Entity hitEntity = hitInfo.getHitEntity().getBukkitEntity();
                         if (hitEntity instanceof LivingEntity) {
-                            Location targetLoc = ((LivingEntity) hitEntity).getEyeLocation();
-                            velocity = terraria.util.MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, 1);
+                            Location targetLoc = EntityHelper.helperAimEntity(extraProjectileShootInfo.shootLoc, hitEntity,
+                                    new EntityHelper.AimHelperOptions(extraProjectileShootInfo.projectileName)
+                                            .setAccelerationMode(true)
+                                            .setProjectileSpeed(extraProjectileSpeed));
+                            velocity = terraria.util.MathHelper.getDirection(extraProjectileShootInfo.shootLoc, targetLoc, 1);
                             break;
                         }
                     }
@@ -349,7 +352,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
         switch (projectileType) {
             case "旋风":
             case "风暴管束者剑气":
-            case "小遗爵硫海漩涡": {
+            case "小遗爵硫海漩涡":
+            case "黑蚀黑洞": {
                 double radius = 1, suckSpeed = 0.1, maxSpeed = 0.5;
                 switch (projectileType) {
                     case "旋风":
@@ -366,6 +370,11 @@ public class TerrariaPotionProjectile extends EntityPotion {
                         radius = 32;
                         suckSpeed = 1.75;
                         maxSpeed = 2.5;
+                        break;
+                    case "黑蚀黑洞":
+                        radius = 8;
+                        suckSpeed = 0.5;
+                        maxSpeed = 1.25;
                         break;
                 }
                 // get list of entities that could get sucked in

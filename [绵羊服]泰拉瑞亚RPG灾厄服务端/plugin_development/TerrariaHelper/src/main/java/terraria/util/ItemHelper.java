@@ -7,6 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftItem;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.Vex;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
@@ -16,12 +17,13 @@ import terraria.TerrariaHelper;
 import terraria.entity.others.TerrariaItem;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 
 public class ItemHelper {
-    public static final String placeholderItemNamePrefix = "§1§1§4§5§1§4";
-    public static HashMap<String, String> attributeDisplayName = new HashMap<>();
-    private static HashMap<String, ItemStack> itemMap;
+    public static final String PLACEHOLDER_ITEM_NAME_PREFIX = "§1§1§4§5§1§4";
+    public static HashMap<String, String> ATTRIBUTE_DISPLAY_NAME = new HashMap<>();
+    private static HashMap<String, ItemStack> ITEM_MAP;
     public static HashMap<String, VexGui> CRAFTING_GUI_MAP;
     public static HashMap<String, String> CRAFTING_GUIS_RECIPE_INDEX_MAP;
     public static HashMap<String, Integer> CRAFTING_GUI_LENGTH_MAP;
@@ -38,73 +40,81 @@ public class ItemHelper {
         }
         return maxLevel;
     }
-    private static void setupRecipesForStation(String station, int level) {
-        String bg = TerrariaHelper.Constants.GUI_BACKGROUND;
-        ConfigurationSection blockSection = TerrariaHelper.recipeConfig.getConfigurationSection(station);
-        ArrayList<ScrollingListComponent> itemSlots = new ArrayList<>();
-        int recipeIndex = 1;
-        // the recipe added by the block itself
-        {
-            Set<String> nodes = blockSection.getKeys(false);
-            for (String recipeName : nodes) {
-                if (recipeName.equals("containedStations")) continue;
-                ConfigurationSection recipeSection = blockSection.getConfigurationSection(recipeName);
-                int requireLevel = recipeSection.getInt("requireLevel", 0);
-                if (requireLevel <= level) {
-                    ItemStack resultItem = getItemFromDescription(
-                            recipeSection.getString("resultItem", ""), false);
-                    resultItem.setAmount(1);
-                    VexSlot slotComp = new VexSlot(recipeIndex, 5, (recipeIndex - 1) * 20, resultItem);
-                    itemSlots.add(slotComp);
-                    CRAFTING_GUIS_RECIPE_INDEX_MAP.put(station + "_" + level + "_" + recipeIndex, station + "." + recipeName);
-                    recipeIndex++;
-                }
-            }
-        }
-        // add recipes from contained stations
-        // for example, draedon's forge, can work as multiple other work stations
-        ConfigurationSection containedStationSection = blockSection.getConfigurationSection("containedStations");
-        if (containedStationSection != null) {
-            Set<String> containedStations = containedStationSection.getKeys(false);
-            for (String subStation : containedStations) {
-                int subStationLevel = containedStationSection.getInt(subStation, 1);
-                // loop through the station info for each
-                ConfigurationSection subStationSection = TerrariaHelper.recipeConfig.getConfigurationSection(subStation);
-                Set<String> nodes = subStationSection.getKeys(false);
-                for (String recipeName : nodes) {
-                    if (recipeName.equals("containedStations")) continue;
-                    ConfigurationSection recipeSection = subStationSection.getConfigurationSection(recipeName);
-                    int requireLevel = recipeSection.getInt("requireLevel", 0);
-                    if (requireLevel <= subStationLevel) {
-                        ItemStack resultItem = getItemFromDescription(recipeSection.getString("resultItem", ""), false);
-                        resultItem.setAmount(1);
-                        VexSlot slotComp = new VexSlot(recipeIndex, 5, (recipeIndex - 1) * 20, resultItem);
-                        itemSlots.add(slotComp);
-                        // the level below is used as the player crafts, so it should remain as level instead of subStationLevel
-                        // the subStationLevel is used to validate the recipe only
-                        CRAFTING_GUIS_RECIPE_INDEX_MAP.put(station + "_" + level + "_" + recipeIndex, subStation + "." + recipeName);
-                        recipeIndex++;
-                    }
-                }
+    // process all recipes for a craft station (shallow, only its main items)
+    private static void processRecipes(ConfigurationSection section, String effectiveStation, int effectiveStationLevel,
+                                       String savedStation, int savedLevel,
+                                       HashMap<String, HashMap<Integer, List<VexSlot>>> itemSlotsMap, AtomicInteger recipeIndex) {
+        for (String recipeName : section.getKeys(false)) {
+            if (recipeName.equals("containedStations")) continue;
 
+            ConfigurationSection recipeSection = section.getConfigurationSection(recipeName);
+            int requireLevel = recipeSection.getInt("requireLevel", 0);
+
+            if (requireLevel <= effectiveStationLevel) {
+                ItemStack resultItem = getItemFromDescription(recipeSection.getString("resultItem", ""), false);
+                resultItem.setAmount(1);
+                String recipeCategory = recipeSection.getString("recipeCategory");
+                HashMap<Integer, List<VexSlot>> subMap = itemSlotsMap.computeIfAbsent(recipeCategory, k -> new HashMap<>());
+                List<VexSlot> itemSlots = subMap.computeIfAbsent(getItemRarity(resultItem), k -> new ArrayList<>());
+                int currentIndex = recipeIndex.getAndIncrement();
+                VexSlot slotComp = new VexSlot(currentIndex, 5, (currentIndex - 1) * 20, resultItem);
+                itemSlots.add(slotComp);
+                CRAFTING_GUIS_RECIPE_INDEX_MAP.put(savedStation + "_" + savedLevel + "_" + currentIndex, effectiveStation + "." + recipeName);
             }
         }
-        // set up the VexGui
-        VexGui gui = new VexGui(bg, 0, 0, 200, 150);
-        VexScrollingList scrList = new VexScrollingList((int) (gui.getWidth() * 0.75), 17, 30, gui.getHeight() - 34, itemSlots.size() * 20);
-        for (ScrollingListComponent comp : itemSlots)
-            scrList.addComponent(comp);
+    }
+    // setup all recipes
+    private static void setupRecipesForStation(String station, int level) {
+        String guiBackground = TerrariaHelper.Constants.GUI_BACKGROUND;
+        ConfigurationSection stationSection = TerrariaHelper.recipeConfig.getConfigurationSection(station);
+
+        HashMap<String, HashMap<Integer, List<VexSlot>>> itemSlotsMap = new HashMap<>();
+        AtomicInteger recipeIndex = new AtomicInteger(1);
+
+        // main station
+        processRecipes(stationSection, station, level, station, level, itemSlotsMap, recipeIndex);
+
+        // contained stations (if any)
+        ConfigurationSection containedStationsSection = stationSection.getConfigurationSection("containedStations");
+        if (containedStationsSection != null) {
+            for (String subStation : containedStationsSection.getKeys(false)) {
+                int subStationLevel = containedStationsSection.getInt(subStation, 1);
+                ConfigurationSection subStationSection = TerrariaHelper.recipeConfig.getConfigurationSection(subStation);
+                processRecipes(subStationSection, subStation, subStationLevel, station, level, itemSlotsMap, recipeIndex);
+            }
+        }
+
+        // configure the VexGui
+        VexGui gui = new VexGui(guiBackground, 0, 0, 200, 150);
+        VexScrollingList scrList = new VexScrollingList(
+                (int) (gui.getWidth() * 0.75), 17, 30, gui.getHeight() - 34, 0
+        );
+        List<String> categoryOrder = TerrariaHelper.recipeConfig.getStringList("categoryOrder");
+        categoryOrder.add(null);for (String category : categoryOrder) {
+            HashMap<Integer, List<VexSlot>> rarityMap = itemSlotsMap.get(category);
+            if (rarityMap != null) {
+                List<Integer> rarities = new ArrayList<>(rarityMap.keySet());
+                Collections.sort(rarities); // sort the rarities in ascending order
+                for (int rarity : rarities) {
+                    List<VexSlot> itemSlots = rarityMap.get(rarity);
+                    itemSlots.forEach(scrList::addComponent);
+                }
+            }
+        }
         gui.addComponent(scrList);
-        // save the GUI to mapping
+        // store the GUI and recipe count
         String craftGuiMappingKey = station + "_" + level;
         CRAFTING_GUI_MAP.put(craftGuiMappingKey, gui);
-        CRAFTING_GUI_LENGTH_MAP.put(craftGuiMappingKey, recipeIndex);
+        CRAFTING_GUI_LENGTH_MAP.put(craftGuiMappingKey, recipeIndex.get());
     }
+
+
     public static void setupItemRecipe(boolean printDebugMessage) {
         Bukkit.clearRecipes();
         Set<String> items = TerrariaHelper.itemConfig.getKeys(false);
         Set<String> craftStations = TerrariaHelper.recipeConfig.getKeys(false);
-        itemMap = new HashMap<>();
+        craftStations.remove("categoryOrder");
+        ITEM_MAP = new HashMap<>();
         CRAFTING_GUI_MAP = new HashMap<>();
         CRAFTING_GUIS_RECIPE_INDEX_MAP = new HashMap<>();
         CRAFTING_GUI_LENGTH_MAP = new HashMap<>();
@@ -138,7 +148,7 @@ public class ItemHelper {
                     item.setItemMeta(meta);
                 }
             }
-            itemMap.put(itemInfo, item);
+            ITEM_MAP.put(itemInfo, item);
         }
         // setup material tooltip
         Set<String> allMaterials = new HashSet<>();
@@ -156,7 +166,7 @@ public class ItemHelper {
         }
         for (String mat : allMaterials) {
             // no cloning here needed, as we are intended to tweak the item value.
-            ItemStack item = itemMap.get(mat);
+            ItemStack item = ITEM_MAP.get(mat);
             if (item == null) {
                 if (printDebugMessage) TerrariaHelper.LOGGER.log(Level.SEVERE, mat + " is supposed to be an crafting material, but it is not found.");
                 continue;
@@ -186,32 +196,32 @@ public class ItemHelper {
         }
     }
     private static void setupAttributeDisplayName() {
-        attributeDisplayName.put("damageTakenMulti", "受到伤害");
-        attributeDisplayName.put("damageContactTakenMulti", "受到接触伤害");
-        attributeDisplayName.put("damageMulti", "伤害");
-        attributeDisplayName.put("damageMeleeMulti", "近战伤害");
-        attributeDisplayName.put("damageRangedMulti", "远程伤害");
-        attributeDisplayName.put("damageMagicMulti", "魔法伤害");
-        attributeDisplayName.put("damageSummonMulti", "召唤伤害");
-        attributeDisplayName.put("damageArrowMulti", "箭矢伤害");
-        attributeDisplayName.put("damageBulletMulti", "子弹伤害");
-        attributeDisplayName.put("damageRocketMulti", "火箭伤害");
-        attributeDisplayName.put("damageTrueMeleeMulti", "真近战伤害");
-        attributeDisplayName.put("flightTimeMulti", "飞行时长");
-        attributeDisplayName.put("manaUseMulti", "魔力消耗");
-        attributeDisplayName.put("maxHealthMulti", "最大生命值");
-        attributeDisplayName.put("mobSpawnRateMulti", "怪物生成速度");
-        attributeDisplayName.put("speedMulti", "移动速度");
-        attributeDisplayName.put("meleeReachMulti", "近战攻击距离");
-        attributeDisplayName.put("regenMulti", "生命回复速度");
-        attributeDisplayName.put("useSpeedMulti", "攻击速度");
-        attributeDisplayName.put("useSpeedMagicMulti", "魔法攻击速度");
-        attributeDisplayName.put("useSpeedMeleeMulti", "近战攻击速度");
-        attributeDisplayName.put("useSpeedMiningMulti", "挖掘速度");
-        attributeDisplayName.put("useSpeedRangedMulti", "远程攻击速度");
-        attributeDisplayName.put("knockbackMeleeMulti", "近战击退");
-        attributeDisplayName.put("projectileSpeedMulti", "弹射物速度");
-        attributeDisplayName.put("projectileSpeedArrowMulti", "箭矢速度");
+        ATTRIBUTE_DISPLAY_NAME.put("damageTakenMulti", "受到伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("damageContactTakenMulti", "受到接触伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("damageMulti", "伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("damageMeleeMulti", "近战伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("damageRangedMulti", "远程伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("damageMagicMulti", "魔法伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("damageSummonMulti", "召唤伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("damageArrowMulti", "箭矢伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("damageBulletMulti", "子弹伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("damageRocketMulti", "火箭伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("damageTrueMeleeMulti", "真近战伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("flightTimeMulti", "飞行时长");
+        ATTRIBUTE_DISPLAY_NAME.put("manaUseMulti", "魔力消耗");
+        ATTRIBUTE_DISPLAY_NAME.put("maxHealthMulti", "最大生命值");
+        ATTRIBUTE_DISPLAY_NAME.put("mobSpawnRateMulti", "怪物生成速度");
+        ATTRIBUTE_DISPLAY_NAME.put("speedMulti", "移动速度");
+        ATTRIBUTE_DISPLAY_NAME.put("meleeReachMulti", "近战攻击距离");
+        ATTRIBUTE_DISPLAY_NAME.put("regenMulti", "生命回复速度");
+        ATTRIBUTE_DISPLAY_NAME.put("useSpeedMulti", "攻击速度");
+        ATTRIBUTE_DISPLAY_NAME.put("useSpeedMagicMulti", "魔法攻击速度");
+        ATTRIBUTE_DISPLAY_NAME.put("useSpeedMeleeMulti", "近战攻击速度");
+        ATTRIBUTE_DISPLAY_NAME.put("useSpeedMiningMulti", "挖掘速度");
+        ATTRIBUTE_DISPLAY_NAME.put("useSpeedRangedMulti", "远程攻击速度");
+        ATTRIBUTE_DISPLAY_NAME.put("knockbackMeleeMulti", "近战击退");
+        ATTRIBUTE_DISPLAY_NAME.put("projectileSpeedMulti", "弹射物速度");
+        ATTRIBUTE_DISPLAY_NAME.put("projectileSpeedArrowMulti", "箭矢速度");
     }
     static {
         setupAttributeDisplayName();
@@ -484,7 +494,7 @@ public class ItemHelper {
                 // get the itemstack
                 ItemStack resultItem;
                 try {
-                    resultItem = itemMap.get(itemType);
+                    resultItem = ITEM_MAP.get(itemType);
                     // attempt to return the item from vanilla material
                     if (resultItem == null || resultItem.getType() == Material.AIR) {
                         try {
@@ -518,7 +528,7 @@ public class ItemHelper {
                         lore.addAll(TerrariaHelper.prefixConfig.getStringList("prefixInfo." + prefix + ".lore"));
                     }
                     // generate color according to rarity
-                    int itemBaseRarity = TerrariaHelper.itemConfig.getInt(itemType + ".rarity", 0);
+                    int itemBaseRarity = getItemRarity(itemType);
                     int prefixRarity = TerrariaHelper.prefixConfig.getInt("prefixInfo." + prefix + ".rarity", 0);
                     // if rarity color [itemBaseRarity + prefixRarity] is set, use it
                     // otherwise, resolve to rarity color [itemBaseRarity]
@@ -537,9 +547,18 @@ public class ItemHelper {
         }
     }
     public static ItemStack getRawItem(String information) {
-        if (information != null && itemMap.containsKey(information))
-            return itemMap.get(information).clone();
+        if (information != null && ITEM_MAP.containsKey(information))
+            return ITEM_MAP.get(information).clone();
         return new ItemStack(Material.AIR);
+    }
+    public static int getItemRarity(ItemStack item) {
+        return getItemRarity(splitItemName(item)[1]);
+    }
+    public static int getItemRarity(String itemType) {
+        return TerrariaHelper.itemConfig.getInt(itemType + ".rarity", 0);
+    }
+    public static int getItemRarityFromFullDescription(String fullItemDesc) {
+        return getItemRarity(splitItemName(fullItemDesc)[1]);
     }
     private static List<String> getLoreDescription(ConfigurationSection attributeSection) {
         // the performance of this function is not very critical
@@ -779,10 +798,10 @@ public class ItemHelper {
                     break;
                 // multiplier-style attributes
                 default:
-                    if (attributeDisplayName.containsKey(attribute)) {
+                    if (ATTRIBUTE_DISPLAY_NAME.containsKey(attribute)) {
                         double multi = attributeSection.getDouble(attribute, 0d);
                         int multiPercentage = (int) (multi * 100);
-                        String descr = attributeDisplayName.getOrDefault(attribute, attribute);
+                        String descr = ATTRIBUTE_DISPLAY_NAME.getOrDefault(attribute, attribute);
                         result.add((multi > 0 ? "+" : "") + multiPercentage + "% " + descr);
                         break;
                     }

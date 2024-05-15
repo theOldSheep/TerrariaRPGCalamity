@@ -71,9 +71,11 @@ public class TerrariaHelper extends JavaPlugin {
             @Override
             public String onPlaceholderRequest(Player ply, String params) {
                 switch (params) {
+                    case "oxygen": {
+                        return EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR).asInt() + "";
+                    }
                     case "money": {
                         double amount = PlayerHelper.getMoney(ply);
-                        String result = "";
                         if (amount < 100) {
                             return "笑死，身无分文";
                         } else {

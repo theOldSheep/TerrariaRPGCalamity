@@ -337,12 +337,12 @@
   item: SHEARS
   lore:
   - §r“汇聚了大量灵魂的精华”
-  rarity: 0
+  rarity: 3
 夜光钥匙:
   item: SHEARS
   lore:
   - §r“汇聚了大量灵魂的精华”
-  rarity: 0
+  rarity: 3
 光明碎块:
   item: NETHER_STAR
   lore:
@@ -1148,7 +1148,7 @@
   attributes:
     manaUseMulti: -0.08
   worth: 1000000
-  rarity: 4
+  rarity: 2
 天界磁石:
   item: LEASH
   lore:
@@ -1191,7 +1191,7 @@
   attributes:
     maxMana: 20
   worth: 3200000
-  rarity: 5
+  rarity: 2
 天界徽章:
   item: LEASH
   lore:
@@ -1210,7 +1210,7 @@
   attributes:
     manaUseMulti: -0.08
   worth: 4000000
-  rarity: 5
+  rarity: 2
 镣铐:
   item: LEASH
   lore:
@@ -1252,7 +1252,7 @@
   - §r[饰品]
   - §r算作鞋子
   worth: 1000000
-  rarity: 3
+  rarity: 2
 蠕虫围巾:
   item: LEASH
   lore:
@@ -1553,7 +1553,7 @@
   attributes:
     speedMulti: 0.1
   worth: 2000000
-  rarity: 4
+  rarity: 2
 跳跃之瓶:
   item: LEASH
   lore:
@@ -1569,7 +1569,7 @@
   - §r算作气球
   - §r按空格释放二段跳，一共可以释放两次二段跳
   worth: 2000000
-  rarity: 8
+  rarity: 3
 岩浆石:
   item: LEASH
   lore:
@@ -1593,7 +1593,6 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r缓慢再生生命
   attributes:
     regen: 2
   worth: 1000000
@@ -2444,7 +2443,7 @@ Drew之翼:
     damageSummonMulti: 0.03
     damageTakenMulti: -0.05
   worth: 2400000
-  rarity: 4
+  rarity: 5
 聚合之脑:
   item: LEASH
   lore:
@@ -2761,7 +2760,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    waterAffinity: 2
+    waterAffinity: 1
     defence: 20
     speedMulti: -0.05
   worth: 4800000
@@ -2771,7 +2770,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    waterAffinity: 3.5
+    waterAffinity: 3
     defence: 25
     speedMulti: -0.05
   worth: 9000000

@@ -535,27 +535,11 @@ public class ItemUseHelper {
     public static Vector getPlayerAimDir(Player ply, Location startShootLoc, double projectileVelocity, String projectileType,
                                          boolean tickOffsetOrSpeed, int tickOffset) {
         // default to acceleration-aim mode
-        ConfigurationSection projConfSec = TerrariaHelper.projectileConfig.getConfigurationSection(projectileType);
-        EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions()
+        EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions(projectileType)
                 .setAccelerationMode(true)
                 .setAimMode(tickOffsetOrSpeed)
                 .setTicksTotal(tickOffset)
                 .setProjectileSpeed(projectileVelocity);
-        // these could cause null pointer issues, so wrap it with an if-statement
-        if (projConfSec == null) {
-            aimHelperOptions
-                    .setProjectileSpeedMax(99d)
-                    .setProjectileSpeedMulti(1d)
-                    .setProjectileGravity(0.05)
-                    .setNoGravityTicks(5);
-        }
-        else {
-            aimHelperOptions
-                    .setProjectileSpeedMax(projConfSec.getDouble("maxSpeed", 99d))
-                    .setProjectileSpeedMulti(projConfSec.getDouble("speedMultiPerTick", 1d))
-                    .setProjectileGravity(projConfSec.getDouble("gravity", 0.05))
-                    .setNoGravityTicks(projConfSec.getInt("noGravityTicks", 5));
-        }
         // get targeted location
         Location targetLoc = getPlayerTargetLoc(ply, 96, 4, aimHelperOptions, true);
         // send the new direction
@@ -4745,6 +4729,7 @@ public class ItemUseHelper {
                                             ConfigurationSection weaponSection, HashMap<String, Double> attrMap) {
         int manaConsumption = (int) Math.round(attrMap.getOrDefault("manaUse", 10d) *
                 attrMap.getOrDefault("manaUseMulti", 1d));
+        // mana consumption tweak
         switch (itemType) {
             case "太空枪":
                 if (EntityHelper.getMetadata(ply, EntityHelper.MetadataName.ARMOR_SET).asString().equals("流星套装"))
@@ -4756,15 +4741,16 @@ public class ItemUseHelper {
                 else if (swingAmount >= 15)
                     manaConsumption *= 1.5;
                 break;
-            case "归元漩涡_RIGHT_CLICK":
-                int charge = getDurability(weaponItem, 9);
-                charge = (charge + 1) % 10;
-                setDurability(weaponItem, 9, charge);
-                // offset the swing amount to align with the durability display
-                swingAmount = charge + 9;
-                break;
         }
         if (!consumeMana(ply, manaConsumption)) return false;
+        // post mana consumption
+        if (itemType.equals("归元漩涡_RIGHT_CLICK")) {
+            int charge = getDurability(weaponItem, 9);
+            charge = (charge + 1) % 10;
+            setDurability(weaponItem, 9, charge);
+            // offset the swing amount to align with the durability display
+            swingAmount = charge + 9;
+        }
         if (weaponType.equals("MAGIC_PROJECTILE")) {
             handleMagicProjectileFire(ply, attrMap, weaponSection, swingAmount, 1, itemType, weaponType, autoSwing);
         } else {

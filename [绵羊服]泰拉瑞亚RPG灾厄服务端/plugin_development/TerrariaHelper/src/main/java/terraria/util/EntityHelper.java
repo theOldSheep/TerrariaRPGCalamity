@@ -87,6 +87,26 @@ public class EntityHelper {
         boolean useAcceleration = false, useTickOrSpeedEstimation = false;
         int epoch = 5, noGravityTicks = 5;
         Vector accelerationOffset = new Vector();
+        // constructor with default values
+        public AimHelperOptions() {
+            super();
+        }
+        public AimHelperOptions(String projectileType) {
+            super();
+            ConfigurationSection projConfSec = TerrariaHelper.projectileConfig.getConfigurationSection(projectileType);
+            if (projConfSec == null) {
+                setProjectileSpeedMax(99d);
+                setProjectileSpeedMulti(1d);
+                setProjectileGravity(0.05);
+                setNoGravityTicks(5);
+            }
+            else {
+                setProjectileSpeedMax(projConfSec.getDouble("maxSpeed", 99d));
+                setProjectileSpeedMulti(projConfSec.getDouble("speedMultiPerTick", 1d));
+                setProjectileGravity(projConfSec.getDouble("gravity", 0.05));
+                setNoGravityTicks(projConfSec.getInt("noGravityTicks", 5));
+            }
+        }
         public AimHelperOptions setTicksTotal(double ticksTotal) {
             this.ticksTotal = ticksTotal;
             return this;
@@ -2621,6 +2641,7 @@ public class EntityHelper {
     // helps aim at an entity
     public static Location helperAimEntity(Location shootLoc, Entity target, AimHelperOptions aimHelperOption) {
         shootLoc.checkFinite();
+        assert aimHelperOption.projectileSpeed != 0d;
         Vector enemyVel, enemyAcc;
         // get target velocity and acceleration
         Location targetLoc;

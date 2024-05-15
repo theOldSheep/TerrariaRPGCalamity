@@ -579,12 +579,12 @@ public class StructurePopulator extends BlockPopulator {
         if (oreOrRock) {
             struct = new StructureInfo(OrePopulator.OreMaterial.SEA_PRISM.material, Material.STATIONARY_WATER, DATA_NONE, DATA_NONE);
             innerRad = 4;
-            outerRad = 8;
+            outerRad = 9;
         }
         else {
             struct = new StructureInfo(Material.STATIONARY_WATER, MAT_SPECIAL_STONE, DATA_NONE, DATA_SUNKEN_SEA);
-            innerRad = 14;
-            outerRad = 32;
+            innerRad = 16;
+            outerRad = 40;
         }
         // place blocks
         for (int yOffset = outerRad - 1; yOffset > -outerRad; yOffset --) {

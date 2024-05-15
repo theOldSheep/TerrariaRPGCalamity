@@ -179,6 +179,8 @@ public class VanillaMechanicListener implements Listener {
         // blocks such as life fruit and Plantera's bulb should not be destroyed by flowing liquid.
         if (e.getToBlock().getType() == Material.SKULL)
             e.setCancelled(true);
+        else
+            WorldHelper.makeEmptyBlock(e.getToBlock(), false);
     }
     @EventHandler(priority = EventPriority.LOW)
     public void onBucketFill(PlayerBucketFillEvent e) {
@@ -186,6 +188,7 @@ public class VanillaMechanicListener implements Listener {
             PlayerHelper.sendActionBar(e.getPlayer(), "请勿破坏出生点附近的方块！");
             e.setCancelled(true);
         }
+        WorldHelper.makeEmptyBlock(e.getBlockClicked().getRelative(e.getBlockFace() ), false);
     }
     @EventHandler(priority = EventPriority.LOW)
     public void onBucketEmpty(PlayerBucketEmptyEvent e) {

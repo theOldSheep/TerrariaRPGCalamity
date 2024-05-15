@@ -55,55 +55,63 @@ public class CritterHelper {
                 heightStr = heightLayer.toString().toLowerCase();
         // get spawn generic category
         String critterCategory;
-        // underworld
-        if (biomeType == WorldHelper.BiomeType.UNDERWORLD) {
-            if (Math.random() < 0.75)
-                critterCategory = "Lavafly";
-            else
-                critterCategory = "MagmaSnail";
-        }
-        // daytime
-        else if (WorldHelper.isDayTime(ply.getWorld())) {
-            double randomNum = Math.random();
-            switch (heightLayer) {
-                case SPACE:
-                    if (randomNum < 0.7)
-                        critterCategory = "Bird";
-                    else
-                        critterCategory = "Butterfly";
-                    break;
-                case SURFACE:
-                    if (randomNum < 0.3)
-                        critterCategory = "Bird";
-                    else if (randomNum < 0.65)
-                        critterCategory = "Butterfly";
-                    else
-                        critterCategory = "Ground";
-                    break;
-                default:
-                    critterCategory = "Ground";
-            }
-        }
-        // night
-        else {
-            double randomNum = Math.random();
-            switch (heightLayer) {
-                case SPACE:
-                    critterCategory = "Firefly";
-                    break;
-                case SURFACE:
-                    if (randomNum < 0.55)
-                        critterCategory = "Firefly";
-                    else if (randomNum < 0.65)
-                        critterCategory = "GroundNight";
-                    else
-                        critterCategory = "Ground";
-                    break;
-                default:
-                    if (randomNum < 0.35)
-                        critterCategory = "GroundNight";
-                    else
-                        critterCategory = "Ground";
+        switch (biomeType) {
+            // underworld
+            case UNDERWORLD:
+                if (Math.random() < 0.75)
+                    critterCategory = "Lavafly";
+                else
+                    critterCategory = "MagmaSnail";
+                break;
+            // these biomes do not spawn critters
+            case ABYSS:
+            case SUNKEN_SEA:
+                return;
+            default: {
+                // daytime
+                if (WorldHelper.isDayTime(ply.getWorld())) {
+                    double randomNum = Math.random();
+                    switch (heightLayer) {
+                        case SPACE:
+                            if (randomNum < 0.7)
+                                critterCategory = "Bird";
+                            else
+                                critterCategory = "Butterfly";
+                            break;
+                        case SURFACE:
+                            if (randomNum < 0.3)
+                                critterCategory = "Bird";
+                            else if (randomNum < 0.65)
+                                critterCategory = "Butterfly";
+                            else
+                                critterCategory = "Ground";
+                            break;
+                        default:
+                            critterCategory = "Ground";
+                    }
+                }
+                // night
+                else {
+                    double randomNum = Math.random();
+                    switch (heightLayer) {
+                        case SPACE:
+                            critterCategory = "Firefly";
+                            break;
+                        case SURFACE:
+                            if (randomNum < 0.55)
+                                critterCategory = "Firefly";
+                            else if (randomNum < 0.65)
+                                critterCategory = "GroundNight";
+                            else
+                                critterCategory = "Ground";
+                            break;
+                        default:
+                            if (randomNum < 0.35)
+                                critterCategory = "GroundNight";
+                            else
+                                critterCategory = "Ground";
+                    }
+                }
             }
         }
         // get possible critters to spawn

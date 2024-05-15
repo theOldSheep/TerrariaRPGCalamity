@@ -276,12 +276,13 @@ public class GameplayHelper {
                             BossHelper.spawnBoss(ply, BossHelper.BossType.valueOf(bossSpawn));
                     }
                 }
-                blockToBreak.setType(Material.AIR);
         }
         // special handling
         handleTreeConsecutiveBreak(ply, blockToBreak, blockMat, noDrop);
         handleGrassConsecutiveBreak(ply, blockToBreak);
         handleSpecialBlockBreakMechanism(ply, blockToBreak, blockMat);
+        // make the block empty
+        WorldHelper.makeEmptyBlock(blockToBreak, true);
         return true;
     }
     // tree breaking helpers
@@ -430,8 +431,8 @@ public class GameplayHelper {
                 }
                 // teleport
                 Block blockToBreak = teleportedLoc.getBlock();
-                blockToBreak.setType(Material.AIR);
-                blockToBreak.getRelative(BlockFace.UP).setType(Material.AIR);
+                WorldHelper.makeEmptyBlock(blockToBreak, true);
+                WorldHelper.makeEmptyBlock(blockToBreak.getRelative(BlockFace.UP), true);
                 ply.teleport(teleportedLoc);
                 break;
             }

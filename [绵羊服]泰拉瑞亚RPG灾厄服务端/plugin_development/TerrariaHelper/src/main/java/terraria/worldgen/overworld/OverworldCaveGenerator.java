@@ -6,6 +6,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 import terraria.TerrariaHelper;
+import terraria.worldgen.overworld.cavern.CavernChunkGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +123,7 @@ public class OverworldCaveGenerator {
                         if (noiseMulti < 1e-5) {
                             result[0] = sunkenSeaAbyssCaveGenerator.noise(currX, effectualY, currZ, 2, 0.5, false);
                             double amplify = 0.4;
-                            result[0] += (result[0] >= 0) ? amplify : -amplify;
+                            result[0] += amplify;
                         }
                         return result;
                     // abyss
@@ -133,17 +134,17 @@ public class OverworldCaveGenerator {
                             result[0] = sunkenSeaAbyssCaveGenerator.noise(currX, effectualY, currZ, 2, 0.5, false);
                             double amplify = 0.4;
                             // make sure the 3rd level is pretty empty (handled by modifying amplify)
-                            if (effectualY < -125) {
-                                amplify = 1;
-                                // ocean floor
-                                if (effectualY < -220)
-                                    amplify = (effectualY + 220) / 7.5d;
-                                // ceiling of 3rd level
-                                else if (effectualY > -150)
-                                    amplify = Math.max( (- effectualY - 150) / 12.5d , amplify);
+                            if (effectualY < -165) {
+                                amplify = 1.75;
+                                // ocean floor: -230(25) - -250(5)
+                                if (effectualY < -230)
+                                    amplify = (effectualY + 230) / 11.5d;
+                                // ceiling of 3rd level: -185(75) - -165(95)
+                                else if (effectualY > -185)
+                                    amplify = Math.max( (- effectualY - 185) / 11.5d , amplify);
                             }
 
-                            result[0] += (result[0] >= 0) ? amplify : -amplify;
+                            result[0] += amplify;
                         }
                         return result;
                 }

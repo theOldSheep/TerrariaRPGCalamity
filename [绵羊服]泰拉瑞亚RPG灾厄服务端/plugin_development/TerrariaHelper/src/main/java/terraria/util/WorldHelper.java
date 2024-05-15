@@ -68,7 +68,7 @@ public class WorldHelper {
         NORMAL(1d), LAVA(2.25d),
         OCEAN(1.15d), SULPHUROUS_OCEAN(1.2d),
         SUNKEN_SEA(1.35d),
-        ABYSS_1(2d), ABYSS_2(3.5d), ABYSS_3(5d);
+        ABYSS_1(3d), ABYSS_2(4.5d), ABYSS_3(6d);
 
         public final double oxygenDepletionLevel;
         WaterRegionType(double oxygenDepletionLevel) {
@@ -270,6 +270,18 @@ public class WorldHelper {
         // clear weather
         wld.setThundering(false);
         wld.setStorm(false);
+    }
+    // set the block to water or air, depending on the biome
+    public static void makeEmptyBlock(Block block, boolean airApplicable) {
+        switch (BiomeType.getBiome(block.getLocation())) {
+            case ABYSS:
+            case SUNKEN_SEA:
+                block.setType(Material.STATIONARY_WATER);
+                break;
+            default:
+                if (airApplicable)
+                    block.setType(Material.AIR);
+        }
     }
     public static void attemptDestroyVegetation(Location startLoc, Location endLoc) {
         Vector direction = endLoc.clone().subtract(startLoc).toVector();

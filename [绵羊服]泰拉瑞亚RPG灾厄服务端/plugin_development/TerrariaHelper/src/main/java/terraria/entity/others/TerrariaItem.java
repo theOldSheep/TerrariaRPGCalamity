@@ -387,7 +387,7 @@ public class TerrariaItem extends EntityItem {
             default:
                 liveTime = GENERIC_LIVE_TIME;
         }
-        baseRarity = itemConfig.getInt(ItemHelper.splitItemName(getItemStack().getName())[1] + ".rarity", 0);
+        baseRarity = ItemHelper.getItemRarityFromFullDescription(getItemStack().getName());
         this.fireProof = baseRarity > 0;
         bukkitItemStack = CraftItemStack.asBukkitCopy(itemstack);
     }

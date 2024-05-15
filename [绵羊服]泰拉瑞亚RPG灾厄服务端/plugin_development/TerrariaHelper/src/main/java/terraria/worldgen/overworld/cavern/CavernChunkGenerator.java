@@ -4,6 +4,7 @@ import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import terraria.TerrariaHelper;
+import terraria.util.WorldHelper;
 import terraria.worldgen.overworld.*;
 
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ import java.util.List;
 import java.util.Random;
 
 public class CavernChunkGenerator extends ChunkGenerator {
-    static final int yOffset = -253;
+    // overworld bedrock covers up y=1, skip that block; otherwise abyss will have an empty layer.
+    static final int yOffset = -WorldHelper.CAVERN_Y_BELOW_BEDROCK;
     static CavernChunkGenerator instance = new CavernChunkGenerator();
     ArrayList<BlockPopulator> populators;
     OverworldCaveGenerator CAVE_GENERATOR_CAVERN;

@@ -148,7 +148,10 @@
 彗星:
     gravity: 0
     projectileSize: 2
+    minimumDamageTicks: 5
     homing: true
+    homingRadius: 20
+    noHomingTicks: 3
     blockHitAction: thru
     liveTime: 60
 腐蚀之云:
@@ -4584,7 +4587,7 @@ TNT:
 原核台风:
     liveTime: 50
     projectileSize: 1
-    enemyInvincibilityFrame: 20
+    enemyInvincibilityFrame: 12
     blockHitAction: thru
     penetration: 999
     gravity: 0
@@ -4620,6 +4623,12 @@ TNT:
     liveTime: 20
     projectileSize: 5
     blockHitAction: thru
+    isGrenade: true
+    blastRadius: 3
+    blastOnContactBlock: false
+    blastOnContactEnemy: true
+    blastOnTimeout: false
+    blastDuration: 16
     penetration: 4
     buffInflict:
         - "碎甲|80|1"

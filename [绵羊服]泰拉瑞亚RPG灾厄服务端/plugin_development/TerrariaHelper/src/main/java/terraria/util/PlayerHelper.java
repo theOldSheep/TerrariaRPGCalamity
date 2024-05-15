@@ -36,14 +36,13 @@ import java.util.function.Predicate;
 import java.util.logging.Level;
 
 public class PlayerHelper {
-    public static HashMap<UUID, HashMap<String, Integer>> PLY_EFFECT_MAPS = new HashMap<>();
     // constants
     public enum GameProgress {
         PRE_WALL_OF_FLESH, PRE_PLANTERA, PRE_MOON_LORD, PRE_DEVOURER_OF_GODS, POST_DEVOURER_OF_GODS;
     }
     private static HashMap<String, Double> defaultPlayerAttrMap = new HashMap<>(60);
     private static HashSet<String> defaultPlayerEffectInflict = new HashSet<>(8);
-    public static final int PLAYER_EXTRA_INVENTORY_SIZE = 54, PLAYER_MAX_OXYGEN = 300;
+    public static final int PLAYER_EXTRA_INVENTORY_SIZE = 54, PLAYER_MAX_OXYGEN = 100;
     public static final String ARES_EXOSKELETON_CONFIG_PAGE_NAME = "阿瑞斯外骨骼配置";
     public static final String[] ARES_EXOSKELETON_WEAPON_NAMES =
             {"阿瑞斯离子加农炮", "阿瑞斯特斯拉加农炮", "阿瑞斯镭射加农炮", "阿瑞斯高斯核弹发射井"};
@@ -906,12 +905,6 @@ public class PlayerHelper {
                                         case ASTRAL_INFECTION:
                                             current = biomeType.toString().toLowerCase() + "_underground";
                                             break;
-                                        default:
-                                            current = biomeType.toString().toLowerCase();
-                                    }
-                                    break;
-                                default:
-                                    switch (biomeType) {
                                         case ABYSS:
                                             WorldHelper.WaterRegionType waterRegionType =
                                                     WorldHelper.WaterRegionType.getWaterRegionType(ply.getLocation(), false);
@@ -919,24 +912,27 @@ public class PlayerHelper {
                                                 case ABYSS_3:
                                                     current = "abyss_3";
                                                     break;
+                                                // currently, abyss 1 and 2 are the same BGM. Do not bother switching between them.
                                                 case ABYSS_2:
-                                                    current = "abyss_2";
-                                                    break;
                                                 case ABYSS_1:
                                                 default:
                                                     current = "abyss_1";
                                                     break;
                                             }
                                             break;
-                                        case DUNGEON:
-                                        case TEMPLE:
+                                        default:
+                                            current = biomeType.toString().toLowerCase();
+                                    }
+                                    break;
+                                default:
+                                    // surface/underworld
+                                    switch (biomeType) {
                                         case BRIMSTONE_CRAG:
                                         case UNDERWORLD:
                                         case ASTRAL_INFECTION:
                                         case CORRUPTION:
                                         case DESERT:
                                         case SULPHUROUS_OCEAN:
-                                        case SUNKEN_SEA:
                                         case TUNDRA:
                                             // always the same bgm
                                             current = biomeType.toString().toLowerCase();
@@ -1590,20 +1586,20 @@ public class PlayerHelper {
             // update variable
             if (submerged) {
                 double oxygenDepleteRate = Math.max(waterRegion.oxygenDepletionLevel - waterAffinity, 0);
-                oxygen -= MathHelper.randomRound(oxygenDepleteRate);
+                oxygen -= MathHelper.randomRound(oxygenDepleteRate / 2d);
                 // drowning damage
                 if (oxygen <= 0) {
                     oxygen = 0;
-                    EntityHelper.handleDamage(ply, ply, 10, EntityHelper.DamageReason.DROWNING);
+                    EntityHelper.handleDamage(ply, ply, 10 * Math.max(oxygenDepleteRate, 1),
+                            EntityHelper.DamageReason.DROWNING);
                 }
             }
             else {
                 // the entire air bar will gradually recover in 5 seconds
-                oxygen = Math.min(oxygen + 3, PLAYER_MAX_OXYGEN);
+                oxygen = Math.min(oxygen + 1, PLAYER_MAX_OXYGEN);
             }
             // save variable
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR, oxygen);
-            ply.setRemainingAir(oxygen);
         }
         // movement slow handling
         {
