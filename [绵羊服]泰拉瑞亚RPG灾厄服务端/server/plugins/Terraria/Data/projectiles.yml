@@ -1523,6 +1523,7 @@
     isGrenade: true
     blastRadius: 2.25
     blastDamageShooter: true
+    slowedByWater: true
 炸弹:
     blockHitAction: bounce
     bounce: 999999
@@ -1535,6 +1536,7 @@
     blastRadius: 2.5
     blastDamageShooter: true
     blastDestroyBlock: true
+    slowedByWater: true
 粘性炸弹:
     blockHitAction: stick
     canBeReflected: false
@@ -1544,6 +1546,7 @@
     blastRadius: 2.5
     blastDamageShooter: true
     blastDestroyBlock: true
+    slowedByWater: true
 雷管:
     blockHitAction: bounce
     bounce: 999999
@@ -1556,6 +1559,7 @@
     blastRadius: 4
     blastDamageShooter: true
     blastDestroyBlock: true
+    slowedByWater: true
 粘性雷管:
     blockHitAction: stick
     canBeReflected: false
@@ -1565,6 +1569,7 @@
     blastRadius: 4
     blastDamageShooter: true
     blastDestroyBlock: true
+    slowedByWater: true
 TNT:
     isGrenade: true
     blastRadius: 7.5
@@ -1575,6 +1580,7 @@ TNT:
     blockHitAction: bounce
     bounce: 2
     penetration: 2
+    slowedByWater: true
 尖桩:
     gravity: 0
     penetration: 9
@@ -1794,6 +1800,7 @@ TNT:
         - "燃烧|200|1"
 手里剑:
     penetration: 3
+    slowedByWater: true
 尖刺球:
     noGravityTicks: 0
     penetration: 999999
@@ -1801,6 +1808,7 @@ TNT:
     blockHitAction: bounce
     bounce: 999999
     bounceVelocityMulti: 0.5
+    slowedByWater: true
 寒霜碎块:
     buffInflict:
         - "冷冻|150|0.67"
@@ -3666,12 +3674,12 @@ TNT:
     trailColor: 249|126|246
     clusterBomb:
         amount: 4
-        damageMulti: 0.8
+        damageMulti: 1.2
         name: 水晶蛇爆炸水晶碎片
         velocity: 1
 水晶蛇爆炸水晶碎片:
     gravity: 0
-    liveTime: 20
+    liveTime: 8
     trailColor: 249|126|246
 树叶:
     arrowOrPotion: true

@@ -284,7 +284,7 @@ public class NPCHelper {
             StringBuilder currentLine = new StringBuilder();
             for (char character : characters) {
                 // chinese characters are twice as long.
-                if (String.valueOf(character).matches("[u4e00-u9fa5]")) {
+                if (String.valueOf(character).matches("[\\u4e00-\\u9fa5]")) {
                     totalW += textSize * 10;
                 }
                 else {

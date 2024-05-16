@@ -23,8 +23,14 @@ import terraria.util.*;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.ToDoubleFunction;
 
 public class BossHelper {
+    private static final String
+            SUMMARY_HEADER_AGGRO  = "————————BOSS仇恨时长（秒）————————",
+            SUMMARY_HEADER_DAMAGE = "———————————伤害汇总———————————",
+            SUMMARY_HEADER_FINAL  = "———————————————————————————————";
     public static class BossTargetInfo {
         public double damageDealt = 0d;
         public int ticksAggression = 0;
@@ -252,10 +258,10 @@ public class BossHelper {
         Bukkit.broadcastMessage("§d§l" + bossType.msgName + " 被击败了.");
         switch (bossType) {
             case DESERT_SCOURGE:
-                Bukkit.broadcastMessage("§#7FFFD4§l地下沙漠的深处轰隆作响……");
+                Bukkit.broadcastMessage("§#7FFFD4地下沙漠的深处轰隆作响……");
                 break;
             case THE_HIVE_MIND:
-                Bukkit.broadcastMessage("§#00FFFF§l苍青色的光辉照耀着这片土地。");
+                Bukkit.broadcastMessage("§#00FFFF苍青色的光辉照耀着这片土地。");
                 break;
             case WALL_OF_FLESH:
                 Bukkit.broadcastMessage("§#7FFFD4沉沦之海在颤动……");
@@ -301,68 +307,14 @@ public class BossHelper {
                 Bukkit.broadcastMessage("§#FFD700远古巨龙的力量在洞穴中显现，交织着穿过岩石。");
                 break;
         }
+
         // calculate and broadcast boss aggression time
-        int ticksAggressionReq;
-        {
-            // calculate total boss fight duration and required aggression duration
-            int bossFightDuration = 0;
-            for (BossTargetInfo fightInfo : targetMap.values()) {
-                bossFightDuration += fightInfo.ticksAggression;
-            }
-            ticksAggressionReq = bossFightDuration / targetMap.size() / 2;
-            // record aggro duration for each player
-            TreeSet<Map.Entry<Integer, String>> aggroList = new TreeSet<>(Comparator.comparingDouble(Map.Entry::getKey));
-            for (Map.Entry<UUID, BossTargetInfo> entry : targetMap.entrySet()) {
-                Player ply = Bukkit.getPlayer(entry.getKey());
-                if (ply == null)
-                    continue;
-                int plyDmg = entry.getValue().ticksAggression;
-                aggroList.add(new AbstractMap.SimpleImmutableEntry<>(plyDmg,
-                        "[" + ply.getDisplayName() + "]") );
-            }
-            aggroList.add(new AbstractMap.SimpleImmutableEntry<>(bossFightDuration, "§7BOSS战总时长") );
-            aggroList.add(new AbstractMap.SimpleImmutableEntry<>(ticksAggressionReq, "§7获得战利品所需仇恨时长") );
-            // send damage dealt
-            Bukkit.broadcastMessage("————————BOSS仇恨时长————————");
-            for (Iterator<Map.Entry<Integer, String>> it = aggroList.descendingIterator(); it.hasNext(); ) {
-                Map.Entry<Integer, String> aggroInfo = it.next();
-                // player, damage, percent damage dealt
-                Bukkit.broadcastMessage(String.format("%1$s 时长：%2$.1f秒 (占比%3$.1f%%)",
-                        aggroInfo.getValue(), aggroInfo.getKey() / 20d,
-                        (double) aggroInfo.getKey() * 100 / bossFightDuration));
-            }
-        }
+        int ticksAggressionReq = calculateAndPrintAggro(targetMap);
         // calculate and broadcast damage dealt
-        double dmgDealtReq;
-        {
-            double totalPlyDmg = 0;
-            TreeSet<Map.Entry<Double, String>> damageList = new TreeSet<>(Comparator.comparingDouble(Map.Entry::getKey));
-            for (Map.Entry<UUID, BossTargetInfo> entry : targetMap.entrySet()) {
-                Player ply = Bukkit.getPlayer(entry.getKey());
-                if (ply == null)
-                    continue;
-                double plyDmg = entry.getValue().damageDealt;
-                damageList.add(new AbstractMap.SimpleImmutableEntry<>(plyDmg,
-                        "[" + ply.getDisplayName() + "]") );
-                totalPlyDmg += plyDmg;
-            }
-            // prevent having player damage over 100%
-            double actualBossHealth = Math.max(healthInfo[1], totalPlyDmg);
-            dmgDealtReq = actualBossHealth / targetMap.size() / 5;
-            double debuffDmg = actualBossHealth - totalPlyDmg;
-            if (debuffDmg < 1e-5) debuffDmg = 0;
-            damageList.add(new AbstractMap.SimpleImmutableEntry<>(debuffDmg, "§7减益等未记录伤害来源") );
-            damageList.add(new AbstractMap.SimpleImmutableEntry<>(dmgDealtReq, "§7获得战利品所需最低伤害") );
-            // send damage dealt
-            Bukkit.broadcastMessage("—————————伤害信息—————————");
-            for (Iterator<Map.Entry<Double, String>> it = damageList.descendingIterator(); it.hasNext(); ) {
-                Map.Entry<Double, String> damageInfo = it.next();
-                // player, damage, percent damage dealt
-                Bukkit.broadcastMessage(String.format("%1$s 伤害：%2$.0f (占比%3$.1f%%)",
-                        damageInfo.getValue(), damageInfo.getKey(), damageInfo.getKey() * 100 / actualBossHealth));
-            }
-            Bukkit.broadcastMessage("————————————————————————");
-        }
+        double dmgDealtReq = calculateAndPrintDamage(targetMap, healthInfo[1]); // healthInfo[1] is the actualBossHealth
+        // print the final line to wrap up the summary
+        Bukkit.broadcastMessage(SUMMARY_HEADER_FINAL);
+
         // send out loot
         if (bossType.hasTreasureBag) {
             ItemStack loopBag = ItemHelper.getItemFromDescription(bossType.msgName + "的 专家模式福袋");
@@ -389,6 +341,63 @@ public class BossHelper {
                     EventAndTime.endEvent();
             }
         }
+    }
+    // Helper function to calculate and broadcast aggro
+    private static int calculateAndPrintAggro(HashMap<UUID, BossTargetInfo> targetMap) {
+        int bossFightDuration = targetMap.values().stream().mapToInt((targetInfo) -> targetInfo.ticksAggression).sum();
+        int ticksAggressionReq = bossFightDuration / targetMap.size() / 2;
 
+        List<Map.Entry<Double, String>> aggroList = buildUnorderedRankingList(targetMap, true);
+        aggroList.add(new AbstractMap.SimpleImmutableEntry<>((double) bossFightDuration, "BOSS战总时长"));
+        aggroList.add(new AbstractMap.SimpleImmutableEntry<>((double) ticksAggressionReq, "获得战利品所需仇恨时长"));
+
+        sortAndBroadcastRanking(SUMMARY_HEADER_AGGRO, aggroList, bossFightDuration, true);
+
+        return ticksAggressionReq;
+    }
+    // Helper function to calculate and broadcast damage
+    private static double calculateAndPrintDamage(HashMap<UUID, BossTargetInfo> targetMap, double actualBossHealth) {
+        double totalPlyDmg = targetMap.values().stream().mapToDouble((targetInfo) -> targetInfo.damageDealt).sum();
+        actualBossHealth = Math.max(actualBossHealth, totalPlyDmg);
+
+        List<Map.Entry<Double, String>> damageList = buildUnorderedRankingList(targetMap, false);
+        double debuffDmg = actualBossHealth - totalPlyDmg;
+        double dmgDealtReq = actualBossHealth / targetMap.size() / 5;
+        if (debuffDmg < 1e-5) debuffDmg = 0;
+        damageList.add(new AbstractMap.SimpleImmutableEntry<>(actualBossHealth, "总伤害"));
+        damageList.add(new AbstractMap.SimpleImmutableEntry<>(debuffDmg, "减益等未记录伤害来源"));
+        damageList.add(new AbstractMap.SimpleImmutableEntry<>(dmgDealtReq, "获得战利品所需最低伤害"));
+
+        sortAndBroadcastRanking(SUMMARY_HEADER_DAMAGE, damageList, actualBossHealth, false);
+
+        return dmgDealtReq;
+    }
+    // Helper function to build the ranking list; do not sort it yet as additional features may be added afterwards.
+    private static List<Map.Entry<Double, String>> buildUnorderedRankingList(
+            HashMap<UUID, BossTargetInfo> targetMap, boolean isAggro) {
+        List<Map.Entry<Double, String>> rankingList = new ArrayList<>();
+        for (Map.Entry<UUID, BossTargetInfo> entry : targetMap.entrySet()) {
+            Player ply = Bukkit.getPlayer(entry.getKey());
+            if (ply == null)
+                continue;
+            double plyValue = (isAggro ? entry.getValue().ticksAggression : entry.getValue().damageDealt);
+            rankingList.add(new AbstractMap.SimpleImmutableEntry<>(plyValue, "[" + ply.getDisplayName() + "]"));
+        }
+        return rankingList;
+    }
+    // Helper function to broadcast the ranking
+    private static void sortAndBroadcastRanking(String title, List<Map.Entry<Double, String>> rankingList,
+                                                double totalValue, boolean isAggro) {
+        Bukkit.broadcastMessage(title);
+
+
+        String format = "%1$s%2$-8." + (isAggro ? "1" : "0") + "f(%3$5.1f%%) · %4$s";
+        rankingList.sort(Comparator.comparingDouble(Map.Entry<Double, String>::getKey).reversed()); // Sort in descending order
+        for (Map.Entry<Double, String> rankInfo : rankingList) {
+            double value = rankInfo.getKey();
+            String name = rankInfo.getValue(), colorCode = name.startsWith("[") ? "§r" : "§7";
+            Bukkit.broadcastMessage(String.format(format,
+                    colorCode, (isAggro ? value / 20 : value), value * 100 / totalValue, name));
+        }
     }
 }
