@@ -43,6 +43,8 @@ public class BossSpawnListener implements Listener {
         summonItems.put("瘟疫起动装置", BossHelper.BossType.THE_PLAGUEBRINGER_GOLIATH);
         summonItems.put("唤死笛哨", BossHelper.BossType.RAVAGER);
         summonItems.put("天界符", BossHelper.BossType.MOON_LORD);
+        // pre-providence
+        summonItems.put("亵渎碎片", BossHelper.BossType.PROFANED_GUARDIANS);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {

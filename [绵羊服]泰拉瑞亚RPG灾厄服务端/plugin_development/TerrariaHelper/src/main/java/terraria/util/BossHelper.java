@@ -22,6 +22,7 @@ import terraria.entity.boss.leviathanAndAnahita.Anahita;
 import terraria.entity.boss.lunaticCultist.LunaticCultist;
 import terraria.entity.boss.moonLord.MoonLord;
 import terraria.entity.boss.plantera.Plantera;
+import terraria.entity.boss.profanedGuardians.GuardianCommander;
 import terraria.entity.boss.ravager.Ravager;
 import terraria.entity.boss.ravager.RavagerNuke;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
@@ -297,6 +298,13 @@ public class BossHelper {
                 break;
             }
             // pre-providence
+            case PROFANED_GUARDIANS: {
+                if (GuardianCommander.canSpawn(target)) {
+                    new GuardianCommander(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
         }
         if (spawnedSuccessfully) {
             bossType.playSummonSound(soundLocation);

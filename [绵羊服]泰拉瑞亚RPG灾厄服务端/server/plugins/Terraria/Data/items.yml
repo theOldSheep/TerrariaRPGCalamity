@@ -333,16 +333,6 @@
   item: CLAY_BALL
   worth: 500000
   rarity: 8
-光明钥匙:
-  item: SHEARS
-  lore:
-  - §r“汇聚了大量灵魂的精华”
-  rarity: 3
-夜光钥匙:
-  item: SHEARS
-  lore:
-  - §r“汇聚了大量灵魂的精华”
-  rarity: 3
 光明碎块:
   item: NETHER_STAR
   lore:
@@ -946,6 +936,16 @@
 虫饵:
   item: ROTTEN_FLESH
   rarity: 1
+光明钥匙:
+  item: SHEARS
+  lore:
+  - §r“汇聚了大量灵魂的精华”
+  rarity: 5
+夜光钥匙:
+  item: SHEARS
+  lore:
+  - §r“汇聚了大量灵魂的精华”
+  rarity: 5
 明胶水晶:
   item: COAL
   lore:
@@ -956,23 +956,23 @@
   item: IRON_NUGGET
   lore:
   - §r召唤机械骷髅王
-  rarity: 3
+  rarity: 5
 机械魔眼:
   item: IRON_NUGGET
   lore:
   - §r召唤双子魔眼
-  rarity: 3
+  rarity: 5
 机械蠕虫:
   item: IRON_NUGGET
   lore:
   - §r召唤毁灭者
-  rarity: 3
+  rarity: 5
 丛林蜥蜴电池:
   item: CLAY_BALL
   lore:
   - §r站在神庙砖上使用召唤石巨人
   worth: 1000000
-  rarity: 0
+  rarity: 7
 天界符:
   item: CLAY_BALL
   lore:
@@ -1068,14 +1068,13 @@
 亵渎碎片:
   item: CLAY_BALL
   lore:
-  - §r白天时在地狱或神圣之地使用以召唤亵渎守卫
+  - §r白天在神圣之地使用以召唤亵渎守卫
   - §r“她的守护者正在搜寻如此浩瀚能量的盗取者。”
   rarity: 11
 亵渎晶核:
   item: CLAY_BALL
   lore:
-  - §r在神圣之地或地狱使用以召唤亵渎天神
-  - §r在不同的群落与其战斗会掉落不同的战利品
+  - §r在神圣之地使用以召唤亵渎天神
   - §r“她的守卫的心脏，她将会用污亵的烈焰焚尽现在正掌控它的人。”
   rarity: 11
 死灵魂炬:
@@ -1118,6 +1117,14 @@
   lore:
   - §r在没有BOSS存活时激活Boss Rush模式
   rarity: 1
+测试伤害:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    damageMulti: 25
+  worth: 20000
+  rarity: 0
 向导巫毒娃娃:
   item: LEASH
   lore:
@@ -1902,6 +1909,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r算作鞋子
   - §r算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
@@ -1937,6 +1945,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r算作鞋子
   - §r算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
@@ -1971,6 +1980,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r算作鞋子
   - §r算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降

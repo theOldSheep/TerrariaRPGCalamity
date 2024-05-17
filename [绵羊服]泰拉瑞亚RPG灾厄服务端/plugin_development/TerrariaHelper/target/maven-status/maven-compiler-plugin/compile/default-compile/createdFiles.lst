@@ -10,6 +10,7 @@ terraria\entity\boss\golem\GolemHead.class
 terraria\entity\boss\lunaticCultist\LunaticIceMist.class
 terraria\entity\npc\TerrariaNPCClothier.class
 terraria\entity\boss\ravager\RavagerLeg.class
+terraria\entity\boss\BossTemplate.class
 terraria\util\Quaternion.class
 terraria\worldgen\MazeGenerator$CellEdge.class
 terraria\entity\monster\MonsterZombie.class
@@ -123,6 +124,7 @@ terraria\util\MathHelper.class
 terraria\worldgen\overworld\OrePopulator$1.class
 terraria\util\EntityHelper$DamageReason.class
 terraria\util\GenericHelper.class
+terraria\entity\boss\profanedGuardians\GuardianDefender$1.class
 terraria\worldgen\underworld\UnderworldChunkGenerator.class
 terraria\entity\boss\skeletronPrime\SkeletronPrimeHead.class
 terraria\worldgen\overworld\StructurePopulator$1.class
@@ -146,12 +148,15 @@ terraria\entity\boss\eaterOfWorld\EaterOfWorld$1.class
 terraria\entity\monster\MonsterCaveSpider.class
 terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
+terraria\entity\boss\profanedGuardians\GuardianDefender$AttackMode.class
 terraria\util\NPCHelper$NPCType.class
 terraria\event\listener\PlayerJoinListener.class
 terraria\entity\boss\theSlimeGod\EbonianSlime.class
 terraria\entity\boss\leviathanAndAnahita\Leviathan.class
+terraria\entity\boss\profanedGuardians\GuardianRock.class
 terraria\util\CritterHelper$1.class
 terraria\util\CritterHelper.class
+terraria\entity\boss\profanedGuardians\GuardianDefender.class
 terraria\util\EntityHelper$AimHelperOptions.class
 terraria\entity\projectile\PlayerTornado.class
 terraria\entity\projectile\TerrariaPotionProjectile$1.class
@@ -210,6 +215,7 @@ terraria\util\EntityHelper.class
 terraria\entity\boss\cryogen\CryogenShield.class
 terraria\event\listener\PlayerKeyToggleListener.class
 terraria\entity\boss\dukeFishron\DukeFishron.class
+terraria\entity\boss\profanedGuardians\GuardianAttacker.class
 terraria\entity\boss\moonLord\MoonLord.class
 terraria\entity\boss\kingSlime\KingSlime$SizeState.class
 terraria\entity\others\TerrariaItem.class
@@ -222,6 +228,7 @@ terraria\event\listener\DamageListener.class
 terraria\entity\npc\TerrariaNPC$1.class
 terraria\entity\boss\event\headlessHorseman\HeadlessHorseman.class
 terraria\util\DragoncoreHelper$SlotCallback.class
+terraria\entity\boss\profanedGuardians\GuardianCommander.class
 terraria\entity\boss\astrumDeus\AstrumDeus.class
 terraria\entity\boss\BossHelper.class
 terraria\entity\boss\desertScourge\DesertScourge.class

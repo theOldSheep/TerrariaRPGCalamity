@@ -623,6 +623,46 @@
     homingAbility: 18
     noHomingTicks: 15
     maxHomingTicks: 40
+闪耀之弹:
+    blockHitAction: thru
+    projectileSize: 2
+    liveTime: 80
+    gravity: 0
+    penetration: 999999
+    minimumDamageTicks: 5
+    homing: true
+    homingRadius: 48
+    homingSharpTurning: false
+    homingAbility: 5
+    spawnProjectiles:
+        interval: 8
+        offset: 1.0
+        spawnMechanism: SURROUND
+        damageMulti: 1
+        speed: 1.35
+        spawnType: 神圣之火
+    buffInflict:
+        - "神圣之火|160|1"
+圣之爆焱:
+    blockHitAction: thru
+    projectileSize: 3
+    liveTime: 40
+    gravity: 0
+    penetration: 999999
+    minimumDamageTicks: 5
+    homing: true
+    homingRadius: 48
+    homingSharpTurning: false
+    homingAbility: 5
+    noHomingTicks: 15
+    clusterBomb:
+        amount: 8
+        damageMulti: 1
+        name: 神圣之火
+        type: normal
+        velocity: 1.5
+    buffInflict:
+        - "神圣之火|80|1"
 神圣之火:
     blockHitAction: thru
     projectileSize: 0.5
@@ -636,6 +676,22 @@
     homingAbility: 27
     noHomingTicks: 15
     maxHomingTicks: 30
+    buffInflict:
+        - "神圣之火|60|1"
+神圣新星:
+    blockHitAction: thru
+    projectileSize: 1
+    liveTime: 60
+    gravity: 0
+    buffInflict:
+        - "神圣之火|40|1"
+神圣之矛:
+    blockHitAction: thru
+    projectileSize: 2
+    liveTime: 60
+    gravity: 0
+    buffInflict:
+        - "神圣之火|60|1"
 南瓜榴弹:
     isGrenade: true
     blastRadius: 1
