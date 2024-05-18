@@ -26,6 +26,7 @@ public class GuardianCommander extends EntitySlime {
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.HALLOW;
     public static final double BASIC_HEALTH = 288000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
+    public static final String DISPLAY_NAME = BOSS_TYPE.msgName + "·统御";
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
@@ -179,7 +180,7 @@ public class GuardianCommander extends EntitySlime {
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName(BOSS_TYPE.msgName);
+        setCustomName(DISPLAY_NAME);
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");

@@ -91,6 +91,15 @@ public class GameplayHelper {
         return "METAL";
     }
     public static void playBlockParticleAndSound(Block blockToBreak) {
+        // they are not solid blocks.
+        switch (blockToBreak.getType()) {
+            case AIR:
+            case WATER:
+            case STATIONARY_WATER:
+            case LAVA:
+            case STATIONARY_LAVA:
+                return;
+        }
         double particleRadius = 0.5;
         MaterialData data = new MaterialData(blockToBreak.getType(), blockToBreak.getData());
         blockToBreak.getWorld().spawnParticle(Particle.BLOCK_CRACK,
@@ -277,12 +286,12 @@ public class GameplayHelper {
                     }
                 }
         }
+        // make the block empty BEFORE recursive breaking mechanism!
+        WorldHelper.makeEmptyBlock(blockToBreak, true);
         // special handling
         handleTreeConsecutiveBreak(ply, blockToBreak, blockMat, noDrop);
         handleGrassConsecutiveBreak(ply, blockToBreak);
         handleSpecialBlockBreakMechanism(ply, blockToBreak, blockMat);
-        // make the block empty
-        WorldHelper.makeEmptyBlock(blockToBreak, true);
         return true;
     }
     // tree breaking helpers

@@ -1,20 +1,12 @@
 package terraria.entity.others;
 
-import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.DisguiseType;
-import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Vehicle;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.util.Vector;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.util.EntityHelper;
@@ -285,8 +277,8 @@ public class TerrariaMount extends EntitySlime {
         bukkitEntity.setVelocity(finalHorComp);
         // update facing dir
         yaw = ownerNMS.yaw;
-        // TODO: prevent unexpected dismount (?)
-        owner.setVelocity(bukkitEntity.getVelocity());
+        // update owner in-world and internal velocity
+        EntityHelper.setVelocity(owner, bukkitEntity.getVelocity());
     }
     public void handleCollisionDamage() {
         if (contactDmg <= 0d)

@@ -20,6 +20,7 @@ import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.UUID;
 
 public class MoonLordEye extends EntitySlime {
@@ -88,7 +89,7 @@ public class MoonLordEye extends EntitySlime {
     EntityHelper.ProjectileShootInfo shootInfoPhantasmalEye;
     EyeAttackMethod attackMethod = EyeAttackMethod.PHANTASMAL_SPHERE;
     ArrayList<MoonLordPhantasmalSphere> allSpheres;
-    ArrayList<Entity> deathRayDamageCD = new ArrayList<>();
+    HashSet<Entity> deathRayDamageCD = new HashSet<>();
 
 
     // returns true if the animation is finished

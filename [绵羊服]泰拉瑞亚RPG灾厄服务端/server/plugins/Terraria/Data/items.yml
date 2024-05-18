@@ -1117,6 +1117,15 @@
   lore:
   - §r在没有BOSS存活时激活Boss Rush模式
   rarity: 1
+测试刮痧:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    damageMulti: -0.9
+    knockback: -10
+  worth: 20000
+  rarity: 0
 测试伤害:
   item: LEASH
   lore:
@@ -1823,6 +1832,7 @@
   lore:
   - §r[饰品]
   - §6专家模式物品
+  - §r按下进升证章按键[默认为X]重置飞行时间
   attributes:
     flightTimeMulti: 0.5
     speedMulti: 0.1

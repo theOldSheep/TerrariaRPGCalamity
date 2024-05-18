@@ -645,7 +645,7 @@
         - "神圣之火|160|1"
 圣之爆焱:
     blockHitAction: thru
-    projectileSize: 3
+    projectileSize: 4
     liveTime: 40
     gravity: 0
     penetration: 999999
@@ -2182,7 +2182,7 @@ TNT:
         name: 五彩星
         type: star
         fireOnTimeout: false
-        velocity: 2.5
+        velocity: 3
 五彩星:
     gravity: 0
     penetration: 999999
@@ -4929,11 +4929,11 @@ TNT:
     arrowOrPotion: true
     clusterBomb:
         amount: 3
-        damageMulti: 0.4
+        damageMulti: 0.2
         name: 坠星
         type: star
         fireOnTimeout: false
-        velocity: 1.5
+        velocity: 2
 诅咒箭:
     arrowOrPotion: true
     buffInflict:
@@ -5019,7 +5019,7 @@ TNT:
         name: 极乐陨石
         type: star
         fireOnTimeout: false
-        velocity: 2.5
+        velocity: 2.75
 血炎箭:
     arrowOrPotion: true
     projectileSize: 0.5

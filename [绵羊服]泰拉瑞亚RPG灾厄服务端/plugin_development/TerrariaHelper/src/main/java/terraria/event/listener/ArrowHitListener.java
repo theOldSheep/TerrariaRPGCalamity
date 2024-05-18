@@ -55,22 +55,10 @@ public class ArrowHitListener implements Listener {
                 return;
             }
         }
-        // Daawnlight targets
-        if (entity.getScoreboardTags().contains("isDaawnlight")) {
-            projectile.addScoreboardTag("hitDaawnlight");
-            e.setCancelled(true);
-            entity.remove();
-            return;
-        }
         // handle damage
         boolean guaranteeCrit = false;
         EntityHelper.DamageReason dmgReason = EntityHelper.DamageReason.PROJECTILE;
-        if (projectileScoreboardTags.contains("hitDaawnlight")) {
-            projectile.removeScoreboardTag("hitDaawnlight");
-            guaranteeCrit = true;
-            dmgReason = EntityHelper.DamageReason.DAAWNLIGHT;
-        }
-        else if (projectileName.equals("瘟疫自爆无人机") && EntityHelper.hasEffect(entity, "瘟疫"))
+        if (projectileName.equals("瘟疫自爆无人机") && EntityHelper.hasEffect(entity, "瘟疫"))
             guaranteeCrit = true;
         if (guaranteeCrit) {
             double lastCrit = attrMap.getOrDefault("crit", 0d);
@@ -195,7 +183,7 @@ public class ArrowHitListener implements Listener {
         double blastRadius = TerrariaHelper.projectileConfig.getDouble( projectileName + ".blastRadius", 1.5);
         EntityHelper.handleEntityExplode(projectile, blastRadius, damageExceptions, projectileDestroyLoc, blastDuration);
     }
-    private static void handleDestroy(TerrariaProjectileHitEvent e, Projectile projectile) {
+    private static void handleDestroy(Projectile projectile) {
         String projectileType = projectile.getName();
         Set<String> projScoreboardTags = projectile.getScoreboardTags();
         Location projectileDestroyLoc = projectile.getLocation();
@@ -224,14 +212,9 @@ public class ArrowHitListener implements Listener {
                 break;
             }
         }
-        // other mechanism
-        ConfigurationSection projectileSection = TerrariaHelper.projectileConfig.getConfigurationSection(projectileType);
-        if (projectileSection == null) return;
-        // cluster bomb
-        spawnProjectileClusterBomb(projectile);
     }
 
-    public static void spawnProjectileClusterBomb(Projectile projectile) {
+    public static void spawnProjectileClusterBomb(Projectile projectile, Entity entityHit) {
         String projectileType = projectile.getName();
         ConfigurationSection projectileSection = TerrariaHelper.projectileConfig.getConfigurationSection(projectileType);
         ConfigurationSection clusterSection = projectileSection.getConfigurationSection("clusterBomb");
@@ -267,32 +250,7 @@ public class ArrowHitListener implements Listener {
                 if (projectile.getShooter() instanceof Entity) projectileSource = (Entity) projectile.getShooter();
                 // spawn clusters
                 for (int i = 0; i < clusterAmount; i ++) {
-                    Vector velocity;
-                    switch (clusterType) {
-                        case "star": {
-                            spawnLoc = projectile.getLocation().add(Math.random() * 10 - 5,
-                                    Math.random() * 20 + 20,
-                                    Math.random() * 10 - 5);
-                            Location targetLoc = projectile.getLocation().add(Math.random() * 3 - 1.5,
-                                    Math.random() * 3 - 1.5,
-                                    Math.random() * 3 - 1.5);
-                            velocity = targetLoc.subtract(spawnLoc).toVector().normalize();
-                            break;
-                        }
-                        case "surround": {
-                            double velYaw = Math.random() * 360;
-                            double velPitch = Math.random() * clusterSection.getDouble("surroundMaxPitch", 30d);
-                            if (Math.random() < 0.5) velPitch *= -1;
-                            velocity = MathHelper.vectorFromYawPitch_quick(velYaw, velPitch);
-                            double offsetLen = clusterSection.getDouble("surroundOffset", 10d);
-                            spawnLoc = projectile.getLocation().subtract(velocity.clone().multiply(offsetLen));
-                            break;
-                        }
-                        default:
-                            velocity = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, Math.random() * 360);
-                            spawnLoc = projectileDestroyLoc;
-                    }
-                    velocity.multiply(clusterSpeed);
+                    // spawn type dynamic tweaks
                     if (projectileType.equals("三色大地流星")) {
                         double rdm = Math.random();
                         if (rdm < 0.3333)
@@ -302,6 +260,50 @@ public class ArrowHitListener implements Listener {
                         else
                             clusterName = "蓝色大地流星";
                     }
+                    // spawn loc & velocity
+                    Vector velocity = new Vector();
+                    boolean aimEnemy = false;
+                    switch (clusterType) {
+                        case "star": {
+                            spawnLoc = projectileDestroyLoc.clone().add(Math.random() * 10 - 5,
+                                    Math.random() * 20 + 20,
+                                    Math.random() * 10 - 5);
+                            // velocity is calculated outside the switch block
+                            aimEnemy = true;
+                            break;
+                        }
+                        case "surround": {
+                            double velYaw = Math.random() * 360;
+                            double velPitch = Math.random() * clusterSection.getDouble("surroundMaxPitch", 30d);
+                            if (Math.random() < 0.5) velPitch *= -1;
+                            double offsetLen = clusterSection.getDouble("surroundOffset", 10d);
+                            Vector offset = MathHelper.vectorFromYawPitch_quick(velYaw, velPitch).multiply(offsetLen);
+                            spawnLoc = projectileDestroyLoc.clone().add(offset);
+                            // velocity is calculated outside the switch block
+                            aimEnemy = true;
+                            break;
+                        }
+                        default:
+                            velocity = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, Math.random() * 360);
+                            spawnLoc = projectileDestroyLoc;
+                    }
+                    // aim enemy if needed
+                    if (aimEnemy) {
+                        Location aimLoc;
+                        if (entityHit == null)
+                            aimLoc = projectileDestroyLoc.clone().add(Math.random() * 3 - 1.5,
+                                    Math.random() * 3 - 1.5,
+                                    Math.random() * 3 - 1.5);
+                        else
+                            aimLoc = EntityHelper.helperAimEntity(spawnLoc, entityHit,
+                                    new EntityHelper.AimHelperOptions(clusterName)
+                                            .setAccelerationMode(true)
+                                            .setProjectileSpeed(clusterSpeed)
+                                            .setRandomOffsetRadius(1.5));
+                        velocity = MathHelper.getDirection(spawnLoc, aimLoc, 1, false);
+                    }
+                    // setup speed and spawn projectile
+                    velocity.multiply(clusterSpeed);
                     EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                             projectileSource, spawnLoc, velocity, attrMap, damageType, clusterName);
                     EntityHelper.spawnProjectile(shootInfo);
@@ -319,6 +321,6 @@ public class ArrowHitListener implements Listener {
         }
         if (e.getHitBlock() != null) handleHitBlock(e, arrow, e.getHitBlock());
         else if (e.getHitEntity() != null) handleHitEntity(e, arrow, e.getHitEntity());
-        else handleDestroy(e, arrow);
+        else handleDestroy(arrow);
     }
 }

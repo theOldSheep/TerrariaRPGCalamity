@@ -264,20 +264,22 @@ public class TerrariaPotionProjectile extends EntityPotion {
         updatePenetration(penetration - 1);
         // special projectile
         hitEntityExtraHandling(e, position);
+        // cluster bomb
+        {
+            boolean shouldSpawnClusterBomb = penetration < 0 ||
+                    TerrariaHelper.projectileConfig.getBoolean(
+                            projectileType + ".clusterBomb.fireOnCollideEntity", false);
+            if (shouldSpawnClusterBomb) {
+                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
+                ArrowHitListener.spawnProjectileClusterBomb(bukkitEntity, e.getBukkitEntity());
+                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, null);
+            }
+        }
         // returns the hit location if the projectile breaks (returns null if the projectile is still alive)
         if (penetration < 0) {
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
             die();
             return new Vec3D(position.pos.x, position.pos.y, position.pos.z);
-        }
-        else {
-            boolean shouldSpawnClusterBomb = TerrariaHelper.projectileConfig.getBoolean(
-                    projectileType + ".clusterBomb.fireOnCollideEntity", false);
-            if (shouldSpawnClusterBomb) {
-                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
-                ArrowHitListener.spawnProjectileClusterBomb(bukkitEntity);
-                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, null);
-            }
         }
         return null;
     }

@@ -372,6 +372,7 @@
     buffImmute:
         - "中毒"
 圣骑士:
+    soundDamaged: entity.irongolem.hurt
     drop:
         - "铜币:100000:150000:1"
         - "圣骑士护盾:1:1:0.1356"
@@ -691,7 +692,29 @@
     buffImmute:
         - "中毒"
         - "幻星感染"
-亵渎守卫:
+亵渎守卫·统御:
+    soundDamaged: entity.hit.pixie
+    soundKilled: entity.hit.pixie
+    buffInflict:
+        - "神圣之火|70|1"
+    buffImmute:
+        - "神圣之火"
+        - "夜魇"
+        - "燃烧"
+        - "狱炎"
+亵渎守卫·神石:
+    soundDamaged: entity.hit.rock
+    soundKilled: entity.hit.pixie
+    buffInflict:
+        - "神圣之火|70|1"
+    buffImmute:
+        - "神圣之火"
+        - "夜魇"
+        - "燃烧"
+        - "狱炎"
+亵渎守卫·圣晶:
+    soundDamaged: entity.hit.crystal
+    soundKilled: entity.hit.rock
     buffInflict:
         - "神圣之火|70|1"
     buffImmute:
@@ -700,6 +723,8 @@
         - "燃烧"
         - "狱炎"
 亵渎岩:
+    soundDamaged: entity.hit.rock
+    soundKilled: entity.hit.rock
     buffInflict:
         - "神圣之火|40|1"
     buffImmute:

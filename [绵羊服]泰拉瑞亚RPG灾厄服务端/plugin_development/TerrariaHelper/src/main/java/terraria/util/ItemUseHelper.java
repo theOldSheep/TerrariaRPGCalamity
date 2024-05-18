@@ -1659,7 +1659,7 @@ public class ItemUseHelper {
                         plyVel = lookDir.clone();
                     }
                     else
-                        plyVel = EntityHelper.getVelocity(ply).normalize();
+                        plyVel = EntityHelper.getRawVelocity(ply).normalize();
                     // end dash earlier after recoil (hitting entity); do not update velocity
                     if (plyVel.dot(lookDir) < 0) {
                         if (currentIndex + 5 < maxIndex) {

@@ -94,7 +94,6 @@ public class MathHelper {
         return result;
     }
     public static double getVectorYaw(Vector vector) {
-        // algorithm from Skript
         if (vector.getX() == 0 && vector.getZ() == 0) {
             return -90;
         }
@@ -104,7 +103,6 @@ public class MathHelper {
         return resultYaw;
     }
     public static double getVectorPitch(Vector vector) {
-        // algorithm from Skript
         double xz = Math.sqrt(vector.getX() * vector.getX() + vector.getZ() * vector.getZ());
         if (xz == 0d) return vector.getY() >= 0 ? -90d : 90d;
         return Math.atan(vector.getY() / xz) * RAD_TO_DEG * -1;
@@ -119,12 +117,7 @@ public class MathHelper {
         // get offset direction for each arc
         Vector[] arcDirs = new Vector[amountArcs];
         {
-            Vector orthVec1 = new Vector();
-            while (orthVec1.lengthSquared() < 1e-5) {
-                orthVec1 = randomVector();
-                Vector fwdComponent = vectorProjection(fwdDir, orthVec1);
-                orthVec1.subtract(fwdComponent);
-            }
+            Vector orthVec1 = getNonZeroCrossProd(fwdDir, fwdDir);
             orthVec1.normalize();
             if (amountArcs == 1)
                 arcDirs[0] = orthVec1;
@@ -174,6 +167,52 @@ public class MathHelper {
         ArrayList<Vector> result = getCircularProjectileDirections(amountPerArc, amountArcs, halfArcAngleDeg, fwdDir, length);
         return result;
     }
+public static ArrayList<Vector> getEvenlySpacedProjectileDirections(double projectileIntervalDegree, double spreadAngleDegree, Vector forwardDir, double length) {
+    ArrayList<Vector> results = new ArrayList<>();
+    // Regularize forward direction
+    Vector fwdDir = new Vector().copy(forwardDir);
+    double fwdLenSqr = fwdDir.lengthSquared();
+    if (fwdLenSqr < 0.999 || fwdLenSqr > 1.001)
+        fwdDir.normalize();
+    // Set up the orthogonal vectors for the perpendicular direction
+    Vector orthVec1 = getNonZeroCrossProd(fwdDir, fwdDir).normalize();
+    Vector orthVec2 = fwdDir.getCrossProduct(orthVec1);
+    // The parameters are passed in as degrees, so let's work with a unit sphere with radius 1.
+    double intervalArcLen = Math.toRadians( projectileIntervalDegree );
+    // Iterate through the circles on the sphere sector
+    for (double theta = 0; theta <= spreadAngleDegree + 1e-9; theta += projectileIntervalDegree) {
+        double sinValCircle = xsin_degree(theta), cosValCircle = xcos_degree(theta);
+        double circleDiam = Math.PI * 2 * sinValCircle;
+        // make sure at least one iteration at the center; this offset fills up holes close to the center.
+        int iterations = (int) Math.ceil( (circleDiam + 0.1) / intervalArcLen);
+        Vector fwdComp = fwdDir.clone().multiply(cosValCircle);
+
+        double phi = Math.random() * 360d, dPhi = 360d / iterations;
+        for (int iteration = 0; iteration < iterations; iteration ++) {
+            double sinPhi = xsin_degree(phi), cosPhi = xcos_degree(phi);
+
+            Vector horComp1 = orthVec1.clone().multiply(sinPhi * sinValCircle);
+            Vector horComp2 = orthVec2.clone().multiply(cosPhi * sinValCircle);
+            Vector result = horComp1.add(horComp2).add(fwdComp);
+            results.add(result);
+
+            phi += dPhi;
+        }
+    }
+    // Setup speed
+    for (Vector vec : results)
+        vec.multiply(length);
+    return results;
+}
+// Replicates the behavior from the "getCircularProjectileDirections" helper function
+public static ArrayList<Vector> getEvenlySpacedProjectileDirections(double projectileIntervalDegree, double spreadAngleDegree,
+                                                                    Entity target, Location shootLoc, double length) {
+    EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions().setProjectileSpeed(length);
+    Location targetLoc = EntityHelper.helperAimEntity(shootLoc, target, aimHelper);
+    Vector fwdDir = targetLoc.subtract(shootLoc).toVector();
+    ArrayList<Vector> result = getEvenlySpacedProjectileDirections(projectileIntervalDegree, spreadAngleDegree, fwdDir, length);
+    return result;
+}
     public static <T> T selectWeighedRandom(HashMap<T, Double> weighedMap, T defaultVal) {
         double total = 0;
         for (double curr : weighedMap.values()) total += curr;

@@ -26,7 +26,6 @@ import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.event.celestialPillar.CelestialPillar;
 import terraria.entity.others.TerrariaMount;
-import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.EventAndTime;
 
 import java.math.BigDecimal;
@@ -293,10 +292,11 @@ public class PlayerHelper {
     public static HashSet<String> getPlayerKeyPressed(Player ply) {
         return (HashSet<String>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_KEYS_PRESSED).value();
     }
-    public static Vector getPlayerVelocity(Player ply) {
-        MetadataValue mtv = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY);
+    // get the internal velocity unaccounted for by the speed multi (water etc.)
+    public static Vector getPlayerRawVelocity(Player ply) {
+        MetadataValue mtv = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_INTERNAL);
         if (mtv == null) {
-            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY, new Vector());
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_INTERNAL, new Vector());
             return new Vector();
         }
         return (Vector) mtv.value();
@@ -1307,7 +1307,8 @@ public class PlayerHelper {
         boolean isWing = false;
         boolean gliding = false;
         // if the player is mounting
-        if (PlayerHelper.getMount(ply) != null) {
+        Entity mount = PlayerHelper.getMount(ply);
+        if (mount != null) {
             // after mounting, accessory (wings etc.) can not be used until landed.
             thrustIndex = 999999;
         }
@@ -1552,7 +1553,6 @@ public class PlayerHelper {
         return vel;
     }
     // underwater movement & oxygen bar
-    // TODO: speed do not exponentially decay underwater; it receives a multiplier
     private static Vector underwaterMovement(Player ply, Vector vel, HashMap<Material, HashSet<Integer>> contactBlocks) {
         // basic settings
         boolean isInLiquid = false, isInLava = false, submerged = false;
@@ -1624,13 +1624,10 @@ public class PlayerHelper {
         return vel;
     }
     // saving location info
-    private static void saveLastLoc(Player ply) {
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_SECOND_LAST_LOCATION,
-                EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION).value());
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION,
-                EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_CURRENT_LOCATION).value());
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CURRENT_LOCATION, getAccurateLocation(ply));
-    }
+private static void saveMovementData(Player ply, Vector velocity, Vector acceleration) {
+    EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_VELOCITY_ACTUAL, velocity);
+    EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ACCELERATION, acceleration);
+}
     // movement, block collision, oxygen bar etc.
     public static void threadExtraTicking() {
         // every 1 tick
@@ -1647,7 +1644,10 @@ public class PlayerHelper {
                         ply.isOnGround() && ply.isSneaking() ? 0.5 : 1);
 
                 // get player speed
-                Vector plySpd = getPlayerVelocity(ply);
+                Vector plySpd = getPlayerRawVelocity(ply);
+                // calculate acceleration info before the speed is updated
+                Vector plyWorldSpd = ply.getVelocity();
+                Vector plyAcc = plyWorldSpd.clone().subtract((Vector) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_VELOCITY_ACTUAL).value());
                 // account for speed direction changed by basic tick (block collision)
                 plySpd = accountVelChangeMovement(ply, plySpd);
 
@@ -1657,11 +1657,11 @@ public class PlayerHelper {
                 plySpd = grapplingHookMovement(ply, plySpd);
                 // underwater speed adjusting & oxygen bar
                 plySpd = underwaterMovement(ply, plySpd, contactBlocks);
+
                 // update speed
                 EntityHelper.setVelocity(ply, plySpd);
-
                 // save location info
-                saveLastLoc(ply);
+                saveMovementData(ply, plyWorldSpd.clone(), plyAcc);
             }
         }, 0, 1);
     }
@@ -1698,9 +1698,8 @@ public class PlayerHelper {
                         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
                         HashSet<String> accessories = getAccessories(ply);
                         HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
-                        Location currLoc = ply.getLocation();
-                        Location lastLoc = (Location) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION).value();
-                        boolean moved = lastLoc.getWorld().equals(currLoc.getWorld()) && lastLoc.distanceSquared(currLoc) > 1e-5;
+                        Vector velocity = getPlayerRawVelocity(ply);
+                        boolean moved = velocity.lengthSquared() > 1e-5;
                         // attempt regenerating the player's damage barrier
                         {
                             if (attrMap.getOrDefault("barrierMax", 0d) > 0d &&
@@ -1921,9 +1920,8 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES, new HashSet<String>());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES_LIST, new ArrayList<String>());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_NEG_REGEN_CAUSE, new HashMap<String, Double>());
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_SECOND_LAST_LOCATION, ply.getLocation());
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION, ply.getLocation());
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CURRENT_LOCATION, ply.getLocation());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ACCELERATION, new Vector());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_VELOCITY_ACTUAL, new Vector());
         // the accessory set cached when first thrusting, to prevent buggy behaviour.
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES_FLIGHT_BACKUP, new HashSet<String>());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ATTRIBUTE_MAP, PlayerHelper.getDefaultPlayerAttributes());
@@ -1934,7 +1932,7 @@ public class PlayerHelper {
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOK_ITEM, "");
         resetPlayerFlightTime(ply);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_DIRECTION, "");
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY, new Vector());
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_INTERNAL, new Vector());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_MULTI, 1d);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS, Calendar.getInstance().getTimeInMillis());
         setArmorSet(ply, "");
@@ -1951,8 +1949,6 @@ public class PlayerHelper {
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_HEALTH_TIER, getPlayerHealthTier(ply));
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_TIER, getPlayerManaTier(ply));
         }
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_SECOND_LAST_LOCATION, ply.getLocation());
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_LOCATION, ply.getLocation());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.REGEN_TIME, 0d);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_DELAY, 0d);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_COUNTER, 0d);
@@ -2406,15 +2402,7 @@ public class PlayerHelper {
             ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(
                     newAttrMap.getOrDefault("maxHealth", 200d) *
                             newAttrMap.getOrDefault("maxHealthMulti", 1d));
-            // setup walking speed
-//            double walkingSpeed = newAttrMap.getOrDefault("speed", 0.2d) *
-//                    newAttrMap.getOrDefault("speedMulti", 1d);
-//            if (walkingSpeed < 0d)
-//                walkingSpeed = 0d;
-//            if (Math.abs(ply.getWalkSpeed() - walkingSpeed) > 1e-9) {
-//                ply.setWalkSpeed((float) walkingSpeed);
-//            }
-            // updated: the on-ground movement is also handled with velocity...
+            // the on-ground movement is handled with velocity...
             if (ply.getWalkSpeed() != 0f)
                 ply.setWalkSpeed(0f);
             // save new attribute map
@@ -2894,7 +2882,7 @@ public class PlayerHelper {
             dashSpeed *= attrMap.getOrDefault("speedMulti", 1d) * speedMulti;
 
             Vector dashVelocity = MathHelper.vectorFromYawPitch_quick(yaw, pitch).multiply(dashSpeed);
-            EntityHelper.setVelocity(ply, getPlayerVelocity(ply).add(dashVelocity));
+            EntityHelper.setVelocity(ply, getPlayerRawVelocity(ply).add(dashVelocity));
             ply.addScoreboardTag("temp_dashCD");
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                     () -> ply.removeScoreboardTag("temp_dashCD"), dashCD);

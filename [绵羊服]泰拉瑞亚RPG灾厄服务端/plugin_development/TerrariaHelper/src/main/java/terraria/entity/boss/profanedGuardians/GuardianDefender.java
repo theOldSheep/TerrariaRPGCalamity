@@ -19,6 +19,7 @@ public class GuardianDefender extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.PROFANED_GUARDIANS;
     public static final double BASIC_HEALTH = 144000 * 2;
+    public static final String DISPLAY_NAME = BOSS_TYPE.msgName + "·神石";
     HashMap<String, Double> attrMap;
     ArrayList<LivingEntity> bossParts;
     Player target = null;
@@ -42,7 +43,7 @@ public class GuardianDefender extends EntitySlime {
     static final Vector SPEAR_SHOOT_LOC_OFFSET = new Vector(0, 1, 0);
     static final int DASH_COUNT = 3;
     static final double REGULAR_MOVE_SPEED = 1.0, DASH_SPEED = 2.0;
-    static final int DASH_DURATION_SINGLE = 20, PROJECTILE_DURATION = 160;
+    static final int DASH_DURATION_SINGLE = 20, PROJECTILE_DURATION = 160, PROJECTILE_MIN_INDEX = 50;
     static final int ROCK_SUMMON_INTERVAL = 10;
     GuardianCommander commander;
     GuardianAttacker attacker;
@@ -122,7 +123,8 @@ public class GuardianDefender extends EntitySlime {
     private void handleProjectileAttack() {
         handleHorizontalRotation();
 
-        boolean shouldFire = indexAI % (secondPhase ? SPEAR_ATTACK_INTERVAL_SECOND_PHASE : SPEAR_ATTACK_INTERVAL) == 0;
+        boolean shouldFire = indexAI >= PROJECTILE_MIN_INDEX &&
+                indexAI % (secondPhase ? SPEAR_ATTACK_INTERVAL_SECOND_PHASE : SPEAR_ATTACK_INTERVAL) == 0;
         if (shouldFire) {
             boolean blastOrSpear = secondPhase && Math.random() < BLAST_CHANCE;
             // Setup projectile features
@@ -170,7 +172,7 @@ public class GuardianDefender extends EntitySlime {
         // add to world
         commander.getWorld().addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName(BOSS_TYPE.msgName);
+        setCustomName(DISPLAY_NAME);
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");

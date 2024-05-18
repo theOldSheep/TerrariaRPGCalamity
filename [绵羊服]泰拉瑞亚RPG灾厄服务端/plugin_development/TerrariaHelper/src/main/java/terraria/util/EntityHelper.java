@@ -226,11 +226,11 @@ public class EntityHelper {
         MONSTER_PARENT_TYPE("parentType"),
         NPC_FIRST_SELL_INDEX("firstSell"),
         NPC_GUI_VIEWERS("GUIViewers"),
+        PLAYER_ACCELERATION("playerAcl"),
         PLAYER_AIR("playerAir"),
         PLAYER_BIOME("playerBiome"),
         PLAYER_CRAFTING_RECIPE_INDEX("recipeNumber"),
         PLAYER_CRAFTING_STATION("craftingStation"),
-        PLAYER_CURRENT_LOCATION("currLocation"),
         PLAYER_DASH_DIRECTION("chargeDir"),
         PLAYER_DASH_KEY_PRESSED_MS("chargeDirLastPressed"),
         PLAYER_BIOME_BLADE_SPIN_PITCH("spinPitch"),
@@ -250,7 +250,8 @@ public class EntityHelper {
         PLAYER_LAST_BACKGROUND("lastBackground"),
         PLAYER_LAST_BGM("lastBGM"),
         PLAYER_LAST_BGM_TIME("lastBGMTime"),
-        PLAYER_LAST_LOCATION("lastLocation"),
+        // the velocity in world, for the last tick
+        PLAYER_LAST_VELOCITY_ACTUAL("plyLastVel"),
         PLAYER_MANA_REGEN_DELAY("manaRegenDelay"),
         PLAYER_MANA_REGEN_COUNTER("manaRegenCounter"),
         PLAYER_MANA_TIER("manaTier"),
@@ -261,7 +262,6 @@ public class EntityHelper {
         PLAYER_NEXT_MINION_INDEX("nextMinionIndex"),
         PLAYER_NEXT_SENTRY_INDEX("nextSentryIndex"),
         PLAYER_NPC_INTERACTING("NPCViewing"),
-        PLAYER_SECOND_LAST_LOCATION("secondLastLocation"),
         PLAYER_SENTRY_LIST("sentries"),
         PLAYER_TARGET_LOC_CACHE("targetLocCache"),
         PLAYER_TEAM("team"),
@@ -269,8 +269,8 @@ public class EntityHelper {
         PLAYER_THRUST_INDEX("thrustIndex"),
         PLAYER_THRUST_PROGRESS("thrustProgress"),
         PLAYER_TRASH_ITEMS("trashItems"),
-        PLAYER_VELOCITY("plyVel"),
         PLAYER_VELOCITY_MULTI("plyVelMulti"),
+        PLAYER_VELOCITY_INTERNAL("plyVelItn"),
         PROJECTILE_BOUNCE_LEFT("bounce"),
         PROJECTILE_DESTROY_REASON("destroyReason"),
         PROJECTILE_PENETRATION_LEFT("penetration"),
@@ -302,7 +302,6 @@ public class EntityHelper {
     public enum DamageReason {
         BLOCK_EXPLOSION(false, DamageType.BLOCK_EXPLOSION),
         BOSS_ANGRY(true, null),
-        DAAWNLIGHT(true, null),
         DIRECT_DAMAGE(true, null),
         DEBUFF(false, DamageType.DEBUFF),
         DROWNING(false, DamageType.DROWNING),
@@ -798,7 +797,7 @@ public class EntityHelper {
                         } else if (velY > maxVerticalSpeed) {
                             velY = maxVerticalSpeed;
                         }
-                        Vector velocity = getVelocity(twistedEntity);
+                        Vector velocity = getRawVelocity(twistedEntity);
                         velocity.setY(velY);
                         setVelocity(twistedEntity, velocity);
                         entity.setFallDistance(0);
@@ -1416,7 +1415,7 @@ public class EntityHelper {
     public static void handleDeath(Entity v, Entity dPly, Entity d, DamageType damageType, String debuffType) {
         if (v instanceof Player) {
             Player vPly = (Player) v;
-            // prevent spectator getting in a wall
+            // prevent spectator getting in a wall & prevent speed remaining after revive
             setVelocity(vPly, new Vector());
             // respawn time, default to 15 seconds and increases if boss is alive
             int respawnTime = 15;
@@ -1837,10 +1836,10 @@ public class EntityHelper {
             return PlayerHelper.getMount((Player) entity);
         return entity.getVehicle();
     }
-    // for player, use either this getVelocity or the getPlayerVelocity in PlayerHelper
-    public static Vector getVelocity(Entity entity) {
+    // for player, use either this getVelocity or the getPlayerVelocity in PlayerHelper to get the underlying velocity without liquid slow etc.
+    public static Vector getRawVelocity(Entity entity) {
         if (entity instanceof Player)
-            return PlayerHelper.getPlayerVelocity((Player) entity);
+            return PlayerHelper.getPlayerRawVelocity((Player) entity);
         return entity.getVelocity();
     }
     // for player, use this setVelocity instead of vanilla one
@@ -1849,7 +1848,7 @@ public class EntityHelper {
         if (spd.lengthSquared() > 1e5)
             spd.zero();
         if (entity instanceof Player) {
-            setMetadata(entity, MetadataName.PLAYER_VELOCITY, spd);
+            setMetadata(entity, MetadataName.PLAYER_VELOCITY_INTERNAL, spd);
             MetadataValue mtv = getMetadata(entity, MetadataName.PLAYER_VELOCITY_MULTI);
             spd = spd.clone();
             if (mtv != null)
@@ -1876,7 +1875,7 @@ public class EntityHelper {
         if (knockbackTaker instanceof Minecart)
             return;
         // calculate the final velocity
-        Vector finalVel = getVelocity(knockbackTaker);
+        Vector finalVel = getRawVelocity(knockbackTaker);
         if (addOrReplace) {
             finalVel.add(dir);
         } else {
@@ -1950,10 +1949,6 @@ public class EntityHelper {
         }
         // living entities
         Set<String> victimScoreboardTags = victim.getScoreboardTags();
-        // Daawnlight target should not take any damage
-        if (victimScoreboardTags.contains("isDaawnlight")) {
-            return;
-        }
         LivingEntity victimLivingEntity = (LivingEntity) victim;
         LivingEntity damageTaker = victimLivingEntity;
         // no damage scenarios
@@ -2649,15 +2644,8 @@ public class EntityHelper {
             Player targetPly = (Player) target;
             targetLoc = PlayerHelper.getAccurateLocation(targetPly);
 
-            Location lastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_CURRENT_LOCATION).value();
-            Location secondLastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_LAST_LOCATION).value();
-            if (lastLoc.distanceSquared(targetLoc) < 1e-5) {
-                lastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_LAST_LOCATION).value();
-                secondLastLoc = (Location) EntityHelper.getMetadata(target, MetadataName.PLAYER_SECOND_LAST_LOCATION).value();
-            }
-            enemyVel = targetLoc.clone().subtract(lastLoc).toVector();
-            Vector enemyVelSecondLast = lastLoc.clone().subtract(secondLastLoc).toVector();
-            enemyAcc = enemyVel.clone().subtract(enemyVelSecondLast);
+            enemyVel = (Vector) getMetadata(target, MetadataName.PLAYER_LAST_VELOCITY_ACTUAL).value();
+            enemyAcc = (Vector) getMetadata(target, MetadataName.PLAYER_ACCELERATION).value();
         }
         else {
             targetLoc = target.getLocation();
