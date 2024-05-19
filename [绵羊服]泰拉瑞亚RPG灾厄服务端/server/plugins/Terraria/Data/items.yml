@@ -2810,7 +2810,6 @@ Drew之翼:
   item: FISHING_ROD
   lore:
   - §r市面上最常见的钓鱼竿，没什么特别的。
-  - §r5% 渔力
   attributes:
     fishingPower: 5
   worth: 20000
@@ -2819,7 +2818,6 @@ Drew之翼:
   item: FISHING_ROD
   lore:
   - §r高档的钓鱼竿。据说用它钓鱼速度会很快。
-  - §r50% 渔力
   - §r一次性投放两根鱼线
   attributes:
     fishingPower: 50
@@ -2828,8 +2826,6 @@ Drew之翼:
   rarity: 3
 钨钢钓竿:
   item: FISHING_ROD
-  lore:
-  - §r10% 渔力
   attributes:
     fishingPower: 10
   worth: 200000
@@ -2839,7 +2835,6 @@ Drew之翼:
   lore:
   - §r能够在岩浆中垂钓
   - §r灵魂内灼热的熔岩是一口熔炉——也是一口喷涌着哀愁和忧伤的活火山
-  - §r25% 渔力
   attributes:
     fishingPower: 25
   worth: 800000
@@ -2848,7 +2843,6 @@ Drew之翼:
   item: FISHING_ROD
   lore:
   - §r这种远古合金反射出的多彩光泽非常适合吸引鱼儿
-  - §r35% 渔力
   attributes:
     fishingPower: 35
   worth: 7200000
@@ -2857,7 +2851,6 @@ Drew之翼:
   item: FISHING_ROD
   lore:
   - §r你已经征服了丛林的怪物，现在征服海洋中的鱼儿也不是难事
-  - §r40% 渔力
   - §r一次性投放两根鱼线
   attributes:
     fishingPower: 40
@@ -2870,7 +2863,6 @@ Drew之翼:
   - §r能够在岩浆中垂钓
   - §r战场永远是充满混乱的场所
   - §r胜者必须是能够控制混乱之人，垂钓也是同样的道理
-  - §r45% 渔力
   - §r一次性投放四根鱼线
   attributes:
     fishingPower: 45
@@ -2881,7 +2873,6 @@ Drew之翼:
   item: FISHING_ROD
   lore:
   - §r早起的鸟儿有鱼吃
-  - §r60% 渔力
   - §r一次性投放六根鱼线
   attributes:
     fishingPower: 60
@@ -2893,7 +2884,6 @@ Drew之翼:
   lore:
   - §r能够在岩浆中垂钓
   - §r就连神明吞噬者也曾经在这样的鱼群中掠食
-  - §r75% 渔力
   - §r一次性投放十根鱼线
   attributes:
     fishingPower: 75

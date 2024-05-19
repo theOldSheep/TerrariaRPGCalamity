@@ -492,14 +492,14 @@ effects:
   生命星云:
     isBuff: true
     attributes:
-      regen: 10
-    tooltip: 每层使每秒生命再生增加 10
+      regen: 6
+    tooltip: 每层使每秒生命再生增加 6
   生命星云1:
-    tooltip: 每秒生命再生增加 10
+    tooltip: 每秒生命再生增加 6
   生命星云2:
-    tooltip: 每秒生命再生增加 20
+    tooltip: 每秒生命再生增加 12
   生命星云3:
-    tooltip: 每秒生命再生增加 30
+    tooltip: 每秒生命再生增加 18
   魔力星云:
     isBuff: true
     attributes:

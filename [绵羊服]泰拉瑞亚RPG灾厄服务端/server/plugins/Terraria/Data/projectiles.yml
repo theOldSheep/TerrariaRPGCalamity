@@ -579,6 +579,106 @@
     maxHomingTicks: 30
     buffInflict:
         - "幻星感染|60|1"
+幻影眼:
+    blockHitAction: thru
+    trailColor: 100|255|255
+    isGrenade: true
+    blastRadius: 4
+    liveTime: 100
+    gravity: 0
+    homing: true
+    homingMethod: 2
+    homingRadius: 128
+    homingSharpTurning: false
+    homingAbility: 18
+    noHomingTicks: 15
+    maxHomingTicks: 40
+闪耀红羽:
+    blockHitAction: thru
+    liveTime: 120
+    gravity: 0
+    homing: true
+    homingRadius: 128
+    homingSharpTurning: false
+    homingAbility: 12
+    noHomingTicks: 15
+    maxHomingTicks: 80
+    homingEndSpeedMultiplier: 2
+闪耀之弹:
+    blockHitAction: thru
+    projectileSize: 2
+    liveTime: 80
+    gravity: 0
+    penetration: 999999
+    minimumDamageTicks: 5
+    homing: true
+    homingRadius: 96
+    homingSharpTurning: false
+    homingAbility: 5
+    spawnProjectiles:
+        interval: 8
+        offset: 1.0
+        spawnMechanism: SURROUND
+        damageMulti: 1
+        speed: 1.35
+        spawnType: 神圣之火
+    buffInflict:
+        - "神圣之火|160|1"
+圣之爆焱:
+    blockHitAction: thru
+    projectileSize: 4
+    liveTime: 40
+    gravity: 0
+    penetration: 999999
+    minimumDamageTicks: 5
+    homing: true
+    homingRadius: 96
+    homingSharpTurning: false
+    homingAbility: 8
+    noHomingTicks: 10
+    clusterBomb:
+        amount: 8
+        damageMulti: 1
+        name: 神圣之火
+        type: normal
+        velocity: 1.5
+    buffInflict:
+        - "神圣之火|80|1"
+神圣之火:
+    blockHitAction: thru
+    projectileSize: 0.5
+    liveTime: 60
+    gravity: 0
+    minimumDamageTicks: 5
+    homing: true
+    homingMethod: 2
+    homingRadius: 64
+    homingSharpTurning: false
+    homingAbility: 27
+    noHomingTicks: 15
+    maxHomingTicks: 30
+    buffInflict:
+        - "神圣之火|60|1"
+神圣新星:
+    blockHitAction: thru
+    projectileSize: 1
+    liveTime: 60
+    gravity: 0
+    buffInflict:
+        - "神圣之火|40|1"
+神圣之矛:
+    blockHitAction: thru
+    projectileSize: 2
+    liveTime: 60
+    gravity: 0
+    buffInflict:
+        - "神圣之火|60|1"
+圣骑士锤:
+    blockHitAction: thru
+    gravity: 0
+    penetration: 999999
+    liveTime: 24
+    projectileSize: 2
 星旋激光:
     blockHitAction: thru
     liveTime: 100
@@ -609,89 +709,6 @@
     projectileSize: 0.5
     speedMultiPerTick: 0.98
     gravity: 0
-幻影眼:
-    blockHitAction: thru
-    trailColor: 100|255|255
-    isGrenade: true
-    blastRadius: 4
-    liveTime: 100
-    gravity: 0
-    homing: true
-    homingMethod: 2
-    homingRadius: 128
-    homingSharpTurning: false
-    homingAbility: 18
-    noHomingTicks: 15
-    maxHomingTicks: 40
-闪耀之弹:
-    blockHitAction: thru
-    projectileSize: 2
-    liveTime: 80
-    gravity: 0
-    penetration: 999999
-    minimumDamageTicks: 5
-    homing: true
-    homingRadius: 48
-    homingSharpTurning: false
-    homingAbility: 5
-    spawnProjectiles:
-        interval: 8
-        offset: 1.0
-        spawnMechanism: SURROUND
-        damageMulti: 1
-        speed: 1.35
-        spawnType: 神圣之火
-    buffInflict:
-        - "神圣之火|160|1"
-圣之爆焱:
-    blockHitAction: thru
-    projectileSize: 4
-    liveTime: 40
-    gravity: 0
-    penetration: 999999
-    minimumDamageTicks: 5
-    homing: true
-    homingRadius: 48
-    homingSharpTurning: false
-    homingAbility: 5
-    noHomingTicks: 15
-    clusterBomb:
-        amount: 8
-        damageMulti: 1
-        name: 神圣之火
-        type: normal
-        velocity: 1.5
-    buffInflict:
-        - "神圣之火|80|1"
-神圣之火:
-    blockHitAction: thru
-    projectileSize: 0.5
-    liveTime: 60
-    gravity: 0
-    minimumDamageTicks: 5
-    homing: true
-    homingMethod: 2
-    homingRadius: 48
-    homingSharpTurning: false
-    homingAbility: 27
-    noHomingTicks: 15
-    maxHomingTicks: 30
-    buffInflict:
-        - "神圣之火|60|1"
-神圣新星:
-    blockHitAction: thru
-    projectileSize: 1
-    liveTime: 60
-    gravity: 0
-    buffInflict:
-        - "神圣之火|40|1"
-神圣之矛:
-    blockHitAction: thru
-    projectileSize: 2
-    liveTime: 60
-    gravity: 0
-    buffInflict:
-        - "神圣之火|60|1"
 南瓜榴弹:
     isGrenade: true
     blastRadius: 1

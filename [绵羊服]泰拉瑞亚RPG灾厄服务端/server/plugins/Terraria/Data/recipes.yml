@@ -1235,7 +1235,7 @@ ANVIL:
     - 恐惧之魂
     - 力量之魂
     - 视域之魂
-    recipeCategory: WEAPON_MELEE
+    recipeCategory: TOOL
   '137':
     requireLevel: 2
     resultItem: 永恒之枪
