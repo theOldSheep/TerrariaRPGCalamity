@@ -15,6 +15,7 @@ import terraria.entity.boss.calamitasClone.Catastrophe;
 import terraria.entity.boss.crabulon.Crabulon;
 import terraria.entity.boss.cryogen.Cryogen;
 import terraria.entity.boss.cryogen.CryogenShield;
+import terraria.entity.boss.dragonFolly.DragonFolly;
 import terraria.entity.boss.dukeFishron.DukeFishron;
 import terraria.entity.boss.dukeFishron.Sharknado;
 import terraria.entity.boss.dukeFishron.Sharkron;
@@ -107,13 +108,14 @@ public enum CustomEntities {
     BOSS_CULTIST_MS         ("LunaticIceMist",         55,  EntityType.SLIME,           EntitySlime.class,           LunaticIceMist.class),
     BOSS_CULTIST_LO         ("LunaticLightningOrb",    55,  EntityType.SLIME,           EntitySlime.class,           LunaticLightningOrb.class),
     BOSS_CULTIST_PD         ("PhantomDragon",          55,  EntityType.SLIME,           EntitySlime.class,           PhantomDragon.class),
-    BOSS_DSTY               ("Destroyer",              55,  EntityType.SLIME,           EntitySlime.class,           Destroyer.class),
-    BOSS_DSSC               ("DesertScourge",          55,  EntityType.SLIME,           EntitySlime.class,           DesertScourge.class),
-    BOSS_DSSC_NUIS          ("DesertNuisance",         55,  EntityType.SLIME,           EntitySlime.class,           DesertNuisance.class),
     BOSS_DKFSR              ("DukeFishron",            55,  EntityType.SLIME,           EntitySlime.class,           DukeFishron.class),
     BOSS_DKFSR_SKND         ("Sharknado",              55,  EntityType.SLIME,           EntitySlime.class,           Sharknado.class),
     BOSS_DKFSR_SHARKRON     ("Sharkron",               55,  EntityType.SLIME,           EntitySlime.class,           Sharkron.class),
     BOSS_DKFSR_WTBLB        ("WaterBlob",              55,  EntityType.SLIME,           EntitySlime.class,           WaterBlob.class),
+    BOSS_DRAGON_FOLLY       ("DragonFolly",            55,  EntityType.SLIME,           EntitySlime.class,           DragonFolly.class),
+    BOSS_DSSC               ("DesertScourge",          55,  EntityType.SLIME,           EntitySlime.class,           DesertScourge.class),
+    BOSS_DSSC_NUIS          ("DesertNuisance",         55,  EntityType.SLIME,           EntitySlime.class,           DesertNuisance.class),
+    BOSS_DSTY               ("Destroyer",              55,  EntityType.SLIME,           EntitySlime.class,           Destroyer.class),
     BOSS_EOC                ("EyeOfCthulhu",           55,  EntityType.SLIME,           EntitySlime.class,           EyeOfCthulhu.class),
     BOSS_EOL                ("EmpressOfLight",         55,  EntityType.SLIME,           EntitySlime.class,           EmpressOfLight.class),
     BOSS_EOW                ("EaterOfWorlds",          55,  EntityType.SLIME,           EntitySlime.class,           EaterOfWorld.class),

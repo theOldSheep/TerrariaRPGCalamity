@@ -44,6 +44,7 @@ public class BossSpawnListener implements Listener {
         summonItems.put("唤死笛哨", BossHelper.BossType.RAVAGER);
         summonItems.put("天界符", BossHelper.BossType.MOON_LORD);
         // pre-providence
+        summonItems.put("奇异信息素", BossHelper.BossType.THE_DRAGONFOLLY);
         summonItems.put("亵渎碎片", BossHelper.BossType.PROFANED_GUARDIANS);
     }
     @EventHandler(priority = EventPriority.HIGHEST)

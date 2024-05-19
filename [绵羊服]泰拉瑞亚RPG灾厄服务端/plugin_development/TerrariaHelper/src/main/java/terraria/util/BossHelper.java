@@ -12,6 +12,7 @@ import terraria.entity.boss.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.calamitasClone.CalamitasClone;
 import terraria.entity.boss.crabulon.Crabulon;
 import terraria.entity.boss.cryogen.Cryogen;
+import terraria.entity.boss.dragonFolly.DragonFolly;
 import terraria.entity.boss.dukeFishron.DukeFishron;
 import terraria.entity.boss.empressOfLight.EmpressOfLight;
 import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
@@ -24,7 +25,6 @@ import terraria.entity.boss.moonLord.MoonLord;
 import terraria.entity.boss.plantera.Plantera;
 import terraria.entity.boss.profanedGuardians.GuardianCommander;
 import terraria.entity.boss.ravager.Ravager;
-import terraria.entity.boss.ravager.RavagerNuke;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
 import terraria.entity.boss.theDestroyer.Destroyer;
 import terraria.entity.boss.theHiveMind.TheHiveMind;
@@ -298,6 +298,13 @@ public class BossHelper {
                 break;
             }
             // pre-providence
+            case THE_DRAGONFOLLY: {
+                if (DragonFolly.canSpawn(target)) {
+                    new DragonFolly(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
             case PROFANED_GUARDIANS: {
                 if (GuardianCommander.canSpawn(target)) {
                     new GuardianCommander(target);

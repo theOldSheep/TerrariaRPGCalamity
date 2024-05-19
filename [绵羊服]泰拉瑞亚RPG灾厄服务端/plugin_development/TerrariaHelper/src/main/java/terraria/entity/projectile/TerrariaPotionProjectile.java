@@ -14,6 +14,7 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.boss.theHiveMind.HiveBlob;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.event.listener.ArrowHitListener;
 import terraria.util.*;
@@ -256,7 +257,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public Vec3D hitEntity(Entity e, MovingObjectPosition position) {
         // handle damage CD before doing anything else. Otherwise, exploding projectiles will damage the enemy being hit twice.
         GenericHelper.damageCoolDown(damageCD, e.getBukkitEntity(), enemyInvincibilityFrame);
-        // handles post-hit mechanism: damage is handled by a listener
+        // handles post-hit mechanism: damage value is handled by a listener
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_LAST_HIT_ENTITY, e.getBukkitEntity());
         if (bouncePenetrationBonded) {
             updateBounce(bounce - 1);
         }
@@ -264,22 +266,21 @@ public class TerrariaPotionProjectile extends EntityPotion {
         updatePenetration(penetration - 1);
         // special projectile
         hitEntityExtraHandling(e, position);
-        // cluster bomb
-        {
-            boolean shouldSpawnClusterBomb = penetration < 0 ||
-                    TerrariaHelper.projectileConfig.getBoolean(
-                            projectileType + ".clusterBomb.fireOnCollideEntity", false);
-            if (shouldSpawnClusterBomb) {
-                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
-                ArrowHitListener.spawnProjectileClusterBomb(bukkitEntity, e.getBukkitEntity());
-                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, null);
-            }
-        }
+
         // returns the hit location if the projectile breaks (returns null if the projectile is still alive)
         if (penetration < 0) {
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
-            die();
+            destroyWithReason(DESTROY_HIT_ENTITY);
             return new Vec3D(position.pos.x, position.pos.y, position.pos.z);
+        }
+        // cluster bomb
+        else {
+            boolean shouldSpawnClusterBomb = TerrariaHelper.projectileConfig.getBoolean(
+                    projectileType + ".clusterBomb.fireOnCollideEntity", false);
+            if (shouldSpawnClusterBomb) {
+                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
+                ArrowHitListener.spawnProjectileClusterBomb(bukkitEntity);
+                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, null);
+            }
         }
         return null;
     }
@@ -683,8 +684,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public void extinguish() {
         switch (projectileType) {
             case "小火花":
-                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_BLOCK);
-                this.die();
+                destroyWithReason(DESTROY_HIT_BLOCK);
                 break;
             case "烈焰箭":
                 setType("木箭");
@@ -703,6 +703,10 @@ public class TerrariaPotionProjectile extends EntityPotion {
         return this.inWater;
     }
     // die
+    public void destroyWithReason(int reason) {
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, reason);
+        die();
+    }
     @Override
     public void die() {
         super.die();
@@ -771,8 +775,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                 case "slide":
                 case "die":
                     updateBounce(-1);
-                    EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_BLOCK);
-                    this.die();
+                    destroyWithReason(DESTROY_HIT_BLOCK);
                     return;
                 case "stick":
                     if (this.world.getType(new BlockPosition(this.locX, this.locY, this.locZ)).getMaterial().isSolid())
@@ -789,96 +792,14 @@ public class TerrariaPotionProjectile extends EntityPotion {
         Vector velocity = new Vector(this.motX, this.motY, this.motZ);
         this.setNoGravity(true);
         if (shouldMove) {
-            // optimize homing target
-            if (homing) {
-                // homing should not work before the projectile's age exceeds no homing tick
-                if (ticksLived < noHomingTicks || ticksLived > maxHomingTicks) {
-                    homingTarget = null;
-                } else {
-                    // mechanism for resetting homing target
-                    if (homingTarget != null) {
-                        if (homingRetarget && damageCD.contains(homingTarget.getBukkitEntity()))
-                            homingTarget = null; // Reset homing target
-                        else if (getHomingInterest(homingTarget) < -1e5)
-                            homingTarget = null;
-                    }
-                    // find a new target
-                    if (homingTarget == null) {
-                        double maxInterest = -1e5;
-                        List<Entity> list = this.world.getEntities(this, getBoundingBox().g(homingRadius));
-                        for (Entity toCheck : list) {
-                            // only living entities are valid targets
-                            if (!toCheck.isInteractable()) continue;
-                            if (this.shooter != null && this.shooter == toCheck) continue;
-                            // if the target is unreachable
-                            if (!blockHitAction.equals("thru")) {
-                                Vec3D traceEnd = toCheck.d();
-                                MovingObjectPosition blockHitPos = HitEntityInfo.rayTraceBlocks(this.world, initialLoc, traceEnd);
-                                if (blockHitPos != null) continue;
-                            }
-                            double currInterest = getHomingInterest(toCheck);
-                            if (currInterest > maxInterest) {
-                                maxInterest = currInterest;
-                                homingTarget = toCheck;
-                            }
-                        }
-                    }
-                }
-            }
+            if (homing)
+                optimizeHomingTarget(initialLoc);
 
             // tweak speed: handle homing or tweak by per tick speed decay and gravity
-            if (homing && homingTarget != null) {
-                // the delta theta is not fixed
-                if (homingSharpTurning) {
-                    Vector acceleration;
-                    if (homingTarget instanceof EntityLiving)
-                        acceleration = ((LivingEntity) homingTarget.getBukkitEntity()).getEyeLocation().subtract(this.locX, this.locY, this.locZ).toVector();
-                    else
-                        acceleration = homingTarget.getBukkitEntity().getLocation().subtract(this.locX, this.locY, this.locZ).toVector();
-
-                    if (acceleration.lengthSquared() > 1e-5) {
-                        // fixed homing efficiency
-                        if (homingMethod == 2) {
-                            acceleration.multiply(homingAbility / acceleration.length());
-                        }
-                        // homing efficiency proportional to (projectile speed / distance)
-                        else {
-                            acceleration.multiply(homingAbility * velocity.length() / acceleration.lengthSquared());
-                        }
-                    }
-
-                    velocity.add(acceleration);
-
-                    terraria.util.MathHelper.setVectorLength(velocity, speed, true);
-                }
-                // delta theta is constant
-                else {
-                    Vector toTarget = homingTarget.getBukkitEntity().getLocation().toVector().subtract(getBukkitEntity().getLocation().toVector());
-                    Vector targetDir = toTarget.normalize(); // Direction to target
-                    Vector currDir = this.getBukkitEntity().getVelocity().normalize(); // Current direction (velocity)
-
-                    double angle = Math.toDegrees(Math.acos(currDir.dot(targetDir))); // Angle in degrees
-
-                    Vector newVelocity;
-                    if (angle > homingAbility) {
-                        // Calculate rotation axis and quaternion
-                        Vector rotAxis = terraria.util.MathHelper.getNonZeroCrossProd(currDir, targetDir).normalize();
-                        Quaternion rotation = new Quaternion(rotAxis, Math.toRadians( homingAbility ) );
-
-                        // Rotate the velocity vector
-                        newVelocity = rotation.interpolate(currDir);
-                    }
-                    else {
-                        newVelocity = targetDir;
-                    }
-                    velocity = newVelocity.multiply(this.speed);
-                }
-
-                // if a target is valid when homing timeout, multiply the speed by the multiplier
-                if (ticksLived == maxHomingTicks) {
-                    velocity.multiply(homingEndSpeedMultiplier);
-                }
-            } else {
+            if (homing && homingTarget != null)
+                homingTick(velocity);
+            // not homing into enemies
+            else {
                 extraMovingTick();
                 // friction if on ground
                 if (this.onGround && this.lastOnGround) {
@@ -925,8 +846,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
                             if (blockHitAction.equals("bounce")) {
                                 updateBounce(bounce - 1);
                                 if (bounce < 0) {
-                                    EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_BLOCK);
-                                    die();
+                                    destroyWithReason(DESTROY_HIT_BLOCK);
                                     return;
                                 }
                                 if (bouncePenetrationBonded) {
@@ -1138,29 +1058,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
         }
 
         // handle projectile hit
-        if (ticksLived >= minimumDamageTicks) {
-            // get list of entities that could get hit
-            Set<HitEntityInfo> hitCandidates = HitEntityInfo.getEntitiesHit(
-                    this.world,
-                    new Vec3D(locX, locY, locZ),
-                    futureLoc,
-                    this.projectileRadius,
-                    this::checkCanHit);
-
-            // hit entities
-            if (projectileType.equals("光之舞闪光")) {
-                attrMap.put("damage", attrMap.getOrDefault("damage", 6666d) / hitCandidates.size());
-            }
-            for (HitEntityInfo toHit : hitCandidates) {
-                Entity hitEntity = toHit.getHitEntity();
-                MovingObjectPosition hitInfo = new MovingObjectPosition(hitEntity, toHit.getHitLocation().pos);
-                if (TerrariaProjectileHitEvent.callProjectileHitEvent(this, hitInfo).isCancelled()) continue;
-                Vec3D newLoc = hitEntity(hitEntity, hitInfo);
-                if (newLoc != null) futureLoc = newLoc;
-                // if the projectile reached its penetration capacity, stop damaging enemies
-                if (this.dead) break;
-            }
-        }
+        if (ticksLived >= minimumDamageTicks)
+            futureLoc = hitEntities(futureLoc);
         // handle vegetation hit
         {
             org.bukkit.World bukkitWorld = bukkitEntity.getWorld();
@@ -1199,5 +1098,122 @@ public class TerrariaPotionProjectile extends EntityPotion {
         if (this.ticksLived >= liveTime) die();
         // timing
         this.world.methodProfiler.b();
+    }
+
+    // optimizes the homing target
+    protected void optimizeHomingTarget(Vec3D initialLoc) {
+        // homing should not work before the projectile's age exceeds no homing tick
+        if (ticksLived < noHomingTicks || ticksLived > maxHomingTicks) {
+            homingTarget = null;
+        } else {
+            // mechanism for resetting homing target
+            if (homingTarget != null) {
+                if (homingRetarget && damageCD.contains(homingTarget.getBukkitEntity()))
+                    homingTarget = null; // Reset homing target
+                else if (getHomingInterest(homingTarget) < -1e5)
+                    homingTarget = null;
+            }
+            // find a new target
+            if (homingTarget == null) {
+                double maxInterest = -1e5;
+                List<Entity> list = this.world.getEntities(this, getBoundingBox().g(homingRadius));
+                for (Entity toCheck : list) {
+                    // only living entities are valid targets
+                    if (!toCheck.isInteractable()) continue;
+                    if (this.shooter != null && this.shooter == toCheck) continue;
+                    // if the target is unreachable
+                    if (!blockHitAction.equals("thru")) {
+                        Vec3D traceEnd = toCheck.d();
+                        MovingObjectPosition blockHitPos = HitEntityInfo.rayTraceBlocks(
+                                this.world, initialLoc, traceEnd);
+                        if (blockHitPos != null) continue;
+                    }
+                    double currInterest = getHomingInterest(toCheck);
+                    if (currInterest > maxInterest) {
+                        maxInterest = currInterest;
+                        homingTarget = toCheck;
+                    }
+                }
+            }
+        }
+    }
+    // changes direction by homing
+    protected void homingTick(Vector velocity) {
+        // the delta theta is not fixed
+        if (homingSharpTurning) {
+            Vector acceleration;
+            if (homingTarget instanceof EntityLiving)
+                acceleration = ((LivingEntity) homingTarget.getBukkitEntity()).getEyeLocation().subtract(this.locX, this.locY, this.locZ).toVector();
+            else
+                acceleration = homingTarget.getBukkitEntity().getLocation().subtract(this.locX, this.locY, this.locZ).toVector();
+
+            if (acceleration.lengthSquared() > 1e-5) {
+                // fixed homing efficiency
+                if (homingMethod == 2) {
+                    acceleration.multiply(homingAbility / acceleration.length());
+                }
+                // homing efficiency proportional to (projectile speed / distance)
+                else {
+                    acceleration.multiply(homingAbility * velocity.length() / acceleration.lengthSquared());
+                }
+            }
+
+            velocity.add(acceleration);
+
+            terraria.util.MathHelper.setVectorLength(velocity, speed, true);
+        }
+        // delta theta is constant
+        else {
+            Vector toTarget = homingTarget.getBukkitEntity().getLocation().toVector().subtract(getBukkitEntity().getLocation().toVector());
+            Vector targetDir = toTarget.normalize(); // Direction to target
+            Vector currDir = this.getBukkitEntity().getVelocity().normalize(); // Current direction (velocity)
+
+            double angle = Math.toDegrees(Math.acos(currDir.dot(targetDir))); // Angle in degrees
+
+            Vector newVelocity;
+            if (angle > homingAbility) {
+                // Calculate rotation axis and quaternion
+                Vector rotAxis = terraria.util.MathHelper.getNonZeroCrossProd(currDir, targetDir).normalize();
+                Quaternion rotation = new Quaternion(rotAxis, Math.toRadians( homingAbility ) );
+
+                // Rotate the velocity vector
+                newVelocity = rotation.interpolate(currDir);
+            }
+            else {
+                newVelocity = targetDir;
+            }
+            // update on velocity itself, do not override its reference.
+            velocity.zero().add(newVelocity).multiply(this.speed);
+        }
+
+        // if a target is valid when homing timeout, multiply the speed by the multiplier
+        if (ticksLived == maxHomingTicks) {
+            velocity.multiply(homingEndSpeedMultiplier);
+        }
+    }
+    // tries to collide with entities, and return the future location (if it is broken etc.)
+    protected Vec3D hitEntities(Vec3D futureLoc) {
+        // get list of entities that could get hit
+        Set<HitEntityInfo> hitCandidates = HitEntityInfo.getEntitiesHit(
+                this.world,
+                new Vec3D(locX, locY, locZ),
+                futureLoc,
+                this.projectileRadius,
+                this::checkCanHit);
+
+        // hit entities
+        if (projectileType.equals("光之舞闪光")) {
+            attrMap.put("damage", attrMap.getOrDefault("damage", 6666d) / hitCandidates.size());
+        }
+        for (HitEntityInfo toHit : hitCandidates) {
+            Entity hitEntity = toHit.getHitEntity();
+            MovingObjectPosition hitInfo = new MovingObjectPosition(hitEntity, toHit.getHitLocation().pos);
+            if (TerrariaProjectileHitEvent.callProjectileHitEvent(this, hitInfo).isCancelled()) continue;
+            Vec3D newLoc = hitEntity(hitEntity, hitInfo);
+            if (newLoc != null) futureLoc = newLoc;
+            // if the projectile reached its penetration capacity, stop damaging enemies
+            if (this.dead) break;
+        }
+        return futureLoc;
     }
 }

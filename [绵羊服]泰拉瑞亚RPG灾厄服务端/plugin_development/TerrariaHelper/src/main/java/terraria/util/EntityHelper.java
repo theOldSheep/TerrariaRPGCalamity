@@ -273,8 +273,9 @@ public class EntityHelper {
         PLAYER_VELOCITY_INTERNAL("plyVelItn"),
         PROJECTILE_BOUNCE_LEFT("bounce"),
         PROJECTILE_DESTROY_REASON("destroyReason"),
-        PROJECTILE_PENETRATION_LEFT("penetration"),
         PROJECTILE_ENTITIES_COLLIDED("collided"),
+        PROJECTILE_LAST_HIT_ENTITY("projLHE"),
+        PROJECTILE_PENETRATION_LEFT("penetration"),
         REGEN_TIME("regenTime"),
         RESPAWN_COUNTDOWN("respawnCD"),
         SPAWN_IN_EVENT("spawnEvent"),
@@ -2340,7 +2341,10 @@ public class EntityHelper {
 
         // damage/kill
         if (!(victim instanceof ArmorStand)) {
+            float soundVolume = 3f;
+            // register damage dealt; bosses have louder damage sound
             if (victimScoreboardTags.contains("isBOSS") && damageSource instanceof Player) {
+                soundVolume = 6f;
                 MetadataValue temp = getMetadata(damageTaker, MetadataName.BOSS_TARGET_MAP);
                 if (temp != null) {
                     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targets =
@@ -2377,7 +2381,7 @@ public class EntityHelper {
                     sound = "entity.generic.fallBig";
             }
             if (sound != null)
-                victim.getWorld().playSound(victim.getLocation(), sound, 3, 1);
+                victim.getWorld().playSound(victim.getLocation(), sound, soundVolume, 1);
             // knockback
             if (knockback > 0) {
                 Vector vec = victim.getLocation().subtract(damager.getLocation()).toVector();

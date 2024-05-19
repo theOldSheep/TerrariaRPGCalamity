@@ -243,6 +243,7 @@ terraria\entity\boss\moonLord\MoonLordTrueEyeOfCthulhu$1.class
 terraria\entity\projectile\TerrariaFlail.class
 terraria\entity\npc\TerrariaNPC.class
 terraria\entity\boss\eaterOfWorld\EaterOfWorld.class
+terraria\entity\boss\dragonFolly\DragonFolly.class
 terraria\entity\boss\thePlaguebringerGoliath\PlagueHomingMissile.class
 terraria\util\EntityHelper$WormSegmentMovementOptions.class
 terraria\util\GameplayHelper$1.class

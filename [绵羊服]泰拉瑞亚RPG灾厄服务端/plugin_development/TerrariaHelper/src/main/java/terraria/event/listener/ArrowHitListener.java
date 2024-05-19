@@ -212,11 +212,14 @@ public class ArrowHitListener implements Listener {
                 break;
             }
         }
+        spawnProjectileClusterBomb(projectile);
     }
 
-    public static void spawnProjectileClusterBomb(Projectile projectile, Entity entityHit) {
+    public static void spawnProjectileClusterBomb(Projectile projectile) {
         String projectileType = projectile.getName();
         ConfigurationSection projectileSection = TerrariaHelper.projectileConfig.getConfigurationSection(projectileType);
+        if (projectileSection == null)
+            return;
         ConfigurationSection clusterSection = projectileSection.getConfigurationSection("clusterBomb");
 
         int destroyReason = TerrariaPotionProjectile.DESTROY_TIME_OUT;
@@ -224,12 +227,17 @@ public class ArrowHitListener implements Listener {
         if (destroyReasonMetadata != null) destroyReason = destroyReasonMetadata.asInt();
 
         boolean shouldFire;
+        Entity entityHit = null;
         if (clusterSection == null)
             shouldFire = false;
         else if (destroyReason == TerrariaPotionProjectile.DESTROY_HIT_BLOCK)
             shouldFire = clusterSection.getBoolean("fireOnHitBlock", true);
-        else if (destroyReason == TerrariaPotionProjectile.DESTROY_HIT_ENTITY)
+        else if (destroyReason == TerrariaPotionProjectile.DESTROY_HIT_ENTITY) {
             shouldFire = clusterSection.getBoolean("fireOnHitEntity", true);
+            MetadataValue collidedVal = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.PROJECTILE_LAST_HIT_ENTITY);
+            if (collidedVal != null)
+                entityHit = (Entity) collidedVal.value();
+        }
         else
             shouldFire = clusterSection.getBoolean("fireOnTimeout", true);
         if (shouldFire) {

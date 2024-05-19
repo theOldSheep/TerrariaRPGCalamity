@@ -1471,10 +1471,6 @@ public class MonsterHelper {
                                     Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 1.5);
                                     EntityHelper.ProjectileShootInfo projInfo = new EntityHelper.ProjectileShootInfo(
                                             monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), EntityHelper.DamageType.MELEE, "圣骑士锤");
-                                    projInfo.properties.put("blockHitAction", "thru");
-                                    projInfo.properties.put("gravity", 0d);
-                                    projInfo.properties.put("penetration", 999);
-                                    projInfo.properties.put("liveTime", 24);
                                     EntityHelper.spawnProjectile(projInfo);
                                 }
                                 break;
