@@ -665,7 +665,7 @@ public class MinionSlime extends EntitySlime {
 
                     flightLoc = target.getLocation()
                             .add(0, 8, 0)
-                            .add( MathHelper.vectorFromYawPitch_quick(ownerNMS.yaw, 0).multiply(2) );
+                            .add( MathHelper.vectorFromYawPitch_approx(ownerNMS.yaw, 0).multiply(2) );
                     speed = 2.5;
                 }
                 // alternate between two phases below
@@ -674,7 +674,7 @@ public class MinionSlime extends EntitySlime {
                     if (index < 100) {
                         flightLoc = target.getEyeLocation()
                                 .add(0, 12, 0)
-                                .add( MathHelper.vectorFromYawPitch_quick(ownerNMS.yaw, 0).multiply(5) );
+                                .add( MathHelper.vectorFromYawPitch_approx(ownerNMS.yaw, 0).multiply(5) );
                         speed = 3;
 
                         // projectile
@@ -808,7 +808,7 @@ public class MinionSlime extends EntitySlime {
                         if (minionInList != minionBukkit)
                             radius = 10;
                         targetLoc = target.getEyeLocation().add(
-                                MathHelper.vectorFromYawPitch_quick(angle, 0).multiply(radius) );
+                                MathHelper.vectorFromYawPitch_approx(angle, 0).multiply(radius) );
                     }
                     else {
                         // predict enemy location
@@ -971,7 +971,7 @@ public class MinionSlime extends EntitySlime {
                     }
                     double angle = 360 * indexCurr / indexMax + firstMinion.getTicksLived() * 6;
                     Location targetLoc = target.getEyeLocation().add(
-                            MathHelper.vectorFromYawPitch_quick(angle, 0).multiply(10) );
+                            MathHelper.vectorFromYawPitch_approx(angle, 0).multiply(10) );
                     velocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), targetLoc, speed, true);
                 }
                 // if enemy is present, dash & fire projectile
@@ -1016,7 +1016,7 @@ public class MinionSlime extends EntitySlime {
                     index = -1;
 
                     targetLoc = target.getLocation().subtract(
-                            MathHelper.vectorFromYawPitch_quick(ownerNMS.yaw, 0).multiply(2) );
+                            MathHelper.vectorFromYawPitch_approx(ownerNMS.yaw, 0).multiply(2) );
                 }
                 // if target is present
                 else {
@@ -1057,7 +1057,7 @@ public class MinionSlime extends EntitySlime {
                         }
                         // spin around the vortex
                         targetLoc = ((Location) extraVariables.get("c")).clone().add(
-                                MathHelper.vectorFromYawPitch_quick(ticksLived * 12, 0).multiply(12.5) );
+                                MathHelper.vectorFromYawPitch_approx(ticksLived * 12, 0).multiply(12.5) );
                     }
                 }
                 if (targetLoc != null)
@@ -1447,7 +1447,7 @@ public class MinionSlime extends EntitySlime {
             }
             case "血炎骨龙": {
                 Location targetLoc = target.getEyeLocation().add(0, 3, 0);
-                targetLoc.add( MathHelper.vectorFromYawPitch_quick(ticksLived * 9, 0).multiply(5) );
+                targetLoc.add( MathHelper.vectorFromYawPitch_approx(ticksLived * 9, 0).multiply(5) );
                 velocity = MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, 3, true);
                 // fire projectile
                 if (! targetIsOwner) {
@@ -1632,7 +1632,7 @@ public class MinionSlime extends EntitySlime {
                     }
                     // setup target location
                     Location targetLoc = target.getLocation().add(0, 1, 0);
-                    Vector locOffset = MathHelper.vectorFromYawPitch_quick(indexCurr * 360d / indexMax, 0);
+                    Vector locOffset = MathHelper.vectorFromYawPitch_approx(indexCurr * 360d / indexMax, 0);
                     locOffset.multiply(targetIsOwner ? 3 : 5);
                     targetLoc.add(locOffset);
                     // velocity
@@ -1731,7 +1731,7 @@ public class MinionSlime extends EntitySlime {
                     // get the location for this minion
                     Location targetLoc = target.getEyeLocation();
                     EntityLiving targetNMS = ((CraftLivingEntity) target).getHandle();
-                    Vector offset = MathHelper.vectorFromYawPitch_quick(targetNMS.yaw + 180, 0);
+                    Vector offset = MathHelper.vectorFromYawPitch_approx(targetNMS.yaw + 180, 0);
                     offset.multiply(indexCurr + 1);
                     targetLoc.add(offset);
                     // set velocity
@@ -2047,7 +2047,7 @@ public class MinionSlime extends EntitySlime {
                     index = -10;
                     // fly around the player
                     Location flightTargetLoc = owner.getLocation().add(0, 6, 0);
-                    Vector locRotationOffset = MathHelper.vectorFromYawPitch_quick(ticksLived * 6, 0)
+                    Vector locRotationOffset = MathHelper.vectorFromYawPitch_approx(ticksLived * 6, 0)
                             .multiply(minionType.equals("白色天龙") ? 6 : -6);
                     flightTargetLoc.add(locRotationOffset);
                     velocity = MathHelper.getDirection(bukkitEntity.getLocation(), flightTargetLoc, 3, true);
@@ -2082,7 +2082,7 @@ public class MinionSlime extends EntitySlime {
                 ArrayList<LivingEntity> allSegments = (ArrayList<LivingEntity>) extraVariables.get("s");
                 // tweak speed, circle around the target
                 Location targetLoc = target.getEyeLocation()
-                        .add(0, 8, 0).add( MathHelper.vectorFromYawPitch_quick(ticksLived * 6, 0).multiply(12) );
+                        .add(0, 8, 0).add( MathHelper.vectorFromYawPitch_approx(ticksLived * 6, 0).multiply(12) );
                 velocity = MathHelper.getDirection( minionBukkit.getEyeLocation(), targetLoc, 3, true);
                 // projectile
                 int fireIdx = allSegments.size() - 1 - (index % 30);
@@ -2122,7 +2122,7 @@ public class MinionSlime extends EntitySlime {
                     }
                     // setup target location
                     Location targetLoc = owner.getLocation().add(0, 1, 0);
-                    Vector locOffset = MathHelper.vectorFromYawPitch_quick(
+                    Vector locOffset = MathHelper.vectorFromYawPitch_approx(
                             firstMinion.getTicksLived() * 4 + indexCurr * 360d / indexMax, 0);
                     locOffset.multiply(4.5);
                     targetLoc.add(locOffset);
@@ -2158,7 +2158,7 @@ public class MinionSlime extends EntitySlime {
                     }
                     velocity = new Vector();
                     Location targetLoc = owner.getLocation().add(0, 1, 0);
-                    Vector locOffset = MathHelper.vectorFromYawPitch_quick(
+                    Vector locOffset = MathHelper.vectorFromYawPitch_approx(
                             firstMinion.getTicksLived() * 6 + indexCurr * 360d / indexMax, 0);
                     locOffset.multiply(3);
                     targetLoc.add(locOffset);
@@ -2244,7 +2244,7 @@ public class MinionSlime extends EntitySlime {
                     dYaw = newDeltaDir[0];
                     dPitch = newDeltaDir[1];
                     // every prism should move periodically according to the first prism.
-                    Vector dPos = MathHelper.vectorFromYawPitch_quick(targetYaw, targetPitch);
+                    Vector dPos = MathHelper.vectorFromYawPitch_approx(targetYaw, targetPitch);
                     Location targetLoc = owner.getLocation().add(dPos.multiply(
                             idleIndex / 3 + 1.5 ));
                     velocity = targetLoc.subtract(minionBukkit.getLocation()).toVector();
@@ -2416,7 +2416,7 @@ public class MinionSlime extends EntitySlime {
                         owner.getLocation().add(0, 6 + 2 * MathHelper.xsin_degree(index * 5), 0));
                 // attack
                 if (!targetIsOwner && index % 10 == 0) {
-                    Vector shootDir = MathHelper.vectorFromYawPitch_quick(index * 4.5, 0);
+                    Vector shootDir = MathHelper.vectorFromYawPitch_approx(index * 4.5, 0);
                     shootDir.multiply(1.25);
                     EntityHelper.spawnProjectile(minionBukkit, shootDir,
                             attrMap, "冰钉");
@@ -2431,7 +2431,7 @@ public class MinionSlime extends EntitySlime {
                 if (!targetIsOwner && index % 20 == 0) {
                     double shootYaw = Math.random() * 360;
                     for (int i = 0; i < 3; i ++) {
-                        Vector shootDir = MathHelper.vectorFromYawPitch_quick(shootYaw, 0);
+                        Vector shootDir = MathHelper.vectorFromYawPitch_approx(shootYaw, 0);
                         shootDir.multiply(1.5);
                         EntityHelper.spawnProjectile(minionBukkit, shootDir,
                                 attrMap, "追踪花球");
@@ -2542,7 +2542,7 @@ public class MinionSlime extends EntitySlime {
                 if (!targetIsOwner && index % 20 == 0) {
                     double shootYaw = Math.random() * 360;
                     for (int i = 0; i < 4; i ++) {
-                        Vector shootDir = MathHelper.vectorFromYawPitch_quick(shootYaw, 0);
+                        Vector shootDir = MathHelper.vectorFromYawPitch_approx(shootYaw, 0);
                         shootDir.multiply(1.5);
                         EntityHelper.spawnProjectile(minionBukkit, shootDir,
                                 attrMap, "瘟疫矢");
@@ -2559,7 +2559,7 @@ public class MinionSlime extends EntitySlime {
                 if (!targetIsOwner && index % 15 == 0) {
                     double shootYaw = Math.random() * 360;
                     for (int i = 0; i < 5; i ++) {
-                        Vector shootDir = MathHelper.vectorFromYawPitch_quick(shootYaw, 0);
+                        Vector shootDir = MathHelper.vectorFromYawPitch_approx(shootYaw, 0);
                         shootDir.multiply(1.75);
                         EntityHelper.spawnProjectile(minionBukkit, shootDir,
                                 attrMap, "告死之花弹幕");
@@ -2575,7 +2575,7 @@ public class MinionSlime extends EntitySlime {
                 if (!targetIsOwner && index % 20 == 0) {
                     double shootYaw = Math.random() * 360;
                     for (int i = 0; i < 3; i ++) {
-                        Vector shootDir = MathHelper.vectorFromYawPitch_quick(shootYaw, 0);
+                        Vector shootDir = MathHelper.vectorFromYawPitch_approx(shootYaw, 0);
                         shootDir.multiply(2.25);
                         EntityHelper.spawnProjectile(minionBukkit, shootDir,
                                 attrMap, "星律辐射溶解球");
@@ -2590,7 +2590,7 @@ public class MinionSlime extends EntitySlime {
                 velocity = MathHelper.getDirection(minionBukkit.getLocation(), targetLoc, 2.5, true);
                 // attack
                 if (!targetIsOwner && index % 2 == 0) {
-                    Vector projVel = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, -70 - Math.random() * 20);
+                    Vector projVel = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, -70 - Math.random() * 20);
                     Location fireLoc = target.getEyeLocation().subtract( projVel.clone().multiply(32) );
                     String projType;
                     switch ((int) (Math.random() * 3)) {
@@ -2611,7 +2611,7 @@ public class MinionSlime extends EntitySlime {
             case "阿瑞斯外骨骼": {
                 // teleport to the owner's back; the two locations below are on the lower center.
                 Location surfaceLoc, centerLoc;
-                Vector exoSkeletonOffsetDir = MathHelper.vectorFromYawPitch_quick(ownerNMS.yaw + 180, 0);
+                Vector exoSkeletonOffsetDir = MathHelper.vectorFromYawPitch_approx(ownerNMS.yaw + 180, 0);
                 surfaceLoc = owner.getLocation().add(exoSkeletonOffsetDir.clone().multiply(4.5));
                 centerLoc = surfaceLoc.clone().add( exoSkeletonOffsetDir.clone().multiply(3) ).add(0, -2, 0);
                 MinionHelper.attemptTeleport(minionBukkit, centerLoc);
@@ -2619,7 +2619,7 @@ public class MinionSlime extends EntitySlime {
                 yaw = ownerNMS.yaw;
                 // attack
                 if (!targetIsOwner) {
-                    Vector fireLocUnitOffset = MathHelper.vectorFromYawPitch_quick(ownerNMS.yaw + 90, 0);
+                    Vector fireLocUnitOffset = MathHelper.vectorFromYawPitch_approx(ownerNMS.yaw + 90, 0);
                     ArrayList<Short> weaponConfig = PlayerHelper.getAresExoskeletonConfig(owner);
                     // loop through all 4 weapons
                     // 0    1
@@ -2956,7 +2956,7 @@ public class MinionSlime extends EntitySlime {
                     Vector projVel = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 1);
                     double projVelPitch = MathHelper.getVectorPitch(projVel), minPitch = -45;
                     if (projVelPitch > minPitch)
-                        projVel = MathHelper.vectorFromYawPitch_quick(MathHelper.getVectorYaw(projVel), minPitch);
+                        projVel = MathHelper.vectorFromYawPitch_approx(MathHelper.getVectorYaw(projVel), minPitch);
                     projVel.multiply(1.25);
 
                     EntityHelper.spawnProjectile(minionBukkit, projVel, attrMap, "干缩硫海龙鲨");

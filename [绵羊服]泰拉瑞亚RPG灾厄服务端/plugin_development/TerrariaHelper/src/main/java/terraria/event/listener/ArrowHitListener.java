@@ -285,14 +285,14 @@ public class ArrowHitListener implements Listener {
                             double velPitch = Math.random() * clusterSection.getDouble("surroundMaxPitch", 30d);
                             if (Math.random() < 0.5) velPitch *= -1;
                             double offsetLen = clusterSection.getDouble("surroundOffset", 10d);
-                            Vector offset = MathHelper.vectorFromYawPitch_quick(velYaw, velPitch).multiply(offsetLen);
+                            Vector offset = MathHelper.vectorFromYawPitch_approx(velYaw, velPitch).multiply(offsetLen);
                             spawnLoc = projectileDestroyLoc.clone().add(offset);
                             // velocity is calculated outside the switch block
                             aimEnemy = true;
                             break;
                         }
                         default:
-                            velocity = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, Math.random() * 360);
+                            velocity = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, Math.random() * 360);
                             spawnLoc = projectileDestroyLoc;
                     }
                     // aim enemy if needed

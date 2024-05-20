@@ -1,14 +1,11 @@
 package terraria.entity.boss.calamitasClone;
 
-import eos.moe.dragoncore.DragonCore;
-import eos.moe.dragoncore.api.CoreAPI;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPolarBear;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -449,10 +446,10 @@ public class CalamitasClone extends EntitySlime {
                 bulletHellViewYaw -= 360;
             bulletHellViewPitch = 0;
 
-            bullet_hell_dir1 = MathHelper.vectorFromYawPitch_quick(angleDir1, 0);
+            bullet_hell_dir1 = MathHelper.vectorFromYawPitch_approx(angleDir1, 0);
             bullet_hell_dir2 = new Vector(0, 1, 0);
 
-            bullet_hell_orth_dir = MathHelper.vectorFromYawPitch_quick(bulletHellViewYaw, bulletHellViewPitch);
+            bullet_hell_orth_dir = MathHelper.vectorFromYawPitch_approx(bulletHellViewYaw, bulletHellViewPitch);
             bullet_hell_orth_dir.multiply(DISPLAY_OFFSET);
         }
         // dummy player

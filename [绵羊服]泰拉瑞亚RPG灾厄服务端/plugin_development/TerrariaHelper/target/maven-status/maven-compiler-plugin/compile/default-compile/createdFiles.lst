@@ -46,6 +46,7 @@ terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu$1.class
 terraria\util\DragoncoreHelper.class
 terraria\util\GenericHelper$ParticleLineOptions.class
 terraria\entity\boss\moonLord\MoonLordTrueEyeOfCthulhu$EyeAttackMethod.class
+terraria\entity\boss\providence\Providence.class
 terraria\entity\minion\MinionSlime.class
 terraria\worldgen\overworld\StructureInfo$StructureOperation.class
 terraria\entity\boss\thePlaguebringerGoliath\ThePlaguebringerGoliath$1.class

@@ -1,12 +1,10 @@
 package terraria.entity.minion;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.entity.CaveSpider;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.LivingEntity;
@@ -195,7 +193,7 @@ public class MinionHusk extends EntityZombieHusk {
                     // get the location for this minion
                     Location targetLoc = target.getEyeLocation();
                     EntityPlayer plyNMS = ((CraftPlayer) owner).getHandle();
-                    Vector offset = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw + 180, 0);
+                    Vector offset = MathHelper.vectorFromYawPitch_approx(plyNMS.yaw + 180, 0);
                     offset.multiply(indexCurr + 1);
                     targetLoc.add(offset);
                     // set velocity
@@ -347,7 +345,7 @@ public class MinionHusk extends EntityZombieHusk {
                             // 15 * 4
                             horizontalOffsetMulti = 0.75 + (subIdx - 35) / 60d;
                         Vector offset = target.getLocation().subtract(owner.getLocation()).toVector();
-                        offset = MathHelper.vectorFromYawPitch_quick( MathHelper.getVectorYaw(offset) + 90, 0 );
+                        offset = MathHelper.vectorFromYawPitch_approx( MathHelper.getVectorYaw(offset) + 90, 0 );
                         Location targetLoc = target.getEyeLocation().add( offset.multiply( horizontalOffsetMulti * 10 ) );
 
                         velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();

@@ -216,7 +216,7 @@ public class TerrariaMount extends EntitySlime {
         {
             double plyHorMoveDir = PlayerHelper.getPlayerMoveYaw(owner);
             if (plyHorMoveDir < 1e5) {
-                Vector horMoveDir = MathHelper.vectorFromYawPitch_quick(plyHorMoveDir, 0);
+                Vector horMoveDir = MathHelper.vectorFromYawPitch_approx(plyHorMoveDir, 0);
                 horMoveDir.multiply(horAcc);
                 finalHorComp.add(horMoveDir);
             }

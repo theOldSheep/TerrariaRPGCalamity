@@ -1,7 +1,6 @@
 package terraria.entity.boss.moonLord;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -89,7 +88,7 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
         owner.bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
     }
     private void teleportToLocation() {
-        Vector offset = MathHelper.vectorFromYawPitch_quick(angleOffset + (owner.ticksLived * 0.5), 0);
+        Vector offset = MathHelper.vectorFromYawPitch_approx(angleOffset + (owner.ticksLived * 0.5), 0);
         offset.multiply(24);
         offset.setY(8);
         Location teleportLoc = target.getLocation().add(offset);

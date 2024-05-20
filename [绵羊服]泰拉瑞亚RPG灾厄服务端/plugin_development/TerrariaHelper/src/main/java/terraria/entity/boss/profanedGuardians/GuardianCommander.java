@@ -24,7 +24,7 @@ public class GuardianCommander extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.PROFANED_GUARDIANS;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.HALLOW;
-    public static final double BASIC_HEALTH = 288000 * 2;
+    public static final double BASIC_HEALTH = 288000 * 2, HEALTH_MULTI_PROVIDENCE_ALIVE = 0.35;
     public static final boolean IGNORE_DISTANCE = false;
     public static final String DISPLAY_NAME = BOSS_TYPE.msgName + "·统御";
     HashMap<String, Double> attrMap;
@@ -44,13 +44,13 @@ public class GuardianCommander extends EntitySlime {
     private boolean defenderAlive = true;
     // In ticks
     private static final int
-            PHASE_SWITCH_INTERVAL = 120,
-            DASH_INTERVAL = 30, DASH_SLOWDOWN_BEGIN = DASH_INTERVAL - 10,
-            SHOOT_INTERVAL_DEFENDER_ALIVE = 40, SHOOT_INTERVAL_DEFENDER_DEAD = 15;
+            PHASE_SWITCH_INTERVAL = 90,
+            DASH_INTERVAL = 30, DASH_SLOWDOWN_BEGIN = DASH_INTERVAL - 12,
+            SHOOT_INTERVAL_DEFENDER_ALIVE = 25, SHOOT_INTERVAL_DEFENDER_DEAD = 10;
     // in Blocks/tick
     private static final double
             VERTICAL_ALIGN_ACCELERATION = 0.35, HORIZONTAL_ADJUST_ACCELERATION = 0.5,
-            DASH_SPEED = 3.0, MAX_SPEED_FOLLOW = 1.5, DASH_SLOWDOWN_FACTOR = 0.95,
+            DASH_SPEED = 3.0, MAX_SPEED_FOLLOW = 1.5, DASH_SLOWDOWN_FACTOR = 0.925,
             PROJECTILE_SPEED = 1.2;
     private EntityHelper.AimHelperOptions aimHelperOptionProjectile, aimHelperOptionDash;
     private Vector velocity = new Vector();
@@ -166,8 +166,12 @@ public class GuardianCommander extends EntitySlime {
         super.die();
     }
     // validate if the condition for spawning is met
+    static boolean providenceAlive() {
+        return BossHelper.bossMap.containsKey(BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS.msgName);
+    }
+    // Do not spawn when providence is present
     public static boolean canSpawn(Player player) {
-        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED && WorldHelper.isDayTime(player.getWorld());
+        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED && WorldHelper.isDayTime(player.getWorld()) && !providenceAlive();
     }
     // a constructor for actual spawning
     public GuardianCommander(Player summonedPlayer) {
@@ -188,6 +192,8 @@ public class GuardianCommander extends EntitySlime {
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
+
+        boolean providenceAlive = providenceAlive();
         // init attribute map
         {
             attrMap = new HashMap<>();
@@ -207,7 +213,8 @@ public class GuardianCommander extends EntitySlime {
         // init target map
         {
             targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
-                    getBukkitEntity(), BossHelper.BossType.MOON_LORD.msgName, summonedPlayer, true, bossbar);
+                    getBukkitEntity(), BossHelper.BossType.MOON_LORD.msgName, summonedPlayer,
+                    true, !providenceAlive, bossbar);
             target = summonedPlayer;
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
@@ -215,6 +222,8 @@ public class GuardianCommander extends EntitySlime {
         {
             setSize(12, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
+            if (providenceAlive)
+                healthMulti *= HEALTH_MULTI_PROVIDENCE_ALIVE;
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
@@ -223,7 +232,8 @@ public class GuardianCommander extends EntitySlime {
         {
             bossParts = new ArrayList<>();
             bossParts.add((LivingEntity) bukkitEntity);
-            BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
+            if (! providenceAlive)
+                BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;
@@ -256,7 +266,8 @@ public class GuardianCommander extends EntitySlime {
             terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
 
             // send loot
-            terraria.entity.boss.BossHelper.handleBossDeath(BOSS_TYPE, bossParts, targetMap);
+            if (! providenceAlive())
+                terraria.entity.boss.BossHelper.handleBossDeath(BOSS_TYPE, bossParts, targetMap);
         }
     }
     // rewrite AI

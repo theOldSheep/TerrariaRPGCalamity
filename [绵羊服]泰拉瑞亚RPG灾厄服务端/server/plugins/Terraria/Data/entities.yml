@@ -692,9 +692,13 @@
     buffImmute:
         - "中毒"
         - "幻星感染"
+痴愚金龙:
+    buffInflict:
+        - "带电|80|1"
+    buffImmute:
+        - "带电"
 亵渎守卫·统御:
     soundDamaged: entity.hit.pixie
-    soundKilled: entity.hit.pixie
     buffInflict:
         - "神圣之火|70|1"
     buffImmute:
@@ -724,9 +728,15 @@
         - "狱炎"
 亵渎岩:
     soundDamaged: entity.hit.rock
-    soundKilled: entity.hit.rock
     buffInflict:
         - "神圣之火|40|1"
+    buffImmute:
+        - "神圣之火"
+        - "夜魇"
+        - "燃烧"
+        - "狱炎"
+亵渎天神，普罗维登斯:
+    soundDamaged: entity.hit.crystal
     buffImmute:
         - "神圣之火"
         - "夜魇"

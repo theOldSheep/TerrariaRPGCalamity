@@ -10,7 +10,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.leviathanAndAnahita.Leviathan;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
@@ -58,7 +57,7 @@ public class AstrumAureus extends EntitySlime {
         for (int i = 0; i < 2; i ++)
             new AureusSpawn(target, this);
         // teleport
-        Vector offset = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, 0);
+        Vector offset = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, 0);
         offset.multiply(40);
         Location teleportLoc = target.getLocation().add(offset);
         teleportLoc.setY(teleportLoc.getWorld().getHighestBlockYAt(teleportLoc));
@@ -130,7 +129,7 @@ public class AstrumAureus extends EntitySlime {
     }
     private void AIPhaseRecharge() {
         if (indexAI < 50 && indexAI % 4 == 0) {
-            Vector shootDir = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, -75 - Math.random() * 15);
+            Vector shootDir = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, -75 - Math.random() * 15);
             shootDir.multiply(SPEED_CRYSTAL);
             shootInfoCrystal.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             shootInfoCrystal.velocity = shootDir;

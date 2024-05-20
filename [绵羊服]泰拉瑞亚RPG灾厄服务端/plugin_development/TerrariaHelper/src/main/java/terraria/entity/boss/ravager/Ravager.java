@@ -84,8 +84,8 @@ public class Ravager extends EntitySlime {
         Location predictedTargetLoc = EntityHelper.helperAimEntity(getBukkitEntity(), target, spawnAimHelper);
         Vector offset = predictedTargetLoc.subtract(currTargetLoc).toVector();
         double spawnYaw = MathHelper.getVectorYaw(offset);
-        Vector offset1 = MathHelper.vectorFromYawPitch_quick(spawnYaw, 0);
-        Vector offset2 = MathHelper.vectorFromYawPitch_quick(spawnYaw + 90, 0);
+        Vector offset1 = MathHelper.vectorFromYawPitch_approx(spawnYaw, 0);
+        Vector offset2 = MathHelper.vectorFromYawPitch_approx(spawnYaw + 90, 0);
         offset1.multiply(PILLAR_OFFSET);
         offset2.multiply(PILLAR_OFFSET);
         new RavagerRockPillar(this, target.getLocation().add(offset1));

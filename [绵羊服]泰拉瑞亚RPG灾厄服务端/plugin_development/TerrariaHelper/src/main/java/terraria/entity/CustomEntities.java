@@ -49,6 +49,7 @@ import terraria.entity.boss.profanedGuardians.GuardianAttacker;
 import terraria.entity.boss.profanedGuardians.GuardianCommander;
 import terraria.entity.boss.profanedGuardians.GuardianDefender;
 import terraria.entity.boss.profanedGuardians.GuardianRock;
+import terraria.entity.boss.providence.Providence;
 import terraria.entity.boss.ravager.*;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHand;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
@@ -148,6 +149,7 @@ public enum CustomEntities {
     BOSS_PFG_COMMANDER      ("GuardianCommander",      55,  EntityType.SLIME,           EntitySlime.class,           GuardianCommander.class),
     BOSS_PFG_DEFENDER       ("GuardianDefender",       55,  EntityType.SLIME,           EntitySlime.class,           GuardianDefender.class),
     BOSS_PFG_ROCK           ("GuardianRock",           55,  EntityType.SLIME,           EntitySlime.class,           GuardianRock.class),
+    BOSS_PROVIDENCE         ("Providence",             55,  EntityType.SLIME,           EntitySlime.class,           Providence.class),
     BOSS_PUMPKING_HEAD      ("PumpkingHead",           55,  EntityType.SLIME,           EntitySlime.class,           PumpkingHead.class),
     BOSS_PUMPKING_HAND      ("PumpkingHand",           55,  EntityType.SLIME,           EntitySlime.class,           PumpkingHand.class),
     BOSS_PUMPKING_SCYTHE    ("PumpkingScythe",         55,  EntityType.SLIME,           EntitySlime.class,           PumpkingScythe.class),

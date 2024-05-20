@@ -1427,7 +1427,7 @@ public class PlayerHelper {
                 double horizontalMoveYaw = getPlayerMoveYaw(ply);
                 if (horizontalMoveYaw < 1e5) {
                     movingHor = true;
-                    moveDir.add(MathHelper.vectorFromYawPitch_quick(horizontalMoveYaw, 0).multiply(horizontalSpeed));
+                    moveDir.add(MathHelper.vectorFromYawPitch_approx(horizontalMoveYaw, 0).multiply(horizontalSpeed));
                 }
                 // thrust tick and misc mechanism
                 if (isThrusting) {
@@ -2525,7 +2525,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         EntityPlayer nms_ply = ((CraftPlayer) ply).getHandle();
         double yaw = nms_ply.yaw,
                 pitch = nms_ply.pitch;
-        Vector velocity = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
+        Vector velocity = MathHelper.vectorFromYawPitch_approx(yaw, pitch);
         velocity.multiply(hookSpeed);
         Entity hookEntity = EntityHelper.spawnProjectile(ply, velocity, new HashMap<>(), "钩爪");
         // pre-set particle item
@@ -2881,7 +2881,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                 speedMulti = 1 + (speedMulti - 1) * 0.25;
             dashSpeed *= attrMap.getOrDefault("speedMulti", 1d) * speedMulti;
 
-            Vector dashVelocity = MathHelper.vectorFromYawPitch_quick(yaw, pitch).multiply(dashSpeed);
+            Vector dashVelocity = MathHelper.vectorFromYawPitch_approx(yaw, pitch).multiply(dashSpeed);
             EntityHelper.setVelocity(ply, getPlayerRawVelocity(ply).add(dashVelocity));
             ply.addScoreboardTag("temp_dashCD");
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),

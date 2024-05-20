@@ -1384,7 +1384,7 @@ public class EntityHelper {
                                 double aimPitch = MathHelper.getVectorPitch(aimDir);
                                 // projectiles
                                 for (int i = 0; i < 3; i++) {
-                                    Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                    Vector projVel = MathHelper.vectorFromYawPitch_approx(
                                             aimYaw + Math.random() * 10 - 5, aimPitch + Math.random() * 10 - 5);
                                     projVel.multiply(projSpd);
                                     EntityHelper.spawnProjectile(dPly, projVel,
@@ -2361,6 +2361,7 @@ public class EntityHelper {
                 handleDeath(damageTaker, damageSource, damager, damageType, debuffType);
                 if (victimScoreboardTags.contains("isMechanic")) sound = "entity.generic.explode";
                 else sound = "entity." + damageTaker.getType() + ".death";
+                sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundDamaged", sound);
                 sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundKilled", sound);
             }
             // hurts the target

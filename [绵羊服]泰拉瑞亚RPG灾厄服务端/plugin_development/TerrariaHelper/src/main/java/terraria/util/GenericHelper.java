@@ -1,10 +1,11 @@
 package terraria.util;
 
 import eos.moe.dragoncore.api.CoreAPI;
-import net.minecraft.server.v1_12_R1.MovingObjectPosition;
+import net.minecraft.server.v1_12_R1.*;
 import org.apache.logging.log4j.util.BiConsumer;
 import org.apache.logging.log4j.util.TriConsumer;
 import org.bukkit.*;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -566,7 +567,7 @@ public class GenericHelper {
         }
         // find terminal location ( hit block etc. )
         World wld = startLoc.getWorld();
-        Vector direction = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
+        Vector direction = MathHelper.vectorFromYawPitch_approx(yaw, pitch);
         direction.multiply(length);
         Location terminalLoc = startLoc.clone().add(direction);
         // if the projectile does not go through wall or have a block hit action, find possible collision
@@ -678,7 +679,7 @@ public class GenericHelper {
         // initialize the intermediate points
         int size = (int) Math.max(1, Math.round(length / stepSize)) + 1;
         Location[] locations = new Location[size];
-        Vector dVec = MathHelper.vectorFromYawPitch_quick(yaw, pitch).multiply(length / (size - 1));
+        Vector dVec = MathHelper.vectorFromYawPitch_approx(yaw, pitch).multiply(length / (size - 1));
         for (int i = 0; i < size; i ++) {
             Location currLoc = startLoc.clone().add(dVec.clone().multiply(i));
             // start location and terminal location must be kept intact.

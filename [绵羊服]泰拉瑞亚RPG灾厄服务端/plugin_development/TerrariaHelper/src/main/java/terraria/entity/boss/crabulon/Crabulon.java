@@ -1,7 +1,6 @@
 package terraria.entity.boss.crabulon;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -11,7 +10,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import terraria.util.MathHelper;
 import terraria.util.*;
@@ -57,14 +55,14 @@ public class Crabulon extends EntitySlime {
         // shoot spores
         double yaw = MathHelper.getVectorYaw(target.getLocation().subtract(psiSpore.shootLoc).toVector());
         for (int i = 0; i < 30; i ++) {
-            Vector velocity = MathHelper.vectorFromYawPitch_quick(yaw + (Math.random() * 90 - 45), -90 + Math.random() * 60);
+            Vector velocity = MathHelper.vectorFromYawPitch_approx(yaw + (Math.random() * 90 - 45), -90 + Math.random() * 60);
             velocity.multiply(1.25 + Math.random());
             psiSpore.velocity = velocity;
             EntityHelper.spawnProjectile(psiSpore);
         }
         // shoot shrooms
         for (int i = 0; i < 15; i ++) {
-            Vector velocity = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, -90 + Math.random() * 30);
+            Vector velocity = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, -90 + Math.random() * 30);
             velocity.multiply(1 + Math.random());
             psiShroom.velocity = velocity;
             shrooms.add( EntityHelper.spawnProjectile(psiShroom) );

@@ -12,7 +12,6 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
@@ -1677,7 +1676,7 @@ public class MonsterHelper {
                         }
                         // roam above target
                         else {
-                            Vector offsetDir = MathHelper.vectorFromYawPitch_quick(indexAI * 2.75, 0);
+                            Vector offsetDir = MathHelper.vectorFromYawPitch_approx(indexAI * 2.75, 0);
                             offsetDir.multiply(25);
                             offsetDir.setY(16);
                             targetLoc = target.getLocation().add(offsetDir);
@@ -1859,7 +1858,7 @@ public class MonsterHelper {
                     if (monster.getHealth() > 0) {
                         // fly around the player
                         {
-                            Vector offsetDir = MathHelper.vectorFromYawPitch_quick(indexAI, 0);
+                            Vector offsetDir = MathHelper.vectorFromYawPitch_approx(indexAI, 0);
                             offsetDir.multiply(16);
                             offsetDir.setY(MathHelper.xsin_degree(indexAI + 90) * 4 + 12);
                             Location targetLoc = target.getLocation().add(offsetDir);
@@ -2126,7 +2125,7 @@ public class MonsterHelper {
                     if (monster.getHealth() > 0) {
                         // velocity update
                         {
-                            Vector offsetDir = MathHelper.vectorFromYawPitch_quick(indexAI * 2, 0);
+                            Vector offsetDir = MathHelper.vectorFromYawPitch_approx(indexAI * 2, 0);
                             offsetDir.multiply(12);
                             offsetDir.setY(8);
                             Location targetLoc = target.getEyeLocation().add(offsetDir);
@@ -2140,7 +2139,7 @@ public class MonsterHelper {
                         }
                         // display projectiles
                         for (int i = 0; i < amountProjectile; i ++) {
-                            Vector offsetDir = MathHelper.vectorFromYawPitch_quick(
+                            Vector offsetDir = MathHelper.vectorFromYawPitch_approx(
                                     indexAI + i * 360d / amountProjectile, 0);
                             offsetDir.multiply(2.5);
                             offsetDir.setY(1.25);

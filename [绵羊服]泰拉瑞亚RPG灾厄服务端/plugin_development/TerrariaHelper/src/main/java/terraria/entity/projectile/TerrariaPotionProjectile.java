@@ -1089,9 +1089,9 @@ public class TerrariaPotionProjectile extends EntityPotion {
         // extra ticking
         extraTicking();
 
-        // prevents client glitch
-        this.positionChanged = true;
-        this.velocityChanged = true;
+//        // prevents client glitch
+//        this.positionChanged = true;
+//        this.velocityChanged = true;
         this.impulse = true;
 
         // time out removal

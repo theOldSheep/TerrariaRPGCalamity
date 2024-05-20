@@ -3,14 +3,10 @@ package terraria.entity.boss.dukeFishron;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.projectile.HitEntityInfo;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
@@ -45,7 +41,7 @@ public class Sharknado extends EntitySlime {
         {
             if (base != null) {
                 angle += 18;
-                Vector offsetDir = MathHelper.vectorFromYawPitch_quick(angle, 0);
+                Vector offsetDir = MathHelper.vectorFromYawPitch_approx(angle, 0);
                 offsetDir.multiply(horizontalOffset);
                 offsetDir.setY(verticalOffset);
                 // go to new location

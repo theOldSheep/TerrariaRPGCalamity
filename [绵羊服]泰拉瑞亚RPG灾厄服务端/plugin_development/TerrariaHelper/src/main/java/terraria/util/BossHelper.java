@@ -24,6 +24,7 @@ import terraria.entity.boss.lunaticCultist.LunaticCultist;
 import terraria.entity.boss.moonLord.MoonLord;
 import terraria.entity.boss.plantera.Plantera;
 import terraria.entity.boss.profanedGuardians.GuardianCommander;
+import terraria.entity.boss.providence.Providence;
 import terraria.entity.boss.ravager.Ravager;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
 import terraria.entity.boss.theDestroyer.Destroyer;
@@ -308,6 +309,13 @@ public class BossHelper {
             case PROFANED_GUARDIANS: {
                 if (GuardianCommander.canSpawn(target)) {
                     new GuardianCommander(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case PROVIDENCE_THE_PROFANED_GODDESS: {
+                if (Providence.canSpawn(target)) {
+                    new Providence(target);
                     spawnedSuccessfully = true;
                 }
                 break;

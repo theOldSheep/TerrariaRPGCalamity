@@ -1,6 +1,5 @@
 package terraria.util;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,7 +18,7 @@ public class CritterHelper {
             case "MagmaSnail":
             case "GroundNight":
             case "Ground": {
-                Vector offsetDir = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, 0);
+                Vector offsetDir = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, 0);
                 offsetDir.multiply(16 + Math.random() * 8);
                 Location spawnLoc = ply.getLocation().add(0, Math.random() * 20 - 6, 0).add(offsetDir);
                 // move downwards until the location is above ground

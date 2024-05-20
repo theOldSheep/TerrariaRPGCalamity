@@ -35,7 +35,7 @@ public class PlayerTornado extends EntitySlime {
         {
             if (base != null) {
                 angle += rotationAngleOffsetPerLayer;
-                Vector offsetDir = MathHelper.vectorFromYawPitch_quick(angle, 0);
+                Vector offsetDir = MathHelper.vectorFromYawPitch_approx(angle, 0);
                 offsetDir.multiply(horizontalOffset);
                 offsetDir.setY(verticalOffset);
                 // go to new location

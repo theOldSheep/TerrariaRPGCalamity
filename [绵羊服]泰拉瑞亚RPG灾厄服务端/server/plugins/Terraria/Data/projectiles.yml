@@ -601,26 +601,25 @@
     homingRadius: 128
     homingSharpTurning: false
     homingAbility: 12
-    noHomingTicks: 15
-    maxHomingTicks: 80
-    homingEndSpeedMultiplier: 2
+    noHomingTicks: 40
+    maxHomingTicks: 100
+    homingEndSpeedMultiplier: 2.5
+    buffInflict:
+        - "带电|50|1"
 闪耀之弹:
     blockHitAction: thru
     projectileSize: 2
-    liveTime: 80
+    liveTime: 400
     gravity: 0
     penetration: 999999
     minimumDamageTicks: 5
-    homing: true
-    homingRadius: 96
-    homingSharpTurning: false
-    homingAbility: 5
+    speedMultiPerTick: 0.99
     spawnProjectiles:
         interval: 8
         offset: 1.0
         spawnMechanism: SURROUND
         damageMulti: 1
-        speed: 1.35
+        speed: 1
         spawnType: 神圣之火
     buffInflict:
         - "神圣之火|160|1"

@@ -202,6 +202,13 @@ effects:
     attributes:
       regenMulti: -1
     tooltip: 美妙的元素交响乐正在活剥你
+  圣狱神火:
+    isBuff: false
+    damageInterval: 5
+    damage: 10
+    attributes:
+      regenMulti: -1
+    tooltip: 你离亵渎天神太远了！
   硫磺海剧毒:
     isBuff: false
     damageInterval: 5

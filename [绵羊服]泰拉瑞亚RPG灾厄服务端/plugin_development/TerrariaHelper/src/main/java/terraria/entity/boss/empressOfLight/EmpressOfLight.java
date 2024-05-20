@@ -196,7 +196,7 @@ public class EmpressOfLight extends EntitySlime {
         {
             attackLoc = target.getLocation();
             double angle = Math.random() * 360;
-            Vector offset = MathHelper.vectorFromYawPitch_quick(angle, 0);
+            Vector offset = MathHelper.vectorFromYawPitch_approx(angle, 0);
             if (attackPhase == AttackPhase.CHARGE) {
                 offset.multiply(16);
             }
@@ -330,7 +330,7 @@ public class EmpressOfLight extends EntitySlime {
                             .setVanillaParticle(false)
                             .setWidth(width)
                             .setLength(length);
-                    GenericHelper.handleParticleLine(MathHelper.vectorFromYawPitch_quick(angleCurrentRay, 0),
+                    GenericHelper.handleParticleLine(MathHelper.vectorFromYawPitch_approx(angleCurrentRay, 0),
                             bukkitEntity.getLocation(), particleLineOptionsSunDance);
                 }
             }
@@ -347,7 +347,7 @@ public class EmpressOfLight extends EntitySlime {
         bukkitEntity.teleport(attackLoc);
         bukkitEntity.setVelocity(new Vector());
 
-        Vector offset = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, 0);
+        Vector offset = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, 0);
         offset.multiply(16);
         Location centerLoc = target.getEyeLocation().add(offset);
         for (int i = 0; i < 13; i ++) {
@@ -368,7 +368,7 @@ public class EmpressOfLight extends EntitySlime {
                 rangeIncrement = 0;
         }
         double nextRange = range + rangeIncrement;
-        Vector offsetDir = MathHelper.vectorFromYawPitch_quick(nextAngle, 0);
+        Vector offsetDir = MathHelper.vectorFromYawPitch_approx(nextAngle, 0);
         offsetDir.multiply(nextRange);
         Location nextLoc = centerLoc.clone().add(offsetDir);
         // handle lingering damage and particle

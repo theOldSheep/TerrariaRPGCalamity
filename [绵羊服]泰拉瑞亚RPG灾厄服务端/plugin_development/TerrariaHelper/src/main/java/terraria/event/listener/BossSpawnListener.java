@@ -46,6 +46,7 @@ public class BossSpawnListener implements Listener {
         // pre-providence
         summonItems.put("奇异信息素", BossHelper.BossType.THE_DRAGONFOLLY);
         summonItems.put("亵渎碎片", BossHelper.BossType.PROFANED_GUARDIANS);
+        summonItems.put("亵渎晶核", BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {

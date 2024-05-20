@@ -57,7 +57,7 @@ public class MoonLord extends EntitySlime {
         // setup new location
         Location targetedCenterLoc, actualCenterLoc;
         {
-            Vector offsetDir = MathHelper.vectorFromYawPitch_quick(centerLocAngle, 0);
+            Vector offsetDir = MathHelper.vectorFromYawPitch_approx(centerLocAngle, 0);
             offsetDir.multiply(50);
             targetedCenterLoc = target.getLocation().add(offsetDir);
             double distSqr = targetedCenterLoc.distanceSquared(background.getBukkitEntity().getLocation());
@@ -80,7 +80,7 @@ public class MoonLord extends EntitySlime {
         Location headBackgroundLoc = actualCenterLoc.clone().add(0, 12, 0);
         setupSingleLocation(head, head.background, headBackgroundLoc, 9.25);
         // teleport hands
-        Vector leftHandOffset = MathHelper.vectorFromYawPitch_quick(facingYaw - 90, 0);
+        Vector leftHandOffset = MathHelper.vectorFromYawPitch_approx(facingYaw - 90, 0);
         Vector rightHandOffset = leftHandOffset.clone();
         rightHandOffset.multiply(-1);
         leftHandOffset.multiply(reachLeft);

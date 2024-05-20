@@ -50,8 +50,8 @@ public class GuardianRock extends EntitySlime {
         {
             // update target
             target = commander.target;
-            // disappear if no target is available
-            if (target == null) {
+            // disappear if no target is available / commander is dead
+            if (target == null || ! commander.isAlive()) {
                 die();
                 return;
             }
@@ -136,7 +136,7 @@ public class GuardianRock extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(4, false);
+            setSize(5, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(commander.targetMap.size());
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);

@@ -4,15 +4,11 @@ import net.minecraft.server.v1_12_R1.Entity;
 import net.minecraft.server.v1_12_R1.MovingObjectPosition;
 import net.minecraft.server.v1_12_R1.Vec3D;
 import net.minecraft.server.v1_12_R1.World;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
-import org.omg.IOP.TaggedComponentHelper;
 import terraria.TerrariaHelper;
 import terraria.util.*;
-
-import java.util.Set;
 
 public class TerrariaFlail extends TerrariaPotionProjectile {
     Player owner;
@@ -144,7 +140,7 @@ public class TerrariaFlail extends TerrariaPotionProjectile {
                 // rotate around the player when spinning
                 else {
                     double angle = ticksLived * 40;
-                    Vector horizontalOffset = MathHelper.vectorFromYawPitch_quick(angle, 0);
+                    Vector horizontalOffset = MathHelper.vectorFromYawPitch_approx(angle, 0);
                     horizontalOffset.multiply(2);
                     Location targetLoc = owner.getLocation().add(0, 1, 0).add(horizontalOffset);
                     bukkitEntity.setVelocity(

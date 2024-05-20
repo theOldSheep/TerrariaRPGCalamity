@@ -265,6 +265,8 @@ deathMessages:
   - <victim> 被月之射线焚烧殆尽
   Debuff_元素谐鸣:
   - <victim> 融入了元素交响乐
+  Debuff_圣狱神火:
+  - <victim> 被亵渎之神变成了灰烬
   Debuff_硫磺海剧毒:
   - <victim> 被剧毒废物融化了
   Debuff_弑神怒焰:

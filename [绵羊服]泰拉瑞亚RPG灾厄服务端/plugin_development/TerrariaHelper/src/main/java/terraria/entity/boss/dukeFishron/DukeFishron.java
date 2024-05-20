@@ -151,7 +151,7 @@ public class DukeFishron extends EntitySlime {
         if (phaseAI == 1) {
             double angle = Math.random() * 360;
             for (int offset = 0; offset < 360; offset += 120) {
-                Vector velocity = MathHelper.vectorFromYawPitch_quick(angle + offset, 0);
+                Vector velocity = MathHelper.vectorFromYawPitch_approx(angle + offset, 0);
                 velocity.multiply(2);
                 new WaterBlob(this, velocity);
             }

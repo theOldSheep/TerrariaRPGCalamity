@@ -106,7 +106,7 @@ public class ItemUseHelper {
             return;
         }
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
-        Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+        Vector facingDir = MathHelper.vectorFromYawPitch_approx(plyNMS.yaw, plyNMS.pitch);
         facingDir.multiply(1.5);
         double hookAmountTemp = attrMap.getOrDefault("fishingHooks", 1d);
         // prevent accidental inaccuracy
@@ -559,7 +559,7 @@ public class ItemUseHelper {
         Location targetLoc = null;
         World plyWorld = ply.getWorld();
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
-        Vector lookDir = MathHelper.vectorFromYawPitch_quick(nmsPly.yaw, nmsPly.pitch);
+        Vector lookDir = MathHelper.vectorFromYawPitch_approx(nmsPly.yaw, nmsPly.pitch);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE, null);
         boolean tracedEntity = false;
         {
@@ -653,7 +653,7 @@ public class ItemUseHelper {
     protected static void handleSingleZenithStrike(Player ply, HashMap<String, Double> attrMap, List<String> colors, GenericHelper.StrikeLineOptions strikeLineInfo) {
         // setup vector info etc.
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
-        Vector lookDir = MathHelper.vectorFromYawPitch_quick(nmsPly.yaw, nmsPly.pitch);
+        Vector lookDir = MathHelper.vectorFromYawPitch_approx(nmsPly.yaw, nmsPly.pitch);
         Location targetLoc = getPlayerTargetLoc(ply, 96, 5, 4,
                 new EntityHelper.AimHelperOptions().setTicksTotal(8).setAimMode(true), true);
         Location centerLoc = targetLoc.clone().add(ply.getEyeLocation()).multiply(0.5);
@@ -702,7 +702,7 @@ public class ItemUseHelper {
                 yawMax = plyYaw;
                 pitchMin = plyPitch;
                 pitchMax = plyPitch;
-                lookDir = MathHelper.vectorFromYawPitch_quick(yawMin, pitchMin);
+                lookDir = MathHelper.vectorFromYawPitch_approx(yawMin, pitchMin);
             }
             // swing
             else {
@@ -731,7 +731,7 @@ public class ItemUseHelper {
                             .setParticleOrItem(false)
                             .setSpriteItem(displayItem)
                             .setTicksLinger(1)
-                            .setRightOrthogonalDir(MathHelper.vectorFromYawPitch_quick(yawMin + 90, 0)));
+                            .setRightOrthogonalDir(MathHelper.vectorFromYawPitch_approx(yawMin + 90, 0)));
                 }
                 break;
             // special settings for whips
@@ -810,7 +810,7 @@ public class ItemUseHelper {
                                             .setTicksTotal(8)
                                             .setRandomOffsetRadius(1.5);
                                     Location predictedLoc = EntityHelper.helperAimEntity(ply, entityHit, aimHelper);
-                                    Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                    Vector projVel = MathHelper.vectorFromYawPitch_approx(
                                             Math.random() * 360, 70 + Math.random() * 20);
                                     projVel.multiply(24);
                                     predictedLoc.subtract(projVel);
@@ -946,7 +946,7 @@ public class ItemUseHelper {
                                 .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
                                     EntityHelper.getAttrMap(entityHit).put("damageMeleeMulti", 10.0);
                                     EntityHelper.getAttrMap(entityHit).put("crit", 100.0);
-                                    Vector projVel = MathHelper.vectorFromYawPitch_quick(finalStrikeYaw, finalStrikePitch);
+                                    Vector projVel = MathHelper.vectorFromYawPitch_approx(finalStrikeYaw, finalStrikePitch);
                                     projVel.multiply(3);
                                     entityHit.setVelocity(projVel);
                                     hitLoc.getWorld().playSound(hitLoc, SOUND_ARK_PARRY, 1f, 1);
@@ -1087,8 +1087,8 @@ public class ItemUseHelper {
                                     // strike
                                     double alternativeStrikePitch = strikePitch + rotationOffset;
                                     Location bladeLoc = getScissorBladeLoc(startStrikeLoc,
-                                            MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch),
-                                            MathHelper.vectorFromYawPitch_quick(strikeYaw, alternativeStrikePitch),
+                                            MathHelper.vectorFromYawPitch_approx(strikeYaw, strikePitch),
+                                            MathHelper.vectorFromYawPitch_approx(strikeYaw, alternativeStrikePitch),
                                             size, scissorsConnLen);
                                     GenericHelper.handleStrikeLine(ply, bladeLoc,
                                             strikeYaw, alternativeStrikePitch,
@@ -1107,8 +1107,8 @@ public class ItemUseHelper {
                                 double strikePitchOriginal = strikePitch;
                                 strikePitch -= rotationOffset;
                                 startStrikeLoc = getScissorBladeLoc(startStrikeLoc,
-                                        MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitchOriginal),
-                                        MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch),
+                                        MathHelper.vectorFromYawPitch_approx(strikeYaw, strikePitchOriginal),
+                                        MathHelper.vectorFromYawPitch_approx(strikeYaw, strikePitch),
                                         size, scissorsConnLen);
                             }
                             break;
@@ -1214,7 +1214,7 @@ public class ItemUseHelper {
                     if (shouldStrike) {
                         // dash
                         {
-                            Vector plyVel = MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch);
+                            Vector plyVel = MathHelper.vectorFromYawPitch_approx(strikeYaw, strikePitch);
                             plyVel.multiply(2);
                             EntityHelper.setVelocity(ply, plyVel);
                         }
@@ -1247,7 +1247,7 @@ public class ItemUseHelper {
                     if (shouldStrike) {
                         // dash
                         {
-                            Vector plyVel = MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch);
+                            Vector plyVel = MathHelper.vectorFromYawPitch_approx(strikeYaw, strikePitch);
                             plyVel.multiply(2);
                             EntityHelper.setVelocity(ply, plyVel);
                         }
@@ -1596,7 +1596,7 @@ public class ItemUseHelper {
                                     .setAimMode(true)
                                     .setTicksTotal(hitDelay)
                                     .setRandomOffsetRadius(5), true);
-                    Vector projVel = MathHelper.vectorFromYawPitch_quick(Math.random() * 360d, 70 + Math.random() * 30d);
+                    Vector projVel = MathHelper.vectorFromYawPitch_approx(Math.random() * 360d, 70 + Math.random() * 30d);
                     projVel.multiply(2.5 + Math.random());
                     targetLoc.subtract(projVel.clone().multiply(hitDelay));
 
@@ -1835,7 +1835,7 @@ public class ItemUseHelper {
                             HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
                             projAttrMap.put("damage", projAttrMap.get("damage") * 0.125);
                             for (int i = 0; i < 4; i++) {
-                                Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                Vector projVel = MathHelper.vectorFromYawPitch_approx(
                                         plyYaw + Math.random() * 60 - 30,
                                         plyPitch + Math.random() * 60 - 30);
                                 projVel.multiply(2.5);
@@ -1889,7 +1889,7 @@ public class ItemUseHelper {
                             Location targetLoc = getPlayerTargetLoc(ply, 64, 5, size * 0.5,
                                     new EntityHelper.AimHelperOptions().setAimMode(true), true);
                             targetLoc.subtract(
-                                    MathHelper.vectorFromYawPitch_quick(strikeYaw, strikePitch)
+                                    MathHelper.vectorFromYawPitch_approx(strikeYaw, strikePitch)
                                             .multiply(size * 0.75));
                             strikeLineInfo.particleInfo.setRightOrthogonalDir(null);
                             GenericHelper.handleStrikeLine(ply, targetLoc, strikeYaw, strikePitch,
@@ -2071,7 +2071,7 @@ public class ItemUseHelper {
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
                             double thornYaw = Math.random() * 360;
                             double thornPitch = Math.random() * 360;
-                            Vector offsetVec = MathHelper.vectorFromYawPitch_quick(thornYaw, thornPitch);
+                            Vector offsetVec = MathHelper.vectorFromYawPitch_approx(thornYaw, thornPitch);
                             offsetVec.multiply(5);
                             GenericHelper.StrikeLineOptions thornStrikeOption = new GenericHelper.StrikeLineOptions()
                                     .setDamageCD(4)
@@ -2097,7 +2097,7 @@ public class ItemUseHelper {
                                 LivingEntity livingHitEntity = (LivingEntity) hitEntity;
                                 if (livingHitEntity.getHealth() * 2 < livingHitEntity.getMaxHealth()) {
                                     for (int projYaw = 0; projYaw <= 360; projYaw += 120) {
-                                        Vector projVel = MathHelper.vectorFromYawPitch_quick(projYaw, -30);
+                                        Vector projVel = MathHelper.vectorFromYawPitch_approx(projYaw, -30);
                                         projVel.multiply(1.5);
                                         EntityHelper.spawnProjectile(ply, hitLoc, projVel, attrMap,
                                                 EntityHelper.DamageType.MELEE, "彩虹弹幕");
@@ -2147,7 +2147,7 @@ public class ItemUseHelper {
                             double projPitch = plyPitch;
                             projPitch -= 15;
                             for (int i = 0; i < 3; i ++) {
-                                Vector projVel = MathHelper.vectorFromYawPitch_quick(plyYaw, projPitch);
+                                Vector projVel = MathHelper.vectorFromYawPitch_approx(plyYaw, projPitch);
                                 projVel.multiply(1.5);
                                 EntityHelper.spawnProjectile(ply,
                                         projVel, attrMap,
@@ -2171,7 +2171,7 @@ public class ItemUseHelper {
                             double projPitch = plyPitch;
                             projPitch -= 15;
                             for (int i = 0; i < 3; i ++) {
-                                Vector projVel = MathHelper.vectorFromYawPitch_quick(plyYaw, projPitch);
+                                Vector projVel = MathHelper.vectorFromYawPitch_approx(plyYaw, projPitch);
                                 projVel.multiply(2.25);
                                 EntityHelper.spawnProjectile(ply,
                                         projVel, attrMap,
@@ -2211,7 +2211,7 @@ public class ItemUseHelper {
                             for (int i = 0; i < 5; i ++) {
                                 HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
                                 projAttrMap.put("damage", projAttrMap.get("damage") * (0.3 + Math.random() * 0.4) );
-                                Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                Vector projVel = MathHelper.vectorFromYawPitch_approx(
                                         plyYaw + Math.random() * 10 - 5, plyPitch + Math.random() * 10 - 5);
                                 projVel.multiply(2.25);
                                 EntityHelper.spawnProjectile(ply, projVel,
@@ -2276,7 +2276,7 @@ public class ItemUseHelper {
                             HashMap<String, Double> projAttrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(ply).clone();
                             projAttrMap.put("damage", projAttrMap.get("damage") * 0.3);
                             for (int i = 0; i < 8; i ++) {
-                                Vector projVel = MathHelper.vectorFromYawPitch_quick(45 * i, 0);
+                                Vector projVel = MathHelper.vectorFromYawPitch_approx(45 * i, 0);
                                 projVel.multiply(1.5);
                                 EntityHelper.spawnProjectile(ply, hitLoc, projVel, projAttrMap,
                                         EntityHelper.DamageType.MELEE,"神圣之火");
@@ -2361,7 +2361,7 @@ public class ItemUseHelper {
                     case "镜之刃": {
                         if (currentIndex == 0) {
                             for (int i = 0; i < 3; i ++) {
-                                Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                Vector projVel = MathHelper.vectorFromYawPitch_approx(
                                         plyYaw + Math.random() * 20 - 10, plyPitch + Math.random() * 20 - 10);
                                 projVel.multiply(3);
                                 EntityHelper.spawnProjectile(ply, projVel,
@@ -2415,7 +2415,7 @@ public class ItemUseHelper {
                             Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), 3, "爆炸禅心导弹", false, 0);
                             projVel.normalize().multiply(3);
                             for (int i = -1; i <= 1; i ++) {
-                                Vector spawnLocOffset = MathHelper.vectorFromYawPitch_quick(
+                                Vector spawnLocOffset = MathHelper.vectorFromYawPitch_approx(
                                         plyYaw, plyPitch + i * 15);
                                 Location spawnLoc = ply.getEyeLocation().add(spawnLocOffset);
                                 EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
@@ -2434,7 +2434,7 @@ public class ItemUseHelper {
                                     projVel = getPlayerAimDir(ply, ply.getEyeLocation(), 3, "跟踪血骷髅", false, 0);
                                     projVel.normalize().multiply(3);
                                     for (int i = -1; i <= 1; i += 2) {
-                                        Vector spawnLocOffset = MathHelper.vectorFromYawPitch_quick(
+                                        Vector spawnLocOffset = MathHelper.vectorFromYawPitch_approx(
                                                 plyYaw, plyPitch + i * 15);
                                         Location spawnLoc = ply.getEyeLocation().add(spawnLocOffset);
                                         EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
@@ -2460,7 +2460,7 @@ public class ItemUseHelper {
                             if (charge++ >= 100) {
                                 charge = 0;
                                 for (int i = 0; i < 20; i ++) {
-                                    projVel = MathHelper.vectorFromYawPitch_quick(
+                                    projVel = MathHelper.vectorFromYawPitch_approx(
                                             Math.random() * 360, Math.random() * -90);
                                     projVel.multiply(2.5);
                                     EntityHelper.spawnProjectile(ply, projVel,
@@ -2519,7 +2519,7 @@ public class ItemUseHelper {
                     double progress = (double) i / loopTimes;
                     double actualYaw = yawMin + (yawMax - yawMin) * progress;
                     double actualPitch = pitchMin + (pitchMax - pitchMin) * progress;
-                    Vector offsetDir = MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch);
+                    Vector offsetDir = MathHelper.vectorFromYawPitch_approx(actualYaw, actualPitch);
                     // swords have a constant reach while whips have a changing attack reach over time
                     double strikeLength = interpolateType == 1 ?
                             size : size * MathHelper.xcos_degree( 300 * (progress - 0.5) );
@@ -2614,7 +2614,7 @@ public class ItemUseHelper {
                             actualYaw = plyYaw + 90;
                             actualPitch = 360d * i / loopTimes;
                             startStrikeLoc = targetLoc.subtract(
-                                    MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch)
+                                    MathHelper.vectorFromYawPitch_approx(actualYaw, actualPitch)
                                             .multiply(strikeLength / 2d));
                             strikeLineInfo.particleInfo.setRightOrthogonalDir(null);
                             break;
@@ -2640,7 +2640,7 @@ public class ItemUseHelper {
                             actualYaw = plyYaw + 90;
                             actualPitch = 360d * i / loopTimes;
                             startStrikeLoc = targetLoc.subtract(
-                                    MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch)
+                                    MathHelper.vectorFromYawPitch_approx(actualYaw, actualPitch)
                                             .multiply(strikeLength / 2d));
                             strikeLineInfo.particleInfo.setRightOrthogonalDir(null);
                             break;
@@ -2720,7 +2720,7 @@ public class ItemUseHelper {
                                     // get rotation
                                     actualPitch = MathHelper.getVectorPitch(targetLocDir) - 55 + (415 * spinProgress);
                                     // setup startStrikeLoc
-                                    Vector startLocOffset = MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch);
+                                    Vector startLocOffset = MathHelper.vectorFromYawPitch_approx(actualYaw, actualPitch);
                                     startLocOffset.multiply(strikeLength / 2d);
                                     startStrikeLoc = targetCenterLoc.clone().subtract(startLocOffset);
 
@@ -2730,8 +2730,8 @@ public class ItemUseHelper {
                                         // strike
                                         double bladePitch = actualPitch + 30;
                                         Location bladeLoc = getScissorBladeLoc(startStrikeLoc,
-                                                MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch),
-                                                MathHelper.vectorFromYawPitch_quick(actualYaw, bladePitch),
+                                                MathHelper.vectorFromYawPitch_approx(actualYaw, actualPitch),
+                                                MathHelper.vectorFromYawPitch_approx(actualYaw, bladePitch),
                                                 strikeLength, scissorsConnLen);
                                         GenericHelper.handleStrikeLine(ply, bladeLoc,
                                                 actualYaw, bladePitch,
@@ -2746,7 +2746,7 @@ public class ItemUseHelper {
                                     double targetLocDirPitch = MathHelper.getVectorPitch(targetLocDir);
                                     actualPitch = targetLocDirPitch - (45 * openProgress);
                                     // setup startStrikeLoc
-                                    Vector startLocOffset = MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch);
+                                    Vector startLocOffset = MathHelper.vectorFromYawPitch_approx(actualYaw, actualPitch);
                                     startLocOffset.multiply(strikeLength / 2d);
                                     startStrikeLoc = targetLoc.clone().subtract(startLocOffset);
 
@@ -2761,8 +2761,8 @@ public class ItemUseHelper {
                                         // set direction and orientation
                                         double scissorPartPitch = targetLocDirPitch + (45 * openProgress);
                                         Location bladeLoc = getScissorBladeLoc(targetCenterLoc,
-                                                MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch),
-                                                MathHelper.vectorFromYawPitch_quick(actualYaw, scissorPartPitch),
+                                                MathHelper.vectorFromYawPitch_approx(actualYaw, actualPitch),
+                                                MathHelper.vectorFromYawPitch_approx(actualYaw, scissorPartPitch),
                                                 strikeLength, scissorsConnLen);
                                         // damage
                                         GenericHelper.handleStrikeLine(ply, bladeLoc,
@@ -2787,7 +2787,7 @@ public class ItemUseHelper {
                                     // get rotation
                                     actualPitch = targetLocDirPitch - (45 * (1 - cutProgress));
                                     // setup startStrikeLoc
-                                    Vector startLocOffset = MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch);
+                                    Vector startLocOffset = MathHelper.vectorFromYawPitch_approx(actualYaw, actualPitch);
                                     startLocOffset.multiply(strikeLength / 2d);
                                     startStrikeLoc = targetLoc.clone().subtract(startLocOffset);
 
@@ -2797,8 +2797,8 @@ public class ItemUseHelper {
                                         // set direction and orientation
                                         double scissorPartPitch = targetLocDirPitch + (45 * (1 - cutProgress));
                                         Location bladeLoc = getScissorBladeLoc(startStrikeLoc,
-                                                MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch),
-                                                MathHelper.vectorFromYawPitch_quick(actualYaw, scissorPartPitch),
+                                                MathHelper.vectorFromYawPitch_approx(actualYaw, actualPitch),
+                                                MathHelper.vectorFromYawPitch_approx(actualYaw, scissorPartPitch),
                                                 strikeLength, scissorsConnLen);
                                         // damage
                                         GenericHelper.handleStrikeLine(ply, bladeLoc,
@@ -2812,7 +2812,7 @@ public class ItemUseHelper {
                                 boolean isDownwardSwing = attackPhase == 1 || attackPhase == 3;
                                 // the blade is rotated by 180 degrees while upward swing
                                 if (strikeLineInfo.displayParticle)
-                                    strikeLineInfo.particleInfo.setRightOrthogonalDir(MathHelper.vectorFromYawPitch_quick(
+                                    strikeLineInfo.particleInfo.setRightOrthogonalDir(MathHelper.vectorFromYawPitch_approx(
                                             actualYaw + (isDownwardSwing ? 90 : -90), 0));
                                 // ark of the cosmos should swing additional 360 degrees during downward swings
                                 if (!isArkOfElements && isDownwardSwing) {
@@ -2830,10 +2830,10 @@ public class ItemUseHelper {
                                         Vector starProjVel;
                                         // element shoots projectile fwd, while cosmos spans their projectile around the circumference
                                         if (isArkOfElements)
-                                            starProjVel = MathHelper.vectorFromYawPitch_quick(
+                                            starProjVel = MathHelper.vectorFromYawPitch_approx(
                                                     actualYaw + Math.random() * 10 - 5, plyPitch + Math.random() * 10 - 5);
                                         else
-                                            starProjVel = MathHelper.vectorFromYawPitch_quick(actualYaw, Math.random() * 360d);
+                                            starProjVel = MathHelper.vectorFromYawPitch_approx(actualYaw, Math.random() * 360d);
                                         starProjVel.multiply(isArkOfElements ? 2 : 2.5);
                                         EntityHelper.spawnProjectile(ply, starProjVel, attrMapStar, isArkOfElements ? "元素之星" : "永恒之雷");
                                     }
@@ -2843,8 +2843,8 @@ public class ItemUseHelper {
                                     // strike
                                     double bladePitch = actualPitch + (isDownwardSwing ? 30 : -30);
                                     Location bladeLoc = getScissorBladeLoc(startStrikeLoc,
-                                            MathHelper.vectorFromYawPitch_quick(actualYaw, actualPitch),
-                                            MathHelper.vectorFromYawPitch_quick(actualYaw, bladePitch),
+                                            MathHelper.vectorFromYawPitch_approx(actualYaw, actualPitch),
+                                            MathHelper.vectorFromYawPitch_approx(actualYaw, bladePitch),
                                             strikeLength, scissorsConnLen);
                                     GenericHelper.handleStrikeLine(ply, bladeLoc,
                                             actualYaw, bladePitch,
@@ -2920,7 +2920,7 @@ public class ItemUseHelper {
                             if (i == indexStart && Math.abs(currentIndex - (int) (maxIndex * 0.5)) <= shootThreshold) {
                                 HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
                                 projAttrMap.put("damage", projAttrMap.getOrDefault("damage", 100d) * 0.5);
-                                Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                                Vector projVel = MathHelper.vectorFromYawPitch_approx(
                                         yawMin + Math.random() * 30 - 15, pitchMin + Math.random() * 30 - 15);
                                 projVel.multiply(3);
                                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
@@ -2968,7 +2968,7 @@ public class ItemUseHelper {
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         double yaw = plyNMS.yaw, pitch = plyNMS.pitch;
         double size = weaponSection.getDouble("size", 3d);
-        Vector lookDir = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
+        Vector lookDir = MathHelper.vectorFromYawPitch_approx(yaw, pitch);
         size *= attrMap.getOrDefault("meleeReachMulti", 1d);
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
         double useTimeMulti = 1 / useSpeed;
@@ -2997,7 +2997,7 @@ public class ItemUseHelper {
                 for (int i = 0; i < shootAmount; i ++) {
                     Projectile spawnedProjectile;
                     if (stabOrSwing) {
-                        Vector offsetV = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
+                        Vector offsetV = MathHelper.vectorFromYawPitch_approx(yaw, pitch);
                         offsetV.multiply(size);
                         Location shootLoc = ply.getEyeLocation().add(offsetV);
                         Vector projVel = getPlayerAimDir(ply, shootLoc, projectileSpeed, projectileType, false, 0);
@@ -3009,7 +3009,7 @@ public class ItemUseHelper {
                         switch (itemType) {
                             case "风之刃":
                             case "风暴管束者":
-                                projVel = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+                                projVel = MathHelper.vectorFromYawPitch_approx(plyNMS.yaw, plyNMS.pitch);
                                 projVel.multiply( projectileSpeed );
                                 break;
                             default:
@@ -3152,7 +3152,7 @@ public class ItemUseHelper {
         // note that whips are not applicable to aim helper: the player moves as the whip is being used!
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         double yaw = plyNMS.yaw, pitch = plyNMS.pitch;
-        Vector lookDir = MathHelper.vectorFromYawPitch_quick(yaw, pitch);
+        Vector lookDir = MathHelper.vectorFromYawPitch_approx(yaw, pitch);
         lookDir.normalize();
         size *= attrMap.getOrDefault("meleeReachMulti", 1d);
         // how many rays does this swing produce
@@ -3211,7 +3211,7 @@ public class ItemUseHelper {
                                            boolean autoSwing, HashMap<String, Double> attrMap, ConfigurationSection weaponSection) {
         // use the weapon
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
-        Vector facingDir = MathHelper.vectorFromYawPitch_quick(plyNMS.yaw, plyNMS.pitch);
+        Vector facingDir = MathHelper.vectorFromYawPitch_approx(plyNMS.yaw, plyNMS.pitch);
         double projectileSpeed = weaponSection.getDouble("velocity", 1.5d);
         double reach = weaponSection.getDouble("reach", 10d);
         int duration = weaponSection.getInt("duration", 100);
@@ -3358,7 +3358,7 @@ public class ItemUseHelper {
                 attrMapExtraProjectile.put("damage", attrMapExtraProjectile.get("damage") * 0.5);
 
                 for (int i = -1; i <= 1; i ++) {
-                    Vector fireVelocity = MathHelper.vectorFromYawPitch_quick(facingDirYaw, facingDirPitch + i * 10);
+                    Vector fireVelocity = MathHelper.vectorFromYawPitch_approx(facingDirYaw, facingDirPitch + i * 10);
                     EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMapExtraProjectile,
                             EntityHelper.getDamageType(ply), "天蓝羽毛");
                 }
@@ -3606,7 +3606,7 @@ public class ItemUseHelper {
                 case "季风":
                 case "啸流":
                 case "赤陨霸龙弓_RIGHT_CLICK": {
-                    fireLoc.add(MathHelper.vectorFromYawPitch_quick(facingDirYaw,
+                    fireLoc.add(MathHelper.vectorFromYawPitch_approx(facingDirYaw,
                                     facingDirPitch + 12.5 * (i - fireAmount / 2))
                             .multiply(1.5));
                     break;
@@ -3666,7 +3666,7 @@ public class ItemUseHelper {
                             pitchOffset = 1;
                             shootLocOffsetLen = 1;
                     }
-                    Vector shootLocOffsetDir = MathHelper.vectorFromYawPitch_quick(facingDirYaw,
+                    Vector shootLocOffsetDir = MathHelper.vectorFromYawPitch_approx(facingDirYaw,
                             facingDirPitch + pitchOffset * (i - fireAmount / 2));
                     fireVelocity = shootLocOffsetDir.clone();
                     fireLoc.add(shootLocOffsetDir.multiply(shootLocOffsetLen));
@@ -3688,7 +3688,7 @@ public class ItemUseHelper {
                 }
                 case "天堂之风": {
                     double pitchOffset = -20 * MathHelper.xsin_degree( 360d * (fireIndex - 1d) / fireRoundMax );
-                    fireVelocity = MathHelper.vectorFromYawPitch_quick(facingDirYaw, facingDirPitch + pitchOffset);
+                    fireVelocity = MathHelper.vectorFromYawPitch_approx(facingDirYaw, facingDirPitch + pitchOffset);
                     break;
                 }
                 // should not shoot for some reason
@@ -4119,7 +4119,7 @@ public class ItemUseHelper {
                                 aimHelperOptions, true);
                     else
                         fireLoc = getPlayerCachedTargetLoc(ply, aimHelperOptions);
-                    fireVelocity = MathHelper.vectorFromYawPitch_quick(i * 360d / fireAmount, 0);
+                    fireVelocity = MathHelper.vectorFromYawPitch_approx(i * 360d / fireAmount, 0);
                     break;
                 }
                 case "离子冲击波":
@@ -4137,7 +4137,7 @@ public class ItemUseHelper {
                 case "遗迹圣物":
                 case "原核之怒":
                 case "黑洞边缘": {
-                    fireVelocity = MathHelper.vectorFromYawPitch_quick(
+                    fireVelocity = MathHelper.vectorFromYawPitch_approx(
                             MathHelper.getVectorYaw(facingDir) + 360d * i / fireAmount, 0);
                     break;
                 }
@@ -4177,11 +4177,11 @@ public class ItemUseHelper {
                     break;
                 }
                 case "天穹流星": {
-                    fireVelocity = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, -70 - Math.random() * 20);
+                    fireVelocity = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, -70 - Math.random() * 20);
                     break;
                 }
                 case "异端": {
-                    fireVelocity = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, -80 - Math.random() * 10);
+                    fireVelocity = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, -80 - Math.random() * 10);
                     // has a chance to not spawn any projectile, which decays as more swings are made
                     double noProjectileChance = 1 - (swingAmount / 25d);
                     if (Math.random() < noProjectileChance)
@@ -4558,7 +4558,7 @@ public class ItemUseHelper {
                                 double extraRayYaw = Math.random() * 360, extraRayPitch = 60 + Math.random() * 30;
                                 double extraRayLength = 40;
                                 Location shootLoc = location.clone().subtract(
-                                        MathHelper.vectorFromYawPitch_quick(extraRayYaw, extraRayPitch).multiply(16));
+                                        MathHelper.vectorFromYawPitch_approx(extraRayYaw, extraRayPitch).multiply(16));
                                 GenericHelper.StrikeLineOptions strikeLineOptions = new GenericHelper.StrikeLineOptions()
                                         .setThruWall(false)
                                         .setBounceWhenHitBlock(true)
@@ -4781,7 +4781,7 @@ public class ItemUseHelper {
                     double centerYaw = MathHelper.getVectorYaw(aimDir);
                     double centerPitch = MathHelper.getVectorPitch(aimDir);
                     for (int i = 0; i < 8; i ++) {
-                        Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                        Vector projVel = MathHelper.vectorFromYawPitch_approx(
                                 centerYaw + Math.random() * 10 - 5, centerPitch + Math.random() * 10 - 5);
                         projVel.multiply(projSpd);
                         EntityHelper.spawnProjectile(ply, projVel,
@@ -4825,7 +4825,7 @@ public class ItemUseHelper {
                     double centerYaw = MathHelper.getVectorYaw(aimDir);
                     double centerPitch = MathHelper.getVectorPitch(aimDir);
                     for (int i = 0; i < 8; i ++) {
-                        Vector projVel = MathHelper.vectorFromYawPitch_quick(
+                        Vector projVel = MathHelper.vectorFromYawPitch_approx(
                                 centerYaw + Math.random() * 10 - 5, centerPitch + Math.random() * 10 - 5);
                         projVel.multiply(projSpd);
                         EntityHelper.spawnProjectile(ply, projVel,

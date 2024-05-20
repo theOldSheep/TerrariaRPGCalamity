@@ -140,7 +140,7 @@ public class TerrariaCritter extends EntitySilverfish {
                 fallDistance = 0f;
                 // initialize a new direction every 75 ticks
                 if (indexAI % 75 == 0) {
-                    acceleration = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, 0);
+                    acceleration = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, 0);
                     acceleration.multiply(0.15);
                 }
                 // adjust vertical velocity every 5 ticks
@@ -168,7 +168,7 @@ public class TerrariaCritter extends EntitySilverfish {
             default: {
                 if (type.endsWith("蚱蜢")) {
                     if (indexAI % 85 == 0 && bukkitEntity.isOnGround()) {
-                        Vector jumpDir = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, 0);
+                        Vector jumpDir = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, 0);
                         jumpDir.multiply(0.6);
                         jumpDir.setY(0.75);
                         bukkitEntity.setVelocity( jumpDir );

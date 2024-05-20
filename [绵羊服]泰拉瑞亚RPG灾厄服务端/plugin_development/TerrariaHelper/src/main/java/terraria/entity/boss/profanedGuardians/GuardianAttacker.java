@@ -46,7 +46,7 @@ public class GuardianAttacker extends EntitySlime {
     }
     // HORIZONTAL_POSITION should have value between 0 (directly above target) and 1 (directly above commander)
     static final double HORIZONTAL_POSITION = 0.75, VERTICAL_OFFSET = 10.0, HOVER_SPEED = 2.5;
-    static final int PROJECTILE_INTERVAL = 20;
+    static final int PROJECTILE_INTERVAL = 30;
     // projectile angle etc.
     static final double ANGLE_INTERVAL = 10, SPREAD_DEGREE = 31, PROJECTILE_SPEED = 2.0;
     static final double[] LASER_THRESHOLDS = {0.7, 0.4};
@@ -189,6 +189,8 @@ private void attack() {
         {
             setSize(12, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(commander.targetMap.size());
+            if (BossHelper.bossMap.containsKey(BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS.msgName))
+                healthMulti *= GuardianCommander.HEALTH_MULTI_PROVIDENCE_ALIVE;
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);

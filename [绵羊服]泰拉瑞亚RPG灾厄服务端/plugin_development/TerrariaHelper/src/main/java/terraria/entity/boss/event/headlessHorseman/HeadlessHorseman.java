@@ -73,7 +73,7 @@ public class HeadlessHorseman extends EntitySlime {
         // send spawn message
         Bukkit.broadcastMessage("§d§l" + BOSS_TYPE + " 苏醒了！");
         // spawn location
-        Vector offsetDir = MathHelper.vectorFromYawPitch_quick(Math.random() * 360, 0);
+        Vector offsetDir = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, 0);
         offsetDir.multiply(40);
         Location spawnLoc = summonedPlayer.getLocation().add(offsetDir);
         spawnLoc.setY(spawnLoc.getWorld().getHighestBlockYAt(spawnLoc));

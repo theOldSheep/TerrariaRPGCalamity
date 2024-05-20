@@ -32,31 +32,40 @@ public class DragonFolly extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    private static final double[] DASH_SPEEDS = {1.5, 1.75, 2.0};
+    private static final double[] DASH_SPEEDS = {2.0, 2.25, 2.5};
+    // DASH_INTERVAL, DASH_DURATION, slow for x ticks
     private final int[][] DASH_TIMINGS = {
-        {30, 20, 5},  // Phase 0: DASH_INTERVAL = 30, DASH_DURATION = 20, slow for 5 ticks
-        {25, 15, 3},  // Phase 1: DASH_INTERVAL = 25, DASH_DURATION = 15, slow for 3 ticks
-        {20, 10, 2}   // Phase 2: DASH_INTERVAL = 20, DASH_DURATION = 10, slow for 2 ticks
+        {10, 40, 10},
+        {8, 30, 5},
+        {5, 25, 3}
     };
-private final int[][] PROJECTILE_TIMINGS = {
-        {20, 10},  // Phase 0: ticks before firing = 20, ticks after firing = 10
-        {15, 9},  // Phase 1: ticks before firing = 15, ticks after firing = 9
-        {10, 8},  // Phase 2: ticks before firing = 10, ticks after firing = 8
-};
+    // ticks before firing, ticks after firing
+    private final int[][] PROJECTILE_TIMINGS = {
+            {20, 10},
+            {15, 8},
+            {10, 5},
+    };
     private static final double[] PHASE_THRESHOLDS = {0.75, 0.4};
     private static final double PARTICLE_INTERVAL = 2;
-    private static final double HORIZONTAL_LIMIT = 32.0, ALIGNMENT_SPEED = 0.8;
+    private static final double HORIZONTAL_LIMIT = 48.0, ALIGNMENT_DIST = 20, ALIGNMENT_SPEED = 0.8;
     private static final double PROJECTILE_SPEED = 1.0;
-    private static final int PROJECTILE_TICKS_OFFSET = 10;
+    private static final int PROJECTILE_TICKS_OFFSET = 30;
     static HashMap<String, Double> attrMapFeather;
     static EntityHelper.AimHelperOptions aimHelperFeather;
+    static EntityHelper.AimHelperOptions[] aimHelperDashes;
     static {
         attrMapFeather = new HashMap<>();
         attrMapFeather.put("damage", 732d);
         attrMapFeather.put("knockback", 1.5d);
+
         aimHelperFeather = new EntityHelper.AimHelperOptions()
                 .setAimMode(true).setAccelerationMode(false)
                 .setProjectileSpeed(PROJECTILE_SPEED).setTicksTotal(PROJECTILE_TICKS_OFFSET);
+        aimHelperDashes = new EntityHelper.AimHelperOptions[]{
+                new EntityHelper.AimHelperOptions().setAccelerationMode(true).setProjectileSpeed(DASH_SPEEDS[0]),
+                new EntityHelper.AimHelperOptions().setAccelerationMode(false).setProjectileSpeed(DASH_SPEEDS[1]),
+                new EntityHelper.AimHelperOptions().setAccelerationMode(false).setProjectileSpeed(DASH_SPEEDS[2]),
+        };
     }
     EntityHelper.ProjectileShootInfo shootInfoFeather;
     int indexAI = 0, AIPhase = 0;
@@ -87,7 +96,7 @@ private final int[][] PROJECTILE_TIMINGS = {
                 targetMap.get(target.getUniqueId()).addAggressionTick();
                 // Check if the player has moved too far horizontally
                 if (isOutOfBoundary()) {
-                    target.setFireTicks(40); // Set on fire for 2 seconds
+                    EntityHelper.applyEffect(target, "龙焰", 200);
                 }
                 // Fire particles
                 if (++particleTicks > PARTICLE_INTERVAL) {
@@ -95,7 +104,6 @@ private final int[][] PROJECTILE_TIMINGS = {
                     particleTicks = 0;
                 }
 
-                // TODO
                 // Phase transition
                 double healthRatio = getHealth() / getMaxHealth();
                 if (AIPhase < PHASE_THRESHOLDS.length && healthRatio < PHASE_THRESHOLDS[AIPhase]) {
@@ -135,24 +143,23 @@ private final int[][] PROJECTILE_TIMINGS = {
         if (indexAI <= DASH_TIMINGS[AIPhase][1]) {
             // Initialize dash direction
             if (indexAI == 0) {
-                velocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
-                if (velocity.lengthSquared() > 1e-9) {
-                    velocity.normalize().multiply(DASH_SPEEDS[AIPhase]);
-                }
+                velocity = MathHelper.getDirection(bukkitEntity.getLocation(),
+                        EntityHelper.helperAimEntity(bukkitEntity, target, aimHelperDashes[AIPhase]),
+                        DASH_SPEEDS[AIPhase], false);
+                bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1.0f);
             }
             // Slow down towards the end of the dash
             if (indexAI >= DASH_TIMINGS[AIPhase][1] - DASH_TIMINGS[AIPhase][2]) {
-                velocity.multiply(0.9);
+                velocity.multiply(0.925);
             }
         }
         // Between dashes
         else {
-            velocity = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
-            // Move much faster vertically than horizontally
-            velocity.setY(velocity.getY() * 5);
-            if (velocity.lengthSquared() > 1e-9) {
-                velocity.normalize().multiply(ALIGNMENT_SPEED);
-            }
+            Location targetLocClone = target.getLocation();
+            targetLocClone.setY(bukkitEntity.getLocation().getY());
+            Vector horDir = MathHelper.getDirection(targetLocClone, bukkitEntity.getLocation(), ALIGNMENT_DIST, true);
+
+            velocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation().add(horDir), ALIGNMENT_SPEED);
             // Next AI Phase
             if (indexAI >= DASH_TIMINGS[AIPhase][0] + DASH_TIMINGS[AIPhase][1]) {
                 indexAI = -1;

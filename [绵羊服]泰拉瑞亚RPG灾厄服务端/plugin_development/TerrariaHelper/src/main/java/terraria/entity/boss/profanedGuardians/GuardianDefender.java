@@ -39,7 +39,7 @@ public class GuardianDefender extends EntitySlime {
     }
     static final double HORIZONTAL_ROTATION_SPEED = 0.05, HORIZONTAL_ROTATION_DIST = 12;
     static final int SPEAR_ATTACK_INTERVAL = 30, SPEAR_ATTACK_INTERVAL_SECOND_PHASE = 15;
-    static final double SPEAR_SPEED = 1.75, BLAST_SPEED = 1, BLAST_CHANCE = 0.1;
+    static final double SPEAR_SPEED = 2.5, BLAST_SPEED = 1.25, BLAST_CHANCE = 0.15;
     static final Vector SPEAR_SHOOT_LOC_OFFSET = new Vector(0, 1, 0);
     static final int DASH_COUNT = 3;
     static final double REGULAR_MOVE_SPEED = 1.0, DASH_SPEED = 2.0;
@@ -51,8 +51,7 @@ public class GuardianDefender extends EntitySlime {
     EntityHelper.AimHelperOptions aimHelperSpear, aimHelperBlast, aimHelperAdvancedDash;
 
     protected AttackMode currentAttackMode = AttackMode.PROJECTILE;
-    private int dashCounter = 0;
-    int indexAI = 0, AIPhase = 0;
+    int indexAI = 0;
     private boolean secondPhase = false;
     private Vector velocity = new Vector();
 
@@ -105,16 +104,14 @@ public class GuardianDefender extends EntitySlime {
         if (! secondPhase && ! attacker.isAlive()) {
             secondPhase = true;
             removeScoreboardTag("noDamage");
-
-            // ... (Add other phase-specific behaviors, like changing attack patterns, etc.)
         }
     }
     private void updateAttackMode() {
         if (currentAttackMode == AttackMode.DASH && indexAI >= DASH_COUNT * DASH_DURATION_SINGLE - 1 ) {
             currentAttackMode = AttackMode.PROJECTILE;
-            dashCounter = 0;
             indexAI = 0; // Reset index for timing
-        } else if (currentAttackMode == AttackMode.PROJECTILE && indexAI >= PROJECTILE_DURATION) {
+        }
+        else if (currentAttackMode == AttackMode.PROJECTILE && !attacker.isAlive() && indexAI >= PROJECTILE_DURATION) {
             currentAttackMode = AttackMode.DASH;
             indexAI = 0; // Reset index for timing
         }
@@ -146,7 +143,6 @@ public class GuardianDefender extends EntitySlime {
             Location targetLoc = secondPhase ? EntityHelper.helperAimEntity(bukkitEntity.getLocation(), target, aimHelperAdvancedDash) : target.getEyeLocation();
             velocity = MathHelper.getDirection( ((LivingEntity) bukkitEntity).getEyeLocation(), targetLoc, DASH_SPEED, false);
             bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
-            dashCounter++;
         }
     }
 
@@ -201,6 +197,8 @@ public class GuardianDefender extends EntitySlime {
         {
             setSize(12, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(commander.targetMap.size());
+            if (BossHelper.bossMap.containsKey(BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS.msgName))
+                healthMulti *= GuardianCommander.HEALTH_MULTI_PROVIDENCE_ALIVE;
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);

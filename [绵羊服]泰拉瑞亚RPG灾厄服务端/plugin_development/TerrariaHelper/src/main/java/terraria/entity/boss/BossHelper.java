@@ -144,7 +144,7 @@ public class BossHelper {
         return multi;
     }
     public static HashMap<UUID, BossTargetInfo> setupBossTarget(Entity boss, String bossDefeatRequirement,
-                                                          Player ply, boolean hasDistanceRestriction, BossBattleServer bossbar) {
+                                                          Player ply, boolean hasDistanceRestriction, boolean sendMsg, BossBattleServer bossbar) {
         HashMap<UUID, BossTargetInfo> targets = new HashMap<>();
         String team = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_TEAM).asString();
         // print out targets of the boss
@@ -177,9 +177,14 @@ public class BossHelper {
         EntityHelper.setMetadata(boss, EntityHelper.MetadataName.BOSS_BAR, bossbar);
         EntityHelper.setMetadata(boss, EntityHelper.MetadataName.BOSS_TARGET_MAP, targets);
         // print targets
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                () -> Bukkit.broadcastMessage(msg.toString()), 1);
+        if (sendMsg)
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
+                    () -> Bukkit.broadcastMessage(msg.toString()), 1);
         return targets;
+    }
+    public static HashMap<UUID, BossTargetInfo> setupBossTarget(Entity boss, String bossDefeatRequirement,
+                                                          Player ply, boolean hasDistanceRestriction, BossBattleServer bossbar) {
+        return setupBossTarget(boss, bossDefeatRequirement, ply, hasDistanceRestriction, true, bossbar);
     }
     public static boolean checkBossTarget(Entity target, Entity boss, boolean ignoreDistance, WorldHelper.BiomeType biomeRequired) {
         if (target instanceof Player) {

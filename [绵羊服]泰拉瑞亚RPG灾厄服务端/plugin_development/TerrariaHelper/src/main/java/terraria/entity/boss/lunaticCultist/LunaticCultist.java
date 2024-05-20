@@ -89,7 +89,7 @@ public class LunaticCultist extends EntityZombie {
                 dirYaw += 180;
             dirPitch += ( (index + 1) / 2) * 3.5;
         }
-        Vector offsetDir = MathHelper.vectorFromYawPitch_quick(dirYaw, dirPitch);
+        Vector offsetDir = MathHelper.vectorFromYawPitch_approx(dirYaw, dirPitch);
         offsetDir.multiply(20);
         return target.getLocation().add(offsetDir);
     }
@@ -121,7 +121,7 @@ public class LunaticCultist extends EntityZombie {
             int totalEntities = clones.size();
             for (int i = 0; i <= totalEntities; i ++) {
                 Location targetLoc = centerLoc.clone();
-                Vector offset = MathHelper.vectorFromYawPitch_quick(angle, 0);
+                Vector offset = MathHelper.vectorFromYawPitch_approx(angle, 0);
                 offset.multiply(6);
                 targetLoc.add(offset);
                 angle += 360d / (totalEntities + 1);
