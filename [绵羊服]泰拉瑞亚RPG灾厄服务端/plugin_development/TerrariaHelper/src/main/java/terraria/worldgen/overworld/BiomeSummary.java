@@ -63,10 +63,9 @@ public class BiomeSummary {
         }
 
         // Calculate the block range around spawn
-        int halfImageWidth = imageDimension / 2;
-        int halfImageHeight = imageDimension / 2;
-        int minBlockX = - (halfImageWidth * BLOCKS_PER_PIXEL);
-        int minBlockZ = - (halfImageHeight * BLOCKS_PER_PIXEL);
+        int halfImageSize = imageDimension / 2;
+        int minBlockX = - (halfImageSize * BLOCKS_PER_PIXEL);
+        int minBlockZ = - (halfImageSize * BLOCKS_PER_PIXEL);
 
         // 2. Image Creation
         BufferedImage biomeImage = new BufferedImage(imageDimension, imageDimension, BufferedImage.TYPE_INT_RGB);
@@ -89,13 +88,12 @@ public class BiomeSummary {
         }
 
         // 4. Chessboard Overlay
-        int halfImageGridsAmountX = (int) Math.ceil((double) halfImageWidth / GRID_SIZE_IN_PIXELS);
-        int halfImageGridsAmountY = (int) Math.ceil((double) halfImageHeight / GRID_SIZE_IN_PIXELS);
-        for (int x = -halfImageGridsAmountX; x <= halfImageGridsAmountX; x++) {
-            int gridPixelX = halfImageWidth + x * GRID_SIZE_IN_PIXELS;
-            for (int y = -halfImageGridsAmountY; y <= halfImageGridsAmountY; y++) {
+        int halfImageGridsAmount = (int) Math.ceil((double) halfImageSize / GRID_SIZE_IN_PIXELS);
+        for (int x = -halfImageGridsAmount; x <= halfImageGridsAmount; x++) {
+            int gridPixelX = halfImageSize + x * GRID_SIZE_IN_PIXELS;
+            for (int y = -halfImageGridsAmount; y <= halfImageGridsAmount; y++) {
                 g2d.setColor(gridColors[Math.abs(x + y) % 2]);
-                int gridPixelY = halfImageWidth + y * GRID_SIZE_IN_PIXELS;
+                int gridPixelY = halfImageSize + y * GRID_SIZE_IN_PIXELS;
                 g2d.fillRect(gridPixelX, gridPixelY, GRID_SIZE_IN_PIXELS, GRID_SIZE_IN_PIXELS);
             }
         }

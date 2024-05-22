@@ -33,12 +33,15 @@ public class IceQueen extends EntitySlime {
     Player target = null;
     // other variables and AI
     int indexAI = 0;
-    static HashMap<String, Double> attrMapFrostShard;
-    EntityHelper.ProjectileShootInfo shootInfoFrostShard;
+    static HashMap<String, Double> attrMapFrostShard, attrMapFrostWave;
+    EntityHelper.ProjectileShootInfo shootInfoFrostShard, shootInfoFrostWave;
     static {
         attrMapFrostShard = new HashMap<>();
         attrMapFrostShard.put("damage", 444d);
         attrMapFrostShard.put("knockback", 1d);
+        attrMapFrostWave = new HashMap<>();
+        attrMapFrostWave.put("damage", 504d);
+        attrMapFrostWave.put("knockback", 1d);
     }
     private void AI() {
         // no AI after death
@@ -71,7 +74,10 @@ public class IceQueen extends EntitySlime {
                         bukkitEntity.getLocation(), target.getLocation().add(0, 15, 0), 1 );
                 bukkitEntity.setVelocity(direction);
                 if (indexAI % 15 == 0) {
-                    new FrostWave(target, ((LivingEntity) bukkitEntity).getEyeLocation() );
+                    shootInfoFrostWave.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                    shootInfoFrostWave.velocity = MathHelper.getDirection(
+                            shootInfoFrostWave.shootLoc, target.getEyeLocation(), 1.75);
+                    EntityHelper.spawnProjectile(shootInfoFrostWave);
                 }
             }
             // ice shard from above
@@ -184,6 +190,8 @@ public class IceQueen extends EntitySlime {
         // shoot info
         shootInfoFrostShard = new EntityHelper.ProjectileShootInfo(
                 bukkitEntity, new Vector(), attrMapFrostShard, EntityHelper.DamageType.ARROW, "寒霜碎块");
+        shootInfoFrostWave = new EntityHelper.ProjectileShootInfo(
+                bukkitEntity, new Vector(), attrMapFrostWave, EntityHelper.DamageType.MAGIC, "寒霜波");
     }
 
     // disable death function to remove boss bar

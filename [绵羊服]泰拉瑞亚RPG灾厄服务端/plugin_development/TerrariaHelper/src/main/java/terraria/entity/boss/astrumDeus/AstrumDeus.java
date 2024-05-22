@@ -84,7 +84,7 @@ public class AstrumDeus extends EntitySlime {
         attrMapTail.put("damageTakenMulti", 1 - TAIL_DR);
     }
     public EntityHelper.ProjectileShootInfo projectilePropertyLaserBlue, projectilePropertyLaserOrange, projectilePropertyMine;
-    int index;
+    int segmentIndex;
     int indexAI = 0;
     double healthRatio = 1;
     Vector dVec = null, bufferVec = new Vector(0, 0, 0);
@@ -106,7 +106,7 @@ public class AstrumDeus extends EntitySlime {
                 .setTicksLinger(10);
     }
     private void handleSpawnAnimation() {
-        if (index != 0) {
+        if (segmentIndex != 0) {
             spawnAnimationIndex --;
             return;
         }
@@ -179,9 +179,9 @@ public class AstrumDeus extends EntitySlime {
         switch (attackMethod) {
             case 1: {
                 if (healthRatio > 0.5)
-                    shootInfo = index % 2 == 0 ? projectilePropertyLaserBlue : projectilePropertyLaserOrange;
+                    shootInfo = segmentIndex % 2 == 0 ? projectilePropertyLaserBlue : projectilePropertyLaserOrange;
                 else
-                    shootInfo = index * 2 < TOTAL_LENGTH ? projectilePropertyLaserBlue : projectilePropertyLaserOrange;
+                    shootInfo = segmentIndex * 2 < TOTAL_LENGTH ? projectilePropertyLaserBlue : projectilePropertyLaserOrange;
                 break;
             }
             case 2:
@@ -246,7 +246,7 @@ public class AstrumDeus extends EntitySlime {
             }
             else {
                 dVec.multiply(0.975);
-                if (index == 0)
+                if (segmentIndex == 0)
                     dVec.setY(dVec.getY() - 0.05);
                 else
                     dVec.setY(dVec.getY() + 0.05);
@@ -255,11 +255,11 @@ public class AstrumDeus extends EntitySlime {
         else {
             // one head borrows, one head flies
             boolean yCoordRequirementMet = locY > target.getLocation().getY();
-            if (index != 0) yCoordRequirementMet = !yCoordRequirementMet;
+            if (segmentIndex != 0) yCoordRequirementMet = !yCoordRequirementMet;
             if (yCoordRequirementMet)
                 shouldIncreaseIdx = false;
             else {
-                Location targetLoc = target.getLocation().subtract(0, index == 0 ? 20 : -20, 0);
+                Location targetLoc = target.getLocation().subtract(0, segmentIndex == 0 ? 20 : -20, 0);
                 dVec = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                 double dVecLen = dVec.length();
                 if (dVecLen < 0.01) {
@@ -269,7 +269,7 @@ public class AstrumDeus extends EntitySlime {
                 dVec.multiply(0.35 / dVecLen);
             }
             dVec.multiply(0.95);
-            if (index == 0)
+            if (segmentIndex == 0)
                 dVec.setY(dVec.getY() - 0.05);
             else
                 dVec.setY(dVec.getY() + 0.05);
@@ -302,7 +302,7 @@ public class AstrumDeus extends EntitySlime {
         // AI
         {
             // increase player aggro duration
-            if (index == 0)
+            if (segmentIndex == 0)
                 targetMap.get(target.getUniqueId()).addAggressionTick();
 
             healthRatio = getHealth() / getMaxHealth();
@@ -325,7 +325,7 @@ public class AstrumDeus extends EntitySlime {
                 target = head.target;
             // if target is valid, attack
             // phase transition
-            if (index == 0 && !secondPhase && healthRatio < 0.5)
+            if (segmentIndex == 0 && !secondPhase && healthRatio < 0.5)
                 phaseTransition();
 
             if (spawnAnimationIndex > 0) {
@@ -350,14 +350,14 @@ public class AstrumDeus extends EntitySlime {
                     // face the charging direction
                     this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
                     // follow
-                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
+                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
                 }
                 // body and tail
                 else {
-                    if (++indexAI % 200 == index * 2) {
+                    if (++indexAI % 200 == segmentIndex * 2) {
                         shootProjectiles(1);
                     }
-                    if (index % 2 == 0 && indexAI % 100 == index) {
+                    if (segmentIndex % 2 == 0 && indexAI % 100 == segmentIndex) {
                         shootProjectiles(2);
                     }
                 }
@@ -376,33 +376,33 @@ public class AstrumDeus extends EntitySlime {
         return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
     }
     // a constructor for actual spawning
-    public AstrumDeus(Player summonedPlayer, ArrayList<LivingEntity> bossParts, Location spawnParticleLoc, int index) {
+    public AstrumDeus(Player summonedPlayer, ArrayList<LivingEntity> bossParts, Location spawnParticleLoc, int segmentIndex) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // copy variable
         this.bossParts = bossParts;
-        this.index = index;
+        this.segmentIndex = segmentIndex;
         // spawn location
         summonedLocation = spawnParticleLoc;
         summonParticleLoc1 = spawnParticleLoc.clone();
         summonParticleLoc2 = spawnParticleLoc.clone();
         Location spawnLoc;
-        if (index == 0) {
+        if (segmentIndex == 0) {
             spawnLoc = spawnParticleLoc.clone();
             spawnLoc.setY(-10);
         }
         else
-            spawnLoc = bossParts.get(index - 1).getLocation().subtract(0, 2, 0);
+            spawnLoc = bossParts.get(segmentIndex - 1).getLocation().subtract(0, 2, 0);
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        if (index == 0) {
+        if (segmentIndex == 0) {
             setCustomName(BOSS_TYPE.msgName + "头");
             this.head = null;
         }
         else {
             this.head = (AstrumDeus) ((CraftEntity) bossParts.get(0)).getHandle();
-            if (index + 1 < TOTAL_LENGTH)
+            if (segmentIndex + 1 < TOTAL_LENGTH)
                 setCustomName(BOSS_TYPE.msgName + "体节");
             else
                 setCustomName(BOSS_TYPE.msgName + "尾");
@@ -416,11 +416,11 @@ public class AstrumDeus extends EntitySlime {
         // init attribute map
         {
             // head
-            if (index == 0) {
+            if (segmentIndex == 0) {
                 attrMap = (HashMap<String, Double>) attrMapHead.clone();
             }
             // tail
-            else if (index + 1 == TOTAL_LENGTH) {
+            else if (segmentIndex + 1 == TOTAL_LENGTH) {
                 attrMap = (HashMap<String, Double>) attrMapTail.clone();
             }
             // body
@@ -431,7 +431,7 @@ public class AstrumDeus extends EntitySlime {
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
-        if (index == 0) {
+        if (segmentIndex == 0) {
             bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                     BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
@@ -440,7 +440,7 @@ public class AstrumDeus extends EntitySlime {
         }
         // init target map
         {
-            if (index == 0) {
+            if (segmentIndex == 0) {
                 targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                         getBukkitEntity(), BossHelper.BossType.WALL_OF_FLESH.msgName, summonedPlayer, true, bossbar);
             } else {
@@ -461,7 +461,7 @@ public class AstrumDeus extends EntitySlime {
         {
             bossParts.add((LivingEntity) bukkitEntity);
             // put a placeholder in boss map so no BGM will play before it is summoned
-            if (index == 0)
+            if (segmentIndex == 0)
                 BossHelper.bossMap.put(BOSS_TYPE.msgName, new ArrayList<>());
             this.noclip = true;
             this.setNoGravity(true);
@@ -478,8 +478,8 @@ public class AstrumDeus extends EntitySlime {
             if (head != null)
                 EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
-            if (index + 1 < TOTAL_LENGTH)
-                new AstrumDeus(summonedPlayer, bossParts, spawnParticleLoc, index + 1);
+            if (segmentIndex + 1 < TOTAL_LENGTH)
+                new AstrumDeus(summonedPlayer, bossParts, spawnParticleLoc, segmentIndex + 1);
         }
     }
 
@@ -487,7 +487,7 @@ public class AstrumDeus extends EntitySlime {
     @Override
     public void die() {
         super.die();
-        if (index == 0 || index == SECOND_HEAD_INDEX) {
+        if (segmentIndex == 0 || segmentIndex == SECOND_HEAD_INDEX) {
             // prevent duplicated death handling
             if (! (bossParts.get(0).isDead() && bossParts.get(SECOND_HEAD_INDEX).isDead()) )
                 return;
@@ -519,7 +519,7 @@ public class AstrumDeus extends EntitySlime {
         if (head != null)
             setHealth(head.getHealth());
         // load nearby chunks
-        if (index % 10 == 0) {
+        if (segmentIndex % 10 == 0) {
             for (int i = -2; i <= 2; i ++)
                 for (int j = -2; j <= 2; j ++) {
                     org.bukkit.Chunk currChunk = bukkitEntity.getLocation().add(i << 4, 0, j << 4).getChunk();

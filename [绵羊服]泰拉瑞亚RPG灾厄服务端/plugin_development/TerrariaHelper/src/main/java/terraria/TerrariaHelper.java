@@ -74,6 +74,9 @@ public class TerrariaHelper extends JavaPlugin {
                     case "oxygen": {
                         return EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR).asInt() + "";
                     }
+                    case "pov_locked": {
+                        return ply.getScoreboardTags().contains("temp_lockPOV") ? "1" : "0";
+                    }
                     case "money": {
                         double amount = PlayerHelper.getMoney(ply);
                         if (amount < 100) {

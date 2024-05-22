@@ -27,6 +27,7 @@ import terraria.entity.boss.profanedGuardians.GuardianCommander;
 import terraria.entity.boss.providence.Providence;
 import terraria.entity.boss.ravager.Ravager;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
+import terraria.entity.boss.stormWeaver.StormWeaver;
 import terraria.entity.boss.theDestroyer.Destroyer;
 import terraria.entity.boss.theHiveMind.TheHiveMind;
 import terraria.entity.boss.skeletron.SkeletronHead;
@@ -316,6 +317,13 @@ public class BossHelper {
             case PROVIDENCE_THE_PROFANED_GODDESS: {
                 if (Providence.canSpawn(target)) {
                     new Providence(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case STORM_WEAVER: {
+                if (StormWeaver.canSpawn(target)) {
+                    new StormWeaver(target, new ArrayList<>(), 0);
                     spawnedSuccessfully = true;
                 }
                 break;

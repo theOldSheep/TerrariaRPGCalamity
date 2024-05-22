@@ -10,8 +10,8 @@ worldGen:
     biomeMarkerRadiusPixel: 2
     spawnMarkerRadiusPixel: 3
     biomeScanRadiusInBlocks: 5000
-    minLabeledBiomeAreaPixels: 25
-    gridSizeInPixels: 100
+    minLabeledBiomeAreaPixels: 50
+    gridSizeInPixels: 50
     outputFolder: worldGenDebug
 rarity:
   '-2': §#AAAAAA§l

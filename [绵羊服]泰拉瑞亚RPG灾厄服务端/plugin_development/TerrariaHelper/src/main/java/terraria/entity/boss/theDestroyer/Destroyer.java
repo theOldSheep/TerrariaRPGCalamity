@@ -63,7 +63,7 @@ public class Destroyer extends EntitySlime {
                 .setProjectileSpeed(laserSpeed);
     }
     public EntityHelper.ProjectileShootInfo projectilePropertyDeathLaser, projectilePropertyCursedLaser, projectilePropertyElectricLaser;
-    int index;
+    int segmentIndex;
     int indexAI = 0;
     Vector dVec = null, bufferVec = new Vector(0, 0, 0);
     boolean charging = true;
@@ -197,7 +197,7 @@ public class Destroyer extends EntitySlime {
                     if (valPitch != null) this.pitch = valPitch.asFloat();
                 }
                 // head
-                if (index == 0) {
+                if (segmentIndex == 0) {
                     // increase player aggro duration
                     targetMap.get(target.getUniqueId()).addAggressionTick();
                     // attack
@@ -205,11 +205,11 @@ public class Destroyer extends EntitySlime {
                     // face the charging direction
                     this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
                     // follow
-                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
+                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
                 }
                 // body, shoot laser
-                else if (index < TOTAL_LENGTH - 1) {
-                    if (++indexAI % 250 == index * 2) {
+                else if (segmentIndex < TOTAL_LENGTH - 1) {
+                    if (++indexAI % 250 == segmentIndex * 2) {
                         double healthRatio = getHealth() / getMaxHealth();
                         if (getScoreboardTags().contains("hasProbe") || healthRatio < 0.5) {
                             if (healthRatio < 0.7)
@@ -236,31 +236,31 @@ public class Destroyer extends EntitySlime {
         return !WorldHelper.isDayTime(player.getWorld());
     }
     // a constructor for actual spawning
-    public Destroyer(Player summonedPlayer, ArrayList<LivingEntity> bossParts, int index) {
+    public Destroyer(Player summonedPlayer, ArrayList<LivingEntity> bossParts, int segmentIndex) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // copy variable
         this.bossParts = bossParts;
-        this.index = index;
+        this.segmentIndex = segmentIndex;
         // spawn location
         Location spawnLoc;
-        if (index == 0) {
+        if (segmentIndex == 0) {
             double angle = Math.random() * 720d, dist = 48;
             spawnLoc = summonedPlayer.getLocation().add(
                     MathHelper.xsin_degree(angle) * dist, -40, MathHelper.xcos_degree(angle) * dist);
         } else {
-            spawnLoc = bossParts.get(index - 1).getLocation().add(0, -1, 0);
+            spawnLoc = bossParts.get(segmentIndex - 1).getLocation().add(0, -1, 0);
         }
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        if (index == 0) {
+        if (segmentIndex == 0) {
             setCustomName(BOSS_TYPE.msgName + "§1");
             this.head = this;
         }
         else {
             this.head = (Destroyer) ((CraftEntity) bossParts.get(0)).getHandle();
-            if (index + 1 < TOTAL_LENGTH) {
+            if (segmentIndex + 1 < TOTAL_LENGTH) {
                 setCustomName(BOSS_TYPE.msgName + "§2");
                 addScoreboardTag("hasProbe");
             }
@@ -285,12 +285,12 @@ public class Destroyer extends EntitySlime {
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
             // head
-            if (index == 0) {
+            if (segmentIndex == 0) {
                 attrMap.put("damage", HEAD_DMG);
                 attrMap.put("defence", HEAD_DEF);
             }
             // tail
-            else if (index + 1 == TOTAL_LENGTH) {
+            else if (segmentIndex + 1 == TOTAL_LENGTH) {
                 attrMap.put("damage", TAIL_DMG);
                 attrMap.put("defence", TAIL_DEF);
             }
@@ -303,7 +303,7 @@ public class Destroyer extends EntitySlime {
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
-        if (index == 0) {
+        if (segmentIndex == 0) {
             bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                     BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
         } else {
@@ -312,7 +312,7 @@ public class Destroyer extends EntitySlime {
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
         // init target map
         {
-            if (index == 0) {
+            if (segmentIndex == 0) {
                 targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                         getBukkitEntity(), BossHelper.BossType.WALL_OF_FLESH.msgName, summonedPlayer, true, bossbar);
             } else {
@@ -332,7 +332,7 @@ public class Destroyer extends EntitySlime {
         // boss parts and other properties
         {
             bossParts.add((LivingEntity) bukkitEntity);
-            if (index == 0)
+            if (segmentIndex == 0)
                 BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
             this.noclip = true;
             this.setNoGravity(true);
@@ -347,8 +347,8 @@ public class Destroyer extends EntitySlime {
             // segment settings
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
-            if (index + 1 < TOTAL_LENGTH)
-                new Destroyer(summonedPlayer, bossParts, index + 1);
+            if (segmentIndex + 1 < TOTAL_LENGTH)
+                new Destroyer(summonedPlayer, bossParts, segmentIndex + 1);
         }
     }
 
@@ -356,7 +356,7 @@ public class Destroyer extends EntitySlime {
     @Override
     public void die() {
         super.die();
-        if (index > 0) return;
+        if (segmentIndex > 0) return;
         // drop loot
         if (getMaxHealth() > 10) {
             terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
@@ -379,12 +379,12 @@ public class Destroyer extends EntitySlime {
         motY /= 0.98;
         motZ /= 0.91;
         // update boss bar and dynamic DR
-        if (index == 0)
+        if (segmentIndex == 0)
             terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, ticksLived, BOSS_TYPE);
         // update health
         setHealth(head.getHealth());
         // load nearby chunks
-        if (index % 10 == 0) {
+        if (segmentIndex % 10 == 0) {
             for (int i = -2; i <= 2; i ++)
                 for (int j = -2; j <= 2; j ++) {
                     org.bukkit.Chunk currChunk = bukkitEntity.getLocation().add(i << 4, 0, j << 4).getChunk();

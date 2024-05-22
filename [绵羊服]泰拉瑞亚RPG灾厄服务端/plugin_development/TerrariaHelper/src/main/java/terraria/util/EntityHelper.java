@@ -1779,10 +1779,10 @@ public class EntityHelper {
             if (target instanceof Player)
                 return (!strict) && (targetScoreboardTags.contains("PVP") && entityScoreboardTags.contains("PVP"));
             else {
-                HashSet<String> accessories = PlayerHelper.getAccessories(damageSource);
                 if (targetScoreboardTags.contains("isMonster")) return true;
                 // homing weapons and minions should not willingly attack critters and NPCs (with voodoo doll)
                 if (strict) return false;
+                HashSet<String> accessories = PlayerHelper.getAccessories(damageSource);
                 if (targetScoreboardTags.contains("isNPC"))
                     return accessories.contains(target.getName() + "巫毒娃娃");
                 if (targetScoreboardTags.contains("isAnimal"))
@@ -1790,8 +1790,9 @@ public class EntityHelper {
                 // entities that are not animal, NPC or monster can be damaged but are not targeted actively
                 return true;
             }
-        } else if (target instanceof Player) {
-            // non-player attacks player
+        }
+        // non-player attacks player
+        else if (target instanceof Player) {
             HashSet<String> accessories = PlayerHelper.getAccessories(target);
             Player targetPly = (Player) target;
             if (PlayerHelper.isProperlyPlaying(targetPly)) {
@@ -1809,8 +1810,9 @@ public class EntityHelper {
             else {
                 return false;
             }
-        } else {
-            // non-player attacks non-player
+        }
+        // non-player attacks non-player
+        else {
             // monster attack target: npc and critters can be damaged by accident but not targeted on purpose
             if (entityScoreboardTags.contains("isMonster")) {
                 if (targetScoreboardTags.contains("isNPC") || targetScoreboardTags.contains("isAnimal"))
@@ -2812,26 +2814,41 @@ public class EntityHelper {
         handleSegmentsFollow(segments, moveOption, 0);
     }
     public static void handleSegmentsFollow(List<LivingEntity> segments, WormSegmentMovementOptions moveOption, int startIndex) {
-        for (int i = (startIndex + 1) ; i < segments.size(); i ++) {
+        for (int i = startIndex + 1; i < segments.size(); i++) {
             LivingEntity segmentCurrent = segments.get(i);
-            if (segmentCurrent.getHealth() < 1e-5 || segmentCurrent.isDead())
+            if (!segmentCurrent.isValid()) { // Check if segment is valid (alive and healthy)
                 return;
-            LivingEntity segmentLast = segments.get(i - 1);
-            LivingEntity segmentNext = segments.get(Math.min(i + 1, segments.size()) - 1);
-            Vector segDVec = segmentLast.getLocation().subtract(segmentNext.getLocation()).toVector().normalize();
-            Vector followDir = segmentLast.getLocation().subtract(segmentCurrent.getLocation()).toVector().normalize();
-            Vector dVec = segDVec.multiply(moveOption.straighteningMultiplier)
-                    .add(followDir.multiply(moveOption.followingMultiplier));
-            if (dVec.lengthSquared() > 1e-9) {
+            }
+
+            LivingEntity segmentLast = segments.get(i - 1); // Get the segment in front
+            LivingEntity segmentNext = null; // Initialize segmentNext for possible later use
+            Vector segDVec; // Direction vector is guaranteed to be initialized in the if-else branch
+
+            // Check for next segment or handle as tail
+            if (i + 1 < segments.size() && segments.get(i + 1).isValid()) {
+                segmentNext = segments.get(i + 1); // Get the segment behind
+                segDVec = MathHelper.getDirection(segmentNext.getLocation(), segmentLast.getLocation(), 1.0);  // Point towards the previous segment
+            } else {
+                // Treat as tail segment - just follow the segment in front
+                segDVec = MathHelper.getDirection(segmentCurrent.getLocation(), segmentLast.getLocation(), 1.0); // Point towards the previous segment
+            }
+
+            Vector followDir = MathHelper.getDirection(segmentCurrent.getLocation(), segmentLast.getLocation(), 1.0);
+            Vector dVec = segDVec.normalize().multiply(moveOption.straighteningMultiplier) // Straightening
+                    .add(followDir.multiply(moveOption.followingMultiplier)); // Following
+
+            if (dVec.lengthSquared() > 1e-9) { // Check if movement is significant
                 dVec.normalize().multiply(moveOption.followDistance);
                 Location targetLoc = segmentLast.getLocation().subtract(dVec);
+
                 if (moveOption.velocityOrTeleport) {
                     Vector velocity = targetLoc.subtract(segmentCurrent.getLocation()).toVector();
-                    segmentCurrent.setVelocity(velocity);
+                    segmentCurrent.setVelocity(velocity); // Smooth movement
                 } else {
-                    segmentCurrent.teleport(targetLoc);
+                    segmentCurrent.teleport(targetLoc); // Teleportation
                     segmentCurrent.setVelocity(new Vector());
                 }
+
                 setMetadata(segmentCurrent, "yaw", (float) MathHelper.getVectorYaw( dVec ));
                 setMetadata(segmentCurrent, "pitch", (float) MathHelper.getVectorPitch( dVec ));
             }

@@ -1870,6 +1870,15 @@ TNT:
     blockHitAction: stick
     buffInflict:
         - "燃烧|200|1"
+寒霜波:
+    penetration: 999999
+    liveTime: 75
+    projectileSize: 4
+    noGravityTicks: 0
+    blockHitAction: thru
+    buffInflict:
+        - "冷冻|150|1"
+        - "冰冻|100|0.1654"
 手里剑:
     penetration: 3
     slowedByWater: true

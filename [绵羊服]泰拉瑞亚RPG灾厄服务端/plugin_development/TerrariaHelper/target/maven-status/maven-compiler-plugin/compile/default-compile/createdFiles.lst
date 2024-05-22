@@ -41,6 +41,7 @@ terraria\event\listener\PlayerQuitListener.class
 terraria\entity\npc\TerrariaNPCGoblinTinkerer.class
 terraria\event\listener\ArrowHitListener$1.class
 terraria\entity\boss\queenSlime\QueenSlime.class
+terraria\event\listener\BossSpawnListener$1.class
 terraria\entity\boss\empressOfLight\EmpressOfLight$1.class
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu$1.class
 terraria\util\DragoncoreHelper.class
@@ -75,7 +76,6 @@ terraria\entity\boss\moonLord\MoonLordEye.class
 terraria\util\WorldHelper$1.class
 terraria\entity\boss\kingSlime\CrownJewel.class
 terraria\entity\boss\event\celestialPillar\CelestialPillar.class
-terraria\entity\boss\event\iceQueen\FrostWave.class
 terraria\entity\npc\TerrariaNPCBlockSeller.class
 terraria\worldgen\overworld\BiomeSummary.class
 terraria\entity\others\TerrariaEntityPlayer.class
@@ -185,6 +185,7 @@ terraria\entity\minion\MinionHusk.class
 terraria\entity\boss\dukeFishron\Sharknado.class
 terraria\entity\boss\empressOfLight\EmpressOfLight$AttackPhase.class
 terraria\entity\boss\dukeFishron\WaterBlob.class
+terraria\entity\boss\stormWeaver\StormWeaver.class
 terraria\entity\monster\MonsterSilverfish.class
 terraria\entity\monster\MonsterSlime.class
 terraria\entity\boss\lunaticCultist\PhantomDragon.class

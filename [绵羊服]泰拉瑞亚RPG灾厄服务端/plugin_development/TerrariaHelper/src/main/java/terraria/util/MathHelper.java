@@ -281,6 +281,9 @@ public class MathHelper {
     public static Vector toBukkitVector(Vec3D vec) {
         return new Vector(vec.x, vec.y, vec.z);
     }
+    public static Vector getDirection(Location initialLoc, Location finalLoc, double length) {
+        return getDirection(initialLoc, finalLoc, length, false);
+    }
     public static Vector getDirection(Location initialLoc, Location finalLoc, double length, boolean keepOriginalBelowLength) {
         // handle different world
         if (initialLoc.getWorld() != finalLoc.getWorld())
@@ -295,9 +298,6 @@ public class MathHelper {
             return new Vector(0, length, 0);
         dir.multiply(length / len);
         return dir;
-    }
-    public static Vector getDirection(Location initialLoc, Location finalLoc, double length) {
-        return getDirection(initialLoc, finalLoc, length, false);
     }
 
     // creates the non-zero cross product: if the two vectors are collinear, return a random one that is orthogonal to them. DOES NOT NORMALIZE.

@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import terraria.util.BossHelper;
 import terraria.util.ItemHelper;
 import terraria.util.PlayerHelper;
+import terraria.util.WorldHelper;
 
 import java.util.HashMap;
 
@@ -47,6 +48,7 @@ public class BossSpawnListener implements Listener {
         summonItems.put("奇异信息素", BossHelper.BossType.THE_DRAGONFOLLY);
         summonItems.put("亵渎碎片", BossHelper.BossType.PROFANED_GUARDIANS);
         summonItems.put("亵渎晶核", BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS);
+        summonItems.put("宇宙符文", null); // Handled as a special case
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {
@@ -71,7 +73,22 @@ public class BossSpawnListener implements Listener {
         ItemStack tool = ply.getInventory().getItemInMainHand();
         String toolType = ItemHelper.splitItemName(tool)[1];
         // handle boss spawning
-        BossHelper.BossType bossType = summonItems.get(toolType);
+        BossHelper.BossType bossType = null;
+        if (toolType.equals("宇宙符文")) {
+            switch (WorldHelper.BiomeType.getBiome(ply)) {
+                case SPACE:
+                    bossType = BossHelper.BossType.STORM_WEAVER;
+                    break;
+                case DUNGEON:
+                    bossType = BossHelper.BossType.CEASELESS_VOID;
+                    break;
+                case UNDERWORLD:
+                    bossType = BossHelper.BossType.SIGNUS_ENVOY_OF_THE_DEVOURER;
+                    break;
+            }
+        }
+        else
+            bossType = summonItems.get(toolType);
         if (bossType != null) {
             if ( BossHelper.spawnBoss(ply, bossType) ) {
                 removeSummoningItem(ply, tool);

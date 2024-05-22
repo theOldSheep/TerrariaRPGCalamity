@@ -1,8 +1,13 @@
 package terraria.entity.boss.dragonFolly;
 
+import eos.moe.dragoncore.api.CoreAPI;
+import eos.moe.dragoncore.util.CoreUtils;
 import net.minecraft.server.v1_12_R1.*;
+import org.apache.logging.log4j.core.Core;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.Server;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -46,7 +51,7 @@ public class DragonFolly extends EntitySlime {
             {10, 5},
     };
     private static final double[] PHASE_THRESHOLDS = {0.75, 0.4};
-    private static final double PARTICLE_INTERVAL = 2;
+    private static final int PARTICLE_INTERVAL = 100;
     private static final double HORIZONTAL_LIMIT = 48.0, ALIGNMENT_DIST = 20, ALIGNMENT_SPEED = 0.8;
     private static final double PROJECTILE_SPEED = 1.0;
     private static final int PROJECTILE_TICKS_OFFSET = 30;
@@ -72,7 +77,7 @@ public class DragonFolly extends EntitySlime {
     Vector velocity = new Vector();
     private Location spawnPosition;
     private boolean isDashPhase = true, isDashing = false;
-    private int particleTicks = 0;
+    private int particleTicks = PARTICLE_INTERVAL;
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -120,6 +125,7 @@ public class DragonFolly extends EntitySlime {
                     bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
                 }
 
+                isDashing = false;
                 if (isDashPhase)
                     dashAttack();
                 else
@@ -141,6 +147,7 @@ public class DragonFolly extends EntitySlime {
     private void dashAttack() {
         // During dashes
         if (indexAI <= DASH_TIMINGS[AIPhase][1]) {
+            isDashing = true;
             // Initialize dash direction
             if (indexAI == 0) {
                 velocity = MathHelper.getDirection(bukkitEntity.getLocation(),
@@ -202,17 +209,9 @@ public class DragonFolly extends EntitySlime {
         return horizontalDistance > HORIZONTAL_LIMIT * HORIZONTAL_LIMIT;
     }
     private void visualizeBoundary() {
-        Location center = spawnPosition;
-        Location targetPos = target.getLocation();
-        double angleToPlayer = Math.atan2(targetPos.getZ() - center.getZ(), targetPos.getX() - center.getX());
-        int numVisualizedParticles = isOutOfBoundary() ? 16 : 8;
-        // Center particles around the player, and only visualize half of the circle.
-        for (int i = -numVisualizedParticles/2; i < numVisualizedParticles/2; ++i) {
-            double angle = angleToPlayer + i * Math.PI / 16;
-            double x = center.getX() + HORIZONTAL_LIMIT * Math.cos(angle);
-            double z = center.getZ() + HORIZONTAL_LIMIT * Math.sin(angle);
-            spawnPosition.getWorld().spawnParticle(Particle.REDSTONE, x, targetPos.getY() + 2, z, 1, 0, 0, 0, 0);
-        }
+        String cmd = String.format("core particlespawn %5$s dragonfolly random %1$f,%2$f,%3$f 0,0,0 %4$d",
+                spawnPosition.getX(), spawnPosition.getY(), spawnPosition.getZ(), PARTICLE_INTERVAL, spawnPosition.getWorld().getName());
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), cmd);
     }
     // default constructor to handle chunk unload
     public DragonFolly(World world) {

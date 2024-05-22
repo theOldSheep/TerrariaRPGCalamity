@@ -1,7 +1,6 @@
 package terraria.entity.boss.aquaticScourge;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -13,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.desertScourge.DesertNuisance;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
@@ -60,7 +58,7 @@ public class AquaticScourge extends EntitySlime {
         attrMapToxicCloud.put("knockback", 2d);
     }
     public EntityHelper.ProjectileShootInfo projectilePropertySandTooth, projectilePropertySandPoisonCloud, projectilePropertyToxicCloud;
-    int index;
+    int segmentIndex;
     int indexAI = 0;
     Vector dVec = null, bufferVec = new Vector(0, 0, 0);
     boolean charging = true;
@@ -213,7 +211,7 @@ public class AquaticScourge extends EntitySlime {
                 if (valPitch != null) this.pitch = valPitch.asFloat();
             }
             // head
-            if (index == 0) {
+            if (segmentIndex == 0) {
                 // increase player aggro duration
                 targetMap.get(target.getUniqueId()).addAggressionTick();
                 // attack
@@ -222,11 +220,11 @@ public class AquaticScourge extends EntitySlime {
                 this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
                 this.pitch = (float) MathHelper.getVectorPitch( bukkitEntity.getVelocity() );
                 // follow
-                EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
+                EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
             }
             // body
-            else if (index < TOTAL_LENGTH - 1) {
-                if (++indexAI % 200 == index * 2) {
+            else if (segmentIndex < TOTAL_LENGTH - 1) {
+                if (++indexAI % 200 == segmentIndex * 2) {
                     shootProjectiles(1);
                 }
             }
@@ -244,31 +242,31 @@ public class AquaticScourge extends EntitySlime {
         return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
     }
     // a constructor for actual spawning
-    public AquaticScourge(Player summonedPlayer, ArrayList<LivingEntity> bossParts, int index) {
+    public AquaticScourge(Player summonedPlayer, ArrayList<LivingEntity> bossParts, int segmentIndex) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // copy variable
         this.bossParts = bossParts;
-        this.index = index;
+        this.segmentIndex = segmentIndex;
         // spawn location
         Location spawnLoc;
-        if (index == 0) {
+        if (segmentIndex == 0) {
             double angle = Math.random() * 720d, dist = 40;
             spawnLoc = summonedPlayer.getLocation().add(
                     MathHelper.xsin_degree(angle) * dist, -40, MathHelper.xcos_degree(angle) * dist);
         } else {
-            spawnLoc = bossParts.get(index - 1).getLocation().add(0, -1, 0);
+            spawnLoc = bossParts.get(segmentIndex - 1).getLocation().add(0, -1, 0);
         }
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        if (index == 0) {
+        if (segmentIndex == 0) {
             setCustomName(BOSS_TYPE.msgName + "头");
             this.head = this;
         }
         else {
             this.head = (AquaticScourge) ((CraftEntity) bossParts.get(0)).getHandle();
-            if (index + 1 < TOTAL_LENGTH)
+            if (segmentIndex + 1 < TOTAL_LENGTH)
                 setCustomName(BOSS_TYPE.msgName + "体节");
             else
                 setCustomName(BOSS_TYPE.msgName + "尾");
@@ -290,13 +288,13 @@ public class AquaticScourge extends EntitySlime {
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
             // head
-            if (index == 0) {
+            if (segmentIndex == 0) {
                 attrMap.put("damage", HEAD_DMG);
                 attrMap.put("defence", HEAD_DEF);
                 attrMap.put("damageTakenMulti", 1 - HEAD_DR);
             }
             // tail
-            else if (index + 1 == TOTAL_LENGTH) {
+            else if (segmentIndex + 1 == TOTAL_LENGTH) {
                 attrMap.put("damage", TAIL_DMG);
                 attrMap.put("defence", TAIL_DEF);
                 attrMap.put("damageTakenMulti", 1 - TAIL_DR);
@@ -311,7 +309,7 @@ public class AquaticScourge extends EntitySlime {
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
-        if (index == 0) {
+        if (segmentIndex == 0) {
             bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                     BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
@@ -320,7 +318,7 @@ public class AquaticScourge extends EntitySlime {
         }
         // init target map
         {
-            if (index == 0) {
+            if (segmentIndex == 0) {
                 targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                         getBukkitEntity(), BossHelper.BossType.WALL_OF_FLESH.msgName, summonedPlayer, true, bossbar);
             } else {
@@ -340,7 +338,7 @@ public class AquaticScourge extends EntitySlime {
         // boss parts and other properties
         {
             bossParts.add((LivingEntity) bukkitEntity);
-            if (index == 0)
+            if (segmentIndex == 0)
                 BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
             this.noclip = true;
             this.setNoGravity(true);
@@ -355,8 +353,8 @@ public class AquaticScourge extends EntitySlime {
             // segment settings
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
-            if (index + 1 < TOTAL_LENGTH)
-                new AquaticScourge(summonedPlayer, bossParts, index + 1);
+            if (segmentIndex + 1 < TOTAL_LENGTH)
+                new AquaticScourge(summonedPlayer, bossParts, segmentIndex + 1);
         }
     }
 
@@ -364,7 +362,7 @@ public class AquaticScourge extends EntitySlime {
     @Override
     public void die() {
         super.die();
-        if (index > 0) return;
+        if (segmentIndex > 0) return;
         // drop loot
         if (getMaxHealth() > 10) {
             terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
@@ -387,12 +385,12 @@ public class AquaticScourge extends EntitySlime {
         motY /= 0.98;
         motZ /= 0.91;
         // update boss bar and dynamic DR
-        if (index == 0)
+        if (segmentIndex == 0)
             terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, ticksLived, BOSS_TYPE);
         // update health
         setHealth(head.getHealth());
         // load nearby chunks
-        if (index % 10 == 0) {
+        if (segmentIndex % 10 == 0) {
             for (int i = -2; i <= 2; i ++)
                 for (int j = -2; j <= 2; j ++) {
                     org.bukkit.Chunk currChunk = bukkitEntity.getLocation().add(i << 4, 0, j << 4).getChunk();

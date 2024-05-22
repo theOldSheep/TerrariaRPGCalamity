@@ -43,7 +43,7 @@ public class DesertNuisance extends EntitySlime {
                     .setStraighteningMultiplier(0.1)
                     .setVelocityOrTeleport(false);
     boolean isFirst;
-    int index;
+    int segmentIndex;
     int indexAI = 0;
     Vector dVec = null, bufferVec = new Vector(0, 0, 0);
     boolean charging = true;
@@ -149,13 +149,13 @@ public class DesertNuisance extends EntitySlime {
                     if (valPitch != null) this.pitch = valPitch.asFloat();
                 }
                 // attack
-                if (index == 0) {
+                if (segmentIndex == 0) {
                     // attack
                     headRushEnemy();
                     // face the charging direction
                     this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
                     // follow
-                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
+                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
                 }
             }
         }
@@ -172,33 +172,33 @@ public class DesertNuisance extends EntitySlime {
         return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
     }
     // a constructor for actual spawning
-    public DesertNuisance(Player summonedPlayer, ArrayList<LivingEntity> bossParts, DesertScourge owner, int index, boolean isFirst) {
+    public DesertNuisance(Player summonedPlayer, ArrayList<LivingEntity> bossParts, DesertScourge owner, int segmentIndex, boolean isFirst) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // copy variable
         this.bossParts = bossParts;
-        this.index = index;
+        this.segmentIndex = segmentIndex;
         this.isFirst = isFirst;
         // spawn location
         Location spawnLoc;
-        if (index == 0) {
+        if (segmentIndex == 0) {
             double angle = Math.random() * 720d, dist = 40;
             spawnLoc = summonedPlayer.getLocation().add(
                     MathHelper.xsin_degree(angle) * dist, -40, MathHelper.xcos_degree(angle) * dist);
         } else {
-            spawnLoc = bossParts.get(index - 1).getLocation().add(0, -1, 0);
+            spawnLoc = bossParts.get(segmentIndex - 1).getLocation().add(0, -1, 0);
         }
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
         this.owner = owner;
-        if (index == 0) {
+        if (segmentIndex == 0) {
             setCustomName("黄沙恶虫头");
             this.head = this;
         }
         else {
             this.head = (DesertNuisance) ((CraftEntity) bossParts.get(0)).getHandle();
-            if (index + 1 < TOTAL_LENGTH)
+            if (segmentIndex + 1 < TOTAL_LENGTH)
                 setCustomName("黄沙恶虫体节");
             else
                 setCustomName("黄沙恶虫尾");
@@ -223,12 +223,12 @@ public class DesertNuisance extends EntitySlime {
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
             // head
-            if (index == 0) {
+            if (segmentIndex == 0) {
                 attrMap.put("damage", HEAD_DMG);
                 attrMap.put("defence", HEAD_DEF);
             }
             // tail
-            else if (index + 1 == TOTAL_LENGTH) {
+            else if (segmentIndex + 1 == TOTAL_LENGTH) {
                 attrMap.put("damage", TAIL_DMG);
                 attrMap.put("defence", TAIL_DEF);
             }
@@ -263,8 +263,8 @@ public class DesertNuisance extends EntitySlime {
 
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
-            if (index + 1 < TOTAL_LENGTH)
-                new DesertNuisance(summonedPlayer, bossParts, owner, index + 1, isFirst);
+            if (segmentIndex + 1 < TOTAL_LENGTH)
+                new DesertNuisance(summonedPlayer, bossParts, owner, segmentIndex + 1, isFirst);
         }
     }
 
@@ -279,7 +279,7 @@ public class DesertNuisance extends EntitySlime {
         // update health
         setHealth(head.getHealth());
         // load nearby chunks
-        if (index % 10 == 0) {
+        if (segmentIndex % 10 == 0) {
             for (int i = -2; i <= 2; i ++)
                 for (int j = -2; j <= 2; j ++) {
                     org.bukkit.Chunk currChunk = bukkitEntity.getLocation().add(i << 4, 0, j << 4).getChunk();

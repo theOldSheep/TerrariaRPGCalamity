@@ -302,7 +302,7 @@ effects:
   冰冻:
     isBuff: false
     attributes:
-      speed: -10
+      speedMulti: -0.99
     tooltip: 你不能动！
   极限重力:
     isBuff: false

@@ -24,7 +24,6 @@ import terraria.entity.boss.empressOfLight.EmpressOfLight;
 import terraria.entity.boss.event.celestialPillar.CelestialPillar;
 import terraria.entity.boss.event.everscream.Everscream;
 import terraria.entity.boss.event.headlessHorseman.HeadlessHorseman;
-import terraria.entity.boss.event.iceQueen.FrostWave;
 import terraria.entity.boss.event.iceQueen.IceQueen;
 import terraria.entity.boss.event.mourningWood.MourningWood;
 import terraria.entity.boss.event.pumpking.PumpkingHand;
@@ -53,6 +52,7 @@ import terraria.entity.boss.providence.Providence;
 import terraria.entity.boss.ravager.*;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHand;
 import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
+import terraria.entity.boss.stormWeaver.StormWeaver;
 import terraria.entity.boss.theDestroyer.Destroyer;
 import terraria.entity.boss.theHiveMind.DarkHeart;
 import terraria.entity.boss.theHiveMind.HiveBlob;
@@ -130,7 +130,6 @@ public enum CustomEntities {
     BOSS_HVM_BLOB           ("HiveBlob",               55,  EntityType.SLIME,           EntitySlime.class,           HiveBlob.class),
     BOSS_HVM_HEART          ("DarkHeart",              55,  EntityType.SLIME,           EntitySlime.class,           DarkHeart.class),
     BOSS_ICE_QUEEN          ("IceQueen",               55,  EntityType.SLIME,           EntitySlime.class,           IceQueen.class),
-    BOSS_ICE_QUEEN__WAVE    ("FrostWave",              55,  EntityType.SLIME,           EntitySlime.class,           FrostWave.class),
     BOSS_KSLM               ("KingSlime",              55,  EntityType.SLIME,           EntitySlime.class,           KingSlime.class),
     BOSS_KSLM_JEWEL         ("CrownJewel",             55,  EntityType.SLIME,           EntitySlime.class,           CrownJewel.class),
     BOSS_MNLD               ("MoonLord",               55,  EntityType.SLIME,           EntitySlime.class,           MoonLord.class),
@@ -168,6 +167,7 @@ public enum CustomEntities {
     BOSS_SLMG               ("TheSlimeGod",            55,  EntityType.SLIME,           EntitySlime.class,           TheSlimeGod.class),
     BOSS_SLMG_EB            ("EbonianSlime",           55,  EntityType.SLIME,           EntitySlime.class,           EbonianSlime.class),
     BOSS_SLMG_CR            ("CrimulanSlime",          55,  EntityType.SLIME,           EntitySlime.class,           CrimulanSlime.class),
+    BOSS_STORM_WEAVER       ("StormWeaver",            55,  EntityType.SLIME,           EntitySlime.class,           StormWeaver.class),
     BOSS_TWIN_RTN           ("Retinazer",              55,  EntityType.SLIME,           EntitySlime.class,           Retinazer.class),
     BOSS_TWIN_SPZ           ("Spazmatism",             55,  EntityType.SLIME,           EntitySlime.class,           Spazmatism.class),
     BOSS_WOF_EYE            ("WallOfFleshEye",         55,  EntityType.SLIME,           EntitySlime.class,           WallOfFleshEye.class),
