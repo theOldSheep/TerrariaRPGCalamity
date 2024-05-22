@@ -1,5 +1,6 @@
 package terraria.entity.boss.providence;
 
+import com.mysql.jdbc.UpdatableResultSet;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -37,21 +38,22 @@ public class Providence extends EntitySlime {
     static final double TARGET_HEIGHT_PHASE_0 = 15.0, HORIZONTAL_DIST_PHASE_0 = 35.0;
     static final double HOVER_HEIGHT_PHASE_1 = 30.0;
     static final double MAX_SPEED = 2.5, MAX_ACCELERATION = 0.25;
-    static final double BOMB_SPEED = 1.35, BOMB_SPEED_EXHAUST = 1.0, BLAST_SPEED = 0.9;
+    static final double BOMB_SPEED = 1.1, BOMB_SPEED_EXHAUST = 1.0, BLAST_SPEED = 0.9;
     static final double PHASE_2_DECELERATION = 0.9; // Rapid slow down
     // phase 3
-    static final double[] STAR_INTERVAL_DEGREE = {10, 11, 12}, STAR_SPREAD_ANGLE = {41, 45, 50}, STAR_SPEED = {2.0, 2.5, 3.0};
+    static final double[] STAR_INTERVAL_DEGREE = {10, 10, 10}, STAR_SPREAD_ANGLE = {41, 41, 41}, STAR_SPEED = {2.0, 2.5, 3.0},
+            STAR_YAW_OFFSETS = {15, 0, -15};
     static final int[] PROJECTILE_RAIN_FIRE_TIME = {0, 8, 16};
     static final int PROJECTILE_RAIN_INTERVAL = 24;
-    static final int
-            PROJECTILE_RAIN_FULL_DURATION = PROJECTILE_RAIN_INTERVAL * 10 - 1,
-            PROJECTILE_RAIN_MARGIN_DURATION = PROJECTILE_RAIN_INTERVAL * 2;
+    static final int PROJECTILE_RAIN_FULL_DURATION = PROJECTILE_RAIN_INTERVAL * 10 - 1;
+    static final int[] PROJECTILE_RAIN_MARGIN_DURATION = {PROJECTILE_RAIN_INTERVAL * 3, PROJECTILE_RAIN_INTERVAL};
     static final int ACTION_BAR_UPDATE_INTERVAL = 3, ACTION_BAR_LENGTH = 30;
     static final double SPECIAL_EFFECT_DISTANCE = 64.0, TARGET_VERTICAL_OFFSET = SPECIAL_EFFECT_DISTANCE * 0.65, VERTICAL_ALIGNMENT_SPEED = 2.25;
     // phase 4
     static final double LASER_LENGTH = SPECIAL_EFFECT_DISTANCE + 16.0, LASER_WIDTH = 1.5,
             LASER_GAP_END = 10, LASER_AIM_PITCH = 35;
-    static final int LASER_DURATION = 120, LASER_MARGIN = 40;
+    static final int LASER_DURATION = 120;
+    static final int[] LASER_MARGIN = {40, 0};
 
 
     static HashMap<String, Double> attrMapDmgLow, attrMapDmgMid, attrMapDmgHigh;
@@ -100,12 +102,27 @@ public class Providence extends EntitySlime {
     public int weightedTransition(int currentPhase) {
         HashMap<Integer, Double> weights = new HashMap<>();
 
-        for (int phase = 0; phase < NUM_PHASES; phase++) {
-            if (phase != currentPhase) {
-                // Calculate weight inversely proportional to frequency
-                double weight = 1.0 / (phaseCounts[phase] + 1); // Avoid division by zero
-                weights.put(phase, weight);
-            }
+        int[] phasesAvailable;
+        switch (currentPhase) {
+            // projectile bomb: can go to either blast or either stopping phases
+            case 0:
+                phasesAvailable = new int[]{1, 2, 3};
+                break;
+            // blast: can only go back to bomb. It would be too harsh to go into stopping phase from here.
+            case 1:
+                phasesAvailable = new int[]{0};
+                break;
+            // stopping phases do not alternate between themselves
+            case 2:
+            case 3:
+            default:
+                phasesAvailable = new int[]{0, 1};
+                break;
+        }
+        for (int phase : phasesAvailable) {
+            // Calculate weight inversely proportional to frequency
+            double weight = 1.0 / (phaseCounts[phase] + 1); // Avoid division by zero
+            weights.put(phase, weight);
         }
 
         int newPhase = MathHelper.selectWeighedRandom(weights, currentPhase);
@@ -162,19 +179,18 @@ public class Providence extends EntitySlime {
         }
         // Do not transition out of this phase if guardians are alive!
         if (indexAI >= phaseDuration && commanderState != 1) {
-            indexAI = -1;
-            AIPhase = weightedTransition(AIPhase);
+            updateAIPhase( weightedTransition(AIPhase) );
         }
     }
     private void stopAndBurn(boolean shouldDamage) {
-        Location highestBlockLoc = bukkitEntity.getWorld().getHighestBlockAt(bukkitEntity.getLocation()).getLocation();
+        Location highestBlockLoc = WorldHelper.getHighestBlockBelow(bukkitEntity.getLocation()).getLocation();
         double targetHeight = highestBlockLoc.getY() + TARGET_VERTICAL_OFFSET; // Add a slight offset for the boss
 
         // Decelerate and vertical adjustment
         velocity.multiply(PHASE_2_DECELERATION);
         double yDiff = targetHeight - bukkitEntity.getLocation().getY();
-        if (yDiff > 4)
-            velocity.setY(Math.max(Math.abs(velocity.getY()), VERTICAL_ALIGNMENT_SPEED) * Math.signum(yDiff) );
+        if (Math.abs(yDiff) > 4)
+            velocity.setY(VERTICAL_ALIGNMENT_SPEED * Math.signum(yDiff));
         else
             velocity.setY(0);
 
@@ -203,18 +219,17 @@ public class Providence extends EntitySlime {
 
                 // Burn, only applicable after a brief moment into this phase!
                 if (distanceToPlayer >= SPECIAL_EFFECT_DISTANCE && shouldDamage) {
-                    EntityHelper.applyEffect(target, "圣狱神火", 100);
+                    // 10 ticks (20 dmg) for each block; max 32 blocks (320 ticks, 640 dmg)
+                    int duration = (int) Math.min(320, (distanceToPlayer - SPECIAL_EFFECT_DISTANCE) * 10);
+                    EntityHelper.applyEffect(target, "圣狱神火", duration);
                 }
             }
         }
     }
     private void rainProjectilePhase() {
-        if (indexAI == 0) {
-            tweakDamageReduction(true);
-        }
-
         // Do not fire projectiles when the phase has just began or is about to end
-        boolean withinTimeMargin = indexAI >= PROJECTILE_RAIN_MARGIN_DURATION && indexAI <= PROJECTILE_RAIN_FULL_DURATION - PROJECTILE_RAIN_MARGIN_DURATION;
+        boolean withinTimeMargin = indexAI >= PROJECTILE_RAIN_MARGIN_DURATION[0] &&
+                indexAI <= PROJECTILE_RAIN_FULL_DURATION - PROJECTILE_RAIN_MARGIN_DURATION[1];
         if (withinTimeMargin) {
             int starProjectileIndex = -1; // -1 denotes not applicable
             int indexWithinFireRound = indexAI % PROJECTILE_RAIN_INTERVAL;
@@ -227,13 +242,17 @@ public class Providence extends EntitySlime {
             // If the index exists, fire a burst of projectiles.
             if (starProjectileIndex != -1) {
                 shootInfoStar.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                Vector dir = target.getEyeLocation().subtract(shootInfoStar.shootLoc).toVector();
+                double yaw = MathHelper.getVectorYaw(dir), pitch = MathHelper.getVectorPitch(dir);
+                Vector fwdDir = MathHelper.vectorFromYawPitch_approx(yaw + STAR_YAW_OFFSETS[starProjectileIndex], pitch);
+
                 ArrayList<Vector> projectileDirections = MathHelper.getEvenlySpacedProjectileDirections(
                         STAR_INTERVAL_DEGREE[starProjectileIndex], STAR_SPREAD_ANGLE[starProjectileIndex],
-                        this.target, shootInfoStar.shootLoc, STAR_SPEED[starProjectileIndex]
+                        fwdDir, STAR_SPEED[starProjectileIndex]
                 );
 
-                for (Vector dir : projectileDirections) {
-                    shootInfoStar.velocity = dir;
+                for (Vector projVel : projectileDirections) {
+                    shootInfoStar.velocity = projVel;
                     EntityHelper.spawnProjectile(shootInfoStar);
                 }
             }
@@ -242,19 +261,17 @@ public class Providence extends EntitySlime {
         stopAndBurn(withinTimeMargin);
 
         if (indexAI >= PROJECTILE_RAIN_FULL_DURATION) {
-            tweakDamageReduction(false);
-            indexAI = -1; // This is incremented immediately afterwards
-            AIPhase = weightedTransition(AIPhase);
+            updateAIPhase( weightedTransition(AIPhase) );
         }
     }
     private void laserPhase() {
-        boolean withinTimeMargin = indexAI >= LASER_MARGIN && indexAI <= LASER_DURATION - LASER_MARGIN;
+        boolean withinTimeMargin = indexAI >= LASER_MARGIN[0] && indexAI <= LASER_DURATION - LASER_MARGIN[1];
 
         stopAndBurn(withinTimeMargin);
 
         // laser
         if (withinTimeMargin) {
-            double progress = (double) (indexAI - LASER_MARGIN) / (LASER_DURATION - LASER_MARGIN * 2);
+            double progress = (double) (indexAI - LASER_MARGIN[0]) / (LASER_DURATION - LASER_MARGIN[0] - LASER_MARGIN[1]);
             double pitchOffsetTop = (90 + LASER_AIM_PITCH) * (1 - progress) + LASER_GAP_END * progress;
             double pitchOffsetBottom = (90 - LASER_AIM_PITCH) * (1 - progress) + LASER_GAP_END * progress;
             for (UUID plyID : targetMap.keySet()) {
@@ -271,8 +288,7 @@ public class Providence extends EntitySlime {
         }
 
         if (indexAI >= LASER_DURATION) {
-            indexAI = -1; // This is incremented immediately afterwards
-            AIPhase = weightedTransition(AIPhase);
+            updateAIPhase( weightedTransition(AIPhase) );
         }
     }
     private void AI() {
@@ -300,23 +316,24 @@ public class Providence extends EntitySlime {
                 // On low health, summon guardians
                 if (getHealth() / getMaxHealth() < 0.33 && commanderState == 0) {
                     commanderMinion = new GuardianCommander(target);
+                    // Overwrite target map
+                    commanderMinion.targetMap.clear();
+                    commanderMinion.targetMap.putAll(targetMap);
                     addScoreboardTag("noDamage");
-                    //
-                    if (AIPhase == 2)
-                        tweakDamageReduction(false);
-                    AIPhase = 0;
-                    indexAI = 0;
+                    // Force into the bomb state
+                    updateAIPhase(0);
                     commanderState = 1;
                 }
                 // The boss can heal beyond low health when guardians are alive
                 if (commanderState == 1) {
+                    // Update minion target
+                    commanderMinion.target = target;
                     heal(300);
                     // Revert damage reduction if guardians defeated
                     if (!commanderMinion.isAlive()) {
                         removeScoreboardTag("noDamage");
-                        // Continue with AI Phase 0
-                        AIPhase = 0;
-                        indexAI = 0;
+                        // Continue with AI Phase 0 (reset indexAI)
+                        updateAIPhase(0);
                         commanderState = 2;
                     }
                 }
@@ -331,8 +348,6 @@ public class Providence extends EntitySlime {
                     case 3:
                         laserPhase();
                         break;
-                    default:
-                        AIPhase = weightedTransition(AIPhase);
                 }
                 indexAI ++;
                 bukkitEntity.setVelocity(velocity);
@@ -341,6 +356,33 @@ public class Providence extends EntitySlime {
         // face the player
         this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // no collision dmg
+    }
+    private void updateAIPhase(int newPhase) {
+        if (newPhase == AIPhase) {
+            indexAI = -1;
+            return;
+        }
+        // Move out of the reduction
+        if (AIPhase == 2)
+            tweakDamageReduction(false);
+        switch (newPhase) {
+            // Bombs / Blasts
+            case 1:
+            case 0:
+                bossbar.color = BossBattle.BarColor.GREEN;
+                break;
+            // Star
+            case 2:
+                tweakDamageReduction(true);
+                bossbar.color = BossBattle.BarColor.WHITE;
+                break;
+            // Laser
+            case 3:
+                bossbar.color = BossBattle.BarColor.YELLOW;
+        }
+        bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+        indexAI = -1;
+        AIPhase = newPhase;
     }
     private void tweakDamageReduction(boolean addOrRemove) {
         EntityHelper.tweakAttribute(attrMap, "damageTakenMulti", "-6", addOrRemove);

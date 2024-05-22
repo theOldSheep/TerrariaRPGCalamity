@@ -10,7 +10,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import org.jboss.security.auth.callback.AbstractCallbackHandler;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
@@ -28,10 +27,12 @@ public class GuardianCommander extends EntitySlime {
     public static final boolean IGNORE_DISTANCE = false;
     public static final String DISPLAY_NAME = BOSS_TYPE.msgName + "·统御";
     HashMap<String, Double> attrMap;
-    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
+    // Made public for Providence access
+    public HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
-    Player target = null;
+    // Made public for Providence access
+    public Player target = null;
     // other variables and AI
     static HashMap<String, Double> attrMapProjectile;
     EntityHelper.ProjectileShootInfo shootInfoProjectile;
@@ -41,7 +42,7 @@ public class GuardianCommander extends EntitySlime {
         attrMapProjectile.put("knockback", 1.5d);
     }
     int indexAI = 0, AIPhase = 0;
-    private boolean defenderAlive = true;
+    private boolean defenderAlive = true, summonedByProvidence;
     // In ticks
     private static final int
             PHASE_SWITCH_INTERVAL = 90,
@@ -113,8 +114,9 @@ public class GuardianCommander extends EntitySlime {
         // AI
         {
             // update target
-            target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+            if (!summonedByProvidence)
+                target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
+                        IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {
@@ -193,7 +195,7 @@ public class GuardianCommander extends EntitySlime {
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
 
-        boolean providenceAlive = providenceAlive();
+        summonedByProvidence = providenceAlive();
         // init attribute map
         {
             attrMap = new HashMap<>();
@@ -214,7 +216,7 @@ public class GuardianCommander extends EntitySlime {
         {
             targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                     getBukkitEntity(), BossHelper.BossType.MOON_LORD.msgName, summonedPlayer,
-                    true, !providenceAlive, bossbar);
+                    true, !summonedByProvidence, bossbar);
             target = summonedPlayer;
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
@@ -222,7 +224,7 @@ public class GuardianCommander extends EntitySlime {
         {
             setSize(12, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
-            if (providenceAlive)
+            if (summonedByProvidence)
                 healthMulti *= HEALTH_MULTI_PROVIDENCE_ALIVE;
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
@@ -232,7 +234,7 @@ public class GuardianCommander extends EntitySlime {
         {
             bossParts = new ArrayList<>();
             bossParts.add((LivingEntity) bukkitEntity);
-            if (! providenceAlive)
+            if (!summonedByProvidence)
                 BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
             this.noclip = true;
             this.setNoGravity(true);

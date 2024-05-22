@@ -3,6 +3,7 @@ package terraria.worldgen;
 import org.bukkit.Bukkit;
 import terraria.TerrariaHelper;
 import terraria.util.MathHelper;
+import terraria.worldgen.overworld.BiomeSummary;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -75,7 +76,13 @@ public class Interpolate {
         for (InterpolatePoint pt : points) {
             maxY = Math.max(maxY, pt.y);
         }
-        File dir_biome_map = new File("worldGenDebug" + File.separator + interpolateName + ".png");
+        File outputFolder = BiomeSummary.OUTPUT_FOLDER;
+        // Ensure the output folder exists
+        if (!outputFolder.exists()) {
+            outputFolder.mkdirs();
+        }
+        File dir_biome_map = new File(outputFolder,  interpolateName + ".png");
+
         TerrariaHelper.LOGGER.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         TerrariaHelper.LOGGER.info("START GENERATING INTERPOLATE MAP " + interpolateName);
         TerrariaHelper.LOGGER.info("Interpolate Pivots: " + Arrays.toString(points));

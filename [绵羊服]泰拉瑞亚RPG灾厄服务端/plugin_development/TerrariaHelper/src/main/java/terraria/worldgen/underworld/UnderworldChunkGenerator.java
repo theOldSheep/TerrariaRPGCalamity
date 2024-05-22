@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Random;
 
 public class UnderworldChunkGenerator extends ChunkGenerator {
-    static long seed = TerrariaHelper.worldSeed;
     public static int OCTAVES = 4,
             LAVA_LEVEL, FLOOR_LEVEL, CEIL_LEVEL, PLATEAU_HEIGHT;
 
@@ -27,7 +26,7 @@ public class UnderworldChunkGenerator extends ChunkGenerator {
     private UnderworldChunkGenerator() {
         super();
         // terrain noise functions
-        Random rdm = new Random(seed);
+        Random rdm = new Random(TerrariaHelper.WORLD_SEED);
         floorGenerator = new PerlinOctaveGenerator(rdm.nextLong(), OCTAVES);
         floorGenerator.setScale(0.01);
         floorDetailGenerator = new PerlinOctaveGenerator(rdm.nextLong(), OCTAVES);
@@ -39,7 +38,6 @@ public class UnderworldChunkGenerator extends ChunkGenerator {
         biomeGenerator = new PerlinOctaveGenerator(rdm.nextLong(), OCTAVES);
         biomeGenerator.setScale(0.001);
         // constants
-        seed = TerrariaHelper.worldSeed;
         LAVA_LEVEL = 50;
         FLOOR_LEVEL = 60;
         PLATEAU_HEIGHT = 15;

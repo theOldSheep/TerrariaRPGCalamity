@@ -1,22 +1,14 @@
 package terraria.worldgen.overworld;
 
-import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
 import org.bukkit.util.noise.PerlinOctaveGenerator;
 import terraria.TerrariaHelper;
 import terraria.util.WorldHelper;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 public class OverworldBiomeGenerator {
-
-    static boolean generatedImg = false;
-    static long SEED = TerrariaHelper.worldSeed;
     static final int
             BIOME_FEATURE_CACHE_SIZE = 500000,
             SPAWN_LOC_PROTECTION_RADIUS = 750;
@@ -44,10 +36,10 @@ public class OverworldBiomeGenerator {
             double distFromSpawn = Math.sqrt((double) x * (double) x + (double) z * (double) z);
             double distFromSpawnFactor = distFromSpawn / SPAWN_LOC_PROTECTION_RADIUS;
 
-            features[CONTINENTALNESS] =     noiseCont.noise(x, z, 2, 0.5);
-            features[TEMPERATURE] =         noiseTemp.noise(x, z, 2, 0.5);
-            features[HUMIDITY] =            noiseHum .noise(x, z, 2, 0.5);
-            features[WEIRDNESS] =           noiseWrd .noise(x, z, 2, 0.5);
+            features[CONTINENTALNESS] =     noiseCont.noise(x, z, 2, 0.5) * 1.25;
+            features[TEMPERATURE] =         noiseTemp.noise(x, z, 2, 0.5) * 2;
+            features[HUMIDITY] =            noiseHum .noise(x, z, 2, 0.5) * 2;
+            features[WEIRDNESS] =           noiseWrd .noise(x, z, 2, 0.5) * 1.5;
             features[EROSION] =             noiseEros.noise(x, z, 2, 0.5);
             features[TERRAIN_H] =           noiseTrH .noise(x, z, 2, 0.5);
             // spawn protection: feature tweak
@@ -117,11 +109,15 @@ public class OverworldBiomeGenerator {
         }
     };
 
-
+    // generate images and store biomes near the spawn
+    public static void init() {
+        setupGenerators();
+        BiomeSummary.createBiomeCenters();
+        BiomeSummary.generateBiomeImage();
+    }
     // set up the generator based on seed
-    private static void setupGenerators(long seed) {
-        SEED = seed;
-        Random rdm = new Random(seed);
+    private static void setupGenerators() {
+        Random rdm = new Random(TerrariaHelper.WORLD_SEED);
         // temperature
         noiseTemp = new PerlinOctaveGenerator(rdm.nextLong(), 1);
         noiseTemp.setScale(0.001);
@@ -139,62 +135,9 @@ public class OverworldBiomeGenerator {
         noiseTrH.setScale(0.001);
         // update continentalness finally, so there is less chance things get broken
         noiseCont = new PerlinOctaveGenerator(rdm.nextLong(), 3);
-        noiseCont.setScale(0.00025);
+        noiseCont.setScale(0.0005);
     }
-    // save the biome image for testing purposes and so on
-    private static void generateBiomeImage() {
-        HashMap<Biome, Integer> biomeColors = new HashMap<>();
-        biomeColors.put(Biome.FOREST,               new Color(0, 175, 0).getRGB()); //forest(normal)
-        biomeColors.put(Biome.JUNGLE,               new Color(0, 100, 0).getRGB()); //jungle
-        biomeColors.put(Biome.DESERT,               new Color(255, 255, 0).getRGB()); //desert
-        biomeColors.put(Biome.MUTATED_DESERT,       new Color(0, 50, 80).getRGB()); //sunken sea
-        biomeColors.put(Biome.BEACHES,              new Color(255, 255, 150).getRGB()); //beach
-        biomeColors.put(Biome.OCEAN,                new Color(0, 0, 255).getRGB()); //ocean
-        biomeColors.put(Biome.COLD_BEACH,           new Color(130, 110, 100).getRGB()); //sulphurous beach
-        biomeColors.put(Biome.FROZEN_OCEAN,         new Color(120, 200, 150).getRGB()); //sulphurous ocean
-        biomeColors.put(Biome.TAIGA_COLD,           new Color(150, 200, 255).getRGB()); //tundra
-        biomeColors.put(Biome.MUSHROOM_ISLAND,      new Color(150, 0, 150).getRGB()); //corruption
-        biomeColors.put(Biome.MESA,                 new Color(50, 25, 60).getRGB()); //astral infection
-        biomeColors.put(Biome.ICE_FLATS,            new Color(255, 255, 255).getRGB()); //hallow
-        // test: save a map of biomes for testing purposes
-        int center = 0;
-        int scale = 1000;
-        int jump = 50;
-        File dir_biome_map = new File("worldGenDebug" + File.separator + "biomesMap(50000x50000).png");
-        TerrariaHelper.LOGGER.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        if (dir_biome_map.exists()) {
-            TerrariaHelper.LOGGER.info("BIOME MAP FILE ALREADY EXISTS. DELETE THE FILE IF YOU WISH FOR GENERATING A NEW ONE.");
-            return;
-        }
-        TerrariaHelper.LOGGER.info("START GENERATING BIOME MAP");
-        double progress = 0, progressMax = scale * scale;
-        long lastPrinted = Calendar.getInstance().getTimeInMillis();
-        BufferedImage biomeMap = new BufferedImage(scale, scale, BufferedImage.TYPE_INT_RGB);
-        for (int i = 0; i < scale; i++)
-            for (int j = 0; j < scale; j++) {
-                // i : x-coordinate corresponding to the point on map increases as we move to the right (bigger i)
-                // j : z-coordinate corresponding to the point on map increases as we move to the top (smaller j)
-                int blockX = (i - (scale / 2)) * jump + center, blockZ = ((scale / 2) - j) * jump + center;
-                Biome currBiome = getBiome(SEED, blockX, blockZ);
-                biomeMap.setRGB(i, j, biomeColors.getOrDefault(currBiome, new Color(0, 255, 0).getRGB()));
-                progress++;
-                if (lastPrinted + 1000 < Calendar.getInstance().getTimeInMillis()) {
-                    lastPrinted = Calendar.getInstance().getTimeInMillis();
-                    TerrariaHelper.LOGGER.info("Generation progress: " + progress / progressMax);
-                    TerrariaHelper.LOGGER.info("Progress detail: " + progress + "/" + progressMax);
-                }
-            }
-        TerrariaHelper.LOGGER.info("Generation progress: " + progress / progressMax);
-        TerrariaHelper.LOGGER.info("Progress detail: " + progress + "/" + progressMax);
-        try {
-            ImageIO.write(biomeMap, "png", dir_biome_map);
-        } catch (IOException e) {
-            e.printStackTrace();
-            TerrariaHelper.LOGGER.warning(e.getMessage());
-        }
-        TerrariaHelper.LOGGER.info("FINISHED GENERATING BIOME MAP.");
-        TerrariaHelper.LOGGER.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    }
+
     // get the key in the biome cache
     private static long getCacheKey(int x, int z) {
         long result = 0;
@@ -205,7 +148,7 @@ public class OverworldBiomeGenerator {
         // otherwise, negative z will cause grief.
         // note: due to the java's hashing for long, it is better to flip the order of the first and last halves of z
         // so that the lower digits do not cancel out frequently
-        result |= (z & MASK_FIRST);
+        result |= (z & MASK_FIRST) >> 16;
         result <<= 16;
         result |= (z & MASK_LAST);
 
@@ -259,12 +202,6 @@ public class OverworldBiomeGenerator {
         return getBiomeFeature((int) actualX, (int) actualZ);
     }
     public static BiomeFeature getBiomeFeature(int blockX, int blockZ) {
-        // evaluate the feature. Technically the world seed do not need to be initialized here, but just in case.
-        return getBiomeFeature(SEED, blockX, blockZ);
-    }
-    // this should be called if possible!
-    public static BiomeFeature getBiomeFeature(long seed, int blockX, int blockZ) {
-
         long biomeLocKey = getCacheKey(blockX, blockZ);
         // return the cached value if available
         if (biomeCache.containsKey(biomeLocKey)) {
@@ -272,7 +209,7 @@ public class OverworldBiomeGenerator {
         }
         // lazy initialization of noise functions
         if (noiseCont == null) {
-            setupGenerators(seed);
+            setupGenerators();
         }
         // the biome feature content is generated within the constructor
         BiomeFeature result = new BiomeFeature(blockX, blockZ);
@@ -280,11 +217,7 @@ public class OverworldBiomeGenerator {
         biomeCache.put(biomeLocKey, result);
         return result;
     }
-    public static Biome getBiome(long seed, int blockX, int blockZ) {
-        if (! generatedImg) {
-            generatedImg = true;
-            generateBiomeImage();
-        }
-        return getBiomeFromType( getBiomeFeature(seed, blockX, blockZ).evaluatedBiome );
+    public static Biome getBiome(int blockX, int blockZ) {
+        return getBiomeFromType( getBiomeFeature(blockX, blockZ).evaluatedBiome );
     }
 }

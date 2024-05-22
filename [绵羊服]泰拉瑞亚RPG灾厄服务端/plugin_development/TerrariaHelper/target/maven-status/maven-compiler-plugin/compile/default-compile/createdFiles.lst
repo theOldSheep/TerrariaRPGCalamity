@@ -77,6 +77,7 @@ terraria\entity\boss\kingSlime\CrownJewel.class
 terraria\entity\boss\event\celestialPillar\CelestialPillar.class
 terraria\entity\boss\event\iceQueen\FrostWave.class
 terraria\entity\npc\TerrariaNPCBlockSeller.class
+terraria\worldgen\overworld\BiomeSummary.class
 terraria\entity\others\TerrariaEntityPlayer.class
 terraria\entity\boss\moonLord\MoonLordPhantasmalBolt.class
 terraria\entity\boss\leviathanAndAnahita\Leviathan$1.class
@@ -104,6 +105,7 @@ terraria\entity\boss\moonLord\MoonLordPhantasmalSphere.class
 terraria\entity\boss\theSlimeGod\CrimulanSlime$SlimeSize.class
 terraria\entity\boss\leviathanAndAnahita\Leviathan$AIPhase.class
 terraria\entity\boss\eyeOfCthulhu\EyeOfCthulhu$AIPhase.class
+terraria\worldgen\overworld\BiomeSummary$BiomeSearchGridPosition.class
 terraria\entity\boss\crabulon\Crabulon.class
 terraria\gameplay\EventAndTime$QuestFish.class
 terraria\entity\boss\thePlaguebringerGoliath\ThePlaguebringerGoliath$AIPhase.class

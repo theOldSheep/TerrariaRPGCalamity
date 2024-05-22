@@ -1,7 +1,6 @@
 package terraria.util;
 
 import com.bekvon.bukkit.residence.Residence;
-import com.comphenix.protocol.PacketType;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.*;
@@ -17,9 +16,9 @@ import terraria.worldgen.overworld.OverworldChunkGenerator;
 import terraria.worldgen.overworld.cavern.CavernChunkGenerator;
 import terraria.worldgen.underworld.UnderworldChunkGenerator;
 
-import javax.xml.bind.annotation.XmlType;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 
 public class WorldHelper {
@@ -221,7 +220,7 @@ public class WorldHelper {
                             .environment(World.Environment.NORMAL)
                             .type(WorldType.CUSTOMIZED)
                             .generateStructures(false)
-                            .seed(TerrariaHelper.worldSeed)
+                            .seed(TerrariaHelper.WORLD_SEED)
                             .createWorld();
                     initWorldRules(surfaceWorld);
                 }
@@ -232,7 +231,7 @@ public class WorldHelper {
                             .environment(World.Environment.NORMAL)
                             .type(WorldType.CUSTOMIZED)
                             .generateStructures(false)
-                            .seed(TerrariaHelper.worldSeed)
+                            .seed(TerrariaHelper.WORLD_SEED)
                             .createWorld();
                     initWorldRules(cavernWorld);
                 }
@@ -243,7 +242,7 @@ public class WorldHelper {
                             .environment(World.Environment.NORMAL)
                             .type(WorldType.CUSTOMIZED)
                             .generateStructures(false)
-                            .seed(TerrariaHelper.worldSeed)
+                            .seed(TerrariaHelper.WORLD_SEED)
                             .createWorld();
                     initWorldRules(underworldWorld);
                 }
@@ -251,6 +250,8 @@ public class WorldHelper {
                 Residence.getInstance().onEnable();
                 Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), () ->
                         Residence.getInstance().onEnable(), 1);
+                // generate biome info
+                OverworldBiomeGenerator.init();
             } catch (Exception e) {
                 TerrariaHelper.LOGGER.info("初始化世界时发生错误；正在关闭服务器……");
                 e.printStackTrace();
@@ -270,6 +271,21 @@ public class WorldHelper {
         // clear weather
         wld.setThundering(false);
         wld.setStorm(false);
+    }
+
+    public static Block getHighestBlockBelow(Location loc) {
+        return getHighestBlockBelow(loc.getBlock(), (b) -> b.getType().isSolid());
+    }
+    public static Block getHighestBlockBelow(Block block, Predicate<Block> validation) {
+        if (block.getY() <= 1)
+            return block;
+        int offset = -1;
+        for (int y = block.getY(); y >= 1; y --) {
+            Block result = block.getRelative(0, offset--, 0);
+            if (validation.test( result ) )
+                return result;
+        }
+        return block;
     }
     // set the block to water or air, depending on the biome
     public static void makeEmptyBlock(Block block, boolean airApplicable) {

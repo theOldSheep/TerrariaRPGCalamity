@@ -1698,8 +1698,9 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
                         HashSet<String> accessories = getAccessories(ply);
                         HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
-                        Vector velocity = getPlayerRawVelocity(ply);
-                        boolean moved = velocity.lengthSquared() > 1e-5;
+                        Vector velocity = ply.getVelocity();
+                        // gravity = 0.08, gravity squared = 0.0064
+                        boolean moved = velocity.lengthSquared() > 0.01;
                         // attempt regenerating the player's damage barrier
                         {
                             if (attrMap.getOrDefault("barrierMax", 0d) > 0d &&
@@ -1732,10 +1733,13 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                             }
                             // regen
                             double regenAmount = (regenerationRate + additionalHealthRegen) * perTickMulti;
-                            if (regenAmount > 0)
-                                 regenAmount *= attrMap.getOrDefault("regenMulti", 1d);
+                            System.out.println(regenAmount + "(" + regenerationRate + ", " + additionalHealthRegen + "x" + perTickMulti);
+                            System.out.println(velocity.lengthSquared() + ", " + moved);
                             if (accessories.contains("再生护符") && (ply.getHealth() + regenAmount) * 2 >= maxHealth) {
                                 regenAmount = - Math.abs(regenAmount);
+                            }
+                            if (regenAmount > 0) {
+                                regenAmount *= attrMap.getOrDefault("regenMulti", 1d);
                             }
                             double healthAmount = Math.min(ply.getHealth() + regenAmount, maxHealth);
                             if (healthAmount > 0) {

@@ -788,7 +788,7 @@ public class EntityHelper {
                         Entity mount = PlayerHelper.getMount((Player) entity);
                         Entity twistedEntity = mount == null ? entity : mount;
                         World entityWorld = twistedEntity.getWorld();
-                        double targetLocY = entityWorld.getHighestBlockAt(twistedEntity.getLocation()).getLocation().getY();
+                        double targetLocY = WorldHelper.getHighestBlockBelow(twistedEntity.getLocation()).getLocation().getY();
                         targetLocY += 8 + MathHelper.xsin_degree(timeRemaining * 2.5) * 2;
                         double velY = targetLocY - twistedEntity.getLocation().getY();
                         velY /= 6;

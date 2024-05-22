@@ -35,7 +35,7 @@ public class TerrariaHelper extends JavaPlugin {
                 GUI_BACKGROUND = "[local]GuiBG.png",
                 GUI_BACKGROUND_NPC = "[local]GuiNPCBG.png";
     }
-    public static long worldSeed;
+    public static long WORLD_SEED;
     public static TerrariaHelper instance;
     // YML configs
     public static final YmlHelper.YmlSection animalConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "animals.yml");
@@ -61,7 +61,7 @@ public class TerrariaHelper extends JavaPlugin {
 
     public TerrariaHelper() {
         super();
-        worldSeed = settingConfig.getLong("worldGen.seed", 114514);
+        WORLD_SEED = settingConfig.getLong("worldGen.seed", 114514);
         instance = this;
         LOGGER = getLogger();
     }
@@ -210,7 +210,7 @@ public class TerrariaHelper extends JavaPlugin {
 
         getLogger().info("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
         getLogger().info("泰拉瑞亚RPG插件部分已启动。");
-        getLogger().info("世界种子: " + worldSeed);
+        getLogger().info("世界种子: " + WORLD_SEED);
         getLogger().info("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
     }
     @Override

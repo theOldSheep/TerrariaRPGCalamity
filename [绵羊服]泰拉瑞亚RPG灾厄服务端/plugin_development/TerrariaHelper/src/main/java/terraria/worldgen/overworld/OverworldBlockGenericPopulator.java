@@ -1,8 +1,6 @@
 package terraria.worldgen.overworld;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -20,7 +18,7 @@ public class OverworldBlockGenericPopulator extends BlockPopulator {
         for (int i = 0; i < 16; i++)
             for (int j = 0; j < 16; j++) {
                 int blockX = startX + i, blockZ = startZ + j;
-                Biome biome = OverworldBiomeGenerator.getBiome(TerrariaHelper.worldSeed, blockX, blockZ);
+                Biome biome = OverworldBiomeGenerator.getBiome(blockX, blockZ);
                 // additional setup for terracotta color etc.
                 for (int y = 1; y < 255; y++) {
                     Block currBlock = chunk.getBlock(i, y, j);

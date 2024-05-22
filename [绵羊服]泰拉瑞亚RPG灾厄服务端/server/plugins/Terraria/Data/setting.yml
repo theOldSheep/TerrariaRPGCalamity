@@ -5,6 +5,14 @@ worldGen:
   caveSketchThreads: 4
   caveDetailThreads: 16
   structureNanoSecond: 10000000
+  mapConfig:
+    blocksPerPixel: 20
+    biomeMarkerRadiusPixel: 2
+    spawnMarkerRadiusPixel: 3
+    biomeScanRadiusInBlocks: 5000
+    minLabeledBiomeAreaPixels: 25
+    gridSizeInPixels: 100
+    outputFolder: worldGenDebug
 rarity:
   '-2': §#AAAAAA§l
   '-1': §#6B6B6B§l

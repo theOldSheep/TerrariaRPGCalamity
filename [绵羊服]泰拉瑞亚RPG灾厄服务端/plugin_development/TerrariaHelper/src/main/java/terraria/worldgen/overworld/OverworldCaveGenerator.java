@@ -6,7 +6,6 @@ import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 import terraria.TerrariaHelper;
-import terraria.worldgen.overworld.cavern.CavernChunkGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -225,7 +224,7 @@ public class OverworldCaveGenerator {
                 if (zBlockOffset < 0) zBlockOffset = 0;
                 else if (zBlockOffset >= 16) zBlockOffset = 15;
 
-                Biome columnBiome = OverworldBiomeGenerator.getBiome(TerrariaHelper.worldSeed, currX, currZ);
+                Biome columnBiome = OverworldBiomeGenerator.getBiome(currX, currZ);
                 int effectualY = ((y_coord - 1) * CAVE_ROUGH_SKETCH_DIAMETER) + yOffset;
                 return validateCaveEstimate(getCavernNoise(
                         columnBiome, heightMap[i][j], currX, effectualY, currZ, caveMultiMap[xBlockOffset][zBlockOffset]));
@@ -248,7 +247,7 @@ public class OverworldCaveGenerator {
                     // prevent out of bound
                     if (zBlockOffset < 0) zBlockOffset = 0;
                     else if (zBlockOffset >= 16) zBlockOffset = 15;
-                    Biome columnBiome = OverworldBiomeGenerator.getBiome(TerrariaHelper.worldSeed, currX, currZ);
+                    Biome columnBiome = OverworldBiomeGenerator.getBiome(currX, currZ);
                     for (int y_coord = 0; y_coord < estimationHeight; y_coord ++) {
                         int effectualY = ((y_coord - 1) * CAVE_ROUGH_SKETCH_DIAMETER) + yOffset;
                         caveEstimates[i][y_coord][j] = validateCaveEstimate(getCavernNoise(

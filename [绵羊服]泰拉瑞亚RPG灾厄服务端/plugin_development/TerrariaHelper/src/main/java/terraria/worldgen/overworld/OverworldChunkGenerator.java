@@ -14,7 +14,6 @@ import terraria.worldgen.Interpolate.InterpolatePoint;
 import java.util.*;
 
 public class OverworldChunkGenerator extends ChunkGenerator {
-    static long seed = TerrariaHelper.worldSeed;
     public static final int OCTAVES_CAVE = 4,
             NEARBY_BIOME_SAMPLE_RADIUS = 25, NEARBY_BIOME_SAMPLE_STEPSIZE = 1,
             LAND_HEIGHT = 100, RIVER_DEPTH = 25, LAKE_DEPTH = 30, PLATEAU_HEIGHT = 40, SEA_LEVEL = 90, LAVA_LEVEL = -150,
@@ -54,7 +53,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     private OverworldChunkGenerator() {
         super();
         // terrain noise functions
-        Random rdm = new Random(seed);
+        Random rdm = new Random(TerrariaHelper.WORLD_SEED);
 
         riverGenerator = new PerlinOctaveGenerator(rdm.nextLong(), 1);
         riverGenerator.setScale(0.0005);
@@ -64,7 +63,6 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         stoneVeinGenerator = new PerlinOctaveGenerator(rdm.nextLong(), 1);
         stoneVeinGenerator.setScale(0.05);
         // constants
-        seed = TerrariaHelper.worldSeed;
         // interpolates
         terrainHeightProvider = new Interpolate(new InterpolatePoint[]{
                 InterpolatePoint.create(-1       , LAND_HEIGHT + 10),
@@ -153,7 +151,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 InterpolatePoint.create(1     , 1),
         }, "lake_ratio_map");
         // block populators
-        CAVE_GENERATOR_OVERWORLD = new OverworldCaveGenerator(Y_OFFSET_OVERWORLD, seed, OCTAVES_CAVE);
+        CAVE_GENERATOR_OVERWORLD = new OverworldCaveGenerator(Y_OFFSET_OVERWORLD, TerrariaHelper.WORLD_SEED, OCTAVES_CAVE);
         populators = new ArrayList<>();
         populators.add(new OverworldBlockGenericPopulator());
         populators.add(new OrePopulator(Y_OFFSET_OVERWORLD));
@@ -164,7 +162,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         for (int i = 0; i < 16; i++)
             for (int j = 0; j < 16; j++) {
                 int blockX = x * 16 + i, blockZ = z * 16 + j;
-                Biome biomeToSet = OverworldBiomeGenerator.getBiome(seed, blockX, blockZ);
+                Biome biomeToSet = OverworldBiomeGenerator.getBiome(blockX, blockZ);
                 if (yOffset >= 0)
                     biome.setBiome(i, j, biomeToSet);
                 else
@@ -287,7 +285,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     static double getTerrainHeight(Biome biome, int currX, int currZ) {
         // special biome setup
         Interpolate heightProvider;
-        OverworldBiomeGenerator.BiomeFeature features = OverworldBiomeGenerator.getBiomeFeature(seed, currX, currZ);
+        OverworldBiomeGenerator.BiomeFeature features = OverworldBiomeGenerator.getBiomeFeature(currX, currZ);
 
         switch (biome) {
             case OCEAN:
@@ -390,7 +388,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             int currSampleX = blockXStart + sampleOffsetX * NEARBY_BIOME_SAMPLE_STEPSIZE;
             for (int sampleOffsetZ = NEARBY_BIOME_SAMPLE_RADIUS * -1; sampleOffsetZ <= NEARBY_BIOME_SAMPLE_RADIUS; sampleOffsetZ++) {
                 int currSampleZ = blockZStart + sampleOffsetZ * NEARBY_BIOME_SAMPLE_STEPSIZE;
-                Biome currBiome = OverworldBiomeGenerator.getBiome(seed, currSampleX, currSampleZ);
+                Biome currBiome = OverworldBiomeGenerator.getBiome(currSampleX, currSampleZ);
                 double updatedBiomeIntensity = nearbyBiomeMap.getOrDefault(currBiome, 0d) +
                         HEIGHT_INFLUENCE_FACTOR[sampleOffsetX + NEARBY_BIOME_SAMPLE_RADIUS][sampleOffsetZ + NEARBY_BIOME_SAMPLE_RADIUS];
                 nearbyBiomeMap.put(currBiome, updatedBiomeIntensity);
@@ -415,11 +413,11 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                         int currSampleX = currX + sampleOffset * NEARBY_BIOME_SAMPLE_STEPSIZE;
                         double influence_factor = HEIGHT_INFLUENCE_FACTOR[0][sampleOffset + NEARBY_BIOME_SAMPLE_RADIUS];
 
-                        Biome currBiome_drop = OverworldBiomeGenerator.getBiome(seed, currSampleX, currSample_dropZ);
+                        Biome currBiome_drop = OverworldBiomeGenerator.getBiome(currSampleX, currSample_dropZ);
                         double updatedIntensity_drop = nearbyBiomeMap.getOrDefault(currBiome_drop, 0d) - influence_factor;
                         nearbyBiomeMap.put(currBiome_drop, updatedIntensity_drop);
 
-                        Biome currBiome_add =  OverworldBiomeGenerator.getBiome(seed, currSampleX, currSample_addZ);
+                        Biome currBiome_add =  OverworldBiomeGenerator.getBiome(currSampleX, currSample_addZ);
                         double updatedIntensity_add = nearbyBiomeMap.getOrDefault(currBiome_add, 0d) + influence_factor;
                         nearbyBiomeMap.put(currBiome_add,  updatedIntensity_add);
                     }
@@ -433,11 +431,11 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                     int currSampleZ = blockZStart + sampleOffset * NEARBY_BIOME_SAMPLE_STEPSIZE;
                     double influence_factor = HEIGHT_INFLUENCE_FACTOR[sampleOffset + NEARBY_BIOME_SAMPLE_RADIUS][0];
 
-                    Biome currBiome_drop = OverworldBiomeGenerator.getBiome(seed, currSample_dropX, currSampleZ);
+                    Biome currBiome_drop = OverworldBiomeGenerator.getBiome(currSample_dropX, currSampleZ);
                     double updatedIntensity_drop = nearbyBiomeMapBackup.getOrDefault(currBiome_drop, 0d) - influence_factor;
                     nearbyBiomeMapBackup.put(currBiome_drop, updatedIntensity_drop);
 
-                    Biome currBiome_add = OverworldBiomeGenerator.getBiome(seed, currSample_addX, currSampleZ);
+                    Biome currBiome_add = OverworldBiomeGenerator.getBiome(currSample_addX, currSampleZ);
                     double updatedIntensity_add = nearbyBiomeMapBackup.getOrDefault(currBiome_add, 0d) + influence_factor;
                     nearbyBiomeMapBackup.put(currBiome_add,  updatedIntensity_add);
                 }

@@ -24,7 +24,7 @@ public class CavernChunkGenerator extends ChunkGenerator {
     public CavernChunkGenerator() {
         super();
         // init populator
-        CAVE_GENERATOR_CAVERN = new OverworldCaveGenerator(yOffset, TerrariaHelper.worldSeed, OverworldChunkGenerator.OCTAVES_CAVE);
+        CAVE_GENERATOR_CAVERN = new OverworldCaveGenerator(yOffset, TerrariaHelper.WORLD_SEED, OverworldChunkGenerator.OCTAVES_CAVE);
         populators = new ArrayList<>();
         populators.add(new OverworldBlockGenericPopulator());
         populators.add(new OrePopulator(yOffset));

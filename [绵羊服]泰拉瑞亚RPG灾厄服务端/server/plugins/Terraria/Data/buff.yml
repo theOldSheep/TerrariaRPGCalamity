@@ -206,8 +206,6 @@ effects:
     isBuff: false
     damageInterval: 5
     damage: 10
-    attributes:
-      regenMulti: -1
     tooltip: 你离亵渎天神太远了！
   硫磺海剧毒:
     isBuff: false
@@ -499,14 +497,14 @@ effects:
   生命星云:
     isBuff: true
     attributes:
-      regen: 6
-    tooltip: 每层使每秒生命再生增加 6
+      regen: 4
+    tooltip: 每层使每秒生命再生增加 4
   生命星云1:
-    tooltip: 每秒生命再生增加 6
+    tooltip: 每秒生命再生增加 4
   生命星云2:
-    tooltip: 每秒生命再生增加 12
+    tooltip: 每秒生命再生增加 8
   生命星云3:
-    tooltip: 每秒生命再生增加 18
+    tooltip: 每秒生命再生增加 12
   魔力星云:
     isBuff: true
     attributes:

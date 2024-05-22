@@ -19,7 +19,6 @@ import terraria.worldgen.overworld.OverworldBiomeGenerator;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 public class GameplayHelper {
@@ -133,12 +132,12 @@ public class GameplayHelper {
 //        Bukkit.broadcastMessage("Not handled block type: " + blockToBreak.getType() + " with data " + blockToBreak.getData() + " and state " + state);
         return null;
     }
-    public static boolean isBreakable(Block block, Player ply) {
-        if (noMiningSet.contains(block.getType())) return false;
+    public static boolean unBreakable(Block block, Player ply, boolean denyNoMiningSet) {
+        if (denyNoMiningSet && noMiningSet.contains(block.getType())) return true;
         // blocks near the spawn point can not be broken
         if (WorldHelper.isSpawnProtected(block.getLocation(), ply)) {
             PlayerHelper.sendActionBar(ply, "请勿破坏出生点附近的方块！");
-            return false;
+            return true;
         }
         // the block directly below a tree can not be mined, unless it is also a log.
         {
@@ -154,7 +153,7 @@ public class GameplayHelper {
                             case LOG_2:
                                 break;
                             default:
-                                return false;
+                                return true;
                         }
                     }
             }
@@ -164,14 +163,14 @@ public class GameplayHelper {
             // unbreakable
             case BEDROCK:
             case ENDER_PORTAL_FRAME:
-                return false;
+                return true;
             // unbreakable when items are present in the block
             case CHEST:
             case TRAPPED_CHEST:
                 Inventory chestInv = ((Chest) block.getState()).getBlockInventory();
                 for (ItemStack item : chestInv.getStorageContents()) {
                     if (item != null && item.getType() != Material.AIR)
-                        return false;
+                        return true;
                 }
                 break;
         }
@@ -180,18 +179,18 @@ public class GameplayHelper {
             if (breakRule.contains("progress")) {
                 // requires the player to defeat a certain boss
                 if (!PlayerHelper.hasDefeated(ply, breakRule.getString("progress")))
-                    return false;
+                    return true;
             }
             if (breakRule.contains("powerPickaxe")) {
                 // requires certain pickaxe power
                 if (EntityHelper.getAttrMap(ply).getOrDefault("powerPickaxe", 0d) <
                         breakRule.getDouble("powerPickaxe", 0d))
-                    return false;
+                    return true;
             }
         }
         BlockBreakEvent evt = new BlockBreakEvent(block, ply);
         Bukkit.getPluginManager().callEvent(evt);
-        return !evt.isCancelled();
+        return evt.isCancelled();
     }
     private static int getBlockBreakingDisplayID(Location loc) {
         int result = loc.getBlockX();
@@ -204,7 +203,8 @@ public class GameplayHelper {
     public static void playerMineBlock(Block blockToBreak, Player ply) {
         if (blockToBreak.getType() == Material.AIR) return;
         playBlockParticleAndSound(blockToBreak);
-        if (!isBreakable(blockToBreak, ply)) return;
+        boolean denyNoMiningSet = true;
+        if (unBreakable(blockToBreak, ply, denyNoMiningSet)) return;
         // get existing breaking progress
         MetadataValue temp = EntityHelper.getMetadata(blockToBreak, EntityHelper.MetadataName.BLOCK_BREAK_PROGRESS);
         int breakingProgress = 0;
@@ -254,13 +254,18 @@ public class GameplayHelper {
         return playerBreakBlock(blockToBreak, ply, validateBreakable, playSound, false);
     }
     public static boolean playerBreakBlock(Block blockToBreak, Player ply, boolean validateBreakable, boolean playSound, boolean noDrop) {
+        return playerBreakBlock(blockToBreak, ply, validateBreakable, playSound, noDrop, true);
+    }
+    public static boolean playerBreakBlock(Block blockToBreak, Player ply,
+                                           boolean validateBreakable, boolean playSound, boolean noDrop, boolean denyNoMiningSet) {
+        // permission denied: false is returned even if it is air
+        if (validateBreakable && unBreakable(blockToBreak, ply, denyNoMiningSet))
+            return false;
         Material blockMat = blockToBreak.getType();
         if (blockMat == Material.AIR)
             return true;
         if (playSound)
             playBlockParticleAndSound(blockToBreak);
-        if (validateBreakable && !isBreakable(blockToBreak, ply))
-            return false;
         // several blocks that are dropped using vanilla mechanism
         switch (blockMat) {
             case BED_BLOCK:

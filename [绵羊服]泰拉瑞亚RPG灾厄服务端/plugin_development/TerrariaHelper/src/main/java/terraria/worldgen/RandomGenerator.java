@@ -14,7 +14,7 @@ public class RandomGenerator {
     }
     public static Random getRandomGenerator(long worldSeed, int x, int z) {
         return new Random(worldSeed + x * 114514L + z * 1919810L + (long) x * z);
-//        return new Random(worldSeed + new Random(new Random(x).nextLong() + z).nextLong());
+//        return new Random(WORLD_SEED + new Random(new Random(x).nextLong() + z).nextLong());
     }
     public static double getRandomByPerlinNoise(long worldSeed, int x, int z) {
         // as perlin noise uses trig functions this is a lot slower than random generator.

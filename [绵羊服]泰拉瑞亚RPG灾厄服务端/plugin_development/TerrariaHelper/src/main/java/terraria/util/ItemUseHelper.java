@@ -12,6 +12,7 @@ import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -180,14 +181,9 @@ public class ItemUseHelper {
                         for (Location loc : blocks.get(delay)) {
                             Block blk = loc.getBlock();
                             if (blk.getType().isSolid()) continue;
-                            // validate permission
-                            BlockBreakEvent evt = new BlockBreakEvent(blk, ply);
-                            Bukkit.getPluginManager().callEvent(evt);
-                            // change block
-                            if (!evt.isCancelled()) {
-                                if (GameplayHelper.playerBreakBlock(blk, ply, true, true))
-                                    blk.setType(Material.GLASS);
-                            }
+                            // validate permission, then change block
+                            if (GameplayHelper.playerBreakBlock(blk, ply, true, true, false, false))
+                                blk.setType(Material.GLASS);
                         }
                     }, delay);
                 }
