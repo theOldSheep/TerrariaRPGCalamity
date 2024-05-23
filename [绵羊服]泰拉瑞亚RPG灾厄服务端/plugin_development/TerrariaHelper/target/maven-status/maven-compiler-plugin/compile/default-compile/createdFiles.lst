@@ -149,6 +149,7 @@ terraria\entity\boss\moonLord\MoonLordEye$EyeAttackMethod.class
 terraria\entity\boss\ravager\RavagerRockPillar.class
 terraria\entity\boss\eaterOfWorld\EaterOfWorld$1.class
 terraria\entity\monster\MonsterCaveSpider.class
+terraria\event\listener\CraftingListener$CraftingFilter.class
 terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
 terraria\entity\boss\profanedGuardians\GuardianDefender$AttackMode.class
@@ -163,7 +164,6 @@ terraria\entity\boss\profanedGuardians\GuardianDefender.class
 terraria\util\EntityHelper$AimHelperOptions.class
 terraria\entity\projectile\PlayerTornado.class
 terraria\entity\projectile\TerrariaPotionProjectile$1.class
-terraria\event\listener\CraftingListener$CRAFTING_FILTER.class
 terraria\util\EntityHelper$1.class
 terraria\entity\boss\theSlimeGod\EbonianSlime$SlimeSize.class
 terraria\entity\boss\dukeFishron\DukeFishron$1.class

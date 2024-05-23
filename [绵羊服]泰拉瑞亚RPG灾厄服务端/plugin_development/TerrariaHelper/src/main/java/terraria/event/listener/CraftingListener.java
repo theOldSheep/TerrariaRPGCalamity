@@ -9,7 +9,6 @@ import lk.vexview.gui.components.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Furnace;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -30,9 +29,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class CraftingListener implements Listener {
-    private final String bg = "[local]GuiBG.png";
+    private final ExecutorService executor = Executors.newCachedThreadPool();
+    private final String BACKGROUND_IMAGE = "[local]GuiBG.png";
     private static final YmlHelper.YmlSection recipeConfig = YmlHelper.getFile(
             TerrariaHelper.Constants.DATA_FOLDER_DIR + "recipes.yml");
     private static HashMap<String, Integer> getRecipeIngredientMap(String station, String vexSlotIndex) {
@@ -261,7 +264,7 @@ public class CraftingListener implements Listener {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                 () -> player.removeScoreboardTag("tempCraftingCD"), 20);
     }
-    enum CRAFTING_FILTER {
+    enum CraftingFilter {
         SHOW_ALL, SHOW_MATERIAL_USAGE, SHOW_CRAFTABLE;
     }
     public boolean handleCrafting(Player ply, Block block) {
@@ -270,18 +273,18 @@ public class CraftingListener implements Listener {
         if (ply.getScoreboardTags().contains("tempCraftingCD")) return false;
         // setup work station info
         String station;
-        CRAFTING_FILTER filterType;
+        CraftingFilter filterType;
         ItemStack plyTool = ply.getInventory().getItemInMainHand();
         if (plyTool == null) plyTool = new ItemStack(Material.AIR);
         if (ply.isSneaking()) {
-            filterType = plyTool.getType() == Material.AIR ? CRAFTING_FILTER.SHOW_ALL : CRAFTING_FILTER.SHOW_MATERIAL_USAGE;
+            filterType = plyTool.getType() == Material.AIR ? CraftingFilter.SHOW_ALL : CraftingFilter.SHOW_MATERIAL_USAGE;
         }
         else
-            filterType = CRAFTING_FILTER.SHOW_CRAFTABLE;
+            filterType = CraftingFilter.SHOW_CRAFTABLE;
         int level = 1;
         if (block == null) {
             station = "AIR";
-            filterType = CRAFTING_FILTER.SHOW_ALL;
+            filterType = CraftingFilter.SHOW_ALL;
         } else {
             station = block.getType().toString();
             switch (block.getType()) {
@@ -291,12 +294,7 @@ public class CraftingListener implements Listener {
                     return false;
                 case FURNACE:
                 case BURNING_FURNACE: {
-                    Inventory inv = ((Furnace) block.getState()).getInventory();
-                    String name = GenericHelper.trimText(inv.getTitle());
                     station = "FURNACE";
-                    if (! name.equals("火炉")) {
-                        station = name;
-                    }
                     break;
                 }
                 // most crafting stations ideally uses stained-glass blocks of different data (color), for block texture purposes.
@@ -346,45 +344,62 @@ public class CraftingListener implements Listener {
         // setup gui to display
         int windowWidth = VexViewAPI.getPlayerClientWindowWidth(ply);
         int windowHeight = VexViewAPI.getPlayerClientWindowHeight(ply);
-        VexGui guiToOpen = new VexGui(bg, windowWidth / 6,  windowHeight / 5,
+        VexGui guiToOpen = new VexGui(BACKGROUND_IMAGE, windowWidth / 6,  windowHeight / 5,
                 (int) (windowWidth * 0.666666), (int) (windowHeight * 0.8));
         // get all recipes for the crafting station
         List<ScrollingListComponent> itemSlots;
+        CompletableFuture<List<ScrollingListComponent>> futureItemSlots;
         switch (filterType) {
             case SHOW_ALL:
                 itemSlots = originalGui.getList().getComponents();
+                futureItemSlots = CompletableFuture.completedFuture(itemSlots); // No filtering needed, return the original slots
                 break;
-            case SHOW_MATERIAL_USAGE: {
-                // get player's tool
-                String toolType = ItemHelper.splitItemName(plyTool)[1];
-                // set up items that could be crafted
-                List<ScrollingListComponent> itemSlotsAll = originalGui.getList().getComponents();
-                itemSlots = new ArrayList<>(itemSlotsAll.size());
-                for (ScrollingListComponent cmp : itemSlotsAll) {
-                    if (!(cmp instanceof VexSlot)) continue;
-                    HashMap<String, Integer> recipeIngredients = getRecipeIngredientMap(station + "_" + level, ((VexSlot) cmp).getID() + "");
-                    if (recipeIngredients.containsKey(toolType))
-                        itemSlots.add(cmp);
-                }
-                break;
-            }
             case SHOW_CRAFTABLE:
-            default: {
+            default:
                 ply.sendMessage("§a提示：潜行右键合成站点时会显示该物品参与的合成配方（空手则展示所有配方）");
-                // get the ingredients the player has
-                HashMap<String, Integer> availableItems = getPlayerIngredientMap(ply, null)[0];
-                // set up items that could be crafted
-                List<ScrollingListComponent> itemSlotsAll = originalGui.getList().getComponents();
-                itemSlots = new ArrayList<>(itemSlotsAll.size());
-                for (ScrollingListComponent cmp : itemSlotsAll) {
-                    if (!(cmp instanceof VexSlot)) continue;
-                    HashMap<String, Integer> recipeIngredients = getRecipeIngredientMap(station + "_" + level, ((VexSlot) cmp).getID() + "");
-                    if (getMaxCraftAmount(recipeIngredients, availableItems) > 0)
-                        itemSlots.add(cmp);
-                }
-                break;
-            }
+            case SHOW_MATERIAL_USAGE:
+                // Save relevant information before proceeding
+                final String toolType = ItemHelper.splitItemName(plyTool)[1];
+                final String finalStationLevel = station + "_" + level;
+                final CraftingFilter finalFilterType = filterType;
+                final HashMap<String, Integer> availableItems = getPlayerIngredientMap(ply, null)[0];
+                final List<ScrollingListComponent> itemSlotsAll = originalGui.getList().getComponents();
+                // We need to perform filtering, so start the async process
+                futureItemSlots = CompletableFuture.supplyAsync(() -> {
+                    ArrayList<ScrollingListComponent> filteredSlots = new ArrayList<>();
+
+                    // Perform the filtering in the background thread
+                    for (ScrollingListComponent cmp : itemSlotsAll) {
+                        if (!(cmp instanceof VexSlot)) continue;
+
+                        HashMap<String, Integer> recipeIngredients =
+                                getRecipeIngredientMap(finalStationLevel, ((VexSlot) cmp).getID() + "");
+
+                        // Apply the appropriate filter condition
+                        boolean matchesFilter;
+                        switch (finalFilterType) {
+                            case SHOW_MATERIAL_USAGE:
+                                matchesFilter = recipeIngredients.containsKey(toolType);
+                                break;
+                            case SHOW_CRAFTABLE:
+                            default:
+                                matchesFilter = getMaxCraftAmount(recipeIngredients, availableItems) > 0;
+                        }
+
+                        if (matchesFilter) filteredSlots.add(cmp);
+                    }
+
+                    return filteredSlots; // Return the filtered slots
+                }, executor);
         }
+        // Wait for the future to complete, but with a timeout to avoid blocking the main thread
+        try {
+            itemSlots = futureItemSlots.get(500, java.util.concurrent.TimeUnit.MILLISECONDS);
+        } catch (Exception e) {
+            Bukkit.getLogger().severe("Error while filtering recipes: " + e.getMessage());
+            itemSlots = new ArrayList<>(); // Empty list to avoid NPE
+        }
+
         // scrolling list
         VexScrollingList scrList = new VexScrollingList(guiToOpen.getWidth() / 10, 17, 30,
                 guiToOpen.getHeight() - 34, itemSlots.size() * 20);
@@ -397,9 +412,9 @@ public class CraftingListener implements Listener {
         }
         guiToOpen.addComponent(scrList);
         // buttons
-        guiToOpen.addComponent(new VexButton("CRAFT", "选择配方", bg, bg,
+        guiToOpen.addComponent(new VexButton("CRAFT", "选择配方", BACKGROUND_IMAGE, BACKGROUND_IMAGE,
                 guiToOpen.getWidth() - 120, guiToOpen.getHeight() - 50, 35, 17 + level));
-        guiToOpen.addComponent(new VexButton("CRAFT_ALL", "选择配方", bg, bg,
+        guiToOpen.addComponent(new VexButton("CRAFT_ALL", "选择配方", BACKGROUND_IMAGE, BACKGROUND_IMAGE,
                 guiToOpen.getWidth() - 60, guiToOpen.getHeight() - 50, 35, 17 + level));
         // open gui
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CRAFTING_RECIPE_INDEX, -1);

@@ -222,7 +222,7 @@
 水晶碎块:
   item: CLAY_BALL
   worth: 100
-  rarity: 1
+  rarity: 3
 弹壳:
   item: CLAY_BALL
   worth: 100
@@ -712,11 +712,11 @@
 陨星矿:
   item: CLAY_BALL
   worth: 20000
-  rarity: 0
+  rarity: 2
 陨星锭:
   item: IRON_INGOT
   worth: 60000
-  rarity: 0
+  rarity: 2
 铜锭:
   item: IRON_INGOT
   worth: 15000
@@ -752,11 +752,11 @@
 恶魔锭:
   item: IRON_INGOT
   worth: 300000
-  rarity: 1
+  rarity: 2
 恶魔矿:
   item: CLAY_BALL
   worth: 100000
-  rarity: 1
+  rarity: 2
 狱炎锭:
   item: IRON_INGOT
   worth: 400000
@@ -776,27 +776,27 @@
 钴锭:
   item: IRON_INGOT
   worth: 210000
-  rarity: 3
+  rarity: 4
 钴矿:
   item: CLAY_BALL
   worth: 70000
-  rarity: 3
+  rarity: 4
 秘银锭:
   item: IRON_INGOT
   worth: 440000
-  rarity: 3
+  rarity: 4
 秘银矿:
   item: CLAY_BALL
   worth: 110000
-  rarity: 3
+  rarity: 4
 精金锭:
   item: IRON_INGOT
   worth: 750000
-  rarity: 3
+  rarity: 4
 精金矿:
   item: CLAY_BALL
   worth: 150000
-  rarity: 3
+  rarity: 4
 焦炭矿:
   item: CLAY_BALL
   worth: 120000
@@ -1138,20 +1138,20 @@
   item: CLAY_BALL
   lore:
   - §r“巨龙正在监视与等候你的象征。”
-  - §r附近亵渎天神后玩家均可参与挑战
+  - §r附近宇宙巨蟒后玩家均可参与挑战
   rarity: 14
 金源量子冷却电池:
   item: CLAY_BALL
   lore:
   - §r它的创造者已经准备好了，他希望你也准备好了
-  - §r附近亵渎天神后玩家均可参与挑战
+  - §r附近宇宙巨蟒后玩家均可参与挑战
   rarity: 15
 祭魂瓮:
   item: CLAY_BALL
   lore:
   - §r召唤至尊女巫，灾厄
   - §r“女巫不会允许这种事情再次发生。”
-  - §r附近亵渎天神后玩家均可参与挑战
+  - §r附近宇宙巨蟒后玩家均可参与挑战
   rarity: 15
 终末石:
   item: CLAY_BALL
@@ -12168,7 +12168,7 @@ Dodu的手炮:
     maxMana: 40
     critMagic: 6
   worth: 900000
-  rarity: 3
+  rarity: 1
 丛林衣:
   item: IRON_CHESTPLATE
   lore:
@@ -12178,7 +12178,7 @@ Dodu的手炮:
     maxMana: 20
     damageMagicMulti: 0.06
   worth: 600000
-  rarity: 3
+  rarity: 1
 丛林裤:
   item: IRON_LEGGINGS
   lore:
@@ -12188,7 +12188,7 @@ Dodu的手炮:
     maxMana: 20
     critMagic: 6
   worth: 600000
-  rarity: 3
+  rarity: 1
 胜潮贝盔:
   item: IRON_HELMET
   lore:
@@ -12197,7 +12197,7 @@ Dodu的手炮:
     defence: 8
     damageMeleeMulti: 0.05
   worth: 400000
-  rarity: 2
+  rarity: 1
 胜潮瑚巾:
   item: IRON_HELMET
   lore:
@@ -12206,7 +12206,7 @@ Dodu的手炮:
     defence: 6
     damageRangedMulti: 0.05
   worth: 400000
-  rarity: 2
+  rarity: 1
 胜潮隐帽:
   item: IRON_HELMET
   lore:
@@ -12215,7 +12215,7 @@ Dodu的手炮:
     defence: 4
     damageMagicMulti: 0.05
   worth: 400000
-  rarity: 2
+  rarity: 1
 胜潮面罩:
   item: IRON_HELMET
   lore:
@@ -12224,7 +12224,7 @@ Dodu的手炮:
     defence: 2
     damageSummonMulti: 0.1
   worth: 400000
-  rarity: 2
+  rarity: 1
 胜潮胸甲:
   item: IRON_CHESTPLATE
   lore:
@@ -12234,7 +12234,7 @@ Dodu的手炮:
     crit: 5
     damageTakenMulti: -0.07
   worth: 400000
-  rarity: 2
+  rarity: 1
 胜潮护胫:
   item: IRON_LEGGINGS
   lore:
@@ -12243,7 +12243,7 @@ Dodu的手炮:
     defence: 8
     speedMulti: 0.23
   worth: 400000
-  rarity: 2
+  rarity: 1
 黑曜石逃犯帽:
   item: IRON_HELMET
   lore:
@@ -12252,7 +12252,7 @@ Dodu的手炮:
     defence: 8
     damageSummonMulti: 0.08
   worth: 90000
-  rarity: 1
+  rarity: 2
 黑曜石风衣:
   item: IRON_CHESTPLATE
   lore:
@@ -12261,7 +12261,7 @@ Dodu的手炮:
     defence: 12
     minionLimit: 1
   worth: 90000
-  rarity: 1
+  rarity: 2
 黑曜石裤:
   item: IRON_LEGGINGS
   lore:
@@ -12270,7 +12270,7 @@ Dodu的手炮:
     defence: 10
     damageSummonMulti: 0.08
   worth: 90000
-  rarity: 1
+  rarity: 2
 流星头盔:
   item: DIAMOND_HELMET
   lore:
@@ -12279,7 +12279,7 @@ Dodu的手炮:
     defence: 10
     damageMagicMulti: 0.09
   worth: 600000
-  rarity: 1
+  rarity: 2
 流星护甲:
   item: DIAMOND_CHESTPLATE
   lore:
@@ -12288,7 +12288,7 @@ Dodu的手炮:
     defence: 12
     damageMagicMulti: 0.09
   worth: 900000
-  rarity: 1
+  rarity: 2
 流星护腿:
   item: DIAMOND_LEGGINGS
   lore:
@@ -12297,7 +12297,7 @@ Dodu的手炮:
     defence: 10
     damageMagicMulti: 0.09
   worth: 600000
-  rarity: 1
+  rarity: 2
 暗影头盔:
   item: DIAMOND_HELMET
   lore:
@@ -12305,7 +12305,7 @@ Dodu的手炮:
   attributes:
     defence: 12
   worth: 750000
-  rarity: 1
+  rarity: 2
 暗影鳞甲:
   item: DIAMOND_CHESTPLATE
   lore:
@@ -12313,7 +12313,7 @@ Dodu的手炮:
   attributes:
     defence: 14
   worth: 600000
-  rarity: 1
+  rarity: 2
 暗影护胫:
   item: DIAMOND_LEGGINGS
   lore:
@@ -12321,7 +12321,7 @@ Dodu的手炮:
   attributes:
     defence: 12
   worth: 450000
-  rarity: 1
+  rarity: 2
 熔岩头盔:
   item: DIAMOND_HELMET
   lore:
@@ -12330,7 +12330,7 @@ Dodu的手炮:
     defence: 16
     critMelee: 7
   worth: 900000
-  rarity: 3
+  rarity: 2
 熔岩胸甲:
   item: DIAMOND_CHESTPLATE
   lore:
@@ -12339,7 +12339,7 @@ Dodu的手炮:
     defence: 18
     damageMeleeMulti: 0.07
   worth: 600000
-  rarity: 3
+  rarity: 2
 熔岩护胫:
   item: DIAMOND_LEGGINGS
   lore:
@@ -12348,7 +12348,7 @@ Dodu的手炮:
     defence: 16
     useSpeedMeleeMulti: 0.07
   worth: 600000
-  rarity: 3
+  rarity: 2
 天蓝战盔:
   item: IRON_HELMET
   lore:
@@ -12413,7 +12413,7 @@ Dodu的手炮:
     defence: 12
     damageRangedMulti: 0.05
   worth: 900000
-  rarity: 2
+  rarity: 3
 死灵胸甲:
   item: DIAMOND_CHESTPLATE
   lore:
@@ -12422,7 +12422,7 @@ Dodu的手炮:
     defence: 14
     damageRangedMulti: 0.05
   worth: 600000
-  rarity: 2
+  rarity: 3
 死灵护胫:
   item: DIAMOND_LEGGINGS
   lore:
@@ -12431,7 +12431,7 @@ Dodu的手炮:
     defence: 12
     damageRangedMulti: 0.05
   worth: 600000
-  rarity: 2
+  rarity: 3
 斯塔提斯战盔:
   item: IRON_HELMET
   lore:
@@ -12442,7 +12442,7 @@ Dodu的手炮:
     useSpeedMeleeMulti: 0.1
     critMelee: 7
   worth: 2400000
-  rarity: 5
+  rarity: 4
 斯塔提斯头饰:
   item: IRON_HELMET
   lore:
@@ -12453,7 +12453,7 @@ Dodu的手炮:
     ammoConsumptionRate: -0.1
     critRanged: 7
   worth: 2400000
-  rarity: 5
+  rarity: 4
 斯塔提斯帽子:
   item: IRON_HELMET
   lore:
@@ -12465,7 +12465,7 @@ Dodu的手炮:
     manaUseMulti: -0.1
     critMagic: 7
   worth: 2400000
-  rarity: 5
+  rarity: 4
 斯塔提斯兜帽:
   item: IRON_HELMET
   lore:
@@ -12475,7 +12475,7 @@ Dodu的手炮:
     damageSummonMulti: 0.12
     speedMulti: 0.05
   worth: 2400000
-  rarity: 5
+  rarity: 4
 斯塔提斯盔甲:
   item: IRON_CHESTPLATE
   lore:
@@ -12484,7 +12484,7 @@ Dodu的手炮:
     defence: 20
     crit: 5
   worth: 2400000
-  rarity: 5
+  rarity: 4
 斯塔提斯护胫:
   item: IRON_LEGGINGS
   lore:
@@ -12494,7 +12494,7 @@ Dodu的手炮:
     speedMulti: 0.05
     damageMulti: 0.05
   worth: 2400000
-  rarity: 5
+  rarity: 4
 蜘蛛面具:
   item: DIAMOND_HELMET
   lore:
@@ -14802,7 +14802,7 @@ Dodu的手炮:
 南瓜派:
   item: PUMPKIN_PIE
   lore:
-  - §r食用后获得8分钟中等属性提升
+  - §r食用后获得8分钟少量属性提升
   - §r“一口就吃完了！”
   worth: 20000
   rarity: 2
