@@ -16,6 +16,7 @@ import terraria.entity.boss.aquaticScourge.AquaticScourge;
 import terraria.entity.boss.astrumDeus.AstrumDeus;
 import terraria.entity.boss.desertScourge.DesertNuisance;
 import terraria.entity.boss.desertScourge.DesertScourge;
+import terraria.entity.boss.stormWeaver.StormWeaver;
 import terraria.entity.boss.theDestroyer.Destroyer;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.EventAndTime;
@@ -74,6 +75,9 @@ public class BossHelper {
                 break;
             case ASTRUM_DEUS:
                 multiplier = 1.5d / AstrumDeus.TOTAL_LENGTH;
+                break;
+            case STORM_WEAVER:
+                multiplier = 1d / StormWeaver.TOTAL_LENGTH;
                 break;
             default:
                 multiplier = 1d;

@@ -1,13 +1,9 @@
 package terraria.entity.boss.dragonFolly;
 
-import eos.moe.dragoncore.api.CoreAPI;
-import eos.moe.dragoncore.util.CoreUtils;
+import eos.moe.dragoncore.network.PacketSender;
 import net.minecraft.server.v1_12_R1.*;
-import org.apache.logging.log4j.core.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.Server;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -16,10 +12,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,8 +94,11 @@ public class DragonFolly extends EntitySlime {
                 // increase player aggro duration
                 targetMap.get(target.getUniqueId()).addAggressionTick();
                 // Check if the player has moved too far horizontally
-                if (isOutOfBoundary()) {
-                    EntityHelper.applyEffect(target, "龙焰", 200);
+                for (UUID uid : targetMap.keySet()) {
+                    Player ply = Bukkit.getPlayer(uid);
+                    if (isOutOfBoundary(ply)) {
+                        EntityHelper.applyEffect(ply, "龙焰", 200);
+                    }
                 }
                 // Fire particles
                 if (++particleTicks > PARTICLE_INTERVAL) {
@@ -202,16 +199,17 @@ public class DragonFolly extends EntitySlime {
             EntityHelper.spawnProjectile(shootInfoFeather);
         }
     }
-    private boolean isOutOfBoundary() {
-        Location targetHorizontalLocation = target.getLocation();
+    private boolean isOutOfBoundary(Player ply) {
+        Location targetHorizontalLocation = ply.getLocation();
         targetHorizontalLocation.setY(spawnPosition.getY());
         double horizontalDistance = spawnPosition.distanceSquared(targetHorizontalLocation);
         return horizontalDistance > HORIZONTAL_LIMIT * HORIZONTAL_LIMIT;
     }
     private void visualizeBoundary() {
-        String cmd = String.format("core particlespawn %5$s dragonfolly random %1$f,%2$f,%3$f 0,0,0 %4$d",
-                spawnPosition.getX(), spawnPosition.getY(), spawnPosition.getZ(), PARTICLE_INTERVAL, spawnPosition.getWorld().getName());
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), cmd);
+        for (UUID uid : targetMap.keySet()) {
+            Player ply = Bukkit.getPlayer(uid);
+            DragoncoreHelper.displayParticle(ply, "dragonfolly", spawnPosition, PARTICLE_INTERVAL);
+        }
     }
     // default constructor to handle chunk unload
     public DragonFolly(World world) {

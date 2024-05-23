@@ -3,6 +3,7 @@ package terraria.entity.boss.stormWeaver;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
@@ -13,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
+import terraria.TerrariaHelper;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
@@ -29,6 +31,8 @@ public class StormWeaver extends EntitySlime {
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
     public static final double BASIC_HEALTH = 1980000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
+    public static final int TOTAL_LENGTH = 61;
+    static final String[] NAME_SUFFIXES = {"头", "体节", "尾"};
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
@@ -36,35 +40,41 @@ public class StormWeaver extends EntitySlime {
     Player target = null;
     // other variables and AI
     StormWeaver head;
-    static final int TOTAL_LENGTH = 61;
-    static final String[] NAME_SUFFIXES = {"头", "体节", "尾"};
     static final double[][]
             SEGMENT_DAMAGE = {{1080d}, {660d}, {540d}}, SEGMENT_DEFENCE = {{99999d, 40d}, {99999d, 60d}, {0d, 80d}};
-    static final double FROST_WAVE_SPEED = 2.75, LASER_SPEED = 3.0;
+    static final double FROST_WAVE_SPEED = 2.75, LASER_SPEED = 2.0;
 
-    static final double ACC_TIER_1 = 0.2, SPEED_TIER_1 = 2, DIST_ACCELERATE_TIER_1 = 16.0;
-    static final double ACC_TIER_2 = 0.8, SPEED_TIER_2 = 3.75, DIST_ACCELERATE_TIER_2 = 24.0,
+    static final double ACC_PHASE_1 = 0.2, SPEED_PHASE_1 = 2.0, DIST_ACCELERATE_PHASE_1 = 16.0;
+    static final double ACC_PHASE_2 = 0.75, SPEED_PHASE_2 = 4.25, SPEED_PHASE_2_DASH = 6.5, DIST_ACCELERATE_PHASE_2 = 24.0,
             CIRCLE_HEIGHT = 40.0, CIRCLE_RADIUS = 40.0,
-            ANGLE_PER_TICK = SPEED_TIER_2 / CIRCLE_RADIUS;
-    static final int PROJECTILE_INTERVAL = 20, PROJECTILE_ROUNDS = 4, DASHES = 3;
+            ANGLE_PER_TICK = SPEED_PHASE_2 / CIRCLE_RADIUS;
+    static final int PROJECTILE_INTERVAL = 20, PROJECTILE_ROUNDS = 4,
+            DASHES = 3, DASH_DURATION_1 = 30, DASH_DURATION_2 = 20;
 
-    static final int SLIME_SIZE_ARMORED = 10, SLIME_SIZE_UNARMORED = 9;
-    static HashMap<String, Double> attrMapFrostWaveLightning, attrMapLaser;
+    static final int SLIME_SIZE_ARMORED = 8, SLIME_SIZE_UNARMORED = 7;
+    static HashMap<String, Double> attrMapFrostWave, attrMapLaser;
     static {
-        attrMapFrostWaveLightning = new HashMap<>();
-        attrMapFrostWaveLightning.put("damage", 864d);
-        attrMapFrostWaveLightning.put("knockback", 2.5d);
+        attrMapFrostWave = new HashMap<>();
+        attrMapFrostWave.put("damage", 864d);
+        attrMapFrostWave.put("knockback", 2.5d);
 
         attrMapLaser = new HashMap<>();
         attrMapLaser.put("damage", 792d);
         attrMapLaser.put("knockback", 1.5d);
     }
-    static final EntityHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
-            new EntityHelper.WormSegmentMovementOptions()
-                    .setFollowDistance(5)
-                    .setFollowingMultiplier(1)
-                    .setStraighteningMultiplier(-0.1)
-                    .setVelocityOrTeleport(false);
+    static final EntityHelper.WormSegmentMovementOptions
+            FOLLOW_PROPERTY_PHASE_1 =
+                    new EntityHelper.WormSegmentMovementOptions()
+                            .setFollowDistance(SLIME_SIZE_ARMORED * 0.5)
+                            .setFollowingMultiplier(1)
+                            .setStraighteningMultiplier(-0.1)
+                            .setVelocityOrTeleport(false),
+            FOLLOW_PROPERTY_PHASE_2 =
+                    new EntityHelper.WormSegmentMovementOptions()
+                            .setFollowDistance(SLIME_SIZE_UNARMORED * 0.5)
+                            .setFollowingMultiplier(1)
+                            .setStraighteningMultiplier(-0.1)
+                            .setVelocityOrTeleport(false);
     EntityHelper.ProjectileShootInfo shootInfoFrostWave, shootInfoLaser;
     int segmentIndex, segmentTypeIndex;
 
@@ -75,17 +85,20 @@ public class StormWeaver extends EntitySlime {
     private int dashCount = 0; // Counter for dash attempts
     private void headMovement() {
         if (phase == 1) {
-            dashTowardsPlayer(ACC_TIER_1, SPEED_TIER_1, DIST_ACCELERATE_TIER_1);
+            dashTowardsPlayer(ACC_PHASE_1, SPEED_PHASE_1, SPEED_PHASE_1, DIST_ACCELERATE_PHASE_1, DASH_DURATION_1, null);
         } else {
             // Phase 2: Circular movement and projectile firing, then dashing
-            if (circleTimer < PROJECTILE_ROUNDS * PROJECTILE_INTERVAL) {
+            if (circleTimer < (PROJECTILE_ROUNDS + 2) * PROJECTILE_INTERVAL) {
                 circleAbovePlayer();
                 if (circleTimer % PROJECTILE_INTERVAL == 0) {
-                     fireProjectile();
+                    int fireRound = circleTimer / PROJECTILE_INTERVAL;
+                    if (fireRound > 0 && fireRound <= PROJECTILE_ROUNDS)
+                        fireProjectile();
                 }
                 circleTimer++;
+                dashCount = 0;
             } else if (dashCount < DASHES) {
-                dashTowardsPlayer(ACC_TIER_2, SPEED_TIER_2, DIST_ACCELERATE_TIER_2);
+                dashTowardsPlayer(ACC_PHASE_2, SPEED_PHASE_2, SPEED_PHASE_2_DASH, DIST_ACCELERATE_PHASE_2, DASH_DURATION_2, Sound.ENTITY_ENDERDRAGON_GROWL);
             } else {
                 // Reset timers and switch back to circular movement
                 circleTimer = 0;
@@ -101,35 +114,67 @@ public class StormWeaver extends EntitySlime {
         double y = target.getLocation().getY() + CIRCLE_HEIGHT;
 
         // Move the head towards the calculated position
-        Vector movementVector = MathHelper.getDirection(bukkitEntity.getLocation(), new Location(bukkitEntity.getWorld(), x, y, z), ACC_TIER_2);
+        Vector movementVector = MathHelper.getDirection(bukkitEntity.getLocation(), new Location(bukkitEntity.getWorld(), x, y, z), ACC_PHASE_2);
         lastVelocity.add(movementVector);
-        MathHelper.setVectorLength(lastVelocity, SPEED_TIER_2, true);// Cap the speed in phase 2
+        MathHelper.setVectorLength(lastVelocity, SPEED_PHASE_2, true);// Cap the speed in phase 2
 
         this.getBukkitEntity().setVelocity(lastVelocity);
         this.setYawPitch(bukkitEntity.getLocation().setDirection(lastVelocity));
     }
-    // TODO: Implement your projectile firing logic here
     private void fireProjectile() {
-        Bukkit.broadcastMessage("StormWeaver Attempted to Fire Projectiles!");
+        shootInfoFrostWave.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        for (Vector vel : MathHelper.getEvenlySpacedProjectileDirections(
+                10, 51, target, shootInfoFrostWave.shootLoc, FROST_WAVE_SPEED)) {
+            shootInfoFrostWave.velocity = vel;
+            EntityHelper.spawnProjectile(shootInfoFrostWave);
+        }
     }
-    private void dashTowardsPlayer(double acceleration, double maxSpeed, double minDistance) {
-        double distanceToTarget = bukkitEntity.getLocation().distance(target.getLocation());
-        // Accelerate to change movement direction when far enough
-        if (distanceToTarget > minDistance) {
-            Vector movementVector = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), acceleration);
+
+    private int getLaserInterval() {
+        double healthPercentage = getHealth() / getAttributeInstance(GenericAttributes.maxHealth).getValue();
+        // Scale the interval based on health (adjust the values as needed)
+        return net.minecraft.server.v1_12_R1.MathHelper.clamp((int) (20 * healthPercentage), 1, 5);
+    }
+    private void scheduleLaserForSegment(int index) {
+        if (index < 0 || index >= bossParts.size())
+            return;
+        Entity nextFireSegmentNMS = ((CraftEntity) bossParts.get(index)).getHandle();
+        Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), ((StormWeaver) nextFireSegmentNMS)::fireLaser, 1);
+    }
+    private void fireLaser() {
+        shootInfoLaser.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        shootInfoLaser.velocity = MathHelper.getDirection(shootInfoLaser.shootLoc, target.getEyeLocation(), LASER_SPEED);
+        EntityHelper.spawnProjectile(shootInfoLaser);
+
+        scheduleLaserForSegment(segmentIndex + getLaserInterval());
+    }
+    private void dashTowardsPlayer(double acceleration, double speed, double dashSpeed, double minDistance, int dashDuration, Sound sound) {
+        // dashTimer = 0 denotes the boss is accelerating towards the player
+        if (dashTimer == 0) {
+            Vector movementVector = MathHelper.getDirection( ((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), acceleration);
 
             // Use stored lastVelocity to avoid being slowed down by liquid
             lastVelocity.add(movementVector);
-            MathHelper.setVectorLength(lastVelocity, maxSpeed, true);
 
-            if (phase == 2) {
-                dashTimer++; // Update the timer
+            double distanceToTarget = bukkitEntity.getLocation().distance(target.getLocation());
+            // The dash begins when the boss is close to the player
+            if (distanceToTarget <= minDistance) {
+                // The velocity is maintained during the dash
+                lastVelocity = MathHelper.setVectorLength(movementVector, dashSpeed, false);
+                if (sound != null) {
+                    bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), sound, 3f, 1f);
+                }
+                dashTimer = 1;
+            }
+            else {
+                MathHelper.setVectorLength(lastVelocity, speed, true);
             }
         }
-        // If the boss dashes into the minDistance, record this as one completed dash.
-        else if (dashTimer > 0 && phase == 2) {
-            dashCount ++;
+        // The boss maintains its speed for the dash duration, and get prepared for the next dash.
+        else if (++dashTimer > dashDuration) {
+            dashCount++;
             dashTimer = 0;
+            scheduleLaserForSegment(1);
         }
         // Update the entity's velocity and facing
         this.getBukkitEntity().setVelocity(lastVelocity);
@@ -164,11 +209,11 @@ public class StormWeaver extends EntitySlime {
                     // increase player aggro duration
                     targetMap.get(target.getUniqueId()).addAggressionTick();
 
-                    // TODO
                     headMovement();
 
                     // follow
-                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
+                    EntityHelper.handleSegmentsFollow(bossParts,
+                            phase == 1 ? FOLLOW_PROPERTY_PHASE_1 : FOLLOW_PROPERTY_PHASE_2, segmentIndex);
                 }
                 // update facing direction from handleSegmentsFollow
                 {
@@ -185,16 +230,23 @@ public class StormWeaver extends EntitySlime {
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     private void updatePhase() {
-        double currentHealthPercentage = getHealth() / getAttributeInstance(GenericAttributes.maxHealth).getValue() * 100;
-
-        if (currentHealthPercentage <= 80 && phase == 1) {
-            phase = 2;
-            System.out.println("StormWeaver changed to phase " + phase);
-//            onPhaseChange(1, 2); // Call the helper function when phase changes
-        } else if (currentHealthPercentage > 80 && phase == 2) {
-            phase = 1;
-            System.out.println("StormWeaver changed to phase " + 1);
-//            onPhaseChange(2, 1);
+        if (phase == 1) {
+            double currentHealthPercentage = getHealth() / getAttributeInstance(GenericAttributes.maxHealth).getValue() * 100;
+            if (currentHealthPercentage <= 80) {
+                phase = 2;
+                // Massive defence for head and body are removed, so they now should become valid targets.
+                if (segmentTypeIndex != 2) {
+                    addScoreboardTag("isMonster");
+                    // Bar color updated once, by the head.
+                    if (segmentTypeIndex == 0) {
+                        bossbar.color = BossBattle.BarColor.PURPLE;
+                        bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+                    }
+                }
+                setCustomName(BOSS_TYPE.msgName + NAME_SUFFIXES[segmentTypeIndex]);
+                EntityHelper.tweakAttribute(attrMap, "defence",
+                        (SEGMENT_DEFENCE[segmentTypeIndex][1] - SEGMENT_DEFENCE[segmentTypeIndex][0]) + "", true);
+            }
         }
     }
     // default constructor to handle chunk unload
@@ -233,12 +285,12 @@ public class StormWeaver extends EntitySlime {
             this.head = (StormWeaver) ((CraftEntity) bossParts.get(0)).getHandle();
             segmentTypeIndex = (segmentIndex + 1 < TOTAL_LENGTH) ? 1 : 2;
         }
-        setCustomName(BOSS_TYPE.msgName + "装甲" + NAME_SUFFIXES[segmentTypeIndex]);
+        setCustomName("装甲" + BOSS_TYPE.msgName + NAME_SUFFIXES[segmentTypeIndex]);
         setCustomNameVisible(true);
-        if (segmentIndex == 2) {
+        if (segmentTypeIndex == 2) {
             addScoreboardTag("isMonster");
-            addScoreboardTag("isBOSS");
         }
+        addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
@@ -256,7 +308,7 @@ public class StormWeaver extends EntitySlime {
         // init boss bar
         if (segmentIndex == 0) {
             bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
-                    BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
+                    BossBattle.BarColor.BLUE, BossBattle.BarStyle.PROGRESS);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
         } else {
             bossbar = (BossBattleServer) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_BAR).value();
@@ -290,7 +342,7 @@ public class StormWeaver extends EntitySlime {
             this.setNoGravity(true);
             this.persistent = true;
             // projectile info
-            shootInfoFrostWave = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFrostWaveLightning,
+            shootInfoFrostWave = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFrostWave,
                     EntityHelper.DamageType.MAGIC, "寒霜波");
             shootInfoLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLaser,
                     EntityHelper.DamageType.BULLET, "电击激光");

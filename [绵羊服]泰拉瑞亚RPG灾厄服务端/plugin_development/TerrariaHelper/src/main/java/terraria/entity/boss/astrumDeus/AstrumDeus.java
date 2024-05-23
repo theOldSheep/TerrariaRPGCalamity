@@ -442,7 +442,7 @@ public class AstrumDeus extends EntitySlime {
         {
             if (segmentIndex == 0) {
                 targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
-                        getBukkitEntity(), BossHelper.BossType.WALL_OF_FLESH.msgName, summonedPlayer, true, bossbar);
+                        getBukkitEntity(), BossHelper.BossType.GOLEM.msgName, summonedPlayer, true, bossbar);
             } else {
                 targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
             }

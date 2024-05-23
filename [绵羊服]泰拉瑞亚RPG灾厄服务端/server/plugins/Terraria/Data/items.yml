@@ -929,12 +929,21 @@
   rarity: 1000
 可疑的眼球:
   item: CLAY_BALL
+  lore:
+  - §r于夜晚使用，召唤克苏鲁之眼
+  - §r附近玩家均可参与挑战
   rarity: 1
 史莱姆王冠:
   item: COAL
+  lore:
+  - §r召唤史莱姆王
+  - §r附近玩家均可参与挑战
   rarity: 1
 虫饵:
   item: ROTTEN_FLESH
+  lore:
+  - §r在腐化之地召唤世界吞噬者
+  - §r附近玩家均可参与挑战
   rarity: 1
 光明钥匙:
   item: SHEARS
@@ -950,107 +959,127 @@
   item: COAL
   lore:
   - §r召唤史莱姆皇后
+  - §r附近血肉之墙后玩家均可参与挑战
   worth: 1000000
   rarity: 5
 机械骷髅头:
   item: IRON_NUGGET
   lore:
   - §r召唤机械骷髅王
+  - §r附近血肉之墙后玩家均可参与挑战
   rarity: 5
 机械魔眼:
   item: IRON_NUGGET
   lore:
   - §r召唤双子魔眼
+  - §r附近血肉之墙后玩家均可参与挑战
   rarity: 5
 机械蠕虫:
   item: IRON_NUGGET
   lore:
   - §r召唤毁灭者
+  - §r附近血肉之墙后玩家均可参与挑战
   rarity: 5
 丛林蜥蜴电池:
   item: CLAY_BALL
   lore:
-  - §r站在神庙砖上使用召唤石巨人
+  - §r在神庙使用召唤石巨人
+  - §r附近世纪之花后玩家均可参与挑战
   worth: 1000000
   rarity: 7
 天界符:
   item: CLAY_BALL
   lore:
   - §r召唤月亮末日
+  - §r附近石巨人后玩家均可参与挑战
   rarity: 10
 南瓜月勋章:
   item: CLAY_BALL
   lore:
   - §r召唤南瓜月
+  - §r世纪之花后玩家均可参与挑战
   rarity: 8
 调皮礼物:
   item: CLAY_BALL
   lore:
   - §r召唤冰霜月
+  - §r世纪之花后玩家均可参与挑战
   rarity: 8
 荒漠吊坠:
   item: CLAY_BALL
   lore:
   - §r在沙漠使用时召唤荒漠灾虫
+  - §r附近玩家均可参与挑战
   rarity: 2
 节肢动物芽孢:
   item: CLAY_BALL
   lore:
   - §r在洞穴层丛林使用，召唤菌生蟹
+  - §r附近玩家均可参与挑战
   rarity: 2
 畸形肿瘤:
   item: CLAY_BALL
   lore:
   - §r在腐化之地使用，召唤腐巢意志
+  - §r附近玩家均可参与挑战
   rarity: 3
 过载淤泥:
   item: CLAY_BALL
   lore:
-  - §r它看起来有点被腐化了
+  - §r它看起来有点太腐化了
   - §r召唤史莱姆之神
+  - §r附近玩家均可参与挑战
   rarity: 4
 极寒之匙:
   item: CLAY_BALL
   lore:
   - §r在雪原使用，召唤极地之灵
+  - §r附近血肉之墙后玩家均可参与挑战
   rarity: 5
 海鲜饵料:
   item: CLAY_BALL
   lore:
   - §r在硫磺海使用，召唤渊海灾虫
+  - §r附近血肉之墙后玩家均可参与挑战
   rarity: 5
 焦炭玩偶:
   item: CLAY_BALL
   lore:
   - §r在硫火之崖使用，召唤硫磺火元素
+  - §r附近血肉之墙后玩家均可参与挑战
   rarity: 5
 荒芜之眼:
   item: CLAY_BALL
   lore:
   - §r这将会是一个恐怖的夜晚...
   - §r在夜晚使用以召唤灾厄之影
+  - §r附近血肉之墙后玩家均可参与挑战
   rarity: 6
 星辉碎块:
   item: CLAY_BALL
   lore:
   - §r夜间在星辉瘟疫使用，召唤白金星舰
+  - §r附近世纪之花后玩家均可参与挑战
   rarity: 7
 瘟疫起动装置:
   item: CLAY_BALL
   lore:
   - §r呼叫瘟疫传播者
   - §r在丛林使用，召唤瘟疫使者歌莉娅
+  - §r附近石巨人后玩家均可参与挑战
   rarity: 8
 唤死笛哨:
   item: CLAY_BALL
   lore:
   - §r非常老旧的神庙笛哨
   - §r召唤毁灭魔像
+  - §r附近石巨人后玩家均可参与挑战
   rarity: 8
 泰坦之心:
   item: CLAY_BALL
   lore:
   - §r在星辉信标处使用，召唤星神游龙
+  - §r附近石巨人后玩家均可参与挑战
   rarity: 4
 星核:
   item: CLAY_BALL
@@ -1058,12 +1087,14 @@
   - §r愿群星指引你的前路
   - §r在星辉信标处使用，召唤星神游龙
   - §r泰坦之心也能起到同样作用，但星核在使用时不会被消耗
+  - §r附近石巨人后玩家均可参与挑战
   rarity: 9
 奇异信息素:
   item: CLAY_BALL
   lore:
   - §r在丛林使用以召唤痴愚金龙
   - §r“用以狩猎巨龙分支的信息素。”
+  - §r附近月球领主后玩家均可参与挑战
   rarity: 10
 亵渎碎片:
   item: CLAY_BALL
@@ -1071,6 +1102,7 @@
   - §r白天在神圣之地使用以召唤亵渎守卫
   - §r亵渎天神存活时暂不可用
   - §r“她的守护者正在搜寻如此浩瀚能量的盗取者。”
+  - §r附近月球领主后玩家均可参与挑战
   rarity: 11
 亵渎晶核:
   item: CLAY_BALL
@@ -1078,12 +1110,14 @@
   - §r白天在神圣之地使用以召唤亵渎天神
   - §r亵渎守卫存活时暂不可用
   - §r“她的守卫的心脏，她将会用污亵的烈焰焚尽现在正掌控它的人。”
+  - §r附近月球领主后玩家均可参与挑战
   rarity: 11
 死灵魂炬:
   item: CLAY_BALL
   lore:
   - §r在地牢使用以召唤噬魂幽花
   - §r“幽魂的哀嚎惊动了更可怕的东西。”
+  - §r附近亵渎天神后玩家均可参与挑战
   rarity: 12
 宇宙符文:
   item: CLAY_BALL
@@ -1091,28 +1125,33 @@
   - §r亵渎火焰的华贵符文
   - §r仇恨还在它的顶部燃烧
   - §r这种能力会吸引异界的存在
+  - §r附近亵渎天神后玩家均可参与挑战
   - §r在太空，地牢和地狱使用时效果似乎有所不同……
   rarity: 12
 宇宙之虫:
   item: CLAY_BALL
   lore:
   - §r“无名的巨蟒已经准备对你动手了。”
+  - §r附近亵渎天神后玩家均可参与挑战
   rarity: 12
 圣佑烬昭龙蛋:
   item: CLAY_BALL
   lore:
   - §r“巨龙正在监视与等候你的象征。”
+  - §r附近亵渎天神后玩家均可参与挑战
   rarity: 14
 金源量子冷却电池:
   item: CLAY_BALL
   lore:
   - §r它的创造者已经准备好了，他希望你也准备好了
+  - §r附近亵渎天神后玩家均可参与挑战
   rarity: 15
 祭魂瓮:
   item: CLAY_BALL
   lore:
   - §r召唤至尊女巫，灾厄
   - §r“女巫不会允许这种事情再次发生。”
+  - §r附近亵渎天神后玩家均可参与挑战
   rarity: 15
 终末石:
   item: CLAY_BALL
