@@ -14,7 +14,7 @@ import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.PlayerTornado;
-import terraria.entity.projectile.TerrariaPotionProjectile;
+import terraria.entity.projectile.GenericProjectile;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.gameplay.EventAndTime;
 import terraria.util.*;
@@ -40,7 +40,7 @@ public class ArrowHitListener implements Listener {
         String projectileName = projectile.getName();
         // if the projectile is reflected
         if (entity.getScoreboardTags().contains("reflectProjectile")) {
-            TerrariaPotionProjectile nmsProjectile = (TerrariaPotionProjectile) ((CraftProjectile) projectile).getHandle();
+            GenericProjectile nmsProjectile = (GenericProjectile) ((CraftProjectile) projectile).getHandle();
             if (nmsProjectile.canBeReflected) {
                 e.setCancelled(true);
                 // set velocity in the next tick, so it do not get overridden
@@ -222,7 +222,7 @@ public class ArrowHitListener implements Listener {
             return;
         ConfigurationSection clusterSection = projectileSection.getConfigurationSection("clusterBomb");
 
-        int destroyReason = TerrariaPotionProjectile.DESTROY_TIME_OUT;
+        int destroyReason = GenericProjectile.DESTROY_TIME_OUT;
         MetadataValue destroyReasonMetadata = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON);
         if (destroyReasonMetadata != null) destroyReason = destroyReasonMetadata.asInt();
 
@@ -230,9 +230,9 @@ public class ArrowHitListener implements Listener {
         Entity entityHit = null;
         if (clusterSection == null)
             shouldFire = false;
-        else if (destroyReason == TerrariaPotionProjectile.DESTROY_HIT_BLOCK)
+        else if (destroyReason == GenericProjectile.DESTROY_HIT_BLOCK)
             shouldFire = clusterSection.getBoolean("fireOnHitBlock", true);
-        else if (destroyReason == TerrariaPotionProjectile.DESTROY_HIT_ENTITY) {
+        else if (destroyReason == GenericProjectile.DESTROY_HIT_ENTITY) {
             shouldFire = clusterSection.getBoolean("fireOnHitEntity", true);
             MetadataValue collidedVal = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.PROJECTILE_LAST_HIT_ENTITY);
             if (collidedVal != null)

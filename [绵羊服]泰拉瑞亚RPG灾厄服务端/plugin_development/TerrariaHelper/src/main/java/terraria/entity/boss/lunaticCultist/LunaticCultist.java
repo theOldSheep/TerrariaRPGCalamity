@@ -154,6 +154,7 @@ public class LunaticCultist extends EntityZombie {
         if (indexAI < 0)
             return;
         if (indexAI % 10 == 0) {
+            shootInfoFireball.setLockedTarget(target);
             shootInfoFireball.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             shootInfoFireball.velocity = MathHelper.getDirection(shootInfoFireball.shootLoc,
                     target.getEyeLocation(), SPEED_FIREBALL);

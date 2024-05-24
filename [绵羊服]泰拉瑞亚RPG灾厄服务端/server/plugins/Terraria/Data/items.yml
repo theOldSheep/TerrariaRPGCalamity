@@ -222,7 +222,7 @@
 水晶碎块:
   item: CLAY_BALL
   worth: 100
-  rarity: 3
+  rarity: 4
 弹壳:
   item: CLAY_BALL
   worth: 100
@@ -744,11 +744,11 @@
 金锭:
   item: GOLD_INGOT
   worth: 120000
-  rarity: 0
+  rarity: 1
 金矿石:
   item: CLAY_BALL
   worth: 30000
-  rarity: 0
+  rarity: 1
 恶魔锭:
   item: IRON_INGOT
   worth: 300000
@@ -2043,8 +2043,10 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r作为代价，生命值在高于生命上限一半时生命再生将减少玩家生命
-  attributes:
+  - §c生命回复形态下时，生命值若高于生命上限一半则生命再生将减少玩家生命
+  attributesFormI:
+    damageMulti: 0.12
+  attributesFormII:
     regen: 24
   worth: 9600000
   rarity: 7
@@ -2563,7 +2565,7 @@ Drew之翼:
     damageMulti: 0.15
     buffInflict: 孱弱巫咒|30|1
   worth: 30000000
-  rarity: 15
+  rarity: 16
 幻灭心元石:
   item: LEASH
   lore:
@@ -2613,12 +2615,12 @@ Drew之翼:
     regen: 4
     speedMulti: 0.1
   worth: 7200000
-  rarity: 5
+  rarity: 1
 宝光盾牌:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r双击一个方向可以冲刺
+  - §r▷ 冲刺：双击一个方向可以冲刺，具有一定的冷却时间
   attributes:
     defence: 16
     damageTakenMulti: -0.08
@@ -2629,7 +2631,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r双击一个方向可以冲刺
+  - §r▷ 冲刺：双击一个方向可以冲刺，具有一定的冷却时间
   attributes:
     defence: 32
     damageTakenMulti: -0.05
@@ -2641,7 +2643,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r双击一个方向可以冲刺
+  - §r▷ 冲刺：双击一个方向可以冲刺，具有一定的冷却时间
   attributes:
     defence: 32
     damageTakenMulti: -0.05
@@ -2653,7 +2655,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r双击一个方向可以冲刺
+  - §r▷ 冲刺：双击一个方向可以冲刺，具有一定的冷却时间
   attributes:
     defence: 40
     damageTakenMulti: -0.1
@@ -2709,7 +2711,7 @@ Drew之翼:
   - §r[饰品]
   - §r受到伤害时会按照最终伤害损失防御
   - §r因此损失的防御会随着时间流逝而逐渐恢复
-  - §r每恢复1点防御便为你回复1点生命值
+  - §r每恢复1点防御便为你恢复1点生命值
   - §r只对超过50点的伤害有效
   - §r“哦天哪！那是接近的！”
   worth: 24000000
@@ -2722,7 +2724,7 @@ Drew之翼:
   - §r-> 试图损失至多为最终伤害75%的防御
   - §r-> 短暂恢复最多为最终伤害95%的生命值，但成功恢复的生命值将被快速扣除
   - §r因此损失的防御会随着时间流逝而逐渐恢复
-  - §r每恢复1点防御便为你回复1点生命值
+  - §r每恢复1点防御便为你恢复1点生命值
   - §r只对超过100点的伤害有效
   - §r“竟然为了一滴血付出了这么多”
   attributes:
@@ -2735,40 +2737,67 @@ Drew之翼:
   - §r[饰品]
   - §r拥有屏障时额外获得20防御
   attributes:
-    barrierMax: 50
+    barrierMax: 40
   worth: 200000
   rarity: 1
+钨钢屏障转换仪:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributesFormI:
+    barrierMax: 125
+  attributesFormII:
+    defence: 35
+  worth: 2400000
+  rarity: 4
 阴阳吸星石:
   item: LEASH
   lore:
   - §r[饰品]
-  attributes:
-    maxHealth: 40
-    maxMana: 20
-    speedMulti: 0.05
+  attributesFormI:
+    maxHealth: 100
     damageTakenMulti: -0.1
-    regen: 4
+  attributesFormII:
+    maxHealth: -100
+    regen: 6
+    damageMulti: 0.15
   worth: 16000000
   rarity: 9
 化绵留香石:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r屏障激活时会提供40点防御并降低7.5%所受伤害
-  attributes:
+  attributesFormI:
     barrierMax: 360
+    damageMulti: 0.15
+  attributesFormII:
+    defence: 40
+    damageTakenMulti: -0.1
   worth: 28000000
   rarity: 14
+龙心吊坠:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributesFormI:
+    maxHealthMulti: -0.5
+    fixedHealingMulti: -0.75
+    regen: 24
+  attributesFormII:
+    damageMulti: 0.2
+    regen: -16
+  worth: 30000000
+  rarity: 15
 嘉登之心:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r屏障激活时会提供6生命再生并降低10%所受伤害
+  - §r屏障存在时会提供6生命再生并降低10%所受伤害
   - §r“纳米机器，小子。”
   attributes:
-    barrierMax: 275
+    barrierMax: 200
   worth: 30000000
-  rarity: 15
+  rarity: 16
 舐火甲壳:
   item: LEASH
   lore:
@@ -2844,7 +2873,7 @@ Drew之翼:
   attributes:
     waterAffinity: 5
     defence: 25
-    barrierMax: 100
+    barrierMax: 175
   worth: 22000000
   rarity: 11
 钓鱼竿:
@@ -5336,7 +5365,7 @@ Drew之翼:
   - §#D83716左键攻击时充能增加剑刃的伤害与长度但充能会随时间减少
   - §#D83716当你在半空且处于潜行状态时，剑刃也可以用于在物块之间弹跳
   - §#D83716右键攻击消耗部分充能并在充能超过一半时向前冲刺
-  - §#D83716右键攻击命中敌人后回复一定生命值并极大地缩短使用冷却
+  - §#D83716右键攻击命中敌人后恢复一定生命值并极大地缩短使用冷却
   - §#D83716右键攻击借助敌人而非物块弹跳
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
@@ -11529,7 +11558,7 @@ Dodu的手炮:
 血炎箭:
   item: ARROW
   lore:
-  - §r命中时有概率回复生命值
+  - §r命中时有概率恢复生命值
   attributes:
     damage: 58
     damageType: Arrow
@@ -12442,7 +12471,7 @@ Dodu的手炮:
     useSpeedMeleeMulti: 0.1
     critMelee: 7
   worth: 2400000
-  rarity: 4
+  rarity: 3
 斯塔提斯头饰:
   item: IRON_HELMET
   lore:
@@ -12453,7 +12482,7 @@ Dodu的手炮:
     ammoConsumptionRate: -0.1
     critRanged: 7
   worth: 2400000
-  rarity: 4
+  rarity: 3
 斯塔提斯帽子:
   item: IRON_HELMET
   lore:
@@ -12465,7 +12494,7 @@ Dodu的手炮:
     manaUseMulti: -0.1
     critMagic: 7
   worth: 2400000
-  rarity: 4
+  rarity: 3
 斯塔提斯兜帽:
   item: IRON_HELMET
   lore:
@@ -12475,7 +12504,7 @@ Dodu的手炮:
     damageSummonMulti: 0.12
     speedMulti: 0.05
   worth: 2400000
-  rarity: 4
+  rarity: 3
 斯塔提斯盔甲:
   item: IRON_CHESTPLATE
   lore:
@@ -12484,7 +12513,7 @@ Dodu的手炮:
     defence: 20
     crit: 5
   worth: 2400000
-  rarity: 4
+  rarity: 3
 斯塔提斯护胫:
   item: IRON_LEGGINGS
   lore:
@@ -12494,7 +12523,7 @@ Dodu的手炮:
     speedMulti: 0.05
     damageMulti: 0.05
   worth: 2400000
-  rarity: 4
+  rarity: 3
 蜘蛛面具:
   item: DIAMOND_HELMET
   lore:
@@ -13973,7 +14002,7 @@ Dodu的手炮:
 再生药水:
   item: CLAY_BALL
   lore:
-  - §a生命回复增加
+  - §a生命恢复增加
   - §a8分钟持续时间
   worth: 20000
   rarity: 1
@@ -14024,15 +14053,22 @@ Dodu的手炮:
   - §a饮用后可以请求TP到玩家身边
   worth: 20000
   rarity: 1
-树之祭祀:
+磁力药水:
   item: CLAY_BALL
   lore:
-  - §r右键木板或树木使用，摧毁它并获得生命再生效果
-  - §r对木板使用时为16秒，对树木使用时为10秒
-  - §r可于建材商人处购买更多
-  - §r“是的，它严重减缓了我的工作效率”
-  worth: 600
-  rarity: 2
+  - §a使你将大范围内的物品吸入囊中
+  - §a15分钟持续时间
+  - §r“桌面清理大师”
+  worth: 20000
+  rarity: 1
+钙质药水:
+  item: CLAY_BALL
+  lore:
+  - §a免疫摔落伤害
+  - §a15分钟持续时间
+  - §r“想你了，钙质药水”
+  worth: 20000
+  rarity: 3
 虫潮药水:
   item: CLAY_BALL
   lore:
@@ -14048,14 +14084,6 @@ Dodu的手炮:
   - §a15分钟持续时间
   worth: 400000
   rarity: 4
-磁力药水:
-  item: CLAY_BALL
-  lore:
-  - §a使你将大范围内的物品吸入囊中
-  - §a15分钟持续时间
-  - §r“桌面清理大师”
-  worth: 20000
-  rarity: 1
 无尽吞噬药水:
   item: CLAY_BALL
   lore:
@@ -14065,83 +14093,92 @@ Dodu的手炮:
   - §r“暴风吸入”
   worth: 400000
   rarity: 13
+树之祭祀:
+  item: CLAY_BALL
+  lore:
+  - §r右键木板或树木使用，摧毁它并获得生命再生效果
+  - §r对木板使用时为16秒，对树木使用时为10秒
+  - §r可于建材商人处购买更多
+  - §r“是的，它严重减缓了我的工作效率”
+  worth: 600
+  rarity: 2
 蜂蜜瓶:
   item: CLAY_BALL
   lore:
-  - §r使用回复160生命值
+  - §r使用恢复160生命值
   worth: 800
   rarity: 0
 弱效治疗药水:
   item: CLAY_BALL
   lore:
-  - §r使用回复100生命值
+  - §r使用恢复100生命值
   worth: 6000
   rarity: 0
 治疗药水:
   item: CLAY_BALL
   lore:
-  - §r使用回复200生命值
+  - §r使用恢复200生命值
   worth: 20000
   rarity: 1
 强效治疗药水:
   item: CLAY_BALL
   lore:
-  - §r使用回复300生命值
+  - §r使用恢复300生命值
   worth: 100000
   rarity: 3
 超级治疗药水:
   item: CLAY_BALL
   lore:
-  - §r使用回复400生命值
+  - §r使用恢复400生命值
   worth: 300000
   rarity: 7
 至尊治疗药水:
   item: CLAY_BALL
   lore:
-  - §r使用回复500生命值
+  - §r使用恢复500生命值
   worth: 1300000
   rarity: 11
 终极治疗药水:
   item: CLAY_BALL
   lore:
-  - §r使用回复600生命值
+  - §r使用恢复600生命值
   worth: 2500000
   rarity: 14
 弱效魔力药水:
   item: CLAY_BALL
   lore:
-  - §r使用回复50法力值
+  - §r使用恢复50法力值
   worth: 2000
   rarity: 0
 魔力药水:
   item: CLAY_BALL
   lore:
-  - §r使用回复100法力值
+  - §r使用恢复100法力值
   worth: 5000
   rarity: 1
 强效魔力药水:
   item: CLAY_BALL
   lore:
-  - §r使用回复200法力值
+  - §r使用恢复200法力值
   worth: 10000
   rarity: 3
 超级魔力药水:
   item: CLAY_BALL
   lore:
-  - §r使用回复300法力值
+  - §r使用恢复300法力值
   worth: 30000
   rarity: 4
 至尊魔力药水:
   item: CLAY_BALL
   lore:
-  - §r使用回复400法力值
+  - §r使用恢复400法力值
   worth: 1300000
   rarity: 11
 恢复药水:
   item: CLAY_BALL
   lore:
-  - §r使用回复160生命值
-  - §r使用回复80法力值
+  - §r使用恢复160生命值
+  - §r使用恢复80法力值
   worth: 30000
   rarity: 1
 星舰电池:
@@ -14522,7 +14559,7 @@ Dodu的手炮:
 蘑菇:
   item: CLAY_BALL
   lore:
-  - §r使用回复30生命值
+  - §r使用恢复30生命值
   worth: 500
   rarity: 0
 发光蘑菇:
@@ -14532,7 +14569,7 @@ Dodu的手炮:
 水瓶:
   item: CLAY_BALL
   lore:
-  - §r使用回复40生命值
+  - §r使用恢复40生命值
   worth: 400
   rarity: 0
 祭坛:
@@ -14600,37 +14637,37 @@ Dodu的手炮:
 钩爪:
   item: LEASH
   lore:
-  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
+  - §7▷ 钩爪：放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 400000
   rarity: 1
 失谐钩爪:
   item: LEASH
   lore:
-  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
+  - §7▷ 钩爪：放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 5000000
   rarity: 4
 刺钩:
   item: LEASH
   lore:
-  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
+  - §7▷ 钩爪：放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 6000000
   rarity: 5
 阴森钩:
   item: LEASH
   lore:
-  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
+  - §7▷ 钩爪：放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 4000000
   rarity: 7
 圣诞钩:
   item: LEASH
   lore:
-  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
+  - §7▷ 钩爪：放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 4000000
   rarity: 7
 月钩:
   item: LEASH
   lore:
-  - §r放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
+  - §7▷ 钩爪：放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 10000000
   rarity: 4
 冰冻火把:
@@ -14640,37 +14677,32 @@ Dodu的手炮:
 矿车:
   item: IRON_INGOT
   lore:
-  - §r在主手时，右键铁轨将乘坐普通矿车
-  - §rBOSS存活时速度将大大降低
+  - §7▷ 矿车：在主手时，右键铁轨将乘坐矿车；在BOSS存活时速度将大大降低
   worth: 100000
   rarity: 1
 机械矿车:
   item: IRON_INGOT
   lore:
-  - §6专家模式物品
-  - §r在主手时，右键铁轨将乘坐机械矿车
-  - §rBOSS存活时速度将大大降低
+  - §7▷ 矿车：在主手时，右键铁轨将乘坐矿车；在BOSS存活时速度将大大降低
   worth: 3000000
   rarity: 1000
 彩虹猫矿车:
   item: IRON_INGOT
   lore:
-  - §r在主手时，右键铁轨将乘坐彩虹猫矿车
-  - §rBOSS存活时速度将大大降低
+  - §7▷ 矿车：在主手时，右键铁轨将乘坐矿车；在BOSS存活时速度将大大降低
   worth: 10000000
   rarity: 10
 神明矿车:
   item: IRON_INGOT
   lore:
-  - §r在主手时，右键铁轨将乘坐神明矿车
-  - §rBOSS存活时速度将大大降低
+  - §7▷ 矿车：在主手时，右键铁轨将乘坐矿车；在BOSS存活时速度将大大降低
   worth: 30000000
   rarity: 14
 黏鞍:
   item: IRON_INGOT
   lore:
   - §r[坐骑]
-  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐史莱姆坐骑
+  - §7▷ 坐骑：装备到坐骑栏后按坐骑按键[默认为R]乘坐坐骑
   - §r“亡了亡了，我没有史莱姆ang啊”
   worth: 5000000
   rarity: 8
@@ -14678,7 +14710,7 @@ Dodu的手炮:
   item: IRON_INGOT
   lore:
   - §r[坐骑]
-  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐独角兽坐骑
+  - §7▷ 坐骑：装备到坐骑栏后按坐骑按键[默认为R]乘坐坐骑
   - §r“创似他，克利希娜！”
   worth: 5000000
   rarity: 8
@@ -14686,28 +14718,28 @@ Dodu的手炮:
   item: IRON_INGOT
   lore:
   - §r[坐骑]
-  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐羽翼史莱姆坐骑
+  - §7▷ 坐骑：装备到坐骑栏后按坐骑按键[默认为R]乘坐坐骑
   worth: 5000000
   rarity: 8
 女巫扫帚:
   item: IRON_INGOT
   lore:
   - §r[坐骑]
-  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐女巫扫帚
+  - §7▷ 坐骑：装备到坐骑栏后按坐骑按键[默认为R]乘坐坐骑
   worth: 5000000
   rarity: 10
 虾松露:
   item: IRON_INGOT
   lore:
   - §r[坐骑]
-  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐猪龙鱼坐骑
+  - §7▷ 坐骑：装备到坐骑栏后按坐骑按键[默认为R]乘坐坐骑
   worth: 5000000
   rarity: 10
 星流之盒:
   item: IRON_INGOT
   lore:
   - §r[坐骑]
-  - §r装备到坐骑栏后按坐骑按键[默认为R]乘坐星流飞椅
+  - §7▷ 坐骑：装备到坐骑栏后按坐骑按键[默认为R]乘坐坐骑
   - §r坐在飞椅上时按住星流飞椅减速键[默认为X]将会以较低速度飞行
   worth: 30000000
   rarity: 15
@@ -15184,13 +15216,13 @@ Dodu的手炮:
 蜂蜜鱼:
   item: RAW_FISH
   lore:
-  - §r使用回复240生命值
+  - §r使用恢复240生命值
   worth: 80000
   rarity: 1
 血鳍:
   item: RAW_FISH
   lore:
-  - §r使用回复480生命值
+  - §r使用恢复480生命值
   - §r给予增益，提升生命再生效果10秒钟
   worth: 5000000
   rarity: 12

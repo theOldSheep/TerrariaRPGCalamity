@@ -20,7 +20,7 @@ import terraria.util.MathHelper;
 
 import java.util.List;
 
-public class TerrariaCritter extends EntitySilverfish {
+public class Critter extends EntitySilverfish {
     String type, critterCategory, idleSound;
     List<String> particle;
     int indexAI = -1;
@@ -28,11 +28,11 @@ public class TerrariaCritter extends EntitySilverfish {
 
 
     // default constructor when the chunk loads with one of these custom entity to prevent bug
-    public TerrariaCritter(World world) {
+    public Critter(World world) {
         super(world);
         die();
     }
-    public TerrariaCritter(String type, Location spawnLoc, String critterCategory) {
+    public Critter(String type, Location spawnLoc, String critterCategory) {
         super(((CraftWorld) spawnLoc.getWorld()).getHandle());
         // does not get removed if far away.
         this.persistent = true;

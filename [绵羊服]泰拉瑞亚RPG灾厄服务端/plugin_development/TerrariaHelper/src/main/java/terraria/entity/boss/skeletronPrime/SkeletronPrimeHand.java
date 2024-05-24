@@ -49,6 +49,7 @@ public class SkeletronPrimeHand extends EntitySlime {
     private void shootRocket(boolean singleOrSpread) {
         double rocketSpeed = 1;
         shootInfoRocket.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        shootInfoRocket.setLockedTarget(target);
         if (singleOrSpread) {
             shootInfoRocket.velocity = MathHelper.getDirection(shootInfoRocket.shootLoc, target.getEyeLocation(), rocketSpeed);
             EntityHelper.spawnProjectile(shootInfoRocket);

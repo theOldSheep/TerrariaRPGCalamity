@@ -40,7 +40,7 @@ public class DamageListener implements Listener {
                 break;
             case FIRE:
             case FIRE_TICK:
-                victim.setFireTicks(EntityHelper.getEffectMap(victim).getOrDefault("燃烧", 0));
+                victim.setFireTicks(0);
                 break;
         }
     }

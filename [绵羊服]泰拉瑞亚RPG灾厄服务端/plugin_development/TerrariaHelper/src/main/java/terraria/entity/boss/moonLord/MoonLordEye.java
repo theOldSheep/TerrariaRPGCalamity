@@ -214,6 +214,7 @@ public class MoonLordEye extends EntitySlime {
         }
         // spawn bolt
         else if (indexAI % 4 == 0) {
+            shootInfoPhantasmalEye.setLockedTarget(target);
             shootInfoPhantasmalEye.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             shootInfoPhantasmalEye.velocity = MathHelper.randomVector();
             EntityHelper.spawnProjectile(shootInfoPhantasmalEye);

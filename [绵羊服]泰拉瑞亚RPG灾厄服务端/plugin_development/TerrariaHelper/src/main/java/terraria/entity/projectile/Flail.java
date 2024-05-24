@@ -10,18 +10,18 @@ import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.util.*;
 
-public class TerrariaFlail extends TerrariaPotionProjectile {
+public class Flail extends GenericProjectile {
     Player owner;
     Location spawnedLoc;
     boolean returning = false, spinning = true, shouldUpdateSpeed = true, canRotate;
     double maxDistanceSquared, useTime, speed;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
-    public TerrariaFlail(World world) {
+    public Flail(World world) {
         super(world);
         owner = null;
         die();
     }
-    public TerrariaFlail(EntityHelper.ProjectileShootInfo shootInfo, double maxDistance, double useTime) {
+    public Flail(EntityHelper.ProjectileShootInfo shootInfo, double maxDistance, double useTime) {
         super(shootInfo);
         // initialize variables
         owner = (Player) shootInfo.shooter;

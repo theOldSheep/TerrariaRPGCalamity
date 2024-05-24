@@ -25,10 +25,7 @@ import org.bukkit.inventory.ItemStack;
 import terraria.TerrariaHelper;
 import terraria.util.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -38,12 +35,12 @@ public class CraftingListener implements Listener {
     private final String BACKGROUND_IMAGE = "[local]GuiBG.png";
     private static final YmlHelper.YmlSection recipeConfig = YmlHelper.getFile(
             TerrariaHelper.Constants.DATA_FOLDER_DIR + "recipes.yml");
-    private static HashMap<String, Integer> getRecipeIngredientMap(String station, String vexSlotIndex) {
+    private static LinkedHashMap<String, Integer> getRecipeIngredientMap(String station, String vexSlotIndex) {
         String recipeConfigName = ItemHelper.CRAFTING_GUIS_RECIPE_INDEX_MAP.get(station + "_" + vexSlotIndex);
         return getRecipeIngredientMap(recipeConfig.getConfigurationSection(recipeConfigName));
     }
-    private static HashMap<String, Integer> getRecipeIngredientMap(ConfigurationSection recipeConfigSection) {
-        HashMap<String, Integer> ingredients = new HashMap<>();
+    private static LinkedHashMap<String, Integer> getRecipeIngredientMap(ConfigurationSection recipeConfigSection) {
+        LinkedHashMap<String, Integer> ingredients = new LinkedHashMap<>();
         for (String item : recipeConfigSection.getStringList("requireItem")) {
             if (item.contains(":")) {
                 String[] itemInfo = item.split(":");
@@ -258,11 +255,9 @@ public class CraftingListener implements Listener {
             currGui.addDynamicComponent((DynamicComponent) cmp);
         currGui.addDynamicComponent(btn1);
         currGui.addDynamicComponent(btn2);
-        // setup cool down to prevent accidental selection of new recipes or glitch
+        // setup cool down to prevent accidental selection of new recipes, glitch / spamming
         EntityHelper.setMetadata(player, EntityHelper.MetadataName.PLAYER_CRAFTING_RECIPE_INDEX, recipeIndex);
-        player.addScoreboardTag("tempCraftingCD");
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                () -> player.removeScoreboardTag("tempCraftingCD"), 20);
+        EntityHelper.handleEntityTemporaryScoreboardTag(player, "tempCraftRecipeSelect", 5);
     }
     enum CraftingFilter {
         SHOW_ALL, SHOW_MATERIAL_USAGE, SHOW_CRAFTABLE;
@@ -420,10 +415,8 @@ public class CraftingListener implements Listener {
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CRAFTING_RECIPE_INDEX, -1);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CRAFTING_STATION, guiKey);
         VexViewAPI.openGui(ply, guiToOpen);
-        // setup cool down to prevent accidentally opening several guis and causing error
-        ply.addScoreboardTag("tempCraftingCD");
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
-                () -> ply.removeScoreboardTag("tempCraftingCD"), 10);
+        // setup cool down to prevent accidentally opening several guis and causing error (or spamming the server)
+        EntityHelper.handleEntityTemporaryScoreboardTag(ply, "tempCraftingCD", 10);
         return true;
     }
     // opens a new crafting gui to the player when a work station is interacted

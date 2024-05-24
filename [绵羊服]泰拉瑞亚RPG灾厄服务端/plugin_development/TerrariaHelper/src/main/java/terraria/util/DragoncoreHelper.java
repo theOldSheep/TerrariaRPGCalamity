@@ -3,6 +3,7 @@ package terraria.util;
 import eos.moe.dragoncore.api.SlotAPI;
 import eos.moe.dragoncore.database.IDataBase;
 import eos.moe.dragoncore.network.PacketSender;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -10,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
+import java.util.function.Predicate;
 
 public class DragoncoreHelper {
     public static class SlotCallback implements IDataBase.Callback<ItemStack> {
@@ -35,15 +37,38 @@ public class DragoncoreHelper {
     public static void setSlotItem(Player ply, String slot, ItemStack itemToSet) {
         SlotAPI.setSlotItem(ply, slot, itemToSet, true);
     }
-    public static void displayParticle(Player ply, String name, Location spawnPos, int duration) {
-        String posInfo = String.format("%1$f,%2$f,%3$f",
-                spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
-        displayParticle(ply, name, posInfo, duration);
+    public static class DragonCoreParticleInfo {
+        String name, positionalInfo, rotationalInfo, uidInfo;
+        UUID uid;
+        public DragonCoreParticleInfo(String name, Location spawnPos) {
+            this.name = name;
+            this.positionalInfo = String.format("%1$f,%2$f,%3$f",
+                    spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+            this.rotationalInfo = "0,0,0";
+            setUID(UUID.randomUUID());
+        }
+        public DragonCoreParticleInfo(String name, Entity spawnEntity) {
+            this.name = name;
+            this.positionalInfo = spawnEntity.getUniqueId().toString();
+            this.rotationalInfo = "0,0,0";
+            setUID(UUID.randomUUID());
+        }
+        public void setUID(UUID newUid) {
+            this.uid = newUid;
+            this.uidInfo = this.uid.toString();
+        }
     }
-    public static void displayParticle(Player ply, String name, Entity spawnEntity, int duration) {
-        displayParticle(ply, name, spawnEntity.getUniqueId().toString(), duration);
+
+    public static void displayParticle(DragonCoreParticleInfo particleInfo, int duration) {
+        displayParticle((p)->true, particleInfo, duration);
     }
-    private static void displayParticle(Player ply, String name, String posInfo, int duration) {
-        PacketSender.addParticle(ply, name, UUID.randomUUID().toString(), posInfo, "0,0,0", duration);
+    public static void displayParticle(Predicate<Player> validation, DragonCoreParticleInfo particleInfo, int duration) {
+        for (Player ply : Bukkit.getOnlinePlayers()) {
+            if (validation.test(ply))
+                displayParticle(ply, particleInfo, duration);
+        }
+    }
+    public static void displayParticle(Player ply, DragonCoreParticleInfo particleInfo, int duration) {
+        PacketSender.addParticle(ply, particleInfo.name, particleInfo.uidInfo, particleInfo.positionalInfo, particleInfo.rotationalInfo, duration);
     }
 }

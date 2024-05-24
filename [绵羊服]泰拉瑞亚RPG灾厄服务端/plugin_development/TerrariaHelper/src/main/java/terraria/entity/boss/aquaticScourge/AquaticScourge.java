@@ -83,6 +83,7 @@ public class AquaticScourge extends EntitySlime {
         switch (attackMethod) {
             // tooth
             case 1: {
+                shootInfo.setLockedTarget(target);
                 shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, target.getEyeLocation(), 1);
                 EntityHelper.spawnProjectile(shootInfo);
                 break;

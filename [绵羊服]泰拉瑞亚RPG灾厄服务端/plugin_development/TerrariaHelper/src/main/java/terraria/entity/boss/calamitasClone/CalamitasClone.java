@@ -98,6 +98,7 @@ public class CalamitasClone extends EntitySlime {
             default:
                 return;
         }
+        shootInfo.setLockedTarget(target);
         shootInfo.shootLoc = shootLoc;
         shootInfo.velocity = velocity;
         // the projectile itself

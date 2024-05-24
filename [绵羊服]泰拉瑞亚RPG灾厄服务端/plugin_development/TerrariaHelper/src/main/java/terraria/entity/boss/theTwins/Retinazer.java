@@ -73,6 +73,7 @@ public class Retinazer extends EntitySlime {
         }
     }
     private void shootMissile() {
+        shootInfoMissile.setLockedTarget(target);
         shootInfoMissile.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         shootInfoMissile.velocity = MathHelper.getDirection(
                 shootInfoMissile.shootLoc, target.getEyeLocation(), SPEED_MISSILE);

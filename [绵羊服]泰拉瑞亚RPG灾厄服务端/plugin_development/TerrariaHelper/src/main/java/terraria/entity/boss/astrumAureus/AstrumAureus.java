@@ -131,6 +131,7 @@ public class AstrumAureus extends EntitySlime {
         if (indexAI < 50 && indexAI % 4 == 0) {
             Vector shootDir = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, -75 - Math.random() * 15);
             shootDir.multiply(SPEED_CRYSTAL);
+            shootInfoCrystal.setLockedTarget(target);
             shootInfoCrystal.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             shootInfoCrystal.velocity = shootDir;
             EntityHelper.spawnProjectile(shootInfoCrystal);

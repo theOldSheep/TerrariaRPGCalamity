@@ -119,6 +119,7 @@ public class Anahita extends EntityZombieHusk {
                 return;
         }
         // shoot projectiles
+        shootInfo.setLockedTarget(target);
         // bubble: shoot at eye location
         if (phaseAI == AIPhase.BUBBLE) {
             shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();

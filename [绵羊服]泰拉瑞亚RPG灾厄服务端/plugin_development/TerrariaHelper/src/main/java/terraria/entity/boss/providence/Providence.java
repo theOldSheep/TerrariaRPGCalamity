@@ -172,6 +172,7 @@ public class Providence extends EntitySlime {
         velocity.add(accelerationVec);
         MathHelper.setVectorLength(velocity, speed, true); // Limit max speed
         if (indexAI > 0 && indexAI % projectileInterval == 0) {
+            projectileType.setLockedTarget(target);
             projectileType.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             projectileType.velocity = MathHelper.getDirection( projectileType.shootLoc,
                     EntityHelper.helperAimEntity(projectileType.shootLoc, this.target, aimHelper), projectileSpeed, false );

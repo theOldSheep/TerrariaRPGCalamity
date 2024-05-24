@@ -85,6 +85,9 @@ public class PlayerKeyToggleListener implements Listener {
                     PlayerHelper.handleMount(ply);
                 }
                 break;
+            case "C":
+                PlayerHelper.handleToggleSwitchable(ply);
+                break;
             case "V":
                 PlayerHelper.handleArmorSetActiveEffect(ply);
                 break;

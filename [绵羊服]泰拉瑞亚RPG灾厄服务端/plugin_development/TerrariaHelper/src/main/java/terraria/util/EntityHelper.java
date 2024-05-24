@@ -28,7 +28,7 @@ import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
-import terraria.entity.projectile.TerrariaPotionProjectile;
+import terraria.entity.projectile.GenericProjectile;
 import terraria.gameplay.EventAndTime;
 
 import java.util.*;
@@ -577,6 +577,11 @@ public class EntityHelper {
         String attributesPathPrefix = "prefixInfo." + itemInfo[0] +  ".attributes";
         ConfigurationSection allAttributesPrefix = TerrariaHelper.prefixConfig.getConfigurationSection(attributesPathPrefix);
         EntityHelper.tweakAllAttributes(entity, attrMap, allAttributesPrefix, addOrRemove);
+        // attributes from the item's switchable properties
+        String attributesPathSwitchable = itemInfo[1] +
+                ( entity.getScoreboardTags().contains(PlayerHelper.TAG_SWITCHED_SWITCHABLE_ACCESSORY) ? ".attributesFormII" : ".attributesFormI" );
+        ConfigurationSection allAttributesSwitchable = TerrariaHelper.itemConfig.getConfigurationSection(attributesPathSwitchable);
+        EntityHelper.tweakAllAttributes(entity, attrMap, allAttributesSwitchable, addOrRemove);
     }
     public static void tweakAttribute(HashMap<String, Double> attrMap, ItemStack item, boolean addOrRemove) {
         String[] itemInfo = ItemHelper.splitItemName(item);
@@ -2080,6 +2085,7 @@ public class EntityHelper {
                 double fallDist = victim.getFallDistance();
                 dmg = (fallDist - 12.5) * 20;
                 if (dmg < 0) return;
+                if (hasEffect(victim, "钙质")) return;
                 break;
             case BLOCK_EXPLOSION:
                 knockback = 5;
@@ -2518,6 +2524,7 @@ public class EntityHelper {
 
     public static class ProjectileShootInfo {
         public ProjectileSource shooter;
+        public net.minecraft.server.v1_12_R1.Entity lockedTarget;
         public Location shootLoc;
         public Vector velocity;
         public HashMap<String, Double> attrMap;
@@ -2549,6 +2556,13 @@ public class EntityHelper {
             }
             return result;
         }
+        public void setLockedTarget(Entity lockedTargetBukkit) {
+            if (lockedTargetBukkit != null) {
+                this.lockedTarget = ((CraftEntity) lockedTargetBukkit).getHandle();
+            } else {
+                this.lockedTarget = null;
+            }
+        }
         // constructors
         public ProjectileShootInfo(Entity shooter, Vector velocity, HashMap<String, Double> attrMap, String projectileName) {
             this(shooter, velocity, attrMap, getDamageType(shooter), projectileName);
@@ -2561,6 +2575,7 @@ public class EntityHelper {
         public ProjectileShootInfo(Entity shooter, Location shootLoc, Vector velocity, HashMap<String, Double> attrMap, DamageType damageType, String projectileName) {
             this.shooter = null;
             if (shooter instanceof ProjectileSource) this.shooter = (ProjectileSource) shooter;
+            this.lockedTarget = null;
             this.shootLoc = shootLoc;
             this.velocity = velocity;
             this.attrMap = extractAttrMap(attrMap);
@@ -2622,7 +2637,7 @@ public class EntityHelper {
     public static Projectile spawnProjectile(ProjectileShootInfo shootInfo) {
         CraftWorld wld = (CraftWorld) shootInfo.shootLoc.getWorld();
         Projectile bukkitProjectile;
-        TerrariaPotionProjectile entity = new TerrariaPotionProjectile(shootInfo);
+        GenericProjectile entity = new GenericProjectile(shootInfo);
         bukkitProjectile = new CraftSplashPotion(wld.getHandle().getServer(), entity);
         return bukkitProjectile;
     }

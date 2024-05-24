@@ -86,6 +86,7 @@ public class GuardianCommander extends EntitySlime {
             Location newFireLocation = ((LivingEntity) getBukkitEntity()).getEyeLocation();
             Vector newFireVelocity = MathHelper.getDirection(newFireLocation, aimLocation, PROJECTILE_SPEED, false);
 
+            shootInfoProjectile.setLockedTarget(target);
             shootInfoProjectile.shootLoc = newFireLocation;
             shootInfoProjectile.velocity = newFireVelocity;
             EntityHelper.spawnProjectile(shootInfoProjectile);

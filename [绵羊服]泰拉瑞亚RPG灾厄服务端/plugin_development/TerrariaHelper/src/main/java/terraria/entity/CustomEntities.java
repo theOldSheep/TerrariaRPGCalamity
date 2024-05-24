@@ -77,9 +77,9 @@ import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
 import terraria.entity.monster.*;
 import terraria.entity.npc.*;
-import terraria.entity.others.TerrariaCritter;
-import terraria.entity.others.TerrariaItem;
-import terraria.entity.others.TerrariaMount;
+import terraria.entity.others.Critter;
+import terraria.entity.others.TerrariaDroppedItem;
+import terraria.entity.others.Mount;
 import terraria.entity.projectile.PlayerTornado;
 import terraria.util.NMSUtils;
 
@@ -172,6 +172,7 @@ public enum CustomEntities {
     BOSS_TWIN_SPZ           ("Spazmatism",             55,  EntityType.SLIME,           EntitySlime.class,           Spazmatism.class),
     BOSS_WOF_EYE            ("WallOfFleshEye",         55,  EntityType.SLIME,           EntitySlime.class,           WallOfFleshEye.class),
     BOSS_WOF_MOUTH          ("WallOfFleshMouth",       55,  EntityType.SLIME,           EntitySlime.class,           WallOfFleshMouth.class),
+    CRITTER                 ("Critter",                60,  EntityType.SILVERFISH,      EntitySilverfish.class,      Critter.class),
     EVENT_PILLAR            ("CelestialPillar",        53,  EntityType.GIANT,           EntityGiantZombie.class,     CelestialPillar.class),
     MINION_CAVE_SPIDER      ("MinionCaveSpider",       59,  EntityType.CAVE_SPIDER,     EntityCaveSpider.class,      MinionCaveSpider.class),
     MINION_HUSK             ("MinionHusk",             23,  EntityType.HUSK,            EntityZombieHusk.class,      MinionHusk .class),
@@ -184,6 +185,8 @@ public enum CustomEntities {
     MONSTER_SPIDER          ("MonsterSpider",          52,  EntityType.SPIDER,          EntitySpider.class,          MonsterSpider.class),
     MONSTER_WITHER_SKELETON ("MonsterWitherSkeleton",  5,   EntityType.WITHER_SKELETON, EntitySkeletonWither.class,  MonsterWitherSkeleton.class),
     MONSTER_ZOMBIE          ("MonsterZombie",          54,  EntityType.ZOMBIE,          EntityZombie.class,          MonsterZombie.class),
+    MOUNT                   ("Mount",                  55,  EntityType.SLIME,           EntitySlime.class,           Mount.class),
+    NPC                     ("NPC",                    120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPC.class),
     NPC_ANGLER              ("NPCAngler",              120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPCAngler.class),
     NPC_ARMS_DEALER         ("NPCArmsDealer",          120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPCArmsDealer.class),
     NPC_BLOCK_SELLER        ("NPCBlockSeller",         120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPCBlockSeller.class),
@@ -192,10 +195,7 @@ public enum CustomEntities {
     NPC_GOBLIN_TINKERER     ("NPCGoblinTinkerer",      120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPCGoblinTinkerer.class),
     NPC_GUIDE               ("NPCGuide",               120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPCGuide.class),
     NPC_NURSE               ("NPCNurse",               120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPCNurse.class),
-    PLAYER_TORNADO          ("PlayerTornado",          55,  EntityType.SLIME,           EntitySlime.class,           PlayerTornado.class),
-    TERRARIA_CRITTER        ("TerrariaCritter",        60,  EntityType.SILVERFISH,      EntitySilverfish.class,      TerrariaCritter.class),
-    TERRARIA_MOUNT          ("TerrariaMount",          55,  EntityType.SLIME,           EntitySlime.class,           TerrariaMount.class),
-    TERRARIA_NPC            ("TerrariaNPC",            120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPC.class);
+    PLAYER_TORNADO          ("PlayerTornado",          55,  EntityType.SLIME,           EntitySlime.class,           PlayerTornado.class);
 
     private String name;
     private int id;
@@ -219,7 +219,7 @@ public enum CustomEntities {
         for (CustomEntities ce : CustomEntities.values())
             ce.register();
         // override some vanilla entities
-        NMSUtils.registerEntity("Terraria_Dropped_Item", NMSUtils.Type.DROPPED_ITEM, TerrariaItem.class, true);
+        NMSUtils.registerEntity("Terraria_Dropped_Item", NMSUtils.Type.DROPPED_ITEM, TerrariaDroppedItem.class, true);
         TerrariaHelper.LOGGER.info("Custom entities have been registered.");
     }
     public static void unregisterEntities() { for (CustomEntities ce : CustomEntities.values()) ce.unregister(); }

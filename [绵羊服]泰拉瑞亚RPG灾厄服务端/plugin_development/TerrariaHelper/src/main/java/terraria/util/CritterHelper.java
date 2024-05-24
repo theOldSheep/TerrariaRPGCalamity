@@ -7,7 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.others.TerrariaCritter;
+import terraria.entity.others.Critter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -135,6 +135,6 @@ public class CritterHelper {
         }
     }
     public static void spawnCritter(String type, Location loc, String category) {
-        new TerrariaCritter(type, loc, category);
+        new Critter(type, loc, category);
     }
 }

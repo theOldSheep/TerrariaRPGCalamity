@@ -11,14 +11,14 @@ import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
 import terraria.TerrariaHelper;
-import terraria.entity.others.TerrariaItem;
+import terraria.entity.others.TerrariaDroppedItem;
 import terraria.util.ItemHelper;
 
 public class DropItemSpawnListener implements Listener {
     @EventHandler
     public void onDroppedItemSpawn(ItemSpawnEvent e) {
         Item droppedItem = e.getEntity();
-        if (((CraftItem) droppedItem).getHandle() instanceof TerrariaItem) return;
+        if (((CraftItem) droppedItem).getHandle() instanceof TerrariaDroppedItem) return;
         ItemStack droppedItemStack = droppedItem.getItemStack();
         // regularize dropped item (vanilla items are converted to Terraria correspondents)
         droppedItemStack = ItemHelper.regularizeItemDropped(droppedItemStack, droppedItem.getLocation());

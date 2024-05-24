@@ -172,6 +172,7 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
         }
         // spawn bolt
         else if (owner.trueEyeIndexAI % 6 == 0) {
+            shootInfoPhantasmalEye.setLockedTarget(target);
             shootInfoPhantasmalEye.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             shootInfoPhantasmalEye.velocity = MathHelper.randomVector();
             EntityHelper.spawnProjectile(shootInfoPhantasmalEye);

@@ -2,30 +2,22 @@ package terraria.entity.projectile;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import terraria.entity.monster.MonsterHelper;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-public class TerrariaBoomerang extends TerrariaPotionProjectile {
+public class Boomerang extends GenericProjectile {
     Player owner;
     Location spawnedLoc;
     boolean returning = false;
     double maxDistanceSquared, useTime, speed;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
-    public TerrariaBoomerang(World world) {
+    public Boomerang(World world) {
         super(world);
         owner = null;
         die();
     }
-    public TerrariaBoomerang(EntityHelper.ProjectileShootInfo shootInfo, double maxDistance, double useTime) {
+    public Boomerang(EntityHelper.ProjectileShootInfo shootInfo, double maxDistance, double useTime) {
         super(shootInfo);
         // initialize variables
         owner = (Player) shootInfo.shooter;

@@ -137,6 +137,7 @@ public class DukeFishron extends EntitySlime {
         bukkitEntity.setVelocity(dashVelocity);
     }
     private void shootBubble() {
+        psiDetonatingBubble.setLockedTarget(target);
         psiDetonatingBubble.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         psiDetonatingBubble.velocity = MathHelper.getDirection(psiDetonatingBubble.shootLoc,
                 target.getEyeLocation(), BUBBLE_SPEED);

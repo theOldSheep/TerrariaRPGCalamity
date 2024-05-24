@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -14,14 +15,13 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.boss.theHiveMind.HiveBlob;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.event.listener.ArrowHitListener;
 import terraria.util.*;
 
 import java.util.*;
 
-public class TerrariaPotionProjectile extends EntityPotion {
+public class GenericProjectile extends EntityPotion {
     private static final double distFromBlock = 1e-5, distCheckOnGround = 1e-1;
     public static final int DESTROY_HIT_BLOCK = 0, DESTROY_HIT_ENTITY = 1, DESTROY_TIME_OUT = 2;
     // projectile info
@@ -29,7 +29,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public int homingMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200,
             noHomingTicks = 0, noGravityTicks = 5, maxHomingTicks = 999999, minimumDamageTicks = 0,
             penetration = 0, trailLingerTime = 10, worldSpriteUpdateInterval = 1;
-    public double homingAbility = 4, homingEndSpeedMultiplier = 1, homingRadius = 12,
+    public double homingAbility = 4, homingEndSpeedMultiplier = 1, homingRadius = 12, homingRadiusSqr = homingRadius * homingRadius,
             blastRadius = 1.5, bounceVelocityMulti = 1,
             frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileRadius = 0.125,
             spawnSoundPitch = 1, spawnSoundVolume = 1.5, speedMultiPerTick = 1,
@@ -48,6 +48,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
     public org.bukkit.entity.Projectile bukkitEntity;
     HashMap<String, Double> attrMap, attrMapExtraProjectile;
     public Entity homingTarget = null;
+    private Entity lockedTarget = null;
     Location lastTrailDisplayLocation = null;
     // extra projectile variables
     public ConfigurationSection extraProjectileConfigSection;
@@ -84,6 +85,7 @@ public class TerrariaPotionProjectile extends EntityPotion {
             this.homingAbility = (double) properties.getOrDefault("homingAbility", this.homingAbility);
             this.homingEndSpeedMultiplier = (double) properties.getOrDefault("homingEndSpeedMultiplier", this.homingEndSpeedMultiplier);
             this.homingRadius = (double) properties.getOrDefault("homingRadius", this.homingRadius);
+            this.homingRadiusSqr = this.homingRadius * this.homingRadius;
             this.blastRadius = (double) properties.getOrDefault("blastRadius", this.blastRadius);
             this.bounceVelocityMulti = (double) properties.getOrDefault("bounceVelocityMulti", this.bounceVelocityMulti);
             this.frictionFactor = (double) properties.getOrDefault("frictionFactor", this.frictionFactor);
@@ -169,18 +171,20 @@ public class TerrariaPotionProjectile extends EntityPotion {
         return CraftItemStack.asNMSCopy(generateBukkitItemStack(projectileType));
     }
     // constructor
-    public TerrariaPotionProjectile(World world) {
+    public GenericProjectile(World world) {
         super(world);
         die();
     }
-    public TerrariaPotionProjectile(EntityHelper.ProjectileShootInfo shootInfo) {
-        this(shootInfo.shootLoc, TerrariaPotionProjectile.generateItemStack(shootInfo.projectileName),
+    public GenericProjectile(EntityHelper.ProjectileShootInfo shootInfo) {
+        this(shootInfo.shootLoc, GenericProjectile.generateItemStack(shootInfo.projectileName),
                 shootInfo.velocity, shootInfo.projectileName, shootInfo.properties,
-                shootInfo.attrMap, shootInfo.shooter, shootInfo.damageType);
+                shootInfo.attrMap, shootInfo.shooter, shootInfo.lockedTarget, shootInfo.damageType);
     }
-    public TerrariaPotionProjectile(org.bukkit.Location loc, ItemStack projectileItem, Vector velocity,
-                                    String projectileType, HashMap<String, Object> properties,
-                                    HashMap<String, Double> attrMap, ProjectileSource shooter, EntityHelper.DamageType damageType) {
+    public GenericProjectile(org.bukkit.Location loc, ItemStack projectileItem, Vector velocity,
+                             String projectileType, HashMap<String, Object> properties,
+                             HashMap<String, Double> attrMap,
+                             ProjectileSource shooter, Entity lockedTarget,
+                             EntityHelper.DamageType damageType) {
         super(((CraftWorld) loc.getWorld()).getHandle(), loc.getX(), loc.getY(), loc.getZ(), projectileItem);
         this.motX = velocity.getX();
         this.motY = velocity.getY();
@@ -194,6 +198,8 @@ public class TerrariaPotionProjectile extends EntityPotion {
         // other properties
         if (shooter != null)
            bukkitEntity.setShooter(shooter);
+        this.lockedTarget = lockedTarget;
+
         this.attrMap = (HashMap<String, Double>) attrMap.clone();
         this.lastTrailDisplayLocation = loc.clone();
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, this.attrMap);
@@ -205,17 +211,21 @@ public class TerrariaPotionProjectile extends EntityPotion {
         }
     }
 
+    // Note: -1e5 is the threshold to be even considered
     protected double getHomingInterest(Entity target) {
         // should only home into "proper" enemies
-        if (!EntityHelper.checkCanDamage(bukkitEntity, target.getBukkitEntity())) return -1e9;
-        // check for recent damage
+        if (!EntityHelper.checkCanDamage(bukkitEntity, target.getBukkitEntity()))
+            return -1e9;
+        // check for recent damage; note that most homing do not lose their alive target anyway.
         if (damageCD.contains(target.getBukkitEntity())) {
             double effectiveDist = this.enemyInvincibilityFrame * this.speed;
             return -effectiveDist * effectiveDist;
         }
         // calculate distance sqr; this is more frequent, hence should have less calculation.
-        double distance = target.d(this.locX, this.locY, this.locZ);
-        return -distance;
+        double distanceSqr = target.d(this.locX, this.locY, this.locZ);
+        if (distanceSqr > homingRadiusSqr)
+            return -1e8;
+        return -distanceSqr;
     }
     public boolean checkCanHit(Entity e) {
         org.bukkit.entity.Entity bukkitE = e.getBukkitEntity();
@@ -1116,7 +1126,12 @@ public class TerrariaPotionProjectile extends EntityPotion {
             // find a new target
             if (homingTarget == null) {
                 double maxInterest = -1e5;
-                List<Entity> list = this.world.getEntities(this, getBoundingBox().g(homingRadius));
+                List<Entity> list;
+                if (lockedTarget != null && lockedTarget.isAlive()) {
+                    list = Collections.singletonList(lockedTarget);
+                } else {
+                    list = this.world.getEntities(this, getBoundingBox().g(homingRadius));
+                }
                 for (Entity toCheck : list) {
                     // only living entities are valid targets
                     if (!toCheck.isInteractable()) continue;

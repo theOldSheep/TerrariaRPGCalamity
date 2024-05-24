@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import terraria.util.*;
 
-public class TerrariaYoyo extends TerrariaPotionProjectile {
+public class Yoyo extends GenericProjectile {
     static EntityHelper.AimHelperOptions aimHelper;
     static {
         aimHelper = new EntityHelper.AimHelperOptions()
@@ -23,13 +23,13 @@ public class TerrariaYoyo extends TerrariaPotionProjectile {
             actualRadiusSqr;
     int ticksDuration, indexAI = 0;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
-    public TerrariaYoyo(World world) {
+    public Yoyo(World world) {
         super(world);
         owner = null;
         die();
     }
-    public TerrariaYoyo(EntityHelper.ProjectileShootInfo shootInfo,
-                        double maxDistance, double useTime, double recoilPoolMultiplier, int ticksDuration) {
+    public Yoyo(EntityHelper.ProjectileShootInfo shootInfo,
+                double maxDistance, double useTime, double recoilPoolMultiplier, int ticksDuration) {
         super(shootInfo);
         // initialize variables
         owner = (Player) shootInfo.shooter;

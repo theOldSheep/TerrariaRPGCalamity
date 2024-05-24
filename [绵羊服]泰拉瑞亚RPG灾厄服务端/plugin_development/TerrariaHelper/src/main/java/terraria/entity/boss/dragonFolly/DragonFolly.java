@@ -192,6 +192,7 @@ public class DragonFolly extends EntitySlime {
         }
     }
     private void fireProjectiles() {
+        shootInfoFeather.setLockedTarget(target);
         for (Vector dir : MathHelper.getCircularProjectileDirections(
                 9, 3, 90, target, bukkitEntity.getLocation(), 1)) {
             shootInfoFeather.shootLoc = target.getEyeLocation().add(dir.clone().multiply(PROJECTILE_SPEED * PROJECTILE_TICKS_OFFSET));
@@ -208,7 +209,9 @@ public class DragonFolly extends EntitySlime {
     private void visualizeBoundary() {
         for (UUID uid : targetMap.keySet()) {
             Player ply = Bukkit.getPlayer(uid);
-            DragoncoreHelper.displayParticle(ply, "dragonfolly", spawnPosition, PARTICLE_INTERVAL);
+            DragoncoreHelper.displayParticle(ply,
+                    new DragoncoreHelper.DragonCoreParticleInfo("dragonfolly", spawnPosition),
+                    PARTICLE_INTERVAL);
         }
     }
     // default constructor to handle chunk unload

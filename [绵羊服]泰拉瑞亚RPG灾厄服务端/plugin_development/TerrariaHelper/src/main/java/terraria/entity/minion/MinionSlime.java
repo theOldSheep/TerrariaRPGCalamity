@@ -16,7 +16,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import terraria.entity.projectile.HitEntityInfo;
-import terraria.entity.projectile.TerrariaPotionProjectile;
+import terraria.entity.projectile.GenericProjectile;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
@@ -2294,7 +2294,7 @@ public class MinionSlime extends EntitySlime {
                                 bounceCountdown = (int) extraVariables.get("c");
                                 // first detection of collision: init countdown
                             else {
-                                TerrariaPotionProjectile projNMS = (TerrariaPotionProjectile) ((CraftProjectile) proj).getHandle();
+                                GenericProjectile projNMS = (GenericProjectile) ((CraftProjectile) proj).getHandle();
                                 if (projNMS.penetration < 999999) {
                                     bounceCountdown = 5;
                                     extraVariables.put("c", bounceCountdown);

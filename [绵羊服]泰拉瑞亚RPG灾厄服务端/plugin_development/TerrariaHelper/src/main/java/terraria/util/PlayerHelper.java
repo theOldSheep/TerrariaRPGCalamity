@@ -25,7 +25,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.event.celestialPillar.CelestialPillar;
-import terraria.entity.others.TerrariaMount;
+import terraria.entity.others.Mount;
 import terraria.gameplay.EventAndTime;
 
 import java.math.BigDecimal;
@@ -47,6 +47,7 @@ public class PlayerHelper {
             {"阿瑞斯离子加农炮", "阿瑞斯特斯拉加农炮", "阿瑞斯镭射加农炮", "阿瑞斯高斯核弹发射井"};
     public static final String[] GEM_TECH_GEMS = {
             "黄色天钻宝石", "绿色天钻宝石", "紫色天钻宝石", "蓝色天钻宝石", "红色天钻宝石", "粉色天钻宝石"};
+    public static final String TAG_HAS_SWITCHABLE_ACCESSORY = "temp_hasSwA", TAG_SWITCHED_SWITCHABLE_ACCESSORY = "temp_isSwAOn";
     static {
         // init default player attribute map
         defaultPlayerAttrMap.put("armorPenetration", 0d);
@@ -76,6 +77,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("defenceMulti", 1d);
         defaultPlayerAttrMap.put("fishingHooks", 1d);
         defaultPlayerAttrMap.put("fishingPower", 0d);
+        defaultPlayerAttrMap.put("fixedHealingMulti", 1d);
         defaultPlayerAttrMap.put("flightTimeMulti", 1d);
         defaultPlayerAttrMap.put("healthMulti", 1d);
         defaultPlayerAttrMap.put("invulnerabilityTick", 10d);
@@ -519,7 +521,7 @@ public class PlayerHelper {
         return false;
     }
     // setters
-    public static void setArmorSet(Player ply, String armorSet) {
+    public static void updateArmorSetMetadata(Player ply, String armorSet) {
         try {
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ARMOR_SET, armorSet);
         } catch (Exception e) {
@@ -1735,7 +1737,9 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                             double regenAmount = (regenerationRate + additionalHealthRegen) * perTickMulti;
                             System.out.println(regenAmount + "(" + regenerationRate + ", " + additionalHealthRegen + "x" + perTickMulti);
                             System.out.println(velocity.lengthSquared() + ", " + moved);
-                            if (accessories.contains("再生护符") && (ply.getHealth() + regenAmount) * 2 >= maxHealth) {
+                            if (accessories.contains("再生护符")
+                                    && ply.getScoreboardTags().contains(PlayerHelper.TAG_SWITCHED_SWITCHABLE_ACCESSORY)
+                                    && (ply.getHealth() + regenAmount) * 2 >= maxHealth) {
                                 regenAmount = - Math.abs(regenAmount);
                             }
                             if (regenAmount > 0) {
@@ -1939,7 +1943,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_INTERNAL, new Vector());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_MULTI, 1d);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS, Calendar.getInstance().getTimeInMillis());
-        setArmorSet(ply, "");
+        updateArmorSetMetadata(ply, "");
         // bgm, biome and background
         // prevent duplicated soundtrack etc.
         if (joinOrRespawn) {
@@ -1980,8 +1984,11 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.BUFF_IMMUNE, new HashMap<String, Integer>());
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BUFF_INFLICT, getDefaultPlayerEffectInflict());
             // re-initialize attribute map
+
             // attrMap is being overridden after newAttrMap is ready to prevent client glitch (especially on max mana)
             HashMap<String, Double> formerAttrMap = EntityHelper.getAttrMap(ply);
+            double originalMaxHealth = ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+
             HashMap<String, Double> newAttrMap = getDefaultPlayerAttributes();
             HashMap<String, Double> negRegenCause = (HashMap<String, Double>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_NEG_REGEN_CAUSE).value();
             newAttrMap.put("maxHealth", (double) getMaxHealthByTier(getPlayerHealthTier(ply)) );
@@ -2123,7 +2130,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 setBonusSection.getConfigurationSection("attributes"), true);
                     }
                 }
-                setArmorSet(ply, armorSet);
+                updateArmorSetMetadata(ply, armorSet);
                 // special armor sets
                 switch (armorSet) {
                     case "血炎召唤套装":
@@ -2147,11 +2154,18 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                 Set<String> accessories = new HashSet<>(12);
                 List<String> accessoryList = new ArrayList<>(7);
                 int accessoryAmount = getAccessoryAmount(ply);
+                boolean hasSwitchable = false;
                 // setup accessory list
                 for (int idx = 1; idx <= accessoryAmount; idx ++) {
                     ItemStack currAcc = DragoncoreHelper.getSlotItem(ply, "accessory" + idx);
                     if (currAcc == null || currAcc.getType() == Material.AIR) continue;
                     String currAccType = ItemHelper.splitItemName(currAcc)[1];
+                    // only one switchable accessory would be active
+                    if (TerrariaHelper.itemConfig.contains(currAccType + ".attributesFormI") ) {
+                        if (hasSwitchable)
+                            continue;
+                        hasSwitchable = true;
+                    }
                     // special accessory activation restrictions and conditional attributes
                     switch (currAccType) {
                         case "钨钢屏障生成仪": {
@@ -2392,6 +2406,10 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     accessories.add(currAccType);
                     accessoryList.add(currAccType);
                 }
+                if (hasSwitchable)
+                    ply.addScoreboardTag(TAG_HAS_SWITCHABLE_ACCESSORY);
+                else
+                    ply.removeScoreboardTag(TAG_HAS_SWITCHABLE_ACCESSORY);
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES, accessories);
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES_LIST, accessoryList);
             }
@@ -2402,10 +2420,15 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             }
 
             // post-initialization
-            // setup max health and max mana
-            ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(
-                    newAttrMap.getOrDefault("maxHealth", 200d) *
-                            newAttrMap.getOrDefault("maxHealthMulti", 1d));
+
+            // setup max health; the ratio of health is preserved.
+            double newMaxHealth = newAttrMap.getOrDefault("maxHealth", 200d) *
+                    newAttrMap.getOrDefault("maxHealthMulti", 1d);
+            if (Math.abs(originalMaxHealth - newMaxHealth) > 1e-5) {
+                double healthRatio = ply.getHealth() / originalMaxHealth;
+                ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(newMaxHealth);
+                ply.setHealth(healthRatio * newMaxHealth);
+            }
             // the on-ground movement is handled with velocity...
             if (ply.getWalkSpeed() != 0f)
                 ply.setWalkSpeed(0f);
@@ -2453,6 +2476,23 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                 result.add(ItemHelper.getItemDescription(currInv.getItem(i)));
             }
             plyFile.set("inventory." + invType, result);
+        }
+    }
+    public static void handleToggleSwitchable(Player ply) {
+        if (ply.getScoreboardTags().contains(TAG_HAS_SWITCHABLE_ACCESSORY)) {
+            if (EntityHelper.hasEffect(ply, "饰品转换冷却"))
+                return;
+            EntityHelper.applyEffect(ply, "饰品转换冷却", 100);
+            // switch successful
+            if (ply.getScoreboardTags().contains(TAG_SWITCHED_SWITCHABLE_ACCESSORY)) {
+                ply.removeScoreboardTag(TAG_SWITCHED_SWITCHABLE_ACCESSORY);
+                ply.playSound(ply.getEyeLocation(), Sound.BLOCK_NOTE_HAT, 5.0f, 1f);
+            }
+            else {
+                ply.addScoreboardTag(TAG_SWITCHED_SWITCHABLE_ACCESSORY);
+                ply.playSound(ply.getEyeLocation(), Sound.BLOCK_NOTE_BELL, 5.0f, 1.25f);
+            }
+            PlayerHelper.setupAttribute(ply);
         }
     }
     public static void handleArmorSetActiveEffect(Player ply) {
@@ -2544,28 +2584,28 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         hooks.add(hookEntity);
     }
     public static Entity getMount(Player ply) {
-        TerrariaMount mountNMS = TerrariaMount.MOUNTS_MAP.get(ply.getUniqueId());
+        Mount mountNMS = Mount.MOUNTS_MAP.get(ply.getUniqueId());
         return mountNMS == null ? null : mountNMS.getBukkitEntity();
     }
     public static void handleMount(Player ply) {
         if (!PlayerHelper.isProperlyPlaying(ply))
             return;
         // if the player has a mount, unmount the player
-        if (TerrariaMount.MOUNTS_MAP.containsKey(ply.getUniqueId())) {
-            TerrariaMount mount = TerrariaMount.MOUNTS_MAP.get(ply.getUniqueId());
+        if (Mount.MOUNTS_MAP.containsKey(ply.getUniqueId())) {
+            Mount mount = Mount.MOUNTS_MAP.get(ply.getUniqueId());
             mount.die();
         }
         // otherwise, spawn the mount if needed
         else {
-            if (ply.getScoreboardTags().contains("temp_useCD"))
+            if (ply.getScoreboardTags().contains("temp_mountCD"))
                 return;
-            ItemUseHelper.applyCD(ply, 20);
+            EntityHelper.handleEntityTemporaryScoreboardTag(ply, "temp_mountCD", 10);
             ItemStack plyMountItem = DragoncoreHelper.getSlotItem(ply, "mount");
             String splitName = ItemHelper.splitItemName(plyMountItem)[1];
             if (splitName.length() > 0) {
                 ConfigurationSection mountSection = TerrariaHelper.mountConfig.getConfigurationSection(splitName);
                 if (mountSection != null) {
-                    new TerrariaMount(ply, mountSection);
+                    new Mount(ply, mountSection);
                 }
             }
         }
@@ -2657,7 +2697,9 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         heal(ply, amount, false);
     }
     public static void heal(LivingEntity ply, double amount, boolean displayActualAmount) {
-        double healAmount = Math.min(ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() - ply.getHealth(), amount);
+        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+        double healAmount = Math.min(ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() - ply.getHealth(),
+                amount * attrMap.getOrDefault("fixedHealingMulti", 1d));
         ply.setHealth(ply.getHealth() + healAmount);
         GenericHelper.displayHolo(ply, displayActualAmount ? healAmount : amount, false, "回血");
     }
@@ -2844,6 +2886,10 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         switch (armorSet) {
             case "水晶刺客套装":
                 dashSpeed = 1.15;
+                dashCD = 30;
+                break;
+            case "耀斑套装":
+                dashSpeed = 1.35;
                 dashCD = 30;
                 break;
         }

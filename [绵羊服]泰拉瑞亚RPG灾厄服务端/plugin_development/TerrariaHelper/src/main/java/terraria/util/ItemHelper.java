@@ -7,14 +7,13 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftItem;
 import org.bukkit.entity.Item;
-import org.bukkit.entity.Vex;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import terraria.TerrariaHelper;
-import terraria.entity.others.TerrariaItem;
+import terraria.entity.others.TerrariaDroppedItem;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -214,6 +213,7 @@ public class ItemHelper {
         ATTRIBUTE_DISPLAY_NAME.put("speedMulti", "移动速度");
         ATTRIBUTE_DISPLAY_NAME.put("meleeReachMulti", "近战攻击距离");
         ATTRIBUTE_DISPLAY_NAME.put("regenMulti", "生命回复速度");
+        ATTRIBUTE_DISPLAY_NAME.put("fixedHealingMulti", "治疗强度");
         ATTRIBUTE_DISPLAY_NAME.put("useSpeedMulti", "攻击速度");
         ATTRIBUTE_DISPLAY_NAME.put("useSpeedMagicMulti", "魔法攻击速度");
         ATTRIBUTE_DISPLAY_NAME.put("useSpeedMeleeMulti", "近战攻击速度");
@@ -575,7 +575,7 @@ public class ItemHelper {
                 "damageMulti", "damageMeleeMulti", "damageRangedMulti", "damageMagicMulti",
                 "damageSummonMulti", "damageArrowMulti", "damageBulletMulti", "damageRocketMulti", "damageTrueMeleeMulti",
                 "manaUseMulti", "ammoConsumptionRate", "arrowConsumptionRate", "mobSpawnRateMulti",
-                "speedMulti", "flightTimeMulti", "meleeReachMulti", "regenMulti", "maxHealthMulti",
+                "speedMulti", "flightTimeMulti", "meleeReachMulti", "regenMulti", "fixedHealingMulti", "maxHealthMulti",
                 "useSpeedMulti", "useSpeedMagicMulti", "useSpeedMeleeMulti", "useSpeedRangedMulti", "useSpeedMiningMulti",
                 "knockbackMeleeMulti", "projectileSpeedArrowMulti",
                 // barrier/mana/health/crit/regen
@@ -825,11 +825,26 @@ public class ItemHelper {
                 int rarity = itemSection.getInt("rarity", 0);
                 String rarityColor = TerrariaHelper.settingConfig.getString("rarity." + rarity, "§r");
                 meta.setDisplayName(rarityColor + itemName);
+                // item lore
                 List<String> lore = itemSection.getStringList("lore");
                 List<String> loreDescription = getLoreDescription(itemSection.getConfigurationSection("attributes"));
+                List<String> loreDescriptionFormI = getLoreDescription(itemSection.getConfigurationSection("attributesFormI"));
+                // [accessory] etc. Should always be the first line
                 ArrayList<String> finalLore = new ArrayList<>(10);
                 while (lore.size() > 0 && lore.get(0).endsWith("]")) finalLore.add(lore.remove(0));
+                // generic attribute lore lines go after that
                 finalLore.addAll(loreDescription);
+                // switchable accessories
+                if (loreDescriptionFormI.size() > 0) {
+                    List<String> loreDescriptionFormII = getLoreDescription(itemSection.getConfigurationSection("attributesFormII"));
+                    finalLore.add("§r算作转换类饰品");
+                    finalLore.add("§7▷ 转换类饰品：仅限装备一个。按下切换按键[默认为C]可于两种加成形态间转换，冷却为5秒");
+                    finalLore.add("§b一形态：");
+                    loreDescriptionFormI.forEach( (line) -> finalLore.add("§b  -> " + line) );
+                    finalLore.add("§c二形态：");
+                    loreDescriptionFormII.forEach((line) -> finalLore.add("§c  -> " + line) );
+                }
+                // add the descriptive lore lines at the very end
                 finalLore.addAll(lore);
                 if (finalLore.size() > 0) meta.setLore(finalLore);
                 meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -904,7 +919,7 @@ public class ItemHelper {
         return dropItemWithoutCheck(loc, itemToDrop, canMerge);
     }
     public static CraftItem dropItemWithoutCheck(Location loc, ItemStack itemToDrop, boolean canMerge) {
-        TerrariaItem entity = new TerrariaItem(loc, itemToDrop);
+        TerrariaDroppedItem entity = new TerrariaDroppedItem(loc, itemToDrop);
         if (!canMerge)
             entity.canBeMerged = false;
         CraftWorld wld = (CraftWorld) loc.getWorld();

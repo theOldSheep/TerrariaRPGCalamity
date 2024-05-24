@@ -1,6 +1,5 @@
 package terraria.entity.others;
 
-import com.comphenix.protocol.PacketType;
 import net.minecraft.server.v1_12_R1.MathHelper;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
@@ -18,7 +17,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 
-public class TerrariaItem extends EntityItem {
+public class TerrariaDroppedItem extends EntityItem {
     public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile(
             TerrariaHelper.Constants.DATA_FOLDER_DIR + "items.yml");
     // boosters live for 30 seconds, heart for 60 seconds, and generic for 300 seconds (5 minutes)
@@ -35,11 +34,11 @@ public class TerrariaItem extends EntityItem {
     public boolean canBeMerged = true, hasNoGravity;
     boolean lastTickNoGravity = false;
     EntityPlayer pickedUpBy = null;
-    public TerrariaItem (World world) {
+    public TerrariaDroppedItem(World world) {
         super(world);
         die();
     }
-    public TerrariaItem (org.bukkit.Location loc, org.bukkit.inventory.ItemStack item) {
+    public TerrariaDroppedItem(org.bukkit.Location loc, org.bukkit.inventory.ItemStack item) {
         super(((CraftWorld) loc.getWorld()).getHandle(),
                 loc.getX(), loc.getY(), loc.getZ(),
                 CraftItemStack.asNMSCopy(item));
@@ -119,7 +118,7 @@ public class TerrariaItem extends EntityItem {
         }
     }
     // merging
-    public boolean mergeWith(TerrariaItem itemToMerge) {
+    public boolean mergeWith(TerrariaDroppedItem itemToMerge) {
         // function modified from EntityItem.class
         if (itemToMerge == this) {
             return false;
@@ -162,7 +161,7 @@ public class TerrariaItem extends EntityItem {
         if (bukkitItemStack.getAmount() < bukkitItemStack.getMaxStackSize()) {
             // only merge twice per second, to reduce lag
             if (ticksLived % 10 == 0)
-                for (TerrariaItem toMerge : this.world.a(TerrariaItem.class, this.getBoundingBox().grow(3, 2, 3))) {
+                for (TerrariaDroppedItem toMerge : this.world.a(TerrariaDroppedItem.class, this.getBoundingBox().grow(3, 2, 3))) {
                     this.mergeWith(toMerge);
                 }
         }
@@ -170,8 +169,8 @@ public class TerrariaItem extends EntityItem {
     @Override
     public Entity b(int i) {
         Entity entity = super.b(i);
-        if (!this.world.isClientSide && entity instanceof TerrariaItem)
-            ((TerrariaItem)entity).merge();
+        if (!this.world.isClientSide && entity instanceof TerrariaDroppedItem)
+            ((TerrariaDroppedItem)entity).merge();
         return entity;
     }
     // generic ticking

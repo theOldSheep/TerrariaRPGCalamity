@@ -26,7 +26,7 @@ import java.util.UUID;
  * Killing this mount can also release the player.
  * Be careful when teleporting the player: it will also force dismount
  */
-public class TerrariaMount extends EntitySlime {
+public class Mount extends EntitySlime {
     public static final double DEFAULT_GRAVITY = 0.05, DEFAULT_VEL_IDLE_DECAY_MULTI = 0.95;
     protected double contactDmg = 0, entityHalfWidth = 0.25, entityHalfHeight = 0.25,
             horSpdMax = 0.5, verSpdMax = 1, horAcc = 0.1, verAcc = 0.2, gravityAcc = DEFAULT_GRAVITY, stepHeight = 1.01,
@@ -40,18 +40,18 @@ public class TerrariaMount extends EntitySlime {
     protected Player owner = null;
     protected EntityPlayer ownerNMS = null;
 
-    public static HashMap<UUID, TerrariaMount> MOUNTS_MAP = new HashMap<>();
+    public static HashMap<UUID, Mount> MOUNTS_MAP = new HashMap<>();
 
     // variables from Entity.class
     protected final double[] move_aJ = new double[]{0.0, 0.0, 0.0};
     protected float move_ay = 1.0F;
 
     // default constructor accounting for default behaviour (removal)
-    public TerrariaMount(World world) {
+    public Mount(World world) {
         super(world);
         super.die();
     }
-    public TerrariaMount(Player owner, ConfigurationSection mountSection) {
+    public Mount(Player owner, ConfigurationSection mountSection) {
         super(((CraftPlayer) owner).getHandle().getWorld());
         // init position
         Location loc = owner.getLocation();

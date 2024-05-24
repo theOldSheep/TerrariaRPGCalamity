@@ -56,6 +56,7 @@ public class LunaticCultistClone extends EntityZombieHusk {
                 motZ = 0;
                 // attack when owner is initializing a non-summon attack
                 if (owner.indexAI == 0 && owner.phaseAttack != 0) {
+                    shootInfoShadowFireball.setLockedTarget(target);
                     shootInfoShadowFireball.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
                     shootInfoShadowFireball.velocity = MathHelper.getDirection(shootInfoShadowFireball.shootLoc,
                             target.getEyeLocation(), SPEED_FIREBALL * (1.25 - Math.random() * 0.5) );

@@ -11,8 +11,6 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -3197,7 +3195,7 @@ public class ItemUseHelper {
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
         double useTimeMulti = 1 / useSpeed;
         double useTime = attrMap.getOrDefault("useTime", 20d) * useTimeMulti;
-        TerrariaBoomerang entity = new TerrariaBoomerang(shootInfo, distance, useTime);
+        Boomerang entity = new Boomerang(shootInfo, distance, useTime);
         plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // play sound
         playerUseItemSound(ply, weaponType, itemType, autoSwing);
@@ -3218,7 +3216,7 @@ public class ItemUseHelper {
         double useTimeMulti = 1 / useSpeed;
         double useTime = attrMap.getOrDefault("useTime", 20d) * useTimeMulti;
         double recoilPoolMultiplier = attrMap.getOrDefault("recoilPoolMultiplier", 0.7);
-        TerrariaYoyo entity = new TerrariaYoyo(shootInfo, reach, useTime, recoilPoolMultiplier, duration);
+        Yoyo entity = new Yoyo(shootInfo, reach, useTime, recoilPoolMultiplier, duration);
         plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // play sound
         playerUseItemSound(ply, weaponType, itemType, autoSwing);
@@ -3238,7 +3236,7 @@ public class ItemUseHelper {
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
         double useTimeMulti = 1 / useSpeed;
         double useTime = attrMap.getOrDefault("useTime", 20d) * useTimeMulti;
-        TerrariaFlail entity = new TerrariaFlail(shootInfo, reach, useTime);
+        Flail entity = new Flail(shootInfo, reach, useTime);
         plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // play sound
         playerUseItemSound(ply, weaponType, itemType, autoSwing);

@@ -70,6 +70,7 @@ public class Plantera extends EntitySlime {
                 poisonSeedChance = 0;
             }
             if (indexAI % shootInterval == 0) {
+                shootInfoSeed.setLockedTarget(target);
                 shootInfoSeed.shootLoc = shootLoc;
                 shootInfoSeed.velocity = MathHelper.getDirection(shootLoc, target.getEyeLocation(), SEED_SPEED);
                 EntityHelper.spawnProjectile(shootInfoSeed);
@@ -109,6 +110,7 @@ public class Plantera extends EntitySlime {
                 perArcAmount = 2;
 
             shootInfoSeed.shootLoc = shootLoc;
+            shootInfoSeed.setLockedTarget(target);
             for (Vector velocity : MathHelper.getCircularProjectileDirections(perArcAmount, 1, 45,
                     target, shootLoc, SEED_SPEED)) {
                 shootInfoSeed.velocity = velocity;

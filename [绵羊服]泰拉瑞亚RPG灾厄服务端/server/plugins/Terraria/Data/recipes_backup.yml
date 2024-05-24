@@ -1186,10 +1186,10 @@ ANVIL:
     requireLevel: 2
     resultItem: 太极连枷
     requireItem:
-    - 暗黑碎块
     - 光明碎块
-    - 暗影之魂:7
+    - 暗黑碎块
     - 光明之魂:7
+    - 暗影之魂:7
     recipeCategory: WEAPON_MELEE
   '131':
     requireLevel: 2
@@ -1205,6 +1205,7 @@ ANVIL:
     resultItem: 寒霜头盔
     requireItem:
     - 神圣锭:10
+    - 灾劫核心
     - 寒霜核
     recipeCategory: ARMOR
   '133':
@@ -1212,6 +1213,7 @@ ANVIL:
     resultItem: 寒霜胸甲
     requireItem:
     - 神圣锭:20
+    - 灾劫核心
     - 寒霜核
     recipeCategory: ARMOR
   '134':
@@ -1219,6 +1221,7 @@ ANVIL:
     resultItem: 寒霜护腿
     requireItem:
     - 神圣锭:16
+    - 灾劫核心
     - 寒霜核
     recipeCategory: ARMOR
   '135':
@@ -1235,7 +1238,7 @@ ANVIL:
     - 恐惧之魂
     - 力量之魂
     - 视域之魂
-    recipeCategory: WEAPON_MELEE
+    recipeCategory: TOOL
   '137':
     requireLevel: 2
     resultItem: 永恒之枪
@@ -2360,8 +2363,8 @@ ANVIL:
     requireLevel: 1
     resultItem: 阴阳
     requireItem:
-    - 暗黑碎块
     - 光明碎块
+    - 暗黑碎块
     recipeCategory: WEAPON_MELEE
   '291':
     requireLevel: 2
@@ -4304,13 +4307,22 @@ BREWING_STAND:
     recipeCategory: CONSUMABLE
   '22':
     requireLevel: 1
+    resultItem: 钙质药水
+    requireItem:
+    - 水瓶
+    - 骨头:2
+    - 火焰花
+    - 波浪叶
+    recipeCategory: CONSUMABLE
+  '23':
+    requireLevel: 1
     resultItem: 磁力药水:2
     requireItem:
     - 水瓶:2
     - 铁锭
     - 火焰花:2
     recipeCategory: CONSUMABLE
-  '23':
+  '24':
     requireLevel: 1
     resultItem: 无尽吞噬药水:4
     requireItem:
@@ -4318,7 +4330,7 @@ BREWING_STAND:
     - 暗离子体
     - 星系异石
     recipeCategory: CONSUMABLE
-  '24':
+  '25':
     requireLevel: 1
     resultItem: 回城药水
     requireItem:
@@ -4326,7 +4338,7 @@ BREWING_STAND:
     - 镜面鱼
     - 太阳花
     recipeCategory: TOOL
-  '25':
+  '26':
     requireLevel: 1
     resultItem: 虫洞药水
     requireItem:
@@ -4334,7 +4346,7 @@ BREWING_STAND:
     - 镜面鱼
     - 闪耀根
     recipeCategory: TOOL
-  '26':
+  '27':
     requireLevel: 1
     resultItem: 弱效治疗药水:2
     requireItem:
@@ -4342,14 +4354,14 @@ BREWING_STAND:
     - 凝胶:2
     - 蘑菇
     recipeCategory: CONSUMABLE_HEAL
-  '27':
+  '28':
     requireLevel: 1
     resultItem: 治疗药水:4
     requireItem:
     - 弱效治疗药水:4
     - 发光蘑菇
     recipeCategory: CONSUMABLE_HEAL
-  '28':
+  '29':
     requireLevel: 1
     resultItem: 强效治疗药水:3
     requireItem:
@@ -4357,7 +4369,7 @@ BREWING_STAND:
     - 妖精尘:3
     - 水晶碎块
     recipeCategory: CONSUMABLE_HEAL
-  '29':
+  '30':
     requireLevel: 1
     resultItem: 超级治疗药水:4
     requireItem:
@@ -4367,28 +4379,28 @@ BREWING_STAND:
     - 星尘碎片
     - 星璇碎片
     recipeCategory: CONSUMABLE_HEAL
-  '30':
+  '31':
     requireLevel: 1
     resultItem: 至尊治疗药水:4
     requireItem:
     - 超级治疗药水:4
     - 血石:3
     recipeCategory: CONSUMABLE_HEAL
-  '31':
+  '32':
     requireLevel: 1
     resultItem: 终极治疗药水:20
     requireItem:
     - 至尊治疗药水:20
     - 化神魂精
     recipeCategory: CONSUMABLE_HEAL
-  '32':
+  '33':
     requireLevel: 1
     resultItem: 恢复药水
     requireItem:
     - 魔力药水
     - 治疗药水
     recipeCategory: CONSUMABLE_HEAL
-  '33':
+  '34':
     requireLevel: 1
     resultItem: 弱效魔力药水:8
     requireItem:
@@ -4396,14 +4408,14 @@ BREWING_STAND:
     - 凝胶:4
     - 坠星
     recipeCategory: CONSUMABLE_MANA
-  '34':
+  '35':
     requireLevel: 1
     resultItem: 魔力药水:4
     requireItem:
     - 弱效魔力药水:4
     - 发光蘑菇
     recipeCategory: CONSUMABLE_MANA
-  '35':
+  '36':
     requireLevel: 1
     resultItem: 强效魔力药水:12
     requireItem:
@@ -4411,7 +4423,7 @@ BREWING_STAND:
     - 妖精尘:4
     - 坠星
     recipeCategory: CONSUMABLE_MANA
-  '36':
+  '37':
     requireLevel: 1
     resultItem: 超级魔力药水:15
     requireItem:
@@ -4420,7 +4432,7 @@ BREWING_STAND:
     - 独角兽角
     - 水晶碎块:3
     recipeCategory: CONSUMABLE_MANA
-  '37':
+  '38':
     requireLevel: 1
     resultItem: 至尊魔力药水:15
     requireItem:
@@ -4631,7 +4643,7 @@ TINKER_WORKBENCH:
     - 翱翔徽章
     - 飞翔之魂:10
     - 闪耀金羽:5
-    - 毁灭之灵:5
+    - 夜明锭:5
     recipeCategory: ACCESSORY
   '28':
     requireLevel: 1
@@ -5020,12 +5032,22 @@ TINKER_WORKBENCH:
     recipeCategory: ACCESSORY
   '74':
     requireLevel: 1
+    resultItem: 钨钢屏障转换仪
+    requireItem:
+    - 钨钢屏障生成仪
+    - 光明碎块
+    - 暗黑碎块
+    - 光明之魂:5
+    - 暗影之魂:5
+    recipeCategory: ACCESSORY
+  '75':
+    requireLevel: 1
     resultItem: 宝光盾牌
     requireItem:
     - 寒元锭:5
     - 水晶碎块:10
     recipeCategory: ACCESSORY
-  '75':
+  '76':
     requireLevel: 1
     resultItem: 阿斯加德之英勇
     requireItem:
@@ -5035,7 +5057,7 @@ TINKER_WORKBENCH:
     - 克苏鲁之眼盾
     - 灾劫核心
     recipeCategory: ACCESSORY
-  '76':
+  '77':
     requireLevel: 1
     resultItem: 阿斯加德之庇护
     requireItem:
@@ -5044,7 +5066,7 @@ TINKER_WORKBENCH:
     - 宇宙锭:10
     - 化神魂精:4
     recipeCategory: ACCESSORY
-  '77':
+  '78':
     requireLevel: 1
     resultItem: 血神圣杯
     requireItem:
@@ -5054,7 +5076,7 @@ TINKER_WORKBENCH:
     - 血石核心:5
     - 化神魂精:4
     recipeCategory: ACCESSORY
-  '78':
+  '79':
     requireLevel: 1
     resultItem: 神圣护符
     requireItem:
@@ -5062,15 +5084,6 @@ TINKER_WORKBENCH:
     - 十字项链
     - 炫星锭:10
     - 海棱晶:15
-    recipeCategory: ACCESSORY
-  '79':
-    requireLevel: 1
-    resultItem: 神之壁垒
-    requireItem:
-    - 冰冻护盾
-    - 神圣护符
-    - 圣金源锭:10
-    - 化神魂精:4
     recipeCategory: ACCESSORY
   '80':
     requireLevel: 1
@@ -5083,16 +5096,34 @@ TINKER_WORKBENCH:
     recipeCategory: ACCESSORY
   '81':
     requireLevel: 1
+    resultItem: 神之壁垒
+    requireItem:
+    - 冰冻护盾
+    - 神圣护符
+    - 圣金源锭:10
+    - 化神魂精:4
+    recipeCategory: ACCESSORY
+  '82':
+    requireLevel: 1
     resultItem: 化绵留香石
     requireItem:
-    - 钨钢屏障生成仪
+    - 钨钢屏障转换仪
     - 阴阳吸星石
     - 神秘电路:16
     - 可疑镀层:16
     - 宇宙锭:5
     - 化神魂精:4
     recipeCategory: ACCESSORY
-  '82':
+  '83':
+    requireLevel: 1
+    resultItem: 龙心吊坠
+    requireItem:
+    - 再生护符
+    - 圣金源锭:5
+    - 龙魂碎片:2
+    - 化神魂精:4
+    recipeCategory: ACCESSORY
+  '84':
     requireLevel: 1
     resultItem: 深渊潜游装
     requireItem:
@@ -5101,7 +5132,7 @@ TINKER_WORKBENCH:
     - 深渊细胞:10
     - 流明晶:10
     recipeCategory: ACCESSORY
-  '83':
+  '85':
     requireLevel: 1
     resultItem: 深渊潜游服
     requireItem:
