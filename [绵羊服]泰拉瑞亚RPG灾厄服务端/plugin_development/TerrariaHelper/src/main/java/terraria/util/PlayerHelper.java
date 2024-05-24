@@ -2161,10 +2161,14 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     if (currAcc == null || currAcc.getType() == Material.AIR) continue;
                     String currAccType = ItemHelper.splitItemName(currAcc)[1];
                     // only one switchable accessory would be active
+                    double regen = TerrariaHelper.itemConfig.getDouble(currAccType + ".attributes.regen", 0);
                     if (TerrariaHelper.itemConfig.contains(currAccType + ".attributesFormI") ) {
                         if (hasSwitchable)
                             continue;
                         hasSwitchable = true;
+                        regen += TerrariaHelper.itemConfig.getDouble(currAccType + "." +
+                                (ply.getScoreboardTags().contains(TAG_SWITCHED_SWITCHABLE_ACCESSORY) ? "attributesFormII" : "attributesFormI") +
+                                ".regen", 0);
                     }
                     // special accessory activation restrictions and conditional attributes
                     switch (currAccType) {
@@ -2399,7 +2403,6 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     }
                     // attribute
                     EntityHelper.tweakAttribute(ply, newAttrMap, currAcc, true);
-                    double regen = TerrariaHelper.itemConfig.getDouble(currAccType + ".attributes.regen", 0);
                     if (regen < 0)
                         negRegenCause.put(currAccType, -regen);
                     // save accessory info

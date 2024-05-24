@@ -2113,7 +2113,7 @@ ANVIL:
     requireLevel: 1
     resultItem: 凝胶波刃
     requireItem:
-    - 纯净凝胶:30
+    - 纯净凝胶:12
     - 凝胶:35
     - 狱炎锭:10
     recipeCategory: WEAPON_MELEE
@@ -5035,6 +5035,7 @@ TINKER_WORKBENCH:
     resultItem: 钨钢屏障转换仪
     requireItem:
     - 钨钢屏障生成仪
+    - 纯净凝胶:15
     - 光明碎块
     - 暗黑碎块
     - 光明之魂:5

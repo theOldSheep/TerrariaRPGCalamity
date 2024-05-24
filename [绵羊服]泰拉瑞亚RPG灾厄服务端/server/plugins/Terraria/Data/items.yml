@@ -2781,7 +2781,7 @@ Drew之翼:
   - §r[饰品]
   attributesFormI:
     maxHealthMulti: -0.5
-    fixedHealingMulti: -0.75
+    fixedHealingMulti: -0.4
     regen: 24
   attributesFormII:
     damageMulti: 0.2
