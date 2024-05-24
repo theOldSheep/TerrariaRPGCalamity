@@ -1,6 +1,6 @@
 {
 	"entity.generic.fallSmall": {
-        "category": "master",
+        "category": "player",
 		"sounds": [
 			{
 				"name": "mob/generic/fallsmall"
@@ -8,7 +8,7 @@
 		]
 	},
 	"entity.generic.fallBig": {
-        "category": "master",
+        "category": "player",
 		"sounds": [
 			{
 				"name": "mob/generic/fallbig"
@@ -16,7 +16,7 @@
 		]
 	},
 	"entity.cltst.death": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "mob/cltst/death"
@@ -24,7 +24,7 @@
 		]
 	},
 	"entity.bird.idle": {
-        "category": "master",
+        "category": "ambient",
 		"sounds": [
 			{
 				"name": "critter/bird/idle1"
@@ -35,7 +35,7 @@
 		]
 	},
 	"entity.bluejay.idle": {
-        "category": "master",
+        "category": "ambient",
 		"sounds": [
 			{
 				"name": "critter/bluejay/idle"
@@ -43,7 +43,7 @@
 		]
 	},
 	"entity.cardinal.idle": {
-        "category": "master",
+        "category": "ambient",
 		"sounds": [
 			{
 				"name": "critter/cardinal/idle1"
@@ -54,7 +54,7 @@
 		]
 	},
 	"entity.eoc.growl": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "mob/enderdragon/growl5",
@@ -63,7 +63,7 @@
 		]
 	},
 	"entity.eol.summoned": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "mob/eol/summoned",
@@ -72,7 +72,7 @@
 		]
 	},
 	"entity.eol.DA": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "mob/eol/da",
@@ -81,7 +81,7 @@
 		]
 	},
 	"entity.eol.EL": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "mob/eol/el",
@@ -90,7 +90,7 @@
 		]
 	},
 	"entity.eol.ER": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "mob/eol/er",
@@ -99,7 +99,7 @@
 		]
 	},
 	"entity.eol.PB": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "mob/eol/pb",
@@ -108,7 +108,7 @@
 		]
 	},
 	"entity.eol.SD": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "mob/eol/sd",
@@ -117,7 +117,7 @@
 		]
 	},
 	"entity.hit.astral": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "damage/entity_hit_astral",
@@ -126,7 +126,7 @@
 		]
 	},
 	"entity.hit.bone": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "damage/entity_hit_bone",
@@ -135,7 +135,7 @@
 		]
 	},
 	"entity.hit.crystal": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "damage/entity_hit_crystal",
@@ -144,7 +144,7 @@
 		]
 	},
 	"entity.hit.flesh": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "damage/entity_hit_flesh",
@@ -153,7 +153,7 @@
 		]
 	},
 	"entity.hit.insect": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "damage/entity_hit_insect",
@@ -162,7 +162,7 @@
 		]
 	},
 	"entity.hit.otherworldly": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "damage/entity_hit_otherworldly",
@@ -171,7 +171,7 @@
 		]
 	},
 	"entity.hit.pixie": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "damage/entity_hit_pixie",
@@ -180,7 +180,7 @@
 		]
 	},
 	"entity.hit.rock": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "damage/entity_hit_rock",
@@ -189,7 +189,7 @@
 		]
 	},
 	"entity.hit.tortoise": {
-        "category": "master",
+        "category": "hostile",
 		"sounds": [
 			{
 				"name": "damage/entity_hit_tortoise",
@@ -198,7 +198,7 @@
 		]
 	},
 	"item.bowShoot": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u5f13:\u5c04\u7bad",
 		"sounds": [
 			{
@@ -208,7 +208,7 @@
 		]
 	},
 	"item.gunFire": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u67aa\u68b0:\u5c04\u51fb",
 		"sounds": [
 			{
@@ -218,7 +218,7 @@
 		]
 	},
 	"item.genericSwing": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u7269\u54c1:\u6325\u821e",
 		"sounds": [
 			{
@@ -228,7 +228,7 @@
 		]
 	},
 	"item.genericLaser": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u6fc0\u5149:\u53d1\u5c04",
 		"sounds": [
 			{
@@ -238,7 +238,7 @@
 		]
 	},
 	"item.genericStar": {
-        "category": "master",
+        "category": "player",
 		"sounds": [
 			{
 				"name": "item/genericstar",
@@ -247,7 +247,7 @@
 		]
 	},
 	"item.genericMeteorStaff": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u6d41\u661f:\u53ec\u5524",
 		"sounds": [
 			{
@@ -257,7 +257,7 @@
 		]
 	},
 	"item.genericSpray": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u6c34\u6d41:\u55b7\u5c04",
 		"sounds": [
 			{
@@ -267,7 +267,7 @@
 		]
 	},
 	"item.genericBubble": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u5410\u6ce1\u6ce1",
 		"sounds": [
 			{
@@ -277,7 +277,7 @@
 		]
 	},
 	"item.genericTyphoon": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u6fc0\u5149:\u53d1\u5c04",
 		"sounds": [
 			{
@@ -287,7 +287,7 @@
 		]
 	},
 	"item.largeWeaponFire": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u5927\u578b\u6b66\u5668:\u53d1\u5c04",
 		"sounds": [
 			{
@@ -297,7 +297,7 @@
 		]
 	},
 	"item.giantExplosion": {
-        "category": "master",
+        "category": "sound",
 		"subtitle": "\u6838\u5f39\u7ea7\u7206\u70b8",
 		"sounds": [
 			{
@@ -307,7 +307,7 @@
 		]
 	},
 	"item.ark.use": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u65b9\u821f:\u6325\u821e",
 		"sounds": [
 			{
@@ -317,7 +317,7 @@
 		]
 	},
 	"item.ark.snap": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u65b9\u821f:\u526a\u51fb",
 		"sounds": [
 			{
@@ -327,7 +327,7 @@
 		]
 	},
 	"item.ark.parry": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u65b9\u821f:\u683c\u6321",
 		"sounds": [
 			{
@@ -337,7 +337,7 @@
 		]
 	},
 	"item.exoblade.beam": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u5251\u6c14\u65a9\u5207",
 		"sounds": [
 			{
@@ -347,7 +347,7 @@
 		]
 	},
 	"item.exoblade.explode": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u5251\u6c14\u7206\u70b8",
 		"sounds": [
 			{
@@ -357,7 +357,7 @@
 		]
 	},
 	"item.exoblade.swing": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u5229\u5203:\u6325\u821e",
 		"sounds": [
 			{
@@ -367,7 +367,7 @@
 		]
 	},
 	"item.guitar": {
-        "category": "master",
+        "category": "music",
 		"sounds": [
 			{
 				"name": "item/guitar"
@@ -375,7 +375,7 @@
 		]
 	},
 	"item.harp": {
-        "category": "master",
+        "category": "music",
 		"sounds": [
 			{
 				"name": "item/harp"
@@ -383,7 +383,7 @@
 		]
 	},
 	"item.danceOfLight": {
-        "category": "master",
+        "category": "player",
 		"subtitle": "\u25a0\u25a0\uff0c\u25a0\u25a0\uff01",
 		"sounds": [
 			{
