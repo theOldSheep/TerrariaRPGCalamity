@@ -116,6 +116,33 @@
 			}
 		]
 	},
+	"entity.storm_weaver.summoned": {
+        "category": "hostile",
+		"sounds": [
+			{
+				"name": "mob/servants_of_dog/storm_weaver_summoned",
+				"attenuation_distance": 30
+			}
+		]
+	},
+	"entity.ceaseless_void.summoned": {
+        "category": "hostile",
+		"sounds": [
+			{
+				"name": "mob/servants_of_dog/ceaseless_void_summoned",
+				"attenuation_distance": 30
+			}
+		]
+	},
+	"entity.signus.summoned": {
+        "category": "hostile",
+		"sounds": [
+			{
+				"name": "mob/servants_of_dog/signus_summoned",
+				"attenuation_distance": 30
+			}
+		]
+	},
 	"entity.hit.astral": {
         "category": "hostile",
 		"sounds": [
