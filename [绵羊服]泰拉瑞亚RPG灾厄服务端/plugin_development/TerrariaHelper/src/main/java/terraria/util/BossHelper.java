@@ -5,38 +5,39 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import terraria.entity.boss.aquaticScourge.AquaticScourge;
-import terraria.entity.boss.astrumAureus.AstrumAureus;
-import terraria.entity.boss.astrumDeus.AstrumDeus;
-import terraria.entity.boss.brimstoneElemental.BrimstoneElemental;
-import terraria.entity.boss.calamitasClone.CalamitasClone;
-import terraria.entity.boss.crabulon.Crabulon;
-import terraria.entity.boss.cryogen.Cryogen;
-import terraria.entity.boss.dragonFolly.DragonFolly;
-import terraria.entity.boss.dukeFishron.DukeFishron;
-import terraria.entity.boss.empressOfLight.EmpressOfLight;
-import terraria.entity.boss.eyeOfCthulhu.EyeOfCthulhu;
-import terraria.entity.boss.eaterOfWorld.EaterOfWorld;
-import terraria.entity.boss.desertScourge.DesertScourge;
-import terraria.entity.boss.golem.Golem;
-import terraria.entity.boss.leviathanAndAnahita.Anahita;
-import terraria.entity.boss.lunaticCultist.LunaticCultist;
-import terraria.entity.boss.moonLord.MoonLord;
-import terraria.entity.boss.plantera.Plantera;
-import terraria.entity.boss.profanedGuardians.GuardianCommander;
-import terraria.entity.boss.providence.Providence;
-import terraria.entity.boss.ravager.Ravager;
-import terraria.entity.boss.skeletronPrime.SkeletronPrimeHead;
-import terraria.entity.boss.stormWeaver.StormWeaver;
-import terraria.entity.boss.theDestroyer.Destroyer;
-import terraria.entity.boss.theHiveMind.TheHiveMind;
-import terraria.entity.boss.skeletron.SkeletronHead;
-import terraria.entity.boss.queenSlime.QueenSlime;
-import terraria.entity.boss.thePlaguebringerGoliath.ThePlaguebringerGoliath;
-import terraria.entity.boss.theSlimeGod.TheSlimeGod;
-import terraria.entity.boss.kingSlime.KingSlime;
-import terraria.entity.boss.theTwins.Retinazer;
-import terraria.entity.boss.wallOfFlesh.WallOfFleshMouth;
+import terraria.entity.boss.hardMode.aquaticScourge.AquaticScourge;
+import terraria.entity.boss.hardMode.astrumAureus.AstrumAureus;
+import terraria.entity.boss.hardMode.astrumDeus.AstrumDeus;
+import terraria.entity.boss.hardMode.brimstoneElemental.BrimstoneElemental;
+import terraria.entity.boss.hardMode.calamitasClone.CalamitasClone;
+import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
+import terraria.entity.boss.preHardMode.crabulon.Crabulon;
+import terraria.entity.boss.hardMode.cryogen.Cryogen;
+import terraria.entity.boss.postMoonLord.dragonFolly.DragonFolly;
+import terraria.entity.boss.hardMode.dukeFishron.DukeFishron;
+import terraria.entity.boss.hardMode.empressOfLight.EmpressOfLight;
+import terraria.entity.boss.preHardMode.eyeOfCthulhu.EyeOfCthulhu;
+import terraria.entity.boss.preHardMode.eaterOfWorld.EaterOfWorld;
+import terraria.entity.boss.preHardMode.desertScourge.DesertScourge;
+import terraria.entity.boss.hardMode.golem.Golem;
+import terraria.entity.boss.hardMode.leviathanAndAnahita.Anahita;
+import terraria.entity.boss.hardMode.lunaticCultist.LunaticCultist;
+import terraria.entity.boss.hardMode.moonLord.MoonLord;
+import terraria.entity.boss.hardMode.plantera.Plantera;
+import terraria.entity.boss.postMoonLord.profanedGuardians.GuardianCommander;
+import terraria.entity.boss.postMoonLord.providence.Providence;
+import terraria.entity.boss.hardMode.ravager.Ravager;
+import terraria.entity.boss.hardMode.skeletronPrime.SkeletronPrimeHead;
+import terraria.entity.boss.postMoonLord.stormWeaver.StormWeaver;
+import terraria.entity.boss.hardMode.theDestroyer.Destroyer;
+import terraria.entity.boss.preHardMode.theHiveMind.TheHiveMind;
+import terraria.entity.boss.preHardMode.skeletron.SkeletronHead;
+import terraria.entity.boss.hardMode.queenSlime.QueenSlime;
+import terraria.entity.boss.hardMode.thePlaguebringerGoliath.ThePlaguebringerGoliath;
+import terraria.entity.boss.preHardMode.theSlimeGod.TheSlimeGod;
+import terraria.entity.boss.preHardMode.kingSlime.KingSlime;
+import terraria.entity.boss.hardMode.theTwins.Retinazer;
+import terraria.entity.boss.preHardMode.wallOfFlesh.WallOfFleshMouth;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -324,6 +325,13 @@ public class BossHelper {
             case STORM_WEAVER: {
                 if (StormWeaver.canSpawn(target)) {
                     new StormWeaver(target, new ArrayList<>(), 0);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case CEASELESS_VOID: {
+                if (CeaselessVoid.canSpawn(target)) {
+                    new CeaselessVoid(target);
                     spawnedSuccessfully = true;
                 }
                 break;

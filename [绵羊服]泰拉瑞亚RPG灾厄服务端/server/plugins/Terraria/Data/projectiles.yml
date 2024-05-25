@@ -672,6 +672,18 @@
     gravity: 0
     buffInflict:
         - "神圣之火|60|1"
+暗能量球:
+    blockHitAction: thru
+    projectileSize: 1
+    liveTime: 150
+    gravity: 0
+    homing: true
+    noHomingTicks: 60
+    maxHomingTicks: 61
+    homingAbility: 999
+    homingRadius: 128
+    buffInflict:
+        - "扭曲|30|1"
 圣骑士锤:
     blockHitAction: thru
     gravity: 0
@@ -3812,7 +3824,7 @@ TNT:
     enemyInvincibilityFrame: 15
     blockHitAction: bounce
     bounce: 8
-    penetration: 999
+    penetration: 9
     gravity: 0
     homing: true
     homingSharpTurning: false
@@ -4678,7 +4690,7 @@ TNT:
     projectileSize: 1
     enemyInvincibilityFrame: 12
     blockHitAction: thru
-    penetration: 999
+    penetration: 9
     gravity: 0
     homing: true
     noHomingTicks: 2

@@ -723,7 +723,7 @@ public class EntityHelper {
         }
         return result;
     }
-    private static void tickEffect(Entity entity, String effect, int delay, double damagePerDelay) {
+    private static void tickEffect(Entity entity, String effect, int delay, double damagePerDelay, String particleID, boolean isFirstTicking) {
         try {
             HashMap<String, Integer> allEffects = getEffectMap(entity);
             int timeRemaining = allEffects.getOrDefault(effect, 0);
@@ -823,8 +823,13 @@ public class EntityHelper {
                     break;
                 }
             }
+            // particle
+            if (particleID != null && (isFirstTicking || timeRemaining % 20 <= delay) ) {
+                DragoncoreHelper.displayParticle((ply) -> true,
+                        new DragoncoreHelper.DragonCoreParticleInfo(particleID, entity), 20);
+            }
             // next delayed task
-            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> tickEffect(entity, effect, delay, damagePerDelay), delay);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> tickEffect(entity, effect, delay, damagePerDelay, particleID, false), delay);
         } catch (Exception e) {
             TerrariaHelper.LOGGER.log(Level.SEVERE, "[Entity Helper] tickEffect", e);
         }
@@ -886,7 +891,9 @@ public class EntityHelper {
             // register delayed task for ticking potion
             int finalDamagePerDelay = damagePerDelay;
             int finalDelay = delay;
-            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> tickEffect(entity, effect, finalDelay, finalDamagePerDelay), delay);
+            String particleID = TerrariaHelper.buffConfig.getString("effects." + effect + ".snowStormParticle");
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () ->
+                    tickEffect(entity, effect, finalDelay, finalDamagePerDelay, particleID, true), delay);
         } catch (Exception e) {
             TerrariaHelper.LOGGER.log(Level.SEVERE, "[Entity Helper] prepareTickEffect", e);
         }
@@ -1868,12 +1875,21 @@ public class EntityHelper {
         knockback(entity, dir, addOrReplace, -1);
     }
     public static void knockback(Entity entity, Vector dir, boolean addOrReplace, double speedLimit) {
-        // entities immune to knockback should not be effected at all
-        double kbResistance = getAttrMap(entity).getOrDefault("knockbackResistance", 0d);
-        if (kbResistance >= 1) return;
-        // determine the knockback acceleration
-        double kbMulti = Math.max(1 - kbResistance, 0);
-        dir = dir.clone().multiply(kbMulti);
+        knockback(entity, dir, addOrReplace, speedLimit, false);
+    }
+    public static void knockback(Entity entity, Vector dir, boolean addOrReplace, double speedLimit, boolean ignoreKBR) {
+        double kbMulti;
+        if (ignoreKBR) {
+            kbMulti = 1d;
+        }
+        else {
+            // entities immune to knockback should not be effected at all
+            double kbResistance = getAttrMap(entity).getOrDefault("knockbackResistance", 0d);
+            if (kbResistance >= 1) return;
+            // determine the knockback acceleration
+            kbMulti = Math.max(1 - kbResistance, 0);
+            dir = dir.clone().multiply(kbMulti);
+        }
         // update the knockback slow factor, which effects the walking speed of zombies etc.
         setMetadata(entity, MetadataName.KNOCKBACK_SLOW_FACTOR, kbMulti);
         // the entity subject to that knockback

@@ -204,7 +204,6 @@ public class MathHelper {
             vec.multiply(length);
         return results;
     }
-    // Replicates the behavior from the "getCircularProjectileDirections" helper function
     public static ArrayList<Vector> getEvenlySpacedProjectileDirections(double projectileIntervalDegree, double spreadAngleDegree,
                                                                         Entity target, Location shootLoc, double length) {
         EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions().setProjectileSpeed(length);
@@ -274,6 +273,17 @@ public class MathHelper {
         double newY = vec.getX() * sineVal + vec.getY() * cosineVal;
         double newZ = vec.getZ();
         return new Vector(newX, newY, newZ);
+    }
+    public static Vector rotateAroundAxisDegree(Vector vec, Vector axis, double angleDegree) {
+        return rotateAroundAxisRadian(vec, axis, Math.toRadians(angleDegree));
+    }
+    public static Vector rotateAroundAxisRadian(Vector vec, Vector axis, double angleRadian) {
+        if ( Math.abs( axis.lengthSquared() - 1) > 1e-5 )
+            axis.normalize();
+        Quaternion rotation = new Quaternion(axis, angleRadian );
+
+        // Rotate the velocity vector
+        return rotation.interpolate(vec);
     }
     public static Vec3D toNMSVector(Vector vec) {
         return new Vec3D(vec.getX(), vec.getY(), vec.getZ());

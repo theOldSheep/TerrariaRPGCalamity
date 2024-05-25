@@ -93,27 +93,32 @@ effects:
     isBuff: false
     damageInterval: 4
     damage: 1
+    snowStormParticle: burning
     tooltip: 缓慢损失生命值
   霜火:
     isBuff: false
     damageInterval: 4
     damage: 2
+    snowStormParticle: frostburn
     tooltip: 不是特别烫就是特别冻。反正都是特别特别痛
   狱炎:
     isBuff: false
     damageInterval: 4
     damage: 6
+    snowStormParticle: burning
     tooltip: 缓慢损失生命值
   咒火:
     isBuff: false
     damageInterval: 5
     damage: 3
     damageMonster: 6
+    snowStormParticle: cursed_inferno
     tooltip: 正在损失生命值
   暗影焰:
     isBuff: false
     damageInterval: 4
     damage: 3
+    snowStormParticle: shadowflame
     tooltip: 正在损失生命值
   带电:
     isBuff: false
@@ -125,18 +130,21 @@ effects:
     damageInterval: 5
     damage: 10
     damageMonster: 25
+    snowStormParticle: burning
     tooltip: 被日耀射线焚烧
   血液沸腾:
     isBuff: false
     damageInterval: 10
     damage: 4
     damageMonster: 25
+    snowStormParticle: bleeding
     tooltip: 你的血液沸腾了
   硫磺火:
     isBuff: false
     damageInterval: 5
     damage: 4
     damageMonster: 10
+    snowStormParticle: shadowflame
     tooltip: 被漆黑的火焰吞噬
   辐射:
     isBuff: false
@@ -158,6 +166,7 @@ effects:
       defence: -40
       damageTakenMulti: 0.1
       flightTimeMulti: -0.25
+    snowStormParticle: shadowflame
     tooltip: 你很虚弱
   幻星感染:
     isBuff: false
@@ -185,6 +194,7 @@ effects:
     damageMonster: 25
     attributes:
       regenMulti: -1
+    snowStormParticle: hallow_fire
     tooltip: 神圣之光正将你焚化
   夜魇:
     isBuff: false
@@ -193,6 +203,7 @@ effects:
     damageMonster: 50
     attributes:
       regenMulti: -1
+    snowStormParticle: shadowflame
     tooltip: 被月之射线瓦解
   元素谐鸣:
     isBuff: false
@@ -201,11 +212,13 @@ effects:
     damageMonster: 80
     attributes:
       regenMulti: -1
+    snowStormParticle: elemental_mix
     tooltip: 美妙的元素交响乐正在活剥你
   圣狱神火:
     isBuff: false
     damageInterval: 5
     damage: 10
+    snowStormParticle: hallow_fire
     tooltip: 你离亵渎天神太远了！
   硫磺海剧毒:
     isBuff: false
@@ -231,6 +244,7 @@ effects:
     damageMonster: 50
     attributes:
       regenMulti: -1
+    snowStormParticle: god_slayer_inferno
     tooltip: 你的血肉在燃烧
   龙焰:
     isBuff: false
@@ -239,6 +253,7 @@ effects:
     damageMonster: 72
     attributes:
       regenMulti: -1
+    snowStormParticle: burning
     tooltip: 被咆哮的火焰吞没
   超位崩解:
     isBuff: false
@@ -247,16 +262,19 @@ effects:
     damageMonster: 250
     attributes:
       regenMulti: -1
+    snowStormParticle: miracle_blight
     tooltip: 星流共振撕碎了组成你身体的物质
   解离:
     isBuff: false
     damageInterval: 4
     damage: 60
+    snowStormParticle: bleeding
     tooltip: 有人造了十把三尖匕首……
   流血:
     isBuff: false
     attributes:
       regenMulti: -1
+    snowStormParticle: bleeding
     tooltip: 无法再生生命
   缓慢:
     isBuff: false
@@ -488,6 +506,7 @@ effects:
     isBuff: false
     damageInterval: 1
     damage: 10
+    snowStormParticle: bleeding
     tooltip: 血神短暂允诺于你的生命正在消散……
   伤害星云:
     isBuff: true
@@ -525,9 +544,11 @@ effects:
     tooltip: 每秒被动和闲置魔力再生增加 15
   魔力烧蚀:
     isBuff: false
+    snowStormParticle: cursed_inferno
     tooltip: 过多的魔力正在烧蚀你的身心
   魔力熔蚀:
     isBuff: false
+    snowStormParticle: cursed_inferno
     tooltip: 你的生命正在升华为魔力
   灵魂恢复:
     isBuff: true
@@ -606,6 +627,7 @@ effects:
         regen: -60
     buffOnTimeout: 硫火狂怒冷却
     buffOnTimeoutDuration: 600
+    snowStormParticle: shadowflame
     tooltip: 以生命为代价，黑魔法大大增强了你的力量
   硫火狂怒冷却:
     isBuff: false

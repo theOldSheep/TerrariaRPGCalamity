@@ -2758,7 +2758,6 @@ Drew之翼:
     maxHealth: 100
     damageTakenMulti: -0.1
   attributesFormII:
-    maxHealth: -100
     regen: 6
     damageMulti: 0.15
   worth: 16000000
@@ -2780,12 +2779,12 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributesFormI:
+    damageMulti: 0.2
+    regen: -16
+  attributesFormII:
     maxHealthMulti: -0.5
     fixedHealingMulti: -0.4
     regen: 24
-  attributesFormII:
-    damageMulti: 0.2
-    regen: -16
   worth: 30000000
   rarity: 15
 嘉登之心:

@@ -746,6 +746,30 @@
         - "夜魇"
         - "燃烧"
         - "狱炎"
+无尽虚空:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "扭曲|20|1"
+    buffImmute:
+        - "狱炎"
+        - "辐射"
+        - "带电"
+        - "破晓"
+        - "神圣之火"
+        - "夜魇"
+        - "弑神怒焰"
+暗能量:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "扭曲|15|1"
+    buffImmute:
+        - "狱炎"
+        - "辐射"
+        - "带电"
+        - "破晓"
+        - "神圣之火"
+        - "夜魇"
+        - "弑神怒焰"
 哥布林战士:
     drop:
         - "铜币:375:375:1"

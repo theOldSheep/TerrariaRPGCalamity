@@ -1189,10 +1189,7 @@ public class GenericProjectile extends EntityPotion {
             if (angle > homingAbility) {
                 // Calculate rotation axis and quaternion
                 Vector rotAxis = terraria.util.MathHelper.getNonZeroCrossProd(currDir, targetDir).normalize();
-                Quaternion rotation = new Quaternion(rotAxis, Math.toRadians( homingAbility ) );
-
-                // Rotate the velocity vector
-                newVelocity = rotation.interpolate(currDir);
+                newVelocity = terraria.util.MathHelper.rotateAroundAxisDegree(currDir, rotAxis, homingAbility);
             }
             else {
                 newVelocity = targetDir;

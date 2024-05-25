@@ -12,20 +12,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.boss.aquaticScourge.AquaticScourge;
-import terraria.entity.boss.astrumDeus.AstrumDeus;
-import terraria.entity.boss.desertScourge.DesertNuisance;
-import terraria.entity.boss.desertScourge.DesertScourge;
-import terraria.entity.boss.stormWeaver.StormWeaver;
-import terraria.entity.boss.theDestroyer.Destroyer;
+import terraria.entity.boss.hardMode.aquaticScourge.AquaticScourge;
+import terraria.entity.boss.hardMode.astrumDeus.AstrumDeus;
+import terraria.entity.boss.preHardMode.desertScourge.DesertScourge;
+import terraria.entity.boss.postMoonLord.stormWeaver.StormWeaver;
+import terraria.entity.boss.hardMode.theDestroyer.Destroyer;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.ToDoubleFunction;
 
 public class BossHelper {
     private static final String
