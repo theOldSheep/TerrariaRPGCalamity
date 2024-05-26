@@ -2747,7 +2747,7 @@ Drew之翼:
   attributesFormI:
     barrierMax: 125
   attributesFormII:
-    defence: 35
+    defence: 30
   worth: 2400000
   rarity: 4
 阴阳吸星石:
@@ -2767,7 +2767,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributesFormI:
-    barrierMax: 360
+    barrierMax: 270
     damageMulti: 0.15
   attributesFormII:
     defence: 40
@@ -2779,7 +2779,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributesFormI:
-    damageMulti: 0.2
+    damageMulti: 0.25
     regen: -16
   attributesFormII:
     maxHealthMulti: -0.5

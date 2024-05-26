@@ -173,14 +173,6 @@ public class MonsterHelper {
                     break;
             }
         }
-        // reduced mob spawning rate if a boss is alive
-        if (BossHelper.bossMap.size() > 0 && Math.random() < 0.75) {
-            return;
-        }
-        // reduced mob spawning rate when no event is present
-        if (EventAndTime.currentEvent == EventAndTime.Events.NONE && Math.random() < 0.5) {
-            return;
-        }
         // only attempt to spawn underworld mobs in underworld
         WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(ply);
         String  biomeStr = biomeType.toString().toLowerCase(),

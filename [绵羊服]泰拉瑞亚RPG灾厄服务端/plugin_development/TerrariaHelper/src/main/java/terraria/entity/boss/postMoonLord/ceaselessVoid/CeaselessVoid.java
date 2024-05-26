@@ -53,7 +53,7 @@ public class CeaselessVoid extends EntitySlime {
     static final double BOSS_DECELERATION = 0.95;  // Deceleration rate in projectile phase
 
     static final double PROJECTILE_INTERVAL_DEGREES = 10, PROJECTILE_SPREAD_DEGREES = 35, PROJECTILE_SPEED = 1.75;
-    static final double SUCTION_FORCE_DISTANCE_FACTOR_MIN = 0.00005, SUCTION_FORCE_DISTANCE_FACTOR_MAX = 0.000075;
+    static final double SUCTION_FORCE_DISTANCE_FACTOR_MIN = 0.000075, SUCTION_FORCE_DISTANCE_FACTOR_MAX = 0.000125;
 
 
     // Phase tracking
@@ -102,7 +102,7 @@ public class CeaselessVoid extends EntitySlime {
 
             // Update arc's radius, accelerating towards the player
             double distanceToPlayer = centerLocation.distance(playerLocation);
-            radius = Math.max(radiusSpeed, 0);
+            radius = Math.max(radius + radiusSpeed, 0);
             if (distanceToPlayer > radius) {
                 radiusSpeed = Math.min(radiusSpeed + radiusAcceleration, maxRadiusSpeed);
             }

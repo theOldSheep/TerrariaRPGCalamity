@@ -1,6 +1,7 @@
-package terraria.entity.boss;
+package terraria.entity.boss.postMoonLord.signus;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -15,15 +16,13 @@ import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 import terraria.util.WorldHelper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
-public class BossTemplate extends EntitySlime {
+public class NewBoss extends EntitySlime {
     // basic variables
-    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.THE_PLAGUEBRINGER_GOLIATH;
-    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.JUNGLE;
-    public static final double BASIC_HEALTH = 255600 * 2;
+    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.SIGNUS_ENVOY_OF_THE_DEVOURER;
+    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.UNDERWORLD;
+    public static final double BASIC_HEALTH = 864000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -31,15 +30,115 @@ public class BossTemplate extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    static HashMap<String, Double> attrMapProjectile;
-    EntityHelper.ProjectileShootInfo shootInfo;
+    static final double SPEED_PHASE_1_FOLLOW = 0.8, DIST_TELEPORT = 32, SPEED_LANTERN = 1.0;
+    static final double SPEED_PHASE_2_HOVER = 1.2, VERTICAL_DIST_HOVER = 17.5, SPEED_SCYTHE = 1.25;
+    static final double SPEED_PHASE_3_DASH = 1.75, SPEED_DECAY_PHASE_3 = 0.99;
+    static HashMap<String, Double> attrMapLantern, attrMapScythe;
+    EntityHelper.ProjectileShootInfo shootInfoLantern, shootInfoScythe;
     static {
-        attrMapProjectile = new HashMap<>();
-        attrMapProjectile.put("damage", 540d);
-        attrMapProjectile.put("knockback", 1.5d);
+        attrMapLantern = new HashMap<>();
+        attrMapLantern.put("damage", 780d);
+        attrMapLantern.put("knockback", 1.5d);
+        attrMapScythe = new HashMap<>();
+        attrMapScythe.put("damage", 800d);
+        attrMapScythe.put("knockback", 1.5d);
     }
-    int indexAI = 0, AIPhase = 0;
+
+    private int indexAI = 0, phaseAI = 1;
+    boolean teleported = false, dashing = false;
     Vector velocity = new Vector();
+
+
+    private void updatePhase() {
+        // Calculate health percentage
+        float healthPercentage = getHealth() / getMaxHealth();
+
+        // If the boss's health is below 30%, never enter phase 1
+        int newPhase = phaseAI;
+
+        // Ensure the new phase is different from the current phase
+        while (newPhase == phaseAI) {
+            if (healthPercentage < 0.3) {
+                newPhase = random.nextInt(2) + 2;
+            } else {
+                newPhase = random.nextInt(3) + 1;
+            }
+        }
+
+        // Bossbar color hinting attack phase
+        switch (newPhase) {
+            case 1:
+                bossbar.color = BossBattle.BarColor.GREEN;
+                indexAI = -11;
+                break;
+            case 2:
+                bossbar.color = BossBattle.BarColor.PURPLE;
+                indexAI = -21;
+                break;
+            case 3:
+                bossbar.color = BossBattle.BarColor.RED;
+                indexAI = -11;
+                break;
+        }
+        bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+
+        // Update the current phase
+        phaseAI = newPhase;
+    }
+
+    private void phase1AI() {
+        velocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), SPEED_PHASE_1_FOLLOW);
+
+        if (indexAI % 20 == 0) {
+            // Projectile
+            shootInfoLantern.setLockedTarget(target);
+            shootInfoLantern.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+            shootInfoLantern.velocity = MathHelper.getDirection(shootInfoLantern.shootLoc, target.getEyeLocation(), SPEED_LANTERN);
+            EntityHelper.spawnProjectile(shootInfoLantern);
+            // Teleport
+            Location newLoc = target.getLocation().add(MathHelper.randomVector().multiply(DIST_TELEPORT));
+            bukkitEntity.teleport(newLoc);
+            teleported = true;
+
+
+            if (indexAI >= 59)
+                updatePhase();
+        }
+    }
+    private void phase2AI() {
+        Location hoverLoc = target.getLocation().add(0, VERTICAL_DIST_HOVER, 0);
+        velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverLoc, SPEED_PHASE_2_HOVER);
+
+        if (indexAI % 20 == 0) { // 20 ticks = 1 second
+            shootInfoScythe.setLockedTarget(target);
+            shootInfoScythe.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+            for (Vector shootDir : MathHelper.getEvenlySpacedProjectileDirections(
+                    10, 31, target, shootInfoScythe.shootLoc, SPEED_SCYTHE)) {
+                shootInfoScythe.velocity = shootDir;
+                EntityHelper.spawnProjectile(shootInfoScythe);
+            }
+
+            if (indexAI >= 40) {
+                updatePhase();
+            }
+        }
+    }
+    private void phase3AI() {
+        if (indexAI % 25 < 10) {
+            velocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), SPEED_PHASE_3_DASH);
+
+            shootInfoScythe.setLockedTarget(target);
+            shootInfoScythe.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+            shootInfoScythe.velocity = velocity.clone().normalize().multiply(SPEED_SCYTHE);
+            EntityHelper.spawnProjectile(shootInfoScythe);
+        }
+        else {
+            velocity.multiply(SPEED_DECAY_PHASE_3);
+            dashing = true;
+            if (indexAI >= 39)
+                updatePhase();
+        }
+    }
 
     private void AI() {
         // no AI after death
@@ -63,21 +162,32 @@ public class BossTemplate extends EntitySlime {
                 // increase player aggro duration
                 targetMap.get(target.getUniqueId()).addAggressionTick();
 
-                // TODO
+                dashing = false;
+                if (phaseAI == 1) {
+                    phase1AI();
+                } else if (phaseAI == 2) {
+                    phase2AI();
+                } else if (phaseAI == 3) {
+                    phase3AI();
+                }
+
                 indexAI ++;
                 bukkitEntity.setVelocity(velocity);
             }
         }
         // face the player
-        if (false)
-            this.yaw = (float) MathHelper.getVectorYaw( velocity );
+        if (dashing)
+            this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
         else
             this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // collision dmg
-        terraria.entity.boss.BossHelper.collisionDamage(this);
+        if (teleported)
+            teleported = false;
+        else
+            terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
-    public BossTemplate(World world) {
+    public NewBoss(World world) {
         super(world);
         super.die();
     }
@@ -86,13 +196,12 @@ public class BossTemplate extends EntitySlime {
         return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
     }
     // a constructor for actual spawning
-    public BossTemplate(Player summonedPlayer) {
+    public NewBoss(Player summonedPlayer) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
         double angle = Math.random() * 720d, dist = 40;
         Location spawnLoc = summonedPlayer.getLocation().add(
                 MathHelper.xsin_degree(angle) * dist, 0, MathHelper.xcos_degree(angle) * dist);
-        spawnLoc.setY( spawnLoc.getWorld().getHighestBlockYAt(spawnLoc) );
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
@@ -108,9 +217,9 @@ public class BossTemplate extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 594d);
-            attrMap.put("damageTakenMulti", 0.7);
-            attrMap.put("defence", 100d);
+            attrMap.put("damage", 925d);
+            attrMap.put("damageTakenMulti", 1d);
+            attrMap.put("defence", 120d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
@@ -129,7 +238,7 @@ public class BossTemplate extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(12, false);
+            setSize(8, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
@@ -146,8 +255,10 @@ public class BossTemplate extends EntitySlime {
         }
         // shoot info's
         {
-            shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapProjectile,
-                    EntityHelper.DamageType.ARROW, "projectile");
+            shootInfoLantern = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLantern,
+                    EntityHelper.DamageType.ARROW, "无限灯笼");
+            shootInfoScythe = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapScythe,
+                    EntityHelper.DamageType.MAGIC, "西格纳斯鬼镰");
         }
     }
 

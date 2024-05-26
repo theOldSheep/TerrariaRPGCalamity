@@ -1017,6 +1017,10 @@ public class PlayerHelper {
                 // monster spawn rate
                 double mobSpawnRate = attrMap.getOrDefault("mobSpawnRate", 0.1d);
                 WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(ply.getLocation());
+                boolean isBossAlive = isTargetedByBOSS(ply);
+                // reduced mob spawning rate if a boss is alive
+                if (isBossAlive)
+                    mobSpawnRate *= 0.75;
                 boolean isSurfaceOrSpace =
                         heightLayer == WorldHelper.HeightLayer.SURFACE ||
                                 heightLayer == WorldHelper.HeightLayer.SPACE;
@@ -1038,11 +1042,12 @@ public class PlayerHelper {
                 }
                 // underground or lower
                 else {
-                    // mob spawning rate hugely increased in dungeon or lizard temple
+                    // mob spawning rate hugely increased in dungeon or lizard temple IF BOSS NOT ALIVE
                     switch (WorldHelper.BiomeType.getBiome(ply)) {
                         case DUNGEON:
                         case TEMPLE:
-                            mobSpawnRate += 1.6;
+                            if (! isBossAlive)
+                                mobSpawnRate += 1.6;
                     }
                 }
                 // spawn monster. Note that mobSpawnRate above is expected monster amount per second

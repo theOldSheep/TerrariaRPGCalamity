@@ -144,7 +144,7 @@ effects:
     damageInterval: 5
     damage: 4
     damageMonster: 10
-    snowStormParticle: shadowflame
+    snowStormParticle: burning
     tooltip: 被漆黑的火焰吞噬
   辐射:
     isBuff: false
@@ -627,7 +627,7 @@ effects:
         regen: -60
     buffOnTimeout: 硫火狂怒冷却
     buffOnTimeoutDuration: 600
-    snowStormParticle: shadowflame
+    snowStormParticle: bleeding
     tooltip: 以生命为代价，黑魔法大大增强了你的力量
   硫火狂怒冷却:
     isBuff: false

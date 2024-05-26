@@ -13,6 +13,7 @@ terraria\entity\boss\postMoonLord\stormWeaver\StormWeaver.class
 terraria\entity\boss\BossTemplate.class
 terraria\util\Quaternion.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticAncientLight.class
+terraria\entity\boss\postMoonLord\signus\NewBoss.class
 terraria\worldgen\MazeGenerator$CellEdge.class
 terraria\entity\monster\MonsterZombie.class
 terraria\entity\boss\hardMode\thePlaguebringerGoliath\PlagueMine.class

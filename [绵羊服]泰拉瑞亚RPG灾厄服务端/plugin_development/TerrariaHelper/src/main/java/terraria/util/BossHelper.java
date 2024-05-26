@@ -11,6 +11,7 @@ import terraria.entity.boss.hardMode.astrumDeus.AstrumDeus;
 import terraria.entity.boss.hardMode.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.hardMode.calamitasClone.CalamitasClone;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
+import terraria.entity.boss.postMoonLord.signus.NewBoss;
 import terraria.entity.boss.preHardMode.crabulon.Crabulon;
 import terraria.entity.boss.hardMode.cryogen.Cryogen;
 import terraria.entity.boss.postMoonLord.dragonFolly.DragonFolly;
@@ -78,6 +79,15 @@ public class BossHelper {
                     break;
                 case RAVAGER:
                     loc.getWorld().playSound(loc, Sound.ENTITY_TNT_PRIMED, 10, 1);
+                    break;
+                case STORM_WEAVER:
+                    loc.getWorld().playSound(loc, "entity.storm_weaver.summoned", 10, 1);
+                    break;
+                case CEASELESS_VOID:
+                    loc.getWorld().playSound(loc, "entity.ceaseless_void.summoned", 10, 1);
+                    break;
+                case SIGNUS_ENVOY_OF_THE_DEVOURER:
+                    loc.getWorld().playSound(loc, "entity.signus.summoned", 10, 1);
                     break;
                 default:
                     loc.getWorld().playSound(loc, "entity.enderdragon.growl", 10, 1);
@@ -332,6 +342,13 @@ public class BossHelper {
             case CEASELESS_VOID: {
                 if (CeaselessVoid.canSpawn(target)) {
                     new CeaselessVoid(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case SIGNUS_ENVOY_OF_THE_DEVOURER: {
+                if (NewBoss.canSpawn(target)) {
+                    new NewBoss(target);
                     spawnedSuccessfully = true;
                 }
                 break;

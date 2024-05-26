@@ -653,7 +653,7 @@
     homingMethod: 2
     homingRadius: 64
     homingSharpTurning: false
-    homingAbility: 27
+    homingAbility: 12
     noHomingTicks: 15
     maxHomingTicks: 30
     buffInflict:
@@ -675,15 +675,35 @@
 暗能量球:
     blockHitAction: thru
     projectileSize: 1
-    liveTime: 150
+    liveTime: 60
     gravity: 0
-    homing: true
-    noHomingTicks: 60
-    maxHomingTicks: 61
-    homingAbility: 999
-    homingRadius: 128
     buffInflict:
         - "扭曲|30|1"
+无限灯笼:
+    blockHitAction: thru
+    projectileSize: 3
+    penetration: 999999
+    liveTime: 100
+    gravity: 0
+    homing: true
+    homingRadius: 64
+    homingSharpTurning: false
+    homingAbility: 12
+    buffInflict:
+        - "死亡低语|50|1"
+西格纳斯鬼镰:
+    blockHitAction: thru
+    projectileSize: 1.5
+    liveTime: 65
+    gravity: 0
+    homing: true
+    homingRadius: 128
+    homingAbility: 999
+    noHomingTicks: 40
+    maxHomingTicks: 41
+    homingEndSpeedMultiplier: 2
+    buffInflict:
+        - "死亡低语|80|1"
 圣骑士锤:
     blockHitAction: thru
     gravity: 0
@@ -3090,6 +3110,7 @@ TNT:
     spawnSoundVolume: 0.3
 镜之刃镜子:
     gravity: 0
+    projectileSize: 1
     penetration: 999999
 恐惧骷髅:
     gravity: 0
@@ -4790,11 +4811,15 @@ TNT:
     noHomingTicks: 5
     homingAbility: 60
     homingRadius: 32
+    buffInflict:
+        - 超位崩解|40|1
 归元漩涡:
     liveTime: 40
     projectileSize: 5
     blockHitAction: thru
     gravity: 0
+    buffInflict:
+        - 超位崩解|100|1
     clusterBomb:
         amount: 1
         damageMulti: 1

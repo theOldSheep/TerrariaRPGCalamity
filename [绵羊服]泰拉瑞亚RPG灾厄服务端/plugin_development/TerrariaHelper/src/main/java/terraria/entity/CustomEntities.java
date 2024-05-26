@@ -14,6 +14,7 @@ import terraria.entity.boss.hardMode.calamitasClone.Cataclysm;
 import terraria.entity.boss.hardMode.calamitasClone.Catastrophe;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.DarkEnergy;
+import terraria.entity.boss.postMoonLord.signus.NewBoss;
 import terraria.entity.boss.preHardMode.crabulon.Crabulon;
 import terraria.entity.boss.hardMode.cryogen.Cryogen;
 import terraria.entity.boss.hardMode.cryogen.CryogenShield;
@@ -164,6 +165,7 @@ public enum CustomEntities {
     BOSS_RVG_NUKE           ("RavagerNuke",            55,  EntityType.SLIME,           EntitySlime.class,           RavagerNuke.class),
     BOSS_RVG_PILLAR         ("RavagerRockPillar",      55,  EntityType.SLIME,           EntitySlime.class,           RavagerRockPillar.class),
     BOSS_SANTA_NK1          ("SantaNK1",               55,  EntityType.SLIME,           EntitySlime.class,           SantaNK1.class),
+    BOSS_SIGNUS             ("Signus",                 55,  EntityType.SLIME,           EntitySlime.class,           NewBoss.class),
     BOSS_SKLT               ("Skeletron",              55,  EntityType.SLIME,           EntitySlime.class,           SkeletronHead.class),
     BOSS_SKLT_HAND          ("SkeletronHand",          55,  EntityType.SLIME,           EntitySlime.class,           SkeletronHand.class),
     BOSS_SKLTPM             ("SkeletronPrime",         55,  EntityType.SLIME,           EntitySlime.class,           SkeletronPrimeHead.class),
