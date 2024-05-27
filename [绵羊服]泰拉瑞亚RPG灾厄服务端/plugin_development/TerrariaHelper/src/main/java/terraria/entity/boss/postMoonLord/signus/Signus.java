@@ -1,7 +1,6 @@
 package terraria.entity.boss.postMoonLord.signus;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -18,7 +17,7 @@ import terraria.util.WorldHelper;
 
 import java.util.*;
 
-public class NewBoss extends EntitySlime {
+public class Signus extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.SIGNUS_ENVOY_OF_THE_DEVOURER;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.UNDERWORLD;
@@ -187,7 +186,7 @@ public class NewBoss extends EntitySlime {
             terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
-    public NewBoss(World world) {
+    public Signus(World world) {
         super(world);
         super.die();
     }
@@ -196,7 +195,7 @@ public class NewBoss extends EntitySlime {
         return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
     }
     // a constructor for actual spawning
-    public NewBoss(Player summonedPlayer) {
+    public Signus(Player summonedPlayer) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
         double angle = Math.random() * 720d, dist = 40;

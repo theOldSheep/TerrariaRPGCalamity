@@ -68,7 +68,7 @@ public class BossTemplate extends EntitySlime {
                 bukkitEntity.setVelocity(velocity);
             }
         }
-        // face the player
+        // facing
         if (false)
             this.yaw = (float) MathHelper.getVectorYaw( velocity );
         else

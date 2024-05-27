@@ -49,6 +49,7 @@ public class BossSpawnListener implements Listener {
         summonItems.put("亵渎碎片", BossHelper.BossType.PROFANED_GUARDIANS);
         summonItems.put("亵渎晶核", BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS);
         summonItems.put("宇宙符文", null); // Handled as a special case
+        summonItems.put("死灵魂炬", BossHelper.BossType.POLTERGHAST);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {

@@ -11,7 +11,8 @@ import terraria.entity.boss.hardMode.astrumDeus.AstrumDeus;
 import terraria.entity.boss.hardMode.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.hardMode.calamitasClone.CalamitasClone;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
-import terraria.entity.boss.postMoonLord.signus.NewBoss;
+import terraria.entity.boss.postMoonLord.polterghast.Polterghast;
+import terraria.entity.boss.postMoonLord.signus.Signus;
 import terraria.entity.boss.preHardMode.crabulon.Crabulon;
 import terraria.entity.boss.hardMode.cryogen.Cryogen;
 import terraria.entity.boss.postMoonLord.dragonFolly.DragonFolly;
@@ -347,8 +348,15 @@ public class BossHelper {
                 break;
             }
             case SIGNUS_ENVOY_OF_THE_DEVOURER: {
-                if (NewBoss.canSpawn(target)) {
-                    new NewBoss(target);
+                if (Signus.canSpawn(target)) {
+                    new Signus(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case POLTERGHAST: {
+                if (Polterghast.canSpawn(target)) {
+                    new Polterghast(target);
                     spawnedSuccessfully = true;
                 }
                 break;

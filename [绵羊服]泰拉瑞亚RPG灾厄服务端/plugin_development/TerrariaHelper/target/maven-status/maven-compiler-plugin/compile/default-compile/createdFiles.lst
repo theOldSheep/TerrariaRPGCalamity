@@ -13,13 +13,14 @@ terraria\entity\boss\postMoonLord\stormWeaver\StormWeaver.class
 terraria\entity\boss\BossTemplate.class
 terraria\util\Quaternion.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticAncientLight.class
-terraria\entity\boss\postMoonLord\signus\NewBoss.class
+terraria\entity\boss\postMoonLord\polterghast\PolterghastClone.class
 terraria\worldgen\MazeGenerator$CellEdge.class
 terraria\entity\monster\MonsterZombie.class
 terraria\entity\boss\hardMode\thePlaguebringerGoliath\PlagueMine.class
 terraria\entity\npc\TerrariaNPCAngler.class
 terraria\entity\boss\hardMode\dukeFishron\DukeFishron$AttackPhase.class
 terraria\util\ItemUseHelper$QuickBuffType.class
+terraria\entity\boss\postMoonLord\polterghast\Polterghast.class
 terraria\entity\boss\BossHelper$1.class
 terraria\util\WorldHelper$PlantType.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Leviathan.class
@@ -224,6 +225,7 @@ terraria\entity\projectile\HitEntityInfo.class
 terraria\entity\boss\hardMode\golem\GolemHead.class
 terraria\util\GameplayHelper.class
 terraria\entity\boss\hardMode\astrumAureus\AstrumAureus.class
+terraria\entity\boss\postMoonLord\signus\Signus.class
 terraria\util\MonsterHelper.class
 terraria\entity\boss\preHardMode\skeletron\SkeletronHand.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Leviathan$1.class

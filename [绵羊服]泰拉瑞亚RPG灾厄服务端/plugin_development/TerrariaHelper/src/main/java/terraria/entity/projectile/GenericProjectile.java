@@ -1102,7 +1102,8 @@ public class GenericProjectile extends EntityPotion {
 //        // prevents client glitch
 //        this.positionChanged = true;
 //        this.velocityChanged = true;
-        this.impulse = true;
+        if (ticksLived % 3 == 0)
+            this.impulse = true;
 
         // time out removal
         if (this.ticksLived >= liveTime) die();

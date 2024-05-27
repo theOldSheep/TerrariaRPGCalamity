@@ -14,7 +14,9 @@ import terraria.entity.boss.hardMode.calamitasClone.Cataclysm;
 import terraria.entity.boss.hardMode.calamitasClone.Catastrophe;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.DarkEnergy;
-import terraria.entity.boss.postMoonLord.signus.NewBoss;
+import terraria.entity.boss.postMoonLord.polterghast.Polterghast;
+import terraria.entity.boss.postMoonLord.polterghast.PolterghastClone;
+import terraria.entity.boss.postMoonLord.signus.Signus;
 import terraria.entity.boss.preHardMode.crabulon.Crabulon;
 import terraria.entity.boss.hardMode.cryogen.Cryogen;
 import terraria.entity.boss.hardMode.cryogen.CryogenShield;
@@ -153,6 +155,8 @@ public enum CustomEntities {
     BOSS_PFG_COMMANDER      ("GuardianCommander",      55,  EntityType.SLIME,           EntitySlime.class,           GuardianCommander.class),
     BOSS_PFG_DEFENDER       ("GuardianDefender",       55,  EntityType.SLIME,           EntitySlime.class,           GuardianDefender.class),
     BOSS_PFG_ROCK           ("GuardianRock",           55,  EntityType.SLIME,           EntitySlime.class,           GuardianRock.class),
+    BOSS_POLTERGHAST        ("Polterghast",            55,  EntityType.SLIME,           EntitySlime.class,           Polterghast.class),
+    BOSS_POLTERGHAST_CLONE  ("PolterghastClone",       55,  EntityType.SLIME,           EntitySlime.class,           PolterghastClone.class),
     BOSS_PROVIDENCE         ("Providence",             55,  EntityType.SLIME,           EntitySlime.class,           Providence.class),
     BOSS_PUMPKING_HEAD      ("PumpkingHead",           55,  EntityType.SLIME,           EntitySlime.class,           PumpkingHead.class),
     BOSS_PUMPKING_HAND      ("PumpkingHand",           55,  EntityType.SLIME,           EntitySlime.class,           PumpkingHand.class),
@@ -165,7 +169,7 @@ public enum CustomEntities {
     BOSS_RVG_NUKE           ("RavagerNuke",            55,  EntityType.SLIME,           EntitySlime.class,           RavagerNuke.class),
     BOSS_RVG_PILLAR         ("RavagerRockPillar",      55,  EntityType.SLIME,           EntitySlime.class,           RavagerRockPillar.class),
     BOSS_SANTA_NK1          ("SantaNK1",               55,  EntityType.SLIME,           EntitySlime.class,           SantaNK1.class),
-    BOSS_SIGNUS             ("Signus",                 55,  EntityType.SLIME,           EntitySlime.class,           NewBoss.class),
+    BOSS_SIGNUS             ("Signus",                 55,  EntityType.SLIME,           EntitySlime.class,           Signus.class),
     BOSS_SKLT               ("Skeletron",              55,  EntityType.SLIME,           EntitySlime.class,           SkeletronHead.class),
     BOSS_SKLT_HAND          ("SkeletronHand",          55,  EntityType.SLIME,           EntitySlime.class,           SkeletronHand.class),
     BOSS_SKLTPM             ("SkeletronPrime",         55,  EntityType.SLIME,           EntitySlime.class,           SkeletronPrimeHead.class),

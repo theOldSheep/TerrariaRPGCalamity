@@ -158,16 +158,6 @@ public class GuardianRock extends EntitySlime {
         aimHelperDash = new EntityHelper.AimHelperOptions().setProjectileSpeed(DASH_SPEED).setAccelerationMode(true);
     }
 
-    // disable death function to remove boss bar
-    @Override
-    public void die() {
-        super.die();
-        // if the boss has been defeated properly
-        if (getMaxHealth() > 10) {
-            // drop items
-            terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
-        }
-    }
     // rewrite AI
     @Override
     public void B_() {

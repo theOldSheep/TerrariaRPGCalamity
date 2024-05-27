@@ -162,7 +162,7 @@ public class StormWeaver extends EntitySlime {
                 // The velocity is maintained during the dash
                 lastVelocity = MathHelper.setVectorLength(movementVector, dashSpeed, false);
                 if (sound != null) {
-                    bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), sound, 3f, 1f);
+                    bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), sound, 10f, 1f);
                 }
                 dashTimer = 1;
             }

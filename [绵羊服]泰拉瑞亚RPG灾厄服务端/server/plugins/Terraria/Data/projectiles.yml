@@ -693,7 +693,7 @@
         - "死亡低语|50|1"
 西格纳斯鬼镰:
     blockHitAction: thru
-    projectileSize: 1.5
+    projectileSize: 1
     liveTime: 65
     gravity: 0
     homing: true
@@ -704,6 +704,21 @@
     homingEndSpeedMultiplier: 2
     buffInflict:
         - "死亡低语|80|1"
+幽花子母弹:
+    blockHitAction: thru
+    projectileSize: 1.5
+    penetration: 999999
+    gravity: 0
+    buffInflict:
+        - "夜魇|40|1"
+幽花弹幕:
+    blockHitAction: thru
+    projectileSize: 1.5
+    liveTime: 80
+    penetration: 999999
+    gravity: 0
+    buffInflict:
+        - "夜魇|25|1"
 圣骑士锤:
     blockHitAction: thru
     gravity: 0
