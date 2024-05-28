@@ -365,9 +365,11 @@ public class GenericProjectile extends EntityPotion {
         switch (projectileType) {
             case "旋风":
             case "风暴管束者剑气":
+            case "遗爵硫海漩涡":
             case "小遗爵硫海漩涡":
             case "黑蚀黑洞": {
                 double radius = 1, suckSpeed = 0.1, maxSpeed = 0.5;
+                boolean forcedKnockback = false;
                 switch (projectileType) {
                     case "旋风":
                         radius = 6;
@@ -378,6 +380,12 @@ public class GenericProjectile extends EntityPotion {
                         radius = 15;
                         suckSpeed = 0.75;
                         maxSpeed = 2;
+                        break;
+                    case "遗爵硫海漩涡":
+                        radius = 32;
+                        suckSpeed = 0.75;
+                        maxSpeed = 2.5;
+                        forcedKnockback = true;
                         break;
                     case "小遗爵硫海漩涡":
                         radius = 32;
@@ -409,7 +417,7 @@ public class GenericProjectile extends EntityPotion {
                     double dist = velocity.length();
                     // pulling force decays as distance increases, to a min of 0.25x
                     velocity.multiply(Math.max(radius / 4, radius - dist) * suckSpeed / dist / radius);
-                    EntityHelper.knockback(enemy, velocity, true, maxSpeed);
+                    EntityHelper.knockback(enemy, velocity, true, maxSpeed, forcedKnockback);
                 }
                 break;
             }

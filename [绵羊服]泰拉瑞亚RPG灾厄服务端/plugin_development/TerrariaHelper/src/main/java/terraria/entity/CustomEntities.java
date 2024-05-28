@@ -17,6 +17,7 @@ import terraria.entity.boss.postMoonLord.ceaselessVoid.DarkEnergy;
 import terraria.entity.boss.postMoonLord.polterghast.Polterghast;
 import terraria.entity.boss.postMoonLord.polterghast.PolterghastClone;
 import terraria.entity.boss.postMoonLord.signus.Signus;
+import terraria.entity.boss.postMoonLord.theOldDuke.TheOldDuke;
 import terraria.entity.boss.preHardMode.crabulon.Crabulon;
 import terraria.entity.boss.hardMode.cryogen.Cryogen;
 import terraria.entity.boss.hardMode.cryogen.CryogenShield;
@@ -178,6 +179,7 @@ public enum CustomEntities {
     BOSS_SLMG_EB            ("EbonianSlime",           55,  EntityType.SLIME,           EntitySlime.class,           EbonianSlime.class),
     BOSS_SLMG_CR            ("CrimulanSlime",          55,  EntityType.SLIME,           EntitySlime.class,           CrimulanSlime.class),
     BOSS_STORM_WEAVER       ("StormWeaver",            55,  EntityType.SLIME,           EntitySlime.class,           StormWeaver.class),
+    BOSS_THE_OLD_DUKE       ("TheOldDuke",             55,  EntityType.SLIME,           EntitySlime.class,           TheOldDuke.class),
     BOSS_TWIN_RTN           ("Retinazer",              55,  EntityType.SLIME,           EntitySlime.class,           Retinazer.class),
     BOSS_TWIN_SPZ           ("Spazmatism",             55,  EntityType.SLIME,           EntitySlime.class,           Spazmatism.class),
     BOSS_WOF_EYE            ("WallOfFleshEye",         55,  EntityType.SLIME,           EntitySlime.class,           WallOfFleshEye.class),

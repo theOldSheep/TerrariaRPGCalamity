@@ -193,6 +193,7 @@ terraria\entity\boss\hardMode\astrumAureus\AstrumAureus$AIPhase.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHead$1.class
 terraria\entity\minion\MinionHusk.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticCultist.class
+terraria\entity\boss\postMoonLord\theOldDuke\TheOldDuke.class
 terraria\entity\boss\postMoonLord\ceaselessVoid\CeaselessVoid.class
 terraria\entity\boss\hardMode\astrumDeus\AstrumDeus.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHead.class

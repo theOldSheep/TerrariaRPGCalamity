@@ -13,6 +13,7 @@ import terraria.entity.boss.hardMode.calamitasClone.CalamitasClone;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
 import terraria.entity.boss.postMoonLord.polterghast.Polterghast;
 import terraria.entity.boss.postMoonLord.signus.Signus;
+import terraria.entity.boss.postMoonLord.theOldDuke.TheOldDuke;
 import terraria.entity.boss.preHardMode.crabulon.Crabulon;
 import terraria.entity.boss.hardMode.cryogen.Cryogen;
 import terraria.entity.boss.postMoonLord.dragonFolly.DragonFolly;
@@ -357,6 +358,13 @@ public class BossHelper {
             case POLTERGHAST: {
                 if (Polterghast.canSpawn(target)) {
                     new Polterghast(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case THE_OLD_DUKE: {
+                if (TheOldDuke.canSpawn(target)) {
+                    new TheOldDuke(target, (Location) extraInfo);
                     spawnedSuccessfully = true;
                 }
                 break;

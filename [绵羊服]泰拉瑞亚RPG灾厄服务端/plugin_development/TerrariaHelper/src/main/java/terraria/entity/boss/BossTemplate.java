@@ -64,6 +64,8 @@ public class BossTemplate extends EntitySlime {
                 targetMap.get(target.getUniqueId()).addAggressionTick();
 
                 // TODO
+
+                // index increment & velocity maintenance
                 indexAI ++;
                 bukkitEntity.setVelocity(velocity);
             }

@@ -74,6 +74,8 @@ public class Polterghast extends EntitySlime {
         } else {
             if (getHealth() / getMaxHealth() <= 0.9) {
                 AIPhase = 1;
+                bossbar.color = BossBattle.BarColor.YELLOW;
+                bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
                 setCustomName(BOSS_TYPE.msgName + "§1");
                 EntityHelper.tweakAttribute(attrMap, "damage", "152", true);
                 EntityHelper.tweakAttribute(attrMap, "defence", "36", false);
@@ -85,7 +87,7 @@ public class Polterghast extends EntitySlime {
     private void phaseTwo() {
         // projectile 20 ticks, dash & windup 25 ticks
         if (indexAI < 40) {
-            if (indexAI % 20 == 19) {
+            if (indexAI >= 0 && indexAI % 20 == 19) {
                 shootProjectiles( ((LivingEntity) bukkitEntity).getEyeLocation());
             }
             velocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), SPEED_PROJECTILE_FOLLOW);
@@ -98,11 +100,13 @@ public class Polterghast extends EntitySlime {
         } else {
             if (getHealth() / getMaxHealth() <= 0.6) {
                 AIPhase = 2;
+                bossbar.color = BossBattle.BarColor.PINK;
+                bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
                 setCustomName(BOSS_TYPE.msgName + "§2");
                 EntityHelper.tweakAttribute(attrMap, "damage", "154", true);
                 EntityHelper.tweakAttribute(attrMap, "defence", "54", false);
-                // rest for 2.5 seconds for the player to get ready
-                indexAI = -50;
+                // rest for 5 seconds (very long as the player needs to align the boss correctly)
+                indexAI = -100;
             }
             else {
                 indexAI = -1;
@@ -148,6 +152,8 @@ public class Polterghast extends EntitySlime {
         }
         else {
             AIPhase = 3;
+            bossbar.color = BossBattle.BarColor.RED;
+            bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
             // rest for 2.5 seconds for the player to get ready
             indexAI = -50;
         }

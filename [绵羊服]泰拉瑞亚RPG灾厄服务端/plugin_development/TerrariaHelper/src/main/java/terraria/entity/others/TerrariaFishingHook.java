@@ -301,7 +301,8 @@ public class TerrariaFishingHook extends EntityFishingHook {
                             shouldConsumeBait = true;
                         break;
                     case "血蠕虫":
-                        // TODO
+                        if ( BossHelper.spawnBoss(ownerPly.getPlayer(), BossHelper.BossType.THE_OLD_DUKE, bukkitEntity.getLocation()) )
+                            shouldConsumeBait = true;
                         break;
                     default:
                         double baitPower = getBaitPower(bait);
