@@ -77,6 +77,7 @@ public class StormWeaver extends EntitySlime {
                             .setVelocityOrTeleport(false);
     EntityHelper.ProjectileShootInfo shootInfoFrostWave, shootInfoLaser;
     int segmentIndex, segmentTypeIndex;
+    boolean isSummonedByDoG = false;
 
     Vector lastVelocity = new Vector(); // Store the last velocity
     private int phase = 1;  // Initialize the phase to 1
@@ -254,9 +255,13 @@ public class StormWeaver extends EntitySlime {
         super(world);
         super.die();
     }
+
+    private static boolean isDoGAlive() {
+        return BossHelper.bossMap.containsKey(BossHelper.BossType.THE_DEVOURER_OF_GODS.msgName);
+    }
     // validate if the condition for spawning is met
     public static boolean canSpawn(Player player) {
-        return WorldHelper.BiomeType.getBiome(player) == WorldHelper.BiomeType.SPACE;
+        return WorldHelper.BiomeType.getBiome(player) == WorldHelper.BiomeType.SPACE && !isDoGAlive();
     }
     // a constructor for actual spawning
     public StormWeaver(Player summonedPlayer, ArrayList<LivingEntity> bossParts, int segmentIndex) {
@@ -277,6 +282,7 @@ public class StormWeaver extends EntitySlime {
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
+        isSummonedByDoG = isDoGAlive();
         if (segmentIndex == 0) {
             this.head = this;
             segmentTypeIndex = 0;
@@ -318,7 +324,7 @@ public class StormWeaver extends EntitySlime {
             if (segmentIndex == 0) {
                 targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                         getBukkitEntity(), BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS.msgName,
-                        summonedPlayer, true, bossbar);
+                        summonedPlayer, true, isSummonedByDoG, bossbar);
             } else {
                 targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
             }
@@ -329,6 +335,8 @@ public class StormWeaver extends EntitySlime {
         {
             setSize(SLIME_SIZE_ARMORED, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
+            if (isSummonedByDoG)
+                healthMulti *= 0.4;
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
@@ -358,15 +366,12 @@ public class StormWeaver extends EntitySlime {
     public void die() {
         super.die();
         if (segmentIndex > 0) return;
-        // drop loot
-        if (getMaxHealth() > 10) {
-            terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
-        }
         // disable boss bar
         bossbar.setVisible(false);
         BossHelper.bossMap.remove(BOSS_TYPE.msgName);
         // if the boss has been defeated properly
-        if (getMaxHealth() > 10) {
+        if (!isSummonedByDoG && getMaxHealth() > 10) {
+            terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
             // send loot
             terraria.entity.boss.BossHelper.handleBossDeath(BOSS_TYPE, bossParts, targetMap);
         }
@@ -375,10 +380,6 @@ public class StormWeaver extends EntitySlime {
     @Override
     public void B_() {
         super.B_();
-        // undo air resistance etc.
-        motX /= 0.91;
-        motY /= 0.98;
-        motZ /= 0.91;
         // update boss bar and dynamic DR
         if (segmentIndex == 0)
             terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, ticksLived, BOSS_TYPE);

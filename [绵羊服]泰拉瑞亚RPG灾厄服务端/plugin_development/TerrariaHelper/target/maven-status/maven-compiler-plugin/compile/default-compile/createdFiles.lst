@@ -42,6 +42,7 @@ terraria\entity\boss\hardMode\ravager\RavagerClaw.class
 terraria\entity\boss\preHardMode\theSlimeGod\EbonianSlime$1.class
 terraria\util\BossHelper$BossType.class
 terraria\entity\boss\event\mourningWood\MourningWood.class
+terraria\entity\boss\postMoonLord\devourerOfGods\DevourerOfGods.class
 terraria\util\ItemUseHelper$1.class
 terraria\util\PlayerHelper$GameProgress.class
 terraria\entity\monster\MonsterHelper$1.class

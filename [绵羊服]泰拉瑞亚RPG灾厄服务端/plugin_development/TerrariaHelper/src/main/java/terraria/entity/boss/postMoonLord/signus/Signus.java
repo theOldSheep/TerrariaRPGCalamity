@@ -44,7 +44,7 @@ public class Signus extends EntitySlime {
     }
 
     private int indexAI = 0, phaseAI = 1;
-    boolean teleported = false, dashing = false;
+    boolean teleported = false, dashing = false, isSummonedByDoG = false;
     Vector velocity = new Vector();
 
 
@@ -190,9 +190,13 @@ public class Signus extends EntitySlime {
         super(world);
         super.die();
     }
+
+    private static boolean isDoGAlive() {
+        return BossHelper.bossMap.containsKey(BossHelper.BossType.THE_DEVOURER_OF_GODS.msgName);
+    }
     // validate if the condition for spawning is met
     public static boolean canSpawn(Player player) {
-        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
+        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED && !isDoGAlive();
     }
     // a constructor for actual spawning
     public Signus(Player summonedPlayer) {
@@ -205,6 +209,7 @@ public class Signus extends EntitySlime {
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
+        isSummonedByDoG = isDoGAlive();
         setCustomName(BOSS_TYPE.msgName);
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
@@ -231,7 +236,8 @@ public class Signus extends EntitySlime {
         // init target map
         {
             targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
-                    getBukkitEntity(), BossHelper.BossType.MOON_LORD.msgName, summonedPlayer, true, bossbar);
+                    getBukkitEntity(), BossHelper.BossType.MOON_LORD.msgName, summonedPlayer,
+                    true, !isSummonedByDoG, bossbar);
             target = summonedPlayer;
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
@@ -239,6 +245,8 @@ public class Signus extends EntitySlime {
         {
             setSize(8, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
+            if (isSummonedByDoG)
+                healthMulti *= 0.6;
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
@@ -269,7 +277,7 @@ public class Signus extends EntitySlime {
         bossbar.setVisible(false);
         BossHelper.bossMap.remove(BOSS_TYPE.msgName);
         // if the boss has been defeated properly
-        if (getMaxHealth() > 10) {
+        if (!isSummonedByDoG && getMaxHealth() > 10) {
             // drop items
             terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
 

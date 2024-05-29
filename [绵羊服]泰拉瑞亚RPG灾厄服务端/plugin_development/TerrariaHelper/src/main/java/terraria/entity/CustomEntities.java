@@ -14,6 +14,7 @@ import terraria.entity.boss.hardMode.calamitasClone.Cataclysm;
 import terraria.entity.boss.hardMode.calamitasClone.Catastrophe;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.DarkEnergy;
+import terraria.entity.boss.postMoonLord.devourerOfGods.DevourerOfGods;
 import terraria.entity.boss.postMoonLord.polterghast.Polterghast;
 import terraria.entity.boss.postMoonLord.polterghast.PolterghastClone;
 import terraria.entity.boss.postMoonLord.signus.Signus;
@@ -117,6 +118,7 @@ public enum CustomEntities {
     BOSS_CULTIST_MS         ("LunaticIceMist",         55,  EntityType.SLIME,           EntitySlime.class,           LunaticIceMist.class),
     BOSS_CULTIST_LO         ("LunaticLightningOrb",    55,  EntityType.SLIME,           EntitySlime.class,           LunaticLightningOrb.class),
     BOSS_CULTIST_PD         ("PhantomDragon",          55,  EntityType.SLIME,           EntitySlime.class,           PhantomDragon.class),
+    BOSS_DEVR_OF_GODS       ("DevourerOfGods",         55,  EntityType.SLIME,           EntitySlime.class,           DevourerOfGods.class),
     BOSS_DKFSR              ("DukeFishron",            55,  EntityType.SLIME,           EntitySlime.class,           DukeFishron.class),
     BOSS_DKFSR_SKND         ("Sharknado",              55,  EntityType.SLIME,           EntitySlime.class,           Sharknado.class),
     BOSS_DKFSR_SHARKRON     ("Sharkron",               55,  EntityType.SLIME,           EntitySlime.class,           Sharkron.class),

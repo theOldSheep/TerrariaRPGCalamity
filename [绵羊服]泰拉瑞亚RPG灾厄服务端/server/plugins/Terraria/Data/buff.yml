@@ -325,8 +325,8 @@ effects:
   极限重力:
     isBuff: false
     attributes:
-      flightTimeMulti: -0.25
-    tooltip: 翅膀飞行时间减少25%
+      flightTimeMulti: -0.35
+    tooltip: 翅膀飞行时间减少35%
   耐药性:
     isBuff: false
     tooltip: 不能再使用治疗物品

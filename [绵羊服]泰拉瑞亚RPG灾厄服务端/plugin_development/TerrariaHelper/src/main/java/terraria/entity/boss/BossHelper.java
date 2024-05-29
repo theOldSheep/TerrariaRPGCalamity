@@ -14,6 +14,7 @@ import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.hardMode.aquaticScourge.AquaticScourge;
 import terraria.entity.boss.hardMode.astrumDeus.AstrumDeus;
+import terraria.entity.boss.postMoonLord.devourerOfGods.DevourerOfGods;
 import terraria.entity.boss.preHardMode.desertScourge.DesertScourge;
 import terraria.entity.boss.postMoonLord.stormWeaver.StormWeaver;
 import terraria.entity.boss.hardMode.theDestroyer.Destroyer;
@@ -75,6 +76,9 @@ public class BossHelper {
                 break;
             case STORM_WEAVER:
                 multiplier = 1d / StormWeaver.TOTAL_LENGTH;
+                break;
+            case THE_DEVOURER_OF_GODS:
+                multiplier = 1d / DevourerOfGods.TOTAL_LENGTH;
                 break;
             default:
                 multiplier = 1d;

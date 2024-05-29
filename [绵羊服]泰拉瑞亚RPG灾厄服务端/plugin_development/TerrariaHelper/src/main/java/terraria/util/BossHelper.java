@@ -11,6 +11,7 @@ import terraria.entity.boss.hardMode.astrumDeus.AstrumDeus;
 import terraria.entity.boss.hardMode.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.hardMode.calamitasClone.CalamitasClone;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
+import terraria.entity.boss.postMoonLord.devourerOfGods.DevourerOfGods;
 import terraria.entity.boss.postMoonLord.polterghast.Polterghast;
 import terraria.entity.boss.postMoonLord.signus.Signus;
 import terraria.entity.boss.postMoonLord.theOldDuke.TheOldDuke;
@@ -365,6 +366,13 @@ public class BossHelper {
             case THE_OLD_DUKE: {
                 if (TheOldDuke.canSpawn(target)) {
                     new TheOldDuke(target, (Location) extraInfo);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case THE_DEVOURER_OF_GODS: {
+                if (DevourerOfGods.canSpawn(target)) {
+                    new DevourerOfGods(target, new ArrayList<>(), 0);
                     spawnedSuccessfully = true;
                 }
                 break;

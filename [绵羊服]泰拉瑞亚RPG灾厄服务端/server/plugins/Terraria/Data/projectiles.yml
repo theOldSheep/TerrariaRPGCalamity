@@ -719,6 +719,47 @@
     gravity: 0
     buffInflict:
         - "夜魇|25|1"
+遗爵鲨牙刺球:
+    gravity: 0
+    liveTime: 80
+    projectileSize: 3
+    homing: true
+    homingSharpTurning: false
+    homingRadius: 128
+    homingAbility: 4.5
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.9
+        name: 遗爵鲨牙尖刺
+        velocity: 1.5
+遗爵鲨牙尖刺:
+    gravity: 0
+    projectileSize: 0.5
+    liveTime: 60
+    blockHitAction: thru
+    homing: true
+    noHomingTicks: 20
+    homingSharpTurning: false
+    homingRadius: 80
+    homingAbility: 6
+硫海龙鲨:
+    projectileSize: 3
+    liveTime: 90
+    homing: true
+    homingSharpTurning: false
+    homingAbility: 12
+    noHomingTicks: 25
+    maxHomingTicks: 50
+    homingRadius: 128
+    homingEndSpeedMultiplier: 2.0
+遗爵硫海漩涡:
+    gravity: 0
+    liveTime: 200
+    blockHitAction: thru
+    projectileSize: 10
+    penetration: 999999
+    worldSpriteMode: true
+    worldSpriteUpdateInterval: 205
 圣骑士锤:
     blockHitAction: thru
     gravity: 0
