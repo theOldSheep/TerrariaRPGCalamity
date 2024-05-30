@@ -28,10 +28,10 @@ public class CeaselessVoid extends EntitySlime {
     public static final double BASIC_HEALTH = 187200 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
+    public HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
-    Player target = null;
+    public Player target = null;
     // other variables and AI
     static HashMap<String, Double> attrMapProjectile;
     EntityHelper.ProjectileShootInfo shootInfoProjectile;
@@ -206,7 +206,7 @@ public class CeaselessVoid extends EntitySlime {
         {
             // update target
             target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+                    IGNORE_DISTANCE, isSummonedByDoG ? null : BIOME_REQUIRED, targetMap.keySet());
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {

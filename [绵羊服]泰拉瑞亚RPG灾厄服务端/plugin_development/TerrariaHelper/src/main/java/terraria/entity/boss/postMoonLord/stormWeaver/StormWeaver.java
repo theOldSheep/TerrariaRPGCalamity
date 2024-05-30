@@ -34,10 +34,10 @@ public class StormWeaver extends EntitySlime {
     public static final int TOTAL_LENGTH = 61;
     static final String[] NAME_SUFFIXES = {"头", "体节", "尾"};
     HashMap<String, Double> attrMap;
-    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
+    public HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
-    Player target = null;
+    public Player target = null;
     // other variables and AI
     StormWeaver head;
     static final double[][]
@@ -193,7 +193,7 @@ public class StormWeaver extends EntitySlime {
         {
             // update target
             target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+                    IGNORE_DISTANCE, isSummonedByDoG ? null : BIOME_REQUIRED, targetMap.keySet());
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity segment : bossParts) {
@@ -264,6 +264,9 @@ public class StormWeaver extends EntitySlime {
         return WorldHelper.BiomeType.getBiome(player) == WorldHelper.BiomeType.SPACE && !isDoGAlive();
     }
     // a constructor for actual spawning
+    public StormWeaver(Player summonedPlayer) {
+        this(summonedPlayer, new ArrayList<>(), 0);
+    }
     public StormWeaver(Player summonedPlayer, ArrayList<LivingEntity> bossParts, int segmentIndex) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // copy variable
@@ -324,7 +327,7 @@ public class StormWeaver extends EntitySlime {
             if (segmentIndex == 0) {
                 targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                         getBukkitEntity(), BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS.msgName,
-                        summonedPlayer, true, isSummonedByDoG, bossbar);
+                        summonedPlayer, true, !isSummonedByDoG, bossbar);
             } else {
                 targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
             }

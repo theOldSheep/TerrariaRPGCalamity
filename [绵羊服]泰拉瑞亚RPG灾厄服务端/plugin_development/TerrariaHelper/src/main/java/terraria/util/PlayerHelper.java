@@ -1740,8 +1740,8 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                             }
                             // regen
                             double regenAmount = (regenerationRate + additionalHealthRegen) * perTickMulti;
-                            System.out.println(regenAmount + "(" + regenerationRate + ", " + additionalHealthRegen + "x" + perTickMulti);
-                            System.out.println(velocity.lengthSquared() + ", " + moved);
+//                            System.out.println(regenAmount + "(" + regenerationRate + ", " + additionalHealthRegen + "x" + perTickMulti);
+//                            System.out.println(velocity.lengthSquared() + ", " + moved);
                             if (accessories.contains("再生护符")
                                     && ply.getScoreboardTags().contains(PlayerHelper.TAG_SWITCHED_SWITCHABLE_ACCESSORY)
                                     && (ply.getHealth() + regenAmount) * 2 >= maxHealth) {

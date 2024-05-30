@@ -337,7 +337,7 @@ public class BossHelper {
             }
             case STORM_WEAVER: {
                 if (StormWeaver.canSpawn(target)) {
-                    new StormWeaver(target, new ArrayList<>(), 0);
+                    new StormWeaver(target);
                     spawnedSuccessfully = true;
                 }
                 break;

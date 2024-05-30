@@ -398,6 +398,7 @@ public class EntityHelper {
         return getMetadata(owner, metadataName.toString());
     }
     @Deprecated
+    // It's OKAY to use this, but prefer the MetadataName for consistency!
     public static void setMetadata(Metadatable owner, String key, Object value) {
         if (value == null)
             owner.removeMetadata(key, TerrariaHelper.getInstance());
@@ -2845,7 +2846,11 @@ public class EntityHelper {
         handleSegmentsFollow(segments, moveOption, 0);
     }
     public static void handleSegmentsFollow(List<LivingEntity> segments, WormSegmentMovementOptions moveOption, int startIndex) {
-        for (int i = startIndex + 1; i < segments.size(); i++) {
+        handleSegmentsFollow(segments, moveOption, startIndex, segments.size());
+    }
+    public static void handleSegmentsFollow(List<LivingEntity> segments, WormSegmentMovementOptions moveOption,
+                                            int startIndex, int endIndex) {
+        for (int i = startIndex + 1; i < endIndex; i++) {
             LivingEntity segmentCurrent = segments.get(i);
             if (!segmentCurrent.isValid()) { // Check if segment is valid (alive and healthy)
                 return;
@@ -2856,7 +2861,7 @@ public class EntityHelper {
             Vector segDVec; // Direction vector is guaranteed to be initialized in the if-else branch
 
             // Check for next segment or handle as tail
-            if (i + 1 < segments.size() && segments.get(i + 1).isValid()) {
+            if (i + 1 < endIndex && segments.get(i + 1).isValid()) {
                 segmentNext = segments.get(i + 1); // Get the segment behind
                 segDVec = MathHelper.getDirection(segmentNext.getLocation(), segmentLast.getLocation(), 1.0);  // Point towards the previous segment
             } else {

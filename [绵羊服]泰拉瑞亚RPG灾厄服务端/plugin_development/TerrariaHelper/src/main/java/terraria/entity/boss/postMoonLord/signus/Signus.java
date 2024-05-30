@@ -24,10 +24,10 @@ public class Signus extends EntitySlime {
     public static final double BASIC_HEALTH = 864000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
+    public HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
-    Player target = null;
+    public Player target = null;
     // other variables and AI
     static final double SPEED_PHASE_1_FOLLOW = 0.8, DIST_TELEPORT = 32, SPEED_LANTERN = 1.0;
     static final double SPEED_PHASE_2_HOVER = 1.2, VERTICAL_DIST_HOVER = 17.5, SPEED_SCYTHE = 1.25;
@@ -147,7 +147,7 @@ public class Signus extends EntitySlime {
         {
             // update target
             target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+                    IGNORE_DISTANCE, isSummonedByDoG ? null : BIOME_REQUIRED, targetMap.keySet());
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {
