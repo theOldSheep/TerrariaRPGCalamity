@@ -1832,8 +1832,10 @@ public class EntityHelper {
                     return !strict;
                 return false;
             }
-            // any entity other than monster -> monster: true
-            return targetScoreboardTags.contains("isMonster");
+            // NPC/minion -> monster: true
+            if (targetScoreboardTags.contains("isMonster") )
+                return entityScoreboardTags.contains("isNPC") || entityScoreboardTags.contains("isMinion");
+            return false;
         }
     }
     public static Entity getDamageSource(Entity damager) {
@@ -2358,6 +2360,9 @@ public class EntityHelper {
             if (damageTaker.getHealth() > healthLock) {
                 dmg = Math.min(damageTaker.getHealth() - (healthLock + 1e-5), dmg);
             }
+            else {
+                dmg = 0;
+            }
         }
 
         // call damage event
@@ -2870,7 +2875,7 @@ public class EntityHelper {
             }
 
             Vector followDir = MathHelper.getDirection(segmentCurrent.getLocation(), segmentLast.getLocation(), 1.0);
-            Vector dVec = segDVec.normalize().multiply(moveOption.straighteningMultiplier) // Straightening
+            Vector dVec = segDVec.multiply(moveOption.straighteningMultiplier) // Straightening
                     .add(followDir.multiply(moveOption.followingMultiplier)); // Following
 
             if (dVec.lengthSquared() > 1e-9) { // Check if movement is significant

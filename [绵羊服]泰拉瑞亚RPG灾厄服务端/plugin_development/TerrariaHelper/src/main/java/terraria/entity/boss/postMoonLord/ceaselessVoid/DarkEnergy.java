@@ -114,7 +114,7 @@ public class DarkEnergy extends EntitySlime {
             setSize(6, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(owner.targetMap.size());
             if (owner.isSummonedByDoG)
-                healthMulti *= 1.5;
+                healthMulti *= 0.9;
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);

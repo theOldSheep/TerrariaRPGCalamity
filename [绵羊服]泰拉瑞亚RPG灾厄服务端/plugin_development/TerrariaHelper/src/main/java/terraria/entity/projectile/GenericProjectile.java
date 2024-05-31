@@ -2,11 +2,9 @@ package terraria.entity.projectile;
 
 import net.minecraft.server.v1_12_R1.*;
 import net.minecraft.server.v1_12_R1.MathHelper;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -24,6 +22,9 @@ import java.util.*;
 public class GenericProjectile extends EntityPotion {
     private static final double distFromBlock = 1e-5, distCheckOnGround = 1e-1;
     public static final int DESTROY_HIT_BLOCK = 0, DESTROY_HIT_ENTITY = 1, DESTROY_TIME_OUT = 2;
+    public static final int RANDOMIZED_IMPULSE_TICK_INTERVAL = 4;
+    int impulse_index = (int) (Math.random() * RANDOMIZED_IMPULSE_TICK_INTERVAL);
+
     // projectile info
     public String projectileType, blockHitAction = "die", spawnSound = "", trailColor = null;
     public int homingMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200,
@@ -1107,11 +1108,14 @@ public class GenericProjectile extends EntityPotion {
         // extra ticking
         extraTicking();
 
-//        // prevents client glitch
-//        this.positionChanged = true;
-//        this.velocityChanged = true;
-        if (ticksLived % 3 == 0)
+        // prevents client glitch; in lava or water: update every tick; otherwise, update every a few ticks
+        if ((this.au() || this.inWater)) {
             this.impulse = true;
+        }
+        else if (++impulse_index >= RANDOMIZED_IMPULSE_TICK_INTERVAL) {
+            this.impulse = true;
+            impulse_index = 0;
+        }
 
         // time out removal
         if (this.ticksLived >= liveTime) die();

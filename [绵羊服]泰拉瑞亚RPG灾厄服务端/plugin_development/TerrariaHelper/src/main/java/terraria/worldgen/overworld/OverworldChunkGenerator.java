@@ -107,14 +107,14 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 InterpolatePoint.create(1        , LAND_HEIGHT + 55),
         }, "desert_heightmap");
         oceanHeightProvider = new Interpolate(new InterpolatePoint[]{
-                InterpolatePoint.create(-0.675 ,   SEA_LEVEL - 20),
-                InterpolatePoint.create(-0.625  ,   SEA_LEVEL - 35),
-                InterpolatePoint.create(-0.575,   SEA_LEVEL - 20),
-                InterpolatePoint.create(-0.535 , SEA_LEVEL + 2),
-                InterpolatePoint.create(-0.5  ,   LAND_HEIGHT),
-                InterpolatePoint.create(0.5   ,   LAND_HEIGHT),
-                InterpolatePoint.create(0.55  ,   SEA_LEVEL + 2),
-                InterpolatePoint.create(0.625 ,   1),
+                InterpolatePoint.create(-0.75  ,   SEA_LEVEL - 25),
+                InterpolatePoint.create(-0.65  ,   SEA_LEVEL - 20),
+                InterpolatePoint.create(-0.575 ,   SEA_LEVEL - 10),
+                InterpolatePoint.create(-0.535 ,   SEA_LEVEL + 2),
+                InterpolatePoint.create(-0.5   ,      LAND_HEIGHT),
+                InterpolatePoint.create(0.5    ,      LAND_HEIGHT),
+                InterpolatePoint.create(0.55   ,   SEA_LEVEL + 2),
+                InterpolatePoint.create(0.625  ,   1),
         }, "ocean_heightmap");
 
         erosionRatioProvider = new Interpolate(new InterpolatePoint[]{

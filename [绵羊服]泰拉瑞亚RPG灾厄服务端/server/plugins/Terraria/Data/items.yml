@@ -1173,7 +1173,7 @@
   - §r[饰品]
   attributes:
     damageMulti: 25
-    maxHealthMulti: 2
+    maxHealthMulti: 0.75
   worth: 20000
   rarity: 0
 向导巫毒娃娃:

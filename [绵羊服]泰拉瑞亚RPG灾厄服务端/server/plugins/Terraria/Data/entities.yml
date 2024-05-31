@@ -782,6 +782,84 @@
         - "神圣之火"
         - "夜魇"
         - "弑神怒焰"
+装甲神明吞噬者头:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "死亡低语|200|1"
+        - "弑神怒焰|70|1"
+    buffImmute:
+        - "狱炎"
+        - "辐射"
+        - "带电"
+        - "破晓"
+        - "神圣之火"
+        - "夜魇"
+        - "弑神怒焰"
+装甲神明吞噬者体节:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "死亡低语|160|1"
+        - "弑神怒焰|55|1"
+    buffImmute:
+        - "狱炎"
+        - "辐射"
+        - "带电"
+        - "破晓"
+        - "神圣之火"
+        - "夜魇"
+        - "弑神怒焰"
+装甲神明吞噬者尾:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "死亡低语|120|1"
+        - "弑神怒焰|40|1"
+    buffImmute:
+        - "狱炎"
+        - "辐射"
+        - "带电"
+        - "破晓"
+        - "神圣之火"
+        - "夜魇"
+        - "弑神怒焰"
+神明吞噬者头:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "死亡低语|200|1"
+        - "弑神怒焰|70|1"
+    buffImmute:
+        - "狱炎"
+        - "辐射"
+        - "带电"
+        - "破晓"
+        - "神圣之火"
+        - "夜魇"
+        - "弑神怒焰"
+神明吞噬者体节:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "死亡低语|160|1"
+        - "弑神怒焰|55|1"
+    buffImmute:
+        - "狱炎"
+        - "辐射"
+        - "带电"
+        - "破晓"
+        - "神圣之火"
+        - "夜魇"
+        - "弑神怒焰"
+神明吞噬者尾:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "死亡低语|120|1"
+        - "弑神怒焰|40|1"
+    buffImmute:
+        - "狱炎"
+        - "辐射"
+        - "带电"
+        - "破晓"
+        - "神圣之火"
+        - "夜魇"
+        - "弑神怒焰"
 哥布林战士:
     drop:
         - "铜币:375:375:1"

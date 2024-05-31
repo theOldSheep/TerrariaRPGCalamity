@@ -46,6 +46,7 @@ terraria\entity\boss\postMoonLord\devourerOfGods\DevourerOfGods.class
 terraria\util\ItemUseHelper$1.class
 terraria\util\PlayerHelper$GameProgress.class
 terraria\entity\monster\MonsterHelper$1.class
+terraria\entity\boss\postMoonLord\devourerOfGods\AttackPattern.class
 terraria\event\listener\PlayerQuitListener.class
 terraria\entity\boss\preHardMode\kingSlime\KingSlime$1.class
 terraria\entity\npc\TerrariaNPCGoblinTinkerer.class
@@ -94,6 +95,7 @@ terraria\entity\projectile\Yoyo.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Anahita$1.class
 terraria\util\MonsterHelper$UniqueMonsterInfo.class
 terraria\util\WorldHelper$LeafLayerShape.class
+terraria\entity\boss\postMoonLord\devourerOfGods\WallAttackPattern.class
 terraria\entity\boss\preHardMode\eyeOfCthulhu\EyeOfCthulhu$1.class
 terraria\entity\projectile\Boomerang.class
 terraria\entity\others\TerrariaFishingHook.class
@@ -110,6 +112,7 @@ terraria\util\PlayerHelper.class
 terraria\TerrariaHelper.class
 terraria\util\NMSUtils$SpawnData.class
 terraria\entity\boss\hardMode\moonLord\MoonLordBackground$MoonLordBackgroundType.class
+terraria\entity\boss\postMoonLord\devourerOfGods\AttackManager.class
 terraria\worldgen\overworld\OverworldChunkGenerator.class
 terraria\entity\boss\hardMode\moonLord\MoonLordTrueEyeOfCthulhu$EyeAttackMethod.class
 terraria\entity\boss\hardMode\ravager\Ravager.class
@@ -131,6 +134,8 @@ terraria\util\EntityHelper$DamageType.class
 terraria\util\NMSUtils$NBTTagType.class
 terraria\entity\boss\hardMode\thePlaguebringerGoliath\ThePlaguebringerGoliath$AIPhase.class
 terraria\entity\others\TerrariaFishingHook$FishingState.class
+terraria\entity\boss\postMoonLord\devourerOfGods\CircleAttackPattern$1.class
+terraria\entity\boss\postMoonLord\devourerOfGods\CircleAttackPattern.class
 terraria\util\YmlHelper.class
 terraria\worldgen\overworld\OrePopulator.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticAncientDoom.class
@@ -159,6 +164,7 @@ terraria\event\listener\CraftingListener$CraftingFilter.class
 terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
 terraria\util\NPCHelper$NPCType.class
+terraria\entity\boss\postMoonLord\devourerOfGods\AttackPattern$1.class
 terraria\event\listener\PlayerJoinListener.class
 terraria\entity\boss\preHardMode\kingSlime\KingSlime.class
 terraria\entity\boss\preHardMode\crabulon\Crabulon.class
@@ -239,6 +245,7 @@ terraria\entity\others\Critter.class
 terraria\entity\boss\event\headlessHorseman\HeadlessHorseman.class
 terraria\util\DragoncoreHelper$SlotCallback.class
 terraria\entity\boss\BossHelper.class
+terraria\entity\boss\postMoonLord\devourerOfGods\DevourerOfGods$Wormhole.class
 terraria\util\WorldHelper$WaterRegionType.class
 terraria\entity\boss\preHardMode\theHiveMind\HiveBlob.class
 terraria\event\listener\BossSpawnListener.class

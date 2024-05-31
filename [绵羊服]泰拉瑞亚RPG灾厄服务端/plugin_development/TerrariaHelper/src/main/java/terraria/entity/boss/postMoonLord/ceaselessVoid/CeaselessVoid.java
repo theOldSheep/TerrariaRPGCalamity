@@ -143,7 +143,7 @@ public class CeaselessVoid extends EntitySlime {
             // Add metadata lock to prevent instant killing by stacking damage
             if (currentPhase < TRANSITION_HEALTH_RATIO.length) {
                 EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT,
-                        getMaxHealth() * PHASE_ARC_AMOUNTS[currentPhase] - 1);
+                        getMaxHealth() * TRANSITION_HEALTH_RATIO[currentPhase] - 10);
             }
         }
         // Update each arc's position
@@ -190,7 +190,7 @@ public class CeaselessVoid extends EntitySlime {
 
             // Shoot projectiles in calculated directions
             shootInfoProjectile.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-            shootInfoProjectile.setLockedTarget(target); // Optional: make projectiles track target
+            shootInfoProjectile.setLockedTarget(target);
             for (Vector dir : projectileDirections) {
                 shootInfoProjectile.velocity = dir;
                 EntityHelper.spawnProjectile(shootInfoProjectile);
@@ -308,7 +308,7 @@ public class CeaselessVoid extends EntitySlime {
             setSize(16, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             if (isSummonedByDoG)
-                healthMulti *= 1.25;
+                healthMulti *= 1.1;
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);

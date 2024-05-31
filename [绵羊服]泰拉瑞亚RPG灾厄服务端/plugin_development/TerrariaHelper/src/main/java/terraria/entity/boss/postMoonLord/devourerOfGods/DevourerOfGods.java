@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
+import terraria.TerrariaHelper;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
 import terraria.entity.boss.postMoonLord.signus.Signus;
 import terraria.entity.boss.postMoonLord.stormWeaver.StormWeaver;
@@ -21,9 +22,7 @@ import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 import terraria.util.WorldHelper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class DevourerOfGods extends EntitySlime {
     // basic variables
@@ -44,9 +43,13 @@ public class DevourerOfGods extends EntitySlime {
     CeaselessVoid ceaselessVoid = null;
     Signus signus = null;
     static final double[]
-            SEGMENT_DAMAGE = {1760d, 1100d, 920d}, SEGMENT_DEFENCE = {100d, 140d, 100d}, SEGMENT_DAMAGE_TAKEN = {0.9d, 0.075d, 1d};
+            SEGMENT_DAMAGE = {1760d, 1100d, 920d}, SEGMENT_DEFENCE = {100d, 140d, 100d}, SEGMENT_DAMAGE_TAKEN = {0.9d, 0.15d, 1d};
     static final int SLIME_SIZE = 10, DAMAGE_TAKEN_INTERPOLATE_SEGMENTS = 15;
-    static final double DASH_DISTANCE_INITIAL = 15.0, DASH_DISTANCE_FINAL = 12.0;
+
+    static final int FLYING_TOTAL_DURATION = 2500, FLYING_START_INDEX = 60, FLYING_END_INDEX = 2100;
+    static final double SEGMENT_RADIUS = SLIME_SIZE * 0.5, DASH_DISTANCE_INITIAL = 15.0, DASH_DISTANCE_FINAL = 12.0,
+            // TODO: Prevent client side teleport interpolation
+            HIDE_Y_COORD = -100;
     static HashMap<String, Double> attrMapFireball, attrMapLaser;
     static {
         attrMapFireball = new HashMap<>();
@@ -60,7 +63,7 @@ public class DevourerOfGods extends EntitySlime {
     static final EntityHelper.WormSegmentMovementOptions
             FOLLOW_PROPERTY =
             new EntityHelper.WormSegmentMovementOptions()
-                    .setFollowDistance(SLIME_SIZE * 0.5)
+                    .setFollowDistance(SEGMENT_RADIUS)
                     .setFollowingMultiplier(1)
                     .setStraighteningMultiplier(-0.1)
                     .setVelocityOrTeleport(false);
@@ -74,23 +77,45 @@ public class DevourerOfGods extends EntitySlime {
     int dashCount = 0; // number of dashes in current dash phase
     int dashTicks = -1; // ticks spent in current dash
     boolean isRamming = false; // whether the boss is currently ramming the player
+    boolean hasRetargeted = false;
     int stage = 0; // 0 - initial, 1 - minion phase, 2 - final
     int minionIndex = 0; // 0 - storm weaver, 1 - ceaseless void, 2 - signus, 3 - delay before the next phase
     int finalPhaseDelayTicks = 200; // delay before starting the final phase
     double dashDistance = DASH_DISTANCE_INITIAL; // Distance for dashing based on the current stage
+    private Queue<Wormhole> wormholes = new ArrayDeque<>(); // Queue to hold multiple wormholes
+    private class Wormhole {
+        Location in, out;
+        int segmentBehindIndex; // Index of segment to teleport next
 
-    int segmentBehindWormholeIdx = TOTAL_LENGTH; // Index of the next segment to teleport
-    Location wormholeIn, wormholeOut; // Locations of the wormhole portals
+        public Wormhole(Location in, Location out) {
+            this.in = in;
+            this.out = out;
+            this.segmentBehindIndex = 1;
+            // TODO: replace with real visualization
+            Bukkit.getLogger().info("Summoned a wormhole!");
+        }
+        // Call this to help you remove the wormhole visualization!
+        void remove() {
+            Bukkit.getLogger().info("Removed a wormhole!");
+        }
+    }
 
+    private void toPhase(int newPhase) {
+        phase = newPhase;
+        phaseTicks = 0;
+        dashCount = 0;
+        dashTicks = -1;
+        isRamming = false;
 
-
+        bossbar.color = newPhase == 1 ? BossBattle.BarColor.PURPLE : BossBattle.BarColor.BLUE;
+        bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+    }
     private void headMovement() {
+        phaseTicks ++;
         if (stage == 1) {
-            // TODO: tweak this mechanism if needed
-            Location teleportLoc = target.getLocation();
-            teleportLoc.setY(-20);
-            bukkitEntity.teleport(teleportLoc);
-            velocityPool = new Vector();
+            Location targetLoc = target.getLocation();
+            targetLoc.setY(HIDE_Y_COORD);
+            circleAboveLocation(bukkitEntity.getLocation(), targetLoc);
         }
         else {
             if (phase == 0) {
@@ -101,32 +126,68 @@ public class DevourerOfGods extends EntitySlime {
         }
         bukkitEntity.setVelocity(velocityPool);
     }
-
     private void flyingPhase() {
-        phaseTicks++;
-        if (phaseTicks > 200) { // switch to dash phase after 10 seconds
-            phase = 1;
-            phaseTicks = 0;
-            dashCount = 0;
-            dashTicks = -1;
-
-            bossbar.color = BossBattle.BarColor.PURPLE;
-            bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+        if (phaseTicks > FLYING_TOTAL_DURATION) { // switch to dash phase
+            toPhase(1);
         }
 
         Location headLocation = getBukkitEntity().getLocation();
         Location targetLocation = target.getLocation();
 
-        if (phaseTicks > 60 && !target.isOnGround()) {
-            isRamming = true;
+        if (!isRamming) {
+            // Wormhole logic. Only applicable to non-ramming situations.
+            if (stage == 2 && phaseTicks < FLYING_END_INDEX) {
+                // Circle at y = HIDE_Y_COORD in the last stage
+                targetLocation.setY(HIDE_Y_COORD);
+                // Open wormhole
+                if (phaseTicks == 1) {
+                    openWormhole(targetLocation);
+                }
+            }
+            // Enter ramming phase
+            if (phaseTicks > FLYING_START_INDEX && phaseTicks < FLYING_END_INDEX && !target.isOnGround()) {
+                isRamming = true;
+                // Open wormhole in front of target
+                if (stage == 2) {
+                    Location wormholeDestination = target.getEyeLocation().add(
+                            MathHelper.setVectorLength(target.getLocation().getDirection(), 16) );
+                    openWormhole(wormholeDestination);
+                }
+            }
         }
+
         if (isRamming) {
-            ramPlayer(headLocation, targetLocation);
+            // ramming speed
+            velocityPool = MathHelper.getDirection(headLocation, targetLocation, 3.25);
         } else {
-            circleAbovePlayer(headLocation, targetLocation);
+            circleAboveLocation(headLocation, targetLocation);
+            if (stage == 2 && phaseTicks == FLYING_END_INDEX) {
+                // Open wormhole above the player at the end of the circling phase
+                Location wormholeDestination = target.getLocation().add(0, 16, 0);
+                openWormhole(wormholeDestination);
+            }
         }
     }
-    private void circleAbovePlayer(Location headLocation, Location targetLocation) {
+    private void startBulletHell() {
+        // TODO
+//        AttackManager attackManager;
+//        if (stage == 0)
+//            attackManager = new AttackManager(TerrariaHelper.getInstance(), target, shootInfoLaser,
+//                    FLYING_END_INDEX - FLYING_START_INDEX, 10,
+//                    new SwipeAttackPattern(5, 2, 45),
+//                    new SwipeAttackPattern(18, 1, 90));
+//        else
+//            attackManager = new AttackManager(TerrariaHelper.getInstance(), target, shootInfoLaser,
+//                    FLYING_END_INDEX - FLYING_START_INDEX, 10,
+//                    new SwipeAttackPattern(5, 2, 45),
+//                    new SwipeAttackPattern(18, 1, 90));
+        AttackManager attackManager = new AttackManager(TerrariaHelper.getInstance(), target, shootInfoLaser,
+                FLYING_END_INDEX - FLYING_START_INDEX, 10,
+                new WallAttackPattern(30, 5, 12),
+                new CircleAttackPattern(15, 8, 2, 90));
+        attackManager.start();
+    }
+    private void circleAboveLocation(Location headLocation, Location targetLocation) {
         double radius = 50.0; // circling radius
         double speed = 2.5; // circling speed
         double amplitude = 8.0; // amplitude of the y-offset fluctuation
@@ -146,7 +207,8 @@ public class DevourerOfGods extends EntitySlime {
                 rotationDirection = 1; // clockwise
             }
 
-            openWormhole(bukkitEntity.getLocation().add(0, 25, 0));
+            // Schedule the projectile attack
+            startBulletHell();
         } else {
             circleAngle += rotationDirection * speed / radius; // update the angle
         }
@@ -157,17 +219,12 @@ public class DevourerOfGods extends EntitySlime {
         Location alignLoc = targetLocation.clone().add(xOffset, 15 + yOffset, zOffset);
         velocityPool = MathHelper.getDirection(headLocation, alignLoc, speed);
     }
-
-    private void ramPlayer(Location headLocation, Location targetLocation) {
-        double speed = 3.25; // ramming speed
-        velocityPool = MathHelper.getDirection(headLocation, targetLocation, speed);
-    }
     private void dashingPhase() {
         double acceleration = 2.0;
         double maxSpeed = 3.0;
         double dashStartDist = dashDistance;
         double minAccelerationAngle = Math.PI / 10;
-        double maxAccelerationAngle = Math.PI;
+        double maxAccelerationAngle = Math.PI / 10;
 
         if (dashCount < 5) { // dash 5 times
             Location headLocation = getBukkitEntity().getLocation();
@@ -178,12 +235,13 @@ public class DevourerOfGods extends EntitySlime {
                 if (velocityPool.lengthSquared() < 1e-5) {
                     velocityPool = direction.clone().multiply(0.1); // initialize velocityPool if it's zero
                 }
-                Vector currentDirection = velocityPool.clone().normalize();
+                Vector currentDirection = velocityPool.clone();
+                MathHelper.setVectorLength(currentDirection, 1d);
                 double angleBetweenDirections = Math.acos(currentDirection.dot(direction));
 
                 // Limit the maximum acceleration angle
                 double accelerationAngle = Math.min(maxAccelerationAngle,
-                        minAccelerationAngle + (maxAccelerationAngle - minAccelerationAngle) * phaseTicks / 25);
+                        minAccelerationAngle + (maxAccelerationAngle - minAccelerationAngle) * phaseTicks / 100);
                 if (angleBetweenDirections > accelerationAngle) {
                     direction = MathHelper.rotateAroundAxisRadian(currentDirection,
                             MathHelper.getNonZeroCrossProd(currentDirection, direction), accelerationAngle);
@@ -207,16 +265,12 @@ public class DevourerOfGods extends EntitySlime {
                 }
             }
         } else {
-            phase = 0; // switch back to flying phase
-            phaseTicks = 0;
-            isRamming = false;
-
-            bossbar.color = BossBattle.BarColor.BLUE;
-            bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+            // switch back to flying phase
+            toPhase(0);
         }
     }
     private void handleMinionPhaseAndRetarget() {
-        if (segmentIndex == 0) {
+        if (segmentIndex == 0 && wormholes.size() == 0) {
             // NOTE: the minions do not have a common interface/class defining the variables used. Optimizing this section would take unreasonably long.
             switch (minionIndex) {
                 case 0:
@@ -231,6 +285,7 @@ public class DevourerOfGods extends EntitySlime {
                         minionIndex++;
                     } else {
                         target = stormWeaver.target;
+                        hasRetargeted = true;
                     }
                     break;
                 case 1:
@@ -245,6 +300,7 @@ public class DevourerOfGods extends EntitySlime {
                         minionIndex++;
                     } else {
                         target = ceaselessVoid.target;
+                        hasRetargeted = true;
                     }
                     break;
                 case 2:
@@ -259,22 +315,28 @@ public class DevourerOfGods extends EntitySlime {
                         minionIndex++;
                     } else {
                         target = signus.target;
+                        hasRetargeted = true;
                     }
                     break;
                 case 3:
+                    setHealth(getMaxHealth() * 0.599f);
                     // Go to the next stage
                     if (--finalPhaseDelayTicks <= 0) {
                         stage = 2;
+                        // reset to dashing phase
+                        toPhase(1);
+
                         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, null);
-                        setHealth(getMaxHealth() * 0.599f);
                         dashDistance = DASH_DISTANCE_FINAL;
-                        // TODO: change this as needed
-                        bukkitEntity.teleport(target.getLocation().subtract(0, 50, 0));
+
+                        Location wormholeDestination = target.getEyeLocation().add(
+                                MathHelper.setVectorLength(target.getLocation().getDirection(), 32) );
+                        openWormhole(wormholeDestination);
                     }
                     break;
             }
         }
-        if (this.stage != head.stage) {
+        if (phaseTicks == 1) {
             this.stage = head.stage;
             if (head.stage == 2) {
                 setCustomName(BOSS_TYPE.msgName + NAME_SUFFIXES[segmentTypeIndex]);
@@ -283,93 +345,109 @@ public class DevourerOfGods extends EntitySlime {
     }
     // This should only be called by the head segment!
     private void openWormhole(Location destination) {
-        wormholeIn = bukkitEntity.getLocation();
-        wormholeOut = destination.clone();
-        // TODO: spawn wormhole entities
-        teleportWithWormhole((LivingEntity) bukkitEntity);
-        segmentBehindWormholeIdx = 1;
+        Wormhole newWormhole = new Wormhole(bukkitEntity.getLocation(), destination.clone());
+        wormholes.add(newWormhole);
+        teleportWithWormhole((LivingEntity) bukkitEntity, newWormhole); // Teleport the head to the new wormhole
     }
-    private void teleportWithWormhole(LivingEntity entity) {
-        entity.teleport(head.wormholeOut);
+    private void teleportWithWormhole(LivingEntity entity, Wormhole wormhole) {
+        entity.teleport(wormhole.out);
     }
     private void handleFollowAndWormholes() {
-        // segment behind the wormhole
-        if (segmentBehindWormholeIdx < TOTAL_LENGTH) {
-            double speed = bossParts.get(segmentBehindWormholeIdx - 1).getLocation().distance(wormholeOut);
-            LivingEntity effectiveHead = bossParts.get(segmentBehindWormholeIdx);
-            // Teleport the effective head (entity immediately behind the portal). Assume the boss does not move too quickly so one entity may be teleported at a time.
-            if (effectiveHead.getLocation().distance(wormholeIn) <= speed) {
-                teleportWithWormhole(effectiveHead);
-                segmentBehindWormholeIdx++;
-                if (segmentBehindWormholeIdx < TOTAL_LENGTH) {
-                    // The next segment would be in charge of pulling the rest of the body through the wormhole.
-                    effectiveHead = bossParts.get(segmentBehindWormholeIdx);
+        int endIndex = TOTAL_LENGTH;
+        // Iterate through each wormhole
+        for (Wormhole wormhole : wormholes) {
+            // Check if there are segments left to teleport for this wormhole
+            if (wormhole.segmentBehindIndex < TOTAL_LENGTH) {
+                double prevDist = bossParts.get(wormhole.segmentBehindIndex - 1).getLocation().distance(wormhole.out);
+                LivingEntity effectiveHead = bossParts.get(wormhole.segmentBehindIndex);
+
+                // Check if previous segment is far enough away from the out portal for this wormhole
+                if (prevDist >= SEGMENT_RADIUS) {
+                    teleportWithWormhole(effectiveHead, wormhole);
+                    wormhole.segmentBehindIndex++;
+                    prevDist = 0;
                 }
-                // Mark for out of bound
-                else {
+
+                // The effective head's velocity and segments following it, if applicable
+                if (wormhole.segmentBehindIndex < TOTAL_LENGTH) {
+                    effectiveHead = bossParts.get(wormhole.segmentBehindIndex);
+                } else {
                     effectiveHead = null;
                 }
-            }
-            // The effective head's velocity and segments following it, if applicable
-            if (effectiveHead != null) {
-                Vector velocity = wormholeIn.clone().subtract(effectiveHead.getLocation()).toVector().normalize().multiply(speed);
-                effectiveHead.setVelocity(velocity);
-                EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentBehindWormholeIdx);
-                // Overwrite the saved yaw and pitch
-                EntityHelper.setMetadata(effectiveHead, "yaw", (float) MathHelper.getVectorYaw(velocity));
-                EntityHelper.setMetadata(effectiveHead, "pitch", (float) MathHelper.getVectorPitch(velocity));
+                if (effectiveHead != null) {
+                    // Adjust the next segment's position relative to the wormhole entrance
+                    double distanceToInPortal = SEGMENT_RADIUS - prevDist;
+                    Vector directionToInPortal = MathHelper.getDirection(effectiveHead.getLocation(), wormhole.in, 1);
+                    Location targetLocation = wormhole.in.clone().subtract(directionToInPortal.multiply(distanceToInPortal));
+                    effectiveHead.teleport(targetLocation);
+
+                    // Make the segment face the wormhole
+                    EntityHelper.setMetadata(effectiveHead, "yaw", (float) MathHelper.getVectorYaw(directionToInPortal));
+                    EntityHelper.setMetadata(effectiveHead, "pitch", (float) MathHelper.getVectorPitch(directionToInPortal));
+
+                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, wormhole.segmentBehindIndex, endIndex);
+                    endIndex = wormhole.segmentBehindIndex;
+                }
             }
         }
-        // segments teleported already follows the head
-        EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex, segmentBehindWormholeIdx);
-        this.yaw = (float) MathHelper.getVectorYaw( velocityPool );
-        this.pitch = (float) MathHelper.getVectorPitch( velocityPool );
+
+        // Pop out finished wormholes
+        while (!wormholes.isEmpty() && wormholes.peek().segmentBehindIndex >= TOTAL_LENGTH)
+            wormholes.poll().remove();
+
+        // segments that should follow the head
+        EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex, endIndex);
+        this.yaw = (float) MathHelper.getVectorYaw(velocityPool);
+        this.pitch = (float) MathHelper.getVectorPitch(velocityPool);
     }
     private void AI() {
         // No AI after death
         if (getHealth() <= 0d) return;
 
-        // Update stage based on health
-        if (stage == 0 && getHealth() < getMaxHealth() * 0.605) {
-            stage = 1;
-        }
-
-        // Target handling
-        if (stage == 1) {
-            handleMinionPhaseAndRetarget();
-        } else {
-            Player previousTarget = target;
-            target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
-            if (target != previousTarget && phase == 0) {
-                phaseTicks = 0;
-                isRamming = false;
-            }
-        }
-
-        // Disappear if no target
-        if (target == null) {
-            for (LivingEntity segment : bossParts) {
-                segment.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
-                segment.setHealth(0d);
-                segment.remove();
-            }
-            return;
-        }
-
-        // debuff
-        for (UUID uid : targetMap.keySet())
-            EntityHelper.applyEffect(Bukkit.getPlayer(uid), "极限重力", 310);
-
         // head
         if (segmentIndex == 0) {
+            // Update stage based on health
+            if (stage == 0 && getHealth() < getMaxHealth() * 0.605) {
+                stage = 1;
+                Location wormholePos = target.getLocation();
+                wormholePos.setY(-20);
+                openWormhole(wormholePos);
+            }
+
+            // Target handling
+            hasRetargeted = false;
+            if (stage == 1) {
+                handleMinionPhaseAndRetarget();
+            }
+            if (!hasRetargeted) {
+                Player previousTarget = target;
+                target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
+                        IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+                // Reset flying phase duration
+                if (stage != 1 && target != previousTarget && phase == 0) {
+                    toPhase(0);
+                }
+            }
+
+            // Disappear if no target
+            if (target == null) {
+                for (LivingEntity segment : bossParts) {
+                    segment.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
+                    segment.setHealth(0d);
+                    segment.remove();
+                }
+                return;
+            }
+
+            // debuff
+            for (UUID uid : targetMap.keySet())
+                EntityHelper.applyEffect(Bukkit.getPlayer(uid), "极限重力", 310);
+
             // increase player aggro duration
             targetMap.get(target.getUniqueId()).addAggressionTick();
 
-            // Attack only if not in the minion phase
-            if (stage != 1) {
-                headMovement();
-            }
+            // Attack
+            headMovement();
 
             // following & rotations
             handleFollowAndWormholes();
@@ -499,10 +577,10 @@ public class DevourerOfGods extends EntitySlime {
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;
-            // projectile info
-            shootInfoFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFireball,
+            // projectile info; the vector specified the projectile speed!
+            shootInfoFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(2, 0, 0), attrMapFireball,
                     EntityHelper.DamageType.MAGIC, "弑神火球");
-            shootInfoLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLaser,
+            shootInfoLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(2, 0, 0), attrMapLaser,
                     EntityHelper.DamageType.BULLET, "弑神激光");
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment

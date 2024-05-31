@@ -760,6 +760,21 @@
     penetration: 999999
     worldSpriteMode: true
     worldSpriteUpdateInterval: 205
+弑神激光:
+    penetration: 99999
+    liveTime: 40
+    gravity: 0
+    blockHitAction: thru
+    buffInflict:
+        - "弑神怒焰|40|1"
+弑神火球:
+    penetration: 99999
+    projectileSize: 0.5
+    liveTime: 50
+    gravity: 0
+    blockHitAction: thru
+    buffInflict:
+        - "弑神怒焰|60|1"
 圣骑士锤:
     blockHitAction: thru
     gravity: 0
