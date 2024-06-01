@@ -6,6 +6,7 @@ import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.*;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
@@ -2142,7 +2143,7 @@ public class EntityHelper {
                             victim.removeScoreboardTag("鞭炮");
                             dmg *= 2.75;
                             victim.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, victim.getLocation(), 1);
-                            victim.getWorld().playSound(victim.getLocation(), "entity.generic.explode", 1f, 1f);
+                            victim.getWorld().playSound(victim.getLocation(), "entity.generic.explode", SoundCategory.HOSTILE,1f, 1f);
                         }
                     }
                     knockback = damagerAttrMap.getOrDefault("knockback", 0d);
@@ -2412,7 +2413,7 @@ public class EntityHelper {
                     sound = "entity.generic.fallBig";
             }
             if (sound != null)
-                victim.getWorld().playSound(victim.getLocation(), sound, soundVolume, 1);
+                victim.getWorld().playSound(victim.getLocation(), sound, SoundCategory.PLAYERS,  soundVolume, 1);
             // knockback
             if (knockback > 0) {
                 Vector vec = victim.getLocation().subtract(damager.getLocation()).toVector();
@@ -2490,7 +2491,7 @@ public class EntityHelper {
             loc.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, loc, amount, actualRad, actualRad, actualRad);
         }
         // sound
-        loc.getWorld().playSound(loc, "entity.generic.explode", (float) radius + 2, 1f);
+        loc.getWorld().playSound(loc, "entity.generic.explode", SoundCategory.HOSTILE, (float) radius + 2, 1f);
         // damage nearby entities
         Collection<Entity> entities = loc.getWorld().getNearbyEntities(loc, radius, radius, radius);
         Entity shooter = source;

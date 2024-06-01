@@ -208,7 +208,7 @@ public class GenericProjectile extends EntityPotion {
         setProperties(projectileType);
         // play spawned sound
         if (spawnSound.length() > 0) {
-            bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), spawnSound, (float) spawnSoundVolume, (float) spawnSoundPitch);
+            bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), spawnSound, org.bukkit.SoundCategory.NEUTRAL, (float) spawnSoundVolume, (float) spawnSoundPitch);
         }
     }
 

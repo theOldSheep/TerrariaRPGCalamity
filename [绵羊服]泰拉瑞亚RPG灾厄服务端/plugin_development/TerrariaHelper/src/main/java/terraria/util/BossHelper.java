@@ -3,6 +3,7 @@ package terraria.util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import terraria.entity.boss.hardMode.aquaticScourge.AquaticScourge;
@@ -78,22 +79,22 @@ public class BossHelper {
         public void playSummonSound(Location loc) {
             switch (this) {
                 case EMPRESS_OF_LIGHT:
-                    loc.getWorld().playSound(loc, "entity.eol.summoned", 10, 1);
+                    loc.getWorld().playSound(loc, "entity.eol.summoned", SoundCategory.HOSTILE, 10, 1);
                     break;
                 case RAVAGER:
-                    loc.getWorld().playSound(loc, Sound.ENTITY_TNT_PRIMED, 10, 1);
+                    loc.getWorld().playSound(loc, Sound.ENTITY_TNT_PRIMED, SoundCategory.HOSTILE, 10, 1);
                     break;
                 case STORM_WEAVER:
-                    loc.getWorld().playSound(loc, "entity.storm_weaver.summoned", 10, 1);
+                    loc.getWorld().playSound(loc, "entity.storm_weaver.summoned", SoundCategory.HOSTILE, 10, 1);
                     break;
                 case CEASELESS_VOID:
-                    loc.getWorld().playSound(loc, "entity.ceaseless_void.summoned", 10, 1);
+                    loc.getWorld().playSound(loc, "entity.ceaseless_void.summoned", SoundCategory.HOSTILE, 10, 1);
                     break;
                 case SIGNUS_ENVOY_OF_THE_DEVOURER:
-                    loc.getWorld().playSound(loc, "entity.signus.summoned", 10, 1);
+                    loc.getWorld().playSound(loc, "entity.signus.summoned", SoundCategory.HOSTILE, 10, 1);
                     break;
                 default:
-                    loc.getWorld().playSound(loc, "entity.enderdragon.growl", 10, 1);
+                    loc.getWorld().playSound(loc, "entity.enderdragon.growl", SoundCategory.HOSTILE, 10, 1);
             }
         }
 

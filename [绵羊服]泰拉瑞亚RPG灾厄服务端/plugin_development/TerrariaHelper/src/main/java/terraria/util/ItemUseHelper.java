@@ -3,6 +3,7 @@ package terraria.util;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.*;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
@@ -80,7 +81,7 @@ public class ItemUseHelper {
     }
     // util functions for use item
     protected static void playerSwingPickaxe(Player ply, HashMap<String, Double> attrMap, boolean isRightClick) {
-        ply.playSound(ply.getEyeLocation(), "item.genericSwing", 1, 1);
+        ply.playSound(ply.getEyeLocation(), "item.genericSwing", SoundCategory.PLAYERS, 1, 1);
         double pickaxeReach = 4 + attrMap.getOrDefault("reachExtra", 0d);
         pickaxeReach *= attrMap.getOrDefault("meleeReachMulti", 1d);
         // mine block if applicable
@@ -446,7 +447,7 @@ public class ItemUseHelper {
             String sound = "entity.generic.drink";
             if (!itemType.endsWith("药水"))
                 sound = "entity.generic.eat";
-            ply.getWorld().playSound(ply.getEyeLocation(), sound, 1, 1);
+            ply.getWorld().playSound(ply.getEyeLocation(), sound, SoundCategory.PLAYERS, 1, 1);
             // potion use cool down if the potion is being drank manually etc.
             if (quickBuffType == QuickBuffType.NONE)
                 applyCD(ply, 10);
@@ -756,7 +757,7 @@ public class ItemUseHelper {
                         // prevent DPS loss due to damage invincibility frame
                         damaged = new ArrayList<>();
                         color = particleColors.get((int) (Math.random() * particleColors.size()));
-                        if (currentIndex > 0) ply.getWorld().playSound(ply.getLocation(), SOUND_GENERIC_SWING, 1f, 1f);
+                        if (currentIndex > 0) ply.getWorld().playSound(ply.getLocation(), SOUND_GENERIC_SWING, SoundCategory.PLAYERS, 1f, 1f);
                         strikeYaw += Math.random() * 30 - 15;
                         strikePitch += Math.random() * 30 - 15;
                     }
@@ -943,7 +944,7 @@ public class ItemUseHelper {
                                     Vector projVel = MathHelper.vectorFromYawPitch_approx(finalStrikeYaw, finalStrikePitch);
                                     projVel.multiply(3);
                                     entityHit.setVelocity(projVel);
-                                    hitLoc.getWorld().playSound(hitLoc, SOUND_ARK_PARRY, 1f, 1);
+                                    hitLoc.getWorld().playSound(hitLoc, SOUND_ARK_PARRY, SoundCategory.PLAYERS, 1f, 1);
                                 })
                                 .setShouldDamageFunction((entity) -> entity.getScoreboardTags().contains("isWulfrumScrew"))
                                 .setLingerDelay(5);
@@ -1043,7 +1044,7 @@ public class ItemUseHelper {
                                     // recharge
                                     if (hitIndex == 1) {
                                         setDurability(weaponItem, 10, 10);
-                                        ply.playSound(ply.getEyeLocation(), SOUND_ARK_PARRY, 2f, 2f);
+                                        ply.playSound(ply.getEyeLocation(), SOUND_ARK_PARRY, SoundCategory.PLAYERS, 2f, 2f);
                                     }
                                 })
                                 // should not damage an enemy twice
@@ -1061,7 +1062,7 @@ public class ItemUseHelper {
                                 if (currentIndex >= cutIndex) {
                                     // play cut sound
                                     if (currentIndex == cutIndex) {
-                                        ply.getWorld().playSound(ply.getLocation(), SOUND_ARK_SCISSOR_CUT, 5f, 1f);
+                                        ply.getWorld().playSound(ply.getLocation(), SOUND_ARK_SCISSOR_CUT, SoundCategory.PLAYERS, 5f, 1f);
                                     }
                                     rotationOffset = 0;
                                 }
@@ -2774,7 +2775,7 @@ public class ItemUseHelper {
                                     // find cut progress; splay cutting sound effect on finish
                                     double cutProgress = Math.min( (progress - 0.8) / 0.125, 1);
                                     if (progress < 0.925 && (i + 1d) / loopTimes >= 0.925) {
-                                        ply.getWorld().playSound(ply.getLocation(), SOUND_ARK_SCISSOR_CUT, 5f, 1f);
+                                        ply.getWorld().playSound(ply.getLocation(), SOUND_ARK_SCISSOR_CUT, SoundCategory.PLAYERS, 5f, 1f);
                                     }
                                     // damage-handling piece of scissors
                                     double targetLocDirPitch = MathHelper.getVectorPitch(targetLocDir);
@@ -4964,7 +4965,7 @@ public class ItemUseHelper {
                 itemUseSound = SOUND_GENERIC_SWING;
         }
         itemUseSound = TerrariaHelper.weaponConfig.getString(weaponItemType + ".useSound", itemUseSound);
-        ply.getWorld().playSound(ply.getLocation(), itemUseSound, volume, pitch);
+        ply.getWorld().playSound(ply.getLocation(), itemUseSound, SoundCategory.PLAYERS, volume, pitch);
     }
     public static boolean playerBiomeBladeResonate(Player ply, String itemType, String prefix) {
         if (ply.isSneaking())

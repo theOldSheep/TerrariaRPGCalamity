@@ -1079,7 +1079,8 @@ public class PlayerHelper {
                     Vector knockbackDir = ply.getEyeLocation().subtract( block.getLocation().add(0.5, 0.5, 0.5) ).toVector();
                     MathHelper.setVectorLength(knockbackDir, 2);
                     EntityHelper.setVelocity(ply, knockbackDir);
-                    block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 3f, 1f);
+                    block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE,
+                            SoundCategory.BLOCKS, 3f, 1f);
                     EntityHelper.applyEffect(ply, "带电", 100);
                 }
                 break;
@@ -1797,7 +1798,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                     int levelResult = ply.getLevel() + (int) regenAmount;
                                     ply.setLevel((int) Math.min(levelResult, maxMana));
                                     if (ply.getLevel() >= maxMana)
-                                        ply.playSound(ply.getLocation(), Sound.BLOCK_NOTE_PLING, 2, 2);
+                                        ply.playSound(ply.getLocation(), Sound.BLOCK_NOTE_PLING, SoundCategory.PLAYERS,2, 2);
                                     EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_COUNTER, manaRegenCounter);
                                 }
                             }
@@ -2494,11 +2495,11 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             // switch successful
             if (ply.getScoreboardTags().contains(TAG_SWITCHED_SWITCHABLE_ACCESSORY)) {
                 ply.removeScoreboardTag(TAG_SWITCHED_SWITCHABLE_ACCESSORY);
-                ply.playSound(ply.getEyeLocation(), Sound.BLOCK_NOTE_HAT, 5.0f, 1f);
+                ply.playSound(ply.getEyeLocation(), Sound.BLOCK_NOTE_HAT, SoundCategory.PLAYERS,5.0f, 1f);
             }
             else {
                 ply.addScoreboardTag(TAG_SWITCHED_SWITCHABLE_ACCESSORY);
-                ply.playSound(ply.getEyeLocation(), Sound.BLOCK_NOTE_BELL, 5.0f, 1.25f);
+                ply.playSound(ply.getEyeLocation(), Sound.BLOCK_NOTE_BELL, SoundCategory.PLAYERS,5.0f, 1.25f);
             }
             PlayerHelper.setupAttribute(ply);
         }
@@ -2625,33 +2626,33 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         String itemType = ItemHelper.splitItemName(item)[1];
         switch (itemType) {
             case "铜币":
-                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", SoundCategory.PLAYERS,1, 1);
                 setMoney(ply, getMoney(ply) + 100d * amountRemaining);
                 return 0;
             case "银币":
-                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", SoundCategory.PLAYERS, 1, 1);
                 setMoney(ply, getMoney(ply) + 10000d * amountRemaining);
                 return 0;
             case "金币":
-                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", SoundCategory.PLAYERS, 1, 1);
                 setMoney(ply, getMoney(ply) + 1000000d * amountRemaining);
                 return 0;
             case "铂金币":
-                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", SoundCategory.PLAYERS, 1, 1);
                 setMoney(ply, getMoney(ply) + 100000000d * amountRemaining);
                 return 0;
             case "心":
-                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", SoundCategory.PLAYERS, 1, 1);
                 heal(ply, 20);
                 return 0;
             case "星":
-                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", SoundCategory.PLAYERS, 1, 1);
                 restoreMana(ply, 100);
                 return 0;
             case "生命强化焰":
             case "伤害强化焰":
             case "魔力强化焰": {
-                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", 1, 1);
+                ply.getWorld().playSound(ply.getEyeLocation(), "minecraft:entity.item.pickup", SoundCategory.PLAYERS, 1, 1);
                 String effect;
                 switch (itemType) {
                     case "生命强化焰":
@@ -2676,7 +2677,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             // destroy trashed items
             if (trashedItems.contains(itemType)) {
                 amountRemaining = 0;
-                ply.getWorld().playSound(ply.getEyeLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 1, 1);
+                ply.getWorld().playSound(ply.getEyeLocation(), Sound.BLOCK_LAVA_EXTINGUISH, SoundCategory.PLAYERS, 1, 1);
             }
             // give non-trashed items; return the leftover amount
             else {
@@ -2693,7 +2694,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     ItemHelper.dropItem(ply.getEyeLocation(), itemToDrop);
                 }
                 if (amountRemaining < amountInitial)
-                    ply.getWorld().playSound(ply.getEyeLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
+                    ply.getWorld().playSound(ply.getEyeLocation(), Sound.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 1, 1);
             }
             return amountRemaining;
         } catch (Exception e) {

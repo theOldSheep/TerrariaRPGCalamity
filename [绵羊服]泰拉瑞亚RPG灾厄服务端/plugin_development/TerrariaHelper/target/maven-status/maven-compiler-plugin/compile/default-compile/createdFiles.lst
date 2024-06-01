@@ -17,6 +17,7 @@ terraria\entity\boss\postMoonLord\polterghast\PolterghastClone.class
 terraria\worldgen\MazeGenerator$CellEdge.class
 terraria\entity\monster\MonsterZombie.class
 terraria\entity\boss\hardMode\thePlaguebringerGoliath\PlagueMine.class
+terraria\entity\boss\postMoonLord\devourerOfGods\DelayedWallAttackPattern$1.class
 terraria\entity\npc\TerrariaNPCAngler.class
 terraria\entity\boss\hardMode\dukeFishron\DukeFishron$AttackPhase.class
 terraria\util\ItemUseHelper$QuickBuffType.class
@@ -28,6 +29,7 @@ terraria\entity\monster\MonsterHusk.class
 terraria\util\NMSUtils$Attributes.class
 terraria\entity\boss\event\celestialPillar\CelestialPillar$PillarTypes.class
 terraria\entity\boss\hardMode\cryogen\CryogenShield.class
+terraria\entity\boss\postMoonLord\devourerOfGods\GodSlayerPortal.class
 terraria\entity\boss\postMoonLord\profanedGuardians\GuardianDefender.class
 terraria\entity\boss\preHardMode\theHiveMind\TheHiveMind.class
 terraria\worldgen\overworld\OverworldCaveGenerator.class
@@ -82,7 +84,9 @@ terraria\entity\boss\hardMode\lunaticCultist\LunaticLightningOrb.class
 terraria\entity\boss\preHardMode\skeletron\SkeletronHead.class
 terraria\entity\boss\event\pumpking\PumpkingScythe.class
 terraria\util\ItemUseHelper.class
+terraria\entity\boss\postMoonLord\devourerOfGods\DelayedWallAttackPattern.class
 terraria\gameplay\EventAndTime$EventInfoMapKeys.class
+terraria\entity\boss\postMoonLord\devourerOfGods\SwingingArcAttackPattern$1.class
 terraria\util\WorldHelper$1.class
 terraria\entity\boss\event\celestialPillar\CelestialPillar.class
 terraria\entity\npc\TerrariaNPCBlockSeller.class
@@ -92,10 +96,10 @@ terraria\entity\projectile\Flail.class
 terraria\entity\boss\preHardMode\eaterOfWorld\EaterOfWorld$1.class
 terraria\entity\boss\hardMode\moonLord\MoonLordPhantasmalBolt.class
 terraria\entity\projectile\Yoyo.class
+terraria\entity\boss\postMoonLord\devourerOfGods\ScatteringCircleAttackPattern$1.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Anahita$1.class
 terraria\util\MonsterHelper$UniqueMonsterInfo.class
 terraria\util\WorldHelper$LeafLayerShape.class
-terraria\entity\boss\postMoonLord\devourerOfGods\WallAttackPattern.class
 terraria\entity\boss\preHardMode\eyeOfCthulhu\EyeOfCthulhu$1.class
 terraria\entity\projectile\Boomerang.class
 terraria\entity\others\TerrariaFishingHook.class
@@ -144,6 +148,7 @@ terraria\worldgen\overworld\OrePopulator$1.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Anahita.class
 terraria\util\EntityHelper$DamageReason.class
 terraria\util\GenericHelper.class
+terraria\entity\boss\postMoonLord\devourerOfGods\SwingingArcAttackPattern$2.class
 terraria\worldgen\underworld\UnderworldChunkGenerator.class
 terraria\worldgen\overworld\StructurePopulator$1.class
 terraria\entity\boss\hardMode\moonLord\MoonLordBackground.class
@@ -228,6 +233,7 @@ terraria\event\listener\PlayerKeyToggleListener.class
 terraria\entity\boss\hardMode\dukeFishron\WaterBlob.class
 terraria\entity\others\TerrariaDroppedItem.class
 terraria\entity\boss\hardMode\moonLord\MoonLordEye$EyeAttackMethod.class
+terraria\entity\boss\postMoonLord\devourerOfGods\ScatteringCircleAttackPattern.class
 terraria\entity\boss\postMoonLord\profanedGuardians\GuardianDefender$1.class
 terraria\entity\projectile\HitEntityInfo.class
 terraria\entity\boss\hardMode\golem\GolemHead.class
@@ -259,6 +265,7 @@ terraria\entity\boss\hardMode\calamitasClone\CalamitasClone.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Leviathan$AIPhase.class
 terraria\entity\boss\preHardMode\eaterOfWorld\EaterOfWorld.class
 terraria\entity\npc\TerrariaNPC.class
+terraria\entity\boss\postMoonLord\devourerOfGods\SwingingArcAttackPattern.class
 terraria\util\EntityHelper$WormSegmentMovementOptions.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHand.class
 terraria\entity\boss\postMoonLord\dragonFolly\DragonFolly.class

@@ -20,6 +20,7 @@ class AttackManager {
     Player player;
     EntityHelper.ProjectileShootInfo shootInfo;
     int duration, attackInterval, currentTick;
+    double projectileSpeed;
 
     // Constructor, contextual information such as plugin, target and shoot info are passed in here.
     public AttackManager(JavaPlugin plugin, Player target, EntityHelper.ProjectileShootInfo shootInfo, int duration, int attackInterval, AttackPattern... attackPatterns) {
@@ -31,6 +32,7 @@ class AttackManager {
         this.patterns = Arrays.asList(attackPatterns);
 
         this.currentTick = 0;
+        this.projectileSpeed = shootInfo.velocity.length();
     }
 
     public void start() {
@@ -49,7 +51,7 @@ class AttackManager {
 
         // Select a random attack pattern and schedule it
         AttackPattern patternUsed = patterns.get(RANDOM.nextInt(patterns.size()));
-        patternUsed.scheduleProjectiles(plugin, player, shootInfo);
+        patternUsed.scheduleProjectiles(plugin, player, shootInfo, projectileSpeed);
 
         // Schedule the next tick
         Bukkit.getScheduler().runTaskLater(plugin, this::tick, attackInterval);

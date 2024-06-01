@@ -134,7 +134,7 @@ public class TerrariaFishingHook extends EntityFishingHook {
         }
         Sound sound = getSplashSound(block);
         if (sound != null) {
-            bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), sound, 1, 1);
+            bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), sound, org.bukkit.SoundCategory.BLOCKS,1, 1);
         }
     }
     private boolean checkValid() {

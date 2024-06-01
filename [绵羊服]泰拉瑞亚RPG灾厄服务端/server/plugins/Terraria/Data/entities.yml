@@ -746,6 +746,48 @@
         - "夜魇"
         - "燃烧"
         - "狱炎"
+装甲风暴编织者头:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "带电|40|1"
+    buffImmute:
+        - "狱炎"
+        - "带电"
+装甲风暴编织者体节:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "带电|30|1"
+    buffImmute:
+        - "狱炎"
+        - "带电"
+装甲风暴编织者尾:
+    soundDamaged: entity.hit.flesh
+    buffInflict:
+        - "带电|20|1"
+    buffImmute:
+        - "狱炎"
+        - "带电"
+风暴编织者头:
+    soundDamaged: entity.hit.flesh
+    buffInflict:
+        - "带电|80|1"
+    buffImmute:
+        - "狱炎"
+        - "带电"
+风暴编织者体节:
+    soundDamaged: entity.hit.flesh
+    buffInflict:
+        - "带电|60|1"
+    buffImmute:
+        - "狱炎"
+        - "带电"
+风暴编织者尾:
+    soundDamaged: entity.hit.flesh
+    buffInflict:
+        - "带电|40|1"
+    buffImmute:
+        - "狱炎"
+        - "带电"
 无尽虚空:
     soundDamaged: entity.hit.otherworldly
     buffInflict:

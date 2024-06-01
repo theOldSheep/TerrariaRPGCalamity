@@ -4,6 +4,7 @@ import lk.vexview.event.ButtonClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -132,7 +133,7 @@ public class NPCListener implements Listener {
                                 double cost = ItemHelper.getReforgeCost(toReforge);
                                 double plyMoney = PlayerHelper.getMoney(ply);
                                 if (plyMoney >= cost) {
-                                    ply.playSound(ply.getEyeLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
+                                    ply.playSound(ply.getEyeLocation(), Sound.BLOCK_ANVIL_USE, SoundCategory.PLAYERS, 1f, 1f);
                                     // reforge
                                     String itemType = ItemHelper.splitItemName(toReforge)[1];
                                     ItemStack reforged = ItemHelper.getItemFromDescription(itemType, true);

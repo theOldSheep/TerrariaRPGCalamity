@@ -107,7 +107,8 @@ public class GameplayHelper {
                 data);
         String soundCategory = getBlockCategory(blockToBreak);
             blockToBreak.getWorld().playSound(blockToBreak.getLocation(),
-                    "block." + soundCategory + ".place",2, 1);
+                    "block." + soundCategory + ".place",
+                    SoundCategory.BLOCKS,2, 1);
     }
     private static ConfigurationSection getBlockConfigSection(Block blockToBreak) {
         String material = blockToBreak.getType().toString();

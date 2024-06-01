@@ -178,7 +178,7 @@ public class Critter extends EntitySilverfish {
         }
         // idle sound
         if (ticksLived % 300 == 200 && idleSound != null) {
-            bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity." + idleSound + ".idle", 3f, 1f);
+            bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity." + idleSound + ".idle", org.bukkit.SoundCategory.AMBIENT, 3f, 1f);
         }
         // particle affect
         if (ticksLived % 3 == 0 && particle.size() > 0) {

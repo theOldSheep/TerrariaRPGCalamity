@@ -10,8 +10,10 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
@@ -46,7 +48,7 @@ public class DevourerOfGods extends EntitySlime {
             SEGMENT_DAMAGE = {1760d, 1100d, 920d}, SEGMENT_DEFENCE = {100d, 140d, 100d}, SEGMENT_DAMAGE_TAKEN = {0.9d, 0.15d, 1d};
     static final int SLIME_SIZE = 10, DAMAGE_TAKEN_INTERPOLATE_SEGMENTS = 15;
 
-    static final int FLYING_TOTAL_DURATION = 2500, FLYING_START_INDEX = 60, FLYING_END_INDEX = 2100;
+    static final int FLYING_TOTAL_DURATION = 3000, FLYING_START_INDEX = 60, FLYING_END_INDEX = 2400;
     static final double SEGMENT_RADIUS = SLIME_SIZE * 0.5, DASH_DISTANCE_INITIAL = 15.0, DASH_DISTANCE_FINAL = 12.0,
             // TODO: Prevent client side teleport interpolation
             HIDE_Y_COORD = -100;
@@ -86,17 +88,20 @@ public class DevourerOfGods extends EntitySlime {
     private class Wormhole {
         Location in, out;
         int segmentBehindIndex; // Index of segment to teleport next
+        GodSlayerPortal inPortal, outPortal;
 
-        public Wormhole(Location in, Location out) {
+        public Wormhole(DevourerOfGods dog, Location in, Location out) {
             this.in = in;
             this.out = out;
             this.segmentBehindIndex = 1;
-            // TODO: replace with real visualization
-            Bukkit.getLogger().info("Summoned a wormhole!");
+
+            inPortal = new GodSlayerPortal(dog, in);
+            outPortal = new GodSlayerPortal(dog, out);
         }
         // Call this to help you remove the wormhole visualization!
         void remove() {
-            Bukkit.getLogger().info("Removed a wormhole!");
+            inPortal.die();
+            outPortal.die();
         }
     }
 
@@ -169,22 +174,28 @@ public class DevourerOfGods extends EntitySlime {
         }
     }
     private void startBulletHell() {
+        JavaPlugin plugin = TerrariaHelper.getInstance();
         // TODO
-//        AttackManager attackManager;
-//        if (stage == 0)
-//            attackManager = new AttackManager(TerrariaHelper.getInstance(), target, shootInfoLaser,
-//                    FLYING_END_INDEX - FLYING_START_INDEX, 10,
-//                    new SwipeAttackPattern(5, 2, 45),
-//                    new SwipeAttackPattern(18, 1, 90));
-//        else
-//            attackManager = new AttackManager(TerrariaHelper.getInstance(), target, shootInfoLaser,
-//                    FLYING_END_INDEX - FLYING_START_INDEX, 10,
-//                    new SwipeAttackPattern(5, 2, 45),
-//                    new SwipeAttackPattern(18, 1, 90));
-        AttackManager attackManager = new AttackManager(TerrariaHelper.getInstance(), target, shootInfoLaser,
-                FLYING_END_INDEX - FLYING_START_INDEX, 10,
-                new WallAttackPattern(30, 5, 12),
-                new CircleAttackPattern(15, 8, 2, 90));
+        AttackManager attackManager;
+        if (stage == 0) {
+            attackManager = new AttackManager(plugin, target, shootInfoLaser,
+                    FLYING_END_INDEX - FLYING_START_INDEX, 10,
+                    new DelayedWallAttackPattern(45, 5, 12, 0, DelayedWallAttackPattern.GRID),
+                    new DelayedWallAttackPattern(45, 5, 12, 0, DelayedWallAttackPattern.GRID_SLANTED),
+                    new CircleAttackPattern(16, 6, 0, 120)
+            );
+        }
+        else {
+            attackManager = new AttackManager(plugin, target, shootInfoFireball,
+                    FLYING_END_INDEX - FLYING_START_INDEX, 10,
+                    new DelayedWallAttackPattern(45, 5, 12, 2, DelayedWallAttackPattern.RANDOM),
+                    new DelayedWallAttackPattern(45, 5, 12, 0, DelayedWallAttackPattern.GRID),
+                    new DelayedWallAttackPattern(45, 5, 12, 0, DelayedWallAttackPattern.GRID_SLANTED),
+                    new CircleAttackPattern(15, 8, 2, 120),
+                    new SwingingArcAttackPattern(15, 6, 2, 120, 0),
+                    new ScatteringCircleAttackPattern(24, 12, 0, 6)
+            );
+        }
         attackManager.start();
     }
     private void circleAboveLocation(Location headLocation, Location targetLocation) {
@@ -336,16 +347,10 @@ public class DevourerOfGods extends EntitySlime {
                     break;
             }
         }
-        if (phaseTicks == 1) {
-            this.stage = head.stage;
-            if (head.stage == 2) {
-                setCustomName(BOSS_TYPE.msgName + NAME_SUFFIXES[segmentTypeIndex]);
-            }
-        }
     }
     // This should only be called by the head segment!
     private void openWormhole(Location destination) {
-        Wormhole newWormhole = new Wormhole(bukkitEntity.getLocation(), destination.clone());
+        Wormhole newWormhole = new Wormhole(this, bukkitEntity.getLocation(), destination.clone());
         wormholes.add(newWormhole);
         teleportWithWormhole((LivingEntity) bukkitEntity, newWormhole); // Teleport the head to the new wormhole
     }
@@ -404,11 +409,19 @@ public class DevourerOfGods extends EntitySlime {
         // No AI after death
         if (getHealth() <= 0d) return;
 
+        // body & tail segment status update for the last phase
+        if (head.stage == 1 && this.stage != head.stage) {
+            this.stage = head.stage;
+            setCustomName(BOSS_TYPE.msgName + NAME_SUFFIXES[segmentTypeIndex]);
+        }
+
         // head
         if (segmentIndex == 0) {
             // Update stage based on health
             if (stage == 0 && getHealth() < getMaxHealth() * 0.605) {
                 stage = 1;
+                setCustomName(BOSS_TYPE.msgName + NAME_SUFFIXES[segmentTypeIndex]);
+
                 Location wormholePos = target.getLocation();
                 wormholePos.setY(-20);
                 openWormhole(wormholePos);
@@ -593,6 +606,8 @@ public class DevourerOfGods extends EntitySlime {
     @Override
     public void die() {
         super.die();
+        for (Wormhole wormhole : wormholes)
+            wormhole.remove();
         if (segmentIndex > 0) return;
         // drop loot
         if (getMaxHealth() > 10) {
