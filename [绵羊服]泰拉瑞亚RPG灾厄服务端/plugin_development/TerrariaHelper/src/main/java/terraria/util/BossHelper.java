@@ -43,6 +43,7 @@ import terraria.entity.boss.preHardMode.theSlimeGod.TheSlimeGod;
 import terraria.entity.boss.preHardMode.kingSlime.KingSlime;
 import terraria.entity.boss.hardMode.theTwins.Retinazer;
 import terraria.entity.boss.preHardMode.wallOfFlesh.WallOfFleshMouth;
+import terraria.entity.boss.postMoonLord.yharon.Yharon;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -374,6 +375,13 @@ public class BossHelper {
             case THE_DEVOURER_OF_GODS: {
                 if (DevourerOfGods.canSpawn(target)) {
                     new DevourerOfGods(target, new ArrayList<>(), 0);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case YHARON_DRAGON_OF_REBIRTH: {
+                if (Yharon.canSpawn(target)) {
+                    new Yharon(target);
                     spawnedSuccessfully = true;
                 }
                 break;

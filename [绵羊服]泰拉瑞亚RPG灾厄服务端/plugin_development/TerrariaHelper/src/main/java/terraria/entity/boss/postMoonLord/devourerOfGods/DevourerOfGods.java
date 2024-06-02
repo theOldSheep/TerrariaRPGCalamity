@@ -139,6 +139,9 @@ public class DevourerOfGods extends EntitySlime {
         Location headLocation = getBukkitEntity().getLocation();
         Location targetLocation = target.getLocation();
 
+        // Schedule the projectile attack
+        if (phaseTicks == FLYING_START_INDEX)
+            startBulletHell();
         if (!isRamming) {
             // Wormhole logic. Only applicable to non-ramming situations.
             if (stage == 2 && phaseTicks < FLYING_END_INDEX) {
@@ -179,7 +182,7 @@ public class DevourerOfGods extends EntitySlime {
         AttackManager attackManager;
         if (stage == 0) {
             attackManager = new AttackManager(plugin, target, shootInfoLaser,
-                    FLYING_END_INDEX - FLYING_START_INDEX, 10,
+                    FLYING_END_INDEX - FLYING_START_INDEX, 30, 2,
                     new DelayedWallAttackPattern(45, 5, 12, 0, DelayedWallAttackPattern.GRID),
                     new DelayedWallAttackPattern(45, 5, 12, 0, DelayedWallAttackPattern.GRID_SLANTED),
                     new CircleAttackPattern(16, 6, 0, 120)
@@ -187,7 +190,7 @@ public class DevourerOfGods extends EntitySlime {
         }
         else {
             attackManager = new AttackManager(plugin, target, shootInfoFireball,
-                    FLYING_END_INDEX - FLYING_START_INDEX, 10,
+                    FLYING_END_INDEX - FLYING_START_INDEX, 30, 3,
                     new DelayedWallAttackPattern(45, 5, 12, 2, DelayedWallAttackPattern.RANDOM),
                     new DelayedWallAttackPattern(45, 5, 12, 0, DelayedWallAttackPattern.GRID),
                     new DelayedWallAttackPattern(45, 5, 12, 0, DelayedWallAttackPattern.GRID_SLANTED),
@@ -217,9 +220,6 @@ public class DevourerOfGods extends EntitySlime {
             } else {
                 rotationDirection = 1; // clockwise
             }
-
-            // Schedule the projectile attack
-            startBulletHell();
         } else {
             circleAngle += rotationDirection * speed / radius; // update the angle
         }

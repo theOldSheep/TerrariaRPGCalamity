@@ -75,21 +75,22 @@ class DelayedWallAttackPattern extends AttackPattern {
         Vector velocity = direction.clone().multiply(projectileSpeed);
 
         Location wallCenter = playerLoc.clone().subtract(direction.clone().multiply(startDist)); // Adjust for random direction
+        double offsetShift = Math.random() < 0.4 ? Math.random() - 0.5 : 0;
 
         // Calculate Delay for Each Projectile
         int loopIterations = (int) (width / interval / 2);
         int delay = 0;
 
         for (int i = loopIterations; i >= 0; i--) {
-            Vector offset = offsetDir.clone().multiply(interval * i);
+            Vector offset = offsetDir.clone().multiply(interval * (i + offsetShift) );
             boolean spawnPaired = i != 0;
 
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    spawnProjectile(plugin, shootInfo, wallCenter.clone().add(offset), velocity, Particle.SPELL_WITCH, startDist * 2, 0.5, 10);
+                    spawnProjectile(plugin, shootInfo, wallCenter.clone().add(offset), velocity, Particle.SPELL_WITCH, startDist * 2, 0.5, 20);
                     if (spawnPaired) {
-                        spawnProjectile(plugin, shootInfo, wallCenter.clone().subtract(offset), velocity, Particle.SPELL_WITCH, startDist * 2, 0.5, 10);
+                        spawnProjectile(plugin, shootInfo, wallCenter.clone().subtract(offset), velocity, Particle.SPELL_WITCH, startDist * 2, 0.5, 20);
                     }
                 }
             }.runTaskLater(plugin, delay);
@@ -230,7 +231,7 @@ class ScatteringCircleAttackPattern extends AttackPattern {
             // Calculate velocity towards the target
             Vector velocity = MathHelper.getDirection(shootLoc, targetLoc, projectileSpeed);
 
-            int delay = random.nextInt(maxDelay); // Random delay
+            int delay = random.nextInt(maxDelay + 1); // Random delay
 
             new BukkitRunnable() {
                 @Override

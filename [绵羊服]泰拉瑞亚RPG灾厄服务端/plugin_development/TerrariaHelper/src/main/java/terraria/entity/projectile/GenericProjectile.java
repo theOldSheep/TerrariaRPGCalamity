@@ -22,7 +22,7 @@ import java.util.*;
 public class GenericProjectile extends EntityPotion {
     private static final double distFromBlock = 1e-5, distCheckOnGround = 1e-1;
     public static final int DESTROY_HIT_BLOCK = 0, DESTROY_HIT_ENTITY = 1, DESTROY_TIME_OUT = 2;
-    public static final int RANDOMIZED_IMPULSE_TICK_INTERVAL = 4;
+    public static final int RANDOMIZED_IMPULSE_TICK_INTERVAL = 3;
     int impulse_index = (int) (Math.random() * RANDOMIZED_IMPULSE_TICK_INTERVAL);
 
     // projectile info

@@ -829,19 +829,19 @@ public class PlayerHelper {
                                     else bossName += "2";
                                     break;
                                 case "神明吞噬者": {
-                                    LivingEntity bossPart = bossArrayList.get(1);
+                                    LivingEntity bossPart = bossArrayList.get(0);
                                     if (bossPart.getHealth() / bossPart.getMaxHealth() >= 0.6) bossName += "1";
                                     else bossName += "2";
                                     break;
                                 }
                                 case "丛林龙，犽戎": {
-                                    LivingEntity bossPart = bossArrayList.get(1);
+                                    LivingEntity bossPart = bossArrayList.get(0);
                                     if (bossPart.getHealth() / bossPart.getMaxHealth() >= 0.55) bossName += "1";
                                     else bossName += "2";
                                     break;
                                 }
                                 case "至尊灾厄": {
-                                    LivingEntity bossPart = bossArrayList.get(1);
+                                    LivingEntity bossPart = bossArrayList.get(0);
                                     double healthRatio = bossPart.getHealth() / bossPart.getMaxHealth();
                                     if (healthRatio >= 0.5) bossName += "1";
                                     else if (healthRatio >= 0.3) bossName += "2";

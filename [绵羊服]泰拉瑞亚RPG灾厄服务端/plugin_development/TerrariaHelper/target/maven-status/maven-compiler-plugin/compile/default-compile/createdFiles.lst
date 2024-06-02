@@ -81,6 +81,7 @@ terraria\entity\boss\hardMode\thePlaguebringerGoliath\PlagueHomingMissile.class
 terraria\entity\npc\PathfinderGoalNPCRestrictLocation.class
 terraria\util\YmlHelper$YmlSection.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticLightningOrb.class
+terraria\entity\boss\postMoonLord\yharon\TornadoSlime.class
 terraria\entity\boss\preHardMode\skeletron\SkeletronHead.class
 terraria\entity\boss\event\pumpking\PumpkingScythe.class
 terraria\util\ItemUseHelper.class
@@ -194,6 +195,7 @@ terraria\entity\minion\MinionHelper.class
 terraria\TerrariaHelper$Constants.class
 terraria\entity\boss\hardMode\queenSlime\QueenSlime$SizeState.class
 terraria\event\listener\ArrowHitListener.class
+terraria\entity\boss\postMoonLord\yharon\Yharon.class
 terraria\worldgen\overworld\StructureInfo$1.class
 terraria\entity\boss\hardMode\empressOfLight\EmpressOfLight.class
 terraria\entity\boss\hardMode\thePlaguebringerGoliath\ThePlaguebringerGoliath$1.class
