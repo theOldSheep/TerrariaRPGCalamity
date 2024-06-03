@@ -775,6 +775,36 @@
     blockHitAction: thru
     buffInflict:
         - "弑神怒焰|60|1"
+灼焱余烬:
+    penetration: 99999
+    projectileSize: 2
+    liveTime: 100
+    gravity: 0
+    blockHitAction: thru
+    buffInflict:
+        - "龙焰|50|1"
+追踪灼焱余烬:
+    penetration: 99999
+    projectileSize: 2
+    liveTime: 100
+    gravity: 0
+    blockHitAction: thru
+    homing: true
+    noHomingTicks: 20
+    maxHomingTicks: 40
+    homingSharpTurning: false
+    homingAbility: 12
+    homingRadius: 96
+    buffInflict:
+        - "龙焰|50|1"
+大型火焰龙卷:
+    projectileSize: 5
+    liveTime: 200
+    gravity: 0
+    blockHitAction: thru
+    homing: true
+    homingAbility: 6
+    homingRadius: 96
 圣骑士锤:
     blockHitAction: thru
     gravity: 0

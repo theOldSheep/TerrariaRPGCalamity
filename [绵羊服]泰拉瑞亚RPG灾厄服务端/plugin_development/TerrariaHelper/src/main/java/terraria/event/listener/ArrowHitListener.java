@@ -55,6 +55,8 @@ public class ArrowHitListener implements Listener {
                 return;
             }
         }
+        if (projectileName.equals("大型火焰龙卷"))
+            return;
         // handle damage
         boolean guaranteeCrit = false;
         EntityHelper.DamageReason dmgReason = EntityHelper.DamageReason.PROJECTILE;

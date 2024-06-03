@@ -70,6 +70,7 @@ terraria\entity\boss\hardMode\ravager\RavagerHead.class
 terraria\entity\monster\MonsterWitherSkeleton.class
 terraria\entity\npc\TerrariaNPCNurse.class
 terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
+terraria\entity\boss\postMoonLord\yharon\Infernado.class
 terraria\entity\others\Mount.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
 terraria\event\TerrariaProjectileHitEvent.class
@@ -114,6 +115,7 @@ terraria\entity\boss\postMoonLord\profanedGuardians\GuardianAttacker.class
 terraria\event\listener\VanillaMechanicListener$1.class
 terraria\util\WorldHelper$BiomeType.class
 terraria\util\PlayerHelper.class
+terraria\entity\projectile\YharonTornado.class
 terraria\TerrariaHelper.class
 terraria\util\NMSUtils$SpawnData.class
 terraria\entity\boss\hardMode\moonLord\MoonLordBackground$MoonLordBackgroundType.class

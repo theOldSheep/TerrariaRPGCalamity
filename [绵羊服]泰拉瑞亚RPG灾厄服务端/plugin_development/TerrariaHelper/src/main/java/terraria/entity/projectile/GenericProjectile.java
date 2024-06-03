@@ -49,7 +49,7 @@ public class GenericProjectile extends EntityPotion {
     public org.bukkit.entity.Projectile bukkitEntity;
     HashMap<String, Double> attrMap, attrMapExtraProjectile;
     public Entity homingTarget = null;
-    private Entity lockedTarget = null;
+    protected Entity lockedTarget = null;
     Location lastTrailDisplayLocation = null;
     // extra projectile variables
     public ConfigurationSection extraProjectileConfigSection;

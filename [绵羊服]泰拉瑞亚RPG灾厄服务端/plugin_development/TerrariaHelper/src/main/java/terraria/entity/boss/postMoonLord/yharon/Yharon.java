@@ -6,11 +6,11 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
+import terraria.entity.projectile.YharonTornado;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
@@ -24,7 +24,7 @@ public class Yharon extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.YHARON_DRAGON_OF_REBIRTH;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 255600 * 2;
+    public static final double BASIC_HEALTH = 3744000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -32,132 +32,434 @@ public class Yharon extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    static HashMap<String, Double> attrMapProjectile;
-    EntityHelper.ProjectileShootInfo shootInfo;
+    static HashMap<String, Double> attrMapFireball, attrMapFlareTornado;
+    EntityHelper.ProjectileShootInfo shootInfoFireballRegular, shootInfoFireballHoming, shootInfoFlareTornado;
 
     static {
-        attrMapProjectile = new HashMap<>();
-        attrMapProjectile.put("damage", 540d);
-        attrMapProjectile.put("knockback", 1.5d);
+        attrMapFireball = new HashMap<>();
+        attrMapFireball.put("damage", 1200d);
+        attrMapFireball.put("knockback", 2.5d);
+        attrMapFlareTornado = new HashMap<>();
+        attrMapFlareTornado.put("damage", 0d);
+        attrMapFlareTornado.put("knockback", 0d);
     }
 
     int phase = 1;
     Vector velocity = new Vector(0, 0, 0);
+    Location teleportTarget;
     LivingEntity entity = (LivingEntity) getBukkitEntity();
     private int phaseTick = 0;
     private int phaseStep = 1;
-
-
-    TornadoSlime tornado;
-
-
-
-
+    private void teleport(Location location) {
+        this.setPosition(location.getX(), location.getY(), location.getZ());
+        this.lastX = location.getX();
+        this.lastY = location.getY();
+        this.lastZ = location.getZ();
+    }
+    private void updatePhaseStep() {
+        updatePhaseStep(this.phaseStep + 1);
+    }
+    private void updatePhaseStep(int nextStep) {
+        this.phaseStep = nextStep;
+        this.phaseTick = 0;
+    }
+    private void charge() {
+        if (this.phaseTick == 1) {
+            this.velocity = this.target.getLocation().toVector().subtract(entity.getLocation().toVector()).normalize().multiply(2.0);
+        }
+    }
+    private void chargeQuickly() {
+        if (this.phaseTick == 1) {
+            this.velocity = this.target.getLocation().toVector().subtract(entity.getLocation().toVector()).normalize().multiply(3.0);
+        }
+    }
+    private void fireBlasts() {
+        Location loc = entity.getEyeLocation();
+        Vector dir = this.target.getLocation().toVector().subtract(loc.toVector()).normalize();
+        for (int i = 0; i < 10; i++) {
+            // Add some randomness to the direction to make the blasts spread out
+            Vector blastDir = dir.clone().add(new Vector(Math.random() * 1 - 0.5, Math.random() * 1 - 0.5, Math.random() * 1 - 0.5)).normalize().multiply(1.6);
+            shootInfoFireballRegular.shootLoc = loc;
+            shootInfoFireballRegular.velocity = blastDir;
+            EntityHelper.spawnProjectile(shootInfoFireballRegular);
+        }
+    }
+    private void flyLoop() {
+        double angle = Math.toRadians(this.phaseTick * 18);
+        this.velocity = new Vector(Math.cos(angle), 0, Math.sin(angle)).multiply(1.5);
+    }
+    private void fireball() {
+        Location loc = entity.getEyeLocation();
+        Vector dir = this.velocity.clone().normalize().multiply(1.5);
+        shootInfoFireballHoming.shootLoc = loc;
+        shootInfoFireballHoming.velocity = dir;
+        shootInfoFireballHoming.setLockedTarget(target);
+        EntityHelper.spawnProjectile(shootInfoFireballHoming);
+    }
+    private void flyHorizontal() {
+        Location loc = entity.getLocation();
+        Vector dir = this.target.getLocation().toVector().subtract(loc.toVector()).normalize();
+        dir.setY(0);
+        this.velocity = dir.multiply(1.85);
+    }
+    private void spawnYharonTornado() {
+        Location loc = entity.getEyeLocation();
+        Vector dir = this.target.getLocation().toVector().subtract(loc.toVector()).normalize().multiply(1.5);
+        shootInfoFlareTornado.shootLoc = loc;
+        shootInfoFlareTornado.velocity = dir;
+        shootInfoFlareTornado.setLockedTarget(target);
+        new YharonTornado(shootInfoFlareTornado, this);
+    }
     public void phase1() {
         switch (this.phaseStep) {
             case 1:
-                this.charge();
-                if (this.phaseTick > 40) {
-                    this.phaseStep = 2;
-                    this.phaseTick = 0;
-                }
-                break;
             case 2:
-                this.teleport(this.target.getLocation().add(0, 2, 0));
-                this.fireBlasts();
-                if (this.phaseTick > 20) {
-                    this.phaseStep = 3;
-                    this.phaseTick = 0;
+            case 6:
+            case 7:
+                this.charge();
+                if (this.phaseTick > 30) {
+                    this.updatePhaseStep();
                 }
                 break;
             case 3:
-                if (this.phaseTick > 60) {
-                    this.phaseStep = 4;
-                    this.phaseTick = 0;
+                this.chargeQuickly();
+                if (this.phaseTick > 20) {
+                    this.updatePhaseStep();
                 }
                 break;
             case 4:
-                this.charge();
+                if (this.phaseTick == 1) {
+                    this.teleportTarget = this.target.getLocation().add(0, 32, 0);
+                    this.velocity = this.teleportTarget.toVector().subtract(entity.getLocation().toVector()).normalize().multiply(2.0);
+                }
+                if (this.phaseTick > 10) {
+                    if (this.phaseTick == 11) {
+                        this.teleport(this.teleportTarget);
+                        this.velocity.zero();
+                    }
+                    if (this.phaseTick % 6 == 1 && this.phaseTick > 11)
+                        this.fireBlasts();
+                }
                 if (this.phaseTick > 40) {
-                    this.phaseStep = 5;
-                    this.phaseTick = 0;
+                    this.updatePhaseStep();
                 }
                 break;
             case 5:
-                this.flyLoop();
-                if (this.phaseTick > 100) {
-                    this.phaseStep = 6;
-                    this.phaseTick = 0;
+                if (this.phaseTick > 40) {
+                    this.updatePhaseStep();
                 }
                 break;
-            case 6:
+            case 8:
+                this.flyLoop();
                 this.fireball();
-                if (this.phaseTick == 1) {
-                    tornado = new TornadoSlime(bukkitEntity.getLocation());
+                if (this.phaseTick > 40) {
+                    this.updatePhaseStep();
                 }
-                tornado.update();
-                // Flame tornado behavior will go here
-                if (this.phaseTick > 80) {
-                    this.phaseStep = 1;
-                    this.phaseTick = 0;
+                break;
+            case 9:
+                if (this.phaseTick == 1) {
+                    spawnYharonTornado();
+                    this.velocity.zero();
+                }
+                if (this.phaseTick > 20) {
+                    this.updatePhaseStep(1);
                 }
                 break;
         }
         this.phaseTick++;
     }
-    private void teleport(Location location) {
-        this.setPosition(location.getX(), location.getY(), location.getZ());
+    public void phase2() {
+        switch (this.phaseStep) {
+            case 1:
+            case 7:
+                this.charge();
+                if (this.phaseTick > 30) {
+                    updatePhaseStep();
+                }
+                break;
+            case 2:
+            case 3:
+            case 6:
+                this.chargeQuickly();
+                if (this.phaseTick > 20) {
+                    updatePhaseStep();
+                }
+                break;
+            case 4:
+                this.flyLoop();
+                this.fireball();
+                if (this.phaseTick > 40) {
+                    updatePhaseStep();
+                }
+                break;
+            case 5:
+                this.flyHorizontal();
+                this.fireball();
+                if (this.phaseTick > 20) {
+                    updatePhaseStep();
+                }
+                break;
+            case 8:
+                if (this.phaseTick == 1) {
+                    spawnYharonTornado();
+                    this.velocity.zero();
+                }
+                if (this.phaseTick > 20) {
+                    updatePhaseStep();
+                }
+                break;
+            case 9:
+                if (this.phaseTick == 1) {
+                    Location loc = target.getLocation().add(target.getLocation().getDirection().multiply(32));
+                    this.teleport(loc);
+                    this.velocity.zero();
+                }
+                if (this.phaseTick % 6 == 1)
+                    this.fireBlasts();
+                if (this.phaseTick > 30) {
+                    updatePhaseStep(1);
+                }
+                break;
+        }
+        this.phaseTick++;
     }
-    private void charge() {
-        this.velocity = this.target.getLocation().toVector().subtract(entity.getLocation().toVector()).normalize().multiply(0.5);
+    public void phase3() {
+        switch (this.phaseStep) {
+            case 1:
+                if (this.phaseTick == 1) {
+                    Location loc = entity.getLocation();
+                    Vector dir = this.target.getLocation().toVector().subtract(loc.toVector()).normalize().multiply(1.5);
+                    shootInfoFlareTornado.shootLoc = loc;
+                    shootInfoFlareTornado.velocity = dir;
+                    shootInfoFlareTornado.setLockedTarget(target);
+                    new YharonTornado(shootInfoFlareTornado, this);
+                }
+                if (this.phaseTick > 15) {
+                    updatePhaseStep();
+                }
+                break;
+            case 2:
+                if (this.phaseTick < 20) {
+                    this.charge();
+                } else if (this.phaseTick < 40) {
+                    this.charge();
+                } else if (this.phaseTick < 60) {
+                    this.flyHorizontal();
+                    this.fireball();
+                } else {
+                    updatePhaseStep();
+                }
+                break;
+            case 3:
+                if (Math.random() < 0.5) {
+                    if (this.phaseTick < 20) {
+                        this.charge();
+                    } else {
+                        updatePhaseStep();
+                    }
+                } else {
+                    if (this.phaseTick < 20) {
+                        this.charge();
+                    } else if (this.phaseTick < 40) {
+                        this.charge();
+                    } else {
+                        updatePhaseStep();
+                    }
+                }
+                break;
+            case 4:
+                if (this.phaseTick < 20) {
+                    this.charge();
+                } else if (this.phaseTick < 40) {
+                    this.charge();
+                } else {
+                    updatePhaseStep();
+                }
+                break;
+            case 5:
+                this.fireBlasts();
+                if (this.phaseTick > 20) {
+                    updatePhaseStep();
+                }
+                break;
+            case 6:
+                if (this.phaseTick > 40) {
+                    updatePhaseStep(1);
+                }
+                break;
+        }
+        this.phaseTick++;
     }
-    private void fireBlasts() {
-        for (int i = 0; i < 10; i++) {
-            Location loc = entity.getLocation();
-            Vector dir = this.target.getLocation().toVector().subtract(loc.toVector()).normalize();
-            loc.getWorld().spawnEntity(loc.add(dir.multiply(2)), EntityType.FIREBALL);
+    public void phase4() {
+        switch (this.phaseStep) {
+            case 1:
+                if (this.phaseTick < 20) {
+                    if (Math.random() < 0.3) {
+                        this.chargeQuickly();
+                    } else {
+                        this.charge();
+                    }
+                } else if (this.phaseTick < 40) {
+                    if (Math.random() < 0.3) {
+                        this.chargeQuickly();
+                    } else {
+                        this.charge();
+                    }
+                } else if (this.phaseTick < 60) {
+                    if (Math.random() < 0.3) {
+                        this.chargeQuickly();
+                    } else {
+                        this.charge();
+                    }
+                } else {
+                    updatePhaseStep();
+                }
+                break;
+            case 2:
+                if (this.phaseTick < 20) {
+                    this.flyHorizontal();
+                    this.fireball();
+                } else {
+                    updatePhaseStep();
+                }
+                break;
+            case 3:
+                if (this.phaseTick < 20) {
+                    if (Math.random() < 0.3) {
+                        this.chargeQuickly();
+                    } else {
+                        this.charge();
+                    }
+                } else if (this.phaseTick < 40) {
+                    if (Math.random() < 0.3) {
+                        this.chargeQuickly();
+                    } else {
+                        this.charge();
+                    }
+                } else if (this.phaseTick < 60) {
+                    if (Math.random() < 0.3) {
+                        this.chargeQuickly();
+                    } else {
+                        this.charge();
+                    }
+                } else {
+                    updatePhaseStep();
+                }
+                break;
+            case 4:
+                this.fireBlasts();
+                if (this.phaseTick > 20) {
+                    updatePhaseStep();
+                }
+                break;
+            case 5:
+                if (this.phaseTick > 20) {
+                    updatePhaseStep(1);
+                }
+                break;
+        }
+        this.phaseTick++;
+    }
+    public void phase5() {
+        switch (this.phaseStep) {
+            case 1:
+                if (this.phaseTick == 1) {
+                    Location loc = this.target.getLocation();
+                    Vector dir;
+                    do {
+                        dir = new Vector(Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1);
+                    } while (loc.getDirection().angle(dir) > Math.toRadians(45));
+                    dir = dir.normalize().multiply(32);
+                    loc = loc.add(dir);
+                    this.teleport(loc);
+                    this.chargeQuickly();
+                }
+                if (this.phaseTick > 20) {
+                    updatePhaseStep();
+                }
+                break;
+            case 2:
+                if (this.phaseTick < 20) {
+                    if (Math.random() < 0.3) {
+                        this.chargeQuickly();
+                    } else {
+                        this.charge();
+                    }
+                } else if (this.phaseTick < 50) {
+                    if (Math.random() < 0.3) {
+                        this.chargeQuickly();
+                    } else {
+                        this.charge();
+                    }
+                } else {
+                    updatePhaseStep();
+                }
+                break;
+            case 3:
+                if (this.phaseTick == 1) {
+                    Location loc = this.target.getLocation();
+                    this.teleport(loc.add(loc.getDirection().multiply(32)));
+                }
+                this.fireBlasts();
+                if (this.phaseTick > 20) {
+                    updatePhaseStep();
+                }
+                break;
+            case 4:
+                if (this.phaseTick > 10) {
+                    updatePhaseStep(1);
+                }
+                break;
+        }
+        this.phaseTick++;
+    }
+    private void updatePhase() {
+        double healthPercentage = (this.getHealth() / this.getMaxHealth()) * 100;
+        int newPhase = this.phase;
+        if (healthPercentage < 80 && this.phase == 1) {
+            newPhase = 2;
+        } else if (healthPercentage < 55 && this.phase == 2) {
+            newPhase = 3;
+        } else if (healthPercentage < 35 && this.phase == 3) {
+            newPhase = 4;
+        } else if (healthPercentage < 16 && this.phase == 4) {
+            newPhase = 5;
+        }
+        if (newPhase != this.phase) {
+            this.phase = newPhase;
+            this.phaseStep = 1;
+            this.phaseTick = 0;
+            System.out.println("Phase " + this.phase);
         }
     }
-    private void flyLoop() {
-        Location loc = entity.getLocation();
-        double angle = Math.toRadians(this.phaseTick);
-        Vector dir = new Vector(Math.cos(angle), 0, Math.sin(angle));
-        this.velocity = dir.multiply(0.5);
+    private void executePhase() {
+        switch (this.phase) {
+            case 1:
+                this.phase1();
+                break;
+            case 2:
+                this.phase2();
+                break;
+            case 3:
+                this.phase3();
+                break;
+            case 4:
+                this.phase4();
+                break;
+            case 5:
+                this.phase5();
+                break;
+        }
     }
-    private void fireball() {
-        Location loc = entity.getLocation();
-        Vector dir = this.target.getLocation().toVector().subtract(loc.toVector()).normalize();
-        loc.getWorld().spawnEntity(loc.add(dir.multiply(2)), EntityType.FIREBALL);
-    }
-
-
-
     public void tick() {
         // Update velocity
-//        this.velocity.setY(this.velocity.getY() - 0.05);
         this.setPosition(this.locX + this.velocity.getX(), this.locY + this.velocity.getY(), this.locZ + this.velocity.getZ());
 
         // Update phase
-        double healthPercentage = (this.getHealth() / this.getMaxHealth()) * 100;
-        if (healthPercentage < 80 && this.phase == 1) {
-            this.phase = 2;
-            System.out.println("Phase 2");
-            this.phaseStep = 1;
-            this.phaseTick = 0;
-        } else if (healthPercentage < 50 && this.phase == 2) {
-            this.phase = 3;
-            System.out.println("Phase 3");
-        } else if (healthPercentage < 35 && this.phase == 3) {
-            this.phase = 4;
-            System.out.println("Phase 4");
-        } else if (healthPercentage < 16 && this.phase == 4) {
-            this.phase = 5;
-            System.out.println("Phase 5");
-        }
+        updatePhase();
 
-        if (this.phase == 1) {
-            this.phase1();
-        }
+        // AI details
+        executePhase();
     }
 
 
@@ -189,7 +491,7 @@ public class Yharon extends EntitySlime {
             }
         }
         // facing
-        if (false)
+        if (velocity.lengthSquared() > 1e-5)
             this.yaw = (float) MathHelper.getVectorYaw( velocity );
         else
             this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
@@ -228,9 +530,9 @@ public class Yharon extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 594d);
-            attrMap.put("damageTakenMulti", 0.7);
-            attrMap.put("defence", 100d);
+            attrMap.put("damage", 1248d);
+            attrMap.put("damageTakenMulti", 0.78);
+            attrMap.put("defence", 180d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
@@ -266,8 +568,12 @@ public class Yharon extends EntitySlime {
         }
         // shoot info's
         {
-            shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapProjectile,
-                    EntityHelper.DamageType.MAGIC, "projectile");
+            shootInfoFireballRegular = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFireball,
+                    EntityHelper.DamageType.MAGIC, "灼焱余烬");
+            shootInfoFireballHoming = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFireball,
+                    EntityHelper.DamageType.MAGIC, "追踪灼焱余烬");
+            shootInfoFlareTornado = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFlareTornado,
+                    EntityHelper.DamageType.MAGIC, "大型火焰龙卷");
         }
     }
 
@@ -303,5 +609,9 @@ public class Yharon extends EntitySlime {
         }
         // AI
         AI();
+    }
+
+    public Player getTarget() {
+        return target;
     }
 }

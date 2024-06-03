@@ -20,6 +20,7 @@ import terraria.entity.boss.postMoonLord.polterghast.Polterghast;
 import terraria.entity.boss.postMoonLord.polterghast.PolterghastClone;
 import terraria.entity.boss.postMoonLord.signus.Signus;
 import terraria.entity.boss.postMoonLord.theOldDuke.TheOldDuke;
+import terraria.entity.boss.postMoonLord.yharon.Infernado;
 import terraria.entity.boss.preHardMode.crabulon.Crabulon;
 import terraria.entity.boss.hardMode.cryogen.Cryogen;
 import terraria.entity.boss.hardMode.cryogen.CryogenShield;
@@ -190,6 +191,7 @@ public enum CustomEntities {
     BOSS_WOF_EYE            ("WallOfFleshEye",         55,  EntityType.SLIME,           EntitySlime.class,           WallOfFleshEye.class),
     BOSS_WOF_MOUTH          ("WallOfFleshMouth",       55,  EntityType.SLIME,           EntitySlime.class,           WallOfFleshMouth.class),
     BOSS_YHARON             ("Yharon",                 55,  EntityType.SLIME,           EntitySlime.class,           Yharon.class),
+    BOSS_YHARON_INFERNADO   ("Infernado",              55,  EntityType.SLIME,           EntitySlime.class,           Infernado.class),
     CRITTER                 ("Critter",                60,  EntityType.SILVERFISH,      EntitySilverfish.class,      Critter.class),
     EVENT_PILLAR            ("CelestialPillar",        53,  EntityType.GIANT,           EntityGiantZombie.class,     CelestialPillar.class),
     MINION_CAVE_SPIDER      ("MinionCaveSpider",       59,  EntityType.CAVE_SPIDER,     EntityCaveSpider.class,      MinionCaveSpider.class),
