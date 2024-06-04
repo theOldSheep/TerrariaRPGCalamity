@@ -77,17 +77,17 @@ public class Infernado extends EntitySlime {
         return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
     }
     // a constructor for actual spawning
-    public Infernado(Yharon owner, Location spawnLoc, ArrayList<Infernado> sharknadoList, int currIndex, boolean phase2) {
+    public Infernado(Yharon owner, Location targetLoc, ArrayList<Infernado> sharknadoList, int currIndex) {
         super( owner.getWorld() );
         // spawn location
-        setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
+        this.phase2 = owner.phase >= 3;
+        setLocation(targetLoc.getX(), targetLoc.getY() + (phase2 ? -20 : -10), targetLoc.getZ(), 0, 0);
         // add to world
         (owner.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
         this.owner = owner;
         this.sharknadoList = sharknadoList;
         this.index = currIndex;
-        this.phase2 = phase2;
         setCustomName("烈焰龙卷");
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("noDamage");
@@ -100,10 +100,8 @@ public class Infernado extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", phase2 ? 696d : 500d);
-            attrMap.put("defence", 200d);
+            attrMap.put("damage", 1392d);
             attrMap.put("knockback", 4d);
-            attrMap.put("knockbackResistance", 1d);
             // damage multiplier
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
@@ -116,9 +114,10 @@ public class Infernado extends EntitySlime {
         }
         // init slime size and offsets
         {
-            horizontalOffset = index * 0.4;
-            verticalOffset = index * 3;
-            int slimeSize = (int) (6 + horizontalOffset);
+            double verticalOffsetMulti = phase2 ? 6 : 3;
+            horizontalOffset = index * (phase2 ? 0.6 : 0.4);
+            verticalOffset = index * verticalOffsetMulti;
+            int slimeSize = (int) (2 * verticalOffsetMulti + horizontalOffset);
             setSize(slimeSize, false);
         }
         // boss parts and other properties
@@ -136,11 +135,11 @@ public class Infernado extends EntitySlime {
         }
         // next layer
         {
-            int indexMax = phase2 ? 60 : 40;
+            int indexMax = 40;
             if (currIndex < indexMax)
                 Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
                     new Infernado(owner, bukkitEntity.getLocation().add(new Vector(0, 1, 0)),
-                            sharknadoList, currIndex + 1, phase2);
+                            sharknadoList, currIndex + 1);
                 }, 2);
         }
     }

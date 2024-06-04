@@ -42,8 +42,8 @@ public class YharonTornado extends GenericProjectile {
         super.die();
 
         // Spawn the Infernado
-        Location infernadoLocation = bukkitEntity.getLocation().add(new Vector(0, -10, 0));
-        new Infernado(boss, infernadoLocation, new ArrayList<>(), 0, false);
+        Location infernadoLocation = bukkitEntity.getLocation();
+        new Infernado(boss, infernadoLocation, new ArrayList<>(), 0);
     }
 
     @Override
