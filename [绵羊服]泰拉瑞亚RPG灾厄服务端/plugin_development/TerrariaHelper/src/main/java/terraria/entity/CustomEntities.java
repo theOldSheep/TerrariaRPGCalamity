@@ -90,7 +90,7 @@ import terraria.entity.npc.*;
 import terraria.entity.others.Critter;
 import terraria.entity.others.TerrariaDroppedItem;
 import terraria.entity.others.Mount;
-import terraria.entity.projectile.PlayerTornado;
+import terraria.entity.others.PlayerTornado;
 import terraria.util.NMSUtils;
 
 /*

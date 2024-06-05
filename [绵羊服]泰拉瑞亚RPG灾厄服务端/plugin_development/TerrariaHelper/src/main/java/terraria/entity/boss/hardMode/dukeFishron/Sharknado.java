@@ -19,10 +19,7 @@ import java.util.UUID;
 public class Sharknado extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.DUKE_FISHRON;
-    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.OCEAN;
-    public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
-    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     Player target = null;
     Vector velocity;
     // other variables and AI
@@ -68,10 +65,6 @@ public class Sharknado extends EntitySlime {
         super(world);
         super.die();
     }
-    // validate if the condition for spawning is met
-    public static boolean canSpawn(Player player) {
-        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
-    }
     // a constructor for actual spawning
     public Sharknado(DukeFishron owner, Location spawnLoc, ArrayList<Sharknado> sharknadoList, int currIndex, boolean phase2) {
         super( owner.getWorld() );
@@ -103,12 +96,6 @@ public class Sharknado extends EntitySlime {
             // damage multiplier
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
-        }
-        // init target map
-        {
-            targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) owner.targetMap.clone();
-            target = owner.target;
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
         // init slime size and offsets
         {

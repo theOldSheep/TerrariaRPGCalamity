@@ -19,6 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.others.PlayerTornado;
 import terraria.entity.projectile.*;
 import terraria.entity.others.TerrariaFishingHook;
 import terraria.entity.minion.MinionCaveSpider;

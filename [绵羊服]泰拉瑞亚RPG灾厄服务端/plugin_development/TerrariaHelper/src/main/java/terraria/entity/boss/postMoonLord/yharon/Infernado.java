@@ -22,13 +22,8 @@ import java.util.UUID;
 
 public class Infernado extends EntitySlime {
     // basic variables
-    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.DUKE_FISHRON;
-    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.OCEAN;
-    public static final boolean IGNORE_DISTANCE = false;
+    public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.YHARON_DRAGON_OF_REBIRTH;
     HashMap<String, Double> attrMap;
-    HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
-    Player target = null;
-    Vector velocity;
     // other variables and AI
     ArrayList<Infernado> sharknadoList;
     Infernado base;
@@ -43,8 +38,8 @@ public class Infernado extends EntitySlime {
             return;
         // AI
         {
+            angle += 18;
             if (base != null) {
-                angle += 18;
                 Vector offsetDir = MathHelper.vectorFromYawPitch_approx(angle, 0);
                 offsetDir.multiply(horizontalOffset);
                 offsetDir.setY(verticalOffset);
@@ -71,10 +66,6 @@ public class Infernado extends EntitySlime {
     public Infernado(World world) {
         super(world);
         super.die();
-    }
-    // validate if the condition for spawning is met
-    public static boolean canSpawn(Player player) {
-        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
     }
     // a constructor for actual spawning
     public Infernado(Yharon owner, Location targetLoc, ArrayList<Infernado> sharknadoList, int currIndex) {
@@ -105,12 +96,6 @@ public class Infernado extends EntitySlime {
             // damage multiplier
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
-        }
-        // init target map
-        {
-            targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) owner.targetMap.clone();
-            target = owner.target;
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
         // init slime size and offsets
         {

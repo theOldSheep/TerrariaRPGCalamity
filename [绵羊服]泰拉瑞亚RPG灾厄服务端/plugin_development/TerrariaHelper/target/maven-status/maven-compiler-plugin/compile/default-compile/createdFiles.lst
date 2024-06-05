@@ -1,3 +1,4 @@
+terraria\entity\projectile\RotatingRingProjectile.class
 terraria\entity\boss\hardMode\theTwins\Retinazer.class
 terraria\util\GameplayHelper$BlockTreePart.class
 terraria\util\NMSUtils.class
@@ -82,6 +83,7 @@ terraria\entity\boss\hardMode\thePlaguebringerGoliath\PlagueHomingMissile.class
 terraria\entity\npc\PathfinderGoalNPCRestrictLocation.class
 terraria\util\YmlHelper$YmlSection.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticLightningOrb.class
+terraria\entity\projectile\RotatingRingProjectile$RingProperties.class
 terraria\entity\boss\preHardMode\skeletron\SkeletronHead.class
 terraria\entity\boss\event\pumpking\PumpkingScythe.class
 terraria\util\ItemUseHelper.class
@@ -99,6 +101,7 @@ terraria\entity\boss\hardMode\moonLord\MoonLordPhantasmalBolt.class
 terraria\entity\projectile\Yoyo.class
 terraria\entity\boss\postMoonLord\devourerOfGods\ScatteringCircleAttackPattern$1.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Anahita$1.class
+terraria\entity\projectile\RotatingRingProjectile$RotationDirection.class
 terraria\util\MonsterHelper$UniqueMonsterInfo.class
 terraria\util\WorldHelper$LeafLayerShape.class
 terraria\entity\boss\preHardMode\eyeOfCthulhu\EyeOfCthulhu$1.class
@@ -182,7 +185,6 @@ terraria\entity\boss\hardMode\queenSlime\QueenSlime.class
 terraria\entity\boss\postMoonLord\profanedGuardians\GuardianCommander.class
 terraria\entity\boss\preHardMode\desertScourge\DesertScourge.class
 terraria\util\EntityHelper$AimHelperOptions.class
-terraria\entity\projectile\PlayerTornado.class
 terraria\util\EntityHelper$1.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticCultistClone.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHand$HandType.class
@@ -212,6 +214,7 @@ terraria\entity\boss\postMoonLord\theOldDuke\TheOldDuke.class
 terraria\entity\boss\postMoonLord\ceaselessVoid\CeaselessVoid.class
 terraria\entity\boss\hardMode\astrumDeus\AstrumDeus.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHead.class
+terraria\entity\others\PlayerTornado.class
 terraria\entity\monster\MonsterSilverfish.class
 terraria\entity\monster\MonsterSlime.class
 terraria\event\listener\RandomTitleListener.class

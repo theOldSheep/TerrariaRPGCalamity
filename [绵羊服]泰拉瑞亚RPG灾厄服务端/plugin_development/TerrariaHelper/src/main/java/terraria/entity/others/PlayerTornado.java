@@ -1,4 +1,4 @@
-package terraria.entity.projectile;
+package terraria.entity.others;
 
 import net.minecraft.server.v1_12_R1.EntitySlime;
 import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;

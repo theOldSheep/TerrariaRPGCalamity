@@ -11,6 +11,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
+import terraria.entity.projectile.RotatingRingProjectile;
 import terraria.entity.projectile.YharonTornado;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
@@ -137,61 +138,77 @@ public class Yharon extends EntitySlime {
         shootInfoFlareTornado.setLockedTarget(target);
         new YharonTornado(shootInfoFlareTornado, this);
     }
+
+
+    public void summonRingOfProjectiles(EntityHelper.ProjectileShootInfo shootInfo, Location spawnLocation, double theta, boolean clockwise, double initialAngle, double angleChange) {
+        RotatingRingProjectile.summonRingOfProjectiles(shootInfo, target, spawnLocation, theta,
+                clockwise ? RotatingRingProjectile.RotationDirection.CLOCKWISE : RotatingRingProjectile.RotationDirection.COUNTER_CLOCKWISE,
+                initialAngle, angleChange, 16);
+    }
+
+
+
+
     public void phase1() {
-        switch (this.phaseStep) {
-            case 1:
-            case 2:
-            case 6:
-            case 7:
-                this.charge();
-                if (this.phaseTick > 30) {
-                    this.updatePhaseStep();
-                }
-                break;
-            case 3:
-                this.chargeQuickly();
-                if (this.phaseTick > 20) {
-                    this.updatePhaseStep();
-                }
-                break;
-            case 4:
-                if (this.phaseTick == 1) {
-                    this.teleportTarget = this.target.getLocation().add(0, 32, 0);
-                    this.velocity = this.teleportTarget.toVector().subtract(entity.getLocation().toVector()).normalize().multiply(2.0);
-                }
-                if (this.phaseTick > 10) {
-                    if (this.phaseTick == 11) {
-                        this.teleport(this.teleportTarget);
-                        this.velocity.zero();
-                    }
-                    if (this.phaseTick % 6 == 1 && this.phaseTick > 11)
-                        this.fireBlasts();
-                }
-                if (this.phaseTick > 40) {
-                    this.updatePhaseStep();
-                }
-                break;
-            case 5:
-                if (this.phaseTick > 40) {
-                    this.updatePhaseStep();
-                }
-                break;
-            case 8:
-                this.flyLoop();
-                this.fireball();
-                if (this.phaseTick > 40) {
-                    this.updatePhaseStep();
-                }
-                break;
-            case 9:
-                if (this.phaseTick == 1) {
-                    spawnTornado();
-                    this.velocity.zero();
-                }
-                if (this.phaseTick > 20) {
-                    this.updatePhaseStep(1);
-                }
-                break;
+//        switch (this.phaseStep) {
+//            case 1:
+//            case 2:
+//            case 6:
+//            case 7:
+//                this.charge();
+//                if (this.phaseTick > 30) {
+//                    this.updatePhaseStep();
+//                }
+//                break;
+//            case 3:
+//                this.chargeQuickly();
+//                if (this.phaseTick > 20) {
+//                    this.updatePhaseStep();
+//                }
+//                break;
+//            case 4:
+//                if (this.phaseTick == 1) {
+//                    this.teleportTarget = this.target.getLocation().add(0, 32, 0);
+//                    this.velocity = this.teleportTarget.toVector().subtract(entity.getLocation().toVector()).normalize().multiply(2.0);
+//                }
+//                if (this.phaseTick > 10) {
+//                    if (this.phaseTick == 11) {
+//                        this.teleport(this.teleportTarget);
+//                        this.velocity.zero();
+//                    }
+//                    if (this.phaseTick % 6 == 1 && this.phaseTick > 11)
+//                        this.fireBlasts();
+//                }
+//                if (this.phaseTick > 40) {
+//                    this.updatePhaseStep();
+//                }
+//                break;
+//            case 5:
+//                if (this.phaseTick > 40) {
+//                    this.updatePhaseStep();
+//                }
+//                break;
+//            case 8:
+//                this.flyLoop();
+//                this.fireball();
+//                if (this.phaseTick > 40) {
+//                    this.updatePhaseStep();
+//                }
+//                break;
+//            case 9:
+//                if (this.phaseTick == 1) {
+//                    spawnTornado();
+//                    this.velocity.zero();
+//                }
+//                if (this.phaseTick > 20) {
+//                    this.updatePhaseStep(1);
+//                }
+//                break;
+//        }
+        int interval = 20;
+        if (this.phaseTick % interval == 0){
+            summonRingOfProjectiles(shootInfoFireballRegular, entity.getEyeLocation().add(0, 10, 0),
+                    phaseTick, phaseTick % (interval * 2) == 0, Math.random() * 360, 4.5);
         }
         this.phaseTick++;
     }
@@ -434,9 +451,6 @@ public class Yharon extends EntitySlime {
         // AI details
         executePhase();
     }
-
-
-
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)

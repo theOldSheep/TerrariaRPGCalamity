@@ -13,7 +13,7 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.projectile.PlayerTornado;
+import terraria.entity.others.PlayerTornado;
 import terraria.entity.projectile.GenericProjectile;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.gameplay.EventAndTime;
