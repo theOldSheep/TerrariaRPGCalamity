@@ -777,7 +777,7 @@
         - "弑神怒焰|60|1"
 灼焱余烬:
     penetration: 99999
-    projectileSize: 2
+    projectileSize: 3
     liveTime: 100
     gravity: 0
     blockHitAction: thru
@@ -785,7 +785,7 @@
         - "龙焰|50|1"
 追踪灼焱余烬:
     penetration: 99999
-    projectileSize: 2
+    projectileSize: 3
     liveTime: 100
     gravity: 0
     blockHitAction: thru
