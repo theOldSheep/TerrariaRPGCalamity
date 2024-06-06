@@ -73,6 +73,7 @@ terraria\entity\npc\TerrariaNPCNurse.class
 terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
 terraria\entity\boss\postMoonLord\yharon\Infernado.class
 terraria\entity\others\Mount.class
+terraria\entity\projectile\RotatingRingProjectile$RingProperties$Builder.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
 terraria\event\TerrariaProjectileHitEvent.class
 terraria\worldgen\overworld\OverworldBiomeGenerator$2.class
@@ -297,6 +298,7 @@ terraria\worldgen\overworld\FoliagePopulator$1.class
 terraria\entity\boss\hardMode\astrumAureus\AureusSpawn.class
 terraria\worldgen\Interpolate.class
 terraria\entity\boss\event\everscream\Everscream.class
+terraria\entity\projectile\RotatingRingProjectile$1.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticIceMist.class
 terraria\entity\minion\MinionCaveSpider.class
 terraria\entity\boss\hardMode\theTwins\Spazmatism.class

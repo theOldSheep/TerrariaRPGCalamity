@@ -139,13 +139,26 @@ public class Yharon extends EntitySlime {
         new YharonTornado(shootInfoFlareTornado, this);
     }
 
+    private boolean clockwise = true;
 
-    public void summonRingOfProjectiles(EntityHelper.ProjectileShootInfo shootInfo, Location spawnLocation, double theta, boolean clockwise, double initialAngle, double angleChange) {
-        RotatingRingProjectile.summonRingOfProjectiles(shootInfo, target, spawnLocation, theta,
-                clockwise ? RotatingRingProjectile.RotationDirection.CLOCKWISE : RotatingRingProjectile.RotationDirection.COUNTER_CLOCKWISE,
-                initialAngle, angleChange, 16);
+    public void summonRingOfProjectilesOne(EntityHelper.ProjectileShootInfo shootInfo, Location spawnLocation) {
+        int numProjectiles = 1;
+        double initialAngle = Math.random() * 360;
+        double angleChange = 1;
+        double radiusMultiplier = 0.2;
+
+        RotatingRingProjectile.RingProperties ringProperties = new RotatingRingProjectile.RingProperties.Builder()
+                .withCenterLocation(spawnLocation)
+                .withRotationDirection(RotatingRingProjectile.RotationDirection.fromBoolean(clockwise))
+                .withAngleChange(angleChange)
+                .withInitialRotationDegrees(0)
+                .withRadiusMultiplier(radiusMultiplier)
+                .build();
+
+        RotatingRingProjectile.summonRingOfProjectiles(shootInfo, target, ringProperties, initialAngle, numProjectiles);
+
+        clockwise = !clockwise; // Toggle the rotation direction for the next call
     }
-
 
 
 
@@ -205,10 +218,9 @@ public class Yharon extends EntitySlime {
 //                }
 //                break;
 //        }
-        int interval = 20;
+        int interval = 150;
         if (this.phaseTick % interval == 0){
-            summonRingOfProjectiles(shootInfoFireballRegular, entity.getEyeLocation().add(0, 10, 0),
-                    phaseTick, phaseTick % (interval * 2) == 0, Math.random() * 360, 4.5);
+            summonRingOfProjectilesOne(shootInfoFireballRegular, entity.getEyeLocation());
         }
         this.phaseTick++;
     }
