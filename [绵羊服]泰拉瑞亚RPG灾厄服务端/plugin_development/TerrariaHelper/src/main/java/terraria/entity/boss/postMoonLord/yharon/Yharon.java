@@ -142,16 +142,16 @@ public class Yharon extends EntitySlime {
     private boolean clockwise = true;
 
     public void summonRingOfProjectilesOne(EntityHelper.ProjectileShootInfo shootInfo, Location spawnLocation) {
-        int numProjectiles = 1;
+        int numProjectiles = 10;
         double initialAngle = Math.random() * 360;
         double angleChange = 1;
-        double radiusMultiplier = 0.2;
+        double radiusMultiplier = 1.5;
 
         RotatingRingProjectile.RingProperties ringProperties = new RotatingRingProjectile.RingProperties.Builder()
                 .withCenterLocation(spawnLocation)
                 .withRotationDirection(RotatingRingProjectile.RotationDirection.fromBoolean(clockwise))
                 .withAngleChange(angleChange)
-                .withInitialRotationDegrees(0)
+                .withInitialRotationDegrees(clockwise ? 0 : 90)
                 .withRadiusMultiplier(radiusMultiplier)
                 .build();
 
@@ -218,7 +218,7 @@ public class Yharon extends EntitySlime {
 //                }
 //                break;
 //        }
-        int interval = 150;
+        int interval = 10;
         if (this.phaseTick % interval == 0){
             summonRingOfProjectilesOne(shootInfoFireballRegular, entity.getEyeLocation());
         }

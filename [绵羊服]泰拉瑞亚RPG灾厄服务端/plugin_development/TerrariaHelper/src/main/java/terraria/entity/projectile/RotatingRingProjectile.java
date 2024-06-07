@@ -2,6 +2,7 @@ package terraria.entity.projectile;
 
 
 import net.minecraft.server.v1_12_R1.World;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -107,7 +108,7 @@ public class RotatingRingProjectile extends GenericProjectile {
 
     // Default rotation axis
     private static Vector getDefaultRotationAxis() {
-        return new Vector(1, 0, 0);
+        return new Vector(0, 0, 1);
     }
 
     // Fields for the projectile
@@ -133,70 +134,61 @@ public class RotatingRingProjectile extends GenericProjectile {
     }
 
 
+    // Field to store the current closest axis
+    private Vector currentClosestAxis;
+
+    // Helper method to get the current closest axis
+    private Vector getCurrentClosestAxis() {
+        return currentClosestAxis;
+    }
     // Tick function for the projectile
     @Override
     public void B_() {
+        // Check if ringProperties is not null
         if (ringProperties != null) {
-            // Calculate the angle and radius for the current tick
+            // Calculate the angle and radius based on the initial angle, rotation direction, angle change, and ticks lived
             double angle = Math.toRadians(initialAngle + (ringProperties.getRotationDirection() == RotationDirection.CLOCKWISE ? 1 : -1) * ringProperties.getAngleChange() * this.ticksLived);
             double radius = ringProperties.getRadiusMultiplier() * this.ticksLived;
 
-            System.out.println("Angle: " + Math.toDegrees(angle));
-            System.out.println("Radius: " + radius);
+            // Calculate the direction vector from the center location to the target's eye location
+            Vector directionVector = MathHelper.getDirection(ringProperties.getCenterLocation(), target.getEyeLocation(), 1d);
 
-            // Calculate the position of the projectile
-            Vector position = new Vector(
-                    radius * Math.cos(angle),
-                    0,
-                    radius * Math.sin(angle)
-            );
+            // Calculate the closest axis (a vector parallel to the x-z plane) from the direction vector
+            // with smooth interpolation to prevent rapid rotations
+            Vector targetClosestAxis = MathHelper.setVectorLength(directionVector.clone().setY(0), 1d);
+            if (currentClosestAxis == null) {
+                currentClosestAxis = targetClosestAxis.clone(); // initialize with the first targetClosestAxis
+            }
+            double interpolationFactor = 0.1;
+            Vector closestAxis = currentClosestAxis.add(targetClosestAxis.subtract(currentClosestAxis).multiply(interpolationFactor));
+            MathHelper.setVectorLength(closestAxis, 1d);
 
-            System.out.println("Position: " + position);
+            // Update the current closest axis
+            this.currentClosestAxis = closestAxis;
 
-            // Rotate the position around the default rotation axis
-            position = MathHelper.rotateAroundAxisDegree(position, getDefaultRotationAxis(), ringProperties.getInitialRotationDegrees());
+            // Calculate the align axis (a vector perpendicular to the direction vector and closest axis)
+            Vector alignAxis = MathHelper.setVectorLength(closestAxis.getCrossProduct(directionVector), 1d);
 
-            // Calculate the direction vector to the target's eye location
-            Vector directionVector = target.getEyeLocation().toVector().subtract(ringProperties.getCenterLocation().toVector()).normalize();
-
-            System.out.println("Direction Vector: " + directionVector);
-
-            // Calculate the alignment axis and angle
-            Vector alignAxis = getDefaultRotationAxis().crossProduct(directionVector).normalize();
-            double alignAngle = Math.toDegrees(Math.acos(directionVector.dot(getDefaultRotationAxis())));
-
-            System.out.println("Alignment Axis: " + alignAxis);
-            System.out.println("Alignment Angle: " + alignAngle);
-
-            // Rotate the position around the alignment axis
-            position = MathHelper.rotateAroundAxisDegree(position, alignAxis, alignAngle);
-
-            // Add the center location to the position
+            // Calculate the position of the projectile based on the radius, angle, and center location
+            // and rotate the position around the closest axis and align axis
+            Vector position = new Vector(radius * Math.cos(angle), 0, radius * Math.sin(angle));
+            position = MathHelper.rotateAroundAxisDegree(position, closestAxis, ringProperties.getInitialRotationDegrees());
+            position = MathHelper.rotateAroundAxisDegree(position, alignAxis, Math.toDegrees(Math.acos(directionVector.dot(closestAxis))));
             position = position.add(ringProperties.getCenterLocation().toVector());
 
-            System.out.println("Final Position: " + position);
-
-            // Calculate the velocity of the projectile
+            // Calculate the velocity of the projectile based on its current location and the position
+            // and set the velocity of the projectile
             Vector velocity = position.clone().subtract(bukkitEntity.getLocation().toVector());
+            bukkitEntity.setVelocity(velocity);
 
-            System.out.println("Velocity: " + velocity);
-
-            // Check if the velocity is valid
-            if (Double.isFinite(velocity.getX()) && Double.isFinite(velocity.getY()) && Double.isFinite(velocity.getZ())) {
-                // Set the velocity of the projectile
-                bukkitEntity.setVelocity(velocity);
-
-                // Sync the velocity change to the client
-                this.impulse_index = RANDOMIZED_IMPULSE_TICK_INTERVAL;
-            } else {
-                // Remove the projectile if the velocity is invalid
-                bukkitEntity.remove();
-            }
+            // Set the impulse index to a random value
+            this.impulse_index = RANDOMIZED_IMPULSE_TICK_INTERVAL;
         }
 
-        // Call the superclass tick function
+        // Call the superclass's B_ method
         super.B_();
     }
+
 
 
     // Summon a ring of projectiles
