@@ -13,10 +13,8 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.entity.projectile.RotatingRingProjectile;
 import terraria.entity.projectile.YharonTornado;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,10 +43,12 @@ public class Yharon extends EntitySlime {
         attrMapFlareTornado.put("damage", 0d);
         attrMapFlareTornado.put("knockback", 0d);
     }
+    static final int PARTICLE_INTERVAL = 200;
+    static final double HORIZONTAL_LIMIT = 64.0;
 
     int phase = 1;
     Vector velocity = new Vector(0, 0, 0);
-    Location teleportTarget;
+    Location teleportTarget, spawnPosition;
     LivingEntity entity = (LivingEntity) getBukkitEntity();
     private int phaseTick = 0;
     private int phaseStep = 1;
@@ -140,24 +140,31 @@ public class Yharon extends EntitySlime {
     }
 
     private boolean clockwise = true;
-
-    public void summonRingOfProjectilesOne(EntityHelper.ProjectileShootInfo shootInfo, Location spawnLocation) {
-        int numProjectiles = 10;
+    public void summonRingOfProjectilesSimple(EntityHelper.ProjectileShootInfo shootInfo, Location spawnLocation, boolean alternate) {
+        summonRingOfProjectilesSphere(shootInfo, spawnLocation, 0, 1, alternate);
+    }
+    public void summonRingOfProjectilesSphere(EntityHelper.ProjectileShootInfo shootInfo, Location spawnLocation, int idx, int idxMax, boolean alternate) {
+        int numProjectiles = 16;
         double initialAngle = Math.random() * 360;
-        double angleChange = 1;
+        double angleChange = 0.4;
         double radiusMultiplier = 1.5;
+
+        double initialRotationDegrees = (double) idx / idxMax * 180;
 
         RotatingRingProjectile.RingProperties ringProperties = new RotatingRingProjectile.RingProperties.Builder()
                 .withCenterLocation(spawnLocation)
                 .withRotationDirection(RotatingRingProjectile.RotationDirection.fromBoolean(clockwise))
                 .withAngleChange(angleChange)
-                .withInitialRotationDegrees(clockwise ? 0 : 90)
+                .withInitialRotationDegrees(initialRotationDegrees)
                 .withRadiusMultiplier(radiusMultiplier)
+                .withPlayer(target)
                 .build();
 
         RotatingRingProjectile.summonRingOfProjectiles(shootInfo, target, ringProperties, initialAngle, numProjectiles);
 
-        clockwise = !clockwise; // Toggle the rotation direction for the next call
+        if (alternate) {
+            clockwise = !clockwise;
+        }
     }
 
 
@@ -220,7 +227,8 @@ public class Yharon extends EntitySlime {
 //        }
         int interval = 10;
         if (this.phaseTick % interval == 0){
-            summonRingOfProjectilesOne(shootInfoFireballRegular, entity.getEyeLocation());
+//            summonRingOfProjectilesSimple(shootInfoFireballRegular, entity.getEyeLocation(), false);
+            summonRingOfProjectilesSphere(shootInfoFireballRegular, entity.getEyeLocation(), phaseTick / interval, 6, false);
         }
         this.phaseTick++;
     }
@@ -462,6 +470,32 @@ public class Yharon extends EntitySlime {
 
         // AI details
         executePhase();
+
+        // Check if the player has moved too far horizontally
+        for (UUID uid : targetMap.keySet()) {
+            Player ply = Bukkit.getPlayer(uid);
+            if (isOutOfBoundary(ply)) {
+                EntityHelper.applyEffect(ply, "龙焰", 200);
+            }
+        }
+        // Fire particles
+        if (ticksLived % PARTICLE_INTERVAL == 1) {
+            visualizeBoundary();
+        }
+    }
+    private boolean isOutOfBoundary(Player ply) {
+        Location targetHorizontalLocation = ply.getLocation();
+        targetHorizontalLocation.setY(spawnPosition.getY());
+        double horizontalDistance = spawnPosition.distanceSquared(targetHorizontalLocation);
+        return horizontalDistance > HORIZONTAL_LIMIT * HORIZONTAL_LIMIT;
+    }
+    private void visualizeBoundary() {
+        for (UUID uid : targetMap.keySet()) {
+            Player ply = Bukkit.getPlayer(uid);
+            DragoncoreHelper.displayParticle(ply,
+                    new DragoncoreHelper.DragonCoreParticleInfo("yharon", spawnPosition),
+                    PARTICLE_INTERVAL);
+        }
     }
     private void AI() {
         // no AI after death
@@ -485,7 +519,6 @@ public class Yharon extends EntitySlime {
                 // increase player aggro duration
                 targetMap.get(target.getUniqueId()).addAggressionTick();
 
-                // TODO
                 tick();
             }
         }
@@ -574,6 +607,8 @@ public class Yharon extends EntitySlime {
             shootInfoFlareTornado = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFlareTornado,
                     EntityHelper.DamageType.MAGIC, "大型火焰龙卷");
         }
+        // center of arena
+        spawnPosition = target.getLocation();
     }
 
     // disable death function to remove boss bar

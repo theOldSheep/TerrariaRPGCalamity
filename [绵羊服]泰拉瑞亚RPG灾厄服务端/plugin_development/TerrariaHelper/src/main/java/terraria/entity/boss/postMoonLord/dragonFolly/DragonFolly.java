@@ -45,7 +45,7 @@ public class DragonFolly extends EntitySlime {
     };
     private static final double[] PHASE_THRESHOLDS = {0.75, 0.4};
     private static final int PARTICLE_INTERVAL = 100;
-    private static final double HORIZONTAL_LIMIT = 48.0, ALIGNMENT_DIST = 20, ALIGNMENT_SPEED = 0.8;
+    private static final double HORIZONTAL_LIMIT = 32.0, ALIGNMENT_DIST = 20, ALIGNMENT_SPEED = 0.8;
     private static final double PROJECTILE_SPEED = 1.0;
     private static final int PROJECTILE_TICKS_OFFSET = 30;
     static HashMap<String, Double> attrMapFeather;
@@ -96,7 +96,7 @@ public class DragonFolly extends EntitySlime {
                 for (UUID uid : targetMap.keySet()) {
                     Player ply = Bukkit.getPlayer(uid);
                     if (isOutOfBoundary(ply)) {
-                        EntityHelper.applyEffect(ply, "龙焰", 200);
+                        EntityHelper.applyEffect(ply, "龙焰", 100);
                     }
                 }
                 // Fire particles

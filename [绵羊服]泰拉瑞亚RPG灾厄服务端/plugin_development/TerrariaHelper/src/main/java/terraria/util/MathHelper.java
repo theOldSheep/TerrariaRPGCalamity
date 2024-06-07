@@ -320,5 +320,4 @@ public class MathHelper {
         }
         return result;
     }
-
 }
