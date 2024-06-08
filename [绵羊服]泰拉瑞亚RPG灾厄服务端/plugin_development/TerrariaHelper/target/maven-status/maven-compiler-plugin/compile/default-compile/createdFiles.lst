@@ -57,6 +57,7 @@ terraria\event\listener\ArrowHitListener$1.class
 terraria\entity\boss\preHardMode\kingSlime\CrownJewel.class
 terraria\entity\boss\hardMode\golem\GolemFoot.class
 terraria\entity\boss\hardMode\thePlaguebringerGoliath\ThePlaguebringerGoliath.class
+terraria\entity\boss\postMoonLord\exoMechs\Thanatos.class
 terraria\entity\boss\hardMode\dukeFishron\DukeFishron.class
 terraria\event\listener\BossSpawnListener$1.class
 terraria\entity\boss\preHardMode\wallOfFlesh\WallOfFleshEye.class
@@ -111,6 +112,8 @@ terraria\entity\others\TerrariaFishingHook.class
 terraria\worldgen\overworld\StructurePopulator.class
 terraria\entity\boss\postMoonLord\providence\Providence.class
 terraria\util\WorldHelper.class
+terraria\entity\boss\postMoonLord\exoMechs\Ares.class
+terraria\entity\boss\postMoonLord\exoMechs\Draedon.class
 terraria\event\listener\NPCListener.class
 terraria\entity\boss\hardMode\moonLord\MoonLordEye.class
 terraria\entity\projectile\GenericProjectile$1.class
@@ -188,6 +191,7 @@ terraria\entity\boss\preHardMode\desertScourge\DesertScourge.class
 terraria\util\EntityHelper$AimHelperOptions.class
 terraria\util\EntityHelper$1.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticCultistClone.class
+terraria\entity\boss\postMoonLord\exoMechs\Artemis.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHand$HandType.class
 terraria\entity\boss\preHardMode\eyeOfCthulhu\EyeOfCthulhu$AIPhase.class
 terraria\entity\npc\TerrariaNPCGuide.class

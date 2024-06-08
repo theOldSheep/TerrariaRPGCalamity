@@ -13,6 +13,7 @@ import terraria.entity.boss.hardMode.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.hardMode.calamitasClone.CalamitasClone;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
 import terraria.entity.boss.postMoonLord.devourerOfGods.DevourerOfGods;
+import terraria.entity.boss.postMoonLord.exoMechs.Draedon;
 import terraria.entity.boss.postMoonLord.polterghast.Polterghast;
 import terraria.entity.boss.postMoonLord.signus.Signus;
 import terraria.entity.boss.postMoonLord.theOldDuke.TheOldDuke;
@@ -315,7 +316,7 @@ public class BossHelper {
                 }
                 break;
             }
-            // pre-providence
+            // pre-servants of gods
             case THE_DRAGONFOLLY: {
                 if (DragonFolly.canSpawn(target)) {
                     new DragonFolly(target);
@@ -358,6 +359,7 @@ public class BossHelper {
                 }
                 break;
             }
+            // post-servants of gods
             case POLTERGHAST: {
                 if (Polterghast.canSpawn(target)) {
                     new Polterghast(target);
@@ -382,6 +384,13 @@ public class BossHelper {
             case YHARON_DRAGON_OF_REBIRTH: {
                 if (Yharon.canSpawn(target)) {
                     new Yharon(target);
+                    spawnedSuccessfully = true;
+                }
+                break;
+            }
+            case EXO_MECHS: {
+                if (Draedon.canSpawn(target)) {
+                    new Draedon(target);
                     spawnedSuccessfully = true;
                 }
                 break;

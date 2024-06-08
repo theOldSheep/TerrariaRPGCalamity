@@ -1,6 +1,7 @@
 package terraria.entity.projectile;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -146,14 +147,30 @@ public class RotatingRingProjectile extends GenericProjectile {
     @Override
     public void B_() {
         if (ringProperties != null) {
-            // Update the forward direction to point at the player's eye location
+            // Calculate the direction to the player's eye location
             Vector newForwardDirection = MathHelper.getDirection(ringProperties.getCenterLocation(), target.getEyeLocation(), 1d);
-            double dotProduct = ringProperties.getForwardDirection().dot(newForwardDirection);
-            if (Math.abs(dotProduct) < 1 - 1e-9) {
-                double angle = Math.acos(dotProduct);
-                Vector axis = MathHelper.setVectorLength(ringProperties.getForwardDirection().getCrossProduct(newForwardDirection), 1d);
+
+            // Project the newForwardDirection onto the normal of the plane
+            Vector projectedForwardDirection = newForwardDirection.clone()
+                    .subtract( MathHelper.vectorProjection(ringProperties.getRotationAxis(), newForwardDirection) );
+
+            // Skip redundant rotation if it is almost parallel to the plane
+            if (projectedForwardDirection.lengthSquared() < 1 - 1e-9) {
+                // 90 degrees change (perpendicular to the plane): use default forward direction.
+                if (projectedForwardDirection.lengthSquared() < 1e-9) {
+                    projectedForwardDirection = ringProperties.getForwardDirection();
+                }
+                else {
+                    projectedForwardDirection.normalize();
+                }
+
+                // Calculate the rotation axis and angle
+                Vector axis = projectedForwardDirection.getCrossProduct(newForwardDirection);
+                double angle = Math.acos(projectedForwardDirection.dot(newForwardDirection) );
+
+                // Rotate the rotationAxis and forwardDirection around the axis
                 ringProperties.rotationAxis = MathHelper.rotateAroundAxisRadian(ringProperties.rotationAxis, axis, angle);
-                ringProperties.forwardDirection = newForwardDirection;
+                ringProperties.forwardDirection = MathHelper.rotateAroundAxisRadian(ringProperties.forwardDirection, axis, angle);
             }
 
             // Calculate the offset direction

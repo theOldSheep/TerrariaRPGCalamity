@@ -209,8 +209,7 @@ public class MathHelper {
         EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions().setProjectileSpeed(length);
         Location targetLoc = EntityHelper.helperAimEntity(shootLoc, target, aimHelper);
         Vector fwdDir = targetLoc.subtract(shootLoc).toVector();
-        ArrayList<Vector> result = getEvenlySpacedProjectileDirections(projectileIntervalDegree, spreadAngleDegree, fwdDir, length);
-        return result;
+        return getEvenlySpacedProjectileDirections(projectileIntervalDegree, spreadAngleDegree, fwdDir, length);
     }
     public static <T> T selectWeighedRandom(HashMap<T, Double> weighedMap, T defaultVal) {
         double total = 0;

@@ -52,6 +52,7 @@ public class BossSpawnListener implements Listener {
         summonItems.put("死灵魂炬", BossHelper.BossType.POLTERGHAST);
         summonItems.put("宇宙之虫", BossHelper.BossType.THE_DEVOURER_OF_GODS);
         summonItems.put("圣佑烬昭龙蛋", BossHelper.BossType.YHARON_DRAGON_OF_REBIRTH);
+        summonItems.put("金源量子冷却电池", BossHelper.BossType.EXO_MECHS);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRightClick(PlayerInteractEvent evt) {

@@ -41,6 +41,7 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\preHardMode\kingSlime\CrownJewel.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\preHardMode\eaterOfWorld\EaterOfWorld.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\worldgen\overworld\OrePopulator.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\postMoonLord\exoMechs\Ares.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\hardMode\astrumDeus\AstrumDeus.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\others\TerrariaMinecart.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\listener\ServerStopListener.java
@@ -60,6 +61,7 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\preHardMode\wallOfFlesh\WallOfFleshEye.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\worldgen\MazeGenerator.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\projectile\HitEntityInfo.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\postMoonLord\exoMechs\Draedon.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\npc\TerrariaNPC.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\CustomEntities.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\hardMode\dukeFishron\Sharknado.java
@@ -105,6 +107,7 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\projectile\Boomerang.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\listener\PlayerKeyToggleListener.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\worldgen\overworld\FoliagePopulator.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\postMoonLord\exoMechs\Artemis.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\event\iceQueen\IceQueen.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\hardMode\lunaticCultist\LunaticCultist.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\hardMode\calamitasClone\Cataclysm.java
@@ -150,6 +153,7 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\hardMode\golem\GolemFist.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\worldgen\overworld\OverworldBlockGenericPopulator.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\hardMode\ravager\RavagerRockPillar.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\postMoonLord\exoMechs\Thanatos.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\listener\DropItemSpawnListener.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\util\CritterHelper.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\worldgen\overworld\OverworldBiomeGenerator.java

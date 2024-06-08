@@ -43,7 +43,7 @@ public class Yharon extends EntitySlime {
         attrMapFlareTornado.put("damage", 0d);
         attrMapFlareTornado.put("knockback", 0d);
     }
-    static final int PARTICLE_INTERVAL = 200;
+    static final int PARTICLE_INTERVAL = 400;
     static final double HORIZONTAL_LIMIT = 64.0;
 
     int phase = 1;
