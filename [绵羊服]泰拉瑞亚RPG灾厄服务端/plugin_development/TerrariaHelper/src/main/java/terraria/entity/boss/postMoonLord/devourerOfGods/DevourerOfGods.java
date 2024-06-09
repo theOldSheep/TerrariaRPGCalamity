@@ -453,8 +453,12 @@ public class DevourerOfGods extends EntitySlime {
             }
 
             // debuff
-            for (UUID uid : targetMap.keySet())
-                EntityHelper.applyEffect(Bukkit.getPlayer(uid), "极限重力", 310);
+            for (UUID uid : targetMap.keySet()) {
+                Player ply = Bukkit.getPlayer(uid);
+                if (ply == null)
+                    continue;
+                EntityHelper.applyEffect(ply, "极限重力", 310);
+            }
 
             // increase player aggro duration
             targetMap.get(target.getUniqueId()).addAggressionTick();

@@ -198,6 +198,8 @@ public class Providence extends EntitySlime {
         if (indexAI % ACTION_BAR_UPDATE_INTERVAL == 0) {
             for (UUID plyID : targetMap.keySet()) {
                 Player ply = Bukkit.getPlayer(plyID);
+                if (ply == null)
+                    continue;
                 double distanceToPlayer = bukkitEntity.getLocation().distance(ply.getLocation());
                 double distRatio = Math.min(distanceToPlayer / SPECIAL_EFFECT_DISTANCE, 1);
                 StringBuilder distanceMsgBuilder = new StringBuilder();
@@ -276,6 +278,8 @@ public class Providence extends EntitySlime {
             double pitchOffsetBottom = (90 - LASER_AIM_PITCH) * (1 - progress) + LASER_GAP_END * progress;
             for (UUID plyID : targetMap.keySet()) {
                 Player ply = Bukkit.getPlayer(plyID);
+                if (ply == null)
+                    continue;
                 double laserYaw = MathHelper.getVectorYaw( ply.getEyeLocation().subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector() );
                 // Shoot lasers
                 GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),

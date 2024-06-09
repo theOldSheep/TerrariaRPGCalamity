@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class Artemis extends EntitySlime {
+public class Apollo extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EXO_MECHS;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
@@ -27,7 +27,7 @@ public class Artemis extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     Draedon owner = null;
-    Apollo apollo = null;
+    Artemis twin = null;
     // other variables and AI
     static HashMap<String, Double> attrMapLaser;
     EntityHelper.ProjectileShootInfo shootInfoLaser;
@@ -38,38 +38,10 @@ public class Artemis extends EntitySlime {
     }
 
     boolean dashing = false;
-    protected Location twinHoverLocation;
-
 
     public void movementTick() {
-        Location targetLocation = target.getLocation();
-        double yaw = MathHelper.getVectorYaw(bukkitEntity.getLocation().subtract(targetLocation).toVector());
-        Vector direction = MathHelper.vectorFromYawPitch_approx(yaw, 0);
-        direction.multiply(32);
-        Location hoverLocation = targetLocation.clone().add(direction);
-
-        if (owner.isSubBossActive(0)) {
-            if (owner.isSubBossActive(2)) {
-                hoverLocation.setY(hoverLocation.getY() - 15);
-            }
-        } else {
-            hoverLocation.setY(-20);
-        }
-
-        // Update the twin's hover location
-        direction = MathHelper.vectorFromYawPitch_approx(yaw + 20, 0);
-        direction.multiply(32);
-        twinHoverLocation = targetLocation.clone().add(direction);
-        if (owner.isSubBossActive(0)) {
-            if (owner.isSubBossActive(2)) {
-                twinHoverLocation.setY(twinHoverLocation.getY() - 15);
-            }
-        } else {
-            twinHoverLocation.setY(-20);
-        }
-
-        // Use velocity-based movement to move the sub-boss to its hover location
-        Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverLocation, 3, true);
+        // Use velocity-based movement to move the twin sub-boss to its hover location
+        Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), twin.twinHoverLocation, 3, true);
         bukkitEntity.setVelocity(velocity);
     }
     private void AI() {
@@ -92,7 +64,7 @@ public class Artemis extends EntitySlime {
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
-    public Artemis(World world) {
+    public Apollo(World world) {
         super(world);
         super.die();
     }
@@ -101,19 +73,21 @@ public class Artemis extends EntitySlime {
         return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
     }
     // a constructor for actual spawning
-    public Artemis(Draedon draedon, Location spawnLoc) {
+    public Apollo(Draedon draedon, Artemis artemis, Location spawnLoc) {
         super( draedon.getWorld() );
         owner = draedon;
+        twin = artemis;
         // spawn location
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         draedon.getWorld().addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName("XS-01“阿尔忒弥斯”");
+        setCustomName("XS-03“阿波罗”");
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, artemis.getBukkitEntity());
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -153,19 +127,13 @@ public class Artemis extends EntitySlime {
             this.setNoGravity(true);
             this.persistent = true;
         }
-        // shoot info's
-        {
-            shootInfoLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLaser,
-                    EntityHelper.DamageType.ARROW, "橙色星流脉冲激光");
-        }
-        // apollo
-        apollo = new Apollo(owner, this, spawnLoc);
     }
 
     // rewrite AI
     @Override
     public void B_() {
         super.B_();
+        this.setHealth(twin.getHealth());
         // update boss bar and dynamic DR
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);
         // load nearby chunks

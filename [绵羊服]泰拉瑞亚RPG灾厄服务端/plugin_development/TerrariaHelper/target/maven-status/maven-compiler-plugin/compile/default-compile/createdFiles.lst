@@ -58,6 +58,7 @@ terraria\entity\boss\preHardMode\kingSlime\CrownJewel.class
 terraria\entity\boss\hardMode\golem\GolemFoot.class
 terraria\entity\boss\hardMode\thePlaguebringerGoliath\ThePlaguebringerGoliath.class
 terraria\entity\boss\postMoonLord\exoMechs\Thanatos.class
+terraria\entity\boss\postMoonLord\exoMechs\Apollo.class
 terraria\entity\boss\hardMode\dukeFishron\DukeFishron.class
 terraria\event\listener\BossSpawnListener$1.class
 terraria\entity\boss\preHardMode\wallOfFlesh\WallOfFleshEye.class

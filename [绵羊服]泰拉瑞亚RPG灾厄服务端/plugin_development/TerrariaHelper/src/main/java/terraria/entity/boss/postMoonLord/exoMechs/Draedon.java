@@ -1,6 +1,7 @@
 package terraria.entity.boss.postMoonLord.exoMechs;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -24,7 +25,7 @@ public class Draedon extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EXO_MECHS;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 100;
+    public static final double BASIC_HEALTH = 10000;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -32,13 +33,18 @@ public class Draedon extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-
+    private static final String[] MESSAGES = {"Message 1", "Message 2", "Message 3"};
+    private int messageIndex = 0;
+    private int messageDelayCounter = 0;
+    private boolean hasTriggered = false;
 
     private EntityLiving[] subBosses;
     private int currentPhase;
-    private boolean[] subBossIsActive;
+    boolean[] subBossIsActive;
 
-
+    public boolean isSubBossActive(int index) {
+        return subBossIsActive[index];
+    }
     private void managePhases() {
         int originalPhase = currentPhase;
         List<Integer> aliveBossIndexes = new ArrayList<>();
@@ -120,16 +126,15 @@ public class Draedon extends EntitySlime {
             case 7:
                 // Last boss fights the player until it's defeated
                 if (aliveBossIndexes.size() == 0) {
-                    // All sub-bosses are defeated, make Draedon vulnerable
+                    // All sub-bosses are defeated
                     this.removeScoreboardTag("noDamage");
-                    // No longer need any check in switch statement
                     currentPhase = 8;
+                    hasTriggered = true;
                 }
                 break;
         }
 
         if (currentPhase != originalPhase) {
-            printPhaseInfo();
             for (int index : aliveBossIndexes) {
                 if (subBossIsActive[index]) {
                     subBosses[index].removeScoreboardTag("noDamage");
@@ -156,19 +161,32 @@ public class Draedon extends EntitySlime {
         }
     }
 
-    private void printPhaseInfo() {
-        System.out.println("Current Phase: " + currentPhase);
-        for (int i = 0; i < 3; i++) {
-            System.out.println("Sub-boss " + i + " health ratio: " + subBosses[i].getHealth() / subBosses[i].getMaxHealth());
-            System.out.println("Sub-boss " + i + " active: " + subBossIsActive[i]);
+    public void broadcastMsg() {
+        if (hasTriggered) {
+            if (messageDelayCounter % 20 == 0) { // broadcast a message every 20 ticks
+                if (messageIndex < MESSAGES.length) {
+                    for (UUID uuid : targetMap.keySet()) {
+                        Player player = Bukkit.getPlayer(uuid);
+                        if (player != null) {
+                            player.sendMessage(MESSAGES[messageIndex]);
+                        }
+                    }
+                    messageIndex++;
+                } else {
+                    die();
+                }
+            }
+            messageDelayCounter++;
         }
     }
 
-
     private void AI() {
         // no AI after death
-        if (getHealth() <= 0d)
+        if (getHealth() <= 0d) {
+            setNoGravity(false);
+            bukkitEntity.setVelocity(new Vector(0, -1, 0));
             return;
+        }
         // AI
         {
             // update target
@@ -187,12 +205,20 @@ public class Draedon extends EntitySlime {
                 // increase player aggro duration
                 targetMap.get(target.getUniqueId()).addAggressionTick();
 
-                // TODO
-                // Make Draedon hover in front of the player
-                Location targetLocation = target.getLocation().add(target.getLocation().getDirection().multiply(10));
-                this.setLocation(targetLocation.getX(), targetLocation.getY(), targetLocation.getZ(), 0, 0);
+                // Hover in front of the player
+                double alignmentDistance = currentPhase == 8 ? 10: 40;
+
+                Location targetLocation = target.getLocation();
+                Vector direction = MathHelper.vectorFromYawPitch_approx(targetLocation.getYaw(), 0); // pitch is set to 0 to keep the direction horizontal
+                direction.multiply(alignmentDistance);
+
+                Location destination = targetLocation.add(direction);
+
+                Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), destination, 3, true);
+                bukkitEntity.setVelocity(velocity);
 
                 managePhases();
+                broadcastMsg();
             }
         }
         // facing
@@ -229,7 +255,7 @@ public class Draedon extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 1d);
-            attrMap.put("damageTakenMulti", 99d);
+            attrMap.put("damageTakenMulti", 1d);
             attrMap.put("defence", 0d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);

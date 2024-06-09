@@ -16,10 +16,7 @@ import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.DarkEnergy;
 import terraria.entity.boss.postMoonLord.devourerOfGods.DevourerOfGods;
 import terraria.entity.boss.postMoonLord.devourerOfGods.GodSlayerPortal;
-import terraria.entity.boss.postMoonLord.exoMechs.Draedon;
-import terraria.entity.boss.postMoonLord.exoMechs.Ares;
-import terraria.entity.boss.postMoonLord.exoMechs.Thanatos;
-import terraria.entity.boss.postMoonLord.exoMechs.Artemis;
+import terraria.entity.boss.postMoonLord.exoMechs.*;
 import terraria.entity.boss.postMoonLord.polterghast.Polterghast;
 import terraria.entity.boss.postMoonLord.polterghast.PolterghastClone;
 import terraria.entity.boss.postMoonLord.signus.Signus;
@@ -139,10 +136,11 @@ public enum CustomEntities {
     BOSS_EOL                ("EmpressOfLight",         55,  EntityType.SLIME,           EntitySlime.class,           EmpressOfLight.class),
     BOSS_EOW                ("EaterOfWorlds",          55,  EntityType.SLIME,           EntitySlime.class,           EaterOfWorld.class),
     BOSS_EVERSCREAM         ("Everscream",             55,  EntityType.SLIME,           EntitySlime.class,           Everscream.class),
-    BOSS_EXO_DRAEDON        ("Draedon",                55,  EntityType.SLIME,           EntitySlime.class,           Draedon.class),
-    BOSS_EXO_ARTEMIS        ("Artemis",                55,  EntityType.SLIME,           EntitySlime.class,           Artemis.class),
-    BOSS_EXO_THANATOS       ("Thanatos",               55,  EntityType.SLIME,           EntitySlime.class,           Thanatos.class),
+    BOSS_EXO_APOLLO         ("Apollo",                 55,  EntityType.SLIME,           EntitySlime.class,           Apollo.class),
     BOSS_EXO_ARES           ("Ares",                   55,  EntityType.SLIME,           EntitySlime.class,           Ares.class),
+    BOSS_EXO_ARTEMIS        ("Artemis",                55,  EntityType.SLIME,           EntitySlime.class,           Artemis.class),
+    BOSS_EXO_DRAEDON        ("Draedon",                55,  EntityType.SLIME,           EntitySlime.class,           Draedon.class),
+    BOSS_EXO_THANATOS       ("Thanatos",               55,  EntityType.SLIME,           EntitySlime.class,           Thanatos.class),
     BOSS_GOLEM              ("Golem",                  55,  EntityType.SLIME,           EntitySlime.class,           Golem.class),
     BOSS_GOLEM_HEAD         ("GolemHead",              55,  EntityType.SLIME,           EntitySlime.class,           GolemHead.class),
     BOSS_GOLEM_FIST         ("GolemFist",              55,  EntityType.SLIME,           EntitySlime.class,           GolemFist.class),

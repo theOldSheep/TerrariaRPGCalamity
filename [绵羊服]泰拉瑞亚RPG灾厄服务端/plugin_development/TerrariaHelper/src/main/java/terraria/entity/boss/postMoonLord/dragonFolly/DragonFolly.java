@@ -95,6 +95,8 @@ public class DragonFolly extends EntitySlime {
                 // Check if the player has moved too far horizontally
                 for (UUID uid : targetMap.keySet()) {
                     Player ply = Bukkit.getPlayer(uid);
+                    if (ply == null)
+                        continue;
                     if (isOutOfBoundary(ply)) {
                         EntityHelper.applyEffect(ply, "龙焰", 100);
                     }
@@ -208,6 +210,8 @@ public class DragonFolly extends EntitySlime {
     private void visualizeBoundary() {
         for (UUID uid : targetMap.keySet()) {
             Player ply = Bukkit.getPlayer(uid);
+            if (ply == null)
+                continue;
             DragoncoreHelper.displayParticle(ply,
                     new DragoncoreHelper.DragonCoreParticleInfo("dragonfolly", spawnPosition),
                     PARTICLE_INTERVAL);
