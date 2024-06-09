@@ -777,7 +777,7 @@
         - "弑神怒焰|60|1"
 灼焱余烬:
     penetration: 99999
-    projectileSize: 3
+    projectileSize: 2
     liveTime: 100
     gravity: 0
     blockHitAction: thru
@@ -785,7 +785,7 @@
         - "龙焰|50|1"
 追踪灼焱余烬:
     penetration: 99999
-    projectileSize: 3
+    projectileSize: 2
     liveTime: 100
     gravity: 0
     blockHitAction: thru
@@ -805,6 +805,90 @@
     homing: true
     homingAbility: 6
     homingRadius: 96
+橙色星流脉冲激光:
+    projectileSize: 0.5
+    liveTime: 80
+    penetration: 999999
+    gravity: 0
+    blockHitAction: thru
+红色星流脉冲激光:
+    projectileSize: 0.5
+    liveTime: 80
+    penetration: 999999
+    gravity: 0
+    blockHitAction: thru
+巨大挥发性等离子光球:
+    projectileSize: 3
+    liveTime: 40
+    penetration: 999999
+    gravity: 0
+    blockHitAction: thru
+    clusterBomb:
+        amount: 4
+        damageMulti: 0.8
+        name: 星流等离子束
+        velocity: 2
+星流等离子束:
+    projectileSize: 0.75
+    liveTime: 80
+    penetration: 999999
+    gravity: 0
+    blockHitAction: thru
+    homing: true
+    homingRadius: 96
+    noHomingTicks: 20
+    maxHomingTicks: 50
+    homingSharpTurning: false
+    homingAbility: 12
+高爆等离子火箭:
+    projectileSize: 1.5
+    liveTime: 100
+    gravity: 0
+    blockHitAction: thru
+    homing: true
+    homingRadius: 128
+    noHomingTicks: 20
+    maxHomingTicks: 60
+    homingSharpTurning: false
+    homingAbility: 12
+    homingEndSpeedMultiplier: 2.0
+特斯拉星流闪电:
+    projectileSize: 2.0
+    liveTime: 100
+    gravity: 0
+    blockHitAction: thru
+    minimumDamageTicks: 100
+    spawnProjectiles:
+        interval: 10
+        offset: 8
+        spawnMechanism: ENEMY
+        damageMulti: 1
+        speed: 24
+        spawnType: 星流闪电电弧
+星流闪电电弧:
+    gravity: 0
+    liveTime: 1
+    blockHitAction: thru
+    trailColor: 138|227|237
+    trailIntensityMulti: 2
+    buffInflict:
+        - "带电|80|1"
+星流高斯核弹:
+    gravity: 0
+    liveTime: 75
+    projectileSize: 1.5
+    homing: true
+    homingRadius: 128
+    homingSharpTurning: false
+    homingAbility: 6
+    maxHomingTicks: 40
+    spawnSound: item.largeWeaponFire
+    spawnSoundVolume: 3.0
+    clusterBomb:
+        amount: 1
+        damageMulti: 1
+        name: 冲击波1
+        velocity: 0
 圣骑士锤:
     blockHitAction: thru
     gravity: 0
@@ -4919,6 +5003,12 @@ TNT:
     projectileSize: 5
     blockHitAction: thru
     gravity: 0
+    homing: true
+    homingSharpTurning: false
+    homingRetarget: true
+    noHomingTicks: 5
+    homingAbility: 18
+    homingRadius: 48
     buffInflict:
         - 超位崩解|100|1
     clusterBomb:
