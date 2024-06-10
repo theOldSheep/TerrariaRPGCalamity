@@ -16,10 +16,7 @@ import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 import terraria.util.WorldHelper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Draedon extends EntitySlime {
     // basic variables
@@ -135,6 +132,7 @@ public class Draedon extends EntitySlime {
         }
 
         if (currentPhase != originalPhase) {
+            Bukkit.broadcastMessage(Arrays.toString(subBossIsActive));
             for (int index : aliveBossIndexes) {
                 if (subBossIsActive[index]) {
                     subBosses[index].removeScoreboardTag("noDamage");
@@ -293,9 +291,9 @@ public class Draedon extends EntitySlime {
         // Initialize sub-bosses
         {
             subBosses = new EntityLiving[3];
-            subBosses[0] = new Thanatos(this, summonedPlayer.getLocation().add(0, -5, 0));
-            subBosses[1] = new Ares(this, summonedPlayer.getLocation().add(0, -5, 0));
-            subBosses[2] = new Artemis(this, summonedPlayer.getLocation().add(0, -5, 0));
+            subBosses[0] = new Artemis(this, summonedPlayer.getLocation().add(0, -5, 0));
+            subBosses[1] = new Thanatos(this, summonedPlayer.getLocation().add(0, -5, 0));
+            subBosses[2] = new Ares(this, summonedPlayer.getLocation().add(0, -5, 0));
 
             // Initialize sub-boss active status
             subBossIsActive = new boolean[3];

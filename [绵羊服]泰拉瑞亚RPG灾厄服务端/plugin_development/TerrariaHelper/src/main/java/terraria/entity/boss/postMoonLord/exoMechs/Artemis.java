@@ -38,40 +38,56 @@ public class Artemis extends EntitySlime {
     }
 
     boolean dashing = false;
-    protected Location twinHoverLocation;
+    protected Location twinHoverLocation, hoverLocation;
+
+
 
 
     public void movementTick() {
         Location targetLocation = target.getLocation();
-        double yaw = MathHelper.getVectorYaw(bukkitEntity.getLocation().subtract(targetLocation).toVector());
-        Vector direction = MathHelper.vectorFromYawPitch_approx(yaw, 0);
-        direction.multiply(32);
+
+        // Calculate the midpoint of the boss's hover location and its twin's hover location
+        Location midPoint = hoverLocation.clone().add(twinHoverLocation).multiply(0.5);
+
+        // Calculate the yaw as between the target and the midpoint
+        double yaw = MathHelper.getVectorYaw(midPoint.clone().subtract(targetLocation).toVector());
+
+        // Calculate the direction vector from the target to the midpoint
+        Vector direction;
+        direction = MathHelper.vectorFromYawPitch_approx(yaw - 20, 0).multiply(32);
+
+        // Calculate the hover location for the boss
         Location hoverLocation = targetLocation.clone().add(direction);
 
-        if (owner.isSubBossActive(0)) {
-            if (owner.isSubBossActive(2)) {
-                hoverLocation.setY(hoverLocation.getY() - 15);
-            }
-        } else {
-            hoverLocation.setY(-20);
-        }
+        // Update the hover location based on the sub-bosses' states
+        updateHoverLocation(hoverLocation);
 
-        // Update the twin's hover location
-        direction = MathHelper.vectorFromYawPitch_approx(yaw + 20, 0);
-        direction.multiply(32);
+        // Calculate the direction vector for the twin
+        direction = MathHelper.vectorFromYawPitch_approx(yaw + 20, 0).multiply(32);
+
+        // Calculate the hover location for the twin
         twinHoverLocation = targetLocation.clone().add(direction);
-        if (owner.isSubBossActive(0)) {
-            if (owner.isSubBossActive(2)) {
-                twinHoverLocation.setY(twinHoverLocation.getY() - 15);
-            }
-        } else {
-            twinHoverLocation.setY(-20);
-        }
+
+        // Update the hover location based on the sub-bosses' states
+        updateHoverLocation(twinHoverLocation);
 
         // Use velocity-based movement to move the sub-boss to its hover location
         Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverLocation, 3, true);
         bukkitEntity.setVelocity(velocity);
     }
+
+    private void updateHoverLocation(Location location) {
+        if (owner.isSubBossActive(0)) {
+            if (owner.isSubBossActive(2)) {
+                location.setY(location.getY() - 15);
+            }
+        } else {
+            location.setY(-20);
+        }
+    }
+
+
+
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -106,6 +122,8 @@ public class Artemis extends EntitySlime {
         owner = draedon;
         // spawn location
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
+        hoverLocation = spawnLoc;
+        twinHoverLocation = spawnLoc;
         // add to world
         draedon.getWorld().addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
