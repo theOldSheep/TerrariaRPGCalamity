@@ -392,8 +392,8 @@ public class EaterOfWorld extends EntitySlime {
             terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, ticksLived, BOSS_TYPE);
         // load nearby chunks
         {
-            for (int i = -2; i <= 2; i ++)
-                for (int j = -2; j <= 2; j ++) {
+            for (int i = -1; i <= 1; i ++)
+                for (int j = -1; j <= 1; j ++) {
                     org.bukkit.Chunk currChunk = bukkitEntity.getLocation().add(i << 4, 0, j << 4).getChunk();
                     currChunk.load();
                 }

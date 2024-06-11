@@ -138,6 +138,7 @@ public enum CustomEntities {
     BOSS_EVERSCREAM         ("Everscream",             55,  EntityType.SLIME,           EntitySlime.class,           Everscream.class),
     BOSS_EXO_APOLLO         ("Apollo",                 55,  EntityType.SLIME,           EntitySlime.class,           Apollo.class),
     BOSS_EXO_ARES           ("Ares",                   55,  EntityType.SLIME,           EntitySlime.class,           Ares.class),
+    BOSS_EXO_ARES_ARM       ("AresArm",                55,  EntityType.SLIME,           EntitySlime.class,           AresArm.class),
     BOSS_EXO_ARTEMIS        ("Artemis",                55,  EntityType.SLIME,           EntitySlime.class,           Artemis.class),
     BOSS_EXO_DRAEDON        ("Draedon",                55,  EntityType.SLIME,           EntitySlime.class,           Draedon.class),
     BOSS_EXO_THANATOS       ("Thanatos",               55,  EntityType.SLIME,           EntitySlime.class,           Thanatos.class),

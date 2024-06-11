@@ -25,6 +25,7 @@ public class TerrariaHelper extends JavaPlugin {
     public static Logger LOGGER = Bukkit.getLogger();
 
     public static class Constants {
+        public static final int WORM_BOSS_CHUNK_LOAD_SEGMENT_INTERVAL = 5;
         public static final String
                 DATA_FOLDER_DIR = "plugins" + File.separator + "Terraria" + File.separator + "Data" + File.separator + "",
                 DATA_PLAYER_FOLDER_DIR = "plugins" + File.separator + "Terraria" + File.separator + "PlayerData" + File.separator + "";

@@ -171,7 +171,7 @@ public class EntityHelper {
     }
     public static class WormSegmentMovementOptions {
         // "straightening" multiplier: last segment - next segment
-        // note that this vector smoothens and straightens the worm.
+        // note that this vector "smoothens and straightens" the worm, but it may cause the segments to recoil and coil up again.
         double straighteningMultiplier = 0;
         // "following" multiplier: last segment - current segment
         // note that this vector let the segment strictly follows the last.

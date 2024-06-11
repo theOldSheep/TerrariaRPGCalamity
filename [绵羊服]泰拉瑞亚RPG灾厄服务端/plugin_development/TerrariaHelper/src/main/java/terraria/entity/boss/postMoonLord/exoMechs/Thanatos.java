@@ -6,6 +6,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.util.Vector;
 import terraria.entity.boss.postMoonLord.exoMechs.Draedon;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
@@ -14,13 +15,36 @@ import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Thanatos extends EntitySlime {
+    public enum SegmentType {
+        HEAD("Thanatos, the Devouring Worm's Head", 10d),
+        BODY("Thanatos, the Devouring Worm's Body", 3d),
+        TAIL("Thanatos, the Devouring Worm's Tail", 5d);
+
+        private String customName;
+        private double damage;
+
+        SegmentType(String customName, double damage) {
+            this.customName = customName;
+            this.damage = damage;
+        }
+
+        public String getCustomName() {
+            return customName;
+        }
+
+        public double getDamage() {
+            return damage;
+        }
+    }
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EXO_MECHS;
-    public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
     public static final double BASIC_HEALTH = 2760000 * 2;
+    public static final int TOTAL_LENGTH = 82, SLIME_SIZE = 8;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -29,8 +53,47 @@ public class Thanatos extends EntitySlime {
     Player target = null;
     Draedon owner = null;
     // other variables and AI
+    static final EntityHelper.WormSegmentMovementOptions followOption = new EntityHelper.WormSegmentMovementOptions()
+            .setStraighteningMultiplier(-0.1)
+            .setFollowingMultiplier(1)
+            .setFollowDistance(SLIME_SIZE * 0.5)
+            .setVelocityOrTeleport(false);
+    List<Thanatos> segments;
+
+    List<LivingEntity> livingSegments;
+    Thanatos head;
+    int index;
+    SegmentType segmentType;
 
 
+    private void tick() {
+        if (segmentType == SegmentType.HEAD) {
+            // Handle movement
+            Location targetLocation;
+            if (owner.isSubBossActive(1)) {
+                targetLocation = target.getLocation();
+            } else {
+                targetLocation = target.getLocation().clone().subtract(0, 50, 0);
+            }
+
+            // Calculate the target velocity
+            Vector targetVelocity = targetLocation.toVector().subtract(getBukkitEntity().getLocation().toVector()).normalize().multiply(2);
+
+            // Smoothly update the velocity
+            Vector velocity = getBukkitEntity().getVelocity();
+            velocity.setX(velocity.getX() * 0.9 + targetVelocity.getX() * 0.1);
+            velocity.setY(velocity.getY() * 0.9 + targetVelocity.getY() * 0.1);
+            velocity.setZ(velocity.getZ() * 0.9 + targetVelocity.getZ() * 0.1);
+            getBukkitEntity().setVelocity(velocity);
+
+
+            // Let the remaining segments follow the head
+            EntityHelper.handleSegmentsFollow(segments.stream().map((e) -> (LivingEntity) (e.bukkitEntity)).collect(Collectors.toList()), followOption);
+        } else {
+            // Set the health of subsequent entities to the health of the head
+            setHealth(head.getHealth());
+        }
+    }
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -42,6 +105,7 @@ public class Thanatos extends EntitySlime {
             // attack
             if (target != null) {
                 // TODO
+                tick();
 
             }
         }
@@ -55,12 +119,11 @@ public class Thanatos extends EntitySlime {
         super(world);
         super.die();
     }
-    // validate if the condition for spawning is met
-    public static boolean canSpawn(Player player) {
-        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
-    }
     // a constructor for actual spawning
     public Thanatos(Draedon draedon, Location spawnLoc) {
+        this(draedon, spawnLoc, new ArrayList<>(), new ArrayList<>(), null, 0);
+    }
+    private Thanatos(Draedon draedon, Location spawnLoc, List<Thanatos> segments, List<LivingEntity> livingSegments, Thanatos head, int index) {
         super( draedon.getWorld() );
         owner = draedon;
         // spawn location
@@ -68,20 +131,32 @@ public class Thanatos extends EntitySlime {
         // add to world
         draedon.getWorld().addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName(BOSS_TYPE.msgName);
+        this.head = head;
+        this.index = index;
+        if (index == 0) {
+            segmentType = SegmentType.HEAD;
+        } else if (index == TOTAL_LENGTH - 1) {
+            segmentType = SegmentType.TAIL;
+        } else {
+            segmentType = SegmentType.BODY;
+        }
+
+        setCustomName(segmentType.getCustomName());
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
+        if (index > 0) {
+            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.bukkitEntity);
+        }
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 1d);
-            attrMap.put("damageTakenMulti", 1d);
-            attrMap.put("defence", 0d);
+            attrMap.put("damage", segmentType.getDamage());
+            attrMap.put("defence", 200d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
@@ -98,7 +173,7 @@ public class Thanatos extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(8, false);
+            setSize(SLIME_SIZE, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
@@ -107,10 +182,23 @@ public class Thanatos extends EntitySlime {
         // boss parts and other properties
         {
             bossParts = owner.bossParts;
-            bossParts.add((LivingEntity) bukkitEntity);
+            if (index == 0)
+                bossParts.add((LivingEntity) bukkitEntity);
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;
+        }
+        // segment info
+        {
+            this.segments = segments;
+            this.livingSegments = livingSegments;
+            this.segments.add(this);
+            this.livingSegments.add((LivingEntity) bukkitEntity);
+
+            if (index < TOTAL_LENGTH - 1) {
+                Location nextSpawnLoc = spawnLoc.subtract(0, 1, 0);
+                new Thanatos(draedon, nextSpawnLoc, segments, livingSegments, head == null ? this : head, index + 1);
+            }
         }
     }
 
@@ -122,8 +210,8 @@ public class Thanatos extends EntitySlime {
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);
         // load nearby chunks
         {
-            for (int i = -2; i <= 2; i ++)
-                for (int j = -2; j <= 2; j ++) {
+            for (int i = -1; i <= 1; i ++)
+                for (int j = -1; j <= 1; j ++) {
                     org.bukkit.Chunk currChunk = bukkitEntity.getLocation().add(i << 4, 0, j << 4).getChunk();
                     currChunk.load();
                 }

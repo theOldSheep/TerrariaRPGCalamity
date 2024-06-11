@@ -49,6 +49,7 @@ terraria\entity\boss\postMoonLord\devourerOfGods\DevourerOfGods.class
 terraria\util\ItemUseHelper$1.class
 terraria\util\PlayerHelper$GameProgress.class
 terraria\entity\monster\MonsterHelper$1.class
+terraria\entity\boss\postMoonLord\exoMechs\AresArm$ArmType.class
 terraria\entity\boss\postMoonLord\devourerOfGods\AttackPattern.class
 terraria\event\listener\PlayerQuitListener.class
 terraria\entity\boss\preHardMode\kingSlime\KingSlime$1.class
@@ -240,6 +241,7 @@ terraria\entity\npc\TerrariaNPCArmsDealer.class
 terraria\entity\boss\hardMode\dukeFishron\DukeFishron$1.class
 terraria\entity\monster\MonsterSpider.class
 terraria\entity\boss\event\pumpking\PumpkingHead.class
+terraria\entity\boss\postMoonLord\exoMechs\Thanatos$SegmentType.class
 terraria\util\EntityHelper.class
 terraria\event\listener\PlayerKeyToggleListener.class
 terraria\entity\boss\hardMode\dukeFishron\WaterBlob.class
@@ -277,6 +279,7 @@ terraria\entity\boss\hardMode\calamitasClone\CalamitasClone.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Leviathan$AIPhase.class
 terraria\entity\boss\preHardMode\eaterOfWorld\EaterOfWorld.class
 terraria\entity\npc\TerrariaNPC.class
+terraria\entity\boss\postMoonLord\exoMechs\Ares$1.class
 terraria\entity\boss\postMoonLord\devourerOfGods\SwingingArcAttackPattern.class
 terraria\util\EntityHelper$WormSegmentMovementOptions.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHand.class
@@ -294,6 +297,7 @@ terraria\event\listener\EntitySpawnListener.class
 terraria\worldgen\overworld\NoiseGeneratorTest.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHand$1.class
 terraria\entity\boss\preHardMode\theSlimeGod\CrimulanSlime$SlimeSize.class
+terraria\entity\boss\postMoonLord\exoMechs\AresArm.class
 terraria\entity\boss\preHardMode\eyeOfCthulhu\EyeOfCthulhu.class
 terraria\entity\boss\event\pumpking\PumpkingHand.class
 terraria\gameplay\EventAndTime.class

@@ -18,7 +18,6 @@ import java.util.UUID;
 public class Artemis extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EXO_MECHS;
-    public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
     public static final double BASIC_HEALTH = 3588000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
@@ -72,17 +71,16 @@ public class Artemis extends EntitySlime {
         updateHoverLocation(twinHoverLocation);
 
         // Use velocity-based movement to move the sub-boss to its hover location
-        Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverLocation, 3, true);
+        Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverLocation, Draedon.MECHS_ALIGNMENT_SPEED, true);
         bukkitEntity.setVelocity(velocity);
     }
-
     private void updateHoverLocation(Location location) {
         if (owner.isSubBossActive(0)) {
             if (owner.isSubBossActive(2)) {
                 location.setY(location.getY() - 15);
             }
         } else {
-            location.setY(-20);
+            location.setY(-30);
         }
     }
 
@@ -111,10 +109,6 @@ public class Artemis extends EntitySlime {
     public Artemis(World world) {
         super(world);
         super.die();
-    }
-    // validate if the condition for spawning is met
-    public static boolean canSpawn(Player player) {
-        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
     }
     // a constructor for actual spawning
     public Artemis(Draedon draedon, Location spawnLoc) {
@@ -188,8 +182,8 @@ public class Artemis extends EntitySlime {
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);
         // load nearby chunks
         {
-            for (int i = -2; i <= 2; i ++)
-                for (int j = -2; j <= 2; j ++) {
+            for (int i = -1; i <= 1; i ++)
+                for (int j = -1; j <= 1; j ++) {
                     org.bukkit.Chunk currChunk = bukkitEntity.getLocation().add(i << 4, 0, j << 4).getChunk();
                     currChunk.load();
                 }

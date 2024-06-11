@@ -2,12 +2,10 @@ package terraria.entity.boss.postMoonLord.exoMechs;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.postMoonLord.exoMechs.Draedon;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
@@ -17,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class Ares extends EntitySlime {
+public class AresArm extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EXO_MECHS;
     public static final double BASIC_HEALTH = 3588000 * 2;
@@ -27,75 +25,41 @@ public class Ares extends EntitySlime {
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
-    Draedon owner = null;
+    Ares owner = null;
     // other variables and AI
-    AresArm[] arms;
+    public enum ArmType {
+        LEFT_TOP("Left Top Claw"),
+        LEFT_BOTTOM("Left Bottom Claw"),
+        RIGHT_TOP("Right Top Claw"),
+        RIGHT_BOTTOM("Right Bottom Claw");
+
+        private final String name;
+
+        ArmType(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+    private ArmType handType;
+    public ArmType getHandType() {
+        return handType;
+    }
+    private Location desiredLocation;
 
 
 
-
+    public void setDesiredLocation(Location location) {
+        this.desiredLocation = location;
+    }
 
     public void movementTick() {
-        Location targetLocation = target.getLocation();
-
-        // Calculate the direction vector from the target to the boss
-        double yaw = MathHelper.getVectorYaw(bukkitEntity.getLocation().clone().subtract(targetLocation).toVector());
-        Vector direction = MathHelper.vectorFromYawPitch_approx(yaw, 0).multiply(32);
-
-        // Calculate the hover location for the boss
-        Location hoverLocation = targetLocation.clone().add(direction);
-
-        // Update the hover location based on the sub-bosses' states
-        updateHoverLocation(hoverLocation);
-
-        // Use velocity-based movement to move the boss to its hover location
-        Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverLocation, Draedon.MECHS_ALIGNMENT_SPEED, true);
+        // Use velocity-based movement to move the arm to its desired location
+        Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), desiredLocation, Draedon.MECHS_ALIGNMENT_SPEED, true);
         bukkitEntity.setVelocity(velocity);
-
-        // Calculate the desired locations for the boss's arms
-        for (AresArm arm : arms) {
-            Location armDesiredLocation = hoverLocation.clone();
-
-            // Calculate a vector that points sideways relative to the boss and player's direction
-            Vector sidewaysVector = MathHelper.vectorFromYawPitch_approx(yaw - 90, 0);
-
-            // Add the sideways vector to the hover location to get the desired location for the arm
-            switch (arm.getHandType()) {
-                case LEFT_TOP:
-                case LEFT_BOTTOM:
-                    armDesiredLocation.add(sidewaysVector.multiply(-20));
-                    break;
-                case RIGHT_TOP:
-                case RIGHT_BOTTOM:
-                    armDesiredLocation.add(sidewaysVector.multiply(20));
-                    break;
-            }
-
-            // You can add arm-specific offset or rotation here based on the arm type
-            switch (arm.getHandType()) {
-                case LEFT_TOP:
-                case RIGHT_TOP:
-                    armDesiredLocation.add(0, 6, 0);
-                    break;
-                case LEFT_BOTTOM:
-                case RIGHT_BOTTOM:
-                    armDesiredLocation.add(0, -10, 0);
-                    break;
-            }
-
-            arm.setDesiredLocation(armDesiredLocation);
-        }
     }
-
-    private void updateHoverLocation(Location hoverLocation) {
-        if (owner.isSubBossActive(2)) {
-            hoverLocation.setY(hoverLocation.getY() + 20);
-        } else {
-            hoverLocation.setY(-15);
-        }
-    }
-
-
 
     private void AI() {
         // no AI after death
@@ -118,24 +82,26 @@ public class Ares extends EntitySlime {
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
-    public Ares(World world) {
+    public AresArm(World world) {
         super(world);
         super.die();
     }
     // a constructor for actual spawning
-    public Ares(Draedon draedon, Location spawnLoc) {
-        super( draedon.getWorld() );
-        owner = draedon;
+    public AresArm(Ares head, Location spawnLoc, ArmType armType) {
+        super( head.getWorld() );
+        owner = head;
+        this.handType = armType;
         // spawn location
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
-        draedon.getWorld().addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        head.getWorld().addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName(BOSS_TYPE.msgName);
+        setCustomName(handType.getName());
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -151,7 +117,7 @@ public class Ares extends EntitySlime {
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
-        bossbar = draedon.bossbar;
+        bossbar = head.bossbar;
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
         // init target map
         {
@@ -161,7 +127,7 @@ public class Ares extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(20, false);
+            setSize(12, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
@@ -170,15 +136,9 @@ public class Ares extends EntitySlime {
         // boss parts and other properties
         {
             bossParts = owner.bossParts;
-            bossParts.add((LivingEntity) bukkitEntity);
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;
-            // arms
-            arms = new AresArm[AresArm.ArmType.values().length];
-            int idx = 0;
-            for (AresArm.ArmType type : AresArm.ArmType.values())
-                arms[idx++] = new AresArm(this, ((LivingEntity) bukkitEntity).getEyeLocation(), type);
         }
     }
 
@@ -186,6 +146,7 @@ public class Ares extends EntitySlime {
     @Override
     public void B_() {
         super.B_();
+        this.setHealth(owner.getHealth());
         // update boss bar and dynamic DR
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);
         // load nearby chunks

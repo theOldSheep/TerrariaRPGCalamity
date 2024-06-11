@@ -30,6 +30,7 @@ public class Draedon extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
+    protected static final double MECHS_ALIGNMENT_SPEED = 3.0;
     private static final String[] MESSAGES = {"Message 1", "Message 2", "Message 3"};
     private int messageIndex = 0;
     private int messageDelayCounter = 0;
@@ -40,7 +41,7 @@ public class Draedon extends EntitySlime {
     boolean[] subBossIsActive;
 
     public boolean isSubBossActive(int index) {
-        return subBossIsActive[index];
+        return subBossIsActive[index] && subBosses[index].isAlive();
     }
     private void managePhases() {
         int originalPhase = currentPhase;
@@ -329,8 +330,8 @@ public class Draedon extends EntitySlime {
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);
         // load nearby chunks
         {
-            for (int i = -2; i <= 2; i ++)
-                for (int j = -2; j <= 2; j ++) {
+            for (int i = -1; i <= 1; i ++)
+                for (int j = -1; j <= 1; j ++) {
                     org.bukkit.Chunk currChunk = bukkitEntity.getLocation().add(i << 4, 0, j << 4).getChunk();
                     currChunk.load();
                 }
