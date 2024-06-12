@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 
 public class Thanatos extends EntitySlime {
     public enum SegmentType {
-        HEAD("Thanatos, the Devouring Worm's Head", 10d),
-        BODY("Thanatos, the Devouring Worm's Body", 3d),
-        TAIL("Thanatos, the Devouring Worm's Tail", 5d);
+        HEAD("Thanatos, the Devouring Worm's Head", 1500d),
+        BODY("Thanatos, the Devouring Worm's Body", 1320d),
+        TAIL("Thanatos, the Devouring Worm's Tail", 1100d);
 
         private String customName;
         private double damage;
@@ -69,15 +69,13 @@ public class Thanatos extends EntitySlime {
     private void tick() {
         if (segmentType == SegmentType.HEAD) {
             // Handle movement
-            Location targetLocation;
-            if (owner.isSubBossActive(1)) {
-                targetLocation = target.getLocation();
-            } else {
-                targetLocation = target.getLocation().clone().subtract(0, 50, 0);
+            Location targetLocation = target.getLocation();
+            if (! owner.isSubBossActive(Draedon.SubBossType.THANATOS)) {
+                targetLocation.setY(-50);
             }
 
             // Calculate the target velocity
-            Vector targetVelocity = targetLocation.toVector().subtract(getBukkitEntity().getLocation().toVector()).normalize().multiply(2);
+            Vector targetVelocity = targetLocation.toVector().subtract(getBukkitEntity().getLocation().toVector()).normalize().multiply(2.5);
 
             // Smoothly update the velocity
             Vector velocity = getBukkitEntity().getVelocity();
@@ -107,10 +105,10 @@ public class Thanatos extends EntitySlime {
                 // TODO
                 tick();
 
+                // facing
+                this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
             }
         }
-        // facing
-        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }

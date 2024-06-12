@@ -3,6 +3,7 @@ package terraria.entity.boss.postMoonLord.exoMechs;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -19,6 +20,11 @@ import terraria.util.WorldHelper;
 import java.util.*;
 
 public class Draedon extends EntitySlime {
+    public enum SubBossType {
+        ARTEMIS,
+        THANATOS,
+        ARES;
+    }
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EXO_MECHS;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
@@ -37,12 +43,40 @@ public class Draedon extends EntitySlime {
     private boolean hasTriggered = false;
 
     private EntityLiving[] subBosses;
-    private int currentPhase;
+    private int currentPhase, activeBossCount;
     boolean[] subBossIsActive;
+    private Location sharedHoverLocation;
 
-    public boolean isSubBossActive(int index) {
-        return subBossIsActive[index] && subBosses[index].isAlive();
+    public void updateSharedHoverLocation(Location targetLocation) {
+        // Calculate the direction vector from the target to the boss
+        double yaw = MathHelper.getVectorYaw(sharedHoverLocation.clone().subtract(targetLocation).toVector());
+        Vector direction = MathHelper.vectorFromYawPitch_approx(yaw, 0).multiply(32);
+
+        // Calculate the hover location for the boss
+        sharedHoverLocation = targetLocation.clone().add(direction);
     }
+    public Location getSharedHoverLocation() {
+        return sharedHoverLocation;
+    }
+    public boolean isSubBossActive(SubBossType type) {
+        return subBossIsActive[type.ordinal()];
+    }
+    public int getActiveBossCount() {
+        return activeBossCount;
+    }
+    private void updateActiveBossCount() {
+        activeBossCount = 0;
+        for (int i = 0; i < subBossIsActive.length; i++) {
+            if (subBossIsActive[i] && subBosses[i].isAlive()) {
+                activeBossCount++;
+            }
+        }
+    }
+    protected void playWarningSound(Location loc) {
+        loc.getWorld().playSound(loc, "entity.exo_mechs.enrage", org.bukkit.SoundCategory.HOSTILE, 5f, 1f);
+        loc.getWorld().playSound(loc, Sound.ENTITY_ENDERDRAGON_GROWL, org.bukkit.SoundCategory.HOSTILE, 5f, 1f);
+    }
+
     private void managePhases() {
         int originalPhase = currentPhase;
         List<Integer> aliveBossIndexes = new ArrayList<>();
@@ -50,6 +84,8 @@ public class Draedon extends EntitySlime {
         for (int i = 0; i < 3; i++) {
             if (subBosses[i].getHealth() > 0) {
                 aliveBossIndexes.add(i);
+            } else {
+                subBossIsActive[i] = false;
             }
         }
 
@@ -141,6 +177,8 @@ public class Draedon extends EntitySlime {
                     subBosses[index].addScoreboardTag("noDamage");
                 }
             }
+            updateActiveBossCount(); // Update active boss count when phase changes
+            Bukkit.broadcastMessage("Active boss count: " + getActiveBossCount());
         }
     }
 
@@ -217,6 +255,7 @@ public class Draedon extends EntitySlime {
                 bukkitEntity.setVelocity(velocity);
 
                 managePhases();
+                updateSharedHoverLocation(target.getLocation());
                 broadcastMsg();
             }
         }
@@ -236,7 +275,9 @@ public class Draedon extends EntitySlime {
     public Draedon(Player summonedPlayer) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
-        Location spawnLoc = summonedPlayer.getLocation().add(summonedPlayer.getLocation().getDirection().multiply(32) );
+        Location spawnLoc = summonedPlayer.getLocation().add(
+                MathHelper.vectorFromYawPitch_approx(summonedPlayer.getLocation().getYaw(), 0).multiply(64) );
+        sharedHoverLocation = spawnLoc.clone();
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
@@ -291,10 +332,10 @@ public class Draedon extends EntitySlime {
         }
         // Initialize sub-bosses
         {
-            subBosses = new EntityLiving[3];
-            subBosses[0] = new Artemis(this, summonedPlayer.getLocation().add(0, -5, 0));
-            subBosses[1] = new Thanatos(this, summonedPlayer.getLocation().add(0, -5, 0));
-            subBosses[2] = new Ares(this, summonedPlayer.getLocation().add(0, -5, 0));
+            subBosses = new EntityLiving[SubBossType.values().length];
+            subBosses[SubBossType.ARTEMIS.ordinal()] = new Artemis(this, summonedPlayer.getLocation().add(0, 100, 0));
+            subBosses[SubBossType.THANATOS.ordinal()] = new Thanatos(this, summonedPlayer.getLocation().add(0, -100, 0));
+            subBosses[SubBossType.ARES.ordinal()] = new Ares(this, summonedPlayer.getLocation().add(0, 15, 0));
 
             // Initialize sub-boss active status
             subBossIsActive = new boolean[3];

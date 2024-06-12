@@ -71,6 +71,7 @@ terraria\worldgen\Maze.class
 terraria\entity\boss\hardMode\moonLord\MoonLordTrueEyeOfCthulhu.class
 terraria\entity\boss\hardMode\moonLord\MoonLordPhantasmalSphere.class
 terraria\entity\boss\hardMode\ravager\RavagerHead.class
+terraria\entity\boss\postMoonLord\exoMechs\Draedon$SubBossType.class
 terraria\entity\monster\MonsterWitherSkeleton.class
 terraria\entity\npc\TerrariaNPCNurse.class
 terraria\worldgen\overworld\cavern\CavernChunkGenerator.class

@@ -62,12 +62,16 @@ public class Ares extends EntitySlime {
             // Add the sideways vector to the hover location to get the desired location for the arm
             switch (arm.getHandType()) {
                 case LEFT_TOP:
-                case LEFT_BOTTOM:
                     armDesiredLocation.add(sidewaysVector.multiply(-20));
                     break;
+                case LEFT_BOTTOM:
+                    armDesiredLocation.add(sidewaysVector.multiply(-15));
+                    break;
                 case RIGHT_TOP:
-                case RIGHT_BOTTOM:
                     armDesiredLocation.add(sidewaysVector.multiply(20));
+                    break;
+                case RIGHT_BOTTOM:
+                    armDesiredLocation.add(sidewaysVector.multiply(15));
                     break;
             }
 
@@ -88,8 +92,8 @@ public class Ares extends EntitySlime {
     }
 
     private void updateHoverLocation(Location hoverLocation) {
-        if (owner.isSubBossActive(2)) {
-            hoverLocation.setY(hoverLocation.getY() + 20);
+        if (owner.isSubBossActive(Draedon.SubBossType.ARES)) {
+            hoverLocation.setY(hoverLocation.getY() + 15);
         } else {
             hoverLocation.setY(-15);
         }
@@ -110,10 +114,10 @@ public class Ares extends EntitySlime {
                 movementTick();
                 // TODO
 
+                // facing
+                this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
             }
         }
-        // facing
-        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }

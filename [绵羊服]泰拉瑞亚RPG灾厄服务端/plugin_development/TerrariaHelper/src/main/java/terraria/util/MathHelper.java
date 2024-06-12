@@ -206,7 +206,13 @@ public class MathHelper {
     }
     public static ArrayList<Vector> getEvenlySpacedProjectileDirections(double projectileIntervalDegree, double spreadAngleDegree,
                                                                         Entity target, Location shootLoc, double length) {
-        EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions().setProjectileSpeed(length);
+        EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                .setProjectileSpeed(length);
+        return getEvenlySpacedProjectileDirections(projectileIntervalDegree, spreadAngleDegree, target, shootLoc, aimHelper, length);
+    }
+    public static ArrayList<Vector> getEvenlySpacedProjectileDirections(double projectileIntervalDegree, double spreadAngleDegree,
+                                                                        Entity target, Location shootLoc, EntityHelper.AimHelperOptions aimHelper,
+                                                                        double length) {
         Location targetLoc = EntityHelper.helperAimEntity(shootLoc, target, aimHelper);
         Vector fwdDir = targetLoc.subtract(shootLoc).toVector();
         return getEvenlySpacedProjectileDirections(projectileIntervalDegree, spreadAngleDegree, fwdDir, length);

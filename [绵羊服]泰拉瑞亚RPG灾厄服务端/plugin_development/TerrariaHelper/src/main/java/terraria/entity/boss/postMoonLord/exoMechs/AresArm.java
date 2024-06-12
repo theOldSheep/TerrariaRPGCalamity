@@ -74,10 +74,10 @@ public class AresArm extends EntitySlime {
                 movementTick();
                 // TODO
 
+                // facing
+                this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
             }
         }
-        // facing
-        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }

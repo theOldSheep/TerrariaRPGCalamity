@@ -1108,8 +1108,8 @@ public class GenericProjectile extends EntityPotion {
         // extra ticking
         extraTicking();
 
-        // prevents client glitch; in lava or water: update every tick; otherwise, update every a few ticks
-        if ((this.au() || this.inWater)) {
+        // prevents client glitch; in lava or water / has other acceleration: update every tick; otherwise, update every a few ticks
+        if ((this.au() || this.inWater) || Math.abs(this.speedMultiPerTick - 1) > 1e-9) {
             this.impulse = true;
         }
         else if (++impulse_index >= RANDOMIZED_IMPULSE_TICK_INTERVAL) {

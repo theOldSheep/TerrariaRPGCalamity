@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
+import terraria.TerrariaHelper;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
