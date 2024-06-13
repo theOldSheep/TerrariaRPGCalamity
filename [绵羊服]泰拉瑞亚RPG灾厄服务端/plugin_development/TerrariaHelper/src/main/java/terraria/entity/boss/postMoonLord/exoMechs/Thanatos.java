@@ -45,7 +45,6 @@ public class Thanatos extends EntitySlime {
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EXO_MECHS;
     public static final double BASIC_HEALTH = 2760000 * 2;
     public static final int TOTAL_LENGTH = 82, SLIME_SIZE = 8;
-    public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;

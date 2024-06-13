@@ -7,9 +7,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
-import terraria.util.GenericHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
 
 import java.util.ArrayList;
@@ -21,7 +19,6 @@ public class Artemis extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EXO_MECHS;
     public static final double BASIC_HEALTH = 3588000 * 2;
-    public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
@@ -33,7 +30,7 @@ public class Artemis extends EntitySlime {
     static final String LASER_TYPE = "橙色星流脉冲激光";
     static final double LASER_SPEED = 1, DASH_SPEED = 3,
             LASER_SPREAD_INTERVAL = 12.5, LASER_SPREAD_TOTAL = 51,
-            FINAL_LASER_LENGTH = 96.0, FINAL_LASER_WIDTH = 2.25, FINAL_LASER_ROTATION = 9.0;
+            FINAL_LASER_LENGTH = 128.0, FINAL_LASER_WIDTH = 2.25, FINAL_LASER_ROTATION = 3.0;
     static HashMap<String, Double> ATTR_MAP_LASER, ATTR_MAP_FINAL_LASER;
     static EntityHelper.AimHelperOptions
             AIM_HELPER_LASER, AIM_HELPER_LASER_INACCURATE, AIM_HELPER_LASER_OFFSET,
@@ -75,11 +72,10 @@ public class Artemis extends EntitySlime {
 
     protected boolean stageTransitionTriggered = false;
     protected Location twinHoverLocation, hoverLocation, pivot;
-    private Vector dashVelocity = new Vector();
+    private Vector dashVelocity = new Vector(), laserDir, laserRot;
     HashSet<Entity> finalLaserDamaged = new HashSet<>();
     private int phase = 1;
     private int phaseDurationCounter = 0;
-    private double laserRotationDirection = 0;
 
 
 
@@ -125,7 +121,6 @@ public class Artemis extends EntitySlime {
         }
     }
 
-
     private void attackTarget() {
         switch (phase) {
             case 1:
@@ -144,15 +139,16 @@ public class Artemis extends EntitySlime {
         phaseDurationCounter++;
         checkPhaseTransition();
     }
+
     private void checkPhaseTransition() {
         switch (phase) {
             case 1:
-                if (phaseDurationCounter >= 120 && (owner.getActiveBossCount() < 3 && stageTransitionTriggered)) {
+                if (phaseDurationCounter >= 120) {
                     transitionToPhase(2);
                 }
                 break;
             case 2:
-                if (phaseDurationCounter >= 200) {
+                if (phaseDurationCounter >= 120) {
                     if (stageTransitionTriggered) {
                         if (owner.getActiveBossCount() == 1 && Math.random() < 0.5) {
                             transitionToPhase(4);
@@ -165,8 +161,12 @@ public class Artemis extends EntitySlime {
                 }
                 break;
             case 3:
+                if (phaseDurationCounter >= 60) {
+                    transitionToPhase(4);
+                }
+                break;
             case 4:
-                if (phaseDurationCounter >= 200) {
+                if (phaseDurationCounter >= 260) {
                     transitionToPhase(1);
                 }
                 break;
@@ -179,24 +179,28 @@ public class Artemis extends EntitySlime {
     }
 
     private void phase1Attack() {
-        int shootInterval = 10;
-        EntityHelper.AimHelperOptions aimHelper = AIM_HELPER_LASER;
+        int shootInterval = getShootInterval();
+        EntityHelper.AimHelperOptions aimHelper = getAimHelper();
+        shootLaser(shootInterval, aimHelper);
+    }
+
+    private int getShootInterval() {
         if (owner.getActiveBossCount() == 3) {
-            shootInterval = 15;
-            aimHelper = AIM_HELPER_LASER_INACCURATE;
+            return 15;
         } else if (owner.getActiveBossCount() == 1 && stageTransitionTriggered) {
-            shootInterval = 5;
-            aimHelper = AIM_HELPER_LASER_OFFSET;
+            return 5;
+        } else {
+            return 10;
         }
-        if (phaseDurationCounter % shootInterval == 0) {
-            Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-            Location aimLoc = EntityHelper.helperAimEntity(shootLoc, target, aimHelper);
-            shootInfoLaser.shootLoc = shootLoc;
-            shootInfoLaser.velocity = MathHelper.getDirection(shootLoc, aimLoc, LASER_SPEED);
-            EntityHelper.spawnProjectile(shootInfoLaser);
-        }
-        if (phaseDurationCounter >= 120) {
-            transitionToPhase(2);
+    }
+
+    private EntityHelper.AimHelperOptions getAimHelper() {
+        if (owner.getActiveBossCount() == 3) {
+            return AIM_HELPER_LASER_INACCURATE;
+        } else if (owner.getActiveBossCount() == 1 && stageTransitionTriggered) {
+            return AIM_HELPER_LASER_OFFSET;
+        } else {
+            return AIM_HELPER_LASER;
         }
     }
 
@@ -221,22 +225,11 @@ public class Artemis extends EntitySlime {
         } else if (phaseDurationCounter < 100) {
             // Maintain the dash velocity
             bukkitEntity.setVelocity(dashVelocity);
-        } else if (phaseDurationCounter >= 120) {
-            transitionToPhase(3);
         }
     }
 
     private void phase3Attack() {
-        if (phaseDurationCounter % 3 == 0) {
-            Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-            Location aimLoc = EntityHelper.helperAimEntity(shootLoc, target, AIM_HELPER_LASER_OFFSET);
-            shootInfoLaser.shootLoc = shootLoc;
-            shootInfoLaser.velocity = MathHelper.getDirection(shootLoc, aimLoc, LASER_SPEED);
-            EntityHelper.spawnProjectile(shootInfoLaser);
-        }
-        if (phaseDurationCounter >= 60) {
-            transitionToPhase(4);
-        }
+        shootLaser(3, AIM_HELPER_LASER_OFFSET);
     }
 
     private void phase4Attack() {
@@ -245,39 +238,58 @@ public class Artemis extends EntitySlime {
             if (phaseDurationCounter % 3 == 0) {
                 owner.playWarningSound(bukkitEntity.getLocation());
             }
-        } else if (phaseDurationCounter == 10) {
-            // Remember the player's current location
-            pivot = target.getLocation();
         } else if (phaseDurationCounter < 20) {
-            // Delay
-        } else if (phaseDurationCounter == 20) {
-            // Determine the direction of the laser rotation
-            laserRotationDirection = pivot.getY() < target.getLocation().getY() ? -FINAL_LASER_ROTATION : FINAL_LASER_ROTATION;
-            // Initialize the laser's pitch angle
-            double pitchAngle = 0;
-            // Initialize the set of damaged entities
-            finalLaserDamaged.clear();
-            // Start the laser rotation
-            laserRotation(pivot, pitchAngle);
-        } else if (phaseDurationCounter < 120) {
-            // Continue the laser rotation
-            double pitchAngle = (phaseDurationCounter - 20) * laserRotationDirection;
-            laserRotation(pivot, pitchAngle);
-        } else if (phaseDurationCounter >= 140) {
-            transitionToPhase(1);
+            if (phaseDurationCounter == 10) {
+                // Remember the player's current location
+                pivot = target.getLocation();
+                // Prevent getting too close to the ground
+                double highestY = WorldHelper.getHighestBlockBelow(pivot).getY();
+                pivot.setY( Math.max( pivot.getY(), highestY + 24 ) );
+            }
+        } else if (phaseDurationCounter < 240) {
+            // Continue the laser rotation, 11 seconds
+            handleFinalLaser(pivot);
         }
     }
 
-    private void laserRotation(Location pivot, double pitchAngle) {
-        // Calculate the yaw angle
-        double yawAngle = MathHelper.getVectorYaw(pivot.subtract(target.getLocation()).toVector());
-        // Teleport the boss to the proper location
-        Location newLocation = pivot.clone().add(MathHelper.vectorFromYawPitch(yawAngle, pitchAngle).multiply(-32));
+    private void shootLaser(int shootInterval, EntityHelper.AimHelperOptions aimHelper) {
+        if (phaseDurationCounter % shootInterval == 0) {
+            Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+            Location aimLoc = EntityHelper.helperAimEntity(shootLoc, target, aimHelper);
+            shootInfoLaser.shootLoc = shootLoc;
+            shootInfoLaser.velocity = MathHelper.getDirection(shootLoc, aimLoc, LASER_SPEED);
+            EntityHelper.spawnProjectile(shootInfoLaser);
+        }
+    }
+
+    private void handleFinalLaser(Location pivot) {
+        if (phaseDurationCounter < 40) {
+            Vector plyDir = target.getLocation().subtract(pivot).toVector();
+            double yawAngle = MathHelper.getVectorYaw(plyDir);
+            laserDir = MathHelper.vectorFromYawPitch(yawAngle, 0);
+            laserRot = MathHelper.getNonZeroCrossProd(laserDir, new Vector(0, 1, 0));
+            if (plyDir.getY() > 0) {
+                laserRot.multiply(-1);
+            }
+        }
+        else {
+            // Rotate laserDir by laserRot
+            laserDir = MathHelper.rotateAroundAxisDegree(laserDir, laserRot, FINAL_LASER_ROTATION);
+        }
+
+        // Calculate the new pivot location to contain the target's location in the laser's plane of rotation
+        Vector pivotToTarget = target.getLocation().subtract(pivot).toVector();
+        Vector projection = MathHelper.vectorProjection(laserRot, pivotToTarget);
+        pivot.add(projection);
+
+        // Calculate the teleport location and fire laser
+        Location newLocation = pivot.clone().add(laserDir.clone().multiply(-32));
+        Vector eyeToFootDir = bukkitEntity.getLocation().subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector();
+        newLocation.add(eyeToFootDir);
         bukkitEntity.teleport(newLocation);
         bukkitEntity.setVelocity(new Vector(0, 0, 0));
-        // Handle the strike line
         GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
-                yawAngle, pitchAngle, FINAL_LASER_LENGTH, FINAL_LASER_WIDTH, "", "",
+                MathHelper.getVectorYaw(laserDir), MathHelper.getVectorPitch(laserDir), FINAL_LASER_LENGTH, FINAL_LASER_WIDTH, "", "",
                 finalLaserDamaged, ATTR_MAP_FINAL_LASER, STRIKE_OPTION_FINAL_LASER);
     }
 
@@ -293,22 +305,21 @@ public class Artemis extends EntitySlime {
             if (target != null) {
                 // movement
                 movementTick();
-            }
-            // attack
-            if (target != null && owner.isSubBossActive(Draedon.SubBossType.ARTEMIS)) {
-                if (!stageTransitionTriggered && getHealth() / getMaxHealth() < 0.7) {
-                    stageTransitionTriggered = true;
-                    setCustomName(getCustomName() + "§1");
-                    apollo.setCustomName(apollo.getCustomName() + "§1");
+                // attack
+                if (owner.isSubBossActive(Draedon.SubBossType.ARTEMIS)) {
+                    if (!stageTransitionTriggered && getHealth() / getMaxHealth() < 0.7) {
+                        stageTransitionTriggered = true;
+                        setCustomName(getCustomName() + "§1");
+                        apollo.setCustomName(apollo.getCustomName() + "§1");
+                    }
+                    attackTarget();
+                } else {
+                    transitionToPhase(1);
                 }
-                attackTarget();
-            } else {
-                phase = 1;
-                phaseDurationCounter = 0;
+                // facing
+                this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
             }
         }
-        // facing
-        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }

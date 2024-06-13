@@ -9,7 +9,6 @@ import org.bukkit.util.Vector;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +18,6 @@ public class Apollo extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EXO_MECHS;
     public static final double BASIC_HEALTH = 3588000 * 2;
-    public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
@@ -28,12 +26,15 @@ public class Apollo extends EntitySlime {
     Draedon owner = null;
     Artemis twin = null;
     // other variables and AI
-    static HashMap<String, Double> attrMapLaser;
-    EntityHelper.ProjectileShootInfo shootInfoLaser;
+    static HashMap<String, Double> attrMapPlasma, attrMapRocket;
+    EntityHelper.ProjectileShootInfo shootInfoPlasma, shootInfoRocket;
     static {
-        attrMapLaser = new HashMap<>();
-        attrMapLaser.put("damage", 1260d);
-        attrMapLaser.put("knockback", 1.5d);
+        attrMapPlasma = new HashMap<>();
+        attrMapPlasma.put("damage", 1260d);
+        attrMapPlasma.put("knockback", 1.5d);
+        attrMapRocket = new HashMap<>();
+        attrMapRocket.put("damage", 1450d);
+        attrMapRocket.put("knockback", 3.5d);
     }
 
     boolean dashing = false;
