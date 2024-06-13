@@ -47,16 +47,19 @@ public class Draedon extends EntitySlime {
     boolean[] subBossIsActive;
     private Location sharedHoverLocation;
 
-    public void updateSharedHoverLocation(Location targetLocation) {
+    public void updateSharedHoverLocation() {
+        Location targetLocation = target.getLocation();
         // Calculate the direction vector from the target to the boss
-        double yaw = MathHelper.getVectorYaw(sharedHoverLocation.clone().subtract(targetLocation).toVector());
+        Location originalHoverLoc = isSubBossActive(SubBossType.ARES) ?
+                subBosses[SubBossType.ARES.ordinal()].getBukkitEntity().getLocation() : sharedHoverLocation;
+        double yaw = MathHelper.getVectorYaw(originalHoverLoc.subtract(targetLocation).toVector());
         Vector direction = MathHelper.vectorFromYawPitch_approx(yaw, 0).multiply(32);
 
         // Calculate the hover location for the boss
         sharedHoverLocation = targetLocation.clone().add(direction);
     }
     public Location getSharedHoverLocation() {
-        return sharedHoverLocation;
+        return sharedHoverLocation.clone();
     }
     public boolean isSubBossActive(SubBossType type) {
         return subBossIsActive[type.ordinal()];
@@ -72,8 +75,10 @@ public class Draedon extends EntitySlime {
             }
         }
     }
-    protected void playWarningSound(Location loc) {
+    protected void playWarningSound() {
+        Location loc = target.getLocation();
         loc.getWorld().playSound(loc, "entity.exo_mechs.enrage", org.bukkit.SoundCategory.HOSTILE, 5f, 1f);
+        // TODO
         loc.getWorld().playSound(loc, Sound.ENTITY_ENDERDRAGON_GROWL, org.bukkit.SoundCategory.HOSTILE, 5f, 1f);
     }
 
@@ -255,7 +260,7 @@ public class Draedon extends EntitySlime {
                 bukkitEntity.setVelocity(velocity);
 
                 managePhases();
-                updateSharedHoverLocation(target.getLocation());
+                updateSharedHoverLocation();
                 broadcastMsg();
             }
         }

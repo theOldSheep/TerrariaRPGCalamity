@@ -53,7 +53,8 @@ public class Artemis extends EntitySlime {
                 .setAccelerationMode(true);
         AIM_HELPER_LASER_OFFSET = new EntityHelper.AimHelperOptions(LASER_TYPE)
                 .setProjectileSpeed(LASER_SPEED)
-                .setRandomOffsetRadius(5);
+                .setRandomOffsetRadius(3)
+                .setAccelerationMode(true);
 
         AIM_HELPER_DASH = new EntityHelper.AimHelperOptions()
                 .setProjectileSpeed(DASH_SPEED);
@@ -74,42 +75,71 @@ public class Artemis extends EntitySlime {
     protected Location twinHoverLocation, hoverLocation, pivot;
     private Vector dashVelocity = new Vector(), laserDir, laserRot;
     HashSet<Entity> finalLaserDamaged = new HashSet<>();
-    private int phase = 1;
-    private int phaseDurationCounter = 0;
+    protected int phase = 1, yawOffsetMulti = 1;
+    protected int phaseDurationCounter = 0;
 
 
 
-    public void movementTick() {
+
+    protected void movementTick(double yawOffset, Entity bukkitEntity) {
         Location targetLocation = target.getLocation();
+        Location sharedHoverLocation = owner.getSharedHoverLocation();
 
-        // Calculate the midpoint of the boss's hover location and its twin's hover location
-        Location midPoint = hoverLocation.clone().add(twinHoverLocation).multiply(0.5);
-
-        // Calculate the yaw as between the target and the midpoint
-        double yaw = MathHelper.getVectorYaw(midPoint.clone().subtract(targetLocation).toVector());
-
-        // Calculate the direction vector from the target to the midpoint
-        Vector direction;
-        direction = MathHelper.vectorFromYawPitch_approx(yaw - 20, 0).multiply(32);
-
-        // Calculate the hover location for the boss
-        Location hoverLocation = targetLocation.clone().add(direction);
+        // Calculate the ideal hover location
+        double yaw = MathHelper.getVectorYaw(sharedHoverLocation.clone().subtract(targetLocation).toVector());
+        Vector direction = MathHelper.vectorFromYawPitch_approx(yaw + yawOffset * yawOffsetMulti, 0).multiply(32);
+        Location idealHoverLocation = targetLocation.clone().add(direction);
 
         // Update the hover location based on the sub-bosses' states
-        updateHoverLocation(hoverLocation);
+        updateHoverLocation(idealHoverLocation);
 
-        // Calculate the direction vector for the twin
-        direction = MathHelper.vectorFromYawPitch_approx(yaw + 20, 0).multiply(32);
+        // Calculate the currently desired hover location
+        Location desiredHoverLocation = calculateDesiredHoverLocation(bukkitEntity, targetLocation, idealHoverLocation);
 
-        // Calculate the hover location for the twin
-        twinHoverLocation = targetLocation.clone().add(direction);
+        // Move the sub-boss to its desired hover location using an arc-shaped path
+        bukkitEntity.setVelocity(MathHelper.getDirection(bukkitEntity.getLocation(), desiredHoverLocation, Draedon.MECHS_ALIGNMENT_SPEED, true));
+    }
+    // Method to calculate the currently desired hover location
+    private Location calculateDesiredHoverLocation(Entity bukkitEntity, Location targetLocation, Location idealHoverLocation) {
+        // Calculate the current direction vector
+        Vector currentDirection = bukkitEntity.getLocation().clone().subtract(targetLocation).toVector();
 
-        // Update the hover location based on the sub-bosses' states
-        updateHoverLocation(twinHoverLocation);
+        // Calculate the ideal direction vector
+        Vector idealDirection = idealHoverLocation.clone().subtract(targetLocation).toVector();
 
-        // Use velocity-based movement to move the sub-boss to its hover location
-        Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverLocation, Draedon.MECHS_ALIGNMENT_SPEED, true);
-        bukkitEntity.setVelocity(velocity);
+        // Calculate the yaw of the current direction vector
+        double currentYaw = MathHelper.getVectorYaw(currentDirection);
+
+        // Calculate the yaw of the ideal direction vector
+        double idealYaw = MathHelper.getVectorYaw(idealDirection);
+
+        // Interpolate the yaw angle
+        double maxYawChange = Math.toDegrees(Draedon.MECHS_ALIGNMENT_SPEED / 32);
+        double yaw = interpolateAngle(currentYaw, idealYaw, maxYawChange);
+
+        // Calculate the desired direction vector
+        Vector desiredDirection = MathHelper.vectorFromYawPitch_approx(yaw, 0).multiply(32);
+
+        // Calculate the currently desired hover location
+        Location desiredHoverLocation = targetLocation.clone().add(desiredDirection);
+        desiredHoverLocation.setY(idealHoverLocation.getY());
+
+        return desiredHoverLocation;
+    }
+    private double interpolateAngle(double currentAngle, double idealAngle, double maxAngleChange) {
+        double difference = idealAngle - currentAngle;
+        double diffSign = Math.signum(difference);
+        difference = Math.abs(difference);
+
+        if (difference > 180) {
+            difference = 360 - difference;
+            diffSign *= -1;
+        }
+        if (difference < maxAngleChange) {
+            return idealAngle;
+        } else {
+            return currentAngle + maxAngleChange * diffSign;
+        }
     }
     private void updateHoverLocation(Location location) {
         if (owner.isSubBossActive(Draedon.SubBossType.ARTEMIS)) {
@@ -144,7 +174,10 @@ public class Artemis extends EntitySlime {
         switch (phase) {
             case 1:
                 if (phaseDurationCounter >= 120) {
-                    transitionToPhase(2);
+                    if (owner.getActiveBossCount() == 3)
+                        transitionToPhase(1);
+                    else
+                        transitionToPhase(2);
                 }
                 break;
             case 2:
@@ -162,7 +195,7 @@ public class Artemis extends EntitySlime {
                 break;
             case 3:
                 if (phaseDurationCounter >= 60) {
-                    transitionToPhase(4);
+                    transitionToPhase(1);
                 }
                 break;
             case 4:
@@ -176,32 +209,24 @@ public class Artemis extends EntitySlime {
     private void transitionToPhase(int newPhase) {
         phase = newPhase;
         phaseDurationCounter = 0;
+        if (newPhase == 1)
+            yawOffsetMulti *= -1;
     }
 
     private void phase1Attack() {
-        int shootInterval = getShootInterval();
-        EntityHelper.AimHelperOptions aimHelper = getAimHelper();
+        int shootInterval;
+        EntityHelper.AimHelperOptions aimHelper;
+        if (owner.getActiveBossCount() == 3) {
+            shootInterval = 10;
+            aimHelper = AIM_HELPER_LASER_INACCURATE;
+        } else if (owner.getActiveBossCount() == 1 && stageTransitionTriggered) {
+            shootInterval = 4;
+            aimHelper = AIM_HELPER_LASER_OFFSET;
+        } else {
+            shootInterval = 8;
+            aimHelper = AIM_HELPER_LASER;
+        }
         shootLaser(shootInterval, aimHelper);
-    }
-
-    private int getShootInterval() {
-        if (owner.getActiveBossCount() == 3) {
-            return 15;
-        } else if (owner.getActiveBossCount() == 1 && stageTransitionTriggered) {
-            return 5;
-        } else {
-            return 10;
-        }
-    }
-
-    private EntityHelper.AimHelperOptions getAimHelper() {
-        if (owner.getActiveBossCount() == 3) {
-            return AIM_HELPER_LASER_INACCURATE;
-        } else if (owner.getActiveBossCount() == 1 && stageTransitionTriggered) {
-            return AIM_HELPER_LASER_OFFSET;
-        } else {
-            return AIM_HELPER_LASER;
-        }
     }
 
     private void phase2Attack() {
@@ -221,30 +246,32 @@ public class Artemis extends EntitySlime {
             dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), aimLoc, DASH_SPEED);
             bukkitEntity.setVelocity(dashVelocity);
             // Unleash a roar
-            owner.playWarningSound(bukkitEntity.getLocation());
+            owner.playWarningSound();
         } else if (phaseDurationCounter < 100) {
             // Maintain the dash velocity
             bukkitEntity.setVelocity(dashVelocity);
+            // Dash yaw
+            this.yaw = (float) MathHelper.getVectorYaw( dashVelocity );
         }
     }
 
     private void phase3Attack() {
-        shootLaser(3, AIM_HELPER_LASER_OFFSET);
+        shootLaser(2, AIM_HELPER_LASER_OFFSET);
     }
 
     private void phase4Attack() {
         if (phaseDurationCounter < 10) {
             // Roar thrice for warning
             if (phaseDurationCounter % 3 == 0) {
-                owner.playWarningSound(bukkitEntity.getLocation());
+                owner.playWarningSound();
             }
-        } else if (phaseDurationCounter < 20) {
+        } else if (phaseDurationCounter < 30) {
             if (phaseDurationCounter == 10) {
                 // Remember the player's current location
                 pivot = target.getLocation();
                 // Prevent getting too close to the ground
                 double highestY = WorldHelper.getHighestBlockBelow(pivot).getY();
-                pivot.setY( Math.max( pivot.getY(), highestY + 24 ) );
+                pivot.setY( highestY + 32 );
             }
         } else if (phaseDurationCounter < 240) {
             // Continue the laser rotation, 11 seconds
@@ -304,7 +331,9 @@ public class Artemis extends EntitySlime {
 
             if (target != null) {
                 // movement
-                movementTick();
+                movementTick(-20, bukkitEntity);
+                // facing
+                this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
                 // attack
                 if (owner.isSubBossActive(Draedon.SubBossType.ARTEMIS)) {
                     if (!stageTransitionTriggered && getHealth() / getMaxHealth() < 0.7) {
@@ -316,8 +345,6 @@ public class Artemis extends EntitySlime {
                 } else {
                     transitionToPhase(1);
                 }
-                // facing
-                this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
             }
         }
         // collision dmg

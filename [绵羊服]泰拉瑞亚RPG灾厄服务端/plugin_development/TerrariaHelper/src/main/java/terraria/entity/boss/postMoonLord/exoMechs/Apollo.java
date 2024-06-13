@@ -26,23 +26,107 @@ public class Apollo extends EntitySlime {
     Draedon owner = null;
     Artemis twin = null;
     // other variables and AI
-    static HashMap<String, Double> attrMapPlasma, attrMapRocket;
+    static final double DASH_SPEED = 3.0;
+    static HashMap<String, Double> ATTR_MAP_PLASMA, ATTR_MAP_ROCKET;
+    static EntityHelper.AimHelperOptions AIM_HELPER_DASH;
     EntityHelper.ProjectileShootInfo shootInfoPlasma, shootInfoRocket;
     static {
-        attrMapPlasma = new HashMap<>();
-        attrMapPlasma.put("damage", 1260d);
-        attrMapPlasma.put("knockback", 1.5d);
-        attrMapRocket = new HashMap<>();
-        attrMapRocket.put("damage", 1450d);
-        attrMapRocket.put("knockback", 3.5d);
+        ATTR_MAP_PLASMA = new HashMap<>();
+        ATTR_MAP_PLASMA.put("damage", 1260d);
+        ATTR_MAP_PLASMA.put("knockback", 1.5d);
+        ATTR_MAP_ROCKET = new HashMap<>();
+        ATTR_MAP_ROCKET.put("damage", 1450d);
+        ATTR_MAP_ROCKET.put("knockback", 3.5d);
+
+        AIM_HELPER_DASH = new EntityHelper.AimHelperOptions()
+                .setProjectileSpeed(DASH_SPEED);
+    }
+    Vector dashVel = null;
+
+
+    private void attack() {
+        if (twin != null) {
+            switch (twin.phase) {
+                case 1:
+                    phase1Attack();
+                    break;
+                case 2:
+                    phase2Attack();
+                    break;
+                case 3:
+                    phase3Attack();
+                    break;
+                case 4:
+                    phase4Attack();
+                    break;
+            }
+        }
     }
 
-    boolean dashing = false;
+    private void phase1Attack() {
+        int interval = owner.getActiveBossCount() == 3 ? 15 : 10;
+        if (twin.stageTransitionTriggered && owner.getActiveBossCount() == 1) {
+            if (twin.phaseDurationCounter % 30 == 0) {
+                owner.playWarningSound();
+                dashVel = getDashDirection(false); // Direct dash
+            }
+            if (dashVel != null) {
+                bukkitEntity.setVelocity(dashVel);
+                this.yaw = (float) MathHelper.getVectorYaw(dashVel);
+            }
+        } else {
+            if (twin.phaseDurationCounter % interval == 0) {
+                fireProjectile(false); // Fire plasma
+            }
+        }
+    }
 
-    public void movementTick() {
-        // Use velocity-based movement to move the twin sub-boss to its hover location
-        Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), twin.twinHoverLocation, Draedon.MECHS_ALIGNMENT_SPEED, true);
-        bukkitEntity.setVelocity(velocity);
+    private void phase2Attack() {
+        int interval = owner.getActiveBossCount() >= 2 ? 12 : 8;
+        if (twin.phaseDurationCounter % interval == 0) {
+            fireProjectile(true); // Fire rocket
+        }
+    }
+
+    private void phase3Attack() {
+        int interval = owner.getActiveBossCount() >= 2 ? 18 : 12;
+        if (owner.getActiveBossCount() == 1 && twin.phaseDurationCounter < 30) {
+            if (twin.phaseDurationCounter == 0) {
+                owner.playWarningSound();
+                dashVel = getDashDirection(true); // Aimed dash
+            }
+            if (dashVel != null) {
+                bukkitEntity.setVelocity(dashVel);
+                this.yaw = (float) MathHelper.getVectorYaw(dashVel);
+            }
+        } else {
+            if (twin.phaseDurationCounter % interval == 0) {
+                fireProjectile(false); // Fire plasma
+            }
+        }
+    }
+
+    private void phase4Attack() {
+        if (twin.phaseDurationCounter % 10 == 0) {
+            fireProjectile(true); // Fire rocket
+        }
+    }
+
+
+
+
+    private void fireProjectile(boolean rocketOrPlasma) {
+        EntityHelper.ProjectileShootInfo shootInfo = rocketOrPlasma ? shootInfoRocket : shootInfoPlasma;
+        shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc,
+                target.getEyeLocation().add(MathHelper.randomVector().multiply(5)),
+                rocketOrPlasma ? 1.25 : 1.5);
+        EntityHelper.spawnProjectile(shootInfo);
+    }
+    private Vector getDashDirection(boolean aimedOrDirect) {
+        Location eyeLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        Location targetLoc = aimedOrDirect ? EntityHelper.helperAimEntity(eyeLoc, target, AIM_HELPER_DASH) : target.getEyeLocation();
+        return MathHelper.getDirection(eyeLoc, targetLoc, DASH_SPEED);
     }
     private void AI() {
         // no AI after death
@@ -54,10 +138,13 @@ public class Apollo extends EntitySlime {
             target = owner.target;
             // attack
             if (target != null) {
-                // TODO
-                movementTick();
+                // hover
+                twin.movementTick(20, bukkitEntity);
                 // facing
                 this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+                // attack
+                if (owner.isSubBossActive(Draedon.SubBossType.ARTEMIS))
+                    attack();
             }
         }
         // collision dmg
@@ -121,6 +208,13 @@ public class Apollo extends EntitySlime {
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;
+        }
+        // shoot info's
+        {
+            shootInfoPlasma = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), ATTR_MAP_PLASMA,
+                    EntityHelper.DamageType.ARROW, "巨大挥发性等离子光球");
+            shootInfoRocket = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), ATTR_MAP_ROCKET,
+                    EntityHelper.DamageType.ARROW, "高爆等离子火箭");
         }
     }
 
