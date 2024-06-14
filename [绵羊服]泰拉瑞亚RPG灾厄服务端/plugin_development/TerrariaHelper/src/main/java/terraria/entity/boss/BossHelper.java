@@ -15,6 +15,9 @@ import terraria.TerrariaHelper;
 import terraria.entity.boss.hardMode.aquaticScourge.AquaticScourge;
 import terraria.entity.boss.hardMode.astrumDeus.AstrumDeus;
 import terraria.entity.boss.postMoonLord.devourerOfGods.DevourerOfGods;
+import terraria.entity.boss.postMoonLord.exoMechs.Ares;
+import terraria.entity.boss.postMoonLord.exoMechs.Artemis;
+import terraria.entity.boss.postMoonLord.exoMechs.Thanatos;
 import terraria.entity.boss.preHardMode.desertScourge.DesertScourge;
 import terraria.entity.boss.postMoonLord.stormWeaver.StormWeaver;
 import terraria.entity.boss.hardMode.theDestroyer.Destroyer;
@@ -79,6 +82,14 @@ public class BossHelper {
                 break;
             case THE_DEVOURER_OF_GODS:
                 multiplier = 1d / DevourerOfGods.TOTAL_LENGTH;
+                break;
+            case EXO_MECHS:
+                double base_health_corrected = Artemis.BASIC_HEALTH + Thanatos.BASIC_HEALTH + Ares.BASIC_HEALTH;
+                double base_health_total =
+                        Artemis.BASIC_HEALTH * 2 +
+                        Thanatos.BASIC_HEALTH * Thanatos.TOTAL_LENGTH +
+                        Ares.BASIC_HEALTH * 5;
+                multiplier = base_health_corrected / base_health_total;
                 break;
             default:
                 multiplier = 1d;

@@ -135,6 +135,7 @@ public class AresArm extends EntitySlime {
         // boss parts and other properties
         {
             bossParts = owner.bossParts;
+            bossParts.add((LivingEntity) bukkitEntity);
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;

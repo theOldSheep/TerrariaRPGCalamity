@@ -177,9 +177,9 @@ public class Apollo extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 1d);
-            attrMap.put("damageTakenMulti", 1d);
-            attrMap.put("defence", 0d);
+            attrMap.put("damage", 1392d);
+            attrMap.put("damageTakenMulti", 0.75d);
+            attrMap.put("defence", 200d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
@@ -205,6 +205,7 @@ public class Apollo extends EntitySlime {
         // boss parts and other properties
         {
             bossParts = owner.bossParts;
+            bossParts.add((LivingEntity) bukkitEntity);
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;
@@ -214,7 +215,7 @@ public class Apollo extends EntitySlime {
             shootInfoPlasma = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), ATTR_MAP_PLASMA,
                     EntityHelper.DamageType.ARROW, "巨大挥发性等离子光球");
             shootInfoRocket = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), ATTR_MAP_ROCKET,
-                    EntityHelper.DamageType.ARROW, "高爆等离子火箭");
+                    EntityHelper.DamageType.ROCKET, "高爆等离子火箭");
         }
     }
 
