@@ -290,6 +290,18 @@ public class MathHelper {
         // Rotate the velocity vector
         return rotation.interpolate(vec);
     }
+    public static Vector rotationInterpolateDegree(Vector start, Vector end, double maxAngleDegree) {
+        return rotationInterpolateRadian(start, end, Math.toRadians(maxAngleDegree));
+    }
+    public static Vector rotationInterpolateRadian(Vector start, Vector end, double maxAngleRadian) {
+        if (start.lengthSquared() < 1e-9)
+            return start;
+
+        Vector axis = getNonZeroCrossProd(start, end);
+        double angle = Math.min( maxAngleRadian, start.angle(end) );
+
+        return rotateAroundAxisRadian(start, axis, angle);
+    }
     public static Vec3D toNMSVector(Vector vec) {
         return new Vec3D(vec.getX(), vec.getY(), vec.getZ());
     }

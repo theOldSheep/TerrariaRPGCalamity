@@ -1192,21 +1192,12 @@ public class GenericProjectile extends EntityPotion {
         }
         // delta theta is constant
         else {
-            Vector toTarget = homingTarget.getBukkitEntity().getLocation().toVector().subtract(getBukkitEntity().getLocation().toVector());
-            Vector targetDir = toTarget.normalize(); // Direction to target
-            Vector currDir = this.getBukkitEntity().getVelocity().normalize(); // Current direction (velocity)
-
-            double angle = Math.toDegrees(Math.acos(currDir.dot(targetDir))); // Angle in degrees
-
-            Vector newVelocity;
-            if (angle > homingAbility) {
-                // Calculate rotation axis and quaternion
-                Vector rotAxis = terraria.util.MathHelper.getNonZeroCrossProd(currDir, targetDir).normalize();
-                newVelocity = terraria.util.MathHelper.rotateAroundAxisDegree(currDir, rotAxis, homingAbility);
-            }
-            else {
-                newVelocity = targetDir;
-            }
+            Vector toTarget = terraria.util.MathHelper.getDirection(
+                    bukkitEntity.getLocation(), homingTarget.getBukkitEntity().getLocation(), 1d);
+            Vector currDir = this.getBukkitEntity().getVelocity();
+            terraria.util.MathHelper.setVectorLength(currDir, 1d); // Current direction (velocity)
+            
+            Vector newVelocity = terraria.util.MathHelper.rotationInterpolateDegree(currDir, toTarget, homingAbility);
             // update on velocity itself, do not override its reference.
             velocity.zero().add(newVelocity).multiply(this.speed);
         }

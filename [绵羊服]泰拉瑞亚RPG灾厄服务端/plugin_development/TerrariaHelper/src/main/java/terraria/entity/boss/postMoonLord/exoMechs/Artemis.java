@@ -271,7 +271,7 @@ public class Artemis extends EntitySlime {
                 pivot = target.getLocation();
                 // Prevent getting too close to the ground
                 double highestY = WorldHelper.getHighestBlockBelow(pivot).getY();
-                pivot.setY( highestY + 32 );
+                pivot.setY( Math.max( highestY + 32, pivot.getY() ) );
             }
         } else if (phaseDurationCounter < 240) {
             // Continue the laser rotation, 11 seconds
@@ -316,7 +316,8 @@ public class Artemis extends EntitySlime {
         bukkitEntity.teleport(newLocation);
         bukkitEntity.setVelocity(new Vector(0, 0, 0));
         GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
-                MathHelper.getVectorYaw(laserDir), MathHelper.getVectorPitch(laserDir), FINAL_LASER_LENGTH, FINAL_LASER_WIDTH, "", "",
+                MathHelper.getVectorYaw(laserDir), MathHelper.getVectorPitch(laserDir),
+                FINAL_LASER_LENGTH, FINAL_LASER_WIDTH, "", "",
                 finalLaserDamaged, ATTR_MAP_FINAL_LASER, STRIKE_OPTION_FINAL_LASER);
     }
 

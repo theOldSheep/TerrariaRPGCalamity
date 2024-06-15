@@ -314,8 +314,7 @@ public class WorldHelper {
                     startLoc.toVector(), direction, 0d, traceLength);
             blockIterator.forEachRemaining(WorldHelper::attemptDestroyVegetation);
         }
-        // this happens if the projectile is in a location where blocks can not be placed
-        catch (IllegalStateException ignored) {
+        catch (Exception ignored) {
         }
     }
     public static void attemptDestroyVegetation(Block block) {

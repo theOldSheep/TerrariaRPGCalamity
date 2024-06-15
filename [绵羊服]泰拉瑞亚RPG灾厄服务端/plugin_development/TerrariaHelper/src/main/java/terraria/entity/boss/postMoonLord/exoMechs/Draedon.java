@@ -338,9 +338,9 @@ public class Draedon extends EntitySlime {
         // Initialize sub-bosses
         {
             subBosses = new EntityLiving[SubBossType.values().length];
-            subBosses[SubBossType.ARTEMIS.ordinal()] = new Artemis(this, summonedPlayer.getLocation().add(0, 100, 0));
-            subBosses[SubBossType.THANATOS.ordinal()] = new Thanatos(this, summonedPlayer.getLocation().add(0, -100, 0));
-            subBosses[SubBossType.ARES.ordinal()] = new Ares(this, summonedPlayer.getLocation().add(0, 15, 0));
+            subBosses[SubBossType.ARTEMIS.ordinal()] = new Artemis(this, spawnLoc.clone().add(0, -100, 0));
+            subBosses[SubBossType.THANATOS.ordinal()] = new Thanatos(this, spawnLoc.clone().add(0, -100, 0));
+            subBosses[SubBossType.ARES.ordinal()] = new Ares(this, spawnLoc.clone().add(0, -100, 0));
 
             // Initialize sub-boss active status
             subBossIsActive = new boolean[3];

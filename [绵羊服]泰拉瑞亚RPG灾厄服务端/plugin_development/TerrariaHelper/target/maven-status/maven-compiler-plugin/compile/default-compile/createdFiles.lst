@@ -189,6 +189,7 @@ terraria\event\listener\PlayerJoinListener.class
 terraria\entity\boss\preHardMode\kingSlime\KingSlime.class
 terraria\entity\boss\preHardMode\crabulon\Crabulon.class
 terraria\entity\boss\hardMode\theDestroyer\Destroyer.class
+terraria\entity\boss\postMoonLord\exoMechs\Thanatos$AttackMethod.class
 terraria\util\CritterHelper$1.class
 terraria\util\CritterHelper.class
 terraria\entity\boss\hardMode\queenSlime\QueenSlime.class
