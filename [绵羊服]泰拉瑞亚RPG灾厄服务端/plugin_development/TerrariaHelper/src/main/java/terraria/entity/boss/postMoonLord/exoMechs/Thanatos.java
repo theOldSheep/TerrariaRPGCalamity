@@ -1,7 +1,6 @@
 package terraria.entity.boss.postMoonLord.exoMechs;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -68,9 +67,7 @@ public class Thanatos extends EntitySlime {
             return damage;
         }
     }
-    private enum Difficulty {
-        LOW, MEDIUM, HIGH
-    }
+
     private enum AttackMethod {
         LASER_PROJECTILE,
         DASH,
@@ -157,15 +154,6 @@ public class Thanatos extends EntitySlime {
             armorCloseCountdown = ARMOR_CLOSE_COUNTDOWN;
         }
     }
-    private Difficulty calculateDifficulty() {
-        if (owner.getActiveBossCount() == 3) {
-            return Difficulty.LOW;
-        } else if (getHealth() < getMaxHealth() * 0.4) {
-            return Difficulty.HIGH;
-        } else {
-            return Difficulty.MEDIUM;
-        }
-    }
 
     private void tick() {
         if (segmentType == SegmentType.HEAD) {
@@ -175,7 +163,7 @@ public class Thanatos extends EntitySlime {
                 ticks = 0;
             }
             else {
-                Difficulty difficulty = calculateDifficulty();
+                Draedon.Difficulty difficulty = owner.calculateDifficulty(this);
 
                 switch (attackMethod) {
                     case LASER_PROJECTILE:
@@ -216,13 +204,13 @@ public class Thanatos extends EntitySlime {
         MathHelper.setVectorLength(velocity, velLen);
     }
 
-    private void handleLaserProjectileAttack(Difficulty difficulty) {
+    private void handleLaserProjectileAttack(Draedon.Difficulty difficulty) {
         int completeFireDuration = TOTAL_LENGTH * LASER_DELAY / laserFireInterval + ARMOR_CLOSE_COUNTDOWN;
         if (ticks % completeFireDuration == ARMOR_CLOSE_COUNTDOWN / 2) {
             int randomIndex = new Random().nextInt(laserFireInterval) + 1;
             segments.get(randomIndex).fireLaser();
         }
-        if (ticks >= completeFireDuration && difficulty != Difficulty.LOW) {
+        if (ticks >= completeFireDuration && difficulty != Draedon.Difficulty.LOW) {
             attackMethod = AttackMethod.DASH;
             ticks = 0;
         }
@@ -231,7 +219,7 @@ public class Thanatos extends EntitySlime {
         velocity = MathHelper.rotationInterpolateDegree(velocity, idealVelocity, 1);
     }
 
-    private void handleDashAttack(Difficulty difficulty) {
+    private void handleDashAttack(Draedon.Difficulty difficulty) {
         // Windup
         if (ticks < 40) {
             double angle = Math.min(25, 25 * ticks / 40.0);
@@ -241,7 +229,7 @@ public class Thanatos extends EntitySlime {
             }
             Vector idealVelocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), targetLocation, desiredLength);
             velocity = MathHelper.rotationInterpolateDegree(velocity, idealVelocity, angle);
-            if (bukkitEntity.getLocation().distance(targetLocation) < 20) {
+            if (bukkitEntity.getLocation().distanceSquared(targetLocation) < 400) {
                 ticks = 39;
             }
         }
@@ -261,7 +249,7 @@ public class Thanatos extends EntitySlime {
         }
         // Next phase
         else if (ticks >= 95) {
-            if (difficulty == Difficulty.HIGH) {
+            if (difficulty == Draedon.Difficulty.HIGH) {
                 attackMethod = AttackMethod.GAMMA_LASER_RAY;
             } else {
                 attackMethod = AttackMethod.LASER_PROJECTILE;
@@ -307,7 +295,7 @@ public class Thanatos extends EntitySlime {
     public void fireLaser() {
         if (armorCloseCountdown <= 0) {
             setOpen(true);
-            Difficulty difficulty = calculateDifficulty();
+            Draedon.Difficulty difficulty = owner.calculateDifficulty(this);
             switch (difficulty) {
                 case LOW:
                     laserFireInterval = 3;

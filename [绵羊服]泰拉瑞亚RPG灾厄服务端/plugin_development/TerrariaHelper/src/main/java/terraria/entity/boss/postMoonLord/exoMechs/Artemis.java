@@ -83,11 +83,11 @@ public class Artemis extends EntitySlime {
 
     protected void movementTick(double yawOffset, Entity bukkitEntity) {
         Location targetLocation = target.getLocation();
-        Location sharedHoverLocation = owner.getSharedHoverLocation();
+        Location sharedHoverLocation = owner.getHoverCenterLoc();
 
         // Calculate the ideal hover location
         double yaw = MathHelper.getVectorYaw(sharedHoverLocation.clone().subtract(targetLocation).toVector());
-        Vector direction = MathHelper.vectorFromYawPitch_approx(yaw + yawOffset * yawOffsetMulti, 0).multiply(32);
+        Vector direction = MathHelper.vectorFromYawPitch_approx(yaw + yawOffset * yawOffsetMulti, 0).multiply(Draedon.MECHS_ALIGN_DIST);
         Location idealHoverLocation = targetLocation.clone().add(direction);
 
         // Update the hover location based on the sub-bosses' states
@@ -114,11 +114,11 @@ public class Artemis extends EntitySlime {
         double idealYaw = MathHelper.getVectorYaw(idealDirection);
 
         // Interpolate the yaw angle
-        double maxYawChange = Math.toDegrees(Draedon.MECHS_ALIGNMENT_SPEED / 32);
+        double maxYawChange = Math.toDegrees(Draedon.MECHS_ALIGNMENT_SPEED / Draedon.MECHS_ALIGN_DIST);
         double yaw = interpolateAngle(currentYaw, idealYaw, maxYawChange);
 
         // Calculate the desired direction vector
-        Vector desiredDirection = MathHelper.vectorFromYawPitch_approx(yaw, 0).multiply(32);
+        Vector desiredDirection = MathHelper.vectorFromYawPitch_approx(yaw, 0).multiply(Draedon.MECHS_ALIGN_DIST);
 
         // Calculate the currently desired hover location
         Location desiredHoverLocation = targetLocation.clone().add(desiredDirection);

@@ -9,13 +9,40 @@ import org.bukkit.util.Vector;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
 public class AresArm extends EntitySlime {
+    public enum ArmType {
+        LEFT_TOP("Left Top Claw", -20, 6),
+        LEFT_BOTTOM("Left Bottom Claw", -15, -10),
+        RIGHT_TOP("Right Top Claw", 20, 6),
+        RIGHT_BOTTOM("Right Bottom Claw", 15, -10);
+
+        private final String name;
+        private final double sidewaysOffset;
+        private final double verticalOffset;
+
+        ArmType(String name, double sidewaysOffset, double verticalOffset) {
+            this.name = name;
+            this.sidewaysOffset = sidewaysOffset;
+            this.verticalOffset = verticalOffset;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public double getSidewaysOffset() {
+            return sidewaysOffset;
+        }
+
+        public double getVerticalOffset() {
+            return verticalOffset;
+        }
+    }
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EXO_MECHS;
     public static final double BASIC_HEALTH = 3588000 * 2;
@@ -26,25 +53,9 @@ public class AresArm extends EntitySlime {
     Player target = null;
     Ares owner = null;
     // other variables and AI
-    public enum ArmType {
-        LEFT_TOP("Left Top Claw"),
-        LEFT_BOTTOM("Left Bottom Claw"),
-        RIGHT_TOP("Right Top Claw"),
-        RIGHT_BOTTOM("Right Bottom Claw");
-
-        private final String name;
-
-        ArmType(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
-    private ArmType handType;
-    public ArmType getHandType() {
-        return handType;
+    private ArmType armType;
+    public ArmType getArmType() {
+        return armType;
     }
     private Location desiredLocation;
 
@@ -77,8 +88,6 @@ public class AresArm extends EntitySlime {
                 this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
             }
         }
-        // collision dmg
-        terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
     public AresArm(World world) {
@@ -89,13 +98,13 @@ public class AresArm extends EntitySlime {
     public AresArm(Ares head, Location spawnLoc, ArmType armType) {
         super( head.getWorld() );
         owner = head;
-        this.handType = armType;
+        this.armType = armType;
         // spawn location
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         head.getWorld().addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName(handType.getName());
+        setCustomName(this.armType.getName());
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");
@@ -108,8 +117,8 @@ public class AresArm extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 1d);
-            attrMap.put("damageTakenMulti", 1d);
-            attrMap.put("defence", 0d);
+            attrMap.put("damageTakenMulti", 0.65d);
+            attrMap.put("defence", 200d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);

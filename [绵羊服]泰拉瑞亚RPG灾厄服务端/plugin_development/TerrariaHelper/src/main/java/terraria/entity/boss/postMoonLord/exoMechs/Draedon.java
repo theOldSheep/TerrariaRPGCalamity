@@ -25,6 +25,9 @@ public class Draedon extends EntitySlime {
         THANATOS,
         ARES;
     }
+    enum Difficulty {
+        LOW, MEDIUM, HIGH
+    }
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EXO_MECHS;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
@@ -36,7 +39,7 @@ public class Draedon extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    protected static final double MECHS_ALIGNMENT_SPEED = 3.0;
+    protected static final double MECHS_ALIGNMENT_SPEED = 3.0, MECHS_ALIGN_DIST = 32.0;
     private static final String[] MESSAGES = {"Message 1", "Message 2", "Message 3"};
     private int messageIndex = 0;
     private int messageDelayCounter = 0;
@@ -53,12 +56,12 @@ public class Draedon extends EntitySlime {
         Location originalHoverLoc = isSubBossActive(SubBossType.ARES) ?
                 subBosses[SubBossType.ARES.ordinal()].getBukkitEntity().getLocation() : sharedHoverLocation;
         double yaw = MathHelper.getVectorYaw(originalHoverLoc.subtract(targetLocation).toVector());
-        Vector direction = MathHelper.vectorFromYawPitch_approx(yaw, 0).multiply(32);
+        Vector direction = MathHelper.vectorFromYawPitch_approx(yaw, 0).multiply(MECHS_ALIGN_DIST);
 
         // Calculate the hover location for the boss
         sharedHoverLocation = targetLocation.clone().add(direction);
     }
-    public Location getSharedHoverLocation() {
+    public Location getHoverCenterLoc() {
         return sharedHoverLocation.clone();
     }
     public boolean isSubBossActive(SubBossType type) {
@@ -80,6 +83,15 @@ public class Draedon extends EntitySlime {
         loc.getWorld().playSound(loc, "entity.exo_mechs.enrage", org.bukkit.SoundCategory.HOSTILE, 5f, 1f);
         // TODO
         loc.getWorld().playSound(loc, Sound.ENTITY_ENDERDRAGON_GROWL, org.bukkit.SoundCategory.HOSTILE, 5f, 1f);
+    }
+    protected Difficulty calculateDifficulty(EntityLiving livingEntity) {
+        if (getActiveBossCount() == 3) {
+            return Draedon.Difficulty.LOW;
+        } else if (livingEntity.getHealth() < livingEntity.getMaxHealth() * 0.4) {
+            return Draedon.Difficulty.HIGH;
+        } else {
+            return Draedon.Difficulty.MEDIUM;
+        }
     }
 
     private void managePhases() {

@@ -13,7 +13,6 @@ terraria\entity\boss\hardMode\queenSlime\QueenSlime$1.class
 terraria\entity\npc\TerrariaNPCClothier.class
 terraria\entity\boss\postMoonLord\stormWeaver\StormWeaver.class
 terraria\entity\boss\BossTemplate.class
-terraria\util\Quaternion.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticAncientLight.class
 terraria\entity\boss\postMoonLord\polterghast\PolterghastClone.class
 terraria\worldgen\MazeGenerator$CellEdge.class
@@ -173,12 +172,12 @@ terraria\util\WorldHelper$HeightLayer.class
 terraria\worldgen\Interpolate$InterpolatePoint.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator.class
 terraria\entity\boss\preHardMode\theHiveMind\TheHiveMind$1.class
-terraria\entity\boss\postMoonLord\exoMechs\Thanatos$Difficulty.class
 terraria\gameplay\EventAndTime$Events.class
 terraria\entity\boss\preHardMode\theHiveMind\TheHiveMind$AIPhase.class
 terraria\entity\boss\hardMode\lunaticCultist\PhantomDragon.class
 terraria\worldgen\overworld\OverworldCaveGenerator$1.class
 terraria\entity\boss\hardMode\aquaticScourge\AquaticScourge.class
+terraria\util\MathHelper$Quaternion.class
 terraria\entity\monster\MonsterCaveSpider.class
 terraria\event\listener\CraftingListener$CraftingFilter.class
 terraria\event\listener\VanillaMechanicListener.class
@@ -285,7 +284,7 @@ terraria\entity\boss\hardMode\calamitasClone\CalamitasClone.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Leviathan$AIPhase.class
 terraria\entity\boss\preHardMode\eaterOfWorld\EaterOfWorld.class
 terraria\entity\npc\TerrariaNPC.class
-terraria\entity\boss\postMoonLord\exoMechs\Ares$1.class
+terraria\entity\boss\postMoonLord\exoMechs\Draedon$Difficulty.class
 terraria\entity\boss\postMoonLord\devourerOfGods\SwingingArcAttackPattern.class
 terraria\util\EntityHelper$WormSegmentMovementOptions.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHand.class

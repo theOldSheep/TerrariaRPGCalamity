@@ -807,19 +807,21 @@
     homingRadius: 96
 橙色星流脉冲激光:
     projectileSize: 0.5
-    liveTime: 80
+    liveTime: 60
     penetration: 999999
     gravity: 0
     blockHitAction: thru
+    speedMultiPerTick: 1.1
+    maxSpeed: 3.5
 红色星流脉冲激光:
     projectileSize: 0.5
-    liveTime: 80
+    liveTime: 60
     penetration: 999999
     gravity: 0
     blockHitAction: thru
 巨大挥发性等离子光球:
     projectileSize: 3
-    liveTime: 40
+    liveTime: 30
     penetration: 999999
     gravity: 0
     blockHitAction: thru
@@ -837,21 +839,22 @@
     homing: true
     homingRadius: 96
     noHomingTicks: 20
-    maxHomingTicks: 50
     homingSharpTurning: false
-    homingAbility: 12
+    homingAbility: 4
 高爆等离子火箭:
     projectileSize: 1.5
-    liveTime: 100
+    liveTime: 80
     gravity: 0
     blockHitAction: thru
+    isGrenade: true
+    blastRadius: 5
     homing: true
     homingRadius: 128
     noHomingTicks: 20
     maxHomingTicks: 60
     homingSharpTurning: false
     homingAbility: 12
-    homingEndSpeedMultiplier: 2.0
+    homingEndSpeedMultiplier: 2.5
 特斯拉星流闪电:
     projectileSize: 2.0
     liveTime: 100
