@@ -16,19 +16,21 @@ import java.util.UUID;
 
 public class AresArm extends EntitySlime {
     public enum ArmType {
-        LEFT_TOP("Left Top Claw", -20, 6),
-        LEFT_BOTTOM("Left Bottom Claw", -15, -10),
-        RIGHT_TOP("Right Top Claw", 20, 6),
-        RIGHT_BOTTOM("Right Bottom Claw", 15, -10);
+        LEFT_TOP("XF-09“阿瑞斯”镭射加农炮", -20, 6, ArmAttackPattern.LASER_CANNON),
+        LEFT_BOTTOM("XF-09“阿瑞斯”特斯拉加农炮", -15, -10, ArmAttackPattern.TESLA_CANNON),
+        RIGHT_TOP("XF-09“阿瑞斯”高斯核弹发射井", 20, 6, ArmAttackPattern.NUKE_LAUNCHER),
+        RIGHT_BOTTOM("XF-09“阿瑞斯”离子加农炮", 15, -10, ArmAttackPattern.PLASMA_CANNON);
 
         private final String name;
         private final double sidewaysOffset;
         private final double verticalOffset;
+        private final ArmAttackPattern attackPattern;
 
-        ArmType(String name, double sidewaysOffset, double verticalOffset) {
+        ArmType(String name, double sidewaysOffset, double verticalOffset, ArmAttackPattern attackPattern) {
             this.name = name;
             this.sidewaysOffset = sidewaysOffset;
             this.verticalOffset = verticalOffset;
+            this.attackPattern = attackPattern;
         }
 
         public String getName() {
@@ -42,6 +44,78 @@ public class AresArm extends EntitySlime {
         public double getVerticalOffset() {
             return verticalOffset;
         }
+
+        public ArmAttackPattern getAttackPattern() {
+            return attackPattern;
+        }
+    }
+    public enum ArmAttackPattern {
+        LASER_CANNON("红色星流脉冲激光", new int[]{10, 8, 5, 10}, new int[]{1, 1, 1, 1}, new int[]{10, 8, 5, 10},
+                2.0, new double[]{0.5, 0.75, 1, 0.25}, new double[]{0.25, 0.5, 1, 0}, createAttributeMap(1560, 1.5)),
+        TESLA_CANNON("特斯拉星流闪电", new int[]{60, 40, 0, 50}, new int[]{4, 5, 6, 1}, new int[]{30, 25, 20, 0},
+                1.8, new double[]{0.6, 0.85, 1, 1}, new double[]{0, 0, 0, 0}, createAttributeMap(1260, 1)),
+        NUKE_LAUNCHER("星流高斯核弹", new int[]{200, 100, 60, 200}, new int[]{0, 1, 1, 0}, new int[]{0, 0, 0, 0},
+                1.5, new double[]{0, 0.5, 1, 0}, new double[]{0, 0, 0, 0}, createAttributeMap(1920, 6)),
+        PLASMA_CANNON("巨大挥发性等离子光球", new int[]{75, 60, 50, 80}, new int[]{2, 3, 5, 2}, new int[]{20, 15, 10, 10},
+                1.2, new double[]{0.5, 0.9, 1, 0}, new double[]{0.75, 1.25, 2, 0}, createAttributeMap(1260, 2.5));
+
+        private final String projectileType;
+        private final int[] loadTimes;
+        private final int[] loadAmounts;
+        private final int[] fireIntervals;
+        private final double projectileSpeed;
+        private final double[] intensities;
+        private final double[] randomOffsetRadii;
+        private final HashMap<String, Double> attributeMap;
+
+        ArmAttackPattern(String projectileType, int[] loadTimes, int[] loadAmounts, int[] fireIntervals, double projectileSpeed, double[] intensities, double[] randomOffsetRadii, HashMap<String, Double> attributeMap) {
+            this.projectileType = projectileType;
+            this.loadTimes = loadTimes;
+            this.loadAmounts = loadAmounts;
+            this.fireIntervals = fireIntervals;
+            this.projectileSpeed = projectileSpeed;
+            this.intensities = intensities;
+            this.randomOffsetRadii = randomOffsetRadii;
+            this.attributeMap = attributeMap;
+        }
+
+        public String getProjectileType() {
+            return projectileType;
+        }
+
+        public int getLoadTime(int difficulty) {
+            return loadTimes[difficulty];
+        }
+
+        public int getLoadAmount(int difficulty) {
+            return loadAmounts[difficulty];
+        }
+
+        public int getFireInterval(int difficulty) {
+            return fireIntervals[difficulty];
+        }
+
+        public double getProjectileSpeed() {
+            return projectileSpeed;
+        }
+
+        public EntityHelper.AimHelperOptions getAimHelperOptions(int difficulty) {
+            return new EntityHelper.AimHelperOptions(projectileType)
+                    .setProjectileSpeed(projectileSpeed)
+                    .setIntensity(intensities[difficulty])
+                    .setRandomOffsetRadius(randomOffsetRadii[difficulty]);
+        }
+
+        public HashMap<String, Double> getAttributeMap() {
+            return attributeMap;
+        }
+
+        private static HashMap<String, Double> createAttributeMap(double damage, double knockback) {
+            HashMap<String, Double> attributeMap = new HashMap<>();
+            attributeMap.put("damage", damage);
+            attributeMap.put("knockback", knockback);
+            return attributeMap;
+        }
     }
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EXO_MECHS;
@@ -53,11 +127,61 @@ public class AresArm extends EntitySlime {
     Player target = null;
     Ares owner = null;
     // other variables and AI
-    private ArmType armType;
+    ArmType armType;
     public ArmType getArmType() {
         return armType;
     }
-    private Location desiredLocation;
+    Location desiredLocation;
+    EntityHelper.ProjectileShootInfo projectileShootInfo;
+    private int chargeTicks = 0;
+    private int projectilesFired = 0;
+
+    private int getDifficulty() {
+        return owner.isLaserBeamAttackActive ? 3 : owner.owner.calculateDifficulty(this).ordinal();
+    }
+
+
+
+    public void handleProjectileFiring() {
+        if (target == null) return;
+
+        ArmAttackPattern attackPattern = armType.getAttackPattern();
+        int difficulty = getDifficulty(); // Replace with your method to get the difficulty level
+
+        if (chargeTicks < attackPattern.getLoadTime(difficulty)) {
+            chargeTicks++;
+        } else {
+            if (projectilesFired < attackPattern.getLoadAmount(difficulty)) {
+                int fireInterval = attackPattern.getFireInterval(difficulty);
+                if (fireInterval == 0 || chargeTicks % fireInterval == 0) {
+                    Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                    EntityHelper.AimHelperOptions aimHelperOptions = attackPattern.getAimHelperOptions(difficulty);
+
+                    Location aimLocation = EntityHelper.helperAimEntity(shootLoc, target, aimHelperOptions);
+
+                    Vector direction = aimLocation.toVector().subtract(shootLoc.toVector());
+                    if (direction.lengthSquared() == 0) {
+                        direction = new Vector(1, 0, 0);
+                    } else {
+                        direction.normalize();
+                    }
+                    Vector velocity = direction.multiply(attackPattern.getProjectileSpeed());
+
+                    projectileShootInfo.setLockedTarget(target);
+                    projectileShootInfo.shootLoc = shootLoc;
+                    projectileShootInfo.velocity = velocity;
+
+                    EntityHelper.spawnProjectile(projectileShootInfo);
+
+                    projectilesFired++;
+                }
+                chargeTicks++;
+            } else {
+                chargeTicks = 0;
+                projectilesFired = 0;
+            }
+        }
+    }
 
 
 
@@ -83,6 +207,7 @@ public class AresArm extends EntitySlime {
             if (target != null) {
                 movementTick();
                 // TODO
+                handleProjectileFiring();
 
                 // facing
                 this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
@@ -149,6 +274,9 @@ public class AresArm extends EntitySlime {
             this.setNoGravity(true);
             this.persistent = true;
         }
+        // shoot info
+        projectileShootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(),
+                armType.getAttackPattern().getAttributeMap(), armType.getAttackPattern().getProjectileType());
     }
 
     // rewrite AI

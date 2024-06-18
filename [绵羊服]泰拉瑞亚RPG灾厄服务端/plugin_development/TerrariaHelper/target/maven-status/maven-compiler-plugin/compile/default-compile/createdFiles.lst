@@ -82,6 +82,7 @@ terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
 terraria\event\TerrariaProjectileHitEvent.class
 terraria\worldgen\overworld\OverworldBiomeGenerator$2.class
 terraria\util\PlayerHelper$1.class
+terraria\entity\boss\postMoonLord\exoMechs\AresArm$ArmAttackPattern.class
 terraria\entity\boss\hardMode\dukeFishron\Sharkron.class
 terraria\entity\boss\hardMode\moonLord\MoonLord.class
 terraria\entity\boss\hardMode\thePlaguebringerGoliath\PlagueHomingMissile.class

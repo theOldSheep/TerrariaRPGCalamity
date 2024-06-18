@@ -129,7 +129,7 @@ public class GenericProjectile extends EntityPotion {
         extraProjectileSpawnInterval = extraProjectileConfigSection.getInt("interval", 10);
         attrMapExtraProjectile = (HashMap<String, Double>) attrMap.clone();
         attrMapExtraProjectile.put("damage",
-                attrMapExtraProjectile.get("damage") * extraProjectileConfigSection.getDouble("damageMulti", 0.5));
+                attrMapExtraProjectile.getOrDefault("damage", 1d) * extraProjectileConfigSection.getDouble("damageMulti", 0.5));
         extraProjectileShootInfo = new EntityHelper.ProjectileShootInfo(getShooter().getBukkitEntity(), new Vector(),
                 attrMapExtraProjectile, extraProjectileConfigSection.getString("spawnType", "木箭"));
     }

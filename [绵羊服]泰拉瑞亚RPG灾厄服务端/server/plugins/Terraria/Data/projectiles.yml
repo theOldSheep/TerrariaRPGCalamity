@@ -878,7 +878,7 @@
         - "带电|80|1"
 星流高斯核弹:
     gravity: 0
-    liveTime: 75
+    liveTime: 60
     projectileSize: 1.5
     homing: true
     homingRadius: 128

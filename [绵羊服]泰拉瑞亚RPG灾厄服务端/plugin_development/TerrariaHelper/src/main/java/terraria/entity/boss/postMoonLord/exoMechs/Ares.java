@@ -27,7 +27,11 @@ public class Ares extends EntitySlime {
     Player target = null;
     Draedon owner = null;
     // other variables and AI
-    static final double LASER_BEAM_LENGTH = 48, LASER_BEAM_WIDTH = 1;
+    static final double LASER_BEAM_LENGTH = 56, LASER_MAX_TARGET_DIST = 48, LASER_BEAM_WIDTH = 1;
+    static final int LASER_BEAM_INITIAL_PITCH = 90, LASER_BEAM_PITCH_CHANGE_RATE = 90 - 15;
+    static final int REGULAR_ATTACK_PHASE_TICK_DURATION = 160,
+            ROAR_INTERVAL = 10, ROAR_COUNT = 3,
+            LASER_BEAM_DURATION = 60, LASER_BEAM_COUNT = 3;
     static HashMap<String, Double> ATTR_MAP_LASER_BEAM;
     static GenericHelper.StrikeLineOptions STRIKE_OPTION_LASER_BEAM;
 
@@ -41,18 +45,15 @@ public class Ares extends EntitySlime {
                 .setParticleInfo(
                         new GenericHelper.ParticleLineOptions()
                                 .setVanillaParticle(false)
-                                .setTicksLinger(1)
-                                .setParticleColor("RAINBOW"));
+                                .setTicksLinger(2)
+                                .setParticleColor("255|255|255", "191|246|145"));
     }
     AresArm[] arms;
-
     HashSet<Entity> laserBeamDamaged = new HashSet<>();
     boolean isHandPlacementFlipped = false;
-    boolean isLaserBeamAttackActive = false;
+    protected boolean isLaserBeamAttackActive = false;
     private int laserBeamCounter = 0;
-
-
-
+    private int currentLaserBeam = 0;
 
 
     public void movementTick() {
@@ -62,39 +63,36 @@ public class Ares extends EntitySlime {
         // Update the hover location based on the sub-bosses' states
         updateHoverLocation(hoverCenterLoc);
 
-        // Cycle the attack phase
-        cycleAttackPhase();
-
         // Calculate the direction vector from the target to the boss
         double yaw = MathHelper.getVectorYaw(bukkitEntity.getLocation().subtract(target.getLocation()).toVector());
 
-        // Check if the laser beam attack is active and the distance to the target is large enough
-        if (isLaserBeamAttackActive) {
-            double distance = bukkitEntity.getLocation().distance(target.getLocation());
-            if (distance > Draedon.MECHS_ALIGN_DIST) {
-                // Move the boss
-                Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverCenterLoc, Draedon.MECHS_ALIGNMENT_SPEED, true);
-                bukkitEntity.setVelocity(velocity);
-            }
+        // Move the boss
+        Vector velocity;
+        if (isLaserBeamAttackActive &&
+                bukkitEntity.getLocation().distanceSquared(target.getLocation()) < LASER_MAX_TARGET_DIST * LASER_MAX_TARGET_DIST) {
+            velocity = bukkitEntity.getVelocity().multiply(0.5);
         } else {
-            // Move the boss normally
-            Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverCenterLoc, Draedon.MECHS_ALIGNMENT_SPEED, true);
-            bukkitEntity.setVelocity(velocity);
+            velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverCenterLoc, Draedon.MECHS_ALIGNMENT_SPEED, true);
         }
+        bukkitEntity.setVelocity(velocity);
 
-        // Calculate the desired locations for the boss's arms
+        // Update the arm locations
         for (AresArm arm : arms) {
-            Location armDesiredLocation = bukkitEntity.getLocation();
-
-            // Calculate a vector that points sideways relative to the boss and player's direction
-            Vector sidewaysVector = MathHelper.vectorFromYawPitch_approx(yaw - 90, 0);
-
-            // Add the sideways vector to the hover location to get the desired location for the arm
-            armDesiredLocation.add(sidewaysVector.multiply(arm.getArmType().getSidewaysOffset() * (isHandPlacementFlipped ? -1 : 1)));
-            armDesiredLocation.add(0, arm.getArmType().getVerticalOffset(), 0);
-
-            arm.setDesiredLocation(armDesiredLocation);
+            arm.setDesiredLocation(calculateArmDesiredLocation(arm, yaw));
         }
+    }
+
+    private Location calculateArmDesiredLocation(AresArm arm, double yaw) {
+        Location armDesiredLocation = bukkitEntity.getLocation();
+
+        // Calculate a vector that points sideways relative to the boss and player's direction
+        Vector sidewaysVector = MathHelper.vectorFromYawPitch_approx(yaw - 90, 0);
+
+        // Add the sideways vector to the hover location to get the desired location for the arm
+        armDesiredLocation.add(sidewaysVector.multiply(arm.getArmType().getSidewaysOffset() * (isHandPlacementFlipped ? -1 : 1)));
+        armDesiredLocation.add(0, arm.getArmType().getVerticalOffset(), 0);
+
+        return armDesiredLocation;
     }
 
     public void cycleAttackPhase() {
@@ -109,32 +107,35 @@ public class Ares extends EntitySlime {
             laserBeamCounter++;
 
             // Regular attack phase
-            if (laserBeamCounter <= 160) {
+            if (laserBeamCounter <= REGULAR_ATTACK_PHASE_TICK_DURATION) {
                 isLaserBeamAttackActive = false;
-            } else if (laserBeamCounter <= 320) {
-                // Laser beam attack phase
-                isLaserBeamAttackActive = true;
-
+            } else if (laserBeamCounter <= REGULAR_ATTACK_PHASE_TICK_DURATION + ROAR_INTERVAL * ROAR_COUNT + LASER_BEAM_DURATION * LASER_BEAM_COUNT) {
                 // Roar before the laser beam attack
-                if (laserBeamCounter == 161) {
-                    owner.playWarningSound();
-                } else if (laserBeamCounter == 171) {
-                    owner.playWarningSound();
-                } else if (laserBeamCounter == 181) {
-                    owner.playWarningSound();
+                if (laserBeamCounter <= REGULAR_ATTACK_PHASE_TICK_DURATION + ROAR_INTERVAL * ROAR_COUNT) {
+                    if ((laserBeamCounter - REGULAR_ATTACK_PHASE_TICK_DURATION) % ROAR_INTERVAL == 1) {
+                        owner.playWarningSound();
+                    }
                 }
 
-                // Apply the laser beam attack
-                if (laserBeamCounter >= 200 && laserBeamCounter < 260) {
-                    applyLaserBeamAttack(1);
-                } else if (laserBeamCounter >= 260) {
-                    applyLaserBeamAttack(2);
-                }
+                // Laser beam attack phase
+                if (laserBeamCounter > REGULAR_ATTACK_PHASE_TICK_DURATION + ROAR_INTERVAL * ROAR_COUNT) {
+                    isLaserBeamAttackActive = true;
 
-                // Swap the arm placement after the laser beam attack
-                if (laserBeamCounter == 320) {
-                    isHandPlacementFlipped = !isHandPlacementFlipped;
-                    laserBeamCounter = 0;
+                    // Apply the laser beam attack
+                    if (currentLaserBeam < LASER_BEAM_COUNT) {
+                        int initialTick = REGULAR_ATTACK_PHASE_TICK_DURATION + ROAR_INTERVAL * ROAR_COUNT + LASER_BEAM_DURATION * currentLaserBeam;
+                        applyLaserBeamAttack(initialTick);
+                        if (laserBeamCounter >= initialTick + LASER_BEAM_DURATION) {
+                            currentLaserBeam++;
+                        }
+                    }
+
+                    // Swap the arm placement after the laser beam attack
+                    if (currentLaserBeam == LASER_BEAM_COUNT) {
+                        isHandPlacementFlipped = !isHandPlacementFlipped;
+                        laserBeamCounter = 0;
+                        currentLaserBeam = 0;
+                    }
                 }
             }
         } else {
@@ -142,19 +143,21 @@ public class Ares extends EntitySlime {
         }
     }
 
-    private void applyLaserBeamAttack(int phase) {
+
+    private void applyLaserBeamAttack(int initialTick) {
         // Calculate the yaw and pitch
         double yaw = MathHelper.getVectorYaw(target.getLocation().clone().subtract(bukkitEntity.getLocation()).toVector());
-        double pitch = (phase == 1 ? 90 - (laserBeamCounter - 200) / 60.0 * 70 : -20 - (320 - laserBeamCounter) / 60.0 * 70);
-        double pitch2 = (phase == 1 ? -90 + (laserBeamCounter - 200) / 60.0 * 70 : 20 + (320 - laserBeamCounter) / 60.0 * 70);
+        double pitch = LASER_BEAM_INITIAL_PITCH - (laserBeamCounter - initialTick) / (double) LASER_BEAM_DURATION * LASER_BEAM_PITCH_CHANGE_RATE;
+        double pitch2 = -pitch; // Opposite direction
 
         // Apply the laser beam attack
+        applyLaserBeam(yaw, pitch);
+        applyLaserBeam(yaw, pitch2);
+    }
+
+    private void applyLaserBeam(double yaw, double pitch) {
         GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
                 yaw, pitch,
-                LASER_BEAM_LENGTH, LASER_BEAM_WIDTH, "", "",
-                laserBeamDamaged, ATTR_MAP_LASER_BEAM, STRIKE_OPTION_LASER_BEAM);
-        GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
-                yaw, pitch2,
                 LASER_BEAM_LENGTH, LASER_BEAM_WIDTH, "", "",
                 laserBeamDamaged, ATTR_MAP_LASER_BEAM, STRIKE_OPTION_LASER_BEAM);
     }
@@ -167,8 +170,6 @@ public class Ares extends EntitySlime {
         }
     }
 
-
-
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -179,19 +180,11 @@ public class Ares extends EntitySlime {
             target = owner.target;
             // attack
             if (target != null) {
-                // TODO
-//                if (isLaserBeamAttackActive) {
-//                    double distance = bukkitEntity.getLocation().distance(target.getLocation());
-//                    if (distance > Draedon.MECHS_ALIGN_DIST) {
-//                        movementTick();
-//                    }
-//                } else {
-//                    movementTick();
-//                }
-                movementTick();
-
                 // facing
                 this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+
+                movementTick();
+                cycleAttackPhase();
             }
         }
     }
@@ -209,7 +202,7 @@ public class Ares extends EntitySlime {
         // add to world
         draedon.getWorld().addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName(BOSS_TYPE.msgName);
+        setCustomName("XF-09“阿瑞斯”");
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");

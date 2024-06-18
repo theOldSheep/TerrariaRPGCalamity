@@ -299,7 +299,7 @@ public class Draedon extends EntitySlime {
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName(BOSS_TYPE.msgName);
+        setCustomName("嘉登");
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");
