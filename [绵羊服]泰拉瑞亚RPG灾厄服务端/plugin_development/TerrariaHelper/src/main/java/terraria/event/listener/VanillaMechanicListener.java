@@ -115,10 +115,12 @@ public class VanillaMechanicListener implements Listener {
                     entity.remove();
                 }
             }
-            // dismount on any teleport
-            Entity mount = PlayerHelper.getMount(e.getPlayer());
-            if (mount != null)
-                mount.remove();
+            // dismount on any teleport 4 blocks away
+            if (distSqr > 16) {
+                Entity mount = PlayerHelper.getMount(e.getPlayer());
+                if (mount != null)
+                    mount.remove();
+            }
         }
     }
     @EventHandler(priority = EventPriority.LOW)

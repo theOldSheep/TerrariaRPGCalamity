@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
+import terraria.entity.projectile.BulletHellProjectile;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
@@ -85,37 +86,43 @@ public class CalamitasClone extends EntitySlime {
     }
     private void spawnBulletHellProjectile(Vector velocity, Location shootLoc, int type, int ticksLive) {
         EntityHelper.ProjectileShootInfo shootInfo;
+        BulletHellProjectile.ProjectileType projectileType;
         switch (type) {
             case 1:
                 shootInfo = psiHellBlast;
+                projectileType = BulletHellProjectile.ProjectileType.SQUARE_BORDER;
                 break;
             case 2:
                 shootInfo = psiFireBlast;
+                projectileType = BulletHellProjectile.ProjectileType.CIRCUMFERENCE;
                 break;
             case 3:
                 shootInfo = psiDart;
+                projectileType = BulletHellProjectile.ProjectileType.CIRCUMFERENCE;
                 break;
             default:
                 return;
         }
         shootInfo.setLockedTarget(target);
-        shootInfo.shootLoc = shootLoc;
-        shootInfo.velocity = velocity;
-        // the projectile itself
-        Entity projectileSpawned = EntityHelper.spawnProjectile(shootInfo);
-        EntityHelper.setMetadata(
-                projectileSpawned, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_TICKS_LIVED, ticksLive);
-        if (type == 2)
-            projectileSpawned.addScoreboardTag("isFireBlast");
-        bulletHellProjectiles.add(projectileSpawned);
-        // the display projectile
-        shootInfo.shootLoc.add(bullet_hell_orth_dir);
-        Entity displayProjectile = EntityHelper.spawnProjectile(shootInfo);
-        EntityHelper.setMetadata(
-                displayProjectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_TICKS_LIVED, ticksLive);
-        EntityHelper.setMetadata(
-                displayProjectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_ORIGINAL, projectileSpawned);
-        bulletHellProjectiles.add(displayProjectile);
+        new BulletHellProjectile(shootInfo, target, projectileType, 32, target.getLocation().getDirection());
+
+//        shootInfo.shootLoc = shootLoc;
+//        shootInfo.velocity = velocity;
+//        // the projectile itself
+//        Entity projectileSpawned = EntityHelper.spawnProjectile(shootInfo);
+//        EntityHelper.setMetadata(
+//                projectileSpawned, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_TICKS_LIVED, ticksLive);
+//        if (type == 2)
+//            projectileSpawned.addScoreboardTag("isFireBlast");
+//        bulletHellProjectiles.add(projectileSpawned);
+//        // the display projectile
+//        shootInfo.shootLoc.add(bullet_hell_orth_dir);
+//        Entity displayProjectile = EntityHelper.spawnProjectile(shootInfo);
+//        EntityHelper.setMetadata(
+//                displayProjectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_TICKS_LIVED, ticksLive);
+//        EntityHelper.setMetadata(
+//                displayProjectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_ORIGINAL, projectileSpawned);
+//        bulletHellProjectiles.add(displayProjectile);
     }
     private void handleBulletHell() {
         // spawn projectiles
@@ -222,7 +229,7 @@ public class CalamitasClone extends EntitySlime {
                 targetMap.get(target.getUniqueId()).addAggressionTick();
                 // calculate brothers alive
                 if (brothersAlive) {
-                    if (bossParts.get(2).isDead() && bossParts.get(3).isDead())
+                    if (bossParts.get(1).isDead() && bossParts.get(2).isDead())
                         brothersAlive = false;
                 }
                 boolean duringBulletHell = bulletHellTicksLeft > 0 || bulletHellProjectiles.size() > 0;
@@ -453,8 +460,6 @@ public class CalamitasClone extends EntitySlime {
             bullet_hell_orth_dir = MathHelper.vectorFromYawPitch_approx(bulletHellViewYaw, bulletHellViewPitch);
             bullet_hell_orth_dir.multiply(DISPLAY_OFFSET);
         }
-        // dummy player
-        new CalamitasDummyPlayer(target, this);
     }
 
     // disable death function to remove boss bar

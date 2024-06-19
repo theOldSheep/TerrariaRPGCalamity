@@ -9,7 +9,6 @@ import terraria.entity.boss.hardMode.astrumAureus.AureusSpawn;
 import terraria.entity.boss.hardMode.astrumDeus.AstrumDeus;
 import terraria.entity.boss.hardMode.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.hardMode.calamitasClone.CalamitasClone;
-import terraria.entity.boss.hardMode.calamitasClone.CalamitasDummyPlayer;
 import terraria.entity.boss.hardMode.calamitasClone.Cataclysm;
 import terraria.entity.boss.hardMode.calamitasClone.Catastrophe;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
@@ -110,7 +109,6 @@ public enum CustomEntities {
     BOSS_CLMT               ("Calamitas",              55,  EntityType.SLIME,           EntitySlime.class,           CalamitasClone.class),
     BOSS_CLMT_CTCLSM        ("Cataclysm",              55,  EntityType.SLIME,           EntitySlime.class,           Cataclysm.class),
     BOSS_CLMT_CTSTPH        ("Catastrophe",            55,  EntityType.SLIME,           EntitySlime.class,           Catastrophe.class),
-    BOSS_CLMT_DUMMY         ("CalamitasDummy",         23,  EntityType.HUSK,            EntityZombieHusk.class,      CalamitasDummyPlayer.class),
     BOSS_CYG                ("Cryogen",                55,  EntityType.SLIME,           EntitySlime.class,           Cryogen.class),
     BOSS_CYG_SHIELD         ("CryogenShield",          55,  EntityType.SLIME,           EntitySlime.class,           CryogenShield.class),
     BOSS_CSLS_VOID          ("CeaselessVoid",          55,  EntityType.SLIME,           EntitySlime.class,           CeaselessVoid.class),

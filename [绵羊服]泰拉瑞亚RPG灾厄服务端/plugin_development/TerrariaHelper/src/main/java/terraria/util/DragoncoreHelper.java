@@ -71,4 +71,8 @@ public class DragoncoreHelper {
     public static void displayParticle(Player ply, DragonCoreParticleInfo particleInfo, int duration) {
         PacketSender.addParticle(ply, particleInfo.name, particleInfo.uidInfo, particleInfo.positionalInfo, particleInfo.rotationalInfo, duration);
     }
+    public static void moveCamera(Player ply, double distance, int fadeInMillis, int sustainMillis, int fadeOutMillis) {
+        PacketSender.sendRunFunction(ply, "default",
+                String.format("方法.拉远视角(%f,%d,%d,%d)", distance, fadeInMillis, sustainMillis, fadeOutMillis), false);
+    }
 }

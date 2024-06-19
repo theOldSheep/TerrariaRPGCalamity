@@ -2,7 +2,6 @@ terraria\entity\projectile\RotatingRingProjectile.class
 terraria\entity\boss\hardMode\theTwins\Retinazer.class
 terraria\util\GameplayHelper$BlockTreePart.class
 terraria\util\NMSUtils.class
-terraria\entity\boss\hardMode\calamitasClone\CalamitasDummyPlayer.class
 terraria\entity\others\TerrariaMinecart.class
 terraria\TerrariaHelper$1.class
 terraria\entity\boss\preHardMode\theSlimeGod\CrimulanSlime.class
@@ -185,6 +184,7 @@ terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
 terraria\util\NPCHelper$NPCType.class
 terraria\entity\boss\postMoonLord\devourerOfGods\AttackPattern$1.class
+terraria\entity\projectile\BulletHellProjectile.class
 terraria\event\listener\PlayerJoinListener.class
 terraria\entity\boss\preHardMode\kingSlime\KingSlime.class
 terraria\entity\boss\preHardMode\crabulon\Crabulon.class
@@ -203,6 +203,7 @@ terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHand$HandType.class
 terraria\entity\boss\preHardMode\eyeOfCthulhu\EyeOfCthulhu$AIPhase.class
 terraria\entity\npc\TerrariaNPCGuide.class
 terraria\entity\others\TerrariaFishingHook$1.class
+terraria\entity\projectile\BulletHellProjectile$1.class
 terraria\util\NMSUtils$Biome.class
 terraria\util\NMSUtils$Type.class
 terraria\entity\boss\hardMode\ravager\RavagerRockPillar.class
@@ -262,6 +263,7 @@ terraria\entity\boss\hardMode\astrumAureus\AstrumAureus.class
 terraria\entity\boss\postMoonLord\signus\Signus.class
 terraria\util\MonsterHelper.class
 terraria\entity\boss\preHardMode\skeletron\SkeletronHand.class
+terraria\entity\projectile\BulletHellProjectile$ProjectileType.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Leviathan$1.class
 terraria\event\listener\DamageListener.class
 terraria\entity\boss\hardMode\moonLord\MoonLordEye$MoonLordEyeLocation.class
