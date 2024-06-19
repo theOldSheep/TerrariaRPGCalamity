@@ -216,13 +216,13 @@ public class Thanatos extends EntitySlime {
         }
         desiredLength = 2.5;
         Vector idealVelocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), desiredLength);
-        velocity = MathHelper.rotationInterpolateDegree(velocity, idealVelocity, 1);
+        velocity = MathHelper.rotationInterpolateDegree(velocity, idealVelocity, 6);
     }
 
     private void handleDashAttack(Draedon.Difficulty difficulty) {
         // Windup
         if (ticks < 40) {
-            double angle = Math.min(25, 25 * ticks / 40.0);
+            double angle = 25 * ticks / 40.0;
             Location targetLocation = target.getEyeLocation();
             if (!owner.isSubBossActive(Draedon.SubBossType.THANATOS)) {
                 targetLocation.setY(-50);
@@ -265,7 +265,7 @@ public class Thanatos extends EntitySlime {
             targetLocation.setY(-50);
         }
         Vector idealVelocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), targetLocation, desiredLength);
-        velocity = MathHelper.rotationInterpolateDegree(velocity, idealVelocity, 1);
+        velocity = MathHelper.rotationInterpolateDegree(velocity, idealVelocity, 9);
         if (ticks >= 20) {
             tickGammaLaser(velocity);
         }
