@@ -184,6 +184,7 @@ terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
 terraria\util\NPCHelper$NPCType.class
 terraria\entity\boss\postMoonLord\devourerOfGods\AttackPattern$1.class
+terraria\util\PlayerPOVHelper$1.class
 terraria\entity\projectile\BulletHellProjectile.class
 terraria\event\listener\PlayerJoinListener.class
 terraria\entity\boss\preHardMode\kingSlime\KingSlime.class
@@ -212,6 +213,7 @@ terraria\TerrariaHelper$Constants.class
 terraria\entity\boss\hardMode\queenSlime\QueenSlime$SizeState.class
 terraria\event\listener\ArrowHitListener.class
 terraria\entity\boss\postMoonLord\yharon\Yharon.class
+terraria\util\PlayerPOVHelper.class
 terraria\worldgen\overworld\StructureInfo$1.class
 terraria\entity\boss\hardMode\empressOfLight\EmpressOfLight.class
 terraria\entity\boss\hardMode\thePlaguebringerGoliath\ThePlaguebringerGoliath$1.class
@@ -275,6 +277,7 @@ terraria\util\DragoncoreHelper$SlotCallback.class
 terraria\entity\boss\BossHelper.class
 terraria\entity\boss\postMoonLord\devourerOfGods\DevourerOfGods$Wormhole.class
 terraria\util\WorldHelper$WaterRegionType.class
+terraria\util\PlayerPOVHelper$PlayerCameraState.class
 terraria\entity\boss\preHardMode\theHiveMind\HiveBlob.class
 terraria\event\listener\BossSpawnListener.class
 terraria\util\ItemHelper.class

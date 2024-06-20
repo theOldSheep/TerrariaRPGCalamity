@@ -18,10 +18,7 @@ import org.bukkit.metadata.MetadataValue;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.event.celestialPillar.CelestialPillar;
 import terraria.gameplay.EventAndTime;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
-import terraria.util.ItemHelper;
-import terraria.util.PlayerHelper;
+import terraria.util.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -41,6 +38,8 @@ public class PlayerJoinListener implements Listener {
         }
         // init stats
         PlayerHelper.initPlayerStats(joinedPly, true);
+        // reset camera
+        PlayerPOVHelper.getInstance().resetCamera(joinedPly);
         // tick existing effects
         {
             HashMap<String, Integer> effects = EntityHelper.getEffectMap(joinedPly);

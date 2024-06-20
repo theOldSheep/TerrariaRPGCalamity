@@ -115,5 +115,8 @@ public class BulletHellProjectile extends GenericProjectile {
         Vector velocity = bukkitEntity.getVelocity();
         Vector velocityProjection = MathHelper.vectorProjection(planeNormal, velocity);
         bukkitEntity.setVelocity(velocity.subtract(velocityProjection));
+
+        // Reset the impulse index
+        this.impulse_index = RANDOMIZED_IMPULSE_TICK_INTERVAL;
     }
 }

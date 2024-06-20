@@ -800,7 +800,7 @@ public class PlayerHelper {
     }
     public static void threadBGM() {
         final boolean printBGMDebugInfo = false;
-        // every 4 ticks (1/5 second)
+        // every 1 tick
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 try {
@@ -1645,32 +1645,37 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                 if (!PlayerHelper.isProperlyPlaying(ply))
                     continue;
 
-                // get contact blocks
-                HashMap<Material, HashSet<Integer>> contactBlocks = handleContactBlocks(ply);
-                // player that are sneaking on ground move more slowly
-                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_MULTI,
-                        ply.isOnGround() && ply.isSneaking() ? 0.5 : 1);
+                // movement
+                {
+                    // get contact blocks
+                    HashMap<Material, HashSet<Integer>> contactBlocks = handleContactBlocks(ply);
+                    // player that are sneaking on ground move more slowly
+                    EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_VELOCITY_MULTI,
+                            ply.isOnGround() && ply.isSneaking() ? 0.5 : 1);
 
-                // get player speed
-                Vector plySpd = getPlayerRawVelocity(ply);
-                // calculate acceleration info before the speed is updated
-                Vector plyWorldSpd = ply.getVelocity();
-                Vector plyAcc = plyWorldSpd.clone().subtract((Vector) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_VELOCITY_ACTUAL).value());
-                // account for speed direction changed by basic tick (block collision)
-                plySpd = accountVelChangeMovement(ply, plySpd);
+                    // get player speed
+                    Vector plySpd = getPlayerRawVelocity(ply);
+                    // calculate acceleration info before the speed is updated
+                    Vector plyWorldSpd = ply.getVelocity();
+                    Vector plyAcc = plyWorldSpd.clone().subtract((Vector) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_VELOCITY_ACTUAL).value());
+                    // account for speed direction changed by basic tick (block collision)
+                    plySpd = accountVelChangeMovement(ply, plySpd);
 
-                // wing/jump movement
-                plySpd = wingMovement(ply, plySpd);
-                // grappling hook (override wing/jump)
-                plySpd = grapplingHookMovement(ply, plySpd);
-                // underwater speed adjusting & oxygen bar
-                plySpd = underwaterMovement(ply, plySpd, contactBlocks);
+                    // wing/jump movement
+                    plySpd = wingMovement(ply, plySpd);
+                    // grappling hook (override wing/jump)
+                    plySpd = grapplingHookMovement(ply, plySpd);
+                    // underwater speed adjusting & oxygen bar
+                    plySpd = underwaterMovement(ply, plySpd, contactBlocks);
 
-                // update speed
-                EntityHelper.setVelocity(ply, plySpd);
-                // save location info
-                saveMovementData(ply, plyWorldSpd.clone(), plyAcc);
+                    // update speed
+                    EntityHelper.setVelocity(ply, plySpd);
+                    // save location info
+                    saveMovementData(ply, plyWorldSpd.clone(), plyAcc);
+                }
             }
+            // camera
+            PlayerPOVHelper.getInstance().tick();
         }, 0, 1);
     }
     public static void threadRegen() {
