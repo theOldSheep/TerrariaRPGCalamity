@@ -2183,7 +2183,8 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     }
                     // special accessory activation restrictions and conditional attributes
                     switch (currAccType) {
-                        case "钨钢屏障生成仪": {
+                        case "钨钢屏障生成仪":
+                        case "钨钢屏障转换仪": {
                             if (effectMap.containsKey("保护矩阵")) {
                                 EntityHelper.tweakAttribute(ply, newAttrMap, "defence", "20", true);
                             }

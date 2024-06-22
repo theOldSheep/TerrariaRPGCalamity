@@ -206,8 +206,9 @@ public class AresArm extends EntitySlime {
             // attack
             if (target != null) {
                 movementTick();
-                // TODO
-                handleProjectileFiring();
+                if (owner.owner.isSubBossActive(Draedon.SubBossType.ARES)) {
+                    handleProjectileFiring();
+                }
 
                 // facing
                 this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
@@ -276,7 +277,8 @@ public class AresArm extends EntitySlime {
         }
         // shoot info
         projectileShootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(),
-                armType.getAttackPattern().getAttributeMap(), armType.getAttackPattern().getProjectileType());
+                armType.getAttackPattern().getAttributeMap(), EntityHelper.DamageType.ARROW,
+                armType.getAttackPattern().getProjectileType());
     }
 
     // rewrite AI

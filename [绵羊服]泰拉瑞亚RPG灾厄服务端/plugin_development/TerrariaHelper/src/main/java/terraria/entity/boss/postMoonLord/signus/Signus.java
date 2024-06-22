@@ -84,11 +84,13 @@ public class Signus extends EntitySlime {
         // Update the current phase
         phaseAI = newPhase;
     }
-
+    // teleport and shoot lanterns
     private void phase1AI() {
         velocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), SPEED_PHASE_1_FOLLOW);
 
-        if (indexAI % 20 == 0) {
+        if (indexAI >= 80)
+            updatePhase();
+        if (indexAI <= 40 && indexAI % 20 == 0) {
             // Projectile
             shootInfoLantern.setLockedTarget(target);
             shootInfoLantern.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
@@ -100,10 +102,9 @@ public class Signus extends EntitySlime {
             teleported = true;
 
 
-            if (indexAI >= 59)
-                updatePhase();
         }
     }
+    // fire clusters of scythes
     private void phase2AI() {
         Location hoverLoc = target.getLocation().add(0, VERTICAL_DIST_HOVER, 0);
         velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverLoc, SPEED_PHASE_2_HOVER);
@@ -122,9 +123,12 @@ public class Signus extends EntitySlime {
             }
         }
     }
+    // dash and leave scythes along the path
     private void phase3AI() {
         if (indexAI % 25 < 10) {
-            velocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), SPEED_PHASE_3_DASH);
+            double accRatio = 0.5;
+            velocity.multiply(1 - accRatio).add(
+                    MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), SPEED_PHASE_3_DASH).multiply(accRatio) );
 
             shootInfoScythe.setLockedTarget(target);
             shootInfoScythe.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();

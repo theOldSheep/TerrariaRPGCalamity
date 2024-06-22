@@ -389,7 +389,7 @@ public class Yharon extends EntitySlime {
                     Vector dir;
                     do {
                         dir = MathHelper.randomVector();
-                    } while (loc.getDirection().angle(dir) > Math.toRadians(45));
+                    } while (MathHelper.getAngle(loc.getDirection(), dir) > Math.toRadians(45));
                     dir = dir.normalize().multiply(32);
                     loc = loc.add(dir);
                     this.teleport(loc);

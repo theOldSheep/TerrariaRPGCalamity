@@ -1,6 +1,7 @@
 package terraria.util;
 
 import net.minecraft.server.v1_12_R1.Vec3D;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
@@ -271,6 +272,13 @@ public class MathHelper {
     public static String selectWeighedRandom(HashMap<String, Double> weighedMap) {
         return selectWeighedRandom(weighedMap, "");
     }
+    public static double getAngle(Vector v1, Vector v2) {
+        double dot = v1.dot(v2) / Math.sqrt(v1.lengthSquared() * v2.lengthSquared());
+        // precision issue: sometimes it is slightly higher than 1, producing NaN
+        if (dot > 1)
+            dot = 1;
+        return (float)Math.acos(dot);
+    }
     public static Vector setVectorLength(Vector vec, double targetLength) {
         return setVectorLength(vec, targetLength, false);
     }
@@ -321,6 +329,10 @@ public class MathHelper {
     public static Vector rotateAroundAxisRadian(Vector vec, Vector axis, double angleRadian) {
         if ( Math.abs( axis.lengthSquared() - 1) > 1e-5 )
             axis.normalize();
+
+        vec.checkFinite();
+        axis.checkFinite();
+
         Quaternion rotation = new Quaternion(axis, angleRadian );
 
         // Rotate the velocity vector
@@ -334,7 +346,7 @@ public class MathHelper {
             return start;
 
         Vector axis = getNonZeroCrossProd(start, end);
-        double angle = Math.min( maxAngleRadian, start.angle(end) );
+        double angle = Math.min( maxAngleRadian, MathHelper.getAngle(start, end) );
 
         return rotateAroundAxisRadian(start, axis, angle);
     }
@@ -365,6 +377,9 @@ public class MathHelper {
 
     // creates the non-zero cross product: if the two vectors are collinear, return a random one that is orthogonal to them. DOES NOT NORMALIZE.
     public static Vector getNonZeroCrossProd(Vector vec1, Vector vec2) {
+        if (vec1.lengthSquared() < 1e-9)
+            return new Vector(0, 1, 0);
+
         Vector result = vec1.getCrossProduct(vec2);
         // within the loop, vec1 and vec2 are collinear.
         while (result.lengthSquared() < 1e-6) {

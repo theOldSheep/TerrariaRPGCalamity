@@ -76,7 +76,7 @@ public class TerrariaMinecart extends EntityMinecartRideable {
         // add to world
         ((CraftWorld) spawnLoc.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // other settings
-        addScoreboardTag("noDamage");
+        addScoreboardTag("isMount");
         addScoreboardTag("ignoreCanDamageCheck");
         // attribute
         {
@@ -84,6 +84,7 @@ public class TerrariaMinecart extends EntityMinecartRideable {
         }
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_SOURCE, owner);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, owner);
 
         setCustomName( this.type.name );
         setCustomNameVisible(false);

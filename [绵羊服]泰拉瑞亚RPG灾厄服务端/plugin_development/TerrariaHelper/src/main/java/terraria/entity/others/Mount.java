@@ -95,8 +95,9 @@ public class Mount extends EntitySlime {
         // init properties
         setNoGravity(! hasGravity);
         setSize(slimeSize, false);
-        addScoreboardTag("noDamage");
+        addScoreboardTag("isMount");
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_SOURCE, owner);
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, owner);
         setCustomName(mountType);
         setCustomNameVisible(false);
         getAttributeInstance(GenericAttributes.maxHealth).setValue(444);

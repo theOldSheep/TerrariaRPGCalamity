@@ -157,9 +157,12 @@ public class StructurePopulator extends BlockPopulator {
             }
             struct.planRegisterBlockPlane(wld, posInfo.x, posInfo.y, posInfo.z, 6, true, false);
             struct.planRegisterBlockPlane(wld, posInfo.x, posInfo.y, posInfo.z, 4, false, true);
-            posInfo.x += xOffset;
-            posInfo.y --;
-            posInfo.z += zOffset;
+            // prevent next room from getting too far away, causing connection issues
+            if (corridorLength != 1) {
+                posInfo.x += xOffset;
+                posInfo.y--;
+                posInfo.z += zOffset;
+            }
             offsetRemainingDuration --;
 
             struct.planSetBlocks();

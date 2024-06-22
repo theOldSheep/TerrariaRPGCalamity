@@ -7,7 +7,6 @@ terraria\TerrariaHelper$1.class
 terraria\entity\boss\preHardMode\theSlimeGod\CrimulanSlime.class
 terraria\event\listener\ItemUseAndAttributeListener$1.class
 terraria\util\GenericHelper$StrikeLineOptions.class
-terraria\entity\boss\postMoonLord\exoMechs\Thanatos$SegmentType$3.class
 terraria\entity\boss\hardMode\queenSlime\QueenSlime$1.class
 terraria\entity\npc\TerrariaNPCClothier.class
 terraria\entity\boss\postMoonLord\stormWeaver\StormWeaver.class
@@ -119,7 +118,6 @@ terraria\entity\boss\postMoonLord\exoMechs\Ares.class
 terraria\entity\boss\postMoonLord\exoMechs\Draedon.class
 terraria\event\listener\NPCListener.class
 terraria\entity\boss\hardMode\moonLord\MoonLordEye.class
-terraria\entity\boss\postMoonLord\exoMechs\Thanatos$SegmentType$2.class
 terraria\entity\projectile\GenericProjectile$1.class
 terraria\entity\boss\postMoonLord\profanedGuardians\GuardianAttacker.class
 terraria\event\listener\VanillaMechanicListener$1.class
@@ -217,7 +215,6 @@ terraria\util\PlayerPOVHelper.class
 terraria\worldgen\overworld\StructureInfo$1.class
 terraria\entity\boss\hardMode\empressOfLight\EmpressOfLight.class
 terraria\entity\boss\hardMode\thePlaguebringerGoliath\ThePlaguebringerGoliath$1.class
-terraria\entity\boss\postMoonLord\exoMechs\Thanatos$SegmentType$1.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
 terraria\entity\boss\preHardMode\theSlimeGod\CrimulanSlime$1.class
 terraria\util\BossHelper.class

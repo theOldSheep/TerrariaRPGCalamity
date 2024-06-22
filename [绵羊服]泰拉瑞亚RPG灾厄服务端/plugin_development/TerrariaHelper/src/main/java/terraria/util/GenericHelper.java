@@ -770,7 +770,7 @@ public class GenericHelper {
             // sin(-x) = -sin(x), cos(-x) = cos(x)
             zRotTargetVec = MathHelper.rotateY(zRotTargetVec, -sinY, cosY);
             zRotTargetVec = MathHelper.rotateX(zRotTargetVec, -sinX, cosX);
-            result[2] = zRotTargetVec.angle(original) * MathHelper.RAD_TO_DEG;
+            result[2] = MathHelper.getAngle(zRotTargetVec, original) * MathHelper.RAD_TO_DEG;
             double sinZ = MathHelper.xsin_degree(result[2]);
             double cosZ = MathHelper.xcos_degree(result[2]);
             // result: if the z is correct, the inverse we get (-)

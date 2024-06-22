@@ -1,6 +1,7 @@
 package terraria.entity.boss.postMoonLord.exoMechs;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -15,53 +16,18 @@ import java.util.*;
 
 public class Thanatos extends EntitySlime {
     public enum SegmentType {
-        HEAD("Thanatos, the Devouring Worm's Head", 1500d) {
-            @Override
-            public String getOpenName() {
-                return getCustomName();
-            }
+        HEAD("XM-05“塔纳托斯”头", "XM-05“塔纳托斯”头", 1500d),
+        BODY("XM-05“塔纳托斯”体节", "XM-05“塔纳托斯”散热体节", 1320d),
+        TAIL("XM-05“塔纳托斯”尾", "XM-05“塔纳托斯”尾", 1100d);
 
-            @Override
-            public String getClosedName() {
-                return getCustomName();
-            }
-        },
-        BODY("Thanatos, the Devouring Worm's Body", 1320d) {
-            @Override
-            public String getOpenName() {
-                return getCustomName() + " (Open)";
-            }
-
-            @Override
-            public String getClosedName() {
-                return getCustomName() + " (Closed)";
-            }
-        },
-        TAIL("Thanatos, the Devouring Worm's Tail", 1100d) {
-            @Override
-            public String getOpenName() {
-                return getCustomName();
-            }
-
-            @Override
-            public String getClosedName() {
-                return getCustomName();
-            }
-        };
-
-        private String customName;
+        private String openName, closedName;
         private double damage;
 
-        SegmentType(String customName, double damage) {
-            this.customName = customName;
+        SegmentType(String openName, String closedName, double damage) {
+            this.openName = openName;
+            this.closedName = closedName;
             this.damage = damage;
         }
-
-        public String getCustomName() {
-            return customName;
-        }
-        public abstract String getOpenName();
-        public abstract String getClosedName();
 
         public double getDamage() {
             return damage;
@@ -144,11 +110,11 @@ public class Thanatos extends EntitySlime {
         if (open && armorCloseCountdown <= 0) {
             EntityHelper.tweakAttribute(attrMap, "defenceMulti", "10", false);
             addScoreboardTag("isMonster");
-            setCustomName(segmentType.getOpenName());
+            setCustomName(segmentType.openName);
         } else if (!open && armorCloseCountdown <= 0) {
             EntityHelper.tweakAttribute(attrMap, "defenceMulti", "10", true);
             removeScoreboardTag("isMonster");
-            setCustomName(segmentType.getClosedName());
+            setCustomName(segmentType.closedName);
         }
         if (open) {
             armorCloseCountdown = ARMOR_CLOSE_COUNTDOWN;
@@ -244,11 +210,11 @@ public class Thanatos extends EntitySlime {
             velocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), targetLocation, desiredLength);
         }
         // Slow
-        else if (ticks == 75) {
+        else if (ticks == 55) {
             desiredLength = 3.5;
         }
         // Next phase
-        else if (ticks >= 95) {
+        else if (ticks >= 75) {
             if (difficulty == Draedon.Difficulty.HIGH) {
                 attackMethod = AttackMethod.GAMMA_LASER_RAY;
             } else {
@@ -384,7 +350,7 @@ public class Thanatos extends EntitySlime {
             segmentType = SegmentType.BODY;
         }
 
-        setCustomName(segmentType.getCustomName());
+        setCustomName(segmentType.openName);
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");

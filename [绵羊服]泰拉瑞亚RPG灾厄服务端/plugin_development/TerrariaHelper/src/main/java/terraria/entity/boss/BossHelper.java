@@ -56,40 +56,19 @@ public class BossHelper {
     public static double[] getHealthInfo(ArrayList<LivingEntity> bossParts, terraria.util.BossHelper.BossType bossType) {
         double[] result = new double[] {0d, 0d};
         for (LivingEntity e : bossParts) {
+            MetadataValue mdv = EntityHelper.getMetadata(e, EntityHelper.MetadataName.DAMAGE_TAKER);
+            // only account for the health of damage-taking parts
+            if (mdv != null && mdv.value() != e)
+                continue;
             result[0] += e.getHealth();
             result[1] += e.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
         }
         // tweak total health so that health for bosses that share health pool are calculated correctly.
         double multiplier;
         switch (bossType) {
-            case DESERT_SCOURGE:
-                 multiplier = 1d / DesertScourge.TOTAL_LENGTH;
-                break;
-            case WALL_OF_FLESH:
-                multiplier = 1d / 3;
-                break;
-            case AQUATIC_SCOURGE:
-                multiplier = 1d / AquaticScourge.TOTAL_LENGTH;
-                break;
-            case THE_DESTROYER:
-                multiplier = 1d / Destroyer.TOTAL_LENGTH;
-                break;
             case ASTRUM_DEUS:
+                // 50% health dealt as a whole, and 50% health dealt to the two parts -> 150% total
                 multiplier = 1.5d / AstrumDeus.TOTAL_LENGTH;
-                break;
-            case STORM_WEAVER:
-                multiplier = 1d / StormWeaver.TOTAL_LENGTH;
-                break;
-            case THE_DEVOURER_OF_GODS:
-                multiplier = 1d / DevourerOfGods.TOTAL_LENGTH;
-                break;
-            case EXO_MECHS:
-                double base_health_corrected = Artemis.BASIC_HEALTH + Thanatos.BASIC_HEALTH + Ares.BASIC_HEALTH;
-                double base_health_total =
-                        Artemis.BASIC_HEALTH * 2 +
-                        Thanatos.BASIC_HEALTH * Thanatos.TOTAL_LENGTH +
-                        Ares.BASIC_HEALTH * 5;
-                multiplier = base_health_corrected / base_health_total;
                 break;
             default:
                 multiplier = 1d;

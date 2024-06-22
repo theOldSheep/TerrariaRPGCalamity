@@ -1753,63 +1753,64 @@ public class EntityHelper {
         // dead target
         if (target.isDead()) return false;
         // store scoreboard tags as it is requested frequently below
-        Set<String> targetScoreboardTags = target.getScoreboardTags();
+        Entity damageTaker = getDamageTaker(target);
+        Set<String> damageTakerScoreboardTags = damageTaker.getScoreboardTags();
         Set<String> entityScoreboardTags = entity.getScoreboardTags();
         Entity damageSource = getDamageSource(entity);
-        if (targetScoreboardTags.contains("isPillar")) {
-            MetadataValue temp = getMetadata(target, MetadataName.CELESTIAL_PILLAR_SHIELD);
+        if (damageTakerScoreboardTags.contains("isPillar")) {
+            MetadataValue temp = getMetadata(damageTaker, MetadataName.CELESTIAL_PILLAR_SHIELD);
             if (temp != null && temp.asInt() > 0) return false;
         }
-        if (!(target instanceof LivingEntity)) {
-            if (target instanceof Projectile) {
-                if (getAttrMap(target).containsKey("health")) {
-                    ProjectileSource src = ((Projectile) target).getShooter();
+        if (!(damageTaker instanceof LivingEntity)) {
+            if (damageTaker instanceof Projectile) {
+                if (getAttrMap(damageTaker).containsKey("health")) {
+                    ProjectileSource src = ((Projectile) damageTaker).getShooter();
                     if (src instanceof Entity) {
-                        target = (Entity) src;
+                        damageTaker = (Entity) src;
                         // can damage shooter (no strict checking needed):
                         // if strict mode return false(so homing weapons do not home to enemy projectiles)
                         // if not strict mode return true(so enemy can be damaged)
-                        if (checkCanDamage(entity, target, false)) return !strict;
+                        if (checkCanDamage(entity, damageTaker, false)) return !strict;
                     }
                 }
             }
             return false;
         }
         // only players can damage armor stand
-        if (target instanceof ArmorStand) return damageSource instanceof Player;
+        if (damageTaker instanceof ArmorStand) return damageSource instanceof Player;
         // invulnerable target
-        if (target.isInvulnerable()) return false;
-        if (targetScoreboardTags.contains("noDamage")) return false;
+        if (damageTaker.isInvulnerable()) return false;
+        if (damageTakerScoreboardTags.contains("noDamage")) return false;
         // fallen star etc. can damage players and NPC etc. without further check
         if (entityScoreboardTags.contains("ignoreCanDamageCheck")) return true;
         // can not attack oneself
-        if (damageSource == target) return false;
+        if (damageSource == damageTaker) return false;
         // check details about damage source and victim
         entityScoreboardTags = damageSource.getScoreboardTags();
         if (damageSource instanceof Player) {
             if (!PlayerHelper.isProperlyPlaying((Player) damageSource)) return false;
             // only both players are in pvp mode and the check is not strict
             // so homing weapons and minions will not target other players
-            if (target instanceof Player)
-                return (!strict) && (targetScoreboardTags.contains("PVP") && entityScoreboardTags.contains("PVP"));
+            if (damageTaker instanceof Player)
+                return (!strict) && (damageTakerScoreboardTags.contains("PVP") && entityScoreboardTags.contains("PVP"));
             else {
-                if (targetScoreboardTags.contains("isMonster")) return true;
+                if (damageTakerScoreboardTags.contains("isMonster")) return true;
                 // homing weapons and minions should not willingly attack critters and NPCs (with voodoo doll)
                 if (strict) return false;
                 HashSet<String> accessories = PlayerHelper.getAccessories(damageSource);
-                if (targetScoreboardTags.contains("isNPC"))
-                    return accessories.contains(target.getName() + "巫毒娃娃");
-                if (targetScoreboardTags.contains("isAnimal"))
+                if (damageTakerScoreboardTags.contains("isNPC"))
+                    return accessories.contains(damageTaker.getName() + "巫毒娃娃");
+                if (damageTakerScoreboardTags.contains("isAnimal"))
                     return (!accessories.contains("小动物友谊指南"));
                 // entities that are not animal, NPC or monster can be damaged but are not targeted actively
                 return true;
             }
         }
         // non-player attacks player
-        else if (target instanceof Player) {
-            HashSet<String> accessories = PlayerHelper.getAccessories(target);
-            Player targetPly = (Player) target;
-            if (PlayerHelper.isProperlyPlaying(targetPly)) {
+        else if (damageTaker instanceof Player) {
+            HashSet<String> accessories = PlayerHelper.getAccessories(damageTaker);
+            Player damageTakerPly = (Player) damageTaker;
+            if (PlayerHelper.isProperlyPlaying(damageTakerPly)) {
                 // handle special parent type (slime damage neglected by royal gel)
                 MetadataValue temp = getMetadata(damageSource, MetadataName.MONSTER_PARENT_TYPE);
                 if (temp != null) {
@@ -1829,12 +1830,12 @@ public class EntityHelper {
         else {
             // monster attack target: npc and critters can be damaged by accident but not targeted on purpose
             if (entityScoreboardTags.contains("isMonster")) {
-                if (targetScoreboardTags.contains("isNPC") || targetScoreboardTags.contains("isAnimal"))
+                if (damageTakerScoreboardTags.contains("isNPC") || damageTakerScoreboardTags.contains("isAnimal"))
                     return !strict;
                 return false;
             }
             // NPC/minion -> monster: true
-            if (targetScoreboardTags.contains("isMonster") )
+            if (damageTakerScoreboardTags.contains("isMonster") )
                 return entityScoreboardTags.contains("isNPC") || entityScoreboardTags.contains("isMinion");
             return false;
         }
@@ -1849,6 +1850,13 @@ public class EntityHelper {
         if (damageSourceMetadata != null)
             source = (Entity) damageSourceMetadata.value();
         return source;
+    }
+    public static Entity getDamageTaker(Entity victim) {
+        Entity taker = victim;
+        MetadataValue mdv = getMetadata(victim, MetadataName.DAMAGE_TAKER);
+        if (mdv != null)
+            taker = (Entity) mdv.value();
+        return taker;
     }
     public static Entity getMount(Entity entity) {
         if (entity instanceof Player)
@@ -1976,13 +1984,18 @@ public class EntityHelper {
             return;
         }
         // living entities
-        Set<String> victimScoreboardTags = victim.getScoreboardTags();
         LivingEntity victimLivingEntity = (LivingEntity) victim;
-        LivingEntity damageTaker = victimLivingEntity;
+        LivingEntity damageTaker = (LivingEntity) getDamageTaker(victim);
+        Set<String> damageTakerTags = damageTaker.getScoreboardTags();
+        Set<String> victimTags = victim.getScoreboardTags();
+        // use the damage taker's defence etc. IFF damaging a mount. For multi-part entities, this is not the case.
+        if (victimTags.contains("isMount")) {
+            victimAttrMap = getAttrMap(damageTaker);
+        }
         // no damage scenarios
         boolean canDamage = true;
-        if (victimScoreboardTags.contains("isMinion")) canDamage = false;
-        else if (victimScoreboardTags.contains("noDamage")) canDamage = false;
+        if (damageTakerTags.contains("isMinion")) canDamage = false;
+        else if (damageTakerTags.contains("noDamage") || victimTags.contains("noDamage")) canDamage = false;
         else if (victim.isInvulnerable()) canDamage = false;
         else if (victim instanceof Player && ((Player) victim).getGameMode() != GameMode.SURVIVAL) canDamage = false;
         else if (victimLivingEntity.getHealth() <= 0) canDamage = false;
@@ -1997,7 +2010,7 @@ public class EntityHelper {
         // setup properties such as invulnerability tick and defence
         int damageInvulnerabilityTicks;
         double defence = victimAttrMap.getOrDefault("defence", 0d) * victimAttrMap.getOrDefault("defenceMulti", 1d);
-        if (victimScoreboardTags.contains("isBOSS")) {
+        if (damageTakerTags.contains("isBOSS")) {
             if (isDirectAttackDamage) {
                 MetadataValue bossTargets = getMetadata(victim, MetadataName.BOSS_TARGET_MAP);
                 boolean canProperlyDamage = false;
@@ -2019,12 +2032,6 @@ public class EntityHelper {
         }
         if (!canDamage) return;
 
-        // damage taker is the entity that takes the damage
-        if (victim.hasMetadata( MetadataName.DAMAGE_TAKER.toString() )) {
-            Object dmgTaker = getMetadata(victim, MetadataName.DAMAGE_TAKER).value();
-            if (dmgTaker instanceof LivingEntity)
-                damageTaker = (LivingEntity) dmgTaker;
-        }
         // setup damage type and damager attribute
         HashMap<String, Double> damagerAttrMap = getAttrMap(damager);
         DamageType damageType = damageReason.getDamageType();
@@ -2037,7 +2044,7 @@ public class EntityHelper {
         }
         // if the victim has invincibility frame on this damage type (usually player)
         String damageInvincibilityFrameName = getInvulnerabilityTickName(damageType);
-        if (victimScoreboardTags.contains(damageInvincibilityFrameName)) return;
+        if (damageTakerTags.contains(damageInvincibilityFrameName)) return;
 
 
         HashSet<String> damagerAccessories = PlayerHelper.getAccessories(damageSource);
@@ -2139,7 +2146,7 @@ public class EntityHelper {
                 } else if (isDirectAttackDamage) {
                     // special minion whip etc
                     if (isMinionDmg) {
-                        if (victimScoreboardTags.contains("鞭炮")) {
+                        if (victimTags.contains("鞭炮")) {
                             victim.removeScoreboardTag("鞭炮");
                             dmg *= 2.75;
                             victim.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, victim.getLocation(), 1);
@@ -2201,7 +2208,6 @@ public class EntityHelper {
                     if (hasEffect(victim, "血肉图腾"))
                         applyEffect(victim, "血肉图腾", 0);
             }
-            dmg *= Math.random() * 0.3 + 0.85;
             // extra tweak on damage when victim is not a player
             if (!(victim instanceof Player)) {
                 // minion damage effects and whips
@@ -2337,8 +2343,11 @@ public class EntityHelper {
             if (hasEffect(victim, "狮心圣裁能量外壳")) {
                 applyEffect(victim, "狮心圣裁能量外壳冷却", 900);
             }
+            // random damage offset
+            dmg *= Math.random() * 0.3 + 0.85;
+
             // boss damage reduction
-            if (victimScoreboardTags.contains("isBOSS")) {
+            if (damageTakerTags.contains("isBOSS")) {
                 double dynamicDR = 1;
                 MetadataValue temp = getMetadata(victim, MetadataName.DYNAMIC_DAMAGE_REDUCTION);
                 if (temp != null) dynamicDR = temp.asDouble();
@@ -2347,7 +2356,7 @@ public class EntityHelper {
                     dmg *= dynamicDR;
             }
             // NPC damage reduction ( for non-fixed damage, the damage is decreased by a factor of 4, and is upper capped at 50
-            else if (victimScoreboardTags.contains("isNPC")) {
+            else if (damageTakerTags.contains("isNPC")) {
                 dmg = Math.min(dmg / 4d, 50);
             }
         }
@@ -2374,7 +2383,7 @@ public class EntityHelper {
         if (!(victim instanceof ArmorStand)) {
             float soundVolume = 3f;
             // register damage dealt; bosses have louder damage sound
-            if (victimScoreboardTags.contains("isBOSS") && damageSource instanceof Player) {
+            if (damageTakerTags.contains("isBOSS") && damageSource instanceof Player) {
                 soundVolume = 6f;
                 MetadataValue temp = getMetadata(damageTaker, MetadataName.BOSS_TARGET_MAP);
                 if (temp != null) {
@@ -2390,7 +2399,7 @@ public class EntityHelper {
             // kills the target
             if (damageTaker.getHealth() <= dmg) {
                 handleDeath(damageTaker, damageSource, damager, damageType, debuffType);
-                if (victimScoreboardTags.contains("isMechanic")) sound = "entity.generic.explode";
+                if (victimTags.contains("isMechanic")) sound = "entity.generic.explode";
                 else sound = "entity." + damageTaker.getType() + ".death";
                 sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundDamaged", sound);
                 sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundKilled", sound);
@@ -2400,7 +2409,7 @@ public class EntityHelper {
                 damageTaker.setHealth(Math.max(0, damageTaker.getHealth() - dmg));
                 if (!(damageType == DamageType.DEBUFF)) {
                     // if damage cause is not debuff, play hurt sound
-                    if (victimScoreboardTags.contains("isMechanic")) sound = "entity.irongolem.hurt";
+                    if (victimTags.contains("isMechanic")) sound = "entity.irongolem.hurt";
                     else sound = "entity." + damageTaker.getType() + ".hurt";
                     sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundDamaged", sound);
                 }
@@ -2446,7 +2455,7 @@ public class EntityHelper {
         }
 
         // send info message to damager player
-        if (damageSource instanceof Player && victim != damageSource) {
+        if (damageSource instanceof Player && damageTaker != damageSource) {
             String vName = victim.getName();
             int dmgInt = (int) dmg;
             int healthInt = (int) damageTaker.getHealth();
@@ -2455,7 +2464,7 @@ public class EntityHelper {
         }
 
         // handle invincibility ticks
-        handleEntityTemporaryScoreboardTag(victim, damageInvincibilityFrameName, damageInvulnerabilityTicks);
+        handleEntityTemporaryScoreboardTag(damageTaker, damageInvincibilityFrameName, damageInvulnerabilityTicks);
     }
     public static void handleEntityExplode(Entity source, Collection<Entity> damageExceptions) {
         handleEntityExplode(source, damageExceptions, source.getLocation());

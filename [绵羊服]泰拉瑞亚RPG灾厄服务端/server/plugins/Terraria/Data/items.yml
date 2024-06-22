@@ -2745,6 +2745,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r拥有屏障时额外获得20防御
   attributesFormI:
     barrierMax: 125
   attributesFormII:
