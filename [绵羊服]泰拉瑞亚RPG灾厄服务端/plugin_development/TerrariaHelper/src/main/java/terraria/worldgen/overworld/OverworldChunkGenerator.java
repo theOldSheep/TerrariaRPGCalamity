@@ -18,7 +18,8 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             NEARBY_BIOME_SAMPLE_RADIUS = 25, NEARBY_BIOME_SAMPLE_STEPSIZE = 1,
             LAND_HEIGHT = 100, RIVER_DEPTH = 25, LAKE_DEPTH = 30, PLATEAU_HEIGHT = 40, SEA_LEVEL = 90, LAVA_LEVEL = -150,
             Y_OFFSET_OVERWORLD = 0, HEIGHT_SAMPLING_DIAMETER;
-    private static final double HEIGHT_SAMPLE_FACTOR_SUM;
+    private static final double
+            HEIGHT_SAMPLE_FACTOR_SUM;
     private static final double[][] HEIGHT_INFLUENCE_FACTOR;
     // initialize the mapping in which nearby heights influences the current block
     static {
@@ -114,7 +115,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 InterpolatePoint.create(-0.5   ,      LAND_HEIGHT),
                 InterpolatePoint.create(0.5    ,      LAND_HEIGHT),
                 InterpolatePoint.create(0.55   ,   SEA_LEVEL + 2),
-                InterpolatePoint.create(0.625  ,   1),
+                InterpolatePoint.create(0.625  ,   0.5),
         }, "ocean_heightmap");
 
         erosionRatioProvider = new Interpolate(new InterpolatePoint[]{
@@ -281,11 +282,20 @@ public class OverworldChunkGenerator extends ChunkGenerator {
      * init terrain helpers
      */
 
+    static double interpolateWaterBodyHeightOffset(double heightOffset, double multiplier, double targetedWaterBodyDepth) {
+        // target depth: 25 etc. heightOffset: -25 etc. flip the sign.
+        targetedWaterBodyDepth = -targetedWaterBodyDepth;
+        double waterOffset = (heightOffset * Math.max(0, 1 - multiplier)) + (multiplier * targetedWaterBodyDepth);
+
+        return Math.min(heightOffset, waterOffset);
+    }
     // compute the desired terrain height at a specific column
     static double getTerrainHeight(Biome biome, int currX, int currZ) {
         // special biome setup
-        Interpolate heightProvider;
+        Interpolate heightProvider = null;
         OverworldBiomeGenerator.BiomeFeature features = OverworldBiomeGenerator.getBiomeFeature(currX, currZ);
+
+        double result = 1;
 
         switch (biome) {
             case OCEAN:
@@ -297,10 +307,12 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 double randomOffset = oceanErosionHeightProvider.getY(erosionFeature);
                 // for abyss near the bottom, this random terrain offset should gradually disappear.
                 if (oceanHeight > 50)
-                    return oceanHeight + randomOffset;
-                if (oceanHeight > 0)
-                    return oceanHeight + randomOffset * (oceanHeight / 50);
-                return oceanHeight;
+                    result = oceanHeight + randomOffset;
+                else if (oceanHeight > 0)
+                    result = oceanHeight + randomOffset * (oceanHeight / 50);
+                else
+                    result = oceanHeight;
+                break;
             }
             case JUNGLE:
                 heightProvider = jungleHeightProvider;
@@ -315,8 +327,10 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 heightProvider = terrainHeightProvider;
         }
 
-        double result = heightProvider.getY(
-                features.features[OverworldBiomeGenerator.BiomeFeature.TERRAIN_H] );
+        if (heightProvider != null) {
+            result = heightProvider.getY(
+                    features.features[OverworldBiomeGenerator.BiomeFeature.TERRAIN_H]);
+        }
 
         double riverNoise = riverGenerator.noise(currX, currZ, 2, 0.5, false);
         double lakeNoise = lakeGenerator.noise(currX, currZ, 2, 0.5, false);
@@ -328,10 +342,10 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         double riverRatio = riverRatioProvider.getY(riverNoise),
                 lakeRatio = lakeRatioProvider.getY(lakeNoise);
         if (riverRatio > 1e-5)
-            heightOffset = (heightOffset * Math.max(0, 1 - riverRatio)) - (riverRatio * RIVER_DEPTH);
+            heightOffset = interpolateWaterBodyHeightOffset(heightOffset, riverRatio, RIVER_DEPTH);
         if (lakeRatio > 1e-5)
-            heightOffset = (heightOffset * Math.max(0, 1 - lakeRatio)) - (lakeRatio * LAKE_DEPTH);
-        // rivers won't be too shallow in this way
+            heightOffset = interpolateWaterBodyHeightOffset(heightOffset, lakeRatio, LAKE_DEPTH);
+        // water bodies won't be too shallow in this way
         if (heightOffset > 0 && result > SEA_LEVEL)
             heightOffset *= terrainScalingFactor;
         result = LAND_HEIGHT + heightOffset;

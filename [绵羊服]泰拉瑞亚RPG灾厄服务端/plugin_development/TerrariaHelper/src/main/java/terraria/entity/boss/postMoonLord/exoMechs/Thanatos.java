@@ -202,7 +202,7 @@ public class Thanatos extends EntitySlime {
         // Dash
         else if (ticks == 40) {
             owner.playWarningSound();
-            desiredLength = 5.0;
+            desiredLength = difficulty == Draedon.Difficulty.HIGH ? 5.0 : 3.5;
             Location targetLocation = target.getEyeLocation();
             if (!owner.isSubBossActive(Draedon.SubBossType.THANATOS)) {
                 targetLocation.setY(-50);

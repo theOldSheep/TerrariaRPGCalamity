@@ -42,6 +42,18 @@ public class PlayerPOVHelper {
         }
         state.targetDistance = distance;
         state.sustainMillis = sustainMillis;
+
+        if (state.isSmoothingIn) {
+            state.targetDistance = distance;
+        }
+        else if (state.isSustaining) {
+            state.pendingUpdate = true;
+        }
+        // smoothing out / idle
+        else {
+            state.currentDistance = distance - 1;
+            state.targetDistance = distance;
+        }
     }
 
     public void tick() {
@@ -77,28 +89,26 @@ public class PlayerPOVHelper {
                     }
                 }
             } else if (state.isSustaining) {
-                if (currentTime >= state.sustainEndTime) {
-                    // Sustain time has ended, start smoothing out
-                    DragoncoreHelper.moveCamera(player, 0, 0, 0, interpolationDuration);
-                    state.isSmoothingOut = true;
-                    state.smoothOutEndTime = currentTime + interpolationDuration;
-                    state.isSustaining = false;
-                } else if (state.targetDistance != state.currentDistance) {
+                if (currentTime >= state.sustainEndTime || state.targetDistance != state.currentDistance) {
                     // Smooth out the current distance
                     DragoncoreHelper.moveCamera(player, state.currentDistance, 0, 0, interpolationDuration);
                     state.isSmoothingOut = true;
                     state.smoothOutEndTime = currentTime + interpolationDuration;
                     state.isSustaining = false;
-                } else {
+                } else if (state.pendingUpdate) {
                     // Update the sustain time
+                    state.pendingUpdate = false;
+                    state.sustainEndTime = currentTime + state.sustainMillis;
                     DragoncoreHelper.moveCamera(player, state.targetDistance, 0, state.sustainMillis, interpolationDuration);
                 }
             } else {
                 // Start the entire life cycle of the new distance
-                DragoncoreHelper.moveCamera(player, state.targetDistance, interpolationDuration, state.sustainMillis, interpolationDuration);
-                state.isSmoothingIn = true;
-                state.smoothInEndTime = currentTime + interpolationDuration;
-                state.currentDistance = state.targetDistance;
+                if (state.targetDistance != state.currentDistance) {
+                    DragoncoreHelper.moveCamera(player, state.targetDistance, interpolationDuration, state.sustainMillis, interpolationDuration);
+                    state.isSmoothingIn = true;
+                    state.smoothInEndTime = currentTime + interpolationDuration;
+                    state.currentDistance = state.targetDistance;
+                }
             }
         }
     }
@@ -115,6 +125,7 @@ public class PlayerPOVHelper {
         boolean isSmoothingIn;
         boolean isSmoothingOut;
         boolean isSustaining;
+        boolean pendingUpdate = false;
         long smoothInEndTime;
         long sustainEndTime;
         long smoothOutEndTime;
