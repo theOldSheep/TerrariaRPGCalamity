@@ -50,41 +50,27 @@ public class CalamitasClone extends EntitySlime {
         attrMapHellFireball.put("knockback", 2d);
     }
     public EntityHelper.ProjectileShootInfo psiFireBlast, psiDart, psiFireball, psiHellBlast;
-    Vector bullet_hell_dir1, bullet_hell_dir2, bullet_hell_orth_dir,
-            dashVelocity = new Vector();
-    double bulletHellViewYaw, bulletHellViewPitch;
+    Vector dashVelocity = new Vector();
     boolean brothersAlive = false;
     int indexAI = -40, attackMethod = 1, bulletHellTicksLeft = -1, lastBulletHellDuration = 300, healthLockProgress = 1;
     HashSet<Entity> bulletHellProjectiles = new HashSet<>();
+    BulletHellProjectile.BulletHellDirectionInfo bulletHellDir = null;
     // 1: fireball   2: hell blast
     private void beginBulletHell(int ticksDuration) {
         lastBulletHellDuration = ticksDuration;
         bulletHellTicksLeft = ticksDuration;
         addScoreboardTag("noDamage");
         Bukkit.broadcastMessage(BULLET_HELL_WARNING);
-
-        Location loc = target.getLocation();
-        loc.setYaw((float) bulletHellViewYaw);
-        loc.setPitch((float) bulletHellViewPitch);
-        target.teleport(loc);
+        bulletHellDir = new BulletHellProjectile.BulletHellDirectionInfo(target.getLocation().getDirection(), target);
     }
-    private void shootProjectile(int type) {
-        switch (type) {
-            case 1: {
-                psiFireball.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-                psiFireball.velocity = MathHelper.getDirection(psiFireball.shootLoc, target.getEyeLocation(), 2.25);
-                EntityHelper.spawnProjectile(psiFireball);
-                break;
-            }
-            case 2: {
-                psiHellBlast.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-                psiHellBlast.velocity = MathHelper.getDirection(psiHellBlast.shootLoc, target.getEyeLocation(), 2);
-                EntityHelper.spawnProjectile(psiHellBlast);
-                break;
-            }
+    private void tickBulletHellRotation() {
+        Location loc = target.getLocation();
+        if (MathHelper.getAngleRadian(bulletHellDir.planeNormal, loc.getDirection()) > 1e-5) {
+            loc.setDirection(bulletHellDir.planeNormal);
+            target.teleport(loc);
         }
     }
-    private void spawnBulletHellProjectile(Vector velocity, Location shootLoc, int type, int ticksLive) {
+    private void spawnBulletHellProjectile(int type, int ticksLive, double speed) {
         EntityHelper.ProjectileShootInfo shootInfo;
         BulletHellProjectile.ProjectileType projectileType;
         switch (type) {
@@ -104,103 +90,89 @@ public class CalamitasClone extends EntitySlime {
                 return;
         }
         shootInfo.setLockedTarget(target);
-        new BulletHellProjectile(shootInfo, target, projectileType, 32, target.getLocation().getDirection());
-
-//        shootInfo.shootLoc = shootLoc;
-//        shootInfo.velocity = velocity;
-//        // the projectile itself
-//        Entity projectileSpawned = EntityHelper.spawnProjectile(shootInfo);
-//        EntityHelper.setMetadata(
-//                projectileSpawned, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_TICKS_LIVED, ticksLive);
-//        if (type == 2)
-//            projectileSpawned.addScoreboardTag("isFireBlast");
-//        bulletHellProjectiles.add(projectileSpawned);
-//        // the display projectile
-//        shootInfo.shootLoc.add(bullet_hell_orth_dir);
-//        Entity displayProjectile = EntityHelper.spawnProjectile(shootInfo);
-//        EntityHelper.setMetadata(
-//                displayProjectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_TICKS_LIVED, ticksLive);
-//        EntityHelper.setMetadata(
-//                displayProjectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_ORIGINAL, projectileSpawned);
-//        bulletHellProjectiles.add(displayProjectile);
+        MathHelper.setVectorLength(shootInfo.velocity, speed);
+        new BulletHellProjectile(shootInfo, projectileType, 32, bulletHellDir);
     }
     private void handleBulletHell() {
+        bulletHellDir.target = target;
+        // target rotation
+        tickBulletHellRotation();
         // spawn projectiles
         if (--bulletHellTicksLeft > 0) {
             // hell blast
             boolean secondBulletHell = healthLockProgress == 4;
             double hellBlastProbability = secondBulletHell ? 0.85 : 0.75;
             if (Math.random() < hellBlastProbability) {
-                boolean direction = Math.random() < 0.5;
-                Vector velocity = direction ? bullet_hell_dir1.clone() : bullet_hell_dir2.clone();
-                Vector spawnLocOffset = !direction ? bullet_hell_dir1.clone() : bullet_hell_dir2.clone();
-                // projectiles may come from either direction, up/down/left/right
-                if (Math.random() < 0.5)
-                    velocity.multiply(-1);
-                spawnLocOffset.multiply((Math.random() * 2 - 1) * BULLET_HELL_RADIUS)
-                        .add(velocity.clone().multiply(-BULLET_HELL_RADIUS));
-                Location spawnLoc = target.getEyeLocation().add(spawnLocOffset);
                 double projectileSpeed = 0.35 + Math.random() * 0.15;
-                velocity.multiply(projectileSpeed);
                 int ticksLive = (int) (BULLET_HELL_RADIUS * 2 / projectileSpeed);
                 // spawn projectile
-                spawnBulletHellProjectile(velocity, spawnLoc, 1, ticksLive);
+                spawnBulletHellProjectile(1, ticksLive, projectileSpeed);
             }
             // fire blasts
             if (bulletHellTicksLeft % 50 == 0 && secondBulletHell) {
-                double angle = Math.random() * 360;
-                double sinVal = MathHelper.xsin_degree(angle) * BULLET_HELL_RADIUS * 0.5;
-                double cosVal = MathHelper.xcos_degree(angle) * BULLET_HELL_RADIUS * 0.5;
-                Vector shootLocOffset = bullet_hell_dir1.clone().multiply(sinVal)
-                        .add(bullet_hell_dir2.clone().multiply(cosVal));
-                spawnBulletHellProjectile(MathHelper.getDirection(psiFireBlast.shootLoc, target.getEyeLocation(), 1),
-                        target.getEyeLocation().add(shootLocOffset), 2, 50);
+                spawnBulletHellProjectile(2, 50, 0.75);
             }
         }
-        // remove outdated projectiles
-        ArrayList<Entity> projectilesToRemove = new ArrayList<>();
-        // record outdated to prevent co-modification error
-        for (Entity projectile : bulletHellProjectiles) {
-            int ticksLive = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_TICKS_LIVED).asInt();
-            if (projectile.isDead() || projectile.getTicksLived() >= ticksLive) {
-                projectilesToRemove.add(projectile);
+//        // remove outdated projectiles
+//        ArrayList<Entity> projectilesToRemove = new ArrayList<>();
+//        // record outdated to prevent co-modification error
+//        for (Entity projectile : bulletHellProjectiles) {
+//            int ticksLive = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_TICKS_LIVED).asInt();
+//            if (projectile.isDead() || projectile.getTicksLived() >= ticksLive) {
+//                projectilesToRemove.add(projectile);
+//            }
+//            // make sure the projectiles stay within the same plane as the player
+//            // and display purpose projectiles stay at the proper location
+//            else if (projectile.getTicksLived() > 1) {
+//                MetadataValue originalValue = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_ORIGINAL);
+//                // if the projectile is display projectile
+//                if (originalValue != null) {
+//                    Entity original = (Entity) originalValue.value();
+//                    projectile.setVelocity(original.getVelocity());
+//                    projectile.teleport(original.getLocation().add(bullet_hell_orth_dir));
+//                }
+//                // actual projectile during the bullet hell
+//                else {
+//                    Vector correctionDir = MathHelper.vectorProjection(
+//                            bullet_hell_orth_dir, target.getEyeLocation().subtract(projectile.getLocation()).toVector());
+//                    projectile.teleport(projectile.getLocation().add(correctionDir));
+//                }
+//            }
+//        }
+//        // remove projectiles
+//        for (Entity projectile : projectilesToRemove) {
+//            // shoot a spread of brimstone darts
+//            if (projectile.getScoreboardTags().contains("isFireBlast")) {
+//                int shootAmount = 8;
+//                for (int i = 0; i < 8; i ++) {
+//                    double angle = (double)i / shootAmount * 360;
+//                    double sinVal = MathHelper.xsin_degree(angle) * DART_SPEED;
+//                    double cosVal = MathHelper.xcos_degree(angle) * DART_SPEED;
+//                    spawnBulletHellProjectile(
+//                            bullet_hell_dir1.clone().multiply(sinVal)
+//                                    .add(bullet_hell_dir2.clone().multiply(cosVal)),
+//                            projectile.getLocation(), 3, (int) (BULLET_HELL_RADIUS * 3 / DART_SPEED));
+//                }
+//            }
+//            // delete the projectile
+//            bulletHellProjectiles.remove(projectile);
+//            projectile.remove();
+//        }
+    }
+    private void shootProjectile(int type) {
+        switch (type) {
+            case 1: {
+                psiFireball.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                psiFireball.velocity = MathHelper.getDirection(psiFireball.shootLoc, target.getEyeLocation(), 2.25);
+                EntityHelper.spawnProjectile(psiFireball);
+                break;
             }
-            // make sure the projectiles stay within the same plane as the player
-            // and display purpose projectiles stay at the proper location
-            else if (projectile.getTicksLived() > 1) {
-                MetadataValue originalValue = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.CALAMITAS_PROJECTILE_ORIGINAL);
-                // if the projectile is display projectile
-                if (originalValue != null) {
-                    Entity original = (Entity) originalValue.value();
-                    projectile.setVelocity(original.getVelocity());
-                    projectile.teleport(original.getLocation().add(bullet_hell_orth_dir));
-                }
-                // actual projectile during the bullet hell
-                else {
-                    Vector correctionDir = MathHelper.vectorProjection(
-                            bullet_hell_orth_dir, target.getEyeLocation().subtract(projectile.getLocation()).toVector());
-                    projectile.teleport(projectile.getLocation().add(correctionDir));
-                }
+            case 2: {
+                psiHellBlast.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                psiHellBlast.velocity = MathHelper.getDirection(psiHellBlast.shootLoc, target.getEyeLocation(), 2);
+                EntityHelper.spawnProjectile(psiHellBlast);
+                break;
             }
-        }
-        // remove projectiles
-        for (Entity projectile : projectilesToRemove) {
-            // shoot a spread of brimstone darts
-            if (projectile.getScoreboardTags().contains("isFireBlast")) {
-                int shootAmount = 8;
-                for (int i = 0; i < 8; i ++) {
-                    double angle = (double)i / shootAmount * 360;
-                    double sinVal = MathHelper.xsin_degree(angle) * DART_SPEED;
-                    double cosVal = MathHelper.xcos_degree(angle) * DART_SPEED;
-                    spawnBulletHellProjectile(
-                            bullet_hell_dir1.clone().multiply(sinVal)
-                                    .add(bullet_hell_dir2.clone().multiply(cosVal)),
-                            projectile.getLocation(), 3, (int) (BULLET_HELL_RADIUS * 3 / DART_SPEED));
-                }
-            }
-            // delete the projectile
-            bulletHellProjectiles.remove(projectile);
-            projectile.remove();
         }
     }
     private void AI() {
@@ -435,31 +407,17 @@ public class CalamitasClone extends EntitySlime {
         }
         // projectile info
         {
-            psiFireBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBrimstoneDart,
+            psiFireBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(0, DART_SPEED, 0), attrMapBrimstoneDart,
                     EntityHelper.DamageType.MAGIC, "无际裂变");
-            psiDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBrimstoneDart,
+            psiDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(0, DART_SPEED, 0), attrMapBrimstoneDart,
                     EntityHelper.DamageType.MAGIC, "硫火飞弹");
-            psiFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball,
+            psiFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(0, DART_SPEED, 0), attrMapHellFireball,
                     EntityHelper.DamageType.MAGIC, "炼狱硫火球");
-            psiHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball,
+            psiHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(0, DART_SPEED, 0), attrMapHellFireball,
                     EntityHelper.DamageType.MAGIC, "深渊亡魂");
         }
         // health lock info
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, getMaxHealth() * 0.69);
-        // bullet hell directions
-        {
-            double angleDir1 = Math.random() * 360 - 180;
-            bulletHellViewYaw = angleDir1 + 90;
-            if (bulletHellViewYaw > 180)
-                bulletHellViewYaw -= 360;
-            bulletHellViewPitch = 0;
-
-            bullet_hell_dir1 = MathHelper.vectorFromYawPitch_approx(angleDir1, 0);
-            bullet_hell_dir2 = new Vector(0, 1, 0);
-
-            bullet_hell_orth_dir = MathHelper.vectorFromYawPitch_approx(bulletHellViewYaw, bulletHellViewPitch);
-            bullet_hell_orth_dir.multiply(DISPLAY_OFFSET);
-        }
     }
 
     // disable death function to remove boss bar

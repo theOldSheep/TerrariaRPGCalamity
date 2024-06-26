@@ -232,6 +232,7 @@ terraria\entity\monster\MonsterSilverfish.class
 terraria\entity\monster\MonsterSlime.class
 terraria\event\listener\RandomTitleListener.class
 terraria\util\EntityHelper$MetadataName.class
+terraria\entity\projectile\BulletHellProjectile$BulletHellDirectionInfo.class
 terraria\entity\boss\hardMode\brimstoneElemental\BrimstoneElemental.class
 terraria\worldgen\overworld\OverworldBiomeGenerator$1.class
 terraria\worldgen\RandomGenerator.class

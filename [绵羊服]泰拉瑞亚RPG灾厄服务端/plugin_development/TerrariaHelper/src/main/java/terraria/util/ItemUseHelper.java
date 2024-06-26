@@ -1531,7 +1531,7 @@ public class ItemUseHelper {
                                     ArrayList<Entity> blastDamageCD = new ArrayList<>();
                                     Vector traceDir = MathHelper.randomVector();
                                     // continue the loop if the vector is not in the right direction (within 60 degrees)
-                                    if ( (MathHelper.getAngle(traceDir, finalLookDir1)) > (Math.PI / 3) ) {
+                                    if ( (MathHelper.getAngleRadian(traceDir, finalLookDir1)) > (Math.PI / 3) ) {
                                         explosionIdx --;
                                         continue;
                                     }

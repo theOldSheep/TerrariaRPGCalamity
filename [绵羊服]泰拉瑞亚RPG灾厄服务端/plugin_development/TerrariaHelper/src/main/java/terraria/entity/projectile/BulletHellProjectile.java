@@ -6,39 +6,58 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+import sun.util.resources.cldr.chr.CalendarData_chr_US;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 
 public class BulletHellProjectile extends GenericProjectile {
     public enum ProjectileType {
-        SQUARE_BORDER,
-        CIRCUMFERENCE
+        SQUARE_BORDER, CIRCUMFERENCE,
+        BLAST_8, BLAST_16, CALCULATED
+    }
+    public static class BulletHellDirectionInfo {
+        // the vectors forming the basis of the bullet hell subspace
+        public Vector e1, e2;
+        public Vector planeNormal;
+        public Player target;
+
+        public BulletHellDirectionInfo(Vector planeNormal, Player target) {
+            planeNormal.setY(0);
+            MathHelper.setVectorLength(planeNormal, 1);
+
+            this.planeNormal = planeNormal;
+            this.target = target;
+            e1 = MathHelper.getNonZeroCrossProd(planeNormal, new Vector(0, 1, 0)).normalize();
+            e2 = MathHelper.getNonZeroCrossProd(planeNormal, e1).normalize();
+        }
     }
 
+    BulletHellDirectionInfo directionInfo;
 
-    private Vector planeNormal;
-    private Player player;
+    public BulletHellProjectile(EntityHelper.ProjectileShootInfo shootInfo, ProjectileType type, double distance, BulletHellDirectionInfo directionInfo) {
+        super(calculateProjectileInfo(shootInfo, type, distance, directionInfo));
+        this.directionInfo = directionInfo;
 
-    public BulletHellProjectile(EntityHelper.ProjectileShootInfo shootInfo, Player player, ProjectileType type, double distance, Vector planeNormal) {
-        super(calculateProjectileInfo(shootInfo, player, type, distance, planeNormal));
-        this.player = player;
-        this.planeNormal = planeNormal;
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BULLET_HELL_PROJECTILE_DIRECTION, directionInfo);
     }
 
-    private static EntityHelper.ProjectileShootInfo calculateProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, Player player, ProjectileType type, double distance, Vector planeNormal) {
-        Location playerLocation = player.getEyeLocation();
-
-        Vector upVector = new Vector(0, 1, 0);
-        Vector forwardVector = MathHelper.getNonZeroCrossProd(planeNormal, upVector).normalize();
-
-        Vector rightVector = forwardVector.getCrossProduct(planeNormal);
+    private static EntityHelper.ProjectileShootInfo calculateProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, ProjectileType type, double distance, BulletHellDirectionInfo directionInfo) {
+        Location playerLocation = directionInfo.target.getEyeLocation();
 
         switch (type) {
             case SQUARE_BORDER:
-                shootInfo = calculateSquareBorderProjectileInfo(shootInfo, playerLocation, forwardVector, rightVector, distance);
+                calculateSquareBorderProjectileInfo(shootInfo, playerLocation, directionInfo, distance);
                 break;
             case CIRCUMFERENCE:
-                shootInfo = calculateCircumferenceProjectileInfo(shootInfo, playerLocation, forwardVector, rightVector, distance);
+                calculateCircumferenceProjectileInfo(shootInfo, playerLocation, directionInfo, distance);
+                break;
+            case BLAST_8:
+                calculateBlastProjectileInfo(shootInfo, directionInfo, distance, 8);
+                break;
+            case BLAST_16:
+                calculateBlastProjectileInfo(shootInfo, directionInfo, distance, 16);
+                break;
+            case CALCULATED:
                 break;
             default:
                 throw new UnsupportedOperationException("Unsupported projectile type");
@@ -47,7 +66,7 @@ public class BulletHellProjectile extends GenericProjectile {
         return shootInfo;
     }
 
-    private static EntityHelper.ProjectileShootInfo calculateSquareBorderProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, Location playerLocation, Vector forwardVector, Vector rightVector, double distance) {
+    private static EntityHelper.ProjectileShootInfo calculateSquareBorderProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, Location playerLocation, BulletHellDirectionInfo directionInfo, double distance) {
         // Calculate a random point on the border of a square centered at the player's eye location
         double minX = -distance;
         double maxX = distance;
@@ -64,41 +83,57 @@ public class BulletHellProjectile extends GenericProjectile {
             case 0: // Top side
                 x = minX + (maxX - minX) * Math.random();
                 z = minZ;
-                velocity = rightVector.clone().multiply(-1); // Move downwards
+                velocity = directionInfo.e2.clone().multiply(-1); // Move downwards
                 break;
             case 1: // Right side
                 x = maxX;
                 z = minZ + (maxZ - minZ) * Math.random();
-                velocity = forwardVector.clone().multiply(-1); // Move to the left
+                velocity = directionInfo.e1.clone().multiply(-1); // Move to the left
                 break;
             case 2: // Bottom side
                 x = minX + (maxX - minX) * Math.random();
                 z = maxZ;
-                velocity = rightVector.clone(); // Move upwards
+                velocity = directionInfo.e2.clone(); // Move upwards
                 break;
             case 3: // Left side
                 x = minX;
                 z = minZ + (maxZ - minZ) * Math.random();
-                velocity = forwardVector.clone(); // Move to the right
+                velocity = directionInfo.e1.clone(); // Move to the right
                 break;
             default:
                 throw new RuntimeException("Unexpected side");
         }
 
-        shootInfo.shootLoc = playerLocation.clone().add(forwardVector.clone().multiply(x)).add(rightVector.clone().multiply(z));
-        shootInfo.velocity = velocity;
+        shootInfo.shootLoc = playerLocation.clone().add(directionInfo.e1.clone().multiply(x)).add(directionInfo.e2.clone().multiply(z));
+        shootInfo.velocity = velocity.multiply(shootInfo.velocity.length());
 
         return shootInfo;
     }
-
-    private static EntityHelper.ProjectileShootInfo calculateCircumferenceProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, Location playerLocation, Vector forwardVector, Vector rightVector, double distance) {
+    private static EntityHelper.ProjectileShootInfo calculateCircumferenceProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, Location playerLocation, BulletHellDirectionInfo directionInfo, double distance) {
         // Calculate a random point on the circumference of a circle centered at the player's eye location
         double angle = Math.random() * 2 * Math.PI;
         double x = distance * Math.cos(angle);
         double z = distance * Math.sin(angle);
 
-        shootInfo.shootLoc = playerLocation.clone().add(forwardVector.clone().multiply(x)).add(rightVector.clone().multiply(z));
-        shootInfo.velocity = MathHelper.setVectorLength(forwardVector.clone().multiply(-x).add(rightVector.clone().multiply(-z)), 1);
+        shootInfo.shootLoc = playerLocation.clone().add(directionInfo.e1.clone().multiply(x)).add(directionInfo.e2.clone().multiply(z));
+        shootInfo.velocity = MathHelper.setVectorLength(directionInfo.e1.clone().multiply(-x).add(directionInfo.e2.clone().multiply(-z)), shootInfo.velocity.length());
+
+        return shootInfo;
+    }
+    private static EntityHelper.ProjectileShootInfo calculateBlastProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, BulletHellDirectionInfo directionInfo, double distance, int fireAmount) {
+        double angle = Math.random() * 2 * Math.PI;
+        double angleOffset = Math.PI * 2 / fireAmount;
+
+        for (int i = 1; i <= fireAmount; i ++) {
+            angle += angleOffset;
+            double x = distance * Math.cos(angle);
+            double z = distance * Math.sin(angle);
+
+            shootInfo.velocity = MathHelper.setVectorLength(directionInfo.e1.clone().multiply(-x).add(directionInfo.e2.clone().multiply(-z)), shootInfo.velocity.length());
+            if (i != fireAmount) {
+                new BulletHellProjectile(shootInfo, ProjectileType.CALCULATED, 0, directionInfo);
+            }
+        }
 
         return shootInfo;
     }
@@ -107,13 +142,13 @@ public class BulletHellProjectile extends GenericProjectile {
     protected void extraTicking() {
         // Update the projectile's position to be on the plane
         Location projectileLocation = bukkitEntity.getLocation();
-        Vector vectorToPlane = projectileLocation.toVector().subtract(player.getEyeLocation().toVector());
-        Vector correctionVector = MathHelper.vectorProjection(planeNormal, vectorToPlane);
+        Vector vectorToPlane = projectileLocation.toVector().subtract(directionInfo.target.getEyeLocation().toVector());
+        Vector correctionVector = MathHelper.vectorProjection(directionInfo.planeNormal, vectorToPlane);
         bukkitEntity.teleport(projectileLocation.subtract(correctionVector));
 
         // Update the projectile's velocity to be parallel to the plane
         Vector velocity = bukkitEntity.getVelocity();
-        Vector velocityProjection = MathHelper.vectorProjection(planeNormal, velocity);
+        Vector velocityProjection = MathHelper.vectorProjection(directionInfo.planeNormal, velocity);
         bukkitEntity.setVelocity(velocity.subtract(velocityProjection));
 
         // Reset the impulse index

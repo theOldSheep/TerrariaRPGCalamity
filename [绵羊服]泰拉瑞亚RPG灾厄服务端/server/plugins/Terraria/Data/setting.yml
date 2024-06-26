@@ -195,7 +195,9 @@ deathMessages:
   - <victim> 在死后的世界冲浪
   - <victim> 的运气用光了
   - <victim> 满身疮痍
+  - <victim> 的死毫无意义
   - <victim> 面带安详
+  - <victim> 多了一个肚脐眼
   - <victim> 被登dua郎
   - <victim> 心花怒放
   - <victim> 脑洞大开
@@ -302,7 +304,8 @@ deathMessages:
   NegRegen_魔力烧蚀:
   - <victim> 被魔力焚毁
   NegRegen_魔力熔蚀:
-  - <victim> 被魔力融化
+  - <victim> 被熔融的魔力化为灰烬
+  - <victim> 的灵魂已支离破碎
   NegRegen_魔能谐振仪:
   - <victim> 的生命完全升华为了魔力
   - <victim> 与魔力合为一体

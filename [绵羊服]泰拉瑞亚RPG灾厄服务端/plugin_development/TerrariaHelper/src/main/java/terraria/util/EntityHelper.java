@@ -207,6 +207,7 @@ public class EntityHelper {
         BOSS_TYPE("bossType"),
         BUFF_IMMUNE("buffImmune"),
         BUFF_INFLICT("buffInflict"),
+        BULLET_HELL_PROJECTILE_DIRECTION("bltHellDir"),
         CALAMITAS_PROJECTILE_TICKS_LIVED("projectileTicksLive"),
         CALAMITAS_PROJECTILE_ORIGINAL("projectileOriginal"),
         CELESTIAL_PILLAR_SHIELD("shield"),
