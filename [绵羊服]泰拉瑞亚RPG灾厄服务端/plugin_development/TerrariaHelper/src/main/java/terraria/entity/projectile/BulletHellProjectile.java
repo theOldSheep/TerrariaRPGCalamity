@@ -34,28 +34,28 @@ public class BulletHellProjectile extends GenericProjectile {
 
     BulletHellDirectionInfo directionInfo;
 
-    public BulletHellProjectile(EntityHelper.ProjectileShootInfo shootInfo, ProjectileType type, double distance, BulletHellDirectionInfo directionInfo) {
-        super(calculateProjectileInfo(shootInfo, type, distance, directionInfo));
+    public BulletHellProjectile(EntityHelper.ProjectileShootInfo shootInfo, ProjectileType type, double distance, double speed, BulletHellDirectionInfo directionInfo) {
+        super(calculateProjectileInfo(shootInfo, type, distance, speed, directionInfo));
         this.directionInfo = directionInfo;
 
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BULLET_HELL_PROJECTILE_DIRECTION, directionInfo);
     }
 
-    private static EntityHelper.ProjectileShootInfo calculateProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, ProjectileType type, double distance, BulletHellDirectionInfo directionInfo) {
+    private static EntityHelper.ProjectileShootInfo calculateProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, ProjectileType type, double distance, double speed, BulletHellDirectionInfo directionInfo) {
         Location playerLocation = directionInfo.target.getEyeLocation();
 
         switch (type) {
             case SQUARE_BORDER:
-                calculateSquareBorderProjectileInfo(shootInfo, playerLocation, directionInfo, distance);
+                calculateSquareBorderProjectileInfo(shootInfo, playerLocation, directionInfo, distance, speed);
                 break;
             case CIRCUMFERENCE:
-                calculateCircumferenceProjectileInfo(shootInfo, playerLocation, directionInfo, distance);
+                calculateCircumferenceProjectileInfo(shootInfo, playerLocation, directionInfo, distance, speed);
                 break;
             case BLAST_8:
-                calculateBlastProjectileInfo(shootInfo, directionInfo, distance, 8);
+                calculateBlastProjectileInfo(shootInfo, directionInfo, distance, speed, 8);
                 break;
             case BLAST_16:
-                calculateBlastProjectileInfo(shootInfo, directionInfo, distance, 16);
+                calculateBlastProjectileInfo(shootInfo, directionInfo, distance, speed, 16);
                 break;
             case CALCULATED:
                 break;
@@ -66,7 +66,8 @@ public class BulletHellProjectile extends GenericProjectile {
         return shootInfo;
     }
 
-    private static EntityHelper.ProjectileShootInfo calculateSquareBorderProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, Location playerLocation, BulletHellDirectionInfo directionInfo, double distance) {
+    private static EntityHelper.ProjectileShootInfo calculateSquareBorderProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, Location playerLocation,
+                                                                                        BulletHellDirectionInfo directionInfo, double distance, double speed) {
         // Calculate a random point on the border of a square centered at the player's eye location
         double minX = -distance;
         double maxX = distance;
@@ -105,22 +106,23 @@ public class BulletHellProjectile extends GenericProjectile {
         }
 
         shootInfo.shootLoc = playerLocation.clone().add(directionInfo.e1.clone().multiply(x)).add(directionInfo.e2.clone().multiply(z));
-        shootInfo.velocity = velocity.multiply(shootInfo.velocity.length());
+        shootInfo.velocity = velocity.multiply(speed);
 
         return shootInfo;
     }
-    private static EntityHelper.ProjectileShootInfo calculateCircumferenceProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, Location playerLocation, BulletHellDirectionInfo directionInfo, double distance) {
+    private static EntityHelper.ProjectileShootInfo calculateCircumferenceProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, Location playerLocation,
+                                                                                         BulletHellDirectionInfo directionInfo, double distance, double speed) {
         // Calculate a random point on the circumference of a circle centered at the player's eye location
         double angle = Math.random() * 2 * Math.PI;
         double x = distance * Math.cos(angle);
         double z = distance * Math.sin(angle);
 
         shootInfo.shootLoc = playerLocation.clone().add(directionInfo.e1.clone().multiply(x)).add(directionInfo.e2.clone().multiply(z));
-        shootInfo.velocity = MathHelper.setVectorLength(directionInfo.e1.clone().multiply(-x).add(directionInfo.e2.clone().multiply(-z)), shootInfo.velocity.length());
+        shootInfo.velocity = MathHelper.setVectorLength(directionInfo.e1.clone().multiply(-x).add(directionInfo.e2.clone().multiply(-z)), speed);
 
         return shootInfo;
     }
-    private static EntityHelper.ProjectileShootInfo calculateBlastProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, BulletHellDirectionInfo directionInfo, double distance, int fireAmount) {
+    private static EntityHelper.ProjectileShootInfo calculateBlastProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, BulletHellDirectionInfo directionInfo, double distance, double speed, int fireAmount) {
         double angle = Math.random() * 2 * Math.PI;
         double angleOffset = Math.PI * 2 / fireAmount;
 
@@ -129,9 +131,9 @@ public class BulletHellProjectile extends GenericProjectile {
             double x = distance * Math.cos(angle);
             double z = distance * Math.sin(angle);
 
-            shootInfo.velocity = MathHelper.setVectorLength(directionInfo.e1.clone().multiply(-x).add(directionInfo.e2.clone().multiply(-z)), shootInfo.velocity.length());
+            shootInfo.velocity = MathHelper.setVectorLength(directionInfo.e1.clone().multiply(-x).add(directionInfo.e2.clone().multiply(-z)), speed);
             if (i != fireAmount) {
-                new BulletHellProjectile(shootInfo, ProjectileType.CALCULATED, 0, directionInfo);
+                new BulletHellProjectile(shootInfo, ProjectileType.CALCULATED, 0, speed, directionInfo);
             }
         }
 

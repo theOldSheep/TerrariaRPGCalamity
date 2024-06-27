@@ -64,34 +64,31 @@ public class CalamitasClone extends EntitySlime {
         bulletHellDir = new BulletHellProjectile.BulletHellDirectionInfo(target.getLocation().getDirection(), target);
     }
     private void tickBulletHellRotation() {
+        if (indexAI % 25 == 0) {
+            PlayerPOVHelper.getInstance().moveCamera(target, 32, 100);
+        }
+
         Location loc = target.getLocation();
         if (MathHelper.getAngleRadian(bulletHellDir.planeNormal, loc.getDirection()) > 1e-5) {
             loc.setDirection(bulletHellDir.planeNormal);
             target.teleport(loc);
         }
     }
-    private void spawnBulletHellProjectile(int type, int ticksLive, double speed) {
+    private void spawnBulletHellProjectile(BulletHellProjectile.ProjectileType projectileType, int ticksLive, double speed) {
         EntityHelper.ProjectileShootInfo shootInfo;
-        BulletHellProjectile.ProjectileType projectileType;
-        switch (type) {
-            case 1:
+        switch (projectileType) {
+            case SQUARE_BORDER:
                 shootInfo = psiHellBlast;
-                projectileType = BulletHellProjectile.ProjectileType.SQUARE_BORDER;
                 break;
-            case 2:
+            case CIRCUMFERENCE:
                 shootInfo = psiFireBlast;
-                projectileType = BulletHellProjectile.ProjectileType.CIRCUMFERENCE;
-                break;
-            case 3:
-                shootInfo = psiDart;
-                projectileType = BulletHellProjectile.ProjectileType.CIRCUMFERENCE;
                 break;
             default:
                 return;
         }
         shootInfo.setLockedTarget(target);
-        MathHelper.setVectorLength(shootInfo.velocity, speed);
-        new BulletHellProjectile(shootInfo, projectileType, 32, bulletHellDir);
+        BulletHellProjectile projectile = new BulletHellProjectile(shootInfo, projectileType, 32, speed, bulletHellDir);
+        projectile.liveTime = ticksLive;
     }
     private void handleBulletHell() {
         bulletHellDir.target = target;
@@ -106,11 +103,11 @@ public class CalamitasClone extends EntitySlime {
                 double projectileSpeed = 0.35 + Math.random() * 0.15;
                 int ticksLive = (int) (BULLET_HELL_RADIUS * 2 / projectileSpeed);
                 // spawn projectile
-                spawnBulletHellProjectile(1, ticksLive, projectileSpeed);
+                spawnBulletHellProjectile(BulletHellProjectile.ProjectileType.SQUARE_BORDER, ticksLive, projectileSpeed);
             }
             // fire blasts
             if (bulletHellTicksLeft % 50 == 0 && secondBulletHell) {
-                spawnBulletHellProjectile(2, 50, 0.75);
+                spawnBulletHellProjectile(BulletHellProjectile.ProjectileType.CIRCUMFERENCE, 50, 0.75);
             }
         }
 //        // remove outdated projectiles

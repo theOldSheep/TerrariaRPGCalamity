@@ -263,10 +263,10 @@ public class ArrowHitListener implements Listener {
                 // bullet hell blasts
                 if (bulletHellInfo != null) {
                     EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                            projectileSource, projectileDestroyLoc, new Vector(clusterSpeed, 0, 0),
+                            projectileSource, projectileDestroyLoc, new Vector(),
                             attrMap, damageType, clusterName);
                     BulletHellProjectile.ProjectileType blastType = clusterAmount < 12 ? BulletHellProjectile.ProjectileType.BLAST_8 : BulletHellProjectile.ProjectileType.BLAST_16;
-                    new BulletHellProjectile(shootInfo, blastType, 0, (BulletHellProjectile.BulletHellDirectionInfo) bulletHellInfo.value());
+                    new BulletHellProjectile(shootInfo, blastType, 0, clusterSpeed, (BulletHellProjectile.BulletHellDirectionInfo) bulletHellInfo.value());
                 }
                 // normal clusters
                 else {

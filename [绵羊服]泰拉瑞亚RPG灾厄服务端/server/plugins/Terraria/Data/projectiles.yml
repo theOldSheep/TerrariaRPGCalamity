@@ -349,6 +349,30 @@
     buffInflict:
         - "硫磺火|60|1"
         - "孱弱巫咒|60|1"
+    clusterBomb:
+        amount: 8
+        damageMulti: 0.6
+        name: 硫火飞弹
+        velocity: 0.5
+深渊炙炎:
+    penetration: 99999
+    blockHitAction: thru
+    gravity: 0
+    projectileSize: 3
+    speedMultiPerTick: 0.975
+    homing: true
+    homingMethod: 2
+    homingRadius: 32
+    homingSharpTurning: false
+    homingAbility: 6
+    buffInflict:
+        - "硫磺火|100|1"
+        - "孱弱巫咒|100|1"
+    clusterBomb:
+        amount: 16
+        damageMulti: 0.75
+        name: 硫火飞弹
+        velocity: 0.5
 硫磺火球:
     penetration: 99999
     blockHitAction: thru
