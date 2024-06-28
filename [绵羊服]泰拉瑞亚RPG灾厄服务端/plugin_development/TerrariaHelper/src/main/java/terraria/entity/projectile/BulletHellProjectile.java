@@ -1,6 +1,7 @@
 package terraria.entity.projectile;
 
 import eos.moe.dragoncore.api.CoreAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -52,16 +53,18 @@ public class BulletHellProjectile extends GenericProjectile {
                 calculateCircumferenceProjectileInfo(shootInfo, playerLocation, directionInfo, distance, speed);
                 break;
             case BLAST_8:
-                calculateBlastProjectileInfo(shootInfo, directionInfo, distance, speed, 8);
+                calculateBlastProjectileInfo(shootInfo, directionInfo, speed, 8);
                 break;
             case BLAST_16:
-                calculateBlastProjectileInfo(shootInfo, directionInfo, distance, speed, 16);
+                calculateBlastProjectileInfo(shootInfo, directionInfo, speed, 16);
                 break;
             case CALCULATED:
                 break;
             default:
                 throw new UnsupportedOperationException("Unsupported projectile type");
         }
+
+        shootInfo.setLockedTarget(directionInfo.target);
 
         return shootInfo;
     }
@@ -122,16 +125,16 @@ public class BulletHellProjectile extends GenericProjectile {
 
         return shootInfo;
     }
-    private static EntityHelper.ProjectileShootInfo calculateBlastProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, BulletHellDirectionInfo directionInfo, double distance, double speed, int fireAmount) {
+    private static EntityHelper.ProjectileShootInfo calculateBlastProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, BulletHellDirectionInfo directionInfo, double speed, int fireAmount) {
         double angle = Math.random() * 2 * Math.PI;
         double angleOffset = Math.PI * 2 / fireAmount;
 
         for (int i = 1; i <= fireAmount; i ++) {
             angle += angleOffset;
-            double x = distance * Math.cos(angle);
-            double z = distance * Math.sin(angle);
+            double x = Math.cos(angle);
+            double z = Math.sin(angle);
 
-            shootInfo.velocity = MathHelper.setVectorLength(directionInfo.e1.clone().multiply(-x).add(directionInfo.e2.clone().multiply(-z)), speed);
+            shootInfo.velocity = directionInfo.e1.clone().multiply(x).add(directionInfo.e2.clone().multiply(z)).multiply(speed);
             if (i != fireAmount) {
                 new BulletHellProjectile(shootInfo, ProjectileType.CALCULATED, 0, speed, directionInfo);
             }

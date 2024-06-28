@@ -40,6 +40,7 @@ terraria\entity\boss\hardMode\calamitasClone\Cataclysm.class
 terraria\util\ItemHelper$1.class
 terraria\entity\boss\preHardMode\desertScourge\DesertNuisance.class
 terraria\entity\boss\hardMode\ravager\RavagerClaw.class
+terraria\entity\boss\hardMode\calamitasClone\CalamitasClone$1.class
 terraria\entity\boss\preHardMode\theSlimeGod\EbonianSlime$1.class
 terraria\util\BossHelper$BossType.class
 terraria\entity\boss\event\mourningWood\MourningWood.class
