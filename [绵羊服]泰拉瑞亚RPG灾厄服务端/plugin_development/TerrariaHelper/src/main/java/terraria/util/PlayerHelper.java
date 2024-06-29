@@ -845,7 +845,7 @@ public class PlayerHelper {
                                     double healthRatio = bossPart.getHealth() / bossPart.getMaxHealth();
                                     if (healthRatio >= 0.5) bossName += "1";
                                     else if (healthRatio >= 0.3) bossName += "2";
-                                    else if (bossPart.getHealth() >= 2) bossName += "3";
+                                    else if (healthRatio >= 0.01) bossName += "3";
                                     else bossName += "4";
                                     break;
                                 }

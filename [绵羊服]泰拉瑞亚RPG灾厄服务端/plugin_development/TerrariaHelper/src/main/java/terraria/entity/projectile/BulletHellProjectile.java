@@ -14,7 +14,7 @@ import terraria.util.MathHelper;
 public class BulletHellProjectile extends GenericProjectile {
     public enum ProjectileType {
         SQUARE_BORDER, CIRCUMFERENCE,
-        BLAST_8, BLAST_16, CALCULATED
+        BLAST_8, BLAST_16, BLAST_32, CALCULATED
     }
     public static class BulletHellDirectionInfo {
         // the vectors forming the basis of the bullet hell subspace
@@ -57,6 +57,9 @@ public class BulletHellProjectile extends GenericProjectile {
                 break;
             case BLAST_16:
                 calculateBlastProjectileInfo(shootInfo, directionInfo, speed, 16);
+                break;
+            case BLAST_32:
+                calculateBlastProjectileInfo(shootInfo, directionInfo, speed, 32);
                 break;
             case CALCULATED:
                 break;

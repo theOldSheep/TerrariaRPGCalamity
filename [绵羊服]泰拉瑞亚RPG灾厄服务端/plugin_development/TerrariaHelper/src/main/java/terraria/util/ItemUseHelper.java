@@ -996,19 +996,17 @@ public class ItemUseHelper {
                     shouldStrike = ! ply.getScoreboardTags().contains(parryCDScoreboardTag);
                     if (shouldStrike) {
                         // parry
-                        int invulnerabilityTicks, coolDown, damageReduction;
+                        int invulnerabilityTicks, coolDown;
                         switch (weaponType) {
                             case "破碎方舟_RIGHT_CLICK":
                                 strikeRadius = 0.4;
                                 invulnerabilityTicks = 12;
                                 coolDown = 160;
-                                damageReduction = 200;
                                 break;
                             case "远古方舟_RIGHT_CLICK":
                                 strikeRadius = 0.55;
                                 invulnerabilityTicks = 13;
                                 coolDown = 140;
-                                damageReduction = 300;
                                 break;
                             case "元素方舟_RIGHT_CLICK":
                             case "鸿蒙方舟_RIGHT_CLICK":
@@ -1016,22 +1014,20 @@ public class ItemUseHelper {
                                 strikeRadius = isArkOfElements ? 0.65 : 0.75;
                                 invulnerabilityTicks = isArkOfElements ? 14 : 15;
                                 coolDown = 120;
-                                damageReduction = isArkOfElements ? 350 : 400;
                                 break;
                             default:
                                 invulnerabilityTicks = 10;
                                 coolDown = 100;
-                                damageReduction = 100;
                         }
                         // parry function
                         Collection<Entity> finalDamagedList = damaged;
                         strikeLineInfo
                                 .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
-                                    // hit projectile: decrease the projectile's damage
+                                    // hit projectile: respective invulnerability tick
                                     if (entityHit instanceof Projectile) {
-                                        HashMap<String, Double> entityHitAttrMap = EntityHelper.getAttrMap(entityHit);
-                                        double newDmg = Math.max(1d, entityHitAttrMap.getOrDefault("damage", 1d) - damageReduction);
-                                        entityHitAttrMap.put("damage", newDmg);
+                                        EntityHelper.handleEntityTemporaryScoreboardTag(ply,
+                                                EntityHelper.getInvulnerabilityTickName(EntityHelper.getDamageType(entityHit)),
+                                                invulnerabilityTicks);
                                     }
                                     // hit entity: apply melee invulnerability tick
                                     else {

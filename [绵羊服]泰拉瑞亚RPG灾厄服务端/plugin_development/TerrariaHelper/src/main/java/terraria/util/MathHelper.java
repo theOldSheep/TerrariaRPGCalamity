@@ -327,10 +327,15 @@ public class MathHelper {
     }
     public static Vector rotateAroundAxisRadian(Vector vec, Vector axis, double angleRadian) {
         if ( Math.abs( axis.lengthSquared() - 1) > 1e-5 )
-            axis.normalize();
+            setVectorLength(axis, 1);
 
-        vec.checkFinite();
-        axis.checkFinite();
+        try {
+            vec.checkFinite();
+            axis.checkFinite();
+        }
+        catch (Exception e) {
+            return new Vector();
+        }
 
         Quaternion rotation = new Quaternion(axis, angleRadian );
 
@@ -345,7 +350,11 @@ public class MathHelper {
             return start;
 
         Vector axis = getNonZeroCrossProd(start, end);
-        double angle = Math.min( maxAngleRadian, MathHelper.getAngleRadian(start, end) );
+        double angle = MathHelper.getAngleRadian(start, end);
+
+        if (angle < maxAngleRadian) {
+            return setVectorLength(end.clone(), start.length());
+        }
 
         return rotateAroundAxisRadian(start, axis, angle);
     }

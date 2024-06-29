@@ -1194,10 +1194,9 @@ public class GenericProjectile extends EntityPotion {
         else {
             Vector toTarget = terraria.util.MathHelper.getDirection(
                     bukkitEntity.getLocation(), homingTarget.getBukkitEntity().getLocation(), 1d);
-            Vector currDir = this.getBukkitEntity().getVelocity();
-            terraria.util.MathHelper.setVectorLength(currDir, 1d); // Current direction (velocity)
+            terraria.util.MathHelper.setVectorLength(velocity, 1d); // Current direction (velocity)
             
-            Vector newVelocity = terraria.util.MathHelper.rotationInterpolateDegree(currDir, toTarget, homingAbility);
+            Vector newVelocity = terraria.util.MathHelper.rotationInterpolateDegree(velocity, toTarget, homingAbility);
             // update on velocity itself, do not override its reference.
             velocity.zero().add(newVelocity).multiply(this.speed);
         }
