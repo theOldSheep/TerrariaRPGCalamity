@@ -22,7 +22,8 @@ public class BulletHellProjectile extends GenericProjectile {
         public Vector planeNormal;
         public Player target;
 
-        public BulletHellDirectionInfo(Vector planeNormal, Player target) {
+        public BulletHellDirectionInfo(Player target) {
+            Vector planeNormal = target.getLocation().getDirection();
             planeNormal.setY(0);
             MathHelper.setVectorLength(planeNormal, 1);
 

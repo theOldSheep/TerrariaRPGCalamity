@@ -12,43 +12,46 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Consumer;
 import org.bukkit.util.Vector;
 import terraria.entity.projectile.BulletHellProjectile;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.UUID;
 
 public class SupremeCalamitas extends EntitySlime {
     private static class BulletHellProjectileOption {
         String projectileType;
         BulletHellProjectile.ProjectileType shootType;
-        double speedMin, speedVariation, chancePerTick;
-        private BulletHellProjectileOption(String projectileType, BulletHellProjectile.ProjectileType shootType,
-                                           double speedMin, double speedVariation, double chancePerTick) {
+        HashMap<String, Double> attrMap;
+        double speedMin, speedVariation;
+        int ticksInterval, projectileLiveTime;
+        private BulletHellProjectileOption(String projectileType, BulletHellProjectile.ProjectileType shootType, HashMap<String, Double> attrMap,
+                                           double speedMin, double speedVariation, int ticksInterval, int projectileLiveTime) {
             this.projectileType = projectileType;
             this.shootType = shootType;
+            this.attrMap = attrMap;
             this.speedMin = speedMin;
             this.speedVariation = speedVariation;
-            this.chancePerTick = chancePerTick;
+            this.ticksInterval = ticksInterval;
+            this.projectileLiveTime = projectileLiveTime;
         }
     }
     private static class BulletHellPattern {
         double healthRatio;
         int duration;
-        HashMap<BulletHellProjectileOption, Double> projectileCandidates;
+        HashSet<BulletHellProjectileOption> projectileCandidates;
         Consumer<SupremeCalamitas> beginFunc, endFunc;
         private BulletHellPattern(double healthRatio, int duration) {
             this.healthRatio = healthRatio;
             this.duration = duration;
-            projectileCandidates = new HashMap<>();
+            projectileCandidates = new HashSet<>();
             beginFunc = null;
             endFunc = null;
         }
-        BulletHellPattern addCandidate(double weight, BulletHellProjectileOption projectile) {
-            projectileCandidates.put(projectile, weight);
+        BulletHellPattern addCandidate(BulletHellProjectileOption projectile) {
+            projectileCandidates.add(projectile);
             return this;
         }
         BulletHellPattern setBeginFunc(Consumer<SupremeCalamitas> beginFunc) {
@@ -66,6 +69,8 @@ public class SupremeCalamitas extends EntitySlime {
     public static final double BASIC_HEALTH = 2760000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
+    HashMap<String, EntityHelper.ProjectileShootInfo> bulletHellShootInfoMap = new HashMap<>();
+    BulletHellProjectile.BulletHellDirectionInfo bulletHellDir = null;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
@@ -108,13 +113,51 @@ public class SupremeCalamitas extends EntitySlime {
         };
     }
 
-    EntityHelper.ProjectileShootInfo shootInfo;
-    int bulletHellPatternNext = 0;
+    EntityHelper.ProjectileShootInfo shootInfoDart, shootInfoHellBlast, shootInfoFireBlast, shootInfoGigaBlast;
+    int bulletHellPatternIdx = 0;
     boolean bulletHellPatternActive = false;
 
     int indexAI = 0, AIPhase = 0;
     Vector velocity = new Vector();
 
+    private void initBulletHellInfo() {
+        bulletHellDir = new BulletHellProjectile.BulletHellDirectionInfo(target);
+    }
+    private void tickBulletHellRotation() {
+        if (ticksLived % 25 == 0) {
+            PlayerPOVHelper.getInstance().moveCamera(target, 32, 3000);
+        }
+
+        Location loc = target.getLocation();
+        if (MathHelper.getAngleRadian(bulletHellDir.planeNormal, loc.getDirection()) > 1e-5) {
+            loc.setDirection(bulletHellDir.planeNormal);
+            target.teleport(loc);
+        }
+
+    }
+    private void handleBulletHell() {
+        bulletHellDir.target = target;
+        // target rotation
+        tickBulletHellRotation();
+        // spawn projectiles
+        for (BulletHellProjectileOption projOption : bulletHellPatterns[bulletHellPatternIdx].projectileCandidates) {
+            if (ticksLived % projOption.ticksInterval == 0) {
+                // prepare shoot info
+                EntityHelper.ProjectileShootInfo shootInfo = bulletHellShootInfoMap.computeIfAbsent(projOption.projectileType,
+                        (type) -> new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), projOption.attrMap,
+                                EntityHelper.DamageType.MAGIC, type
+                        ));
+                // fire projectile
+                shootInfo.setLockedTarget(target);
+                double speed = projOption.speedMin + Math.random() * projOption.speedVariation;
+                BulletHellProjectile projectile = new BulletHellProjectile(shootInfo, projOption.shootType, 48, speed, bulletHellDir);
+                projectile.liveTime = projOption.projectileLiveTime;
+            }
+        }
+    }
+    private void normalAIPhase() {
+
+    }
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -139,28 +182,30 @@ public class SupremeCalamitas extends EntitySlime {
 
 
                 BulletHellPattern pattern;
-                if (bulletHellPatternNext < bulletHellPatterns.length)
-                    pattern = bulletHellPatterns[bulletHellPatternNext];
+                if (bulletHellPatternIdx < bulletHellPatterns.length)
+                    pattern = bulletHellPatterns[bulletHellPatternIdx];
                 else
                     pattern = null;
                 // bullet hell
                 if (bulletHellPatternActive) {
+                    handleBulletHell();
                     // termination. "pattern" would not be null here, don't worry.
                     if (indexAI > pattern.duration) {
-                        bulletHellPatternNext ++;
+                        bulletHellPatternIdx++;
                         indexAI = -1;
                         bulletHellPatternActive = false;
                         removeScoreboardTag("noDamage");
                         if (pattern.endFunc != null)
                             pattern.endFunc.accept(this);
-                        if (bulletHellPatternNext < bulletHellPatterns.length) {
+                        if (bulletHellPatternIdx < bulletHellPatterns.length) {
                             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT,
-                                    (getMaxHealth() * bulletHellPatterns[bulletHellPatternNext].healthRatio) - 10);
+                                    (getMaxHealth() * bulletHellPatterns[bulletHellPatternIdx].healthRatio) - 10);
                         }
                     }
                 }
                 // normal behavior
                 else {
+                    normalAIPhase();
                     // bullet hell transition
                     if (pattern != null && getHealth() / getMaxHealth() < pattern.healthRatio) {
                         indexAI = -1;
@@ -254,8 +299,14 @@ public class SupremeCalamitas extends EntitySlime {
         }
         // shoot info's
         {
-//            shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapProjectile,
-//                    EntityHelper.DamageType.ARROW, "projectile");
+            shootInfoDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjLow,
+                    EntityHelper.DamageType.MAGIC, "硫火飞弹");
+            shootInfoHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjNormal,
+                    EntityHelper.DamageType.MAGIC, "深渊亡魂");
+            shootInfoFireBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjNormal,
+                    EntityHelper.DamageType.MAGIC, "无际裂变球");
+            shootInfoGigaBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjMid,
+                    EntityHelper.DamageType.MAGIC, "深渊炙炎弹");
         }
     }
 

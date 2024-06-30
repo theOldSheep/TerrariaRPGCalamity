@@ -61,7 +61,7 @@ public class CalamitasClone extends EntitySlime {
         bulletHellTicksLeft = ticksDuration;
         addScoreboardTag("noDamage");
         Bukkit.broadcastMessage(BULLET_HELL_WARNING);
-        bulletHellDir = new BulletHellProjectile.BulletHellDirectionInfo(target.getLocation().getDirection(), target);
+        bulletHellDir = new BulletHellProjectile.BulletHellDirectionInfo(target);
         PlayerPOVHelper.getInstance().moveCamera(target, 32, 3000);
     }
     private void tickBulletHellRotation() {
