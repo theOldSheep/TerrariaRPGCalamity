@@ -99,7 +99,7 @@ public class CalamitasClone extends EntitySlime {
         if (--bulletHellTicksLeft > 0) {
             // hell blast
             boolean secondBulletHell = healthLockProgress == 4;
-            double hellBlastProbability = secondBulletHell ? 0.85 : 0.75;
+            double hellBlastProbability = secondBulletHell ? 0.6 : 0.4;
             if (Math.random() < hellBlastProbability) {
                 double projectileSpeed = 0.35 + Math.random() * 0.15;
                 int ticksLive = (int) (BULLET_HELL_RADIUS * 2 / projectileSpeed);

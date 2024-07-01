@@ -272,66 +272,76 @@ public class ArrowHitListener implements Listener {
                 }
                 // normal clusters
                 else {
-                    Location spawnLoc;
-                    // spawn clusters
-                    for (int i = 0; i < clusterAmount; i++) {
-                        // spawn type dynamic tweaks
-                        if (projectileType.equals("三色大地流星")) {
-                            double rdm = Math.random();
-                            if (rdm < 0.3333)
-                                clusterName = "红色大地流星";
-                            else if (rdm < 0.6666)
-                                clusterName = "绿色大地流星";
-                            else
-                                clusterName = "蓝色大地流星";
-                        }
-                        // spawn loc & velocity
-                        Vector velocity = new Vector();
-                        boolean aimEnemy = false;
-                        switch (clusterType) {
-                            case "star": {
-                                spawnLoc = projectileDestroyLoc.clone().add(Math.random() * 10 - 5,
-                                        Math.random() * 20 + 20,
-                                        Math.random() * 10 - 5);
-                                // velocity is calculated outside the switch block
-                                aimEnemy = true;
-                                break;
-                            }
-                            case "surround": {
-                                double velYaw = Math.random() * 360;
-                                double velPitch = Math.random() * clusterSection.getDouble("surroundMaxPitch", 30d);
-                                if (Math.random() < 0.5) velPitch *= -1;
-                                double offsetLen = clusterSection.getDouble("surroundOffset", 10d);
-                                Vector offset = MathHelper.vectorFromYawPitch_approx(velYaw, velPitch).multiply(offsetLen);
-                                spawnLoc = projectileDestroyLoc.clone().add(offset);
-                                // velocity is calculated outside the switch block
-                                aimEnemy = true;
-                                break;
-                            }
-                            default:
-                                velocity = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, Math.random() * 360);
-                                spawnLoc = projectileDestroyLoc;
-                        }
-                        // aim enemy if needed
-                        if (aimEnemy) {
-                            Location aimLoc;
-                            if (entityHit == null)
-                                aimLoc = projectileDestroyLoc.clone().add(Math.random() * 3 - 1.5,
-                                        Math.random() * 3 - 1.5,
-                                        Math.random() * 3 - 1.5);
-                            else
-                                aimLoc = EntityHelper.helperAimEntity(spawnLoc, entityHit,
-                                        new EntityHelper.AimHelperOptions(clusterName)
-                                                .setAccelerationMode(true)
-                                                .setProjectileSpeed(clusterSpeed)
-                                                .setRandomOffsetRadius(1.5));
-                            velocity = MathHelper.getDirection(spawnLoc, aimLoc, 1, false);
-                        }
-                        // setup speed and spawn projectile
-                        velocity.multiply(clusterSpeed);
+                    if (clusterType.equals("spread")) {
                         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                projectileSource, spawnLoc, velocity, attrMap, damageType, clusterName);
-                        EntityHelper.spawnProjectile(shootInfo);
+                                projectileSource, projectileDestroyLoc, new Vector(), attrMap, damageType, clusterName);
+                        for (Vector velocity : MathHelper.getEvenlySpacedProjectileDirections(clusterAmount, 180, MathHelper.randomVector(), clusterSpeed)) {
+                            shootInfo.velocity = velocity;
+                            EntityHelper.spawnProjectile(shootInfo);
+                        }
+                    }
+                    else {
+                        Location spawnLoc;
+                        // spawn clusters
+                        for (int i = 0; i < clusterAmount; i++) {
+                            // spawn type dynamic tweaks
+                            if (projectileType.equals("三色大地流星")) {
+                                double rdm = Math.random();
+                                if (rdm < 0.3333)
+                                    clusterName = "红色大地流星";
+                                else if (rdm < 0.6666)
+                                    clusterName = "绿色大地流星";
+                                else
+                                    clusterName = "蓝色大地流星";
+                            }
+                            // spawn loc & velocity
+                            Vector velocity = new Vector();
+                            boolean aimEnemy = false;
+                            switch (clusterType) {
+                                case "star": {
+                                    spawnLoc = projectileDestroyLoc.clone().add(Math.random() * 10 - 5,
+                                            Math.random() * 20 + 20,
+                                            Math.random() * 10 - 5);
+                                    // velocity is calculated outside the switch block
+                                    aimEnemy = true;
+                                    break;
+                                }
+                                case "surround": {
+                                    double velYaw = Math.random() * 360;
+                                    double velPitch = Math.random() * clusterSection.getDouble("surroundMaxPitch", 30d);
+                                    if (Math.random() < 0.5) velPitch *= -1;
+                                    double offsetLen = clusterSection.getDouble("surroundOffset", 10d);
+                                    Vector offset = MathHelper.vectorFromYawPitch_approx(velYaw, velPitch).multiply(offsetLen);
+                                    spawnLoc = projectileDestroyLoc.clone().add(offset);
+                                    // velocity is calculated outside the switch block
+                                    aimEnemy = true;
+                                    break;
+                                }
+                                default:
+                                    velocity = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, Math.random() * 360);
+                                    spawnLoc = projectileDestroyLoc;
+                            }
+                            // aim enemy if needed
+                            if (aimEnemy) {
+                                Location aimLoc;
+                                if (entityHit == null)
+                                    aimLoc = projectileDestroyLoc.clone().add(Math.random() * 3 - 1.5,
+                                            Math.random() * 3 - 1.5,
+                                            Math.random() * 3 - 1.5);
+                                else
+                                    aimLoc = EntityHelper.helperAimEntity(spawnLoc, entityHit,
+                                            new EntityHelper.AimHelperOptions(clusterName)
+                                                    .setAccelerationMode(true)
+                                                    .setProjectileSpeed(clusterSpeed)
+                                                    .setRandomOffsetRadius(1.5));
+                                velocity = MathHelper.getDirection(spawnLoc, aimLoc, 1, false);
+                            }
+                            // setup speed and spawn projectile
+                            velocity.multiply(clusterSpeed);
+                            EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                    projectileSource, spawnLoc, velocity, attrMap, damageType, clusterName);
+                            EntityHelper.spawnProjectile(shootInfo);
+                        }
                     }
                 }
             }

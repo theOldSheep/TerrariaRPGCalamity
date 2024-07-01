@@ -98,13 +98,13 @@
     # 集束炸弹类，可不写
     # 仅在损毁时生效
     clusterBomb:
-        # 分裂成弹片数量
+        # 分裂成弹片数量；分裂方式为spread时为分布角度
         amount: 8
         # 分裂后弹片伤害为原本伤害*damageMulti
         damageMulti: 0.85
         # 分裂后弹片弹射物类型
         name: 装饰弹片
-        # 分裂方式，normal（默认）: 在原地分裂，star：圣箭落星式分裂，surround：在四周向碰撞点发射
+        # 分裂方式，normal（默认）: 在原地分裂，star：圣箭落星式分裂，surround：在四周向碰撞点发射，spread：均匀分布
         type: normal
         # 若分裂方式为surround, 分裂时倾角最大为多少？默认30 (最大90)
         surroundMaxPitch: 30.0
@@ -340,10 +340,9 @@
     blockHitAction: thru
     gravity: 0
     projectileSize: 1.5
-    speedMultiPerTick: 0.975
     homing: true
     homingMethod: 2
-    homingRadius: 32
+    homingRadius: 96
     homingSharpTurning: false
     homingAbility: 6
     buffInflict:
@@ -359,10 +358,9 @@
     blockHitAction: thru
     gravity: 0
     projectileSize: 3
-    speedMultiPerTick: 0.975
     homing: true
     homingMethod: 2
-    homingRadius: 32
+    homingRadius: 128
     homingSharpTurning: false
     homingAbility: 6
     buffInflict:
@@ -373,6 +371,40 @@
         damageMulti: 0.75
         name: 硫火飞弹
         velocity: 0.5
+深渊炙炎弹:
+    blockHitAction: thru
+    gravity: 0
+    projectileSize: 3
+    homing: true
+    homingMethod: 2
+    homingRadius: 128
+    homingSharpTurning: false
+    homingAbility: 6
+    buffInflict:
+        - "硫磺火|60|1"
+        - "孱弱巫咒|60|1"
+    clusterBomb:
+        amount: 30
+        type: spread
+        damageMulti: 0.9
+        name: 硫火飞弹
+        velocity: 1.25
+深渊炙颅:
+    penetration: 99999
+    projectileSize: 1
+    blockHitAction: thru
+    liveTime: 80
+    gravity: 0
+    buffInflict:
+        - "孱弱巫咒|60|1"
+猩红圆月:
+    penetration: 99999
+    projectileSize: 5
+    blockHitAction: thru
+    liveTime: 999999
+    gravity: 0
+    buffInflict:
+        - "孱弱巫咒|120|1"
 硫磺火球:
     penetration: 99999
     blockHitAction: thru

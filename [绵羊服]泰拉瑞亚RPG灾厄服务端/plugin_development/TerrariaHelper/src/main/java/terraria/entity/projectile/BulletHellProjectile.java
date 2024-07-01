@@ -23,14 +23,11 @@ public class BulletHellProjectile extends GenericProjectile {
         public Player target;
 
         public BulletHellDirectionInfo(Player target) {
-            Vector planeNormal = target.getLocation().getDirection();
-            planeNormal.setY(0);
-            MathHelper.setVectorLength(planeNormal, 1);
-
-            this.planeNormal = planeNormal;
             this.target = target;
-            e1 = MathHelper.getNonZeroCrossProd(planeNormal, new Vector(0, 1, 0)).normalize();
-            e2 = MathHelper.getNonZeroCrossProd(planeNormal, e1).normalize();
+            e1 = MathHelper.vectorFromYawPitch_approx(
+                    MathHelper.getVectorYaw(target.getLocation().getDirection()) - 90, 0);
+            e2 = new Vector(0, 1, 0);
+            this.planeNormal = e1.getCrossProduct(e2);
         }
     }
 
@@ -90,7 +87,7 @@ public class BulletHellProjectile extends GenericProjectile {
         switch (side) {
             case 0: // Top side
                 x = minX + (maxX - minX) * Math.random();
-                z = minZ;
+                z = maxZ;
                 velocity = directionInfo.e2.clone().multiply(-1); // Move downwards
                 break;
             case 1: // Right side
@@ -100,7 +97,7 @@ public class BulletHellProjectile extends GenericProjectile {
                 break;
             case 2: // Bottom side
                 x = minX + (maxX - minX) * Math.random();
-                z = maxZ;
+                z = minZ;
                 velocity = directionInfo.e2.clone(); // Move upwards
                 break;
             case 3: // Left side
@@ -149,6 +146,10 @@ public class BulletHellProjectile extends GenericProjectile {
 
     @Override
     protected void extraTicking() {
+        if (projectileType.equals("深渊炙颅")) {
+            motY = MathHelper.xcos_degree(ticksLived * 9);
+        }
+
         // Update the projectile's position to be on the plane
         Location projectileLocation = bukkitEntity.getLocation();
         Vector vectorToPlane = projectileLocation.toVector().subtract(directionInfo.target.getEyeLocation().toVector());

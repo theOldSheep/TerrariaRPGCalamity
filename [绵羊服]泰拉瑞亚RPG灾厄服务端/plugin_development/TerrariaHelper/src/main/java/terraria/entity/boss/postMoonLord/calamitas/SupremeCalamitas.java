@@ -76,53 +76,164 @@ public class SupremeCalamitas extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    static HashMap<String, Double> attrMapPrjLow, attrMapPrjNormal, attrMapPrjMid, attrMapPrjHigh;
+    static double DASH_SPEED = 3.5, HOVER_SPEED = 2.75, DART_SPEED = 2.75, HELL_BLAST_SPEED = 3.75, GIGA_BLAST_SPEED = 1.25,
+            HOVER_DISTANCE = 48, HOVER_DISTANCE_BROTHERS = 32,
+            DART_SPREAD_SINGLE = 10, DART_SPREAD_TOTAL = 40;
+    static HashMap<String, Double> attrMapPrjLow, attrMapPrjMid, attrMapPrjHigh, attrMapPrjExtreme;
     static BulletHellPattern[] bulletHellPatterns;
+    static EntityHelper.AimHelperOptions dashAimHelper, blastAimHelper;
     static {
         attrMapPrjLow = new HashMap<>();
         attrMapPrjLow.put("damage", 1350d);
         attrMapPrjLow.put("knockback", 1.5d);
-        attrMapPrjNormal = new HashMap<>();
-        attrMapPrjNormal.put("damage", 1450d);
-        attrMapPrjNormal.put("knockback", 2.0d);
         attrMapPrjMid = new HashMap<>();
-        attrMapPrjMid.put("damage", 1560d);
-        attrMapPrjMid.put("knockback", 2.5d);
+        attrMapPrjMid.put("damage", 1450d);
+        attrMapPrjMid.put("knockback", 2.0d);
         attrMapPrjHigh = new HashMap<>();
-        attrMapPrjHigh.put("damage", 1850d);
-        attrMapPrjHigh.put("knockback", 3.75d);
+        attrMapPrjHigh.put("damage", 1560d);
+        attrMapPrjHigh.put("knockback", 2.5d);
+        attrMapPrjExtreme = new HashMap<>();
+        attrMapPrjExtreme.put("damage", 1850d);
+        attrMapPrjExtreme.put("knockback", 3.75d);
 
+
+        BulletHellProjectileOption optionBlastSurrounding = new BulletHellProjectileOption(
+                "深渊亡魂", BulletHellProjectile.ProjectileType.SQUARE_BORDER,
+                attrMapPrjMid, 0.4, 0.2, 2, 100);
+        BulletHellProjectileOption optionFlameSkull = new BulletHellProjectileOption(
+                "深渊炙颅", BulletHellProjectile.ProjectileType.SQUARE_BORDER,
+                attrMapPrjHigh, 0.4, 0.2, 2, 100);
+        BulletHellProjectileOption optionHellBlast = new BulletHellProjectileOption(
+                "无际裂变", BulletHellProjectile.ProjectileType.CIRCUMFERENCE,
+                attrMapPrjHigh, 0.3, 0.1, 40, 60);
+        BulletHellProjectileOption optionGigaBlast = new BulletHellProjectileOption(
+                "深渊炙炎", BulletHellProjectile.ProjectileType.CIRCUMFERENCE,
+                attrMapPrjHigh, 0.35, 0.15, 50, 75);
+
+        final String bossProgress = BOSS_TYPE.msgName;
+        final String msgPrefix = "§#FFA500";
         bulletHellPatterns = new BulletHellPattern[]{
                 // first bullet hell when summoned
-                new BulletHellPattern(1.1, 300),
+                new BulletHellPattern(1.1, 300)
+                        .addCandidate(optionBlastSurrounding)
+                        .addCandidate(optionBlastSurrounding)
+                        .setBeginFunc(
+                                (boss) -> {
+                                    String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
+                                            new String[]{(msgPrefix + "如果你想感受一下四级烫伤的话，你可算是找对人了。")} :
+                                            new String[]{(msgPrefix + "你享受地狱之旅么？")};
+                                    terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                                })
+                        .setEndFunc(
+                        (boss) -> {
+                            String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
+                                    new String[]{(msgPrefix + "他日若你魂销魄散，你会介意我将你的骨头和血肉融入我的造物中吗？")} :
+                                    new String[]{(msgPrefix + "真奇怪，你应该已经死了才对......")};
+                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                        }),
                 // second bullet hell 75% health
-                new BulletHellPattern(0.75, 325),
+                new BulletHellPattern(0.75, 300)
+                        .addCandidate(optionBlastSurrounding)
+                        .addCandidate(optionHellBlast)
+                        .setBeginFunc(
+                        (boss) -> {
+                            String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
+                                    new String[]{(msgPrefix + "你离胜利还差得远着呢。")} :
+                                    new String[]{(msgPrefix + "距离你上次勉强才击败我的克隆体也没过多久。那玩意就是个失败品，不是么？")};
+                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                        }),
                 // third bullet hell 50% health
-                new BulletHellPattern(0.5, 350),
+                new BulletHellPattern(0.5, 300)
+                        .addCandidate(optionBlastSurrounding)
+                        .addCandidate(optionHellBlast)
+                        .addCandidate(optionGigaBlast)
+                        .setBeginFunc(
+                        (boss) -> {
+                            String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
+                                    new String[]{(msgPrefix + "自我上一次能在如此有趣的靶子假人身上测试我的魔法，已经过了很久了。")} :
+                                    new String[]{(msgPrefix + "你驾驭着强大的力量，但你使用这股力量只为了自己的私欲。")};
+                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                        }),
                 // spawn brothers 45% health
-                new BulletHellPattern(0.45, 50),
+                new BulletHellPattern(0.45, 50)
+                        .setBeginFunc(
+                        (boss) -> {
+                            String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
+                                    new String[]{(msgPrefix + "只是单有过去形态的空壳罢了，或许在其中依然残存他们的些许灵魂也说不定。")} :
+                                    new String[]{(msgPrefix + "你想见见我的家人吗？听上去挺可怕，不是么？")};
+                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                        }),
                 // fourth bullet hell 30% health
-                new BulletHellPattern(0.3, 375),
+                new BulletHellPattern(0.3, 300)
+                        .addCandidate(optionBlastSurrounding)
+                        .addCandidate(optionHellBlast)
+                        .addCandidate(optionGigaBlast)
+                        .setBeginFunc(
+                        (boss) -> {
+                            String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
+                                    new String[]{(msgPrefix + "我挺好奇，自我们第一次交手后，你是否有在梦魇中见到过这些？")} :
+                                    new String[]{(msgPrefix + "别想着逃跑。只要你还活着，痛苦就不会离你而去。")};
+                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                        }),
                 // another sepulcher at 20% health
-                new BulletHellPattern(0.2, 50),
+                new BulletHellPattern(0.2, 50)
+                        .setBeginFunc(
+                        (boss) -> {
+                            String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
+                                    new String[]{(msgPrefix + "注意一下，那个会自己爬的坟墓来了，这是最后一次。")} :
+                                    new String[]{(msgPrefix + "一个后起之人，只识杀戮与偷窃，但却以此得到力量。我想想，这让我想起了谁...？")};
+                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                        }),
                 // final bullet hell 10% health
-                new BulletHellPattern(0.1, 400),
+                new BulletHellPattern(0.1, 300)
+                        .addCandidate(optionBlastSurrounding)
+                        .addCandidate(optionFlameSkull)
+                        .addCandidate(optionHellBlast)
+                        .addCandidate(optionGigaBlast)
+                        .setBeginFunc(
+                        (boss) -> {
+                            String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
+                                    new String[]{(msgPrefix + "这难道不令人激动么？")} :
+                                    new String[]{
+                                            (msgPrefix + "给我停下！"),
+                                            (msgPrefix + "如果我在这里失败，我就再无未来可言。"),
+                                            (msgPrefix + "一旦你战胜了我，你就只剩下一条道路。"),
+                                            (msgPrefix + "而那条道路......同样也无未来可言。"),
+                                            (msgPrefix + "这场战斗的输赢对你而言毫无意义！那你又有什么理由干涉这一切！"),};
+                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                        }),
                 // final conversation
                 new BulletHellPattern(0.005, 200)
+                        .setBeginFunc(
+                                (boss) -> {
+                                    String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
+                                            new String[]{
+                                                    (msgPrefix + "了不起的表现，我认可你的胜利。"),
+                                                    (msgPrefix + "毫无疑问，你会遇见比我更加强大的敌人。"),
+                                                    (msgPrefix + "我相信你不会犯下和他一样的错误。"),
+                                                    (msgPrefix + "至于你的未来会变成什么样子，我很期待。"),} :
+                                            new String[]{
+                                                    (msgPrefix + "哪怕他抛弃了一切，他的力量也不会消失。"),
+                                                    (msgPrefix + "我已没有余力去怨恨他了，对你也是如此......"),
+                                                    (msgPrefix + "现在，一切都取决于你。"),};
+                                    terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                                })
                         .setEndFunc(SupremeCalamitas::die),
         };
+
+        dashAimHelper = new EntityHelper.AimHelperOptions().setProjectileSpeed(DASH_SPEED);
+        blastAimHelper = new EntityHelper.AimHelperOptions().setProjectileSpeed(HELL_BLAST_SPEED);
     }
 
-    EntityHelper.ProjectileShootInfo shootInfoDart, shootInfoHellBlast, shootInfoFireBlast, shootInfoGigaBlast;
+    EntityHelper.ProjectileShootInfo shootInfoDart, shootInfoHellBlast, shootInfoGigaBlast;
     int bulletHellPatternIdx = 0;
     boolean bulletHellPatternActive = false;
 
-    int indexAI = 0, AIPhase = 0;
+    // indexAI initialized as 1 to prevent a projectile fired before the first bullet hell
+    int indexAI = 1, attackType = 0;
     Vector velocity = new Vector();
 
-    private void initBulletHellInfo() {
-        bulletHellDir = new BulletHellProjectile.BulletHellDirectionInfo(target);
-    }
+
     private void tickBulletHellRotation() {
         if (ticksLived % 25 == 0) {
             PlayerPOVHelper.getInstance().moveCamera(target, 32, 3000);
@@ -136,6 +247,15 @@ public class SupremeCalamitas extends EntitySlime {
 
     }
     private void handleBulletHell() {
+        // init bullet hell dir
+        if (indexAI == 0) {
+            bulletHellDir = new BulletHellProjectile.BulletHellDirectionInfo(target);
+        }
+        // velocity
+        Location hoverLoc = target.getLocation();
+        hoverLoc.add(hoverLoc.getDirection().multiply(HOVER_DISTANCE));
+        velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverLoc, HOVER_SPEED, true);
+
         bulletHellDir.target = target;
         // target rotation
         tickBulletHellRotation();
@@ -156,7 +276,114 @@ public class SupremeCalamitas extends EntitySlime {
         }
     }
     private void normalAIPhase() {
+        // true pattern:
+        // 1. darts
+        // 2. hell blasts
+        // 3. giga blasts
+        // 4. dash
+        LivingEntity livingEntity = (LivingEntity) bukkitEntity;
 
+        boolean isPhase2 = getHealth() / getMaxHealth() < 0.44;
+        int trueAttackPattern, attackInterval, attackTimes;
+        switch (attackType % 21) {
+            case 0:
+            case 6:
+            case 8:
+            case 13:
+            case 16:
+            case 18:
+            case 20:
+                trueAttackPattern = 1;
+                attackInterval = 25;
+                attackTimes = isPhase2 ? 2 : 3;
+                break;
+            case 1:
+            case 5:
+            case 9:
+            case 11:
+                trueAttackPattern = 2;
+                attackInterval = 1;
+                attackTimes = 40;
+                break;
+            case 2:
+            case 4:
+                trueAttackPattern = 3;
+                attackInterval = 25;
+                attackTimes = 2;
+                break;
+            case 10:
+            case 14:
+                trueAttackPattern = 3;
+                attackInterval = 30;
+                attackTimes = 4;
+                break;
+            case 3:
+            case 15:
+                trueAttackPattern = 4;
+                attackInterval = 30;
+                attackTimes = isPhase2 ? 2 : 4;
+                break;
+            case 7:
+            case 12:
+            case 17:
+            case 19:
+                trueAttackPattern = 4;
+                attackInterval = 25;
+                attackTimes = isPhase2 ? 1 : 2;
+                break;
+            default:
+                trueAttackPattern = 0;
+                attackInterval = 0;
+                attackTimes = 0;
+        }
+
+        // general projectile movement
+        if (trueAttackPattern != 4) {
+            Vector offsetDir = MathHelper.vectorFromYawPitch_approx(
+                    MathHelper.getVectorYaw(bukkitEntity.getLocation().subtract(target.getLocation()).toVector()), 0);
+            offsetDir.multiply(HOVER_DISTANCE);
+            Location eyeHoverLoc = target.getEyeLocation().add(offsetDir);
+            velocity = MathHelper.getDirection(livingEntity.getEyeLocation(), eyeHoverLoc, HOVER_SPEED, true);
+        }
+        // projectile
+        if (indexAI % attackInterval == 0) {
+            switch (trueAttackPattern) {
+                // spread of darts
+                case 1:
+                    shootInfoDart.shootLoc = livingEntity.getEyeLocation();
+                    shootInfoDart.setLockedTarget(target);
+                    for (Vector projVel : MathHelper.getEvenlySpacedProjectileDirections(DART_SPREAD_SINGLE, DART_SPREAD_TOTAL, target, shootInfoDart.shootLoc, DART_SPEED)) {
+                        shootInfoDart.velocity = projVel;
+                        EntityHelper.spawnProjectile(shootInfoDart);
+                    }
+                    break;
+                // hell blasts
+                case 2:
+                    shootInfoHellBlast.shootLoc = livingEntity.getEyeLocation();
+                    shootInfoHellBlast.setLockedTarget(target);
+                    Location aimedLoc = EntityHelper.helperAimEntity(shootInfoHellBlast.shootLoc, target, blastAimHelper);
+                    shootInfoHellBlast.velocity = MathHelper.getDirection(shootInfoHellBlast.shootLoc, aimedLoc, HELL_BLAST_SPEED);
+                    EntityHelper.spawnProjectile(shootInfoHellBlast);
+                    break;
+                // giga blasts
+                case 3:
+                    shootInfoGigaBlast.shootLoc = livingEntity.getEyeLocation();
+                    shootInfoGigaBlast.setLockedTarget(target);
+                    shootInfoGigaBlast.velocity = MathHelper.getDirection(shootInfoGigaBlast.shootLoc, target.getEyeLocation(), GIGA_BLAST_SPEED);
+                    EntityHelper.spawnProjectile(shootInfoGigaBlast);
+                    break;
+                // dash
+                case 4:
+                    Location targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, dashAimHelper);
+                    velocity = MathHelper.getDirection(livingEntity.getEyeLocation(), targetLoc, DASH_SPEED);
+                    break;
+            }
+        }
+        // next phase
+        if (indexAI + 1 >= attackTimes * attackInterval) {
+            indexAI = -1;
+            attackType ++;
+        }
     }
     private void AI() {
         // no AI after death
@@ -193,6 +420,7 @@ public class SupremeCalamitas extends EntitySlime {
                     if (indexAI > pattern.duration) {
                         bulletHellPatternIdx++;
                         indexAI = -1;
+                        attackType = 0;
                         bulletHellPatternActive = false;
                         removeScoreboardTag("noDamage");
                         if (pattern.endFunc != null)
@@ -227,7 +455,8 @@ public class SupremeCalamitas extends EntitySlime {
         else
             this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // collision dmg
-        terraria.entity.boss.BossHelper.collisionDamage(this);
+        if (!bulletHellPatternActive)
+            terraria.entity.boss.BossHelper.collisionDamage(this);
     }
     // default constructor to handle chunk unload
     public SupremeCalamitas(World world) {
@@ -301,11 +530,9 @@ public class SupremeCalamitas extends EntitySlime {
         {
             shootInfoDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjLow,
                     EntityHelper.DamageType.MAGIC, "硫火飞弹");
-            shootInfoHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjNormal,
+            shootInfoHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjMid,
                     EntityHelper.DamageType.MAGIC, "深渊亡魂");
-            shootInfoFireBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjNormal,
-                    EntityHelper.DamageType.MAGIC, "无际裂变球");
-            shootInfoGigaBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjMid,
+            shootInfoGigaBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjHigh,
                     EntityHelper.DamageType.MAGIC, "深渊炙炎弹");
         }
     }
