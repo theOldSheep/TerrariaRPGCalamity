@@ -1188,12 +1188,12 @@ public class WorldHelper {
             byte treeData = (byte) (treeType & 3);
             // leaves
             for (Block leafBlock : leafBlocks) {
-                leafBlock.setType(leafMat);
+                leafBlock.setType(leafMat, false);
                 leafBlock.setData(treeData);
             }
             // trunk
             for (Block trunkBlock : trunkBlocks) {
-                trunkBlock.setType(logMat);
+                trunkBlock.setType(logMat, false);
                 trunkBlock.setData(treeData);
                 // update branch rotation
                 if (trunkBlock.getX() != rootBlock.getX())
@@ -1205,6 +1205,23 @@ public class WorldHelper {
 
         return treeStylePref;
     }
+    private static List<Block> getGrowthComparisonBlocks(Block center) {
+        Material blkType = center.getType();
+        ArrayList<Block> blocks = new ArrayList<>();
+        for (int yOffset = -1; yOffset <= 1; yOffset ++) {
+            int offsetRadius = yOffset == 0 ? 3 : 2;
+            for (int xOffset = -offsetRadius; xOffset <= offsetRadius; xOffset ++) {
+                for (int zOffset = -offsetRadius; zOffset <= offsetRadius; zOffset ++) {
+
+                    Block newBlk = center.getRelative(xOffset, yOffset, zOffset);
+                    if (newBlk.getType() == blkType)
+                        blocks.add(newBlk);
+
+                }
+            }
+        }
+        return blocks;
+    }
     private static void worldRandomTickVegetation(Chunk chunk) {
         // grass
         for (int i = 0; i < MathHelper.randomRound(1.25); i ++) {
@@ -1212,7 +1229,8 @@ public class WorldHelper {
             attemptGrowPlantAt(blockToTick);
         }
         // other plant growth ticking
-        for (int i = 0; i < MathHelper.randomRound(15); i ++) {
+        // ORIGINAL: 15
+        for (int i = 0; i < MathHelper.randomRound(1500); i ++) {
             Block blockToTick = getRandomBlockInChunk(chunk);
             switch (blockToTick.getType()) {
                 case SAPLING: {
@@ -1221,13 +1239,27 @@ public class WorldHelper {
                     }
                     break;
                 }
-                case PUMPKIN_STEM: {
+                case MELON_STEM: {
+                    // find the lowest crop's growth progress
                     byte growthProgress = blockToTick.getData();
+                    Block blockToGrow = blockToTick;
+                    for (Block blockToCompare : getGrowthComparisonBlocks(blockToTick)) {
+                        byte compareGrowth = blockToCompare.getData();
+                        if (compareGrowth < growthProgress) {
+                            int growthLevelDiff = growthProgress - compareGrowth;
+                            // switch target with a chance related to the growth difference
+                            if (Math.random() < (growthLevelDiff / (growthLevelDiff + 7d)) ) {
+                                growthProgress = compareGrowth;
+                                blockToGrow = blockToCompare;
+                            }
+                        }
+                    }
+                    // handle growth
                     growthProgress ++;
                     if (growthProgress <= 7)
-                        blockToTick.setData(growthProgress);
+                        blockToGrow.setData(growthProgress);
                     else
-                        blockToTick.setType(Material.PUMPKIN);
+                        blockToGrow.setType(Material.PUMPKIN);
                     break;
                 }
             }

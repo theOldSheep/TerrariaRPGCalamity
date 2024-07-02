@@ -83,6 +83,7 @@ import terraria.entity.boss.hardMode.theTwins.Spazmatism;
 import terraria.entity.boss.preHardMode.wallOfFlesh.WallOfFleshEye;
 import terraria.entity.boss.preHardMode.wallOfFlesh.WallOfFleshMouth;
 import terraria.entity.boss.postMoonLord.yharon.Yharon;
+import terraria.entity.boss.preHardMode.wallOfFlesh.WallOfFleshWall;
 import terraria.entity.minion.MinionCaveSpider;
 import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
@@ -197,6 +198,7 @@ public enum CustomEntities {
     BOSS_TWIN_SPZ           ("Spazmatism",             55,  EntityType.SLIME,           EntitySlime.class,           Spazmatism.class),
     BOSS_WOF_EYE            ("WallOfFleshEye",         55,  EntityType.SLIME,           EntitySlime.class,           WallOfFleshEye.class),
     BOSS_WOF_MOUTH          ("WallOfFleshMouth",       55,  EntityType.SLIME,           EntitySlime.class,           WallOfFleshMouth.class),
+    BOSS_WOF_WALL           ("WallOfFleshWall",        55,  EntityType.SLIME,           EntitySlime.class,           WallOfFleshWall.class),
     BOSS_YHARON             ("Yharon",                 55,  EntityType.SLIME,           EntitySlime.class,           Yharon.class),
     BOSS_YHARON_INFERNADO   ("Infernado",              55,  EntityType.SLIME,           EntitySlime.class,           Infernado.class),
     CRITTER                 ("Critter",                60,  EntityType.SILVERFISH,      EntitySilverfish.class,      Critter.class),

@@ -150,7 +150,7 @@ public class AstrumDeus extends EntitySlime {
         // new tail
         LivingEntity newTail = bossParts.get(SECOND_HEAD_INDEX - 2);
         EntityHelper.setMetadata(newTail, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMapTail.clone());
-        newTail.setCustomName(BOSS_TYPE.msgName + "§2");
+        newTail.setCustomName(BOSS_TYPE.msgName + "尾");
         // remove a segment to separate the two
         LivingEntity toRemove = bossParts.get(SECOND_HEAD_INDEX - 1);
         toRemove.setHealth(0d);
@@ -159,7 +159,7 @@ public class AstrumDeus extends EntitySlime {
         LivingEntity newHead = bossParts.get(SECOND_HEAD_INDEX);
         AstrumDeus newHeadNMS = (AstrumDeus) ((CraftLivingEntity) newHead).getHandle();
         EntityHelper.setMetadata(newHead, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMapHead.clone());
-        newHead.setCustomName(BOSS_TYPE.msgName);
+        newHead.setCustomName(BOSS_TYPE.msgName + "头");
         // new head should become a new health pool
         double updatedHealth = getHealth();
         // tweak second half of body to share health with second head

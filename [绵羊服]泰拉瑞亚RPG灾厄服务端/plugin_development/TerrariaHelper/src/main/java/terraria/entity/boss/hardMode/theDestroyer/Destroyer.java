@@ -175,8 +175,11 @@ public class Destroyer extends EntitySlime {
         // AI
         {
             // update target
-            target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+            if (segmentIndex == 0)
+                target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
+                        IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+            else
+                target = head.target;
             if (WorldHelper.isDayTime(bukkitEntity.getWorld()))
                 target = null;
             // disappear if no target is available

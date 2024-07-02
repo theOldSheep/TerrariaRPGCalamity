@@ -54,7 +54,7 @@ class DelayedWallAttackPattern extends AttackPattern {
     private final double interval;
     private final int startDist;
     private final int delayPerProjectile; // Added delay per projectile
-    private Supplier<Vector> fwdDistSupplier; // Supplies the forward distance.
+    private final Supplier<Vector> fwdDistSupplier; // Supplies the forward distance.
 
     // This would produce the randomized direction.
     public DelayedWallAttackPattern(double width, double interval, int startDist, int delayPerProjectile, Supplier<Vector> fwdDistSupplier) {

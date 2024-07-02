@@ -63,7 +63,7 @@ public class MinionSlime extends EntitySlime {
         this.damageInvincibilityTicks = 15;
         this.damageCD = new ArrayList<>();
         this.attrMap = attrMap;
-        this.originalStaff = originalStaff;
+        this.originalStaff = originalStaff.clone();
         this.basicDamage = attrMap.getOrDefault("damage", 10d);
         // does not get removed if far away.
         this.persistent = true;

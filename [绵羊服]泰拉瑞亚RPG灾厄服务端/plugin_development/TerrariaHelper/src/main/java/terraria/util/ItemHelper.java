@@ -89,11 +89,23 @@ public class ItemHelper {
                 (int) (gui.getWidth() * 0.75), 17, 30, gui.getHeight() - 34, 0
         );
         List<String> categoryOrder = TerrariaHelper.recipeConfig.getStringList("categoryOrder");
-        categoryOrder.add(null);for (String category : categoryOrder) {
+        // null rarity exists!
+        categoryOrder.add(null);
+        for (String category : categoryOrder) {
             HashMap<Integer, List<VexSlot>> rarityMap = itemSlotsMap.get(category);
             if (rarityMap != null) {
                 List<Integer> rarities = new ArrayList<>(rarityMap.keySet());
+                // revert 1000+ rarity (special ones) so they are displayed correctly
+                for (int i = 0; i < rarities.size(); i ++) {
+                    int currRarity = rarities.get(i);
+                    if (currRarity >= 1000) rarities.set(i, -currRarity);
+                }
                 Collections.sort(rarities); // sort the rarities in ascending order
+                for (int i = 0; i < rarities.size(); i ++) {
+                    int currRarity = rarities.get(i);
+                    if (currRarity <= -1000) rarities.set(i, -currRarity);
+                }
+                // put slots according to the rarity display order
                 for (int rarity : rarities) {
                     List<VexSlot> itemSlots = rarityMap.get(rarity);
                     itemSlots.forEach(scrList::addComponent);

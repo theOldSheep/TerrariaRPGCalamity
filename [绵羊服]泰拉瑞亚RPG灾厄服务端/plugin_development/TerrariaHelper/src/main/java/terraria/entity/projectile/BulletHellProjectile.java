@@ -13,7 +13,7 @@ import terraria.util.MathHelper;
 
 public class BulletHellProjectile extends GenericProjectile {
     public enum ProjectileType {
-        SQUARE_BORDER, CIRCUMFERENCE,
+        SQUARE_BORDER, SQUARE_BORDER_SIDES, CIRCUMFERENCE,
         BLAST_8, BLAST_16, BLAST_32, CALCULATED
     }
     public static class BulletHellDirectionInfo {
@@ -45,7 +45,10 @@ public class BulletHellProjectile extends GenericProjectile {
 
         switch (type) {
             case SQUARE_BORDER:
-                calculateSquareBorderProjectileInfo(shootInfo, playerLocation, directionInfo, distance, speed);
+                calculateSquareBorderProjectileInfo(shootInfo, playerLocation, directionInfo, distance, speed, false);
+                break;
+            case SQUARE_BORDER_SIDES:
+                calculateSquareBorderProjectileInfo(shootInfo, playerLocation, directionInfo, distance, speed, true);
                 break;
             case CIRCUMFERENCE:
                 calculateCircumferenceProjectileInfo(shootInfo, playerLocation, directionInfo, distance, speed);
@@ -71,7 +74,7 @@ public class BulletHellProjectile extends GenericProjectile {
     }
 
     private static EntityHelper.ProjectileShootInfo calculateSquareBorderProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, Location playerLocation,
-                                                                                        BulletHellDirectionInfo directionInfo, double distance, double speed) {
+                                                                                        BulletHellDirectionInfo directionInfo, double distance, double speed, boolean sidesOnly) {
         // Calculate a random point on the border of a square centered at the player's eye location
         double minX = -distance;
         double maxX = distance;
@@ -82,28 +85,28 @@ public class BulletHellProjectile extends GenericProjectile {
         Vector velocity;
 
         // Randomly choose a side of the square
-        int side = (int) (Math.random() * 4);
+        int side = (int) (Math.random() * (sidesOnly ? 2 : 4));
 
         switch (side) {
-            case 0: // Top side
-                x = minX + (maxX - minX) * Math.random();
-                z = maxZ;
-                velocity = directionInfo.e2.clone().multiply(-1); // Move downwards
+            case 0: // Left side
+                x = minX;
+                z = minZ + (maxZ - minZ) * Math.random();
+                velocity = directionInfo.e1.clone(); // Move to the right
                 break;
             case 1: // Right side
                 x = maxX;
                 z = minZ + (maxZ - minZ) * Math.random();
                 velocity = directionInfo.e1.clone().multiply(-1); // Move to the left
                 break;
-            case 2: // Bottom side
+            case 2: // Top side
+                x = minX + (maxX - minX) * Math.random();
+                z = maxZ;
+                velocity = directionInfo.e2.clone().multiply(-1); // Move downwards
+                break;
+            case 3: // Bottom side
                 x = minX + (maxX - minX) * Math.random();
                 z = minZ;
                 velocity = directionInfo.e2.clone(); // Move upwards
-                break;
-            case 3: // Left side
-                x = minX;
-                z = minZ + (maxZ - minZ) * Math.random();
-                velocity = directionInfo.e1.clone(); // Move to the right
                 break;
             default:
                 throw new RuntimeException("Unexpected side");
@@ -147,7 +150,7 @@ public class BulletHellProjectile extends GenericProjectile {
     @Override
     protected void extraTicking() {
         if (projectileType.equals("深渊炙颅")) {
-            motY = MathHelper.xcos_degree(ticksLived * 9);
+            motY = MathHelper.xcos_degree(ticksLived * 9) * 0.2;
         }
 
         // Update the projectile's position to be on the plane

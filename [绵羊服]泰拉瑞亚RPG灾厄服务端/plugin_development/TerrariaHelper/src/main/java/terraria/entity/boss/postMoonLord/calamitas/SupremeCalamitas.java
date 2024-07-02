@@ -40,12 +40,14 @@ public class SupremeCalamitas extends EntitySlime {
     }
     private static class BulletHellPattern {
         double healthRatio;
+        boolean lockCamera;
         int duration;
         HashSet<BulletHellProjectileOption> projectileCandidates;
         Consumer<SupremeCalamitas> beginFunc, endFunc;
-        private BulletHellPattern(double healthRatio, int duration) {
+        private BulletHellPattern(double healthRatio, int duration, boolean lockCamera) {
             this.healthRatio = healthRatio;
             this.duration = duration;
+            this.lockCamera = lockCamera;
             projectileCandidates = new HashSet<>();
             beginFunc = null;
             endFunc = null;
@@ -99,22 +101,22 @@ public class SupremeCalamitas extends EntitySlime {
 
         BulletHellProjectileOption optionBlastSurrounding = new BulletHellProjectileOption(
                 "深渊亡魂", BulletHellProjectile.ProjectileType.SQUARE_BORDER,
-                attrMapPrjMid, 0.4, 0.2, 2, 100);
+                attrMapPrjMid, 0.4, 0.2, 2, 250);
         BulletHellProjectileOption optionFlameSkull = new BulletHellProjectileOption(
-                "深渊炙颅", BulletHellProjectile.ProjectileType.SQUARE_BORDER,
-                attrMapPrjHigh, 0.4, 0.2, 2, 100);
+                "深渊炙颅", BulletHellProjectile.ProjectileType.SQUARE_BORDER_SIDES,
+                attrMapPrjHigh, 0.4, 0.2, 2, 250);
         BulletHellProjectileOption optionHellBlast = new BulletHellProjectileOption(
                 "无际裂变", BulletHellProjectile.ProjectileType.CIRCUMFERENCE,
-                attrMapPrjHigh, 0.3, 0.1, 40, 60);
+                attrMapPrjHigh, 0.3, 0.1, 20, 60);
         BulletHellProjectileOption optionGigaBlast = new BulletHellProjectileOption(
                 "深渊炙炎", BulletHellProjectile.ProjectileType.CIRCUMFERENCE,
-                attrMapPrjHigh, 0.35, 0.15, 50, 75);
+                attrMapPrjHigh, 0.35, 0.15, 35, 75);
 
         final String bossProgress = BOSS_TYPE.msgName;
         final String msgPrefix = "§#FFA500";
         bulletHellPatterns = new BulletHellPattern[]{
                 // first bullet hell when summoned
-                new BulletHellPattern(1.1, 300)
+                new BulletHellPattern(1.1, 400, true)
                         .addCandidate(optionBlastSurrounding)
                         .addCandidate(optionBlastSurrounding)
                         .setBeginFunc(
@@ -132,7 +134,7 @@ public class SupremeCalamitas extends EntitySlime {
                             terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
                         }),
                 // second bullet hell 75% health
-                new BulletHellPattern(0.75, 300)
+                new BulletHellPattern(0.75, 425, true)
                         .addCandidate(optionBlastSurrounding)
                         .addCandidate(optionHellBlast)
                         .setBeginFunc(
@@ -143,7 +145,7 @@ public class SupremeCalamitas extends EntitySlime {
                             terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
                         }),
                 // third bullet hell 50% health
-                new BulletHellPattern(0.5, 300)
+                new BulletHellPattern(0.5, 450, true)
                         .addCandidate(optionBlastSurrounding)
                         .addCandidate(optionHellBlast)
                         .addCandidate(optionGigaBlast)
@@ -155,7 +157,7 @@ public class SupremeCalamitas extends EntitySlime {
                             terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
                         }),
                 // spawn brothers 45% health
-                new BulletHellPattern(0.45, 50)
+                new BulletHellPattern(0.45, 50, false)
                         .setBeginFunc(
                         (boss) -> {
                             String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
@@ -164,7 +166,7 @@ public class SupremeCalamitas extends EntitySlime {
                             terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
                         }),
                 // fourth bullet hell 30% health
-                new BulletHellPattern(0.3, 300)
+                new BulletHellPattern(0.3, 475, true)
                         .addCandidate(optionBlastSurrounding)
                         .addCandidate(optionHellBlast)
                         .addCandidate(optionGigaBlast)
@@ -176,7 +178,7 @@ public class SupremeCalamitas extends EntitySlime {
                             terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
                         }),
                 // another sepulcher at 20% health
-                new BulletHellPattern(0.2, 50)
+                new BulletHellPattern(0.2, 50, false)
                         .setBeginFunc(
                         (boss) -> {
                             String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
@@ -185,7 +187,7 @@ public class SupremeCalamitas extends EntitySlime {
                             terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
                         }),
                 // final bullet hell 10% health
-                new BulletHellPattern(0.1, 300)
+                new BulletHellPattern(0.1, 500, true)
                         .addCandidate(optionBlastSurrounding)
                         .addCandidate(optionFlameSkull)
                         .addCandidate(optionHellBlast)
@@ -203,7 +205,7 @@ public class SupremeCalamitas extends EntitySlime {
                             terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
                         }),
                 // final conversation
-                new BulletHellPattern(0.005, 200)
+                new BulletHellPattern(0.005, 300, false)
                         .setBeginFunc(
                                 (boss) -> {
                                     String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
@@ -229,8 +231,8 @@ public class SupremeCalamitas extends EntitySlime {
     int bulletHellPatternIdx = 0;
     boolean bulletHellPatternActive = false;
 
-    // indexAI initialized as 1 to prevent a projectile fired before the first bullet hell
-    int indexAI = 1, attackType = 0;
+    // do not init indexAI as 0 to prevent a projectile fired before the first bullet hell
+    int indexAI = -50, attackType = 0;
     Vector velocity = new Vector();
 
 
@@ -256,11 +258,15 @@ public class SupremeCalamitas extends EntitySlime {
         hoverLoc.add(hoverLoc.getDirection().multiply(HOVER_DISTANCE));
         velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverLoc, HOVER_SPEED, true);
 
+        BulletHellPattern pattern = bulletHellPatterns[bulletHellPatternIdx];
+
         bulletHellDir.target = target;
         // target rotation
-        tickBulletHellRotation();
+        if (pattern.lockCamera) {
+            tickBulletHellRotation();
+        }
         // spawn projectiles
-        for (BulletHellProjectileOption projOption : bulletHellPatterns[bulletHellPatternIdx].projectileCandidates) {
+        for (BulletHellProjectileOption projOption : pattern.projectileCandidates) {
             if (ticksLived % projOption.ticksInterval == 0) {
                 // prepare shoot info
                 EntityHelper.ProjectileShootInfo shootInfo = bulletHellShootInfoMap.computeIfAbsent(projOption.projectileType,
@@ -346,7 +352,7 @@ public class SupremeCalamitas extends EntitySlime {
             velocity = MathHelper.getDirection(livingEntity.getEyeLocation(), eyeHoverLoc, HOVER_SPEED, true);
         }
         // projectile
-        if (indexAI % attackInterval == 0) {
+        if (indexAI % attackInterval == 0 && indexAI >= 0) {
             switch (trueAttackPattern) {
                 // spread of darts
                 case 1:
@@ -419,7 +425,7 @@ public class SupremeCalamitas extends EntitySlime {
                     // termination. "pattern" would not be null here, don't worry.
                     if (indexAI > pattern.duration) {
                         bulletHellPatternIdx++;
-                        indexAI = -1;
+                        indexAI = -51;
                         attackType = 0;
                         bulletHellPatternActive = false;
                         removeScoreboardTag("noDamage");

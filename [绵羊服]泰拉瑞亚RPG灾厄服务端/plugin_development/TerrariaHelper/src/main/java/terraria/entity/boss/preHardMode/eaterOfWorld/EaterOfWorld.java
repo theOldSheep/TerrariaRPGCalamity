@@ -4,6 +4,7 @@ import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.Entity;
@@ -154,8 +155,13 @@ public class EaterOfWorld extends EntitySlime {
         // AI
         {
             // update target
-            target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+            int firstIdx;
+            for (firstIdx = 0; bossParts.get(firstIdx).isDead(); firstIdx ++);
+            if (index == firstIdx)
+                target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
+                        IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+            else
+                target = ((EaterOfWorld) ((CraftEntity) bossParts.get(firstIdx) ).getHandle()).target;
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity segment : bossParts) {

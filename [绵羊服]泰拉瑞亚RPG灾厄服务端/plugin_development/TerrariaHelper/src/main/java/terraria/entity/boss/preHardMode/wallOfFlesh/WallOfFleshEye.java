@@ -142,7 +142,7 @@ public class WallOfFleshEye extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(8, false);
+            setSize(12, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);

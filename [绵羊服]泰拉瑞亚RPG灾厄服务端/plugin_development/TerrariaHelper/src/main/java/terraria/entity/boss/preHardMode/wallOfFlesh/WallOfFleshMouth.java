@@ -297,7 +297,7 @@ public class WallOfFleshMouth extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(8, false);
+            setSize(12, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = BASIC_HEALTH * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
@@ -314,6 +314,10 @@ public class WallOfFleshMouth extends EntitySlime {
             // summon the two eyes
             new WallOfFleshEye(summonedPlayer, bossParts);
             new WallOfFleshEye(summonedPlayer, bossParts);
+            // summon the visualization
+            for (double i = 1; i <= 255; i += WallOfFleshWall.SLIME_SIZE_BLOCKS) {
+                new WallOfFleshWall(this, i);
+            }
             spawnHungry();
         }
     }

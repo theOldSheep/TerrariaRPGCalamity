@@ -192,8 +192,11 @@ public class StormWeaver extends EntitySlime {
         // AI
         {
             // update target
-            target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                    IGNORE_DISTANCE, isSummonedByDoG ? null : BIOME_REQUIRED, targetMap.keySet());
+            if (segmentIndex == 0)
+                target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
+                        IGNORE_DISTANCE, isSummonedByDoG ? null : BIOME_REQUIRED, targetMap.keySet());
+            else
+                target = head.target;
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity segment : bossParts) {

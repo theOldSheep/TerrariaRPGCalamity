@@ -795,7 +795,6 @@ public class EntityHelper {
                     if (entity instanceof Player) {
                         Entity mount = PlayerHelper.getMount((Player) entity);
                         Entity twistedEntity = mount == null ? entity : mount;
-                        World entityWorld = twistedEntity.getWorld();
                         double targetLocY = WorldHelper.getHighestBlockBelow(twistedEntity.getLocation()).getLocation().getY();
                         targetLocY += 8 + MathHelper.xsin_degree(timeRemaining * 2.5) * 2;
                         double velY = targetLocY - twistedEntity.getLocation().getY();
@@ -880,7 +879,7 @@ public class EntityHelper {
                 default:
                     delay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageInterval", delay);
                     damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damage", damagePerDelay);
-                    if (!(entity instanceof Player))
+                    if (!(entity instanceof Player || entity.getScoreboardTags().contains("isNPC")))
                         damagePerDelay = TerrariaHelper.buffConfig.getInt("effects." + effect + ".damageMonster", damagePerDelay);
             }
             // tweak attrMap
@@ -1987,9 +1986,11 @@ public class EntityHelper {
         // living entities
         LivingEntity victimLivingEntity = (LivingEntity) victim;
         LivingEntity damageTaker = (LivingEntity) getDamageTaker(victim);
+        if (damageTaker.getHealth() <= 0)
+            return;
         Set<String> damageTakerTags = damageTaker.getScoreboardTags();
         Set<String> victimTags = victim.getScoreboardTags();
-        // use the damage taker's defence etc. IFF damaging a mount. For multi-part entities, this is not the case.
+        // use the damage taker's defence etc. IFF damaging a mount. For multipart entities, this is not the case.
         if (victimTags.contains("isMount")) {
             victimAttrMap = getAttrMap(damageTaker);
         }

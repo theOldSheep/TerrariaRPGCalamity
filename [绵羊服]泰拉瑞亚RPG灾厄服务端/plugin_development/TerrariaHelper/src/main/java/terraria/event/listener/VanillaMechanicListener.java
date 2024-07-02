@@ -244,7 +244,7 @@ public class VanillaMechanicListener implements Listener {
         switch (e.getBlock().getType()) {
             // those blocks should not be destroyed by vanilla mechanism as long as the block below it is intact
             case SAPLING:
-            case PUMPKIN_STEM:
+            case MELON_STEM:
             case YELLOW_FLOWER:
             case RED_ROSE:
             case RED_MUSHROOM:

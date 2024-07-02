@@ -76,6 +76,7 @@ terraria\entity\monster\MonsterWitherSkeleton.class
 terraria\entity\npc\TerrariaNPCNurse.class
 terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
 terraria\entity\boss\postMoonLord\yharon\Infernado.class
+terraria\entity\boss\preHardMode\wallOfFlesh\WallOfFleshWall.class
 terraria\entity\others\Mount.class
 terraria\entity\projectile\RotatingRingProjectile$RingProperties$Builder.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class

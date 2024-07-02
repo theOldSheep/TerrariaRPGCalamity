@@ -49,7 +49,7 @@ public class GameplayHelper {
             case GRASS:
             case MYCEL:
             case PUMPKIN:
-            case PUMPKIN_STEM:
+            case MELON_STEM:
             case LONG_GRASS:
             case YELLOW_FLOWER:
             case RED_ROSE:
@@ -357,7 +357,7 @@ public class GameplayHelper {
             case YELLOW_FLOWER:
             case RED_ROSE:
             case SKULL:
-            case PUMPKIN_STEM:
+            case MELON_STEM:
             case SAPLING:
             case BED:
             case BED_BLOCK:
@@ -384,6 +384,8 @@ public class GameplayHelper {
         switch (blockType) {
             // wool changes color
             case WOOL: {
+                if (unBreakable(blk, ply, false))
+                    return;
                 int data = blockData;
                 if (ply.isSneaking())
                     data = (data + 1) % 16;
@@ -458,6 +460,8 @@ public class GameplayHelper {
                 switch (plyToolType) {
                     // seeds
                     case "草种": {
+                        if (unBreakable(blk, ply, false))
+                            return;
                         if (blockType == Material.DIRT && blockData == 0) {
                             blk.setType(Material.GRASS, false);
                             plyTool.setAmount(plyTool.getAmount() - 1);
@@ -465,6 +469,8 @@ public class GameplayHelper {
                         break;
                     }
                     case "腐化种子": {
+                        if (unBreakable(blk, ply, false))
+                            return;
                         if (blockType == Material.DIRT && blockData == 0) {
                             blk.setType(Material.MYCEL, false);
                             plyTool.setAmount(plyTool.getAmount() - 1);
@@ -482,9 +488,11 @@ public class GameplayHelper {
                         break;
                     }
                     case "南瓜种子": {
+                        if (unBreakable(blk, ply, false))
+                            return;
                         Block blockToPlant = blk.getRelative(BlockFace.UP);
                         if (blockToPlant.getType() == Material.AIR) {
-                            blockToPlant.setType(Material.PUMPKIN_STEM, false);
+                            blockToPlant.setType(Material.MELON_STEM, false);
                             blockToPlant.setData((byte) 1, false);
                             plyTool.setAmount(plyTool.getAmount() - 1);
                         }
@@ -525,6 +533,8 @@ public class GameplayHelper {
 
         switch (plyToolType) {
             case "橡实": {
+                if (unBreakable(blk, ply, false))
+                    return;
                 if (WorldHelper.canGrowPlant(blk, true)) {
                     Block blockToPlant = blk.getRelative(BlockFace.UP);
                     WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(blockToPlant.getLocation());
@@ -536,6 +546,8 @@ public class GameplayHelper {
                 break;
             }
             case "树之祭祀": {
+                if (unBreakable(blk, ply, false))
+                    return;
                 // do not use when on CD
                 if (ply.getScoreboardTags().contains("temp_useCD"))
                     break;

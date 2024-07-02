@@ -871,8 +871,9 @@ public class PlayerHelper {
                         }
                         // events
                         if (current.equals("")) {
-                            // other events
-                            if (EventAndTime.currentEvent != EventAndTime.Events.NONE)
+                            // other events: only play on surface world
+                            if (EventAndTime.currentEvent != EventAndTime.Events.NONE &&
+                                    ply.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE))
                                 current = TerrariaHelper.soundConfig.getString(
                                         "event." + EventAndTime.currentEvent, "");
                             // celestial pillars
@@ -912,10 +913,11 @@ public class PlayerHelper {
                                                     WorldHelper.WaterRegionType.getWaterRegionType(ply.getLocation(), false);
                                             switch (waterRegionType) {
                                                 case ABYSS_3:
+                                                    current = "threats_of_the_ocean_floor";
+                                                    break;
+                                                case ABYSS_2:
                                                     current = "abyss_3";
                                                     break;
-                                                // currently, abyss 1 and 2 are the same BGM. Do not bother switching between them.
-                                                case ABYSS_2:
                                                 case ABYSS_1:
                                                 default:
                                                     current = "abyss_1";

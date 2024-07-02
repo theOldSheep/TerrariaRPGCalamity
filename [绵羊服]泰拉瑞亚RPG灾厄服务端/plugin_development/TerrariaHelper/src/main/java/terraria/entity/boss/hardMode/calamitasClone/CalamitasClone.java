@@ -102,7 +102,7 @@ public class CalamitasClone extends EntitySlime {
             double hellBlastProbability = secondBulletHell ? 0.6 : 0.4;
             if (Math.random() < hellBlastProbability) {
                 double projectileSpeed = 0.35 + Math.random() * 0.15;
-                int ticksLive = (int) (BULLET_HELL_RADIUS * 2 / projectileSpeed);
+                int ticksLive = (int) (BULLET_HELL_RADIUS * 3 / projectileSpeed);
                 // spawn projectile
                 spawnBulletHellProjectile(BulletHellProjectile.ProjectileType.SQUARE_BORDER, ticksLive, projectileSpeed);
             }
