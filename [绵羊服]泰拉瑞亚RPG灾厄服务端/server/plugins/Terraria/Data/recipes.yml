@@ -3375,7 +3375,7 @@ WORKBENCH:
     requireLevel: 1
     resultItem: 玻璃平台
     requireItem:
-    - 玻璃:64
+    - 玻璃:32
     recipeCategory: TOOL
   '2':
     requireLevel: 1
@@ -5147,10 +5147,10 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 天界符
     requireItem:
-    - 日耀碎片:20
-    - 星璇碎片:20
-    - 星云碎片:20
-    - 星尘碎片:20
+    - 日耀碎片:8
+    - 星璇碎片:8
+    - 星云碎片:8
+    - 星尘碎片:8
     recipeCategory: BOSS
   '2':
     requireLevel: 1

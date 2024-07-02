@@ -1421,7 +1421,7 @@
     defence: 12
     knockbackResistance: 1
   worth: 10000000
-  rarity: 5
+  rarity: 8
 步枪瞄准镜:
   item: LEASH
   lore:
@@ -1436,7 +1436,7 @@
     damageRangedMulti: 0.1
     critRanged: 10
   worth: 5000000
-  rarity: 7
+  rarity: 8
 侦察镜:
   item: LEASH
   lore:
@@ -1448,7 +1448,7 @@
     mobLimit: -1
     mobSpawnRateMulti: -0.1
   worth: 15000000
-  rarity: 5
+  rarity: 8
 闪亮石:
   item: LEASH
   lore:
@@ -5447,6 +5447,7 @@ Drew之翼:
   - §#FFA403剑刃击中敌人和弹幕时会进行招架，使你短暂获得对应的无敌帧
   - §#FFA403格挡后会获得16层充能，充能会强化普通攻击，让你可以同时使用两把剑刃
   - §r一对注入了泰拉大陆精华的天赐之刃，其威力足以切割现实的结构
+  - §r“剪刀飞快”
   attributes:
     damage: 1200
     damageType: Melee
@@ -13904,7 +13905,7 @@ Dodu的手炮:
   - §2右键打开垃圾桶
   - §2获得物品时，若垃圾桶中有同类物品则直接销毁
   - §c警告：不同宝藏袋均视为同类物品，请勿将宝藏袋放入垃圾桶
-  worth: 2000000
+  worth: 200000
   rarity: 3
 空瓶:
   item: CLAY_BALL

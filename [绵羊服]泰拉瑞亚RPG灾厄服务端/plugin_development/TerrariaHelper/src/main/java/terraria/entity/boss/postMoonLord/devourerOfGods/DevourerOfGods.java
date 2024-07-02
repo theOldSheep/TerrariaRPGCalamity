@@ -48,7 +48,7 @@ public class DevourerOfGods extends EntitySlime {
             SEGMENT_DAMAGE = {1760d, 1100d, 920d}, SEGMENT_DEFENCE = {100d, 140d, 100d}, SEGMENT_DAMAGE_TAKEN = {0.9d, 0.15d, 1d};
     static final int SLIME_SIZE = 10, DAMAGE_TAKEN_INTERPOLATE_SEGMENTS = 15;
 
-    static final int FLYING_TOTAL_DURATION = 3000, FLYING_START_INDEX = 60, FLYING_END_INDEX = 2400;
+    static final int FLYING_TOTAL_DURATION = 300, FLYING_START_INDEX = 60, FLYING_END_INDEX = 240;
     static final double SEGMENT_RADIUS = SLIME_SIZE * 0.5, DASH_DISTANCE_INITIAL = 15.0, DASH_DISTANCE_FINAL = 12.0,
             // TODO: Prevent client side teleport interpolation
             HIDE_Y_COORD = -100;
@@ -178,7 +178,6 @@ public class DevourerOfGods extends EntitySlime {
     }
     private void startBulletHell() {
         JavaPlugin plugin = TerrariaHelper.getInstance();
-        // TODO
         AttackManager attackManager;
         if (stage == 0) {
             attackManager = new AttackManager(plugin, target, shootInfoLaser,
@@ -195,11 +194,11 @@ public class DevourerOfGods extends EntitySlime {
                     new DelayedWallAttackPattern(45, 5, 12, 0, DelayedWallAttackPattern.GRID),
                     new DelayedWallAttackPattern(45, 5, 12, 0, DelayedWallAttackPattern.GRID_SLANTED),
                     new CircleAttackPattern(15, 8, 2, 120),
-                    new SwingingArcAttackPattern(15, 6, 2, 120, 0),
-                    new ScatteringCircleAttackPattern(32, 12, 0, 6)
+                    new SwingingArcAttackPattern(15, 6, 2, 120, 0)
             );
+
             AttackManager attackManagerExtra = new AttackManager(plugin, target, shootInfoFireball,
-                    FLYING_END_INDEX - FLYING_START_INDEX, 60, 1,
+                    FLYING_END_INDEX - FLYING_START_INDEX - 30, 60, 1,
                     new ScatteringCircleAttackPattern(32, 16, 0, 8)
             );
             Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), attackManagerExtra::start, 30);
