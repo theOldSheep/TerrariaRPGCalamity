@@ -447,8 +447,11 @@ public class ItemHelper {
             // these items simply should not be dropped
             case SAPLING:
             case SNOW_BALL:
-            // pumpkin stem being destroyed by flowing water
+            case REDSTONE_TORCH_ON:
+            case REDSTONE_TORCH_OFF:
+            // pumpkin stem being destroyed by flowing water / by hand
             case PUMPKIN_SEEDS:
+            case MELON_SEEDS:
                 item.setType(Material.AIR);
                 break;
         }

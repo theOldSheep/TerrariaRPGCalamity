@@ -25,6 +25,8 @@ public class BiomeSummary {
     public static final int BLOCKS_PER_PIXEL = CONFIG.getInt("blocksPerPixel", 20);
     public static final int BIOME_MARKER_RADIUS_PIXEL = CONFIG.getInt("biomeMarkerRadiusPixel", 1);
     public static final int SPAWN_MARKER_RADIUS_PIXEL = CONFIG.getInt("spawnMarkerRadiusPixel", 3);
+    public static final int AXIS_MARKER_LENGTH_PIXEL = CONFIG.getInt("axisMarkerLengthPixel", 25);
+    public static final float AXIS_MARKER_FONT_SIZE = (float) CONFIG.getDouble("axisMarkerFontSize", 15);
     public static final int BIOME_SCAN_RADIUS_IN_BLOCKS = CONFIG.getInt("biomeScanRadiusInBlocks", 5000);
     public static final int MINIMUM_LABELED_BIOME_AREA_BLOCKS = BLOCKS_PER_PIXEL * BLOCKS_PER_PIXEL * CONFIG.getInt("minLabeledBiomeAreaPixels", 5);
     public static final int GRID_SIZE_IN_PIXELS = CONFIG.getInt("gridSizeInPixels", 16);
@@ -102,10 +104,19 @@ public class BiomeSummary {
         int spawnImageX = imageDimension / 2;
         int spawnImageZ = imageDimension / 2;
 
-        // Mark spawn point
+        // Mark spawn point & axis labels
         g2d.setColor(Color.RED);
         g2d.fillOval(spawnImageX - SPAWN_MARKER_RADIUS_PIXEL, spawnImageZ - SPAWN_MARKER_RADIUS_PIXEL,
                 2 * SPAWN_MARKER_RADIUS_PIXEL + 1, 2 * SPAWN_MARKER_RADIUS_PIXEL + 1);
+        g2d.fillRect(spawnImageX - 1, spawnImageZ,
+                2, AXIS_MARKER_LENGTH_PIXEL);
+        g2d.fillRect(spawnImageX, spawnImageZ - 1,
+                AXIS_MARKER_LENGTH_PIXEL, 2);
+        Font currentFont = g2d.getFont();
+        Font newFont = currentFont.deriveFont(AXIS_MARKER_FONT_SIZE);
+        g2d.setFont(newFont);
+        g2d.drawString("X", spawnImageX + AXIS_MARKER_LENGTH_PIXEL - AXIS_MARKER_FONT_SIZE, spawnImageZ);
+        g2d.drawString("Z", spawnImageX - AXIS_MARKER_FONT_SIZE, spawnImageZ + AXIS_MARKER_LENGTH_PIXEL);
 
         // Mark biome centers
         int markerSize = BIOME_MARKER_RADIUS_PIXEL * 2 + 1; // Total marker size including the border

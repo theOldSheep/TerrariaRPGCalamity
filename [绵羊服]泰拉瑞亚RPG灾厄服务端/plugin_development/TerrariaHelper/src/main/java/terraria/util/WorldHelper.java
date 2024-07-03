@@ -399,7 +399,7 @@ public class WorldHelper {
     private static Block getRandomBlockInChunk(Chunk chunk) {
         // code from net.minecraft.server
         randomGenerator = randomGenerator * 3 + 1013904223;
-        int randomInt = (int) (randomGenerator >> 2);
+        int randomInt = (int) (randomGenerator >> 20);
         int x = randomInt & 15;
         int y = randomInt >> 10 & 255;
         int z = randomInt >> 20 & 15;
@@ -660,6 +660,24 @@ public class WorldHelper {
             return;
         if (!canGrowPlant(plantBlock.getRelative(BlockFace.DOWN)))
             return;
+        // prevent plants from getting too crowded. Ticking only to prevent intense lag.
+        if (!generationOrTicking) {
+            int nearbyPlants = getGrowthComparisonBlocks(plantBlock, (mat) -> {
+                switch (mat) {
+                    case LONG_GRASS:
+                    case RED_ROSE:
+                    case YELLOW_FLOWER:
+                    case RED_MUSHROOM:
+                    case BROWN_MUSHROOM:
+                        return true;
+                    default:
+                        return false;
+                }
+            }).size();
+            double cancelChance = nearbyPlants / 7d;
+            if (Math.random() < cancelChance)
+                return;
+        }
         // plant different blocks according to location
         BiomeType biome = BiomeType.getBiome(plantBlock.getLocation());
         HeightLayer height = HeightLayer.getHeightLayer(plantBlock.getLocation());
@@ -1207,14 +1225,17 @@ public class WorldHelper {
     }
     private static List<Block> getGrowthComparisonBlocks(Block center) {
         Material blkType = center.getType();
+        return getGrowthComparisonBlocks(center, (mat) -> mat == blkType);
+    }
+    private static List<Block> getGrowthComparisonBlocks(Block center, Predicate<Material> validation) {
         ArrayList<Block> blocks = new ArrayList<>();
         for (int yOffset = -1; yOffset <= 1; yOffset ++) {
-            int offsetRadius = yOffset == 0 ? 3 : 2;
+            int offsetRadius = yOffset == 0 ? 2 : 1;
             for (int xOffset = -offsetRadius; xOffset <= offsetRadius; xOffset ++) {
                 for (int zOffset = -offsetRadius; zOffset <= offsetRadius; zOffset ++) {
 
                     Block newBlk = center.getRelative(xOffset, yOffset, zOffset);
-                    if (newBlk.getType() == blkType)
+                    if (validation.test(newBlk.getType()))
                         blocks.add(newBlk);
 
                 }
@@ -1223,14 +1244,13 @@ public class WorldHelper {
         return blocks;
     }
     private static void worldRandomTickVegetation(Chunk chunk) {
-        // grass
-        for (int i = 0; i < MathHelper.randomRound(1.25); i ++) {
+        // grass & herbs
+        for (int i = 0; i < MathHelper.randomRound(2); i ++) {
             Block blockToTick = getRandomBlockInChunk(chunk);
             attemptGrowPlantAt(blockToTick);
         }
         // other plant growth ticking
-        // ORIGINAL: 15
-        for (int i = 0; i < MathHelper.randomRound(1500); i ++) {
+        for (int i = 0; i < MathHelper.randomRound(15); i ++) {
             Block blockToTick = getRandomBlockInChunk(chunk);
             switch (blockToTick.getType()) {
                 case SAPLING: {

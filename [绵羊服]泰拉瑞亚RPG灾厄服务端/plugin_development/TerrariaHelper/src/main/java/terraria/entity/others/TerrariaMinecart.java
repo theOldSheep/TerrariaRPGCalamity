@@ -4,6 +4,7 @@ import net.minecraft.server.v1_12_R1.AxisAlignedBB;
 import net.minecraft.server.v1_12_R1.Entity;
 import net.minecraft.server.v1_12_R1.EntityMinecartRideable;
 import net.minecraft.server.v1_12_R1.World;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.Player;
@@ -47,7 +48,7 @@ public class TerrariaMinecart extends EntityMinecartRideable {
     // Leave this line intact. Otherwise, the MinecartType will not initialize.
     static {
         if (MinecartType.values().length > 0)
-            TerrariaHelper.LOGGER.log(Level.SEVERE, "No minecart type is currently available!");
+            TerrariaHelper.LOGGER.log(Level.SEVERE, "No minecart type is currently available. Initializing the minecart mapping.");
     }
     MinecartType type;
     HashMap<String, Double> attrMap;

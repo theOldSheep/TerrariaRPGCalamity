@@ -1,8 +1,8 @@
 # 匹配实体名(忽略颜色空格)
 match: 
-  - "aaaaaaaa"
+  - "aaaaa"
 # 名称判定是否为包含模式
-contains: false
+contains: true
 # 显示模式
 display: "always"
 

@@ -95,7 +95,8 @@ public class OverworldBiomeGenerator {
             // normal
             else {
                 evaluatedBiome = WorldHelper.BiomeType.NORMAL;
-                biomeSignificance = -Math.abs( Math.abs(cnt) - 0.35 );
+                // -0.5 is the ocean; the dungeon is closer to the ocean side.
+                biomeSignificance = -Math.abs( cnt + 0.35 );
             }
         }
     }

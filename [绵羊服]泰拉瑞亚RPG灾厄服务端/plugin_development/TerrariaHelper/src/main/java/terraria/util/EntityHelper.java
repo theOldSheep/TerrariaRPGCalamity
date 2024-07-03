@@ -2332,15 +2332,19 @@ public class EntityHelper {
             dmg *= damageTakenMulti;
             defence = Math.max(defence - damagerAttrMap.getOrDefault("armorPenetration", 0d), 0);
             dmg -= defence * 0.75;
-            // damage barrier
+            // interrupt barrier regen - 10 seconds when damaged while interrupted
+            if (hasEffect(victim, "保护矩阵充能")) {
+                applyEffect(victim, "保护矩阵充能", 200);
+            }
+            // damage barrier damage reduction & interruption
             if (hasEffect(victim, "保护矩阵")) {
                 // 20 ticks = 10 dmg
                 int damageShield = getEffectMap(victim).get("保护矩阵") / 2;
                 int damageBlock = (int) Math.min(Math.ceil(dmg), damageShield);
                 dmg -= damageBlock;
                 applyEffect(victim, "保护矩阵", (damageShield - damageBlock) * 2);
-                // interrupt barrier regen
-                applyEffect(victim, "保护矩阵充能", 175);
+                // interrupt barrier regen - 8 seconds when damaged with barrier
+                applyEffect(victim, "保护矩阵充能", 160);
             }
             if (hasEffect(victim, "狮心圣裁能量外壳")) {
                 applyEffect(victim, "狮心圣裁能量外壳冷却", 900);

@@ -338,6 +338,7 @@ terraria\entity\boss\hardMode\empressOfLight\EmpressOfLight$AttackPhase.class
 terraria\worldgen\MazeGenerator.class
 terraria\util\DragoncoreHelper$DragonCoreParticleInfo.class
 terraria\worldgen\overworld\OverworldBiomeGenerator$BiomeFeature.class
+terraria\worldgen\overworld\RailPopulator.class
 terraria\entity\others\TerrariaMinecart$MinecartType.class
 terraria\entity\npc\TerrariaNPCDemolitionist.class
 terraria\worldgen\overworld\OverworldChunkGenerator$1.class

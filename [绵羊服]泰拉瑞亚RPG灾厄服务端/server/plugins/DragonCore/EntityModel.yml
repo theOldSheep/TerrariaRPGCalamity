@@ -131,6 +131,27 @@
 #   texture: "风暴编织者/体节/body.png"
 #   scale: 100
 #   renderAlways: true
+# 装甲神明吞噬者头:
+#   entity: "装甲神明吞噬者头"
+#   contains: false
+#   model: "装甲神明吞噬者/头/head.obj"
+#   texture: "装甲神明吞噬者/头/head.png"
+#   scale: 100
+#   renderAlways: true
+# 装甲神明吞噬者体节:
+#   entity: "装甲神明吞噬者体节"
+#   contains: false
+#   model: "装甲神明吞噬者/体节/body.obj"
+#   texture: "装甲神明吞噬者/体节/body.png"
+#   scale: 100
+#   renderAlways: true
+# 装甲神明吞噬者尾:
+#   entity: "装甲神明吞噬者尾"
+#   contains: false
+#   model: "装甲神明吞噬者/体节/body.obj"
+#   texture: "装甲神明吞噬者/体节/body.png"
+#   scale: 100
+#   renderAlways: true
 神明吞噬者头:
   entity: "神明吞噬者头"
   contains: false
@@ -138,17 +159,17 @@
   texture: "神明吞噬者/头/head.png"
   scale: 100
   renderAlways: true
-神明吞噬者体节:
-  entity: "神明吞噬者体节"
-  contains: false
-  model: "神明吞噬者/体节/body.obj"
-  texture: "神明吞噬者/体节/body.png"
-  scale: 100
-  renderAlways: true
-神明吞噬者尾:
-  entity: "神明吞噬者尾"
-  contains: false
-  model: "神明吞噬者/体节/body.obj"
-  texture: "神明吞噬者/体节/body.png"
-  scale: 100
-  renderAlways: true
+# 神明吞噬者体节:
+#   entity: "神明吞噬者体节"
+#   contains: false
+#   model: "神明吞噬者/体节/body.obj"
+#   texture: "神明吞噬者/体节/body.png"
+#   scale: 100
+#   renderAlways: true
+# 神明吞噬者尾:
+#   entity: "神明吞噬者尾"
+#   contains: false
+#   model: "神明吞噬者/体节/body.obj"
+#   texture: "神明吞噬者/体节/body.png"
+#   scale: 100
+#   renderAlways: true
