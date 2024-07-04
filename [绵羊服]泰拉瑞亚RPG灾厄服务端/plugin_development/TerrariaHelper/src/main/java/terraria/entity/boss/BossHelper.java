@@ -400,15 +400,15 @@ public class BossHelper {
                     colorCode, (isAggro ? value / 20 : value), value * 100 / totalValue, name));
         }
     }
-    public static void sendBossMessages(int delay, int index, Entity sentBy, String... messages) {
+    public static void sendBossMessages(int delay, int index, Entity sentBy, String prefix, String... messages) {
         // validations
         if (index < 0 || index >= messages.length)
             return;
         if (sentBy != null && ! sentBy.isValid())
             return;
 
-        Bukkit.broadcastMessage(messages[index]);
+        Bukkit.broadcastMessage(prefix + messages[index]);
         Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(),
-                () -> sendBossMessages(delay, index + 1, sentBy, messages), delay);
+                () -> sendBossMessages(delay, index + 1, sentBy, prefix, messages), delay);
     }
 }

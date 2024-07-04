@@ -1,4 +1,4 @@
-package terraria.entity.boss.postMoonLord.calamitas;
+package terraria.entity.boss.postMoonLord.supremeCalamitas;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
@@ -113,7 +113,7 @@ public class SupremeCalamitas extends EntitySlime {
                 attrMapPrjHigh, 0.35, 0.15, 35, 75);
 
         final String bossProgress = BOSS_TYPE.msgName;
-        final String msgPrefix = "§#FFA500";
+        final String MSG_PREFIX = "§#FFA500";
         bulletHellPatterns = new BulletHellPattern[]{
                 // first bullet hell when summoned
                 new BulletHellPattern(1.1, 400, true)
@@ -122,16 +122,18 @@ public class SupremeCalamitas extends EntitySlime {
                         .setBeginFunc(
                                 (boss) -> {
                                     String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                            new String[]{(msgPrefix + "如果你想感受一下四级烫伤的话，你可算是找对人了。")} :
-                                            new String[]{(msgPrefix + "你享受地狱之旅么？")};
-                                    terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                                            new String[]{("如果你想感受一下四级烫伤的话，你可算是找对人了。")} :
+                                            new String[]{("你享受地狱之旅么？")};
+                                    terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
                                 })
                         .setEndFunc(
                         (boss) -> {
                             String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                    new String[]{(msgPrefix + "他日若你魂销魄散，你会介意我将你的骨头和血肉融入我的造物中吗？")} :
-                                    new String[]{(msgPrefix + "真奇怪，你应该已经死了才对......")};
-                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                                    new String[]{("他日若你魂销魄散，你会介意我将你的骨头和血肉融入我的造物中吗？")} :
+                                    new String[]{("真奇怪，你应该已经死了才对......")};
+                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
+                            // spawn first sepulcher
+                            new Sepulcher(boss);
                         }),
                 // second bullet hell 75% health
                 new BulletHellPattern(0.75, 425, true)
@@ -140,9 +142,9 @@ public class SupremeCalamitas extends EntitySlime {
                         .setBeginFunc(
                         (boss) -> {
                             String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                    new String[]{(msgPrefix + "你离胜利还差得远着呢。")} :
-                                    new String[]{(msgPrefix + "距离你上次勉强才击败我的克隆体也没过多久。那玩意就是个失败品，不是么？")};
-                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                                    new String[]{("你离胜利还差得远着呢。")} :
+                                    new String[]{("距离你上次勉强才击败我的克隆体也没过多久。那玩意就是个失败品，不是么？")};
+                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
                         }),
                 // third bullet hell 50% health
                 new BulletHellPattern(0.5, 450, true)
@@ -152,18 +154,18 @@ public class SupremeCalamitas extends EntitySlime {
                         .setBeginFunc(
                         (boss) -> {
                             String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                    new String[]{(msgPrefix + "自我上一次能在如此有趣的靶子假人身上测试我的魔法，已经过了很久了。")} :
-                                    new String[]{(msgPrefix + "你驾驭着强大的力量，但你使用这股力量只为了自己的私欲。")};
-                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                                    new String[]{("自我上一次能在如此有趣的靶子假人身上测试我的魔法，已经过了很久了。")} :
+                                    new String[]{("你驾驭着强大的力量，但你使用这股力量只为了自己的私欲。")};
+                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
                         }),
                 // spawn brothers 45% health
                 new BulletHellPattern(0.45, 50, false)
                         .setBeginFunc(
                         (boss) -> {
                             String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                    new String[]{(msgPrefix + "只是单有过去形态的空壳罢了，或许在其中依然残存他们的些许灵魂也说不定。")} :
-                                    new String[]{(msgPrefix + "你想见见我的家人吗？听上去挺可怕，不是么？")};
-                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                                    new String[]{("只是单有过去形态的空壳罢了，或许在其中依然残存他们的些许灵魂也说不定。")} :
+                                    new String[]{("你想见见我的家人吗？听上去挺可怕，不是么？")};
+                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
                         }),
                 // fourth bullet hell 30% health
                 new BulletHellPattern(0.3, 475, true)
@@ -173,18 +175,20 @@ public class SupremeCalamitas extends EntitySlime {
                         .setBeginFunc(
                         (boss) -> {
                             String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                    new String[]{(msgPrefix + "我挺好奇，自我们第一次交手后，你是否有在梦魇中见到过这些？")} :
-                                    new String[]{(msgPrefix + "别想着逃跑。只要你还活着，痛苦就不会离你而去。")};
-                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                                    new String[]{("我挺好奇，自我们第一次交手后，你是否有在梦魇中见到过这些？")} :
+                                    new String[]{("别想着逃跑。只要你还活着，痛苦就不会离你而去。")};
+                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
                         }),
                 // another sepulcher at 20% health
                 new BulletHellPattern(0.2, 50, false)
                         .setBeginFunc(
                         (boss) -> {
                             String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                    new String[]{(msgPrefix + "注意一下，那个会自己爬的坟墓来了，这是最后一次。")} :
-                                    new String[]{(msgPrefix + "一个后起之人，只识杀戮与偷窃，但却以此得到力量。我想想，这让我想起了谁...？")};
-                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                                    new String[]{("注意一下，那个会自己爬的坟墓来了，这是最后一次。")} :
+                                    new String[]{("一个后起之人，只识杀戮与偷窃，但却以此得到力量。我想想，这让我想起了谁...？")};
+                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
+                            // spawn second sepulcher
+                            new Sepulcher(boss);
                         }),
                 // final bullet hell 10% health
                 new BulletHellPattern(0.1, 500, true)
@@ -195,14 +199,14 @@ public class SupremeCalamitas extends EntitySlime {
                         .setBeginFunc(
                         (boss) -> {
                             String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                    new String[]{(msgPrefix + "这难道不令人激动么？")} :
+                                    new String[]{("这难道不令人激动么？")} :
                                     new String[]{
-                                            (msgPrefix + "给我停下！"),
-                                            (msgPrefix + "如果我在这里失败，我就再无未来可言。"),
-                                            (msgPrefix + "一旦你战胜了我，你就只剩下一条道路。"),
-                                            (msgPrefix + "而那条道路......同样也无未来可言。"),
-                                            (msgPrefix + "这场战斗的输赢对你而言毫无意义！那你又有什么理由干涉这一切！"),};
-                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                                            ("给我停下！"),
+                                            ("如果我在这里失败，我就再无未来可言。"),
+                                            ("一旦你战胜了我，你就只剩下一条道路。"),
+                                            ("而那条道路......同样也无未来可言。"),
+                                            ("这场战斗的输赢对你而言毫无意义！那你又有什么理由干涉这一切！"),};
+                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
                         }),
                 // final conversation
                 new BulletHellPattern(0.005, 300, false)
@@ -210,15 +214,15 @@ public class SupremeCalamitas extends EntitySlime {
                                 (boss) -> {
                                     String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
                                             new String[]{
-                                                    (msgPrefix + "了不起的表现，我认可你的胜利。"),
-                                                    (msgPrefix + "毫无疑问，你会遇见比我更加强大的敌人。"),
-                                                    (msgPrefix + "我相信你不会犯下和他一样的错误。"),
-                                                    (msgPrefix + "至于你的未来会变成什么样子，我很期待。"),} :
+                                                    ("了不起的表现，我认可你的胜利。"),
+                                                    ("毫无疑问，你会遇见比我更加强大的敌人。"),
+                                                    ("我相信你不会犯下和他一样的错误。"),
+                                                    ("至于你的未来会变成什么样子，我很期待。"),} :
                                             new String[]{
-                                                    (msgPrefix + "哪怕他抛弃了一切，他的力量也不会消失。"),
-                                                    (msgPrefix + "我已没有余力去怨恨他了，对你也是如此......"),
-                                                    (msgPrefix + "现在，一切都取决于你。"),};
-                                    terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, messages);
+                                                    ("哪怕他抛弃了一切，他的力量也不会消失。"),
+                                                    ("我已没有余力去怨恨他了，对你也是如此......"),
+                                                    ("现在，一切都取决于你。"),};
+                                    terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
                                 })
                         .setEndFunc(SupremeCalamitas::die),
         };

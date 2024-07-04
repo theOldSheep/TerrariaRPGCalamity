@@ -19,7 +19,6 @@ terraria\entity\boss\hardMode\thePlaguebringerGoliath\PlagueMine.class
 terraria\entity\boss\postMoonLord\devourerOfGods\DelayedWallAttackPattern$1.class
 terraria\entity\npc\TerrariaNPCAngler.class
 terraria\entity\boss\hardMode\dukeFishron\DukeFishron$AttackPhase.class
-terraria\entity\boss\postMoonLord\calamitas\SupremeCalamitas$BulletHellPattern.class
 terraria\util\ItemUseHelper$QuickBuffType.class
 terraria\entity\boss\postMoonLord\polterghast\Polterghast.class
 terraria\entity\boss\BossHelper$1.class
@@ -129,6 +128,7 @@ terraria\util\PlayerHelper.class
 terraria\entity\projectile\YharonTornado.class
 terraria\TerrariaHelper.class
 terraria\util\NMSUtils$SpawnData.class
+terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitas$1.class
 terraria\entity\boss\hardMode\moonLord\MoonLordBackground$MoonLordBackgroundType.class
 terraria\entity\boss\postMoonLord\devourerOfGods\AttackManager.class
 terraria\worldgen\overworld\OverworldChunkGenerator.class
@@ -136,7 +136,6 @@ terraria\entity\boss\hardMode\moonLord\MoonLordTrueEyeOfCthulhu$EyeAttackMethod.
 terraria\entity\boss\hardMode\ravager\Ravager.class
 terraria\entity\boss\hardMode\moonLord\MoonLordTrueEyeOfCthulhu$1.class
 terraria\entity\boss\hardMode\plantera\PlanteraTentacle.class
-terraria\entity\boss\postMoonLord\calamitas\SupremeCalamitas$BulletHellProjectileOption.class
 terraria\worldgen\overworld\BiomeSummary$BiomeSearchGridPosition.class
 terraria\entity\boss\preHardMode\theSlimeGod\TheSlimeGod.class
 terraria\entity\boss\hardMode\golem\Golem.class
@@ -175,7 +174,6 @@ terraria\worldgen\Interpolate$InterpolatePoint.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator.class
 terraria\entity\boss\preHardMode\theHiveMind\TheHiveMind$1.class
 terraria\gameplay\EventAndTime$Events.class
-terraria\entity\boss\postMoonLord\calamitas\SupremeCalamitas$1.class
 terraria\entity\boss\preHardMode\theHiveMind\TheHiveMind$AIPhase.class
 terraria\entity\boss\hardMode\lunaticCultist\PhantomDragon.class
 terraria\worldgen\overworld\OverworldCaveGenerator$1.class
@@ -188,6 +186,7 @@ terraria\util\BossHelper$1.class
 terraria\util\NPCHelper$NPCType.class
 terraria\entity\boss\postMoonLord\devourerOfGods\AttackPattern$1.class
 terraria\util\PlayerPOVHelper$1.class
+terraria\entity\boss\postMoonLord\supremeCalamitas\Sepulcher.class
 terraria\entity\projectile\BulletHellProjectile.class
 terraria\event\listener\PlayerJoinListener.class
 terraria\entity\boss\preHardMode\kingSlime\KingSlime.class
@@ -236,11 +235,11 @@ terraria\entity\others\PlayerTornado.class
 terraria\entity\monster\MonsterSilverfish.class
 terraria\entity\monster\MonsterSlime.class
 terraria\event\listener\RandomTitleListener.class
-terraria\entity\boss\postMoonLord\calamitas\SupremeCalamitas.class
 terraria\util\EntityHelper$MetadataName.class
 terraria\entity\projectile\BulletHellProjectile$BulletHellDirectionInfo.class
 terraria\entity\boss\hardMode\brimstoneElemental\BrimstoneElemental.class
 terraria\worldgen\overworld\OverworldBiomeGenerator$1.class
+terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitas.class
 terraria\worldgen\RandomGenerator.class
 terraria\entity\boss\postMoonLord\ceaselessVoid\DarkEnergy.class
 terraria\event\listener\DropItemSpawnListener.class
@@ -254,10 +253,12 @@ terraria\entity\npc\TerrariaNPCArmsDealer.class
 terraria\entity\boss\hardMode\dukeFishron\DukeFishron$1.class
 terraria\entity\monster\MonsterSpider.class
 terraria\entity\boss\event\pumpking\PumpkingHead.class
+terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitas$BulletHellProjectileOption.class
 terraria\entity\boss\postMoonLord\exoMechs\Thanatos$SegmentType.class
 terraria\util\EntityHelper.class
 terraria\event\listener\PlayerKeyToggleListener.class
 terraria\entity\boss\hardMode\dukeFishron\WaterBlob.class
+terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitas$BulletHellPattern.class
 terraria\entity\others\TerrariaDroppedItem.class
 terraria\entity\boss\hardMode\moonLord\MoonLordEye$EyeAttackMethod.class
 terraria\entity\boss\postMoonLord\devourerOfGods\ScatteringCircleAttackPattern.class

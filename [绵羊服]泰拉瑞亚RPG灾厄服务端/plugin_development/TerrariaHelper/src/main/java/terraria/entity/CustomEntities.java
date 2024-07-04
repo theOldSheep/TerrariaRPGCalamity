@@ -11,7 +11,7 @@ import terraria.entity.boss.hardMode.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.hardMode.calamitasClone.CalamitasClone;
 import terraria.entity.boss.hardMode.calamitasClone.Cataclysm;
 import terraria.entity.boss.hardMode.calamitasClone.Catastrophe;
-import terraria.entity.boss.postMoonLord.calamitas.SupremeCalamitas;
+import terraria.entity.boss.postMoonLord.supremeCalamitas.SupremeCalamitas;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.DarkEnergy;
 import terraria.entity.boss.postMoonLord.devourerOfGods.DevourerOfGods;
