@@ -11,6 +11,7 @@ import terraria.entity.boss.hardMode.brimstoneElemental.BrimstoneElemental;
 import terraria.entity.boss.hardMode.calamitasClone.CalamitasClone;
 import terraria.entity.boss.hardMode.calamitasClone.Cataclysm;
 import terraria.entity.boss.hardMode.calamitasClone.Catastrophe;
+import terraria.entity.boss.postMoonLord.supremeCalamitas.Sepulcher;
 import terraria.entity.boss.postMoonLord.supremeCalamitas.SupremeCalamitas;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.DarkEnergy;
@@ -20,6 +21,7 @@ import terraria.entity.boss.postMoonLord.exoMechs.*;
 import terraria.entity.boss.postMoonLord.polterghast.Polterghast;
 import terraria.entity.boss.postMoonLord.polterghast.PolterghastClone;
 import terraria.entity.boss.postMoonLord.signus.Signus;
+import terraria.entity.boss.postMoonLord.supremeCalamitas.SupremeCalamitasBrother;
 import terraria.entity.boss.postMoonLord.theOldDuke.TheOldDuke;
 import terraria.entity.boss.postMoonLord.yharon.Infernado;
 import terraria.entity.boss.preHardMode.crabulon.Crabulon;
@@ -192,7 +194,9 @@ public enum CustomEntities {
     BOSS_SLMG_EB            ("EbonianSlime",           55,  EntityType.SLIME,           EntitySlime.class,           EbonianSlime.class),
     BOSS_SLMG_CR            ("CrimulanSlime",          55,  EntityType.SLIME,           EntitySlime.class,           CrimulanSlime.class),
     BOSS_STORM_WEAVER       ("StormWeaver",            55,  EntityType.SLIME,           EntitySlime.class,           StormWeaver.class),
+    BOSS_SUPREME_BROTHERS   ("SupremeCalamitasBrother",55,  EntityType.SLIME,           EntitySlime.class,           SupremeCalamitasBrother.class),
     BOSS_SUPREME_CALAMITAS  ("SupremeCalamitas",       55,  EntityType.SLIME,           EntitySlime.class,           SupremeCalamitas.class),
+    BOSS_SUPREME_SEPULCHER  ("Sepulcher",              55,  EntityType.SLIME,           EntitySlime.class,           Sepulcher.class),
     BOSS_THE_OLD_DUKE       ("TheOldDuke",             55,  EntityType.SLIME,           EntitySlime.class,           TheOldDuke.class),
     BOSS_TWIN_RTN           ("Retinazer",              55,  EntityType.SLIME,           EntitySlime.class,           Retinazer.class),
     BOSS_TWIN_SPZ           ("Spazmatism",             55,  EntityType.SLIME,           EntitySlime.class,           Spazmatism.class),

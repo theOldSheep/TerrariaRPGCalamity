@@ -15,9 +15,9 @@ import java.util.Random;
 public class FoliagePopulator extends BlockPopulator {
     public static final double GRASS_GROW_CHANCE = 0.1;
     double getTreeAmount(double temp, double moisture) {
-        double result = 6d;
+        double result = 4d;
         // dry+hot=desert, dry+cold=tundra(even less tree?), moist+hot=jungle, moist+cold=tundra
-        result += Math.min(moisture * 16 * Math.abs(temp), 4);
+        result += Math.min(moisture * 8 * Math.abs(temp), 2);
         return Math.max(result, 2);
     }
     @Override
@@ -41,7 +41,7 @@ public class FoliagePopulator extends BlockPopulator {
             // slightly randomize the amount generated
             if (amount > 0) {
                 amount /= 2;
-                amount = amount + rdm.nextDouble() * amount;
+                amount += rdm.nextDouble() * amount;
             }
 
             int finalAmount = MathHelper.randomRound( amount );

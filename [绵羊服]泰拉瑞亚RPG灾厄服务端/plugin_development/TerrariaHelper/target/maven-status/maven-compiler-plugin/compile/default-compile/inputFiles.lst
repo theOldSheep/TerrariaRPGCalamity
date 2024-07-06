@@ -42,6 +42,7 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\projectile\Flail.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\event\TerrariaProjectileHitEvent.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\hardMode\lunaticCultist\PhantomDragon.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitas.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\event\santaNK1\SantaNK1.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\event\headlessHorseman\HeadlessHorseman.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\preHardMode\theHiveMind\TheHiveMind.java
@@ -112,7 +113,9 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\util\NPCHelper.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\hardMode\golem\Golem.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\hardMode\moonLord\MoonLord.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\postMoonLord\supremeCalamitas\Sepulcher.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\npc\TerrariaNPCArmsDealer.java
+C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitasBrother.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\preHardMode\crabulon\Crabulon.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\event\everscream\Everscream.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\hardMode\cryogen\Cryogen.java
@@ -148,7 +151,6 @@ C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\hardMode\ravager\Ravager.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\hardMode\theTwins\Retinazer.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\preHardMode\theSlimeGod\CrimulanSlime.java
-C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\postMoonLord\calamitas\SupremeCalamitas.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\util\NMSUtils.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\others\TerrariaFishingHook.java
 C:\Users\sunny\OneDrive\Desktop\other\MC\server\[绵羊服]泰拉瑞亚RPG灾厄服务端 - 1.12\plugin_development\TerrariaHelper\src\main\java\terraria\entity\boss\postMoonLord\ceaselessVoid\DarkEnergy.java

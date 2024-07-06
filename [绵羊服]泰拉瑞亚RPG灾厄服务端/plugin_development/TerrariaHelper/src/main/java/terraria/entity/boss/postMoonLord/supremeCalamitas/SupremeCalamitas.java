@@ -79,7 +79,7 @@ public class SupremeCalamitas extends EntitySlime {
     Player target = null;
     // other variables and AI
     static double DASH_SPEED = 3.5, HOVER_SPEED = 2.75, DART_SPEED = 2.75, HELL_BLAST_SPEED = 3.75, GIGA_BLAST_SPEED = 1.25,
-            HOVER_DISTANCE = 48, HOVER_DISTANCE_BROTHERS = 32,
+            HOVER_DISTANCE = 48, HOVER_DISTANCE_BROTHERS = 40, HOVER_DISTANCE_BROTHERS_OFFSET = 12,
             DART_SPREAD_SINGLE = 10, DART_SPREAD_TOTAL = 40;
     static HashMap<String, Double> attrMapPrjLow, attrMapPrjMid, attrMapPrjHigh, attrMapPrjExtreme;
     static BulletHellPattern[] bulletHellPatterns;
@@ -136,7 +136,7 @@ public class SupremeCalamitas extends EntitySlime {
                             new Sepulcher(boss);
                         }),
                 // second bullet hell 75% health
-                new BulletHellPattern(0.75, 425, true)
+                new BulletHellPattern(0.75, 400, true)
                         .addCandidate(optionBlastSurrounding)
                         .addCandidate(optionHellBlast)
                         .setBeginFunc(
@@ -147,7 +147,7 @@ public class SupremeCalamitas extends EntitySlime {
                             terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
                         }),
                 // third bullet hell 50% health
-                new BulletHellPattern(0.5, 450, true)
+                new BulletHellPattern(0.5, 400, true)
                         .addCandidate(optionBlastSurrounding)
                         .addCandidate(optionHellBlast)
                         .addCandidate(optionGigaBlast)
@@ -166,9 +166,12 @@ public class SupremeCalamitas extends EntitySlime {
                                     new String[]{("只是单有过去形态的空壳罢了，或许在其中依然残存他们的些许灵魂也说不定。")} :
                                     new String[]{("你想见见我的家人吗？听上去挺可怕，不是么？")};
                             terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
+                            boss.brothers.add( new SupremeCalamitasBrother(boss, 0) );
+                            boss.brothers.add( new SupremeCalamitasBrother(boss, 1) );
+                            boss.addScoreboardTag("noDamage");
                         }),
                 // fourth bullet hell 30% health
-                new BulletHellPattern(0.3, 475, true)
+                new BulletHellPattern(0.3, 400, true)
                         .addCandidate(optionBlastSurrounding)
                         .addCandidate(optionHellBlast)
                         .addCandidate(optionGigaBlast)
@@ -191,7 +194,7 @@ public class SupremeCalamitas extends EntitySlime {
                             new Sepulcher(boss);
                         }),
                 // final bullet hell 10% health
-                new BulletHellPattern(0.1, 500, true)
+                new BulletHellPattern(0.1, 400, true)
                         .addCandidate(optionBlastSurrounding)
                         .addCandidate(optionFlameSkull)
                         .addCandidate(optionHellBlast)
@@ -238,6 +241,7 @@ public class SupremeCalamitas extends EntitySlime {
     // do not init indexAI as 0 to prevent a projectile fired before the first bullet hell
     int indexAI = -50, attackType = 0;
     Vector velocity = new Vector();
+    ArrayList<SupremeCalamitasBrother> brothers = new ArrayList<>();
 
 
     private void tickBulletHellRotation() {
@@ -284,6 +288,13 @@ public class SupremeCalamitas extends EntitySlime {
                 projectile.liveTime = projOption.projectileLiveTime;
             }
         }
+    }
+    private void generalMovement() {
+        Vector offsetDir = MathHelper.vectorFromYawPitch_approx(
+                MathHelper.getVectorYaw(bukkitEntity.getLocation().subtract(target.getLocation()).toVector()), 0);
+        offsetDir.multiply(HOVER_DISTANCE);
+        Location eyeHoverLoc = target.getEyeLocation().add(offsetDir);
+        velocity = MathHelper.getDirection( ((LivingEntity) bukkitEntity).getEyeLocation(), eyeHoverLoc, HOVER_SPEED, true);
     }
     private void normalAIPhase() {
         // true pattern:
@@ -347,13 +358,9 @@ public class SupremeCalamitas extends EntitySlime {
                 attackTimes = 0;
         }
 
-        // general projectile movement
+        // general movement
         if (trueAttackPattern != 4) {
-            Vector offsetDir = MathHelper.vectorFromYawPitch_approx(
-                    MathHelper.getVectorYaw(bukkitEntity.getLocation().subtract(target.getLocation()).toVector()), 0);
-            offsetDir.multiply(HOVER_DISTANCE);
-            Location eyeHoverLoc = target.getEyeLocation().add(offsetDir);
-            velocity = MathHelper.getDirection(livingEntity.getEyeLocation(), eyeHoverLoc, HOVER_SPEED, true);
+            generalMovement();
         }
         // projectile
         if (indexAI % attackInterval == 0 && indexAI >= 0) {
@@ -395,6 +402,32 @@ public class SupremeCalamitas extends EntitySlime {
             attackType ++;
         }
     }
+    private void tickBrothers() {
+        // remove dead brother
+        for (int i = 0; i < brothers.size(); i ++) {
+            if (brothers.get(i).isAlive())
+                continue;
+            brothers.remove(i);
+            i --;
+            if (brothers.isEmpty()) {
+                removeScoreboardTag("noDamage");
+                return;
+            }
+        }
+        double yaw = MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+        Vector directDir = MathHelper.vectorFromYawPitch_approx(yaw, 0)
+                .multiply(HOVER_DISTANCE_BROTHERS);
+        Location hoverLoc = bukkitEntity.getLocation().add(directDir);
+        if (brothers.size() == 1) {
+            brothers.get(0).desiredLoc = hoverLoc;
+        }
+        else {
+            Vector offsetDir = MathHelper.vectorFromYawPitch_approx(yaw + 90, 0)
+                    .multiply(HOVER_DISTANCE_BROTHERS_OFFSET);
+            brothers.get(0).desiredLoc = hoverLoc.clone().add(offsetDir);
+            brothers.get(1).desiredLoc = hoverLoc.clone().subtract(offsetDir);
+        }
+    }
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -402,6 +435,7 @@ public class SupremeCalamitas extends EntitySlime {
         // AI
         {
             // update target
+            Player lastTarget = target;
             target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
                     IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
             // disappear if no target is available
@@ -423,8 +457,17 @@ public class SupremeCalamitas extends EntitySlime {
                     pattern = bulletHellPatterns[bulletHellPatternIdx];
                 else
                     pattern = null;
+                // brothers
+                if (brothers.size() > 0) {
+                    generalMovement();
+                    tickBrothers();
+                }
                 // bullet hell
-                if (bulletHellPatternActive) {
+                else if (bulletHellPatternActive) {
+                    // retarget: reset bullet hell duration
+                    if (target != lastTarget)
+                        indexAI = 0;
+
                     handleBulletHell();
                     // termination. "pattern" would not be null here, don't worry.
                     if (indexAI > pattern.duration) {

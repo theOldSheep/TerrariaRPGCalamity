@@ -1331,7 +1331,7 @@ ANVIL:
     requireLevel: 1
     resultItem: 海鲜饵料
     requireItem:
-    - 沙块:16
+    - 沙块:12
     - 海星:5
     - 贝壳:5
     - 珊瑚:5
@@ -3881,7 +3881,7 @@ ENCHANTMENT_TABLE:
     requireLevel: 1
     resultItem: 荒漠吊坠
     requireItem:
-    - 沙块:16
+    - 沙块:12
     - 蚁狮上颚:4
     - 风暴之颚:2
     recipeCategory: BOSS

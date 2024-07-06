@@ -397,14 +397,24 @@
     gravity: 0
     buffInflict:
         - "孱弱巫咒|60|1"
-猩红圆月:
+硫火碎魂拳:
     penetration: 99999
-    projectileSize: 5
+    projectileSize: 2
     blockHitAction: thru
-    liveTime: 999999
+    liveTime: 80
     gravity: 0
     buffInflict:
-        - "孱弱巫咒|120|1"
+        - "孱弱巫咒|60|1"
+斩魂幻锋:
+    penetration: 99999
+    projectileSize: 2
+    blockHitAction: thru
+    liveTime: 80
+    gravity: 0
+    speedMultiPerTick: 10
+    maxSpeed: 3
+    buffInflict:
+        - "孱弱巫咒|60|1"
 硫磺火球:
     penetration: 99999
     blockHitAction: thru

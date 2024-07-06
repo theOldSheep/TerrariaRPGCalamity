@@ -29,14 +29,13 @@ public class Sepulcher extends EntitySlime {
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.SUPREME_WITCH_CALAMITAS;
     // it can follow the player out of the space
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 2500000 * 2;
+    public static final double BASIC_HEALTH = 1000000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     public static final int TOTAL_LENGTH = 51;
     static final String[] NAME_SUFFIXES = {"头", "体节", "尾"};
     HashMap<String, Double> attrMap;
     public HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
-    BossBattleServer bossbar;
     public Player target = null;
     // other variables and AI
     Sepulcher head;
@@ -63,7 +62,7 @@ public class Sepulcher extends EntitySlime {
     int segmentIndex, segmentTypeIndex;
 
     static final int DASH_INTERVAL = 30;
-    static final double DASH_ACCELERATION = 0.25, DASH_SPEED = 3.25, DASH_MIN_DISTANCE = 12.5;
+    static final double DASH_ACCELERATION = 0.25, DASH_SPEED = 3.25, DASH_MIN_DISTANCE = 22.5;
     Vector lastVelocity = new Vector();
     private int dashTimer = 0;
 
@@ -222,8 +221,6 @@ public class Sepulcher extends EntitySlime {
         // boss parts and other properties
         {
             bossParts.add((LivingEntity) bukkitEntity);
-            if (segmentIndex == 0)
-                BossHelper.bossMap.put(BOSS_TYPE.msgName, bossParts);
             this.noclip = true;
             this.setNoGravity(true);
             this.persistent = true;
