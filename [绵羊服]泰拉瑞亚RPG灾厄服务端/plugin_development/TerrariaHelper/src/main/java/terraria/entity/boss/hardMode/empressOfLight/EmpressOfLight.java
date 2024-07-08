@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
@@ -452,12 +453,11 @@ public class EmpressOfLight extends EntitySlime {
             return;
         // AI
         {
-            // update target
+            // update target; if summoned during day time, disappear at night, vise versa.
             target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
-            // if summoned during day time, disappear at night, vise versa.
-            if (summonedDuringDay != WorldHelper.isDayTime(bukkitEntity.getWorld()))
-                target = null;
+                    IGNORE_DISTANCE,
+                    summonedDuringDay ? terraria.entity.boss.BossHelper.TimeRequirement.DAY : terraria.entity.boss.BossHelper.TimeRequirement.NIGHT,
+                    BIOME_REQUIRED, targetMap.keySet());
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {
@@ -507,6 +507,8 @@ public class EmpressOfLight extends EntitySlime {
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
         summonedDuringDay = WorldHelper.isDayTime(bukkitEntity.getWorld());
+        if (EventAndTime.isBossRushActive())
+            summonedDuringDay = false; // never get bonus dmg for BR
         particleColor = summonedDuringDay ? particleColorDay : particleColorNight;
         setCustomName(BOSS_TYPE.msgName);
         setCustomNameVisible(true);

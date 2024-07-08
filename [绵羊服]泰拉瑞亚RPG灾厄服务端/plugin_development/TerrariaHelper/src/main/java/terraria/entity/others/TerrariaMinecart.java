@@ -24,12 +24,12 @@ import java.util.logging.Level;
 public class TerrariaMinecart extends EntityMinecartRideable {
     static HashMap<String, MinecartType> minecartTypeHashMap = new HashMap<>();
     enum MinecartType {
-        // total speed: 0.675
-        NORMAL("矿车", 2, 0.225, 30, 135),
-        // total speed: 1
-        MECHANIC("机械矿车", 3,0.25, 50, 360),
-        // total speed: 1.375
-        RAINBOW("彩虹猫矿车", 4,0.275, 100, 666),
+        // total speed: 0.65
+        NORMAL("矿车", 1, 0.325, 30, 135),
+        // total speed: 1.05
+        MECHANIC("机械矿车", 2,0.35, 50, 360),
+        // total speed: 1.3
+        RAINBOW("彩虹猫矿车", 3,0.325, 100, 666),
         // total speed: 1.6
         GOD_CART("神明矿车", 3,0.4, 175, 1250);
         public final String name;

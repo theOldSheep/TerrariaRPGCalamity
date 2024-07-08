@@ -46,6 +46,7 @@ import terraria.entity.boss.preHardMode.kingSlime.KingSlime;
 import terraria.entity.boss.hardMode.theTwins.Retinazer;
 import terraria.entity.boss.preHardMode.wallOfFlesh.WallOfFleshMouth;
 import terraria.entity.boss.postMoonLord.yharon.Yharon;
+import terraria.gameplay.EventAndTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,6 +111,12 @@ public class BossHelper {
         return spawnBoss(target, bossType, null);
     }
     public static boolean spawnBoss(Player target, BossType bossType, Object extraInfo) {
+        return spawnBoss(target, bossType, extraInfo, true);
+    }
+    public static boolean spawnBoss(Player target, BossType bossType, Object extraInfo, boolean playerSummoned) {
+        boolean isBossRush = EventAndTime.isBossRushActive();
+        if (isBossRush & playerSummoned)
+            return false;
         // no duplication!
         if (bossMap.containsKey(bossType.msgName)) return false;
         boolean spawnedSuccessfully = false;
@@ -119,64 +126,67 @@ public class BossHelper {
         switch (bossType) {
             // pre-wall of flesh
             case KING_SLIME: {
-                if (KingSlime.canSpawn(target)) {
+                if (isBossRush || KingSlime.canSpawn(target)) {
                     new KingSlime(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case DESERT_SCOURGE: {
-                if (DesertScourge.canSpawn(target)) {
+                if (isBossRush || DesertScourge.canSpawn(target)) {
                     new DesertScourge(target, new ArrayList<>(), 0);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case EYE_OF_CTHULHU: {
-                if (EyeOfCthulhu.canSpawn(target)) {
+                if (isBossRush || EyeOfCthulhu.canSpawn(target)) {
                     new EyeOfCthulhu(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case CRABULON: {
-                if (Crabulon.canSpawn(target)) {
+                if (isBossRush || Crabulon.canSpawn(target)) {
                     new Crabulon(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case EATER_OF_WORLDS: {
-                if (EaterOfWorld.canSpawn(target)) {
+                if (isBossRush || EaterOfWorld.canSpawn(target)) {
                     new EaterOfWorld(target, new ArrayList<>(), 0);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case THE_HIVE_MIND: {
-                if (TheHiveMind.canSpawn(target)) {
+                if (isBossRush || TheHiveMind.canSpawn(target)) {
                     new TheHiveMind(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case SKELETRON: {
-                if (SkeletronHead.canSpawn(target)) {
+                if (isBossRush || SkeletronHead.canSpawn(target)) {
                     new SkeletronHead(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case THE_SLIME_GOD: {
-                if (TheSlimeGod.canSpawn(target)) {
+                if (isBossRush || TheSlimeGod.canSpawn(target)) {
                     new TheSlimeGod(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case WALL_OF_FLESH: {
-                soundLocation = (Location) extraInfo;
-                if (WallOfFleshMouth.canSpawn(target)) {
+                if (extraInfo instanceof Location)
+                    soundLocation = (Location) extraInfo;
+                else
+                    soundLocation = target.getLocation().add(target.getLocation().getDirection().multiply(24));
+                if (isBossRush || WallOfFleshMouth.canSpawn(target)) {
                     new WallOfFleshMouth(soundLocation);
                     spawnedSuccessfully = true;
                 }
@@ -184,63 +194,63 @@ public class BossHelper {
             }
             // pre-plantera
             case QUEEN_SLIME: {
-                if (QueenSlime.canSpawn(target)) {
+                if (isBossRush || QueenSlime.canSpawn(target)) {
                     new QueenSlime(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case CRYOGEN: {
-                if (Cryogen.canSpawn(target)) {
+                if (isBossRush || Cryogen.canSpawn(target)) {
                     new Cryogen(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case THE_TWINS: {
-                if (Retinazer.canSpawn(target)) {
+                if (isBossRush || Retinazer.canSpawn(target)) {
                     new Retinazer(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case AQUATIC_SCOURGE: {
-                if (AquaticScourge.canSpawn(target)) {
+                if (isBossRush || AquaticScourge.canSpawn(target)) {
                     new AquaticScourge(target, new ArrayList<>(), 0);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case THE_DESTROYER: {
-                if (Destroyer.canSpawn(target)) {
+                if (isBossRush || Destroyer.canSpawn(target)) {
                     new Destroyer(target, new ArrayList<>(), 0);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case BRIMSTONE_ELEMENTAL: {
-                if (BrimstoneElemental.canSpawn(target)) {
+                if (isBossRush || BrimstoneElemental.canSpawn(target)) {
                     new BrimstoneElemental(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case SKELETRON_PRIME: {
-                if (SkeletronPrimeHead.canSpawn(target)) {
+                if (isBossRush || SkeletronPrimeHead.canSpawn(target)) {
                     new SkeletronPrimeHead(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case CALAMITAS_CLONE: {
-                if (CalamitasClone.canSpawn(target)) {
+                if (isBossRush || CalamitasClone.canSpawn(target)) {
                     new CalamitasClone(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case PLANTERA: {
-                if (Plantera.canSpawn(target)) {
+                if (isBossRush || Plantera.canSpawn(target)) {
                     new Plantera(target);
                     spawnedSuccessfully = true;
                 }
@@ -248,70 +258,82 @@ public class BossHelper {
             }
             // pre-moon lord
             case LEVIATHAN_AND_ANAHITA: {
-                if (Anahita.canSpawn(target)) {
+                if (isBossRush || Anahita.canSpawn(target)) {
                     new Anahita(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case ASTRUM_AUREUS: {
-                if (AstrumAureus.canSpawn(target)) {
+                if (isBossRush || AstrumAureus.canSpawn(target)) {
                     new AstrumAureus(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case GOLEM: {
-                if (Golem.canSpawn(target)) {
+                if (isBossRush || Golem.canSpawn(target)) {
                     new Golem(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case THE_PLAGUEBRINGER_GOLIATH: {
-                if (ThePlaguebringerGoliath.canSpawn(target)) {
+                if (isBossRush || ThePlaguebringerGoliath.canSpawn(target)) {
                     new ThePlaguebringerGoliath(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case EMPRESS_OF_LIGHT: {
-                if (EmpressOfLight.canSpawn(target)) {
+                if (isBossRush || EmpressOfLight.canSpawn(target)) {
                     new EmpressOfLight(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case DUKE_FISHRON: {
-                if (DukeFishron.canSpawn(target)) {
-                    new DukeFishron(target, (Location) extraInfo);
+                if (extraInfo instanceof Location)
+                    soundLocation = (Location) extraInfo;
+                else
+                    soundLocation = target.getLocation().add(target.getLocation().getDirection().multiply(24));
+                if (isBossRush || DukeFishron.canSpawn(target)) {
+                    new DukeFishron(target, soundLocation);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case RAVAGER: {
-                if (Ravager.canSpawn(target)) {
+                if (isBossRush || Ravager.canSpawn(target)) {
                     new Ravager(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case LUNATIC_CULTIST: {
-                if (LunaticCultist.canSpawn(target)) {
-                    new LunaticCultist(target, (Location) extraInfo);
+                if (extraInfo instanceof Location)
+                    soundLocation = (Location) extraInfo;
+                else
+                    soundLocation = target.getLocation().add(target.getLocation().getDirection().multiply(24));
+                if (isBossRush || LunaticCultist.canSpawn(target)) {
+                    new LunaticCultist(target, soundLocation);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case ASTRUM_DEUS: {
-                if (AstrumDeus.canSpawn(target)) {
-                    new AstrumDeus(target, new ArrayList<>(), (Location) extraInfo,0);
+                if (extraInfo instanceof Location)
+                    soundLocation = (Location) extraInfo;
+                else
+                    soundLocation = target.getLocation().add(target.getLocation().getDirection().multiply(24));
+                if (isBossRush || AstrumDeus.canSpawn(target)) {
+                    new AstrumDeus(target, new ArrayList<>(), soundLocation,0);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case MOON_LORD: {
-                if (MoonLord.canSpawn(target)) {
+                if (isBossRush || MoonLord.canSpawn(target)) {
                     new MoonLord(target);
                     spawnedSuccessfully = true;
                 }
@@ -319,42 +341,42 @@ public class BossHelper {
             }
             // pre-servants of gods
             case THE_DRAGONFOLLY: {
-                if (DragonFolly.canSpawn(target)) {
+                if (isBossRush || DragonFolly.canSpawn(target)) {
                     new DragonFolly(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case PROFANED_GUARDIANS: {
-                if (GuardianCommander.canSpawn(target)) {
+                if (isBossRush || GuardianCommander.canSpawn(target)) {
                     new GuardianCommander(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case PROVIDENCE_THE_PROFANED_GODDESS: {
-                if (Providence.canSpawn(target)) {
+                if (isBossRush || Providence.canSpawn(target)) {
                     new Providence(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case STORM_WEAVER: {
-                if (StormWeaver.canSpawn(target)) {
+                if (isBossRush || StormWeaver.canSpawn(target)) {
                     new StormWeaver(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case CEASELESS_VOID: {
-                if (CeaselessVoid.canSpawn(target)) {
+                if (isBossRush || CeaselessVoid.canSpawn(target)) {
                     new CeaselessVoid(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case SIGNUS_ENVOY_OF_THE_DEVOURER: {
-                if (Signus.canSpawn(target)) {
+                if (isBossRush || Signus.canSpawn(target)) {
                     new Signus(target);
                     spawnedSuccessfully = true;
                 }
@@ -362,42 +384,46 @@ public class BossHelper {
             }
             // post-servants of gods
             case POLTERGHAST: {
-                if (Polterghast.canSpawn(target)) {
+                if (isBossRush || Polterghast.canSpawn(target)) {
                     new Polterghast(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case THE_OLD_DUKE: {
-                if (TheOldDuke.canSpawn(target)) {
-                    new TheOldDuke(target, (Location) extraInfo);
+                if (extraInfo instanceof Location)
+                    soundLocation = (Location) extraInfo;
+                else
+                    soundLocation = target.getLocation().add(target.getLocation().getDirection().multiply(32));
+                if (isBossRush || TheOldDuke.canSpawn(target)) {
+                    new TheOldDuke(target, soundLocation);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case THE_DEVOURER_OF_GODS: {
-                if (DevourerOfGods.canSpawn(target)) {
+                if (isBossRush || DevourerOfGods.canSpawn(target)) {
                     new DevourerOfGods(target, new ArrayList<>(), 0);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case YHARON_DRAGON_OF_REBIRTH: {
-                if (Yharon.canSpawn(target)) {
+                if (isBossRush || Yharon.canSpawn(target)) {
                     new Yharon(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case EXO_MECHS: {
-                if (Draedon.canSpawn(target)) {
+                if (isBossRush || Draedon.canSpawn(target)) {
                     new Draedon(target);
                     spawnedSuccessfully = true;
                 }
                 break;
             }
             case SUPREME_WITCH_CALAMITAS: {
-                if (SupremeCalamitas.canSpawn(target)) {
+                if (isBossRush || SupremeCalamitas.canSpawn(target)) {
                     new SupremeCalamitas(target);
                     spawnedSuccessfully = true;
                 }
@@ -419,5 +445,8 @@ public class BossHelper {
 
     public static ArrayList<LivingEntity> getBossList(String boss) {
         return bossMap.get(boss);
+    }
+    public static ArrayList<LivingEntity> getBossList(BossType bossType) {
+        return getBossList(bossType.msgName);
     }
 }

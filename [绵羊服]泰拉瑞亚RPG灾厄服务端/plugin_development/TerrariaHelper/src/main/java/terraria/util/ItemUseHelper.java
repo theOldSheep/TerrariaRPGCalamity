@@ -150,6 +150,9 @@ public class ItemUseHelper {
         boolean isDayTime = WorldHelper.isDayTime(ply.getWorld());
         int useCD = 20;
         switch (itemName) {
+            case "终末石":
+                successful = EventAndTime.startBossRush();
+                break;
             case "日耀碑牌":
                 if (isDayTime) {
                     successful = EventAndTime.initializeEvent(EventAndTime.Events.SOLAR_ECLIPSE);
@@ -342,7 +345,7 @@ public class ItemUseHelper {
                                 successful = currTier < 20;
                                 break;
                             case "生命果":
-                                successful = PlayerHelper.hasDefeated(ply, BossHelper.BossType.WALL_OF_FLESH.msgName) &&
+                                successful = PlayerHelper.hasDefeated(ply, BossHelper.BossType.WALL_OF_FLESH) &&
                                         currTier < 40 && currTier >= 20;
                                 break;
                             case "血橙":

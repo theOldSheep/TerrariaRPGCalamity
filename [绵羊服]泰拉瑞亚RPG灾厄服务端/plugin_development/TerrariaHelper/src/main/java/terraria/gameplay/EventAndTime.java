@@ -1,5 +1,6 @@
 package terraria.gameplay;
 
+import com.comphenix.protocol.PacketType;
 import net.minecraft.server.v1_12_R1.BossBattle;
 import net.minecraft.server.v1_12_R1.BossBattleServer;
 import org.bukkit.Bukkit;
@@ -9,6 +10,7 @@ import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.util.Vector;
@@ -23,10 +25,7 @@ import terraria.entity.boss.event.santaNK1.SantaNK1;
 import terraria.util.*;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 
 public class EventAndTime {
@@ -75,7 +74,7 @@ public class EventAndTime {
         ;
 
         // fields
-        final String eventName;
+        public final String eventName;
         // constructors
         Events(String evtName) {
             this.eventName = evtName;
@@ -143,6 +142,68 @@ public class EventAndTime {
     public static HashSet<String> questFishSubmitted = new HashSet<>();
     // celestial pillars
     public static HashMap<CelestialPillar.PillarTypes, CelestialPillar> pillars = new HashMap<>(6);
+    // boss rush
+    public static int bossRushProgress = -1;
+    public static final BossHelper.BossType[] BOSS_RUSH_ORDER = {
+            // pre hardmode
+            BossHelper.BossType.KING_SLIME, BossHelper.BossType.DESERT_SCOURGE, BossHelper.BossType.EYE_OF_CTHULHU,
+            BossHelper.BossType.CRABULON, BossHelper.BossType.EATER_OF_WORLDS, BossHelper.BossType.THE_HIVE_MIND,
+            BossHelper.BossType.SKELETRON, BossHelper.BossType.THE_SLIME_GOD,
+            // hardmode
+            BossHelper.BossType.QUEEN_SLIME, BossHelper.BossType.CRYOGEN, BossHelper.BossType.THE_TWINS,
+            BossHelper.BossType.AQUATIC_SCOURGE, BossHelper.BossType.THE_DESTROYER, BossHelper.BossType.BRIMSTONE_ELEMENTAL,
+            BossHelper.BossType.SKELETRON_PRIME, BossHelper.BossType.CALAMITAS_CLONE, BossHelper.BossType.PLANTERA,
+            // post plantera
+            BossHelper.BossType.LEVIATHAN_AND_ANAHITA, BossHelper.BossType.ASTRUM_AUREUS, BossHelper.BossType.GOLEM,
+            BossHelper.BossType.THE_PLAGUEBRINGER_GOLIATH, BossHelper.BossType.EMPRESS_OF_LIGHT, BossHelper.BossType.DUKE_FISHRON,
+            BossHelper.BossType.RAVAGER, BossHelper.BossType.LUNATIC_CULTIST, BossHelper.BossType.ASTRUM_DEUS, BossHelper.BossType.MOON_LORD,
+            // post moon lord
+            BossHelper.BossType.THE_DRAGONFOLLY, BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS,
+            BossHelper.BossType.POLTERGHAST, BossHelper.BossType.THE_OLD_DUKE, BossHelper.BossType.THE_DEVOURER_OF_GODS,
+            BossHelper.BossType.YHARON_DRAGON_OF_REBIRTH, BossHelper.BossType.EXO_MECHS, BossHelper.BossType.SUPREME_WITCH_CALAMITAS};
+    public static final String BOSS_RUSH_MESSAGES_PREFIX = "§#FAD54D";
+    public static final HashMap<BossHelper.BossType, String[]> BOSS_RUSH_MESSAGES;
+    static {
+        BOSS_RUSH_MESSAGES = new HashMap<>();
+        BOSS_RUSH_MESSAGES.put(BossHelper.BossType.KING_SLIME, new String[]{
+                "......自从上次已经多久了？一个世纪？还是都一个千年了？",
+                "我把这圣物隐匿于纷争的焦点，就是为了防止它被再度使用。",
+                "几乎没人知晓它的存在，那那些知道的人呢？",
+                "他们都知道这件圣物曾经所提供的无穷的力量，现在都已经没法被利用了。",
+                "在明知这些的情况下，却还是有人勇敢地制造了它的复制品，令人惊讶。",
+                "这次竟是个凡人！多么有趣......",
+                "它不过是块腐烂的石碑，究竟是什么驱使你竭尽全力也要制造它？",
+                "......这或许是个机会。得到这圣物可不是什么小打小闹，而我恰好对你的旅途也有所一瞥。",
+                "是你，在终结一个时代的过程中，得到了曾终结了另一个时代的圣物......",
+                "是你，杀死了无名的巨蛇......",
+                "是你，击败了我的故友，不死之龙......",
+                "是你的力量，能和那唯一一个让我怀疑自己的凡人所匹敌......",
+                "我想测试你的力量，我会用我原始之光的碎片捏造出你过往敌人的形象。",
+                "这不是什么简单的活，但只要你能证明自己足够强大，我会给你一个提案。",
+                "你觉得自己能赢下这场挑战么？",});
+        BOSS_RUSH_MESSAGES.put(BossHelper.BossType.QUEEN_SLIME, new String[]{
+                "到目前为止只是无足轻重的热身罢了，根本没达到我的期望。",
+                "让你的身体和灵魂准备好面对接下来的一切。",});
+        BOSS_RUSH_MESSAGES.put(BossHelper.BossType.LEVIATHAN_AND_ANAHITA, new String[]{
+                "我没错，你确实是一位值得令人敬重的战士。",
+                "不过，你所展现的还不够。我们继续吧？",});
+        BOSS_RUSH_MESSAGES.put(BossHelper.BossType.THE_DRAGONFOLLY, new String[]{
+                "你渴望变强的决心和意志......让我想起了自己，那时候我还只是一介凡人。",
+                "但最为困难的挑战仍在前方，不要放松警惕，一刻也不要。",});
+        BOSS_RUSH_MESSAGES.put(BossHelper.BossType.YHARON_DRAGON_OF_REBIRTH, new String[]{
+                "试炼就将抵达它的高潮。",
+                "是时候展现你的决心，和你力量与意志的真正限度了。",
+                "向我证明，你足以超越自身。",});
+        BOSS_RUSH_MESSAGES.put(null, new String[]{
+                "着实完美的展演。看来我是对的！你确实可能是这个世界最强大的战士，但......",
+                "看来就算是那种力量......还是不够。恐怕我不能向你分享我的提案了。",
+                "尽管如此，虽然只是安慰奖，但我还是希望你拿着这块古代石头，它是我从巨龙天巢上刻下来的。",
+                "我带着它当......纪念品，某种程度上。",
+                "尽管你没能达成我的需求，但未来我们的道路肯定还会有交叉！",
+                "继续寻求更为强大的力量吧，当我们再度相遇时，或许你的力量就够格了。",
+                "与此同时，我自己也还有必须要亲自处理的事情。",
+                "至于现在，先再见吧。",});
+    }
     // fallen stars
     static final HashMap<String, Double> attrMapFallenStar;
     static {
@@ -181,6 +242,10 @@ public class EventAndTime {
             handleEventTermination();
             // tick event
             tickEvent();
+            // tick boss rush
+            if (isBossRushActive()) {
+                tickBossRush();
+            }
             // other surface world mechanism
             if (surfaceWorld != null) {
                 // spawn NPCs
@@ -223,6 +288,72 @@ public class EventAndTime {
             }
         }, 0, 3);
     }
+    // boss rush
+    public static boolean isBossRushActive() {
+        return bossRushProgress >= 0;
+    }
+    public static boolean startBossRush() {
+        if (isBossRushActive())
+            return false;
+        if (! BossHelper.bossMap.isEmpty())
+            return false;
+        bossRushProgress = -1;
+        bossRushSpawn(true);
+        return true;
+    }
+    public static void endBossRush(boolean failure) {
+        bossRushProgress = -1;
+        if (failure)
+            Bukkit.broadcastMessage(BOSS_RUSH_MESSAGES_PREFIX + "菜就多练，菜，就多练！");
+    }
+    public static void bossRushSpawn(boolean goNext) {
+        if (goNext) {
+            // increment progress
+            bossRushProgress ++;
+            // messages
+            String[] msg;
+            if (bossRushProgress >= BOSS_RUSH_ORDER.length) {
+                msg = BOSS_RUSH_MESSAGES.get(null);
+            }
+            else {
+                msg = BOSS_RUSH_MESSAGES.get(BOSS_RUSH_ORDER[bossRushProgress]);
+            }
+            if (msg != null)
+                terraria.entity.boss.BossHelper.sendBossMessages(20, 0, null, BOSS_RUSH_MESSAGES_PREFIX, msg);
+            // end
+            if (bossRushProgress >= BOSS_RUSH_ORDER.length) {
+                endBossRush(false);
+                return;
+            }
+        }
+
+        // randomize target
+        Bukkit.broadcastMessage(goNext + ", " + bossRushProgress);
+        ArrayList<Player> candidates = new ArrayList<>();
+        for (Player ply : Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE).getPlayers()) {
+            if (PlayerHelper.isProperlyPlaying(ply) &&
+                    PlayerHelper.hasDefeated(ply, "毕业")) {
+                candidates.add(ply);
+                Bukkit.broadcastMessage(ply.getName());
+            }
+        }
+        // end if no candidate available
+        if (candidates.isEmpty()) {
+            endBossRush(true);
+        }
+        // spawn boss
+        Player target = candidates.get((int) (Math.random() * candidates.size()));
+        BossHelper.spawnBoss(target, BOSS_RUSH_ORDER[bossRushProgress]);
+    }
+    // this tick would only handle boss escaped.
+    public static void tickBossRush() {
+        BossHelper.BossType currActive = BOSS_RUSH_ORDER[bossRushProgress];
+        // boss disappeared
+        if (BossHelper.getBossList(currActive) == null) {
+            bossRushSpawn(false);
+        }
+    }
+    // fallen star
     public static void destroyAllFallenStars() {
         if (fallenStars.size() > 0) {
             for (Entity entity : fallenStars) {
@@ -258,6 +389,7 @@ public class EventAndTime {
             }
         }
     }
+    // event
     protected static void handleEventTermination() {
         // for events that are specific to daytime or nighttime
         switch (currentEvent) {
@@ -394,8 +526,8 @@ public class EventAndTime {
             double goblinArmyChance = 0.035;
             // if there is one player that has defeated eye of cthulhu but not goblin army, boost chance to 1/3.
             for (Player ply : Bukkit.getOnlinePlayers()) {
-                if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.EYE_OF_CTHULHU.msgName) &&
-                        !PlayerHelper.hasDefeated(ply, Events.GOBLIN_ARMY.eventName)) {
+                if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.EYE_OF_CTHULHU) &&
+                        !PlayerHelper.hasDefeated(ply, Events.GOBLIN_ARMY)) {
                     goblinArmyChance = 0.33;
                     break;
                 }
@@ -467,7 +599,7 @@ public class EventAndTime {
                             continue;
                         if (! ply.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE))
                             continue;
-                        if (! PlayerHelper.hasDefeated(ply, BossHelper.BossType.PLANTERA.msgName))
+                        if (! PlayerHelper.hasDefeated(ply, BossHelper.BossType.PLANTERA))
                             continue;
                         switch (WorldHelper.HeightLayer.getHeightLayer( ply.getLocation() ) ) {
                             case SURFACE:

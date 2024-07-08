@@ -1592,12 +1592,12 @@ public class EntityHelper {
                     Player dPlayer = (Player) dPly;
                     // dungeon souls
                     if (WorldHelper.BiomeType.getBiome(dPlayer) == WorldHelper.BiomeType.DUNGEON) {
-                        if (PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.PLANTERA.msgName) &&
+                        if (PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.PLANTERA) &&
                                 Math.random() < 0.125)
                             MonsterHelper.spawnMob("地牢幽魂", v.getLocation(), dPlayer);
                     }
                     // souls and essences
-                    if (PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.WALL_OF_FLESH.msgName)) {
+                    if (PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.WALL_OF_FLESH)) {
                         if (!v.getScoreboardTags().contains("isBOSS")) {
                             Location deathLoc = v.getLocation();
                             WorldHelper.BiomeType biome = WorldHelper.BiomeType.getBiome(deathLoc);
@@ -1642,7 +1642,7 @@ public class EntityHelper {
                         }
                     }
                     // post-DoG essences
-                    if (spawnEvt != null && PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.THE_DEVOURER_OF_GODS.msgName)) {
+                    if (spawnEvt != null && PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.THE_DEVOURER_OF_GODS)) {
                         String itemType = null;
                         int dropAmountMin = 1, dropAmountMax = 1;
                         double dropChance = 0d;
@@ -2358,7 +2358,7 @@ public class EntityHelper {
                 MetadataValue temp = getMetadata(victim, MetadataName.DYNAMIC_DAMAGE_REDUCTION);
                 if (temp != null) dynamicDR = temp.asDouble();
                 BossHelper.BossType type = (BossHelper.BossType) getMetadata(victim, MetadataName.BOSS_TYPE).value();
-                if (damageSource instanceof Player &&  ! PlayerHelper.hasDefeated((Player) damageSource, type.msgName) )
+                if (damageSource instanceof Player &&  ! PlayerHelper.hasDefeated((Player) damageSource, type) )
                     dmg *= dynamicDR;
             }
             // NPC damage reduction ( for non-fixed damage, the damage is decreased by a factor of 4, and is upper capped at 50

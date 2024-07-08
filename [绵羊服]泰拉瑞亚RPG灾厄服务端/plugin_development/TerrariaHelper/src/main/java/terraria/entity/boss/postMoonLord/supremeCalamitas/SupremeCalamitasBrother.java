@@ -32,7 +32,7 @@ public class SupremeCalamitasBrother extends EntitySlime {
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     Player target = null;
     // other variables and AI
-    static final double[] PROJECTILE_SPEEDS = {1.0, 3.0};
+    static final double[] PROJECTILE_SPEEDS = {0.5, 2.0};
     static HashMap<String, Double> attrMapProjectile;
     static EntityHelper.AimHelperOptions[] aimHelpers;
     EntityHelper.ProjectileShootInfo shootInfo;

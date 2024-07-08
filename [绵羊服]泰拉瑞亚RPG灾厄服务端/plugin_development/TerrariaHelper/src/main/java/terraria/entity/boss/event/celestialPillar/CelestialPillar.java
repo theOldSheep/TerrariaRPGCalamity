@@ -97,7 +97,7 @@ public class CelestialPillar extends EntityGiantZombie {
                         , true)[0],
                 BossBattle.BarColor.WHITE, BossBattle.BarStyle.PROGRESS);
         for (Player ply : Bukkit.getOnlinePlayers()) {
-            if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.GOLEM.msgName))
+            if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.GOLEM))
                 bossbar.addPlayer( ((CraftPlayer) ply).getHandle() );
         }
         bossbar.setVisible(true);

@@ -3,6 +3,7 @@ package terraria.entity.boss;
 import net.minecraft.server.v1_12_R1.AxisAlignedBB;
 import net.minecraft.server.v1_12_R1.BossBattleServer;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
@@ -12,15 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.boss.hardMode.aquaticScourge.AquaticScourge;
 import terraria.entity.boss.hardMode.astrumDeus.AstrumDeus;
-import terraria.entity.boss.postMoonLord.devourerOfGods.DevourerOfGods;
-import terraria.entity.boss.postMoonLord.exoMechs.Ares;
-import terraria.entity.boss.postMoonLord.exoMechs.Artemis;
-import terraria.entity.boss.postMoonLord.exoMechs.Thanatos;
-import terraria.entity.boss.preHardMode.desertScourge.DesertScourge;
-import terraria.entity.boss.postMoonLord.stormWeaver.StormWeaver;
-import terraria.entity.boss.hardMode.theDestroyer.Destroyer;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.EventAndTime;
 import terraria.util.*;
@@ -29,6 +22,17 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class BossHelper {
+    public enum TimeRequirement {
+        DAY,NIGHT,NONE;
+        public boolean validate(World wld) {
+            if (this == NONE)
+                return true;
+            boolean isAppropriate = WorldHelper.isDayTime(wld);
+            if (this == NIGHT)
+                isAppropriate = ! isAppropriate;
+            return isAppropriate;
+        }
+    }
     private static final String
             SUMMARY_HEADER_AGGRO  = "————————BOSS仇恨时长（秒）————————",
             SUMMARY_HEADER_DAMAGE = "———————————伤害汇总———————————",
@@ -147,6 +151,8 @@ public class BossHelper {
         boolean firstAppend = true;
         msg.append("BOSS的挑战者为：");
         // setup targets of the boss
+        if (EventAndTime.isBossRushActive())
+            bossDefeatRequirement = "毕业";
         for (Player currPly : boss.getWorld().getPlayers()) {
             if (!currPly.getName().equals(ply.getName())) {
                 // unauthorized
@@ -181,12 +187,19 @@ public class BossHelper {
                                                           Player ply, boolean hasDistanceRestriction, BossBattleServer bossbar) {
         return setupBossTarget(boss, bossDefeatRequirement, ply, hasDistanceRestriction, true, bossbar);
     }
-    public static boolean checkBossTarget(Entity target, Entity boss, boolean ignoreDistance, WorldHelper.BiomeType biomeRequired) {
+    public static boolean checkBossTarget(Entity target, Entity boss, boolean ignoreDistance,
+                                          TimeRequirement timeRequirement, WorldHelper.BiomeType biomeRequired) {
         if (target instanceof Player) {
             Player targetPlayer = (Player) target;
             if (!PlayerHelper.isProperlyPlaying(targetPlayer)) return false;
             if (targetPlayer.getWorld() != boss.getWorld()) return false;
-            if (biomeRequired != null && WorldHelper.BiomeType.getBiome(targetPlayer, false) != biomeRequired) return false;
+            // do not check for biome/time during boss rush
+            if (! EventAndTime.isBossRushActive()) {
+                if (! timeRequirement.validate(targetPlayer.getWorld()))
+                    return false;
+                if (biomeRequired != null && WorldHelper.BiomeType.getBiome(targetPlayer, false) != biomeRequired)
+                    return false;
+            }
             double distHor = GenericHelper.getHorizontalDistance(targetPlayer.getLocation(), boss.getLocation());
             if (distHor > 165) return ignoreDistance;
             return true;
@@ -195,6 +208,10 @@ public class BossHelper {
     }
     // generally, this function also handles misc aspects like cached velocity
     public static Player updateBossTarget(Player currentTarget, Entity boss, boolean ignoreDistance,
+                                          WorldHelper.BiomeType biomeRequired, Collection<UUID> availableTargets) {
+        return updateBossTarget(currentTarget, boss, ignoreDistance, TimeRequirement.NONE, biomeRequired, availableTargets);
+    }
+    public static Player updateBossTarget(Player currentTarget, Entity boss, boolean ignoreDistance, TimeRequirement timeRequired,
                                           WorldHelper.BiomeType biomeRequired, Collection<UUID> availableTargets) {
         // update saved velocity
         {
@@ -205,14 +222,14 @@ public class BossHelper {
         }
         // update target
         Player finalTarget = currentTarget;
-        if (!checkBossTarget(currentTarget, boss, ignoreDistance, biomeRequired)) {
+        if (!checkBossTarget(currentTarget, boss, ignoreDistance, timeRequired, biomeRequired)) {
             // save all applicable targets
             ArrayList<Player> candidates = new ArrayList<>();
             for (UUID plyID : availableTargets) {
                 Player ply = Bukkit.getPlayer(plyID);
                 if (ply == null)
                     continue;
-                if ( checkBossTarget(ply, boss, ignoreDistance, biomeRequired) )
+                if ( checkBossTarget(ply, boss, ignoreDistance, timeRequired, biomeRequired) )
                     candidates.add(ply);
             }
             // update the target as a random new target
@@ -253,92 +270,98 @@ public class BossHelper {
     }
     public static void handleBossDeath(terraria.util.BossHelper.BossType bossType,
                                        ArrayList<LivingEntity> bossParts, HashMap<UUID, BossTargetInfo> targetMap) {
+        boolean isBossRush = EventAndTime.isBossRushActive();
+
         double[] healthInfo = terraria.entity.boss.BossHelper.getHealthInfo(bossParts, bossType);
         // boss death message
         Bukkit.broadcastMessage("§d§l" + bossType.msgName + " 被击败了.");
-        switch (bossType) {
-            case DESERT_SCOURGE:
-                Bukkit.broadcastMessage("§#7FFFD4地下沙漠的深处轰隆作响……");
-                break;
-            case THE_HIVE_MIND:
-                Bukkit.broadcastMessage("§#00FFFF苍青色的光辉照耀着这片土地。");
-                break;
-            case WALL_OF_FLESH:
-                Bukkit.broadcastMessage("§#7FFFD4沉沦之海在颤动……");
-                Bukkit.broadcastMessage("§#FFD700一颗明星从天堂中坠陨！");
-                break;
-            case CRYOGEN:
-                Bukkit.broadcastMessage("§#87CEFA寒晶能量从冰之洞穴中迸发而出。");
-                break;
-            case PLANTERA:
-                Bukkit.broadcastMessage("§#ADFF2F富含能量的植物物质已在地下形成。");
-                break;
-            case CALAMITAS_CLONE:
-                Bukkit.broadcastMessage("§#4169E1海洋的深处传来震动。");
-                break;
-            case ASTRUM_AUREUS:
-                Bukkit.broadcastMessage("§#FFD700星幻敌人得到了增强！");
-                break;
-            case GOLEM:
-                Bukkit.broadcastMessage("§#00FF00一场瘟疫席卷了丛林。");
-                break;
-            case ASTRUM_DEUS:
-                Bukkit.broadcastMessage("§#FFD700幻星的封印已破碎！你可以挖掘炫星矿了。");
-                break;
-            case MOON_LORD:
-                Bukkit.broadcastMessage("§#FFA500亵渎之火猛烈燃烧！");
-                Bukkit.broadcastMessage("§#EE82EE宇宙的恐惧正注视着这一切……");
-                Bukkit.broadcastMessage("§#D3D3D3冷黯的能量散布至宇宙之间。");
-                Bukkit.broadcastMessage("§#00FFFF尖叫声回荡于地牢之中。");
-                break;
-            case PROVIDENCE_THE_PROFANED_GODDESS:
-                Bukkit.broadcastMessage("§#FFA500灾厄造物已被血石洗礼。");
-                Bukkit.broadcastMessage("§#90EE90石化树皮正在丛林的淤泥中爆发。");
-                break;
-            case POLTERGHAST:
-                Bukkit.broadcastMessage("§#4169E1深渊之灵受到了威胁。");
-                break;
-            case THE_DEVOURER_OF_GODS:
-                Bukkit.broadcastMessage("§#FFA500收割之月散布着诡异的光芒。");
-                Bukkit.broadcastMessage("§#00FFFF寒霜之月散发着明洁的光辉。");
-                Bukkit.broadcastMessage("§#FFA500黑蚀之日蓄势待发。");
-                break;
-            case YHARON_DRAGON_OF_REBIRTH:
-                Bukkit.broadcastMessage("§#FFD700远古巨龙的力量在洞穴中显现，交织着穿过岩石。");
-                break;
+        if (isBossRush) {
+            EventAndTime.bossRushSpawn(true);
         }
+        else {
+            // additional defeat messages
+            switch (bossType) {
+                case DESERT_SCOURGE:
+                    Bukkit.broadcastMessage("§#7FFFD4地下沙漠的深处轰隆作响……");
+                    break;
+                case THE_HIVE_MIND:
+                    Bukkit.broadcastMessage("§#00FFFF苍青色的光辉照耀着这片土地。");
+                    break;
+                case WALL_OF_FLESH:
+                    Bukkit.broadcastMessage("§#7FFFD4沉沦之海在颤动……");
+                    Bukkit.broadcastMessage("§#FFD700一颗明星从天堂中坠陨！");
+                    break;
+                case CRYOGEN:
+                    Bukkit.broadcastMessage("§#87CEFA寒晶能量从冰之洞穴中迸发而出。");
+                    break;
+                case PLANTERA:
+                    Bukkit.broadcastMessage("§#ADFF2F富含能量的植物物质已在地下形成。");
+                    break;
+                case CALAMITAS_CLONE:
+                    Bukkit.broadcastMessage("§#4169E1海洋的深处传来震动。");
+                    break;
+                case ASTRUM_AUREUS:
+                    Bukkit.broadcastMessage("§#FFD700星幻敌人得到了增强！");
+                    break;
+                case GOLEM:
+                    Bukkit.broadcastMessage("§#00FF00一场瘟疫席卷了丛林。");
+                    break;
+                case ASTRUM_DEUS:
+                    Bukkit.broadcastMessage("§#FFD700幻星的封印已破碎！你可以挖掘炫星矿了。");
+                    break;
+                case MOON_LORD:
+                    Bukkit.broadcastMessage("§#FFA500亵渎之火猛烈燃烧！");
+                    Bukkit.broadcastMessage("§#EE82EE宇宙的恐惧正注视着这一切……");
+                    Bukkit.broadcastMessage("§#D3D3D3冷黯的能量散布至宇宙之间。");
+                    Bukkit.broadcastMessage("§#00FFFF尖叫声回荡于地牢之中。");
+                    break;
+                case PROVIDENCE_THE_PROFANED_GODDESS:
+                    Bukkit.broadcastMessage("§#FFA500灾厄造物已被血石洗礼。");
+                    Bukkit.broadcastMessage("§#90EE90石化树皮正在丛林的淤泥中爆发。");
+                    break;
+                case POLTERGHAST:
+                    Bukkit.broadcastMessage("§#4169E1深渊之灵受到了威胁。");
+                    break;
+                case THE_DEVOURER_OF_GODS:
+                    Bukkit.broadcastMessage("§#FFA500收割之月散布着诡异的光芒。");
+                    Bukkit.broadcastMessage("§#00FFFF寒霜之月散发着明洁的光辉。");
+                    Bukkit.broadcastMessage("§#FFA500黑蚀之日蓄势待发。");
+                    break;
+                case YHARON_DRAGON_OF_REBIRTH:
+                    Bukkit.broadcastMessage("§#FFD700远古巨龙的力量在洞穴中显现，交织着穿过岩石。");
+                    break;
+            }
+            // calculate and broadcast boss aggression time & dmg dealt
+            int ticksAggressionReq = calculateAndPrintAggro(targetMap);
+            double dmgDealtReq = calculateAndPrintDamage(targetMap, healthInfo[1]); // healthInfo[1] is the actualBossHealth
+            // print the final line to wrap up the summary
+            Bukkit.broadcastMessage(SUMMARY_HEADER_FINAL);
 
-        // calculate and broadcast boss aggression time
-        int ticksAggressionReq = calculateAndPrintAggro(targetMap);
-        // calculate and broadcast damage dealt
-        double dmgDealtReq = calculateAndPrintDamage(targetMap, healthInfo[1]); // healthInfo[1] is the actualBossHealth
-        // print the final line to wrap up the summary
-        Bukkit.broadcastMessage(SUMMARY_HEADER_FINAL);
-
-        // send out loot
-        if (bossType.hasTreasureBag) {
-            ItemStack loopBag = ItemHelper.getItemFromDescription(bossType.msgName + "的 专家模式福袋");
-            for (UUID plyID : targetMap.keySet()) {
-                Player ply = Bukkit.getPlayer(plyID);
-                if (ply == null)
-                    continue;
-                boolean hasEnoughContribution = targetMap.get(plyID).damageDealt >= dmgDealtReq ||
-                        targetMap.get(plyID).ticksAggression >= ticksAggressionReq;
-                if (hasEnoughContribution) {
-                    ply.sendMessage("§a恭喜你击败了BOSS[§r" + bossType.msgName + "§a]!");
-                    PlayerHelper.setDefeated(ply, bossType.msgName, true);
-                    PlayerHelper.giveItem(ply, loopBag, true);
-                } else {
-                    ply.sendMessage("§aBOSS " + bossType.msgName + " 已经被击败。很遗憾，您对BOSS战的贡献不足以获得一份战利品。");
-                    ply.sendMessage("若要获得一份战利品，请在BOSS战中贡献更多的伤害或吸引更久的仇恨。");
+            // loot
+            if (bossType.hasTreasureBag) {
+                ItemStack loopBag = ItemHelper.getItemFromDescription(bossType.msgName + "的 专家模式福袋");
+                for (UUID plyID : targetMap.keySet()) {
+                    Player ply = Bukkit.getPlayer(plyID);
+                    if (ply == null)
+                        continue;
+                    boolean hasEnoughContribution = targetMap.get(plyID).damageDealt >= dmgDealtReq ||
+                            targetMap.get(plyID).ticksAggression >= ticksAggressionReq;
+                    if (hasEnoughContribution) {
+                        ply.sendMessage("§a恭喜你击败了BOSS[§r" + bossType.msgName + "§a]!");
+                        PlayerHelper.setDefeated(ply, bossType.msgName, true);
+                        PlayerHelper.giveItem(ply, loopBag, true);
+                    } else {
+                        ply.sendMessage("§aBOSS " + bossType.msgName + " 已经被击败。很遗憾，您对BOSS战的贡献不足以获得一份战利品。");
+                        ply.sendMessage("若要获得一份战利品，请在BOSS战中贡献更多的伤害或吸引更久的仇恨。");
+                    }
                 }
             }
-        }
-        // other mechanics
-        switch (bossType) {
-            case KING_SLIME: {
-                if (EventAndTime.currentEvent == EventAndTime.Events.SLIME_RAIN)
-                    EventAndTime.endEvent();
+            // other mechanics
+            switch (bossType) {
+                case KING_SLIME: {
+                    if (EventAndTime.currentEvent == EventAndTime.Events.SLIME_RAIN)
+                        EventAndTime.endEvent();
+                }
             }
         }
     }

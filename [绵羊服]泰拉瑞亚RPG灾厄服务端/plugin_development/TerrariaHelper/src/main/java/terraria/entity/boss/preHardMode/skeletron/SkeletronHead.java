@@ -12,6 +12,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
+import terraria.gameplay.EventAndTime;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
@@ -125,7 +126,8 @@ public class SkeletronHead extends EntitySlime {
                     } else {
                         bukkitEntity.removeScoreboardTag("noDamage");
                     }
-                    if (WorldHelper.isDayTime(bukkitEntity.getWorld())) {
+                    // transition to higher dmg only
+                    if (WorldHelper.isDayTime(bukkitEntity.getWorld()) && !EventAndTime.isBossRushActive()) {
                         attrMap.put("defence", 9999d);
                         attrMap.put("damage", 9999d);
                     } else {

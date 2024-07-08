@@ -85,6 +85,9 @@ public class PlayerKeyToggleListener implements Listener {
                     PlayerHelper.handleMount(ply);
                 }
                 break;
+            case "X":
+                PlayerHelper.handleInsignia(ply);
+                break;
             case "C":
                 PlayerHelper.handleToggleSwitchable(ply);
                 break;

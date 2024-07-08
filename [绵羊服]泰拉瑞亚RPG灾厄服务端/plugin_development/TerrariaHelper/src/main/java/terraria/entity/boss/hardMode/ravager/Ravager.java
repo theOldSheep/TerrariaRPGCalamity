@@ -232,8 +232,7 @@ public class Ravager extends EntitySlime {
     // a constructor for actual spawning
     public Ravager(Player summonedPlayer) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
-        String providenceName = BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS.msgName;
-        postProvidence = PlayerHelper.hasDefeated(summonedPlayer, providenceName);
+        postProvidence = PlayerHelper.hasDefeated(summonedPlayer, BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS);
         // spawn location
         Location spawnLoc = summonedPlayer.getLocation().add(0, 25, 0);
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);

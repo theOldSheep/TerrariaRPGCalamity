@@ -55,7 +55,7 @@ public class PlayerJoinListener implements Listener {
         }
         // for players after golem, show the celestial pillar boss bar to them
         EntityPlayer playerNMS = ((CraftPlayer) joinedPly).getHandle();
-        if (PlayerHelper.hasDefeated(joinedPly, BossHelper.BossType.GOLEM.msgName))
+        if (PlayerHelper.hasDefeated(joinedPly, BossHelper.BossType.GOLEM))
             for (CelestialPillar pillar : EventAndTime.pillars.values())
                 pillar.bossbar.addPlayer( playerNMS );
         // show boss bars

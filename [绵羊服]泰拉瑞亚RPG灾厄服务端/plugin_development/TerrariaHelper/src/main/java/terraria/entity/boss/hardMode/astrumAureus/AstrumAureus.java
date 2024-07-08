@@ -221,9 +221,7 @@ public class AstrumAureus extends EntitySlime {
         {
             // update target
             target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
-            if (WorldHelper.isDayTime(bukkitEntity.getWorld()))
-                target = null;
+                    IGNORE_DISTANCE, terraria.entity.boss.BossHelper.TimeRequirement.NIGHT, BIOME_REQUIRED, targetMap.keySet());
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {

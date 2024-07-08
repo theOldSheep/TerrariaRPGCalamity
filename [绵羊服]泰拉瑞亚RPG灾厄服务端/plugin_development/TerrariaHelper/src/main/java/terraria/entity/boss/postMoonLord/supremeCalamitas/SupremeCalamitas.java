@@ -78,7 +78,7 @@ public class SupremeCalamitas extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    static double DASH_SPEED = 3.5, HOVER_SPEED = 2.75, DART_SPEED = 2.75, HELL_BLAST_SPEED = 3.75, GIGA_BLAST_SPEED = 1.25,
+    static double DASH_SPEED = 3.5, HOVER_SPEED = 2.75, DART_SPEED = 2.75, HELL_BLAST_SPEED = 3.25, GIGA_BLAST_SPEED = 1.25,
             HOVER_DISTANCE = 48, HOVER_DISTANCE_BROTHERS = 40, HOVER_DISTANCE_BROTHERS_OFFSET = 12,
             DART_SPREAD_SINGLE = 10, DART_SPREAD_TOTAL = 40;
     static HashMap<String, Double> attrMapPrjLow, attrMapPrjMid, attrMapPrjHigh, attrMapPrjExtreme;
@@ -416,7 +416,7 @@ public class SupremeCalamitas extends EntitySlime {
         }
         double yaw = MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         Vector directDir = MathHelper.vectorFromYawPitch_approx(yaw, 0)
-                .multiply(HOVER_DISTANCE_BROTHERS);
+                .multiply(HOVER_DISTANCE - HOVER_DISTANCE_BROTHERS);
         Location hoverLoc = bukkitEntity.getLocation().add(directDir);
         if (brothers.size() == 1) {
             brothers.get(0).desiredLoc = hoverLoc;

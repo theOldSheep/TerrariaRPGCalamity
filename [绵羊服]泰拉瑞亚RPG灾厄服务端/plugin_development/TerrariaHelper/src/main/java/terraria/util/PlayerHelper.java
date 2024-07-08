@@ -399,6 +399,12 @@ public class PlayerHelper {
         String filePath = getPlayerDataFilePath(ply);
         return YmlHelper.getFile(filePath);
     }
+    public static boolean hasDefeated(Player player, EventAndTime.Events eventToCheck) {
+        return hasDefeated(player, eventToCheck.eventName);
+    }
+    public static boolean hasDefeated(Player player, BossHelper.BossType bossToCheck) {
+        return hasDefeated(player, bossToCheck.msgName);
+    }
     public static boolean hasDefeated(Player player, String progressToCheck) {
         if (progressToCheck.length() == 0)
             return true;
@@ -407,9 +413,9 @@ public class PlayerHelper {
             case "机械二王":
             case "机械三王":
                 int amountDefeated = 0;
-                if (hasDefeated(player, BossHelper.BossType.THE_TWINS.msgName)) amountDefeated ++;
-                if (hasDefeated(player, BossHelper.BossType.SKELETRON_PRIME.msgName)) amountDefeated ++;
-                if (hasDefeated(player, BossHelper.BossType.THE_DESTROYER.msgName)) amountDefeated ++;
+                if (hasDefeated(player, BossHelper.BossType.THE_TWINS)) amountDefeated ++;
+                if (hasDefeated(player, BossHelper.BossType.SKELETRON_PRIME)) amountDefeated ++;
+                if (hasDefeated(player, BossHelper.BossType.THE_DESTROYER)) amountDefeated ++;
                 switch (progressToCheck) {
                     case "机械一王":
                         return amountDefeated >= 1;
@@ -418,6 +424,9 @@ public class PlayerHelper {
                     case "机械三王":
                         return amountDefeated >= 3;
                 }
+                break;
+            case "毕业":
+                return hasDefeated(player, BossHelper.BossType.EXO_MECHS) && hasDefeated(player, BossHelper.BossType.SUPREME_WITCH_CALAMITAS);
         }
         YmlHelper.YmlSection fileSection = getPlayerDataFile(player);
         return fileSection.getBoolean("bossDefeated." + progressToCheck, false);
@@ -1889,14 +1898,14 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     // dungeon; apply debuff when skeletron is not yet defeated
                     if (specialBlocks[1] >= 3) {
                         plyBiome = WorldHelper.BiomeType.DUNGEON;
-                        if (! hasDefeated(ply, BossHelper.BossType.SKELETRON.msgName)) {
+                        if (! hasDefeated(ply, BossHelper.BossType.SKELETRON)) {
                             EntityHelper.applyEffect(ply, "带电", 300);
                         }
                     }
                     // lizard temple; apply debuff when plantera is not yet defeated
                     else if (specialBlocks[2] >= 3) {
                         plyBiome = WorldHelper.BiomeType.TEMPLE;
-                        if (! hasDefeated(ply, BossHelper.BossType.PLANTERA.msgName)) {
+                        if (! hasDefeated(ply, BossHelper.BossType.PLANTERA)) {
                             EntityHelper.applyEffect(ply, "龙焰", 300);
                         }
                     }
@@ -2232,7 +2241,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         }
                         case "归一心元石": {
                             HashMap<String, String> toTweak = new HashMap<>(17);
-                            if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.SUPREME_WITCH_CALAMITAS.msgName)) {
+                            if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.SUPREME_WITCH_CALAMITAS)) {
                                 toTweak.put("maxHealthMulti", "0.1");
                                 toTweak.put("useSpeedMeleeMulti", "0.05");
                                 toTweak.put("regen", "6");
@@ -2243,7 +2252,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("speedMulti", "0.1");
                                 toTweak.put("flightTimeMulti", "0.2");
                             }
-                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.EXO_MECHS.msgName)) {
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.EXO_MECHS)) {
                                 toTweak.put("maxHealthMulti", "0.09");
                                 toTweak.put("useSpeedMeleeMulti", "0.049");
                                 toTweak.put("regen", "4");
@@ -2254,7 +2263,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("speedMulti", "0.098");
                                 toTweak.put("flightTimeMulti", "0.196");
                             }
-                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.YHARON_DRAGON_OF_REBIRTH.msgName)) {
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.YHARON_DRAGON_OF_REBIRTH)) {
                                 toTweak.put("maxHealthMulti", "0.09");
                                 toTweak.put("useSpeedMeleeMulti", "0.048");
                                 toTweak.put("regen", "4");
@@ -2265,7 +2274,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("speedMulti", "0.096");
                                 toTweak.put("flightTimeMulti", "0.193");
                             }
-                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.THE_DEVOURER_OF_GODS.msgName)) {
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.THE_DEVOURER_OF_GODS)) {
                                 toTweak.put("maxHealthMulti", "0.09");
                                 toTweak.put("useSpeedMeleeMulti", "0.047");
                                 toTweak.put("regen", "4");
@@ -2276,7 +2285,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("speedMulti", "0.095");
                                 toTweak.put("flightTimeMulti", "0.189");
                             }
-                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS.msgName)) {
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS)) {
                                 toTweak.put("maxHealthMulti", "0.08");
                                 toTweak.put("useSpeedMeleeMulti", "0.042");
                                 toTweak.put("regen", "4");
@@ -2287,7 +2296,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("speedMulti", "0.084");
                                 toTweak.put("flightTimeMulti", "0.168");
                             }
-                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.MOON_LORD.msgName)) {
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.MOON_LORD)) {
                                 toTweak.put("maxHealthMulti", "0.07");
                                 toTweak.put("useSpeedMeleeMulti", "0.039");
                                 toTweak.put("regen", "4");
@@ -2298,7 +2307,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("speedMulti", "0.079");
                                 toTweak.put("flightTimeMulti", "0.157");
                             }
-                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.ASTRUM_DEUS.msgName)) {
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.ASTRUM_DEUS)) {
                                 toTweak.put("maxHealthMulti", "0.07");
                                 toTweak.put("useSpeedMeleeMulti", "0.038");
                                 toTweak.put("regen", "4");
@@ -2309,7 +2318,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("speedMulti", "0.077");
                                 toTweak.put("flightTimeMulti", "0.154");
                             }
-                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.EMPRESS_OF_LIGHT.msgName)) {
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.EMPRESS_OF_LIGHT)) {
                                 toTweak.put("maxHealthMulti", "0.06");
                                 toTweak.put("useSpeedMeleeMulti", "0.035");
                                 toTweak.put("regen", "4");
@@ -2320,7 +2329,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("speedMulti", "0.07");
                                 toTweak.put("flightTimeMulti", "0.139");
                             }
-                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.PLANTERA.msgName)) {
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.PLANTERA)) {
                                 toTweak.put("maxHealthMulti", "0.06");
                                 toTweak.put("useSpeedMeleeMulti", "0.03");
                                 toTweak.put("regen", "4");
@@ -2331,7 +2340,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("speedMulti", "0.061");
                                 toTweak.put("flightTimeMulti", "0.121");
                             }
-                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.BRIMSTONE_ELEMENTAL.msgName)) {
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.BRIMSTONE_ELEMENTAL)) {
                                 toTweak.put("maxHealthMulti", "0.05");
                                 toTweak.put("useSpeedMeleeMulti", "0.028");
                                 toTweak.put("regen", "4");
@@ -2342,7 +2351,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("speedMulti", "0.057");
                                 toTweak.put("flightTimeMulti", "0.114");
                             }
-                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.CRYOGEN.msgName)) {
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.CRYOGEN)) {
                                 toTweak.put("maxHealthMulti", "0.04");
                                 toTweak.put("useSpeedMeleeMulti", "0.024");
                                 toTweak.put("regen", "2");
@@ -2353,7 +2362,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("speedMulti", "0.048");
                                 toTweak.put("flightTimeMulti", "0.096");
                             }
-                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.WALL_OF_FLESH.msgName)) {
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.WALL_OF_FLESH)) {
                                 toTweak.put("maxHealthMulti", "0.04");
                                 toTweak.put("useSpeedMeleeMulti", "0.022");
                                 toTweak.put("regen", "2");
@@ -2364,7 +2373,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("speedMulti", "0.045");
                                 toTweak.put("flightTimeMulti", "0.089");
                             }
-                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.THE_SLIME_GOD.msgName)) {
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.THE_SLIME_GOD)) {
                                 toTweak.put("maxHealthMulti", "0.04");
                                 toTweak.put("useSpeedMeleeMulti", "0.021");
                                 toTweak.put("regen", "2");
@@ -2375,7 +2384,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("speedMulti", "0.043");
                                 toTweak.put("flightTimeMulti", "0.086");
                             }
-                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.THE_HIVE_MIND.msgName)) {
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.THE_HIVE_MIND)) {
                                 toTweak.put("maxHealthMulti", "0.03");
                                 toTweak.put("useSpeedMeleeMulti", "0.018");
                                 toTweak.put("regen", "2");
@@ -2386,7 +2395,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("speedMulti", "0.036");
                                 toTweak.put("flightTimeMulti", "0.071");
                             }
-                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.EYE_OF_CTHULHU.msgName)) {
+                            else if (PlayerHelper.hasDefeated(ply, BossHelper.BossType.EYE_OF_CTHULHU)) {
                                 toTweak.put("maxHealthMulti", "0.03");
                                 toTweak.put("useSpeedMeleeMulti", "0.015");
                                 toTweak.put("regen", "2");
@@ -2494,6 +2503,12 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             }
             plyFile.set("inventory." + invType, result);
         }
+    }
+    public static void handleInsignia(Player ply) {
+        if (EntityHelper.hasEffect(ply, "进升证章冷却"))
+            return;
+        resetPlayerFlightTime(ply);
+        EntityHelper.applyEffect(ply, "进升证章冷却", 800);
     }
     public static void handleToggleSwitchable(Player ply) {
         if (ply.getScoreboardTags().contains(TAG_HAS_SWITCHABLE_ACCESSORY)) {

@@ -703,7 +703,7 @@ public class MonsterHelper {
                             boolean useAcc = false;
                             if (type.equals("精灵弓箭手")) {
                                 aimPrecision = 1d;
-                                if (PlayerHelper.hasDefeated(target, BossHelper.BossType.THE_DEVOURER_OF_GODS.msgName)) {
+                                if (PlayerHelper.hasDefeated(target, BossHelper.BossType.THE_DEVOURER_OF_GODS)) {
                                     projSpd = 2.5;
                                     randOffset = 1.75;
                                     useAcc = true;
