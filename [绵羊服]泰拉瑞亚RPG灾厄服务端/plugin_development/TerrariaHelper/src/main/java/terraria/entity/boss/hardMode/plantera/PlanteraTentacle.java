@@ -17,6 +17,7 @@ import java.util.HashMap;
 public class PlanteraTentacle extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.PLANTERA;
+    public static final double BASIC_HEALTH = 2600 * 2, BASIC_HEALTH_BR = 5100 * 2;
     HashMap<String, Double> attrMap;
     // other variables and AI
     static final double SPEED = 2;
@@ -93,7 +94,7 @@ public class PlanteraTentacle extends EntitySlime {
         {
             setSize(4, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(owner.targetMap.size());
-            double health = 5100 * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

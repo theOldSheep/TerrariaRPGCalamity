@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.boss.event.celestialPillar.CelestialPillar;
 import terraria.entity.boss.hardMode.astrumDeus.AstrumDeus;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.EventAndTime;
@@ -361,6 +362,11 @@ public class BossHelper {
                 case KING_SLIME: {
                     if (EventAndTime.currentEvent == EventAndTime.Events.SLIME_RAIN)
                         EventAndTime.endEvent();
+                    break;
+                }
+                case LUNATIC_CULTIST: {
+                    CelestialPillar.handlePillarSpawn();
+                    break;
                 }
             }
         }

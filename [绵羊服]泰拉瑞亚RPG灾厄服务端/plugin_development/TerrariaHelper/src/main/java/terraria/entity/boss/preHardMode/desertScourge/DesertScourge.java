@@ -24,7 +24,7 @@ public class DesertScourge extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.DESERT_SCOURGE;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.DESERT;
-    public static final double BASIC_HEALTH = 7200 * 2;
+    public static final double BASIC_HEALTH = 7200 * 2, BASIC_HEALTH_BR = 3960000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -286,7 +286,7 @@ public class DesertScourge extends EntitySlime {
         {
             setSize(8, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

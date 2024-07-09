@@ -107,6 +107,13 @@ public class BossHelper {
             return msgName;
         }
     }
+
+    public static double accountForBR(double br, double notBr) {
+        if (EventAndTime.isBossRushActive())
+            return br;
+        return notBr;
+    }
+
     public static boolean spawnBoss(Player target, BossType bossType) {
         return spawnBoss(target, bossType, null);
     }

@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class GuardianDefender extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.PROFANED_GUARDIANS;
-    public static final double BASIC_HEALTH = 144000 * 2;
+    public static final double BASIC_HEALTH = 144000 * 2, BASIC_HEALTH_BR = 216000 * 2;
     public static final String DISPLAY_NAME = BOSS_TYPE.msgName + "·神石";
     HashMap<String, Double> attrMap;
     ArrayList<LivingEntity> bossParts;
@@ -198,7 +198,7 @@ public class GuardianDefender extends EntitySlime {
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(commander.targetMap.size());
             if (BossHelper.bossMap.containsKey(BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS.msgName))
                 healthMulti *= GuardianCommander.HEALTH_MULTI_PROVIDENCE_ALIVE;
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

@@ -620,6 +620,9 @@ effects:
   星云之核冷却:
     isBuff: false
     tooltip: 星云之核复活仍未就绪
+  进升证章冷却:
+    isBuff: false
+    tooltip: 进升证章仍未就绪
   硫火狂怒:
     isBuff: true
     attributes:
@@ -658,7 +661,7 @@ effects:
   龙蒿披风:
     isBuff: true
     attributes:
-        damageTakenMulti: -0.5
+        damageContactTakenMulti: -0.5
     buffOnTimeout: 龙蒿披风冷却
     buffOnTimeoutDuration: 600
     tooltip: 降低接触伤害
@@ -695,9 +698,9 @@ effects:
   弑神者冲刺:
     isBuff: true
     attributes:
-        damageTakenMulti: -0.85
+        damageTakenMulti: -0.65
         knockbackResistance: 1
-    tooltip: 下次受到攻击时减少85%受到伤害并无视击退
+    tooltip: 下次受到攻击时减少40%受到伤害并无视击退
   神弑者之停息:
     isBuff: false
     tooltip: 你需要稍等片刻才能再次使用弑神者冲刺

@@ -23,7 +23,7 @@ public class GuardianCommander extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.PROFANED_GUARDIANS;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.HALLOW;
-    public static final double BASIC_HEALTH = 288000 * 2, HEALTH_MULTI_PROVIDENCE_ALIVE = 0.35;
+    public static final double BASIC_HEALTH = 288000 * 2, BASIC_HEALTH_BR = 432000 * 2, HEALTH_MULTI_PROVIDENCE_ALIVE = 0.35;
     public static final boolean IGNORE_DISTANCE = false;
     public static final String DISPLAY_NAME = BOSS_TYPE.msgName + "·统御";
     HashMap<String, Double> attrMap;
@@ -227,7 +227,7 @@ public class GuardianCommander extends EntitySlime {
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             if (summonedByProvidence)
                 healthMulti *= HEALTH_MULTI_PROVIDENCE_ALIVE;
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

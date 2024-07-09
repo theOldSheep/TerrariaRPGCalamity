@@ -18,7 +18,7 @@ public class CrimulanSlime extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.THE_SLIME_GOD;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 15552 * 2;
+    public static final double BASIC_HEALTH = 15552 * 2, BASIC_HEALTH_BR = 808080 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -210,7 +210,7 @@ public class CrimulanSlime extends EntitySlime {
                     healthMulti *= 0.05;
                     break;
             }
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

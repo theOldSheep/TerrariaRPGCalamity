@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class CryogenShield extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.CRYOGEN;
-    public static final double BASIC_HEALTH = 2100 * 2;
+    public static final double BASIC_HEALTH = 2100 * 2, BASIC_HEALTH_BR = 16800 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     // other variables and AI
@@ -83,7 +83,7 @@ public class CryogenShield extends EntitySlime {
         {
             setSize(8 + 4, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(owner.targetMap.size());
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

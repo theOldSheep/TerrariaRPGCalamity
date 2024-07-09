@@ -411,8 +411,12 @@
     blockHitAction: thru
     liveTime: 80
     gravity: 0
+    homing: true
+    maxHomingTicks: 20
+    homingRadius: 128
+    homingAbility: 0
     speedMultiPerTick: 10
-    maxSpeed: 3
+    maxSpeed: 2.5
     buffInflict:
         - "孱弱巫咒|60|1"
 硫磺火球:

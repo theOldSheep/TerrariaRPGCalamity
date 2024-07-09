@@ -24,7 +24,7 @@ public class EaterOfWorld extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EATER_OF_WORLDS;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.CORRUPTION;
-    public static final double BASIC_HEALTH = 372 * 2;
+    public static final double BASIC_HEALTH = 372 * 2, BASIC_HEALTH_BR = 18708 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -310,7 +310,7 @@ public class EaterOfWorld extends EntitySlime {
         {
             setSize(3, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

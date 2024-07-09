@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.entity.boss.event.celestialPillar.CelestialPillar;
+import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
@@ -23,7 +24,7 @@ public class LunaticCultist extends EntityZombie {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.LUNATIC_CULTIST;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 85104 * 2;
+    public static final double BASIC_HEALTH = 85104 * 2, BASIC_HEALTH_BR = 420750 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -290,7 +291,10 @@ public class LunaticCultist extends EntityZombie {
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
-        summonedPlayer.sendMessage("§a你有30秒的时间寻找开阔的场地，请做好挑战拜月教邪教徒的准备！");
+        if (EventAndTime.isBossRushActive())
+            ticksBeforeAttack = 1;
+        else
+            summonedPlayer.sendMessage("§a你有30秒的时间寻找开阔的场地，请做好挑战拜月教邪教徒的准备！");
         // init attribute map
         {
             attrMap = new HashMap<>();
@@ -317,7 +321,7 @@ public class LunaticCultist extends EntityZombie {
         // init health
         {
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }
@@ -347,14 +351,12 @@ public class LunaticCultist extends EntityZombie {
         BossHelper.bossMap.remove(BOSS_TYPE.msgName);
         // if the boss has been defeated properly
         if (getMaxHealth() > 10) {
-            // drop items
-            terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
+            // drop items (manipulator etc.)
+            if (! EventAndTime.isBossRushActive())
+                terraria.entity.monster.MonsterHelper.handleMonsterDrop((LivingEntity) bukkitEntity);
 
             // send loot
             terraria.entity.boss.BossHelper.handleBossDeath(BOSS_TYPE, bossParts, targetMap);
-
-            // spawn celestial pillars
-            CelestialPillar.handlePillarSpawn();
         }
     }
     // rewrite AI

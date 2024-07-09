@@ -41,7 +41,7 @@ public class Thanatos extends EntitySlime {
     }
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EXO_MECHS;
-    public static final double BASIC_HEALTH = 2760000 * 2;
+    public static final double BASIC_HEALTH = 2760000 * 2, BASIC_HEALTH_BR = 1275000 * 2;
     public static final int TOTAL_LENGTH = 102, SLIME_SIZE = 8;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -384,7 +384,7 @@ public class Thanatos extends EntitySlime {
         {
             setSize(SLIME_SIZE, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

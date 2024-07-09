@@ -34,23 +34,24 @@ public class MoonLordEye extends EntitySlime {
         PHANTASMAL_DEATH_RAY, PHANTASMAL_SPHERE, PHANTASMAL_EYE, PHANTASMAL_BOLT;
     }
     enum MoonLordEyeLocation {
-        LEFT_HAND (57375 * 2,  80d, 5, -1, 0,  "月球领主手",
+        LEFT_HAND (57375 * 2, 95000 * 2,80d, 5, -1, 0,  "月球领主手",
                 MoonLordBackground.MoonLordBackgroundType.LEFT_HAND,
                 new EyeAttackMethod[]{EyeAttackMethod.PHANTASMAL_EYE, EyeAttackMethod.PHANTASMAL_BOLT, EyeAttackMethod.PHANTASMAL_SPHERE}),
-        RIGHT_HAND(57375 * 2,  80d, 5, -20, 120,"月球领主手",
+        RIGHT_HAND(57375 * 2, 95000 * 2,  80d, 5, -20, 120,"月球领主手",
                 MoonLordBackground.MoonLordBackgroundType.RIGHT_HAND,
                 new EyeAttackMethod[]{EyeAttackMethod.PHANTASMAL_EYE, EyeAttackMethod.PHANTASMAL_SPHERE, EyeAttackMethod.PHANTASMAL_BOLT}),
-        HEAD      (103275 * 2, 100d,5, -50, 240, "月球领主"  ,
+        HEAD      (103275 * 2, 171200 * 2, 100d,5, -50, 240, "月球领主"  ,
                 MoonLordBackground.MoonLordBackgroundType.HEAD,
                 new EyeAttackMethod[]{EyeAttackMethod.PHANTASMAL_BOLT, EyeAttackMethod.PHANTASMAL_DEATH_RAY, EyeAttackMethod.PHANTASMAL_BOLT});
-        final double angleOffset, basicHealth, defence;
+        final double angleOffset, basicHealth, basicHealthBR, defence;
         final int eyeSize, initialIndexAI;
         final String eyeName;
         final EyeAttackMethod[] attackCycle;
         final MoonLordBackground.MoonLordBackgroundType backgroundType;
-        MoonLordEyeLocation(double basicHealth, double defence, int eyeSize, int initialIndexAI, double angleOffset, String eyeName,
+        MoonLordEyeLocation(double basicHealth, double basicHealthBR, double defence, int eyeSize, int initialIndexAI, double angleOffset, String eyeName,
                                     MoonLordBackground.MoonLordBackgroundType backgroundType, EyeAttackMethod[] attackCycle) {
             this.basicHealth = basicHealth;
+            this.basicHealthBR = basicHealthBR;
             this.defence = defence;
             this.eyeSize = eyeSize;
             this.initialIndexAI = initialIndexAI;
@@ -352,7 +353,7 @@ public class MoonLordEye extends EntitySlime {
         {
             setSize(eyeLocation.eyeSize, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
-            double health = eyeLocation.basicHealth * healthMulti;
+            double health = BossHelper.accountForBR(eyeLocation.basicHealthBR, eyeLocation.basicHealth) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

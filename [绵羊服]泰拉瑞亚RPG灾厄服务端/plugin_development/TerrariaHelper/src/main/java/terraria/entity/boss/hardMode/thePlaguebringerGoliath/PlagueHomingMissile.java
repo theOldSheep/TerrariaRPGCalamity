@@ -21,7 +21,7 @@ import java.util.UUID;
 public class PlagueHomingMissile extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.THE_PLAGUEBRINGER_GOLIATH;
-    public static final double BASIC_HEALTH = 1500 * 2;
+    public static final double BASIC_HEALTH = 1500 * 2, BASIC_HEALTH_BR = 5000 * 2;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     Player target = null;
@@ -118,7 +118,7 @@ public class PlagueHomingMissile extends EntitySlime {
         {
             setSize(3, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

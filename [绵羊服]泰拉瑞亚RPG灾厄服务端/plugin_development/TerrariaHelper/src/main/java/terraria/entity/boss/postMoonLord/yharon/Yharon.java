@@ -24,7 +24,7 @@ public class Yharon extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.YHARON_DRAGON_OF_REBIRTH;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 3744000 * 2;
+    public static final double BASIC_HEALTH = 3744000 * 2, BASIC_HEALTH_BR = 1776000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -170,67 +170,61 @@ public class Yharon extends EntitySlime {
 
 
     public void phase1() {
-//        switch (this.phaseStep) {
-//            case 1:
-//            case 2:
-//            case 6:
-//            case 7:
-//                this.charge();
-//                if (this.phaseTick > 30) {
-//                    this.updatePhaseStep();
-//                }
-//                break;
-//            case 3:
-//                this.chargeQuickly();
-//                if (this.phaseTick > 20) {
-//                    this.updatePhaseStep();
-//                }
-//                break;
-//            case 4:
-//                if (this.phaseTick == 1) {
-//                    this.teleportTarget = this.target.getLocation().add(0, 32, 0);
-//                    this.velocity = this.teleportTarget.toVector().subtract(entity.getLocation().toVector()).normalize().multiply(2.0);
-//                }
-//                if (this.phaseTick > 10) {
-//                    if (this.phaseTick == 11) {
-//                        this.teleport(this.teleportTarget);
-//                        this.velocity.zero();
-//                    }
-//                    if (this.phaseTick % 6 == 1 && this.phaseTick > 11)
-//                        this.fireBlasts();
-//                }
-//                if (this.phaseTick > 40) {
-//                    this.updatePhaseStep();
-//                }
-//                break;
-//            case 5:
-//                if (this.phaseTick > 40) {
-//                    this.updatePhaseStep();
-//                }
-//                break;
-//            case 8:
-//                this.flyLoop();
-//                this.fireball();
-//                if (this.phaseTick > 40) {
-//                    this.updatePhaseStep();
-//                }
-//                break;
-//            case 9:
-//                if (this.phaseTick == 1) {
-//                    spawnTornado();
-//                    this.velocity.zero();
-//                }
-//                if (this.phaseTick > 20) {
-//                    this.updatePhaseStep(1);
-//                }
-//                break;
-//        }
-        int interval = 10;
-        if (this.phaseTick % interval == 0){
-//            summonRingOfProjectilesSimple(shootInfoFireballRegular, entity.getEyeLocation(), false);
-            summonRingOfProjectilesSphere(shootInfoFireballRegular, entity.getEyeLocation(), phaseTick / interval, 6, false);
+        switch (this.phaseStep) {
+            case 1:
+            case 2:
+            case 6:
+            case 7:
+                this.charge();
+                if (this.phaseTick > 30) {
+                    this.updatePhaseStep();
+                }
+                break;
+            case 3:
+                this.chargeQuickly();
+                if (this.phaseTick > 20) {
+                    this.updatePhaseStep();
+                }
+                break;
+            case 4:
+                if (this.phaseTick == 1) {
+                    this.teleportTarget = this.target.getLocation().add(0, 32, 0);
+                    this.velocity = this.teleportTarget.toVector().subtract(entity.getLocation().toVector()).normalize().multiply(2.0);
+                }
+                if (this.phaseTick > 10) {
+                    if (this.phaseTick == 11) {
+                        this.teleport(this.teleportTarget);
+                        this.velocity.zero();
+                    }
+                    if (this.phaseTick % 6 == 1 && this.phaseTick > 11)
+                        this.fireBlasts();
+                }
+                if (this.phaseTick > 40) {
+                    this.updatePhaseStep();
+                }
+                break;
+            case 5:
+                if (this.phaseTick > 40) {
+                    this.updatePhaseStep();
+                }
+                break;
+            case 8:
+                this.flyLoop();
+                this.fireball();
+                if (this.phaseTick > 40) {
+                    this.updatePhaseStep();
+                }
+                break;
+            case 9:
+                if (this.phaseTick == 1) {
+                    spawnTornado();
+                    this.velocity.zero();
+                }
+                if (this.phaseTick > 20) {
+                    this.updatePhaseStep(1);
+                }
+                break;
         }
-        this.phaseTick++;
     }
     public void phase2() {
         switch (this.phaseStep) {
@@ -589,7 +583,7 @@ public class Yharon extends EntitySlime {
         {
             setSize(16, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

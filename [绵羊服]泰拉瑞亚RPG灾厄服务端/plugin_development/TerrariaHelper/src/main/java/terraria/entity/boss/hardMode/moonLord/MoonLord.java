@@ -13,6 +13,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
@@ -24,7 +25,7 @@ public class MoonLord extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.MOON_LORD;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 211140 * 2;
+    public static final double BASIC_HEALTH = 211140 * 2, BASIC_HEALTH_BR = 356000 * 2;
     public static final boolean IGNORE_DISTANCE = true;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -228,7 +229,7 @@ public class MoonLord extends EntitySlime {
         {
             setSize(6, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }
@@ -244,6 +245,9 @@ public class MoonLord extends EntitySlime {
         }
         // reset true eye's attack pattern
         MoonLordTrueEyeOfCthulhu.initializeAttackPattern();
+        // no animation for boss rush
+        if (EventAndTime.isBossRushActive())
+            indexSpawnAnimation = 1;
     }
 
     // disable death function to remove boss bar

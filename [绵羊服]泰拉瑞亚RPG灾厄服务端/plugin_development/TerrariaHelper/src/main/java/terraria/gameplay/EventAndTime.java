@@ -173,7 +173,7 @@ public class EventAndTime {
                 "在明知这些的情况下，却还是有人勇敢地制造了它的复制品，令人惊讶。",
                 "这次竟是个凡人！多么有趣......",
                 "它不过是块腐烂的石碑，究竟是什么驱使你竭尽全力也要制造它？",
-                "......这或许是个机会。得到这圣物可不是什么小打小闹，而我恰好对你的旅途也有所一瞥。",
+                "......这或许是个机会。得到这圣物可不是什么小打小闹。",
                 "是你，在终结一个时代的过程中，得到了曾终结了另一个时代的圣物......",
                 "是你，杀死了无名的巨蛇......",
                 "是你，击败了我的故友，不死之龙......",
@@ -197,8 +197,8 @@ public class EventAndTime {
         BOSS_RUSH_MESSAGES.put(null, new String[]{
                 "着实完美的展演。看来我是对的！你确实可能是这个世界最强大的战士，但......",
                 "看来就算是那种力量......还是不够。恐怕我不能向你分享我的提案了。",
-                "尽管如此，虽然只是安慰奖，但我还是希望你拿着这块古代石头，它是我从巨龙天巢上刻下来的。",
-                "我带着它当......纪念品，某种程度上。",
+                "尽管如此，虽然只是安慰奖，但我还是希望你拿着这块古代石头。",
+                "它是我从巨龙天巢上刻下来的；我带着它当......纪念品，某种程度上。",
                 "尽管你没能达成我的需求，但未来我们的道路肯定还会有交叉！",
                 "继续寻求更为强大的力量吧，当我们再度相遇时，或许你的力量就够格了。",
                 "与此同时，我自己也还有必须要亲自处理的事情。",
@@ -343,7 +343,7 @@ public class EventAndTime {
         }
         // spawn boss
         Player target = candidates.get((int) (Math.random() * candidates.size()));
-        BossHelper.spawnBoss(target, BOSS_RUSH_ORDER[bossRushProgress]);
+        BossHelper.spawnBoss(target, BOSS_RUSH_ORDER[bossRushProgress], null, false);
     }
     // this tick would only handle boss escaped.
     public static void tickBossRush() {

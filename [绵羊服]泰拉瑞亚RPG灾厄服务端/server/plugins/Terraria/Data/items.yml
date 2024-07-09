@@ -1156,7 +1156,7 @@
 终末石:
   item: CLAY_BALL
   lore:
-  - §r在没有BOSS存活时激活Boss Rush模式
+  - §r在没有BOSS存活时使用以激活Boss Rush模式
   rarity: 1
 测试刮痧:
   item: LEASH

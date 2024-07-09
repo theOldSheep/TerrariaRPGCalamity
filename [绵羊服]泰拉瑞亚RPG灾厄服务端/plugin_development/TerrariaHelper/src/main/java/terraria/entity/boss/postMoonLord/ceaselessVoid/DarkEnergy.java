@@ -21,7 +21,7 @@ import java.util.HashMap;
 public class DarkEnergy extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.CEASELESS_VOID;
-    public static final double BASIC_HEALTH = 36000;
+    public static final double BASIC_HEALTH = 36000, BASIC_HEALTH_BR = 35000 * 2;
     HashMap<String, Double> attrMap;
     Player target = null;
     // other variables and AI
@@ -115,7 +115,7 @@ public class DarkEnergy extends EntitySlime {
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(owner.targetMap.size());
             if (owner.isSummonedByDoG)
                 healthMulti *= 0.9;
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class AureusSpawn extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.ASTRUM_AUREUS;
-    public static final double BASIC_HEALTH = 4500 * 2;
+    public static final double BASIC_HEALTH = 4500 * 2, BASIC_HEALTH_BR = 28500 * 2;
     HashMap<String, Double> attrMap;
     AstrumAureus owner;
     // other variables and AI
@@ -117,7 +117,7 @@ public class AureusSpawn extends EntitySlime {
         {
             setSize(4, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(owner.targetMap.size());
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

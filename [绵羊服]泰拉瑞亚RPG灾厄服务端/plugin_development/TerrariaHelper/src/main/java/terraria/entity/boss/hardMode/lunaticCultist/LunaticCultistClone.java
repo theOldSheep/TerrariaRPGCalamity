@@ -17,7 +17,6 @@ import java.util.HashMap;
 public class LunaticCultistClone extends EntityZombieHusk {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.LUNATIC_CULTIST;
-    public static final double BASIC_HEALTH = 85104 * 2;
     HashMap<String, Double> attrMap;
     Player target = null;
     // other variables and AI

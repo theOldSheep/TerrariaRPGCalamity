@@ -15,7 +15,7 @@ import java.util.UUID;
 public class HiveBlob extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.THE_HIVE_MIND;
-    public static final double BASIC_HEALTH = 100 * 2;
+    public static final double BASIC_HEALTH = 100 * 2, BASIC_HEALTH_BR = 2288 * 2;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     Player target = null;
@@ -139,7 +139,7 @@ public class HiveBlob extends EntitySlime {
         {
             setSize(2, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

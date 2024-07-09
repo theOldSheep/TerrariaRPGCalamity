@@ -18,7 +18,6 @@ import java.util.HashMap;
 public class LunaticAncientLight extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.LUNATIC_CULTIST;
-    public static final double BASIC_HEALTH = 1200 * 2;
     HashMap<String, Double> attrMap;
     Player target = null;
     // other variables and AI

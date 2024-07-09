@@ -25,7 +25,7 @@ public class CeaselessVoid extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.CEASELESS_VOID;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.DUNGEON;
-    public static final double BASIC_HEALTH = 187200 * 2;
+    public static final double BASIC_HEALTH = 187200 * 2, BASIC_HEALTH_BR = 172800 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     public HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -311,7 +311,7 @@ public class CeaselessVoid extends EntitySlime {
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             if (isSummonedByDoG)
                 healthMulti *= 1.1;
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }

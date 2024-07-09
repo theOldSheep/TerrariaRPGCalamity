@@ -25,7 +25,7 @@ public class SupremeCalamitasBrother extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.SUPREME_WITCH_CALAMITAS;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 414000 * 2;
+    public static final double BASIC_HEALTH = 414000 * 2, BASIC_HEALTH_BR = 576800 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     static final String[] NAMES = {"至尊灾难", "至尊灾祸"}, PROJECTILE_TYPES = {"斩魂幻锋", "硫火碎魂拳"};
     HashMap<String, Double> attrMap;
@@ -56,7 +56,6 @@ public class SupremeCalamitasBrother extends EntitySlime {
         double healthRatio = getHealth() / getMaxHealth();
         shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
 
-        bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 5f, 1f);
         boolean fireDirectProj = false;
         if (healthRatio > 0.5) {
             int fireInterval = healthRatio > 0.75 ? 8 : 5;
@@ -159,7 +158,7 @@ public class SupremeCalamitasBrother extends EntitySlime {
         {
             setSize(12, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
-            double health = BASIC_HEALTH * healthMulti;
+            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }
