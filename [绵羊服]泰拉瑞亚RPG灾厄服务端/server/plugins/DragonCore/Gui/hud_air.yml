@@ -1,0 +1,95 @@
+match: "hud"
+Functions:
+  preRender: |-
+    界面变量.bubble_size = 方法.取屏幕宽度() / 30;
+    界面变量.bubble_size_empty = 界面变量.bubble_size * 0.65;
+    界面变量.bubble_interval = 界面变量.bubble_size / 2;
+    界面变量.bubble_offset = 界面变量.bubble_size + 界面变量.bubble_interval;
+    界面变量.margin_left = (方法.取屏幕宽度() - (界面变量.bubble_size * 9 + 界面变量.bubble_interval * 8)) / 2;
+    界面变量.margin_top = (方法.取屏幕高度() * 0.65) - 界面变量.bubble_size / 2;
+    界面变量.oxygen = 方法.取变量('terraria_oxygen') * 10;
+    界面变量.oxygen_display_edge = 方法.floor(界面变量.oxygen);
+    界面变量.oxygen_rmd = 方法.mod(界面变量.oxygen, 1);
+    界面变量.oxygen_rmd_size = 方法.lerp(界面变量.bubble_size_empty, 界面变量.bubble_size, 界面变量.oxygen_rmd);
+
+
+bubble1_texture:
+  x: "界面变量.margin_left + (界面变量.bubble_size - 方法.取组件值('bubble1_texture','width')) / 2"
+  y: "界面变量.margin_top + (界面变量.bubble_size - 方法.取组件值('bubble1_texture','width')) / 2"
+  width: "(界面变量.oxygen_display_edge==0) ? 界面变量.oxygen_rmd_size : 界面变量.bubble_size"
+  height: "方法.取组件值('bubble1_texture','width')"
+  texture: 'hud/air.png'
+  alpha: 0.5
+  visible: 界面变量.oxygen_display_edge != 10
+bubble2_texture:
+  x: "界面变量.margin_left + 界面变量.bubble_offset + (界面变量.bubble_size - 方法.取组件值('bubble2_texture','width')) / 2"
+  y: "界面变量.margin_top + (界面变量.bubble_size - 方法.取组件值('bubble2_texture','width')) / 2"
+  width: "界面变量.oxygen_display_edge<1 ? 界面变量.bubble_size_empty : ((界面变量.oxygen_display_edge==1) ? 界面变量.oxygen_rmd_size : 界面变量.bubble_size)"
+  height: "方法.取组件值('bubble2_texture','width')"
+  texture: 'hud/air.png'
+  alpha: 0.5
+  visible: 界面变量.oxygen_display_edge != 10
+bubble3_texture:
+  x: "界面变量.margin_left + 界面变量.bubble_offset * 2 + (界面变量.bubble_size - 方法.取组件值('bubble3_texture','width')) / 2"
+  y: "界面变量.margin_top + (界面变量.bubble_size - 方法.取组件值('bubble3_texture','width')) / 2"
+  width: "界面变量.oxygen_display_edge<2 ? 界面变量.bubble_size_empty : ((界面变量.oxygen_display_edge==2) ? 界面变量.oxygen_rmd_size : 界面变量.bubble_size)"
+  height: "方法.取组件值('bubble3_texture','width')"
+  texture: 'hud/air.png'
+  alpha: 0.5
+  visible: 界面变量.oxygen_display_edge != 10
+bubble4_texture:
+  x: "界面变量.margin_left + 界面变量.bubble_offset * 3 + (界面变量.bubble_size - 方法.取组件值('bubble4_texture','width')) / 2"
+  y: "界面变量.margin_top + (界面变量.bubble_size - 方法.取组件值('bubble4_texture','width')) / 2"
+  width: "界面变量.oxygen_display_edge<3 ? 界面变量.bubble_size_empty : ((界面变量.oxygen_display_edge==3) ? 界面变量.oxygen_rmd_size : 界面变量.bubble_size)"
+  height: "方法.取组件值('bubble4_texture','width')"
+  texture: 'hud/air.png'
+  alpha: 0.5
+  visible: 界面变量.oxygen_display_edge != 10
+bubble5_texture:
+  x: "界面变量.margin_left + 界面变量.bubble_offset * 4 + (界面变量.bubble_size - 方法.取组件值('bubble5_texture','width')) / 2"
+  y: "界面变量.margin_top + (界面变量.bubble_size - 方法.取组件值('bubble5_texture','width')) / 2"
+  width: "界面变量.oxygen_display_edge<4 ? 界面变量.bubble_size_empty : ((界面变量.oxygen_display_edge==4) ? 界面变量.oxygen_rmd_size : 界面变量.bubble_size)"
+  height: "方法.取组件值('bubble5_texture','width')"
+  texture: 'hud/air.png'
+  alpha: 0.5
+  visible: 界面变量.oxygen_display_edge != 10
+bubble6_texture:
+  x: "界面变量.margin_left + 界面变量.bubble_offset * 5 + (界面变量.bubble_size - 方法.取组件值('bubble6_texture','width')) / 2"
+  y: "界面变量.margin_top + (界面变量.bubble_size - 方法.取组件值('bubble6_texture','width')) / 2"
+  width: "界面变量.oxygen_display_edge<5 ? 界面变量.bubble_size_empty : ((界面变量.oxygen_display_edge==5) ? 界面变量.oxygen_rmd_size : 界面变量.bubble_size)"
+  height: "方法.取组件值('bubble6_texture','width')"
+  texture: 'hud/air.png'
+  alpha: 0.5
+  visible: 界面变量.oxygen_display_edge != 10
+bubble7_texture:
+  x: "界面变量.margin_left + 界面变量.bubble_offset * 6 + (界面变量.bubble_size - 方法.取组件值('bubble7_texture','width')) / 2"
+  y: "界面变量.margin_top + (界面变量.bubble_size - 方法.取组件值('bubble7_texture','width')) / 2"
+  width: "界面变量.oxygen_display_edge<6 ? 界面变量.bubble_size_empty : ((界面变量.oxygen_display_edge==6) ? 界面变量.oxygen_rmd_size : 界面变量.bubble_size)"
+  height: "方法.取组件值('bubble7_texture','width')"
+  texture: 'hud/air.png'
+  alpha: 0.5
+  visible: 界面变量.oxygen_display_edge != 10
+bubble8_texture:
+  x: "界面变量.margin_left + 界面变量.bubble_offset * 7 + (界面变量.bubble_size - 方法.取组件值('bubble8_texture','width')) / 2"
+  y: "界面变量.margin_top + (界面变量.bubble_size - 方法.取组件值('bubble8_texture','width')) / 2"
+  width: "界面变量.oxygen_display_edge<7 ? 界面变量.bubble_size_empty : ((界面变量.oxygen_display_edge==7) ? 界面变量.oxygen_rmd_size : 界面变量.bubble_size)"
+  height: "方法.取组件值('bubble8_texture','width')"
+  texture: 'hud/air.png'
+  alpha: 0.5
+  visible: 界面变量.oxygen_display_edge != 10
+bubble9_texture:
+  x: "界面变量.margin_left + 界面变量.bubble_offset * 8 + (界面变量.bubble_size - 方法.取组件值('bubble9_texture','width')) / 2"
+  y: "界面变量.margin_top + (界面变量.bubble_size - 方法.取组件值('bubble9_texture','width')) / 2"
+  width: "界面变量.oxygen_display_edge<8 ? 界面变量.bubble_size_empty : ((界面变量.oxygen_display_edge==8) ? 界面变量.oxygen_rmd_size : 界面变量.bubble_size)"
+  height: "方法.取组件值('bubble9_texture','width')"
+  texture: 'hud/air.png'
+  alpha: 0.5
+  visible: 界面变量.oxygen_display_edge != 10
+bubble10_texture:
+  x: "界面变量.margin_left + 界面变量.bubble_offset * 9 + (界面变量.bubble_size - 方法.取组件值('bubble10_texture','width')) / 2"
+  y: "界面变量.margin_top + (界面变量.bubble_size - 方法.取组件值('bubble10_texture','width')) / 2"
+  width: "界面变量.oxygen_display_edge<9 ? 界面变量.bubble_size_empty : ((界面变量.oxygen_display_edge==9) ? 界面变量.oxygen_rmd_size : 界面变量.bubble_size)"
+  height: "方法.取组件值('bubble10_texture','width')"
+  texture: 'hud/air.png'
+  alpha: 0.5
+  visible: 界面变量.oxygen_display_edge != 10

@@ -3,6 +3,7 @@ package terraria.gameplay;
 import com.comphenix.protocol.PacketType;
 import net.minecraft.server.v1_12_R1.BossBattle;
 import net.minecraft.server.v1_12_R1.BossBattleServer;
+import net.minecraft.server.v1_12_R1.IHopper;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -13,6 +14,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.event.celestialPillar.CelestialPillar;
@@ -305,9 +307,33 @@ public class EventAndTime {
         bossRushProgress = -1;
         if (failure)
             Bukkit.broadcastMessage(BOSS_RUSH_MESSAGES_PREFIX + "菜就多练，菜，就多练！");
+        else {
+            ItemStack itemToGive = ItemHelper.getItemFromDescription("古恒石");
+            for (Player ply : getBossRushCandidatePlayers()) {
+                PlayerHelper.giveItem(ply, itemToGive, true);
+            }
+        }
+    }
+    private static ArrayList<Player> getBossRushCandidatePlayers() {
+        ArrayList<Player> candidates = new ArrayList<>();
+        for (Player ply : Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE).getPlayers()) {
+            if (PlayerHelper.isProperlyPlaying(ply) &&
+                    PlayerHelper.hasDefeated(ply, "毕业")) {
+                candidates.add(ply);
+                Bukkit.broadcastMessage(ply.getName());
+            }
+        }
+        return candidates;
     }
     public static void bossRushSpawn(boolean goNext) {
         if (goNext) {
+            // kill the current boss just in case
+            BossHelper.BossType currActive = BOSS_RUSH_ORDER[bossRushProgress];
+            if (BossHelper.getBossList(currActive) != null) {
+                LivingEntity bossE = BossHelper.getBossList(currActive).get(0);
+                bossE.setHealth(0);
+                bossE.remove();
+            }
             // increment progress
             bossRushProgress ++;
             // messages
@@ -329,14 +355,7 @@ public class EventAndTime {
 
         // randomize target
         Bukkit.broadcastMessage(goNext + ", " + bossRushProgress);
-        ArrayList<Player> candidates = new ArrayList<>();
-        for (Player ply : Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE).getPlayers()) {
-            if (PlayerHelper.isProperlyPlaying(ply) &&
-                    PlayerHelper.hasDefeated(ply, "毕业")) {
-                candidates.add(ply);
-                Bukkit.broadcastMessage(ply.getName());
-            }
-        }
+        ArrayList<Player> candidates = getBossRushCandidatePlayers();
         // end if no candidate available
         if (candidates.isEmpty()) {
             endBossRush(true);

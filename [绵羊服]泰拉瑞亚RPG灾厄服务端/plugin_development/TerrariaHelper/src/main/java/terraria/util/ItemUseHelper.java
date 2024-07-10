@@ -151,7 +151,9 @@ public class ItemUseHelper {
         int useCD = 20;
         switch (itemName) {
             case "终末石":
-                successful = EventAndTime.startBossRush();
+                if (ply.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE)) {
+                    successful = EventAndTime.startBossRush();
+                }
                 break;
             case "日耀碑牌":
                 if (isDayTime) {

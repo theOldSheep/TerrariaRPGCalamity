@@ -73,7 +73,7 @@ public class TerrariaHelper extends JavaPlugin {
             public String onPlaceholderRequest(Player ply, String params) {
                 switch (params) {
                     case "oxygen": {
-                        return EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR).asInt() + "";
+                        return ((double) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR).asInt() / PlayerHelper.PLAYER_MAX_OXYGEN) + "";
                     }
                     case "pov_locked": {
                         return ply.getScoreboardTags().contains("temp_lockPOV") ? "1" : "0";
