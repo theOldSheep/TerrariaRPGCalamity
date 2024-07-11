@@ -11,6 +11,13 @@ Functions:
     界面变量.splitted = 方法.分割(界面变量.before_split,'~');
     界面变量.buffAlpha = 0.7 + (0.3 * 方法.sin(方法.取当前时间() * 0.01));
     
+    界面变量.icon_size = 方法.取屏幕宽度() / 40;
+    界面变量.icon_offset = 界面变量.icon_size * 7 / 6;
+    界面变量.icon_row_offset = 界面变量.icon_size * 5 / 3;
+    界面变量.start_x = 界面变量.icon_size * 4 / 3;
+    界面变量.start_y = 界面变量.icon_size * 17 / 6;
+    界面变量.label_scale = 方法.取屏幕宽度() / 480;
+    
     界面变量.type_potion_1 = 方法.取成员(界面变量.splitted, 0);
     界面变量.tip_potion_1 = 方法.取成员(界面变量.splitted, 1);
     界面变量.duration_potion_1 = 方法.取成员(界面变量.splitted, 2);
@@ -153,10 +160,10 @@ Functions:
 
 # row 1
 potion_1_texture:
-  x: 16
-  y: 34
-  width: 12
-  height: 12
+  x: "界面变量.start_x + (界面变量.icon_offset * 0)"
+  y: "界面变量.start_y + (界面变量.icon_row_offset * 0)"
+  width: "界面变量.icon_size"
+  height: "界面变量.icon_size"
   alpha: "界面变量.duration_potion_1 < 200 ? 界面变量.buffAlpha : 1"
   texture: "方法.合并文本('potion/', 界面变量.type_potion_1, '.png')"
   tip:
@@ -164,13 +171,13 @@ potion_1_texture:
       - "方法.合并文本('&2&3&3&r', 界面变量.tip_potion_1)"
   visible: "界面变量.duration_potion_1 > 0"
 potion_1_label:
-  x: 22
-  y: 46
+  x: "界面变量.start_x + (界面变量.icon_offset * 0) + (界面变量.icon_size / 2)"
+  y: "界面变量.start_y + (界面变量.icon_row_offset * 0) + 界面变量.icon_size"
   texts: "界面变量.duration_potion_1 <= 1200 ? 方法.合并文本(方法.到整数(界面变量.duration_potion_1 / 20), '秒') : 方法.合并文本(方法.到整数(界面变量.duration_potion_1 / 1200), '分')"
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_1 > 0"
 potion_2_texture:
   x: 30
@@ -190,7 +197,7 @@ potion_2_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_2 > 0"
 potion_3_texture:
   x: 44
@@ -210,7 +217,7 @@ potion_3_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_3 > 0"
 potion_4_texture:
   x: 58
@@ -230,7 +237,7 @@ potion_4_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_4 > 0"
 potion_5_texture:
   x: 72
@@ -250,7 +257,7 @@ potion_5_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_5 > 0"
 potion_6_texture:
   x: 86
@@ -270,7 +277,7 @@ potion_6_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_6 > 0"
 potion_7_texture:
   x: 100
@@ -290,7 +297,7 @@ potion_7_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_7 > 0"
 potion_8_texture:
   x: 114
@@ -310,7 +317,7 @@ potion_8_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_8 > 0"
 potion_9_texture:
   x: 128
@@ -330,7 +337,7 @@ potion_9_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_9 > 0"
 potion_10_texture:
   x: 142
@@ -350,7 +357,7 @@ potion_10_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_10 > 0"
 potion_11_texture:
   x: 156
@@ -370,7 +377,7 @@ potion_11_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_11 > 0"
 
 # row 2
@@ -392,7 +399,7 @@ potion_12_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_12 > 0"
 potion_13_texture:
   x: 30 
@@ -412,7 +419,7 @@ potion_13_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_13 > 0"
 potion_14_texture:
   x: 44 
@@ -432,7 +439,7 @@ potion_14_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_14 > 0"
 potion_15_texture:
   x: 58 
@@ -452,7 +459,7 @@ potion_15_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_15 > 0"
 potion_16_texture:
   x: 72 
@@ -472,7 +479,7 @@ potion_16_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_16 > 0"
 potion_17_texture:
   x: 86 
@@ -492,7 +499,7 @@ potion_17_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_17 > 0"
 potion_18_texture:
   x: 100 
@@ -512,7 +519,7 @@ potion_18_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_18 > 0"
 potion_19_texture:
   x: 114 
@@ -532,7 +539,7 @@ potion_19_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_19 > 0"
 potion_20_texture:
   x: 128 
@@ -552,7 +559,7 @@ potion_20_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_20 > 0"
 potion_21_texture:
   x: 142 
@@ -572,7 +579,7 @@ potion_21_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_21 > 0"
 potion_22_texture:
   x: 156 
@@ -592,7 +599,7 @@ potion_22_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_22 > 0"
 
 # row 3
@@ -614,7 +621,7 @@ potion_23_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_23 > 0"
 potion_24_texture:
   x: 30 
@@ -634,7 +641,7 @@ potion_24_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_24 > 0"
 potion_25_texture:
   x: 44 
@@ -654,7 +661,7 @@ potion_25_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_25 > 0"
 potion_26_texture:
   x: 58 
@@ -674,7 +681,7 @@ potion_26_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_26 > 0"
 potion_27_texture:
   x: 72 
@@ -694,7 +701,7 @@ potion_27_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_27 > 0"
 potion_28_texture:
   x: 86 
@@ -714,7 +721,7 @@ potion_28_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_28 > 0"
 potion_29_texture:
   x: 100 
@@ -734,7 +741,7 @@ potion_29_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_29 > 0"
 potion_30_texture:
   x: 114 
@@ -754,7 +761,7 @@ potion_30_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_30 > 0"
 potion_31_texture:
   x: 128 
@@ -774,7 +781,7 @@ potion_31_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_31 > 0"
 potion_32_texture:
   x: 142 
@@ -794,7 +801,7 @@ potion_32_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_32 > 0"
 potion_33_texture:
   x: 156 
@@ -814,7 +821,7 @@ potion_33_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_33 > 0"
 
 # row 4
@@ -836,7 +843,7 @@ potion_34_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_34 > 0"
 potion_35_texture:
   x: 30 
@@ -856,7 +863,7 @@ potion_35_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_35 > 0"
 potion_36_texture:
   x: 44 
@@ -876,7 +883,7 @@ potion_36_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_36 > 0"
 potion_37_texture:
   x: 58 
@@ -896,7 +903,7 @@ potion_37_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_37 > 0"
 potion_38_texture:
   x: 72 
@@ -916,7 +923,7 @@ potion_38_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_38 > 0"
 potion_39_texture:
   x: 86 
@@ -936,7 +943,7 @@ potion_39_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_39 > 0"
 potion_40_texture:
   x: 100 
@@ -956,7 +963,7 @@ potion_40_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_40 > 0"
 potion_41_texture:
   x: 114 
@@ -976,7 +983,7 @@ potion_41_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_41 > 0"
 potion_42_texture:
   x: 128 
@@ -996,7 +1003,7 @@ potion_42_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_42 > 0"
 potion_43_texture:
   x: 142 
@@ -1016,7 +1023,7 @@ potion_43_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_43 > 0"
 potion_44_texture:
   x: 156 
@@ -1036,5 +1043,5 @@ potion_44_label:
   center: true
   shadow: true
   length: 999999
-  scale: 0.75
+  scale: "0.75 * 界面变量.label_scale"
   visible: "界面变量.duration_potion_44 > 0"
