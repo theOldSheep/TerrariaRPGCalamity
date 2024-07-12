@@ -1,0 +1,887 @@
+# 复制到子物品栏的preRender中
+Functions:
+  preRender: |-
+    方法.设置变量值('label_scale', 方法.取屏幕宽度() / 480);
+
+    方法.设置变量值('subinv_slot_size', 方法.取屏幕宽度() * 14 / 480);
+    方法.设置变量值('subinv_slot_offset', 方法.取变量('subinv_slot_size') * 8 / 7);
+    方法.设置变量值('subinv_x', 方法.取屏幕宽度() * 26 / 480);
+    方法.设置变量值('subinv_y', 方法.取屏幕宽度() * 82 / 480);
+
+# 物品栏标题
+subinventory_label:
+  x: "方法.取屏幕宽度 * 174 / 480"
+  y: "方法.取变量('subinv_y')"
+  scale: "方法.取变量('label_scale')"
+  texts: "方法.分割(方法.取变量('GUI_subinv_title'), '<n>')"
+# 物品栏格子
+#row 1
+subinv_slot0-0_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 0)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 1"
+subinv_slot0-0_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 0)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_0"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 1"
+  drawBackground: false
+subinv_slot0-1_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 1)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 2"
+subinv_slot0-1_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 1)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_1"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 2"
+  drawBackground: false
+subinv_slot0-2_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 2)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 3"
+subinv_slot0-2_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 2)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_2"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 3"
+  drawBackground: false
+subinv_slot0-3_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 3)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 4"
+subinv_slot0-3_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 3)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_3"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 4"
+  drawBackground: false
+subinv_slot0-4_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 4)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 5"
+subinv_slot0-4_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 4)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_4"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 5"
+  drawBackground: false
+subinv_slot0-5_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 5)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 6"
+subinv_slot0-5_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 5)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_5"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 6"
+  drawBackground: false
+subinv_slot0-6_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 6)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 7"
+subinv_slot0-6_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 6)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_6"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 7"
+  drawBackground: false
+subinv_slot0-7_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 7)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 8"
+subinv_slot0-7_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 7)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_7"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 8"
+  drawBackground: false
+subinv_slot0-8_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 8)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 9"
+subinv_slot0-8_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 8)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 0)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_8"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 9"
+  drawBackground: false
+#row 2
+subinv_slot1-0_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 0)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 10"
+subinv_slot1-0_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 0)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_9"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 10"
+  drawBackground: false
+subinv_slot1-1_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 1)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 11"
+subinv_slot1-1_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 1)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_10"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 11"
+  drawBackground: false
+subinv_slot1-2_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 2)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 12"
+subinv_slot1-2_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 2)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_11"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 12"
+  drawBackground: false
+subinv_slot1-3_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 3)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 13"
+subinv_slot1-3_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 3)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_12"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 13"
+  drawBackground: false
+subinv_slot1-4_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 4)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 14"
+subinv_slot1-4_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 4)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_13"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 14"
+  drawBackground: false
+subinv_slot1-5_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 5)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 15"
+subinv_slot1-5_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 5)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_14"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 15"
+  drawBackground: false
+subinv_slot1-6_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 6)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 16"
+subinv_slot1-6_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 6)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_15"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 16"
+  drawBackground: false
+subinv_slot1-7_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 7)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 17"
+subinv_slot1-7_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 7)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_16"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 17"
+  drawBackground: false
+subinv_slot1-8_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 8)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 18"
+subinv_slot1-8_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 8)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 1)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_17"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 18"
+  drawBackground: false
+#row 3
+subinv_slot2-0_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 0)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 19"
+subinv_slot2-0_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 0)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_18"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 19"
+  drawBackground: false
+subinv_slot2-1_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 1)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 20"
+subinv_slot2-1_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 1)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_19"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 20"
+  drawBackground: false
+subinv_slot2-2_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 2)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 21"
+subinv_slot2-2_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 2)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_20"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 21"
+  drawBackground: false
+subinv_slot2-3_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 3)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 22"
+subinv_slot2-3_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 3)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_21"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 22"
+  drawBackground: false
+subinv_slot2-4_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 4)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 23"
+subinv_slot2-4_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 4)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_22"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 23"
+  drawBackground: false
+subinv_slot2-5_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 5)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 24"
+subinv_slot2-5_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 5)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_23"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 24"
+  drawBackground: false
+subinv_slot2-6_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 6)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 25"
+subinv_slot2-6_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 6)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_24"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 25"
+  drawBackground: false
+subinv_slot2-7_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 7)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 26"
+subinv_slot2-7_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 7)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_25"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 26"
+  drawBackground: false
+subinv_slot2-8_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 8)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 27"
+subinv_slot2-8_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 8)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 2)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_26"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 27"
+  drawBackground: false
+#row 4
+subinv_slot3-0_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 0)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 28"
+subinv_slot3-0_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 0)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_27"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 28"
+  drawBackground: false
+subinv_slot3-1_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 1)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 29"
+subinv_slot3-1_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 1)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_28"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 29"
+  drawBackground: false
+subinv_slot3-2_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 2)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 30"
+subinv_slot3-2_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 2)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_29"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 30"
+  drawBackground: false
+subinv_slot3-3_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 3)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 31"
+subinv_slot3-3_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 3)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_30"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 31"
+  drawBackground: false
+subinv_slot3-4_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 4)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 32"
+subinv_slot3-4_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 4)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_31"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 32"
+  drawBackground: false
+subinv_slot3-5_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 5)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 33"
+subinv_slot3-5_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 5)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_32"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 33"
+  drawBackground: false
+subinv_slot3-6_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 6)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 34"
+subinv_slot3-6_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 6)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_33"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 34"
+  drawBackground: false
+subinv_slot3-7_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 7)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 35"
+subinv_slot3-7_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 7)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_34"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 35"
+  drawBackground: false
+subinv_slot3-8_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 8)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 36"
+subinv_slot3-8_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 8)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 3)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_35"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 36"
+  drawBackground: false
+#row 5
+subinv_slot4-0_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 0)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 37"
+subinv_slot4-0_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 0)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_36"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 37"
+  drawBackground: false
+subinv_slot4-1_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 1)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 38"
+subinv_slot4-1_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 1)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_37"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 38"
+  drawBackground: false
+subinv_slot4-2_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 2)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 39"
+subinv_slot4-2_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 2)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_38"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 39"
+  drawBackground: false
+subinv_slot4-3_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 3)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 40"
+subinv_slot4-3_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 3)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_39"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 40"
+  drawBackground: false
+subinv_slot4-4_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 4)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 41"
+subinv_slot4-4_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 4)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_40"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 41"
+  drawBackground: false
+subinv_slot4-5_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 5)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 42"
+subinv_slot4-5_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 5)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_41"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 42"
+  drawBackground: false
+subinv_slot4-6_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 6)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 43"
+subinv_slot4-6_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 6)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_42"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 43"
+  drawBackground: false
+subinv_slot4-7_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 7)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 44"
+subinv_slot4-7_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 7)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_43"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 44"
+  drawBackground: false
+subinv_slot4-8_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 8)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 45"
+subinv_slot4-8_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 8)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 4)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_44"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 45"
+  drawBackground: false
+#row 6
+subinv_slot5-0_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 0)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 46"
+subinv_slot5-0_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 0)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_45"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 46"
+  drawBackground: false
+subinv_slot5-1_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 1)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 47"
+subinv_slot5-1_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 1)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_46"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 47"
+  drawBackground: false
+subinv_slot5-2_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 2)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 48"
+subinv_slot5-2_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 2)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_47"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 48"
+  drawBackground: false
+subinv_slot5-3_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 3)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 49"
+subinv_slot5-3_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 3)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_48"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 49"
+  drawBackground: false
+subinv_slot5-4_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 4)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 50"
+subinv_slot5-4_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 4)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_49"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 50"
+  drawBackground: false
+subinv_slot5-5_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 5)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 51"
+subinv_slot5-5_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 5)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_50"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 51"
+  drawBackground: false
+subinv_slot5-6_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 6)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 52"
+subinv_slot5-6_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 6)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_51"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 52"
+  drawBackground: false
+subinv_slot5-7_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 7)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 53"
+subinv_slot5-7_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 7)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_52"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 53"
+  drawBackground: false
+subinv_slot5-8_texture:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 8)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  texture: "gui/slot.png"
+  alpha: 0.75
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 54"
+subinv_slot5-8_slot:
+  x: "方法.取变量('subinv_x') + (方法.取变量('subinv_slot_offset') * 8)"
+  y: "方法.取变量('subinv_y') + (方法.取变量('subinv_slot_offset') * 5)"
+  width: "方法.取变量('subinv_slot_size')"
+  height: "方法.取变量('subinv_slot_size')"
+  identifier: "container_53"
+  visible: "方法.取变量('GUI_subinv_slot_amount') >= 54"
+  drawBackground: false

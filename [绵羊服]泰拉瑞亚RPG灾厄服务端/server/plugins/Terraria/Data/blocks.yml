@@ -127,6 +127,10 @@ STONE:
   totalProgress: 100
   dropItem:
   - 石头
+COBBLESTONE:
+  totalProgress: 100
+  dropItem:
+  - 古恒石
 STAINED_CLAY_0:
   powerPickaxe: 65
   totalProgress: 200

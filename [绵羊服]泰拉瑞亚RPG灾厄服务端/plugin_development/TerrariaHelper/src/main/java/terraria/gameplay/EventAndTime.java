@@ -328,11 +328,13 @@ public class EventAndTime {
     public static void bossRushSpawn(boolean goNext) {
         if (goNext) {
             // kill the current boss just in case
-            BossHelper.BossType currActive = BOSS_RUSH_ORDER[bossRushProgress];
-            if (BossHelper.getBossList(currActive) != null) {
-                LivingEntity bossE = BossHelper.getBossList(currActive).get(0);
-                bossE.setHealth(0);
-                bossE.remove();
+            if (bossRushProgress >= 0) {
+                BossHelper.BossType currActive = BOSS_RUSH_ORDER[bossRushProgress];
+                if (BossHelper.getBossList(currActive) != null) {
+                    LivingEntity bossE = BossHelper.getBossList(currActive).get(0);
+                    bossE.setHealth(0);
+                    bossE.remove();
+                }
             }
             // increment progress
             bossRushProgress ++;
@@ -354,7 +356,6 @@ public class EventAndTime {
         }
 
         // randomize target
-        Bukkit.broadcastMessage(goNext + ", " + bossRushProgress);
         ArrayList<Player> candidates = getBossRushCandidatePlayers();
         // end if no candidate available
         if (candidates.isEmpty()) {

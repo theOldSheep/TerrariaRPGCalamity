@@ -3479,7 +3479,7 @@ WORKBENCH:
     recipeCategory: BLOCK
   '17':
     requireLevel: 1
-    resultItem: 箱子
+    resultItem: CHEST
     requireItem:
     - 木材:8
     - 铁锭:2
@@ -3923,7 +3923,6 @@ ENCHANTMENT_TABLE:
     resultItem: 垃圾桶
     requireItem:
     - 铁锭:8
-    - 箱子
     recipeCategory: TOOL
   '10':
     requireLevel: 1

@@ -39,6 +39,15 @@
 石头:
   item: STONE
   rarity: 0
+古恒石:
+  item: COBBLESTONE
+  lore:
+  - §r战斗已然结束，而尘埃尚未落定
+  - §r在一个足以抹灭坚石的古恒之地，静坐着一位僧侣
+  - §r他敢于质问过去，他敢于直面命运
+  - §r“让过去成为永恒的真正代价到底是什么？为何我们永远受困于我们自己的未来？”
+  worth: 100
+  rarity: 0
 黑檀石:
   item: STAINED_CLAY
   data: 7
@@ -95,10 +104,6 @@
   lore:
   - §r右键在脚下31*31的范围内生成玻璃
   rarity: 1
-箱子:
-  item: CHEST
-  worth: 10000
-  rarity: 0
 铁轨:
   item: RAILS
   rarity: 0
@@ -1157,6 +1162,7 @@
   item: CLAY_BALL
   lore:
   - §r在没有BOSS存活时使用以激活Boss Rush模式
+  - §rBoss Rush事件将在地面世界进行
   rarity: 1
 测试刮痧:
   item: LEASH

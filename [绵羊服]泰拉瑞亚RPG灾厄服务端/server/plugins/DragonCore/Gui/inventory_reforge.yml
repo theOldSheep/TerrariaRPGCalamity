@@ -27,12 +27,22 @@ Functions:
     方法.延时(200);
     方法.异步执行方法('update_variable_money');
 
-  # 界面开启之后会自动执行open，此时就可以开始更新变量啦
   open: |-
     方法.异步执行方法('update_variables');
     方法.异步执行方法('update_variable_money');
-    方法.设置变量值('GUI_slot_amount', '27');
-    方法.设置变量值('reforge_btn_texture', 'gui/Reforge_0.png');
+    方法.设置变量值('GUI_subinv_slot_amount', '27');
+    方法.设置变量值('GUI_subinv_title', '');
+  
+  preRender: |-
+    方法.设置变量值('label_scale', 方法.取屏幕宽度() / 480);
+
+    方法.设置变量值('slot_size', 方法.取屏幕宽度() / 30);
+    方法.设置变量值('slot_offset', 方法.取变量('slot_size') * 9 / 8);
+    方法.设置变量值('acc_x', 方法.取屏幕宽度() - 方法.取变量('slot_size') * 2);
+    方法.设置变量值('acc_y', 方法.取屏幕高度() - 方法.取变量('slot_offset') * 5.5);
+    方法.设置变量值('acc_label_y', 方法.取变量('acc_y') - 方法.取变量('slot_size') * 5 / 8);
+    方法.设置变量值('inv_x', 方法.取变量('slot_size') / 2);
+    方法.设置变量值('inv_y', 方法.取变量('slot_size') * 5 / 8);
 
 # 基础背包内容
 import:
@@ -41,39 +51,41 @@ import:
 # 商店内容
 # 重铸物品槽
 inv1-5_texture:
-  x: "20"
-  y: "86"
-  width: "16"
-  height: "16"
+  x: "方法.取屏幕宽度() * 20 / 480"
+  y: "方法.取屏幕宽度() * 86 / 480"
+  width: "方法.取屏幕宽度() * 16 / 480"
+  height: "方法.取组件值('inv1-5_texture','width')"
   texture: "gui/slot.png"
   alpha: 0.8
 inv1-5_slot:
-  x: "20"
-  y: "86"
+  x: "方法.取组件值('inv1-5_texture','x')"
+  y: "方法.取组件值('inv1-5_texture','y')"
+  width: "方法.取组件值('inv1-5_texture','width')"
+  height: "方法.取组件值('inv1-5_texture','height')"
   identifier: "container_4"
   drawBackground: false
 # 重铸信息
 reforge_prompt_label:
-  x: "38"
-  y: "86"
-  scale: 0.8
+  x: "方法.取屏幕宽度() * 38 / 480"
+  y: "方法.取屏幕宽度() * 86 / 480"
+  scale: "0.8 * 方法.取变量('label_scale')"
   texts:
     - "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? '将物品放到此处重铸' : 方法.取物品名(方法.取物品('container_4'))"
 # 重铸花费
 reforge_cost_label:
-  x: "20"
-  y: "106"
-  scale: 0.8
+  x: "方法.取屏幕宽度() * 20 / 480"
+  y: "方法.取屏幕宽度() * 106 / 480"
+  scale: "0.8 * 方法.取变量('label_scale')"
   visible: "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? 0 : 1"
   texts:
     - "方法.取物品名(方法.取物品('container_13'))"
     - "方法.合并文本( '存款: ', 方法.取变量('terraria_money') )"
 # 重铸按钮
-reforge_prompt_texture:
-  x: "40"
-  y: "95"
-  width: "12"
-  height: "12"
+reforge_texture:
+  x: "方法.取屏幕宽度() * 40 / 480"
+  y: "方法.取屏幕宽度() * 95 / 480"
+  width: "方法.取屏幕宽度() * 12 / 480"
+  height: "方法.取组件值('reforge_texture','width')"
   texture: "方法.取变量('reforge_btn_texture')"
   visible: "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? 0 : 1"
   actions:
