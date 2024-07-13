@@ -32,24 +32,27 @@ spawnInfo:
         红恶魔: 8
         巫毒恶魔: 1
     brimstone_crag:
-        地狱蝙蝠: 20
-        史莱姆: 35
-        恶魔: 16
-        骨蛇: 8
-        红恶魔: 12
-        巫毒恶魔: 0.5
+        殒命妖灵: 4
+        灵魂饮食者: 3
+        绝望之石: 2
+        强化殒命妖灵: 3
+        强化灵魂饮食者: 3
+        强化绝望之石: 2
     astral_infection:
-        白羊座: 20
-        星辉史莱姆: 2
+        白羊座: 12.5
+        幻星探测器: 12.5
+        对撞观星眼: 8.5
+        星辉史莱姆: 4
         擎星者: 1
     astral_infection_underground:
-        白羊座: 17.5
+        白羊座: 12.5
+        幻星探测器: 3.5
+        对撞观星眼: 10
         星辉史莱姆: 5
-        擎星者: 1
     astral_infection_cavern:
-        白羊座: 16
+        白羊座: 10
+        对撞观星眼: 12
         星辉史莱姆: 6
-        擎星者: 1
     hallow:
         独角兽: 1
         妖精: 10
@@ -61,7 +64,9 @@ spawnInfo:
         蚁狮马: 1
         风暴蚁狮: 0.25
     sunken_sea:
-        水母: 20
+        蛤: 12
+        富养鳐鱼: 8
+        鬼铃水母: 3
         巨像蛤: 1
         肉后巨像蛤: 1
     jungle_day:
@@ -299,6 +304,7 @@ spawnInfo:
         雪兽: 1
         精灵直升机: 1
 mobTier:
+    鬼铃水母: 荒漠灾虫
     哥布林苦力: 克苏鲁之眼
     哥布林盗贼: 克苏鲁之眼
     哥布林战士: 克苏鲁之眼
@@ -309,6 +315,8 @@ mobTier:
     飞龙: 血肉之墙
     白羊座: 血肉之墙
     擎星者: 血肉之墙
+    对撞观星眼: 血肉之墙
+    幻星探测器: 血肉之墙
     眼怪: 血肉之墙
     科学怪人: 血肉之墙
     沼泽怪: 血肉之墙
@@ -381,10 +389,16 @@ mobTier:
     闪耀炮手: 石巨人
     闪耀怪: 石巨人
     星辉史莱姆: 星神游龙
+    强化灵魂饮食者: 亵渎天神，普罗维登斯
+    强化殒命妖灵: 亵渎天神，普罗维登斯
+    强化绝望之石: 亵渎天神，普罗维登斯
 mobTierMax:
     诅咒骷髅头: 血肉之墙
     恶魔: 机械三王
     巨像蛤: 血肉之墙
+    灵魂饮食者: 亵渎天神，普罗维登斯
+    殒命妖灵: 亵渎天神，普罗维登斯
+    绝望之石: 亵渎天神，普罗维登斯
 mobInfo:
     陨石怪:
         name: "陨石怪"
@@ -883,6 +897,90 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 1
                     health: 1800
+    灵魂饮食者:
+        name: "灵魂饮食者"
+        monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 3
+        variants:
+            underworld1:
+                attributes:
+                    damage: 264
+                    damageType: "Magic"
+                    defence: 80
+                    knockback: 2.75
+                    knockbackResistance: 0.48
+                    health: 360
+    强化灵魂饮食者:
+        name: "灵魂饮食者"
+        monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 3
+        variants:
+            underworld1:
+                attributes:
+                    damage: 624
+                    damageType: "Magic"
+                    defence: 90
+                    knockback: 3.25
+                    knockbackResistance: 0.48
+                    health: 12000
+    殒命妖灵:
+        name: "殒命妖灵"
+        monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 5
+        variants:
+            underworld1:
+                attributes:
+                    damage: 300
+                    damageType: "Magic"
+                    defence: 36
+                    knockback: 3.75
+                    knockbackResistance: 0.44
+                    health: 540
+    强化殒命妖灵:
+        name: "殒命妖灵"
+        monsterType: "SLIME"
+        spawnLocationType: ANY
+        slimeSize: 5
+        variants:
+            underworld1:
+                attributes:
+                    damage: 540
+                    damageType: "Magic"
+                    defence: 60
+                    knockback: 4.25
+                    knockbackResistance: 0.44
+                    health: 15000
+    绝望之石:
+        name: "绝望之石"
+        monsterType: "SLIME"
+        spawnLocationType: GROUND
+        slimeSize: 4
+        variants:
+            underworld1:
+                attributes:
+                    damage: 240
+                    damageType: "Magic"
+                    defence: 75
+                    knockback: 4.75
+                    knockbackResistance: 1
+                    health: 720
+    强化绝望之石:
+        name: "绝望之石"
+        monsterType: "SLIME"
+        spawnLocationType: GROUND
+        slimeSize: 4
+        variants:
+            underworld1:
+                attributes:
+                    damage: 480
+                    damageType: "Magic"
+                    defence: 100
+                    knockback: 5.5
+                    knockbackResistance: 1
+                    health: 18000
     骷髅:
         name: "骷髅"
         monsterType: "SKELETON"
@@ -1051,6 +1149,33 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.936
                     health: 7200
+    对撞观星眼:
+        name: "对撞观星眼"
+        monsterType: "SLIME"
+        slimeSize: 4
+        variants:
+            default1:
+                attributes:
+                    damage: 228
+                    damageType: "Melee"
+                    defence: 32
+                    damageTakenMulti: 0.85
+                    knockback: 3
+                    knockbackResistance: 0.55
+                    health: 1860
+    幻星探测器:
+        name: "幻星探测器"
+        monsterType: "SLIME"
+        variants:
+            default1:
+                attributes:
+                    damage: 180
+                    damageType: "Melee"
+                    defence: 20
+                    damageTakenMulti: 0.85
+                    knockback: 2
+                    knockbackResistance: 0.275
+                    health: 300
     装甲幻影魔:
         name: "装甲幻影魔"
         monsterType: "ZOMBIE"
@@ -1333,6 +1458,50 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.48
                     health: 1560
+    蛤:
+        name: "蛤"
+        monsterType: "SLIME"
+        slimeSize: 2
+        spawnLocationType: GROUND
+        variants:
+            default1:
+                attributes:
+                    damage: 236
+                    damageTakenMulti: 0.75
+                    damageType: "Melee"
+                    defence: 12
+                    knockback: 3
+                    knockbackResistance: 0.96
+                    health: 900
+    富养鳐鱼:
+        name: "富养鳐鱼"
+        monsterType: "SLIME"
+        slimeSize: 4
+        spawnLocationType: WATER
+        variants:
+            default1:
+                attributes:
+                    damage: 316
+                    damageTakenMulti: 0.95
+                    damageType: "Melee"
+                    defence: 30
+                    knockback: 3.25
+                    knockbackResistance: 1
+                    health: 900
+    鬼铃水母:
+        name: "鬼铃水母"
+        monsterType: "SLIME"
+        slimeSize: 4
+        spawnLocationType: WATER
+        variants:
+            default1:
+                attributes:
+                    damage: 525
+                    damageType: "Melee"
+                    defence: 10
+                    knockback: 5.5
+                    knockbackResistance: 1
+                    health: 720
     巨像蛤:
         name: "巨像蛤"
         monsterType: "SLIME"

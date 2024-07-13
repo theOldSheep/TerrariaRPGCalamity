@@ -85,4 +85,15 @@ public class MonsterSlime extends EntitySlime {
         indexAI = MonsterHelper.monsterAI(this, defaultSpeed, this.target, this.monsterType,
                 indexAI, extraVariables, isMonsterPart);
     }
+    // jumping CD
+    @Override
+    protected int df() {
+        switch (monsterType) {
+            case "绝望之石":
+            case "强化绝望之石":
+                return 4;
+            default:
+                return super.df();
+        }
+    }
 }

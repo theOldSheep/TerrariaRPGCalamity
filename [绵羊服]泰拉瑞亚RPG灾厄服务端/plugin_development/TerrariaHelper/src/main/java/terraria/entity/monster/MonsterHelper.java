@@ -3,6 +3,7 @@ package terraria.entity.monster;
 
 import net.minecraft.server.v1_12_R1.*;
 import net.minecraft.server.v1_12_R1.Entity;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -259,6 +260,10 @@ public class MonsterHelper {
             case "恶魔":
             case "巫毒恶魔":
             case "红恶魔":
+            case "殒命妖灵":
+            case "灵魂饮食者":
+            case "强化殒命妖灵":
+            case "强化灵魂饮食者":
             case "饿鬼":
             case "巨型诅咒骷髅头":
             case "胡闹鬼":
@@ -267,6 +272,8 @@ public class MonsterHelper {
             case "吞噬者":
             case "骨蛇":
             case "妖精":
+            case "幻星探测器":
+            case "对撞观星眼":
             case "飞蛇":
             case "诅咒骷髅头":
             case "地牢幽魂":
@@ -315,9 +322,13 @@ public class MonsterHelper {
             case "沼泽之眼":
             case "幽灵":
             case "死神":
+            case "幻星探测器":
+            case "对撞观星眼":
             case "飞龙":
             case "吞噬者":
             case "骨蛇":
+            case "殒命妖灵":
+            case "强化殒命妖灵":
             case "流星火怪":
             case "千足蜈蚣":
             case "吮脑怪":
@@ -342,6 +353,8 @@ public class MonsterHelper {
                     case "礼物宝箱怪":
                     case "神圣宝箱怪":
                     case "腐化宝箱怪":
+                    case "绝望之石":
+                    case "强化绝望之石":
                     case "独角兽":
                     case "白羊座":
                     case "地狱犬":
@@ -371,8 +384,14 @@ public class MonsterHelper {
         switch (type) {
             case "钨钢回转器":
             case "钨钢漫步者":
+            case "骷髅特警": {
+                bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+                break;
+            }
+            case "绝望之石":
+            case "强化绝望之石":
             {
-                bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.45);
+                bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.8);
                 break;
             }
             case "飞龙":
@@ -474,11 +493,6 @@ public class MonsterHelper {
             case "褴褛邪教徒法师":
             {
                 bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
-                break;
-            }
-            case "骷髅特警":
-            {
-                bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
                 break;
             }
             case "精灵直升机":
@@ -802,8 +816,14 @@ public class MonsterHelper {
                     }
                     break;
                 }
+                case "幻星探测器":
+                case "对撞观星眼":
                 case "探测怪":
                 case "飞蛇":
+                case "灵魂饮食者":
+                case "强化灵魂饮食者":
+                case "殒命妖灵":
+                case "强化殒命妖灵":
                 case "钨钢悬浮坦克":
                 case "钨钢无人机": {
                     if (monster.getHealth() > 0) {
@@ -820,6 +840,9 @@ public class MonsterHelper {
                             Location targetLoc = target.getEyeLocation();
                             switch (type) {
                                 case "探测怪":
+                                case "灵魂饮食者":
+                                case "强化灵魂饮食者":
+                                case "幻星探测器":
                                     targetLoc.add(MathHelper.xsin_degree(indexAI) * 16, 5, MathHelper.xcos_degree(indexAI) * 16);
                                     break;
                                 case "钨钢无人机":
@@ -844,6 +867,9 @@ public class MonsterHelper {
                             // shoot projectile
                             switch (type) {
                                 case "探测怪":
+                                case "灵魂饮食者":
+                                case "强化灵魂饮食者":
+                                case "幻星探测器":
                                 case "钨钢无人机": {
                                     int shootInterval = 0;
                                     String projectileType = "";
@@ -852,6 +878,15 @@ public class MonsterHelper {
                                             shootInterval = 10;
                                             projectileType = "激光";
                                             break;
+                                        case "幻星探测器":
+                                            shootInterval = 15;
+                                            projectileType = "星幻激光";
+                                            break;
+                                        case "灵魂饮食者":
+                                        case "强化灵魂饮食者":
+                                            shootInterval = 20;
+                                            projectileType = "硫火飞弹";
+                                            break;
                                         case "钨钢无人机":
                                             shootInterval = 15;
                                             projectileType = "钨钢光球";
@@ -859,10 +894,18 @@ public class MonsterHelper {
                                     }
                                     if ((indexAI + 1) % shootInterval == 0) {
                                         double shootSpd;
-                                        if (type.equals("探测怪"))
-                                            shootSpd = 2.5;
-                                        else
-                                            shootSpd = 1.5;
+                                        switch (type) {
+                                            case "探测怪":
+                                                shootSpd = 2.5;
+                                                break;
+                                            case "灵魂饮食者":
+                                            case "强化灵魂饮食者":
+                                            case "幻星探测器":
+                                                shootSpd = 2.0;
+                                                break;
+                                            default:
+                                                shootSpd = 1.5;
+                                        }
                                         Vector projectileV = MathHelper.getDirection(
                                                 monsterBkt.getEyeLocation(), target.getEyeLocation(), shootSpd);
                                         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
@@ -948,6 +991,79 @@ public class MonsterHelper {
                     }
                     break;
                 }
+                case "蛤": {
+                    if (monster.getHealth() > 0) {
+                        // hop towards target if damaged
+                        if (monster.getHealth() + 1e-5 < monster.getMaxHealth()
+                                && indexAI > 25
+                                && monsterBkt.getLocation().subtract(0, 0.01, 0).getBlock().getType().isSolid()) {
+                            indexAI = -1;
+                            Vector velocity = target.getLocation().subtract(monsterBkt.getLocation()).toVector();
+                            velocity.setY(0);
+                            MathHelper.setVectorLength(velocity, 0.75 + Math.random() * 0.25);
+                            velocity.setY(0.35 + Math.random() * 0.15);
+                            monsterBkt.setVelocity(velocity);
+                        }
+                    }
+                    break;
+                }
+                case "富养鳐鱼": {
+                    if (monster.getHealth() > 0) {
+                        Vector velocity = monsterBkt.getVelocity();
+                        switch (monsterBkt.getLocation().getBlock().getType()) {
+                            // in water
+                            case WATER:
+                            case STATIONARY_WATER: {
+                                // wonder around when on full health
+                                if (monster.getHealth() + 1e-5 > monster.getMaxHealth()) {
+                                    hasContactDamage = false;
+                                    if (indexAI % 45 == 0 || !extraVariables.containsKey("a")) {
+                                        extraVariables.put("a", MathHelper.randomVector().multiply(0.05 + Math.random() * 0.035));
+                                        indexAI = (int) (Math.random() * 25);
+                                    }
+                                }
+                                // dash into enemy otherwise
+                                else {
+                                    if (indexAI % 25 == 0 || !extraVariables.containsKey("a")) {
+                                        extraVariables.put("a",
+                                                MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 0.125));
+                                        indexAI = (int) (Math.random() * 10);
+                                    }
+                                }
+                                velocity.add((Vector) extraVariables.get("a"));
+                                MathHelper.setVectorLength(velocity, 1, true);
+                                break;
+                            }
+                            // on land
+                            default:
+                                velocity.multiply(0.975);
+                                if (monsterBkt.isOnGround()) {
+                                    velocity.add(new Vector(0, 0.75, 0));
+                                }
+                                velocity.subtract(new Vector(0, 0.08, 0));
+                        }
+                        monsterBkt.setVelocity(velocity);
+                    }
+                    break;
+                }
+                case "鬼铃水母": {
+                    if (monster.getHealth() > 0) {
+                        switch (monsterBkt.getLocation().getBlock().getType()) {
+                            // in water
+                            case WATER:
+                            case STATIONARY_WATER: {
+                                Vector velocity = new Vector(0, MathHelper.xsin_degree(indexAI * 5) * 0.25, 0);
+                                monsterBkt.setVelocity(velocity);
+                                break;
+                            }
+                            default:
+                                Vector velocity = monsterBkt.getVelocity();
+                                velocity.add(new Vector(0, -0.08, 0));
+                                monsterBkt.setVelocity(velocity);
+                        }
+                    }
+                    break;
+                }
                 case "巨像蛤":
                 case "肉后巨像蛤": {
                     if (monster.getHealth() > 0) {
@@ -968,6 +1084,9 @@ public class MonsterHelper {
                                     monster.noclip = false;
                                     monsterBkt.removeScoreboardTag("noDamage");
                                     indexAI = 0;
+                                    // spawn 1-2 clams when landing
+                                    for (int i = (int) (Math.random() * 2); i < 2; i ++)
+                                        terraria.util.MonsterHelper.spawnMob("蛤", monsterBkt.getLocation(), target);
                                 }
                             }
                             if (indexAI > 30) {

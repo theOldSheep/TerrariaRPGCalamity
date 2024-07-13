@@ -317,7 +317,7 @@ public class BossHelper {
                     Bukkit.broadcastMessage("§#00FFFF尖叫声回荡于地牢之中。");
                     break;
                 case PROVIDENCE_THE_PROFANED_GODDESS:
-                    Bukkit.broadcastMessage("§#FFA500血肉巨像已被血石洗礼。");
+                    Bukkit.broadcastMessage("§#FFA500灾厄造物已被血石洗礼。");
                     Bukkit.broadcastMessage("§#90EE90石化树皮正在丛林的淤泥中爆发。");
                     break;
                 case POLTERGHAST:
