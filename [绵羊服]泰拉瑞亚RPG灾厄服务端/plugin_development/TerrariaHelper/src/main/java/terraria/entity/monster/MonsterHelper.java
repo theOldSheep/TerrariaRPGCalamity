@@ -277,6 +277,7 @@ public class MonsterHelper {
             case "飞蛇":
             case "诅咒骷髅头":
             case "地牢幽魂":
+            case "幻魂":
             case "致命球":
             case "精灵直升机":
             case "雪花怪":
@@ -287,6 +288,9 @@ public class MonsterHelper {
             case "地狱蝙蝠":
             case "丛林蝙蝠":
             case "幽灵":
+            case "冰雪精":
+            case "亵渎献祭者":
+            case "黄蜂":
             case "死神":
             case "流星火怪":
             case "千足蜈蚣":
@@ -312,6 +316,7 @@ public class MonsterHelper {
             case "巨型诅咒骷髅头" :
             case "诅咒骷髅头":
             case "地牢幽魂":
+            case "幻魂":
             case "致命球":
             case "胡闹鬼":
             case "探测怪":
@@ -321,6 +326,8 @@ public class MonsterHelper {
             case "陨石怪":
             case "沼泽之眼":
             case "幽灵":
+            case "冰雪精":
+            case "亵渎献祭者":
             case "死神":
             case "幻星探测器":
             case "对撞观星眼":
@@ -361,6 +368,7 @@ public class MonsterHelper {
                     case "火龙怪":
                     case "闪耀炮手":
                     case "星辉史莱姆":
+                    case "吞食魔":
                         break;
                     default:
                         removeAI = true;
@@ -384,7 +392,8 @@ public class MonsterHelper {
         switch (type) {
             case "钨钢回转器":
             case "钨钢漫步者":
-            case "骷髅特警": {
+            case "骷髅特警":
+            {
                 bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
                 break;
             }
@@ -392,6 +401,11 @@ public class MonsterHelper {
             case "强化绝望之石":
             {
                 bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.8);
+                break;
+            }
+            case "吞食魔":
+            {
+                bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(2);
                 break;
             }
             case "飞龙":
@@ -522,6 +536,7 @@ public class MonsterHelper {
             switch (type) {
                 case "哥布林弓箭手":
                 case "精灵弓箭手":
+                case "骷髅弓箭手":
                     break;
                 default:
                     equipment.setItemInMainHand(new ItemStack(Material.IRON_SWORD));
@@ -705,7 +720,20 @@ public class MonsterHelper {
         boolean lookAtPlayer = true;
         if (!isMonsterPart) {
             switch (type) {
+                case "冰雪巨人": {
+                    if (monster.getHealth() > 0) {
+                        // shoot projectile
+                        if (indexAI % 10 == 0) {
+                            EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                    monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "电击激光");
+                            shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, target.getEyeLocation(), 2);
+                            EntityHelper.spawnProjectile(shootInfo);
+                        }
+                    }
+                    break;
+                }
                 case "哥布林弓箭手":
+                case "骷髅弓箭手":
                 case "精灵弓箭手": {
                     if (monster.getHealth() > 0) {
                         if (indexAI == 0)
@@ -818,6 +846,9 @@ public class MonsterHelper {
                 }
                 case "幻星探测器":
                 case "对撞观星眼":
+                case "冰雪精":
+                case "亵渎献祭者":
+                case "黄蜂":
                 case "探测怪":
                 case "飞蛇":
                 case "灵魂饮食者":
@@ -840,10 +871,15 @@ public class MonsterHelper {
                             Location targetLoc = target.getEyeLocation();
                             switch (type) {
                                 case "探测怪":
+                                case "黄蜂":
                                 case "灵魂饮食者":
                                 case "强化灵魂饮食者":
                                 case "幻星探测器":
+                                case "亵渎献祭者":
                                     targetLoc.add(MathHelper.xsin_degree(indexAI) * 16, 5, MathHelper.xcos_degree(indexAI) * 16);
+                                    break;
+                                case "冰雪精":
+                                    targetLoc.setY(targetLoc.getWorld().getHighestBlockYAt(targetLoc) + 8);
                                     break;
                                 case "钨钢无人机":
                                     targetLoc.add(MathHelper.xsin_degree(indexAI) * 6, 5, MathHelper.xcos_degree(indexAI) * 6);
@@ -859,6 +895,7 @@ public class MonsterHelper {
                                     acceleration.multiply(0.035);
                                     break;
                                 case "钨钢悬浮坦克":
+                                case "冰雪精":
                                     acceleration.multiply(0.02);
                                     break;
                                 default:
@@ -867,9 +904,12 @@ public class MonsterHelper {
                             // shoot projectile
                             switch (type) {
                                 case "探测怪":
+                                case "黄蜂":
                                 case "灵魂饮食者":
                                 case "强化灵魂饮食者":
+                                case "冰雪精":
                                 case "幻星探测器":
+                                case "亵渎献祭者":
                                 case "钨钢无人机": {
                                     int shootInterval = 0;
                                     String projectileType = "";
@@ -878,13 +918,25 @@ public class MonsterHelper {
                                             shootInterval = 10;
                                             projectileType = "激光";
                                             break;
-                                        case "幻星探测器":
+                                        case "黄蜂":
                                             shootInterval = 15;
+                                            projectileType = "毒刺";
+                                            break;
+                                        case "亵渎献祭者":
+                                            shootInterval = 20;
+                                            projectileType = "神圣新星";
+                                            break;
+                                        case "幻星探测器":
+                                            shootInterval = 22;
                                             projectileType = "星幻激光";
+                                            break;
+                                        case "冰雪精":
+                                            shootInterval = 20;
+                                            projectileType = "冰锥";
                                             break;
                                         case "灵魂饮食者":
                                         case "强化灵魂饮食者":
-                                            shootInterval = 20;
+                                            shootInterval = 25;
                                             projectileType = "硫火飞弹";
                                             break;
                                         case "钨钢无人机":
@@ -902,6 +954,9 @@ public class MonsterHelper {
                                             case "强化灵魂饮食者":
                                             case "幻星探测器":
                                                 shootSpd = 2.0;
+                                                break;
+                                            case "黄蜂":
+                                                shootSpd = 1.0;
                                                 break;
                                             default:
                                                 shootSpd = 1.5;
@@ -1192,6 +1247,7 @@ public class MonsterHelper {
                 case "诅咒骷髅头":
                 case "巨型诅咒骷髅头":
                 case "地牢幽魂":
+                case "幻魂":
                 case "死神":
                 case "致命球":
                 case "胡闹鬼":
@@ -1210,6 +1266,11 @@ public class MonsterHelper {
                                 accelerationLen = 0.1;
                                 speed = 2;
                                 retargetDist = 8;
+                                break;
+                            case "幻魂":
+                                accelerationLen = 0.2;
+                                speed = 1.5;
+                                retargetDist = 10;
                                 break;
                             default:
                                 accelerationLen = 0.075;

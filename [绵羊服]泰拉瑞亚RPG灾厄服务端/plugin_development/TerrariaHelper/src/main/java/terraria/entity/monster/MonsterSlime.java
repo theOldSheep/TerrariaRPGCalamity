@@ -92,6 +92,8 @@ public class MonsterSlime extends EntitySlime {
             case "绝望之石":
             case "强化绝望之石":
                 return 4;
+            case "吞食魔":
+                return 30;
             default:
                 return super.df();
         }

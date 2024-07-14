@@ -1592,9 +1592,18 @@ public class EntityHelper {
                     Player dPlayer = (Player) dPly;
                     // dungeon souls
                     if (WorldHelper.BiomeType.getBiome(dPlayer) == WorldHelper.BiomeType.DUNGEON) {
-                        if (PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.PLANTERA) &&
-                                Math.random() < 0.125)
-                            MonsterHelper.spawnMob("地牢幽魂", v.getLocation(), dPlayer);
+                        switch (parentType) {
+                            case "地牢幽魂":
+                            case "幻魂":
+                                break;
+                            default:
+                                if (PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.PLANTERA) &&
+                                        Math.random() < 0.175)
+                                    MonsterHelper.spawnMob("地牢幽魂", v.getLocation(), dPlayer);
+                                else if (PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.MOON_LORD) &&
+                                        Math.random() < 0.25)
+                                    MonsterHelper.spawnMob("幻魂", v.getLocation(), dPlayer);
+                        }
                     }
                     // souls and essences
                     if (PlayerHelper.hasDefeated(dPlayer, BossHelper.BossType.WALL_OF_FLESH)) {

@@ -394,15 +394,6 @@ public class ItemHelper {
                     if (rdm < 0.025) {
                         regularizedItemType = "大自然的恩赐";
                     }
-                    else if (rdm < 0.135) {
-                        regularizedItemType = "毒刺";
-                    }
-                    else if (rdm < 0.275) {
-                        regularizedItemType = "丛林孢子";
-                    }
-                    else if (rdm < 0.35) {
-                        regularizedItemType = "藤蔓";
-                    }
                 }
                 break;
             case CACTUS:

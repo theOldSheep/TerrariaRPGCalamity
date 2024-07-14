@@ -57,6 +57,8 @@ spawnInfo:
         独角兽: 1
         妖精: 10
         光明木乃伊: 1
+        亵渎献祭者: 2
+        吞食魔: 0.5
     desert_day:
         史莱姆: 1
         秃鹰: 0.25
@@ -81,14 +83,21 @@ spawnInfo:
         巨型陆龟: 1
         瘟疫龟: 1.5
     jungle_underground:
-        丛林蝙蝠: 1
-        丛林史莱姆: 2
-        瘟疫龟: 0.25
+        丛林蝙蝠: 10
+        丛林史莱姆: 20
+        黄蜂: 5
+        瘟疫龟: 1
     jungle_cavern:
         丛林蝙蝠: 15
         丛林史莱姆: 10
+        黄蜂: 10
         巨型陆龟: 2
         瘟疫龟: 3
+    tundra_night:
+        僵尸: 20
+        史莱姆: 20
+        冰雪精: 10
+        冰雪巨人: 1
     tundra_cavern:
         史莱姆: 20
         黑隐士: 4
@@ -111,6 +120,7 @@ spawnInfo:
         史莱姆: 10
     cavern:
         史莱姆: 20
+        骷髅弓箭手: 6
         黑隐士: 4
     dungeon:
         骷髅: 50
@@ -317,6 +327,9 @@ mobTier:
     擎星者: 血肉之墙
     对撞观星眼: 血肉之墙
     幻星探测器: 血肉之墙
+    冰雪精: 血肉之墙
+    冰雪巨人: 血肉之墙
+    骷髅弓箭手: 血肉之墙
     眼怪: 血肉之墙
     科学怪人: 血肉之墙
     沼泽怪: 血肉之墙
@@ -389,6 +402,9 @@ mobTier:
     闪耀炮手: 石巨人
     闪耀怪: 石巨人
     星辉史莱姆: 星神游龙
+    幻魂: 月球领主
+    亵渎献祭者: 月球领主
+    吞食魔: 月球领主
     强化灵魂饮食者: 亵渎天神，普罗维登斯
     强化殒命妖灵: 亵渎天神，普罗维登斯
     强化绝望之石: 亵渎天神，普罗维登斯
@@ -779,6 +795,34 @@ mobInfo:
                     knockback: 3
                     knockbackResistance: 0.84
                     health: 480
+    冰雪精:
+        name: "冰雪精"
+        monsterType: "SLIME"
+        slimeSize: 3
+        spawnLocationType: AIR
+        variants:
+            default1:
+                attributes:
+                    damage: 540
+                    damageType: "Melee"
+                    defence: 40
+                    knockback: 3
+                    knockbackResistance: 0.52
+                    health: 1200
+    冰雪巨人:
+        name: "冰雪巨人"
+        monsterType: "WITHER_SKELETON"
+        spawnLocationType: GROUND
+        unique: true
+        variants:
+            default1:
+                attributes:
+                    damage: 384
+                    damageType: "Melee"
+                    defence: 64
+                    knockback: 4
+                    knockbackResistance: 0.96
+                    health: 24000
     吞噬者:
         name: "吞噬者"
         monsterType: "SLIME"
@@ -853,6 +897,37 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.36
                     health: 204
+    黄蜂:
+        name: "黄蜂"
+        monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 3
+        variants:
+            default1:
+                attributes:
+                    damage: 156
+                    damageType: "Melee"
+                    defence: 24
+                    knockback: 2.5
+                    knockbackResistance: 0.6
+                    health: 288
+            default2:
+                attributes:
+                    damage: 180
+                    damageType: "Melee"
+                    defence: 28
+                    knockback: 2.75
+                    knockbackResistance: 0.64
+                    health: 228
+                name: "多叶黄蜂"
+            default3:
+                attributes:
+                    damage: 246
+                    damageType: "Melee"
+                    defence: 8
+                    knockback: 3
+                    knockbackResistance: 0.62
+                    health: 274
     恶魔:
         name: "恶魔"
         monsterType: "SLIME"
@@ -1084,6 +1159,36 @@ mobInfo:
                     knockback: 3
                     knockbackResistance: 0.76
                     health: 2400
+    亵渎献祭者:
+        name: "亵渎献祭者"
+        monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 4
+        variants:
+            default1:
+                attributes:
+                    damage: 504
+                    damageType: "Melee"
+                    defence: 60
+                    knockback: 3
+                    knockbackResistance: 0.84
+                    health: 18000
+    吞食魔:
+        name: "吞食魔"
+        monsterType: "SLIME"
+        spawnLocationType: GROUND
+        slimeSize: 10
+        stepHeight: 1.6
+        variants:
+            default1:
+                attributes:
+                    damage: 668
+                    damageType: "Melee"
+                    defence: 76
+                    damageTakenMulti: 0.95
+                    knockback: 5
+                    knockbackResistance: 1
+                    health: 54000
     光明木乃伊:
         name: "光明木乃伊"
         monsterType: "HUSK"
@@ -1110,6 +1215,20 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.6
                     health: 1080
+    骷髅弓箭手:
+        name: "骷髅弓箭手"
+        monsterType: "SKELETON"
+        spawnLocationType: GROUND
+        stepHeight: 1.15
+        variants:
+            default1:
+                attributes:
+                    damage: 400
+                    damageType: "Arrow"
+                    defence: 28
+                    knockback: 3
+                    knockbackResistance: 0.56
+                    health: 1260
     白羊座:
         name: "白羊座"
         monsterType: "SLIME"
@@ -1152,6 +1271,7 @@ mobInfo:
     对撞观星眼:
         name: "对撞观星眼"
         monsterType: "SLIME"
+        spawnLocationType: ANY
         slimeSize: 4
         variants:
             default1:
@@ -1166,6 +1286,7 @@ mobInfo:
     幻星探测器:
         name: "幻星探测器"
         monsterType: "SLIME"
+        spawnLocationType: ANY
         variants:
             default1:
                 attributes:
@@ -1432,6 +1553,35 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.84
                     health: 1200
+    幻魂:
+        name: "幻魂"
+        monsterType: "SLIME"
+        spawnLocationType: ANY
+        variants:
+            default1:
+                attributes:
+                    damage: 420
+                    damageType: "Melee"
+                    defence: 20
+                    knockback: 2.5
+                    knockbackResistance: 0.92
+                    health: 6000
+            default2:
+                attributes:
+                    damage: 480
+                    damageType: "Melee"
+                    defence: 40
+                    knockback: 3
+                    knockbackResistance: 0.92
+                    health: 9000
+            default3:
+                attributes:
+                    damage: 540
+                    damageType: "Melee"
+                    defence: 50
+                    knockback: 3.25
+                    knockbackResistance: 0.92
+                    health: 12000
     蜥蜴人:
         name: "蜥蜴人"
         monsterType: "ZOMBIE"

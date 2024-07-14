@@ -115,7 +115,8 @@ public class Yharon extends EntitySlime {
     }
     private void fireball() {
         Location loc = entity.getEyeLocation();
-        Vector dir = this.velocity.clone().normalize().multiply(1.5);
+        Vector dir = this.velocity.clone();
+        MathHelper.setVectorLength(dir, 1.5);
         shootInfoFireballHoming.shootLoc = loc;
         shootInfoFireballHoming.velocity = dir;
         shootInfoFireballHoming.setLockedTarget(target);

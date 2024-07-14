@@ -204,6 +204,13 @@
         - "铜币:600:1000:1"
         - "恶魔锄刀:1:1:0.015"
         - "剑锋之誓约:1:1:0.0667"
+红恶魔:
+    buffImmute:
+        - "燃烧"
+        - "咒火"
+    drop:
+        - "铜币:3000:3000:1"
+        - "邪恶三叉戟:1:1:0.033"
 骨蛇:
     buffImmute:
         - "燃烧"
@@ -221,6 +228,17 @@
 丛林蝙蝠:
     drop:
         - "铜币:200:400:1"
+黄蜂:
+    drop:
+        - "铜币:400:600:1"
+        - "毒刺:1:1:1"
+    buffImmute:
+        - "中毒"
+    buffInflict:
+        - "中毒|150|1"
+多叶黄蜂:
+    drop:
+        - "藤蔓:1:1:1"
 丛林史莱姆:
     drop:
         - "铜币:500:1000:1"
@@ -356,6 +374,32 @@
         - "铜币:2000:3000:1"
         - "独角兽角:1:1:1"
         - "恩赐苹果:1:1:0.05"
+亵渎献祭者:
+    soundDamaged: entity.hit.crystal
+    soundKilled: entity.hit.crystal
+    drop:
+        - "铜币:3000:7000:1"
+        - "浊火精华:1:3:1"
+    buffInflict:
+        - "神圣之火|60|1"
+    buffImmute:
+        - "燃烧"
+        - "狱炎"
+        - "神圣之火"
+        - "夜魇"
+吞食魔:
+    soundDamaged: entity.hit.rock
+    soundKilled: entity.hit.rock
+    drop:
+        - "铜币:5000:10000:1"
+        - "浊火精华:2:4:1"
+    buffInflict:
+        - "神圣之火|100|1"
+    buffImmute:
+        - "燃烧"
+        - "狱炎"
+        - "神圣之火"
+        - "夜魇"
 光明木乃伊:
     drop:
         - "铜币:1500:2000:1"
@@ -405,13 +449,27 @@
     buffImmute:
         - "中毒"
         - "幻星感染"
-红恶魔:
-    buffImmute:
-        - "燃烧"
-        - "咒火"
+冰雪精:
+    soundDamaged: entity.hit.pixie
+    soundKilled: entity.hit.pixie
     drop:
-        - "铜币:3000:3000:1"
-        - "邪恶三叉戟:1:1:0.033"
+        - "铜币:2000:4000:1"
+    buffInflict:
+        - "霜火|100|1"
+    buffImmute:
+        - "霜火"
+        - "中毒"
+冰雪巨人:
+    soundDamaged: entity.hit.astral
+    soundKilled: entity.hit.rock
+    drop:
+        - "铜币:20000:40000:1"
+        - "寒霜核:1:1:1"
+    buffInflict:
+        - "霜火|100|1"
+    buffImmute:
+        - "霜火"
+        - "中毒"
 蜥蜴人:
     drop:
         - "铜币:5000:7000:1"
@@ -513,9 +571,23 @@
     buffImmute:
         - "中毒"
 地牢幽魂:
+    soundDamaged: entity.hit.pixie
+    soundKilled: entity.hit.crystal
     drop:
         - "铜币:1000:1500:1"
         - "灵气:1:3:1"
+    buffImmute:
+        - "中毒"
+        - "剧毒"
+        - "霜火"
+        - "咒火"
+        - "燃烧"
+幻魂:
+    soundDamaged: entity.hit.pixie
+    soundKilled: entity.hit.crystal
+    drop:
+        - "铜币:2000:4000:1"
+        - "灵质:1:3:1"
     buffImmute:
         - "中毒"
         - "剧毒"
@@ -1022,6 +1094,12 @@
     drop:
         - "铜币:250:250:1"
         - "尖刺球:1:5:0.4975"
+骷髅弓箭手:
+    soundDamaged: entity.hit.bone
+    soundKilled: entity.hit.bone
+    drop:
+        - "铜币:500:2000:1"
+        - "魔法箭袋:1:1:0.05"
 眼怪:
     drop:
         - "铜币:10000:15000:1"
@@ -1150,21 +1228,18 @@
 常绿尖叫怪:
     drop:
         - "铜币:20000:30000:1"
-        - "寒霜核:1:1:0.1"
     buffImmute:
         - "中毒"
         - "霜火"
 圣诞坦克:
     drop:
         - "铜币:20000:30000:1"
-        - "寒霜核:1:1:0.1"
     buffImmute:
         - "中毒"
         - "霜火"
 冰雪女王:
     drop:
         - "铜币:100000:150000:1"
-        - "寒霜核:1:1:0.1"
     buffImmute:
         - "中毒"
         - "霜火"

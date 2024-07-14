@@ -1204,24 +1204,24 @@ ANVIL:
     requireLevel: 2
     resultItem: 寒霜头盔
     requireItem:
-    - 神圣锭:10
-    - 灾劫核心
+    - 精金锭:10
+    - 冰川精华:4
     - 寒霜核
     recipeCategory: ARMOR
   '133':
     requireLevel: 2
     resultItem: 寒霜胸甲
     requireItem:
-    - 神圣锭:20
-    - 灾劫核心
+    - 精金锭:20
+    - 冰川精华:8
     - 寒霜核
     recipeCategory: ARMOR
   '134':
     requireLevel: 2
     resultItem: 寒霜护腿
     requireItem:
-    - 神圣锭:16
-    - 灾劫核心
+    - 精金锭:16
+    - 冰川精华:6
     - 寒霜核
     recipeCategory: ARMOR
   '135':

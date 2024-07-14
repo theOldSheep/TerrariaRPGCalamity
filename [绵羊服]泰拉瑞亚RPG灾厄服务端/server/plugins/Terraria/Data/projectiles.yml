@@ -962,6 +962,11 @@
         damageMulti: 1
         name: 冲击波1
         velocity: 0
+毒刺:
+    gravity: 0
+    liveTime: 80
+    buffInflict:
+        - "中毒|100|1"
 圣骑士锤:
     blockHitAction: thru
     gravity: 0
