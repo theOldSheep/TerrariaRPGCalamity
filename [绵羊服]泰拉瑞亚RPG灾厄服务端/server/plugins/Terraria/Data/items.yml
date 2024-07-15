@@ -937,6 +937,7 @@
   lore:
   - §r于夜晚使用，召唤克苏鲁之眼
   - §r附近玩家均可参与挑战
+  - §r附近玩家均可参与挑战
   rarity: 1
 史莱姆王冠:
   item: COAL
@@ -2792,6 +2793,7 @@ Drew之翼:
   attributesFormII:
     maxHealthMulti: -0.5
     fixedHealingMulti: -0.4
+    damageTakenMulti: -0.15
     regen: 24
   worth: 30000000
   rarity: 15
@@ -9458,7 +9460,7 @@ Dodu的手炮:
 幻妖龙吟:
   item: DIAMOND_SWORD
   lore:
-  - §r发射一串弹射声波，移动距离越远威力越强
+  - §r发射一串弹射声波
   - §r全损音质，贯耳魔音
   attributes:
     damage: 2500

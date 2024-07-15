@@ -336,6 +336,9 @@ public class MonsterHelper {
             case "骨蛇":
             case "殒命妖灵":
             case "强化殒命妖灵":
+            case "幻海水母":
+            case "巨像乌贼":
+            case "猎魂鲨":
             case "流星火怪":
             case "千足蜈蚣":
             case "吮脑怪":
@@ -1150,6 +1153,214 @@ public class MonsterHelper {
                                 monsterBkt.addScoreboardTag("noDamage");
                                 indexAI = -2;
                             }
+                        }
+                    }
+                    break;
+                }
+                case "硫磺比目鱼":
+                case "炮弹水母":
+                case "剧毒米诺鱼":
+                case "眼后剧毒米诺鱼":
+                case "流光石首鱼":
+                case "激光鱼":
+                case "魔鬼鱼":
+                case "幻海水母": {
+                    boolean shouldBlast = false, shouldHandleAI = false;
+                    if (monster.getHealth() > 0) {
+                        // check for whether in water or not
+                        switch (monsterBkt.getLocation().getBlock().getType()) {
+                            // in water
+                            case WATER:
+                            case STATIONARY_WATER: {
+                                shouldHandleAI = true;
+                                break;
+                            }
+                            // on land
+                            default:
+                                shouldBlast = true;
+                                monsterBkt.remove();
+                        }
+                        // AI when in water (attempt to blast otherwise)
+                        if (shouldHandleAI) {
+                            Vector velocity = monsterBkt.getVelocity();
+                            boolean fullHealth = monster.getHealth() + 1e-5 > monster.getMaxHealth();
+                            double distSqr;
+                            if (monsterBkt.getWorld() == target.getWorld())
+                                distSqr = monsterBkt.getEyeLocation().distanceSquared(target.getEyeLocation());
+                            else
+                                distSqr = 999999d;
+                            switch (type) {
+                                case "硫磺比目鱼": {
+                                    Vector acc;
+                                    // attempts to sink to the bottom when idle (dist: 16)
+                                    if (fullHealth && distSqr > 256) {
+                                        acc = new Vector(0, -0.1, 0);
+                                    }
+                                    // charge the player when needed
+                                    else {
+                                        acc = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 0.15);
+                                    }
+                                    velocity.add(acc);
+                                    MathHelper.setVectorLength(velocity, 1, true);
+                                    break;
+                                }
+                                case "炮弹水母": {
+                                    if (indexAI > 50) {
+                                        indexAI = (int) (Math.random() * 20);
+                                        extraVariables.remove("a");
+                                    }
+                                    velocity.add((Vector) extraVariables.computeIfAbsent("a",
+                                            (ignored) -> MathHelper.randomVector().multiply(0.1).add(new Vector(0, 0.025, 0)) ));
+                                    MathHelper.setVectorLength(velocity, 0.6, true);
+                                    break;
+                                }
+                                case "剧毒米诺鱼":
+                                case "眼后剧毒米诺鱼": {
+                                    if (indexAI > 30) {
+                                        indexAI = (int) (Math.random() * 10);
+                                        extraVariables.remove("a");
+                                    }
+                                    velocity.add((Vector) extraVariables.computeIfAbsent("a",
+                                            (ignored) -> MathHelper.randomVector().multiply(0.175)));
+                                    MathHelper.setVectorLength(velocity, 1.4, true);
+                                    break;
+                                }
+                                case "流光石首鱼": {
+                                    Vector acc;
+                                    // wander around idle (dist: 25)
+                                    if (fullHealth && distSqr > 625) {
+                                        if (indexAI > 40) {
+                                            indexAI = (int) (Math.random() * 15);
+                                            extraVariables.remove("a");
+                                        }
+                                        acc = (Vector) extraVariables.computeIfAbsent("a",
+                                                (ignored) -> MathHelper.randomVector().multiply(0.1));
+                                    }
+                                    // charge the player when needed
+                                    else {
+                                        acc = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 0.075);
+                                    }
+                                    velocity.add(acc);
+                                    MathHelper.setVectorLength(velocity, 1.15, true);
+                                    break;
+                                }
+                                case "激光鱼": {
+                                    Vector acc;
+                                    // wander around idle (dist: 24)
+                                    if (fullHealth && distSqr > 576) {
+                                        if (indexAI > 40) {
+                                            indexAI = (int) (Math.random() * 15);
+                                            extraVariables.remove("a");
+                                        }
+                                        acc = (Vector) extraVariables.computeIfAbsent("a",
+                                                (ignored) -> MathHelper.randomVector().multiply(0.06));
+                                    }
+                                    // flee from the player & fire laser when needed
+                                    else {
+                                        acc = MathHelper.getDirection(target.getEyeLocation(), monsterBkt.getEyeLocation(), 0.125);
+                                        if (indexAI % 20 == 0) {
+                                            EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                                    monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "激光");
+                                            shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, target.getEyeLocation(), 1.5);
+                                            EntityHelper.spawnProjectile(shootInfo);
+                                        }
+                                    }
+                                    velocity.add(acc);
+                                    MathHelper.setVectorLength(velocity, 1.1, true);
+                                    break;
+                                }
+                                case "魔鬼鱼": {
+                                    Vector acc;
+                                    double speed = 0.75;
+                                    // wander around idle (dist: 24)
+                                    if (fullHealth && distSqr > 576) {
+                                        if (indexAI > 40) {
+                                            indexAI = (int) (Math.random() * 15);
+                                            extraVariables.remove("a");
+                                        }
+                                        acc = (Vector) extraVariables.computeIfAbsent("a",
+                                                (ignored) -> MathHelper.randomVector().multiply(0.075));
+                                    }
+                                    // swim towards the player when needed
+                                    else {
+                                        double acceleration = 0.2;
+                                        if (indexAI % 40 < 20) {
+                                            acceleration = 0.1;
+                                            speed = 1.75;
+                                        }
+                                        acc = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), acceleration);
+                                    }
+                                    velocity.add(acc);
+                                    MathHelper.setVectorLength(velocity, speed, true);
+                                    break;
+                                }
+                                case "幻海水母": {
+                                    // always float towards the player
+                                    velocity = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 0.5, true);
+                                    break;
+                                }
+                            }
+                            monsterBkt.setVelocity(velocity);
+                        }
+                    }
+                    else {
+                        switch (type) {
+                            case "炮弹水母":
+                            case "剧毒米诺鱼":
+                            case "眼后剧毒米诺鱼":
+                                shouldBlast = true;
+                        }
+                    }
+                    // death blasts
+                    if (shouldBlast) {
+                        if (! extraVariables.containsKey("b")) {
+                            extraVariables.put("b", true);
+                            switch (type) {
+                                case "剧毒米诺鱼":
+                                case "眼后剧毒米诺鱼": {
+                                    EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                            monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "渊海灾虫毒云");
+                                    for (int i = 0; i < 20; i ++) {
+                                        shootInfo.velocity = MathHelper.randomVector().multiply(0.35);
+                                        EntityHelper.spawnProjectile(shootInfo);
+                                    }
+                                    break;
+                                }
+                                default:
+                                    EntityHelper.handleEntityExplode(monsterBkt, 5.5, new HashSet<>(), monsterBkt.getEyeLocation());
+                            }
+                        }
+                    }
+                    break;
+                }
+                case "巨像乌贼": {
+                    if (monster.getHealth() > 0) {
+                        // float towards the player
+                        Vector velocity = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 0.75, true);
+                        monsterBkt.setVelocity(velocity);
+                        // fire projectiles
+                        if (indexAI > 60 && indexAI % 25 == 0) {
+                            EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                    monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "追踪墨汁");
+                            shootInfo.properties.put("homingAbility", 1d);
+                            shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, target.getEyeLocation(), 1);
+                            EntityHelper.spawnProjectile(shootInfo);
+                        }
+                    }
+                    break;
+                }
+                case "猎魂鲨": {
+                    if (monster.getHealth() > 0) {
+                        // dash
+                        if (indexAI > 30 && indexAI % 30 < 20) {
+                            Vector velocity = (Vector) extraVariables.computeIfAbsent("v", (ignored) ->
+                                    MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(),
+                                            3, true));
+                            monsterBkt.setVelocity(velocity);
+                        }
+                        // ready for next dash
+                        else {
+                            extraVariables.remove("v");
                         }
                     }
                     break;

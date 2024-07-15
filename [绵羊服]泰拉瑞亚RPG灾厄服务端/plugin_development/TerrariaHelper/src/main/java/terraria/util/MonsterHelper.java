@@ -177,10 +177,20 @@ public class MonsterHelper {
         WorldHelper.BiomeType biomeType = WorldHelper.BiomeType.getBiome(ply);
         String  biomeStr = biomeType.toString().toLowerCase(),
                 heightStr = heightLayer.toString().toLowerCase();
-        // do not attempt anything else for underworld
+        // special biomes' mob spawning
         switch (biomeType) {
+            // do not attempt anything else for underworld
             case UNDERWORLD:
             case BRIMSTONE_CRAG:
+                naturalMobSpawnType(ply, biomeStr);
+                return;
+            // abyss layers should be accounted for
+            case ABYSS:
+                String abyssLayerStr = WorldHelper.WaterRegionType.getWaterRegionType(ply.getLocation(), false)
+                        .toString().toLowerCase();
+                // try that particular layer first; use default when necessary.
+                if (naturalMobSpawnType(ply, abyssLayerStr))
+                    return;
                 naturalMobSpawnType(ply, biomeStr);
                 return;
         }

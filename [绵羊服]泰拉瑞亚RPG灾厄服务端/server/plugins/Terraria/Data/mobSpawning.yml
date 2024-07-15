@@ -106,9 +106,27 @@ spawnInfo:
         ???: 1
         水母: 50
     sulphurous_ocean:
-        水母: 1
+        硫磺比目鱼: 2
+        炮弹水母: 1
     abyss:
-        水母: 1
+        硫磺比目鱼: 2
+        炮弹水母: 2
+        剧毒米诺鱼: 3
+        眼后剧毒米诺鱼: 3
+        流光石首鱼: 3
+        激光鱼: 1
+    abyss_2:
+        剧毒米诺鱼: 2
+        眼后剧毒米诺鱼: 2
+        流光石首鱼: 3
+        激光鱼: 3
+        魔鬼鱼: 3
+        幻海水母: 1
+    abyss_3:
+        魔鬼鱼: 10
+        幻海水母: 5
+        巨像乌贼: 1
+        猎魂鲨: 1
     corruption_underground:
         噬魂怪: 1
     corruption:
@@ -378,6 +396,11 @@ mobTier:
     蜥蜴人: 世纪之花
     飞蛇: 世纪之花
     深海吞食者: 世纪之花
+    眼后剧毒米诺鱼: 灾厄之眼
+    流光石首鱼: 灾厄之眼
+    激光鱼: 灾厄之眼
+    幻海水母: 灾厄之眼
+    魔鬼鱼: 石巨人
     瘟疫龟: 石巨人
     拜月教教徒: 石巨人
     流星火怪: 石巨人
@@ -408,10 +431,13 @@ mobTier:
     强化灵魂饮食者: 亵渎天神，普罗维登斯
     强化殒命妖灵: 亵渎天神，普罗维登斯
     强化绝望之石: 亵渎天神，普罗维登斯
+    巨像乌贼: 噬魂幽花
+    猎魂鲨: 噬魂幽花
 mobTierMax:
     诅咒骷髅头: 血肉之墙
     恶魔: 机械三王
     巨像蛤: 血肉之墙
+    剧毒米诺鱼: 灾厄之眼
     灵魂饮食者: 亵渎天神，普罗维登斯
     殒命妖灵: 亵渎天神，普罗维登斯
     绝望之石: 亵渎天神，普罗维登斯
@@ -1682,6 +1708,150 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 1
                     health: 45000
+    硫磺比目鱼:
+        name: "硫磺比目鱼"
+        monsterType: "SLIME"
+        slimeSize: 2
+        spawnLocationType: WATER
+        variants:
+            default1:
+                attributes:
+                    damage: 150
+                    damageType: "Melee"
+                    defence: 30
+                    knockback: 2
+                    knockbackResistance: 0.72
+                    health: 240
+    炮弹水母:
+        name: "炮弹水母"
+        monsterType: "SLIME"
+        slimeSize: 3
+        spawnLocationType: WATER
+        variants:
+            default1:
+                attributes:
+                    damage: 300
+                    damageType: "Melee"
+                    defence: 0
+                    knockback: 3
+                    knockbackResistance: 1
+                    health: 800
+    剧毒米诺鱼:
+        name: "剧毒米诺鱼"
+        monsterType: "SLIME"
+        slimeSize: 4
+        spawnLocationType: WATER
+        variants:
+            default1:
+                attributes:
+                    damage: 360
+                    damageType: "Magic"
+                    defence: 40
+                    knockback: 3
+                    knockbackResistance: 0.88
+                    health: 1440
+    眼后剧毒米诺鱼:
+        name: "剧毒米诺鱼"
+        monsterType: "SLIME"
+        slimeSize: 4
+        spawnLocationType: WATER
+        variants:
+            default1:
+                attributes:
+                    damage: 360
+                    damageType: "Magic"
+                    defence: 40
+                    knockback: 3
+                    knockbackResistance: 0.88
+                    health: 1440
+    流光石首鱼:
+        name: "流光石首鱼"
+        monsterType: "SLIME"
+        slimeSize: 4
+        spawnLocationType: WATER
+        variants:
+            default1:
+                attributes:
+                    damage: 300
+                    damageType: "Melee"
+                    defence: 80
+                    knockback: 3
+                    knockbackResistance: 0.9
+                    health: 4800
+    激光鱼:
+        name: "激光鱼"
+        monsterType: "SLIME"
+        slimeSize: 3
+        spawnLocationType: WATER
+        variants:
+            default1:
+                attributes:
+                    damage: 480
+                    damageMeleeMulti: 0.5
+                    damageType: "Arrow"
+                    defence: 30
+                    knockback: 3
+                    knockbackResistance: 0.664
+                    health: 2880
+    魔鬼鱼:
+        name: "魔鬼鱼"
+        monsterType: "SLIME"
+        slimeSize: 5
+        spawnLocationType: WATER
+        variants:
+            default1:
+                attributes:
+                    damage: 540
+                    damageType: "Melee"
+                    defence: 100
+                    damageTakenMulti: 0.8
+                    knockback: 3
+                    knockbackResistance: 0.88
+                    health: 2400
+    幻海水母:
+        name: "幻海水母"
+        monsterType: "SLIME"
+        slimeSize: 8
+        spawnLocationType: WATER
+        variants:
+            default1:
+                attributes:
+                    damage: 600
+                    damageType: "Magic"
+                    defence: 20
+                    knockback: 3
+                    knockbackResistance: 1
+                    health: 36000
+    巨像乌贼:
+        name: "巨像乌贼"
+        monsterType: "SLIME"
+        slimeSize: 16
+        spawnLocationType: WATER
+        unique: true
+        variants:
+            default1:
+                attributes:
+                    damage: 990
+                    damageType: "Magic"
+                    defence: 100
+                    knockback: 4
+                    knockbackResistance: 0.96
+                    health: 780000
+    猎魂鲨:
+        name: "猎魂鲨"
+        monsterType: "SLIME"
+        slimeSize: 20
+        spawnLocationType: WATER
+        unique: true
+        variants:
+            default1:
+                attributes:
+                    damage: 1112
+                    damageType: "Magic"
+                    defence: 140
+                    knockback: 5
+                    knockbackResistance: 1
+                    health: 600000
     克苏鲁的仆从:
         name: "克苏鲁的仆从"
         monsterType: "SLIME"
