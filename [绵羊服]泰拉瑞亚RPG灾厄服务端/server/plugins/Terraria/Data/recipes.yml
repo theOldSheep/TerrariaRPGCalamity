@@ -4572,6 +4572,8 @@ TINKER_WORKBENCH:
     requireItem:
     - 机械手套
     - 岩浆石
+    - 再生药水
+    - 灾厄尘:5
     - 熔渣锭:5
     recipeCategory: ACCESSORY
   '19':

@@ -937,7 +937,7 @@
   lore:
   - §r于夜晚使用，召唤克苏鲁之眼
   - §r附近玩家均可参与挑战
-  - §r附近玩家均可参与挑战
+  - §r“不要妄想用洗发水战胜它”
   rarity: 1
 史莱姆王冠:
   item: COAL
@@ -1709,10 +1709,12 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r“……对他使用「炎拳」吧！”
   attributes:
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.1
     damageMeleeMulti: 0.15
+    regen: 3
     buffInflictMelee: 狱炎|80|1
   worth: 6000000
   rarity: 7
@@ -2127,9 +2129,9 @@ Drew之翼:
   attributes:
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.15
-    damageMeleeMulti: 0.15
+    damageMeleeMulti: 0.2
     critMelee: 15
-    damageTrueMeleeMulti: 0.2
+    damageTrueMeleeMulti: 0.15
     buffInflictMelee: 超位崩解|80|1
   worth: 40000000
   rarity: 16
@@ -4652,7 +4654,7 @@ Drew之翼:
   - §r不要低估了小号太空剑的杀伤力
   - §r发射追踪新月
   - §r击中敌人时生成小行星
-  - §r“发射的弹幕并不能使敌人内外翻转”
+  - §r“并不能使敌人内外翻转”
   attributes:
     damage: 220
     damageType: Melee
@@ -5487,6 +5489,7 @@ Drew之翼:
   lore:
   - §r你感到死神之手掌控着你
   - §r发射一连串追踪镰刀
+  - §r“可以告诉我你的名字吗？”
   attributes:
     damage: 2400
     damageType: Melee
@@ -14051,6 +14054,7 @@ Dodu的手炮:
   item: CLAY_BALL
   lore:
   - §a饮用后返回出生点
+  - §r“你在开玩笑。”
   worth: 20000
   rarity: 1
 虫洞药水:

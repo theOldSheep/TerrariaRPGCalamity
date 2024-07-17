@@ -133,8 +133,8 @@
     buffImmute:
         - "深渊水压"
     buffInflict:
-        - "破损盔甲|200|0"
-        - "深渊水压|50|0"
+        - "破损盔甲|200|1"
+        - "深渊水压|50|1"
     drop:
         - "铜币:1000:2000:1"
         - "虚空石:1:3:1"
@@ -153,7 +153,7 @@
         - "狱炎"
         - "破晓"
     buffInflict:
-        - "深渊水压|80|0"
+        - "深渊水压|80|1"
     drop:
         - "铜币:1000:2500:1"
         - "深渊细胞:1:3:0.75"
@@ -163,9 +163,9 @@
     buffImmute:
         - "深渊水压"
     buffInflict:
-        - "深渊水压|40|0"
-        - "带电|50|0"
-        - "剧毒|100|0"
+        - "深渊水压|40|1"
+        - "带电|50|1"
+        - "剧毒|100|1"
     drop:
         - "铜币:1500:2500:1"
         - "深渊细胞:5:7:1"
@@ -178,7 +178,7 @@
     buffImmute:
         - "深渊水压"
     buffInflict:
-        - "深渊水压|100|0"
+        - "深渊水压|100|1"
     drop:
         - "铜币:200000:300000:1"
         - "深渊细胞:12:25:1"
@@ -188,8 +188,8 @@
     buffImmute:
         - "深渊水压"
     buffInflict:
-        - "深渊水压|200|0"
-        - "碎甲|200|0"
+        - "深渊水压|200|1"
+        - "碎甲|200|1"
     drop:
         - "铜币:200000:350000:1"
         - "虚空石:32:48:1"
@@ -1177,6 +1177,137 @@
 烈焰龙卷:
     buffInflict:
         - "龙焰|80|1"
+XS-01“阿尔忒弥斯”:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "超位崩解|40|1"
+    buffImmute:
+        - "超位崩解"
+XS-03“阿波罗”:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "超位崩解|40|1"
+    buffImmute:
+        - "超位崩解"
+XM-05“塔纳托斯”头:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "超位崩解|60|1"
+    buffImmute:
+        - "燃烧"
+        - "霜火"
+        - "狱炎"
+        - "破晓"
+        - "夜魇"
+        - "龙焰"
+        - "超位崩解"
+XM-05“塔纳托斯”体节:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "超位崩解|40|1"
+    buffImmute:
+        - "燃烧"
+        - "霜火"
+        - "狱炎"
+        - "破晓"
+        - "夜魇"
+        - "龙焰"
+        - "超位崩解"
+XM-05“塔纳托斯”尾:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "超位崩解|30|1"
+    buffImmute:
+        - "燃烧"
+        - "霜火"
+        - "狱炎"
+        - "破晓"
+        - "夜魇"
+        - "龙焰"
+        - "超位崩解"
+XF-09“阿瑞斯”:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "超位崩解|100|1"
+    buffImmute:
+        - "超位崩解"
+XF-09“阿瑞斯”高斯核弹发射井:
+    soundDamaged: entity.hit.otherworldly
+    buffImmute:
+        - "超位崩解"
+XF-09“阿瑞斯”镭射加农炮:
+    soundDamaged: entity.hit.otherworldly
+    buffImmute:
+        - "超位崩解"
+XF-09“阿瑞斯”离子加农炮:
+    soundDamaged: entity.hit.otherworldly
+    buffImmute:
+        - "超位崩解"
+XF-09“阿瑞斯”特斯拉加农炮:
+    soundDamaged: entity.hit.otherworldly
+    buffImmute:
+        - "超位崩解"
+至尊灾厄:
+    buffInflict:
+        - "孱弱巫咒|200|1"
+    buffImmute:
+        - "燃烧"
+        - "霜火"
+        - "狱炎"
+        - "破晓"
+        - "夜魇"
+        - "硫磺火"
+        - "孱弱巫咒"
+至尊灾难:
+    soundDamaged: entity.hit.flesh
+    buffImmute:
+        - "燃烧"
+        - "霜火"
+        - "狱炎"
+        - "破晓"
+        - "夜魇"
+        - "硫磺火"
+        - "孱弱巫咒"
+至尊灾祸:
+    soundDamaged: entity.hit.flesh
+    buffImmute:
+        - "燃烧"
+        - "霜火"
+        - "狱炎"
+        - "破晓"
+        - "夜魇"
+        - "硫磺火"
+        - "孱弱巫咒"
+灾坟魔物头:
+    soundDamaged: entity.hit.flesh
+    buffImmute:
+        - "燃烧"
+        - "霜火"
+        - "狱炎"
+        - "破晓"
+        - "夜魇"
+        - "硫磺火"
+        - "孱弱巫咒"
+灾坟魔物体节:
+    soundDamaged: entity.hit.flesh
+    buffImmute:
+        - "燃烧"
+        - "霜火"
+        - "狱炎"
+        - "破晓"
+        - "夜魇"
+        - "硫磺火"
+        - "孱弱巫咒"
+灾坟魔物尾:
+    soundDamaged: entity.hit.flesh
+    buffImmute:
+        - "燃烧"
+        - "霜火"
+        - "狱炎"
+        - "破晓"
+        - "夜魇"
+        - "硫磺火"
+        - "孱弱巫咒"
 哥布林战士:
     drop:
         - "铜币:375:375:1"

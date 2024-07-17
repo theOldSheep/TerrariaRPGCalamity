@@ -410,7 +410,7 @@ STAINED_GLASS_7:
 CHEST:
   totalProgress: 150
   dropItem:
-  - 箱子
+  - CHEST
 # unbreakables
 SMOOTH_BRICK_1:
   powerPickaxe: 999999
