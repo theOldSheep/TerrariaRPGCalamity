@@ -98,17 +98,6 @@ public class Yharon extends EntitySlime {
             }
         }
     }
-    private void fireBlasts() {
-        Location loc = entity.getEyeLocation();
-        Vector dir = this.target.getLocation().toVector().subtract(loc.toVector()).normalize();
-        for (int i = 0; i < 10; i++) {
-            // Add some randomness to the direction to make the blasts spread out
-            Vector blastDir = dir.clone().add(new Vector(Math.random() * 1 - 0.5, Math.random() * 1 - 0.5, Math.random() * 1 - 0.5)).normalize().multiply(1.6);
-            shootInfoFireballRegular.shootLoc = loc;
-            shootInfoFireballRegular.velocity = blastDir;
-            EntityHelper.spawnProjectile(shootInfoFireballRegular);
-        }
-    }
     private void flyLoop() {
         double angle = Math.toRadians(this.phaseTick * 18);
         this.velocity = new Vector(Math.cos(angle), 0, Math.sin(angle)).multiply(1.5);
@@ -123,7 +112,6 @@ public class Yharon extends EntitySlime {
         EntityHelper.spawnProjectile(shootInfoFireballHoming);
     }
     private void flyHorizontal() {
-        // TODO: gently accelerate towards the correct horizontal direction?
         if (this.phaseTick == 1) {
             Location loc = entity.getLocation();
             Vector dir = this.target.getLocation().toVector().subtract(loc.toVector()).normalize();
@@ -141,10 +129,11 @@ public class Yharon extends EntitySlime {
     }
 
     private boolean clockwise = true;
-    public void summonRingOfProjectilesSimple(EntityHelper.ProjectileShootInfo shootInfo, Location spawnLocation, boolean alternate) {
-        summonRingOfProjectilesSphere(shootInfo, spawnLocation, 0, 1, alternate);
+    public void summonRingOfProjectilesSimple(EntityHelper.ProjectileShootInfo shootInfo, boolean alternate) {
+        summonRingOfProjectilesSphere(shootInfo, 0, 1, alternate);
     }
-    public void summonRingOfProjectilesSphere(EntityHelper.ProjectileShootInfo shootInfo, Location spawnLocation, int idx, int idxMax, boolean alternate) {
+    public void summonRingOfProjectilesSphere(EntityHelper.ProjectileShootInfo shootInfo, int idx, int idxMax, boolean alternate) {
+        Location spawnLocation = ((LivingEntity) bukkitEntity).getEyeLocation();
         int numProjectiles = 16;
         double initialAngle = Math.random() * 360;
         double angleChange = 0.4;
@@ -197,10 +186,10 @@ public class Yharon extends EntitySlime {
                         this.teleport(this.teleportTarget);
                         this.velocity.zero();
                     }
-                    if (this.phaseTick % 6 == 1 && this.phaseTick > 11)
-                        this.fireBlasts();
+                    if (this.phaseTick % 10 == 0)
+                        summonRingOfProjectilesSimple(shootInfoFireballRegular, false);
                 }
-                if (this.phaseTick > 40) {
+                if (this.phaseTick > 60) {
                     this.updatePhaseStep();
                 }
                 break;
@@ -273,14 +262,13 @@ public class Yharon extends EntitySlime {
                     this.teleport(loc);
                     this.velocity.zero();
                 }
-                if (this.phaseTick % 6 == 1)
-                    this.fireBlasts();
-                if (this.phaseTick > 30) {
+                if (this.phaseTick % 10 == 1)
+                    summonRingOfProjectilesSimple(shootInfoFireballRegular, true);
+                if (this.phaseTick > 60) {
                     updatePhaseStep(1);
                 }
                 break;
         }
-        this.phaseTick++;
     }
     public void phase3() {
         switch (this.phaseStep) {
@@ -328,10 +316,10 @@ public class Yharon extends EntitySlime {
                 }
                 break;
             case 6:
-                if (this.phaseTick % 6 == 1) {
-                    this.fireBlasts();
+                if (this.phaseTick % 15 == 0) {
+                    summonRingOfProjectilesSphere(shootInfoFireballRegular, phaseTick / 15, 2, true);
                 }
-                if (this.phaseTick > 30) {
+                if (this.phaseTick > 60) {
                     updatePhaseStep();
                 }
                 break;
@@ -341,7 +329,6 @@ public class Yharon extends EntitySlime {
                 }
                 break;
         }
-        this.phaseTick++;
     }
     public void phase4() {
         switch (this.phaseStep) {
@@ -362,9 +349,9 @@ public class Yharon extends EntitySlime {
                 break;
             case 8:
                 this.velocity = new Vector(0, 0, 0); // Ensure the entity does not move
-                if (this.phaseTick % 6 == 1)
-                    this.fireBlasts();
-                if (this.phaseTick > 30) {
+                if (this.phaseTick % 12 == 0)
+                    summonRingOfProjectilesSphere(shootInfoFireballRegular, phaseTick / 12, 5, false);
+                if (this.phaseTick > 60) {
                     updatePhaseStep();
                 }
                 break;
@@ -374,7 +361,6 @@ public class Yharon extends EntitySlime {
                 }
                 break;
         }
-        this.phaseTick++;
     }
     public void phase5() {
         switch (this.phaseStep) {
@@ -404,9 +390,9 @@ public class Yharon extends EntitySlime {
                     this.teleport(loc.add(loc.getDirection().multiply(32)));
                     this.velocity.zero();
                 }
-                if (this.phaseTick % 10 == 1)
-                    this.fireBlasts();
-                if (this.phaseTick > 30) {
+                if (this.phaseTick % 10 == 0)
+                    summonRingOfProjectilesSphere(shootInfoFireballRegular, phaseTick / 10, 3, true);
+                if (this.phaseTick > 60) {
                     updatePhaseStep();
                 }
                 break;
@@ -416,7 +402,6 @@ public class Yharon extends EntitySlime {
                 }
                 break;
         }
-        this.phaseTick++;
     }
     private void updatePhase() {
         double healthPercentage = (this.getHealth() / this.getMaxHealth()) * 100;
@@ -455,6 +440,7 @@ public class Yharon extends EntitySlime {
                 this.phase5();
                 break;
         }
+        this.phaseTick++;
     }
     public void tick() {
         // Update velocity

@@ -116,21 +116,21 @@ public class UnderworldChunkGenerator extends ChunkGenerator {
                     else
                         brimstoneCragFactor = (noise[i][j] - 0.4) * 5;
                 }
+                brimstoneCragFactor *= 0.5;
+                double underworldFactor = 1 - brimstoneCragFactor;
 
                 double floorHeight = LAVA_LEVEL + 2;
                 double ceilHeight = CEIL_LEVEL;
-                if (brimstoneCragFactor < 0.9999) {
-                    double floorNoise = floorGenerator.noise(currX, currZ, 0.5, 0.5, false);
-                    double floorDetail = floorDetailGenerator.noise(currX, currZ, 0.5, 0.5, false);
-                    double ceilNoise = ceilGenerator.noise(currX, currZ, 0.5, 0.5, false);
-                    double ceilDetail = ceilDetailGenerator.noise(currX, currZ, 0.5, 0.5, false);
 
-                    double underworldFactor = 1 - brimstoneCragFactor;
-                    floorHeight *= brimstoneCragFactor;
-                    floorHeight += underworldFactor * getFloorHeight(floorNoise, floorDetail);
-                    ceilHeight *= brimstoneCragFactor;
-                    ceilHeight += underworldFactor * getCeilHeight(ceilNoise, ceilDetail) + Math.random() * 2;
-                }
+                double floorNoise = floorGenerator.noise(currX, currZ, 0.5, 0.5, false);
+                double floorDetail = floorDetailGenerator.noise(currX, currZ, 0.5, 0.5, false);
+                double ceilNoise = ceilGenerator.noise(currX, currZ, 0.5, 0.5, false);
+                double ceilDetail = ceilDetailGenerator.noise(currX, currZ, 0.5, 0.5, false);
+
+                floorHeight *= brimstoneCragFactor;
+                floorHeight += underworldFactor * getFloorHeight(floorNoise, floorDetail);
+                ceilHeight *= brimstoneCragFactor;
+                ceilHeight += underworldFactor * getCeilHeight(ceilNoise, ceilDetail) + Math.random() * 2;
 
                 // loop through y to set blocks
                 for (int y_coord = 0; y_coord <= 128; y_coord++) {

@@ -728,8 +728,8 @@ public class ItemHelper {
                     break;
                 }
                 case "regen": {
-                    if (attributeSection.getDouble(attribute, 0) < 0) result.add("减缓生命恢复");
-                    else result.add("加快生命恢复");
+                    int amount = attributeSection.getInt(attribute, 0);
+                    result.add((amount > 0 ? "+" : "") + amount + " 额外自然生命恢复");
                     break;
                 }
                 case "manaRegen": {

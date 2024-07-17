@@ -194,11 +194,11 @@ public class Ravager extends EntitySlime {
                     phase2AI();
                 }
                 // rock pillars
-                if (ticksLived % 50 == 40) {
+                if (ticksLived % 35 == 25) {
                     bossbar.color = BossBattle.BarColor.RED;
                     bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
                 }
-                else if (ticksLived % 50 == 0) {
+                else if (ticksLived % 35 == 0) {
                     spawnRockPillars();
                     bossbar.color = BossBattle.BarColor.GREEN;
                     bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);

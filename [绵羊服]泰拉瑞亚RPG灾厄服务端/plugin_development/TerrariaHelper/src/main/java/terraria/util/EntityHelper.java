@@ -1493,7 +1493,7 @@ public class EntityHelper {
             if (dPly instanceof Player) {
                 Player dPlayer = (Player) dPly;
                 String victimName = GenericHelper.trimText(v.getName());
-                // spawn empress of light
+                // special enemy death handling
                 switch (victimName) {
                     // the Hive Mind
                     case "腐化囊": {
@@ -1513,6 +1513,13 @@ public class EntityHelper {
                     // lunatic cultist spawns after killing the mob in the dungeon
                     case "拜月教教徒": {
                         BossHelper.spawnBoss((Player) dPly, BossHelper.BossType.LUNATIC_CULTIST, v.getLocation());
+                        break;
+                    }
+                    // drop a lot of hearts
+                    case "礼物宝箱怪": {
+                        // randomly drop 4-8 hearts
+                        for (int i = (int) (Math.random() * 5); i < 8; i ++)
+                            dropHeart(v.getLocation());
                         break;
                     }
                 }

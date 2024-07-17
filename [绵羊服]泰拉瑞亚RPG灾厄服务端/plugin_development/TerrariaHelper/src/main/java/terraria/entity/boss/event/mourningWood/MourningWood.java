@@ -4,6 +4,8 @@ import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
@@ -110,10 +112,19 @@ public class MourningWood extends EntitySlime {
                 double horSpeed = HORIZONTAL_SPEED;
                 if (velLen > horSpeed)
                     velocity.multiply(horSpeed / velLen);
+
                 double verticalVelocity = 0.35;
-                velocity.setY(
-                        bukkitEntity.getLocation().subtract(0, verticalVelocity, 0).getBlock().getType().isSolid()
-                                ? verticalVelocity : -verticalVelocity);
+                Block testBlk = bukkitEntity.getLocation().subtract(0, verticalVelocity, 0).getBlock();
+                if (testBlk.getType().isSolid()) {
+                    double targetY = testBlk.getY() + 1.0001;
+                    if (testBlk.getRelative(BlockFace.UP).getType().isSolid()) {
+                        targetY ++;
+                    }
+                    velocity.setY( Math.min(verticalVelocity, targetY - locY) );
+                }
+                else {
+                    velocity.setY(-verticalVelocity);
+                }
                 bukkitEntity.setVelocity(velocity);
             }
 

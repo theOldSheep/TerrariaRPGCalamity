@@ -102,12 +102,18 @@ public class SupremeCalamitas extends EntitySlime {
         BulletHellProjectileOption optionBlastSurrounding = new BulletHellProjectileOption(
                 "深渊亡魂", BulletHellProjectile.ProjectileType.SQUARE_BORDER,
                 attrMapPrjMid, 0.4, 0.2, 2, 250);
+        BulletHellProjectileOption optionBlastSurroundingEasy = new BulletHellProjectileOption(
+                "深渊亡魂", BulletHellProjectile.ProjectileType.SQUARE_BORDER,
+                attrMapPrjMid, 0.4, 0.2, 3, 250);
         BulletHellProjectileOption optionFlameSkull = new BulletHellProjectileOption(
                 "深渊炙颅", BulletHellProjectile.ProjectileType.SQUARE_BORDER_SIDES,
                 attrMapPrjHigh, 0.4, 0.2, 2, 250);
         BulletHellProjectileOption optionHellBlast = new BulletHellProjectileOption(
                 "无际裂变", BulletHellProjectile.ProjectileType.CIRCUMFERENCE,
                 attrMapPrjHigh, 0.3, 0.1, 20, 60);
+        BulletHellProjectileOption optionHellBlastEasy = new BulletHellProjectileOption(
+                "无际裂变", BulletHellProjectile.ProjectileType.CIRCUMFERENCE,
+                attrMapPrjHigh, 0.3, 0.1, 30, 60);
         BulletHellProjectileOption optionGigaBlast = new BulletHellProjectileOption(
                 "深渊炙炎", BulletHellProjectile.ProjectileType.CIRCUMFERENCE,
                 attrMapPrjHigh, 0.35, 0.15, 35, 75);
@@ -148,7 +154,7 @@ public class SupremeCalamitas extends EntitySlime {
                         }),
                 // third bullet hell 50% health
                 new BulletHellPattern(0.5, 400, true)
-                        .addCandidate(optionBlastSurrounding)
+                        .addCandidate(optionBlastSurroundingEasy)
                         .addCandidate(optionHellBlast)
                         .addCandidate(optionGigaBlast)
                         .setBeginFunc(
@@ -173,7 +179,7 @@ public class SupremeCalamitas extends EntitySlime {
                 // fourth bullet hell 30% health
                 new BulletHellPattern(0.3, 400, true)
                         .addCandidate(optionBlastSurrounding)
-                        .addCandidate(optionHellBlast)
+                        .addCandidate(optionHellBlastEasy)
                         .addCandidate(optionGigaBlast)
                         .setBeginFunc(
                         (boss) -> {
@@ -195,9 +201,9 @@ public class SupremeCalamitas extends EntitySlime {
                         }),
                 // final bullet hell 10% health
                 new BulletHellPattern(0.1, 400, true)
-                        .addCandidate(optionBlastSurrounding)
+                        .addCandidate(optionBlastSurroundingEasy)
                         .addCandidate(optionFlameSkull)
-                        .addCandidate(optionHellBlast)
+                        .addCandidate(optionHellBlastEasy)
                         .addCandidate(optionGigaBlast)
                         .setBeginFunc(
                         (boss) -> {

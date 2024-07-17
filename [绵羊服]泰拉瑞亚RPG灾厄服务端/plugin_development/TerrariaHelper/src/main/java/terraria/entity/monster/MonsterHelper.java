@@ -393,11 +393,11 @@ public class MonsterHelper {
         }
         // attributes and other properties
         switch (type) {
-            case "钨钢回转器":
             case "钨钢漫步者":
+            case "钨钢回转器":
             case "骷髅特警":
             {
-                bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+                bukkitMonsterLivingEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.375);
                 break;
             }
             case "绝望之石":
@@ -661,7 +661,7 @@ public class MonsterHelper {
             switch (type) {
                 case "神圣宝箱怪":
                 case "腐化宝箱怪": {
-                    String[] candidateDrops = new String[]{"魔法箭袋", "再生手环", "泰坦手套", "炼金石", "十字项链", "天神之剑",
+                    String[] candidateDrops = new String[]{"再生手环", "泰坦手套", "炼金石", "十字项链", "天神之剑",
                             type.equals("神圣宝箱怪") ? "代达罗斯风暴弓" : "腐香囊"};
                     toDrop.add(candidateDrops[(int) (Math.random() * candidateDrops.length)]);
                     break;
