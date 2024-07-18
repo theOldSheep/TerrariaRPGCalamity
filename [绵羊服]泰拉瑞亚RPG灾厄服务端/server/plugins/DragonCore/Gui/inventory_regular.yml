@@ -27,15 +27,15 @@ Functions:
     方法.异步执行方法('更新背包变量');
     
   preRender: |-
-    界面变量.label_scale = 方法.取屏幕宽度() / 480;
-    界面变量.slot_size = 方法.取屏幕宽度() * 16 / 480;
-    界面变量.slot_offset = 方法.取屏幕宽度() * 18 / 480;
-    界面变量.hlmt_x = 方法.取屏幕宽度 - (方法.取屏幕宽度() * 32 / 480);
-    界面变量.hlmt_y = 方法.取屏幕高度 - (方法.取屏幕宽度() * 160 / 480);
-    界面变量.acc_x = 方法.取屏幕宽度 - (方法.取屏幕宽度() * 32 / 480);
-    界面变量.acc_y = 方法.取屏幕高度 - (方法.取屏幕宽度() * 98 / 480);
-    界面变量.inv_x = 方法.取屏幕宽度() * 8 / 480;
-    界面变量.inv_y = 方法.取屏幕宽度() * 10 / 480;
+    界面变量.label_scale = 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size');
+    界面变量.slot_size = 方法.取屏幕宽度() * 16 / 方法.取变量('adjusted_scr_size');
+    界面变量.slot_offset = 方法.取屏幕宽度() * 18 / 方法.取变量('adjusted_scr_size');
+    界面变量.hlmt_x = 方法.取屏幕宽度 - (方法.取屏幕宽度() * 32 / 方法.取变量('adjusted_scr_size'));
+    界面变量.hlmt_y = 方法.取屏幕高度 - (方法.取屏幕宽度() * 160 / 方法.取变量('adjusted_scr_size'));
+    界面变量.acc_x = 方法.取屏幕宽度 - (方法.取屏幕宽度() * 32 / 方法.取变量('adjusted_scr_size'));
+    界面变量.acc_y = 方法.取屏幕高度 - (方法.取屏幕宽度() * 98 / 方法.取变量('adjusted_scr_size'));
+    界面变量.inv_x = 方法.取屏幕宽度() * 8 / 方法.取变量('adjusted_scr_size');
+    界面变量.inv_y = 方法.取屏幕宽度() * 10 / 方法.取变量('adjusted_scr_size');
 
 # 设置4个装备槽和副手槽
 helmet_texture:
@@ -110,8 +110,8 @@ mount_slot:
   drawBackground: false
 # 饰品
 accessories_label:
-  x: "方法.取屏幕宽度 - (方法.取屏幕宽度 * 32 / 480)"
-  y: "方法.取屏幕高度 - (方法.取屏幕宽度 * 108 / 480)"
+  x: "方法.取屏幕宽度 - (方法.取屏幕宽度 * 32 / 方法.取变量('adjusted_scr_size'))"
+  y: "方法.取屏幕高度 - (方法.取屏幕宽度 * 108 / 方法.取变量('adjusted_scr_size'))"
   texts: "饰品"
   scale: "界面变量.label_scale"
 accessory1_texture:
@@ -219,50 +219,50 @@ accessory7_slot:
 
 # 设置合成槽位
 crafting_label:
-  x: "方法.取屏幕宽度 * 24 / 480"
-  y: "方法.取屏幕宽度 * 110 / 480"
+  x: "方法.取屏幕宽度 * 24 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 110 / 方法.取变量('adjusted_scr_size')"
   center: true
   texts: "合成"
   scale: "界面变量.label_scale"
 crafting_texture:
-  x: "方法.取屏幕宽度 * 18 / 480"
-  y: "方法.取屏幕宽度 * 120 / 480"
-  width: "方法.取屏幕宽度 * 12 / 480"
-  height: "方法.取屏幕宽度 * 12 / 480"
+  x: "方法.取屏幕宽度 * 18 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 120 / 方法.取变量('adjusted_scr_size')"
+  width: "方法.取屏幕宽度 * 12 / 方法.取变量('adjusted_scr_size')"
+  height: "方法.取屏幕宽度 * 12 / 方法.取变量('adjusted_scr_size')"
   texture: "gui/slot_crafting.png"
 crafting_slot:
-  x: "方法.取屏幕宽度 * 18 / 480"
-  y: "方法.取屏幕宽度 * 120 / 480"
-  width: "方法.取屏幕宽度 * 12 / 480"
-  height: "方法.取屏幕宽度 * 12 / 480"
+  x: "方法.取屏幕宽度 * 18 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 120 / 方法.取变量('adjusted_scr_size')"
+  width: "方法.取屏幕宽度 * 12 / 方法.取变量('adjusted_scr_size')"
+  height: "方法.取屏幕宽度 * 12 / 方法.取变量('adjusted_scr_size')"
   identifier: "container_0"
   drawBackground: false
   tip: "&2&3&3&r制作窗口"
 # 防御
 defence_texture:
-  x: "方法.取屏幕宽度 - (方法.取屏幕宽度 * 50 / 480)"
-  y: "方法.取屏幕高度 - (方法.取屏幕宽度 * 40 / 480)"
-  width: "方法.取屏幕宽度 * 14 / 480"
-  height: "方法.取屏幕宽度 * 14 / 480"
+  x: "方法.取屏幕宽度 - (方法.取屏幕宽度 * 50 / 方法.取变量('adjusted_scr_size'))"
+  y: "方法.取屏幕高度 - (方法.取屏幕宽度 * 40 / 方法.取变量('adjusted_scr_size'))"
+  width: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')"
+  height: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')"
   texture: "gui/defence.png"
   tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')"
 defence_label:
-  x: "方法.取屏幕宽度 - (方法.取屏幕宽度 * 43 / 480)"
-  y: "方法.取屏幕高度 - (方法.取屏幕宽度 * 37 / 480)"
+  x: "方法.取屏幕宽度 - (方法.取屏幕宽度 * 43 / 方法.取变量('adjusted_scr_size'))"
+  y: "方法.取屏幕高度 - (方法.取屏幕宽度 * 37 / 方法.取变量('adjusted_scr_size'))"
   center: true
   scale: "0.8 * 界面变量.label_scale"
   texts: "方法.合并文本('&#CCCCCC&l', 方法.取变量('terraria_defence'))"
   tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')"
 # 背包
 backpack_label:
-  x: "方法.取屏幕宽度 * 17 / 480"
+  x: "方法.取屏幕宽度 * 17 / 方法.取变量('adjusted_scr_size')"
   y: "0"
   texts: "物品栏"
   scale: "界面变量.label_scale"
 # 显示钱币
 money_label:
-  x: "方法.取屏幕宽度 * 8 / 480"
-  y: "方法.取屏幕宽度 * 82 / 480"
+  x: "方法.取屏幕宽度 * 8 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 82 / 方法.取变量('adjusted_scr_size')"
   texts: "方法.合并文本('金钱: ', 方法.取变量('terraria_money'))"
   scale: "界面变量.label_scale"
 # 背包格子#row 1

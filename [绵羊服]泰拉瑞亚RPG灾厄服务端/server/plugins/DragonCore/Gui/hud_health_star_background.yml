@@ -32,7 +32,7 @@ Functions:
   preRender: |-
     界面变量.healthRounded = 方法.玩家是否飞行() ? 方法.到整数(0) : 方法.到整数(方法.玩家血量());
     界面变量.healthRounded = 方法.到整数(方法.玩家血量());
-    界面变量.star_size = 方法.取屏幕宽度() / 40;
+    界面变量.star_size = 方法.取屏幕宽度() * 12 / 方法.取变量('adjusted_scr_size');
     界面变量.star_stack_offset = 界面变量.star_size * 2 / 3;
     界面变量.star_x = 方法.取屏幕宽度() - 界面变量.star_size * 5 / 4;
     界面变量.mana_tooltip = 方法.合并文本('&2&3&3&r', 方法.到整数(方法.玩家等级()), '/', 方法.到整数(方法.取变量('terraria_max_mana')));
@@ -50,7 +50,8 @@ Functions:
     方法.延时(100);
     方法.异步执行方法('更新hud变量');
   更新hud变量2: |-
-    方法.更新变量值('terraria_max_mana','terraria_mana_tier','terraria_health_tier','terraria_pov_locked');
+    方法.更新变量值('terraria_max_mana','terraria_mana_tier','terraria_health_tier','terraria_ui_size');
+    方法.设置变量值('adjusted_scr_size', 480 / ( 方法.到整数(方法.取变量('terraria_ui_size')) / 100) );
     方法.延时(1000);
     方法.异步执行方法('更新hud变量2');
 

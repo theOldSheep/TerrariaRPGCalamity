@@ -16,9 +16,9 @@ Functions:
   
   # 更新界面大小
   preRender: |-
-    界面变量.leftMargin = 方法.取屏幕宽度 / 3;
-    界面变量.totalWidth = 方法.取屏幕宽度 / 3;
-    界面变量.upMargin = 方法.取屏幕高度 / 6;
+    界面变量.totalWidth = 方法.取屏幕宽度 * 160 / 方法.取变量('adjusted_scr_size');
+    界面变量.leftMargin = (方法.取屏幕宽度 - 界面变量.totalWidth) / 2;
+    界面变量.upMargin = 方法.取屏幕宽度 * 42 / 方法.取变量('adjusted_scr_size');
     界面变量.totalHeight = 界面变量.totalWidth * 62 / 174;
     界面变量.btnUpMargin = 界面变量.totalHeight * 22 / 62;
     界面变量.btnSeparation = 界面变量.totalWidth * 6 / 174;

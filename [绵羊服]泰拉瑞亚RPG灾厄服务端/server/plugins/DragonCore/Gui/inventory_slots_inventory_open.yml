@@ -1,9 +1,9 @@
 # 复制到子物品栏的preRender中
 Functions:
   preRender: |-
-    方法.设置变量值('label_scale', 方法.取屏幕宽度() / 480);
+    方法.设置变量值('label_scale', 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size'));
 
-    方法.设置变量值('slot_size', 方法.取屏幕宽度() / 30);
+    方法.设置变量值('slot_size', 方法.取屏幕宽度() * 16 / 方法.取变量('adjusted_scr_size'));
     方法.设置变量值('slot_offset', 方法.取变量('slot_size') * 9 / 8);
     方法.设置变量值('acc_x', 方法.取屏幕宽度() - 方法.取变量('slot_size') * 2);
     方法.设置变量值('acc_y', 方法.取屏幕高度() - 方法.取变量('slot_offset') * 5.5);
@@ -122,22 +122,22 @@ accessory7_slot:
 
 # 防御
 defence_texture:
-  x: "方法.取屏幕宽度-(方法.取屏幕宽度 * 50 / 480)"
-  y: "方法.取屏幕高度-(方法.取屏幕宽度 * 40 / 480)"
-  width: "方法.取屏幕宽度 * 14 / 480"
-  height: "方法.取屏幕宽度 * 14 / 480"
+  x: "方法.取屏幕宽度-(方法.取屏幕宽度 * 50 / 方法.取变量('adjusted_scr_size'))"
+  y: "方法.取屏幕高度-(方法.取屏幕宽度 * 40 / 方法.取变量('adjusted_scr_size'))"
+  width: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')"
+  height: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')"
   texture: "gui/defence.png"
   tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')"
 defence_label:
-  x: "方法.取屏幕宽度-(方法.取屏幕宽度 * 43 / 480)"
-  y: "方法.取屏幕高度-(方法.取屏幕宽度 * 37 / 480)"
+  x: "方法.取屏幕宽度-(方法.取屏幕宽度 * 43 / 方法.取变量('adjusted_scr_size'))"
+  y: "方法.取屏幕高度-(方法.取屏幕宽度 * 37 / 方法.取变量('adjusted_scr_size'))"
   center: true
   scale: "0.8 * 方法.取变量('label_scale')"
   texts: "方法.合并文本('&#CCCCCC&l', 方法.取变量('terraria_defence'))"
   tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')"
 # 背包
 backpack_label:
-  x: "方法.取屏幕宽度 * 17 / 480"
+  x: "方法.取屏幕宽度 * 17 / 方法.取变量('adjusted_scr_size')"
   y: "0"
   scale: "方法.取变量('label_scale')"
   texts: "物品栏"

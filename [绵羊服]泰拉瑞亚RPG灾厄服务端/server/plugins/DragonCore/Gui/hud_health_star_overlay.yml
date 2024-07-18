@@ -7,7 +7,7 @@ Functions:
   # 设置玩家显示的血量
   preRender: |-
     界面变量.playerHealth = 方法.玩家是否飞行() ? 0 : 方法.玩家血量();
-    界面变量.star_size = 方法.取屏幕宽度() / 40;
+    界面变量.star_size = 方法.取屏幕宽度() * 12 / 方法.取变量('adjusted_scr_size');
     界面变量.star_stack_offset = 界面变量.star_size * 2 / 3;
     界面变量.star_x = 方法.取屏幕宽度() - 界面变量.star_size * 3 / 4;
     界面变量.star_y = 界面变量.star_size * 3 / 2;

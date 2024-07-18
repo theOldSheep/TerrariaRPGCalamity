@@ -1,16 +1,16 @@
 # 复制到子物品栏的preRender中
 Functions:
   preRender: |-
-    方法.设置变量值('label_scale', 方法.取屏幕宽度() / 480);
+    方法.设置变量值('label_scale', 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size'));
 
-    方法.设置变量值('subinv_slot_size', 方法.取屏幕宽度() * 14 / 480);
+    方法.设置变量值('subinv_slot_size', 方法.取屏幕宽度() * 14 / 方法.取变量('adjusted_scr_size'));
     方法.设置变量值('subinv_slot_offset', 方法.取变量('subinv_slot_size') * 8 / 7);
-    方法.设置变量值('subinv_x', 方法.取屏幕宽度() * 26 / 480);
-    方法.设置变量值('subinv_y', 方法.取屏幕宽度() * 82 / 480);
+    方法.设置变量值('subinv_x', 方法.取屏幕宽度() * 26 / 方法.取变量('adjusted_scr_size'));
+    方法.设置变量值('subinv_y', 方法.取屏幕宽度() * 82 / 方法.取变量('adjusted_scr_size'));
 
 # 物品栏标题
 subinventory_label:
-  x: "方法.取屏幕宽度 * 174 / 480"
+  x: "方法.取屏幕宽度 * 174 / 方法.取变量('adjusted_scr_size')"
   y: "方法.取变量('subinv_y')"
   scale: "方法.取变量('label_scale')"
   texts: "方法.分割(方法.取变量('GUI_subinv_title'), '<n>')"

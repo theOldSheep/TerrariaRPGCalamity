@@ -29,14 +29,14 @@ Functions:
     方法.设置变量值('GUI_subinv_title', '大型宝箱');
   
   preRender: |-
-    方法.设置变量值('label_scale', 方法.取屏幕宽度() / 480);
+    方法.设置变量值('label_scale', 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size'));
 
-    方法.设置变量值('subinv_slot_size', 方法.取屏幕宽度() * 14 / 480);
+    方法.设置变量值('subinv_slot_size', 方法.取屏幕宽度() * 14 / 方法.取变量('adjusted_scr_size'));
     方法.设置变量值('subinv_slot_offset', 方法.取变量('subinv_slot_size') * 8 / 7);
-    方法.设置变量值('subinv_x', 方法.取屏幕宽度() * 26 / 480);
-    方法.设置变量值('subinv_y', 方法.取屏幕宽度() * 82 / 480);
+    方法.设置变量值('subinv_x', 方法.取屏幕宽度() * 26 / 方法.取变量('adjusted_scr_size'));
+    方法.设置变量值('subinv_y', 方法.取屏幕宽度() * 82 / 方法.取变量('adjusted_scr_size'));
 
-    方法.设置变量值('slot_size', 方法.取屏幕宽度() / 30);
+    方法.设置变量值('slot_size', 方法.取屏幕宽度() * 16 / 方法.取变量('adjusted_scr_size'));
     方法.设置变量值('slot_offset', 方法.取变量('slot_size') * 9 / 8);
     方法.设置变量值('acc_x', 方法.取屏幕宽度() - 方法.取变量('slot_size') * 2);
     方法.设置变量值('acc_y', 方法.取屏幕高度() - 方法.取变量('slot_offset') * 5.5);

@@ -1,7 +1,7 @@
 match: "hud"
 Functions:
   preRender: |-
-    界面变量.inactive_size = 方法.取屏幕宽度() / 30;
+    界面变量.inactive_size = 方法.取屏幕宽度() * 16 / 方法.取变量('adjusted_scr_size');
     界面变量.active_size = 界面变量.inactive_size * 3 / 2;
     界面变量.margin = 界面变量.inactive_size / 2;
     界面变量.margin_large = 界面变量.margin * 3 / 2;

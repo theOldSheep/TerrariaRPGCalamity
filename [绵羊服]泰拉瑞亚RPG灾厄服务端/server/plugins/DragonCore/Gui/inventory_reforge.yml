@@ -32,11 +32,12 @@ Functions:
     方法.异步执行方法('update_variable_money');
     方法.设置变量值('GUI_subinv_slot_amount', '27');
     方法.设置变量值('GUI_subinv_title', '');
+    方法.设置变量值('reforge_btn_texture', 'gui/Reforge_0.png');
   
   preRender: |-
-    方法.设置变量值('label_scale', 方法.取屏幕宽度() / 480);
+    方法.设置变量值('label_scale', 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size'));
 
-    方法.设置变量值('slot_size', 方法.取屏幕宽度() / 30);
+    方法.设置变量值('slot_size', 方法.取屏幕宽度() * 16 / 方法.取变量('adjusted_scr_size'));
     方法.设置变量值('slot_offset', 方法.取变量('slot_size') * 9 / 8);
     方法.设置变量值('acc_x', 方法.取屏幕宽度() - 方法.取变量('slot_size') * 2);
     方法.设置变量值('acc_y', 方法.取屏幕高度() - 方法.取变量('slot_offset') * 5.5);
@@ -51,9 +52,9 @@ import:
 # 商店内容
 # 重铸物品槽
 inv1-5_texture:
-  x: "方法.取屏幕宽度() * 20 / 480"
-  y: "方法.取屏幕宽度() * 86 / 480"
-  width: "方法.取屏幕宽度() * 16 / 480"
+  x: "方法.取屏幕宽度() * 20 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度() * 86 / 方法.取变量('adjusted_scr_size')"
+  width: "方法.取屏幕宽度() * 16 / 方法.取变量('adjusted_scr_size')"
   height: "方法.取组件值('inv1-5_texture','width')"
   texture: "gui/slot.png"
   alpha: 0.8
@@ -66,15 +67,15 @@ inv1-5_slot:
   drawBackground: false
 # 重铸信息
 reforge_prompt_label:
-  x: "方法.取屏幕宽度() * 38 / 480"
-  y: "方法.取屏幕宽度() * 86 / 480"
+  x: "方法.取屏幕宽度() * 38 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度() * 86 / 方法.取变量('adjusted_scr_size')"
   scale: "0.8 * 方法.取变量('label_scale')"
   texts:
     - "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? '将物品放到此处重铸' : 方法.取物品名(方法.取物品('container_4'))"
 # 重铸花费
 reforge_cost_label:
-  x: "方法.取屏幕宽度() * 20 / 480"
-  y: "方法.取屏幕宽度() * 106 / 480"
+  x: "方法.取屏幕宽度() * 20 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度() * 106 / 方法.取变量('adjusted_scr_size')"
   scale: "0.8 * 方法.取变量('label_scale')"
   visible: "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? 0 : 1"
   texts:
@@ -82,9 +83,9 @@ reforge_cost_label:
     - "方法.合并文本( '存款: ', 方法.取变量('terraria_money') )"
 # 重铸按钮
 reforge_texture:
-  x: "方法.取屏幕宽度() * 40 / 480"
-  y: "方法.取屏幕宽度() * 95 / 480"
-  width: "方法.取屏幕宽度() * 12 / 480"
+  x: "方法.取屏幕宽度() * 40 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度() * 95 / 方法.取变量('adjusted_scr_size')"
+  width: "方法.取屏幕宽度() * 12 / 方法.取变量('adjusted_scr_size')"
   height: "方法.取组件值('reforge_texture','width')"
   texture: "方法.取变量('reforge_btn_texture')"
   visible: "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? 0 : 1"

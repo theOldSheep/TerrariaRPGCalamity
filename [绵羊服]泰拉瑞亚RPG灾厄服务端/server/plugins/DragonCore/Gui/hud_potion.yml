@@ -11,12 +11,12 @@ Functions:
     界面变量.splitted = 方法.分割(界面变量.before_split,'~');
     界面变量.buffAlpha = 0.7 + (0.3 * 方法.sin(方法.取当前时间() * 0.01));
     
-    界面变量.icon_size = 方法.取屏幕宽度() / 40;
+    界面变量.icon_size = 方法.取屏幕宽度() * 12 / 方法.取变量('adjusted_scr_size');
     界面变量.icon_offset = 界面变量.icon_size * 7 / 6;
     界面变量.icon_row_offset = 界面变量.icon_size * 5 / 3;
     界面变量.start_x = 界面变量.icon_size * 4 / 3;
     界面变量.start_y = 界面变量.icon_size * 17 / 6;
-    界面变量.label_scale = 方法.取屏幕宽度() / 480;
+    界面变量.label_scale = 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size');
     
     界面变量.type_potion_1 = 方法.取成员(界面变量.splitted, 0);
     界面变量.tip_potion_1 = 方法.取成员(界面变量.splitted, 1);
