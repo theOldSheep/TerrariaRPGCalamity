@@ -419,7 +419,6 @@ public class Yharon extends EntitySlime {
             this.phase = newPhase;
             this.phaseStep = 1;
             this.phaseTick = 0;
-            Bukkit.broadcastMessage("Phase " + this.phase);
         }
     }
     private void executePhase() {
@@ -477,7 +476,7 @@ public class Yharon extends EntitySlime {
             Player ply = Bukkit.getPlayer(uid);
             if (ply == null)
                 continue;
-            DragoncoreHelper.displayParticle(ply,
+            DragoncoreHelper.displayBlizzardParticle(ply,
                     new DragoncoreHelper.DragonCoreParticleInfo("yharon", spawnPosition),
                     PARTICLE_INTERVAL);
         }

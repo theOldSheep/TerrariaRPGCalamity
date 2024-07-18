@@ -193,6 +193,7 @@ terraria\event\listener\PlayerJoinListener.class
 terraria\entity\boss\preHardMode\kingSlime\KingSlime.class
 terraria\entity\boss\preHardMode\crabulon\Crabulon.class
 terraria\entity\boss\hardMode\theDestroyer\Destroyer.class
+terraria\gameplay\Setting$PendingKeyBind.class
 terraria\entity\boss\postMoonLord\exoMechs\Thanatos$AttackMethod.class
 terraria\util\CritterHelper$1.class
 terraria\util\CritterHelper.class
@@ -281,6 +282,7 @@ terraria\entity\npc\TerrariaNPC$1.class
 terraria\entity\others\Critter.class
 terraria\entity\boss\event\headlessHorseman\HeadlessHorseman.class
 terraria\util\DragoncoreHelper$SlotCallback.class
+terraria\gameplay\SettingCommandExecutor.class
 terraria\entity\boss\BossHelper.class
 terraria\entity\boss\postMoonLord\devourerOfGods\DevourerOfGods$Wormhole.class
 terraria\util\WorldHelper$WaterRegionType.class
@@ -323,6 +325,7 @@ terraria\entity\boss\event\pumpking\PumpkingHand.class
 terraria\gameplay\EventAndTime.class
 terraria\entity\monster\MonsterHelper.class
 terraria\gameplay\EventAndTime$1.class
+terraria\gameplay\Setting$Options.class
 terraria\worldgen\overworld\FoliagePopulator$1.class
 terraria\entity\boss\hardMode\astrumAureus\AureusSpawn.class
 terraria\worldgen\Interpolate.class

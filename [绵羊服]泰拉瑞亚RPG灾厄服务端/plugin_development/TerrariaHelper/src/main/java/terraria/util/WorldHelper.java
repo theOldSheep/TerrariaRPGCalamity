@@ -1091,8 +1091,8 @@ public class WorldHelper {
                     tempDiff *= tempDiff;
                     moistDiff *= moistDiff;
                 }
-                // 0.3^4 * 2 = 0.0162
-                double similarity = (0.0162 - (tempDiff + moistDiff)) * shape.weight + offset;
+                // 0.5^4 * 2 = 0.125
+                double similarity = (0.125 - (tempDiff + moistDiff)) * shape.weight + offset;
                 if (similarity > 0)
                     result.put(shape, similarity);
                 // set up the smallest difference

@@ -39,7 +39,7 @@ public class PlayerJoinListener implements Listener {
         // init stats
         PlayerHelper.initPlayerStats(joinedPly, true);
         // reset camera
-        PlayerPOVHelper.getInstance().resetCamera(joinedPly);
+        PlayerPOVHelper.resetCamera(joinedPly);
         // tick existing effects
         {
             HashMap<String, Integer> effects = EntityHelper.getEffectMap(joinedPly);

@@ -603,7 +603,7 @@ public class GenericProjectile extends EntityPotion {
                                 EntityHelper.checkCanDamage(owner, ((LivingEntity) targetCache.value()), true))
                             targetLoc = ((LivingEntity) targetCache.value()).getEyeLocation();
                         else
-                            targetLoc = ItemUseHelper.getPlayerTargetLoc(owner, 80, 5,
+                            targetLoc = ItemUseHelper.getPlayerTargetLoc(owner,
                                     new EntityHelper.AimHelperOptions().setAimMode(true).setTicksTotal(0), true);
                         // move towards the owner's target
                         Vector dir = targetLoc.subtract(bukkitEntity.getLocation()).toVector();

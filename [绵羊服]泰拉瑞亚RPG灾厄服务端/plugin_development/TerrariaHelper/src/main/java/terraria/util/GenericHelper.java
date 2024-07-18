@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
+import terraria.gameplay.Setting;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -447,17 +448,22 @@ public class GenericHelper {
             if (options.vanillaParticle) {
                 double particleEstDist = (stepsize + width) / 2;
                 // basically, max(estimated dist, estimated dist^2) * intensityMulti
-                int particleAmount = MathHelper.randomRound(options.intensityMulti *
-                        (particleEstDist < 1 ? particleEstDist : particleEstDist * particleEstDist ) );
+                double particleAmountRaw = options.intensityMulti *
+                        (particleEstDist < 1 ? particleEstDist : particleEstDist * particleEstDist );
                 double rVal = (currentColor.getRed() / 255d) - 1;
                 double gVal = (currentColor.getGreen() / 255d);
                 double bVal = (currentColor.getBlue() / 255d);
-                for (int spawnIdx = 0; spawnIdx < particleAmount; spawnIdx ++) {
-                    Location currParticleLoc = currLoc.clone().add(
-                            Math.random() * width * 2 - width,
-                            Math.random() * width * 2 - width,
-                            Math.random() * width * 2 - width);
-                    currParticleLoc.getWorld().spawnParticle(Particle.REDSTONE, currParticleLoc, 0, rVal, gVal, bVal);
+                // spawn particles for each player
+                for (Player ply : startLoc.getWorld().getPlayers()) {
+                    int particleAmount = MathHelper.randomRound(
+                            particleAmountRaw * Setting.getOptionDouble(ply, Setting.Options.PARTICLE_DENSITY_MULTI));
+                    for (int spawnIdx = 0; spawnIdx < particleAmount; spawnIdx ++) {
+                        Location currParticleLoc = currLoc.clone().add(
+                                Math.random() * width * 2 - width,
+                                Math.random() * width * 2 - width,
+                                Math.random() * width * 2 - width);
+                        ply.spawnParticle(Particle.REDSTONE, currParticleLoc, 0, rVal, gVal, bVal);
+                    }
                 }
             }
             else {

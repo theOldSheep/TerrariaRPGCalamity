@@ -26,6 +26,7 @@ import terraria.entity.minion.MinionCaveSpider;
 import terraria.entity.minion.MinionHusk;
 import terraria.entity.minion.MinionSlime;
 import terraria.gameplay.EventAndTime;
+import terraria.gameplay.Setting;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -537,24 +538,35 @@ public class ItemUseHelper {
                                          boolean tickOffsetOrSpeed, int tickOffset) {
         // default to acceleration-aim mode
         EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions(projectileType)
-                .setAccelerationMode(true)
+                .setAccelerationMode(Setting.getOptionBool(ply, Setting.Options.AIM_HELPER_ACCELERATION))
                 .setAimMode(tickOffsetOrSpeed)
                 .setTicksTotal(tickOffset)
                 .setProjectileSpeed(projectileVelocity);
         // get targeted location
-        Location targetLoc = getPlayerTargetLoc(ply, 96, 4, aimHelperOptions, true);
+        Location targetLoc = getPlayerTargetLoc(ply, aimHelperOptions, true);
         // send the new direction
         Vector dir = targetLoc.subtract(startShootLoc).toVector();
         if (dir.lengthSquared() < 1e-5)
             dir = new Vector(1, 0, 0);
         return dir;
     }
-    public static Location getPlayerTargetLoc(Player ply, double traceDist, double entityEnlargeRadius, EntityHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
+    public static Location getPlayerTargetLoc(Player ply, EntityHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
+        return getPlayerTargetLoc(ply, 0d, aimHelperInfo, strictMode);
+    }
+    public static Location getPlayerTargetLoc(Player ply, double traceDist, double entityEnlargeRadius,
+                                              EntityHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
         return getPlayerTargetLoc(ply, traceDist, entityEnlargeRadius, 0d, aimHelperInfo, strictMode);
     }
     // trace dist: distance to trace into a block/entity
     // enlarge radius: max error distance allowed to target an entity that is not directly in line of sight
     // strict mode: do not target critters and entities that are strictly speaking, non-enemy
+    public static Location getPlayerTargetLoc(Player ply, double blockDist,
+                                              EntityHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
+        return getPlayerTargetLoc(ply,
+                Setting.getOptionDouble(ply, Setting.Options.AIM_HELPER_DISTANCE),
+                Setting.getOptionDouble(ply, Setting.Options.AIM_HELPER_RADIUS),
+                blockDist, aimHelperInfo, strictMode);
+    }
     public static Location getPlayerTargetLoc(Player ply, double traceDist, double entityEnlargeRadius, double blockDist,
                                               EntityHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
         Location targetLoc = null;
@@ -655,7 +667,7 @@ public class ItemUseHelper {
         // setup vector info etc.
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
         Vector lookDir = MathHelper.vectorFromYawPitch_approx(nmsPly.yaw, nmsPly.pitch);
-        Location targetLoc = getPlayerTargetLoc(ply, 96, 5, 4,
+        Location targetLoc = getPlayerTargetLoc(ply, 4,
                 new EntityHelper.AimHelperOptions().setTicksTotal(8).setAimMode(true), true);
         Location centerLoc = targetLoc.clone().add(ply.getEyeLocation()).multiply(0.5);
         Vector reachVec = centerLoc.clone().subtract(ply.getEyeLocation()).toVector();
@@ -1588,7 +1600,7 @@ public class ItemUseHelper {
                     strikePitch = -45;
                     // summons meteors from the sky
                     int hitDelay = 5 + (int) (Math.random() * 5);
-                    Location targetLoc = getPlayerTargetLoc(ply, 48, 3.5,
+                    Location targetLoc = getPlayerTargetLoc(ply,
                             new EntityHelper.AimHelperOptions()
                                     .setAimMode(true)
                                     .setTicksTotal(hitDelay)
@@ -1740,8 +1752,7 @@ public class ItemUseHelper {
                             EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
                                     .setAimMode(true)
                                     .setTicksTotal(10);
-                            Location aimLoc = getPlayerTargetLoc(ply, 96, 5,
-                                    aimHelper, true);
+                            Location aimLoc = getPlayerTargetLoc(ply, aimHelper, true);
                             for (int i = 0; i < 3; i ++) {
                                 Location targetLoc = aimLoc.clone();
                                 targetLoc.add(
@@ -1883,7 +1894,7 @@ public class ItemUseHelper {
                             double strikeYaw = Math.random() * 360, strikePitch = Math.random() * 360;
                             damaged.clear();
                             // direction
-                            Location targetLoc = getPlayerTargetLoc(ply, 64, 5, size * 0.5,
+                            Location targetLoc = getPlayerTargetLoc(ply, size * 0.5,
                                     new EntityHelper.AimHelperOptions().setAimMode(true), true);
                             targetLoc.subtract(
                                     MathHelper.vectorFromYawPitch_approx(strikeYaw, strikePitch)
@@ -2283,7 +2294,7 @@ public class ItemUseHelper {
                     }
                     case "星河之刃": {
                         if (currentIndex == 0) {
-                            Location targetLoc = getPlayerTargetLoc(ply, 48, 2,
+                            Location targetLoc = getPlayerTargetLoc(ply,
                                     new EntityHelper.AimHelperOptions().setAimMode(true).setTicksTotal(10), true);
                             for (int i = 0; i < 5; i ++) {
                                 Location spawnLoc = targetLoc.clone().add(
@@ -2603,7 +2614,8 @@ public class ItemUseHelper {
                             EntityHelper.AimHelperOptions aimOption = new EntityHelper.AimHelperOptions().setAimMode(true);
                             // only initialize target once to prevent dashing into multiple enemies with one swing
                             if (i == 0)
-                                targetLoc = getPlayerTargetLoc(ply, 64, 3.5, strikeLength * 0.75,
+                                targetLoc = getPlayerTargetLoc(ply,
+                                        strikeLength * 0.75,
                                         aimOption, true);
                             else
                                 targetLoc = getPlayerCachedTargetLoc(ply, aimOption);
@@ -2629,7 +2641,8 @@ public class ItemUseHelper {
                             strikeLineInfo.setDamageCD(1);
                             // only initialize target once to prevent dashing into multiple enemies with one swing
                             if (i == 0)
-                                targetLoc = getPlayerTargetLoc(ply, 64, 4, strikeLength * 0.75,
+                                targetLoc = getPlayerTargetLoc(ply,
+                                        strikeLength * 0.75,
                                         aimOption, true);
                             else
                                 targetLoc = getPlayerCachedTargetLoc(ply, aimOption);
@@ -2703,7 +2716,8 @@ public class ItemUseHelper {
                                 EntityHelper.AimHelperOptions aimOption = new EntityHelper.AimHelperOptions().setAimMode(true);
                                 // only initialize target once to prevent scissors dashing into multiple enemies with one swing
                                 if (i == 0)
-                                    targetLoc = getPlayerTargetLoc(ply, 64, 5, strikeLength * 0.75,
+                                    targetLoc = getPlayerTargetLoc(ply,
+                                            strikeLength * 0.75,
                                             aimOption, true);
                                 else
                                     targetLoc = getPlayerCachedTargetLoc(ply, aimOption);
@@ -3189,7 +3203,8 @@ public class ItemUseHelper {
                 .setProjectileSpeed(projectileSpeed)
                 .setProjectileGravity(0);
         // get targeted location
-        Location targetLoc = getPlayerTargetLoc(ply, 64, 4, aimHelperOptions, true);
+        Location targetLoc = getPlayerTargetLoc(ply,
+                aimHelperOptions, true);
         Vector fireDir = targetLoc.subtract(ply.getEyeLocation()).toVector();
         fireDir.normalize();
         fireDir.multiply(projectileSpeed);
@@ -3675,7 +3690,7 @@ public class ItemUseHelper {
                 case "血陨": {
                     Vector offset = new Vector(Math.random() * 30 - 15, 20 + Math.random() * 20, Math.random() * 30 - 15);
                     fireVelocity = offset.clone().multiply(-1).normalize();
-                    Location destination = getPlayerTargetLoc(ply, 64, 4,
+                    Location destination = getPlayerTargetLoc(ply,
                             new EntityHelper.AimHelperOptions()
                                     .setAimMode(true)
                                     .setRandomOffsetRadius(5)
@@ -4013,7 +4028,7 @@ public class ItemUseHelper {
                             options.setRandomOffsetRadius(0.5);
                             break;
                     }
-                    Location destination = getPlayerTargetLoc(ply, 64, 4, options, true);
+                    Location destination = getPlayerTargetLoc(ply, options, true);
                     fireLoc = destination.add(offset);
                     break;
                 }
@@ -4035,7 +4050,7 @@ public class ItemUseHelper {
                             options.setRandomOffsetRadius(0.5);
                             break;
                     }
-                    Location destination = getPlayerTargetLoc(ply, 64, 4, options, true);
+                    Location destination = getPlayerTargetLoc(ply, options, true);
                     fireLoc = destination.add(offset);
                     break;
                 }
@@ -4089,7 +4104,7 @@ public class ItemUseHelper {
                     EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
                             .setAimMode(true)
                             .setTicksTotal(10);
-                    Location aimLoc = getPlayerTargetLoc(ply, 64, 5, aimHelper, true);
+                    Location aimLoc = getPlayerTargetLoc(ply, aimHelper, true);
                     aimLoc.add(Math.random() * 8 - 4, projectileSpeed * -10, Math.random() * 8 - 4);
                     fireLoc = aimLoc;
                     fireVelocity = new Vector(0, 1, 0);
@@ -4112,8 +4127,7 @@ public class ItemUseHelper {
                             .setAimMode(true)
                             .setTicksTotal(0);
                     if (i == 0)
-                        fireLoc = getPlayerTargetLoc(ply, 80, 3.5,
-                                aimHelperOptions, true);
+                        fireLoc = getPlayerTargetLoc(ply, aimHelperOptions, true);
                     else
                         fireLoc = getPlayerCachedTargetLoc(ply, aimHelperOptions);
                     fireVelocity = MathHelper.vectorFromYawPitch_approx(i * 360d / fireAmount, 0);
@@ -4751,7 +4765,7 @@ public class ItemUseHelper {
         if (weaponType.equals("MAGIC_PROJECTILE")) {
             handleMagicProjectileFire(ply, attrMap, weaponSection, swingAmount, 1, itemType, weaponType, autoSwing);
         } else {
-            Location targetedLocation = getPlayerTargetLoc(ply, 64, 4,
+            Location targetedLocation = getPlayerTargetLoc(ply,
                     new EntityHelper.AimHelperOptions()
                             .setAimMode(true), true);
             handleMagicSpecialFire(ply, attrMap, weaponSection, 1, itemType, weaponType,

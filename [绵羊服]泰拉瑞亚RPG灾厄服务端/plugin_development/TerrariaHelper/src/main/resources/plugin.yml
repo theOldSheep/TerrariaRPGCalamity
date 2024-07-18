@@ -17,3 +17,6 @@ commands:
   findNoise:
     description: teleport to somewhere near the noise input
     usage: /<command> [<noise(double)>]
+  settings:
+    description: teleport to somewhere near the noise input
+    usage: /<command> <option> [value] or /<command> ? [page]

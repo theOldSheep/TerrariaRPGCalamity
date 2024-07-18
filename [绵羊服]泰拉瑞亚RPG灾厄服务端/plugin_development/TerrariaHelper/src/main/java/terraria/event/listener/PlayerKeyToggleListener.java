@@ -11,28 +11,27 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.omg.CORBA.TypeCodePackage.BadKind;
+import terraria.gameplay.Setting;
 import terraria.util.EntityHelper;
 import terraria.util.ItemUseHelper;
 import terraria.util.PlayerHelper;
+import terraria.util.PlayerPOVHelper;
 
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 public class PlayerKeyToggleListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onKeyReleaseEvent(KeyReleaseEvent e) {
         Player ply = e.getPlayer();
-        HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply,
-                EntityHelper.MetadataName.PLAYER_KEYS_PRESSED).value();
+        HashSet<String> allKeysPressed = PlayerHelper.getPlayerKeyPressed(ply);
         String keyReleased = e.getKey();
         allKeysPressed.remove(keyReleased);
         // space bar
-        switch (keyReleased) {
-            case "SPACE":
-            case "ALL":
-                ply.removeScoreboardTag("temp_thrusting");
-                break;
+        if (keyReleased.equals("ALL") || keyReleased.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_SPACE))) {
+            ply.removeScoreboardTag("temp_thrusting");
         }
         if (keyReleased.equals("ALL")) {
             allKeysPressed.clear();
@@ -42,8 +41,7 @@ public class PlayerKeyToggleListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onKeyPressEvent(KeyPressEvent e) {
         Player ply = e.getPlayer();
-        HashSet<String> allKeysPressed = (HashSet<String>) EntityHelper.getMetadata(ply,
-                EntityHelper.MetadataName.PLAYER_KEYS_PRESSED).value();
+        HashSet<String> allKeysPressed = PlayerHelper.getPlayerKeyPressed(ply);
         String keyPressed = e.getKey();
         if (! PlayerHelper.isProperlyPlaying(ply))
             return;
@@ -52,64 +50,83 @@ public class PlayerKeyToggleListener implements Listener {
             return;
         allKeysPressed.add(keyPressed);
         int removeAllGrapplingHooks = 0;
-        switch (keyPressed) {
-            case "W":
-            case "A":
-            case "S":
-            case "D":
-                long lastChargeTime = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS).asLong();
-                long currTimeInMS = Calendar.getInstance().getTimeInMillis();
-                String lastChargeDir = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_DIRECTION).asString();
-                if (currTimeInMS - lastChargeTime < 200 && lastChargeDir.equals(keyPressed)) {
-                    // handle player charge
-                    double chargeYaw = PlayerHelper.getPlayerMoveYaw(ply, keyPressed);
-                    PlayerHelper.handleDash(ply, chargeYaw, 0);
-                }
-                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS, currTimeInMS);
-                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_DIRECTION, keyPressed);
-                break;
-            case "SPACE":
-                ply.addScoreboardTag("temp_thrusting");
-                // only remove hooks already in blocks
-                removeAllGrapplingHooks = 1;
-                break;
-            case "R":
-                PlayerHelper.handleMount(ply);
-                // remove all hooks
-                removeAllGrapplingHooks = 2;
-                break;
-            case "F":
-                PlayerHelper.handleGrapplingHook(ply);
-                // dismount on using hook
-                if (PlayerHelper.getMount(ply) != null) {
-                    PlayerHelper.handleMount(ply);
-                }
-                break;
-            case "X":
-                PlayerHelper.handleInsignia(ply);
-                break;
-            case "C":
-                PlayerHelper.handleToggleSwitchable(ply);
-                break;
-            case "V":
-                PlayerHelper.handleArmorSetActiveEffect(ply);
-                break;
-            case "B":
-                ItemUseHelper.playerQuickUsePotion(ply, ItemUseHelper.QuickBuffType.BUFF);
-                break;
-            case "H":
-                ItemUseHelper.playerQuickUsePotion(ply, ItemUseHelper.QuickBuffType.HEALTH);
-                break;
-            case "J":
-                ItemUseHelper.playerQuickUsePotion(ply, ItemUseHelper.QuickBuffType.MANA);
-                break;
+        // check for key binding
+        Setting.PendingKeyBind keyBind = Setting.PENDING_KEY_BIND.get(ply.getUniqueId());
+        if (keyBind != null && keyBind.attemptBind(keyPressed)) {
+            return;
         }
 
-        // remove all hooks that are in place
-        if (removeAllGrapplingHooks > 0)
+        // WASD
+        if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_W)) ||
+                keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_A)) ||
+                keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_S)) ||
+                keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_D))) {
+            long lastChargeTime = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS).asLong();
+            long currTimeInMS = Calendar.getInstance().getTimeInMillis();
+            String lastChargeDir = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_DIRECTION).asString();
+            if (currTimeInMS - lastChargeTime < 200 && lastChargeDir.equals(keyPressed)) {
+                // handle player charge
+                double chargeYaw = PlayerHelper.getPlayerMoveYaw(ply, keyPressed);
+                PlayerHelper.handleDash(ply, chargeYaw, 0);
+            }
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS, currTimeInMS);
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_DIRECTION, keyPressed);
+        }
+        // SPACE
+        if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_SPACE))) {
+            ply.addScoreboardTag("temp_thrusting");
+            // only remove hooks already in blocks
+            removeAllGrapplingHooks = 1;
+        }
+        // MOUNT
+        if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_MOUNT))) {
+            PlayerHelper.handleMount(ply);
+            // remove all hooks
+            removeAllGrapplingHooks = 2;
+        }
+        // HOOK
+        if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_HOOK))) {
+            PlayerHelper.handleGrapplingHook(ply);
+            // dismount on using hook
+            if (PlayerHelper.getMount(ply) != null) {
+                PlayerHelper.handleMount(ply);
+            }
+        }
+        // Insignia
+        if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_INSIGNIA))) {
+            PlayerHelper.handleInsignia(ply);
+        }
+        // Switchable
+        if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_SWITCHABLE))) {
+            PlayerHelper.handleToggleSwitchable(ply);
+        }
+        // Armor Set
+        if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_ARMOR_SET))) {
+            PlayerHelper.handleArmorSetActiveEffect(ply);
+        }
+        // Buff up
+        if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_BUFF))) {
+            ItemUseHelper.playerQuickUsePotion(ply, ItemUseHelper.QuickBuffType.BUFF);
+        }
+        // Quick Heal
+        if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_HEAL))) {
+            ItemUseHelper.playerQuickUsePotion(ply, ItemUseHelper.QuickBuffType.HEALTH);
+        }
+        // Quick Mana
+        if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_MANA))) {
+            ItemUseHelper.playerQuickUsePotion(ply, ItemUseHelper.QuickBuffType.MANA);
+        }
+        // third person toggle
+        if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.THIRD_PERSON_HOTKEY))) {
+            PlayerPOVHelper.togglePOV(ply);
+        }
+
+        // remove all hooks that are in place, if needed
+        if (removeAllGrapplingHooks > 0) {
             for (Entity hook : (Collection<Entity>) EntityHelper.getMetadata(ply,
                     EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOKS).value())
                 if (removeAllGrapplingHooks != 1 || hook.getVelocity().lengthSquared() < 1e-5)
                     hook.remove();
+        }
     }
 }

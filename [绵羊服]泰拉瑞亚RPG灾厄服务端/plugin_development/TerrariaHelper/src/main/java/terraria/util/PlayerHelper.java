@@ -27,10 +27,13 @@ import terraria.TerrariaHelper;
 import terraria.entity.boss.event.celestialPillar.CelestialPillar;
 import terraria.entity.others.Mount;
 import terraria.gameplay.EventAndTime;
+import terraria.gameplay.Setting;
 
+import javax.xml.ws.Holder;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 
@@ -306,10 +309,10 @@ public class PlayerHelper {
     public static double getPlayerMoveYaw(Player ply) {
         HashSet<String> allKeysPressed = getPlayerKeyPressed(ply);
         String movementKeyDown = "";
-        boolean fwd = allKeysPressed.contains("W"),
-                rev = allKeysPressed.contains("S"),
-                lft = allKeysPressed.contains("A"),
-                rt = allKeysPressed.contains("D");
+        boolean fwd = allKeysPressed.contains( Setting.getOptionString(ply, Setting.Options.CONTROL_W) ),
+                rev = allKeysPressed.contains( Setting.getOptionString(ply, Setting.Options.CONTROL_S) ),
+                lft = allKeysPressed.contains( Setting.getOptionString(ply, Setting.Options.CONTROL_A) ),
+                rt = allKeysPressed.contains( Setting.getOptionString(ply, Setting.Options.CONTROL_D) );
         if (fwd && !rev)
             movementKeyDown += "W";
         else if (rev && !fwd)
@@ -321,6 +324,11 @@ public class PlayerHelper {
         return getPlayerMoveYaw(ply, movementKeyDown);
     }
     public static double getPlayerMoveYaw(Player ply, String movementKeyDown) {
+        movementKeyDown = movementKeyDown.replace(Setting.getOptionString(ply, Setting.Options.CONTROL_W), "W");
+        movementKeyDown = movementKeyDown.replace(Setting.getOptionString(ply, Setting.Options.CONTROL_A), "A");
+        movementKeyDown = movementKeyDown.replace(Setting.getOptionString(ply, Setting.Options.CONTROL_S), "S");
+        movementKeyDown = movementKeyDown.replace(Setting.getOptionString(ply, Setting.Options.CONTROL_D), "D");
+
         double horizontalMoveYaw = ((CraftPlayer) ply).getHandle().yaw;
         switch (movementKeyDown) {
             case "":
@@ -1649,6 +1657,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
 }
     // movement, block collision, oxygen bar etc.
     public static void threadExtraTicking() {
+        AtomicLong idx = new AtomicLong(0);
         // every 1 tick
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
@@ -1686,7 +1695,8 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                 }
             }
             // camera
-            PlayerPOVHelper.getInstance().tick();
+            PlayerPOVHelper.tick(idx.get());
+            idx.getAndIncrement();
         }, 0, 1);
     }
     public static void threadRegen() {
@@ -2507,6 +2517,8 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
     public static void handleInsignia(Player ply) {
         if (EntityHelper.hasEffect(ply, "进升证章冷却"))
             return;
+        if (EntityHelper.getMount(ply) != null)
+            return;
         resetPlayerFlightTime(ply);
         EntityHelper.applyEffect(ply, "进升证章冷却", 800);
     }
@@ -2627,17 +2639,25 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             Mount mount = Mount.MOUNTS_MAP.get(ply.getUniqueId());
             mount.die();
         }
-        // otherwise, spawn the mount if needed
+        // otherwise, handle minecart or spawn the mount as needed
         else {
-            if (ply.getScoreboardTags().contains("temp_mountCD"))
-                return;
-            EntityHelper.handleEntityTemporaryScoreboardTag(ply, "temp_mountCD", 10);
-            ItemStack plyMountItem = DragoncoreHelper.getSlotItem(ply, "mount");
-            String splitName = ItemHelper.splitItemName(plyMountItem)[1];
-            if (splitName.length() > 0) {
-                ConfigurationSection mountSection = TerrariaHelper.mountConfig.getConfigurationSection(splitName);
-                if (mountSection != null) {
-                    new Mount(ply, mountSection);
+            // minecart
+            Entity vehicle = ply.getVehicle();
+            if (vehicle != null) {
+                vehicle.eject();
+            }
+            // spawn mount
+            else {
+                if (ply.getScoreboardTags().contains("temp_mountCD"))
+                    return;
+                EntityHelper.handleEntityTemporaryScoreboardTag(ply, "temp_mountCD", 10);
+                ItemStack plyMountItem = DragoncoreHelper.getSlotItem(ply, "mount");
+                String splitName = ItemHelper.splitItemName(plyMountItem)[1];
+                if (splitName.length() > 0) {
+                    ConfigurationSection mountSection = TerrariaHelper.mountConfig.getConfigurationSection(splitName);
+                    if (mountSection != null) {
+                        new Mount(ply, mountSection);
+                    }
                 }
             }
         }

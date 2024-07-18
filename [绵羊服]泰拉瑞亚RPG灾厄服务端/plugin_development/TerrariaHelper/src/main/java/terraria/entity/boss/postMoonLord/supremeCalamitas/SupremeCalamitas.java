@@ -252,7 +252,7 @@ public class SupremeCalamitas extends EntitySlime {
 
     private void tickBulletHellRotation() {
         if (ticksLived % 25 == 0) {
-            PlayerPOVHelper.getInstance().moveCamera(target, 32, 3000);
+            PlayerPOVHelper.setPOVState(target, true);
         }
 
         Location loc = target.getLocation();

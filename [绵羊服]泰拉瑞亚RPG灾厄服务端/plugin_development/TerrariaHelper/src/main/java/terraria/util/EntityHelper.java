@@ -31,6 +31,7 @@ import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.entity.projectile.GenericProjectile;
 import terraria.gameplay.EventAndTime;
+import terraria.gameplay.Setting;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -827,7 +828,7 @@ public class EntityHelper {
             }
             // particle
             if (particleID != null && (isFirstTicking || timeRemaining % 20 <= delay) ) {
-                DragoncoreHelper.displayParticle((ply) -> true,
+                DragoncoreHelper.displayBlizzardParticle((ply) -> Setting.getOptionBool(ply, Setting.Options.DEBUFF_PARTICLE_TOGGLE),
                         new DragoncoreHelper.DragonCoreParticleInfo(particleID, entity), 20);
             }
             // next delayed task

@@ -1,6 +1,9 @@
 package terraria.util;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import terraria.gameplay.Setting;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,32 +12,29 @@ import java.util.Map;
 
 public class PlayerPOVHelper {
     private static final int INTERPOLATION_MILLIS = 2500;
+    private static final String POV_TAG = "temp_thirdPerson";
 
-    private Map<Player, PlayerCameraState> playerStates;
+    private static Map<Player, PlayerCameraState> playerStates = new HashMap<>();
     private static PlayerPOVHelper instance;
-    private Map<Player, Integer> interpolationDurations;
 
-
-    private PlayerPOVHelper() {
-        this.playerStates = new HashMap<>();
-        interpolationDurations = new HashMap<>();
+    public static boolean getPOVSwitch(Player ply) {
+        return ply.getScoreboardTags().contains(POV_TAG);
     }
-
-    public static PlayerPOVHelper getInstance() {
-        if (instance == null) {
-            instance = new PlayerPOVHelper();
+    public static void setPOVState(Player ply, boolean newState) {
+        if (newState) {
+            ply.addScoreboardTag(POV_TAG);
+            moveCamera(ply, Setting.getOptionDouble(ply, Setting.Options.THIRD_PERSON_DIST), 1500);
         }
-        return instance;
+        else {
+            ply.removeScoreboardTag(POV_TAG);
+            moveCamera(ply, Setting.getOptionDouble(ply, Setting.Options.THIRD_PERSON_DIST), 0);
+        }
     }
-    public void setInterpolationDuration(Player player, int duration) {
-        interpolationDurations.put(player, duration);
+    public static void togglePOV(Player ply) {
+        setPOVState(ply, !getPOVSwitch(ply));
     }
 
-    private int getInterpolationDuration(Player player) {
-        return interpolationDurations.getOrDefault(player, INTERPOLATION_MILLIS);
-    }
-
-    public void moveCamera(Player player, double distance, int sustainMillis) {
+    public static void moveCamera(Player player, double distance, int sustainMillis) {
         PlayerCameraState state = playerStates.get(player);
         if (state == null) {
             state = new PlayerCameraState();
@@ -56,12 +56,21 @@ public class PlayerPOVHelper {
         }
     }
 
-    public void tick() {
+    public static void tick(long idx) {
+        // sustain the camera location
+        if (idx % 20 == 0) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (getPOVSwitch(player)) {
+                    moveCamera(player, Setting.getOptionDouble(player, Setting.Options.THIRD_PERSON_DIST), 1500);
+                }
+            }
+        }
         long currentTime = System.currentTimeMillis();
         for (Map.Entry<Player, PlayerCameraState> entry : playerStates.entrySet()) {
             Player player = entry.getKey();
+            // track the duration
             PlayerCameraState state = entry.getValue();
-            int interpolationDuration = getInterpolationDuration(player);
+            int interpolationDuration = Setting.getOptionInt(player, Setting.Options.THIRD_PERSON_INTERPOLATE);
             if (state.isSmoothingIn) {
                 if (currentTime >= state.smoothInEndTime) {
                     state.isSmoothingIn = false;
@@ -113,7 +122,7 @@ public class PlayerPOVHelper {
         }
     }
 
-    public void resetCamera(Player player) {
+    public static void resetCamera(Player player) {
         playerStates.remove(player);
         DragoncoreHelper.moveCamera(player, 0, 0, 0, 0);
     }

@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.entity.projectile.HitEntityInfo;
+import terraria.gameplay.Setting;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 import terraria.util.PlayerHelper;
@@ -208,7 +209,9 @@ public class Mount extends EntitySlime {
         else if (isOnGround) {
             horSpdLmt *= speedMultiGround;
         }
-        if (mountType.equals("星流飞椅") && playerKeyPressed.contains("X")) {
+        // slow down
+        if (mountType.equals("星流飞椅") &&
+                playerKeyPressed.contains( Setting.getOptionString(owner, Setting.Options.CONTROL_INSIGNIA) )) {
             horSpdLmt *= 0.35;
             verSpdLmt *= 0.35;
         }
@@ -239,7 +242,8 @@ public class Mount extends EntitySlime {
                 verticalVel = Math.min(verticalVel, verSpdLmt);
                 flightIndex ++;
             }
-            else if (playerKeyPressed.contains("LSHIFT") && isInfFlight && canFly) {
+            else if (playerKeyPressed.contains( Setting.getOptionString(owner, Setting.Options.CONTROL_MOUNT_DESCEND) )
+                    && isInfFlight && canFly) {
                 verticalVel -= verAcc;
                 verticalVel = Math.max(verticalVel, -verSpdLmt);
                 flightIndex ++;

@@ -195,7 +195,6 @@ public class Draedon extends EntitySlime {
                 }
             }
             updateActiveBossCount(); // Update active boss count when phase changes
-            Bukkit.broadcastMessage("Active boss count: " + getActiveBossCount());
         }
     }
 

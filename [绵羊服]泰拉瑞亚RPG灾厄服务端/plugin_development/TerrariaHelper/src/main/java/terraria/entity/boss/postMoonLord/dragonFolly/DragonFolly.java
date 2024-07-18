@@ -212,7 +212,7 @@ public class DragonFolly extends EntitySlime {
             Player ply = Bukkit.getPlayer(uid);
             if (ply == null)
                 continue;
-            DragoncoreHelper.displayParticle(ply,
+            DragoncoreHelper.displayBlizzardParticle(ply,
                     new DragoncoreHelper.DragonCoreParticleInfo("dragonfolly", spawnPosition),
                     PARTICLE_INTERVAL);
         }

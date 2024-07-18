@@ -9,6 +9,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import terraria.entity.CustomEntities;
 import terraria.event.listener.*;
 import terraria.gameplay.EventAndTime;
+import terraria.gameplay.Setting;
+import terraria.gameplay.SettingCommandExecutor;
 import terraria.util.*;
 import terraria.worldgen.overworld.NoiseGeneratorTest;
 import terraria.worldgen.overworld.OverworldChunkGenerator;
@@ -133,14 +135,6 @@ public class TerrariaHelper extends JavaPlugin {
                         }
                         return result.toString();
                     }
-                }
-                HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
-                if (attrMap == null) attrMap = new HashMap<>(1);
-                switch (params) {
-                    case "defence":
-                        return (int)Math.round(attrMap.getOrDefault("defence", 0d) * attrMap.getOrDefault("defenceMulti", 1d)) + "";
-                    case "max_mana":
-                        return (int)Math.round(attrMap.getOrDefault("maxMana", 20d)) + "";
                     case "mana_tier":
                         return PlayerHelper.getPlayerManaTier(ply) + "";
                     case "health_tier":
@@ -148,6 +142,18 @@ public class TerrariaHelper extends JavaPlugin {
                     case "accessory_amount": {
                         return PlayerHelper.getAccessoryAmount(ply) + "";
                     }
+                    case "ui_size": {
+                        return (int) (Setting.getOptionDouble(ply, Setting.Options.UI_SIZE) * 100) + "";
+                    }
+                }
+                // BELOW: attributes that would require attribute map to be computed
+                HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+                if (attrMap == null) attrMap = new HashMap<>(1);
+                switch (params) {
+                    case "defence":
+                        return (int)Math.round(attrMap.getOrDefault("defence", 0d) * attrMap.getOrDefault("defenceMulti", 1d)) + "";
+                    case "max_mana":
+                        return (int)Math.round(attrMap.getOrDefault("maxMana", 20d)) + "";
                     default:
                         Bukkit.broadcastMessage("UNHANDLED PLACEHOLDER " + params);
                         return "哒哒哒哒嘀哒哒，我不道啊";
@@ -211,6 +217,7 @@ public class TerrariaHelper extends JavaPlugin {
         CustomEntities.registerEntities();
 
         this.getCommand("findNoise").setExecutor(new NoiseGeneratorTest());
+        this.getCommand(SettingCommandExecutor.COMMAND).setExecutor(new SettingCommandExecutor());
 
         getLogger().info("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
         getLogger().info("泰拉瑞亚RPG插件部分已启动。");

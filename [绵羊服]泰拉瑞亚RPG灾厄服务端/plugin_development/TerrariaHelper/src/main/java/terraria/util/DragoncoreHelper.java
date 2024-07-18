@@ -59,16 +59,16 @@ public class DragoncoreHelper {
         }
     }
 
-    public static void displayParticle(DragonCoreParticleInfo particleInfo, int duration) {
-        displayParticle((p)->true, particleInfo, duration);
+    public static void displayBlizzardParticle(DragonCoreParticleInfo particleInfo, int duration) {
+        displayBlizzardParticle((p)->true, particleInfo, duration);
     }
-    public static void displayParticle(Predicate<Player> validation, DragonCoreParticleInfo particleInfo, int duration) {
+    public static void displayBlizzardParticle(Predicate<Player> validation, DragonCoreParticleInfo particleInfo, int duration) {
         for (Player ply : Bukkit.getOnlinePlayers()) {
             if (validation.test(ply))
-                displayParticle(ply, particleInfo, duration);
+                displayBlizzardParticle(ply, particleInfo, duration);
         }
     }
-    public static void displayParticle(Player ply, DragonCoreParticleInfo particleInfo, int duration) {
+    public static void displayBlizzardParticle(Player ply, DragonCoreParticleInfo particleInfo, int duration) {
         PacketSender.addParticle(ply, particleInfo.name, particleInfo.uidInfo, particleInfo.positionalInfo, particleInfo.rotationalInfo, duration);
     }
     public static void moveCamera(Player ply, double distance, int fadeInMillis, int sustainMillis, int fadeOutMillis) {
