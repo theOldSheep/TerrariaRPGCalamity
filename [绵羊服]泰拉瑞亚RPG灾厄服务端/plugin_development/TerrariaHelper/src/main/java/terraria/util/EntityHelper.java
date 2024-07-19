@@ -1,5 +1,6 @@
 package terraria.util;
 
+import fr.xephi.authme.libs.com.maxmind.db.Metadata;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
@@ -234,6 +235,7 @@ public class EntityHelper {
         PLAYER_BIOME("playerBiome"),
         PLAYER_CRAFTING_RECIPE_INDEX("recipeNumber"),
         PLAYER_CRAFTING_STATION("craftingStation"),
+        PLAYER_DAMAGE_SOUND_MEMO("lastDmgPlayed"),
         PLAYER_DASH_DIRECTION("chargeDir"),
         PLAYER_DASH_KEY_PRESSED_MS("chargeDirLastPressed"),
         PLAYER_BIOME_BLADE_SPIN_PITCH("spinPitch"),
@@ -1980,6 +1982,30 @@ public class EntityHelper {
         } else
             PlayerHelper.sendActionBar(damager, victimName + " §c领了盒饭");
     }
+    private static void playDamageSound(Location playLoc, String sound, float volume) {
+        HashMap<String, Long> soundPlayed;
+        double audibleDistSqr = volume * 16;
+        audibleDistSqr *= audibleDistSqr;
+        for (Player ply : playLoc.getWorld().getPlayers()) {
+            if (ply.getLocation().distanceSquared(playLoc) > audibleDistSqr)
+                continue;
+            // get last played time
+            MetadataValue mdv = getMetadata(ply, MetadataName.PLAYER_DAMAGE_SOUND_MEMO);
+            if (mdv == null) {
+                soundPlayed = new HashMap<>();
+                setMetadata(ply, MetadataName.PLAYER_DAMAGE_SOUND_MEMO, soundPlayed);
+            }
+            else {
+                soundPlayed = (HashMap<String, Long>) mdv.value();
+            }
+            // do not play again within 100 ms
+            if (soundPlayed.getOrDefault(sound, 0L) + 100 > System.currentTimeMillis())
+                continue;
+            // play the sound
+            ply.playSound(playLoc, sound, SoundCategory.HOSTILE, volume, 1f);
+            soundPlayed.put(sound, System.currentTimeMillis());
+        }
+    }
     public static void handleDamage(Entity damager, Entity victim, double damage, DamageReason damageReason) {
         handleDamage(damager, victim, damage, damageReason, null);
     }
@@ -2444,8 +2470,9 @@ public class EntityHelper {
                 else
                     sound = "entity.generic.fallBig";
             }
+            // play sound
             if (sound != null)
-                victim.getWorld().playSound(victim.getLocation(), sound, SoundCategory.PLAYERS,  soundVolume, 1);
+                playDamageSound(victim.getLocation(), sound, soundVolume);
             // knockback
             if (knockback > 0) {
                 Vector vec = victim.getLocation().subtract(damager.getLocation()).toVector();

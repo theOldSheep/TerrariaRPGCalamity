@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import terraria.entity.CustomEntities;
 import terraria.event.listener.*;
 import terraria.gameplay.EventAndTime;
+import terraria.gameplay.MenuHandler;
 import terraria.gameplay.Setting;
 import terraria.gameplay.SettingCommandExecutor;
 import terraria.util.*;
@@ -50,6 +51,7 @@ public class TerrariaHelper extends JavaPlugin {
     public static final YmlHelper.YmlSection fishingConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "fishing.yml");
     public static final YmlHelper.YmlSection hookConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "hooks.yml");
     public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "items.yml");
+    public static final YmlHelper.YmlSection menusConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "menus.yml");
     public static final YmlHelper.YmlSection mobSpawningConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "mobSpawning.yml");
     public static final YmlHelper.YmlSection mountConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "mounts.yml");
     public static final YmlHelper.YmlSection NPCConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "NPC.yml");
@@ -169,6 +171,7 @@ public class TerrariaHelper extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new DropItemSpawnListener(), this);
         Bukkit.getPluginManager().registerEvents(new EntitySpawnListener(), this);
         Bukkit.getPluginManager().registerEvents(new ItemUseAndAttributeListener(), this);
+        Bukkit.getPluginManager().registerEvents(new MenuHandler(), this);
         Bukkit.getPluginManager().registerEvents(new NPCListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
@@ -214,10 +217,13 @@ public class TerrariaHelper extends JavaPlugin {
         initThreads();
         setupPlaceholders();
 
+        MenuHandler.loadGuis();
+
         CustomEntities.registerEntities();
 
         this.getCommand("findNoise").setExecutor(new NoiseGeneratorTest());
         this.getCommand(SettingCommandExecutor.COMMAND).setExecutor(new SettingCommandExecutor());
+        this.getCommand(MenuHandler.COMMAND).setExecutor(new MenuHandler());
 
         getLogger().info("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
         getLogger().info("泰拉瑞亚RPG插件部分已启动。");

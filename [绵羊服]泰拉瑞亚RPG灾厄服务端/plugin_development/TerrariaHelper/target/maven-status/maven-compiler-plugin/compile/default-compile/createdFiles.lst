@@ -7,6 +7,7 @@ terraria\TerrariaHelper$1.class
 terraria\entity\boss\preHardMode\theSlimeGod\CrimulanSlime.class
 terraria\event\listener\ItemUseAndAttributeListener$1.class
 terraria\util\GenericHelper$StrikeLineOptions.class
+terraria\gameplay\MenuHandler.class
 terraria\entity\boss\hardMode\queenSlime\QueenSlime$1.class
 terraria\entity\npc\TerrariaNPCClothier.class
 terraria\entity\boss\postMoonLord\stormWeaver\StormWeaver.class

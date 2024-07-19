@@ -2485,9 +2485,11 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             if (contents == null) contents = new ArrayList<>(1);
             Inventory inv = Bukkit.createInventory(ply, PLAYER_EXTRA_INVENTORY_SIZE, title);
             int slot = 0;
-            for (String itemInfo : contents) {
-                inv.setItem(slot, ItemHelper.getItemFromDescription(itemInfo, false));
-                slot ++;
+            for (String rowInfo : contents) {
+                for (String itemInfo : rowInfo.split("\t")) {
+                    inv.setItem(slot, ItemHelper.getItemFromDescription(itemInfo, false));
+                    slot++;
+                }
             }
             inventories.put(invName, inv);
         }
@@ -2507,9 +2509,18 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         YmlHelper.YmlSection plyFile = getPlayerDataFile(ply);
         for (String invType : inventories.keySet()) {
             Inventory currInv = inventories.get(invType);
+            StringBuilder rowData = new StringBuilder();
             ArrayList<String> result = new ArrayList<>(PLAYER_EXTRA_INVENTORY_SIZE);
             for (int i = 0; i < PLAYER_EXTRA_INVENTORY_SIZE; i ++) {
-                result.add(ItemHelper.getItemDescription(currInv.getItem(i)));
+                // tab separates the items
+                if (i % 9 != 0)
+                    rowData.append("\t");
+                rowData.append(ItemHelper.getItemDescription(currInv.getItem(i)));
+                // save the items in each row
+                if (i % 9 == 8) {
+                    result.add(rowData.toString());
+                    rowData = new StringBuilder();
+                }
             }
             plyFile.set("inventory." + invType, result);
         }

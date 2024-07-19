@@ -42,7 +42,7 @@ public class Flail extends GenericProjectile {
             case "海蚌锤":
                 super.projectileRadius = 0.75;
                 super.gravity = 0.05;
-                super.noGravityTicks = 10;
+                super.noGravityTicks = 8;
                 break;
             case "雷姆的复仇":
                 super.projectileRadius = 0.75;

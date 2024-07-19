@@ -259,6 +259,16 @@ backpack_label:
   y: "0"
   texts: "物品栏"
   scale: "界面变量.label_scale"
+# 菜单
+menu_label:
+  x: "界面变量.acc_x"
+  y: "界面变量.acc_y + 界面变量.slot_offset * 5"
+  texts: "菜单"
+  scale: "界面变量.label_scale"
+  actions:
+    enter: "方法.设置组件值('menu_label', 'fscale', '1.1')"
+    leave: "方法.设置组件值('menu_label', 'fscale', '1')"
+    click: "方法.聊天('/terrariaMenu menu')"
 # 显示钱币
 money_label:
   x: "方法.取屏幕宽度 * 8 / 方法.取变量('adjusted_scr_size')"

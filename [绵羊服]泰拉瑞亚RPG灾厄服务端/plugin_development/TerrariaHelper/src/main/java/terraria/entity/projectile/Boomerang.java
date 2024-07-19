@@ -10,7 +10,7 @@ public class Boomerang extends GenericProjectile {
     Player owner;
     Location spawnedLoc;
     boolean returning = false;
-    double maxDistanceSquared, useTime, speed;
+    double maxDistanceSquared, useTime;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public Boomerang(World world) {
         super(world);
@@ -24,7 +24,6 @@ public class Boomerang extends GenericProjectile {
         spawnedLoc = bukkitEntity.getLocation();
         this.maxDistanceSquared = maxDistance * maxDistance;
         this.useTime = useTime;
-        this.speed = bukkitEntity.getVelocity().length();
         // make the projectile return on block hit
         super.projectileRadius = 0.25;
         super.gravity = 0;
@@ -57,8 +56,8 @@ public class Boomerang extends GenericProjectile {
         if (returning) {
             super.blockHitAction = "thru";
             bukkitEntity.setVelocity(MathHelper.getDirection(
-                    bukkitEntity.getLocation(), owner.getEyeLocation(), this.speed) );
-            if (bukkitEntity.getLocation().distanceSquared(owner.getEyeLocation()) < this.speed * this.speed)
+                    bukkitEntity.getLocation(), owner.getEyeLocation(), super.speed) );
+            if (bukkitEntity.getLocation().distanceSquared(owner.getEyeLocation()) < super.speed * super.speed)
                 die();
         }
         // validate if the projectile should return to owner

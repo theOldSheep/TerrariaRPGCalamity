@@ -43,6 +43,9 @@ public class PolterghastClone extends EntitySlime {
             return;
         // AI
         {
+            // disappear when the boss has been defeated
+            if (! boss.isAlive())
+                die();
             // update target
             target = boss.target;
 

@@ -10,7 +10,6 @@ depend:
   - Vault
   - VexView
 softdepend:
-  - AuthMe
   - Residence
 load: STARTUP
 commands:
@@ -20,3 +19,6 @@ commands:
   settings:
     description: teleport to somewhere near the noise input
     usage: /<command> <option> [value] or /<command> ? [page]
+  terrariaMenu:
+    description: opens the specified menu
+    usage: /<command> <name>

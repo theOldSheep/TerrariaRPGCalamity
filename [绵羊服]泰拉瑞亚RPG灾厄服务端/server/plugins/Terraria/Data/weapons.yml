@@ -2390,11 +2390,11 @@ Dodu的手炮:
 荆棘旋刃:
   type: BOOMERANG
   distance: 15
-  velocity: 5
+  velocity: 2.25
 烈焰回旋镖:
   type: BOOMERANG
   distance: 17.5
-  velocity: 3
+  velocity: 2.5
 疯狂飞斧:
   autoSwing: true
   type: STAB
@@ -2619,9 +2619,9 @@ Dodu的手炮:
   particleColor:
   - 81|159|192
 龙魂破:
-  type: FLAIL
-  reach: 48
-  velocity: 4.5
+  type: BOOMERANG
+  distance: 48
+  velocity: 5
   autoSwing: true
 塔纳托斯的脊柱:
   type: WHIP

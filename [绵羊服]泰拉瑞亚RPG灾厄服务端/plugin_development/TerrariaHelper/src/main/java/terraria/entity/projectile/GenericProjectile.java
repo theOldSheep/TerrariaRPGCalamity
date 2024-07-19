@@ -2,6 +2,7 @@ package terraria.entity.projectile;
 
 import net.minecraft.server.v1_12_R1.*;
 import net.minecraft.server.v1_12_R1.MathHelper;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -210,6 +211,12 @@ public class GenericProjectile extends EntityPotion {
         if (spawnSound.length() > 0) {
             bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), spawnSound, org.bukkit.SoundCategory.NEUTRAL, (float) spawnSoundVolume, (float) spawnSoundPitch);
         }
+        // schedule timeout removal
+        Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), () -> {
+            // important: do not remove again if already destroyed. This would trigger on-death effects twice.
+            if (this.isAlive())
+                this.die();
+        }, liveTime);
     }
 
     // Note: -1e5 is the threshold to be even considered
@@ -1112,13 +1119,15 @@ public class GenericProjectile extends EntityPotion {
         if ((this.au() || this.inWater) || Math.abs(this.speedMultiPerTick - 1) > 1e-9) {
             this.impulse = true;
         }
+        // the projectile's velocity should be constantly updated to the client for the first 8 ticks
+        else if (ticksLived < 8) {
+            this.impulse = true;
+        }
         else if (++impulse_index >= RANDOMIZED_IMPULSE_TICK_INTERVAL) {
             this.impulse = true;
             impulse_index = 0;
         }
 
-        // time out removal
-        if (this.ticksLived >= liveTime) die();
         // timing
         this.world.methodProfiler.b();
     }

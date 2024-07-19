@@ -595,20 +595,22 @@ public class ItemUseHelper {
                 }
             }
             // the enemy the player is looking at, if applicable
-            if (eyeLoc.distanceSquared(endLoc) > entityEnlargeRadius * entityEnlargeRadius * 4) {
-                Set<HitEntityInfo> hits = HitEntityInfo.getEntitiesHit(
-                        plyWorld,
-                        eyeLoc.clone().add(lookDir.clone().multiply(entityEnlargeRadius)),
-                        endLoc.clone().add(lookDir.clone().multiply(entityEnlargeRadius)),
-                        entityEnlargeRadius,
-                        (net.minecraft.server.v1_12_R1.Entity target) -> EntityHelper.checkCanDamage(ply, target.getBukkitEntity(), strictMode));
-                if (hits.size() > 0) {
-                    HitEntityInfo hitInfo = hits.iterator().next();
-                    Entity hitEntity = hitInfo.getHitEntity().getBukkitEntity();
-                    targetLoc = EntityHelper.helperAimEntity(ply, hitEntity, aimHelperInfo);
-                    EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE, hitEntity);
-                    tracedEntity = true;
-                }
+            Vector traceStart = eyeLoc.clone();
+            Vector traceEnd = endLoc.clone();
+            if (eyeLoc.distanceSquared(endLoc) > entityEnlargeRadius * entityEnlargeRadius) {
+                traceStart.add(lookDir.clone().multiply(entityEnlargeRadius / 2));
+                traceEnd.subtract(lookDir.clone().multiply(entityEnlargeRadius / 2));
+            }
+            Set<HitEntityInfo> hits = HitEntityInfo.getEntitiesHit(
+                    plyWorld, traceStart, traceEnd,
+                    entityEnlargeRadius,
+                    (net.minecraft.server.v1_12_R1.Entity target) -> EntityHelper.checkCanDamage(ply, target.getBukkitEntity(), strictMode));
+            if (hits.size() > 0) {
+                HitEntityInfo hitInfo = hits.iterator().next();
+                Entity hitEntity = hitInfo.getHitEntity().getBukkitEntity();
+                targetLoc = EntityHelper.helperAimEntity(ply, hitEntity, aimHelperInfo);
+                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE, hitEntity);
+                tracedEntity = true;
             }
             // if the target location is still null, that is, no block/entity being hit
             if (targetLoc == null) {
@@ -942,10 +944,12 @@ public class ItemUseHelper {
                 case "女妖之爪": {
                     shouldStrike = currentIndex <= 5;
                     if (shouldStrike) {
-                        Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), 2.5, "灵魂鬼爪", false, 0);
+                        Location shootLoc = ply.getEyeLocation().add( ply.getLocation().getDirection().multiply(size) );
+
+                        Vector projVel = getPlayerAimDir(ply, shootLoc, 2.5, "灵魂鬼爪", false, 0);
                         projVel.normalize().multiply(2.5);
 
-                        EntityHelper.spawnProjectile(ply, projVel,
+                        EntityHelper.spawnProjectile(ply, shootLoc, projVel,
                                 attrMap, EntityHelper.DamageType.MELEE, "灵魂鬼爪");
                     }
                     break;
@@ -3198,7 +3202,7 @@ public class ItemUseHelper {
         double distance = weaponSection.getDouble("distance", 10d);
         // note that the gravity of boomerangs are turned off in the boomerang class, so DO NOT use aim helper, it will cause issue.
         EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions()
-                .setAccelerationMode(true)
+                .setAccelerationMode(Setting.getOptionBool(ply, Setting.Options.AIM_HELPER_ACCELERATION))
                 .setAimMode(false)
                 .setProjectileSpeed(projectileSpeed)
                 .setProjectileGravity(0);

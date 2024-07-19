@@ -7,10 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftFish;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -286,6 +283,10 @@ public class VanillaMechanicListener implements Listener {
             // remove fallen stars on chunk unload
             if (scoreboardTags.contains("isFallenStar") ) {
                 entity.removeScoreboardTag("isFallenStar");
+                entity.remove();
+            }
+            // remove projectiles on chunk unload
+            else if (entity instanceof Projectile) {
                 entity.remove();
             }
         }

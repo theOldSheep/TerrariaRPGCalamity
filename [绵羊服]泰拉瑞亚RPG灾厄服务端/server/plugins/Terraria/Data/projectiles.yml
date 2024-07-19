@@ -2677,6 +2677,8 @@ TNT:
 雷姆的复仇:
     buffInflict:
         - "枯萎|80|1"
+脉冲龙链枷:
+    enemyInvincibilityFrame: 1
 龙魂破:
     buffInflict:
         - "神圣之火|60|1"
@@ -3335,8 +3337,7 @@ TNT:
 泰拉能量矢:
     gravity: 0
     projectileSize: 1
-    blockHitAction: thru
-    liveTime: 10
+    liveTime: 20
     enemyInvincibilityFrame: 1
     trailColor: 128|255|64
     clusterBomb:
@@ -4731,8 +4732,6 @@ TNT:
     projectileSize: 0.5
     liveTime: 12
     penetration: 999999
-    isGrenade: true
-    blastRadius: 2.5
     spawnProjectiles:
         interval: 4
         offset: 0.5
