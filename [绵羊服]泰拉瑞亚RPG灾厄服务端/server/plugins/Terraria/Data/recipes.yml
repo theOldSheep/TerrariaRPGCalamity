@@ -249,8 +249,7 @@ FURNACE:
     requireLevel: 3
     resultItem: 蘑菇锭:2
     requireItem:
-    - 叶绿锭:2
-    - 蘑菇:15
+    - 幽灵锭:2
     - 发光蘑菇
     recipeCategory: MATERIAL
   '38':

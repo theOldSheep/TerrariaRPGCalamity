@@ -100,7 +100,7 @@ public class Retinazer extends EntitySlime {
         EntityHelper.spawnProjectile(shootInfoGenericLaser);
     }
     private void attackAI() {
-        // if the twin is in an earlier phase, set damage reduction to a high amount
+        // if the twin is in an earlier phase, prevent damage
         if (ticksLived % 5 == 0) {
             if ( twin.phaseAI < phaseAI && twin.isAlive() ) {
                 addScoreboardTag("noDamage");

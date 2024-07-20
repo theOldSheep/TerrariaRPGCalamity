@@ -56,6 +56,8 @@ public class CrownJewel extends EntitySlime {
             return;
         // AI
         {
+            if (! owner.isAlive())
+                die();
             // update target
             target = owner.target;
             // if target is valid, attack

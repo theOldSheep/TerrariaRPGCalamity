@@ -53,12 +53,17 @@ public class Leviathan extends EntitySlime {
     private void changePhase() {
         // change phase
         ArrayList<AIPhase> availablePhase = new ArrayList<>();
-        availablePhase.add(AIPhase.METEOR);
-        availablePhase.add(AIPhase.METEOR);
-        availablePhase.add(AIPhase.DASH);
-        availablePhase.add(AIPhase.DASH);
-        availablePhase.add(AIPhase.SUMMON);
-        availablePhase.remove(phaseAI);
+        if (phaseAI != AIPhase.METEOR) {
+            availablePhase.add(AIPhase.METEOR);
+            availablePhase.add(AIPhase.METEOR);
+        }
+        if (phaseAI != AIPhase.DASH) {
+            availablePhase.add(AIPhase.DASH);
+            availablePhase.add(AIPhase.DASH);
+        }
+        if (phaseAI != AIPhase.SUMMON) {
+            availablePhase.add(AIPhase.SUMMON);
+        }
         phaseAI = availablePhase.get((int) (Math.random() * availablePhase.size()));
         // aftermath
         indexAI = -1;
@@ -78,11 +83,12 @@ public class Leviathan extends EntitySlime {
             switch (phaseAI) {
                 case DASH: {
                     int subIndex = indexAI % DASH_DURATION;
-                    if (subIndex < 30) {
+                    int startTick = DASH_DURATION / 2;
+                    if (subIndex < startTick) {
                         shouldAlignHorizontally = true;
                     } else {
                         shouldAlignHorizontally = false;
-                        if (subIndex == 30) {
+                        if (subIndex == startTick) {
                             bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
                             Location targetLoc = target.getLocation();
                             targetLoc.setY(bukkitEntity.getLocation().getY());
@@ -127,20 +133,20 @@ public class Leviathan extends EntitySlime {
                 break;
             }
             case METEOR: {
-                if (indexAI % 12 == 0) {
-                    shootMeteor();
-                }
                 if (indexAI >= 120)
                     changePhase();
+                else if (indexAI % 12 == 0) {
+                    shootMeteor();
+                }
                 break;
             }
             case SUMMON: {
                 int summonAmount = anahita.healthRatio < 0.2 ? 3 : 2;
-                if (indexAI % 6 == 0) {
-                    MonsterHelper.spawnMob("深海吞食者", bukkitEntity.getLocation(), target);
-                }
                 if (indexAI >= 6 * summonAmount)
                     changePhase();
+                else if (indexAI % 6 == 0) {
+                    MonsterHelper.spawnMob("深海吞食者", bukkitEntity.getLocation(), target);
+                }
                 break;
             }
         }

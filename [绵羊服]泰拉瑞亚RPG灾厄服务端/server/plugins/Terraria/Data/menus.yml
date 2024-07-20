@@ -253,26 +253,63 @@ bosses:
         header:
             row: 0
             col: 4
-            name: §r[菜单] BOSS图鉴
+            name: §r[菜单] BOSS图鉴（困难模式前）
             lore:
             - §r以下BOSS排序以建议挑战顺序为准；从左到右，随后从上到下
             - §rBOSS战开始时会记录附近的挑战者
             - §r击败BOSS后，造成足够高伤害或吸引足够久仇恨的挑战者均视为挑战成功
         kslm:
-            row: 1
+            row: 2
             col: 0
             name: §r[信息] 史莱姆王
             cmd: terrariaMenu bossKSLM
         dstscg:
-            row: 1
+            row: 2
             col: 1
             name: §r[信息] 荒漠灾虫
             cmd: terrariaMenu bossDSTSCG
-        eoc:
-            row: 1
+        cbl:
+            row: 2
             col: 2
+            name: §r[信息] 菌生蟹
+            cmd: terrariaMenu bossCBL
+        eoc:
+            row: 2
+            col: 3
             name: §r[信息] 克苏鲁之眼
             cmd: terrariaMenu bossEOC
+        eow:
+            row: 2
+            col: 4
+            name: §r[信息] 世界吞噬者
+            cmd: terrariaMenu bossEOW
+        hvm:
+            row: 2
+            col: 5
+            name: §r[信息] 腐巢意志
+            cmd: terrariaMenu bossHVM
+        sklt:
+            row: 2
+            col: 6
+            name: §r[信息] 骷髅王
+            cmd: terrariaMenu bossSKLT
+        slmg:
+            row: 2
+            col: 7
+            name: §r[信息] 史莱姆之神
+            cmd: terrariaMenu bossSLMG
+        wof:
+            row: 2
+            col: 8
+            name: §r[信息] 血肉之墙
+            cmd: terrariaMenu bossWOF
+        next:
+            row: 5
+            col: 8
+            name: §r[菜单] BOSS图鉴（困难模式）
+            lore:
+            - §r点击查看困难模式的BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
         back:
             row: 5
             col: 4
@@ -308,6 +345,7 @@ bossKSLM:
             name: §r[信息] 打法攻略
             lore:
             - §r作为最简单的BOSS之一，本BOSS战难度较低
+            - §r钨钢套装，沙漠巡游者套装或矿物套装表现均可
             - §r治疗药水与增益药水可以进一步降低难度
             - §r推荐使用敏捷药水和食物以更好地规避王冠宝石的弹幕
         back:
@@ -346,11 +384,49 @@ bossDSTSCG:
             name: §r[信息] 打法攻略
             lore:
             - §r作为最简单的BOSS之一，本BOSS战难度较低
+            - §r钨钢，沙漠巡游者，忍者或矿物套装表现均可
             - §r治疗药水与增益药水可以进一步降低难度
             - §r推荐优先击杀黄沙恶虫以避免在BOSS战中后期手忙脚乱
             - §r观察小地图以获取BOSS及黄沙恶虫的位置信息
             - §r弹幕频率低，伤害不高且极其不准确，可酌情无视弹幕
             - §r蠕虫类敌人的最大威胁来源于头部的冲撞。尽可能避免直接被头部命中
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses
+bossCBL:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 菌生蟹
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r于祭坛中制作节肢动物芽孢
+            - §r在丛林洞穴层使用即可召唤
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §r向玩家跳跃
+            - §r向上方发射逐渐下落的孢子
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r挑战荒漠灾虫获得的胜潮套装可以提供额外的护甲和生命再生
+            - §r治疗药水与增益药水可以进一步降低难度
+            - §r敏捷药水与食物可增加移速以便躲避跳跃攻击
+            - §r钓鱼获得的跳跃之瓶可以在此时期大幅提供机动性
         back:
             row: 5
             col: 4
@@ -415,3 +491,1078 @@ bossEOC:
             lore:
             - §r点击返回BOSS图鉴
             cmd: terrariaMenu bosses
+bossEOW:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 世界吞噬者
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r于祭坛中制作虫饵
+            - §r在腐化之地使用即可召唤
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §rBOSS会向玩家冲撞
+            - §r此外，体节被击败后BOSS将分为两部分，各自的头部将带领剩余的体节分别移动
+            - §rBOSS越短，机动能力越高
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r哥布林军团事件后哥布林工匠将开始出售火箭靴
+            - §r考虑在火箭靴下装备跳跃之瓶以免意外承受摔落伤害
+            - §r治疗药水与增益药水可以进一步降低难度
+            - §r敏捷药水与食物可增加移速以便躲避短小体节的迅速冲撞
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses
+bossHVM:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 腐巢意志
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r腐化之地会刷新腐化囊
+            - §r破坏腐化囊后即可挑战BOSS
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-第一阶段
+            lore:
+            - §r第一阶段时，BOSS的攻击方式如此循环：
+            - §r- 偶尔缩小至消失后重新出现在随机的位置
+            - §r- 不会移动；BOSS的召唤物将对玩家发起攻击
+            - §rBOSS的生命值每降低5%将召唤一波新的怪物
+            - §r生命值低于80%时，进入第二阶段
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-第二阶段
+            lore:
+            - §r第二阶段时，BOSS的攻击方式如此循环：
+            - §r- 缩小至消失后重新出现在随机的位置
+            - §r- 向玩家移动；此时是输出的最佳时机。移动速度随血量降低而增加
+            - §r- 围绕玩家高速旋转以迷惑玩家
+            - §r- 向玩家发起冲刺；冲刺时召唤少量怪物
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] BOSS仆从
+            lore:
+            - §rBOSS可以在全时期召唤以下四种仆从：
+            - §r- 噬魂怪：腐化之地常态存在的敌怪；缓慢飞向玩家
+            - §r- 吞噬者：腐化之地常态存在的蠕虫敌怪
+            - §r- 暗之心：试图悬浮在玩家上空并降下暗影之雨
+            - §r- 沼泽之眼：飞向玩家，并在被击败后留下暗影云，在原地降下暗影之雨
+            - §2第一阶段BOSS还将生成腐化球：一开始生成15个，召唤仆从时额外生成5个
+            - §2腐化球会向玩家发射带有预判性质的弹幕
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r胜潮套装可以提供额外的护甲和生命再生
+            - §r暗影套装可以提供更高的机动性和防御力
+            - §r黑曜石和流星套装可以提供更高输出
+            - §r使用对群能力较强的武器能够极大地帮助清理小怪
+            - §r菌生蟹掉落的真菌块可以限制小怪同时提供额外续航
+            - §r一阶段的威胁主要来源于腐化球的预判攻击；注意及时变向
+            - §r二阶段的冲撞攻击时通过小地图留意BOSS的位置
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses
+bossSKLT:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 骷髅王
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r夜晚与主城裁缝NPC对话并选择“诅咒”
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-第一阶段
+            lore:
+            - §r第一阶段时，BOSS的攻击方式如此循环：
+            - §r- 使用四只手轮流挥向玩家
+            - §r- 准备传送；准备时本体与传送位置均会多次产生爆炸粒子效果
+            - §r- 传送，射出大量弹幕并开始冲向玩家
+            - §r第一阶段时本体无法受到伤害；有一只手被击败后开始每秒发射2次弹幕
+            - §r四只手被击败后，进入第二阶段
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-第二阶段
+            lore:
+            - §r第二阶段时，BOSS的攻击方式如此循环：
+            - §r- 每秒发射2次弹幕；生命值少于40%时改为每秒5次
+            - §r- 准备传送；准备时本体与传送位置均会多次产生爆炸粒子效果
+            - §r- 传送，发射弹幕并开始冲向玩家
+            - §r生命值降低到25%以下时使四只手一起重生，仅能发动一次
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r天蓝套装可以提供大量机动性，且数值较优
+            - §r熔岩套装坦度极佳，可提供高额容错
+            - §r在夜幕降临（BGM改变）时开始准备挑战BOSS以保证时间充足
+            - §r（警告：白天时BOSS将获得极高的伤害与防御）
+            - §r敏捷药水与食物可增加移速以便躲避冲锋攻击
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses
+bossSLMG:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 史莱姆之神
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r于祭坛中制作过载淤泥
+            - §r任意时间地点均可使用
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-第一阶段
+            lore:
+            - §r第一阶段时，黑檀与血化史莱姆将造成主要威胁
+            - §r两者均会跃向玩家，落地时发射大量预判弹幕
+            - §r距离玩家较远时跳跃能力受到极大增强
+            - §r两者被击败后均可分裂2次；分裂后的史莱姆更小，生命值更低且发射弹幕数量减少
+            - §r此时，史莱姆之神本体将向玩家径直发起冲撞
+            - §r所有史莱姆被击败后进入第二阶段
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-第二阶段
+            lore:
+            - §r第二阶段时，BOSS的攻击方式如此循环：
+            - §r- 快速发射预判弹幕；每次发射一枚
+            - §r- 进行一次预判冲撞
+            - §r此时击败仅剩的本体即可结束战斗
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r天蓝，熔岩与骷髅王后可制作的死灵套装均有不错的表现
+            - §r火箭靴，跳跃之瓶等饰品能极大地帮助躲避弹幕
+            - §r利用本BOSS学习如何骗预判将极大地帮助挑战中后期BOSS
+            - §r亦可观察根据当前移动方向预判而来的弹道以便及时变向
+            - §r克苏鲁之眼盾的冲撞能力能在关键时刻弥补走位失误
+            - §r尽可能不要受到伤害；本BOSS的所有弹幕和史莱姆之神本体都会造成扭曲DEBUFF
+            - §r扭曲DEBUFF会极大限制走位能力与空间
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses
+bossWOF:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 血肉之墙
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r地狱的巫毒恶魔掉落向导巫毒娃娃
+            - §r在向导存活时丢入岩浆召唤血肉之墙
+            - §r*注：血肉之墙将生成在巫毒娃娃焚毁的方向并向玩家逼近*
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §rBOSS生成时召唤数个饿鬼飞向玩家；随后每2.5秒召唤一个饿鬼
+            - §rBOSS将前推进；速度随生命值降低而增加
+            - §r推进方向在召唤时即刻确定，随后不再更改
+            - §r眼睛会向玩家发射激光，嘴偶尔发射略微追踪的恶魔之镰
+            - §r玩家在血肉之墙身后时会受到超高攻击伤害和击退
+            - §r玩家远离超过48格时会狂暴，极大提升攻击速度与移动速度
+            - §r玩家远离超过100格时会被瞬间秒杀
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r挑战前需大体规划好移动路线，以免碰到地狱中的柱子无法移动
+            - §r斯塔提斯套装提供的防御较为出色
+            - §r天蓝套装的移动速度也可以考虑在内
+            - §r注意避免离BOSS过远导致狂暴；狂暴在玩家返回48格内后依然会保持一秒
+            - §r可考虑使用镇静药水、禅定药水等方式进一步减少小怪对BOSS战的干扰
+            - §r多人挑战时，在跑道方向的较远处设置床以便复活后更可能重新加入战斗
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses
+bosses_hardmode:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[菜单] BOSS图鉴（困难模式）
+            lore:
+            - §r以下BOSS排序以建议挑战顺序为准；从左到右，随后从上到下
+            - §rBOSS战开始时会记录附近的挑战者
+            - §r击败BOSS后，造成足够高伤害或吸引足够久仇恨的挑战者均视为挑战成功
+        slmq:
+            row: 2
+            col: 0
+            name: §r[信息] 史莱姆皇后
+            cmd: terrariaMenu bossSLMQ
+        twins:
+            row: 2
+            col: 1
+            name: §r[信息] 双子魔眼
+            cmd: terrariaMenu bossTWINS
+        cygn:
+            row: 2
+            col: 2
+            name: §r[信息] 极地之灵
+            cmd: terrariaMenu bossCYGN
+        aqsc:
+            row: 2
+            col: 3
+            name: §r[信息] 渊海灾虫
+            cmd: terrariaMenu bossAQSCG
+        dsty:
+            row: 2
+            col: 4
+            name: §r[信息] 毁灭者
+            cmd: terrariaMenu bossDSTY
+        bselmt:
+            row: 2
+            col: 5
+            name: §r[信息] 硫磺火元素
+            cmd: terrariaMenu bossBSELMT
+        skltp:
+            row: 2
+            col: 6
+            name: §r[信息] 机械骷髅王
+            cmd: terrariaMenu bossSKLTP
+        pltr:
+            row: 2
+            col: 7
+            name: §r[信息] 世纪之花
+            cmd: terrariaMenu bossPLTR
+        clmtc:
+            row: 2
+            col: 8
+            name: §r[信息] 灾厄之眼
+            cmd: terrariaMenu bossCLMTC
+        anhtlvt:
+            row: 3
+            col: 0
+            name: §r[信息] 阿娜希塔与利维坦
+            cmd: terrariaMenu bossANHTLVT
+        asarus:
+            row: 3
+            col: 1
+            name: §r[信息] 白金星舰
+            cmd: terrariaMenu bossASARUS
+        glm:
+            row: 3
+            col: 2
+            name: §r[信息] 石巨人
+            cmd: terrariaMenu bossGLM
+        pbglat:
+            row: 3
+            col: 3
+            name: §r[信息] 瘟疫使者歌莉娅
+            cmd: terrariaMenu bossPBGLAT
+        prev:
+            row: 5
+            col: 0
+            name: §r[菜单] BOSS图鉴（困难模式前）
+            lore:
+            - §r点击查看困难模式前的BOSS图鉴
+            cmd: terrariaMenu bosses
+        next:
+            row: 5
+            col: 8
+            name: §r[菜单] BOSS图鉴（月球领主后）
+            lore:
+            - §r点击查看月球领主后的BOSS图鉴
+            cmd: terrariaMenu bosses_post_moonlord
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] 主菜单
+            lore:
+            - §r点击返回主菜单
+            cmd: terrariaMenu menu
+bossSLMQ:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 史莱姆皇后
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r挖掘珍珠石有概率掉落明胶水晶
+            - §r水晶也可通过合成获得
+            - §r在神圣之地使用召唤史莱姆皇后
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-第一阶段
+            lore:
+            - §r- 向玩家跳跃3次，此时可以被方块阻挡
+            - §r- 穿过方块飞向玩家上方并砸下；下砸时接触伤害有所提升
+            - §r- 缩小至消失后重新出现在玩家位置
+            - §r此外，BOSS会召唤三种仆从帮助攻击玩家
+            - §r血量降至50%后进入第二阶段
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-第二阶段
+            lore:
+            - §r- 飞向玩家上方，发射大量弹跳弹幕
+            - §r- 吼叫并垂直下砸；下砸时接触伤害有所提升
+            - §rBOSS仍然会召唤三种仆从帮助攻击玩家
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] BOSS仆从
+            lore:
+            - §r飞翔史莱姆：飞向玩家，试图造成接触伤害
+            - §r水晶史莱姆：向玩家发射大量受重力影响的水晶弹幕
+            - §r弹力史莱姆：向玩家发射受重力影响的弹力弹幕
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r挑战前需准备好平整的地形
+            - §rBOSS战中，蜘蛛、软壳（移速较低）和钴套装效果均可
+            - §r尽量考虑易于清理小怪的武器以免手忙脚乱
+            - §r血肉之墙后的各种环境有全新的掉落物以及合成的物品
+            - §r光明/暗影钥匙召唤的宝箱怪也会掉落强力武器和饰品
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossTWINS:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 双子魔眼
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r铁砧处制作机械魔眼
+            - §r在夜晚召唤双子魔眼
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-阶段切换
+            lore:
+            - §r两只眼球均有相似的阶段切换逻辑
+            - §r生成时，两者皆为第一阶段
+            - §r当生命值降到70%以下时，进入第二阶段
+            - §r当生命值降到25%以下或另一只眼球被击败后，进入第三阶段
+            - §r当一只眼球处于更高阶段时，它暂时不会受到伤害
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-激光眼
+            lore:
+            - §r第一阶段：
+            - §r- 在玩家的斜上方发射激光
+            - §r- 向玩家进行三次长距离冲刺
+            - §r第二阶段：
+            - §r- 在玩家的正上方发射激光
+            - §r- 在玩家的水平方向快速发射激光
+            - §r第三阶段：
+            - §r- 在玩家的正上方发射激光
+            - §r- 在玩家的水平方向快速发射激光
+            - §r- 向玩家进行三次长距离冲刺；第一次冲刺时释放五枚追踪弹幕
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] 攻击方式-魔焰眼
+            lore:
+            - §r第一阶段：
+            - §r- 在玩家的水平方向发射火球
+            - §r- 向玩家进行八次短距离冲刺
+            - §r第二阶段：
+            - §r- 向玩家缓慢移动并喷射大量火球
+            - §r- 快速冲撞五次
+            - §r第三阶段：
+            - §r- 向玩家缓慢移动并喷射大量火球
+            - §r- 向玩家下方移动并射出五枚追踪弹幕
+            - §r- 快速冲撞三次
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r史莱姆皇后掉落的水晶刺客套装可以提供冲刺，解放克苏鲁之眼盾的饰品栏
+            - §r肉后的翅膀在此BOSS战中更加重要；垂直方向走位可以轻松躲避大部分弹幕
+            - §r在飞行的顶端和底端（接触地面刷新飞行时间时）使用冲刺可以保持高速移动
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossCYGN:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 极地之灵
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r铁砧处制作极寒之匙
+            - §r在雪原召唤极地之灵
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-第一阶段
+            lore:
+            - §r- 向玩家发射两次六角形弹幕，间隔较长
+            - §r- 向玩家发射三次六角形弹幕，间隔较短
+            - §r- 径直冲向玩家
+            - §r此外，所有阶段中，BOSS都会定时释放数个冰霜炸弹
+            - §r冰霜炸弹会在短暂延迟后爆炸成大量受重力影响的冰片，注意适当远离
+            - §r所有阶段中，BOSS都会召唤冰川护盾替自身抵挡伤害；护盾破碎12秒后再生
+            - §r生命值低于80%时，进入第二阶段
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-第二阶段
+            lore:
+            - §r- 飞向玩家并发射两次六角形弹幕
+            - §r- 原地停留，发射两次六角形弹幕后径直向玩家冲刺
+            - §r- 再次原地停留，发射两次六角形弹幕后径直向玩家冲刺
+            - §r生命值低于60%时，进入第三阶段
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] 攻击方式-第三阶段
+            lore:
+            - §r- 缓慢飞向玩家并发射六角形弹幕
+            - §r- 定时传送到玩家附近的位置；传送前会在目标位置显示多次爆炸粒子
+            - §r生命值低于50%时，进入第四阶段
+        attack4:
+            row: 2
+            col: 4
+            name: §r[信息] 攻击方式-第四阶段
+            lore:
+            - §r- 以适中的速度向玩家逼近
+            - §r- 在距离玩家较近时直线向玩家冲刺
+            - §r生命值低于35%时，进入第五阶段
+        attack5:
+            row: 2
+            col: 5
+            name: §r[信息] 攻击方式-第五阶段
+            lore:
+            - §r- 以适中的速度向玩家的上方逼近
+            - §r- 短暂停留后进行三连冲刺，速度稍快
+            - §r- 冲刺开始时发射4枚具有追踪能力的弹幕
+            - §r生命值低于25%时，进入第六阶段
+        attack6:
+            row: 2
+            col: 6
+            name: §r[信息] 攻击方式-第六阶段
+            lore:
+            - §r- 以适中的速度向玩家的上方逼近
+            - §r- 短暂停留后进行三连冲刺，速度适中但间隔稍短
+            - §r- 冲刺开始时发射8枚具有追踪能力的弹幕
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r挑战前建议清理出大量的平整空地
+            - §r史莱姆皇后掉落的水晶刺客套装可以提供冲刺，解放克苏鲁之眼盾的饰品栏
+            - §rBOSS和弹幕会造成冷冻DEBUFF，短时间内减少大量移动能力，注意躲避
+            - §r由于BOSS的冰川护盾，尽可能将火力集中在护盾破损时造成有效输出
+            - §r躲避六角形弹幕时横向移动也十分有效
+            - §r第四阶段最为轻松，可酌情考虑暂缓攻击BOSS等待状态恢复
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossAQSCG:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 渊海灾虫
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r铁砧处制作海鲜饵料
+            - §r在硫磺海召唤渊海灾虫
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §r- 向玩家移动和冲刺
+            - §r- 在接近玩家后吐出大量酸雾
+            - §r- 周期性从头到尾射出追踪毒牙
+            - §r机动能力随生命值降低而略微增加
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r挑战前建议建造出大型平台（建议使用玻璃平台物品）提供走位空间
+            - §r若已战胜双子魔眼，秘银套装是不错的选择
+            - §r若已战胜双子魔眼和极地之灵，代达罗斯套装和代达罗斯守卫法杖效果拔群
+            - §r使用对群能力较强的武器；对单类武器输出极其乏力
+            - §r与其余长直类敌人相同，尽可能避免被头部直接命中
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossDSTY:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 毁灭者
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r铁砧处制作机械蠕虫
+            - §r在夜间召唤毁灭者
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §r- 向玩家移动和冲刺
+            - §r- 拥有探针的体节会向玩家发射激光
+            - §r- 生命值低于50%时没有探针的体节也可以发射激光
+            - §r机动能力随生命值降低而增加
+            - §r拥有探针的体节受到伤害有可能释放探针
+            - §r这些探针会游离并向玩家发射激光
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r挑战前强烈建议击败渊海灾虫；深海权杖与海之烧灼均可对长直类敌人造成巨额伤害
+            - §r代达罗斯套装和秘银套装都是不错的选择
+            - §r使用对群能力较强的武器；对单类武器输出极其乏力
+            - §r可以考虑先利用高频低伤武器火力覆盖大量体节以引出探针
+            - §r击溃大部分探针后，BOSS战后半段即可减少不必要的干扰
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossBSELMT:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 硫磺火元素
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r地狱熔炉处制作焦炭玩偶
+            - §r在硫火之崖召唤硫磺火元素
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击模式切换
+            lore:
+            - §rBOSS有三种攻击模式；
+            - §r漂浮，悬浮，激光
+            - §r激光模式仅在半血以下开始使用
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击模式-漂浮
+            lore:
+            - §r- 试图漂浮在玩家上方
+            - §r- 交替射出六角弹幕与速度更快的单个爆炸弹幕
+            - §r- 交替六次后进入下一攻击模式
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] 攻击模式-悬浮
+            lore:
+            - §r- 速度降低，最后停止移动
+            - §r- 同时射出六角弹幕与数个紧密的深渊亡魂
+            - §r- 深渊亡魂的速度会随玩家距离的增加而大幅度增加
+            - §r- 发射六次后进入下一攻击模式
+        attack4:
+            row: 2
+            col: 4
+            name: §r[信息] 攻击模式-激光
+            lore:
+            - §r- 试图漂浮在玩家上方
+            - §r- 试图预判玩家的移动位置并显示射线瞄准方向
+            - §r- 一秒后发射真正的激光并造成伤害判定
+            - §r- 发射三次后进入下一攻击模式
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r挑战前建议清理出硫火之崖的地面提供走位空间
+            - §r若已战胜两个机械BOSS，精金套装和武器是很好的选择
+            - §r代达罗斯套装也可供选择
+            - §r漂浮模式：保持适当的移动速度，以免被滞留爆炸弹击中
+            - §r悬浮模式：保持适当的距离，过近会导致六角星弹幕难以躲避，过远会导致深渊亡魂拥有疯狂的速度
+            - §r激光模式：保持变向移动，使BOSS的激光预判出现误差
+            - §r可考虑使用镇静药水、禅定药水等方式进一步减少小怪对BOSS战的干扰
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossSKLTP:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 机械骷髅王
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r铁砧处制作机械骷髅头
+            - §r在夜晚召唤机械骷髅王
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-头部
+            lore:
+            - §r在手没有被全部击溃前，头部只会向玩家移动
+            - §r在手被全部击溃后：
+            - §r- 在玩家斜上方转圈，射出追踪头骨
+            - §r- 飞向玩家正上方，射出追踪火箭；此阶段仅在小于25%生命值后启用
+            - §r- 快速飞向玩家，在低于50%生命值时发射激光
+            - §r“叟没了就好点了，可以庄↑心地~躲这个佝偻头了”
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-机械锯
+            lore:
+            - §r闲置时在头附近待命，攻击时高速径直飞向玩家
+            - §r随存活的手数量减少，闲置时间减少且飞行速度增加
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] 攻击方式-机械钳
+            lore:
+            - §r闲置时在头附近待命，攻击时以超高速度径直飞向玩家
+            - §r相较机械锯，闲置模式转换更快且飞行速度上限更高
+            - §r随存活的手数量减少，闲置时间减少且飞行速度增加
+        attack4:
+            row: 2
+            col: 4
+            name: §r[信息] 攻击方式-机械激光
+            lore:
+            - §r向玩家一次性发射大量激光束
+            - §r发射频率随存活的手数量减少而增加
+        attack5:
+            row: 2
+            col: 5
+            name: §r[信息] 攻击方式-机械炮
+            lore:
+            - §r发射火箭，在单发与大量齐射之间交替进行
+            - §r火箭会在发射半秒后瞄准玩家方向；在短暂延迟后急速飞行并爆炸
+            - §r随存活的手数量减少，发射频率大幅增加
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r作为机械三王中相对具有挑战性的BOSS，建议作为三王中最后一个挑战
+            - §r届时，玩家应该拥有精金/寒霜套装并且击败大量其他困难模式BOSS
+            - §r手部存活时可适当考虑对群/半对群武器；仅剩头部时建议使用强对单武器
+            - §r除非移动力超高的极端配装，强烈建议优先击杀两只近战手臂以免出现无法躲避的情况
+            - §r对于机械炮的火箭要格外注意；弹道末端的爆炸有可能带来意外惊喜
+            - §r仅剩骷髅头时，建议在旋转发射弹幕阶段下降，其他阶段向上飞行
+            - §r“又是这个囊的过分的啵丝”
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossPLTR:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 世纪之花
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r丛林洞穴层生成世纪之花花苞
+            - §r挖掘后召唤世纪之花
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §r向玩家冲刺并发射种子和弹跳尖刺球
+            - §r生命值降低到50%时，接触伤害提高，防御减少并释放大量触手
+            - §r生命值低于25%时，会额外放出滞留的孢子云
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §rBOSS战的弹跳尖刺球和滞留孢子云都会逐渐增加场地中的危机
+            - §r因此，寻找一片大规模的丛林地下洞穴（并酌情扩建）非常重要
+            - §r此时玩家应当击败机械三王，可以使用神圣锭和叶绿锭制作的武器护甲
+            - §rBOSS战大部分时间建议使用强对单武器；清理触手时对群武器也同样重要
+            - §r大量的触手会变相增加BOSS冲刺时的碰撞范围
+            - §r由于BOSS的低速度，硫磺火元素掉落的地狱降临拥有夸张的输出上限
+            - §r可考虑使用镇静药水、禅定药水等方式进一步减少小怪（特指世纪之龟）对BOSS战的干扰
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossCLMTC:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 灾厄之眼
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r秘银砧处制作荒芜之眼
+            - §r在夜晚召唤灾厄之眼
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-常态
+            lore:
+            - §r- 在玩家上方发射爆炸弹
+            - §r- 在玩家水平方向发射深渊亡魂
+            - §r降低到70%生命时开启第一轮弹幕炼狱
+            - §r降低到40%生命时召唤兄弟
+            - §r降低到10%生命时开启第二轮弹幕炼狱
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-弹幕炼狱
+            lore:
+            - §r- 第一轮弹幕炼狱由深渊亡魂组成
+            - §r- 第二轮弹幕炼狱在此基础上增加了会追踪并爆炸成八枚硫火飞弹的弹幕
+            - §r- 玩家在弹幕炼狱期间下线或被击杀将重置弹幕炼狱时长
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] 攻击方式-兄弟重生
+            lore:
+            - §r- 召唤“灾难”与“灾祸”
+            - §r- “灾难”：与第二阶段激光眼类似，在玩家上方和水平方向发射激光
+            - §r- “灾祸”：与第二阶段魔焰眼类似，向玩家喷吐大量火球后进行5次冲刺
+            - §r- “灾祸”的第五次冲刺持续时间稍短于其余冲刺
+            - §r- “灾厄之眼”在此期间只会在玩家上方发射爆炸弹幕
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r在BOSS使用爆炸弹幕攻击时，避免完全垂直移动
+            - §r在“灾祸”存活时，切记留意冲刺次数；第五次冲刺开始后向冲刺反方向移动避免被火球灼烧
+            - §r在略微离开地面的位置建造玻璃平台以更好地看清弹幕炼狱
+            - §r设置好泰拉瑞亚第三人称视角距离以在弹幕炼狱时获得更好的视野
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossANHTLVT:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 阿娜希塔与利维坦
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r海洋中刷新“？？？”
+            - §r击杀后召唤阿娜希塔与利维坦
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-利维坦
+            lore:
+            - §r- 垂直与玩家对齐后水平冲刺一次；随着生命下降增加冲刺次数（70%两次，40%三次）
+            - §r- 垂直与玩家对齐并发射巨大弹幕，一共十次
+            - §r- 召唤两个深海吞食者冲向玩家；阿娜西塔生命值低于20%改为三个
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-阿娜西塔
+            lore:
+            - §r在利维坦生命值大于70%时悬浮在玩家上方且不攻击
+            - §r阿娜西塔一共有以下的攻击模式，她会在其中随机切换：
+            - §r- 射出大量追踪泡泡
+            - §r- 冲刺三次，期间接触伤害增加50%
+            - §r- 在玩家的周围向玩家发射水之枪/霜雾/魅惑之音弹幕
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r理论上，在挑战本BOSS时玩家应当已击败灾厄之眼和世纪之花
+            - §r推荐使用掠夺者，硫火，蘑菇或幽灵套装
+            - §r使用战斗+虫潮药水可迅速刷新召唤物敌怪
+            - §r保持垂直移动（规避利维坦伤害）的同时进行小幅度水平移动（规避阿娜西塔弹幕）
+            - §r可考虑携带备用对群武器以应对大量的利维坦仆从
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossASARUS:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 白金星舰
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r秘银砧处制作星辉碎块
+            - §r夜晚在星辉瘟疫召唤白金星舰
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-充能
+            lore:
+            - §r原地不动并向上发射追踪弹幕
+            - §r片刻过后，进行一次传送并生成两只小白星
+            - §r小白星围绕玩家运动，在降低到半血以下时冲向玩家并爆炸（接触方块会提前引爆）
+            - §r充能时，BOSS的伤害减免和防御都会降低
+            - §r传送后不久将开始爬行攻击
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-爬行
+            lore:
+            - §r向玩家爬行前进并发射星型弹幕
+            - §r发射第六次时马上进入跳跃攻击
+            - §r移动速度将随生命值降低而增加
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] 攻击方式-跳跃
+            lore:
+            - §r向上跳跃，在空中会缓慢向玩家转向
+            - §r落地后发射一次星型弹幕
+            - §r完成六次跳跃后马上进入充能阶段
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r理论上，在挑战本BOSS时玩家应当已击败灾厄之眼和世纪之花
+            - §r推荐使用掠夺者，硫火，蘑菇或幽灵套装
+            - §r可考虑使用镇静药水、禅定药水等方式进一步减少小怪对BOSS战的干扰
+            - §r注意在跳跃时和BOSS二人转绕圈，防止被骑脸输出
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossGLM:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 石巨人
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r丛林神庙内敌人掉落丛林蜥蜴电池
+            - §r在神庙中召唤石巨人
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-身体
+            lore:
+            - §r身体会跃向玩家攻击
+            - §r手部存活时会定期向玩家出拳
+            - §r头部脱落后身体也会开始发射激光
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-头部
+            lore:
+            - §r向玩家发射激光和弹跳火球
+            - §r受到足够伤害后会脱落，独自游离在玩家上方并继续发射弹幕
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r本BOSS的难度来源于丛林神庙的探索；本体难度相对较低
+            - §r丛林神庙的上两层建议脱下靴子进行探索，否则移速相对过快
+            - §r所有神庙迷宫均可通过跟着右边/左边墙壁一路找到下一层的入口
+            - §r刷取BOSS召唤物时需要战斗、虫潮药水；确保这些药水失效后再挑战BOSS
+            - §r可考虑使用镇静药水、禅定药水等方式进一步减少小怪对BOSS战的干扰
+            - §r注：可考虑多次击败BOSS以获得石巨人之眼、锯刃镐等重要物品
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossPBGLAT:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 瘟疫使者歌莉娅
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r秘银砧处制作瘟疫启动装置
+            - §r在丛林召唤瘟疫使者歌莉娅
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §r
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] BOSS仆从
+            lore:
+            - §r
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode

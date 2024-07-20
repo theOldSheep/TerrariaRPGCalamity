@@ -93,11 +93,11 @@ public class Cryogen extends EntitySlime {
                 EntityHelper.tweakAttribute(attrMap, "defence", "12", false);
                 break;
             case 5:
-                psiBlast.properties.put("autoTrace", true);
-                psiBlast.properties.put("autoTraceMethod", 2);
-                psiBlast.properties.put("autoTraceRadius", 32d);
-                psiBlast.properties.put("autoTraceSharpTurning", false);
-                psiBlast.properties.put("autoTraceAbility", 0.6d);
+                psiBlast.properties.put("homing", true);
+                psiBlast.properties.put("homingMethod", 2);
+                psiBlast.properties.put("homingRadius", 32d);
+                psiBlast.properties.put("homingSharpTurning", false);
+                psiBlast.properties.put("homingAbility", 0.6d);
                 break;
         }
         indexAI = -30;

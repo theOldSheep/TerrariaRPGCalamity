@@ -153,16 +153,23 @@ public class BulletHellProjectile extends GenericProjectile {
             motY = MathHelper.xcos_degree(ticksLived * 9) * 0.2;
         }
 
+
         // Update the projectile's position to be on the plane
         Location projectileLocation = bukkitEntity.getLocation();
-        Vector vectorToPlane = projectileLocation.toVector().subtract(directionInfo.target.getEyeLocation().toVector());
-        Vector correctionVector = MathHelper.vectorProjection(directionInfo.planeNormal, vectorToPlane);
-        bukkitEntity.teleport(projectileLocation.subtract(correctionVector));
+        // sometimes this would be NaN
+        if (! Double.isNaN(projectileLocation.getX())) {
+            Vector vectorToPlane = projectileLocation.toVector().subtract(directionInfo.target.getEyeLocation().toVector());
+            Vector correctionVector = MathHelper.vectorProjection(directionInfo.planeNormal, vectorToPlane);
+            bukkitEntity.teleport(projectileLocation.subtract(correctionVector));
+        }
 
         // Update the projectile's velocity to be parallel to the plane
         Vector velocity = bukkitEntity.getVelocity();
-        Vector velocityProjection = MathHelper.vectorProjection(directionInfo.planeNormal, velocity);
-        bukkitEntity.setVelocity(velocity.subtract(velocityProjection));
+        // sometimes this would be NaN as well
+        if (! Double.isNaN(velocity.getX())) {
+            Vector velocityProjection = MathHelper.vectorProjection(directionInfo.planeNormal, velocity);
+            bukkitEntity.setVelocity(velocity.subtract(velocityProjection));
+        }
 
         // Reset the impulse index
         this.impulse_index = RANDOMIZED_IMPULSE_TICK_INTERVAL;

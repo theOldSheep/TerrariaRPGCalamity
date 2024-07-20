@@ -53,6 +53,9 @@ public class CryogenShield extends EntitySlime {
         // basic characteristics
         setCustomName("冰川护盾");
         setCustomNameVisible(true);
+        setNoGravity(true);
+        persistent = true;
+        noclip = true;
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);

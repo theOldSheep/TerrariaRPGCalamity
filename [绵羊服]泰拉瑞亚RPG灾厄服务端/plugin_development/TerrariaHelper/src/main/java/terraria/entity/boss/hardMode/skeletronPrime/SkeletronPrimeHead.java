@@ -183,7 +183,6 @@ public class SkeletronPrimeHead extends EntitySlime {
                         if (healthRatio < 0.5 && indexAI % 10 == 0) {
                             shootLaser();
                         }
-                        // return to hand sweeping phase
                         if (indexAI >= 59) {
                             switchPhase(healthRatio);
                         }
@@ -281,13 +280,13 @@ public class SkeletronPrimeHead extends EntitySlime {
             shootInfoSkull = new EntityHelper.ProjectileShootInfo(
                     bukkitEntity, new Vector(), attrMapSkull, EntityHelper.DamageType.MAGIC, "");
             shootInfoSkull.projectileName = "诅咒头";
-            shootInfoSkull.properties.put("autoTrace", true);
-            shootInfoSkull.properties.put("autoTraceMethod", 2);
-            shootInfoSkull.properties.put("autoTraceRadius", 24d);
-            shootInfoSkull.properties.put("autoTraceSharpTurning", false);
-            shootInfoSkull.properties.put("autoTraceAbility", 0.5);
-            shootInfoSkull.properties.put("noAutoTraceTicks", 10);
-            shootInfoSkull.properties.put("maxAutoTraceTicks", 60);
+            shootInfoSkull.properties.put("homing", true);
+            shootInfoSkull.properties.put("homingMethod", 2);
+            shootInfoSkull.properties.put("homingRadius", 24d);
+            shootInfoSkull.properties.put("homingSharpTurning", false);
+            shootInfoSkull.properties.put("homingAbility", 0.5);
+            shootInfoSkull.properties.put("noHomingTicks", 10);
+            shootInfoSkull.properties.put("maxHomingTicks", 60);
             shootInfoSkull.properties.put("liveTime", 80);
             shootInfoSkull.properties.put("gravity", 0d);
             shootInfoSkull.properties.put("blockHitAction", "thru");
@@ -296,13 +295,13 @@ public class SkeletronPrimeHead extends EntitySlime {
             shootInfoRocket = new EntityHelper.ProjectileShootInfo(
                     bukkitEntity, new Vector(), attrMapRocket, EntityHelper.DamageType.ROCKET, "");
             shootInfoRocket.projectileName = "红烟花火箭";
-            shootInfoRocket.properties.put("autoTrace", true);
-            shootInfoRocket.properties.put("autoTraceMethod", 2);
-            shootInfoRocket.properties.put("autoTraceRadius", 32d);
-            shootInfoRocket.properties.put("autoTraceSharpTurning", false);
-            shootInfoRocket.properties.put("autoTraceAbility", 0.35);
-            shootInfoRocket.properties.put("noAutoTraceTicks", 10);
-            shootInfoRocket.properties.put("maxAutoTraceTicks", 40);
+            shootInfoRocket.properties.put("homing", true);
+            shootInfoRocket.properties.put("homingMethod", 2);
+            shootInfoRocket.properties.put("homingRadius", 32d);
+            shootInfoRocket.properties.put("homingSharpTurning", false);
+            shootInfoRocket.properties.put("homingAbility", 0.35);
+            shootInfoRocket.properties.put("noHomingTicks", 10);
+            shootInfoRocket.properties.put("maxHomingTicks", 40);
             shootInfoRocket.properties.put("liveTime", 80);
             shootInfoRocket.properties.put("gravity", 0d);
             shootInfoRocket.properties.put("blockHitAction", "thru");

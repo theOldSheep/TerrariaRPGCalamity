@@ -1,4 +1,4 @@
-package terraria.entity.boss.preHardMode;
+package terraria.entity.boss;
 
 import org.bukkit.entity.Projectile;
 
@@ -8,6 +8,9 @@ import java.util.HashSet;
 public class BossProjectilesManager {
     HashSet<Projectile> projectiles = new HashSet<>();
 
+    public void handleProjectile(Projectile projectile) {
+        projectiles.add(projectile);
+    }
     public void dropOutdated() {
         ArrayList<Projectile> toDrop = new ArrayList<>();
         for (Projectile proj : projectiles) {

@@ -95,7 +95,7 @@ public class Spazmatism extends EntitySlime {
             }
         }
         // phase change
-        double healthRatio = getHealth() / getMaxHealth();
+            double healthRatio = getHealth() / getMaxHealth();
         switch (phaseAI) {
             case 1:
                 if (healthRatio < 0.7) changePhase();
@@ -170,7 +170,7 @@ public class Spazmatism extends EntitySlime {
                 }
                 break;
             }
-            // phase 3: flamethrower, homing flame, 4 long dash
+            // phase 3: flamethrower, homing flame, 3 long dash
             case 3: {
                 // follow and shoot flame
                 if (indexAI < 40) {
@@ -351,13 +351,13 @@ public class Spazmatism extends EntitySlime {
             shootInfoHomingFlame.properties.put("blockHitAction", "thru");
             shootInfoCursedFlame.properties.put("trailColor", "160|255|160");
             shootInfoCursedFlame.properties.put("trailLingerTime", 2);
-            shootInfoHomingFlame.properties.put("autoTrace", true);
-            shootInfoHomingFlame.properties.put("autoTraceMethod", 2);
-            shootInfoHomingFlame.properties.put("autoTraceRadius", 32d);
-            shootInfoHomingFlame.properties.put("autoTraceSharpTurning", false);
-            shootInfoHomingFlame.properties.put("autoTraceAbility", 0.5);
-            shootInfoHomingFlame.properties.put("noAutoTraceTicks", 15);
-            shootInfoHomingFlame.properties.put("maxAutoTraceTicks", 30);
+            shootInfoHomingFlame.properties.put("homing", true);
+            shootInfoHomingFlame.properties.put("homingMethod", 2);
+            shootInfoHomingFlame.properties.put("homingRadius", 32d);
+            shootInfoHomingFlame.properties.put("homingSharpTurning", false);
+            shootInfoHomingFlame.properties.put("homingAbility", 0.5);
+            shootInfoHomingFlame.properties.put("noHomingTicks", 15);
+            shootInfoHomingFlame.properties.put("maxHomingTicks", 30);
         }
     }
 

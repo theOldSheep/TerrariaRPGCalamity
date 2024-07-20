@@ -92,6 +92,7 @@ terraria\util\YmlHelper$YmlSection.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticLightningOrb.class
 terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitasBrother.class
 terraria\entity\projectile\RotatingRingProjectile$RingProperties.class
+terraria\entity\boss\BossProjectilesManager.class
 terraria\entity\boss\preHardMode\skeletron\SkeletronHead.class
 terraria\entity\boss\event\pumpking\PumpkingScythe.class
 terraria\util\ItemUseHelper.class

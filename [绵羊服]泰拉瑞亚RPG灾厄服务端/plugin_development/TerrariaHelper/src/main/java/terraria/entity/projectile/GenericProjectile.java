@@ -211,12 +211,14 @@ public class GenericProjectile extends EntityPotion {
         if (spawnSound.length() > 0) {
             bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), spawnSound, org.bukkit.SoundCategory.NEUTRAL, (float) spawnSoundVolume, (float) spawnSoundPitch);
         }
-        // schedule timeout removal
-        Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), () -> {
-            // important: do not remove again if already destroyed. This would trigger on-death effects twice.
-            if (this.isAlive())
-                this.die();
-        }, liveTime);
+        // schedule timeout removal the next tick to serve later liveTime modifications.
+        // NOTE: this is a plan B of projectile removal; the main removal mechanism is still in ticking function.
+        Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), () ->
+                Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), () -> {
+                    // important: do not remove again if already destroyed. This would trigger on-death effects twice.
+                    if (this.isAlive())
+                        this.die();
+        }, liveTime), 1);
     }
 
     // Note: -1e5 is the threshold to be even considered
@@ -1128,6 +1130,8 @@ public class GenericProjectile extends EntityPotion {
             impulse_index = 0;
         }
 
+        // time out removal
+        if (this.ticksLived >= liveTime) die();
         // timing
         this.world.methodProfiler.b();
     }

@@ -55,7 +55,7 @@ public class SkeletronPrimeHand extends EntitySlime {
         }
         else {
             for (Vector velocity : MathHelper.getCircularProjectileDirections(
-                    5, 2, 22.5, target, shootInfoRocket.shootLoc, rocketSpeed)) {
+                    3, 2, 45, target, shootInfoRocket.shootLoc, rocketSpeed)) {
                 shootInfoRocket.velocity = velocity;
                 EntityHelper.spawnProjectile(shootInfoRocket);
             }
@@ -259,14 +259,14 @@ public class SkeletronPrimeHand extends EntitySlime {
             shootInfoLaser.properties.put("liveTime", 40);
             shootInfoRocket = new EntityHelper.ProjectileShootInfo(
                     bukkitEntity, new Vector(), SkeletronPrimeHead.attrMapRocket, EntityHelper.DamageType.ROCKET, "红烟花火箭");
-            shootInfoRocket.properties.put("autoTrace", true);
-            shootInfoRocket.properties.put("autoTraceMethod", 2);
-            shootInfoRocket.properties.put("autoTraceRadius", 64d);
-            shootInfoRocket.properties.put("autoTraceSharpTurning", false);
-            shootInfoRocket.properties.put("autoTraceAbility", 0.35d);
-            shootInfoRocket.properties.put("noAutoTraceTicks", 10);
-            shootInfoRocket.properties.put("maxAutoTraceTicks", 15);
-            shootInfoRocket.properties.put("autoTraceEndSpeedMultiplier", 5d);
+            shootInfoRocket.properties.put("homing", true);
+            shootInfoRocket.properties.put("homingMethod", 2);
+            shootInfoRocket.properties.put("homingRadius", 128d);
+            shootInfoRocket.properties.put("homingSharpTurning", false);
+            shootInfoRocket.properties.put("homingAbility", 0.35d);
+            shootInfoRocket.properties.put("noHomingTicks", 10);
+            shootInfoRocket.properties.put("maxHomingTicks", 15);
+            shootInfoRocket.properties.put("homingEndSpeedMultiplier", 5d);
             shootInfoRocket.properties.put("liveTime", 22);
             shootInfoRocket.properties.put("gravity", 0d);
         }

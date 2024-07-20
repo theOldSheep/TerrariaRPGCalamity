@@ -2,6 +2,7 @@ package terraria.entity.boss.hardMode.brimstoneElemental;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -71,7 +72,7 @@ public class BrimstoneElemental extends EntitySlime {
     private void shootProjectile(int type) {
         switch (type) {
             case 1: {
-                double shootSpeed = phaseAI == 2 ? 1.75 : 1.25;
+                double shootSpeed = phaseAI == 2 ? 1.4 : 1.25;
                 psiDart.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
                 for (Vector direction : MathHelper.getCircularProjectileDirections(
                         9, 4, 90, target, psiDart.shootLoc, shootSpeed)) {
@@ -82,7 +83,7 @@ public class BrimstoneElemental extends EntitySlime {
             }
             case 2: {
                 psiFireball.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-                psiFireball.velocity = MathHelper.getDirection(psiFireball.shootLoc, target.getEyeLocation(), 2);
+                psiFireball.velocity = MathHelper.getDirection(psiFireball.shootLoc, target.getEyeLocation(), 1.6);
                 EntityHelper.spawnProjectile(psiFireball);
                 break;
             }
@@ -223,8 +224,8 @@ public class BrimstoneElemental extends EntitySlime {
                         velocity.multiply(0.2);
                         bukkitEntity.setVelocity(velocity);
                         // ray
-                        int cycleTime = 50, cycleAmount = indexAI / cycleTime, cycleIndex = indexAI % cycleTime;
-                        if (cycleAmount < 5) {
+                        int cycleTime = 40, cycleAmount = indexAI / cycleTime, cycleIndex = indexAI % cycleTime;
+                        if (cycleAmount < 3) {
                             if (cycleIndex <= 30) {
                                 // update aimed location
                                 if (cycleIndex <= 20)
@@ -237,6 +238,7 @@ public class BrimstoneElemental extends EntitySlime {
                                     GenericHelper.handleStrikeLine(bukkitEntity, shootLoc,
                                             MathHelper.getVectorYaw(direction), MathHelper.getVectorPitch(direction), 48, 0.5,
                                             "", "", new ArrayList<>(), attrMapBrimstoneRay, rayOption);
+                                    bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 3f, 1f);
                                 }
                                 // hint targeted location
                                 else {

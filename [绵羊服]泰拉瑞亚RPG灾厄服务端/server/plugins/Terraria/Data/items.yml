@@ -6587,6 +6587,7 @@ Drew之翼:
   item: BOW
   lore:
   - §r发射10支高速箭
+  - §r“好劲啊！”
   attributes:
     damage: 56
     damageType: Arrow

@@ -57,13 +57,13 @@ public class SkeletronHead extends EntitySlime {
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                 bukkitEntity, velocity, skull_attrMap, EntityHelper.DamageType.MAGIC, "--");
         shootInfo.projectileName = "诅咒头";
-        shootInfo.properties.put("autoTrace", true);
-        shootInfo.properties.put("autoTraceMethod", 2);
-        shootInfo.properties.put("autoTraceRadius", 24d);
-        shootInfo.properties.put("autoTraceSharpTurning", false);
-        shootInfo.properties.put("autoTraceAbility", 0.5);
-        shootInfo.properties.put("noAutoTraceTicks", 10);
-        shootInfo.properties.put("maxAutoTraceTicks", 40);
+        shootInfo.properties.put("homing", true);
+        shootInfo.properties.put("homingMethod", 2);
+        shootInfo.properties.put("homingRadius", 24d);
+        shootInfo.properties.put("homingSharpTurning", false);
+        shootInfo.properties.put("homingAbility", 0.5);
+        shootInfo.properties.put("noHomingTicks", 10);
+        shootInfo.properties.put("maxHomingTicks", 40);
         shootInfo.properties.put("liveTime", 80);
         shootInfo.properties.put("gravity", 0d);
         shootInfo.properties.put("blockHitAction", "thru");
@@ -75,7 +75,7 @@ public class SkeletronHead extends EntitySlime {
                 bukkitEntity, new Vector(), skull_attrMap, EntityHelper.DamageType.MAGIC, "--");
         shootInfo.projectileName = "骷髅头";
         shootInfo.properties.put("gravity", 0d);
-        shootInfo.properties.put("autoTrace", false);
+        shootInfo.properties.put("homing", false);
         shootInfo.properties.put("trailColor", null);
         shootInfo.properties.put("blockHitAction", "thru");
         for (Vector velocity : MathHelper.getCircularProjectileDirections(5, 4, 90, target, shootInfo.shootLoc, 1.5)) {

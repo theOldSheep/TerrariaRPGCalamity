@@ -43,7 +43,7 @@ public class Anahita extends EntityZombieHusk {
     static HashMap<String, Double> attrMapWaterSpear, attrMapFrostMist, attrMapTrebleClef, attrMapBubble;
     static final double SPEED_WATER_SPEAR = 1.5, SPEED_FROST_MIST = 0.9, SPEED_TREBLE_CLEF = 1.25, SPEED_BUBBLE = 1,
             SPEED_USUAL = 2.5, SPEED_DASH = 3;
-    static final int DASH_DURATION = 40;
+    static final int DASH_DURATION = 20;
     EntityHelper.ProjectileShootInfo shootInfoWaterSpear, shootInfoFrostMist, shootInfoTrebleClef, shootInfoBubble;
     static {
         attrMapWaterSpear = new HashMap<>();
@@ -84,6 +84,17 @@ public class Anahita extends EntityZombieHusk {
             addScoreboardTag("noDamage");
         else
             removeScoreboardTag("noDamage");
+        // bossbar color to hint projectile attack
+        switch (phaseAI) {
+            case FROST_MIST:
+            case TREBLE_CLEF:
+            case WATER_SPEAR:
+                bossbar.color = BossBattle.BarColor.BLUE;
+                break;
+            default:
+                bossbar.color = BossBattle.BarColor.GREEN;
+        }
+        bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
         // deal extra contact damage when dashing
         if (lastPhase == AIPhase.DASH)
             EntityHelper.tweakAttribute(attrMap, "damageMulti", "0.5", false);
@@ -143,7 +154,7 @@ public class Anahita extends EntityZombieHusk {
             Location targetLoc = null;
             switch (phaseAI) {
                 case DASH: {
-                    if (indexAI % DASH_DURATION < 10) {
+                    if (indexAI % DASH_DURATION < DASH_DURATION / 4) {
                         targetLoc = bukkitEntity.getLocation().add(0, 1, 0);
                     }
                     break;
@@ -190,7 +201,7 @@ public class Anahita extends EntityZombieHusk {
             case FROST_MIST:
             case TREBLE_CLEF:
             case WATER_SPEAR: {
-                if (indexAI == 0)
+                if (indexAI == 25)
                     shootProjectiles();
                 if (indexAI >= 60)
                     changePhase();

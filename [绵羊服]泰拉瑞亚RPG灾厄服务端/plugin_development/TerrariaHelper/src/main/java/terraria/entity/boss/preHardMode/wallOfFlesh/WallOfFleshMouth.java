@@ -51,11 +51,11 @@ public class WallOfFleshMouth extends EntitySlime {
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                 bukkitEntity, velocity, demon_scythe_attrMap, "--");
         shootInfo.projectileName = "恶魔之镰";
-        shootInfo.properties.put("autoTrace", true);
-        shootInfo.properties.put("autoTraceMethod", 2);
-        shootInfo.properties.put("autoTraceRadius", 24d);
-        shootInfo.properties.put("autoTraceSharpTurning", false);
-        shootInfo.properties.put("autoTraceAbility", 0.075);
+        shootInfo.properties.put("homing", true);
+        shootInfo.properties.put("homingMethod", 2);
+        shootInfo.properties.put("homingRadius", 24d);
+        shootInfo.properties.put("homingSharpTurning", false);
+        shootInfo.properties.put("homingAbility", 0.075);
         shootInfo.properties.put("liveTime", 100);
         shootInfo.properties.put("gravity", 0d);
         shootInfo.properties.put("projectileSize", 0.25);
@@ -175,9 +175,9 @@ public class WallOfFleshMouth extends EntitySlime {
                             continue;
                         EntityHelper.applyEffect(ply, "恐惧", 1200);
                         // enrage?
-                        if (targetMap.containsKey(ply) && distSqr > ENRAGE_DIST_SQR) {
+                        if (targetMap.containsKey(ply.getUniqueId()) && distSqr > ENRAGE_DIST_SQR) {
                             toggleEnraged(true);
-                            enragedCounter = 25;
+                            enragedCounter = 20;
                         }
                         // behind wall of flesh?
                         if (horDir.dot(horizontalMoveDirection) < 0) {

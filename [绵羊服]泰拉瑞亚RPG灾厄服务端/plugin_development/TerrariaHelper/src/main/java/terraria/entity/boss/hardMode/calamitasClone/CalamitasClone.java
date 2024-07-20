@@ -12,6 +12,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
+import terraria.entity.boss.BossProjectilesManager;
 import terraria.entity.projectile.BulletHellProjectile;
 import terraria.util.MathHelper;
 import terraria.util.*;
@@ -48,6 +49,7 @@ public class CalamitasClone extends EntitySlime {
         attrMapHellFireball.put("damage", 468d);
         attrMapHellFireball.put("knockback", 2d);
     }
+    BossProjectilesManager projectilesManager = new BossProjectilesManager();
     public EntityHelper.ProjectileShootInfo psiFireBlast, psiDart, psiFireball, psiHellBlast;
     Vector dashVelocity = new Vector();
     boolean brothersAlive = false;
@@ -62,6 +64,7 @@ public class CalamitasClone extends EntitySlime {
         Bukkit.broadcastMessage(BULLET_HELL_WARNING);
         bulletHellDir = new BulletHellProjectile.BulletHellDirectionInfo(target);
         PlayerPOVHelper.setPOVState(target, true);
+        projectilesManager.killAll();
     }
     private void tickBulletHellRotation() {
         if (ticksLived % 25 == 0) {
@@ -88,6 +91,7 @@ public class CalamitasClone extends EntitySlime {
         }
         shootInfo.setLockedTarget(target);
         BulletHellProjectile projectile = new BulletHellProjectile(shootInfo, projectileType, 32, speed, bulletHellDir);
+        projectilesManager.handleProjectile(projectile.bukkitEntity);
         projectile.liveTime = ticksLive;
     }
     private void handleBulletHell() {
@@ -110,19 +114,23 @@ public class CalamitasClone extends EntitySlime {
                 spawnBulletHellProjectile(BulletHellProjectile.ProjectileType.CIRCUMFERENCE, 50, 0.75);
             }
         }
+        // remove bullet hell projectiles
+        else {
+            projectilesManager.killAll();
+        }
     }
     private void shootProjectile(int type) {
         switch (type) {
             case 1: {
                 psiFireball.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
                 psiFireball.velocity = MathHelper.getDirection(psiFireball.shootLoc, target.getEyeLocation(), 2.25);
-                EntityHelper.spawnProjectile(psiFireball);
+                projectilesManager.handleProjectile( EntityHelper.spawnProjectile(psiFireball) );
                 break;
             }
             case 2: {
                 psiHellBlast.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
                 psiHellBlast.velocity = MathHelper.getDirection(psiHellBlast.shootLoc, target.getEyeLocation(), 2);
-                EntityHelper.spawnProjectile(psiHellBlast);
+                projectilesManager.handleProjectile( EntityHelper.spawnProjectile(psiHellBlast) );
                 break;
             }
         }
@@ -159,6 +167,9 @@ public class CalamitasClone extends EntitySlime {
                     addScoreboardTag("noDamage");
                 else
                     removeScoreboardTag("noDamage");
+                // occasionally manage the projectiles
+                if (indexAI % 20 == 0)
+                    projectilesManager.dropOutdated();
                 // bullet hell
                 if ( duringBulletHell ) {
                     // spawn and handle bullet hell projectiles
