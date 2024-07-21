@@ -106,14 +106,15 @@
   rarity: 1
 铁轨:
   item: RAILS
+  worth: 1000
   rarity: 0
 充能铁轨:
   item: POWERED_RAIL
-  worth: 20000
+  worth: 2000
   rarity: 0
 拉杆:
   item: LEVER
-  worth: 10000
+  worth: 2500
   rarity: 0
 床:
   item: BED
@@ -13102,53 +13103,6 @@ Dodu的手炮:
     speedMulti: 0.08
   worth: 4500000
   rarity: 8
-甲虫头盔:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 46
-    damageMeleeMulti: 0.06
-    mobLimit: 2
-    mobSpawnRateMulti: 0.2
-  worth: 6000000
-  rarity: 8
-甲虫铠甲:
-  item: DIAMOND_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 40
-    damageMeleeMulti: 0.08
-    crit: 8
-    speedMulti: 0.06
-    useSpeedMeleeMulti: 0.06
-  worth: 4800000
-  rarity: 8
-甲虫壳:
-  item: DIAMOND_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 64
-    damageMeleeMulti: 0.05
-    crit: 5
-    mobLimit: 2
-    mobSpawnRateMulti: 0.2
-  worth: 4800000
-  rarity: 8
-甲虫护腿:
-  item: DIAMOND_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 36
-    speedMulti: 0.06
-    mobLimit: 2
-    mobSpawnRateMulti: 0.2
-    useSpeedMeleeMulti: 0.06
-  worth: 3600000
-  rarity: 8
 蘑菇矿头饰:
   item: DIAMOND_HELMET
   lore:
@@ -13230,6 +13184,53 @@ Dodu的手炮:
     damageSummonMulti: 0.11
     speedMulti: 0.2
   worth: 1000000
+  rarity: 8
+甲虫头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 46
+    damageMeleeMulti: 0.06
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
+  worth: 6000000
+  rarity: 8
+甲虫铠甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 40
+    damageMeleeMulti: 0.08
+    crit: 8
+    speedMulti: 0.06
+    useSpeedMeleeMulti: 0.06
+  worth: 4800000
+  rarity: 8
+甲虫壳:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 64
+    damageMeleeMulti: 0.05
+    crit: 5
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
+  worth: 4800000
+  rarity: 8
+甲虫护腿:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 36
+    speedMulti: 0.06
+    mobLimit: 2
+    mobSpawnRateMulti: 0.2
+    useSpeedMeleeMulti: 0.06
+  worth: 3600000
   rarity: 8
 渊泉战盔:
   item: DIAMOND_HELMET

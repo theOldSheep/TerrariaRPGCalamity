@@ -54,6 +54,7 @@ public class RavagerClaw extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
                 // velocity and location
                 Location idleLocation;
                 {

@@ -39,6 +39,7 @@ public class PlanteraTentacle extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
                 bukkitEntity.setVelocity(MathHelper.getDirection(
                         bukkitEntity.getLocation(),
                         owner.getBukkitEntity().getLocation().add(offsetDirection),

@@ -44,7 +44,7 @@ public class DarkEnergy extends EntitySlime {
             }
             // if target is valid, attack
             else {
-                // TODO
+                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
 
                 indexAI++;
                 bukkitEntity.setVelocity(velocity);

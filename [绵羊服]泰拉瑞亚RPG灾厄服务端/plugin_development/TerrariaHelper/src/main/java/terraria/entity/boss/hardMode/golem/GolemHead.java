@@ -97,6 +97,7 @@ public class GolemHead extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
                 // velocity and location
                 if (owner.phaseAI < 3) {
                     bukkitEntity.setVelocity(owner.getBukkitEntity().getVelocity());

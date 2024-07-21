@@ -47,7 +47,7 @@ public class GuardianDefender extends EntitySlime {
     GuardianCommander commander;
     GuardianAttacker attacker;
     EntityHelper.ProjectileShootInfo shootInfoSpear, shootInfoBlast;
-    EntityHelper.AimHelperOptions aimHelperSpear, aimHelperBlast, aimHelperAdvancedDash;
+    EntityHelper.AimHelperOptions aimHelperSpear, aimHelperBlast, aimHelperDash;
 
     protected AttackMode currentAttackMode = AttackMode.PROJECTILE;
     int indexAI = 0;
@@ -62,6 +62,7 @@ public class GuardianDefender extends EntitySlime {
         {
             // update target
             target = commander.target;
+            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {
@@ -139,7 +140,7 @@ public class GuardianDefender extends EntitySlime {
     private void handleDashAttack() {
         // Dash towards the player
         if (indexAI % DASH_DURATION_SINGLE == 0) {
-            Location targetLoc = secondPhase ? EntityHelper.helperAimEntity(bukkitEntity.getLocation(), target, aimHelperAdvancedDash) : target.getEyeLocation();
+            Location targetLoc = EntityHelper.helperAimEntity(bukkitEntity.getLocation(), target, aimHelperDash);
             velocity = MathHelper.getDirection( ((LivingEntity) bukkitEntity).getEyeLocation(), targetLoc, DASH_SPEED, false);
             bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
         }
@@ -221,7 +222,7 @@ public class GuardianDefender extends EntitySlime {
                     .setAccelerationMode(true);
             aimHelperBlast = new EntityHelper.AimHelperOptions()
                     .setProjectileSpeed(BLAST_SPEED);
-            aimHelperAdvancedDash = new EntityHelper.AimHelperOptions()
+            aimHelperDash = new EntityHelper.AimHelperOptions()
                     .setProjectileSpeed(DASH_SPEED)
                     .setAccelerationMode(true);
         }

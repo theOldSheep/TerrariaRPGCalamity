@@ -329,6 +329,7 @@ public class Artemis extends EntitySlime {
         {
             // update target
             target = owner.target;
+            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
 
             if (target != null) {
                 // movement

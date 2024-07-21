@@ -131,8 +131,10 @@ public class PhantomDragon extends EntitySlime {
         // AI
         {
             // update target
-            if (owner.isAlive())
+            if (owner.isAlive()) {
                 target = owner.target;
+                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            }
             else
                 target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
                         IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());

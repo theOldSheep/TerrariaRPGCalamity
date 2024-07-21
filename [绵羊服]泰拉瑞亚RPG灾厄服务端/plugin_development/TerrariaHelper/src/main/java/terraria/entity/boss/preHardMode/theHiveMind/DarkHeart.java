@@ -39,6 +39,7 @@ public class DarkHeart extends EntitySlime {
                 die();
                 return;
             }
+            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
             // if target is valid, attack
             if (ticksLived % 3 == 0) {
                 // move towards enemy

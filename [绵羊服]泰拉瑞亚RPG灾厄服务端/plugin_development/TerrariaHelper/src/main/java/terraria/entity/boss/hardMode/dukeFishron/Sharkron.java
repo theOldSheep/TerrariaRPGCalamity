@@ -86,8 +86,7 @@ public class Sharkron extends EntitySlime {
         this.owner = owner;
         setCustomName("龙卷鲨");
         setCustomNameVisible(true);
-        bukkitEntity.addScoreboardTag("isMonster");
-        bukkitEntity.addScoreboardTag("isBOSS");
+        // do not add isMonster; this would cause the player to aim at those
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);

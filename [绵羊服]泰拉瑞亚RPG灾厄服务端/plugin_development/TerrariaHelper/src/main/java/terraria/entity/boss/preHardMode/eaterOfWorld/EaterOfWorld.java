@@ -156,12 +156,14 @@ public class EaterOfWorld extends EntitySlime {
         {
             // update target
             int firstIdx;
-            for (firstIdx = 0; bossParts.get(firstIdx).isDead(); firstIdx ++);
+            for (firstIdx = 0; bossParts.get(firstIdx).isDead(); firstIdx++) ;
             if (index == firstIdx)
                 target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
                         IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
-            else
-                target = ((EaterOfWorld) ((CraftEntity) bossParts.get(firstIdx) ).getHandle()).target;
+            else {
+                target = ((EaterOfWorld) ((CraftEntity) bossParts.get(firstIdx)).getHandle()).target;
+                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            }
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity segment : bossParts) {

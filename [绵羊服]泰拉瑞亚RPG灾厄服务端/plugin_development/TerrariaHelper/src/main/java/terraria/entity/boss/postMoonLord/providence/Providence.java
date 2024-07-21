@@ -13,6 +13,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
+import terraria.entity.boss.BossProjectilesManager;
 import terraria.entity.boss.postMoonLord.profanedGuardians.GuardianCommander;
 import terraria.util.*;
 import terraria.util.MathHelper;
@@ -40,7 +41,7 @@ public class Providence extends EntitySlime {
     static final double BOMB_SPEED = 1.1, BOMB_SPEED_EXHAUST = 1.0, BLAST_SPEED = 0.9;
     static final double PHASE_2_DECELERATION = 0.9; // Rapid slow down
     // phase 3
-    static final double[] STAR_INTERVAL_DEGREE = {10, 10, 10}, STAR_SPREAD_ANGLE = {41, 41, 41}, STAR_SPEED = {2.0, 2.5, 3.0},
+    static final double[] STAR_INTERVAL_DEGREE = {10, 10, 10}, STAR_SPREAD_ANGLE = {41, 31, 41}, STAR_SPEED = {2.0, 2.5, 3.0},
             STAR_YAW_OFFSETS = {15, 0, -15};
     static final int[] PROJECTILE_RAIN_FIRE_TIME = {0, 8, 16};
     static final int PROJECTILE_RAIN_INTERVAL = 24;
@@ -93,6 +94,7 @@ public class Providence extends EntitySlime {
     int indexAI = -100, AIPhase = 0;
     Vector velocity = new Vector();
     GuardianCommander commanderMinion = null;
+    BossProjectilesManager projectilesManager = new BossProjectilesManager();
     HashSet<Entity> laserDamaged = new HashSet<>();
     int commanderState = 0; // 0: not spawned, 1: spawned, 2: defeated
     static final int NUM_PHASES = 4;
@@ -175,7 +177,7 @@ public class Providence extends EntitySlime {
             projectileType.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             projectileType.velocity = MathHelper.getDirection( projectileType.shootLoc,
                     EntityHelper.helperAimEntity(projectileType.shootLoc, this.target, aimHelper), projectileSpeed, false );
-            EntityHelper.spawnProjectile(projectileType);
+            projectilesManager.handleProjectile( EntityHelper.spawnProjectile(projectileType) );
         }
         // Do not transition out of this phase if guardians are alive!
         if (indexAI >= phaseDuration && commanderState != 1) {
@@ -314,6 +316,9 @@ public class Providence extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                // occasionally manage the projectiles
+                if (indexAI % 20 == 0)
+                    projectilesManager.dropOutdated();
                 // increase player aggro duration
                 targetMap.get(target.getUniqueId()).addAggressionTick();
 
@@ -379,10 +384,14 @@ public class Providence extends EntitySlime {
             case 2:
                 tweakDamageReduction(true);
                 bossbar.color = BossBattle.BarColor.WHITE;
+                // kill all existing projectiles
+                projectilesManager.killAll();
                 break;
             // Laser
             case 3:
                 bossbar.color = BossBattle.BarColor.YELLOW;
+                // kill all existing projectiles
+                projectilesManager.killAll();
         }
         bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
         indexAI = -1;

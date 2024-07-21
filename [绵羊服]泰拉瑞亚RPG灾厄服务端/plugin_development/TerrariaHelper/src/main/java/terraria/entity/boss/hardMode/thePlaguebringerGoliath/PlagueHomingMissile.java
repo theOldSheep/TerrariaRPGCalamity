@@ -47,6 +47,7 @@ public class PlagueHomingMissile extends EntitySlime {
                 die();
                 return;
             }
+            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
             // if target is valid, attack
             Location eyeLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             if (ticksLived % 3 == 0) {

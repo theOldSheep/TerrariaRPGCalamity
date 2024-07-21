@@ -73,6 +73,7 @@ public class ThePlaguebringerGoliath extends EntitySlime {
                 phaseAI = AIPhase.DASH;
                 break;
         }
+        // bar color
         switch (phaseAI) {
             case DASH:
                 bossbar.color = BossBattle.BarColor.RED;

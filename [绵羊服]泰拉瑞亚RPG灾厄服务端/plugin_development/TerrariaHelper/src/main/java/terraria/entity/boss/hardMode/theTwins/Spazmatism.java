@@ -228,6 +228,7 @@ public class Spazmatism extends EntitySlime {
             // update target
             if (twin.isAlive()) {
                 this.target = twin.target;
+                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
             }
             else {
                 target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),

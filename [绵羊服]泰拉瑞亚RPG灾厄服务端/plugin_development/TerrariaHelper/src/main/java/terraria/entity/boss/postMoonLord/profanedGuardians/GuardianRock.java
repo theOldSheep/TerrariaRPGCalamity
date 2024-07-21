@@ -54,6 +54,7 @@ public class GuardianRock extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
                 if (ticksSinceLaunch > 0) { // Launched towards target
                     ticksSinceLaunch++;
                     if (ticksSinceLaunch >= ROCK_LIFETIME) {

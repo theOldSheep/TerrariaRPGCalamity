@@ -289,6 +289,8 @@ public class MoonLord extends EntitySlime {
         // AI
         AI();
         // update facing direction
-        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+        if (target != null) {
+            this.yaw = (float) MathHelper.getVectorYaw(target.getLocation().subtract(bukkitEntity.getLocation()).toVector());
+        }
     }
 }

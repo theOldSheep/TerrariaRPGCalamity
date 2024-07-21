@@ -473,6 +473,10 @@ public class DevourerOfGods extends EntitySlime {
             // following & rotations
             handleFollowAndWormholes();
         }
+        // saving body speed for aim helper
+        else {
+            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+        }
         // update facing direction
         {
             MetadataValue valYaw = EntityHelper.getMetadata(bukkitEntity, "yaw");

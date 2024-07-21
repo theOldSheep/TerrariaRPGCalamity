@@ -55,6 +55,7 @@ public class RavagerHead extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
                 // velocity and location
                 if (!free) {
                     bukkitEntity.setVelocity(owner.getBukkitEntity().getVelocity());

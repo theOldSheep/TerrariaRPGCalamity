@@ -1543,13 +1543,43 @@ ANVIL:
     recipeCategory: ARMOR
   '180':
     requireLevel: 2
+    resultItem: 蘑菇矿头饰
+    requireItem:
+    - 蘑菇锭:12
+    recipeCategory: ARMOR
+  '181':
+    requireLevel: 2
+    resultItem: 蘑菇矿头盔
+    requireItem:
+    - 蘑菇锭:12
+    recipeCategory: ARMOR
+  '182':
+    requireLevel: 2
+    resultItem: 蘑菇矿面具
+    requireItem:
+    - 蘑菇锭:12
+    recipeCategory: ARMOR
+  '183':
+    requireLevel: 2
+    resultItem: 蘑菇矿胸甲
+    requireItem:
+    - 蘑菇锭:24
+    recipeCategory: ARMOR
+  '184':
+    requireLevel: 2
+    resultItem: 蘑菇矿护腿
+    requireItem:
+    - 蘑菇锭:18
+    recipeCategory: ARMOR
+  '185':
+    requireLevel: 2
     resultItem: 甲虫头盔
     requireItem:
     - 甲虫外壳:4
     - 海龟壳
     - 叶绿面具
     recipeCategory: ARMOR
-  '181':
+  '186':
     requireLevel: 2
     resultItem: 甲虫铠甲
     requireItem:
@@ -1557,7 +1587,7 @@ ANVIL:
     - 海龟壳
     - 叶绿板甲
     recipeCategory: ARMOR
-  '182':
+  '187':
     requireLevel: 2
     resultItem: 甲虫壳
     requireItem:
@@ -1565,43 +1595,13 @@ ANVIL:
     - 海龟壳
     - 叶绿板甲
     recipeCategory: ARMOR
-  '183':
+  '188':
     requireLevel: 2
     resultItem: 甲虫护腿
     requireItem:
     - 甲虫外壳:6
     - 海龟壳
     - 叶绿护胫
-    recipeCategory: ARMOR
-  '184':
-    requireLevel: 2
-    resultItem: 蘑菇矿头饰
-    requireItem:
-    - 蘑菇锭:12
-    recipeCategory: ARMOR
-  '185':
-    requireLevel: 2
-    resultItem: 蘑菇矿头盔
-    requireItem:
-    - 蘑菇锭:12
-    recipeCategory: ARMOR
-  '186':
-    requireLevel: 2
-    resultItem: 蘑菇矿面具
-    requireItem:
-    - 蘑菇锭:12
-    recipeCategory: ARMOR
-  '187':
-    requireLevel: 2
-    resultItem: 蘑菇矿胸甲
-    requireItem:
-    - 蘑菇锭:24
-    recipeCategory: ARMOR
-  '188':
-    requireLevel: 2
-    resultItem: 蘑菇矿护腿
-    requireItem:
-    - 蘑菇锭:18
     recipeCategory: ARMOR
   '189':
     requireLevel: 2
@@ -2384,7 +2384,7 @@ ANVIL:
     - 熔渣锭:6
     recipeCategory: WEAPON_MELEE
   '294':
-    requireLevel: 2
+    requireLevel: 3
     resultItem: 神谕
     requireItem:
     - 混沌射线

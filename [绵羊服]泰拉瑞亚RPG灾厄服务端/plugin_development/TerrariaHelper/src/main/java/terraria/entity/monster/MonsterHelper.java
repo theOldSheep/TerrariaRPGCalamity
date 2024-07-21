@@ -1900,11 +1900,11 @@ public class MonsterHelper {
                                 case "魔教徒":
                                     for (int i = 0; i < 3; i ++) {
                                         Location targetLoc = monsterBkt.getLocation().add(
-                                                Math.random() * 24 - 12, Math.random() * 24 - 12, Math.random() * 24 - 12);
+                                                Math.random() * 24 - 12, Math.random() * 16 - 4, Math.random() * 24 - 12);
                                         Block blk = targetLoc.getBlock();
                                         if (! blk.getType().isSolid()) {
-                                            while (! (blk.getRelative(0, 1, 0).getType().isSolid() &&
-                                                      blk.getRelative(0, 2, 0).getType().isSolid()) ) {
+                                            while (! (blk.getRelative(0, -1, 0).getType().isSolid() &&
+                                                      blk.getRelative(0, -2, 0).getType().isSolid()) ) {
                                                 blk = blk.getRelative(0, -1, 0);
                                             }
                                             monsterBkt.teleport(blk.getLocation().add(0.5, 1, 0.5));

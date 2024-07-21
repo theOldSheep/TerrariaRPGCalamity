@@ -708,8 +708,8 @@ public class ItemUseHelper {
                                            String weaponType, ItemStack weaponItem, double size,
                                            boolean dirFixed, int interpolateType, int currentIndex, int maxIndex, int swingAmount) {
         if (!PlayerHelper.isProperlyPlaying(ply)) return;
-        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
-        final double plyYaw = plyNMS.yaw, plyPitch = plyNMS.pitch;
+        Vector aimDir = getPlayerMeleeDir(ply, size);
+        final double plyYaw = MathHelper.getVectorYaw(aimDir), plyPitch = MathHelper.getVectorPitch(aimDir);
         if (!dirFixed) {
             // stab
             if (interpolateType == 0) {
@@ -2977,14 +2977,27 @@ public class ItemUseHelper {
         }
     }
     // melee helper functions below
+    protected static Vector getPlayerMeleeDir(Player ply, double size) {
+        EntityHelper.AimHelperOptions rotationAimHelper = new EntityHelper.AimHelperOptions()
+                .setAimMode(true)
+                .setTicksTotal(0);
+        // get targeted location
+        Location targetLoc = getPlayerTargetLoc(ply, size,
+                Setting.getOptionDouble(ply, Setting.Options.AIM_HELPER_RADIUS),
+                0, rotationAimHelper, true);
+        return MathHelper.getDirection(ply.getEyeLocation(), targetLoc, 1);
+    }
     // stab and swing. NOT NECESSARILY MELEE DAMAGE!
     protected static boolean playerUseMelee(Player ply, String itemType, ItemStack weaponItem,
                                           ConfigurationSection weaponSection, HashMap<String, Double> attrMap, int swingAmount, boolean stabOrSwing) {
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
-        double yaw = plyNMS.yaw, pitch = plyNMS.pitch;
         double size = weaponSection.getDouble("size", 3d);
-        Vector lookDir = MathHelper.vectorFromYawPitch_approx(yaw, pitch);
         size *= attrMap.getOrDefault("meleeReachMulti", 1d);
+//        double yaw = plyNMS.yaw, pitch = plyNMS.pitch;
+//        Vector lookDir = MathHelper.vectorFromYawPitch_approx(yaw, pitch);
+        Vector lookDir = getPlayerMeleeDir(ply, size);
+        double yaw = MathHelper.getVectorYaw(lookDir), pitch = MathHelper.getVectorPitch(lookDir);
+
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
         double useTimeMulti = 1 / useSpeed;
         // shoot projectile

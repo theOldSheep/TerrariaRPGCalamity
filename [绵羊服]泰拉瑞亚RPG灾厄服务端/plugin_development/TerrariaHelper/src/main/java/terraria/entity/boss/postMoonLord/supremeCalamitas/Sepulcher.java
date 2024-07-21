@@ -121,8 +121,10 @@ public class Sepulcher extends EntitySlime {
         // AI
         {
             // update target
-            if (owner.isAlive())
+            if (owner.isAlive()) {
                 target = owner.target;
+                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            }
             else
                 target = null;
             // disappear if no target is available

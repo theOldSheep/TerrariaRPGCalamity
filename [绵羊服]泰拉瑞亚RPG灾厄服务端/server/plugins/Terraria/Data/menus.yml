@@ -819,6 +819,36 @@ bosses_hardmode:
             col: 3
             name: §r[信息] 瘟疫使者歌莉娅
             cmd: terrariaMenu bossPBGLAT
+        eol:
+            row: 3
+            col: 4
+            name: §r[信息] 光之女皇
+            cmd: terrariaMenu bossEOL
+        dkfsr:
+            row: 3
+            col: 5
+            name: §r[信息] 猪鲨公爵
+            cmd: terrariaMenu bossDKFSR
+        rvg:
+            row: 3
+            col: 6
+            name: §r[信息] 毁灭魔像
+            cmd: terrariaMenu bossRVG
+        cltst:
+            row: 3
+            col: 7
+            name: §r[信息] 拜月教邪教徒
+            cmd: terrariaMenu bossCLTST
+        asdeus:
+            row: 3
+            col: 8
+            name: §r[信息] 星神游龙
+            cmd: terrariaMenu bossASDEUS
+        mnld:
+            row: 4
+            col: 0
+            name: §r[信息] 月球领主
+            cmd: terrariaMenu bossMNLD
         prev:
             row: 5
             col: 0
@@ -1539,18 +1569,756 @@ bossPBGLAT:
             col: 1
             name: §r[信息] 召唤方式
             lore:
-            - §r秘银砧处制作瘟疫启动装置
+            - §r秘银砧处制作瘟疫起动装置
             - §r在丛林召唤瘟疫使者歌莉娅
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-冲撞
+            lore:
+            - §r向玩家垂直方向对齐
+            - §r随后，在一声吼叫后进行冲锋
+            - §r冲锋五次后进入导弹攻击模式
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-导弹
+            lore:
+            - §r在玩家上方飞行并射出导弹
+            - §r导弹会穿墙和爆炸
+            - §r随后进入召唤攻击模式
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] 攻击方式-召唤
+            lore:
+            - §r移动速度逐渐降低并召唤仆从
+            - §r随后进入核弹攻击模式（第一形态则开始冲撞）
+            - §r仆从均可击碎，会追踪玩家并在靠近时爆炸
+            - §r制导瘟疫弹更快，爆炸半径较小且伤害较低
+            - §r瘟疫之雷速度更慢且仅在第二阶段生成
+        attack4:
+            row: 2
+            col: 4
+            name: §r[信息] 攻击方式-核弹
+            lore:
+            - §r在玩家上方来回飞行
+            - §r向玩家发射六角核弹集束
+            - §r核弹会穿墙和爆炸
+            - §r发射四次后进入冲撞攻击模式
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r击败石巨人后获得锯刃镐可以前往深渊挖掘熔渣锭制作渊泉套装
+            - §r甲虫套装以及世纪之花/灾厄之眼后的套装也可供选择
+            - §r对单和对群的武器建议都要携带；适当地清理仆从可降低BOSS战难度
+            - §r注意在核弹攻击时保持适当距离，距离过远会被爆炸波及
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossEOL:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 光之女皇
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r在神圣之地夜间捕捉七彩草蛉
+            - §r击杀七彩草蛉后召唤光之女皇
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-冲撞
+            lore:
+            - §r传送到玩家周围的随机位置
+            - §r发出叫声并向后蓄力
+            - §r向前冲向玩家并散射出大量追踪水晶矢
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-水晶矢
+            lore:
+            - §r传送到玩家周围的随机位置
+            - §r向玩家发射一些有追踪能力的水晶矢
+            - §r第二阶段新增水晶矢变种攻击，发射角度随机
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] 攻击方式-太阳之舞
+            lore:
+            - §r传送到玩家前方
+            - §r保持垂直方向与玩家平齐；水平方向的距离不会超过16格
+            - §r发射多次顺时针旋转的光之射线
+            - §r光之射线需要短暂的时间成型；成型后会造成接触伤害
+        attack4:
+            row: 2
+            col: 4
+            name: §r[信息] 攻击方式-空灵长枪
+            lore:
+            - §r传送到玩家周围的随机位置
+            - §r朝玩家的移动方向射出空灵长枪弹幕
+            - §r弹幕发射前会有瞄准线帮助玩家判断
+            - §r第二阶段新增空灵长枪变种攻击
+            - §r每次会射出一束长枪弹幕而非一支
+        attack5:
+            row: 2
+            col: 5
+            name: §r[信息] 攻击方式-永恒虹光
+            lore:
+            - §r传送到玩家附近的位置
+            - §r在原地放出大量旋转散开后重新聚拢的虹光弹幕
+            - §r虹光弹幕会在附近存在较长的时间
+        attack6:
+            row: 2
+            col: 6
+            name: §r[信息] 攻击方式-第一阶段
+            lore:
+            - §rBOSS在生命值50%以上时为第一阶段
+            - §r第一阶段的攻击顺序如下：
+            - §r- 水晶矢
+            - §r- 冲撞
+            - §r- 太阳之舞
+            - §r- 冲撞
+            - §r- 永恒虹光
+            - §r- 水晶矢
+            - §r- 冲撞
+            - §r- 空灵长枪
+            - §r- 冲撞
+            - §r- 永恒虹光
+        attack7:
+            row: 2
+            col: 7
+            name: §r[信息] 攻击方式-第二阶段
+            lore:
+            - §r第二阶段的攻击顺序如下：
+            - §r- 空灵长枪变种
+            - §r- 水晶矢
+            - §r- 冲撞
+            - §r- 永恒虹光
+            - §r- 水晶矢
+            - §r- 太阳之舞
+            - §r- 空灵长枪
+            - §r- 冲撞
+            - §r- 水晶矢变种
+        attack8:
+            row: 2
+            col: 8
+            name: §r[信息] BOSS特性-日夜
+            lore:
+            - §r白天召唤的光之女皇会获得双倍的伤害
+            - §r此外，太阳之舞会变成八束而非六束
+            - §r在白天召唤的光之女皇被击败后会掉落泰拉棱镜
+            - §r夜间召唤的光之女皇会在白天脱战，反之亦然
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r花后/灾厄之眼后和石巨人后的护甲都是不错的选择
+            - §r本BOSS战仅有对单输出，请选择适合的武器
+            - §r垂直方向移动可以有效规避大部分弹幕；太阳之舞攻击需要水平移动躲避
+            - §r留意永恒虹光的释放位置
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossDKFSR:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 猪鲨公爵
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r在丛林洞穴捕捉松露虫
+            - §r在海洋使用松露虫钓鱼召唤猪鲨公爵
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-第一阶段
+            lore:
+            - §r- 向玩家预判冲撞五次
+            - §r- 吐出一串追踪的泡泡；泡泡可被击破
+            - §r- 向玩家预判冲撞五次
+            - §r- 喷出三个水螺旋，稍后变成三个水龙卷并向玩家抛射龙卷鲨
+            - §r- 龙卷鲨在接触方块时会死亡
+            - §r在生命值低于70%时进入第二阶段
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-第二阶段
+            lore:
+            - §r- 向玩家冲撞三次；有一半概率直冲，一半概率预判
+            - §r- 喷出一个追踪水螺旋，击中玩家或超时会变成水龙卷
+            - §r- 向玩家冲撞三次；有一半概率直冲，一半概率预判
+            - §r- 围绕玩家转圈并发射大量追踪泡泡
+            - §r在生命值低于40%时进入第三阶段
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] 攻击方式-第三阶段
+            lore:
+            - §r- 隐身，传送到玩家身边并直冲一次
+            - §r- 隐身，传送到玩家身边并直冲两次
+            - §r- 隐身，传送到玩家身边并直冲三次
+            - §r在生命值低于20%时进入第四阶段
+        attack4:
+            row: 2
+            col: 4
+            name: §r[信息] 攻击方式-第四阶段
+            lore:
+            - §r- 在隐身与直冲之间循环
+            - §r- 定时喷出一个追踪水螺旋
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r石巨人/瘟疫使者歌莉娅后护甲均可
+            - §r幽魂套装可以为队友提供续航；单人挑战由于坦度过低并不推荐
+            - §r对单武器与高效清理泡泡的武器均有用武之地
+            - §r留意骗一二阶段的预判冲刺，不要直线走位
+            - §r三四阶段难度相对不高，保持移动即可
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossRVG:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 毁灭魔像
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r秘银砧处制作唤死笛哨
+            - §r随时使用均可召唤毁灭魔像
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-身体
+            lore:
+            - §r- 在任意其他身体部位存活时，身体会跃向玩家
+            - §r- 存活的手部会向玩家出拳，类似于石巨人的攻击方式
+            - §r- 在其他身体部位全部击溃后，身体会飞向玩家上方并下砸
+            - §r- BOSS战全程会周期性召唤四个石元柱（注意观察BOSS血条颜色）
+            - §r- 石元柱会瞄准玩家移动的方向
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-头部
+            lore:
+            - §r- 头部在被击溃前会保持在身体上方，向玩家发射火箭
+            - §r- 火箭会多次冲向玩家并最终爆炸
+            - §r- 头部被击溃后会脱离身体在玩家下方飞行，继续发射火箭
+            - §r- 再次击溃头部即可将其完全摧毁
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r本BOSS的难点主要来源于石元柱
+            - §r躲避石元柱需要轻微变向移动
+            - §r可尝试在BOSS血条变红时按住AS（或只按下A），在变回绿色后按住S
+            - §r在需要冲刺飙车时，只按A键变向后S冲刺会更安全
+            - §r谨慎使用会被石元柱轻易阻挡的武器；对群武器（如利刃台风）在BOSS战前中期更理想
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossCLTST:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 拜月教邪教徒
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r地牢中刷新拜月教教徒
+            - §r击败拜月教教徒即可召唤拜月教邪教徒
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-火光球
+            lore:
+            - §r传送到玩家斜上方
+            - §r向玩家发射数个追踪火光球
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-冰球
+            lore:
+            - §r传送到玩家斜上方
+            - §r向玩家发射两个缓慢追踪的冰球
+            - §r冰球会向玩家射出一条由弹幕组成的圆弧
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] 攻击方式-闪电珠
+            lore:
+            - §r传送到玩家斜上方
+            - §r在头顶召唤一个闪电珠
+            - §r闪电珠会向玩家射出数道闪电
+        attack4:
+            row: 2
+            col: 4
+            name: §r[信息] 攻击方式-远古噩运妖
+            lore:
+            - §r传送到玩家斜上方
+            - §r在玩家附近召唤数个旋转的远古噩运妖
+            - §r不久后，远古噩运妖会分裂成向各个方向发射的预言之末弹幕
+            - §r此攻击拥有超高的伤害
+        attack5:
+            row: 2
+            col: 5
+            name: §r[信息] 攻击方式-召唤仆从
+            lore:
+            - §r传送到玩家斜上方
+            - §r召唤额外两个克隆体
+            - §r克隆体会随BOSS移动；在除召唤外的攻击方式过程中将射出追踪暗影焰
+            - §r若该阶段中BOSS没有受伤，BOSS还会额外召唤一条幻影弓龙
+        attack6:
+            row: 2
+            col: 6
+            name: §r[信息] 攻击方式-远古光明妖
+            lore:
+            - §r仅在生命值低于50%时可以使用
+            - §r传送到玩家斜上方
+            - §r多次发射扇形的远古光明妖弹幕追踪玩家
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r在地牢的最底端有一个最大的房间；地牢BOSS均建议在这里挑战
+            - §r尽量不要长时间靠近天花板，防止BOSS传送到墙里
+            - §r携带准确的单点武器以打断召唤仪式
+            - §r建议携带对群武器处理不慎召唤的幻影弓龙
+            - §r冲刺在BOSS传送后反向使用更易于躲避追踪弹幕
+            - §r可考虑使用镇静药水、禅定药水等方式进一步减少小怪对BOSS战的干扰
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossASDEUS:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 星神游龙
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r星辉瘟疫的擎星者会掉落泰坦之心
+            - §r手持泰坦之心右键星辉瘟疫的祭坛召唤星神游龙
         attack1:
             row: 2
             col: 1
             name: §r[信息] 攻击方式
             lore:
-            - §r
+            - §r向玩家移动并在接近后冲撞
+            - §r身体会发射激光和幻星雷
+            - §r幻星雷会略微追踪玩家并很快停止；消失前会存在较长时间
+            - §r生命值降低到50%时分裂成两条星神游龙独立行动
+            - §r两条龙通常一上一下交错攻击
+            - §rBOSS存活时的极限重力DEBUFF会导致飞行时间减少
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r强烈建议使用拥有足够伤害的对群武器来挑战BOSS
+            - §r尽量将冲刺用于闪避头部撞击，蠕虫敌人的头部会造成极高伤害
+            - §r准备较大的场地用于迂回；避开幻星雷暂未消失的场地
+            - §r可考虑使用镇静药水、禅定药水等方式进一步减少小怪对BOSS战的干扰
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bossMNLD:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 月球领主
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r击溃拜月教邪教徒死后产生的四根天界柱可召唤
+            - §r在远古操纵机中合成天界符亦可召唤
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-眼睛
+            lore:
+            - §r月球领主会缓慢围绕玩家旋转；身体上的眼睛在被重创后会生成克苏鲁真眼幻象
+            - §r所有眼睛都被重创后心脏可以被攻击
+            - §r眼睛有以下攻击方式：
+            - §r- 预判玩家移动并射出2个幻影矢
+            - §r- 射出大量略微追踪的爆炸幻影眼
+            - §r- 抛出一串幻影球并一起预判射向玩家（仅手部）
+            - §r- 扫射一束致命激光（仅头部）
         attack2:
             row: 2
             col: 2
-            name: §r[信息] BOSS仆从
+            name: §r[信息] 攻击方式-克苏鲁真眼
+            lore:
+            - §r所有克苏鲁真眼会同步使用以下三种攻击模式：
+            - §r- 幻影矢攻击
+            - §r- 幻影眼攻击
+            - §r- 幻影球攻击
+            - §r- 弱化版致命激光攻击
+            - §r根据攻击模式，BOSS血条会更换颜色
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r星神游龙后的星幻套装可以提供出色的攻防属性以及一些移速
+            - §r尽量使用带有自动追踪能力的武器
+            - §r注意通过垂直/水平变向来躲避预判弹道
+            - §r使用冲刺和快速垂直移动躲避致命激光
+            - §r仔细观察BOSS血条颜色来判断克苏鲁真眼的攻击类型
+            - §r四柱碎片可以参与制作更高级的治疗药水
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+bosses_post_moonlord:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[菜单] BOSS图鉴（月球领主后）
+            lore:
+            - §r以下BOSS排序以建议挑战顺序为准；从左到右，随后从上到下
+            - §rBOSS战开始时会记录附近的挑战者
+            - §r击败BOSS后，造成足够高伤害或吸引足够久仇恨的挑战者均视为挑战成功
+        dgfl:
+            row: 2
+            col: 0
+            name: §r[信息] 痴愚金龙
+            cmd: terrariaMenu bossDGFL
+        pfgdn:
+            row: 2
+            col: 1
+            name: §r[信息] 亵渎守卫
+            cmd: terrariaMenu bossPFGDN
+        pfgds:
+            row: 2
+            col: 2
+            name: §r[信息] 亵渎天神
+            cmd: terrariaMenu bossPFGDS
+        stwv:
+            row: 2
+            col: 3
+            name: §r[信息] 风暴编织者
+            cmd: terrariaMenu bossSTWV
+        cslsv:
+            row: 2
+            col: 4
+            name: §r[信息] 无尽虚空
+            cmd: terrariaMenu bossCSLSV
+        sgns:
+            row: 2
+            col: 5
+            name: §r[信息] 神之使徒西格纳斯
+            cmd: terrariaMenu bossSGNS
+        ptgst:
+            row: 2
+            col: 6
+            name: §r[信息] 噬魂幽花
+            cmd: terrariaMenu bossPTGST
+        tod:
+            row: 2
+            col: 7
+            name: §r[信息] 硫海遗爵
+            cmd: terrariaMenu bossTOD
+        dog:
+            row: 2
+            col: 8
+            name: §r[信息] 神明吞噬者
+            cmd: terrariaMenu bossDOG
+        yrn:
+            row: 3
+            col: 0
+            name: §r[信息] 丛林龙，犽戎
+            cmd: terrariaMenu bossYRN
+        exom:
+            row: 3
+            col: 1
+            name: §r[信息] 星流巨械
+            cmd: terrariaMenu bossEXOM
+        clmts:
+            row: 3
+            col: 2
+            name: §r[信息] 至尊灾厄
+            cmd: terrariaMenu bossCLMTS
+        prev:
+            row: 5
+            col: 0
+            name: §r[菜单] BOSS图鉴（困难模式）
+            lore:
+            - §r点击查看困难模式的BOSS图鉴
+            cmd: terrariaMenu bosses_hardmode
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] 主菜单
+            lore:
+            - §r点击返回主菜单
+            cmd: terrariaMenu menu
+bossDGFL:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 痴愚金龙
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r远古操纵机合成奇异信息素
+            - §r在丛林使用召唤痴愚金龙
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-第一阶段
+            lore:
+            - §r召唤环形火墙；火墙外的玩家会被龙焰点燃
+            - §r向玩家冲刺，冲刺时按照加速度预判
+            - §r冲刺有10%概率被替换成在玩家的移动方向发射大量闪耀红羽
+            - §r闪耀红羽会缓慢追踪玩家；追踪结束后速度获得大幅增加
+            - §r生命低于75%时进入第二阶段
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-第二阶段
+            lore:
+            - §r冲刺速度略微增加，开始按照速度而非加速度预判
+            - §r冲刺间隔减少
+            - §r冲刺有20%概率被替换成闪耀红羽攻击
+            - §r闪耀红羽攻击的前后摇缩短
+            - §r生命低于40%时进入第三阶段
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] 攻击方式-第三阶段
+            lore:
+            - §r冲刺速度进一步增加
+            - §r冲刺间隔进一步减少
+            - §r冲刺有30%概率被替换成闪耀红羽攻击
+            - §r闪耀红羽攻击的前后摇进一步缩短
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r本BOSS旨在为困难模式与月球领主后的BOSS难度之间创造平滑过渡
+            - §r虽不推荐，但本BOSS理论上有可能在月球领主前击败
+            - §r月球领主后夜明锭制作的各职业武器，护甲和饰品能够极大地帮助挑战BOSS
+            - §r多人挑战时，星云套装的集体BUFF可以提供续航和输出的全方面增强
+            - §r注意观察火墙范围，避免受到不必要的龙焰灼烧
+            - §r注意及时变向和冲刺晃掉BOSS的冲刺预判
+            - §r保持垂直方向的移动可以帮助减少弹幕的威胁
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_post_moonlord
+bossPFGDN:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 亵渎守卫
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r在远古操纵机中合成亵渎碎片
+            - §r在神圣之地使用亵渎碎片召唤亵渎守卫
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-圣晶守卫
+            lore:
+            - §r保持在玩家的斜上方，向玩家倾斜大量神圣新星弹幕
+            - §r该守卫存活时会保护神石守卫，使其免受伤害
+            - §r在生命值减少至70%和40%时各进行一次激光攻击
+            - §r此时，上下两道激光将向玩家聚拢，最终于留下狭窄空隙时结束
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-神石守卫
+            lore:
+            - §r保持在玩家的水平方向
+            - §r该守卫存活时会保护统御守卫，使其免受伤害
+            - §r存活时召唤大量脆弱的亵渎岩；亵渎岩存在一定时间后会径直射向玩家
+            - §r在圣晶守卫被击溃后进入第二阶段
+            - §r偶尔射出神圣之矛；第二阶段时射速翻倍且低概率射出闪耀之弹
+            - §r闪耀之弹会滞留并召唤出大量神圣之火弹幕
+            - §r第二阶段可以进行冲撞攻击；冲撞攻击利用玩家的加速度进行预判
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] 攻击方式-统御守卫
+            lore:
+            - §r在玩家的水平方向游荡
+            - §r偶尔射出神圣之火弹幕
+            - §r在神石守卫被击溃后进入第二阶段
+            - §r第二阶段改为发射会追踪并爆裂成神圣之火的圣之爆焱；射速得到极大增强
+            - §r第二阶段可以进行冲撞攻击；冲撞攻击利用玩家的加速度进行预判
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r月球领主后的护甲非常有效
+            - §r痴愚金龙后可制作的进升证章可帮助躲避圣晶守卫的激光
+            - §r可考虑使用对群武器，在清理亵渎石的同时伤害到圣晶/神石守卫
+            - §r如此虽减缓了出伤速度，但走位环境会有显著提升
+            - §r记得假动作骗歪神石和统御守卫的冲刺
+            - §r保持高速移动和冲刺来规避统御守卫的爆焱弹幕
+            - §r在飞行的顶端和底端（接触地面刷新飞行时间时）使用冲刺可以保持全程高速移动
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_post_moonlord
+bossPFGDS:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r亵渎守卫宝藏袋会掉落三个亵渎晶核
+            - §r白天在神圣之地使用亵渎晶核召唤亵渎天神
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式-爆焱阶段、烁光阶段
+            lore:
+            - §r在玩家斜上方摇摆飞行
+            - §r在爆焱阶段射出圣之爆焱，在烁光阶段射出闪耀之弹
+            - §r在爆焱阶段射出圣之爆焱
+        attack2:
+            row: 2
+            col: 2
+            name: §r[信息] 攻击方式-茧形阶段、圣之耀光阶段
+            lore:
+            - §r开始时，引爆爆焱阶段、烁光阶段的弹幕
+            - §r垂直移动到最高方块上方的一定距离后停止
+            - §r在神圣新星时获得超高减伤
+            - §r在茧形阶段射出三连发的神圣新星弹幕墙
+            - §r在圣之耀光阶段发射上下两束缓慢聚合的激光，在斜下方仅剩少量间隙时结束
+            - §r两种阶段时都会显示离BOSS的距离条
+            - §r一旦攻击开始，则距离过远的玩家都会受到长时间灼伤；灼伤时长随距离增加而增加
+        attack3:
+            row: 2
+            col: 3
+            name: §r[信息] 召唤守卫
+            lore:
+            - §r生命值降低到33%以下时，召唤亵渎守卫
+            - §r召唤在BOSS战中只会进行一次
+            - §r亵渎守卫将一部分力量用于缓慢治疗亵渎天神
+            - §r亵渎天神此时会按照弱化版的爆焱阶段攻击
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r多次挑战亵渎守卫以练习应对弹幕墙的走位并让击败守卫游刃有余
+            - §r在弹幕阶段时保持高速移动、在阵地战阶段时靠近地面并小心走位
+            - §r茧形阶段时可通过保持低于BOSS位置并观察稍侧面的弹道帮助躲避
+            - §r注意亵渎天神的圣之耀光的聚合位置偏下，而亵渎守卫的激光聚合位置为水平方向
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_post_moonlord
+boss:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r
+            - §r
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
             lore:
             - §r
         tutorial1:
@@ -1565,4 +2333,268 @@ bossPBGLAT:
             name: §r[菜单] BOSS图鉴
             lore:
             - §r点击返回BOSS图鉴
-            cmd: terrariaMenu bosses_hardmode
+            cmd: terrariaMenu bosses_post_moonlord
+boss:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r
+            - §r
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §r
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_post_moonlord
+boss:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r
+            - §r
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §r
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_post_moonlord
+boss:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r
+            - §r
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §r
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_post_moonlord
+boss:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r
+            - §r
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §r
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_post_moonlord
+boss:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r
+            - §r
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §r
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_post_moonlord
+boss:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r
+            - §r
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §r
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_post_moonlord
+boss:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r
+            - §r
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §r
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_post_moonlord
+boss:
+    title: 菜单
+    items:
+        header:
+            row: 0
+            col: 4
+            name: §r[信息] 
+        summon:
+            row: 1
+            col: 1
+            name: §r[信息] 召唤方式
+            lore:
+            - §r
+            - §r
+        attack1:
+            row: 2
+            col: 1
+            name: §r[信息] 攻击方式
+            lore:
+            - §r
+        tutorial1:
+            row: 3
+            col: 1
+            name: §r[信息] 打法攻略
+            lore:
+            - §r
+        back:
+            row: 5
+            col: 4
+            name: §r[菜单] BOSS图鉴
+            lore:
+            - §r点击返回BOSS图鉴
+            cmd: terrariaMenu bosses_post_moonlord

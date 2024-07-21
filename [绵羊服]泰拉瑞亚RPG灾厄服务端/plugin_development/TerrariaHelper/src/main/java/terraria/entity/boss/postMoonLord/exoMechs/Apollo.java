@@ -136,6 +136,7 @@ public class Apollo extends EntitySlime {
         {
             // update target
             target = owner.target;
+            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
             // attack
             if (target != null) {
                 // hover

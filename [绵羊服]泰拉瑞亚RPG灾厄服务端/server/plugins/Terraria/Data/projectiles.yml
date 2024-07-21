@@ -581,11 +581,11 @@
 瘟疫核弹:
     penetration: 99999
     gravity: 0
-    liveTime: 20
+    liveTime: 15
     blockHitAction: thru
     trailColor: 50|255|150
     isGrenade: true
-    blastRadius: 3
+    blastRadius: 5
     buffInflict:
         - "瘟疫|300|1"
 水晶矢:
@@ -3176,6 +3176,7 @@ TNT:
 蓝焰火花:
     homing: true
     noHomingTicks: 10
+    homingRadius: 24
     blockHitAction: thru
     liveTime: 60
     trailColor: 148|255|255

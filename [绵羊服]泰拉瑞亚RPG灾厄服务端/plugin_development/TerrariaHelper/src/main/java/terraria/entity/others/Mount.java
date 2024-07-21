@@ -47,6 +47,10 @@ public class Mount extends EntitySlime {
     protected final double[] move_aJ = new double[]{0.0, 0.0, 0.0};
     protected float move_ay = 1.0F;
 
+    // synchronize attribute, such as knockback resistance, from owner
+    protected void synchronizeAttribute() {
+        attrMap.put("knockbackResistance", EntityHelper.getAttrMap(owner).getOrDefault("knockbackResistance", 0d));
+    }
     // default constructor accounting for default behaviour (removal)
     public Mount(World world) {
         super(world);
@@ -92,11 +96,11 @@ public class Mount extends EntitySlime {
         attrMap = new HashMap<>(5);
         attrMap.put("damage", contactDmg);
         attrMap.put("knockback", mountSection.getDouble("knockback", 2d));
+        synchronizeAttribute();
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         // init properties
         setNoGravity(! hasGravity);
         setSize(slimeSize, false);
-        addScoreboardTag("noDamage");
         addScoreboardTag("isMount");
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_SOURCE, owner);
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, owner);
@@ -192,7 +196,7 @@ public class Mount extends EntitySlime {
         }
 
         // basic tick
-
+        synchronizeAttribute();
         movementTicking();
 
         // handle contact damage

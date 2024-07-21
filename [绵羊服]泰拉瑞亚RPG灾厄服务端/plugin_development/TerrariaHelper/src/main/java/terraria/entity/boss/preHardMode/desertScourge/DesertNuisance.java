@@ -142,6 +142,7 @@ public class DesertNuisance extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
                 // update facing direction
                 {
                     MetadataValue valYaw = EntityHelper.getMetadata(bukkitEntity, "yaw");

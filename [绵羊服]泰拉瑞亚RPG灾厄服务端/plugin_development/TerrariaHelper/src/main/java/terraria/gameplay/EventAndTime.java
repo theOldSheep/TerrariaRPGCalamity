@@ -148,11 +148,11 @@ public class EventAndTime {
     public static int bossRushProgress = -1;
     public static final BossHelper.BossType[] BOSS_RUSH_ORDER = {
             // pre hardmode
-            BossHelper.BossType.KING_SLIME, BossHelper.BossType.DESERT_SCOURGE, BossHelper.BossType.EYE_OF_CTHULHU,
-            BossHelper.BossType.CRABULON, BossHelper.BossType.EATER_OF_WORLDS, BossHelper.BossType.THE_HIVE_MIND,
+            BossHelper.BossType.KING_SLIME, BossHelper.BossType.DESERT_SCOURGE, BossHelper.BossType.CRABULON,
+            BossHelper.BossType.EYE_OF_CTHULHU, BossHelper.BossType.EATER_OF_WORLDS, BossHelper.BossType.THE_HIVE_MIND,
             BossHelper.BossType.SKELETRON, BossHelper.BossType.THE_SLIME_GOD,
             // hardmode
-            BossHelper.BossType.QUEEN_SLIME, BossHelper.BossType.CRYOGEN, BossHelper.BossType.THE_TWINS,
+            BossHelper.BossType.QUEEN_SLIME, BossHelper.BossType.THE_TWINS, BossHelper.BossType.CRYOGEN,
             BossHelper.BossType.AQUATIC_SCOURGE, BossHelper.BossType.THE_DESTROYER, BossHelper.BossType.BRIMSTONE_ELEMENTAL,
             BossHelper.BossType.SKELETRON_PRIME, BossHelper.BossType.CALAMITAS_CLONE, BossHelper.BossType.PLANTERA,
             // post plantera

@@ -151,8 +151,10 @@ public class DesertScourge extends EntitySlime {
             if (segmentIndex == 0)
                 target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
                         IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
-            else
+            else {
                 target = head.target;
+                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            }
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity segment : bossParts) {

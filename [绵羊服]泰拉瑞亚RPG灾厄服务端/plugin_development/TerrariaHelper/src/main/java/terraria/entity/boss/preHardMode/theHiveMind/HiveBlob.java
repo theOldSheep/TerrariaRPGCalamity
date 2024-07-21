@@ -44,6 +44,7 @@ public class HiveBlob extends EntitySlime {
                 die();
                 return;
             }
+            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
             // if target is valid, attack
             if (ticksLived % 3 == 0) {
                 if (indexAI % 20 == 0 || offset == null) {

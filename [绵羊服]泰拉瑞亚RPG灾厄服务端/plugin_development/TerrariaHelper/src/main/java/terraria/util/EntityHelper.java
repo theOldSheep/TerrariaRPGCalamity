@@ -2624,6 +2624,9 @@ public class EntityHelper {
                     case "knockback":
                     case "knockbackMulti":
                     case "liveSteal":
+                    // projectiles with health would need those attributes
+                    case "health":
+                    case "healthMax":
                         shouldInclude = true;
                         break;
                     default:

@@ -543,7 +543,7 @@ public class GenericProjectile extends EntityPotion {
                 double offsetRatio, rotationFreq;
                 switch (projectileType) {
                     case "以太流光":
-                        offsetRatio = 0.05;
+                        offsetRatio = 0.125;
                         // 2 full rotation per second
                         rotationFreq = 72;
                         break;
@@ -554,8 +554,10 @@ public class GenericProjectile extends EntityPotion {
                         rotationFreq = 36;
                         break;
                 }
-                // on first tick, save the forward direction, initialize twitch direction
+                // on first tick, save the forward direction, initialize twitch direction, tweak max speed
                 if (!extraVariables.containsKey("v")) {
+                    // increase max speed to preserve the forward velocity component
+                    maxSpeed *= Math.sqrt(1 + offsetRatio * offsetRatio);
                     Vector fwdDir = bukkitEntity.getVelocity();
                     // make sure twitch one and two are linearly independent
                     Vector twitchOne = terraria.util.MathHelper.getNonZeroCrossProd(fwdDir, fwdDir);

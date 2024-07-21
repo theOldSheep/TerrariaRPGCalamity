@@ -5,6 +5,7 @@ import net.minecraft.server.v1_12_R1.BossBattleServer;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -207,6 +208,16 @@ public class BossHelper {
         }
         return false;
     }
+    // this is in place to help aim helpers
+    public static void updateSpeedForAimHelper(Entity boss) {
+        MetadataValue currVel = EntityHelper.getMetadata(boss, EntityHelper.MetadataName.ENTITY_CURRENT_VELOCITY);
+        if (currVel != null)
+            EntityHelper.setMetadata(boss, EntityHelper.MetadataName.ENTITY_LAST_VELOCITY, currVel.value());
+        // calculate velocity
+        net.minecraft.server.v1_12_R1.Entity bossNMS = ((CraftEntity) boss).getHandle();
+        Vector velocity = new Vector(bossNMS.locX - bossNMS.lastX, bossNMS.locY - bossNMS.lastY, bossNMS.locZ - bossNMS.lastZ);
+        EntityHelper.setMetadata(boss, EntityHelper.MetadataName.ENTITY_CURRENT_VELOCITY, velocity);
+    }
     // generally, this function also handles misc aspects like cached velocity
     public static Player updateBossTarget(Player currentTarget, Entity boss, boolean ignoreDistance,
                                           WorldHelper.BiomeType biomeRequired, Collection<UUID> availableTargets) {
@@ -215,12 +226,7 @@ public class BossHelper {
     public static Player updateBossTarget(Player currentTarget, Entity boss, boolean ignoreDistance, TimeRequirement timeRequired,
                                           WorldHelper.BiomeType biomeRequired, Collection<UUID> availableTargets) {
         // update saved velocity
-        {
-            MetadataValue currVel = EntityHelper.getMetadata(boss, EntityHelper.MetadataName.ENTITY_CURRENT_VELOCITY);
-            if (currVel != null)
-                EntityHelper.setMetadata(boss, EntityHelper.MetadataName.ENTITY_LAST_VELOCITY, currVel.value());
-            EntityHelper.setMetadata(boss, EntityHelper.MetadataName.ENTITY_CURRENT_VELOCITY, boss.getVelocity());
-        }
+        updateSpeedForAimHelper(boss);
         // update target
         Player finalTarget = currentTarget;
         if (!checkBossTarget(currentTarget, boss, ignoreDistance, timeRequired, biomeRequired)) {

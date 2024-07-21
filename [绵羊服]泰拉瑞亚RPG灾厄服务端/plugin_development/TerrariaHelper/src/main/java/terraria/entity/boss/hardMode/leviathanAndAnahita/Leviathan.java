@@ -135,7 +135,7 @@ public class Leviathan extends EntitySlime {
             case METEOR: {
                 if (indexAI >= 120)
                     changePhase();
-                else if (indexAI % 12 == 0) {
+                else if (indexAI % 12 == 0 && indexAI >= 0) {
                     shootMeteor();
                 }
                 break;
@@ -161,6 +161,7 @@ public class Leviathan extends EntitySlime {
             // update target
             if (anahita.isAlive()) {
                 target = anahita.target;
+                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
             }
             else {
                 target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),

@@ -78,6 +78,7 @@ public class WallOfFleshEye extends EntitySlime {
                 die();
                 return;
             }
+            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
             // AI
             if (ticksLived % 3 == 0) {
                 // shoot laser

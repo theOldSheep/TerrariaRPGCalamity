@@ -60,63 +60,63 @@ public class GuardianAttacker extends EntitySlime {
     double laserPitch;
     boolean isLaserPhase = false;
     HashSet<Entity> laserDamaged = new HashSet<>();
-private void attack() {
-    // 1. Determine Hovering Location
-    Location targetLoc = target.getLocation();
-    Location commanderLoc = commander.getBukkitEntity().getLocation();
-    // Vertically align the two locations
-    commanderLoc.setY(targetLoc.getY());
-    // Calculate the hover position
-    Location hoverPosition = targetLoc.clone().multiply(1 - HORIZONTAL_POSITION).add(commanderLoc.clone().multiply(HORIZONTAL_POSITION));
-    hoverPosition.add(0, VERTICAL_OFFSET, 0);
+    private void attack() {
+        // 1. Determine Hovering Location
+        Location targetLoc = target.getLocation();
+        Location commanderLoc = commander.getBukkitEntity().getLocation();
+        // Vertically align the two locations
+        commanderLoc.setY(targetLoc.getY());
+        // Calculate the hover position
+        Location hoverPosition = targetLoc.clone().multiply(1 - HORIZONTAL_POSITION).add(commanderLoc.clone().multiply(HORIZONTAL_POSITION));
+        hoverPosition.add(0, VERTICAL_OFFSET, 0);
 
-    // 2. Movement towards Hovering Location
-    this.velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverPosition, HOVER_SPEED);
-    if (isLaserPhase) {
-        if (this.velocity.getY() > LASER_SPEED_VERTICAL)
-            this.velocity.setY(LASER_SPEED_VERTICAL);
-        else if (this.velocity.getY() < -LASER_SPEED_VERTICAL)
-            this.velocity.setY(-LASER_SPEED_VERTICAL);
-    }
+        // 2. Movement towards Hovering Location
+        this.velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverPosition, HOVER_SPEED);
+        if (isLaserPhase) {
+            if (this.velocity.getY() > LASER_SPEED_VERTICAL)
+                this.velocity.setY(LASER_SPEED_VERTICAL);
+            else if (this.velocity.getY() < -LASER_SPEED_VERTICAL)
+                this.velocity.setY(-LASER_SPEED_VERTICAL);
+        }
 
-    // 3. Attack
-    if (isLaserPhase) {
-        double pitchOffset = LASER_GAP_START + (LASER_GAP_END - LASER_GAP_START) * indexAI / LASER_DURATION;
-        // Horizontally Locks the target
-        double laserYaw = MathHelper.getVectorYaw( target.getEyeLocation().subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector() );
-        // Shoot lasers
-        GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
-                laserYaw, laserPitch + pitchOffset, LASER_LENGTH, LASER_WIDTH, "", "",
-                laserDamaged, attrMapLaser, strikeOptionLaser);
-        GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
-                laserYaw, laserPitch - pitchOffset, LASER_LENGTH, LASER_WIDTH, "", "",
-                laserDamaged, attrMapLaser, strikeOptionLaser);
-        // Transform back into regular phase
-        if (indexAI >= LASER_DURATION) {
-            isLaserPhase = false;
-            indexAI = 0;
+        // 3. Attack
+        if (isLaserPhase) {
+            double pitchOffset = LASER_GAP_START + (LASER_GAP_END - LASER_GAP_START) * indexAI / LASER_DURATION;
+            // Horizontally Locks the target
+            double laserYaw = MathHelper.getVectorYaw( target.getEyeLocation().subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector() );
+            // Shoot lasers
+            GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
+                    laserYaw, laserPitch + pitchOffset, LASER_LENGTH, LASER_WIDTH, "", "",
+                    laserDamaged, attrMapLaser, strikeOptionLaser);
+            GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
+                    laserYaw, laserPitch - pitchOffset, LASER_LENGTH, LASER_WIDTH, "", "",
+                    laserDamaged, attrMapLaser, strikeOptionLaser);
+            // Transform back into regular phase
+            if (indexAI >= LASER_DURATION) {
+                isLaserPhase = false;
+                indexAI = 0;
+            }
         }
-    }
-    else {
-        // Transform into laser phase
-        if (laserFired < LASER_THRESHOLDS.length && getHealth() / getMaxHealth() < LASER_THRESHOLDS[laserFired]) {
-            laserFired ++;
-            indexAI = 0;
-            isLaserPhase = true;
-            laserPitch = MathHelper.getVectorPitch( target.getEyeLocation().subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector() );
-        }
-        // Fire projectile
-        if (ticksLived > 90 && indexAI % PROJECTILE_INTERVAL == 0) {
-            shootInfoProjectile.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-            ArrayList<Vector> projectileDirections = MathHelper.getEvenlySpacedProjectileDirections(
-                    ANGLE_INTERVAL, SPREAD_DEGREE, target, shootInfoProjectile.shootLoc, PROJECTILE_SPEED);
-            for (Vector direction : projectileDirections) {
-                shootInfoProjectile.velocity = direction;
-                EntityHelper.spawnProjectile(shootInfoProjectile);
+        else {
+            // Transform into laser phase
+            if (laserFired < LASER_THRESHOLDS.length && getHealth() / getMaxHealth() < LASER_THRESHOLDS[laserFired]) {
+                laserFired ++;
+                indexAI = 0;
+                isLaserPhase = true;
+                laserPitch = MathHelper.getVectorPitch( target.getEyeLocation().subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector() );
+            }
+            // Fire projectile
+            if (ticksLived > 90 && indexAI % PROJECTILE_INTERVAL == 0) {
+                shootInfoProjectile.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+                ArrayList<Vector> projectileDirections = MathHelper.getEvenlySpacedProjectileDirections(
+                        ANGLE_INTERVAL, SPREAD_DEGREE, target, shootInfoProjectile.shootLoc, PROJECTILE_SPEED);
+                for (Vector direction : projectileDirections) {
+                    shootInfoProjectile.velocity = direction;
+                    EntityHelper.spawnProjectile(shootInfoProjectile);
+                }
             }
         }
     }
-}
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -125,6 +125,7 @@ private void attack() {
         {
             // update target
             target = commander.target;
+            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {

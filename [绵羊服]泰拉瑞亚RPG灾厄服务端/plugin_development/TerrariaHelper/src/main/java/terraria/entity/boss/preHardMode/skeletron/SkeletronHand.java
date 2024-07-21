@@ -48,6 +48,7 @@ public class SkeletronHand extends EntitySlime {
                 die();
                 return;
             }
+            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
             // if target is valid, attack
             indexAI = head.indexAI;
             if (lastIndexAI != indexAI) {

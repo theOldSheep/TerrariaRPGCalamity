@@ -30,6 +30,7 @@ public class LunaticCultistClone extends EntityZombieHusk {
         attrMapShadowFireball.put("damage", 516d);
         attrMapShadowFireball.put("knockback", 1.5d);
     }
+    int fireballCountdown = -1;
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -49,8 +50,12 @@ public class LunaticCultistClone extends EntityZombieHusk {
                 motX = 0;
                 motY = 0;
                 motZ = 0;
-                // attack when owner is initializing a non-summon attack
+                // plan an attack when owner is initializing a non-summon attack
                 if (owner.indexAI == 0 && owner.phaseAttack != 0) {
+                    fireballCountdown = 25 + (int) (Math.random() * 10);
+                }
+                // shoot fireballs
+                if (--fireballCountdown == 0) {
                     shootInfoShadowFireball.setLockedTarget(target);
                     shootInfoShadowFireball.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
                     shootInfoShadowFireball.velocity = MathHelper.getDirection(shootInfoShadowFireball.shootLoc,

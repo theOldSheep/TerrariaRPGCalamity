@@ -272,6 +272,7 @@ public class MoonLordEye extends EntitySlime {
             }
             // update target
             target = owner.target;
+            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
             // if target is valid, attack
             if (indexAI >= 0) {
                 // get next attack method

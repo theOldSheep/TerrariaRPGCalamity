@@ -197,6 +197,9 @@ public class EmpressOfLight extends EntitySlime {
         {
             attackLoc = target.getLocation();
             double angle = Math.random() * 360;
+            if (attackPhase == AttackPhase.SUN_DANCE) {
+                angle = MathHelper.getVectorYaw(attackLoc.getDirection());
+            }
             Vector offset = MathHelper.vectorFromYawPitch_approx(angle, 0);
             if (attackPhase == AttackPhase.CHARGE) {
                 offset.multiply(16);
@@ -296,7 +299,8 @@ public class EmpressOfLight extends EntitySlime {
         bukkitEntity.teleport(attackLoc);
         bukkitEntity.setVelocity(new Vector());
         int rays = summonedDuringDay ? 8 : 6;
-        double angle = 0, angleOffset = 360 * 0.7 / rays;
+        // angle offset: the single ray would travel about 50% of the gap
+        double angle = 0, angleOffset = 360 * 0.75 / rays;
         int interval = secondPhase ? 20 : 30;
         // three waves of sun dance
         for (int i = 0; i < 3; i ++) {
@@ -312,9 +316,12 @@ public class EmpressOfLight extends EntitySlime {
         // 360 / 60 for display, 360 / 90 while it deals damage
         boolean hasDamage = index > 10;
         double angleChangeAmount = (hasDamage ? 9d : 6d) / rays;
-        // teleport to vertically align with the target
+        // teleport to vertically align with the target with a maximum horizontal distance
         Location targetLoc = bukkitEntity.getLocation();
-        targetLoc.setY(target.getLocation().getY());
+        Location plyLoc = target.getLocation();
+        targetLoc.setY(plyLoc.getY());
+        targetLoc = plyLoc.add(MathHelper.getDirection(
+                plyLoc, targetLoc, SUN_DANCE_MAX_LENGTH * 0.65, true));
         bukkitEntity.teleport(targetLoc);
         // handle particle/damage
         double sizeMultiplier = Math.sqrt(1 - Math.abs(20d - index) / 20);

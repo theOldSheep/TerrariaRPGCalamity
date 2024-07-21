@@ -77,6 +77,7 @@ public class SkeletronPrimeHand extends EntitySlime {
                 die();
                 return;
             }
+            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
             // if target is valid, attack
             Location usualLocation;
             {

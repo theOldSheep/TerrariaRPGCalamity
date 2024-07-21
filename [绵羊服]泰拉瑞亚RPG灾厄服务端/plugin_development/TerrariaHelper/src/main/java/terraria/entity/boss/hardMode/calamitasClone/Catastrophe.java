@@ -133,6 +133,7 @@ public class Catastrophe extends EntitySlime {
             }
             // if target is valid, attack
             else {
+                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
                 attackAI();
             }
         }
