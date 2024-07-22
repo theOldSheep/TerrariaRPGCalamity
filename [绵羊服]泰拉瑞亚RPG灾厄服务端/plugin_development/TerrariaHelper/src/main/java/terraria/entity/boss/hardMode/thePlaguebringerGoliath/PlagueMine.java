@@ -47,7 +47,7 @@ public class PlagueMine extends EntitySlime {
                 die();
                 return;
             }
-            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            
             // if target is valid, attack
             Location eyeLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             if (ticksLived % 3 == 0) {
@@ -134,6 +134,7 @@ public class PlagueMine extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

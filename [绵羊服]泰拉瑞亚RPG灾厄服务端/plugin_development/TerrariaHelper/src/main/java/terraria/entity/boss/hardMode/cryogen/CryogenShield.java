@@ -29,9 +29,9 @@ public class CryogenShield extends EntitySlime {
         // AI
         {
             bukkitEntity.setVelocity(owner.getBukkitEntity().getVelocity());
-            bukkitEntity.teleport(owner.getBukkitEntity().getLocation().subtract(0, 1, 0));
+            EntityHelper.movementTP(bukkitEntity, owner.getBukkitEntity().getLocation().subtract(0, 1, 0));
 
-            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            
         }
         // face the player
         this.yaw = (float) MathHelper.getVectorYaw( owner.target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
@@ -103,6 +103,7 @@ public class CryogenShield extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // AI
         AI();

@@ -40,7 +40,8 @@
   item: STONE
   rarity: 0
 古恒石:
-  item: COBBLESTONE
+  item: STONE
+  data: 5
   lore:
   - §r战斗已然结束，而尘埃尚未落定
   - §r在一个足以抹灭坚石的古恒之地，静坐着一位僧侣
@@ -5490,7 +5491,6 @@ Drew之翼:
   lore:
   - §r你感到死神之手掌控着你
   - §r发射一连串追踪镰刀
-  - §r“可以告诉我你的名字吗？”
   attributes:
     damage: 2400
     damageType: Melee
@@ -11469,6 +11469,7 @@ Dodu的手炮:
   - §r撞墙后弹回
   attributes:
     damage: 24
+    damageArrowMulti: -0.1
     damageType: Arrow
     crit: 4
     knockback: 3.5
@@ -11642,7 +11643,7 @@ Dodu的手炮:
   - §r追踪你的敌人
   attributes:
     damage: 18
-    damageBulletMulti: -0.25
+    damageBulletMulti: -0.15
     damageType: Bullet
     crit: 4
     knockback: 2

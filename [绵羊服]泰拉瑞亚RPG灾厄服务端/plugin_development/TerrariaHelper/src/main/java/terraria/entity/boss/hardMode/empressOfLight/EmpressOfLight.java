@@ -229,7 +229,7 @@ public class EmpressOfLight extends EntitySlime {
     }
     // attack AI
     private void AIPhasePrismaticBolt() {
-        bukkitEntity.teleport(attackLoc);
+        EntityHelper.movementTP(bukkitEntity, attackLoc);
         bukkitEntity.setVelocity(new Vector());
         for (int shootIndex = 0; shootIndex < 15; shootIndex ++) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
@@ -240,7 +240,7 @@ public class EmpressOfLight extends EntitySlime {
         }
     }
     private void AIPhasePrismaticBoltV2() {
-        bukkitEntity.teleport(attackLoc);
+        EntityHelper.movementTP(bukkitEntity, attackLoc);
         bukkitEntity.setVelocity(new Vector());
         for (int shootIndex = 0; shootIndex < 25; shootIndex ++) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
@@ -266,7 +266,7 @@ public class EmpressOfLight extends EntitySlime {
         EntityHelper.spawnProjectile(shootInfoPrismaticBolt);
     }
     private void AIPhaseCharge() {
-        bukkitEntity.teleport(attackLoc);
+        EntityHelper.movementTP(bukkitEntity, attackLoc);
         Vector velocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(),
                 target.getEyeLocation(), 1);
         Vector velWindup = velocity.clone().multiply(-SPEED_CHARGE_WINDUP);
@@ -296,7 +296,7 @@ public class EmpressOfLight extends EntitySlime {
         }, waitTime);
     }
     private void AIPhaseSunDance() {
-        bukkitEntity.teleport(attackLoc);
+        EntityHelper.movementTP(bukkitEntity, attackLoc);
         bukkitEntity.setVelocity(new Vector());
         int rays = summonedDuringDay ? 8 : 6;
         // angle offset: the single ray would travel about 50% of the gap
@@ -322,7 +322,7 @@ public class EmpressOfLight extends EntitySlime {
         targetLoc.setY(plyLoc.getY());
         targetLoc = plyLoc.add(MathHelper.getDirection(
                 plyLoc, targetLoc, SUN_DANCE_MAX_LENGTH * 0.65, true));
-        bukkitEntity.teleport(targetLoc);
+        EntityHelper.movementTP(bukkitEntity, targetLoc);
         // handle particle/damage
         double sizeMultiplier = Math.sqrt(1 - Math.abs(20d - index) / 20);
         if (sizeMultiplier > 1e-5) {
@@ -353,7 +353,7 @@ public class EmpressOfLight extends EntitySlime {
             }, 1);
     }
     private void AIPhaseEverlastingRainbow() {
-        bukkitEntity.teleport(attackLoc);
+        EntityHelper.movementTP(bukkitEntity, attackLoc);
         bukkitEntity.setVelocity(new Vector());
 
         Vector offset = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, 0);
@@ -402,7 +402,7 @@ public class EmpressOfLight extends EntitySlime {
             }, 2);
     }
     private void AIPhaseEtherealLance() {
-        bukkitEntity.teleport(attackLoc);
+        EntityHelper.movementTP(bukkitEntity, attackLoc);
         bukkitEntity.setVelocity(new Vector());
         for (int i = 0; i < 20; i ++) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
@@ -417,7 +417,7 @@ public class EmpressOfLight extends EntitySlime {
         }
     }
     private void AIPhaseEtherealLanceV2() {
-        bukkitEntity.teleport(attackLoc);
+        EntityHelper.movementTP(bukkitEntity, attackLoc);
         bukkitEntity.setVelocity(new Vector());
         int ticksOffset = 0;
         for (Vector offsetDir : eLV2Dirs) {
@@ -633,6 +633,7 @@ public class EmpressOfLight extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

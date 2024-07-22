@@ -85,9 +85,10 @@ public class Draedon extends EntitySlime {
         loc.getWorld().playSound(loc, Sound.ENTITY_ENDERDRAGON_GROWL, org.bukkit.SoundCategory.HOSTILE, 5f, 1f);
     }
     protected Difficulty calculateDifficulty(EntityLiving livingEntity) {
+        double healthRatio = livingEntity.getHealth() / livingEntity.getMaxHealth();
         if (getActiveBossCount() == 3) {
             return Draedon.Difficulty.LOW;
-        } else if (livingEntity.getHealth() < livingEntity.getMaxHealth() * 0.4) {
+        } else if ( (getActiveBossCount() == 1 && healthRatio < 0.7) || healthRatio < 0.4) {
             return Draedon.Difficulty.HIGH;
         } else {
             return Draedon.Difficulty.MEDIUM;
@@ -186,7 +187,6 @@ public class Draedon extends EntitySlime {
         }
 
         if (currentPhase != originalPhase) {
-            Bukkit.broadcastMessage(Arrays.toString(subBossIsActive));
             for (int index : aliveBossIndexes) {
                 if (subBossIsActive[index]) {
                     subBosses[index].removeScoreboardTag("noDamage");
@@ -382,6 +382,7 @@ public class Draedon extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // update boss bar and dynamic DR
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);

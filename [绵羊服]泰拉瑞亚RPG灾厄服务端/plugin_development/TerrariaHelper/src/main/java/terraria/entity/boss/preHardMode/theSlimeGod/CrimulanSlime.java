@@ -77,7 +77,7 @@ public class CrimulanSlime extends EntitySlime {
                 super.die();
                 return;
             }
-            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            
             // if target is valid, attack
             int tickInterval = owner.ebonianDefeated ? 1 : 3;
             boolean currentlyOnGround = isOnGround();
@@ -280,6 +280,7 @@ public class CrimulanSlime extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

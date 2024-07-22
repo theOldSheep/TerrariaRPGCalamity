@@ -55,11 +55,12 @@ public class RavagerHead extends EntitySlime {
             }
             // if target is valid, attack
             else {
-                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+                
                 // velocity and location
                 if (!free) {
                     bukkitEntity.setVelocity(owner.getBukkitEntity().getVelocity());
-                    bukkitEntity.teleport(owner.getBukkitEntity().getLocation().add(offsetDir));
+                    EntityHelper.movementTP(bukkitEntity,
+                            owner.getBukkitEntity().getLocation().add(offsetDir));
                 }
                 else {
                     bukkitEntity.setVelocity(MathHelper.getDirection(bukkitEntity.getLocation(),
@@ -141,6 +142,7 @@ public class RavagerHead extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

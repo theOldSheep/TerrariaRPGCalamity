@@ -191,6 +191,7 @@ public class CelestialPillar extends EntityGiantZombie {
     }
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // update boss bar
         if (amountShieldLeft > 0) {

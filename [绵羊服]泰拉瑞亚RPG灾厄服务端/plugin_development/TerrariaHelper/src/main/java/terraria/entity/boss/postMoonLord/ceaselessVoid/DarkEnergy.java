@@ -44,7 +44,7 @@ public class DarkEnergy extends EntitySlime {
             }
             // if target is valid, attack
             else {
-                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+                
 
                 indexAI++;
                 bukkitEntity.setVelocity(velocity);
@@ -130,6 +130,7 @@ public class DarkEnergy extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // AI
         AI();

@@ -228,7 +228,7 @@ public class Spazmatism extends EntitySlime {
             // update target
             if (twin.isAlive()) {
                 this.target = twin.target;
-                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+                
             }
             else {
                 target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
@@ -384,6 +384,7 @@ public class Spazmatism extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

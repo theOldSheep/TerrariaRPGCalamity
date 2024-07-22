@@ -199,7 +199,7 @@ public class AquaticScourge extends EntitySlime {
                         IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
             else {
                 target = head.target;
-                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+                
             }
             // disappear if no target is available
             if (target == null) {
@@ -386,6 +386,7 @@ public class AquaticScourge extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

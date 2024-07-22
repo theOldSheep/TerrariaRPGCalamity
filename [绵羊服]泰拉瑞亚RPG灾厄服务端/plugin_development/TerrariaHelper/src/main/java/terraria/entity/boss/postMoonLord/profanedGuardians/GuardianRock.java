@@ -54,7 +54,7 @@ public class GuardianRock extends EntitySlime {
             }
             // if target is valid, attack
             else {
-                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+                
                 if (ticksSinceLaunch > 0) { // Launched towards target
                     ticksSinceLaunch++;
                     if (ticksSinceLaunch >= ROCK_LIFETIME) {
@@ -69,7 +69,8 @@ public class GuardianRock extends EntitySlime {
                                     orbitZ.clone().multiply(MathHelper.xcos_radian(angle)));
 
                     // Update velocity to move towards new position
-                    velocity = commander.getBukkitEntity().getLocation().add(offsetDirection).subtract(bukkitEntity.getLocation()).toVector();
+                    velocity = MathHelper.getDirection(bukkitEntity.getLocation(),
+                            commander.getBukkitEntity().getLocation().add(offsetDirection), 0.75, true);
 
                     // Check for launch condition
                     if (owner.isAlive() && owner.currentAttackMode != GuardianDefender.AttackMode.DASH && indexAI > PREPARATION_TIME_FOR_LAUNCH) { // Delay before launch
@@ -162,6 +163,7 @@ public class GuardianRock extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // AI
         AI();

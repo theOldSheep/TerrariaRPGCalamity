@@ -72,7 +72,7 @@ public class Infernado extends EntitySlime {
         super( owner.getWorld() );
         // spawn location
         this.phase2 = owner.phase >= 3;
-        setLocation(targetLoc.getX(), targetLoc.getY() + (phase2 ? -20 : -10), targetLoc.getZ(), 0, 0);
+        setLocation(targetLoc.getX(), targetLoc.getY() + (phase2 ? -30 : -20), targetLoc.getZ(), 0, 0);
         // add to world
         (owner.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
@@ -132,6 +132,7 @@ public class Infernado extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // AI
         AI();

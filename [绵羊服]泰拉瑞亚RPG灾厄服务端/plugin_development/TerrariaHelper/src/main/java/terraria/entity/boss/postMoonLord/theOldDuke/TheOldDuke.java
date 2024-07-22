@@ -125,23 +125,19 @@ public class TheOldDuke extends EntitySlime {
         if (AIPhase == 1) {
             if (random < 0.6) {
                 aimHelperOption = aimHelperDashAcceleration;
-            } else if (random < 0.9) {
-                aimHelperOption = aimHelperDash;
             } else {
-                aimHelperOption = null;
+                aimHelperOption = aimHelperDash;
             }
         } else if (AIPhase == 2) {
-            if (random < 0.5) {
+            if (random < 0.4) {
                 aimHelperOption = aimHelperDashAcceleration;
-            } else if (random < 0.85) {
-                aimHelperOption = aimHelperDash;
             } else {
-                aimHelperOption = null;
+                aimHelperOption = aimHelperDash;
             }
         } else {
-            if (random < 0.3) {
+            if (random < 0.25) {
                 aimHelperOption = aimHelperDashAcceleration;
-            } else if (random < 0.7) {
+            } else if (random < 0.75) {
                 aimHelperOption = aimHelperDash;
             } else {
                 aimHelperOption = null;
@@ -437,6 +433,7 @@ public class TheOldDuke extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // update boss bar and dynamic DR
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);

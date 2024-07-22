@@ -50,8 +50,8 @@ public class MoonLord extends EntitySlime {
         // teleport
         Location eyeLoc = backgroundLoc.clone()
                 .add(facingDirection).add(0, verticalOffset, 0);
-        eye.getBukkitEntity().teleport(eyeLoc);
-        background.getBukkitEntity().teleport(backgroundLoc);
+        EntityHelper.movementTP(eye.getBukkitEntity(), eyeLoc);
+        EntityHelper.movementTP(background.getBukkitEntity(), backgroundLoc);
     }
     private void setupLocation() {
         double centerLocAngle = indexAI / 10d;
@@ -271,6 +271,7 @@ public class MoonLord extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

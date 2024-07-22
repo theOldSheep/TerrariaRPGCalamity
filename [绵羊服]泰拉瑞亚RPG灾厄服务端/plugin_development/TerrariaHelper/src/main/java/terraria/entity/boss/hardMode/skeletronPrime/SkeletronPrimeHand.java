@@ -77,7 +77,7 @@ public class SkeletronPrimeHand extends EntitySlime {
                 die();
                 return;
             }
-            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            
             // if target is valid, attack
             Location usualLocation;
             {
@@ -276,6 +276,7 @@ public class SkeletronPrimeHand extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

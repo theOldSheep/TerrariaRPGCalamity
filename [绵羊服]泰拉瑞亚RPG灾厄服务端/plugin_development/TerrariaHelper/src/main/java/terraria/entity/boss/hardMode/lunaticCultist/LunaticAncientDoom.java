@@ -70,7 +70,8 @@ public class LunaticAncientDoom extends EntitySlime {
                     Vector offset2 = dir2.clone();
                     offset2.multiply(cosVal);
 
-                    bukkitEntity.teleport(target.getEyeLocation().add(offset1).add(offset2));
+                    EntityHelper.movementTP(bukkitEntity,
+                            target.getEyeLocation().add(offset1).add(offset2));
                     bukkitEntity.setVelocity(new Vector());
 
                     // timeout
@@ -150,6 +151,7 @@ public class LunaticAncientDoom extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

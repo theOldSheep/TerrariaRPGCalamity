@@ -123,7 +123,7 @@ public class Sepulcher extends EntitySlime {
             // update target
             if (owner.isAlive()) {
                 target = owner.target;
-                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+                
             }
             else
                 target = null;
@@ -239,6 +239,7 @@ public class Sepulcher extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // update health
         setHealth(head.getHealth());

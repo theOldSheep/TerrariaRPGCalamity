@@ -41,7 +41,7 @@ public class Setting {
     public enum Options {
         // 3rd person
         THIRD_PERSON_DIST("泰拉瑞亚第三人称视角距离；取值范围<min>~<max>，默认值为<def>", 8d, 64d, 24d),
-        THIRD_PERSON_INTERPOLATE("泰拉瑞亚第三人称视角切换动画时长（单位：毫秒）；取值范围<min>~<max>，默认值为<def>", 0, 5000, 2500),
+        THIRD_PERSON_INTERPOLATE("泰拉瑞亚第三人称视角切换动画时长（单位：毫秒）；取值范围<min>~<max>，默认值为<def>", 0, 2000, 500),
         THIRD_PERSON_HOTKEY("泰拉瑞亚第三人称视角切换按键，默认为[<def>]", "K"),
         // visual / client accessibility
         DEBUFF_PARTICLE_TOGGLE("是否在受到Debuff的实体身上显示粒子，默认值为<def>", true),

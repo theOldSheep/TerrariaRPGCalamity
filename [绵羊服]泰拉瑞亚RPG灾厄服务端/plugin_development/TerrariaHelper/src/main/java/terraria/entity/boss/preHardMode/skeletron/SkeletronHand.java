@@ -48,7 +48,7 @@ public class SkeletronHand extends EntitySlime {
                 die();
                 return;
             }
-            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            
             // if target is valid, attack
             indexAI = head.indexAI;
             if (lastIndexAI != indexAI) {
@@ -189,6 +189,7 @@ public class SkeletronHand extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

@@ -1600,8 +1600,9 @@ public class EntityHelper {
                 // special, player-progression specific drops
                 if (dPly instanceof Player) {
                     Player dPlayer = (Player) dPly;
-                    // dungeon souls
-                    if (WorldHelper.BiomeType.getBiome(dPlayer) == WorldHelper.BiomeType.DUNGEON) {
+                    // dungeon souls; not applicable for boss parts
+                    if (! vScoreboardTags.contains("isBOSS") &&
+                            WorldHelper.BiomeType.getBiome(dPlayer) == WorldHelper.BiomeType.DUNGEON) {
                         switch (parentType) {
                             case "地牢幽魂":
                             case "幻魂":
@@ -1773,6 +1774,7 @@ public class EntityHelper {
         if (target.isDead()) return false;
         // store scoreboard tags as it is requested frequently below
         Entity damageTaker = getDamageTaker(target);
+        Set<String> targetScoreboardTags = target.getScoreboardTags();
         Set<String> damageTakerScoreboardTags = damageTaker.getScoreboardTags();
         Set<String> entityScoreboardTags = entity.getScoreboardTags();
         Entity damageSource = getDamageSource(entity);
@@ -1799,7 +1801,7 @@ public class EntityHelper {
         if (damageTaker instanceof ArmorStand) return damageSource instanceof Player;
         // invulnerable target
         if (damageTaker.isInvulnerable()) return false;
-        if (damageTakerScoreboardTags.contains("noDamage")) return false;
+        if (damageTakerScoreboardTags.contains("noDamage") || targetScoreboardTags.contains("noDamage")) return false;
         // fallen star etc. can damage players and NPC etc. without further check
         if (entityScoreboardTags.contains("ignoreCanDamageCheck")) return true;
         // can not attack oneself
@@ -1813,7 +1815,7 @@ public class EntityHelper {
             if (damageTaker instanceof Player)
                 return (!strict) && (damageTakerScoreboardTags.contains("PVP") && entityScoreboardTags.contains("PVP"));
             else {
-                if (damageTakerScoreboardTags.contains("isMonster")) return true;
+                if (targetScoreboardTags.contains("isMonster")) return true;
                 // homing weapons and minions should not willingly attack critters and NPCs (with voodoo doll)
                 if (strict) return false;
                 HashSet<String> accessories = PlayerHelper.getAccessories(damageSource);
@@ -1854,7 +1856,7 @@ public class EntityHelper {
                 return false;
             }
             // NPC/minion -> monster: true
-            if (damageTakerScoreboardTags.contains("isMonster") )
+            if (targetScoreboardTags.contains("isMonster"))
                 return entityScoreboardTags.contains("isNPC") || entityScoreboardTags.contains("isMinion");
             return false;
         }
@@ -2740,6 +2742,18 @@ public class EntityHelper {
         ProjectileShootInfo shootInfo = new ProjectileShootInfo(shooter, shootLoc, velocity, attrMap, damageType, projectileName);
         return spawnProjectile(shootInfo);
     }
+    // Teleportation would update last location; this function undoes this side effect.
+    // This is important for bosses' aim helper recording mechanism to work as intended.
+    public static void movementTP(Entity entity, Location destination) {
+        net.minecraft.server.v1_12_R1.Entity entityNMS = ((CraftEntity) entity).getHandle();
+        double lastX = entityNMS.lastX, lastY = entityNMS.lastY, lastZ = entityNMS.lastZ;
+
+        entity.teleport(destination); // Teleportation
+
+        entityNMS.lastX = lastX;
+        entityNMS.lastY = lastY;
+        entityNMS.lastZ = lastZ;
+    }
     // helps aim at an entity
     public static Location helperAimEntity(Location shootLoc, Entity target, AimHelperOptions aimHelperOption) {
         shootLoc.checkFinite();
@@ -2758,6 +2772,7 @@ public class EntityHelper {
             targetLoc = target.getLocation();
             MetadataValue currVelMetadata = getMetadata(target, MetadataName.ENTITY_CURRENT_VELOCITY);
             MetadataValue lastVelMetadata = getMetadata(target, MetadataName.ENTITY_LAST_VELOCITY);
+            // placeholder; use the saved current velocity for teleportation-based AI compatibility below.
             enemyVel = target.getVelocity();
             // if any of the two are not yet recorded, assume acceleration is none.
             if (currVelMetadata == null || lastVelMetadata == null) {
@@ -2765,9 +2780,9 @@ public class EntityHelper {
             }
             // otherwise, calculate acceleration.
             else {
-                Vector currSavedVel = (Vector) currVelMetadata.value();
+                enemyVel = (Vector) currVelMetadata.value();
                 Vector lastSavedVel = (Vector) lastVelMetadata.value();
-                enemyAcc = currSavedVel.clone().subtract(lastSavedVel);
+                enemyAcc = enemyVel.clone().subtract(lastSavedVel);
             }
             // for enemies with gravity, upper cap the acceleration at y = -0.08
             if (target.hasGravity())
@@ -2782,7 +2797,7 @@ public class EntityHelper {
         if (target instanceof LivingEntity) {
             EntityLiving targetNMS = ((CraftLivingEntity) target).getHandle();
             AxisAlignedBB boundingBox = targetNMS.getBoundingBox();
-            targetLoc.add(0, boundingBox.e - boundingBox.b, 0);
+            targetLoc.add(0, (boundingBox.e - boundingBox.b) / 2, 0);
         }
         // a placeholder, so that the function does not report an error
         predictedLoc = targetLoc.clone();
@@ -2949,7 +2964,7 @@ public class EntityHelper {
                     Vector velocity = targetLoc.subtract(segmentCurrent.getLocation()).toVector();
                     segmentCurrent.setVelocity(velocity); // Smooth movement
                 } else {
-                    segmentCurrent.teleport(targetLoc); // Teleportation
+                    movementTP(segmentCurrent, targetLoc); // Teleportation
                     segmentCurrent.setVelocity(new Vector());
                 }
 

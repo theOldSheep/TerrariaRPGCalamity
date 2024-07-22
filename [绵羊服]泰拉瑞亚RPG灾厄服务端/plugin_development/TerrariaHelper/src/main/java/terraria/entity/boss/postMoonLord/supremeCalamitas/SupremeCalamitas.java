@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Consumer;
 import org.bukkit.util.Vector;
+import terraria.entity.boss.BossProjectilesManager;
 import terraria.entity.projectile.BulletHellProjectile;
 import terraria.util.*;
 import terraria.util.MathHelper;
@@ -107,7 +108,7 @@ public class SupremeCalamitas extends EntitySlime {
                 attrMapPrjMid, 0.4, 0.2, 3, 250);
         BulletHellProjectileOption optionFlameSkull = new BulletHellProjectileOption(
                 "深渊炙颅", BulletHellProjectile.ProjectileType.SQUARE_BORDER_SIDES,
-                attrMapPrjHigh, 0.4, 0.2, 2, 250);
+                attrMapPrjHigh, 0.4, 0.2, 3, 250);
         BulletHellProjectileOption optionHellBlast = new BulletHellProjectileOption(
                 "无际裂变", BulletHellProjectile.ProjectileType.CIRCUMFERENCE,
                 attrMapPrjHigh, 0.3, 0.1, 20, 60);
@@ -155,7 +156,7 @@ public class SupremeCalamitas extends EntitySlime {
                 // third bullet hell 50% health
                 new BulletHellPattern(0.5, 400, true)
                         .addCandidate(optionBlastSurroundingEasy)
-                        .addCandidate(optionHellBlast)
+                        .addCandidate(optionHellBlastEasy)
                         .addCandidate(optionGigaBlast)
                         .setBeginFunc(
                         (boss) -> {
@@ -248,6 +249,7 @@ public class SupremeCalamitas extends EntitySlime {
     int indexAI = -50, attackType = 0;
     Vector velocity = new Vector();
     ArrayList<SupremeCalamitasBrother> brothers = new ArrayList<>();
+    BossProjectilesManager projectilesManager = new BossProjectilesManager();
 
 
     private void tickBulletHellRotation() {
@@ -263,9 +265,10 @@ public class SupremeCalamitas extends EntitySlime {
 
     }
     private void handleBulletHell() {
-        // init bullet hell dir
+        // init bullet hell dir & kill other projectiles
         if (indexAI == 0) {
             bulletHellDir = new BulletHellProjectile.BulletHellDirectionInfo(target);
+            projectilesManager.killAll();
         }
         // velocity
         Location hoverLoc = target.getLocation();
@@ -292,6 +295,7 @@ public class SupremeCalamitas extends EntitySlime {
                 double speed = projOption.speedMin + Math.random() * projOption.speedVariation;
                 BulletHellProjectile projectile = new BulletHellProjectile(shootInfo, projOption.shootType, 48, speed, bulletHellDir);
                 projectile.liveTime = projOption.projectileLiveTime;
+                projectilesManager.handleProjectile(projectile.bukkitEntity);
             }
         }
     }
@@ -377,7 +381,7 @@ public class SupremeCalamitas extends EntitySlime {
                     shootInfoDart.setLockedTarget(target);
                     for (Vector projVel : MathHelper.getEvenlySpacedProjectileDirections(DART_SPREAD_SINGLE, DART_SPREAD_TOTAL, target, shootInfoDart.shootLoc, DART_SPEED)) {
                         shootInfoDart.velocity = projVel;
-                        EntityHelper.spawnProjectile(shootInfoDart);
+                        projectilesManager.handleProjectile( EntityHelper.spawnProjectile(shootInfoDart) );
                     }
                     break;
                 // hell blasts
@@ -386,14 +390,14 @@ public class SupremeCalamitas extends EntitySlime {
                     shootInfoHellBlast.setLockedTarget(target);
                     Location aimedLoc = EntityHelper.helperAimEntity(shootInfoHellBlast.shootLoc, target, blastAimHelper);
                     shootInfoHellBlast.velocity = MathHelper.getDirection(shootInfoHellBlast.shootLoc, aimedLoc, HELL_BLAST_SPEED);
-                    EntityHelper.spawnProjectile(shootInfoHellBlast);
+                    projectilesManager.handleProjectile( EntityHelper.spawnProjectile(shootInfoHellBlast) );
                     break;
                 // giga blasts
                 case 3:
                     shootInfoGigaBlast.shootLoc = livingEntity.getEyeLocation();
                     shootInfoGigaBlast.setLockedTarget(target);
                     shootInfoGigaBlast.velocity = MathHelper.getDirection(shootInfoGigaBlast.shootLoc, target.getEyeLocation(), GIGA_BLAST_SPEED);
-                    EntityHelper.spawnProjectile(shootInfoGigaBlast);
+                    projectilesManager.handleProjectile( EntityHelper.spawnProjectile(shootInfoGigaBlast) );
                     break;
                 // dash
                 case 4:
@@ -457,6 +461,9 @@ public class SupremeCalamitas extends EntitySlime {
                 // increase player aggro duration
                 targetMap.get(target.getUniqueId()).addAggressionTick();
 
+                // manage projectiles
+                if (indexAI % 20 == 0)
+                    projectilesManager.dropOutdated();
 
                 BulletHellPattern pattern;
                 if (bulletHellPatternIdx < bulletHellPatterns.length)
@@ -477,6 +484,8 @@ public class SupremeCalamitas extends EntitySlime {
                     handleBulletHell();
                     // termination. "pattern" would not be null here, don't worry.
                     if (indexAI > pattern.duration) {
+                        projectilesManager.killAll();
+
                         bulletHellPatternIdx++;
                         indexAI = -51;
                         attackType = 0;
@@ -615,6 +624,7 @@ public class SupremeCalamitas extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // update boss bar and dynamic DR
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);

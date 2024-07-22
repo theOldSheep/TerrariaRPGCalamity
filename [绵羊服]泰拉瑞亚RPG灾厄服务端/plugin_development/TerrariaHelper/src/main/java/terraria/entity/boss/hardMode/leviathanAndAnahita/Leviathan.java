@@ -161,7 +161,7 @@ public class Leviathan extends EntitySlime {
             // update target
             if (anahita.isAlive()) {
                 target = anahita.target;
-                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+                
             }
             else {
                 target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
@@ -283,6 +283,7 @@ public class Leviathan extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

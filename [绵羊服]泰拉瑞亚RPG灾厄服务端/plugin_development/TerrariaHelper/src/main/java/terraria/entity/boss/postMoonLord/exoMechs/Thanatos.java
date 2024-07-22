@@ -180,7 +180,7 @@ public class Thanatos extends EntitySlime {
             attackMethod = AttackMethod.DASH;
             ticks = 0;
         }
-        desiredLength = 2.5;
+        desiredLength = 2;
         Vector idealVelocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), desiredLength);
         velocity = MathHelper.rotationInterpolateDegree(velocity, idealVelocity, 6);
     }
@@ -188,6 +188,8 @@ public class Thanatos extends EntitySlime {
     private void handleDashAttack(Draedon.Difficulty difficulty) {
         // Windup
         if (ticks < 40) {
+            desiredLength = 2.5;
+
             double angle = 25 * ticks / 40.0;
             Location targetLocation = target.getEyeLocation();
             if (!owner.isSubBossActive(Draedon.SubBossType.THANATOS)) {
@@ -201,11 +203,13 @@ public class Thanatos extends EntitySlime {
         }
         // Dash
         else if (ticks == 40) {
-            owner.playWarningSound();
             desiredLength = difficulty == Draedon.Difficulty.HIGH ? 5.0 : 3.5;
             Location targetLocation = target.getEyeLocation();
             if (!owner.isSubBossActive(Draedon.SubBossType.THANATOS)) {
                 targetLocation.setY(-50);
+            }
+            else {
+                owner.playWarningSound();
             }
             velocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), targetLocation, desiredLength);
         }
@@ -310,7 +314,7 @@ public class Thanatos extends EntitySlime {
         {
             // update target
             target = owner.target;
-            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            
             // attack
             if (target != null) {
                 tick();
@@ -419,6 +423,7 @@ public class Thanatos extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // update boss bar and dynamic DR
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);

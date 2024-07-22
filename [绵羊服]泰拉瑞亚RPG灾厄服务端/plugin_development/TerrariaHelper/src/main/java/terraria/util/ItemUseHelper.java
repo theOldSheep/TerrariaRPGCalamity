@@ -2372,7 +2372,7 @@ public class ItemUseHelper {
                     }
                     case "镜之刃": {
                         if (currentIndex == 0) {
-                            for (int i = 0; i < 3; i ++) {
+                            if (Math.random() < 0.5) {
                                 Vector projVel = MathHelper.vectorFromYawPitch_approx(
                                         plyYaw + Math.random() * 20 - 10, plyPitch + Math.random() * 20 - 10);
                                 projVel.multiply(3);
@@ -5195,7 +5195,7 @@ public class ItemUseHelper {
         if (scoreboardTags.contains("toolChanged"))
             PlayerHelper.setupAttribute(ply);
         // variable setup
-        HashMap<String, Double> attrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(ply).clone();
+        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
         boolean isRightClick = scoreboardTags.contains("isSecondaryAttack");
         // other items that require item type info
         ItemStack mainHandItem = ply.getInventory().getItemInMainHand();
@@ -5225,6 +5225,11 @@ public class ItemUseHelper {
             itemName += (isRightClick ? "_RIGHT_CLICK" : "");
             ConfigurationSection weaponSection = TerrariaHelper.weaponConfig.getConfigurationSection(itemName);
             if (weaponSection != null) {
+                // prevent accidental glitch that creates endless item use cool down
+                if (attrMap.getOrDefault("useCD", 0d) < 0.01) {
+                    PlayerHelper.setupAttribute(ply);
+                    attrMap = EntityHelper.getAttrMap(ply);
+                }
                 // handle loading
                 boolean autoSwing = weaponSection.getBoolean("autoSwing", false);
                 boolean isLoading = false;
@@ -5268,8 +5273,6 @@ public class ItemUseHelper {
                 }
                 // use weapon
                 String weaponType = weaponSection.getString("type", "");
-                // prevent accidental glitch that creates endless item use cool down
-                if (attrMap.getOrDefault("useCD", 0d) < 0.01) PlayerHelper.setupAttribute(ply);
                 boolean success = false;
                 switch (weaponType) {
                     case "STAB":

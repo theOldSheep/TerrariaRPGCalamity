@@ -107,6 +107,7 @@ terraria\entity\boss\hardMode\dukeFishron\Sharknado.class
 terraria\entity\projectile\Flail.class
 terraria\entity\boss\preHardMode\eaterOfWorld\EaterOfWorld$1.class
 terraria\entity\boss\hardMode\moonLord\MoonLordPhantasmalBolt.class
+terraria\entity\boss\postMoonLord\exoMechs\Artemis$1.class
 terraria\entity\projectile\Yoyo.class
 terraria\entity\boss\postMoonLord\devourerOfGods\ScatteringCircleAttackPattern$1.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Anahita$1.class

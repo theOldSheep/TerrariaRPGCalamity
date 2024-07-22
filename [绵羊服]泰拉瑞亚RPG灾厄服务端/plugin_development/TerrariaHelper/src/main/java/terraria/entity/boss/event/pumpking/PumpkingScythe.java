@@ -104,6 +104,7 @@ public class PumpkingScythe extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // AI
         AI();

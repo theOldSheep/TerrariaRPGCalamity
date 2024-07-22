@@ -157,9 +157,6 @@ public class SkeletronHead extends EntitySlime {
                             for (org.bukkit.entity.LivingEntity loopEntity : bossParts)
                                 if (loopEntity.getHealth() > 1e-5) toTeleport.add( ((CraftEntity) loopEntity).getHandle() );
                             for (Entity teleportedEntity : toTeleport) {
-                                teleportedEntity.lastX = teleportLoc.getX();
-                                teleportedEntity.lastY = teleportLoc.getY();
-                                teleportedEntity.lastZ = teleportLoc.getZ();
                                 teleportedEntity.getBukkitEntity().teleport(teleportLoc);
                             }
                             spitShadowFlame();
@@ -313,6 +310,7 @@ public class SkeletronHead extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

@@ -216,6 +216,7 @@ public class BossHelper {
         // calculate velocity
         net.minecraft.server.v1_12_R1.Entity bossNMS = ((CraftEntity) boss).getHandle();
         Vector velocity = new Vector(bossNMS.locX - bossNMS.lastX, bossNMS.locY - bossNMS.lastY, bossNMS.locZ - bossNMS.lastZ);
+
         EntityHelper.setMetadata(boss, EntityHelper.MetadataName.ENTITY_CURRENT_VELOCITY, velocity);
     }
     // generally, this function also handles misc aspects like cached velocity
@@ -225,8 +226,6 @@ public class BossHelper {
     }
     public static Player updateBossTarget(Player currentTarget, Entity boss, boolean ignoreDistance, TimeRequirement timeRequired,
                                           WorldHelper.BiomeType biomeRequired, Collection<UUID> availableTargets) {
-        // update saved velocity
-        updateSpeedForAimHelper(boss);
         // update target
         Player finalTarget = currentTarget;
         if (!checkBossTarget(currentTarget, boss, ignoreDistance, timeRequired, biomeRequired)) {

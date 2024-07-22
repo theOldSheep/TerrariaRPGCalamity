@@ -102,6 +102,7 @@ public class MoonLordBackground extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // set velocity to zero
         bukkitEntity.setVelocity(new Vector());

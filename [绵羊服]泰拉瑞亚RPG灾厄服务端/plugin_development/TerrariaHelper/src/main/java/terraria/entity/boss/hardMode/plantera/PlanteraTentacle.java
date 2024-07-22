@@ -39,7 +39,7 @@ public class PlanteraTentacle extends EntitySlime {
             }
             // if target is valid, attack
             else {
-                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+                
                 bukkitEntity.setVelocity(MathHelper.getDirection(
                         bukkitEntity.getLocation(),
                         owner.getBukkitEntity().getLocation().add(offsetDirection),
@@ -114,6 +114,7 @@ public class PlanteraTentacle extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

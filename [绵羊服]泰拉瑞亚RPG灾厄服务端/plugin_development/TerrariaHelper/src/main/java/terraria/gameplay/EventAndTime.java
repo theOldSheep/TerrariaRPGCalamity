@@ -199,8 +199,8 @@ public class EventAndTime {
         BOSS_RUSH_MESSAGES.put(null, new String[]{
                 "着实完美的展演。看来我是对的！你确实可能是这个世界最强大的战士，但......",
                 "看来就算是那种力量......还是不够。恐怕我不能向你分享我的提案了。",
-                "尽管如此，虽然只是安慰奖，但我还是希望你拿着这块古代石头。",
-                "它是我从巨龙天巢上刻下来的；我带着它当......纪念品，某种程度上。",
+                "尽管如此，虽然只是安慰奖，但我还是希望你拿着这些古代石头。",
+                "它们是我从巨龙天巢上刻下来的；我带着当......纪念品，某种程度上。",
                 "尽管你没能达成我的需求，但未来我们的道路肯定还会有交叉！",
                 "继续寻求更为强大的力量吧，当我们再度相遇时，或许你的力量就够格了。",
                 "与此同时，我自己也还有必须要亲自处理的事情。",
@@ -308,7 +308,7 @@ public class EventAndTime {
         if (failure)
             Bukkit.broadcastMessage(BOSS_RUSH_MESSAGES_PREFIX + "菜就多练，菜，就多练！");
         else {
-            ItemStack itemToGive = ItemHelper.getItemFromDescription("古恒石");
+            ItemStack itemToGive = ItemHelper.getItemFromDescription("古恒石:64");
             for (Player ply : getBossRushCandidatePlayers()) {
                 PlayerHelper.giveItem(ply, itemToGive, true);
             }
@@ -320,7 +320,6 @@ public class EventAndTime {
             if (PlayerHelper.isProperlyPlaying(ply) &&
                     PlayerHelper.hasDefeated(ply, "毕业")) {
                 candidates.add(ply);
-                Bukkit.broadcastMessage(ply.getName());
             }
         }
         return candidates;

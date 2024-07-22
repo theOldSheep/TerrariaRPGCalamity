@@ -100,8 +100,6 @@ public class Signus extends EntitySlime {
             Location newLoc = target.getLocation().add(MathHelper.randomVector().multiply(DIST_TELEPORT));
             bukkitEntity.teleport(newLoc);
             teleported = true;
-
-
         }
     }
     // fire clusters of scythes
@@ -117,10 +115,9 @@ public class Signus extends EntitySlime {
                 shootInfoScythe.velocity = shootDir;
                 EntityHelper.spawnProjectile(shootInfoScythe);
             }
-
-            if (indexAI >= 40) {
-                updatePhase();
-            }
+        }
+        if (indexAI >= 50) {
+            updatePhase();
         }
     }
     // dash and leave scythes along the path
@@ -132,7 +129,7 @@ public class Signus extends EntitySlime {
 
             shootInfoScythe.setLockedTarget(target);
             shootInfoScythe.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-            shootInfoScythe.velocity = velocity.clone().normalize().multiply(SPEED_SCYTHE);
+            shootInfoScythe.velocity = MathHelper.setVectorLength(velocity.clone(), SPEED_SCYTHE);
             EntityHelper.spawnProjectile(shootInfoScythe);
         }
         else {
@@ -292,6 +289,7 @@ public class Signus extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // update boss bar and dynamic DR
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);

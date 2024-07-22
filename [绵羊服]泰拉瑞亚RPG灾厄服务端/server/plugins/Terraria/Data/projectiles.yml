@@ -899,7 +899,7 @@
         amount: 4
         damageMulti: 0.8
         name: 星流等离子束
-        velocity: 2
+        velocity: 1.6
 星流等离子束:
     projectileSize: 0.75
     liveTime: 80
@@ -2172,8 +2172,8 @@ TNT:
     noGravityTicks: 0
     blockHitAction: thru
     buffInflict:
-        - "冷冻|150|1"
-        - "冰冻|100|0.1654"
+        - "冷冻|60|1"
+        - "冰冻|50|0.1654"
 手里剑:
     penetration: 3
     slowedByWater: true
@@ -4152,6 +4152,7 @@ TNT:
     gravity: 0
     isGrenade: true
     blastRadius: 4.5
+    trailColor: 100|250|250
 钨钢光球:
     gravity: 0
     trailColor: 251|250|250

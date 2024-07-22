@@ -88,7 +88,8 @@ public class CeaselessVoid extends EntitySlime {
 
             for (int i = 0; i < numEntities; i++) {
                 DarkEnergy darkEnergy = new DarkEnergy(owner);
-                darkEnergy.getBukkitEntity().teleport(owner.getBukkitEntity().getLocation());
+                EntityHelper.movementTP(darkEnergy.getBukkitEntity(),
+                        owner.getBukkitEntity().getLocation());
                 darkEnergies.add(darkEnergy);
             }
         }
@@ -130,7 +131,7 @@ public class CeaselessVoid extends EntitySlime {
             spawnArcs(PHASE_ARC_AMOUNTS[currentPhase]); // Spawn the configured number of arcs
             getBukkitEntity().getScoreboardTags().add("noDamage"); // Make the boss invulnerable
         }
-        // Remove invulnerability if 80% dark energies are defeated
+        // Remove invulnerability if 75% dark energies are defeated
         if (darkEnergyArcs.stream()
                 .flatMap(arc -> arc.darkEnergies.stream())
                 .filter((e) -> !e.isAlive() ).count()
@@ -350,6 +351,7 @@ public class CeaselessVoid extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // update boss bar and dynamic DR
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);

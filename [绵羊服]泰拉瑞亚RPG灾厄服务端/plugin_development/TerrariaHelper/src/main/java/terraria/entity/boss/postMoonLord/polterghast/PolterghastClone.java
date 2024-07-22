@@ -48,7 +48,7 @@ public class PolterghastClone extends EntitySlime {
                 die();
             // update target
             target = boss.target;
-            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            
 
             bukkitEntity.setVelocity(velocity);
         }
@@ -123,6 +123,7 @@ public class PolterghastClone extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // load nearby chunks
         {

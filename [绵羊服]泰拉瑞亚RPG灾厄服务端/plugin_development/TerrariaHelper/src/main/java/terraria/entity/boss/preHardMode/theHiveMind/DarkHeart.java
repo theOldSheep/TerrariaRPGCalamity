@@ -39,7 +39,7 @@ public class DarkHeart extends EntitySlime {
                 die();
                 return;
             }
-            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            
             // if target is valid, attack
             if (ticksLived % 3 == 0) {
                 // move towards enemy
@@ -129,6 +129,7 @@ public class DarkHeart extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

@@ -1204,6 +1204,18 @@ XM-05“塔纳托斯”头:
 XM-05“塔纳托斯”体节:
     soundDamaged: entity.hit.otherworldly
     buffInflict:
+        - "超位崩解|20|1"
+    buffImmute:
+        - "燃烧"
+        - "霜火"
+        - "狱炎"
+        - "破晓"
+        - "夜魇"
+        - "龙焰"
+        - "超位崩解"
+XM-05“塔纳托斯”散热体节:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
         - "超位崩解|40|1"
     buffImmute:
         - "燃烧"

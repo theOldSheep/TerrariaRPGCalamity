@@ -63,9 +63,11 @@ public class Apollo extends EntitySlime {
         }
     }
 
+    // dash when difficulty is high and otherwise fire plasma
     private void phase1Attack() {
-        int interval = owner.getActiveBossCount() == 3 ? 15 : 10;
-        if (twin.stageTransitionTriggered && owner.getActiveBossCount() == 1) {
+        Draedon.Difficulty difficulty = owner.calculateDifficulty(this);
+        int interval = difficulty == Draedon.Difficulty.LOW ? 15 : 10;
+        if (difficulty == Draedon.Difficulty.HIGH) {
             if (twin.phaseDurationCounter % 30 == 0) {
                 owner.playWarningSound();
                 dashVel = getDashDirection(false); // Direct dash
@@ -80,17 +82,18 @@ public class Apollo extends EntitySlime {
             }
         }
     }
-
+    // fire rockets
     private void phase2Attack() {
-        int interval = owner.getActiveBossCount() >= 2 ? 12 : 8;
+        int interval = owner.calculateDifficulty(this) == Draedon.Difficulty.HIGH ? 8 : 12;
         if (twin.phaseDurationCounter % interval == 0) {
             fireProjectile(true); // Fire rocket
         }
     }
-
+    // fire plasma; first perform a dash if difficulty is high
     private void phase3Attack() {
-        int interval = owner.getActiveBossCount() >= 2 ? 18 : 12;
-        if (owner.getActiveBossCount() == 1 && twin.phaseDurationCounter < 30) {
+        Draedon.Difficulty difficulty = owner.calculateDifficulty(this);
+        int interval = difficulty == Draedon.Difficulty.HIGH ? 12 : 18;
+        if (difficulty == Draedon.Difficulty.HIGH && twin.phaseDurationCounter < 30) {
             if (twin.phaseDurationCounter == 0) {
                 owner.playWarningSound();
                 dashVel = getDashDirection(true); // Aimed dash
@@ -105,22 +108,19 @@ public class Apollo extends EntitySlime {
             }
         }
     }
-
+    // fire rockets
     private void phase4Attack() {
         if (twin.phaseDurationCounter % 10 == 0) {
             fireProjectile(true); // Fire rocket
         }
     }
 
-
-
-
     private void fireProjectile(boolean rocketOrPlasma) {
         EntityHelper.ProjectileShootInfo shootInfo = rocketOrPlasma ? shootInfoRocket : shootInfoPlasma;
         shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc,
                 target.getEyeLocation().add(MathHelper.randomVector().multiply(5)),
-                rocketOrPlasma ? 1.25 : 1.5);
+                rocketOrPlasma ? 1.25 : 1.35);
         EntityHelper.spawnProjectile(shootInfo);
     }
     private Vector getDashDirection(boolean aimedOrDirect) {
@@ -136,7 +136,7 @@ public class Apollo extends EntitySlime {
         {
             // update target
             target = owner.target;
-            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            
             // attack
             if (target != null) {
                 // hover
@@ -223,6 +223,7 @@ public class Apollo extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         this.setHealth(twin.getHealth());
         // update boss bar and dynamic DR

@@ -53,13 +53,8 @@ public class Yharon extends EntitySlime {
     private int phaseTick = 0;
     private int phaseStep = 1;
     private int dashType;
+    private int particleTicks = PARTICLE_INTERVAL;
 
-    private void teleport(Location location) {
-        this.setPosition(location.getX(), location.getY(), location.getZ());
-        this.lastX = location.getX();
-        this.lastY = location.getY();
-        this.lastZ = location.getZ();
-    }
     private void updatePhaseStep() {
         updatePhaseStep(this.phaseStep + 1);
     }
@@ -69,13 +64,13 @@ public class Yharon extends EntitySlime {
     }
     private void charge() {
         if (this.phaseTick % 30 == 1) {
-            this.velocity = this.target.getLocation().toVector().subtract(entity.getLocation().toVector()).normalize().multiply(2.0);
+            this.velocity = MathHelper.getDirection(entity.getLocation(), this.target.getLocation(), 2);
         }
     }
 
     private void chargeQuickly() {
         if (this.phaseTick % 20 == 1) {
-            this.velocity = this.target.getLocation().toVector().subtract(entity.getLocation().toVector()).normalize().multiply(3.0);
+            this.velocity = MathHelper.getDirection(entity.getLocation(), this.target.getLocation(), 3);
         }
     }
     private void randomCharge() {
@@ -114,14 +109,14 @@ public class Yharon extends EntitySlime {
     private void flyHorizontal() {
         if (this.phaseTick == 1) {
             Location loc = entity.getLocation();
-            Vector dir = this.target.getLocation().toVector().subtract(loc.toVector()).normalize();
+            Vector dir = this.target.getLocation().toVector().subtract(loc.toVector());
             dir.setY(0);
-            this.velocity = dir.multiply(2.5);
+            this.velocity = MathHelper.setVectorLength(dir,1.5);
         }
     }
     private void spawnTornado() {
         Location loc = entity.getEyeLocation();
-        Vector dir = this.target.getLocation().toVector().subtract(loc.toVector()).normalize().multiply(1.5);
+        Vector dir = MathHelper.getDirection(entity.getLocation(), this.target.getLocation(), 1.5);
         shootInfoFlareTornado.shootLoc = loc;
         shootInfoFlareTornado.velocity = dir;
         shootInfoFlareTornado.setLockedTarget(target);
@@ -133,8 +128,10 @@ public class Yharon extends EntitySlime {
         summonRingOfProjectilesSphere(shootInfo, 0, 1, alternate);
     }
     public void summonRingOfProjectilesSphere(EntityHelper.ProjectileShootInfo shootInfo, int idx, int idxMax, boolean alternate) {
+        summonRingOfProjectilesSphere(shootInfo, idx, idxMax, alternate, 32);
+    }
+    public void summonRingOfProjectilesSphere(EntityHelper.ProjectileShootInfo shootInfo, int idx, int idxMax, boolean alternate, int numProjectiles) {
         Location spawnLocation = ((LivingEntity) bukkitEntity).getEyeLocation();
-        int numProjectiles = 16;
         double initialAngle = Math.random() * 360;
         double angleChange = 0.4;
         double radiusMultiplier = 1.5;
@@ -179,11 +176,11 @@ public class Yharon extends EntitySlime {
             case 4:
                 if (this.phaseTick == 1) {
                     this.teleportTarget = this.target.getLocation().add(0, 32, 0);
-                    this.velocity = this.teleportTarget.toVector().subtract(entity.getLocation().toVector()).normalize().multiply(2.0);
+                    this.velocity = MathHelper.getDirection(entity.getLocation(), this.teleportTarget, 2);
                 }
                 if (this.phaseTick > 10) {
                     if (this.phaseTick == 11) {
-                        this.teleport(this.teleportTarget);
+                        bukkitEntity.teleport(this.teleportTarget);
                         this.velocity.zero();
                     }
                     if (this.phaseTick % 10 == 0)
@@ -259,7 +256,7 @@ public class Yharon extends EntitySlime {
             case 9:
                 if (this.phaseTick == 1) {
                     Location loc = target.getLocation().add(target.getLocation().getDirection().multiply(32));
-                    this.teleport(loc);
+                    bukkitEntity.teleport(loc);
                     this.velocity.zero();
                 }
                 if (this.phaseTick % 10 == 1)
@@ -284,14 +281,19 @@ public class Yharon extends EntitySlime {
             case 2:
                 if (this.phaseTick < 40) {
                     this.chargeQuickly();
-                } else if (this.phaseTick < 60) {
+                } else {
+                    updatePhaseStep();
+                }
+                break;
+            case 3:
+                if (this.phaseTick < 20) {
                     this.flyHorizontal();
                     this.fireball();
                 } else {
                     updatePhaseStep();
                 }
                 break;
-            case 3:
+            case 4:
                 this.charge();
                 if (this.phaseTick > 30) {
                     if (Math.random() < 0.5) {
@@ -301,13 +303,13 @@ public class Yharon extends EntitySlime {
                     }
                 }
                 break;
-            case 4:
+            case 5:
                 this.charge();
                 if (this.phaseTick > 30) {
                     updatePhaseStep();
                 }
                 break;
-            case 5:
+            case 6:
                 if (this.phaseTick < 40) {
                     this.chargeQuickly();
                 } else {
@@ -315,7 +317,7 @@ public class Yharon extends EntitySlime {
                     updatePhaseStep();
                 }
                 break;
-            case 6:
+            case 7:
                 if (this.phaseTick % 15 == 0) {
                     summonRingOfProjectilesSphere(shootInfoFireballRegular, phaseTick / 15, 2, true);
                 }
@@ -323,7 +325,7 @@ public class Yharon extends EntitySlime {
                     updatePhaseStep();
                 }
                 break;
-            case 7:
+            case 8:
                 if (this.phaseTick > 30) {
                     updatePhaseStep(1);
                 }
@@ -350,7 +352,7 @@ public class Yharon extends EntitySlime {
             case 8:
                 this.velocity = new Vector(0, 0, 0); // Ensure the entity does not move
                 if (this.phaseTick % 12 == 0)
-                    summonRingOfProjectilesSphere(shootInfoFireballRegular, phaseTick / 12, 5, false);
+                    summonRingOfProjectilesSphere(shootInfoFireballRegular, phaseTick / 12, 5, false, 26);
                 if (this.phaseTick > 60) {
                     updatePhaseStep();
                 }
@@ -371,9 +373,9 @@ public class Yharon extends EntitySlime {
                     do {
                         dir = MathHelper.randomVector();
                     } while (MathHelper.getAngleRadian(loc.getDirection(), dir) > Math.toRadians(45));
-                    dir = dir.normalize().multiply(32);
-                    loc = loc.add(dir);
-                    this.teleport(loc);
+                    dir.multiply(32);
+                    loc.add(dir);
+                    bukkitEntity.teleport(loc);
                     this.chargeQuickly();
                 }
                 if (this.phaseTick > 20) {
@@ -387,17 +389,17 @@ public class Yharon extends EntitySlime {
             case 4:
                 if (this.phaseTick == 1) {
                     Location loc = this.target.getLocation();
-                    this.teleport(loc.add(loc.getDirection().multiply(32)));
+                    bukkitEntity.teleport(loc.add(loc.getDirection().multiply(32)));
                     this.velocity.zero();
                 }
                 if (this.phaseTick % 10 == 0)
-                    summonRingOfProjectilesSphere(shootInfoFireballRegular, phaseTick / 10, 3, true);
+                    summonRingOfProjectilesSphere(shootInfoFireballRegular, phaseTick / 10, 3, true, 20);
                 if (this.phaseTick > 60) {
                     updatePhaseStep();
                 }
                 break;
             case 5:
-                if (this.phaseTick > 20) {
+                if (this.phaseTick > 40) {
                     updatePhaseStep(1);
                 }
                 break;
@@ -461,8 +463,9 @@ public class Yharon extends EntitySlime {
             }
         }
         // Fire particles
-        if (ticksLived % PARTICLE_INTERVAL == 1) {
+        if (++particleTicks > PARTICLE_INTERVAL) {
             visualizeBoundary();
+            particleTicks = 0;
         }
     }
     private boolean isOutOfBoundary(Player ply) {
@@ -614,6 +617,7 @@ public class Yharon extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // update boss bar and dynamic DR
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);

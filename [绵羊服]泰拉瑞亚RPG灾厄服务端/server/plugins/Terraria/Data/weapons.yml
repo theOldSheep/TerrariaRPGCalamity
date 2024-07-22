@@ -2075,7 +2075,7 @@ P90:
 灭域者:
   type: GUN
   shots: 3
-  offSet: 12
+  offSet: 49
   autoSwing: true
   useSound: entity.generic.explode
   ammoConversion:

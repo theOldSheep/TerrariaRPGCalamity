@@ -272,7 +272,7 @@ public class MoonLordEye extends EntitySlime {
             }
             // update target
             target = owner.target;
-            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            
             // if target is valid, attack
             if (indexAI >= 0) {
                 // get next attack method
@@ -384,6 +384,7 @@ public class MoonLordEye extends EntitySlime {
     }
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

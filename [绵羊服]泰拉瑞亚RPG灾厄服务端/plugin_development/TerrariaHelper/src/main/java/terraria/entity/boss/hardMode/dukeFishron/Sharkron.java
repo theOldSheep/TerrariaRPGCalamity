@@ -57,7 +57,8 @@ public class Sharkron extends EntitySlime {
             if (bukkitEntity.getLocation().getBlock().getType() != org.bukkit.Material.AIR || hitLocation
                      != null) {
                 if (hitLocation != null)
-                    bukkitEntity.teleport(MathHelper.toBukkitVector(hitLocation.pos).toLocation(bukkitEntity.getWorld()));
+                    EntityHelper.movementTP(bukkitEntity,
+                            MathHelper.toBukkitVector(hitLocation.pos).toLocation(bukkitEntity.getWorld()));
                 setHealth(0f);
             }
         }
@@ -132,6 +133,7 @@ public class Sharkron extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

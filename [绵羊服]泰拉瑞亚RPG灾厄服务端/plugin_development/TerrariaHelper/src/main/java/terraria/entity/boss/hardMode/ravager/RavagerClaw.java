@@ -54,7 +54,7 @@ public class RavagerClaw extends EntitySlime {
             }
             // if target is valid, attack
             else {
-                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+                
                 // velocity and location
                 Location idleLocation;
                 {
@@ -64,7 +64,7 @@ public class RavagerClaw extends EntitySlime {
                 }
                 if (indexAI < 15) {
                     bukkitEntity.setVelocity(owner.getBukkitEntity().getVelocity());
-                    bukkitEntity.teleport(idleLocation);
+                    EntityHelper.movementTP(bukkitEntity, idleLocation);
                 }
                 else {
                     if (indexAI == 15) {
@@ -161,6 +161,7 @@ public class RavagerClaw extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

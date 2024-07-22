@@ -36,7 +36,7 @@ public class WallOfFleshWall extends EntitySlime {
                 Vector offsetDir = owner.horizontalMoveDirection.clone().multiply(-SLIME_SIZE_BLOCKS * 0.5);
                 Location hoverLoc = owner.getBukkitEntity().getLocation().add(offsetDir);
                 hoverLoc.setY(yCoord);
-                bukkitEntity.teleport(hoverLoc);
+                EntityHelper.movementTP(bukkitEntity, hoverLoc);
                 bukkitEntity.setVelocity(owner.getBukkitEntity().getVelocity());
             }
         }
@@ -89,6 +89,7 @@ public class WallOfFleshWall extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // AI
         AI();

@@ -52,7 +52,7 @@ public class AresArm extends EntitySlime {
     public enum ArmAttackPattern {
         LASER_CANNON("红色星流脉冲激光", new int[]{10, 8, 5, 10}, new int[]{1, 1, 1, 1}, new int[]{10, 8, 5, 10},
                 2.0, new double[]{0.5, 0.75, 1, 0.25}, new double[]{0.25, 0.5, 1, 0}, createAttributeMap(1560, 1.5)),
-        TESLA_CANNON("特斯拉星流闪电", new int[]{60, 40, 0, 50}, new int[]{4, 5, 6, 1}, new int[]{30, 25, 20, 0},
+        TESLA_CANNON("特斯拉星流闪电", new int[]{60, 40, 30, 50}, new int[]{4, 5, 6, 1}, new int[]{30, 25, 20, 0},
                 1.8, new double[]{0.6, 0.85, 1, 1}, new double[]{0, 0, 0, 0}, createAttributeMap(1260, 1)),
         NUKE_LAUNCHER("星流高斯核弹", new int[]{200, 100, 60, 200}, new int[]{0, 1, 1, 0}, new int[]{0, 0, 0, 0},
                 1.5, new double[]{0, 0.5, 1, 0}, new double[]{0, 0, 0, 0}, createAttributeMap(1920, 6)),
@@ -160,7 +160,7 @@ public class AresArm extends EntitySlime {
                     Location aimLocation = EntityHelper.helperAimEntity(shootLoc, target, aimHelperOptions);
 
                     Vector direction = aimLocation.toVector().subtract(shootLoc.toVector());
-                    if (direction.lengthSquared() == 0) {
+                    if (direction.lengthSquared() < 1e-9) {
                         direction = new Vector(1, 0, 0);
                     } else {
                         direction.normalize();
@@ -203,7 +203,7 @@ public class AresArm extends EntitySlime {
         {
             // update target
             target = owner.target;
-            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            
             // attack
             if (target != null) {
                 movementTick();
@@ -285,6 +285,7 @@ public class AresArm extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         this.setHealth(owner.getHealth());
         // update boss bar and dynamic DR

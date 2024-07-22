@@ -46,8 +46,8 @@ public class StormWeaver extends EntitySlime {
 
     static final double ACC_PHASE_1 = 0.2, SPEED_PHASE_1 = 2.0, DIST_ACCELERATE_PHASE_1 = 16.0;
     static final double ACC_PHASE_2 = 0.75, SPEED_PHASE_2 = 4.25, SPEED_PHASE_2_DASH = 6.5, DIST_ACCELERATE_PHASE_2 = 24.0,
-            CIRCLE_HEIGHT = 40.0, CIRCLE_RADIUS = 40.0,
-            ANGLE_PER_TICK = SPEED_PHASE_2 / CIRCLE_RADIUS;
+            CIRCLE_HEIGHT = 40.0, CIRCLE_RADIUS = 40.0, CIRCLE_SPEED = 2.5,
+            ANGLE_PER_TICK = CIRCLE_SPEED / CIRCLE_RADIUS;
     static final int PROJECTILE_INTERVAL = 20, PROJECTILE_ROUNDS = 4,
             DASHES = 3, DASH_DURATION_1 = 30, DASH_DURATION_2 = 20;
 
@@ -80,6 +80,7 @@ public class StormWeaver extends EntitySlime {
     boolean isSummonedByDoG = false;
 
     Vector lastVelocity = new Vector(); // Store the last velocity
+    private double circleAngle = 0;
     private int phase = 1;  // Initialize the phase to 1
     private int circleTimer = 0; // Timer to track circular movement duration
     private int dashTimer = 0; // Timer to track dash duration
@@ -90,6 +91,10 @@ public class StormWeaver extends EntitySlime {
         } else {
             // Phase 2: Circular movement and projectile firing, then dashing
             if (circleTimer < (PROJECTILE_ROUNDS + 2) * PROJECTILE_INTERVAL) {
+                if (circleTimer == 0) {
+                    Vector dir = target.getLocation().subtract(bukkitEntity.getLocation()).toVector();
+                    circleAngle = Math.atan2(dir.getZ(), dir.getX());
+                }
                 circleAbovePlayer();
                 if (circleTimer % PROJECTILE_INTERVAL == 0) {
                     int fireRound = circleTimer / PROJECTILE_INTERVAL;
@@ -109,15 +114,15 @@ public class StormWeaver extends EntitySlime {
     }
     private void circleAbovePlayer() {
         // Calculate circular movement parameters
-        double angle = ticksLived * ANGLE_PER_TICK; // Adjust the speed as needed
-        double x = target.getLocation().getX() + CIRCLE_RADIUS * Math.cos(angle);
-        double z = target.getLocation().getZ() + CIRCLE_RADIUS * Math.sin(angle);
+        circleAngle += ANGLE_PER_TICK; // Adjust the speed as needed
+        double x = target.getLocation().getX() + CIRCLE_RADIUS * Math.cos(circleAngle);
+        double z = target.getLocation().getZ() + CIRCLE_RADIUS * Math.sin(circleAngle);
         double y = target.getLocation().getY() + CIRCLE_HEIGHT;
 
         // Move the head towards the calculated position
         Vector movementVector = MathHelper.getDirection(bukkitEntity.getLocation(), new Location(bukkitEntity.getWorld(), x, y, z), ACC_PHASE_2);
         lastVelocity.add(movementVector);
-        MathHelper.setVectorLength(lastVelocity, SPEED_PHASE_2, true);// Cap the speed in phase 2
+        MathHelper.setVectorLength(lastVelocity, CIRCLE_SPEED, true);// Cap the speed in phase 2
 
         this.getBukkitEntity().setVelocity(lastVelocity);
         this.setYawPitch(bukkitEntity.getLocation().setDirection(lastVelocity));
@@ -125,7 +130,7 @@ public class StormWeaver extends EntitySlime {
     private void fireProjectile() {
         shootInfoFrostWave.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         for (Vector vel : MathHelper.getEvenlySpacedProjectileDirections(
-                10, 51, target, shootInfoFrostWave.shootLoc, FROST_WAVE_SPEED)) {
+                12, 49, target, shootInfoFrostWave.shootLoc, FROST_WAVE_SPEED)) {
             shootInfoFrostWave.velocity = vel;
             EntityHelper.spawnProjectile(shootInfoFrostWave);
         }
@@ -197,7 +202,6 @@ public class StormWeaver extends EntitySlime {
                         IGNORE_DISTANCE, isSummonedByDoG ? null : BIOME_REQUIRED, targetMap.keySet());
             else {
                 target = head.target;
-                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
             }
             // disappear if no target is available
             if (target == null) {
@@ -387,6 +391,7 @@ public class StormWeaver extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // update boss bar and dynamic DR
         if (segmentIndex == 0)

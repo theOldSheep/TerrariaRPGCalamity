@@ -130,6 +130,10 @@ STONE:
 COBBLESTONE:
   totalProgress: 100
   dropItem:
+  - 石头
+STONE_5:
+  totalProgress: 100
+  dropItem:
   - 古恒石
 STAINED_CLAY_0:
   powerPickaxe: 65

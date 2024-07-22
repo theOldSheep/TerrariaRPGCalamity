@@ -1,5 +1,6 @@
 package terraria.entity.boss.postMoonLord.exoMechs;
 
+import io.netty.channel.unix.DomainSocketReadMode;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -171,10 +172,11 @@ public class Artemis extends EntitySlime {
     }
 
     private void checkPhaseTransition() {
+        Draedon.Difficulty difficulty = owner.calculateDifficulty(this);
         switch (phase) {
             case 1:
                 if (phaseDurationCounter >= 120) {
-                    if (owner.getActiveBossCount() == 3)
+                    if (difficulty == Draedon.Difficulty.LOW)
                         transitionToPhase(1);
                     else
                         transitionToPhase(2);
@@ -183,7 +185,7 @@ public class Artemis extends EntitySlime {
             case 2:
                 if (phaseDurationCounter >= 120) {
                     if (stageTransitionTriggered) {
-                        if (owner.getActiveBossCount() == 1 && Math.random() < 0.5) {
+                        if (difficulty == Draedon.Difficulty.HIGH && Math.random() < 0.5) {
                             transitionToPhase(4);
                         } else {
                             transitionToPhase(3);
@@ -213,22 +215,27 @@ public class Artemis extends EntitySlime {
             yawOffsetMulti *= -1;
     }
 
+    // fire lasers at the player
     private void phase1Attack() {
         int shootInterval;
         EntityHelper.AimHelperOptions aimHelper;
-        if (owner.getActiveBossCount() == 3) {
-            shootInterval = 10;
-            aimHelper = AIM_HELPER_LASER_INACCURATE;
-        } else if (owner.getActiveBossCount() == 1 && stageTransitionTriggered) {
-            shootInterval = 4;
-            aimHelper = AIM_HELPER_LASER_OFFSET;
-        } else {
-            shootInterval = 8;
-            aimHelper = AIM_HELPER_LASER;
+        switch (owner.calculateDifficulty(this)) {
+            case LOW:
+                shootInterval = 10;
+                aimHelper = AIM_HELPER_LASER_INACCURATE;
+                break;
+            case MEDIUM:
+                shootInterval = 8;
+                aimHelper = AIM_HELPER_LASER;
+                break;
+            case HIGH:
+            default:
+                shootInterval = 4;
+                aimHelper = AIM_HELPER_LASER_OFFSET;
         }
         shootLaser(shootInterval, aimHelper);
     }
-
+    // fire laser wall & dash at the player
     private void phase2Attack() {
         if (phaseDurationCounter < 75) {
             if (phaseDurationCounter % 25 == 0) {
@@ -242,7 +249,8 @@ public class Artemis extends EntitySlime {
             }
         } else if (phaseDurationCounter == 75) {
             // Dash towards the player
-            Location aimLoc = EntityHelper.helperAimEntity(bukkitEntity, target, owner.getActiveBossCount() == 1 ? AIM_HELPER_DASH : AIM_HELPER_DASH_INACCURATE);
+            Location aimLoc = EntityHelper.helperAimEntity(bukkitEntity, target,
+                    owner.calculateDifficulty(this) == Draedon.Difficulty.HIGH ? AIM_HELPER_DASH : AIM_HELPER_DASH_INACCURATE);
             dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), aimLoc, DASH_SPEED);
             bukkitEntity.setVelocity(dashVelocity);
             // Unleash a roar
@@ -254,11 +262,11 @@ public class Artemis extends EntitySlime {
             this.yaw = (float) MathHelper.getVectorYaw( dashVelocity );
         }
     }
-
+    // rapidly fire inaccurate lasers at the player
     private void phase3Attack() {
         shootLaser(2, AIM_HELPER_LASER_OFFSET);
     }
-
+    // use the laser attack at the player
     private void phase4Attack() {
         if (phaseDurationCounter < 10) {
             // Roar thrice for warning
@@ -313,11 +321,14 @@ public class Artemis extends EntitySlime {
         Location newLocation = pivot.clone().add(laserDir.clone().multiply(-32));
         Vector eyeToFootDir = bukkitEntity.getLocation().subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector();
         newLocation.add(eyeToFootDir);
-        bukkitEntity.teleport(newLocation);
+        EntityHelper.movementTP(bukkitEntity, newLocation);
         bukkitEntity.setVelocity(new Vector(0, 0, 0));
+
+        double laserLength = Math.max( ((LivingEntity) bukkitEntity).getEyeLocation()
+                .subtract(target.getEyeLocation()).toVector().length(), FINAL_LASER_LENGTH);
         GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
                 MathHelper.getVectorYaw(laserDir), MathHelper.getVectorPitch(laserDir),
-                FINAL_LASER_LENGTH, FINAL_LASER_WIDTH, "", "",
+                laserLength, FINAL_LASER_WIDTH, "", "",
                 finalLaserDamaged, ATTR_MAP_FINAL_LASER, STRIKE_OPTION_FINAL_LASER);
     }
 
@@ -329,7 +340,7 @@ public class Artemis extends EntitySlime {
         {
             // update target
             target = owner.target;
-            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            
 
             if (target != null) {
                 // movement
@@ -424,6 +435,7 @@ public class Artemis extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // update boss bar and dynamic DR
         terraria.entity.boss.BossHelper.updateBossBarAndDamageReduction(bossbar, bossParts, BOSS_TYPE);

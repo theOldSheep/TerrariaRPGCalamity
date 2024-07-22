@@ -60,7 +60,8 @@ public class GolemFoot extends EntitySlime {
                     Vector orthogonalOffsetVec = owner.orthogonalDir.clone();
                     orthogonalOffsetVec.multiply(0.9 *
                             (componentIndex == 2 ? -5.4 : 5.4));
-                    bukkitEntity.teleport(owner.getBukkitEntity().getLocation().add(offsetDir).add(orthogonalOffsetVec));
+                    EntityHelper.movementTP(bukkitEntity,
+                            owner.getBukkitEntity().getLocation().add(offsetDir).add(orthogonalOffsetVec));
                 }
             }
         }
@@ -129,6 +130,7 @@ public class GolemFoot extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // undo air resistance etc.
         motX /= 0.91;

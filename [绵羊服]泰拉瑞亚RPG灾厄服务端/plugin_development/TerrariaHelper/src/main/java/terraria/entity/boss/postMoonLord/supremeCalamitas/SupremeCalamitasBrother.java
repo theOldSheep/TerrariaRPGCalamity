@@ -66,7 +66,7 @@ public class SupremeCalamitasBrother extends EntitySlime {
         else {
             if (indexAI % 4 == 0) {
                 if (indexAI % 20 == 0) {
-                    for (Vector projVel : MathHelper.getEvenlySpacedProjectileDirections(8, 25,
+                    for (Vector projVel : MathHelper.getEvenlySpacedProjectileDirections(10, 31,
                             target, shootInfo.shootLoc, aimHelpers[typeIdx], PROJECTILE_SPEEDS[typeIdx])) {
                         shootInfo.velocity = projVel;
                         EntityHelper.spawnProjectile(shootInfo);
@@ -92,7 +92,7 @@ public class SupremeCalamitasBrother extends EntitySlime {
             // update target
             if (owner.isAlive()) {
                 target = owner.target;
-                terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+                
             }
             else
                 target = null;
@@ -180,6 +180,7 @@ public class SupremeCalamitasBrother extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // load nearby chunks
         {

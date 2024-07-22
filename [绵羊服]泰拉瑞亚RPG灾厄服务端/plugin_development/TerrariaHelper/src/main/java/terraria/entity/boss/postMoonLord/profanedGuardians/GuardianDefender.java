@@ -62,7 +62,7 @@ public class GuardianDefender extends EntitySlime {
         {
             // update target
             target = commander.target;
-            terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
+            
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {
@@ -242,6 +242,7 @@ public class GuardianDefender extends EntitySlime {
     // rewrite AI
     @Override
     public void B_() {
+        terraria.entity.boss.BossHelper.updateSpeedForAimHelper(bukkitEntity);
         super.B_();
         // load nearby chunks
         {

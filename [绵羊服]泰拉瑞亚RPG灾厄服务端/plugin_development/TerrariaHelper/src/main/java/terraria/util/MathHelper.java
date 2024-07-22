@@ -1,6 +1,7 @@
 package terraria.util;
 
 import net.minecraft.server.v1_12_R1.Vec3D;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
@@ -115,10 +116,10 @@ public class MathHelper {
     public static Vector vectorFromYawPitch_approx(double yaw, double pitch) {
         // algorithm from Skript
         // uses xsin and xcos so that it is quicker. a bit less accurate though.
-        double y = -1 * MathHelper.xsin_degree(pitch);
-        double div = MathHelper.xcos_degree(pitch);
-        double x = -1 * MathHelper.xsin_degree(yaw);
-        double z = MathHelper.xcos_degree(yaw);
+        double y = -1 * xsin_degree(pitch);
+        double div = xcos_degree(pitch);
+        double x = -1 * xsin_degree(yaw);
+        double z = xcos_degree(yaw);
         x *= div;
         z *= div;
         return new Vector(x,y,z);
@@ -273,9 +274,11 @@ public class MathHelper {
     }
     public static double getAngleRadian(Vector v1, Vector v2) {
         double dot = v1.dot(v2) / Math.sqrt(v1.lengthSquared() * v2.lengthSquared());
-        // precision issue: sometimes it is slightly higher than 1, producing NaN
+        // precision issue: sometimes its absolute value is slightly higher than 1, producing NaN
         if (dot > 1)
             dot = 1;
+        if (dot < -1)
+            dot = -1;
         return (float)Math.acos(dot);
     }
     public static Vector setVectorLength(Vector vec, double targetLength) {
@@ -339,7 +342,6 @@ public class MathHelper {
 
         Quaternion rotation = new Quaternion(axis, angleRadian );
 
-        // Rotate the velocity vector
         return rotation.interpolate(vec);
     }
     public static Vector rotationInterpolateDegree(Vector start, Vector end, double maxAngleDegree) {
@@ -350,7 +352,7 @@ public class MathHelper {
             return start;
 
         Vector axis = getNonZeroCrossProd(start, end);
-        double angle = MathHelper.getAngleRadian(start, end);
+        double angle = getAngleRadian(start, end);
 
         if (angle < maxAngleRadian) {
             return setVectorLength(end.clone(), start.length());
