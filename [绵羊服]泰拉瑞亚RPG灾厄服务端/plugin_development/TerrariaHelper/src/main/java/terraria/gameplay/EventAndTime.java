@@ -693,7 +693,7 @@ public class EventAndTime {
             }
             case SLIME_RAIN: {
                 eventInfo.put(EventInfoMapKeys.INVADE_PROGRESS, 0d);
-                eventInfo.put(EventInfoMapKeys.INVADE_PROGRESS_MAX, 150d);
+                eventInfo.put(EventInfoMapKeys.INVADE_PROGRESS_MAX, 75d);
                 eventInfo.put(EventInfoMapKeys.IS_INVASION, 1d);
                 break;
             }

@@ -53,53 +53,19 @@ Script:
       }
       return false;
     }
-    function isWing(itemStack){
+    function getItemCategories(itemStack){
+      var results = [];
+      var nextIdx = 0;
       var lore = itemStack.getItemMeta().getLore();
       if(lore!=null){
         for(var i=0;i<lore.size();i++){
           var line = lore.get(i);
-          if(line!=null && line.contains("算作翅膀")){
-            return true;
+          if(line!=null && line.contains("▣算作")){
+            results[nextIdx++] = line.split("▣算作")[1];
           }
         }
       }
-      return false;
-    }
-    function isBoots(itemStack){
-      var lore = itemStack.getItemMeta().getLore();
-      if(lore!=null){
-        for(var i=0;i<lore.size();i++){
-          var line = lore.get(i);
-          if(line!=null && line.contains("算作鞋子")){
-            return true;
-          }
-        }
-      }
-      return false;
-    }
-    function isBalloon(itemStack){
-      var lore = itemStack.getItemMeta().getLore();
-      if(lore!=null){
-        for(var i=0;i<lore.size();i++){
-          var line = lore.get(i);
-          if(line!=null && line.contains("算作气球")){
-            return true;
-          }
-        }
-      }
-      return false;
-    }
-    function isSwitchable(itemStack){
-      var lore = itemStack.getItemMeta().getLore();
-      if(lore!=null){
-        for(var i=0;i<lore.size();i++){
-          var line = lore.get(i);
-          if(line!=null && line.contains("算作转换类饰品")){
-            return true;
-          }
-        }
-      }
-      return false;
+      return results;
     }
     function hasAccessoryConflictSingle(currItem, otherAccessoryName){
       if (currItem == otherAccessoryName) return true;
@@ -199,40 +165,17 @@ Script:
       for (var i = 0; i < otherAccessories.length; i ++) {
         otherAccessoryNames[i] = getItemName(otherAccessories[i]);
       }
-      // do not allow multiple wings
-      if (isWing(itemStack) === true) {
-        for (var i = 0; i < otherAccessories.length; i ++) {
-          var otherAcc = otherAccessories[i];
-          if (isWing(otherAcc) === true) {
-            return false;
-          }          
-        }
-      }
-      // do not allow multiple boots
-      if (isBoots(itemStack) === true) {
-        for (var i = 0; i < otherAccessories.length; i ++) {
-          var otherAcc = otherAccessories[i];
-          if (isBoots(otherAcc) === true) {
-            return false;
-          }          
-        }
-      }
-      // do not allow multiple balloons
-      if (isBalloon(itemStack) === true) {
-        for (var i = 0; i < otherAccessories.length; i ++) {
-          var otherAcc = otherAccessories[i];
-          if (isBalloon(otherAcc) === true) {
-            return false;
-          }          
-        }
-      }
-      // do not allow multiple switchables
-      if (isSwitchable(itemStack) === true) {
-        for (var i = 0; i < otherAccessories.length; i ++) {
-          var otherAcc = otherAccessories[i];
-          if (isSwitchable(otherAcc) === true) {
-            return false;
-          }          
+      // do not allow multiple accessories of the same type
+      var currAccCategories = getItemCategories(itemStack);
+      for (var i = 0; i < otherAccessories.length; i ++) {
+        var otherAcc = otherAccessories[i];
+        var otherAccCategories = getItemCategories(otherAcc);
+        for (var j = 0; j < currAccCategories.length; j ++) {
+          for (var k = 0; k < otherAccCategories.length; k ++) {
+            if (currAccCategories[j] == otherAccCategories[k]) {
+              return false;
+            }
+          }
         }
       }
       // do not allow conflicting accessories

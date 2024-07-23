@@ -522,52 +522,66 @@ sets:
     - ''
     - §a套装效果： 
     - §a+12 防御
-    - §a+3 远程伤害
+    - §a+6 所有伤害
     - §a+10% 远程暴击
     - §a-20% 弹药消耗
     - §a+10% 移动速度
     attributes:
       defence: 12
       critRanged: 10
-      damage: 3
+      damage: 6
       ammoConsumptionRate: -0.2
       speedMulti: 0.1
   铜套装:
     lore:
     - ''
-    - §a套装效果： +2 防御
+    - §a套装效果：
+    - §a+4 防御
+    - §a+4 所有伤害
     attributes:
-      defence: 2
+      defence: 4
+      damage: 4
   铁套装:
     lore:
     - ''
-    - §a套装效果： +4 防御
+    - §a套装效果：
+    - §a+4 防御
+    - §a+3 生命恢复
+    - §a+6% 伤害减免
     attributes:
       defence: 4
+      regen: 3
+      damageTakenMulti: -0.06
   银套装:
     lore:
     - ''
-    - §a套装效果： +6 防御
+    - §a套装效果：
+    - §a+6 防御
+    - §a+2 生命恢复
     attributes:
       defence: 6
+      regen: 2
   金套装:
     lore:
     - ''
-    - §a套装效果： +8 防御
+    - §a套装效果：
+    - §a+10 防御
+    - §a+3 暴击率
     attributes:
-      defence: 8
+      defence: 10
+      crit: 3
   忍者套装:
     lore:
     - ''
-    - §a套装效果： -20% 弹药消耗
+    - §a套装效果： +6% 伤害
     attributes:
-      ammoConsumptionRate: -0.2
+      damageMulti: 0.06
   丛林法师套:
     lore:
     - ''
-    - §a套装效果： -16% 魔力消耗
+    - §a套装效果： -15% 魔力消耗
     attributes:
-      manaUseMulti: -0.16
+      manaUseMulti: -0.15
   胜潮近战套装:
     lore:
     - ''
@@ -624,10 +638,12 @@ sets:
     lore:
     - ''
     - §a套装效果：
+    - §a+1 召唤栏
     - §a+15% 召唤伤害
     - §a+15% 近战速度
     - §a+30% 近战范围
     attributes:
+      minionLimit: 1
       damageSummonMulti: 0.15
       meleeReachMulti: 0.3
       useSpeedMeleeMulti: 0.15
@@ -642,16 +658,16 @@ sets:
     - ''
     - §a套装效果：
     - §a-20% 弹药消耗
-    - §a+10% 远程暴击
+    - §a+15% 远程暴击
     attributes:
       ammoConsumptionRate: -0.2
-      critRanged: 10
+      critRanged: 15
   天蓝近战套装:
     lore:
     - ''
     - §a套装效果： 
-    - §a+5% 移动速度
-    - §a+15% 近战暴击
+    - §a+15% 移动速度
+    - §a+5% 近战暴击
     attributes:
       critMelee: 5
       speedMulti: 0.15
@@ -659,8 +675,8 @@ sets:
     lore:
     - ''
     - §a套装效果： 
-    - §a+5% 移动速度
-    - §a+15% 远程暴击
+    - §a+15% 移动速度
+    - §a+5% 远程暴击
     attributes:
       critRanged: 5
       speedMulti: 0.15
@@ -668,8 +684,8 @@ sets:
     lore:
     - ''
     - §a套装效果： 
-    - §a+5% 移动速度
-    - §a+15% 魔法暴击
+    - §a+15% 移动速度
+    - §a+5% 魔法暴击
     attributes:
       critMagic: 5
       speedMulti: 0.15
@@ -685,10 +701,10 @@ sets:
   熔岩套装:
     lore:
     - ''
-    - §a套装效果： +15% 近战伤害与速度
+    - §a套装效果： +10% 近战伤害与速度
     attributes:
-      damageMeleeMulti: 0.15
-      useSpeedMeleeMulti: 0.15
+      damageMeleeMulti: 0.1
+      useSpeedMeleeMulti: 0.1
   斯塔提斯近战套装:
     lore:
     - ''
@@ -768,18 +784,18 @@ sets:
     - §a套装效果： +15% 近战速度
     attributes:
       useSpeedMeleeMulti: 0.15
-  钴魔法套装:
-    lore:
-    - ''
-    - §a套装效果： -14% 魔力消耗
-    attributes:
-      manaUseMulti: -0.14
   钴射手套装:
     lore:
     - ''
     - §a套装效果： 20% 几率不消耗弹药
     attributes:
       ammoConsumptionRate: -0.2
+  钴魔法套装:
+    lore:
+    - ''
+    - §a套装效果： -14% 魔力消耗
+    attributes:
+      manaUseMulti: -0.14
   秘银战士套装:
     lore:
     - ''
@@ -787,37 +803,18 @@ sets:
     attributes:
       useSpeedMeleeMulti: 0.08
       crit: 8
-  秘银魔法套装:
-    lore:
-    - ''
-    - §a套装效果： -17% 魔力消耗
-    attributes:
-      manaUseMulti: -0.17
   秘银射手套装:
     lore:
     - ''
     - §a套装效果： 20% 几率不消耗弹药
     attributes:
       ammoConsumptionRate: -0.2
-  精金战士套装:
+  秘银魔法套装:
     lore:
     - ''
-    - §a套装效果： +20% 近战与移动速度
+    - §a套装效果： -17% 魔力消耗
     attributes:
-      speedMulti: 0.2
-      useSpeedMeleeMulti: 0.2
-  精金魔法套装:
-    lore:
-    - ''
-    - §a套装效果： -19% 魔力消耗
-    attributes:
-      manaUseMulti: -0.19
-  精金射手套装:
-    lore:
-    - ''
-    - §a套装效果： 25% 几率不消耗弹药
-    attributes:
-      ammoConsumptionRate: -0.25
+      manaUseMulti: -0.17
   代达罗斯战士套装:
     lore:
     - ''
@@ -847,10 +844,29 @@ sets:
     - ''
     - §a套装效果：
     - §a提升20%召唤伤害
-    - §a+2 召唤栏
+    - §a+3 召唤栏
     attributes:
       damageSummonMulti: 0.2
-      minionLimit: 2
+      minionLimit: 3
+  精金战士套装:
+    lore:
+    - ''
+    - §a套装效果： +20% 近战与移动速度
+    attributes:
+      speedMulti: 0.2
+      useSpeedMeleeMulti: 0.2
+  精金射手套装:
+    lore:
+    - ''
+    - §a套装效果： 25% 几率不消耗弹药
+    attributes:
+      ammoConsumptionRate: -0.25
+  精金魔法套装:
+    lore:
+    - ''
+    - §a套装效果： -19% 魔力消耗
+    attributes:
+      manaUseMulti: -0.19
   神圣魔法套装:
     lore:
     - ''
@@ -906,7 +922,7 @@ sets:
     lore:
     - ''
     - §a套装效果：
-    - §a+20防御力并+6生命回复
+    - §a+20防御力并+6生命恢复
     - §a刷怪效率增加
     - §a减少10%移动速度与飞行时间
     - §a敌人会受到你的反伤
@@ -946,10 +962,10 @@ sets:
   甲虫铠甲套装:
     lore:
     - ''
-    - §a套装效果：近战速度和伤害提升25%
+    - §a套装效果：近战速度和伤害提升20%
     attributes:
-      damageMeleeMulti: 0.25
-      useSpeedMeleeMulti: 0.25
+      damageMeleeMulti: 0.2
+      useSpeedMeleeMulti: 0.2
   甲虫壳套装:
     lore:
     - ''
@@ -960,13 +976,13 @@ sets:
     lore:
     - ''
     - §a套装效果：
-    - §a远程伤害和暴击率提升10%
-    - §a略微减少移动速度
+    - §a远程伤害和暴击率提升5%
+    - §a移动速度减少7.5%
     - §a略微减少刷怪量和刷怪率
     attributes:
-      damageRangedMulti: 0.1
-      critRanged: 10
-      speed: -0.075
+      damageRangedMulti: 0.05
+      critRanged: 5
+      speedMulti: -0.075
       mobLimit: -1
       mobSpawnRateMulti: -0.15
   寒霜套装:
@@ -974,12 +990,13 @@ sets:
     - ''
     - §a套装效果：
     - §a近战和远程攻击会导致霜冻
-    - §a+10% 近战和远程伤害
+    - §a+30% 近战伤害
+    - §a+15% 远程伤害
     attributes:
       buffInflictMelee: 霜火|160|1
       buffInflictRanged: 霜火|160|1
-      damageMeleeMulti: 0.1
-      damageRangedMulti: 0.1
+      damageMeleeMulti: 0.3
+      damageRangedMulti: 0.15
   阴森套装:
     lore:
     - ''
@@ -1038,13 +1055,15 @@ sets:
     - §a套装效果：
     - §a提升5% 移动速度并+3 召唤栏
     - §a手持其他职业武器导致的召唤物伤害惩罚 -50%
-    - §a提升35% 伤害和25% 暴击率
+    - §a提升20% 近战速度
+    - §a提升20% 伤害和暴击率
     attributes:
       speedMulti: 0.05
       minionLimit: 3
       minionDamagePenaltyMulti: 0.5
-      damageMulti: 0.35
-      crit: 25
+      useSpeedMeleeMulti: 0.2
+      damageMulti: 0.2
+      crit: 20
   星云套装:
     lore:
     - ''
@@ -1056,13 +1075,13 @@ sets:
     - ''
     - §a套装效果：
     - §a无视击退
-    - §a所受伤害减少10%
+    - §a所受伤害减少20%
     - §a受到近战攻击后反弹1.5倍伤害
     - §a近战攻击命中敌人后，若其破晓层数小于2则追加一层破晓效果
     - §a▷ 冲刺：双击一个方向可以冲刺，具有一定的冷却时间
     attributes:
       knockbackResistance: 1
-      damageTakenMulti: -0.1
+      damageTakenMulti: -0.2
       buffInflictMelee: 破晓|200|1
   星尘套装:
     lore:
@@ -1075,13 +1094,12 @@ sets:
     - ''
     - §a套装效果：
     - §a移动速度减少10%
-    - §a远程伤害提升30%
-    - §a远程暴击率提升15%
+    - §a远程伤害和暴击率提升10%
     - §a减少刷怪量和刷怪率
     attributes:
-      speed: -0.1
-      damageRangedMulti: 0.3
-      critRanged: 15
+      speedMulti: -0.1
+      damageRangedMulti: 0.1
+      critRanged: 10
       mobLimit: -2
       mobSpawnRateMulti: -0.35
   龙蒿近战套装:
@@ -1143,7 +1161,7 @@ sets:
     lore:
     - ''
     - §a套装效果：
-    - §a极大提高生命恢复速度
+    - §a+6 生命恢复
     - §a击中敌人会掉落红心，这个效果有5秒冷却时间
     - §a提高18%近战攻速，增加刷怪量和刷怪率
     - §a使用真近战武器打击敌人时进入鲜血狂怒状态，持续5秒
@@ -1158,7 +1176,7 @@ sets:
     lore:
     - ''
     - §a套装效果：
-    - §a极大提高生命恢复速度
+    - §a+6 生命恢复
     - §a击中敌人会掉落红心，这个效果有5秒冷却时间
     - §a按下按下套装增益键[默认为V]释放噬魂幽花的冤魂摧毁你的敌人
     - §a此效果有30秒冷却时间
@@ -1168,7 +1186,7 @@ sets:
     lore:
     - ''
     - §a套装效果：
-    - §a极大提高生命恢复速度
+    - §a+6 生命恢复
     - §a击中敌人会掉落红心，这个效果有5秒冷却时间
     - §a魔法武器每1.25秒会发射一个灵魂射弹
     attributes:
@@ -1177,14 +1195,14 @@ sets:
     lore:
     - ''
     - §a套装效果：
-    - §a极大提高生命恢复速度
+    - §a+6 生命恢复
     - §a击中敌人会掉落红心，这个效果有5秒冷却时间
-    - §a增加50%召唤伤害和4召唤栏
+    - §a增加30%召唤伤害和4召唤栏
     - §a如果玩家在90%血量以上，增加15%召唤伤害
     - §a在50%生命及以下获得40点防御和4点生命恢复
     attributes:
       regen: 6
-      damageSummonMulti: 0.5
+      damageSummonMulti: 0.3
       minionLimit: 4
   蓝色欧米茄套装:
     lore:
@@ -1192,16 +1210,16 @@ sets:
     - §a套装效果：
     - §a获得30点护甲穿透和0.2%的生命汲取
     - §a生命汲取每帧最多触发一次，且每次治疗量不可超过最大生命值的5%
-    - §a提高10%伤害和暴击率并+2召唤栏
+    - §a提高10%伤害和暴击率并+5召唤栏
     - §a按下套装增益键[默认为V]进入深渊狂乱状态5秒
-    - §a深渊狂乱进一步提升你的伤害与暴击率，同时额外获得0.4%的生命汲取
+    - §a深渊狂乱进一步提升35%伤害与暴击率，同时额外获得0.4%的生命汲取
     - §a此效果有25秒冷却时间
     attributes:
       armorPenetration: 30
       lifeSteal: 0.002
       damageMulti: 0.1
       crit: 10
-      minionLimit: 2
+      minionLimit: 5
   弑神者近战套装:
     lore:
     - ''
@@ -1237,11 +1255,11 @@ sets:
     - §a即将收到致命伤害时进入8秒始源林海无敌状态
     - §a按下套装增益键[默认为V]时进入6秒始源林海无敌状态
     - §a无论以何种方式触发此效果，效果结束后均进入5分钟冷却
-    - §a+5召唤栏并提高65%召唤伤害
+    - §a+4召唤栏并提高50%召唤伤害
     attributes:
       speedMulti: 0.05
-      minionLimit: 5
-      damageSummonMulti: 0.65
+      minionLimit: 4
+      damageSummonMulti: 0.5
   金源近战套装:
     lore:
     - ''
@@ -1253,7 +1271,7 @@ sets:
     - §a你可以按下套装增益键[默认为V]来被生命能量包裹，获得龙蒿披风增益10秒
     - §a这个效果结束之后有30秒的冷却时间
     - §b-> §a继承自血炎套装的效果：
-    - §a极大提高生命恢复速度
+    - §a+6 生命恢复
     - §a击中敌人会掉落红心，这个效果有5秒冷却时间
     - §a使用真近战武器打击敌人时进入鲜血狂怒状态，持续5秒
     - §a此期间近战伤害和暴击率提升20%，来自敌人的接触伤害减半
@@ -1275,7 +1293,7 @@ sets:
     - §a远程弹幕在击中敌人后分裂为2个追踪生命能量，分别造成45%的魔法伤害
     - §a这个效果有1秒的冷却
     - §b-> §a继承自血炎套装的效果：
-    - §a极大提高生命恢复速度
+    - §a+6 生命恢复
     - §a击中敌人会掉落红心，这个效果有5秒冷却时间
     - §a按下按下套装增益键[默认为V]释放噬魂幽花的冤魂摧毁你的敌人
     - §a此效果有30秒冷却时间
@@ -1297,7 +1315,7 @@ sets:
     - §a减少刷怪量和刷怪率
     - §a每8次挥舞魔法武器就会发射出数个叶片，造成伤害的50%
     - §b-> §a继承自血炎套装的效果：
-    - §a极大提高生命恢复速度
+    - §a+6 生命恢复
     - §a击中敌人会掉落红心，这个效果有5秒冷却时间
     - §a魔法武器每1.25秒会发射一个灵魂射弹
     - §b-> §a继承自始源林海套装的效果：
@@ -1316,12 +1334,12 @@ sets:
     - ''
     - §a套装效果：
     - §a+5% 移动速度
-    - §a+6 仆从容量和 50% 仆从伤害
+    - §a+5 仆从容量和 50% 仆从伤害
     - §a继承龙蒿套装、血炎套装和始源林海套装召唤头盔的效果
     - §b-> §a继承自龙蒿套装的效果：
     - §a减少刷怪量和刷怪率
     - §b-> §a继承自血炎套装的效果：
-    - §a极大提高生命恢复速度
+    - §a+6 生命恢复
     - §a击中敌人会掉落红心，这个效果有5秒冷却时间
     - §a如果玩家在90%血量以上，增加15%召唤伤害
     - §a在50%生命及以下获得40点防御和4点生命恢复
@@ -1335,7 +1353,7 @@ sets:
       mobLimit: -2
       mobSpawnRateMulti: -0.5
       speedMulti: 0.05
-      minionLimit: 6
+      minionLimit: 5
       damageSummonMulti: 0.5
   天钻套装:
     lore:
@@ -1349,17 +1367,18 @@ sets:
     - §a黄色宝石增加45%近战伤害，26%近战速度和12%近战暴击率
     - §a绿色宝石增加50%远程伤害和16%远程暴击率
     - §a紫色宝石给予50%魔法伤害和16%魔法暴击率；最大魔力值提升100
-    - §a蓝色宝石给予72%召唤伤害和4个召唤栏，并取消手持非召唤武器的召唤伤害降低惩罚
+    - §a蓝色宝石给予72%召唤伤害和8个召唤栏，并取消手持非召唤武器的召唤伤害降低惩罚
     - §a红色基础宝石给予150防御和12%伤害减免；丢失基础宝石时优先丢失红色宝石
-    - §a粉色基础宝石给予40%飞行时间，8生命回复和更长的受伤无敌帧
+    - §a粉色基础宝石给予40%飞行时间，8生命恢复和更长的受伤无敌帧
   魔影套装:
     lore:
     - ''
     - §a“众戒归一黑暗中”
     - §a套装效果：
-    - §a增加10个召唤栏
+    - §a增加8个召唤栏，但手持其他职业武器对召唤物的伤害惩罚有所加深
     - §a按下套装增益键[默认为V]以黑魔法咒语强化自身
-    - §a这道咒语生效时防御力和伤害减免各降低35%，但造成伤害提高75%
+    - §a这道咒语生效时防御力和伤害减免各降低15%，但造成伤害提高75%
     - §a该效果每次触发都将持续时间重置为30秒，没有冷却限制
     attributes:
-      minionLimit: 10
+      minionLimit: 8
+      minionDamagePenaltyFactor: -0.25

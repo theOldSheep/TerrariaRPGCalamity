@@ -262,7 +262,7 @@ DIAMOND_ORE:
   - 天蓝矿
 DIAMOND_BLOCK:
   progress: 极地之灵
-  powerPickaxe: 180
+  powerPickaxe: 150
   totalProgress: 650
   dropItem:
   - 寒元矿

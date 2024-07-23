@@ -657,13 +657,13 @@ public class ItemHelper {
                 }
                 case "useTime": {
                     int useTime = attributeSection.getInt(attribute, 0);
-                    if (useTime <= 8) result.add("超快的使用速度");
-                    else if (useTime <= 20) result.add("很快的使用速度");
-                    else if (useTime <= 25) result.add("快的使用速度");
-                    else if (useTime <= 30) result.add("普通的使用速度");
-                    else if (useTime <= 35) result.add("慢的使用速度");
-                    else if (useTime <= 45) result.add("很慢的使用速度");
-                    else if (useTime <= 55) result.add("极慢的使用速度");
+                    if (useTime <= 5) result.add("超快的使用速度");
+                    else if (useTime <= 9) result.add("很快的使用速度");
+                    else if (useTime <= 14) result.add("快的使用速度");
+                    else if (useTime <= 22) result.add("普通的使用速度");
+                    else if (useTime <= 29) result.add("慢的使用速度");
+                    else if (useTime <= 37) result.add("很慢的使用速度");
+                    else if (useTime <= 45) result.add("极慢的使用速度");
                     else result.add("蜗牛的使用速度");
                     break;
                 }
@@ -843,7 +843,7 @@ public class ItemHelper {
                 // switchable accessories
                 if (loreDescriptionFormI.size() > 0) {
                     List<String> loreDescriptionFormII = getLoreDescription(itemSection.getConfigurationSection("attributesFormII"));
-                    finalLore.add("§r算作转换类饰品");
+                    finalLore.add("§r▣算作转换类饰品");
                     finalLore.add("§7▷ 转换类饰品：仅限装备一个。按下切换按键[默认为C]可于两种加成形态间转换，冷却为5秒");
                     finalLore.add("§b一形态：");
                     loreDescriptionFormI.forEach( (line) -> finalLore.add("§b  -> " + line) );

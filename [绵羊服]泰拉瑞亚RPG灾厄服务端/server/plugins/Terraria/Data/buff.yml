@@ -348,8 +348,8 @@ effects:
     isBuff: true
     attributes:
       projectileSpeedArrowMulti: 0.2
-      damageArrowMulti: 0.1
-    tooltip: 箭矢伤害增加10%，箭矢速度增加20%
+      damageArrowMulti: 0.05
+    tooltip: 箭矢伤害增加5%，箭矢速度增加20%
   战斗:
     isBuff: true
     attributes:
@@ -394,7 +394,8 @@ effects:
     isBuff: true
     attributes:
       defence: 16
-    tooltip: 获得 16 防御力
+      defenceMulti: 0.02
+    tooltip: 获得 16 防御力；防御力额外提升 2%
   生命力:
     isBuff: true
     attributes:
@@ -522,14 +523,14 @@ effects:
   生命星云:
     isBuff: true
     attributes:
-      regen: 4
-    tooltip: 每层使每秒生命再生增加 4
+      regen: 6
+    tooltip: 每层使每秒生命再生增加 6
   生命星云1:
-    tooltip: 每秒生命再生增加 4
+    tooltip: 每秒生命再生增加 6
   生命星云2:
-    tooltip: 每秒生命再生增加 8
-  生命星云3:
     tooltip: 每秒生命再生增加 12
+  生命星云3:
+    tooltip: 每秒生命再生增加 18
   魔力星云:
     isBuff: true
     attributes:
@@ -686,8 +687,8 @@ effects:
   深渊狂乱:
     isBuff: true
     attributes:
-        damageMulti: 0.1
-        crit: 10
+        damageMulti: 0.35
+        crit: 35
         lifeSteal: 0.004
     buffOnTimeout: 深渊狂乱冷却
     buffOnTimeoutDuration: 500
@@ -698,9 +699,9 @@ effects:
   弑神者冲刺:
     isBuff: true
     attributes:
-        damageTakenMulti: -0.65
+        damageTakenMulti: -1
         knockbackResistance: 1
-    tooltip: 下次受到攻击时减少40%受到伤害并无视击退
+    tooltip: 下次受到攻击时减少50%受到伤害并无视击退
   神弑者之停息:
     isBuff: false
     tooltip: 你需要稍等片刻才能再次使用弑神者冲刺
@@ -745,7 +746,7 @@ effects:
     isBuff: true
     attributes:
         damageSummonMulti: 0.72
-        minionLimit: 4
+        minionLimit: 8
         minionDamagePenaltyFactor: 0.5
     tooltip: 召唤属性大幅提高
   蓝色天钻宝石冷却:
@@ -773,8 +774,8 @@ effects:
   魔影激怒:
     isBuff: false
     attributes:
-        defenceMulti: -0.35
-        damageTakenMulti: 0.35
+        defenceMulti: -0.15
+        damageTakenMulti: 0.15
         damageMulti: 0.75
     tooltip: 你以防御和伤害减免为代价大大提升自身的攻击力
   暴君之怒:

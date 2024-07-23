@@ -1435,14 +1435,16 @@ public class EntityHelper {
             Player vPly = (Player) v;
             // prevent spectator getting in a wall & prevent speed remaining after revive
             setVelocity(vPly, new Vector());
-            // respawn time, default to 15 seconds and increases if boss is alive
-            int respawnTime = 15;
+            // respawn time, default to 5 seconds and increases if boss is alive
+            int respawnTime = 5;
             for (ArrayList<LivingEntity> bossList : BossHelper.bossMap.values()) {
                 HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targets =
                         (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>)
                                 getMetadata(bossList.get(0), MetadataName.BOSS_TARGET_MAP).value();
+                // if the current boss has the player as target, 15 seconds respawn time for each player, up to 1 minute
                 if (targets.containsKey(vPly.getUniqueId())) {
-                    respawnTime = Math.max(respawnTime, Math.min(targets.size() * 15, 75));
+                    // note: max would take the longest respawn time across all active bosses
+                    respawnTime = Math.max(respawnTime, Math.min(targets.size() * 15, 60));
                 }
             }
             // drop money
@@ -2318,16 +2320,16 @@ public class EntityHelper {
                                     double manaToDamageRate;
                                     double consumptionRatio;
                                     if (plyAcc.equals("魔能过载仪")) {
-                                        consumption = 8;
-                                        manaToDamageRate = 7.5;
+                                        consumption = 2;
+                                        manaToDamageRate = 36;
                                         consumptionRatio = 1;
                                     }
                                     else {
                                         consumption = (int) Math.max(mana * 0.035, 5);
-                                        manaToDamageRate = 15;
+                                        manaToDamageRate = 40;
                                         double effectDuration = EntityHelper.getEffectMap(damageSourcePly).getOrDefault("魔力熔蚀", 0);
-                                        // at 20 second = 400 ticks, mana use reduced by roughly 65%
-                                        consumptionRatio = 1 - (effectDuration / 615);
+                                        // at 20 second = 400 ticks, mana use reduced by roughly 80%
+                                        consumptionRatio = 1 - (effectDuration / 500);
                                     }
                                     if (ItemUseHelper.consumeMana(damageSourcePly, MathHelper.randomRound(consumption * consumptionRatio) )) {
                                         dmg += consumption * manaToDamageRate;

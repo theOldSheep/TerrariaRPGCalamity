@@ -127,6 +127,8 @@ public class Thanatos extends EntitySlime {
                 handleHeadIdleMovement();
                 attackMethod = AttackMethod.LASER_PROJECTILE;
                 ticks = 0;
+                // Let the remaining segments follow the head
+                EntityHelper.handleSegmentsFollow(livingSegments, followOptionStationary);
             }
             else {
                 Draedon.Difficulty difficulty = owner.calculateDifficulty(this);
@@ -144,11 +146,11 @@ public class Thanatos extends EntitySlime {
                 }
                 adjustLength();
                 ticks++;
+                // Let the remaining segments follow the head
+                EntityHelper.handleSegmentsFollow(livingSegments, followOption);
             }
             // Movement
             bukkitEntity.setVelocity(velocity);
-            // Let the remaining segments follow the head
-            EntityHelper.handleSegmentsFollow(livingSegments, followOption);
         } else {
             // Set the health of subsequent entities to the health of the head
             setHealth(head.getHealth());

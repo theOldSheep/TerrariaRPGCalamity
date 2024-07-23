@@ -1283,7 +1283,7 @@
   lore:
   - §r[饰品]
   attributes:
-    defence: 2
+    defence: 6
   worth: 20000
   rarity: 1
 鲨牙项链:
@@ -1310,14 +1310,14 @@
   - §r双击一个方向来冲刺
   - §6专家模式物品
   attributes:
-    defence: 1
+    defence: 6
   worth: 2000000
   rarity: 1000
 火箭靴:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作鞋子
+  - §r▣算作鞋子
   worth: 1000000
   rarity: 2
 蠕虫围巾:
@@ -1334,7 +1334,7 @@
   lore:
   - §r[饰品]
   attributes:
-    defence: 2
+    defence: 8
     knockbackResistance: 1
   worth: 1750000
   rarity: 2
@@ -1343,7 +1343,7 @@
   lore:
   - §r[饰品]
   attributes:
-    defence: 2
+    defence: 4
   worth: 540000
   rarity: 2
 黑曜石护盾:
@@ -1351,7 +1351,7 @@
   lore:
   - §r[饰品]
   attributes:
-    defence: 4
+    defence: 12
     knockbackResistance: 1
   worth: 2000000
   rarity: 4
@@ -1359,6 +1359,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作箭袋
   attributes:
     damageArrowMulti: 0.1
     projectileSpeedArrowMulti: 0.35
@@ -1369,6 +1370,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作箭袋
   - §r点燃木箭，火光熊熊
   - §r“在恐惧中颤抖吧！”
   attributes:
@@ -1381,6 +1383,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作箭袋
   attributes:
     damageArrowMulti: 0.1
     projectileSpeedArrowMulti: 0.35
@@ -1394,6 +1397,8 @@
   lore:
   - §r[饰品]
   - §r生命值低于一半时减少受到的伤害
+  attributes:
+    defence: 12
   worth: 4500000
   rarity: 5
 孢子囊:
@@ -1413,7 +1418,7 @@
   - §r-> 使本次伤害降低15%
   - §r你受到的伤害无法被其他玩家以此方式减少
   attributes:
-    defence: 12
+    defence: 16
     knockbackResistance: 1
   worth: 6000000
   rarity: 8
@@ -1427,7 +1432,7 @@
   - §r你受到的伤害无法被其他玩家以此方式减少
   - §r生命值低于一半时减少受到的伤害
   attributes:
-    defence: 12
+    defence: 20
     knockbackResistance: 1
   worth: 10000000
   rarity: 8
@@ -1435,12 +1440,14 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作瞄准镜
   worth: 3000000
   rarity: 4
 狙击镜:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作瞄准镜
   attributes:
     damageRangedMulti: 0.1
     critRanged: 10
@@ -1450,6 +1457,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作瞄准镜
   - §r“发现敌人”
   attributes:
     damageRangedMulti: 0.1
@@ -1508,7 +1516,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   attributes:
@@ -1519,7 +1527,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   attributes:
@@ -1530,7 +1538,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   worth: 8000000
@@ -1539,7 +1547,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   worth: 1000000
@@ -1548,7 +1556,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   attributes:
@@ -1562,7 +1570,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   attributes:
@@ -1574,7 +1582,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   attributes:
@@ -1586,7 +1594,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   attributes:
@@ -1597,7 +1605,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   - §6专家模式物品
@@ -1607,7 +1615,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作鞋子
+  - §r▣算作鞋子
   attributes:
     speedMulti: 0.1
   worth: 1000000
@@ -1616,7 +1624,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作鞋子
+  - §r▣算作鞋子
   attributes:
     speedMulti: 0.1
   worth: 2000000
@@ -1625,7 +1633,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作气球
+  - §r▣算作气球
   - §r按空格释放二段跳
   worth: 500000
   rarity: 1
@@ -1633,7 +1641,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作气球
+  - §r▣算作气球
   - §r按空格释放二段跳，一共可以释放两次二段跳
   worth: 2000000
   rarity: 3
@@ -1692,6 +1700,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作拳套
   attributes:
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.1
@@ -1701,6 +1710,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作拳套
   attributes:
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.1
@@ -1711,6 +1721,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作拳套
   - §r“……对他使用「炎拳」吧！”
   attributes:
     knockbackMeleeMulti: 1
@@ -1857,7 +1868,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作鞋子
+  - §r▣算作鞋子
   attributes:
     speedMulti: 0.12
     flightTimeMulti: 0.1
@@ -1895,7 +1906,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   worth: 800000
@@ -1904,7 +1915,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   attributes:
@@ -1916,7 +1927,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   - §r近战攻击造成霜火减益
@@ -1930,7 +1941,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作气球
+  - §r▣算作气球
   - §r允许使用四次二段跳
   worth: 7200000
   rarity: 6
@@ -1938,7 +1949,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   - §r“优雅地音速飞行”
@@ -1948,7 +1959,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   - §r“由深渊的怒火驱动”
@@ -1960,7 +1971,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   attributes:
@@ -1972,8 +1983,8 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作鞋子
-  - §r算作翅膀
+  - §r▣算作鞋子
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   - §r“六翼天使之靴”
@@ -1985,7 +1996,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   attributes:
@@ -1997,7 +2008,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   attributes:
@@ -2008,8 +2019,8 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作鞋子
-  - §r算作翅膀
+  - §r▣算作鞋子
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   attributes:
@@ -2020,7 +2031,7 @@
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   - §r“纯粹的自然之力”
@@ -2033,7 +2044,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作翅膀
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   - §r“山猪今天喝醉没”
@@ -2043,8 +2054,8 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r算作鞋子
-  - §r算作翅膀
+  - §r▣算作鞋子
+  - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   attributes:
@@ -2094,8 +2105,8 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    damageMeleeMulti: 0.1
-    damageTrueMeleeMulti: 0.1
+    damageMeleeMulti: 0.15
+    damageTrueMeleeMulti: 0.05
     useSpeedMeleeMulti: 0.1
   worth: 22000000
   rarity: 10
@@ -2104,7 +2115,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    damageMeleeMulti: 0.1
+    damageMeleeMulti: 0.15
     critMelee: 10
     armorPenetration: 10
   worth: 24000000
@@ -2113,6 +2124,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作拳套
   - §r近战伤害造成元素谐鸣减益
   attributes:
     knockbackMeleeMulti: 1
@@ -2127,6 +2139,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作拳套
   - §r近战伤害造成超位崩解减益
   attributes:
     knockbackMeleeMulti: 1
@@ -2165,6 +2178,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作箭袋
   - §r“充满比夜空更暗的物质”
   attributes:
     critRanged: 5
@@ -2176,6 +2190,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作箭袋
   - §r远程伤害造成元素谐鸣减益
   attributes:
     critRanged: 10
@@ -2189,6 +2204,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作箭袋
   - §r远程伤害造成超位崩解减益
   attributes:
     critRanged: 15
@@ -2233,7 +2249,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   - §r手持魔法武器时对敌人造成魔法伤害则触发以下效果：
-  - §r尝试额外消耗8点魔力，若成功则使本次暴击前伤害增加60点
+  - §r尝试额外消耗2点魔力，若成功则使本次暴击前伤害增加72点
   attributes:
     regen: -10
     maxMana: 60
@@ -2261,8 +2277,8 @@ Drew之翼:
   - §r魔力熔蚀在对玩家造成伤害的同时提供额外魔力恢复
   - §r手持魔法武器时对敌人造成魔法伤害则触发以下效果：
   - §r尝试额外消耗当前魔力的3.5%（至少为5）
-  - §r若成功，则将本次暴击前伤害提升额外魔力损耗的15倍
-  - §r实际损毁的魔力值将基于魔力熔蚀效果剩余时长减少（伤害提升不变）
+  - §r若成功，则将本次暴击前伤害提升额外魔力损耗的40倍
+  - §r实际损毁的魔力值将基于魔力熔蚀效果剩余时长减少至多80%（伤害提升不变）
   - §r“……目光呆滞……”
   attributes:
     maxMana: 80
@@ -2286,6 +2302,8 @@ Drew之翼:
   - §r神圣之辉：+5生命再生速度
   - §r神圣之佑：增加16点防御力和4%伤害减免
   - §r神圣之力：+10%召唤伤害
+  attributes:
+    minionLimit: 1
   worth: 4800000
   rarity: 5
 幻魂神物:
@@ -2297,7 +2315,7 @@ Drew之翼:
   - §r神圣之佑：增加20点防御力和5%伤害减免
   - §r神圣之力：+10%召唤伤害
   attributes:
-    minionLimit: 1
+    minionLimit: 2
   worth: 26000000
   rarity: 13
 钨钢电池:
@@ -2448,7 +2466,7 @@ Drew之翼:
   - §r[饰品]
   - §r“致命失误！”
   attributes:
-    damageMulti: 0.25
+    damageMulti: 0.35
     damageTakenMulti: 0.15
   worth: 28000000
   rarity: 14
@@ -2535,8 +2553,8 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    armorPenetration: 20
-    damageMulti: 0.06
+    armorPenetration: 25
+    damageMulti: 0.1
   worth: 9600000
   rarity: 7
 猎魂鲨齿项链:
@@ -2545,7 +2563,7 @@ Drew之翼:
   - §r[饰品]
   - §r取自顶级掠食者的恐怖战利品
   attributes:
-    armorPenetration: 30
+    armorPenetration: 45
     damageMulti: 0.15
   worth: 26000000
   rarity: 13
@@ -2582,10 +2600,10 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r幻灭于不可知的仇恨中，它仍然包含着归一心元石大部分的力量......
+  - §r幻灭于不可知的仇恨中，它包含着归一心元石极化后的力量......
   attributes:
     crit: 10
-    damageMulti: 0.2
+    damageMulti: 0.25
     maxHealthMulti: -0.1
     regen: -6
     damageTakenMulti: 0.05
@@ -2741,6 +2759,7 @@ Drew之翼:
   - §r“竟然为了一滴血付出了这么多”
   attributes:
     maxHealthMulti: 0.25
+    regen: 4
   worth: 28000000
   rarity: 14
 钨钢屏障生成仪:
@@ -2756,7 +2775,6 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r拥有屏障时额外获得20防御
   attributesFormI:
     barrierMax: 125
   attributesFormII:
@@ -2792,7 +2810,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributesFormI:
-    damageMulti: 0.25
+    damageMulti: 0.35
     regen: -16
   attributesFormII:
     maxHealthMulti: -0.5
@@ -2818,7 +2836,7 @@ Drew之翼:
   - §r坚固沉重的护具，并不是大理石制成的
   attributes:
     defence: 72
-    speedMulti: -0.35
+    speedMulti: -0.3
   worth: 4800000
   rarity: 5
 魔鬼之庇护:
@@ -2836,7 +2854,7 @@ Drew之翼:
   - §r受到致死伤害前会受到相当于本次伤害最终值1.75倍的治疗效果
   - §r此效果有180秒冷却时间，最低治疗量为200
   attributes:
-    damageMulti: 0.1
+    damageMulti: 0.12
   worth: 28000000
   rarity: 14
 魔君的礼物:
@@ -2845,7 +2863,7 @@ Drew之翼:
   - §r[饰品]
   - §r神的力量蕴藏于其中
   attributes:
-    defence: 45
+    defence: 60
     damageMulti: 0.15
     speedMulti: 0.1
   worth: 30000000
@@ -4318,7 +4336,7 @@ Drew之翼:
 毁灭刃:
   item: DIAMOND_SWORD
   attributes:
-    damage: 86
+    damage: 194
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4328,7 +4346,7 @@ Drew之翼:
 钴剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 78
+    damage: 80
     damageType: Melee
     crit: 4
     knockback: 3.85
@@ -4338,7 +4356,7 @@ Drew之翼:
 秘银剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 88
+    damage: 100
     damageType: Melee
     crit: 4
     knockback: 6
@@ -4348,7 +4366,7 @@ Drew之翼:
 精金剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 100
+    damage: 122
     damageType: Melee
     crit: 4
     knockback: 6
@@ -4404,7 +4422,7 @@ Drew之翼:
   lore:
   - §r射出孢子球
   attributes:
-    damage: 60
+    damage: 80
     damageType: Melee
     crit: 4
     knockback: 4
@@ -4416,7 +4434,7 @@ Drew之翼:
   lore:
   - §r射出叶绿珠
   attributes:
-    damage: 150
+    damage: 160
     damageType: Melee
     crit: 4
     knockback: 6
@@ -4562,7 +4580,7 @@ Drew之翼:
   lore:
   - §r射出孢子球
   attributes:
-    damage: 80
+    damage: 100
     damageType: Melee
     crit: 4
     knockback: 6.2
@@ -6036,7 +6054,7 @@ Drew之翼:
     crit: 4
     projectileSpeed: 10
     knockback: 2.5
-    useTime: 19
+    useTime: 14
   worth: 2400000
   rarity: 4
 神圣连弩:
@@ -6667,7 +6685,7 @@ Drew之翼:
 喜庆弹射器:
   item: BLAZE_ROD
   attributes:
-    damage: 130
+    damage: 180
     damageType: Rocket
     crit: 4
     projectileSpeed: 15
@@ -7363,7 +7381,7 @@ Drew之翼:
 链式机枪:
   item: BLAZE_ROD
   attributes:
-    damage: 62
+    damage: 70
     damageType: Bullet
     crit: 4
     projectileSpeed: 14
@@ -8186,9 +8204,9 @@ Dodu的手炮:
     damageType: Magic
     crit: 4
     projectileSpeed: 5
-    knockback: 3.5
+    knockback: 5.5
     useTime: 26
-    manaUse: 18
+    manaUse: 12
   worth: 1500000
   rarity: 2
 恶魔锄刀:
@@ -8220,7 +8238,7 @@ Dodu的手炮:
   lore:
   - §r召唤快速发射的水晶碎块
   attributes:
-    damage: 64
+    damage: 80
     damageType: Magic
     crit: 4
     projectileSpeed: 16
@@ -8244,7 +8262,7 @@ Dodu的手炮:
 水晶蛇:
   item: DIAMOND_SWORD
   attributes:
-    damage: 80
+    damage: 90
     damageType: Magic
     crit: 4
     projectileSpeed: 13
@@ -8387,7 +8405,7 @@ Dodu的手炮:
 蝙蝠权杖:
   item: DIAMOND_SWORD
   attributes:
-    damage: 90
+    damage: 112
     damageType: Magic
     crit: 4
     projectileSpeed: 10
@@ -9989,7 +10007,7 @@ Dodu的手炮:
   attributes:
     damage: 648
     damageType: Magic
-    projectileSpeed: 14
+    projectileSpeed: 20
     crit: 4
     knockback: 4
     useTime: 8
@@ -10244,10 +10262,10 @@ Dodu的手炮:
   - §r“千刀万剐”
   attributes:
     armorPenetration: 50
-    damage: 12
+    damage: 18
     damageType: Summon
     knockback: 0
-    useTime: 36
+    useTime: 25
     manaUse: 10
   worth: 1000000
   rarity: 5
@@ -11456,7 +11474,7 @@ Dodu的手炮:
   lore:
   - §r对目标施放酸性毒液
   attributes:
-    damage: 25
+    damage: 28
     damageType: Arrow
     crit: 4
     knockback: 3
@@ -11995,6 +12013,60 @@ Dodu的手炮:
     defence: 2
   worth: 5000
   rarity: 0
+铜头盔:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 2
+    damageMulti: 0.05
+  worth: 25000
+  rarity: 0
+铜链甲:
+  item: IRON_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 4
+    crit: 3
+  worth: 20000
+  rarity: 0
+铜护胫:
+  item: IRON_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 2
+    speedMulti: 0.05
+  worth: 15000
+  rarity: 0
+铁头盔:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 4
+    damageTakenMulti: -0.03
+  worth: 60000
+  rarity: 0
+铁链甲:
+  item: IRON_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 6
+    damageTakenMulti: -0.03
+  worth: 100000
+  rarity: 0
+铁护胫:
+  item: IRON_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 4
+    damageTakenMulti: -0.03
+  worth: 80000
+  rarity: 0
 钨钢战盔:
   item: IRON_HELMET
   lore:
@@ -12076,54 +12148,6 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 200000
   rarity: 1
-铜头盔:
-  item: IRON_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 2
-  worth: 25000
-  rarity: 0
-铜链甲:
-  item: IRON_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 4
-  worth: 20000
-  rarity: 0
-铜护胫:
-  item: IRON_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 2
-  worth: 15000
-  rarity: 0
-铁头盔:
-  item: IRON_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 4
-  worth: 60000
-  rarity: 0
-铁链甲:
-  item: IRON_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 6
-  worth: 100000
-  rarity: 0
-铁护胫:
-  item: IRON_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 4
-  worth: 80000
-  rarity: 0
 白银头盔:
   item: IRON_HELMET
   lore:
@@ -12131,6 +12155,7 @@ Dodu的手炮:
   - §r“脱下时并不会为你恢复生命值”
   attributes:
     defence: 6
+    crit: 5
   worth: 250000
   rarity: 0
 白银链甲:
@@ -12139,6 +12164,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 8
+    regen: 4
   worth: 200000
   rarity: 0
 白银护胫:
@@ -12147,6 +12173,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 6
+    speedMulti: 0.08
   worth: 150000
   rarity: 0
 忍者头盔:
@@ -12154,7 +12181,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 3
+    defence: 4
     crit: 3
   worth: 200000
   rarity: 1
@@ -12163,7 +12190,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 5
+    defence: 8
     crit: 3
   worth: 100000
   rarity: 1
@@ -12172,7 +12199,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 3
+    defence: 6
     crit: 3
   worth: 100000
   rarity: 1
@@ -12182,6 +12209,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 8
+    damageMulti: 0.06
   worth: 300000
   rarity: 0
 金链甲:
@@ -12190,6 +12218,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 10
+    damageTakenMulti: -0.05
   worth: 500000
   rarity: 0
 金护胫:
@@ -12198,6 +12227,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 8
+    speedMulti: 0.1
   worth: 400000
   rarity: 0
 丛林帽:
@@ -12207,7 +12237,7 @@ Dodu的手炮:
   attributes:
     defence: 10
     maxMana: 40
-    critMagic: 6
+    critMagic: 3
   worth: 900000
   rarity: 1
 丛林衣:
@@ -12215,8 +12245,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 12
-    maxMana: 20
+    defence: 14
     damageMagicMulti: 0.06
   worth: 600000
   rarity: 1
@@ -12225,9 +12254,8 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 12
-    maxMana: 20
-    critMagic: 6
+    defence: 8
+    critMagic: 3
   worth: 600000
   rarity: 1
 胜潮贝盔:
@@ -12282,7 +12310,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 8
-    speedMulti: 0.23
+    speedMulti: 0.12
   worth: 400000
   rarity: 1
 黑曜石逃犯帽:
@@ -12318,7 +12346,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 10
-    damageMagicMulti: 0.09
+    damageMagicMulti: 0.08
   worth: 600000
   rarity: 2
 流星护甲:
@@ -12327,7 +12355,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 12
-    damageMagicMulti: 0.09
+    damageMagicMulti: 0.08
   worth: 900000
   rarity: 2
 流星护腿:
@@ -12336,7 +12364,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 10
-    damageMagicMulti: 0.09
+    damageMagicMulti: 0.08
   worth: 600000
   rarity: 2
 暗影头盔:
@@ -12345,6 +12373,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 12
+    crit: 5
   worth: 750000
   rarity: 2
 暗影鳞甲:
@@ -12353,6 +12382,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 14
+    crit: 5
   worth: 600000
   rarity: 2
 暗影护胫:
@@ -12361,6 +12391,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 12
+    crit: 5
   worth: 450000
   rarity: 2
 熔岩头盔:
@@ -12369,7 +12400,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 16
-    critMelee: 7
+    critMelee: 3
   worth: 900000
   rarity: 2
 熔岩胸甲:
@@ -12378,7 +12409,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 18
-    damageMeleeMulti: 0.07
+    damageMeleeMulti: 0.03
   worth: 600000
   rarity: 2
 熔岩护胫:
@@ -12387,7 +12418,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 16
-    useSpeedMeleeMulti: 0.07
+    useSpeedMeleeMulti: 0.03
   worth: 600000
   rarity: 2
 天蓝战盔:
@@ -12405,7 +12436,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 10
-    damageRangedMulti: 0.08
+    damageRangedMulti: 0.1
   worth: 800000
   rarity: 3
 天蓝帽:
@@ -12414,7 +12445,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 6
-    damageMagicMulti: 0.08
+    damageMagicMulti: 0.15
     maxMana: 20
   worth: 800000
   rarity: 3
@@ -12443,7 +12474,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 12
-    speedMulti: 0.24
+    speedMulti: 0.1
   worth: 800000
   rarity: 3
 死灵头盔:
@@ -12452,7 +12483,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 12
-    damageRangedMulti: 0.05
+    damageRangedMulti: 0.1
   worth: 900000
   rarity: 3
 死灵胸甲:
@@ -12461,7 +12492,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 14
-    damageRangedMulti: 0.05
+    damageRangedMulti: 0.1
   worth: 600000
   rarity: 3
 死灵护胫:
@@ -12470,7 +12501,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 12
-    damageRangedMulti: 0.05
+    damageRangedMulti: 0.1
   worth: 600000
   rarity: 3
 斯塔提斯战盔:
@@ -12501,10 +12532,9 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 10
-    damageMagicMulti: 0.1
     maxMana: 30
     manaUseMulti: -0.1
-    critMagic: 7
+    critMagic: 12
   worth: 2400000
   rarity: 3
 斯塔提斯兜帽:
@@ -12536,6 +12566,56 @@ Dodu的手炮:
     damageMulti: 0.05
   worth: 2400000
   rarity: 3
+钴头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 24
+    speedMulti: 0.1
+    damageMeleeMulti: 0.15
+  worth: 1500000
+  rarity: 4
+钴面具:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 18
+    damageRangedMulti: 0.15
+    critRanged: 15
+  worth: 1500000
+  rarity: 4
+钴帽:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 8
+    maxMana: 40
+    damageMagicMulti: 0.15
+    critMagic: 15
+  worth: 1500000
+  rarity: 4
+钴胸甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 20
+    crit: 5
+  worth: 1200000
+  rarity: 4
+钴护腿:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 16
+    speedMulti: 0.1
+    damageMulti: 0.03
+  worth: 900000
+  rarity: 4
 蜘蛛面具:
   item: DIAMOND_HELMET
   lore:
@@ -12543,7 +12623,7 @@ Dodu的手炮:
   attributes:
     defence: 10
     minionLimit: 1
-    damageSummonMulti: 0.05
+    damageSummonMulti: 0.1
   worth: 750000
   rarity: 4
 蜘蛛胸甲:
@@ -12553,7 +12633,7 @@ Dodu的手炮:
   attributes:
     defence: 16
     minionLimit: 1
-    damageSummonMulti: 0.05
+    damageSummonMulti: 0.1
   worth: 750000
   rarity: 4
 蜘蛛护胫:
@@ -12563,7 +12643,7 @@ Dodu的手炮:
   attributes:
     defence: 14
     minionLimit: 1
-    damageSummonMulti: 0.06
+    damageSummonMulti: 0.1
   worth: 750000
   rarity: 4
 软壳贝盔:
@@ -12572,7 +12652,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 36
-    damageMulti: 0.05
+    damageMeleeMulti: 0.05
     crit: 4
   worth: 4800000
   rarity: 5
@@ -12582,7 +12662,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 44
-    damageMulti: 0.1
+    damageMeleeMulti: 0.1
     crit: 6
     speedMulti: -0.15
   worth: 4800000
@@ -12593,7 +12673,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 30
-    damageMulti: 0.12
+    damageMeleeMulti: 0.12
     crit: 4
     speedMulti: -0.07
   worth: 4800000
@@ -12614,7 +12694,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 28
-    damageMulti: 0.05
+    damageMeleeMulti: 0.05
     ammoConsumptionRate: -0.1
   worth: 2000000
   rarity: 5
@@ -12628,73 +12708,13 @@ Dodu的手炮:
     useSpeedMeleeMulti: 0.1
   worth: 2000000
   rarity: 5
-钴帽:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 4
-    maxMana: 40
-    damageMagicMulti: 0.1
-    crit: 9
-  worth: 1500000
-  rarity: 4
-钴头盔:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 24
-    speedMulti: 0.1
-    damageMeleeMulti: 0.15
-  worth: 1500000
-  rarity: 4
-钴面具:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 8
-    damageRangedMulti: 0.1
-    crit: 10
-  worth: 1500000
-  rarity: 4
-钴胸甲:
-  item: DIAMOND_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 16
-    crit: 5
-  worth: 1200000
-  rarity: 4
-钴护腿:
-  item: DIAMOND_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 16
-    speedMulti: 0.1
-    damageMulti: 0.03
-  worth: 900000
-  rarity: 4
-秘银帽:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 6
-    maxMana: 60
-    damageMagicMulti: 0.15
-  worth: 2250000
-  rarity: 4
 秘银头盔:
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
   attributes:
     defence: 32
-    crit: 8
+    critMelee: 8
     damageMeleeMulti: 0.1
   worth: 2250000
   rarity: 4
@@ -12703,9 +12723,19 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 12
+    defence: 20
     damageRangedMulti: 0.12
-    crit: 7
+    critRanged: 7
+  worth: 2250000
+  rarity: 4
+秘银帽:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 12
+    maxMana: 60
+    damageMagicMulti: 0.2
   worth: 2250000
   rarity: 4
 秘银链甲:
@@ -12726,24 +12756,74 @@ Dodu的手炮:
     crit: 10
   worth: 1350000
   rarity: 4
-精金头饰:
+代达罗斯头盔:
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
   attributes:
-    defence: 8
-    maxMana: 80
-    damageMagicMulti: 0.12
-    crit: 12
-  worth: 3000000
-  rarity: 4
+    defence: 42
+    damageMeleeMulti: 0.15
+    critMelee: 10
+  worth: 4800000
+  rarity: 5
+代达罗斯头罩:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 18
+    damageRangedMulti: 0.1
+    critRanged: 7
+  worth: 4800000
+  rarity: 5
+代达罗斯兜帽:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 10
+    damageMagicMulti: 0.13
+    critMagic: 10
+    manaUseMulti: -0.1
+    maxMana: 60
+  worth: 4800000
+  rarity: 5
+代达罗斯面具:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 6
+    damageSummonMulti: 0.1
+  worth: 4800000
+  rarity: 5
+代达罗斯胸甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 28
+    damageMulti: 0.03
+    crit: 3
+  worth: 4800000
+  rarity: 5
+代达罗斯护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 20
+    crit: 3
+    speedMulti: 0.1
+  worth: 4800000
+  rarity: 5
 精金头盔:
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
   attributes:
     defence: 44
-    crit: 7
+    critMelee: 7
     damageMeleeMulti: 0.14
   worth: 3000000
   rarity: 4
@@ -12752,9 +12832,20 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 16
+    defence: 20
     damageRangedMulti: 0.14
-    crit: 10
+    critRanged: 10
+  worth: 3000000
+  rarity: 4
+精金头饰:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 8
+    maxMana: 80
+    damageMagicMulti: 0.12
+    critMagic: 12
   worth: 3000000
   rarity: 4
 精金胸甲:
@@ -12792,7 +12883,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 40
-    crit: 11
+    critMelee: 11
   worth: 4000000
   rarity: 5
 寒霜护腿:
@@ -12805,86 +12896,13 @@ Dodu的手炮:
     useSpeedMeleeMulti: 0.1
   worth: 3000000
   rarity: 5
-代达罗斯头盔:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 42
-    damageMeleeMulti: 0.15
-    critMelee: 10
-  worth: 4800000
-  rarity: 5
-代达罗斯头罩:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 18
-    damageRangedMulti: 0.13
-    critRanged: 7
-    ammoConsumptionRate: -0.2
-  worth: 4800000
-  rarity: 5
-代达罗斯兜帽:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 10
-    damageMagicMulti: 0.13
-    critMagic: 7
-    manaUseMulti: -0.1
-    maxMana: 60
-  worth: 4800000
-  rarity: 5
-代达罗斯面具:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 6
-    damageSummonMulti: 0.05
-  worth: 4800000
-  rarity: 5
-代达罗斯胸甲:
-  item: DIAMOND_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 38
-    damageMulti: 0.03
-    crit: 3
-  worth: 4800000
-  rarity: 5
-代达罗斯护胫:
-  item: DIAMOND_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 30
-    crit: 3
-    speedMulti: 0.1
-  worth: 4800000
-  rarity: 5
-神圣头饰:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 10
-    maxMana: 100
-    damageMagicMulti: 0.12
-    crit: 12
-  worth: 5000000
-  rarity: 5
 神圣面具:
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
   attributes:
-    defence: 48
-    crit: 10
+    defence: 38
+    critMelee: 10
     damageMeleeMulti: 0.1
     useSpeedMeleeMulti: 0.1
   worth: 5000000
@@ -12894,9 +12912,20 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 18
+    defence: 24
     damageRangedMulti: 0.15
-    crit: 8
+    critRanged: 8
+  worth: 5000000
+  rarity: 5
+神圣头饰:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 10
+    maxMana: 100
+    damageMagicMulti: 0.15
+    critMagic: 15
   worth: 5000000
   rarity: 5
 神圣兜帽:
@@ -12905,7 +12934,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 2
-    damageSummonMulti: 0.1
+    damageSummonMulti: 0.2
     minionLimit: 1
   worth: 5000000
   rarity: 5
@@ -12914,7 +12943,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 30
+    defence: 36
     crit: 7
   worth: 4000000
   rarity: 5
@@ -12923,32 +12952,10 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 22
+    defence: 26
     damageMulti: 0.07
-    speedMulti: 0.08
   worth: 3000000
   rarity: 5
-叶绿头饰:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 14
-    maxMana: 80
-    manaUseMulti: -0.17
-    damageMagicMulti: 0.16
-  worth: 6000000
-  rarity: 7
-叶绿头盔:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 26
-    damageRangedMulti: 0.16
-    ammoConsumptionRate: -0.2
-  worth: 6000000
-  rarity: 7
 叶绿面具:
   item: DIAMOND_HELMET
   lore:
@@ -12959,13 +12966,34 @@ Dodu的手炮:
     crit: 6
   worth: 6000000
   rarity: 7
+叶绿头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 32
+    damageRangedMulti: 0.05
+    ammoConsumptionRate: -0.2
+  worth: 6000000
+  rarity: 7
+叶绿头饰:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 14
+    maxMana: 80
+    manaUseMulti: -0.17
+    damageMagicMulti: 0.1
+  worth: 6000000
+  rarity: 7
 叶绿板甲:
   item: DIAMOND_CHESTPLATE
   lore:
   - §r[装备]
   attributes:
     defence: 36
-    damageMulti: 0.05
+    damageMulti: 0.12
     crit: 7
   worth: 4800000
   rarity: 7
@@ -12975,7 +13003,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 26
-    crit: 8
+    crit: 9
     speedMulti: 0.05
   worth: 3600000
   rarity: 7
@@ -13069,7 +13097,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 12
-    damageMagicMulti: -0.4
+    damageMagicMulti: -0.2
   worth: 7500000
   rarity: 8
 幽灵面具:
@@ -13110,7 +13138,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 22
-    damageArrowMulti: 0.15
+    damageArrowMulti: 0.1
     crit: 5
   worth: 7500000
   rarity: 8
@@ -13120,7 +13148,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 22
-    damageRocketMulti: 0.15
+    damageRocketMulti: 0.1
     crit: 5
   worth: 7500000
   rarity: 8
@@ -13130,7 +13158,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 22
-    damageBulletMulti: 0.15
+    damageBulletMulti: 0.1
     crit: 5
   worth: 7500000
   rarity: 8
@@ -13139,7 +13167,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 48
+    defence: 32
     damageRangedMulti: 0.13
     crit: 13
     ammoConsumptionRate: -0.2
@@ -13150,7 +13178,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 32
+    defence: 20
     crit: 7
     speedMulti: 0.12
   worth: 4500000
@@ -13261,10 +13289,10 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 18
-    damageMagicMulti: 0.12
+    defence: 24
+    damageMagicMulti: 0.1
     maxMana: 100
-    critMagic: 10
+    critMagic: 15
   worth: 12000000
   rarity: 8
 渊泉头盔:
@@ -13357,7 +13385,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    crit: 7
+    critMagic: 7
     damageMagicMulti: 0.07
     defence: 28
     manaUseMulti: -0.15
@@ -13369,7 +13397,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    crit: 9
+    critMagic: 9
     damageMagicMulti: 0.09
     defence: 36
   worth: 14000000
@@ -13390,7 +13418,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 48
-    crit: 26
+    critMelee: 20
     regenMulti: 0.167
     mobLimit: 2
     mobSpawnRateMulti: 0.2
@@ -13436,7 +13464,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 32
-    minionLimit: 2
+    minionLimit: 1
     damageSummonMulti: 0.22
   worth: 14000000
   rarity: 10
@@ -13446,7 +13474,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 24
-    minionLimit: 2
+    minionLimit: 1
     damageSummonMulti: 0.22
   worth: 10500000
   rarity: 10
@@ -13456,8 +13484,8 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 28
-    damageRangedMulti: 0.16
-    crit: 7
+    damageRangedMulti: 0.1
+    critRanged: 7
   worth: 7000000
   rarity: 10
 星璇胸甲:
@@ -13466,8 +13494,8 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 56
-    crit: 12
-    damageRangedMulti: 0.12
+    critRanged: 10
+    damageRangedMulti: 0.1
     ammoConsumptionRate: -0.25
   worth: 14000000
   rarity: 10
@@ -13477,7 +13505,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 40
-    crit: 8
+    critRanged: 8
     damageRangedMulti: 0.08
     speedMulti: 0.1
   worth: 10500000
@@ -13489,7 +13517,7 @@ Dodu的手炮:
   - §r“远古信徒的头盔”
   attributes:
     defence: 66
-    crit: 5
+    critMelee: 5
     damageMeleeMulti: 0.1
     damageTakenMulti: -0.05
   worth: 24000000
@@ -13540,7 +13568,7 @@ Dodu的手炮:
     defence: 74
     crit: 5
     damageMulti: 0.1
-    regen: 2
+    regen: 4
     maxHealth: 80
   worth: 24000000
   rarity: 12
@@ -13561,8 +13589,8 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 36
-    damageMagicMulti: 0.18
+    defence: 40
+    damageMagicMulti: 0.2
     critMagic: 12
     damageMeleeMulti: -0.2
     damageRangedMulti: -0.2
@@ -13574,8 +13602,8 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 66
-    damageMagicMulti: 0.12
+    defence: 50
+    damageMagicMulti: 0.15
     critMagic: 15
     damageMeleeMulti: -0.2
     damageRangedMulti: -0.2
@@ -13589,8 +13617,8 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 42
-    damageMagicMulti: 0.1
+    defence: 30
+    damageMagicMulti: 0.12
     critMagic: 12
     damageMeleeMulti: -0.2
     damageRangedMulti: -0.2
@@ -13700,7 +13728,7 @@ Dodu的手炮:
   attributes:
     defence: 96
     damageMeleeMulti: 0.17
-    crit: 7
+    critMelee: 7
   worth: 28000000
   rarity: 14
 弑神者头套:
@@ -13742,8 +13770,8 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 42
-    damageMagicMulti: 0.23
-    critMagic: 13
+    damageMagicMulti: 0.25
+    critMagic: 15
     maxMana: 100
     manaUseMulti: -0.19
   worth: 28000000
@@ -13764,7 +13792,7 @@ Dodu的手炮:
   attributes:
     defence: 88
     maxHealth: 160
-    damageMulti: 0.12
+    damageMulti: 0.1
     crit: 8
   worth: 28000000
   rarity: 14
@@ -13774,8 +13802,8 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 78
-    damageMulti: 0.12
-    crit: 12
+    damageMulti: 0.1
+    crit: 1
     speedMulti: 0.1
   worth: 28000000
   rarity: 14
@@ -13786,7 +13814,7 @@ Dodu的手炮:
   attributes:
     defence: 108
     damageMeleeMulti: 0.2
-    crit: 10
+    critMelee: 10
   worth: 30000000
   rarity: 15
 金兜铁面盔:
@@ -13875,7 +13903,9 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 100
-    damageMulti: 0.3
+    damageMeleeMulti: 0.3
+    damageRangedMulti: 0.3
+    damageMagicMulti: 0.15
     crit: 15
   worth: 100000000
   rarity: 16
@@ -13936,7 +13966,7 @@ Dodu的手炮:
   item: CLAY_BALL
   lore:
   - §a+20% 箭矢速度
-  - §a+5% 箭矢速度
+  - §a+5% 箭矢伤害
   - §a8分钟持续时间
   worth: 20000
   rarity: 1

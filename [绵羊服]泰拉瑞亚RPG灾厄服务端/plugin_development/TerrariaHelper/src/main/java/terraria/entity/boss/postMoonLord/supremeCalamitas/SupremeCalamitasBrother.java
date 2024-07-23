@@ -57,8 +57,8 @@ public class SupremeCalamitasBrother extends EntitySlime {
         shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
 
         boolean fireDirectProj = false;
-        if (healthRatio > 0.5) {
-            int fireInterval = healthRatio > 0.75 ? 8 : 5;
+        if (healthRatio > 0.4) {
+            int fireInterval = healthRatio > 0.7 ? 8 : 5;
             if (indexAI % fireInterval == 0) {
                 fireDirectProj = true;
             }
@@ -66,7 +66,8 @@ public class SupremeCalamitasBrother extends EntitySlime {
         else {
             if (indexAI % 4 == 0) {
                 if (indexAI % 20 == 0) {
-                    for (Vector projVel : MathHelper.getEvenlySpacedProjectileDirections(10, 31,
+                    for (Vector projVel : MathHelper.getEvenlySpacedProjectileDirections(
+                            11.5, 35,
                             target, shootInfo.shootLoc, aimHelpers[typeIdx], PROJECTILE_SPEEDS[typeIdx])) {
                         shootInfo.velocity = projVel;
                         EntityHelper.spawnProjectile(shootInfo);

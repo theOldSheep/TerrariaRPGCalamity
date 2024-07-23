@@ -81,7 +81,7 @@ public class SupremeCalamitas extends EntitySlime {
     // other variables and AI
     static double DASH_SPEED = 3.5, HOVER_SPEED = 2.75, DART_SPEED = 2.75, HELL_BLAST_SPEED = 3.25, GIGA_BLAST_SPEED = 1.25,
             HOVER_DISTANCE = 48, HOVER_DISTANCE_BROTHERS = 40, HOVER_DISTANCE_BROTHERS_OFFSET = 12,
-            DART_SPREAD_SINGLE = 10, DART_SPREAD_TOTAL = 40;
+            DART_SPREAD_SINGLE = 8.5, DART_SPREAD_TOTAL = 35;
     static HashMap<String, Double> attrMapPrjLow, attrMapPrjMid, attrMapPrjHigh, attrMapPrjExtreme;
     static BulletHellPattern[] bulletHellPatterns;
     static EntityHelper.AimHelperOptions dashAimHelper, blastAimHelper;

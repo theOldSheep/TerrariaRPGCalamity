@@ -3974,7 +3974,6 @@ TNT:
 灵魂鬼爪:
     gravity: 0
     liveTime: 100
-    penetration: 2
     blockHitAction: thru
     speedMultiPerTick: 0.975
     projectileSize: 3
