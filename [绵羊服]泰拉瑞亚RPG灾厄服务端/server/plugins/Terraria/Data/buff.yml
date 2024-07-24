@@ -152,7 +152,7 @@ effects:
     damage: 5
     damageMonster: 10
     attributes:
-      damageTakenMulti: 0.1
+      damageTakenMulti: 0.05
       defence: -20
       speedMulti: -0.1
     tooltip: 你的皮肤正被侵蚀
@@ -559,8 +559,7 @@ effects:
   灵魂防御:
     isBuff: true
     attributes:
-        minionLimit: 3
-        damageSummonMulti: 0.1
+        defence: 12
         damageTakenMulti: -0.03
     tooltip: 增加12点防御力和3%伤害减免
   灵魂力量:
@@ -746,7 +745,7 @@ effects:
     isBuff: true
     attributes:
         damageSummonMulti: 0.72
-        minionLimit: 8
+        minionLimit: 6
         minionDamagePenaltyFactor: 0.5
     tooltip: 召唤属性大幅提高
   蓝色天钻宝石冷却:

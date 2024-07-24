@@ -311,7 +311,7 @@ public class CeaselessVoid extends EntitySlime {
             setSize(16, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             if (isSummonedByDoG)
-                healthMulti *= 1.1;
+                healthMulti *= 0.4;
             double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);

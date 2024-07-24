@@ -105,11 +105,11 @@ public class WallOfFleshMouth extends EntitySlime {
                 {
                     if (enraged)
                         moveSpeedMultiplier = 1.25;
-                    else if (healthRatio < 0.025)
+                    else if (healthRatio < 0.01)
                         moveSpeedMultiplier = 1;
-                    else if (healthRatio < 0.035)
+                    else if (healthRatio < 0.02)
                         moveSpeedMultiplier = 0.75;
-                    else if (healthRatio < 0.05)
+                    else if (healthRatio < 0.04)
                         moveSpeedMultiplier = 0.6;
                     else if (healthRatio < 0.25)
                         moveSpeedMultiplier = 0.5;

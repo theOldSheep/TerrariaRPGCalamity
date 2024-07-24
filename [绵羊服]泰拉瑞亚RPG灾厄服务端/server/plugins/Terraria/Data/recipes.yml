@@ -3706,6 +3706,19 @@ WORKBENCH:
     - 冰川精华:2
     - 混乱精华:2
     recipeCategory: WEAPON_MAGIC
+  '53':
+    requireLevel: 1
+    resultItem: 暗晶风暴
+    requireItem:
+    - 水晶风暴
+    - 寒元锭:6
+    recipeCategory: WEAPON_MAGIC
+  '54':
+    requireLevel: 1
+    resultItem: 蒸海硫火
+    requireItem:
+    - 污痕核心:5
+    recipeCategory: WEAPON_MAGIC
   '51':
     requireLevel: 1
     resultItem: 死亡之尘
@@ -3720,19 +3733,6 @@ WORKBENCH:
     requireItem:
     - 禁戒碎片:2
     - 精金锭:5
-    recipeCategory: WEAPON_MAGIC
-  '53':
-    requireLevel: 1
-    resultItem: 暗晶风暴
-    requireItem:
-    - 水晶风暴
-    - 寒元锭:6
-    recipeCategory: WEAPON_MAGIC
-  '54':
-    requireLevel: 1
-    resultItem: 蒸海硫火
-    requireItem:
-    - 污痕核心:5
     recipeCategory: WEAPON_MAGIC
   '55':
     requireLevel: 1

@@ -708,7 +708,7 @@ public class ItemUseHelper {
                                            String weaponType, ItemStack weaponItem, double size,
                                            boolean dirFixed, int interpolateType, int currentIndex, int maxIndex, int swingAmount) {
         if (!PlayerHelper.isProperlyPlaying(ply)) return;
-        Vector aimDir = getPlayerMeleeDir(ply, size);
+        Vector aimDir = ply.getLocation().getDirection();
         final double plyYaw = MathHelper.getVectorYaw(aimDir), plyPitch = MathHelper.getVectorPitch(aimDir);
         if (!dirFixed) {
             // stab
@@ -2977,25 +2977,14 @@ public class ItemUseHelper {
         }
     }
     // melee helper functions below
-    protected static Vector getPlayerMeleeDir(Player ply, double size) {
-        EntityHelper.AimHelperOptions rotationAimHelper = new EntityHelper.AimHelperOptions()
-                .setAimMode(true)
-                .setTicksTotal(0);
-        // get targeted location
-        Location targetLoc = getPlayerTargetLoc(ply, size,
-                Setting.getOptionDouble(ply, Setting.Options.AIM_HELPER_RADIUS),
-                0, rotationAimHelper, true);
-        return MathHelper.getDirection(ply.getEyeLocation(), targetLoc, 1);
-    }
+
     // stab and swing. NOT NECESSARILY MELEE DAMAGE!
     protected static boolean playerUseMelee(Player ply, String itemType, ItemStack weaponItem,
                                           ConfigurationSection weaponSection, HashMap<String, Double> attrMap, int swingAmount, boolean stabOrSwing) {
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         double size = weaponSection.getDouble("size", 3d);
         size *= attrMap.getOrDefault("meleeReachMulti", 1d);
-//        double yaw = plyNMS.yaw, pitch = plyNMS.pitch;
-//        Vector lookDir = MathHelper.vectorFromYawPitch_approx(yaw, pitch);
-        Vector lookDir = getPlayerMeleeDir(ply, size);
+        Vector lookDir = ply.getLocation().getDirection();
         double yaw = MathHelper.getVectorYaw(lookDir), pitch = MathHelper.getVectorPitch(lookDir);
 
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
@@ -3962,7 +3951,6 @@ public class ItemUseHelper {
             case "酸蚀毒蝰": {
                 if (fireIndex == 2) {
                     fireAmount = 5;
-                    spread = 30;
                 }
                 break;
             }
@@ -4028,11 +4016,11 @@ public class ItemUseHelper {
                             options.setRandomOffsetRadius(3);
                             if (Math.random() < 0.35) {
                                 projectileName = "破空暗夜飞龙";
-                                attrMap.put("damageMagicMulti", 3.75);
+                                attrMap.put("damageMagicMulti",
+                                        attrMap.getOrDefault("damageMagicMulti", 1d) * 3.75);
                             }
                             else {
                                 projectileName = "破空星辰";
-                                attrMap.put("damageMagicMulti", 1.5);
                             }
                             break;
                         case "死亡冰雹":
@@ -4107,7 +4095,8 @@ public class ItemUseHelper {
                             charge = 0;
                             HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
                             projAttrMap.put("damage", 233333d);
-                            projAttrMap.put("damageMulti", 1d);
+                            projAttrMap.put("damageMulti", projAttrMap.getOrDefault("damageMulti", 1d) *
+                                    (100 + projAttrMap.getOrDefault("crit", 4d)) / 100);
                             projAttrMap.put("crit", 100d);
                             EntityHelper.spawnProjectile(ply, ply.getEyeLocation().add(0, 15, 0), new Vector(),
                                     projAttrMap, EntityHelper.DamageType.MAGIC, "光之舞闪光");
@@ -4173,7 +4162,7 @@ public class ItemUseHelper {
                     // fires two darts that are slower and a major projectile unaffected by random offset
                     if (i > 0) {
                         projectileName = "硫火飞弹";
-                        projectileSpeed /= 2;
+                        projectileSpeed *= 0.8;
                     }
                     else {
                         fireVelocity = facingDir.clone();
@@ -4188,11 +4177,11 @@ public class ItemUseHelper {
                             break;
                         case 1:
                             projectileName = "中殷红利刃";
-                            projectileSpeed *= 0.85;
+                            projectileSpeed *= 0.95;
                             break;
                         case 2:
                             projectileName = "小殷红利刃";
-                            projectileSpeed *= 0.7;
+                            projectileSpeed *= 0.9;
                             break;
                     }
                     break;
@@ -4461,7 +4450,7 @@ public class ItemUseHelper {
                     }
                     case "亚特兰蒂斯": {
                         length = 24;
-                        width = 1.25;
+                        width = 0.5;
                         particleColor = "119|145|197";
                         strikeInfo
                                 .setDamageCD(4)
@@ -4480,8 +4469,6 @@ public class ItemUseHelper {
                     case "拉扎尔射线": {
                         length = 48;
                         particleColor = "255|225|0";
-                        yaw += Math.random() * 10 - 5;
-                        pitch += Math.random() * 10 - 5;
                         strikeInfo
                                 .setThruWall(false)
                                 .setMaxTargetHit(1)
@@ -5268,8 +5255,15 @@ public class ItemUseHelper {
                 // update attribute
                 if (weaponSection.contains("attributes")) {
                     ConfigurationSection attributeSection = weaponSection.getConfigurationSection("attributes");
-                    for (String attributeType : attributeSection.getKeys(false))
-                        attrMap.put(attributeType, attributeSection.getDouble(attributeType, 1d));
+                    for (String attributeType : attributeSection.getKeys(false)) {
+                        attrMap.put(attributeType, attributeSection.getDouble(attributeType));
+                        // when the use time is fixed by the config, convert swing speed to damage.
+                        if (attributeType.equals("useTime")) {
+                            double dmgRatioConverted = attrMap.getOrDefault("useSpeedMulti", 1d);
+                            dmgRatioConverted *= attrMap.getOrDefault("useSpeed" + EntityHelper.getDamageType(ply) + "Multi", 1d);
+                            attrMap.put("damageMulti", attrMap.getOrDefault("damageMulti", 1d) * dmgRatioConverted);
+                        }
+                    }
                 }
                 // use weapon
                 String weaponType = weaponSection.getString("type", "");
@@ -5296,8 +5290,10 @@ public class ItemUseHelper {
                         break;
                     case "SUMMON":
                     case "SENTRY":
+                        // minions will play around with this attribute map. Clone it!
                         success = playerUseSummon(ply, itemName, swingAmount, weaponType,
-                                autoSwing, mainHandItem, weaponSection, attrMap);
+                                autoSwing, mainHandItem, weaponSection,
+                                (HashMap<String, Double>) attrMap.clone());
                         break;
                     case "THROW_PROJECTILE":
                         success = playerUseThrowingProjectile(ply, itemName, weaponType,

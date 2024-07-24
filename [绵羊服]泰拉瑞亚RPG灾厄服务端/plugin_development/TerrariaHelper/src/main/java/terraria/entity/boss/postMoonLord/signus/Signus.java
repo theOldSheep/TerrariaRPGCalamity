@@ -223,7 +223,7 @@ public class Signus extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 925d);
-            attrMap.put("damageTakenMulti", 1d);
+            attrMap.put("damageTakenMulti", 0.75d);
             attrMap.put("defence", 120d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
@@ -247,7 +247,7 @@ public class Signus extends EntitySlime {
             setSize(8, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             if (isSummonedByDoG)
-                healthMulti *= 0.6;
+                healthMulti *= 0.5;
             double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);

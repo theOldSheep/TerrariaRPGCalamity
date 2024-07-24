@@ -60,7 +60,8 @@ public class PlanteraTentacle extends EntitySlime {
     public PlanteraTentacle(Player summonedPlayer, Plantera owner) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
-        Location spawnLoc = owner.getBukkitEntity().getLocation();
+        Location spawnLoc = owner.getBukkitEntity().getLocation().add(
+                MathHelper.randomVector().multiply(2));
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);

@@ -214,25 +214,25 @@ public class SkeletronPrimeHand extends EntitySlime {
                     setCustomName("机械锯");
                     attrMap.put("damage", 408d);
                     attrMap.put("defence", 76d);
-                    health = BossHelper.accountForBR(40000, 11187) * 2;
+                    health = BossHelper.accountForBR(40000, 11187) * 3;
                     break;
                 case VICE:
                     setCustomName("机械钳");
                     attrMap.put("damage", 408d);
                     attrMap.put("defence", 68d);
-                    health = BossHelper.accountForBR(40000, 11187) * 2;
+                    health = BossHelper.accountForBR(40000, 11187) * 3;
                     break;
                 case LASER:
                     setCustomName("机械激光");
                     attrMap.put("damage", 204d);
                     attrMap.put("defence", 40d);
-                    health = BossHelper.accountForBR(26500, 7458) * 2;
+                    health = BossHelper.accountForBR(26500, 7458) * 3;
                     break;
                 case CANNON:
                     setCustomName("机械炮");
                     attrMap.put("damage", 204d);
                     attrMap.put("defence", 46d);
-                    health = BossHelper.accountForBR(31000, 8700) * 2;
+                    health = BossHelper.accountForBR(31000, 8700) * 3;
                     break;
             }
             health *= healthMulti;

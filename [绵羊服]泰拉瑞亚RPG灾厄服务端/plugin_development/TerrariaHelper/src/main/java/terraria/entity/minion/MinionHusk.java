@@ -208,8 +208,12 @@ public class MinionHusk extends EntityZombieHusk {
                         velocity.multiply(0.6 / velLen);
                     // shoot projectile
                     if (index % 12 == 0) {
+                        String projType = "蚀骨尖刺";
+                        double projSpd = 1.5;
+                        Location aimLoc = EntityHelper.helperAimEntity(bukkitEntity, target,
+                                new EntityHelper.AimHelperOptions(projType).setProjectileSpeed(projSpd));
                         EntityHelper.spawnProjectile(minionBukkit, MathHelper.getDirection(minionBukkit.getEyeLocation(),
-                                target.getEyeLocation(), 1.5), attrMap, "蚀骨尖刺");
+                                aimLoc, projSpd), attrMap, projType);
                     }
                 }
                 break;
@@ -222,9 +226,13 @@ public class MinionHusk extends EntityZombieHusk {
                 break;
             }
             case "缠怨鬼碟": {
-                if (!targetIsOwner && ticksLived % 10 == 0) {
-                    Vector projVel = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 2);
-                    EntityHelper.spawnProjectile(minionBukkit, projVel, attrMap, "缠怨鬼碟");
+                if (!targetIsOwner && ticksLived % 8 == 0) {
+                    String projType = "缠怨鬼碟";
+                    double projSpd = 2;
+                    Location aimLoc = EntityHelper.helperAimEntity(bukkitEntity, target,
+                            new EntityHelper.AimHelperOptions(projType).setProjectileSpeed(projSpd));
+                    Vector projVel = MathHelper.getDirection(minionBukkit.getEyeLocation(), aimLoc, projSpd);
+                    EntityHelper.spawnProjectile(minionBukkit, projVel, attrMap, projType);
                 }
                 break;
             }
@@ -275,7 +283,7 @@ public class MinionHusk extends EntityZombieHusk {
             case "矮人": {
                 if (!targetIsOwner && ticksLived % 12 == 0) {
                     Location targetLoc = EntityHelper.helperAimEntity(minionBukkit, target,
-                            new EntityHelper.AimHelperOptions()
+                            new EntityHelper.AimHelperOptions("投矛")
                                     .setProjectileSpeed(2.5));
                     Vector v = MathHelper.getDirection(minionBukkit.getEyeLocation(), targetLoc, 2.5);
                     EntityHelper.spawnProjectile(minionBukkit, v, attrMap, "投矛");

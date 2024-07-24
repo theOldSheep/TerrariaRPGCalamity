@@ -2378,7 +2378,7 @@ public class EntityHelper {
             }
             dmg *= damageTakenMulti;
             defence = Math.max(defence - damagerAttrMap.getOrDefault("armorPenetration", 0d), 0);
-            dmg -= defence * 0.75;
+            dmg -= defence;
             // interrupt barrier regen - 10 seconds when damaged while interrupted
             if (hasEffect(victim, "保护矩阵充能")) {
                 applyEffect(victim, "保护矩阵充能", 200);
@@ -2405,13 +2405,17 @@ public class EntityHelper {
                 MetadataValue temp = getMetadata(victim, MetadataName.DYNAMIC_DAMAGE_REDUCTION);
                 if (temp != null) dynamicDR = temp.asDouble();
                 BossHelper.BossType type = (BossHelper.BossType) getMetadata(victim, MetadataName.BOSS_TYPE).value();
-                if (damageSource instanceof Player &&  ! PlayerHelper.hasDefeated((Player) damageSource, type) )
-                    dmg *= dynamicDR;
+                // TODO:
+//                if (damageSource instanceof Player &&  ! PlayerHelper.hasDefeated((Player) damageSource, type) )
+//                    dmg *= dynamicDR;
             }
             // NPC damage reduction ( for non-fixed damage, the damage is decreased by a factor of 4, and is upper capped at 50
             else if (damageTakerTags.contains("isNPC")) {
                 dmg = Math.min(dmg / 4d, 50);
             }
+            // TODO:
+            else if (! (damageTaker instanceof Player))
+                dmg *= 10;
         }
         // round damage
         dmg = Math.round(dmg);

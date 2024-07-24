@@ -23,7 +23,7 @@ public class Crabulon extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.CRABULON;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.JUNGLE;
-    public static final double BASIC_HEALTH = 9600 * 2, BASIC_HEALTH_BR = 1632000 * 2;
+    public static final double BASIC_HEALTH = 6066 * 2, BASIC_HEALTH_BR = 1632000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;

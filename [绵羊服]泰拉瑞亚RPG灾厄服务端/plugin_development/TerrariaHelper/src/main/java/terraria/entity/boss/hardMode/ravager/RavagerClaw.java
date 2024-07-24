@@ -125,7 +125,7 @@ public class RavagerClaw extends EntitySlime {
             attrMap.put("crit", 0.04);
             attrMap.put("damage", postProvidence ? 720d : 480d);
             attrMap.put("damageTakenMulti", 0.85);
-            attrMap.put("defence", postProvidence ? 80d : 160d);
+            attrMap.put("defence", postProvidence ? 160d : 80d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);

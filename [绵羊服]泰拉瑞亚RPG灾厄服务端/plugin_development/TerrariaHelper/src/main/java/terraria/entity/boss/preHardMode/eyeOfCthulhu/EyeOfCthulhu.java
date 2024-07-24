@@ -21,7 +21,7 @@ public class EyeOfCthulhu extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.EYE_OF_CTHULHU;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 6066 * 2, BASIC_HEALTH_BR = 895050 * 2;
+    public static final double BASIC_HEALTH = 9600 * 2, BASIC_HEALTH_BR = 895050 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;

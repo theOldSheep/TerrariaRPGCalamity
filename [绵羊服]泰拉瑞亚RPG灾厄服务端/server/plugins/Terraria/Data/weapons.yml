@@ -2708,7 +2708,7 @@ Dodu的手炮:
   projectileName: 树叶
   shots: 2
   autoSwing: true
-  offSet: 16
+  offSet: 27.5
 狱火叉:
   type: MAGIC_PROJECTILE
   projectileName: 狱火爆破弹
@@ -2735,7 +2735,7 @@ Dodu的手炮:
   projectileName: 松针
   shots: 3
   autoSwing: true
-  offSet: 16
+  offSet: 20
 蝙蝠权杖:
   type: MAGIC_PROJECTILE
   projectileName: 蝙蝠
@@ -2758,7 +2758,7 @@ Dodu的手炮:
   projectileName: 泡泡
   shots: 4
   autoSwing: true
-  offSet: 6
+  offSet: 17.5
   useSound: item.genericBubble
 利刃台风:
   type: MAGIC_PROJECTILE
@@ -2828,7 +2828,7 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 黑翼蝙蝠
   shots: 3
-  offSet: 10
+  offSet: 24
   autoSwing: true
 腐蚀之雨法杖:
   type: MAGIC_PROJECTILE
@@ -2841,28 +2841,21 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 冰晶雪花
   autoSwing: true
-冰坠三叉戟:
-  type: MAGIC_PROJECTILE
-  projectileName: 三叉戟冰锥
-  shots: 3
-  offSet: 15
-  autoSwing: true
 飞龙之歌:
   type: MAGIC_PROJECTILE
   projectileName: 迷你飞龙
   shots: 2
   autoSwing: true
+冰坠三叉戟:
+  type: MAGIC_PROJECTILE
+  projectileName: 三叉戟冰锥
+  shots: 3
+  offSet: 20
+  autoSwing: true
 烁兰:
   type: MAGIC_PROJECTILE
   projectileName: 闪光花朵
   autoSwing: true
-狱炎裂空:
-  type: MAGIC_PROJECTILE
-  projectileName: 狱炎三叉戟
-  fireRounds: 15
-  fireRoundsDelay: 1
-  autoSwing: true
-  useSound: item.genericStar
 水灌:
   type: MAGIC_PROJECTILE
   projectileName: 海蓝射线
@@ -2896,6 +2889,13 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 极光光束
   autoSwing: true
+狱炎裂空:
+  type: MAGIC_PROJECTILE
+  projectileName: 狱炎三叉戟
+  fireRounds: 15
+  fireRoundsDelay: 1
+  autoSwing: true
+  useSound: item.genericStar
 维苏威阿斯:
   type: MAGIC_PROJECTILE
   projectileName: 熔岩陨星
@@ -2913,7 +2913,7 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 瘟疫毒牙
   shots: 3
-  offSet: 17.5
+  offSet: 25
   autoSwing: true
 血涌:
   type: MAGIC_PROJECTILE
@@ -2967,13 +2967,13 @@ Dodu的手炮:
   fireRounds: 2
   fireRoundsDelay: 1
   autoSwing: true
-  offSet: 25
+  offSet: 32
 猩红烈焰:
   type: MAGIC_PROJECTILE
   projectileName: 猩红烈焰珠
   shots: 8
   autoSwing: true
-  offSet: 25
+  offSet: 32
 心泵血杖:
   type: MAGIC_SPECIAL
   autoSwing: true
@@ -3084,7 +3084,7 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 冰锥
   shots: 4
-  offSet: 10
+  offSet: 36
   autoSwing: true
 离子冲击波:
   type: MAGIC_PROJECTILE
@@ -3130,9 +3130,9 @@ Dodu的手炮:
 等离子液铸器_RIGHT_CLICK:
   type: MAGIC_PROJECTILE
   projectileName: 等离子液铸器脉冲
-  offSet: 20
+  offSet: 27.5
   attributes:
-    damage: 900
+    damage: 1000
     useTime: 5
     manaUse: 8
   autoSwing: true
@@ -3206,6 +3206,16 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 海神之台风
   autoSwing: true
+暗晶风暴:
+  type: MAGIC_PROJECTILE
+  projectileName: 暗晶碎片
+  offSet: 20
+  autoSwing: true
+  useSound: item.genericStar
+蒸海硫火:
+  type: MAGIC_PROJECTILE
+  projectileName: 硫磺火球
+  autoSwing: true
 死亡之尘:
   type: MAGIC_PROJECTILE
   projectileName: 死亡粉尘
@@ -3215,21 +3225,11 @@ Dodu的手炮:
   projectileName: 遗忘沙刃
   shots: 12
   autoSwing: true
-暗晶风暴:
-  type: MAGIC_PROJECTILE
-  projectileName: 暗晶碎片
-  offSet: 17.5
-  autoSwing: true
-  useSound: item.genericStar
 沸腾之火:
   type: MAGIC_PROJECTILE
   projectileName: 深渊亡魂
   shots: 3
   offSet: 12.5
-  autoSwing: true
-蒸海硫火:
-  type: MAGIC_PROJECTILE
-  projectileName: 硫磺火球
   autoSwing: true
 混乱火鞭:
   type: MAGIC_PROJECTILE
@@ -3256,7 +3256,7 @@ Dodu的手炮:
   type: MAGIC_PROJECTILE
   projectileName: 暴雪
   shots: 2
-  offSet: 8
+  offSet: 20
   autoSwing: true
 禁忌之阳:
   type: MAGIC_PROJECTILE
@@ -3317,7 +3317,7 @@ Dodu的手炮:
   autoSwing: true
   useSound: item.genericTyphoon
   attributes:
-    damage: 325
+    damage: 362
     useTime: 5
 归元漩涡_RIGHT_CLICK:
   type: MAGIC_PROJECTILE

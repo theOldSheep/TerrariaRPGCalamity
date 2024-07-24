@@ -86,7 +86,7 @@ public class PolterghastClone extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 1056d);
-            attrMap.put("damageTakenMulti", 0.9);
+            attrMap.put("damageTakenMulti", 0.75);
             attrMap.put("defence", 90d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);

@@ -116,19 +116,22 @@ public class MinionSlime extends EntitySlime {
                 ));
                 break;
             }
-            case "小鬼":
-            case "钨钢无人机": {
-                index = (int) (Math.random() * 360);
+            case "脆弱之星":
+            case "沼泽之眼":
+            case "附魔飞刀":
+            case "深海海星":
+            case "硫火搜寻者":
+            case "乌鸦仆从":
+            case "耀目圣刃":
+            case "灭兆渡鸦": {
+                this.damageInvincibilityTicks = 5;
+                noclip = true;
                 setNoGravity(true);
                 break;
             }
-            case "沼泽之眼":
-            case "附魔飞刀":
-            case "耀目圣刃":
-            case "乌鸦仆从":
-            case "灭兆渡鸦": {
-                damageInvincibilityTicks = 5;
-                noclip = true;
+            case "小鬼":
+            case "钨钢无人机": {
+                index = (int) (Math.random() * 360);
                 setNoGravity(true);
                 break;
             }
@@ -359,7 +362,6 @@ public class MinionSlime extends EntitySlime {
                 break;
             }
             case "极昼飞行物": {
-                damageInvincibilityTicks = 10;
                 GenericHelper.StrikeLineOptions strikeLineOption =
                         new GenericHelper.StrikeLineOptions()
                                 .setDamageCD(damageInvincibilityTicks)
@@ -486,7 +488,7 @@ public class MinionSlime extends EntitySlime {
                 extraVariables.put("sLO", strikeLineOption);
 
                 extraVariables.put("AI", 0);
-                damageInvincibilityTicks = 2;
+                damageInvincibilityTicks = 3;
                 setSize(5, false);
                 noclip = true;
                 setNoGravity(true);
@@ -617,7 +619,7 @@ public class MinionSlime extends EntitySlime {
                                 (itemStack) -> itemStack.getType() == Material.SLIME_BALL, ammoConsumptionRate);
                         if (ammoItem != null) {
                             double projSpd = 3;
-                            EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions();
+                            EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions().setProjectileGravity(0);
                             switch (minionType) {
                                 case "黑鹰战斗机":
                                     if (ammoItem.equals("火枪子弹")) ammoItem = "黑鹰子弹";
@@ -681,7 +683,7 @@ public class MinionSlime extends EntitySlime {
                         if (index % 10 == 0) {
                             double projSpd = 3;
                             Location aimLoc = EntityHelper.helperAimEntity( minionBukkit, target,
-                                    new EntityHelper.AimHelperOptions()
+                                    new EntityHelper.AimHelperOptions("极昼激光")
                                             .setProjectileSpeed(projSpd) );
                             EntityHelper.spawnProjectile(minionBukkit,
                                     MathHelper.getDirection(minionBukkit.getEyeLocation(), aimLoc, projSpd),
@@ -728,7 +730,7 @@ public class MinionSlime extends EntitySlime {
                     targetLoc.add(0, 4, 0);
                 }
                 // setup velocity
-                boolean shouldUpdateVelocity = targetIsOwner || index % 10 == 0;
+                boolean shouldUpdateVelocity = targetIsOwner || index % 8 == 0;
                 double maxSpeed = targetIsOwner ? 1 : 1.5;
                 if (shouldUpdateVelocity) {
                     velocity = targetLoc.subtract(minionBukkit.getLocation()).toVector();
@@ -784,7 +786,7 @@ public class MinionSlime extends EntitySlime {
                 break;
             }
             case "磁铁无人机": {
-                boolean shouldUpdateVelocity = targetIsOwner || index % 20 == 0;
+                boolean shouldUpdateVelocity = targetIsOwner || index % 10 == 0;
                 double maxSpeed = targetIsOwner ? 2 : 3;
                 // setup velocity
                 if (shouldUpdateVelocity) {
@@ -851,6 +853,7 @@ public class MinionSlime extends EntitySlime {
                     targetLoc = EntityHelper.helperAimEntity(
                         minionBukkit.getEyeLocation(), target,
                         new EntityHelper.AimHelperOptions()
+                                .setProjectileGravity(0)
                                 .setProjectileSpeed(speed)
                                 .setAccelerationMode(minionType.equals("灭兆渡鸦")) );
                 }
@@ -890,8 +893,10 @@ public class MinionSlime extends EntitySlime {
                 }
                 // fire projectiles
                 if (!targetIsOwner && index % 20 == 0) {
-                    Vector projVel = MathHelper.getDirection(minionBukkit.getEyeLocation(),
-                            target.getEyeLocation().add(MathHelper.randomVector().multiply(3) ), 2.5);
+                    Location aimLoc = EntityHelper.helperAimEntity(minionBukkit.getEyeLocation(), target,
+                            new EntityHelper.AimHelperOptions("宇宙灯笼光束")
+                                    .setProjectileSpeed(2.5).setRandomOffsetRadius(3));
+                    Vector projVel = MathHelper.getDirection(minionBukkit.getEyeLocation(), aimLoc, 2.5);
                     EntityHelper.spawnProjectile(minionBukkit, projVel, attrMap, "宇宙灯笼光束");
                 }
                 break;
@@ -905,10 +910,13 @@ public class MinionSlime extends EntitySlime {
                 if (noMeleeAttack) {
                     targetLoc = owner.getLocation().add(
                             Math.random() * 20 - 10, Math.random() * 8 + 8, Math.random() * 20 - 10);
-                    if (! targetIsOwner && index % 15 == 0 )
+                    if (! targetIsOwner && index % 15 == 0 ) {
+                        Location aimLoc = EntityHelper.helperAimEntity(minionBukkit.getEyeLocation(), target,
+                                new EntityHelper.AimHelperOptions("追踪墨汁").setProjectileSpeed(2.5).setRandomOffsetRadius(2));
                         EntityHelper.spawnProjectile(minionBukkit,
-                                MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 2.5),
+                                MathHelper.getDirection(minionBukkit.getEyeLocation(), aimLoc, 2.5),
                                 attrMap, "追踪墨汁");
+                    }
                 }
                 // set velocity
                 velocity = MathHelper.getDirection(minionBukkit.getLocation(), targetLoc, 2.25, true);
@@ -932,14 +940,15 @@ public class MinionSlime extends EntitySlime {
                             addScoreboardTag("dashed");
                             Location dashAimLoc = EntityHelper.helperAimEntity(minionBukkit, target,
                                     new EntityHelper.AimHelperOptions()
+                                            .setProjectileGravity(0)
                                             .setProjectileSpeed(speed)
                                             .setAccelerationMode(true));
                             velocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), dashAimLoc, speed);
                         }
                     }
-                    // otherwise, approach enemy and fire projectiles
+                    // otherwise, approach enemy and fire direct projectiles at a quicker rate
                     else {
-                        shouldFireProjectile = index % 4 == 0;
+                        shouldFireProjectile = index % 6 == 0;
                         velocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), speed);
                     }
                     // projectile
@@ -982,6 +991,7 @@ public class MinionSlime extends EntitySlime {
                         if (subIndex == 0) {
                             Location dashAimLoc = EntityHelper.helperAimEntity(minionBukkit, target,
                                     new EntityHelper.AimHelperOptions()
+                                            .setProjectileGravity(0)
                                             .setProjectileSpeed(speed)
                                             .setAccelerationMode(true));
                             velocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), dashAimLoc, speed);
@@ -998,7 +1008,7 @@ public class MinionSlime extends EntitySlime {
                         if (subIndex == 10) {
                             double projSpd = 3;
                             Location projAimLoc = EntityHelper.helperAimEntity(minionBukkit, target,
-                                    new EntityHelper.AimHelperOptions()
+                                    new EntityHelper.AimHelperOptions("硫火仆从飞弹")
                                             .setProjectileSpeed(projSpd)
                                             .setAccelerationMode(true));
                             EntityHelper.spawnProjectile(minionBukkit,
@@ -1025,6 +1035,7 @@ public class MinionSlime extends EntitySlime {
                         if (index % 10 == 0) {
                             targetLoc = EntityHelper.helperAimEntity(minionBukkit, target,
                                     new EntityHelper.AimHelperOptions()
+                                            .setProjectileGravity(0)
                                             .setProjectileSpeed(3)
                                             .setAccelerationMode(true));
                         }
@@ -1078,6 +1089,7 @@ public class MinionSlime extends EntitySlime {
                         // predicted location based on velocity
                         targetLoc = EntityHelper.helperAimEntity(minionBukkit, target,
                                 new EntityHelper.AimHelperOptions()
+                                        .setProjectileGravity(0)
                                         .setProjectileSpeed(moveSpd));
                     }
                     velocity = targetLoc.subtract(minionBukkit.getLocation()).toVector();
@@ -1100,22 +1112,22 @@ public class MinionSlime extends EntitySlime {
                 // attack enemies
                 else {
                     if (index > 0) {
-                        // dash
-                        if (minionBukkit.getLocation().distanceSquared(target.getEyeLocation()) < 225) {
-                            index = -12;
-                        }
-                        // move towards enemy if not on dash cool down
-                        else {
+                        // move towards enemy
+                        if (ticksLived <= 2 || minionBukkit.getLocation().distanceSquared(target.getEyeLocation()) >= 225) {
                             velocity = MathHelper.getDirection(
                                     minionBukkit.getEyeLocation(), target.getEyeLocation(), 2);
                             minionBukkit.addScoreboardTag("dashed");
+                        }
+                        // maintain velocity
+                        else {
+                            index = -12;
                         }
                     }
                 }
                 break;
             }
             case "硫火搜寻者": {
-                int dashDuration = 15;
+                int dashDuration = 10;
                 // velocity init
                 if (index % dashDuration == 0) {
                     Location targetLoc;
@@ -1135,7 +1147,7 @@ public class MinionSlime extends EntitySlime {
                     }
                 }
                 // slow down
-                if (index % dashDuration >= 10) {
+                if (index % dashDuration >= 7) {
                     velocity.multiply(0.8);
                 }
                 break;
@@ -1173,23 +1185,29 @@ public class MinionSlime extends EntitySlime {
                     // velocity init
                     if (roundPhase == 0) {
                         Location targetLoc;
+                        // calculate speed
+                        double speed;
+                        {
+                            Vector dir = target.getLocation().subtract(minionBukkit.getEyeLocation()).toVector();
+                            double distance = dir.length();
+                            double expectedDist;
+                            if (targetIsOwner) {
+                                expectedDist = Math.max(6, distance);
+                            } else {
+                                expectedDist = 5 + distance + Math.min(10, distance / 2);
+                            }
+                            speed = expectedDist / roundDuration;
+                        }
                         if (targetIsOwner)
                             targetLoc = target.getEyeLocation().add(
                                     Math.random() * 10 - 5,
                                     Math.random() * 6 - 2,
                                     Math.random() * 10 - 5);
-                        else
-                            targetLoc = target.getEyeLocation();
-                        velocity = targetLoc.subtract(minionBukkit.getEyeLocation()).toVector();
-                        double distance = velocity.length();
-                        double expectedDist;
-                        if (targetIsOwner) {
-                            expectedDist = Math.max(6, distance / roundDuration);
-                        } else {
-                            expectedDist = Math.max(10, distance * 2 / roundDuration);
+                        else {
+                            targetLoc = EntityHelper.helperAimEntity(minionBukkit.getEyeLocation(), target,
+                                    new EntityHelper.AimHelperOptions().setProjectileGravity(0).setProjectileSpeed(speed));
                         }
-                        // then, upper cap the speed at 4
-                        velocity.multiply(Math.min(4, expectedDist) / distance);
+                        velocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), targetLoc, speed);
                     }
                     // slow down; float up if target is not the owner
                     if (roundPhase * 1.5 >= roundDuration) {
@@ -1240,11 +1258,8 @@ public class MinionSlime extends EntitySlime {
                 // shoot laser
                 if (!targetIsOwner) {
                     if (index % shootInterval == 0) {
-                        Vector projectileVelocity = target.getEyeLocation().subtract(minionBukkit.getEyeLocation()).toVector();
-                        if (projectileVelocity.lengthSquared() > 1e-9) {
-                            projectileVelocity.normalize().multiply(projSpeed);
-                            EntityHelper.spawnProjectile(minionBukkit, projectileVelocity, attrMap, projectileType);
-                        }
+                        Vector projectileVelocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), projSpeed);
+                        EntityHelper.spawnProjectile(minionBukkit, projectileVelocity, attrMap, projectileType);
                     }
                 }
                 break;
@@ -1398,7 +1413,10 @@ public class MinionSlime extends EntitySlime {
                     // velocity
                     switch (index % 12) {
                         case 0: {
-                            Location targetLoc = target.getEyeLocation();
+                            Location targetLoc = EntityHelper.helperAimEntity(minionBukkit.getEyeLocation(), target,
+                                    new EntityHelper.AimHelperOptions()
+                                            .setProjectileGravity(0)
+                                            .setProjectileSpeed(2.5));
                             velocity = targetLoc.subtract(minionBukkit.getEyeLocation()).toVector();
                             double distance = velocity.length();
                             if (distance > 1e-9) {
@@ -1436,9 +1454,8 @@ public class MinionSlime extends EntitySlime {
                         velocity.multiply(0.75 / velLen);
 
                     if (index % 50 == 0) {
-                        Vector fwdDir = target.getEyeLocation().subtract( minionBukkit.getEyeLocation() ).toVector();
                         for (Vector projVel : MathHelper.getCircularProjectileDirections(3, 1,
-                                22.5, fwdDir,1.75)) {
+                                22.5, target, minionBukkit.getEyeLocation(),1.75)) {
                             EntityHelper.spawnProjectile(minionBukkit, projVel, attrMap, "樱花弹");
                         }
                     }
@@ -1498,12 +1515,11 @@ public class MinionSlime extends EntitySlime {
                 // shoot projectile
                 if (!targetIsOwner) {
                     if (index % shootInterval == 0) {
-                        Vector projectileVelocity = target.getEyeLocation().subtract(minionBukkit.getEyeLocation()).toVector();
-                        if (projectileVelocity.lengthSquared() > 1e-9) {
-                            projectileVelocity.normalize().multiply(projSpeed);
-                            EntityHelper.spawnProjectile(owner, minionBukkit.getEyeLocation(), projectileVelocity,
-                                    attrMap, EntityHelper.DamageType.MAGIC, projectileType);
-                        }
+                        Location aimLoc = EntityHelper.helperAimEntity(minionBukkit.getEyeLocation(), target,
+                                new EntityHelper.AimHelperOptions(projectileType).setProjectileSpeed(projSpeed));
+                        Vector projectileVelocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), aimLoc, projSpeed);
+                        EntityHelper.spawnProjectile(owner, minionBukkit.getEyeLocation(), projectileVelocity,
+                                attrMap, EntityHelper.DamageType.MAGIC, projectileType);
                     }
                 }
                 break;
@@ -1553,9 +1569,14 @@ public class MinionSlime extends EntitySlime {
                     else velocity.multiply(0.5 / distance);
                     // basic fire
                     if (index % 12 == 0) {
+                        String projectileType = "瘟疫细胞";
+                        double projectileSpd = 1.5;
+                        Location aimedLoc = EntityHelper.helperAimEntity(bukkitEntity, target,
+                                new EntityHelper.AimHelperOptions(projectileType)
+                                        .setProjectileSpeed(projectileSpd));
                         Vector projectileDir = MathHelper.getDirection(
-                                minionBukkit.getEyeLocation(), target.getEyeLocation(), 1.75);
-                        EntityHelper.spawnProjectile(minionBukkit, projectileDir, attrMap, "瘟疫细胞");
+                                minionBukkit.getEyeLocation(), aimedLoc, projectileSpd);
+                        EntityHelper.spawnProjectile(minionBukkit, projectileDir, attrMap, projectileType);
                     }
                 } else {
                     Location targetLoc = target.getLocation().add(
@@ -1783,7 +1804,9 @@ public class MinionSlime extends EntitySlime {
                         }
                         // dash into enemy
                         else if (phaseIndex == 6) {
-                            velocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 1.75);
+                            Location aimLoc = EntityHelper.helperAimEntity(minionBukkit.getEyeLocation(), target,
+                                    new EntityHelper.AimHelperOptions().setProjectileGravity(0).setProjectileSpeed(2.25));
+                            velocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), aimLoc, 2.25);
                         }
                     }
                     // release a barrage of missiles for 6 times
@@ -1814,8 +1837,10 @@ public class MinionSlime extends EntitySlime {
                             case 15:
                             case 17:
                             case 19:
+                                Location aimLoc = EntityHelper.helperAimEntity(minionBukkit.getEyeLocation(), target,
+                                        new EntityHelper.AimHelperOptions("追踪瘟疫导弹").setProjectileSpeed(1.75));
                                 Vector missileVel = MathHelper.getDirection(
-                                        minionBukkit.getEyeLocation(), target.getEyeLocation(), 1.75);
+                                        minionBukkit.getEyeLocation(), aimLoc, 1.75);
                                 EntityHelper.spawnProjectile(minionBukkit, missileVel, attrMap, "追踪瘟疫导弹");
                         }
                     }
@@ -2007,6 +2032,7 @@ public class MinionSlime extends EntitySlime {
 
                             Vector v = EntityHelper.helperAimEntity(minionBukkit, target,
                                             new EntityHelper.AimHelperOptions()
+                                                    .setProjectileGravity(0)
                                                     .setProjectileSpeed(speed)
                                                     .setAccelerationMode(!isStardust))
                                     .subtract(minionBukkit.getEyeLocation())
@@ -2063,6 +2089,7 @@ public class MinionSlime extends EntitySlime {
                     if (index < 0) {
                         Location targetLoc = EntityHelper.helperAimEntity(minionBukkit, target,
                                 new EntityHelper.AimHelperOptions()
+                                        .setProjectileGravity(0)
                                         .setProjectileSpeed(speed)
                                         .setAccelerationMode(true));
                         velocity = MathHelper.getDirection(minionBukkit.getEyeLocation(), targetLoc, speed);
@@ -2071,7 +2098,7 @@ public class MinionSlime extends EntitySlime {
                 // the segment is the head, handle segments following
                 EntityHelper.handleSegmentsFollow(allSegments,
                         new EntityHelper.WormSegmentMovementOptions()
-                                .setStraighteningMultiplier(-0.75)
+                                .setStraighteningMultiplier(0)
                                 .setFollowingMultiplier(1)
                                 .setFollowDistance(1)
                                 .setVelocityOrTeleport(false));
@@ -2091,7 +2118,7 @@ public class MinionSlime extends EntitySlime {
                     double projSpd = 3;
                     Location aimLoc = targetIsOwner ? target.getEyeLocation() :
                             EntityHelper.helperAimEntity( fireSeg, target,
-                                    new EntityHelper.AimHelperOptions()
+                                    new EntityHelper.AimHelperOptions("硫火仆从飞弹")
                                             .setProjectileSpeed(projSpd) );
                     EntityHelper.spawnProjectile(fireSeg,
                                     MathHelper.getDirection(fireSeg.getEyeLocation(), aimLoc, projSpd),
@@ -2101,7 +2128,7 @@ public class MinionSlime extends EntitySlime {
                 // the segment is the head, handle segments following
                 EntityHelper.handleSegmentsFollow(allSegments,
                         new EntityHelper.WormSegmentMovementOptions()
-                                .setStraighteningMultiplier(-0.75)
+                                .setStraighteningMultiplier(0)
                                 .setFollowingMultiplier(1)
                                 .setFollowDistance(1.5)
                                 .setVelocityOrTeleport(false));
@@ -2133,7 +2160,7 @@ public class MinionSlime extends EntitySlime {
                 if (!targetIsOwner && index % 12 == 0) {
                     // predict location
                     Location shootAimLoc = EntityHelper.helperAimEntity(minionBukkit, target,
-                            new EntityHelper.AimHelperOptions()
+                            new EntityHelper.AimHelperOptions("星幻激光")
                                     .setProjectileSpeed(2.25));
                     Vector projVel = MathHelper.getDirection(
                             minionBukkit.getEyeLocation(), shootAimLoc, 2.25);
@@ -2310,8 +2337,12 @@ public class MinionSlime extends EntitySlime {
                                     proj.remove();
                                     // fire reflected projectile
                                     Location fireLoc = teleportLoc.clone();
+                                    Location predictedLoc = EntityHelper.helperAimEntity(fireLoc, target,
+                                            new EntityHelper.AimHelperOptions("蛇眼反弹光电矢")
+                                                    .setAccelerationMode(true)
+                                                    .setProjectileSpeed(2.5));
                                     EntityHelper.spawnProjectile(bukkitEntity, fireLoc, MathHelper.getDirection(
-                                                    fireLoc, target.getEyeLocation(), 2.5),
+                                                    fireLoc, predictedLoc, 2.5),
                                             attrMap, EntityHelper.DamageType.BULLET, "蛇眼反弹光电矢");
                                 } else {
                                     extraVariables.put("c", bounceCountdown);
@@ -2326,8 +2357,7 @@ public class MinionSlime extends EntitySlime {
                         // fire original projectile
                         Location fireLoc = teleportLoc.clone();
                         Location predictedLoc = EntityHelper.helperAimEntity(fireLoc, target,
-                                new EntityHelper.AimHelperOptions()
-                                        .setAimMode(false)
+                                new EntityHelper.AimHelperOptions("蛇眼光电矢")
                                         .setAccelerationMode(true)
                                         .setProjectileSpeed(3));
                         Projectile spawnedProj = EntityHelper.spawnProjectile(bukkitEntity, fireLoc, MathHelper.getDirection(
@@ -2417,7 +2447,7 @@ public class MinionSlime extends EntitySlime {
                 // attack
                 if (!targetIsOwner && index % 10 == 0) {
                     Vector shootDir = MathHelper.vectorFromYawPitch_approx(index * 4.5, 0);
-                    shootDir.multiply(1.25);
+                    shootDir.multiply(1.5);
                     EntityHelper.spawnProjectile(minionBukkit, shootDir,
                             attrMap, "冰钉");
                 }
@@ -2525,7 +2555,8 @@ public class MinionSlime extends EntitySlime {
                     if (length < 80) {
                         GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
                                 .setDamagedFunction( (Integer hitIdx, Entity hitEntity, Location hitLoc) ->
-                                        EntityHelper.applyEffect(hitEntity, "夜魇", 60) );
+                                        EntityHelper.applyEffect(hitEntity, "夜魇", 60) )
+                                .setMaxTargetHit(1);
                         GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
                                 MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
                                 80, 0.25, 0.25, "", "150|255|255",
@@ -2633,7 +2664,7 @@ public class MinionSlime extends EntitySlime {
                         switch (weaponType) {
                             // plasma cannon
                             case 0: {
-                                correctedIdx = index + (int) (i * 2.5);
+                                correctedIdx = index + (int) (i * 10 / 4d);
                                 double projSpd = 2.5;
                                 if (correctedIdx % 10 == 0) {
                                     EntityHelper.spawnProjectile(minionBukkit, shootLoc,
@@ -2644,11 +2675,11 @@ public class MinionSlime extends EntitySlime {
                             }
                             // tesla cannon
                             case 1: {
-                                correctedIdx = index + i * 3;
-                                if (correctedIdx % 12 == 0) {
+                                correctedIdx = index + (int) (i * 15 / 4d);
+                                if (correctedIdx % 15 == 0) {
                                     double projSpd = 2;
                                     Location aimLoc = EntityHelper.helperAimEntity(shootLoc, target,
-                                            new EntityHelper.AimHelperOptions()
+                                            new EntityHelper.AimHelperOptions("阿瑞斯外骨骼球状闪电")
                                                     .setProjectileSpeed(projSpd)
                                                     .setAccelerationMode(true));
                                     EntityHelper.spawnProjectile(minionBukkit, shootLoc,
@@ -2660,7 +2691,7 @@ public class MinionSlime extends EntitySlime {
                             // laser cannon
                             case 2: {
                                 correctedIdx = index + i * 15;
-                                // 1.25s=25tick projectile, 1.25s=25tick laser then 0.5s=10tick idle, total 60 ticks
+                                // 25tick projectile, 25tick laser then 10tick idle, total 60 ticks
                                 int internalIdx = correctedIdx % 60;
 
                                 if (internalIdx < 25) {
@@ -2769,8 +2800,8 @@ public class MinionSlime extends EntitySlime {
                         // burst of homing shards
                         case 1: {
                             double projSpd = 2.5;
-                            if (index % 20 == 0) {
-                                for (int i = 0; i < 20; i ++) {
+                            if (index % 30 == 0) {
+                                for (int i = 0; i < 12; i ++) {
                                     EntityHelper.spawnProjectile(minionBukkit,
                                             MathHelper.randomVector().multiply(projSpd),
                                             attrMap, "源生冰片");
@@ -2782,25 +2813,20 @@ public class MinionSlime extends EntitySlime {
                         case 2: {
                             targetLoc = EntityHelper.helperAimEntity(minionBukkit, target,
                                     new EntityHelper.AimHelperOptions()
+                                            .setProjectileGravity(0)
                                             .setAimMode(true)
                                             .setTicksTotal(1));
                             break;
                         }
                         // fire blasts of ice shards
                         case 3: {
-                            double projSpd = 1.6;
-                            if (index % 5 == 0) {
+                            double projSpd = 2.25;
+                            if (index % 15 == 0) {
                                 Location fireLoc = minionBukkit.getEyeLocation();
-                                Location aimLoc = EntityHelper.helperAimEntity(fireLoc, target,
-                                        new EntityHelper.AimHelperOptions()
-                                                .setProjectileSpeed(projSpd)
-                                                .setAccelerationMode(true));
-                                Vector fwdDir = MathHelper.getDirection(fireLoc, aimLoc, 1);
                                 for (Vector dir : MathHelper.getCircularProjectileDirections(
-                                        5, 3, 60, fwdDir, projSpd)) {
+                                        3, 2, 5, target, fireLoc, projSpd)) {
                                     EntityHelper.spawnProjectile(minionBukkit,
-                                            dir,
-                                            attrMap, "源生冰锥");
+                                            dir, attrMap, "源生冰锥");
                                 }
                             }
                             break;

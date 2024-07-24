@@ -134,15 +134,8 @@ public class BossHelper {
             EntityHelper.setMetadata(bossPart, EntityHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION, dynamicDamageMultiplier);
     }
     public static double getBossHealthMulti(int numPly) {
-        double multi = 1, multiInc = 0.35;
-        // multiInc -> 1 for curr > 30
-        for (int curr = 1; curr < Math.min(numPly, 32); curr ++) {
-            multi += multiInc;
-            multiInc += (1 - multiInc) / 3;
-        }
-        multi += Math.max(0, numPly - 32);
-        if (numPly >= 10) multi = (multi * 2 + 8) / 3;
-        return multi;
+        // sqrt(x) + x - 1; first few players in addition to the first would contribute to a slightly higher multiplier
+        return Math.sqrt(numPly) + numPly - 1;
     }
     public static HashMap<UUID, BossTargetInfo> setupBossTarget(Entity boss, String bossDefeatRequirement,
                                                           Player ply, boolean hasDistanceRestriction, boolean sendMsg, BossBattleServer bossbar) {

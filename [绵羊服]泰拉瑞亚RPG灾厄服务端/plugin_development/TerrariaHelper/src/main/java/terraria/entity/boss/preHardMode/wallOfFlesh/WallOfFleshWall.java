@@ -60,7 +60,6 @@ public class WallOfFleshWall extends EntitySlime {
         // basic characteristics
         setCustomName(BOSS_TYPE.msgName + "墙体");
         setCustomNameVisible(false);
-        bukkitEntity.
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");
         addScoreboardTag("noDamage");

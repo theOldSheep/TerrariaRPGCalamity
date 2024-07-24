@@ -623,12 +623,12 @@ sets:
     - §a套装效果：
     - §a+3 生命恢复
     - §a+10% 召唤伤害
-    - §a+2 召唤栏
+    - §a+1 召唤栏
     - §a增加水下适应性
     attributes:
       damageSummonMulti: 0.1
       regen: 3
-      minionLimit: 2
+      minionLimit: 1
       waterAffinity: 1
   流星套装:
     lore:
@@ -638,12 +638,10 @@ sets:
     lore:
     - ''
     - §a套装效果：
-    - §a+1 召唤栏
     - §a+15% 召唤伤害
     - §a+15% 近战速度
     - §a+30% 近战范围
     attributes:
-      minionLimit: 1
       damageSummonMulti: 0.15
       meleeReachMulti: 0.3
       useSpeedMeleeMulti: 0.15
@@ -693,10 +691,10 @@ sets:
     lore:
     - ''
     - §a套装效果： 
-    - §a+16% 召唤伤害
+    - §a+20% 召唤伤害
     - §a+2 召唤栏
     attributes:
-      damageSummonMulti: 0.16
+      damageSummonMulti: 0.2
       minionLimit: 2
   熔岩套装:
     lore:
@@ -736,26 +734,17 @@ sets:
     lore:
     - ''
     - §a套装效果： 
-    - §a+18% 召唤伤害
+    - §a+5% 召唤伤害
     - §a+2 召唤栏
     attributes:
-      damageSummonMulti: 0.18
-      minionLimit: 2
-  斯塔提斯召唤套装:
-    lore:
-    - ''
-    - §a套装效果： 
-    - §a+18% 召唤伤害
-    - §a+2 召唤栏
-    attributes:
-      damageSummonMulti: 0.18
+      damageSummonMulti: 0.05
       minionLimit: 2
   蜘蛛套装:
     lore:
     - ''
-    - §a套装效果： +12% 仆从伤害
+    - §a套装效果： +10% 仆从伤害
     attributes:
-      damageSummonMulti: 0.12
+      damageSummonMulti: 0.1
   软壳套装:
     lore:
     - ''
@@ -843,10 +832,10 @@ sets:
     lore:
     - ''
     - §a套装效果：
-    - §a提升20%召唤伤害
+    - §a提升35%召唤伤害
     - §a+3 召唤栏
     attributes:
-      damageSummonMulti: 0.2
+      damageSummonMulti: 0.35
       minionLimit: 3
   精金战士套装:
     lore:
@@ -891,10 +880,10 @@ sets:
     - ''
     - §a套装效果：
     - §a+2 仆从容量
-    - §a+5% 仆从伤害
+    - §a+25% 仆从伤害
     attributes:
       minionLimit: 2
-      damageSummonMulti: 0.05
+      damageSummonMulti: 0.25
   叶绿魔法套装:
     lore:
     - ''
@@ -1000,9 +989,9 @@ sets:
   阴森套装:
     lore:
     - ''
-    - §a套装效果： 仆从伤害增加25%
+    - §a套装效果： 仆从伤害增加20%
     attributes:
-      damageSummonMulti: 0.25
+      damageSummonMulti: 0.2
   渊泉近战套装:
     lore:
     - ''
@@ -1047,8 +1036,8 @@ sets:
     - §a增加5% 飞行时间
     - §a你可以按下套装增益键[默认为V]进入五秒钟的瘟疫狂暴模式
     attributes:
-      damageSummonMulti: 0.4
-      minionLimit: 3
+      ammoConsumptionRate: -0.25
+      flightTimeMulti: 0.05
   星幻套装:
     lore:
     - ''
@@ -1210,7 +1199,8 @@ sets:
     - §a套装效果：
     - §a获得30点护甲穿透和0.2%的生命汲取
     - §a生命汲取每帧最多触发一次，且每次治疗量不可超过最大生命值的5%
-    - §a提高10%伤害和暴击率并+5召唤栏
+    - §a提高10%伤害和暴击率并+6召唤栏
+    - §a手持其他职业武器对召唤物的伤害惩罚有所加深
     - §a按下套装增益键[默认为V]进入深渊狂乱状态5秒
     - §a深渊狂乱进一步提升35%伤害与暴击率，同时额外获得0.4%的生命汲取
     - §a此效果有25秒冷却时间
@@ -1219,7 +1209,8 @@ sets:
       lifeSteal: 0.002
       damageMulti: 0.1
       crit: 10
-      minionLimit: 5
+      minionLimit: 6
+      minionDamagePenaltyFactor: -0.25
   弑神者近战套装:
     lore:
     - ''
@@ -1334,7 +1325,7 @@ sets:
     - ''
     - §a套装效果：
     - §a+5% 移动速度
-    - §a+5 仆从容量和 50% 仆从伤害
+    - §a+4 仆从容量和 45% 仆从伤害
     - §a继承龙蒿套装、血炎套装和始源林海套装召唤头盔的效果
     - §b-> §a继承自龙蒿套装的效果：
     - §a减少刷怪量和刷怪率
@@ -1353,8 +1344,8 @@ sets:
       mobLimit: -2
       mobSpawnRateMulti: -0.5
       speedMulti: 0.05
-      minionLimit: 5
-      damageSummonMulti: 0.5
+      minionLimit: 4
+      damageSummonMulti: 0.45
   天钻套装:
     lore:
     - ''
@@ -1367,7 +1358,7 @@ sets:
     - §a黄色宝石增加45%近战伤害，26%近战速度和12%近战暴击率
     - §a绿色宝石增加50%远程伤害和16%远程暴击率
     - §a紫色宝石给予50%魔法伤害和16%魔法暴击率；最大魔力值提升100
-    - §a蓝色宝石给予72%召唤伤害和8个召唤栏，并取消手持非召唤武器的召唤伤害降低惩罚
+    - §a蓝色宝石给予72%召唤伤害和6个召唤栏，并取消手持非召唤武器的召唤伤害降低惩罚
     - §a红色基础宝石给予150防御和12%伤害减免；丢失基础宝石时优先丢失红色宝石
     - §a粉色基础宝石给予40%飞行时间，8生命恢复和更长的受伤无敌帧
   魔影套装:
@@ -1375,10 +1366,10 @@ sets:
     - ''
     - §a“众戒归一黑暗中”
     - §a套装效果：
-    - §a增加8个召唤栏，但手持其他职业武器对召唤物的伤害惩罚有所加深
+    - §a增加7个召唤栏，但手持其他职业武器对召唤物的伤害惩罚有所加深
     - §a按下套装增益键[默认为V]以黑魔法咒语强化自身
     - §a这道咒语生效时防御力和伤害减免各降低15%，但造成伤害提高75%
     - §a该效果每次触发都将持续时间重置为30秒，没有冷却限制
     attributes:
-      minionLimit: 8
+      minionLimit: 7
       minionDamagePenaltyFactor: -0.25

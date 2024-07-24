@@ -90,7 +90,7 @@ public class MinionCaveSpider extends EntityCaveSpider {
         this.targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         switch (minionType) {
             case "蜘蛛": {
-                damageInvincibilityTicks = 10;
+                damageInvincibilityTicks = 5;
                 getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.6d);
                 // navigation
                 getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(48);
@@ -104,13 +104,14 @@ public class MinionCaveSpider extends EntityCaveSpider {
                 break;
             }
             case "寄居蟹": {
-                damageInvincibilityTicks = 10;
+                damageInvincibilityTicks = 8;
                 getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.4d);
                 // navigation
                 getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(32);
                 break;
             }
             case "灵魂吞噬者宝宝": {
+                damageInvincibilityTicks = 5;
                 setNoGravity(true);
             }
             default: {

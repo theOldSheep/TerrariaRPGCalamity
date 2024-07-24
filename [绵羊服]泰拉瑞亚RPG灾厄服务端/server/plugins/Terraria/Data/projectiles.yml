@@ -1125,7 +1125,7 @@
     projectileSize: 1.5
     clusterBomb:
         amount: 1
-        damageMulti: 0.15
+        damageMulti: 0.5
         name: 冲击波1
         velocity: 0
 冲击波1:
@@ -1187,7 +1187,7 @@
     blockHitAction: thru
 蚀骨尖刺:
     liveTime: 60
-    penetration: 999999
+    penetration: 1
     blockHitAction: thru
     trailColor: "255|100|0"
     trailIntensityMulti: 0.35
@@ -1300,9 +1300,10 @@
 瘟疫搜寻者:
     gravity: 0
     homing: true
+    homingRadius: 32
+    noHomingTicks: 5
     blockHitAction: thru
     minimumDamageTicks: 5
-    noHomingTicks: 5
     liveTime: 60
     trailColor: "100|255|100"
     trailStepSize: 0.65
@@ -1361,7 +1362,7 @@
     homingMethod: 2
     homingRadius: 40
     homingAbility: 5.5
-    noHomingTicks: 20
+    noHomingTicks: 10
 血炎龙息:
     gravity: 0
     liveTime: 30
@@ -1503,7 +1504,7 @@
     spawnSoundVolume: 0.75
     clusterBomb:
         amount: 1
-        damageMulti: 0.5
+        damageMulti: 0.6
         name: 冲击波1
         velocity: 0
 归墟跟踪能源箭:
@@ -4052,7 +4053,7 @@ TNT:
     trailColor: 249|126|246
     clusterBomb:
         amount: 4
-        damageMulti: 1.2
+        damageMulti: 0.6
         name: 水晶蛇爆炸水晶碎片
         velocity: 1
 水晶蛇爆炸水晶碎片:
@@ -4091,7 +4092,8 @@ TNT:
     gravity: 0
     liveTime: 45
     blockHitAction: bounce
-    bounce: 5
+    bounce: 14
+    enemyInvincibilityFrame: 5
     penetration: 2
     speedMultiPerTick: 0.75
     homing: true
@@ -4109,7 +4111,7 @@ TNT:
     enemyInvincibilityFrame: 15
     blockHitAction: bounce
     bounce: 8
-    penetration: 9
+    penetration: 14
     gravity: 0
     homing: true
     homingSharpTurning: false
@@ -4244,7 +4246,7 @@ TNT:
     gravity: 0
     liveTime: 40
     homing: true
-    noHomingTicks: 8
+    noHomingTicks: 4
     trailColor: 226|202|70
     trailSize: 0.1
     trailStepSize: 0.5
@@ -4263,7 +4265,7 @@ TNT:
         amount: 6
         name: 闪光花瓣
         velocity: 1.25
-        damageMulti: 0.75
+        damageMulti: 0.6
 狱炎三叉戟:
     arrowOrPotion: true
     gravity: 0
@@ -4324,7 +4326,7 @@ TNT:
     gravity: 0
     liveTime: 40
     homing: true
-    noHomingTicks: 5
+    noHomingTicks: 3
     trailColor: 225|90|175
     trailSize: 0.1
     trailStepSize: 0.5
@@ -4343,7 +4345,7 @@ TNT:
         amount: 8
         name: 玄法花瓣
         velocity: 1.75
-        damageMulti: 0.75
+        damageMulti: 0.5
 幻星水晶:
     gravity: 0
     projectileSize: 1
@@ -4382,7 +4384,7 @@ TNT:
     homing: true
     homingRadius: 16
     minimumDamageTicks: 5
-    noHomingTicks: 5
+    noHomingTicks: 3
     trailColor: 212|80|194
     trailSize: 0.1
     trailStepSize: 0.5
@@ -4401,7 +4403,7 @@ TNT:
         amount: 8
         name: 玄法花瓣
         velocity: 2.25
-        damageMulti: 0.75
+        damageMulti: 0.6
 王子火焰:
     gravity: 0
     liveTime: 40
@@ -4421,7 +4423,7 @@ TNT:
         amount: 6
         name: 王子火焰
         velocity: 2.5
-        damageMulti: 0.6
+        damageMulti: 0.75
 磁场之融磁球:
     gravity: 0
     blockHitAction: thru
@@ -4484,7 +4486,7 @@ TNT:
     trailColor: 255|255|137
     clusterBomb:
         amount: 8
-        damageMulti: 0.75
+        damageMulti: 0.15
         name: 火焰碎片
         type: normal
         velocity: 1.5
@@ -4528,7 +4530,7 @@ TNT:
         - "弑神怒焰|60|1"
 灵魂穿透者主光束:
     gravity: 0
-    projectileSize: 0.5
+    projectileSize: 0.45
     liveTime: 2
     speedMultiPerTick: 999
     maxSpeed: 64
@@ -4549,7 +4551,7 @@ TNT:
 灵魂穿透者衍生光束:
     gravity: 0
     blockHitAction: thru
-    projectileSize: 0.25
+    projectileSize: 0.5
     penetration: 999999
     liveTime: 1
     trailColor: 171|152|236
@@ -4590,7 +4592,7 @@ TNT:
     trailColor: 239|193|119
     clusterBomb:
         amount: 1
-        damageMulti: 0.1
+        damageMulti: 0.25
         name: 冲击波1
         velocity: 0
 磁球:
@@ -4666,7 +4668,6 @@ TNT:
     gravity: 0
     liveTime: 50
     blockHitAction: thru
-    penetration: 99999
     projectileSize: 3
     speedMultiPerTick: 0.925
 绝学光束:
@@ -4705,7 +4706,6 @@ TNT:
     penetration: 1
     projectileSize: 0.5
     liveTime: 60
-    minimumDamageTicks: 5
     homing: true
     homingRadius: 24
     noHomingTicks: 999999
@@ -4779,14 +4779,14 @@ TNT:
 以太之低语额外弹幕:
     gravity: 0
     blockHitAction: thru
-    projectileSize: 0.5
+    projectileSize: 0.75
     liveTime: 20
     trailColor: 255|142|255
     buffInflict:
         - "暗影焰|200|1"
 以太之低语:
     gravity: 0
-    projectileSize: 0.75
+    projectileSize: 0.5
     liveTime: 20
     trailColor: 255|142|255
     buffInflict:
@@ -4821,7 +4821,7 @@ TNT:
     blastRadius: 3
     trailColor: 96|255|255
     spawnProjectiles:
-        interval: 2
+        interval: 1
         offset: 32
         spawnMechanism: ENEMY
         damageMulti: 1
@@ -4830,7 +4830,7 @@ TNT:
 以太流光:
     gravity: 0
     blockHitAction: thru
-    penetration: 4
+    penetration: 1
     projectileSize: 1
     liveTime: 20
     trailColor: 255|255|172
@@ -5114,7 +5114,7 @@ TNT:
     blockHitAction: thru
     gravity: 0
     homing: true
-    homingRadius: 32
+    homingRadius: 48
     homingAbility: 5
     noHomingTicks: 3
     trailColor: 255|255|100
@@ -5124,7 +5124,7 @@ TNT:
     gravity: 0
     projectileSize: 1
     homing: true
-    homingRadius: 32
+    homingRadius: 64
     homingAbility: 5
     noHomingTicks: 1
 异端迷失灵魂:
@@ -5133,7 +5133,7 @@ TNT:
     gravity: 0
     projectileSize: 0.5
     homing: true
-    homingRadius: 32
+    homingRadius: 56
     homingAbility: 6
     noHomingTicks: 2
 异端复仇灵魂:
@@ -5142,7 +5142,7 @@ TNT:
     gravity: 0
     projectileSize: 1.5
     homing: true
-    homingRadius: 32
+    homingRadius: 64
 舞光之刃:
     liveTime: 50
     blockHitAction: thru

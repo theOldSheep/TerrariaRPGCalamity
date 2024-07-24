@@ -225,6 +225,7 @@ public class EventAndTime {
      */
     public static void threadTimeAndEvent() {
         // every 3 ticks (~1/7 second)
+        final int delay = 3;
         Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), () -> {
             World[] worldsToHandle = {
                     Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE),
@@ -265,7 +266,8 @@ public class EventAndTime {
                 tickFallenStars(surfaceWorld);
                 // NPC respawn
                 if (WorldHelper.isDayTime(surfaceWorld)) {
-                    if (--NPCRespawnCountdown < 0) {
+                    NPCRespawnCountdown -= delay;
+                    if (NPCRespawnCountdown < 0) {
                         for (NPCHelper.NPCType npcType : NPCHelper.NPCType.values()) {
                             // if NPC is alive, move on
                             if (NPCHelper.NPCMap.containsKey(npcType) && !NPCHelper.NPCMap.get(npcType).isDead())
@@ -280,15 +282,16 @@ public class EventAndTime {
                             // only revive one NPC at a time
                             break;
                         }
-                        NPCRespawnCountdown = (int) (500 + Math.random() * 1000);
+                        // 2-3 minutes
+                        NPCRespawnCountdown = (int) (2400 + Math.random() * 1200);
                     }
                 }
                 // NPC respawn counter resets at night
                 else {
-                    NPCRespawnCountdown = 1800;
+                    NPCRespawnCountdown = 3600;
                 }
             }
-        }, 0, 3);
+        }, 0, delay);
     }
     // boss rush
     public static boolean isBossRushActive() {

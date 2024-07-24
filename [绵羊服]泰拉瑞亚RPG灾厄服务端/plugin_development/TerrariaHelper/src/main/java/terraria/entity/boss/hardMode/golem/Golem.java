@@ -23,7 +23,7 @@ public class Golem extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.GOLEM;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.TEMPLE;
-    public static final double BASIC_HEALTH = 68850 * 2, BASIC_HEALTH_BR = 272625 * 2;
+    public static final double BASIC_HEALTH = 104623 * 2, BASIC_HEALTH_BR = 272625 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -186,6 +186,7 @@ public class Golem extends EntitySlime {
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 480d);
             attrMap.put("defence", 52d);
+            attrMap.put("damageTakenMulti", 0.75d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);

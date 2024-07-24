@@ -204,7 +204,7 @@ public class CrimulanSlime extends EntitySlime {
                     break;
                 case MIDDLE:
                     setSize(8, false);
-                    healthMulti *= 0.33;
+                    healthMulti *= 0.2;
                     break;
                 case SMALL:
                     setSize(4, false);
@@ -266,12 +266,12 @@ public class CrimulanSlime extends EntitySlime {
         // spawn smaller slimes
         switch (slimeSize) {
             case BIG:
-                for (int i = 0; i < 4; i ++) {
+                for (int i = 0; i < 3; i ++) {
                     new CrimulanSlime(owner, SlimeSize.MIDDLE, getBukkitEntity());
                 }
                 break;
             case MIDDLE:
-                for (int i = 0; i < 5; i ++) {
+                for (int i = 0; i < 4; i ++) {
                     new CrimulanSlime(owner, SlimeSize.SMALL, getBukkitEntity());
                 }
                 break;

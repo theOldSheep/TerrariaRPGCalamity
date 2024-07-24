@@ -21,7 +21,7 @@ public class SkeletronPrimeHead extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.SKELETRON_PRIME;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 64260 * 2, BASIC_HEALTH_BR = 230000 * 2;
+    public static final double BASIC_HEALTH = 64260 * 3, BASIC_HEALTH_BR = 230000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
