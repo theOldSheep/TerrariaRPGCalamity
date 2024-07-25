@@ -562,7 +562,7 @@ public class PlayerHelper {
         // setup projectile attributes
         HashMap<String, Double> attrMapChlorophyte = new HashMap<>(5);
         {
-            attrMapChlorophyte.put("damage", 200d);
+            attrMapChlorophyte.put("damage", 100d);
             attrMapChlorophyte.put("knockback", 0d);
         }
         HashMap<String, Double> attrMapVolatileGelatinJr = new HashMap<>(5);
@@ -572,12 +572,12 @@ public class PlayerHelper {
         }
         HashMap<String, Double> attrMapVolatileGelatin = new HashMap<>(5);
         {
-            attrMapVolatileGelatin.put("damage", 20d);
+            attrMapVolatileGelatin.put("damage", 125d);
             attrMapVolatileGelatin.put("knockback", 0d);
         }
         HashMap<String, Double> attrMapSpore = new HashMap<>(5);
         {
-            attrMapSpore.put("damage", 125d);
+            attrMapSpore.put("damage", 100d);
             attrMapSpore.put("knockback", 0d);
         }
         // every 2 ticks (1/10 second)

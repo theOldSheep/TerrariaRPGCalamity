@@ -90,8 +90,8 @@ public class ArrowHitListener implements Listener {
             attrMapProj.put("damage", attrMapProj.get("damage") * 0.3);
             attrMapProj.put("knockback", 0d);
             Player shooter = (Player) projectile.getShooter();
-            int waitTime = 3 + (int) (Math.random() * 3);
-            for (int i = 0; i < 3; i ++) {
+            int waitTime = 3 + (int) (Math.random() * 5);
+            for (int i = 0; i < 2; i ++) {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
                     Vector velocity = MathHelper.getDirection(shooter.getLocation(), entity.getLocation(), 1);
                     velocity.multiply(17);
@@ -102,7 +102,7 @@ public class ArrowHitListener implements Listener {
                     ItemUseHelper.playerUseItemSound(shooter, "BOW", "幻象弓", true);
                 }, waitTime);
 
-                waitTime += 4 + (int) (Math.random() * 5);
+                waitTime += 4 + (int) (Math.random() * 7);
             }
         }
         // god slayer slug
@@ -110,7 +110,7 @@ public class ArrowHitListener implements Listener {
             // only handle extra projectile once per bullet
             if (! projectileScoreboardTags.contains("godSlyHandled")) {
                 HashMap<String, Double> attrMapProj = (HashMap<String, Double>) EntityHelper.getAttrMap(projectile).clone();
-                attrMapProj.put("damage", attrMapProj.get("damage") * 0.35);
+                attrMapProj.put("damage", attrMapProj.get("damage") * 0.85);
                 Player shooter = (Player) projectile.getShooter();
                 projectile.addScoreboardTag("godSlyHandled");
                 // after 5 ticks, remove current bullet and fire a new one
@@ -133,7 +133,7 @@ public class ArrowHitListener implements Listener {
         // hellborn bullet
         if (projectileScoreboardTags.contains("isHellborn")) {
             Player shooter = (Player) projectile.getShooter();
-            ItemUseHelper.applyCD(shooter, 1);
+            ItemUseHelper.applyCD(shooter, 2);
         }
         // adamantite particle accelerator
         if (projectileScoreboardTags.contains("isAPA")) {

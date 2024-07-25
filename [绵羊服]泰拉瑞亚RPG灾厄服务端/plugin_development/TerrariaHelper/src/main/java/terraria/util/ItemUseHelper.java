@@ -505,28 +505,29 @@ public class ItemUseHelper {
         // title message
         double fillProgress = (double) currLoad / maxLoad;
         String colorCode;
-        switch ((int) fillProgress * 5) {
+        switch ((int) (fillProgress * 4.9999)) {
             case 1:
-                colorCode = "§4";
+                colorCode = ChatColor.RED.toString();
                 break;
             case 2:
-                colorCode = "§c";
+                colorCode = ChatColor.GOLD.toString();
                 break;
             case 3:
-                colorCode = "§e";
+                colorCode = ChatColor.YELLOW.toString();
                 break;
             case 4:
-                colorCode = "§a";
+                colorCode = ChatColor.GREEN.toString();
                 break;
+            // 0
             default:
-                colorCode = "§2";
+                colorCode = ChatColor.DARK_RED.toString();
         }
         int barLengthTotal = 50;
         int barLengthReady = (int) (barLengthTotal * fillProgress);
         StringBuilder infoText = new StringBuilder(colorCode + "装填:[");
         for (int i = 0; i < barLengthReady; i ++)
             infoText.append("|");
-        infoText.append("§8");
+        infoText.append(ChatColor.DARK_GRAY);
         for (int i = barLengthReady; i < barLengthTotal; i ++)
             infoText.append("|");
         infoText.append(colorCode).append("]");
@@ -3313,7 +3314,7 @@ public class ItemUseHelper {
             case "蘑菇狙击枪":
             case "鬼火弓": {
                 Location fireLoc = ply.getEyeLocation();
-                Vector fireVelocity = facingDir.clone();
+                Vector fireVelocity = null;
                 HashMap<String, Double> attrMapExtraProjectile = (HashMap<String, Double>) attrMap.clone();
                 boolean shouldFire = true;
                 String extraProjectileType = "";
@@ -3328,7 +3329,7 @@ public class ItemUseHelper {
                     case "星璇机枪": {
                         if (swingAmount % 5 == 4) {
                             extraProjectileType = "星璇导弹";
-                            attrMapExtraProjectile.put("damage", 140d);
+                            attrMapExtraProjectile.put("damage", 175d);
                         } else {
                             shouldFire = false;
                         }
@@ -3361,7 +3362,12 @@ public class ItemUseHelper {
                 }
                 // setup projectile velocity
                 if (shouldFire) {
-                    fireVelocity.multiply(projectileSpeed);
+                    if (fireVelocity == null) {
+                        Location aimLoc = getPlayerTargetLoc(ply,
+                                new EntityHelper.AimHelperOptions(extraProjectileType)
+                                        .setProjectileSpeed(projectileSpeed), true);
+                        fireVelocity = MathHelper.getDirection(fireLoc, aimLoc, projectileSpeed);
+                    }
                     for (int i = 0; i < extraProjectileAmount; i ++) {
                         EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMapExtraProjectile,
                                 EntityHelper.getDamageType(ply), extraProjectileType);
@@ -3425,13 +3431,13 @@ public class ItemUseHelper {
             }
             case "赤陨霸龙弓": {
                 ammoConversion = new ArrayList<>(2);
-                if (swingAmount <= 40) {
+                if (swingAmount <= 30) {
                     ammoConversion.add("炎龙崩啸");
                 }
                 else {
-                    ammoConversion.add("充能炎龙崩啸");
-                    if (swingAmount >= 50) {
-                        ammoConversion.add("追踪炎龙崩啸");
+                    ammoConversion.add("追踪炎龙崩啸");
+                    if (swingAmount >= 45) {
+                        ammoConversion.add("充能炎龙崩啸");
                     }
                 }
                 break;
@@ -3639,7 +3645,7 @@ public class ItemUseHelper {
                     double pitchOffset, shootLocOffsetLen;
                     switch (itemType) {
                         case "珍珠之神":
-                            pitchOffset = 7.5;
+                            pitchOffset = 3.5;
                             shootLocOffsetLen = 1.5;
                             break;
                         case "黄金之鹰":
@@ -5257,10 +5263,9 @@ public class ItemUseHelper {
                     ConfigurationSection attributeSection = weaponSection.getConfigurationSection("attributes");
                     for (String attributeType : attributeSection.getKeys(false)) {
                         attrMap.put(attributeType, attributeSection.getDouble(attributeType));
-                        // when the use time is fixed by the config, convert swing speed to damage.
-                        if (attributeType.equals("useTime")) {
-                            double dmgRatioConverted = attrMap.getOrDefault("useSpeedMulti", 1d);
-                            dmgRatioConverted *= attrMap.getOrDefault("useSpeed" + EntityHelper.getDamageType(ply) + "Multi", 1d);
+                        // when fixed by the config, convert swing speed to damage.
+                        if (attributeType.startsWith("useSpeed") && attributeType.endsWith("Multi")) {
+                            double dmgRatioConverted = attrMap.getOrDefault(attributeType, 1d);
                             attrMap.put("damageMulti", attrMap.getOrDefault("damageMulti", 1d) * dmgRatioConverted);
                         }
                     }

@@ -1601,6 +1601,7 @@
 三级雪人火箭:
     gravity: 0
     homing: true
+    isGrenade: true
     blastRadius: 2.25
     blastDamageShooter: true
 四级雪人火箭:
@@ -1838,16 +1839,15 @@
     isGrenade: true
     blastRadius: 2.75
     clusterBomb:
-        amount: 13
+        amount: 5
         name: 火焰碎片
         velocity: 1.5
-        damageMulti: 0.25
+        damageMulti: 0.15
 小鸡火箭:
     projectileSize: 1
     liveTime: 20
     isGrenade: true
     blastRadius: 10
-    blastDuration: 50
     trailColor: 255|129|16
     trailSize: 0.25
     trailStepSize: 0.5
@@ -1860,6 +1860,7 @@
     isGrenade: true
     homing: true
     homingRadius: 24
+    homingAbility: 6
     blastRadius: 2.75
     trailColor: 87|255|51
     trailSize: 0.25
@@ -2076,6 +2077,7 @@ TNT:
 余晖烈焰:
     gravity: 0
     projectileSize: 3
+    speedMultiPerTick: 0.9
     blockHitAction: thru
     penetration: 999999
     liveTime: 30
@@ -2087,7 +2089,6 @@ TNT:
 生命血火:
     gravity: 0
     projectileSize: 1.5
-    penetration: 999999
     liveTime: 12
     trailColor: 133|9|11
     trailLingerTime: 6
@@ -2107,7 +2108,7 @@ TNT:
 弑神火焰:
     gravity: 0
     projectileSize: 1.5
-    penetration: 999999
+    penetration: 1
     liveTime: 10
     trailColor: 235|146|255
     trailLingerTime: 6
@@ -2117,7 +2118,7 @@ TNT:
 星流火星:
     gravity: 0
     projectileSize: 1.5
-    penetration: 999999
+    penetration: 2
     liveTime: 10
     trailColor: 106|255|76;255|150|0;100|255|100;100|100|255
     trailLingerTime: 6
@@ -2142,14 +2143,12 @@ TNT:
     gravity: 0
     projectileSize: 1.5
     blockHitAction: thru
-    penetration: 9
-    liveTime: 100
+    penetration: 14
+    liveTime: 200
     homing: true
     homingAbility: 6
     homingRadius: 24
     trailColor: 255|255|255
-    trailLingerTime: 6
-    trailIntensityMulti: 1
     buffInflict:
         - "超位崩解|100|1"
 烈焰木:
@@ -2269,7 +2268,7 @@ TNT:
 冰砾弹:
     gravity: 0
     liveTime: 100
-    penetration: 2
+    penetration: 1
     buffInflict:
         - "霜火|60|1"
     clusterBomb:
@@ -2299,7 +2298,7 @@ TNT:
         amount: 2
         name: 泰拉追踪弹
         velocity: 1.5
-        damageMulti: 0.3
+        damageMulti: 0.45
 钫弹:
     gravity: 0
     liveTime: 100
@@ -2345,7 +2344,7 @@ TNT:
     trailLingerTime: 8
     trailStepSize: 1
     clusterBomb:
-        amount: 4
+        amount: 3
         name: 小孢子
         velocity: 0.5
         damageMulti: 0.45
@@ -2367,7 +2366,7 @@ TNT:
     gravity: 0.01
     liveTime: 100
     clusterBomb:
-        amount: 6
+        amount: 2
         name: 追踪蓝晶碎片
         velocity: 0.5
         damageMulti: 0.25
@@ -2454,7 +2453,7 @@ TNT:
         amount: 3
         name: 解离分裂弹
         velocity: 2.5
-        damageMulti: 0.85
+        damageMulti: 0.5
 解离分裂弹:
     gravity: 0
     projectileSize: 0.5
@@ -2533,7 +2532,7 @@ TNT:
     gravity: 0
     liveTime: 100
     isGrenade: true
-    blastRadius: 2
+    blastRadius: 2.85
     buffInflict:
         - "龙焰|100|1"
 .70狙击弹:
@@ -4185,6 +4184,7 @@ TNT:
     trailSize: 0.1
     trailStepSize: 0.5
 天蓝羽毛:
+    gravity: 0.01
     homing: true
     isGrenade: true
     blastRadius: 1.5
@@ -5292,7 +5292,7 @@ TNT:
         - "霜火|60|1"
     clusterBomb:
         amount: 3
-        damageMulti: 0.3333
+        damageMulti: 0.15
         name: 水晶碎块
         velocity: 0.35
 火焰碎片:
@@ -5314,7 +5314,7 @@ TNT:
     blastRadius: 0.75
     clusterBomb:
         amount: 3
-        damageMulti: 0.3
+        damageMulti: 0.2
         name: 火焰碎片
         velocity: 1
 泰拉追踪箭:
@@ -5370,9 +5370,9 @@ TNT:
     buffInflict:
         - "弑神怒焰|60|1"
     spawnProjectiles:
-        interval: 7
+        interval: 2
         spawnMechanism: FORWARD
-        damageMulti: 0.5
+        damageMulti: 0.35
         speed: 2.5
         spawnType: 征戮分裂箭
 幻象箭:
@@ -5411,6 +5411,7 @@ TNT:
     buffInflict:
         - "霜火|50|1"
 硫火射线:
+    gravity: 0
     penetration: 2
     trailColor: 255|129|183
     trailSize: 0.25
@@ -5609,27 +5610,23 @@ TNT:
     projectileSize: 0.5
     homing: true
     homingRadius: 24
-    homingAbility: 5
+    homingAbility: 6.5
     noHomingTicks: 5
     liveTime: 100
     buffInflict:
         - "超位崩解|100|1"
-    trailColor: 174|255|152
-    trailIntensityMulti: 0.25
 天堂充能星流晶体:
     gravity: 0
     blockHitAction: thru
     projectileSize: 0.5
     homing: true
-    homingRadius: 24
-    homingAbility: 6
+    homingRadius: 32
+    homingAbility: 8
     noHomingTicks: 5
     isGrenade: true
     liveTime: 120
     buffInflict:
         - "超位崩解|100|1"
-    trailColor: 255|253|191
-    trailIntensityMulti: 0.25
     clusterBomb:
         amount: 1
         damageMulti: 0.75
@@ -5643,7 +5640,7 @@ TNT:
     projectileSize: 3
     liveTime: 1
     trailColor: 127|255|14
-    trailSize: 0.25
+    trailSize: 0.1
     trailIntensityMulti: 2
     buffInflict:
         - "超位崩解|100|1"
@@ -5651,18 +5648,25 @@ TNT:
     projectileSize: 0.5
     liveTime: 40
     spawnProjectiles:
-        interval: 5
+        interval: 3
         offset: 0
         spawnMechanism: SURROUND
-        damageMulti: 1
+        damageMulti: 0.25
         speed: 2.5
         spawnType: 瘟疫疫病球
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.5
+        name: 瘟疫疫病球
+        velocity: 2.5
 瘟疫疫病球:
     projectileSize: 0.5
     gravity: 0
     liveTime: 20
     homing: true
-    homingRadius: 16
+    homingRadius: 24
+    noHomingTicks: 2
+    minimumDamageTicks: 2
     speedMultiPerTick: 0.5
     isGrenade: true
     blastRadius: 2.5
@@ -5670,6 +5674,7 @@ TNT:
     projectileSize: 2
     blockHitAction: thru
     homing: true
+    homingAbility: 6.75
     homingRadius: 16
     gravity: 0
     liveTime: 75

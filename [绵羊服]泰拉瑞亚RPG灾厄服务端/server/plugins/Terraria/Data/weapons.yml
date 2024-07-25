@@ -1287,14 +1287,14 @@
   type: BOW
   autoSwing: true
   shots: 2
-  offSet: 14
+  offSet: 27.5
 白霜弓:
   type: BOW
   autoSwing: true
   shots: 2
-  offSet: 24
+  offSet: 35
   ammoConversion:
-    木箭:
+    ALL:
     - 冰雾箭
 巴淋诺提卡:
   type: BOW
@@ -1315,7 +1315,7 @@
 叶流:
   type: BOW
   autoSwing: true
-  fireRounds: 4
+  fireRounds: 5
   fireRoundsDelay: 1
   attributes:
     useTime: 5
@@ -1329,7 +1329,7 @@
   autoSwing: true
   ammo: _孢子球
   attributes:
-    useTime: 10
+    useTime: 20
     useSpeedMulti: 1
     useSpeedRangedMulti: 1
 宇束弓:
@@ -1461,7 +1461,7 @@
   offSet: 35
   autoSwing: true
   ammoConversion:
-    木箭:
+    ALL:
     - 死亡之风星云射线
 啸流:
   type: BOW
@@ -1501,7 +1501,7 @@
   fireRoundsDelay: 4
   autoSwing: true
   attributes:
-    damage: 155
+    damage: 418
     useTime: 20
   ammoConversion:
     ALL:
@@ -1530,7 +1530,7 @@
   autoSwing: true
   offSet: 30
   fireRounds: 4
-  fireRoundsDelay: 2
+  fireRoundsDelay: 3
 锋叶十字弩:
   type: BOW
   autoSwing: true
@@ -1545,7 +1545,7 @@
   type: BOW
   autoSwing: true
   maxLoad: 8
-  loadTimeMulti: 0.75
+  loadTimeMulti: 0.85
   fireRoundsDelay: 1
   ammoConversion:
     ALL:
@@ -1589,17 +1589,13 @@
   type: SPECIAL_AMMO
   ammo: _海之烧灼水弹
   attributes:
-    useTime: 10
-    useSpeedMulti: 1
-    useSpeedRangedMulti: 1
+    useTime: 12
   autoSwing: true
 物质调谐器:
   type: SPECIAL_AMMO
   ammo: _不稳定物质
   shots: 4
-  offSet: 6
-  attributes:
-    damage: 66
+  offSet: 17.5
   autoSwing: true
 高斯来复枪:
   type: SPECIAL_AMMO
@@ -1637,9 +1633,8 @@
   type: SPECIAL_AMMO
   ammo: _异象纳米裂变炸弹
   attributes:
-    damage: 1850
     knockback: 5
-    useTime: 15
+    useTime: 30
     useSpeedMulti: 1
     useSpeedRangedMulti: 1
   autoSwing: true
@@ -1665,6 +1660,11 @@
   autoSwing: true
   fireRounds: 5
   fireRoundsDelay: 1
+  attributes:
+    projectileSpeed: 25.5
+    useTime: 5
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
   ammoConversion:
     凝胶:
     - 火焰
@@ -1676,6 +1676,9 @@
   autoSwing: true
   attributes:
     projectileSpeed: 35
+    useTime: 6
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
   ammoConversion:
     凝胶:
     - 短程火焰
@@ -1685,6 +1688,8 @@
   autoSwing: true
   attributes:
     projectileSpeed: 35
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
   ammoConversion:
     凝胶:
     - 影流火焰
@@ -1692,10 +1697,12 @@
   type: SPECIAL_AMMO
   ammo: 凝胶
   shots: 5
-  offSet: 7.5
+  offSet: 22.5
   autoSwing: true
   attributes:
     projectileSpeed: 35
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
   ammoConversion:
     凝胶:
     - 反弹凝胶
@@ -1706,6 +1713,8 @@
   autoSwing: true
   attributes:
     projectileSpeed: 35
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
   ammoConversion:
     凝胶:
     - 蓝焰
@@ -1718,6 +1727,9 @@
   autoSwing: true
   attributes:
     projectileSpeed: 35
+    useTime: 10
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
   ammoConversion:
     凝胶:
     - 硫火喷射
@@ -1729,6 +1741,9 @@
   autoSwing: true
   attributes:
     projectileSpeed: 35
+    useTime: 6
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
   ammoConversion:
     凝胶:
     - 泰拉火焰
@@ -1738,6 +1753,8 @@
   autoSwing: true
   attributes:
     projectileSpeed: 35
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
   ammoConversion:
     凝胶:
     - 星辉烈焰
@@ -1749,6 +1766,9 @@
   autoSwing: true
   attributes:
     projectileSpeed: 35
+    useTime: 10
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
   ammoConversion:
     凝胶:
     - 瘟疫火焰
@@ -1760,6 +1780,9 @@
   autoSwing: true
   attributes:
     projectileSpeed: 35
+    useTime: 6
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
   ammoConversion:
     凝胶:
     - 紫绿色火焰
@@ -1771,6 +1794,8 @@
   autoSwing: true
   attributes:
     projectileSpeed: 35
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
   ammoConversion:
     凝胶:
     - 元素彩虹烈焰
@@ -1795,7 +1820,7 @@
   fireRoundsDelay: 2
   autoSwing: true
   attributes:
-    projectileSpeed: 8
+    projectileSpeed: 3
     useTime: 6
     useSpeedMulti: 1
     useSpeedRangedMulti: 1
@@ -1822,6 +1847,8 @@
   autoSwing: true
   attributes:
     projectileSpeed: 50
+    useSpeedMulti: 1
+    useSpeedRangedMulti: 1
   ammoConversion:
     凝胶:
     - 燃烧哈雷彗星
@@ -1862,7 +1889,7 @@
   offSet: 35
   autoSwing: true
   attributes:
-    useTime: 10
+    useTime: 7
   ammoConversion:
     凝胶:
     - 追踪星焱
@@ -1871,8 +1898,10 @@
   thruWall: true
 手枪:
   type: GUN
+  autoSwing: true
 凤凰爆破枪:
   type: GUN
+  autoSwing: true
 迷你鲨:
   type: GUN
   autoSwing: true
@@ -1893,11 +1922,13 @@
   offSet: 20
 狙击步枪:
   type: GUN
+  autoSwing: true
 战术霰弹枪:
   type: GUN
   shots: 6
   offSet: 16
   autoSwing: true
+  useSound: entity.generic.explode
 链式机枪:
   type: GUN
   autoSwing: true
@@ -1909,15 +1940,17 @@
 太空海豚机枪:
   type: GUN
   autoSwing: true
-  offSet: 24
+  offSet: 27.5
 四管猎枪:
   type: GUN
+  autoSwing: true
   shots: 4
-  offSet: 5
+  offSet: 12.5
 玛瑙爆破枪:
   type: GUN
+  autoSwing: true
   shots: 4
-  offSet: 14
+  offSet: 17.5
 鹅卵石冲击波:
   type: GUN
   autoSwing: true
@@ -1951,7 +1984,7 @@
 胶泥散弹枪:
   type: GUN
   shots: 3
-  offSet: 12
+  offSet: 16
   autoSwing: true
 P90:
   type: GUN
@@ -1977,14 +2010,11 @@ P90:
   type: GUN
   autoSwing: true
   useSound: entity.generic.explode
-  ammoConversion:
-    绿藻弹:
-    - 火枪子弹
 霜牙冲击波:
   type: GUN
   autoSwing: true
   shots: 2
-  offSet: 9
+  offSet: 22.5
   fireRounds: 3
   fireRoundsDelay: 2
   ammoConversion:
@@ -2000,7 +2030,6 @@ P90:
   type: GUN
   autoSwing: true
   attributes:
-    damage: 400
     useTime: 12
 憎恨_RIGHT_CLICK:
   type: GUN
@@ -2008,7 +2037,7 @@ P90:
   fireRounds: 3
   fireRoundsDelay: 1
   attributes:
-    damage: 66
+    damage: 125
     useTime: 7
 深核GK2:
   type: GUN
@@ -2071,6 +2100,7 @@ P90:
   offSet: 9
   autoSwing: true
   attributes:
+    damage: 200
     useTime: 25
 灭域者:
   type: GUN
@@ -2104,7 +2134,7 @@ P90:
 玛瑙链炮:
   type: GUN
   shots: 4
-  offSet: 25
+  offSet: 37.5
   autoSwing: true
 解离者:
   type: GUN
@@ -2166,6 +2196,13 @@ Dodu的手炮:
   ammoConversion:
     ALL:
     - 花生壳
+大比目鱼炮:
+  type: GUN
+  shots: 12
+  offSet: 50
+  fireRounds: 2
+  fireRoundsDelay: 3
+  autoSwing: true
 腐臭倾泻者:
   type: GUN
   autoSwing: true
@@ -2176,7 +2213,7 @@ Dodu的手炮:
   type: GUN
   fireRounds: 10
   fireRoundsDelay: 1
-  shots: 3
+  shots: 2
   autoSwing: true
   attributes:
     useTime: 10
@@ -2189,7 +2226,7 @@ Dodu的手炮:
   type: GUN
   fireRounds: 10
   fireRoundsDelay: 1
-  shots: 3
+  shots: 2
   autoSwing: true
   attributes:
     useTime: 10
@@ -2218,7 +2255,7 @@ Dodu的手炮:
 奥妮克希亚:
   type: GUN
   shots: 4
-  offSet: 30
+  offSet: 45
   autoSwing: true
 巨龙之息:
   type: GUN
@@ -2226,14 +2263,6 @@ Dodu的手炮:
   fireRounds: 2
   fireRoundsDelay: 2
   autoSwing: true
-巨龙之息_RIGHT_CLICK:
-  type: GUN
-  shots: 6
-  fireRounds: 2
-  fireRoundsDelay: 3
-  autoSwing: true
-  attributes:
-    damage: 260
 迷你加特林:
   type: GUN
   autoSwing: true
@@ -2258,7 +2287,7 @@ Dodu的手炮:
   offSet: 25
   autoSwing: true
   attributes:
-    useTime: 3
+    useTime: 5
 太虚星龙炮:
   type: GUN
   autoSwing: true
@@ -2270,13 +2299,6 @@ Dodu的手炮:
   ammoConversion:
     火枪子弹:
     - 月神高速弹
-大比目鱼炮:
-  type: GUN
-  shots: 15
-  offSet: 50
-  fireRounds: 2
-  fireRoundsDelay: 3
-  autoSwing: true
 榴弹发射器:
   type: ROCKET
   autoSwing: true
@@ -2342,7 +2364,7 @@ Dodu的手炮:
   type: ROCKET
   autoSwing: true
   attributes:
-    damage: 200
+    damage: 1000
     useTime: 13
   ammoConversion:
     ALL:

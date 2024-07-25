@@ -310,6 +310,8 @@ public class GenericProjectile extends EntityPotion {
     protected void spawnExtraProjectiles() {
         if (extraProjectileConfigSection == null)
             return;
+        if (projectileType.equals("征戮箭") && ticksLived > extraProjectileSpawnInterval * 2)
+            return;
         // validate CD
         if (extraProjectileSpawnInterval > 0 && ticksLived % extraProjectileSpawnInterval == 0) {
             Vector velocity = null;

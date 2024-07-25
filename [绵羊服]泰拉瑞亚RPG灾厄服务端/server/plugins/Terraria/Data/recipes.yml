@@ -574,12 +574,6 @@ ANVIL:
     - 火枪子弹:64
     - 陨星锭
     recipeCategory: AMMO_BULLET
-  '36':
-    requireLevel: 2
-    resultItem: 绿藻弹:64
-    requireItem:
-    - 叶绿锭
-    recipeCategory: AMMO_BULLET
   '37':
     requireLevel: 2
     resultItem: 水晶子弹:96
@@ -594,12 +588,39 @@ ANVIL:
     - 火枪子弹:96
     - 诅咒焰
     recipeCategory: AMMO_BULLET
+  '36':
+    requireLevel: 2
+    resultItem: 绿藻弹:64
+    requireItem:
+    - 叶绿锭
+    recipeCategory: AMMO_BULLET
   '39':
     requireLevel: 1
     resultItem: 加速弹:144
     requireItem:
     - 火枪子弹:144
     - 珍珠碎片
+    recipeCategory: AMMO_BULLET
+  '42':
+    requireLevel: 1
+    resultItem: 弹球弹:144
+    requireItem:
+    - 陨星弹:144
+    - 珍珠碎片
+    recipeCategory: AMMO_BULLET
+  '44':
+    requireLevel: 2
+    resultItem: 钫弹:96
+    requireItem:
+    - 火枪子弹:96
+    - 寒元锭
+    recipeCategory: AMMO_BULLET
+  '43':
+    requireLevel: 2
+    resultItem: 泰拉弹:144
+    requireItem:
+    - 水晶子弹:96
+    - 生命碎片
     recipeCategory: AMMO_BULLET
   '40':
     requireLevel: 2
@@ -614,27 +635,6 @@ ANVIL:
     requireItem:
     - 火枪子弹:144
     - 生命合金
-    recipeCategory: AMMO_BULLET
-  '42':
-    requireLevel: 1
-    resultItem: 弹球弹:144
-    requireItem:
-    - 陨星弹:144
-    - 珍珠碎片
-    recipeCategory: AMMO_BULLET
-  '43':
-    requireLevel: 2
-    resultItem: 泰拉弹:144
-    requireItem:
-    - 水晶子弹:96
-    - 生命碎片
-    recipeCategory: AMMO_BULLET
-  '44':
-    requireLevel: 2
-    resultItem: 钫弹:96
-    requireItem:
-    - 火枪子弹:96
-    - 寒元锭
     recipeCategory: AMMO_BULLET
   '45':
     requireLevel: 3
@@ -2598,18 +2598,17 @@ ANVIL:
     - 金弓
     - 禁戒碎片
     - 灵气:10
-    recipeCategory: WEAPON_ARROW
   '322':
-    requireLevel: 2
-    resultItem: 洲陆巨弓
-    requireItem:
-    - 熔渣锭:10
-    recipeCategory: WEAPON_ARROW
-  '323':
     requireLevel: 2
     resultItem: 猎人长弓
     requireItem:
     - 灵气:31
+    recipeCategory: WEAPON_ARROW
+  '323':
+    requireLevel: 2
+    resultItem: 洲陆巨弓
+    requireItem:
+    - 熔渣锭:10
     recipeCategory: WEAPON_ARROW
   '324':
     requireLevel: 3
@@ -2930,7 +2929,7 @@ ANVIL:
     - 可疑镀层:20
     - 神秘电路:20
     - 宇宙锭:8
-    - 化神魂精:2
+    - 神圣晶石:16
     recipeCategory: WEAPON_BULLET
   '363':
     requireLevel: 1
@@ -6463,6 +6462,7 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 天堂之风
     requireItem:
+    - 叶流
     - 地核之炎
     - 破城巨弓
     - 发条弓
