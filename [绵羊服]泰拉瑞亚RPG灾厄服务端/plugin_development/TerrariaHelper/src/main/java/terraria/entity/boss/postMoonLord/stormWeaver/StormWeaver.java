@@ -130,7 +130,7 @@ public class StormWeaver extends EntitySlime {
     private void fireProjectile() {
         shootInfoFrostWave.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         for (Vector vel : MathHelper.getEvenlySpacedProjectileDirections(
-                12, 49, target, shootInfoFrostWave.shootLoc, FROST_WAVE_SPEED)) {
+                15, 46, target, shootInfoFrostWave.shootLoc, FROST_WAVE_SPEED)) {
             shootInfoFrostWave.velocity = vel;
             EntityHelper.spawnProjectile(shootInfoFrostWave);
         }

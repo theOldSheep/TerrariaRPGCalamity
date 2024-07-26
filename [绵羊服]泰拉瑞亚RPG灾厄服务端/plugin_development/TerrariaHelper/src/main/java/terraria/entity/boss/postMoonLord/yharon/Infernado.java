@@ -53,7 +53,7 @@ public class Infernado extends EntitySlime {
                 bukkitEntity.setVelocity(new Vector());
             }
             // handle max live time
-            int maxLiveTime = phase2 ? 600 : 400;
+            int maxLiveTime = phase2 ? 400 : 300;
             if (ticksLived > maxLiveTime)
                 die();
         }

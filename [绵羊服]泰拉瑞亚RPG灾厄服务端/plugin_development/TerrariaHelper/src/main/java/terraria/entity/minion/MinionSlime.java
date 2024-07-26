@@ -298,24 +298,19 @@ public class MinionSlime extends EntitySlime {
                 break;
             }
             case "灾坟仆从":
-            case "灾坟仆从体节1":
-            case "灾坟仆从体节2":
+            case "灾坟仆从体节":
             case "灾坟仆从尾": {
                 // for heads only, summon body segments
                 if (minionType.equals("灾坟仆从")) {
                     ArrayList<LivingEntity> segments = new ArrayList<>(11);
                     // add this head
                     segments.add((LivingEntity) bukkitEntity);
-                    // add body (3 pairs of segments)
-                    for (int i = 0; i < 5; i++) {
+                    // add body (10 segments)
+                    for (int i = 0; i < 10; i++) {
                         MinionSlime newSeg1 = new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                                 this.sentryOrMinion, true,
-                                minionType + "体节1", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                                minionType + "体节", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
                         segments.add((LivingEntity) newSeg1.getBukkitEntity());
-                        MinionSlime newSeg2 = new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
-                                this.sentryOrMinion, true,
-                                minionType + "体节2", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
-                        segments.add((LivingEntity) newSeg2.getBukkitEntity());
                     }
                     // add tail
                     MinionSlime tailSeg = new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
@@ -511,7 +506,17 @@ public class MinionSlime extends EntitySlime {
     // basic ticking
     @Override
     public void B_() {
+        float lastYaw = yaw;
         super.B_();
+        // these worm minions should maintain their own facing direction
+        switch (minionType) {
+            case "星尘之龙":
+            case "黑色天龙":
+            case "白色天龙":
+            case "小星宇神卫":
+            case "灾坟仆从":
+                yaw = lastYaw;
+        }
         // update attribute
         if (this.ticksLived <= 1 || this.ticksLived % 10 == 0) {
             MinionHelper.updateAttrMap(this.attrMap, owner, originalStaff);
@@ -529,8 +534,7 @@ public class MinionSlime extends EntitySlime {
             case "黑色天龙尾":
             case "白色天龙体节":
             case "白色天龙尾":
-            case "灾坟仆从体节1":
-            case "灾坟仆从体节2":
+            case "灾坟仆从体节":
             case "灾坟仆从尾":
                 break;
             default:
@@ -1957,7 +1961,7 @@ public class MinionSlime extends EntitySlime {
                 ArrayList<LivingEntity> allSegments = new ArrayList<>(allMinions.size());
                 for (Entity currMinion : allMinions) {
                     if (currMinion.isDead()) continue;
-                    if (!GenericHelper.trimText(currMinion.getName()).equals(minionType)) continue;
+                    if (!currMinion.getName().startsWith(minionType)) continue;
                     if (allSegments.size() == 0 && currMinion != minionBukkit) {
                         isHeadSegment = false;
                         break;
@@ -2050,14 +2054,20 @@ public class MinionSlime extends EntitySlime {
                     }
                     EntityHelper.handleSegmentsFollow(allSegments,
                             new EntityHelper.WormSegmentMovementOptions()
-                                    .setStraighteningMultiplier(-0.75)
+                                    .setStraighteningMultiplier(0)
                                     .setFollowingMultiplier(1)
                                     .setFollowDistance(isStardust ? 0.5 : 1)
                                     .setVelocityOrTeleport(false));
+                    // facing
+                    this.yaw = (float) MathHelper.getVectorYaw(velocity);
+                    for (int i = 1; i < allSegments.size(); i ++) {
+                        ((CraftLivingEntity) allSegments.get(i)).getHandle().yaw =
+                                EntityHelper.getMetadata(allSegments.get(i), "yaw").asFloat();
+                    }
                 }
                 // set display name according to segment info
                 if (isHeadSegment) {
-                    setCustomName(minionType + "§1");
+                    setCustomName(minionType + "头");
                 } else {
                     setCustomName(minionType);
                 }
@@ -2102,6 +2112,12 @@ public class MinionSlime extends EntitySlime {
                                 .setFollowingMultiplier(1)
                                 .setFollowDistance(1)
                                 .setVelocityOrTeleport(false));
+                // facing
+                this.yaw = (float) MathHelper.getVectorYaw(velocity);
+                for (int i = 1; i < allSegments.size(); i ++) {
+                    ((CraftLivingEntity) allSegments.get(i)).getHandle().yaw =
+                            EntityHelper.getMetadata(allSegments.get(i), "yaw").asFloat();
+                }
                 break;
             }
             case "灾坟仆从": {
@@ -2132,6 +2148,12 @@ public class MinionSlime extends EntitySlime {
                                 .setFollowingMultiplier(1)
                                 .setFollowDistance(1.5)
                                 .setVelocityOrTeleport(false));
+                // facing
+                this.yaw = (float) MathHelper.getVectorYaw(velocity);
+                for (int i = 1; i < allSegments.size(); i ++) {
+                    ((CraftLivingEntity) allSegments.get(i)).getHandle().yaw =
+                            EntityHelper.getMetadata(allSegments.get(i), "yaw").asFloat();
+                }
                 break;
             }
             case "幻星探测器": {
