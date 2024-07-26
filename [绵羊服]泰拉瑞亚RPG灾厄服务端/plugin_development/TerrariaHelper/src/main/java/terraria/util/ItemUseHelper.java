@@ -779,8 +779,8 @@ public class ItemUseHelper {
                         damaged = new ArrayList<>();
                         color = particleColors.get((int) (Math.random() * particleColors.size()));
                         if (currentIndex > 0) ply.getWorld().playSound(ply.getLocation(), SOUND_GENERIC_SWING, SoundCategory.PLAYERS, 1f, 1f);
-                        strikeYaw += Math.random() * 30 - 15;
-                        strikePitch += Math.random() * 30 - 15;
+                        strikeYaw += Math.random() * 10 - 5;
+                        strikePitch += Math.random() * 10 - 5;
                     }
                     break;
                 }
@@ -804,7 +804,7 @@ public class ItemUseHelper {
                         strikeLineInfo
                                 .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
                                     // melee invulnerability tick
-                                    int invulnerabilityTicks = 3;
+                                    int invulnerabilityTicks = 4;
                                     EntityHelper.handleEntityTemporaryScoreboardTag(ply,
                                             EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
                                             invulnerabilityTicks);
@@ -947,8 +947,8 @@ public class ItemUseHelper {
                     if (shouldStrike) {
                         Location shootLoc = ply.getEyeLocation().add( ply.getLocation().getDirection().multiply(size) );
 
-                        Vector projVel = getPlayerAimDir(ply, shootLoc, 2.5, "灵魂鬼爪", false, 0);
-                        projVel.normalize().multiply(2.5);
+                        Vector projVel = getPlayerAimDir(ply, shootLoc, 2.75, "灵魂鬼爪", false, 0);
+                        projVel.normalize().multiply(2.75);
 
                         EntityHelper.spawnProjectile(ply, shootLoc, projVel,
                                 attrMap, EntityHelper.DamageType.MELEE, "灵魂鬼爪");
@@ -962,7 +962,7 @@ public class ItemUseHelper {
                         double finalStrikePitch = strikePitch;
                         strikeLineInfo
                                 .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
-                                    EntityHelper.getAttrMap(entityHit).put("damageMeleeMulti", 10.0);
+                                    EntityHelper.getAttrMap(entityHit).put("damageMeleeMulti", 6.0);
                                     EntityHelper.getAttrMap(entityHit).put("crit", 100.0);
                                     Vector projVel = MathHelper.vectorFromYawPitch_approx(finalStrikeYaw, finalStrikePitch);
                                     projVel.multiply(3);
@@ -1631,8 +1631,8 @@ public class ItemUseHelper {
                     }
                     // shoot rainbow instead of normal blade on later swing animation
                     int swingIdx = swingAmount % 32;
-                    if (swingIdx >= 8) {
-                        double interpolateRatio = ( (swingIdx - 8) + ((double) currentIndex / maxIndex) ) / 32.000001d;
+                    if (swingIdx > 8) {
+                        double interpolateRatio = ( (swingIdx - 9) + strikeRatio ) / 24.000001d;
                         ArrayList<Color> rainbowColor = new ArrayList<>();
                         rainbowColor.add(Color.fromRGB(255, 0, 0));
                         rainbowColor.add(Color.fromRGB(255, 255, 0));
@@ -1727,7 +1727,7 @@ public class ItemUseHelper {
         // "swing" or "whip"
         else {
             if (weaponType.equals("天顶剑")) {
-                if (currentIndex % 2 == 0) {
+                if (currentIndex % 3 == 0) {
                     String[] candidateItems = {"泰拉之刃", "彩虹猫之刃", "狂星之怒", "无头骑士剑", "种子弯刀", "铜质短剑"};
                     strikeLineInfo.particleInfo.setSpriteItem(ItemHelper.getRawItem(
                             candidateItems[(int) (Math.random() * candidateItems.length) ]));
@@ -1764,8 +1764,8 @@ public class ItemUseHelper {
                                         Math.random() * 2 - 1,
                                         Math.random() * 2 - 1,
                                         Math.random() * 2 - 1);
-                                Location shootLoc = aimLoc.add(Math.random() * 16 - 8, 25, Math.random() * 16 - 8);
-                                Vector velocity = targetLoc.clone().subtract(shootLoc).toVector().multiply(0.1);
+                                Location shootLoc = aimLoc.clone().add(Math.random() * 16 - 8, 25, Math.random() * 16 - 8);
+                                Vector velocity = targetLoc.subtract(shootLoc).toVector().multiply(0.1);
                                 EntityHelper.spawnProjectile(ply, shootLoc, velocity, attrMap,
                                         EntityHelper.DamageType.MELEE, "狂星之怒");
                             }
@@ -1776,14 +1776,12 @@ public class ItemUseHelper {
                     case "誓约与禁忌之刃":
                     case "炼狱":
                     case "地狱龙锋":
-                    case "绝对零度":
                     case "庇护之刃": {
                         double explodeRad;
                         double explodeRate;
                         int explodeDuration, explodeDelay;
                         switch (weaponType) {
                             case "高斯短匕":
-                            case "绝对零度":
                                 explodeRad = 1.25;
                                 explodeRate = 1;
                                 explodeDuration = 1;
@@ -1805,9 +1803,9 @@ public class ItemUseHelper {
                                 explodeDelay = 5;
                                 break;
                             case "庇护之刃":
-                                explodeRad = 1.5;
+                                explodeRad = 1.75;
                                 explodeRate = 1;
-                                explodeDuration = 24;
+                                explodeDuration = 1;
                                 explodeDelay = 5;
                                 break;
                             default:
@@ -1846,12 +1844,12 @@ public class ItemUseHelper {
                     case "死神擢升": {
                         if (currentIndex == 0) {
                             HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
-                            projAttrMap.put("damage", projAttrMap.get("damage") * 0.125);
+                            projAttrMap.put("damage", projAttrMap.get("damage") * 0.5);
                             for (int i = 0; i < 4; i++) {
                                 Vector projVel = MathHelper.vectorFromYawPitch_approx(
-                                        plyYaw + Math.random() * 60 - 30,
-                                        plyPitch + Math.random() * 60 - 30);
-                                projVel.multiply(2.5);
+                                        plyYaw + Math.random() * 10 - 50,
+                                        plyPitch + Math.random() * 10 - 50);
+                                projVel.multiply(2.75);
                                 EntityHelper.spawnProjectile(ply, projVel, projAttrMap,
                                         EntityHelper.DamageType.MELEE, "死神擢升镰刀");
                             }
@@ -1872,14 +1870,9 @@ public class ItemUseHelper {
                         pitchMax = plyPitch;
                         // projectile
                         if (currentIndex == 0) {
-                            // deal 25% of weapon dmg (15% in calamity mod)
-                            HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
-                            projAttrMap.put("damage", projAttrMap.get("damage") * 0.25);
-
-
                             Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), 3, "热熔光刃", false, 0);
                             projVel.normalize().multiply(3);
-                            EntityHelper.spawnProjectile(ply, projVel, projAttrMap,
+                            EntityHelper.spawnProjectile(ply, projVel, attrMap,
                                     EntityHelper.DamageType.MELEE, "热熔光刃");
                         }
                         break;
@@ -1924,7 +1917,7 @@ public class ItemUseHelper {
                             shouldShoot = true;
                         if (shouldShoot) {
                             HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
-                            projAttrMap.put("damage", 800d);
+                            projAttrMap.put("damage", projAttrMap.getOrDefault("damage", 2000d) * 0.35);
                             // projectile
                             Vector projVel = MathHelper.randomVector();
                             projVel.multiply(3);
@@ -1947,13 +1940,15 @@ public class ItemUseHelper {
                         strikeRadius = 1;
                         // on-hit projectiles
                         HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
-                        projAttrMap.put("damage", 800d);
-                        strikeLineInfo.setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
+                        projAttrMap.put("damage", projAttrMap.getOrDefault("damage", 2000d) * 0.35);
+                        strikeLineInfo
+                                .setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
                             Vector projVel = MathHelper.randomVector();
                             projVel.multiply(2.5);
                             EntityHelper.spawnProjectile(ply, hitLoc, projVel, projAttrMap,
                                     EntityHelper.DamageType.MELEE, "银河之雷");
-                        });
+                        })
+                                .setDamageCD(5);
                         // passive projectile
                         if (currentIndex == 0) {
                             HashMap<String, Double> passiveProjAttrMap = (HashMap<String, Double>) attrMap.clone();
@@ -2019,7 +2014,7 @@ public class ItemUseHelper {
                     case "雄伟之护": {
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
                             if (EntityHelper.hasEffect(hitEntity, "碎甲"))
-                                PlayerHelper.heal(ply, 6);
+                                PlayerHelper.heal(ply, 2);
                             else
                                 EntityHelper.applyEffect(hitEntity, "碎甲", 50);
                         });
@@ -2102,7 +2097,7 @@ public class ItemUseHelper {
                             EntityHelper.handleEntityExplode(ply, 2.5, new ArrayList<>(), hitLoc);
 
                             if (EntityHelper.hasEffect(hitEntity, "碎甲"))
-                                PlayerHelper.heal(ply, 8);
+                                PlayerHelper.heal(ply, 5);
                             else
                                 EntityHelper.applyEffect(hitEntity, "碎甲", 50);
 
@@ -2136,7 +2131,7 @@ public class ItemUseHelper {
                                 HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
                                 projAttrMap.put("damage", projAttrMap.get("damage") * damageMulti);
                                 Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), 1.5, projectileType, false, 0);
-                                projVel.add(MathHelper.randomVector().multiply( projVel.length() * 0.1 ) );
+                                projVel.add(MathHelper.randomVector().multiply( projVel.length() * 0.02 ) );
                                 projVel.normalize().multiply(1.5);
                                 EntityHelper.spawnProjectile(ply, projVel,
                                         projAttrMap, EntityHelper.DamageType.MELEE, projectileType);
@@ -2185,7 +2180,7 @@ public class ItemUseHelper {
                             projPitch -= 15;
                             for (int i = 0; i < 3; i ++) {
                                 Vector projVel = MathHelper.vectorFromYawPitch_approx(plyYaw, projPitch);
-                                projVel.multiply(2.25);
+                                projVel.multiply(3.5);
                                 EntityHelper.spawnProjectile(ply,
                                         projVel, attrMap,
                                         EntityHelper.DamageType.MELEE, "禁忌镰刀");
@@ -2208,7 +2203,7 @@ public class ItemUseHelper {
                                 .setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
                                     if (! ply.getScoreboardTags().contains("temp_sharknado")) {
                                         EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                                "temp_sharknado", 100);
+                                                "temp_sharknado", 25);
                                         HashMap<String, Double> tornadoAttrMap = (HashMap<String, Double>) attrMap.clone();
                                         tornadoAttrMap.put("damage", tornadoAttrMap.get("damage") * 0.5);
                                         new PlayerTornado(
@@ -2223,7 +2218,7 @@ public class ItemUseHelper {
                         if (currentIndex == 0) {
                             for (int i = 0; i < 5; i ++) {
                                 HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
-                                projAttrMap.put("damage", projAttrMap.get("damage") * (0.3 + Math.random() * 0.4) );
+                                projAttrMap.put("damage", projAttrMap.get("damage") * (0.5 + Math.random() * 0.3) );
                                 Vector projVel = MathHelper.vectorFromYawPitch_approx(
                                         plyYaw + Math.random() * 10 - 5, plyPitch + Math.random() * 10 - 5);
                                 projVel.multiply(2.25);
@@ -2287,9 +2282,10 @@ public class ItemUseHelper {
                     case "圣火之刃": {
                         strikeLineInfo.setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
                             HashMap<String, Double> projAttrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(ply).clone();
-                            projAttrMap.put("damage", projAttrMap.get("damage") * 0.3);
-                            for (int i = 0; i < 8; i ++) {
-                                Vector projVel = MathHelper.vectorFromYawPitch_approx(45 * i, 0);
+                            projAttrMap.put("damage", projAttrMap.get("damage") * 0.5);
+                            double startYaw = Math.random() * 360;
+                            for (int i = 0; i < 4; i ++) {
+                                Vector projVel = MathHelper.vectorFromYawPitch_approx(startYaw + 90 * i, 0);
                                 projVel.multiply(1.5);
                                 EntityHelper.spawnProjectile(ply, hitLoc, projVel, projAttrMap,
                                         EntityHelper.DamageType.MELEE,"神圣之火");
@@ -2392,7 +2388,7 @@ public class ItemUseHelper {
                     }
                     case "狮心圣裁": {
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
-                            EntityHelper.applyEffect(ply, "狮心圣裁能量外壳", 100);
+                            EntityHelper.applyEffect(ply, "狮心圣裁能量外壳", 200);
                         });
                         break;
                     }
@@ -2400,7 +2396,7 @@ public class ItemUseHelper {
                         if (currentIndex == 0) {
                             for (int i = 0; i < 3; i ++) {
                                 Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), 2, "宙魔之纹", false, 0);
-                                projVel.add( MathHelper.randomVector().multiply(projVel.length() * 0.175) );
+                                projVel.add( MathHelper.randomVector().multiply(projVel.length() * 0.1) );
                                 projVel.normalize().multiply(2.25);
                                 EntityHelper.spawnProjectile(ply, projVel,
                                         attrMap, EntityHelper.DamageType.MELEE, "宙魔之纹");
@@ -2469,8 +2465,8 @@ public class ItemUseHelper {
                                     });
                             }
                             // charge up
-                            int charge = getDurability(weaponItem, 100);
-                            if (charge++ >= 100) {
+                            int charge = getDurability(weaponItem, 50);
+                            if (charge++ >= 50) {
                                 charge = 0;
                                 for (int i = 0; i < 20; i ++) {
                                     projVel = MathHelper.vectorFromYawPitch_approx(
@@ -2480,7 +2476,7 @@ public class ItemUseHelper {
                                             attrMap, EntityHelper.DamageType.MELEE, "跟踪血骷髅");
                                 }
                             }
-                            setDurability(weaponItem, 100, charge);
+                            setDurability(weaponItem, 50, charge);
                         }
                         break;
                     }
@@ -2513,7 +2509,7 @@ public class ItemUseHelper {
                                 .setAimMode(true).setTicksTotal(10);
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
                             // heal
-                            PlayerHelper.heal(ply, (int) (Math.random() * 50));
+                            PlayerHelper.heal(ply, (int) (Math.random() * 10));
                             // spawn projectiles
                             Location aimLoc = EntityHelper.helperAimEntity(ply, hitEntity, aimHelper);
                             Location spawnLoc = aimLoc.clone().add(
@@ -2551,11 +2547,11 @@ public class ItemUseHelper {
                             break;
                         }
                         case "炼狱": {
-                            if ( i == (int) (loopTimes * 0.15) ||
-                                    i == (int) (loopTimes * 0.3) ||
+                            if ( i == (int) (loopTimes * 0.3) ||
+                                    i == (int) (loopTimes * 0.375) ||
                                     i == (int) (loopTimes * 0.45) ||
-                                    i == (int) (loopTimes * 0.6) ||
-                                    i == (int) (loopTimes * 0.75)) {
+                                    i == (int) (loopTimes * 0.525) ||
+                                    i == (int) (loopTimes * 0.6)) {
                                 offsetDir.multiply(1.35);
                                 HashMap<String, Double> attrMapProj = (HashMap<String, Double>) attrMap.clone();
                                 attrMapProj.put("damage", attrMapProj.get("damage") * 0.4);
@@ -2565,11 +2561,11 @@ public class ItemUseHelper {
                             break;
                         }
                         case "斩首者": {
-                            if ( i == (int) (loopTimes * 0.15) ||
-                                    i == (int) (loopTimes * 0.3) ||
+                            if ( i == (int) (loopTimes * 0.3) ||
+                                    i == (int) (loopTimes * 0.375) ||
                                     i == (int) (loopTimes * 0.45) ||
-                                    i == (int) (loopTimes * 0.6) ||
-                                    i == (int) (loopTimes * 0.75)) {
+                                    i == (int) (loopTimes * 0.525) ||
+                                    i == (int) (loopTimes * 0.6)) {
                                 offsetDir.multiply(1.45);
                                 HashMap<String, Double> attrMapProj = (HashMap<String, Double>) attrMap.clone();
                                 attrMapProj.put("damage", attrMapProj.get("damage") * 0.35);
@@ -3014,12 +3010,12 @@ public class ItemUseHelper {
                 }
                 for (int i = 0; i < shootAmount; i ++) {
                     Projectile spawnedProjectile;
+                    Vector offsetV = MathHelper.vectorFromYawPitch_approx(yaw, pitch);
+                    offsetV.multiply(size);
+                    Location shootLoc = ply.getEyeLocation().add(offsetV);
                     if (stabOrSwing) {
-                        Vector offsetV = MathHelper.vectorFromYawPitch_approx(yaw, pitch);
-                        offsetV.multiply(size);
-                        Location shootLoc = ply.getEyeLocation().add(offsetV);
                         Vector projVel = getPlayerAimDir(ply, shootLoc, projectileSpeed, projectileType, false, 0);
-                        projVel.normalize().multiply( projectileSpeed );
+                        MathHelper.setVectorLength( projVel, projectileSpeed );
                         spawnedProjectile = EntityHelper.spawnProjectile(ply, shootLoc,
                                 projVel, attrMapProjectile, EntityHelper.DamageType.MELEE, projectileType);
                     } else {
@@ -3031,10 +3027,10 @@ public class ItemUseHelper {
                                 projVel.multiply( projectileSpeed );
                                 break;
                             default:
-                                projVel = getPlayerAimDir(ply, ply.getEyeLocation(), projectileSpeed, projectileType, false, 0);
-                                projVel.normalize().multiply( projectileSpeed );
+                                projVel = getPlayerAimDir(ply, shootLoc, projectileSpeed, projectileType, false, 0);
+                                MathHelper.setVectorLength( projVel, projectileSpeed );
                         }
-                        spawnedProjectile = EntityHelper.spawnProjectile(ply, ply.getEyeLocation(),
+                        spawnedProjectile = EntityHelper.spawnProjectile(ply, shootLoc,
                                 projVel, attrMapProjectile, EntityHelper.DamageType.MELEE, projectileType);
                     }
                     if (itemType.equals("钨钢螺丝刀")) {
@@ -5269,6 +5265,14 @@ public class ItemUseHelper {
                             attrMap.put("damageMulti", attrMap.getOrDefault("damageMulti", 1d) * dmgRatioConverted);
                         }
                     }
+                }
+                // "music instrument" weapons
+                String musicInstrumentSound = weaponSection.getString("instrumentSound");
+                if (musicInstrumentSound != null) {
+                    double pitch = MathHelper.getVectorPitch(ply.getLocation().getDirection());
+                    int note = (int) -Math.round(pitch * 24 / 180);
+                    ply.getWorld().playSound(ply.getLocation(), musicInstrumentSound, SoundCategory.PLAYERS,
+                            3f, (float) Math.pow(2, note / 12d));
                 }
                 // use weapon
                 String weaponType = weaponSection.getString("type", "");

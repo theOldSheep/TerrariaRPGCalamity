@@ -122,14 +122,17 @@ public class Flail extends GenericProjectile {
                     spinning = false;
                     super.blockHitAction = "stick";
                     // update velocity
-                    Vector newVelocity = ItemUseHelper.getPlayerAimDir(owner, owner.getEyeLocation(),
-                            speed, projectileType, false, 0);
+                    EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions(projectileType)
+                            .setProjectileSpeed(speed)
+                            .setProjectileGravity(gravity);
+                    Vector newVelocity = MathHelper.getDirection(owner.getEyeLocation(),
+                            ItemUseHelper.getPlayerTargetLoc(owner, aimHelper, true), speed);
                     newVelocity.normalize();
                     newVelocity.multiply(speed);
                     bukkitEntity.setVelocity(newVelocity);
                     switch (projectileType) {
                         case "海胆链枷": {
-                            if (ticksLived > 40) {
+                            if (ticksLived > 20) {
                                 newVelocity.multiply(1.5);
                                 EntityHelper.spawnProjectile(owner, newVelocity, attrMap, "涡流");
                             }

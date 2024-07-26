@@ -8,9 +8,6 @@
   size: 5
   particleColor:
   - 255|255|75
-木剑:
-  type: SWING
-  size: 2.2
 仙人掌镐:
   type: SWING
   size: 2.5
@@ -65,6 +62,14 @@
 繁花镐:
   type: SWING
   size: 7.5
+木剑:
+  type: SWING
+  size: 2.2
+仙人掌剑:
+  type: SWING
+  size: 2.7
+  particleColor:
+  - 0|150|0
 铜质短剑:
   type: STAB
   size: 1.7
@@ -75,8 +80,6 @@
   size: 2.3
   particleColor:
   - 255|155|100
-铜质短弓:
-  type: BOW
 铁短剑:
   type: STAB
   size: 1.7
@@ -99,27 +102,6 @@
   size: 2.4
   particleColor:
   - 150|150|0
-仙人掌剑:
-  type: SWING
-  size: 2.7
-  particleColor:
-  - 0|150|0
-光之驱逐:
-  type: SWING
-  size: 2.4
-  particleColor:
-  - 80|0|150
-妖刀村正:
-  type: SWING
-  autoSwing: true
-  size: 3.6
-  particleColor:
-  - 0|0|175
-陨星光剑:
-  type: SWING
-  size: 3.6
-  particleColor:
-  - 255|255|0
 紫挥棒鱼:
   type: SWING
   autoSwing: true
@@ -131,8 +113,27 @@
   size: 3.7
   particleColor:
   - 0|150|0
+光之驱逐:
+  type: SWING
+  autoSwing: true
+  size: 2.4
+  particleColor:
+  - 80|0|150
+妖刀村正:
+  type: SWING
+  autoSwing: true
+  size: 3.6
+  particleColor:
+  - 0|0|175
+陨星光剑:
+  type: SWING
+  autoSwing: true
+  size: 3.6
+  particleColor:
+  - 255|255|0
 烈焰剑:
   type: SWING
+  autoSwing: true
   size: 4
   particleColor:
   - 255|150|0
@@ -147,6 +148,7 @@
   size: 4
 毁灭刃:
   type: SWING
+  autoSwing: true
   size: 7
 钴剑:
   type: SWING
@@ -175,7 +177,6 @@
   autoSwing: true
   size: 6
   projectileInfo:
-    interval: 2
     velocity: 3
     noGravity: true
     name: 泰拉光束
@@ -203,7 +204,7 @@
 叶绿军刀:
   type: SWING
   autoSwing: true
-  size: 4.5
+  size: 4
   particleColor:
   - 91|217|74
   projectileInfo:
@@ -215,7 +216,7 @@
 叶绿双刃刀:
   type: SWING
   autoSwing: true
-  size: 6.5
+  size: 8.5
   particleColor:
   - 91|217|74
   projectileInfo:
@@ -236,17 +237,18 @@
 吉他斧:
   type: SWING
   autoSwing: true
-  size: 8
+  size: 7.5
   particleColor:
   - 225|35|64
+  instrumentSound: item.guitar
 钥匙剑:
   type: SWING
   autoSwing: true
-  size: 5
+  size: 8
 死神镰刀:
   type: SWING
   autoSwing: true
-  size: 5
+  size: 4.5
   projectileInfo:
     interval: 1
     velocity: 1.25
@@ -254,7 +256,7 @@
 圣诞树剑:
   type: SWING
   autoSwing: true
-  size: 6
+  size: 5.5
   projectileInfo:
     interval: 1
     velocity: 2
@@ -279,7 +281,7 @@
 彩虹猫之刃:
   type: SWING
   autoSwing: true
-  size: 6
+  size: 4
   projectileInfo:
     interval: 1
     velocity: 2.25
@@ -290,6 +292,9 @@
   type: SWING
   autoSwing: true
   size: 24
+  attributes:
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
   particleColor:
   - 100|255|150
   - 255|155|255
@@ -304,7 +309,7 @@
 海耀之刃:
   type: SWING
   autoSwing: true
-  size: 3
+  size: 2
   projectileInfo:
     interval: 1
     velocity: 1.75
@@ -336,7 +341,7 @@
 风之刃:
   type: SWING
   autoSwing: true
-  size: 3.75
+  size: 3.25
   projectileInfo:
     interval: 1
     velocity: 1.5
@@ -348,7 +353,7 @@
 凝胶波刃:
   type: SWING
   autoSwing: true
-  size: 4
+  size: 3
   projectileInfo:
     interval: 1
     velocity: 2
@@ -360,11 +365,11 @@
 纯净之斧:
   type: SWING
   autoSwing: true
-  size: 4
+  size: 5
 天神之剑:
   type: SWING
   autoSwing: true
-  size: 6
+  size: 4.5
 遗忘之刃:
   type: SWING
   autoSwing: true
@@ -392,7 +397,7 @@
 雪崩:
   type: SWING
   autoSwing: true
-  size: 7
+  size: 5.5
   projectileInfo:
     interval: 1
     velocity: 1
@@ -408,7 +413,7 @@
 炎霜之刃:
   type: SWING
   autoSwing: true
-  size: 5
+  size: 3
   projectileInfo:
     interval: 1
     velocity: 2.06
@@ -440,7 +445,7 @@
 誓约与禁忌之刃:
   type: SWING
   autoSwing: true
-  size: 10
+  size: 4
   projectileInfo:
     interval: 1
     velocity: 2.5
@@ -452,7 +457,7 @@
 硫火鞭:
   type: SWING
   autoSwing: true
-  size: 6
+  size: 4
   projectileInfo:
     interval: 1
     velocity: 2
@@ -472,27 +477,19 @@
 深渊之刃:
   type: SWING
   autoSwing: true
-  size: 6.5
+  size: 4.5
   projectileInfo:
     interval: 1
     velocity: 2
     name: 深渊三叉戟
-风暴管束者:
-  type: SWING
-  autoSwing: true
-  size: 9
-  projectileInfo:
-    interval: 1
-    velocity: 1.5
-    name: 风暴管束者剑气
 彗星陨刃:
   type: SWING
   autoSwing: true
-  size: 6.5
+  size: 8.5
 荆棘长刃:
   type: SWING
   autoSwing: true
-  size: 6.5
+  size: 7.25
 地狱龙锋:
   type: SWING
   autoSwing: true
@@ -500,15 +497,11 @@
 绝对零度:
   type: SWING
   autoSwing: true
-  size: 5.5
+  size: 4.5
   projectileInfo:
     interval: 1
     velocity: 2
     name: 暗影冰晶
-大守卫者:
-  type: SWING
-  autoSwing: true
-  size: 10.5
 翡翠之潮:
   type: SWING
   autoSwing: true
@@ -516,7 +509,7 @@
 庇护之刃:
   type: SWING
   autoSwing: true
-  size: 7.5
+  size: 9
 庇护之刃_RIGHT_CLICK:
   type: SWING
   autoSwing: true
@@ -544,11 +537,11 @@
 崇高誓约之剑:
   type: SWING
   autoSwing: true
-  size: 9
+  size: 6
 瘟疫毒刃:
   type: SWING
   autoSwing: true
-  size: 5
+  size: 3.5
   projectileInfo:
     interval: 1
     velocity: 3.5
@@ -560,9 +553,9 @@
 海爵剑_RIGHT_CLICK:
   type: SWING
   autoSwing: true
-  size: 5
+  size: 3.75
   attributes:
-    damage: 125
+    damage: 225
   projectileInfo:
     interval: 1
     velocity: 2
@@ -570,11 +563,11 @@
 斩首者:
   type: SWING
   autoSwing: true
-  size: 8
+  size: 4
 熵阔剑:
   type: SWING
   autoSwing: true
-  size: 10
+  size: 7.5
 邪恶收割者:
   type: SWING
   autoSwing: true
@@ -583,10 +576,22 @@
     interval: 1
     velocity: 2.25
     name: 燃烧头骨
+风暴管束者:
+  type: SWING
+  autoSwing: true
+  size: 4.5
+  projectileInfo:
+    interval: 1
+    velocity: 1.5
+    name: 风暴管束者剑气
+大守卫者:
+  type: SWING
+  autoSwing: true
+  size: 10.5
 破坏重剑:
   type: SWING
   autoSwing: true
-  size: 6
+  size: 5
   projectileInfo:
     interval: 1
     velocity: 3
@@ -602,7 +607,7 @@
 瘟疫大剑:
   type: SWING
   autoSwing: true
-  size: 6
+  size: 5.25
   projectileInfo:
     interval: 1
     velocity: 1.85
@@ -618,7 +623,7 @@
 爆破剑:
   type: SWING
   autoSwing: true
-  size: 7.5
+  size: 5
 圣火之刃:
   type: SWING
   autoSwing: true
@@ -626,7 +631,7 @@
 星河之刃:
   type: SWING
   autoSwing: true
-  size: 6
+  size: 5.5
 格拉克斯:
   type: SWING
   autoSwing: true
@@ -642,7 +647,7 @@
 不洁巨剑:
   type: SWING
   autoSwing: true
-  size: 10
+  size: 6
 泰拉阔剑:
   type: SWING
   autoSwing: true
@@ -655,11 +660,11 @@
 镜之刃:
   type: SWING
   autoSwing: true
-  size: 6
+  size: 9.5
 末晓之殇:
   type: SWING
   autoSwing: true
-  size: 12
+  size: 6
   projectileInfo:
     interval: 1
     velocity: 3
@@ -671,7 +676,7 @@
 海神之馈赠:
   type: SWING
   autoSwing: true
-  size: 11.5
+  size: 5
   projectileInfo:
     interval: 1
     velocity: 3
@@ -679,10 +684,10 @@
 灵魂之锋:
   type: SWING
   autoSwing: true
-  size: 12
+  size: 5
   projectileInfo:
     interval: 1
-    velocity: 2.5
+    velocity: 3.5
     name: 惧魂
 惊惧魂刃:
   type: SWING
@@ -703,15 +708,15 @@
 精元劫掠者:
   type: SWING
   autoSwing: true
-  size: 7
+  size: 5.5
   projectileInfo:
     interval: 1
-    velocity: 2.5
+    velocity: 3
     name: 精元镰刀
 破灭魔王剑:
   type: SWING
   autoSwing: true
-  size: 11
+  size: 8.5
 携序之剑:
   type: SWING
   autoSwing: true
@@ -727,15 +732,16 @@
 光棱破碎者_RIGHT_CLICK:
   type: SWING
   autoSwing: true
-  size: 5
+  size: 2
   projectileInfo:
+    useTime: 2
     interval: 1
     velocity: 3
     name: 虹光剑气
 禅心剑:
   type: SWING
   autoSwing: true
-  size: 8.5
+  size: 7
 盖尔大剑:
   type: SWING
   autoSwing: true
@@ -757,9 +763,7 @@
 绚辉圣剑:
   type: SWING
   autoSwing: true
-  size: 11.5
-  attributes:
-    damage: 2000
+  size: 5
   projectileInfo:
     interval: 1
     velocity: 3
@@ -768,8 +772,6 @@
   type: SWING
   autoSwing: true
   size: 12.5
-  attributes:
-    damage: 4000
 钴薙刀:
   type: STAB
   size: 6
@@ -819,7 +821,10 @@
 星光:
   type: STAB
   autoSwing: true
-  size: 5.5
+  size: 7
+  attributes:
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
   particleColor:
   - 255|0|0
   - 255|127|0
@@ -852,13 +857,13 @@
   autoSwing: true
   size: 6
   projectileInfo:
-    velocity: 2.5
+    velocity: 2.75
     name: 伽利略新月
 宇宙短剑:
   type: STAB
   autoSwing: true
   projectileInfo:
-    velocity: 2.5
+    velocity: 3
     name: 宇宙之刃
   size: 5
 赤潮矛:
@@ -886,15 +891,15 @@
   canRotate: true
   autoSwing: true
   attributes:
-    damage: 60
-    useTime: 22
+    damage: 30
+    useTime: 7
 绽花毒藤_RIGHT_CLICK:
   type: STAB
   size: 3.5
   autoSwing: true
   attributes:
-    damage: 44
-    useTime: 30
+    damage: 90
+    useTime: 20
 星夜长枪:
   type: STAB
   autoSwing: true
@@ -950,11 +955,11 @@
 女妖之爪:
   type: STAB
   autoSwing: true
-  size: 6.5
+  size: 5
 阴险穿刺者:
   type: STAB
   autoSwing: true
-  size: 7
+  size: 3
   projectileInfo:
     velocity: 4
     name: 阴险穿刺者鱼叉
@@ -981,8 +986,8 @@
   type: STAB
   autoSwing: false
   attributes:
-    damage: 35
-    armorPenetration: 40
+    damage: 40
+    armorPenetration: 30
     useTime: 45
   size: 7.5
 残缺环境刃[澄澈之纯净]:
@@ -1131,14 +1136,17 @@
 死神擢升:
   type: SWING
   autoSwing: true
-  size: 8
+  size: 4
 相位剑:
   type: SWING
   autoSwing: true
-  size: 15
+  size: 8
 宇宙暗流:
   type: SWING
   autoSwing: true
+  attributes:
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
   size: 6
 银河[凤凰之耀]:
   type: SWING
@@ -1180,6 +1188,10 @@
 焚灭天惩:
   type: STAB
   autoSwing: true
+  attributes:
+    useSpeedMulti: 1
+    useSpeedMeleeMulti: 1
+  useSound: item.genericMeteorStaff
   size: 5
 鸿蒙方舟:
   type: SWING
@@ -1203,6 +1215,8 @@
   autoSwing: true
   size: 8.5
 木弓:
+  type: BOW
+铜质短弓:
   type: BOW
 钨钢弓:
   type: BOW
@@ -3375,7 +3389,7 @@ Dodu的手炮:
   projectileName: 高音谱号
   offSet: 10
   autoSwing: true
-  useSound: item.harp
+  instrumentSound: item.harp
 鬼之形:
   type: MAGIC_PROJECTILE
   projectileName: 鬼魂能量球

@@ -553,6 +553,10 @@
   item: CLAY_BALL
   worth: 800000
   rarity: 7
+断裂英雄剑:
+  item: DIAMOND_SWORD
+  worth: 7500000
+  rarity: 8
 瘟疫细胞罐:
   item: CLAY_BALL
   worth: 1000000
@@ -1195,8 +1199,7 @@
 小动物友谊指南:
   item: LEASH
   lore:
-  - §r[饰品]
-  - §r避免误伤小动物
+  - §r在背包中时，避免误伤小动物
   worth: 1000000
   rarity: 0
 大自然的恩赐:
@@ -2218,6 +2221,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作特殊魔力装置
   - §r高于50%总魔力时，减少6点生命恢复速度
   - §r造成魔法伤害时触发治疗效果
   - §r伤害越高治疗效果越强；魔力越少治疗效果越弱
@@ -2248,8 +2252,9 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作特殊魔力装置
   - §r手持魔法武器时对敌人造成魔法伤害则触发以下效果：
-  - §r尝试额外消耗2点魔力，若成功则使本次暴击前伤害增加72点
+  - §r尝试额外消耗2点魔力，若成功则使本次暴击前伤害增加100点
   attributes:
     regen: -10
     maxMana: 60
@@ -2273,12 +2278,13 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作特殊魔力装置
   - §r使用魔力药水时获得魔力熔蚀而非魔力疾病
   - §r魔力熔蚀在对玩家造成伤害的同时提供额外魔力恢复
   - §r手持魔法武器时对敌人造成魔法伤害则触发以下效果：
   - §r尝试额外消耗当前魔力的3.5%（至少为5）
-  - §r若成功，则将本次暴击前伤害提升额外魔力损耗的40倍
-  - §r实际损毁的魔力值将基于魔力熔蚀效果剩余时长减少至多80%（伤害提升不变）
+  - §r若成功，则将本次暴击前伤害提升额外魔力损耗的25倍
+  - §r实际损毁的魔力值将基于魔力熔蚀效果剩余时长减少至多100%（伤害提升不变）
   - §r“……目光呆滞……”
   attributes:
     maxMana: 80
@@ -3013,6 +3019,9 @@ Drew之翼:
   rarity: 0
 铜镐:
   item: IRON_PICKAXE
+  lore:
+  - §r左键点击可切换持续挖掘
+  - §r右键点击可进行单次挖掘
   attributes:
     damage: 4
     damageType: Melee
@@ -3192,7 +3201,7 @@ Drew之翼:
 木剑:
   item: WOOD_SWORD
   attributes:
-    damage: 14
+    damage: 16
     damageType: Melee
     crit: 4
     knockback: 4
@@ -3202,7 +3211,7 @@ Drew之翼:
 仙人掌剑:
   item: WOOD_SWORD
   attributes:
-    damage: 16
+    damage: 22
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3212,7 +3221,7 @@ Drew之翼:
 铜质短剑:
   item: IRON_SWORD
   attributes:
-    damage: 10
+    damage: 15
     damageType: Melee
     crit: 4
     knockback: 4
@@ -3222,7 +3231,7 @@ Drew之翼:
 铜质阔剑:
   item: IRON_SWORD
   attributes:
-    damage: 15
+    damage: 17
     damageType: Melee
     crit: 4
     knockback: 4
@@ -3232,7 +3241,7 @@ Drew之翼:
 铁短剑:
   item: STONE_SWORD
   attributes:
-    damage: 16
+    damage: 17
     damageType: Melee
     crit: 4
     knockback: 4
@@ -3244,7 +3253,7 @@ Drew之翼:
   lore:
   - §r“使用时并不需要高速旋转”
   attributes:
-    damage: 20
+    damage: 19
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3254,7 +3263,7 @@ Drew之翼:
 银短剑:
   item: IRON_SWORD
   attributes:
-    damage: 17
+    damage: 20
     damageType: Melee
     crit: 4
     knockback: 4
@@ -3264,7 +3273,7 @@ Drew之翼:
 银阔剑:
   item: IRON_SWORD
   attributes:
-    damage: 22
+    damage: 20
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3274,23 +3283,43 @@ Drew之翼:
 金短剑:
   item: GOLD_SWORD
   attributes:
-    damage: 24
+    damage: 23
     damageType: Melee
     crit: 4
     knockback: 5
     useTime: 13
   worth: 140000
-  rarity: 0
+  rarity: 1
 金阔剑:
   item: GOLD_SWORD
   attributes:
-    damage: 28
+    damage: 24
     damageType: Melee
     crit: 4
     knockback: 5
     useTime: 16
   worth: 180000
-  rarity: 0
+  rarity: 1
+紫挥棒鱼:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 35
+    damageType: Melee
+    crit: 4
+    knockback: 5.5
+    useTime: 32
+  worth: 1000000
+  rarity: 1
+草薙剑:
+  item: WOOD_SWORD
+  attributes:
+    damage: 28
+    damageType: Melee
+    crit: 4
+    knockback: 3.5
+    useTime: 23
+  worth: 540000
+  rarity: 1
 光之驱逐:
   item: DIAMOND_SWORD
   attributes:
@@ -3301,60 +3330,40 @@ Drew之翼:
     useTime: 16
   worth: 270000
   rarity: 1
-妖刀村正:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 38
-    damageType: Melee
-    crit: 4
-    knockback: 3.5
-    useTime: 16
-  worth: 1750000
-  rarity: 2
 陨星光剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 38
+    damage: 28
     damageType: Melee
     crit: 4
     knockback: 3.5
     useTime: 19
   worth: 540000
-  rarity: 1
-紫挥棒鱼:
-  item: DIAMOND_SWORD
-  attributes:
-    damage: 48
-    damageType: Melee
-    crit: 4
-    knockback: 5.5
-    useTime: 32
-  worth: 1000000
-  rarity: 1
-草薙剑:
-  item: WOOD_SWORD
-  attributes:
-    damage: 42
-    damageType: Melee
-    crit: 4
-    knockback: 3.5
-    useTime: 23
-  worth: 540000
   rarity: 3
 烈焰剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 72
+    damage: 67
     damageType: Melee
     crit: 4
     knockback: 5.5
     useTime: 23
   worth: 540000
   rarity: 3
+妖刀村正:
+  item: DIAMOND_SWORD
+  attributes:
+    damage: 49
+    damageType: Melee
+    crit: 4
+    knockback: 3.5
+    useTime: 16
+  worth: 1750000
+  rarity: 3
 永夜之刃:
   item: DIAMOND_SWORD
   attributes:
-    damage: 87
+    damage: 78
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3364,7 +3373,7 @@ Drew之翼:
 翡翠斧:
   item: DIAMOND_SWORD
   attributes:
-    damage: 36
+    damage: 26
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3376,7 +3385,7 @@ Drew之翼:
   lore:
   - §r发射水刃剑气
   attributes:
-    damage: 52
+    damage: 39
     damageType: Melee
     crit: 4
     knockback: 2
@@ -3386,7 +3395,7 @@ Drew之翼:
 泪刃:
   item: DIAMOND_SWORD
   attributes:
-    damage: 90
+    damage: 44
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -3396,7 +3405,7 @@ Drew之翼:
 真菌爪:
   item: DIAMOND_SWORD
   attributes:
-    damage: 56
+    damage: 24
     damageType: Melee
     crit: 4
     knockback: 3.75
@@ -3406,7 +3415,7 @@ Drew之翼:
 绝望之刃:
   item: DIAMOND_SWORD
   attributes:
-    damage: 120
+    damage: 75
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3417,7 +3426,7 @@ Drew之翼:
 灼炎弯刀:
   item: DIAMOND_SWORD
   attributes:
-    damage: 30
+    damage: 25
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -3429,7 +3438,7 @@ Drew之翼:
   lore:
   - §r发射恶毒球体，黏附于物块并爆炸
   attributes:
-    damage: 48
+    damage: 68
     damageType: Melee
     crit: 4
     knockback: 4.25
@@ -3442,7 +3451,7 @@ Drew之翼:
   - §r发射会将敌怪吸入的旋风
   - §r“随风而去吧！”
   attributes:
-    damage: 82
+    damage: 62
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3454,7 +3463,7 @@ Drew之翼:
   lore:
   - §r切割敌人时会释放涡旋能量撕裂周围的敌人
   attributes:
-    damage: 50
+    damage: 70
     damageType: Melee
     crit: 4
     knockback: 7
@@ -3466,7 +3475,7 @@ Drew之翼:
   lore:
   - §r发射凝胶波
   attributes:
-    damage: 100
+    damage: 128
     damageType: Melee
     crit: 4
     knockback: 5.25
@@ -3478,7 +3487,7 @@ Drew之翼:
   lore:
   - §r敌人死亡时治疗玩家
   attributes:
-    damage: 260
+    damage: 100
     damageType: Melee
     crit: 4
     knockback: 5.25
@@ -3488,7 +3497,7 @@ Drew之翼:
 纯净之斧:
   item: DIAMOND_SWORD
   attributes:
-    damage: 110
+    damage: 75
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3500,7 +3509,7 @@ Drew之翼:
   lore:
   - §r在玩家周围生成两秒后会爆炸的宇宙能量之火
   attributes:
-    damage: 140
+    damage: 60
     damageType: Melee
     crit: 4
     knockback: 5.25
@@ -3525,7 +3534,7 @@ Drew之翼:
   - §r发出弹射绝望光束
   - §r造成酸性毒液减益
   attributes:
-    damage: 200
+    damage: 122
     damageType: Melee
     crit: 4
     knockback: 5.75
@@ -3538,7 +3547,7 @@ Drew之翼:
   lore:
   - §r发射追踪的风暴剑气
   attributes:
-    damage: 132
+    damage: 110
     damageType: Melee
     crit: 4
     knockback: 6
@@ -3548,9 +3557,9 @@ Drew之翼:
 雪崩:
   item: DIAMOND_SWORD
   lore:
-  - §r生成会在接触敌人3秒钟后爆炸出冰晶的冰炸弹
+  - §r生成无限穿透并爆炸出冰晶的冰炸弹
   attributes:
-    damage: 200
+    damage: 65
     damageType: Melee
     crit: 4
     knockback: 7.25
@@ -3562,7 +3571,7 @@ Drew之翼:
   lore:
   - §r发射夜光刀锋
   attributes:
-    damage: 144
+    damage: 115
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3574,11 +3583,11 @@ Drew之翼:
   lore:
   - §r发射追踪炎霜球
   attributes:
-    damage: 208
+    damage: 120
     damageType: Melee
     crit: 4
     knockback: 6.25
-    useTime: 36
+    useTime: 12
   worth: 7200000
   rarity: 5
 灾难巨剑:
@@ -3586,7 +3595,7 @@ Drew之翼:
   lore:
   - §r发射会造成狱火减益的火花
   attributes:
-    damage: 170
+    damage: 184
     damageType: Melee
     crit: 4
     knockback: 6.25
@@ -3599,7 +3608,7 @@ Drew之翼:
   - §r击中敌人时释放硫磺火间歇泉
   - §r右键会将其像标枪一样掷出，击中敌人时爆炸
   attributes:
-    damage: 140
+    damage: 220
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -3612,7 +3621,7 @@ Drew之翼:
   - §r击碎敌人的护甲
   - §r当敌人护甲已经被击碎时治疗玩家
   attributes:
-    damage: 140
+    damage: 84
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -3624,7 +3633,7 @@ Drew之翼:
   lore:
   - §r发射恶魔镰刀，有等同于暴击率的概率造成暗影焰爆炸
   attributes:
-    damage: 220
+    damage: 300
     damageType: Melee
     crit: 4
     knockback: 6.5
@@ -3637,7 +3646,7 @@ Drew之翼:
   - §r挥动时生成一些火星
   - §r直接命中敌人时有等同于暴击率的概率造成小爆炸
   attributes:
-    damage: 220
+    damage: 108
     damageType: Melee
     crit: 4
     knockback: 7
@@ -3647,9 +3656,9 @@ Drew之翼:
 硫火鞭:
   item: DIAMOND_SWORD
   lore:
-  - §r发射一颗硫磺火弹，在爆裂时产生更多硫磺火弹
+  - §r发射一颗硫磺火弹，爆裂后产生更多硫磺火弹
   attributes:
-    damage: 140
+    damage: 185
     damageType: Melee
     crit: 4
     knockback: 6
@@ -3662,7 +3671,7 @@ Drew之翼:
   - §r发射追踪剑气
   - §r击中敌人时给予玩家暴君之怒增益，增加玩家30%近战伤害和10%近战暴击率
   attributes:
-    damage: 128
+    damage: 118
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -3687,34 +3696,20 @@ Drew之翼:
   lore:
   - §r发射短距离三叉戟
   attributes:
-    damage: 260
+    damage: 252
     damageType: Melee
     crit: 4
     knockback: 8
-    useTime: 18
+    useTime: 9
     buffInflictMelee: 深渊水压|100|1
   worth: 12000000
   rarity: 7
-风暴管束者:
-  item: DIAMOND_SWORD
-  lore:
-  - §r只有风暴才能击倒大树
-  - §r发射剑气将怪物吸入
-  - §r“别想逃开哦”
-  attributes:
-    damage: 120
-    damageType: Melee
-    crit: 4
-    knockback: 6.25
-    useTime: 25
-  worth: 20000000
-  rarity: 10
 彗星陨刃:
   item: DIAMOND_SWORD
   lore:
   - §r击中敌人时会召唤流星
   attributes:
-    damage: 320
+    damage: 267
     damageType: Melee
     crit: 4
     knockback: 7.75
@@ -3726,11 +3721,11 @@ Drew之翼:
   lore:
   - §r命中时召唤荆棘
   attributes:
-    damage: 160
+    damage: 124
     damageType: Melee
     crit: 4
     knockback: 7.25
-    useTime: 13
+    useTime: 32
     buffInflictMelee: 剧毒|100|1
   worth: 12000000
   rarity: 7
@@ -3740,7 +3735,7 @@ Drew之翼:
   - §r蕴含着一条古龙的力量
   - §r击中敌人会产生一团爆炸性的火焰
   attributes:
-    damage: 360
+    damage: 565
     damageType: Melee
     crit: 4
     knockback: 8
@@ -3753,36 +3748,21 @@ Drew之翼:
   lore:
   - §r被冰之大魔法师祝福的远古之刃
   - §r发射暗影冰晶
-  - §r剑刃接触制造冰爆
   attributes:
-    damage: 240
+    damage: 216
     damageType: Melee
     crit: 4
     knockback: 4
-    useTime: 20
+    useTime: 10
     buffInflictMelee: 霜火|100|1
   worth: 16000000
   rarity: 8
-大守卫者:
-  item: DIAMOND_SWORD
-  lore:
-  - §r击碎敌人的护甲
-  - §r当敌人护甲已经被击碎时治疗玩家
-  - §r击中低于半血的敌人会释放彩虹弹幕
-  attributes:
-    damage: 300
-    damageType: Melee
-    crit: 4
-    knockback: 8.5
-    useTime: 22
-  worth: 20000000
-  rarity: 10
 翡翠之潮:
   item: DIAMOND_SWORD
   lore:
   - §r攻击敌人时从天空召唤利维坦毒牙
   attributes:
-    damage: 190
+    damage: 198
     damageType: Melee
     crit: 4
     knockback: 7
@@ -3795,7 +3775,7 @@ Drew之翼:
   - §r用剑击打敌人时，庇护之光会爆发出火焰
   - §r右键发射庇护之火
   attributes:
-    damage: 216
+    damage: 213
     damageType: Melee
     crit: 4
     knockback: 4.25
@@ -3807,7 +3787,7 @@ Drew之翼:
   lore:
   - §r发射若干个火球
   attributes:
-    damage: 180
+    damage: 246
     damageType: Melee
     crit: 4
     knockback: 7.75
@@ -3820,7 +3800,7 @@ Drew之翼:
   lore:
   - §r根据敌人剩余生命值造成额外伤害
   attributes:
-    damage: 170
+    damage: 231
     damageType: Melee
     crit: 4
     knockback: 4
@@ -3833,7 +3813,7 @@ Drew之翼:
   lore:
   - §r发射出一把灵魂镰刀
   attributes:
-    damage: 170
+    damage: 455
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -3847,7 +3827,7 @@ Drew之翼:
   - §r射出发散的恶魔镰刀
   - §r直接击中敌人时有等同于暴击率的概率造成爆炸
   attributes:
-    damage: 300
+    damage: 78
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -3858,7 +3838,7 @@ Drew之翼:
 瘟疫毒刃:
   item: DIAMOND_SWORD
   attributes:
-    damage: 192
+    damage: 408
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -3870,9 +3850,9 @@ Drew之翼:
   item: DIAMOND_SWORD
   lore:
   - §r用剑刃击中敌人会释放涡流台风
-  - §r右键发射水刃龙卷
+  - §r右键攻击伤害较低，但发射水刃龙卷
   attributes:
-    damage: 360
+    damage: 389
     damageType: Melee
     crit: 4
     knockback: 4
@@ -3884,7 +3864,7 @@ Drew之翼:
   lore:
   - §r发射出破坏性的追踪火花
   attributes:
-    damage: 260
+    damage: 360
     damageType: Melee
     crit: 4
     knockback: 8
@@ -3896,7 +3876,7 @@ Drew之翼:
   lore:
   - §r发射数个追踪离子球
   attributes:
-    damage: 180
+    damage: 250
     damageType: Melee
     crit: 4
     knockback: 5.25
@@ -3909,7 +3889,7 @@ Drew之翼:
   - §r召唤燃烧头骨
   - §r燃烧头骨命中敌怪时会爆炸成追踪火球
   attributes:
-    damage: 180
+    damage: 550
     damageType: Melee
     crit: 4
     knockback: 8
@@ -3917,12 +3897,40 @@ Drew之翼:
     buffInflictMelee: 狱炎|100|1
   worth: 16000000
   rarity: 9
+风暴管束者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r只有风暴才能击倒大树
+  - §r发射剑气将怪物吸入
+  - §r“别想逃开哦”
+  attributes:
+    damage: 397
+    damageType: Melee
+    crit: 4
+    knockback: 6.25
+    useTime: 25
+  worth: 20000000
+  rarity: 10
+大守卫者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r击碎敌人的护甲
+  - §r当敌人护甲已经被击碎时治疗玩家
+  - §r击中低于半血的敌人会释放彩虹弹幕
+  attributes:
+    damage: 272
+    damageType: Melee
+    crit: 4
+    knockback: 8.5
+    useTime: 22
+  worth: 20000000
+  rarity: 10
 破坏重剑:
   item: DIAMOND_SWORD
   lore:
-  - §r发射会爆炸的宇宙冲击波
+  - §r发射大量会爆炸的宇宙冲击波
   attributes:
-    damage: 264
+    damage: 105
     damageType: Melee
     crit: 4
     knockback: 4.25
@@ -3937,7 +3945,7 @@ Drew之翼:
   - §r你可以听见这把剑微弱的安抚和低语
   - §r“无论你在何方，你都绝非孤身一人。我永远会在你身旁，我的王”
   attributes:
-    damage: 96
+    damage: 168
     damageType: Melee
     crit: 4
     knockback: 7
@@ -3948,8 +3956,9 @@ Drew之翼:
   item: DIAMOND_SWORD
   lore:
   - §r发射蜜蜂和瘟疫云
+  - §r“奴役蜜蜂，属实可耻”
   attributes:
-    damage: 160
+    damage: 255
     damageType: Melee
     crit: 4
     knockback: 6
@@ -3964,7 +3973,7 @@ Drew之翼:
   - §r剑气在白天造成破晓减益，在晚上造成夜魇
   - §r“打破次元壁”
   attributes:
-    damage: 600
+    damage: 763
     damageType: Melee
     crit: 4
     knockback: 6.5
@@ -3976,7 +3985,7 @@ Drew之翼:
   lore:
   - §r击中敌人时会天降月火
   attributes:
-    damage: 960
+    damage: 64
     damageType: Melee
     crit: 4
     knockback: 7.75
@@ -3986,7 +3995,7 @@ Drew之翼:
 爆破剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 96
+    damage: 260
     damageType: Melee
     crit: 4
     knockback: 7
@@ -3998,7 +4007,7 @@ Drew之翼:
   lore:
   - §r命中敌人会爆发神圣之火
   attributes:
-    damage: 540
+    damage: 228
     damageType: Melee
     crit: 4
     knockback: 7.75
@@ -4012,7 +4021,7 @@ Drew之翼:
   - §r以混沌之核的愤怒铸造而成
   - §r召唤大量从天而降的陨石
   attributes:
-    damage: 168
+    damage: 431
     damageType: Melee
     crit: 4
     knockback: 6
@@ -4024,7 +4033,7 @@ Drew之翼:
   lore:
   - §r击中敌人会在短时间内大幅提升你的防御、近战伤害和暴击率
   attributes:
-    damage: 944
+    damage: 500
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4036,7 +4045,7 @@ Drew之翼:
   lore:
   - §r直接击中敌人会恢复生命值
   attributes:
-    damage: 312
+    damage: 340
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -4049,7 +4058,7 @@ Drew之翼:
   - §r发射三种具有不同追踪能力的剑气
   - §r剑刃直接击中敌人时给予玩家暴君之怒增益，增加玩家30%近战伤害和10%近战暴击率
   attributes:
-    damage: 224
+    damage: 456
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -4064,7 +4073,7 @@ Drew之翼:
   - §r击中敌人后召唤斩切光束
   - §r能量矢命中后爆炸
   attributes:
-    damage: 520
+    damage: 473
     damageType: Melee
     crit: 4
     knockback: 7
@@ -4077,7 +4086,7 @@ Drew之翼:
   - §r击中生命值低于20%的非BOSS敌怪时会产生血爆
   - §r血爆会掉落可以治愈玩家的红心
   attributes:
-    damage: 966
+    damage: 817
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4091,7 +4100,7 @@ Drew之翼:
   - §r你必须用剑身击中敌人才能触发此效果
   - §r射出的弹幕将跟随玩家并保持一定距离
   attributes:
-    damage: 200
+    damage: 555
     damageType: Melee
     crit: 4
     knockback: 7
@@ -4104,7 +4113,7 @@ Drew之翼:
   - §r发射追踪并在击中时召唤追踪并在击中时召唤追踪火球的恐惧骷髅的烈焰头骨
   - §r“禁止禁止套娃”
   attributes:
-    damage: 720
+    damage: 600
     damageType: Melee
     crit: 4
     knockback: 8.5
@@ -4114,9 +4123,9 @@ Drew之翼:
 狮心圣裁:
   item: DIAMOND_SWORD
   lore:
-  - §r击中敌人时试图召唤可以使伤害减半的能量庇护，此效果持续5秒且有45秒冷却时间
+  - §r击中敌人时试图召唤可以使伤害减半的能量庇护，此效果持续10秒且有45秒冷却时间
   attributes:
-    damage: 1200
+    damage: 691
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -4129,7 +4138,7 @@ Drew之翼:
   - §r发射一个无限穿透的渊海三叉戟
   - §r渊海三叉戟在飞行途中降下更多三叉戟
   attributes:
-    damage: 502
+    damage: 750
     damageType: Melee
     crit: 4
     knockback: 9
@@ -4141,7 +4150,7 @@ Drew之翼:
   lore:
   - §r发射出深渊原住民的的恐惧幽魂
   attributes:
-    damage: 348
+    damage: 777
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -4154,7 +4163,7 @@ Drew之翼:
   - §r射出会弹射的恐惧光束
   - §r每次弹射或命中敌人时猛烈爆炸
   attributes:
-    damage: 375
+    damage: 345
     damageType: Melee
     crit: 4
     knockback: 8.5
@@ -4166,7 +4175,7 @@ Drew之翼:
   lore:
   - §r射出发散的旋转刀刃
   attributes:
-    damage: 558
+    damage: 466
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4179,7 +4188,7 @@ Drew之翼:
   lore:
   - §r命中时生成弑神之焰
   attributes:
-    damage: 1780
+    damage: 1769
     damageType: Melee
     crit: 4
     knockback: 9
@@ -4191,7 +4200,7 @@ Drew之翼:
   lore:
   - §r发射命中敌人时治愈自身的精元镰刀
   attributes:
-    damage: 360
+    damage: 739
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4222,7 +4231,7 @@ Drew之翼:
   - §r“无论你在何方，你都绝非孤身一人。我永远会在你身旁，我的王”
   - §7§m“这把刀在之前的版本名字不是巨剑“巴拉”，绝 对 不 是”
   attributes:
-    damage: 276
+    damage: 703
     damageType: Melee
     crit: 4
     knockback: 7
@@ -4234,9 +4243,9 @@ Drew之翼:
   lore:
   - §r看上去属于一位魔法少女。辐射出强烈的宇宙魔能
   - §r左键发射一束彩虹光炮
-  - §r右键挥舞此剑，释放虹光剑气
+  - §r右键迅速挥舞，释放虹光剑气
   attributes:
-    damage: 1398
+    damage: 937
     damageType: Melee
     crit: 12
     knockback: 7
@@ -4249,7 +4258,7 @@ Drew之翼:
   lore:
   - §r安宁
   attributes:
-    damage: 910
+    damage: 626
     damageType: Melee
     crit: 4
     knockback: 2.5
@@ -4266,7 +4275,7 @@ Drew之翼:
   - §r第三次挥动造成两次伤害判定
   - §r挥刀时逐渐积攒力量，最终将四散发射大量追踪骷髅
   attributes:
-    damage: 1560
+    damage: 1572
     damageType: Melee
     crit: 4
     knockback: 9
@@ -4282,7 +4291,7 @@ Drew之翼:
   - §r充能将用作强化左键攻击，满充能时本次攻击在命中敌人时爆炸
   - §r“嘉登喷流之刃”
   attributes:
-    damage: 1830
+    damage: 958
     damageType: Melee
     crit: 4
     knockback: 9
@@ -4314,7 +4323,7 @@ Drew之翼:
   - §r发射彩虹光束，效果取决于它们的颜色
   - §r右击施展真近战攻击
   attributes:
-    damage: 2000
+    damage: 2415
     damageType: Melee
     crit: 14
     knockback: 8
@@ -4325,7 +4334,7 @@ Drew之翼:
 剑鱼:
   item: STONE_SWORD
   attributes:
-    damage: 37
+    damage: 30
     damageType: Melee
     crit: 4
     knockback: 5
@@ -4335,7 +4344,7 @@ Drew之翼:
 毁灭刃:
   item: DIAMOND_SWORD
   attributes:
-    damage: 194
+    damage: 144
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4345,7 +4354,7 @@ Drew之翼:
 钴剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 80
+    damage: 109
     damageType: Melee
     crit: 4
     knockback: 3.85
@@ -4355,7 +4364,7 @@ Drew之翼:
 秘银剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 100
+    damage: 126
     damageType: Melee
     crit: 4
     knockback: 6
@@ -4365,7 +4374,7 @@ Drew之翼:
 精金剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 122
+    damage: 140
     damageType: Melee
     crit: 4
     knockback: 6
@@ -4375,21 +4384,17 @@ Drew之翼:
 圣剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 132
+    damage: 138
     damageType: Melee
     crit: 4
     knockback: 5
     useTime: 20
   worth: 4600000
   rarity: 5
-断裂英雄剑:
-  item: DIAMOND_SWORD
-  worth: 7500000
-  rarity: 8
 真·永夜之刃:
   item: DIAMOND_SWORD
   attributes:
-    damage: 210
+    damage: 286
     damageType: Melee
     crit: 4
     knockback: 4.75
@@ -4399,7 +4404,7 @@ Drew之翼:
 真·圣剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 140
+    damage: 185
     damageType: Melee
     crit: 4
     knockback: 4.75
@@ -4409,7 +4414,7 @@ Drew之翼:
 泰拉之刃:
   item: DIAMOND_SWORD
   attributes:
-    damage: 230
+    damage: 200
     damageType: Melee
     crit: 4
     knockback: 6.5
@@ -4421,11 +4426,11 @@ Drew之翼:
   lore:
   - §r射出孢子球
   attributes:
-    damage: 80
+    damage: 56
     damageType: Melee
     crit: 4
     knockback: 4
-    useTime: 16
+    useTime: 20
   worth: 5520000
   rarity: 7
 叶绿双刃刀:
@@ -4433,7 +4438,7 @@ Drew之翼:
   lore:
   - §r射出叶绿珠
   attributes:
-    damage: 160
+    damage: 342
     damageType: Melee
     crit: 4
     knockback: 6
@@ -4443,7 +4448,7 @@ Drew之翼:
 吉他斧:
   item: DIAMOND_SWORD
   attributes:
-    damage: 105
+    damage: 116
     damageType: Melee
     crit: 4
     knockback: 7.25
@@ -4465,7 +4470,7 @@ Drew之翼:
   lore:
   - §r§o射出致命镰刀
   attributes:
-    damage: 114
+    damage: 200
     damageType: Melee
     crit: 4
     knockback: 7
@@ -4475,7 +4480,7 @@ Drew之翼:
 圣诞树剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 172
+    damage: 168
     damageType: Melee
     crit: 4
     knockback: 7
@@ -4487,7 +4492,7 @@ Drew之翼:
   lore:
   - §r射出南瓜头
   attributes:
-    damage: 150
+    damage: 342
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -4497,7 +4502,7 @@ Drew之翼:
 种子弯刀:
   item: DIAMOND_SWORD
   attributes:
-    damage: 100
+    damage: 175
     damageType: Melee
     crit: 4
     knockback: 6
@@ -4507,7 +4512,7 @@ Drew之翼:
 狂星之怒:
   item: DIAMOND_SWORD
   attributes:
-    damage: 220
+    damage: 337
     damageType: Melee
     crit: 4
     knockback: 6.5
@@ -4527,7 +4532,7 @@ Drew之翼:
 天顶剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 400
+    damage: 550
     damageType: Melee
     crit: 14
     knockback: 1
@@ -4537,7 +4542,7 @@ Drew之翼:
 钴薙刀:
   item: DIAMOND_SWORD
   attributes:
-    damage: 43
+    damage: 106
     damageType: Melee
     crit: 4
     knockback: 4
@@ -4547,7 +4552,7 @@ Drew之翼:
 秘银长戟:
   item: DIAMOND_SWORD
   attributes:
-    damage: 52
+    damage: 120
     damageType: Melee
     crit: 4
     knockback: 5
@@ -4557,7 +4562,7 @@ Drew之翼:
 精金关刀:
   item: DIAMOND_SWORD
   attributes:
-    damage: 57
+    damage: 136
     damageType: Melee
     crit: 4
     knockback: 6
@@ -4567,7 +4572,7 @@ Drew之翼:
 永恒之枪:
   item: DIAMOND_SWORD
   attributes:
-    damage: 84
+    damage: 150
     damageType: Melee
     crit: 4
     knockback: 6.4
@@ -4579,7 +4584,7 @@ Drew之翼:
   lore:
   - §r射出孢子球
   attributes:
-    damage: 100
+    damage: 70
     damageType: Melee
     crit: 4
     knockback: 6.2
@@ -4589,17 +4594,17 @@ Drew之翼:
 北极:
   item: DIAMOND_SWORD
   attributes:
-    damage: 146
+    damage: 175
     damageType: Melee
     crit: 4
     knockback: 6.7
-    useTime: 25
+    useTime: 12
   worth: 9000000
   rarity: 7
 星光:
   item: DIAMOND_SWORD
   attributes:
-    damage: 120
+    damage: 173
     damageType: Melee
     crit: 4
     knockback: 4
@@ -4611,7 +4616,7 @@ Drew之翼:
   lore:
   - §r“用光明之矛将敌人四分五裂！”
   attributes:
-    damage: 300
+    damage: 435
     damageType: Melee
     crit: 4
     knockback: 5
@@ -4623,7 +4628,7 @@ Drew之翼:
   lore:
   - §r击中敌人时散发电火花
   attributes:
-    damage: 46
+    damage: 40
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -4635,7 +4640,7 @@ Drew之翼:
   lore:
   - §r击中敌人时散发电火花
   attributes:
-    damage: 180
+    damage: 134
     damageType: Melee
     crit: 4
     knockback: 7
@@ -4647,11 +4652,11 @@ Drew之翼:
   lore:
   - §r攻击敌人会让你获得极短暂的近战无敌帧
   attributes:
-    damage: 180
+    damage: 382
     damageType: Melee
     crit: 4
     knockback: 8.25
-    useTime: 15
+    useTime: 24
   worth: 16000000
   rarity: 8
 元素短剑:
@@ -4659,7 +4664,7 @@ Drew之翼:
   lore:
   - §r生成彩虹短剑，击中敌人后会发出额外的短剑弹幕
   attributes:
-    damage: 336
+    damage: 215
     damageType: Melee
     crit: 4
     knockback: 8.5
@@ -4675,7 +4680,7 @@ Drew之翼:
   - §r击中敌人时生成小行星
   - §r“并不能使敌人内外翻转”
   attributes:
-    damage: 220
+    damage: 462
     damageType: Melee
     crit: 4
     knockback: 10
@@ -4690,7 +4695,7 @@ Drew之翼:
   - §r发射一束追踪敌人的宇宙射线
   - §r在击中敌人后在较远处生成追踪弹幕
   attributes:
-    damage: 436
+    damage: 686
     damageType: Melee
     crit: 4
     knockback: 9
@@ -4700,7 +4705,7 @@ Drew之翼:
 赤潮矛:
   item: DIAMOND_SWORD
   attributes:
-    damage: 50
+    damage: 59
     damageType: Melee
     crit: 4
     knockback: 5
@@ -4712,7 +4717,7 @@ Drew之翼:
   lore:
   - §r发射追踪漩涡
   attributes:
-    damage: 24
+    damage: 28
     damageType: Melee
     crit: 4
     knockback: 4.5
@@ -4722,7 +4727,7 @@ Drew之翼:
 金羽:
   item: DIAMOND_SWORD
   attributes:
-    damage: 48
+    damage: 64
     damageType: Melee
     crit: 4
     knockback: 5.75
@@ -4748,7 +4753,7 @@ Drew之翼:
   lore:
   - §r发射星夜光束
   attributes:
-    damage: 220
+    damage: 113
     damageType: Melee
     crit: 4
     knockback: 6
@@ -4760,7 +4765,7 @@ Drew之翼:
   lore:
   - §r打击敌人时会引发硫磺火爆炸并降落硫磺火
   attributes:
-    damage: 116
+    damage: 132
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -4784,7 +4789,7 @@ Drew之翼:
   lore:
   - §r发射一个长矛状的射线
   attributes:
-    damage: 176
+    damage: 248
     damageType: Melee
     crit: 4
     knockback: 8.5
@@ -4793,8 +4798,10 @@ Drew之翼:
   rarity: 8
 火山之矛:
   item: DIAMOND_SWORD
+  lore:
+  - §r命中时爆炸并有等同于暴击率的概率生成一个追踪弹幕
   attributes:
-    damage: 180
+    damage: 238
     damageType: Melee
     crit: 4
     knockback: 6.75
@@ -4807,7 +4814,7 @@ Drew之翼:
   lore:
   - §r打击敌人会发射瘟疫搜寻者
   attributes:
-    damage: 130
+    damage: 222
     damageType: Melee
     crit: 4
     knockback: 8.5
@@ -4820,7 +4827,7 @@ Drew之翼:
   lore:
   - §r释放多个能量脉冲
   attributes:
-    damage: 260
+    damage: 168
     damageType: Melee
     crit: 4
     knockback: 9
@@ -4832,7 +4839,7 @@ Drew之翼:
   lore:
   - §r有等同于暴击率的概率在命中后召唤一枚幻星
   attributes:
-    damage: 180
+    damage: 220
     damageType: Melee
     crit: 29
     knockback: 8.5
@@ -4845,7 +4852,7 @@ Drew之翼:
   - §r撕裂宇宙！
   - §r发射一只元素之矛，飞行过程中会分裂数次
   attributes:
-    damage: 320
+    damage: 454
     damageType: Melee
     crit: 4
     knockback: 9.5
@@ -4858,7 +4865,7 @@ Drew之翼:
   lore:
   - §r命中敌怪时治疗玩家
   attributes:
-    damage: 630
+    damage: 1119
     damageType: Melee
     crit: 4
     knockback: 8.75
@@ -4870,7 +4877,7 @@ Drew之翼:
   lore:
   - §r放出五个灵魂鬼爪
   attributes:
-    damage: 476
+    damage: 576
     damageType: Melee
     crit: 4
     knockback: 8.5
@@ -4882,7 +4889,7 @@ Drew之翼:
   lore:
   - §r发射一柄巨大的鱼叉穿刺敌人，鱼叉会附着在方块上
   attributes:
-    damage: 750
+    damage: 900
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4893,7 +4900,7 @@ Drew之翼:
 木制回力镖:
   item: STICK
   attributes:
-    damage: 16
+    damage: 19
     damageType: Melee
     crit: 4
     knockback: 5
@@ -4913,7 +4920,7 @@ Drew之翼:
 荆棘旋刃:
   item: STICK
   attributes:
-    damage: 50
+    damage: 39
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4923,7 +4930,7 @@ Drew之翼:
 烈焰回旋镖:
   item: STICK
   attributes:
-    damage: 62
+    damage: 100
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4936,7 +4943,7 @@ Drew之翼:
   lore:
   - §r追杀敌人
   attributes:
-    damage: 160
+    damage: 288
     damageType: Melee
     crit: 4
     knockback: 5
@@ -4946,7 +4953,7 @@ Drew之翼:
 链锤:
   item: STICK
   attributes:
-    damage: 30
+    damage: 18
     damageType: Melee
     crit: 4
     knockback: 4.6
@@ -4956,7 +4963,7 @@ Drew之翼:
 火焰锤:
   item: STICK
   attributes:
-    damage: 36
+    damage: 24
     damageType: Melee
     crit: 4
     knockback: 4.6
@@ -4967,7 +4974,7 @@ Drew之翼:
 蓝月:
   item: STICK
   attributes:
-    damage: 60
+    damage: 85
     damageType: Melee
     crit: 4
     knockback: 6
@@ -4977,7 +4984,7 @@ Drew之翼:
 太极连枷:
   item: STICK
   attributes:
-    damage: 126
+    damage: 135
     damageType: Melee
     crit: 4
     knockback: 6
@@ -4989,7 +4996,7 @@ Drew之翼:
   lore:
   - §r喷出自动寻敌泡泡
   attributes:
-    damage: 132
+    damage: 346
     damageType: Melee
     crit: 4
     knockback: 4.5
@@ -4999,7 +5006,7 @@ Drew之翼:
 日耀喷发剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 210
+    damage: 608
     damageType: Melee
     crit: 4
     knockback: 2
@@ -5010,9 +5017,9 @@ Drew之翼:
 海胆链枷:
   item: STICK
   lore:
-  - §r旋转一定时间后掷出将额外射出一股赤潮涡流
+  - §r旋转至少一秒后掷出将额外射出一股赤潮涡流
   attributes:
-    damage: 46
+    damage: 68
     damageType: Melee
     crit: 4
     knockback: 6
@@ -5022,7 +5029,7 @@ Drew之翼:
 海胆链球:
   item: STICK
   attributes:
-    damage: 66
+    damage: 56
     damageType: Melee
     crit: 4
     knockback: 6
@@ -5034,7 +5041,7 @@ Drew之翼:
   lore:
   - §r发射一个受重力影响的巨蛤，在留空一段时间后会造成更高伤害。
   attributes:
-    damage: 300
+    damage: 350
     damageType: Melee
     crit: 4
     knockback: 10
@@ -5046,7 +5053,7 @@ Drew之翼:
   lore:
   - §r击中敌人后脱手而出
   attributes:
-    damage: 250
+    damage: 641
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5056,7 +5063,7 @@ Drew之翼:
 星云鞭:
   item: DIAMOND_SWORD
   attributes:
-    damage: 120
+    damage: 565
     damageType: Melee
     crit: 4
     knockback: 2
@@ -5072,7 +5079,7 @@ Drew之翼:
   - §r似乎可以在与某种海洋巨兽的战斗中立下汗马功劳……
   - §r“如有鬼助”
   attributes:
-    damage: 750
+    damage: 2786
     damageType: Melee
     crit: 4
     knockback: 10
@@ -5084,7 +5091,7 @@ Drew之翼:
   lore:
   - §r发射两个日耀链剑
   attributes:
-    damage: 254
+    damage: 234
     damageType: Melee
     crit: 4
     knockback: 2.5
@@ -5097,7 +5104,7 @@ Drew之翼:
   - §r重型链枷，每一个都内置有在挥舞时启动的强劲发电机
   - §r丢出龙首，龙首会释放电场
   attributes:
-    damage: 1250
+    damage: 1366
     damageType: Melee
     crit: 4
     knockback: 2.5
@@ -5109,7 +5116,7 @@ Drew之翼:
   lore:
   - §r以寒锋恰似拜月者希冀之月
   attributes:
-    damage: 1000
+    damage: 1075
     damageType: Melee
     crit: 4
     knockback: 4
@@ -5121,11 +5128,11 @@ Drew之翼:
   lore:
   - §r“神，不掉弹刃！”
   attributes:
-    damage: 1600
+    damage: 1557
     damageType: Melee
     crit: 4
     knockback: 0.5
-    useTime: 15
+    useTime: 18
   worth: 28000000
   rarity: 14
 龙魂破:
@@ -5134,7 +5141,7 @@ Drew之翼:
   - §r发射龙头，释放龙息火星
   - §r击中敌人时召唤花瓣
   attributes:
-    damage: 1320
+    damage: 2525
     damageType: Melee
     crit: 4
     knockback: 9
@@ -5148,7 +5155,7 @@ Drew之翼:
   - §r挥出由星流金属构成的鞭子
   - §r“这何尝不是一种脊髓剑”
   attributes:
-    damage: 3000
+    damage: 2414
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5165,7 +5172,7 @@ Drew之翼:
   - §#83B87E“这东西甚至可以直接把人的眼睛挖出来！”
   - §#83B87E“……啊。”
   attributes:
-    damage: 20
+    damage: 28
     damageType: Melee
     crit: 4
     knockback: 3.75
@@ -5189,7 +5196,7 @@ Drew之翼:
   lore:
   - §r右键将向敌人冲刺，刺中敌人时自动调整距离并急速造成伤害
   attributes:
-    damage: 120
+    damage: 58
     damageType: Melee
     crit: 4
     knockback: 7
@@ -5202,7 +5209,7 @@ Drew之翼:
   - §#ABB448射出薄弱的弹幕，它将击碎敌怪的防御
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 94
+    damage: 92
     damageType: Melee
     crit: 4
     knockback: 5
@@ -5215,7 +5222,7 @@ Drew之翼:
   - §#A5EBEB以冰川凝结为剑身，施行威力递增的三连剑技
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 114
+    damage: 115
     damageType: Melee
     crit: 4
     knockback: 5
@@ -5229,7 +5236,7 @@ Drew之翼:
   - §#EE9C49你在半空时，剑刃也能用于在物块之间弹跳
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 140
+    damage: 148
     damageType: Melee
     crit: 4
     knockback: 5
@@ -5243,7 +5250,7 @@ Drew之翼:
   - §#D34093攻击汲取击中敌怪的生命，并从其身上弹开
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 126
+    damage: 120
     damageType: Melee
     crit: 4
     knockback: 5
@@ -5257,7 +5264,7 @@ Drew之翼:
   - §#A2C855刃尖击中敌怪必定暴击，潜行时击中物块将把你拉去
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 130
+    damage: 100
     damageType: Melee
     crit: 4
     knockback: 5
@@ -5270,7 +5277,7 @@ Drew之翼:
   - §#A2C855射出薄弱的弹幕，它将击碎敌怪的防御
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 240
+    damage: 176
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5283,7 +5290,7 @@ Drew之翼:
   - §#A5EBEB以冰川凝结为剑身，施行威力递增的三连剑技
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 300
+    damage: 277
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5296,7 +5303,7 @@ Drew之翼:
   - §#EE9C49于面前召唤炙热的剑刃。你在半空时，剑刃能用于在物块之间弹跳
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 244
+    damage: 200
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5310,7 +5317,7 @@ Drew之翼:
   - §#D34093成功击中敌怪减少使用冷却
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 425
+    damage: 383
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5324,7 +5331,7 @@ Drew之翼:
   - §#A2C855暴击造成额外的伤害
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 240
+    damage: 200
     damageType: Melee
     crit: -25
     critDamage: 75
@@ -5339,7 +5346,7 @@ Drew之翼:
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   - §r“■■■ ■~■~■~■~”
   attributes:
-    damage: 225
+    damage: 260
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5353,7 +5360,7 @@ Drew之翼:
   - §#8A86FC右键攻击向前冲刺并在击中敌人或方块时造成猛烈爆炸
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 260
+    damage: 380
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5366,7 +5373,7 @@ Drew之翼:
   - §#486ACC发射不受液体减速的水球，水球会爆裂成数个冲击波
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 350
+    damage: 165
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5380,7 +5387,7 @@ Drew之翼:
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   - §r“爱滴魔力转圈圈~”
   attributes:
-    damage: 300
+    damage: 795
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5399,7 +5406,7 @@ Drew之翼:
   - §#D83716右键攻击借助敌人而非物块弹跳
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 400
+    damage: 450
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5413,7 +5420,7 @@ Drew之翼:
   - §#71EFB1每第二次攻击造成的伤害显著增加
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 640
+    damage: 430
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5428,7 +5435,7 @@ Drew之翼:
   - §#846DE9撞击地面将引发山崩地裂，天地轰鸣，刹那间，一排异界巨石破土而出
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 1100
+    damage: 1850
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5460,7 +5467,7 @@ Drew之翼:
   - §r锻造出来征服一切邪恶的神圣之刃
   - §r“并不能触发时空断裂”
   attributes:
-    damage: 360
+    damage: 490
     damageType: Melee
     crit: 4
     knockback: 6.5
@@ -5478,7 +5485,7 @@ Drew之翼:
   - §r一对注入了泰拉大陆精华的天赐之刃，其威力足以切割现实的结构
   - §r“剪刀飞快”
   attributes:
-    damage: 1200
+    damage: 741
     damageType: Melee
     crit: 14
     knockback: 8.5
@@ -5496,7 +5503,7 @@ Drew之翼:
   - §#FFA403格挡后会获得16层充能，充能会强化普通攻击，让你可以同时使用两把剑刃
   - §r“你的旅程的物理顶点，拥有着能使神明§m笑嘻§r分崩离析的力量”
   attributes:
-    damage: 5000
+    damage: 4700
     damageType: Melee
     crit: 19
     knockback: 9.5
@@ -5509,7 +5516,7 @@ Drew之翼:
   - §r你感到死神之手掌控着你
   - §r发射一连串追踪镰刀
   attributes:
-    damage: 2400
+    damage: 707
     damageType: Melee
     crit: 4
     knockback: 9
@@ -5521,7 +5528,7 @@ Drew之翼:
   lore:
   - §r利用相位剑进行攻击并释放热熔光刃
   attributes:
-    damage: 2000
+    damage: 1500
     damageType: Melee
     crit: 4
     knockback: 7
@@ -5534,7 +5541,7 @@ Drew之翼:
   - §r召唤一个让长矛穿过的传送门
   - §r短暂延迟后在目标周围释放长矛的复制体刺穿敌人
   attributes:
-    damage: 800
+    damage: 1680
     damageType: Melee
     crit: 4
     knockback: 9.75
@@ -5554,7 +5561,7 @@ Drew之翼:
   - §r潜行时鼠标右键切换当前调谐
   - §r“转圈圈咯~”
   attributes:
-    damage: 3000
+    damage: 888
     damageType: Melee
     crit: 4
     knockback: 9
@@ -5572,7 +5579,7 @@ Drew之翼:
   - §r潜行时鼠标右键切换当前调谐
   - §r“很好的索敌，使我的银河旋转”
   attributes:
-    damage: 1900
+    damage: 2086
     damageType: Melee
     crit: 4
     knockback: 9
@@ -5590,7 +5597,7 @@ Drew之翼:
   - §r全部环境调谐已存在其中
   - §r潜行时鼠标右键切换当前调谐
   attributes:
-    damage: 2400
+    damage: 2886
     damageType: Melee
     crit: 4
     knockback: 9
@@ -5622,7 +5629,7 @@ Drew之翼:
   - §r旋转武器，命中敌怪时产生爆炸火球
   - §r“石猴出世”
   attributes:
-    damage: 2150
+    damage: 1807
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5637,7 +5644,7 @@ Drew之翼:
   - §r天降正义！
   - §r“你怎么穿着法杖的贴图，还用人攻击方式”
   attributes:
-    damage: 295
+    damage: 828
     damageType: Melee
     crit: 4
     knockback: 2.5
@@ -5649,7 +5656,7 @@ Drew之翼:
   lore:
   - §r掷出在目标处旋转的硫火三叉戟，撕裂你的敌人
   attributes:
-    damage: 888
+    damage: 828
     damageType: Melee
     crit: 4
     knockback: 9
@@ -5658,8 +5665,10 @@ Drew之翼:
   rarity: 15
 木制悠悠球:
   item: STICK
+  lore:
+  - §r掷出悠悠球后按住潜行可以收回
   attributes:
-    damage: 18
+    damage: 30
     damageType: Melee
     crit: 4
     projectileSpeed: 16
@@ -5667,10 +5676,21 @@ Drew之翼:
     useTime: 25
   worth: 10000
   rarity: 0
+亚马逊悠悠球:
+  item: STICK
+  attributes:
+    damage: 40
+    damageType: Melee
+    crit: 4
+    projectileSpeed: 16
+    knockback: 3.75
+    useTime: 25
+  worth: 1300000
+  rarity: 1
 抑郁球:
   item: STICK
   attributes:
-    damage: 32
+    damage: 87
     damageType: Melee
     crit: 4
     projectileSpeed: 16
@@ -5678,21 +5698,10 @@ Drew之翼:
     useTime: 25
   worth: 1000000
   rarity: 1
-亚马逊悠悠球:
-  item: STICK
-  attributes:
-    damage: 36
-    damageType: Melee
-    crit: 4
-    projectileSpeed: 16
-    knockback: 3.75
-    useTime: 25
-  worth: 1300000
-  rarity: 3
 克苏鲁之眼悠悠球:
   item: STICK
   attributes:
-    damage: 230
+    damage: 534
     damageType: Melee
     crit: 4
     projectileSpeed: 16
@@ -5703,7 +5712,7 @@ Drew之翼:
 泰拉悠悠球:
   item: STICK
   attributes:
-    damage: 300
+    damage: 306
     damageType: Melee
     crit: 14
     projectileSpeed: 16
@@ -5717,7 +5726,7 @@ Drew之翼:
   - §r向下召唤星星
   - §r一只十分灵活的悠悠球
   attributes:
-    damage: 28
+    damage: 36
     damageType: Melee
     crit: 4
     projectileSpeed: 16
@@ -5728,7 +5737,7 @@ Drew之翼:
 涡旋:
   item: STICK
   attributes:
-    damage: 24
+    damage: 55
     damageType: Melee
     crit: 4
     projectileSpeed: 12.5
@@ -5742,7 +5751,7 @@ Drew之翼:
   - §r有敌人在附近时发射羽毛
   - §r一只十分灵活的悠悠球
   attributes:
-    damage: 52
+    damage: 78
     damageType: Melee
     crit: 4
     projectileSpeed: 16
@@ -5756,7 +5765,7 @@ Drew之翼:
   - §r有敌人在附近时发射凝胶束
   - §r一只十分灵活的悠悠球
   attributes:
-    damage: 58
+    damage: 80
     damageType: Melee
     crit: 4
     projectileSpeed: 32
@@ -5770,7 +5779,7 @@ Drew之翼:
   - §r来自古代东方的神秘力量
   - §r一只十分灵活的悠悠球
   attributes:
-    damage: 100
+    damage: 152
     damageType: Melee
     crit: 4
     projectileSpeed: 32
@@ -5784,7 +5793,7 @@ Drew之翼:
   - §r有敌人在附近时发射星星
   - §r一只十分灵活的悠悠球
   attributes:
-    damage: 82
+    damage: 136
     damageType: Melee
     crit: 4
     projectileSpeed: 36
@@ -5798,7 +5807,7 @@ Drew之翼:
   - §r有敌人在附近时发射硫磺火激光
   - §r一只十分灵活的悠悠球
   attributes:
-    damage: 110
+    damage: 354
     damageType: Melee
     crit: 4
     projectileSpeed: 36
@@ -5812,7 +5821,7 @@ Drew之翼:
   - §r发射孢子云
   - §r一只十分灵活的悠悠球
   attributes:
-    damage: 104
+    damage: 226
     damageType: Melee
     crit: 4
     projectileSpeed: 36
@@ -5826,7 +5835,7 @@ Drew之翼:
   - §r击中敌人时产生爆炸
   - §r一只十分灵活的悠悠球
   attributes:
-    damage: 150
+    damage: 240
     damageType: Melee
     crit: 4
     projectileSpeed: 40
@@ -5840,7 +5849,7 @@ Drew之翼:
   - §r有敌人在附近时发射瘟疫搜寻者
   - §r一只十分灵活的悠悠球
   attributes:
-    damage: 200
+    damage: 480
     damageType: Melee
     crit: 4
     projectileSpeed: 40
@@ -5855,7 +5864,7 @@ Drew之翼:
   - §r一只十分灵活的悠悠球
   - §r用幻星的传统方式料理你的敌人，是舌尖上的灾厄的著名菜点
   attributes:
-    damage: 222
+    damage: 417
     damageType: Melee
     crit: 4
     projectileSpeed: 54
@@ -5869,7 +5878,7 @@ Drew之翼:
   - §r击中敌人时产生强大的圣火爆炸
   - §r一只十分灵活的悠悠球
   attributes:
-    damage: 240
+    damage: 676
     damageType: Melee
     crit: 4
     projectileSpeed: 54
@@ -5883,7 +5892,7 @@ Drew之翼:
   - §r接近这个悠悠球的敌人的生命会被汲取
   - §r一只十分灵活的悠悠球
   attributes:
-    damage: 260
+    damage: 1593
     damageType: Melee
     crit: 4
     projectileSpeed: 48
@@ -5897,7 +5906,7 @@ Drew之翼:
   - §r以死亡激光抹除周围敌人的存在
   - §r一只超级灵活的悠悠球
   attributes:
-    damage: 444
+    damage: 1747
     damageType: Melee
     crit: 4
     projectileSpeed: 54
@@ -5912,7 +5921,7 @@ Drew之翼:
   - §r电击附近敌人
   - §r一只超级灵活的悠悠球
   attributes:
-    damage: 340
+    damage: 1512
     damageType: Melee
     crit: 4
     projectileSpeed: 54
@@ -5927,7 +5936,7 @@ Drew之翼:
   - §r发射能爆裂出死亡射线的寰宇之球攻击敌人
   - §r一只十分灵活的悠悠球
   attributes:
-    damage: 160
+    damage: 500
     damageType: Melee
     crit: 4
     projectileSpeed: 60
@@ -9075,7 +9084,7 @@ Dodu的手炮:
   - §r穿透的敌人越多，伤害越高
   - §r“……也会带~来折磨~”
   attributes:
-    damage: 1450
+    damage: 543
     damageType: Magic
     crit: 4
     knockback: 8
@@ -9088,7 +9097,7 @@ Dodu的手炮:
   lore:
   - §r发射一团狱炎三叉戟，造成巨大爆炸并释放熔岩火焰碎片
   attributes:
-    damage: 350
+    damage: 305
     damageType: Magic
     projectileSpeed: 19
     crit: 4
@@ -14897,13 +14906,13 @@ Dodu的手炮:
   lore:
   - §r15 饵力
   worth: 100000
-  rarity: 2
+  rarity: 1
 专家鱼饵:
   item: CLAY_BALL
   lore:
   - §r30 饵力
   worth: 200000
-  rarity: 1
+  rarity: 2
 大师鱼饵:
   item: CLAY_BALL
   lore:

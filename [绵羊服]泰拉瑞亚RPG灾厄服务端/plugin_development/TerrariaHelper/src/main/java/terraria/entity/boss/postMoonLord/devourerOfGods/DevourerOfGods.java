@@ -50,7 +50,6 @@ public class DevourerOfGods extends EntitySlime {
 
     static final int FLYING_TOTAL_DURATION = 300, FLYING_START_INDEX = 60, FLYING_END_INDEX = 240;
     static final double SEGMENT_RADIUS = SLIME_SIZE * 0.5, DASH_DISTANCE_INITIAL = 15.0, DASH_DISTANCE_FINAL = 12.0,
-            // TODO: Prevent client side teleport interpolation
             HIDE_Y_COORD = -100;
     static HashMap<String, Double> attrMapFireball, attrMapLaser;
     static {

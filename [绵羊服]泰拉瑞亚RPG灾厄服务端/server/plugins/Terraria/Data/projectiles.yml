@@ -2612,7 +2612,8 @@ TNT:
     liveTime: 40
 叶绿珠:
     projectileSize: 1
-    penetration: 999999
+    noGravityTicks: 10
+    penetration: 1
     liveTime: 60
 烈焰杰克南瓜:
     gravity: 0
@@ -2626,7 +2627,7 @@ TNT:
         interval: 4
         offset: 0
         spawnMechanism: BOTTOM
-        damageMulti: 0.8
+        damageMulti: 0.5
         speed: 0.5
         spawnType: 北极雪花
 装饰:
@@ -2667,7 +2668,7 @@ TNT:
         interval: 2
         offset: 1.0
         spawnMechanism: SURROUND
-        damageMulti: 0.35
+        damageMulti: 0.5
         speed: 0.4
         spawnType: 气泡弹
 气泡弹:
@@ -2677,8 +2678,6 @@ TNT:
 雷姆的复仇:
     buffInflict:
         - "枯萎|80|1"
-脉冲龙链枷:
-    enemyInvincibilityFrame: 1
 龙魂破:
     buffInflict:
         - "神圣之火|60|1"
@@ -2691,7 +2690,7 @@ TNT:
         spawnType: 龙魂破火星
     clusterBomb:
         amount: 12
-        damageMulti: 0.15
+        damageMulti: 0.35
         name: 龙魂破花瓣
         type: surround
         fireOnTimeout: false
@@ -2718,10 +2717,11 @@ TNT:
         offset: 0.5
         spawnMechanism: SURROUND
         damageMulti: 0.25
-        speed: 0.5
+        speed: 1.75
         spawnType: 泰拉悠悠球光束
 泰拉悠悠球光束:
     homing: true
+    homingRadius: 16
     penetration: 999999
     blockHitAction: thru
     gravity: 0
@@ -2847,7 +2847,7 @@ TNT:
         speed: 25
         spawnType: 混沌射线分支
     buffInflict:
-        - "神弑者之怒焰|60|1"
+        - "弑神怒焰|60|1"
 混沌射线分支:
     gravity: 0
     liveTime: 1
@@ -2855,7 +2855,7 @@ TNT:
     trailLingerTime: 5
     trailStepSize: 0.5
     buffInflict:
-        - "神弑者之怒焰|20|1"
+        - "弑神怒焰|20|1"
 神谕:
     spawnProjectiles:
         interval: 3
@@ -2884,6 +2884,7 @@ TNT:
     bounce: 2
     liveTime: 20
     penetration: 999999
+    minimumDamageTicks: 20
     spawnProjectiles:
         interval: 3
         offset: 20
@@ -3050,6 +3051,7 @@ TNT:
         - "狱炎|30|1"
 追踪硫火刃:
     homing: true
+    homingRadius: 32
     projectileSize: 0.5
     noHomingTicks: 10
     gravity: 0
@@ -3083,7 +3085,6 @@ TNT:
     projectileSize: 0.5
     gravity: 0
     liveTime: 25
-    penetration: 2
     buffInflict:
         - "深渊水压|40|1"
 风暴管束者剑气:
@@ -3103,11 +3104,10 @@ TNT:
     gravity: 0
     projectileSize: 0.5
     liveTime: 50
-    isGrenade: true
-    blastRadius: 3
 彩虹弹幕:
     homing: true
-    noHomingTicks: 15
+    noHomingTicks: 5
+    homingRadius: 32
     gravity: 0
     projectileSize: 0.5
     liveTime: 65
@@ -3176,7 +3176,7 @@ TNT:
 蓝焰火花:
     homing: true
     noHomingTicks: 10
-    homingRadius: 24
+    homingRadius: 32
     blockHitAction: thru
     liveTime: 60
     trailColor: 148|255|255
@@ -3193,15 +3193,15 @@ TNT:
     trailLingerTime: 5
 追踪火球:
     homing: true
-    homingRadius: 16
+    homingRadius: 24
     minimumDamageTicks: 5
-    noHomingTicks: 10
+    noHomingTicks: 5
     trailColor: 255|137|17
     trailSize: 0.15
     trailStepSize: 0.4
 燃烧头骨:
     homing: true
-    homingRadius: 16
+    homingRadius: 32
     noHomingTicks: 5
     minimumDamageTicks: 1
     blockHitAction: thru
@@ -3219,7 +3219,7 @@ TNT:
     projectileSize: 0.5
     liveTime: 60
     isGrenade: true
-    blastRadius: 1.75
+    blastRadius: 1
     buffInflict:
         - "狱炎|60|1"
         - "霜火|40|1"
@@ -3241,7 +3241,7 @@ TNT:
     trailStepSize: 0.5
     trailLingerTime: 6
     spawnProjectiles:
-        interval: 4
+        interval: 2
         offset: 0.5
         spawnMechanism: BOTTOM
         damageMulti: 1
@@ -3372,7 +3372,7 @@ TNT:
     trailIntensityMulti: 1.5
     trailLingerTime: 5
     spawnSound: item.exoblade.beam
-    spawnSoundVolume: 0.3
+    spawnSoundVolume: 2
 镜之刃镜子:
     gravity: 0
     projectileSize: 1
@@ -3380,7 +3380,7 @@ TNT:
 恐惧骷髅:
     gravity: 0
     homing: true
-    homingRadius: 24
+    homingRadius: 40
     noHomingTicks: 5
     blockHitAction: thru
     projectileSize: 1.5
@@ -3438,6 +3438,8 @@ TNT:
     projectileSize: 3
     enemyInvincibilityFrame: 10
     speedMultiPerTick: 0.975
+    buffInflict:
+        - "弑神怒焰|30|1"
 精华火焰:
     gravity: 0
     blockHitAction: thru
@@ -3446,7 +3448,7 @@ TNT:
     homingRadius: 27.5
     trailColor: 255|174|255
     buffInflict:
-        - "神弑者之怒焰|100|1"
+        - "弑神怒焰|100|1"
 精元镰刀:
     gravity: 0
     blockHitAction: thru
@@ -3458,6 +3460,8 @@ TNT:
     projectileSize: 3
     enemyInvincibilityFrame: 2
     speedMultiPerTick: 0.95
+    buffInflict:
+        - "弑神怒焰|30|1"
 携序之剑分裂剑气:
     gravity: 0
     liveTime: 40
@@ -3500,8 +3504,9 @@ TNT:
     gravity: 0
     liveTime: 50
     homing: true
-    noHomingTicks: 5
-    homingRadius: 16
+    minimumDamageTicks: 4
+    noHomingTicks: 4
+    homingRadius: 24
     buffInflict:
         - "暗影焰|60|1"
 分裂禅心导弹:
@@ -3510,7 +3515,7 @@ TNT:
     projectileSize: 0.5
     homing: true
     noHomingTicks: 5
-    homingRadius: 16
+    homingRadius: 32
     isGrenade: true
     blastRadius: 2.5
     buffInflict:
@@ -3535,7 +3540,7 @@ TNT:
     liveTime: 100
     homing: true
     noHomingTicks: 5
-    homingRadius: 24
+    homingRadius: 48
     isGrenade: true
     blastRadius: 4
 星流能量矢:
@@ -3580,7 +3585,7 @@ TNT:
     trailIntensityMulti: 2
     trailLingerTime: 5
     spawnSound: item.exoblade.beam
-    spawnSoundVolume: 1
+    spawnSoundVolume: 3.5
     buffInflict:
         - "超位崩解|100|1"
 三色大地流星:
@@ -3593,7 +3598,7 @@ TNT:
         - "咒火|100|1"
         - "霜火|100|1"
     clusterBomb:
-        amount: 8
+        amount: 4
         damageMulti: 1
         name: 红色大地流星
         velocity: 1.5
@@ -3719,6 +3724,8 @@ TNT:
     projectileSize: 0.5
     blockHitAction: thru
     trailColor: 255|199|238
+    buffInflict:
+        - "弑神怒焰|30|1"
     clusterBomb:
         amount: 3
         damageMulti: 0.5
@@ -3726,15 +3733,17 @@ TNT:
         type: surround
         surroundOffset: 20.0
         fireOnTimeout: false
-        velocity: 2.75
+        velocity: 3
 宇宙之刃分裂弹幕:
     gravity: 0
-    liveTime: 20
-    penetration: 4
+    liveTime: 60
+    penetration: 2
     homing: true
     homingRadius: 16
     projectileSize: 0.25
     blockHitAction: thru
+    buffInflict:
+        - "弑神怒焰|15|1"
 阿米迪亚斯漩涡:
     projectileSize: 0.5
     homing: true
@@ -3820,7 +3829,7 @@ TNT:
 死神擢升镰刀:
     gravity: 0
     homing: true
-    homingRadius: 16
+    homingRadius: 24
     blockHitAction: thru
     speedMultiPerTick: 0.95
     projectileSize: 3
@@ -3840,7 +3849,7 @@ TNT:
 银河之雷:
     gravity: 0
     homing: true
-    homingRadius: 24
+    homingRadius: 64
     homingAbility: 6.0
     noHomingTicks: 5
     blockHitAction: thru
@@ -3876,7 +3885,7 @@ TNT:
     minimumDamageTicks: 5
     homing: true
     noHomingTicks: 5
-    homingRadius: 24
+    homingRadius: 40
     projectileSize: 2
     isGrenade: true
     blastRadius: 4
@@ -3900,7 +3909,7 @@ TNT:
     blockHitAction: thru
     speedMultiPerTick: 0.98
     homing: true
-    homingRadius: 24
+    homingRadius: 32
     homingAbility: 6
     liveTime: 50
 星夜光束:
@@ -3936,7 +3945,7 @@ TNT:
     buffInflict:
         - "元素谐鸣|40|1"
     clusterBomb:
-        amount: 9
+        amount: 6
         damageMulti: 0.4
         name: 蓝色元素光束
         velocity: 1.25
@@ -3948,7 +3957,7 @@ TNT:
     buffInflict:
         - "元素谐鸣|40|1"
     clusterBomb:
-        amount: 5
+        amount: 4
         damageMulti: 0.6
         name: 粉色元素光束
         velocity: 1.15
@@ -4109,7 +4118,7 @@ TNT:
     projectileSize: 1
     enemyInvincibilityFrame: 15
     blockHitAction: bounce
-    bounce: 8
+    bounce: 19
     penetration: 14
     gravity: 0
     homing: true

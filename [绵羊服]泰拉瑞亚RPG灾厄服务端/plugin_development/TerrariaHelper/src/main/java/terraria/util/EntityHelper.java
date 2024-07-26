@@ -1824,7 +1824,7 @@ public class EntityHelper {
                 if (damageTakerScoreboardTags.contains("isNPC"))
                     return accessories.contains(damageTaker.getName() + "巫毒娃娃");
                 if (damageTakerScoreboardTags.contains("isAnimal"))
-                    return (!accessories.contains("小动物友谊指南"));
+                    return (!PlayerHelper.hasCritterGuide((Player) damageSource));
                 // entities that are not animal, NPC or monster can be damaged but are not targeted actively
                 return true;
             }
@@ -2303,7 +2303,7 @@ public class EntityHelper {
                     case "利维坦":
                         // the damager is the flail
                         if (damager.getName().equals("雷姆的复仇"))
-                            dmg *= 50;
+                            dmg *= 8;
                         break;
 
                 }
@@ -2321,15 +2321,15 @@ public class EntityHelper {
                                     double consumptionRatio;
                                     if (plyAcc.equals("魔能过载仪")) {
                                         consumption = 2;
-                                        manaToDamageRate = 36;
+                                        manaToDamageRate = 50;
                                         consumptionRatio = 1;
                                     }
                                     else {
                                         consumption = (int) Math.max(mana * 0.035, 5);
-                                        manaToDamageRate = 40;
+                                        manaToDamageRate = 25;
                                         double effectDuration = EntityHelper.getEffectMap(damageSourcePly).getOrDefault("魔力熔蚀", 0);
-                                        // at 20 second = 400 ticks, mana use reduced by roughly 80%
-                                        consumptionRatio = 1 - (effectDuration / 500);
+                                        // at 20 second = 400 ticks, mana use reduced by roughly 100%
+                                        consumptionRatio = 1 - Math.pow(effectDuration / 400, 0.25);
                                     }
                                     if (ItemUseHelper.consumeMana(damageSourcePly, MathHelper.randomRound(consumption * consumptionRatio) )) {
                                         dmg += consumption * manaToDamageRate;

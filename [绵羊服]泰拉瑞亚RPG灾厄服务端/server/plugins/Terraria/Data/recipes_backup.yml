@@ -249,8 +249,7 @@ FURNACE:
     requireLevel: 3
     resultItem: 蘑菇锭:2
     requireItem:
-    - 叶绿锭:2
-    - 蘑菇:15
+    - 幽灵锭:2
     - 发光蘑菇
     recipeCategory: MATERIAL
   '38':
@@ -575,12 +574,6 @@ ANVIL:
     - 火枪子弹:64
     - 陨星锭
     recipeCategory: AMMO_BULLET
-  '36':
-    requireLevel: 2
-    resultItem: 绿藻弹:64
-    requireItem:
-    - 叶绿锭
-    recipeCategory: AMMO_BULLET
   '37':
     requireLevel: 2
     resultItem: 水晶子弹:96
@@ -595,12 +588,39 @@ ANVIL:
     - 火枪子弹:96
     - 诅咒焰
     recipeCategory: AMMO_BULLET
+  '36':
+    requireLevel: 2
+    resultItem: 绿藻弹:64
+    requireItem:
+    - 叶绿锭
+    recipeCategory: AMMO_BULLET
   '39':
     requireLevel: 1
     resultItem: 加速弹:144
     requireItem:
     - 火枪子弹:144
     - 珍珠碎片
+    recipeCategory: AMMO_BULLET
+  '42':
+    requireLevel: 1
+    resultItem: 弹球弹:144
+    requireItem:
+    - 陨星弹:144
+    - 珍珠碎片
+    recipeCategory: AMMO_BULLET
+  '44':
+    requireLevel: 2
+    resultItem: 钫弹:96
+    requireItem:
+    - 火枪子弹:96
+    - 寒元锭
+    recipeCategory: AMMO_BULLET
+  '43':
+    requireLevel: 2
+    resultItem: 泰拉弹:144
+    requireItem:
+    - 水晶子弹:96
+    - 生命碎片
     recipeCategory: AMMO_BULLET
   '40':
     requireLevel: 2
@@ -615,27 +635,6 @@ ANVIL:
     requireItem:
     - 火枪子弹:144
     - 生命合金
-    recipeCategory: AMMO_BULLET
-  '42':
-    requireLevel: 1
-    resultItem: 弹球弹:144
-    requireItem:
-    - 陨星弹:144
-    - 珍珠碎片
-    recipeCategory: AMMO_BULLET
-  '43':
-    requireLevel: 2
-    resultItem: 泰拉弹:144
-    requireItem:
-    - 水晶子弹:96
-    - 生命碎片
-    recipeCategory: AMMO_BULLET
-  '44':
-    requireLevel: 2
-    resultItem: 钫弹:96
-    requireItem:
-    - 火枪子弹:96
-    - 寒元锭
     recipeCategory: AMMO_BULLET
   '45':
     requireLevel: 3
@@ -727,12 +726,6 @@ ANVIL:
     - 附魔回力镖
     - 狱炎锭:15
     recipeCategory: WEAPON_MELEE
-  '58':
-    requireLevel: 1
-    resultItem: 抑郁球
-    requireItem:
-    - 恶魔锭:18
-    recipeCategory: WEAPON_MELEE
   '59':
     requireLevel: 1
     resultItem: 亚马逊悠悠球
@@ -741,6 +734,12 @@ ANVIL:
     - 木材:17
     - 丛林孢子:7
     - 毒刺:6
+    recipeCategory: WEAPON_MELEE
+  '58':
+    requireLevel: 1
+    resultItem: 抑郁球
+    requireItem:
+    - 恶魔锭:18
     recipeCategory: WEAPON_MELEE
   '60':
     requireLevel: 1
@@ -1204,24 +1203,24 @@ ANVIL:
     requireLevel: 2
     resultItem: 寒霜头盔
     requireItem:
-    - 神圣锭:10
-    - 灾劫核心
+    - 精金锭:10
+    - 冰川精华:4
     - 寒霜核
     recipeCategory: ARMOR
   '133':
     requireLevel: 2
     resultItem: 寒霜胸甲
     requireItem:
-    - 神圣锭:20
-    - 灾劫核心
+    - 精金锭:20
+    - 冰川精华:8
     - 寒霜核
     recipeCategory: ARMOR
   '134':
     requireLevel: 2
     resultItem: 寒霜护腿
     requireItem:
-    - 神圣锭:16
-    - 灾劫核心
+    - 精金锭:16
+    - 冰川精华:6
     - 寒霜核
     recipeCategory: ARMOR
   '135':
@@ -1331,7 +1330,7 @@ ANVIL:
     requireLevel: 1
     resultItem: 海鲜饵料
     requireItem:
-    - 沙块:16
+    - 沙块:12
     - 海星:5
     - 贝壳:5
     - 珊瑚:5
@@ -1411,6 +1410,7 @@ ANVIL:
     requireLevel: 2
     resultItem: 泰拉之刃
     requireItem:
+    - 凝胶波刃
     - 真·永夜之刃
     - 真·圣剑
     - 断裂英雄剑
@@ -1544,13 +1544,43 @@ ANVIL:
     recipeCategory: ARMOR
   '180':
     requireLevel: 2
+    resultItem: 蘑菇矿头饰
+    requireItem:
+    - 蘑菇锭:12
+    recipeCategory: ARMOR
+  '181':
+    requireLevel: 2
+    resultItem: 蘑菇矿头盔
+    requireItem:
+    - 蘑菇锭:12
+    recipeCategory: ARMOR
+  '182':
+    requireLevel: 2
+    resultItem: 蘑菇矿面具
+    requireItem:
+    - 蘑菇锭:12
+    recipeCategory: ARMOR
+  '183':
+    requireLevel: 2
+    resultItem: 蘑菇矿胸甲
+    requireItem:
+    - 蘑菇锭:24
+    recipeCategory: ARMOR
+  '184':
+    requireLevel: 2
+    resultItem: 蘑菇矿护腿
+    requireItem:
+    - 蘑菇锭:18
+    recipeCategory: ARMOR
+  '185':
+    requireLevel: 2
     resultItem: 甲虫头盔
     requireItem:
     - 甲虫外壳:4
     - 海龟壳
     - 叶绿面具
     recipeCategory: ARMOR
-  '181':
+  '186':
     requireLevel: 2
     resultItem: 甲虫铠甲
     requireItem:
@@ -1558,7 +1588,7 @@ ANVIL:
     - 海龟壳
     - 叶绿板甲
     recipeCategory: ARMOR
-  '182':
+  '187':
     requireLevel: 2
     resultItem: 甲虫壳
     requireItem:
@@ -1566,43 +1596,13 @@ ANVIL:
     - 海龟壳
     - 叶绿板甲
     recipeCategory: ARMOR
-  '183':
+  '188':
     requireLevel: 2
     resultItem: 甲虫护腿
     requireItem:
     - 甲虫外壳:6
     - 海龟壳
     - 叶绿护胫
-    recipeCategory: ARMOR
-  '184':
-    requireLevel: 2
-    resultItem: 蘑菇矿头饰
-    requireItem:
-    - 蘑菇锭:12
-    recipeCategory: ARMOR
-  '185':
-    requireLevel: 2
-    resultItem: 蘑菇矿头盔
-    requireItem:
-    - 蘑菇锭:12
-    recipeCategory: ARMOR
-  '186':
-    requireLevel: 2
-    resultItem: 蘑菇矿面具
-    requireItem:
-    - 蘑菇锭:12
-    recipeCategory: ARMOR
-  '187':
-    requireLevel: 2
-    resultItem: 蘑菇矿胸甲
-    requireItem:
-    - 蘑菇锭:24
-    recipeCategory: ARMOR
-  '188':
-    requireLevel: 2
-    resultItem: 蘑菇矿护腿
-    requireItem:
-    - 蘑菇锭:18
     recipeCategory: ARMOR
   '189':
     requireLevel: 2
@@ -2113,7 +2113,7 @@ ANVIL:
     requireLevel: 1
     resultItem: 凝胶波刃
     requireItem:
-    - 纯净凝胶:30
+    - 纯净凝胶:12
     - 凝胶:35
     - 狱炎锭:10
     recipeCategory: WEAPON_MELEE
@@ -2385,7 +2385,7 @@ ANVIL:
     - 熔渣锭:6
     recipeCategory: WEAPON_MELEE
   '294':
-    requireLevel: 2
+    requireLevel: 3
     resultItem: 神谕
     requireItem:
     - 混沌射线
@@ -2602,15 +2602,15 @@ ANVIL:
     recipeCategory: WEAPON_ARROW
   '322':
     requireLevel: 2
-    resultItem: 洲陆巨弓
-    requireItem:
-    - 熔渣锭:10
-    recipeCategory: WEAPON_ARROW
-  '323':
-    requireLevel: 2
     resultItem: 猎人长弓
     requireItem:
     - 灵气:31
+    recipeCategory: WEAPON_ARROW
+  '323':
+    requireLevel: 2
+    resultItem: 洲陆巨弓
+    requireItem:
+    - 熔渣锭:10
     recipeCategory: WEAPON_ARROW
   '324':
     requireLevel: 3
@@ -2931,7 +2931,7 @@ ANVIL:
     - 可疑镀层:20
     - 神秘电路:20
     - 宇宙锭:8
-    - 化神魂精:2
+    - 神圣晶石:16
     recipeCategory: WEAPON_BULLET
   '363':
     requireLevel: 1
@@ -3375,7 +3375,7 @@ WORKBENCH:
     requireLevel: 1
     resultItem: 玻璃平台
     requireItem:
-    - 玻璃:64
+    - 玻璃:32
     recipeCategory: TOOL
   '2':
     requireLevel: 1
@@ -3479,7 +3479,7 @@ WORKBENCH:
     recipeCategory: BLOCK
   '17':
     requireLevel: 1
-    resultItem: 箱子
+    resultItem: CHEST
     requireItem:
     - 木材:8
     - 铁锭:2
@@ -3707,6 +3707,19 @@ WORKBENCH:
     - 冰川精华:2
     - 混乱精华:2
     recipeCategory: WEAPON_MAGIC
+  '53':
+    requireLevel: 1
+    resultItem: 暗晶风暴
+    requireItem:
+    - 水晶风暴
+    - 寒元锭:6
+    recipeCategory: WEAPON_MAGIC
+  '54':
+    requireLevel: 1
+    resultItem: 蒸海硫火
+    requireItem:
+    - 污痕核心:5
+    recipeCategory: WEAPON_MAGIC
   '51':
     requireLevel: 1
     resultItem: 死亡之尘
@@ -3721,19 +3734,6 @@ WORKBENCH:
     requireItem:
     - 禁戒碎片:2
     - 精金锭:5
-    recipeCategory: WEAPON_MAGIC
-  '53':
-    requireLevel: 1
-    resultItem: 暗晶风暴
-    requireItem:
-    - 水晶风暴
-    - 寒元锭:6
-    recipeCategory: WEAPON_MAGIC
-  '54':
-    requireLevel: 1
-    resultItem: 蒸海硫火
-    requireItem:
-    - 污痕核心:5
     recipeCategory: WEAPON_MAGIC
   '55':
     requireLevel: 1
@@ -3836,7 +3836,8 @@ WORKBENCH:
     - 原核之怒
     - 遗迹圣物
     - 宇宙锭:8
-    - 日蚀之阴碎片:8
+    - 暗物质
+    - 扭曲虚空
     recipeCategory: WEAPON_MAGIC
   '67':
     requireLevel: 1
@@ -3881,7 +3882,7 @@ ENCHANTMENT_TABLE:
     requireLevel: 1
     resultItem: 荒漠吊坠
     requireItem:
-    - 沙块:16
+    - 沙块:12
     - 蚁狮上颚:4
     - 风暴之颚:2
     recipeCategory: BOSS
@@ -3923,7 +3924,6 @@ ENCHANTMENT_TABLE:
     resultItem: 垃圾桶
     requireItem:
     - 铁锭:8
-    - 箱子
     recipeCategory: TOOL
   '10':
     requireLevel: 1
@@ -4098,7 +4098,7 @@ AIR:
     requireLevel: 1
     resultItem: 初学者鱼饵:2
     requireItem:
-    - 发光蘑菇
+    - 蘑菇
     - 南瓜
     recipeCategory: FISH_BAIT
   '14':
@@ -4115,8 +4115,8 @@ AIR:
     requireItem:
     - 专家鱼饵:8
     - 妖精尘:8
-    - 星尘:4
-    - 凝胶
+    - 凝胶:4
+    - 星尘:8
     recipeCategory: FISH_BAIT
   '16':
     requireLevel: 1
@@ -4573,6 +4573,8 @@ TINKER_WORKBENCH:
     requireItem:
     - 机械手套
     - 岩浆石
+    - 再生药水
+    - 灾厄尘:5
     - 熔渣锭:5
     recipeCategory: ACCESSORY
   '19':
@@ -5035,6 +5037,7 @@ TINKER_WORKBENCH:
     resultItem: 钨钢屏障转换仪
     requireItem:
     - 钨钢屏障生成仪
+    - 纯净凝胶:15
     - 光明碎块
     - 暗黑碎块
     - 光明之魂:5
@@ -5146,10 +5149,10 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 天界符
     requireItem:
-    - 日耀碎片:20
-    - 星璇碎片:20
-    - 星云碎片:20
-    - 星尘碎片:20
+    - 日耀碎片:8
+    - 星璇碎片:8
+    - 星云碎片:8
+    - 星尘碎片:8
     recipeCategory: BOSS
   '2':
     requireLevel: 1
@@ -5478,23 +5481,6 @@ TINKER_WORKBENCH:
     - 星璇碎片
     - 星云碎片
     recipeCategory: MATERIAL
-  '50':
-    requireLevel: 1
-    resultItem: 风暴管束者
-    requireItem:
-    - 日光核心:3
-    - 风暴军刀
-    - 风之刃
-    - 日耀碎片:10
-    recipeCategory: WEAPON_MELEE
-  '51':
-    requireLevel: 1
-    resultItem: 大守卫者
-    requireItem:
-    - 雄伟之护
-    - 灼炎弯刀
-    - 星云碎片:6
-    recipeCategory: WEAPON_MELEE
   '52':
     requireLevel: 1
     resultItem: 幻星刀
@@ -5513,6 +5499,23 @@ TINKER_WORKBENCH:
     requireItem:
     - 无头骑士剑
     - 星尘碎片:12
+    recipeCategory: WEAPON_MELEE
+  '50':
+    requireLevel: 1
+    resultItem: 风暴管束者
+    requireItem:
+    - 日光核心:3
+    - 风暴军刀
+    - 风之刃
+    - 日耀碎片:10
+    recipeCategory: WEAPON_MELEE
+  '51':
+    requireLevel: 1
+    resultItem: 大守卫者
+    requireItem:
+    - 雄伟之护
+    - 灼炎弯刀
+    - 星云碎片:6
     recipeCategory: WEAPON_MELEE
   '55':
     requireLevel: 1
@@ -6462,6 +6465,7 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 天堂之风
     requireItem:
+    - 叶流
     - 地核之炎
     - 破城巨弓
     - 发条弓

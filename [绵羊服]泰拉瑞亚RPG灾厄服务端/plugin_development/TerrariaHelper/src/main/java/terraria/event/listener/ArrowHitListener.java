@@ -36,11 +36,6 @@ public class ArrowHitListener implements Listener {
         }
     }
     private static void handleHitEntity(TerrariaProjectileHitEvent e, Projectile projectile, Entity entity) {
-        if (entity instanceof ArmorStand) {
-            // TODO
-            Bukkit.broadcastMessage(projectile.getName());
-        }
-
         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(projectile);
         Set<String> projectileScoreboardTags = projectile.getScoreboardTags();
         String projectileName = projectile.getName();

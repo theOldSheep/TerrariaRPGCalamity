@@ -476,8 +476,12 @@ public class PlayerHelper {
         return ply.getInventory().contains(voidBag);
     }
     public static boolean hasTrashBin(Player ply) {
-        ItemStack voidBag = ItemHelper.getItemFromDescription("垃圾桶", false, new ItemStack(Material.BEDROCK));
-        return ply.getInventory().contains(voidBag);
+        ItemStack trashBin = ItemHelper.getItemFromDescription("垃圾桶", false, new ItemStack(Material.BEDROCK));
+        return ply.getInventory().contains(trashBin);
+    }
+    public static boolean hasCritterGuide(Player ply) {
+        ItemStack guideBook = ItemHelper.getItemFromDescription("小动物友谊指南", false, new ItemStack(Material.BEDROCK));
+        return ply.getInventory().contains(guideBook);
     }
     public static void updateTrashBinInfo(Player ply) {
         HashSet<String> itemsInTrash = new HashSet<>();
@@ -738,18 +742,28 @@ public class PlayerHelper {
                     String current = "";
                     MetadataValue forceBackground = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BACKGROUND);
                     if (forceBackground == null) {
-                        // sky darkens when fighting duke fishron in tier 3
+                        // duke fishron: background change for only the last tier
                         if (BossHelper.bossMap.containsKey(BossHelper.BossType.DUKE_FISHRON.msgName)) {
                             LivingEntity fishron = BossHelper.bossMap.get(BossHelper.BossType.DUKE_FISHRON.msgName).get(0);
                             if (fishron.getHealth() / fishron.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() <= 0.4)
                                 current = "猪鲨";
                         }
-                        if (BossHelper.bossMap.containsKey(BossHelper.BossType.MOON_LORD.msgName))
+                        // other bosses with constant background change
+                        if (BossHelper.bossMap.containsKey(BossHelper.BossType.SUPREME_WITCH_CALAMITAS.msgName) )
+                            current = "血月";
+                        else if (BossHelper.bossMap.containsKey(BossHelper.BossType.EXO_MECHS.msgName) )
+                            current = "虚空";
+                        else if (BossHelper.bossMap.containsKey(BossHelper.BossType.YHARON_DRAGON_OF_REBIRTH.msgName) )
+                            current = "血月";
+                        else if (BossHelper.bossMap.containsKey(BossHelper.BossType.THE_DEVOURER_OF_GODS.msgName) )
+                            current = "虚空";
+                        else if (BossHelper.bossMap.containsKey(BossHelper.BossType.MOON_LORD.msgName))
                             current = "虚空";
                         else if (BossHelper.bossMap.containsKey(BossHelper.BossType.CALAMITAS_CLONE.msgName))
                             current = "血月";
                         else if (BossHelper.bossMap.containsKey(BossHelper.BossType.THE_PLAGUEBRINGER_GOLIATH.msgName) )
                             current = "猪鲨";
+                        // celestial pillars
                         else if (ply.getWorld().getName().equals(TerrariaHelper.Constants.WORLD_NAME_SURFACE)) {
                             if (EventAndTime.currentEvent != EventAndTime.Events.NONE)
                                 current = EventAndTime.currentEvent.toString();
@@ -2907,8 +2921,8 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     } else {
                         int projectilePower = (int) Math.ceil(dmg * 0.5);
                         createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), projectilePower, false, "255|255|255");
-                        // 400 dmg/second = 20 dmg/tick
-                        coolDownTicks = (int) Math.ceil(projectilePower / 20d);
+                        // 600 dmg/second = 30 dmg/tick
+                        coolDownTicks = (int) Math.ceil(projectilePower / 30d);
                     }
                     // apply CD
                     EntityHelper.handleEntityTemporaryScoreboardTag(dPly, spectreCD, coolDownTicks);
