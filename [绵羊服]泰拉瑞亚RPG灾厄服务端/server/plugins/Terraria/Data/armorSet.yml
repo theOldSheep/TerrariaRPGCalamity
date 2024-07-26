@@ -1186,13 +1186,13 @@ sets:
     - §a套装效果：
     - §a+6 生命恢复
     - §a击中敌人会掉落红心，这个效果有5秒冷却时间
-    - §a增加30%召唤伤害和4召唤栏
+    - §a增加30%召唤伤害和3召唤栏
     - §a如果玩家在90%血量以上，增加15%召唤伤害
     - §a在50%生命及以下获得40点防御和4点生命恢复
     attributes:
       regen: 6
       damageSummonMulti: 0.3
-      minionLimit: 4
+      minionLimit: 3
   蓝色欧米茄套装:
     lore:
     - ''
@@ -1325,7 +1325,7 @@ sets:
     - ''
     - §a套装效果：
     - §a+5% 移动速度
-    - §a+4 仆从容量和 45% 仆从伤害
+    - §a+4 仆从容量和 30% 仆从伤害
     - §a继承龙蒿套装、血炎套装和始源林海套装召唤头盔的效果
     - §b-> §a继承自龙蒿套装的效果：
     - §a减少刷怪量和刷怪率
@@ -1345,7 +1345,7 @@ sets:
       mobSpawnRateMulti: -0.5
       speedMulti: 0.05
       minionLimit: 4
-      damageSummonMulti: 0.45
+      damageSummonMulti: 0.3
   天钻套装:
     lore:
     - ''

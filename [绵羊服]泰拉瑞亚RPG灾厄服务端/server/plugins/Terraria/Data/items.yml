@@ -2558,8 +2558,8 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    armorPenetration: 25
-    damageMulti: 0.1
+    armorPenetration: 20
+    crit: 8
   worth: 9600000
   rarity: 7
 猎魂鲨齿项链:
@@ -2569,7 +2569,7 @@ Drew之翼:
   - §r取自顶级掠食者的恐怖战利品
   attributes:
     armorPenetration: 60
-    damageMulti: 0.15
+    crit: 15
   worth: 26000000
   rarity: 13
 恼怒项链:
@@ -4536,7 +4536,7 @@ Drew之翼:
     damageType: Melee
     crit: 14
     knockback: 1
-    useTime: 30
+    useTime: 27
   worth: 20000000
   rarity: 10
 钴薙刀:
@@ -9811,7 +9811,7 @@ Dodu的手炮:
   item: BOOK
   lore:
   - §r召唤宇宙之触助你撕裂敌人
-  - §r“§#305F4F大脑在颤抖!§r”
+  - §#305F4F“大脑在颤抖!”
   attributes:
     damage: 220
     damageType: Magic
@@ -13826,7 +13826,6 @@ Dodu的手炮:
   attributes:
     defence: 108
     damageMeleeMulti: 0.2
-    critMelee: 10
   worth: 30000000
   rarity: 15
 金兜铁面盔:
@@ -13836,7 +13835,7 @@ Dodu的手炮:
   attributes:
     defence: 80
     damageRangedMulti: 0.3
-    critRanged: 30
+    critRanged: 20
   worth: 30000000
   rarity: 15
 金虚万象盔:
@@ -13845,7 +13844,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 48
-    damageMagicMulti: 0.3
+    damageMagicMulti: 0.2
     critMagic: 20
     maxMana: 100
     manaUseMulti: -0.2

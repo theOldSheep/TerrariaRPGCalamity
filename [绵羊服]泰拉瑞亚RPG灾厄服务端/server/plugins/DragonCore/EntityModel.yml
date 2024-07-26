@@ -92,84 +92,140 @@
 装甲风暴编织者头:
   entity: "装甲风暴编织者头"
   contains: false
-  model: "装甲风暴编织者/头/head.obj"
-  texture: "装甲风暴编织者/头/head.png"
-  scale: 100
+  model: "神明吞噬者/头/head.obj"
+  texture: "神明吞噬者/StormWeaverArmored.png"
+  scale: 55
   renderAlways: true
-# 装甲风暴编织者体节:
-#   entity: "装甲风暴编织者体节"
-#   contains: false
-#   model: "装甲风暴编织者/体节/body.obj"
-#   texture: "装甲风暴编织者/体节/body.png"
-#   scale: 100
-#   renderAlways: true
-# 装甲风暴编织者尾:
-#   entity: "装甲风暴编织者尾"
-#   contains: false
-#   model: "装甲风暴编织者/体节/body.obj"
-#   texture: "装甲风暴编织者/体节/body.png"
-#   scale: 100
-#   renderAlways: true
+装甲风暴编织者体节:
+  entity: "装甲风暴编织者体节"
+  contains: false
+  model: "神明吞噬者/体节/body.obj"
+  texture: "神明吞噬者/StormWeaverArmored.png"
+  scale: 55
+  renderAlways: true
+装甲风暴编织者尾:
+  entity: "装甲风暴编织者尾"
+  contains: false
+  model: "神明吞噬者/尾/tail.obj"
+  texture: "神明吞噬者/StormWeaverArmored.png"
+  scale: 55
+  renderAlways: true
 风暴编织者头:
   entity: "风暴编织者头"
   contains: false
-  model: "风暴编织者/头/head.obj"
-  texture: "风暴编织者/头/head.png"
-  scale: 100
+  model: "神明吞噬者/头/head.obj"
+  texture: "神明吞噬者/StormWeaver.png"
+  scale: 50
   renderAlways: true
-# 风暴编织者体节:
-#   entity: "风暴编织者体节"
-#   contains: false
-#   model: "风暴编织者/体节/body.obj"
-#   texture: "风暴编织者/体节/body.png"
-#   scale: 100
-#   renderAlways: true
-# 风暴编织者尾:
-#   entity: "风暴编织者尾"
-#   contains: false
-#   model: "风暴编织者/体节/body.obj"
-#   texture: "风暴编织者/体节/body.png"
-#   scale: 100
-#   renderAlways: true
-# 装甲神明吞噬者头:
-#   entity: "装甲神明吞噬者头"
-#   contains: false
-#   model: "装甲神明吞噬者/头/head.obj"
-#   texture: "装甲神明吞噬者/头/head.png"
-#   scale: 100
-#   renderAlways: true
-# 装甲神明吞噬者体节:
-#   entity: "装甲神明吞噬者体节"
-#   contains: false
-#   model: "装甲神明吞噬者/体节/body.obj"
-#   texture: "装甲神明吞噬者/体节/body.png"
-#   scale: 100
-#   renderAlways: true
-# 装甲神明吞噬者尾:
-#   entity: "装甲神明吞噬者尾"
-#   contains: false
-#   model: "装甲神明吞噬者/体节/body.obj"
-#   texture: "装甲神明吞噬者/体节/body.png"
-#   scale: 100
-#   renderAlways: true
+风暴编织者体节:
+  entity: "风暴编织者体节"
+  contains: false
+  model: "神明吞噬者/体节/body.obj"
+  texture: "神明吞噬者/StormWeaver.png"
+  scale: 50
+  renderAlways: true
+风暴编织者尾:
+  entity: "风暴编织者尾"
+  contains: false
+  model: "神明吞噬者/尾/tail.obj"
+  texture: "神明吞噬者/StormWeaver.png"
+  scale: 50
+  renderAlways: true
+装甲神明吞噬者头:
+  entity: "装甲神明吞噬者头"
+  contains: false
+  model: "神明吞噬者/头/head.obj"
+  texture: "神明吞噬者/DoG.png"
+  scale: 70
+  renderAlways: true
+装甲神明吞噬者体节:
+  entity: "装甲神明吞噬者体节"
+  contains: false
+  model: "神明吞噬者/体节/body.obj"
+  texture: "神明吞噬者/DoG.png"
+  scale: 70
+  renderAlways: true
+装甲神明吞噬者尾:
+  entity: "装甲神明吞噬者尾"
+  contains: false
+  model: "神明吞噬者/尾/tail.obj"
+  texture: "神明吞噬者/DoG.png"
+  scale: 70
+  renderAlways: true
 神明吞噬者头:
   entity: "神明吞噬者头"
   contains: false
   model: "神明吞噬者/头/head.obj"
-  texture: "神明吞噬者/头/head.png"
-  scale: 100
+  texture: "神明吞噬者/DoG.png"
+  scale: 70
   renderAlways: true
-# 神明吞噬者体节:
-#   entity: "神明吞噬者体节"
-#   contains: false
-#   model: "神明吞噬者/体节/body.obj"
-#   texture: "神明吞噬者/体节/body.png"
-#   scale: 100
-#   renderAlways: true
-# 神明吞噬者尾:
-#   entity: "神明吞噬者尾"
-#   contains: false
-#   model: "神明吞噬者/体节/body.obj"
-#   texture: "神明吞噬者/体节/body.png"
-#   scale: 100
-#   renderAlways: true
+神明吞噬者体节:
+  entity: "神明吞噬者体节"
+  contains: false
+  model: "神明吞噬者/体节/body.obj"
+  texture: "神明吞噬者/DoG.png"
+  scale: 70
+  renderAlways: true
+神明吞噬者尾:
+  entity: "神明吞噬者尾"
+  contains: false
+  model: "神明吞噬者/尾/tail.obj"
+  texture: "神明吞噬者/DoG.png"
+  scale: 70
+  renderAlways: true
+小星宇神卫头:
+  entity: "小星宇神卫头"
+  contains: false
+  model: "神明吞噬者/头/head.obj"
+  texture: "神明吞噬者/DoG.png"
+  scale: 12
+  renderAlways: true
+小星宇神卫体节:
+  entity: "小星宇神卫"
+  contains: false
+  model: "神明吞噬者/体节/body.obj"
+  texture: "神明吞噬者/DoG.png"
+  scale: 12
+  renderAlways: true
+灾坟魔物头:
+  entity: "灾坟魔物头"
+  contains: false
+  model: "灾坟魔物/CustomModel.obj"
+  texture: "灾坟魔物/texture.png"
+  scale: 50
+  renderAlways: true
+灾坟魔物体节:
+  entity: "灾坟魔物体节"
+  contains: false
+  model: "灾坟魔物/CustomModel.obj"
+  texture: "灾坟魔物/texture.png"
+  scale: 50
+  renderAlways: true
+灾坟魔物尾:
+  entity: "灾坟魔物尾"
+  contains: false
+  model: "灾坟魔物/CustomModel.obj"
+  texture: "灾坟魔物/texture.png"
+  scale: 50
+  renderAlways: true
+灾坟仆从:
+  entity: "灾坟仆从"
+  contains: false
+  model: "灾坟魔物/CustomModel.obj"
+  texture: "灾坟魔物/texture.png"
+  scale: 18
+  renderAlways: true
+灾坟仆从体节:
+  entity: "灾坟仆从体节"
+  contains: false
+  model: "灾坟魔物/CustomModel.obj"
+  texture: "灾坟魔物/texture.png"
+  scale: 18
+  renderAlways: true
+灾坟仆从尾:
+  entity: "灾坟仆从尾"
+  contains: false
+  model: "灾坟魔物/CustomModel.obj"
+  texture: "灾坟魔物/texture.png"
+  scale: 18
+  renderAlways: true
