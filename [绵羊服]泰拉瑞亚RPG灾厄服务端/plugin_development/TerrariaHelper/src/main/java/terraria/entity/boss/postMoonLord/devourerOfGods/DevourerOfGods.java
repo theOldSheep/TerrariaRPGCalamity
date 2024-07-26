@@ -10,7 +10,6 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -40,6 +39,8 @@ public class DevourerOfGods extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
+    public String COLOR_PREFIX = "§#00FFFF", MSG_SPAWN = "你不是神……但你的灵魂仍是我的盛宴！",
+            MSG_FINAL_STAGE = "还没完呢！", MSG_KILL = "致命失误！";
     DevourerOfGods head;
     StormWeaver stormWeaver = null;
     CeaselessVoid ceaselessVoid = null;
@@ -336,6 +337,7 @@ public class DevourerOfGods extends EntitySlime {
                     setHealth(getMaxHealth() * 0.599f);
                     // Go to the next stage
                     if (--finalPhaseDelayTicks <= 0) {
+                        Bukkit.broadcastMessage(COLOR_PREFIX + MSG_FINAL_STAGE);
                         stage = 2;
                         // reset to dashing phase
                         toPhase(1);
@@ -439,9 +441,13 @@ public class DevourerOfGods extends EntitySlime {
                 Player previousTarget = target;
                 target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
                         IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
-                // Reset flying phase duration
-                if (stage != 1 && target != previousTarget && phase == 0) {
-                    toPhase(0);
+                // Target changed
+                if (target != previousTarget) {
+                    Bukkit.broadcastMessage(COLOR_PREFIX + MSG_KILL);
+                    // Reset flying phase duration
+                    if (stage != 1 && phase == 0) {
+                        toPhase(0);
+                    }
                 }
             }
 
@@ -607,6 +613,9 @@ public class DevourerOfGods extends EntitySlime {
             if (segmentTypeIndex != 2)
                 new DevourerOfGods(summonedPlayer, bossParts, segmentIndex + 1);
         }
+        // summon message
+        if (segmentIndex == 0)
+            Bukkit.broadcastMessage(COLOR_PREFIX + MSG_SPAWN);
     }
 
     // disable death function to remove boss bar

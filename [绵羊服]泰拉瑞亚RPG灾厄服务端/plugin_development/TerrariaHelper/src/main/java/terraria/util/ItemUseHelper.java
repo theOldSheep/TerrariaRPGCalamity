@@ -598,10 +598,11 @@ public class ItemUseHelper {
             // the enemy the player is looking at, if applicable
             Vector traceStart = eyeLoc.clone();
             Vector traceEnd = endLoc.clone();
-            if (eyeLoc.distanceSquared(endLoc) > entityEnlargeRadius * entityEnlargeRadius) {
-                traceStart.add(lookDir.clone().multiply(entityEnlargeRadius / 2));
-                traceEnd.subtract(lookDir.clone().multiply(entityEnlargeRadius / 2));
-            }
+            // omit this terminal smoothing for optimal user experience
+//            if (eyeLoc.distanceSquared(endLoc) > entityEnlargeRadius * entityEnlargeRadius) {
+//                traceStart.add(lookDir.clone().multiply(entityEnlargeRadius / 2));
+//                traceEnd.subtract(lookDir.clone().multiply(entityEnlargeRadius / 2));
+//            }
             Set<HitEntityInfo> hits = HitEntityInfo.getEntitiesHit(
                     plyWorld, traceStart, traceEnd,
                     entityEnlargeRadius,
@@ -1727,7 +1728,7 @@ public class ItemUseHelper {
         // "swing" or "whip"
         else {
             if (weaponType.equals("天顶剑")) {
-                if (currentIndex % 3 == 0) {
+                if (currentIndex % 3 == 0 && currentIndex != maxIndex) {
                     String[] candidateItems = {"泰拉之刃", "彩虹猫之刃", "狂星之怒", "无头骑士剑", "种子弯刀", "铜质短剑"};
                     strikeLineInfo.particleInfo.setSpriteItem(ItemHelper.getRawItem(
                             candidateItems[(int) (Math.random() * candidateItems.length) ]));
@@ -2957,6 +2958,7 @@ public class ItemUseHelper {
                 }
             }
         }
+        // ark of cosmos etc. would depend on currentIndex == maxIndex
         if (currentIndex < maxIndex) {
             Vector finalLookDir = lookDir;
             Collection<Entity> finalDamaged = damaged;

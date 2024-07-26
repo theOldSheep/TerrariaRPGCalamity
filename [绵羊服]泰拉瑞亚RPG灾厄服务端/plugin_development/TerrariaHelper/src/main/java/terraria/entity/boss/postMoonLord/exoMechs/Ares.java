@@ -99,6 +99,7 @@ public class Ares extends EntitySlime {
         // Check if the sub-boss is active
         if (!owner.isSubBossActive(Draedon.SubBossType.ARES)) {
             isLaserBeamAttackActive = false;
+            laserBeamCounter = 0;
         }
 
         // Check the difficulty level
@@ -110,6 +111,11 @@ public class Ares extends EntitySlime {
             if (laserBeamCounter <= REGULAR_ATTACK_PHASE_TICK_DURATION) {
                 isLaserBeamAttackActive = false;
             } else if (laserBeamCounter <= REGULAR_ATTACK_PHASE_TICK_DURATION + ROAR_INTERVAL * ROAR_COUNT + LASER_BEAM_DURATION * LASER_BEAM_COUNT) {
+                // Change bar color
+                if (laserBeamCounter == REGULAR_ATTACK_PHASE_TICK_DURATION + 1) {
+                    bossbar.color = BossBattle.BarColor.RED;
+                    bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+                }
                 // Roar before the laser beam attack
                 if (laserBeamCounter <= REGULAR_ATTACK_PHASE_TICK_DURATION + ROAR_INTERVAL * ROAR_COUNT) {
                     if ((laserBeamCounter - REGULAR_ATTACK_PHASE_TICK_DURATION) % ROAR_INTERVAL == 1) {
@@ -132,6 +138,9 @@ public class Ares extends EntitySlime {
 
                     // Swap the arm placement after the laser beam attack
                     if (currentLaserBeam == LASER_BEAM_COUNT) {
+                        bossbar.color = BossBattle.BarColor.GREEN;
+                        bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+
                         isHandPlacementFlipped = !isHandPlacementFlipped;
                         laserBeamCounter = 0;
                         currentLaserBeam = 0;

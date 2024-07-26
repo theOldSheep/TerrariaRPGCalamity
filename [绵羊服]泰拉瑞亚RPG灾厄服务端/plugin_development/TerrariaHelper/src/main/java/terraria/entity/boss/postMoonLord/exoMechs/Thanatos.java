@@ -51,7 +51,7 @@ public class Thanatos extends EntitySlime {
     Draedon owner = null;
     // other variables and AI
     static final double LASER_SPEED = 4.0,
-            FINAL_LASER_LENGTH = 96.0, FINAL_LASER_WIDTH = 1.5;
+            FINAL_LASER_MINIMUM_LENGTH = 24.0, FINAL_LASER_WIDTH = 0.5;
     private static final int ARMOR_CLOSE_COUNTDOWN = 60;
     private static final int LASER_DELAY = 1;
     static EntityHelper.AimHelperOptions
@@ -104,7 +104,7 @@ public class Thanatos extends EntitySlime {
     AttackMethod attackMethod = AttackMethod.LASER_PROJECTILE;
     int ticks = 0;
     Vector velocity = new Vector();
-    double desiredLength = 2.5;
+    double desiredSpeed = 2.5;
 
     public void setOpen(boolean open) {
         if (open && armorCloseCountdown <= 0) {
@@ -166,7 +166,7 @@ public class Thanatos extends EntitySlime {
 
     private void adjustLength() {
         double velLen = velocity.length();
-        double diff = desiredLength - velLen;
+        double diff = desiredSpeed - velLen;
         double diffAbs = Math.abs(diff);
         velLen += Math.min(0.05, diffAbs) * Math.signum(diff);
         MathHelper.setVectorLength(velocity, velLen);
@@ -182,22 +182,23 @@ public class Thanatos extends EntitySlime {
             attackMethod = AttackMethod.DASH;
             ticks = 0;
         }
-        desiredLength = 2;
-        Vector idealVelocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), desiredLength);
+        desiredSpeed = 1.75;
+        Vector idealVelocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), target.getEyeLocation(), desiredSpeed);
         velocity = MathHelper.rotationInterpolateDegree(velocity, idealVelocity, 6);
     }
 
     private void handleDashAttack(Draedon.Difficulty difficulty) {
+        int dashDuration = difficulty == Draedon.Difficulty.HIGH ? 10 : 15;
         // Windup
         if (ticks < 40) {
-            desiredLength = 2.5;
+            desiredSpeed = 2.5;
 
             double angle = 25 * ticks / 40.0;
             Location targetLocation = target.getEyeLocation();
             if (!owner.isSubBossActive(Draedon.SubBossType.THANATOS)) {
                 targetLocation.setY(-50);
             }
-            Vector idealVelocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), targetLocation, desiredLength);
+            Vector idealVelocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), targetLocation, desiredSpeed);
             velocity = MathHelper.rotationInterpolateDegree(velocity, idealVelocity, angle);
             if (bukkitEntity.getLocation().distanceSquared(targetLocation) < 400) {
                 ticks = 39;
@@ -205,7 +206,7 @@ public class Thanatos extends EntitySlime {
         }
         // Dash
         else if (ticks == 40) {
-            desiredLength = difficulty == Draedon.Difficulty.HIGH ? 5.0 : 3.5;
+            desiredSpeed = difficulty == Draedon.Difficulty.HIGH ? 5.0 : 3.5;
             Location targetLocation = target.getEyeLocation();
             if (!owner.isSubBossActive(Draedon.SubBossType.THANATOS)) {
                 targetLocation.setY(-50);
@@ -213,16 +214,19 @@ public class Thanatos extends EntitySlime {
             else {
                 owner.playWarningSound();
             }
-            velocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), targetLocation, desiredLength);
+            velocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), targetLocation, desiredSpeed);
         }
         // Slow
-        else if (ticks == 55) {
-            desiredLength = 3.5;
+        else if (ticks == 40 + dashDuration) {
+            desiredSpeed = 3.5;
         }
         // Next phase
-        else if (ticks >= 75) {
+        else if (ticks >= 40 + dashDuration * 2) {
             if (difficulty == Draedon.Difficulty.HIGH) {
                 attackMethod = AttackMethod.GAMMA_LASER_RAY;
+
+                bossbar.color = BossBattle.BarColor.RED;
+                bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
             } else {
                 attackMethod = AttackMethod.LASER_PROJECTILE;
             }
@@ -231,22 +235,36 @@ public class Thanatos extends EntitySlime {
     }
 
     private void handleGammaLaserAttack() {
-        desiredLength = 1.5;
         Location targetLocation = target.getLocation().add(target.getEyeLocation()).multiply(0.5);
         if (!owner.isSubBossActive(Draedon.SubBossType.THANATOS)) {
             targetLocation.setY(-50);
         }
-        Vector idealVelocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), targetLocation, desiredLength);
-        velocity = MathHelper.rotationInterpolateDegree(velocity, idealVelocity, 9);
-        if (ticks >= 20) {
-            tickGammaLaser(velocity);
+        // do not start the attack until getting real close
+        double turningRate = ticks >= 5 ? 3 : 12;
+        if (ticks == 1) {
+            if (targetLocation.distanceSquared(bukkitEntity.getLocation()) < FINAL_LASER_MINIMUM_LENGTH * FINAL_LASER_MINIMUM_LENGTH) {
+                desiredSpeed = 0.75;
+            }
+            else {
+                ticks = -1;
+                desiredSpeed = 3;
+            }
         }
-        if (ticks < 20 && ticks % 6 == 0) {
+        Vector idealVelocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), targetLocation, desiredSpeed);
+        velocity = MathHelper.rotationInterpolateDegree(velocity, idealVelocity, turningRate);
+
+        if (ticks < 20 && ticks % 6 == 1) {
             owner.playWarningSound();
         }
-        if (ticks >= 100) {
+        else if (ticks >= 40 && ticks <= 140) {
+            tickGammaLaser(velocity);
+        }
+        if (ticks >= 160) {
             attackMethod = AttackMethod.LASER_PROJECTILE;
             ticks = 0;
+
+            bossbar.color = BossBattle.BarColor.GREEN;
+            bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
         }
     }
 
@@ -302,9 +320,11 @@ public class Thanatos extends EntitySlime {
         }
     }
     public void tickGammaLaser(Vector laserDir) {
+        double laserLen = target.getLocation().distance(bukkitEntity.getLocation()) + 4;
+        laserLen = Math.max(laserLen, FINAL_LASER_MINIMUM_LENGTH);
         GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
                 MathHelper.getVectorYaw(laserDir), MathHelper.getVectorPitch(laserDir),
-                FINAL_LASER_LENGTH, FINAL_LASER_WIDTH, "", "",
+                laserLen, FINAL_LASER_WIDTH, "", "",
                 finalLaserDamaged, ATTR_MAP_FINAL_LASER, STRIKE_OPTION_GAMMA_LASER);
     }
 

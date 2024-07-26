@@ -209,6 +209,16 @@ public class Artemis extends EntitySlime {
     }
 
     private void transitionToPhase(int newPhase) {
+        // out of the laser attack
+        if (phase == 4) {
+            bossbar.color = BossBattle.BarColor.GREEN;
+            bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+        }
+        // into the laser attack
+        else if (newPhase == 4) {
+            bossbar.color = BossBattle.BarColor.RED;
+            bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+        }
         phase = newPhase;
         phaseDurationCounter = 0;
         if (newPhase == 1)

@@ -40,7 +40,42 @@ public class Draedon extends EntitySlime {
     Player target = null;
     // other variables and AI
     protected static final double MECHS_ALIGNMENT_SPEED = 3.0, MECHS_ALIGN_DIST = 32.0;
-    private static final String[] MESSAGES = {"Message 1", "Message 2", "Message 3"};
+    static String MSG_COLOR = "§#9BFFFF";
+    static final String[]
+            MESSAGES_SPAWN = {
+            "你知道吗？这一刻已经等了太久了。",
+            "我对一切未知感到着迷，但最让我着迷的莫过于你的本质。",
+            "我将会向你展示，我那些超越神明的造物。",
+            "而你，则将在战斗中向我展示你的本质。"},
+            MESSAGES_FIRST_TRANSITION = {
+            "时间与知识的积累带来的不断改进，正是我作品精华所在。",
+            "接近完美的方法，除此再无。"},
+            MESSAGES_SECOND_TRANSITION = {
+            "很好，很好，你的表现水平完全就在误差范围之内。",
+            "这着实令人满意。接下来我们将进入下一个测试环节。"},
+            MESSAGES_THIRD_TRANSITION = {
+            "自我第一次到得知你的存在，我就一直在研究你的战斗，并以此让我的机械变得更强。",
+            "就算是现在，我依然在检测你的行动。一切都在我的计算之内。"},
+            MESSAGES_FOURTH_TRANSITION = {
+            "有趣，十分有趣。",
+            "就算是面对更为困难的挑战，你仍可以稳步推进。"},
+            MESSAGES_FIFTH_TRANSITION = {
+            "我依然无法理解你的本质，这样下去可不行。",
+            "......我一向追求完美，可惜造化弄人，这一定是我犯下的第一个错误。"},
+            MESSAGES_SIXTH_TRANSITION = {
+            "荒谬至极。",
+            "我不会再让那些无用的计算干扰我对这场战斗的观察了。",
+            "我将向你展示，我终极造物的全部威力。"},
+            MESSAGES_FINAL = {
+            "一个未知因素——你，是一个特异点。",
+            "你对这片大地和它的历史而言，只是外来之人，就和我一样。",
+            "......很抱歉，但在看了这样一场“展示”之后，我必须得花点时间整理我的思绪。",
+            "迄今为止喷洒的血液已经让这片大陆变得陈腐无比，毫无生气。",
+            "你也挥洒了自己的鲜血，但这可能足以带来一个新的时代......是什么，我不知道。但那一定是我所渴望看到的时代。",
+            "现在，你想要接触那位暴君。可惜我无法帮到你。",
+            "这并非出自怨恨，毕竟从一开始，我的目标就只有观察刚才的这一场战斗。",
+            "但你过去也成功过，所以你最后会找到办法的。",
+            "我必须尊重并承认你的胜利，但现在，我得把注意力放回到我的机械上了。"};
     private int messageIndex = 0;
     private int messageDelayCounter = 0;
     private boolean hasTriggered = false;
@@ -126,6 +161,7 @@ public class Draedon extends EntitySlime {
                 if (firstSubBoss != null && firstSubBoss.getHealth() / firstSubBoss.getMaxHealth() < 0.7) {
                     updateSubBosses(aliveBossIndexes, 0.7, true, 2);
                     currentPhase = 2;
+                    terraria.entity.boss.BossHelper.sendBossMessages(20, 0, bukkitEntity, MSG_COLOR, MESSAGES_FIRST_TRANSITION);
                 }
                 break;
             case 2:
@@ -135,6 +171,7 @@ public class Draedon extends EntitySlime {
                         // All three sub-bosses fight the player with less aggressive attacks
                         updateSubBosses(aliveBossIndexes, 0.0, true, 3);
                         currentPhase = 3;
+                        terraria.entity.boss.BossHelper.sendBossMessages(20, 0, bukkitEntity, MSG_COLOR, MESSAGES_SECOND_TRANSITION);
                         break;
                     }
                 }
@@ -146,6 +183,7 @@ public class Draedon extends EntitySlime {
                         // Solo the player
                         updateSubBosses(aliveBossIndexes, 0.4, false, 1);
                         currentPhase = 4;
+                        terraria.entity.boss.BossHelper.sendBossMessages(20, 0, bukkitEntity, MSG_COLOR, MESSAGES_THIRD_TRANSITION);
                         break;
                     }
                 }
@@ -155,6 +193,7 @@ public class Draedon extends EntitySlime {
                 if (aliveBossIndexes.size() == 2) {
                     updateSubBosses(aliveBossIndexes, 0.0, true, 2);
                     currentPhase = 5;
+                    terraria.entity.boss.BossHelper.sendBossMessages(20, 0, bukkitEntity, MSG_COLOR, MESSAGES_FOURTH_TRANSITION);
                 }
                 break;
             case 5:
@@ -164,6 +203,7 @@ public class Draedon extends EntitySlime {
                         // Solo the player
                         updateSubBosses(aliveBossIndexes, 0.4, false, 1);
                         currentPhase = 6;
+                        terraria.entity.boss.BossHelper.sendBossMessages(20, 0, bukkitEntity, MSG_COLOR, MESSAGES_FIFTH_TRANSITION);
                         break;
                     }
                 }
@@ -173,6 +213,7 @@ public class Draedon extends EntitySlime {
                 if (aliveBossIndexes.size() == 1) {
                     updateSubBosses(aliveBossIndexes, 0.0, true, 1);
                     currentPhase = 7;
+                    terraria.entity.boss.BossHelper.sendBossMessages(20, 0, bukkitEntity, MSG_COLOR, MESSAGES_SIXTH_TRANSITION);
                 }
                 break;
             case 7:
@@ -187,6 +228,9 @@ public class Draedon extends EntitySlime {
         }
 
         if (currentPhase != originalPhase) {
+            bossbar.color = BossBattle.BarColor.GREEN;
+            bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+
             for (int index : aliveBossIndexes) {
                 if (subBossIsActive[index]) {
                     subBosses[index].removeScoreboardTag("noDamage");
@@ -217,11 +261,11 @@ public class Draedon extends EntitySlime {
     public void broadcastMsg() {
         if (hasTriggered) {
             if (messageDelayCounter % 20 == 0) { // broadcast a message every 20 ticks
-                if (messageIndex < MESSAGES.length) {
+                if (messageIndex < MESSAGES_FINAL.length) {
                     for (UUID uuid : targetMap.keySet()) {
                         Player player = Bukkit.getPlayer(uuid);
                         if (player != null) {
-                            player.sendMessage(MESSAGES[messageIndex]);
+                            player.sendMessage(MSG_COLOR + MESSAGES_FINAL[messageIndex]);
                         }
                     }
                     messageIndex++;
@@ -298,7 +342,7 @@ public class Draedon extends EntitySlime {
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName("嘉登");
+        setCustomName("██-██ “嘉登”");
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");
@@ -361,6 +405,7 @@ public class Draedon extends EntitySlime {
 
             currentPhase = -1;
         }
+        terraria.entity.boss.BossHelper.sendBossMessages(20, 0, bukkitEntity, MSG_COLOR, MESSAGES_SPAWN);
     }
 
     // disable death function to remove boss bar

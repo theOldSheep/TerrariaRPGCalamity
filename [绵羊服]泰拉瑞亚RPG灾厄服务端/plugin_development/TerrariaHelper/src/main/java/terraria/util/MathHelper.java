@@ -358,7 +358,7 @@ public class MathHelper {
             return setVectorLength(end.clone(), start.length());
         }
 
-        return rotateAroundAxisRadian(start, axis, angle);
+        return rotateAroundAxisRadian(start, axis, maxAngleRadian);
     }
     public static Vec3D toNMSVector(Vector vec) {
         return new Vec3D(vec.getX(), vec.getY(), vec.getZ());
