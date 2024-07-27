@@ -1,7 +1,6 @@
 package terraria.entity.boss.postMoonLord.exoMechs;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -29,9 +28,10 @@ public class Ares extends EntitySlime {
     // other variables and AI
     static final double LASER_BEAM_LENGTH = 56, LASER_MAX_TARGET_DIST = 48, LASER_BEAM_WIDTH = 1;
     static final int LASER_BEAM_INITIAL_PITCH = 90, LASER_BEAM_PITCH_CHANGE_RATE = 90 - 15;
-    static final int REGULAR_ATTACK_PHASE_TICK_DURATION = 160,
-            ROAR_INTERVAL = 10, ROAR_COUNT = 3,
-            LASER_BEAM_DURATION = 60, LASER_BEAM_COUNT = 3;
+    static final int REGULAR_ATTACK_PHASE_TICK_DURATION = 160;
+    static final int ROAR_INTERVAL = 20;
+    static final int LASER_BEAM_DURATION = 60;
+    static final int LASER_BEAM_COUNT = 3;
     static HashMap<String, Double> ATTR_MAP_LASER_BEAM;
     static GenericHelper.StrikeLineOptions STRIKE_OPTION_LASER_BEAM;
 
@@ -110,26 +110,26 @@ public class Ares extends EntitySlime {
             // Regular attack phase
             if (laserBeamCounter <= REGULAR_ATTACK_PHASE_TICK_DURATION) {
                 isLaserBeamAttackActive = false;
-            } else if (laserBeamCounter <= REGULAR_ATTACK_PHASE_TICK_DURATION + ROAR_INTERVAL * ROAR_COUNT + LASER_BEAM_DURATION * LASER_BEAM_COUNT) {
+            } else if (laserBeamCounter <= REGULAR_ATTACK_PHASE_TICK_DURATION + ROAR_INTERVAL + LASER_BEAM_DURATION * LASER_BEAM_COUNT) {
                 // Change bar color
                 if (laserBeamCounter == REGULAR_ATTACK_PHASE_TICK_DURATION + 1) {
                     bossbar.color = BossBattle.BarColor.RED;
                     bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
                 }
                 // Roar before the laser beam attack
-                if (laserBeamCounter <= REGULAR_ATTACK_PHASE_TICK_DURATION + ROAR_INTERVAL * ROAR_COUNT) {
+                if (laserBeamCounter <= REGULAR_ATTACK_PHASE_TICK_DURATION + ROAR_INTERVAL) {
                     if ((laserBeamCounter - REGULAR_ATTACK_PHASE_TICK_DURATION) % ROAR_INTERVAL == 1) {
-                        owner.playWarningSound();
+                        owner.playWarningSound(true);
                     }
                 }
 
                 // Laser beam attack phase
-                if (laserBeamCounter > REGULAR_ATTACK_PHASE_TICK_DURATION + ROAR_INTERVAL * ROAR_COUNT) {
+                if (laserBeamCounter > REGULAR_ATTACK_PHASE_TICK_DURATION + ROAR_INTERVAL) {
                     isLaserBeamAttackActive = true;
 
                     // Apply the laser beam attack
                     if (currentLaserBeam < LASER_BEAM_COUNT) {
-                        int initialTick = REGULAR_ATTACK_PHASE_TICK_DURATION + ROAR_INTERVAL * ROAR_COUNT + LASER_BEAM_DURATION * currentLaserBeam;
+                        int initialTick = REGULAR_ATTACK_PHASE_TICK_DURATION + ROAR_INTERVAL + LASER_BEAM_DURATION * currentLaserBeam;
                         applyLaserBeamAttack(initialTick);
                         if (laserBeamCounter >= initialTick + LASER_BEAM_DURATION) {
                             currentLaserBeam++;

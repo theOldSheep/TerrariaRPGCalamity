@@ -113,11 +113,10 @@ public class Draedon extends EntitySlime {
             }
         }
     }
-    protected void playWarningSound() {
+    protected void playWarningSound(boolean enragedOrDash) {
         Location loc = target.getLocation();
-        loc.getWorld().playSound(loc, "entity.exo_mechs.enrage", org.bukkit.SoundCategory.HOSTILE, 5f, 1f);
-        // TODO
-        loc.getWorld().playSound(loc, Sound.ENTITY_ENDERDRAGON_GROWL, org.bukkit.SoundCategory.HOSTILE, 5f, 1f);
+        loc.getWorld().playSound(loc, enragedOrDash ? "entity.exo_mechs.exo_mech_enraged" : "entity.exo_mechs.exo_mech_dash",
+                org.bukkit.SoundCategory.HOSTILE, 5f, 1f);
     }
     protected Difficulty calculateDifficulty(EntityLiving livingEntity) {
         double healthRatio = livingEntity.getHealth() / livingEntity.getMaxHealth();

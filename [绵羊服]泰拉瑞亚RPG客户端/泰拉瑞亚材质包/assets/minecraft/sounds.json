@@ -143,6 +143,51 @@
 			}
 		]
 	},
+	"entity.old_duke.old_duke_hurt": {
+        "category": "hostile",
+		"sounds": [
+			{
+				"name": "mob/old_duke/fishron_hurt",
+				"attenuation_distance": 48
+			}
+		]
+	},
+	"entity.old_duke.old_duke_roar": {
+        "category": "hostile",
+		"sounds": [
+			{
+				"name": "mob/old_duke/old_duke_roar",
+				"attenuation_distance": 30
+			}
+		]
+	},
+	"entity.yharon.yharon_roar": {
+        "category": "hostile",
+		"sounds": [
+			{
+				"name": "mob/yharon/yharon_roar",
+				"attenuation_distance": 30
+			}
+		]
+	},
+	"entity.exo_mechs.exo_mech_dash": {
+        "category": "hostile",
+		"sounds": [
+			{
+				"name": "mob/exo_mechs/exo_mech_dash",
+				"attenuation_distance": 30
+			}
+		]
+	},
+	"entity.exo_mechs.exo_mech_enraged": {
+        "category": "hostile",
+		"sounds": [
+			{
+				"name": "mob/exo_mechs/exo_mech_enraged",
+				"attenuation_distance": 48
+			}
+		]
+	},
 	"entity.hit.astral": {
         "category": "hostile",
 		"sounds": [
@@ -206,6 +251,15 @@
 			}
 		]
 	},
+	"entity.hit.ghost": {
+        "category": "hostile",
+		"sounds": [
+			{
+				"name": "damage/entity_hit_ghost",
+				"attenuation_distance": 32
+			}
+		]
+	},
 	"entity.hit.rock": {
         "category": "hostile",
 		"sounds": [
@@ -250,7 +304,7 @@
 		"sounds": [
 			{
 				"name": "item/genericswing",
-				"attenuation_distance": 8
+				"attenuation_distance": 16
 			}
 		]
 	},
@@ -289,7 +343,7 @@
 		"sounds": [
 			{
 				"name": "item/genericspray",
-				"attenuation_distance": 16
+				"attenuation_distance": 20
 			}
 		]
 	},
@@ -299,7 +353,7 @@
 		"sounds": [
 			{
 				"name": "item/genericbubble",
-				"attenuation_distance": 16
+				"attenuation_distance": 20
 			}
 		]
 	},
@@ -319,7 +373,7 @@
 		"sounds": [
 			{
 				"name": "item/largeweaponfire",
-				"attenuation_distance": 32
+				"attenuation_distance": 64
 			}
 		]
 	},

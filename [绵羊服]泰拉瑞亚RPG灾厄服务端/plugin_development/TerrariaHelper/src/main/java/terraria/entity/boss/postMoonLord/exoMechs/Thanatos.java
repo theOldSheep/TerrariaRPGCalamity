@@ -225,7 +225,7 @@ public class Thanatos extends EntitySlime {
                 targetLocation.setY(-50);
             }
             else {
-                owner.playWarningSound();
+                owner.playWarningSound(false);
             }
             velocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), targetLocation, desiredSpeed);
         }
@@ -266,14 +266,17 @@ public class Thanatos extends EntitySlime {
         Vector idealVelocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), targetLocation, desiredSpeed);
         velocity = MathHelper.rotationInterpolateDegree(velocity, idealVelocity, turningRate);
 
-        if (ticks < 20 && ticks % 6 == 1) {
-            owner.playWarningSound();
+        // warning sound
+        if (ticks == 1) {
+            owner.playWarningSound(true);
         }
+        // laser
         else if (ticks >= 40 && ticks <= 140) {
             setOpen(true);
             tickGammaLaser(velocity);
         }
-        if (ticks >= 160) {
+        // next attack
+        else if (ticks >= 160) {
             attackMethod = AttackMethod.LASER_PROJECTILE;
             ticks = 0;
 

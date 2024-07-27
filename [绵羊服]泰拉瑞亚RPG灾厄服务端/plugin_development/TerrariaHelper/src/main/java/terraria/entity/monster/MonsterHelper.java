@@ -566,7 +566,7 @@ public class MonsterHelper {
             }
         }
         // the monster's ticks lived is set to represent the ticks of losing any target
-        // this is triggered when target is not online / not logged in; target is in a different world
+        // this is triggered when target is not online / not logged in; or the target is in a different world
         if (
                 !PlayerHelper.isProperlyPlaying(target) ||
                         targetNMS.getWorld() != monster.getWorld()) {
@@ -1184,11 +1184,7 @@ public class MonsterHelper {
                         if (shouldHandleAI) {
                             Vector velocity = monsterBkt.getVelocity();
                             boolean fullHealth = monster.getHealth() + 1e-5 > monster.getMaxHealth();
-                            double distSqr;
-                            if (monsterBkt.getWorld() == target.getWorld())
-                                distSqr = monsterBkt.getEyeLocation().distanceSquared(target.getEyeLocation());
-                            else
-                                distSqr = 999999d;
+                            double distSqr = monsterBkt.getEyeLocation().distanceSquared(target.getEyeLocation());
                             switch (type) {
                                 case "硫磺比目鱼": {
                                     Vector acc;

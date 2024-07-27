@@ -94,7 +94,7 @@ public class ThePlaguebringerGoliath extends EntitySlime {
     }
 
     private void toSecondPhase() {
-        Bukkit.broadcastMessage("§#00FF00瘟疫核弹已就绪，准备发射！！！");
+        Bukkit.broadcastMessage("§#00FF00瘟疫核弹已就绪，准备发射！！！**音量控诉**");
         secondPhase = true;
     }
     private Vector getHorizontalDirection() {

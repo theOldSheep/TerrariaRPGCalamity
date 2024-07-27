@@ -77,7 +77,7 @@ public class MonsterWitherSkeleton extends EntitySkeletonWither {
         motZ /= 0.91;
         if (!isMonsterPart) {
             if (getHealth() > 0) {
-                if (++this.idx % 10 == 0)
+                if (++this.idx % 10 == 0 || target.getWorld() != bukkitEntity.getWorld())
                     this.target = MonsterHelper.updateMonsterTarget(this.target, this, this.monsterType);
             }
             if (this.target == null) return;

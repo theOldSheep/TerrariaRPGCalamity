@@ -421,6 +421,10 @@ public class Yharon extends EntitySlime {
             this.phase = newPhase;
             this.phaseStep = 1;
             this.phaseTick = 0;
+
+            Location loc = bukkitEntity.getLocation();
+            loc.getWorld().playSound(loc, "entity.yharon.yharon_roar",
+                    org.bukkit.SoundCategory.HOSTILE, 5f, 1f);
         }
     }
     private void executePhase() {

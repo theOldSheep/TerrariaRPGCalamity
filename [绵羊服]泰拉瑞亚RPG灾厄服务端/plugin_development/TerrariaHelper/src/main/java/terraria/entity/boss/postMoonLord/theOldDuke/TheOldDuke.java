@@ -36,6 +36,7 @@ public class TheOldDuke extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
+    static final String VORTEX_ROAR_SOUND = "entity.old_duke.old_duke_roar";
     public static final double PHASE_TRANSITION_1 = 0.8;
     public static final double PHASE_TRANSITION_2 = 0.5;
     public static final double DASH_SPEED = 2.75;
@@ -205,7 +206,7 @@ public class TheOldDuke extends EntitySlime {
             // Summon a vertex
             moveTowardsPlayer();
             if (indexAI == 50) {
-                bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), Sound.ENTITY_ENDERDRAGON_GROWL, 10, 1.5f);
+                bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), VORTEX_ROAR_SOUND, 10, 1.5f);
             }
             else if (indexAI == 75) {
                 summonSulphurousVertex();
@@ -247,7 +248,7 @@ public class TheOldDuke extends EntitySlime {
             }
         } else if (indexAI < 105) {
             if (indexAI == 75) {
-                bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), Sound.ENTITY_ENDERDRAGON_GROWL, 10, 1.5f);
+                bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), VORTEX_ROAR_SOUND, 10, 1.5f);
             }
             // Summon a vertex ahead of the player and teleport
             else if (indexAI == 85) {

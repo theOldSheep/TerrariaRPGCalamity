@@ -10,15 +10,15 @@ Groups:
            # Determins if this group can create residences or not.  This option can be overriden with the permissions node 'residence.create'
            CanCreate: true
            # The maximum number of Residences a player can have.
-           MaxResidences: 3
+           MaxResidences: 5
            # The maximum number of physical areas a residence can have.
            MaxAreasPerResidence: 2
            # The maximum number of blocks a Residence can be, East to West (X).
-           MaxEastWest: 16
+           MaxEastWest: 100
            # (Optional) The minimum number of blocks a Residence can be, East to West (X).
            MinEastWest: 3
            # The maximum number of blocks a Residence can be, North to South (Z).
-           MaxNorthSouth: 16
+           MaxNorthSouth: 100
            # (Optional) The minimum number of blocks a Residence can be, North to South (Z).
            MinNorthSouth: 3
            # The maximum number of blocks a Residence can be, High to Low (Y).
@@ -36,11 +36,11 @@ Groups:
             # Set to 0 to disable subzones.
            SubzoneDepth: 3
            # (Optional) The maximum number of blocks a Residence Subzone can be, East to West (X).
-           SubzoneMaxEastWest: 16
+           SubzoneMaxEastWest: 100
            # (Optional) The minimum number of blocks a Residence Subzone can be, East to West (X).
            SubzoneMinEastWest: 3
            # (Optional) The maximum number of blocks a Residence Subzone can be, North to South (Z).
-           SubzoneMaxNorthSouth: 16
+           SubzoneMaxNorthSouth: 100
            # (Optional) The minimum number of blocks a Residence Subzone can be, North to South (Z).
            SubzoneMinNorthSouth: 3
            # (Optional) The maximum number of blocks a Residence Subzone can be, High to Low (Y).
@@ -63,10 +63,10 @@ Groups:
            CanChange: true
            # The default enter message to apply to new Residences created by players in this group.
            # Leaving the message blank will disable it.
-           DefaultEnter: Welcome %player to %residence, owned by %owner.
+           DefaultEnter: 欢迎 %player 来到 %owner 的 %residence
            # The default leave message to apply to new Residences created by players in this group.
            # Leaving the message blank will disable it.
-           DefaultLeave: Now leaving %residence.
+           DefaultLeave: 现已离开 %residence
        # Options relating to the Lease system.
        Lease:
           # The maximum number of days to allow leases.
@@ -90,11 +90,11 @@ Groups:
           # Whether or not to ignore the Residence size/count limits when buying a residence.
           IgnoreLimits: false
           # The cost, per block, of making a new Residence or adding a area to it.
-          BuyCost: 0.5
+          BuyCost: 100
           # The cost, per block, player will be getting back when removing residence.
-          SellCost: 0.25
+          SellCost: 50
           # The cost, per block, of renewing a Residence lease (if the lease system is enabled).
-          RenewCost: 0.2
+          RenewCost: 50
        # Flags are checked in the order:
        # 1: Player
        # 2: Group
@@ -105,10 +105,27 @@ Groups:
        Flags:
           # Specifically allow or deny this group from changing certain flags.
           Permission:
-               #build: true
+               bank: true
+               day: false
+               falldamage: false
+               feed: false
+               fly: false
+               healing: false
+               jump2: false
+               jump3: false
+               monsters: false
+               night: false
+               nofly: false
+               nomobs: false
+               rain: false
+               shoot: false
+               smonsters: false
+               sun: false
+               wspeed1: false
+               wspeed2: false
           # Specifys the flags that are applied at residence creation for players of this group.
           Default:
-              #build: true
+               bank: true
           # Specifys the flags that are applied at to the creator at residence creation.
           CreatorDefault:
               #build: true

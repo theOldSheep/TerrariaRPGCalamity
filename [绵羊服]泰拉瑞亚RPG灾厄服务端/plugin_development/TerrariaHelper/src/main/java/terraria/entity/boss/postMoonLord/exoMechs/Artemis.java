@@ -258,13 +258,13 @@ public class Artemis extends EntitySlime {
                 }
             }
         } else if (phaseDurationCounter == 75) {
+            // Unleash a roar
+            owner.playWarningSound(false);
             // Dash towards the player
             Location aimLoc = EntityHelper.helperAimEntity(bukkitEntity, target,
                     owner.calculateDifficulty(this) == Draedon.Difficulty.HIGH ? AIM_HELPER_DASH : AIM_HELPER_DASH_INACCURATE);
             dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), aimLoc, DASH_SPEED);
             bukkitEntity.setVelocity(dashVelocity);
-            // Unleash a roar
-            owner.playWarningSound();
         } else if (phaseDurationCounter < 100) {
             // Maintain the dash velocity
             bukkitEntity.setVelocity(dashVelocity);
@@ -279,9 +279,9 @@ public class Artemis extends EntitySlime {
     // use the laser attack at the player
     private void phase4Attack() {
         if (phaseDurationCounter < 10) {
-            // Roar thrice for warning
-            if (phaseDurationCounter % 3 == 0) {
-                owner.playWarningSound();
+            // Roar for enraged warning
+            if (phaseDurationCounter == 0) {
+                owner.playWarningSound(true);
             }
         } else if (phaseDurationCounter < 30) {
             if (phaseDurationCounter == 10) {

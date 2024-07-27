@@ -69,7 +69,7 @@ public class Apollo extends EntitySlime {
         int interval = difficulty == Draedon.Difficulty.LOW ? 15 : 10;
         if (difficulty == Draedon.Difficulty.HIGH) {
             if (twin.phaseDurationCounter % 30 == 0) {
-                owner.playWarningSound();
+                owner.playWarningSound(false);
                 dashVel = getDashDirection(false); // Direct dash
             }
             if (dashVel != null) {
@@ -95,7 +95,7 @@ public class Apollo extends EntitySlime {
         int interval = difficulty == Draedon.Difficulty.HIGH ? 12 : 18;
         if (difficulty == Draedon.Difficulty.HIGH && twin.phaseDurationCounter < 30) {
             if (twin.phaseDurationCounter == 0) {
-                owner.playWarningSound();
+                owner.playWarningSound(false);
                 dashVel = getDashDirection(true); // Aimed dash
             }
             if (dashVel != null) {
