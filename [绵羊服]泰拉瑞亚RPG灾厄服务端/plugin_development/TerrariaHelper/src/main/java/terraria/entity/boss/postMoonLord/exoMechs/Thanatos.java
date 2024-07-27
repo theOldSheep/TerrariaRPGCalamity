@@ -16,8 +16,8 @@ import java.util.*;
 
 public class Thanatos extends EntitySlime {
     public enum SegmentType {
-        HEAD("XM-05“塔纳托斯”头", "XM-05“塔纳托斯”头", 1500d),
-        BODY("XM-05“塔纳托斯”体节", "XM-05“塔纳托斯”散热体节", 1320d),
+        HEAD("XM-05“塔纳托斯”激光头", "XM-05“塔纳托斯”头", 1500d),
+        BODY("XM-05“塔纳托斯”散热体节", "XM-05“塔纳托斯”体节", 1320d),
         TAIL("XM-05“塔纳托斯”尾", "XM-05“塔纳托斯”尾", 1100d);
 
         private String openName, closedName;
@@ -99,7 +99,8 @@ public class Thanatos extends EntitySlime {
     List<LivingEntity> livingSegments;
     HashSet<Entity> finalLaserDamaged = new HashSet<>();
     Thanatos head;
-    int index, laserFireInterval = 3, armorCloseCountdown = 1;
+    static final int LASER_INTERVAL_EASY = 5, LASER_INTERVAL_NORMAL = 4, LASER_INTERVAL_HARD = 3;
+    protected int index, laserFireInterval = 3, armorCloseCountdown = 1;
     SegmentType segmentType;
     AttackMethod attackMethod = AttackMethod.LASER_PROJECTILE;
     int ticks = 0;
@@ -122,6 +123,13 @@ public class Thanatos extends EntitySlime {
     }
 
     private void tick() {
+        // for all segments, the open & close mechanism should apply.
+        if (armorCloseCountdown > 0) {
+            armorCloseCountdown--;
+            if (armorCloseCountdown <= 0) {
+                setOpen(false);
+            }
+        }
         if (segmentType == SegmentType.HEAD) {
             if (!owner.isSubBossActive(Draedon.SubBossType.THANATOS)) {
                 handleHeadIdleMovement();
@@ -154,12 +162,6 @@ public class Thanatos extends EntitySlime {
         } else {
             // Set the health of subsequent entities to the health of the head
             setHealth(head.getHealth());
-            if (armorCloseCountdown > 0) {
-                armorCloseCountdown--;
-                if (armorCloseCountdown <= 0) {
-                    setOpen(false);
-                }
-            }
             checkLaserChain();
         }
     }
@@ -171,8 +173,19 @@ public class Thanatos extends EntitySlime {
         velLen += Math.min(0.05, diffAbs) * Math.signum(diff);
         MathHelper.setVectorLength(velocity, velLen);
     }
-
+    // the head uses this to initiate laser beam pattern
     private void handleLaserProjectileAttack(Draedon.Difficulty difficulty) {
+        switch (difficulty) {
+            case LOW:
+                laserFireInterval = LASER_INTERVAL_EASY;
+                break;
+            case MEDIUM:
+                laserFireInterval = LASER_INTERVAL_NORMAL;
+                break;
+            case HIGH:
+                laserFireInterval = LASER_INTERVAL_HARD;
+                break;
+        }
         int completeFireDuration = TOTAL_LENGTH * LASER_DELAY / laserFireInterval + ARMOR_CLOSE_COUNTDOWN;
         if (ticks % completeFireDuration == ARMOR_CLOSE_COUNTDOWN / 2) {
             int randomIndex = new Random().nextInt(laserFireInterval) + 1;
@@ -257,6 +270,7 @@ public class Thanatos extends EntitySlime {
             owner.playWarningSound();
         }
         else if (ticks >= 40 && ticks <= 140) {
+            setOpen(true);
             tickGammaLaser(velocity);
         }
         if (ticks >= 160) {
@@ -288,16 +302,13 @@ public class Thanatos extends EntitySlime {
             Draedon.Difficulty difficulty = owner.calculateDifficulty(this);
             switch (difficulty) {
                 case LOW:
-                    laserFireInterval = 3;
                     spawnSingleLaser(AIM_HELPER_LASER_GENTLE);
                     break;
                 case MEDIUM:
-                    laserFireInterval = 3;
                     spawnSingleLaser(AIM_HELPER_LASER_GENTLE);
                     spawnSingleLaser(AIM_HELPER_LASER);
                     break;
                 case HIGH:
-                    laserFireInterval = 2;
                     spawnSingleLaser(AIM_HELPER_LASER);
                     spawnSingleLaser(AIM_HELPER_LASER_ACC);
                     break;
@@ -312,8 +323,8 @@ public class Thanatos extends EntitySlime {
         EntityHelper.spawnProjectile(shootInfoLaser);
     }
     public void checkLaserChain() {
-        if (armorCloseCountdown <= 0 && index > laserFireInterval) {
-            Thanatos previousSegment = segments.get(index - laserFireInterval);
+        if (armorCloseCountdown <= 0 && index > head.laserFireInterval) {
+            Thanatos previousSegment = segments.get(index - head.laserFireInterval);
             if (previousSegment.armorCloseCountdown == ARMOR_CLOSE_COUNTDOWN - LASER_DELAY) {
                 fireLaser();
             }
@@ -377,7 +388,7 @@ public class Thanatos extends EntitySlime {
             segmentType = SegmentType.BODY;
         }
 
-        setCustomName(segmentType.openName);
+        setCustomName(segmentType.closedName);
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");

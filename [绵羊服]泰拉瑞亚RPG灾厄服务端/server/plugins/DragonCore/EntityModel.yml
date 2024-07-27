@@ -236,6 +236,13 @@
   texture: "神明吞噬者/Thanatos.png"
   scale: 60
   renderAlways: true
+塔纳托斯激光头:
+  entity: "XM-05“塔纳托斯”激光头"
+  contains: false
+  model: "神明吞噬者/头/head.obj"
+  texture: "神明吞噬者/ThanatosOpen.png"
+  scale: 60
+  renderAlways: true
 塔纳托斯体节:
   entity: "XM-05“塔纳托斯”体节"
   contains: false
