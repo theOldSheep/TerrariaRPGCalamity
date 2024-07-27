@@ -229,3 +229,31 @@
   texture: "灾坟魔物/texture.png"
   scale: 18
   renderAlways: true
+塔纳托斯头:
+  entity: "XM-05“塔纳托斯”头"
+  contains: false
+  model: "神明吞噬者/头/head.obj"
+  texture: "神明吞噬者/Thanatos.png"
+  scale: 60
+  renderAlways: true
+塔纳托斯体节:
+  entity: "XM-05“塔纳托斯”体节"
+  contains: false
+  model: "神明吞噬者/体节/body.obj"
+  texture: "神明吞噬者/Thanatos.png"
+  scale: 60
+  renderAlways: true
+塔纳托斯散热体节:
+  entity: "XM-05“塔纳托斯”散热体节"
+  contains: false
+  model: "神明吞噬者/体节/body.obj"
+  texture: "神明吞噬者/ThanatosOpen.png"
+  scale: 60
+  renderAlways: true
+塔纳托斯尾:
+  entity: "XM-05“塔纳托斯”尾"
+  contains: false
+  model: "神明吞噬者/尾/tail.obj"
+  texture: "神明吞噬者/Thanatos.png"
+  scale: 60
+  renderAlways: true
