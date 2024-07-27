@@ -5530,6 +5530,8 @@ TNT:
     blockHitAction: thru
     liveTime: 21
     enemyInvincibilityFrame: 10
+    spawnSound: item.exoblade.explode
+    spawnSoundVolume: 5
     spawnProjectiles:
         interval: 2
         offset: 0
