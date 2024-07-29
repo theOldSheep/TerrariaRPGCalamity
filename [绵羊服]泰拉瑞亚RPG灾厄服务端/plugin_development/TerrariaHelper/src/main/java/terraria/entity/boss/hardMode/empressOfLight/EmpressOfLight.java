@@ -314,7 +314,7 @@ public class EmpressOfLight extends EntitySlime {
     }
     private void handleSunDanceSingle(double angle, int rays, int index) {
         // 360 / 60 for display, 360 / 90 while it deals damage
-        boolean hasDamage = index > 10;
+        boolean hasDamage = index > 20;
         double angleChangeAmount = (hasDamage ? 9d : 6d) / rays;
         // teleport to vertically align with the target with a maximum horizontal distance
         Location targetLoc = bukkitEntity.getLocation();

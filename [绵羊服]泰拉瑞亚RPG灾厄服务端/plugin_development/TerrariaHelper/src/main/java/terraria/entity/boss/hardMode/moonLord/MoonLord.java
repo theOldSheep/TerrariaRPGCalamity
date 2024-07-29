@@ -184,8 +184,11 @@ public class MoonLord extends EntitySlime {
     public static boolean canSpawn(Player player) {
         return true;
     }
-    // a constructor for actual spawning
+    // constructors for actual spawning
     public MoonLord(Player summonedPlayer) {
+        this(summonedPlayer, false);
+    }
+    public MoonLord(Player summonedPlayer, boolean summonedByItem) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
         Location spawnLoc = summonedPlayer.getLocation();
@@ -248,6 +251,9 @@ public class MoonLord extends EntitySlime {
         // no animation for boss rush
         if (EventAndTime.isBossRushActive())
             indexSpawnAnimation = 1;
+        // only 5 seconds delay when summoned by item
+        else if (summonedByItem)
+            indexSpawnAnimation = 100;
     }
 
     // disable death function to remove boss bar

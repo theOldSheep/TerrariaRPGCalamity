@@ -130,8 +130,9 @@ public class BossHelper {
             }
 //            Bukkit.broadcastMessage("Dynamic DR multi: " + dynamicDamageMultiplier + ", time: " + ticksLived + "/" + targetTime + ", health: " + healthInfo[0] + "/" + healthInfo[1]);
         }
-        for (LivingEntity bossPart : bossParts)
+        for (LivingEntity bossPart : bossParts) {
             EntityHelper.setMetadata(bossPart, EntityHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION, dynamicDamageMultiplier);
+        }
     }
     public static double getBossHealthMulti(int numPly) {
         // sqrt(x) + x - 1; first few players in addition to the first would contribute to a slightly higher multiplier
@@ -196,7 +197,7 @@ public class BossHelper {
                     return false;
             }
             double distHor = GenericHelper.getHorizontalDistance(targetPlayer.getLocation(), boss.getLocation());
-            if (distHor > 165) return ignoreDistance;
+            if (distHor > 200) return ignoreDistance;
             return true;
         }
         return false;

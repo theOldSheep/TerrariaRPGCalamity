@@ -2539,6 +2539,8 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         }
     }
     public static void handleInsignia(Player ply) {
+        if (! getAccessories(ply).contains("进升证章"))
+            return;
         if (EntityHelper.hasEffect(ply, "进升证章冷却"))
             return;
         if (EntityHelper.getMount(ply) != null)
@@ -2740,9 +2742,9 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             }
         }
         try {
-            HashSet<String> trashedItems = (HashSet<String>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_TRASH_ITEMS).value();
+            MetadataValue mdv = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_TRASH_ITEMS);
             // destroy trashed items
-            if (trashedItems.contains(itemType)) {
+            if (mdv != null && ((HashSet<String>) mdv.value()).contains(itemType)) {
                 amountRemaining = 0;
                 ply.getWorld().playSound(ply.getEyeLocation(), Sound.BLOCK_LAVA_EXTINGUISH, SoundCategory.PLAYERS, 1, 1);
             }

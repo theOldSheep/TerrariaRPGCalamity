@@ -185,7 +185,7 @@ public class CelestialPillar extends EntityGiantZombie {
                 }
                 if (bossTarget != null) {
                     Bukkit.broadcastMessage("§d§o月亮末日慢慢逼近...");
-                    BossHelper.spawnBoss(bossTarget, BossHelper.BossType.MOON_LORD);
+                    BossHelper.spawnBoss(bossTarget, BossHelper.BossType.MOON_LORD, false);
                 }
         }
     }

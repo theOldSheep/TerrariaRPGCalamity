@@ -250,7 +250,7 @@ public class DragonFolly extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 768d);
-            attrMap.put("damageTakenMulti", 0.9);
+            attrMap.put("damageTakenMulti", 0.9d);
             attrMap.put("defence", 80d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);

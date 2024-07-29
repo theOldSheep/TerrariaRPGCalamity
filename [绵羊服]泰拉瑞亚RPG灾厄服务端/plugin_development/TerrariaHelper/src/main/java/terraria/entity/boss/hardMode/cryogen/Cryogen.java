@@ -190,7 +190,7 @@ public class Cryogen extends EntitySlime {
                             Location targetLoc = target.getLocation();
                             Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                             double velLen = velocity.length();
-                            double maxSpeed = 0.75;
+                            double maxSpeed = 0.6;
                             if (velLen > maxSpeed) {
                                 velocity.multiply(maxSpeed / velLen);
                             }
@@ -201,11 +201,11 @@ public class Cryogen extends EntitySlime {
                                     shootIceBlasts(ICE_BLAST_REGULAR);
                             }
                         }
-                        // then, stay where it is, fire 3 rounds of more ice blasts and dash
+                        // then, stay where it is, fire 2 rounds of more ice blasts and dash
                         else {
                             // stay, fire rounds of ice blasts
-                            if (indexAI <= 120) {
-                                int subIndex = (indexAI - 40) % 40;
+                            if (indexAI <= 140) {
+                                int subIndex = (indexAI - 40) % 50;
                                 if (subIndex < 20)
                                     bukkitEntity.setVelocity(new Vector());
                                 switch (subIndex) {
@@ -215,9 +215,14 @@ public class Cryogen extends EntitySlime {
                                         break;
                                 }
                                 // dash
-                                if (subIndex == 20) {
-                                    Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 2.75);
-                                    bukkitEntity.setVelocity(velocity);
+                                if (subIndex >= 20) {
+                                    if (subIndex == 20) {
+                                        dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 2.75);
+                                    }
+                                    if (subIndex >= 40) {
+                                        dashVelocity.multiply(0.9);
+                                    }
+                                    bukkitEntity.setVelocity(dashVelocity);
                                 }
                             }
                             // finish one AI cycle
@@ -238,7 +243,7 @@ public class Cryogen extends EntitySlime {
                             Location targetLoc = target.getLocation();
                             Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                             double velLen = velocity.length();
-                            double maxSpeed = 0.75;
+                            double maxSpeed = 0.5;
                             if (velLen > maxSpeed) {
                                 velocity.multiply(maxSpeed / velLen);
                             }
@@ -258,6 +263,8 @@ public class Cryogen extends EntitySlime {
                             case 75:
                             case 80:
                             case 95:
+                                bukkitEntity.getWorld().spawnParticle(Particle.EXPLOSION_HUGE,
+                                        ((LivingEntity) bukkitEntity).getEyeLocation(), 1);
                                 bukkitEntity.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, teleportLoc, 1);
                                 break;
                             case 100:
@@ -316,7 +323,7 @@ public class Cryogen extends EntitySlime {
                     case 5: {
                         // hover above player
                         if (indexAI < 30) {
-                            Location targetLoc = target.getLocation().add(0, 16, 0);
+                            Location targetLoc = target.getLocation().add(0, 24, 0);
                             Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                             double velLen = velocity.length();
                             double maxSpeed = 1.75;
@@ -325,18 +332,17 @@ public class Cryogen extends EntitySlime {
                             }
                             bukkitEntity.setVelocity(velocity);
                         }
-                        // halt for 10 ticks to signal the player
-                        else if (indexAI < 40) {
+                        // halt for 15 ticks to signal the player
+                        else if (indexAI < 45) {
                             bukkitEntity.setVelocity(new Vector());
                         }
                         // dashes into player
                         else {
                             switch (indexAI) {
-                                case 40:
-                                case 65:
-                                case 90:
+                                case 45:
+                                case 70:
+                                case 95:
                                     dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 2.25);
-                                    bukkitEntity.setVelocity(dashVelocity);
                                     shootIceBlasts(ICE_BLAST_TIER_5);
                                     break;
                                 // a new AI cycle
@@ -344,9 +350,7 @@ public class Cryogen extends EntitySlime {
                                     indexAI = -1;
                                     break;
                             }
-                            // reset velocity to cached dash velocity
-                            if (indexAI < 115)
-                                bukkitEntity.setVelocity(dashVelocity);
+                            bukkitEntity.setVelocity(dashVelocity);
                         }
                         // phase transition
                         if (healthRatio < 0.25) {
@@ -358,7 +362,7 @@ public class Cryogen extends EntitySlime {
                     case 6: {
                         // hover above player
                         if (indexAI < 20) {
-                            Location targetLoc = target.getLocation().add(0, 12, 0);
+                            Location targetLoc = target.getLocation().add(0, 20, 0);
                             Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                             double velLen = velocity.length();
                             double maxSpeed = 2.25;
@@ -378,7 +382,6 @@ public class Cryogen extends EntitySlime {
                                 case 50:
                                 case 70:
                                     dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 1.75);
-                                    bukkitEntity.setVelocity(dashVelocity);
                                     shootIceBlasts(ICE_BLAST_TIER_6);
                                     break;
                                 // a new AI cycle
@@ -386,7 +389,7 @@ public class Cryogen extends EntitySlime {
                                     indexAI = -1;
                                     break;
                             }
-                            // reset velocity to cached dash velocity
+                            // reset velocity to dash velocity
                             if (indexAI < 90)
                                 bukkitEntity.setVelocity(dashVelocity);
                         }

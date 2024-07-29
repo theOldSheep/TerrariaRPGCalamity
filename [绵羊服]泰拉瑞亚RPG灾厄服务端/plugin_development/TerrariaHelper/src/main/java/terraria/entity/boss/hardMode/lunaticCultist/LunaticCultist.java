@@ -33,7 +33,7 @@ public class LunaticCultist extends EntityZombie {
     Player target = null;
     // other variables and AI
     int phaseAttack = 1;
-    int indexAI = -40, ticksBeforeAttack = 600;
+    int indexAI = -40, ticksBeforeAttack = 200;
     double lastHealth, mainYaw = 0;
     ArrayList<LunaticCultistClone> clones = new ArrayList<>(6);
     Location centerLoc;
@@ -294,7 +294,7 @@ public class LunaticCultist extends EntityZombie {
         if (EventAndTime.isBossRushActive())
             ticksBeforeAttack = 1;
         else
-            summonedPlayer.sendMessage("§a你有30秒的时间寻找开阔的场地，请做好挑战拜月教邪教徒的准备！");
+            summonedPlayer.sendMessage("§a你有10秒的时间做好挑战拜月教邪教徒的准备！");
         // init attribute map
         {
             attrMap = new HashMap<>();

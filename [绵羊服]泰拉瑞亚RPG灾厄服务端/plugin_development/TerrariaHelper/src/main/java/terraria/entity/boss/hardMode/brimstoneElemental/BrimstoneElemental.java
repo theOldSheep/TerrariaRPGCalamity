@@ -37,7 +37,7 @@ public class BrimstoneElemental extends EntitySlime {
     static {
         rayAimHelper = new EntityHelper.AimHelperOptions()
                 .setAimMode(true)
-                .setTicksTotal(10);
+                .setTicksTotal(20);
 
         hintParticleOption = new GenericHelper.ParticleLineOptions()
                 .setLength(48)
@@ -174,7 +174,7 @@ public class BrimstoneElemental extends EntitySlime {
                     // loosely hover above player, shoot fireballs over time
                     case 1: {
                         // movement
-                        Location targetLoc = target.getLocation().add(0, 16, 0);
+                        Location targetLoc = target.getLocation().add(0, 24, 0);
                         Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                         double velLen = velocity.length();
                         double maxSpeed = 2;
@@ -219,7 +219,7 @@ public class BrimstoneElemental extends EntitySlime {
                     // only below 50% health: aim, then shoot a laser at the player
                     case 3: {
                         // movement
-                        Location targetLoc = target.getLocation().add(0, 12, 0);
+                        Location targetLoc = target.getLocation().add(0, 16, 0);
                         Vector velocity = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                         velocity.multiply(0.2);
                         bukkitEntity.setVelocity(velocity);
@@ -233,12 +233,21 @@ public class BrimstoneElemental extends EntitySlime {
                                 // get direction
                                 Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
                                 Vector direction = aimLoc.clone().subtract(shootLoc).toVector();
+                                // warning sound
+                                if (cycleIndex % 10 == 7) {
+                                    bossbar.color = BossBattle.BarColor.RED;
+                                    bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+                                }
+                                if (cycleIndex % 10 == 0) {
+                                    bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10f, 1f);
+                                    bossbar.color = BossBattle.BarColor.YELLOW;
+                                    bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
+                                }
                                 // fire ray
                                 if (cycleIndex == 30) {
                                     GenericHelper.handleStrikeLine(bukkitEntity, shootLoc,
                                             MathHelper.getVectorYaw(direction), MathHelper.getVectorPitch(direction), 48, 0.5,
                                             "", "", new ArrayList<>(), attrMapBrimstoneRay, rayOption);
-                                    bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 3f, 1f);
                                 }
                                 // hint targeted location
                                 else {

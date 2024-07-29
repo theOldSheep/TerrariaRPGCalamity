@@ -111,7 +111,8 @@ public class GuardianRock extends EntitySlime {
         // basic characteristics
         setCustomName("亵渎岩");
         setCustomNameVisible(true);
-        addScoreboardTag("isMonster");
+        // do not mark it as reasonable target!
+//        addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);

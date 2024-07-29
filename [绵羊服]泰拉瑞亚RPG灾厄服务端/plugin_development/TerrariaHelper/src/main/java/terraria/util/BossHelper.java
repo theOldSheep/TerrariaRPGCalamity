@@ -117,6 +117,9 @@ public class BossHelper {
     public static boolean spawnBoss(Player target, BossType bossType) {
         return spawnBoss(target, bossType, null);
     }
+    public static boolean spawnBoss(Player target, BossType bossType, boolean playerSummoned) {
+        return spawnBoss(target, bossType, null, playerSummoned);
+    }
     public static boolean spawnBoss(Player target, BossType bossType, Object extraInfo) {
         return spawnBoss(target, bossType, extraInfo, true);
     }
@@ -341,7 +344,7 @@ public class BossHelper {
             }
             case MOON_LORD: {
                 if (isBossRush || MoonLord.canSpawn(target)) {
-                    new MoonLord(target);
+                    new MoonLord(target, playerSummoned);
                     spawnedSuccessfully = true;
                 }
                 break;

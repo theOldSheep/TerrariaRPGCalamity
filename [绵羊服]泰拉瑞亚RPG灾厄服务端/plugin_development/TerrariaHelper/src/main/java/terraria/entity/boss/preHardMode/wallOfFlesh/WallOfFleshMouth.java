@@ -55,7 +55,7 @@ public class WallOfFleshMouth extends EntitySlime {
         shootInfo.properties.put("homingMethod", 2);
         shootInfo.properties.put("homingRadius", 24d);
         shootInfo.properties.put("homingSharpTurning", false);
-        shootInfo.properties.put("homingAbility", 0.075);
+        shootInfo.properties.put("homingAbility", 1d);
         shootInfo.properties.put("liveTime", 100);
         shootInfo.properties.put("gravity", 0d);
         shootInfo.properties.put("projectileSize", 0.25);

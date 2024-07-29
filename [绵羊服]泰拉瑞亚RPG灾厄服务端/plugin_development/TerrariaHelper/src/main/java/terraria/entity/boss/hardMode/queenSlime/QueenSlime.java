@@ -113,7 +113,7 @@ public class QueenSlime extends EntitySlime {
                 if (sizeChangeTimeIndex >= DISAPPEAR_TIME) {
                     sizeChangeState = SizeState.GROWING;
                     sizeChangeTimeIndex = 1;
-                    Location targetLoc = target.getWorld().getHighestBlockAt(target.getLocation()).getLocation().add(0, 1, 0);
+                    Location targetLoc = WorldHelper.getHighestBlockBelow(target.getLocation()).getLocation().add(0, 1, 0);
                     bukkitEntity.teleport(targetLoc);
                 }
                 return true;
@@ -176,8 +176,9 @@ public class QueenSlime extends EntitySlime {
                 // regulate magnitude of acceleration
                 Vector acc = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                 double accLen = acc.length();
+                double acceleration = FLY_ACC * Math.min(sizeChangeTimeIndex / 7, 1);
                 if (accLen > FLY_ACC) {
-                    acc.multiply(FLY_ACC / accLen);
+                    acc.multiply(acceleration / accLen);
                 }
                 // add acceleration to velocity
                 flyVel.add(acc);
