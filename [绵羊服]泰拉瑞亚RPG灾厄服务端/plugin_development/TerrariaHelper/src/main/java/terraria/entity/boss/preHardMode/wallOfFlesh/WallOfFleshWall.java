@@ -14,7 +14,7 @@ import terraria.util.MathHelper;
 
 public class WallOfFleshWall extends EntitySlime {
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.WALL_OF_FLESH;
-    public static int SLIME_SIZE = 48;
+    public static int SLIME_SIZE = 24;
     public static double SLIME_SIZE_BLOCKS = SLIME_SIZE * 0.5;
     // basic variables
     WallOfFleshMouth owner;

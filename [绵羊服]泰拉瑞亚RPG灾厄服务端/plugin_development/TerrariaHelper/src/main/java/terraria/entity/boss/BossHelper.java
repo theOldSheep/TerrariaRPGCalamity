@@ -279,6 +279,12 @@ public class BossHelper {
             EventAndTime.bossRushSpawn(true);
         }
         else {
+            // calculate and broadcast boss aggression time & dmg dealt
+            int ticksAggressionReq = calculateAndPrintAggro(targetMap);
+            double dmgDealtReq = calculateAndPrintDamage(targetMap, healthInfo[1]); // healthInfo[1] is the actualBossHealth
+            // print the final line to wrap up the summary
+            Bukkit.broadcastMessage(SUMMARY_HEADER_FINAL);
+
             // additional defeat messages
             switch (bossType) {
                 case DESERT_SCOURGE:
@@ -331,11 +337,6 @@ public class BossHelper {
                     Bukkit.broadcastMessage("§#FFD700远古巨龙的力量在洞穴中显现，交织着穿过岩石。");
                     break;
             }
-            // calculate and broadcast boss aggression time & dmg dealt
-            int ticksAggressionReq = calculateAndPrintAggro(targetMap);
-            double dmgDealtReq = calculateAndPrintDamage(targetMap, healthInfo[1]); // healthInfo[1] is the actualBossHealth
-            // print the final line to wrap up the summary
-            Bukkit.broadcastMessage(SUMMARY_HEADER_FINAL);
 
             // loot
             if (bossType.hasTreasureBag) {

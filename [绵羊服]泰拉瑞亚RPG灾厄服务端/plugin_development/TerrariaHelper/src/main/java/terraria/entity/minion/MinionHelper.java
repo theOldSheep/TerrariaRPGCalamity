@@ -7,7 +7,6 @@ import net.minecraft.server.v1_12_R1.Vec3D;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -24,7 +23,8 @@ import java.util.*;
 import java.util.logging.Level;
 
 public class MinionHelper {
-    private static final double maxDistBeforeReturn = 90, maxDistBeforeTeleport = 90, targetRadius = 75;
+    private static final double MAX_DIST_BEFORE_RETURN = 90, MAX_DIST_BEFORE_TELEPORT = 90,
+            TARGET_RADIUS = 75;
     public static final String[] minionRelevantAttributes = {
             "armorPenetration", "damage", "damageMulti", "damageSummonMulti", "knockback", "knockbackMulti"
     };
@@ -144,9 +144,9 @@ public class MinionHelper {
     }
     public static boolean checkDistanceIsValid(EntityInsentient minion, EntityPlayer owner) {
         double horDistSqrToOwner = getHorDistSqr(minion.locX, owner.locX, minion.locZ, owner.locZ);
-        if (horDistSqrToOwner > maxDistBeforeReturn * maxDistBeforeReturn) {
+        if (horDistSqrToOwner > MAX_DIST_BEFORE_RETURN * MAX_DIST_BEFORE_RETURN) {
             minion.setGoalTarget(owner, EntityTargetEvent.TargetReason.CUSTOM, false);
-            if (horDistSqrToOwner > maxDistBeforeTeleport * maxDistBeforeTeleport) {
+            if (horDistSqrToOwner > MAX_DIST_BEFORE_TELEPORT * MAX_DIST_BEFORE_TELEPORT) {
                 attemptTeleport(minion.getBukkitEntity(), owner.getBukkitEntity().getLocation().add(0, 5, 0));
             }
             return false;
@@ -189,9 +189,12 @@ public class MinionHelper {
         if (!whipTargetValid) {
             net.minecraft.server.v1_12_R1.Entity findNearestFrom = protectOwner ? owner : minion;
             double nearestTargetDistSqr = 1e9,
-                    targetRadiusActual =
-                            finalTarget == owner ? targetRadius :
-                                    getHorDistSqr(findNearestFrom.getBukkitEntity(), finalTarget.getBukkitEntity()) * 0.85 - 8;
+                    targetRadiusActual;
+            if (finalTarget == owner)
+                targetRadiusActual = TARGET_RADIUS;
+            else
+                targetRadiusActual = Math.sqrt( getHorDistSqr(findNearestFrom.getBukkitEntity(),
+                        finalTarget.getBukkitEntity()) ) - 4;
             ArrayList<net.minecraft.server.v1_12_R1.Entity> toCheck = new ArrayList<>(50);
             toCheck.addAll(getNearbyEntities(minion, targetRadiusActual, predication));
             toCheck.addAll(getNearbyEntities(owner, targetRadiusActual, predication));

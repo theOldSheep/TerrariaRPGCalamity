@@ -434,7 +434,6 @@ public class Providence extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 1d);
-            attrMap.put("damageTakenMulti", 0.7);
             attrMap.put("defence", 100d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);

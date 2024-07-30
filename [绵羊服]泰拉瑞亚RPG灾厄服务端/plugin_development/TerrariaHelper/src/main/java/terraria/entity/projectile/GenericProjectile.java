@@ -395,7 +395,7 @@ public class GenericProjectile extends EntityPotion {
                         break;
                     case "遗爵硫海漩涡":
                         radius = 32;
-                        suckSpeed = 0.75;
+                        suckSpeed = 0.6;
                         maxSpeed = 2.5;
                         forcedKnockback = true;
                         break;
