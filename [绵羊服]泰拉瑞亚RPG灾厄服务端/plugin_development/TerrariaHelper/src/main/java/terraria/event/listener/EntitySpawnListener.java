@@ -26,7 +26,6 @@ public class EntitySpawnListener implements Listener {
             Entity entity = e.getEntity();
             if (entity instanceof TNTPrimed) {
                 TNTPrimed entityTNT = (TNTPrimed) entity;
-                Bukkit.broadcastMessage(entityTNT + "   !");
                 entityTNT.setCustomName("TNT");
                 // explode instantly
                 Collection<? extends Player> allPlayers = Bukkit.getOnlinePlayers();
@@ -45,7 +44,6 @@ public class EntitySpawnListener implements Listener {
                         }
                     }
                     // make the player responsible for the explosion
-                    Bukkit.broadcastMessage("can explode!");
                     HashMap<String, Double> attrMap = new HashMap<>();
                     attrMap.put("damage", 1200d);
                     EntityHelper.setMetadata(entityTNT, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);

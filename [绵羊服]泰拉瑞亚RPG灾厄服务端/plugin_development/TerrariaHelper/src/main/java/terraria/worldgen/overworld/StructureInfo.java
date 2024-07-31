@@ -113,11 +113,11 @@ public class StructureInfo {
                 if (blocksPendingPlacement.get(b)) {
                     b.setType(trueMat, false);
                     if (trueDt != 0)
-                        b.setData(trueDt);
+                        b.setData(trueDt, false);
                 } else {
                     b.setType(falseMat, false);
                     if (falseDt != 0)
-                        b.setData(falseDt);
+                        b.setData(falseDt, false);
                 }
             }
             // clear the blocks pending placement afterward!

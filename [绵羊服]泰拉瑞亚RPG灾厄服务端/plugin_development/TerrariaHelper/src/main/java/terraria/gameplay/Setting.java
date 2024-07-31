@@ -51,6 +51,7 @@ public class Setting {
         AIM_HELPER_ACCELERATION("辅助瞄准功能是否考虑敌人加速度，默认值为<def>", true),
         AIM_HELPER_DISTANCE("辅助瞄准功能索敌最大距离（单位：格）；取值范围<min>~<max>，默认值为<def>", 32d, 96d, 96d),
         AIM_HELPER_RADIUS("辅助瞄准功能索敌最大范围（单位：格）；取值范围<min>~<max>，默认值为<def>", 0d, 15d, 5d),
+        MINION_RETARGET_THRESHOLD("仆从因护主重新锁敌的最小距离差（单位：格）；取值范围<min>~<max>，默认值为<def>", 0d, 16d, 5d),
         // controls
         CONTROL_W("前进按键，默认为[<def>]", "W"),
         CONTROL_A("向左移动按键，默认为[<def>]", "A"),

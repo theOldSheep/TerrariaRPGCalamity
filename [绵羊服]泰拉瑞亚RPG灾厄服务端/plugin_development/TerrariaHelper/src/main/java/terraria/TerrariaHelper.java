@@ -66,7 +66,15 @@ public class TerrariaHelper extends JavaPlugin {
 
     public TerrariaHelper() {
         super();
-        WORLD_SEED = settingConfig.getLong("worldGen.seed", 114514);
+        // manipulate around the seed to generate a long number
+        String seedRaw = settingConfig.getString("worldGen.seed", "SEED");
+        if (seedRaw.length() <= 1) {
+            seedRaw += "SALT";
+        }
+        WORLD_SEED = seedRaw.substring(0, seedRaw.length() / 2).hashCode();
+        WORLD_SEED <<= 32;
+        WORLD_SEED += seedRaw.substring(seedRaw.length() / 2).hashCode();
+
         instance = this;
         LOGGER = getLogger();
     }

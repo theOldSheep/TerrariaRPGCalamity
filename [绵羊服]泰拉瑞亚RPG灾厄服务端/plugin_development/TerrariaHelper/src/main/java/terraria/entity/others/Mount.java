@@ -320,8 +320,10 @@ public class Mount extends EntitySlime {
                 (Entity entity) -> EntityHelper.checkCanDamage(bukkitEntity, entity.getBukkitEntity(), false));
         for (HitEntityInfo hitEntityInfo : toDamage) {
             org.bukkit.entity.Entity victimBukkit = hitEntityInfo.getHitEntity().getBukkitEntity();
-            // do not collide with passenger
+            // do not collide with passenger or itself
             if (bukkitEntity.getPassengers().contains(victimBukkit))
+                continue;
+            if (bukkitEntity == victimBukkit)
                 continue;
             if (!damageCD.contains(victimBukkit)) {
                 EntityHelper.damageCD(damageCD, victimBukkit, 5);

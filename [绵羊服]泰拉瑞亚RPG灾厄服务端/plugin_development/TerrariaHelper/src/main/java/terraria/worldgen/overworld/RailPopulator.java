@@ -62,6 +62,9 @@ public class RailPopulator extends BlockPopulator {
     }
     @Override
     public void populate(World wld, Random rdm, Chunk chunk) {
+        // do not spawn rails if rail height is negative
+        if (RAIL_HEIGHT < 0)
+            return;
         // no rail near spawn
         if (Math.abs(chunk.getX()) <= 3 && Math.abs(chunk.getZ()) <= 3)
             return;

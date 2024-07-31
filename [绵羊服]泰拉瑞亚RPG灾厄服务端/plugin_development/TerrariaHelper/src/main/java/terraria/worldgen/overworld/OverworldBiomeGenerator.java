@@ -106,7 +106,7 @@ public class OverworldBiomeGenerator {
         @Override
         // the eldest entry should be removed once the cache reaches its designed capacity
         protected boolean removeEldestEntry(Map.Entry entry) {
-            return size() > BIOME_FEATURE_CACHE_SIZE;
+            return size() >= BIOME_FEATURE_CACHE_SIZE;
         }
     };
 

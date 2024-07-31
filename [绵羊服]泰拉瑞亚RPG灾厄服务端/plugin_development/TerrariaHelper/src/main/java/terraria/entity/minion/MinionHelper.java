@@ -1,5 +1,6 @@
 package terraria.entity.minion;
 
+import com.earth2me.essentials.Settings;
 import net.minecraft.server.v1_12_R1.EntityInsentient;
 import net.minecraft.server.v1_12_R1.EntityLiving;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
+import terraria.gameplay.Setting;
 import terraria.util.EntityHelper;
 import terraria.util.PlayerHelper;
 
@@ -192,8 +194,9 @@ public class MinionHelper {
             if (finalTarget == owner)
                 targetRadiusActual = TARGET_RADIUS;
             else
-                targetRadiusActual = Math.sqrt( getHorDistSqr(findNearestFrom.getBukkitEntity(),
-                        finalTarget.getBukkitEntity()) ) - 6;
+                targetRadiusActual =
+                        Math.sqrt( getHorDistSqr(findNearestFrom.getBukkitEntity(), finalTarget.getBukkitEntity()) )
+                                - Setting.getOptionDouble((Player) owner, Setting.Options.MINION_RETARGET_THRESHOLD);
             ArrayList<net.minecraft.server.v1_12_R1.Entity> toCheck = new ArrayList<>(50);
             toCheck.addAll(getNearbyEntities(minion, targetRadiusActual, predication));
             toCheck.addAll(getNearbyEntities(owner, targetRadiusActual, predication));

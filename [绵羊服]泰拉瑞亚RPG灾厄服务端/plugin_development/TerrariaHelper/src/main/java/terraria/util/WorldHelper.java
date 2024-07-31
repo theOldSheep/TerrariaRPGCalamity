@@ -782,9 +782,14 @@ public class WorldHelper {
                 break;
         }
         if (plantType != PlantType.SPECIAL_OR_NONE) {
-            plantBlock.setType(plantType.material);
-            if (plantType.data != 0)
+            // only update physics once.
+            if (plantType.data != 0) {
+                plantBlock.setType(plantType.material, false);
                 plantBlock.setData(plantType.data);
+            }
+            else {
+                plantBlock.setType(plantType.material);
+            }
         }
     }
     //                  trees
@@ -1129,8 +1134,9 @@ public class WorldHelper {
         if ( ! canGrowPlant(rootBlock.getRelative(BlockFace.DOWN), true, false) ) {
             return null;
         }
-        if (treeStylePref == null)
+        if (treeStylePref == null) {
             treeStylePref = getTreeStyleProbabilities(temperature, moisture);
+        }
 
         ArrayList<Block> trunkBlocks = new ArrayList<>();
         ArrayList<Block> leafBlocks = new ArrayList<>();
@@ -1207,17 +1213,18 @@ public class WorldHelper {
             // leaves
             for (Block leafBlock : leafBlocks) {
                 leafBlock.setType(leafMat, false);
-                leafBlock.setData(treeData);
+                leafBlock.setData(treeData, false);
             }
             // trunk
             for (Block trunkBlock : trunkBlocks) {
                 trunkBlock.setType(logMat, false);
-                trunkBlock.setData(treeData);
+                byte trunkData = treeData;
                 // update branch rotation
                 if (trunkBlock.getX() != rootBlock.getX())
-                    trunkBlock.setData((byte) (treeData + 4));
+                    trunkData = (byte) (treeData + 4);
                 else if (trunkBlock.getZ() != rootBlock.getZ())
-                    trunkBlock.setData((byte) (treeData + 8));
+                    trunkData = (byte) (treeData + 8);
+                trunkBlock.setData(trunkData, false);
             }
         }
 

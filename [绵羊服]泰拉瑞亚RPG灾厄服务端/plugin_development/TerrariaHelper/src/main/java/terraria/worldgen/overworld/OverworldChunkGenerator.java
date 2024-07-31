@@ -1,5 +1,6 @@
 package terraria.worldgen.overworld;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -14,10 +15,16 @@ import terraria.worldgen.Interpolate.InterpolatePoint;
 import java.util.*;
 
 public class OverworldChunkGenerator extends ChunkGenerator {
-    public static final int OCTAVES_CAVE = 4,
-            NEARBY_BIOME_SAMPLE_RADIUS = 25, NEARBY_BIOME_SAMPLE_STEPSIZE = 1,
-            LAND_HEIGHT = 100, RIVER_DEPTH = 25, LAKE_DEPTH = 30, PLATEAU_HEIGHT = 40, SEA_LEVEL = 90, LAVA_LEVEL = -150,
-            Y_OFFSET_OVERWORLD = 0, HEIGHT_SAMPLING_DIAMETER;
+    public static final int OCTAVES_CAVE = 4;
+    public static final int NEARBY_BIOME_SAMPLE_RADIUS = 25;
+    public static final int LAND_HEIGHT = 100;
+    public static final int RIVER_DEPTH = 25;
+    public static final int LAKE_DEPTH = 30;
+    public static final int PLATEAU_HEIGHT = 40;
+    public static final int SEA_LEVEL = 90;
+    public static final int LAVA_LEVEL = -150;
+    public static final int Y_OFFSET_OVERWORLD = 0;
+    public static final int HEIGHT_SAMPLING_DIAMETER;
     private static final double
             HEIGHT_SAMPLE_FACTOR_SUM;
     private static final double[][] HEIGHT_INFLUENCE_FACTOR;
@@ -159,17 +166,6 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         populators.add(new FoliagePopulator());
         populators.add(new StructurePopulator(true));
         populators.add(new RailPopulator());
-    }
-    public static void tweakBiome(int x, int z, BiomeGrid biome, int yOffset) {
-        for (int i = 0; i < 16; i++)
-            for (int j = 0; j < 16; j++) {
-                int blockX = x * 16 + i, blockZ = z * 16 + j;
-                Biome biomeToSet = OverworldBiomeGenerator.getBiome(blockX, blockZ);
-                if (yOffset >= 0)
-                    biome.setBiome(i, j, biomeToSet);
-                else
-                    biome.setBiome(i, j, OverworldBiomeGenerator.getUndergroundEquivalent(biomeToSet));
-            }
     }
     public static OverworldChunkGenerator getInstance() {
         return instance;
@@ -391,27 +387,47 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         // save cave multi into caveMultiMap
         caveMultiMap[i][j] = caveMulti;
     }
+    // updates the biome information
+    private static void tweakBiome(Biome[][] biomesMemoization, BiomeGrid biome, int yOffset) {
+        for (int i = 0; i < 16; i++)
+            for (int j = 0; j < 16; j++) {
+                Biome biomeToSet = biomesMemoization[NEARBY_BIOME_SAMPLE_RADIUS + i][NEARBY_BIOME_SAMPLE_RADIUS + j];
+                if (yOffset >= 0)
+                    biome.setBiome(i, j, biomeToSet);
+                else
+                    biome.setBiome(i, j, OverworldBiomeGenerator.getUndergroundEquivalent(biomeToSet));
+            }
+    }
     // generates the height and cave multiplier mapping of a chunk
-    public static void generateMaps(int blockXStart, int blockZStart, int[][] heightMap, double[][] caveMultiMap, OverworldCaveGenerator caveGen) {
-        double height, caveMulti;
+    public static void generateMaps(int blockXStart, int blockZStart, int[][] heightMap, double[][] caveMultiMap,
+                                    OverworldCaveGenerator caveGen, BiomeGrid biomeGrid, int yOffset) {
+        // create memoization 2D array for the nearby biomes
+        int memoiSize = 16 + NEARBY_BIOME_SAMPLE_RADIUS * 2;
+        Biome[][] biomesMemoization = new Biome[memoiSize][memoiSize];
+        for (int i = 0; i < memoiSize; i ++)
+            for (int j = 0; j < memoiSize; j ++) {
+                biomesMemoization[i][j] = OverworldBiomeGenerator.getBiome(
+                        blockXStart - NEARBY_BIOME_SAMPLE_RADIUS + i, blockZStart - NEARBY_BIOME_SAMPLE_RADIUS + j);
+            }
+        // update the biome grid
+        tweakBiome(biomesMemoization, biomeGrid, yOffset);
+
         int currX, currZ;
 
         // setup height info according to nearby biomes at both offset 0.
         // Then use sliding window technique to derive the height everywhere.
-        HashMap<Biome, Double> nearbyBiomeMap = new HashMap<>();
-        for (int sampleOffsetX = NEARBY_BIOME_SAMPLE_RADIUS * -1; sampleOffsetX <= NEARBY_BIOME_SAMPLE_RADIUS; sampleOffsetX++) {
-            int currSampleX = blockXStart + sampleOffsetX * NEARBY_BIOME_SAMPLE_STEPSIZE;
-            for (int sampleOffsetZ = NEARBY_BIOME_SAMPLE_RADIUS * -1; sampleOffsetZ <= NEARBY_BIOME_SAMPLE_RADIUS; sampleOffsetZ++) {
-                int currSampleZ = blockZStart + sampleOffsetZ * NEARBY_BIOME_SAMPLE_STEPSIZE;
-                Biome currBiome = OverworldBiomeGenerator.getBiome(currSampleX, currSampleZ);
-                double updatedBiomeIntensity = nearbyBiomeMap.getOrDefault(currBiome, 0d) +
-                        HEIGHT_INFLUENCE_FACTOR[sampleOffsetX + NEARBY_BIOME_SAMPLE_RADIUS][sampleOffsetZ + NEARBY_BIOME_SAMPLE_RADIUS];
-                nearbyBiomeMap.put(currBiome, updatedBiomeIntensity);
+        HashMap<Biome, Double> nearbyBiomeMapBackup = new HashMap<>();
+        for (int sampleIdxX = 0; sampleIdxX <= NEARBY_BIOME_SAMPLE_RADIUS * 2; sampleIdxX++) {
+            for (int sampleIdxZ = 0; sampleIdxZ <= NEARBY_BIOME_SAMPLE_RADIUS * 2; sampleIdxZ++) {
+                Biome currBiome = biomesMemoization[sampleIdxX][sampleIdxZ];
+                double updatedBiomeIntensity = nearbyBiomeMapBackup.getOrDefault(currBiome, 0d) +
+                        HEIGHT_INFLUENCE_FACTOR[sampleIdxX][sampleIdxZ];
+                nearbyBiomeMapBackup.put(currBiome, updatedBiomeIntensity);
             }
         }
-        HashMap<Biome, Double> nearbyBiomeMapBackup = (HashMap<Biome, Double>) nearbyBiomeMap.clone();
 
         // loop through all blocks.
+        HashMap<Biome, Double> nearbyBiomeMap;
         for (int i = 0; i < 16; i ++) {
             currX = blockXStart + i;
             nearbyBiomeMap = (HashMap<Biome, Double>) nearbyBiomeMapBackup.clone();
@@ -422,17 +438,16 @@ public class OverworldChunkGenerator extends ChunkGenerator {
 
                 // sliding window technique
                 if (j + 1 < 16) {
-                    int currSample_dropZ = currZ - NEARBY_BIOME_SAMPLE_RADIUS * NEARBY_BIOME_SAMPLE_STEPSIZE;
-                    int currSample_addZ = currZ + (NEARBY_BIOME_SAMPLE_RADIUS + 1) * NEARBY_BIOME_SAMPLE_STEPSIZE;
-                    for (int sampleOffset = NEARBY_BIOME_SAMPLE_RADIUS * -1; sampleOffset <= NEARBY_BIOME_SAMPLE_RADIUS; sampleOffset++) {
-                        int currSampleX = currX + sampleOffset * NEARBY_BIOME_SAMPLE_STEPSIZE;
-                        double influence_factor = HEIGHT_INFLUENCE_FACTOR[0][sampleOffset + NEARBY_BIOME_SAMPLE_RADIUS];
+                    int currSample_dropZ = j;
+                    int currSample_addZ = j + NEARBY_BIOME_SAMPLE_RADIUS * 2 + 1;
+                    for (int sampleIdx = 0; sampleIdx <= NEARBY_BIOME_SAMPLE_RADIUS * 2; sampleIdx++) {
+                        double influence_factor = HEIGHT_INFLUENCE_FACTOR[0][sampleIdx];
 
-                        Biome currBiome_drop = OverworldBiomeGenerator.getBiome(currSampleX, currSample_dropZ);
+                        Biome currBiome_drop = biomesMemoization[sampleIdx + i][currSample_dropZ];
                         double updatedIntensity_drop = nearbyBiomeMap.getOrDefault(currBiome_drop, 0d) - influence_factor;
                         nearbyBiomeMap.put(currBiome_drop, updatedIntensity_drop);
 
-                        Biome currBiome_add =  OverworldBiomeGenerator.getBiome(currSampleX, currSample_addZ);
+                        Biome currBiome_add =  biomesMemoization[sampleIdx + i][currSample_addZ];
                         double updatedIntensity_add = nearbyBiomeMap.getOrDefault(currBiome_add, 0d) + influence_factor;
                         nearbyBiomeMap.put(currBiome_add,  updatedIntensity_add);
                     }
@@ -440,17 +455,16 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             }
             // sliding window technique.
             if (i + 1 < 16) {
-                int currSample_dropX = currX - NEARBY_BIOME_SAMPLE_RADIUS * NEARBY_BIOME_SAMPLE_STEPSIZE;
-                int currSample_addX  = currX + (NEARBY_BIOME_SAMPLE_RADIUS + 1) * NEARBY_BIOME_SAMPLE_STEPSIZE;
-                for (int sampleOffset = NEARBY_BIOME_SAMPLE_RADIUS * -1; sampleOffset <= NEARBY_BIOME_SAMPLE_RADIUS; sampleOffset++) {
-                    int currSampleZ = blockZStart + sampleOffset * NEARBY_BIOME_SAMPLE_STEPSIZE;
-                    double influence_factor = HEIGHT_INFLUENCE_FACTOR[sampleOffset + NEARBY_BIOME_SAMPLE_RADIUS][0];
+                int currSample_dropX = i;
+                int currSample_addX  = i + NEARBY_BIOME_SAMPLE_RADIUS * 2 + 1;
+                for (int sampleIdx = 0; sampleIdx <= NEARBY_BIOME_SAMPLE_RADIUS * 2; sampleIdx++) {
+                    double influence_factor = HEIGHT_INFLUENCE_FACTOR[sampleIdx][0];
 
-                    Biome currBiome_drop = OverworldBiomeGenerator.getBiome(currSample_dropX, currSampleZ);
+                    Biome currBiome_drop = biomesMemoization[currSample_dropX][sampleIdx];
                     double updatedIntensity_drop = nearbyBiomeMapBackup.getOrDefault(currBiome_drop, 0d) - influence_factor;
                     nearbyBiomeMapBackup.put(currBiome_drop, updatedIntensity_drop);
 
-                    Biome currBiome_add = OverworldBiomeGenerator.getBiome(currSample_addX, currSampleZ);
+                    Biome currBiome_add =  biomesMemoization[currSample_addX][sampleIdx];
                     double updatedIntensity_add = nearbyBiomeMapBackup.getOrDefault(currBiome_add, 0d) + influence_factor;
                     nearbyBiomeMapBackup.put(currBiome_add,  updatedIntensity_add);
                 }
@@ -586,13 +600,10 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     }
     @Override
     public ChunkData generateChunkData(World world, Random random, int x, int z, BiomeGrid biome) {
-        // setup biome
-        tweakBiome(x, z, biome, Y_OFFSET_OVERWORLD);
-
-        // init info maps
+        // init info maps; the memoization would also set up the biome.
         int[][] heightMap = new int[16][16];
         double[][] caveMultiMap = new double[16][16];
-        generateMaps(x << 4, z << 4, heightMap, caveMultiMap, CAVE_GENERATOR_OVERWORLD);
+        generateMaps(x << 4, z << 4, heightMap, caveMultiMap, CAVE_GENERATOR_OVERWORLD, biome, Y_OFFSET_OVERWORLD);
 
         // init terrain
         ChunkData chunk = createChunkData(world);

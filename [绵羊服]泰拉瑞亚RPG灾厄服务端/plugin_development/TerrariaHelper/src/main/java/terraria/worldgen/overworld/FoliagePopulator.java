@@ -44,25 +44,22 @@ public class FoliagePopulator extends BlockPopulator {
                 amount += rdm.nextDouble() * amount;
             }
 
-            int finalAmount = MathHelper.randomRound( amount );
-            // prevent chunks loading each other aggressively because of tree generation
-            Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), () -> {
-                HashMap<WorldHelper.LeafShape, Double>[] treeStylePref = null;
-                for (int i = 1; i < finalAmount; i++) {
-                    int X = rdm.nextInt(15);
-                    int Z = rdm.nextInt(15);
-                    int Y = ((CraftChunk) chunk).getHandle().heightMap[Z << 4 | X];
-                    // if the position is not covered by water, grow a tree.
-                    Block blockToGrow = chunk.getBlock(X, Y, Z);
-                    switch (blockToGrow.getType()) {
-                        case WATER:
-                        case STATIONARY_WATER:
-                            break;
-                        default:
-                            treeStylePref = WorldHelper.attemptGenerateTreeAt(blockToGrow, temp, moisture, treeStylePref);
-                    }
+            // plant the trees
+            HashMap<WorldHelper.LeafShape, Double>[] treeStylePref = null;
+            for (int i = 1; i < MathHelper.randomRound( amount ); i++) {
+                int X = rdm.nextInt(15);
+                int Z = rdm.nextInt(15);
+                int Y = ((CraftChunk) chunk).getHandle().heightMap[Z << 4 | X];
+                // if the position is not covered by water, grow a tree.
+                Block blockToGrow = chunk.getBlock(X, Y, Z);
+                switch (blockToGrow.getType()) {
+                    case WATER:
+                    case STATIONARY_WATER:
+                        break;
+                    default:
+                        treeStylePref = WorldHelper.attemptGenerateTreeAt(blockToGrow, temp, moisture, treeStylePref);
                 }
-            }, 1);
+            }
         }
     }
 }
