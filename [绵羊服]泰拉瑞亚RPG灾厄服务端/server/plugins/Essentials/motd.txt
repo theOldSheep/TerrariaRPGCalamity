@@ -1,4 +1,3 @@
-&6Welcome, {PLAYER}&6!
-&6Type &c/help&6 for a list of commands.
-&6Type &c/list&6 to see who else is online.
-&6Players online:&c {ONLINE} &6- World time:&c {WORLDTIME12}
+&6你好，{PLAYER}&6！
+&6输入&c/help&6查看所有命令
+&6输入&c/settings&6修改泰拉瑞亚设置
