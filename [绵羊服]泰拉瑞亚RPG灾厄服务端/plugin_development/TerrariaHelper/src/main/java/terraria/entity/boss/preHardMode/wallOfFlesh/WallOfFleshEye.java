@@ -66,8 +66,10 @@ public class WallOfFleshEye extends EntitySlime {
     }
     private void AI() {
         // no AI after death
-        if (getHealth() <= 0d)
+        if (getHealth() <= 0d) {
+            setNoGravity(false);
             return;
+        }
         // AI
         {
             // update target

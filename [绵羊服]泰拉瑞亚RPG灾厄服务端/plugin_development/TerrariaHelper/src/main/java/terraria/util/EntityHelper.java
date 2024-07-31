@@ -1,6 +1,5 @@
 package terraria.util;
 
-import fr.xephi.authme.libs.com.maxmind.db.Metadata;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
@@ -308,7 +307,7 @@ public class EntityHelper {
     public enum DamageReason {
         BLOCK_EXPLOSION(false, DamageType.BLOCK_EXPLOSION),
         BOSS_ANGRY(true, null),
-        DIRECT_DAMAGE(true, null),
+        CONTACT_DAMAGE(true, DamageType.MELEE),
         DEBUFF(false, DamageType.DEBUFF),
         DROWNING(false, DamageType.DROWNING),
         FALL(false, DamageType.FALL),
@@ -318,10 +317,11 @@ public class EntityHelper {
         FEAR(true, null),
         THORN(true, DamageType.THORN),
         SPECTRE(true, DamageType.SPECTRE),
+        STRIKE(true, null),
         SUFFOCATION(false, DamageType.SUFFOCATION);
         // fields
-        boolean isDirectDamage = false;
-        DamageType damageType = null;
+        final boolean isDirectDamage;
+        final DamageType damageType;
         // constructors
         DamageReason(boolean isDirectDamage, DamageType damageType) {
             this.isDirectDamage = isDirectDamage;
@@ -2014,6 +2014,11 @@ public class EntityHelper {
         handleDamage(damager, victim, damage, damageReason, null);
     }
     public static void handleDamage(Entity damager, Entity victim, double damage, DamageReason damageReason, String debuffType) {
+        // damaging a mount counts as directly damaging its owner.
+        if (victim.getScoreboardTags().contains("isMount")) {
+            victim = getDamageTaker(victim);
+        }
+
         HashMap<String, Double> victimAttrMap = getAttrMap(victim);
         Entity damageSource = getDamageSource(damager);
         // projectile etc
@@ -2030,6 +2035,7 @@ public class EntityHelper {
             }
             return;
         }
+
         // living entities
         LivingEntity victimLivingEntity = (LivingEntity) victim;
         LivingEntity damageTaker = (LivingEntity) getDamageTaker(victim);
@@ -2037,10 +2043,7 @@ public class EntityHelper {
             return;
         Set<String> damageTakerTags = damageTaker.getScoreboardTags();
         Set<String> victimTags = victim.getScoreboardTags();
-        // use the damage taker's defence etc. IFF damaging a mount. For multipart entities, this is not the case.
-        if (victimTags.contains("isMount")) {
-            victimAttrMap = getAttrMap(damageTaker);
-        }
+
         // no damage scenarios
         boolean canDamage = true;
         if (damageTakerTags.contains("isMinion")) canDamage = false;
@@ -2088,12 +2091,12 @@ public class EntityHelper {
             // if no mandatory damage type for the damage reason, default to the attacker(can be a projectile) damage type
             if (damageType == null)
                 damageType = getDamageType(damager);
-            if (damageReason == DamageReason.DIRECT_DAMAGE && damageType == DamageType.MELEE)
+            if (damageReason == DamageReason.STRIKE && damageType == DamageType.MELEE)
                 damageType = DamageType.TRUE_MELEE;
         }
         // if the victim has invincibility frame on this damage type (usually player)
         String damageInvincibilityFrameName = getInvulnerabilityTickName(damageType);
-        if (damageTakerTags.contains(damageInvincibilityFrameName)) return;
+        if (victimTags.contains(damageInvincibilityFrameName)) return;
 
 
         HashSet<String> damagerAccessories = PlayerHelper.getAccessories(damageSource);
@@ -2128,7 +2131,7 @@ public class EntityHelper {
                     // Summon, Melee, Magic
                     default:
                         // whip
-                        if (damageType == DamageType.SUMMON && damageReason == DamageReason.DIRECT_DAMAGE)
+                        if (damageType == DamageType.SUMMON && damageReason == DamageReason.STRIKE)
                             buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
                         buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict" + damageType, new ArrayList<>(0)));
                 }
@@ -2437,7 +2440,7 @@ public class EntityHelper {
             float soundVolume = 3f;
             // register damage dealt; bosses have louder damage sound
             if (damageTakerTags.contains("isBOSS") && damageSource instanceof Player) {
-                soundVolume = 6f;
+                soundVolume = 8f;
                 MetadataValue temp = getMetadata(damageTaker, MetadataName.BOSS_TARGET_MAP);
                 if (temp != null) {
                     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targets =

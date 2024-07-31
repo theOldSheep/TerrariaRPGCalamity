@@ -4,7 +4,6 @@ import net.minecraft.server.v1_12_R1.EntityInsentient;
 import net.minecraft.server.v1_12_R1.EntityLiving;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.Vec3D;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
@@ -102,7 +101,7 @@ public class MinionHelper {
         for (HitEntityInfo info : toDamage) {
             Entity victimBukkit = info.getHitEntity().getBukkitEntity();
             EntityHelper.damageCD(damageCD, victimBukkit, invincibilityTick);
-            EntityHelper.handleDamage(minionBukkit, victimBukkit, basicDamage, EntityHelper.DamageReason.DIRECT_DAMAGE);
+            EntityHelper.handleDamage(minionBukkit, victimBukkit, basicDamage, EntityHelper.DamageReason.CONTACT_DAMAGE);
         }
         return toDamage;
     }
@@ -194,7 +193,7 @@ public class MinionHelper {
                 targetRadiusActual = TARGET_RADIUS;
             else
                 targetRadiusActual = Math.sqrt( getHorDistSqr(findNearestFrom.getBukkitEntity(),
-                        finalTarget.getBukkitEntity()) ) - 4;
+                        finalTarget.getBukkitEntity()) ) - 6;
             ArrayList<net.minecraft.server.v1_12_R1.Entity> toCheck = new ArrayList<>(50);
             toCheck.addAll(getNearbyEntities(minion, targetRadiusActual, predication));
             toCheck.addAll(getNearbyEntities(owner, targetRadiusActual, predication));

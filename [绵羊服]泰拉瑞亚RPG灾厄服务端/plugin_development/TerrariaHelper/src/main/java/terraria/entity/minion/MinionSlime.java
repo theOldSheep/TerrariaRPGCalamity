@@ -2672,6 +2672,8 @@ public class MinionSlime extends EntitySlime {
                 Location surfaceLoc, centerLoc;
                 Vector exoSkeletonOffsetDir = MathHelper.vectorFromYawPitch_approx(ownerNMS.yaw + 180, 0);
                 surfaceLoc = owner.getLocation().add(exoSkeletonOffsetDir.clone().multiply(4.5));
+                // the minion stay well above the player to benefit the supreme calamitas fight
+                surfaceLoc.add(0, 10, 0);
                 centerLoc = surfaceLoc.clone().add( exoSkeletonOffsetDir.clone().multiply(3) ).add(0, -2, 0);
                 MinionHelper.attemptTeleport(minionBukkit, centerLoc);
                 // face whatever direction the owner is facing

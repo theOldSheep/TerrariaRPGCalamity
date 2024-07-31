@@ -124,9 +124,7 @@ public class Yharon extends EntitySlime {
     }
 
     private boolean clockwise = true;
-    public void summonRingOfProjectilesSimple(EntityHelper.ProjectileShootInfo shootInfo, boolean alternate) {
-        summonRingOfProjectilesSphere(shootInfo, 0, 1, alternate);
-    }
+
     public void summonRingOfProjectilesSphere(EntityHelper.ProjectileShootInfo shootInfo, int idx, int idxMax, boolean alternate) {
         summonRingOfProjectilesSphere(shootInfo, idx, idxMax, alternate, 32);
     }
@@ -184,7 +182,7 @@ public class Yharon extends EntitySlime {
                         this.velocity.zero();
                     }
                     if (this.phaseTick % 10 == 0)
-                        summonRingOfProjectilesSimple(shootInfoFireballRegular, false);
+                        summonRingOfProjectilesSphere(shootInfoFireballRegular, 0, 1, false);
                 }
                 if (this.phaseTick > 60) {
                     this.updatePhaseStep();
@@ -260,7 +258,7 @@ public class Yharon extends EntitySlime {
                     this.velocity.zero();
                 }
                 if (this.phaseTick % 10 == 1)
-                    summonRingOfProjectilesSimple(shootInfoFireballRegular, true);
+                    summonRingOfProjectilesSphere(shootInfoFireballRegular, 0, 1, true, 24);
                 if (this.phaseTick > 60) {
                     updatePhaseStep(1);
                 }
@@ -424,7 +422,7 @@ public class Yharon extends EntitySlime {
 
             Location loc = bukkitEntity.getLocation();
             loc.getWorld().playSound(loc, "entity.yharon.yharon_roar",
-                    org.bukkit.SoundCategory.HOSTILE, 5f, 1f);
+                    org.bukkit.SoundCategory.HOSTILE, 25f, 1f);
         }
     }
     private void executePhase() {

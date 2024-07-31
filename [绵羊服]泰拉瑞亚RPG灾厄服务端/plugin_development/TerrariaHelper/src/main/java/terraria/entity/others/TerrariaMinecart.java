@@ -4,7 +4,6 @@ import net.minecraft.server.v1_12_R1.AxisAlignedBB;
 import net.minecraft.server.v1_12_R1.Entity;
 import net.minecraft.server.v1_12_R1.EntityMinecartRideable;
 import net.minecraft.server.v1_12_R1.World;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.Player;
@@ -15,7 +14,6 @@ import terraria.entity.projectile.HitEntityInfo;
 import terraria.util.EntityHelper;
 import terraria.util.PlayerHelper;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -146,7 +144,7 @@ public class TerrariaMinecart extends EntityMinecartRideable {
             if (!damageCD.contains(victimBukkit)) {
                 EntityHelper.damageCD(damageCD, victimBukkit, 10);
                 EntityHelper.handleDamage(bukkitEntity, victimBukkit,
-                        attrMap.getOrDefault("damage", 100d), EntityHelper.DamageReason.DIRECT_DAMAGE);
+                        attrMap.getOrDefault("damage", 100d), EntityHelper.DamageReason.CONTACT_DAMAGE);
             }
         }
     }

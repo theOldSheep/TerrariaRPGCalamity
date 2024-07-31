@@ -409,7 +409,7 @@ public class Thanatos extends EntitySlime {
             attrMap.put("defence", 300d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.BULLET);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

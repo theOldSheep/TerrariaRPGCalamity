@@ -104,8 +104,24 @@ public class MoonLord extends EntitySlime {
         if (getHealth() <= 0d)
             return;
 
+        // update target
+        target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
+                IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+        // disappear if no target is available
+        if (target == null) {
+            for (LivingEntity entity : bossParts) {
+                entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
+                entity.remove();
+            }
+            return;
+        }
         // spawn animation
         if (indexSpawnAnimation > 0) {
+            // teleport to follow the player
+            Location tpLoc = target.getLocation();
+            tpLoc.setY(-40);
+            EntityHelper.movementTP(bukkitEntity, tpLoc);
+            // visual effects
             int ticksDuration = -1;
             switch (indexSpawnAnimation) {
                 case 1200:
@@ -127,6 +143,7 @@ public class MoonLord extends EntitySlime {
                     ticksDuration = 200;
                     break;
             }
+            // spawn parts
             if (ticksDuration > 0) {
                 for (UUID targetID : targetMap.keySet()) {
                     Player toApplyEffect = Bukkit.getPlayer(targetID);
@@ -145,20 +162,9 @@ public class MoonLord extends EntitySlime {
         }
         // AI
         else {
-            // update target
-            target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                    IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
-            // disappear if no target is available
-            if (target == null) {
-                for (LivingEntity entity : bossParts) {
-                    entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
-                    entity.remove();
-                }
-                return;
-            }
             // increase player aggro duration
             targetMap.get(target.getUniqueId()).addAggressionTick();
-            // if target is valid, teleport parts to location
+            // teleport parts to location
             setupLocation();
             // if the eyes are destroyed, the heart can now be damaged.
             if (!secondPhase && trueEyeSpawned >= 3) {
@@ -264,7 +270,8 @@ public class MoonLord extends EntitySlime {
         bossbar.setVisible(false);
         BossHelper.bossMap.remove(BOSS_TYPE.msgName);
         // remove the background
-        background.die();
+        if (background != null)
+            background.die();
         // if the boss has been defeated properly
         if (getMaxHealth() > 10) {
             // drop items

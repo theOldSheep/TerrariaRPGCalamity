@@ -3,7 +3,6 @@ package terraria.entity.monster;
 
 import net.minecraft.server.v1_12_R1.*;
 import net.minecraft.server.v1_12_R1.Entity;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -446,7 +445,7 @@ public class MonsterHelper {
                             case "千足蜈蚣":
                                 segment.setCustomName(type);
                                 if (i + 1 < additionalSegAmount) {
-                                    segment.addScoreboardTag("noDamage");
+                                    segment.removeScoreboardTag("isMonster");
                                 }
                                 else {
                                     attrMapSegment.put("damageTakenMulti", 10d);
@@ -467,10 +466,10 @@ public class MonsterHelper {
                             break;
                     }
                     extraVariables.put("wormMoveOption", followInfo);
-                    // other properties
+                    // other properties for the current segment
                     switch (type) {
                         case "千足蜈蚣":
-                            monster.addScoreboardTag("noDamage");
+                            monster.removeScoreboardTag("isMonster");
                             break;
                         case "银河织妖":
                             Location[] formerLoc = new Location[10];
@@ -2048,8 +2047,8 @@ public class MonsterHelper {
                 }
                 case "千足蜈蚣": {
                     ArrayList<org.bukkit.entity.LivingEntity> segments = (ArrayList<org.bukkit.entity.LivingEntity>) extraVariables.get("attachments");
-                    for (org.bukkit.entity.Entity entity : segments) {
-                        ((LivingEntity) entity).setHealth(monsterBkt.getHealth());
+                    for (LivingEntity entity : segments) {
+                        entity.setHealth(monsterBkt.getHealth());
                     }
 
                     if (monster.getHealth() > 0) {
@@ -2675,7 +2674,7 @@ public class MonsterHelper {
             double damage = EntityHelper.getAttrMap(monsterBkt).getOrDefault("damage", 1d);
             for (HitEntityInfo hitEntityInfo : toDamage) {
                 EntityHelper.handleDamage(monsterBkt, hitEntityInfo.getHitEntity().getBukkitEntity(),
-                        damage, EntityHelper.DamageReason.DIRECT_DAMAGE);
+                        damage, EntityHelper.DamageReason.CONTACT_DAMAGE);
             }
         }
         // update saved velocity

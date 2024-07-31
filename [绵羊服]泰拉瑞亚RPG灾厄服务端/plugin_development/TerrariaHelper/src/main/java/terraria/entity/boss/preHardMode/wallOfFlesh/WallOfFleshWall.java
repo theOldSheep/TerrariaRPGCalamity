@@ -4,9 +4,12 @@ import net.minecraft.server.v1_12_R1.EntitySlime;
 import net.minecraft.server.v1_12_R1.GenericAttributes;
 import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
 import net.minecraft.server.v1_12_R1.World;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
@@ -29,7 +32,8 @@ public class WallOfFleshWall extends EntitySlime {
         {
             // removed after target is dead
             if (owner.target == null || ! owner.isAlive()) {
-                setHealth(0);
+                setNoGravity(false);
+                setHealth(0f);
             }
             // if target is valid, adjust position
             else {
@@ -83,6 +87,7 @@ public class WallOfFleshWall extends EntitySlime {
         this.owner = owner;
         this.yCoord = yCoord;
         this.yawDir = (float) MathHelper.getVectorYaw(owner.horizontalMoveDirection);
+        ((LivingEntity) bukkitEntity).addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 0), true);
     }
 
     // rewrite AI

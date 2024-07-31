@@ -178,7 +178,7 @@ public class GuardianAttacker extends EntitySlime {
             attrMap.put("defence", 60d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target

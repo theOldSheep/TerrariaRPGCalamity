@@ -44,10 +44,11 @@ public class DarkEnergy extends EntitySlime {
             }
             // if target is valid, attack
             else {
-                
-
                 indexAI++;
                 bukkitEntity.setVelocity(velocity);
+
+                if (indexAI == 20)
+                    removeScoreboardTag("noDamage");
             }
         }
         this.yaw = (float) MathHelper.getVectorYaw(
@@ -89,6 +90,8 @@ public class DarkEnergy extends EntitySlime {
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");
+        // neglects damage for a brief moment; this tag would be removed later.
+        addScoreboardTag("noDamage");
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);

@@ -261,7 +261,7 @@ public class BossHelper {
             if (damageExceptions != null && damageExceptions.contains(victimEntity))
                 continue;
             EntityHelper.handleDamage(monsterBkt, victimEntity,
-                    damage, EntityHelper.DamageReason.DIRECT_DAMAGE);
+                    damage, EntityHelper.DamageReason.CONTACT_DAMAGE);
             // record damage CD
             if (damageExceptions != null) {
                 EntityHelper.damageCD(damageExceptions, victimEntity, damageCDTicks);

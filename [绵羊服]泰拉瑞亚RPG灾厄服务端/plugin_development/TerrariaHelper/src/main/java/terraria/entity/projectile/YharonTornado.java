@@ -49,6 +49,10 @@ public class YharonTornado extends GenericProjectile {
     @Override
     public void B_() {
         this.target = boss.getTarget();
+        if (this.target == null) {
+            die();
+            return;
+        }
         super.lockedTarget = ((CraftEntity) target).getHandle();
 
         super.B_();

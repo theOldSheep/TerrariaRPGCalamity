@@ -502,7 +502,7 @@ public class GenericHelper {
                 wld, startLoc.toVector(), terminalLoc.toVector(), width, predication);
         for (HitEntityInfo info : entityHitCandidate) {
             Entity victim = info.getHitEntity().getBukkitEntity();
-            EntityHelper.handleDamage(damager, victim, damage, EntityHelper.DamageReason.DIRECT_DAMAGE);
+            EntityHelper.handleDamage(damager, victim, damage, EntityHelper.DamageReason.STRIKE);
             // damage decay
             damage *= decayCoef;
             if (useAttrMapDamage)

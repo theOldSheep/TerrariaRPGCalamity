@@ -326,7 +326,7 @@ public class Mount extends EntitySlime {
             if (!damageCD.contains(victimBukkit)) {
                 EntityHelper.damageCD(damageCD, victimBukkit, 5);
                 EntityHelper.handleDamage(bukkitEntity, victimBukkit,
-                        currDmg, EntityHelper.DamageReason.DIRECT_DAMAGE);
+                        currDmg, EntityHelper.DamageReason.CONTACT_DAMAGE);
                 // slimes also bounce upward
                 switch (mountType) {
                     case "史莱姆坐骑":

@@ -1,19 +1,26 @@
 buffConflicts:
   # 食物buff有优先级的不同
-  1:
+  food:
     吃饱: 1
     饱足: 2
     饕餮: 3
   # 灌注buff无优先级的不同，因此后触发的buff会覆盖之前存在的
-  2:
+  flasks:
     灵液灌注: 1
     诅咒焰灌注: 1
-  3:
+  # 圣神之怒buff现版本已移除
+  rage:
     怒气: 1
     圣神之怒: 2
-  5:
+  obsidianExtinguish:
     燃烧: 0
     黑曜石皮: 1
+  mobSpawn:
+    战斗: 1
+    冷静: 1
+  mobSpawnSuperior:
+    虫潮: 1
+    禅定: 1
   # 灵魂浮雕系列buff
   6:
     灵魂恢复: 0
@@ -602,7 +609,7 @@ effects:
   血肉图腾:
     isBuff: true
     attributes:
-        damageSummonMulti: -0.5
+        damageContactTakenMulti: -0.5
     buffOnTimeout: 血肉图腾冷却
     buffOnTimeoutDuration: 400
     tooltip: 下一次接触伤害减半

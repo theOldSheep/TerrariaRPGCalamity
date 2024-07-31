@@ -66,13 +66,13 @@ public class CelestialPillar extends EntityGiantZombie {
         Bukkit.broadcastMessage("§d§l天界生物要入侵了！");
         ArrayList<PillarTypes> pillarsPendingSpawn = new ArrayList<>( Arrays.asList(PillarTypes.values()) );
         org.bukkit.World pillarWorld = Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE);
-        handleSinglePillarSpawn(new Location(pillarWorld, 750, 0, 750),
+        handleSinglePillarSpawn(new Location(pillarWorld, 1500, 0, 1500),
                 pillarsPendingSpawn.remove( (int) (Math.random() * pillarsPendingSpawn.size()) ));
-        handleSinglePillarSpawn(new Location(pillarWorld, 750, 0, -750),
+        handleSinglePillarSpawn(new Location(pillarWorld, 1500, 0, -1500),
                 pillarsPendingSpawn.remove( (int) (Math.random() * pillarsPendingSpawn.size()) ));
-        handleSinglePillarSpawn(new Location(pillarWorld, -750, 0, 750),
+        handleSinglePillarSpawn(new Location(pillarWorld, -1500, 0, 1500),
                 pillarsPendingSpawn.remove( (int) (Math.random() * pillarsPendingSpawn.size()) ));
-        handleSinglePillarSpawn(new Location(pillarWorld, -750, 0, -750),
+        handleSinglePillarSpawn(new Location(pillarWorld, -1500, 0, -1500),
                 pillarsPendingSpawn.remove( (int) (Math.random() * pillarsPendingSpawn.size()) ));
     }
 

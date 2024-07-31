@@ -2030,7 +2030,7 @@ public class ItemUseHelper {
                     case "混乱之刃": {
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
                             double damage = ply.getMaxHealth() - ply.getHealth();
-                            EntityHelper.handleDamage(ply, hitEntity, damage, EntityHelper.DamageReason.DIRECT_DAMAGE);
+                            EntityHelper.handleDamage(ply, hitEntity, damage, EntityHelper.DamageReason.STRIKE);
                         });
                         break;
                     }
@@ -2146,7 +2146,7 @@ public class ItemUseHelper {
                                 LivingEntity hitEntityLiving = (LivingEntity) hitEntity;
                                 double victimHealthRatio = hitEntityLiving.getHealth() / hitEntityLiving.getMaxHealth();
                                 double damage = attrMap.get("damage") * victimHealthRatio;
-                                EntityHelper.handleDamage(ply, hitEntity, damage, EntityHelper.DamageReason.DIRECT_DAMAGE);
+                                EntityHelper.handleDamage(ply, hitEntity, damage, EntityHelper.DamageReason.STRIKE);
                             }
                         });
                         break;
@@ -2383,7 +2383,7 @@ public class ItemUseHelper {
                             HashMap<String, Double> victimAttrMap = EntityHelper.getAttrMap(hitEntity);
                             double extraDamage = Math.min(1000, victimAttrMap.getOrDefault("damage", 1d) );
                             EntityHelper.handleDamage(ply, hitEntity, extraDamage,
-                                    EntityHelper.DamageReason.DIRECT_DAMAGE);
+                                    EntityHelper.DamageReason.STRIKE);
                         });
                         break;
                     }
@@ -2462,7 +2462,7 @@ public class ItemUseHelper {
                                 default:
                                     double dmg = attrMap.getOrDefault("damage", 100d);
                                     strikeLineInfo.setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
-                                        EntityHelper.handleDamage(ply, hitEntity, dmg, EntityHelper.DamageReason.DIRECT_DAMAGE);
+                                        EntityHelper.handleDamage(ply, hitEntity, dmg, EntityHelper.DamageReason.STRIKE);
                                     });
                             }
                             // charge up

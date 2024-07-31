@@ -536,11 +536,12 @@
     penetration: 99999
     blockHitAction: bounce
     bounce: 6
-    projectileSize: 2
+    projectileSize: 1
     gravity: 0
     buffInflict:
         - "燃烧|140|1"
     trailColor: 255|50|50
+    trailIntensityMulti: 1.5
 爆裂火球:
     penetration: 99999
     projectileSize: 2
@@ -605,8 +606,8 @@
     noHomingTicks: 10
     maxHomingTicks: 45
     buffInflict:
-        - "神圣之火|60|1"
-        - "夜魇|60|1"
+        - "神圣之火|20|1"
+        - "夜魇|20|1"
 暗影焰:
     blockHitAction: thru
     liveTime: 100

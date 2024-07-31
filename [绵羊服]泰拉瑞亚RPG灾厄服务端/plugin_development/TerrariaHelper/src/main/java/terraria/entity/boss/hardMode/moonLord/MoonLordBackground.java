@@ -26,6 +26,7 @@ public class MoonLordBackground extends EntitySlime {
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     Player target = null;
+    MoonLord owner;
     // other variables and AI
     enum MoonLordBackgroundType {
         BODY      ("月球领主身体", 35),
@@ -51,6 +52,7 @@ public class MoonLordBackground extends EntitySlime {
     public MoonLordBackground(Player summonedPlayer, MoonLord owner, MoonLordBackgroundType backgroundType) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
+        this.owner = owner;
         Location spawnLoc = owner.getBukkitEntity().getLocation();
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         // add to world
@@ -108,5 +110,9 @@ public class MoonLordBackground extends EntitySlime {
         bukkitEntity.setVelocity(new Vector());
         // update facing direction
         this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+        // remove when the boss has been defeated
+        if (! owner.isAlive()) {
+            die();
+        }
     }
 }

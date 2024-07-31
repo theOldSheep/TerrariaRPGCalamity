@@ -341,7 +341,7 @@ public class MoonLordEye extends EntitySlime {
             attrMap.put("defence", eyeLocation.defence);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map

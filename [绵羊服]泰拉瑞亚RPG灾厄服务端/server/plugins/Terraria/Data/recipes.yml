@@ -5184,7 +5184,7 @@ TINKER_WORKBENCH:
     recipeCategory: BOSS
   '6':
     requireLevel: 1
-    resultItem: 宇宙符文
+    resultItem: 宇宙符文:3
     requireItem:
     - 神圣晶石
     - 夜明锭
@@ -6465,12 +6465,12 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 天堂之风
     requireItem:
-    - 叶流
     - 地核之炎
     - 破城巨弓
     - 发条弓
     - 灵星寂灭
     - 幻魔
+    - 赤陨霸龙弓
     - 湮灭千星
     - 奇迹物质
     recipeCategory: WEAPON_ARROW

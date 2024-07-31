@@ -108,16 +108,16 @@ public class SupremeCalamitas extends EntitySlime {
                 attrMapPrjMid, 0.4, 0.2, 3, 250);
         BulletHellProjectileOption optionFlameSkull = new BulletHellProjectileOption(
                 "深渊炙颅", BulletHellProjectile.ProjectileType.SQUARE_BORDER_SIDES,
-                attrMapPrjHigh, 0.4, 0.2, 3, 250);
+                attrMapPrjHigh, 0.4, 0.2, 4, 250);
         BulletHellProjectileOption optionHellBlast = new BulletHellProjectileOption(
                 "无际裂变", BulletHellProjectile.ProjectileType.CIRCUMFERENCE,
-                attrMapPrjHigh, 0.3, 0.1, 20, 60);
+                attrMapPrjHigh, 0.15, 0.05, 20, 60);
         BulletHellProjectileOption optionHellBlastEasy = new BulletHellProjectileOption(
                 "无际裂变", BulletHellProjectile.ProjectileType.CIRCUMFERENCE,
-                attrMapPrjHigh, 0.3, 0.1, 30, 60);
+                attrMapPrjHigh, 0.15, 0.05, 30, 60);
         BulletHellProjectileOption optionGigaBlast = new BulletHellProjectileOption(
                 "深渊炙炎", BulletHellProjectile.ProjectileType.CIRCUMFERENCE,
-                attrMapPrjHigh, 0.35, 0.15, 35, 75);
+                attrMapPrjHigh, 0.175, 0.05, 35, 75);
 
         final String bossProgress = BOSS_TYPE.msgName;
         final String MSG_PREFIX = "§#FFA500";

@@ -146,10 +146,17 @@ public class CeaselessVoid extends EntitySlime {
                 EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT,
                         getMaxHealth() * TRANSITION_HEALTH_RATIO[currentPhase] - 10);
             }
+            // Remove all remaining dark energies
+            for (DarkEnergyArc arc : darkEnergyArcs) {
+                for (Entity energy : arc.darkEnergies)
+                    energy.die();
+            }
         }
-        // Update each arc's position
-        for (DarkEnergyArc arc : darkEnergyArcs) {
-            arc.tick();
+        // Update each arc's position otherwise
+        else {
+            for (DarkEnergyArc arc : darkEnergyArcs) {
+                arc.tick();
+            }
         }
         // Move towards player
         velocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), BOSS_MOVEMENT_SPEED);

@@ -2558,8 +2558,8 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    armorPenetration: 20
-    crit: 8
+    armorPenetration: 35
+    damageMulti: 0.08
   worth: 9600000
   rarity: 7
 猎魂鲨齿项链:
@@ -2568,8 +2568,8 @@ Drew之翼:
   - §r[饰品]
   - §r取自顶级掠食者的恐怖战利品
   attributes:
-    armorPenetration: 60
-    crit: 15
+    armorPenetration: 75
+    damageMulti: 0.15
   worth: 26000000
   rarity: 13
 恼怒项链:
@@ -2658,8 +2658,9 @@ Drew之翼:
   - §r▷ 冲刺：双击一个方向可以冲刺，具有一定的冷却时间
   attributes:
     defence: 16
-    damageTakenMulti: -0.08
+    damageTakenMulti: -0.05
     maxHealth: 40
+    knockbackResistance: 1
   worth: 7200000
   rarity: 5
 阿斯加德之英勇:
@@ -2782,8 +2783,9 @@ Drew之翼:
   - §r[饰品]
   attributesFormI:
     barrierMax: 125
+    defence: -15
   attributesFormII:
-    defence: 30
+    defence: 20
   worth: 2400000
   rarity: 4
 阴阳吸星石:
@@ -10466,7 +10468,7 @@ Dodu的手炮:
   lore:
   - §r召唤灵魂吞噬者宝宝来保护你
   attributes:
-    damage: 24
+    damage: 32
     damageType: Summon
     knockback: 0.5
     useTime: 29
@@ -10479,7 +10481,7 @@ Dodu的手炮:
   - §r在你的头顶召唤一朵灼热之花
   - §r同时只能存在至多一朵灼热之花
   attributes:
-    damage: 35
+    damage: 42
     damageType: Summon
     knockback: 2
     useTime: 29
@@ -10491,7 +10493,7 @@ Dodu的手炮:
   lore:
   - §r召唤黑暗爬行者为你而战
   attributes:
-    damage: 14
+    damage: 26
     damageType: Summon
     knockback: 2.25
     useTime: 30
@@ -10504,7 +10506,7 @@ Dodu的手炮:
   - §r用于运输和发射电浆的小巧玩具，在人类中意外的流行
   - §r召唤一个生物力学青蛙，向敌人倾吐电浆
   attributes:
-    damage: 48
+    damage: 60
     damageType: Summon
     knockback: 2.25
     useTime: 30
@@ -10517,7 +10519,7 @@ Dodu的手炮:
   - §r召唤小骷髅为你而战
   - §r小骷髅在移动时会留下骨细胞
   attributes:
-    damage: 62
+    damage: 74
     damageType: Summon
     knockback: 3.5
     useTime: 29
@@ -10529,7 +10531,7 @@ Dodu的手炮:
   lore:
   - §r召唤腐化史莱姆为你而战
   attributes:
-    damage: 160
+    damage: 172
     damageType: Summon
     knockback: 2
     useTime: 29
@@ -10541,7 +10543,7 @@ Dodu的手炮:
   lore:
   - §r召唤血腥史莱姆为你而战
   attributes:
-    damage: 160
+    damage: 172
     damageType: Summon
     knockback: 2
     useTime: 29
@@ -10553,7 +10555,7 @@ Dodu的手炮:
   lore:
   - §r召唤会发射瘟疫细胞的永夜眼球
   attributes:
-    damage: 30
+    damage: 44
     damageType: Summon
     knockback: 1
     useTime: 29
@@ -10567,7 +10569,7 @@ Dodu的手炮:
   - §r向敌人发射你背包内的子弹
   - §r50% 概率不消耗弹药
   attributes:
-    damage: 150
+    damage: 162
     damageType: Summon
     knockback: 1
     useTime: 24
@@ -10580,7 +10582,7 @@ Dodu的手炮:
   - §r召唤缠怨鬼碟为你而战
   - §r“这些盘子不能拿走”
   attributes:
-    damage: 80
+    damage: 92
     damageType: Summon
     knockback: 3
     useTime: 24
@@ -10592,7 +10594,7 @@ Dodu的手炮:
   lore:
   - §r召唤蚀骨之龙为你而战
   attributes:
-    damage: 90
+    damage: 102
     damageType: Summon
     knockback: 2
     useTime: 24
@@ -10605,7 +10607,7 @@ Dodu的手炮:
   - §r召唤远古岩鲨为你而战，击碎敌人的防御
   - §r看起来，它在很久之前就失去了颚骨
   attributes:
-    damage: 140
+    damage: 160
     damageType: Summon
     knockback: 4
     useTime: 24
@@ -10618,7 +10620,7 @@ Dodu的手炮:
   - §r召唤海贝为你而战
   - §r每只海贝占据两个召唤栏
   attributes:
-    damage: 155
+    damage: 180
     damageType: Summon
     knockback: 2
     useTime: 24
@@ -10631,7 +10633,7 @@ Dodu的手炮:
   - §r召唤极寒冰块为你而战
   - §r同时只能存在至多一个极寒冰块
   attributes:
-    damage: 115
+    damage: 135
     damageType: Summon
     knockback: 4.5
     useTime: 24
@@ -10644,7 +10646,19 @@ Dodu的手炮:
   - §r召唤永冻之焱华为你而战
   - §r同时只能存在至多一个永冻之焱华
   attributes:
-    damage: 80
+    damage: 100
+    damageType: Summon
+    knockback: 3
+    useTime: 24
+    manaUse: 10
+  worth: 4800000
+  rarity: 5
+代达罗斯守卫法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤代达罗斯守卫为你而战
+  attributes:
+    damage: 65
     damageType: Summon
     knockback: 3
     useTime: 24
@@ -10656,7 +10670,7 @@ Dodu的手炮:
   lore:
   - §r召唤深海海星为你而战
   attributes:
-    damage: 45
+    damage: 65
     damageType: Summon
     knockback: 2
     useTime: 24
@@ -10680,7 +10694,7 @@ Dodu的手炮:
   lore:
   - §r召唤熔火古刀为你而战
   attributes:
-    damage: 65
+    damage: 83
     damageType: Summon
     knockback: 4.5
     useTime: 24
@@ -10692,7 +10706,7 @@ Dodu的手炮:
   lore:
   - §r召唤架式扫射机为你而战
   attributes:
-    damage: 72
+    damage: 92
     damageType: Summon
     knockback: 2
     useTime: 24
@@ -10705,7 +10719,7 @@ Dodu的手炮:
   - §r召唤太阳神之灵为你而战
   - §r同时只能存在至多一个太阳神之灵
   attributes:
-    damage: 120
+    damage: 140
     damageType: Summon
     knockback: 1.25
     useTime: 24
@@ -10718,7 +10732,7 @@ Dodu的手炮:
   - §r召唤灾厄三兄妹为你而战
   - §r灾厄三兄妹占据两个召唤栏
   attributes:
-    damage: 55
+    damage: 75
     damageType: Summon
     knockback: 2
     useTime: 24
@@ -10732,7 +10746,7 @@ Dodu的手炮:
   - §r迷你世纪之花占据三个召唤栏
   - §r同时只能存在至多一个迷你世纪之花
   attributes:
-    damage: 110
+    damage: 118
     damageType: Summon
     knockback: 1
     useTime: 19
@@ -10744,7 +10758,19 @@ Dodu的手炮:
   lore:
   - §r召唤沙龙卷为你而战
   attributes:
-    damage: 150
+    damage: 170
+    damageType: Summon
+    knockback: 2
+    useTime: 19
+    manaUse: 10
+  worth: 9600000
+  rarity: 7
+剧毒芽孢:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤鼠尾草之灵为你而战
+  attributes:
+    damage: 90
     damageType: Summon
     knockback: 2
     useTime: 19
@@ -10756,7 +10782,7 @@ Dodu的手炮:
   lore:
   - §r召唤畸变吞食者为你而战
   attributes:
-    damage: 60
+    damage: 80
     damageType: Summon
     knockback: 1
     useTime: 19
@@ -10770,7 +10796,7 @@ Dodu的手炮:
   - §r“回归于花下好了，春之亡灵！”
   - §r“沉眠于花下好了，红白之蝶！”
   attributes:
-    damage: 50
+    damage: 71
     damageType: Summon
     knockback: 1
     useTime: 19
@@ -10782,7 +10808,7 @@ Dodu的手炮:
   lore:
   - §r召唤一个小而特别的瘟疫携带者变种
   attributes:
-    damage: 200
+    damage: 220
     damageType: Summon
     knockback: 7
     useTime: 19
@@ -10796,9 +10822,23 @@ Dodu的手炮:
   - §r瘟疫雌蜂占据三个召唤栏
   - §r同时只能存在至多一个瘟疫雌蜂
   attributes:
-    damage: 340
+    damage: 347
     damageType: Summon
     knockback: 5
+    useTime: 19
+    manaUse: 10
+  worth: 12000000
+  rarity: 8
+凋零绽放法杖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤凋零枯花为你而战
+  - §r凋零枯花占据两个召唤栏
+  - §r同时只能存在至多一个凋零枯花
+  attributes:
+    damage: 77
+    damageType: Summon
+    knockback: 3
     useTime: 19
     manaUse: 10
   worth: 12000000
@@ -10808,51 +10848,13 @@ Dodu的手炮:
   lore:
   - §r召唤幻星探测器为你而战
   attributes:
-    damage: 120
+    damage: 154
     damageType: Summon
     knockback: 1.25
     useTime: 19
     manaUse: 10
   worth: 16000000
   rarity: 9
-剧毒芽孢:
-  item: DIAMOND_SWORD
-  lore:
-  - §r召唤鼠尾草之灵为你而战
-  attributes:
-    damage: 70
-    damageType: Summon
-    knockback: 2
-    useTime: 19
-    manaUse: 10
-  worth: 9600000
-  rarity: 7
-凋零绽放法杖:
-  item: DIAMOND_SWORD
-  lore:
-  - §r召唤凋零枯花为你而战
-  - §r凋零枯花占据三个召唤栏
-  - §r同时只能存在至多一个凋零枯花
-  attributes:
-    damage: 70
-    damageType: Summon
-    knockback: 3
-    useTime: 19
-    manaUse: 10
-  worth: 12000000
-  rarity: 8
-代达罗斯守卫法杖:
-  item: DIAMOND_SWORD
-  lore:
-  - §r召唤代达罗斯守卫为你而战
-  attributes:
-    damage: 55
-    damageType: Summon
-    knockback: 3
-    useTime: 24
-    manaUse: 10
-  worth: 4800000
-  rarity: 5
 战术瘟疫引擎:
   item: DIAMOND_SWORD
   lore:
@@ -10861,7 +10863,7 @@ Dodu的手炮:
   - §r有时会发射导弹而非子弹
   - §r66%几率节省弹药
   attributes:
-    damage: 225
+    damage: 258
     damageType: Summon
     knockback: 0.5
     useTime: 14
@@ -10874,7 +10876,7 @@ Dodu的手炮:
   - §r召唤元素之斧为你而战
   - §r“放心使用，并不会劈坏你的木门”
   attributes:
-    damage: 195
+    damage: 226
     damageType: Summon
     knockback: 5
     useTime: 14
@@ -10887,7 +10889,7 @@ Dodu的手炮:
   - §r在你的头顶召唤元素之花
   - §r共占据3格仆从栏位
   attributes:
-    damage: 235
+    damage: 248
     damageType: Summon
     knockback: 5
     useTime: 14
@@ -10899,7 +10901,7 @@ Dodu的手炮:
   lore:
   - §r召唤圣刃为你而战
   attributes:
-    damage: 200
+    damage: 226
     damageType: Summon
     knockback: 2
     useTime: 14
@@ -10913,7 +10915,7 @@ Dodu的手炮:
   - §r“你说到底↑为什↓么↑~”
   - §r“都→是←我→的←错→~”
   attributes:
-    damage: 334
+    damage: 360
     damageType: Summon
     knockback: 5
     useTime: 14
@@ -10929,7 +10931,7 @@ Dodu的手炮:
   - §#1FFBFF“装备有高端的传感器，几乎无人可以避开它们。能逃脱它们目光的则更少了。
   - §#1FFBFF在我基于视觉灵魂的动力机器实验和我最新的项目之间的一座优秀桥梁。”
   attributes:
-    damage: 164
+    damage: 210
     damageType: Summon
     knockback: 3
     useTime: 14
@@ -10942,7 +10944,7 @@ Dodu的手炮:
   - §r在你的头顶召唤一盏宇宙灯为你而战
   - §r每盏宇宙灯占据两格仆从栏位
   attributes:
-    damage: 685
+    damage: 705
     damageType: Summon
     knockback: 4
     useTime: 14
@@ -10956,7 +10958,7 @@ Dodu的手炮:
   - §r同一时间只能存在一对巨龙
   - §r“吞噬恒星的巨龙”
   attributes:
-    damage: 256
+    damage: 263
     damageType: Summon
     knockback: 2
     useTime: 30
@@ -10971,7 +10973,7 @@ Dodu的手炮:
   - §r需要至少3格仆从栏位才能使用
   - §r同时只能存在至多一家骨龙
   attributes:
-    damage: 150
+    damage: 163
     damageType: Summon
     knockback: 4
     useTime: 30
@@ -10983,7 +10985,7 @@ Dodu的手炮:
   lore:
   - §r召唤花灵来保护你
   attributes:
-    damage: 685
+    damage: 722
     damageType: Summon
     knockback: 1
     useTime: 14
@@ -10998,7 +11000,7 @@ Dodu的手炮:
   - §r在近距离，乌贼会扑向敌人并造成高频伤害
   - §r“深渊之中，任何资源都是稀缺的，每个物种都孤苦伶仃，仅是因为它们根本没有可共享的资源。”
   attributes:
-    damage: 615
+    damage: 652
     damageType: Summon
     knockback: 2.5
     useTime: 14
@@ -11013,7 +11015,7 @@ Dodu的手炮:
   - §r同时只能存在至多一个幻云星体
   - §r“我祈祷拥有一颗透明的心灵~”
   attributes:
-    damage: 1850
+    damage: 1860
     damageType: Summon
     knockback: 3
     useTime: 30
@@ -11027,7 +11029,7 @@ Dodu的手炮:
   - §r需要至少3格仆从栏位才能使用
   - §r同时只能存在至多一个年轻猪龙鱼
   attributes:
-    damage: 325
+    damage: 339
     damageType: Summon
     knockback: 5
     useTime: 30
@@ -11040,7 +11042,7 @@ Dodu的手炮:
   - §r召唤星宇护卫为你而战
   - §r“神，永不护主！”
   attributes:
-    damage: 1024
+    damage: 1082
     damageType: Summon
     knockback: 2
     useTime: 14
@@ -11055,7 +11057,7 @@ Dodu的手炮:
   - §r交替发射火箭和子弹
   - §r75%几率节省弹药
   attributes:
-    damage: 920
+    damage: 978
     damageType: Summon
     knockback: 6
     useTime: 14
@@ -11068,7 +11070,7 @@ Dodu的手炮:
   - §r召唤一只强大的渡鸦，可以传送和猛冲
   - §r“永不复焉”
   attributes:
-    damage: 430
+    damage: 486
     damageType: Summon
     knockback: 2
     useTime: 14
@@ -11083,7 +11085,7 @@ Dodu的手炮:
   - §r同时只能存在至多一个光环
   - §r需要5格仆从栏位
   attributes:
-    damage: 1786
+    damage: 1798
     damageType: Summon
     knockback: 4
     useTime: 40
@@ -11095,7 +11097,7 @@ Dodu的手炮:
   lore:
   - §r召唤一对磁铁无人机，无情的撕裂敌人
   attributes:
-    damage: 533
+    damage: 603
     damageType: Summon
     knockback: 8
     useTime: 14
@@ -11109,7 +11111,7 @@ Dodu的手炮:
   - §r需要至少5格仆从栏位才能使用
   - §r“巨龙撞击”
   attributes:
-    damage: 2380
+    damage: 2392
     damageType: Summon
     knockback: 7
     useTime: 30
@@ -11121,7 +11123,7 @@ Dodu的手炮:
   lore:
   - §r召唤一个UFO来蒸发你的敌人
   attributes:
-    damage: 320
+    damage: 378
     damageType: Summon
     knockback: 1
     useTime: 14
@@ -11137,7 +11139,7 @@ Dodu的手炮:
   - §r无论何时，灾坟仆从的弹幕将强行对击中的目标造成伤害
   - §#C61B40宇宙之虫可能的未来，对力量的饥渴蒙蔽双眼，这可是一个可怕的警告，但不影响你走向这样的结局。
   attributes:
-    damage: 1485
+    damage: 1500
     damageType: Summon
     knockback: 2
     useTime: 40
@@ -11149,7 +11151,7 @@ Dodu的手炮:
   lore:
   - §r召唤一个探魂者为你而战
   attributes:
-    damage: 591
+    damage: 609
     damageType: Summon
     knockback: 4
     useTime: 14
@@ -11163,7 +11165,7 @@ Dodu的手炮:
   - §r它会从其下方召唤出灵魂之流，将敌人湮没在永劫地狱中
   - §r需要5个仆从栏位召唤且同时只能存在至多一个永劫信标
   attributes:
-    damage: 750
+    damage: 762
     damageType: Summon
     knockback: 4
     useTime: 40
@@ -11257,7 +11259,7 @@ Dodu的手炮:
   - §r需要至少5格仆从栏位才能使用并且最多召唤一次
   - §r“如此结实，我敢说它一击就能打趴那些黑手党”
   attributes:
-    damage: 386
+    damage: 400
     damageType: Summon
     knockback: 1
     useTime: 50
@@ -13815,7 +13817,7 @@ Dodu的手炮:
   attributes:
     defence: 78
     damageMulti: 0.1
-    crit: 1
+    crit: 12
     speedMulti: 0.1
   worth: 28000000
   rarity: 14
@@ -14022,6 +14024,7 @@ Dodu的手炮:
   item: CLAY_BALL
   lore:
   - §a+16 防御力
+  - §a+2% 防御力
   - §a8分钟持续时间
   worth: 20000
   rarity: 1

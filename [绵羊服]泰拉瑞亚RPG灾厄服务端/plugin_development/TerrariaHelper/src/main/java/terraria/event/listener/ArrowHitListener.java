@@ -84,7 +84,7 @@ public class ArrowHitListener implements Listener {
             HashMap<String, Double> attrMapProj = (HashMap<String, Double>) EntityHelper.getAttrMap(projectile).clone();
             attrMapProj.put("damage", attrMapProj.get("damage") * 0.3);
             attrMapProj.put("knockback", 0d);
-            Player shooter = (Player) projectile.getShooter();
+            LivingEntity shooter = (LivingEntity) projectile.getShooter();
             int waitTime = 3 + (int) (Math.random() * 5);
             for (int i = 0; i < 2; i ++) {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
@@ -106,7 +106,8 @@ public class ArrowHitListener implements Listener {
             if (! projectileScoreboardTags.contains("godSlyHandled")) {
                 HashMap<String, Double> attrMapProj = (HashMap<String, Double>) EntityHelper.getAttrMap(projectile).clone();
                 attrMapProj.put("damage", attrMapProj.get("damage") * 0.85);
-                Player shooter = (Player) projectile.getShooter();
+                LivingEntity shooter = (LivingEntity) projectile.getShooter();
+                Player ply = (Player) EntityHelper.getDamageSource(shooter);
                 projectile.addScoreboardTag("godSlyHandled");
                 // after 5 ticks, remove current bullet and fire a new one
                 Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
@@ -116,7 +117,7 @@ public class ArrowHitListener implements Listener {
                     String projType = "弑神折返弹";
                     Location fireLoc = shooter.getEyeLocation().add(MathHelper.randomVector().multiply(3.5));
                     Vector velocity = ItemUseHelper.getPlayerAimDir(
-                            shooter, fireLoc, projSpd, projType, false, 0);
+                            ply, fireLoc, projSpd, projType, false, 0);
                     MathHelper.setVectorLength(velocity, projSpd);
 
                     EntityHelper.spawnProjectile(shooter, fireLoc, velocity, attrMapProj, EntityHelper.DamageType.BULLET, projType);

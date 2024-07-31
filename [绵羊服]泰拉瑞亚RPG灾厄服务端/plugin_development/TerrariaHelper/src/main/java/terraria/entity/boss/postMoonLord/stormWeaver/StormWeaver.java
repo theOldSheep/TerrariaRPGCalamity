@@ -148,11 +148,13 @@ public class StormWeaver extends EntitySlime {
         Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), ((StormWeaver) nextFireSegmentNMS)::fireLaser, 1);
     }
     private void fireLaser() {
-        shootInfoLaser.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-        shootInfoLaser.velocity = MathHelper.getDirection(shootInfoLaser.shootLoc, target.getEyeLocation(), LASER_SPEED);
-        EntityHelper.spawnProjectile(shootInfoLaser);
+        if (this.isAlive()) {
+            shootInfoLaser.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+            shootInfoLaser.velocity = MathHelper.getDirection(shootInfoLaser.shootLoc, target.getEyeLocation(), LASER_SPEED);
+            EntityHelper.spawnProjectile(shootInfoLaser);
 
-        scheduleLaserForSegment(segmentIndex + getLaserInterval());
+            scheduleLaserForSegment(segmentIndex + getLaserInterval());
+        }
     }
     private void dashTowardsPlayer(double acceleration, double speed, double dashSpeed, double minDistance, int dashDuration, Sound sound) {
         // dashTimer = 0 denotes the boss is accelerating towards the player

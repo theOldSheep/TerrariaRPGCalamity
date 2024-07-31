@@ -83,8 +83,10 @@ public class WallOfFleshMouth extends EntitySlime {
     }
     private void AI() {
         // no AI after death
-        if (getHealth() <= 0d)
+        if (getHealth() <= 0d) {
+            setNoGravity(false);
             return;
+        }
         // AI
         {
             // update target
@@ -181,7 +183,7 @@ public class WallOfFleshMouth extends EntitySlime {
                         }
                         // behind wall of flesh?
                         if (horDir.dot(horizontalMoveDirection) < 0) {
-                            EntityHelper.handleDamage(bukkitEntity, ply, 100, EntityHelper.DamageReason.DIRECT_DAMAGE);
+                            EntityHelper.handleDamage(bukkitEntity, ply, 100, EntityHelper.DamageReason.CONTACT_DAMAGE);
                             Vector dragDir = bukkitEntity.getLocation().subtract(ply.getLocation()).toVector();
                             double dragLen = dragDir.length();
                             if (dragLen > 1e-5) {
@@ -254,6 +256,8 @@ public class WallOfFleshMouth extends EntitySlime {
         // spawn location
         horizontalMoveDirection = summonedPlayer.getLocation().subtract(burntItemLocation).toVector();
         horizontalMoveDirection.setY(0);
+        if (horizontalMoveDirection.lengthSquared() < 1e-9)
+            horizontalMoveDirection = new Vector(1, 0, 0);
         horizontalMoveDirection.normalize();
         Location spawnLoc = summonedPlayer.getLocation().subtract(horizontalMoveDirection.clone().multiply(24));
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
