@@ -179,21 +179,27 @@ fish:
     日光鱼:
       height:
       - SPACE
+      progressRequired: 血肉之墙
     冰川鱼:
       biome:
       - TUNDRA
+      progressRequired: 血肉之墙
     混乱鱼:
       biome:
       - BRIMSTONE_CRAG
+      progressRequired: 血肉之墙
     飞翔之鱼:
       height:
       - SPACE
+      progressRequired: 血肉之墙
     光明之鱼:
       biome:
       - HALLOW
+      progressRequired: 血肉之墙
     暗影之鱼:
       biome:
       - CORRUPTION
+      progressRequired: 血肉之墙
     毕宿五灰西鲱:
       biome:
       - ASTRAL_INFECTION

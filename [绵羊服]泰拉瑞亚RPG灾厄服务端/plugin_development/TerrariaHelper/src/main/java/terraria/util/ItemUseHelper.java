@@ -606,7 +606,9 @@ public class ItemUseHelper {
             Set<HitEntityInfo> hits = HitEntityInfo.getEntitiesHit(
                     plyWorld, traceStart, traceEnd,
                     entityEnlargeRadius,
-                    (net.minecraft.server.v1_12_R1.Entity target) -> EntityHelper.checkCanDamage(ply, target.getBukkitEntity(), strictMode));
+                    (net.minecraft.server.v1_12_R1.Entity target) ->
+                            EntityHelper.checkCanDamage(ply, target.getBukkitEntity(), strictMode) &&
+                                    ply.hasLineOfSight(target.getBukkitEntity()));
             if (hits.size() > 0) {
                 HitEntityInfo hitInfo = hits.iterator().next();
                 Entity hitEntity = hitInfo.getHitEntity().getBukkitEntity();

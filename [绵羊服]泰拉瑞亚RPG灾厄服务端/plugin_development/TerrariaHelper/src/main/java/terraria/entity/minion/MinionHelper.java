@@ -196,7 +196,7 @@ public class MinionHelper {
             else
                 targetRadiusActual =
                         Math.sqrt( getHorDistSqr(findNearestFrom.getBukkitEntity(), finalTarget.getBukkitEntity()) )
-                                - Setting.getOptionDouble((Player) owner, Setting.Options.MINION_RETARGET_THRESHOLD);
+                                - Setting.getOptionDouble(owner.getBukkitEntity(), Setting.Options.MINION_RETARGET_THRESHOLD);
             ArrayList<net.minecraft.server.v1_12_R1.Entity> toCheck = new ArrayList<>(50);
             toCheck.addAll(getNearbyEntities(minion, targetRadiusActual, predication));
             toCheck.addAll(getNearbyEntities(owner, targetRadiusActual, predication));
