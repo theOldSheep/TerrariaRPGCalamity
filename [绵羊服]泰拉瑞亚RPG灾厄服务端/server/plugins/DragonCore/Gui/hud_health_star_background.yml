@@ -63,7 +63,7 @@ star1_background_texture:
   width: "界面变量.star_size"
   height: "界面变量.star_size"
   texture: "'hud/star_container.png'"
-  tip: "界面变量.mana_tooltip"
+  tip: ""
 star2_background_texture:
   visible: "(方法.到整数(方法.取变量('terraria_max_mana')) > 20) ? 'true' : 'false'"
   x: "界面变量.star_x"

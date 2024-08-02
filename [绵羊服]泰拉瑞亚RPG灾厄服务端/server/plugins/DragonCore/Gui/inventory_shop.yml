@@ -30,11 +30,12 @@ Functions:
 
   open: |-
     方法.异步执行方法('update_variables');
+    方法.异步执行方法('update_variable_money');
     方法.设置变量值('GUI_subinv_slot_amount', '54');
-    方法.设置变量值('GUI_subinv_title', 方法.合并文本('商店<n><n>存款<n>', 方法.取变量("terraria_money")));
   
   preRender: |-
     方法.设置变量值('label_scale', 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size'));
+    方法.设置变量值('GUI_subinv_title', 方法.合并文本('商店<n><n>存款<n>', 方法.取变量("terraria_money")));
 
     方法.设置变量值('subinv_slot_size', 方法.取屏幕宽度() * 14 / 方法.取变量('adjusted_scr_size'));
     方法.设置变量值('subinv_slot_offset', 方法.取变量('subinv_slot_size') * 8 / 7);
