@@ -120,10 +120,6 @@
 床:
   item: BED
   rarity: 0
-梯子:
-  item: LADDER
-  worth: 300
-  rarity: 0
 牌子:
   item: SIGN
   worth: 10000

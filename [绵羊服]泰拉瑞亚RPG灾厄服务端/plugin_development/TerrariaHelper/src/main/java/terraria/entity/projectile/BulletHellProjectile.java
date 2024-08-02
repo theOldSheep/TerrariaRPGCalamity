@@ -1,13 +1,8 @@
 package terraria.entity.projectile;
 
-import eos.moe.dragoncore.api.CoreAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
-import sun.util.resources.cldr.chr.CalendarData_chr_US;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 
@@ -170,8 +165,10 @@ public class BulletHellProjectile extends GenericProjectile {
             Vector velocityProjection = MathHelper.vectorProjection(directionInfo.planeNormal, velocity);
             bukkitEntity.setVelocity(velocity.subtract(velocityProjection));
         }
+    }
 
-        // Reset the impulse index
-        this.impulse_index = RANDOMIZED_IMPULSE_TICK_INTERVAL;
+    @Override
+    protected int getVelocityUpdateInterval() {
+        return 2;
     }
 }

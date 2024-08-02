@@ -1,7 +1,6 @@
 package terraria.entity.projectile;
 
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -183,9 +182,6 @@ public class RotatingRingProjectile extends GenericProjectile {
             Vector position = ringProperties.getCenterLocation().toVector().add(offsetDirection);
             Vector velocity = position.clone().subtract(bukkitEntity.getLocation().toVector());
             bukkitEntity.setVelocity(velocity);
-
-            // Reset the impulse index
-            this.impulse_index = RANDOMIZED_IMPULSE_TICK_INTERVAL;
         }
 
         // Call the superclass's B_ method
@@ -212,5 +208,10 @@ public class RotatingRingProjectile extends GenericProjectile {
 
             new RotatingRingProjectile(shootInfo, target, ringProperties, angle);
         }
+    }
+
+    @Override
+    protected int getVelocityUpdateInterval() {
+        return 2;
     }
 }

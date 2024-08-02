@@ -92,7 +92,9 @@
     worldSpriteMode: false
     # 世界贴图更新的间隔，默认1刻（1/20秒）；世界中的贴图物品名为"弹射物名_1", "弹射物名_2"...以此类推
     worldSpriteUpdateInterval: 1
-    # 攻击造成的buff，格式为  buff名|buff时长（单位：帧）|几率。可不写。
+    # 向客户端同步速度的间隔，默认间隔和玩家距离都在setting.yml的优化部分中
+    velocityUpdateInterval: -1
+    # 攻击造成的buff，格式为  buff名|buff时长（单位：帧）|几率。可不写
     buffInflict:
         - "霜火|100|0.35"
     # 集束炸弹类，可不写

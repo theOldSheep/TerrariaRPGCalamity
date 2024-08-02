@@ -21,7 +21,8 @@ import java.util.function.Predicate;
 public class GenericHelper {
     static long nextWorldTextureIndex = 0;
     // 80 * 80 = 6400
-    static double PARTICLE_DISPLAY_RADIUS_SQR = 6400;
+    static final double PARTICLE_DISPLAY_RADIUS_SQR = 80 * 80;
+    public static final double GLOBAL_PARTICLE_DENSITY = TerrariaHelper.settingConfig.getDouble("optimization.globalParticleDensity", 1d);
     public static class ParticleLineOptions {
         boolean particleOrItem;
         boolean vanillaParticle;
@@ -456,7 +457,8 @@ public class GenericHelper {
                 // spawn particles for each player
                 for (Player ply : startLoc.getWorld().getPlayers()) {
                     int particleAmount = MathHelper.randomRound(
-                            particleAmountRaw * Setting.getOptionDouble(ply, Setting.Options.PARTICLE_DENSITY_MULTI));
+                            particleAmountRaw * GLOBAL_PARTICLE_DENSITY *
+                                    Setting.getOptionDouble(ply, Setting.Options.PARTICLE_DENSITY_MULTI));
                     for (int spawnIdx = 0; spawnIdx < particleAmount; spawnIdx ++) {
                         Location currParticleLoc = currLoc.clone().add(
                                 Math.random() * width * 2 - width,

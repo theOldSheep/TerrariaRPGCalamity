@@ -2483,11 +2483,13 @@ public class EntityHelper {
             // knockback
             if (knockback > 0) {
                 Vector vec = victim.getLocation().subtract(damager.getLocation()).toVector();
-                double kbForce = knockback / 20;
+//                double kbForce = knockback / 20;
+                double sqrtKB = Math.sqrt(knockback);
+                double kbForce = sqrtKB / 8;
                 MathHelper.setVectorLength(vec, kbForce);
                 // for non-downward knockback, amplify the upward component and push the victim off ground
                 if (victim.isOnGround() && vec.getY() > -1e-3)
-                    vec.setY(vec.getY() + Math.min(kbForce * 0.35, 1));
+                    vec.setY(vec.getY() + Math.min(sqrtKB / 4, 1));
                 knockback(victim, vec, false);
             }
         }

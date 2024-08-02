@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -23,8 +24,10 @@ import java.util.*;
 public class GenericProjectile extends EntityPotion {
     private static final double distFromBlock = 1e-5, distCheckOnGround = 1e-1;
     public static final int DESTROY_HIT_BLOCK = 0, DESTROY_HIT_ENTITY = 1, DESTROY_TIME_OUT = 2;
-    public static final int RANDOMIZED_IMPULSE_TICK_INTERVAL = 3;
-    int impulse_index = (int) (Math.random() * RANDOMIZED_IMPULSE_TICK_INTERVAL);
+    private static final int VELOCITY_UPDATE_INTERVAL_NORMAL = TerrariaHelper.settingConfig.getInt("optimization.projVelUpdItvNormal", 10);
+    private static final int VELOCITY_UPDATE_INTERVAL_HOMING = TerrariaHelper.settingConfig.getInt("optimization.projVelUpdItvHoming", 5);
+    private static final int VELOCITY_UPDATE_INTERVAL_ACCELERATION = TerrariaHelper.settingConfig.getInt("optimization.projVelUpdItvAcceleration", 3);
+    private static final double VELOCITY_UPDATE_DIST = TerrariaHelper.settingConfig.getDouble("optimization.projectileVelocityUpdateDistance", 96d);
 
     // projectile info
     public String projectileType, blockHitAction = "die", spawnSound = "", trailColor = null;
@@ -43,6 +46,7 @@ public class GenericProjectile extends EntityPotion {
 
     // projectile variables
     public int worldSpriteIdx = 0;
+    public int velocityUpdateIndex = 0;
     public double speed;
     public boolean lastOnGround = false;
     public HashSet<org.bukkit.entity.Entity> damageCD;
@@ -1121,17 +1125,19 @@ public class GenericProjectile extends EntityPotion {
         // extra ticking
         extraTicking();
 
-        // prevents client glitch; in lava or water / has other acceleration: update every tick; otherwise, update every a few ticks
-        if ((this.au() || this.inWater) || Math.abs(this.speedMultiPerTick - 1) > 1e-9) {
-            this.impulse = true;
-        }
-        // the projectile's velocity should be constantly updated to the client for the first 8 ticks
-        else if (ticksLived < 8) {
-            this.impulse = true;
-        }
-        else if (++impulse_index >= RANDOMIZED_IMPULSE_TICK_INTERVAL) {
-            this.impulse = true;
-            impulse_index = 0;
+        // updates the velocity to prevent client glitch
+        if (!impulse && ++velocityUpdateIndex >= getVelocityUpdateInterval()) {
+            velocityUpdateIndex = 0;
+
+            PacketPlayOutEntityVelocity packet = new PacketPlayOutEntityVelocity(this);
+            double distSqrMax = VELOCITY_UPDATE_DIST * VELOCITY_UPDATE_DIST;
+            for (Player ply : Bukkit.getOnlinePlayers()) {
+                if (ply.getWorld() != bukkitEntity.getWorld())
+                    continue;
+                if (ply.getLocation().distanceSquared(bukkitEntity.getLocation()) > distSqrMax)
+                    continue;
+                ((CraftPlayer) ply).getHandle().playerConnection.sendPacket(packet);
+            }
         }
 
         // time out removal
@@ -1139,7 +1145,15 @@ public class GenericProjectile extends EntityPotion {
         // timing
         this.world.methodProfiler.b();
     }
-
+    // handles the velocity update interval
+    protected int getVelocityUpdateInterval() {
+        int result = VELOCITY_UPDATE_INTERVAL_NORMAL;
+        if (homing && homingTarget != null)
+            result = Math.min(result, VELOCITY_UPDATE_INTERVAL_HOMING);
+        if ((this.au() || this.inWater) || Math.abs(this.speedMultiPerTick - 1) > 1e-9)
+            result = Math.min(result, VELOCITY_UPDATE_INTERVAL_ACCELERATION);
+        return result;
+    }
     // optimizes the homing target
     protected void optimizeHomingTarget(Vec3D initialLoc) {
         // homing should not work before the projectile's age exceeds no homing tick

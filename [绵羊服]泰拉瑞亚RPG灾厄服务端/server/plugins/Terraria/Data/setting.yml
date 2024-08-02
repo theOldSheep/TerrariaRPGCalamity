@@ -16,6 +16,12 @@ worldGen:
     minLabeledBiomeAreaPixels: 50
     gridSizeInPixels: 50
     outputFolder: worldGenDebug
+optimization:
+  projVelUpdItvNormal: 10
+  projVelUpdItvHoming: 5
+  projVelUpdItvAcceleration: 3
+  projectileVelocityUpdateDistance: 96
+  globalParticleDensity: 1.0
 rarity:
   '-2': §#AAAAAA§l
   '-1': §#6B6B6B§l

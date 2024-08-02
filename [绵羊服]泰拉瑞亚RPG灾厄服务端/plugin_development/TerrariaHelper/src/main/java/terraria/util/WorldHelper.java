@@ -23,7 +23,7 @@ import java.util.logging.Level;
 
 public class WorldHelper {
     public static final double CHANCE_SPECIAL_PLANT_TICK = 0.075, CHANCE_SPECIAL_PLANT_GENERATION = 0.025,
-            CHANCE_LIFE_FRUIT = 0.125, CHANCE_BULB = 0.075;
+            CHANCE_LIFE_FRUIT = 0.125, CHANCE_BULB = 0.025;
     public static final int CAVERN_Y_BELOW_BEDROCK = 254;
     public static final String
             UUID_LIFE_FRUIT = "81834b91-513d-450f-b920-6880fd47c997",
@@ -669,6 +669,7 @@ public class WorldHelper {
                     case YELLOW_FLOWER:
                     case RED_MUSHROOM:
                     case BROWN_MUSHROOM:
+                    case CACTUS:
                         return true;
                     default:
                         return false;

@@ -1,6 +1,5 @@
 package terraria.entity.minion;
 
-import com.earth2me.essentials.Settings;
 import net.minecraft.server.v1_12_R1.EntityInsentient;
 import net.minecraft.server.v1_12_R1.EntityLiving;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
@@ -24,8 +23,7 @@ import java.util.*;
 import java.util.logging.Level;
 
 public class MinionHelper {
-    private static final double MAX_DIST_BEFORE_RETURN = 90, MAX_DIST_BEFORE_TELEPORT = 90,
-            TARGET_RADIUS = 75;
+    public static final double DEFAULT_TARGET_DIST = 75, MAX_DIST_BEFORE_TELEPORT = 100;
     public static final String[] minionRelevantAttributes = {
             "armorPenetration", "damage", "damageMulti", "damageSummonMulti", "knockback", "knockbackMulti"
     };
@@ -145,7 +143,8 @@ public class MinionHelper {
     }
     public static boolean checkDistanceIsValid(EntityInsentient minion, EntityPlayer owner) {
         double horDistSqrToOwner = getHorDistSqr(minion.locX, owner.locX, minion.locZ, owner.locZ);
-        if (horDistSqrToOwner > MAX_DIST_BEFORE_RETURN * MAX_DIST_BEFORE_RETURN) {
+        double maxDist = Setting.getOptionDouble(owner.getBukkitEntity(), Setting.Options.MINION_AGGRO_RADIUS);
+        if (horDistSqrToOwner > maxDist * maxDist) {
             minion.setGoalTarget(owner, EntityTargetEvent.TargetReason.CUSTOM, false);
             if (horDistSqrToOwner > MAX_DIST_BEFORE_TELEPORT * MAX_DIST_BEFORE_TELEPORT) {
                 attemptTeleport(minion.getBukkitEntity(), owner.getBukkitEntity().getLocation().add(0, 5, 0));
@@ -192,7 +191,7 @@ public class MinionHelper {
             double nearestTargetDistSqr = 1e9,
                     targetRadiusActual;
             if (finalTarget == owner)
-                targetRadiusActual = TARGET_RADIUS;
+                targetRadiusActual = Setting.getOptionDouble(owner.getBukkitEntity(), Setting.Options.MINION_AGGRO_RADIUS);
             else
                 targetRadiusActual =
                         Math.sqrt( getHorDistSqr(findNearestFrom.getBukkitEntity(), finalTarget.getBukkitEntity()) )

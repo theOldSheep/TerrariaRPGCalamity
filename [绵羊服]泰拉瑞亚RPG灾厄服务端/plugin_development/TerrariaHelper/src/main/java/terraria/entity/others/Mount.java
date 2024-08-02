@@ -60,7 +60,7 @@ public class Mount extends EntitySlime {
         super(((CraftPlayer) owner).getHandle().getWorld());
         // init position
         Location loc = owner.getLocation();
-        setLocation(loc.getX(), loc.getY(), loc.getZ(), 0, 0);
+        setLocation(loc.getX(), loc.getY() + 0.01, loc.getZ(), 0, 0);
         // add to world
         ((CraftWorld) owner.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // init variables
@@ -109,10 +109,10 @@ public class Mount extends EntitySlime {
         getAttributeInstance(GenericAttributes.maxHealth).setValue(444);
         setHealth(444f);
         initBoundingBox();
-        bukkitEntity.setVelocity(owner.getVelocity());
+//        bukkitEntity.setVelocity(owner.getVelocity());
         // step height
         super.P = (float) this.stepHeight;
-        // disguise (?)
+        // disguise (not working?)
         // this seems to create some lag and glitch
 //        if (mountType.equals("独角兽坐骑")) {
 //            MobDisguise disguise = new MobDisguise(DisguiseType.SKELETON_HORSE);
