@@ -150,8 +150,6 @@ public class PlayerHelper {
             BigDecimal money = Economy.getMoneyExact(ply.getUniqueId());
             return money == null ? 0d : money.doubleValue();
         } catch (Exception e) {
-            TerrariaHelper.LOGGER.log(Level.SEVERE, "[Player Helper] getMoney ");
-            e.printStackTrace();
             return 0d;
         }
     }

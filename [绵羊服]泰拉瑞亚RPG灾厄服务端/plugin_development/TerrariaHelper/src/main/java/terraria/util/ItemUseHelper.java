@@ -451,9 +451,11 @@ public class ItemUseHelper {
             // remove a potion item
             potion.setAmount(potion.getAmount() - 1);
             // play consumption sound
-            String sound = "entity.generic.drink";
-            if (!itemType.endsWith("药水"))
-                sound = "entity.generic.eat";
+            String sound = "entity.generic.eat";
+            if (itemType.endsWith("药水"))
+                sound = "entity.generic.drink";
+            else if (itemType.endsWith("瓶"))
+                sound = "entity.generic.drink";
             ply.getWorld().playSound(ply.getEyeLocation(), sound, SoundCategory.PLAYERS, 1, 1);
             // potion use cool down if the potion is being drank manually etc.
             if (quickBuffType == QuickBuffType.NONE)
