@@ -3510,7 +3510,7 @@ Drew之翼:
   lore:
   - §r在玩家周围生成两秒后会爆炸的宇宙能量之火
   attributes:
-    damage: 60
+    damage: 80
     damageType: Melee
     crit: 4
     knockback: 5.25

@@ -67,8 +67,9 @@ spawnInfo:
         风暴蚁狮: 0.25
     sunken_sea:
         蛤: 12
-        富养鳐鱼: 8
-        鬼铃水母: 3
+        肉后蛤: 12
+        富养鳐鱼: 3
+        鬼铃水母: 2
         巨像蛤: 1
         肉后巨像蛤: 1
     jungle_day:
@@ -357,6 +358,7 @@ mobTier:
     哥布林盗贼: 克苏鲁之眼
     哥布林战士: 克苏鲁之眼
     哥布林弓箭手: 克苏鲁之眼
+    肉后蛤: 血肉之墙
     肉后巨像蛤: 血肉之墙
     妖精: 血肉之墙
     独角兽: 血肉之墙
@@ -457,6 +459,7 @@ mobTier:
 mobTierMax:
     诅咒骷髅头: 血肉之墙
     恶魔: 机械三王
+    蛤: 血肉之墙
     巨像蛤: 血肉之墙
     剧毒米诺鱼: 灾厄之眼
     灵魂饮食者: 亵渎天神，普罗维登斯
@@ -1659,7 +1662,7 @@ mobInfo:
         name: "蛤"
         monsterType: "SLIME"
         slimeSize: 2
-        spawnLocationType: GROUND
+        spawnLocationType: WATER_GROUND
         variants:
             default1:
                 attributes:
@@ -1670,6 +1673,21 @@ mobInfo:
                     knockback: 3
                     knockbackResistance: 0.96
                     health: 900
+    肉后蛤:
+        name: "蛤"
+        monsterType: "SLIME"
+        slimeSize: 2
+        spawnLocationType: WATER_GROUND
+        variants:
+            default1:
+                attributes:
+                    damage: 474
+                    damageTakenMulti: 0.75
+                    damageType: "Melee"
+                    defence: 30
+                    knockback: 3
+                    knockbackResistance: 0.96
+                    health: 1800
     富养鳐鱼:
         name: "富养鳐鱼"
         monsterType: "SLIME"
