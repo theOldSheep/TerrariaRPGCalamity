@@ -136,7 +136,8 @@ public class BossHelper {
     }
     public static double getBossHealthMulti(int numPly) {
         // sqrt(x) + x - 1; first few players in addition to the first would contribute to a slightly higher multiplier
-        return Math.sqrt(numPly) + numPly - 1;
+//        return Math.sqrt(numPly) + numPly - 1;
+        return numPly;
     }
     public static HashMap<UUID, BossTargetInfo> setupBossTarget(Entity boss, String bossDefeatRequirement,
                                                           Player ply, boolean hasDistanceRestriction, boolean sendMsg, BossBattleServer bossbar) {

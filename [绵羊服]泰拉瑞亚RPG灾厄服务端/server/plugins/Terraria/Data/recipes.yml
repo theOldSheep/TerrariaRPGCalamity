@@ -298,7 +298,7 @@ FURNACE:
     - 天蓝矿:4
     recipeCategory: MATERIAL
   '44':
-    requireLevel: 3
+    requireLevel: 2
     resultItem: 寒元锭
     requireItem:
     - 寒元矿:4

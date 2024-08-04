@@ -498,11 +498,9 @@ sets:
     lore:
     - ''
     - §a套装效果： +6 防御
-    - §a增加刷怪量和刷怪率
     attributes:
       defence: 6
       mobLimit: 2
-      mobSpawnRateMulti: 0.1
   钨钢远程魔法套装:
     lore:
     - ''
@@ -588,12 +586,10 @@ sets:
     - §a套装效果： 
     - §a+3 生命恢复
     - §a+10% 近战伤害
-    - §a加快敌人刷新
     - §a增加水下适应性
     attributes:
       damageMeleeMulti: 0.1
       regen: 3
-      mobSpawnRateMulti: 0.2
       waterAffinity: 1
   胜潮远程套装:
     lore:
@@ -912,14 +908,12 @@ sets:
     - ''
     - §a套装效果：
     - §a+20防御力并+6生命恢复
-    - §a刷怪效率增加
     - §a减少10%移动速度与飞行时间
     - §a敌人会受到你的反伤
     - §a当你受伤时有25%的几率获得掠夺者之怒增益
     attributes:
         defence: 20
         regen: 6
-        mobSpawnRateMulti: 0.2
         speedMulti: -0.1
         flightTimeMulti: -0.1
   掠夺者探索套装:
@@ -997,11 +991,9 @@ sets:
     - ''
     - §a套装效果：
     - §a提升15% 近战攻速
-    - §a刷怪效率增加
     - §a造成近战伤害时发射出数个熔岩火球
     attributes:
       useSpeedMeleeMulti: 0.15
-      mobSpawnRateMulti: 0.2
   渊泉远程套装:
     lore:
     - ''
@@ -1096,14 +1088,11 @@ sets:
     - ''
     - §a套装效果：
     - §a近战攻速提升15%
-    - §a增加刷怪量和刷怪率
     - §a受到伤害时有25%的几率获得4秒的生命涌流增益，增加6点生命恢复
     - §a你可以按下套装增益键[默认为V]来被生命能量包裹，获得龙蒿披风增益10秒
     - §a这个效果结束之后有30秒的冷却时间
     attributes:
       useSpeedMeleeMulti: 0.15
-      mobLimit: 2
-      mobSpawnRateMulti: 0.3
   龙蒿远程套装:
     lore:
     - ''
@@ -1152,15 +1141,13 @@ sets:
     - §a套装效果：
     - §a+6 生命恢复
     - §a击中敌人会掉落红心，这个效果有5秒冷却时间
-    - §a提高18%近战攻速，增加刷怪量和刷怪率
+    - §a提高18%近战攻速
     - §a使用真近战武器打击敌人时进入鲜血狂怒状态，持续5秒
     - §a此期间近战伤害和暴击率提升20%，来自敌人的接触伤害减半
     - §a此效果有20秒冷却时间
     attributes:
       regen: 6
       useSpeedMeleeMulti: 0.18
-      mobLimit: 2
-      mobSpawnRateMulti: 0.3
   血炎远程套装:
     lore:
     - ''

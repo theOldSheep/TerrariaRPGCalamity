@@ -67,24 +67,32 @@ public class MonsterHelper {
         String spawnLocationType = TerrariaHelper.mobSpawningConfig.getString(
                 "mobInfo." + monsterSpawn + ".spawnLocationType", "GROUND");
         switch (spawnLocationType) {
-            case "GROUND": {
+            case "GROUND":
+            case "WATER_GROUND": {
                 // so that the loop does not terminate at once
                 boolean lastLocValid = true;
                 for (int i = 1; i <= adjustHeight; i++) {
                     boolean currLocValid = spawnLoc.getY() > 0 && spawnLoc.getY() < 256;
                     Material currBlockMat = spawnLoc.getBlock().getType();
-                    // no spawning in liquid!
-                    switch (currBlockMat) {
-                        case WATER:
-                        case STATIONARY_WATER:
-                        case LAVA:
-                        case STATIONARY_LAVA:
-                            return true;
-                    }
                     if (currBlockMat.isSolid()) currLocValid = false;
                     // the block became valid
                     if (!lastLocValid && currLocValid) {
                         spawnLoc.setY(Math.floor(spawnLoc.getY()));
+                        // validation of spawn location
+                        switch (currBlockMat) {
+                            case WATER:
+                            case STATIONARY_WATER:
+                            case LAVA:
+                            case STATIONARY_LAVA:
+                                // no spawning in liquid!
+                                if (spawnLocationType.equals("GROUND"))
+                                    return true;
+                                break;
+                            default:
+                                // no spawning in air!
+                                if (spawnLocationType.equals("WATER_GROUND") && ! currBlockMat.isSolid())
+                                    return true;
+                        }
                         break;
                     }
                     // tweak location to find appropriate spawn loc

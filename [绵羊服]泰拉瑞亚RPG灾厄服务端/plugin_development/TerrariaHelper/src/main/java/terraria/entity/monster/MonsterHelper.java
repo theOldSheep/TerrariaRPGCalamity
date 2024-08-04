@@ -1898,11 +1898,18 @@ public class MonsterHelper {
                                                 Math.random() * 24 - 12, Math.random() * 16 - 4, Math.random() * 24 - 12);
                                         Block blk = targetLoc.getBlock();
                                         if (! blk.getType().isSolid()) {
+                                            int attempts = 0;
                                             while (! (blk.getRelative(0, -1, 0).getType().isSolid() &&
                                                       blk.getRelative(0, -2, 0).getType().isSolid()) ) {
                                                 blk = blk.getRelative(0, -1, 0);
+                                                // prevent infinite loop
+                                                if (++ attempts > 20) {
+                                                    break;
+                                                }
                                             }
-                                            monsterBkt.teleport(blk.getLocation().add(0.5, 1, 0.5));
+                                            if (attempts <= 20) {
+                                                monsterBkt.teleport(blk.getLocation().add(0.5, 1, 0.5));
+                                            }
                                             indexAI = -1;
                                             break;
                                         }

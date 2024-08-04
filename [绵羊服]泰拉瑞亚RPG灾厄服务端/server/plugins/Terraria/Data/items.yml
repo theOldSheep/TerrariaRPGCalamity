@@ -2595,7 +2595,7 @@ Drew之翼:
   - §r[饰品]
   - §r攻击将附带孱弱巫咒减益，造成伤害的同时削弱敌人的护甲与伤害抗性
   attributes:
-    damageMulti: 0.25
+    damageMulti: 0.1
     buffInflict: 孱弱巫咒|30|1
   worth: 30000000
   rarity: 16
@@ -13234,8 +13234,6 @@ Dodu的手炮:
   attributes:
     defence: 46
     damageMeleeMulti: 0.06
-    mobLimit: 2
-    mobSpawnRateMulti: 0.2
   worth: 6000000
   rarity: 8
 甲虫铠甲:
@@ -13258,8 +13256,6 @@ Dodu的手炮:
     defence: 64
     damageMeleeMulti: 0.05
     crit: 5
-    mobLimit: 2
-    mobSpawnRateMulti: 0.2
   worth: 4800000
   rarity: 8
 甲虫护腿:
@@ -13269,8 +13265,6 @@ Dodu的手炮:
   attributes:
     defence: 36
     speedMulti: 0.06
-    mobLimit: 2
-    mobSpawnRateMulti: 0.2
     useSpeedMeleeMulti: 0.06
   worth: 3600000
   rarity: 8
@@ -13436,8 +13430,6 @@ Dodu的手炮:
     defence: 48
     critMelee: 20
     regenMulti: 0.167
-    mobLimit: 2
-    mobSpawnRateMulti: 0.2
   worth: 7000000
   rarity: 10
 耀斑胸甲:
@@ -13448,8 +13440,6 @@ Dodu的手炮:
     defence: 68
     damageMeleeMulti: 0.29
     regenMulti: 0.167
-    mobLimit: 2
-    mobSpawnRateMulti: 0.2
   worth: 14000000
   rarity: 10
 耀斑护腿:
@@ -13459,8 +13449,6 @@ Dodu的手炮:
   attributes:
     defence: 40
     regenMulti: 0.167
-    mobLimit: 2
-    mobSpawnRateMulti: 0.2
     useSpeedMeleeMulti: 0.15
   worth: 10500000
   rarity: 10

@@ -2978,7 +2978,7 @@ TNT:
 风暴剑气:
     projectileSize: 0.5
     homing: true
-    homingAbility: 1.75
+    homingAbility: 2.75
     penetration: 1
     gravity: 0
 分裂球:
@@ -3000,7 +3000,7 @@ TNT:
         velocity: 0.75
 霜火球:
     homing: true
-    homingAbility: 1.75
+    homingAbility: 2.75
     noHomingTicks: 5
     gravity: 0
     buffInflict:
@@ -3309,7 +3309,7 @@ TNT:
     blockHitAction: thru
     liveTime: 50
     homing: true
-    homingAbility: 2
+    homingAbility: 3.5
     homingRadius: 16
     penetration: 4
     enemyInvincibilityFrame: 2
@@ -3399,7 +3399,7 @@ TNT:
     penetration: 1
     liveTime: 100
     homing: true
-    homingAbility: 3
+    homingAbility: 3.5
     homingRadius: 24
     projectileSize: 1
 海神之馈赠三叉戟:
