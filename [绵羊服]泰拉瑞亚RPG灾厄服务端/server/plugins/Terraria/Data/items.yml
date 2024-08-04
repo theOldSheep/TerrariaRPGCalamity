@@ -2718,6 +2718,7 @@ Drew之翼:
   - §r你受到的伤害无法被其他玩家以此方式减少
   - §r生命值低于一半时减少受到的伤害
   attributes:
+    defence: 36
     regen: 2
     invulnerabilityTick: 10
     knockbackResistance: 1

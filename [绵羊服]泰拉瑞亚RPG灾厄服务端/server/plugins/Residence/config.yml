@@ -161,8 +161,8 @@ Global:
         CenterZ: 0
       world_surface:
         Enabled: true
-        MaxCoord: 1000
-        MinCord: 500
+        MaxCoord: 2500
+        MinCord: 250
         CenterX: 0
         CenterZ: 0
       world_underworld:

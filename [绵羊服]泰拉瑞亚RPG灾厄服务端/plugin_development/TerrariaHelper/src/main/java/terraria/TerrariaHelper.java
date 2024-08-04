@@ -186,6 +186,7 @@ public class TerrariaHelper extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerKeyToggleListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), this);
         Bukkit.getPluginManager().registerEvents(new RandomTitleListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ResidenceListener(), this);
         Bukkit.getPluginManager().registerEvents(new ServerStopListener(), this);
         Bukkit.getPluginManager().registerEvents(new VanillaMechanicListener(), this);
     }

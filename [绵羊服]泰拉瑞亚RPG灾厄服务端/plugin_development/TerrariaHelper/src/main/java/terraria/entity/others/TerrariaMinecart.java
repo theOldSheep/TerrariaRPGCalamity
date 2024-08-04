@@ -76,7 +76,7 @@ public class TerrariaMinecart extends EntityMinecartRideable {
         ((CraftWorld) spawnLoc.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // other settings
         addScoreboardTag("isMount");
-        addScoreboardTag("ignoreCanDamageCheck");
+//        addScoreboardTag("ignoreCanDamageCheck");
         // attribute
         {
             attrMap = new HashMap<>();

@@ -225,6 +225,7 @@ terraria\util\PlayerPOVHelper.class
 terraria\worldgen\overworld\StructureInfo$1.class
 terraria\entity\boss\hardMode\empressOfLight\EmpressOfLight.class
 terraria\entity\boss\hardMode\thePlaguebringerGoliath\ThePlaguebringerGoliath$1.class
+terraria\event\listener\ResidenceListener.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator$1.class
 terraria\entity\boss\preHardMode\theSlimeGod\CrimulanSlime$1.class
 terraria\util\BossHelper.class

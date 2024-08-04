@@ -1805,7 +1805,11 @@ public class EntityHelper {
         if (damageTaker.isInvulnerable()) return false;
         if (damageTakerScoreboardTags.contains("noDamage") || targetScoreboardTags.contains("noDamage")) return false;
         // fallen star etc. can damage players and NPC etc. without further check
-        if (entityScoreboardTags.contains("ignoreCanDamageCheck")) return true;
+        if (entityScoreboardTags.contains("ignoreCanDamageCheck")) {
+            // for pvp damage, it still requires the later validations.
+            if (! (damageSource instanceof Player && target instanceof Player) )
+                return true;
+        }
         // can not attack oneself
         if (damageSource == damageTaker) return false;
         // check details about damage source and victim

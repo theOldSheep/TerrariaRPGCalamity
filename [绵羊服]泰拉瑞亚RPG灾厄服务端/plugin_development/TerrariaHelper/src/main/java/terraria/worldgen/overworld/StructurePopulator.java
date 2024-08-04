@@ -459,9 +459,9 @@ public class StructurePopulator extends BlockPopulator {
             lastXOffset = newXOffset;
             lastZOffset = newZOffset;
             levelY -= 4;
-            mazeRadius += 2;
+//            mazeRadius += 2;
         }
-        // bottom 2/3 levels
+        // bottom 3 levels
         levelY = 48;
         mazeRadius = 9;
         for (int i = 0; i < 2; i ++) {
@@ -555,7 +555,7 @@ public class StructurePopulator extends BlockPopulator {
                 buildLizardMaze(structure, wld, new StructPosInfo(blockX, topLevelY, blockZ),
                         topMazeRad, mazeGen, 2, 1);
                 topLevelY -= 4;
-                topMazeRad += 2;
+//                topMazeRad += 2;
             }
         }
         // the bottom levels

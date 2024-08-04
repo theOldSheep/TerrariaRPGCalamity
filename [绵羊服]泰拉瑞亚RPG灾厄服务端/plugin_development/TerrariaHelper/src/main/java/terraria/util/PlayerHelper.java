@@ -1737,6 +1737,12 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                             sendActionBar(ply, "");
                             // reset minion index, sentry index etc.
                             initPlayerStats(ply, false);
+                            // revive invulnerability ticks - 3 seconds
+                            int dmgImmuneTicks = 60;
+                            EntityHelper.DamageType[] dmgImmuneTypes = {
+                                    EntityHelper.DamageType.MELEE, EntityHelper.DamageType.ARROW, EntityHelper.DamageType.MAGIC};
+                            EntityHelper.handleEntityTemporaryScoreboardTag(ply,
+                                    EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE), dmgImmuneTicks);
                         }
                     } else {
                         if (!isProperlyPlaying(ply)) continue; // waiting to revive etc.
