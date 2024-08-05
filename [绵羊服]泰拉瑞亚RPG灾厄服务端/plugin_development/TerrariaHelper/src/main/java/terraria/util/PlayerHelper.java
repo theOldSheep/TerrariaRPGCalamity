@@ -1829,13 +1829,10 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 // players with mana regen buff regenerates mana as if their mana is full
                                 double manaRatio = hasManaRegenPotionEffect ? 1d : (double) ply.getLevel() / maxMana;
                                 double manaRegenRate = ((maxMana * (moved ? 1d / 6 : 1d / 2)) + 1 + manaRegenBonus) * (manaRatio * 0.8 + 0.2) * 1.15;
-                                // if the player is currently using item: no natural mana regen; bonus regen is reduced
-                                switch (EntityHelper.getDamageType(ply)) {
-                                    case SUMMON:
-                                    case MAGIC:
-                                        if (ply.getScoreboardTags().contains("temp_useCD"))
-                                            manaRegenRate = manaRegenBonus * (manaRatio * 0.8 + 0.2);
-                                        break;
+                                // if the player is currently using mana-consuming item: no natural mana regen; bonus regen is reduced
+                                if (attrMap.getOrDefault("manaUse", 0d) > 0) {
+                                    if (ply.getScoreboardTags().contains("temp_useCD"))
+                                        manaRegenRate = manaRegenBonus * (manaRatio * 0.8 + 0.2);
                                 }
                                 if (ply.getLevel() < maxMana) {
                                     manaRegenCounter += manaRegenRate * delay * attrMap.getOrDefault("manaRegenMulti", 1d);
@@ -2482,7 +2479,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             if (Math.abs(originalMaxHealth - newMaxHealth) > 1e-5) {
                 double healthRatio = ply.getHealth() / originalMaxHealth;
                 ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(newMaxHealth);
-                ply.setHealth(healthRatio * newMaxHealth);
+                ply.setHealth( Math.min(healthRatio * newMaxHealth, newMaxHealth) );
             }
             // the on-ground movement is handled with velocity...
             if (ply.getWalkSpeed() != 0f)
