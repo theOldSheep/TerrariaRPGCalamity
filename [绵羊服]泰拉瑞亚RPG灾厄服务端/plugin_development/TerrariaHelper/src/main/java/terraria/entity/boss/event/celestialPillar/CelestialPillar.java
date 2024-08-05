@@ -15,6 +15,7 @@ import terraria.TerrariaHelper;
 import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 import terraria.util.MathHelper;
+import terraria.worldgen.overworld.OverworldBiomeGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,7 +55,22 @@ public class CelestialPillar extends EntityGiantZombie {
         }
     }
     public static void handleSinglePillarSpawn(Location centerLoc, PillarTypes pillarType) {
-        Location actualSpawnLoc = centerLoc.add(Math.random() * 500 - 250, 0, Math.random() * 500 - 250);
+        Location actualSpawnLoc = null;
+        // attempt to find new location for up to 10 times if spawning above an ocean
+        for (int iteration = 0; iteration < 10; iteration ++) {
+            actualSpawnLoc = centerLoc.add(Math.random() * 500 - 250, 0, Math.random() * 500 - 250);
+            boolean notOcean;
+            switch (OverworldBiomeGenerator.getBiomeFeature(actualSpawnLoc.getBlockX(), actualSpawnLoc.getBlockZ()).evaluatedBiome) {
+                case OCEAN:
+                case SULPHUROUS_OCEAN:
+                    notOcean = false;
+                    break;
+                default:
+                    notOcean = true;
+            }
+            if (notOcean)
+                break;
+        }
         actualSpawnLoc = actualSpawnLoc.getWorld().getHighestBlockAt(actualSpawnLoc).getLocation().add(0, 20, 0);
         actualSpawnLoc.getChunk().load();
         EventAndTime.pillars.put(pillarType, new CelestialPillar(

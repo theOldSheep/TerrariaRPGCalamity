@@ -2123,6 +2123,12 @@ ANVIL:
     requireItem:
     - 棱晶碎片:5
     recipeCategory: MATERIAL
+  '258_1':
+    requireLevel: 1
+    resultItem: 坠星
+    requireItem:
+    - 星尘:5
+    recipeCategory: MATERIAL
   '259':
     requireLevel: 2
     resultItem: 纯净之斧
@@ -6349,12 +6355,6 @@ TINKER_WORKBENCH:
     - 猎魂鲨牙:10
     - 深渊细胞:15
     recipeCategory: ARMOR
-  '160_1':
-    requireLevel: 1
-    resultItem: 坠星
-    requireItem:
-    - 星尘:5
-    recipeCategory: MATERIAL
   '161':
     requireLevel: 1
     resultItem: 炫星锭

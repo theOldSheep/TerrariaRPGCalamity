@@ -289,6 +289,7 @@ BLACK_GLAZED_TERRACOTTA:
   totalProgress: 800
   dropItem:
   - 起源之簇
+  - 夜明矿:1:1:0.5
 BROWN_GLAZED_TERRACOTTA:
   progress: 亵渎天神，普罗维登斯
   powerPickaxe: 225

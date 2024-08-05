@@ -1807,7 +1807,7 @@ public class EntityHelper {
         // fallen star etc. can damage players and NPC etc. without further check
         if (entityScoreboardTags.contains("ignoreCanDamageCheck")) {
             // for pvp damage, it still requires the later validations.
-            if (! (damageSource instanceof Player && target instanceof Player) )
+            if (! (damageSource instanceof Player && target instanceof Player && damageSource != target) )
                 return true;
         }
         // can not attack oneself

@@ -1740,9 +1740,11 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                             // revive invulnerability ticks - 3 seconds
                             int dmgImmuneTicks = 60;
                             EntityHelper.DamageType[] dmgImmuneTypes = {
-                                    EntityHelper.DamageType.MELEE, EntityHelper.DamageType.ARROW, EntityHelper.DamageType.MAGIC};
-                            EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                    EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE), dmgImmuneTicks);
+                                    EntityHelper.DamageType.MELEE, EntityHelper.DamageType.ARROW,
+                                    EntityHelper.DamageType.BULLET, EntityHelper.DamageType.ROCKET, EntityHelper.DamageType.MAGIC};
+                            for (EntityHelper.DamageType type : dmgImmuneTypes)
+                                EntityHelper.handleEntityTemporaryScoreboardTag(ply,
+                                        EntityHelper.getInvulnerabilityTickName(type), dmgImmuneTicks);
                         }
                     } else {
                         if (!isProperlyPlaying(ply)) continue; // waiting to revive etc.

@@ -112,6 +112,7 @@ terraria\entity\projectile\Yoyo.class
 terraria\entity\boss\postMoonLord\devourerOfGods\ScatteringCircleAttackPattern$1.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Anahita$1.class
 terraria\entity\projectile\RotatingRingProjectile$RotationDirection.class
+terraria\entity\boss\event\celestialPillar\CelestialPillar$1.class
 terraria\util\MonsterHelper$UniqueMonsterInfo.class
 terraria\util\WorldHelper$LeafLayerShape.class
 terraria\entity\boss\preHardMode\eyeOfCthulhu\EyeOfCthulhu$1.class
