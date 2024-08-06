@@ -40,7 +40,7 @@ public class CavernChunkGenerator extends ChunkGenerator {
         // init terrain
         ChunkData chunk = createChunkData(world);
         OverworldChunkGenerator.initializeTerrain(chunk, x * 16, z * 16, biome, Y_OFFSET_CAVERN, heightMap);
-        boolean[][][] stoneFlags = OverworldChunkGenerator.setupStoneFlags(x << 4, z << 4, Y_OFFSET_CAVERN, heightMap);
+        Boolean[][][] stoneFlags = OverworldChunkGenerator.setupStoneFlags(x << 4, z << 4, Y_OFFSET_CAVERN, heightMap);
         // tweak terrain
         CAVE_GENERATOR_CAVERN.populate(world, chunk, biome, heightMap, x, z, caveMultiMap);
 //        CAVE_GENERATOR_CAVERN.populate_no_optimization(chunk, biome, heightMap, x, z, caveMultiMap);

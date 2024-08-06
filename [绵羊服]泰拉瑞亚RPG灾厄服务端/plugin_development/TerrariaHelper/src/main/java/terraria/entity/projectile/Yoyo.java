@@ -87,7 +87,9 @@ public class Yoyo extends GenericProjectile {
         }
         // update velocity
         else {
-            Location targetLoc = ItemUseHelper.getPlayerTargetLoc(owner, maxDistance, 2, aimHelper, true);
+            Location targetLoc = ItemUseHelper.getPlayerTargetLoc(
+                    new ItemUseHelper.PlyTargetLocInfo(owner, aimHelper, true)
+                            .setTraceDist(maxDistance));
             Vector velocity = MathHelper.getDirection(bukkitEntity.getLocation(), targetLoc, speed, true);
             // tweak velocity
             velocity.add(recoilPool);

@@ -1,6 +1,5 @@
 package terraria.worldgen.overworld;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -11,17 +10,26 @@ import terraria.TerrariaHelper;
 import terraria.util.WorldHelper;
 import terraria.worldgen.Interpolate;
 import terraria.worldgen.Interpolate.InterpolatePoint;
+import terraria.worldgen.WorldGenHelper;
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class OverworldChunkGenerator extends ChunkGenerator {
-    public static final int OCTAVES_CAVE = 4;
-    public static final int NEARBY_BIOME_SAMPLE_RADIUS = 25;
-    public static final int LAND_HEIGHT = 100;
-    public static final int RIVER_DEPTH = 25;
-    public static final int LAKE_DEPTH = 30;
-    public static final int PLATEAU_HEIGHT = 40;
-    public static final int SEA_LEVEL = 90;
+    // optimization & logging variables
+    public static final boolean LOG_TIMING = TerrariaHelper.settingConfig.getBoolean("worldGen.opt.chunkPrepDurationLog", false);
+    static long[] testGenDurTotal = {0, 0, 0, 0};
+    static long testGenAmount = 0;
+
+    // world generator parameters
+    public static final int OCTAVES_CAVE = TerrariaHelper.settingConfig.getInt("worldGen.params.caveOctaves", 4);
+    public static final int NEARBY_BIOME_SAMPLE_RADIUS = TerrariaHelper.settingConfig.getInt("worldGen.params.nearbyBiomeSampleRadius", 25);
+    public static final int LAND_HEIGHT = TerrariaHelper.settingConfig.getInt("worldGen.params.landHeight", 100);
+    public static final int SEA_LEVEL = TerrariaHelper.settingConfig.getInt("worldGen.params.seaLevel", 90);
+    public static final int RIVER_DEPTH = TerrariaHelper.settingConfig.getInt("worldGen.params.riverDepth", 25);
+    public static final int LAKE_DEPTH = TerrariaHelper.settingConfig.getInt("worldGen.params.lakeDepth", 30);
+    public static final int PLATEAU_HEIGHT = TerrariaHelper.settingConfig.getInt("worldGen.params.plateauHeight", 40);
     public static final int LAVA_LEVEL = -150;
     public static final int Y_OFFSET_OVERWORLD = 0;
     public static final int HEIGHT_SAMPLING_DIAMETER;
@@ -82,8 +90,8 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 InterpolatePoint.create(0.25     , LAND_HEIGHT),
                 InterpolatePoint.create(0.5      , LAND_HEIGHT + 25),
                 InterpolatePoint.create(0.6      , LAND_HEIGHT + 40),
-                InterpolatePoint.create(0.7      , LAND_HEIGHT + 60),
-                InterpolatePoint.create(1        , LAND_HEIGHT + 80),
+                InterpolatePoint.create(0.7      , LAND_HEIGHT + 55),
+                InterpolatePoint.create(1        , LAND_HEIGHT + 60),
         }, "terrain_heightmap");
         jungleHeightProvider = new Interpolate(new InterpolatePoint[]{
                 InterpolatePoint.create(-1       , SEA_LEVEL - 10),
@@ -175,7 +183,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
      */
 
     // chunk block material details
-    public static void generateTopSoil(ChunkData chunk, boolean[][][] stoneVeinFlag, int i, int height, int j, int blockX, int blockZ, Biome biome, int yOffset) {
+    public static void generateTopSoil(ChunkData chunk, Boolean[][][] stoneVeinFlag, int i, int height, int j, int blockX, int blockZ, Biome biome, int yOffset) {
         // although it is named as such, this actually generates stone layers too.
         double topSoilThicknessRandomizer = stoneVeinGenerator.noise(blockX, blockZ, 2, 0.5, false);
         double topSoilThickness;
@@ -401,6 +409,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     // generates the height and cave multiplier mapping of a chunk
     public static void generateMaps(int blockXStart, int blockZStart, int[][] heightMap, double[][] caveMultiMap,
                                     OverworldCaveGenerator caveGen, BiomeGrid biomeGrid, int yOffset) {
+        long timing = System.nanoTime();
         // create memoization 2D array for the nearby biomes
         int memoiSize = 16 + NEARBY_BIOME_SAMPLE_RADIUS * 2;
         Biome[][] biomesMemoization = new Biome[memoiSize][memoiSize];
@@ -411,7 +420,10 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             }
         // update the biome grid
         tweakBiome(biomesMemoization, biomeGrid, yOffset);
+        // record timing info
+        testGenDurTotal[0] += System.nanoTime() - timing;
 
+        timing = System.nanoTime();
         int currX, currZ;
 
         // setup height info according to nearby biomes at both offset 0.
@@ -470,6 +482,8 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 }
             }
         }
+        // record timing info
+        testGenDurTotal[1] += System.nanoTime() - timing;
     }
     /*
      * init terrain (rough + detail)
@@ -508,7 +522,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     protected static boolean checkStoneNoise(double blockX, double effectualY, double blockZ) {
         return stoneVeinGenerator.noise(blockX, effectualY, blockZ, 2, 0.5, false) > 0.5;
     }
-    protected static boolean isDetailedCheckNeeded(boolean[][][] greaterGrid, int indexX, int indexY, int indexZ) {
+    protected static boolean isDetailedCheckNeeded(Boolean[][][] greaterGrid, int indexX, int indexY, int indexZ) {
         // checks the nearby 2*2 greater grid and tells if they are the same.
         int greaterIdxX = indexX >> 1;
         int greaterIdxY = indexY >> 1;
@@ -535,9 +549,11 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         // everything seems to match, returns false and no extra calculation is needed.
         return false;
     }
-    public static boolean[][][] setupStoneFlags(int xStart, int zStart, int yOffset, int[][] heightMap) {
+    // NOTE: the attempt to utilize thread pool to optimize this has failed. Don't bother trying again.
+    // This has to do with the noise function having a single octave.
+    public static Boolean[][][] setupStoneFlags(int xStart, int zStart, int yOffset, int[][] heightMap) {
         // setup 4*4 grid
-        boolean[][][] fourGrid = new boolean[5][65][5];
+        Boolean[][][] fourGrid = new Boolean[5][65][5];
         for (int i = 0; i < 5; i++) {
             int actualXOffset = i << 2;
             for (int j = 0; j < 65; j++) {
@@ -547,13 +563,14 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                     // if the block is above max height. Checks i and k for out of bound.
                     if (i < 4 && k < 4 && actualY > heightMap[actualXOffset][actualZOffset])
                         fourGrid[i][j][k] = false;
-                    // otherwise, we calculate the noise and validate
-                    else fourGrid[i][j][k] = checkStoneNoise(xStart + actualXOffset, actualY, zStart + actualZOffset);
+                        // otherwise, we calculate the noise and validate
+                    else
+                        fourGrid[i][j][k] = checkStoneNoise(xStart + actualXOffset, actualY, zStart + actualZOffset);
                 }
             }
         }
         // setup 2*2 grid
-        boolean[][][] twoGrid = new boolean[9][129][9];
+        Boolean[][][] twoGrid = new Boolean[9][129][9];
         for (int i = 0; i < 9; i++) {
             int actualXOffset = i << 1;
             for (int j = 0; j < 129; j++) {
@@ -576,7 +593,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             }
         }
         // setup result grid
-        boolean[][][] result = new boolean[16][256][16];
+        Boolean[][][] result = new Boolean[16][256][16];
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 256; j++) {
                 int actualY = j + yOffset;
@@ -600,23 +617,42 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     }
     @Override
     public ChunkData generateChunkData(World world, Random random, int x, int z, BiomeGrid biome) {
+        // print time benchmarking info
+        if (LOG_TIMING && testGenAmount % 20 == 19) {
+            TerrariaHelper.LOGGER.info("区块基础生成（生物群系，高度，土壤，岩石）时长：");
+            TerrariaHelper.LOGGER.info("区块基础生成-载入生物群系 平均使用时间（单位：纳秒）: " + (testGenDurTotal[0] / testGenAmount) );
+            TerrariaHelper.LOGGER.info("区块基础生成-地形高度 平均使用时间（单位：纳秒）: " + (testGenDurTotal[1] / testGenAmount) );
+            TerrariaHelper.LOGGER.info("区块基础生成-粗略地形与岩石 平均使用时间（单位：纳秒）: " + (testGenDurTotal[2] / testGenAmount) );
+            TerrariaHelper.LOGGER.info("区块基础生成-土壤 平均使用时间（单位：纳秒）: " + (testGenDurTotal[3] / testGenAmount) );
+        }
+
+        long timing;
         // init info maps; the memoization would also set up the biome.
         int[][] heightMap = new int[16][16];
         double[][] caveMultiMap = new double[16][16];
         generateMaps(x << 4, z << 4, heightMap, caveMultiMap, CAVE_GENERATOR_OVERWORLD, biome, Y_OFFSET_OVERWORLD);
 
-        // init terrain
+
+        timing = System.nanoTime();
+        // init terrain (height & stone)
         ChunkData chunk = createChunkData(world);
         initializeTerrain(chunk, x << 4, z << 4, biome, Y_OFFSET_OVERWORLD, heightMap);
-        boolean[][][] stoneFlags = setupStoneFlags(x << 4, z << 4, Y_OFFSET_OVERWORLD, heightMap);
+        Boolean[][][] stoneFlags = setupStoneFlags(x << 4, z << 4, Y_OFFSET_OVERWORLD, heightMap);
+        // record timing info
+        testGenDurTotal[2] += System.nanoTime() - timing;
 
-        // tweak terrain
+        // generate cave
         CAVE_GENERATOR_OVERWORLD.populate(world, chunk, biome, heightMap, x, z, caveMultiMap);
 //        CAVE_GENERATOR_OVERWORLD.populate_no_optimization(chunk, biome, heightMap, x, z, caveMultiMap);
 
+        timing = System.nanoTime();
+        // finally place topsoil
         for (int i = 0; i < 16; i ++)
             for (int j = 0; j < 16; j ++)
                 generateTopSoil(chunk, stoneFlags, i, heightMap[i][j], j, (x << 4) + i, (z << 4) + j, biome.getBiome(i, j), Y_OFFSET_OVERWORLD);
+        // record timing info
+        testGenDurTotal[3] += System.nanoTime() - timing;
+        testGenAmount++;
 
         return chunk;
     }

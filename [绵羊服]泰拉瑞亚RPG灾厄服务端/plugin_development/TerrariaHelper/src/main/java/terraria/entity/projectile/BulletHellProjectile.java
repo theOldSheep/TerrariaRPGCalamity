@@ -3,10 +3,12 @@ package terraria.entity.projectile;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+import terraria.TerrariaHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 
 public class BulletHellProjectile extends GenericProjectile {
+    public static final int VEL_UPDATE_INTERVAL = TerrariaHelper.settingConfig.getInt("optimization.projVelUpdItvBulletHell", 2);
     public enum ProjectileType {
         SQUARE_BORDER, SQUARE_BORDER_SIDES, CIRCUMFERENCE,
         BLAST_8, BLAST_16, BLAST_32, CALCULATED
@@ -169,6 +171,6 @@ public class BulletHellProjectile extends GenericProjectile {
 
     @Override
     protected int getVelocityUpdateInterval() {
-        return 2;
+        return VEL_UPDATE_INTERVAL;
     }
 }

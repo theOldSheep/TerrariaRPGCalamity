@@ -16,7 +16,7 @@ public class StructureInfo {
     interface StructureOperation {
         public void operate();
     }
-    private static final long MAX_NANO_SECOND_SPIKE = TerrariaHelper.settingConfig.getInt("structureNanoSecond.structureNanoSecond", 1000000);
+    private static final long MAX_NANO_SECOND_SPIKE = TerrariaHelper.settingConfig.getInt("worldGen.opt.structureNanoSecond", 1000000);
     // block information
     Material trueMat, falseMat;
     byte trueDt, falseDt;

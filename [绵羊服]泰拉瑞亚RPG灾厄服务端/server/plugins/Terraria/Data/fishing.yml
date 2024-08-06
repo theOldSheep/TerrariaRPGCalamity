@@ -146,9 +146,6 @@ fish:
     寒霜鲦鱼:
       biome:
       - TUNDRA
-    公主鱼:
-      biome:
-      - HALLOW
     虾:
       height:
       - SPACE

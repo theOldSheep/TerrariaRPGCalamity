@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class RailPopulator extends BlockPopulator {
     static Material[][][] RAIL_STRUCTURE;
-    static final int RAIL_HEIGHT = TerrariaHelper.settingConfig.getInt("worldGen.railYCoordinate", 100);
+    static final int RAIL_HEIGHT = TerrariaHelper.settingConfig.getInt("worldGen.params.railYCoordinate", 100);
     static final int RAIL_STRUCT_WIDTH = 3, RAIL_STRUCT_HEIGHT = 5;
     static {
         Material[][] basicShape = {

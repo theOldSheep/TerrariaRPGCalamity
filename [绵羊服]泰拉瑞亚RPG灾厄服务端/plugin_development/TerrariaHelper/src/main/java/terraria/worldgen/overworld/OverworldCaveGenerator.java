@@ -6,15 +6,11 @@ import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 import terraria.TerrariaHelper;
+import terraria.worldgen.WorldGenHelper;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.function.Function;
 
 public class OverworldCaveGenerator {
     int yOffset;
@@ -25,11 +21,16 @@ public class OverworldCaveGenerator {
     int testInfoIndex;
     long[] testCaveDetailDurTotal = {0, 0},
                 testCaveSetupDurTotal = {0, 0}, testCaveGenAmount = {0, 0};
-    static final boolean CAVE_GEN_TIME_LOG = TerrariaHelper.settingConfig.getBoolean("worldGen.caveGenDurationLog", false);
+    static final boolean CAVE_GEN_TIME_LOG = TerrariaHelper.settingConfig.getBoolean("worldGen.opt.caveGenDurationLog", false);
     static final int
-            CAVE_ROUGH_SKETCH_DIAMETER = Math.max( TerrariaHelper.settingConfig.getInt("worldGen.caveSketchSize", 3), 0),
-            CAVE_ROUGH_SKETCH_THREADS = Math.max( TerrariaHelper.settingConfig.getInt("worldGen.caveSketchThreads", 3), 1),
-            CAVE_DETAIL_THREADS = Math.max( TerrariaHelper.settingConfig.getInt("worldGen.caveDetailThreads", 8), 1);
+            CAVE_ROUGH_SKETCH_DIAMETER = Math.max( TerrariaHelper.settingConfig.getInt("worldGen.opt.caveSketchSize", 3), 0),
+            CAVE_ROUGH_SKETCH_THREADS = Math.max( TerrariaHelper.settingConfig.getInt("worldGen.opt.caveSketchThreads", 3), 1),
+            CAVE_DETAIL_THREADS = Math.max( TerrariaHelper.settingConfig.getInt("worldGen.opt.caveDetailThreads", 8), 1);
+
+
+    static ExecutorService poolRoughSketch = Executors.newFixedThreadPool(CAVE_ROUGH_SKETCH_THREADS);
+    static ExecutorService poolFineDetail = Executors.newFixedThreadPool(CAVE_DETAIL_THREADS);
+
     public OverworldCaveGenerator(int yOffset, long seed, int OCTAVES) {
         this.yOffset = yOffset;
         this.testInfoIndex = this.yOffset == OverworldChunkGenerator.Y_OFFSET_OVERWORLD ? 0 : 1;
@@ -190,8 +191,8 @@ public class OverworldCaveGenerator {
         // print time benchmarking info
         if (CAVE_GEN_TIME_LOG && testCaveGenAmount[testInfoIndex] % 10 == 9) {
             TerrariaHelper.LOGGER.info("洞穴所属世界：" + testInfoIndex + "（0为地表，1为地下）");
-            TerrariaHelper.LOGGER.info("洞穴估算平均使用时间（单位：纳秒）: " + testCaveSetupDurTotal[testInfoIndex] / testCaveGenAmount[testInfoIndex]);
-            TerrariaHelper.LOGGER.info("洞穴细化计算平均使用时间（单位：纳秒，不含估算时长）: " + testCaveDetailDurTotal[testInfoIndex] / testCaveGenAmount[testInfoIndex]);
+            TerrariaHelper.LOGGER.info("洞穴估算平均使用时间（单位：纳秒）: " + (testCaveSetupDurTotal[testInfoIndex] / testCaveGenAmount[testInfoIndex]) );
+            TerrariaHelper.LOGGER.info("洞穴细化计算平均使用时间（单位：纳秒，不含估算时长）: " + (testCaveDetailDurTotal[testInfoIndex] / testCaveGenAmount[testInfoIndex]) );
         }
         int chunkX = x << 4, chunkZ = z << 4;
         // setup cave estimates
@@ -206,7 +207,7 @@ public class OverworldCaveGenerator {
         // create estimates
         Boolean[][][] caveEstimates = new Boolean[estimationWidth][estimationHeight][estimationWidth];
         try {
-            fill3DArray(caveEstimates, CAVE_ROUGH_SKETCH_THREADS, (info) -> {
+            WorldGenHelper.fill3DArray(caveEstimates, poolRoughSketch, CAVE_ROUGH_SKETCH_THREADS, (info) -> {
                 int i = info[0];
                 int y_coord = info[1];
                 int j = info[2];
@@ -231,10 +232,9 @@ public class OverworldCaveGenerator {
             });
         }
         catch (Exception e) {
-            if (CAVE_GEN_TIME_LOG) {
-                TerrariaHelper.LOGGER.info("利用线程估算洞穴信息时以下错误出现。本区块改为以单线程模式生成。");
-                e.printStackTrace();
-            }
+            TerrariaHelper.LOGGER.info("利用线程估算洞穴信息时以下错误出现。本区块改为以单线程模式生成。");
+            e.printStackTrace();
+
             for (int i = 0; i < estimationWidth; i ++) {
                 int xBlockOffset = (i - 1) * CAVE_ROUGH_SKETCH_DIAMETER;
                 int currX = chunkX + xBlockOffset;
@@ -264,7 +264,7 @@ public class OverworldCaveGenerator {
         // setup actual blocks
         try {
             Boolean[][][] temp = new Boolean[16][255][16];
-            fill3DArray(temp, CAVE_DETAIL_THREADS, (info) -> {
+            WorldGenHelper.fill3DArray(temp, poolFineDetail, CAVE_DETAIL_THREADS, (info) -> {
                 int i = info[0];
                 int y_coord = info[1];
                 // DO NOT BREAK BEDROCK!
@@ -301,10 +301,9 @@ public class OverworldCaveGenerator {
             });
         }
         catch (Exception e) {
-            if (CAVE_GEN_TIME_LOG) {
-                TerrariaHelper.LOGGER.info("利用线程精确计算洞穴信息时以下错误出现。本区块改为以单线程模式生成。");
-                e.printStackTrace();
-            }
+            TerrariaHelper.LOGGER.info("利用线程精确计算洞穴信息时以下错误出现。本区块改为以单线程模式生成。");
+            e.printStackTrace();
+
             for (int i = 0; i < 16; i ++) {
                 int currX = chunkX + i;
                 int estimateX = 1 + Math.floorDiv(i, CAVE_ROUGH_SKETCH_DIAMETER);
@@ -372,53 +371,5 @@ public class OverworldCaveGenerator {
                 }
             }
         }
-    }
-
-
-    /*
-     * Helper function to fill up an array with the calculation as specified.
-     */
-    public static <T> void fill3DArray(T[][][] arr, int numThreads, Function<int[], T> fillFunction) throws InterruptedException, ExecutionException {
-        int rows = arr.length;
-        int height = arr[0].length;
-        int cols = arr[0][0].length;
-
-        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
-        List<Future<?>> futures = new ArrayList<>();
-
-        // split the tasks into sections, where each section is vertical.
-        int maxSections = rows * cols;
-        // chunk size refer to the chunk for the thread, not the chunk in the world.
-        int chunkSize = maxSections / numThreads;
-
-        for (int i = 0; i < numThreads; i++) {
-            int startSection = i * chunkSize;
-            int endSection = (i == numThreads - 1) ? maxSections : startSection + chunkSize;
-
-            Runnable task = () -> {
-                // increase x, then "carry digit" to z
-                int[] posInfo = new int[] {startSection % rows, 0, startSection / rows};
-                for (int sectionInd = startSection; sectionInd < endSection; sectionInd++) {
-                    for (int h = 0; h < height; h++) {
-                        posInfo[1] = h;
-                        arr[ posInfo[0] ][h][ posInfo[2] ] = fillFunction.apply(posInfo);
-                    }
-                    // increment
-                    if (++posInfo[0] >= rows) {
-                        posInfo[0] = 0;
-                        posInfo[2] ++;
-                    }
-                }
-            };
-
-            futures.add(executor.submit(task));
-        }
-
-        // Wait for all tasks to complete
-        for (Future<?> future : futures) {
-            future.get();
-        }
-
-        executor.shutdown();
     }
 }

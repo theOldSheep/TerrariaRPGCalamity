@@ -125,8 +125,10 @@ public class Flail extends GenericProjectile {
                     EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions(projectileType)
                             .setProjectileSpeed(speed)
                             .setProjectileGravity(gravity);
-                    Vector newVelocity = MathHelper.getDirection(owner.getEyeLocation(),
-                            ItemUseHelper.getPlayerTargetLoc(owner, aimHelper, true), speed);
+                    Vector newVelocity = MathHelper.getDirection(
+                            owner.getEyeLocation(),
+                            ItemUseHelper.getPlayerTargetLoc(new ItemUseHelper.PlyTargetLocInfo(owner, aimHelper, true)),
+                            speed);
                     newVelocity.normalize();
                     newVelocity.multiply(speed);
                     bukkitEntity.setVelocity(newVelocity);

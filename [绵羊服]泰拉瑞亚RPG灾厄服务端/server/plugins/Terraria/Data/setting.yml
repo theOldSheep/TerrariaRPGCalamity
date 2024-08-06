@@ -1,11 +1,21 @@
 worldGen:
-  seed: 876239938
-  caveGenDurationLog: false
-  caveSketchSize: 3
-  caveSketchThreads: 4
-  caveDetailThreads: 16
-  structureNanoSecond: 10000000
-  railYCoordinate: 125
+  params:
+    seed: 876239938
+    landHeight: 100
+    seaLevel: 90
+    riverDepth: 25
+    lakeDepth: 30
+    plateauHeight: 40
+    nearbyBiomeSampleRadius: 25
+    caveOctaves: 4
+    railYCoordinate: 125
+  opt:
+    chunkPrepDurationLog: false
+    caveGenDurationLog: false
+    caveSketchSize: 3
+    caveSketchThreads: 4
+    caveDetailThreads: 16
+    structureNanoSecond: 10000000
   mapConfig:
     blocksPerPixel: 20
     biomeMarkerRadiusPixel: 2
@@ -17,11 +27,15 @@ worldGen:
     gridSizeInPixels: 50
     outputFolder: worldGenDebug
 optimization:
-  projVelUpdItvNormal: 10
-  projVelUpdItvHoming: 5
-  projVelUpdItvAcceleration: 3
+  projVelUpdItvNormal: 6
+  projVelUpdItvHoming: 3
+  projVelUpdItvAcceleration: 2
+  projVelUpdItvDragonFireball: 2
+  projVelUpdItvBulletHell: 2
   projectileVelocityUpdateDistance: 96
   globalParticleDensity: 1.0
+miscSetting:
+  summoningItemConsumption: false
 rarity:
   '-2': §#AAAAAA§l
   '-1': §#6B6B6B§l

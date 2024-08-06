@@ -4,12 +4,14 @@ package terraria.entity.projectile;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+import terraria.TerrariaHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 
 
 
 public class RotatingRingProjectile extends GenericProjectile {
+    public static final int VEL_UPDATE_INTERVAL = TerrariaHelper.settingConfig.getInt("optimization.projVelUpdItvDragonFireball", 2);
 
     // Enum for rotation direction
     public enum RotationDirection {
@@ -212,6 +214,6 @@ public class RotatingRingProjectile extends GenericProjectile {
 
     @Override
     protected int getVelocityUpdateInterval() {
-        return 2;
+        return VEL_UPDATE_INTERVAL;
     }
 }

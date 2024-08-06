@@ -620,8 +620,7 @@ public class GenericProjectile extends EntityPotion {
                                 EntityHelper.checkCanDamage(owner, ((LivingEntity) targetCache.value()), true))
                             targetLoc = ((LivingEntity) targetCache.value()).getEyeLocation();
                         else
-                            targetLoc = ItemUseHelper.getPlayerTargetLoc(owner,
-                                    new EntityHelper.AimHelperOptions().setAimMode(true).setTicksTotal(0), true);
+                            targetLoc = ItemUseHelper.getPlayerTargetLoc(new ItemUseHelper.PlyTargetLocInfo(owner, new EntityHelper.AimHelperOptions().setAimMode(true).setTicksTotal(0), true));
                         // move towards the owner's target
                         Vector dir = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                         terraria.util.MathHelper.setVectorLength(dir, speed);
@@ -1147,6 +1146,10 @@ public class GenericProjectile extends EntityPotion {
     }
     // handles the velocity update interval
     protected int getVelocityUpdateInterval() {
+        // no extra velocity synchronization for almost stationary projectile
+        if (bukkitEntity.getVelocity().lengthSquared() < 0.01)
+            return 999999;
+
         int result = VELOCITY_UPDATE_INTERVAL_NORMAL;
         if (homing && homingTarget != null)
             result = Math.min(result, VELOCITY_UPDATE_INTERVAL_HOMING);

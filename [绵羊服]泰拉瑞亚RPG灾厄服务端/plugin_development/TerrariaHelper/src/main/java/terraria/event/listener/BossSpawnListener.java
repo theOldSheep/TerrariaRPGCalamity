@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import terraria.TerrariaHelper;
 import terraria.util.BossHelper;
 import terraria.util.ItemHelper;
 import terraria.util.PlayerHelper;
@@ -18,6 +19,7 @@ import terraria.util.WorldHelper;
 import java.util.HashMap;
 
 public class BossSpawnListener implements Listener {
+    public static final boolean summonItemConsumption = TerrariaHelper.settingConfig.getBoolean("miscSetting.summoningItemConsumption", false);
     static HashMap<String, BossHelper.BossType> summonItems = new HashMap<>();
     static {
         // pre-wall of flesh
@@ -95,7 +97,7 @@ public class BossSpawnListener implements Listener {
         else
             bossType = summonItems.get(toolType);
         if (bossType != null) {
-            if ( BossHelper.spawnBoss(ply, bossType) ) {
+            if ( BossHelper.spawnBoss(ply, bossType) && summonItemConsumption ) {
                 removeSummoningItem(ply, tool);
             }
         }

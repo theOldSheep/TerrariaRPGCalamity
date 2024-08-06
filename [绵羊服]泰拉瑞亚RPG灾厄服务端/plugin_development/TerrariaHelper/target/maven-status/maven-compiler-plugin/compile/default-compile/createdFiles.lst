@@ -240,6 +240,8 @@ terraria\entity\boss\postMoonLord\ceaselessVoid\CeaselessVoid.class
 terraria\entity\boss\hardMode\astrumDeus\AstrumDeus.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHead.class
 terraria\entity\others\PlayerTornado.class
+terraria\util\ItemUseHelper$PlyTargetLocInfo.class
+terraria\worldgen\WorldGenHelper.class
 terraria\entity\monster\MonsterSilverfish.class
 terraria\entity\monster\MonsterSlime.class
 terraria\event\listener\RandomTitleListener.class
