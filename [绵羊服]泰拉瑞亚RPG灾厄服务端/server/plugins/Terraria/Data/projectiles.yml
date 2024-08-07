@@ -3043,7 +3043,7 @@ TNT:
     blockHitAction: thru
     projectileSize: 0.5
     homing: true
-    homingAbility: 3
+    homingAbility: 5
     homingRadius: 64
     noHomingTicks: 10
     gravity: 0

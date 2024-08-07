@@ -1894,8 +1894,8 @@ public class ItemUseHelper {
                             projAttrMap.put("damage", projAttrMap.get("damage") * 0.5);
                             for (int i = 0; i < 4; i++) {
                                 Vector projVel = MathHelper.vectorFromYawPitch_approx(
-                                        plyYaw + Math.random() * 10 - 50,
-                                        plyPitch + Math.random() * 10 - 50);
+                                        plyYaw + Math.random() * 10 - 5,
+                                        plyPitch + Math.random() * 10 - 5);
                                 projVel.multiply(2.75);
                                 EntityHelper.spawnProjectile(ply, projVel, projAttrMap,
                                         EntityHelper.DamageType.MELEE, "死神擢升镰刀");

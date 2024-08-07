@@ -14,7 +14,7 @@ public class Flail extends GenericProjectile {
     Player owner;
     Location spawnedLoc;
     boolean returning = false, spinning = true, shouldUpdateSpeed = true, canRotate;
-    double maxDistanceSquared, useTime, speed;
+    double maxDist, maxDistanceSquared, useTime, speed;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public Flail(World world) {
         super(world);
@@ -26,6 +26,7 @@ public class Flail extends GenericProjectile {
         // initialize variables
         owner = (Player) shootInfo.shooter;
         spawnedLoc = bukkitEntity.getLocation();
+        this.maxDist = maxDistance;
         this.maxDistanceSquared = maxDistance * maxDistance;
         this.useTime = useTime;
         this.speed = bukkitEntity.getVelocity().length();
@@ -127,7 +128,8 @@ public class Flail extends GenericProjectile {
                             .setProjectileGravity(gravity);
                     Vector newVelocity = MathHelper.getDirection(
                             owner.getEyeLocation(),
-                            ItemUseHelper.getPlayerTargetLoc(new ItemUseHelper.PlyTargetLocInfo(owner, aimHelper, true)),
+                            ItemUseHelper.getPlayerTargetLoc(new ItemUseHelper.PlyTargetLocInfo(owner, aimHelper, true)
+                                    .setTraceDist(maxDist)),
                             speed);
                     newVelocity.normalize();
                     newVelocity.multiply(speed);

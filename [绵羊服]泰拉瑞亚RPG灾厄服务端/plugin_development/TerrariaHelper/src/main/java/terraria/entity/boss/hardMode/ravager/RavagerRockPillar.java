@@ -11,6 +11,7 @@ import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class RavagerRockPillar extends EntitySlime {
     // basic variables
@@ -54,9 +55,11 @@ public class RavagerRockPillar extends EntitySlime {
     }
     // a constructor for actual spawning
     public RavagerRockPillar(Ravager owner, Location spawnLoc) {
-        this(owner.target, owner, 0, owner.postProvidence, null, spawnLoc);
+        this(owner.target, owner, 0, owner.postProvidence, null, spawnLoc, null);
     }
-    public RavagerRockPillar(Player summonedPlayer, Ravager owner, int index, boolean postProvidence, RavagerRockPillar base, Location spawnLoc) {
+    public RavagerRockPillar(Player summonedPlayer, Ravager owner, int index, boolean postProvidence,
+                             RavagerRockPillar base, Location spawnLoc,
+                             HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
@@ -82,8 +85,13 @@ public class RavagerRockPillar extends EntitySlime {
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map
-        HashMap<Player, Double> targetMap = (HashMap<Player, Double>) owner.targetMap.clone();
         {
+            if (targetMap == null) {
+                targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) owner.targetMap.clone();
+                for (UUID id : targetMap.keySet()) {
+                    targetMap.put(id, new terraria.entity.boss.BossHelper.BossTargetInfo());
+                }
+            }
             target = summonedPlayer;
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
@@ -102,7 +110,7 @@ public class RavagerRockPillar extends EntitySlime {
         // next layer
         if (index < 7)
             new RavagerRockPillar(summonedPlayer, owner, index + 1, postProvidence,
-                    (index == 0 ? this : base), spawnLoc);
+                    (index == 0 ? this : base), spawnLoc, targetMap);
     }
 
     // rewrite AI
