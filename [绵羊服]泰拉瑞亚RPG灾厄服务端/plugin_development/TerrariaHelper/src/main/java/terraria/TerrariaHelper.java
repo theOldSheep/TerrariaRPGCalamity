@@ -8,10 +8,7 @@ import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 import terraria.entity.CustomEntities;
 import terraria.event.listener.*;
-import terraria.gameplay.EventAndTime;
-import terraria.gameplay.MenuHandler;
-import terraria.gameplay.Setting;
-import terraria.gameplay.SettingCommandExecutor;
+import terraria.gameplay.*;
 import terraria.util.*;
 import terraria.worldgen.overworld.NoiseGeneratorTest;
 import terraria.worldgen.overworld.OverworldChunkGenerator;
@@ -232,6 +229,7 @@ public class TerrariaHelper extends JavaPlugin {
 
         this.getCommand("findNoise").setExecutor(new NoiseGeneratorTest());
         this.getCommand(SettingCommandExecutor.COMMAND).setExecutor(new SettingCommandExecutor());
+        this.getCommand(RestartCommandExecutor.COMMAND).setExecutor(new RestartCommandExecutor());
         this.getCommand(MenuHandler.COMMAND).setExecutor(new MenuHandler());
 
         getLogger().info("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");

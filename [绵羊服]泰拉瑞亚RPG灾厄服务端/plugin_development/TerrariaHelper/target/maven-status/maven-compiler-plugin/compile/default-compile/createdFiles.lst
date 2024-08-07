@@ -209,6 +209,7 @@ terraria\util\EntityHelper$1.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticCultistClone.class
 terraria\entity\boss\postMoonLord\exoMechs\Artemis.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHand$HandType.class
+terraria\gameplay\RestartCommandExecutor.class
 terraria\entity\boss\preHardMode\eyeOfCthulhu\EyeOfCthulhu$AIPhase.class
 terraria\entity\npc\TerrariaNPCGuide.class
 terraria\entity\others\TerrariaFishingHook$1.class

@@ -22,3 +22,6 @@ commands:
   terrariaMenu:
     description: opens the specified menu
     usage: /<command> <name>
+  terrariaRestart:
+    description: attempts to restart the server
+    usage: /<command> [terminate]
