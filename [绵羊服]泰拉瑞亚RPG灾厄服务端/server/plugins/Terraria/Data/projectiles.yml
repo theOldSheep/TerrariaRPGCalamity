@@ -3456,7 +3456,7 @@ TNT:
     gravity: 0
     blockHitAction: thru
     homing: true
-    homingRadius: 24
+    homingRadius: 32
     noHomingTicks: 5
     penetration: 3
     liveTime: 100
@@ -3469,7 +3469,7 @@ TNT:
     gravity: 0
     liveTime: 40
     homing: true
-    homingRadius: 24
+    homingRadius: 32
     trailColor: 255|255|255
     trailStepSize: 0.5
     trailLingerTime: 6
@@ -3509,7 +3509,7 @@ TNT:
     homing: true
     minimumDamageTicks: 4
     noHomingTicks: 4
-    homingRadius: 24
+    homingRadius: 40
     buffInflict:
         - "暗影焰|60|1"
 分裂禅心导弹:
@@ -3518,7 +3518,7 @@ TNT:
     projectileSize: 0.5
     homing: true
     noHomingTicks: 5
-    homingRadius: 32
+    homingRadius: 40
     isGrenade: true
     blastRadius: 2.5
     buffInflict:
@@ -3638,7 +3638,7 @@ TNT:
     gravity: 0
     homing: true
     homingAbility: 5.5
-    homingRadius: 24
+    homingRadius: 32
     projectileSize: 3
     liveTime: 50
     trailColor: 0|255|0
@@ -3705,7 +3705,7 @@ TNT:
     liveTime: 50
     penetration: 4
     homing: true
-    homingRadius: 16
+    homingRadius: 24
     projectileSize: 0.5
     blockHitAction: thru
     enemyInvincibilityFrame: 15
@@ -3723,7 +3723,7 @@ TNT:
     gravity: 0
     liveTime: 60
     homing: true
-    homingRadius: 24
+    homingRadius: 32
     projectileSize: 0.5
     blockHitAction: thru
     trailColor: 255|199|238
@@ -3742,7 +3742,7 @@ TNT:
     liveTime: 60
     penetration: 2
     homing: true
-    homingRadius: 16
+    homingRadius: 24
     projectileSize: 0.25
     blockHitAction: thru
     buffInflict:
@@ -3842,7 +3842,7 @@ TNT:
 热熔光刃:
     gravity: 0
     homing: true
-    homingRadius: 24
+    homingRadius: 32
     homingAbility: 5.0
     blockHitAction: thru
     projectileSize: 3
@@ -3912,7 +3912,7 @@ TNT:
     blockHitAction: thru
     speedMultiPerTick: 0.98
     homing: true
-    homingRadius: 32
+    homingRadius: 40
     homingAbility: 6
     liveTime: 50
 星夜光束:

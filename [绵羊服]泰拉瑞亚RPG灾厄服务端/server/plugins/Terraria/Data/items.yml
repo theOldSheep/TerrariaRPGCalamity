@@ -2724,7 +2724,7 @@ Drew之翼:
     invulnerabilityTick: 10
     knockbackResistance: 1
   worth: 28000000
-  rarity: 14
+  rarity: 15
 血契:
   item: LEASH
   lore:
@@ -5639,7 +5639,7 @@ Drew之翼:
     useTime: 25
     buffInflictMelee: 龙焰|100|1
   worth: 30000000
-  rarity: 14
+  rarity: 15
 焚灭天惩:
   item: DIAMOND_SWORD
   lore:
@@ -9181,36 +9181,6 @@ Dodu的手炮:
     manaUse: 60
   worth: 26000000
   rarity: 14
-星火凤凰雨:
-  item: DIAMOND_SWORD
-  lore:
-  - §r召唤火幕从天而降
-  - §r“圣火洗礼”
-  attributes:
-    damage: 486
-    damageType: Magic
-    projectileSpeed: 30
-    crit: 4
-    knockback: 3.5
-    useTime: 30
-    manaUse: 35
-  worth: 30000000
-  rarity: 14
-氦闪:
-  item: DIAMOND_SWORD
-  lore:
-  - §r“于刹那之间瞥见星海浩瀚之威”
-  - §r发射挥发性星核，随即引发巨大聚变爆炸
-  attributes:
-    damage: 2400
-    damageType: Magic
-    projectileSpeed: 15
-    crit: 4
-    knockback: 9.5
-    useTime: 50
-    manaUse: 40
-  worth: 30000000
-  rarity: 14
 极点光伏:
   item: DIAMOND_SWORD
   lore:
@@ -9225,6 +9195,36 @@ Dodu的手炮:
     manaUse: 30
   worth: 28000000
   rarity: 14
+星火凤凰雨:
+  item: DIAMOND_SWORD
+  lore:
+  - §r召唤火幕从天而降
+  - §r“圣火洗礼”
+  attributes:
+    damage: 486
+    damageType: Magic
+    projectileSpeed: 30
+    crit: 4
+    knockback: 3.5
+    useTime: 30
+    manaUse: 35
+  worth: 30000000
+  rarity: 15
+氦闪:
+  item: DIAMOND_SWORD
+  lore:
+  - §r“于刹那之间瞥见星海浩瀚之威”
+  - §r发射挥发性星核，随即引发巨大聚变爆炸
+  attributes:
+    damage: 2400
+    damageType: Magic
+    projectileSpeed: 15
+    crit: 4
+    knockback: 9.5
+    useTime: 50
+    manaUse: 40
+  worth: 30000000
+  rarity: 15
 虚空漩涡:
   item: DIAMOND_SWORD
   lore:

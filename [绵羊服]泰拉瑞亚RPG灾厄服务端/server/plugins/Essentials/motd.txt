@@ -1,3 +1,5 @@
 &6你好，{PLAYER}&6！
 &6输入&c/help&6查看所有命令
 &6输入&c/settings&6修改泰拉瑞亚设置
+&6输入&c/terrariaRestart plan&6/&cterminate&6可开始或结束服务器重启
+&6若出现饰品无法装备等问题，请关闭触屏功能
