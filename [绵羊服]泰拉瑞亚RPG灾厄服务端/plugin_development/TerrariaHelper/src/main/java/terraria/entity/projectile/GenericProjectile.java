@@ -258,6 +258,9 @@ public class GenericProjectile extends EntityPotion {
                 noHomingTicks = ticksLived + 2;
                 break;
             case "精元镰刀":
+                double amount = (Math.random() < 0.35) ? 1 : 2;
+                PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), amount, false);
+                break;
             case "裂魔":
             case "生命血火":
             case "猩红烈焰珠":

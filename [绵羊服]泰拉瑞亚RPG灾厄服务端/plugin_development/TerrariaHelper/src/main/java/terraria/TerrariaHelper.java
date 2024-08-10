@@ -2,6 +2,7 @@ package terraria;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.PlaceholderHook;
+import net.minecraft.server.v1_12_R1.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;

@@ -34,6 +34,10 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class ItemUseHelper {
+    public static final double AMMO_CONSUMPTION_CHANCE_MULTI = TerrariaHelper.settingConfig.getDouble(
+            "miscSetting.ammoConsumptionChanceMulti", 0.35d);
+    public static final double CHANCE_POTION_CONSUMPTION = TerrariaHelper.settingConfig.getDouble(
+            "miscSetting.potionConsumptionChanceMulti", 0.35d);
     public enum QuickBuffType {
         NONE, HEALTH, MANA, BUFF;
     }
@@ -268,11 +272,14 @@ public class ItemUseHelper {
         // potion can not be consumed when cursed. Do not delete this line as this is also triggered from key strike.
         if (EntityHelper.hasEffect(ply, "诅咒")) return false;
         boolean successful = false;
+        // 0: permanent; 1: util; 2: buff; 3: mana
+        boolean canReduceConsumption = false;
         switch (itemType) {
             case "回城药水": {
                 if (quickBuffType == QuickBuffType.NONE) {
                     ply.teleport(PlayerHelper.getSpawnLocation(ply));
                     successful = true;
+                    canReduceConsumption = true;
                 }
                 break;
             }
@@ -282,6 +289,7 @@ public class ItemUseHelper {
                         ply.sendMessage("§a请输入\"传送到 (您想传送的玩家名称)\"发送传送请求哦~");
                         ply.addScoreboardTag("wormHolePotionUsed");
                         successful = true;
+                        canReduceConsumption = true;
                     } else {
                         ply.sendMessage("§a您上次服用的虫洞药水还未生效哦~");
                     }
@@ -424,6 +432,7 @@ public class ItemUseHelper {
                                             accessories.contains("神之壁垒"))
                                         duration *= 0.75;
                                     EntityHelper.applyEffect(ply, "耐药性", duration);
+                                    canReduceConsumption = true;
                                     break;
                                 }
                                 // if the potion recovers mana
@@ -435,11 +444,13 @@ public class ItemUseHelper {
                                         debuffType = "魔力烧蚀";
                                     PlayerHelper.restoreMana(ply, potionPotency);
                                     EntityHelper.applyEffect(ply, debuffType, 160);
+                                    canReduceConsumption = true;
                                     break;
                                 }
                                 // otherwise, apply the potion effect
                                 default: {
                                     EntityHelper.applyEffect(ply, potionInfo, (int) potionPotency);
+                                    canReduceConsumption = true;
                                 }
                             }
                         }
@@ -449,7 +460,8 @@ public class ItemUseHelper {
         }
         if (successful) {
             // remove a potion item
-            potion.setAmount(potion.getAmount() - 1);
+            if (! (canReduceConsumption && Math.random() > CHANCE_POTION_CONSUMPTION) )
+                potion.setAmount(potion.getAmount() - 1);
             // play consumption sound
             String sound = "entity.generic.eat";
             if (itemType.endsWith("药水"))
@@ -3792,6 +3804,7 @@ public class ItemUseHelper {
         }
     }
     public static String consumePlayerAmmo(Player ply, Predicate<ItemStack> ammoPredicate, double consumptionRate) {
+        consumptionRate *= AMMO_CONSUMPTION_CHANCE_MULTI;
         ItemStack ammo = PlayerHelper.getFirstItem(ply, ammoPredicate, true);
         if (ammo == null) return null;
         String ammoName = ItemHelper.splitItemName(ammo)[1];
@@ -5256,7 +5269,8 @@ public class ItemUseHelper {
                     attrMap = EntityHelper.getAttrMap(ply);
                 }
                 // handle loading
-                boolean autoSwing = weaponSection.getBoolean("autoSwing", false);
+                boolean autoSwing = weaponSection.getBoolean("autoSwing",
+                        Setting.getOptionBool(ply, Setting.Options.DEFAULT_AUTO_SWING));
                 boolean isLoading = false;
                 int maxLoad = weaponSection.getInt("maxLoad", 0);
                 int swingAmount = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT).asInt();

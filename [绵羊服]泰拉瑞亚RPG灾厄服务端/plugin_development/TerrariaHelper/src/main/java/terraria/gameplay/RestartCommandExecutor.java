@@ -15,7 +15,8 @@ import java.util.List;
 
 public class RestartCommandExecutor implements CommandExecutor, TabCompleter {
     private int countdown = -1;
-    public static final int COUNTDOWN_MAX = 20, COUNTDOWN_ITV = 5;
+    public static final int COUNTDOWN_MAX = TerrariaHelper.settingConfig.getInt("miscSetting.restartCountdown", 30),
+            COUNTDOWN_ITV = TerrariaHelper.settingConfig.getInt("miscSetting.restartCountdownInterval", 5);
     public static String COMMAND = "terrariaRestart";
 
     private void printWarning() {

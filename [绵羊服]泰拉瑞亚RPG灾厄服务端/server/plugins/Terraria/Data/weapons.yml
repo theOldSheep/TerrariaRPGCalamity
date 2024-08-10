@@ -753,6 +753,7 @@
   useSound: item.exoblade.swing
 星流之刃_RIGHT_CLICK:
   type: STAB
+  autoSwing: false
   size: 12
   attributes:
     useTime: 20
@@ -965,12 +966,14 @@
     name: 阴险穿刺者鱼叉
 钨钢螺丝刀:
   type: STAB
+  autoSwing: false
   size: 1.5
   projectileInfo:
     velocity: 0.1
     name: 螺丝钉
 钨钢螺丝刀_RIGHT_CLICK:
   type: STAB
+  autoSwing: false
   size: 3.75
   attributes:
     useTime: 40
@@ -1047,6 +1050,7 @@
   size: 2.5
 环境之刃[嫌恶之永存]_RIGHT_CLICK:
   type: STAB
+  autoSwing: false
   attributes:
     useTime: 26
     useSpeedMulti: 1
@@ -1069,6 +1073,7 @@
   size: 2.5
 真·环境之刃[血腾之愤]_RIGHT_CLICK:
   type: STAB
+  autoSwing: false
   attributes:
     useTime: 50
     useSpeedMulti: 1
@@ -1085,6 +1090,7 @@
   size: 3
 真·环境之刃[变幻之潮]_RIGHT_CLICK:
   type: STAB
+  autoSwing: false
   attributes:
     useTime: 26
     useSpeedMulti: 1
@@ -1097,6 +1103,7 @@
   useSound: item.ark.use
 破碎方舟_RIGHT_CLICK:
   type: STAB
+  autoSwing: false
   size: 5.5
   useSound: item.ark.use
   attributes:
@@ -1110,6 +1117,7 @@
   useSound: item.ark.use
 远古方舟_RIGHT_CLICK:
   type: STAB
+  autoSwing: false
   size: 7.5
   useSound: item.ark.use
   attributes:
@@ -1127,6 +1135,7 @@
     useSpeedMeleeMulti: 1
 元素方舟_RIGHT_CLICK:
   type: STAB
+  autoSwing: false
   size: 9
   useSound: item.ark.use
   attributes:
@@ -1165,6 +1174,7 @@
   size: 9
 银河[北斗之眸]_RIGHT_CLICK:
   type: STAB
+  autoSwing: false
   attributes:
     useTime: 40
     useSpeedMulti: 1
@@ -1176,6 +1186,7 @@
   size: 4
 银河[仙女之跃]_RIGHT_CLICK:
   type: STAB
+  autoSwing: false
   attributes:
     useTime: 25
     useSpeedMulti: 1
@@ -1204,6 +1215,7 @@
     useSpeedMeleeMulti: 1
 鸿蒙方舟_RIGHT_CLICK:
   type: STAB
+  autoSwing: false
   size: 10
   useSound: item.ark.use
   attributes:
@@ -2459,110 +2471,92 @@ Dodu的手炮:
   reach: 23
   velocity: 1.75
   duration: 1200
-  autoSwing: true
 泰拉悠悠球:
   type: YOYO
   reach: 32
   velocity: 2.5
   duration: 1200
   recoilPoolMultiplier: 0.6
-  autoSwing: true
 烟陨彗星:
   type: YOYO
   reach: 15
   velocity: 1.25
   duration: 100
-  autoSwing: true
 涡旋:
   type: YOYO
   reach: 18
   velocity: 1.35
   duration: 100
-  autoSwing: true
 空旋:
   type: YOYO
   reach: 20
   velocity: 1.25
   duration: 120
-  autoSwing: true
 神旨:
   type: YOYO
   reach: 25
   velocity: 1.5
   duration: 120
-  autoSwing: true
 阴阳:
   type: YOYO
   reach: 25
   velocity: 1.5
   duration: 150
-  autoSwing: true
 烁光:
   type: YOYO
   reach: 28
   velocity: 1.6
   duration: 150
-  autoSwing: true
 遗殇:
   type: YOYO
   reach: 32
   velocity: 1.65
   duration: 180
-  autoSwing: true
 泥潭:
   type: YOYO
   reach: 30
   velocity: 1.75
   duration: 225
-  autoSwing: true
 断层:
   type: YOYO
   reach: 30
   velocity: 2
   duration: 250
-  autoSwing: true
 瘟疫狂潮:
   type: YOYO
   reach: 30
   velocity: 2.15
   duration: 350
-  autoSwing: true
 微波辐照:
   type: YOYO
   reach: 32
   velocity: 2.25
   duration: 400
-  autoSwing: true
 日炎:
   type: YOYO
   reach: 35
   velocity: 2.5
   duration: 800
-  autoSwing: true
 裂魔:
   type: YOYO
   reach: 40
   velocity: 2.5
   duration: 700
-  autoSwing: true
 混沌射线:
   type: YOYO
   reach: 45
   velocity: 2.75
   duration: 1500
-  autoSwing: true
 神谕:
   type: YOYO
   reach: 50
   velocity: 3
   duration: 1750
-  autoSwing: true
 阿撒托斯:
   type: YOYO
   reach: 55
   velocity: 2.5
   duration: 1500
-  autoSwing: true
 链锤:
   type: FLAIL
   reach: 16
@@ -2671,22 +2665,25 @@ Dodu的手炮:
   type: THROW_PROJECTILE
 手榴弹:
   type: THROW_PROJECTILE
+  autoSwing: false
 炸弹:
   type: THROW_PROJECTILE
+  autoSwing: false
 粘性炸弹:
   type: THROW_PROJECTILE
+  autoSwing: false
 雷管:
   type: THROW_PROJECTILE
+  autoSwing: false
 粘性雷管:
   type: THROW_PROJECTILE
+  autoSwing: false
 火花魔棒:
   type: MAGIC_PROJECTILE
   projectileName: 小火花
-  autoSwing: true
 钻石法杖:
   type: MAGIC_PROJECTILE
   projectileName: 钻石射线
-  autoSwing: true
 骷髅头法书:
   type: MAGIC_PROJECTILE
   projectileName: 骷髅头

@@ -2237,7 +2237,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         case "嘉登之心": {
                             if (effectMap.containsKey("保护矩阵")) {
                                 EntityHelper.tweakAttribute(ply, newAttrMap, "regen", "6", true);
-                                EntityHelper.tweakAttribute(ply, newAttrMap, "damageTakenMulti", "-0.1", true);
+                                EntityHelper.tweakAttribute(ply, newAttrMap, "damageTakenMulti", "-0.15", true);
                             }
                             break;
                         }

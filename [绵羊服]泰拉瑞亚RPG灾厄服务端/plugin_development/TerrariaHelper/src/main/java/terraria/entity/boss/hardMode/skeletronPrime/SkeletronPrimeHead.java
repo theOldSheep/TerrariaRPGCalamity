@@ -10,6 +10,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
+import terraria.gameplay.EventAndTime;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
@@ -136,11 +137,12 @@ public class SkeletronPrimeHead extends EntitySlime {
             {
                 for (int i = 1; i < bossParts.size(); i++)
                     if (!bossParts.get(i).isDead()) handsAlive++;
-                // if hands are alive, the head should get increased defence.
-                if (WorldHelper.isDayTime(bukkitEntity.getWorld())) {
+                if (WorldHelper.isDayTime(bukkitEntity.getWorld()) && !EventAndTime.isBossRushActive()) {
                     attrMap.put("defence", 9999d);
                     attrMap.put("damage", 9999d);
-                } else {
+                }
+                // if hands are alive, the head should get increased defence.
+                else {
                     attrMap.put("damage", spinning ? SPINNING_DMG : REGULAR_DMG);
                     attrMap.put("defence", (spinning ? 2d : 1d) * (48 + 16 * handsAlive));
                 }

@@ -21,8 +21,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.projectiles.ProjectileSource;
-import org.spigotmc.event.entity.EntityDismountEvent;
 import terraria.TerrariaHelper;
 import terraria.entity.others.TerrariaFishingHook;
 import terraria.util.*;
@@ -32,6 +30,48 @@ import java.util.Set;
 
 
 public class VanillaMechanicListener implements Listener {
+    // deny Vanilla Minecraft's compensation-tick
+    public static final long MS_TO_NS_RATE = 1000000;
+    // when the thread should be halted for at least this long, the mechanism would take effect.
+    public static final long TICK_DELAY_THRESHOLD = TerrariaHelper.settingConfig.getLong(
+            "tickCompensationSetting.tickCompensationSetting", 5) * MS_TO_NS_RATE;
+    // the minimum tick interval willing to maintain (at the highest tick rate)
+    public static final long MIN_TICK_INTERVAL = TerrariaHelper.settingConfig.getLong(
+            "tickCompensationSetting.fastestTickInterval", 45) * MS_TO_NS_RATE;
+    // when the compensation ticks ends, this would control how smoothly the tick rate goes back to normal
+    public static final double DECAY_FACTOR = TerrariaHelper.settingConfig.getDouble(
+            "tickCompensationSetting.decayFactor", 0.5);
+    // only trigger this effect when a boss is alive
+    public static final boolean BOSS_ACTIVE_ONLY = TerrariaHelper.settingConfig.getBoolean(
+            "tickCompensationSetting.bossFightOnly", true);
+    long lastTickNS = System.nanoTime(), waitNS = 0;
+    private void tick() {
+        long currNanoTime = System.nanoTime();
+        long timeDiff = currNanoTime - lastTickNS;
+        lastTickNS = currNanoTime;
+        // smooth out the wait time
+        long timeWait = MIN_TICK_INTERVAL - timeDiff;
+        waitNS += timeWait * DECAY_FACTOR;
+        waitNS = Math.max(waitNS, timeWait);
+        // delay the thread execution when necessary
+        if (waitNS >= TICK_DELAY_THRESHOLD) {
+            long timeSleepMS = waitNS / MS_TO_NS_RATE;
+            // if the delay should not be applied, limit waitNS to the threshold to prevent unreasonable accumulation later
+            if (BOSS_ACTIVE_ONLY && BossHelper.bossMap.isEmpty()) {
+                waitNS = TICK_DELAY_THRESHOLD;
+            }
+            // apply the delay
+            else {
+                try {
+                    Thread.sleep(timeSleepMS);
+                } catch (Exception ignored) {
+                }
+            }
+        }
+    }
+    public VanillaMechanicListener() {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), this::tick, 1, 1);
+    }
     // entity related
     @EventHandler(priority = EventPriority.LOW)
     public void onInventoryCLose(InventoryCloseEvent evt) {

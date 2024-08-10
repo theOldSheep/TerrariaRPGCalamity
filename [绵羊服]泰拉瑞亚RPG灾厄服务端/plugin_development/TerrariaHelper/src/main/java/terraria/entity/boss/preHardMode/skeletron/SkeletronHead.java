@@ -226,14 +226,20 @@ public class SkeletronHead extends EntitySlime {
     public SkeletronHead(Player summonedPlayer) {
         super( ((CraftPlayer) summonedPlayer).getHandle().getWorld() );
         // spawn location
-        org.bukkit.entity.Entity clothier = NPCHelper.NPCMap.get(NPCHelper.NPCType.CLOTHIER);
-        if (clothier == null) {
-            die();
-            return;
+        Location spawnLoc;
+        if (EventAndTime.isBossRushActive()) {
+            spawnLoc = summonedPlayer.getLocation().add(summonedPlayer.getLocation().getDirection().multiply(24));
         }
-        Location spawnLoc = clothier.getLocation().add(0, 5, 0);
+        else {
+            org.bukkit.entity.Entity clothier = NPCHelper.NPCMap.get(NPCHelper.NPCType.CLOTHIER);
+            if (clothier == null) {
+                die();
+                return;
+            }
+            spawnLoc = clothier.getLocation().add(0, 5, 0);
+            clothier.remove();
+        }
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
-        clothier.remove();
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
