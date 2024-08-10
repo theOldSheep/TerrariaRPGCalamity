@@ -73,7 +73,8 @@ public class GuardianRock extends EntitySlime {
                             commander.getBukkitEntity().getLocation().add(offsetDirection), 0.75, true);
 
                     // Check for launch condition
-                    if (owner.isAlive() && owner.currentAttackMode != GuardianDefender.AttackMode.DASH && indexAI > PREPARATION_TIME_FOR_LAUNCH) { // Delay before launch
+                    if ((owner.currentAttackMode != GuardianDefender.AttackMode.DASH || ! owner.isAlive()) &&
+                            indexAI > PREPARATION_TIME_FOR_LAUNCH) { // Delay before launch
                         launchTowardsTarget();
                     }
                 }
