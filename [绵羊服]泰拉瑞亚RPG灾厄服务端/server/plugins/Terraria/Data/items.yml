@@ -1707,6 +1707,7 @@
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.25
     damageMeleeMulti: 0.1
+    critMelee: 5
   worth: 2000000
   rarity: 4
 机械手套:
@@ -1718,6 +1719,7 @@
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.35
     damageMeleeMulti: 0.12
+    critMelee: 8
   worth: 5000000
   rarity: 5
 烈火手套:
@@ -1730,6 +1732,7 @@
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.4
     damageMeleeMulti: 0.15
+    critMelee: 10
     regen: 2
     buffInflictMelee: 狱炎|80|1
   worth: 6000000
@@ -2132,7 +2135,7 @@ Drew之翼:
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.5
     damageMeleeMulti: 0.15
-    critMelee: 5
+    critMelee: 12
     damageTrueMeleeMulti: 0.1
     buffInflictMelee: 元素谐鸣|80|1
   worth: 28000000
@@ -2147,7 +2150,7 @@ Drew之翼:
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.65
     damageMeleeMulti: 0.2
-    critMelee: 10
+    critMelee: 15
     damageTrueMeleeMulti: 0.1
     buffInflictMelee: 超位崩解|80|1
   worth: 40000000
@@ -2308,7 +2311,7 @@ Drew之翼:
   - §r神圣之佑：增加16点防御力和4%伤害减免
   - §r神圣之力：+10%召唤伤害
   attributes:
-    minionLimit: 1
+    damageSummonMulti: 0.05
   worth: 4800000
   rarity: 5
 幻魂神物:
@@ -2320,7 +2323,7 @@ Drew之翼:
   - §r神圣之佑：增加20点防御力和5%伤害减免
   - §r神圣之力：+10%召唤伤害
   attributes:
-    minionLimit: 2
+    damageSummonMulti: 0.1
   worth: 26000000
   rarity: 13
 钨钢电池:
@@ -6675,7 +6678,7 @@ Drew之翼:
     damage: 169
     damageType: Rocket
     crit: 4
-    projectileSpeed: 4
+    projectileSpeed: 8
     knockback: 4
     useTime: 20
   worth: 7000000
@@ -6699,7 +6702,7 @@ Drew之翼:
     damage: 240
     damageType: Rocket
     crit: 4
-    projectileSpeed: 15
+    projectileSpeed: 20
     knockback: 4
     useTime: 10
   worth: 16000000
@@ -6712,7 +6715,7 @@ Drew之翼:
     damage: 85
     damageType: Rocket
     crit: 4
-    projectileSpeed: 14
+    projectileSpeed: 17.5
     knockback: 5
     useTime: 33
   worth: 7200000
@@ -6725,7 +6728,7 @@ Drew之翼:
     damage: 56
     damageType: Rocket
     crit: 4
-    projectileSpeed: 13
+    projectileSpeed: 16
     knockback: 3.5
     useTime: 21
   worth: 16000000
@@ -6780,7 +6783,7 @@ Drew之翼:
     damage: 1522
     damageType: Rocket
     crit: 4
-    projectileSpeed: 12.6
+    projectileSpeed: 16
     knockback: 8.7
     useTime: 32
   worth: 28000000
@@ -6794,7 +6797,7 @@ Drew之翼:
     damage: 2494
     damageType: Rocket
     crit: 4
-    projectileSpeed: 14.5
+    projectileSpeed: 17.5
     knockback: 1.5
     useTime: 33
   worth: 30000000
@@ -6822,7 +6825,7 @@ Drew之翼:
     damage: 49
     damageType: Bullet
     crit: 4
-    projectileSpeed: 11
+    projectileSpeed: 16
     knockback: 1.25
     useTime: 30
   worth: 400000
@@ -6835,7 +6838,7 @@ Drew之翼:
     damage: 56
     damageType: Arrow
     crit: 4
-    projectileSpeed: 16
+    projectileSpeed: 25
     knockback: 4.5
     useTime: 25
   worth: 400000
@@ -6848,7 +6851,7 @@ Drew之翼:
     damage: 38
     damageType: Bullet
     crit: 14
-    projectileSpeed: 10
+    projectileSpeed: 14.5
     knockback: 7.5
     useTime: 20
   worth: 400000
@@ -6859,7 +6862,7 @@ Drew之翼:
     damage: 39
     damageType: Bullet
     crit: 4
-    projectileSpeed: 12
+    projectileSpeed: 16.5
     knockback: 5
     useTime: 18
   worth: 400000
@@ -6872,7 +6875,7 @@ Drew之翼:
     damage: 153
     damageType: Bullet
     crit: 14
-    projectileSpeed: 15
+    projectileSpeed: 19.5
     knockback: 0
     useTime: 28
   worth: 800000
@@ -6886,7 +6889,7 @@ Drew之翼:
     damage: 130
     damageType: Bullet
     crit: 4
-    projectileSpeed: 11
+    projectileSpeed: 20
     knockback: 5
     useTime: 24
   worth: 4800000
@@ -6901,7 +6904,7 @@ Drew之翼:
     damage: 90
     damageType: Bullet
     crit: 4
-    projectileSpeed: 12
+    projectileSpeed: 17.5
     knockback: 11
     useTime: 33
   worth: 4800000
@@ -6997,7 +7000,7 @@ Drew之翼:
     damage: 75
     damageType: Arrow
     crit: 4
-    projectileSpeed: 8
+    projectileSpeed: 10
     knockback: 2.3
     useTime: 12
   worth: 2000000
@@ -8108,7 +8111,7 @@ Dodu的手炮:
     damage: 625
     damageType: Bullet
     crit: 4
-    projectileSpeed: 11
+    projectileSpeed: 16
     knockback: 8
     useTime: 28
   worth: 30000000
@@ -8151,7 +8154,7 @@ Dodu的手炮:
     damage: 24
     damageType: Magic
     crit: 4
-    projectileSpeed: 7
+    projectileSpeed: 10
     knockback: 0
     useTime: 26
     manaUse: 4
@@ -8163,7 +8166,7 @@ Dodu的手炮:
     damage: 46
     damageType: Magic
     crit: 4
-    projectileSpeed: 9.5
+    projectileSpeed: 12.5
     knockback: 5.5
     useTime: 26
     manaUse: 16
@@ -8199,7 +8202,7 @@ Dodu的手炮:
     damage: 84
     damageType: Magic
     crit: 4
-    projectileSpeed: 4.5
+    projectileSpeed: 10
     knockback: 5
     useTime: 17
     manaUse: 20
@@ -8211,7 +8214,7 @@ Dodu的手炮:
     damage: 50
     damageType: Magic
     crit: 4
-    projectileSpeed: 5
+    projectileSpeed: 10
     knockback: 5.5
     useTime: 26
     manaUse: 12
@@ -8223,7 +8226,7 @@ Dodu的手炮:
     damage: 100
     damageType: Magic
     crit: 4
-    projectileSpeed: 1
+    projectileSpeed: 2
     knockback: 5
     useTime: 20
     manaUse: 30
@@ -8249,7 +8252,7 @@ Dodu的手炮:
     damage: 80
     damageType: Magic
     crit: 4
-    projectileSpeed: 16
+    projectileSpeed: 17.5
     knockback: 3
     useTime: 6
     manaUse: 5
@@ -8261,7 +8264,7 @@ Dodu的手炮:
     damage: 65
     damageType: Magic
     crit: 24
-    projectileSpeed: 12
+    projectileSpeed: 16
     knockback: 4
     useTime: 12
     manaUse: 17
@@ -8273,7 +8276,7 @@ Dodu的手炮:
     damage: 198
     damageType: Magic
     crit: 4
-    projectileSpeed: 13
+    projectileSpeed: 17.5
     knockback: 4.4
     useTime: 29
     manaUse: 9
@@ -8285,7 +8288,7 @@ Dodu的手炮:
     damage: 350
     damageType: Magic
     crit: 4
-    projectileSpeed: 13
+    projectileSpeed: 18
     knockback: 6.5
     useTime: 17
     manaUse: 19
@@ -8311,7 +8314,7 @@ Dodu的手炮:
     damage: 135
     damageType: Magic
     crit: 4
-    projectileSpeed: 11
+    projectileSpeed: 15
     knockback: 4
     useTime: 5
     manaUse: 4
@@ -8325,7 +8328,7 @@ Dodu的手炮:
     damage: 200
     damageType: Magic
     crit: 4
-    projectileSpeed: 8
+    projectileSpeed: 13.5
     knockback: 8
     useTime: 20
     manaUse: 18
@@ -8352,7 +8355,7 @@ Dodu的手炮:
     damage: 255
     damageType: Magic
     crit: 4
-    projectileSpeed: 12
+    projectileSpeed: 15.5
     knockback: 4
     useTime: 24
     manaUse: 15
@@ -8416,7 +8419,7 @@ Dodu的手炮:
     damage: 130
     damageType: Magic
     crit: 4
-    projectileSpeed: 10
+    projectileSpeed: 15
     knockback: 3
     useTime: 12
     manaUse: 6
@@ -8428,7 +8431,7 @@ Dodu的手炮:
     damage: 100
     damageType: Magic
     crit: 4
-    projectileSpeed: 10
+    projectileSpeed: 13.5
     knockback: 2.5
     useTime: 26
     manaUse: 20
@@ -8472,7 +8475,7 @@ Dodu的手炮:
     damage: 282
     damageType: Magic
     crit: 4
-    projectileSpeed: 8
+    projectileSpeed: 12
     knockback: 0
     useTime: 12
     manaUse: 12
@@ -8486,7 +8489,7 @@ Dodu的手炮:
     damage: 140
     damageType: Magic
     crit: 4
-    projectileSpeed: 7
+    projectileSpeed: 9.5
     knockback: 5
     useTime: 30
     manaUse: 30
@@ -8554,7 +8557,7 @@ Dodu的手炮:
   attributes:
     damage: 32
     damageType: Magic
-    projectileSpeed: 8
+    projectileSpeed: 13.5
     crit: 4
     knockback: 3.25
     useTime: 38
@@ -8568,7 +8571,7 @@ Dodu的手炮:
   attributes:
     damage: 30
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 17.5
     crit: 4
     knockback: 2
     useTime: 33
@@ -8582,7 +8585,7 @@ Dodu的手炮:
   attributes:
     damage: 47
     damageType: Magic
-    projectileSpeed: 14
+    projectileSpeed: 16
     crit: 4
     knockback: 2.5
     useTime: 22
@@ -8681,7 +8684,7 @@ Dodu的手炮:
   attributes:
     damage: 100
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 15
     crit: 4
     knockback: 4.75
     useTime: 23
@@ -8695,7 +8698,7 @@ Dodu的手炮:
   attributes:
     damage: 90
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 16.5
     crit: 4
     knockback: 5
     useTime: 80
@@ -8709,7 +8712,7 @@ Dodu的手炮:
   attributes:
     damage: 175
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 17.5
     crit: 4
     knockback: 7
     useTime: 25
@@ -8723,7 +8726,7 @@ Dodu的手炮:
   attributes:
     damage: 141
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 16
     crit: 4
     knockback: 5.5
     useTime: 27
@@ -8737,7 +8740,7 @@ Dodu的手炮:
   attributes:
     damage: 120
     damageType: Magic
-    projectileSpeed: 12.5
+    projectileSpeed: 18.5
     crit: 4
     knockback: 3
     useTime: 15
@@ -8776,7 +8779,7 @@ Dodu的手炮:
   attributes:
     damage: 166
     damageType: Magic
-    projectileSpeed: 12
+    projectileSpeed: 16
     crit: 4
     knockback: 3.5
     useTime: 18
@@ -8816,7 +8819,7 @@ Dodu的手炮:
   attributes:
     damage: 180
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 17
     crit: 4
     knockback: 3
     useTime: 17
@@ -8830,7 +8833,7 @@ Dodu的手炮:
   attributes:
     damage: 145
     damageType: Magic
-    projectileSpeed: 14
+    projectileSpeed: 16
     crit: 29
     knockback: 7
     useTime: 75
@@ -8859,7 +8862,7 @@ Dodu的手炮:
   attributes:
     damage: 200
     damageType: Magic
-    projectileSpeed: 15
+    projectileSpeed: 17
     crit: 4
     knockback: 8
     useTime: 21
@@ -8874,7 +8877,7 @@ Dodu的手炮:
   attributes:
     damage: 240
     damageType: Magic
-    projectileSpeed: 7.5
+    projectileSpeed: 10
     crit: 4
     knockback: 3.75
     useTime: 22
@@ -8888,7 +8891,7 @@ Dodu的手炮:
   attributes:
     damage: 400
     damageType: Magic
-    projectileSpeed: 13.5
+    projectileSpeed: 18
     crit: 4
     knockback: 7.5
     useTime: 23
@@ -8902,7 +8905,7 @@ Dodu的手炮:
   attributes:
     damage: 575
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 16
     crit: 19
     knockback: 5
     useTime: 18
@@ -8916,7 +8919,7 @@ Dodu的手炮:
   attributes:
     damage: 337
     damageType: Magic
-    projectileSpeed: 20
+    projectileSpeed: 17.5
     crit: 4
     knockback: 6.75
     useTime: 10
@@ -8948,7 +8951,7 @@ Dodu的手炮:
   attributes:
     damage: 330
     damageType: Magic
-    projectileSpeed: 16
+    projectileSpeed: 19.5
     crit: 4
     knockback: 5
     useTime: 25
@@ -8974,7 +8977,7 @@ Dodu的手炮:
   attributes:
     damage: 508
     damageType: Magic
-    projectileSpeed: 15
+    projectileSpeed: 20
     crit: 4
     knockback: 2
     useTime: 23
@@ -9074,7 +9077,7 @@ Dodu的手炮:
   attributes:
     damage: 890
     damageType: Magic
-    projectileSpeed: 12
+    projectileSpeed: 17.5
     crit: 4
     knockback: 7.5
     useTime: 20
@@ -9102,7 +9105,7 @@ Dodu的手炮:
   attributes:
     damage: 305
     damageType: Magic
-    projectileSpeed: 19
+    projectileSpeed: 20
     crit: 4
     knockback: 9
     useTime: 25
@@ -9131,7 +9134,7 @@ Dodu的手炮:
   attributes:
     damage: 262
     damageType: Magic
-    projectileSpeed: 20
+    projectileSpeed: 21
     crit: 4
     knockback: 4
     useTime: 16
@@ -9174,7 +9177,7 @@ Dodu的手炮:
   attributes:
     damage: 1024
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 16
     crit: 4
     knockback: 6
     useTime: 30
@@ -9218,7 +9221,7 @@ Dodu的手炮:
   attributes:
     damage: 2400
     damageType: Magic
-    projectileSpeed: 15
+    projectileSpeed: 18.5
     crit: 4
     knockback: 9.5
     useTime: 50
@@ -9278,7 +9281,7 @@ Dodu的手炮:
   attributes:
     damage: 1212
     damageType: Magic
-    projectileSpeed: 13.5
+    projectileSpeed: 25
     crit: 4
     knockback: 5
     useTime: 20
@@ -9321,7 +9324,7 @@ Dodu的手炮:
   attributes:
     damage: 126
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 16.5
     crit: 4
     knockback: 1.5
     useTime: 40
@@ -9394,7 +9397,7 @@ Dodu的手炮:
   attributes:
     damage: 120
     damageType: Magic
-    projectileSpeed: 13
+    projectileSpeed: 17.5
     crit: 4
     knockback: 3.75
     useTime: 15
@@ -9495,7 +9498,7 @@ Dodu的手炮:
   attributes:
     damage: 1800
     damageType: Magic
-    projectileSpeed: 8
+    projectileSpeed: 14.5
     crit: 4
     knockback: 1
     useTime: 36
@@ -9539,7 +9542,7 @@ Dodu的手炮:
     damage: 34
     damageType: Magic
     crit: 4
-    projectileSpeed: 6
+    projectileSpeed: 7.5
     knockback: 3.5
     useTime: 20
     manaUse: 6
@@ -9553,7 +9556,7 @@ Dodu的手炮:
     damage: 42
     damageType: Magic
     crit: 4
-    projectileSpeed: 8
+    projectileSpeed: 11.5
     knockback: 3.5
     useTime: 26
     manaUse: 4
@@ -9567,7 +9570,7 @@ Dodu的手炮:
     damage: 30
     damageType: Magic
     crit: 4
-    projectileSpeed: 12
+    projectileSpeed: 12.5
     knockback: 2.5
     useTime: 15
     manaUse: 4
@@ -9581,7 +9584,7 @@ Dodu的手炮:
     damage: 124
     damageType: Magic
     crit: 4
-    projectileSpeed: 7.5
+    projectileSpeed: 9.5
     knockback: 5.5
     useTime: 30
     manaUse: 12
@@ -9635,7 +9638,7 @@ Dodu的手炮:
   attributes:
     damage: 180
     damageType: Magic
-    projectileSpeed: 9
+    projectileSpeed: 12.5
     crit: 4
     knockback: 5.5
     useTime: 20
@@ -9649,7 +9652,7 @@ Dodu的手炮:
   attributes:
     damage: 124
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 13.5
     crit: 4
     knockback: 6
     useTime: 45
@@ -9663,7 +9666,7 @@ Dodu的手炮:
   attributes:
     damage: 68
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 16
     crit: 4
     knockback: 5.5
     useTime: 6
@@ -9677,7 +9680,7 @@ Dodu的手炮:
   attributes:
     damage: 230
     damageType: Magic
-    projectileSpeed: 15
+    projectileSpeed: 16.5
     crit: 4
     knockback: 6.5
     useTime: 20
@@ -9719,7 +9722,7 @@ Dodu的手炮:
   attributes:
     damage: 170
     damageType: Magic
-    projectileSpeed: 12
+    projectileSpeed: 17.5
     crit: 4
     knockback: 6.75
     useTime: 24
@@ -9733,7 +9736,7 @@ Dodu的手炮:
   attributes:
     damage: 245
     damageType: Magic
-    projectileSpeed: 13
+    projectileSpeed: 17
     crit: 4
     knockback: 7.5
     useTime: 38
@@ -9747,7 +9750,7 @@ Dodu的手炮:
   attributes:
     damage: 120
     damageType: Magic
-    projectileSpeed: 10
+    projectileSpeed: 18
     crit: 4
     knockback: 4.5
     useTime: 18
@@ -9761,7 +9764,7 @@ Dodu的手炮:
   attributes:
     damage: 170
     damageType: Magic
-    projectileSpeed: 6
+    projectileSpeed: 12.5
     crit: 4
     knockback: 5.5
     useTime: 20
@@ -9775,7 +9778,7 @@ Dodu的手炮:
   attributes:
     damage: 120
     damageType: Magic
-    projectileSpeed: 5
+    projectileSpeed: 8
     crit: 4
     knockback: 7
     useTime: 20
@@ -9789,7 +9792,7 @@ Dodu的手炮:
   attributes:
     damage: 200
     damageType: Magic
-    projectileSpeed: 9.5
+    projectileSpeed: 14
     crit: 4
     knockback: 5
     useTime: 12
@@ -9803,7 +9806,7 @@ Dodu的手炮:
   attributes:
     damage: 175
     damageType: Magic
-    projectileSpeed: 6
+    projectileSpeed: 11.5
     crit: 4
     knockback: 7
     useTime: 30
@@ -9832,7 +9835,7 @@ Dodu的手炮:
   attributes:
     damage: 370
     damageType: Magic
-    projectileSpeed: 12
+    projectileSpeed: 14.5
     crit: 29
     knockback: 3.25
     useTime: 6
@@ -10031,7 +10034,7 @@ Dodu的手炮:
   attributes:
     damage: 233
     damageType: Magic
-    projectileSpeed: 5
+    projectileSpeed: 6
     crit: 4
     knockback: 10
     useTime: 28
@@ -10045,7 +10048,7 @@ Dodu的手炮:
   attributes:
     damage: 200
     damageType: Magic
-    projectileSpeed: 3
+    projectileSpeed: 5
     crit: 4
     knockback: 6.5
     useTime: 18
@@ -11416,7 +11419,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 2
-    projectileSpeed: 3
+    projectileSpeed: 6
   worth: 100
   rarity: 0
 烈焰箭:
@@ -11426,7 +11429,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 2
-    projectileSpeed: 3.5
+    projectileSpeed: 6
   worth: 200
   rarity: 0
 冰焰箭:
@@ -11436,7 +11439,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 2.2
-    projectileSpeed: 3.75
+    projectileSpeed: 5
     projectileSpeedMulti: 0.25
   worth: 300
   rarity: 0
@@ -11447,7 +11450,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 4
-    projectileSpeed: 0.5
+    projectileSpeed: 5
     projectileSpeedMulti: 0.25
   worth: 2000
   rarity: 1
@@ -11458,7 +11461,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 3
-    projectileSpeed: 3.4
+    projectileSpeed: 6.5
   worth: 800
   rarity: 1
 狱炎箭:
@@ -11468,7 +11471,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 8
-    projectileSpeed: 6.5
+    projectileSpeed: 7.5
   worth: 2000
   rarity: 2
 圣箭:
@@ -11478,7 +11481,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 2
-    projectileSpeed: 3.5
+    projectileSpeed: 8
   worth: 1600
   rarity: 3
 诅咒箭:
@@ -11490,7 +11493,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 3
-    projectileSpeed: 4
+    projectileSpeed: 8
   worth: 800
   rarity: 3
 叶绿箭:
@@ -11502,7 +11505,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 3.5
-    projectileSpeed: 4.5
+    projectileSpeed: 7
     projectileSpeedMulti: 0.25
   worth: 2000
   rarity: 7
@@ -11515,7 +11518,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 4.2
-    projectileSpeed: 4.3
+    projectileSpeed: 8
     projectileSpeedMulti: 0.25
   worth: 1800
   rarity: 3
@@ -11528,7 +11531,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 3.5
-    projectileSpeed: 3
+    projectileSpeed: 8
     projectileSpeedMulti: 0.25
   worth: 200
   rarity: 9
@@ -11542,7 +11545,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 1.5
-    projectileSpeed: 13
+    projectileSpeed: 8
   worth: 20000
   rarity: 3
 北极箭:
@@ -11554,7 +11557,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 1.5
-    projectileSpeed: 13
+    projectileSpeed: 10
   worth: 1200
   rarity: 3
 冰坠箭:
@@ -11566,7 +11569,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 2.5
-    projectileSpeed: 1
+    projectileSpeed: 6.5
     projectileSpeedMulti: 0.25
   worth: 1600
   rarity: 6
@@ -11579,7 +11582,7 @@ Dodu的手炮:
     damageType: Arrow
     crit: 4
     knockback: 1.5
-    projectileSpeed: 15
+    projectileSpeed: 8
     projectileSpeedMulti: 0.25
   worth: 2000
   rarity: 7
@@ -11630,7 +11633,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 2
-    projectileSpeed: 3
+    projectileSpeed: 8
   worth: 100
   rarity: 0
 陨星弹:
@@ -11640,7 +11643,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 1
-    projectileSpeed: 3
+    projectileSpeed: 8
   worth: 100
   rarity: 1
 银子弹:
@@ -11650,7 +11653,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 3
-    projectileSpeed: 4.5
+    projectileSpeed: 9.5
   worth: 300
   rarity: 0
 爆炸弹:
@@ -11662,7 +11665,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 6.6
-    projectileSpeed: 4.7
+    projectileSpeed: 7.5
     projectileSpeedMulti: 0.5
   worth: 800
   rarity: 3
@@ -11675,7 +11678,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 1
-    projectileSpeed: 5
+    projectileSpeed: 7.5
     projectileSpeedMulti: 0.25
   worth: 600
   rarity: 3
@@ -11686,7 +11689,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 4
-    projectileSpeed: 5
+    projectileSpeed: 7.5
     projectileSpeedMulti: 0.5
   worth: 600
   rarity: 3
@@ -11699,7 +11702,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 4.1
-    projectileSpeed: 5.3
+    projectileSpeed: 8.5
     projectileSpeedMulti: 0.5
   worth: 800
   rarity: 3
@@ -11712,7 +11715,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 2
-    projectileSpeed: 5
+    projectileSpeed: 8
     projectileSpeedMulti: 0.5
   worth: 1000
   rarity: 7
@@ -11725,7 +11728,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 3
-    projectileSpeed: 2
+    projectileSpeed: 5
     projectileSpeedMulti: 1
   worth: 200
   rarity: 9
@@ -11739,7 +11742,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 1.25
-    projectileSpeed: 1
+    projectileSpeed: 5
     projectileSpeedMulti: 0.5
   worth: 5000
   rarity: 1
@@ -11752,7 +11755,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 1.5
-    projectileSpeed: 1
+    projectileSpeed: 7.5
     projectileSpeedMulti: 0.25
   worth: 5000
   rarity: 2
@@ -11767,7 +11770,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 1.25
-    projectileSpeed: 16
+    projectileSpeed: 8
     projectileSpeedMulti: 0.25
   worth: 10000
   rarity: 3
@@ -11781,7 +11784,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 2
-    projectileSpeed: 5
+    projectileSpeed: 8
     projectileSpeedMulti: 0.5
   worth: 1600
   rarity: 6
@@ -11794,7 +11797,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 1.25
-    projectileSpeed: 10
+    projectileSpeed: 8
     projectileSpeedMulti: 0.5
   worth: 40000
   rarity: 7
@@ -11806,7 +11809,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 1.5
-    projectileSpeed: 10
+    projectileSpeed: 8
     projectileSpeedMulti: 0.5
   worth: 25000
   rarity: 8
@@ -11820,7 +11823,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 1.5
-    projectileSpeed: 16
+    projectileSpeed: 8
     projectileSpeedMulti: 0.5
   worth: 1600
   rarity: 9
@@ -11833,7 +11836,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 2
-    projectileSpeed: 6
+    projectileSpeed: 9.5
     projectileSpeedMulti: 0.375
   worth: 2400
   rarity: 11
@@ -11846,7 +11849,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 4.5
-    projectileSpeed: 4.8
+    projectileSpeed: 9.5
     projectileSpeedMulti: 0.375
   worth: 8000
   rarity: 12
@@ -11861,7 +11864,7 @@ Dodu的手炮:
     damageType: Bullet
     crit: 4
     knockback: 3
-    projectileSpeed: 6
+    projectileSpeed: 10
     projectileSpeedMulti: 0.375
   worth: 2800
   rarity: 14
@@ -13671,7 +13674,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 32
-    minionLimit: 1
+    minionLimit: 2
     damageSummonMulti: 0.1
   worth: 26000000
   rarity: 13
@@ -13755,7 +13758,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 82
+    defence: 88
     maxHealth: 120
     damageMulti: 0.11
     crit: 6
@@ -13766,7 +13769,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 70
+    defence: 78
     damageMulti: 0.1
     crit: 10
     speedMulti: 0.05
@@ -13799,7 +13802,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 88
+    defence: 82
     maxHealth: 160
     damageMulti: 0.1
     crit: 8
@@ -13810,7 +13813,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 78
+    defence: 70
     damageMulti: 0.1
     crit: 12
     speedMulti: 0.1

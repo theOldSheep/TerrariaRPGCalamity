@@ -3617,7 +3617,7 @@ WORKBENCH:
     requireItem:
     - 飞翔之魂:20
     - 巨型羽毛
-    - 羽毛:35
+    - 羽毛:16
     recipeCategory: ACCESSORY
   '38':
     requireLevel: 1
