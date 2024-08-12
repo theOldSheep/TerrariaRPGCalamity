@@ -2,6 +2,7 @@ package terraria.event.listener;
 
 import net.minecraft.server.v1_12_R1.EntityFishingHook;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -309,14 +310,22 @@ public class VanillaMechanicListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onChunkUnload(ChunkUnloadEvent evt) {
         if (evt.isCancelled()) return;
-        // do not unload chunks with boss/celestial pillar/npc in it
-        for (Entity entity : evt.getChunk().getEntities()) {
-            Set<String> scoreboardTags = entity.getScoreboardTags();
-            if (scoreboardTags.contains("isBOSS") || scoreboardTags.contains("isPillar") || scoreboardTags.contains("isNPC")) {
-                evt.setCancelled(true);
-                return;
+        // do not unload chunks with boss/celestial pillar/npc near it
+        for (int i = -1; i <= 1; i ++)
+            for (int j = -1; j <= 1; j ++) {
+                int chunkX = evt.getChunk().getX() + i, chunkZ = evt.getChunk().getZ() + j;
+                if (! evt.getWorld().isChunkLoaded(chunkX, chunkZ) ) {
+                    continue;
+                }
+                Chunk testChunk = evt.getWorld().getChunkAt(chunkX, chunkZ);
+                for (Entity entity : testChunk.getEntities()) {
+                    Set<String> scoreboardTags = entity.getScoreboardTags();
+                    if (scoreboardTags.contains("isBOSS") || scoreboardTags.contains("isPillar") || scoreboardTags.contains("isNPC")) {
+                        evt.setCancelled(true);
+                        return;
+                    }
+                }
             }
-        }
         // if the chunk is unloaded
         for (Entity entity : evt.getChunk().getEntities()) {
             Set<String> scoreboardTags = entity.getScoreboardTags();

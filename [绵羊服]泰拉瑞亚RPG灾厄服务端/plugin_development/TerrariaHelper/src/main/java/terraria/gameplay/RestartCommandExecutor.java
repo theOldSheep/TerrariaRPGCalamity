@@ -15,11 +15,15 @@ import java.util.List;
 
 public class RestartCommandExecutor implements CommandExecutor, TabCompleter {
     private int countdown = -1;
-    public static final int COUNTDOWN_MAX = TerrariaHelper.settingConfig.getInt("miscSetting.restartCountdown", 30),
+    public static final int
+            COUNTDOWN_MAX = TerrariaHelper.settingConfig.getInt("miscSetting.restartCountdown", 30),
+            COUNTDOWN_MAX_BOSS = TerrariaHelper.settingConfig.getInt("miscSetting.restartCountdownBossActive", 60),
             COUNTDOWN_ITV = TerrariaHelper.settingConfig.getInt("miscSetting.restartCountdownInterval", 5);
     public static String COMMAND = "terrariaRestart";
 
     private void printWarning() {
+        if (countdown <= 0)
+            return;
         Bukkit.broadcastMessage(ChatColor.RED +
                 "服务器将在 " + countdown + " 秒后重启！若要取消重启，请输入 /"
                 + COMMAND + " terminate");
@@ -49,8 +53,8 @@ public class RestartCommandExecutor implements CommandExecutor, TabCompleter {
             }
         }
         if (startOrTerminate) {
-            if (countdown < 0 && BossHelper.bossMap.isEmpty()) {
-                countdown = COUNTDOWN_MAX;
+            if (countdown < 0) {
+                countdown = BossHelper.bossMap.isEmpty() ? COUNTDOWN_MAX : COUNTDOWN_MAX_BOSS;
                 printWarning();
             }
         }

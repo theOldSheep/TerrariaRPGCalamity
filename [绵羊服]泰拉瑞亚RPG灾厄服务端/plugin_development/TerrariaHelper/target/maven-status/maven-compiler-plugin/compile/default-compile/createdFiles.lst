@@ -69,6 +69,7 @@ terraria\entity\minion\MinionSlime.class
 terraria\worldgen\overworld\StructureInfo$StructureOperation.class
 terraria\worldgen\Maze.class
 terraria\entity\boss\hardMode\moonLord\MoonLordTrueEyeOfCthulhu.class
+terraria\event\listener\BossTickListener.class
 terraria\entity\boss\hardMode\moonLord\MoonLordPhantasmalSphere.class
 terraria\entity\boss\hardMode\ravager\RavagerHead.class
 terraria\entity\boss\postMoonLord\exoMechs\Draedon$SubBossType.class
