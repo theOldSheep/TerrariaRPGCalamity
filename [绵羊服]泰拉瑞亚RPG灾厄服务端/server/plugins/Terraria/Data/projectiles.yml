@@ -1,6 +1,8 @@
 弹射物示例:
     # 贴图使用箭矢还是药水？不写则将名称以"箭"结尾的视为箭矢，否则视为药水
     arrowOrPotion: false
+    # 贴图药水瓶物品名；不写则默认为弹射物名称。
+    projDisguiseName: 弹射物示例
     # 是否自动追踪，不写则视为false
     homing: false
     # 自动追踪方式。1: 自动追踪效率与(速度/距离)成正比；2：自动追踪效率恒定。不写则视为1
@@ -318,6 +320,14 @@
     gravity: 0
     buffInflict:
         - "硫磺火|60|1"
+灾厄飞弹:
+    projDisguiseName: 硫火飞弹
+    penetration: 99999
+    projectileSize: 0.5
+    blockHitAction: thru
+    liveTime: 100
+    gravity: 0
+    buffInflict:
         - "孱弱巫咒|40|1"
 炼狱硫火球:
     penetration: 99999
@@ -353,7 +363,7 @@
     clusterBomb:
         amount: 8
         damageMulti: 0.6
-        name: 硫火飞弹
+        name: 灾厄飞弹
         velocity: 0.5
 深渊炙炎:
     penetration: 99999
@@ -371,7 +381,7 @@
     clusterBomb:
         amount: 16
         damageMulti: 0.75
-        name: 硫火飞弹
+        name: 灾厄飞弹
         velocity: 0.5
 深渊炙炎弹:
     blockHitAction: thru
@@ -389,7 +399,7 @@
         amount: 30
         type: spread
         damageMulti: 0.9
-        name: 硫火飞弹
+        name: 灾厄飞弹
         velocity: 1.25
 深渊炙颅:
     penetration: 99999

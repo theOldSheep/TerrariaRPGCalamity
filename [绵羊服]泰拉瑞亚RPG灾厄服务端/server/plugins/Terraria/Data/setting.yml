@@ -27,15 +27,16 @@ worldGen:
     gridSizeInPixels: 50
     outputFolder: worldGenDebug
 optimization:
-  projVelUpdItvNormal: 10
-  projVelUpdItvHoming: 4
+  projVelUpdItvNormal: 6
+  projVelUpdItvHoming: 3
   projVelUpdItvAcceleration: 2
-  projVelUpdItvDragonFireball: 6
+  projVelUpdItvDragonFireball: 5
   projectileVelocityUpdateDistance: 96
   globalParticleDensity: 1.0
 miscSetting:
   summoningItemConsumption: false
   restartCountdown: 30
+  restartCountdownBossActive: 60
   restartCountdownInterval: 5
   ammoConsumptionChanceMulti: 0.1
   potionConsumptionChanceMulti: 0.2

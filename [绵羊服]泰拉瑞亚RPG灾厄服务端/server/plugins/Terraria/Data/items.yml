@@ -2311,7 +2311,7 @@ Drew之翼:
   - §r神圣之佑：增加16点防御力和4%伤害减免
   - §r神圣之力：+10%召唤伤害
   attributes:
-    damageSummonMulti: 0.05
+    damageSummonMulti: 0.1
   worth: 4800000
   rarity: 5
 幻魂神物:
@@ -2323,7 +2323,8 @@ Drew之翼:
   - §r神圣之佑：增加20点防御力和5%伤害减免
   - §r神圣之力：+10%召唤伤害
   attributes:
-    damageSummonMulti: 0.1
+    minionLimit: 1
+    damageSummonMulti: 0.05
   worth: 26000000
   rarity: 13
 钨钢电池:
@@ -2588,6 +2589,7 @@ Drew之翼:
   - §r蕴含着日蚀之阴的力量
   attributes:
     damageMulti: 0.15
+    crit: 5
     regen: 2
     minionLimit: 2
     defence: 20

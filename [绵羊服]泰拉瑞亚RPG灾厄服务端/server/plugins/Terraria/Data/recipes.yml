@@ -326,7 +326,7 @@ FURNACE:
     resultItem: 圣金源锭:5
     requireItem:
     - 圣金源矿:64
-    - 龙魂碎片
+    - 龙魂碎片:4
     recipeCategory: MATERIAL
   '49':
     requireLevel: 2
@@ -5011,7 +5011,6 @@ TINKER_WORKBENCH:
     requireItem:
     - 灾劫虚空
     - 焦热地狱
-    - 黑曜石头骨
     - 混乱核心
     - 熔渣锭:3
     - 魔鬼之庇护
