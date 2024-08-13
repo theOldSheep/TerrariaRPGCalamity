@@ -160,9 +160,12 @@ public class GenericProjectile extends EntityPotion {
     }
     // setup properties of the specific type, including its item displayed
     public void setType(String type) {
+        setType(type, type);
+    }
+    public void setType(String type, String disguiseName) {
         // if world sprite mode is on, do not give the projectile an item sprite that may interfere with the world sprite.
         if (! worldSpriteMode)
-            setItem(generateItemStack(type));
+            setItem(generateItemStack(disguiseName));
         setProperties(type);
     }
     public static org.bukkit.inventory.ItemStack generateBukkitItemStack(String projectileType) {
@@ -182,7 +185,7 @@ public class GenericProjectile extends EntityPotion {
         die();
     }
     public GenericProjectile(EntityHelper.ProjectileShootInfo shootInfo) {
-        this(shootInfo.shootLoc, GenericProjectile.generateItemStack(shootInfo.projectileName),
+        this(shootInfo.shootLoc, GenericProjectile.generateItemStack(shootInfo.projectileItemName),
                 shootInfo.velocity, shootInfo.projectileName, shootInfo.properties,
                 shootInfo.attrMap, shootInfo.shooter, shootInfo.lockedTarget, shootInfo.damageType);
     }

@@ -2625,7 +2625,7 @@ public class EntityHelper {
         public HashMap<String, Double> attrMap;
         public HashMap<String, Object> properties;
         public DamageType damageType;
-        public String projectileName;
+        public String projectileName, projectileItemName;
         public boolean arrowOrPotion;
         // extracts the attributes that may impact the projectile's damage to prevent excessive memory usage
         private static HashMap<String, Double> extractAttrMap(HashMap<String, Double> original) {
@@ -2678,9 +2678,16 @@ public class EntityHelper {
             this.velocity = velocity;
             this.attrMap = extractAttrMap(attrMap);
             this.properties = new HashMap<>(25);
+            this.damageType = damageType;
+            this.projectileName = projectileName;
+            this.projectileItemName = projectileName;
+            boolean arrowOrPotion = projectileName.endsWith("箭");
+            this.arrowOrPotion = TerrariaHelper.projectileConfig.getBoolean(projectileName + ".arrowOrPotion", arrowOrPotion);
+
             if (projectileName.length() > 0) {
                 ConfigurationSection section = TerrariaHelper.projectileConfig.getConfigurationSection(projectileName);
                 if (section != null) {
+                    this.projectileItemName = section.getString("projDisguiseName", this.projectileItemName);
                     String[] keys;
                     // ints
                     {
@@ -2725,10 +2732,6 @@ public class EntityHelper {
                     }
                 }
             }
-            this.damageType = damageType;
-            this.projectileName = projectileName;
-            boolean arrowOrPotion = projectileName.endsWith("箭");
-            this.arrowOrPotion = TerrariaHelper.projectileConfig.getBoolean(projectileName + ".arrowOrPotion", arrowOrPotion);
         }
 
     }
