@@ -37,6 +37,7 @@ public class LunaticCultist extends EntityZombie {
     double lastHealth, mainYaw = 0;
     ArrayList<LunaticCultistClone> clones = new ArrayList<>(6);
     Location centerLoc;
+    PhantomDragon dragon = null;
 
     static HashMap<String, Double> attrMapFireball;
     static final int SUMMON_TIMEOUT = 50;
@@ -60,6 +61,11 @@ public class LunaticCultist extends EntityZombie {
         phaseAttack %= 6;
         // for summoning phase, init y-coordinate as -10 and can not be actively targeted by minions etc.
         if (phaseAttack == 0) {
+            // no duplication for phantom dragon
+            if (dragon != null && dragon.isAlive()) {
+                nextAttack();
+                return;
+            }
             removeScoreboardTag("isMonster");
             // teleport
             locY = -10;
@@ -145,7 +151,7 @@ public class LunaticCultist extends EntityZombie {
         if (indexAI >= SUMMON_TIMEOUT) {
             // summon phantom dragon if not damaged
             if (lastHealth > 0) {
-                new PhantomDragon(target, new ArrayList<>(), this, 0, true, centerLoc);
+                dragon = new PhantomDragon(target, new ArrayList<>(), this, 0, true, centerLoc);
             }
             nextAttack();
         }
