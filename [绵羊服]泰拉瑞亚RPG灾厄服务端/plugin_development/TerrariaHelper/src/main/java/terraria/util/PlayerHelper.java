@@ -466,20 +466,23 @@ public class PlayerHelper {
         return false;
     }
     public static boolean hasPiggyBank(Player ply) {
-        ItemStack piggyBank = ItemHelper.getItemFromDescription("钱币槽", false, new ItemStack(Material.BEDROCK));
-        return ply.getInventory().contains(piggyBank);
+        return hasItemInMainInv(ply, "钱币槽");
     }
     public static boolean hasVoidBag(Player ply) {
-        ItemStack voidBag = ItemHelper.getItemFromDescription("虚空袋", false, new ItemStack(Material.BEDROCK));
-        return ply.getInventory().contains(voidBag);
+        return hasItemInMainInv(ply, "虚空袋");
     }
     public static boolean hasTrashBin(Player ply) {
-        ItemStack trashBin = ItemHelper.getItemFromDescription("垃圾桶", false, new ItemStack(Material.BEDROCK));
-        return ply.getInventory().contains(trashBin);
+        return hasItemInMainInv(ply, "垃圾桶");
     }
     public static boolean hasCritterGuide(Player ply) {
-        ItemStack guideBook = ItemHelper.getItemFromDescription("小动物友谊指南", false, new ItemStack(Material.BEDROCK));
-        return ply.getInventory().contains(guideBook);
+        return hasItemInMainInv(ply, "小动物友谊指南");
+    }
+    public static boolean hasItemInMainInv(Player ply, String type) {
+        for (ItemStack item : ply.getInventory().getContents()) {
+            if (ItemHelper.splitItemName(item)[1].equals(type))
+                return true;
+        }
+        return false;
     }
     public static void updateTrashBinInfo(Player ply) {
         HashSet<String> itemsInTrash = new HashSet<>();
@@ -517,9 +520,9 @@ public class PlayerHelper {
             if (currItem == null || currItem.getType() == Material.AIR) return true;
         }
         // void bag
-        boolean hasVoidBag = hasVoidBag(ply);
+        boolean considerVoidBag = hasVoidBag(ply) && Setting.getOptionBool(ply, Setting.Options.VOID_BAG_PICKUP);
         Inventory voidBagInv = getInventory(ply, "voidBag");
-        if (hasVoidBag && voidBagInv != null) {
+        if (considerVoidBag && voidBagInv != null) {
             for (ItemStack currItem : voidBagInv.getContents())
                 if (currItem == null || currItem.getType() == Material.AIR) return true;
         }
@@ -533,7 +536,7 @@ public class PlayerHelper {
             if (currItem.isSimilar(item) && maxStackSize > currItem.getAmount()) return true;
         }
         // void bag
-        if (hasVoidBag && voidBagInv != null) {
+        if (considerVoidBag && voidBagInv != null) {
             for (ItemStack currItem : voidBagInv.getContents())
                 if (currItem.isSimilar(item) && maxStackSize > currItem.getAmount()) return true;
         }
@@ -2755,7 +2758,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             else {
                 amountRemaining = ItemHelper.addItemToGenericInventory(item, ply.getInventory());
                 // put the item in the player's void bag, if the player has a void bag in the inventory
-                if (amountRemaining > 0 && hasVoidBag(ply)) {
+                if (amountRemaining > 0 && hasVoidBag(ply) && Setting.getOptionBool(ply, Setting.Options.VOID_BAG_PICKUP)) {
                     Inventory voidBagInv = getInventory(ply, "voidBag");
                     if (voidBagInv != null)
                         amountRemaining = ItemHelper.addItemToGenericInventory(item, voidBagInv);

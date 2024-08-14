@@ -101,10 +101,10 @@ public class SupremeCalamitas extends EntitySlime {
 
 
         BulletHellProjectileOption optionBlastSurrounding = new BulletHellProjectileOption(
-                "深渊亡魂", BulletHellProjectile.ProjectileType.SQUARE_BORDER,
+                "灾厄亡魂", BulletHellProjectile.ProjectileType.SQUARE_BORDER,
                 attrMapPrjMid, 0.4, 0.2, 2, 250);
         BulletHellProjectileOption optionBlastSurroundingEasy = new BulletHellProjectileOption(
-                "深渊亡魂", BulletHellProjectile.ProjectileType.SQUARE_BORDER,
+                "灾厄亡魂", BulletHellProjectile.ProjectileType.SQUARE_BORDER,
                 attrMapPrjMid, 0.4, 0.2, 3, 250);
         BulletHellProjectileOption optionFlameSkull = new BulletHellProjectileOption(
                 "深渊炙颅", BulletHellProjectile.ProjectileType.SQUARE_BORDER_SIDES,
@@ -597,9 +597,9 @@ public class SupremeCalamitas extends EntitySlime {
         // shoot info's
         {
             shootInfoDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjLow,
-                    EntityHelper.DamageType.MAGIC, "硫火飞弹");
+                    EntityHelper.DamageType.MAGIC, "灾厄飞弹");
             shootInfoHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjMid,
-                    EntityHelper.DamageType.MAGIC, "深渊亡魂");
+                    EntityHelper.DamageType.MAGIC, "灾厄亡魂");
             shootInfoGigaBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjHigh,
                     EntityHelper.DamageType.MAGIC, "深渊炙炎弹");
         }

@@ -55,7 +55,8 @@ public class Setting {
         DEFAULT_AUTO_SWING("对于未注明是否自动挥舞的武器是否开启自动挥舞，默认值为<def>", true),
         MINION_RETARGET_THRESHOLD("仆从因护主重新锁敌的最小距离差（单位：格）；取值范围<min>~<max>，默认值为<def>", 0d, 16d, 5d),
         MINION_AGGRO_RADIUS("仆从最大索敌范围（单位：格）；取值范围<min>~<max>，默认值为<def>", 24d, MinionHelper.MAX_DIST_BEFORE_TELEPORT, MinionHelper.DEFAULT_TARGET_DIST),
-        // controls
+        VOID_BAG_PICKUP("虚空袋是否自动收纳掉落物，默认值为<def>", true),
+        // controls,
         CONTROL_W("前进按键，默认为[<def>]", "W"),
         CONTROL_A("向左移动按键，默认为[<def>]", "A"),
         CONTROL_S("后退按键，默认为[<def>]", "S"),

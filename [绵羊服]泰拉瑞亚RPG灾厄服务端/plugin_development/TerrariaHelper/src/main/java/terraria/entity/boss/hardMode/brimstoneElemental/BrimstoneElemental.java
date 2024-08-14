@@ -346,7 +346,7 @@ public class BrimstoneElemental extends EntitySlime {
             psiFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball,
                     EntityHelper.DamageType.MAGIC, "炼狱硫火球");
             psiHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball,
-                    EntityHelper.DamageType.MAGIC, "深渊亡魂");
+                    EntityHelper.DamageType.MAGIC, "灾厄亡魂");
         }
     }
 

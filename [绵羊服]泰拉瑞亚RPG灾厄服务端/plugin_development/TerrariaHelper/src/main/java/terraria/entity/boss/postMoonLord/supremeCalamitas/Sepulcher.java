@@ -228,7 +228,7 @@ public class Sepulcher extends EntitySlime {
             this.persistent = true;
             // projectile info
             shootInfoDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapDart,
-                    EntityHelper.DamageType.MAGIC, "硫火飞弹");
+                    EntityHelper.DamageType.MAGIC, "灾厄飞弹");
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
             if (segmentTypeIndex != 2)
