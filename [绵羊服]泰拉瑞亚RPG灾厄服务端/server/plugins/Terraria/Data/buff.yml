@@ -90,11 +90,13 @@ effects:
     isBuff: false
     damageInterval: 10
     damage: 1
+    damageMonster: 5
     tooltip: 缓慢损失生命值
   剧毒:
     isBuff: false
     damageInterval: 4
     damage: 6
+    damageMonster: 15
     tooltip: 在酸性毒液的腐蚀下损失生命值
   燃烧:
     isBuff: false
@@ -112,25 +114,28 @@ effects:
     isBuff: false
     damageInterval: 4
     damage: 6
+    damageMonster: 12
     snowStormParticle: burning
     tooltip: 缓慢损失生命值
   咒火:
     isBuff: false
     damageInterval: 5
     damage: 3
-    damageMonster: 6
+    damageMonster: 12
     snowStormParticle: cursed_inferno
     tooltip: 正在损失生命值
   暗影焰:
     isBuff: false
     damageInterval: 4
     damage: 3
+    damageMonster: 12
     snowStormParticle: shadowflame
     tooltip: 正在损失生命值
   带电:
     isBuff: false
     damageInterval: 4
     damage: 6
+    damageMonster: 15
     tooltip: 极速损失生命值
   破晓:
     isBuff: false
@@ -142,15 +147,15 @@ effects:
   血液沸腾:
     isBuff: false
     damageInterval: 10
-    damage: 4
-    damageMonster: 25
+    damage: 5
+    damageMonster: 100
     snowStormParticle: bleeding
     tooltip: 你的血液沸腾了
   硫磺火:
     isBuff: false
     damageInterval: 5
     damage: 4
-    damageMonster: 10
+    damageMonster: 15
     snowStormParticle: burning
     tooltip: 被漆黑的火焰吞噬
   辐射:
@@ -179,7 +184,7 @@ effects:
     isBuff: false
     damageInterval: 4
     damage: 4
-    damageMonster: 15
+    damageMonster: 25
     attributes:
       speedMulti: -0.15
       regenMulti: -1
@@ -189,7 +194,7 @@ effects:
     isBuff: false
     damageInterval: 10
     damage: 10
-    damageMonster: 50
+    damageMonster: 75
     attributes:
       speedMulti: -0.15
       damageMulti: -0.1
@@ -198,7 +203,7 @@ effects:
     isBuff: false
     damageInterval: 10
     damage: 8
-    damageMonster: 25
+    damageMonster: 100
     attributes:
       regenMulti: -1
     snowStormParticle: hallow_fire
@@ -207,7 +212,7 @@ effects:
     isBuff: false
     damageInterval: 10
     damage: 8
-    damageMonster: 50
+    damageMonster: 100
     attributes:
       regenMulti: -1
     snowStormParticle: shadowflame
@@ -229,9 +234,9 @@ effects:
     tooltip: 你离亵渎天神太远了！
   硫磺海剧毒:
     isBuff: false
-    damageInterval: 5
-    damage: 2
-    damageMonster: 45
+    damageInterval: 4
+    damage: 5
+    damageMonster: 125
     attributes:
       regenMulti: -1
     tooltip: 有毒的硫磺海水正在烧灼你的皮肤
@@ -242,13 +247,13 @@ effects:
     damageMonster: 50
     attributes:
       regenMulti: -1
-      waterAffinity: -1.5
+      waterAffinity: -1
     tooltip: 深海压强似乎作用于身
   弑神怒焰:
     isBuff: false
     damageInterval: 4
     damage: 6
-    damageMonster: 50
+    damageMonster: 150
     attributes:
       regenMulti: -1
     snowStormParticle: god_slayer_inferno
@@ -257,7 +262,7 @@ effects:
     isBuff: false
     damageInterval: 4
     damage: 6
-    damageMonster: 72
+    damageMonster: 225
     attributes:
       regenMulti: -1
     snowStormParticle: burning

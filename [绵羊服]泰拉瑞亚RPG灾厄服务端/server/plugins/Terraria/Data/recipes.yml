@@ -3935,9 +3935,8 @@ ENCHANTMENT_TABLE:
     requireLevel: 1
     resultItem: 虚空袋
     requireItem:
-    - 骨头:30
-    - 丛林孢子:15
-    - 暗影鳞片:30
+    - 丝绸:8
+    - 丛林孢子:5
     recipeCategory: TOOL
   '11':
     requireLevel: 1

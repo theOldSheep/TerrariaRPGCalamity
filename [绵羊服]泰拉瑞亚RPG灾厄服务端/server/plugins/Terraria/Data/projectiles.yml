@@ -346,7 +346,16 @@
     liveTime: 80
     gravity: 0
     buffInflict:
-        - "硫磺火|60|1"
+        - "硫磺火|100|1"
+灾厄亡魂:
+    projDisguiseName: 深渊亡魂
+    penetration: 99999
+    projectileSize: 1.5
+    blockHitAction: thru
+    liveTime: 80
+    gravity: 0
+    buffInflict:
+        - "孱弱巫咒|60|1"
 无际裂变:
     penetration: 99999
     blockHitAction: thru
@@ -2486,6 +2495,8 @@ TNT:
     projectileSize: 0.5
     liveTime: 30
     homing: true
+    homingRadius: 16
+    homingAbility: 5
     isGrenade: true
     blastRadius: 2.5
     clusterBomb:
