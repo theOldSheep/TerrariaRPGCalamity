@@ -410,7 +410,7 @@ public class GameplayHelper {
                 }
                 break;
             }
-            // attempt to change world
+            // attempt to teleport between worlds
             case BEDROCK: {
                 Location teleportedLoc = blk.getLocation();
                 teleportedLoc.add(0.5, 0, 0.5);
@@ -448,8 +448,8 @@ public class GameplayHelper {
                 }
                 // teleport
                 Block blockToBreak = teleportedLoc.getBlock();
-                WorldHelper.makeEmptyBlock(blockToBreak, true);
-                WorldHelper.makeEmptyBlock(blockToBreak.getRelative(BlockFace.UP), true);
+                WorldHelper.makeEmptyBlock(blockToBreak, true, true);
+                WorldHelper.makeEmptyBlock(blockToBreak.getRelative(BlockFace.UP), true, true);
                 ply.teleport(teleportedLoc);
                 break;
             }

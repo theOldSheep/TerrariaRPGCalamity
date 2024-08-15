@@ -27,10 +27,10 @@ worldGen:
     gridSizeInPixels: 50
     outputFolder: worldGenDebug
 optimization:
-  projVelUpdItvNormal: 6
-  projVelUpdItvHoming: 3
+  projVelUpdItvNormal: 2
+  projVelUpdItvHoming: 2
   projVelUpdItvAcceleration: 2
-  projVelUpdItvDragonFireball: 5
+  projVelUpdItvDragonFireball: 3
   projectileVelocityUpdateDistance: 96
   globalParticleDensity: 1.0
 miscSetting:

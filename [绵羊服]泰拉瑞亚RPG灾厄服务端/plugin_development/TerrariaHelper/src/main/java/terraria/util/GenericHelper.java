@@ -945,9 +945,10 @@ public class GenericHelper {
         if (dmg < 1)
             dmg = 1;
         String text = ChatColor.COLOR_CHAR + colorCode + (int) Math.round(dmg);
-        Location displayLoc;
-        if (e instanceof LivingEntity) displayLoc = ((LivingEntity) e).getEyeLocation().add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
-        else displayLoc = e.getLocation().add(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
+        Location displayLoc = EntityHelper.getRandomPosInEntity(e,
+                new EntityHelper.RandomPosInBBInfo()
+                        .setSideEdgesOnly(true)
+                        .setBBShrinkYBottom(1d));
         displayHoloText(displayLoc, text, ticksDisplay, 1f, 0.75f, 0.75f);
     }
     public static double[] interpolateDirection(double initialYaw, double initialPitch,

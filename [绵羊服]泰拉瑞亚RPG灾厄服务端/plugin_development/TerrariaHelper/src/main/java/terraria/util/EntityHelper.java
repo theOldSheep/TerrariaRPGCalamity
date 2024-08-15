@@ -1067,8 +1067,10 @@ public class EntityHelper {
                     int amountRemainingAfterDmg = (int) (100 * (victim.getHealth() - dmg) / victim.getMaxHealth());
                     int amountSpawn = amountRemaining - amountRemainingAfterDmg;
                     for (int i = 0; i < amountSpawn; i ++)
-                        MonsterHelper.spawnMob(Math.random() < 0.2 ? "尖刺史莱姆" : "史莱姆",
-                                victim.getLocation(), (Player) damageSource);
+                        MonsterHelper.spawnMob(
+                                Math.random() < 0.2 ? "尖刺史莱姆" : "史莱姆",
+                                EntityHelper.getRandomPosInEntity(victim, new RandomPosInBBInfo().setBBShrinkYTop(1d)),
+                                (Player) damageSource);
                 }
                 break;
             }
@@ -2680,14 +2682,14 @@ public class EntityHelper {
             this.properties = new HashMap<>(25);
             this.damageType = damageType;
             this.projectileName = projectileName;
-            this.projectileItemName = projectileName;
+            this.projectileItemName = null;
             boolean arrowOrPotion = projectileName.endsWith("箭");
             this.arrowOrPotion = TerrariaHelper.projectileConfig.getBoolean(projectileName + ".arrowOrPotion", arrowOrPotion);
 
             if (projectileName.length() > 0) {
                 ConfigurationSection section = TerrariaHelper.projectileConfig.getConfigurationSection(projectileName);
                 if (section != null) {
-                    this.projectileItemName = section.getString("projDisguiseName", this.projectileItemName);
+                    this.projectileItemName = section.getString("projDisguiseName");
                     String[] keys;
                     // ints
                     {
@@ -2767,6 +2769,65 @@ public class EntityHelper {
         entityNMS.lastX = lastX;
         entityNMS.lastY = lastY;
         entityNMS.lastZ = lastZ;
+    }
+    public static class RandomPosInBBInfo {
+        boolean sideEdgesOnly = false;
+        double BBShrinkX = 0;
+        double BBShrinkYTop = 0;
+        double BBShrinkYBottom = 0;
+        double BBShrinkZ = 0;
+
+        public RandomPosInBBInfo setSideEdgesOnly(boolean sideEdgesOnly) {
+            this.sideEdgesOnly = sideEdgesOnly;
+            return this;
+        }
+        public RandomPosInBBInfo setBBShrinkX(double BBShrinkX) {
+            this.BBShrinkX = BBShrinkX;
+            return this;
+        }
+        public RandomPosInBBInfo setBBShrinkYTop(double BBShrinkYTop) {
+            this.BBShrinkYTop = BBShrinkYTop;
+            return this;
+        }
+        public RandomPosInBBInfo setBBShrinkYBottom(double BBShrinkYBottom) {
+            this.BBShrinkYBottom = BBShrinkYBottom;
+            return this;
+        }
+        public RandomPosInBBInfo setBBShrinkZ(double BBShrinkZ) {
+            this.BBShrinkZ = BBShrinkZ;
+            return this;
+        }
+    }
+    public static Location getRandomPosInEntity(Entity entity, RandomPosInBBInfo info) {
+        return getRandomPosInBoundingBox(entity.getWorld(), ((CraftEntity) entity).getHandle().getBoundingBox(), info);
+    }
+    public static Location getRandomPosInBoundingBox(World world, AxisAlignedBB boundingBox, RandomPosInBBInfo info) {
+        double ySizeChange = (info.BBShrinkYTop + info.BBShrinkYBottom) / 2;
+        AxisAlignedBB boundingBoxActual = boundingBox
+                .grow(-info.BBShrinkX, -ySizeChange, -info.BBShrinkZ)
+                .d(0, ySizeChange - info.BBShrinkYTop, 0);
+        // get the random loc
+        double xRatio, yRatio, zRatio;
+        if (info.sideEdgesOnly) {
+            yRatio = Math.random();
+            if (Math.random() < 0.5) {
+                xRatio = Math.random() < 0.5 ? 0 : 1;
+                zRatio = Math.random();
+            }
+            else {
+                xRatio = Math.random();
+                zRatio = Math.random() < 0.5 ? 0 : 1;
+            }
+        }
+        else {
+            xRatio = Math.random();
+            yRatio = Math.random();
+            zRatio = Math.random();
+        }
+        return new Location(world,
+                boundingBoxActual.a + (boundingBoxActual.d - boundingBoxActual.a) * xRatio,
+                boundingBoxActual.b + (boundingBoxActual.e - boundingBoxActual.b) * yRatio,
+                boundingBoxActual.c + (boundingBoxActual.f - boundingBoxActual.c) * zRatio);
     }
     // helps aim at an entity
     public static Location helperAimEntity(Location shootLoc, Entity target, AimHelperOptions aimHelperOption) {

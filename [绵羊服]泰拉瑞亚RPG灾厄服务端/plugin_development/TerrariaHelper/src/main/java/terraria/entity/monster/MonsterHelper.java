@@ -1330,32 +1330,36 @@ public class MonsterHelper {
                 }
                 case "巨像乌贼": {
                     if (monster.getHealth() > 0) {
-                        // float towards the player
-                        Vector velocity = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 0.75, true);
-                        monsterBkt.setVelocity(velocity);
-                        // fire projectiles
-                        if (indexAI > 60 && indexAI % 25 == 0) {
-                            EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                    monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "追踪墨汁");
-                            shootInfo.properties.put("homingAbility", 1d);
-                            shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, target.getEyeLocation(), 1);
-                            EntityHelper.spawnProjectile(shootInfo);
+                        if (indexAI > 60) {
+                            // float towards the player
+                            Vector velocity = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 0.75, true);
+                            monsterBkt.setVelocity(velocity);
+                            // fire projectiles
+                            if (indexAI % 25 == 0) {
+                                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                        monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "追踪墨汁");
+                                shootInfo.properties.put("homingAbility", 1d);
+                                shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, target.getEyeLocation(), 1);
+                                EntityHelper.spawnProjectile(shootInfo);
+                            }
                         }
                     }
                     break;
                 }
                 case "猎魂鲨": {
                     if (monster.getHealth() > 0) {
-                        // dash
-                        if (indexAI > 30 && indexAI % 30 < 20) {
-                            Vector velocity = (Vector) extraVariables.computeIfAbsent("v", (ignored) ->
-                                    MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(),
-                                            3, true));
-                            monsterBkt.setVelocity(velocity);
-                        }
-                        // ready for next dash
-                        else {
-                            extraVariables.remove("v");
+                        if (indexAI > 60) {
+                            // dash
+                            if (indexAI % 30 < 20) {
+                                Vector velocity = (Vector) extraVariables.computeIfAbsent("v", (ignored) ->
+                                        MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(),
+                                                3, true));
+                                monsterBkt.setVelocity(velocity);
+                            }
+                            // ready for next dash
+                            else {
+                                extraVariables.remove("v");
+                            }
                         }
                     }
                     break;

@@ -218,6 +218,7 @@ terraria\entity\projectile\BulletHellProjectile$1.class
 terraria\util\NMSUtils$Biome.class
 terraria\util\NMSUtils$Type.class
 terraria\entity\boss\hardMode\ravager\RavagerRockPillar.class
+terraria\util\EntityHelper$RandomPosInBBInfo.class
 terraria\entity\minion\MinionHelper.class
 terraria\TerrariaHelper$Constants.class
 terraria\entity\boss\hardMode\queenSlime\QueenSlime$SizeState.class

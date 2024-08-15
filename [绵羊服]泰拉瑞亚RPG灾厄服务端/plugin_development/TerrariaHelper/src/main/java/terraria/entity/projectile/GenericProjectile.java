@@ -185,7 +185,7 @@ public class GenericProjectile extends EntityPotion {
         die();
     }
     public GenericProjectile(EntityHelper.ProjectileShootInfo shootInfo) {
-        this(shootInfo.shootLoc, GenericProjectile.generateItemStack(shootInfo.projectileItemName),
+        this(shootInfo.shootLoc, GenericProjectile.generateItemStack(shootInfo.projectileItemName == null ? shootInfo.projectileName : shootInfo.projectileItemName),
                 shootInfo.velocity, shootInfo.projectileName, shootInfo.properties,
                 shootInfo.attrMap, shootInfo.shooter, shootInfo.lockedTarget, shootInfo.damageType);
     }

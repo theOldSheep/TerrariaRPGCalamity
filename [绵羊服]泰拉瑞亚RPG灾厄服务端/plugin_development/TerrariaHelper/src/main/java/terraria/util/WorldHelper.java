@@ -289,6 +289,11 @@ public class WorldHelper {
     }
     // set the block to water or air, depending on the biome
     public static void makeEmptyBlock(Block block, boolean airApplicable) {
+        makeEmptyBlock(block, airApplicable, false);
+    }
+    public static void makeEmptyBlock(Block block, boolean airApplicable, boolean changeSolidOnly) {
+        if (changeSolidOnly && !block.getType().isSolid())
+            return;
         switch (BiomeType.getBiome(block.getLocation())) {
             case ABYSS:
             case SUNKEN_SEA:
