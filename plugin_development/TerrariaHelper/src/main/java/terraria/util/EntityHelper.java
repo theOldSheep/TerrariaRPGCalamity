@@ -11,6 +11,7 @@ import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.*;
@@ -215,6 +216,8 @@ public class EntityHelper {
         DAMAGE_SOURCE("damageSourcePlayer"),
         DAMAGE_TAKER("damageTaker"),
         DAMAGE_TYPE("damageType"),
+        DPS_HITS("dpsHits"),
+        DPS_DMG_TOTAL("dpsDmg"),
         DYNAMIC_DAMAGE_REDUCTION("dynamicDR"),
         EFFECTS("effects"),
         ENTITY_CURRENT_VELOCITY("eCurrVel"),
@@ -1801,8 +1804,10 @@ public class EntityHelper {
             }
             return false;
         }
-        // only players can damage armor stand
-        if (damageTaker instanceof ArmorStand) return damageSource instanceof Player;
+        // only players not fighting any boss can damage armor stand
+        if (damageTaker instanceof ArmorStand) {
+            return damageSource instanceof Player && ! PlayerHelper.isTargetedByBOSS((Player) damageSource);
+        }
         // invulnerable target
         if (damageTaker.isInvulnerable()) return false;
         if (damageTakerScoreboardTags.contains("noDamage") || targetScoreboardTags.contains("noDamage")) return false;
@@ -1985,13 +1990,6 @@ public class EntityHelper {
                     }, scoreboardTagDuration);
         }
     }
-    private static void displayDamageActionBar(Player damager, String victimName, int health, int maxHealth, int damage) {
-        if (health > 0) {
-            PlayerHelper.sendActionBar(damager,
-                    "§r" + victimName + " §6[§a" + health + "§6/§a" + maxHealth + "§6] §b(-" + damage + ")");
-        } else
-            PlayerHelper.sendActionBar(damager, victimName + " §c领了盒饭");
-    }
     private static void playDamageSound(Location playLoc, String sound, float volume) {
         HashMap<String, Long> soundPlayed;
         double audibleDistSqr = volume * 16;
@@ -2016,6 +2014,35 @@ public class EntityHelper {
             soundPlayed.put(sound, System.currentTimeMillis());
         }
     }
+    private static void displayDamageActionBar(Player damager, String victimName, int health, int maxHealth, int damage) {
+        if (health > 0) {
+            PlayerHelper.sendActionBar(damager,
+                    "§r" + victimName + " §6[§a" + health + "§6/§a" + maxHealth + "§6] §b(-" + damage + ")");
+        } else
+            PlayerHelper.sendActionBar(damager, victimName + " §c领了盒饭");
+    }
+    // tracks the DPS and display the damage info to the player
+    private static void trackDPS(Player src, String victimName, double health, double maxHealth, double dmg, boolean beginOrEnd) {
+        // update variables
+        int hits = getMetadata(src, MetadataName.DPS_HITS).asInt();
+        double dmgTotal = getMetadata(src, MetadataName.DPS_DMG_TOTAL).asDouble();
+        int recordSign = beginOrEnd ? 1 : -1;
+        hits += recordSign;
+        dmgTotal += dmg * recordSign;
+        setMetadata(src, MetadataName.DPS_HITS, hits);
+        setMetadata(src, MetadataName.DPS_DMG_TOTAL, dmgTotal);
+        // send message etc.
+        if (beginOrEnd) {
+            int secInterval = Setting.getOptionInt(src, Setting.Options.DPS_DURATION);
+            double dps = dmgTotal / secInterval;
+            PlayerHelper.sendActionBar(src,
+                    String.format("§r%s §6[§a%.0f§6/§a%.0f§6] §b(-%.0f) §6[§a%d秒内%d次共%.0f§d|§a%.1f§dDPS§6]",
+                            victimName, health, maxHealth, dmg, secInterval, hits, dmgTotal, dps));
+            // plan to remove the info
+            Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(),
+                    () -> trackDPS(src, victimName, health, maxHealth, dmg, false), secInterval * 20);
+        }
+    }
     public static void handleDamage(Entity damager, Entity victim, double damage, DamageReason damageReason) {
         handleDamage(damager, victim, damage, damageReason, null);
     }
@@ -2033,11 +2060,12 @@ public class EntityHelper {
                 double health = victimAttrMap.get("health") - damage;
                 double maxHealth = victimAttrMap.getOrDefault("healthMax", health);
                 victimAttrMap.put("health", health);
-                if (damageSource instanceof Player)
-                    displayDamageActionBar((Player) damageSource, victim.getName(), (int) health, (int) maxHealth, (int) damage);
                 if (health < 0) {
                     victim.remove();
+                    health = 0;
                 }
+                if (damageSource instanceof Player)
+                    trackDPS((Player) damageSource, victim.getName(), health, maxHealth, damage, true);
             }
             return;
         }
@@ -2442,7 +2470,24 @@ public class EntityHelper {
             return;
 
         // damage/kill
-        if (!(victim instanceof ArmorStand)) {
+        if (victim instanceof ArmorStand) {
+            // players can break the armor stand by damaging it with a pickaxe
+            if (damageSource instanceof Player && getAttrMap(damageSource).getOrDefault("powerPickaxe", 0d) > 0d) {
+                // check for break permission
+                if (GameplayHelper.isBreakable(victim.getLocation().getBlock().getRelative(BlockFace.UP), (Player) damageSource)) {
+                    LivingEntity victimLivingE = (LivingEntity) victim;
+                    victimLivingE.remove();
+                    // drop the armor stand itself and its equipment
+                    ItemHelper.dropItem(victimLivingE.getEyeLocation(), "盔甲架");
+                    for (ItemStack item : victimLivingE.getEquipment().getArmorContents() ) {
+                        if (item == null || item.getType() == Material.AIR)
+                            continue;
+                        ItemHelper.dropItem(victimLivingE.getEyeLocation(), item);
+                    }
+                }
+            }
+        }
+        else {
             float soundVolume = 3f;
             // register damage dealt; bosses have louder damage sound
             if (damageTakerTags.contains("isBOSS") && damageSource instanceof Player) {
@@ -2519,13 +2564,11 @@ public class EntityHelper {
             GenericHelper.displayHolo(victim, dmg, crit, hologramInfo);
         }
 
-        // send info message to damager player
+        // track DPS for the damager player
         if (damageSource instanceof Player && damageTaker != damageSource) {
             String vName = victim.getName();
-            int dmgInt = (int) dmg;
-            int healthInt = (int) damageTaker.getHealth();
-            int maxHealthInt = (int) damageTaker.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-            displayDamageActionBar((Player) damageSource, vName, healthInt, maxHealthInt, dmgInt);
+            double maxHealth = damageTaker.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+            trackDPS((Player) damageSource, vName, damageTaker.getHealth(), maxHealth, dmg, true);
         }
 
         // handle invincibility ticks

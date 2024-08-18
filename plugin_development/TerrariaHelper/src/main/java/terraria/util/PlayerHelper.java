@@ -1969,11 +1969,13 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         // crafting variables
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CRAFTING_STATION, "CLOSED");
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CRAFTING_RECIPE_INDEX, -1);
-        // weapon use variables
+        // combat variables
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_INTERNAL_ITEM_START_USE_CD, 0);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, 0);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_NEXT_MINION_INDEX, 0);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_NEXT_SENTRY_INDEX, 0);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.DPS_HITS, 0);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.DPS_DMG_TOTAL, 0d);
         // object variables
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MINION_LIST, new ArrayList<Entity>());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_SENTRY_LIST, new ArrayList<Entity>());

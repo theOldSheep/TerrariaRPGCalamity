@@ -3377,6 +3377,13 @@ ANVIL:
     - 化神魂精:2
     recipeCategory: CONSUMABLE_PERMANENT
 WORKBENCH:
+  '0':
+    requireLevel: 1
+    resultItem: 盔甲架
+    requireItem:
+    - 木材:8
+    - 石头:2
+    recipeCategory: TOOL
   '1':
     requireLevel: 1
     resultItem: 玻璃平台

@@ -133,6 +133,11 @@ public class GameplayHelper {
 //        Bukkit.broadcastMessage("Not handled block type: " + blockToBreak.getType() + " with data " + blockToBreak.getData() + " and state " + state);
         return null;
     }
+    // a wrapper that helps easier use in many other places
+    public static boolean isBreakable(Block block, Player ply) {
+        // do not deny block modification validation on air/water etc.
+        return ! unBreakable(block, ply, false);
+    }
     public static boolean unBreakable(Block block, Player ply, boolean denyNoMiningSet) {
         if (denyNoMiningSet && noMiningSet.contains(block.getType())) return true;
         // blocks near the spawn point can not be broken

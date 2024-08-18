@@ -53,10 +53,11 @@ public class Setting {
         AIM_HELPER_DISTANCE("辅助瞄准功能索敌最大距离（单位：格）；取值范围<min>~<max>，默认值为<def>", 32d, 96d, 96d),
         AIM_HELPER_RADIUS("辅助瞄准功能索敌最大范围（单位：格）；取值范围<min>~<max>，默认值为<def>", 0d, 15d, 5d),
         DEFAULT_AUTO_SWING("对于未注明是否自动挥舞的武器是否开启自动挥舞，默认值为<def>", true),
+        DPS_DURATION("DPS计算时长；设置为较长时间可能会使计算更精准。取值范围<min>~<max>，默认值为<def>", 1, 10, 3),
         MINION_RETARGET_THRESHOLD("仆从因护主重新锁敌的最小距离差（单位：格）；取值范围<min>~<max>，默认值为<def>", 0d, 16d, 5d),
         MINION_AGGRO_RADIUS("仆从最大索敌范围（单位：格）；取值范围<min>~<max>，默认值为<def>", 24d, MinionHelper.MAX_DIST_BEFORE_TELEPORT, MinionHelper.DEFAULT_TARGET_DIST),
         VOID_BAG_PICKUP("虚空袋是否自动收纳掉落物，默认值为<def>", true),
-        // controls,
+        // controls
         CONTROL_W("前进按键，默认为[<def>]", "W"),
         CONTROL_A("向左移动按键，默认为[<def>]", "A"),
         CONTROL_S("后退按键，默认为[<def>]", "S"),

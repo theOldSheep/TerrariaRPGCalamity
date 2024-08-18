@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -173,6 +174,12 @@ public class ItemUseHelper {
             case "南瓜月勋章":
                 if (!isDayTime) {
                     successful = EventAndTime.initializeEvent(EventAndTime.Events.PUMPKIN_MOON);
+                }
+                break;
+            case "盔甲架":
+                if (GameplayHelper.isBreakable(ply.getLocation().getBlock().getRelative(BlockFace.UP), ply)) {
+                    ply.getWorld().spawnEntity(ply.getLocation(), EntityType.ARMOR_STAND);
+                    successful = true;
                 }
                 break;
             case "玻璃平台":

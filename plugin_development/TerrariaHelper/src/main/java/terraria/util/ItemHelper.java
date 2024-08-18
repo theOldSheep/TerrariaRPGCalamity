@@ -364,6 +364,9 @@ public class ItemHelper {
             case BED:
                 regularizedItemType = "床";
                 break;
+            case ARMOR_STAND:
+                regularizedItemType = "盔甲架";
+                break;
             case WOOD_DOOR:
             case WOODEN_DOOR:
                 regularizedItemType = "木门";

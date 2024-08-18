@@ -19,6 +19,10 @@ import java.util.HashMap;
 public class EntitySpawnListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEntitySpawn(CreatureSpawnEvent e) {
+        // do not interfere with armor stand
+        if (e.getEntityType() == EntityType.ARMOR_STAND) {
+            return;
+        }
         if (e.getSpawnReason() != CreatureSpawnEvent.SpawnReason.CUSTOM) {
             e.setCancelled(true);
             // TODO: handle TNT explode

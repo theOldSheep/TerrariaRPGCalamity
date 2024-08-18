@@ -157,18 +157,20 @@ public class ItemUseAndAttributeListener implements Listener {
             default:
                 return;
         }
-        if (isRightClick) {
-            switch (ply.getInventory().getItemInMainHand().getType()) {
-                case BOW:
-                case ENDER_PEARL:
-                case EYE_OF_ENDER:
-                    e.setCancelled(true);
-            }
-        }
         if (e.useInteractedBlock() == Event.Result.DENY && e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             // crafting station
             return;
         }
         toolSwing(ply, isRightClick);
+        // deny special items consumption
+        if (isRightClick) {
+            switch (ply.getInventory().getItemInMainHand().getType()) {
+                case BOW:
+                case ENDER_PEARL:
+                case ARMOR_STAND:
+                case EYE_OF_ENDER:
+                    e.setCancelled(true);
+            }
+        }
     }
 }
