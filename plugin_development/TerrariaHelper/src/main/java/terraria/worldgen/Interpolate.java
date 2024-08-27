@@ -58,11 +58,18 @@ public class Interpolate {
             }
         }
         if (ptLeft != null && ptRight != null) {
-            // distance from ptLeft, in range (0, 1)
+            // the progress between the two points normalized to [0, 1]
             double xDiff = Math.max(0, x - ptLeft.x) / (ptRight.x - ptLeft.x);
+
+            // xsin called with range [-1, 1], output normalized to [0, 1]
             double multiplier = MathHelper.xsin(xDiff * 2 - 1) / 2 + 0.5;
-            // this squares the multiplier so that it seems more smooth
-            if (useSquareSmoothing) multiplier = multiplier * multiplier;
+
+            // apply the xsin transformation again
+            if (useSquareSmoothing) {
+                multiplier = MathHelper.xsin(multiplier * 2 - 1) / 2 + 0.5;
+            }
+
+            // weighted average of both end points determined by multiplier
             return ptRight.y * multiplier + ptLeft.y * (1 - multiplier);
         }
         else if (ptLeft  != null) return ptLeft.y ;
@@ -100,14 +107,19 @@ public class Interpolate {
             }
         }
         for (InterpolatePoint pt : points) {
-            int x = (int) (length * (0.5 + (pt.x / range)));
-            int y = (int) (height - pt.y);
-            int pointRadius = 0;
-            for (int i = x - pointRadius; i <= x + pointRadius; i ++) {
+            // calculate pixel coordinates for the point
+            int x = (int) ((pt.x + range / 2) / range * length);
+            int y = (int) (height - (pt.y / maxY * height));
+
+            // define the size of the point marker (radius)
+            int pointRadius = 3;
+
+            // mark the point on the image
+            for (int i = x - pointRadius; i <= x + pointRadius; i++) {
                 if (i < 0 || i >= length) continue;
                 for (int j = y - pointRadius; j <= y + pointRadius; j++) {
                     if (j < 0 || j >= height) continue;
-                    heightMap.setRGB(i, j, new Color(0, 0, 0, 25).getRGB());
+                    heightMap.setRGB(i, j, new Color(0, 0, 0).getRGB());
                 }
             }
         }
