@@ -214,6 +214,13 @@ FURNACE:
     - 光明碎块
     - 暗黑碎块
     recipeCategory: MATERIAL
+  '31_1':
+    requireLevel: 1
+    resultItem: 大狂鲨鳞
+    requireItem:
+    - 禁戒碎片
+    - 生命碎片:5
+    recipeCategory: MATERIAL
   '32':
     requireLevel: 2
     resultItem: 钴锭
