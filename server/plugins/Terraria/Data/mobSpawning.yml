@@ -130,8 +130,10 @@ spawnInfo:
         猎魂鲨: 1
     corruption_underground:
         噬魂怪: 1
+        肉后噬魂怪: 1
     corruption:
         噬魂怪: 75
+        肉后噬魂怪: 75
         腐化囊: 1
         吞噬者: 5
         暗黑木乃伊: 7.5
@@ -358,6 +360,7 @@ mobTier:
     哥布林盗贼: 克苏鲁之眼
     哥布林战士: 克苏鲁之眼
     哥布林弓箭手: 克苏鲁之眼
+    肉后噬魂怪: 血肉之墙
     肉后蛤: 血肉之墙
     肉后巨像蛤: 血肉之墙
     妖精: 血肉之墙
@@ -459,6 +462,7 @@ mobTier:
 mobTierMax:
     诅咒骷髅头: 血肉之墙
     恶魔: 机械三王
+    噬魂怪: 血肉之墙
     蛤: 血肉之墙
     巨像蛤: 血肉之墙
     剧毒米诺鱼: 灾厄之眼
@@ -918,6 +922,39 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.66
                     health: 276
+                name: "大噬魂怪"
+    肉后噬魂怪:
+        name: "噬魂怪"
+        monsterType: "SLIME"
+        spawnLocationType: AIR
+        slimeSize: 3
+        variants:
+            default1:
+                attributes:
+                    damage: 234
+                    damageType: "Melee"
+                    defence: 32
+                    knockback: 2
+                    knockbackResistance: 0.6
+                    health: 528
+                name: "噬魂怪"
+            default2:
+                attributes:
+                    damage: 198
+                    damageType: "Melee"
+                    defence: 26
+                    knockback: 2
+                    knockbackResistance: 0.54
+                    health: 448
+                name: "小噬魂怪"
+            default3:
+                attributes:
+                    damage: 268
+                    damageType: "Melee"
+                    defence: 36
+                    knockback: 2
+                    knockbackResistance: 0.66
+                    health: 606
                 name: "大噬魂怪"
     地狱蝙蝠:
         name: "地狱蝙蝠"

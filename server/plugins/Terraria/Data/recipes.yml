@@ -8,12 +8,13 @@ categoryOrder:
 - ARMOR
 - AMMO_BULLET
 - AMMO_ARROW
-- WEAPON_MAGIC
-- WEAPON_ARROW
-- WEAPON_SUMMON
 - WEAPON_MELEE
+- WEAPON_ARROW
 - WEAPON_BULLET
 - WEAPON_ROCKET
+- WEAPON_ROGUE
+- WEAPON_MAGIC
+- WEAPON_SUMMON
 - CONSUMABLE_PERMANENT
 - FISH_BAIT
 - FISHING_ROD
@@ -424,6 +425,13 @@ ANVIL:
   '11':
     requireLevel: 1
     resultItem: 钨钢头饰
+    requireItem:
+    - 钨钢金属废料:5
+    - 能源核心
+    recipeCategory: ARMOR
+  '11_1':
+    requireLevel: 1
+    resultItem: 钨钢面具
     requireItem:
     - 钨钢金属废料:5
     - 能源核心
@@ -1007,6 +1015,27 @@ ANVIL:
     resultItem: 蜘蛛护胫
     requireItem:
     - 蜘蛛牙:12
+    recipeCategory: ARMOR
+  '100_1':
+    requireLevel: 1
+    resultItem: 泰坦之心面具
+    requireItem:
+    - 星辉石:10
+    - 泰坦之心
+    recipeCategory: ARMOR
+  '100_2':
+    requireLevel: 1
+    resultItem: 泰坦之心斗篷
+    requireItem:
+    - 星辉石:20
+    - 泰坦之心
+    recipeCategory: ARMOR
+  '100_3':
+    requireLevel: 1
+    resultItem: 泰坦之心靴子
+    requireItem:
+    - 星辉石:14
+    - 泰坦之心
     recipeCategory: ARMOR
   '101':
     requireLevel: 2
@@ -1661,6 +1690,12 @@ ANVIL:
     requireItem:
     - 海洋残渣:3
     recipeCategory: ARMOR
+  '196_1':
+    requireLevel: 1
+    resultItem: 胜潮蟹盔
+    requireItem:
+    - 海洋残渣:3
+    recipeCategory: ARMOR
   '197':
     requireLevel: 1
     resultItem: 胜潮护胫
@@ -1700,6 +1735,14 @@ ANVIL:
   '202':
     requireLevel: 1
     resultItem: 天蓝兜帽
+    requireItem:
+    - 天蓝锭:5
+    - 丝绸:4
+    - 羽毛:1
+    recipeCategory: ARMOR
+  '202_1':
+    requireLevel: 1
+    resultItem: 天蓝头套
     requireItem:
     - 天蓝锭:5
     - 丝绸:4
@@ -1745,6 +1788,13 @@ ANVIL:
   '208':
     requireLevel: 1
     resultItem: 斯塔提斯头饰
+    requireItem:
+    - 纯净凝胶:5
+    - 狱炎锭:9
+    recipeCategory: ARMOR
+  '208_1':
+    requireLevel: 1
+    resultItem: 斯塔提斯面具
     requireItem:
     - 纯净凝胶:5
     - 狱炎锭:9
@@ -1812,6 +1862,13 @@ ANVIL:
     - 寒元锭:8
     - 冰川精华
     recipeCategory: ARMOR
+  '217_1':
+    requireLevel: 2
+    resultItem: 代达罗斯面罩
+    requireItem:
+    - 寒元锭:8
+    - 冰川精华
+    recipeCategory: ARMOR
   '218':
     requireLevel: 2
     resultItem: 代达罗斯兜帽
@@ -1825,6 +1882,27 @@ ANVIL:
     requireItem:
     - 寒元锭:8
     - 冰川精华
+    recipeCategory: ARMOR
+  '219_1':
+    requireLevel: 2
+    resultItem: 日影兜帽
+    requireItem:
+    - 日影面纱:12
+    - 神圣锭:8
+    recipeCategory: ARMOR
+  '219_2':
+    requireLevel: 2
+    resultItem: 日影斗篷
+    requireItem:
+    - 日影面纱:18
+    - 神圣锭:15
+    recipeCategory: ARMOR
+  '219_3':
+    requireLevel: 2
+    resultItem: 日影靴子
+    requireItem:
+    - 日影面纱:14
+    - 神圣锭:11
     recipeCategory: ARMOR
   '220':
     requireLevel: 2
@@ -1910,6 +1988,13 @@ ANVIL:
     - 熔渣锭:7
     - 混乱核心
     recipeCategory: ARMOR
+  '231_1':
+    requireLevel: 2
+    resultItem: 渊泉兜帽
+    requireItem:
+    - 熔渣锭:7
+    - 混乱核心
+    recipeCategory: ARMOR
   '232':
     requireLevel: 2
     resultItem: 渊泉面具
@@ -1958,6 +2043,13 @@ ANVIL:
   '238':
     requireLevel: 3
     resultItem: 弑神者头套
+    requireItem:
+    - 宇宙锭:7
+    - 化神魂精:2
+    recipeCategory: ARMOR
+  '238_1':
+    requireLevel: 3
+    resultItem: 弑神者面具
     requireItem:
     - 宇宙锭:7
     - 化神魂精:2
@@ -2028,6 +2120,15 @@ ANVIL:
     - 龙蒿兜帽
     - 血弑曲角盔
     - 弑神者头套
+    - 圣金源锭:12
+    recipeCategory: ARMOR
+  '246_1':
+    requireLevel: 3
+    resultItem: 金羽十杀盔
+    requireItem:
+    - 龙蒿头盔
+    - 血饮魔精盔
+    - 弑神者面具
     - 圣金源锭:12
     recipeCategory: ARMOR
   '247':
@@ -2946,6 +3047,241 @@ ANVIL:
     - 宇宙锭:8
     - 神圣晶石:16
     recipeCategory: WEAPON_BULLET
+  '362_1':
+    requireLevel: 1
+    resultItem: 海沫炸弹
+    requireItem:
+    - 海棱晶:10
+    - 炸弹:16
+    - 珍珠碎片
+    recipeCategory: WEAPON_ROGUE
+  '362_2':
+    requireLevel: 1
+    resultItem: 陨星拳套
+    requireItem:
+    - 陨星锭:10
+    recipeCategory: WEAPON_ROGUE
+  '362_3':
+    requireLevel: 2
+    resultItem: 渎神邪水
+    requireItem:
+    - 水瓶:10
+    - 精金锭:5
+    - 诅咒焰:5
+    - 暗影之魂:7
+    recipeCategory: WEAPON_ROGUE
+  '362_4':
+    requireLevel: 2
+    resultItem: 驱魔十字架
+    requireItem:
+    - 神圣锭:12
+    - 视域之魂:6
+    - 恐惧之魂:6
+    - 力量之魂:6
+    recipeCategory: WEAPON_ROGUE
+  '362_5':
+    requireLevel: 2
+    resultItem: 集束燃爆瓶
+    requireItem:
+    - 火把
+    - 凝胶:16
+    - 日影面纱:10
+    recipeCategory: WEAPON_ROGUE
+  '362_6':
+    requireLevel: 2
+    resultItem: 瓶中尘
+    requireItem:
+    - 海沫炸弹
+    - 大狂鲨鳞
+    - 沙块:16
+    recipeCategory: WEAPON_ROGUE
+  '362_7':
+    requireLevel: 2
+    resultItem: 瘟疫蜜蜂手雷:64
+    requireItem:
+    - 手榴弹:64
+    - 瘟疫细胞罐:2
+    recipeCategory: WEAPON_ROGUE
+  '362_8':
+    requireLevel: 3
+    resultItem: 半影飞弹
+    requireItem:
+    - 宇宙锭:8
+    - 梦魇魔能:20
+    - 毁灭之灵:6
+    recipeCategory: WEAPON_ROGUE
+  '362_9':
+    requireLevel: 3
+    resultItem: 等离子手雷
+    requireItem:
+    - 可疑镀层:25
+    - 神秘电路:15
+    - 宇宙锭:8
+    - 化神魂精:2
+    recipeCategory: WEAPON_ROGUE
+  '362_10':
+    requireLevel: 1
+    resultItem: 鱼骨回旋镖
+    requireItem:
+    - 海洋残渣:2
+    recipeCategory: WEAPON_ROGUE
+  '362_11':
+    requireLevel: 1
+    resultItem: 逐影飞盘
+    requireItem:
+    - 可疑镀层:7
+    - 神秘电路:5
+    - 天蓝锭:4
+    - 海棱晶:7
+    recipeCategory: WEAPON_ROGUE
+  '362_12':
+    requireLevel: 1
+    resultItem: 附魔飞斧
+    requireItem:
+    - 铁质飞斧:64
+    - 坠星:5
+    - 珍珠碎片:10
+    - 骨头:30
+    recipeCategory: WEAPON_ROGUE
+  '362_13':
+    requireLevel: 1
+    resultItem: 烈火之星
+    requireItem:
+    - 回飞刃
+    - 狱炎锭:5
+    - 混乱精华:10
+    recipeCategory: WEAPON_ROGUE
+  '362_14':
+    requireLevel: 1
+    resultItem: 宁静回旋镖
+    requireItem:
+    - 附魔回力镖
+    - 光明碎块
+    - 暗黑碎块
+    recipeCategory: WEAPON_ROGUE
+  '362_15':
+    requireLevel: 2
+    resultItem: 硫火手里剑
+    requireItem:
+    - 污痕核心:4
+    recipeCategory: WEAPON_ROGUE
+  '362_16':
+    requireLevel: 2
+    resultItem: 红木环刃
+    requireItem:
+    - 永恒锭:7
+    recipeCategory: WEAPON_ROGUE
+  '362_17':
+    requireLevel: 2
+    resultItem: 回春环刃
+    requireItem:
+    - 硫火手里剑
+    - 宁静回旋镖
+    - 生命碎片:12
+    recipeCategory: WEAPON_ROGUE
+  '362_18':
+    requireLevel: 2
+    resultItem: 霜碎回旋镖
+    requireItem:
+    - 回飞棒
+    - 寒元锭:6
+    - 虚空石:40
+    - 冰川核心:5
+    recipeCategory: WEAPON_ROGUE
+  '362_19':
+    requireLevel: 2
+    resultItem: 板块斩切者
+    requireItem:
+    - 熔渣锭:9
+    recipeCategory: WEAPON_ROGUE
+  '362_20':
+    requireLevel: 2
+    resultItem: 瘟疫解离者
+    requireItem:
+    - 叶绿锭:20
+    - 纳米机器人:128
+    - 瘟疫细胞罐:15
+    recipeCategory: WEAPON_ROGUE
+  '362_21':
+    requireLevel: 3
+    resultItem: 动能寻迹镖
+    requireItem:
+    - 湮灭
+    - 逐影飞盘
+    - 圣金源锭:5
+    recipeCategory: WEAPON_ROGUE
+  '362_22':
+    requireLevel: 1
+    resultItem: 镀金匕首
+    requireItem:
+    - 金短剑
+    - 坠星:3
+    recipeCategory: WEAPON_ROGUE
+  '362_23':
+    requireLevel: 1
+    resultItem: 晶体飞刀
+    requireItem:
+    - 钨钢飞刀:64
+    - 坠星:3
+    - 钻石:3
+    recipeCategory: WEAPON_ROGUE
+  '362_24':
+    requireLevel: 1
+    resultItem: 地狱飞剑:128
+    requireItem:
+    - 狱炎锭:2
+    - 黑曜石
+    recipeCategory: WEAPON_ROGUE
+  '362_25':
+    requireLevel: 1
+    resultItem: 羽刃:128
+    requireItem:
+    - 天蓝锭:2
+    recipeCategory: WEAPON_ROGUE
+  '362_26':
+    requireLevel: 1
+    resultItem: 凝胶飞镖:128
+    requireItem:
+    - 纯净凝胶:2
+    - 凝胶:2
+    recipeCategory: WEAPON_ROGUE
+  '362_27':
+    requireLevel: 1
+    resultItem: 棱晶飞刀
+    requireItem:
+    - 晶体飞刀
+    - 软体动物外壳:5
+    - 海棱晶:5
+    recipeCategory: WEAPON_ROGUE
+  '362_28':
+    requireLevel: 1
+    resultItem: 钴蓝苦无:96
+    requireItem:
+    - 钴锭
+    recipeCategory: WEAPON_ROGUE
+  '362_29':
+    requireLevel: 2
+    resultItem: 秘银飞刀:96
+    requireItem:
+    - 秘银锭
+    recipeCategory: WEAPON_ROGUE
+  '362_30':
+    requireLevel: 2
+    resultItem: 风暴剃刃
+    requireItem:
+    - 五指剑
+    - 秘银锭:6
+    - 日光精华:4
+    - 海棱晶:15
+    - 风暴之颚:2
+    recipeCategory: WEAPON_ROGUE
+  '362_31':
+    requireLevel: 3
+    resultItem: 炽天使
+    requireItem:
+    - 裂阳
+    - 圣金源锭:5
+    recipeCategory: WEAPON_ROGUE
   '363':
     requireLevel: 1
     resultItem: 魔法玫瑰
@@ -4039,6 +4375,12 @@ AIR:
     - 凝胶
     - 木材
     recipeCategory: BLOCK
+  '1_1':
+    requireLevel: 1
+    resultItem: 钨钢飞刀:64
+    requireItem:
+    - 钨钢金属废料
+    recipeCategory: WEAPON_ROGUE
   '2':
     requireLevel: 1
     resultItem: 烈焰箭:16
@@ -5395,6 +5737,27 @@ TINKER_WORKBENCH:
     - 星璇碎片:15
     - 夜明锭:12
     recipeCategory: ARMOR
+  '34_1':
+    requireLevel: 1
+    resultItem: 皇天面具
+    requireItem:
+    - 冥思构造体:10
+    - 夜明锭:8
+    recipeCategory: ARMOR
+  '34_2':
+    requireLevel: 1
+    resultItem: 皇天斗篷
+    requireItem:
+    - 冥思构造体:20
+    - 夜明锭:16
+    recipeCategory: ARMOR
+  '34_3':
+    requireLevel: 1
+    resultItem: 皇天护胫
+    requireItem:
+    - 冥思构造体:15
+    - 夜明锭:12
+    recipeCategory: ARMOR
   '35':
     requireLevel: 1
     resultItem: 星云头盔
@@ -5939,6 +6302,92 @@ TINKER_WORKBENCH:
     - 龙蒿锭:8
     - 夜明锭:4
     recipeCategory: WEAPON_BULLET
+  '105_1':
+    requireLevel: 1
+    resultItem: 毁灭之星
+    requireItem:
+    - 冥思构造体:10
+    recipeCategory: WEAPON_ROGUE
+  '105_2':
+    requireLevel: 1
+    resultItem: 震波炸弹
+    requireItem:
+    - 可疑镀层:18
+    - 神秘电路:12
+    - 龙蒿锭:8
+    - 夜明锭:4
+    recipeCategory: WEAPON_ROGUE
+  '105_3':
+    requireLevel: 1
+    resultItem: 秘封奇点
+    requireItem:
+    - 瓶中尘
+    - 暗离子体:3
+    recipeCategory: WEAPON_ROGUE
+  '105_4':
+    requireLevel: 1
+    resultItem: 元素飞盘
+    requireItem:
+    - 回春环刃
+    - 夜明锭:5
+    - 星系异石:5
+    - 生命合金:5
+    recipeCategory: WEAPON_ROGUE
+  '105_5':
+    requireLevel: 1
+    resultItem: 光辉星剑
+    requireItem:
+    - 棱晶飞刀
+    - 炫星锭:10
+    - 星尘:15
+    - 坠星:10
+    recipeCategory: WEAPON_ROGUE
+  '105_6':
+    requireLevel: 1
+    resultItem: 月明苦无:320
+    requireItem:
+    - 夜明锭:5
+    recipeCategory: WEAPON_ROGUE
+  '105_7':
+    requireLevel: 1
+    resultItem: 裂阳
+    requireItem:
+    - 光辉星剑
+    - 神圣晶石:6
+    recipeCategory: WEAPON_ROGUE
+  '105_8':
+    requireLevel: 1
+    resultItem: 龙蒿投镖:320
+    requireItem:
+    - 龙蒿锭:5
+    recipeCategory: WEAPON_ROGUE
+  '105_9':
+    requireLevel: 1
+    resultItem: 雷劫
+    requireItem:
+    - 风暴剃刃
+    - 装甲外壳:3
+    - 浊火精华:15
+    - 日光核心:5
+    recipeCategory: WEAPON_ROGUE
+  '105_10':
+    requireLevel: 1
+    resultItem: 时空交叉刃
+    requireItem:
+    - 星体苦无
+    - 恒星匕首
+    - 毁灭之灵:5
+    - 灵质:20
+    recipeCategory: WEAPON_ROGUE
+  '105_11':
+    requireLevel: 1
+    resultItem: 遗忘之颚
+    requireItem:
+    - 利维坦之牙
+    - 猎魂鲨牙:6
+    - 毁灭之灵:2
+    - 流明晶:15
+    recipeCategory: WEAPON_ROGUE
   '106':
     requireLevel: 1
     resultItem: 玄法百枝莲
@@ -6246,6 +6695,13 @@ TINKER_WORKBENCH:
     - 龙蒿锭:7
     - 神圣晶石:6
     recipeCategory: ARMOR
+  '144_1':
+    requireLevel: 1
+    resultItem: 龙蒿头盔
+    requireItem:
+    - 龙蒿锭:7
+    - 神圣晶石:6
+    recipeCategory: ARMOR
   '145':
     requireLevel: 1
     resultItem: 龙蒿面具
@@ -6311,6 +6767,13 @@ TINKER_WORKBENCH:
   '153':
     requireLevel: 1
     resultItem: 血弑曲角盔
+    requireItem:
+    - 血石核心:11
+    - 毁灭之灵:2
+    recipeCategory: ARMOR
+  '153_1':
+    requireLevel: 1
+    resultItem: 血饮魔精盔
     requireItem:
     - 血石核心:11
     - 毁灭之灵:2
@@ -6536,6 +6999,41 @@ TINKER_WORKBENCH:
     - 哈雷彗星炮
     - 奇迹物质
     recipeCategory: WEAPON_ARROW
+  '10_1':
+    requireLevel: 1
+    resultItem: 超新星
+    requireItem:
+    - 天鳍毁灭者
+    - 集束燃爆瓶
+    - 毁灭之星
+    - 秘封奇点
+    - 半影飞弹
+    - 奇迹物质
+    recipeCategory: WEAPON_ROGUE
+  '10_2':
+    requireLevel: 1
+    resultItem: 星神之杀
+    requireItem:
+    - 元素飞盘
+    - 熔岩切碎者
+    - 板块斩切者
+    - 霜碎回旋镖
+    - 烈火之星
+    - 附魔飞斧
+    - 奇迹物质
+    recipeCategory: WEAPON_ROGUE
+  '10_3':
+    requireLevel: 1
+    resultItem: 纳米黑死神
+    requireItem:
+    - 剧毒旋风
+    - 狱卒之镰
+    - 熔岩切碎者
+    - 魔影锭:5
+    - 恒温能量:40
+    - 瘟疫细胞罐:20
+    - 纳米机器人:320
+    recipeCategory: WEAPON_ROGUE
   '11':
     requireLevel: 1
     resultItem: 耀界之光

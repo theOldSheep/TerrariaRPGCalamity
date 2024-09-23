@@ -2838,8 +2838,7 @@ Drew之翼:
     regen: -16
   attributesFormII:
     maxHealthMulti: -0.5
-    fixedHealingMulti: -0.4
-    damageTakenMulti: -0.15
+    fixedHealingMulti: -0.35
     regen: 24
   worth: 30000000
   rarity: 15
@@ -8160,6 +8159,1082 @@ Dodu的手炮:
     ammoConsumptionRate: -0.8
   worth: 40000000
   rarity: 16
+海沫炸弹:
+  item: IRON_SWORD
+  lore:
+  - §r投掷一颗会在爆炸时产生泡泡的炸弹
+  - §r潜伏攻击会使炸弹飞的更快并且在爆炸时生成五个泡泡
+  attributes:
+    damage: 24
+    damageStealth: 32
+    damageType: Rogue
+    crit: 4
+    knockback: 8
+    useTime: 24
+  worth: 400000
+  rarity: 1
+陨星拳套:
+  item: IRON_SWORD
+  lore:
+  - §r发射激烈爆炸的火箭拳
+  - §r潜伏攻击会使拳头在敌人间来回反弹，至多4次
+  - §r“盗贼这下NB了”
+  attributes:
+    damage: 30
+    damageStealth: 50
+    damageType: Rogue
+    crit: 4
+    knockback: 5.75
+    useTime: 18
+  worth: 400000
+  rarity: 2
+炸药桶:
+  item: DIAMOND_SWORD
+  lore:
+  - §r丢出一个滚动爆炸桶
+  - §r潜伏攻击会让桶弹跳两次，且反弹时也会产生爆炸效果
+  attributes:
+    damage: 64
+    damageStealth: 100
+    damageType: Rogue
+    crit: 4
+    knockback: 8
+    useTime: 22
+  worth: 2400000
+  rarity: 4
+渎神邪水:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投掷一瓶会爆炸成邪恶气泡的不洁之水
+  - §r潜伏攻击形成更多气泡，并造成诅咒狱火和灵液减益
+  attributes:
+    damage: 110
+    damageStealth: 175
+    damageType: Rogue
+    crit: 4
+    knockback: 4.5
+    useTime: 28
+  worth: 4800000
+  rarity: 5
+驱魔十字架:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一个神圣十字架，能爆炸并对附近的敌人造成伤害
+  - §r潜伏攻击会产生更大的爆炸，以及充满神圣之光的流星
+  - §r“Dimension Sonata”
+  attributes:
+    damage: 128
+    damageStealth: 160
+    damageType: Rogue
+    crit: 4
+    knockback: 1
+    useTime: 19
+  worth: 4800000
+  rarity: 5
+天鳍毁灭者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一枚会追踪下方敌人的天鳍核武
+  - §r潜伏攻击会丢出无视敌人位置进行追踪的天鳍核武
+  - §r“鱼雷母舰入境！”
+  attributes:
+    damage: 92
+    damageStealth: 225
+    damageType: Rogue
+    crit: 4
+    knockback: 6.5
+    useTime: 35
+  worth: 7200000
+  rarity: 5
+集束燃爆瓶:
+  item: DIAMOND_SWORD
+  lore:
+  - §r燃爆瓶爆炸出一片火花
+  - §r潜伏攻击丢出集束燃爆瓶
+  - §r“我需要更大的破坏”
+  attributes:
+    damage: 100
+    damageStealth: 150
+    damageType: Rogue
+    crit: 4
+    knockback: 5
+    useTime: 27
+  worth: 12000000
+  rarity: 7
+瓶中尘:
+  item: DIAMOND_SWORD
+  lore:
+  - §r炸裂成一团粉尘云
+  - §r潜伏攻击使得粉尘云更猛烈且持续时间更久
+  attributes:
+    damage: 148
+    damageStealth: 200
+    damageType: Rogue
+    crit: 4
+    knockback: 4
+    useTime: 28
+  worth: 12000000
+  rarity: 7
+咸水瓶:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一个爆炸成剧毒海水弹的烧瓶
+  - §r潜伏攻击召唤伤害更高的追踪海水弹
+  attributes:
+    damage: 120
+    damageStealth: 180
+    damageType: Rogue
+    crit: 4
+    knockback: 6.5
+    useTime: 34
+  worth: 12000000
+  rarity: 7
+瘟疫蜜蜂手雷:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r释放大量瘟疫蜜蜂
+  - §r潜伏攻击会产生一次大爆炸并生成更多的蜜蜂
+  attributes:
+    damage: 126
+    damageStealth: 200
+    damageType: Rogue
+    crit: 4
+    knockback: 1.5
+    useTime: 14
+  worth: 200000
+  rarity: 8
+碎颅飞盘:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投掷在地面滚动的飞盘
+  - §r潜伏攻击发射能穿透的爆炸飞盘
+  attributes:
+    damage: 240
+    damageStealth: 350
+    damageType: Rogue
+    crit: 4
+    knockback: 4
+    useTime: 14
+  worth: 16000000
+  rarity: 8
+毁灭之星:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射巨大的毁灭地雷，爆炸形成追踪子母炸弹
+  - §r潜伏攻击生成更多更强的子母炸弹
+  attributes:
+    damage: 300
+    damageStealth: 400
+    damageType: Rogue
+    crit: 4
+    knockback: 10
+    useTime: 40
+  worth: 16000000
+  rarity: 9
+震波炸弹:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一颗炸弹
+  - §r潜伏攻击会使炸弹释放出极为强劲的震荡波
+  attributes:
+    damage: 400
+    damageStealth: 1000
+    damageType: Rogue
+    crit: 4
+    knockback: 3
+    useTime: 55
+  worth: 24000000
+  rarity: 1100
+秘封奇点:
+  item: DIAMOND_SWORD
+  lore:
+  - §r碰撞时碎裂，召唤一个持续牵引附近敌人的奇点
+  - §r潜伏攻击会召唤一个持续时间更长的黑洞，同时会有更加强力的牵引力
+  attributes:
+    damage: 520
+    damageStealth: 700
+    damageType: Rogue
+    crit: 4
+    knockback: 5
+    useTime: 24
+  worth: 24000000
+  rarity: 12
+半影飞弹:
+  item: DIAMOND_SWORD
+  lore:
+  - §r掷出一发半影飞弹，爆炸产生追踪灵魂与火焰
+  - §r潜伏攻击会瞬间命中敌人
+  attributes:
+    damage: 1660
+    damageStealth: 2520
+    damageType: Rogue
+    crit: 20
+    knockback: 8
+    useTime: 39
+  worth: 28000000
+  rarity: 14
+等离子手雷:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一个会在撞击敌人或物块时爆炸的手雷
+  - §r潜伏攻击会使手雷在撞击时造成更加猛烈的汽化爆炸
+  - §r“每个手雷中都封存着高度浓缩且炽热的等离子，小心使用”
+  attributes:
+    damage: 1900
+    damageStealth: 2430
+    damageType: Rogue
+    crit: 4
+    knockback: 3
+    useTime: 30
+  worth: 28000000
+  rarity: 1100
+超新星:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投出一颗会锁定并追踪目标的智能炸弹
+  - §r每颗炸弹都会产生一颗微型超新星，它会牵引弱小的敌人
+  - §r潜伏攻击将会产生一道撼动现实基础的冲击波
+  attributes:
+    damage: 10072
+    damageStealth: 17500
+    damageType: Rogue
+    crit: 4
+    knockback: 18
+    useTime: 70
+  worth: 30000000
+  rarity: 15
+鱼骨回旋镖:
+  item: IRON_SWORD
+  lore:
+  - §r潜伏攻击会扔出能敌人之间弹跳的回旋镖
+  attributes:
+    damage: 54
+    damageStealth: 60
+    damageType: Rogue
+    crit: 4
+    knockback: 5.5
+    useTime: 15
+  worth: 400000
+  rarity: 2
+沙钱:
+  item: IRON_SWORD
+  lore:
+  - §r扔出回旋沙钱
+  - §r潜伏攻击将同时扔出两个沙钱，击中敌人后炸成珊瑚碎片
+  - §r“沙县！”
+  attributes:
+    damage: 52
+    damageStealth: 60
+    damageType: Rogue
+    crit: 4
+    knockback: 3.5
+    useTime: 14
+  worth: 200000
+  rarity: 2
+真菌回旋爪:
+  item: IRON_SWORD
+  lore:
+  - §r发射慢速，远距离的回旋镖
+  attributes:
+    damage: 36
+    damageStealth: 72
+    damageType: Rogue
+    crit: 4
+    knockback: 1.5
+    useTime: 19
+  worth: 400000
+  rarity: 2
+逐影飞盘:
+  item: IRON_SWORD
+  lore:
+  - §r扔出一个会向周围敌人发射激光的飞盘
+  - §r潜伏攻击会以极高的频率倾泻激光，激光攻击距离更远
+  attributes:
+    damage: 38
+    damageStealth: 60
+    damageType: Rogue
+    crit: 4
+    knockback: 3
+    useTime: 40
+  worth: 800000
+  rarity: 3
+附魔飞斧:
+  item: IRON_SWORD
+  lore:
+  - §r扔出一把高速飞斧，撞到物块或短距离飞行后返回
+  - §r在每次飞行最远点召唤一个能穿墙和自动瞄准的魔法飞斧
+  - §r潜伏攻击使斧头飞的更远，并在命中时向四面八方发射魔法飞斧
+  attributes:
+    damage: 40
+    damageStealth: 70
+    damageType: Rogue
+    crit: 4
+    knockback: 1
+    useTime: 14
+  worth: 800000
+  rarity: 3
+回飞刃:
+  item: IRON_SWORD
+  lore:
+  - §r扔出锋利回飞刃
+  - §r潜伏攻击会使回飞刃飞得很快且能够无限穿透
+  attributes:
+    damage: 90
+    damageStealth: 100
+    damageType: Rogue
+    crit: 8
+    knockback: 3
+    useTime: 14
+  worth: 600000
+  rarity: 3
+回飞棒:
+  item: IRON_SWORD
+  lore:
+  - §r潜伏攻击发射三把短距离回飞棒
+  - §r“也叫作Dowak”
+  attributes:
+    damage: 126
+    damageStealth: 150
+    damageType: Rogue
+    crit: 20
+    knockback: 12
+    useTime: 24
+  worth: 800000
+  rarity: 3
+烈火之星:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出穿透至多3次的灼热回飞刃
+  - §r潜伏攻击能够无限穿透
+  attributes:
+    damage: 150
+    damageStealth: 225
+    damageType: Rogue
+    crit: 8
+    knockback: 4
+    useTime: 15
+  worth: 2400000
+  rarity: 4
+宁静回旋镖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一把由光明和黑暗产生的回旋镖
+  - §r回旋镖在扔出去击中敌人时召唤光明碎块，在返回时召唤追踪的黑暗碎块
+  - §r潜伏攻击会同时释放两种碎块
+  attributes:
+    damage: 80
+    damageStealth: 120
+    damageType: Rogue
+    crit: 4
+    knockback: 1
+    useTime: 36
+  worth: 2400000
+  rarity: 4
+破冰者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r潜伏攻击产生冰霜爆炸
+  attributes:
+    damage: 120
+    damageStealth: 160
+    damageType: Rogue
+    crit: 4
+    knockback: 6.75
+    useTime: 13
+  worth: 4800000
+  rarity: 5
+冰灵旋刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投出一把冰刃，击中敌人时碎成若干个冰星
+  - §r潜伏攻击会使冰刃追踪攻击敌怪
+  attributes:
+    damage: 120
+    damageStealth: 150
+    damageType: Rogue
+    crit: 4
+    knockback: 4
+    useTime: 29
+  worth: 4800000
+  rarity: 5
+硫火手里剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投出击中敌人时分裂的硫火手里剑
+  - §r潜伏攻击使手里剑发射大量硫火飞弹
+  attributes:
+    damage: 56
+    damageStealth: 60
+    damageType: Rogue
+    crit: 4
+    knockback: 6.5
+    useTime: 17
+  worth: 7200000
+  rarity: 5
+红木环刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r潜伏攻击在飞行轨迹上生成花朵
+  attributes:
+    damage: 168
+    damageStealth: 200
+    damageType: Rogue
+    crit: 4
+    knockback: 7.5
+    useTime: 13
+  worth: 12000000
+  rarity: 7
+回春环刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r掷出泰拉飞盘，有敌人在附近时分裂出新的飞盘
+  - §r潜伏攻击会投掷速度较慢但分裂间隔更低的泰拉飞盘
+  attributes:
+    damage: 200
+    damageStealth: 225
+    damageType: Rogue
+    crit: 4
+    knockback: 4
+    useTime: 30
+  worth: 12000000
+  rarity: 7
+霜碎回旋镖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射长距离回旋镖，接触敌人时碎成冰锥
+  - §r潜伏攻击会扔出三把飞行距离较短的冰冻回旋镖
+  attributes:
+    damage: 180
+    damageStealth: 200
+    damageType: Rogue
+    crit: 20
+    knockback: 12
+    useTime: 21
+  worth: 12000000
+  rarity: 7
+板块斩切者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出会在击中敌人时爆炸的飞镰
+  - §r潜伏攻击能够穿透4次
+  attributes:
+    damage: 190
+    damageStealth: 225
+    damageType: Rogue
+    crit: 4
+    knockback: 8.5
+    useTime: 19
+  worth: 12000000
+  rarity: 8
+瘟疫解离者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一把瘟疫回旋镖，碰撞物块或敌人时释放瘟疫寻觅者
+  - §r潜伏攻击导致回旋镖飞行过程不断释放瘟疫寻觅者
+  attributes:
+    damage: 160
+    damageStealth: 175
+    damageType: Rogue
+    crit: 4
+    knockback: 4.5
+    useTime: 15
+  worth: 16000000
+  rarity: 8
+元素飞盘:
+  item: DIAMOND_SWORD
+  lore:
+  - §r掷出元素飞盘，命中敌怪时分裂出数个新的元素飞盘
+  - §r潜伏攻击飞行速度较慢，但飞行距离远且穿透敌怪
+  attributes:
+    damage: 184
+    damageStealth: 200
+    damageType: Rogue
+    crit: 4
+    knockback: 9
+    useTime: 16
+  worth: 22000000
+  rarity: 11
+熔岩切碎者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一把会在命中敌人产生神圣火球的飞镰
+  - §r潜伏攻击会使镰刀在飞行中不断释放神圣火球，并在命中时产生更多的火球
+  attributes:
+    damage: 332
+    damageStealth: 444
+    damageType: Rogue
+    crit: 4
+    knockback: 9
+    useTime: 17
+  worth: 24000000
+  rarity: 12
+狱卒之镰:
+  item: DIAMOND_SWORD
+  lore:
+  - §r快速投掷狱卒之镰
+  - §r潜伏攻击命中后召唤一大群受苦亡魂
+  attributes:
+    damage: 332
+    damageStealth: 666
+    damageType: Rogue
+    crit: 4
+    knockback: 7.5
+    useTime: 6
+  worth: 26000000
+  rarity: 13
+辞别飞镰:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出追踪的死神之镰
+  - §r潜伏攻击会在击中敌人时释放狂暴龙卷
+  attributes:
+    damage: 486
+    damageStealth: 444
+    damageType: Rogue
+    crit: 4
+    knockback: 7
+    useTime: 16
+  worth: 26000000
+  rarity: 13
+剧毒旋风:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投掷一个缓慢移动的回旋镖
+  - §r发射一段时间后，环刃选择一个目标并快速追踪敌人
+  - §r潜伏攻击会投掷追踪速度更快的环刃并释放沙子
+  attributes:
+    damage: 666
+    damageStealth: 666
+    damageType: Rogue
+    crit: 4
+    knockback: 5
+    useTime: 19
+  worth: 26000000
+  rarity: 13
+湮灭:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投出一个向周围敌人发射星云激光的飞盘
+  - §r潜伏攻击会无限穿透并追踪，且发射更多激光
+  attributes:
+    damage: 1240
+    damageStealth: 1000
+    damageType: Rogue
+    crit: 4
+    knockback: 7
+    useTime: 32
+  worth: 28000000
+  rarity: 14
+动能寻迹镖:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一个处理计算的飞盘，飞盘会向敌人发射电能
+  - §r潜伏攻击使飞盘弹向其他目标
+  attributes:
+    damage: 5700
+    damageStealth: 5000
+    damageType: Rogue
+    crit: 4
+    knockback: 3
+    useTime: 42
+  worth: 30000000
+  rarity: 15
+星神之杀:
+  item: DIAMOND_SWORD
+  lore:
+  - §r掷出一把高速的圣金镰刀——星神之杀，击中敌怪时分裂出数把幻影镰刀
+  - §r潜伏攻击分裂出更多镰刀
+  attributes:
+    damage: 560
+    damageStealth: 1000
+    damageType: Rogue
+    crit: 4
+    knockback: 6
+    useTime: 21
+  worth: 30000000
+  rarity: 15
+纳米黑死神:
+  item: DIAMOND_SWORD
+  lore:
+  - §r释放纳米黑能量刀刃风暴
+  - §r潜伏攻击会导致镰刃产生大量自动追踪的残像，而不是能量刀刃
+  - §r“生灵在她的无尽仇恨中溺亡”
+  attributes:
+    damage: 260
+    damageStealth: 300
+    damageType: Rogue
+    crit: 4
+    knockback: 9
+    useTime: 5
+  worth: 40000000
+  rarity: 16
+钨钢飞刀:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r发射钨钢飞刀
+  - §r潜伏攻击会使飞刀飞得更远并迅速造成至多3次伤害
+  attributes:
+    damage: 18
+    damageStealth: 20
+    damageType: Rogue
+    crit: 4
+    knockback: 1
+    useTime: 10
+  worth: 500
+  rarity: 1
+镀金匕首:
+  item: IRON_SWORD
+  lore:
+  - §r扔出一把会在敌人间反弹一次的闪亮匕首
+  - §r潜伏攻击于一秒内在原地向附近敌人投出20把无法反弹的匕首
+  attributes:
+    damage: 28
+    damageStealth: 20
+    damageType: Rogue
+    crit: 4
+    knockback: 1
+    useTime: 17
+  worth: 200000
+  rarity: 1
+晶体飞刀:
+  item: IRON_SWORD
+  lore:
+  - §r飞行时分裂成几个短距离飞刀
+  - §r潜伏攻击使飞刀可以分裂两次
+  attributes:
+    damage: 32
+    damageStealth: 32
+    damageType: Rogue
+    crit: 8
+    knockback: 3
+    useTime: 17
+  worth: 400000
+  rarity: 1
+狂菌根系:
+  item: IRON_SWORD
+  lore:
+  - §r疯狂发射短距离真菌根系
+  - §r潜伏打击会引发真菌爆炸
+  attributes:
+    damage: 20
+    damageStealth: 40
+    damageType: Rogue
+    crit: 4
+    knockback: 1.5
+    useTime: 4
+  worth: 400000
+  rarity: 2
+地狱飞剑:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r扔出一个燃烧着的飞刀
+  - §r潜伏攻击会使飞刀被火焰吞没，与墙和敌怪接触时爆炸
+  attributes:
+    damage: 48
+    damageStealth: 48
+    damageType: Rogue
+    crit: 4
+    knockback: 1
+    useTime: 17
+  worth: 10000
+  rarity: 3
+羽刃:
+  item: IRON_SWORD
+  lore:
+  - §r扔出一把会召唤追踪羽毛的飞刀
+  - §r潜伏攻击会扔出一束飞刀
+  attributes:
+    damage: 32
+    damageStealth: 32
+    damageType: Rogue
+    crit: 4
+    knockback: 2
+    useTime: 20
+  worth: 6000
+  rarity: 3
+灰烬石钟乳:
+  item: IRON_SWORD
+  lore:
+  - §r丢出一个小的石钟乳，飞行一小段距离后化为灰烬
+  - §r潜伏攻击会丢出一个更大的石钟乳，造成更多伤害且会移动更远距离
+  attributes:
+    damage: 74
+    damageStealth: 100
+    damageType: Rogue
+    crit: 4
+    knockback: 1
+    useTime: 17
+  worth: 200000
+  rarity: 3
+五指剑:
+  item: IRON_SWORD
+  lore:
+  - §r潜伏攻击追踪敌人
+  - §r“五指……你知道我要说什么”
+  attributes:
+    damage: 72
+    damageStealth: 128
+    damageType: Rogue
+    crit: 12
+    knockback: 5
+    useTime: 14
+  worth: 800000
+  rarity: 3
+凝胶飞镖:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r投掷弹跳凝胶飞镖
+  - §r潜伏攻击将使飞镖忽视重力并更有力地反弹
+  - §r它们还会额外溢出凝胶束
+  attributes:
+    damage: 56
+    damageStealth: 72
+    damageType: Rogue
+    crit: 4
+    knockback: 2.5
+    useTime: 10
+  worth: 500000
+  rarity: 4
+咒焰匕首:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投掷三把不精准的匕首
+  - §r潜伏攻击会投掷一把会爆裂成咒焰旋涡的匕首
+  attributes:
+    damage: 90
+    damageStealth: 90
+    damageType: Rogue
+    crit: 4
+    knockback: 4.5
+    useTime: 18
+  worth: 4800000
+  rarity: 4
+棱晶飞刀:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投掷一个会在短时间后分裂的飞刀
+  - §r潜伏攻击会使飞刀额外爆裂出棱晶碎片
+  attributes:
+    damage: 72
+    damageStealth: 100
+    damageType: Rogue
+    crit: 8
+    knockback: 5
+    useTime: 20
+  worth: 4800000
+  rarity: 4
+钴蓝苦无:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r潜伏攻击发射三道追踪钴蓝能量束
+  attributes:
+    damage: 116
+    damageStealth: 125
+    damageType: Rogue
+    crit: 4
+    knockback: 2.5
+    useTime: 11
+  worth: 18000
+  rarity: 4
+秘银飞刀:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r潜伏攻击覆盖着致命的毒素，会造成辐射、中毒和酸性毒液减益
+  attributes:
+    damage: 160
+    damageStealth: 225
+    damageType: Rogue
+    crit: 4
+    knockback: 1.75
+    useTime: 9
+  worth: 22000
+  rarity: 4
+风暴剃刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投掷一把会在命中时召唤闪电的飞刀
+  - §r潜伏攻击会使飞刀的飞行速度更快并在命中时生成多道闪电
+  - §#24c7f0“力挽狂澜”
+  attributes:
+    damage: 76
+    damageStealth: 80
+    damageType: Rogue
+    crit: 12
+    knockback: 7
+    useTime: 14
+  worth: 4800000
+  rarity: 5
+猴子飞镖:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r潜伏攻击扔出三把高速弹跳飞刀
+  - §r“非常适合用来扎破气球”
+  attributes:
+    damage: 300
+    damageStealth: 300
+    damageType: Rogue
+    crit: 22
+    knockback: 4
+    useTime: 19
+  worth: 8000
+  rarity: 7
+利维坦之牙:
+  item: DIAMOND_SWORD
+  lore:
+  - §r迅速投掷毒牙，造成毒液减益
+  - §r潜伏攻击会掷出6枚高速毒牙，无视重力并且会在命中时产生水爆炸
+  attributes:
+    damage: 128
+    damageStealth: 150
+    damageType: Rogue
+    crit: 4
+    knockback: 1
+    useTime: 15
+  worth: 12000000
+  rarity: 7
+恒星匕首:
+  item: DIAMOND_SWORD
+  lore:
+  - §r潜伏攻击会在敌人周围投掷10把飞刀
+  - §r“砸！瓦鲁多！”
+  attributes:
+    damage: 175
+    damageStealth: 200
+    damageType: Rogue
+    crit: 8
+    knockback: 4
+    useTime: 8
+  worth: 12000000
+  rarity: 7
+孔雀翎:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一片苦无
+  - §r潜伏攻击发射三把追踪穿透苦无
+  attributes:
+    damage: 104
+    damageStealth: 125
+    damageType: Rogue
+    crit: 8
+    knockback: 1.25
+    useTime: 14
+  worth: 16000000
+  rarity: 8
+憎恶血刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r命中时吸取少量生命
+  - §r潜伏攻击会使你失去30%的当前生命值
+  - §r失去生命值的75%会附加到基础伤害中
+  - §r“似乎随时间的流逝而逐渐崩解”
+  attributes:
+    damage: 196
+    damageStealth: 125
+    damageType: Rogue
+    crit: 4
+    knockback: 3
+    useTime: 14
+  worth: 16000000
+  rarity: 8
+光辉星剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投掷一个会在短时间后爆炸并分裂的匕首
+  - §r潜伏攻击会分裂更多匕首并产生更强的爆炸并且爆炸会牵引敌人
+  attributes:
+    damage: 110
+    damageStealth: 150
+    damageType: Rogue
+    crit: 12
+    knockback: 5
+    useTime: 12
+  worth: 16000000
+  rarity: 9
+百变餐叉:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射三把餐具
+  - §r潜伏攻击会发射强大的屠刀
+  - §r“太空鸡，就是它了”
+  attributes:
+    damage: 666
+    damageStealth: 666
+    damageType: Rogue
+    crit: 4
+    knockback: 8
+    useTime: 44
+  worth: 20000000
+  rarity: 10
+月明苦无:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r扔出三把无视重力的追踪苦无
+  - §r飞行足够距离后，苦无会获得月之能量，追踪至附近敌人
+  - §r潜伏攻击会立即投掷出九把加强的苦无
+  attributes:
+    damage: 224
+    damageStealth: 250
+    damageType: Rogue
+    crit: 4
+    knockback: 2
+    useTime: 9
+  worth: 2400
+  rarity: 10
+裂阳:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投掷一把会分裂成灼热追踪匕首的匕首
+  - §r潜伏攻击会使匕首牵引敌人，并且匕首在摧毁时会发射更多追踪匕首
+  attributes:
+    damage: 160
+    damageStealth: 175
+    damageType: Rogue
+    crit: 14
+    knockback: 6
+    useTime: 11
+  worth: 24000000
+  rarity: 12
+龙蒿投镖:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r投掷一支穿透投镖
+  - §r潜伏攻击完全不受重力影响
+  attributes:
+    damage: 760
+    damageStealth: 950
+    damageType: Rogue
+    crit: 4
+    knockback: 4.5
+    useTime: 10
+  worth: 3000
+  rarity: 12
+雷劫:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射圣雷天劫电击周围敌人
+  - §r弹幕击中敌人时从天上降下闪电
+  - §r潜伏攻击召唤更多闪电且弹幕移动速度提高
+  attributes:
+    damage: 932
+    damageStealth: 1024
+    damageType: Rogue
+    crit: 16
+    knockback: 10
+    useTime: 20
+  worth: 24000000
+  rarity: 12
+星体苦无:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射鬼畜的短程苦无
+  - §r潜伏攻击发射一束能够刺穿敌人并折返的苦无
+  attributes:
+    damage: 184
+    damageStealth: 250
+    damageType: Rogue
+    crit: 4
+    knockback: 5
+    useTime: 10
+  worth: 24000000
+  rarity: 12
+时空交叉刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一把时间之刃，扭曲敌人周围的时空
+  - §r潜伏攻击可以无限穿透并在命中时在敌人周围召唤大量飞刀
+  attributes:
+    damage: 864
+    damageStealth: 999
+    damageType: Rogue
+    crit: 4
+    knockback: 2
+    useTime: 19
+  worth: 26000000
+  rarity: 13
+遗忘之颚:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出六颗毒牙
+  - §r潜伏攻击命中会产生冲击波
+  - §r“你将需要一艘更大的船”
+  attributes:
+    damage: 318
+    damageStealth: 666
+    damageType: Rogue
+    crit: 4
+    knockback: 1
+    useTime: 14
+  worth: 26000000
+  rarity: 13
+炽天使:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投掷一柄急速飞行但会迅速减速并消散成光的匕首
+  - §r消散后生成六个急速切割附近敌人的刀刃和一束大型激光
+  - §r潜伏攻击会释放7个光球，在匕首消散后会发射小型激光
+  attributes:
+    damage: 640
+    damageStealth: 725
+    damageType: Rogue
+    crit: 4
+    knockback: 6
+    useTime: 12
+  worth: 30000000
+  rarity: 15
+牺牲:
+  item: DIAMOND_SWORD
+  lore:
+  - §r丢出一把牺牲之匕，释放邪血爆炸并为你回复生命值
+  - §r潜伏攻击会使你失去50%的当前生命值
+  - §r失去生命值的175%会附加到基础伤害中
+  attributes:
+    damage: 600
+    damageStealth: 300
+    damageType: Rogue
+    crit: 4
+    knockback: 4
+    useTime: 8
+  worth: 30000000
+  rarity: 15
+尖刺球:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r投出一个尖刺球
+  - §r潜伏攻击基础伤害有显著提升
+  attributes:
+    damage: 15
+    damageStealth: 45
+    damageType: Rogue
+    crit: 4
+    knockback: 1
+    useTime: 15
+  worth: 1600
+  rarity: 0
+手里剑:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r投出一个手里剑
+  - §r潜伏攻击同时发射数个弹幕
+  attributes:
+    damage: 15
+    damageStealth: 15
+    damageType: Rogue
+    crit: 4
+    knockback: 0
+    useTime: 15
+  worth: 300
+  rarity: 0
 火花魔棒:
   item: STICK
   lore:
@@ -11335,30 +12410,9 @@ Dodu的手炮:
     useTime: 30
   worth: 5000000
   rarity: 8
-手里剑:
-  item: IRON_NUGGET
-  attributes:
-    damage: 15
-    damageType: Arrow
-    crit: 4
-    knockback: 0
-    projectileSpeed: 2
-    useTime: 15
-  worth: 300
-  rarity: 0
-尖刺球:
-  item: IRON_NUGGET
-  attributes:
-    damage: 15
-    damageType: Arrow
-    crit: 4
-    knockback: 1
-    projectileSpeed: 1
-    useTime: 15
-  worth: 1600
-  rarity: 0
 手榴弹:
   item: IRON_NUGGET
+  prefixApplicable: false
   attributes:
     damage: 120
     damageType: Arrow
@@ -11370,6 +12424,7 @@ Dodu的手炮:
   rarity: 0
 炸弹:
   item: IRON_NUGGET
+  prefixApplicable: false
   lore:
   - §r造成会摧毁大部分图格的小爆炸
   - §7▷ 爆炸物：摧毁方块会按照玩家手上的工具和游戏进度进行判定
@@ -11384,6 +12439,7 @@ Dodu的手炮:
   rarity: 0
 粘性炸弹:
   item: IRON_NUGGET
+  prefixApplicable: false
   lore:
   - §r造成会摧毁大部分图格的小爆炸
   - §7▷ 爆炸物：摧毁方块会按照玩家手上的工具和游戏进度进行判定
@@ -11399,6 +12455,7 @@ Dodu的手炮:
   rarity: 0
 雷管:
   item: IRON_NUGGET
+  prefixApplicable: false
   lore:
   - §r造成会摧毁大部分图格的大爆炸
   - §7▷ 爆炸物：摧毁方块会按照玩家手上的工具和游戏进度进行判定
@@ -11413,6 +12470,7 @@ Dodu的手炮:
   rarity: 1
 粘性雷管:
   item: IRON_NUGGET
+  prefixApplicable: false
   lore:
   - §r造成会摧毁大部分图格的大爆炸
   - §7▷ 爆炸物：摧毁方块会按照玩家手上的工具和游戏进度进行判定
@@ -12115,6 +13173,15 @@ Dodu的手炮:
     damageRangedMulti: 0.1
   worth: 150000
   rarity: 1
+钨钢面具:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 2
+    damageRogueMulti: 0.1
+  worth: 150000
+  rarity: 1
 钨钢兜帽:
   item: IRON_HELMET
   lore:
@@ -12306,6 +13373,15 @@ Dodu的手炮:
     damageRangedMulti: 0.05
   worth: 400000
   rarity: 1
+胜潮蟹盔:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 6
+    damageRogueMulti: 0.05
+  worth: 400000
+  rarity: 1
 胜潮隐帽:
   item: IRON_HELMET
   lore:
@@ -12470,6 +13546,16 @@ Dodu的手炮:
     damageRangedMulti: 0.1
   worth: 800000
   rarity: 3
+天蓝头套:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 8
+    damageRogueMulti: 0.1
+    speedMulti: 0.05
+  worth: 800000
+  rarity: 3
 天蓝帽:
   item: IRON_HELMET
   lore:
@@ -12555,6 +13641,17 @@ Dodu的手炮:
     damageRangedMulti: 0.1
     ammoConsumptionRate: -0.1
     critRanged: 7
+  worth: 2400000
+  rarity: 3
+斯塔提斯面具:
+  item: IRON_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 12
+    damageRogueMulti: 0.1
+    critRogue: 7
+    speedMulti: 0.05
   worth: 2400000
   rarity: 3
 斯塔提斯帽子:
@@ -12676,6 +13773,36 @@ Dodu的手炮:
     defence: 14
     minionLimit: 1
     damageSummonMulti: 0.15
+  worth: 750000
+  rarity: 4
+泰坦之心面具:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 24
+    damageRogueMulti: 0.05
+    buffInflictRogue: 幻星感染|100|1
+  worth: 2400000
+  rarity: 4
+泰坦之心斗篷:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 34
+    damageRogueMulti: 0.07
+    useSpeedRogueMulti: -0.15
+  worth: 750000
+  rarity: 4
+泰坦之心靴子:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 28
+    damageRogueMulti: 0.05
+    critRogue: 3
   worth: 750000
   rarity: 4
 软壳贝盔:
@@ -12806,6 +13933,17 @@ Dodu的手炮:
     defence: 18
     damageRangedMulti: 0.1
     critRanged: 7
+  worth: 4800000
+  rarity: 5
+代达罗斯面罩:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 14
+    damageRogueMulti: 0.13
+    critRogue: 7
+    speedMulti: 0.05
   worth: 4800000
   rarity: 5
 代达罗斯兜帽:
@@ -13038,6 +14176,36 @@ Dodu的手炮:
     crit: 9
     speedMulti: 0.05
   worth: 3600000
+  rarity: 7
+日影兜帽:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 16
+    damageRogueMulti: 0.1
+  worth: 9600000
+  rarity: 7
+日影斗篷:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 32
+    damageRogueMulti: 0.1
+    critRogue: 10
+  worth: 9600000
+  rarity: 7
+日影靴子:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 24
+    damageMagicMulti: 0.09
+    critRogue: 6
+    speedMulti: 0.2
+  worth: 9600000
   rarity: 7
 硫火兜帽:
   item: DIAMOND_HELMET
@@ -13310,6 +14478,17 @@ Dodu的手炮:
     ammoConsumptionRate: -0.25
   worth: 12000000
   rarity: 8
+渊泉兜帽:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 28
+    damageRogueMulti: 0.12
+    critRogue: 10
+    speedMulti: 0.05
+  worth: 12000000
+  rarity: 8
 渊泉面具:
   item: DIAMOND_HELMET
   lore:
@@ -13409,38 +14588,6 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 16000000
   rarity: 9
-星云头盔:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    critMagic: 7
-    damageMagicMulti: 0.07
-    defence: 28
-    manaUseMulti: -0.15
-    maxMana: 60
-  worth: 7000000
-  rarity: 10
-星云胸甲:
-  item: DIAMOND_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    critMagic: 9
-    damageMagicMulti: 0.09
-    defence: 36
-  worth: 14000000
-  rarity: 10
-星云护腿:
-  item: DIAMOND_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    damageMagicMulti: 0.1
-    defence: 28
-    speedMulti: 0.1
-  worth: 10500000
-  rarity: 10
 耀斑头盔:
   item: DIAMOND_HELMET
   lore:
@@ -13469,36 +14616,6 @@ Dodu的手炮:
     defence: 40
     regenMulti: 0.167
     useSpeedMeleeMulti: 0.15
-  worth: 10500000
-  rarity: 10
-星尘头盔:
-  item: DIAMOND_HELMET
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 20
-    minionLimit: 1
-    damageSummonMulti: 0.27
-  worth: 7000000
-  rarity: 10
-星尘板甲:
-  item: DIAMOND_CHESTPLATE
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 32
-    minionLimit: 2
-    damageSummonMulti: 0.27
-  worth: 14000000
-  rarity: 10
-星尘护腿:
-  item: DIAMOND_LEGGINGS
-  lore:
-  - §r[装备]
-  attributes:
-    defence: 24
-    minionLimit: 1
-    damageSummonMulti: 0.27
   worth: 10500000
   rarity: 10
 星璇头盔:
@@ -13533,6 +14650,102 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 10500000
   rarity: 10
+皇天面具:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 40
+    damageRogueMulti: 0.11
+    critRogue: 11
+    speedMulti: 0.05
+  worth: 20000000
+  rarity: 10
+皇天斗篷:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  - §r诸天寰宇之庇护
+  attributes:
+    defence: 54
+    maxHealth: 40
+    damageRogueMulti: 0.07
+    critRogue: 7
+  worth: 20000000
+  rarity: 10
+皇天护胫:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 48
+    damageRogueMulti: 0.05
+    critRogue: 5
+    speedMulti: 0.15
+  worth: 20000000
+  rarity: 10
+星云头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    critMagic: 7
+    damageMagicMulti: 0.07
+    defence: 28
+    manaUseMulti: -0.15
+    maxMana: 60
+  worth: 7000000
+  rarity: 10
+星云胸甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    critMagic: 9
+    damageMagicMulti: 0.09
+    defence: 36
+  worth: 14000000
+  rarity: 10
+星云护腿:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    damageMagicMulti: 0.1
+    defence: 28
+    speedMulti: 0.1
+  worth: 10500000
+  rarity: 10
+星尘头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 20
+    minionLimit: 1
+    damageSummonMulti: 0.27
+  worth: 7000000
+  rarity: 10
+星尘板甲:
+  item: DIAMOND_CHESTPLATE
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 32
+    minionLimit: 2
+    damageSummonMulti: 0.27
+  worth: 14000000
+  rarity: 10
+星尘护腿:
+  item: DIAMOND_LEGGINGS
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 24
+    minionLimit: 1
+    damageSummonMulti: 0.27
+  worth: 10500000
+  rarity: 10
 龙蒿战盔:
   item: DIAMOND_HELMET
   lore:
@@ -13555,6 +14768,19 @@ Dodu的手炮:
     critRanged: 10
     damageRangedMulti: 0.1
     damageTakenMulti: -0.05
+  worth: 24000000
+  rarity: 12
+龙蒿头盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  - §r“远古信徒的头盔”
+  attributes:
+    defence: 30
+    critRogue: 10
+    damageRogueMulti: 0.1
+    damageTakenMulti: -0.1
+    speedMulti: 0.05
   worth: 24000000
   rarity: 12
 龙蒿面具:
@@ -13670,6 +14896,17 @@ Dodu的手炮:
     critRanged: 10
   worth: 26000000
   rarity: 13
+血饮魔精盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 56
+    damageRogueMulti: 0.1
+    critRogue: 10
+    speedMulti: 0.05
+  worth: 26000000
+  rarity: 13
 血魇九头盔:
   item: DIAMOND_HELMET
   lore:
@@ -13767,6 +15004,17 @@ Dodu的手炮:
     critRanged: 14
   worth: 28000000
   rarity: 14
+弑神者面具:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 58
+    damageRogueMulti: 0.14
+    critRogue: 14
+    speedMulti: 0.05
+  worth: 28000000
+  rarity: 14
 弑神者胸甲:
   item: DIAMOND_CHESTPLATE
   lore:
@@ -13850,6 +15098,17 @@ Dodu的手炮:
     defence: 80
     damageRangedMulti: 0.3
     critRanged: 20
+  worth: 30000000
+  rarity: 15
+金羽十杀盔:
+  item: DIAMOND_HELMET
+  lore:
+  - §r[装备]
+  attributes:
+    defence: 68
+    damageRogueMulti: 0.2
+    critRogue: 20
+    speedMulti: 0.05
   worth: 30000000
   rarity: 15
 金虚万象盔:

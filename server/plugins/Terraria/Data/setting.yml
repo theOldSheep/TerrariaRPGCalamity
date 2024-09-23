@@ -10,7 +10,7 @@ worldGen:
     caveOctaves: 4
     railYCoordinate: 125
   opt:
-    chunkPrepDurationLog: false
+    chunkPrepDurationLog: true
     caveGenDurationLog: false
     caveSketchSize: 3
     caveSketchThreads: 4
@@ -44,7 +44,7 @@ tickCompensationSetting:
   triggerThreshold: 5
   fastestTickInterval: 45
   decayFactor: 0.5
-  bossFightOnly: false
+  bossFightOnly: true
 rarity:
   '-2': §#AAAAAA§l
   '-1': §#6B6B6B§l

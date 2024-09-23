@@ -762,6 +762,7 @@
       - 弱效治疗药水:5:15
     2:
       giveAllItems: false
+      amountToGive: 2
       items:
       - 海星召唤杖
       - 水电剑
@@ -793,11 +794,14 @@
   菌生蟹:
     1:
       giveAllItems: false
+      amountToGive: 3
       items:
-      - 真菌块
-      - 菌杖
       - 真菌爪
       - 真菌枪
+      - 真菌回旋爪
+      - 狂菌根系
+      - 菌杖
+      - 真菌块
     2:
       items:
       - 发光蘑菇:25:35
@@ -815,6 +819,7 @@
   腐巢意志:
     1:
       giveAllItems: false
+      amountToGive: 2
       items:
       - 腐蚀之雨法杖
       - 阴雷
@@ -844,22 +849,24 @@
   史莱姆之神:
     1:
       giveAllItems: false
+      amountToGive: 3
       items:
       - 过载凝胶发射器
       - 深渊之书
       - 诡触之书
       - 腐化史莱姆召唤杖
       - 血腥史莱姆召唤杖
-      - 金币:20
-      - 治疗药水:5:15
     2:
       items:
       - 魔能谐振仪
       - 凝胶:25:64
       - 纯净凝胶:40:52
+      - 金币:20
+      - 治疗药水:5:15
   血肉之墙:
     1:
       giveAllItems: false
+      amountToGive: 2
       items:
       - 战士徽章
       - 游侠徽章
@@ -867,14 +874,15 @@
       - 召唤师徽章
     2:
       giveAllItems: false
-      amountToGive: 2
+      amountToGive: 3
       items:
       - 毁灭刃
       - 发条突击步枪
+      - 彩虹喵喷射器
+      - 炸药桶
       - 激光步枪
       - 鞭炮
       - 黑鹰遥控器
-      - 彩虹喵喷射器
     3:
       items:
       - 恶魔之心
@@ -900,12 +908,14 @@
   极地之灵:
     1:
       giveAllItems: false
-      amountToGive: 2
+      amountToGive: 3
       items:
-      - 冰寒神性
-      - 白霜弓
       - 雪崩
+      - 白霜弓
+      - 破冰者
+      - 冰灵旋刃
       - 冰晶风暴
+      - 冰寒神性
       - 寒极法杖
     2:
       items:
@@ -930,9 +940,11 @@
   渊海灾虫:
     1:
       giveAllItems: false
+      amountToGive: 2
       items:
       - 潜渊震荡者
       - 巴淋诺提卡
+      - 天鳍毁灭者
       - 水灌
       - 深海权杖
     2:
@@ -957,6 +969,7 @@
   硫磺火元素:
     1:
       giveAllItems: false
+      amountToGive: 2
       items:
       - 硫磺火矛
       - 沉眠寻焰者
@@ -985,6 +998,7 @@
   灾厄之眼:
     1:
       giveAllItems: false
+      amountToGive: 2
       items:
       - 憎恨
       - 混乱火鞭
@@ -1024,11 +1038,14 @@
   阿娜希塔和利维坦:
     1:
       giveAllItems: false
+      amountToGive: 3
       items:
-      - 亚特兰蒂斯
-      - 利维坦海潮枪
-      - 阿娜希塔琶音
       - 翡翠之潮
+      - 利维坦海潮枪
+      - 咸水瓶
+      - 利维坦之牙
+      - 亚特兰蒂斯
+      - 阿娜希塔琶音
       - 畸变吞食者法杖
     2:
       items:
@@ -1039,10 +1056,11 @@
   白金星舰:
     1:
       giveAllItems: false
+      amountToGive: 2
       items:
-      - 极光爆破
       - 星云鞭
       - 极光烈焰
+      - 恒星匕首
       - 南极光羽
     2:
       items:
@@ -1071,15 +1089,16 @@
   瘟疫使者歌莉娅:
     1:
       giveAllItems: false
-      amountToGive: 3
+      amountToGive: 4
       items:
-      - 疫病污染者
-      - 瘟疫狂潮
-      - 蜂巢发射器
-      - 蜂毒
-      - 瘟疫长枪
       - 瘟疫毒刃
+      - 瘟疫狂潮
+      - 瘟疫长枪
+      - 蜂毒
+      - 疫病污染者
+      - 蜂巢发射器
       - 枯萎散播者
+      - 孔雀翎
       - 瘟疫法杖
       - 燃料电池组
       - 瘟疫控制器
@@ -1093,6 +1112,7 @@
   光之女皇:
     1:
       giveAllItems: false
+      amountToGive: 2
       items:
       - 夜光
       - 星光
@@ -1107,6 +1127,7 @@
   猪鲨公爵:
     1:
       giveAllItems: false
+      amountToGive: 2
       items:
       - 泡泡枪
       - 海啸弓
@@ -1122,9 +1143,12 @@
   毁灭魔像:
     1:
       giveAllItems: false
+      amountToGive: 3
       items:
       - 斩首者
       - 灭域者
+      - 碎颅飞盘
+      - 憎恶血刃
       - 血涌
       - 地刺王法杖
     2:
@@ -1146,6 +1170,7 @@
   星神游龙:
     1:
       giveAllItems: false
+      amountToGive: 2
       items:
       - 微波辐照
       - 星神圣护
@@ -1163,17 +1188,18 @@
   月球领主:
     1:
       giveAllItems: false
-      amountToGive: 3
+      amountToGive: 4
       items:
-      - 月亮传送门法杖
-      - 七彩水晶法杖
       - 彩虹猫之刃
       - 泰拉悠悠球
       - 狂星之怒
       - 太空海豚机枪
       - 喜庆弹射器
+      - 百变餐叉
       - 终极棱镜
       - 月之耀斑
+      - 月亮传送门法杖
+      - 七彩水晶法杖
     2:
       items:
       - 天界之翼
@@ -1184,6 +1210,7 @@
   痴愚金龙:
     1:
       giveAllItems: false
+      amountToGive: 2
       items:
       - 殷红鞭笞
       - 镀金鸟喙
@@ -1207,14 +1234,15 @@
   亵渎天神，普罗维登斯:
     1:
       giveAllItems: false
-      amountToGive: 2
+      amountToGive: 3
       items:
-      - 极乐升天炮
-      - 耀目穿刺者杖
       - 圣火之刃
       - 日炎
-      - 净化激光炮
       - 地核之炎
+      - 极乐升天炮
+      - 熔岩切碎者
+      - 净化激光炮
+      - 耀目穿刺者杖
     2:
       items:
       - 纯元怒焰:1:1:0.1
@@ -1250,7 +1278,8 @@
     1:
       giveAllItems: false
       items:
-      - 无限之灯:1:1:0.3333
+      - 无限之灯:1:1:0.5
+      - 星体苦无:1:1:0.5
     2:
       items:
       - 扭曲虚空:6:9
@@ -1259,14 +1288,15 @@
   噬魂幽花:
     1:
       giveAllItems: false
-      amountToGive: 2
+      amountToGive: 3
       items:
+      - 惊惧魂刃
       - 女妖之爪
       - 鬼火弓
-      - 幽花之主
+      - 狱卒之镰
       - 命运神启
       - 鬼之形
-      - 惊惧魂刃
+      - 幽花之主
     2:
       items:
       - 毁灭之灵:10:20
@@ -1276,11 +1306,12 @@
   硫海遗爵:
     1:
       giveAllItems: false
-      amountToGive: 2
+      amountToGive: 3
       items:
       - 阴险穿刺者
       - 腐臭倾泻者
       - 剧毒叉枪
+      - 剧毒旋风
       - 酸蚀毒蝰
       - 干缩腐尸
     2:
@@ -1291,12 +1322,13 @@
   神明吞噬者:
     1:
       giveAllItems: false
-      amountToGive: 2
+      amountToGive: 3
       items:
-      - 死亡冰雹
       - 宙能波纹剑
       - 混沌射线
       - 死亡之风
+      - 湮灭
+      - 死亡冰雹
       - 星宇神卫召唤杖
     2:
       items:
@@ -1308,7 +1340,7 @@
   丛林龙，犽戎:
     1:
       giveAllItems: false
-      amountToGive: 2
+      amountToGive: 3
       items:
       - 巨龙七星灯
       - 巨龙之息
@@ -1327,6 +1359,7 @@
   星流巨械:
     1:
       giveAllItems: false
+      amountToGive: 2
       items:
       - 塔纳托斯的脊柱
       - 煌晖御流炮
@@ -1341,14 +1374,15 @@
   至尊灾厄:
     1:
       giveAllItems: false
-      amountToGive: 2
+      amountToGive: 3
       items:
-      - 诘责
-      - 狞桀
-      - 异端
-      - 永劫
-      - 恂戒
       - 恣睢
+      - 诘责
+      - 牺牲
+      - 异端
+      - 狞桀
+      - 恂戒
+      - 永劫
     2:
       items:
       - 灾厄

@@ -1226,6 +1226,238 @@
   type: SWING
   autoSwing: true
   size: 8.5
+木制回力镖:
+  type: BOOMERANG
+  distance: 12
+  velocity: 1
+附魔回力镖:
+  type: BOOMERANG
+  distance: 12
+  velocity: 1.8
+荆棘旋刃:
+  type: BOOMERANG
+  distance: 15
+  velocity: 2.25
+烈焰回旋镖:
+  type: BOOMERANG
+  distance: 17.5
+  velocity: 2.5
+疯狂飞斧:
+  autoSwing: true
+  type: STAB
+  size: -1
+  projectileInfo:
+    interval: 0.1
+    velocity: 3
+    name: 疯狂飞斧
+木制悠悠球:
+  type: YOYO
+  reach: 11
+  velocity: 1
+  duration: 80
+抑郁球:
+  type: YOYO
+  reach: 14
+  velocity: 1.2
+  duration: 100
+亚马逊悠悠球:
+  type: YOYO
+  reach: 13
+  velocity: 1.1
+  duration: 120
+克苏鲁之眼悠悠球:
+  type: YOYO
+  reach: 23
+  velocity: 1.75
+  duration: 1200
+泰拉悠悠球:
+  type: YOYO
+  reach: 32
+  velocity: 2.5
+  duration: 1200
+  recoilPoolMultiplier: 0.6
+烟陨彗星:
+  type: YOYO
+  reach: 15
+  velocity: 1.25
+  duration: 100
+涡旋:
+  type: YOYO
+  reach: 18
+  velocity: 1.35
+  duration: 100
+空旋:
+  type: YOYO
+  reach: 20
+  velocity: 1.25
+  duration: 120
+神旨:
+  type: YOYO
+  reach: 25
+  velocity: 1.5
+  duration: 120
+阴阳:
+  type: YOYO
+  reach: 25
+  velocity: 1.5
+  duration: 150
+烁光:
+  type: YOYO
+  reach: 28
+  velocity: 1.6
+  duration: 150
+遗殇:
+  type: YOYO
+  reach: 32
+  velocity: 1.65
+  duration: 180
+泥潭:
+  type: YOYO
+  reach: 30
+  velocity: 1.75
+  duration: 225
+断层:
+  type: YOYO
+  reach: 30
+  velocity: 2
+  duration: 250
+瘟疫狂潮:
+  type: YOYO
+  reach: 30
+  velocity: 2.15
+  duration: 350
+微波辐照:
+  type: YOYO
+  reach: 32
+  velocity: 2.25
+  duration: 400
+日炎:
+  type: YOYO
+  reach: 35
+  velocity: 2.5
+  duration: 800
+裂魔:
+  type: YOYO
+  reach: 40
+  velocity: 2.5
+  duration: 700
+混沌射线:
+  type: YOYO
+  reach: 45
+  velocity: 2.75
+  duration: 1500
+神谕:
+  type: YOYO
+  reach: 50
+  velocity: 3
+  duration: 1750
+阿撒托斯:
+  type: YOYO
+  reach: 55
+  velocity: 2.5
+  duration: 1500
+链锤:
+  type: FLAIL
+  reach: 16
+  velocity: 2.5
+  canRotate: true
+  autoSwing: true
+火焰锤:
+  type: FLAIL
+  reach: 16
+  velocity: 2.5
+  canRotate: true
+  autoSwing: true
+蓝月:
+  type: FLAIL
+  reach: 24
+  velocity: 2.75
+  canRotate: true
+  autoSwing: true
+太极连枷:
+  type: FLAIL
+  reach: 27.5
+  velocity: 3
+  canRotate: true
+  autoSwing: true
+猪鲨链球:
+  type: FLAIL
+  reach: 32
+  velocity: 3.5
+  canRotate: true
+  autoSwing: true
+日耀喷发剑:
+  type: WHIP
+  autoSwing: true
+  size: 48
+  particleColor:
+  - 255|100|50
+海胆链枷:
+  type: FLAIL
+  reach: 20
+  velocity: 2.5
+  canRotate: true
+  autoSwing: true
+海胆链球:
+  type: FLAIL
+  reach: 16
+  velocity: 2.5
+  autoSwing: true
+海蚌锤:
+  type: FLAIL
+  reach: 32
+  velocity: 1.75
+  autoSwing: true
+风滚草:
+  type: FLAIL
+  reach: 24
+  velocity: 2.75
+  autoSwing: true
+星云鞭:
+  type: WHIP
+  autoSwing: true
+  size: 32
+  particleColor:
+  - 66|189|181
+雷姆的复仇:
+  type: FLAIL
+  reach: 48
+  velocity: 3.75
+  autoSwing: true
+晨星链刃:
+  type: WHIP
+  autoSwing: true
+  size: 32
+  particleColor:
+  - 255|100|50
+脉冲龙链枷:
+  type: FLAIL
+  reach: 48
+  velocity: 4
+  autoSwing: true
+新月链刃:
+  type: WHIP
+  autoSwing: true
+  size: 40
+  particleColor:
+  - 143|255|227
+寒宙弹刃:
+  type: WHIP
+  autoSwing: true
+  size: 48
+  particleColor:
+  - 81|159|192
+龙魂破:
+  type: BOOMERANG
+  distance: 48
+  velocity: 5
+  autoSwing: true
+塔纳托斯的脊柱:
+  type: WHIP
+  autoSwing: true
+  size: 48
+  particleColor:
+  - 166|240|105
 木弓:
   type: BOW
 铜质短弓:
@@ -2427,242 +2659,6 @@ Dodu的手炮:
   ammoConversion:
     ALL:
     - 嘉登火箭
-木制回力镖:
-  type: BOOMERANG
-  distance: 12
-  velocity: 1
-附魔回力镖:
-  type: BOOMERANG
-  distance: 12
-  velocity: 1.8
-荆棘旋刃:
-  type: BOOMERANG
-  distance: 15
-  velocity: 2.25
-烈焰回旋镖:
-  type: BOOMERANG
-  distance: 17.5
-  velocity: 2.5
-疯狂飞斧:
-  autoSwing: true
-  type: STAB
-  size: -1
-  projectileInfo:
-    interval: 0.1
-    velocity: 3
-    name: 疯狂飞斧
-木制悠悠球:
-  type: YOYO
-  reach: 11
-  velocity: 1
-  duration: 80
-抑郁球:
-  type: YOYO
-  reach: 14
-  velocity: 1.2
-  duration: 100
-亚马逊悠悠球:
-  type: YOYO
-  reach: 13
-  velocity: 1.1
-  duration: 120
-克苏鲁之眼悠悠球:
-  type: YOYO
-  reach: 23
-  velocity: 1.75
-  duration: 1200
-泰拉悠悠球:
-  type: YOYO
-  reach: 32
-  velocity: 2.5
-  duration: 1200
-  recoilPoolMultiplier: 0.6
-烟陨彗星:
-  type: YOYO
-  reach: 15
-  velocity: 1.25
-  duration: 100
-涡旋:
-  type: YOYO
-  reach: 18
-  velocity: 1.35
-  duration: 100
-空旋:
-  type: YOYO
-  reach: 20
-  velocity: 1.25
-  duration: 120
-神旨:
-  type: YOYO
-  reach: 25
-  velocity: 1.5
-  duration: 120
-阴阳:
-  type: YOYO
-  reach: 25
-  velocity: 1.5
-  duration: 150
-烁光:
-  type: YOYO
-  reach: 28
-  velocity: 1.6
-  duration: 150
-遗殇:
-  type: YOYO
-  reach: 32
-  velocity: 1.65
-  duration: 180
-泥潭:
-  type: YOYO
-  reach: 30
-  velocity: 1.75
-  duration: 225
-断层:
-  type: YOYO
-  reach: 30
-  velocity: 2
-  duration: 250
-瘟疫狂潮:
-  type: YOYO
-  reach: 30
-  velocity: 2.15
-  duration: 350
-微波辐照:
-  type: YOYO
-  reach: 32
-  velocity: 2.25
-  duration: 400
-日炎:
-  type: YOYO
-  reach: 35
-  velocity: 2.5
-  duration: 800
-裂魔:
-  type: YOYO
-  reach: 40
-  velocity: 2.5
-  duration: 700
-混沌射线:
-  type: YOYO
-  reach: 45
-  velocity: 2.75
-  duration: 1500
-神谕:
-  type: YOYO
-  reach: 50
-  velocity: 3
-  duration: 1750
-阿撒托斯:
-  type: YOYO
-  reach: 55
-  velocity: 2.5
-  duration: 1500
-链锤:
-  type: FLAIL
-  reach: 16
-  velocity: 2.5
-  canRotate: true
-  autoSwing: true
-火焰锤:
-  type: FLAIL
-  reach: 16
-  velocity: 2.5
-  canRotate: true
-  autoSwing: true
-蓝月:
-  type: FLAIL
-  reach: 24
-  velocity: 2.75
-  canRotate: true
-  autoSwing: true
-太极连枷:
-  type: FLAIL
-  reach: 27.5
-  velocity: 3
-  canRotate: true
-  autoSwing: true
-猪鲨链球:
-  type: FLAIL
-  reach: 32
-  velocity: 3.5
-  canRotate: true
-  autoSwing: true
-日耀喷发剑:
-  type: WHIP
-  autoSwing: true
-  size: 48
-  particleColor:
-  - 255|100|50
-海胆链枷:
-  type: FLAIL
-  reach: 20
-  velocity: 2.5
-  canRotate: true
-  autoSwing: true
-海胆链球:
-  type: FLAIL
-  reach: 16
-  velocity: 2.5
-  autoSwing: true
-海蚌锤:
-  type: FLAIL
-  reach: 32
-  velocity: 1.75
-  autoSwing: true
-风滚草:
-  type: FLAIL
-  reach: 24
-  velocity: 2.75
-  autoSwing: true
-星云鞭:
-  type: WHIP
-  autoSwing: true
-  size: 32
-  particleColor:
-  - 66|189|181
-雷姆的复仇:
-  type: FLAIL
-  reach: 48
-  velocity: 3.75
-  autoSwing: true
-晨星链刃:
-  type: WHIP
-  autoSwing: true
-  size: 32
-  particleColor:
-  - 255|100|50
-脉冲龙链枷:
-  type: FLAIL
-  reach: 48
-  velocity: 4
-  autoSwing: true
-新月链刃:
-  type: WHIP
-  autoSwing: true
-  size: 40
-  particleColor:
-  - 143|255|227
-寒宙弹刃:
-  type: WHIP
-  autoSwing: true
-  size: 48
-  particleColor:
-  - 81|159|192
-龙魂破:
-  type: BOOMERANG
-  distance: 48
-  velocity: 5
-  autoSwing: true
-塔纳托斯的脊柱:
-  type: WHIP
-  autoSwing: true
-  size: 48
-  particleColor:
-  - 166|240|105
-手里剑:
-  type: THROW_PROJECTILE
-尖刺球:
-  type: THROW_PROJECTILE
 手榴弹:
   type: THROW_PROJECTILE
   autoSwing: false
@@ -2678,6 +2674,24 @@ Dodu的手炮:
 粘性雷管:
   type: THROW_PROJECTILE
   autoSwing: false
+手里剑:
+  type: THROW_ROGUE
+  normal:
+    projectile: 手里剑
+    projectileSpeed: 2
+  stealth:
+    projectile: 手里剑
+    projectileSpeed: 3
+    shots: 3
+    offset: 15
+尖刺球:
+  type: THROW_ROGUE
+  normal:
+    projectile: 尖刺球
+    projectileSpeed: 0.75
+  stealth:
+    projectile: 尖刺球
+    projectileSpeed: 1
 火花魔棒:
   type: MAGIC_PROJECTILE
   projectileName: 小火花
