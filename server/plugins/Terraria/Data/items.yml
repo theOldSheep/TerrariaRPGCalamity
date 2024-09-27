@@ -8221,7 +8221,7 @@ Dodu的手炮:
   lore:
   - §r扔出一个神圣十字架，能爆炸并对附近的敌人造成伤害
   - §r潜伏攻击会产生更大的爆炸，以及充满神圣之光的流星
-  - §r“Dimension Sonata”
+  - §r“物理驱魔”
   attributes:
     damage: 128
     damageStealth: 160
@@ -8458,7 +8458,7 @@ Dodu的手炮:
     knockback: 3
     useTime: 40
   worth: 800000
-  rarity: 3
+  rarity: 1100
 附魔飞斧:
   item: IRON_SWORD
   lore:
@@ -8842,7 +8842,8 @@ Dodu的手炮:
   worth: 10000
   rarity: 3
 羽刃:
-  item: IRON_SWORD
+  item: IRON_NUGGET
+  prefixApplicable: false
   lore:
   - §r扔出一把会召唤追踪羽毛的飞刀
   - §r潜伏攻击会扔出一束飞刀
@@ -9193,9 +9194,10 @@ Dodu的手炮:
 牺牲:
   item: DIAMOND_SWORD
   lore:
-  - §r丢出一把牺牲之匕，释放邪血爆炸并为你回复生命值
-  - §r潜伏攻击会使你失去50%的当前生命值
+  - §r丢出一把牺牲之匕并为你回复生命值
+  - §r潜伏攻击会使你失去50%的当前生命值（至多300）
   - §r失去生命值的175%会附加到基础伤害中
+  - §r潜伏攻击命中时为你恢复15%已损失生命值
   attributes:
     damage: 600
     damageStealth: 300
@@ -9205,12 +9207,252 @@ Dodu的手炮:
     useTime: 8
   worth: 30000000
   rarity: 15
+沙漠之灾:
+  item: IRON_SWORD
+  lore:
+  - §r扔出一把会在命中方块时弹跳向敌人的标枪
+  - §r潜伏攻击会扔出三把标枪
+  attributes:
+    damage: 24
+    damageStealth: 30
+    damageType: Rogue
+    crit: 4
+    knockback: 3.5
+    useTime: 24
+  worth: 400000
+  rarity: 2
+乱流:
+  item: IRON_SWORD
+  lore:
+  - §r发射一支会在命中时产生追踪旋风的穿云标枪
+  - §r潜伏攻击会在飞行轨迹上生成旋风
+  attributes:
+    damage: 36
+    damageStealth: 40
+    damageType: Rogue
+    crit: 4
+    knockback: 5
+    useTime: 17
+  worth: 800000
+  rarity: 3
+越浪蛟:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一把弹跳向敌人的标枪，可以穿透一次
+  - §r潜伏攻击会扔出三把标枪
+  attributes:
+    damage: 160
+    damageStealth: 200
+    damageType: Rogue
+    crit: 4
+    knockback: 4
+    useTime: 21
+  worth: 4800000
+  rarity: 4
+变频器:
+  item: DIAMOND_SWORD
+  lore:
+  - §r长矛撞击时会释放追踪能量体
+  - §r潜伏攻击会使矛释放更多能量体
+  attributes:
+    damage: 160
+    damageStealth: 300
+    damageType: Rogue
+    crit: 4
+    knockback: 5
+    useTime: 55
+  worth: 4800000
+  rarity: 1100
+渊海之灾:
+  item: DIAMOND_SWORD
+  lore:
+  - §r标枪在命中敌人时会爆成辐射毒云
+  attributes:
+    damage: 100
+    damageStealth: 125
+    damageType: Rogue
+    crit: 4
+    knockback: 3.5
+    useTime: 24
+  worth: 7200000
+  rarity: 5
+水晶穿刺者:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r投掷一支可以无限穿透的水晶标枪
+  - §r潜伏攻击将使标枪可以穿过物块且无视重力
+  attributes:
+    damage: 184
+    damageStealth: 200
+    damageType: Rogue
+    crit: 4
+    knockback: 6
+    useTime: 22
+  worth: 50000
+  rarity: 5
+古岩投矛:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投出一把能够粉碎敌人护甲的远古长矛
+  - §r长矛命中后爆成化石碎片
+  - §r潜伏攻击会产生更多的化石碎片
+  attributes:
+    damage: 130
+    damageStealth: 200
+    damageType: Rogue
+    crit: 4
+    knockback: 6
+    useTime: 26
+  worth: 7200000
+  rarity: 5
+命运之矛:
+  item: DIAMOND_SWORD
+  lore:
+  - §r在投掷一支穿透矛与三支跟踪矛的攻击方式间循环
+  - §r潜伏攻击会投掷一发高速的神圣之矛
+  attributes:
+    damage: 100
+    damageStealth: 425
+    damageType: Rogue
+    crit: 4
+    knockback: 2
+    useTime: 40
+  worth: 7200000
+  rarity: 6
+幻魂归墟:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射巨大的幽魂投矛，命中敌人时会爆炸并放出幽魂
+  - §r潜伏攻击可以穿透两次，并且每次击中敌人时均会召唤数个幽魂
+  attributes:
+    damage: 304
+    damageStealth: 328
+    damageType: Rogue
+    crit: 4
+    knockback: 8
+    useTime: 30
+  worth: 9600000
+  rarity: 7
+半影裂片:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r潜伏攻击会使半影裂片在飞行时留下追踪星星
+  attributes:
+    damage: 480
+    damageStealth: 512
+    damageType: Rogue
+    crit: 4
+    knockback: 8
+    useTime: 20
+  worth: 200000
+  rarity: 9
+渎神投矛:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一支不洁之矛
+  - §r潜伏攻击会在飞行轨迹上生成小的长矛克隆体
+  attributes:
+    damage: 644
+    damageStealth: 800
+    damageType: Rogue
+    crit: 4
+    knockback: 8
+    useTime: 17
+  worth: 24000000
+  rarity: 12
+裂世投矛:
+  item: DIAMOND_SWORD
+  lore:
+  - §r在投掷一支穿透矛与三支小型跟踪矛的攻击方式间循环
+  - §r潜伏攻击会投掷一发割裂现实的高速投矛
+  attributes:
+    damage: 450
+    damageStealth: 750
+    damageType: Rogue
+    crit: 4
+    knockback: 8
+    useTime: 17
+  worth: 24000000
+  rarity: 12
+暗夜凝视:
+  item: DIAMOND_SWORD
+  lore:
+  - §r用这支夜之长矛贯穿你的敌人
+  - §r潜伏攻击命中敌人会召唤追踪的星辰
+  attributes:
+    damage: 1062
+    damageStealth: 1333
+    damageType: Rogue
+    crit: 4
+    knockback: 5
+    useTime: 19
+  worth: 26000000
+  rarity: 13
+日蚀之陨:
+  item: DIAMOND_SWORD
+  lore:
+  - §r击中敌人时召唤长矛从天而降
+  - §r潜伏攻击会追击敌人并改为持续召唤长矛
+  attributes:
+    damage: 1000
+    damageStealth: 1500
+    damageType: Rogue
+    crit: 4
+    knockback: 3.5
+    useTime: 22
+  worth: 28000000
+  rarity: 14
+狂龙翼火:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投掷强力的追踪火矛
+  - §r潜伏攻击会在命中后喷发出火球
+  attributes:
+    damage: 1184
+    damageStealth: 1250
+    damageType: Rogue
+    crit: 4
+    knockback: 8
+    useTime: 12
+  worth: 30000000
+  rarity: 15
+微元劫裂者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投掷出处于量子叠加态的标枪，击中后会同时从复数时间线对目标进行攻击
+  - §r潜伏攻击会召唤更多彩虹标枪
+  attributes:
+    damage: 640
+    damageStealth: 720
+    damageType: Rogue
+    crit: 4
+    knockback: 7
+    useTime: 24
+  worth: 30000000
+  rarity: 15
+绯红恶魔:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一把必中的神枪，在飞行路径上生成追踪弹幕
+  - §r神枪在击中敌人时会产生斯卡雷特爆炸
+  - §r潜伏攻击会使神枪获得生命汲取并且会在击中敌人时爆成一片追踪弹幕
+  - §r“神枪「冈格尼尔」”
+  attributes:
+    damage: 20000
+    damageStealth: 32767
+    damageType: Rogue
+    crit: 24
+    knockback: 8
+    useTime: 60
+  worth: 40000000
+  rarity: 16
 尖刺球:
   item: IRON_NUGGET
   prefixApplicable: false
   lore:
   - §r投出一个尖刺球
-  - §r潜伏攻击基础伤害有显著提升
   attributes:
     damage: 15
     damageStealth: 45
@@ -9220,6 +9462,80 @@ Dodu的手炮:
     useTime: 15
   worth: 1600
   rarity: 0
+污泥斑点:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r投出一团污泥
+  - §r潜伏攻击会使斑点在命中时分裂，造成更多伤害
+  attributes:
+    damage: 96
+    damageStealth: 105
+    damageType: Rogue
+    crit: 4
+    knockback: 1
+    useTime: 17
+  worth: 4000
+  rarity: 3
+易碎金属球:
+  item: IRON_SWORD
+  lore:
+  - §r投掷一个会碎裂成钉球和尖刺的尖钉球
+  - §r潜伏攻击会使钉球爆成更多钉球和金属尖刺
+  - §r“哦，那一定很疼”
+  attributes:
+    damage: 60
+    damageStealth: 80
+    damageType: Rogue
+    crit: 4
+    knockback: 7
+    useTime: 39
+  worth: 800000
+  rarity: 4
+神经系统紊乱装置:
+  item: DIAMOND_SWORD
+  lore:
+  - §r丢出一个不稳定的设备，可吸附于地面上，同时用闪电电击周围的敌人
+  - §r潜伏攻击会使设备释放大范围的伤害性电磁脉冲力场
+  attributes:
+    damage: 90
+    damageStealth: 100
+    damageType: Rogue
+    crit: 4
+    knockback: 5
+    useTime: 14
+  worth: 12000000
+  rarity: 1100
+地底太阳:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射不受重力影响停在空中的尖钉球
+  - §r尖钉球会向四周发射小太阳，接触敌人后爆炸
+  - §r潜伏攻击使尖钉球发射太阳的速度变快，持续时间更长
+  - §r“地底太阳的力量正被你握在掌心”
+  attributes:
+    damage: 400
+    damageStealth: 500
+    damageType: Rogue
+    crit: 4
+    knockback: 5
+    useTime: 60
+  worth: 22000000
+  rarity: 11
+神明妄论:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出追踪尖钉球，快速追踪敌人并召唤弑神苦无
+  - §r潜伏攻击可以追踪地更快并更快地召唤弑神苦无
+  attributes:
+    damage: 284
+    damageStealth: 300
+    damageType: Rogue
+    crit: 4
+    knockback: 5
+    useTime: 20
+  worth: 28000000
+  rarity: 14
 手里剑:
   item: IRON_NUGGET
   prefixApplicable: false
@@ -9235,6 +9551,355 @@ Dodu的手炮:
     useTime: 15
   worth: 300
   rarity: 0
+板砖:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r把它往天上扔，然后用你的脸去接，以证明它的硬度
+  - §r潜伏攻击会使板砖碎裂
+  - §r“以理服人”
+  attributes:
+    damage: 34
+    damageStealth: 50
+    damageType: Rogue
+    crit: 24
+    knockback: 5
+    useTime: 35
+  worth: 1000
+  rarity: 0
+铁质飞斧:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r“这柄斧太干了”
+  attributes:
+    damage: 28
+    damageStealth: 40
+    damageType: Rogue
+    crit: 4
+    knockback: 3
+    useTime: 14
+  worth: 2000
+  rarity: 0
+弹跳眼球:
+  item: IRON_SWORD
+  lore:
+  - §r掷出一个弹跳眼球
+  - §r潜伏攻击更快且弹跳、穿刺次数均有所增加
+  attributes:
+    damage: 32
+    damageStealth: 40
+    damageType: Rogue
+    crit: 4
+    knockback: 3.5
+    useTime: 23
+  worth: 400000
+  rarity: 2
+腐蚀之球:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r潜伏攻击可以穿透一次
+  attributes:
+    damage: 52
+    damageStealth: 60
+    damageType: Rogue
+    crit: 12
+    knockback: 2.5
+    useTime: 12
+  worth: 20000
+  rarity: 3
+南十字星蜗:
+  item: DIAMOND_SWORD
+  lore:
+  - §r飞行过程中释放追踪火星
+  - §r潜伏攻击释放追踪蜗牛，放出更多火星
+  attributes:
+    damage: 72
+    damageStealth: 86
+    damageType: Rogue
+    crit: 4
+    knockback: 5
+    useTime: 25
+  worth: 2400000
+  rarity: 4
+冰花:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r扔出快速但易碎的追踪冰花
+  - §r潜伏攻击穿透两次，且在命中时生成追踪冰花
+  attributes:
+    damage: 90
+    damageStealth: 90
+    damageType: Rogue
+    crit: 11
+    knockback: 2.5
+    useTime: 11
+  worth: 10000
+  rarity: 4
+精金投斧:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r潜伏攻击无视重力，并在击中敌人时降下闪电
+  attributes:
+    damage: 134
+    damageStealth: 150
+    damageType: Rogue
+    crit: 4
+    knockback: 3.25
+    useTime: 14
+  worth: 32000
+  rarity: 5
+硫火飞爪:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投掷可以弹跳的硫火飞爪
+  - §r潜伏攻击可以一次投掷五个
+  attributes:
+    damage: 170
+    damageStealth: 170
+    damageType: Rogue
+    crit: 4
+    knockback: 7
+    useTime: 18
+  worth: 9600000
+  rarity: 7
+深渊裂斧:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投掷一把深渊战斧，造成碎甲和深渊水压减益
+  - §r潜伏攻击会使斧头飞的更快，并额外造成死亡标记减益
+  attributes:
+    damage: 272
+    damageStealth: 200
+    damageType: Rogue
+    crit: 4
+    knockback: 3
+    useTime: 22
+  worth: 12000000
+  rarity: 7
+幻想符札:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r发射不受重力影响的高速符札
+  - §r符札会追踪敌人且不断释放追踪的失落灵魂
+  - §r潜伏攻击会释放更多的灵魂
+  attributes:
+    damage: 163
+    damageStealth: 172
+    damageType: Rogue
+    crit: 4
+    knockback: 6
+    useTime: 15
+  worth: 120000
+  rarity: 7
+沙暴手里剑:
+  item: DIAMOND_SWORD
+  lore:
+  - §r投掷一个不受重力影响的沙暴手里剑
+  - §r潜伏攻击速度更快，命中时触发沙尘爆炸
+  attributes:
+    damage: 230
+    damageStealth: 235
+    damageType: Rogue
+    crit: 4
+    knockback: 5
+    useTime: 20
+  worth: 12000000
+  rarity: 7
+末渊石板:
+  item: DIAMOND_SWORD
+  lore:
+  - §r粉碎敌人的防御
+  - §r潜伏攻击会使石板碎裂
+  - §r“可能用脸接板砖真的不是个好想法……”
+  attributes:
+    damage: 456
+    damageStealth: 470
+    damageType: Rogue
+    crit: 24
+    knockback: 10
+    useTime: 26
+  worth: 9600000
+  rarity: 7
+源野天光:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一颗分裂流星，分裂并于几秒后开始追踪附近的敌人
+  - §r潜伏攻击会在分裂流星击中敌人时召唤一颗陨星
+  attributes:
+    damage: 96
+    damageStealth: 100
+    damageType: Rogue
+    crit: 4
+    knockback: 6
+    useTime: 29
+  worth: 12000000
+  rarity: 7
+瘟疫注射器:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一个高速注射器，飞行距离越远伤害越高
+  - §r命中后碎裂成玻璃碎片和瘟疫喷溅
+  - §r潜伏攻击会使注射器在碎裂时生成瘟疫蜜蜂
+  - §r“我保证这对你的健康有百害而无一利”
+  attributes:
+    damage: 120
+    damageStealth: 128
+    damageType: Rogue
+    crit: 4
+    knockback: 5
+    useTime: 14
+  worth: 16000000
+  rarity: 8
+公爵斩首者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一把穿透五次的飞斧
+  - §r潜伏攻击可以无限穿透
+  attributes:
+    damage: 180
+    damageStealth: 180
+    damageType: Rogue
+    crit: 4
+    knockback: 2
+    useTime: 29
+  worth: 16000000
+  rarity: 8
+星体暴乱:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一个快速的追踪飞盘
+  - §r潜伏攻击会使飞盘爆炸成星辉法球
+  attributes:
+    damage: 232
+    damageStealth: 255
+    damageType: Rogue
+    crit: 4
+    knockback: 4.5
+    useTime: 25
+  worth: 16000000
+  rarity: 9
+掠星镰:
+  item: DIAMOND_SWORD
+  lore:
+  - §r掷出追踪镰刀
+  - §r击中敌人时镰刀会反弹最多击中六个敌人
+  attributes:
+    damage: 280
+    damageStealth: 305
+    damageType: Rogue
+    crit: 4
+    knockback: 6
+    useTime: 40
+  worth: 20000000
+  rarity: 10
+血沫重斧:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一把受重力影响的血斧，击中敌怪时治疗玩家
+  - §r潜伏攻击追踪敌人且治疗量更高
+  attributes:
+    damage: 490
+    damageStealth: 500
+    damageType: Rogue
+    crit: 4
+    knockback: 3
+    useTime: 23
+  worth: 24000000
+  rarity: 12
+渊海哑铃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r抛出一个哑铃，撞击时分裂出两个小铃片
+  attributes:
+    damage: 932
+    damageStealth: 1320
+    damageType: Rogue
+    crit: 4
+    knockback: 8
+    useTime: 24
+  worth: 26000000
+  rarity: 13
+死神遗镰:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一把追踪死神镰刀切碎敌人
+  - §r潜伏攻击会一次性扔出3把飞镰
+  - §r“切成碎片”
+  attributes:
+    damage: 360
+    damageStealth: 400
+    damageType: Rogue
+    crit: 4
+    knockback: 4
+    useTime: 20
+  worth: 26000000
+  rarity: 13
+终结者之刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一连串追踪飞刀
+  - §r潜伏攻击召唤额外飞刀
+  attributes:
+    damage: 450
+    damageStealth: 525
+    damageType: Rogue
+    crit: 4
+    knockback: 6.75
+    useTime: 8
+  worth: 28000000
+  rarity: 14
+终曲黎明:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射龙焰镰刀，命中时爆出一圈火球
+  - §r潜伏攻击追踪并穿透三次
+  - §r“我们必将再度拥抱黎明”
+  attributes:
+    damage: 5000
+    damageStealth: 5000
+    damageType: Rogue
+    crit: 4
+    knockback: 5
+    useTime: 60
+  worth: 30000000
+  rarity: 15
+焦锅:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出一个高速飞行的平底锅
+  - §r每四次攻击会扔出金平底锅
+  - §r金平底锅会爆出大量火花和火球
+  - §r潜伏攻击必定扔出金平底锅
+  - §#842593“伤~害↘不↑会↓断~”
+  attributes:
+    damage: 4444
+    damageStealth: 4444
+    damageType: Rogue
+    crit: 4
+    knockback: 10
+    useTime: 25
+  worth: 30000000
+  rarity: 15
+衍曜旋刃:
+  item: DIAMOND_SWORD
+  lore:
+  - §r掷出一个巨大的棱晶手里剑
+  - §r手里剑在命中敌人后碎裂并释放出追踪火箭
+  - §r潜伏攻击会使手里剑在碎裂时释放出更多火箭
+  attributes:
+    damage: 1632
+    damageStealth: 1750
+    damageType: Rogue
+    crit: 4
+    knockback: 8.5
+    useTime: 18
+  worth: 30000000
+  rarity: 15
 火花魔棒:
   item: STICK
   lore:

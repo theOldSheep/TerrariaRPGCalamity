@@ -32,7 +32,7 @@ public class OverworldBiomeGenerator {
         public final WorldHelper.BiomeType evaluatedBiome;
 
         public BiomeFeature(int x, int z) {
-            // IMPORTANT: prevent overflow.
+            // IMPORTANT: prevent overflow from integer > 32768.
             double distFromSpawn = Math.sqrt((double) x * (double) x + (double) z * (double) z);
             double distFromSpawnFactor = distFromSpawn / SPAWN_LOC_PROTECTION_RADIUS;
 
@@ -145,13 +145,12 @@ public class OverworldBiomeGenerator {
 
         result |= x;
         result <<= 16;
-        // only keep the last 32 bits of z! It gets converted to long during this operation.
-        // otherwise, negative z will cause grief.
+        // use logical right shift when bit shifting z
         // note: due to the java's hashing for long, it is better to flip the order of the first and last halves of z
         // so that the lower digits do not cancel out frequently
-        result |= ( (z >> 16) & MASK_LAST_HALF);
-        result <<= 16;
         result |= (z & MASK_LAST_HALF);
+        result <<= 16;
+        result |= z >>> 16;
 
         return result;
     }
@@ -198,7 +197,7 @@ public class OverworldBiomeGenerator {
                 return Biome.MUTATED_FOREST;
         }
     }
-    // get the biome feature at position; this should be used outside this function for tree growth etc.
+    // get the biome feature at position; this should be used for tree growth etc.
     public static BiomeFeature getBiomeFeature(double actualX, double actualZ) {
         return getBiomeFeature((int) actualX, (int) actualZ);
     }

@@ -293,9 +293,9 @@ public class ItemHelper {
         String itemName = splitItemName(item)[1];
         // items that deals no damage, for example, bug net, shall not have any prefix
         if (TerrariaHelper.itemConfig.getDouble(itemName + ".attributes.damage", -1) <= 0) return false;
-        // thrown projectile (grenades, for example), can not have any prefix neither
-        String weaponType = TerrariaHelper.weaponConfig.getString(itemName + ".type", "THROW");
-        return !weaponType.startsWith("THROW");
+        // thrown projectile (grenades, for example) can not have any prefix neither
+        // this property is specified with "prefixApplicable" in item config
+        return TerrariaHelper.itemConfig.getBoolean(itemName + ".prefixApplicable", true);
     }
     public static HashMap<String, Double> getApplicablePrefix(ItemStack item) {
         HashMap<String, Double> result = new HashMap<>(50);
@@ -315,7 +315,7 @@ public class ItemHelper {
         ArrayList<String> prefixClassesApplicable = new ArrayList<>(4);
         prefixClassesApplicable.add("Universal");
         String itemName = splitItemName(item)[1];
-        switch (TerrariaHelper.weaponConfig.getString(itemName + ".type").toLowerCase()) {
+        switch (TerrariaHelper.weaponConfig.getString(itemName + ".type", "").toLowerCase()) {
             case "stab":
             case "swing":
             case "whip":
@@ -323,16 +323,19 @@ public class ItemHelper {
             case "yoyo":
                 prefixClassesApplicable.add("Melee");
                 break;
-            case "magic_projectile":
-            case "magic_special":
-            case "summon":
-                prefixClassesApplicable.add("Magic");
-                break;
             case "bow":
             case "gun":
             case "rocket":
             case "special_ammo":
                 prefixClassesApplicable.add("Ranged");
+                break;
+            case "throw_rogue":
+                prefixClassesApplicable.add("Rogue");
+                break;
+            case "magic_projectile":
+            case "magic_special":
+            case "summon":
+                prefixClassesApplicable.add("Magic");
                 break;
         }
         for (String prefixClass : prefixClassesApplicable) {

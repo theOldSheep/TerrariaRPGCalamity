@@ -54,6 +54,19 @@ prefixList:
   - 强大:4
   - 暴怒:4
   - 虚幻:0.5
+  Rogue:
+  - 锐利:2
+  - 尖锐:4
+  - 覆羽:1
+  - 荣光:4
+  - 恶毒:1
+  - 极端:2
+  - 强袭:2
+  - 钝化:2
+  - 易碎:2
+  - 失衡:2
+  - 糟糕:1
+  - 化境:0.5
   Magic:
   - 神秘:1
   - 精巧:1
@@ -623,6 +636,120 @@ prefixInfo:
       crit: 5
       projectileSpeedMulti: 0.1
       knockbackMulti: 0.15
+    priceMultiplier: 3.1
+    rarity: 2
+  锐利:
+    lore:
+    - ''
+    - §a+15%伤害
+    attributes:
+      damageMulti: 0.15
+    priceMultiplier: 1.32
+    rarity: 1
+  覆羽:
+    lore:
+    - ''
+    - §a+15%使用速度
+    attributes:
+      useSpeedMulti: 0.15
+    priceMultiplier: 1.6
+    rarity: 2
+  荣光:
+    lore:
+    - ''
+    - §a+10%伤害
+    - §a+5%使用速度
+    attributes:
+      damageMulti: 0.1
+      useSpeedMulti: 0.05
+    priceMultiplier: 1.6
+    rarity: 1
+  恶毒:
+    lore:
+    - ''
+    - §a+10%伤害
+    - §a+10%使用速度
+    - §r“祝你潜伏必空枪”
+    attributes:
+      damageMulti: 0.1
+      useSpeedMulti: 0.1
+    priceMultiplier: 1.76
+    rarity: 2
+  极端:
+    lore:
+    - ''
+    - §a+10%伤害
+    - §a+5%使用速度
+    - §c-10%潜伏攻击伤害
+    - §r“你疑似有点太极端了”
+    attributes:
+      damageMulti: 0.1
+      useSpeedMulti: 0.05
+      damageStealthMulti: -0.1
+    priceMultiplier: 1.18
+    rarity: 1
+  强袭:
+    lore:
+    - ''
+    - §a+10%潜伏攻击伤害
+    - §c-15%使用速度
+    - §r“强无敌”
+    attributes:
+      damageStealthMulti: 0.15
+      useSpeedMulti: -0.15
+    priceMultiplier: 1.21
+    rarity: 1
+  钝化:
+    lore:
+    - ''
+    - §c-15%伤害
+    attributes:
+      damageMulti: -0.15
+    priceMultiplier: 0.72
+    rarity: -1
+  易碎:
+    lore:
+    - ''
+    - §c-10%伤害
+    - §c-10%潜伏攻击伤害
+    attributes:
+      damageMulti: -0.1
+      damageStealthMulti: -0.1
+    priceMultiplier: 0.66
+    rarity: -1
+  失衡:
+    lore:
+    - ''
+    - §c-15%使用速度
+    attributes:
+      useSpeedMulti: -0.15
+    priceMultiplier: 0.62
+    rarity: -1
+  糟糕:
+    lore:
+    - ''
+    - §c-15%伤害
+    - §c-10%使用速度
+    - §c-10%潜伏攻击伤害
+    attributes:
+      damageMulti: -0.15
+      useSpeedMulti: -0.1
+      damageStealthMulti: -0.1
+    priceMultiplier: 0.47
+    rarity: -2
+  化境:
+    lore:
+    - ''
+    - §a+15%伤害
+    - §a+5%暴击率
+    - §a+10%使用速度
+    - §a+10%潜伏攻击伤害
+    - §r“这把武器似乎能与主人心意相通”
+    attributes:
+      damageMulti: 0.15
+      crit: 5
+      useSpeedMulti: 0.1
+      damageStealthMulti: 0.1
     priceMultiplier: 3.1
     rarity: 2
   神秘:

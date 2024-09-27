@@ -63,19 +63,24 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("critMagic", 0d);
         defaultPlayerAttrMap.put("critMelee", 0d);
         defaultPlayerAttrMap.put("critRanged", 0d);
+        defaultPlayerAttrMap.put("critRogue", 0d);
+        defaultPlayerAttrMap.put("critStealth", 20d);
         defaultPlayerAttrMap.put("critTrueMelee", 0d);
         defaultPlayerAttrMap.put("damage", 0d);
+        defaultPlayerAttrMap.put("damageStealth", 1d);
+        defaultPlayerAttrMap.put("damageMulti", 1d);
+        defaultPlayerAttrMap.put("damageMeleeMulti", 1d);
+        defaultPlayerAttrMap.put("damageTrueMeleeMulti", 1d);
         defaultPlayerAttrMap.put("damageArrowMulti", 1d);
         defaultPlayerAttrMap.put("damageBulletMulti", 1d);
-        defaultPlayerAttrMap.put("damageMagicMulti", 1d);
-        defaultPlayerAttrMap.put("damageMeleeMulti", 1d);
-        defaultPlayerAttrMap.put("damageMulti", 1d);
         defaultPlayerAttrMap.put("damageRangedMulti", 1d);
         defaultPlayerAttrMap.put("damageRocketMulti", 1d);
+        defaultPlayerAttrMap.put("damageMagicMulti", 1d);
+        defaultPlayerAttrMap.put("damageRogueMulti", 1d);
+        defaultPlayerAttrMap.put("damageStealthMulti", 1d);
         defaultPlayerAttrMap.put("damageSummonMulti", 1d);
         defaultPlayerAttrMap.put("damageTakenMulti", 1d);
         defaultPlayerAttrMap.put("damageContactTakenMulti", 1d);
-        defaultPlayerAttrMap.put("damageTrueMeleeMulti", 1d);
         defaultPlayerAttrMap.put("defence", 0d);
         defaultPlayerAttrMap.put("defenceMulti", 1d);
         defaultPlayerAttrMap.put("fishingHooks", 1d);
@@ -114,11 +119,15 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("sentryLimit", 1d);
         defaultPlayerAttrMap.put("speed", 0.2d);
         defaultPlayerAttrMap.put("speedMulti", 1d);
-        defaultPlayerAttrMap.put("useSpeedMagicMulti", 1d);
+        defaultPlayerAttrMap.put("stealthConsumptionMulti", 1d);
+        defaultPlayerAttrMap.put("stealthLimit", 0d);
+        defaultPlayerAttrMap.put("stealthRegenMulti", 1d);
         defaultPlayerAttrMap.put("useSpeedMeleeMulti", 1d);
+        defaultPlayerAttrMap.put("useSpeedRangedMulti", 1d);
+        defaultPlayerAttrMap.put("useSpeedRogueMulti", 1d);
+        defaultPlayerAttrMap.put("useSpeedMagicMulti", 1d);
         defaultPlayerAttrMap.put("useSpeedMiningMulti", 1d);
         defaultPlayerAttrMap.put("useSpeedMulti", 1d);
-        defaultPlayerAttrMap.put("useSpeedRangedMulti", 1d);
         defaultPlayerAttrMap.put("useTime", 0d);
         defaultPlayerAttrMap.put("waterAffinity", 0d);
         // init default player buff inflict map
@@ -126,6 +135,7 @@ public class PlayerHelper {
         defaultPlayerEffectInflict.add("buffInflictMagic");
         defaultPlayerEffectInflict.add("buffInflictMelee");
         defaultPlayerEffectInflict.add("buffInflictRanged");
+        defaultPlayerEffectInflict.add("buffInflictRogue");
         defaultPlayerEffectInflict.add("buffInflictSummon");
         defaultPlayerEffectInflict.add("buffInflictTrueMelee");
     }
@@ -1769,6 +1779,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                             int level = Math.min(ply.getLevel(), getMaxMana(ply));
                             ply.setLevel(level);
                         }
+                        boolean usingItem = ply.getScoreboardTags().contains("temp_useCD");
                         // health regen
                         {
                             // init variables
@@ -1833,9 +1844,8 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 double manaRatio = hasManaRegenPotionEffect ? 1d : (double) ply.getLevel() / maxMana;
                                 double manaRegenRate = ((maxMana * (moved ? 1d / 6 : 1d / 2)) + 1 + manaRegenBonus) * (manaRatio * 0.8 + 0.2) * 1.15;
                                 // if the player is currently using mana-consuming item: no natural mana regen; bonus regen is reduced
-                                if (attrMap.getOrDefault("manaUse", 0d) > 0) {
-                                    if (ply.getScoreboardTags().contains("temp_useCD"))
-                                        manaRegenRate = manaRegenBonus * (manaRatio * 0.8 + 0.2);
+                                if (attrMap.getOrDefault("manaUse", 0d) > 0 && usingItem) {
+                                    manaRegenRate = manaRegenBonus * (manaRatio * 0.8 + 0.2);
                                 }
                                 if (ply.getLevel() < maxMana) {
                                     manaRegenCounter += manaRegenRate * delay * attrMap.getOrDefault("manaRegenMulti", 1d);
@@ -1847,6 +1857,22 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                         ply.playSound(ply.getLocation(), Sound.BLOCK_NOTE_PLING, SoundCategory.PLAYERS,2, 2);
                                     EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_COUNTER, manaRegenCounter);
                                 }
+                            }
+                        }
+                        // stealth regen
+                        if (! usingItem) {
+                            double stealth = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble();
+                            double stealthMax = attrMap.getOrDefault("stealthLimit", 0d);
+                            if (stealth < stealthMax) {
+                                // default to fully regenerate over 4 seconds = 80 ticks
+                                double stealthRegen = stealthMax * delay / 80 * attrMap.getOrDefault("stealthRegenMulti", 0d);
+                                stealth += stealthRegen;
+                                // on fully recovery
+                                if (stealth >= stealthMax) {
+                                    stealth = stealthMax;
+                                    ply.playSound(ply.getLocation(), Sound.BLOCK_NOTE_PLING, SoundCategory.PLAYERS,2, 2);
+                                }
+                                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH, stealth);
                             }
                         }
                     }
@@ -2014,6 +2040,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.REGEN_TIME, 0d);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_DELAY, 0d);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_COUNTER, 0d);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH, 0d);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR, PLAYER_MAX_OXYGEN);
         // extra setups on join
         if (joinOrRespawn) {
@@ -2474,6 +2501,16 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             if (ItemHelper.splitItemName(plyTool)[1].equals("月神Prime")) {
                 EntityHelper.tweakAttribute(ply, newAttrMap, "critDamage",
                         (newAttrMap.getOrDefault("crit", 4d) * 0.5) + "", true);
+            }
+            // stealth increases rogue damage & crit
+            double maxStealth = newAttrMap.getOrDefault("stealthLimit", 0d);
+            if (maxStealth > 1) {
+                double stealthRatio = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble() / maxStealth;
+                EntityHelper.tweakAttribute(ply, newAttrMap, "critRogue",
+                        (newAttrMap.getOrDefault("critStealth", 0d) * stealthRatio) + "", true);
+                EntityHelper.tweakAttribute(ply, newAttrMap, "damageRogueMulti",
+                        ( (newAttrMap.getOrDefault("damageStealthMulti", 0d) + maxStealth / 100d )
+                                * stealthRatio) + "", true);
             }
 
             // post-initialization

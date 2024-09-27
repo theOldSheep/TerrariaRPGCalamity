@@ -10,11 +10,8 @@ import terraria.TerrariaHelper;
 import terraria.util.WorldHelper;
 import terraria.worldgen.Interpolate;
 import terraria.worldgen.Interpolate.InterpolatePoint;
-import terraria.worldgen.WorldGenHelper;
 
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class OverworldChunkGenerator extends ChunkGenerator {
     // optimization & logging variables
@@ -40,11 +37,12 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     static {
         HEIGHT_SAMPLING_DIAMETER = 1 + NEARBY_BIOME_SAMPLE_RADIUS * 2;
         double[][] influence_factors = new double[HEIGHT_SAMPLING_DIAMETER][HEIGHT_SAMPLING_DIAMETER];
-        double furthestDistance = NEARBY_BIOME_SAMPLE_RADIUS * Math.sqrt(2);
+//        double furthestDistance = NEARBY_BIOME_SAMPLE_RADIUS * Math.sqrt(2);
         for (int i = 0; i <= NEARBY_BIOME_SAMPLE_RADIUS; i ++)
             for (int j = 0; j <= NEARBY_BIOME_SAMPLE_RADIUS; j ++) {
-                double currDist = Math.sqrt(i * i + j * j);
-                double currFactor = Math.cos( (Math.PI / 2) * currDist / furthestDistance);
+                double currFactor;
+//                double currDist = Math.sqrt(i * i + j * j);
+//                currFactor = Math.cos( (Math.PI / 2) * currDist / furthestDistance);
                 currFactor = 1;
                 influence_factors[NEARBY_BIOME_SAMPLE_RADIUS + i][NEARBY_BIOME_SAMPLE_RADIUS + j] = currFactor;
                 influence_factors[NEARBY_BIOME_SAMPLE_RADIUS + i][NEARBY_BIOME_SAMPLE_RADIUS - j] = currFactor;
@@ -59,10 +57,10 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         HEIGHT_SAMPLE_FACTOR_SUM = sum;
     }
     public static PerlinOctaveGenerator riverGenerator, lakeGenerator,
-                                        stoneVeinGenerator;
+            stoneVeinGenerator;
     public static Interpolate terrainHeightProvider, jungleHeightProvider, astralHeightProvider, desertHeightProvider, oceanHeightProvider,
-                                erosionRatioProvider, oceanErosionHeightProvider,
-                                riverRatioProvider, lakeRatioProvider;
+            erosionRatioProvider, oceanErosionHeightProvider,
+            riverRatioProvider, lakeRatioProvider;
     static OverworldChunkGenerator instance = new OverworldChunkGenerator();
     static List<BlockPopulator> populators;
     static OverworldCaveGenerator CAVE_GENERATOR_OVERWORLD;
@@ -187,92 +185,92 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         // although it is named as such, this actually generates stone layers too.
         double topSoilThicknessRandomizer = stoneVeinGenerator.noise(blockX, blockZ, 2, 0.5, false);
         double topSoilThickness;
-            Material matTopSoil, matSoil, matStone;
-            // setup biome block info
-            switch (biome) {
-                case DEEP_OCEAN: // abyss
-                    matTopSoil = Material.SAND;
-                    matSoil = Material.SAND;
-                    matStone = Material.PRISMARINE;
-                    break;
-                case TAIGA_COLD: // tundra
-                case MUTATED_TAIGA_COLD: // tundra
-                    matTopSoil = Material.SNOW_BLOCK;
-                    matSoil = Material.SNOW_BLOCK;
-                    matStone = Material.PACKED_ICE;
-                    break;
-                case DESERT: // desert
-                case OCEAN: // ocean
-                case BEACHES: // beach
-                case FROZEN_OCEAN: // sulphurous ocean
-                case COLD_BEACH: // sulphurous beach
-                    matTopSoil = Material.SAND;
-                    matSoil = Material.SAND;
-                    matStone = Material.SANDSTONE;
-                    break;
-                case MUTATED_DESERT: // sunken sea
-                    matTopSoil = Material.STAINED_CLAY;
-                    matSoil = Material.STAINED_CLAY;
-                    matStone = Material.STAINED_CLAY;
-                    break;
-                case MUSHROOM_ISLAND: // corruption
-                case MUSHROOM_ISLAND_SHORE: // corruption
-                    matTopSoil = Material.MYCEL;
-                    matSoil = Material.DIRT;
-                    matStone = Material.STAINED_CLAY;
-                    break;
-                case ICE_FLATS: // hallow
-                case MUTATED_ICE_FLATS: // hallow
-                case MESA: // astral infection
-                case MUTATED_MESA: // astral infection
-                    matTopSoil = Material.DIRT;
-                    matSoil = Material.DIRT;
-                    matStone = Material.STAINED_CLAY;
-                    break;
-                case JUNGLE: // astral infection
-                case MUTATED_JUNGLE: // astral infection
-                    matTopSoil = Material.GRASS;
-                    matSoil = Material.DIRT;
-                    matStone = Material.DIRT;
-                    break;
-                default: // forest
-                    matTopSoil = Material.GRASS;
-                    matSoil = Material.DIRT;
-                    matStone = Material.STONE;
+        Material matTopSoil, matSoil, matStone;
+        // setup biome block info
+        switch (biome) {
+            case DEEP_OCEAN: // abyss
+                matTopSoil = Material.SAND;
+                matSoil = Material.SAND;
+                matStone = Material.PRISMARINE;
+                break;
+            case TAIGA_COLD: // tundra
+            case MUTATED_TAIGA_COLD: // tundra
+                matTopSoil = Material.SNOW_BLOCK;
+                matSoil = Material.SNOW_BLOCK;
+                matStone = Material.PACKED_ICE;
+                break;
+            case DESERT: // desert
+            case OCEAN: // ocean
+            case BEACHES: // beach
+            case FROZEN_OCEAN: // sulphurous ocean
+            case COLD_BEACH: // sulphurous beach
+                matTopSoil = Material.SAND;
+                matSoil = Material.SAND;
+                matStone = Material.SANDSTONE;
+                break;
+            case MUTATED_DESERT: // sunken sea
+                matTopSoil = Material.STAINED_CLAY;
+                matSoil = Material.STAINED_CLAY;
+                matStone = Material.STAINED_CLAY;
+                break;
+            case MUSHROOM_ISLAND: // corruption
+            case MUSHROOM_ISLAND_SHORE: // corruption
+                matTopSoil = Material.MYCEL;
+                matSoil = Material.DIRT;
+                matStone = Material.STAINED_CLAY;
+                break;
+            case ICE_FLATS: // hallow
+            case MUTATED_ICE_FLATS: // hallow
+            case MESA: // astral infection
+            case MUTATED_MESA: // astral infection
+                matTopSoil = Material.DIRT;
+                matSoil = Material.DIRT;
+                matStone = Material.STAINED_CLAY;
+                break;
+            case JUNGLE: // astral infection
+            case MUTATED_JUNGLE: // astral infection
+                matTopSoil = Material.GRASS;
+                matSoil = Material.DIRT;
+                matStone = Material.DIRT;
+                break;
+            default: // forest
+                matTopSoil = Material.GRASS;
+                matSoil = Material.DIRT;
+                matStone = Material.STONE;
+        }
+        double soilLayerHeight = 50 + topSoilThicknessRandomizer * 10;
+        // setup soil/stone layers
+        for (int y = Math.min(height - yOffset, WorldHelper.CAVERN_Y_BELOW_BEDROCK); y > 0; y--) {
+            if (! chunk.getType(i, y, j).isSolid()) continue;
+            Material matToSet;
+            int effectualY = y + yOffset;
+            boolean isStoneVein = stoneVeinFlag[i][y][j];
+            if (effectualY > soilLayerHeight) {
+                if (isStoneVein)
+                    matToSet = matStone;
+                else
+                    matToSet = matSoil;
+            } else {
+                if (isStoneVein)
+                    matToSet = matSoil;
+                else
+                    matToSet = matStone;
             }
-            double soilLayerHeight = 50 + topSoilThicknessRandomizer * 10;
-            // setup soil/stone layers
-            for (int y = Math.min(height - yOffset, WorldHelper.CAVERN_Y_BELOW_BEDROCK); y > 0; y--) {
-                if (! chunk.getType(i, y, j).isSolid()) continue;
-                Material matToSet;
-                int effectualY = y + yOffset;
-                boolean isStoneVein = stoneVeinFlag[i][y][j];
-                if (effectualY > soilLayerHeight) {
-                    if (isStoneVein)
-                        matToSet = matStone;
-                    else
-                        matToSet = matSoil;
-                } else {
-                    if (isStoneVein)
-                        matToSet = matSoil;
-                    else
-                        matToSet = matStone;
+            if (matToSet == matSoil) {
+                // the block below is air and this block has gravity; set the stone thickness higher, so it looks more appealing.
+                if (matToSet.hasGravity()) {
+                    for (int check = 1; check <= 3; check++)
+                        if (chunk.getType(i, y - check, j) == Material.AIR) {
+                            matToSet = matStone;
+                            break;
+                        }
                 }
-                if (matToSet == matSoil) {
-                    // the block below is air and this block has gravity; set the stone thickness higher, so it looks more appealing.
-                    if (matToSet.hasGravity()) {
-                        for (int check = 1; check <= 3; check++)
-                            if (chunk.getType(i, y - check, j) == Material.AIR) {
-                                matToSet = matStone;
-                                break;
-                            }
-                    }
-                    // the block above is air then set a grass instead of dirt
-                    else if (chunk.getType(i, y + 1, j) == Material.AIR)
-                        matToSet = matTopSoil;
-                }
-                chunk.setBlock(i, y, j, matToSet);
+                // the block above is air then set a grass instead of dirt
+                else if (chunk.getType(i, y + 1, j) == Material.AIR)
+                    matToSet = matTopSoil;
             }
+            chunk.setBlock(i, y, j, matToSet);
+        }
 
         if (yOffset == 0 && height - 1 < SEA_LEVEL) {
             // for surface only
@@ -359,8 +357,8 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     }
     // set up the "desired" block height and special cave ratio at a specific column of a chunk.
     private static void setupHeightAndCaveRatioAtLocation(int currX, int currZ, int i, int j,
-                                              int[][] heightMap, double[][] caveMultiMap,
-                                              HashMap<Biome, Double> nearbyBiomeMap, OverworldCaveGenerator caveGen) {
+                                                          int[][] heightMap, double[][] caveMultiMap,
+                                                          HashMap<Biome, Double> nearbyBiomeMap, OverworldCaveGenerator caveGen) {
         // calculate each nearby biome's contribution to the current land height
         HashMap<Biome, Double> biomeWeights = new HashMap<>();
         double totalWeight = 0;
@@ -406,6 +404,135 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                     biome.setBiome(i, j, OverworldBiomeGenerator.getUndergroundEquivalent(biomeToSet));
             }
     }
+    /** tweaks the biome then generates the height and cave multiplier mapping of a chunk
+     * @param blockXStart the starting x of the chunk
+     * @param blockZStart the starting z of the chunk
+     * @param heightMap the height map to initialize
+     * @param caveMultiMap the cave multiplier map to initialize
+     * @param caveGen the cave generator to use
+     * @param biomeGrid the biome grid to tweak
+     * @param yOffset the y offset used to tweak the biome
+     */
+    public static void generateMapsAlternative(int blockXStart, int blockZStart, int[][] heightMap, double[][] caveMultiMap,
+                                               OverworldCaveGenerator caveGen, BiomeGrid biomeGrid, int yOffset) {
+        long timing = System.nanoTime();
+        // create memoization 2D array for the nearby biomes
+        int memoiSize = 16 + NEARBY_BIOME_SAMPLE_RADIUS * 2;
+        Biome[][] biomesMemoization = new Biome[memoiSize][memoiSize];
+        for (int i = 0; i < memoiSize; i ++)
+            for (int j = 0; j < memoiSize; j ++) {
+                biomesMemoization[i][j] = OverworldBiomeGenerator.getBiome(
+                        blockXStart - NEARBY_BIOME_SAMPLE_RADIUS + i, blockZStart - NEARBY_BIOME_SAMPLE_RADIUS + j);
+            }
+        // update the biome grid
+        tweakBiome(biomesMemoization, biomeGrid, yOffset);
+        // record timing info
+        testGenDurTotal[0] += System.nanoTime() - timing;
+
+        timing = System.nanoTime();
+        int currX, currZ;
+
+        // setup height info according to nearby biomes at both offset 0.
+        // then use sliding window technique to derive the height everywhere.
+        HashMap<Biome, Double> nearbyBiomeMap = new HashMap<>();
+        for (int sampleIdxX = 0; sampleIdxX <= NEARBY_BIOME_SAMPLE_RADIUS * 2; sampleIdxX++) {
+            for (int sampleIdxZ = 0; sampleIdxZ <= NEARBY_BIOME_SAMPLE_RADIUS * 2; sampleIdxZ++) {
+                Biome currBiome = biomesMemoization[sampleIdxX][sampleIdxZ];
+                double updatedBiomeIntensity = nearbyBiomeMap.getOrDefault(currBiome, 0d) +
+                        HEIGHT_INFLUENCE_FACTOR[sampleIdxX][sampleIdxZ];
+                nearbyBiomeMap.put(currBiome, updatedBiomeIntensity);
+            }
+        }
+
+        // loop through all blocks in a zigzag fashion with the sliding window technique.
+        boolean increasingZ = true;
+        for (int i = 0; i < 16; i ++) {
+            currX = blockXStart + i;
+            for (int j = 0; j < 16; j++) {
+                // account for shift direction
+                int actualJ = increasingZ ? j : 15 - j;
+                currZ = blockZStart + actualJ;
+
+                // use actualJ to pass in the correct index corresponding to currZ
+                setupHeightAndCaveRatioAtLocation(currX, currZ, i, actualJ, heightMap, caveMultiMap, nearbyBiomeMap, caveGen);
+
+                // sliding window technique
+                if (j + 1 < 16) {
+                    slidingWindowStep(nearbyBiomeMap, biomesMemoization, i, actualJ, false, increasingZ);
+                }
+            }
+            // sliding window technique.
+            if (i + 1 < 16) {
+                int zOffset = increasingZ ? 15 : 0;
+                slidingWindowStep(nearbyBiomeMap, biomesMemoization, i, zOffset, true, increasingZ);
+            }
+            // reverse the direction to traverse
+            increasingZ = !increasingZ;
+        }
+        // record timing info
+        testGenDurTotal[1] += System.nanoTime() - timing;
+    }
+    /** helper function; handles a single sliding window step
+     * @param nearbyBiomeMap biome map
+     * @param biomesMemoization memoized nearby biomes
+     * @param x the x position (0-15)
+     * @param z the z position (0-15)
+     * @param isXDirection true if the sliding window is moving in the x direction
+     * @param increasingZ true if the sliding window is moving in the increasing z direction
+     */
+    private static void slidingWindowStep(HashMap<Biome, Double> nearbyBiomeMap, Biome[][] biomesMemoization,
+                                          int x, int z, boolean isXDirection, boolean increasingZ) {
+        // note that x + NEARBY_BIOME_SAMPLE_RADIUS is the actual index in memoization
+        // same for z
+        int indAddX, indAddZ;
+        int indDropX, indDropZ;
+        int xStep, zStep;
+        // sliding window in the x direction
+        if (isXDirection) {
+            // add one to include the information just beyond the current scope
+            // (x + NEARBY_BIOME_SAMPLE_RADIUS) + NEARBY_BIOME_SAMPLE_RADIUS + 1
+            indAddX = x + NEARBY_BIOME_SAMPLE_RADIUS * 2 + 1;
+            // (x + NEARBY_BIOME_SAMPLE_RADIUS) - NEARBY_BIOME_SAMPLE_RADIUS
+            indDropX = x;
+            // (z + NEARBY_BIOME_SAMPLE_RADIUS) - NEARBY_BIOME_SAMPLE_RADIUS
+            indAddZ = z;
+            indDropZ = z;
+            // step in the z direction
+            xStep = 0;
+            zStep = 1;
+        }
+        // sliding in the z direction; note this might be increasing or decreasing.
+        else {
+            // (x + NEARBY_BIOME_SAMPLE_RADIUS) - NEARBY_BIOME_SAMPLE_RADIUS
+            indAddX = x;
+            indDropX = x;
+            // add one to include the information just beyond the current scope
+            indAddZ = z + NEARBY_BIOME_SAMPLE_RADIUS + (NEARBY_BIOME_SAMPLE_RADIUS + 1) * (increasingZ ? 1 : -1);
+            indDropZ = z + NEARBY_BIOME_SAMPLE_RADIUS - (NEARBY_BIOME_SAMPLE_RADIUS) * (increasingZ ? 1 : -1);
+            // step in the x direction
+            xStep = 1;
+            zStep = 0;
+        }
+        // loop to add and remove the two strips for transition
+        for (int sampleIdx = 0; sampleIdx <= NEARBY_BIOME_SAMPLE_RADIUS * 2; sampleIdx++) {
+            double influence_factor = HEIGHT_INFLUENCE_FACTOR[sampleIdx][0];
+
+            Biome currBiome_drop = biomesMemoization[indDropX][indDropZ];
+            double updatedIntensity_drop = nearbyBiomeMap.getOrDefault(currBiome_drop, 0d) - influence_factor;
+            nearbyBiomeMap.put(currBiome_drop, updatedIntensity_drop);
+
+            Biome currBiome_add =  biomesMemoization[indAddX][indAddZ];
+            double updatedIntensity_add = nearbyBiomeMap.getOrDefault(currBiome_add, 0d) + influence_factor;
+            nearbyBiomeMap.put(currBiome_add,  updatedIntensity_add);
+
+            // update indexes
+            indAddX += xStep;
+            indDropX += xStep;
+            indAddZ += zStep;
+            indDropZ += zStep;
+        }
+    }
+
     // generates the height and cave multiplier mapping of a chunk
     public static void generateMaps(int blockXStart, int blockZStart, int[][] heightMap, double[][] caveMultiMap,
                                     OverworldCaveGenerator caveGen, BiomeGrid biomeGrid, int yOffset) {
@@ -630,7 +757,8 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         // init info maps; the memoization would also set up the biome.
         int[][] heightMap = new int[16][16];
         double[][] caveMultiMap = new double[16][16];
-        generateMaps(x << 4, z << 4, heightMap, caveMultiMap, CAVE_GENERATOR_OVERWORLD, biome, Y_OFFSET_OVERWORLD);
+//        generateMaps(x << 4, z << 4, heightMap, caveMultiMap, CAVE_GENERATOR_OVERWORLD, biome, Y_OFFSET_OVERWORLD);
+        generateMapsAlternative(x << 4, z << 4, heightMap, caveMultiMap, CAVE_GENERATOR_OVERWORLD, biome, Y_OFFSET_OVERWORLD);
 
 
         timing = System.nanoTime();

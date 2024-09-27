@@ -30,6 +30,7 @@ import terraria.gameplay.EventAndTime;
 import terraria.gameplay.Setting;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -3949,15 +3950,60 @@ public class ItemUseHelper {
             tool.setAmount(tool.getAmount() - 1);
         }
         // use the weapon
-        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
         double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
         projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
         Vector facingDir = getPlayerAimDir(ply, ply.getEyeLocation(), projectileSpeed, itemType, false, 0);
         facingDir.normalize().multiply(projectileSpeed);
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, facingDir, attrMap, itemType);
         EntityHelper.spawnProjectile(shootInfo);
-        // play sound
-        playerUseItemSound(ply, weaponType, itemType, autoSwing);
+        // apply CD
+        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
+        double useTimeMulti = 1 / useSpeed;
+        applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
+        return true;
+    }
+    // rogue helper functions below
+    protected static boolean playerUseRogue(Player ply, String itemType, String weaponType,
+                                            AtomicBoolean autoSwing, ConfigurationSection weaponSection,
+                                            HashMap<String, Double> attrMap, ItemStack tool) {
+        // remove one of the player's tool if needed
+        if (weaponType.equals("THROW_ROGUE")) {
+            double consumptionRate = attrMap.getOrDefault("ammoConsumptionRate", 1d);
+            if (Math.random() < consumptionRate) {
+                tool.setAmount(tool.getAmount() - 1);
+            }
+        }
+        // stealth
+        double currStealth = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble();
+        double maxStealth = attrMap.getOrDefault("stealthLimit", 0d);
+        double stealthConsumption = maxStealth * attrMap.getOrDefault("stealthConsumptionMulti", 1d) - 1e-9;
+        boolean isStealth = currStealth >= stealthConsumption;
+        currStealth = Math.max(0, currStealth - stealthConsumption);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH, currStealth);
+        if (isStealth) {
+            attrMap.put("damage", attrMap.getOrDefault("damageStealth", 1d));
+            autoSwing.set(false);
+        }
+        // use the weapon
+        weaponSection = weaponSection.getConfigurationSection(isStealth ? "stealth" : "normal");
+        double projectileSpeed = weaponSection.getDouble("projectileSpeed", 1d);
+        projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
+
+        String projType = weaponSection.getString("projectile", itemType);
+
+        Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), projectileSpeed, projType, false, 0);
+        projVel.normalize();
+        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, projVel, attrMap, projType);
+        int shots = weaponSection.getInt("shots", 1);
+        double offset = weaponSection.getDouble("offset", -1d);
+        for (int shot = 0; shot < shots; shot ++) {
+            if (offset > 0) {
+                projVel = MathHelper.setVectorLength(
+                        projVel.clone().multiply(offset).add( MathHelper.randomVector() ), projectileSpeed);
+            }
+            shootInfo.velocity = projVel;
+            EntityHelper.spawnProjectile(shootInfo);
+        }
         // apply CD
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
         double useTimeMulti = 1 / useSpeed;
@@ -5339,6 +5385,18 @@ public class ItemUseHelper {
                     case "SWING":
                         success = playerUseMelee(ply, itemName, mainHandItem, weaponSection, attrMap, swingAmount, weaponType.equals("STAB"));
                         break;
+                    case "BOOMERANG":
+                        success = playerUseBoomerang(ply, itemName, weaponType,
+                                autoSwing, attrMap, weaponSection);
+                        break;
+                    case "YOYO":
+                        success = playerUseYoyo(ply, itemName, weaponType,
+                                autoSwing, attrMap, weaponSection);
+                        break;
+                    case "FLAIL":
+                        success = playerUseFlail(ply, itemName, weaponType,
+                                autoSwing, attrMap, weaponSection);
+                        break;
                     case "WHIP":
                         success = playerUseWhip(ply, itemName, mainHandItem, weaponSection, attrMap, swingAmount);
                         break;
@@ -5348,6 +5406,18 @@ public class ItemUseHelper {
                     case "SPECIAL_AMMO":
                         success = playerUseRanged(ply, itemName, swingAmount, mainHandItem,
                                 weaponType, maxLoad > 0, autoSwing, weaponSection, attrMap);
+                        break;
+                    case "THROW_PROJECTILE":
+                        success = playerUseThrowingProjectile(ply, itemName, weaponType,
+                                autoSwing, attrMap, mainHandItem);
+                        break;
+                    case "THROW_ROGUE":
+                    case "ROGUE":
+                        // stealth attack will not auto swing
+                        AtomicBoolean autosSwingUpdated = new AtomicBoolean(autoSwing);
+                        success = playerUseRogue(ply, itemName, weaponType,
+                                autosSwingUpdated, weaponSection, attrMap, mainHandItem);
+                        autoSwing = autosSwingUpdated.get();
                         break;
                     case "MAGIC_PROJECTILE":
                     case "MAGIC_SPECIAL":
@@ -5361,22 +5431,6 @@ public class ItemUseHelper {
                                 autoSwing, mainHandItem, weaponSection,
                                 (HashMap<String, Double>) attrMap.clone());
                         break;
-                    case "THROW_PROJECTILE":
-                        success = playerUseThrowingProjectile(ply, itemName, weaponType,
-                                autoSwing, attrMap, mainHandItem);
-                        break;
-                    case "BOOMERANG":
-                        success = playerUseBoomerang(ply, itemName, weaponType,
-                                autoSwing, attrMap, weaponSection);
-                        break;
-                    case "YOYO":
-                        success = playerUseYoyo(ply, itemName, weaponType,
-                                autoSwing, attrMap, weaponSection);
-                        break;
-                    case "FLAIL":
-                        success = playerUseFlail(ply, itemName, weaponType,
-                                autoSwing, attrMap, weaponSection);
-                        break;
                 }
                 if (success) {
                     if (autoSwing) {
@@ -5385,6 +5439,9 @@ public class ItemUseHelper {
                     }
                     // play item use sound
                     playerUseItemSound(ply, weaponType, itemName, autoSwing);
+                    // reset stealth if the weapon is not rogue
+                    if (! weaponType.equals("ROGUE"))
+                        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH, 0d);
                 } else {
                     // prevent bug, if the item is not being used successfully, cancel auto swing
                     // this mainly happens when mana has depleted or ammo runs out

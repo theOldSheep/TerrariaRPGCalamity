@@ -228,6 +228,9 @@ fish:
     紫挥棒鱼:
       biome:
       - CORRUPTION
+    南十字星蜗:
+      biome:
+      - ASTRAL_INFECTION
     水晶蛇:
       biome:
       - HALLOW

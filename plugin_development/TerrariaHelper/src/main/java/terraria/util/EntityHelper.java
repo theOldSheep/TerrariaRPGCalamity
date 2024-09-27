@@ -270,6 +270,7 @@ public class EntityHelper {
         PLAYER_NEXT_SENTRY_INDEX("nextSentryIndex"),
         PLAYER_NPC_INTERACTING("NPCViewing"),
         PLAYER_SENTRY_LIST("sentries"),
+        PLAYER_STEALTH("stealth"),
         PLAYER_TARGET_LOC_CACHE("targetLocCache"),
         PLAYER_TEAM("team"),
         PLAYER_TELEPORT_TARGET("teleportTarget"),
@@ -339,22 +340,23 @@ public class EntityHelper {
         }
     }
     public enum DamageType {
+        MELEE("Melee"),
+        TRUE_MELEE("TrueMelee"),
         ARROW("Arrow"),
-        BLOCK_EXPLOSION("BlockExplosion"),
         BULLET("Bullet"),
+        ROCKET("Rocket"),
+        ROGUE("Rogue"),
+        MAGIC("Magic"),
+        SPECTRE("Spectre"),
+        SUMMON("Summon"),
+        BLOCK_EXPLOSION("BlockExplosion"),
         DEBUFF("Debuff"),
         DROWNING("Drowning"),
         FALL("Fall"),
         LAVA("Lava"),
-        MAGIC("Magic"),
-        MELEE("Melee"),
         NEGATIVE_REGEN("NegativeRegen"),
-        ROCKET("Rocket"),
-        SPECTRE("Spectre"),
         SUFFOCATION("Suffocation"),
-        SUMMON("Summon"),
-        THORN("Thorn"),
-        TRUE_MELEE("TrueMelee");
+        THORN("Thorn");
         // field
         String internalName;
         // constructor
@@ -2162,7 +2164,7 @@ public class EntityHelper {
                         buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
                         buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictTrueMelee", new ArrayList<>(0)));
                         break;
-                    // Summon, Melee, Magic
+                    // Melee, Magic, Summon, Rogue
                     default:
                         // whip
                         if (damageType == DamageType.SUMMON && damageReason == DamageReason.STRIKE)
@@ -2265,6 +2267,12 @@ public class EntityHelper {
                                 dmg *= damagerAttrMap.getOrDefault("damageRangedMulti", 1d);
                             }
                             critRate += damagerAttrMap.getOrDefault("critRanged", 0d);
+                            break;
+                        case ROGUE:
+                            if (canGetPercentageBonus) {
+                                dmg *= damagerAttrMap.getOrDefault("damageRogueMulti", 1d);
+                            }
+                            critRate += damagerAttrMap.getOrDefault("critRogue", 0d);
                             break;
                         case MAGIC:
                         case SPECTRE:
