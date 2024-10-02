@@ -1718,7 +1718,6 @@
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.25
     damageMeleeMulti: 0.1
-    critMelee: 5
   worth: 2000000
   rarity: 4
 机械手套:
@@ -1729,8 +1728,8 @@
   attributes:
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.35
-    damageMeleeMulti: 0.12
-    critMelee: 8
+    damageMeleeMulti: 0.1
+    critMelee: 5
   worth: 5000000
   rarity: 5
 烈火手套:
@@ -1743,7 +1742,7 @@
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.4
     damageMeleeMulti: 0.15
-    critMelee: 10
+    critMelee: 5
     regen: 2
     buffInflictMelee: 狱炎|80|1
   worth: 6000000
@@ -2146,8 +2145,8 @@ Drew之翼:
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.5
     damageMeleeMulti: 0.15
-    critMelee: 12
-    damageTrueMeleeMulti: 0.1
+    critMelee: 10
+    damageTrueMeleeMulti: 0.5
     buffInflictMelee: 元素谐鸣|80|1
   worth: 28000000
   rarity: 14
@@ -2161,7 +2160,7 @@ Drew之翼:
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.65
     damageMeleeMulti: 0.2
-    critMelee: 15
+    critMelee: 10
     damageTrueMeleeMulti: 0.1
     buffInflictMelee: 超位崩解|80|1
   worth: 40000000
@@ -2248,6 +2247,8 @@ Drew之翼:
   lore:
   - §r[饰品]
   - §r使用魔力药水时获得魔力烧蚀而非魔力疾病
+  attributes:
+    damageMagicMulti: 0.1
   worth: 9600000
   rarity: 7
 灾厄符章:
