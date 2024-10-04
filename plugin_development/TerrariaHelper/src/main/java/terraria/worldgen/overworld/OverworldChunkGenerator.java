@@ -534,8 +534,8 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     }
 
     // generates the height and cave multiplier mapping of a chunk
-    public static void generateMaps(int blockXStart, int blockZStart, int[][] heightMap, double[][] caveMultiMap,
-                                    OverworldCaveGenerator caveGen, BiomeGrid biomeGrid, int yOffset) {
+    public static void generateChunkMaps(int blockXStart, int blockZStart, int[][] heightMap, double[][] caveMultiMap,
+                                         OverworldCaveGenerator caveGen, BiomeGrid biomeGrid, int yOffset) {
         long timing = System.nanoTime();
         // create memoization 2D array for the nearby biomes
         int memoiSize = 16 + NEARBY_BIOME_SAMPLE_RADIUS * 2;

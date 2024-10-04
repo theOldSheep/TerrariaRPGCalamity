@@ -21,6 +21,7 @@ import java.util.logging.Level;
 
 public class ItemHelper {
     public static final String PLACEHOLDER_ITEM_NAME_PREFIX = "§1§1§4§5§1§4";
+    public static String[] ATTRIBUTE_LORE_ORDER;
     public static HashMap<String, String> ATTRIBUTE_DISPLAY_NAME = new HashMap<>();
     private static HashMap<String, ItemStack> ITEM_MAP;
     public static HashMap<String, VexGui> CRAFTING_GUI_MAP;
@@ -207,30 +208,64 @@ public class ItemHelper {
         }
     }
     private static void setupAttributeDisplayName() {
+        ATTRIBUTE_LORE_ORDER = new String[] {
+                // usually found in weapon lore
+                "damage", "damageStealth", "knockback", "crit", "critDamage", "useTime", "manaUse",
+                "powerPickaxe", "fishingPower", "reachExtra",
+                // multipliers, usually found in armor/accessory lore
+                "damageTakenMulti", "damageContactTakenMulti",
+                "damageMulti", "damageMeleeMulti", "damageTrueMeleeMulti",
+                "damageRangedMulti", "damageArrowMulti", "damageBulletMulti", "damageRocketMulti",
+                "damageRogueMulti", "damageStealthMulti", "damageMagicMulti", "damageSummonMulti",
+                "stealthConsumptionMulti", "manaUseMulti", "ammoConsumptionRate", "arrowConsumptionRate", "mobSpawnRateMulti",
+                "speedMulti", "flightTimeMulti", "meleeReachMulti", "regenMulti", "fixedHealingMulti", "maxHealthMulti",
+                "useSpeedMulti", "useSpeedMeleeMulti", "useSpeedRangedMulti",
+                "useSpeedRogueMulti", "useSpeedMagicMulti", "useSpeedMiningMulti",
+                "knockbackMeleeMulti", "projectileSpeedArrowMulti",
+                // barrier/mana/health/crit/regen
+                "barrierMax", "maxHealth", "stealthLimit", "maxMana",
+                "regen", "stealthRegenMulti", "manaRegen",
+                "critMelee", "critTrueMelee", "critRanged", "critRogue", "critStealth", "critMagic",
+                // other attributes usually found in armor/accessory lore
+                "armorPenetration", "defence", "invulnerabilityTick", "waterAffinity",
+                "minionLimit", "sentryLimit", "mobLimit", "knockbackResistance",
+                // these attributes are not displayed; however, they are put in this list to prevent sending warning message.
+                "damageType", "fishingHooks",
+                "buffInflict", "buffInflictMelee", "buffInflictTrueMelee",
+                "buffInflictRanged", "buffInflictRogue", "buffInflictMagic",
+                "buffInflictSummon", "buffImmune",
+                "bounce", "projectileSpeed", "projectileSpeedMulti", "penetration",
+        };
+
         ATTRIBUTE_DISPLAY_NAME.put("damageTakenMulti", "受到伤害");
         ATTRIBUTE_DISPLAY_NAME.put("damageContactTakenMulti", "受到接触伤害");
         ATTRIBUTE_DISPLAY_NAME.put("damageMulti", "伤害");
         ATTRIBUTE_DISPLAY_NAME.put("damageMeleeMulti", "近战伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("damageTrueMeleeMulti", "真近战伤害");
         ATTRIBUTE_DISPLAY_NAME.put("damageRangedMulti", "远程伤害");
-        ATTRIBUTE_DISPLAY_NAME.put("damageMagicMulti", "魔法伤害");
-        ATTRIBUTE_DISPLAY_NAME.put("damageSummonMulti", "召唤伤害");
         ATTRIBUTE_DISPLAY_NAME.put("damageArrowMulti", "箭矢伤害");
         ATTRIBUTE_DISPLAY_NAME.put("damageBulletMulti", "子弹伤害");
         ATTRIBUTE_DISPLAY_NAME.put("damageRocketMulti", "火箭伤害");
-        ATTRIBUTE_DISPLAY_NAME.put("damageTrueMeleeMulti", "真近战伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("damageRogueMulti", "盗贼伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("damageStealthMulti", "潜伏增伤倍率");
+        ATTRIBUTE_DISPLAY_NAME.put("damageMagicMulti", "魔法伤害");
+        ATTRIBUTE_DISPLAY_NAME.put("damageSummonMulti", "召唤伤害");
         ATTRIBUTE_DISPLAY_NAME.put("flightTimeMulti", "飞行时长");
+        ATTRIBUTE_DISPLAY_NAME.put("stealthConsumptionMulti", "潜伏攻击所需潜行值");
         ATTRIBUTE_DISPLAY_NAME.put("manaUseMulti", "魔力消耗");
         ATTRIBUTE_DISPLAY_NAME.put("maxHealthMulti", "最大生命值");
         ATTRIBUTE_DISPLAY_NAME.put("mobSpawnRateMulti", "怪物生成速度");
         ATTRIBUTE_DISPLAY_NAME.put("speedMulti", "移动速度");
         ATTRIBUTE_DISPLAY_NAME.put("meleeReachMulti", "近战攻击距离");
         ATTRIBUTE_DISPLAY_NAME.put("regenMulti", "生命回复速度");
+        ATTRIBUTE_DISPLAY_NAME.put("stealthRegenMulti", "潜伏值累积速度");
         ATTRIBUTE_DISPLAY_NAME.put("fixedHealingMulti", "治疗强度");
         ATTRIBUTE_DISPLAY_NAME.put("useSpeedMulti", "攻击速度");
-        ATTRIBUTE_DISPLAY_NAME.put("useSpeedMagicMulti", "魔法攻击速度");
         ATTRIBUTE_DISPLAY_NAME.put("useSpeedMeleeMulti", "近战攻击速度");
-        ATTRIBUTE_DISPLAY_NAME.put("useSpeedMiningMulti", "挖掘速度");
         ATTRIBUTE_DISPLAY_NAME.put("useSpeedRangedMulti", "远程攻击速度");
+        ATTRIBUTE_DISPLAY_NAME.put("useSpeedRogueMulti", "盗贼攻击速度");
+        ATTRIBUTE_DISPLAY_NAME.put("useSpeedMagicMulti", "魔法攻击速度");
+        ATTRIBUTE_DISPLAY_NAME.put("useSpeedMiningMulti", "挖掘速度");
         ATTRIBUTE_DISPLAY_NAME.put("knockbackMeleeMulti", "近战击退");
         ATTRIBUTE_DISPLAY_NAME.put("projectileSpeedMulti", "弹射物速度");
         ATTRIBUTE_DISPLAY_NAME.put("projectileSpeedArrowMulti", "箭矢速度");
@@ -578,41 +613,18 @@ public class ItemHelper {
         ArrayList<String> result = new ArrayList<>(10);
         if (attributeSection == null) return result;
         Set<String> attributes = attributeSection.getKeys(false);
-        String[] attributeLoreOrder = {
-                // usually found in weapon lore
-                "damage", "knockback", "crit", "critDamage", "useTime", "manaUse",
-                "powerPickaxe", "fishingPower", "reachExtra",
-                // multipliers, usually found in armor/accessory lore
-                "damageTakenMulti", "damageContactTakenMulti",
-                "damageMulti", "damageMeleeMulti", "damageRangedMulti", "damageMagicMulti",
-                "damageSummonMulti", "damageArrowMulti", "damageBulletMulti", "damageRocketMulti", "damageTrueMeleeMulti",
-                "manaUseMulti", "ammoConsumptionRate", "arrowConsumptionRate", "mobSpawnRateMulti",
-                "speedMulti", "flightTimeMulti", "meleeReachMulti", "regenMulti", "fixedHealingMulti", "maxHealthMulti",
-                "useSpeedMulti", "useSpeedMagicMulti", "useSpeedMeleeMulti", "useSpeedRangedMulti", "useSpeedMiningMulti",
-                "knockbackMeleeMulti", "projectileSpeedArrowMulti",
-                // barrier/mana/health/crit/regen
-                "barrierMax", "maxMana", "maxHealth", "regen", "manaRegen", "critMelee", "critMagic", "critRanged", "critTrueMelee",
-                // other attributes usually found in armor/accessory lore
-                "armorPenetration", "defence", "invulnerabilityTick", "waterAffinity",
-                "minionLimit", "sentryLimit", "mobLimit", "knockbackResistance",
-                // these attributes are not displayed; however, they are put in this list to prevent sending warning message.
-                "damageType", "fishingHooks",
-                "buffInflict", "buffInflictMagic", "buffInflictMelee", "buffInflictRanged",
-                "buffInflictSummon", "buffInflictTrueMelee", "buffImmune",
-                "bounce", "projectileSpeed", "projectileSpeedMulti", "penetration",
-        };
         // send warning message if the attribute is not handled
         for (String attribute : attributes) {
             boolean found = false;
-            for (int i = 0; i < attributeLoreOrder.length; i ++)
-                if (attributeLoreOrder[i].equals(attribute)) {
+            for (int i = 0; i < ATTRIBUTE_LORE_ORDER.length; i ++)
+                if (ATTRIBUTE_LORE_ORDER[i].equals(attribute)) {
                     found = true;
                     break;
                 }
             if (!found) TerrariaHelper.LOGGER.log(Level.WARNING, "Unhandled attribute when initializing item from yml: " + attribute);
         }
         // loop through all attributes in the order wanted and add their lore lines
-        for (String attribute : attributeLoreOrder) {
+        for (String attribute : ATTRIBUTE_LORE_ORDER) {
             if (!attributes.contains(attribute)) continue;
             switch (attribute) {
                 case "damage": {
@@ -626,6 +638,9 @@ public class ItemHelper {
                         case "Rocket":
                             result.add(damage + " 基础远程伤害");
                             break;
+                        case "Rogue":
+                            result.add(damage + " 基础盗贼伤害");
+                            break;
                         case "Magic":
                             result.add(damage + " 基础魔法伤害");
                             break;
@@ -635,6 +650,11 @@ public class ItemHelper {
                         default:
                             result.add(damage + " 基础无职业伤害");
                     }
+                    break;
+                }
+                case "damageStealth": {
+                    int damage = attributeSection.getInt(attribute, 0);
+                    result.add(damage + " 基础潜伏伤害");
                     break;
                 }
                 case "knockback": {
@@ -711,9 +731,9 @@ public class ItemHelper {
                     }
                     break;
                 }
-                case "maxMana": {
+                case "barrierMax": {
                     int amount = attributeSection.getInt(attribute, 0);
-                    result.add((amount > 0 ? "+" : "") + amount + " 魔力上限");
+                    result.add(amount + " 保护矩阵能量上限");
                     break;
                 }
                 case "maxHealth": {
@@ -721,9 +741,14 @@ public class ItemHelper {
                     result.add(amount + " 最大生命值");
                     break;
                 }
-                case "barrierMax": {
+                case "stealthLimit": {
                     int amount = attributeSection.getInt(attribute, 0);
-                    result.add(amount + " 保护矩阵能量上限");
+                    result.add(amount + " 潜行值上限");
+                    break;
+                }
+                case "maxMana": {
+                    int amount = attributeSection.getInt(attribute, 0);
+                    result.add((amount > 0 ? "+" : "") + amount + " 魔力上限");
                     break;
                 }
                 case "waterAffinity": {
@@ -744,19 +769,27 @@ public class ItemHelper {
                     break;
                 }
                 case "critMelee":
-                case "critMagic":
+                case "critTrueMelee":
                 case "critRanged":
-                case "critTrueMelee": {
+                case "critRogue":
+                case "critStealth":
+                case "critMagic": {
                     int crit = attributeSection.getInt(attribute, 0);
                     switch (attribute) {
                         case "critMelee":
                             result.add((crit > 0 ? "+" : "") + crit + "% 近战暴击率");
                             break;
-                        case "critMagic":
-                            result.add((crit > 0 ? "+" : "") + crit + "% 魔法暴击率");
-                            break;
                         case "critRanged":
                             result.add((crit > 0 ? "+" : "") + crit + "% 远程暴击率");
+                            break;
+                        case "critRogue":
+                            result.add((crit > 0 ? "+" : "") + crit + "% 盗贼暴击率");
+                            break;
+                        case "critStealth":
+                            result.add((crit > 0 ? "+" : "") + crit + "% 潜伏最高额外暴击率");
+                            break;
+                        case "critMagic":
+                            result.add((crit > 0 ? "+" : "") + crit + "% 魔法暴击率");
                             break;
                         default:
                             result.add((crit > 0 ? "+" : "") + crit + "% 真近战暴击率");
@@ -802,11 +835,12 @@ public class ItemHelper {
                 case "projectileSpeed":
                 case "penetration":
                 case "buffInflict":
-                case "buffInflictMagic":
                 case "buffInflictMelee":
-                case "buffInflictRanged":
-                case "buffInflictSummon":
                 case "buffInflictTrueMelee":
+                case "buffInflictRanged":
+                case "buffInflictRogue":
+                case "buffInflictMagic":
+                case "buffInflictSummon":
                     break;
                 // multiplier-style attributes
                 default:

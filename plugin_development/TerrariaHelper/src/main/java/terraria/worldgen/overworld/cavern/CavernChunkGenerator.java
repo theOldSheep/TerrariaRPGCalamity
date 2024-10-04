@@ -36,7 +36,7 @@ public class CavernChunkGenerator extends ChunkGenerator {
         // init info maps; biome setup is handled here
         int[][] heightMap = new int[16][16];
         double[][] caveMultiMap = new double[16][16];
-        OverworldChunkGenerator.generateMaps(x << 4, z << 4, heightMap, caveMultiMap, CAVE_GENERATOR_CAVERN, biome, Y_OFFSET_CAVERN);
+        OverworldChunkGenerator.generateChunkMaps(x << 4, z << 4, heightMap, caveMultiMap, CAVE_GENERATOR_CAVERN, biome, Y_OFFSET_CAVERN);
         // init terrain
         ChunkData chunk = createChunkData(world);
         OverworldChunkGenerator.initializeTerrain(chunk, x * 16, z * 16, biome, Y_OFFSET_CAVERN, heightMap);

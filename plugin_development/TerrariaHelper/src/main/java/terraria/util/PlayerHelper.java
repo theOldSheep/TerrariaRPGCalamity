@@ -2505,12 +2505,12 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             // stealth increases rogue damage & crit
             double maxStealth = newAttrMap.getOrDefault("stealthLimit", 0d);
             if (maxStealth > 1) {
-                double stealthRatio = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble() / maxStealth;
+                double currStealth = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble();
+                double stealthRatio = currStealth / maxStealth;
                 EntityHelper.tweakAttribute(ply, newAttrMap, "critRogue",
                         (newAttrMap.getOrDefault("critStealth", 0d) * stealthRatio) + "", true);
                 EntityHelper.tweakAttribute(ply, newAttrMap, "damageRogueMulti",
-                        ( (newAttrMap.getOrDefault("damageStealthMulti", 0d) + maxStealth / 100d )
-                                * stealthRatio) + "", true);
+                        ( currStealth / 100d * newAttrMap.getOrDefault("damageStealthMulti", 1d) ) + "", true);
             }
 
             // post-initialization

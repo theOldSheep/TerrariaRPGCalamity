@@ -1320,6 +1320,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作勇气之盾
   - §r双击一个方向来冲刺
   - §6专家模式物品
   attributes:
@@ -1346,6 +1347,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作守护之盾
   attributes:
     defence: 8
     knockbackResistance: 1
@@ -1363,6 +1365,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作守护之盾
   attributes:
     defence: 12
     knockbackResistance: 1
@@ -1426,6 +1429,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作守护之盾
   - §r当团队中附近玩家受伤时，若生命值高于25%则在计算一切减免前：
   - §r-> 受到相当于本次伤害5%的真实伤害
   - §r-> 使本次伤害降低15%
@@ -1439,6 +1443,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作守护之盾
   - §r当团队中附近玩家受伤时，若生命值高于25%则在计算一切减免前：
   - §r-> 受到相当于本次伤害5%的真实伤害
   - §r-> 使本次伤害降低15%
@@ -2239,7 +2244,7 @@ Drew之翼:
   - §r伤害越高治疗效果越强；魔力越少治疗效果越弱
   attributes:
     maxMana: 50
-    damageMagicMulti: 0.06
+    damageMagicMulti: 0.08
   worth: 2400000
   rarity: 4
 混乱石:
@@ -2247,8 +2252,6 @@ Drew之翼:
   lore:
   - §r[饰品]
   - §r使用魔力药水时获得魔力烧蚀而非魔力疾病
-  attributes:
-    damageMagicMulti: 0.1
   worth: 9600000
   rarity: 7
 灾厄符章:
@@ -2270,7 +2273,7 @@ Drew之翼:
   - §r手持魔法武器时对敌人造成魔法伤害则触发以下效果：
   - §r尝试额外消耗2点魔力，若成功则使本次暴击前伤害增加100点
   attributes:
-    regen: -10
+    regen: -6
     maxMana: 60
   worth: 22000000
   rarity: 11
@@ -2662,6 +2665,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作守护之盾
   attributes:
     defence: 4
     regen: 4
@@ -2672,6 +2676,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作勇气之盾
   - §r▷ 冲刺：双击一个方向可以冲刺，具有一定的冷却时间
   attributes:
     defence: 16
@@ -2684,6 +2689,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作勇气之盾
   - §r▷ 冲刺：双击一个方向可以冲刺，具有一定的冷却时间
   attributes:
     defence: 32
@@ -2696,6 +2702,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作勇气之盾
   - §r▷ 冲刺：双击一个方向可以冲刺，具有一定的冷却时间
   attributes:
     defence: 32
@@ -2708,6 +2715,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作勇气之盾
   - §r▷ 冲刺：双击一个方向可以冲刺，具有一定的冷却时间
   attributes:
     defence: 40
@@ -2730,6 +2738,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作守护之盾
   - §r减少治疗药水的冷却时间
   - §r当团队中附近玩家受伤时，若生命值高于25%则在计算一切减免前：
   - §r-> 受到相当于本次伤害5%的真实伤害
@@ -2811,7 +2820,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributesFormI:
-    maxHealth: 100
+    maxHealth: 200
     damageTakenMulti: -0.1
   attributesFormII:
     regen: 6
@@ -2857,6 +2866,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作守护之盾
   - §r坚固沉重的护具，并不是大理石制成的
   attributes:
     defence: 72
@@ -2885,6 +2895,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作守护之盾
   - §r神的力量蕴藏于其中
   attributes:
     defence: 60
@@ -14445,6 +14456,7 @@ Dodu的手炮:
   item: DIAMOND_HELMET
   lore:
   - §r[装备]
+  - §r盗贼攻击造成幻星感染减益
   attributes:
     defence: 24
     damageRogueMulti: 0.05
