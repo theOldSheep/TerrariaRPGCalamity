@@ -2503,6 +2503,53 @@ Drew之翼:
     damageSummonMulti: 0.2
   worth: 30000000
   rarity: 15
+掠夺者护符:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r潜伏攻击后获得18%盗贼暴击率加成
+  - §r此暴击加成在下一次攻击后消散
+  worth: 200000
+  rarity: 1
+沙尘披风:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r▣算作盗贼杂技饰品
+  - §r按下盗贼杂技按键[默认为???]消耗10%最大潜行值，召唤一个围绕你的保护性沙漠龙卷伤害并击退敌人
+  - §r身处龙卷中时获得10点防御和2生命再生
+  - §r此效果有30秒冷却时间
+  worth: 400000
+  rarity: 2
+欺诈硬币:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r▣算作潜伏增幅饰品
+  attributes:
+    stealthConsumptionMulti: -0.15
+    critRogue: 6
+  worth: 400000
+  rarity: 2
+墨水炸弹:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r▣算作脱身道具
+  - §r受到伤害时会回复大量潜行值
+  - §r下次攻击会额外投掷出爆炸成墨水云雾的墨汁炸弹
+  - §r此效果有20秒冷却时间
+  worth: 400000
+  rarity: 2
+寂静刀鞘:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    stealthLimit: 10
+    stealthRegenMulti: 0.04
+  worth: 800000
+  rarity: 3
 深渊护身符:
   item: LEASH
   lore:

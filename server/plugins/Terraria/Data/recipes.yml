@@ -5475,6 +5475,28 @@ TINKER_WORKBENCH:
     - 黑曜石:16
     - 起源之簇:25
     recipeCategory: ACCESSORY
+  '63_1':
+    requireLevel: 1
+    resultItem: 掠夺者护符
+    requireItem:
+    - 腐肉:5
+    - 黑曜石:20
+    recipeCategory: ACCESSORY
+  '63_2':
+    requireLevel: 1
+    resultItem: 欺诈硬币
+    requireItem:
+    - 铜锭:12
+    - 恶魔锭:8
+    recipeCategory: ACCESSORY
+  '63_3':
+    requireLevel: 1
+    resultItem: 寂静刀鞘
+    requireItem:
+    - 恶魔锭:8
+    - 丝绸:10
+    - 暗影鳞片:3
+    recipeCategory: ACCESSORY
   '64':
     requireLevel: 1
     resultItem: 融合之脑
