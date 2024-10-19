@@ -5052,6 +5052,15 @@ TINKER_WORKBENCH:
     - 视域之魂:5
     - 恐惧之魂:5
     recipeCategory: ACCESSORY
+  '12_1':
+    requireLevel: 1
+    resultItem: 复仇者徽章
+    requireItem:
+    - 盗贼徽章
+    - 力量之魂:5
+    - 视域之魂:5
+    - 恐惧之魂:5
+    recipeCategory: ACCESSORY
   '13':
     requireLevel: 1
     resultItem: 复仇者徽章
@@ -5496,6 +5505,53 @@ TINKER_WORKBENCH:
     - 恶魔锭:8
     - 丝绸:10
     - 暗影鳞片:3
+    recipeCategory: ACCESSORY
+  '63_4':
+    requireLevel: 1
+    resultItem: 天羽头冠
+    requireItem:
+    - 天蓝锭:6
+    - 丝绸:4
+    - 羽毛:8
+    recipeCategory: ACCESSORY
+  '63_5':
+    requireLevel: 1
+    resultItem: 幻影魔镜
+    requireItem:
+    - 黑晶状体
+    - 骨头:50
+    recipeCategory: ACCESSORY
+  '63_6':
+    requireLevel: 1
+    resultItem: 电击手套
+    requireItem:
+    - 污秽手套
+    - 风暴之颚:2
+    - 秘银锭:5
+    recipeCategory: ACCESSORY
+  '63_7':
+    requireLevel: 1
+    resultItem: 毁灭勋章
+    requireItem:
+    - 欺诈硬币
+    - 污痕核心:4
+    - 混乱精华:2
+    recipeCategory: ACCESSORY
+  '63_8':
+    requireLevel: 1
+    resultItem: 吸血鬼符咒
+    requireItem:
+    - 盗贼徽章
+    - 日影面纱:10
+    recipeCategory: ACCESSORY
+  '63_9':
+    requireLevel: 1
+    resultItem: 深渊魔镜
+    requireItem:
+    - 幻影魔镜
+    - 墨水炸弹
+    - 深渊细胞:5
+    - 流明晶:5
     recipeCategory: ACCESSORY
   '64':
     requireLevel: 1

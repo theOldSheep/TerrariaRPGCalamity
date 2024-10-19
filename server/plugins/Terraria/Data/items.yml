@@ -2536,8 +2536,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   - §r▣算作脱身道具
-  - §r受到伤害时会回复大量潜行值
-  - §r下次攻击会额外投掷出爆炸成墨水云雾的墨汁炸弹
+  - §r受到伤害时会投掷出爆炸成墨水云雾的墨汁炸弹并回复大量潜行值
   - §r此效果有20秒冷却时间
   worth: 400000
   rarity: 2
@@ -2550,6 +2549,121 @@ Drew之翼:
     stealthRegenMulti: 0.04
   worth: 800000
   rarity: 3
+污秽手套:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    armorPenetration: 5
+    damageStealthMulti: 0.08
+  worth: 800000
+  rarity: 3
+天羽头冠:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r潜伏攻击在击中敌人时会召唤羽毛从天而降
+  worth: 800000
+  rarity: 3
+幻影魔镜:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    stealthRegenMulti: 0.12
+  worth: 800000
+  rarity: 3
+盗贼徽章:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    damageRogueMulti: 0.15
+  worth: 2400000
+  rarity: 4
+腐蚀脊椎:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r盗贼武器会在击中敌人时生成毒云
+  attributes:
+    buffInflictRogue: 剧毒|80|1
+  worth: 4800000
+  rarity: 5
+电击手套:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r使用潜伏攻击时为你回复5点生命值
+  attributes:
+    armorPenetration: 10
+    damageStealthMulti: 0.08
+  worth: 4800000
+  rarity: 5
+毁灭勋章:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r▣算作潜伏增幅饰品
+  attributes:
+    stealthConsumptionMulti: -0.25
+    damageRogueMulti: 0.06
+    critRogue: 6
+  worth: 4800000
+  rarity: 5
+吸血鬼符咒:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r盗贼武器的弹幕在暴击时会吸血
+  attributes:
+    damageRogueMulti: 0.12
+  worth: 9600000
+  rarity: 6
+精准手套:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    useSpeedRogueMulti: -0.15
+    damageRogueMulti: 0.1
+    critRogue: 15
+  worth: 9600000
+  rarity: 6
+鲁莽手套:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    useSpeedRogueMulti: 0.15
+    damageRogueMulti: -0.05
+    critRogue: -5
+  worth: 9600000
+  rarity: 6
+深渊魔镜:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r▣算作脱身道具
+  - §r受到高于最大生命值5%伤害的攻击时触发闪避
+  - §r闪避攻击时会释放伤害性流明晶流体云并眩晕附近的敌人
+  - §r闪避攻击时会使你获得大量的潜行值
+  - §r根据被闪避的攻击伤害，闪避有15到90秒的冷却时间
+  - §r“光无法到达海洋深处”
+  attributes:
+    stealthRegenMulti: 0.12
+  worth: 9600000
+  rarity: 6
+虚空掠夺者:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r盗贼武器的弹幕在击中时会爆炸成追踪灵魂
+  attributes:
+    damageRogueMulti: 0.08
+    stealthLimit: 5
+  worth: 12000000
+  rarity: 8
 深渊护身符:
   item: LEASH
   lore:
