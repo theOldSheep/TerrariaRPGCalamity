@@ -5486,6 +5486,13 @@ TINKER_WORKBENCH:
     recipeCategory: ACCESSORY
   '63_1':
     requireLevel: 1
+    resultItem: 潜遁者宝石
+    requireItem:
+    - 钻石:2
+    - 金锭:5
+    recipeCategory: ACCESSORY
+  '63_1_1':
+    requireLevel: 1
     resultItem: 掠夺者护符
     requireItem:
     - 腐肉:5
@@ -5552,6 +5559,42 @@ TINKER_WORKBENCH:
     - 墨水炸弹
     - 深渊细胞:5
     - 流明晶:5
+    recipeCategory: ACCESSORY
+  '63_10':
+    requireLevel: 1
+    resultItem: 暗物质剑鞘
+    requireItem:
+    - 毁灭勋章
+    - 寂静刀鞘
+    - 冥思构造体:5
+    recipeCategory: ACCESSORY
+  '63_11':
+    requireLevel: 1
+    resultItem: 月长石头冠
+    requireItem:
+    - 天羽头冠
+    - 夜明锭:5
+    - 星系异石:5
+    recipeCategory: ACCESSORY
+  '63_12':
+    requireLevel: 1
+    resultItem: 日蚀魔镜
+    requireItem:
+    - 暗物质剑鞘
+    - 深渊魔镜
+    - 日蚀之阴碎片:20
+    recipeCategory: ACCESSORY
+  '63_13':
+    requireLevel: 1
+    resultItem: 纳米技术
+    requireItem:
+    - 月长石头冠
+    - 电击手套
+    - 盗贼徽章
+    - 掠夺者护符
+    - 化神魂精:4
+    - 夜明锭:8
+    - 星系异石:4
     recipeCategory: ACCESSORY
   '64':
     requireLevel: 1

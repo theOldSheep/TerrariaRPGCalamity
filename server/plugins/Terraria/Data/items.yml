@@ -2135,9 +2135,9 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    damageMeleeMulti: 0.15
+    damageMeleeMulti: 0.12
     critMelee: 10
-    armorPenetration: 10
+    armorPenetration: 25
   worth: 24000000
   rarity: 12
 元素之握:
@@ -2503,24 +2503,23 @@ Drew之翼:
     damageSummonMulti: 0.2
   worth: 30000000
   rarity: 15
+潜遁者宝石:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r潜伏攻击在击中敌人时会召唤宝石碎片
+  - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
+  - §r飞快地爬.png
+  worth: 200000
+  rarity: 1
 掠夺者护符:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r潜伏攻击后获得18%盗贼暴击率加成
+  - §r潜伏攻击后短时间内获得18%盗贼暴击率加成
   - §r此暴击加成在下一次攻击后消散
   worth: 200000
   rarity: 1
-沙尘披风:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  - §r▣算作盗贼杂技饰品
-  - §r按下盗贼杂技按键[默认为???]消耗10%最大潜行值，召唤一个围绕你的保护性沙漠龙卷伤害并击退敌人
-  - §r身处龙卷中时获得10点防御和2生命再生
-  - §r此效果有30秒冷却时间
-  worth: 400000
-  rarity: 2
 欺诈硬币:
   item: LEASH
   lore:
@@ -2563,6 +2562,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   - §r潜伏攻击在击中敌人时会召唤羽毛从天而降
+  - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   worth: 800000
   rarity: 3
 幻影魔镜:
@@ -2585,7 +2585,8 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r盗贼武器会在击中敌人时生成毒云
+  - §r潜伏攻击在击中敌人时生成毒云
+  - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   attributes:
     buffInflictRogue: 剧毒|80|1
   worth: 4800000
@@ -2646,7 +2647,7 @@ Drew之翼:
   - §r[饰品]
   - §r▣算作脱身道具
   - §r受到高于最大生命值5%伤害的攻击时触发闪避
-  - §r闪避攻击时会释放伤害性流明晶流体云并眩晕附近的敌人
+  - §r闪避攻击时会释放伤害性流明晶流体云
   - §r闪避攻击时会使你获得大量的潜行值
   - §r根据被闪避的攻击伤害，闪避有15到90秒的冷却时间
   - §r“光无法到达海洋深处”
@@ -2659,11 +2660,84 @@ Drew之翼:
   lore:
   - §r[饰品]
   - §r盗贼武器的弹幕在击中时会爆炸成追踪灵魂
+  - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   attributes:
     damageRogueMulti: 0.08
     stealthLimit: 5
   worth: 12000000
   rarity: 8
+暗物质剑鞘:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r▣算作潜伏增幅饰品
+  attributes:
+    stealthLimit: 10
+    stealthRegenMulti: 0.05
+    stealthConsumptionMulti: -0.5
+    damageRogueMulti: 0.06
+    critRogue: 6
+  worth: 16000000
+  rarity: 9
+月长石头冠:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r潜伏攻击在击中敌人时会召唤月球耀斑从天而降
+  - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
+  worth: 22000000
+  rarity: 11
+敬天神盗盒:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r使用盗贼武器发射弹幕时，会召唤一个完美复制品从天而降
+  attributes:
+    damageMulti: -0.4
+  worth: 24000000
+  rarity: 12
+日蚀魔镜:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r▣算作脱身道具
+  - §r▣算作潜伏增幅饰品
+  - §r受到高于最大生命值5%伤害的攻击时触发闪避
+  - §r闪避攻击时会释放伤害性流明晶流体云
+  - §r闪避攻击时会使你获得大量的潜行值
+  - §r根据被闪避的攻击伤害，闪避有15到90秒的冷却时间
+  - §r“光无法到达海洋深处”
+  attributes:
+    stealthLimit: 10
+    damageRogueMulti: 0.06
+    critRogue: 6
+    stealthRegenMulti: 0.2
+    stealthConsumptionMulti: -0.5
+  worth: 28000000
+  rarity: 14
+纳米技术:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r潜伏攻击后短时间内获得18%盗贼暴击率加成
+  - §r此暴击加成在下一次攻击后消散
+  - §r潜伏攻击在击中敌人时会留下一个追踪纳米叶片
+  - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
+  attributes:
+    armorPenetration: 30
+    damageRogueMulti: 0.12
+    useSpeedRogueMulti: 0.12
+  worth: 28000000
+  rarity: 14
+浴火龙鳞:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    damageRogueMulti: 0.2
+    buffInflictRogue: 龙焰|100|1
+  worth: 30000000
+  rarity: 15
 深渊护身符:
   item: LEASH
   lore:
@@ -2748,7 +2822,7 @@ Drew之翼:
   - §r[饰品]
   - §r取自顶级掠食者的恐怖战利品
   attributes:
-    armorPenetration: 75
+    armorPenetration: 50
     damageMulti: 0.15
   worth: 26000000
   rarity: 13
