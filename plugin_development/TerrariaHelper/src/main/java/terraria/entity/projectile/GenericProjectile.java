@@ -250,7 +250,7 @@ public class GenericProjectile extends EntityPotion {
         // should still be able to hit entities that are neither monster nor forbidden to hit
         return EntityHelper.checkCanDamage(bukkitEntity, bukkitE, false);
     }
-    public void hitEntityExtraHandling(Entity e, MovingObjectPosition position) {
+    public void hitEntityExtraHandling(Entity e, MovingObjectPosition position, Vec3D futureLoc, Vector velocityHolder) {
         switch (projectileType) {
             case "钫弹":
                 noHomingTicks = ticksLived + 1;
@@ -270,6 +270,9 @@ public class GenericProjectile extends EntityPotion {
             case "血炎龙息":
                 PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 1, false);
                 break;
+            case "巨蟹之礼星环":
+                PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 5, false);
+                break;
             case "血炎箭":
                 if (Math.random() < 0.5)
                     PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 1, false);
@@ -279,12 +282,14 @@ public class GenericProjectile extends EntityPotion {
                         .asDouble();
                 EntityHelper.setMetadata(shooter.getBukkitEntity(), EntityHelper.MetadataName.REGEN_TIME, healthRegenTime + 2);
                 break;
-            case "巨蟹之礼星环":
-                PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 5, false);
+            case "陨星之拳Ex": {
+                this.noGravityTicks = this.ticksLived - 1;
+                ricochet(16, futureLoc, velocityHolder);
                 break;
+            }
         }
     }
-    public Vec3D hitEntity(Entity e, MovingObjectPosition position) {
+    public Vec3D hitEntity(Entity e, MovingObjectPosition position, Vec3D futureLoc, Vector velocityHolder) {
         // handle damage CD before doing anything else. Otherwise, exploding projectiles will damage the enemy being hit twice.
         GenericHelper.damageCoolDown(damageCD, e.getBukkitEntity(), enemyInvincibilityFrame);
         // handles post-hit mechanism: damage value is handled by a listener
@@ -295,14 +300,14 @@ public class GenericProjectile extends EntityPotion {
         setPosition(position.pos.x, position.pos.y, position.pos.z);
         updatePenetration(penetration - 1);
         // special projectile
-        hitEntityExtraHandling(e, position);
+        hitEntityExtraHandling(e, position, futureLoc, velocityHolder);
 
         // returns the hit location if the projectile breaks (returns null if the projectile is still alive)
         if (penetration < 0) {
             destroyWithReason(DESTROY_HIT_ENTITY);
             return new Vec3D(position.pos.x, position.pos.y, position.pos.z);
         }
-        // cluster bomb
+        // on-collide cluster bomb
         else {
             boolean shouldSpawnClusterBomb = TerrariaHelper.projectileConfig.getBoolean(
                     projectileType + ".clusterBomb.fireOnCollideEntity", false);
@@ -897,43 +902,7 @@ public class GenericProjectile extends EntityPotion {
                                 switch (projectileType) {
                                     case "叶绿箭": {
                                         velocity.multiply(-1);
-                                        double homeInRadius = 32,
-                                                smallestDistSqr = 1e9;
-                                        Location currLoc = new Location(this.bukkitEntity.getWorld(), futureLoc.x, futureLoc.y, futureLoc.z);
-                                        for (org.bukkit.entity.Entity entity : getBukkitEntity().getNearbyEntities(homeInRadius, homeInRadius, homeInRadius)) {
-                                            // should strictly home into "proper" enemies (no critters!)
-                                            if (!EntityHelper.checkCanDamage(this.bukkitEntity, entity, true))
-                                                continue;
-                                            // make sure the closest entity is targeted
-                                            double currDistSqr = entity.getLocation().distanceSquared(currLoc);
-                                            if (currDistSqr >= smallestDistSqr)
-                                                continue;
-                                            // check if the direction is clear. If it is obstructed with block, skip this entity.
-                                            Vec3D checkLocVec;
-                                            if (entity instanceof LivingEntity)
-                                                checkLocVec = terraria.util.MathHelper.toNMSVector(((LivingEntity) entity).getEyeLocation().toVector());
-                                            else
-                                                checkLocVec = terraria.util.MathHelper.toNMSVector(entity.getLocation().toVector());
-                                            MovingObjectPosition blockedLocation = HitEntityInfo.rayTraceBlocks(this.world,
-                                                    futureLoc, checkLocVec);
-                                            if (blockedLocation != null)
-                                                continue;
-                                            // predicts the enemy's future location; note that gravity is turned off in the previous code.
-                                            Location predictedLoc = EntityHelper.helperAimEntity(currLoc, entity,
-                                                    new EntityHelper.AimHelperOptions()
-                                                            .setAccelerationMode(true)
-                                                            .setProjectileSpeed(this.speed)
-                                                            .setProjectileGravity(this.gravity)
-                                                            .setNoGravityTicks(0)
-                                                            // the new velocity will be in effect the next tick.
-                                                            .setTicksMonsterExtra(1));
-                                            // initializes direction the projectile should go to
-                                            Vector dir = predictedLoc.subtract(currLoc).toVector();
-                                            terraria.util.MathHelper.setVectorLengthSquared(dir, this.speed);
-                                            // update the smallest distance & velocity
-                                            smallestDistSqr = currDistSqr;
-                                            velocity = dir;
-                                        }
+                                        ricochet(32, futureLoc, velocity);
                                         break;
                                     }
                                     case "不稳定物质": {
@@ -965,30 +934,7 @@ public class GenericProjectile extends EntityPotion {
                                                 break;
                                         }
                                         // homing into enemy
-                                        double homeInRadius = 16,
-                                                smallestDistSqr = 1e9;
-                                        Location currLoc = new Location(this.bukkitEntity.getWorld(), futureLoc.x, futureLoc.y, futureLoc.z);
-                                        for (org.bukkit.entity.Entity entity : getBukkitEntity().getNearbyEntities(homeInRadius, homeInRadius, homeInRadius)) {
-                                            // should strictly home into "proper" enemies (no critters!)
-                                            if (!EntityHelper.checkCanDamage(this.bukkitEntity, entity, true))
-                                                continue;
-                                            // make sure the closest entity is targeted
-                                            double currDistSqr = entity.getLocation().distanceSquared(currLoc);
-                                            if (currDistSqr >= smallestDistSqr)
-                                                continue;
-                                            // predicts the enemy's future location
-                                            Location predictedLoc = EntityHelper.helperAimEntity(this.bukkitEntity, entity,
-                                                    new EntityHelper.AimHelperOptions()
-                                                            .setProjectileSpeed(this.speed));
-                                            // initializes direction the projectile should go to
-                                            Vector dir = predictedLoc.subtract(currLoc).toVector();
-                                            double predictedDist = dir.length();
-                                            dir.multiply(this.speed / predictedDist);
-                                            // update the smallest distance only if the target is reachable.
-                                            smallestDistSqr = currDistSqr;
-                                            // update velocity
-                                            velocity = dir;
-                                        }
+                                        ricochet(24, futureLoc, velocity);
                                         break;
                                     }
                                     case "黑翼蝙蝠": {
@@ -1100,7 +1046,7 @@ public class GenericProjectile extends EntityPotion {
 
         // handle projectile hit
         if (ticksLived >= minimumDamageTicks)
-            futureLoc = hitEntities(futureLoc);
+            futureLoc = hitEntities(futureLoc, velocity);
         // handle vegetation hit
         {
             org.bukkit.World bukkitWorld = bukkitEntity.getWorld();
@@ -1246,8 +1192,58 @@ public class GenericProjectile extends EntityPotion {
             velocity.multiply(homingEndSpeedMultiplier);
         }
     }
+    // ricochet to the nearest target, returns whether a target was found.
+    protected boolean ricochet(double targetRadius, Vector velocityHolder) {
+        return ricochet(targetRadius, new Vec3D(locX, locY, locZ), velocityHolder);
+    }
+    protected boolean ricochet(double targetRadius, Vec3D location, Vector velocityHolder) {
+        double smallestDistSqr = 1e9;
+        Location currLoc = new Location(this.bukkitEntity.getWorld(), location.x, location.y, location.z);
+        boolean velocityChanged = false;
+        for (org.bukkit.entity.Entity entity : bukkitEntity.getNearbyEntities(targetRadius, targetRadius, targetRadius)) {
+            // ignore entities in damage cool down
+            if (damageCD.contains(entity))
+                continue;
+            // should strictly home into "proper" enemies (no critters!)
+            if (!EntityHelper.checkCanDamage(this.bukkitEntity, entity, true))
+                continue;
+            // make sure the closest entity is targeted
+            double currDistSqr = entity.getLocation().distanceSquared(currLoc);
+            if (currDistSqr >= smallestDistSqr)
+                continue;
+            // check if the direction is clear. If it is obstructed with block, skip this entity.
+            Vec3D checkLocVec;
+            if (entity instanceof LivingEntity)
+                checkLocVec = terraria.util.MathHelper.toNMSVector(((LivingEntity) entity).getEyeLocation().toVector());
+            else
+                checkLocVec = terraria.util.MathHelper.toNMSVector(entity.getLocation().toVector());
+            MovingObjectPosition blockedLocation = HitEntityInfo.rayTraceBlocks(this.world,
+                    location, checkLocVec);
+            if (blockedLocation != null)
+                continue;
+            // predicts the enemy's future location; note that gravity is turned off in the previous code.
+            Location predictedLoc = EntityHelper.helperAimEntity(currLoc, entity,
+                    new EntityHelper.AimHelperOptions()
+                            .setAccelerationMode(true)
+                            .setProjectileSpeed(this.speed)
+                            .setProjectileGravity(this.gravity)
+                            .setNoGravityTicks(0)
+                            // the new velocity will be in effect the next tick.
+                            .setTicksMonsterExtra(1));
+            // initializes direction the projectile should go to
+            Vector dir = predictedLoc.subtract(currLoc).toVector();
+            // update the smallest distance & velocity
+            smallestDistSqr = currDistSqr;
+            velocityHolder.copy( dir );
+            velocityChanged = true;
+            impulse = true;
+        }
+        if (velocityChanged)
+            terraria.util.MathHelper.setVectorLengthSquared(velocityHolder, this.speed);
+        return velocityChanged;
+    }
     // tries to collide with entities, and return the future location (if it is broken etc.)
-    protected Vec3D hitEntities(Vec3D futureLoc) {
+    protected Vec3D hitEntities(Vec3D futureLoc, Vector velocityHolder) {
         // get list of entities that could get hit
         Set<HitEntityInfo> hitCandidates = HitEntityInfo.getEntitiesHit(
                 this.world,
@@ -1264,7 +1260,7 @@ public class GenericProjectile extends EntityPotion {
             Entity hitEntity = toHit.getHitEntity();
             MovingObjectPosition hitInfo = new MovingObjectPosition(hitEntity, toHit.getHitLocation().pos);
             if (TerrariaProjectileHitEvent.callProjectileHitEvent(this, hitInfo).isCancelled()) continue;
-            Vec3D newLoc = hitEntity(hitEntity, hitInfo);
+            Vec3D newLoc = hitEntity(hitEntity, hitInfo, futureLoc, velocityHolder);
             if (newLoc != null) futureLoc = newLoc;
             // if the projectile reached its penetration capacity, stop damaging enemies
             if (this.dead) break;

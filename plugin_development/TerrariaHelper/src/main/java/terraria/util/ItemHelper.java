@@ -328,6 +328,8 @@ public class ItemHelper {
         String itemName = splitItemName(item)[1];
         // items that deals no damage, for example, bug net, shall not have any prefix
         if (TerrariaHelper.itemConfig.getDouble(itemName + ".attributes.damage", -1) <= 0) return false;
+        // items that are not weapons should not have any prefix (mostly ammunition)
+        if (! TerrariaHelper.weaponConfig.contains(itemName)) return false;
         // thrown projectile (grenades, for example) can not have any prefix neither
         // this property is specified with "prefixApplicable" in item config
         return TerrariaHelper.itemConfig.getBoolean(itemName + ".prefixApplicable", true);

@@ -66,8 +66,8 @@ public class Flail extends GenericProjectile {
         }
     }
     @Override
-    public Vec3D hitEntity(Entity e, MovingObjectPosition position) {
-        Vec3D result = super.hitEntity(e, position);
+    public Vec3D hitEntity(Entity e, MovingObjectPosition position, Vec3D futureLoc, Vector velocityHolder) {
+        Vec3D result = super.hitEntity(e, position, futureLoc, velocityHolder);
         // flails that returns on first hit
         switch (super.projectileType) {
             case "海蚌锤":

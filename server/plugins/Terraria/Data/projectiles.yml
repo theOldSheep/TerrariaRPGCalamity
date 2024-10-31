@@ -1187,6 +1187,58 @@
     homing: true
     isGrenade: true
     blastRadius: 5
+海沫炸弹:
+    projectileSize: 1
+    isGrenade: true
+    blastRadius: 2
+    liveTime: 30
+    clusterBomb:
+        amount: 2
+        damageMulti: 0.5
+        name: 海沫泡泡
+        velocity: 0.75
+海沫炸弹Ex:
+    projDisguiseName: 海沫炸弹
+    projectileSize: 1
+    isGrenade: true
+    blastRadius: 2
+    liveTime: 30
+    clusterBomb:
+        amount: 5
+        damageMulti: 0.5
+        name: 海沫泡泡
+        fireOnTimeout: false
+        velocity: 0.75
+海沫泡泡:
+    projDisguiseName: 淡蓝色泡沫
+    projectileSize: 0.5
+    speedMultiPerTick: 0.95
+    liveTime: 30
+陨星之拳:
+    projectileSize: 0.5
+    gravity: 0.01
+    liveTime: 40
+    isGrenade: true
+    blastRadius: 1
+陨星之拳Ex:
+    projDisguiseName: 陨星之拳
+    projectileSize: 0.75
+    gravity: 0.01
+    penetration: 3
+    liveTime: 75
+    isGrenade: true
+    blastOnContactEnemy: true
+    blastRadius: 1
+手里剑:
+    slowedByWater: true
+尖刺球:
+    noGravityTicks: 0
+    penetration: 999999
+    projectileSize: 0.5
+    blockHitAction: bounce
+    bounce: 999999
+    bounceVelocityMulti: 0.5
+    slowedByWater: true
 剧毒花瓣:
     gravity: 0
     speedMultiPerTick: 0.95
@@ -2196,17 +2248,6 @@ TNT:
     buffInflict:
         - "冷冻|60|1"
         - "冰冻|50|0.1654"
-手里剑:
-    penetration: 3
-    slowedByWater: true
-尖刺球:
-    noGravityTicks: 0
-    penetration: 999999
-    projectileSize: 0.5
-    blockHitAction: bounce
-    bounce: 999999
-    bounceVelocityMulti: 0.5
-    slowedByWater: true
 寒霜碎块:
     buffInflict:
         - "冷冻|150|0.67"

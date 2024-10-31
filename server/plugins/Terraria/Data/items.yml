@@ -2647,9 +2647,9 @@ Drew之翼:
   - §r[饰品]
   - §r▣算作脱身道具
   - §r受到高于最大生命值5%伤害的攻击时触发闪避
+  - §r根据被闪避的攻击伤害，闪避有15到90秒的冷却时间
   - §r闪避攻击时会释放伤害性流明晶流体云
   - §r闪避攻击时会使你获得大量的潜行值
-  - §r根据被闪避的攻击伤害，闪避有15到90秒的冷却时间
   - §r“光无法到达海洋深处”
   attributes:
     stealthRegenMulti: 0.12
@@ -2659,7 +2659,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r盗贼武器的弹幕在击中时会爆炸成追踪灵魂
+  - §r盗潜伏攻击在击中敌人时会爆炸成追踪灵魂
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   attributes:
     damageRogueMulti: 0.08
@@ -2703,9 +2703,9 @@ Drew之翼:
   - §r▣算作脱身道具
   - §r▣算作潜伏增幅饰品
   - §r受到高于最大生命值5%伤害的攻击时触发闪避
+  - §r根据被闪避的攻击伤害，闪避有15到90秒的冷却时间
   - §r闪避攻击时会释放伤害性流明晶流体云
   - §r闪避攻击时会使你获得大量的潜行值
-  - §r根据被闪避的攻击伤害，闪避有15到90秒的冷却时间
   - §r“光无法到达海洋深处”
   attributes:
     stealthLimit: 10
@@ -2721,7 +2721,7 @@ Drew之翼:
   - §r[饰品]
   - §r潜伏攻击后短时间内获得18%盗贼暴击率加成
   - §r此暴击加成在下一次攻击后消散
-  - §r潜伏攻击在击中敌人时会留下一个追踪纳米叶片
+  - §r潜伏攻击在击中敌人时会留下数个追踪纳米叶片
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   attributes:
     armorPenetration: 30
@@ -2733,8 +2733,10 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r盗贼攻击造成龙焰减益
   attributes:
-    damageRogueMulti: 0.2
+    critRogue: 12
+    damageRogueMulti: 0.12
     buffInflictRogue: 龙焰|100|1
   worth: 30000000
   rarity: 15
@@ -2789,22 +2791,24 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r受到高于最大生命值5%伤害的攻击时触发闪避
+  - §r根据被闪避的攻击伤害，闪避有15到90秒的冷却时间
   attributes:
     damageMulti: 0.1
     crit: 3
     damageSummonMulti: 0.03
-    damageTakenMulti: -0.05
   worth: 2400000
   rarity: 5
 聚合之脑:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r受到高于最大生命值5%伤害的攻击时触发闪避
+  - §r根据被闪避的攻击伤害，闪避有15到90秒的冷却时间
   attributes:
     damageMulti: 0.15
     crit: 5
     damageSummonMulti: 0.05
-    damageTakenMulti: -0.1
   worth: 28000000
   rarity: 14
 旱海鲨牙项链:
@@ -2812,7 +2816,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    armorPenetration: 35
+    armorPenetration: 20
     damageMulti: 0.08
   worth: 9600000
   rarity: 7
@@ -2823,7 +2827,7 @@ Drew之翼:
   - §r取自顶级掠食者的恐怖战利品
   attributes:
     armorPenetration: 50
-    damageMulti: 0.15
+    damageMulti: 0.12
   worth: 26000000
   rarity: 13
 恼怒项链:
@@ -9035,10 +9039,11 @@ Dodu的手炮:
   item: IRON_SWORD
   lore:
   - §r扔出一把会在敌人间反弹一次的闪亮匕首
-  - §r潜伏攻击于一秒内在原地向附近敌人投出20把无法反弹的匕首
+  - §r潜伏攻击迅速向附近所有敌人数次投出无法反弹的匕首
+  - §r仅每五波投出的匕首中的随机一个会造成潜伏攻击的后续判定
   attributes:
     damage: 28
-    damageStealth: 20
+    damageStealth: 10
     damageType: Rogue
     crit: 4
     knockback: 1

@@ -2674,6 +2674,22 @@ Dodu的手炮:
 粘性雷管:
   type: THROW_PROJECTILE
   autoSwing: false
+海沫炸弹:
+  type: ROGUE
+  normal:
+    projectile: 海沫炸弹
+    projectileSpeed: 1.65
+  stealth:
+    projectile: 海沫炸弹Ex
+    projectileSpeed: 1.75
+陨星拳套:
+  type: ROGUE
+  normal:
+    projectile: 陨星之拳
+    projectileSpeed: 2
+  stealth:
+    projectile: 陨星之拳Ex
+    projectileSpeed: 2.35
 手里剑:
   type: THROW_ROGUE
   normal:
@@ -2683,7 +2699,7 @@ Dodu的手炮:
     projectile: 手里剑
     projectileSpeed: 3
     shots: 3
-    offset: 15
+    offset: 20
 尖刺球:
   type: THROW_ROGUE
   normal:

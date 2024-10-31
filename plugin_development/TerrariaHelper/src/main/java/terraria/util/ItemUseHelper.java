@@ -3963,12 +3963,52 @@ public class ItemUseHelper {
         return true;
     }
     // rogue helper functions below
+    protected static boolean playerUseRogueTick(Player ply, String itemType, String weaponType,
+                                                ConfigurationSection weaponSection, HashMap<String, Double> attrMap,
+                                                ItemStack tool, int index) {
+        // use the weapon
+        double projectileSpeed = weaponSection.getDouble("projectileSpeed", 1d);
+        projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
+
+        String projType = weaponSection.getString("projectile", itemType);
+
+        Location fireLoc = ply.getEyeLocation();
+        Vector projVel = getPlayerAimDir(ply, fireLoc, projectileSpeed, projType, false, 0);
+        projVel.normalize();
+        Vector currVel;
+
+        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, projVel, attrMap, projType);
+        shootInfo.shootLoc = fireLoc;
+        int shots = weaponSection.getInt("shots", 1);
+        double offset = weaponSection.getDouble("offset", -1d);
+        for (int shot = 0; shot < shots; shot ++) {
+            if (offset > 0) {
+                currVel = projVel.clone().multiply(offset).add( MathHelper.randomVector() );
+            }
+            else {
+                currVel = projVel;
+            }
+            currVel = MathHelper.setVectorLength(currVel, projectileSpeed);
+            shootInfo.velocity = currVel;
+            EntityHelper.spawnProjectile(shootInfo);
+        }
+        // next tick if needed
+        int totalTicks = weaponSection.getInt("throwRounds", 1);
+        int ticksInterval = weaponSection.getInt("throwInterval", 2);
+        if (index + 1 < totalTicks) {
+            Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(),
+                    () -> playerUseRogueTick(ply, itemType, weaponType, weaponSection, attrMap, tool, index + 1),
+                    ticksInterval);
+        }
+        return true;
+    }
     protected static boolean playerUseRogue(Player ply, String itemType, String weaponType,
                                             AtomicBoolean autoSwing, ConfigurationSection weaponSection,
                                             HashMap<String, Double> attrMap, ItemStack tool) {
         // remove one of the player's tool if needed
         if (weaponType.equals("THROW_ROGUE")) {
             double consumptionRate = attrMap.getOrDefault("ammoConsumptionRate", 1d);
+            consumptionRate *= TerrariaHelper.settingConfig.getDouble("miscSetting.ammoConsumptionChanceMulti", 0.35d);
             if (Math.random() < consumptionRate) {
                 tool.setAmount(tool.getAmount() - 1);
             }
@@ -3986,24 +4026,7 @@ public class ItemUseHelper {
         }
         // use the weapon
         weaponSection = weaponSection.getConfigurationSection(isStealth ? "stealth" : "normal");
-        double projectileSpeed = weaponSection.getDouble("projectileSpeed", 1d);
-        projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
-
-        String projType = weaponSection.getString("projectile", itemType);
-
-        Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), projectileSpeed, projType, false, 0);
-        projVel.normalize();
-        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, projVel, attrMap, projType);
-        int shots = weaponSection.getInt("shots", 1);
-        double offset = weaponSection.getDouble("offset", -1d);
-        for (int shot = 0; shot < shots; shot ++) {
-            if (offset > 0) {
-                projVel = MathHelper.setVectorLength(
-                        projVel.clone().multiply(offset).add( MathHelper.randomVector() ), projectileSpeed);
-            }
-            shootInfo.velocity = projVel;
-            EntityHelper.spawnProjectile(shootInfo);
-        }
+        playerUseRogueTick(ply, itemType, weaponType, weaponSection, attrMap, tool, 0);
         // apply CD
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
         double useTimeMulti = 1 / useSpeed;

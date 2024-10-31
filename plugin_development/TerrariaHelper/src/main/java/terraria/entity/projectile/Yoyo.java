@@ -60,8 +60,8 @@ public class Yoyo extends GenericProjectile {
     }
 
     @Override
-    public Vec3D hitEntity(Entity e, MovingObjectPosition position) {
-        Vec3D result = super.hitEntity(e, position);
+    public Vec3D hitEntity(Entity e, MovingObjectPosition position, Vec3D futureLoc, Vector velocityHolder) {
+        Vec3D result = super.hitEntity(e, position, futureLoc, velocityHolder);
         // tweak the on-hit recoil
         Location hitLoc = new Location(bukkitEntity.getWorld(), position.pos.x, position.pos.y, position.pos.z);
         if (hitLoc.distanceSquared(bukkitEntity.getLocation()) <= actualRadiusSqr) {

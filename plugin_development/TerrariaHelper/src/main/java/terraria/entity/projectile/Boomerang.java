@@ -3,6 +3,7 @@ package terraria.entity.projectile;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
@@ -43,8 +44,8 @@ public class Boomerang extends GenericProjectile {
     }
 
     @Override
-    public Vec3D hitEntity(Entity e, MovingObjectPosition position) {
-        Vec3D result = super.hitEntity(e, position);
+    public Vec3D hitEntity(Entity e, MovingObjectPosition position, Vec3D futureLoc, Vector velocityHolder) {
+        Vec3D result = super.hitEntity(e, position, futureLoc, velocityHolder);
         this.returning = true;
         return result;
     }
