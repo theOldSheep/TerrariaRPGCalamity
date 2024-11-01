@@ -2659,7 +2659,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r盗潜伏攻击在击中敌人时会爆炸成追踪灵魂
+  - §r潜伏攻击在击中敌人时会爆炸成追踪灵魂
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   attributes:
     damageRogueMulti: 0.08
@@ -2740,6 +2740,17 @@ Drew之翼:
     buffInflictRogue: 龙焰|100|1
   worth: 30000000
   rarity: 15
+星流校准器:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r盗贼衍生弹幕可被普通攻击的主弹幕触发
+  - §r以此方式触发的衍生弹幕基础伤害降低15%
+  - §r盗贼攻击造成超位崩解减益
+  attributes:
+    buffInflictRogue: 超位崩解|40|1
+  worth: 40000000
+  rarity: 16
 深渊护身符:
   item: LEASH
   lore:
@@ -8442,11 +8453,11 @@ Dodu的手炮:
 炸药桶:
   item: DIAMOND_SWORD
   lore:
-  - §r丢出一个滚动爆炸桶
-  - §r潜伏攻击会让桶弹跳两次，且反弹时也会产生爆炸效果
+  - §r丢出一个沉重的爆炸桶
+  - §r潜伏攻击速度稍快，爆炸更强烈并放出大量火花
   attributes:
-    damage: 64
-    damageStealth: 100
+    damage: 80
+    damageStealth: 140
     damageType: Rogue
     crit: 4
     knockback: 8
@@ -8456,8 +8467,8 @@ Dodu的手炮:
 渎神邪水:
   item: DIAMOND_SWORD
   lore:
-  - §r投掷一瓶会爆炸成邪恶气泡的不洁之水
-  - §r潜伏攻击形成更多气泡，并造成诅咒狱火和灵液减益
+  - §r投掷一小瓶会爆炸成邪恶气泡的不洁之水
+  - §r潜伏攻击形成更多气泡，并造成狱炎和咒火减益
   attributes:
     damage: 110
     damageStealth: 175
@@ -8466,6 +8477,21 @@ Dodu的手炮:
     knockback: 4.5
     useTime: 28
   worth: 4800000
+  rarity: 5
+天鳍毁灭者:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射一枚会追踪的天鳍核武
+  - §r潜伏攻击会丢出疯狂追踪的天鳍核武并留下毒云
+  - §r“鱼雷母舰入境！”
+  attributes:
+    damage: 92
+    damageStealth: 225
+    damageType: Rogue
+    crit: 4
+    knockback: 6.5
+    useTime: 35
+  worth: 7200000
   rarity: 5
 驱魔十字架:
   item: DIAMOND_SWORD
@@ -8481,21 +8507,6 @@ Dodu的手炮:
     knockback: 1
     useTime: 19
   worth: 4800000
-  rarity: 5
-天鳍毁灭者:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射一枚会追踪下方敌人的天鳍核武
-  - §r潜伏攻击会丢出无视敌人位置进行追踪的天鳍核武
-  - §r“鱼雷母舰入境！”
-  attributes:
-    damage: 92
-    damageStealth: 225
-    damageType: Rogue
-    crit: 4
-    knockback: 6.5
-    useTime: 35
-  worth: 7200000
   rarity: 5
 集束燃爆瓶:
   item: DIAMOND_SWORD

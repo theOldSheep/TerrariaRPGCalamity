@@ -2690,6 +2690,38 @@ Dodu的手炮:
   stealth:
     projectile: 陨星之拳Ex
     projectileSpeed: 2.35
+炸药桶:
+  type: ROGUE
+  normal:
+    projectile: 炸药桶
+    projectileSpeed: 1.75
+  stealth:
+    projectile: 炸药桶Ex
+    projectileSpeed: 2
+渎神邪水:
+  type: ROGUE
+  normal:
+    projectile: 渎神邪水
+    projectileSpeed: 2.25
+  stealth:
+    projectile: 渎神邪水Ex
+    projectileSpeed: 2.5
+天鳍毁灭者:
+  type: ROGUE
+  normal:
+    projectile: 天鳍毁灭者
+    projectileSpeed: 2
+  stealth:
+    projectile: 天鳍毁灭者Ex
+    projectileSpeed: 2
+驱魔十字架:
+  type: ROGUE
+  normal:
+    projectile: 驱魔十字架
+    projectileSpeed: 1.9
+  stealth:
+    projectile: 驱魔十字架Ex
+    projectileSpeed: 2.15
 手里剑:
   type: THROW_ROGUE
   normal:

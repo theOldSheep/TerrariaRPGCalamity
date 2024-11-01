@@ -1229,6 +1229,96 @@
     isGrenade: true
     blastOnContactEnemy: true
     blastRadius: 1
+炸药桶:
+    projectileSize: 1.25
+    liveTime: 60
+    isGrenade: true
+    blastRadius: 2.5
+炸药桶Ex:
+    projDisguiseName: 炸药桶
+    projectileSize: 1.25
+    liveTime: 60
+    isGrenade: true
+    blastRadius: 3.5
+    clusterBomb:
+        amount: 12
+        damageMulti: 0.5
+        name: 火焰碎片
+        velocity: 0.75
+渎神邪水:
+    liveTime: 60
+    clusterBomb:
+        amount: 5
+        damageMulti: 0.5
+        name: 渎神邪水泡
+        velocity: 1.2
+渎神邪水Ex:
+    projDisguiseName: 渎神邪水
+    liveTime: 60
+    clusterBomb:
+        amount: 12
+        damageMulti: 0.5
+        name: 渎神邪水泡Ex
+        velocity: 1.35
+渎神邪水泡:
+    homing: true
+    homingRadius: 20
+    minimumDamageTicks: 5
+    noHomingTicks: 5
+渎神邪水泡Ex:
+    projDisguiseName: 渎神邪水泡
+    homing: true
+    homingRadius: 24
+    minimumDamageTicks: 5
+    noHomingTicks: 5
+    buffInflict:
+        - "狱炎|100|1"
+        - "咒火|100|1"
+天鳍毁灭者:
+    projectileSize: 1.5
+    gravity: 0
+    homing: true
+    noHomingTicks: 10
+    homingRadius: 16
+    isGrenade: true
+    blastRadius: 3.25
+    buffInflict:
+        - "辐射|50|1"
+天鳍毁灭者Ex:
+    projDisguiseName: 天鳍毁灭者
+    projectileSize: 1.5
+    gravity: 0
+    homing: true
+    homingRadius: 32
+    homingAbility: 5
+    isGrenade: true
+    blastRadius: 3.75
+    buffInflict:
+        - "辐射|100|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.5
+        name: 渊海灾虫毒云
+        velocity: 0.1
+驱魔十字架:
+    projectileSize: 1.5
+    isGrenade: true
+    blastRadius: 3
+驱魔十字架Ex:
+    projDisguiseName: 驱魔十字架
+    projectileSize: 1.5
+    isGrenade: true
+    blastRadius: 4
+    clusterBomb:
+        amount: 6
+        damageMulti: 0.75
+        name: 神圣流星
+        type: star
+        fireOnTimeout: false
+        velocity: 2
+神圣流星:
+    projectileSize: 1
+    gravity: 0
 手里剑:
     slowedByWater: true
 尖刺球:

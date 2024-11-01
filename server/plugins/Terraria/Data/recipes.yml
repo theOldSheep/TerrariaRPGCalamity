@@ -5596,6 +5596,14 @@ TINKER_WORKBENCH:
     - 夜明锭:8
     - 星系异石:4
     recipeCategory: ACCESSORY
+  '63_14':
+    requireLevel: 1
+    resultItem: 星流校准器
+    requireItem:
+    - 敬天神盗盒
+    - 星流棱晶:8
+    - 化神魂精:2
+    recipeCategory: ACCESSORY
   '64':
     requireLevel: 1
     resultItem: 融合之脑
