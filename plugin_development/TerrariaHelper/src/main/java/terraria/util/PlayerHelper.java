@@ -64,7 +64,7 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("critMelee", 0d);
         defaultPlayerAttrMap.put("critRanged", 0d);
         defaultPlayerAttrMap.put("critRogue", 0d);
-        defaultPlayerAttrMap.put("critStealth", 20d);
+        defaultPlayerAttrMap.put("critStealth", 0d);
         defaultPlayerAttrMap.put("critTrueMelee", 0d);
         defaultPlayerAttrMap.put("damage", 0d);
         defaultPlayerAttrMap.put("damageStealth", 1d);
@@ -2508,9 +2508,11 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                 double currStealth = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble();
                 double stealthRatio = currStealth / maxStealth;
                 EntityHelper.tweakAttribute(ply, newAttrMap, "critRogue",
-                        (newAttrMap.getOrDefault("critStealth", 0d) * stealthRatio) + "", true);
+                        ( (currStealth * 0.1 + newAttrMap.getOrDefault("critStealth", 0d)) * stealthRatio) + "",
+                        true);
                 EntityHelper.tweakAttribute(ply, newAttrMap, "damageRogueMulti",
-                        ( currStealth / 100d * newAttrMap.getOrDefault("damageStealthMulti", 1d) ) + "", true);
+                        ( (currStealth * 0.001 + newAttrMap.getOrDefault("damageStealthMulti", 1d) - 1 ) * stealthRatio ) + "",
+                        true);
             }
 
             // post-initialization

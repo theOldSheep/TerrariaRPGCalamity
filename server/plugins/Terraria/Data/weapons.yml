@@ -2722,6 +2722,54 @@ Dodu的手炮:
   stealth:
     projectile: 驱魔十字架Ex
     projectileSpeed: 2.15
+集束燃爆瓶:
+  type: ROGUE
+  normal:
+    projectile: 燃爆瓶
+    projectileSpeed: 2.25
+  stealth:
+    projectile: 集束燃爆瓶
+    projectileSpeed: 2.5
+瓶中尘:
+  type: ROGUE
+  normal:
+    projectile: 瓶中尘
+    projectileSpeed: 2
+  stealth:
+    projectile: 瓶中尘Ex
+    projectileSpeed: 2.25
+咸水瓶:
+  type: ROGUE
+  normal:
+    projectile: 咸水瓶
+    projectileSpeed: 2
+  stealth:
+    projectile: 咸水瓶Ex
+    projectileSpeed: 2.25
+瘟疫蜜蜂手雷:
+  type: THROW_ROGUE
+  normal:
+    projectile: 瘟疫蜜蜂手雷
+    projectileSpeed: 2.5
+  stealth:
+    projectile: 瘟疫蜜蜂手雷Ex
+    projectileSpeed: 2.5
+碎颅飞盘:
+  type: ROGUE
+  normal:
+    projectile: 碎颅飞盘
+    projectileSpeed: 2
+  stealth:
+    projectile: 碎颅飞盘Ex
+    projectileSpeed: 2.25
+毁灭之星:
+  type: ROGUE
+  normal:
+    projectile: 毁灭之星
+    projectileSpeed: 1.5
+  stealth:
+    projectile: 毁灭之星Ex
+    projectileSpeed: 1.5
 手里剑:
   type: THROW_ROGUE
   normal:

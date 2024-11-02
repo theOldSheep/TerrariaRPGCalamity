@@ -1316,6 +1316,152 @@
         type: star
         fireOnTimeout: false
         velocity: 2
+燃爆瓶:
+    projectileSize: 0.5
+    isGrenade: true
+    blastRadius: 2
+    liveTime: 40
+    buffInflict:
+        - "狱炎|100|1"
+    clusterBomb:
+        amount: 6
+        damageMulti: 0.5
+        name: 火焰碎片
+        velocity: 0.5
+集束燃爆瓶:
+    projDisguiseName: 燃爆瓶
+    projectileSize: 1
+    isGrenade: true
+    blastRadius: 2.75
+    liveTime: 30
+    buffInflict:
+        - "狱炎|100|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.75
+        name: 燃爆瓶
+        velocity: 0.5
+瓶中尘:
+    projectileSize: 0.5
+    liveTime: 50
+    clusterBomb:
+        amount: 8
+        damageMulti: 0.5
+        name: 瓶中沙尘
+        velocity: 0.15
+瓶中尘Ex:
+    projDisguiseName: 瓶中尘
+    projectileSize: 0.5
+    liveTime: 50
+    clusterBomb:
+        amount: 24
+        damageMulti: 0.65
+        name: 瓶中沙尘
+        velocity: 0.15
+瓶中沙尘:
+    projectileSize: 0.5
+    speedMultiPerTick: 0.99
+    gravity: 0
+    liveTime: 30
+    blockHitAction: thru
+咸水瓶:
+    projectileSize: 0.5
+    liveTime: 50
+    buffInflict:
+        - "剧毒|40|1"
+    clusterBomb:
+        amount: 4
+        damageMulti: 0.25
+        name: 水晶碎块
+        velocity: 0.5
+咸水瓶Ex:
+    projDisguiseName: 咸水瓶
+    projectileSize: 0.5
+    liveTime: 50
+    buffInflict:
+        - "剧毒|40|1"
+    clusterBomb:
+        amount: 8
+        damageMulti: 0.5
+        name: 咸水追踪弹
+        velocity: 1.5
+咸水追踪弹:
+    liveTime: 50
+    homing: true
+    homingRadius: 24
+    noHomingTicks: 5
+    buffInflict:
+        - "剧毒|80|1"
+瘟疫蜜蜂手雷:
+    liveTime: 30
+    isGrenade: true
+    blastRadius: 2.25
+    buffInflict:
+        - "瘟疫|40|1"
+    clusterBomb:
+        amount: 4
+        damageMulti: 0.5
+        name: 瘟疫蜜蜂
+        velocity: 1.25
+瘟疫蜜蜂手雷Ex:
+    projDisguiseName: 瘟疫蜜蜂手雷
+    liveTime: 30
+    isGrenade: true
+    blastRadius: 3.5
+    buffInflict:
+        - "瘟疫|80|1"
+    clusterBomb:
+        amount: 12
+        damageMulti: 0.5
+        name: 瘟疫蜜蜂
+        velocity: 1.25
+碎颅飞盘:
+    projectileSize: 1.5
+    gravity: 0
+    blockHitAction: slide
+    liveTime: 80
+    penetration: 4
+碎颅飞盘Ex:
+    projDisguiseName: 碎颅飞盘
+    projectileSize: 1.5
+    gravity: 0
+    blockHitAction: slide
+    liveTime: 80
+    penetration: 9
+    isGrenade: true
+    blastRadius: 2.75
+    blastOnContactEnemy: true
+毁灭之星:
+    projectileSize: 3
+    blockHitAction: thru
+    gravity: 0
+    liveTime: 50
+    isGrenade: true
+    blastRadius: 3.5
+    clusterBomb:
+        amount: 4
+        damageMulti: 0.4
+        name: 毁灭裂片
+        velocity: 2
+毁灭之星Ex:
+    projDisguiseName: 毁灭之星
+    projectileSize: 3
+    blockHitAction: thru
+    gravity: 0
+    liveTime: 50
+    isGrenade: true
+    blastRadius: 3.5
+    clusterBomb:
+        amount: 16
+        damageMulti: 0.6
+        name: 毁灭裂片
+        velocity: 2
+毁灭裂片:
+    projectileSize: 1
+    liveTime: 80
+    homing: true
+    homingRadius: 32
+    noHomingTicks: 4
 神圣流星:
     projectileSize: 1
     gravity: 0
@@ -1885,16 +2031,20 @@
     homing: true
     homingAbility: 2.25
     homingRadius: 24
-    blockHitAction: thru
+    noHomingTicks: 3
+    blockHitAction: bounce
+    bounce: 7
 瘟疫蜜蜂:
     liveTime: 100
     gravity: 0
     homing: true
     homingAbility: 2.25
     homingRadius: 24
-    blockHitAction: thru
+    noHomingTicks: 3
+    blockHitAction: bounce
+    bounce: 7
     buffInflict:
-        - "瘟疫|20|1"
+        - "瘟疫|40|1"
 蜜蜂RPG:
     gravity: 0
     projectileSize: 0.5

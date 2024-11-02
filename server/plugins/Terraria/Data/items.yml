@@ -2663,7 +2663,7 @@ Drew之翼:
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   attributes:
     damageRogueMulti: 0.08
-    stealthLimit: 5
+    stealthLimit: 10
   worth: 12000000
   rarity: 8
 暗物质剑鞘:
@@ -2672,7 +2672,7 @@ Drew之翼:
   - §r[饰品]
   - §r▣算作潜伏增幅饰品
   attributes:
-    stealthLimit: 10
+    stealthLimit: 15
     stealthRegenMulti: 0.05
     stealthConsumptionMulti: -0.5
     damageRogueMulti: 0.06
@@ -2708,7 +2708,7 @@ Drew之翼:
   - §r闪避攻击时会使你获得大量的潜行值
   - §r“光无法到达海洋深处”
   attributes:
-    stealthLimit: 10
+    stealthLimit: 20
     damageRogueMulti: 0.06
     critRogue: 6
     stealthRegenMulti: 0.2
@@ -2744,7 +2744,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r盗贼衍生弹幕可被普通攻击的主弹幕触发
+  - §r盗贼衍生弹幕可被所有盗贼攻击的主弹幕触发
   - §r以此方式触发的衍生弹幕基础伤害降低15%
   - §r盗贼攻击造成超位崩解减益
   attributes:
@@ -8527,7 +8527,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r炸裂成一团粉尘云
-  - §r潜伏攻击使得粉尘云更猛烈且持续时间更久
+  - §r潜伏攻击使得粉尘云更猛烈
   attributes:
     damage: 148
     damageStealth: 200
@@ -8540,8 +8540,8 @@ Dodu的手炮:
 咸水瓶:
   item: DIAMOND_SWORD
   lore:
-  - §r扔出一个爆炸成剧毒海水弹的烧瓶
-  - §r潜伏攻击召唤伤害更高的追踪海水弹
+  - §r扔出一个剧毒烧瓶
+  - §r潜伏攻击爆出追踪海水弹
   attributes:
     damage: 120
     damageStealth: 180
@@ -8569,7 +8569,7 @@ Dodu的手炮:
 碎颅飞盘:
   item: DIAMOND_SWORD
   lore:
-  - §r投掷在地面滚动的飞盘
+  - §r投掷在方块表面滑行的飞盘
   - §r潜伏攻击发射能穿透的爆炸飞盘
   attributes:
     damage: 240
