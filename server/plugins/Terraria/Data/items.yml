@@ -8625,7 +8625,7 @@ Dodu的手炮:
 半影飞弹:
   item: DIAMOND_SWORD
   lore:
-  - §r掷出一发半影飞弹，爆炸产生追踪灵魂与火焰
+  - §r掷出一发迅猛的半影飞弹，爆炸产生追踪灵魂火焰
   - §r潜伏攻击会瞬间命中敌人
   attributes:
     damage: 1660

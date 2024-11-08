@@ -30,7 +30,7 @@ public class GenericProjectile extends EntityPotion {
     private static final double VELOCITY_UPDATE_DIST = TerrariaHelper.settingConfig.getDouble("optimization.projectileVelocityUpdateDistance", 96d);
 
     // projectile info
-    public String projectileType, blockHitAction = "die", spawnSound = "", trailColor = null;
+    public String projectileType, projectileItemName, blockHitAction = "die", spawnSound = "", trailColor = null;
     public int homingMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200,
             noHomingTicks = 0, noGravityTicks = 5, maxHomingTicks = 999999, minimumDamageTicks = 0,
             penetration = 0, trailLingerTime = 10, worldSpriteUpdateInterval = 1;
@@ -185,16 +185,18 @@ public class GenericProjectile extends EntityPotion {
         die();
     }
     public GenericProjectile(EntityHelper.ProjectileShootInfo shootInfo) {
-        this(shootInfo.shootLoc, GenericProjectile.generateItemStack(shootInfo.projectileItemName == null ? shootInfo.projectileName : shootInfo.projectileItemName),
+        this(shootInfo.shootLoc, shootInfo.projectileItemName == null ? shootInfo.projectileName : shootInfo.projectileItemName,
                 shootInfo.velocity, shootInfo.projectileName, shootInfo.properties,
                 shootInfo.attrMap, shootInfo.shooter, shootInfo.lockedTarget, shootInfo.damageType);
     }
-    public GenericProjectile(org.bukkit.Location loc, ItemStack projectileItem, Vector velocity,
+    public GenericProjectile(org.bukkit.Location loc, String projectileItemName, Vector velocity,
                              String projectileType, HashMap<String, Object> properties,
                              HashMap<String, Double> attrMap,
                              ProjectileSource shooter, Entity lockedTarget,
                              EntityHelper.DamageType damageType) {
-        super(((CraftWorld) loc.getWorld()).getHandle(), loc.getX(), loc.getY(), loc.getZ(), projectileItem);
+        super(((CraftWorld) loc.getWorld()).getHandle(), loc.getX(), loc.getY(), loc.getZ(),
+                GenericProjectile.generateItemStack(projectileItemName));
+        this.projectileItemName = projectileItemName;
         this.motX = velocity.getX();
         this.motY = velocity.getY();
         this.motZ = velocity.getZ();
@@ -392,6 +394,9 @@ public class GenericProjectile extends EntityPotion {
         switch (projectileType) {
             case "旋风":
             case "风暴管束者剑气":
+            case "解封奇点":
+            case "解封奇点Ex":
+            case "超新星牵引":
             case "遗爵硫海漩涡":
             case "小遗爵硫海漩涡":
             case "黑蚀黑洞": {
@@ -407,6 +412,21 @@ public class GenericProjectile extends EntityPotion {
                         radius = 15;
                         suckSpeed = 0.75;
                         maxSpeed = 2;
+                        break;
+                    case "解封奇点":
+                        radius = 24;
+                        suckSpeed = 0.5;
+                        maxSpeed = 1.5;
+                        break;
+                    case "解封奇点Ex":
+                        radius = 32;
+                        suckSpeed = 0.75;
+                        maxSpeed = 2;
+                        break;
+                    case "超新星牵引":
+                        radius = 64;
+                        suckSpeed = 1;
+                        maxSpeed = 4;
                         break;
                     case "遗爵硫海漩涡":
                         radius = 32;
@@ -653,10 +673,18 @@ public class GenericProjectile extends EntityPotion {
                 }
                 break;
             }
-            case "冲击波1": {
+            case "冲击波1":
+            case "冲击波2": {
                 // after 30 ticks, the radius is 30 + 1 = 31, total size = 62
                 projectileRadius += 1;
                 attrMap.put("damage", attrMap.getOrDefault("damage", 10d) * 0.95);
+                break;
+            }
+            case "超新星大爆炸": {
+                // after 6 ticks, the radius is 5 + 30 = 35, total size = 70
+                if (ticksLived <= 6) {
+                    projectileRadius += 5;
+                }
                 break;
             }
         }
@@ -672,7 +700,7 @@ public class GenericProjectile extends EntityPotion {
         if (worldSpriteMode) {
             if (worldSpriteIdx % worldSpriteUpdateInterval == 0) {
                 int currSpriteIdx = worldSpriteIdx / worldSpriteUpdateInterval + 1;
-                org.bukkit.inventory.ItemStack displaySprite = generateBukkitItemStack(projectileType + "_" + currSpriteIdx);
+                org.bukkit.inventory.ItemStack displaySprite = generateBukkitItemStack(projectileItemName + "_" + currSpriteIdx);
                 if (worldSpriteIndex == null)
                     worldSpriteIndex = GenericHelper.displayNonDirectionalHoloItem(bukkitEntity.getLocation(), displaySprite,
                             liveTime, (float) (projectileRadius * 2));

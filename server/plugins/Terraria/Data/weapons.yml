@@ -2770,6 +2770,46 @@ Dodu的手炮:
   stealth:
     projectile: 毁灭之星Ex
     projectileSpeed: 1.5
+震波炸弹:
+  type: ROGUE
+  normal:
+    projectile: 震波炸弹
+    projectileSpeed: 1.85
+  stealth:
+    projectile: 震波炸弹Ex
+    projectileSpeed: 1.85
+秘封奇点:
+  type: ROGUE
+  normal:
+    projectile: 秘封奇点
+    projectileSpeed: 2.15
+  stealth:
+    projectile: 秘封奇点Ex
+    projectileSpeed: 2.15
+半影飞弹:
+  type: ROGUE
+  normal:
+    projectile: 半影飞弹
+    projectileSpeed: 2.75
+  stealth:
+    projectile: 半影飞弹
+    projectileSpeed: 99
+等离子手雷:
+  type: ROGUE
+  normal:
+    projectile: 等离子手雷
+    projectileSpeed: 2.6
+  stealth:
+    projectile: 等离子手雷Ex
+    projectileSpeed: 2.6
+超新星:
+  type: ROGUE
+  normal:
+    projectile: 超新星
+    projectileSpeed: 3
+  stealth:
+    projectile: 超新星Ex
+    projectileSpeed: 3
 手里剑:
   type: THROW_ROGUE
   normal:

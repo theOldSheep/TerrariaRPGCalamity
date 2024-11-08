@@ -1161,6 +1161,18 @@
     worldSpriteUpdateInterval: 1
     spawnSound: item.giantExplosion
     spawnSoundVolume: 10
+冲击波2:
+    projDisguiseName: 冲击波1
+    gravity: 0
+    liveTime: 10
+    enemyInvincibilityFrame: 1
+    penetration: 999999
+    blockHitAction: thru
+    projectileSize: 2
+    worldSpriteMode: true
+    worldSpriteUpdateInterval: 1
+    spawnSound: item.giantExplosion
+    spawnSoundVolume: 10
 粉色粒子光束:
     gravity: 0
     projectileSize: 1.5
@@ -1316,6 +1328,9 @@
         type: star
         fireOnTimeout: false
         velocity: 2
+神圣流星:
+    projectileSize: 1
+    gravity: 0
 燃爆瓶:
     projectileSize: 0.5
     isGrenade: true
@@ -1462,9 +1477,172 @@
     homing: true
     homingRadius: 32
     noHomingTicks: 4
-神圣流星:
-    projectileSize: 1
+震波炸弹:
+    projectileSize: 1.5
+    blockHitAction: stick
+    liveTime: 75
+    clusterBomb:
+        amount: 1
+        damageMulti: 1
+        name: 冲击波2
+        velocity: 0
+震波炸弹Ex:
+    projDisguiseName: 震波炸弹
+    projectileSize: 1.5
+    blockHitAction: stick
+    liveTime: 75
+    clusterBomb:
+        amount: 1
+        damageMulti: 1
+        name: 冲击波1
+        velocity: 0
+秘封奇点:
+    projectileSize: 0.75
+    liveTime: 50
+    clusterBomb:
+        amount: 1
+        damageMulti: 1
+        name: 解封奇点
+        velocity: 0
+秘封奇点Ex:
+    projDisguiseName: 秘封奇点
+    projectileSize: 0.75
+    liveTime: 50
+    clusterBomb:
+        amount: 1
+        damageMulti: 1
+        name: 解封奇点Ex
+        velocity: 0
+解封奇点:
+    projectileSize: 2
     gravity: 0
+    blockHitAction: thru
+    penetration: 999999
+    liveTime: 30
+    enemyInvincibilityFrame: 6
+解封奇点Ex:
+    projDisguiseName: 解封奇点
+    projectileSize: 2
+    gravity: 0
+    blockHitAction: thru
+    penetration: 999999
+    liveTime: 100
+    enemyInvincibilityFrame: 5
+半影飞弹:
+    projectileSize: 2
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 60
+    clusterBomb:
+        amount: 5
+        damageMulti: 0.35
+        name: 半影之魂
+        velocity: 2.25
+半影之魂:
+    projectileSize: 0.5
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 100
+    homing: true
+    homingRadius: 40
+    noHomingTicks: 5
+等离子手雷:
+    projectileSize: 0.5
+    liveTime: 40
+    clusterBomb:
+        amount: 1
+        damageMulti: 3
+        name: 小型等离子手雷爆炸
+        velocity: 0
+等离子手雷Ex:
+    projDisguiseName: 等离子手雷
+    projectileSize: 0.5
+    liveTime: 40
+    clusterBomb:
+        amount: 1
+        damageMulti: 3
+        name: 大型等离子手雷爆炸
+        velocity: 0
+小型等离子手雷爆炸:
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 20
+    projectileSize: 7.5
+    penetration: 999999
+    enemyInvincibilityFrame: 40
+    worldSpriteMode: true
+    worldSpriteUpdateInterval: 2
+    spawnSound: item.exoblade.explode
+    spawnSoundVolume: 10
+大型等离子手雷爆炸:
+    projDisguiseName: 小型等离子手雷爆炸
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 20
+    projectileSize: 10
+    penetration: 999999
+    enemyInvincibilityFrame: 12
+    worldSpriteMode: true
+    worldSpriteUpdateInterval: 2
+    spawnSound: item.exoblade.explode
+    spawnSoundVolume: 10
+超新星:
+    projectileSize: 3
+    speedMultiPerTick: 0.9
+    gravity: 0
+    liveTime: 60
+    homing: true
+    homingRadius: 48
+    clusterBomb:
+        amount: 1
+        damageMulti: 2.5
+        name: 超新星小爆炸
+        velocity: 0
+超新星Ex:
+    projDisguiseName: 超新星
+    projectileSize: 3
+    speedMultiPerTick: 0.9
+    gravity: 0
+    liveTime: 60
+    homing: true
+    homingRadius: 48
+    homingAbility: 10
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.25
+        name: 超新星牵引
+        velocity: 0
+超新星牵引:
+    projectileSize: 2
+    gravity: 0
+    blockHitAction: thru
+    penetration: 999999
+    liveTime: 40
+    clusterBomb:
+        amount: 1
+        damageMulti: 16
+        name: 超新星大爆炸
+        velocity: 0
+超新星小爆炸:
+    projectileSize: 10
+    gravity: 0
+    blockHitAction: thru
+    penetration: 999999
+    liveTime: 20
+    enemyInvincibilityFrame: 100
+    worldSpriteMode: true
+    worldSpriteUpdateInterval: 2
+    spawnSound: item.largeWeaponFire
+超新星大爆炸:
+    projectileSize: 10
+    gravity: 0
+    blockHitAction: thru
+    penetration: 999999
+    liveTime: 20
+    enemyInvincibilityFrame: 100
+    worldSpriteMode: true
+    worldSpriteUpdateInterval: 2
+    spawnSound: item.largeWeaponFire
 手里剑:
     slowedByWater: true
 尖刺球:
