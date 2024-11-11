@@ -1643,6 +1643,87 @@
     worldSpriteMode: true
     worldSpriteUpdateInterval: 2
     spawnSound: item.largeWeaponFire
+鱼骨回旋镖:
+    projectileSize: 0.5
+    gravity: 0
+鱼骨回旋镖Ex:
+    projDisguiseName: 鱼骨回旋镖
+    projectileSize: 0.5
+    gravity: 0
+沙钱:
+    projectileSize: 0.5
+    gravity: 0
+沙钱Ex:
+    projDisguiseName: 沙钱
+    projectileSize: 0.5
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.5
+        name: 珊瑚碎片
+        velocity: 0.25
+真菌回旋爪:
+    projectileSize: 1.5
+    gravity: 0
+逐影飞盘:
+    projectileSize: 1
+    gravity: 0
+    spawnProjectiles:
+        interval: 3
+        offset: 8
+        spawnMechanism: ENEMY
+        damageMulti: 0.5
+        speed: 10
+        spawnType: 逐影飞盘射线
+逐影飞盘Ex:
+    projDisguiseName: 逐影飞盘
+    projectileSize: 1
+    gravity: 0
+    spawnProjectiles:
+        interval: 1
+        offset: 12
+        spawnMechanism: ENEMY
+        damageMulti: 0.5
+        speed: 12
+        spawnType: 逐影飞盘射线
+逐影飞盘射线:
+    liveTime: 1
+    gravity: 0
+    blockHitAction: thru
+    trailColor: 228|167|176
+    trailLingerTime: 5
+附魔飞斧:
+    projectileSize: 1
+    gravity: 0
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.5
+        name: 追踪附魔飞斧
+        velocity: 1.5
+        fireOnCollideEntity: true
+附魔飞斧Ex:
+    projDisguiseName: 附魔飞斧
+    projectileSize: 1
+    gravity: 0
+    clusterBomb:
+        amount: 4
+        damageMulti: 0.5
+        name: 追踪附魔飞斧
+        velocity: 1.5
+        fireOnCollideEntity: true
+追踪附魔飞斧:
+    projectileSize: 1
+    gravity: 0
+    liveTime: 60
+    minimumDamageTicks: 3
+    noHomingTicks: 3
+    homing: true
+    homingRadius: 16
+回飞刃:
+    projectileSize: 1.5
+    gravity: 0
+回飞棒:
+    projectileSize: 2
+    gravity: 0
 手里剑:
     slowedByWater: true
 尖刺球:
@@ -3146,6 +3227,18 @@ TNT:
 疯狂飞斧:
     homing: true
     liveTime: 100
+链锤:
+    projectileSize: 1
+    gravity: 0
+火焰锤:
+    projectileSize: 1
+    gravity: 0
+蓝月:
+    projectileSize: 1
+    gravity: 0
+太极连枷:
+    projectileSize: 1
+    gravity: 0
 猪鲨链球:
     spawnProjectiles:
         interval: 2
@@ -3158,10 +3251,34 @@ TNT:
     homing: true
     gravity: 0
     liveTime: 35
+绽花毒藤:
+    projectileSize: 1
+    gravity: 0
+海胆链枷:
+    projectileSize: 1
+    gravity: 0
+海胆链球:
+    projectileSize: 1
+    gravity: 0
+海蚌锤:
+    projectileSize: 1.5
+    noGravityTicks: 8
+风滚草:
+    projectileSize: 1
+    gravity: 0
 雷姆的复仇:
+    projectileSize: 1.5
+    gravity: 0
     buffInflict:
         - "枯萎|80|1"
+脉冲龙链枷:
+    projectileSize: 5
+    gravity: 0
+    buffInflict:
+        - "带电|60|1"
 龙魂破:
+    projectileSize: 3
+    gravity: 0
     buffInflict:
         - "神圣之火|60|1"
     spawnProjectiles:
@@ -4395,6 +4512,18 @@ TNT:
     homingRadius: 40
     homingAbility: 6
     liveTime: 50
+木制回力镖:
+    projectileSize: 0.25
+    gravity: 0
+附魔回力镖:
+    projectileSize: 0.25
+    gravity: 0
+荆棘旋刃:
+    projectileSize: 0.25
+    gravity: 0
+烈焰回旋镖:
+    projectileSize: 0.25
+    gravity: 0
 星夜光束:
     gravity: 0
     projectileSize: 0.75

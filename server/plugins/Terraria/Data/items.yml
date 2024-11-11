@@ -2083,17 +2083,6 @@ Drew之翼:
     speedMulti: 0.2
   worth: 30000000
   rarity: 15
-再生护符:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  - §c生命回复形态下时，生命值若高于生命上限一半则生命再生将减少玩家生命
-  attributesFormI:
-    damageMulti: 0.12
-  attributesFormII:
-    regen: 24
-  worth: 9600000
-  rarity: 7
 绚彩明胶:
   item: LEASH
   lore:
@@ -3065,6 +3054,17 @@ Drew之翼:
     defence: 20
   worth: 2400000
   rarity: 4
+再生护符:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §c生命回复形态下时，生命值若高于生命上限一半则生命再生将减少玩家生命
+  attributesFormI:
+    damageMulti: 0.12
+  attributesFormII:
+    regen: 24
+  worth: 9600000
+  rarity: 7
 阴阳吸星石:
   item: LEASH
   lore:
@@ -8711,7 +8711,7 @@ Dodu的手炮:
   item: IRON_SWORD
   lore:
   - §r扔出一个会向周围敌人发射激光的飞盘
-  - §r潜伏攻击会以极高的频率倾泻激光，激光攻击距离更远
+  - §r潜伏攻击会穿墙并以极高的频率倾泻激光，激光攻击距离更远
   attributes:
     damage: 38
     damageStealth: 60
@@ -8725,8 +8725,8 @@ Dodu的手炮:
   item: IRON_SWORD
   lore:
   - §r扔出一把高速飞斧，撞到物块或短距离飞行后返回
-  - §r在每次飞行最远点召唤一个能穿墙和自动瞄准的魔法飞斧
-  - §r潜伏攻击使斧头飞的更远，并在命中时向四面八方发射魔法飞斧
+  - §r在命中时召唤一个能穿墙和自动瞄准的魔法飞斧
+  - §r潜伏攻击使斧头飞的更远，并在命中时发射四把魔法飞斧
   attributes:
     damage: 40
     damageStealth: 70
@@ -8739,8 +8739,8 @@ Dodu的手炮:
 回飞刃:
   item: IRON_SWORD
   lore:
-  - §r扔出锋利回飞刃
-  - §r潜伏攻击会使回飞刃飞得很快且能够无限穿透
+  - §r扔出无限穿透的锋利回飞刃
+  - §r潜伏攻击会使回飞刃飞得很快
   attributes:
     damage: 90
     damageStealth: 100
@@ -8753,7 +8753,7 @@ Dodu的手炮:
 回飞棒:
   item: IRON_SWORD
   lore:
-  - §r潜伏攻击发射三把短距离回飞棒
+  - §r发射击中第一个敌人就会返回的回飞棒
   - §r“也叫作Dowak”
   attributes:
     damage: 126

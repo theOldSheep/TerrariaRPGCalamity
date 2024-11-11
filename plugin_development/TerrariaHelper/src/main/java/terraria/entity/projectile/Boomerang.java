@@ -2,6 +2,7 @@ package terraria.entity.projectile;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import terraria.util.*;
@@ -12,6 +13,7 @@ public class Boomerang extends GenericProjectile {
     Location spawnedLoc;
     boolean returning = false;
     double maxDistanceSquared, useTime;
+    int hitTimes = 0;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public Boomerang(World world) {
         super(world);
@@ -26,8 +28,6 @@ public class Boomerang extends GenericProjectile {
         this.maxDistanceSquared = maxDistance * maxDistance;
         this.useTime = useTime;
         // make the projectile return on block hit
-        super.projectileRadius = 0.25;
-        super.gravity = 0;
         super.penetration = 999999;
         super.liveTime = 999999;
         super.blockHitAction = "stick";
@@ -46,7 +46,17 @@ public class Boomerang extends GenericProjectile {
     @Override
     public Vec3D hitEntity(Entity e, MovingObjectPosition position, Vec3D futureLoc, Vector velocityHolder) {
         Vec3D result = super.hitEntity(e, position, futureLoc, velocityHolder);
-        this.returning = true;
+        switch (projectileType) {
+            case "鱼骨回旋镖Ex": {
+                if (hitTimes++ == 0)
+                    ricochet(14.5, futureLoc, velocityHolder);
+                else
+                    this.returning = true;
+                break;
+            }
+            default:
+                this.returning = true;
+        }
         return result;
     }
 

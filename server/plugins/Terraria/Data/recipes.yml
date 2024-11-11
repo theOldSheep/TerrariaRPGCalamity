@@ -205,7 +205,7 @@ FURNACE:
     - 冰川精华
     recipeCategory: MATERIAL
   '31':
-    requireLevel: 1
+    requireLevel: 2
     resultItem: 禁戒碎片
     requireItem:
     - 沙块:32
@@ -216,7 +216,7 @@ FURNACE:
     - 暗黑碎块
     recipeCategory: MATERIAL
   '31_1':
-    requireLevel: 1
+    requireLevel: 2
     resultItem: 大狂鲨鳞
     requireItem:
     - 禁戒碎片

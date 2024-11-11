@@ -13,7 +13,7 @@ import terraria.util.*;
 public class Flail extends GenericProjectile {
     Player owner;
     Location spawnedLoc;
-    boolean returning = false, spinning = true, shouldUpdateSpeed = true, canRotate;
+    boolean returning = false, spinning = true, shouldUpdateSpeed = true, returnOnHitBlock, canRotate;
     double maxDist, maxDistanceSquared, useTime, speed;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public Flail(World world) {
@@ -31,30 +31,14 @@ public class Flail extends GenericProjectile {
         this.useTime = useTime;
         this.speed = bukkitEntity.getVelocity().length();
         // make the projectile return on block hit
-        super.projectileRadius = 0.5;
-        super.gravity = 0;
         super.penetration = 999999;
         super.liveTime = 999999;
         super.blockHitAction = "thru";
         super.canBeReflected = false;
         // see if the flail supports rotation
         canRotate = TerrariaHelper.weaponConfig.getBoolean(super.projectileType + ".canRotate", false);
-        switch (super.projectileType) {
-            case "海蚌锤":
-                super.projectileRadius = 0.75;
-                super.gravity = 0.05;
-                super.noGravityTicks = 8;
-                break;
-            case "雷姆的复仇":
-                super.projectileRadius = 0.75;
-                break;
-            case "脉冲龙链枷":
-                super.projectileRadius = 2.5;
-                break;
-            case "龙魂破":
-                super.projectileRadius = 1.5;
-                break;
-        }
+        // see if the flail goes through wall or returns on hitting blocks
+        returnOnHitBlock = TerrariaHelper.weaponConfig.getBoolean(super.projectileType + ".returnOnHitBlock", true);
         // give infinite use CD temporarily
         ItemUseHelper.applyCD(owner, -1);
     }
@@ -121,11 +105,12 @@ public class Flail extends GenericProjectile {
                 if ( ! (canRotate && owner.getScoreboardTags().contains("temp_autoSwing")) ) {
                     bukkitEntity.teleport(owner.getEyeLocation());
                     spinning = false;
-                    super.blockHitAction = "stick";
+                    if (returnOnHitBlock) {
+                        super.blockHitAction = "stick";
+                    }
                     // update velocity
                     EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions(projectileType)
-                            .setProjectileSpeed(speed)
-                            .setProjectileGravity(gravity);
+                            .setProjectileSpeed(speed);
                     Vector newVelocity = MathHelper.getDirection(
                             owner.getEyeLocation(),
                             ItemUseHelper.getPlayerTargetLoc(new ItemUseHelper.PlyTargetLocInfo(owner, aimHelper, true)
@@ -159,7 +144,7 @@ public class Flail extends GenericProjectile {
                 if (spawnedLoc.distanceSquared(bukkitEntity.getLocation()) > maxDistanceSquared) {
                     this.returning = true;
                 }
-                // hit ground
+                // if the projectile should return for hitting a block
                 if (bukkitEntity.getVelocity().lengthSquared() < 1e-5)
                     this.returning = true;
             }

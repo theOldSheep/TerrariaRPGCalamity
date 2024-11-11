@@ -2810,6 +2810,99 @@ Dodu的手炮:
   stealth:
     projectile: 超新星Ex
     projectileSpeed: 3
+鱼骨回旋镖:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 鱼骨回旋镖
+    distance: 14.5
+    velocity: 3
+  stealth:
+    type: BOOMERANG
+    projectile: 鱼骨回旋镖Ex
+    distance: 14.5
+    velocity: 3
+沙钱:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 沙钱
+    distance: 13
+    velocity: 2.25
+  stealth:
+    projectile: 沙钱Ex
+    projectileSpeed: 2.25
+    shots: 2
+    offset: 20
+真菌回旋爪:
+  type: ROGUE
+  normal:
+    type: FLAIL
+    projectile: 真菌回旋爪
+    velocity: 2
+    reach: 20
+    canRotate: false
+  stealth:
+    type: FLAIL
+    projectile: 真菌回旋爪
+    velocity: 2
+    reach: 20
+    canRotate: false
+逐影飞盘:
+  type: ROGUE
+  normal:
+    type: FLAIL
+    projectile: 逐影飞盘
+    velocity: 1.5
+    reach: 16
+    canRotate: false
+  stealth:
+    type: FLAIL
+    projectile: 逐影飞盘Ex
+    velocity: 1.5
+    reach: 16
+    canRotate: false
+    returnOnHitBlock: false
+附魔飞斧:
+  type: ROGUE
+  normal:
+    type: FLAIL
+    projectile: 附魔飞斧
+    velocity: 3
+    reach: 20
+    canRotate: false
+  stealth:
+    type: FLAIL
+    projectile: 附魔飞斧Ex
+    velocity: 3
+    reach: 20
+    canRotate: false
+回飞刃:
+  type: ROGUE
+  normal:
+    type: FLAIL
+    projectile: 回飞刃
+    velocity: 2.5
+    reach: 15
+    canRotate: false
+  stealth:
+    type: FLAIL
+    projectile: 回飞刃Ex
+    velocity: 3
+    reach: 18
+    canRotate: false
+回飞棒:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 回飞棒
+    distance: 24
+    velocity: 2.5
+  stealth:
+    type: BOOMERANG
+    projectile: 回飞棒
+    distance: 24
+    velocity: 2.75
 手里剑:
   type: THROW_ROGUE
   normal:

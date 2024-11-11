@@ -3260,11 +3260,10 @@ public class ItemUseHelper {
         double projectileSpeed = weaponSection.getDouble("velocity", 5d);
         double distance = weaponSection.getDouble("distance", 10d);
         // note that the gravity of boomerangs are turned off in the boomerang class, so DO NOT use aim helper, it will cause issue.
-        EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions()
+        EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions(itemType)
                 .setAccelerationMode(Setting.getOptionBool(ply, Setting.Options.AIM_HELPER_ACCELERATION))
                 .setAimMode(false)
-                .setProjectileSpeed(projectileSpeed)
-                .setProjectileGravity(0);
+                .setProjectileSpeed(projectileSpeed);
         // get targeted location
         Location targetLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, aimHelperOptions, true));
         Vector fireDir = targetLoc.subtract(ply.getEyeLocation()).toVector();
@@ -4026,11 +4025,20 @@ public class ItemUseHelper {
         }
         // use the weapon
         weaponSection = weaponSection.getConfigurationSection(isStealth ? "stealth" : "normal");
-        playerUseRogueTick(ply, itemType, weaponType, weaponSection, attrMap, tool, 0);
-        // apply CD
-        double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
-        double useTimeMulti = 1 / useSpeed;
-        applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
+        switch (weaponSection.getString("type", weaponType)) {
+            case "BOOMERANG":
+                playerUseBoomerang(ply, weaponSection.getString("projectile", itemType), weaponType, autoSwing.get(), attrMap, weaponSection);
+                break;
+            case "FLAIL":
+                playerUseFlail(ply, weaponSection.getString("projectile", itemType), weaponType, autoSwing.get(), attrMap, weaponSection);
+                break;
+            default:
+                playerUseRogueTick(ply, itemType, weaponType, weaponSection, attrMap, tool, 0);
+                // apply CD
+                double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
+                double useTimeMulti = 1 / useSpeed;
+                applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
+        }
         return true;
     }
     // magic helper functions below
@@ -5403,6 +5411,7 @@ public class ItemUseHelper {
                 // use weapon
                 String weaponType = weaponSection.getString("type", "");
                 boolean success = false;
+                boolean isRogue = false;
                 switch (weaponType) {
                     case "STAB":
                     case "SWING":
@@ -5441,6 +5450,7 @@ public class ItemUseHelper {
                         success = playerUseRogue(ply, itemName, weaponType,
                                 autosSwingUpdated, weaponSection, attrMap, mainHandItem);
                         autoSwing = autosSwingUpdated.get();
+                        isRogue = true;
                         break;
                     case "MAGIC_PROJECTILE":
                     case "MAGIC_SPECIAL":
@@ -5462,8 +5472,9 @@ public class ItemUseHelper {
                     }
                     // play item use sound
                     playerUseItemSound(ply, weaponType, itemName, autoSwing);
-                    // reset stealth if the weapon is not rogue
-                    if (! weaponType.equals("ROGUE"))
+                    // always completely reset stealth if the weapon is not rogue
+                    // stealth for rogue weapons is handled in its own section.
+                    if (! isRogue)
                         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH, 0d);
                 } else {
                     // prevent bug, if the item is not being used successfully, cancel auto swing
