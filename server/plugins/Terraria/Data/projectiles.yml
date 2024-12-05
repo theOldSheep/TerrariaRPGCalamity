@@ -1724,6 +1724,205 @@
 回飞棒:
     projectileSize: 2
     gravity: 0
+烈火之星:
+    projectileSize: 1.5
+    gravity: 0
+    blockHitAction: thru
+宁静回旋镖:
+    projectileSize: 1
+    gravity: 0
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.5
+        name: 宁静光明碎块
+        velocity: 0.4
+        fireOnCollideEntity: true
+宁静回旋镖Ex:
+    projDisguiseName: 宁静回旋镖
+    projectileSize: 1
+    gravity: 0
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.5
+        name: 宁静暗黑碎块
+        velocity: 1.75
+        fireOnCollideEntity: true
+宁静光明碎块:
+    liveTime: 20
+宁静暗黑碎块:
+    minimumDamageTicks: 2
+    noHomingTicks: 2
+    homing: true
+    homingRadius: 16
+    liveTime: 80
+破冰者:
+    projectileSize: 2
+    gravity: 0
+破冰者Ex:
+    projDisguiseName: 破冰者
+    projectileSize: 2
+    gravity: 0
+    isGrenade: true
+    blastRadius: 3.25
+    blastOnContactBlock: false
+    blastOnContactEnemy: true
+冰灵旋刃:
+    projectileSize: 3
+    gravity: 0
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.35
+        name: 旋刃冰星
+        velocity: 1.75
+        fireOnCollideEntity: true
+冰灵旋刃Ex:
+    projDisguiseName: 冰灵旋刃
+    projectileSize: 3
+    gravity: 0
+    blockHitAction: bounce
+    bounce: 9
+    penetration: 4
+    homing: true
+    homingRadius: 24
+    liveTime: 100
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.35
+        name: 旋刃冰星
+        velocity: 1.75
+        fireOnCollideEntity: true
+旋刃冰星:
+    blockHitAction: thru
+    minimumDamageTicks: 2
+    noHomingTicks: 2
+    homing: true
+    homingRadius: 16
+    gravity: 0
+    liveTime: 80
+硫火手里剑:
+    projectileSize: 0.5
+    gravity: 0
+    liveTime: 40
+硫火手里剑Ex:
+    projDisguiseName: 硫火手里剑
+    projectileSize: 0.5
+    gravity: 0
+    liveTime: 50
+    clusterBomb:
+        amount: 10
+        damageMulti: 0.25
+        name: 硫火飞弹
+        velocity: 2
+红木环刃:
+    projectileSize: 2
+    gravity: 0
+红木环刃Ex:
+    projDisguiseName: 红木环刃
+    projectileSize: 2
+    gravity: 0
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.15
+        name: 孢子云
+        velocity: 0.1
+        fireOnCollideEntity: true
+回春环刃:
+    projectileSize: 2
+    gravity: 0
+    spawnProjectiles:
+        interval: 5
+        offset: 16
+        spawnMechanism: ENEMY
+        damageMulti: 0.35
+        speed: 2
+        spawnType: 迷你回春环刃
+回春环刃Ex:
+    projDisguiseName: 回春环刃
+    projectileSize: 2
+    gravity: 0
+    spawnProjectiles:
+        interval: 2
+        offset: 24
+        spawnMechanism: ENEMY
+        damageMulti: 0.35
+        speed: 2
+        spawnType: 迷你回春环刃
+迷你回春环刃:
+    projectileSize: 1
+    gravity: 0
+    liveTime: 50
+    blockHitAction: thru
+霜碎回旋镖:
+    projectileSize: 2.5
+    gravity: 0
+    buffInflict:
+        - "霜火|60|1"
+    clusterBomb:
+        amount: 4
+        damageMulti: 0.35
+        name: 水晶碎块
+        velocity: 0.5
+        fireOnCollideEntity: true
+霜碎回旋镖Ex:
+    projDisguiseName: 霜碎回旋镖
+    projectileSize: 2.5
+    gravity: 0
+    buffInflict:
+        - "霜火|200|1"
+    clusterBomb:
+        amount: 10
+        damageMulti: 0.35
+        name: 水晶碎块
+        velocity: 0.6
+        fireOnCollideEntity: true
+板块斩切者:
+    projectileSize: 2
+    gravity: 0
+    isGrenade: true
+    blastRadius: 3.5
+    blastOnContactBlock: false
+    blastOnContactEnemy: true
+    buffInflict:
+        - "狱炎|60|1"
+板块斩切者Ex:
+    projDisguiseName: 板块斩切者
+    projectileSize: 2
+    gravity: 0
+    isGrenade: true
+    blastRadius: 3.5
+    blastOnContactBlock: false
+    blastOnContactEnemy: true
+    buffInflict:
+        - "狱炎|200|1"
+瘟疫解离者:
+    projectileSize: 1.5
+    gravity: 0
+    buffInflict:
+        - "瘟疫|60|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.25
+        name: 瘟疫搜寻者
+        velocity: 2
+        fireOnCollideEntity: true
+瘟疫解离者Ex:
+    projDisguiseName: 瘟疫解离者
+    projectileSize: 1.5
+    gravity: 0
+    buffInflict:
+        - "瘟疫|200|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.25
+        name: 瘟疫搜寻者
+        velocity: 2
+        fireOnCollideEntity: true
+    spawnProjectiles:
+        interval: 3
+        spawnMechanism: SURROUND
+        damageMulti: 0.15
+        speed: 2
+        spawnType: 瘟疫搜寻者
 手里剑:
     slowedByWater: true
 尖刺球:

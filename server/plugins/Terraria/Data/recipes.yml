@@ -2249,7 +2249,7 @@ ANVIL:
     requireLevel: 2
     resultItem: 遗忘之刃
     requireItem:
-    - 禁戒碎片:2
+    - 禁戒碎片
     - 精金锭:5
     recipeCategory: WEAPON_MELEE
   '261':
@@ -2474,7 +2474,7 @@ ANVIL:
     - 凝胶:18
     recipeCategory: WEAPON_MELEE
   '290':
-    requireLevel: 1
+    requireLevel: 2
     resultItem: 阴阳
     requireItem:
     - 光明碎块
@@ -3152,7 +3152,7 @@ ANVIL:
     - 混乱精华:10
     recipeCategory: WEAPON_ROGUE
   '362_14':
-    requireLevel: 1
+    requireLevel: 2
     resultItem: 宁静回旋镖
     requireItem:
     - 附魔回力镖
@@ -3318,7 +3318,7 @@ ANVIL:
     requireLevel: 2
     resultItem: 古岩投矛
     requireItem:
-    - 禁戒碎片:2
+    - 禁戒碎片
     - 精金锭:4
     recipeCategory: WEAPON_ROGUE
   '362_37':
@@ -3671,7 +3671,7 @@ ANVIL:
     requireLevel: 2
     resultItem: 失落极峰
     requireItem:
-    - 禁戒碎片:2
+    - 禁戒碎片
     - 精金锭:5
     recipeCategory: WEAPON_SUMMON
   '392':
@@ -4251,7 +4251,7 @@ WORKBENCH:
     requireLevel: 1
     resultItem: 遗迹圣物
     requireItem:
-    - 禁戒碎片:2
+    - 禁戒碎片
     - 精金锭:5
     recipeCategory: WEAPON_MAGIC
   '55':
@@ -4276,7 +4276,7 @@ WORKBENCH:
     resultItem: 始源之尘
     requireItem:
     - 死亡之尘
-    - 禁戒碎片:3
+    - 禁戒碎片
     - 陨星锭:5
     - 灵气:5
     recipeCategory: WEAPON_MAGIC
@@ -4322,7 +4322,7 @@ WORKBENCH:
     resultItem: 始源之遗
     requireItem:
     - 始源之尘
-    - 禁戒碎片:5
+    - 禁戒碎片
     - 宇宙锭:8
     - 恒温能量:20
     recipeCategory: WEAPON_MAGIC

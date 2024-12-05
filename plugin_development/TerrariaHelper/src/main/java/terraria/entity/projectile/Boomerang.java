@@ -37,7 +37,7 @@ public class Boomerang extends GenericProjectile {
     }
     @Override
     public void die() {
-        super.die();
+        super.vanillaDie();
         if (owner != null && owner.isOnline()) {
             ItemUseHelper.applyCD(owner, useTime);
         }

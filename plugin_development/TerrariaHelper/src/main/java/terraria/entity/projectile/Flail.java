@@ -44,7 +44,7 @@ public class Flail extends GenericProjectile {
     }
     @Override
     public void die() {
-        super.die();
+        super.vanillaDie();
         if (useTime > 0 && owner != null && owner.isOnline()) {
             ItemUseHelper.applyCD(owner, useTime);
         }

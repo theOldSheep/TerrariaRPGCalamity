@@ -1951,7 +1951,7 @@
   - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
-  - §r近战攻击造成霜火减益
+  - §r近战和远程攻击造成霜火减益
   attributes:
     damageMulti: 0.07
     buffInflictMelee: 霜火|40|1
@@ -3121,6 +3121,7 @@ Drew之翼:
   attributes:
     defence: 72
     speedMulti: -0.3
+    knockbackResistance: 1
   worth: 4800000
   rarity: 5
 魔鬼之庇护:
@@ -3151,6 +3152,7 @@ Drew之翼:
     defence: 60
     damageMulti: 0.15
     speedMulti: 0.1
+    knockbackResistance: 1
   worth: 30000000
   rarity: 15
 海波项链:
@@ -3348,6 +3350,8 @@ Drew之翼:
   rarity: 0
 恶魔镐:
   item: DIAMOND_PICKAXE
+  lore:
+  - §r“可挖掘狱炎/陨石”
   attributes:
     damage: 9
     damageType: Melee
@@ -8767,7 +8771,7 @@ Dodu的手炮:
 烈火之星:
   item: DIAMOND_SWORD
   lore:
-  - §r扔出穿透至多3次的灼热回飞刃
+  - §r扔出灼热回飞刃
   - §r潜伏攻击能够无限穿透
   attributes:
     damage: 150
@@ -8782,8 +8786,8 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r扔出一把由光明和黑暗产生的回旋镖
-  - §r回旋镖在扔出去击中敌人时召唤光明碎块，在返回时召唤追踪的黑暗碎块
-  - §r潜伏攻击会同时释放两种碎块
+  - §r回旋镖在击中敌人时召唤光明碎块
+  - §r潜伏攻击击中时召唤追踪的黑暗碎块
   attributes:
     damage: 80
     damageStealth: 120
@@ -8809,7 +8813,7 @@ Dodu的手炮:
 冰灵旋刃:
   item: DIAMOND_SWORD
   lore:
-  - §r投出一把冰刃，击中敌人时碎成若干个冰星
+  - §r投出一把冰刃，击中敌人时释放若干个冰星
   - §r潜伏攻击会使冰刃追踪攻击敌怪
   attributes:
     damage: 120
@@ -8823,8 +8827,8 @@ Dodu的手炮:
 硫火手里剑:
   item: DIAMOND_SWORD
   lore:
-  - §r投出击中敌人时分裂的硫火手里剑
-  - §r潜伏攻击使手里剑发射大量硫火飞弹
+  - §r投出硫火手里剑
+  - §r潜伏攻击使手里剑爆出大量硫火飞弹
   attributes:
     damage: 56
     damageStealth: 60
@@ -8837,7 +8841,7 @@ Dodu的手炮:
 红木环刃:
   item: DIAMOND_SWORD
   lore:
-  - §r潜伏攻击在飞行轨迹上生成花朵
+  - §r潜伏攻击在击中时生成孢子云
   attributes:
     damage: 168
     damageStealth: 200
@@ -8865,7 +8869,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r发射长距离回旋镖，接触敌人时碎成冰锥
-  - §r潜伏攻击会扔出三把飞行距离较短的冰冻回旋镖
+  - §r潜伏攻击会扔出飞行距离较短的冰冻回旋镖
   attributes:
     damage: 180
     damageStealth: 200
@@ -8879,7 +8883,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r扔出会在击中敌人时爆炸的飞镰
-  - §r潜伏攻击能够穿透4次
+  - §r潜伏攻击能够穿透敌人
   attributes:
     damage: 190
     damageStealth: 225
@@ -8892,8 +8896,8 @@ Dodu的手炮:
 瘟疫解离者:
   item: DIAMOND_SWORD
   lore:
-  - §r扔出一把瘟疫回旋镖，碰撞物块或敌人时释放瘟疫寻觅者
-  - §r潜伏攻击导致回旋镖飞行过程不断释放瘟疫寻觅者
+  - §r扔出一把瘟疫回旋镖，碰撞时释放瘟疫寻觅者
+  - §r潜伏攻击导致回旋镖无限穿透并不断释放瘟疫寻觅者
   attributes:
     damage: 160
     damageStealth: 175

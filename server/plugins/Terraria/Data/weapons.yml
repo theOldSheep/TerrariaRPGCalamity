@@ -2903,6 +2903,124 @@ Dodu的手炮:
     projectile: 回飞棒
     distance: 24
     velocity: 2.75
+烈火之星:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 烈火之星
+    distance: 24
+    velocity: 3
+  stealth:
+    type: FLAIL
+    projectile: 烈火之星
+    velocity: 3
+    reach: 24
+    canRotate: false
+宁静回旋镖:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 宁静回旋镖
+    distance: 24
+    velocity: 3
+  stealth:
+    type: BOOMERANG
+    projectile: 宁静回旋镖Ex
+    distance: 24
+    velocity: 3
+破冰者:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 破冰者
+    distance: 28
+    velocity: 3
+  stealth:
+    type: BOOMERANG
+    projectile: 破冰者Ex
+    distance: 28
+    velocity: 3
+冰灵旋刃:
+  type: ROGUE
+  normal:
+    type: FLAIL
+    projectile: 冰灵旋刃
+    velocity: 3
+    reach: 28
+    canRotate: false
+  stealth:
+    projectile: 冰灵旋刃Ex
+    projectileSpeed: 2.5
+硫火手里剑:
+  type: ROGUE
+  normal:
+    projectile: 硫火手里剑
+    projectileSpeed: 2.75
+  stealth:
+    projectile: 硫火手里剑Ex
+    projectileSpeed: 2.75
+红木环刃:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 红木环刃
+    distance: 32
+    velocity: 3.25
+  stealth:
+    type: BOOMERANG
+    projectile: 红木环刃Ex
+    distance: 32
+    velocity: 3.25
+回春环刃:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 回春环刃
+    distance: 32
+    velocity: 3.25
+  stealth:
+    type: BOOMERANG
+    projectile: 回春环刃Ex
+    distance: 32
+    velocity: 2.9
+霜碎回旋镖:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 霜碎回旋镖
+    distance: 32
+    velocity: 2.85
+  stealth:
+    type: BOOMERANG
+    projectile: 霜碎回旋镖Ex
+    distance: 20
+    velocity: 2.85
+板块斩切者:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 板块斩切者
+    distance: 32
+    velocity: 3
+  stealth:
+    type: FLAIL
+    projectile: 板块斩切者Ex
+    velocity: 3
+    reach: 32
+    canRotate: false
+瘟疫解离者:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 瘟疫解离者
+    distance: 32
+    velocity: 3.25
+  stealth:
+    type: FLAIL
+    projectile: 瘟疫解离者Ex
+    velocity: 3.25
+    reach: 32
+    canRotate: false
 手里剑:
   type: THROW_ROGUE
   normal:

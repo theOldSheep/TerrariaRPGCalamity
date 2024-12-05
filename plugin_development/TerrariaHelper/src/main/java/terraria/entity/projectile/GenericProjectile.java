@@ -786,6 +786,10 @@ public class GenericProjectile extends EntityPotion {
         super.die();
         TerrariaProjectileHitEvent.callProjectileHitEvent(this);
     }
+    // does not call projectile hit events
+    protected void vanillaDie() {
+        super.die();
+    }
     // bounding box override on location update
     @Override
     public void setPosition(double x, double y, double z) {
