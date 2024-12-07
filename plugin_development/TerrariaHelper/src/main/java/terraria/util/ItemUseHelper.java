@@ -3253,10 +3253,24 @@ public class ItemUseHelper {
         }
         return true;
     }
+    /**
+     * Handles a boomerang attack from a player.
+     * @param ply the player using the boomerang
+     * @param itemType the weapon item
+     * @param weaponType weapon type ("BOOMERANG")
+     * @param autoSwing is auto swing after cool down active?
+     * @param attrMap attribute map of the attack
+     * @param weaponSection config section of the weapon to specify more details
+     * @return whether the attack was successful
+     */
     protected static boolean playerUseBoomerang(Player ply, String itemType, String weaponType,
                                                 boolean autoSwing, HashMap<String, Double> attrMap, ConfigurationSection weaponSection) {
         // use the weapon
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+        // if true, an infinite item usage cool is applied before boomerang is returned;
+        // the boomerang will also infinitely penetrate & persist, and can not be reflected.
+        boolean strict = weaponSection.getBoolean("strict", true);
+        boolean returnOnHitBlock = weaponSection.getBoolean("returnOnHitBlock", true);
         double projectileSpeed = weaponSection.getDouble("velocity", 5d);
         double distance = weaponSection.getDouble("distance", 10d);
         // note that the gravity of boomerangs are turned off in the boomerang class, so DO NOT use aim helper, it will cause issue.
@@ -3274,7 +3288,7 @@ public class ItemUseHelper {
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
         double useTimeMulti = 1 / useSpeed;
         double useTime = attrMap.getOrDefault("useTime", 20d) * useTimeMulti;
-        Boomerang entity = new Boomerang(shootInfo, distance, useTime);
+        Boomerang entity = new Boomerang(shootInfo, distance, useTime, strict, returnOnHitBlock);
         plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // play sound
         playerUseItemSound(ply, weaponType, itemType, autoSwing);
@@ -3305,6 +3319,11 @@ public class ItemUseHelper {
                                             boolean autoSwing, HashMap<String, Double> attrMap, ConfigurationSection weaponSection) {
         // use the weapon
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
+        // if true, an infinite item usage cool is applied before boomerang is returned;
+        // the boomerang will also infinitely penetrate & persist, and can not be reflected.
+        boolean strict = weaponSection.getBoolean("strict", true);
+        boolean canRotate = weaponSection.getBoolean("canRotate", false);
+        boolean returnOnHitBlock = weaponSection.getBoolean("returnOnHitBlock", true);
         double projectileSpeed = weaponSection.getDouble("velocity", 5d);
         double reach = weaponSection.getDouble("reach", 10d);
         Vector fireDir = getPlayerAimDir(ply, ply.getEyeLocation(), projectileSpeed, itemType, false, 0);
@@ -3315,7 +3334,7 @@ public class ItemUseHelper {
         double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedMeleeMulti", 1d);
         double useTimeMulti = 1 / useSpeed;
         double useTime = attrMap.getOrDefault("useTime", 20d) * useTimeMulti;
-        Flail entity = new Flail(shootInfo, reach, useTime);
+        Flail entity = new Flail(shootInfo, reach, useTime, strict, canRotate, returnOnHitBlock);
         plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // play sound
         playerUseItemSound(ply, weaponType, itemType, autoSwing);

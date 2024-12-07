@@ -13,15 +13,16 @@ import terraria.util.*;
 public class Flail extends GenericProjectile {
     Player owner;
     Location spawnedLoc;
-    boolean returning = false, spinning = true, shouldUpdateSpeed = true, returnOnHitBlock, canRotate;
+    boolean returning = false, spinning = true, shouldUpdateSpeed = true, returnOnHitBlock, canRotate, strict;
     double maxDist, maxDistanceSquared, useTime, speed;
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public Flail(World world) {
         super(world);
         owner = null;
-        die();
+        vanillaDie();
     }
-    public Flail(EntityHelper.ProjectileShootInfo shootInfo, double maxDistance, double useTime) {
+    public Flail(EntityHelper.ProjectileShootInfo shootInfo, double maxDistance, double useTime,
+                 boolean strict, boolean canRotate, boolean returnOnHitBlock) {
         super(shootInfo);
         // initialize variables
         owner = (Player) shootInfo.shooter;
@@ -30,22 +31,39 @@ public class Flail extends GenericProjectile {
         this.maxDistanceSquared = maxDistance * maxDistance;
         this.useTime = useTime;
         this.speed = bukkitEntity.getVelocity().length();
-        // make the projectile return on block hit
-        super.penetration = 999999;
-        super.liveTime = 999999;
+        this.strict = strict;
+        // if it is strict, more properties of the projectile will be overridden
+        // and the player will be given a hardcore cool down until it returns
+        if (strict) {
+            super.penetration = 999999;
+            super.liveTime = 999999;
+            super.canBeReflected = false;
+            // give infinite use CD temporarily
+            ItemUseHelper.applyCD(owner, -1);
+        }
+        // normally give use CD if it is positive
+        else if (useTime > 0) {
+            ItemUseHelper.applyCD(owner, useTime);
+        }
+        // it needs to pass through blocks during spinning phase.
+        // if needed, turns into "stick" on casting out, to make the projectile return on block hit.
         super.blockHitAction = "thru";
-        super.canBeReflected = false;
         // see if the flail supports rotation
-        canRotate = TerrariaHelper.weaponConfig.getBoolean(super.projectileType + ".canRotate", false);
+        this.canRotate = canRotate;
         // see if the flail goes through wall or returns on hitting blocks
-        returnOnHitBlock = TerrariaHelper.weaponConfig.getBoolean(super.projectileType + ".returnOnHitBlock", true);
-        // give infinite use CD temporarily
-        ItemUseHelper.applyCD(owner, -1);
+        this.returnOnHitBlock = returnOnHitBlock;
     }
     @Override
     public void die() {
+        super.die();
+        if (strict && useTime > 0 && owner != null && owner.isOnline()) {
+            ItemUseHelper.applyCD(owner, useTime);
+        }
+    }
+    @Override
+    protected void vanillaDie() {
         super.vanillaDie();
-        if (useTime > 0 && owner != null && owner.isOnline()) {
+        if (strict && useTime > 0 && owner != null && owner.isOnline()) {
             ItemUseHelper.applyCD(owner, useTime);
         }
     }
@@ -88,7 +106,7 @@ public class Flail extends GenericProjectile {
         if (shouldUpdateSpeed) {
             // owner is offline
             if (!PlayerHelper.isProperlyPlaying(owner)) {
-                die();
+                vanillaDie();
                 return;
             }
             // returns if too far away
@@ -97,7 +115,7 @@ public class Flail extends GenericProjectile {
                 bukkitEntity.setVelocity(MathHelper.getDirection(
                         bukkitEntity.getLocation(), owner.getEyeLocation(), this.speed));
                 if (bukkitEntity.getLocation().distanceSquared(owner.getEyeLocation()) < this.speed * this.speed)
-                    die();
+                    vanillaDie();
             }
             // if the player is spinning the flail before throwing out
             else if (spinning) {

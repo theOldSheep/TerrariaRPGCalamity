@@ -8924,7 +8924,7 @@ Dodu的手炮:
 熔岩切碎者:
   item: DIAMOND_SWORD
   lore:
-  - §r扔出一把会在命中敌人产生神圣火球的飞镰
+  - §r扔出一把会在命中敌人时产生神圣火球的飞镰
   - §r潜伏攻击会使镰刀在飞行中不断释放神圣火球，并在命中时产生更多的火球
   attributes:
     damage: 332
@@ -8946,7 +8946,7 @@ Dodu的手炮:
     damageType: Rogue
     crit: 4
     knockback: 7.5
-    useTime: 6
+    useTime: 9
   worth: 26000000
   rarity: 13
 辞别飞镰:
@@ -8966,9 +8966,8 @@ Dodu的手炮:
 剧毒旋风:
   item: DIAMOND_SWORD
   lore:
-  - §r投掷一个缓慢移动的回旋镖
-  - §r发射一段时间后，环刃选择一个目标并快速追踪敌人
-  - §r潜伏攻击会投掷追踪速度更快的环刃并释放沙子
+  - §r投掷一个环刃，选择一个目标并快速追踪敌人
+  - §r潜伏攻击会投掷追踪速度更快的环刃并造成多次伤害
   attributes:
     damage: 666
     damageStealth: 666
@@ -8981,7 +8980,7 @@ Dodu的手炮:
 湮灭:
   item: DIAMOND_SWORD
   lore:
-  - §r投出一个向周围敌人发射星云激光的飞盘
+  - §r投出一个向周围敌人发射星云激光的缓慢飞盘
   - §r潜伏攻击会无限穿透并追踪，且发射更多激光
   attributes:
     damage: 1240
@@ -9010,7 +9009,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r掷出一把高速的圣金镰刀——星神之杀，击中敌怪时分裂出数把幻影镰刀
-  - §r潜伏攻击分裂出更多镰刀
+  - §r潜伏攻击无限穿透并分裂出更多镰刀
   attributes:
     damage: 560
     damageStealth: 1000
@@ -9023,16 +9022,16 @@ Dodu的手炮:
 纳米黑死神:
   item: DIAMOND_SWORD
   lore:
-  - §r释放纳米黑能量刀刃风暴
-  - §r潜伏攻击会导致镰刃产生大量自动追踪的残像，而不是能量刀刃
+  - §r释放追踪的纳米黑能量刀刃风暴
+  - §r潜伏攻击留下的刀刃更为致命
   - §r“生灵在她的无尽仇恨中溺亡”
   attributes:
     damage: 260
-    damageStealth: 300
+    damageStealth: 1500
     damageType: Rogue
     crit: 4
     knockback: 9
-    useTime: 5
+    useTime: 12
   worth: 40000000
   rarity: 16
 钨钢飞刀:

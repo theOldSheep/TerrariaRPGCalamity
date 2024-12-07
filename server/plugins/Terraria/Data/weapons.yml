@@ -2869,7 +2869,7 @@ Dodu的手炮:
     type: FLAIL
     projectile: 附魔飞斧
     velocity: 3
-    reach: 20
+    reach: 16
     canRotate: false
   stealth:
     type: FLAIL
@@ -2964,11 +2964,14 @@ Dodu的手炮:
   normal:
     type: BOOMERANG
     projectile: 红木环刃
+    strict: false
+    autoSwing: true
     distance: 32
     velocity: 3.25
   stealth:
     type: BOOMERANG
     projectile: 红木环刃Ex
+    strict: false
     distance: 32
     velocity: 3.25
 回春环刃:
@@ -2976,11 +2979,14 @@ Dodu的手炮:
   normal:
     type: BOOMERANG
     projectile: 回春环刃
+    strict: false
+    autoSwing: true
     distance: 32
     velocity: 3.25
   stealth:
     type: BOOMERANG
     projectile: 回春环刃Ex
+    strict: false
     distance: 32
     velocity: 2.9
 霜碎回旋镖:
@@ -2988,11 +2994,14 @@ Dodu的手炮:
   normal:
     type: BOOMERANG
     projectile: 霜碎回旋镖
+    strict: false
+    autoSwing: true
     distance: 32
     velocity: 2.85
   stealth:
     type: BOOMERANG
     projectile: 霜碎回旋镖Ex
+    strict: false
     distance: 20
     velocity: 2.85
 板块斩切者:
@@ -3000,11 +3009,16 @@ Dodu的手炮:
   normal:
     type: BOOMERANG
     projectile: 板块斩切者
+    strict: false
+    autoSwing: true
+    returnOnHitBlock: false
     distance: 32
     velocity: 3
   stealth:
     type: FLAIL
     projectile: 板块斩切者Ex
+    strict: false
+    returnOnHitBlock: false
     velocity: 3
     reach: 32
     canRotate: false
@@ -3013,14 +3027,141 @@ Dodu的手炮:
   normal:
     type: BOOMERANG
     projectile: 瘟疫解离者
+    strict: false
+    autoSwing: true
+    returnOnHitBlock: false
     distance: 32
     velocity: 3.25
   stealth:
     type: FLAIL
     projectile: 瘟疫解离者Ex
+    strict: false
+    returnOnHitBlock: false
     velocity: 3.25
     reach: 32
     canRotate: false
+元素飞盘:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 元素飞盘
+    strict: false
+    autoSwing: true
+    returnOnHitBlock: false
+    distance: 32
+    velocity: 3.5
+  stealth:
+    type: FLAIL
+    projectile: 元素飞盘Ex
+    strict: false
+    returnOnHitBlock: false
+    reach: 32
+    velocity: 3.25
+    canRotate: false
+熔岩切碎者:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 熔岩切碎者
+    strict: false
+    autoSwing: true
+    returnOnHitBlock: false
+    distance: 32
+    velocity: 3.5
+  stealth:
+    type: FLAIL
+    projectile: 熔岩切碎者Ex
+    strict: false
+    returnOnHitBlock: false
+    reach: 32
+    velocity: 3.25
+    canRotate: false
+狱卒之镰:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 狱卒之镰
+    strict: false
+    autoSwing: true
+    returnOnHitBlock: false
+    distance: 48
+    velocity: 3.5
+  stealth:
+    type: BOOMERANG
+    projectile: 狱卒之镰Ex
+    strict: false
+    autoSwing: true
+    returnOnHitBlock: false
+    distance: 48
+    velocity: 3.5
+辞别飞镰:
+  type: ROGUE
+  normal:
+    projectile: 辞别飞镰
+    projectileSpeed: 3.5
+  stealth:
+    projectile: 辞别飞镰Ex
+    projectileSpeed: 3.5
+剧毒旋风:
+  type: ROGUE
+  normal:
+    projectile: 剧毒旋风
+    projectileSpeed: 3.5
+  stealth:
+    projectile: 剧毒旋风Ex
+    projectileSpeed: 3.75
+湮灭:
+  type: ROGUE
+  normal:
+    type: FLAIL
+    projectile: 湮灭
+    strict: false
+    returnOnHitBlock: false
+    reach: 40
+    velocity: 1.75
+    canRotate: false
+  stealth:
+    type: FLAIL
+    projectile: 湮灭Ex
+    strict: false
+    returnOnHitBlock: false
+    reach: 40
+    velocity: 1.75
+    canRotate: false
+动能寻迹镖:
+  type: ROGUE
+  normal:
+    projectile: 动能寻迹镖
+    projectileSpeed: 4
+  stealth:
+    projectile: 动能寻迹镖Ex
+    projectileSpeed: 4.25
+星神之杀:
+  type: ROGUE
+  normal:
+    type: BOOMERANG
+    projectile: 星神之杀
+    strict: false
+    autoSwing: true
+    returnOnHitBlock: false
+    distance: 32
+    velocity: 4
+  stealth:
+    type: FLAIL
+    projectile: 星神之杀Ex
+    strict: false
+    returnOnHitBlock: false
+    reach: 32
+    velocity: 4
+    canRotate: false
+纳米黑死神:
+  type: ROGUE
+  normal:
+    projectile: 纳米黑死神
+    projectileSpeed: 3.75
+  stealth:
+    projectile: 纳米黑死神Ex
+    projectileSpeed: 3.75
 手里剑:
   type: THROW_ROGUE
   normal:

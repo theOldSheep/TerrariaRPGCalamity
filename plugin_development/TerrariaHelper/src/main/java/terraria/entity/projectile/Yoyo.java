@@ -26,7 +26,7 @@ public class Yoyo extends GenericProjectile {
     public Yoyo(World world) {
         super(world);
         owner = null;
-        die();
+        vanillaDie();
     }
     public Yoyo(EntityHelper.ProjectileShootInfo shootInfo,
                 double maxDistance, double useTime, double recoilPoolMultiplier, int ticksDuration) {
@@ -53,6 +53,13 @@ public class Yoyo extends GenericProjectile {
     }
     @Override
     public void die() {
+        super.die();
+        if (owner != null && owner.isOnline()) {
+            ItemUseHelper.applyCD(owner, useTime);
+        }
+    }
+    @Override
+    protected void vanillaDie() {
         super.vanillaDie();
         if (owner != null && owner.isOnline()) {
             ItemUseHelper.applyCD(owner, useTime);
@@ -83,7 +90,7 @@ public class Yoyo extends GenericProjectile {
             bukkitEntity.setVelocity(MathHelper.getDirection(
                     bukkitEntity.getLocation(), owner.getEyeLocation(), this.speed) );
             if (bukkitEntity.getLocation().distanceSquared(owner.getEyeLocation()) < this.speed * this.speed)
-                die();
+                vanillaDie();
         }
         // update velocity
         else {
@@ -98,7 +105,7 @@ public class Yoyo extends GenericProjectile {
         }
         // owner is offline
         if (! PlayerHelper.isProperlyPlaying(owner) )
-            die();
+            vanillaDie();
         // add 1 to index per tick
         indexAI ++;
     }

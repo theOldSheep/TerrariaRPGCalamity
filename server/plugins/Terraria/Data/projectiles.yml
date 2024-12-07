@@ -1816,10 +1816,12 @@
 红木环刃:
     projectileSize: 2
     gravity: 0
+    penetration: 999999
 红木环刃Ex:
     projDisguiseName: 红木环刃
     projectileSize: 2
     gravity: 0
+    penetration: 999999
     clusterBomb:
         amount: 3
         damageMulti: 0.15
@@ -1829,6 +1831,7 @@
 回春环刃:
     projectileSize: 2
     gravity: 0
+    penetration: 999999
     spawnProjectiles:
         interval: 5
         offset: 16
@@ -1840,6 +1843,7 @@
     projDisguiseName: 回春环刃
     projectileSize: 2
     gravity: 0
+    penetration: 999999
     spawnProjectiles:
         interval: 2
         offset: 24
@@ -1848,13 +1852,14 @@
         speed: 2
         spawnType: 迷你回春环刃
 迷你回春环刃:
-    projectileSize: 1
+    projectileSize: 1.5
     gravity: 0
     liveTime: 50
     blockHitAction: thru
 霜碎回旋镖:
     projectileSize: 2.5
     gravity: 0
+    penetration: 999999
     buffInflict:
         - "霜火|60|1"
     clusterBomb:
@@ -1867,6 +1872,7 @@
     projDisguiseName: 霜碎回旋镖
     projectileSize: 2.5
     gravity: 0
+    penetration: 999999
     buffInflict:
         - "霜火|200|1"
     clusterBomb:
@@ -1888,6 +1894,7 @@
     projDisguiseName: 板块斩切者
     projectileSize: 2
     gravity: 0
+    penetration: 999999
     isGrenade: true
     blastRadius: 3.5
     blastOnContactBlock: false
@@ -1897,6 +1904,7 @@
 瘟疫解离者:
     projectileSize: 1.5
     gravity: 0
+    penetration: 999999
     buffInflict:
         - "瘟疫|60|1"
     clusterBomb:
@@ -1909,6 +1917,7 @@
     projDisguiseName: 瘟疫解离者
     projectileSize: 1.5
     gravity: 0
+    penetration: 999999
     buffInflict:
         - "瘟疫|200|1"
     clusterBomb:
@@ -1923,6 +1932,259 @@
         damageMulti: 0.15
         speed: 2
         spawnType: 瘟疫搜寻者
+元素飞盘:
+    projectileSize: 2
+    gravity: 0
+    buffInflict:
+        - "元素谐鸣|30|1"
+    clusterBomb:
+        amount: 8
+        damageMulti: 0.25
+        name: 分裂元素飞盘
+        velocity: 2
+        fireOnCollideEntity: true
+元素飞盘Ex:
+    projDisguiseName: 元素飞盘
+    penetration: 999999
+    projectileSize: 2
+    gravity: 0
+    buffInflict:
+        - "元素谐鸣|300|1"
+    clusterBomb:
+        amount: 8
+        damageMulti: 0.25
+        name: 分裂元素飞盘
+        velocity: 2
+        fireOnCollideEntity: true
+分裂元素飞盘:
+    blockHitAction: thru
+    projectileSize: 2
+    gravity: 0
+    liveTime: 5
+    buffInflict:
+        - "元素谐鸣|20|1"
+熔岩切碎者:
+    projectileSize: 2
+    gravity: 0
+    buffInflict:
+        - "神圣之火|30|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.25
+        name: 神圣之火
+        velocity: 1.5
+        fireOnCollideEntity: true
+熔岩切碎者Ex:
+    projDisguiseName: 熔岩切碎者
+    penetration: 999999
+    projectileSize: 2
+    gravity: 0
+    buffInflict:
+        - "神圣之火|200|1"
+    clusterBomb:
+        amount: 4
+        damageMulti: 0.25
+        name: 神圣之火
+        velocity: 1.5
+        fireOnCollideEntity: true
+    spawnProjectiles:
+        interval: 3
+        spawnMechanism: SURROUND
+        damageMulti: 0.15
+        speed: 1.5
+        spawnType: 神圣之火
+狱卒之镰:
+    projectileSize: 2.5
+    gravity: 0
+狱卒之镰Ex:
+    projDisguiseName: 狱卒之镰
+    penetration: 999999
+    projectileSize: 2.5
+    gravity: 0
+    clusterBomb:
+        amount: 6
+        damageMulti: 0.25
+        name: 血炎灵魂
+        velocity: 2.25
+        fireOnCollideEntity: true
+辞别飞镰:
+    projectileSize: 2.5
+    blockHitAction: thru
+    gravity: 0
+    homing: true
+    homingRadius: 24
+辞别飞镰Ex:
+    projDisguiseName: 辞别飞镰
+    projectileSize: 2.5
+    blockHitAction: thru
+    gravity: 0
+    homing: true
+    homingAbility: 5
+    homingRadius: 24
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.25
+        name: 原核台风
+        velocity: 2
+        fireOnCollideEntity: true
+剧毒旋风:
+    projectileSize: 2.5
+    blockHitAction: thru
+    gravity: 0
+    homing: true
+    homingAbility: 5
+    homingRadius: 32
+    noHomingTicks: 5
+    buffInflict:
+        - "硫磺海剧毒|60|1"
+剧毒旋风Ex:
+    projDisguiseName: 剧毒旋风
+    projectileSize: 2.5
+    blockHitAction: thru
+    gravity: 0
+    penetration: 4
+    homing: true
+    homingAbility: 5
+    homingRadius: 32
+    noHomingTicks: 5
+    buffInflict:
+        - "硫磺海剧毒|200|1"
+湮灭:
+    projectileSize: 3
+    gravity: 0
+    penetration: 999999
+    buffInflict:
+        - "弑神怒焰|60|1"
+    spawnProjectiles:
+        interval: 3
+        offset: 24
+        spawnMechanism: ENEMY
+        damageMulti: 0.35
+        speed: 24
+        spawnType: 灵魂穿透者衍生光束
+湮灭Ex:
+    projDisguiseName: 湮灭
+    projectileSize: 3
+    gravity: 0
+    penetration: 999999
+    buffInflict:
+        - "弑神怒焰|200|1"
+    spawnProjectiles:
+        interval: 1
+        offset: 24
+        spawnMechanism: ENEMY
+        damageMulti: 0.35
+        speed: 24
+        spawnType: 灵魂穿透者衍生光束
+动能寻迹镖:
+    projectileSize: 3
+    blockHitAction: thru
+    gravity: 0
+    homing: true
+    homingAbility: 5
+    homingRadius: 32
+    noHomingTicks: 5
+    spawnProjectiles:
+        interval: 3
+        offset: 24
+        spawnMechanism: ENEMY
+        damageMulti: 0.2
+        speed: 24
+        spawnType: 神谕射线
+动能寻迹镖Ex:
+    projDisguiseName: 动能寻迹镖
+    projectileSize: 3
+    blockHitAction: thru
+    gravity: 0
+    penetration: 4
+    spawnProjectiles:
+        interval: 2
+        offset: 24
+        spawnMechanism: ENEMY
+        damageMulti: 0.2
+        speed: 24
+        spawnType: 神谕射线
+星神之杀:
+    penetration: 999999
+    projectileSize: 3
+    gravity: 0
+    buffInflict:
+        - "超位崩解|30|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.5
+        name: 星神幻影镰
+        velocity: 2.5
+        fireOnCollideEntity: true
+星神之杀Ex:
+    projDisguiseName: 星神之杀
+    penetration: 999999
+    projectileSize: 3
+    gravity: 0
+    buffInflict:
+        - "超位崩解|200|1"
+    clusterBomb:
+        amount: 4
+        damageMulti: 0.5
+        name: 星神幻影镰
+        velocity: 2.5
+        fireOnCollideEntity: true
+星神幻影镰:
+    blockHitAction: thru
+    projectileSize: 3
+    gravity: 0
+    penetration: 999999
+    liveTime: 6
+    buffInflict:
+        - "超位崩解|20|1"
+纳米黑死神:
+    blockHitAction: thru
+    projectileSize: 3
+    gravity: 0
+    homing: true
+    homingAbility: 5
+    homingRadius: 48
+    buffInflict:
+        - "瘟疫|60|1"
+    spawnProjectiles:
+        interval: 3
+        spawnMechanism: SURROUND
+        damageMulti: 0.25
+        speed: 2.5
+        spawnType: 纳米黑能量刀刃
+纳米黑死神Ex:
+    projDisguiseName: 纳米黑死神
+    blockHitAction: thru
+    projectileSize: 3
+    gravity: 0
+    homing: true
+    homingAbility: 5
+    homingRadius: 48
+    buffInflict:
+        - "瘟疫|200|1"
+    spawnProjectiles:
+        interval: 2
+        spawnMechanism: SURROUND
+        damageMulti: 0.25
+        speed: 2.5
+        spawnType: 纳米黑能量刀刃
+    clusterBomb:
+        amount: 10
+        damageMulti: 0.5
+        name: 纳米黑能量刀刃
+        velocity: 2.5
+纳米黑能量刀刃:
+    blockHitAction: thru
+    projectileSize: 3
+    gravity: 0
+    liveTime: 30
+    homing: true
+    homingAbility: 5
+    homingRadius: 32
+    noHomingTicks: 3
+    minimumDamageTicks: 3
+    buffInflict:
+        - "瘟疫|40|1"
 手里剑:
     slowedByWater: true
 尖刺球:
@@ -6536,8 +6798,10 @@ TNT:
     penetration: 1
     enemyInvincibilityFrame: 1
     homing: true
-    homingRadius: 24
+    homingRadius: 27.5
     homingAbility: 5
+    noHomingTicks: 3
+    minimumDamageTicks: 3
 血炎魔法射弹:
     gravity: 0
     blockHitAction: thru

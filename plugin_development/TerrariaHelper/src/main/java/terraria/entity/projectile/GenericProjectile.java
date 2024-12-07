@@ -289,6 +289,10 @@ public class GenericProjectile extends EntityPotion {
                 ricochet(16, futureLoc, velocityHolder);
                 break;
             }
+            case "动能寻迹镖Ex": {
+                ricochet(32, futureLoc, velocityHolder);
+                break;
+            }
         }
     }
     public Vec3D hitEntity(Entity e, MovingObjectPosition position, Vec3D futureLoc, Vector velocityHolder) {
