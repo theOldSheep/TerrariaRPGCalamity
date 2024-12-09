@@ -9053,8 +9053,8 @@ Dodu的手炮:
   item: IRON_SWORD
   lore:
   - §r扔出一把会在敌人间反弹一次的闪亮匕首
-  - §r潜伏攻击迅速向附近所有敌人数次投出无法反弹的匕首
-  - §r仅每五波投出的匕首中的随机一个会造成潜伏攻击的后续判定
+  - §r潜伏攻击迅速向附近至多三个敌人数次投出无法反弹的匕首
+  - §r仅每三波投出的匕首中的随机一个会造成潜伏攻击的后续判定
   attributes:
     damage: 28
     damageStealth: 10
@@ -9125,7 +9125,7 @@ Dodu的手炮:
 灰烬石钟乳:
   item: IRON_SWORD
   lore:
-  - §r丢出一个小的石钟乳，飞行一小段距离后化为灰烬
+  - §r丢出一个飞行一小段距离的石钟乳
   - §r潜伏攻击会丢出一个更大的石钟乳，造成更多伤害且会移动更远距离
   attributes:
     damage: 74
@@ -9154,9 +9154,8 @@ Dodu的手炮:
   item: IRON_NUGGET
   prefixApplicable: false
   lore:
-  - §r投掷弹跳凝胶飞镖
-  - §r潜伏攻击将使飞镖忽视重力并更有力地反弹
-  - §r它们还会额外溢出凝胶束
+  - §r投掷凝胶飞镖
+  - §r潜伏攻击将使飞镖忽视重力并在敌人间弹跳一次
   attributes:
     damage: 56
     damageStealth: 72
@@ -9170,7 +9169,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r投掷三把不精准的匕首
-  - §r潜伏攻击会投掷一把会爆裂成咒焰旋涡的匕首
+  - §r潜伏攻击会投掷一把会爆裂成咒焰火球的匕首
   attributes:
     damage: 90
     damageStealth: 90
@@ -9184,7 +9183,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r投掷一个会在短时间后分裂的飞刀
-  - §r潜伏攻击会使飞刀额外爆裂出棱晶碎片
+  - §r潜伏攻击会使飞刀爆裂出更多碎片
   attributes:
     damage: 72
     damageStealth: 100
@@ -9212,7 +9211,7 @@ Dodu的手炮:
   item: IRON_NUGGET
   prefixApplicable: false
   lore:
-  - §r潜伏攻击覆盖着致命的毒素，会造成辐射、中毒和酸性毒液减益
+  - §r潜伏攻击覆盖着致命的毒素，会造成辐射、中毒和剧毒减益
   attributes:
     damage: 160
     damageStealth: 225
@@ -9241,7 +9240,7 @@ Dodu的手炮:
   item: IRON_NUGGET
   prefixApplicable: false
   lore:
-  - §r潜伏攻击扔出三把高速弹跳飞刀
+  - §r潜伏攻击扔出三把高速飞刀
   - §r“非常适合用来扎破气球”
   attributes:
     damage: 300
@@ -9252,23 +9251,10 @@ Dodu的手炮:
     useTime: 19
   worth: 8000
   rarity: 7
-利维坦之牙:
-  item: DIAMOND_SWORD
-  lore:
-  - §r迅速投掷毒牙，造成毒液减益
-  - §r潜伏攻击会掷出6枚高速毒牙，无视重力并且会在命中时产生水爆炸
-  attributes:
-    damage: 128
-    damageStealth: 150
-    damageType: Rogue
-    crit: 4
-    knockback: 1
-    useTime: 15
-  worth: 12000000
-  rarity: 7
 恒星匕首:
   item: DIAMOND_SWORD
   lore:
+  - §r投出追踪敌人的飞刀
   - §r潜伏攻击会在敌人周围投掷10把飞刀
   - §r“砸！瓦鲁多！”
   attributes:
@@ -9283,7 +9269,7 @@ Dodu的手炮:
 孔雀翎:
   item: DIAMOND_SWORD
   lore:
-  - §r发射一片苦无
+  - §r发射一串苦无
   - §r潜伏攻击发射三把追踪穿透苦无
   attributes:
     damage: 104
@@ -9291,15 +9277,16 @@ Dodu的手炮:
     damageType: Rogue
     crit: 8
     knockback: 1.25
-    useTime: 14
+    useTime: 5
   worth: 16000000
   rarity: 8
 憎恶血刃:
   item: DIAMOND_SWORD
   lore:
-  - §r命中时吸取少量生命
+  - §r命中时恢复5点生命值
+  - §r潜伏攻击恢复量为50点
   - §r潜伏攻击会使你失去30%的当前生命值
-  - §r失去生命值的75%会附加到基础伤害中
+  - §r失去生命值的40%会附加到基础伤害中
   - §r“似乎随时间的流逝而逐渐崩解”
   attributes:
     damage: 196
@@ -9313,8 +9300,8 @@ Dodu的手炮:
 光辉星剑:
   item: DIAMOND_SWORD
   lore:
-  - §r投掷一个会在短时间后爆炸并分裂的匕首
-  - §r潜伏攻击会分裂更多匕首并产生更强的爆炸并且爆炸会牵引敌人
+  - §r投掷一个匕首并分裂成追踪匕首
+  - §r潜伏攻击会分裂更多追踪匕首
   attributes:
     damage: 110
     damageStealth: 150
@@ -9324,21 +9311,6 @@ Dodu的手炮:
     useTime: 12
   worth: 16000000
   rarity: 9
-百变餐叉:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射三把餐具
-  - §r潜伏攻击会发射强大的屠刀
-  - §r“太空鸡，就是它了”
-  attributes:
-    damage: 666
-    damageStealth: 666
-    damageType: Rogue
-    crit: 4
-    knockback: 8
-    useTime: 44
-  worth: 20000000
-  rarity: 10
 月明苦无:
   item: IRON_NUGGET
   prefixApplicable: false
@@ -9359,7 +9331,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r投掷一把会分裂成灼热追踪匕首的匕首
-  - §r潜伏攻击会使匕首牵引敌人，并且匕首在摧毁时会发射更多追踪匕首
+  - §r潜伏攻击在摧毁时会发射更多追踪匕首
   attributes:
     damage: 160
     damageStealth: 175
@@ -9374,7 +9346,7 @@ Dodu的手炮:
   prefixApplicable: false
   lore:
   - §r投掷一支穿透投镖
-  - §r潜伏攻击完全不受重力影响
+  - §r潜伏攻击无限穿透
   attributes:
     damage: 760
     damageStealth: 950
@@ -9384,40 +9356,25 @@ Dodu的手炮:
     useTime: 10
   worth: 3000
   rarity: 12
-雷劫:
-  item: DIAMOND_SWORD
-  lore:
-  - §r发射圣雷天劫电击周围敌人
-  - §r弹幕击中敌人时从天上降下闪电
-  - §r潜伏攻击召唤更多闪电且弹幕移动速度提高
-  attributes:
-    damage: 932
-    damageStealth: 1024
-    damageType: Rogue
-    crit: 16
-    knockback: 10
-    useTime: 20
-  worth: 24000000
-  rarity: 12
 星体苦无:
   item: DIAMOND_SWORD
   lore:
   - §r发射鬼畜的短程苦无
-  - §r潜伏攻击发射一束能够刺穿敌人并折返的苦无
+  - §r潜伏攻击发射一束能够刺穿敌人后折返的苦无
   attributes:
     damage: 184
     damageStealth: 250
     damageType: Rogue
     crit: 4
     knockback: 5
-    useTime: 10
+    useTime: 4
   worth: 24000000
   rarity: 12
 时空交叉刃:
   item: DIAMOND_SWORD
   lore:
-  - §r扔出一把时间之刃，扭曲敌人周围的时空
-  - §r潜伏攻击可以无限穿透并在命中时在敌人周围召唤大量飞刀
+  - §r扔出一把时间之刃，在命中后操控自身的时间以再次攻击
+  - §r潜伏攻击在命中时在敌人周围召唤大量时间之刃
   attributes:
     damage: 864
     damageStealth: 999
@@ -9427,27 +9384,12 @@ Dodu的手炮:
     useTime: 19
   worth: 26000000
   rarity: 13
-遗忘之颚:
-  item: DIAMOND_SWORD
-  lore:
-  - §r扔出六颗毒牙
-  - §r潜伏攻击命中会产生冲击波
-  - §r“你将需要一艘更大的船”
-  attributes:
-    damage: 318
-    damageStealth: 666
-    damageType: Rogue
-    crit: 4
-    knockback: 1
-    useTime: 14
-  worth: 26000000
-  rarity: 13
 炽天使:
   item: DIAMOND_SWORD
   lore:
-  - §r投掷一柄急速飞行但会迅速减速并消散成光的匕首
-  - §r消散后生成六个急速切割附近敌人的刀刃和一束大型激光
-  - §r潜伏攻击会释放7个光球，在匕首消散后会发射小型激光
+  - §r投掷一柄急速飞行，穿透两次但会迅速减速并消散成光的匕首
+  - §r光束不会穿透敌人
+  - §r潜伏攻击会无限穿透后释放7个光束
   attributes:
     damage: 640
     damageStealth: 725
@@ -9460,17 +9402,17 @@ Dodu的手炮:
 牺牲:
   item: DIAMOND_SWORD
   lore:
-  - §r丢出一把牺牲之匕并为你回复生命值
-  - §r潜伏攻击会使你失去50%的当前生命值（至多300）
-  - §r失去生命值的175%会附加到基础伤害中
-  - §r潜伏攻击命中时为你恢复15%已损失生命值
+  - §r丢出一把牺牲之匕并为你回复5点生命值
+  - §r潜伏攻击会使你失去20%的当前生命值
+  - §r失去生命值的75%会附加到基础伤害中
+  - §r潜伏攻击命中时为你恢复10%已损失生命值
   attributes:
     damage: 600
     damageStealth: 300
     damageType: Rogue
     crit: 4
     knockback: 4
-    useTime: 8
+    useTime: 10
   worth: 30000000
   rarity: 15
 沙漠之灾:
@@ -9991,6 +9933,20 @@ Dodu的手炮:
     useTime: 26
   worth: 9600000
   rarity: 7
+利维坦之牙:
+  item: DIAMOND_SWORD
+  lore:
+  - §r迅速投掷毒牙，造成毒液减益
+  - §r潜伏攻击会掷出6枚高速毒牙，无视重力并且会在命中时产生水爆炸
+  attributes:
+    damage: 128
+    damageStealth: 150
+    damageType: Rogue
+    crit: 4
+    knockback: 1
+    useTime: 15
+  worth: 12000000
+  rarity: 7
 源野天光:
   item: DIAMOND_SWORD
   lore:
@@ -10049,6 +10005,21 @@ Dodu的手炮:
     useTime: 25
   worth: 16000000
   rarity: 9
+百变餐叉:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射三把餐具
+  - §r潜伏攻击会发射强大的屠刀并穿透4次
+  - §r“太空鸡，就是它了”
+  attributes:
+    damage: 666
+    damageStealth: 1024
+    damageType: Rogue
+    crit: 4
+    knockback: 8
+    useTime: 44
+  worth: 20000000
+  rarity: 10
 掠星镰:
   item: DIAMOND_SWORD
   lore:
@@ -10077,6 +10048,36 @@ Dodu的手炮:
     useTime: 23
   worth: 24000000
   rarity: 12
+雷劫:
+  item: DIAMOND_SWORD
+  lore:
+  - §r发射圣雷天劫电击周围敌人
+  - §r弹幕击中敌人时从天上降下闪电
+  - §r潜伏攻击召唤更多闪电且弹幕移动速度提高
+  attributes:
+    damage: 932
+    damageStealth: 1024
+    damageType: Rogue
+    crit: 16
+    knockback: 10
+    useTime: 20
+  worth: 24000000
+  rarity: 12
+遗忘之颚:
+  item: DIAMOND_SWORD
+  lore:
+  - §r扔出六颗毒牙
+  - §r潜伏攻击命中会产生冲击波
+  - §r“你将需要一艘更大的船”
+  attributes:
+    damage: 318
+    damageStealth: 666
+    damageType: Rogue
+    crit: 4
+    knockback: 1
+    useTime: 14
+  worth: 26000000
+  rarity: 13
 渊海哑铃:
   item: DIAMOND_SWORD
   lore:

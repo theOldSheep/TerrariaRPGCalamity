@@ -3162,6 +3162,234 @@ Dodu的手炮:
   stealth:
     projectile: 纳米黑死神Ex
     projectileSpeed: 3.75
+钨钢飞刀:
+  type: ROGUE
+  normal:
+    projectile: 钨钢飞刀
+    projectileSpeed: 2.25
+  stealth:
+    projectile: 钨钢飞刀Ex
+    projectileSpeed: 2.25
+镀金匕首:
+  type: ROGUE
+  normal:
+    projectile: 镀金匕首
+    projectileSpeed: 2.75
+  stealth:
+    projectile: 镀金匕首Ex
+    projectileSpeed: 3
+    throwRounds: 10
+    throwInterval: 1
+晶体飞刀:
+  type: ROGUE
+  normal:
+    projectile: 晶体飞刀
+    projectileSpeed: 2.5
+  stealth:
+    projectile: 晶体飞刀Ex
+    projectileSpeed: 2.5
+狂菌根系:
+  type: ROGUE
+  normal:
+    projectile: 狂菌根系
+    projectileSpeed: 2.5
+  stealth:
+    projectile: 狂菌根系Ex
+    projectileSpeed: 2.5
+地狱飞剑:
+  type: ROGUE
+  normal:
+    projectile: 地狱飞剑
+    projectileSpeed: 2.75
+  stealth:
+    projectile: 地狱飞剑Ex
+    projectileSpeed: 2.75
+羽刃:
+  type: ROGUE
+  normal:
+    projectile: 羽刃
+    projectileSpeed: 2.75
+  stealth:
+    projectile: 羽刃
+    projectileSpeed: 2.75
+    shots: 5
+    offset: 25
+灰烬石钟乳:
+  type: ROGUE
+  normal:
+    projectile: 灰烬石钟乳
+    projectileSpeed: 2.25
+  stealth:
+    projectile: 灰烬石钟乳Ex
+    projectileSpeed: 2.35
+五指剑:
+  type: ROGUE
+  normal:
+    projectile: 五指剑
+    projectileSpeed: 2.6
+  stealth:
+    projectile: 五指剑Ex
+    projectileSpeed: 2.6
+凝胶飞镖:
+  type: ROGUE
+  normal:
+    projectile: 凝胶飞镖
+    projectileSpeed: 2.8
+  stealth:
+    projectile: 凝胶飞镖Ex
+    projectileSpeed: 3
+咒焰匕首:
+  type: ROGUE
+  normal:
+    projectile: 咒焰匕首
+    projectileSpeed: 3
+    shots: 3
+    offset: 20
+  stealth:
+    projectile: 咒焰匕首Ex
+    projectileSpeed: 3.5
+棱晶飞刀:
+  type: ROGUE
+  normal:
+    projectile: 棱晶飞刀
+    projectileSpeed: 3
+  stealth:
+    projectile: 棱晶飞刀Ex
+    projectileSpeed: 3
+钴蓝苦无:
+  type: ROGUE
+  normal:
+    projectile: 钴蓝苦无
+    projectileSpeed: 3.25
+  stealth:
+    projectile: 钴蓝苦无Ex
+    projectileSpeed: 3.25
+    shots: 3
+    offset: 20
+秘银飞刀:
+  type: ROGUE
+  normal:
+    projectile: 秘银飞刀
+    projectileSpeed: 3.25
+  stealth:
+    projectile: 秘银飞刀Ex
+    projectileSpeed: 3.5
+风暴剃刃:
+  type: ROGUE
+  normal:
+    projectile: 风暴剃刃
+    projectileSpeed: 3.25
+  stealth:
+    projectile: 风暴剃刃Ex
+    projectileSpeed: 3.5
+猴子飞镖:
+  type: ROGUE
+  normal:
+    projectile: 猴子飞镖
+    projectileSpeed: 3.35
+  stealth:
+    projectile: 猴子飞镖
+    projectileSpeed: 3.75
+    shots: 3
+    offset: 25
+恒星匕首:
+  type: ROGUE
+  normal:
+    projectile: 恒星匕首
+    projectileSpeed: 3.5
+  stealth:
+    projectile: 恒星匕首
+    projectileSpeed: 3.5
+    shots: 10
+    offset: 16
+孔雀翎:
+  type: ROGUE
+  normal:
+    projectile: 孔雀翎
+    projectileSpeed: 3.75
+  stealth:
+    projectile: 孔雀翎Ex
+    projectileSpeed: 3.6
+    shots: 3
+    offset: 25
+憎恶血刃:
+  type: ROGUE
+  normal:
+    projectile: 憎恶血刃
+    projectileSpeed: 3.75
+  stealth:
+    projectile: 憎恶血刃Ex
+    projectileSpeed: 4.25
+光辉星剑:
+  type: ROGUE
+  normal:
+    projectile: 光辉星剑
+    projectileSpeed: 3.75
+  stealth:
+    projectile: 光辉星剑Ex
+    projectileSpeed: 4
+月明苦无:
+  type: ROGUE
+  normal:
+    projectile: 月明苦无
+    projectileSpeed: 4
+    shots: 3
+    offset: 25
+  stealth:
+    projectile: 月明苦无Ex
+    projectileSpeed: 4
+    shots: 9
+    offset: 25
+裂阳:
+  type: ROGUE
+  normal:
+    projectile: 裂阳
+    projectileSpeed: 4.25
+  stealth:
+    projectile: 裂阳Ex
+    projectileSpeed: 4.25
+龙蒿投镖:
+  type: ROGUE
+  normal:
+    projectile: 龙蒿投镖
+    projectileSpeed: 4.25
+  stealth:
+    projectile: 龙蒿投镖Ex
+    projectileSpeed: 4.25
+星体苦无:
+  type: ROGUE
+  normal:
+    projectile: 星体苦无
+    projectileSpeed: 4.25
+  stealth:
+    projectile: 星体苦无Ex
+    projectileSpeed: 4.25
+    throwRounds: 4
+    throwInterval: 2
+时空交叉刃:
+  type: ROGUE
+  normal:
+    projectile: 时空交叉刃
+    projectileSpeed: 4.5
+  stealth:
+    projectile: 时空交叉刃Ex
+    projectileSpeed: 4.5
+炽天使:
+  type: ROGUE
+  normal:
+    projectile: 炽天使
+    projectileSpeed: 5
+  stealth:
+    projectile: 炽天使Ex
+    projectileSpeed: 5
+牺牲:
+  type: ROGUE
+  normal:
+    projectile: 牺牲
+    projectileSpeed: 4.5
+  stealth:
+    projectile: 牺牲Ex
+    projectileSpeed: 4.5
 手里剑:
   type: THROW_ROGUE
   normal:

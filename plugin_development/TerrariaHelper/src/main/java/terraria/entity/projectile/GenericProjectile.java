@@ -36,7 +36,7 @@ public class GenericProjectile extends EntityPotion {
             penetration = 0, trailLingerTime = 10, worldSpriteUpdateInterval = 1;
     public double homingAbility = 4, homingEndSpeedMultiplier = 1, homingRadius = 12, homingRadiusSqr = homingRadius * homingRadius,
             blastRadius = 1.5, bounceVelocityMulti = 1,
-            frictionFactor = 0.05, gravity = 0.05, maxSpeed = 100, projectileRadius = 0.125,
+            frictionFactor = 0.05, gravity = 0.05, healOnHit = 0, maxSpeed = 100, projectileRadius = 0.125,
             spawnSoundPitch = 1, spawnSoundVolume = 1.5, speedMultiPerTick = 1,
             trailIntensityMulti = 1, trailSize = -1, trailStepSize = -1;
     public boolean arrowOrPotion = false, homing = false, homingSharpTurning = true, homingRetarget = false,
@@ -96,6 +96,7 @@ public class GenericProjectile extends EntityPotion {
             this.bounceVelocityMulti = (double) properties.getOrDefault("bounceVelocityMulti", this.bounceVelocityMulti);
             this.frictionFactor = (double) properties.getOrDefault("frictionFactor", this.frictionFactor);
             this.gravity = (double) properties.getOrDefault("gravity", this.gravity);
+            this.healOnHit = (double) properties.getOrDefault("healOnHit", this.healOnHit);
             this.maxSpeed = (double) properties.getOrDefault("maxSpeed", this.maxSpeed);
             this.projectileRadius = (double) properties.getOrDefault("projectileSize", this.projectileRadius * 2) / 2;
             this.spawnSoundPitch = (double) properties.getOrDefault("spawnSoundPitch", this.spawnSoundPitch);
@@ -253,6 +254,9 @@ public class GenericProjectile extends EntityPotion {
         return EntityHelper.checkCanDamage(bukkitEntity, bukkitE, false);
     }
     public void hitEntityExtraHandling(Entity e, MovingObjectPosition position, Vec3D futureLoc, Vector velocityHolder) {
+        if (healOnHit > 0) {
+            PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), terraria.util.MathHelper.randomRound(healOnHit), false);
+        }
         switch (projectileType) {
             case "钫弹":
                 noHomingTicks = ticksLived + 1;
@@ -262,35 +266,29 @@ public class GenericProjectile extends EntityPotion {
             case "脉冲步枪电弧":
                 noHomingTicks = ticksLived + 2;
                 break;
-            case "精元镰刀":
-                double amount = (Math.random() < 0.35) ? 1 : 2;
-                PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), amount, false);
-                break;
-            case "裂魔":
-            case "生命血火":
-            case "猩红烈焰珠":
-            case "血炎龙息":
-                PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 1, false);
-                break;
-            case "巨蟹之礼星环":
-                PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 5, false);
-                break;
-            case "血炎箭":
-                if (Math.random() < 0.5)
-                    PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), 1, false);
+            case "星体苦无Ex":
+                noHomingTicks = ticksLived + 10;
+                maxHomingTicks = noHomingTicks + 1;
                 break;
             case "血炎弹":
                 double healthRegenTime = EntityHelper.getMetadata(shooter.getBukkitEntity(), EntityHelper.MetadataName.REGEN_TIME)
                         .asDouble();
                 EntityHelper.setMetadata(shooter.getBukkitEntity(), EntityHelper.MetadataName.REGEN_TIME, healthRegenTime + 2);
                 break;
-            case "陨星之拳Ex": {
+            case "陨星之拳Ex":
+            case "镀金匕首":
+            case "凝胶飞镖Ex": {
                 this.noGravityTicks = this.ticksLived - 1;
                 ricochet(16, futureLoc, velocityHolder);
                 break;
             }
             case "动能寻迹镖Ex": {
                 ricochet(32, futureLoc, velocityHolder);
+                break;
+            }
+            case "牺牲Ex": {
+                double heal = (shooter.getMaxHealth() - shooter.getHealth()) * 0.1;
+                PlayerHelper.heal( (LivingEntity) shooter.getBukkitEntity(), heal);
                 break;
             }
         }

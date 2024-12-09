@@ -2764,7 +2764,7 @@ public class EntityHelper {
                     {
                         keys = new String[]{"homingAbility", "homingEndSpeedMultiplier", "homingRadius",
                                 "blastRadius", "bounceVelocityMulti",
-                                "frictionFactor", "gravity", "maxSpeed", "projectileSize", "spawnSoundPitch",
+                                "frictionFactor", "gravity", "healOnHit", "maxSpeed", "projectileSize", "spawnSoundPitch",
                                 "spawnSoundVolume", "speedMultiPerTick", "trailIntensityMulti", "trailSize",
                                 "trailStepSize"};
                         for (String key : keys) {

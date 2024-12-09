@@ -941,9 +941,7 @@ public class GenericHelper {
                     ticksDisplay = 8;
                 } else if (isCrit) ticksDisplay = 30;
         }
-        // display the message (display damage/healing of 0 as 1 instead)
-        if (dmg < 1)
-            dmg = 1;
+        // display the message
         String text = ChatColor.COLOR_CHAR + colorCode + (int) Math.round(dmg);
         Location displayLoc = EntityHelper.getRandomPosInEntity(e,
                 new EntityHelper.RandomPosInBBInfo()

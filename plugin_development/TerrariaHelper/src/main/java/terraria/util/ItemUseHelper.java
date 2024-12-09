@@ -3983,7 +3983,7 @@ public class ItemUseHelper {
     // rogue helper functions below
     protected static boolean playerUseRogueTick(Player ply, String itemType, String weaponType,
                                                 ConfigurationSection weaponSection, HashMap<String, Double> attrMap,
-                                                ItemStack tool, int index) {
+                                                ItemStack tool, int index, boolean isStealth) {
         // use the weapon
         double projectileSpeed = weaponSection.getDouble("projectileSpeed", 1d);
         projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
@@ -3998,24 +3998,65 @@ public class ItemUseHelper {
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, projVel, attrMap, projType);
         shootInfo.shootLoc = fireLoc;
         int shots = weaponSection.getInt("shots", 1);
-        double offset = weaponSection.getDouble("offset", -1d);
-        for (int shot = 0; shot < shots; shot ++) {
-            if (offset > 0) {
-                currVel = projVel.clone().multiply(offset).add( MathHelper.randomVector() );
+        switch (projType) {
+            case "镀金匕首Ex": {
+                double radius = 16;
+                int fired = 0;
+                for (HitEntityInfo targetInfo : HitEntityInfo.getEntitiesHit(
+                        fireLoc.getWorld(),
+                        fireLoc.toVector(),
+                        fireLoc.toVector(),
+                        radius,
+                        (e) -> (e instanceof EntityLiving) &&
+                                EntityHelper.checkCanDamage(ply, e.getBukkitEntity(), true) )) {
+                    LivingEntity target = (LivingEntity) (targetInfo.getHitEntity()).getBukkitEntity();
+                    currVel = MathHelper.getDirection(fireLoc, target.getEyeLocation(), projectileSpeed);
+                    shootInfo.velocity = currVel;
+                    EntityHelper.spawnProjectile(shootInfo);
+                    if (++fired >= 3)
+                        break;
+                }
+                break;
             }
-            else {
-                currVel = projVel;
+            // default attack behavior
+            default: {
+                // some attacks have extra handling
+                switch (projType) {
+                    case "憎恶血刃Ex": {
+                        double healthConsumed = ply.getHealth() * 0.3;
+                        double extraBaseDmg = healthConsumed * 0.4;
+                        PlayerHelper.heal(ply, -healthConsumed);
+                        EntityHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
+                        break;
+                    }
+                    case "牺牲Ex": {
+                        double healthConsumed = ply.getHealth() * 0.2;
+                        double extraBaseDmg = healthConsumed * 0.75;
+                        PlayerHelper.heal(ply, -healthConsumed);
+                        EntityHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
+                        break;
+                    }
+                }
+                double offset = weaponSection.getDouble("offset", -1d);
+                for (int shot = 0; shot < shots; shot ++) {
+                    if (offset > 0) {
+                        currVel = projVel.clone().multiply(offset).add( MathHelper.randomVector() );
+                    }
+                    else {
+                        currVel = projVel;
+                    }
+                    MathHelper.setVectorLength(currVel, projectileSpeed);
+                    shootInfo.velocity = currVel;
+                    EntityHelper.spawnProjectile(shootInfo);
+                }
             }
-            currVel = MathHelper.setVectorLength(currVel, projectileSpeed);
-            shootInfo.velocity = currVel;
-            EntityHelper.spawnProjectile(shootInfo);
         }
         // next tick if needed
         int totalTicks = weaponSection.getInt("throwRounds", 1);
         int ticksInterval = weaponSection.getInt("throwInterval", 2);
         if (index + 1 < totalTicks) {
             Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(),
-                    () -> playerUseRogueTick(ply, itemType, weaponType, weaponSection, attrMap, tool, index + 1),
+                    () -> playerUseRogueTick(ply, itemType, weaponType, weaponSection, attrMap, tool, index + 1, isStealth),
                     ticksInterval);
         }
         return true;
@@ -4052,7 +4093,7 @@ public class ItemUseHelper {
                 playerUseFlail(ply, weaponSection.getString("projectile", itemType), weaponType, autoSwing.get(), attrMap, weaponSection);
                 break;
             default:
-                playerUseRogueTick(ply, itemType, weaponType, weaponSection, attrMap, tool, 0);
+                playerUseRogueTick(ply, itemType, weaponType, weaponSection, attrMap, tool, 0, isStealth);
                 // apply CD
                 double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
                 double useTimeMulti = 1 / useSpeed;

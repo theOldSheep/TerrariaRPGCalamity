@@ -2823,8 +2823,12 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
     }
     public static void heal(LivingEntity ply, double amount, boolean displayActualAmount) {
         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
-        double healAmount = Math.min(ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() - ply.getHealth(),
-                amount * attrMap.getOrDefault("fixedHealingMulti", 1d));
+        double healAmount;
+        if (amount < 0)
+            healAmount = amount;
+        else
+            healAmount = Math.min(ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() - ply.getHealth(),
+                    amount * attrMap.getOrDefault("fixedHealingMulti", 1d));
         ply.setHealth(ply.getHealth() + healAmount);
         GenericHelper.displayHolo(ply, displayActualAmount ? healAmount : amount, false, "回血");
     }

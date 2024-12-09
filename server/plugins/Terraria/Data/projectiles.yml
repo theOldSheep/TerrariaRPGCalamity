@@ -37,6 +37,8 @@
     minimumDamageTicks: 0
     # 重力影响，受重力时每帧向下的速度改变（负数则为向上偏移）。不写则视为0.05
     gravity: 0.05
+    # 命中时的回血量，根据小数部分随机取整。不写则视为0
+    healOnHit: 0
     # 弹射物的碰撞箱直径，不写视为0.25
     projectileSize: 0.25
     # 每帧速度乘以这个数字，例如1.25则为每帧加速25%，不写则视为1
@@ -2185,6 +2187,465 @@
     minimumDamageTicks: 3
     buffInflict:
         - "瘟疫|40|1"
+钨钢飞刀:
+    liveTime: 80
+    noGravityTicks: 5
+钨钢飞刀Ex:
+    projDisguiseName: 钨钢飞刀
+    liveTime: 80
+    noGravityTicks: 10
+    penetration: 2
+    enemyInvincibilityFrame: 1
+镀金匕首:
+    liveTime: 80
+    noGravityTicks: 999999
+    penetration: 1
+镀金匕首Ex:
+    projDisguiseName: 镀金匕首
+    liveTime: 20
+    noGravityTicks: 10
+晶体飞刀:
+    liveTime: 10
+    noGravityTicks: 0
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.5
+        name: 晶体飞刀碎片
+        velocity: 0.5
+晶体飞刀Ex:
+    projDisguiseName: 晶体飞刀
+    liveTime: 10
+    noGravityTicks: 0
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.5
+        name: 晶体飞刀
+        velocity: 0.5
+晶体飞刀碎片:
+    liveTime: 10
+    noGravityTicks: 0
+狂菌根系:
+    projectileSize: 0.5
+    liveTime: 10
+狂菌根系Ex:
+    projectileSize: 0.5
+    projDisguiseName: 狂菌根系
+    liveTime: 30
+    isGrenade: true
+    blastRadius: 3.5
+地狱飞剑:
+    projectileSize: 0.5
+    noGravityTicks: 8
+    liveTime: 50
+    buffInflict:
+        - "燃烧|60|1"
+地狱飞剑Ex:
+    projectileSize: 0.5
+    noGravityTicks: 10
+    projDisguiseName: 地狱飞剑
+    liveTime: 50
+    isGrenade: true
+    blastRadius: 3.5
+    buffInflict:
+        - "燃烧|200|1"
+羽刃:
+    liveTime: 50
+    noGravityTicks: 12
+    spawnProjectiles:
+        interval: 5
+        spawnMechanism: SURROUND
+        damageMulti: 0.25
+        speed: 1.6
+        spawnType: 天蓝羽毛
+灰烬石钟乳:
+    projectileSize: 0.5
+    liveTime: 10
+    noGravityTicks: 8
+灰烬石钟乳Ex:
+    projDisguiseName: 灰烬石钟乳
+    projectileSize: 0.75
+    liveTime: 20
+    noGravityTicks: 10
+五指剑:
+    projectileSize: 0.75
+    liveTime: 30
+    noGravityTicks: 12
+五指剑Ex:
+    projDisguiseName: 五指剑
+    projectileSize: 0.75
+    liveTime: 30
+    noGravityTicks: 12
+    homing: true
+    homingRadius: 16
+凝胶飞镖:
+    projectileSize: 0.5
+    liveTime: 40
+    noGravityTicks: 12
+凝胶飞镖Ex:
+    projDisguiseName: 凝胶飞镖
+    projectileSize: 0.5
+    liveTime: 60
+    gravity: 0
+    penetration: 1
+咒焰匕首:
+    liveTime: 40
+    noGravityTicks: 12
+    buffInflict:
+        - "咒火|40|1"
+咒焰匕首Ex:
+    projDisguiseName: 咒焰匕首
+    liveTime: 60
+    noGravityTicks: 20
+    buffInflict:
+        - "咒火|200|1"
+    clusterBomb:
+        amount: 5
+        damageMulti: 0.35
+        name: 咒焰火球
+        velocity: 0.5
+咒焰火球:
+    liveTime: 10
+    noGravityTicks: 0
+    buffInflict:
+        - "咒火|30|1"
+棱晶飞刀:
+    liveTime: 10
+    projectileSize: 0.5
+    clusterBomb:
+        amount: 5
+        damageMulti: 0.35
+        name: 棱晶飞刀碎片
+        velocity: 0.5
+棱晶飞刀Ex:
+    projDisguiseName: 棱晶飞刀
+    liveTime: 15
+    projectileSize: 0.5
+    clusterBomb:
+        amount: 8
+        damageMulti: 0.35
+        name: 棱晶飞刀碎片
+        velocity: 0.5
+棱晶飞刀碎片:
+    projDisguiseName: 棱晶飞刀
+    liveTime: 10
+    projectileSize: 0.5
+    noGravityTicks: 0
+钴蓝苦无:
+    liveTime: 50
+钴蓝苦无Ex:
+    projDisguiseName: 钴蓝苦无
+    liveTime: 100
+    blockHitAction: thru
+    homing: true
+    homingRadius: 20
+    trailColor: 63|177|255
+秘银飞刀:
+    liveTime: 50
+    noGravityTicks: 8
+秘银飞刀Ex:
+    projDisguiseName: 秘银飞刀
+    liveTime: 80
+    noGravityTicks: 8
+    buffInflict:
+        - "辐射|200|1"
+        - "中毒|200|1"
+        - "剧毒|200|1"
+风暴剃刃:
+    liveTime: 50
+    projectileSize: 1
+    noGravityTicks: 8
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.5
+        name: 风暴剃刃闪电
+        type: star
+        fireOnTimeout: false
+        velocity: 64
+风暴剃刃Ex:
+    projDisguiseName: 风暴剃刃
+    liveTime: 60
+    projectileSize: 1
+    noGravityTicks: 8
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.5
+        name: 风暴剃刃闪电
+        type: star
+        fireOnTimeout: false
+        velocity: 64
+风暴剃刃闪电:
+    blockHitAction: thru
+    penetration: 999999
+    projectileSize: 2
+    liveTime: 1
+    trailColor: 142|254|254
+    trailSize: 0.1
+    trailIntensityMulti: 2
+    buffInflict:
+        - "带电|200|1"
+猴子飞镖:
+    liveTime: 50
+    projectileSize: 0.5
+    noGravityTicks: 12
+恒星匕首:
+    liveTime: 80
+    projectileSize: 0.5
+    gravity: 0
+    homing: true
+    homingRadius: 24
+    homingAbility: 6
+    noHomingTicks: 10
+孔雀翎:
+    blockHitAction: thru
+    liveTime: 80
+    projectileSize: 1
+    gravity: 0
+孔雀翎Ex:
+    projDisguiseName: 孔雀翎
+    blockHitAction: thru
+    liveTime: 100
+    projectileSize: 1
+    gravity: 0
+    penetration: 1
+    homing: true
+    homingRadius: 24
+    homingAbility: 5
+憎恶血刃:
+    blockHitAction: thru
+    liveTime: 60
+    projectileSize: 1
+    gravity: 0
+    healOnHit: 5
+    buffInflict:
+        - "血液沸腾|60|1"
+憎恶血刃Ex:
+    projDisguiseName: 憎恶血刃
+    blockHitAction: thru
+    liveTime: 80
+    projectileSize: 1
+    gravity: 0
+    healOnHit: 50
+    buffInflict:
+        - "血液沸腾|200|1"
+光辉星剑:
+    blockHitAction: thru
+    liveTime: 60
+    projectileSize: 1.5
+    gravity: 0
+    buffInflict:
+        - "幻星感染|60|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.3
+        name: 光辉星剑碎片
+        velocity: 1.5
+光辉星剑Ex:
+    projDisguiseName: 光辉星剑
+    blockHitAction: thru
+    liveTime: 80
+    projectileSize: 1.5
+    gravity: 0
+    buffInflict:
+        - "幻星感染|200|1"
+    clusterBomb:
+        amount: 7
+        damageMulti: 0.3
+        name: 光辉星剑碎片
+        velocity: 1.75
+光辉星剑碎片:
+    projDisguiseName: 光辉星剑
+    blockHitAction: thru
+    liveTime: 80
+    projectileSize: 1.5
+    gravity: 0
+    homing: true
+    homingRadius: 32
+    noHomingTicks: 5
+    minimumDamageTicks: 5
+    buffInflict:
+        - "幻星感染|40|1"
+月明苦无:
+    blockHitAction: thru
+    liveTime: 80
+    projectileSize: 0.75
+    gravity: 0
+    homing: true
+    homingAbility: 5
+    homingRadius: 24
+    noHomingTicks: 6
+    trailColor: 164|101|124
+月明苦无Ex:
+    projDisguiseName: 月明苦无
+    blockHitAction: thru
+    liveTime: 100
+    projectileSize: 0.75
+    gravity: 0
+    homing: true
+    homingAbility: 6
+    homingRadius: 24
+    noHomingTicks: 4
+    trailColor: 151|247|221
+裂阳:
+    blockHitAction: thru
+    liveTime: 60
+    projectileSize: 2
+    gravity: 0
+    buffInflict:
+        - "神圣之火|60|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.35
+        name: 裂阳刀刃
+        velocity: 2
+裂阳Ex:
+    projDisguiseName: 裂阳
+    blockHitAction: thru
+    liveTime: 80
+    projectileSize: 2
+    gravity: 0
+    buffInflict:
+        - "神圣之火|200|1"
+    clusterBomb:
+        amount: 8
+        damageMulti: 0.35
+        name: 裂阳刀刃
+        velocity: 2.25
+裂阳刀刃:
+    projDisguiseName: 裂阳
+    blockHitAction: thru
+    liveTime: 80
+    projectileSize: 2
+    gravity: 0
+    homing: true
+    homingAbility: 5
+    homingRadius: 24
+    noHomingTicks: 4
+    minimumDamageTicks: 4
+    buffInflict:
+        - "神圣之火|40|1"
+龙蒿投镖:
+    liveTime: 80
+    projectileSize: 2
+    penetration: 2
+    gravity: 0
+龙蒿投镖Ex:
+    projDisguiseName: 龙蒿投镖
+    liveTime: 80
+    projectileSize: 2
+    penetration: 999999
+    gravity: 0
+星体苦无:
+    blockHitAction: thru
+    liveTime: 5
+    projectileSize: 2
+    gravity: 0
+星体苦无Ex:
+    projDisguiseName: 星体苦无
+    blockHitAction: thru
+    liveTime: 30
+    projectileSize: 2
+    penetration: 1
+    gravity: 0
+    homing: true
+    homingAbility: 360
+    homingSharpTurning: false
+    homingRadius: 40
+    noHomingTicks: 999999
+时空交叉刃:
+    blockHitAction: thru
+    liveTime: 20
+    projectileSize: 1
+    gravity: 0
+    clusterBomb:
+        amount: 1
+        damageMulti: 1
+        name: 时空交叉刃回响
+        type: surround
+        surroundMaxPitch: 90
+        surroundOffset: 20
+        fireOnTimeout: false
+        fireOnHitBlock: false
+        velocity: 4.5
+时空交叉刃Ex:
+    projDisguiseName: 时空交叉刃
+    blockHitAction: thru
+    liveTime: 30
+    projectileSize: 1
+    gravity: 0
+    clusterBomb:
+        amount: 10
+        damageMulti: 0.35
+        name: 时空交叉刃
+        type: surround
+        surroundMaxPitch: 90
+        surroundOffset: 20
+        fireOnTimeout: false
+        fireOnHitBlock: false
+        velocity: 4.5
+时空交叉刃回响:
+    projDisguiseName: 时空交叉刃
+    blockHitAction: thru
+    liveTime: 10
+    projectileSize: 1
+    gravity: 0
+炽天使:
+    blockHitAction: thru
+    liveTime: 20
+    projectileSize: 3
+    gravity: 0
+    penetration: 2
+    speedMultiPerTick: 0.85
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.5
+        name: 炽天使光球
+        velocity: 0
+炽天使Ex:
+    projDisguiseName: 炽天使
+    blockHitAction: thru
+    liveTime: 20
+    projectileSize: 3
+    gravity: 0
+    penetration: 999999
+    speedMultiPerTick: 0.85
+    clusterBomb:
+        amount: 7
+        damageMulti: 0.5
+        name: 炽天使光球
+        type: surround
+        surroundMaxPitch: 90
+        surroundOffset: 1
+        velocity: 0
+炽天使光球:
+    blockHitAction: thru
+    liveTime: 12
+    projectileSize: 2
+    gravity: 0
+    minimumDamageTicks: 999999
+    spawnProjectiles:
+        interval: 12
+        offset: 48
+        spawnMechanism: ENEMY
+        damageMulti: 1
+        speed: 48
+        spawnType: 炽天使光束
+炽天使光束:
+    blockHitAction: thru
+    liveTime: 1
+    trailColor: 255|255|189
+    trailIntensityMulti: 2
+牺牲:
+    blockHitAction: thru
+    liveTime: 30
+    projectileSize: 2
+    gravity: 0
+    healOnHit: 5
+牺牲Ex:
+    projDisguiseName: 牺牲
+    blockHitAction: thru
+    liveTime: 40
+    projectileSize: 2
+    gravity: 0
 手里剑:
     slowedByWater: true
 尖刺球:
@@ -2395,6 +2856,7 @@
     noHomingTicks: 10
 血炎龙息:
     gravity: 0
+    healOnHit: 1.5
     liveTime: 30
     blockHitAction: thru
 鲜血龙息:
@@ -3122,6 +3584,7 @@ TNT:
         - "神圣之火|80|1"
 生命血火:
     gravity: 0
+    healOnHit: 1
     projectileSize: 1.5
     liveTime: 12
     trailColor: 133|9|11
@@ -3899,6 +4362,8 @@ TNT:
     liveTime: 50
     buffInflict:
         - "神圣之火|40|1"
+裂魔:
+    healOnHit: 5
 混沌射线:
     spawnProjectiles:
         interval: 5
@@ -4512,6 +4977,7 @@ TNT:
         - "弑神怒焰|100|1"
 精元镰刀:
     gravity: 0
+    healOnHit: 1.35
     blockHitAction: thru
     homing: true
     homingRadius: 32
@@ -4932,6 +5398,7 @@ TNT:
         - "碎甲|66|1"
 巨蟹之礼星环:
     gravity: 0
+    healOnHit: 4
     blockHitAction: thru
     homing: true
     noHomingTicks: 5
@@ -5507,6 +5974,8 @@ TNT:
         name: 王子火焰
         velocity: 2.5
         damageMulti: 0.75
+猩红烈焰珠:
+    healOnHit: 2.5
 磁场之融磁球:
     gravity: 0
     blockHitAction: thru
@@ -6439,6 +6908,7 @@ TNT:
 血炎箭:
     arrowOrPotion: true
     projectileSize: 0.5
+    healOnHit: 0.5
 征戮分裂箭:
     liveTime: 15
     projectileSize: 0.5
