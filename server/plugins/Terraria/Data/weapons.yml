@@ -3386,10 +3386,96 @@ Dodu的手炮:
   type: ROGUE
   normal:
     projectile: 牺牲
-    projectileSpeed: 4.5
+    projectileSpeed: 5
   stealth:
     projectile: 牺牲Ex
-    projectileSpeed: 4.5
+    projectileSpeed: 5
+沙漠之灾:
+  type: ROGUE
+  normal:
+    projectile: 沙漠之灾
+    projectileSpeed: 2.5
+  stealth:
+    projectile: 沙漠之灾
+    projectileSpeed: 2.5
+    shots: 3
+    offset: 20
+乱流:
+  type: ROGUE
+  normal:
+    projectile: 乱流
+    projectileSpeed: 3
+  stealth:
+    projectile: 乱流Ex
+    projectileSpeed: 3
+越浪蛟:
+  type: ROGUE
+  normal:
+    projectile: 越浪蛟
+    projectileSpeed: 3.25
+  stealth:
+    projectile: 越浪蛟
+    projectileSpeed: 3.25
+    shots: 3
+    offset: 27.5
+变频器:
+  type: ROGUE
+  normal:
+    projectile: 变频器
+    projectileSpeed: 3.5
+  stealth:
+    projectile: 变频器Ex
+    projectileSpeed: 3.5
+水晶穿刺者:
+  type: ROGUE
+  normal:
+    projectile: 水晶穿刺者
+    projectileSpeed: 3.25
+  stealth:
+    projectile: 水晶穿刺者
+    projectileSpeed: 3.25
+渊海之灾:
+  type: ROGUE
+  normal:
+    projectile: 渊海之灾
+    projectileSpeed: 3.25
+  stealth:
+    projectile: 渊海之灾Ex
+    projectileSpeed: 3.25
+古岩投矛:
+  type: ROGUE
+  normal:
+    projectile: 古岩投矛
+    projectileSpeed: 3.5
+  stealth:
+    projectile: 古岩投矛Ex
+    projectileSpeed: 3.5
+命运之矛:
+  type: ROGUE
+  normal:
+    projectile: 命运之矛
+    projectileSpeed: 3.5
+    shots: 3
+    offset: 27.5
+  stealth:
+    projectile: 命运之矛Ex
+    projectileSpeed: 4
+幻魂归墟:
+  type: ROGUE
+  normal:
+    projectile: 幻魂归墟
+    projectileSpeed: 3.75
+  stealth:
+    projectile: 幻魂归墟Ex
+    projectileSpeed: 3.75
+半影裂片:
+  type: ROGUE
+  normal:
+    projectile: 半影裂片
+    projectileSpeed: 3.75
+  stealth:
+    projectile: 半影裂片Ex
+    projectileSpeed: 4
 手里剑:
   type: THROW_ROGUE
   normal:

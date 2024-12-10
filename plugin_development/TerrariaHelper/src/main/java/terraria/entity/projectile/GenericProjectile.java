@@ -932,42 +932,48 @@ public class GenericProjectile extends EntityPotion {
                                 if (bouncePenetrationBonded) {
                                     updatePenetration(penetration - 1);
                                 }
-                                // chlorophyte arrow bounce into enemies
+                                // some projectiles bounces into enemies
                                 switch (projectileType) {
                                     case "叶绿箭": {
                                         velocity.multiply(-1);
                                         ricochet(32, futureLoc, velocity);
                                         break;
                                     }
-                                    case "不稳定物质": {
+                                    case "不稳定物质":
+                                    case "沙漠之灾":
+                                    case "越浪蛟": {
                                         // increases damage, but disappears after striking one enemy.
-                                        attrMap.put("damage", attrMap.get("damage") * 3);
-                                        updatePenetration(0);
-                                        // default bounce behaviour
-                                        double yVelocityThreshold = gravity * speedMulti;
-                                        switch (movingobjectposition.direction) {
-                                            case UP:
-                                                velocity.setY(velocity.getY() * -1);
-                                                // prevent projectile twitching
-                                                if (gravity > 0 && velocity.getY() < yVelocityThreshold)
-                                                    velocity.setY(0);
-                                                break;
-                                            case DOWN:
-                                                velocity.setY(velocity.getY() * -1);
-                                                // prevent projectile twitching
-                                                if (gravity < 0 && velocity.getY() > yVelocityThreshold)
-                                                    velocity.setY(0);
-                                                break;
-                                            case EAST:
-                                            case WEST:
-                                                velocity.setX(velocity.getX() * -1);
-                                                break;
-                                            case SOUTH:
-                                            case NORTH:
-                                                velocity.setZ(velocity.getZ() * -1);
-                                                break;
+                                        if (projectileType.equals("不稳定物质")) {
+                                            attrMap.put("damage", attrMap.get("damage") * 3);
+                                            updatePenetration(0);
                                         }
-                                        // homing into enemy
+                                        // default bounce behaviour
+                                        {
+                                            double yVelocityThreshold = gravity * speedMulti;
+                                            switch (movingobjectposition.direction) {
+                                                case UP:
+                                                    velocity.setY(velocity.getY() * -1);
+                                                    // prevent projectile twitching
+                                                    if (gravity > 0 && velocity.getY() < yVelocityThreshold)
+                                                        velocity.setY(0);
+                                                    break;
+                                                case DOWN:
+                                                    velocity.setY(velocity.getY() * -1);
+                                                    // prevent projectile twitching
+                                                    if (gravity < 0 && velocity.getY() > yVelocityThreshold)
+                                                        velocity.setY(0);
+                                                    break;
+                                                case EAST:
+                                                case WEST:
+                                                    velocity.setX(velocity.getX() * -1);
+                                                    break;
+                                                case SOUTH:
+                                                case NORTH:
+                                                    velocity.setZ(velocity.getZ() * -1);
+                                                    break;
+                                            }
+                                        }
+                                        // ricochet into enemy
                                         ricochet(24, futureLoc, velocity);
                                         break;
                                     }
@@ -1234,6 +1240,13 @@ public class GenericProjectile extends EntityPotion {
         double smallestDistSqr = 1e9;
         Location currLoc = new Location(this.bukkitEntity.getWorld(), location.x, location.y, location.z);
         boolean velocityChanged = false;
+        EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions()
+                .setAccelerationMode(true)
+                .setProjectileSpeed(this.speed)
+                .setProjectileGravity(this.gravity)
+                .setNoGravityTicks(0)
+                // the new velocity will be in effect the next tick.
+                .setTicksMonsterExtra(1);
         for (org.bukkit.entity.Entity entity : bukkitEntity.getNearbyEntities(targetRadius, targetRadius, targetRadius)) {
             // ignore entities in damage cool down
             if (damageCD.contains(entity))
@@ -1256,14 +1269,7 @@ public class GenericProjectile extends EntityPotion {
             if (blockedLocation != null)
                 continue;
             // predicts the enemy's future location; note that gravity is turned off in the previous code.
-            Location predictedLoc = EntityHelper.helperAimEntity(currLoc, entity,
-                    new EntityHelper.AimHelperOptions()
-                            .setAccelerationMode(true)
-                            .setProjectileSpeed(this.speed)
-                            .setProjectileGravity(this.gravity)
-                            .setNoGravityTicks(0)
-                            // the new velocity will be in effect the next tick.
-                            .setTicksMonsterExtra(1));
+            Location predictedLoc = EntityHelper.helperAimEntity(currLoc, entity, aimHelperOptions);
             // initializes direction the projectile should go to
             Vector dir = predictedLoc.subtract(currLoc).toVector();
             // update the smallest distance & velocity

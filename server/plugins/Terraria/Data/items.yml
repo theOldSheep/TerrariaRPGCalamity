@@ -9433,7 +9433,7 @@ Dodu的手炮:
   item: IRON_SWORD
   lore:
   - §r发射一支会在命中时产生追踪旋风的穿云标枪
-  - §r潜伏攻击会在飞行轨迹上生成旋风
+  - §r潜伏攻击产生更多旋风
   attributes:
     damage: 36
     damageStealth: 40
@@ -9460,7 +9460,7 @@ Dodu的手炮:
 变频器:
   item: DIAMOND_SWORD
   lore:
-  - §r长矛撞击时会释放追踪能量体
+  - §r投掷高速长矛，撞击时释放追踪能量体
   - §r潜伏攻击会使矛释放更多能量体
   attributes:
     damage: 160
@@ -9471,25 +9471,11 @@ Dodu的手炮:
     useTime: 55
   worth: 4800000
   rarity: 1100
-渊海之灾:
-  item: DIAMOND_SWORD
-  lore:
-  - §r标枪在命中敌人时会爆成辐射毒云
-  attributes:
-    damage: 100
-    damageStealth: 125
-    damageType: Rogue
-    crit: 4
-    knockback: 3.5
-    useTime: 24
-  worth: 7200000
-  rarity: 5
 水晶穿刺者:
   item: IRON_NUGGET
   prefixApplicable: false
   lore:
   - §r投掷一支可以无限穿透的水晶标枪
-  - §r潜伏攻击将使标枪可以穿过物块且无视重力
   attributes:
     damage: 184
     damageStealth: 200
@@ -9498,6 +9484,21 @@ Dodu的手炮:
     knockback: 6
     useTime: 22
   worth: 50000
+  rarity: 5
+渊海之灾:
+  item: DIAMOND_SWORD
+  lore:
+  - §r标枪在命中敌人时会爆成毒云
+  - §r潜伏攻击爆出更多毒云
+  - §r毒云会造成削减敌人防御的辐射减益
+  attributes:
+    damage: 100
+    damageStealth: 125
+    damageType: Rogue
+    crit: 4
+    knockback: 3.5
+    useTime: 24
+  worth: 7200000
   rarity: 5
 古岩投矛:
   item: DIAMOND_SWORD
@@ -9517,8 +9518,8 @@ Dodu的手炮:
 命运之矛:
   item: DIAMOND_SWORD
   lore:
-  - §r在投掷一支穿透矛与三支跟踪矛的攻击方式间循环
-  - §r潜伏攻击会投掷一发高速的神圣之矛
+  - §r投掷三支跟踪矛
+  - §r潜伏攻击会投掷一发巨大，高速并无限穿透的神圣之矛
   attributes:
     damage: 100
     damageStealth: 425
@@ -9531,8 +9532,8 @@ Dodu的手炮:
 幻魂归墟:
   item: DIAMOND_SWORD
   lore:
-  - §r发射巨大的幽魂投矛，命中敌人时会爆炸并放出幽魂
-  - §r潜伏攻击可以穿透两次，并且每次击中敌人时均会召唤数个幽魂
+  - §r发射巨大的幽魂投矛，命中敌人时会召唤四个幽魂
+  - §r潜伏攻击可以穿透两次，并且每次击中敌人时均会召唤三个幽魂
   attributes:
     damage: 304
     damageStealth: 328
@@ -9546,7 +9547,8 @@ Dodu的手炮:
   item: IRON_NUGGET
   prefixApplicable: false
   lore:
-  - §r潜伏攻击会使半影裂片在飞行时留下追踪星星
+  - §r普通攻击会无限穿透
+  - §r潜伏攻击无法穿透且在摧毁后留下追踪星星
   attributes:
     damage: 480
     damageStealth: 512

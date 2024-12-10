@@ -2562,7 +2562,7 @@
         name: 时空交叉刃回响
         type: surround
         surroundMaxPitch: 90
-        surroundOffset: 20
+        surroundOffset: 25
         fireOnTimeout: false
         fireOnHitBlock: false
         velocity: 4.5
@@ -2578,14 +2578,14 @@
         name: 时空交叉刃
         type: surround
         surroundMaxPitch: 90
-        surroundOffset: 20
+        surroundOffset: 25
         fireOnTimeout: false
         fireOnHitBlock: false
         velocity: 4.5
 时空交叉刃回响:
     projDisguiseName: 时空交叉刃
     blockHitAction: thru
-    liveTime: 10
+    liveTime: 12
     projectileSize: 1
     gravity: 0
 炽天使:
@@ -2646,6 +2646,189 @@
     liveTime: 40
     projectileSize: 2
     gravity: 0
+沙漠之灾:
+    projectileSize: 2
+    blockHitAction: bounce
+    bounce: 1
+    liveTime: 100
+乱流:
+    blockHitAction: thru
+    liveTime: 50
+    projectileSize: 1.5
+    noGravityTicks: 12
+    clusterBomb:
+        amount: 2
+        damageMulti: 0.35
+        name: 乱流旋风
+        velocity: 1.5
+乱流Ex:
+    projDisguiseName: 乱流
+    blockHitAction: thru
+    liveTime: 50
+    projectileSize: 1.5
+    noGravityTicks: 12
+    clusterBomb:
+        amount: 5
+        damageMulti: 0.35
+        name: 乱流旋风
+        velocity: 1.5
+乱流旋风:
+    projectileSize: 0.5
+    liveTime: 40
+    homing: true
+    homingRadius: 16
+    noHomingTicks: 3
+    minimumDamageTicks: 3
+越浪蛟:
+    projectileSize: 2.5
+    blockHitAction: bounce
+    bounce: 3
+    penetration: 1
+    liveTime: 120
+变频器:
+    liveTime: 50
+    projectileSize: 1.5
+    noGravityTicks: 12
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.35
+        name: 变频器电流
+        velocity: 2
+变频器Ex:
+    projDisguiseName: 变频器
+    liveTime: 50
+    projectileSize: 1.5
+    noGravityTicks: 12
+    clusterBomb:
+        amount: 5
+        damageMulti: 0.35
+        name: 变频器电流
+        velocity: 2
+变频器电流:
+    blockHitAction: thru
+    liveTime: 40
+    homing: true
+    homingRadius: 20
+    noHomingTicks: 3
+    minimumDamageTicks: 3
+    trailColor: 31|251|255
+水晶穿刺者:
+    liveTime: 60
+    projectileSize: 2
+    noGravityTicks: 10
+    penetration: 999999
+渊海之灾:
+    liveTime: 50
+    projectileSize: 2
+    noGravityTicks: 12
+    buffInflict:
+        - "辐射|60|1"
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.35
+        name: 渊海灾虫沙爆
+        velocity: 0.1
+渊海之灾Ex:
+    projDisguiseName: 渊海之灾
+    liveTime: 50
+    projectileSize: 2
+    noGravityTicks: 12
+    buffInflict:
+        - "辐射|200|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.35
+        name: 渊海灾虫沙爆
+        velocity: 0.1
+古岩投矛:
+    liveTime: 50
+    projectileSize: 1.5
+    noGravityTicks: 12
+    buffInflict:
+        - "碎甲|60|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.25
+        name: 化石碎片
+        velocity: 0.5
+古岩投矛Ex:
+    projDisguiseName: 古岩投矛
+    liveTime: 50
+    projectileSize: 1.5
+    noGravityTicks: 12
+    buffInflict:
+        - "碎甲|200|1"
+    clusterBomb:
+        amount: 5
+        damageMulti: 0.25
+        name: 化石碎片
+        velocity: 0.5
+命运之矛:
+    liveTime: 80
+    projectileSize: 1.5
+    gravity: 0
+    homing: true
+    homingRadius: 24
+命运之矛Ex:
+    projDisguiseName: 命运之矛
+    blockHitAction: thru
+    liveTime: 30
+    projectileSize: 3
+    gravity: 0
+    penetration: 999999
+幻魂归墟:
+    blockHitAction: thru
+    liveTime: 50
+    projectileSize: 3
+    gravity: 0
+    clusterBomb:
+        amount: 4
+        damageMulti: 0.25
+        name: 归墟幻魂
+        velocity: 2.5
+        type: surround
+        surroundMaxPitch: 90
+        surroundOffset: 20
+        fireOnTimeout: false
+幻魂归墟Ex:
+    projDisguiseName: 幻魂归墟
+    blockHitAction: thru
+    liveTime: 50
+    projectileSize: 3
+    gravity: 0
+    penetration: 2
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.25
+        name: 归墟幻魂
+        velocity: 2.25
+        type: surround
+        surroundMaxPitch: 90
+        surroundOffset: 20
+        fireOnCollideEntity: true
+        fireOnTimeout: false
+归墟幻魂:
+    blockHitAction: thru
+    liveTime: 75
+    projectileSize: 2
+    gravity: 0
+    homing: true
+    homingRadius: 24
+半影裂片:
+    liveTime: 50
+    projectileSize: 3
+    noGravityTicks: 12
+    penetration: 999999
+半影裂片Ex:
+    projDisguiseName: 半影裂片
+    liveTime: 35
+    projectileSize: 3
+    noGravityTicks: 12
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.25
+        name: 毁灭裂片
+        velocity: 2
 手里剑:
     slowedByWater: true
 尖刺球:
