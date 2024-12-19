@@ -3476,6 +3476,64 @@ Dodu的手炮:
   stealth:
     projectile: 半影裂片Ex
     projectileSpeed: 4
+渎神投矛:
+  type: ROGUE
+  normal:
+    projectile: 渎神投矛
+    projectileSpeed: 4
+  stealth:
+    projectile: 渎神投矛
+    projectileSpeed: 4.25
+裂世投矛:
+  type: ROGUE
+  normal:
+    projectile: 裂世投矛
+    projectileSpeed: 3.75
+    shots: 3
+    offset: 35
+  stealth:
+    projectile: 裂世投矛Ex
+    projectileSpeed: 4.25
+暗夜凝视:
+  type: ROGUE
+  normal:
+    projectile: 暗夜凝视
+    projectileSpeed: 4.25
+  stealth:
+    projectile: 暗夜凝视Ex
+    projectileSpeed: 4.5
+日蚀之陨:
+  type: ROGUE
+  normal:
+    projectile: 日蚀之陨
+    projectileSpeed: 4.5
+  stealth:
+    projectile: 日蚀之陨Ex
+    projectileSpeed: 4.25
+狂龙翼火:
+  type: ROGUE
+  normal:
+    projectile: 狂龙翼火
+    projectileSpeed: 4.25
+  stealth:
+    projectile: 狂龙翼火Ex
+    projectileSpeed: 4.25
+微元劫裂者:
+  type: ROGUE
+  normal:
+    projectile: 微元劫裂者
+    projectileSpeed: 4.25
+  stealth:
+    projectile: 微元劫裂者Ex
+    projectileSpeed: 4.75
+绯红恶魔:
+  type: ROGUE
+  normal:
+    projectile: 绯红恶魔
+    projectileSpeed: 4.5
+  stealth:
+    projectile: 绯红恶魔Ex
+    projectileSpeed: 5
 手里剑:
   type: THROW_ROGUE
   normal:

@@ -2829,6 +2829,202 @@
         damageMulti: 0.25
         name: 毁灭裂片
         velocity: 2
+渎神投矛:
+    blockHitAction: thru
+    liveTime: 35
+    projectileSize: 2
+    noGravityTicks: 12
+    isGrenade: true
+    blastRadius: 4
+    buffInflict:
+        - "神圣之火|60|1"
+裂世投矛:
+    blockHitAction: thru
+    liveTime: 80
+    projectileSize: 2
+    gravity: 0
+    homing: true
+    homingRadius: 32
+裂世投矛Ex:
+    projDisguiseName: 裂世投矛
+    blockHitAction: thru
+    liveTime: 40
+    projectileSize: 3
+    gravity: 0
+    penetration: 999999
+暗夜凝视:
+    blockHitAction: thru
+    liveTime: 40
+    projectileSize: 3
+    gravity: 0
+    buffInflict:
+        - "夜魇|60|1"
+暗夜凝视Ex:
+    projDisguiseName: 暗夜凝视
+    blockHitAction: thru
+    liveTime: 40
+    projectileSize: 3
+    gravity: 0
+    buffInflict:
+        - "夜魇|200|1"
+    clusterBomb:
+        amount: 4
+        damageMulti: 0.25
+        name: 夜凝星辰
+        velocity: 3
+夜凝星辰:
+    projDisguiseName: 破空星辰
+    blockHitAction: thru
+    projectileSize: 0.5
+    liveTime: 100
+    homing: true
+    homingRadius: 32
+    homingAbility: 5
+    noHomingTicks: 4
+    minimumDamageTicks: 4
+    buffInflict:
+        - "夜魇|50|1"
+日蚀之陨:
+    blockHitAction: thru
+    liveTime: 50
+    projectileSize: 3
+    gravity: 0
+    clusterBomb:
+        amount: 4
+        damageMulti: 0.25
+        name: 日蚀之陨分裂矛
+        type: star
+        velocity: 3
+        fireOnTimeout: false
+日蚀之陨Ex:
+    projDisguiseName: 日蚀之陨
+    blockHitAction: thru
+    liveTime: 100
+    penetration: 19
+    projectileSize: 3
+    gravity: 0
+    homing: true
+    homingRadius: 40
+    homingAbility: 5
+    clusterBomb:
+        amount: 1
+        damageMulti: 0.25
+        name: 日蚀之陨分裂矛
+        type: star
+        velocity: 3
+        fireOnCollideEntity: true
+        fireOnTimeout: false
+日蚀之陨分裂矛:
+    projDisguiseName: 日蚀之陨
+    blockHitAction: thru
+    projectileSize: 3
+    liveTime: 50
+    homing: true
+    homingRadius: 32
+    homingAbility: 5
+狂龙翼火:
+    blockHitAction: thru
+    liveTime: 75
+    projectileSize: 4
+    gravity: 0
+    buffInflict:
+        - "龙焰|60|1"
+狂龙翼火Ex:
+    projDisguiseName: 狂龙翼火
+    blockHitAction: thru
+    liveTime: 100
+    projectileSize: 4
+    gravity: 0
+    homing: true
+    homingRadius: 40
+    homingAbility: 5.5
+    buffInflict:
+        - "龙焰|200|1"
+    clusterBomb:
+        amount: 60
+        type: spread
+        damageMulti: 0.1
+        name: 巨龙之怒火球
+        velocity: 3
+        fireOnTimeout: false
+微元劫裂者:
+    blockHitAction: thru
+    liveTime: 60
+    projectileSize: 4
+    gravity: 0
+    buffInflict:
+        - "超位崩解|60|1"
+    clusterBomb:
+        amount: 1
+        damageMulti: 1
+        name: 微元劫裂者克隆体
+        velocity: 3
+        type: surround
+        surroundMaxPitch: 90
+        surroundOffset: 25
+        fireOnTimeout: false
+微元劫裂者Ex:
+    projDisguiseName: 微元劫裂者
+    blockHitAction: thru
+    liveTime: 60
+    projectileSize: 4
+    gravity: 0
+    buffInflict:
+        - "超位崩解|200|1"
+    clusterBomb:
+        amount: 3
+        damageMulti: 1
+        name: 微元劫裂者
+        velocity: 3.75
+        type: surround
+        surroundMaxPitch: 90
+        surroundOffset: 25
+        fireOnTimeout: false
+微元劫裂者克隆体:
+    projDisguiseName: 微元劫裂者
+    blockHitAction: thru
+    liveTime: 15
+    projectileSize: 4
+    gravity: 0
+    buffInflict:
+        - "超位崩解|20|1"
+绯红恶魔:
+    blockHitAction: thru
+    liveTime: 60
+    projectileSize: 4
+    gravity: 0
+    isGrenade: true
+    blastRadius: 5.5
+    buffInflict:
+        - "血液沸腾|80|1"
+绯红恶魔Ex:
+    projDisguiseName: 绯红恶魔
+    blockHitAction: thru
+    liveTime: 60
+    projectileSize: 4
+    gravity: 0
+    healOnHit: 50
+    buffInflict:
+        - "血液沸腾|200|1"
+    clusterBomb:
+        amount: 30
+        type: spread
+        damageMulti: 0.05
+        name: 绯红恶魔珠
+        velocity: 3
+        fireOnTimeout: false
+绯红恶魔珠:
+    blockHitAction: thru
+    liveTime: 80
+    projectileSize: 1
+    gravity: 0
+    homing: true
+    homingRadius: 64
+    homingAbility: 60
+    homingSharpTurning: false
+    noHomingTicks: 12
+    minimumDamageTicks: 12
+    speedMultiPerTick: 0.8
 手里剑:
     slowedByWater: true
 尖刺球:
@@ -4574,6 +4770,7 @@ TNT:
         speed: 30
         spawnType: 神谕射线
 神谕射线:
+    blockHitAction: thru
     gravity: 0
     liveTime: 1
     trailColor: 224|67|98

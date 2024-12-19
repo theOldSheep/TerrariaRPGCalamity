@@ -1297,7 +1297,7 @@ public class EntityHelper {
 
             // life steal
             String lifeStealTempCD = "temp_lifeStealCD";
-            // debuff and self-damage may not trigger life steal
+            // debuff and self-damage shall not trigger life steal
             if (damager != victim && ! dPly.getScoreboardTags().contains(lifeStealTempCD)) {
                 // cool down
                 EntityHelper.handleEntityTemporaryScoreboardTag(dPly, lifeStealTempCD, 1);
@@ -1311,15 +1311,20 @@ public class EntityHelper {
                 }
             }
 
-            // generic armor set (damage-type restricted armor set properties are handled below)
+            // general armor set properties (damage-type restricted armor set properties are handled below)
             if (isDirectDmg) {
+                // blood flare armor mechanisms
                 switch (armorSet) {
                     case "血炎近战套装":
                     case "血炎远程套装":
+                    case "血炎盗贼套装":
                     case "血炎魔法套装":
                     case "血炎召唤套装":
                     case "金源近战套装":
-                    case "金源远程套装": {
+                    case "金源远程套装":
+                    case "金源盗贼套装":
+                    case "金源魔法套装":
+                    case "金源召唤套装": {
                         String coolDownTag = "temp_bloodFlareHeart";
                         if (!dPly.getScoreboardTags().contains(coolDownTag)) {
                             // cool down (5 seconds)
@@ -1329,26 +1334,13 @@ public class EntityHelper {
                         }
                         break;
                     }
+                }
+                // silva armor healing
+                switch (armorSet) {
                     case "始源林海魔法套装":
-                    case "始源林海召唤套装": {
-                        String coolDownTag = "temp_silvaHealing";
-                        if (!dPly.getScoreboardTags().contains(coolDownTag)) {
-                            // cool down (1 second)
-                            handleEntityTemporaryScoreboardTag(dPly, coolDownTag, 20);
-                            PlayerHelper.createSpectreProjectile(dPly, victim.getLocation().add(0, 1.5d, 0),
-                                    10, true, "96|169|92");
-                        }
-                        break;
-                    }
+                    case "始源林海召唤套装":
                     case "金源魔法套装":
                     case "金源召唤套装": {
-                        // drop a heart
-                        String coolDownTagHeart = "temp_bloodFlareHeart";
-                        if (!dPly.getScoreboardTags().contains(coolDownTagHeart)) {
-                            // cool down (5 seconds)
-                            handleEntityTemporaryScoreboardTag(dPly, coolDownTagHeart, 100);
-                            dropHeart(victim.getLocation());
-                        }
                         // healing orb
                         String coolDownTagHealingOrb = "temp_silvaHealing";
                         if (!dPly.getScoreboardTags().contains(coolDownTagHealingOrb)) {
@@ -1361,29 +1353,12 @@ public class EntityHelper {
                     }
                 }
             }
-            // magic damage
+            // damage type-based armor set properties
             switch (damageType) {
+                // magic damage
                 case MAGIC: {
                     if (! (damageReason == DamageReason.SPECTRE)) {
                         PlayerHelper.playerMagicArmorSet(dPly, victim, dmg);
-                    }
-
-                    switch (armorSet) {
-                        case "始源林海魔法套装":
-                        case "金源魔法套装": {
-                            String coolDownTag = "temp_silvaMagicBlast";
-                            if (! dPly.getScoreboardTags().contains(coolDownTag)) {
-                                // cool down (5 second)
-                                handleEntityTemporaryScoreboardTag(dPly, coolDownTag, 100);
-                                // explosion
-                                HashMap<String, Double> explosionAttribute = (HashMap<String, Double>) getAttrMap(dPly).clone();
-                                double explosionDmg = 1600 + explosionAttribute.getOrDefault("damage", 10d) * 0.6;
-                                explosionAttribute.put("damage", Math.min(explosionDmg, 2800d));
-                                spawnProjectile(dPly, victim.getEyeLocation(), new Vector(),
-                                        explosionAttribute, DamageType.MAGIC, "始源林海爆炸");
-                            }
-                            break;
-                        }
                     }
                     break;
                 }

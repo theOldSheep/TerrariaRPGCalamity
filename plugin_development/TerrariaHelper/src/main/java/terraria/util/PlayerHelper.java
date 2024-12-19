@@ -2214,6 +2214,21 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                 updateArmorSetMetadata(ply, armorSet);
                 // special armor sets
                 switch (armorSet) {
+                    case "血炎盗贼套装":
+                    case "金源盗贼套装": {
+                        double plyHealthRatio = ply.getHealth() / ply.getMaxHealth();
+                        if (plyHealthRatio > 0.8) {
+                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                                    "defence", "30", true);
+                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                                    "damageRogueMulti", "0.05", true);
+                        }
+                        else {
+                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                                    "damageRogueMulti", "0.1", true);
+                        }
+                        break;
+                    }
                     case "血炎召唤套装":
                     case "金源召唤套装": {
                         double plyHealthRatio = ply.getHealth() / ply.getMaxHealth();
@@ -2222,9 +2237,25 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                     "damageSummonMulti", "0.15", true);
                         else if (plyHealthRatio <= 0.5) {
                             EntityHelper.tweakAttribute(ply, newAttrMap,
-                                    "defence", "40", true);
+                                    "defence", "30", true);
+                        }
+                        break;
+                    }
+                }
+                // god slayer and auric rogue armor set
+                switch (armorSet) {
+                    case "弑神者盗贼套装":
+                    case "金源盗贼套装": {
+                        double plyHealthRatio = ply.getHealth() / ply.getMaxHealth();
+                        if (plyHealthRatio > 0.99999) {
                             EntityHelper.tweakAttribute(ply, newAttrMap,
-                                    "regen", "4", true);
+                                    "damageRogueMulti", "0.1", true);
+                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                                    "critRogue", "10", true);
+                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                                    "useSpeedRogueMulti", "0.1", true);
+                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                                    "stealthRegenMulti", "0.1", true);
                         }
                         break;
                     }
@@ -2936,7 +2967,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             spectreProjectileTick(MathHelper.randomVector(), (LivingEntity) target, 0, 0.5, dPly, loc, num, healingOrDamage, color);
         }
     }
-    public static void playerMagicArmorSet(Player dPly, Entity v, double dmg) {
+    public static void playerMagicArmorSet(Player dPly, LivingEntity v, double dmg) {
         if (!v.getScoreboardTags().contains("isMonster")) return;
         String armorSet = getArmorSet(dPly);
         String spectreCD = "tempSpectreCD";
@@ -2979,6 +3010,21 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     }
                     // apply CD
                     EntityHelper.handleEntityTemporaryScoreboardTag(dPly, spectreCD, coolDownTicks);
+                }
+                break;
+            }
+            case "始源林海魔法套装":
+            case "金源魔法套装": {
+                String coolDownTag = "temp_silvaMagicBlast";
+                if (! dPly.getScoreboardTags().contains(coolDownTag)) {
+                    // cool down (5 second)
+                    EntityHelper.handleEntityTemporaryScoreboardTag(dPly, coolDownTag, 100);
+                    // explosion
+                    HashMap<String, Double> explosionAttribute = (HashMap<String, Double>) EntityHelper.getAttrMap(dPly).clone();
+                    double explosionDmg = 1600 + explosionAttribute.getOrDefault("damage", 10d) * 0.6;
+                    explosionAttribute.put("damage", Math.min(explosionDmg, 2800d));
+                    EntityHelper.spawnProjectile(dPly, v.getEyeLocation(), new Vector(),
+                            explosionAttribute, EntityHelper.DamageType.MAGIC, "始源林海爆炸");
                 }
                 break;
             }
@@ -3069,8 +3115,10 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             switch (armorSet) {
                 case "弑神者近战套装":
                 case "弑神者远程套装":
+                case "弑神者盗贼套装":
                 case "金源近战套装":
-                case "金源远程套装": {
+                case "金源远程套装":
+                case "金源盗贼套装": {
                     EntityHelper.applyEffect(ply, "弑神者冲刺", 20);
                     break;
                 }
