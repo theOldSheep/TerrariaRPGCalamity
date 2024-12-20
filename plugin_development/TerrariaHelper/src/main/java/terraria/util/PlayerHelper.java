@@ -1817,7 +1817,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 healthRegenTime += delay;
                                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.REGEN_TIME, Math.min(healthRegenTime, 1201));
                             } else {
-                                EntityHelper.handleDeath(ply, ply, ply, EntityHelper.DamageType.NEGATIVE_REGEN, null);
+                                EntityHelper.handleDeath(ply, ply, ply, EntityHelper.DamageType.NEGATIVE_REGEN, EntityHelper.DamageReason.DEBUFF, null);
                             }
                         }
                         // mana regen

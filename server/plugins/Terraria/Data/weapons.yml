@@ -3534,6 +3534,14 @@ Dodu的手炮:
   stealth:
     projectile: 绯红恶魔Ex
     projectileSpeed: 5
+尖刺球:
+  type: THROW_ROGUE
+  normal:
+    projectile: 尖刺球
+    projectileSpeed: 0.75
+  stealth:
+    projectile: 尖刺球
+    projectileSpeed: 1
 手里剑:
   type: THROW_ROGUE
   normal:
@@ -3544,14 +3552,6 @@ Dodu的手炮:
     projectileSpeed: 3
     shots: 3
     offset: 20
-尖刺球:
-  type: THROW_ROGUE
-  normal:
-    projectile: 尖刺球
-    projectileSpeed: 0.75
-  stealth:
-    projectile: 尖刺球
-    projectileSpeed: 1
 火花魔棒:
   type: MAGIC_PROJECTILE
   projectileName: 小火花

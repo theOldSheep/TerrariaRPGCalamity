@@ -123,6 +123,7 @@ terraria\worldgen\overworld\StructurePopulator.class
 terraria\entity\boss\postMoonLord\providence\Providence.class
 terraria\util\WorldHelper.class
 terraria\entity\boss\postMoonLord\exoMechs\Ares.class
+terraria\util\ArmourerWorkshopHelper.class
 terraria\entity\boss\postMoonLord\exoMechs\Draedon.class
 terraria\event\listener\NPCListener.class
 terraria\entity\boss\hardMode\moonLord\MoonLordEye.class

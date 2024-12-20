@@ -1,5 +1,7 @@
 package terraria.util;
 
+import de.tr7zw.nbtapi.NBTItem;
+import de.tr7zw.nbtapi.plugin.NBTAPI;
 import lk.vexview.gui.VexGui;
 import lk.vexview.gui.components.*;
 import org.bukkit.*;
@@ -868,9 +870,14 @@ public class ItemHelper {
                 ItemStack item = new ItemStack(material, 1, (short) 0, data);
                 // air has no item meta.
                 if (material == Material.AIR) return item;
+                // armorers workshop
+                ConfigurationSection armourerSection = itemSection.getConfigurationSection("armourerModel");
+                if (armourerSection != null) {
+                    ArmourerWorkshopHelper.setArmorModel(item, armourerSection);
+                }
                 // item meta
                 ItemMeta meta = item.getItemMeta();
-                int rarity = itemSection.getInt("rarity", 0);
+                int rarity = getItemRarity(itemName);
                 String rarityColor = TerrariaHelper.settingConfig.getString("rarity." + rarity, "§r");
                 meta.setDisplayName(rarityColor + itemName);
                 // item lore

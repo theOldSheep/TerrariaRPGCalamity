@@ -3025,15 +3025,23 @@
     noHomingTicks: 12
     minimumDamageTicks: 12
     speedMultiPerTick: 0.8
-手里剑:
-    slowedByWater: true
 尖刺球:
     noGravityTicks: 0
-    penetration: 999999
+    penetration: 9
     projectileSize: 0.5
     blockHitAction: bounce
     bounce: 999999
     bounceVelocityMulti: 0.5
+    slowedByWater: true
+尖刺球:
+    noGravityTicks: 0
+    penetration: 9
+    projectileSize: 0.5
+    blockHitAction: bounce
+    bounce: 999999
+    bounceVelocityMulti: 0.5
+    slowedByWater: true
+手里剑:
     slowedByWater: true
 剧毒花瓣:
     gravity: 0

@@ -9660,7 +9660,7 @@ Dodu的手炮:
   item: IRON_NUGGET
   prefixApplicable: false
   lore:
-  - §r投出一个尖刺球
+  - §r投出一个穿透至多十次后消失的尖刺球
   attributes:
     damage: 15
     damageStealth: 45
@@ -9688,8 +9688,8 @@ Dodu的手炮:
 易碎金属球:
   item: IRON_SWORD
   lore:
-  - §r投掷一个会碎裂成钉球和尖刺的尖钉球
-  - §r潜伏攻击会使钉球爆成更多钉球和金属尖刺
+  - §r投掷一个会碎裂成钉球的尖钉球
+  - §r潜伏攻击会使钉球爆成更多钉球
   - §r“哦，那一定很疼”
   attributes:
     damage: 60
@@ -14473,6 +14473,8 @@ Dodu的手炮:
   item: IRON_HELMET
   lore:
   - §r[装备]
+  armourerModel:
+    localId: 526652617
   attributes:
     defence: 10
     damageRangedMulti: 0.1
@@ -14512,6 +14514,8 @@ Dodu的手炮:
   item: IRON_CHESTPLATE
   lore:
   - §r[装备]
+  armourerModel:
+    localId: -1040728637
   attributes:
     defence: 14
     crit: 6
@@ -14521,11 +14525,17 @@ Dodu的手炮:
   item: IRON_LEGGINGS
   lore:
   - §r[装备]
+  armourerModel:
+    localId: 1578655264
   attributes:
     defence: 12
     speedMulti: 0.1
   worth: 800000
   rarity: 3
+天蓝护胫靴子:
+  item: IRON_BOOTS
+  armourerModel:
+    localId: -2080780066
 死灵头盔:
   item: DIAMOND_HELMET
   lore:

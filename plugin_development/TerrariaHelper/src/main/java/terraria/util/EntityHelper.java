@@ -978,13 +978,21 @@ public class EntityHelper {
             TerrariaHelper.LOGGER.log(Level.SEVERE, "[Entity Helper] applyEffect", e);
         }
     }
-    private static void sendDeathMessage(Entity d, Entity v, DamageType damageType, String debuffType) {
+    private static void sendDeathMessage(Entity d, Entity v, DamageType damageType, DamageReason damageReason, String debuffType) {
         String dm = "";
         // special death message cases
         if (v instanceof Player) {
             Player plyV = (Player) v;
-            if ( ItemHelper.splitItemName(plyV.getInventory().getItemInMainHand() )[1].equals("雷姆的复仇") )
-                dm = "<victim>……是谁？";
+            String plyTool = ItemHelper.splitItemName(plyV.getInventory().getItemInMainHand() )[1];
+            switch (plyTool) {
+                case "雷姆的复仇":
+                    dm = "<victim>……是谁？";
+                    break;
+                case "绯红恶魔":
+                    if (damageReason.isDirectDamage)
+                        dm = "<victim> 忘记了抱头蹲防";
+                    break;
+            }
             if ( PlayerHelper.getAccessories(plyV).contains("空灵护符") && Math.random() < 0.1 ) {
                 String msg = "§4<victim>死了    <victim>死了".replaceAll("<victim>", v.getName());
                 for (int i = 0; i < 3; i ++) {
@@ -1412,7 +1420,7 @@ public class EntityHelper {
         heart.setItemMeta(meta);
         ItemHelper.dropItem(loc, heart, false);
     }
-    public static void handleDeath(Entity v, Entity dPly, Entity d, DamageType damageType, String debuffType) {
+    public static void handleDeath(Entity v, Entity dPly, Entity d, DamageType damageType, DamageReason damageReason, String debuffType) {
         if (v instanceof Player) {
             Player vPly = (Player) v;
             // prevent spectator getting in a wall & prevent speed remaining after revive
@@ -1456,7 +1464,7 @@ public class EntityHelper {
             if ( ItemHelper.splitItemName( vPly.getInventory().getItemInMainHand() )[1].equals("雷姆的复仇") )
                 deathTitle = "感谢款待！";
             vPly.sendTitle("§c§l" + deathTitle, moneyMsg, 0, respawnTime * 20, 0);
-            sendDeathMessage(d, v, damageType, debuffType);
+            sendDeathMessage(d, v, damageType, damageReason, debuffType);
             // remove vanilla potion effects except for mining fatigue
             // terraria potion effects are removed in their threads
             for (PotionEffect effect : vPly.getActivePotionEffects()) {
@@ -1536,7 +1544,7 @@ public class EntityHelper {
             else v.remove();
             // NPC should also get death message
             if (vScoreboardTags.contains("isNPC"))
-                sendDeathMessage(d, v, damageType, debuffType);
+                sendDeathMessage(d, v, damageType, damageReason, debuffType);
             // monster generic drop, event etc.
             else if (vScoreboardTags.contains("isMonster")) {
                 LivingEntity vLiving = (LivingEntity) v;
@@ -2488,7 +2496,7 @@ public class EntityHelper {
             String sound = null;
             // kills the target
             if (damageTaker.getHealth() <= dmg) {
-                handleDeath(damageTaker, damageSource, damager, damageType, debuffType);
+                handleDeath(damageTaker, damageSource, damager, damageType, damageReason, debuffType);
                 if (victimTags.contains("isMechanic")) sound = "entity.generic.explode";
                 else sound = "entity." + damageTaker.getType() + ".death";
                 sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundDamaged", sound);

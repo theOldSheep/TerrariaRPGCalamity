@@ -3360,7 +3360,7 @@ ANVIL:
     requireItem:
     - 尖刺球:256
     - 铁锭:8
-    - 纯净凝胶:10
+    - 骨头:32
     recipeCategory: WEAPON_ROGUE
   '362_42':
     requireLevel: 2
@@ -6716,6 +6716,9 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 地底太阳
     requireItem:
+    - 羽毛:16
+    - 灵气
+    - 灵质
     - 浊火精华:20
     - 夜明锭:10
     - 狱炎锭:10
