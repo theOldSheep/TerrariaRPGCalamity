@@ -133,7 +133,7 @@ Global:
   Tp:
     # The interval, in seconds, for teleportation.
     # Use 0 to disable
-    TeleportDelay: 15
+    TeleportDelay: 5
     # Show aditional message in title message area when player is teleporting to residence
     TeleportTitleMessage: true
   RandomTeleportation:
