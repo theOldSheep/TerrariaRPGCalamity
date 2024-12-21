@@ -3026,21 +3026,144 @@
     minimumDamageTicks: 12
     speedMultiPerTick: 0.8
 尖刺球:
+    projectileSize: 0.5
     noGravityTicks: 0
     penetration: 9
-    projectileSize: 0.5
     blockHitAction: bounce
     bounce: 999999
-    bounceVelocityMulti: 0.5
+    bounceVelocityMulti: 0.25
     slowedByWater: true
-尖刺球:
+易碎金属球:
+    projectileSize: 0.5
+    blockHitAction: bounce
+    liveTime: 100
+    bounce: 999999
+    bounceVelocityMulti: 0.25
+    slowedByWater: true
+    clusterBomb:
+        amount: 2
+        damageMulti: 0.5
+        name: 尖刺球
+        velocity: 0.6
+易碎金属球Ex:
+    projDisguiseName: 易碎金属球
+    projectileSize: 0.5
+    blockHitAction: bounce
+    liveTime: 100
+    bounce: 999999
+    bounceVelocityMulti: 0.25
+    slowedByWater: true
+    clusterBomb:
+        amount: 5
+        damageMulti: 0.5
+        name: 尖刺球
+        velocity: 0.6
+污泥斑点:
+    projectileSize: 0.5
+    liveTime: 60
+    slowedByWater: true
+污泥斑点Ex:
+    projDisguiseName: 污泥斑点
+    projectileSize: 0.5
+    liveTime: 60
+    slowedByWater: true
+    clusterBomb:
+        amount: 5
+        damageMulti: 0.25
+        name: 小污泥斑点
+        velocity: 0.6
+小污泥斑点:
     noGravityTicks: 0
-    penetration: 9
-    projectileSize: 0.5
-    blockHitAction: bounce
-    bounce: 999999
-    bounceVelocityMulti: 0.5
+    liveTime: 20
     slowedByWater: true
+神经系统紊乱装置:
+    projectileSize: 1
+    liveTime: 200
+    homing: true
+    homingRadius: 24
+    blockHitAction: thru
+    buffInflict:
+        - "带电|60|1"
+神经系统紊乱装置Ex:
+    projDisguiseName: 神经系统紊乱装置
+    minimumDamageTicks: 999999
+    liveTime: 200
+    blockHitAction: stick
+    spawnProjectiles:
+        interval: 1
+        offset: 32
+        spawnMechanism: ENEMY
+        damageMulti: 1
+        speed: 32
+        spawnType: 神经系统紊乱电弧
+神经系统紊乱电弧:
+    gravity: 0
+    liveTime: 1
+    trailColor: 138|227|237
+    blockHitAction: thru
+    buffInflict:
+        - "带电|40|1"
+地底太阳追踪球:
+    gravity: 0
+    projectileSize: 1.5
+    blockHitAction: thru
+    homing: true
+    homingRadius: 32
+    homingAbility: 5
+    buffInflict:
+        - "神圣之火|80|1"
+地底太阳:
+    liveTime: 200
+    gravity: 0
+    minimumDamageTicks: 999999
+    blockHitAction: thru
+    speedMultiPerTick: 0.85
+    spawnProjectiles:
+        interval: 4
+        spawnMechanism: SURROUND
+        damageMulti: 1
+        speed: 3
+        spawnType: 地底太阳爆破球
+地底太阳爆破球:
+    projDisguiseName: 地底太阳追踪球
+    gravity: 0
+    projectileSize: 1.5
+    blockHitAction: thru
+    homing: true
+    homingRadius: 32
+    homingAbility: 5
+    isGrenade: true
+    blastRadius: 3.25
+    buffInflict:
+        - "神圣之火|80|1"
+神明妄论:
+    gravity: 0
+    blockHitAction: thru
+    homing: true
+    homingRadius: 48
+    homingAbility: 5.5
+    buffInflict:
+        - "弑神怒焰|80|1"
+神明妄论Ex:
+    projDisguiseName: 神明妄论
+    gravity: 0
+    liveTime: 200
+    minimumDamageTicks: 999999
+    blockHitAction: thru
+    speedMultiPerTick: 0.85
+    spawnProjectiles:
+        interval: 1
+        offset: 80
+        spawnMechanism: ENEMY
+        damageMulti: 1
+        speed: 4.25
+        spawnType: 妄论弑神苦无
+妄论弑神苦无:
+    gravity: 0
+    projectileSize: 0.5
+    blockHitAction: thru
+    buffInflict:
+        - "弑神怒焰|60|1"
 手里剑:
     slowedByWater: true
 剧毒花瓣:

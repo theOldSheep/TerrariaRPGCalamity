@@ -3542,6 +3542,46 @@ Dodu的手炮:
   stealth:
     projectile: 尖刺球
     projectileSpeed: 1
+易碎金属球:
+  type: ROGUE
+  normal:
+    projectile: 易碎金属球
+    projectileSpeed: 2.25
+  stealth:
+    projectile: 易碎金属球Ex
+    projectileSpeed: 2.25
+污泥斑点:
+  type: THROW_ROGUE
+  normal:
+    projectile: 污泥斑点
+    projectileSpeed: 2.5
+  stealth:
+    projectile: 污泥斑点Ex
+    projectileSpeed: 2.5
+神经系统紊乱装置:
+  type: ROGUE
+  normal:
+    projectile: 神经系统紊乱装置
+    projectileSpeed: 3
+  stealth:
+    projectile: 神经系统紊乱装置Ex
+    projectileSpeed: 3
+地底太阳:
+  type: ROGUE
+  normal:
+    projectile: 地底太阳追踪球
+    projectileSpeed: 3.25
+  stealth:
+    projectile: 地底太阳
+    projectileSpeed: 1
+神明妄论:
+  type: ROGUE
+  normal:
+    projectile: 神明妄论
+    projectileSpeed: 3.75
+  stealth:
+    projectile: 神明妄论Ex
+    projectileSpeed: 1
 手里剑:
   type: THROW_ROGUE
   normal:

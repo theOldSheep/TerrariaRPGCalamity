@@ -9670,6 +9670,21 @@ Dodu的手炮:
     useTime: 15
   worth: 1600
   rarity: 0
+易碎金属球:
+  item: IRON_SWORD
+  lore:
+  - §r投掷一个会碎裂成钉球的高速尖钉球
+  - §r潜伏攻击会使钉球爆成更多钉球
+  - §r“哦，那一定很疼”
+  attributes:
+    damage: 60
+    damageStealth: 80
+    damageType: Rogue
+    crit: 4
+    knockback: 7
+    useTime: 39
+  worth: 800000
+  rarity: 3
 污泥斑点:
   item: IRON_NUGGET
   prefixApplicable: false
@@ -9684,27 +9699,12 @@ Dodu的手炮:
     knockback: 1
     useTime: 17
   worth: 4000
-  rarity: 3
-易碎金属球:
-  item: IRON_SWORD
-  lore:
-  - §r投掷一个会碎裂成钉球的尖钉球
-  - §r潜伏攻击会使钉球爆成更多钉球
-  - §r“哦，那一定很疼”
-  attributes:
-    damage: 60
-    damageStealth: 80
-    damageType: Rogue
-    crit: 4
-    knockback: 7
-    useTime: 39
-  worth: 800000
   rarity: 4
 神经系统紊乱装置:
   item: DIAMOND_SWORD
   lore:
-  - §r丢出一个不稳定的设备，可吸附于地面上，同时用闪电电击周围的敌人
-  - §r潜伏攻击会使设备释放大范围的伤害性电磁脉冲力场
+  - §r丢出一个不稳定的设备穿过方块追杀敌人
+  - §r潜伏攻击会使设备黏附在方块上并释放伤害性电磁脉冲
   attributes:
     damage: 90
     damageStealth: 100
@@ -9717,9 +9717,9 @@ Dodu的手炮:
 地底太阳:
   item: DIAMOND_SWORD
   lore:
-  - §r发射不受重力影响停在空中的尖钉球
-  - §r尖钉球会向四周发射小太阳，接触敌人后爆炸
-  - §r潜伏攻击使尖钉球发射太阳的速度变快，持续时间更长
+  - §r普通攻击发射炽热的太阳追踪敌人
+  - §r潜伏攻击发射不受重力影响停在空中的尖钉球
+  - §r尖钉球会向四周发射接触敌人后爆炸的小太阳
   - §r“地底太阳的力量正被你握在掌心”
   attributes:
     damage: 400
@@ -9733,8 +9733,8 @@ Dodu的手炮:
 神明妄论:
   item: DIAMOND_SWORD
   lore:
-  - §r扔出追踪尖钉球，快速追踪敌人并召唤弑神苦无
-  - §r潜伏攻击可以追踪地更快并更快地召唤弑神苦无
+  - §r扔出追踪尖钉球，快速追踪敌人
+  - §r潜伏攻击悬停在空中并召唤穿墙弑神苦无
   attributes:
     damage: 284
     damageStealth: 300
@@ -10124,7 +10124,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r发射龙焰镰刀，命中时爆出一圈火球
-  - §r潜伏攻击追踪并穿透三次
+  - §r潜伏攻击追踪并穿透两次
   - §r“我们必将再度拥抱黎明”
   attributes:
     damage: 5000
