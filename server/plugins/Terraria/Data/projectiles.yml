@@ -3166,6 +3166,56 @@
         - "弑神怒焰|60|1"
 手里剑:
     slowedByWater: true
+板砖:
+    projectileSize: 0.5
+    slowedByWater: true
+    liveTime: 60
+板砖Ex:
+    projDisguiseName: 板砖
+    projectileSize: 0.5
+    slowedByWater: true
+    liveTime: 60
+    clusterBomb:
+        amount: 3
+        damageMulti: 0.5
+        name: 板砖碎块
+        velocity: 0.6
+板砖碎块:
+    noGravityTicks: 0
+    slowedByWater: true
+    liveTime: 25
+铁质飞斧:
+    noGravityTicks: 0
+    projectileSize: 0.5
+    slowedByWater: true
+    liveTime: 60
+弹跳眼球:
+    noGravityTicks: 10
+    projectileSize: 0.5
+    slowedByWater: true
+    blockHitAction: bounce
+    bounce: 2
+    penetration: 2
+弹跳眼球Ex:
+    projDisguiseName: 弹跳眼球
+    noGravityTicks: 10
+    projectileSize: 0.5
+    slowedByWater: true
+    blockHitAction: bounce
+    bounce: 8
+    penetration: 4
+腐蚀之球:
+    noGravityTicks: 10
+    projectileSize: 0.75
+    slowedByWater: true
+    liveTime: 60
+腐蚀之球Ex:
+    projDisguiseName: 腐蚀之球
+    noGravityTicks: 10
+    projectileSize: 0.75
+    slowedByWater: true
+    liveTime: 60
+    penetration: 1
 剧毒花瓣:
     gravity: 0
     speedMultiPerTick: 0.95

@@ -3586,12 +3586,44 @@ Dodu的手炮:
   type: THROW_ROGUE
   normal:
     projectile: 手里剑
-    projectileSpeed: 2
+    projectileSpeed: 2.75
   stealth:
     projectile: 手里剑
     projectileSpeed: 3
     shots: 3
     offset: 20
+板砖:
+  type: THROW_ROGUE
+  normal:
+    projectile: 板砖
+    projectileSpeed: 2
+  stealth:
+    projectile: 板砖Ex
+    projectileSpeed: 2
+铁质飞斧:
+  type: THROW_ROGUE
+  normal:
+    projectile: 铁质飞斧
+    projectileSpeed: 2.25
+  stealth:
+    projectile: 铁质飞斧
+    projectileSpeed: 2.25
+弹跳眼球:
+  type: ROGUE
+  normal:
+    projectile: 弹跳眼球
+    projectileSpeed: 2.5
+  stealth:
+    projectile: 弹跳眼球Ex
+    projectileSpeed: 2.75
+腐蚀之球:
+  type: THROW_ROGUE
+  normal:
+    projectile: 腐蚀之球
+    projectileSpeed: 3
+  stealth:
+    projectile: 腐蚀之球Ex
+    projectileSpeed: 3
 火花魔棒:
   type: MAGIC_PROJECTILE
   projectileName: 小火花

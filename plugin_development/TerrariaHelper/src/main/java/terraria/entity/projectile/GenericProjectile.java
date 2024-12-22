@@ -941,7 +941,9 @@ public class GenericProjectile extends EntityPotion {
                                     }
                                     case "不稳定物质":
                                     case "沙漠之灾":
-                                    case "越浪蛟": {
+                                    case "越浪蛟":
+                                    case "弹跳眼球":
+                                    case "弹跳眼球Ex": {
                                         // increases damage, but disappears after striking one enemy.
                                         if (projectileType.equals("不稳定物质")) {
                                             attrMap.put("damage", attrMap.get("damage") * 3);

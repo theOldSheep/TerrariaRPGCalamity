@@ -9792,7 +9792,7 @@ Dodu的手炮:
 弹跳眼球:
   item: IRON_SWORD
   lore:
-  - §r掷出一个弹跳眼球
+  - §r掷出一个弹射向敌人的弹跳眼球
   - §r潜伏攻击更快且弹跳、穿刺次数均有所增加
   attributes:
     damage: 32
