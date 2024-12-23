@@ -1200,7 +1200,7 @@ ANVIL:
     requireItem:
     - 迷你鲨
     - 非法枪械部件
-    - 力量之魂:20
+    - 力量之魂:15
     recipeCategory: WEAPON_BULLET
   '128':
     requireLevel: 2
@@ -1233,7 +1233,7 @@ ANVIL:
     - 黑晶状体
     - 晶状体:2
     - 神圣锭:12
-    - 视域之魂:20
+    - 视域之魂:15
     recipeCategory: WEAPON_SUMMON
   '132':
     requireLevel: 2
@@ -1431,9 +1431,9 @@ ANVIL:
     resultItem: 真·永夜之刃
     requireItem:
     - 永夜之刃
-    - 恐惧之魂:20
-    - 力量之魂:20
-    - 视域之魂:20
+    - 恐惧之魂:5
+    - 力量之魂:5
+    - 视域之魂:5
     recipeCategory: WEAPON_MELEE
   '159':
     requireLevel: 2
@@ -3018,7 +3018,6 @@ ANVIL:
     - 可疑镀层:8
     - 神秘电路:12
     - 秘银锭:10
-    - 恐惧之魂:20
     recipeCategory: WEAPON_BULLET
   '360':
     requireLevel: 2
@@ -3306,7 +3305,6 @@ ANVIL:
     - 可疑镀层:12
     - 神秘电路:8
     - 秘银锭:10
-    - 视域之魂:20
     recipeCategory: WEAPON_ROGUE
   '362_35':
     requireLevel: 2
@@ -3580,7 +3578,6 @@ ANVIL:
     requireLevel: 2
     resultItem: 离子冲击波
     requireItem:
-    - 恐惧之魂:10
     - 精金锭:7
     recipeCategory: WEAPON_MAGIC
   '381':
@@ -3590,7 +3587,6 @@ ANVIL:
     - 可疑镀层:8
     - 神秘电路:12
     - 秘银锭:10
-    - 力量之魂:20
     recipeCategory: WEAPON_MAGIC
   '382':
     requireLevel: 2
@@ -3704,7 +3700,6 @@ ANVIL:
     - 可疑镀层:5
     - 神秘电路:15
     - 秘银锭:10
-    - 恐惧之魂:20
     recipeCategory: WEAPON_SUMMON
   '396':
     requireLevel: 2
