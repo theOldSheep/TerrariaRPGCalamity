@@ -6540,7 +6540,7 @@ TNT:
 磁场之融磁球:
     gravity: 0
     blockHitAction: thru
-    penetration: 999999
+    minimumDamageTicks: 999999
     enemyInvincibilityFrame: 100
     liveTime: 60
     spawnProjectiles:
@@ -6712,7 +6712,7 @@ TNT:
     gravity: 0
     blockHitAction: bounce
     bounce: 999999
-    penetration: 999999
+    minimumDamageTicks: 999999
     enemyInvincibilityFrame: 100
     liveTime: 200
     spawnProjectiles:
@@ -6725,7 +6725,7 @@ TNT:
 极点光伏磁球:
     gravity: 0
     blockHitAction: thru
-    penetration: 999999
+    minimumDamageTicks: 999999
     enemyInvincibilityFrame: 100
     liveTime: 30
     spawnProjectiles:
@@ -6738,7 +6738,7 @@ TNT:
 漩涡光伏磁球:
     gravity: 0
     blockHitAction: thru
-    penetration: 999999
+    minimumDamageTicks: 999999
     enemyInvincibilityFrame: 100
     liveTime: 60
     spawnProjectiles:
