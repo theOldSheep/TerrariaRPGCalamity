@@ -20,7 +20,6 @@ public class PlanteraTentacle extends EntitySlime {
     public static final double BASIC_HEALTH = 2600 * 2, BASIC_HEALTH_BR = 5100 * 2;
     HashMap<String, Double> attrMap;
     // other variables and AI
-    static final double SPEED = 2;
 
     Plantera owner;
     Vector offsetDirection;
@@ -39,14 +38,11 @@ public class PlanteraTentacle extends EntitySlime {
             }
             // if target is valid, attack
             else {
-                
-                bukkitEntity.setVelocity(MathHelper.getDirection(
-                        bukkitEntity.getLocation(),
-                        owner.getBukkitEntity().getLocation().add(offsetDirection),
-                        SPEED));
+                bukkitEntity.setVelocity(
+                        owner.getBukkitEntity().getLocation().subtract( bukkitEntity.getLocation() ).toVector());
             }
         }
-        // face the player
+        // face away from the boss
         this.yaw = (float) MathHelper.getVectorYaw( offsetDirection );
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
