@@ -132,12 +132,12 @@ public class PlayerHelper {
         defaultPlayerAttrMap.put("waterAffinity", 0d);
         // init default player buff inflict map
         defaultPlayerEffectInflict.add("buffInflict");
-        defaultPlayerEffectInflict.add("buffInflictMagic");
         defaultPlayerEffectInflict.add("buffInflictMelee");
+        defaultPlayerEffectInflict.add("buffInflictTrueMelee");
         defaultPlayerEffectInflict.add("buffInflictRanged");
         defaultPlayerEffectInflict.add("buffInflictRogue");
+        defaultPlayerEffectInflict.add("buffInflictMagic");
         defaultPlayerEffectInflict.add("buffInflictSummon");
-        defaultPlayerEffectInflict.add("buffInflictTrueMelee");
     }
     // getters
     public static HashMap<String, ArrayList<String>> getDefaultPlayerEffectInflict() {

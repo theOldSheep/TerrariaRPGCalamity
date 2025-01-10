@@ -104,18 +104,22 @@
     # 集束炸弹类，可不写
     # 仅在损毁时生效
     clusterBomb:
-        # 分裂成弹片数量；分裂方式为spread时为分布角度
+        # 分裂成弹片数量；分裂方式为spread时为分布角度；分裂方式为arc时为每条弧线的弹幕数量
         amount: 8
         # 分裂后弹片伤害为原本伤害*damageMulti
         damageMulti: 0.85
         # 分裂后弹片弹射物类型
         name: 装饰弹片
-        # 分裂方式，normal（默认）: 在原地分裂，star：圣箭落星式分裂，surround：在四周向碰撞点发射，spread：均匀分布
+        # 分裂方式，normal（默认）: 在原地分裂，star：圣箭落星式分裂，surround：在四周向碰撞点发射
+        # spread：完全均匀分布，arc：向弹幕移动方向前方弧形分布
         type: normal
         # 若分裂方式为surround, 分裂时倾角最大为多少？默认30 (最大90)
+        # 若分裂方式为arc, 此项表示弧线单侧对应的圆心角（单位：角度）
         surroundMaxPitch: 30.0
         # 若分裂方式为surround, 分裂时距离撞击地点多远？默认10
         surroundOffset: 10.0
+        # 若分裂方式为arc, 分裂弹幕共有几条弧线？默认1
+        arcAmount: 1
         # 是否在弹射物因存在时间结束摧毁后发射？默认true
         fireOnTimeout: true
         # 是否在弹射物因撞墙损毁后发射？默认true
@@ -3226,12 +3230,6 @@
     homing: true
     buffInflict:
         - "带电|200|1"
-精金投斧:
-    liveTime: 50
-精金投斧Ex:
-    projDisguiseName: 精金投斧
-    liveTime: 60
-    gravity: 0
 冰花:
     projectileSize: 1.5
     liveTime: 80
@@ -3256,25 +3254,18 @@
         fireOnTimeout: false
         fireOnCollideEntity: true
         velocity: 2.25
+精金投斧:
+    liveTime: 50
+精金投斧Ex:
+    projDisguiseName: 精金投斧
+    liveTime: 60
+    gravity: 0
 硫火飞爪:
     projectileSize: 1.5
     liveTime: 80
     penetration: 9
     buffInflict:
         - "硫磺火|200|1"
-利维坦之牙:
-    projectileSize: 1.5
-    liveTime: 80
-    buffInflict:
-        - "剧毒|60|1"
-利维坦之牙Ex:
-    projDisguiseName: 利维坦之牙
-    projectileSize: 1.5
-    liveTime: 80
-    isGrenade: true
-    blastRadius: 1
-    buffInflict:
-        - "剧毒|200|1"
 深渊裂斧:
     projectileSize: 1.5
     liveTime: 80
@@ -3295,9 +3286,6 @@
     enemyInvincibilityFrame: 999999
     gravity: 0
     blockHitAction: thru
-    homing: true
-    homingRadius: 24
-    homingAbility: 5
     spawnProjectiles:
         interval: 10
         spawnMechanism: SURROUND
@@ -3306,7 +3294,7 @@
         spawnType: 幻想符札幽灵
 幻想符札Ex:
     projDisguiseName: 幻想符札
-    liveTime: 80
+    liveTime: 100
     penetration: 999999
     enemyInvincibilityFrame: 999999
     gravity: 0
@@ -3333,26 +3321,6 @@
     projectileSize: 1.5
     gravity: 0
     blockHitAction: thru
-    clusterBomb:
-        amount: 3
-        damageMulti: 0.5
-        name: 沙暴沙尘
-        velocity: 0.5
-沙暴手里剑Ex:
-    projDisguiseName: 沙暴手里剑
-    liveTime: 80
-    projectileSize: 1.5
-    gravity: 0
-    blockHitAction: thru
-    clusterBomb:
-        amount: 8
-        damageMulti: 0.5
-        name: 沙暴沙尘
-        velocity: 0.5
-沙暴沙尘:
-    liveTime: 20
-    projectileSize: 0.5
-    noGravityTicks: 0
 末渊石板:
     liveTime: 60
     noGravityTicks: 10
@@ -3382,6 +3350,20 @@
     noGravityTicks: 0
     buffInflict:
         - "深渊水压|40|1"
+利维坦之牙:
+    projectileSize: 1.5
+    liveTime: 80
+    buffInflict:
+        - "剧毒|60|1"
+利维坦之牙Ex:
+    projDisguiseName: 利维坦之牙
+    gravity: 0
+    projectileSize: 1.5
+    liveTime: 80
+    isGrenade: true
+    blastRadius: 1
+    buffInflict:
+        - "剧毒|200|1"
 源野天光:
     liveTime: 60
     noGravityTicks: 10
@@ -3389,7 +3371,7 @@
     buffInflict:
         - "幻星感染|60|1"
     clusterBomb:
-        amount: 3
+        amount: 1
         damageMulti: 0.5
         name: 源野天光星辰
         velocity: 1
@@ -3402,10 +3384,10 @@
         - "幻星感染|200|1"
     clusterBomb:
         amount: 4
-        damageMulti: 0.5
+        damageMulti: 1
         type: star
         name: 源野天光流星
-        velocity: 2.75
+        velocity: 3.25
 源野天光星辰:
     projDisguiseName: 源野天光
     liveTime: 100
@@ -3420,7 +3402,7 @@
 源野天光流星:
     projDisguiseName: 陨落流星
     liveTime: 30
-    projectileSize: 1
+    projectileSize: 1.5
     gravity: 0
     blockHitAction: thru
     isGrenade: true
@@ -3430,7 +3412,7 @@
 瘟疫注射器:
     liveTime: 60
     noGravityTicks: 10
-    projectileSize: 1.5
+    projectileSize: 1
     buffInflict:
         - "瘟疫|60|1"
     clusterBomb:
@@ -3442,7 +3424,7 @@
     projDisguiseName: 瘟疫注射器
     liveTime: 80
     noGravityTicks: 10
-    projectileSize: 1.5
+    projectileSize: 1
     buffInflict:
         - "瘟疫|200|1"
     clusterBomb:
@@ -3460,7 +3442,7 @@
     projectileSize: 3
     gravity: 0
     blockHitAction: thru
-    penetration: 1
+    penetration: 2
 星体暴乱:
     liveTime: 80
     projectileSize: 0.5
@@ -3473,8 +3455,10 @@
         - "幻星感染|60|1"
 星体暴乱Ex:
     projDisguiseName: 星体暴乱
-    liveTime: 100
+    liveTime: 120
     projectileSize: 0.5
+    penetration: 2
+    enemyInvincibilityFrame: 10
     gravity: 0
     blockHitAction: thru
     homing: true
@@ -3488,6 +3472,7 @@
     noGravityTicks: 10
 百变屠刀:
     projectileSize: 1
+    penetration: 1
     liveTime: 100
     noGravityTicks: 10
 掠星镰:
@@ -3505,16 +3490,17 @@
     blockHitAction: thru
 血沫重斧:
     projectileSize: 3
-    liveTime: 80
-    noGravityTicks: 10
+    liveTime: 60
     blockHitAction: thru
+    healOnHit: 5
 血沫重斧Ex:
     projDisguiseName: 血沫重斧
     projectileSize: 3
-    liveTime: 125
+    liveTime: 80
     penetration: 4
     noGravityTicks: 10
     blockHitAction: thru
+    healOnHit: 5
 雷劫:
     projectileSize: 1.5
     liveTime: 80
@@ -3572,21 +3558,21 @@
         - "深渊水压|200|1"
         - "碎甲|200|1"
 渊海哑铃:
-    projectileSize: 3
+    projectileSize: 4
     blockHitAction: thru
     liveTime: 60
     buffInflict:
         - "深渊水压|80|1"
 渊海哑铃Ex:
     projDisguiseName: 渊海哑铃
-    projectileSize: 3
+    projectileSize: 4
     blockHitAction: thru
     liveTime: 80
     buffInflict:
         - "深渊水压|200|1"
 死神遗镰:
     projectileSize: 3
-    penetration: 3
+    penetration: 2
     blockHitAction: thru
     gravity: 0
     liveTime: 80
@@ -3596,7 +3582,7 @@
     projDisguiseName: 死神遗镰
     projectileSize: 3
     blockHitAction: thru
-    penetration: 9
+    penetration: 4
     gravity: 0
     liveTime: 100
     buffInflict:
@@ -3620,6 +3606,7 @@
         - "龙焰|80|1"
     clusterBomb:
         amount: 8
+        surroundMaxPitch: 90
         damageMulti: 0.75
         name: 巨龙之怒火球
         type: arc

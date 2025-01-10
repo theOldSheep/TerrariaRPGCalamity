@@ -9863,8 +9863,8 @@ Dodu的手炮:
 硫火飞爪:
   item: DIAMOND_SWORD
   lore:
-  - §r投掷可以弹跳的硫火飞爪
-  - §r潜伏攻击可以一次投掷五个
+  - §r投掷可以穿透九次的硫火飞爪
+  - §r潜伏攻击投出两只飞爪
   attributes:
     damage: 170
     damageStealth: 170
@@ -9892,9 +9892,8 @@ Dodu的手炮:
   item: IRON_NUGGET
   prefixApplicable: false
   lore:
-  - §r发射不受重力影响的高速符札
-  - §r符札会追踪敌人且不断释放追踪的失落灵魂
-  - §r潜伏攻击会释放更多的灵魂
+  - §r发射不受重力影响的高速符札，不断释放追踪的失落灵魂
+  - §r潜伏攻击追踪敌人且释放更多的灵魂
   attributes:
     damage: 163
     damageStealth: 172
@@ -9908,7 +9907,6 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r投掷一个不受重力影响的沙暴手里剑
-  - §r潜伏攻击速度更快，命中时触发沙尘爆炸
   attributes:
     damage: 230
     damageStealth: 235
@@ -9950,8 +9948,8 @@ Dodu的手炮:
 源野天光:
   item: DIAMOND_SWORD
   lore:
-  - §r扔出一颗分裂流星，分裂并于几秒后开始追踪附近的敌人
-  - §r潜伏攻击会在分裂流星击中敌人时召唤一颗陨星
+  - §r扔出一颗分裂流星，分裂并追踪附近的敌人
+  - §r潜伏攻击会在击中敌人时召唤分裂陨星
   attributes:
     damage: 96
     damageStealth: 100
@@ -9964,8 +9962,7 @@ Dodu的手炮:
 瘟疫注射器:
   item: DIAMOND_SWORD
   lore:
-  - §r扔出一个高速注射器，飞行距离越远伤害越高
-  - §r命中后碎裂成玻璃碎片和瘟疫喷溅
+  - §r扔出一个高速注射器，命中后碎裂成玻璃碎片
   - §r潜伏攻击会使注射器在碎裂时生成瘟疫蜜蜂
   - §r“我保证这对你的健康有百害而无一利”
   attributes:
@@ -9980,8 +9977,7 @@ Dodu的手炮:
 公爵斩首者:
   item: DIAMOND_SWORD
   lore:
-  - §r扔出一把穿透五次的飞斧
-  - §r潜伏攻击可以无限穿透
+  - §r扔出一把穿透两次的飞斧
   attributes:
     damage: 180
     damageStealth: 180
@@ -9995,7 +9991,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r发射一个快速的追踪飞盘
-  - §r潜伏攻击会使飞盘爆炸成星辉法球
+  - §r潜伏攻击会穿透两次
   attributes:
     damage: 232
     damageStealth: 255
@@ -10009,7 +10005,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r发射三把餐具
-  - §r潜伏攻击会发射强大的屠刀并穿透4次
+  - §r潜伏攻击会发射强大的屠刀并穿透一次
   - §r“太空鸡，就是它了”
   attributes:
     damage: 666
@@ -10023,8 +10019,8 @@ Dodu的手炮:
 掠星镰:
   item: DIAMOND_SWORD
   lore:
-  - §r掷出追踪镰刀
-  - §r击中敌人时镰刀会反弹最多击中六个敌人
+  - §r掷出击中敌人时弹向其他敌人的镰刀
+  - §r潜伏攻击会反弹更多次
   attributes:
     damage: 280
     damageStealth: 305
@@ -10038,7 +10034,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r扔出一把受重力影响的血斧，击中敌怪时治疗玩家
-  - §r潜伏攻击追踪敌人且治疗量更高
+  - §r潜伏攻击可以穿透四次
   attributes:
     damage: 490
     damageStealth: 500
@@ -10051,8 +10047,7 @@ Dodu的手炮:
 雷劫:
   item: DIAMOND_SWORD
   lore:
-  - §r发射圣雷天劫电击周围敌人
-  - §r弹幕击中敌人时从天上降下闪电
+  - §r发射圣雷天劫，击中敌人时从天上降下闪电
   - §r潜伏攻击召唤更多闪电且弹幕移动速度提高
   attributes:
     damage: 932
@@ -10067,7 +10062,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r扔出六颗毒牙
-  - §r潜伏攻击命中会产生冲击波
+  - §r潜伏攻击命中会追踪并击碎敌人护甲
   - §r“你将需要一艘更大的船”
   attributes:
     damage: 318
@@ -10081,7 +10076,7 @@ Dodu的手炮:
 渊海哑铃:
   item: DIAMOND_SWORD
   lore:
-  - §r抛出一个哑铃，撞击时分裂出两个小铃片
+  - §r抛出一个沉重的巨大哑铃
   attributes:
     damage: 932
     damageStealth: 1320
@@ -10094,8 +10089,8 @@ Dodu的手炮:
 死神遗镰:
   item: DIAMOND_SWORD
   lore:
-  - §r扔出一把追踪死神镰刀切碎敌人
-  - §r潜伏攻击会一次性扔出3把飞镰
+  - §r扔出一把穿透两次的死神镰刀
+  - §r潜伏攻击会穿透四次
   - §r“切成碎片”
   attributes:
     damage: 360
@@ -10110,7 +10105,6 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r发射一连串追踪飞刀
-  - §r潜伏攻击召唤额外飞刀
   attributes:
     damage: 450
     damageStealth: 525
@@ -10124,7 +10118,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r发射龙焰镰刀，命中时爆出一圈火球
-  - §r潜伏攻击追踪并穿透两次
+  - §r潜伏攻击发射三次镰刀
   - §r“我们必将再度拥抱黎明”
   attributes:
     damage: 5000
@@ -10139,9 +10133,6 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r扔出一个高速飞行的平底锅
-  - §r每四次攻击会扔出金平底锅
-  - §r金平底锅会爆出大量火花和火球
-  - §r潜伏攻击必定扔出金平底锅
   - §#842593“伤~害↘不↑会↓断~”
   attributes:
     damage: 4444
@@ -10156,7 +10147,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r掷出一个巨大的棱晶手里剑
-  - §r手里剑在命中敌人后碎裂并释放出追踪火箭
+  - §r手里剑在命中敌人后碎裂并释放出一发追踪火箭
   - §r潜伏攻击会使手里剑在碎裂时释放出更多火箭
   attributes:
     damage: 1632

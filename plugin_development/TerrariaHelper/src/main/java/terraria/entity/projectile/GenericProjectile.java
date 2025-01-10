@@ -282,7 +282,8 @@ public class GenericProjectile extends EntityPotion {
                 ricochet(16, futureLoc, velocityHolder);
                 break;
             }
-            case "动能寻迹镖Ex": {
+            case "动能寻迹镖Ex":
+            case "掠星镰": {
                 ricochet(32, futureLoc, velocityHolder);
                 break;
             }

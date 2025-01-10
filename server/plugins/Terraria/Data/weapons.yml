@@ -3624,6 +3624,210 @@ Dodu的手炮:
   stealth:
     projectile: 腐蚀之球Ex
     projectileSpeed: 3
+南十字星蜗:
+  type: ROGUE
+  normal:
+    projectile: 南十字星蜗
+    projectileSpeed: 3.35
+  stealth:
+    projectile: 南十字星蜗Ex
+    projectileSpeed: 3.35
+冰花:
+  type: ROGUE
+  normal:
+    projectile: 冰花
+    projectileSpeed: 3
+  stealth:
+    projectile: 冰花Ex
+    projectileSpeed: 3
+精金投斧:
+  type: ROGUE
+  normal:
+    projectile: 精金投斧
+    projectileSpeed: 3.25
+  stealth:
+    projectile: 精金投斧Ex
+    projectileSpeed: 3.25
+硫火飞爪:
+  type: ROGUE
+  normal:
+    projectile: 硫火飞爪
+    projectileSpeed: 3.25
+  stealth:
+    projectile: 硫火飞爪
+    projectileSpeed: 3.25
+    throwRounds: 1
+    throwInterval: 5
+深渊裂斧:
+  type: ROGUE
+  normal:
+    projectile: 深渊裂斧
+    projectileSpeed: 3.25
+  stealth:
+    projectile: 深渊裂斧Ex
+    projectileSpeed: 3.4
+幻想符札:
+  type: ROGUE
+  normal:
+    projectile: 幻想符札
+    projectileSpeed: 3.25
+  stealth:
+    projectile: 幻想符札Ex
+    projectileSpeed: 3.25
+沙暴手里剑:
+  type: ROGUE
+  normal:
+    projectile: 沙暴手里剑
+    projectileSpeed: 3.25
+  stealth:
+    projectile: 沙暴手里剑
+    projectileSpeed: 3.25
+末渊石板:
+  type: ROGUE
+  normal:
+    projectile: 末渊石板
+    projectileSpeed: 3
+  stealth:
+    projectile: 末渊石板Ex
+    projectileSpeed: 3
+利维坦之牙:
+  type: ROGUE
+  normal:
+    projectile: 利维坦之牙
+    projectileSpeed: 3.35
+  stealth:
+    projectile: 利维坦之牙Ex
+    projectileSpeed: 3.35
+    throwRounds: 6
+    throwInterval: 1
+源野天光:
+  type: ROGUE
+  normal:
+    projectile: 源野天光
+    projectileSpeed: 3.5
+  stealth:
+    projectile: 源野天光Ex
+    projectileSpeed: 3.5
+瘟疫注射器:
+  type: ROGUE
+  normal:
+    projectile: 瘟疫注射器
+    projectileSpeed: 3.75
+  stealth:
+    projectile: 瘟疫注射器Ex
+    projectileSpeed: 3.75
+公爵斩首者:
+  type: ROGUE
+  normal:
+    projectile: 公爵斩首者
+    projectileSpeed: 3.6
+  stealth:
+    projectile: 公爵斩首者Ex
+    projectileSpeed: 3.6
+星体暴乱:
+  type: ROGUE
+  normal:
+    projectile: 星体暴乱
+    projectileSpeed: 3.5
+  stealth:
+    projectile: 星体暴乱Ex
+    projectileSpeed: 3.5
+百变餐叉:
+  type: ROGUE
+  normal:
+    projectile: 百变餐叉
+    projectileSpeed: 4
+    throwRounds: 3
+    throwInterval: 2
+  stealth:
+    projectile: 百变屠刀
+    projectileSpeed: 3.75
+掠星镰:
+  type: ROGUE
+  normal:
+    projectile: 掠星镰
+    projectileSpeed: 4
+  stealth:
+    projectile: 掠星镰Ex
+    projectileSpeed: 4
+血沫重斧:
+  type: ROGUE
+  normal:
+    projectile: 血沫重斧
+    projectileSpeed: 3.75
+  stealth:
+    projectile: 血沫重斧Ex
+    projectileSpeed: 3.75
+雷劫:
+  type: ROGUE
+  normal:
+    projectile: 雷劫
+    projectileSpeed: 4
+  stealth:
+    projectile: 雷劫Ex
+    projectileSpeed: 4.25
+遗忘之颚:
+  type: ROGUE
+  normal:
+    projectile: 遗忘之颚
+    projectileSpeed: 4
+  stealth:
+    projectile: 遗忘之颚Ex
+    projectileSpeed: 4.25
+    shots: 6
+    offset: 32
+渊海哑铃:
+  type: ROGUE
+  normal:
+    projectile: 渊海哑铃
+    projectileSpeed: 3
+  stealth:
+    projectile: 渊海哑铃Ex
+    projectileSpeed: 3
+死神遗镰:
+  type: ROGUE
+  normal:
+    projectile: 死神遗镰
+    projectileSpeed: 3.75
+  stealth:
+    projectile: 死神遗镰Ex
+    projectileSpeed: 3.75
+终结者之刃:
+  type: ROGUE
+  normal:
+    projectile: 终结者之刃
+    projectileSpeed: 3.85
+  stealth:
+    projectile: 终结者之刃
+    projectileSpeed: 3.9
+    throwRounds: 10
+    throwInterval: 1
+终曲黎明:
+  type: ROGUE
+  normal:
+    projectile: 终曲黎明
+    projectileSpeed: 4.25
+  stealth:
+    projectile: 终曲黎明
+    projectileSpeed: 4.25
+    throwRounds: 3
+    throwInterval: 5
+焦锅:
+  type: ROGUE
+  normal:
+    projectile: 焦锅
+    projectileSpeed: 4
+  stealth:
+    projectile: 焦锅
+    projectileSpeed: 4
+衍曜旋刃:
+  type: ROGUE
+  normal:
+    projectile: 衍曜旋刃
+    projectileSpeed: 4.25
+  stealth:
+    projectile: 衍曜旋刃Ex
+    projectileSpeed: 4.25
 火花魔棒:
   type: MAGIC_PROJECTILE
   projectileName: 小火花

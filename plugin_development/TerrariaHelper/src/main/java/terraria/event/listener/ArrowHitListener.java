@@ -281,6 +281,17 @@ public class ArrowHitListener implements Listener {
                             EntityHelper.spawnProjectile(shootInfo);
                         }
                     }
+                    else if (clusterType.equals("arc")) {
+                        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                projectileSource, projectileDestroyLoc, new Vector(), attrMap, damageType, clusterName);
+                        int arcAmount = clusterSection.getInt("arcAmount", 1);
+                        double halfArcAngleDeg = clusterSection.getDouble("surroundMaxPitch", 30d);
+                        for (Vector velocity : MathHelper.getCircularProjectileDirections(
+                                clusterAmount, arcAmount, halfArcAngleDeg, projectile.getVelocity(), clusterSpeed)) {
+                            shootInfo.velocity = velocity;
+                            EntityHelper.spawnProjectile(shootInfo);
+                        }
+                    }
                     else {
                         Location spawnLoc;
                         // spawn clusters
