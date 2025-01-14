@@ -3163,7 +3163,7 @@ Dodu的手炮:
     projectile: 纳米黑死神Ex
     projectileSpeed: 3.75
 钨钢飞刀:
-  type: ROGUE
+  type: THROW_ROGUE
   normal:
     projectile: 钨钢飞刀
     projectileSpeed: 2.25
@@ -3197,7 +3197,7 @@ Dodu的手炮:
     projectile: 狂菌根系Ex
     projectileSpeed: 2.5
 地狱飞剑:
-  type: ROGUE
+  type: THROW_ROGUE
   normal:
     projectile: 地狱飞剑
     projectileSpeed: 2.75
@@ -3205,7 +3205,7 @@ Dodu的手炮:
     projectile: 地狱飞剑Ex
     projectileSpeed: 2.75
 羽刃:
-  type: ROGUE
+  type: THROW_ROGUE
   normal:
     projectile: 羽刃
     projectileSpeed: 2.75
@@ -3231,7 +3231,7 @@ Dodu的手炮:
     projectile: 五指剑Ex
     projectileSpeed: 2.6
 凝胶飞镖:
-  type: ROGUE
+  type: THROW_ROGUE
   normal:
     projectile: 凝胶飞镖
     projectileSpeed: 2.8
@@ -3257,7 +3257,7 @@ Dodu的手炮:
     projectile: 棱晶飞刀Ex
     projectileSpeed: 3
 钴蓝苦无:
-  type: ROGUE
+  type: THROW_ROGUE
   normal:
     projectile: 钴蓝苦无
     projectileSpeed: 3.25
@@ -3267,7 +3267,7 @@ Dodu的手炮:
     shots: 3
     offset: 20
 秘银飞刀:
-  type: ROGUE
+  type: THROW_ROGUE
   normal:
     projectile: 秘银飞刀
     projectileSpeed: 3.25
@@ -3283,7 +3283,7 @@ Dodu的手炮:
     projectile: 风暴剃刃Ex
     projectileSpeed: 3.5
 猴子飞镖:
-  type: ROGUE
+  type: THROW_ROGUE
   normal:
     projectile: 猴子飞镖
     projectileSpeed: 3.35
@@ -3329,7 +3329,7 @@ Dodu的手炮:
     projectile: 光辉星剑Ex
     projectileSpeed: 4
 月明苦无:
-  type: ROGUE
+  type: THROW_ROGUE
   normal:
     projectile: 月明苦无
     projectileSpeed: 4
@@ -3349,7 +3349,7 @@ Dodu的手炮:
     projectile: 裂阳Ex
     projectileSpeed: 4.25
 龙蒿投镖:
-  type: ROGUE
+  type: THROW_ROGUE
   normal:
     projectile: 龙蒿投镖
     projectileSpeed: 4.25
@@ -3427,7 +3427,7 @@ Dodu的手炮:
     projectile: 变频器Ex
     projectileSpeed: 3.5
 水晶穿刺者:
-  type: ROGUE
+  type: THROW_ROGUE
   normal:
     projectile: 水晶穿刺者
     projectileSpeed: 3.25
@@ -3633,7 +3633,7 @@ Dodu的手炮:
     projectile: 南十字星蜗Ex
     projectileSpeed: 3.35
 冰花:
-  type: ROGUE
+  type: THROW_ROGUE
   normal:
     projectile: 冰花
     projectileSpeed: 3
@@ -3641,7 +3641,7 @@ Dodu的手炮:
     projectile: 冰花Ex
     projectileSpeed: 3
 精金投斧:
-  type: ROGUE
+  type: THROW_ROGUE
   normal:
     projectile: 精金投斧
     projectileSpeed: 3.25
@@ -3656,7 +3656,7 @@ Dodu的手炮:
   stealth:
     projectile: 硫火飞爪
     projectileSpeed: 3.25
-    throwRounds: 1
+    throwRounds: 2
     throwInterval: 5
 深渊裂斧:
   type: ROGUE
@@ -3667,13 +3667,13 @@ Dodu的手炮:
     projectile: 深渊裂斧Ex
     projectileSpeed: 3.4
 幻想符札:
-  type: ROGUE
+  type: THROW_ROGUE
   normal:
     projectile: 幻想符札
-    projectileSpeed: 3.25
+    projectileSpeed: 3
   stealth:
     projectile: 幻想符札Ex
-    projectileSpeed: 3.25
+    projectileSpeed: 3
 沙暴手里剑:
   type: ROGUE
   normal:
@@ -3722,7 +3722,7 @@ Dodu的手炮:
     projectile: 公爵斩首者
     projectileSpeed: 3.6
   stealth:
-    projectile: 公爵斩首者Ex
+    projectile: 公爵斩首者
     projectileSpeed: 3.6
 星体暴乱:
   type: ROGUE
@@ -3811,7 +3811,7 @@ Dodu的手炮:
     projectile: 终曲黎明
     projectileSpeed: 4.25
     throwRounds: 3
-    throwInterval: 5
+    throwInterval: 8
 焦锅:
   type: ROGUE
   normal:

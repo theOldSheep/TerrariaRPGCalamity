@@ -2496,6 +2496,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作衍生弹幕
   - §r潜伏攻击在击中敌人时会召唤宝石碎片
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   - §r飞快地爬.png
@@ -2550,6 +2551,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作衍生弹幕
   - §r潜伏攻击在击中敌人时会召唤羽毛从天而降
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   worth: 800000
@@ -2574,6 +2576,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作衍生弹幕
   - §r潜伏攻击在击中敌人时生成毒云
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   attributes:
@@ -2648,11 +2651,9 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作衍生弹幕
   - §r潜伏攻击在击中敌人时会爆炸成追踪灵魂
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
-  attributes:
-    damageRogueMulti: 0.08
-    stealthLimit: 10
   worth: 12000000
   rarity: 8
 暗物质剑鞘:
@@ -2672,8 +2673,11 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作衍生弹幕
   - §r潜伏攻击在击中敌人时会召唤月球耀斑从天而降
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
+  attributes:
+    stealthLimit: 10
   worth: 22000000
   rarity: 11
 敬天神盗盒:
@@ -2682,7 +2686,8 @@ Drew之翼:
   - §r[饰品]
   - §r使用盗贼武器发射弹幕时，会召唤一个完美复制品从天而降
   attributes:
-    damageMulti: -0.4
+    damageMulti: -0.35
+    damageRogueMulti: -0.15
   worth: 24000000
   rarity: 12
 日蚀魔镜:
@@ -2708,6 +2713,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作衍生弹幕
   - §r潜伏攻击后短时间内获得18%盗贼暴击率加成
   - §r此暴击加成在下一次攻击后消散
   - §r潜伏攻击在击中敌人时会留下数个追踪纳米叶片
@@ -2782,15 +2788,18 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作脱身道具
+  - §r受到高于最大生命值5%伤害的攻击时触发闪避
+  - §r根据被闪避的攻击伤害，闪避有15到90秒的冷却时间
   attributes:
     damageMulti: 0.1
-    damageTakenMulti: -0.03
   worth: 800000
   rarity: 3
 融合之脑:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作脱身道具
   - §r受到高于最大生命值5%伤害的攻击时触发闪避
   - §r根据被闪避的攻击伤害，闪避有15到90秒的冷却时间
   attributes:
@@ -2803,6 +2812,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作脱身道具
   - §r受到高于最大生命值5%伤害的攻击时触发闪避
   - §r根据被闪避的攻击伤害，闪避有15到90秒的冷却时间
   attributes:
@@ -9820,15 +9830,14 @@ Dodu的手炮:
 南十字星蜗:
   item: DIAMOND_SWORD
   lore:
-  - §r飞行过程中释放追踪火星
-  - §r潜伏攻击释放追踪蜗牛，放出更多火星
+  - §r投掷出带电的小小宇宙蜗牛
   attributes:
     damage: 72
     damageStealth: 86
     damageType: Rogue
     crit: 4
     knockback: 5
-    useTime: 25
+    useTime: 10
   worth: 2400000
   rarity: 4
 冰花:
@@ -9850,7 +9859,7 @@ Dodu的手炮:
   item: IRON_NUGGET
   prefixApplicable: false
   lore:
-  - §r潜伏攻击无视重力，并在击中敌人时降下闪电
+  - §r潜伏攻击无视重力
   attributes:
     damage: 134
     damageStealth: 150
@@ -9948,7 +9957,7 @@ Dodu的手炮:
 源野天光:
   item: DIAMOND_SWORD
   lore:
-  - §r扔出一颗分裂流星，分裂并追踪附近的敌人
+  - §r扔出一颗分裂流星，分裂并缓慢追踪附近的敌人
   - §r潜伏攻击会在击中敌人时召唤分裂陨星
   attributes:
     damage: 96
@@ -10061,8 +10070,8 @@ Dodu的手炮:
 遗忘之颚:
   item: DIAMOND_SWORD
   lore:
-  - §r扔出六颗毒牙
-  - §r潜伏攻击命中会追踪并击碎敌人护甲
+  - §r扔出追踪毒牙
+  - §r潜伏攻击发射六颗毒牙并击碎敌人护甲
   - §r“你将需要一艘更大的船”
   attributes:
     damage: 318
@@ -10083,7 +10092,7 @@ Dodu的手炮:
     damageType: Rogue
     crit: 4
     knockback: 8
-    useTime: 24
+    useTime: 60
   worth: 26000000
   rarity: 13
 死神遗镰:

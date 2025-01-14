@@ -3235,6 +3235,9 @@
     liveTime: 80
     homing: true
     homingRadius: 24
+    homingAbility: 5
+    noHomingTicks: 3
+    minimumDamageTicks: 3
     buffInflict:
         - "霜火|50|1"
 冰花Ex:
@@ -3253,7 +3256,7 @@
         name: 冰花
         fireOnTimeout: false
         fireOnCollideEntity: true
-        velocity: 2.25
+        velocity: 2
 精金投斧:
     liveTime: 50
 精金投斧Ex:
@@ -3277,7 +3280,7 @@
     projectileSize: 1.5
     liveTime: 80
     buffInflict:
-        - "死亡标记|40|1"
+        - "死亡标记|200|1"
         - "碎甲|200|1"
         - "深渊水压|200|1"
 幻想符札:
@@ -3287,23 +3290,24 @@
     gravity: 0
     blockHitAction: thru
     spawnProjectiles:
-        interval: 10
+        interval: 5
         spawnMechanism: SURROUND
         damageMulti: 1
         speed: 2
         spawnType: 幻想符札幽灵
 幻想符札Ex:
     projDisguiseName: 幻想符札
-    liveTime: 100
+    liveTime: 60
     penetration: 999999
     enemyInvincibilityFrame: 999999
     gravity: 0
     blockHitAction: thru
     homing: true
-    homingRadius: 24
-    homingAbility: 5
+    homingSharpTurning: false
+    homingRadius: 32
+    homingAbility: 10
     spawnProjectiles:
-        interval: 5
+        interval: 2
         spawnMechanism: SURROUND
         damageMulti: 1
         speed: 2.25
@@ -3390,13 +3394,13 @@
         velocity: 3.25
 源野天光星辰:
     projDisguiseName: 源野天光
-    liveTime: 100
+    liveTime: 200
     projectileSize: 2
     gravity: 0
     blockHitAction: thru
     homing: true
     noHomingTicks: 20
-    homingRadius: 24
+    homingRadius: 32
     buffInflict:
         - "幻星感染|40|1"
 源野天光流星:
@@ -3532,6 +3536,7 @@
         velocity: 64
 雷劫电弧:
     blockHitAction: thru
+    projectileSize: 1
     liveTime: 1
     trailColor: 186|255|228
     trailIntensityMulti: 2
@@ -3605,8 +3610,8 @@
     buffInflict:
         - "龙焰|80|1"
     clusterBomb:
-        amount: 8
-        surroundMaxPitch: 90
+        amount: 12
+        surroundMaxPitch: 180
         damageMulti: 0.75
         name: 巨龙之怒火球
         type: arc
@@ -3646,10 +3651,12 @@
         velocity: 3
 衍曜棱晶火箭:
     projectileSize: 1.5
-    minimumDamageTicks: 5
+    minimumDamageTicks: 4
     homing: true
-    homingRadius: 48
-    homingAbility: 6
+    homingSharpTurning: false
+    homingRadius: 64
+    homingAbility: 45
+    noHomingTicks: 4
     liveTime: 100
     buffInflict:
         - "超位崩解|50|1"
@@ -6410,8 +6417,10 @@ TNT:
     blockHitAction: thru
     minimumDamageTicks: 5
     homing: true
-    noHomingTicks: 5
+    homingSharpTurning: false
     homingRadius: 40
+    homingAbility: 30
+    noHomingTicks: 5
     projectileSize: 2
     isGrenade: true
     blastRadius: 4
