@@ -99,7 +99,8 @@ prefixList:
   - 鲁莽:3
   - 勇猛:2
   - 暴力:1
-  - 奥术:2
+  - 注魔:3
+  - 奥术:1
 prefixInfo:
   敏锐:
     lore:
@@ -1047,11 +1048,19 @@ prefixInfo:
       useSpeedMeleeMulti: 0.04
     priceMultiplier: 1.6
     rarity: 2
+  注魔:
+    lore:
+    - ''
+    - §a-3%魔力消耗
+    attributes:
+      manaUseMulti: -0.03
+    priceMultiplier: 1.2
+    rarity: 1
   奥术:
     lore:
     - ''
-    - §a+20法术上限
+    - §a-5%魔力消耗
     attributes:
-      maxMana: 20
+      manaUseMulti: -0.05
     priceMultiplier: 1.4
-    rarity: 1
+    rarity: 2
