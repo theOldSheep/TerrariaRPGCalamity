@@ -2100,6 +2100,10 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         EntityHelper.tweakAttribute(ply, newAttrMap, "damageMagicMulti",
                                 ((double)-ticksRemaining / 800) + "", true);
                         break;
+                    case "防御损毁":
+                        // -1 defence per tick
+                        EntityHelper.tweakAttribute(ply, newAttrMap, "defence", ticksRemaining + "", false);
+                        break;
                     case "血炎防御损毁":
                         // -1 defence per tick
                         EntityHelper.tweakAttribute(ply, newAttrMap, "defence", ticksRemaining + "", false);

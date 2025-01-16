@@ -744,6 +744,10 @@ public class EntityHelper {
                     if (! PlayerHelper.getAccessories(entity).contains("血肉图腾"))
                         timeRemaining = -1;
                     break;
+                case "防御损毁":
+                    if (! allEffects.containsKey("防御修补冷却"))
+                        timeRemaining -= 2;
+                    break;
                 case "血炎防御损毁":
                     PlayerHelper.heal((LivingEntity) entity, 2);
                     timeRemaining -= 2;
@@ -881,6 +885,7 @@ public class EntityHelper {
             switch (effect) {
                 case "保护矩阵":
                 case "扭曲":
+                case "防御损毁":
                 case "血炎防御损毁":
                     delay = 1;
                     break;
@@ -933,6 +938,7 @@ public class EntityHelper {
             int finalDurationTicks;
             int currentDurationTicks = allEffects.getOrDefault(effect, 0);
             switch (effect) {
+                case "防御损毁":
                 case "血炎防御损毁":
                 case "血神之凋零":
                     finalDurationTicks = currentDurationTicks + applyDurationTicks;
@@ -1038,7 +1044,8 @@ public class EntityHelper {
         dm = dm.replaceAll("<victim>", v.getName());
         Bukkit.broadcastMessage("§4" + dm);
     }
-    public static boolean entityDamageEvent(Entity damager, Entity damageSource, LivingEntity victim, LivingEntity damageTaker, double dmg,
+    public static boolean entityDamageEvent(Entity damager, Entity damageSource, LivingEntity victim, LivingEntity damageTaker,
+                                            double dmg, double originalDmg,
                                             DamageType damageType, DamageReason damageReason) {
         if (damager == null) return true;
         String nameV = GenericHelper.trimText(victim.getName());
@@ -1163,9 +1170,25 @@ public class EntityHelper {
                     break;
                 }
             }
-            // accessories
             HashSet<String> accessories = PlayerHelper.getAccessories(victim);
             HashMap<String, Double> victimAttrMap = getAttrMap(victim);
+            // defence-damage style damage reduction POST damage calculation
+            if (isDirectDmg && originalDmg > 50) {
+                boolean alternative = accessories.contains("血炎晶核") || accessories.contains("血神圣杯");
+                double def = victimAttrMap.getOrDefault("defence", 0d);
+                // alternative: lose more defence but regenerate health while recovering
+                if (alternative) {
+                    int duration = (int) Math.min(def, Math.max(dmg * 0.5, def * 0.5) );
+                    applyEffect(victim, "血炎防御损毁", duration);
+                }
+                // "vanilla" behavior of defence-damage
+                else {
+                    int duration = (int) ( Math.min(def, originalDmg * 0.05 + def * 0.1 ) );
+                    applyEffect(victim, "防御损毁", duration);
+                    applyEffect(victim, "防御修补冷却", 100);
+                }
+            }
+            // accessories
             for (String accessory : accessories) {
                 switch (accessory) {
                     // mana recovery on damage
@@ -1175,18 +1198,8 @@ public class EntityHelper {
                         PlayerHelper.restoreMana(vPly, recovery);
                         break;
                     }
-                    // defence-damage style damage reduction POST damage calculation
-                    case "血炎晶核": {
-                        if (isDirectDmg && dmg >= 50d) {
-                            int duration = (int) Math.min(victimAttrMap.getOrDefault("defence", 0d), dmg);
-                            applyEffect(victim, "血炎防御损毁", duration);
-                        }
-                        break;
-                    }
                     case "血神圣杯": {
                         if (isDirectDmg && dmg >= 100d) {
-                            int duration = (int) Math.min(victimAttrMap.getOrDefault("defence", 0d), dmg * 0.75);
-                            applyEffect(victim, "血炎防御损毁", duration);
                             double recovery = Math.min(vPly.getMaxHealth() - vPly.getHealth(), dmg * 0.95);
                             PlayerHelper.heal(vPly, recovery);
                             applyEffect(victim, "血神之凋零", (int) Math.ceil(recovery / 10));
@@ -2457,7 +2470,7 @@ public class EntityHelper {
         }
 
         // call damage event
-        if (! entityDamageEvent(damager, damageSource, victimLivingEntity, damageTaker, dmg, damageType, damageReason))
+        if (! entityDamageEvent(damager, damageSource, victimLivingEntity, damageTaker, dmg, damage, damageType, damageReason))
             return;
 
         // damage/kill

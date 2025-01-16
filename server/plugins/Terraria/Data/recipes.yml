@@ -5333,6 +5333,15 @@ TINKER_WORKBENCH:
     recipeCategory: ACCESSORY
   '47':
     requireLevel: 1
+    resultItem: 灵魂之戒
+    requireItem:
+    - 镣铐
+    - 生命凝胶
+    - 魔力再生药水
+    - 金锭:3
+    recipeCategory: ACCESSORY
+  '47_1':
+    requireLevel: 1
     resultItem: 灾厄符章
     requireItem:
     - 天界徽章
@@ -7375,6 +7384,7 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 绯红恶魔
     requireItem:
+    - 命运之矛
     - 狂龙翼火
     - 终曲黎明
     - 裂世投矛

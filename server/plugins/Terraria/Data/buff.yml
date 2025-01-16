@@ -512,6 +512,12 @@ effects:
     attributes:
         damageTakenMulti: -0.15
     tooltip: 所受伤害减少15%
+  防御损毁:
+    isBuff: false
+    tooltip: 缓慢恢复损伤的防御力
+  防御修补冷却:
+    isBuff: false
+    tooltip: 突如其来的攻击打乱了防御的修复
   血炎防御损毁:
     isBuff: false
     tooltip: 缓慢恢复损伤的防御力与生命值
