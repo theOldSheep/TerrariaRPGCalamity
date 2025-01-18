@@ -10,6 +10,7 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.projectiles.ProjectileSource;
@@ -253,6 +254,37 @@ public class GenericProjectile extends EntityPotion {
         // should still be able to hit entities that are neither monster nor forbidden to hit
         return EntityHelper.checkCanDamage(bukkitEntity, bukkitE, false);
     }
+    public Vec3D hitEntity(Entity e, MovingObjectPosition position, Vec3D futureLoc, Vector velocityHolder) {
+        // handle damage CD before doing anything else. Otherwise, exploding projectiles will damage the enemy being hit twice.
+        GenericHelper.damageCoolDown(damageCD, e.getBukkitEntity(), enemyInvincibilityFrame);
+        // handles post-hit mechanism: damage value is handled by a listener
+        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_LAST_HIT_ENTITY, e.getBukkitEntity());
+        if (bouncePenetrationBonded) {
+            updateBounce(bounce - 1);
+        }
+        // set position to the exact collision point for more precise explosion etc.
+        setPosition(position.pos.x, position.pos.y, position.pos.z);
+        updatePenetration(penetration - 1);
+        // special projectile
+        hitEntityExtraHandling(e, position, futureLoc, velocityHolder);
+
+        // returns the hit location if the projectile breaks (returns null if the projectile is still alive)
+        if (penetration < 0) {
+            destroyWithReason(DESTROY_HIT_ENTITY);
+            return new Vec3D(position.pos.x, position.pos.y, position.pos.z);
+        }
+        // on-collide cluster bomb
+        else {
+            boolean shouldSpawnClusterBomb = TerrariaHelper.projectileConfig.getBoolean(
+                    projectileType + ".clusterBomb.fireOnCollideEntity", false);
+            if (shouldSpawnClusterBomb) {
+                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
+                ArrowHitListener.handleProjectileClusterBomb(bukkitEntity);
+                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, null);
+            }
+        }
+        return null;
+    }
     public void hitEntityExtraHandling(Entity e, MovingObjectPosition position, Vec3D futureLoc, Vector velocityHolder) {
         if (healOnHit > 0) {
             PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), terraria.util.MathHelper.randomRound(healOnHit),
@@ -295,36 +327,38 @@ public class GenericProjectile extends EntityPotion {
                 break;
             }
         }
+        handleRogueProjectileHit(e);
     }
-    public Vec3D hitEntity(Entity e, MovingObjectPosition position, Vec3D futureLoc, Vector velocityHolder) {
-        // handle damage CD before doing anything else. Otherwise, exploding projectiles will damage the enemy being hit twice.
-        GenericHelper.damageCoolDown(damageCD, e.getBukkitEntity(), enemyInvincibilityFrame);
-        // handles post-hit mechanism: damage value is handled by a listener
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_LAST_HIT_ENTITY, e.getBukkitEntity());
-        if (bouncePenetrationBonded) {
-            updateBounce(bounce - 1);
-        }
-        setPosition(position.pos.x, position.pos.y, position.pos.z);
-        updatePenetration(penetration - 1);
-        // special projectile
-        hitEntityExtraHandling(e, position, futureLoc, velocityHolder);
-
-        // returns the hit location if the projectile breaks (returns null if the projectile is still alive)
-        if (penetration < 0) {
-            destroyWithReason(DESTROY_HIT_ENTITY);
-            return new Vec3D(position.pos.x, position.pos.y, position.pos.z);
-        }
-        // on-collide cluster bomb
-        else {
-            boolean shouldSpawnClusterBomb = TerrariaHelper.projectileConfig.getBoolean(
-                    projectileType + ".clusterBomb.fireOnCollideEntity", false);
-            if (shouldSpawnClusterBomb) {
-                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
-                ArrowHitListener.spawnProjectileClusterBomb(bukkitEntity);
-                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, null);
+    protected void handleRogueProjectileHit(Entity entityHit) {
+        Set<String> projectileScoreboardTags = getScoreboardTags();
+        if (projectileScoreboardTags.contains("isRogue")) {
+            LivingEntity shooter = (LivingEntity) bukkitEntity.getShooter();
+            Set<String> accessories = PlayerHelper.getAccessories(shooter);
+            boolean isStealth = projectileScoreboardTags.contains("isStealth");
+            // accessory on-hit
+            if (accessories.contains("吸血鬼符咒")) {
+                PlayerHelper.heal(shooter, isStealth ? 5 : 1);
+            }
+            // stealth attack secondary projectiles
+            boolean shouldTriggerSecondary = isStealth;
+            double secondaryDmgMulti = 1.0;
+            if (! shouldTriggerSecondary && accessories.contains("星流校准器")) {
+                shouldTriggerSecondary = true;
+                secondaryDmgMulti = 0.5;
+            }
+            if (shouldTriggerSecondary) {
+                for (String accessory : accessories) {
+                    ConfigurationSection clusterSectionCfg = TerrariaHelper.projectileConfig.getConfigurationSection(
+                            "潜伏衍生弹幕." + accessory);
+                    if (clusterSectionCfg == null)
+                        continue;
+                    HashMap<String, Double> attrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(bukkitEntity).clone();
+                    if (secondaryDmgMulti != 1.0)
+                        attrMap.put("damage", attrMap.getOrDefault("damage", 1d) * secondaryDmgMulti);
+                    ArrowHitListener.spawnProjectileClusterBomb(clusterSectionCfg, bukkitEntity, attrMap, entityHit.getBukkitEntity());
+                }
             }
         }
-        return null;
     }
 
     // tick

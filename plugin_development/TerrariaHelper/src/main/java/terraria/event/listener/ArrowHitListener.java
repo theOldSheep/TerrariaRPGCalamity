@@ -1,9 +1,12 @@
 package terraria.event.listener;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.Hash;
+import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftProjectile;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -16,6 +19,7 @@ import terraria.TerrariaHelper;
 import terraria.entity.others.PlayerTornado;
 import terraria.entity.projectile.BulletHellProjectile;
 import terraria.entity.projectile.GenericProjectile;
+import terraria.entity.projectile.HitEntityInfo;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.gameplay.EventAndTime;
 import terraria.util.*;
@@ -71,14 +75,24 @@ public class ArrowHitListener implements Listener {
         } else {
             EntityHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), dmgReason);
         }
-        // projectile-specific characteristics:
-        // explode
+        // explosive projectiles
         if (projectileScoreboardTags.contains("isGrenade")) {
             Location projectileDestroyLoc = MathHelper.toBukkitVector(e.movingObjectPosition.pos).toLocation(entity.getWorld());
             if (projectileScoreboardTags.contains("blastOnContactEnemy")) {
                 handleProjectileBlast(projectile, projectileDestroyLoc);
             }
         }
+        // projectile-specific characteristics:
+        handleProjectileOnHit(projectile, projectileName, entity, projectileScoreboardTags);
+
+        // weapon-specific characteristics:
+        handleProjectileWeapon(projectile, projectileName, projectileScoreboardTags, entity);
+
+        // armor set specific characteristics:
+        handleProjectileArmorSet(projectile, attrMap);
+    }
+    private static void handleProjectileOnHit(Projectile projectile, String projectileName,
+                                              Entity entityHit, Set<String> projectileScoreboardTags) {
         // vortex arrow
         if (projectileScoreboardTags.contains("isVortex")) {
             HashMap<String, Double> attrMapProj = (HashMap<String, Double>) EntityHelper.getAttrMap(projectile).clone();
@@ -88,7 +102,7 @@ public class ArrowHitListener implements Listener {
             int waitTime = 3 + (int) (Math.random() * 5);
             for (int i = 0; i < 2; i ++) {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
-                    Vector velocity = MathHelper.getDirection(shooter.getLocation(), entity.getLocation(), 1);
+                    Vector velocity = MathHelper.getDirection(shooter.getLocation(), entityHit.getLocation(), 1);
                     velocity.multiply(17);
                     velocity.add(MathHelper.randomVector());
                     velocity.normalize().multiply(1.75);
@@ -124,27 +138,28 @@ public class ArrowHitListener implements Listener {
                 }, 5);
             }
         }
-
-        // weapon-specific characteristics:
-        // hellborn bullet
+    }
+    private static void handleProjectileWeapon(Projectile projectile, String projectileName,
+                                               Set<String> projectileScoreboardTags, Entity entityHit) {
+        // hell-born bullet
         if (projectileScoreboardTags.contains("isHellborn")) {
             Player shooter = (Player) projectile.getShooter();
             ItemUseHelper.applyCD(shooter, 2);
         }
         // adamantite particle accelerator
         if (projectileScoreboardTags.contains("isAPA")) {
-            MetadataValue lastParticleName = EntityHelper.getMetadata(entity,
+            MetadataValue lastParticleName = EntityHelper.getMetadata(entityHit,
                     EntityHelper.MetadataName.LAST_ADAMANTITE_PARTICLE_TYPE);
             if (lastParticleName != null && ! (lastParticleName.asString().equals(projectileName) )) {
                 HashMap<String, Double> attrMapProj = EntityHelper.getAttrMap(projectile);
-                EntityHelper.handleDamage((Entity) projectile.getShooter(), entity,
+                EntityHelper.handleDamage((Entity) projectile.getShooter(), entityHit,
                         attrMapProj.get("damage"), EntityHelper.DamageReason.PROJECTILE);
             }
-            EntityHelper.setMetadata(entity, EntityHelper.MetadataName.LAST_ADAMANTITE_PARTICLE_TYPE,
+            EntityHelper.setMetadata(entityHit, EntityHelper.MetadataName.LAST_ADAMANTITE_PARTICLE_TYPE,
                     projectileName);
         }
-
-        // armor set specific characteristics:
+    }
+    private static void handleProjectileArmorSet(Projectile projectile, HashMap<String, Double> attrMap) {
         if (projectile.getShooter() instanceof Player) {
             Player shooter = (Player) projectile.getShooter();
             String armorSet = PlayerHelper.getArmorSet(shooter);
@@ -216,10 +231,13 @@ public class ArrowHitListener implements Listener {
                 break;
             }
         }
-        spawnProjectileClusterBomb(projectile);
+        handleProjectileClusterBomb(projectile);
     }
-
-    public static void spawnProjectileClusterBomb(Projectile projectile) {
+    /**
+     * Triggers the cluster bomb mechanism of the projectile.
+     * This method is called when the projectile destroys or collides with an entity.
+     */
+    public static void handleProjectileClusterBomb(Projectile projectile) {
         String projectileType = projectile.getName();
         ConfigurationSection projectileSection = TerrariaHelper.projectileConfig.getConfigurationSection(projectileType);
         if (projectileSection == null)
@@ -245,115 +263,130 @@ public class ArrowHitListener implements Listener {
         else
             shouldFire = clusterSection.getBoolean("fireOnTimeout", true);
         if (shouldFire) {
-            String clusterName = clusterSection.getString("name");
-            if (clusterName != null) {
-                int clusterAmount = clusterSection.getInt("amount", 3);
-                String clusterType = clusterSection.getString("type", "normal");
-                double clusterDamageMulti = clusterSection.getDouble("damageMulti", 1d);
-                double clusterSpeed = clusterSection.getDouble("velocity", 1d);
-                // setup damage
-                HashMap<String, Double> attrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(projectile).clone();
-                attrMap.put("damage", attrMap.getOrDefault("damage", 20d) * clusterDamageMulti);
+            HashMap<String, Double> attrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(projectile).clone();
+            spawnProjectileClusterBomb(clusterSection, projectile, attrMap, entityHit);
+        }
+    }
 
-                // projectile basic info
-                Entity projectileSource = null;
-                if (projectile.getShooter() instanceof Entity) projectileSource = (Entity) projectile.getShooter();
-                Location projectileDestroyLoc = projectile.getLocation();
-                EntityHelper.DamageType damageType = EntityHelper.getDamageType(projectile);
-                MetadataValue bulletHellInfo = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.BULLET_HELL_PROJECTILE_DIRECTION);
-                // bullet hell blasts
-                if (bulletHellInfo != null) {
+    /**
+     * Spawns the specified cluster bomb from the projectile.
+     * An entity may be specified for more precise falling star aiming.
+     */
+    public static void spawnProjectileClusterBomb(ConfigurationSection clusterSection, Projectile projectile,
+                                                  HashMap<String, Double> attrMap, @Nullable Entity entityHit) {
+        String projectileType = projectile.getName();
+        String clusterName = clusterSection.getString("name");
+        if (clusterName != null) {
+            int clusterAmount = clusterSection.getInt("amount", 3);
+            String clusterType = clusterSection.getString("type", "normal");
+            double clusterDamageMulti = clusterSection.getDouble("damageMulti", 1d);
+            double clusterDamageFixed = clusterSection.getDouble("damageFixed", -1d);
+            double clusterSpeed = clusterSection.getDouble("velocity", 1d);
+            // setup damage
+            double projectileBaseDmg = clusterDamageFixed;
+            if (projectileBaseDmg < 0)
+                projectileBaseDmg = attrMap.getOrDefault("damage", 20d) * clusterDamageMulti;
+            attrMap.put("damage", projectileBaseDmg);
+
+            // projectile basic info
+            Entity projectileSource = null;
+            if (projectile.getShooter() instanceof Entity) projectileSource = (Entity) projectile.getShooter();
+            EntityHelper.DamageType damageType = EntityHelper.getDamageType(projectile);
+            // get a more precise location at the edge of the enemy's bounding box
+            Location projectileDestroyLoc = projectile.getLocation();
+            // bullet hell blasts
+            MetadataValue bulletHellInfo = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.BULLET_HELL_PROJECTILE_DIRECTION);
+            if (bulletHellInfo != null) {
+                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                        projectileSource, projectileDestroyLoc, new Vector(),
+                        attrMap, damageType, clusterName);
+                BulletHellProjectile.ProjectileType blastType = BulletHellProjectile.ProjectileType.BLAST_8;
+                if (clusterAmount > 24) blastType = BulletHellProjectile.ProjectileType.BLAST_32;
+                else if (clusterAmount > 12) blastType = BulletHellProjectile.ProjectileType.BLAST_16;
+                new BulletHellProjectile(shootInfo, blastType, 0, clusterSpeed, (BulletHellProjectile.BulletHellDirectionInfo) bulletHellInfo.value());
+            }
+            // normal clusters
+            else {
+                if (clusterType.equals("spread")) {
                     EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                            projectileSource, projectileDestroyLoc, new Vector(),
-                            attrMap, damageType, clusterName);
-                    BulletHellProjectile.ProjectileType blastType = BulletHellProjectile.ProjectileType.BLAST_8;
-                    if (clusterAmount > 24) blastType = BulletHellProjectile.ProjectileType.BLAST_32;
-                    else if (clusterAmount > 12) blastType = BulletHellProjectile.ProjectileType.BLAST_16;
-                    new BulletHellProjectile(shootInfo, blastType, 0, clusterSpeed, (BulletHellProjectile.BulletHellDirectionInfo) bulletHellInfo.value());
+                            projectileSource, projectileDestroyLoc, new Vector(), attrMap, damageType, clusterName);
+                    for (Vector velocity : MathHelper.getEvenlySpacedProjectileDirections(clusterAmount, 180, MathHelper.randomVector(), clusterSpeed)) {
+                        shootInfo.velocity = velocity;
+                        EntityHelper.spawnProjectile(shootInfo);
+                    }
                 }
-                // normal clusters
+                else if (clusterType.equals("arc")) {
+                    EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                            projectileSource, projectileDestroyLoc, new Vector(), attrMap, damageType, clusterName);
+                    int arcAmount = clusterSection.getInt("arcAmount", 1);
+                    double halfArcAngleDeg = clusterSection.getDouble("surroundMaxPitch", 30d);
+                    for (Vector velocity : MathHelper.getCircularProjectileDirections(
+                            clusterAmount, arcAmount, halfArcAngleDeg, projectile.getVelocity(), clusterSpeed)) {
+                        shootInfo.velocity = velocity;
+                        EntityHelper.spawnProjectile(shootInfo);
+                    }
+                }
                 else {
-                    if (clusterType.equals("spread")) {
+                    Location spawnLoc;
+                    // spawn clusters
+                    for (int i = 0; i < clusterAmount; i++) {
+                        // spawn type dynamic tweaks
+                        if (projectileType.equals("三色大地流星")) {
+                            double rdm = Math.random();
+                            if (rdm < 0.3333)
+                                clusterName = "红色大地流星";
+                            else if (rdm < 0.6666)
+                                clusterName = "绿色大地流星";
+                            else
+                                clusterName = "蓝色大地流星";
+                        }
+                        // spawn loc & velocity
+                        Vector velocity = new Vector();
+                        boolean aimEnemy = false;
+                        switch (clusterType) {
+                            case "star": {
+                                spawnLoc = projectileDestroyLoc.clone().add(Math.random() * 10 - 5,
+                                        Math.random() * 20 + 20,
+                                        Math.random() * 10 - 5);
+                                // velocity is calculated outside the switch block
+                                aimEnemy = true;
+                                break;
+                            }
+                            case "surround": {
+                                double velYaw = Math.random() * 360;
+                                double velPitch = Math.random() * clusterSection.getDouble("surroundMaxPitch", 30d);
+                                if (Math.random() < 0.5) velPitch *= -1;
+                                double offsetLen = clusterSection.getDouble("surroundOffset", 10d);
+                                Vector offset = MathHelper.vectorFromYawPitch_approx(velYaw, velPitch).multiply(offsetLen);
+                                spawnLoc = projectileDestroyLoc.clone().add(offset);
+                                // velocity is calculated outside the switch block
+                                aimEnemy = true;
+                                break;
+                            }
+                            default:
+                                velocity = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, Math.random() * 360);
+                                spawnLoc = projectileDestroyLoc;
+                        }
+                        // aim enemy if needed
+                        if (aimEnemy) {
+                            Location aimLoc;
+                            if (entityHit == null)
+                                aimLoc = projectileDestroyLoc.clone().add(Math.random() * 3 - 1.5,
+                                        Math.random() * 3 - 1.5,
+                                        Math.random() * 3 - 1.5);
+                            else
+                                aimLoc = EntityHelper.helperAimEntity(spawnLoc, entityHit,
+                                        new EntityHelper.AimHelperOptions(clusterName)
+                                                .setAccelerationMode(true)
+                                                .setProjectileSpeed(clusterSpeed)
+                                                .setRandomOffsetRadius(1.5));
+                            velocity = MathHelper.getDirection(spawnLoc, aimLoc, 1, false);
+                        }
+                        // setup speed and spawn projectile
+                        velocity.multiply(clusterSpeed);
                         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                projectileSource, projectileDestroyLoc, new Vector(), attrMap, damageType, clusterName);
-                        for (Vector velocity : MathHelper.getEvenlySpacedProjectileDirections(clusterAmount, 180, MathHelper.randomVector(), clusterSpeed)) {
-                            shootInfo.velocity = velocity;
-                            EntityHelper.spawnProjectile(shootInfo);
-                        }
-                    }
-                    else if (clusterType.equals("arc")) {
-                        EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                projectileSource, projectileDestroyLoc, new Vector(), attrMap, damageType, clusterName);
-                        int arcAmount = clusterSection.getInt("arcAmount", 1);
-                        double halfArcAngleDeg = clusterSection.getDouble("surroundMaxPitch", 30d);
-                        for (Vector velocity : MathHelper.getCircularProjectileDirections(
-                                clusterAmount, arcAmount, halfArcAngleDeg, projectile.getVelocity(), clusterSpeed)) {
-                            shootInfo.velocity = velocity;
-                            EntityHelper.spawnProjectile(shootInfo);
-                        }
-                    }
-                    else {
-                        Location spawnLoc;
-                        // spawn clusters
-                        for (int i = 0; i < clusterAmount; i++) {
-                            // spawn type dynamic tweaks
-                            if (projectileType.equals("三色大地流星")) {
-                                double rdm = Math.random();
-                                if (rdm < 0.3333)
-                                    clusterName = "红色大地流星";
-                                else if (rdm < 0.6666)
-                                    clusterName = "绿色大地流星";
-                                else
-                                    clusterName = "蓝色大地流星";
-                            }
-                            // spawn loc & velocity
-                            Vector velocity = new Vector();
-                            boolean aimEnemy = false;
-                            switch (clusterType) {
-                                case "star": {
-                                    spawnLoc = projectileDestroyLoc.clone().add(Math.random() * 10 - 5,
-                                            Math.random() * 20 + 20,
-                                            Math.random() * 10 - 5);
-                                    // velocity is calculated outside the switch block
-                                    aimEnemy = true;
-                                    break;
-                                }
-                                case "surround": {
-                                    double velYaw = Math.random() * 360;
-                                    double velPitch = Math.random() * clusterSection.getDouble("surroundMaxPitch", 30d);
-                                    if (Math.random() < 0.5) velPitch *= -1;
-                                    double offsetLen = clusterSection.getDouble("surroundOffset", 10d);
-                                    Vector offset = MathHelper.vectorFromYawPitch_approx(velYaw, velPitch).multiply(offsetLen);
-                                    spawnLoc = projectileDestroyLoc.clone().add(offset);
-                                    // velocity is calculated outside the switch block
-                                    aimEnemy = true;
-                                    break;
-                                }
-                                default:
-                                    velocity = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, Math.random() * 360);
-                                    spawnLoc = projectileDestroyLoc;
-                            }
-                            // aim enemy if needed
-                            if (aimEnemy) {
-                                Location aimLoc;
-                                if (entityHit == null)
-                                    aimLoc = projectileDestroyLoc.clone().add(Math.random() * 3 - 1.5,
-                                            Math.random() * 3 - 1.5,
-                                            Math.random() * 3 - 1.5);
-                                else
-                                    aimLoc = EntityHelper.helperAimEntity(spawnLoc, entityHit,
-                                            new EntityHelper.AimHelperOptions(clusterName)
-                                                    .setAccelerationMode(true)
-                                                    .setProjectileSpeed(clusterSpeed)
-                                                    .setRandomOffsetRadius(1.5));
-                                velocity = MathHelper.getDirection(spawnLoc, aimLoc, 1, false);
-                            }
-                            // setup speed and spawn projectile
-                            velocity.multiply(clusterSpeed);
-                            EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                    projectileSource, spawnLoc, velocity, attrMap, damageType, clusterName);
-                            EntityHelper.spawnProjectile(shootInfo);
-                        }
+                                projectileSource, spawnLoc, velocity, attrMap, damageType, clusterName);
+                        EntityHelper.spawnProjectile(shootInfo);
                     }
                 }
             }

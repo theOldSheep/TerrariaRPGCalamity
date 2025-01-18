@@ -265,7 +265,15 @@ public class ItemUseHelper {
         }
         return false;
     }
-    protected static boolean potionEffectNecessary(Player ply, String effect) {
+
+    /**
+     * returns whether the potion effect would be helpful;
+     * that is, should the player auto-consume that potion during quick buff?
+     * @param ply the player to validate
+     * @param effect the effect to look for
+     * @return whether the player would consume that potion
+     */
+    protected static boolean isPotionHelpful(Player ply, String effect) {
         HashMap<String, Integer> allEffects = EntityHelper.getEffectMap(ply);
         // no need to drink the potion if the effect is already in place.
         if (allEffects.containsKey(effect)) return false;
@@ -347,7 +355,7 @@ public class ItemUseHelper {
                                         potionEffect.equals("maxMana")) {
                                     successful = false;
                                     break;
-                                } else if (potionEffectNecessary(ply, potionEffect)) {
+                                } else if (isPotionHelpful(ply, potionEffect)) {
                                     successful = true;
                                 }
                             }
@@ -4019,14 +4027,25 @@ public class ItemUseHelper {
         // attack logic
         switch (weaponSection.getString("type", weaponType)) {
             // boomerang and flail; CD handled within the projectile.
-            case "BOOMERANG":
-                playerUseBoomerang(ply, weaponSection.getString("projectile", itemType), weaponType, isAutoSwing, attrMap, weaponSection);
+            case "BOOMERANG": {
+                Boomerang projectile = playerUseBoomerang(ply, weaponSection.getString("projectile", itemType),
+                        weaponType, isAutoSwing, attrMap, weaponSection);
+                projectile.addScoreboardTag("isRogue");
+                if (isStealth)
+                    projectile.addScoreboardTag("isStealth");
                 break;
-            case "FLAIL":
-                playerUseFlail(ply, weaponSection.getString("projectile", itemType), weaponType, isAutoSwing, attrMap, weaponSection);
+            }
+            case "FLAIL": {
+                Flail projectile = playerUseFlail(ply, weaponSection.getString("projectile", itemType),
+                        weaponType, isAutoSwing, attrMap, weaponSection);
+                projectile.addScoreboardTag("isRogue");
+                if (isStealth)
+                    projectile.addScoreboardTag("isStealth");
                 break;
-            default:
-                // default weapons
+            }
+            // default weapon behavior
+            default: {
+                Projectile projectile;
                 switch (projType) {
                     case "镀金匕首Ex": {
                         double radius = 16;
@@ -4037,11 +4056,17 @@ public class ItemUseHelper {
                                 fireLoc.toVector(),
                                 radius,
                                 (e) -> (e instanceof EntityLiving) &&
-                                        EntityHelper.checkCanDamage(ply, e.getBukkitEntity(), true) )) {
+                                        EntityHelper.checkCanDamage(ply, e.getBukkitEntity(), true))) {
                             LivingEntity target = (LivingEntity) (targetInfo.getHitEntity()).getBukkitEntity();
                             currVel = MathHelper.getDirection(fireLoc, target.getEyeLocation(), projectileSpeed);
                             shootInfo.velocity = currVel;
-                            EntityHelper.spawnProjectile(shootInfo);
+
+                            projectile = EntityHelper.spawnProjectile(shootInfo);
+                            projectile.addScoreboardTag("isRogue");
+                            // only the first dagger thrown every 3 waves counts as stealth
+                            if (isStealth && index % 3 == 0 && fired == 0)
+                                projectile.addScoreboardTag("isStealth");
+                            // only fire at most 3 daggers each round
                             if (++fired >= 3)
                                 break;
                         }
@@ -4067,16 +4092,18 @@ public class ItemUseHelper {
                             }
                         }
                         double offset = weaponSection.getDouble("offset", -1d);
-                        for (int shot = 0; shot < shots; shot ++) {
+                        for (int shot = 0; shot < shots; shot++) {
                             if (offset > 0) {
-                                currVel = projVel.clone().multiply(offset).add( MathHelper.randomVector() );
-                            }
-                            else {
+                                currVel = projVel.clone().multiply(offset).add(MathHelper.randomVector());
+                            } else {
                                 currVel = projVel;
                             }
                             MathHelper.setVectorLength(currVel, projectileSpeed);
                             shootInfo.velocity = currVel;
-                            EntityHelper.spawnProjectile(shootInfo);
+                            projectile = EntityHelper.spawnProjectile(shootInfo);
+                            projectile.addScoreboardTag("isRogue");
+                            if (isStealth)
+                                projectile.addScoreboardTag("isStealth");
                         }
                     }
                 }
@@ -4086,6 +4113,7 @@ public class ItemUseHelper {
                     double useTimeMulti = 1 / useSpeed;
                     applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
                 }
+            }
         }
 
         // next tick if needed
@@ -4120,9 +4148,18 @@ public class ItemUseHelper {
         boolean isStealth = currStealth >= stealthConsumption;
         currStealth = Math.max(0, currStealth - stealthConsumption);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH, currStealth);
+        // this effect only lasts for one hit
+        if (EntityHelper.hasEffect(ply, "掠夺者护符")) {
+            EntityHelper.removeEffect(ply, "掠夺者护符");
+        }
+        // stealth attack
         if (isStealth) {
             attrMap.put("damage", attrMap.getOrDefault("damageStealth", 1d));
             autoSwing.set(false);
+            HashSet<String> accessories = PlayerHelper.getAccessories(ply);
+            if (accessories.contains("掠夺者护符")) {
+                EntityHelper.applyEffect(ply, "掠夺者护符", 60);
+            }
         }
         // use the weapon
         weaponSection = weaponSection.getConfigurationSection(isStealth ? "stealth" : "normal");

@@ -2516,7 +2516,6 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r▣算作衍生弹幕
   - §r潜伏攻击在击中敌人时会召唤宝石碎片
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   - §r飞快地爬.png
@@ -2571,7 +2570,6 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r▣算作衍生弹幕
   - §r潜伏攻击在击中敌人时会召唤羽毛从天而降
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   worth: 800000
@@ -2596,7 +2594,6 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r▣算作衍生弹幕
   - §r潜伏攻击在击中敌人时生成毒云
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   attributes:
@@ -2607,7 +2604,6 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r使用潜伏攻击时为你回复5点生命值
   attributes:
     armorPenetration: 10
     damageStealthMulti: 0.08
@@ -2628,7 +2624,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r盗贼武器的弹幕在暴击时会吸血
+  - §r盗贼武器的弹幕在命中时会吸血
   attributes:
     damageRogueMulti: 0.12
   worth: 9600000
@@ -2671,7 +2667,6 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r▣算作衍生弹幕
   - §r潜伏攻击在击中敌人时会爆炸成追踪灵魂
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   worth: 12000000
@@ -2693,7 +2688,6 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r▣算作衍生弹幕
   - §r潜伏攻击在击中敌人时会召唤月球耀斑从天而降
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   attributes:
@@ -2733,15 +2727,12 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r▣算作衍生弹幕
-  - §r潜伏攻击后短时间内获得18%盗贼暴击率加成
-  - §r此暴击加成在下一次攻击后消散
-  - §r潜伏攻击在击中敌人时会留下数个追踪纳米叶片
+  - §r潜伏攻击在击中敌人时会留下一个追踪纳米叶片
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   attributes:
-    armorPenetration: 30
-    damageRogueMulti: 0.12
-    useSpeedRogueMulti: 0.12
+    armorPenetration: 10
+    damageRogueMulti: 0.1
+    useSpeedRogueMulti: 0.1
   worth: 28000000
   rarity: 14
 浴火龙鳞:
@@ -2760,7 +2751,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   - §r盗贼衍生弹幕可被所有盗贼攻击的主弹幕触发
-  - §r以此方式触发的衍生弹幕基础伤害降低15%
+  - §r以此方式触发的衍生弹幕基础伤害降低50%
   - §r盗贼攻击造成超位崩解减益
   attributes:
     buffInflictRogue: 超位崩解|40|1
@@ -9081,7 +9072,7 @@ Dodu的手炮:
   lore:
   - §r扔出一把会在敌人间反弹一次的闪亮匕首
   - §r潜伏攻击迅速向附近至多三个敌人数次投出无法反弹的匕首
-  - §r仅每三波投出的匕首中的随机一个会造成潜伏攻击的后续判定
+  - §r仅每波投出的匕首中的随机一个会造成潜伏攻击的后续判定
   attributes:
     damage: 28
     damageStealth: 10
@@ -9311,7 +9302,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r命中时恢复5点生命值
-  - §r潜伏攻击恢复量为50点
+  - §r潜伏攻击恢复量为100点
   - §r潜伏攻击会使你失去30%的当前生命值
   - §r失去生命值的40%会附加到基础伤害中
   - §r“似乎随时间的流逝而逐渐崩解”

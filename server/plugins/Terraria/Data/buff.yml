@@ -617,6 +617,11 @@ effects:
     attributes:
         damageSummonMulti: 0.1
     tooltip: 增加10%召唤伤害
+  掠夺者护符:
+    isBuff: true
+    attributes:
+        critRogue: 18
+    tooltip: 下一次攻击时增加18%盗贼暴击率
   血肉图腾:
     isBuff: true
     attributes:

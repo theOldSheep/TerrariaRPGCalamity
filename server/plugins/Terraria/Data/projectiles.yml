@@ -106,8 +106,10 @@
     clusterBomb:
         # 分裂成弹片数量；分裂方式为spread时为分布角度；分裂方式为arc时为每条弧线的弹幕数量
         amount: 8
-        # 分裂后弹片伤害为原本伤害*damageMulti
+        # 分裂后弹片基础伤害为原本伤害*damageMulti
         damageMulti: 0.85
+        # 分裂后弹片基础伤害；若为正数则覆盖按百分比计算得到的基础伤害值（默认不覆盖）
+        damageFixed: -1
         # 分裂后弹片弹射物类型
         name: 装饰弹片
         # 分裂方式，normal（默认）: 在原地分裂，star：圣箭落星式分裂，surround：在四周向碰撞点发射
@@ -144,7 +146,39 @@
         speed: 1.0
         # 生成射弹类型
         spawnType: 木箭
-
+潜伏衍生弹幕:
+    潜遁者宝石:
+        amount: 4
+        damageFixed: 18
+        name: 水晶碎块
+        velocity: 0.5
+    天羽头冠:
+        amount: 2
+        damageFixed: 30
+        name: 天蓝羽毛
+        type: star
+        velocity: 1.6
+    腐蚀脊椎:
+        amount: 1
+        damageFixed: 45
+        name: 腐蚀脊椎毒云
+        velocity: 0
+    虚空掠夺者:
+        amount: 3
+        damageFixed: 60
+        name: 幻想符札幽灵
+        velocity: 2.25
+    月长石头冠:
+        amount: 1
+        damageFixed: 100
+        name: 月之耀斑
+        type: star
+        velocity: 3
+    纳米技术:
+        amount: 1
+        damageFixed: 180
+        name: 追踪纳米叶片
+        velocity: 3
 钩爪:
     gravity: 0
     speedMultiPerTick: 1
@@ -2067,7 +2101,7 @@
         spawnMechanism: ENEMY
         damageMulti: 0.35
         speed: 24
-        spawnType: 灵魂穿透者衍生光束
+        spawnType: 湮灭光束
 湮灭Ex:
     projDisguiseName: 湮灭
     projectileSize: 3
@@ -2081,7 +2115,17 @@
         spawnMechanism: ENEMY
         damageMulti: 0.35
         speed: 24
-        spawnType: 灵魂穿透者衍生光束
+        spawnType: 湮灭光束
+湮灭光束:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.5
+    penetration: 999999
+    liveTime: 1
+    trailColor: 171|152|236
+    trailIntensityMulti: 0.75
+    buffInflict:
+        - "弑神怒焰|40|1"
 动能寻迹镖:
     projectileSize: 3
     blockHitAction: thru
@@ -2428,7 +2472,7 @@
     liveTime: 80
     projectileSize: 1
     gravity: 0
-    healOnHit: 50
+    healOnHit: 100
     buffInflict:
         - "血液沸腾|200|1"
 光辉星剑:
@@ -3107,6 +3151,7 @@
     gravity: 0
     liveTime: 1
     trailColor: 138|227|237
+    trailIntensityMulti: 0.75
     blockHitAction: thru
     buffInflict:
         - "带电|40|1"
@@ -3663,6 +3708,26 @@
     liveTime: 100
     buffInflict:
         - "超位崩解|50|1"
+腐蚀脊椎毒云:
+    projDisguiseName: 渊海灾虫毒云
+    penetration: 9
+    gravity: 0
+    projectileSize: 2
+    liveTime: 60
+    blockHitAction: thru
+    speedMultiPerTick: 0.925
+    buffInflict:
+        - "中毒|80|1"
+        - "剧毒|80|1"
+追踪纳米叶片:
+    projectileSize: 1
+    minimumDamageTicks: 4
+    homing: true
+    homingSharpTurning: false
+    homingRadius: 64
+    homingAbility: 45
+    noHomingTicks: 4
+    liveTime: 100
 剧毒花瓣:
     gravity: 0
     speedMultiPerTick: 0.95
@@ -6800,7 +6865,7 @@ TNT:
         interval: 6
         spawnMechanism: BOTTOM
         damageMulti: 0.4
-        speed: 1.0
+        speed: 2
         spawnType: 天蓝羽毛
 闪光花瓣:
     gravity: 0

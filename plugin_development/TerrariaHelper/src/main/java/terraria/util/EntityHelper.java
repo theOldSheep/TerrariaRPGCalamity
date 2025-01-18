@@ -913,6 +913,13 @@ public class EntityHelper {
             TerrariaHelper.LOGGER.log(Level.SEVERE, "[Entity Helper] prepareTickEffect", e);
         }
     }
+
+    /**
+     * Applies an effect with the given duration to the entity.
+     * @param entity The entity to apply the effect.
+     * @param effect The effect name to apply.
+     * @param applyDurationTicks The number of ticks to apply the effect.
+     */
     public static void applyEffect(Entity entity, String effect, int applyDurationTicks) {
         try {
             // if the buff is not in config, do not do anything
@@ -983,6 +990,14 @@ public class EntityHelper {
         } catch (Exception e) {
             TerrariaHelper.LOGGER.log(Level.SEVERE, "[Entity Helper] applyEffect", e);
         }
+    }
+    /**
+     * Removes the specified effect for the entity.
+     * @param entity The entity from which to remove an effect.
+     * @param effect The effect name to be removed.
+     */
+    public static void removeEffect(Entity entity, String effect) {
+        endTickEffect(entity, effect, getEffectMap(entity), true);
     }
     private static void sendDeathMessage(Entity d, Entity v, DamageType damageType, DamageReason damageReason, String debuffType) {
         String dm = "";
