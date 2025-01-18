@@ -3030,7 +3030,7 @@ public class MinionSlime extends EntitySlime {
                     if (!hitInfo.isEmpty()) {
                         String scoreboardTagHealCD = "temp_healCD";
                         if (! getScoreboardTags().contains(scoreboardTagHealCD)) {
-                            PlayerHelper.heal(owner, 1, false);
+                            PlayerHelper.heal(owner, 1);
                             EntityHelper.handleEntityTemporaryScoreboardTag(minionBukkit, scoreboardTagHealCD, 8);
                         }
                     }

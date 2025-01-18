@@ -2931,6 +2931,9 @@
     liveTime: 75
     projectileSize: 4
     gravity: 0
+    homing: true
+    homingRadius: 40
+    homingAbility: 5.5
     buffInflict:
         - "龙焰|60|1"
 狂龙翼火Ex:

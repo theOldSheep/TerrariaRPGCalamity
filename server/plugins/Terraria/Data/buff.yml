@@ -563,11 +563,11 @@ effects:
     tooltip: 每秒被动和闲置魔力再生增加 15
   魔力烧蚀:
     isBuff: false
-    snowStormParticle: cursed_inferno
+    snowStormParticle: burning
     tooltip: 过多的魔力正在烧蚀你的身心
   魔力熔蚀:
     isBuff: false
-    snowStormParticle: cursed_inferno
+    snowStormParticle: burning
     tooltip: 你的生命正在升华为魔力
   灵魂恢复:
     isBuff: true

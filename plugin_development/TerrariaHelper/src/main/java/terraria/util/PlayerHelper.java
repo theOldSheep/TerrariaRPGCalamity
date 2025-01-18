@@ -2853,10 +2853,15 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             return amountRemaining;
         }
     }
+    // heals the player by the amount.
     public static void heal(LivingEntity ply, double amount) {
         heal(ply, amount, false);
     }
+    // heals the player by the amount; can specify whether to display the actual amount and damage source of negative regen.
     public static void heal(LivingEntity ply, double amount, boolean displayActualAmount) {
+        heal(ply, amount, displayActualAmount, "");
+    }
+    public static void heal(LivingEntity ply, double amount, boolean displayActualAmount, String dmgReason) {
         HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
         double healAmount;
         if (amount < 0)
@@ -2864,7 +2869,18 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         else
             healAmount = Math.min(ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() - ply.getHealth(),
                     amount * attrMap.getOrDefault("fixedHealingMulti", 1d));
-        ply.setHealth(ply.getHealth() + healAmount);
+        double newHealth = ply.getHealth() + healAmount;
+        // negative healing that kills the player
+        if (newHealth < 1e-9) {
+            // negative regen death messages are handled differently
+            // such abrupt dmg would slightly better align with debuff dmg anyway
+            EntityHelper.handleDeath(ply, ply, ply, EntityHelper.DamageType.DEBUFF,
+                    EntityHelper.DamageReason.DEBUFF, dmgReason);
+        }
+        // set the player's health as usual otherwise
+        else {
+            ply.setHealth(newHealth);
+        }
         GenericHelper.displayHolo(ply, displayActualAmount ? healAmount : amount, false, "回血");
     }
     public static void restoreMana(Player ply, double amount) {

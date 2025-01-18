@@ -255,7 +255,8 @@ public class GenericProjectile extends EntityPotion {
     }
     public void hitEntityExtraHandling(Entity e, MovingObjectPosition position, Vec3D futureLoc, Vector velocityHolder) {
         if (healOnHit > 0) {
-            PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), terraria.util.MathHelper.randomRound(healOnHit), false);
+            PlayerHelper.heal((LivingEntity) shooter.getBukkitEntity(), terraria.util.MathHelper.randomRound(healOnHit),
+                    false, projectileType);
         }
         switch (projectileType) {
             case "钫弹":

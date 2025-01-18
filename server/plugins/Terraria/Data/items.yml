@@ -2235,9 +2235,9 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r在试图使用魔力药水时改为恢复170点魔力
+  - §r在按下快速回蓝键[默认为J]或触发魔力花时直接恢复170点魔力
   - §r作为代价，玩家会损耗50点生命值
-  - §r此伤害不会致命且依旧会正常造成魔力疾病效果
+  - §r此效果依旧会正常造成魔力疾病
   attributes:
     maxHealth: 22
     defence: 2
@@ -2640,7 +2640,7 @@ Drew之翼:
   attributes:
     useSpeedRogueMulti: -0.15
     damageRogueMulti: 0.1
-    critRogue: 15
+    critRogue: 10
   worth: 9600000
   rarity: 6
 鲁莽手套:
@@ -2648,7 +2648,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    useSpeedRogueMulti: 0.15
+    useSpeedRogueMulti: 0.2
     damageRogueMulti: -0.05
     critRogue: -5
   worth: 9600000
@@ -2704,7 +2704,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r使用盗贼武器时发射的弹幕量翻倍
+  - §r使用盗贼武器时发射的弹幕量翻倍且发射间隔减半
   attributes:
     damageMulti: -0.3
     damageRogueMulti: -0.1
@@ -9021,8 +9021,8 @@ Dodu的手炮:
 动能寻迹镖:
   item: DIAMOND_SWORD
   lore:
-  - §r扔出一个处理计算的飞盘，飞盘会向敌人发射电能
-  - §r潜伏攻击使飞盘弹向其他目标
+  - §r扔出一个处理计算的飞盘，飞盘会追踪且向敌人发射电能
+  - §r潜伏攻击的飞盘会弹向其他目标而非追踪
   attributes:
     damage: 5700
     damageStealth: 5000
@@ -9646,8 +9646,8 @@ Dodu的手炮:
   - §r投掷强力的追踪火矛
   - §r潜伏攻击会在命中后喷发出火球
   attributes:
-    damage: 1184
-    damageStealth: 1250
+    damage: 5000
+    damageStealth: 5000
     damageType: Rogue
     crit: 4
     knockback: 8
@@ -10137,7 +10137,7 @@ Dodu的手炮:
     damageType: Rogue
     crit: 4
     knockback: 6.75
-    useTime: 8
+    useTime: 7
   worth: 28000000
   rarity: 14
 终曲黎明:
@@ -10147,8 +10147,8 @@ Dodu的手炮:
   - §r潜伏攻击发射三次镰刀
   - §r“我们必将再度拥抱黎明”
   attributes:
-    damage: 5000
-    damageStealth: 5000
+    damage: 666
+    damageStealth: 1250
     damageType: Rogue
     crit: 4
     knockback: 5

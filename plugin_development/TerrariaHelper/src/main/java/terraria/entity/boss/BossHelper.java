@@ -99,7 +99,7 @@ public class BossHelper {
             double currDynamicDM;
             MetadataValue metadataVal = EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION);
             if (metadataVal != null) currDynamicDM = metadataVal.asDouble();
-            else currDynamicDM = 1d;
+            else currDynamicDM = 0.9d; // has 10% DR at the beginning ("prior" assumption about player's DPS build).
             // dynamic DR only applies when the current time elapsed is within the expected time to defeat the boss
             if (ticksLived < targetTime && ticksLived > 1) {
                 if (healthRatio > 0.000001 && healthRatio < 0.999999) {
@@ -117,14 +117,16 @@ public class BossHelper {
                     dynamicDamageMultiplier = timeElapsedRatio / damageRatioPotentialBeforeDDM;
                     // gradually change the damage multiplier
                     dynamicDamageMultiplier = dynamicDamageMultiplier * 0.1 + currDynamicDM * 0.9;
+
                     // dynamic damage multiplier can not increase player damage or decrease damage excessively
                     dynamicDamageMultiplier = Math.min(dynamicDamageMultiplier, 1d);
-                    dynamicDamageMultiplier = Math.max(dynamicDamageMultiplier, 0.15d);
+                    // 1/0.7 ~= 1.4; player needs to build 1.4 times DPS than expected to outrun dynamic DR
+                    dynamicDamageMultiplier = Math.max(dynamicDamageMultiplier, 0.7d);
                 }
                 else
                     dynamicDamageMultiplier = currDynamicDM;
             }
-            // once exceeding targeted defeat time, dynamic DR multiplier linearly increases to 1 over maximum of 10 seconds.
+            // once exceeding targeted defeat time, dynamic DR multiplier linearly increases to 1
             else {
                 dynamicDamageMultiplier = Math.min(currDynamicDM + 0.005, 1);
             }

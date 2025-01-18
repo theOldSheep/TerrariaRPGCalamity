@@ -3135,7 +3135,7 @@ Dodu的手炮:
     projectileSpeed: 4
   stealth:
     projectile: 动能寻迹镖Ex
-    projectileSpeed: 4.25
+    projectileSpeed: 4.75
 星神之杀:
   type: ROGUE
   normal:
@@ -3800,8 +3800,8 @@ Dodu的手炮:
   stealth:
     projectile: 终结者之刃
     projectileSpeed: 3.9
-    throwRounds: 10
-    throwInterval: 1
+    throwRounds: 5
+    throwInterval: 2
 终曲黎明:
   type: ROGUE
   normal:

@@ -432,26 +432,14 @@ public class ItemUseHelper {
                                 // if the potion has healing ability
                                 case "health": {
                                     PlayerHelper.heal(ply, potionPotency);
-                                    int duration = 1200;
-                                    if (itemType.equals("恢复药水")) duration *= 0.75;
-                                    if (accessories.contains("炼金石") ||
-                                            accessories.contains("神话护身符") ||
-                                            accessories.contains("神圣护符") ||
-                                            accessories.contains("神之壁垒"))
-                                        duration *= 0.75;
-                                    EntityHelper.applyEffect(ply, "耐药性", duration);
+                                    applyHealingPotionDebuff(ply, itemType, accessories);
                                     canReduceConsumption = true;
                                     break;
                                 }
                                 // if the potion recovers mana
                                 case "mana": {
-                                    String debuffType = "魔力疾病";
-                                    if ( accessories.contains("魔能熔毁仪") )
-                                        debuffType = "魔力熔蚀";
-                                    else if (accessories.contains("混乱石") )
-                                        debuffType = "魔力烧蚀";
                                     PlayerHelper.restoreMana(ply, potionPotency);
-                                    EntityHelper.applyEffect(ply, debuffType, 160);
+                                    applyManaPotionDebuff(ply, accessories);
                                     canReduceConsumption = true;
                                     break;
                                 }
@@ -483,12 +471,41 @@ public class ItemUseHelper {
         }
         return successful;
     }
+    // apply the healing potion's debuff as if a healing potion has been consumed
+    public static void applyHealingPotionDebuff(Player ply, String itemType, HashSet<String> accessories) {
+        int duration = 1200;
+        if (itemType.equals("恢复药水")) duration *= 0.75;
+        if (accessories.contains("炼金石") ||
+                accessories.contains("神话护身符") ||
+                accessories.contains("神圣护符") ||
+                accessories.contains("神之壁垒"))
+            duration *= 0.75;
+        EntityHelper.applyEffect(ply, "耐药性", duration);
+    }
+    // apply the mana potion's debuff as if a mana potion has been consumed
+    public static void applyManaPotionDebuff(Player ply, HashSet<String> accessories) {
+        String debuffType = "魔力疾病";
+        if ( accessories.contains("魔能熔毁仪") )
+            debuffType = "魔力熔蚀";
+        else if (accessories.contains("混乱石") )
+            debuffType = "魔力烧蚀";
+        EntityHelper.applyEffect(ply, debuffType, 160);
+    }
     public static boolean playerQuickUsePotion(Player ply, QuickBuffType quickBuffType) {
         if (!PlayerHelper.isProperlyPlaying(ply))
             return false;
         Inventory plyInv = ply.getInventory();
         if (quickBuffType == QuickBuffType.NONE) return false;
         boolean successfullyConsumed = false;
+        // soul ring's special mana recovery
+        if (quickBuffType == QuickBuffType.MANA) {
+            if (PlayerHelper.getAccessories(ply).contains("灵魂之戒")) {
+                PlayerHelper.heal(ply, -50, false, "灵魂之戒");
+                PlayerHelper.restoreMana(ply, 170);
+                applyManaPotionDebuff(ply, PlayerHelper.getAccessories(ply) );
+                return true;
+            }
+        }
         // for health and mana, only one item is needed to be successfully consumed.
         boolean consumeAllOrOne = quickBuffType == QuickBuffType.BUFF;
         for (int i = 0; i < 36; i ++) {
@@ -1243,7 +1260,7 @@ public class ItemUseHelper {
                                         Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc2, 0.75);
                                         EntityHelper.setVelocity(ply, plyVel);
                                         // heal for a small amount
-                                        PlayerHelper.heal(ply, 3, false);
+                                        PlayerHelper.heal(ply, 3);
                                     }
                                 })
                                 .setLingerDelay(1);
@@ -1271,7 +1288,7 @@ public class ItemUseHelper {
                                         Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc3, 1);
                                         EntityHelper.setVelocity(ply, plyVel);
                                         // heal for a small amount
-                                        PlayerHelper.heal(ply, 4, false);
+                                        PlayerHelper.heal(ply, 4);
                                         applyCD(ply, overrideCD);
                                     }
                                 })
@@ -1442,7 +1459,7 @@ public class ItemUseHelper {
                                     Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc5, 1.5);
                                     EntityHelper.setVelocity(ply, plyVel);
                                     // heal for a small amount
-                                    PlayerHelper.heal(ply, 8, false);
+                                    PlayerHelper.heal(ply, 8);
                                     applyCD(ply, overrideCD);
                                 }
                             });
@@ -1519,7 +1536,7 @@ public class ItemUseHelper {
                                     Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc5, 1.5);
                                     EntityHelper.setVelocity(ply, plyVel);
                                     // heal for a small amount
-                                    PlayerHelper.heal(ply, 10, false);
+                                    PlayerHelper.heal(ply, 10);
                                     applyCD(ply, overrideCD);
                                 }
                             });
@@ -3261,9 +3278,9 @@ public class ItemUseHelper {
      * @param autoSwing is auto swing after cool down active?
      * @param attrMap attribute map of the attack
      * @param weaponSection config section of the weapon to specify more details
-     * @return whether the attack was successful
+     * @return the projectile being summoned
      */
-    protected static boolean playerUseBoomerang(Player ply, String itemType, String weaponType,
+    protected static Boomerang playerUseBoomerang(Player ply, String itemType, String weaponType,
                                                 boolean autoSwing, HashMap<String, Double> attrMap, ConfigurationSection weaponSection) {
         // use the weapon
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
@@ -3292,9 +3309,9 @@ public class ItemUseHelper {
         plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // play sound
         playerUseItemSound(ply, weaponType, itemType, autoSwing);
-        return true;
+        return entity;
     }
-    protected static boolean playerUseYoyo(Player ply, String itemType, String weaponType,
+    protected static Yoyo playerUseYoyo(Player ply, String itemType, String weaponType,
                                            boolean autoSwing, HashMap<String, Double> attrMap, ConfigurationSection weaponSection) {
         // use the weapon
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
@@ -3313,9 +3330,9 @@ public class ItemUseHelper {
         plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // play sound
         playerUseItemSound(ply, weaponType, itemType, autoSwing);
-        return true;
+        return entity;
     }
-    protected static boolean playerUseFlail(Player ply, String itemType, String weaponType,
+    protected static Flail playerUseFlail(Player ply, String itemType, String weaponType,
                                             boolean autoSwing, HashMap<String, Double> attrMap, ConfigurationSection weaponSection) {
         // use the weapon
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
@@ -3338,7 +3355,7 @@ public class ItemUseHelper {
         plyNMS.getWorld().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // play sound
         playerUseItemSound(ply, weaponType, itemType, autoSwing);
-        return true;
+        return entity;
     }
     // ranged helper functions below
     protected static double calculateProjectileSpeed(HashMap<String, Double> attrMap) {
@@ -3983,7 +4000,7 @@ public class ItemUseHelper {
     // rogue helper functions below
     protected static boolean playerUseRogueTick(Player ply, String itemType, String weaponType,
                                                 ConfigurationSection weaponSection, HashMap<String, Double> attrMap,
-                                                ItemStack tool, int index, boolean isStealth) {
+                                                ItemStack tool, int index, boolean isStealth, boolean isAutoSwing) {
         // use the weapon
         double projectileSpeed = weaponSection.getDouble("projectileSpeed", 1d);
         projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
@@ -3998,65 +4015,89 @@ public class ItemUseHelper {
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, projVel, attrMap, projType);
         shootInfo.shootLoc = fireLoc;
         int shots = weaponSection.getInt("shots", 1);
-        switch (projType) {
-            case "镀金匕首Ex": {
-                double radius = 16;
-                int fired = 0;
-                for (HitEntityInfo targetInfo : HitEntityInfo.getEntitiesHit(
-                        fireLoc.getWorld(),
-                        fireLoc.toVector(),
-                        fireLoc.toVector(),
-                        radius,
-                        (e) -> (e instanceof EntityLiving) &&
-                                EntityHelper.checkCanDamage(ply, e.getBukkitEntity(), true) )) {
-                    LivingEntity target = (LivingEntity) (targetInfo.getHitEntity()).getBukkitEntity();
-                    currVel = MathHelper.getDirection(fireLoc, target.getEyeLocation(), projectileSpeed);
-                    shootInfo.velocity = currVel;
-                    EntityHelper.spawnProjectile(shootInfo);
-                    if (++fired >= 3)
-                        break;
-                }
+
+        // attack logic
+        switch (weaponSection.getString("type", weaponType)) {
+            // boomerang and flail; CD handled within the projectile.
+            case "BOOMERANG":
+                playerUseBoomerang(ply, weaponSection.getString("projectile", itemType), weaponType, isAutoSwing, attrMap, weaponSection);
                 break;
-            }
-            // default attack behavior
-            default: {
-                // some attacks have extra handling
+            case "FLAIL":
+                playerUseFlail(ply, weaponSection.getString("projectile", itemType), weaponType, isAutoSwing, attrMap, weaponSection);
+                break;
+            default:
+                // default weapons
                 switch (projType) {
-                    case "憎恶血刃Ex": {
-                        double healthConsumed = ply.getHealth() * 0.3;
-                        double extraBaseDmg = healthConsumed * 0.4;
-                        PlayerHelper.heal(ply, -healthConsumed);
-                        EntityHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
+                    case "镀金匕首Ex": {
+                        double radius = 16;
+                        int fired = 0;
+                        for (HitEntityInfo targetInfo : HitEntityInfo.getEntitiesHit(
+                                fireLoc.getWorld(),
+                                fireLoc.toVector(),
+                                fireLoc.toVector(),
+                                radius,
+                                (e) -> (e instanceof EntityLiving) &&
+                                        EntityHelper.checkCanDamage(ply, e.getBukkitEntity(), true) )) {
+                            LivingEntity target = (LivingEntity) (targetInfo.getHitEntity()).getBukkitEntity();
+                            currVel = MathHelper.getDirection(fireLoc, target.getEyeLocation(), projectileSpeed);
+                            shootInfo.velocity = currVel;
+                            EntityHelper.spawnProjectile(shootInfo);
+                            if (++fired >= 3)
+                                break;
+                        }
                         break;
                     }
-                    case "牺牲Ex": {
-                        double healthConsumed = ply.getHealth() * 0.2;
-                        double extraBaseDmg = healthConsumed * 0.75;
-                        PlayerHelper.heal(ply, -healthConsumed);
-                        EntityHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
-                        break;
+                    // default attack behavior
+                    default: {
+                        // some attacks have extra handling
+                        switch (projType) {
+                            case "憎恶血刃Ex": {
+                                double healthConsumed = ply.getHealth() * 0.3;
+                                double extraBaseDmg = healthConsumed * 0.4;
+                                PlayerHelper.heal(ply, -healthConsumed);
+                                EntityHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
+                                break;
+                            }
+                            case "牺牲Ex": {
+                                double healthConsumed = ply.getHealth() * 0.2;
+                                double extraBaseDmg = healthConsumed * 0.75;
+                                PlayerHelper.heal(ply, -healthConsumed);
+                                EntityHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
+                                break;
+                            }
+                        }
+                        double offset = weaponSection.getDouble("offset", -1d);
+                        for (int shot = 0; shot < shots; shot ++) {
+                            if (offset > 0) {
+                                currVel = projVel.clone().multiply(offset).add( MathHelper.randomVector() );
+                            }
+                            else {
+                                currVel = projVel;
+                            }
+                            MathHelper.setVectorLength(currVel, projectileSpeed);
+                            shootInfo.velocity = currVel;
+                            EntityHelper.spawnProjectile(shootInfo);
+                        }
                     }
                 }
-                double offset = weaponSection.getDouble("offset", -1d);
-                for (int shot = 0; shot < shots; shot ++) {
-                    if (offset > 0) {
-                        currVel = projVel.clone().multiply(offset).add( MathHelper.randomVector() );
-                    }
-                    else {
-                        currVel = projVel;
-                    }
-                    MathHelper.setVectorLength(currVel, projectileSpeed);
-                    shootInfo.velocity = currVel;
-                    EntityHelper.spawnProjectile(shootInfo);
+                // apply CD
+                if (index == 0) {
+                    double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
+                    double useTimeMulti = 1 / useSpeed;
+                    applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
                 }
-            }
         }
+
         // next tick if needed
         int totalTicks = weaponSection.getInt("throwRounds", 1);
-        int ticksInterval = weaponSection.getInt("throwInterval", 2);
+        int ticksInterval = weaponSection.getInt("throwInterval", 10);
+        if (PlayerHelper.getAccessories(ply).contains("敬天神盗盒")) {
+            totalTicks <<= 1;
+            ticksInterval = Math.max(ticksInterval >> 1, 1);
+        }
         if (index + 1 < totalTicks) {
             Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(),
-                    () -> playerUseRogueTick(ply, itemType, weaponType, weaponSection, attrMap, tool, index + 1, isStealth),
+                    () -> playerUseRogueTick(ply, itemType, weaponType, weaponSection, attrMap, tool, index + 1, isStealth, isAutoSwing),
                     ticksInterval);
         }
         return true;
@@ -4085,20 +4126,7 @@ public class ItemUseHelper {
         }
         // use the weapon
         weaponSection = weaponSection.getConfigurationSection(isStealth ? "stealth" : "normal");
-        switch (weaponSection.getString("type", weaponType)) {
-            case "BOOMERANG":
-                playerUseBoomerang(ply, weaponSection.getString("projectile", itemType), weaponType, autoSwing.get(), attrMap, weaponSection);
-                break;
-            case "FLAIL":
-                playerUseFlail(ply, weaponSection.getString("projectile", itemType), weaponType, autoSwing.get(), attrMap, weaponSection);
-                break;
-            default:
-                playerUseRogueTick(ply, itemType, weaponType, weaponSection, attrMap, tool, 0, isStealth);
-                // apply CD
-                double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
-                double useTimeMulti = 1 / useSpeed;
-                applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
-        }
+        playerUseRogueTick(ply, itemType, weaponType, weaponSection, attrMap, tool, 0, isStealth, autoSwing.get());
         return true;
     }
     // magic helper functions below
@@ -5478,16 +5506,19 @@ public class ItemUseHelper {
                         success = playerUseMelee(ply, itemName, mainHandItem, weaponSection, attrMap, swingAmount, weaponType.equals("STAB"));
                         break;
                     case "BOOMERANG":
-                        success = playerUseBoomerang(ply, itemName, weaponType,
+                        playerUseBoomerang(ply, itemName, weaponType,
                                 autoSwing, attrMap, weaponSection);
+                        success = true;
                         break;
                     case "YOYO":
-                        success = playerUseYoyo(ply, itemName, weaponType,
+                        playerUseYoyo(ply, itemName, weaponType,
                                 autoSwing, attrMap, weaponSection);
+                        success = true;
                         break;
                     case "FLAIL":
-                        success = playerUseFlail(ply, itemName, weaponType,
+                        playerUseFlail(ply, itemName, weaponType,
                                 autoSwing, attrMap, weaponSection);
+                        success = true;
                         break;
                     case "WHIP":
                         success = playerUseWhip(ply, itemName, mainHandItem, weaponSection, attrMap, swingAmount);

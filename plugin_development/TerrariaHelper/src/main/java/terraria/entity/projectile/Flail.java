@@ -34,15 +34,21 @@ public class Flail extends GenericProjectile {
         this.strict = strict;
         // if it is strict, more properties of the projectile will be overridden
         // and the player will be given a hardcore cool down until it returns
-        if (strict) {
+        boolean shouldApplyCD = !owner.getScoreboardTags().contains("temp_useCD");
+        if (this.strict) {
             super.penetration = 999999;
             super.liveTime = 999999;
             super.canBeReflected = false;
-            // give infinite use CD temporarily
-            ItemUseHelper.applyCD(owner, -1);
+            // give infinite use CD temporarily; if this projectile is somehow spawned during CD
+            // don't recognize it as a strict projectile starting from here
+            if ( shouldApplyCD ) {
+                ItemUseHelper.applyCD(owner, -1);
+            } else {
+                this.strict = false;
+            }
         }
         // normally give use CD if it is positive
-        else if (useTime > 0) {
+        else if (useTime > 0 && shouldApplyCD) {
             ItemUseHelper.applyCD(owner, useTime);
         }
         // it needs to pass through blocks during spinning phase.
